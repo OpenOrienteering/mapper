@@ -27,7 +27,7 @@
 #include <QHash>
 #include <QString>
 
-#include "georeferencing.h"
+#include "core/georeferencing.h"
 
 QT_BEGIN_NAMESPACE
 class QFile;

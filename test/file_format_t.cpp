@@ -23,7 +23,7 @@
 #include "../src/core/map_printer.h"
 #include "../src/file_format_registry.h"
 #include "../src/file_import_export.h"
-#include "../src/georeferencing.h"
+#include "../src/core/georeferencing.h"
 #include "../src/global.h"
 #include "../src/map_grid.h"
 #include "../src/mapper_resource.h"

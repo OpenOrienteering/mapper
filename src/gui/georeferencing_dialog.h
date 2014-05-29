@@ -26,7 +26,7 @@
 #include <QString>
 #include <QScopedPointer>
 
-#include "tool.h"
+#include "../tool.h"
 
 QT_BEGIN_NAMESPACE
 class QComboBox;

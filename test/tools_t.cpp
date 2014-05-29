@@ -20,9 +20,9 @@
 
 #include "tools_t.h"
 
+#include "../src/core/georeferencing.h"
 #include "../src/core/map_color.h"
 #include "../src/file_format.h"
-#include "../src/georeferencing.h"
 #include "../src/global.h"
 #include "../src/map_editor.h"
 #include "../src/map_grid.h"

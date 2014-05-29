@@ -29,11 +29,11 @@
 #include <QImageReader>
 #include <QTextCodec>
 
+#include "core/georeferencing.h"
 #include "core/map_color.h"
 #include "core/map_view.h"
 #include "file_format_xml.h"
 #include "file_import_export.h"
-#include "georeferencing.h"
 #include "map.h"
 #include "map_part.h"
 #include "object.h"

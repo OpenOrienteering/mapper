@@ -22,8 +22,8 @@
 
 #include <QtWidgets>
 
+#include "core/georeferencing.h"
 #include "map.h"
-#include "georeferencing.h"
 #include "template.h"
 #include "util_gui.h"
 

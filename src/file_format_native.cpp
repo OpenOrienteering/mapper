@@ -21,11 +21,11 @@
 
 #include <QFile>
 
+#include "core/georeferencing.h"
 #include "core/map_color.h"
 #include "core/map_printer.h"
 #include "core/map_view.h"
 #include "file_import_export.h"
-#include "georeferencing.h"
 #include "map.h"
 #include "map_grid.h"
 #include "symbol.h"

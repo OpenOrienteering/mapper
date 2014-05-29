@@ -28,13 +28,14 @@
 #include <QNetworkReply>
 #endif
 
-#include "georeferencing.h"
-#include "gui/main_window.h"
-#include "map.h"
-#include "map_editor.h"
-#include "map_dialog_rotate.h"
-#include "util_gui.h"
-#include "util.h"
+#include "../core/crs_template.h"
+#include "../core/georeferencing.h"
+#include "main_window.h"
+#include "../map.h"
+#include "../map_editor.h"
+#include "../map_dialog_rotate.h"
+#include "../util_gui.h"
+#include "../util.h"
 
 GeoreferencingDialog::GeoreferencingDialog(MapEditorController* controller, const Georeferencing* initial, bool allow_no_georeferencing)
 : QDialog(controller->getWindow(), Qt::WindowSystemMenuHint | Qt::WindowTitleHint),

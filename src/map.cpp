@@ -33,6 +33,7 @@
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
+#include "core/georeferencing.h"
 #include "core/map_color.h"
 #include "core/map_printer.h"
 #include "core/map_view.h"
@@ -53,7 +54,6 @@
 #include "file_format_ocad8.h"
 #include "file_format_registry.h"
 #include "file_import_export.h"
-#include "georeferencing.h"
 
 // ### MapColorSet ###
 

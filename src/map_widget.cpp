@@ -25,8 +25,8 @@
 #include <QPinchGesture>
 #include <QTouchEvent>
 
+#include "core/georeferencing.h"
 #include "core/map_color.h"
-#include "georeferencing.h"
 #include "map.h"
 #include "map_editor_activity.h"
 #include "settings.h"

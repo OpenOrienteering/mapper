@@ -25,8 +25,8 @@
 #include <QString>
 #include <QTransform>
 
-#include "map_coord.h"
-#include "file_format.h"
+#include "latlon.h"
+#include "../map_coord.h"
 
 class QDebug;
 class QXmlStreamReader;
@@ -34,81 +34,7 @@ class QXmlStreamWriter;
 
 typedef void* projPJ;
 
-/**
- * Specifies geographic coordinates by latitude and longitude.
- */
-class LatLon
-{
-public:
-	/** 
-	 * Latitude is a geographic coordinate that specifies the north-south
-	 * position (φ, phi). The unit is radiant.
-	 */
-	double latitude;
-	
-	/**
-	 * Longitude is a geographic coordinate that specifies the east-west 
-	 * position (λ, lambda). The unit is radiant.
-	 */
-	double longitude;
-	
-	/**
-	 * Constructs a new LatLon with latitude and longitude set to zero.
-	 */
-	LatLon() : latitude(0.0), longitude(0.0) { };
-	
-	/**
-	 * Constructs a new LatLon for the latitude and longitude.
-	 * If given_in_degrees is true, the parameters' unit is degree, otherwise 
-	 * the unit is radiant.
-	 */
-	LatLon(double latitude, double longitude, bool given_in_degrees = false)
-	: latitude(latitude), longitude(longitude)
-	{
-		if (given_in_degrees)
-		{
-			this->latitude = latitude * M_PI / 180;
-			this->longitude = longitude * M_PI / 180;
-		}
-	}
-	
-	/**
-	 * Returns the latitude value in degrees.
-	 */
-	inline double getLatitudeInDegrees() const  { return latitude * 180.0 / M_PI; }
-	
-	/**
-	 * Returns the longitude value in degrees.
-	 */
-	inline double getLongitudeInDegrees() const { return longitude * 180.0 / M_PI; }
-	
-	/**
-	 * Returns true if this object has exactly the same latitude and longitude
-	 * like another. FP precision issues are not taken into account.
-	 */
-	bool operator==(const LatLon& rhs) const
-	{
-		return (this->latitude == rhs.latitude) && (this->longitude == rhs.longitude);
-	}
-	
-	/**
-	 * Returns true if this object has not exactly the same latitude and longitude
-	 * like another. FP precision issues are not taken into account.
-	 */
-	bool operator!=(const LatLon& rhs) const
-	{
-		return (this->latitude != rhs.latitude) || (this->longitude != rhs.longitude);
-	}
-};
-
-/**
- * Dumps a LatLon to the debug output.
- * 
- * Note that this requires a *reference*, not a pointer.
- */
-QDebug operator<<(QDebug dbg, const LatLon &lat_lon);
-
-
+class FileFormatException;
 
 /**
  * A Georeferencing defines a mapping between "map coordinates" (as measured on
@@ -202,7 +128,7 @@ public:
 	 * coordinates. isLocal() can be checked to determine if a conversion
 	 * to geographic coordinates is also possible.
 	 */
-	inline bool isValid() const {return state == Local || projected_crs != NULL;}
+	bool isValid() const;
 	
 	/** 
 	 * Returns true if this georeferencing is local.
@@ -211,13 +137,13 @@ public:
 	 * is given for the projected coordinates. A local georeferencing cannot 
 	 * convert coordinates from and to geographic coordinate systems.
 	 */
-	inline bool isLocal() const { return state == Local; }
+	bool isLocal() const;
 	
 	
 	/**
 	 * Returns the georeferencing state.
 	 */
-	inline State getState() const {return state;}
+	State getState() const;
 	
 	/**
 	 * Sets the georeferencing state.
@@ -231,7 +157,7 @@ public:
 	/**
 	 * Returns the map scale denominator.
 	 */
-	inline unsigned int getScaleDenominator() const { return scale_denominator; }
+	unsigned int getScaleDenominator() const;
 	
 	/**
 	 * Sets the map scale denominator.
@@ -244,7 +170,7 @@ public:
 	 * 
 	 * @see setDeclination()
 	 */
-	inline double getDeclination() const { return declination; }
+	double getDeclination() const;
 	
 	/**
 	 * Sets the magnetic declination (in degrees).
@@ -264,7 +190,7 @@ public:
 	 * 
 	 * @see setGrivation()
 	 */
-	inline double getGrivation() const { return grivation; }
+	double getGrivation() const;
 	
 	/**
 	 * Sets the grivation (in degrees).
@@ -281,7 +207,7 @@ public:
 	/**
 	 * Returns the map coordinates of the reference point.
 	 */
-	inline MapCoord getMapRefPoint() const { return map_ref_point; };
+	MapCoord getMapRefPoint() const;
 	
 	/**
 	 * Defines the map coordinates of the reference point.
@@ -294,7 +220,7 @@ public:
 	/**
 	 * Returns the projected coordinates of the reference point.
 	 */
-	inline QPointF getProjectedRefPoint() const { return projected_ref_point; };
+	QPointF getProjectedRefPoint() const;
 	
 	/**
 	 * Defines the projected coordinates of the reference point.
@@ -308,7 +234,7 @@ public:
 	/**
 	 * Returns the unique id of the projected CRS.
 	 */
-	QString getProjectedCRSId() const { return projected_crs_id; }
+	QString getProjectedCRSId() const;
 	
 	/** 
 	 * Returns the name of the coordinate reference system (CRS) of the
@@ -319,12 +245,12 @@ public:
 	/**
 	 * Returns the array of projected crs parameter values.
 	 */
-	std::vector< QString > getProjectedCRSParameters() const { return projected_crs_parameters; }
+	std::vector< QString > getProjectedCRSParameters() const;
 	
 	/**
 	 * Sets the array of projected crs parameter values.
 	 */
-	void setProjectedCRSParameters(std::vector< QString > values) { projected_crs_parameters = values; }
+	void setProjectedCRSParameters(std::vector< QString > values);
 	
 	/** 
 	 * Returns the specification of the coordinate reference system (CRS) of the
@@ -356,7 +282,7 @@ public:
 	/**
 	 * Returns the geographic coordinates of the reference point.
 	 */
-	inline LatLon getGeographicRefPoint() const { return geographic_ref_point; };
+	LatLon getGeographicRefPoint() const;
 	
 	/**
 	 * Defines the geographic coordinates of the reference point.
@@ -527,116 +453,78 @@ QDebug operator<<(QDebug dbg, const Georeferencing &georef);
 
 
 
-/**
- * A template for a coordinate reference system specification string,
- * which may contain one or more parameters described by the Param struct.
- * For each param, spec_template must contain a free parameter for QString::arg(),
- * e.g. "%1" for the first parameter.
- */
-class CRSTemplate
+//### Georeferencing inline code ###
+
+inline
+bool Georeferencing::isValid() const
 {
-public:
-	/** Abstract base class for parameters in CRSTemplates. */
-	struct Param
-	{
-		Param(const QString& desc);
-		virtual ~Param() {}
-		/** Must create a widget which can be used to edit the value. */
-		virtual QWidget* createEditWidget(QObject* edit_receiver) const = 0;
-		/** Must return the widget's value in a form so it can be pasted into
-		 *  the CRS specification
-		 */
-		virtual QString getSpecValue(QWidget* edit_widget) const = 0;
-		/** Must return the widget's value in a form so it can be stored */
-		virtual QString getValue(QWidget* edit_widget) const = 0;
-		/** Must set the stored value in the widget */
-		virtual void setValue(QWidget* edit_widget, const QString& value) = 0;
-		
-		QString desc;
-	};
-	
-	/** CRSTemplate parameter specifying a zone. */
-	struct ZoneParam : public Param
-	{
-		ZoneParam(const QString& desc);
-		virtual QWidget* createEditWidget(QObject* edit_receiver) const;
-		virtual QString getSpecValue(QWidget* edit_widget) const;
-		virtual QString getValue(QWidget* edit_widget) const;
-		virtual void setValue(QWidget* edit_widget, const QString& value);
-	};
-	
-	/** CRSTemplate integer parameter, with values from an integer range. */
-	struct IntRangeParam : public Param
-	{
-		IntRangeParam(const QString& desc, int min_value, int max_value, int apply_factor = 1);
-		virtual QWidget* createEditWidget(QObject* edit_receiver) const;
-		virtual QString getSpecValue(QWidget* edit_widget) const;
-		virtual QString getValue(QWidget* edit_widget) const;
-		virtual void setValue(QWidget* edit_widget, const QString& value);
-		
-		int min_value;
-		int max_value;
-		int apply_factor;
-	};
-	
-	/**
-	 * Creates a new CRS template.
-	 * The id must be unique and different from "Local".
-	 */
-	CRSTemplate(const QString& id, const QString& name,
-				const QString& coordinates_name, const QString& spec_template);
-	~CRSTemplate();
-	
-	/**
-	 * Adds a parameter to this template.
-	 * A corresponding "%x" (%0, %1, ...) entry must exist in the spec template,
-	 * where the parameter value will be pasted using QString.arg() when
-	 * applying the CRSTemplate.
-	 */
-	void addParam(Param* param);
-	
-	/** Returns the unique ID of this template. */
-	inline const QString& getId() const {return id;}
-	/** Returns the user-visible name of this template. */
-	inline const QString& getName() const {return name;}
-	/**
-	 * Returns the name for the coordinates of this template, e.g.
-	 * "UTM coordinates".
-	 */
-	inline const QString& getCoordinatesName() const {return coordinates_name;}
-	/** Returns the specification string template in Proj.4 format. */
-	inline const QString& getSpecTemplate() const {return spec_template;}
-	/** Returns the number of free parameters in this template. */
-	inline int getNumParams() const {return (int)params.size();}
-	/** Returns a reference to the i-th parameter. */
-	inline Param& getParam(int index) {return *params[index];}
-	
-	// CRS Registry
-	
-	/** Returns the number of CRS templates which are registered */
-	static int getNumCRSTemplates();
-	
-	/** Returns a registered CRS template by index */
-	static CRSTemplate& getCRSTemplate(int index);
-	
-	/**
-	 * Returns a registered CRS template by id,
-	 * or NULL if the given id does not exist
-	 */
-	static CRSTemplate* getCRSTemplate(const QString& id);
-	
-	/** Registers a CRS template */
-	static void registerCRSTemplate(CRSTemplate* temp);
-	
-private:
-	QString id;
-	QString name;
-	QString coordinates_name;
-	QString spec_template;
-	std::vector<Param*> params;
-	
-	// CRS Registry
-	static std::vector<CRSTemplate*> crs_templates;
-};
+	return state == Local || projected_crs != NULL;
+}
+
+inline
+bool Georeferencing::isLocal() const
+{
+	return state == Local;
+}
+
+inline
+Georeferencing::State Georeferencing::getState() const
+{
+	return state;
+}
+
+inline
+unsigned int Georeferencing::getScaleDenominator() const
+{
+	return scale_denominator;
+}
+
+inline
+double Georeferencing::getDeclination() const
+{
+	return declination;
+}
+
+inline
+double Georeferencing::getGrivation() const
+{
+	return grivation;
+}
+
+inline
+MapCoord Georeferencing::getMapRefPoint() const
+{
+	return map_ref_point;
+}
+
+inline
+QPointF Georeferencing::getProjectedRefPoint() const
+{
+	return projected_ref_point;
+}
+
+inline
+QString Georeferencing::getProjectedCRSId() const
+{
+	return projected_crs_id;
+}
+
+inline
+std::vector<QString> Georeferencing::getProjectedCRSParameters() const
+{
+	return projected_crs_parameters;
+}
+
+inline
+void Georeferencing::setProjectedCRSParameters(std::vector<QString> values)
+{
+	projected_crs_parameters = values;
+}
+
+inline
+LatLon Georeferencing::getGeographicRefPoint() const
+{
+	return geographic_ref_point;
+}
 
 #endif

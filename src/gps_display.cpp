@@ -27,8 +27,8 @@
 #include <qmath.h>
 #include <QTimer>
 
+#include "core/georeferencing.h"
 #include "map_widget.h"
-#include "georeferencing.h"
 #include "util.h"
 #include "compass.h"
 #if defined(ANDROID)

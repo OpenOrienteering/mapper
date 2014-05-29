@@ -31,8 +31,6 @@ HEADERS += \
   file_format_ocad8_p.h \
   file_format_xml_p.h \
   file_import_export.h \
-  georeferencing.h \
-  georeferencing_dialog.h \
   gps_display.h \
   gps_temporary_markers.h \
   gps_track_recorder.h \
@@ -92,10 +90,12 @@ HEADERS += \
   undo.h \
   util_task_dialog.h \
   core/auto_save_p.h \
+  core/georeferencing.h \
   core/map_printer.h \
   fileformats/ocd_file_format_p.h \
   gui/about_dialog.h \
   gui/color_dialog.h \
+  gui/georeferencing_dialog.h \
   gui/home_screen_controller.h \
   gui/main_window.h \
   gui/main_window_controller.h \
@@ -142,8 +142,6 @@ SOURCES += \
   map_dialog_scale.cpp \
   map_dialog_rotate.cpp \
   map_grid.cpp \
-  georeferencing.cpp \
-  georeferencing_dialog.cpp \
   color_dock_widget.cpp \
   symbol.cpp \
   symbol_dialog_replace.cpp \
@@ -208,6 +206,9 @@ SOURCES += \
   file_format_ocad8.cpp \
   file_format_xml.cpp \
   core/auto_save.cpp \
+  core/crs_template.cpp \
+  core/georeferencing.cpp \
+  core/latlon.cpp \
   core/map_color.cpp \
   core/map_printer.cpp \
   core/map_view.cpp \
@@ -215,6 +216,7 @@ SOURCES += \
   fileformats/ocd_types.cpp \
   gui/about_dialog.cpp \
   gui/color_dialog.cpp \
+  gui/georeferencing_dialog.cpp \
   gui/home_screen_controller.cpp \
   gui/main_window.cpp \
   gui/main_window_controller.cpp \

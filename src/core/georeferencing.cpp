@@ -33,8 +33,10 @@
 
 #include <proj_api.h>
 
-#include "mapper_resource.h"
-#include "util_gui.h"
+#include "crs_template.h"
+#include "../file_format.h"
+#include "../mapper_resource.h"
+#include "../util_gui.h"
 
 
 const QString Georeferencing::geographic_crs_spec("+proj=latlong +datum=WGS84");
@@ -45,8 +47,7 @@ Georeferencing::Georeferencing()
   declination(0.0),
   grivation(0.0),
   map_ref_point(0, 0),
-  projected_ref_point(0, 0),
-  geographic_ref_point(0, 0)
+  projected_ref_point(0, 0)
 {
 	updateTransformation();
 	
@@ -583,117 +584,3 @@ QDebug operator<<(QDebug dbg, const Georeferencing &georef)
 	return dbg.space();
 }
 
-QDebug operator<<(QDebug dbg, const LatLon& lat_lon)
-{
-	dbg.space() 
-	  << "LatLon" << lat_lon.latitude << lat_lon.longitude
-	  << "(" << Georeferencing::radToDeg(lat_lon.latitude)
-	  << Georeferencing::radToDeg(lat_lon.longitude) << ")";
-	return dbg.space();
-}
-
-
-
-// ### CRSTemplate ###
-
-std::vector<CRSTemplate*> CRSTemplate::crs_templates;
-
-CRSTemplate::Param::Param(const QString& desc)
- : desc(desc)
-{
-}
-
-CRSTemplate::ZoneParam::ZoneParam(const QString& desc)
- : Param(desc)
-{
-}
-QWidget* CRSTemplate::ZoneParam::createEditWidget(QObject* edit_receiver) const
-{
-	QLineEdit* widget = new QLineEdit();
-	QObject::connect(widget, SIGNAL(textEdited(QString)), edit_receiver, SLOT(crsParamEdited(QString)));
-	return widget;
-}
-QString CRSTemplate::ZoneParam::getSpecValue(QWidget* edit_widget) const
-{
-	QString zone = getValue(edit_widget);
-	zone.replace(" N", "");
-	zone.replace(" S", " +south");
-	return zone;
-}
-QString CRSTemplate::ZoneParam::getValue(QWidget* edit_widget) const
-{
-	QLineEdit* text_edit = static_cast<QLineEdit*>(edit_widget);
-	return text_edit->text();
-}
-void CRSTemplate::ZoneParam::setValue(QWidget* edit_widget, const QString& value)
-{
-	QLineEdit* text_edit = static_cast<QLineEdit*>(edit_widget);
-	text_edit->setText(value);
-}
-
-CRSTemplate::IntRangeParam::IntRangeParam(const QString& desc, int min_value, int max_value, int apply_factor)
-: Param(desc), min_value(min_value), max_value(max_value), apply_factor(apply_factor)
-{
-}
-QWidget* CRSTemplate::IntRangeParam::createEditWidget(QObject* edit_receiver) const
-{
-	QSpinBox* widget = Util::SpinBox::create(min_value, max_value);
-	QObject::connect(widget, SIGNAL(valueChanged(QString)), edit_receiver, SLOT(crsParamEdited(QString)));
-	return widget;
-}
-QString CRSTemplate::IntRangeParam::getSpecValue(QWidget* edit_widget) const
-{
-	QSpinBox* spin_box = static_cast<QSpinBox*>(edit_widget);
-	return QString::number(apply_factor * spin_box->value());
-}
-QString CRSTemplate::IntRangeParam::getValue(QWidget* edit_widget) const
-{
-	QSpinBox* spin_box = static_cast<QSpinBox*>(edit_widget);
-	return QString::number(spin_box->value());
-}
-void CRSTemplate::IntRangeParam::setValue(QWidget* edit_widget, const QString& value)
-{
-	QSpinBox* spin_box = static_cast<QSpinBox*>(edit_widget);
-	spin_box->setValue(value.toInt());
-}
-
-CRSTemplate::CRSTemplate(const QString& id, const QString& name, const QString& coordinates_name, const QString& spec_template)
-: id(id), name(name), coordinates_name(coordinates_name), spec_template(spec_template)
-{
-}
-
-CRSTemplate::~CRSTemplate()
-{
-	for (int i = 0; i < (int)params.size(); ++i)
-		delete params[i];
-}
-
-void CRSTemplate::addParam(Param* param)
-{
-	params.push_back(param);
-}
-
-int CRSTemplate::getNumCRSTemplates()
-{
-	return (int)crs_templates.size();
-}
-
-CRSTemplate& CRSTemplate::getCRSTemplate(int index)
-{
-	return *crs_templates[index];
-}
-
-CRSTemplate* CRSTemplate::getCRSTemplate(const QString& id)
-{
-	for (size_t i = 0, end = crs_templates.size(); i < end; ++i)
-	{
-		if (crs_templates[i]->getId() == id)
-			return crs_templates[i];
-	}
-	return NULL;
-}
-
-void CRSTemplate::registerCRSTemplate(CRSTemplate* temp)
-{
-	crs_templates.push_back(temp);
-}

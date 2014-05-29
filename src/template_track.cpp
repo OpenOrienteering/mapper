@@ -23,12 +23,12 @@
 #include <qmath.h>
 #include <QtWidgets>
 
+#include "gui/georeferencing_dialog.h"
 #include "map_widget.h"
 #include "map_undo.h"
 #include "object.h"
 #include "symbol_line.h"
 #include "symbol_point.h"
-#include "georeferencing_dialog.h"
 #include "util.h"
 #include "util_task_dialog.h"
 #include "util_gui.h"

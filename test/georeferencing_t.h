@@ -22,7 +22,7 @@
 
 #include <QtTest/QtTest>
 
-#include "../src/georeferencing.h"
+#include "../src/core/georeferencing.h"
 
 
 /**

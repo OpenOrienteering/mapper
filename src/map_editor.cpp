@@ -31,13 +31,13 @@
 #include <QtAndroidExtras/QAndroidJniObject>
 #endif
 
+#include "core/georeferencing.h"
+#include "gui/georeferencing_dialog.h"
 #include "gui/widgets/action_grid_bar.h"
 #include "gui/widgets/symbol_widget.h"
 #include "color_dock_widget.h"
 #include "compass_display.h"
 #include "file_format_registry.h"
-#include "georeferencing.h"
-#include "georeferencing_dialog.h"
 #include "map.h"
 #include "map_dialog_rotate.h"
 #include "map_dialog_scale.h"

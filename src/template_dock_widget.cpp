@@ -20,7 +20,7 @@
 
 #include "template_dock_widget.h"
 
-#include "georeferencing.h"
+#include "core/georeferencing.h"
 #include "gui/main_window.h"
 #include "gui/widgets/segmented_button_layout.h"
 #include "map.h"

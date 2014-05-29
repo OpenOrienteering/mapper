@@ -24,10 +24,10 @@
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
+#include "core/georeferencing.h"
+#include "gui/georeferencing_dialog.h"
 #include "map.h"
 #include "util.h"
-#include "georeferencing.h"
-#include "georeferencing_dialog.h"
 
 TemplateImage::TemplateImage(const QString& path, Map* map) : Template(path, map)
 {
