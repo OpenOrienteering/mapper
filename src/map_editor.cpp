@@ -85,6 +85,7 @@
 #include "tool_rotate_pattern.h"
 #include "tool_scale.h"
 #include "util.h"
+#include "util/scoped_signals_blocker.h"
 #include "gps_temporary_markers.h"
 #include "compass.h"
 #include "gps_track_recorder.h"
@@ -94,6 +95,12 @@
 MapEditorController::MapEditorController(OperatingMode mode, Map* map)
 : MainWindowController()
 , active_symbol(NULL)
+, mappart_remove_act(NULL)
+, mappart_merge_menu(NULL)
+, mappart_move_menu(NULL)
+, mappart_selector_box(NULL)
+, mappart_merge_mapper(new QSignalMapper(this))
+, mappart_move_mapper(new QSignalMapper(this))
 {
 	this->mode = mode;
 	
@@ -112,9 +119,6 @@ MapEditorController::MapEditorController(OperatingMode mode, Map* map)
 	
 	toggle_template_menu = NULL;
 	cut_hole_menu = NULL;
-	mappart_move_mapper = NULL;
-	mappart_move_menu = NULL;
-	mappart_selector_box = NULL;
 	
 	if (map)
 		setMap(map, true);
@@ -153,6 +157,9 @@ MapEditorController::MapEditorController(OperatingMode mode, Map* map)
 	being_destructed = false;
 	
 	actionsById[""] = new QAction(this); // dummy action
+	
+	connect(mappart_merge_mapper, SIGNAL(mapped(int)), this, SLOT(mergeCurrentMapPartTo(int)));
+	connect(mappart_move_mapper, SIGNAL(mapped(int)), this, SLOT(reassignObjectsToMapPart(int)));
 }
 
 MapEditorController::~MapEditorController()
@@ -174,6 +181,7 @@ MapEditorController::~MapEditorController()
 	delete template_dock_widget;
 	delete tags_dock_widget;
 	delete cut_hole_menu;
+	delete mappart_merge_menu;
 	delete mappart_move_menu;
 	delete toggle_template_menu;
 	for (QHash<Template*, TemplatePositionDockWidget*>::iterator it = template_position_widgets.begin(); it != template_position_widgets.end(); ++it)
@@ -390,9 +398,7 @@ bool MapEditorController::load(const QString& path, QWidget* dialog_parent)
 	else
 	{
 		delete map;
-		delete mappart_move_mapper;
 		map = NULL;
-		mappart_move_mapper = NULL;
 		main_view = NULL;
 	}
 	
@@ -751,9 +757,9 @@ void MapEditorController::createActions()
 	
 	template_toggle_action = newAction("toggletemplate", tr("Toggle template visibility"), this, SLOT(toggleTemplateClicked()), "tool-template-toggle.png", QString::null, "toolbars.html#toggle_template"); // TODO: write documentation
 	
-	mappart_add_act = newAction("addmappart", tr("Add Map Part..."), this, SLOT(addMapPart()));
-	mappart_remove_act = newAction("removemappart", tr("Remove Map Part"), this, SLOT(removeMapPart()));
-	mappart_merge_act = newAction("mergemappart", tr("Merge this part with..."), this, SLOT(mergeMapPart()));
+	mappart_add_act = newAction("addmappart", tr("Add new part..."), this, SLOT(addMapPart()));
+	mappart_rename_act = newAction("renamemappart", tr("Rename current part..."), this, SLOT(renameMapPart()));
+	mappart_remove_act = newAction("removemappart", tr("Remove current part"), this, SLOT(removeMapPart()));
 	
 	import_act = newAction("import", tr("Import..."), this, SLOT(importClicked()), NULL, QString::null, "file_menu.html");
 	
@@ -890,13 +896,12 @@ void MapEditorController::createMenuAndToolbars()
 	map_menu->addAction(scale_map_act);
 	map_menu->addAction(rotate_map_act);
 	map_menu->addAction(map_notes_act);
-	map_menu->addSeparator()->setText(tr("Map Parts"));
+	map_menu->addSeparator();
+	updateMapPartUI();
 	map_menu->addAction(mappart_add_act);
+	map_menu->addAction(mappart_rename_act);
 	map_menu->addAction(mappart_remove_act);
-	map_menu->addAction(mappart_merge_act);
-	if(!mappart_move_menu)
-		mappart_move_menu = new QMenu();
-	mappart_move_menu->setTitle(tr("Move selected objects to..."));
+	map_menu->addMenu(mappart_merge_menu);
 	map_menu->addMenu(mappart_move_menu);
 	
 	// Symbols menu
@@ -952,10 +957,13 @@ void MapEditorController::createMenuAndToolbars()
 	toolbar_view->addAction(show_all_act);
 	
 	// MapParts toolbar
-	toolbar_mapparts = window->addToolBar(tr("Map Parts"));
+	toolbar_mapparts = window->addToolBar(tr("Map parts"));
 	toolbar_mapparts->setObjectName("Map parts toolbar");
 	if (!mappart_selector_box)
+	{
 		mappart_selector_box = new QComboBox(toolbar_mapparts);
+		mappart_selector_box->setToolTip(tr("Map parts"));
+	}
 	connect(mappart_selector_box, SIGNAL(currentIndexChanged(int)), this, SLOT(changeMapPart(int)));
 	toolbar_mapparts->addWidget(mappart_selector_box);
 	
@@ -1224,6 +1232,8 @@ void MapEditorController::restoreWindowState()
 	QSettings settings;
 	settings.beginGroup(metaObject()->className());
 	window->restoreState(settings.value("state").toByteArray());
+	if (toolbar_mapparts && mappart_selector_box)
+		toolbar_mapparts->setVisible(mappart_selector_box->count() > 1);
 }
 
 bool MapEditorController::keyPressEventFilter(QKeyEvent* event)
@@ -3079,47 +3089,137 @@ void MapEditorController::mobileSymbolSelectorFinished()
 	symbol_widget->hide();
 }
 
+void MapEditorController::updateMapPartUI()
+{
+	if (!mappart_selector_box)
+	{
+		mappart_selector_box = new QComboBox();
+		mappart_selector_box->setToolTip(tr("Map parts"));
+	}
+	
+	if (!mappart_merge_menu)
+	{
+		mappart_merge_menu = new QMenu();
+		mappart_merge_menu->setTitle(tr("Merge this part with..."));
+	}
+	
+	if (!mappart_move_menu)
+	{
+		mappart_move_menu = new QMenu();
+		mappart_move_menu->setTitle(tr("Move selected objects to..."));
+	}
+	
+	ScopedSignalsBlocker selector_box_blocker(mappart_selector_box);
+	mappart_selector_box->clear();
+	mappart_merge_menu->clear();
+	mappart_move_menu->clear();
+	
+	const int count = map ? map->getNumParts() : 0;
+	const bool multiple_parts = (count > 1);
+	mappart_merge_menu->setEnabled(multiple_parts);
+	mappart_move_menu->setEnabled(multiple_parts);
+	if (mappart_remove_act)
+	{
+		mappart_remove_act->setEnabled(multiple_parts);
+	}
+	if (toolbar_mapparts && !toolbar_mapparts->isVisible())
+	{
+		toolbar_mapparts->setVisible(multiple_parts);
+	}
+	
+	if (count > 0)
+	{
+		const int current = map->getCurrentPartIndex();
+		for (int i = 0; i < count; ++i)
+		{
+			QString part_name = map->getPart(i)->getName();
+			mappart_selector_box->addItem(part_name);
+			
+			if (i != current)
+			{
+				QAction* action = new QAction(part_name, this);
+				mappart_merge_mapper->setMapping(action, i);
+				connect(action, SIGNAL(triggered()), mappart_merge_mapper, SLOT(map()));
+				mappart_merge_menu->addAction(action);
+				
+				action = new QAction(part_name, this);
+				mappart_move_mapper->setMapping(action, i);
+				connect(action, SIGNAL(triggered()), mappart_move_mapper, SLOT(map()));
+				mappart_move_menu->addAction(action);
+			}
+		}
+		
+		mappart_selector_box->setCurrentIndex(current);
+	}
+}
+
 void MapEditorController::addMapPart()
 {
-	bool ok = false;
-	QString name = QInputDialog::getText(window, tr("New Map Part"), tr("Enter the name of the new map part"), QLineEdit::Normal, QString(), &ok);
-	if (!ok || name.isEmpty())
-		return;
-	MapPart* part = new MapPart(name, map);
-	int index = map->getCurrentPartIndex() + 1;
-	if (mappart_selector_box)
-		mappart_selector_box->insertItem(index, name);
-	map->addPart(part, index);
-	map->setCurrentPart(part);
-	
-	QAction* action = new QAction(name, this);
-	mappart_move_mapper->setMapping(action, index);
-	connect(action, SIGNAL(triggered()), mappart_move_mapper, SLOT(map()));
-	if (mappart_move_menu)
-		mappart_move_menu->addAction(action);
+	bool accepted = false;
+	QString name = QInputDialog::getText(
+	                   window,
+	                   tr("Add new part..."),
+	                   tr("Enter the name of the map part:"),
+	                   QLineEdit::Normal,
+	                   QString(),
+	                   &accepted );
+	if (accepted && !name.isEmpty())
+	{
+		MapPart* part = new MapPart(name, map);
+		int index = map->getCurrentPartIndex() + 1;
+		map->addPart(part, index);
+		map->setCurrentPart(part);
+		updateMapPartUI();
+	}
 }
 
 void MapEditorController::removeMapPart()
 {
-	int index = map->getCurrentPartIndex();
-	map->removePart(index);
-	QAction* action = qobject_cast<QAction*>(mappart_move_mapper->mapping(index));
-	if (mappart_move_menu)
-		mappart_move_menu->removeAction(action);
-	action->deleteLater();
-	if (mappart_selector_box)
-		mappart_selector_box->removeItem(index);
+	QMessageBox::StandardButton button =
+	        QMessageBox::question(
+	            window,
+                tr("Remove current part"),
+                tr("Do you want to remove map part \"%1\" and all its objects? This cannot be undone.").arg(map->getCurrentPart()->getName()),
+                QMessageBox::Yes | QMessageBox::No );
+	
+	if (button == QMessageBox::Yes)
+	{
+		int index = map->getCurrentPartIndex();
+		map->removePart(index);
+		updateMapPartUI();
+	}
+}
+
+void MapEditorController::renameMapPart()
+{
+	bool accepted = false;
+	QString name =
+	        QInputDialog::getText(
+	            window,
+	            tr("Rename current part..."),
+	            tr("Enter the name of the map part:"),
+	            QLineEdit::Normal,
+	            map->getCurrentPart()->getName(),
+	            &accepted );
+	if (accepted && !name.isEmpty())
+	{
+		map->getCurrentPart()->setName(name);
+		updateMapPartUI();
+	}
 }
 
 void MapEditorController::changeMapPart(int part)
 {
 	if (part >= 0)
+	{
 		map->setCurrentPart(part);
+		updateMapPartUI();
+	}
 }
 
-void MapEditorController::selectMapPart(int part)
+void MapEditorController::currentMapPartChanged(int part)
 {
-	if (window && mappart_selector_box)
+	if (mappart_selector_box)
 		mappart_selector_box->setCurrentIndex(part);
 }
 
@@ -3128,31 +3228,21 @@ void MapEditorController::reassignObjectsToMapPart(int part)
 	map->reassignObjectsToMapPart(map->selectedObjectsBegin(), map->selectedObjectsEnd(), part);
 }
 
-void MapEditorController::mergeMapPart()
+void MapEditorController::mergeCurrentMapPartTo(int part)
 {
-	int current = map->getCurrentPartIndex();
-	QInputDialog dialog(window);
-	QStringList parts;
-	for (int i = 0; i < map->getNumParts(); i++) {
-		parts.append(map->getPart(i)->getName());
-	}
-	QStringList parts_to_display = parts;
-	parts_to_display.removeAt(current);
-	dialog.setComboBoxItems(parts_to_display);
-	dialog.setComboBoxEditable(false);
-	dialog.setWindowTitle(tr("Merge Map Parts"));
-	dialog.setLabelText(tr("Merge %1 into...").arg(map->getCurrentPart()->getName()));
-
-	if (dialog.exec() == QInputDialog::Accepted) {
-		// this will also remove the current part...
-		map->mergeParts(current, parts.indexOf(dialog.textValue()));
-		// so we have to remember to remove it from the menu
-		QAction* action = qobject_cast<QAction*>(mappart_move_mapper->mapping(current));
-		if (mappart_move_menu)
-			mappart_move_menu->removeAction(action);
-		action->deleteLater();
-		if (mappart_selector_box)
-			mappart_selector_box->removeItem(current);
+	const QMessageBox::StandardButton button =
+	        QMessageBox::question(
+	            window,
+                tr("Merge map parts"),
+                tr("Do you want to move all objects from \"%1\" to \"%2\", and to remove \"%1\"? This cannot be undone.").arg(map->getCurrentPart()->getName()).arg(map->getPart(part)->getName()),
+                QMessageBox::Yes | QMessageBox::No );
+	
+	if (button == QMessageBox::Yes)
+	{
+		MapPart* target = map->getPart(part);
+		map->mergeParts(map->getCurrentPartIndex(), part);
+		map->setCurrentPart(target);
+		updateMapPartUI();
 	}
 }
 
@@ -3213,6 +3303,7 @@ void MapEditorController::setMap(Map* map, bool create_new_map_view)
 		{
 			this->map->disconnect(symbol_widget);
 		}
+		updateMapPartUI();
 	}
 	
 	this->map = map;
@@ -3221,28 +3312,13 @@ void MapEditorController::setMap(Map* map, bool create_new_map_view)
 		main_view = new MapView(map);
 	}
 	
-	mappart_move_mapper = new QSignalMapper(this);
-	connect(mappart_move_mapper, SIGNAL(mapped(int)), this, SLOT(reassignObjectsToMapPart(int)));
-	for (int i = 0; i < map->getNumParts(); i++)
-	{
-		QAction* action = new QAction(map->getPart(i)->getName(), this);
-		mappart_move_mapper->setMapping(action, i);
-		connect(action, SIGNAL(triggered()), mappart_move_mapper, SLOT(map()));
-		if (!mappart_move_menu)
-			mappart_move_menu = new QMenu();
-		mappart_move_menu->addAction(action);
-		if (!mappart_selector_box)
-			mappart_selector_box = new QComboBox(window);
-		mappart_selector_box->addItem(map->getPart(i)->getName());
-	}
-	
 	connect(&map->objectUndoManager(), SIGNAL(undoStepAvailabilityChanged()), this, SLOT(undoStepAvailabilityChanged()));
 	connect(map, SIGNAL(objectSelectionChanged()), this, SLOT(objectSelectionChanged()));
 	connect(map, SIGNAL(templateAdded(int,Template*)), this, SLOT(templateAdded(int,Template*)));
 	connect(map, SIGNAL(templateDeleted(int,Template*)), this, SLOT(templateDeleted(int,Template*)));
 	connect(map, SIGNAL(closedTemplateAvailabilityChanged()), this, SLOT(closedTemplateAvailabilityChanged()));
 	connect(map, SIGNAL(spotColorPresenceChanged(bool)), this, SLOT(spotColorPresenceChanged(bool)));
-	connect(map, SIGNAL(currentMapPartChanged(int)), this, SLOT(selectMapPart(int)));
+	connect(map, SIGNAL(currentMapPartChanged(int)), this, SLOT(currentMapPartChanged(int)));
 	
 	if (symbol_widget)
 	{
@@ -3275,6 +3351,7 @@ void MapEditorController::updateWidgets()
 			baseline_view_act->setChecked(map->isBaselineViewEnabled());
 			closedTemplateAvailabilityChanged();
 			spotColorPresenceChanged(map->hasSpotColors());
+			updateMapPartUI();
 		}
 	}
 }

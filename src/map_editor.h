@@ -467,14 +467,14 @@ public slots:
 	void addMapPart();
 	/** Removes the current map part */
 	void removeMapPart();
-	/** Sets the current map part */
-	void changeMapPart(int part);
+	/** Renames the current map part */
+	void renameMapPart();
 	/** Selects the given part in the selector box */
-	void selectMapPart(int part);
+	void currentMapPartChanged(int part);
 	/** Moves all selected objects to a different map part */
 	void reassignObjectsToMapPart(int part);
 	/** Merges the current map part with another one */
-	void mergeMapPart();
+	void mergeCurrentMapPartTo(int part);
 	
 	/** Updates action enabled states after a template has been added */
 	void templateAdded(int pos, Template* temp);
@@ -511,11 +511,21 @@ protected slots:
 	void projectionChanged();
 	void georeferencingDialogFinished();
 	
+	/**
+	 * Sets the map's current part.
+	 */
+	void changeMapPart(int part);
+	
 private:
 	void setMap(Map* map, bool create_new_map_view);
 	
 	/// Updates enabled state of all widgets
 	void updateWidgets();
+	
+	/**
+	 * @brief Updates all UI components related to map parts.
+	 */
+	void updateMapPartUI();
 	
 	void createSymbolWidget(QWidget* parent = NULL);
 	
@@ -664,8 +674,9 @@ private:
 	QMenu* toggle_template_menu;
 	
 	QAction* mappart_add_act;
+	QAction* mappart_rename_act;
 	QAction* mappart_remove_act;
-	QAction* mappart_merge_act;
+	QMenu* mappart_merge_menu;
 	QMenu* mappart_move_menu;
 	
 	QAction* import_act;
@@ -693,6 +704,7 @@ private:
 	
 	QHash<Template*, TemplatePositionDockWidget*> template_position_widgets;
 
+	QSignalMapper* mappart_merge_mapper;
 	QSignalMapper* mappart_move_mapper;
 	
 	bool being_destructed;
