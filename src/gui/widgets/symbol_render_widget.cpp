@@ -37,6 +37,149 @@
 #include "symbol_tooltip.h"
 
 
+//### SymbolIconDecorator ###
+
+/**
+ * @brief Abstract interface for classes which draws icon decorations.
+ * 
+ * The icon is expected to be at (0, 0) in the painter's coordinates.
+ */
+class SymbolIconDecorator
+{
+public:
+	virtual ~SymbolIconDecorator();
+	virtual void draw(QPainter& p) const = 0;
+};
+
+SymbolIconDecorator::~SymbolIconDecorator()
+{
+	; // nothing
+}
+
+
+
+//### ProtectedSymbolDecorator ###
+
+/**
+ * @brief Draws the decoration for a protected symbol.
+ * 
+ * A small gray lock is drawn in the top-right corner of the icon.
+ */
+class ProtectedSymbolDecorator : public SymbolIconDecorator
+{
+public:
+	explicit ProtectedSymbolDecorator(int icon_size);
+	virtual ~ProtectedSymbolDecorator();
+	virtual void draw(QPainter& p) const;
+	
+private:
+	int arc_size;
+	int pen_width;
+	int box_width;
+	int box_height;
+	QPoint offset;
+};
+
+ProtectedSymbolDecorator::ProtectedSymbolDecorator(int icon_size)
+: arc_size(qFloor(qMax(3.0, 0.15*icon_size)))
+, pen_width(qMax(1, qCeil(0.4*arc_size)))
+, box_width(arc_size + pen_width + qMax(1, qFloor(0.1*icon_size)))
+, box_height(qMax(arc_size, qCeil(0.6*box_width)))
+, offset(icon_size - 3 - box_width, 1 + pen_width)
+{
+	; // nothing else
+}
+
+ProtectedSymbolDecorator::~ProtectedSymbolDecorator()
+{
+	; // nothing
+}
+
+void ProtectedSymbolDecorator::draw(QPainter& painter) const
+{
+	// Draw a lock symbol
+	painter.save();
+	painter.setRenderHint(QPainter::Antialiasing, true);
+	painter.translate(offset);
+	
+	painter.setOpacity(0.5);
+	QPen arc_background_pen(Qt::white);
+	arc_background_pen.setWidth(pen_width+2);
+	painter.setPen(arc_background_pen);
+	painter.drawRoundedRect(0.5*(box_width-arc_size), 0.0, qreal(arc_size), qreal(arc_size+pen_width), qreal(pen_width), qreal(pen_width));
+	painter.fillRect(-1, arc_size-1, box_width+2, box_height+2, QBrush(Qt::white));
+	
+	painter.setOpacity(1.0);
+	QPen arc_pen(Qt::darkGray);
+	arc_pen.setWidth(pen_width);
+	painter.setPen(arc_pen);
+	painter.drawRoundedRect(0.5*(box_width-arc_size), 0.0, qreal(arc_size), qreal(arc_size+pen_width), qreal(pen_width), qreal(pen_width));
+	painter.fillRect(0, arc_size, box_width, box_height, QBrush(Qt::darkGray));
+	
+	painter.restore();
+}
+
+
+
+//### HiddenSymbolDecorator ###
+
+/**
+ * @brief Draws the decoration for a hidden symbol.
+ * 
+ * A small red x is drawn in the top-left corner of the icon.
+ */
+class HiddenSymbolDecorator : public SymbolIconDecorator
+{
+public:
+	explicit HiddenSymbolDecorator(int icon_size);
+	virtual ~HiddenSymbolDecorator();
+	virtual void draw(QPainter& p) const;
+	
+private:
+	int icon_size;
+	int pen_width;
+	int x_width;
+	QPoint offset;
+};
+
+HiddenSymbolDecorator::HiddenSymbolDecorator(int icon_size)
+: icon_size(icon_size)
+, pen_width(qMax(1, qCeil(0.06*icon_size)))
+, x_width(icon_size/3)
+, offset(1 + pen_width, 1 + pen_width)
+{
+	; // nothing else
+}
+
+HiddenSymbolDecorator::~HiddenSymbolDecorator()
+{
+	; // nothing
+}
+
+void HiddenSymbolDecorator::draw(QPainter& painter) const
+{
+	// Draw a lock symbol
+	painter.save();
+	painter.setRenderHint(QPainter::Antialiasing, true);
+	
+	painter.setOpacity(0.6);
+	painter.fillRect(0, 0, icon_size, icon_size, QBrush(Qt::white));
+	
+	painter.translate(offset);
+	painter.setOpacity(1.0);
+	QPen pen(Qt::red);
+	pen.setWidth(pen_width);
+	painter.setPen(pen);
+	painter.drawLine(QPoint(0, 0), QPoint(x_width, x_width));
+	painter.drawLine(QPoint(x_width, 0), QPoint(0, x_width));
+	
+	painter.restore();
+}
+
+
+
+//### SymbolRenderWidget ###
+
 SymbolRenderWidget::SymbolRenderWidget(Map* map, bool mobile_mode, QWidget* parent)
 : QWidget(parent)
 , map(map)
@@ -51,6 +194,8 @@ SymbolRenderWidget::SymbolRenderWidget(Map* map, bool mobile_mode, QWidget* pare
 , icons_per_row(6)
 , num_rows(5)
 , preferred_size(icons_per_row * icon_size, num_rows * icon_size)
+, hidden_symbol_decoration(new HiddenSymbolDecorator(icon_size))
+, protected_symbol_decoration(new ProtectedSymbolDecorator(icon_size))
 {	
 	setBackgroundRole(QPalette::Base);
 	setMouseTracking(true);
@@ -164,6 +309,9 @@ void SymbolRenderWidget::adjustLayout()
 	icons_per_row = qMax(1, (width() + overflow) / icon_size);
 	num_rows = (map->getNumSymbols() + icons_per_row -1) / icons_per_row;
 	setFixedHeight(num_rows * icon_size);
+	
+	hidden_symbol_decoration.reset(new HiddenSymbolDecorator(icon_size));
+	protected_symbol_decoration.reset(new ProtectedSymbolDecorator(icon_size));
 }
 
 void SymbolRenderWidget::lockSelection()
@@ -306,47 +454,70 @@ QRect SymbolRenderWidget::dropIndicatorRect(int row, int pos_in_row)
 	return QRect(pos_in_row * icon_size - rect_width / 2 - 1, row * icon_size - 1, rect_width, icon_size + 2);
 }
 
-void SymbolRenderWidget::drawIcon(QPainter &painter, int i, int x, int y)
+void SymbolRenderWidget::drawIcon(QPainter &painter, int i) const
 {
-	QPoint corner(x, y);
-	painter.drawImage(corner, *map->getSymbol(i)->getIcon(map));
+	painter.save();
 	
-	if (i == hover_symbol_index || isSymbolSelected(i))
+	Symbol* symbol = map->getSymbol(i);
+	painter.drawImage(0, 0, * symbol->getIcon(map));
+	
+	if (isSymbolSelected(i) || i == current_symbol_index)
 	{
-		painter.setPen(Qt::white);
-		painter.drawRect(corner.x() + 2, corner.y() + 2, icon_size - 6, icon_size - 6);
-		
-		QPen pen(isSymbolSelected(i) ? qRgb(12, 0, 255) : qRgb(255, 150, 0));
+		painter.setOpacity(0.5);
+		QPen pen(Qt::white);
 		pen.setWidth(2);
 		pen.setJoinStyle(Qt::MiterJoin);
 		painter.setPen(pen);
-		painter.drawRect(QRectF(corner.x() + 0.5f, corner.y() + 0.5f, icon_size - 3, icon_size - 3));
+		painter.drawRect(QRectF(1.5f, 1.5f, icon_size - 5, icon_size - 5));
 		
-		if (i == current_symbol_index && isSymbolSelected(i))
+		painter.setOpacity(1.0);
+	}
+	
+	if (symbol->isProtected())
+		protected_symbol_decoration->draw(painter);
+	
+	if (symbol->isHidden())
+		hidden_symbol_decoration->draw(painter);
+	
+	if (isSymbolSelected(i))
+	{
+		QPen pen(qRgb(12, 0, 255));
+		pen.setWidth(2);
+		pen.setJoinStyle(Qt::MiterJoin);
+		painter.setPen(pen);
+		painter.drawRect(QRectF(0.5f, 0.5f, icon_size - 3, icon_size - 3));
+		
+		if (i == hover_symbol_index)
+		{
+			QPen pen(qRgb(255, 150, 0));
+			pen.setWidth(2);
+			pen.setDashPattern(QVector<qreal>() << 1 << 2);
+			pen.setJoinStyle(Qt::MiterJoin);
+			painter.setPen(pen);
+			painter.drawRect(QRectF(0.5f, 0.5f, icon_size - 3, icon_size - 3));
+		}
+		else if (i == current_symbol_index)
 		{
 			QPen pen(Qt::white);
 			pen.setDashPattern(QVector<qreal>() << 2 << 2);
 			painter.setPen(pen);
-			painter.drawRect(corner.x() + 1, corner.y() + 1, icon_size - 4, icon_size - 4);
+			painter.drawRect(1, 1, icon_size - 4, icon_size - 4);
 		}
 	}
-	
-	if (map->getSymbol(i)->isHidden() || map->getSymbol(i)->isProtected())
+	else if (i == hover_symbol_index)
 	{
-		QPen pen(Qt::white);
-		pen.setWidth(3);
+		QPen pen(qRgb(255, 150, 0));
+		pen.setWidth(2);
+		pen.setJoinStyle(Qt::MiterJoin);
 		painter.setPen(pen);
-		painter.drawLine(corner + QPoint(1, 1), corner + QPoint(icon_size - 2, icon_size - 2));
-		painter.drawLine(corner + QPoint(icon_size - 3, 1), corner + QPoint(1, icon_size - 3));
-		
-		painter.setPen(QPen(map->getSymbol(i)->isHidden() ? Qt::red : Qt::blue));
-		painter.drawLine(corner + QPoint(0, 0), corner + QPoint(icon_size - 2, icon_size - 2));
-		painter.drawLine(corner + QPoint(icon_size - 2, 0), corner + QPoint(0, icon_size - 2));
+		painter.drawRect(QRectF(0.5f, 0.5f, icon_size - 3, icon_size - 3));
 	}
 	
 	painter.setPen(Qt::gray);
-	painter.drawLine(corner + QPoint(0, icon_size - 1), corner + QPoint(icon_size - 1, icon_size - 1));
-	painter.drawLine(corner + QPoint(icon_size - 1, 0), corner + QPoint(icon_size - 1, icon_size - 2));
+	painter.drawLine(QPoint(0, icon_size - 1), QPoint(icon_size - 1, icon_size - 1));
+	painter.drawLine(QPoint(icon_size - 1, 0), QPoint(icon_size - 1, icon_size - 2));
+	
+	painter.restore();
 }
 
 void SymbolRenderWidget::paintEvent(QPaintEvent* event)
@@ -362,7 +533,10 @@ void SymbolRenderWidget::paintEvent(QPaintEvent* event)
 	{
 		if (event_rect.contains(x,y))
 		{
-			drawIcon(painter, i, x, y);
+			painter.save();
+			painter.translate(x, y);
+			drawIcon(painter, i);
+			painter.restore();
 		}
 		
 		x += icon_size;

@@ -24,6 +24,7 @@
 
 #include <set>
 
+#include <QScopedPointer>
 #include <QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -33,6 +34,7 @@ QT_END_NAMESPACE
 class Map;
 class Symbol;
 class SymbolToolTip;
+class SymbolIconDecorator;
 
 /**
  * @brief Shows all symbols from a map in a size-constrained widget.
@@ -225,12 +227,12 @@ protected:
 	
 	/**
 	 * @brief Draws the icon and its decoration (hidden, protected).
+	 * 
+	 * The icon is drawn at (0, 0) with the current icon size.
 	 * @param painter The QPainter to be used (must be active).
 	 * @param i       The index of the symbol.
-	 * @param x       The x coordinate of the top left corner.
-	 * @param y       The y coordinate of the top left corner.
 	 */
-	void drawIcon(QPainter& painter, int i, int x, int y);
+	void drawIcon(QPainter& painter, int i) const;
 	
 	
 	virtual void mouseMoveEvent(QMouseEvent* event);
@@ -329,6 +331,9 @@ private:
 	QAction* select_objects_additionally_action;
 	
 	SymbolToolTip* tooltip;
+	
+	QScopedPointer<SymbolIconDecorator> hidden_symbol_decoration;
+	QScopedPointer<SymbolIconDecorator> protected_symbol_decoration;
 };
 
 //### SymbolRenderWidget inline code ###
