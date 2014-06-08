@@ -1,5 +1,6 @@
 /*
  *    Copyright 2013 Thomas Schöps
+ *    Copyright 2014 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -207,12 +208,12 @@ struct PhysicalCutoutOperation
 			if (object->getSymbol()->getContainedTypes() & Symbol::Area)
 			{
 				// Use the Clipper library to clip the area
-				BooleanTool boolean_tool(map);
+				BooleanTool boolean_tool(cut_away ? BooleanTool::Difference : BooleanTool::Intersection, map);
 				BooleanTool::PathObjects in_objects;
 				in_objects.push_back(cutout_object);
 				in_objects.push_back(object->asPath());
 				BooleanTool::PathObjects out_objects;
-				if (!boolean_tool.executeForObjects(cut_away ? BooleanTool::Difference : BooleanTool::Intersection, object->asPath(), object->getSymbol(), in_objects, out_objects))
+				if (!boolean_tool.executeForObjects(object->asPath(), object->getSymbol(), in_objects, out_objects))
 					return true;
 				
 				add_step->addObject(object, object);
@@ -221,9 +222,9 @@ struct PhysicalCutoutOperation
 			else
 			{
 				// Use some custom code to clip the line
-				BooleanTool boolean_tool(map);
+				BooleanTool boolean_tool(cut_away ? BooleanTool::Difference : BooleanTool::Intersection, map);
 				BooleanTool::PathObjects out_objects;
-				boolean_tool.executeForLine(cut_away ? BooleanTool::Difference : BooleanTool::Intersection, cutout_object, object->asPath(), out_objects);
+				boolean_tool.executeForLine(cutout_object, object->asPath(), out_objects);
 				
 				add_step->addObject(object, object);
 				new_objects.insert(new_objects.end(), out_objects.begin(), out_objects.end());

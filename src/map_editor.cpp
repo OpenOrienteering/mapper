@@ -2636,29 +2636,25 @@ void MapEditorController::measureClicked(bool checked)
 
 void MapEditorController::booleanUnionClicked()
 {
-	BooleanTool tool(map);
-	if (!tool.execute(BooleanTool::Union))
+	if (!BooleanTool(BooleanTool::Union, map).execute())
 		QMessageBox::warning(window, tr("Error"), tr("Unification failed."));
 }
 
 void MapEditorController::booleanIntersectionClicked()
 {
-	BooleanTool tool(map);
-	if (!tool.execute(BooleanTool::Intersection))
+	if (!BooleanTool(BooleanTool::Intersection, map).execute())
 		QMessageBox::warning(window, tr("Error"), tr("Intersection failed."));
 }
 
 void MapEditorController::booleanDifferenceClicked()
 {
-	BooleanTool tool(map);
-	if (!tool.execute(BooleanTool::Difference))
+	if (!BooleanTool(BooleanTool::Difference, map).execute())
 		QMessageBox::warning(window, tr("Error"), tr("Difference failed."));
 }
 
 void MapEditorController::booleanXOrClicked()
 {
-	BooleanTool tool(map);
-	if (!tool.execute(BooleanTool::XOr))
+	if (!BooleanTool(BooleanTool::XOr, map).execute())
 		QMessageBox::warning(window, tr("Error"), tr("XOr failed."));
 }
 
@@ -2667,8 +2663,7 @@ void MapEditorController::booleanMergeHolesClicked()
 	if (map->getNumSelectedObjects() != 1)
 		return;
 	
-	BooleanTool tool(map);
-	if (!tool.execute(BooleanTool::MergeHoles))
+	if (!BooleanTool(BooleanTool::MergeHoles, map).execute())
 		QMessageBox::warning(window, tr("Error"), tr("Merging holes failed."));
 }
 
