@@ -134,14 +134,21 @@ private:
 	        PolyMap& polymap );
 	
 	/**
+	 * Constructs ClipperLib::Path from a PathObject.
+	 */
+	static void PathObjectToPolygon(
+	        PathObject* object,
+	        ClipperLib::Path& polygon,
+	        PolyMap& polymap );
+	
+	/**
 	 * Reconstructs a PathObject from a polygon given as ClipperLib::Path.
 	 * 
 	 * Curves are reconstructed with the help of the polymap, mapping locations
 	 * to path coords of the original objects.
 	 */
-	static void polygonToPathPart(
-	        const ClipperLib::Path& polygon,
-	        PolyMap& polymap,
+	static void polygonToPathPart(const ClipperLib::Path& polygon,
+	        const PolyMap& polymap,
 	        PathObject* object );
 	
 	/**
@@ -155,7 +162,7 @@ private:
 	        bool have_sequence,
 	        bool sequence_increasing,
 	        const ClipperLib::Path& polygon,
-	        PolyMap& polymap,
+	        const PolyMap& polymap,
 	        PathObject* object );
 	
 	/**
@@ -176,7 +183,7 @@ private:
 	        int end_index,
 	        bool sequence_increasing,
 	        const ClipperLib::Path& polygon,
-	        PolyMap& polymap,
+	        const PolyMap& polymap,
 	        PathObject* object );
 	
 	/**
@@ -187,7 +194,7 @@ private:
 	static void rebuildCoordinate(
 	        int index,
 	        const ClipperLib::Path& polygon,
-	        PolyMap& polymap,
+	        const PolyMap& polymap,
 	        PathObject* object,
 	        bool start_new_part = false );
 	

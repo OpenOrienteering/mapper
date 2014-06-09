@@ -86,115 +86,74 @@ BooleanTool::BooleanTool(Operation op, Map* map)
 
 bool BooleanTool::execute()
 {
+	// Check basic prerequisite
 	Object* const primary_object = map->getFirstSelectedObject();
 	if (primary_object->getType() != Object::Path)
 	{
 		Q_ASSERT(false && "The first selected object must be a path.");
 		return false; // in release build
 	}
-	
-	// Objects to process, sorted by symbol
-	typedef QHash< Symbol*, PathObjects > ObjectGroups;
-	ObjectGroups object_groups;
-	
-	PathObjects result;
-	AddObjectsUndoStep* add_step = new AddObjectsUndoStep(map);
-	MapPart* part = map->getCurrentPart();
 
-	if (op == Difference)
+	// Filter selected objects into in_objects
+	PathObjects in_objects;
+	in_objects.reserve(map->getNumSelectedObjects());
+	Map::ObjectSelection::const_iterator it_end = map->selectedObjectsEnd();
+	for (Map::ObjectSelection::const_iterator it = map->selectedObjectsBegin(); it != it_end; ++it)
 	{
-		// Make a dummy group with all selected paths
-		PathObjects new_vector;
-		new_vector.reserve(map->getNumSelectedObjects());
-		Map::ObjectSelection::const_iterator it_end = map->selectedObjectsEnd();
-		for (Map::ObjectSelection::const_iterator it = map->selectedObjectsBegin(); it != it_end; ++it)
+		Object* const object = *it;
+		if (object->getType() == Object::Path)
 		{
-			Object* object = *it;
-			if (object->getType() == Object::Path)
-				new_vector.push_back(object->asPath());
-		}
-		object_groups.insert(NULL, new_vector);
-	}
-	else
-	{
-		// Find all groups (of at least two areas with the same symbol) to process.
-		// (If op == MergeHoles, do not enforce at least two objects.)
-		Map::ObjectSelection::const_iterator it_end = map->selectedObjectsEnd();
-		for (Map::ObjectSelection::const_iterator it = map->selectedObjectsBegin(); it != it_end; ++it)
-		{
-			Symbol* symbol = (*it)->getSymbol();
-			if (symbol->getContainedTypes() & Symbol::Area && (*it)->getType() == Object::Path)
+			PathObject* const path = object->asPath();
+			if (op != MergeHoles || (object->getSymbol()->getContainedTypes() & Symbol::Area && path->getNumParts() > 1 ))
 			{
-				if (object_groups.contains(symbol))
-					object_groups.find(symbol).value().push_back(reinterpret_cast<PathObject*>(*it));
-				else
-				{
-					PathObjects new_vector;
-					new_vector.push_back(reinterpret_cast<PathObject*>(*it));
-					object_groups.insert(symbol, new_vector);
-				}
-			}
-		}
-		if (op != MergeHoles)
-		{
-			for (ObjectGroups::iterator it = object_groups.begin(); it != object_groups.end();)
-			{
-				if (it.value().size() <= 1)
-					it = object_groups.erase(it);
-				else
-					++it;
+				in_objects.push_back(path);
 			}
 		}
 	}
 	
-	// For all groups of objects with the same symbol ...
-	for (ObjectGroups::iterator it = object_groups.begin(); it != object_groups.end(); ++it)
+	// Perform the core operation
+	PathObjects out_objects;
+	if (!executeForObjects(primary_object->asPath(), primary_object->getSymbol(), in_objects, out_objects))
 	{
-		// Do operation
-		PathObjects group_result;
-		if (!executeForObjects(primary_object->asPath(), primary_object->getSymbol(), it.value(), group_result))
-		{
-			delete add_step;
-			for (int i = 0; i < (int)result.size(); ++i)
-				delete result[i];
-			return false;
-		}
-		
-		// Add original objects to add step
-		for (int i = 0; i < (int)it.value().size(); ++i)
-		{
-			Object* object = it.value().at(i);
-			if (op == Difference && object != primary_object)
-				continue;
-			add_step->addObject(object, object);
-		}
-		
-		// Collect resulting objects
-		result.insert(result.end(), group_result.begin(), group_result.end());
+		Q_ASSERT(out_objects.size() == 0);
+		return false; // in release build
 	}
 	
-	// Remove original objects from map
-	std::vector< Object* > in_objects;
-	if (op == Difference)
-		in_objects.push_back(primary_object);
-	else
-		add_step->getAffectedOutcome(in_objects);
+	// Add original objects to undo step, and remove them from map.
+	AddObjectsUndoStep* add_step = new AddObjectsUndoStep(map);
 	for (int i = 0; i < (int)in_objects.size(); ++i)
 	{
-		map->removeObjectFromSelection(in_objects[i], false);
-		map->getCurrentPart()->deleteObject(in_objects[i], true);
-		in_objects[i]->setMap(map); // necessary so objects are saved correctly
+		PathObject* object = in_objects.at(i);
+		if (op != Difference || object == primary_object)
+		{
+			add_step->addObject(object, object);
+		}
+	}
+	// Keep as separate loop to get the correct index in the previous loop
+	for (int i = 0; i < (int)in_objects.size(); ++i)
+	{
+		PathObject* object = in_objects.at(i);
+		if (op != Difference || object == primary_object)
+		{
+			map->removeObjectFromSelection(object, false);
+			map->getCurrentPart()->deleteObject(object, true);
+			object->setMap(map); // necessary so objects are saved correctly
+		}
 	}
 	
-	// Add resulting objects to map and create delete step for them
-	for (int i = 0; i < (int)result.size(); ++i)
-	{
-		map->addObject(result[i]);
-		map->addObjectToSelection(result[i], false);
-	}
+	// Add resulting objects to map, and create delete step for them
 	DeleteObjectsUndoStep* delete_step = new DeleteObjectsUndoStep(map);
-	for (int i = 0; i < (int)result.size(); ++i) // keep as separate loop to get the correct order
-		delete_step->addObject(part->findObjectIndex(result[i]));
+	MapPart* part = map->getCurrentPart();
+	for (int i = 0; i < (int)out_objects.size(); ++i)
+	{
+		map->addObject(out_objects[i]);
+		map->addObjectToSelection(out_objects[i], false);
+	}
+	// Keep as separate loop to get the correct index
+	for (int i = 0; i < (int)out_objects.size(); ++i)
+	{
+		delete_step->addObject(part->findObjectIndex(out_objects[i]));
+	}
 	
 	CombinedUndoStep* undo_step = new CombinedUndoStep((void*)map);
 	undo_step->addSubStep(delete_step);
@@ -210,73 +169,60 @@ bool BooleanTool::execute()
 
 bool BooleanTool::executeForObjects(PathObject* subject, Symbol* result_objects_symbol, PathObjects& in_objects, PathObjects& out_objects)
 {
-	// Convert the objects to Clipper polygons and create a hash map, mapping point positions to the PathCoords
-	ClipperLib::Paths subject_polygons;
-	ClipperLib::Paths clip_polygons;
+	
+	// Convert the objects to Clipper polygons and
+	// create a hash map, mapping point positions to the PathCoords.
+	// These paths are to be regarded as closed.
 	PolyMap polymap;
 	
+	ClipperLib::Paths subject_polygons;
+	subject_polygons.push_back(ClipperLib::Path());
+	PathObjectToPolygon(subject, subject_polygons.back(), polymap);
+	
+	ClipperLib::Paths clip_polygons;
 	for (int object_number = 0; object_number < (int)in_objects.size(); ++object_number)
 	{
 		PathObject* object = in_objects[object_number];
-		object->update();
-		const PathCoordVector& path_coords = object->getPathCoordinateVector();
-		
-		for (int part_number = 0; part_number < object->getNumParts(); ++part_number)
+		if (object != subject)
 		{
-			ClipperLib::Path* polygon;
-			if (object == subject)
-			{
-				subject_polygons.push_back(ClipperLib::Path());
-				polygon = &subject_polygons.back();
-			}
-			else
-			{
-				clip_polygons.push_back(ClipperLib::Path());
-				polygon = &clip_polygons.back();
-			}
-			
-			PathObject::PathPart& part = object->getPart(part_number);
-			
-			for (int i = part.path_coord_start_index + (part.isClosed() ? 1 : 0); i <= part.path_coord_end_index; ++i)
-			{
-				polygon->push_back(ClipperLib::IntPoint(path_coords[i].pos.getIntX(), path_coords[i].pos.getIntY()));
-				polymap.insertMulti(polygon->back(), std::make_pair(&part, &path_coords[i]));
-			}
-			
-			bool orientation = Orientation(*polygon);
-			if ((part_number == 0 && !orientation) || (part_number > 0 && orientation))
-				std::reverse(polygon->begin(), polygon->end());
+			clip_polygons.push_back(ClipperLib::Path());
+			PathObjectToPolygon(object, clip_polygons.back(), polymap);
 		}
 	}
 	
-	// Do the operation. Add the first selected object as subject, the rest as clip polygons
-	// These paths are to be regarded as closed.
+	// Do the operation.
 	ClipperLib::Clipper clipper;
 	clipper.AddPaths(subject_polygons, ClipperLib::ptSubject, true);
 	clipper.AddPaths(clip_polygons, ClipperLib::ptClip, true);
 	
 	ClipperLib::ClipType clip_type;
-	if (op == Union) clip_type = ClipperLib::ctUnion;
-	else if (op == Intersection) clip_type = ClipperLib::ctIntersection;
-	else if (op == Difference) clip_type = ClipperLib::ctDifference;
-	else if (op == XOr) clip_type = ClipperLib::ctXor;
-	else if (op == MergeHoles) clip_type = ClipperLib::ctUnion;
-	else return false;
-	
-	ClipperLib::PolyFillType fill_type;
-	if (op == MergeHoles)
-		fill_type = ClipperLib::pftPositive;
-	else
-		fill_type = ClipperLib::pftNonZero;
-	
+	ClipperLib::PolyFillType fill_type = ClipperLib::pftNonZero;
+	switch (op)
+	{
+	case Union:         clip_type = ClipperLib::ctUnion;
+	                    break;
+	case Intersection:  clip_type = ClipperLib::ctIntersection;
+	                    break;
+	case Difference:    clip_type = ClipperLib::ctDifference;
+	                    break;
+	case XOr:           clip_type = ClipperLib::ctXor;
+	                    break;
+	case MergeHoles:    clip_type = ClipperLib::ctUnion;
+	                    fill_type = ClipperLib::pftPositive;
+	                    break;
+	default:            Q_ASSERT(false && "Undefined operation");
+	                    return false;
+	}
+
 	ClipperLib::PolyTree solution;
-	if (!clipper.Execute(clip_type, solution, fill_type, fill_type))
-		return false;
+	bool success = clipper.Execute(clip_type, solution, fill_type, fill_type);
+	if (success)
+	{
+		// Try to convert the solution polygons to objects again
+		polyTreeToPathObjects(solution, out_objects, result_objects_symbol, polymap);
+	}
 	
-	// Try to convert the solution polygons to objects again
-	polyTreeToPathObjects(solution, out_objects, result_objects_symbol, polymap);
-	
-	return true;
+	return success;
 }
 
 void BooleanTool::polyTreeToPathObjects(const ClipperLib::PolyTree& tree, PathObjects& out_objects, Symbol* result_objects_symbol, PolyMap& polymap)
@@ -392,7 +338,31 @@ void BooleanTool::executeForLine(PathObject* area, PathObject* line, BooleanTool
 	}
 }
 
-void BooleanTool::polygonToPathPart(const ClipperLib::Path& polygon, PolyMap& polymap, PathObject* object)
+void BooleanTool::PathObjectToPolygon(PathObject* object, ClipperLib::Path& polygon, PolyMap& polymap)
+{
+	object->update();
+	
+	const PathCoordVector& path_coords = object->getPathCoordinateVector();
+	
+	for (int part_number = 0, part_count = object->getNumParts(); part_number < part_count; ++part_number)
+	{
+		PathObject::PathPart& part = object->getPart(part_number);
+		
+		for (int i = part.path_coord_start_index + (part.isClosed() ? 1 : 0); i <= part.path_coord_end_index; ++i)
+		{
+			polygon.push_back(ClipperLib::IntPoint(path_coords[i].pos.getIntX(), path_coords[i].pos.getIntY()));
+			polymap.insertMulti(polygon.back(), std::make_pair(&part, &path_coords[i]));
+		}
+		
+		bool orientation = Orientation(polygon);
+		if ((part_number == 0 && !orientation) || (part_number > 0 && orientation))
+		{
+			std::reverse(polygon.begin(), polygon.end());
+		}
+	}
+}
+
+void BooleanTool::polygonToPathPart(const ClipperLib::Path& polygon, const PolyMap& polymap, PathObject* object)
 {
 	if (polygon.size() < 3)
 		return;
@@ -542,7 +512,7 @@ void BooleanTool::polygonToPathPart(const ClipperLib::Path& polygon, PolyMap& po
 	object->getPart(object->getNumParts() - 1).connectEnds();
 }
 
-void BooleanTool::rebuildSegment(int start_index, int end_index, bool have_sequence, bool sequence_increasing, const ClipperLib::Path& polygon, PolyMap& polymap, PathObject* object)
+void BooleanTool::rebuildSegment(int start_index, int end_index, bool have_sequence, bool sequence_increasing, const ClipperLib::Path& polygon, const PolyMap& polymap, PathObject* object)
 {
 	int num_points = (int)polygon.size();
 	
@@ -583,8 +553,8 @@ void BooleanTool::rebuildSegment(int start_index, int end_index, bool have_seque
 	
 	// Try to find a consistent set of path coord infos for the middle coordinates
 	bool found = false;
-	PolyMap::iterator second_it = polymap.find(second_point);
-	PolyMap::iterator second_last_it = polymap.find(second_last_point);
+	PolyMap::const_iterator second_it = polymap.find(second_point);
+	PolyMap::const_iterator second_last_it = polymap.find(second_last_point);
 	while (second_it != polymap.end())
 	{
 		while (second_last_it != polymap.end())
@@ -617,7 +587,7 @@ void BooleanTool::rebuildSegment(int start_index, int end_index, bool have_seque
 	PathObject* original = original_path->path;
 	int original_index = second_info.second->index;
 	
-	PolyMap::iterator start_it = polymap.find(start_point);
+	PolyMap::const_iterator start_it = polymap.find(start_point);
 	while (start_it != polymap.end())
 	{
 		if (start_it->first == original_path)
@@ -627,7 +597,7 @@ void BooleanTool::rebuildSegment(int start_index, int end_index, bool have_seque
 	if (start_it != polymap.end())
 		start_info = *start_it;
 	
-	PolyMap::iterator end_it = polymap.find(end_point);
+	PolyMap::const_iterator end_it = polymap.find(end_point);
 	while (end_it != polymap.end())
 	{
 		if (end_it->first == original_path)
@@ -817,7 +787,7 @@ void BooleanTool::rebuildSegmentFromPathOnly(const ClipperLib::IntPoint& start_p
 	object->addCoordinate(end_point_c);
 }
 
-void BooleanTool::rebuildTwoIndexSegment(int start_index, int end_index, bool sequence_increasing, const ClipperLib::Path& polygon, PolyMap& polymap, PathObject* object)
+void BooleanTool::rebuildTwoIndexSegment(int start_index, int end_index, bool sequence_increasing, const ClipperLib::Path& polygon, const PolyMap& polymap, PathObject* object)
 {
 	// sequence_increasing is only used in Q_ASSERT.
 	// This won't be checked in release builds so the compiler is right to issue a warning...
@@ -881,7 +851,7 @@ void BooleanTool::rebuildTwoIndexSegment(int start_index, int end_index, bool se
 	}
 }
 
-void BooleanTool::rebuildCoordinate(int index, const ClipperLib::Path& polygon, PolyMap& polymap, PathObject* object, bool start_new_part)
+void BooleanTool::rebuildCoordinate(int index, const ClipperLib::Path& polygon, const PolyMap& polymap, PathObject* object, bool start_new_part)
 {
 	MapCoord coord(0.001 * polygon.at(index).X, 0.001 * polygon.at(index).Y);
 	if (polymap.contains(polygon.at(index)))

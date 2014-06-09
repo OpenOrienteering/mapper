@@ -718,7 +718,7 @@ void MapEditorController::createActions()
 	measure_act = newCheckAction("measure", tr("Measure lengths and areas"), this, SLOT(measureClicked(bool)), "tool-measure.png", QString::null, "toolbars.html#measure");
 	boolean_union_act = newAction("booleanunion", tr("Unify areas"), this, SLOT(booleanUnionClicked()), "tool-boolean-union.png", QString::null, "toolbars.html#unify_areas");
 	boolean_intersection_act = newAction("booleanintersection", tr("Intersect areas"), this, SLOT(booleanIntersectionClicked()), "tool-boolean-intersection.png", QString::null, "toolbars.html#intersect_areas");
-	boolean_difference_act = newAction("booleandifference", tr("Area difference"), this, SLOT(booleanDifferenceClicked()), "tool-boolean-difference.png", QString::null, "toolbars.html#area_difference");
+	boolean_difference_act = newAction("booleandifference", tr("Cut away from area"), this, SLOT(booleanDifferenceClicked()), "tool-boolean-difference.png", QString::null, "toolbars.html#area_difference");
 	boolean_xor_act = newAction("booleanxor", tr("Area XOr"), this, SLOT(booleanXOrClicked()), "tool-boolean-xor.png", QString::null, "toolbars.html#area_xor");
 	boolean_merge_holes_act = newAction("booleanmergeholes", tr("Merge area holes"), this, SLOT(booleanMergeHolesClicked()), "tool-boolean-merge-holes.png", QString::null, "toolbars.html#area_merge_holes"); // TODO:documentation
 	convert_to_curves_act = newAction("converttocurves", tr("Convert to curves"), this, SLOT(convertToCurvesClicked()), "tool-convert-to-curves.png", QString::null, "toolbars.html#convert_to_curves");
@@ -1861,19 +1861,19 @@ void MapEditorController::objectSelectionChanged()
 	if (mode != MapEditor)
 		return;
 	
-	bool have_selection = map->getNumSelectedObjects() > 0;
-	bool single_object_selected = map->getNumSelectedObjects() == 1;
-	bool have_line = false;
-	bool have_area = false;
-	bool have_area_with_holes = false;
-	bool have_rotatable_pattern = false;
-	bool have_rotatable_point = false;
-	int num_selected_areas = 0;
-	bool have_two_same_symbol_areas = false;
+	bool have_selection          = map->getNumSelectedObjects() > 0;
+	bool single_object_selected  = map->getNumSelectedObjects() == 1;
+	bool have_line               = false;
+	bool have_area               = false;
+	bool have_area_with_holes    = false;
+	bool have_rotatable_pattern  = false;
+	bool have_rotatable_point    = false;
+	int  num_selected_paths      = 0;
+	bool first_selected_is_path  = have_selection && map->getFirstSelectedObject()->getType() == Object::Path;
 	bool uniform_symbol_selected = true;
-	Symbol* uniform_symbol = NULL;
-	std::vector< bool > symbols_in_selection;
-	symbols_in_selection.assign(map->getNumSymbols(), false);
+	Symbol* uniform_symbol       = NULL;
+	Symbol* first_selected_symbol= have_selection ? map->getFirstSelectedObject()->getSymbol() : NULL;
+	std::vector< bool > symbols_in_selection(map->getNumSymbols(), false);
 	
 	Map::ObjectSelection::const_iterator it_end = map->selectedObjectsEnd();
 	for (Map::ObjectSelection::const_iterator it = map->selectedObjectsBegin(); it != it_end; ++it)
@@ -1886,7 +1886,9 @@ void MapEditorController::objectSelectionChanged()
 		if (uniform_symbol_selected)
 		{
 			if (!uniform_symbol)
+			{
 				uniform_symbol = symbol;
+			}
 			else if (uniform_symbol != symbol)
 			{
 				uniform_symbol = NULL;
@@ -1896,93 +1898,114 @@ void MapEditorController::objectSelectionChanged()
 		
 		if (symbol->getType() == Symbol::Point)
 		{
-			PointSymbol* point_symbol = static_cast<PointSymbol*>(symbol);
-			if (point_symbol->isRotatable())
-				have_rotatable_point = true;
+			have_rotatable_point |= symbol->asPoint()->isRotatable();
 		}
-		
-		if (symbol->getContainedTypes() & Symbol::Line)
-			have_line = true;
-		if (symbol->getContainedTypes() & Symbol::Area)
+		else if (Symbol::areTypesCompatible(symbol->getType(), Symbol::Area))
 		{
-			have_area = true;
-			++num_selected_areas;
-			have_area_with_holes |= (*it)->asPath()->getNumParts() > 1;
-			if (!have_two_same_symbol_areas)
+			++num_selected_paths;
+			
+			if (symbol->getType() == Symbol::Area)
 			{
-				for (Map::ObjectSelection::const_iterator it2 = map->selectedObjectsBegin(); it2 != it; ++it2)
+				have_rotatable_pattern |= symbol->asArea()->hasRotatableFillPattern();
+			}
+			
+			int const contained_types = symbol->getContainedTypes();
+			
+			if (contained_types & Symbol::Line)
+			{
+				have_line = true;
+			}
+			
+			if (contained_types & Symbol::Area)
+			{
+				have_area = true;
+				have_area_with_holes |= (*it)->asPath()->getNumParts() > 1;
+			}
+		}
+	}
+	
+	if (have_area && !have_rotatable_pattern)
+	{
+		map->determineSymbolUseClosure(symbols_in_selection);
+		for (size_t i = 0, end = symbols_in_selection.size(); i < end; ++i)
+		{
+			if (symbols_in_selection[i])
+			{
+				Symbol* symbol = map->getSymbol(i);
+				if (symbol->getType() == Symbol::Area)
 				{
-					if ((*it2)->getSymbol() == symbol)
-					{
-						have_two_same_symbol_areas = true;
-						break;
-					}
+					have_rotatable_pattern = symbol->asArea()->hasRotatableFillPattern();
+					break;
 				}
 			}
 		}
 	}
 	
-	map->determineSymbolUseClosure(symbols_in_selection);
-	for (size_t i = 0, end = symbols_in_selection.size(); i < end; ++i)
-	{
-		if (!symbols_in_selection[i])
-			continue;
-		
-		Symbol* symbol = map->getSymbol(i);
-		if (symbol->getType() == Symbol::Area)
-		{
-			AreaSymbol* area_symbol = static_cast<AreaSymbol*>(symbol);
-			if (area_symbol->hasRotatableFillPattern())
-			{
-				have_rotatable_pattern = true;
-				break;
-			}
-		}
-	}
-	
+	// have_selection
 	cut_act->setEnabled(have_selection);
 	copy_act->setEnabled(have_selection);
 	delete_act->setEnabled(have_selection);
 	delete_act->setStatusTip(tr("Deletes the selected object(s).") + (delete_act->isEnabled() ? "" : (" " + tr("Select at least one object to activate this tool."))));
 	duplicate_act->setEnabled(have_selection);
 	duplicate_act->setStatusTip(tr("Duplicate the selected object(s).") + (duplicate_act->isEnabled() ? "" : (" " + tr("Select at least one object to activate this tool."))));
+	rotate_act->setEnabled(have_selection);
+	rotate_act->setStatusTip(tr("Rotate the selected object(s).") + (rotate_act->isEnabled() ? "" : (" " + tr("Select at least one object to activate this tool."))));
+	scale_act->setEnabled(have_selection);
+	scale_act->setStatusTip(tr("Scale the selected object(s).") + (scale_act->isEnabled() ? "" : (" " + tr("Select at least one object to activate this tool."))));
+	
+	// have_rotatable_pattern || have_rotatable_point
+	rotate_pattern_act->setEnabled(have_rotatable_pattern || have_rotatable_point);
+	rotate_pattern_act->setStatusTip(tr("Set the direction of area fill patterns or point objects.") + (rotate_pattern_act->isEnabled() ? "" : (" " + tr("Select an area object with rotatable fill pattern or a rotatable point object to activate this tool."))));
+	
+	// have_line
 	switch_dashes_act->setEnabled(have_line);
 	switch_dashes_act->setStatusTip(tr("Switch the direction of symbols on line objects.") + (switch_dashes_act->isEnabled() ? "" : (" " + tr("Select at least one line object to activate this tool."))));
 	connect_paths_act->setEnabled(have_line);
 	connect_paths_act->setStatusTip(tr("Connect endpoints of paths which are close together.") + (connect_paths_act->isEnabled() ? "" : (" " + tr("Select at least one line object to activate this tool."))));
+	
+	// have_are || have_line
 	cut_tool_act->setEnabled(have_area || have_line);
 	cut_tool_act->setStatusTip(tr("Cut the selected object(s) into smaller parts.") + (cut_tool_act->isEnabled() ? "" : (" " + tr("Select at least one line or area object to activate this tool."))));
-	cut_hole_act->setEnabled(single_object_selected && have_area);
-	cut_hole_act->setStatusTip(tr("Cut a hole into the selected area object.") + (cut_hole_act->isEnabled() ? "" : (" " + tr("Select a single area object to activate this tool."))));
-	cut_hole_circle_act->setEnabled(cut_hole_act->isEnabled());
-	cut_hole_circle_act->setStatusTip(cut_hole_act->statusTip());
-	cut_hole_rectangle_act->setEnabled(cut_hole_act->isEnabled());
-	cut_hole_rectangle_act->setStatusTip(cut_hole_act->statusTip());
-	cut_hole_menu->setEnabled(cut_hole_act->isEnabled());
-	rotate_act->setEnabled(have_selection);
-	rotate_act->setStatusTip(tr("Rotate the selected object(s).") + (rotate_act->isEnabled() ? "" : (" " + tr("Select at least one object to activate this tool."))));
-	rotate_pattern_act->setEnabled(have_rotatable_pattern || have_rotatable_point);
-	rotate_pattern_act->setStatusTip(tr("Set the direction of area fill patterns or point objects.") + (rotate_pattern_act->isEnabled() ? "" : (" " + tr("Select an area object with rotatable fill pattern or a rotatable point object to activate this tool."))));
-	scale_act->setEnabled(have_selection);
-	scale_act->setStatusTip(tr("Scale the selected object(s).") + (scale_act->isEnabled() ? "" : (" " + tr("Select at least one object to activate this tool."))));
-	boolean_union_act->setEnabled(have_two_same_symbol_areas);
-	boolean_union_act->setStatusTip(tr("Unify overlapping areas.") + (boolean_union_act->isEnabled() ? "" : (" " + tr("Select at least two area objects with the same symbol to activate this tool."))));
-	boolean_intersection_act->setEnabled(have_two_same_symbol_areas && uniform_symbol_selected);
-	boolean_intersection_act->setStatusTip(tr("Intersect the first selected area object with all other selected overlapping areas.") + (boolean_intersection_act->isEnabled() ? "" : (" " + tr("Select at least two area objects with the same symbol to activate this tool."))));
-	boolean_difference_act->setEnabled(num_selected_areas >= 2);
-	boolean_difference_act->setStatusTip(tr("Subtract all other selected area objects from the first selected area object.") + (boolean_difference_act->isEnabled() ? "" : (" " + tr("Select at least two area objects to activate this tool."))));
-	boolean_xor_act->setEnabled(have_two_same_symbol_areas && uniform_symbol_selected);
-	boolean_xor_act->setStatusTip(tr("Calculate nonoverlapping parts of areas.") + (boolean_xor_act->isEnabled() ? "" : (" " + tr("Select at least two area objects with the same symbol to activate this tool."))));
-	boolean_merge_holes_act->setEnabled(single_object_selected && have_area_with_holes);
-	boolean_merge_holes_act->setStatusTip(tr("Merge area holes together, or merge holes with the object boundary to cut out this part.") + (boolean_xor_act->isEnabled() ? "" : (" " + tr("Select one area object with holes to activate this tool."))));
 	convert_to_curves_act->setEnabled(have_area || have_line);
 	convert_to_curves_act->setStatusTip(tr("Turn paths made of straight segments into smooth bezier splines.") + (convert_to_curves_act->isEnabled() ? "" : (" " + tr("Select a path object to activate this tool."))));
 	simplify_path_act->setEnabled(have_area || have_line);
-	simplify_path_act->setStatusTip(tr("Reduce the number of points in path objects while trying to retain their shape.") + (convert_to_curves_act->isEnabled() ? "" : (" " + tr("Select a path object to activate this tool."))));
-	cutout_physical_act->setEnabled((have_area || have_line) && single_object_selected && (*(map->selectedObjectsBegin()))->asPath()->getPart(0).isClosed() && (*(map->selectedObjectsBegin()))->asPath()->getNumParts() == 1);
+	simplify_path_act->setStatusTip(tr("Reduce the number of points in path objects while trying to retain their shape.") + (simplify_path_act->isEnabled() ? "" : (" " + tr("Select a path object to activate this tool."))));
+	
+	// cut_hole_enabled
+	const bool cut_hole_enabled = single_object_selected && have_area;
+	cut_hole_act->setEnabled(cut_hole_enabled);
+	cut_hole_act->setStatusTip(tr("Cut a hole into the selected area object.") + (cut_hole_act->isEnabled() ? "" : (" " + tr("Select a single area object to activate this tool."))));
+	cut_hole_circle_act->setEnabled(cut_hole_enabled);
+	cut_hole_circle_act->setStatusTip(cut_hole_act->statusTip());
+	cut_hole_rectangle_act->setEnabled(cut_hole_enabled);
+	cut_hole_rectangle_act->setStatusTip(cut_hole_act->statusTip());
+	cut_hole_menu->setEnabled(cut_hole_enabled);
+	
+	// boolean_prerequisite [&& x]
+	bool const boolean_prerequisite = first_selected_is_path && num_selected_paths >= 2;
+	QString const extra_status_tip = " " +
+	                                 ( boolean_prerequisite
+	                                 ? tr("Resulting symbol: %1 %2.").arg(first_selected_symbol->getNumberAsString(), first_selected_symbol->getPlainTextName())
+	                                 : tr("Select at least two area or path objects activate this tool.") );
+	boolean_union_act->setEnabled(boolean_prerequisite);
+	boolean_union_act->setStatusTip(tr("Unify overlapping objects.") + extra_status_tip);
+	boolean_intersection_act->setEnabled(boolean_prerequisite);
+	boolean_intersection_act->setStatusTip(tr("Remove all parts which are not overlaps with the first selected object.") + extra_status_tip);
+	boolean_difference_act->setEnabled(boolean_prerequisite);
+	boolean_difference_act->setStatusTip(tr("Remove overlapped parts of the first selected object.") + (boolean_prerequisite ? "" : extra_status_tip));
+	boolean_xor_act->setEnabled(boolean_prerequisite);
+	boolean_xor_act->setStatusTip(tr("Remove all parts which overlap the first selected object.") + extra_status_tip);
+	
+	// special
+	boolean_merge_holes_act->setEnabled(single_object_selected && have_area_with_holes);
+	boolean_merge_holes_act->setStatusTip(tr("Merge area holes together, or merge holes with the object boundary to cut out this part.") + (boolean_merge_holes_act->isEnabled() ? "" : (" " + tr("Select one area object with holes to activate this tool."))));
+	
+	// cutout_enabled
+	bool const cutout_enabled = single_object_selected && (have_area || have_line) && !have_area_with_holes && (*(map->selectedObjectsBegin()))->asPath()->getPart(0).isClosed();
+	cutout_physical_act->setEnabled(cutout_enabled);
 	cutout_physical_act->setStatusTip(tr("Create a cutout of some objects or the whole map.") + (cutout_physical_act->isEnabled() ? "" : (" " + tr("Select a closed path object as cutout shape to activate this tool."))));
-	cutaway_physical_act->setEnabled(cutout_physical_act->isEnabled());
-	cutaway_physical_act->setStatusTip(tr("Cut away some objects or everything in a limited area.") + (cutout_physical_act->isEnabled() ? "" : (" " + tr("Select a closed path object as cutout shape to activate this tool."))));
+	cutaway_physical_act->setEnabled(cutout_enabled);
+	cutaway_physical_act->setStatusTip(tr("Cut away some objects or everything in a limited area.") + (cutaway_physical_act->isEnabled() ? "" : (" " + tr("Select a closed path object as cutout shape to activate this tool."))));
 	
 	// Automatic symbol selection of selected objects
 	if (symbol_widget && uniform_symbol_selected && Settings::getInstance().getSettingCached(Settings::MapEditor_ChangeSymbolWhenSelecting).toBool())
