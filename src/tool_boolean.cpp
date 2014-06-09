@@ -86,6 +86,13 @@ BooleanTool::BooleanTool(Operation op, Map* map)
 
 bool BooleanTool::execute()
 {
+	Object* const primary_object = map->getFirstSelectedObject();
+	if (primary_object->getType() != Object::Path)
+	{
+		Q_ASSERT(false && "The first selected object must be a path.");
+		return false; // in release build
+	}
+	
 	// Objects to process, sorted by symbol
 	typedef QHash< Symbol*, PathObjects > ObjectGroups;
 	ObjectGroups object_groups;
@@ -96,12 +103,16 @@ bool BooleanTool::execute()
 
 	if (op == Difference)
 	{
-		// Make a dummy group with all selected areas
+		// Make a dummy group with all selected paths
 		PathObjects new_vector;
 		new_vector.reserve(map->getNumSelectedObjects());
 		Map::ObjectSelection::const_iterator it_end = map->selectedObjectsEnd();
 		for (Map::ObjectSelection::const_iterator it = map->selectedObjectsBegin(); it != it_end; ++it)
-			new_vector.push_back(reinterpret_cast<PathObject*>(*it));
+		{
+			Object* object = *it;
+			if (object->getType() == Object::Path)
+				new_vector.push_back(object->asPath());
+		}
 		object_groups.insert(NULL, new_vector);
 	}
 	else
@@ -141,7 +152,7 @@ bool BooleanTool::execute()
 	{
 		// Do operation
 		PathObjects group_result;
-		if (!executeForObjects(map->getFirstSelectedObject()->asPath(), map->getFirstSelectedObject()->getSymbol(), it.value(), group_result))
+		if (!executeForObjects(primary_object->asPath(), primary_object->getSymbol(), it.value(), group_result))
 		{
 			delete add_step;
 			for (int i = 0; i < (int)result.size(); ++i)
@@ -153,7 +164,7 @@ bool BooleanTool::execute()
 		for (int i = 0; i < (int)it.value().size(); ++i)
 		{
 			Object* object = it.value().at(i);
-			if (op == Difference && object != map->getFirstSelectedObject())
+			if (op == Difference && object != primary_object)
 				continue;
 			add_step->addObject(object, object);
 		}
@@ -165,7 +176,7 @@ bool BooleanTool::execute()
 	// Remove original objects from map
 	std::vector< Object* > in_objects;
 	if (op == Difference)
-		in_objects.push_back(map->getFirstSelectedObject());
+		in_objects.push_back(primary_object);
 	else
 		add_step->getAffectedOutcome(in_objects);
 	for (int i = 0; i < (int)in_objects.size(); ++i)

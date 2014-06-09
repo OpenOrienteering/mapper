@@ -73,6 +73,8 @@ public:
 	
 	/**
 	 * Executes the operation on the selected objects in the map.
+	 * 
+	 * The first selected object is treated special and must be a path.
 	 */
 	bool execute();
 	
