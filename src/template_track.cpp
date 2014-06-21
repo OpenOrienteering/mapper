@@ -449,7 +449,7 @@ bool TemplateTrack::import(QWidget* dialog_parent)
 		undo_step->addObject(part->findObjectIndex(result[i]));
 	
 	map->setObjectsDirty();
-	map->objectUndoManager().addNewUndoStep(undo_step);
+	map->objectUndoManager().push(undo_step);
 	
 	map->emitSelectionChanged();
 	map->emitSelectionEdited();		// TODO: is this necessary here?

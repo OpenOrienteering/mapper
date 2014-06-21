@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2014 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -28,101 +29,167 @@
 #include "object.h"
 #include "symbol.h"
 
-// ### MapUndoStep ###
+// ### ObjectModifyingUndoStep ###
 
-MapUndoStep::MapUndoStep(Map* map, Type type): UndoStep(type)
+ObjectModifyingUndoStep::ObjectModifyingUndoStep(Type type, Map* map)
+: UndoStep(type, map)
+, part_index(map->getCurrentPartIndex())
 {
-	this->map = map;
-	part = map->getCurrentPartIndex();
+	; // nothing
 }
 
-bool MapUndoStep::load(QIODevice* file, int version)
+ObjectModifyingUndoStep::ObjectModifyingUndoStep(Type type, Map *map, int part_index)
+: UndoStep(type, map)
+, part_index(part_index)
+{
+	; // nothing
+}
+
+
+ObjectModifyingUndoStep::~ObjectModifyingUndoStep()
+{
+	; // nothing
+}
+
+void ObjectModifyingUndoStep::setPartIndex(int part_index)
+{
+	Q_ASSERT(modified_objects.empty());
+	this->part_index = part_index;
+}
+
+bool ObjectModifyingUndoStep::isEmpty() const
+{
+	return modified_objects.empty();
+}
+
+void ObjectModifyingUndoStep::addObject(int index)
+{
+	modified_objects.push_back(index);
+}
+
+bool ObjectModifyingUndoStep::getModifiedParts(PartSet& out) const
+{
+	out.insert(getPartIndex());
+	return !modified_objects.empty();
+}
+
+void ObjectModifyingUndoStep::getModifiedObjects(int part_index, ObjectSet& out) const
+{
+	if (part_index == getPartIndex())
+	{
+		MapPart* const map_part = map->getPart(part_index);
+		for (std::vector<int>::const_iterator it = modified_objects.begin(), end = modified_objects.end(); it != end; ++it)
+		{
+			Q_ASSERT(*it >= 0 && *it < map_part->getNumObjects());
+			out.insert(map_part->getObject(*it));
+		}
+	}
+}
+
+bool ObjectModifyingUndoStep::load(QIODevice* file, int version)
 {
 	Q_UNUSED(version);
-	file->read((char*)&part, sizeof(int));
+	file->read((char*)&part_index, sizeof(int));
 	int size;
 	file->read((char*)&size, sizeof(int));
-	affected_objects.resize(size);
+	modified_objects.resize(size);
 	for (int i = 0; i < size; ++i)
-		file->read((char*)&affected_objects[i], sizeof(int));
+		file->read((char*)&modified_objects[i], sizeof(int));
 	return true;
 }
 
-void MapUndoStep::saveImpl(QXmlStreamWriter& xml) const
+void ObjectModifyingUndoStep::saveImpl(QXmlStreamWriter& xml) const
 {
 	UndoStep::saveImpl(xml);
 	
-	xml.writeStartElement("affected_objects");
-	xml.writeAttribute("part", QString::number(part));
-	int size = affected_objects.size();
-	xml.writeAttribute("count", QString::number(size));
+	XmlElementWriter element(xml, QLatin1String("affected_objects"));
+	element.writeAttribute(QLatin1String("part"), part_index);
+	int size = modified_objects.size();
+	element.writeAttribute(QLatin1String("count"), size);
 	for (int i = 0; i < size; ++i)
 	{
-		xml.writeEmptyElement("ref");
-		xml.writeAttribute("object", QString::number(affected_objects[i]));
+		XmlElementWriter ref(xml, QLatin1String("ref"));
+		ref.writeAttribute(QLatin1String("object"), modified_objects[i]);
 	}
-	xml.writeEndElement(/*affected_objects*/);
 }
 
-void MapUndoStep::loadImpl(QXmlStreamReader& xml, SymbolDictionary& symbol_dict)
+void ObjectModifyingUndoStep::loadImpl(QXmlStreamReader& xml, SymbolDictionary& symbol_dict)
 {
 	if (xml.name() == "affected_objects")
 	{
-		part = xml.attributes().value("part").toString().toInt();
-		int size = xml.attributes().value("count").toString().toInt();
-		affected_objects.reserve(size);
+		XmlElementReader element(xml);
+		part_index = element.attribute<int>(QLatin1String("part"));
+		int size = element.attribute<int>(QLatin1String("count"));
+		modified_objects.reserve(size);
 		while (xml.readNextStartElement())
 		{
 			if (xml.name() == "ref")
-				affected_objects.push_back(xml.attributes().value("object").toString().toInt());
-			
-			xml.skipCurrentElement(); // unknown
+			{
+				XmlElementReader ref(xml);
+				modified_objects.push_back(ref.attribute<int>(QLatin1String("object")));
+			}
+			else
+			{
+				xml.skipCurrentElement(); // unknown
+			}
 		}
 	}
 	else
+	{
 		UndoStep::loadImpl(xml, symbol_dict);
+	}
 }
 
-void MapUndoStep::getAffectedOutcome(std::vector< Object* >& out) const
-{
-	out.resize(affected_objects.size());
-	for (int i = 0; i < (int)affected_objects.size(); ++i)
-		out[i] = map->getPart(part)->getObject(affected_objects[i]);
-}
 
-// ### ObjectContainingUndoStep ###
 
-ObjectContainingUndoStep::ObjectContainingUndoStep(Map* map, Type type) : MapUndoStep(map, type)
+// ### ObjectCreatingUndoStep ###
+
+ObjectCreatingUndoStep::ObjectCreatingUndoStep(Type type, Map* map)
+: ObjectModifyingUndoStep(type, map)
+, valid(true)
 {
 	connect(map, SIGNAL(symbolChanged(int,Symbol*,Symbol*)), this, SLOT(symbolChanged(int,Symbol*,Symbol*)));
 	connect(map, SIGNAL(symbolDeleted(int,Symbol*)), this, SLOT(symbolDeleted(int,Symbol*)));
 }
-ObjectContainingUndoStep::~ObjectContainingUndoStep()
+
+ObjectCreatingUndoStep::~ObjectCreatingUndoStep()
 {
 	int size = (int)objects.size();
 	for (int i = 0; i < size; ++i)
 		delete objects[i];
 }
 
-void ObjectContainingUndoStep::addObject(int existing_index, Object* object)
+bool ObjectCreatingUndoStep::isValid() const
 {
-	affected_objects.push_back(existing_index);
+	return valid;
+}
+
+void ObjectCreatingUndoStep::addObject(int index)
+{
+	Q_ASSERT(false && "This implementation must not be called");
+	return;
+}
+
+void ObjectCreatingUndoStep::addObject(int existing_index, Object* object)
+{
+	ObjectModifyingUndoStep::addObject(existing_index);
 	object->setMap(map); // this is necessary so the object will find the symbols and colors it references when the undo step is saved
 	objects.push_back(object);
 }
-void ObjectContainingUndoStep::addObject(Object* existing, Object* object)
+
+void ObjectCreatingUndoStep::addObject(Object* existing, Object* object)
 {
 	int index = map->getCurrentPart()->findObjectIndex(existing);
-	assert(index >= 0);
+	Q_ASSERT(index >= 0);
 	addObject(index, object);
 }
 
-bool ObjectContainingUndoStep::load(QIODevice* file, int version)
+bool ObjectCreatingUndoStep::load(QIODevice* file, int version)
 {
-	if (!MapUndoStep::load(file, version))
+	if (!ObjectModifyingUndoStep::load(file, version))
 		return false;
 	
-	int size = (int)affected_objects.size();
+	int size = (int)modified_objects.size();
 	objects.resize(size);
 	for (int i = 0; i < size; ++i)
 	{
@@ -136,9 +203,15 @@ bool ObjectContainingUndoStep::load(QIODevice* file, int version)
 	return true;
 }
 
-void ObjectContainingUndoStep::saveImpl(QXmlStreamWriter& xml) const
+void ObjectCreatingUndoStep::getModifiedObjects(int part_index, ObjectSet& out) const
 {
-	MapUndoStep::saveImpl(xml);
+	if (part_index == getPartIndex())
+		out.insert(objects.begin(), objects.end());
+}
+
+void ObjectCreatingUndoStep::saveImpl(QXmlStreamWriter& xml) const
+{
+	ObjectModifyingUndoStep::saveImpl(xml);
 	
 	xml.writeStartElement("contained_objects");
 	int size = (int)objects.size();
@@ -151,7 +224,7 @@ void ObjectContainingUndoStep::saveImpl(QXmlStreamWriter& xml) const
 	xml.writeEndElement(/*contained_objects*/);
 }
 
-void ObjectContainingUndoStep::loadImpl(QXmlStreamReader& xml, SymbolDictionary& symbol_dict)
+void ObjectCreatingUndoStep::loadImpl(QXmlStreamReader& xml, SymbolDictionary& symbol_dict)
 {
 	if (xml.name() == "contained_objects")
 	{
@@ -166,10 +239,10 @@ void ObjectContainingUndoStep::loadImpl(QXmlStreamReader& xml, SymbolDictionary&
 		}
 	}
 	else
-		MapUndoStep::loadImpl(xml, symbol_dict);
+		ObjectModifyingUndoStep::loadImpl(xml, symbol_dict);
 }
 
-void ObjectContainingUndoStep::symbolChanged(int pos, Symbol* new_symbol, Symbol* old_symbol)
+void ObjectCreatingUndoStep::symbolChanged(int pos, Symbol* new_symbol, Symbol* old_symbol)
 {
 	Q_UNUSED(pos);
 	int size = (int)objects.size();
@@ -179,7 +252,8 @@ void ObjectContainingUndoStep::symbolChanged(int pos, Symbol* new_symbol, Symbol
 			objects[i]->setSymbol(new_symbol, true);
 	}
 }
-void ObjectContainingUndoStep::symbolDeleted(int pos, Symbol* old_symbol)
+
+void ObjectCreatingUndoStep::symbolDeleted(int pos, Symbol* old_symbol)
 {
 	Q_UNUSED(pos);
 	int size = (int)objects.size();
@@ -193,36 +267,50 @@ void ObjectContainingUndoStep::symbolDeleted(int pos, Symbol* old_symbol)
 	}
 }
 
+
+
 // ### ReplaceObjectsUndoStep ###
 
-ReplaceObjectsUndoStep::ReplaceObjectsUndoStep(Map* map) : ObjectContainingUndoStep(map, ReplaceObjectsUndoStepType)
+ReplaceObjectsUndoStep::ReplaceObjectsUndoStep(Map* map)
+: ObjectCreatingUndoStep(ReplaceObjectsUndoStepType, map)
 {
+	; // nothing else
 }
+
+ReplaceObjectsUndoStep::~ReplaceObjectsUndoStep()
+{
+	; // nothing
+}
+
 UndoStep* ReplaceObjectsUndoStep::undo()
 {
 	ReplaceObjectsUndoStep* undo_step = new ReplaceObjectsUndoStep(map);
 	
-	MapPart* part = map->getPart(this->part);
-	int size = (int)objects.size();
-	for (int i = 0; i < size; ++i)
+	MapPart* part = map->getPart(getPartIndex());
+	std::size_t size = objects.size();
+	for (std::size_t i = 0; i < size; ++i)
 	{
-		undo_step->addObject(affected_objects[i], part->getObject(affected_objects[i]));
-		part->setObject(objects[i], affected_objects[i], false);
+		undo_step->addObject(modified_objects[i], part->getObject(modified_objects[i]));
+		part->setObject(objects[i], modified_objects[i], false);
 	}
 	
 	objects.clear();
 	return undo_step;
 }
 
+
+
 // ### DeleteObjectsUndoStep ###
 
-DeleteObjectsUndoStep::DeleteObjectsUndoStep(Map* map): MapUndoStep(map, DeleteObjectsUndoStepType)
+DeleteObjectsUndoStep::DeleteObjectsUndoStep(Map* map)
+: ObjectModifyingUndoStep(DeleteObjectsUndoStepType, map)
 {
+	; // nothing else
 }
 
-void DeleteObjectsUndoStep::addObject(int index)
+DeleteObjectsUndoStep::~DeleteObjectsUndoStep()
 {
-	affected_objects.push_back(index);
+	; // nothing
 }
 
 UndoStep* DeleteObjectsUndoStep::undo()
@@ -230,40 +318,60 @@ UndoStep* DeleteObjectsUndoStep::undo()
 	AddObjectsUndoStep* undo_step = new AddObjectsUndoStep(map);
 	
 	// Make sure to delete the objects in the right order so the other objects' indices stay valid
-	std::sort(affected_objects.begin(), affected_objects.end(), std::greater<int>());
+	std::sort(modified_objects.begin(), modified_objects.end(), std::greater<int>());
 	
-	MapPart* part = map->getPart(this->part);
-	int size = (int)affected_objects.size();
+	MapPart* part = map->getPart(getPartIndex());
+	int size = (int)modified_objects.size();
 	for (int i = 0; i < size; ++i)
 	{
-		undo_step->addObject(affected_objects[i], part->getObject(affected_objects[i]));
-		part->deleteObject(affected_objects[i], true);
+		undo_step->addObject(modified_objects[i], part->getObject(modified_objects[i]));
+		part->deleteObject(modified_objects[i], true);
 	}
 	
 	return undo_step;
 }
 
+bool DeleteObjectsUndoStep::getModifiedParts(PartSet&) const
+{
+	return false;
+}
+
+void DeleteObjectsUndoStep::getModifiedObjects(int, ObjectSet&) const
+{
+	; // nothing
+}
+
+
+
 // ### AddObjectsUndoStep ###
 
-AddObjectsUndoStep::AddObjectsUndoStep(Map* map) : ObjectContainingUndoStep(map, AddObjectsUndoStepType)
+AddObjectsUndoStep::AddObjectsUndoStep(Map* map)
+    : ObjectCreatingUndoStep(AddObjectsUndoStepType, map)
 {
+	; // nothing else
 }
+
+AddObjectsUndoStep::~AddObjectsUndoStep()
+{
+	; // nothing
+}
+
 UndoStep* AddObjectsUndoStep::undo()
 {
 	DeleteObjectsUndoStep* undo_step = new DeleteObjectsUndoStep(map);
 	
 	// Make sure to add the objects in the right order so the other objects' indices stay valid
 	std::vector< std::pair<int, int> > order;	// index into affected_objects & objects, object index
-	order.resize(affected_objects.size());
-	for (int i = 0; i < (int)affected_objects.size(); ++i)
-		order[i] = std::pair<int, int>(i, affected_objects[i]);
+	order.resize(modified_objects.size());
+	for (int i = 0; i < (int)modified_objects.size(); ++i)
+		order[i] = std::pair<int, int>(i, modified_objects[i]);
 	std::sort(order.begin(), order.end(), sortOrder);
 	
-	MapPart* part = map->getPart(this->part);
+	MapPart* part = map->getPart(getPartIndex());
 	int size = (int)objects.size();
 	for (int i = 0; i < size; ++i)
 	{
-		undo_step->addObject(affected_objects[order[i].first]);
+		undo_step->addObject(modified_objects[order[i].first]);
 		part->addObject(objects[order[i].first], order[i].second);
 	}
 	
@@ -273,7 +381,7 @@ UndoStep* AddObjectsUndoStep::undo()
 
 void AddObjectsUndoStep::removeContainedObjects(bool emit_selection_changed)
 {
-	MapPart* part = map->getPart(this->part);
+	MapPart* part = map->getPart(getPartIndex());
 	int size = (int)objects.size();
 	bool object_deselected = false;
 	for (int i = 0; i < size; ++i)
@@ -295,28 +403,44 @@ bool AddObjectsUndoStep::sortOrder(const std::pair< int, int >& a, const std::pa
 	return a.second < b.second;
 }
 
+
+
 // ### SwitchSymbolUndoStep ###
 
-SwitchSymbolUndoStep::SwitchSymbolUndoStep(Map* map) : MapUndoStep(map, SwitchSymbolUndoStepType)
+SwitchSymbolUndoStep::SwitchSymbolUndoStep(Map* map)
+: ObjectModifyingUndoStep(SwitchSymbolUndoStepType, map)
+, valid(true)
 {
 	connect(map, SIGNAL(symbolChanged(int,Symbol*,Symbol*)), this, SLOT(symbolChanged(int,Symbol*,Symbol*)));
 	connect(map, SIGNAL(symbolDeleted(int,Symbol*)), this, SLOT(symbolDeleted(int,Symbol*)));
 }
+
+SwitchSymbolUndoStep::~SwitchSymbolUndoStep()
+{
+	; // nothing
+}
+
+bool SwitchSymbolUndoStep::isValid() const
+{
+	return valid;
+}
+
 void SwitchSymbolUndoStep::addObject(int index, Symbol* target_symbol)
 {
-	affected_objects.push_back(index);
+	ObjectModifyingUndoStep::addObject(index);
 	target_symbols.push_back(target_symbol);
 }
+
 UndoStep* SwitchSymbolUndoStep::undo()
 {
 	SwitchSymbolUndoStep* undo_step = new SwitchSymbolUndoStep(map);
 	
-	MapPart* part = map->getPart(this->part);
-	int size = (int)affected_objects.size();
+	MapPart* part = map->getPart(getPartIndex());
+	int size = (int)modified_objects.size();
 	for (int i = 0; i < size; ++i)
 	{
-		Object* object = part->getObject(affected_objects[i]);
-		undo_step->addObject(affected_objects[i], object->getSymbol());
+		Object* object = part->getObject(modified_objects[i]);
+		undo_step->addObject(modified_objects[i], object->getSymbol());
 		bool ok = object->setSymbol(target_symbols[i], false);
 		assert(ok);
 	}
@@ -326,10 +450,10 @@ UndoStep* SwitchSymbolUndoStep::undo()
 
 bool SwitchSymbolUndoStep::load(QIODevice* file, int version)
 {
-	if (!MapUndoStep::load(file, version))
+	if (!ObjectModifyingUndoStep::load(file, version))
 		return false;
 	
-	int size = (int)affected_objects.size();
+	int size = (int)modified_objects.size();
 	target_symbols.resize(size);
 	for (int i = 0; i < size; ++i)
 	{
@@ -342,7 +466,7 @@ bool SwitchSymbolUndoStep::load(QIODevice* file, int version)
 
 void SwitchSymbolUndoStep::saveImpl(QXmlStreamWriter& xml) const
 {
-	MapUndoStep::saveImpl(xml);
+	ObjectModifyingUndoStep::saveImpl(xml);
 	
 	xml.writeStartElement("switch_symbol");
 	int size = (int)target_symbols.size();
@@ -374,7 +498,7 @@ void SwitchSymbolUndoStep::loadImpl(QXmlStreamReader& xml, SymbolDictionary& sym
 		}
 	}
 	else
-		MapUndoStep::loadImpl(xml, symbol_dict);
+		ObjectModifyingUndoStep::loadImpl(xml, symbol_dict);
 }
 
 void SwitchSymbolUndoStep::symbolChanged(int pos, Symbol* new_symbol, Symbol* old_symbol)
@@ -401,28 +525,33 @@ void SwitchSymbolUndoStep::symbolDeleted(int pos, Symbol* old_symbol)
 	}
 }
 
+
+
 // ### SwitchDashesUndoStep ###
 
-SwitchDashesUndoStep::SwitchDashesUndoStep(Map* map) : MapUndoStep(map, SwitchDashesUndoStepType)
+SwitchDashesUndoStep::SwitchDashesUndoStep(Map* map)
+: ObjectModifyingUndoStep(SwitchDashesUndoStepType, map)
 {
+	; // nothing else
 }
-void SwitchDashesUndoStep::addObject(int index)
+
+SwitchDashesUndoStep::~SwitchDashesUndoStep()
 {
-	affected_objects.push_back(index);
+	; // nothing
 }
+
 UndoStep* SwitchDashesUndoStep::undo()
 {
 	SwitchDashesUndoStep* undo_step = new SwitchDashesUndoStep(map);
 	
-	MapPart* part = map->getPart(this->part);
-	int size = (int)affected_objects.size();
-	for (int i = 0; i < size; ++i)
+	MapPart* part = map->getPart(getPartIndex());
+	for (ObjectList::iterator it = modified_objects.begin(), end = modified_objects.end(); it != end; ++it)
 	{
-		PathObject* object = reinterpret_cast<PathObject*>(part->getObject(affected_objects[i]));
+		PathObject* object = reinterpret_cast<PathObject*>(part->getObject(*it));
 		object->reverse();
 		object->update(true);
 		
-		undo_step->addObject(affected_objects[i]);
+		undo_step->addObject(*it);
 	}
 	
 	return undo_step;

@@ -332,10 +332,22 @@ bool FileFormatTest::compareMaps(Map* a, Map* b, QString& error)
 	
 	// Undo steps
 	// TODO: Currently only the number of steps is compared here.
-	if (a->objectUndoManager().getNumUndoSteps() != b->objectUndoManager().getNumUndoSteps() ||
-		a->objectUndoManager().getNumRedoSteps() != b->objectUndoManager().getNumRedoSteps())
+	if (a->objectUndoManager().undoStepCount() != b->objectUndoManager().undoStepCount() ||
+		a->objectUndoManager().redoStepCount() != b->objectUndoManager().redoStepCount())
 	{
 		error = "The number of undo / redo steps differs.";
+		return false;
+	}
+	if (a->objectUndoManager().canUndo() &&
+	    a->objectUndoManager().nextUndoStep()->getType() != b->objectUndoManager().nextUndoStep()->getType())
+	{
+		error = "The type of the first undo step is different.";
+		return false;
+	}
+	if (a->objectUndoManager().canRedo() &&
+	    a->objectUndoManager().nextRedoStep()->getType() != b->objectUndoManager().nextRedoStep()->getType())
+	{
+		error = "The type of the first redo step is different.";
 		return false;
 	}
 	

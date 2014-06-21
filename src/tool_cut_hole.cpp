@@ -207,7 +207,7 @@ void CutHoleTool::pathFinished(PathObject* hole_path)
 	
 	ReplaceObjectsUndoStep* undo_step = new ReplaceObjectsUndoStep(map());
 	undo_step->addObject(edited_object, undo_duplicate);
-	map()->objectUndoManager().addNewUndoStep(undo_step);
+	map()->objectUndoManager().push(undo_step);
 	map()->setObjectsDirty();
 	map()->emitSelectionEdited();
 	

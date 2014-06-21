@@ -440,7 +440,7 @@ bool FillTool::fillBoundary(const QImage& image, const std::vector< QPoint >& bo
 	
 	DeleteObjectsUndoStep* undo_step = new DeleteObjectsUndoStep(map());
 	undo_step->addObject(index);
-	map()->objectUndoManager().addNewUndoStep(undo_step);
+	map()->objectUndoManager().push(undo_step);
 	
 	map()->setObjectsDirty();
 	

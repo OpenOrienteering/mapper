@@ -131,7 +131,7 @@ void DrawPointTool::clickRelease()
 	
 	DeleteObjectsUndoStep* undo_step = new DeleteObjectsUndoStep(map());
 	undo_step->addObject(index);
-	map()->objectUndoManager().addNewUndoStep(undo_step);
+	map()->objectUndoManager().push(undo_step);
 	
 	setEditingInProgress(false);
 	updateStatusText();

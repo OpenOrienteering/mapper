@@ -221,7 +221,7 @@ void ReplaceSymbolSetDialog::apply()
 	map->updateAllObjects();
 	map->setObjectsDirty();
 	map->setSymbolsDirty();
-	map->objectUndoManager().clear(false);
+	map->objectUndoManager().clear();
 	accept();
 }
 

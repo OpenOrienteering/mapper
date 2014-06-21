@@ -203,7 +203,7 @@ void MapPart::importPart(MapPart* other, QHash<Symbol*, Symbol*>& symbol_map, bo
 			map->addObjectToSelection(new_object, false);
 	}
 	
-	map->objectUndoManager().addNewUndoStep(undo_step);
+	map->objectUndoManager().push(undo_step);
 	map->setObjectsDirty();
 	if (select_new_objects)
 	{

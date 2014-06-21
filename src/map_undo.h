@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2014 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -21,86 +22,231 @@
 #ifndef _OPENORIENTEERING_MAP_UNDO_H_
 #define _OPENORIENTEERING_MAP_UNDO_H_
 
+#include "symbol.h"
 #include "undo.h"
 
-/** Base class for all map undo steps */
-class MapUndoStep : public UndoStep
+QT_BEGIN_NAMESPACE
+class QIODevice;
+class QXmlStreamReader;
+class QXmlStreamWriter;
+QT_END_NAMESPACE
+
+
+/** 
+ * Base class for undo steps which modify objects of a single map part.
+ */
+class ObjectModifyingUndoStep : public UndoStep
 {
-Q_OBJECT
 public:
-	/** Creates a MapUndoStep for the given map with the given type */
-	MapUndoStep(Map* map, Type type);
+	/**
+	 * Creates an ObjectModifyingUndoStep for the given map and its current part.
+	 */
+	ObjectModifyingUndoStep(Type type, Map* map);
 	
-	/** Loads the MapUndoStep in the old "native" file format from the given file */
+	/**
+	 * Creates an ObjectModifyingUndoStep for the given map and part.
+	 */
+	ObjectModifyingUndoStep(Type type, Map* map, int part_index);
+	
+	/**
+	 * Destructor.
+	 */
+	virtual ~ObjectModifyingUndoStep();
+	
+	
+	/**
+	 * Returns the index of the map part modified by this undo step.
+	 */
+	int getPartIndex() const;
+	
+	/**
+	 * Set the index of the map part modified by this undo step.
+	 * 
+	 * This must not be called after object have been added.
+	 */
+	void setPartIndex(int part_index);
+	
+	
+	/**
+	 * Returns true if no objects are modified by this undo step.
+	 */
+	virtual bool isEmpty() const;
+	
+	/**
+	 * Adds an object (by index) to this step.
+	 * 
+	 * The object must belong to the step's part.
+	 */
+	virtual void addObject(int index);
+	
+	
+	/**
+	 * Adds the the step's modified part to the container provided by out.
+	 * 
+	 * @return True if there are objects modified by this undo step, false otherwise.
+	 */
+	virtual bool getModifiedParts(PartSet& out) const;
+	
+	/**
+	 * Adds the list of the step's modified objects to the container provided by out.
+	 * 
+	 * Only adds objects when the given part_index matches this step's part index.
+	 */
+	virtual void getModifiedObjects(int part_index, ObjectSet& out) const;
+	
+	
+	/**
+	 * Loads the undo step from the file in the old "native" format.
+	 * @deprecated Old file format.
+	 */
 	virtual bool load(QIODevice* file, int version);
-	
-	/** Returns the map part affected by the MapUndoStep */
-	int getPart() const {return part;}
-	
-	/** Returns a list of affected objects in out. */
-	virtual void getAffectedOutcome(std::vector<Object*>& out) const;
 	
 protected:
+	/**
+	 * Saves undo properties to the the xml stream.
+	 * 
+	 * Implementations in derived classes shall first call the parent class'
+	 * implementation, and then start a new element for additional properties.
+	 */
 	virtual void saveImpl(QXmlStreamWriter& xml) const;
+	
+	/**
+	 * Loads undo properties from the the xml stream.
+	 * 
+	 * Implementations in derived classes shall first check the element's name
+	 * for one of their own elements, and otherwise call the parent class'
+	 * implementation.
+	 */
 	virtual void loadImpl(QXmlStreamReader& xml, SymbolDictionary& symbol_dict);
 	
-	int part;
-	/** Indices of the existing objects that are affected */
-	std::vector<int> affected_objects;
-	Map* map;
+	
+private:
+	/**
+	 * The index of the part all modified objects belong to.
+	 */
+	int part_index;
+	
+protected:
+	/**
+	 * A list of indices referring to objects in a map part.
+	 */
+	typedef std::vector<int> ObjectList;
+	
+	/**
+	 * Indices of the existing objects that are modified by this step.
+	 */
+	ObjectList modified_objects;
 };
 
+
+
 /**
- * Base class for undo steps which store an array of objects internally.
- * Takes care of correctly reacting to symbol changes in the map, which are not
- * covered by the undo / redo system.
+ * Base class for undo steps which add new objects to the map.
+ * 
+ * Takes care of correctly reacting to symbol changes in the map,
+ * which are not covered by the undo / redo system.
+ * 
  */
-class ObjectContainingUndoStep : public MapUndoStep
+class ObjectCreatingUndoStep : public QObject, public ObjectModifyingUndoStep
 {
 Q_OBJECT
 public:
-	/** Constructor, calls MapUndoStep(map, type). */
-	ObjectContainingUndoStep(Map* map, Type type);
+	/**
+	 * Constructor.
+	 */
+	ObjectCreatingUndoStep(Type type, Map* map);
 	
-	/** Destructor. */
-	virtual ~ObjectContainingUndoStep();
+	/**
+	 * Destructor.
+	 */
+	virtual ~ObjectCreatingUndoStep();
 	
-	/** Adds an object to the undo step with given index. */
+	
+	/**
+	 * Returns true if the step can still be undone.
+	 * 
+	 * The value returned by this function is taken from the "valid" member variable.
+	 */
+	virtual bool isValid() const;
+	
+	/**
+	 * Must not be called.
+	 * 
+	 * Use the two-parameter signatures instead of this one.
+	 * 
+	 * Does nothing in release builds. Aborts the program in non-release builds.
+	 * Reimplemented from ObjectModifyingUndoStep::addObject()).
+	 */
+	virtual void addObject(int index);
+	
+	/**
+	 * Adds an object to the undo step with given index.
+	 */
 	void addObject(int existing_index, Object* object);
-	/** Adds an object to the undo step with the index of the existing object. */
+	
+	/**
+	 * Adds an object to the undo step with the index of the existing object.
+	 */
 	void addObject(Object* existing, Object* object);
 	
-	/** Loads the MapUndoStep in the old "native" file format from the given file */
+	/**
+	 * @copybrief ObjectModifyingUndoStep::getModifiedObjects
+	 */
+	virtual void getModifiedObjects(int, ObjectSet&) const;
+	
+	
+	/**
+	 * @copybrief UndoStep::load()
+	 * @deprecated Old file format.
+	 */
 	virtual bool load(QIODevice* file, int version);
 	
-	/** Returns a list of affected objects in out. */
-	virtual void getAffectedOutcome(std::vector< Object* >& out) const {out = objects;}
-	/** Returns true if no objects are stored in the undo step. */
-	inline bool isEmpty() const {return objects.empty();}
-	
 public slots:
-	/** Adapts the symbol pointers of objects referencing the changed symbol */
+	/**
+	 * Adapts the symbol pointers of objects referencing the changed symbol.
+	 */
 	virtual void symbolChanged(int pos, Symbol* new_symbol, Symbol* old_symbol);
 	
 	/**
-	 * Invalidates the undo step if a contained object
-	 * referenced the deleted symbol
+	 * Invalidates the undo step if a contained object references the deleted symbol.
 	 */
 	virtual void symbolDeleted(int pos, Symbol* old_symbol);
 	
 protected:
+	/**
+	 * @copybrief UndoStep::saveImpl()
+	 */
 	virtual void saveImpl(QXmlStreamWriter& xml) const;
+	
+	/**
+	 * @copybrief UndoStep::loadImpl()
+	 */
 	virtual void loadImpl(QXmlStreamReader& xml, SymbolDictionary& symbol_dict);
 	
+	/**
+	 * A list of object instance which are currently not part of the map.
+	 */
 	std::vector<Object*> objects;
+	
+	/**
+	 * A flag indicating whether this step is still valid.
+	 */
+	bool valid;
 };
 
-/** Map undo step which replaces all affected objects by another set of objects. */
-class ReplaceObjectsUndoStep : public ObjectContainingUndoStep
+
+
+/**
+ * Map undo step which replaces all affected objects by another set of objects.
+ */
+class ReplaceObjectsUndoStep : public ObjectCreatingUndoStep
 {
 Q_OBJECT
 public:
 	ReplaceObjectsUndoStep(Map* map);
+	
+	virtual ~ReplaceObjectsUndoStep();
+	
 	virtual UndoStep* undo();
 };
 
@@ -110,17 +256,18 @@ public:
  * Take care of correct application order when mixing with an add step to
  * make sure that the object indices are preserved.
  */
-class DeleteObjectsUndoStep : public MapUndoStep
+class DeleteObjectsUndoStep : public ObjectModifyingUndoStep
 {
-Q_OBJECT
 public:
 	DeleteObjectsUndoStep(Map* map);
 	
-	void addObject(int index);
+	virtual ~DeleteObjectsUndoStep();
+	
 	virtual UndoStep* undo();
 	
-	virtual void getAffectedOutcome(std::vector< Object* >& out) const {out.clear();}
-	inline bool isEmpty() const {return affected_objects.empty();}
+	virtual bool getModifiedParts(PartSet& out) const;
+	
+	virtual void getModifiedObjects(int part_index, ObjectSet& out) const;
 };
 
 /**
@@ -129,59 +276,89 @@ public:
  * Take care of correct application order when mixing with a delete step to
  * make sure that the object indices are preserved.
  */
-class AddObjectsUndoStep : public ObjectContainingUndoStep
+class AddObjectsUndoStep : public ObjectCreatingUndoStep
 {
 Q_OBJECT
 public:
 	AddObjectsUndoStep(Map* map);
+	
+	~AddObjectsUndoStep();
+	
 	virtual UndoStep* undo();
 	
 	/**
 	 * Removes all contained objects from the map.
+	 * 
 	 * This can be useful after constructing the undo step,
 	 * as it is often impractical to remove the objects directly
 	 * when adding them as the indexing would be changed this way.
 	 */
 	void removeContainedObjects(bool emit_selection_changed);
+	
 protected:
 	static bool sortOrder(const std::pair<int, int>& a, const std::pair<int, int>& b);
 };
 
-/** Map undo step which changes the symbols of referenced objects. */
-class SwitchSymbolUndoStep : public MapUndoStep
+
+
+/**
+ * Map undo step which changes the symbols of referenced objects.
+ */
+class SwitchSymbolUndoStep : public QObject, public ObjectModifyingUndoStep
 {
 Q_OBJECT
 public:
 	SwitchSymbolUndoStep(Map* map);
 	
-	void addObject(int index, Symbol* target_symbol);
+	virtual ~SwitchSymbolUndoStep();
+	
+	bool isValid() const;
+	
+	virtual void addObject(int index, Symbol* target_symbol);
+	
 	virtual UndoStep* undo();
 	
 	virtual bool load(QIODevice* file, int version);
 	
 public slots:
 	virtual void symbolChanged(int pos, Symbol* new_symbol, Symbol* old_symbol);
+	
 	virtual void symbolDeleted(int pos, Symbol* old_symbol);
 	
 protected:
 	virtual void saveImpl(QXmlStreamWriter& xml) const;
+	
 	virtual void loadImpl(QXmlStreamReader& xml, SymbolDictionary& symbol_dict);
 	
 	std::vector<Symbol*> target_symbols;
+	
+	bool valid;
 };
 
 /**
  * Map undo step which reverses the directions of referenced objects,
+ * 
  * thereby switching the side of any line mid symbols (often dashes of fences).
  */
-class SwitchDashesUndoStep : public MapUndoStep
+class SwitchDashesUndoStep : public ObjectModifyingUndoStep
 {
-Q_OBJECT
 public:
 	SwitchDashesUndoStep(Map* map);
 	
-	void addObject(int index);
+	virtual ~SwitchDashesUndoStep();
+	
 	virtual UndoStep* undo();
 };
+
+
+
+// ### ObjectModifyingUndoStep inline code ###
+
+inline
+int ObjectModifyingUndoStep::getPartIndex() const
+{
+	return part_index;
+}
+
 
 #endif

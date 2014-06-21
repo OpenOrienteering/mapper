@@ -269,8 +269,8 @@ void MapEditorController::setEditingInProgress(bool value)
 	{
 		editing_in_progress = value;
 		
-		undo_act->setEnabled(!editing_in_progress && map->objectUndoManager().getNumUndoSteps() > 0);
-		redo_act->setEnabled(!editing_in_progress && map->objectUndoManager().getNumRedoSteps() > 0);
+		undo_act->setEnabled(!editing_in_progress && map->objectUndoManager().canUndo());
+		redo_act->setEnabled(!editing_in_progress && map->objectUndoManager().canRedo());
 		updatePasteAvailability();
 		
 		map_widget->setGesturesEnabled(!value);
@@ -1285,54 +1285,34 @@ void MapEditorController::redo()
 
 void MapEditorController::doUndo(bool redo)
 {
-	if ((!redo && map->objectUndoManager().getNumUndoSteps() == 0) ||
-		(redo && map->objectUndoManager().getNumRedoSteps() == 0))
+	if ((!redo && !map->objectUndoManager().canUndo()) ||
+		(redo && !map->objectUndoManager().canRedo()))
 	{
 		// This should not happen as the action should be deactivated in this case!
 		QMessageBox::critical(window, tr("Error"), tr("No undo steps available."));
 		return;
 	}
 	
-	UndoStep* generic_step = redo ? map->objectUndoManager().getLastRedoStep() : map->objectUndoManager().getLastUndoStep();
-	MapPart* affected_part = NULL;
-	std::vector<Object*> affected_objects;
+	UndoStep* step = redo ? map->objectUndoManager().nextRedoStep() : map->objectUndoManager().nextUndoStep();
 	
-	if (generic_step->getType() == UndoStep::CombinedUndoStepType)
-	{
-		CombinedUndoStep* combined_step = reinterpret_cast<CombinedUndoStep*>(generic_step);
-		std::set<Object*> affected_objects_set;
-		for (int i = 0; i < combined_step->getNumSubSteps(); ++i)
-		{
-			std::vector<Object*> affected_objects_temp;
-			MapUndoStep* map_step = reinterpret_cast<MapUndoStep*>(combined_step->getSubStep(i));
-			if (!affected_part)
-				affected_part = map->getPart(map_step->getPart());
-			else
-				assert(affected_part == map->getPart(map_step->getPart()));
-			map_step->getAffectedOutcome(affected_objects_temp);
-			
-			for (int o = 0; o < (int)affected_objects_temp.size(); ++o)
-				affected_objects_set.insert(affected_objects_temp[o]);	// NOTE: This does only work as long as there is no combined step which combines editing objects with deleting them later
-		}
-		for (std::set<Object*>::const_iterator it = affected_objects_set.begin(); it != affected_objects_set.end(); ++it)
-			affected_objects.push_back(*it);
-	}
-	else
-	{
-		MapUndoStep* map_step = reinterpret_cast<MapUndoStep*>(generic_step);
-		affected_part = map->getPart(map_step->getPart());
-		map_step->getAffectedOutcome(affected_objects);
-	}
+	UndoStep::PartSet result_parts;
+	bool have_modified_objects = step->getModifiedParts(result_parts);
+	if (have_modified_objects && result_parts.find(map->getCurrentPartIndex()) == result_parts.end())
+		map->setCurrentPart(*result_parts.begin());
 	
-	bool in_saved_state, done;
+	UndoStep::ObjectSet result_objects;
+	step->getModifiedObjects(map->getCurrentPartIndex(), result_objects);
+	
+	bool done;
 	if (redo)
-		in_saved_state = map->objectUndoManager().redo(window, &done);
+		done = map->objectUndoManager().redo(window);
 	else
-		in_saved_state = map->objectUndoManager().undo(window, &done);
+		done = map->objectUndoManager().undo(window);
 	
 	if (!done)
 		return;
 	
+	bool in_saved_state = map->objectUndoManager().isClean();
 	if (map->hasUnsavedChanged() && in_saved_state && !(map->areColorsDirty() || map->areSymbolsDirty() || map->areTemplatesDirty() || map->isOtherDirty()))
 	{
 		map->setHasUnsavedChanges(false);
@@ -1345,12 +1325,14 @@ void MapEditorController::doUndo(bool redo)
 	}
 	
 	// Select affected objects and ensure that they are visible
-	map->clearObjectSelection((int)affected_objects.size() == 0);
+	map->clearObjectSelection((int)result_objects.size() == 0);
+	
 	QRectF object_rect;
-	for (int i = 0; i < (int)affected_objects.size(); ++i)
+	UndoStep::ObjectSet::iterator object = result_objects.begin();
+	for (std::size_t i = 1, size = result_objects.size(); i <= size; ++i, ++object)
 	{
-		rectIncludeSafe(object_rect, affected_objects[i]->getExtent());
-		map->addObjectToSelection(affected_objects[i], i == (int)affected_objects.size() - 1);
+		rectIncludeSafe(object_rect, (*object)->getExtent());
+		map->addObjectToSelection(*object, i == size);
 	}
 	if (object_rect.isValid())
 		map_widget->ensureVisibilityOfRect(object_rect, false, true);
@@ -1460,7 +1442,7 @@ void MapEditorController::paste()
 
 void MapEditorController::clearUndoRedoHistory()
 {
-	map->objectUndoManager().clear(false);
+	map->objectUndoManager().clear();
 	map->setOtherDirty();
 }
 
@@ -2049,8 +2031,8 @@ void MapEditorController::undoStepAvailabilityChanged()
 	if (mode != MapEditor)
 		return;
 	
-	undo_act->setEnabled(map->objectUndoManager().getNumUndoSteps() > 0);
-	redo_act->setEnabled(map->objectUndoManager().getNumRedoSteps() > 0);
+	undo_act->setEnabled(map->objectUndoManager().canUndo());
+	redo_act->setEnabled(map->objectUndoManager().canRedo());
 	clear_undo_redo_history_act->setEnabled(undo_act->isEnabled() || redo_act->isEnabled());
 }
 
@@ -2160,7 +2142,7 @@ void MapEditorController::duplicateClicked()
 	}
 	
 	map->setObjectsDirty();
-	map->objectUndoManager().addNewUndoStep(undo_step);
+	map->objectUndoManager().push(undo_step);
 	setEditTool();
 	window->showStatusBarMessage(tr("%1 object(s) duplicated").arg((int)new_objects.size()), 2000);
 }
@@ -2253,16 +2235,16 @@ void MapEditorController::switchSymbolClicked()
 	
 	map->setObjectsDirty();
 	if (close_paths)
-		map->objectUndoManager().addNewUndoStep(replace_step);
+		map->objectUndoManager().push(replace_step);
 	else if (split_up)
 	{
-		CombinedUndoStep* combined_step = new CombinedUndoStep((void*)map);
+		CombinedUndoStep* combined_step = new CombinedUndoStep(map);
 		combined_step->addSubStep(delete_step);
 		combined_step->addSubStep(add_step);
-		map->objectUndoManager().addNewUndoStep(combined_step);
+		map->objectUndoManager().push(combined_step);
 	}
 	else
-		map->objectUndoManager().addNewUndoStep(switch_step);
+		map->objectUndoManager().push(switch_step);
 	map->emitSelectionEdited();
 	// Also emit selectionChanged, as symbols of selected objects changed
 	map->emitSelectionChanged();
@@ -2320,7 +2302,7 @@ void MapEditorController::fillBorderClicked()
 		map->addObjectToSelection(new_objects[i], i == (int)new_objects.size() - 1);
 		undo_step->addObject(part->findObjectIndex(new_objects[i]));
 	}
-	map->objectUndoManager().addNewUndoStep(undo_step);
+	map->objectUndoManager().push(undo_step);
 }
 void MapEditorController::selectObjectsClicked(bool select_exclusively)
 {
@@ -2376,7 +2358,7 @@ void MapEditorController::switchDashesClicked()
 	}
 	
 	map->setObjectsDirty();
-	map->objectUndoManager().addNewUndoStep(undo_step);
+	map->objectUndoManager().push(undo_step);
 	map->emitSelectionEdited();
 }
 
@@ -2594,12 +2576,12 @@ void MapEditorController::connectPathsClicked()
 	
 	if (add_step || replace_step)
 	{
-		CombinedUndoStep* undo_step = new CombinedUndoStep((void*)map);
+		CombinedUndoStep* undo_step = new CombinedUndoStep(map);
 		if (add_step)
 			undo_step->addSubStep(add_step);
 		if (replace_step)
 			undo_step->addSubStep(replace_step);
-		map->objectUndoManager().addNewUndoStep(undo_step);
+		map->objectUndoManager().push(undo_step);
 		map->setObjectsDirty();
 	}
 	
@@ -2716,7 +2698,7 @@ void MapEditorController::convertToCurvesClicked()
 	else
 	{
 		map->setObjectsDirty();
-		map->objectUndoManager().addNewUndoStep(undo_step);
+		map->objectUndoManager().push(undo_step);
 		map->emitSelectionEdited();
 	}
 }
@@ -2744,7 +2726,7 @@ void MapEditorController::simplifyPathClicked()
 	else
 	{
 		map->setObjectsDirty();
-		map->objectUndoManager().addNewUndoStep(undo_step);
+		map->objectUndoManager().push(undo_step);
 		map->emitSelectionEdited();
 	}
 }
@@ -2795,7 +2777,7 @@ void MapEditorController::distributePointsClicked()
 		delete_step->addObject(part->findObjectIndex(object));
 		map->addObjectToSelection(object, i == created_objects.size() - 1);
 	}
-	map->objectUndoManager().addNewUndoStep(delete_step);
+	map->objectUndoManager().push(delete_step);
 	map->setObjectsDirty();
 }
 
@@ -3330,7 +3312,8 @@ void MapEditorController::setMap(Map* map, bool create_new_map_view)
 		main_view = new MapView(map);
 	}
 	
-	connect(&map->objectUndoManager(), SIGNAL(undoStepAvailabilityChanged()), this, SLOT(undoStepAvailabilityChanged()));
+	connect(&map->objectUndoManager(), SIGNAL(canRedoChanged(bool)), this, SLOT(undoStepAvailabilityChanged()));
+	connect(&map->objectUndoManager(), SIGNAL(canUndoChanged(bool)), this, SLOT(undoStepAvailabilityChanged()));
 	connect(map, SIGNAL(objectSelectionChanged()), this, SLOT(objectSelectionChanged()));
 	connect(map, SIGNAL(templateAdded(int,Template*)), this, SLOT(templateAdded(int,Template*)));
 	connect(map, SIGNAL(templateDeleted(int,Template*)), this, SLOT(templateDeleted(int,Template*)));

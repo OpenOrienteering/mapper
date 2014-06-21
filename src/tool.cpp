@@ -298,7 +298,7 @@ void MapEditorTool::finishEditingSelection(MapRenderables& renderables, MapRende
 	
 	undo_duplicates->clear();
 	if (create_undo_step)
-		editor->getMap()->objectUndoManager().addNewUndoStep(undo_step);
+		editor->getMap()->objectUndoManager().push(undo_step);
 	
 	editor->setEditingInProgress(false);
 }

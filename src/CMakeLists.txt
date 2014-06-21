@@ -36,6 +36,7 @@ set(Mapper_Common_SRCS
  util_translation.cpp
  mapper_resource.cpp
  undo.cpp
+ undo_manager.cpp
  matrix.cpp
  transformation.cpp
 
@@ -229,7 +230,7 @@ set(Mapper_Common_MOC_INPUT
  tool_rotate.h
  tool_rotate_pattern.h
  tool_scale.h
- undo.h
+ undo_manager.h
  util_task_dialog.h
  
  core/auto_save_p.h
@@ -282,6 +283,7 @@ set(Mapper_EXTRA_HEADERS
   gui/settings_dialog_p.h
   util/scoped_signals_blocker.h
   file_format_ocad8_p.h
+  undo.h
 )
 
 qt5_wrap_cpp(Mapper_Common_MOC ${Mapper_Common_MOC_INPUT})

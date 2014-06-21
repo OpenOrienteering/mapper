@@ -87,7 +87,7 @@ HEADERS += \
   tool_rotate.h \
   tool_rotate_pattern.h \
   tool_scale.h \
-  undo.h \
+  undo_manager.h \
   util_task_dialog.h \
   core/auto_save_p.h \
   core/georeferencing.h \
@@ -128,6 +128,7 @@ SOURCES += \
   util_translation.cpp \
   mapper_resource.cpp \
   undo.cpp \
+  undo_manager.cpp \
   matrix.cpp \
   transformation.cpp \
   settings.cpp \

@@ -121,7 +121,7 @@ void TagsWidget::createUndoStep(Object* object)
 	ReplaceObjectsUndoStep* undo_step = new ReplaceObjectsUndoStep(map);
 	undo_step->addObject(object, undo_duplicate);
 	
-	map->objectUndoManager().addNewUndoStep(undo_step);
+	map->objectUndoManager().push(undo_step);
 }
 
 // slot

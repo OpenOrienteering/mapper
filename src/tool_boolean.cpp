@@ -155,10 +155,10 @@ bool BooleanTool::execute()
 		delete_step->addObject(part->findObjectIndex(out_objects[i]));
 	}
 	
-	CombinedUndoStep* undo_step = new CombinedUndoStep((void*)map);
+	CombinedUndoStep* undo_step = new CombinedUndoStep(map);
 	undo_step->addSubStep(delete_step);
 	undo_step->addSubStep(add_step);
-	map->objectUndoManager().addNewUndoStep(undo_step);
+	map->objectUndoManager().push(undo_step);
 	map->setObjectsDirty();
 	
 	map->emitSelectionChanged();

@@ -368,6 +368,7 @@ CombinedSymbol* Map::covering_combined_line;
 
 Map::Map()
  : has_spot_colors(false),
+   object_undo_manager(this),
    renderables(new MapRenderables(this)),
    selection_renderables(new MapRenderables(this)),
    printer_config(NULL)
@@ -376,7 +377,6 @@ Map::Map()
 		initStatic();
 	
 	color_set = NULL;
-	object_undo_manager.setOwner(this);
 	georeferencing = new Georeferencing();
 	grid = new MapGrid();
 	area_hatching_enabled = false;
@@ -437,7 +437,7 @@ void Map::changeScale(unsigned int new_scale_denominator, const MapCoord& scalin
 		scaleAllSymbols(factor);
 	if (scale_objects)
 	{
-		object_undo_manager.clear(false);
+		object_undo_manager.clear();
 		scaleAllObjects(factor, scaling_center);
 	}
 	if (scale_georeferencing)
@@ -471,7 +471,7 @@ void Map::rotateMap(double rotation, const MapCoord& center, bool adjust_georefe
 	if (fmod(rotation, 2 * M_PI) == 0)
 		return;
 	
-	object_undo_manager.clear(false);
+	object_undo_manager.clear();
 	rotateAllObjects(rotation, center);
 	
 	if (adjust_georeferencing)
@@ -522,7 +522,7 @@ bool Map::saveTo(const QString& path, MapEditorController* map_editor)
 	other_dirty = false;
 	unsaved_changes = false;
 	
-	objectUndoManager().notifyOfSave();
+	objectUndoManager().setClean();
 	
 	return true;
 }
@@ -928,7 +928,8 @@ void Map::clear()
 	first_selected_object = NULL;
 	
 	widgets.clear();
-	object_undo_manager.clear(true);
+	object_undo_manager.clear();
+	object_undo_manager.setClean();
 	
 	map_notes = "";
 	
@@ -1070,7 +1071,7 @@ void Map::deleteSelectedObjects()
 		
 		setObjectsDirty();
 		clearObjectSelection(true);
-		objectUndoManager().addNewUndoStep(undo_step);
+		objectUndoManager().push(undo_step);
 	}
 }
 
@@ -1642,7 +1643,7 @@ void Map::setSymbol(Symbol* symbol, int pos)
 void Map::deleteSymbol(int pos)
 {
 	if (deleteAllObjectsWithSymbol(symbols[pos]))
-		object_undo_manager.clear(false);
+		object_undo_manager.clear();
 	
 	int size = (int)symbols.size();
 	for (int i = 0; i < size; ++i)

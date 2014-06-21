@@ -160,7 +160,7 @@ bool CutTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidg
 					
 					ReplaceObjectsUndoStep* replace_step = new ReplaceObjectsUndoStep(map);
 					replace_step->addObject(part->findObjectIndex(split_object), undo_duplicate);
-					map->objectUndoManager().addNewUndoStep(replace_step);
+					map->objectUndoManager().push(replace_step);
 					split_object->update(); // Make sure that the map display is updated
 				}
 				else
@@ -174,7 +174,7 @@ bool CutTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidg
 					float max_cut_pos = qMax(drag_start_len, drag_end_len);
 					float path_len = split_object->getPathCoordinateVector().at(split_object->getPathCoordinateVector().size() - 1).clen;
 					if (min_cut_pos <= 0 && max_cut_pos >= path_len)
-						map->objectUndoManager().addNewUndoStep(add_step);
+						map->objectUndoManager().push(add_step);
 					else
 					{
 						DeleteObjectsUndoStep* delete_step = new DeleteObjectsUndoStep(map);
@@ -196,10 +196,10 @@ bool CutTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidg
 							map->addObjectToSelection(part2, true);
 						}
 						
-						CombinedUndoStep* undo_step = new CombinedUndoStep((void*)map);
+						CombinedUndoStep* undo_step = new CombinedUndoStep(map);
 						undo_step->addSubStep(delete_step);
 						undo_step->addSubStep(add_step);
-						map->objectUndoManager().addNewUndoStep(undo_step);
+						map->objectUndoManager().push(undo_step);
 					}
 				}
 				
@@ -235,7 +235,7 @@ bool CutTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidg
 			map->removeObjectFromSelection(split_object, false);
 			if (!out1 && !out2)
 			{
-				map->objectUndoManager().addNewUndoStep(add_step);
+				map->objectUndoManager().push(add_step);
 				map->emitSelectionChanged();
 				map->emitSelectionEdited();
 				return true;
@@ -257,14 +257,14 @@ bool CutTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidg
 			if (out2)
 				delete_step->addObject(part->findObjectIndex(out2));
 			
-			CombinedUndoStep* undo_step = new CombinedUndoStep((void*)map);
+			CombinedUndoStep* undo_step = new CombinedUndoStep(map);
 			if (out1 || out2)
 				undo_step->addSubStep(delete_step);
 			else
 				delete delete_step;
 			if (add_step)
 				undo_step->addSubStep(add_step);
-			map->objectUndoManager().addNewUndoStep(undo_step);
+			map->objectUndoManager().push(undo_step);
 			
 			updateDirtyRect();
 			map->emitSelectionEdited();
@@ -679,10 +679,10 @@ void CutTool::pathFinished(PathObject* split_path)
 		map->addObjectToSelection(parts[i], false);
 	}
 	
-	CombinedUndoStep* undo_step = new CombinedUndoStep((void*)map);
+	CombinedUndoStep* undo_step = new CombinedUndoStep(map);
 	undo_step->addSubStep(delete_step);
 	undo_step->addSubStep(add_step);
-	map->objectUndoManager().addNewUndoStep(undo_step);
+	map->objectUndoManager().push(undo_step);
 	map->setObjectsDirty();
 	
 	pathAborted();

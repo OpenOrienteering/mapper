@@ -471,7 +471,7 @@ void EditTool::createReplaceUndoStep(Object* object)
 	Object* undo_duplicate = object->duplicate();
 	undo_duplicate->setMap(map());
 	undo_step->addObject(object, undo_duplicate);
-	map()->objectUndoManager().addNewUndoStep(undo_step);
+	map()->objectUndoManager().push(undo_step);
 	
 	map()->setObjectsDirty();
 }

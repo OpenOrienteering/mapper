@@ -718,7 +718,7 @@ bool DrawPathTool::removeLastPointFromSelectedPath()
 	Object* undo_duplicate = object->duplicate();
 	undo_duplicate->setMap(map());
 	undo_step->addObject(object, undo_duplicate);
-	map()->objectUndoManager().addNewUndoStep(undo_step);
+	map()->objectUndoManager().push(undo_step);
 	updateDirtyRect();
 	
 	path->getPart(0).setClosed(false);

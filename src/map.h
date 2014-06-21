@@ -32,7 +32,7 @@
 #include <QExplicitlySharedDataPointer>
 
 #include "global.h"
-#include "undo.h"
+#include "undo_manager.h"
 #include "map_coord.h"
 #include "map_part.h"
 
