@@ -25,7 +25,7 @@
 
 #include "map.h"
 #include "map_editor.h"
-#include "map_undo.h"
+#include "object_undo.h"
 #include "map_widget.h"
 #include "object.h"
 #include "renderable.h"

@@ -30,7 +30,7 @@
 #include "object_text.h"
 #include "map.h"
 #include "map_widget.h"
-#include "map_undo.h"
+#include "object_undo.h"
 #include "tool_draw_text.h"
 #include "tool_helpers.h"
 #include "symbol_line.h"

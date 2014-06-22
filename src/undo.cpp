@@ -22,7 +22,7 @@
 #include "undo.h"
 
 #include "map.h"
-#include "map_undo.h"
+#include "object_undo.h"
 #include "util/xml_stream_util.h"
 
 // ### UndoStep ###

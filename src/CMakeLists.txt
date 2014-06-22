@@ -48,7 +48,7 @@ set(Mapper_Common_SRCS
  touch_cursor.cpp
  map_editor.cpp
  map_editor_activity.cpp
- map_undo.cpp
+ object_undo.cpp
  map_dialog_new.cpp
  map_dialog_scale.cpp
  map_dialog_rotate.cpp
@@ -184,7 +184,7 @@ set(Mapper_Common_MOC_INPUT
  map_editor.h
  map_editor_activity.h
  map_grid.h
- map_undo.h
+ object_undo.h
  map_widget.h
  settings.h
  symbol.h

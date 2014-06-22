@@ -25,7 +25,7 @@
 
 #include "gui/georeferencing_dialog.h"
 #include "map_widget.h"
-#include "map_undo.h"
+#include "object_undo.h"
 #include "object.h"
 #include "symbol_line.h"
 #include "symbol_point.h"

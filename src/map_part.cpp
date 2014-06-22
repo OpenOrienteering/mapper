@@ -32,7 +32,7 @@
 #include <QXmlStreamWriter>
 
 #include "map.h"
-#include "map_undo.h"
+#include "object_undo.h"
 #include "object.h"
 #include "object_operations.h"
 #include "renderable.h"

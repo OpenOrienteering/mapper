@@ -43,7 +43,7 @@
 #include "map_editor.h"
 #include "map_grid.h"
 #include "map_part.h"
-#include "map_undo.h"
+#include "object_undo.h"
 #include "map_widget.h"
 #include "object.h"
 #include "object_operations.h"

@@ -19,7 +19,7 @@
  */
 
 
-#include "map_undo.h"
+#include "object_undo.h"
 
 #include <algorithm>
 

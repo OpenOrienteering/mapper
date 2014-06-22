@@ -44,7 +44,7 @@
 #include "map_dialog_scale.h"
 #include "map_editor_activity.h"
 #include "map_grid.h"
-#include "map_undo.h"
+#include "object_undo.h"
 #include "map_widget.h"
 #include "gps_display.h"
 #include "gps_temporary_markers.h"
