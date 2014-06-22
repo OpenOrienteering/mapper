@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2012, 2013, 2014 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -58,8 +59,6 @@ namespace literal
 	static const QLatin1String pattern("pattern");
 	static const QLatin1String rotation("rotation");
 	static const QLatin1String tags("tags");
-	static const QLatin1String key("key");
-	static const QLatin1String tag("tag");
 }
 
 
@@ -313,17 +312,10 @@ void Object::save(QXmlStreamWriter& xml) const
 		object_element.writeAttribute(literal::v_align, text->getVerticalAlignment());
 	}
 	
-	const int num_tags = object_tags.size();
-	if (num_tags > 0)
+	if (!object_tags.empty())
 	{
 		XmlElementWriter tags_element(xml, literal::tags);
-		tags_element.writeAttribute(literal::count, num_tags);
-		for (Tags::const_iterator tag = object_tags.constBegin(), end = object_tags.constEnd(); tag != end; ++tag)
-		{
-			XmlElementWriter tag_element(xml, literal::tag);
-			tag_element.writeAttribute(literal::key, tag.key());
-			xml.writeCharacters(tag.value());
-		}
+		tags_element.write(object_tags);
 	}
 	
 	{
@@ -420,24 +412,7 @@ Object* Object::load(QXmlStreamReader& xml, Map* map, const SymbolDictionary& sy
 		}
 		else if (xml.name() == literal::tags)
 		{
-			object->object_tags.clear();
-			while (xml.readNextStartElement())
-			{
-				if (xml.name() == literal::tag)
-				{
-					const QString key(xml.attributes().value(literal::key).toString());
-					object->object_tags.insert(key, xml.readElementText());
-				}
-				else if (xml.name() == literal::tags)
-				{
-					// Fix for broken Object::save in pre-0.6.0 master branch
-					// TODO Remove after Mapper 0.6.x releases
-					const QString key(xml.attributes().value(literal::key).toString());
-					object->object_tags.insert(key, xml.readElementText());
-				}
-				else
-					xml.skipCurrentElement();
-			}
+			XmlElementReader(xml).read(object->object_tags);
 		}
 		else
 			xml.skipCurrentElement(); // unknown
