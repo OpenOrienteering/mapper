@@ -30,6 +30,7 @@
 #include "map_grid.h"
 #include "symbol.h"
 #include "template.h"
+#include "undo_manager.h"
 #include "util.h"
 
 
@@ -360,7 +361,7 @@ void NativeFileImport::import(bool load_symbols_only) throw (FileFormatException
 		// Load undo steps
 		if (version >= 7)
 		{
-			if (!map->object_undo_manager.load(stream, version))
+			if (!map->undoManager().load(stream, version))
 			{
 				throw FileFormatException(Importer::tr("Error while loading undo steps."));
 			}

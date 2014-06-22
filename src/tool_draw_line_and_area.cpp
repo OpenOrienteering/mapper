@@ -240,7 +240,7 @@ void DrawLineAndAreaTool::finishDrawing(PathObject* append_to_object)
 			MapPart* cur_part = map()->getCurrentPart();
 			ReplaceObjectsUndoStep* undo_step = new ReplaceObjectsUndoStep(map());
 			undo_step->addObject(cur_part->findObjectIndex(append_to_object), undo_duplicate);
-			map()->objectUndoManager().push(undo_step);
+			map()->push(undo_step);
 		}
 		else
 		{
@@ -250,7 +250,7 @@ void DrawLineAndAreaTool::finishDrawing(PathObject* append_to_object)
 			
 			DeleteObjectsUndoStep* undo_step = new DeleteObjectsUndoStep(map());
 			undo_step->addObject(index);
-			map()->objectUndoManager().push(undo_step);
+			map()->push(undo_step);
 		}
 	}
 	map()->clearDrawingBoundingBox();

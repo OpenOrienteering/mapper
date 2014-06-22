@@ -33,10 +33,10 @@
 
 #include "map.h"
 #include "map_undo.h"
-#include "util.h"
 #include "object.h"
 #include "object_operations.h"
 #include "renderable.h"
+#include "util.h"
 
 MapPart::MapPart(const QString& name, Map* map) : name(name), map(map)
 {
@@ -203,7 +203,7 @@ void MapPart::importPart(MapPart* other, QHash<Symbol*, Symbol*>& symbol_map, bo
 			map->addObjectToSelection(new_object, false);
 	}
 	
-	map->objectUndoManager().push(undo_step);
+	map->push(undo_step);
 	map->setObjectsDirty();
 	if (select_new_objects)
 	{

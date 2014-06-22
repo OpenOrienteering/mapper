@@ -300,7 +300,7 @@ void CutoutTool::apply(Map* map, PathObject* cutout_object, bool cut_away)
 	if (undo_step)
 	{
 		map->setObjectsDirty();
-		map->objectUndoManager().push(undo_step);
+		map->push(undo_step);
 		map->emitSelectionEdited();
 	}
 }

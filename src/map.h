@@ -32,7 +32,6 @@
 #include <QExplicitlySharedDataPointer>
 
 #include "global.h"
-#include "undo_manager.h"
 #include "map_coord.h"
 #include "map_part.h"
 
@@ -45,6 +44,7 @@ QT_END_NAMESPACE
 
 class Map;
 class MapColor;
+class MapColorMap;
 class MapWidget;
 class MapView;
 class MapEditorController;
@@ -57,6 +57,8 @@ class Object;
 class Renderable;
 class MapRenderables;
 class Template;
+class UndoManager;
+class UndoStep;
 class OCAD8FileImport;
 class Georeferencing;
 class MapGrid;
@@ -616,10 +618,20 @@ public:
 							  MapView* view, const QString& map_path = QString());
 	
 	
-	// Map parts & Undo
+	// Undo & Redo
 	
-	/** Returns the UndoManager instance for this map. */
-	inline UndoManager& objectUndoManager() {return object_undo_manager;}
+	/**
+	 * Returns the UndoManager instance for this map.
+	 */
+	UndoManager& undoManager();
+	
+	/**
+	 * Pushes a new undo step to the map's undoManager.
+	 */
+	void push(UndoStep* step);
+	
+	
+	// Map parts
 	
 	/** Returns the number of map parts in this map. */
 	inline int getNumParts() const {return (int)parts.size();}
@@ -1195,7 +1207,7 @@ private:
 	PartVector parts;
 	ObjectSelection object_selection;
 	Object* first_selected_object;
-	UndoManager object_undo_manager;
+	QScopedPointer<UndoManager> undo_manager;
 	int current_part_index;
 	WidgetVector widgets;
 	ViewVector views;
@@ -1296,6 +1308,12 @@ const MapColor* Map::getColor(int i) const
 		default:
 			return NULL;
 	}
+}
+
+inline
+UndoManager& Map::undoManager()
+{
+	return *(undo_manager.data());
 }
 
 #endif

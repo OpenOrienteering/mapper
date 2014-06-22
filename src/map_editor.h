@@ -35,6 +35,7 @@
 
 class GPSTrackRecorder;
 QT_BEGIN_NAMESPACE
+class QComboBox;
 class QFrame;
 class QLabel;
 class QToolBar;

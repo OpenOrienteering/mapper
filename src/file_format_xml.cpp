@@ -46,6 +46,7 @@
 #include "symbol_point.h"
 #include "symbol_text.h"
 #include "template.h"
+#include "undo_manager.h"
 #include "util/xml_stream_util.h"
 
 // ### XMLFileFormat definition ###
@@ -339,12 +340,12 @@ void XMLFileExporter::exportPrint()
 
 void XMLFileExporter::exportUndo()
 {
-	map->object_undo_manager.saveUndo(xml);
+	map->undoManager().saveUndo(xml);
 }
 
 void XMLFileExporter::exportRedo()
 {
-	map->object_undo_manager.saveRedo(xml);
+	map->undoManager().saveRedo(xml);
 }
 
 
@@ -714,10 +715,10 @@ void XMLFileImporter::importPrint()
 
 void XMLFileImporter::importUndo()
 {
-	map->object_undo_manager.loadUndo(xml, symbol_dict);
+	map->undoManager().loadUndo(xml, symbol_dict);
 }
 
 void XMLFileImporter::importRedo()
 {
-	map->object_undo_manager.loadRedo(xml, symbol_dict);
+	map->undoManager().loadRedo(xml, symbol_dict);
 }

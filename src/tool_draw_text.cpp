@@ -359,7 +359,7 @@ void DrawTextTool::finishEditing()
 		
 		DeleteObjectsUndoStep* undo_step = new DeleteObjectsUndoStep(map());
 		undo_step->addObject(index);
-		map()->objectUndoManager().push(undo_step);
+		map()->push(undo_step);
 		
 		preview_text = NULL;
 	}

@@ -29,6 +29,7 @@
 #include "../src/mapper_resource.h"
 #include "../src/object.h"
 #include "../src/template.h"
+#include "../src/undo_manager.h"
 
 
 
@@ -332,20 +333,20 @@ bool FileFormatTest::compareMaps(Map* a, Map* b, QString& error)
 	
 	// Undo steps
 	// TODO: Currently only the number of steps is compared here.
-	if (a->objectUndoManager().undoStepCount() != b->objectUndoManager().undoStepCount() ||
-		a->objectUndoManager().redoStepCount() != b->objectUndoManager().redoStepCount())
+	if (a->undoManager().undoStepCount() != b->undoManager().undoStepCount() ||
+		a->undoManager().redoStepCount() != b->undoManager().redoStepCount())
 	{
 		error = "The number of undo / redo steps differs.";
 		return false;
 	}
-	if (a->objectUndoManager().canUndo() &&
-	    a->objectUndoManager().nextUndoStep()->getType() != b->objectUndoManager().nextUndoStep()->getType())
+	if (a->undoManager().canUndo() &&
+	    a->undoManager().nextUndoStep()->getType() != b->undoManager().nextUndoStep()->getType())
 	{
 		error = "The type of the first undo step is different.";
 		return false;
 	}
-	if (a->objectUndoManager().canRedo() &&
-	    a->objectUndoManager().nextRedoStep()->getType() != b->objectUndoManager().nextRedoStep()->getType())
+	if (a->undoManager().canRedo() &&
+	    a->undoManager().nextRedoStep()->getType() != b->undoManager().nextRedoStep()->getType())
 	{
 		error = "The type of the first redo step is different.";
 		return false;

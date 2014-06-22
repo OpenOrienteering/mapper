@@ -37,23 +37,24 @@
 #include "core/map_color.h"
 #include "core/map_printer.h"
 #include "core/map_view.h"
+#include "file_format_ocad8.h"
+#include "file_format_registry.h"
+#include "file_import_export.h"
 #include "map_editor.h"
 #include "map_grid.h"
 #include "map_part.h"
-#include "map_widget.h"
 #include "map_undo.h"
-#include "util.h"
-#include "template.h"
+#include "map_widget.h"
 #include "object.h"
 #include "object_operations.h"
 #include "renderable.h"
 #include "symbol.h"
-#include "symbol_point.h"
-#include "symbol_line.h"
 #include "symbol_combined.h"
-#include "file_format_ocad8.h"
-#include "file_format_registry.h"
-#include "file_import_export.h"
+#include "symbol_line.h"
+#include "symbol_point.h"
+#include "template.h"
+#include "undo_manager.h"
+#include "util.h"
 
 // ### MapColorSet ###
 
@@ -368,7 +369,7 @@ CombinedSymbol* Map::covering_combined_line;
 
 Map::Map()
  : has_spot_colors(false),
-   object_undo_manager(this),
+   undo_manager(new UndoManager(this)),
    renderables(new MapRenderables(this)),
    selection_renderables(new MapRenderables(this)),
    printer_config(NULL)
@@ -437,7 +438,7 @@ void Map::changeScale(unsigned int new_scale_denominator, const MapCoord& scalin
 		scaleAllSymbols(factor);
 	if (scale_objects)
 	{
-		object_undo_manager.clear();
+		undo_manager->clear();
 		scaleAllObjects(factor, scaling_center);
 	}
 	if (scale_georeferencing)
@@ -471,7 +472,7 @@ void Map::rotateMap(double rotation, const MapCoord& center, bool adjust_georefe
 	if (fmod(rotation, 2 * M_PI) == 0)
 		return;
 	
-	object_undo_manager.clear();
+	undo_manager->clear();
 	rotateAllObjects(rotation, center);
 	
 	if (adjust_georeferencing)
@@ -522,7 +523,7 @@ bool Map::saveTo(const QString& path, MapEditorController* map_editor)
 	other_dirty = false;
 	unsaved_changes = false;
 	
-	objectUndoManager().setClean();
+	undoManager().setClean();
 	
 	return true;
 }
@@ -928,8 +929,8 @@ void Map::clear()
 	first_selected_object = NULL;
 	
 	widgets.clear();
-	object_undo_manager.clear();
-	object_undo_manager.setClean();
+	undo_manager->clear();
+	undo_manager->setClean();
 	
 	map_notes = "";
 	
@@ -1071,7 +1072,7 @@ void Map::deleteSelectedObjects()
 		
 		setObjectsDirty();
 		clearObjectSelection(true);
-		objectUndoManager().push(undo_step);
+		push(undo_step);
 	}
 }
 
@@ -1643,7 +1644,7 @@ void Map::setSymbol(Symbol* symbol, int pos)
 void Map::deleteSymbol(int pos)
 {
 	if (deleteAllObjectsWithSymbol(symbols[pos]))
-		object_undo_manager.clear();
+		undo_manager->clear();
 	
 	int size = (int)symbols.size();
 	for (int i = 0; i < size; ++i)
@@ -1892,6 +1893,11 @@ bool Map::reloadClosedTemplate(int i, int target_pos, QWidget* dialog_parent, Ma
 		return true;
 	}
 	return false;
+}
+
+void Map::push(UndoStep *step)
+{
+	undo_manager->push(step);
 }
 
 void Map::addPart(MapPart* part, int pos)
