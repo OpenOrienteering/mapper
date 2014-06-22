@@ -59,6 +59,7 @@ public:
 		SwitchDashesUndoStepType   =   4,
 		CombinedUndoStepType       =   5,
 		ValidNoOpUndoStepType      =   6,
+		ObjectTagsUndoStepType     =   7,
 		InvalidUndoStepType        = 999
 	};
 	

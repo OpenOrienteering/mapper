@@ -1,5 +1,5 @@
 /*
- *    Copyright 2013 Kai Pastor
+ *    Copyright 2013, 2014 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -115,12 +115,8 @@ void TagsWidget::createUndoStep(Object* object)
 {
 	Q_ASSERT(object);
 	
-	Object* undo_duplicate = object->duplicate();
-	undo_duplicate->setMap(map);
-	
-	ReplaceObjectsUndoStep* undo_step = new ReplaceObjectsUndoStep(map);
-	undo_step->addObject(object, undo_duplicate);
-	
+	ObjectTagsUndoStep* undo_step = new ObjectTagsUndoStep(map);
+	undo_step->addObject(map->getCurrentPart()->findObjectIndex(object));
 	map->push(undo_step);
 }
 

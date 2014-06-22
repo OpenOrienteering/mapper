@@ -22,6 +22,9 @@
 #ifndef _OPENORIENTEERING_MAP_UNDO_H_
 #define _OPENORIENTEERING_MAP_UNDO_H_
 
+#include <map>
+
+#include "object.h"
 #include "symbol.h"
 #include "undo.h"
 
@@ -350,6 +353,34 @@ public:
 	virtual UndoStep* undo();
 };
 
+
+
+/**
+ * Undo step which modifies object tags.
+ * 
+ * Note: For reduced file size, this implementation copies, not calls,
+ * ObjectModifyingUndoStep::saveImpl()/ObjectModifyingUndoStep::loadImpl().
+ */
+class ObjectTagsUndoStep : public ObjectModifyingUndoStep
+{
+public:
+	ObjectTagsUndoStep(Map* map);
+	
+	virtual ~ObjectTagsUndoStep();
+	
+	virtual void addObject(int index);
+	
+	virtual UndoStep* undo();
+	
+protected:
+	virtual void saveImpl(QXmlStreamWriter& xml) const;
+	
+	virtual void loadImpl(QXmlStreamReader& xml, SymbolDictionary& symbol_dict);
+	
+	typedef std::map<int, Object::Tags> ObjectTagsMap;
+	
+	ObjectTagsMap object_tags_map;
+};
 
 
 // ### ObjectModifyingUndoStep inline code ###

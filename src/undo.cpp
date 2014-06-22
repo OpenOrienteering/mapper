@@ -53,6 +53,9 @@ UndoStep* UndoStep::getUndoStepForType(Type type, Map* map)
 	case ValidNoOpUndoStepType:
 		return new NoOpUndoStep(map, true);
 		
+	case ObjectTagsUndoStepType:
+		return new ObjectTagsUndoStep(map);
+		
 	default:
 		qWarning("Undefined undo step type");
 		return new NoOpUndoStep(map, false);

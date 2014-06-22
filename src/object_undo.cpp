@@ -105,7 +105,9 @@ void ObjectModifyingUndoStep::saveImpl(QXmlStreamWriter& xml) const
 	XmlElementWriter element(xml, QLatin1String("affected_objects"));
 	element.writeAttribute(QLatin1String("part"), part_index);
 	int size = modified_objects.size();
-	element.writeAttribute(QLatin1String("count"), size);
+	if (size > 8)
+		element.writeAttribute(QLatin1String("count"), size);
+	
 	for (int i = 0; i < size; ++i)
 	{
 		XmlElementWriter ref(xml, QLatin1String("ref"));
@@ -120,7 +122,8 @@ void ObjectModifyingUndoStep::loadImpl(QXmlStreamReader& xml, SymbolDictionary& 
 		XmlElementReader element(xml);
 		part_index = element.attribute<int>(QLatin1String("part"));
 		int size = element.attribute<int>(QLatin1String("count"));
-		modified_objects.reserve(size);
+		if (size)
+			modified_objects.reserve(size);
 		while (xml.readNextStartElement())
 		{
 			if (xml.name() == "ref")
@@ -555,4 +558,97 @@ UndoStep* SwitchDashesUndoStep::undo()
 	}
 	
 	return undo_step;
+}
+
+
+
+// ### ObjectTagsUndoStep ###
+
+ObjectTagsUndoStep::ObjectTagsUndoStep(Map *map)
+: ObjectModifyingUndoStep(ObjectTagsUndoStepType, map)
+{
+	; // nothing else
+}
+
+ObjectTagsUndoStep::~ObjectTagsUndoStep()
+{
+	; // nothing
+}
+
+void ObjectTagsUndoStep::addObject(int index)
+{
+	ObjectModifyingUndoStep::addObject(index);
+	
+	MapPart* const map_part = map->getPart(getPartIndex());
+	object_tags_map[index] = map_part->getObject(index)->tags();
+}
+
+UndoStep* ObjectTagsUndoStep::undo()
+{
+	MapPart* const map_part = map->getPart(getPartIndex());
+	
+	ObjectTagsUndoStep* redo_step = new ObjectTagsUndoStep(map);
+	for (ObjectTagsMap::iterator it = object_tags_map.begin(), end = object_tags_map.end(); it != end; ++it)
+	{
+		redo_step->addObject(it->first);
+		map_part->getObject(it->first)->setTags(it->second);
+	}
+	
+	return redo_step;
+}
+
+void ObjectTagsUndoStep::saveImpl(QXmlStreamWriter &xml) const
+{
+	UndoStep::saveImpl(xml);
+	
+	// Note: For reducing file size, this implementation copies, not calls,
+	// the parent's implementation.
+	XmlElementWriter element(xml, QLatin1String("affected_objects"));
+	element.writeAttribute(QLatin1String("part"), getPartIndex());
+	std::size_t size = modified_objects.size();
+	if (size > 8)
+		element.writeAttribute(QLatin1String("count"), size);
+	
+	for (ObjectTagsMap::const_iterator it = object_tags_map.begin(), end = object_tags_map.end(); it != end; ++it)
+	{
+		namespace literal = XmlStreamLiteral;
+		
+		XmlElementWriter tags_element(xml, QLatin1String("ref"));
+		tags_element.writeAttribute(literal::object, it->first);
+		tags_element.write(it->second);
+	}
+}
+
+void ObjectTagsUndoStep::loadImpl(QXmlStreamReader &xml, SymbolDictionary &symbol_dict)
+{
+	namespace literal = XmlStreamLiteral;
+	
+	// Note: This implementation copies, not calls, the parent's implementation.
+	if (xml.name() == "affected_objects")
+	{
+		XmlElementReader element(xml);
+		setPartIndex(element.attribute<int>(QLatin1String("part")));
+		int size = element.attribute<int>(QLatin1String("count"));
+		if (size)
+			modified_objects.reserve(size);
+		
+		while (xml.readNextStartElement())
+		{
+			if (xml.name() == "ref")
+			{
+				XmlElementReader tags_element(xml);
+				int index = tags_element.attribute<int>(literal::object);
+				modified_objects.push_back(index);
+				tags_element.read(object_tags_map[index]);
+			}
+			else
+			{
+				xml.skipCurrentElement();
+			}
+		}
+	}
+	else
+	{
+		UndoStep::loadImpl(xml, symbol_dict);
+	}
 }
