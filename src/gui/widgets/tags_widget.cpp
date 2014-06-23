@@ -133,13 +133,16 @@ void TagsWidget::objectTagsChanged()
 	if (object)
 	{
 		const Object::Tags& tags = object->tags();
+		tags_table->clearContents();
 		tags_table->setRowCount(tags.size() + 1);
-		for (Object::Tags::const_iterator tag = tags.constBegin(), end = tags.constEnd(); tag != end; ++tag, ++row)
+		for (Object::Tags::const_iterator tag = tags.constBegin(), end = tags.constEnd(); tag != end; ++tag)
 		{
 			tags_table->setItem(row, 0, new QTableWidgetItem(tag.key()));
 			tags_table->item(row, 0)->setData(Qt::UserRole, tag.key());
 			tags_table->setItem(row, 1, new QTableWidgetItem(tag.value()));
+			++row;
 		}
+		tags_table->sortItems(0);
 		setupLastRow();
 	}
 	else
@@ -160,65 +163,94 @@ void TagsWidget::cellChange(int row, int column)
 	react_to_changes = false;
 	const QString key = tags_table->item(row, 0)->text().trimmed();
 	const QString value = tags_table->item(row, 1)->text();
-	if (column == 1)
+	
+	if (column == 1 && key.isEmpty())
 	{
-		// Value edited
+		// Shall not happen
+		qWarning("Empty key for modified tag value!");
+	}
+	else if (column == 1)
+	{
+		// Value edited: update the tag
 		createUndoStep(object);
 		object->setTag(key, value);
-		if (row == tags_table->rowCount())
+		if (row + 1 == tags_table->rowCount())
 		{
-			tags_table->setRowCount(row + 1);
+			// Append new row, jump to key
+			tags_table->setRowCount(row + 2);
 			setupLastRow();
+		}
+		
+		if (!tags_table->item(row + 1, 1)->flags().testFlag(Qt::ItemIsEnabled))
+		{
+			// Jump to key
+			tags_table->setCurrentCell(row + 1, 0);
+		}
+		else
+		{
+			// Jump to value
+			tags_table->setCurrentCell(row + 1, 1);
 		}
 	}
 	else if (column == 0)
 	{
 		const QString old_key = tags_table->item(row, 0)->data(Qt::UserRole).toString();
-		if (old_key == key && key.length() > 0)
+		if (old_key == key && !key.isEmpty())
 		{
-			// value edited
-			createUndoStep(object);
-			object->setTag(key, value);
-			if (row == tags_table->rowCount())
-			{
-				tags_table->setRowCount(row + 1);
-				setupLastRow();
-			}
+			// Key edited but not changed: do nothing
 		}
-		else if (old_key.length() > 0 && key.length() == 0)
+		else if (!old_key.isEmpty() && key.isEmpty())
 		{
-			// key deleted
+			// Key deleted: remove tag
 			createUndoStep(object);
 			object->removeTag(old_key);
 			tags_table->removeRow(row);
 			if (row > 0)
 			{
+				// Jump to previous row
 				tags_table->setCurrentCell(row - 1, 1);
 			}
+			else
+			{
+				// Reset current row
+				tags_table->item(row, 1)->setText("");
+				QTableWidgetItem* value_item = tags_table->item(row, 1);
+				value_item->setFlags(value_item->flags() & ~Qt::ItemIsEnabled);
+			}
 		}
-		else if (key.length() > 0)
+		else if (!key.isEmpty())
 		{
-			// key edited
+			// Key edited: update the tags
 			if (object->tags().contains(key))
 			{
 				QMessageBox::critical(window(), tr("Key exists"),
 				  tr("The key \"%1\" already exists and must not be used twice.").arg(key)
 				);
 				tags_table->item(row, column)->setText(old_key);
+				tags_table->setCurrentCell(row, column);
 			}
 			else
 			{
-				createUndoStep(object);
-				object->removeTag(old_key);
-				object->setTag(key, value);
+				if (value.isEmpty() && old_key.isEmpty())
+				{
+					// New key, empty value - dont insert yet
+					tags_table->item(row, 0)->setData(Qt::UserRole, "ABOUT TO INSERT NEW VALUE");
+					tags_table->setCurrentCell(row, 1);
+				}
+				else
+				{
+					// New key with value - update tags
+					createUndoStep(object);
+					object->removeTag(old_key);
+					object->setTag(key, value);
+				}
 				tags_table->item(row, 0)->setData(Qt::UserRole, key);
 				if (tags_table->rowCount() == row + 1)
 				{
 					QTableWidgetItem* value_item = tags_table->item(row, 1);
 					value_item->setFlags(value_item->flags() | Qt::ItemIsEnabled);
-					tags_table->setRowCount(row + 2);
-					setupLastRow();
 				}
+				tags_table->setCurrentCell(row, 1);
 			}
 		}
 	}
