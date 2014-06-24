@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2012, 2013, 2014 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -25,41 +26,28 @@
 
 #include <QHash>
 #include <QRect>
-#include <QScopedPointer>
-#include <QSet>
 #include <QString>
-
-#include "map_coord.h"
 
 QT_BEGIN_NAMESPACE
 class QIODevice;
-class QPainter;
 class QXmlStreamReader;
 class QXmlStreamWriter;
 QT_END_NAMESPACE
 
-class CombinedSymbol;
-class Georeferencing;
-class LineSymbol;
 class Map;
-class MapColor;
-class MapEditorController;
-class MapGrid;
-class MapRenderables;
-class MapView;
-class MapWidget;
+class MapCoord;
+class MapCoordF;
 class Object;
 class OCAD8FileImport;
 class Symbol;
 typedef QHash<QString, Symbol*> SymbolDictionary; // from symbol.h
-class PointSymbol;
-class Renderable;
-class Template;
+
 
 typedef std::vector< std::pair< int, Object* > > SelectionInfoVector;
 
+
 /**
- * Represents one part of a map, containing a list of objects.
+ * Represents a part of a map by owning a list of map objects.
  * 
  * Dividing maps in parts is e.g. useful to have multiple mappers work on a map:
  * every mapper can do the work in his/her part without getting into conflict
@@ -76,83 +64,137 @@ class MapPart
 {
 friend class OCAD8FileImport;
 public:
-	/** Creates a new map part with the given name for a map. */
+	/**
+	 * Creates a new map part with the given name for a map.
+	 */
 	MapPart(const QString& name, Map* map);
 	
-	/** Destroys the map part. */
+	/**
+	 * Destroys the map part.
+	 */
 	~MapPart();
 	
-	/** Loads the map part in the old "native" format from the given file. */
-	bool load(QIODevice* file, int version, Map* map);
-	/** Saves the map part in xml format to the given stream. */
-	void save(QXmlStreamWriter& xml, const Map& map) const;
+	
 	/**
-	 * Loads the map part in xml format from the given stream,
-	 * using a dictionary to map symbol ids to symbol pointers.
+	 * Loads the map part in the old "native" format from the given file.
+	 */
+	bool load(QIODevice* file, int version, Map* map);
+	
+	/**
+	 * Saves the map part in xml format to the given stream.
+	 */
+	void save(QXmlStreamWriter& xml) const;
+	
+	/**
+	 * Loads the map part in xml format from the given stream.
+	 * 
+	 * Needs a dictionary to map symbol ids to symbol pointers.
 	 */
 	static MapPart* load(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol_dict);
 	
-	/** Returns the part's name. */
-	inline const QString& getName() const {return name;}
-	/** Sets the part's name. */
-	inline void setName(const QString new_name) {name = new_name;}
-	
-	/** Returns the number of objects in the part. */
-	inline int getNumObjects() const {return (int)objects.size();}
-	/** Returns the i-th object from the part. */
-	inline Object* getObject(int i) {return objects[i];}
-	/** Returns the i-th object from the part. */
-	inline const Object* getObject(int i) const {return objects[i];}
 	/**
-	 * Loops over all objects in the part and looks for the given pointer.
-	 * Returns the index of the object. The object must be contained in this part,
-	 * otherwise an assert is triggered!
+	 * Returns the part's name.
 	 */
-	int findObjectIndex(Object* object);
+	const QString& getName() const;
+	
+	/**
+	 * Sets the part's name.
+	 */
+	void setName(const QString new_name);
+	
+	
+	/**
+	 * Returns the number of objects in the part.
+	 */
+	int getNumObjects() const;
+	
+	/**
+	 * Returns the i-th object from the part.
+	 */
+	Object* getObject(int i);
+	
+	/**
+	 * Returns the i-th object from the part.
+	 */
+	const Object* getObject(int i) const;
+	
+	/**
+	 * Returns the index of the object.
+	 * 
+	 * Loops over all objects in the part and looks for the given pointer.
+	 * The object must be contained in this part,
+	 * otherwise an assert is triggered (in debug builds),
+	 * or -1 is returned (release builds).
+	 */
+	int findObjectIndex(const Object* object) const;
+	
 	/**
 	 * Replaces the object at the given index with another.
+	 * 
 	 * If delete_old is set, calls "delete old_object".
 	 */
 	void setObject(Object* object, int pos, bool delete_old);
-	/** Adds the object as new object at the given index. */
+	
+	/**
+	 * Adds the object as new object at the given index.
+	 */
 	void addObject(Object* object, int pos);
+	
 	/**
 	 * Deleted the object from the given index.
+	 * 
 	 * If remove_only is set, does not call "delete object".
 	 * 
-	 * TODO: make a separate method "removeObject()", this is misleading!
+	 * @todo Make a separate method "removeObject()", this is misleading!
 	 */
 	void deleteObject(int pos, bool remove_only);
+	
 	/**
 	 * Deleted the object from the given index.
+	 * 
 	 * If remove_only is set, does not call "delete object".
 	 * Returns if the object was found in this part.
 	 * 
-	 * TODO: make a separate method "removeObject()", this is misleading!
+	 * @todo Make a separate method "removeObject()", this is misleading!
 	 */
 	bool deleteObject(Object* object, bool remove_only);
 	
+	
 	/**
-	 * Imports the contents of the other part (which can be from another map)
-	 * into this part. Uses symbol_map to replace all symbols contained there.
-	 * No replacement is done for symbols which are not in the map.
+	 * Imports the contents another part into this part.
+	 * 
+	 * The other part can be from another map.
+	 * Uses symbol_map to replace all symbols contained there.
+	 * No replacement is done for symbols which are not in the symbol_map.
 	 */
 	void importPart(MapPart* other, QHash<Symbol*, Symbol*>& symbol_map,
 		bool select_new_objects);
 	
-	/** See Map::findObjectsAt(). */
+	
+	/**
+	 * @see Map::findObjectsAt().
+	 */
 	void findObjectsAt(MapCoordF coord, float tolerance, bool treat_areas_as_paths,
 		bool extended_selection, bool include_hidden_objects,
 		bool include_protected_objects, SelectionInfoVector& out);
-	/** See Map::findObjectsAtBox(). */
+	
+	/**
+	 * @see Map::findObjectsAtBox().
+	 */
 	void findObjectsAtBox(MapCoordF corner1, MapCoordF corner2,
 		bool include_hidden_objects, bool include_protected_objects,
 		std::vector<Object*>& out);
-	/** See Map::countObjectsInRect(). */
+	
+	/** 
+	 * @see Map::countObjectsInRect().
+	 */
 	int countObjectsInRect(QRectF map_coord_rect, bool include_hidden_objects);
 	
-	/** Calculates and returns the bounding box of all objects in this map part. */
+	/**
+	 * Calculates and returns the bounding box of all objects in this map part.
+	 */
 	QRectF calculateExtent(bool include_helper_symbols);
+	
 	
 	/**
 	 * Applies a condition on all objects (until the first match is found).
@@ -160,82 +202,133 @@ public:
 	 * @return True if there is an object matching the condition, false otherwise.
 	 */
 	template<typename Condition>
-	bool existsObject(const Condition& condition)
-	{
-		for (std::vector<Object*>::const_iterator object = objects.begin(), end = objects.end(); object != end; ++object)
-		{
-			if (condition(*object))
-				return true;
-		}
-		return false;
-	}
+	bool existsObject(const Condition& condition);
 	
 	/**
-	 * @copybrief Map::applyOnAllObjects(const Operation&, const Condition&)
+	 * @copybrief   Map::applyOnAllObjects()
+	 * @copydetails Map::applyOnAllObjects()
 	 */
 	template<typename Operation, typename Condition>
-	bool applyOnMatchingObjects(const Operation& operation, const Condition& condition)
-	{
-		bool result = true;
-		if (!objects.empty())
-		{
-			std::size_t i = objects.size();
-			do
-			{
-				--i;
-				Object* const object = objects[i];
-				if (condition(object))
-					result &= operation(object, this, i);
-			}
-			while (i > 0);
-		}
-		return result;
-	}
+	bool applyOnMatchingObjects(const Operation& operation, const Condition& condition);
 	
 	/**
-	 * @copybrief Map::applyOnAllObjects(const Operation&)
+	 * @copybrief   Map::applyOnAllObjects()
+	 * @copydetails Map::applyOnAllObjects()
 	 */
 	template<typename Operation>
-	bool applyOnAllObjects(const Operation& operation)
-	{
-		bool result = true;
-		if (!objects.empty())
-		{
-			std::size_t i = objects.size();
-			do
-			{
-				--i;
-				result &= operation(objects[i], this, i);
-			}
-			while (i > 0);
-		}
-		return result;
-	}
+	bool applyOnAllObjects(const Operation& operation);
 	
 	/**
-	 * @copybrief Map::applyOnAllObjects(const Operation&)
+	 * @copybrief   Map::applyOnAllObjects()
+	 * @copydetails Map::applyOnAllObjects()
 	 */
 	template<typename Operation>
-	bool applyOnAllObjects(Operation& operation)
-	{
-		bool result = true;
-		if (!objects.empty())
-		{
-			std::size_t i = objects.size();
-			do
-			{
-				--i;
-				result &= operation(objects[i], this, i);
-			}
-			while (i > 0);
-		}
-		return result;
-	}
+	bool applyOnAllObjects(Operation& operation);
 	
 private:
+	typedef std::vector<Object*> ObjectList;
+
 	QString name;
-	std::vector<Object*> objects;	// TODO: this could / should be a spatial representation optimized for quick access
+	ObjectList objects;  ///< @todo This could be a spatial representation optimized for quick access
 	Map* map;
 };
+
+
+
+// ## MapPart inline and template code ###
+
+inline
+const QString& MapPart::getName() const
+{
+	return name;
+}
+
+inline
+void MapPart::setName(const QString new_name)
+{
+	name = new_name;
+}
+
+inline
+int MapPart::getNumObjects() const
+{
+	return (int)objects.size();
+}
+
+inline
+Object* MapPart::getObject(int i)
+{
+	return objects[i];
+}
+
+inline
+const Object* MapPart::getObject(int i) const
+{
+	return objects[i];
+}
+
+template<typename Condition>
+bool MapPart::existsObject(const Condition& condition)
+{
+   for (ObjectList::const_iterator object = objects.begin(), end = objects.end(); object != end; ++object)
+   {
+	   if (condition(*object))
+		   return true;
+   }
+   return false;
+}
+
+template<typename Operation, typename Condition>
+bool MapPart::applyOnMatchingObjects(const Operation& operation, const Condition& condition)
+{
+   bool result = true;
+   if (!objects.empty())
+   {
+	   std::size_t i = objects.size();
+	   do
+	   {
+		   --i;
+		   Object* const object = objects[i];
+		   if (condition(object))
+			   result &= operation(object, this, i);
+	   }
+	   while (i > 0);
+   }
+   return result;
+}
+
+template<typename Operation>
+bool MapPart::applyOnAllObjects(const Operation& operation)
+{
+   bool result = true;
+   if (!objects.empty())
+   {
+	   std::size_t i = objects.size();
+	   do
+	   {
+		   --i;
+		   result &= operation(objects[i], this, i);
+	   }
+	   while (i > 0);
+   }
+   return result;
+}
+
+template<typename Operation>
+bool MapPart::applyOnAllObjects(Operation& operation)
+{
+	bool result = true;
+	if (!objects.empty())
+	{
+		std::size_t i = objects.size();
+		do
+		{
+			--i;
+			result &= operation(objects[i], this, i);
+		}
+		while (i > 0);
+	}
+	return result;
+}
 
 #endif

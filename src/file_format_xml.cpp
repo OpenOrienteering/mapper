@@ -296,7 +296,7 @@ void XMLFileExporter::exportMapParts()
 	parts_element.writeAttribute(literal::count, num_parts);
 	parts_element.writeAttribute(literal::current, map->current_part_index);
 	for (int i = 0; i < num_parts; ++i)
-		map->getPart(i)->save(xml, *map);
+		map->getPart(i)->save(xml);
 }
 
 void XMLFileExporter::exportTemplates()

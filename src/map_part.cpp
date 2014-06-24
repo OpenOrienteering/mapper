@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2012, 2013, 2014 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -18,28 +19,38 @@
  */
 
 
-#include "map.h"
+#include "map_part.h"
 
 #include <algorithm>
 
 #include <qmath.h>
-#include <QDebug>
-#include <QDir>
-#include <QFile>
-#include <QMessageBox>
-#include <QPainter>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
 #include "map.h"
-#include "object_undo.h"
 #include "object.h"
 #include "object_operations.h"
+#include "object_undo.h"
 #include "renderable.h"
 #include "util.h"
+#include "util/xml_stream_util.h"
 
-MapPart::MapPart(const QString& name, Map* map) : name(name), map(map)
+
+namespace literal
 {
+	const QLatin1String part("part");
+	const QLatin1String name("name");
+	const QLatin1String objects("objects");
+	const QLatin1String object("object");
+	const QLatin1String count("count");
+}
+
+
+MapPart::MapPart(const QString& name, Map* map)
+: name(name)
+, map(map)
+{
+	; // nothing else
 }
 
 MapPart::~MapPart()
@@ -48,6 +59,7 @@ MapPart::~MapPart()
 	for (int i = 0; i < size; ++i)
 		delete objects[i];
 }
+
 
 bool MapPart::load(QIODevice* file, int version, Map* map)
 {
@@ -69,40 +81,42 @@ bool MapPart::load(QIODevice* file, int version, Map* map)
 	return true;
 }
 
-void MapPart::save(QXmlStreamWriter& xml, const Map& map) const
+
+void MapPart::save(QXmlStreamWriter& xml) const
 {
-	Q_UNUSED(map);
-	
-	xml.writeStartElement("part");
-	xml.writeAttribute("name", name);
-	
-	xml.writeStartElement("objects");
-	int size = (int)objects.size();
-	xml.writeAttribute("count", QString::number(size));
-	for (int i = 0; i < size; ++i)
+	XmlElementWriter part_element(xml, literal::part);
+	part_element.writeAttribute(literal::name, name);
 	{
-		objects[i]->save(xml);
+		XmlElementWriter objects_element(xml, literal::objects);
+		std::size_t size = objects.size();
+		objects_element.writeAttribute(literal::count, size);
+		for (ObjectList::const_iterator o = objects.begin(), end = objects.end(); o != end; ++o)
+		{
+			(*o)->save(xml);
+		}
 	}
-	xml.writeEndElement(/*objects*/);
-	
-	xml.writeEndElement(/*part*/);
 }
 
 MapPart* MapPart::load(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol_dict)
 {
-	Q_ASSERT(xml.name() == "part");
+	Q_ASSERT(xml.name() == literal::part);
 	
-	MapPart* part = new MapPart(xml.attributes().value("name").toString(), &map);
+	XmlElementReader part_element(xml);
+	MapPart* part = new MapPart(part_element.attribute<QString>(literal::name), &map);
 	
 	while (xml.readNextStartElement())
 	{
-		if (xml.name() == "objects")
+		if (xml.name() == literal::objects)
 		{
-			int num_objects = xml.attributes().value("count").toString().toInt();
-			part->objects.reserve(qMin(num_objects, 50000)); // 50000 is not a limit
+			XmlElementReader objects_element(xml);
+			
+			std::size_t num_objects = objects_element.attribute<std::size_t>(literal::count);
+			if (num_objects > 0)
+				part->objects.reserve(qMin(num_objects, 50ul)); // 50 is not a limit
+			
 			while (xml.readNextStartElement())
 			{
-				if (xml.name() == "object")
+				if (xml.name() == literal::object)
 					part->objects.push_back(Object::load(xml, &map, symbol_dict));
 				else
 					xml.skipCurrentElement(); // unknown
@@ -115,7 +129,7 @@ MapPart* MapPart::load(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol
 	return part;
 }
 
-int MapPart::findObjectIndex(Object* object)
+int MapPart::findObjectIndex(const Object* object) const
 {
 	int size = objects.size();
 	for (int i = size - 1; i >= 0; --i)
@@ -209,6 +223,7 @@ void MapPart::importPart(MapPart* other, QHash<Symbol*, Symbol*>& symbol_map, bo
 	{
 		map->emitSelectionChanged();
 		map->emitSelectionEdited();		// TODO: is this necessary here?
+		                                // Not as long as observers listen to both...
 	}
 	if (first_objects)
 		map->updateAllMapWidgets();
