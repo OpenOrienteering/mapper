@@ -851,7 +851,7 @@ void TemplateWidget::importClicked()
 	{
 		TemplateTransform transform;
 		templ->getTransform(transform);
-		template_map->operationOnAllObjects(ApplyTemplateTransform(transform));
+		template_map->applyOnAllObjects(ApplyTemplateTransform(transform));
 		
 		double nominal_scale = template_map->getScaleDenominator() / map->getScaleDenominator();
 		double current_scale = 0.5 * (transform.template_scale_x + transform.template_scale_y);

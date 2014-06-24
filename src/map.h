@@ -754,38 +754,51 @@ public:
 	int countObjectsInRect(QRectF map_coord_rect, bool include_hidden_objects);
 	
 	/**
-	 * Goes through all objects and for each object where condition(object)
-	 * returns true, applies processor(object, map_part, object_index).
-	 * If processor() returns false, aborts the operation and includes
-	 * ObjectOperationResult::Aborted in the return value.
-	 * If the operation is performed on any object (i.e. the condition returns
-	 * true at least once), includes ObjectOperationResult::Success in the return value.
+	 * Applies a condition on all objects (until the first match is found).
+	 * 
+	 * @return True if there is an object matching the condition, false otherwise.
 	 */
-	template<typename Processor, typename Condition> ObjectOperationResult::Enum operationOnAllObjects(const Processor& processor, const Condition& condition)
+	template<typename Condition>
+	bool existsObject(const Condition& condition)
 	{
-		int result = ObjectOperationResult::NoResult;
-		int size = parts.size();
-		for (int i = 0; i < size; ++i)
+		for (PartVector::iterator part = parts.begin(), end = parts.end(); part != end; ++part)
 		{
-			result |= parts[i]->operationOnAllObjects<Processor, Condition>(processor, condition);
-			if (result & ObjectOperationResult::Abort)
-				return (ObjectOperationResult::Enum)result;
+			if ((*part)->existsObject<Condition>(condition))
+				return true;
 		}
-		return (ObjectOperationResult::Enum)result;
+		return false;
 	}
 	
-	/** Version of operationOnAllObjects() without condition. */
-	template<typename Processor> ObjectOperationResult::Enum operationOnAllObjects(const Processor& processor)
+	/**
+	 * Applies an operation on all objects which match a particular condition.
+	 * 
+	 * @return False if the operation fails for any matching object, true otherwise.
+	 */
+	template<typename Operation, typename Condition>
+	bool applyOnMatchingObjects(const Operation& operation, const Condition& condition)
 	{
-		int result = ObjectOperationResult::NoResult;
-		int size = parts.size();
-		for (int i = 0; i < size; ++i)
+		bool result = true;
+		for (PartVector::iterator part = parts.begin(), end = parts.end(); part != end; ++part)
 		{
-			result |= parts[i]->operationOnAllObjects<Processor>(processor);
-			if (result & ObjectOperationResult::Abort)
-				return (ObjectOperationResult::Enum)result;
+			result &= (*part)->applyOnMatchingObjects<Operation, Condition>(operation, condition);
 		}
-		return (ObjectOperationResult::Enum)result;
+		return result;
+	}
+	
+	/**
+	 * Applies an operation on all objects.
+	 * 
+	 * @return False if the operation fails for any object, true otherwise.
+	 */
+	template<typename Operation>
+	bool applyOnAllObjects(const Operation& operation)
+	{
+		bool result = true;
+		for (PartVector::iterator part = parts.begin(), end = parts.end(); part != end; ++part)
+		{
+			result &= (*part)->applyOnAllObjects<Operation>(operation);
+		}
+		return result;
 	}
 	
 	/** Scales all objects by the given factor. */
@@ -804,8 +817,9 @@ public:
 	void changeSymbolForAllObjects(Symbol* old_symbol, Symbol* new_symbol);
 	
 	/**
-	 * Deleted all objects with the given symbol.
-	 * Returns true if there was an object that was deleted.
+	 * Deletes all objects with the given symbol.
+	 * 
+	 * @return True if at least one object was deleted, false otherwise
 	 */
 	bool deleteAllObjectsWithSymbol(Symbol* symbol);
 	
@@ -814,7 +828,7 @@ public:
 	 * WARNING: Even if no objects exist directly, the symbol could still be
 	 *          required by another (combined) symbol used by an object!
 	 */
-	bool doObjectsExistWithSymbol(Symbol* symbol);
+	bool existsObjectWithSymbol(Symbol* symbol);
 	
 	/**
 	 * Removes the renderables of the given object from display (does not

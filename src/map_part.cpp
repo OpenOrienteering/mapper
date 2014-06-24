@@ -292,32 +292,3 @@ QRectF MapPart::calculateExtent(bool include_helper_symbols)
 	
 	return rect;
 }
-
-void MapPart::scaleAllObjects(double factor, const MapCoord& scaling_center)
-{
-	operationOnAllObjects(ObjectOp::Scale(factor, scaling_center));
-}
-void MapPart::rotateAllObjects(double rotation, const MapCoord& center)
-{
-	operationOnAllObjects(ObjectOp::Rotate(rotation, center));
-}
-void MapPart::updateAllObjects()
-{
-	operationOnAllObjects(ObjectOp::Update(true));
-}
-void MapPart::updateAllObjectsWithSymbol(Symbol* symbol)
-{
-	operationOnAllObjects(ObjectOp::Update(true), ObjectOp::HasSymbol(symbol));
-}
-void MapPart::changeSymbolForAllObjects(Symbol* old_symbol, Symbol* new_symbol)
-{
-	operationOnAllObjects(ObjectOp::ChangeSymbol(new_symbol), ObjectOp::HasSymbol(old_symbol));
-}
-bool MapPart::deleteAllObjectsWithSymbol(Symbol* symbol)
-{
-	return operationOnAllObjects(ObjectOp::Delete(), ObjectOp::HasSymbol(symbol)) & ObjectOperationResult::Success;
-}
-bool MapPart::doObjectsExistWithSymbol(Symbol* symbol)
-{
-	return operationOnAllObjects(ObjectOp::NoOp(), ObjectOp::HasSymbol(symbol)) & ObjectOperationResult::Success;
-}

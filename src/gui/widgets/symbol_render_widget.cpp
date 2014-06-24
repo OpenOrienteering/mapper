@@ -868,7 +868,7 @@ void SymbolRenderWidget::deleteSymbols()
 {
 	for (std::set<int>::const_reverse_iterator it = selected_symbols.rbegin(); it != selected_symbols.rend(); ++it)
 	{
-		if (map->doObjectsExistWithSymbol(map->getSymbol(*it)))
+		if (map->existsObjectWithSymbol(map->getSymbol(*it)))
 		{
 			if (QMessageBox::warning(this, tr("Confirmation"), tr("The map contains objects with the symbol \"%1\". Deleting it will delete those objects and clear the undo history! Do you really want to do that?").arg(map->getSymbol(*it)->getName()), QMessageBox::Yes | QMessageBox::No) == QMessageBox::No)
 				continue;

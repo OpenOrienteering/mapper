@@ -295,7 +295,7 @@ private:
 void CutoutTool::apply(Map* map, PathObject* cutout_object, bool cut_away)
 {
 	PhysicalCutoutOperation operation(map, cutout_object, cut_away);
-	map->getCurrentPart()->operationOnAllObjects(operation);
+	map->getCurrentPart()->applyOnAllObjects(operation);
 	UndoStep* undo_step = operation.finish();
 	if (undo_step)
 	{

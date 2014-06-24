@@ -58,16 +58,6 @@ class Template;
 
 typedef std::vector< std::pair< int, Object* > > SelectionInfoVector;
 
-struct ObjectOperationResult
-{
-	enum Enum
-	{
-		NoResult = 0,
-		Success  = 1 << 0,
-		Abort    = 1 << 1
-	};
-};
-
 /**
  * Represents one part of a map, containing a list of objects.
  * 
@@ -164,69 +154,83 @@ public:
 	/** Calculates and returns the bounding box of all objects in this map part. */
 	QRectF calculateExtent(bool include_helper_symbols);
 	
-	/** See Map::operationOnAllObjects() */
-	template<typename Processor, typename Condition> ObjectOperationResult::Enum operationOnAllObjects(const Processor& processor, const Condition& condition)
+	/**
+	 * Applies a condition on all objects (until the first match is found).
+	 * 
+	 * @return True if there is an object matching the condition, false otherwise.
+	 */
+	template<typename Condition>
+	bool existsObject(const Condition& condition)
 	{
-		int result = ObjectOperationResult::NoResult;
-		int size = (int)objects.size();
-		for (int i = size - 1; i >= 0; --i)
+		for (std::vector<Object*>::const_iterator object = objects.begin(), end = objects.end(); object != end; ++object)
 		{
-			if (!condition(objects[i]))
-				continue;
-			result |= ObjectOperationResult::Success;
-			
-			if (!processor(objects[i], this, i))
-			{
-				result |= ObjectOperationResult::Abort;
-				return (ObjectOperationResult::Enum)result;
-			}
+			if (condition(*object))
+				return true;
 		}
-		return (ObjectOperationResult::Enum)result;
+		return false;
 	}
-	/** See Map::operationOnAllObjects() */
-	template<typename Processor> ObjectOperationResult::Enum operationOnAllObjects(const Processor& processor)
+	
+	/**
+	 * @copybrief Map::applyOnAllObjects(const Operation&, const Condition&)
+	 */
+	template<typename Operation, typename Condition>
+	bool applyOnMatchingObjects(const Operation& operation, const Condition& condition)
 	{
-		int size = (int)objects.size();
-		int result = size >= 1 ? ObjectOperationResult::Success : ObjectOperationResult::NoResult;
-		for (int i = size - 1; i >= 0; --i)
+		bool result = true;
+		if (!objects.empty())
 		{
-			if (!processor(objects[i], this, i))
+			std::size_t i = objects.size();
+			do
 			{
-				result |= ObjectOperationResult::Abort;
-				return (ObjectOperationResult::Enum)result;
+				--i;
+				Object* const object = objects[i];
+				if (condition(object))
+					result &= operation(object, this, i);
 			}
+			while (i > 0);
 		}
-		return (ObjectOperationResult::Enum)result;
+		return result;
 	}
-	/** See Map::operationOnAllObjects() */
-	template<typename Processor> ObjectOperationResult::Enum operationOnAllObjects(Processor& processor)
+	
+	/**
+	 * @copybrief Map::applyOnAllObjects(const Operation&)
+	 */
+	template<typename Operation>
+	bool applyOnAllObjects(const Operation& operation)
 	{
-		int size = (int)objects.size();
-		int result = size >= 1 ? ObjectOperationResult::Success : ObjectOperationResult::NoResult;
-		for (int i = size - 1; i >= 0; --i)
+		bool result = true;
+		if (!objects.empty())
 		{
-			if (!processor(objects[i], this, i))
+			std::size_t i = objects.size();
+			do
 			{
-				result |= ObjectOperationResult::Abort;
-				return (ObjectOperationResult::Enum)result;
+				--i;
+				result &= operation(objects[i], this, i);
 			}
+			while (i > 0);
 		}
-		return (ObjectOperationResult::Enum)result;
+		return result;
 	}
-	/** See Map::scaleAllObjects() */
-	void scaleAllObjects(double factor, const MapCoord& scaling_center);
-	/** See Map::rotateAllObjects() */
-	void rotateAllObjects(double rotation, const MapCoord& center);
-	/** See Map::updateAllObjects() */
-	void updateAllObjects();
-	/** See Map::updateAllObjectsWithSymbol() */
-	void updateAllObjectsWithSymbol(Symbol* symbol);
-	/** See Map::changeSymbolForAllObjects() */
-	void changeSymbolForAllObjects(Symbol* old_symbol, Symbol* new_symbol);
-	/** See Map::deleteAllObjectsWithSymbol() */
-	bool deleteAllObjectsWithSymbol(Symbol* symbol);
-	/** See Map::doObjectsExistWithSymbol() */
-	bool doObjectsExistWithSymbol(Symbol* symbol);
+	
+	/**
+	 * @copybrief Map::applyOnAllObjects(const Operation&)
+	 */
+	template<typename Operation>
+	bool applyOnAllObjects(Operation& operation)
+	{
+		bool result = true;
+		if (!objects.empty())
+		{
+			std::size_t i = objects.size();
+			do
+			{
+				--i;
+				result &= operation(objects[i], this, i);
+			}
+			while (i > 0);
+		}
+		return result;
+	}
 	
 private:
 	QString name;

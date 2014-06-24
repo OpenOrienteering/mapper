@@ -182,7 +182,7 @@ void ReplaceSymbolSetDialog::apply()
 	}
 	
 	// Change symbols for all objects
-	map->operationOnAllObjects(ReplaceSymbolSetOperation(&mapping, &import_symbol_map));
+	map->applyOnAllObjects(ReplaceSymbolSetOperation(&mapping, &import_symbol_map));
 	
 	// Delete unused old symbols
 	if (delete_unused_symbols_check->isChecked())

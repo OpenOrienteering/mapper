@@ -2076,35 +2076,40 @@ int Map::countObjectsInRect(QRectF map_coord_rect, bool include_hidden_objects)
 
 void Map::scaleAllObjects(double factor, const MapCoord& scaling_center)
 {
-	operationOnAllObjects(ObjectOp::Scale(factor, scaling_center));
+	applyOnAllObjects(ObjectOp::Scale(factor, scaling_center));
 }
 void Map::rotateAllObjects(double rotation, const MapCoord& center)
 {
-	operationOnAllObjects(ObjectOp::Rotate(rotation, center));
+	applyOnAllObjects(ObjectOp::Rotate(rotation, center));
 }
 void Map::updateAllObjects()
 {
-	operationOnAllObjects(ObjectOp::Update(true));
+	applyOnAllObjects(ObjectOp::Update(true));
 }
 void Map::updateAllObjectsWithSymbol(Symbol* symbol)
 {
-	operationOnAllObjects(ObjectOp::Update(true), ObjectOp::HasSymbol(symbol));
+	applyOnMatchingObjects(ObjectOp::Update(true), ObjectOp::HasSymbol(symbol));
 }
 void Map::changeSymbolForAllObjects(Symbol* old_symbol, Symbol* new_symbol)
 {
-	operationOnAllObjects(ObjectOp::ChangeSymbol(new_symbol), ObjectOp::HasSymbol(old_symbol));
+	applyOnMatchingObjects(ObjectOp::ChangeSymbol(new_symbol), ObjectOp::HasSymbol(old_symbol));
 }
 bool Map::deleteAllObjectsWithSymbol(Symbol* symbol)
 {
-	// Remove objects from selection
-	removeSymbolFromSelection(symbol, true);
+	bool exists = existsObject(ObjectOp::HasSymbol(symbol));
+	if (exists)
+	{
+		// Remove objects from selection
+		removeSymbolFromSelection(symbol, true);
 	
-	// Delete objects from map
-	return operationOnAllObjects(ObjectOp::Delete(), ObjectOp::HasSymbol(symbol)) & ObjectOperationResult::Success;
+		// Delete objects from map
+		applyOnMatchingObjects(ObjectOp::Delete(), ObjectOp::HasSymbol(symbol));
+	}
+	return exists;
 }
-bool Map::doObjectsExistWithSymbol(Symbol* symbol)
+bool Map::existsObjectWithSymbol(Symbol* symbol)
 {
-	return operationOnAllObjects(ObjectOp::NoOp(), ObjectOp::HasSymbol(symbol)) & ObjectOperationResult::Success;
+	return existsObject(ObjectOp::HasSymbol(symbol));
 }
 
 void Map::setGeoreferencing(const Georeferencing& georeferencing)

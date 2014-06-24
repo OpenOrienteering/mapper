@@ -1507,7 +1507,7 @@ void MapEditorController::hatchAreas(bool checked)
 {
 	map->setAreaHatchingEnabled(checked);
 	// Update all areas
-	map->operationOnAllObjects(ObjectOp::Update(), ObjectOp::ContainsSymbolType(Symbol::Area));
+	map->applyOnMatchingObjects(ObjectOp::Update(), ObjectOp::ContainsSymbolType(Symbol::Area));
 }
 
 void MapEditorController::baselineView(bool checked)
