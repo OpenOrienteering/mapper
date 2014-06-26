@@ -476,6 +476,8 @@ public slots:
 	void reassignObjectsToMapPart(int part);
 	/** Merges the current map part with another one */
 	void mergeCurrentMapPartTo(int part);
+	/** Merges all map parts into the current one. */
+	void mergeAllMapParts();
 	
 	/** Updates action enabled states after a template has been added */
 	void templateAdded(int pos, Template* temp);
@@ -677,6 +679,7 @@ private:
 	QAction* mappart_add_act;
 	QAction* mappart_rename_act;
 	QAction* mappart_remove_act;
+	QAction* mappart_merge_act;
 	QMenu* mappart_merge_menu;
 	QMenu* mappart_move_menu;
 	

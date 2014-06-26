@@ -97,6 +97,7 @@ MapEditorController::MapEditorController(OperatingMode mode, Map* map)
 : MainWindowController()
 , active_symbol(NULL)
 , mappart_remove_act(NULL)
+, mappart_merge_act(NULL)
 , mappart_merge_menu(NULL)
 , mappart_move_menu(NULL)
 , mappart_selector_box(NULL)
@@ -182,6 +183,7 @@ MapEditorController::~MapEditorController()
 	delete template_dock_widget;
 	delete tags_dock_widget;
 	delete cut_hole_menu;
+	delete mappart_merge_act;
 	delete mappart_merge_menu;
 	delete mappart_move_menu;
 	delete toggle_template_menu;
@@ -761,6 +763,7 @@ void MapEditorController::createActions()
 	mappart_add_act = newAction("addmappart", tr("Add new part..."), this, SLOT(addMapPart()));
 	mappart_rename_act = newAction("renamemappart", tr("Rename current part..."), this, SLOT(renameMapPart()));
 	mappart_remove_act = newAction("removemappart", tr("Remove current part"), this, SLOT(removeMapPart()));
+	mappart_merge_act = newAction("mergemapparts", tr("Merge all parts"), this, SLOT(mergeAllMapParts()));
 	
 	import_act = newAction("import", tr("Import..."), this, SLOT(importClicked()), NULL, QString::null, "file_menu.html");
 	
@@ -904,6 +907,7 @@ void MapEditorController::createMenuAndToolbars()
 	map_menu->addAction(mappart_remove_act);
 	map_menu->addMenu(mappart_merge_menu);
 	map_menu->addMenu(mappart_move_menu);
+	map_menu->addAction(mappart_merge_act);
 	
 	// Symbols menu
 	QMenu* symbols_menu = window->menuBar()->addMenu(tr("Sy&mbols"));
@@ -3122,6 +3126,7 @@ void MapEditorController::updateMapPartUI()
 	if (mappart_remove_act)
 	{
 		mappart_remove_act->setEnabled(multiple_parts);
+		mappart_merge_act->setEnabled(multiple_parts);
 	}
 	if (toolbar_mapparts && !toolbar_mapparts->isVisible())
 	{
@@ -3243,6 +3248,31 @@ void MapEditorController::mergeCurrentMapPartTo(int part)
 		MapPart* target = map->getPart(part);
 		map->mergeParts(map->getCurrentPartIndex(), part);
 		map->setCurrentPart(target);
+		updateMapPartUI();
+	}
+}
+
+void MapEditorController::mergeAllMapParts()
+{
+	const QMessageBox::StandardButton button =
+	        QMessageBox::question(
+	            window,
+                tr("Merge map parts"),
+                tr("Do you want to move all objects to \"%1\", and to remove all other map parts? This cannot be undone.").arg(map->getCurrentPart()->getName()),
+                QMessageBox::Yes | QMessageBox::No );
+	
+	if (button == QMessageBox::Yes)
+	{
+		// For simplicity, we merge to the first part,
+		// but keep the properties (i.e. name) of the current part.
+		MapPart* target = map->getPart(0);
+		map->setCurrentPart(target);
+		QString const name = target->getName();
+		for (int i = 1, count = map->getNumParts(); i < count; ++i)
+		{
+			map->mergeParts(i, 0);
+		}
+		target->setName(name);
 		updateMapPartUI();
 	}
 }
