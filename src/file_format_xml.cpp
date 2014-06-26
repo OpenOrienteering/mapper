@@ -94,6 +94,9 @@ namespace literal
 	static const QLatin1String version("version");
 	static const QLatin1String notes("notes");
 	
+	static const QLatin1String barrier("barrier");
+	static const QLatin1String required("required");
+	
 	static const QLatin1String count("count");
 	static const QLatin1String current("current");
 	
@@ -173,6 +176,11 @@ void XMLFileExporter::doExport() throw (FileFormatException)
 	bool retain_compatibility = Settings::getInstance().getSetting(Settings::General_RetainCompatiblity).toBool();
 	XMLFileFormat::active_version = retain_compatibility ? current_version-1 : current_version;
 	
+	if (XMLFileFormat::active_version < 6 && map->getNumParts() != 1)
+	{
+		throw FileFormatException(tr("Older versions of Mapper do not support multiple map parts. To save the map in compatibility mode, you must first merge all map parts."));
+	}
+	
 	xml.writeDefaultNamespace(XMLFileFormat::mapper_namespace);
 	xml.writeStartDocument();
 	
@@ -184,13 +192,33 @@ void XMLFileExporter::doExport() throw (FileFormatException)
 		
 		exportGeoreferencing();
 		exportColors();
+
+		XmlElementWriter* barrier = NULL;
+		if (XMLFileFormat::active_version >= 6)
+		{
+			// Prevent Mapper versions < 0.6.0 from crashing
+			// when compatibilty mode is NOT activated
+			// Incompatible feature: dense coordinates
+			barrier = new XmlElementWriter(xml, literal::barrier);
+			barrier->writeAttribute(literal::version, 6);
+			barrier->writeAttribute(literal::required, "0.6.0");
+		}
 		exportSymbols();
 		exportMapParts();
 		exportTemplates();
 		exportView();
 		exportPrint();
+		delete barrier;
+
+		// Prevent Mapper versions < 0.6.0 from crashing
+		// when compatibilty mode IS activated
+		// Incompatible feature: new undo step types
+		barrier = new XmlElementWriter(xml, literal::barrier);
+		barrier->writeAttribute(literal::version, 6);
+		barrier->writeAttribute(literal::required, "0.6.0");
 		exportUndo();
 		exportRedo();
+		delete barrier;
 	}
 	
 	xml.writeEndDocument();
@@ -384,6 +412,11 @@ void XMLFileImporter::import(bool load_symbols_only) throw (FileFormatException)
 	else if (version > XMLFileFormat::current_version)
 		addWarning(Importer::tr("Unsupported new file format version. Some map features will not be loaded or saved by this version of the program."));
 	
+	importElements(load_symbols_only);
+}
+
+void XMLFileImporter::importElements(bool load_symbols_only) throw (FileFormatException)
+{
 	while (xml.readNextStartElement())
 	{
 		const QStringRef name(xml.name());
@@ -410,6 +443,22 @@ void XMLFileImporter::import(bool load_symbols_only) throw (FileFormatException)
 			importUndo();
 		else if (name == literal::redo)
 			importRedo();
+		else if (name == literal::barrier)
+		{
+			XmlElementReader barrier(xml);
+			if (barrier.attribute<int>(literal::version) > XMLFileFormat::current_version)
+			{
+				QString required_version = barrier.attribute<QString>(literal::required);
+				if (required_version.isEmpty())
+					required_version = tr("unknow");
+				addWarning(tr("Parts of this file cannot be read by this version of Mapper. Minimum required version: %1").arg(required_version));
+				xml.skipCurrentElement();
+			}
+			else
+			{
+				importElements(load_symbols_only);
+			}
+		}
 		else
 		{
 			addWarningUnsupportedElement();
