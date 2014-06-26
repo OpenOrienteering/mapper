@@ -22,14 +22,16 @@
 
 // ### FileFormatException ###
 
+// virtual
 FileFormatException::~FileFormatException() throw()
 {
 	// Nothing, not inlined
 }
 
+// virtual
 const char* FileFormatException::what() const throw()
 {
-	return msg.toLocal8Bit().constData();
+	return msg_c.constData();
 }
 
 

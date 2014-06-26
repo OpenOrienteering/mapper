@@ -617,7 +617,7 @@ bool Map::exportTo(const QString& path, MapEditorController* map_editor, const F
 	{
 		file.close();
 		
-		QMessageBox::warning(NULL, tr("Error"), tr("Internal error while saving:\n%1").arg(e.what()));
+		QMessageBox::warning(NULL, tr("Error"), tr("Internal error while saving:\n%1").arg(QString::fromLocal8Bit(e.what())));
 		if (temp_path.isEmpty())
 			QFile::remove(path);
 		else
