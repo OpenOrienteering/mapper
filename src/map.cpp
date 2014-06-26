@@ -514,18 +514,20 @@ bool Map::saveTo(const QString& path, MapEditorController* map_editor)
 {
 	assert(map_editor && "Preserving the widget&view information without retrieving it from a MapEditorController is not implemented yet!");
 	
-	exportTo(path, map_editor);
+	bool success = exportTo(path, map_editor);
 	
-	colors_dirty = false;
-	symbols_dirty = false;
-	templates_dirty = false;
-	objects_dirty = false;
-	other_dirty = false;
-	unsaved_changes = false;
-	
-	undoManager().setClean();
-	
-	return true;
+	if (success)
+	{
+		colors_dirty = false;
+		symbols_dirty = false;
+		templates_dirty = false;
+		objects_dirty = false;
+		other_dirty = false;
+		unsaved_changes = false;
+		
+		undoManager().setClean();
+	}
+	return success;
 }
 
 bool Map::exportTo(const QString& path, MapEditorController* map_editor, const FileFormat* format)
