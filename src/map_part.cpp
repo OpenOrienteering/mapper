@@ -112,7 +112,7 @@ MapPart* MapPart::load(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol
 			
 			std::size_t num_objects = objects_element.attribute<std::size_t>(literal::count);
 			if (num_objects > 0)
-				part->objects.reserve(qMin(num_objects, 50ul)); // 50 is not a limit
+				part->objects.reserve(qMin(num_objects, (std::size_t)50)); // 50 is not a limit
 			
 			while (xml.readNextStartElement())
 			{
