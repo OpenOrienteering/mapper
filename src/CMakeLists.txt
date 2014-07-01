@@ -283,6 +283,7 @@ set(Mapper_EXTRA_HEADERS
   gui/settings_dialog_p.h
   util/scoped_signals_blocker.h
   file_format_ocad8_p.h
+  map_part.h
   object_operations.h
   undo.h
 )

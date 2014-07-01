@@ -388,7 +388,9 @@ Map::Map()
 	connect(this, SIGNAL(colorAdded(int,MapColor*)), SLOT(checkSpotColorPresence()));
 	connect(this, SIGNAL(colorChanged(int,MapColor*)), SLOT(checkSpotColorPresence()));
 	connect(this, SIGNAL(colorDeleted(int,const MapColor*)), SLOT(checkSpotColorPresence()));
+	connect(undo_manager.data(), SIGNAL(cleanChanged(bool)), this, SLOT(undoCleanChanged(bool)));
 }
+
 Map::~Map()
 {
 	int size = symbols.size();
@@ -464,7 +466,7 @@ void Map::changeScale(unsigned int new_scale_denominator, const MapCoord& scalin
 	}
 	
 	setScaleDenominator(new_scale_denominator);
-	setOtherDirty(true);
+	setOtherDirty();
 	updateAllMapWidgets();
 }
 void Map::rotateMap(double rotation, const MapCoord& center, bool adjust_georeferencing, bool adjust_declination, bool adjust_templates)
@@ -506,7 +508,7 @@ void Map::rotateMap(double rotation, const MapCoord& center, bool adjust_georefe
 		}
 	}
 	
-	setOtherDirty(true);
+	setOtherDirty();
 	updateAllMapWidgets();
 }
 
@@ -1383,8 +1385,8 @@ int Map::findColorIndex(const MapColor* color) const
 }
 void Map::setColorsDirty()
 {
-	setHasUnsavedChanges();
 	colors_dirty = true;
+	setHasUnsavedChanges(true);
 }
 
 void Map::useColorsFrom(Map* map)
@@ -1695,8 +1697,8 @@ int Map::findSymbolIndex(const Symbol* symbol) const
 
 void Map::setSymbolsDirty()
 {
-	setHasUnsavedChanges();
 	symbols_dirty = true;
+	setHasUnsavedChanges(true);
 }
 
 void Map::scaleAllSymbols(double factor)
@@ -1836,8 +1838,8 @@ int Map::findTemplateIndex(const Template* temp) const
 }
 void Map::setTemplatesDirty()
 {
-	setHasUnsavedChanges();
 	templates_dirty = true;
+	setHasUnsavedChanges(true);
 }
 void Map::emitTemplateChanged(Template* temp)
 {
@@ -1910,7 +1912,7 @@ void Map::addPart(MapPart* part, int pos)
 	
 	emit currentMapPartChanged(current_part_index);
 	
-	setOtherDirty(true);
+	setOtherDirty();
 	for(unsigned int i = 0; i < widgets.size(); i++)
 		widgets[i]->updateEverything();
 }
@@ -1931,12 +1933,12 @@ void Map::removePart(int index)
 		emit currentMapPartChanged(current_part_index);
 	}
 	
-	setOtherDirty(true);
+	setOtherDirty();
 	for(unsigned int i = 0; i < widgets.size(); i++)
 		widgets[i]->updateEverything();
 }
 
-int Map::findPartIndex(MapPart* part) const
+int Map::findPartIndex(const MapPart* part) const
 {
 	int size = (int)parts.size();
 	for (int i = 0; i < size; ++i)
@@ -2022,8 +2024,8 @@ void Map::deleteObject(Object* object, bool remove_only)
 }
 void Map::setObjectsDirty()
 {
-	setHasUnsavedChanges();
 	objects_dirty = true;
+	setHasUnsavedChanges(true);
 }
 
 QRectF Map::calculateExtent(bool include_helper_symbols, bool include_templates, const MapView* view) const
@@ -2117,7 +2119,7 @@ bool Map::existsObjectWithSymbol(Symbol* symbol)
 void Map::setGeoreferencing(const Georeferencing& georeferencing)
 {
 	*this->georeferencing = georeferencing;
-	setOtherDirty(true);
+	setOtherDirty();
 }
 
 const MapPrinterConfig& Map::printerConfig()
@@ -2141,12 +2143,12 @@ void Map::setPrinterConfig(const MapPrinterConfig& config)
 	if (printer_config.isNull())
 	{
 		printer_config.reset(new MapPrinterConfig(config));
-		setOtherDirty(true);
+		setOtherDirty();
 	}
 	else if (*printer_config != config)
 	{
 		*printer_config = config;
-		setOtherDirty(true);
+		setOtherDirty();
 	}
 }
 
@@ -2174,19 +2176,36 @@ void Map::setHasUnsavedChanges(bool has_unsaved_changes)
 		templates_dirty = false;
 		objects_dirty = false;
 		other_dirty = false;
-		unsaved_changes = false;
+		if (unsaved_changes)
+		{
+			unsaved_changes = false;
+			emit hasUnsavedChanges(unsaved_changes);
+		}
 	}
-	else
+	else if (!unsaved_changes)
 	{
-		emit gotUnsavedChanges(); // always needed to trigger autosave
 		unsaved_changes = true;
+		emit hasUnsavedChanges(unsaved_changes);
 	}
 }
-void Map::setOtherDirty(bool value)
+
+void Map::setOtherDirty()
 {
-	if (!other_dirty && value)
-		setHasUnsavedChanges();
-	other_dirty = value;
+	other_dirty = true;
+	setHasUnsavedChanges(true);
+}
+
+// slot
+void Map::undoCleanChanged(bool is_clean)
+{
+	if (is_clean && unsaved_changes && !(colors_dirty || symbols_dirty || templates_dirty || other_dirty))
+	{
+		setHasUnsavedChanges(false);
+	}
+	else if (!is_clean && !unsaved_changes)
+	{
+		setHasUnsavedChanges(true);
+	}
 }
 
 void Map::checkIfFirstColorAdded()

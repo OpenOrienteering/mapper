@@ -27,6 +27,7 @@
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
+#include "map.h"
 #include "object_undo.h"
 #include "util/xml_stream_util.h"
 
@@ -128,6 +129,7 @@ bool UndoManager::undo(QWidget* dialog_parent)
 	}
 	
 	UndoStep* redo_step = step->undo();
+	updateMapState(step);
 	delete step;
 	
 	--current_index;
@@ -157,6 +159,7 @@ bool UndoManager::redo(QWidget* dialog_parent)
 	}
 	
 	UndoStep* undo_step = step->undo();
+	updateMapState(step);
 	delete step;
 	
 	StepList::iterator entry = undo_steps.begin() + current_index;
@@ -166,6 +169,28 @@ bool UndoManager::redo(QWidget* dialog_parent)
 	emitChangedSignals(old_state);
 	
 	return true;
+}
+
+void UndoManager::updateMapState(const UndoStep *step) const
+{
+	// Make a modified part the current one
+	UndoStep::PartSet result_parts;
+	bool have_modified_objects = step->getModifiedParts(result_parts);
+	if (have_modified_objects && result_parts.find(map->getCurrentPartIndex()) == result_parts.end())
+		map->setCurrentPart(*result_parts.begin());
+	
+	// Select affected objects and ensure that they are visible
+	UndoStep::ObjectSet result_objects;
+	step->getModifiedObjects(map->getCurrentPartIndex(), result_objects);
+	map->clearObjectSelection(result_objects.size() == (std::size_t)0);
+	
+	UndoStep::ObjectSet::iterator object = result_objects.begin();
+	for (std::size_t i = 1, size = result_objects.size(); i <= size; ++i, ++object)
+	{
+		map->addObjectToSelection(*object, i == size);
+	}
+	
+	map->ensureVisibilityOfSelectedObjects();
 }
 
 

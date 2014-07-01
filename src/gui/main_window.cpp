@@ -1023,8 +1023,3 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event){
 	}
 	return false;
 }
-
-void MainWindow::gotUnsavedChanges()
-{
-	setHasUnsavedChanges(true);
-}

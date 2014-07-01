@@ -290,6 +290,14 @@ protected:
 	 */
 	void emitChangedSignals(UndoManager::State const &old_state);
 	
+	/**
+	 * Set the map's current part and selection from the given undo step.
+	 * 
+	 * This method relies on the step already being applied to the map,
+	 * i.e. all affected parts and objects do exist.
+	 */
+	void updateMapState(const UndoStep* step) const;
+	
 private:
 	bool loadSteps(StepList& steps, QIODevice* file, int version);
 	

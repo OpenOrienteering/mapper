@@ -397,7 +397,7 @@ public:
 	
 	/**
 	 * Marks the colors as "dirty", i.e. as having unsaved changes.
-	 * Emits gotUnsavedChanges() if the map did not have unsaved changed before.
+	 * Emits hasUnsavedChanges(true) if the map did not have unsaved changed before.
 	 */
 	void setColorsDirty();
 	
@@ -477,7 +477,7 @@ public:
 	
 	/**
 	 * Marks the symbols as "dirty", i.e. as having unsaved changes.
-	 * Emits gotUnsavedChanges() if the map did not have unsaved changed before.
+	 * Emits hasUnsavedChanges(true) if the map did not have unsaved changed before.
 	 */
 	void setSymbolsDirty();
 	
@@ -571,7 +571,7 @@ public:
 	
 	/**
 	 * Marks the template settings as "dirty", i.e. as having unsaved changes.
-	 * Emits gotUnsavedChanges() if the map did not have unsaved changed before.
+	 * Emits hasUnsavedChanges(true) if the map did not have unsaved changed before.
 	 */
 	void setTemplatesDirty();
 	
@@ -650,7 +650,7 @@ public:
 	 * Returns the part's index in the list. The part must be contained in the
 	 * map, otherwise an assert will be triggered!
 	 */
-	int findPartIndex(MapPart* part) const;
+	int findPartIndex(const MapPart* part) const;
 	
 	/** Returns the current map part, i.e. the part where edit operations happen. */
 	inline MapPart* getCurrentPart() const {return (current_part_index < 0) ? NULL : parts[current_part_index];}
@@ -691,7 +691,7 @@ public:
 	
 	/**
 	 * Marks the objects as "dirty", i.e. as having unsaved changes.
-	 * Emits gotUnsavedChanges() if the map did not have unsaved changed before.
+	 * Emits hasUnsavedChanges(true) if the map did not have unsaved changed before.
 	 */
 	void setObjectsDirty();
 	
@@ -1057,7 +1057,7 @@ public:
 	inline bool hasUnsavedChanged() const {return unsaved_changes;}
 	
 	/** Do not use this in usual cases, see hasUnsavedChanged(). */
-	void setHasUnsavedChanges(bool has_unsaved_changes = true);
+	void setHasUnsavedChanges(bool has_unsaved_changes);
 	
 	/** Returns if there are unsaved changes to the colors. */
 	inline bool areColorsDirty() const {return colors_dirty;}
@@ -1072,12 +1072,12 @@ public:
 	
 	/**
 	 * Marks somthing unspecific in the map as "dirty", i.e. as having unsaved changes.
-	 * Emits gotUnsavedChanges() if the map did not have unsaved changed before.
+	 * Emits hasUnsavedChanges(true) if the map did not have unsaved changed before.
 	 * 
 	 * Use setColorsDirty(), setSymbolsDirty(), setTemplatesDirty() or
 	 * setObjectsDirty() if you know more specificly what has changed.
 	 */
-	void setOtherDirty(bool value = true);
+	void setOtherDirty();
 	
 	// Static
 	
@@ -1106,10 +1106,9 @@ public:
 	
 signals:
 	/**
-	 * Emitted when a change is made which causes the map to contain
-	 * unsaved changes, when it had not unsaved changes before.
+	 * Emitted when a the map enters or leaves the state which is saved on map.
 	 */
-	void gotUnsavedChanges();
+	void hasUnsavedChanges(bool is_clean);
 	
 	/** Emitted when a color is added to the map, gives the color's index and pointer. */
 	void colorAdded(int pos, MapColor* color);
@@ -1158,6 +1157,8 @@ signals:
 	
 protected slots:
 	void checkSpotColorPresence();
+	
+	void undoCleanChanged(bool is_clean);
 	
 private:
 	typedef std::vector<MapColor*> ColorVector;

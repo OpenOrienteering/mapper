@@ -420,7 +420,7 @@ void MapEditorController::attach(MainWindow* window)
 	this->window = window;
 	if (mode == MapEditor)
 		window->setHasOpenedFile(true);
-	connect(map, SIGNAL(gotUnsavedChanges()), window, SLOT(gotUnsavedChanges()));
+	connect(map, SIGNAL(hasUnsavedChanges(bool)), window, SLOT(setHasUnsavedChanges(bool)));
 	
 #ifdef Q_OS_ANDROID
 	QAndroidJniObject::callStaticMethod<void>("org/openorienteering/mapper/MapperActivity",
@@ -1298,49 +1298,10 @@ void MapEditorController::doUndo(bool redo)
 		return;
 	}
 	
-	UndoStep* step = redo ? map->undoManager().nextRedoStep() : map->undoManager().nextUndoStep();
-	
-	UndoStep::PartSet result_parts;
-	bool have_modified_objects = step->getModifiedParts(result_parts);
-	if (have_modified_objects && result_parts.find(map->getCurrentPartIndex()) == result_parts.end())
-		map->setCurrentPart(*result_parts.begin());
-	
-	UndoStep::ObjectSet result_objects;
-	step->getModifiedObjects(map->getCurrentPartIndex(), result_objects);
-	
-	bool done;
 	if (redo)
-		done = map->undoManager().redo(window);
+		map->undoManager().redo(window);
 	else
-		done = map->undoManager().undo(window);
-	
-	if (!done)
-		return;
-	
-	bool in_saved_state = map->undoManager().isClean();
-	if (map->hasUnsavedChanged() && in_saved_state && !(map->areColorsDirty() || map->areSymbolsDirty() || map->areTemplatesDirty() || map->isOtherDirty()))
-	{
-		map->setHasUnsavedChanges(false);
-		window->setHasUnsavedChanges(false);
-	}
-	else if (!map->hasUnsavedChanged() && !in_saved_state)
-	{
-		map->setHasUnsavedChanges(true);
-		window->setHasUnsavedChanges(true);
-	}
-	
-	// Select affected objects and ensure that they are visible
-	map->clearObjectSelection((int)result_objects.size() == 0);
-	
-	QRectF object_rect;
-	UndoStep::ObjectSet::iterator object = result_objects.begin();
-	for (std::size_t i = 1, size = result_objects.size(); i <= size; ++i, ++object)
-	{
-		rectIncludeSafe(object_rect, (*object)->getExtent());
-		map->addObjectToSelection(*object, i == size);
-	}
-	if (object_rect.isValid())
-		map_widget->ensureVisibilityOfRect(object_rect, false, true);
+		map->undoManager().undo(window);
 }
 
 void MapEditorController::cut()
@@ -1481,7 +1442,7 @@ void MapEditorController::configureGrid()
 	{
 		show_grid_act->setChecked(main_view->isGridVisible());
 		map->updateAllMapWidgets();
-		map->setOtherDirty(true);
+		map->setOtherDirty();
 	}
 }
 
@@ -1669,7 +1630,7 @@ void MapEditorController::mapNotesClicked()
 		if (text_edit->toPlainText() != map->getMapNotes())
 		{
 			map->setMapNotes(text_edit->toPlainText());
-			map->setHasUnsavedChanges();
+			map->setHasUnsavedChanges(true);
 		}
 	}
 }
@@ -3223,10 +3184,9 @@ void MapEditorController::changeMapPart(int part)
 	}
 }
 
-void MapEditorController::currentMapPartChanged(int part)
+void MapEditorController::currentMapPartChanged(int)
 {
-	if (mappart_selector_box)
-		mappart_selector_box->setCurrentIndex(part);
+	updateMapPartUI();
 }
 
 void MapEditorController::reassignObjectsToMapPart(int part)

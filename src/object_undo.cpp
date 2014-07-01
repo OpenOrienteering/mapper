@@ -287,9 +287,12 @@ ReplaceObjectsUndoStep::~ReplaceObjectsUndoStep()
 
 UndoStep* ReplaceObjectsUndoStep::undo()
 {
-	ReplaceObjectsUndoStep* undo_step = new ReplaceObjectsUndoStep(map);
+	int const part_index = getPartIndex();
 	
-	MapPart* part = map->getPart(getPartIndex());
+	ReplaceObjectsUndoStep* undo_step = new ReplaceObjectsUndoStep(map);
+	undo_step->setPartIndex(part_index);
+	
+	MapPart* part = map->getPart(part_index);
 	std::size_t size = objects.size();
 	for (std::size_t i = 0; i < size; ++i)
 	{
@@ -318,12 +321,15 @@ DeleteObjectsUndoStep::~DeleteObjectsUndoStep()
 
 UndoStep* DeleteObjectsUndoStep::undo()
 {
+	int const part_index = getPartIndex();
+	
 	AddObjectsUndoStep* undo_step = new AddObjectsUndoStep(map);
+	undo_step->setPartIndex(part_index);
 	
 	// Make sure to delete the objects in the right order so the other objects' indices stay valid
 	std::sort(modified_objects.begin(), modified_objects.end(), std::greater<int>());
 	
-	MapPart* part = map->getPart(getPartIndex());
+	MapPart* part = map->getPart(part_index);
 	int size = (int)modified_objects.size();
 	for (int i = 0; i < size; ++i)
 	{
@@ -361,7 +367,10 @@ AddObjectsUndoStep::~AddObjectsUndoStep()
 
 UndoStep* AddObjectsUndoStep::undo()
 {
+	int const part_index = getPartIndex();
+	
 	DeleteObjectsUndoStep* undo_step = new DeleteObjectsUndoStep(map);
+	undo_step->setPartIndex(part_index);
 	
 	// Make sure to add the objects in the right order so the other objects' indices stay valid
 	std::vector< std::pair<int, int> > order;	// index into affected_objects & objects, object index
@@ -370,7 +379,7 @@ UndoStep* AddObjectsUndoStep::undo()
 		order[i] = std::pair<int, int>(i, modified_objects[i]);
 	std::sort(order.begin(), order.end(), sortOrder);
 	
-	MapPart* part = map->getPart(getPartIndex());
+	MapPart* part = map->getPart(part_index);
 	int size = (int)objects.size();
 	for (int i = 0; i < size; ++i)
 	{
@@ -436,9 +445,12 @@ void SwitchSymbolUndoStep::addObject(int index, Symbol* target_symbol)
 
 UndoStep* SwitchSymbolUndoStep::undo()
 {
-	SwitchSymbolUndoStep* undo_step = new SwitchSymbolUndoStep(map);
+	int const part_index = getPartIndex();
 	
-	MapPart* part = map->getPart(getPartIndex());
+	SwitchSymbolUndoStep* undo_step = new SwitchSymbolUndoStep(map);
+	undo_step->setPartIndex(part_index);
+	
+	MapPart* part = map->getPart(part_index);
 	int size = (int)modified_objects.size();
 	for (int i = 0; i < size; ++i)
 	{
@@ -545,9 +557,12 @@ SwitchDashesUndoStep::~SwitchDashesUndoStep()
 
 UndoStep* SwitchDashesUndoStep::undo()
 {
-	SwitchDashesUndoStep* undo_step = new SwitchDashesUndoStep(map);
+	int const part_index = getPartIndex();
 	
-	MapPart* part = map->getPart(getPartIndex());
+	SwitchDashesUndoStep* undo_step = new SwitchDashesUndoStep(map);
+	undo_step->setPartIndex(part_index);
+	
+	MapPart* part = map->getPart(part_index);
 	for (ObjectList::iterator it = modified_objects.begin(), end = modified_objects.end(); it != end; ++it)
 	{
 		PathObject* object = reinterpret_cast<PathObject*>(part->getObject(*it));
@@ -585,9 +600,12 @@ void ObjectTagsUndoStep::addObject(int index)
 
 UndoStep* ObjectTagsUndoStep::undo()
 {
-	MapPart* const map_part = map->getPart(getPartIndex());
+	int const part_index = getPartIndex();
 	
 	ObjectTagsUndoStep* redo_step = new ObjectTagsUndoStep(map);
+	MapPart* const map_part = map->getPart(part_index);
+	
+	redo_step->setPartIndex(part_index);
 	for (ObjectTagsMap::iterator it = object_tags_map.begin(), end = object_tags_map.end(); it != end; ++it)
 	{
 		redo_step->addObject(it->first);
