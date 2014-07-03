@@ -177,7 +177,7 @@ void UndoManager::updateMapState(const UndoStep *step) const
 	UndoStep::PartSet result_parts;
 	bool have_modified_objects = step->getModifiedParts(result_parts);
 	if (have_modified_objects && result_parts.find(map->getCurrentPartIndex()) == result_parts.end())
-		map->setCurrentPart(*result_parts.begin());
+		map->setCurrentPartIndex(*result_parts.begin());
 	
 	// Select affected objects and ensure that they are visible
 	UndoStep::ObjectSet result_objects;

@@ -470,12 +470,10 @@ public slots:
 	void removeMapPart();
 	/** Renames the current map part */
 	void renameMapPart();
-	/** Selects the given part in the selector box */
-	void currentMapPartChanged(int part);
 	/** Moves all selected objects to a different map part */
-	void reassignObjectsToMapPart(int part);
+	void reassignObjectsToMapPart(int target);
 	/** Merges the current map part with another one */
-	void mergeCurrentMapPartTo(int part);
+	void mergeCurrentMapPartTo(int target);
 	/** Merges all map parts into the current one. */
 	void mergeAllMapParts();
 	
@@ -517,18 +515,18 @@ protected slots:
 	/**
 	 * Sets the map's current part.
 	 */
-	void changeMapPart(int part);
+	void changeMapPart(int index);
+	
+	/**
+	 * Updates all UI components related to map parts.
+	 */
+	void updateMapPartsUI();
 	
 private:
 	void setMap(Map* map, bool create_new_map_view);
 	
 	/// Updates enabled state of all widgets
 	void updateWidgets();
-	
-	/**
-	 * @brief Updates all UI components related to map parts.
-	 */
-	void updateMapPartUI();
 	
 	void createSymbolWidget(QWidget* parent = NULL);
 	

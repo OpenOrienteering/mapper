@@ -50,6 +50,7 @@ MapPart::MapPart(const QString& name, Map* map)
 : name(name)
 , map(map)
 {
+	Q_ASSERT(map);
 	; // nothing else
 }
 
@@ -58,6 +59,14 @@ MapPart::~MapPart()
 	int size = (int)objects.size();
 	for (int i = 0; i < size; ++i)
 		delete objects[i];
+}
+
+
+void MapPart::setName(const QString new_name)
+{
+	name = new_name;
+	if (map)
+		emit map->mapPartChanged(map->findPartIndex(this), this);
 }
 
 

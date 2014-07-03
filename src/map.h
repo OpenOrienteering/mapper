@@ -633,17 +633,25 @@ public:
 	
 	// Map parts
 	
-	/** Returns the number of map parts in this map. */
-	inline int getNumParts() const {return (int)parts.size();}
+	/**
+	 * Returns the number of map parts in this map.
+	 */
+	int getNumParts() const;
 	
-	/** Returns the i-th map part. */
-	inline MapPart* getPart(int i) const {return parts[i];}
+	/**
+	 * Returns the i-th map part.
+	 */
+	MapPart* getPart(std::size_t i) const;
 	
-	/** Adds the new part at the given index. */
-	void addPart(MapPart* part, int pos);
+	/** 
+	 * Adds the new part at the given index.
+	 */
+	void addPart(MapPart* part, std::size_t index);
 
-	/** Removes the map part at position */
-	void removePart(int index);
+	/**
+	 * Removes the map part at position.
+	 */
+	void removePart(std::size_t index);
 	
 	/**
 	 * Loops over all map parts, looking for the given part pointer.
@@ -652,21 +660,65 @@ public:
 	 */
 	int findPartIndex(const MapPart* part) const;
 	
-	/** Returns the current map part, i.e. the part where edit operations happen. */
-	inline MapPart* getCurrentPart() const {return (current_part_index < 0) ? NULL : parts[current_part_index];}
+	/**
+	 * Returns the current map part, i.e. the part where edit operations happen.
+	 */
+	MapPart* getCurrentPart() const;
 	
-	/** Changes the current map part. */
-	inline void setCurrentPart(MapPart* part) {setCurrentPart(findPartIndex(part));}
-	void setCurrentPart(int index);
-
-	/** Returns the index of the current map part, see also getCurrentPart(). */
-	inline int getCurrentPartIndex() const {return current_part_index;}
-
-	/** Moves all specified objects to the specified map part */
-	void reassignObjectsToMapPart(QSet<Object*>::const_iterator begin, QSet<Object*>::const_iterator end, int destination);
+	/**
+	 * Changes the current map part.
+	 * 
+	 * This is a convenience method which looks up the part's index and then
+	 * calls setCurrentPartIndex.
+	 */
+	void setCurrentPart(MapPart* part);
 	
-	/** Merges the source layer with the destination layer, and deletes the source layer */
-	void mergeParts(int source, int destination);
+	/**
+	 * Returns the index of the current map part.
+	 * 
+	 * @see getCurrentPart().
+	 */
+	std::size_t getCurrentPartIndex() const;
+	
+	/**
+	 * Changes the current map part.
+	 */
+	void setCurrentPartIndex(std::size_t index);
+	
+	/**
+	 * Moves all specified objects from the source to the destination map part.
+	 * 
+	 * The objects will be continuously located at the end to the objects in the target part.
+	 * Source object which were selected will be removed from the object selection.
+	 * 
+	 * @return The index of the first object which has been reassigned.
+	 */
+	std::size_t reassignObjectsToMapPart(QSet<Object*>::const_iterator begin, QSet<Object*>::const_iterator end, std::size_t source, std::size_t destination);
+	
+	/**
+	 * Moves all specified objects from the source to the target map part.
+	 * 
+	 * The objects will be continuously located at the end to the objects in the target part.
+	 * Source object which were selected will be removed from the object selection.
+	 * 
+	 * @return The index of the first object which has been reassigned.
+	 */
+	std::size_t reassignObjectsToMapPart(std::vector<int>::const_iterator begin, std::vector<int>::const_iterator end, std::size_t source, std::size_t destination);
+	
+	/**
+	 * Merges the source part with the destination part.
+	 * 
+	 * Removes the source part unless it is identical with the destination part.
+	 * 
+	 * The objects will be continuously located at the end to the objects in the target part.
+	 * Does not change the object selection.
+	 * 
+	 * Makes the destination part the current part when the source part is the current part.
+	 * 
+	 * @return The index of the first object which has been reassigned.
+	 */
+	std::size_t mergeParts(std::size_t source, std::size_t destination);
+	
 	
 	// Objects
 	
@@ -1151,9 +1203,35 @@ signals:
 	void selectedObjectEdited();
 
 	/**
-	 * Emitted when the map part currently used for drawing changes
+	 * Emitted when the map part currently used for drawing changes.
+	 * 
+	 * @see currentMapPartIndexChanged()
 	 */
-	void currentMapPartChanged(int index);
+	void currentMapPartChanged(const MapPart* part);
+	
+	/**
+	 * Emitted when the index of map part currently used for drawing changes.
+	 * 
+	 * This signal may be emitted even when the current MapPart object does not
+	 * change. This happens when the index changes due to addition or removal
+	 * of map parts.
+	 */
+	void currentMapPartIndexChanged(std::size_t index);
+	
+	/**
+	 * Emitted when a part is added to the map.
+	 */
+	void mapPartAdded(std::size_t index, const MapPart* part);
+	
+	/**
+	 * Emitted when a part's properties are changed.
+	 */
+	void mapPartChanged(std::size_t index, const MapPart* part);
+	
+	/**
+	 * Emitted when a part is removed from the map.
+	 */
+	void mapPartDeleted(std::size_t index, const MapPart* part);
 	
 protected slots:
 	void checkSpotColorPresence();
@@ -1223,7 +1301,7 @@ private:
 	ObjectSelection object_selection;
 	Object* first_selected_object;
 	QScopedPointer<UndoManager> undo_manager;
-	int current_part_index;
+	std::size_t current_part_index;
 	WidgetVector widgets;
 	ViewVector views;
 	QScopedPointer<MapRenderables> renderables;
@@ -1329,6 +1407,36 @@ inline
 UndoManager& Map::undoManager()
 {
 	return *(undo_manager.data());
+}
+
+inline
+int Map::getNumParts() const
+{
+	return parts.size();
+}
+
+inline
+MapPart* Map::getPart(std::size_t i) const
+{
+	return parts[i];
+}
+
+inline
+MapPart* Map::getCurrentPart() const
+{
+	return (current_part_index < 0) ? NULL : parts[current_part_index];
+}
+
+inline
+void Map::setCurrentPart(MapPart* part)
+{
+	setCurrentPartIndex(findPartIndex(part));
+}
+
+inline
+std::size_t Map::getCurrentPartIndex() const
+{
+	return current_part_index;
 }
 
 #endif

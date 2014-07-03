@@ -389,5 +389,6 @@ void NativeFileImport::import(bool load_symbols_only) throw (FileFormatException
 		}
 	}
 	
-	emit map->currentMapPartChanged(map->current_part_index);
+	emit map->currentMapPartIndexChanged(map->current_part_index);
+	emit map->currentMapPartChanged(map->getPart(map->current_part_index));
 }

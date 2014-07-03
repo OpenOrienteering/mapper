@@ -230,7 +230,7 @@ private:
 
 	QString name;
 	ObjectList objects;  ///< @todo This could be a spatial representation optimized for quick access
-	Map* map;
+	Map* const map;
 };
 
 
@@ -241,12 +241,6 @@ inline
 const QString& MapPart::getName() const
 {
 	return name;
-}
-
-inline
-void MapPart::setName(const QString new_name)
-{
-	name = new_name;
 }
 
 inline

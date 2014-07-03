@@ -1841,6 +1841,7 @@ void Map::setTemplatesDirty()
 	templates_dirty = true;
 	setHasUnsavedChanges(true);
 }
+
 void Map::emitTemplateChanged(Template* temp)
 {
 	emit(templateChanged(findTemplateIndex(temp), temp));
@@ -1904,34 +1905,44 @@ void Map::push(UndoStep *step)
 	undo_manager->push(step);
 }
 
-void Map::addPart(MapPart* part, int pos)
+
+void Map::addPart(MapPart* part, std::size_t index)
 {
-	parts.insert(parts.begin() + pos, part);
-	if (current_part_index >= pos)
-		++current_part_index;
+	Q_ASSERT(index >= 0 && index <= parts.size());
 	
-	emit currentMapPartChanged(current_part_index);
+	parts.insert(parts.begin() + index, part);
+	if (current_part_index >= index)
+		setCurrentPartIndex(current_part_index + 1);
+	
+	emit mapPartAdded(index, part);
 	
 	setOtherDirty();
 	for(unsigned int i = 0; i < widgets.size(); i++)
 		widgets[i]->updateEverything();
 }
 
-void Map::removePart(int index)
+void Map::removePart(std::size_t index)
 {
+	Q_ASSERT(index >= 0 && index < parts.size());
+	Q_ASSERT(parts.size() > 1);
+	
+	if (current_part_index == index)
+		// First switch to another part when removing the current part
+		setCurrentPartIndex((index == parts.size() - 1) ? (parts.size() - 2) : (index + 1));
+	
 	MapPart* part = parts[index];
 	
 	// FIXME: This loop should move to MapPart.
 	while(part->getNumObjects())
 		part->deleteObject(0, false);
-	delete part;
 	
 	parts.erase(parts.begin() + index);
+	if (current_part_index >= index)
+		setCurrentPartIndex((index == parts.size()) ? (parts.size() - 1) : index);
 	
-	if(current_part_index == index) {
-		current_part_index = 0;
-		emit currentMapPartChanged(current_part_index);
-	}
+	emit mapPartDeleted(index, part);
+	
+	delete part;
 	
 	setOtherDirty();
 	for(unsigned int i = 0; i < widgets.size(); i++)
@@ -1940,58 +1951,144 @@ void Map::removePart(int index)
 
 int Map::findPartIndex(const MapPart* part) const
 {
-	int size = (int)parts.size();
-	for (int i = 0; i < size; ++i)
+	std::size_t const size = parts.size();
+	for (std::size_t i = 0; i < size; ++i)
 	{
 		if (parts[i] == part)
 			return i;
 	}
-	assert(false);
+	Q_ASSERT(false);
 	return -1;
 }
 
-void Map::setCurrentPart(int index)
+void Map::setCurrentPartIndex(std::size_t index)
 {
-	Q_ASSERT(index >= 0 && index < (int)parts.size());
-	if (index == current_part_index)
-		return;
+	Q_ASSERT(index >= 0 && index < parts.size());
 	
-	clearObjectSelection(true);
+	MapPart* const old_part = parts[current_part_index];
+	if (index != current_part_index)
+	{
+		current_part_index = index;
+		emit currentMapPartIndexChanged(index);
+	}
 	
-	current_part_index = index;
-	emit currentMapPartChanged(index);
+	MapPart* const new_part = parts[current_part_index];
+	if (new_part != old_part)
+	{
+		clearObjectSelection(true);
+		emit currentMapPartChanged(new_part);
+	}
 }
 
-void Map::reassignObjectsToMapPart(QSet<Object*>::const_iterator begin, QSet<Object*>::const_iterator end, int destination)
+std::size_t Map::reassignObjectsToMapPart(QSet<Object*>::const_iterator begin, QSet<Object*>::const_iterator end, std::size_t source, std::size_t destination)
 {
-	for (QSet<Object*>::const_iterator it = begin; it != end; it++) {
-		Object* object = *it;
-		deleteObject(object, true);
-		addObject(object, destination);
+	Q_ASSERT(source < parts.size());
+	Q_ASSERT(destination < parts.size());
+	
+	std::size_t count = 0;
+	MapPart* const source_part = parts[source];
+	MapPart* const target_part = parts[destination];
+	for (QSet<Object*>::const_iterator it = begin; it != end; ++it)
+	{
+		Object* const object = *it;
+		source_part->deleteObject(object, true);
+
+		int index = target_part->getNumObjects();
+		target_part->addObject(object, index);
+		
+		++count;
 	}
 	
 	setOtherDirty();
+	
+	std::size_t const target_end   = target_part->getNumObjects();
+	std::size_t const target_begin = target_end - count;
+	
+	if (current_part_index == source)
+	{
+		int const selection_size = getNumSelectedObjects();
+		
+		// When modifying the selection we must not use the original iterators
+		// because they may be operating on the selection and then become invalid!
+		for (std::size_t i = target_begin; i != target_end; ++i)
+		{
+			Object* const object = target_part->getObject(i);
+			if (isObjectSelected(object))
+				removeObjectFromSelection(object, false);
+		}
+		
+		if (selection_size != getNumSelectedObjects())
+			emit objectSelectionChanged();
+	}	
+		
+	return target_begin;
 }
 
-void Map::mergeParts(int source, int destination)
+std::size_t Map::reassignObjectsToMapPart(std::vector<int>::const_iterator begin, std::vector<int>::const_iterator end, std::size_t source, std::size_t destination)
 {
-	// FIXME: Retain object selection
-	clearObjectSelection(false);
+	Q_ASSERT(source < parts.size());
+	Q_ASSERT(destination < parts.size());
 	
-	MapPart* source_part = parts[source];
+	bool selection_changed = false;
 	
-	while (source_part->getNumObjects()) {
-		int obj_index = source_part->getNumObjects() - 1;
-		Object* obj = source_part->getObject(obj_index);
-		source_part->deleteObject(obj_index, true);
-		addObject(obj, destination);
-		addObjectToSelection(obj, false);
+	std::size_t count = 0;
+	MapPart* const source_part = parts[source];
+	MapPart* const target_part = parts[destination];
+	for (std::vector<int>::const_iterator it = begin; it != end; ++it)
+	{
+		Object* const object = source_part->getObject(*it);
+		
+		if (current_part_index == source && isObjectSelected(object))
+		{
+			removeObjectFromSelection(object, false);
+			selection_changed = true;
+		}
+		
+		source_part->deleteObject(object, true);
+		
+		int index = target_part->getNumObjects();
+		target_part->addObject(object, index);
+		
+		++count;
 	}
 	
-	removePart(source);
+	setOtherDirty();
 	
-	emit objectSelectionChanged();
+	if (selection_changed)
+		emit objectSelectionChanged();
+	
+	return target_part->getNumObjects() - count;
 }
+
+std::size_t Map::mergeParts(std::size_t source, std::size_t destination)
+{
+	Q_ASSERT(source < parts.size());
+	Q_ASSERT(destination < parts.size());
+	
+	std::size_t count = 0;
+	MapPart* const source_part = parts[source];
+	MapPart* const target_part = parts[destination];
+	// Preserve order (but not efficient)
+	for (std::size_t i = source_part->getNumObjects(); i > 0 ; --i)
+	{
+		Object* object = source_part->getObject(0);
+		source_part->deleteObject(0, true);
+		
+		int index = target_part->getNumObjects();
+		target_part->addObject(object, index);
+		
+		++count;
+	}
+	
+	if (current_part_index == source)
+		setCurrentPartIndex(destination);
+	
+	if (destination != source)
+		removePart(source);
+	
+	return target_part->getNumObjects() - count;
+}
+
 
 int Map::getNumObjects()
 {
