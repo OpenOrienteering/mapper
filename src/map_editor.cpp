@@ -2207,8 +2207,8 @@ void MapEditorController::switchSymbolClicked()
 	else if (split_up)
 	{
 		CombinedUndoStep* combined_step = new CombinedUndoStep(map);
-		combined_step->addSubStep(delete_step);
-		combined_step->addSubStep(add_step);
+		combined_step->push(add_step);
+		combined_step->push(delete_step);
 		map->push(combined_step);
 	}
 	else
@@ -2545,10 +2545,10 @@ void MapEditorController::connectPathsClicked()
 	if (add_step || replace_step)
 	{
 		CombinedUndoStep* undo_step = new CombinedUndoStep(map);
-		if (add_step)
-			undo_step->addSubStep(add_step);
 		if (replace_step)
-			undo_step->addSubStep(replace_step);
+			undo_step->push(replace_step);
+		if (add_step)
+			undo_step->push(add_step);
 		map->push(undo_step);
 		map->setObjectsDirty();
 	}

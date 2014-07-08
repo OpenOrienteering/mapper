@@ -276,8 +276,8 @@ struct PhysicalCutoutOperation
 			else
 			{
 				CombinedUndoStep* combined_step = new CombinedUndoStep(map);
-				combined_step->addSubStep(delete_step);
-				combined_step->addSubStep(add_step);
+				combined_step->push(add_step);
+				combined_step->push(delete_step);
 				return combined_step;
 			}
 		}

@@ -25,6 +25,12 @@
 #include "object_undo.h"
 #include "util/xml_stream_util.h"
 
+namespace literal
+{
+	const QLatin1String step("step");
+	const QLatin1String steps("steps");
+}
+
 // ### UndoStep ###
 
 // static
@@ -153,8 +159,8 @@ UndoStep* CombinedUndoStep::undo()
 {
 	CombinedUndoStep* undo_step = new CombinedUndoStep(map);
 	undo_step->steps.reserve(steps.size());
-	for (std::size_t i = 0; i < steps.size(); ++i)
-		undo_step->steps.insert(undo_step->steps.begin(), steps[i]->undo());
+	for (StepList::reverse_iterator step = steps.rbegin(), end = steps.rend(); step != end; ++step)
+		undo_step->push((*step)->undo());
 	return undo_step;
 }
 
@@ -185,8 +191,8 @@ bool CombinedUndoStep::load(QIODevice* file, int version)
 	{
 		int type;
 		file->read((char*)&type, sizeof(int));
-		steps[i] = UndoStep::getUndoStepForType((UndoStep::Type)type, map);
-		success = steps[i]->load(file, version);
+		steps.insert(steps.begin(), UndoStep::getUndoStepForType((UndoStep::Type)type, map));
+		success = steps.front()->load(file, version);
 	}
 	return success;
 }
@@ -195,25 +201,39 @@ void CombinedUndoStep::saveImpl(QXmlStreamWriter& xml) const
 {
 	UndoStep::saveImpl(xml);
 	
-	xml.writeStartElement("substeps");
-	int size = (int)steps.size();
-	xml.writeAttribute("count", QString::number(size));
-	for (int i = 0; i < size; ++i)
-	{
-		steps[i]->save(xml);
-	}
-	xml.writeEndElement(/*substeps*/);
+	// From Mapper 0.6, use the same XML element and order as UndoManager.
+	// (A barrier element prevents older versions from loading this element.)
+	XmlElementWriter steps_element(xml, literal::steps);
+	steps_element.writeAttribute(XmlStreamLiteral::count, steps.size());
+	for (StepList::const_iterator step = steps.begin(), end = steps.end(); step != end; ++step)
+		(*step)->save(xml);
 }
 
 void CombinedUndoStep::loadImpl(QXmlStreamReader& xml, SymbolDictionary& symbol_dict)
 {
 	if (xml.name() == "substeps")
 	{
+		// Mapper before 0.6
+		// @todo Remove in a future version
 		int size = xml.attributes().value("count").toString().toInt();
 		steps.reserve(qMin(size, 10)); // 10 is not a limit
 		while (xml.readNextStartElement())
 		{
-			if (xml.name() == "step")
+			if (xml.name() == literal::step)
+				steps.insert(steps.begin(), UndoStep::load(xml, map, symbol_dict));
+			else
+				xml.skipCurrentElement(); // unknown
+		}
+	}
+	else if (xml.name() == literal::steps)
+	{
+		// From Mapper 0.6, use the same XML element and order as UndoManager.
+		XmlElementReader steps_element(xml);
+		std::size_t size = steps_element.attribute<std::size_t>(XmlStreamLiteral::count);
+		steps.reserve(qMin(size, (std::size_t)50)); // 50 is not a limit
+		while (xml.readNextStartElement())
+		{
+			if (xml.name() == literal::step)
 				steps.push_back(UndoStep::load(xml, map, symbol_dict));
 			else
 				xml.skipCurrentElement(); // unknown

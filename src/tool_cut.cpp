@@ -197,8 +197,8 @@ bool CutTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidg
 						}
 						
 						CombinedUndoStep* undo_step = new CombinedUndoStep(map);
-						undo_step->addSubStep(delete_step);
-						undo_step->addSubStep(add_step);
+						undo_step->push(add_step);
+						undo_step->push(delete_step);
 						map->push(undo_step);
 					}
 				}
@@ -258,12 +258,12 @@ bool CutTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidg
 				delete_step->addObject(part->findObjectIndex(out2));
 			
 			CombinedUndoStep* undo_step = new CombinedUndoStep(map);
+			if (add_step)
+				undo_step->push(add_step);
 			if (out1 || out2)
-				undo_step->addSubStep(delete_step);
+				undo_step->push(delete_step);
 			else
 				delete delete_step;
-			if (add_step)
-				undo_step->addSubStep(add_step);
 			map->push(undo_step);
 			
 			updateDirtyRect();
@@ -680,8 +680,8 @@ void CutTool::pathFinished(PathObject* split_path)
 	}
 	
 	CombinedUndoStep* undo_step = new CombinedUndoStep(map);
-	undo_step->addSubStep(delete_step);
-	undo_step->addSubStep(add_step);
+	undo_step->push(add_step);
+	undo_step->push(delete_step);
 	map->push(undo_step);
 	map->setObjectsDirty();
 	

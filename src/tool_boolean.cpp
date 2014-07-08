@@ -156,8 +156,8 @@ bool BooleanTool::execute()
 	}
 	
 	CombinedUndoStep* undo_step = new CombinedUndoStep(map);
-	undo_step->addSubStep(delete_step);
-	undo_step->addSubStep(add_step);
+	undo_step->push(add_step);
+	undo_step->push(delete_step);
 	map->push(undo_step);
 	map->setObjectsDirty();
 	

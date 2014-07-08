@@ -199,7 +199,7 @@ protected:
  * @brief An undo step which is actually a sequence of sub UndoSteps.
  * 
  * A CombinedUndoStep bundles a sequence of one or more UndoSteps,
- * which it executes in order.
+ * which it executes in reverse order.
  */
 class CombinedUndoStep : public UndoStep
 {
@@ -245,7 +245,7 @@ public:
 	/** 
 	 * Adds a sub step.
 	 */
-	void addSubStep(UndoStep* step);
+	void push(UndoStep* step);
 	
 	/** 
 	 * Returns the i-th sub step.
@@ -347,7 +347,7 @@ int CombinedUndoStep::getNumSubSteps() const
 }
 
 inline
-void CombinedUndoStep::addSubStep(UndoStep* step)
+void CombinedUndoStep::push(UndoStep* step)
 {
 	steps.push_back(step);
 }
