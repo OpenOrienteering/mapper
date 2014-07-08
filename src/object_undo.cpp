@@ -29,6 +29,12 @@
 #include "object.h"
 #include "symbol.h"
 
+namespace literal
+{
+	const QLatin1String source("source");
+	const QLatin1String part("part");
+}
+
 // ### ObjectModifyingUndoStep ###
 
 ObjectModifyingUndoStep::ObjectModifyingUndoStep(Type type, Map* map)
@@ -413,6 +419,73 @@ void AddObjectsUndoStep::removeContainedObjects(bool emit_selection_changed)
 bool AddObjectsUndoStep::sortOrder(const std::pair< int, int >& a, const std::pair< int, int >& b)
 {
 	return a.second < b.second;
+}
+
+
+
+// ### SwitchPartUndoStep ###
+
+SwitchPartUndoStep::SwitchPartUndoStep(Map *map, std::size_t source, std::size_t target_index)
+: ObjectModifyingUndoStep(SwitchPartUndoStepType, map, target_index)
+, source_index(source)
+{
+	// nothing else
+}
+
+SwitchPartUndoStep::SwitchPartUndoStep(Map *map)
+: ObjectModifyingUndoStep(SwitchPartUndoStepType, map)
+, source_index(map->getCurrentPartIndex())
+{
+	// nothing else
+}
+
+// virtual
+SwitchPartUndoStep::~SwitchPartUndoStep()
+{
+	// nothing
+}
+
+// virtual
+UndoStep* SwitchPartUndoStep::undo()
+{
+	std::size_t begin = map->reassignObjectsToMapPart(modified_objects.begin(), modified_objects.end(), source_index, getPartIndex());
+	
+	ObjectList::iterator it = modified_objects.begin();
+	SwitchPartUndoStep* undo = new SwitchPartUndoStep(map, getPartIndex(), source_index);
+	for (std::size_t i = begin, end = map->getPart(getPartIndex())->getNumObjects(); i < end; ++i)
+	{
+		undo->addObject(i);
+		// Save indices from target part (needed for getModifiedObjects())
+		*it = i;
+		++it;
+	}
+	return undo;
+}
+
+// virtual
+bool SwitchPartUndoStep::load(QIODevice *file, int version)
+{
+	Q_ASSERT(false); // Not used in legacy file format
+}
+
+// virtual
+void SwitchPartUndoStep::saveImpl(QXmlStreamWriter &xml) const
+{
+	ObjectModifyingUndoStep::saveImpl(xml);
+	XmlElementWriter source_element(xml, literal::source);
+	source_element.writeAttribute(literal::part, source_index);
+}
+
+// virtual
+void SwitchPartUndoStep::loadImpl(QXmlStreamReader &xml, SymbolDictionary &symbol_dict)
+{
+	if (xml.name() == literal::source)
+	{
+		XmlElementReader source_element(xml);
+		source_index = source_element.attribute<std::size_t>(literal::part);
+	}
+	else
+		ObjectModifyingUndoStep::loadImpl(xml, symbol_dict);
 }
 
 

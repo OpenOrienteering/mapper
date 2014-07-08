@@ -305,6 +305,32 @@ protected:
 
 
 /**
+ * Map undo step which assigns the referenced objects to another part.
+ */
+class SwitchPartUndoStep : public ObjectModifyingUndoStep
+{
+public:
+	SwitchPartUndoStep(Map* map, std::size_t source_index, std::size_t target_index);
+	
+	SwitchPartUndoStep(Map* map);
+	
+	virtual ~SwitchPartUndoStep();
+	
+	virtual UndoStep* undo();
+	
+	virtual bool load(QIODevice* file, int version);
+	
+protected:
+	virtual void saveImpl(QXmlStreamWriter& xml) const;
+	
+	virtual void loadImpl(QXmlStreamReader& xml, SymbolDictionary& symbol_dict);
+	
+	std::size_t source_index;
+};
+
+
+
+/**
  * Map undo step which changes the symbols of referenced objects.
  */
 class SwitchSymbolUndoStep : public QObject, public ObjectModifyingUndoStep
@@ -337,6 +363,8 @@ protected:
 	
 	bool valid;
 };
+
+
 
 /**
  * Map undo step which reverses the directions of referenced objects,

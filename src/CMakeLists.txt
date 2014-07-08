@@ -44,6 +44,7 @@ set(Mapper_Common_SRCS
 
  map.cpp
  map_part.cpp
+ map_part_undo.cpp
  map_widget.cpp
  touch_cursor.cpp
  map_editor.cpp
@@ -284,6 +285,7 @@ set(Mapper_EXTRA_HEADERS
   util/scoped_signals_blocker.h
   file_format_ocad8_p.h
   map_part.h
+  map_part_undo.h
   object_operations.h
   undo.h
 )

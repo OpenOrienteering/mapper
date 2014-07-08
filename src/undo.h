@@ -60,6 +60,8 @@ public:
 		CombinedUndoStepType       =   5,
 		ValidNoOpUndoStepType      =   6,
 		ObjectTagsUndoStepType     =   7,
+		MapPartUndoStepType        =   8,
+		SwitchPartUndoStepType     =   9,
 		InvalidUndoStepType        = 999
 	};
 	

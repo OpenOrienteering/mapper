@@ -44,6 +44,7 @@
 #include "map_dialog_scale.h"
 #include "map_editor_activity.h"
 #include "map_grid.h"
+#include "map_part_undo.h"
 #include "object_undo.h"
 #include "map_widget.h"
 #include "gps_display.h"
@@ -3137,7 +3138,7 @@ void MapEditorController::addMapPart()
 		MapPart* part = new MapPart(name, map);
 		map->addPart(part, map->getCurrentPartIndex() + 1);
 		map->setCurrentPart(part);
-		map->undoManager().clear();
+		map->push(new MapPartUndoStep(map, MapPartUndoStep::RemoveMapPart, part));
 	}
 }
 
@@ -3152,8 +3153,9 @@ void MapEditorController::removeMapPart()
 	
 	if (button == QMessageBox::Yes)
 	{
-		map->removePart(map->getCurrentPartIndex());
-		map->undoManager().clear();
+		std::size_t index = map->getCurrentPartIndex();
+		map->push(new MapPartUndoStep(map, MapPartUndoStep::AddMapPart, index));
+		map->removePart(index);
 	}
 }
 
@@ -3170,6 +3172,7 @@ void MapEditorController::renameMapPart()
 	            &accepted );
 	if (accepted && !name.isEmpty())
 	{
+		map->push(new MapPartUndoStep(map, MapPartUndoStep::ModifyMapPart, map->getCurrentPartIndex()));
 		map->getCurrentPart()->setName(name);
 	}
 }
@@ -3185,8 +3188,12 @@ void MapEditorController::changeMapPart(int index)
 void MapEditorController::reassignObjectsToMapPart(int target)
 {
 	std::size_t current = map->getCurrentPartIndex();
-	map->reassignObjectsToMapPart(map->selectedObjectsBegin(), map->selectedObjectsEnd(), current, target);
-	map->undoManager().clear();
+	std::size_t begin   = map->reassignObjectsToMapPart(map->selectedObjectsBegin(), map->selectedObjectsEnd(), current, target);
+	
+	SwitchPartUndoStep* undo = new SwitchPartUndoStep(map, target, current);
+	for (std::size_t i = begin, end = map->getPart(target)->getNumObjects(); i < end; ++i)
+		undo->addObject(i);
+	map->push(undo);
 }
 
 void MapEditorController::mergeCurrentMapPartTo(int target)
@@ -3197,15 +3204,26 @@ void MapEditorController::mergeCurrentMapPartTo(int target)
 	        QMessageBox::question(
 	            window,
                 tr("Merge map parts"),
-                tr("Do you want to move all objects from \"%1\" to \"%2\", and to remove \"%1\"? This cannot be undone.").arg(source_part->getName()).arg(target_part->getName()),
+                tr("Do you want to move all objects from map part \"%1\" to \"%2\", and to remove \"%1\"?").arg(source_part->getName()).arg(target_part->getName()),
                 QMessageBox::Yes | QMessageBox::No );
 	
 	if (button == QMessageBox::Yes)
 	{
 		// Beware that the source part is removed, and
 		// the target part's index might change during merge.
-		map->mergeParts(map->getCurrentPartIndex(), target);
-		map->undoManager().clear();
+		std::size_t source = map->getCurrentPartIndex();
+		UndoStep* add_part_step = new MapPartUndoStep(map, MapPartUndoStep::AddMapPart, source);
+		
+		std::size_t begin  = map->mergeParts(source, target);
+		
+		SwitchPartUndoStep* switch_part_undo = new SwitchPartUndoStep(map, target, source);
+		for (std::size_t i = begin, end = target_part->getNumObjects(); i < end; ++i)
+			switch_part_undo->addObject(i);
+		
+		CombinedUndoStep* undo = new CombinedUndoStep(map);
+		undo->push(switch_part_undo);
+		undo->push(add_part_step);
+		map->push(undo);
 	}
 }
 
@@ -3216,11 +3234,13 @@ void MapEditorController::mergeAllMapParts()
 	        QMessageBox::question(
 	            window,
                 tr("Merge map parts"),
-                tr("Do you want to move all objects to \"%1\", and to remove all other map parts? This cannot be undone.").arg(name),
+                tr("Do you want to move all objects to map part \"%1\", and to remove all other map parts?").arg(name),
                 QMessageBox::Yes | QMessageBox::No );
 	
 	if (button == QMessageBox::Yes)
 	{
+		CombinedUndoStep* undo = new CombinedUndoStep(map);
+		
 		// For simplicity, we merge to the first part,
 		// but keep the properties (i.e. name) of the current part.
 		map->setCurrentPartIndex(0);
@@ -3228,10 +3248,19 @@ void MapEditorController::mergeAllMapParts()
 		
 		for (std::size_t i = map->getNumParts() - 1; i > 0; --i)
 		{
-			map->mergeParts(i, 0);
+			UndoStep* add_part_step = new MapPartUndoStep(map, MapPartUndoStep::AddMapPart, i);
+			std::size_t begin = map->mergeParts(i, 0);
+			SwitchPartUndoStep* switch_part_undo = new SwitchPartUndoStep(map, 0, i);
+			for (std::size_t j = begin, end = target_part->getNumObjects(); j < end; ++j)
+				switch_part_undo->addObject(j);
+			undo->push(switch_part_undo);
+			undo->push(add_part_step);
 		}
+		
+		undo->push(new MapPartUndoStep(map, MapPartUndoStep::ModifyMapPart, 0));
 		target_part->setName(name);
-		map->undoManager().clear();
+		
+		map->push(undo);
 	}
 }
 

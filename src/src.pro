@@ -134,6 +134,7 @@ SOURCES += \
   settings.cpp \
   map.cpp \
   map_part.cpp \
+  map_part_undo.cpp \
   map_widget.cpp \
   touch_cursor.cpp \
   map_editor.cpp \
