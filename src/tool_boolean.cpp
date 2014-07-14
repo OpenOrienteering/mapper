@@ -258,7 +258,7 @@ void BooleanTool::executeForLine(PathObject* area, PathObject* line, BooleanTool
 		Q_ASSERT(false && "Only intersection and difference are supported.");
 		return; // no-op in release build
 	}
-	if (line->getNumParts() == 1)
+	if (line->getNumParts() != 1)
 	{
 		Q_ASSERT(false && "Only single-part lines are supported.");
 		return; // no-op in release build
