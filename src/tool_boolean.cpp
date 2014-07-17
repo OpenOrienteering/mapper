@@ -176,8 +176,7 @@ bool BooleanTool::executeForObjects(PathObject* subject, Symbol* result_objects_
 	PolyMap polymap;
 	
 	ClipperLib::Paths subject_polygons;
-	subject_polygons.push_back(ClipperLib::Path());
-	PathObjectToPolygon(subject, subject_polygons.back(), polymap);
+	PathObjectToPolygons(subject, subject_polygons, polymap);
 	
 	ClipperLib::Paths clip_polygons;
 	for (int object_number = 0; object_number < (int)in_objects.size(); ++object_number)
@@ -185,8 +184,7 @@ bool BooleanTool::executeForObjects(PathObject* subject, Symbol* result_objects_
 		PathObject* object = in_objects[object_number];
 		if (object != subject)
 		{
-			clip_polygons.push_back(ClipperLib::Path());
-			PathObjectToPolygon(object, clip_polygons.back(), polymap);
+			PathObjectToPolygons(object, clip_polygons, polymap);
 		}
 	}
 	
@@ -338,16 +336,21 @@ void BooleanTool::executeForLine(PathObject* area, PathObject* line, BooleanTool
 	}
 }
 
-void BooleanTool::PathObjectToPolygon(PathObject* object, ClipperLib::Path& polygon, PolyMap& polymap)
+void BooleanTool::PathObjectToPolygons(PathObject* object, ClipperLib::Paths& polygons, PolyMap& polymap)
 {
 	object->update();
 	
+	int part_count = object->getNumParts();
+	polygons.clear();
+	polygons.resize(part_count);
+	
 	const PathCoordVector& path_coords = object->getPathCoordinateVector();
 	
-	for (int part_number = 0, part_count = object->getNumParts(); part_number < part_count; ++part_number)
+	for (int part_number = 0; part_number < part_count; ++part_number)
 	{
 		PathObject::PathPart& part = object->getPart(part_number);
 		
+		ClipperLib::Path& polygon = polygons[part_number];
 		for (int i = part.path_coord_start_index + (part.isClosed() ? 1 : 0); i <= part.path_coord_end_index; ++i)
 		{
 			polygon.push_back(ClipperLib::IntPoint(path_coords[i].pos.getIntX(), path_coords[i].pos.getIntY()));
@@ -876,19 +879,17 @@ bool BooleanTool::checkSegmentMatch(
 {
 	
 	MapCoord& first = original->getCoordinate(coord_index);
-	bool is_curve = first.isCurveStart();
-	MapCoord& other = original->getCoordinate(coord_index + is_curve ? 3 : 1);
+	out_is_curve = first.isCurveStart();
+	MapCoord& other = original->getCoordinate(coord_index + out_is_curve ? 3 : 1);
 	
 	bool found = true;
 	if (first == polygon.at(start_index) && other == polygon.at(end_index))
 	{
 		out_coords_increasing = true;
-		out_is_curve = is_curve;
 	}
 	else if (first == polygon.at(end_index) && other == polygon.at(start_index))
 	{
 		out_coords_increasing = false;
-		out_is_curve = is_curve;
 	}
 	else
 	{

@@ -134,11 +134,11 @@ private:
 	        PolyMap& polymap );
 	
 	/**
-	 * Constructs ClipperLib::Path from a PathObject.
+	 * Constructs ClipperLib::Paths from a PathObject.
 	 */
-	static void PathObjectToPolygon(
+	static void PathObjectToPolygons(
 	        PathObject* object,
-	        ClipperLib::Path& polygon,
+	        ClipperLib::Paths& polygons,
 	        PolyMap& polymap );
 	
 	/**
