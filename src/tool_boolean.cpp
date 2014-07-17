@@ -253,7 +253,7 @@ void BooleanTool::outerPolyNodeToPathObjects(const ClipperLib::PolyNode& node, P
 
 void BooleanTool::executeForLine(PathObject* area, PathObject* line, BooleanTool::PathObjects& out_objects)
 {
-	if (op != BooleanTool::Intersection && op == BooleanTool::Difference)
+	if (op != BooleanTool::Intersection && op != BooleanTool::Difference)
 	{
 		Q_ASSERT(false && "Only intersection and difference are supported.");
 		return; // no-op in release build
