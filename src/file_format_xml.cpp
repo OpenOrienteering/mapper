@@ -427,22 +427,6 @@ void XMLFileImporter::importElements(bool load_symbols_only) throw (FileFormatEx
 			importSymbols();
 		else if (name == literal::georeferencing)
 			importGeoreferencing(load_symbols_only);
-		else if (load_symbols_only)
-			xml.skipCurrentElement();
-		else if (name == literal::notes)
-			map->setMapNotes(xml.readElementText());
-		else if (name == literal::parts)
-			importMapParts();
-		else if (name == literal::templates)
-			importTemplates();
-		else if (name == literal::view)
-			importView();
-		else if (name == literal::print)
-			importPrint();
-		else if (name == literal::undo)
-			importUndo();
-		else if (name == literal::redo)
-			importRedo();
 		else if (name == literal::barrier)
 		{
 			XmlElementReader barrier(xml);
@@ -459,6 +443,25 @@ void XMLFileImporter::importElements(bool load_symbols_only) throw (FileFormatEx
 				importElements(load_symbols_only);
 			}
 		}
+		else if (load_symbols_only)
+			xml.skipCurrentElement();
+		/******************************************************
+		* The remainder is skipped when loading a symbol set! *
+		******************************************************/
+		else if (name == literal::notes)
+			map->setMapNotes(xml.readElementText());
+		else if (name == literal::parts)
+			importMapParts();
+		else if (name == literal::templates)
+			importTemplates();
+		else if (name == literal::view)
+			importView();
+		else if (name == literal::print)
+			importPrint();
+		else if (name == literal::undo)
+			importUndo();
+		else if (name == literal::redo)
+			importRedo();
 		else
 		{
 			addWarningUnsupportedElement();
