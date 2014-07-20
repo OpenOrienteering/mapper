@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2013, 2014 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -318,7 +319,7 @@ void EditPointTool::dragMove()
 {
 	if (no_more_effect_on_click)
 		return;
-	if (editing)
+	if (editingInProgress())
 	{
 		if (snapped_to_pos && handle_offset != MapCoordF(0, 0))
 		{
@@ -343,7 +344,7 @@ void EditPointTool::dragFinish()
 	if (no_more_effect_on_click)
 		no_more_effect_on_click = false;
 	
-	if (editing)
+	if (editingInProgress())
 	{
 		finishEditing();
 		angle_helper->setActive(false);
@@ -386,10 +387,10 @@ bool EditPointTool::keyPress(QKeyEvent* event)
 		map()->clearObjectSelection(true);
 	else if (event->key() == Qt::Key_Control)
 	{
-		if (editing)
+		if (editingInProgress())
 			activateAngleHelperWhileEditing();
 	}
-	else if (event->key() == Qt::Key_Shift && editing)
+	else if (event->key() == Qt::Key_Shift && editingInProgress())
 	{
 		if (hover_object != NULL &&
 			hover_point >= 0 &&
@@ -420,7 +421,7 @@ bool EditPointTool::keyRelease(QKeyEvent* event)
 	if (event->key() == Qt::Key_Control)
 	{
 		angle_helper->setActive(false);
-		if (editing)
+		if (editingInProgress())
 		{
 			calcConstrainedPositions(cur_map_widget);
 			dragMove();
@@ -429,7 +430,7 @@ bool EditPointTool::keyRelease(QKeyEvent* event)
 	else if (event->key() == Qt::Key_Shift)
 	{
 		snap_helper->setFilter(SnappingToolHelper::NoSnapping);
-		if (editing)
+		if (editingInProgress())
 		{
 			calcConstrainedPositions(cur_map_widget);
 			dragMove();
@@ -601,7 +602,7 @@ void EditPointTool::updateStatusText()
 	{
 		text = tr("<b>%1</b>: Finish editing. ").arg(ModifierKey::escape());
 	}
-	else if (editing)
+	else if (editingInProgress())
 	{
 		MapCoordF drag_vector = constrained_pos_map - click_pos_map;
 		text = EditTool::tr("<b>Coordinate offset:</b> %1, %2 mm  <b>Distance:</b> %3 m ").

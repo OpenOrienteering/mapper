@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2014 Kai Pastor
+ *    Copyright 2013, 2014 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -205,6 +205,14 @@ public:
 	 * @return Returns true if there is an ongoing edition operation, false otherwise.
 	 */
 	bool editingInProgress() const;
+	
+	/**
+	 * @brief Finishes editing if it is currently in progress.
+	 * 
+	 * Deriving functions shall call this class' implementation
+	 * (which calls setEditingInProgress(false)).
+	 */
+	virtual void finishEditing();
 	
 	
 	/**

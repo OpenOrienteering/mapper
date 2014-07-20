@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2014 Kai Pastor
+ *    Copyright 2013, 2014 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -60,6 +60,8 @@ public:
 	
 	virtual void draw(QPainter* painter, MapWidget* widget);
 	
+	virtual void finishEditing();
+	
 	static QCursor* cursor;
 	
 protected slots:
@@ -75,7 +77,6 @@ protected:
 	void deletePreviewText();
 	void setPreviewLetter();
 	void abortEditing();
-	void finishEditing();
 	
 	Symbol* drawing_symbol;
 	

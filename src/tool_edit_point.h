@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2013, 2014 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -61,6 +62,11 @@ public:
 	
 	virtual void focusOutEvent(QFocusEvent* event);
 	
+	/**
+	 * Contains special treatment for text objects.
+	 */
+	void finishEditing();
+	
 public slots:
 	void textSelectionChanged(bool text_change);
 	
@@ -72,12 +78,6 @@ protected:
 	virtual void objectSelectionChangedImpl();
 	virtual int updateDirtyRectImpl(QRectF& rect);
 	virtual void drawImpl(QPainter* painter, MapWidget* widget);
-	
-	/**
-	 * Hides the method from MapEditorToolBase.
-	 * Contains special treatment for text objects.
-	 */
-	void finishEditing();
 	
 	/** In addition to the base class implementation, updates the status text. */
 	virtual void updatePreviewObjects();

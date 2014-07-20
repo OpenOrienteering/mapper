@@ -1,5 +1,6 @@
 /*
- *    Copyright 2012 Thomas Schöps
+ *    Copyright 2012, 2014 Thomas Schöps
+ *    Copyright 2013, 2014 Kai Pastor
  *    
  *    This file is part of OpenOrienteering.
  * 
@@ -59,6 +60,8 @@ public:
 	/// Draws the preview renderables. Should be overridden to draw custom elements.
 	virtual void draw(QPainter* painter, MapWidget* widget);
 	
+	virtual void finishEditing();
+	
 protected slots:
 	void updateDirtyRect();
 	void objectSelectionChanged();
@@ -116,7 +119,7 @@ protected:
 	/// Takes care of the preview renderables handling, map dirty flag, and objects edited signal.
 	void startEditing();
 	void abortEditing();
-	void finishEditing(bool delete_objects = false, bool create_undo_step = true);
+	void finishEditing(bool delete_objects, bool create_undo_step);
 	
 	/// Call this to display changes to the preview objects between startEditing() and finish/abortEditing().
 	virtual void updatePreviewObjects();
@@ -176,9 +179,6 @@ protected:
 	
 	/// The map widget in which the tool was last used
 	MapWidget* cur_map_widget;
-	
-	/// True if startEditing() has been called and editing is not finished yet.
-	bool editing;
 	
 	/// Must be set by derived classes if a key button bar is used.
 	/// MapEditorToolBase will take care of including its modifiers into

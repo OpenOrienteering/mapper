@@ -45,7 +45,7 @@ CutoutTool::CutoutTool(MapEditorController* editor, QAction* tool_button, bool c
 
 CutoutTool::~CutoutTool()
 {
-	if (editing)
+	if (editingInProgress())
 	{
 		if (cutout_object_index >= 0)
 			map()->getCurrentPart()->addObject(cutout_object, cutout_object_index);

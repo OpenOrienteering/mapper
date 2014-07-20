@@ -1,6 +1,6 @@
 /*
- *    Copyright 2012 Thomas Schöps
- *    Copyright 2013, 2014 Thomas Schöps, Kai Pastor
+ *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2012, 2013, 2014 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -205,7 +205,13 @@ bool MapEditorController::isInMobileMode() const
 void MapEditorController::setTool(MapEditorTool* new_tool)
 {
 	if (current_tool)
+	{
+		if (current_tool->editingInProgress())
+		{
+			current_tool->finishEditing();
+		}
 		current_tool->deleteLater();
+	}
 	
 	if (!override_tool)
 	{
@@ -234,7 +240,15 @@ void MapEditorController::setOverrideTool(MapEditorTool* new_override_tool)
 	if (override_tool == new_override_tool)
 		return;
 	
-	delete override_tool;
+	if (override_tool)
+	{
+		if (override_tool->editingInProgress())
+		{
+			override_tool->finishEditing();
+		}
+		delete override_tool;
+	}
+	
 	map->clearDrawingBoundingBox();
 	window->setStatusBarText("");
 	

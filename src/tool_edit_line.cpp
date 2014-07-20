@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2013, 2014 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -219,7 +220,7 @@ void EditLineTool::dragMove()
 	if (no_more_effect_on_click)
 		return;
 	
-	if (editing)
+	if (editingInProgress())
 	{
 		if (snapped_to_pos && handle_offset != MapCoordF(0, 0))
 		{
@@ -256,7 +257,7 @@ void EditLineTool::dragFinish()
 		return;
 	}
 	
-	if (editing)
+	if (editingInProgress())
 	{
 		finishEditing();
 		angle_helper->setActive(false);
@@ -280,10 +281,10 @@ bool EditLineTool::keyPress(QKeyEvent* event)
 		map()->clearObjectSelection(true);
 	else if (event->key() == Qt::Key_Control)
 	{
-		if (editing)
+		if (editingInProgress())
 			toggleAngleHelper();
 	}
-	else if (event->key() == Qt::Key_Shift && editing)
+	else if (event->key() == Qt::Key_Shift && editingInProgress())
 		activateSnapHelperWhileEditing();
 	else
 		return false;
@@ -300,7 +301,7 @@ bool EditLineTool::keyRelease(QKeyEvent* event)
 	else if (event->key() == Qt::Key_Shift)
 	{
 		snap_helper->setFilter(SnappingToolHelper::NoSnapping);
-		if (editing)
+		if (editingInProgress())
 		{
 			dragMove();
 			calcConstrainedPositions(cur_map_widget);
@@ -413,7 +414,7 @@ void EditLineTool::deleteHighlightObject()
 void EditLineTool::updateStatusText()
 {
 	QString text;
-	if (editing)
+	if (editingInProgress())
 	{
 		MapCoordF drag_vector = constrained_pos_map - click_pos_map;
 		text = EditTool::tr("<b>Coordinate offset:</b> %1, %2 mm  <b>Distance:</b> %3 m ").
@@ -536,7 +537,7 @@ void EditLineTool::updateHoverLine(MapCoordF cursor_pos)
 
 void EditLineTool::toggleAngleHelper()
 {
-	if (!editing)
+	if (!editingInProgress())
 		angle_helper->setActive(false);
 	else
 		activateAngleHelperWhileEditing(!angle_helper->isActive());

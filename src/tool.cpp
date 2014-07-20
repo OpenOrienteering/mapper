@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2014 Kai Pastor
+ *    Copyright 2013, 2014 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -99,6 +99,12 @@ void MapEditorTool::deactivate()
 void MapEditorTool::switchToDefaultDrawTool(Symbol* symbol) const
 {
 	editor->setTool(editor->getDefaultDrawToolForSymbol(symbol));
+}
+
+// virtual
+void MapEditorTool::finishEditing()
+{
+	setEditingInProgress(false);
 }
 
 void MapEditorTool::setEditingInProgress(bool state)
