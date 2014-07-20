@@ -20,16 +20,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/about_dialog.cpp" line="235"/>
-        <source>This program is free software: you can redistribute it and/or modify it under the terms of the &lt;a %1&gt;GNU Generic Public License (GPL), version&amp;nbsp;3&lt;/a&gt;, as published by the Free Software Foundation.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/gui/about_dialog.cpp" line="241"/>
-        <source>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Generic Public License (GPL), version&amp;nbsp;3, for &lt;a %1&gt;more details&lt;/a&gt;.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/gui/about_dialog.cpp" line="248"/>
         <source>&lt;a %1&gt;All about licenses, copyright notices, conditions and disclaimers.&lt;/a&gt;</source>
         <translation type="unfinished"></translation>
@@ -47,6 +37,16 @@
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="231"/>
         <source>A free software for drawing orienteering maps</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gui/about_dialog.cpp" line="235"/>
+        <source>This program is free software: you can redistribute it and/or modify it under the terms of the &lt;a %1&gt;GNU General Public License (GPL), version&amp;nbsp;3&lt;/a&gt;, as published by the Free Software Foundation.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gui/about_dialog.cpp" line="241"/>
+        <source>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License (GPL), version&amp;nbsp;3, for &lt;a %1&gt;more details&lt;/a&gt;.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -774,6 +774,19 @@
     </message>
 </context>
 <context>
+    <name>DXFParser</name>
+    <message>
+        <location filename="../src/dxfparser.cpp" line="36"/>
+        <source>Could not open the file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dxfparser.cpp" line="52"/>
+        <source>The file is not an DXF file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>DetermineFontSizeDialog</name>
     <message>
         <location filename="../src/symbol_text.cpp" line="1027"/>
@@ -1096,7 +1109,7 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
     <message>
         <location filename="../src/tool_draw_rectangle.cpp" line="82"/>
         <source>Line snap</source>
-        <comment>Using constrained angles</comment>
+        <comment>Snap to previous lines</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3169,6 +3182,14 @@ Skala om den importerade datan?</translation>
         <location filename="../src/map.cpp" line="1300"/>
         <source>New color</source>
         <translation>Ny färg</translation>
+    </message>
+</context>
+<context>
+    <name>MapColor</name>
+    <message>
+        <location filename="../src/core/map_color.cpp" line="73"/>
+        <source>Registration black (all printed colors)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5596,27 +5617,6 @@ zooma med scrollhjulet om tillgängligt.</translation>
     </message>
 </context>
 <context>
-    <name>QApplication</name>
-    <message>
-        <location filename="../src/dxfparser.cpp" line="36"/>
-        <source>Could not open the file.</source>
-        <comment>DXFParser</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/dxfparser.cpp" line="52"/>
-        <source>The file is not an DXF file.</source>
-        <comment>DXFParser</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/core/map_color.cpp" line="73"/>
-        <source>Registration black (all printed colors)</source>
-        <comment>MapColor</comment>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>QDialogButtonBox</name>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="99"/>
@@ -5627,26 +5627,12 @@ zooma med scrollhjulet om tillgängligt.</translation>
 <context>
     <name>QFile</name>
     <message>
-        <location filename="../src/util.cpp" line="243"/>
-        <location filename="../src/util.cpp" line="250"/>
-        <location filename="../src/util.cpp" line="277"/>
         <source>Error</source>
-        <translation type="unfinished">Fel</translation>
+        <translation type="obsolete">Fel</translation>
     </message>
     <message>
-        <location filename="../src/util.cpp" line="243"/>
         <source>Failed to locate the help files.</source>
-        <translation type="unfinished">Kunde inte hitta hjälpfilerna.</translation>
-    </message>
-    <message>
-        <location filename="../src/util.cpp" line="250"/>
-        <source>Failed to locate the help browser (&quot;Qt Assistant&quot;).</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/util.cpp" line="278"/>
-        <source>Failed to launch the help browser (&quot;Qt Assistant&quot;).</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Kunde inte hitta hjälpfilerna.</translation>
     </message>
 </context>
 <context>
@@ -7840,6 +7826,31 @@ Kunde inte ladda bakgrundsbild. Existerar filen och är den korrekt?</translatio
     </message>
 </context>
 <context>
+    <name>Util</name>
+    <message>
+        <location filename="../src/util.cpp" line="243"/>
+        <location filename="../src/util.cpp" line="250"/>
+        <location filename="../src/util.cpp" line="277"/>
+        <source>Error</source>
+        <translation type="unfinished">Fel</translation>
+    </message>
+    <message>
+        <location filename="../src/util.cpp" line="243"/>
+        <source>Failed to locate the help files.</source>
+        <translation type="unfinished">Kunde inte hitta hjälpfilerna.</translation>
+    </message>
+    <message>
+        <location filename="../src/util.cpp" line="250"/>
+        <source>Failed to locate the help browser (&quot;Qt Assistant&quot;).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/util.cpp" line="278"/>
+        <source>Failed to launch the help browser (&quot;Qt Assistant&quot;).</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>XMLFileExporter</name>
     <message>
         <location filename="../src/file_format_xml.cpp" line="181"/>
@@ -7856,7 +7867,7 @@ Kunde inte ladda bakgrundsbild. Existerar filen och är den korrekt?</translatio
     </message>
     <message>
         <location filename="../src/file_format_xml.cpp" line="437"/>
-        <source>unknow</source>
+        <source>unknown</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

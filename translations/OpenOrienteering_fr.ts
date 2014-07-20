@@ -21,12 +21,12 @@
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="235"/>
-        <source>This program is free software: you can redistribute it and/or modify it under the terms of the &lt;a %1&gt;GNU Generic Public License (GPL), version&amp;nbsp;3&lt;/a&gt;, as published by the Free Software Foundation.</source>
+        <source>This program is free software: you can redistribute it and/or modify it under the terms of the &lt;a %1&gt;GNU General Public License (GPL), version&amp;nbsp;3&lt;/a&gt;, as published by the Free Software Foundation.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="241"/>
-        <source>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Generic Public License (GPL), version&amp;nbsp;3, for &lt;a %1&gt;more details&lt;/a&gt;.</source>
+        <source>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License (GPL), version&amp;nbsp;3, for &lt;a %1&gt;more details&lt;/a&gt;.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -727,6 +727,19 @@
     </message>
 </context>
 <context>
+    <name>DXFParser</name>
+    <message>
+        <location filename="../src/dxfparser.cpp" line="36"/>
+        <source>Could not open the file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/dxfparser.cpp" line="52"/>
+        <source>The file is not an DXF file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>DetermineFontSizeDialog</name>
     <message>
         <location filename="../src/symbol_text.cpp" line="1027"/>
@@ -999,7 +1012,7 @@
     <message>
         <location filename="../src/tool_draw_rectangle.cpp" line="82"/>
         <source>Line snap</source>
-        <comment>Using constrained angles</comment>
+        <comment>Snap to previous lines</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2776,6 +2789,14 @@ Redimensionner le fichier importé?</translation>
         <location filename="../src/map.cpp" line="1300"/>
         <source>New color</source>
         <translation>Nouvelle couleur</translation>
+    </message>
+</context>
+<context>
+    <name>MapColor</name>
+    <message>
+        <location filename="../src/core/map_color.cpp" line="73"/>
+        <source>Registration black (all printed colors)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5109,27 +5130,6 @@ Zoomez en utilisant la molette de votre souris.</translation>
     </message>
 </context>
 <context>
-    <name>QApplication</name>
-    <message>
-        <location filename="../src/dxfparser.cpp" line="36"/>
-        <source>Could not open the file.</source>
-        <comment>DXFParser</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/dxfparser.cpp" line="52"/>
-        <source>The file is not an DXF file.</source>
-        <comment>DXFParser</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/core/map_color.cpp" line="73"/>
-        <source>Registration black (all printed colors)</source>
-        <comment>MapColor</comment>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>QDialogButtonBox</name>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="99"/>
@@ -5140,21 +5140,16 @@ Zoomez en utilisant la molette de votre souris.</translation>
 <context>
     <name>QFile</name>
     <message>
-        <location filename="../src/util.cpp" line="243"/>
-        <location filename="../src/util.cpp" line="250"/>
-        <location filename="../src/util.cpp" line="277"/>
         <source>Error</source>
-        <translation>Erreur</translation>
+        <translation type="vanished">Erreur</translation>
     </message>
     <message>
-        <location filename="../src/util.cpp" line="243"/>
         <source>Failed to locate the help files.</source>
-        <translation>La localisation des fichiers d&apos;aide a échoué.</translation>
+        <translation type="vanished">La localisation des fichiers d&apos;aide a échoué.</translation>
     </message>
     <message>
-        <location filename="../src/util.cpp" line="250"/>
         <source>Failed to locate the help browser (&quot;Qt Assistant&quot;).</source>
-        <translation>La localisation du fichier d&apos;aide a échoué (&quot;Qt Assistant&quot;).</translation>
+        <translation type="vanished">La localisation du fichier d&apos;aide a échoué (&quot;Qt Assistant&quot;).</translation>
     </message>
     <message>
         <source>The help browser (&quot;Qt Assistant&quot;) is not installed.</source>
@@ -5169,9 +5164,8 @@ Zoomez en utilisant la molette de votre souris.</translation>
         <translation type="obsolete">Installer...</translation>
     </message>
     <message>
-        <location filename="../src/util.cpp" line="278"/>
         <source>Failed to launch the help browser (&quot;Qt Assistant&quot;).</source>
-        <translation>Le lancement du fichier d&apos;aide (&quot;Qt Assistant&quot;) a échoué.</translation>
+        <translation type="vanished">Le lancement du fichier d&apos;aide (&quot;Qt Assistant&quot;) a échoué.</translation>
     </message>
 </context>
 <context>
@@ -6798,6 +6792,31 @@ Le chargement du modèle a échoué. Le fichier existe-t-il et est-il valide?</t
     </message>
 </context>
 <context>
+    <name>Util</name>
+    <message>
+        <location filename="../src/util.cpp" line="243"/>
+        <location filename="../src/util.cpp" line="250"/>
+        <location filename="../src/util.cpp" line="277"/>
+        <source>Error</source>
+        <translation type="unfinished">Erreur</translation>
+    </message>
+    <message>
+        <location filename="../src/util.cpp" line="243"/>
+        <source>Failed to locate the help files.</source>
+        <translation type="unfinished">La localisation des fichiers d&apos;aide a échoué.</translation>
+    </message>
+    <message>
+        <location filename="../src/util.cpp" line="250"/>
+        <source>Failed to locate the help browser (&quot;Qt Assistant&quot;).</source>
+        <translation type="unfinished">La localisation du fichier d&apos;aide a échoué (&quot;Qt Assistant&quot;).</translation>
+    </message>
+    <message>
+        <location filename="../src/util.cpp" line="278"/>
+        <source>Failed to launch the help browser (&quot;Qt Assistant&quot;).</source>
+        <translation type="unfinished">Le lancement du fichier d&apos;aide (&quot;Qt Assistant&quot;) a échoué.</translation>
+    </message>
+</context>
+<context>
     <name>XMLFileExporter</name>
     <message>
         <location filename="../src/file_format_xml.cpp" line="181"/>
@@ -6814,7 +6833,7 @@ Le chargement du modèle a échoué. Le fichier existe-t-il et est-il valide?</t
     </message>
     <message>
         <location filename="../src/file_format_xml.cpp" line="437"/>
-        <source>unknow</source>
+        <source>unknown</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

@@ -434,7 +434,7 @@ void XMLFileImporter::importElements(bool load_symbols_only) throw (FileFormatEx
 			{
 				QString required_version = barrier.attribute<QString>(literal::required);
 				if (required_version.isEmpty())
-					required_version = tr("unknow");
+					required_version = tr("unknown");
 				addWarning(tr("Parts of this file cannot be read by this version of Mapper. Minimum required version: %1").arg(required_version));
 				xml.skipCurrentElement();
 			}

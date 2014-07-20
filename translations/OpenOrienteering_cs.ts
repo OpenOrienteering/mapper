@@ -21,12 +21,12 @@
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="235"/>
-        <source>This program is free software: you can redistribute it and/or modify it under the terms of the &lt;a %1&gt;GNU Generic Public License (GPL), version&amp;nbsp;3&lt;/a&gt;, as published by the Free Software Foundation.</source>
+        <source>This program is free software: you can redistribute it and/or modify it under the terms of the &lt;a %1&gt;GNU General Public License (GPL), version&amp;nbsp;3&lt;/a&gt;, as published by the Free Software Foundation.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="241"/>
-        <source>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Generic Public License (GPL), version&amp;nbsp;3, for &lt;a %1&gt;more details&lt;/a&gt;.</source>
+        <source>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License (GPL), version&amp;nbsp;3, for &lt;a %1&gt;more details&lt;/a&gt;.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -730,6 +730,19 @@
     </message>
 </context>
 <context>
+    <name>DXFParser</name>
+    <message>
+        <location filename="../src/dxfparser.cpp" line="36"/>
+        <source>Could not open the file.</source>
+        <translation type="unfinished">Nepodařilo se otevřít soubor.</translation>
+    </message>
+    <message>
+        <location filename="../src/dxfparser.cpp" line="52"/>
+        <source>The file is not an DXF file.</source>
+        <translation type="unfinished">Soubor není ve formátu DXF.</translation>
+    </message>
+</context>
+<context>
     <name>DetermineFontSizeDialog</name>
     <message>
         <location filename="../src/symbol_text.cpp" line="1027"/>
@@ -1002,7 +1015,7 @@
     <message>
         <location filename="../src/tool_draw_rectangle.cpp" line="82"/>
         <source>Line snap</source>
-        <comment>Using constrained angles</comment>
+        <comment>Snap to previous lines</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2785,6 +2798,14 @@ Přepočítat zavedená data na měřítko mapy?</translation>
         <location filename="../src/map.cpp" line="1300"/>
         <source>New color</source>
         <translation>Nová barva  </translation>
+    </message>
+</context>
+<context>
+    <name>MapColor</name>
+    <message>
+        <location filename="../src/core/map_color.cpp" line="73"/>
+        <source>Registration black (all printed colors)</source>
+        <translation type="unfinished">Černá zápisu je (všechny tištěné barvy)</translation>
     </message>
 </context>
 <context>
@@ -5157,22 +5178,19 @@ mapy. Změna zvětšení je možná pomocí kolečka myši.</translation>
 <context>
     <name>QApplication</name>
     <message>
-        <location filename="../src/dxfparser.cpp" line="36"/>
         <source>Could not open the file.</source>
         <comment>DXFParser</comment>
-        <translation>Nepodařilo se otevřít soubor.</translation>
+        <translation type="vanished">Nepodařilo se otevřít soubor.</translation>
     </message>
     <message>
-        <location filename="../src/dxfparser.cpp" line="52"/>
         <source>The file is not an DXF file.</source>
         <comment>DXFParser</comment>
-        <translation>Soubor není ve formátu DXF.</translation>
+        <translation type="vanished">Soubor není ve formátu DXF.</translation>
     </message>
     <message>
-        <location filename="../src/core/map_color.cpp" line="73"/>
         <source>Registration black (all printed colors)</source>
         <comment>MapColor</comment>
-        <translation>Černá zápisu je (všechny tištěné barvy)</translation>
+        <translation type="vanished">Černá zápisu je (všechny tištěné barvy)</translation>
     </message>
 </context>
 <context>
@@ -5186,21 +5204,16 @@ mapy. Změna zvětšení je možná pomocí kolečka myši.</translation>
 <context>
     <name>QFile</name>
     <message>
-        <location filename="../src/util.cpp" line="243"/>
-        <location filename="../src/util.cpp" line="250"/>
-        <location filename="../src/util.cpp" line="277"/>
         <source>Error</source>
-        <translation>Chyba</translation>
+        <translation type="vanished">Chyba</translation>
     </message>
     <message>
-        <location filename="../src/util.cpp" line="243"/>
         <source>Failed to locate the help files.</source>
-        <translation>Soubory s nápovědou se nepodařilo najít.</translation>
+        <translation type="vanished">Soubory s nápovědou se nepodařilo najít.</translation>
     </message>
     <message>
-        <location filename="../src/util.cpp" line="250"/>
         <source>Failed to locate the help browser (&quot;Qt Assistant&quot;).</source>
-        <translation>Program pro procházení souboru s nápovědou (&quot;Qt Assistant&quot;) se nepodařilo najít.</translation>
+        <translation type="vanished">Program pro procházení souboru s nápovědou (&quot;Qt Assistant&quot;) se nepodařilo najít.</translation>
     </message>
     <message>
         <source>The help browser (&quot;Qt Assistant&quot;) is not installed.</source>
@@ -5215,9 +5228,8 @@ mapy. Změna zvětšení je možná pomocí kolečka myši.</translation>
         <translation type="obsolete">Installieren...</translation>
     </message>
     <message>
-        <location filename="../src/util.cpp" line="278"/>
         <source>Failed to launch the help browser (&quot;Qt Assistant&quot;).</source>
-        <translation>Program pro procházení souboru s nápovědou (&quot;Qt Assistant&quot;) se nepodařilo spustit.</translation>
+        <translation type="vanished">Program pro procházení souboru s nápovědou (&quot;Qt Assistant&quot;) se nepodařilo spustit.</translation>
     </message>
 </context>
 <context>
@@ -6882,6 +6894,31 @@ Nepodařilo se nahrát podklad. Soubor existuje a je platný?</translation>
     </message>
 </context>
 <context>
+    <name>Util</name>
+    <message>
+        <location filename="../src/util.cpp" line="243"/>
+        <location filename="../src/util.cpp" line="250"/>
+        <location filename="../src/util.cpp" line="277"/>
+        <source>Error</source>
+        <translation type="unfinished">Chyba</translation>
+    </message>
+    <message>
+        <location filename="../src/util.cpp" line="243"/>
+        <source>Failed to locate the help files.</source>
+        <translation type="unfinished">Soubory s nápovědou se nepodařilo najít.</translation>
+    </message>
+    <message>
+        <location filename="../src/util.cpp" line="250"/>
+        <source>Failed to locate the help browser (&quot;Qt Assistant&quot;).</source>
+        <translation type="unfinished">Program pro procházení souboru s nápovědou (&quot;Qt Assistant&quot;) se nepodařilo najít.</translation>
+    </message>
+    <message>
+        <location filename="../src/util.cpp" line="278"/>
+        <source>Failed to launch the help browser (&quot;Qt Assistant&quot;).</source>
+        <translation type="unfinished">Program pro procházení souboru s nápovědou (&quot;Qt Assistant&quot;) se nepodařilo spustit.</translation>
+    </message>
+</context>
+<context>
     <name>XMLFileExporter</name>
     <message>
         <location filename="../src/file_format_xml.cpp" line="181"/>
@@ -6898,7 +6935,7 @@ Nepodařilo se nahrát podklad. Soubor existuje a je platný?</translation>
     </message>
     <message>
         <location filename="../src/file_format_xml.cpp" line="437"/>
-        <source>unknow</source>
+        <source>unknown</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

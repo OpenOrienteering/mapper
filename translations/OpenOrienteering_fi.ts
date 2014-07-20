@@ -21,12 +21,12 @@
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="235"/>
-        <source>This program is free software: you can redistribute it and/or modify it under the terms of the &lt;a %1&gt;GNU Generic Public License (GPL), version&amp;nbsp;3&lt;/a&gt;, as published by the Free Software Foundation.</source>
+        <source>This program is free software: you can redistribute it and/or modify it under the terms of the &lt;a %1&gt;GNU General Public License (GPL), version&amp;nbsp;3&lt;/a&gt;, as published by the Free Software Foundation.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="241"/>
-        <source>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Generic Public License (GPL), version&amp;nbsp;3, for &lt;a %1&gt;more details&lt;/a&gt;.</source>
+        <source>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License (GPL), version&amp;nbsp;3, for &lt;a %1&gt;more details&lt;/a&gt;.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -726,6 +726,19 @@
     </message>
 </context>
 <context>
+    <name>DXFParser</name>
+    <message>
+        <location filename="../src/dxfparser.cpp" line="36"/>
+        <source>Could not open the file.</source>
+        <translation type="unfinished">Tiedostoa ei voitu avata.</translation>
+    </message>
+    <message>
+        <location filename="../src/dxfparser.cpp" line="52"/>
+        <source>The file is not an DXF file.</source>
+        <translation type="unfinished">Tiedosto ei ole DXF-tiedosto.</translation>
+    </message>
+</context>
+<context>
     <name>DetermineFontSizeDialog</name>
     <message>
         <location filename="../src/symbol_text.cpp" line="1027"/>
@@ -998,7 +1011,7 @@
     <message>
         <location filename="../src/tool_draw_rectangle.cpp" line="82"/>
         <source>Line snap</source>
-        <comment>Using constrained angles</comment>
+        <comment>Snap to previous lines</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2776,6 +2789,14 @@ Skaalataanko tuotu tieto?</translation>
         <location filename="../src/map.cpp" line="1300"/>
         <source>New color</source>
         <translation>Uusi väri</translation>
+    </message>
+</context>
+<context>
+    <name>MapColor</name>
+    <message>
+        <location filename="../src/core/map_color.cpp" line="73"/>
+        <source>Registration black (all printed colors)</source>
+        <translation type="unfinished">Värierottelu (kaikki tulostettavat värit)</translation>
     </message>
 </context>
 <context>
@@ -5101,22 +5122,19 @@ zoomaa hiiren rullalla.</translation>
 <context>
     <name>QApplication</name>
     <message>
-        <location filename="../src/dxfparser.cpp" line="36"/>
         <source>Could not open the file.</source>
         <comment>DXFParser</comment>
-        <translation>Tiedostoa ei voitu avata.</translation>
+        <translation type="vanished">Tiedostoa ei voitu avata.</translation>
     </message>
     <message>
-        <location filename="../src/dxfparser.cpp" line="52"/>
         <source>The file is not an DXF file.</source>
         <comment>DXFParser</comment>
-        <translation>Tiedosto ei ole DXF-tiedosto.</translation>
+        <translation type="vanished">Tiedosto ei ole DXF-tiedosto.</translation>
     </message>
     <message>
-        <location filename="../src/core/map_color.cpp" line="73"/>
         <source>Registration black (all printed colors)</source>
         <comment>MapColor</comment>
-        <translation>Värierottelu (kaikki tulostettavat värit)</translation>
+        <translation type="vanished">Värierottelu (kaikki tulostettavat värit)</translation>
     </message>
 </context>
 <context>
@@ -5130,26 +5148,20 @@ zoomaa hiiren rullalla.</translation>
 <context>
     <name>QFile</name>
     <message>
-        <location filename="../src/util.cpp" line="243"/>
-        <location filename="../src/util.cpp" line="250"/>
-        <location filename="../src/util.cpp" line="277"/>
         <source>Error</source>
-        <translation>Virhe</translation>
+        <translation type="vanished">Virhe</translation>
     </message>
     <message>
-        <location filename="../src/util.cpp" line="243"/>
         <source>Failed to locate the help files.</source>
-        <translation>Ohje-tiedostoa ei löytynyt.</translation>
+        <translation type="vanished">Ohje-tiedostoa ei löytynyt.</translation>
     </message>
     <message>
-        <location filename="../src/util.cpp" line="250"/>
         <source>Failed to locate the help browser (&quot;Qt Assistant&quot;).</source>
-        <translation>Ohjeen lukijaa ei löytynyt (&quot;Qt Assistant&quot;).</translation>
+        <translation type="vanished">Ohjeen lukijaa ei löytynyt (&quot;Qt Assistant&quot;).</translation>
     </message>
     <message>
-        <location filename="../src/util.cpp" line="278"/>
         <source>Failed to launch the help browser (&quot;Qt Assistant&quot;).</source>
-        <translation>Ohjeen lukijaa ei voitu käynnistää (&quot;Qt Assistant&quot;).</translation>
+        <translation type="vanished">Ohjeen lukijaa ei voitu käynnistää (&quot;Qt Assistant&quot;).</translation>
     </message>
 </context>
 <context>
@@ -6761,6 +6773,31 @@ Tiedostoa ei voitu ladata. Onko se olemassa ja kelvollinen?</translation>
     </message>
 </context>
 <context>
+    <name>Util</name>
+    <message>
+        <location filename="../src/util.cpp" line="243"/>
+        <location filename="../src/util.cpp" line="250"/>
+        <location filename="../src/util.cpp" line="277"/>
+        <source>Error</source>
+        <translation type="unfinished">Virhe</translation>
+    </message>
+    <message>
+        <location filename="../src/util.cpp" line="243"/>
+        <source>Failed to locate the help files.</source>
+        <translation type="unfinished">Ohje-tiedostoa ei löytynyt.</translation>
+    </message>
+    <message>
+        <location filename="../src/util.cpp" line="250"/>
+        <source>Failed to locate the help browser (&quot;Qt Assistant&quot;).</source>
+        <translation type="unfinished">Ohjeen lukijaa ei löytynyt (&quot;Qt Assistant&quot;).</translation>
+    </message>
+    <message>
+        <location filename="../src/util.cpp" line="278"/>
+        <source>Failed to launch the help browser (&quot;Qt Assistant&quot;).</source>
+        <translation type="unfinished">Ohjeen lukijaa ei voitu käynnistää (&quot;Qt Assistant&quot;).</translation>
+    </message>
+</context>
+<context>
     <name>XMLFileExporter</name>
     <message>
         <location filename="../src/file_format_xml.cpp" line="181"/>
@@ -6777,7 +6814,7 @@ Tiedostoa ei voitu ladata. Onko se olemassa ja kelvollinen?</translation>
     </message>
     <message>
         <location filename="../src/file_format_xml.cpp" line="437"/>
-        <source>unknow</source>
+        <source>unknown</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

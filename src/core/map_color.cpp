@@ -70,7 +70,7 @@ MapColor::MapColor(int priority)
 			break;
 		case Registration:
 			Q_ASSERT(isBlack());
-			name = QApplication::tr("Registration black (all printed colors)", "MapColor");
+			name = QApplication::translate("MapColor", "Registration black (all printed colors)");
 			break;
 		default:
 			; // no change

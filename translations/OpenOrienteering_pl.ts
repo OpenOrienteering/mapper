@@ -56,19 +56,19 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>This program is free software: you can redistribute it and/or modify it under the terms of the &lt;a %1&gt;GNU Generic Public License (GPL), version&amp;nbsp;3&lt;/a&gt;, as published by the Free Software Foundation.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Generic Public License (GPL), version&amp;nbsp;3, for &lt;a %1&gt;more details&lt;/a&gt;.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>&lt;a %1&gt;All about licenses, copyright notices, conditions and disclaimers.&lt;/a&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>The OpenOrienteering developers in alphabetical order:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This program is free software: you can redistribute it and/or modify it under the terms of the &lt;a %1&gt;GNU General Public License (GPL), version&amp;nbsp;3&lt;/a&gt;, as published by the Free Software Foundation.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License (GPL), version&amp;nbsp;3, for &lt;a %1&gt;more details&lt;/a&gt;.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -593,6 +593,17 @@
     </message>
 </context>
 <context>
+    <name>DXFParser</name>
+    <message>
+        <source>Could not open the file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The file is not an DXF file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>DetermineFontSizeDialog</name>
     <message>
         <source>A</source>
@@ -823,11 +834,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Line snap</source>
-        <comment>Using constrained angles</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Dash</source>
         <comment>Drawing dash points</comment>
         <translation type="unfinished"></translation>
@@ -838,6 +844,11 @@
     </message>
     <message>
         <source>Abort</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Line snap</source>
+        <comment>Snap to previous lines</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2257,6 +2268,13 @@ do odczytu.</translation>
     <message>
         <source>Nothing to import.</source>
         <translation>Nie ma nic co zaimportowania.</translation>
+    </message>
+</context>
+<context>
+    <name>MapColor</name>
+    <message>
+        <source>Registration black (all printed colors)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4112,24 +4130,6 @@ zoom using the mouse wheel, if available.</source>
     </message>
 </context>
 <context>
-    <name>QApplication</name>
-    <message>
-        <source>Could not open the file.</source>
-        <comment>DXFParser</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The file is not an DXF file.</source>
-        <comment>DXFParser</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Registration black (all printed colors)</source>
-        <comment>MapColor</comment>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>QDialogButtonBox</name>
     <message>
         <source>&amp;Close</source>
@@ -4140,7 +4140,7 @@ zoom using the mouse wheel, if available.</source>
     <name>QFile</name>
     <message>
         <source>Error</source>
-        <translation>Błąd</translation>
+        <translation type="vanished">Błąd</translation>
     </message>
     <message>
         <source>The help browser (&quot;Qt Assistant&quot;) is not installed.</source>
@@ -4148,7 +4148,7 @@ zoom using the mouse wheel, if available.</source>
     </message>
     <message>
         <source>Failed to locate the help files.</source>
-        <translation>Nie udało się zlokalizować plików pomocy.</translation>
+        <translation type="vanished">Nie udało się zlokalizować plików pomocy.</translation>
     </message>
     <message>
         <source>Install...</source>
@@ -4156,11 +4156,11 @@ zoom using the mouse wheel, if available.</source>
     </message>
     <message>
         <source>Failed to launch the help browser (&quot;Qt Assistant&quot;).</source>
-        <translation>Nie udało się uruchomić przeglądarki pomocy (&quot;Qt Assistant&quot;).</translation>
+        <translation type="vanished">Nie udało się uruchomić przeglądarki pomocy (&quot;Qt Assistant&quot;).</translation>
     </message>
     <message>
         <source>Failed to locate the help browser (&quot;Qt Assistant&quot;).</source>
-        <translation>Nie udało się zlokalizować przeglądarki pomocy (&quot;Qt Assistant&quot;).</translation>
+        <translation type="vanished">Nie udało się zlokalizować przeglądarki pomocy (&quot;Qt Assistant&quot;).</translation>
     </message>
     <message>
         <source>Do you want to install it now?</source>
@@ -5527,6 +5527,25 @@ Nie udało się załadować podkładu. Czy plik istnieje i jest poprawny?</trans
     </message>
 </context>
 <context>
+    <name>Util</name>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to locate the help files.</source>
+        <translation type="unfinished">Nie udało się zlokalizować plików pomocy.</translation>
+    </message>
+    <message>
+        <source>Failed to locate the help browser (&quot;Qt Assistant&quot;).</source>
+        <translation type="unfinished">Nie udało się zlokalizować przeglądarki pomocy (&quot;Qt Assistant&quot;).</translation>
+    </message>
+    <message>
+        <source>Failed to launch the help browser (&quot;Qt Assistant&quot;).</source>
+        <translation type="unfinished">Nie udało się uruchomić przeglądarki pomocy (&quot;Qt Assistant&quot;).</translation>
+    </message>
+</context>
+<context>
     <name>XMLFileExporter</name>
     <message>
         <source>Older versions of Mapper do not support multiple map parts. To save the map in compatibility mode, you must first merge all map parts.</source>
@@ -5556,11 +5575,11 @@ Nie udało się załadować podkładu. Czy plik istnieje i jest poprawny?</trans
         <translation>Spodziewane %1 kolory, znalezione %2.</translation>
     </message>
     <message>
-        <source>unknow</source>
+        <source>Parts of this file cannot be read by this version of Mapper. Minimum required version: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Parts of this file cannot be read by this version of Mapper. Minimum required version: %1</source>
+        <source>unknown</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -91,12 +91,12 @@ AboutDialog::AboutDialog(QWidget* parent)
 	QHBoxLayout* buttons_layout = new QHBoxLayout();
 	buttons_layout->setContentsMargins(left, top, right, bottom);
 	
-	QPushButton* back_button  = new QPushButton(QIcon(":/images/arrow-left.png"), QFileDialog::tr("Back"));
+	QPushButton* back_button  = new QPushButton(QIcon(":/images/arrow-left.png"), QApplication::translate("QFileDialog", "Back"));
 	buttons_layout->addWidget(back_button);
 	
 	buttons_layout->addStretch(1);
 	
-	QPushButton* close_button  = new QPushButton(QDialogButtonBox::tr("&Close"));
+	QPushButton* close_button  = new QPushButton(QApplication::translate("QDialogButtonBox", "&Close"));
 	close_button->setDefault(true);
 	buttons_layout->addWidget(close_button);
 	
@@ -234,14 +234,14 @@ QString AboutDialog::about()
 	    // %5
 	    arg(tr("This program is free software: you can redistribute it "
 	           "and/or modify it under the terms of the "
-	           "<a %1>GNU Generic Public License (GPL), version&nbsp;3</a>, "
+	           "<a %1>GNU General Public License (GPL), version&nbsp;3</a>, "
 	           "as published by the Free Software Foundation.").
 	           arg("href=\"gpl-3-0.html\"")).
 	    // %6
 	    arg(tr("This program is distributed in the hope that it will be useful, "
 	           "but WITHOUT ANY WARRANTY; without even the implied warranty of "
 	           "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the "
-	           "GNU Generic Public License (GPL), version&nbsp;3, for "
+	           "GNU General Public License (GPL), version&nbsp;3, for "
 	           "<a %1>more details</a>.").
 	           arg("href=\"gpl-3-0.html#15-disclaimer-of-warranty\"")).
 	    // %7

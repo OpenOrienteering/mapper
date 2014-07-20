@@ -79,7 +79,7 @@ void DrawRectangleTool::init()
 		key_button_bar = new KeyButtonBar(this, editor->getMainWidget());
 		key_button_bar->addPressKey(Qt::Key_Return, tr("Finish"));
 		key_button_bar->addModifierKey(Qt::Key_Shift, Qt::ShiftModifier, tr("Snap", "Snap to existing objects"));
-		key_button_bar->addModifierKey(Qt::Key_Control, Qt::ControlModifier, tr("Line snap", "Using constrained angles"));
+		key_button_bar->addModifierKey(Qt::Key_Control, Qt::ControlModifier, tr("Line snap", "Snap to previous lines"));
 		key_button_bar->addPressKey(Qt::Key_Space, tr("Dash", "Drawing dash points"));
 		key_button_bar->addPressKey(Qt::Key_Backspace, tr("Undo"));
 		key_button_bar->addPressKey(Qt::Key_Escape, tr("Abort"));
