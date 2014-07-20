@@ -1,5 +1,6 @@
 /*
- *    Copyright 2012, 2013 Thomas Schöps, Kai Pastor
+ *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2012, 2013, 2014 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -131,7 +132,7 @@ void GeoreferencingDialog::init(const Georeferencing* initial)
 	
 	QLabel* map_north_label = Util::Headline::create(tr("Map north"));
 	
-	declination_edit = Util::SpinBox::create(1, -180.0, +180.0, trUtf8("°"));
+	declination_edit = Util::SpinBox::create(Georeferencing::declinationPrecision(), -180.0, +180.0, trUtf8("°"));
 	declination_button = new QPushButton("");
 	QHBoxLayout* declination_layout = new QHBoxLayout();
 	declination_layout->addWidget(declination_edit, 1);
@@ -596,7 +597,7 @@ void GeoreferencingDialog::declinationReplyFinished(QNetworkReply* reply)
 						if (ok)
 						{
 							// success
-							declination_edit->setValue(declination);
+							declination_edit->setValue(Georeferencing::roundDeclination(declination));
 							return;
 						}
 						else 
@@ -658,7 +659,7 @@ void GeoreferencingDialog::updateZone()
 
 void GeoreferencingDialog::updateNorth()
 {
-	grivation_label->setText(trUtf8("%1 °", "degree value").arg(QLocale().toString(georef->getGrivation(), 'f', 1)));
+	grivation_label->setText(trUtf8("%1 °", "degree value").arg(QLocale().toString(georef->getGrivation(), 'f', 2)));
 }
 
 void GeoreferencingDialog::setMapRefValuesFrom(Georeferencing* values)

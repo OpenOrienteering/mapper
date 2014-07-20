@@ -179,9 +179,9 @@ void Georeferencing::load(QXmlStreamReader& xml, bool load_scale_only) throw (Fi
 	}
 	
 	if (georef_element.hasAttribute(literal::declination))
-		declination = georef_element.attribute<double>(literal::declination);
+		declination = roundDeclination(georef_element.attribute<double>(literal::declination));
 	if (georef_element.hasAttribute(literal::grivation))
-		grivation = georef_element.attribute<double>(literal::grivation);
+		grivation = roundDeclination(georef_element.attribute<double>(literal::grivation));
 	
 	while (xml.readNextStartElement())
 	{
@@ -273,8 +273,8 @@ void Georeferencing::save(QXmlStreamWriter& xml) const
 	georef_element.writeAttribute(literal::scale, scale_denominator);
 	if (state != ScaleOnly)
 	{
-		georef_element.writeAttribute(literal::declination, declination);
-		georef_element.writeAttribute(literal::grivation, grivation);
+		georef_element.writeAttribute(literal::declination, declination, declinationPrecision());
+		georef_element.writeAttribute(literal::grivation, grivation, declinationPrecision());
 		
 		{
 			XmlElementWriter ref_point_element(xml, literal::ref_point);
@@ -343,6 +343,7 @@ void Georeferencing::setScaleDenominator(int value)
 
 void Georeferencing::setDeclination(double value)
 {
+	value = roundDeclination(value);
 	grivation += value - declination;
 	declination = value;
 	if (state == ScaleOnly)
@@ -352,6 +353,7 @@ void Georeferencing::setDeclination(double value)
 
 void Georeferencing::setGrivation(double value)
 {
+	value = roundDeclination(value);
 	declination += value - grivation;
 	grivation = value;
 	if (state == ScaleOnly)
@@ -410,7 +412,7 @@ double Georeferencing::getConvergence() const
 	if (fabs(denominator) < 0.00000000001)
 		return 0.0;
 	
-	return RAD_TO_DEG * atan((projected_ref_point.x() - projected_other.x()) / denominator);
+	return roundDeclination(RAD_TO_DEG * atan((projected_ref_point.x() - projected_other.x()) / denominator));
 }
 
 void Georeferencing::setGeographicRefPoint(LatLon lat_lon)

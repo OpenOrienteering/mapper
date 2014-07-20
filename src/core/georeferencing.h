@@ -81,6 +81,25 @@ public:
 		Normal
 	};
 	
+	
+	/**
+	 * @brief Returns the precision of declination/grivation/convergence.
+	 * 
+	 * The precision is given in number of decimal places,
+	 * i.e. digits after the decimal point.
+	 * 
+	 * All values set as declination or grivation will be rounded to this precisison.
+	 */
+	static unsigned int declinationPrecision();
+	
+	/**
+	 * @brief Rounds according to the defined precision of declination/grivation/convergence.
+	 * 
+	 * @see declinationPrecision();
+	 */
+	static double roundDeclination(double);
+	
+	
 	/** 
 	 * Constructs a scale-only georeferencing.
 	 */
@@ -459,6 +478,20 @@ QDebug operator<<(QDebug dbg, const Georeferencing &georef);
 
 
 //### Georeferencing inline code ###
+
+inline
+unsigned int Georeferencing::declinationPrecision()
+{
+	// This must match the implementation in declinationRound().
+	return 2u;
+}
+
+inline
+double Georeferencing::roundDeclination(double value)
+{
+	// This must match the implementation in declinationPrecision().
+	return floor(value*100.0+0.5)/100.0;
+}
 
 inline
 bool Georeferencing::isValid() const
