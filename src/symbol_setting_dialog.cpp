@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2012, 2014 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -461,13 +462,10 @@ void SymbolSettingDialog::reset()
 
 void SymbolSettingDialog::setSymbolModified(bool modified)
 {
-	if (symbol_modified != modified)
-	{
-		symbol_modified = modified;
-		updateSymbolLabel();
-		updatePreview();
-		updateButtons();
-	}
+	symbol_modified = modified;
+	updateSymbolLabel();
+	updatePreview();
+	updateButtons();
 }
 
 void SymbolSettingDialog::updateSymbolLabel()
