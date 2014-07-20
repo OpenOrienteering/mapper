@@ -19,7 +19,7 @@
 
 cd "@SOURCE_DIR@"
 
-PRETTY_DATE=$(date --rfc-3339=date)
+PRETTY_DATE=$(date +%Y-%m-%d)
 OO_LOG=OpenOrienteering/CHANGES.txt
 
 mkdir -p OpenOrienteering
