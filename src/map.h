@@ -57,6 +57,7 @@ class Object;
 class Renderable;
 class MapRenderables;
 class Template;
+class TextSymbol;
 class UndoManager;
 class UndoStep;
 class OCAD8FileImport;
@@ -1155,6 +1156,8 @@ public:
 	static LineSymbol* getUndefinedLine() {return undefined_line;}
 	/** Returns the special gray "undefined" point symbol. */
 	static PointSymbol* getUndefinedPoint() {return undefined_point;}
+	/** Returns the special gray "undefined" text symbol. */
+	static TextSymbol* getUndefinedText() {return undefined_text;}
 	
 signals:
 	/**
@@ -1341,6 +1344,7 @@ private:
 	static LineSymbol* covering_red_line;
 	static LineSymbol* undefined_line;
 	static PointSymbol* undefined_point;
+	static TextSymbol* undefined_text;
 	static CombinedSymbol* covering_combined_line;
 };
 

@@ -1488,24 +1488,34 @@ void OcdFileImport::setupPointSymbolPattern(PointSymbol* symbol, std::size_t dat
 template< class O >
 Object* OcdFileImport::importObject(const O& ocd_object, MapPart* part)
 {
-	if (ocd_object.symbol < 0)
-		return NULL;
+	Symbol* symbol = NULL;
+	if (ocd_object.symbol >= 0)
+	{
+		symbol = symbol_index[ocd_object.symbol];
+	}
 	
-	Symbol* symbol = symbol_index[ocd_object.symbol];
 	if (!symbol)
 	{
-		if (ocd_object.type == 1)
-			symbol = map->getUndefinedPoint();
-		else if (ocd_object.type == 2 || ocd_object.type == 3)
-			symbol = map->getUndefinedLine();
-		else
+		switch (ocd_object.type)
 		{
+		case 1:
+			symbol = map->getUndefinedPoint();
+			break;
+		case 2:
+		case 3:
+			symbol = map->getUndefinedLine();
+			break;
+		case 4:
+		case 5:
+			symbol = map->getUndefinedText();
+			break;
+		default:
 			addWarning(tr("Unable to load object"));
 			qDebug() << "Undefined object type" << ocd_object.type << " for object of symbol" << ocd_object.symbol;
 			return NULL;
 		}
 	}
-	
+		
 	if (symbol->getType() == Symbol::Line && rectangle_info.contains(ocd_object.symbol))
 	{
 		Object* object = importRectangleObject(ocd_object, part, rectangle_info[ocd_object.symbol]);

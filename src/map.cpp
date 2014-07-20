@@ -52,6 +52,7 @@
 #include "symbol_combined.h"
 #include "symbol_line.h"
 #include "symbol_point.h"
+#include "symbol_text.h"
 #include "template.h"
 #include "undo_manager.h"
 #include "util.h"
@@ -365,6 +366,7 @@ LineSymbol* Map::covering_white_line;
 LineSymbol* Map::covering_red_line;
 LineSymbol* Map::undefined_line;
 PointSymbol* Map::undefined_point;
+TextSymbol* Map::undefined_text;
 CombinedSymbol* Map::covering_combined_line;
 
 Map::Map()
@@ -1568,11 +1570,15 @@ void Map::initStatic()
 	undefined_line->setColor(&undefined_symbol_color);
 	undefined_line->setLineWidth(1);
 	undefined_line->setIsHelperSymbol(true);
-
+	
 	undefined_point = new PointSymbol();
 	undefined_point->setInnerRadius(100);
 	undefined_point->setInnerColor(&undefined_symbol_color);
 	undefined_point->setIsHelperSymbol(true);
+	
+	undefined_text = new TextSymbol();
+	undefined_text->setColor(&undefined_symbol_color);
+	undefined_text->setIsHelperSymbol(true);
 }
 
 void Map::addSymbol(Symbol* symbol, int pos)
@@ -1690,6 +1696,8 @@ int Map::findSymbolIndex(const Symbol* symbol) const
 		return -2;
 	else if (symbol == undefined_line)
 		return -3;
+	else if (symbol == undefined_text)
+		return -4;
 	
 	// maybe element of point symbol
 	return -1;

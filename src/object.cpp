@@ -360,6 +360,30 @@ Object* Object::load(QXmlStreamReader& xml, Map* map, const SymbolDictionary& sy
 		// NOTE: object->symbol may be NULL.
 	}
 	
+	if (!object->symbol || !object->symbol->isTypeCompatibleTo(object))
+	{
+		// Throwing an exception will cause loading to fail.
+		// Rather than not loading the broken file at all,
+		// use the same symbols which are used for importing GPS tracks etc.
+		// FIXME: Implement a way to send a warning to the user.
+		switch (object_type)
+		{
+			case Point:
+				object->symbol = Map::getUndefinedPoint();
+				break;
+			case Path:
+				object->symbol = Map::getUndefinedLine();
+				break;
+			case Text:
+				object->symbol = Map::getUndefinedText();
+				break;
+			default:
+				throw FileFormatException(
+				  ImportExport::tr("Unable to find symbol for object at %1:%2.").
+				  arg(xml.lineNumber()).arg(xml.columnNumber()) );
+		}
+	}
+	
 	if (object_type == Point)
 	{
 		PointObject* point = reinterpret_cast<PointObject*>(object);
@@ -416,30 +440,6 @@ Object* Object::load(QXmlStreamReader& xml, Map* map, const SymbolDictionary& sy
 		}
 		else
 			xml.skipCurrentElement(); // unknown
-	}
-	
-	if (!object->symbol)
-	{
-		// Throwing an exception will cause loading to fail.
-		// Rather than not loading the broken file at all,
-		// use the same symbols which are used for importing GPS tracks etc.
-		// FIXME: Implement a way to send a warning to the user.
-		switch (object_type)
-		{
-			case Point:
-				object->symbol = Map::getUndefinedPoint();
-				break;
-			case Path:
-				object->symbol = Map::getUndefinedLine();
-				break;
-			case Text:
-				object->symbol = (object->coords.size() > 1) ? static_cast<Symbol*>(Map::getUndefinedLine()) : static_cast<Symbol*>(Map::getUndefinedPoint());
-				break;
-			default:
-				throw FileFormatException(
-				  ImportExport::tr("Unable to find symbol for object at %1:%2.").
-				  arg(xml.lineNumber()).arg(xml.columnNumber()) );
-		}
 	}
 	
 	if (object_type == Path)

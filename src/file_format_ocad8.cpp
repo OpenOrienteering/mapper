@@ -940,6 +940,8 @@ Object *OCAD8FileImport::importObject(const OCADObject* ocad_object, MapPart* pa
 				symbol = map->getUndefinedPoint();
 			else if (ocad_object->type == 2 || ocad_object->type == 3)
 				symbol = map->getUndefinedLine();
+			else if (ocad_object->type == 4 || ocad_object->type == 5)
+				symbol = map->getUndefinedText();
 			else
 			{
 				addWarning(tr("Unable to load object"));
@@ -1701,7 +1703,7 @@ void OCAD8FileExport::doExport() throw (FileFormatException)
 				s16 index_to_use = *it;
 				
 				// For text objects, check if we have to change / create a new text symbol because of the formatting
-				if (object->getType() == Object::Text)
+				if (object->getType() == Object::Text && symbol_index.contains(object->getSymbol()))
 				{
 					TextObject* text_object = static_cast<TextObject*>(object);
 					TextSymbol* text_symbol = static_cast<TextSymbol*>(object->getSymbol());
