@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="pl_PL">
+<TS version="2.1" language="pl_PL">
 <context>
     <name>AboutDialog</name>
     <message>
@@ -9,7 +9,7 @@
     </message>
     <message>
         <source>Additional information</source>
-        <translation>Dodatkowe informacje</translation>
+        <translation type="vanished">Dodatkowe informacje</translation>
     </message>
     <message>
         <source>About %1</source>
@@ -17,15 +17,15 @@
     </message>
     <message>
         <source>Developers in alphabetical order:</source>
-        <translation>Współtwórcy w kolejności alfabetycznej:</translation>
+        <translation type="vanished">Współtwórcy w kolejności alfabetycznej:</translation>
     </message>
     <message>
         <source>See &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt; for more information.</source>
-        <translation>Więcej informacji: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;.</translation>
+        <translation type="vanished">Więcej informacji: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;.</translation>
     </message>
     <message>
         <source>License (%1)</source>
-        <translation>Licencja (%1)</translation>
+        <translation type="vanished">Licencja (%1)</translation>
     </message>
     <message>
         <source>A free software for drawing orienteering maps</source>
@@ -33,19 +33,61 @@
     </message>
     <message>
         <source>This program uses the &lt;b&gt;PROJ.4 Cartographic Projections Library&lt;/b&gt; by Frank Warmerdam.</source>
-        <translation>Ten program używa &lt;b&gt;PROJ.4 Cartographic Projections Library&lt;/b&gt; by Frank Warmerdam.</translation>
+        <translation type="vanished">Ten program używa &lt;b&gt;PROJ.4 Cartographic Projections Library&lt;/b&gt; by Frank Warmerdam.</translation>
     </message>
     <message>
         <source>This software is licensed under the term of the GNU General Public License (GPL), version 3.&lt;br/&gt;You are welcome to redistribute it under the terms of this license.&lt;br/&gt;THERE IS NO WARRANTY FOR THE PROGRAM, TO THE EXTENT PERMITTED BY APPLICABLE LAW.&lt;br&gt;The full license text is supplied in the file %1.</source>
-        <translation>To oprogramowanie jest licencjonowane na zasadach GNU General Public License (GPL), wersja 3. &lt;br/&gt; Zachęcamy to rozpowszechniania programu zachowując zasady tej licencji.&lt;br/&gt; NIE MA ŻADNEJ GWARANCJI NA TEN PROGRAM, W ZAKRESIE DOZWOLONYM PRZEZ PRAWO. &lt;br&gt;Pełny plik licencji jest zawarty w pliku %1.</translation>
+        <translation type="vanished">To oprogramowanie jest licencjonowane na zasadach GNU General Public License (GPL), wersja 3. &lt;br/&gt; Zachęcamy to rozpowszechniania programu zachowując zasady tej licencji.&lt;br/&gt; NIE MA ŻADNEJ GWARANCJI NA TEN PROGRAM, W ZAKRESIE DOZWOLONYM PRZEZ PRAWO. &lt;br&gt;Pełny plik licencji jest zawarty w pliku %1.</translation>
     </message>
     <message>
         <source>This program uses the &lt;b&gt;Clipper library&lt;/b&gt; by Angus Johnson.</source>
-        <translation>Ten program wykorzystuje bibliotekę &lt;b&gt;Clipper&lt;/b&gt; Angusa Johnsona.</translation>
+        <translation type="vanished">Ten program wykorzystuje bibliotekę &lt;b&gt;Clipper&lt;/b&gt; Angusa Johnsona.</translation>
     </message>
     <message>
         <source>(project initiator)</source>
         <translation>Twórca projektu</translation>
+    </message>
+    <message>
+        <source>External link: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Click to view</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This program is free software: you can redistribute it and/or modify it under the terms of the &lt;a %1&gt;GNU Generic Public License (GPL), version&amp;nbsp;3&lt;/a&gt;, as published by the Free Software Foundation.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Generic Public License (GPL), version&amp;nbsp;3, for &lt;a %1&gt;more details&lt;/a&gt;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;a %1&gt;All about licenses, copyright notices, conditions and disclaimers.&lt;/a&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The OpenOrienteering developers in alphabetical order:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>AbstractHomeScreenWidget</name>
+    <message>
+        <source>Open most recently used file</source>
+        <translation type="unfinished">Otwórz ostatnio używany plik</translation>
+    </message>
+    <message>
+        <source>Show tip of the day</source>
+        <translation type="unfinished">Pokaż wskazówkę dnia</translation>
+    </message>
+</context>
+<context>
+    <name>ActionGridBar</name>
+    <message>
+        <source>Show remaining items</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -54,11 +96,11 @@
         <source>mm</source>
         <translation>mm</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>°</source>
         <translation>°</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>mm²</source>
         <translation>mm²</translation>
     </message>
@@ -377,7 +419,7 @@
         <source>mm</source>
         <translation type="obsolete">mm</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>°</source>
         <translation>°</translation>
     </message>
@@ -599,7 +641,7 @@
         <source>Align points with direction of line</source>
         <translation type="unfinished"></translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>°</source>
         <comment>degrees</comment>
         <translation type="unfinished">°</translation>
@@ -626,6 +668,22 @@
     <message>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Draw an ellipse. </source>
         <translation>&lt;b&gt;Przeciągnij&lt;/b&gt;: Zacznij rysować elipsę.</translation>
+    </message>
+    <message>
+        <source>From center</source>
+        <comment>Draw circle starting from center</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hold %1 to start drawing from the center.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>DrawFreehandTool</name>
+    <message>
+        <source>&lt;b&gt;Drag&lt;/b&gt;: Draw a path. </source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -673,10 +731,52 @@
         <source>&lt;b&gt;Length:&lt;/b&gt; %1 m </source>
         <translation>&lt;b&gt;Długość:&lt;/b&gt; %1 m </translation>
     </message>
+    <message>
+        <source>Finish</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished">Zamknij</translation>
+    </message>
+    <message>
+        <source>Snap</source>
+        <comment>Snap to existing objects</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Angle</source>
+        <comment>Using constrained angles</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dash</source>
+        <comment>Drawing dash points</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Undo</source>
+        <translation type="unfinished">Cofnij</translation>
+    </message>
+    <message>
+        <source>Abort</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>DrawPointGPSTool</name>
+    <message>
+        <source>Touch the map to finish averaging</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Click&lt;/b&gt;: Finish setting the object. </source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DrawPointTool</name>
-    <message utf8="true">
+    <message>
         <source>&lt;b&gt;Angle:&lt;/b&gt; %1° </source>
         <translation>&lt;b&gt;Kąt:&lt;/b&gt; %1° </translation>
     </message>
@@ -687,6 +787,16 @@
     <message>
         <source>&lt;b&gt;Click&lt;/b&gt;: Create a point object. &lt;b&gt;Drag&lt;/b&gt;: Create an object and set its orientation (if rotatable). </source>
         <translation>&lt;b&gt;Kliknij&lt;/b&gt;: Narysuj obiekt punktowy. &lt;b&gt;Przeciągnij&lt;/b&gt;: Narysuj obiekt i nadaj mu orientację (jeśli jest obrotowy). </translation>
+    </message>
+    <message>
+        <source>Snap</source>
+        <comment>Snap to existing objects</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Angle</source>
+        <comment>Using constrained angles</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -703,16 +813,47 @@
         <source>&lt;b&gt;Click&lt;/b&gt;: Set a corner point. &lt;b&gt;Right or double click&lt;/b&gt;: Finish the rectangle. </source>
         <translation>&lt;b&gt;Kliknij&lt;/b&gt;: Ustaw punkt narożny. &lt;b&gt;PPM lub podwójne kliknięcie&lt;/b&gt;: Zakończ rysowanie. </translation>
     </message>
+    <message>
+        <source>Finish</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Snap</source>
+        <comment>Snap to existing objects</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Line snap</source>
+        <comment>Using constrained angles</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dash</source>
+        <comment>Drawing dash points</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Undo</source>
+        <translation type="unfinished">Cofnij</translation>
+    </message>
+    <message>
+        <source>Abort</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DrawTextTool</name>
     <message>
         <source>A</source>
-        <translation>A</translation>
+        <translation type="vanished">A</translation>
     </message>
     <message>
         <source>&lt;b&gt;Click&lt;/b&gt;: Create a text object with a single anchor. &lt;b&gt;Drag&lt;/b&gt;: Create a text box. </source>
         <translation>&lt;b&gt;Kliknij&lt;/b&gt;: Stwórz obiekt tekstowy. &lt;b&gt;Przeciągnij&lt;/b&gt;: Stwórz pole tekstowe. </translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;%1&lt;/b&gt;: Finish editing. </source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -724,6 +865,16 @@
     <message>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on segment: Toggle between straight and curved. </source>
         <translation>&lt;b&gt;%1+Kliknięcie&lt;/b&gt; na odcinku: przełączaj pomiędzy prostą i krzywą. </translation>
+    </message>
+    <message>
+        <source>Snap</source>
+        <comment>Snap to existing objects</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toggle curve</source>
+        <comment>Toggle between curved and flat segment</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -743,6 +894,25 @@
     <message>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on point: Delete it; on path: Add a new point; with &lt;b&gt;%2&lt;/b&gt;: Add a dash point. </source>
         <translation>&lt;b&gt;%1+Kliknięcie&lt;/b&gt; na punkcie: Usuń; na linii: Dodaj nowy punkt z &lt;b&gt;%2&lt;/b&gt;: Dodaj pośredni punkt. </translation>
+    </message>
+    <message>
+        <source>Snap</source>
+        <comment>Snap to existing objects</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Point / Angle</source>
+        <comment>Modify points or use constrained angles</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toggle dash</source>
+        <comment>Toggle dash points</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;%1&lt;/b&gt;: Finish editing. </source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -772,9 +942,9 @@
     <name>EditorPage</name>
     <message>
         <source>px</source>
-        <translation>px</translation>
+        <translation type="vanished">px</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>°</source>
         <translation type="obsolete">°</translation>
     </message>
@@ -850,10 +1020,15 @@
         <source>Templates: keep settings of closed templates</source>
         <translation>Podkłady: zachowaj ustawienia zamkniętych podkładów</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>°</source>
         <comment>Degree sign for angles</comment>
         <translation type="unfinished">°</translation>
+    </message>
+    <message>
+        <source>mm</source>
+        <comment>millimeters</comment>
+        <translation type="unfinished">mm</translation>
     </message>
 </context>
 <context>
@@ -861,6 +1036,37 @@
     <message>
         <source>Could not create new file: %1</source>
         <translation>Nie można utworzyć nowego pliku: %1</translation>
+    </message>
+</context>
+<context>
+    <name>FillTool</name>
+    <message>
+        <source>Warning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The map area is large. Use of the fill tool may be very slow. Do you want to use it anyway?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The clicked area is not bounded by lines or areas, cannot fill this area.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The clicked position is not free, cannot use the fill tool there.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to create the fill object.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Click&lt;/b&gt;: Fill area with active symbol. The area to be filled must be bounded by lines or areas, other symbols are not taken into account. </source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -911,6 +1117,43 @@
     </message>
     <message>
         <source>Use the new OCD importer also for version 8 files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Screen</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pixels per inch:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Saving files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Retain compatibility with Mapper %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save information for automatic recovery</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Recovery information saving interval:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>min</source>
+        <comment>unit minutes</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Primary screen resolution in pixels:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Primary screen size in inches (diagonal):</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1006,7 +1249,7 @@
         <source>mm</source>
         <translation>mm</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>°</source>
         <translation>°</translation>
     </message>
@@ -1014,7 +1257,7 @@
         <source>Declination:</source>
         <translation>Deklinacja:</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>%1 °</source>
         <translation type="obsolete">%1 °</translation>
     </message>
@@ -1108,7 +1351,7 @@
         <source>Declination value not found.</source>
         <translation>Wartość deklinacji nie została znaleziona.</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>The magnetic declination for the reference point %1° %2° will now be retrieved from &lt;a href=&quot;%3&quot;&gt;%3&lt;/a&gt;. Do you want to continue?</source>
         <translation>Deklinacja magnetyczna dla punktu odniesienia %1° %2° nie będzie przywrócona z &lt;a href=&quot;%3&quot;&gt;%3&lt;/a&gt;. Czy chcesz kontynuować?</translation>
     </message>
@@ -1173,7 +1416,7 @@
         <comment>north / south</comment>
         <translation type="unfinished">N</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>%1 °</source>
         <comment>degree value</comment>
         <translation type="unfinished">%1 °</translation>
@@ -1197,51 +1440,51 @@
     <name>HomeScreenWidget</name>
     <message>
         <source>Exit</source>
-        <translation>Zakończ</translation>
+        <translation type="vanished">Zakończ</translation>
     </message>
     <message>
         <source>Help</source>
-        <translation>Pomoc</translation>
+        <translation type="vanished">Pomoc</translation>
     </message>
     <message>
         <source>Next</source>
-        <translation>Następne</translation>
+        <translation type="vanished">Następne</translation>
     </message>
     <message>
         <source>Activities</source>
-        <translation>Działania</translation>
+        <translation type="vanished">Działania</translation>
     </message>
     <message>
         <source>Open most recently used file on start</source>
-        <translation>Otwórz ostatnio używany plik na starcie</translation>
+        <translation type="vanished">Otwórz ostatnio używany plik na starcie</translation>
     </message>
     <message>
         <source>Show tip of the day</source>
-        <translation>Pokaż wskazówkę dnia</translation>
+        <translation type="vanished">Pokaż wskazówkę dnia</translation>
     </message>
     <message>
         <source>Recent maps</source>
-        <translation>Ostatnie mapy</translation>
+        <translation type="vanished">Ostatnie mapy</translation>
     </message>
     <message>
         <source>Open most recently used file</source>
-        <translation>Otwórz ostatnio używany plik</translation>
+        <translation type="vanished">Otwórz ostatnio używany plik</translation>
     </message>
     <message>
         <source>Open map ...</source>
-        <translation>Otwórz mapę...</translation>
+        <translation type="vanished">Otwórz mapę...</translation>
     </message>
     <message>
         <source>Clear list</source>
-        <translation>Wyczyść listę</translation>
+        <translation type="vanished">Wyczyść listę</translation>
     </message>
     <message>
         <source>Create a new map ...</source>
-        <translation>Utwórz nową mapę...</translation>
+        <translation type="vanished">Utwórz nową mapę...</translation>
     </message>
     <message>
         <source>Previous</source>
-        <translation>Poprzednie</translation>
+        <translation type="vanished">Poprzednie</translation>
     </message>
     <message>
         <source>About %1</source>
@@ -1249,15 +1492,93 @@
     </message>
     <message>
         <source>Tip of the day</source>
-        <translation>Wskazówka dnia</translation>
+        <translation type="vanished">Wskazówka dnia</translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation>Ustawienia</translation>
+        <translation type="vanished">Ustawienia</translation>
+    </message>
+</context>
+<context>
+    <name>HomeScreenWidgetDesktop</name>
+    <message>
+        <source>Activities</source>
+        <translation type="unfinished">Działania</translation>
+    </message>
+    <message>
+        <source>Create a new map ...</source>
+        <translation type="unfinished">Utwórz nową mapę...</translation>
+    </message>
+    <message>
+        <source>Open map ...</source>
+        <translation type="unfinished">Otwórz mapę...</translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <translation type="unfinished">Ustawienia</translation>
     </message>
     <message>
         <source>About %1</source>
         <comment>As in &apos;About OpenOrienteering Mapper&apos;</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Help</source>
+        <translation type="unfinished">Pomoc</translation>
+    </message>
+    <message>
+        <source>Exit</source>
+        <translation type="unfinished">Zakończ</translation>
+    </message>
+    <message>
+        <source>Recent maps</source>
+        <translation type="unfinished">Ostatnie mapy</translation>
+    </message>
+    <message>
+        <source>Open most recently used file on start</source>
+        <translation type="unfinished">Otwórz ostatnio używany plik na starcie</translation>
+    </message>
+    <message>
+        <source>Clear list</source>
+        <translation type="unfinished">Wyczyść listę</translation>
+    </message>
+    <message>
+        <source>Tip of the day</source>
+        <translation type="unfinished">Wskazówka dnia</translation>
+    </message>
+    <message>
+        <source>Show tip of the day</source>
+        <translation type="unfinished">Pokaż wskazówkę dnia</translation>
+    </message>
+    <message>
+        <source>Previous</source>
+        <translation type="unfinished">Poprzednie</translation>
+    </message>
+    <message>
+        <source>Next</source>
+        <translation type="unfinished">Następne</translation>
+    </message>
+</context>
+<context>
+    <name>HomeScreenWidgetMobile</name>
+    <message>
+        <source>Examples</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>About Mapper</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>About Qt</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No map files found!&lt;br/&gt;&lt;br/&gt;Copy a map file to /OOMapper or /sdcard/OOMapper to list it here.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1297,6 +1618,22 @@
     </message>
     <message>
         <source>OCAD</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error while loading an object of type %1 at %2:%3: %4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Could not parse the data.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Could not parse the coordinates.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Expected %1 coordinates, found %2.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1593,6 +1930,18 @@
         <comment>meters</comment>
         <translation type="unfinished">m</translation>
     </message>
+    <message>
+        <source>Coordinate system</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Real</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Map</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MAC_APPLICATION_MENU</name>
@@ -1800,6 +2149,22 @@ Czy chcesz przeskalować symbole?</translation>
         <source>Unsaved file</source>
         <translation>Niezapisany plik</translation>
     </message>
+    <message>
+        <source>File recovery</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>There is an automatically saved version of &lt;br /&gt;&lt;tt&gt;%1&lt;/tt&gt;&lt;br /&gt;&lt;br /&gt;Load this version?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto-saving...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto-saving failed!</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Map</name>
@@ -1950,7 +2315,7 @@ do odczytu.</translation>
     </message>
     <message>
         <source>Dummy</source>
-        <translation>Atrapa</translation>
+        <translation type="vanished">Atrapa</translation>
     </message>
     <message>
         <source>Error</source>
@@ -1962,7 +2327,7 @@ do odczytu.</translation>
     </message>
     <message>
         <source>Calculate nonoverlapping parts of areas.</source>
-        <translation>Oblicz nienakładające się części obszaru.</translation>
+        <translation type="vanished">Oblicz nienakładające się części obszaru.</translation>
     </message>
     <message>
         <source>Difference failed.</source>
@@ -2014,7 +2379,7 @@ do odczytu.</translation>
     </message>
     <message>
         <source>Select at least two area objects to activate this tool.</source>
-        <translation>Wybierz przynajmniej dwa obiekty aby aktywować to narzędzie.</translation>
+        <translation type="vanished">Wybierz przynajmniej dwa obiekty aby aktywować to narzędzie.</translation>
     </message>
     <message>
         <source>Cut %1 object(s)</source>
@@ -2226,7 +2591,7 @@ do odczytu.</translation>
     </message>
     <message>
         <source>Area difference</source>
-        <translation>Różnica obszarów</translation>
+        <translation type="vanished">Różnica obszarów</translation>
     </message>
     <message>
         <source>Cut round hole</source>
@@ -2286,7 +2651,7 @@ do odczytu.</translation>
     </message>
     <message>
         <source>Intersect the first selected area object with all other selected overlapping areas.</source>
-        <translation>Przetnij pierwszy wybrany obiekt ze wszystkimi pozostałymi wybranymi nakładającymi się obszarami.</translation>
+        <translation type="vanished">Przetnij pierwszy wybrany obiekt ze wszystkimi pozostałymi wybranymi nakładającymi się obszarami.</translation>
     </message>
     <message>
         <source>Draw paths</source>
@@ -2294,7 +2659,7 @@ do odczytu.</translation>
     </message>
     <message>
         <source>Select at least two area objects with the same symbol to activate this tool.</source>
-        <translation>Wybierz przynajmniej dwa obszary z takim samym symbolem, aby aktywować to narzędzie.</translation>
+        <translation type="vanished">Wybierz przynajmniej dwa obszary z takim samym symbolem, aby aktywować to narzędzie.</translation>
     </message>
     <message>
         <source>Change map scale...</source>
@@ -2314,7 +2679,7 @@ do odczytu.</translation>
     </message>
     <message>
         <source>Unify overlapping areas.</source>
-        <translation>Ujednolić nakładające się obszary.</translation>
+        <translation type="vanished">Ujednolić nakładające się obszary.</translation>
     </message>
     <message>
         <source>Rotate the whole map</source>
@@ -2342,7 +2707,7 @@ do odczytu.</translation>
     </message>
     <message>
         <source>Subtract all other selected area objects from the first selected area object.</source>
-        <translation>Odejmij wszystkie pozostałe wybrane obiekty od pierwszego wybranego.</translation>
+        <translation type="vanished">Odejmij wszystkie pozostałe wybrane obiekty od pierwszego wybranego.</translation>
     </message>
     <message>
         <source>Show/Hide the template window</source>
@@ -2552,6 +2917,220 @@ do odczytu.</translation>
         <source>Select at least one path object and a single point symbol to activate this tool.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Map saved</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tag editor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show/Hide the tag editor window</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Draw free-handedly</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fill bounded areas</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation type="unfinished">Usuń</translation>
+    </message>
+    <message>
+        <source>Cut away from area</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Merge area holes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Paint on template settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable touch cursor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable GPS display</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable GPS distance rings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set point object at GPS position</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set temporary marker at GPS position</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create temporary path at GPS position</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Clear temporary GPS markers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable compass display</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Align map with north</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toggle template visibility</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add new part...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rename current part...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove current part</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Merge all parts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Map parts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hide top bar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show top bar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Print / Export is not available in this program version!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tag Editor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No
+symbol
+selected</source>
+        <comment>Keep it short. Should not be much longer per line than the longest word in the original.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Multiple
+symbols
+selected</source>
+        <comment>Keep it short. Should not be much longer per line than the longest word in the original.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Draw paths free-handedly.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fill bounded areas.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Deletes the selected object(s).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resulting symbol: %1 %2.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select at least two area or path objects activate this tool.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unify overlapping objects.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove all parts which are not overlaps with the first selected object.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove overlapped parts of the first selected object.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove all parts which overlap the first selected object.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Merge area holes together, or merge holes with the object boundary to cut out this part.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select one area object with holes to activate this tool.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Merging holes failed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Clear temporary markers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Are you sure you want to delete all temporary GPS markers? This cannot be undone.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Merge this part with</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move selected objects to</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter the name of the map part:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do you want to remove map part &quot;%1&quot; and all its objects? This cannot be undone.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Merge map parts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do you want to move all objects from map part &quot;%1&quot; to &quot;%2&quot;, and to remove &quot;%1&quot;?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do you want to move all objects to map part &quot;%1&quot;, and to remove all other map parts?</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MapEditorTool</name>
@@ -2684,11 +3263,11 @@ zoom using the mouse wheel, if available.</source>
         <source>mm</source>
         <translation>mm</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>m²</source>
         <translation type="obsolete">m²</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>mm²</source>
         <translation>mm²</translation>
     </message>
@@ -2708,7 +3287,7 @@ zoom using the mouse wheel, if available.</source>
         <source>Length:</source>
         <translation>Długość:</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>mm²</source>
         <comment>square millimeters</comment>
         <translation>mm²</translation>
@@ -2751,7 +3330,7 @@ zoom using the mouse wheel, if available.</source>
         <comment>meters</comment>
         <translation type="unfinished">m</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>m²</source>
         <comment>square meters</comment>
         <translation type="unfinished">m²</translation>
@@ -3357,7 +3936,7 @@ zoom using the mouse wheel, if available.</source>
     </message>
     <message>
         <source>Export to PDF or PS</source>
-        <translation>Eksportuj do PDFa lub PS</translation>
+        <translation type="vanished">Eksportuj do PDFa lub PS</translation>
     </message>
     <message>
         <source>Failed to save the image. Does the path exist? Do you have sufficient rights?</source>
@@ -3520,6 +4099,10 @@ zoom using the mouse wheel, if available.</source>
         <comment>Paper size</comment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Not supported on Android.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ProjectedCRSSelector</name>
@@ -3543,6 +4126,13 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <source>Registration black (all printed colors)</source>
         <comment>MapColor</comment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QDialogButtonBox</name>
+    <message>
+        <source>&amp;Close</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3575,6 +4165,13 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <source>Do you want to install it now?</source>
         <translation type="obsolete">Czy chcesz zainstalować teraz?</translation>
+    </message>
+</context>
+<context>
+    <name>QFileDialog</name>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3666,6 +4263,10 @@ zoom using the mouse wheel, if available.</source>
         <source>Warning</source>
         <translation>Ostrzeżenie</translation>
     </message>
+    <message>
+        <source>Keep the symbols&apos; hidden / protected states of the old symbol set</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RotateMapDialog</name>
@@ -3681,7 +4282,7 @@ zoom using the mouse wheel, if available.</source>
         <source>mm</source>
         <translation>mm</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>°</source>
         <translation>°</translation>
     </message>
@@ -3757,7 +4358,7 @@ zoom using the mouse wheel, if available.</source>
 </context>
 <context>
     <name>RotatePatternTool</name>
-    <message utf8="true">
+    <message>
         <source>&lt;b&gt;Angle:&lt;/b&gt; %1° </source>
         <translation>&lt;b&gt;Kąt:&lt;/b&gt; %1° </translation>
     </message>
@@ -3784,7 +4385,7 @@ zoom using the mouse wheel, if available.</source>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set the center of rotation. </source>
         <translation>&lt;b&gt;Kliknij&lt;/b&gt;: określ oś obrotu. </translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>&lt;b&gt;Rotation:&lt;/b&gt; %1° </source>
         <translation>&lt;b&gt;Obrót:&lt;/b&gt; %1° </translation>
     </message>
@@ -4198,17 +4799,12 @@ przeskoczenia leniwego psa
 <context>
     <name>TagsDialog</name>
     <message>
-        <source>Add</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Close</source>
-        <translation type="unfinished">Zamknij</translation>
+        <translation type="obsolete">Zamknij</translation>
     </message>
+</context>
+<context>
+    <name>TagsWidget</name>
     <message>
         <source>Key</source>
         <translation type="unfinished"></translation>
@@ -4218,11 +4814,15 @@ przeskoczenia leniwego psa
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>key</source>
+        <source>Help</source>
+        <translation type="unfinished">Pomoc</translation>
+    </message>
+    <message>
+        <source>Key exists</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>key %0</source>
+        <source>The key &quot;%1&quot; already exists and must not be used twice.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4927,6 +5527,13 @@ Nie udało się załadować podkładu. Czy plik istnieje i jest poprawny?</trans
     </message>
 </context>
 <context>
+    <name>XMLFileExporter</name>
+    <message>
+        <source>Older versions of Mapper do not support multiple map parts. To save the map in compatibility mode, you must first merge all map parts.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>XMLFileImporter</name>
     <message>
         <source>Unsupported element: %1 (line %2 column %3)</source>
@@ -4947,6 +5554,14 @@ Nie udało się załadować podkładu. Czy plik istnieje i jest poprawny?</trans
     <message>
         <source>Expected %1 colors, found %2.</source>
         <translation>Spodziewane %1 kolory, znalezione %2.</translation>
+    </message>
+    <message>
+        <source>unknow</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Parts of this file cannot be read by this version of Mapper. Minimum required version: %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
