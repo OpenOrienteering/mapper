@@ -619,7 +619,7 @@ inline
 void XmlElementReader::read(QHash<QString, QString> &tags) throw (FileFormatException)
 {
 	namespace literal = XmlStreamLiteral;
-	typedef QHash<QString, QString> Tags;
+	//typedef QHash<QString, QString> Tags;
 	
 	tags.clear();
 	while (xml.readNextStartElement())
