@@ -36,9 +36,10 @@
 FillTool::FillTool(MapEditorController* editor, QAction* tool_button)
 : MapEditorToolBase(QCursor(QPixmap(":/images/cursor-fill.png"), 11, 11), Other, editor, tool_button)
 {
+	drawing_symbol = editor->activeSymbol();
 	setDrawingSymbol(editor->activeSymbol());
 	
-	connect(editor, SIGNAL(setDrawingSymbol(Symbol*)), this, SLOT(setDrawingSymbol(Symbol*)));
+	connect(editor, SIGNAL(activeSymbolChanged(Symbol*)), this, SLOT(setDrawingSymbol(Symbol*)));
 }
 
 FillTool::~FillTool()
