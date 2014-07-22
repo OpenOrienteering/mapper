@@ -626,6 +626,8 @@ void MapEditorController::assignKeyboardShortcuts()
 	findAction("drawtext")->setShortcut(QKeySequence("T"));
 	
 	findAction("duplicate")->setShortcut(QKeySequence("D"));
+	findAction("switchsymbol")->setShortcut(QKeySequence("Ctrl+G"));
+	findAction("fillborder")->setShortcut(QKeySequence("Ctrl+F"));
 	findAction("switchdashes")->setShortcut(QKeySequence("Ctrl+D"));
 	findAction("connectpaths")->setShortcut(QKeySequence("C"));
 	findAction("rotateobjects")->setShortcut(QKeySequence("R"));
@@ -635,6 +637,7 @@ void MapEditorController::assignKeyboardShortcuts()
 	findAction("measure")->setShortcut(QKeySequence("M"));
 	findAction("booleanunion")->setShortcut(QKeySequence("U"));
 	findAction("converttocurves")->setShortcut(QKeySequence("N"));
+	findAction("simplify")->setShortcut(QKeySequence("Ctrl+N"));
 }
 
 void MapEditorController::createActions()
