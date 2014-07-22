@@ -45,6 +45,11 @@ CutoutTool::CutoutTool(MapEditorController* editor, QAction* tool_button, bool c
 
 CutoutTool::~CutoutTool()
 {
+
+}
+
+void CutoutTool::finishEditing()
+{
 	if (editingInProgress())
 	{
 		if (cutout_object_index >= 0)
@@ -89,7 +94,7 @@ bool CutoutTool::keyPress(QKeyEvent* event)
 	if (event->key() == Qt::Key_Return)
 	{
 		// Insert cutout object again at its original index to keep the objects order
-		// (necessary no to break undo / redo)
+		// (necessary for not breaking undo / redo)
 		map()->getCurrentPart()->addObject(cutout_object, cutout_object_index);
 		cutout_object_index = -1;
 		

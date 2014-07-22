@@ -57,6 +57,8 @@ public:
 	 */
 	static void apply(Map* map, PathObject* cutout_object, bool cut_away);
 	
+	virtual void finishEditing();
+	
 protected:
 	virtual void initImpl();
 	virtual int updateDirtyRectImpl(QRectF& rect);
