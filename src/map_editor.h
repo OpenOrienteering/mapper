@@ -378,6 +378,8 @@ public slots:
 	void fillBorderClicked();
 	/** Selects all objects with the selected symbol(s) */
 	void selectObjectsClicked(bool select_exclusively);
+	/** Deselects all objects with the selected symbol(s) */
+	void deselectObjectsClicked();
 	/**
 	 * Reverses the selected object(s) direcction(s),
 	 * thus switching dash directions for lines.

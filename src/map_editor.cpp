@@ -2324,6 +2324,29 @@ void MapEditorController::selectObjectsClicked(bool select_exclusively)
 	else
 		QMessageBox::warning(window, tr("Object selection"), tr("No objects were selected because there are no objects with the selected symbol(s)."));
 }
+void MapEditorController::deselectObjectsClicked()
+{
+	bool selection_changed = false;
+	
+	MapPart* part = map->getCurrentPart();
+	for (int i = 0, size = map->getNumObjects(); i < size; ++i)
+	{
+		Object* object = part->getObject(i);
+		if (symbol_widget->isSymbolSelected(object->getSymbol()) && map->isObjectSelected(object))
+		{
+			map->removeObjectFromSelection(object, false);
+			selection_changed = true;
+		}
+	}
+	
+	if (selection_changed)
+	{
+		map->emitSelectionChanged();
+		
+		if (current_tool && current_tool->isDrawTool())
+			setEditTool();
+	}
+}
 
 void MapEditorController::switchDashesClicked()
 {
@@ -3404,6 +3427,7 @@ void MapEditorController::createSymbolWidget(QWidget* parent)
 		connect(symbol_widget, SIGNAL(switchSymbolClicked()), this, SLOT(switchSymbolClicked()));
 		connect(symbol_widget, SIGNAL(fillBorderClicked()), this, SLOT(fillBorderClicked()));
 		connect(symbol_widget, SIGNAL(selectObjectsClicked(bool)), this, SLOT(selectObjectsClicked(bool)));
+		connect(symbol_widget, SIGNAL(deselectObjectsClicked()), this, SLOT(deselectObjectsClicked()));
 		connect(symbol_widget, SIGNAL(selectedSymbolsChanged()), this, SLOT(selectedSymbolsChanged()));
 		if (symbol_dock_widget)
 		{

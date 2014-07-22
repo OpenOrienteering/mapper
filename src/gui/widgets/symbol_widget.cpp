@@ -42,6 +42,7 @@ SymbolWidget::SymbolWidget(Map* map, bool mobile_mode, QWidget* parent)
 	connect(render_widget, SIGNAL(fillBorderClicked()), this, SIGNAL(fillBorderClicked()));
 	connect(render_widget, SIGNAL(switchSymbolClicked()), this, SIGNAL(switchSymbolClicked()));
 	connect(render_widget, SIGNAL(selectObjectsClicked(bool)), this, SIGNAL(selectObjectsClicked(bool)));
+	connect(render_widget, SIGNAL(deselectObjectsClicked()), this, SIGNAL(deselectObjectsClicked()));
 }
 
 SymbolWidget::~SymbolWidget()

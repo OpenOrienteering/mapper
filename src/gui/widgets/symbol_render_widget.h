@@ -146,6 +146,11 @@ signals:
 	 */
 	void selectObjectsClicked(bool exclusively);
 	
+	/**
+	 * @brief The user triggered deselecting objects with the active symbol.
+	 */
+	void deselectObjectsClicked();
+	
 protected slots:
 	/**
 	 * @brief Updates icon and selection when a symbol changes.
@@ -169,6 +174,7 @@ protected slots:
 	void setSelectedSymbolProtection(bool checked);
 	void selectObjectsExclusively();
 	void selectObjectsAdditionally();
+	void deselectObjects();
 	void selectAll();
 	void selectUnused();
 	void invertSelection();
@@ -329,6 +335,7 @@ private:
 	QAction* delete_action;
 	QAction* select_objects_action;
 	QAction* select_objects_additionally_action;
+	QAction* deselect_objects_action;
 	
 	SymbolToolTip* tooltip;
 	

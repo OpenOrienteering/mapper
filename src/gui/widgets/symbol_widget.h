@@ -101,6 +101,11 @@ signals:
 	 */
 	void selectObjectsClicked(bool select_exclusively);
 	
+	/**
+	 * @brief The user triggered deselecting objects with the active symbol.
+	 */
+	void deselectObjectsClicked();
+	
 protected:
 	/**
 	 * @brief Receives context menu events and opens the context menu.

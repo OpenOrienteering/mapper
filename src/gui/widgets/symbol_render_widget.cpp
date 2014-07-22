@@ -234,6 +234,7 @@ SymbolRenderWidget::SymbolRenderWidget(Map* map, bool mobile_mode, QWidget* pare
 	// text will be filled in by updateContextMenuState()
 	select_objects_action = context_menu->addAction(QIcon(":/images/tool-edit.png"), "", this, SLOT(selectObjectsExclusively()));
 	select_objects_additionally_action = context_menu->addAction(QIcon(":/images/tool-edit.png"), "", this, SLOT(selectObjectsAdditionally()));
+	deselect_objects_action = context_menu->addAction(QIcon(":/images/tool-edit.png"), "", this, SLOT(deselectObjects()));
 	context_menu->addSeparator();
 	hide_action = context_menu->addAction("", this, SLOT(setSelectedSymbolVisibility(bool)));
 	hide_action->setCheckable(true);
@@ -804,6 +805,11 @@ void SymbolRenderWidget::selectObjectsAdditionally()
 	emit selectObjectsClicked(false);
 }
 
+void SymbolRenderWidget::deselectObjects()
+{
+	emit deselectObjectsClicked();
+}
+
 void SymbolRenderWidget::newPointSymbol()
 {
 	newSymbol(new PointSymbol());
@@ -1092,6 +1098,7 @@ void SymbolRenderWidget::updateContextMenuState()
 	{
 		select_objects_action->setText(tr("Select all objects with this symbol"));
 		select_objects_additionally_action->setText(tr("Add all objects with this symbol to selection"));
+		deselect_objects_action->setText(tr("Remove all objects with this symbol from selection"));
 		hide_action->setText(tr("Hide objects with this symbol"));
 		protect_action->setText(tr("Protect objects with this symbol"));
 	}
@@ -1099,11 +1106,13 @@ void SymbolRenderWidget::updateContextMenuState()
 	{
 		select_objects_action->setText(tr("Select all objects with selected symbols"));
 		select_objects_additionally_action->setText(tr("Add all objects with selected symbols to selection"));
+		deselect_objects_action->setText(tr("Remove all objects with selected symbols from selection"));
 		hide_action->setText(tr("Hide objects with selected symbols"));
 		protect_action->setText(tr("Protect objects with selected symbols"));
 	}
-    select_objects_action->setEnabled(have_selection);
+	select_objects_action->setEnabled(have_selection);
 	select_objects_additionally_action->setEnabled(have_selection);
+	deselect_objects_action->setEnabled(have_selection);
 }
 
 bool SymbolRenderWidget::newSymbol(Symbol* prototype)
