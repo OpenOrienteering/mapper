@@ -880,7 +880,7 @@ bool BooleanTool::checkSegmentMatch(
 	
 	MapCoord& first = original->getCoordinate(coord_index);
 	out_is_curve = first.isCurveStart();
-	MapCoord& other = original->getCoordinate(coord_index + out_is_curve ? 3 : 1);
+	MapCoord& other = original->getCoordinate(coord_index + (out_is_curve ? 3 : 1));
 	
 	bool found = true;
 	if (first == polygon.at(start_index) && other == polygon.at(end_index))
