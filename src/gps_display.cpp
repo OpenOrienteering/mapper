@@ -310,7 +310,7 @@ MapCoordF GPSDisplay::calcLatestGPSCoord(bool& ok)
 		return latest_gps_coord;
 	}
 	
-	LatLon latlon(qgeo_coord.latitude(), qgeo_coord.longitude(), true);
+	LatLon latlon(qgeo_coord.latitude(), qgeo_coord.longitude());
 	latest_gps_coord = georeferencing.toMapCoordF(latlon, &ok);
 	if (!ok)
 	{

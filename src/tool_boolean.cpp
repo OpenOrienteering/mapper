@@ -34,17 +34,26 @@
 
 //### Local helper functions
 
+/*
+ * NB: qHash must be in the same namespace as the QHash key.
+ * This is a C++ language issue, not a Qt issue.
+ * Cf. https://bugreports.qt-project.org/browse/QTBUG-34912
+ */
+namespace ClipperLib
+{
+
 /**
- * Implements (specializes) qHash for ClipperLib::IntPoint.
+ * Implements qHash for ClipperLib::IntPoint.
  * 
  * This is needed to use ClipperLib::IntPoint as QHash key.
  */
-template < >
-uint qHash(const ClipperLib::IntPoint& point, uint seed)
+uint qHash(const IntPoint& point, uint seed)
 {
 	qint64 tmp = (point.X & 0xffffffff) | (point.Y << 32);
 	return qHash(tmp, seed);
 }
+
+} // namespace ClipperLib
 
 /**
  * Removes flags from the coordinate to be able to use it in the reconstruction.

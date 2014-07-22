@@ -26,6 +26,7 @@
 
 #include <QHash>
 
+#undef CLIPPER_VERSION
 #include <clipper.hpp>
 #include "object.h"
 

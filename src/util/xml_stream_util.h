@@ -28,7 +28,7 @@
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
-#include "../file_import_export.h"
+#include "../file_format.h"
 
 
 // Originally defined in map_coord.h, but we want to avoid the depedency.
@@ -619,7 +619,6 @@ inline
 void XmlElementReader::read(QHash<QString, QString> &tags) throw (FileFormatException)
 {
 	namespace literal = XmlStreamLiteral;
-	//typedef QHash<QString, QString> Tags;
 	
 	tags.clear();
 	while (xml.readNextStartElement())

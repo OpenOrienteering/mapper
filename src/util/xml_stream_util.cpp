@@ -22,6 +22,7 @@
 
 #include "../map_coord.h"
 #include "../file_format_xml.h"
+#include "../file_import_export.h"
 
 
 void XmlElementWriter::write(const MapCoordVector& coords)

@@ -95,6 +95,7 @@ bool UndoStep::isValid() const
 
 bool UndoStep::getModifiedParts(PartSet& out) const
 {
+	Q_UNUSED(out);
 	return false;
 }
 

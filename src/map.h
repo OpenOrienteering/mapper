@@ -1428,7 +1428,7 @@ MapPart* Map::getPart(std::size_t i) const
 inline
 MapPart* Map::getCurrentPart() const
 {
-	return (current_part_index < 0) ? NULL : parts[current_part_index];
+	return parts[current_part_index];
 }
 
 inline
