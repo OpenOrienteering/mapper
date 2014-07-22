@@ -173,6 +173,10 @@ bool UndoManager::redo(QWidget* dialog_parent)
 
 void UndoManager::updateMapState(const UndoStep *step) const
 {
+	// Do nothing for a null map (which is the case for tests)
+	if (!map)
+		return;
+	
 	// Make a modified part the current one
 	UndoStep::PartSet result_parts;
 	bool have_modified_objects = step->getModifiedParts(result_parts);
