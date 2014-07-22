@@ -143,6 +143,8 @@ SymbolSettingDialog::SymbolSettingDialog(Symbol* source_symbol, Map* source_map,
 		right = new QWidget();
 		right->setLayout(preview_layout);
 	}
+	else
+		right->setMinimumWidth(300);
 	
 	QSplitter* splitter = new QSplitter();
 	splitter->addWidget(left);
