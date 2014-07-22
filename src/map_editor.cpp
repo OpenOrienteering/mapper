@@ -637,7 +637,7 @@ void MapEditorController::assignKeyboardShortcuts()
 	findAction("measure")->setShortcut(QKeySequence("M"));
 	findAction("booleanunion")->setShortcut(QKeySequence("U"));
 	findAction("converttocurves")->setShortcut(QKeySequence("N"));
-	findAction("simplify")->setShortcut(QKeySequence("Ctrl+N"));
+	findAction("simplify")->setShortcut(QKeySequence("Ctrl+M"));
 }
 
 void MapEditorController::createActions()
