@@ -728,7 +728,10 @@ bool Map::loadFrom(const QString& path, QWidget* dialog_parent, MapEditorControl
 	}
 	
 	if (map_editor)
+	{
+		view->setDragOffset(QPoint(0, 0), false);
 		map_editor->main_view = view;
+	}
 	else
 		delete view;	// TODO: HACK. Better not create the view at all in this case!
 
