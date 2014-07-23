@@ -173,7 +173,7 @@ bool ObjectCreatingUndoStep::isValid() const
 	return valid;
 }
 
-void ObjectCreatingUndoStep::addObject(int index)
+void ObjectCreatingUndoStep::addObject(int)
 {
 	Q_ASSERT(false && "This implementation must not be called");
 	return;
@@ -463,9 +463,10 @@ UndoStep* SwitchPartUndoStep::undo()
 }
 
 // virtual
-bool SwitchPartUndoStep::load(QIODevice *file, int version)
+bool SwitchPartUndoStep::load(QIODevice *, int)
 {
 	Q_ASSERT(false); // Not used in legacy file format
+	return false;
 }
 
 // virtual

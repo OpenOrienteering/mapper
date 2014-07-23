@@ -1919,7 +1919,7 @@ void Map::push(UndoStep *step)
 
 void Map::addPart(MapPart* part, std::size_t index)
 {
-	Q_ASSERT(index >= 0 && index <= parts.size());
+	Q_ASSERT(index <= parts.size());
 	
 	parts.insert(parts.begin() + index, part);
 	if (current_part_index >= index)
@@ -1934,7 +1934,7 @@ void Map::addPart(MapPart* part, std::size_t index)
 
 void Map::removePart(std::size_t index)
 {
-	Q_ASSERT(index >= 0 && index < parts.size());
+	Q_ASSERT(index < parts.size());
 	Q_ASSERT(parts.size() > 1);
 	
 	if (current_part_index == index)
@@ -1974,7 +1974,7 @@ int Map::findPartIndex(const MapPart* part) const
 
 void Map::setCurrentPartIndex(std::size_t index)
 {
-	Q_ASSERT(index >= 0 && index < parts.size());
+	Q_ASSERT(index < parts.size());
 	
 	MapPart* const old_part = parts[current_part_index];
 	if (index != current_part_index)

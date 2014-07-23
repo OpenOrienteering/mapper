@@ -123,9 +123,9 @@ bool MapPartUndoStep::getModifiedParts(PartSet &out) const
 }
 
 // virtual
-void MapPartUndoStep::getModifiedObjects(int part_index, ObjectSet &out) const
+void MapPartUndoStep::getModifiedObjects(int, ObjectSet &) const
 {
-	return; // !
+	// nothing
 }
 
 bool MapPartUndoStep::load(QIODevice *, int )
@@ -156,7 +156,7 @@ void MapPartUndoStep::saveImpl(QXmlStreamWriter &xml) const
 }
 
 // virtual
-void MapPartUndoStep::loadImpl(QXmlStreamReader &xml, SymbolDictionary &symbol_dict)
+void MapPartUndoStep::loadImpl(QXmlStreamReader &xml, SymbolDictionary &)
 {
 	if (xml.name() == literal::change)
 	{
