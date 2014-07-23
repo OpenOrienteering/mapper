@@ -2368,12 +2368,10 @@ void PathObject::convertRangeToCurves(int part_number, int start_index, int end_
 	++end_index;
 }
 
-bool PathObject::simplify(PathObject** undo_duplicate)
+bool PathObject::simplify(PathObject** undo_duplicate, float threshold)
 {
 	// Simple algorithm, trying to delete each point and keeping those where
 	// the deletion cost (= difference in the curves) is high
-	// TODO: make threshold configurable
-	const float threshold = 0.1f;
 	const int num_iterations = 1;
 	
 	bool removed_a_point = false;

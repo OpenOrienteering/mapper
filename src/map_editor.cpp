@@ -2697,7 +2697,9 @@ void MapEditorController::convertToCurvesClicked()
 		if (path->convertToCurves(&undo_duplicate))
 		{
 			undo_step->addObject(part->findObjectIndex(path), undo_duplicate);
-			path->simplify();
+			// TODO: make threshold configurable?
+			const float threshold = 0.08f;
+			path->simplify(NULL, threshold);
 		}
 		path->update(true);
 	}
@@ -2714,6 +2716,9 @@ void MapEditorController::convertToCurvesClicked()
 
 void MapEditorController::simplifyPathClicked()
 {
+	// TODO: make threshold configurable!
+	const float threshold = 0.1f;
+	
 	ReplaceObjectsUndoStep* undo_step = new ReplaceObjectsUndoStep(map);
 	MapPart* part = map->getCurrentPart();
 	
@@ -2725,7 +2730,7 @@ void MapEditorController::simplifyPathClicked()
 		
 		PathObject* path = (*it)->asPath();
 		PathObject* undo_duplicate = NULL;
-		if (path->simplify(&undo_duplicate))
+		if (path->simplify(&undo_duplicate, threshold))
 			undo_step->addObject(part->findObjectIndex(path), undo_duplicate);
 		path->update(true);
 	}

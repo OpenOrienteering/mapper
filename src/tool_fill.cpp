@@ -24,6 +24,7 @@
 #include <limits>
 
 #include <QMessageBox>
+#include <QLabel>
 #include <QPainter>
 
 #include "map_editor.h"
@@ -66,11 +67,32 @@ void FillTool::setDrawingSymbol(Symbol* symbol)
 
 void FillTool::clickPress()
 {
+	// First try to apply with current viewport only as extent (for speed)
+	MapWidget* widget = editor->getMainWidget();
+	QRectF viewport_extent = widget->getMapView()->calculateViewedRect(widget->viewportToView(widget->geometry()));
+	int result = fill(viewport_extent);
+	if (result == -1 || result == 1)
+		return;
+	
+	// If not successful, try again with rasterizing the whole map
+	QRectF map_extent = map()->calculateExtent(true, false);
+	result = fill(map_extent);
+	if (result == -1 || result == 1)
+		return;
+	
+	QMessageBox::warning(
+		window(),
+		tr("Error"),
+		tr("The clicked area is not bounded by lines or areas, cannot fill this area.")
+	);
+}
+
+int FillTool::fill(const QRectF& extent)
+{
 	const float extent_area_warning_threshold = 600 * 600; // 60 cm x 60 cm
 	
-	// Get desired extent and warn if it is large
-	QRectF map_extent = map()->calculateExtent(true, false);
-	if (map_extent.width() * map_extent.height() > extent_area_warning_threshold)
+	// Warn if desired extent is large
+	if (extent.width() * extent.height() > extent_area_warning_threshold)
 	{
 		if (QMessageBox::question(
 			window(),
@@ -78,25 +100,18 @@ void FillTool::clickPress()
 			tr("The map area is large. Use of the fill tool may be very slow. Do you want to use it anyway?"),
 			QMessageBox::No | QMessageBox::Yes) == QMessageBox::No)
 		{
-			return;
+			return -1;
 		}
 	}
 	
 	// Rasterize map into image
 	QTransform transform;
-	QImage image = rasterizeMap(map_extent, transform);
+	QImage image = rasterizeMap(extent, transform);
 	
 	// Calculate click position in image and check if it is inside the map area and free
 	QPoint clicked_pixel = transform.map(cur_map_widget->viewportToMapF(click_pos).toQPointF()).toPoint();
 	if (!image.rect().contains(clicked_pixel, true))
-	{
-		QMessageBox::warning(
-			window(),
-			tr("Error"),
-			tr("The clicked area is not bounded by lines or areas, cannot fill this area.")
-		);
-		return;
-	}
+		return 0;
 	if (qAlpha(image.pixel(clicked_pixel)) > 0)
 	{
 		QMessageBox::warning(
@@ -104,7 +119,7 @@ void FillTool::clickPress()
 			tr("Error"),
 			tr("The clicked position is not free, cannot use the fill tool there.")
 		);
-		return;
+		return -1;
 	}
 	
 	// Go to the right and find collisions with objects.
@@ -121,7 +136,10 @@ void FillTool::clickPress()
 		// Found a collision, trace outline of hit object
 		// and check whether the outline contains start_pixel
 		std::vector<QPoint> boundary;
-		if (!traceBoundary(image, start_pixel, test_pixel, boundary))
+		int trace_result = traceBoundary(image, start_pixel, test_pixel, boundary);
+		if (trace_result == -1)
+			return 0;
+		else if (trace_result == 0)
 		{
 			// The outline does not contain start_pixel.
 			// Jump to the rightmost pixel of the boundary with same y as the start.
@@ -149,15 +167,11 @@ void FillTool::clickPress()
 				tr("Error"),
 				tr("Failed to create the fill object.")
 			);
+			return -1;
 		}
-		return;
+		return 1;
 	}
-	
-	QMessageBox::warning(
-		window(),
-		tr("Error"),
-		tr("The clicked area is not bounded by lines or areas, cannot fill this area.")
-	);
+	return 0;
 }
 
 void FillTool::updateStatusText()
@@ -176,7 +190,6 @@ QImage FillTool::rasterizeMap(const QRectF& extent, QTransform& out_transform)
 	// - no antialiasing
 	// - encode object ids in object colors
 	// - draw centerlines in addition to normal rendering
-	// TODO: replace prototype implementation
 	
 	const float zoom_level = 4;
 	
@@ -228,6 +241,8 @@ void FillTool::drawObjectIDs(Map* map, QPainter* painter, QRectF bounding_box, f
 	for (int o = 0, num_objects = part->getNumObjects(); o < num_objects; ++o)
 	{
 		Object* object = part->getObject(o);
+		if (object->getSymbol() && object->getSymbol()->isHidden())
+			continue;
 		if (object->getType() != Object::Path)
 			continue;
 		
@@ -242,7 +257,7 @@ void FillTool::drawObjectIDs(Map* map, QPainter* painter, QRectF bounding_box, f
 	}
 }
 
-bool FillTool::traceBoundary(QImage image, QPoint start_pixel, QPoint test_pixel, std::vector< QPoint >& out_boundary)
+int FillTool::traceBoundary(QImage image, QPoint start_pixel, QPoint test_pixel, std::vector< QPoint >& out_boundary)
 {
 	out_boundary.clear();
 	out_boundary.reserve(4096);
@@ -265,9 +280,9 @@ bool FillTool::traceBoundary(QImage image, QPoint start_pixel, QPoint test_pixel
 	{
 		QPoint right_vector = QPoint(fwd_vector.y(), -fwd_vector.x());
 		if (!image.rect().contains(cur_pixel + fwd_vector + right_vector, true))
-			return false;
+			return -1;
 		if (!image.rect().contains(cur_pixel + right_vector, true))
-			return false;
+			return -1;
 		
 		if (qAlpha(image.pixel(cur_pixel + fwd_vector + right_vector)) > 0)
 		{
@@ -295,6 +310,9 @@ bool FillTool::traceBoundary(QImage image, QPoint start_pixel, QPoint test_pixel
 			out_boundary.push_back(cur_pixel);
 	}
 	
+// 	QLabel* debugImageLabel = new QLabel();
+// 	debugImageLabel->setPixmap(QPixmap::fromImage(debugImage));
+// 	debugImageLabel->show();
 // 	debugImage.save("debugImage.png");
 	
 	bool inside = false;
@@ -307,7 +325,7 @@ bool FillTool::traceBoundary(QImage image, QPoint start_pixel, QPoint test_pixel
 			(start_pixel.y() - out_boundary[i].y()) / (float)(out_boundary[j].y() - out_boundary[i].y()) + out_boundary[i].x()) )
 			inside = !inside;
 	}
-	return inside;
+	return inside ? 1 : 0;
 }
 
 bool FillTool::fillBoundary(const QImage& image, const std::vector< QPoint >& boundary, QTransform image_to_map)
@@ -434,6 +452,8 @@ bool FillTool::fillBoundary(const QImage& image, const std::vector< QPoint >& bo
 		return false;
 	}
 	path->closeAllParts();
+	const float simplify_epsilon = 1e-2f;
+	path->simplify(NULL, simplify_epsilon);
 	
 	int index = map()->addObject(path);
 	map()->clearObjectSelection(false);
@@ -444,6 +464,7 @@ bool FillTool::fillBoundary(const QImage& image, const std::vector< QPoint >& bo
 	map()->push(undo_step);
 	
 	map()->setObjectsDirty();
+	updateDirtyRect();
 	
 	return true;
 }

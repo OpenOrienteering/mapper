@@ -608,7 +608,7 @@ public:
 	 * If at least one point is changed, returns true and
 	 * returns an undo duplicate if the corresponding pointer is set.
 	 */
-	bool simplify(PathObject** undo_duplicate = NULL);
+	bool simplify(PathObject** undo_duplicate, float threshold);
 	
 	/** See Object::isPointOnObject() */
 	int isPointOnPath(MapCoordF coord, float tolerance,
