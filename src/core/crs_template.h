@@ -27,7 +27,7 @@
 /**
  * A template for a coordinate reference system specification string,
  * which may contain one or more parameters described by the Param struct.
- * For each param, spec_template must contain a free parameter for QString::arg(),
+ * For each param, spec_template must contain a number of free parameters for QString::arg(),
  * e.g. "%1" for the first parameter.
  */
 class CRSTemplate
@@ -40,10 +40,10 @@ public:
 		virtual ~Param() {}
 		/** Must create a widget which can be used to edit the value. */
 		virtual QWidget* createEditWidget(QObject* edit_receiver) const = 0;
-		/** Must return the widget's value in a form so it can be pasted into
-		 *  the CRS specification
+		/** Must return the widget's value(s) in a form so they can be pasted into
+		 *  the CRS specification.
 		 */
-		virtual QString getSpecValue(QWidget* edit_widget) const = 0;
+		virtual std::vector<QString> getSpecValue(QWidget* edit_widget) const = 0;
 		/** Must return the widget's value in a form so it can be stored */
 		virtual QString getValue(QWidget* edit_widget) const = 0;
 		/** Must set the stored value in the widget */
@@ -57,7 +57,7 @@ public:
 	{
 		ZoneParam(const QString& desc);
 		virtual QWidget* createEditWidget(QObject* edit_receiver) const;
-		virtual QString getSpecValue(QWidget* edit_widget) const;
+		virtual std::vector<QString> getSpecValue(QWidget* edit_widget) const;
 		virtual QString getValue(QWidget* edit_widget) const;
 		virtual void setValue(QWidget* edit_widget, const QString& value);
 	};
@@ -65,15 +65,19 @@ public:
 	/** CRSTemplate integer parameter, with values from an integer range. */
 	struct IntRangeParam : public Param
 	{
-		IntRangeParam(const QString& desc, int min_value, int max_value, int apply_factor = 1);
+		IntRangeParam(const QString& desc, int min_value, int max_value);
 		virtual QWidget* createEditWidget(QObject* edit_receiver) const;
-		virtual QString getSpecValue(QWidget* edit_widget) const;
+		virtual std::vector<QString> getSpecValue(QWidget* edit_widget) const;
 		virtual QString getValue(QWidget* edit_widget) const;
 		virtual void setValue(QWidget* edit_widget, const QString& value);
 		
+		// These methods return this to allow for stacking.
+		IntRangeParam* clearOutputs();
+		IntRangeParam* addDerivedOutput(int factor, int bias);
+		
 		int min_value;
 		int max_value;
-		int apply_factor;
+		std::vector<std::pair<int, int> > outputs;
 	};
 	
 	/**

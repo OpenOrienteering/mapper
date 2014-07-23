@@ -58,8 +58,8 @@ void registerProjectionTemplates()
 		"Gauss-Krueger, datum: Potsdam",
 		Georeferencing::tr("Gauss-Krueger, datum: Potsdam", "Gauss-Krueger coordinate reference system"),
 		Georeferencing::tr("Gauss-Krueger coordinates"),
-		"+proj=tmerc +lat_0=0 +lon_0=%1 +k=1.000000 +x_0=3500000 +y_0=0 +ellps=bessel +datum=potsdam +units=m +no_defs");
-	temp->addParam(new CRSTemplate::IntRangeParam(Georeferencing::tr("Zone number (1 to 119)", "Zone number for Gauss-Krueger coordinates"), 1, 119, 3));
+		"+proj=tmerc +lat_0=0 +lon_0=%1 +k=1.000000 +x_0=%2 +y_0=0 +ellps=bessel +datum=potsdam +units=m +no_defs");
+	temp->addParam((new CRSTemplate::IntRangeParam(Georeferencing::tr("Zone number (1 to 119)", "Zone number for Gauss-Krueger coordinates"), 1, 119))->clearOutputs()->addDerivedOutput(3, 0)->addDerivedOutput(1000000, 500000));
 	CRSTemplate::registerCRSTemplate(temp);
 }
 

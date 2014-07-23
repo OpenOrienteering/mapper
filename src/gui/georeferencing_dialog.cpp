@@ -776,7 +776,9 @@ QString ProjectedCRSSelector::getSelectedCRSSpec()
 	for (int param = 0; param < temp->getNumParams(); ++param)
 	{
 		QWidget* edit_widget = layout->itemAt(1 + param, QFormLayout::FieldRole)->widget();
-		spec = spec.arg(temp->getParam(param).getSpecValue(edit_widget));
+		std::vector<QString> spec_value_list = temp->getParam(param).getSpecValue(edit_widget);
+		for (std::size_t i = 0; i < spec_value_list.size(); ++ i)
+			spec = spec.arg(spec_value_list[i]);
 	}
 	
 	return spec;

@@ -45,12 +45,15 @@ QWidget* CRSTemplate::ZoneParam::createEditWidget(QObject* edit_receiver) const
 	QObject::connect(widget, SIGNAL(textEdited(QString)), edit_receiver, SLOT(crsParamEdited(QString)));
 	return widget;
 }
-QString CRSTemplate::ZoneParam::getSpecValue(QWidget* edit_widget) const
+std::vector<QString> CRSTemplate::ZoneParam::getSpecValue(QWidget* edit_widget) const
 {
 	QString zone = getValue(edit_widget);
 	zone.replace(" N", "");
 	zone.replace(" S", " +south");
-	return zone;
+	
+	std::vector<QString> out;
+	out.push_back(zone);
+	return out;
 }
 QString CRSTemplate::ZoneParam::getValue(QWidget* edit_widget) const
 {
@@ -63,9 +66,10 @@ void CRSTemplate::ZoneParam::setValue(QWidget* edit_widget, const QString& value
 	text_edit->setText(value);
 }
 
-CRSTemplate::IntRangeParam::IntRangeParam(const QString& desc, int min_value, int max_value, int apply_factor)
-: Param(desc), min_value(min_value), max_value(max_value), apply_factor(apply_factor)
+CRSTemplate::IntRangeParam::IntRangeParam(const QString& desc, int min_value, int max_value)
+: Param(desc), min_value(min_value), max_value(max_value)
 {
+	outputs.push_back(std::make_pair(1, 0));
 }
 QWidget* CRSTemplate::IntRangeParam::createEditWidget(QObject* edit_receiver) const
 {
@@ -73,10 +77,18 @@ QWidget* CRSTemplate::IntRangeParam::createEditWidget(QObject* edit_receiver) co
 	QObject::connect(widget, SIGNAL(valueChanged(QString)), edit_receiver, SLOT(crsParamEdited(QString)));
 	return widget;
 }
-QString CRSTemplate::IntRangeParam::getSpecValue(QWidget* edit_widget) const
+std::vector<QString> CRSTemplate::IntRangeParam::getSpecValue(QWidget* edit_widget) const
 {
 	QSpinBox* spin_box = static_cast<QSpinBox*>(edit_widget);
-	return QString::number(apply_factor * spin_box->value());
+	int chosen_value = spin_box->value();
+	
+	std::vector<QString> out;
+	for (std::size_t i = 0; i < outputs.size(); ++ i)
+	{
+		std::pair<int, int> factor_and_bias = outputs[i];
+		out.push_back(QString::number(factor_and_bias.first * chosen_value + factor_and_bias.second));
+	}
+	return out;
 }
 QString CRSTemplate::IntRangeParam::getValue(QWidget* edit_widget) const
 {
@@ -87,6 +99,16 @@ void CRSTemplate::IntRangeParam::setValue(QWidget* edit_widget, const QString& v
 {
 	QSpinBox* spin_box = static_cast<QSpinBox*>(edit_widget);
 	spin_box->setValue(value.toInt());
+}
+CRSTemplate::IntRangeParam* CRSTemplate::IntRangeParam::clearOutputs()
+{
+	outputs.clear();
+	return this;
+}
+CRSTemplate::IntRangeParam* CRSTemplate::IntRangeParam::addDerivedOutput(int factor, int bias)
+{
+	outputs.push_back(std::make_pair(factor, bias));
+	return this;
 }
 
 CRSTemplate::CRSTemplate(const QString& id, const QString& name, const QString& coordinates_name, const QString& spec_template)
