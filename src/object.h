@@ -583,8 +583,12 @@ public:
 	/** Ensures that all parts are closed. Useful for objects with area-only symbols. */
 	void closeAllParts();
 	
-	/** Creates a new path object containing the given coordinate range. */
-	PathObject* extractCoords(int start, int end);
+	/**
+	 * Creates a new path object containing the given coordinate range.
+	 * The range must be within one part, and end may be smaller than start
+	 * if the path is closed to wrap around.
+	 */
+	PathObject* extractCoordsWithinPart(int start, int end);
 	
 	/**
 	 * Converts all polygonal sections in this path to splines.
