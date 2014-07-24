@@ -1,0 +1,33 @@
+Thomas Schoeps (OpenOrienteering)
+- Correctly deal with the history provided by the event.
+- Cf. QTBUG-38379
+
+diff -up qt-everywhere-opensource-src-5.2.0/qtbase/src/android/jar/src/org/qtproject/qt5/android/QtNative.java.orig qt-everywhere-opensource-src-5.2.0/qtbase/src/android/jar/src/org/qtproject/qt5/android/QtNative.java
+--- qt-everywhere-opensource-src-5.2.0/qtbase/src/android/jar/src/org/qtproject/qt5/android/QtNative.java.orig	2014-01-25 14:20:16.140595706 +0100
++++ qt-everywhere-opensource-src-5.2.0/qtbase/src/android/jar/src/org/qtproject/qt5/android/QtNative.java	2014-01-25 14:22:47.274428101 +0100
+@@ -298,15 +298,15 @@ public class QtNative
+     {
+         int action = event.getActionMasked();
+         if (action == MotionEvent.ACTION_MOVE) {
+-            int hsz = event.getHistorySize();
+-            if (hsz > 0) {
+-                if (event.getX(index) != event.getHistoricalX(index, hsz-1)
+-                    || event.getY(index) != event.getHistoricalY(index, hsz-1)) {
+-                    return 1;
+-                } else {
+-                    return 2;
+-                }
+-            }
++            //int hsz = event.getHistorySize();
++            //if (hsz > 0) {
++            //    if (event.getX(index) != event.getHistoricalX(index, hsz-1)
++            //        || event.getY(index) != event.getHistoricalY(index, hsz-1)) {
++            //        return 1;
++            //    } else {
++            //        return 2;
++            //    }
++            //}
+             return 1;
+         }
+         if (action == MotionEvent.ACTION_DOWN || action == MotionEvent.ACTION_POINTER_DOWN && index == event.getActionIndex()) {
+
