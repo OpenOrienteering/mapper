@@ -434,7 +434,10 @@ void TemplateWidget::deleteTemplate()
 	
 	map->setTemplatesDirty();
 	
-	template_table->selectRow(template_table->currentRow());
+	// Do a change of selection to trigger a button update
+	int current_row = template_table->currentRow();
+	template_table->clearSelection();
+	template_table->selectRow(current_row);
 }
 
 void TemplateWidget::duplicateTemplate()
