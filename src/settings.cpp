@@ -53,6 +53,11 @@ Settings::Settings()
 		start_drag_distance_default = QApplication::startDragDistance();
 	#endif
 	
+	qreal ppi = QApplication::primaryScreen()->physicalDotsPerInch();
+	// Beware of https://bugreports.qt-project.org/browse/QTBUG-35701
+	if (ppi > 2048.0 || ppi < 16.0)
+		ppi = QApplication::primaryScreen()->logicalDotsPerInch();
+	
 	registerSetting(MapDisplay_TextAntialiasing, "MapDisplay/text_antialiasing", false);
 	registerSetting(MapEditor_ClickToleranceMM, "MapEditor/click_tolerance_mm", map_editor_click_tolerance_default);
 	registerSetting(MapEditor_SnapDistanceMM, "MapEditor/snap_distance_mm", map_editor_snap_distance_default);
@@ -75,7 +80,7 @@ Settings::Settings()
 	registerSetting(General_RetainCompatiblity, "retainCompatiblity", true);
 	registerSetting(General_AutoSaveInterval, "autosave", 15); // unit: minutes
 	registerSetting(General_Language, "language", QVariant((int)QLocale::system().language()));
-	registerSetting(General_PixelsPerInch, "pixelsPerInch", QApplication::primaryScreen()->physicalDotsPerInch());
+	registerSetting(General_PixelsPerInch, "pixelsPerInch", ppi);
 	registerSetting(General_TranslationFile, "translationFile", QVariant(QString::null));
 	registerSetting(General_RecentFilesList, "recentFileList", QVariant(QStringList()));
 	registerSetting(General_OpenMRUFile, "openMRUFile", false);
