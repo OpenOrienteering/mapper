@@ -15,13 +15,13 @@ QT += core gui widgets printsupport network xml
 
 # Defines. Use fancy quotation marks to be able to define strings with spaces.
 CONFIG(debug, debug|release) {
-	DEFINES += \"APP_VERSION='\\"Debug 0.5.90\\"'\"
+	DEFINES += \"APP_VERSION='\\"Debug 0.5.99\\"'\"
 }
 else {
-	DEFINES += \"APP_VERSION='\\"0.5.90\\"'\"
+	DEFINES += \"APP_VERSION='\\"0.5.99\\"'\"
 }
 DEFINES += \"CLIPPER_VERSION='\\"5.1.6\\"'\"
-DEFINES += \"MAPPER_HELP_NAMESPACE='\\"openorienteering.mapper-0.5.90.help\\"'\"
+DEFINES += \"MAPPER_HELP_NAMESPACE='\\"openorienteering.mapper-0.5.99.help\\"'\"
 
 # Input
 HEADERS += \
