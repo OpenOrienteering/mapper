@@ -26,7 +26,7 @@
 #include "map.h"
 #include "symbol_point.h"
 #include "object.h"
-#include "map_undo.h"
+#include "object_undo.h"
 #include "util.h"
 #include "util_gui.h"
 

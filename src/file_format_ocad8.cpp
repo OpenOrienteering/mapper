@@ -29,11 +29,11 @@
 #include <QImageReader>
 #include <QTextCodec>
 
+#include "core/georeferencing.h"
 #include "core/map_color.h"
 #include "core/map_view.h"
 #include "file_format_xml.h"
 #include "file_import_export.h"
-#include "georeferencing.h"
 #include "map.h"
 #include "map_part.h"
 #include "object.h"
@@ -200,7 +200,7 @@ void OCAD8FileImport::import(bool load_symbols_only) throw (FileFormatException)
 		}
 		
 		if (i == 0 && color->isBlack() && color->getName() == QLatin1String("Registration black")
-		           && XMLFileFormat::current_version >= 6 )
+		           && XMLFileFormat::active_version >= 6 )
 		{
 			delete color; color = NULL;
 			color_index[ocad_color->number] = Map::getRegistrationColor();
@@ -353,7 +353,8 @@ void OCAD8FileImport::import(bool load_symbols_only) throw (FileFormatException)
     //qint64 elapsed = QDateTime::currentMSecsSinceEpoch() - start;
 	//qDebug() << "OCAD map imported:"<<map->getNumSymbols()<<"symbols and"<<map->getNumObjects()<<"objects in"<<elapsed<<"milliseconds";
 
-	emit map->currentMapPartChanged(map->current_part_index);
+	emit map->currentMapPartIndexChanged(map->current_part_index);
+	emit map->currentMapPartChanged(map->getPart(map->current_part_index));
 }
 
 void OCAD8FileImport::setStringEncodings(const char *narrow, const char *wide) {
@@ -939,6 +940,8 @@ Object *OCAD8FileImport::importObject(const OCADObject* ocad_object, MapPart* pa
 				symbol = map->getUndefinedPoint();
 			else if (ocad_object->type == 2 || ocad_object->type == 3)
 				symbol = map->getUndefinedLine();
+			else if (ocad_object->type == 4 || ocad_object->type == 5)
+				symbol = map->getUndefinedText();
 			else
 			{
 				addWarning(tr("Unable to load object"));
@@ -1700,7 +1703,7 @@ void OCAD8FileExport::doExport() throw (FileFormatException)
 				s16 index_to_use = *it;
 				
 				// For text objects, check if we have to change / create a new text symbol because of the formatting
-				if (object->getType() == Object::Text)
+				if (object->getType() == Object::Text && symbol_index.contains(object->getSymbol()))
 				{
 					TextObject* text_object = static_cast<TextObject*>(object);
 					TextSymbol* text_symbol = static_cast<TextSymbol*>(object->getSymbol());

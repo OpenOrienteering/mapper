@@ -240,14 +240,14 @@ void showHelp(QWidget* dialog_parent, QString filename, QString fragment)
 		const QString compiled_help_path(MapperResource::locate(MapperResource::MANUAL, QLatin1String("Mapper ")+APP_VERSION+".qch"));
 		if (help_collection_path.isEmpty() || compiled_help_path.isEmpty())
 		{
-			QMessageBox::warning(dialog_parent, QFile::tr("Error"), QFile::tr("Failed to locate the help files."));
+			QMessageBox::warning(dialog_parent, QApplication::translate("Util", "Error"), QApplication::translate("Util", "Failed to locate the help files."));
 			return;
 		}
 		
 		QString assistant_path = MapperResource::locate(MapperResource::ASSISTANT);
 		if (assistant_path.isEmpty())
 		{
-			QMessageBox::warning(dialog_parent, QFile::tr("Error"), QFile::tr("Failed to locate the help browser (\"Qt Assistant\")."));
+			QMessageBox::warning(dialog_parent, QApplication::translate("Util", "Error"), QApplication::translate("Util", "Failed to locate the help browser (\"Qt Assistant\")."));
 			return;
 		}
 		
@@ -274,8 +274,8 @@ void showHelp(QWidget* dialog_parent, QString filename, QString fragment)
 		{
 			QMessageBox msg_box;
 			msg_box.setIcon(QMessageBox::Warning);
-			msg_box.setWindowTitle(QFile::tr("Error"));
-			msg_box.setText(QFile::tr("Failed to launch the help browser (\"Qt Assistant\")."));
+			msg_box.setWindowTitle(QApplication::translate("Util", "Error"));
+			msg_box.setText(QApplication::translate("Util", "Failed to launch the help browser (\"Qt Assistant\")."));
 			msg_box.setStandardButtons(QMessageBox::Ok);
 			QString details = assistant_process.readAllStandardError();
 			if (! details.isEmpty())

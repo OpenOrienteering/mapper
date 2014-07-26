@@ -20,7 +20,7 @@
 
 #include "template_dock_widget.h"
 
-#include "georeferencing.h"
+#include "core/georeferencing.h"
 #include "gui/main_window.h"
 #include "gui/widgets/segmented_button_layout.h"
 #include "map.h"
@@ -132,7 +132,7 @@ TemplateWidget::TemplateWidget(Map* map, MapView* main_view, MapEditorController
 	all_templates_layout->addWidget(template_table, 1);
 	
 	QMenu* new_button_menu = new QMenu(this);
-	(void) new_button_menu->addAction(QIcon(":/images/open.png"), tr("Open..."), this, SLOT(openTemplate()));
+	//new_button_menu->addAction(QIcon(":/images/open.png"), tr("Open..."), this, SLOT(openTemplate()));
 	new_button_menu->addAction(controller->getAction("reopentemplate"));
 	duplicate_action = new_button_menu->addAction(QIcon(":/images/tool-duplicate.png"), tr("Duplicate"), this, SLOT(duplicateTemplate()));
 #if 0
@@ -143,7 +143,7 @@ TemplateWidget::TemplateWidget(Map* map, MapView* main_view, MapEditorController
 #endif
 	
 	QToolButton* new_button = newToolButton(QIcon(":/images/plus.png"), tr("Add template..."));
-	new_button->setPopupMode(QToolButton::DelayedPopup); // or MenuButtonPopup
+	new_button->setPopupMode(QToolButton::MenuButtonPopup);
 	new_button->setMenu(new_button_menu);
 	
 	delete_button = newToolButton(QIcon(":/images/minus.png"), QString());
@@ -434,7 +434,10 @@ void TemplateWidget::deleteTemplate()
 	
 	map->setTemplatesDirty();
 	
-	template_table->selectRow(template_table->currentRow());
+	// Do a change of selection to trigger a button update
+	int current_row = template_table->currentRow();
+	template_table->clearSelection();
+	template_table->selectRow(current_row);
 }
 
 void TemplateWidget::duplicateTemplate()
@@ -851,7 +854,7 @@ void TemplateWidget::importClicked()
 	{
 		TemplateTransform transform;
 		templ->getTransform(transform);
-		template_map->operationOnAllObjects(ApplyTemplateTransform(transform));
+		template_map->applyOnAllObjects(ApplyTemplateTransform(transform));
 		
 		double nominal_scale = template_map->getScaleDenominator() / map->getScaleDenominator();
 		double current_scale = 0.5 * (transform.template_scale_x + transform.template_scale_y);

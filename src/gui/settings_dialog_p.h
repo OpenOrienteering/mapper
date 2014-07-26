@@ -121,6 +121,8 @@ private slots:
 	
 	void autoSaveIntervalChanged(int value);
 	
+	void retainCompatibilityChanged(bool state);
+	
 private:
 	/** Adds the available languages to the language combo box,
 	 *  and sets the current element.

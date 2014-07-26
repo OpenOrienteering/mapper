@@ -27,7 +27,7 @@
 #include <QHash>
 #include <QString>
 
-#include "georeferencing.h"
+#include "core/georeferencing.h"
 
 QT_BEGIN_NAMESPACE
 class QFile;
@@ -83,7 +83,12 @@ public:
 	
 	// Modifiers
 	
-	/** Appends the point and also converts the point's gps coords to map coords */
+	/**
+	 * @brief Appends the point and updates the point's map coordinates.
+	 * 
+	 * The point's map coordinates are determined from its geographic coodinates
+	 * according to the map's georeferencing.
+	 */
 	void appendTrackPoint(TrackPoint& point);
 	
 	/**
@@ -92,7 +97,12 @@ public:
 	 */
 	void finishCurrentSegment();
 	
-	/** Appends the waypoint and also converts the point's gps coords to map coords */
+	/**
+	 * @brief Appends the waypoint and updates the point's map coordinates.
+	 * 
+	 * The point's map coordinates are determined from its geographic coodinates
+	 * according to the map's georeferencing.
+	 */
 	void appendWaypoint(TrackPoint& point, const QString& name);
 	
 	/** Updates the map positions of all points based on the new georeferencing. */

@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2013, 2014 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -23,11 +24,10 @@
 
 #include <vector>
 
-#include <QHash>
-#include <QScopedPointer>
 #include <QAction>
 
 #include "map_coord.h"
+#include "gui/point_handles.h"
 
 class MainWindow;
 class Map;
@@ -37,97 +37,107 @@ class MapWidget;
 class Object;
 class Renderable;
 class Symbol;
-class TextObject;
 typedef std::vector<Renderable*> RenderableVector;
 
 /** 
- * Represents a tool which works usually by using the mouse.
- * The given button is unchecked when the tool is destroyed.
+ * @brief An abstract tool for editing a map.
  * 
- * NOTE 1: Do not change any settings (e.g. status bar text) in the constructor,
- * as another tool still might be active at that point in time!
- * Instead, use the init() method.
+ * A map editor tool uses mouse and key input to modify a map.
  * 
- * NOTE 2: This class provides a general but cumbersome interface. If you want
- * to write a simple tool and can live with some limitations, consider using
+ * The given tool_button is unchecked when the tool is destroyed.
+ * 
+ * When deriving from MapEditorTool, do not make changes on the map editor or
+ * window (e.g. status bar text) in the constructor. Another tool might still
+ * be active at that point in time! Instead, reimplement the init() method.
+ * 
+ * This class provides a general but cumbersome interface. If you want to write
+ * a simple tool and can live with some limitations, consider using
  * MapEditorToolBase instead.
  */
 class MapEditorTool : public QObject
 {
 Q_OBJECT
 public:
-	/** Type enum for identification of tools */
+	/**
+	 * @brief Types of tool.
+	 */
 	enum Type
 	{
-		Other = 0,
-		EditPoint = 1,
-		EditLine = 2,
-		DrawPoint = 3,
-		DrawPath = 4,
-		DrawCircle = 5,
+		EditPoint     = 1,
+		EditLine      = 2,
+		DrawPoint     = 3,
+		DrawPath      = 4,
+		DrawCircle    = 5,
 		DrawRectangle = 6,
-		DrawFreehand = 8,
-		DrawText = 7,
-		Pan = 9
-	};
-	
-	/// The numbers correspond to the columns in point-handles.png
-	enum PointHandleType
-	{
-		StartHandle = 0,
-		EndHandle = 1,
-		NormalHandle = 2,
-		CurveHandle = 3,
-		DashHandle = 4
-	};
-	
-	/// The numbers correspond to the rows in point-handles.png
-	enum PointHandleState
-	{
-		NormalHandleState = 0,
-		ActiveHandleState = 1,
-		SelectedHandleState = 2,
-		DisabledHandleState = 3
+		DrawText      = 7,
+		DrawFreehand  = 8,
+		Pan           = 9,
+		Other         = 0
 	};
 	
 	/**
-	 * Constructs a new MapEditorTool.
-	 * @param editor The MapEditorController in which the tool is used.
-	 * @param type The type of the tool (it is safe to use Other if it is not
-	 *     necessary to query for this type somewhere).
-	 * @param tool_button Optional button which will be unchecked on destruction
-	 *     of this tool.
+	 * @brief Constructs a new MapEditorTool.
+	 * 
+	 * @param editor       The MapEditorController in which the tool is used.
+	 * @param type         The type of the tool. It is safe to use Other if it
+	 *                     is not necessary to query for this type somewhere.
+	 * @param tool_action  Optional button which will be unchecked on
+	 *                     destruction of this tool.
 	 */
-	MapEditorTool(MapEditorController* editor, Type type, QAction* tool_button = NULL);
+	MapEditorTool(MapEditorController* editor, Type tool_type, QAction* tool_action = NULL);
 	
-	/** Destructs the MapEditorTool. */
+	/**
+	 * @brief Destructs the MapEditorTool.
+	 */
 	virtual ~MapEditorTool();
 	
 	/**
-	 * This is called when the tool is activated and should be used to
-	 * change any settings, e.g. the status bar text.
+	 * @brief Performs initialization when the tool becomes active.
+	 * 
+	 * This method is called by the map editor when the tool shall become
+	 * active. Reimplementations may make changes to the map editor or window
+	 * (e.g. set status bar text) which are not allowed in the constructor.
+	 * 
+	 * Note that this method by call several times, without any deinitialization
+	 * in between.
+	 * 
+	 * Reimplementations shall call parent implementations.
+	 * 
+	 * The implementation in this class marks the tool's action as checked.
 	 */
 	virtual void init();
 	
-	/** Makes this tool inactive in the editor. 
-	 *  This will also schedule this tool's deletion. */
+	/**
+	 * @brief Makes this tool inactive in the editor.
+	 * 
+	 * Remplementations shall call parent implementations.
+	 * 
+	 * This implementation will always schedule the tool's deletion. But
+	 * marking the tool's action as not checked is left to the destructor
+	 */
 	virtual void deactivate();
 	
-	/** Switch to a default draw tool for the given symbol.
-	 *  Makes this tool inactive and schedules its deletion. */
+	/**
+	 * @brief Switch to a default draw tool for the given symbol.
+	 * 
+	 * Makes this tool inactive and schedules its deletion.
+	 * 
+	 * @todo Review for refactoring: no reimplementation found, maybe not in right class?
+	 */
 	virtual void switchToDefaultDrawTool(Symbol* symbol) const;
 	
-	void setEditingInProgress(bool state);
-	
 	/**
-	 * Must return the cursor which should be used for the tool in the editor windows.
-	 * TODO: How to change the cursor for all map widgets while active?
+	 * @brief Returns the cursor which should be used for the tool in the editor windows.
+	 * 
+	 * @todo How to change the cursor for all map widgets while a tool is active?
 	 */
 	virtual QCursor* getCursor() = 0;
 	
 	/**
-	 * All dynamic drawings must be drawn here using the given painter.
-	 * Drawing is only possible in the area specified by calling map->setDrawingBoundingBox().
+	 * @brief Draws the tool's visualisation for a map widget.
+	 * 
+	 * All dynamic drawing must be done here using the given painter. Drawing
+	 * is only possible in the area specified by calling map->setDrawingBoundingBox().
 	 */
 	virtual void draw(QPainter* painter, MapWidget* widget);
 	
@@ -143,61 +153,86 @@ public:
 	virtual bool keyReleaseEvent(QKeyEvent* event);
 	virtual void focusOutEvent(QFocusEvent* event);
 	
-	inline Type getType() const {return type;}
-	inline QAction* getAction() const {return tool_button;}
-	/** Returns whether the touch helper cursor should be used for this tool if it is enabled. */
-	inline bool usesTouchCursor() const {return uses_touch_cursor;}
-	inline void setAction(QAction* new_tool_button) {tool_button = new_tool_button;}
+	/**
+	 * @brief Returns the type of this tool.
+	 */
+	Type toolType() const;
 	
-	/** Returns the map being edited. */
+	
+	/**
+	 * @brief Returns the action which repesents this tool.
+	 */
+	QAction* toolAction() const;
+	
+	
+	/**
+	 * @brief Returns whether to use the touch helper cursor for this tool.
+	 */
+	bool usesTouchCursor() const;
+	
+	
+	/** 
+	 * @brief Returns the map being edited.
+	 */
 	Map* map() const;
 	
-	/** Returns the map widget being operated on. */
+	/**
+	 * @brief Returns the map widget being operated on.
+	 */
 	MapWidget* mapWidget() const;
 	
-	/** Returns the main window the controller is attached to.*/
+	/**
+	 * @brief Returns the main window the controller is attached to.
+	 */
 	MainWindow* mainWindow() const;
 	
-	/** Returns the main window the controller is attached to as a QWidget.*/
+	/**
+	 * @brief Returns the main window the controller is attached to as a QWidget.
+	 * 
+	 * This function can be used without the need to include main_window.h.
+	 */
 	QWidget* window() const;
 	
 	
-	static bool isDrawTool(Type type);
-	
-	// Helper methods for object handles
-	
-	/** Must be called once on startup to load the point handle image. */
-	static void loadPointHandles();
-	
-	/** Returns the color in which point handles with the given state will be displayed. */
-	static QRgb getPointHandleStateColor(PointHandleState state);
+	/**
+	 * @brief Returns whether an editing operation is currently in progress.
+	 * 
+	 * Some editing operation, such as drawing a path, need several user inputs
+	 * over some period of time. This flag indicates that such an operation is
+	 * currently active, limiting the number of other actions which may be
+	 * triggered in this time.
+	 * 
+	 * @return Returns true if there is an ongoing edition operation, false otherwise.
+	 */
+	bool editingInProgress() const;
 	
 	/**
-	 * Draws point handles for the given object.
-	 * @param hover_point Index of a point which should be drawn in 'active' state. Pass a negative number to disable.
-	 * @param painter QPainter object with correct transformation set
-	 * @param object Object to draw point handles for
-	 * @param widget Map widget in which to draw
-	 * @param draw_curve_handles Draw curve handles for path objects?
-	 * @param base_state The state in which all points except hover_point should be drawn
+	 * @brief Finishes editing if it is currently in progress.
+	 * 
+	 * Deriving functions shall call this class' implementation
+	 * (which calls setEditingInProgress(false)).
 	 */
-	static void drawPointHandles(int hover_point, QPainter* painter, Object* object, MapWidget* widget, bool draw_curve_handles = true, PointHandleState base_state = NormalHandleState);
+	virtual void finishEditing();
 	
-	/** Draws a single point handle. */
-	static void drawPointHandle(QPainter* painter, QPointF point, PointHandleType type, PointHandleState state);
-	
-	/** Draws a point handle line (used between curve anchor points and their handles). */
-	static void drawCurveHandleLine(QPainter* painter, QPointF point, PointHandleType type, QPointF curve_handle, PointHandleState state);
-	
-	/** Includes the rectangle which encloses all of the object's control points in rect. */
-	static void includeControlPointRect(QRectF& rect, Object* object);
 	
 	/**
-	 * Calculates the map positions of the box text handles for the given object.
-	 * text_object must be a box text object! Text objects with single
-	 * anchor trigger an exception.
+	 * @brief Returns true if the given tool is for drawing new objects.
+	 * 
+	 * @todo This shall be rewritten as virtual/reimplemented function.
 	 */
-	static void calculateBoxTextHandles(QPointF* out, TextObject* text_object);
+	bool isDrawTool() const;
+	
+	/**
+	 * @brief Returns the point handles utility for this tool.
+	 */
+	const PointHandles& pointHandles() const;
+	
+	/**
+	 * @brief The factor by which all drawing shall be scaled.
+	 * 
+	 * @see PointHandles::scaleFactor()
+	 */
+	int scaleFactor() const;
 	
 	// General color definitions which are used by all tools
 	
@@ -208,13 +243,37 @@ public:
 	/// Color for selected elements
 	static const QRgb selection_color;
 	
-	/// The global point handle image (in different resolutions)
-	static const int num_point_handle_resolutions = 3;
-	static QImage* point_handles[num_point_handle_resolutions];
-	
 protected:
-	/// Can be called by subclasses to display help text in the status bar
+	/**
+	 * Sets the flag which indicates whether the touch cursor shall be used.
+	 * 
+	 * @see usesTouchCursor()
+	 */
+	void useTouchCursor(bool enabled);
+	
+	/**
+	 * @brief Sets a flag which indicates an active editing operation.
+	 * 
+	 * This function takes care of informing the MapEditorController about the change.
+	 * 
+	 * @see editingInProgress()
+	 */
+	void setEditingInProgress(bool state);
+	
+	
+	/**
+	 * @brief Sends text to the window's status bar.
+	 */
 	void setStatusBarText(const QString& text);
+	
+	
+	/**
+	 * @brief Draws a selection box for the given corner points.
+	 * 
+	 * A selection box is drawn while selecting objects by dragging.
+	 */
+	void drawSelectionBox(QPainter* painter, MapWidget* widget, const MapCoordF& corner1, const MapCoordF& corner2) const;
+	
 	
 	// Helper methods for editing the selected objects with preview
 	void startEditingSelection(MapRenderables& old_renderables, std::vector<Object*>* undo_duplicates = NULL);
@@ -224,22 +283,93 @@ protected:
 	void deleteOldSelectionRenderables(MapRenderables& old_renderables, bool set_area_dirty);
 	
 	/**
-	 * Finds and returns the point of the given object over which the cursor hovers.
+	 * @brief Finds and returns the point of the given object over which the cursor hovers.
+	 * 
 	 * Returns -1 if not hovering over a point.
 	 */
 	int findHoverPoint(QPointF cursor, Object* object, bool include_curve_handles, QRectF* selection_extent, MapWidget* widget, MapCoordF* out_handle_pos = NULL);
-	inline float distanceSquared(const QPointF& a, const QPointF& b) {float dx = b.x() - a.x(); float dy = b.y() - a.y(); return dx*dx + dy*dy;}
-	/// Checks if a mouse button for drawing is currently held, according to the given event
+	
+	
+	/**
+	 * Checks if a mouse button for drawing is currently held, according to the given event
+	 */
 	bool drawMouseButtonHeld(QMouseEvent* event);
-	/// Checks if a mouse button for drawing is clicked, according to the given event
+	
+	/**
+	 * Checks if a mouse button for drawing is clicked, according to the given event
+	 */
 	bool drawMouseButtonClicked(QMouseEvent* event);
 	
-	QAction* tool_button;
-	Type type;
+	
+	/**
+	 * @brief Returns the drawing scale value for the current pixel-per-inch setting.
+	 */
+	static int newScaleFactor();
+	
+private slots:
+	/**
+	 * @brief Listens to the destruction of the tool's action.
+	 */
+	void toolActionDestroyed();
+	
+	/**
+	 * @brief Updates the point handles from the current settings.
+	 */
+	void updateScaleFactor();
+
+protected:
+	/**
+	 * @brief The map editor which uses this tool.
+	 */
+	MapEditorController* const editor;
+	
+private:	
+	QAction* tool_action;
+	Type tool_type;
+	bool editing_in_progress;
 	bool uses_touch_cursor;
-	static int resolution_index;
-	static int resolution_scale_factor;
-	MapEditorController* editor;
+	int scale_factor;
+	PointHandles point_handles;
 };
+
+
+
+//### MapEditorTool inline code ###
+
+inline
+MapEditorTool::Type MapEditorTool::toolType() const
+{
+	return tool_type;
+}
+
+inline
+QAction* MapEditorTool::toolAction() const
+{
+	return tool_action;
+}
+
+inline
+bool MapEditorTool::usesTouchCursor() const
+{
+	return uses_touch_cursor;
+}
+
+inline
+bool MapEditorTool::editingInProgress() const
+{
+	return editing_in_progress;
+}
+
+inline
+const PointHandles& MapEditorTool::pointHandles() const
+{
+	return point_handles;
+}
+
+inline
+int MapEditorTool::scaleFactor() const
+{
+	return point_handles.scaleFactor();
+}
 
 #endif

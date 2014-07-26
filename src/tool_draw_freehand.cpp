@@ -31,8 +31,8 @@
 
 QCursor* DrawFreehandTool::cursor = NULL;
 
-DrawFreehandTool::DrawFreehandTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget)
- : DrawLineAndAreaTool(editor, DrawFreehand, tool_button, symbol_widget)
+DrawFreehandTool::DrawFreehandTool(MapEditorController* editor, QAction* tool_button, bool is_helper_tool)
+: DrawLineAndAreaTool(editor, DrawFreehand, tool_button, is_helper_tool)
 {
 	dragging = false;
 	
@@ -47,13 +47,15 @@ DrawFreehandTool::~DrawFreehandTool()
 void DrawFreehandTool::init()
 {
 	updateStatusText();
+	
+	MapEditorTool::init();
 }
 
 bool DrawFreehandTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
 	Q_UNUSED(widget);
 	
-	if (event->button() == Qt::LeftButton && !draw_in_progress)
+	if (event->button() == Qt::LeftButton && !editingInProgress())
 	{
 		cur_pos = event->pos();
 		cur_pos_map = map_coord;
@@ -77,7 +79,7 @@ bool DrawFreehandTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, M
 	
 	if (!mouse_down)
 	{
-		if (!draw_in_progress)
+		if (!editingInProgress())
 		{
 			setPreviewPointsPosition(map_coord);
 			setDirtyRect();
@@ -85,7 +87,7 @@ bool DrawFreehandTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, M
 	}
 	else
 	{
-		if (!draw_in_progress)
+		if (!editingInProgress())
 			return false;
 		
 		dragging = true;
@@ -100,7 +102,7 @@ bool DrawFreehandTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord
 {
 	Q_UNUSED(widget);
 	
-	if (!draw_in_progress)
+	if (!editingInProgress())
 		return false;
 	
 	if (!dragging)

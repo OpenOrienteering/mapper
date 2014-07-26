@@ -33,7 +33,7 @@ QString DXFParser::parse()
 	{
 		if (!device->open(QIODevice::ReadOnly))
 		{
-			return QApplication::tr("Could not open the file.", "DXFParser");
+			return QApplication::translate("DXFParser", "Could not open the file.");
 		}
 		must_close_device = true;
 	}
@@ -49,7 +49,7 @@ QString DXFParser::parse()
 	if (code != 0 || value != "SECTION")
 	{
 		// File does not start with DXF section
-		return QApplication::tr("The file is not an DXF file.", "DXFParser");
+		return QApplication::translate("DXFParser", "The file is not an DXF file.");
 	}
 
 	paths = QList<DXFPath>();

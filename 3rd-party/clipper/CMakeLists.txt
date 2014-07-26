@@ -23,10 +23,15 @@ cmake_minimum_required(VERSION 2.8.3)
 
 # Configuration options
 
-set(CLIPPER_VERSION_DEFAULT 5.1.6)
+set(CLIPPER_VERSION_DEFAULT 6.1.3a)
+if(CLIPPER_VERSION MATCHES "^5")
+	unset(CLIPPER_VERSION CACHE) # source incompatible
+endif()
 set(CLIPPER_VERSION ${CLIPPER_VERSION_DEFAULT} CACHE STRING
-  "Version number of the Clipper library, recommended value: 5.1.6")
+  "Version number of the Clipper library, recommended value: 6.1.3a")
 mark_as_advanced(CLIPPER_VERSION)
+
+
 
 message(STATUS "Configuring Clipper library ${CLIPPER_VERSION}")
 
@@ -36,37 +41,58 @@ if (NOT ${CLIPPER_VERSION} STREQUAL ${CLIPPER_VERSION_DEFAULT})
 	  "(${CLIPPER_VERSION} vs. ${CLIPPER_VERSION_DEFAULT}).")
 endif()
 
-set(CLIPPER_MD5SUMS
-  5.1.4:8693d4ca96f50d93ae36ea5761e07119
-  5.1.5:f5eae2ed9a30124ff825284560fe0635 # license file has long lines
-  5.1.6:1b44159d15d75731e374f0ddda61a49a
-)
-foreach(line ${CLIPPER_MD5SUMS})
-	if(${line} MATCHES "^${CLIPPER_VERSION}:")
-		string(REPLACE "${CLIPPER_VERSION}:" "" CLIPPER_MD5 ${line})
-		break()
+# Optionally use externally provided clipper source dir (e.g. Debian packaging)
+set(CLIPPER_SOURCE_DIR_DEFAULT)
+set(CLIPPER_SOURCE_DIR "${CLIPPER_SOURCE_DIR_DEFAULT}" CACHE STRING
+  "The Clipper library source directory to be used instead of a download")
+mark_as_advanced(CLIPPER_SOURCE_DIR)
+
+if(CLIPPER_SOURCE_DIR)
+	# Expand variables like @PROJECT_SOURCE_DIR@
+	string(CONFIGURE "${CLIPPER_SOURCE_DIR}" EXPANDED_SOURCE_DIR @ONLY)
+	set(CLIPPER_SOURCE
+	  SOURCE_DIR "${EXPANDED_SOURCE_DIR}"
+	)
+else()
+	set(CLIPPER_MD5SUMS
+	  # Schema: VERSION:MD5
+	  6.1.3a:4dcd043ce48de59714f07bd3ec7ac62b
+	)
+	foreach(line ${CLIPPER_MD5SUMS})
+		if(${line} MATCHES "^${CLIPPER_VERSION}:")
+			string(REPLACE "${CLIPPER_VERSION}:" "" CLIPPER_MD5 ${line})
+			break()
+		endif()
+	endforeach()
+	if(NOT CLIPPER_MD5)
+		message(FATAL_ERROR
+		  "Unknown MD5 sum for Clipper library ${CLIPPER_VERSION}. "
+		  "Edit ${PROJECT_SOURCE_DIR}/CMakeLists.txt, "
+		  "or specify the correct CLIPPER_MD5 value at the command line.")
 	endif()
-endforeach()
-if(NOT CLIPPER_MD5)
-	message(FATAL_ERROR
-	  "Unknown MD5 sum for Clipper library ${CLIPPER_VERSION}. "
-	  "Edit ${PROJECT_SOURCE_DIR}/CMakeLists.txt, "
-	  "or specify the correct CLIPPER_MD5 value at the command line.")
+	set(CLIPPER_SOURCE
+	  DOWNLOAD_DIR ${PROJECT_SOURCE_DIR}/download
+	  URL "http://sourceforge.net/projects/polyclipping/files/clipper_ver${CLIPPER_VERSION}.zip/download"
+	  URL_MD5 ${CLIPPER_MD5}
+	)
 endif()
 
 set(CLIPPER_LICENSE_FILE "${PROJECT_SOURCE_DIR}/License.txt")
 if(EXISTS "${CLIPPER_LICENSE_FILE}.${CLIPPER_VERSION}")
 	set(CLIPPER_LICENSE_FILE "${CLIPPER_LICENSE_FILE}.${CLIPPER_VERSION}")
 endif()
+file(GLOB CLIPPER_LICENSE_FILES License.txt*)
+add_custom_target(clipper-licenses
+  COMMENT   "This target makes Qt Creator show all sources in the project tree."
+  SOURCES   ${CLIPPER_LICENSE_FILES}
+)
 
 # External project definition
 
 include(ExternalProject)
 ExternalProject_Add(
   Clipper
-  DOWNLOAD_DIR ${PROJECT_SOURCE_DIR}/download
-  URL "http://sourceforge.net/projects/polyclipping/files/clipper_ver${CLIPPER_VERSION}.zip/download"
-  URL_MD5 ${CLIPPER_MD5}
+  ${CLIPPER_SOURCE}
   # Check that the license hasn't changed.
   UPDATE_COMMAND ${CMAKE_COMMAND} -E compare_files <SOURCE_DIR>/License.txt "${CLIPPER_LICENSE_FILE}"
   # Force source file timestamp update.
@@ -79,12 +105,16 @@ ExternalProject_Get_Property(Clipper SOURCE_DIR)
 
 # Exported configuration
 
-set(CLIPPER_INCLUDE_DIR ${SOURCE_DIR}/cpp CACHE STRING
-  "The directory where to find clipper.hpp")
+set(CLIPPER_INCLUDE_DIR ${SOURCE_DIR}/cpp CACHE PATH
+  "The directory where to find clipper.hpp"
+  FORCE
+)
 mark_as_advanced(CLIPPER_INCLUDE_DIR)
 
 set(CLIPPER_LIBRARY polyclipping CACHE STRING
-  "The Clipper C++ library.")
+  "The Clipper C++ library."
+  FORCE
+)
 mark_as_advanced(CLIPPER_LIBRARY)
 
 
@@ -95,7 +125,3 @@ set_source_files_properties(${CLIPPER_SOURCES} PROPERTIES GENERATED TRUE)
 include_directories(${CLIPPER_INCLUDE_DIR})
 add_library(${CLIPPER_LIBRARY} STATIC ${CLIPPER_SOURCES})
 add_dependencies(${CLIPPER_LIBRARY} Clipper)
-
-
-message(STATUS "Configuring Clipper library ${CLIPPER_VERSION} - done")
-

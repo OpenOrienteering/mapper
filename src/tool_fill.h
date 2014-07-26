@@ -1,5 +1,6 @@
 /*
  *    Copyright 2013 Thomas Schöps
+ *    Copyright 2014 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -23,7 +24,6 @@
 
 #include "tool_base.h"
 
-class SymbolWidget;
 class MapView;
 class PathObject;
 
@@ -34,13 +34,11 @@ class FillTool : public MapEditorToolBase
 {
 Q_OBJECT
 public:
-	FillTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget);
+	FillTool(MapEditorController* editor, QAction* tool_action);
 	virtual ~FillTool();
 	
 protected slots:
-	void selectedSymbolsChanged();
-	void symbolChanged(int pos, Symbol* new_symbol, Symbol* old_symbol);
-	void symbolDeleted(int pos, Symbol* old_symbol);
+	void setDrawingSymbol(Symbol* symbol);
 	
 protected:
 	/**
@@ -61,6 +59,13 @@ protected:
 	virtual void clickPress();
 	
 	/**
+	 * Tries to apply the fill tool at the current click position,
+	 * rasterizing the given extent of the map.
+	 * Returns -1 for abort, 0 for unsuccesful, 1 for succesful.
+	 */
+	int fill(const QRectF& extent);
+	
+	/**
 	 * Rasterizes an area of the current map part with the given extent into an image.
 	 * Encodes object ids as colors, where the object with index 0 has color (0, 0, 0, 255),
 	 * the object with index 1 has (1, 0, 0, 255), and so on. The background is transparent.
@@ -77,10 +82,12 @@ protected:
 	 * Traces the boundary around an "island" in the given image, starting from the
 	 * start_pixel / test_pixel pair, where start_pixel must reference a free (transparent)
 	 * pixel and test_pixel a 4-adjacent obstructed pixel of the island to trace.
-	 * Returns the found boundary as a vector of pixel positions. Returns false if the
-	 * tracing fails (e.g. because of running out of the image borders).
+	 * Returns the found boundary as a vector of pixel positions. Returns:
+	 * -1 if running out of the image borders,
+	 *  0 if the tracing fails because the start is not included in the shape,
+	 *  1 if the tracing succeeds.
 	 */
-	bool traceBoundary(QImage image, QPoint start_pixel, QPoint test_pixel, std::vector< QPoint >& out_boundary);
+	int traceBoundary(QImage image, QPoint start_pixel, QPoint test_pixel, std::vector< QPoint >& out_boundary);
 	
 	/**
 	 * Creates a fill object for the given image, boundary vector (of pixel positions) and transform.
@@ -88,8 +95,7 @@ protected:
 	 */
 	bool fillBoundary(const QImage& image, const std::vector< QPoint >& boundary, QTransform image_to_map);
 	
-	SymbolWidget* symbol_widget;
-	Symbol* last_used_symbol;
+	Symbol* drawing_symbol;
 };
 
 #endif

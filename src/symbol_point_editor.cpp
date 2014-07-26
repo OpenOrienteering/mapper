@@ -955,6 +955,8 @@ PointSymbolEditorTool::PointSymbolEditorTool(MapEditorController* editor, PointS
 void PointSymbolEditorTool::init()
 {
 	setStatusBarText(tr("<b>Click</b>: Add a coordinate. <b>%1+Click</b>: Change the selected coordinate. ").arg(ModifierKey::control()));
+	
+	MapEditorTool::init();
 }
 
 bool PointSymbolEditorTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* map_widget)

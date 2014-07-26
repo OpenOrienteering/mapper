@@ -30,7 +30,7 @@ class TemplateMoveTool : public MapEditorTool
 {
 Q_OBJECT
 public:
-	TemplateMoveTool(Template* templ, MapEditorController* editor, QAction* action = NULL);
+	TemplateMoveTool(Template* templ, MapEditorController* editor, QAction* toolAction = NULL);
 	
 	virtual void init();
 	virtual QCursor* getCursor() {return cursor;}

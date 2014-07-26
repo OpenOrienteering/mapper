@@ -53,6 +53,11 @@ Settings::Settings()
 		start_drag_distance_default = QApplication::startDragDistance();
 	#endif
 	
+	qreal ppi = QApplication::primaryScreen()->physicalDotsPerInch();
+	// Beware of https://bugreports.qt-project.org/browse/QTBUG-35701
+	if (ppi > 2048.0 || ppi < 16.0)
+		ppi = QApplication::primaryScreen()->logicalDotsPerInch();
+	
 	registerSetting(MapDisplay_TextAntialiasing, "MapDisplay/text_antialiasing", false);
 	registerSetting(MapEditor_ClickToleranceMM, "MapEditor/click_tolerance_mm", map_editor_click_tolerance_default);
 	registerSetting(MapEditor_SnapDistanceMM, "MapEditor/snap_distance_mm", map_editor_snap_distance_default);
@@ -72,14 +77,15 @@ Settings::Settings()
 	registerSetting(ActionGridBar_ButtonSizeMM, "ActionGridBar/button_size_mm", touch_button_minimum_size_default);
 	registerSetting(SymbolWidget_IconSizeMM, "SymbolWidget/icon_size_mm", symbol_widget_icon_size_mm_default);
 	
+	registerSetting(General_RetainCompatiblity, "retainCompatiblity", true);
 	registerSetting(General_AutoSaveInterval, "autosave", 15); // unit: minutes
 	registerSetting(General_Language, "language", QVariant((int)QLocale::system().language()));
-	registerSetting(General_PixelsPerInch, "pixelsPerInch", QApplication::primaryScreen()->physicalDotsPerInch());
+	registerSetting(General_PixelsPerInch, "pixelsPerInch", ppi);
 	registerSetting(General_TranslationFile, "translationFile", QVariant(QString::null));
 	registerSetting(General_RecentFilesList, "recentFileList", QVariant(QStringList()));
 	registerSetting(General_OpenMRUFile, "openMRUFile", false);
 	registerSetting(General_Local8BitEncoding, "local_8bit_encoding", "Windows-1252");
-	registerSetting(General_NewOcd8Implementation, "new_ocd8_implementation", false);
+	registerSetting(General_NewOcd8Implementation, "new_ocd8_implementation", true);
 	registerSetting(General_StartDragDistance, "startDragDistance", start_drag_distance_default);
 	
 	registerSetting(HomeScreen_TipsVisible, "HomeScreen/tipsVisible", true);
@@ -93,14 +99,6 @@ Settings::Settings()
 	QSettings settings;
 	if (settings.value("version") != current_version)
 	{
-		if (!settings.contains("version"))
-		{
-			// pre-0.5
-			QSettings old_settings("Thomas Schoeps", "OpenOrienteering");
-			old_settings.setFallbacksEnabled(false);
-			Q_FOREACH(QString key, old_settings.allKeys())
-				settings.setValue(key, old_settings.value(key));
-		}
 		migrateValue("General/language", General_Language, settings);
 		if (migrateValue("MapEditor/click_tolerance", MapEditor_ClickToleranceMM, settings))
 			settings.setValue(getSettingPath(MapEditor_ClickToleranceMM), Util::pixelToMMLogical(settings.value(getSettingPath(MapEditor_ClickToleranceMM)).toFloat()));

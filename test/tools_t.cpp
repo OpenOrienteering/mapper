@@ -20,9 +20,9 @@
 
 #include "tools_t.h"
 
+#include "../src/core/georeferencing.h"
 #include "../src/core/map_color.h"
 #include "../src/file_format.h"
-#include "../src/georeferencing.h"
 #include "../src/global.h"
 #include "../src/map_editor.h"
 #include "../src/map_grid.h"
@@ -162,7 +162,7 @@ void ToolsTest::editTool()
 	// Initialization
 	TestMap map;
 	TestMapEditor editor(map.map);
-	EditTool* tool = new EditPointTool(editor.editor, NULL, editor.editor->getSymbolWidget());	// TODO: Refactor EditTool: MapEditorController and SymbolWidget pointers could be unnecessary
+	EditTool* tool = new EditPointTool(editor.editor, NULL);	// TODO: Refactor EditTool: MapEditorController and SymbolWidget pointers could be unnecessary
 	editor.editor->setTool(tool);
 	
 	// Move the first coordinate of the line object

@@ -16,26 +16,43 @@
 #    You should have received a copy of the GNU General Public License
 #    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
 
-# At first, check that the working directory is clean.
-message(STATUS "Checking git working directory")
-execute_process(
-  COMMAND "@GIT_EXECUTABLE@" status
-  WORKING_DIRECTORY "@PROJECT_SOURCE_DIR@"
-  OUTPUT_VARIABLE GIT_STATUS_OUTPUT
-)
-message(${GIT_STATUS_OUTPUT})
-if(NOT GIT_STATUS_OUTPUT MATCHES "working directory clean")
-	message(FATAL_ERROR "Source package must be created from a clean git working directory.")
-endif()
-message(STATUS "Checking git working directory - clean")
+# Synopsis:
+#   cmake [ -DPREFIX=my/prefix ] [ -DSKIP_CHECK=1 ] [ -DOUTPUT_DIR=/usr/src ] -P Mapper_Source.cmake
 
-# Working directory is clean, now let git build the archive
-message(STATUS "Creating @Mapper_Source_FILE_NAME@.@Mapper_Source_FORMAT@")
+if (NOT PREFIX)
+	set(PREFIX @Mapper_Source_FILE_NAME@)
+endif ()
+
+if (NOT OUTPUT_DIR)
+	set(OUTPUT_DIR ${CMAKE_CURRENT_SOURCE_DIR})
+endif ()
+if (NOT OUTPUT_DIR)
+	set(OUTPUT_DIR .)
+endif ()
+
+if (NOT SKIP_CHECK)
+	# Check that the working directory is clean.
+	execute_process(
+	  COMMAND "@GIT_EXECUTABLE@" status
+	  WORKING_DIRECTORY "@PROJECT_SOURCE_DIR@"
+	  OUTPUT_VARIABLE GIT_STATUS_OUTPUT
+	)
+	if (NOT GIT_STATUS_OUTPUT MATCHES "working directory clean")
+		message(${GIT_STATUS_OUTPUT})
+		message(FATAL_ERROR
+		  "Source package must be created from a clean git working directory, "
+		  "or you must specify -DSKIP_CHECK=1."
+		)
+	endif ()
+endif ()
+
+# Let git build the archive
+message(STATUS "Creating ${PREFIX}.@Mapper_Source_FORMAT@")
 execute_process(
   COMMAND "@GIT_EXECUTABLE@" archive
     --format "@Mapper_Source_FORMAT@"
-    --prefix "@Mapper_Source_FILE_NAME@/"
-    --output "@PROJECT_BINARY_DIR@/@Mapper_Source_FILE_NAME@.@Mapper_Source_FORMAT@"
+    --prefix "${PREFIX}/"
+    --output "${OUTPUT_DIR}/${PREFIX}.@Mapper_Source_FORMAT@"
     HEAD
   WORKING_DIRECTORY "@PROJECT_SOURCE_DIR@"
 )

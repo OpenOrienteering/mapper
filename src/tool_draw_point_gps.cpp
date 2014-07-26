@@ -23,12 +23,12 @@
 #include <QtWidgets>
 
 #include "map.h"
+#include "map_editor.h"
+#include "object_undo.h"
 #include "map_widget.h"
-#include "map_undo.h"
 #include "object.h"
 #include "renderable.h"
 #include "symbol.h"
-#include "symbol_dock_widget.h"
 #include "symbol_point.h"
 #include "tool_helpers.h"
 #include "util.h"
@@ -36,19 +36,19 @@
 #include "map_editor.h"
 
 
-DrawPointGPSTool::DrawPointGPSTool(GPSDisplay* gps_display, MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget)
- : MapEditorToolBase(QCursor(QPixmap(":/images/cursor-draw-point.png"), 11, 11), DrawPoint, editor, tool_button),
-   renderables(new MapRenderables(map())),
-   symbol_widget(symbol_widget),
-   help_label(NULL)
+DrawPointGPSTool::DrawPointGPSTool(GPSDisplay* gps_display, MapEditorController* editor, QAction* tool_button)
+: MapEditorToolBase(QCursor(QPixmap(":/images/cursor-draw-point.png"), 11, 11), DrawPoint, editor, tool_button)
+, renderables(new MapRenderables(map()))
+, help_label(NULL)
 {
-	uses_touch_cursor = false;
+	useTouchCursor(false);
 	
 	preview_object = NULL;
 	if (gps_display->hasValidPosition())
 		newGPSPosition(gps_display->getLatestGPSCoord(), gps_display->getLatestGPSCoordAccuracy());
+	
 	connect(gps_display, SIGNAL(mapPositionUpdated(MapCoordF,float)), this, SLOT(newGPSPosition(MapCoordF,float)));
-	connect(symbol_widget, SIGNAL(selectedSymbolsChanged()), this, SLOT(selectedSymbolsChanged()));
+	connect(editor, SIGNAL(activeSymbolChanged(Symbol*)), this, SLOT(activeSymbolChanged(Symbol*)));
 	connect(map(), SIGNAL(symbolDeleted(int,Symbol*)), this, SLOT(symbolDeleted(int,Symbol*)));
 }
 
@@ -74,7 +74,7 @@ void DrawPointGPSTool::initImpl()
 
 void DrawPointGPSTool::newGPSPosition(MapCoordF coord, float accuracy)
 {
-	PointSymbol* point = reinterpret_cast<PointSymbol*>(symbol_widget->getSingleSelectedSymbol());
+	PointSymbol* point = reinterpret_cast<PointSymbol*>(editor->activeSymbol());
 	
 	// Calculate weight from accuracy. This is arbitrarily chosen.
 	float weight;
@@ -131,7 +131,7 @@ void DrawPointGPSTool::clickRelease()
 	
 	DeleteObjectsUndoStep* undo_step = new DeleteObjectsUndoStep(map());
 	undo_step->addObject(index);
-	map()->objectUndoManager().addNewUndoStep(undo_step);
+	map()->push(undo_step);
 	
 	setEditingInProgress(false);
 	deactivate();
@@ -182,18 +182,17 @@ void DrawPointGPSTool::objectSelectionChangedImpl()
 	// NOP
 }
 
-void DrawPointGPSTool::selectedSymbolsChanged()
+void DrawPointGPSTool::activeSymbolChanged(Symbol* symbol)
 {
-	Symbol* single_selected_symbol = symbol_widget->getSingleSelectedSymbol();
-	if (single_selected_symbol == NULL || single_selected_symbol->getType() != Symbol::Point || single_selected_symbol->isHidden())
+	if (symbol == NULL || symbol->getType() != Symbol::Point || symbol->isHidden())
 	{
-		if (single_selected_symbol && single_selected_symbol->isHidden())
+		if (symbol && symbol->isHidden())
 			deactivate();
 		else
-			switchToDefaultDrawTool(single_selected_symbol);
+			switchToDefaultDrawTool(symbol);
 	}
 	else
-		last_used_symbol = single_selected_symbol;
+		last_used_symbol = symbol;
 }
 
 void DrawPointGPSTool::symbolDeleted(int pos, Symbol* old_symbol)

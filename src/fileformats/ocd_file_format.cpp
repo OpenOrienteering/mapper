@@ -35,7 +35,7 @@
 #include "ocd_types_v11.h"
 #include "../core/map_color.h"
 #include "../core/map_view.h"
-#include "../georeferencing.h"
+#include "../core/georeferencing.h"
 #include "../file_format_ocad8.h"
 #include "../file_format_ocad8_p.h"
 #include "../map.h"
@@ -1376,6 +1376,18 @@ LineSymbol* OcdFileImport::importRectangleSymbol(const S& ocd_symbol)
 	return symbol;
 }
 
+template< > // OCD::FormatV8
+int OcdFileImport::circleRadius(const Ocd::PointSymbolElementV8* element) const
+{
+	return element->diameter / 2 - element->line_width;
+}
+
+template< class E >
+int OcdFileImport::circleRadius(const E* element) const
+{
+	return (element->diameter - element->line_width) / 2;
+}
+
 template< class E >
 void OcdFileImport::setupPointSymbolPattern(PointSymbol* symbol, std::size_t data_size, const E* elements)
 {
@@ -1417,12 +1429,14 @@ void OcdFileImport::setupPointSymbolPattern(PointSymbol* symbol, std::size_t dat
 				}
 				break;
 			case E::TypeCircle:
-				if ((element->diameter / 2 - element->line_width) > 0)
+			{
+				int element_radius = circleRadius(element);
+				if (element_radius > 0)
 				{
 					bool can_use_base_symbol = (!base_symbol_used && (!element->num_coords || (!coords[0].x && !coords[0].y)));
 					PointSymbol* working_symbol = can_use_base_symbol ? symbol : new PointSymbol();
 					working_symbol->setInnerColor(NULL);
-					working_symbol->setInnerRadius(convertLength(element->diameter / 2 - element->line_width));
+					working_symbol->setInnerRadius(convertLength(element_radius));
 					working_symbol->setOuterColor(convertColor(element->color));
 					working_symbol->setOuterWidth(convertLength(element->line_width));
 					if (can_use_base_symbol)
@@ -1442,6 +1456,7 @@ void OcdFileImport::setupPointSymbolPattern(PointSymbol* symbol, std::size_t dat
 					}
 				}
 				break;
+			}
 			case E::TypeLine:
 				{
 					OcdImportedLineSymbol* element_symbol = new OcdImportedLineSymbol();
@@ -1473,24 +1488,34 @@ void OcdFileImport::setupPointSymbolPattern(PointSymbol* symbol, std::size_t dat
 template< class O >
 Object* OcdFileImport::importObject(const O& ocd_object, MapPart* part)
 {
-	if (ocd_object.symbol < 0)
-		return NULL;
+	Symbol* symbol = NULL;
+	if (ocd_object.symbol >= 0)
+	{
+		symbol = symbol_index[ocd_object.symbol];
+	}
 	
-	Symbol* symbol = symbol_index[ocd_object.symbol];
 	if (!symbol)
 	{
-		if (ocd_object.type == 1)
-			symbol = map->getUndefinedPoint();
-		else if (ocd_object.type == 2 || ocd_object.type == 3)
-			symbol = map->getUndefinedLine();
-		else
+		switch (ocd_object.type)
 		{
+		case 1:
+			symbol = map->getUndefinedPoint();
+			break;
+		case 2:
+		case 3:
+			symbol = map->getUndefinedLine();
+			break;
+		case 4:
+		case 5:
+			symbol = map->getUndefinedText();
+			break;
+		default:
 			addWarning(tr("Unable to load object"));
 			qDebug() << "Undefined object type" << ocd_object.type << " for object of symbol" << ocd_object.symbol;
 			return NULL;
 		}
 	}
-	
+		
 	if (symbol->getType() == Symbol::Line && rectangle_info.contains(ocd_object.symbol))
 	{
 		Object* object = importRectangleObject(ocd_object, part, rectangle_info[ocd_object.symbol]);

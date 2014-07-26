@@ -20,7 +20,7 @@ CONFIG(debug, debug|release) {
 else {
 	DEFINES += \"APP_VERSION='\\"0.5.99\\"'\"
 }
-DEFINES += \"CLIPPER_VERSION='\\"5.1.6\\"'\"
+DEFINES += \"CLIPPER_VERSION='\\"6.1.3a\\"'\"
 DEFINES += \"MAPPER_HELP_NAMESPACE='\\"openorienteering.mapper-0.5.99.help\\"'\"
 
 # Input
@@ -31,8 +31,6 @@ HEADERS += \
   file_format_ocad8_p.h \
   file_format_xml_p.h \
   file_import_export.h \
-  georeferencing.h \
-  georeferencing_dialog.h \
   gps_display.h \
   gps_temporary_markers.h \
   gps_track_recorder.h \
@@ -43,14 +41,13 @@ HEADERS += \
   map_editor.h \
   map_editor_activity.h \
   map_grid.h \
-  map_undo.h \
+  object_undo.h \
   map_widget.h \
   settings.h \
   symbol.h \
   symbol_area.h \
   symbol_combined.h \
   symbol_dialog_replace.h \
-  symbol_dock_widget.h \
   symbol_line.h \
   symbol_point.h \
   symbol_point_editor.h \
@@ -90,13 +87,15 @@ HEADERS += \
   tool_rotate.h \
   tool_rotate_pattern.h \
   tool_scale.h \
-  undo.h \
+  undo_manager.h \
   util_task_dialog.h \
   core/auto_save_p.h \
+  core/georeferencing.h \
   core/map_printer.h \
   fileformats/ocd_file_format_p.h \
   gui/about_dialog.h \
   gui/color_dialog.h \
+  gui/georeferencing_dialog.h \
   gui/home_screen_controller.h \
   gui/main_window.h \
   gui/main_window_controller.h \
@@ -113,6 +112,9 @@ HEADERS += \
   gui/widgets/measure_widget.h \
   gui/widgets/pie_menu.h \
   gui/widgets/segmented_button_layout.h \
+  gui/widgets/symbol_render_widget.h \
+  gui/widgets/symbol_tooltip.h \
+  gui/widgets/symbol_widget.h \
   gui/widgets/tags_widget.h \
   util/item_delegates.h \
   util/overriding_shortcut.h \
@@ -126,25 +128,24 @@ SOURCES += \
   util_translation.cpp \
   mapper_resource.cpp \
   undo.cpp \
+  undo_manager.cpp \
   matrix.cpp \
   transformation.cpp \
   settings.cpp \
   map.cpp \
   map_part.cpp \
+  map_part_undo.cpp \
   map_widget.cpp \
   touch_cursor.cpp \
   map_editor.cpp \
   map_editor_activity.cpp \
-  map_undo.cpp \
+  object_undo.cpp \
   map_dialog_new.cpp \
   map_dialog_scale.cpp \
   map_dialog_rotate.cpp \
   map_grid.cpp \
-  georeferencing.cpp \
-  georeferencing_dialog.cpp \
   color_dock_widget.cpp \
   symbol.cpp \
-  symbol_dock_widget.cpp \
   symbol_dialog_replace.cpp \
   symbol_setting_dialog.cpp \
   symbol_properties_widget.cpp \
@@ -193,7 +194,6 @@ SOURCES += \
   tool_scale.cpp \
   tool_boolean.cpp \
   tool_fill.cpp \
-  gps_coordinates.cpp \
   gps_track.cpp \
   gps_display.cpp \
   gps_temporary_markers.cpp \
@@ -208,6 +208,9 @@ SOURCES += \
   file_format_ocad8.cpp \
   file_format_xml.cpp \
   core/auto_save.cpp \
+  core/crs_template.cpp \
+  core/georeferencing.cpp \
+  core/latlon.cpp \
   core/map_color.cpp \
   core/map_printer.cpp \
   core/map_view.cpp \
@@ -215,10 +218,12 @@ SOURCES += \
   fileformats/ocd_types.cpp \
   gui/about_dialog.cpp \
   gui/color_dialog.cpp \
+  gui/georeferencing_dialog.cpp \
   gui/home_screen_controller.cpp \
   gui/main_window.cpp \
   gui/main_window_controller.cpp \
   gui/modifier_key.cpp \
+  gui/point_handles.cpp \
   gui/print_progress_dialog.cpp \
   gui/print_tool.cpp \
   gui/print_widget.cpp \
@@ -231,6 +236,9 @@ SOURCES += \
   gui/widgets/measure_widget.cpp \
   gui/widgets/pie_menu.cpp \
   gui/widgets/segmented_button_layout.cpp \
+  gui/widgets/symbol_render_widget.cpp \
+  gui/widgets/symbol_tooltip.cpp \
+  gui/widgets/symbol_widget.cpp \
   gui/widgets/tags_widget.cpp \
   util/item_delegates.cpp \
   util/overriding_shortcut.cpp \

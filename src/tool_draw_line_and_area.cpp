@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2014 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -23,110 +24,102 @@
 #include <QPainter>
 
 #include "map.h"
+#include "map_editor.h"
+#include "object_undo.h"
 #include "map_widget.h"
-#include "map_undo.h"
 #include "object.h"
 #include "renderable.h"
 #include "symbol.h"
-#include "symbol_dock_widget.h"
 #include "symbol_combined.h"
 #include "symbol_line.h"
 #include "symbol_point.h"
 #include "util.h"
 
-DrawLineAndAreaTool::DrawLineAndAreaTool(MapEditorController* editor, Type type, QAction* tool_button, SymbolWidget* symbol_widget)
- : MapEditorTool(editor, type, tool_button), 
-   renderables(new MapRenderables(map())),
-   symbol_widget(symbol_widget)
+DrawLineAndAreaTool::DrawLineAndAreaTool(MapEditorController* editor, Type type, QAction* tool_action, bool is_helper_tool)
+: MapEditorTool(editor, type, tool_action)
+, is_helper_tool(is_helper_tool)
+, drawing_symbol(NULL)
+, preview_point_radius(0)
+, preview_points_shown(false)
+, path_combination(new CombinedSymbol())
+, preview_path(NULL)
+, renderables(new MapRenderables(map()))
 {
-	preview_points_shown = false;
-	draw_in_progress = false;
-	path_combination = NULL;
-	preview_path = NULL;
-	last_used_symbol = NULL;
-	is_helper_tool = symbol_widget == NULL;
-	
+	// Helper tools don't draw the active symbol.
 	if (!is_helper_tool)
 	{
-		selectedSymbolsChanged();
-		connect(symbol_widget, SIGNAL(selectedSymbolsChanged()), this, SLOT(selectedSymbolsChanged()));
-		connect(map(), SIGNAL(symbolChanged(int,Symbol*,Symbol*)), this, SLOT(symbolChanged(int,Symbol*,Symbol*)));
-		connect(map(), SIGNAL(symbolDeleted(int,Symbol*)), this, SLOT(symbolDeleted(int,Symbol*)));
+		drawing_symbol = editor->activeSymbol();
+		if (drawing_symbol)
+			createPreviewPoints();
+		
 	}
+	
+	connect(editor, SIGNAL(activeSymbolChanged(Symbol*)), this, SLOT(setDrawingSymbol(Symbol*)));
 }
 
 DrawLineAndAreaTool::~DrawLineAndAreaTool()
 {
 	deletePreviewObjects();
-	delete path_combination;
 }
 
 void DrawLineAndAreaTool::leaveEvent(QEvent* event)
 {
 	Q_UNUSED(event);
 	
-	if (!draw_in_progress)
+	if (!editingInProgress())
 		map()->clearDrawingBoundingBox();
 }
 
-void DrawLineAndAreaTool::selectedSymbolsChanged()
+void DrawLineAndAreaTool::setDrawingSymbol(Symbol* symbol)
 {
-	if (is_helper_tool)
-		return;
-	if (draw_in_progress)
-		finishDrawing();
+	// Avoid using deleted symbol
+	if (map()->findSymbolIndex(drawing_symbol) == -1)
+		symbol = NULL;
 	
-	Symbol* symbol = symbol_widget->getSingleSelectedSymbol();
-	if (symbol == NULL || ((symbol->getType() & (Symbol::Line | Symbol::Area | Symbol::Combined)) == 0) || symbol->isHidden())
+	// End current editing
+	if (editingInProgress())
 	{
-		if (symbol && symbol->isHidden())
-			deactivate();
+		if (symbol)
+			finishDrawing();
 		else
-			switchToDefaultDrawTool(symbol);
-		return;
+			abortDrawing();
 	}
 	
-	last_used_symbol = symbol;
-	createPreviewPoints();
-}
-
-void DrawLineAndAreaTool::symbolChanged(int pos, Symbol* new_symbol, Symbol* old_symbol)
-{
-	Q_UNUSED(pos);
-	Q_UNUSED(new_symbol);
+	// Handle new symbol
+	if (!is_helper_tool)
+		drawing_symbol = symbol;
 	
-	if (old_symbol == last_used_symbol)
-		selectedSymbolsChanged();
-}
-
-void DrawLineAndAreaTool::symbolDeleted(int pos, Symbol* old_symbol)
-{
-	Q_UNUSED(pos);
-	
-	if (old_symbol == last_used_symbol)
+	if (!symbol)
 		deactivate();
+	else if (symbol->isHidden())
+		deactivate();
+	else if ((symbol->getType() & (Symbol::Line | Symbol::Area | Symbol::Combined)) == 0)
+		switchToDefaultDrawTool(symbol);
+	else
+		createPreviewPoints();
 }
 
 void DrawLineAndAreaTool::createPreviewPoints()
 {
 	deletePreviewObjects();
+	
 	preview_point_radius = 0;
-	addPreviewPointSymbols(last_used_symbol);
+	addPreviewPointSymbols(drawing_symbol);
 	
 	// Create objects for the new symbols
-	int size = (int)preview_point_symbols.size();
-	for (int p = 0; p < 2; ++p)
+	std::size_t size = preview_point_symbols.size();
+	for (std::size_t p = 0; p < 2; ++p)
 	{
 		preview_points[p].resize(size);
-		for (int i = 0; i < size; ++i)
+		for (std::size_t i = 0; i < size; ++i)
 			preview_points[p][i] = new PointObject(preview_point_symbols[i]);
 	}
 }
 
 void DrawLineAndAreaTool::setPreviewPointsPosition(MapCoordF map_coord, int index)
 {
-	int size = (int)preview_points[index].size();
-	for (int i = 0; i < size; ++i)
+	std::size_t size = preview_points[index].size();
+	for (std::size_t i = 0; i < size; ++i)
 	{
 		if (preview_points_shown)
 			renderables->removeRenderablesOfObject(preview_points[index][i], false);
@@ -139,17 +132,17 @@ void DrawLineAndAreaTool::setPreviewPointsPosition(MapCoordF map_coord, int inde
 
 void DrawLineAndAreaTool::hidePreviewPoints()
 {
-	if (!preview_points_shown)
-		return;
-	
-	for (int p = 0; p < 2; ++p)
+	if (preview_points_shown)
 	{
-		int size = (int)preview_points[p].size();
-		for (int i = 0; i < size; ++i)
-			renderables->removeRenderablesOfObject(preview_points[p][i], false);
+		for (std::size_t p = 0; p < 2; ++p)
+		{
+			std::size_t size = preview_points[p].size();
+			for (std::size_t i = 0; i < size; ++i)
+				renderables->removeRenderablesOfObject(preview_points[p][i], false);
+		}
+		
+		preview_points_shown = false;
 	}
-	
-	preview_points_shown = false;
 }
 
 void DrawLineAndAreaTool::includePreviewRects(QRectF& rect)
@@ -159,10 +152,10 @@ void DrawLineAndAreaTool::includePreviewRects(QRectF& rect)
 	
 	if (preview_points_shown)
 	{
-		for (int p = 0; p < 2; ++p)
+		for (std::size_t p = 0; p < 2; ++p)
 		{
-			int size = (int)preview_points[p].size();
-			for (int i = 0; i < size; ++i)
+			std::size_t size = preview_points[p].size();
+			for (std::size_t i = 0; i < size; ++i)
 				rectIncludeSafe(rect, preview_points[p][i]->getExtent());
 		}
 	}
@@ -185,17 +178,14 @@ void DrawLineAndAreaTool::drawPreviewObjects(QPainter* painter, MapWidget* widge
 
 void DrawLineAndAreaTool::startDrawing()
 {
-	drawing_symbol = is_helper_tool ? NULL : symbol_widget->getSingleSelectedSymbol();
-	if (!path_combination)
-		path_combination = new CombinedSymbol();
 	path_combination->setNumParts(is_helper_tool ? 2 : 3);
 	path_combination->setPart(0, Map::getCoveringWhiteLine(), false);
 	path_combination->setPart(1, Map::getCoveringRedLine(), false);
 	if (drawing_symbol)
 		path_combination->setPart(2, drawing_symbol, false);
-	preview_path = new PathObject(path_combination);
 	
-	draw_in_progress = true;
+	preview_path = new PathObject(path_combination.data());
+	
 	setEditingInProgress(true);
 }
 
@@ -213,11 +203,10 @@ void DrawLineAndAreaTool::abortDrawing()
 	map()->clearDrawingBoundingBox();
 	
 	preview_path = NULL;
-	draw_in_progress = false;
 	
 	setEditingInProgress(false);
 	
-	emit(pathAborted());
+	emit pathAborted();
 }
 
 void DrawLineAndAreaTool::finishDrawing()
@@ -232,6 +221,7 @@ void DrawLineAndAreaTool::finishDrawing(PathObject* append_to_object)
 	
 	if (preview_path && !is_helper_tool)
 	{
+		Q_ASSERT(drawing_symbol);
 		preview_path->setSymbol(drawing_symbol, true);
 
 		bool can_be_appended = false;
@@ -250,7 +240,7 @@ void DrawLineAndAreaTool::finishDrawing(PathObject* append_to_object)
 			MapPart* cur_part = map()->getCurrentPart();
 			ReplaceObjectsUndoStep* undo_step = new ReplaceObjectsUndoStep(map());
 			undo_step->addObject(cur_part->findObjectIndex(append_to_object), undo_duplicate);
-			map()->objectUndoManager().addNewUndoStep(undo_step);
+			map()->push(undo_step);
 		}
 		else
 		{
@@ -260,13 +250,12 @@ void DrawLineAndAreaTool::finishDrawing(PathObject* append_to_object)
 			
 			DeleteObjectsUndoStep* undo_step = new DeleteObjectsUndoStep(map());
 			undo_step->addObject(index);
-			map()->objectUndoManager().addNewUndoStep(undo_step);
+			map()->push(undo_step);
 		}
 	}
 	map()->clearDrawingBoundingBox();
 	map()->setObjectsDirty();
 	
-	draw_in_progress = false;
 	setEditingInProgress(false);
 	
 	if (is_helper_tool)
@@ -314,12 +303,17 @@ void DrawLineAndAreaTool::deletePreviewObjects()
 		delete preview_path;
 		preview_path = NULL;
 	}
-	draw_in_progress = false; // FIXME: does not belong here
+	//drawing_in_progress = false; // FIXME: does not belong here
 }
 
 void DrawLineAndAreaTool::addPreviewPointSymbols(Symbol* symbol)
 {
-	if (symbol->getType() == Symbol::Line)
+	if (!symbol)
+	{
+		// Don't abort in release build
+		Q_ASSERT(symbol); 
+	}
+	else if (symbol->getType() == Symbol::Line)
 	{
 		LineSymbol* line = reinterpret_cast<LineSymbol*>(symbol);
 		
@@ -371,12 +365,16 @@ void DrawLineAndAreaTool::addPreviewPointSymbolsForBorder(LineSymbol* line, Line
 {
 	if (!border->isVisible())
 		return;
+	
 	PointSymbol* preview = new PointSymbol();
 	preview->setInnerRadius(line->getLineWidth() / 2 - border->width / 2 + border->shift);
 	preview->setOuterWidth(border->width);
 	preview->setOuterColor(border->color);
+	
 	preview_point_symbols.push_back(preview);
 	preview_point_symbols_external.push_back(false);
+	
 	if (preview->getOuterColor() != NULL)
 		preview_point_radius = qMax(preview_point_radius, preview->getInnerRadius() + preview->getOuterWidth());
 }
+

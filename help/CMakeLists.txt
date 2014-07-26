@@ -1,5 +1,5 @@
 #
-#    Copyright 2012 Thomas Schöps, Kai Pastor
+#    Copyright 2012, 2013, 2014 Thomas Schöps, Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -19,18 +19,29 @@
 message(STATUS "Configuring ${PROJECT_NAME} help")
 
 find_package(Qt5Help REQUIRED)
-qt5_find_host_program(QT_QCOLLECTIONGENERATOR_EXECUTABLE NAMES qcollectiongenerator)
-find_program(QT_QTASSISTANT_EXECUTABLE NAMES assistant${CMAKE_EXECUTABLE_SUFFIX} Assistant${CMAKE_EXECUTABLE_SUFFIX}
+
+# Not exported from Qt5
+if (NOT TARGET Qt5::qcollectiongenerator AND TARGET Qt5::moc)
+	add_executable(Qt5::qcollectiongenerator IMPORTED)
+	get_target_property(imported_location Qt5::moc IMPORTED_LOCATION)
+	get_filename_component(imported_location ${imported_location} PATH)
+	set(imported_location ${imported_location}/qcollectiongenerator)
+	if(NOT EXISTS "${imported_location}")
+		message(FATAL_ERROR "qcollectiongenerator executable does not exist: "
+		                    "${imported_location}")
+	endif()
+	set_target_properties(Qt5::qcollectiongenerator PROPERTIES
+		IMPORTED_LOCATION ${imported_location}
+	)
+endif()
+set(Qt5Help_QCOLLECTIONGENERATOR_EXECUTABLE Qt5::qcollectiongenerator)
+
+find_program(Qt5Help_ASSISTANT_EXECUTABLE NAMES assistant${CMAKE_EXECUTABLE_SUFFIX} Assistant${CMAKE_EXECUTABLE_SUFFIX}
   DOC "The path of the Qt Assistant executable"
   HINTS ${QT5_DIR}
   PATH_SUFFIXES bin
   NO_DEFAULT_PATH)
-mark_as_advanced(QT_QCOLLECTIONGENERATOR_EXECUTABLE)
-mark_as_advanced(QT_QTASSISTANT_EXECUTABLE)
-
-if(QT_QCOLLECTIONGENERATOR_EXECUTABLE MATCHES NOTFOUND)
-	message(FATAL_ERROR "qcollectiongenerator executable not found.")
-endif()
+mark_as_advanced(Qt5Help_ASSISTANT_EXECUTABLE)
 
 set(Mapper_HELP_NAMESPACE "openorienteering.mapper-${Mapper_VERSION_MAJOR}.${Mapper_VERSION_MINOR}.${Mapper_VERSION_PATCH}.help"
   CACHE INTERNAL "The namespace where the current version's help will be located.")
@@ -52,7 +63,7 @@ add_custom_command(
 	COMMAND   ${CMAKE_COMMAND}
 	ARGS      -E copy_directory ${PROJECT_SOURCE_DIR}/images
 	            ${CMAKE_CURRENT_BINARY_DIR}/images
-	COMMAND   ${QT_QCOLLECTIONGENERATOR_EXECUTABLE}
+	COMMAND   ${Qt5Help_QCOLLECTIONGENERATOR_EXECUTABLE}
 	ARGS      Mapper.qhcp
 	          -o ${Mapper_HELP_COLLECTION}
 	MAIN_DEPENDENCY ${CMAKE_CURRENT_BINARY_DIR}/Mapper.qhp 

@@ -23,12 +23,12 @@
 #include <qmath.h>
 #include <QtWidgets>
 
+#include "gui/georeferencing_dialog.h"
 #include "map_widget.h"
-#include "map_undo.h"
+#include "object_undo.h"
 #include "object.h"
 #include "symbol_line.h"
 #include "symbol_point.h"
-#include "georeferencing_dialog.h"
 #include "util.h"
 #include "util_task_dialog.h"
 #include "util_gui.h"
@@ -449,7 +449,7 @@ bool TemplateTrack::import(QWidget* dialog_parent)
 		undo_step->addObject(part->findObjectIndex(result[i]));
 	
 	map->setObjectsDirty();
-	map->objectUndoManager().addNewUndoStep(undo_step);
+	map->push(undo_step);
 	
 	map->emitSelectionChanged();
 	map->emitSelectionEdited();		// TODO: is this necessary here?
@@ -497,7 +497,7 @@ void TemplateTrack::calculateLocalGeoreferencing()
 	georef.setScaleDenominator(map->getScaleDenominator());
 	georef.setGeographicRefPoint(proj_center);
 	georef.setProjectedCRS("", QString("+proj=ortho +datum=WGS84 +lat_0=%1 +lon_0=%2")
-		.arg(proj_center.latitude * 180 / M_PI).arg(proj_center.longitude * 180 / M_PI));
+		.arg(proj_center.latitude()).arg(proj_center.longitude()));
 	track.changeMapGeoreferencing(georef);
 }
 

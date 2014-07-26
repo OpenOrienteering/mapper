@@ -83,9 +83,6 @@ public:
 	inline bool hasOpenedFile() const {return has_opened_file;}
 	
 	
-	/** Sets the unsaved-changes state to value. */
-	void setHasUnsavedChanges(bool value);
-	
 	/** Returns true if the opened file is marked as having unsaved changes. */
 	inline bool hasUnsavedChanges() const {return has_unsaved_changes;}
 	
@@ -232,9 +229,11 @@ public slots:
 	 */
 	void linkClicked(const QString &link);
 	
-	/** Notify the main window of unsaved changes.
+	/**
+	 * Notifies this window of unsaved changes.
 	 */
-	void gotUnsavedChanges();
+	void setHasUnsavedChanges(bool value);
+	
 	
 protected slots:
 	/**

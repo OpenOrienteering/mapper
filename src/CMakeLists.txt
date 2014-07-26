@@ -25,10 +25,9 @@ execute_process(
   COMMAND "${CMAKE_COMMAND}" -E copy_if_different mapper_config.h.tmp mapper_config.h
   WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
 )
-include_directories(
-  "${CMAKE_CURRENT_BINARY_DIR}"
-  "../3rd-party/qbezier/src"
-)
+include_directories(${CLIPPER_INCLUDE_DIRS})
+include_directories("${CMAKE_CURRENT_BINARY_DIR}")
+include_directories(AFTER "../3rd-party/qbezier/src") # Always, last
 
 set(Mapper_Common_SRCS
  global.cpp
@@ -37,6 +36,7 @@ set(Mapper_Common_SRCS
  util_translation.cpp
  mapper_resource.cpp
  undo.cpp
+ undo_manager.cpp
  matrix.cpp
  transformation.cpp
 
@@ -44,22 +44,20 @@ set(Mapper_Common_SRCS
 
  map.cpp
  map_part.cpp
+ map_part_undo.cpp
  map_widget.cpp
  touch_cursor.cpp
  map_editor.cpp
  map_editor_activity.cpp
- map_undo.cpp
+ object_undo.cpp
  map_dialog_new.cpp
  map_dialog_scale.cpp
  map_dialog_rotate.cpp
  map_grid.cpp
- georeferencing.cpp
- georeferencing_dialog.cpp
 
  color_dock_widget.cpp
 
  symbol.cpp
- symbol_dock_widget.cpp
  symbol_dialog_replace.cpp
  symbol_setting_dialog.cpp
  symbol_properties_widget.cpp
@@ -111,7 +109,6 @@ set(Mapper_Common_SRCS
  tool_boolean.cpp
  tool_fill.cpp
 
- gps_coordinates.cpp
  gps_track.cpp
  gps_display.cpp
  gps_temporary_markers.cpp
@@ -129,6 +126,9 @@ set(Mapper_Common_SRCS
  file_format_xml.cpp
  
  core/auto_save.cpp
+ core/crs_template.cpp
+ core/georeferencing.cpp
+ core/latlon.cpp
  core/map_color.cpp
  core/map_printer.cpp
  core/map_view.cpp
@@ -138,10 +138,12 @@ set(Mapper_Common_SRCS
  
  gui/about_dialog.cpp
  gui/color_dialog.cpp
+ gui/georeferencing_dialog.cpp
  gui/home_screen_controller.cpp
  gui/main_window.cpp
  gui/main_window_controller.cpp
  gui/modifier_key.cpp
+ gui/point_handles.cpp
  gui/print_progress_dialog.cpp
  gui/print_tool.cpp
  gui/print_widget.cpp
@@ -155,6 +157,9 @@ set(Mapper_Common_SRCS
  gui/widgets/measure_widget.cpp
  gui/widgets/pie_menu.cpp
  gui/widgets/segmented_button_layout.cpp
+ gui/widgets/symbol_render_widget.cpp
+ gui/widgets/symbol_tooltip.cpp
+ gui/widgets/symbol_widget.cpp
  gui/widgets/tags_widget.cpp
  
  util/item_delegates.cpp
@@ -170,8 +175,6 @@ set(Mapper_Common_MOC_INPUT
  file_format_ocad8_p.h
  file_format_xml_p.h
  file_import_export.h
- georeferencing.h
- georeferencing_dialog.h
  gps_display.h
  gps_temporary_markers.h
  gps_track_recorder.h
@@ -182,14 +185,13 @@ set(Mapper_Common_MOC_INPUT
  map_editor.h
  map_editor_activity.h
  map_grid.h
- map_undo.h
+ object_undo.h
  map_widget.h
  settings.h
  symbol.h
  symbol_area.h
  symbol_combined.h
  symbol_dialog_replace.h
- symbol_dock_widget.h
  symbol_line.h
  symbol_point.h
  symbol_point_editor.h
@@ -229,16 +231,18 @@ set(Mapper_Common_MOC_INPUT
  tool_rotate.h
  tool_rotate_pattern.h
  tool_scale.h
- undo.h
+ undo_manager.h
  util_task_dialog.h
  
  core/auto_save_p.h
+ core/georeferencing.h
  core/map_printer.h
  
  fileformats/ocd_file_format_p.h
  
  gui/about_dialog.h
  gui/color_dialog.h
+ gui/georeferencing_dialog.h
  gui/home_screen_controller.h
  gui/main_window.h
  gui/main_window_controller.h
@@ -256,6 +260,9 @@ set(Mapper_Common_MOC_INPUT
  gui/widgets/measure_widget.h
  gui/widgets/pie_menu.h
  gui/widgets/segmented_button_layout.h
+ gui/widgets/symbol_render_widget.h
+ gui/widgets/symbol_tooltip.h
+ gui/widgets/symbol_widget.h
  gui/widgets/tags_widget.h
  
  util/item_delegates.h
@@ -265,15 +272,22 @@ set(Mapper_Common_MOC_INPUT
 
 set(Mapper_EXTRA_HEADERS
   core/auto_save_p.h
+  core/crs_template.h
   core/image_transparency_fixup.h
+  core/latlon.h
   fileformats/ocd_file_format_p.h
   fileformats/ocd_types_v8.h
   fileformats/ocd_types_v9.h
   fileformats/ocd_types_v10.h
   fileformats/ocd_types_v11.h
+  gui/point_handles.h
   gui/settings_dialog_p.h
   util/scoped_signals_blocker.h
   file_format_ocad8_p.h
+  map_part.h
+  map_part_undo.h
+  object_operations.h
+  undo.h
 )
 
 qt5_wrap_cpp(Mapper_Common_MOC ${Mapper_Common_MOC_INPUT})
@@ -307,7 +321,6 @@ add_dependencies(Mapper_Common
 )
 target_link_libraries(Mapper_Common
   libocad
-  QBezier
 )
 
 qt5_translations_sources(
@@ -321,13 +334,20 @@ set(Mapper_SRCS
   main.cpp
 )
  
-if(MINGW)
+if(WIN32)
 	enable_language(RC)
-	Quirks_CMake_RC_Compiler()
+	if(MINGW)
+		# Cf. http://public.kitware.com/Bug/view.php?id=12480
+		cmake_minimum_required(VERSION 2.8.7 FATAL_ERROR)
+		# Cf. http://public.kitware.com/Bug/view.php?id=14865
+		if(CMAKE_RC_COMPILER MATCHES "windres\$" AND CMAKE_RC_COMPILE_OBJECT MATCHES "/fo")
+			include(Platform/${CMAKE_SYSTEM_NAME}-windres)
+		endif()
+	endif()
 	configure_file(mingw/resources.rc.in ${CMAKE_CURRENT_BINARY_DIR}/resources.rc @ONLY)
 	configure_file(${PROJECT_SOURCE_DIR}/images/mapper-icon/Mapper.ico ${CMAKE_CURRENT_BINARY_DIR}/Mapper.ico COPYONLY)
 	list(APPEND Mapper_SRCS ${CMAKE_CURRENT_BINARY_DIR}/resources.rc)
-endif(MINGW)
+endif()
 
 add_executable(Mapper
   WIN32
@@ -335,8 +355,7 @@ add_executable(Mapper
   ${Mapper_SRCS}
 )
 
-get_property(_definitions DIRECTORY PROPERTY COMPILE_DEFINITIONS)
-if(_definitions MATCHES "QT_NETWORK_LIB")
+if(TARGET QtSingleApplication)
 	include_directories("../3rd-party/qtsingleapplication/src")
 	target_link_libraries(Mapper QtSingleApplication)
 endif()
@@ -346,7 +365,7 @@ target_link_libraries(Mapper
   docs-licensing
   ${PROJ_LIBRARY}
   ${QT_LIBRARIES}
-  ${CLIPPER_LIBRARY}
+  ${CLIPPER_LIBRARIES}
 )
 
 install(TARGETS Mapper

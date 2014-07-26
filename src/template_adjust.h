@@ -141,7 +141,7 @@ class TemplateAdjustEditTool : public MapEditorTool
 {
 Q_OBJECT
 public:
-	TemplateAdjustEditTool(MapEditorController* editor, QAction* tool_button, TemplateAdjustWidget* widget);
+	TemplateAdjustEditTool(MapEditorController* editor, QAction* tool_action, TemplateAdjustWidget* widget);
 	
 	virtual void draw(QPainter* painter, MapWidget* widget);
 	
@@ -159,7 +159,7 @@ class TemplateAdjustAddTool : public MapEditorTool
 {
 Q_OBJECT
 public:
-	TemplateAdjustAddTool(MapEditorController* editor, QAction* tool_button, TemplateAdjustWidget* widget);
+	TemplateAdjustAddTool(MapEditorController* editor, QAction* tool_action, TemplateAdjustWidget* widget);
 	
 	virtual void init();
 	virtual QCursor* getCursor() {return cursor;}
@@ -187,7 +187,7 @@ class TemplateAdjustMoveTool : public TemplateAdjustEditTool
 {
 Q_OBJECT
 public:
-	TemplateAdjustMoveTool(MapEditorController* editor, QAction* tool_button, TemplateAdjustWidget* widget);
+	TemplateAdjustMoveTool(MapEditorController* editor, QAction* tool_action, TemplateAdjustWidget* widget);
 	
 	virtual void init();
 	virtual QCursor* getCursor() {return cursor;}
@@ -211,7 +211,7 @@ class TemplateAdjustDeleteTool : public TemplateAdjustEditTool
 {
 Q_OBJECT
 public:
-	TemplateAdjustDeleteTool(MapEditorController* editor, QAction* tool_button, TemplateAdjustWidget* widget);
+	TemplateAdjustDeleteTool(MapEditorController* editor, QAction* tool_action, TemplateAdjustWidget* widget);
 	
 	virtual bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
 	virtual bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);

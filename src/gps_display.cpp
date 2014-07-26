@@ -27,8 +27,8 @@
 #include <qmath.h>
 #include <QTimer>
 
+#include "core/georeferencing.h"
 #include "map_widget.h"
-#include "georeferencing.h"
 #include "util.h"
 #include "compass.h"
 #if defined(ANDROID)
@@ -273,7 +273,7 @@ void GPSDisplay::debugPositionUpdate()
 		LatLon latLon = georeferencing.toGeographicCoords(coord, &ok);
 		if (ok)
 		{
-			emit latLonUpdated(latLon.getLatitudeInDegrees(), latLon.getLongitudeInDegrees(), altitude, accuracy);
+			emit latLonUpdated(latLon.latitude(), latLon.longitude(), altitude, accuracy);
 		}
 	}
 	
@@ -310,7 +310,7 @@ MapCoordF GPSDisplay::calcLatestGPSCoord(bool& ok)
 		return latest_gps_coord;
 	}
 	
-	LatLon latlon(qgeo_coord.latitude(), qgeo_coord.longitude(), true);
+	LatLon latlon(qgeo_coord.latitude(), qgeo_coord.longitude());
 	latest_gps_coord = georeferencing.toMapCoordF(latlon, &ok);
 	if (!ok)
 	{

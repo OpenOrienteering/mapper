@@ -65,8 +65,8 @@ QStringList MapperResource::getLocations(MapperResource::RESOURCE_TYPE resource_
 			resource_path = "/doc";
 #elif defined(Q_OS_MAC)
 			resource_path = "";
-#elif defined(MAPPER_DEBIAN_PACKAGE_NAME)
-			resource_path = QString("/../doc/") + MAPPER_DEBIAN_PACKAGE_NAME;
+#elif defined(MAPPER_PACKAGE_NAME)
+			resource_path = QString("/../doc/") + MAPPER_PACKAGE_NAME;
 #endif
 			break;
 			
@@ -130,9 +130,9 @@ QStringList MapperResource::getLocations(MapperResource::RESOURCE_TYPE resource_
 #endif
 	
 	QDir app_dir(QCoreApplication::applicationDirPath());
-#if defined(MAPPER_DEBIAN_PACKAGE_NAME)
+#if defined(MAPPER_PACKAGE_NAME)
 	// Linux: program in xxx/bin, resources in xxx/bin/../share/PACKAGE_NAME
-	QString linux_dir(app_dir.absoluteFilePath(QString("../share/") + MAPPER_DEBIAN_PACKAGE_NAME + resource_path));
+	QString linux_dir(app_dir.absoluteFilePath(QString("../share/") + MAPPER_PACKAGE_NAME + resource_path));
 	addIfExists(locations, linux_dir);
 #elif defined(Q_OS_MAC)
 	// Mac OS X: load resources from the Resources directory of the bundle
@@ -177,9 +177,9 @@ QStringList MapperResource::getProgramLocations(MapperResource::RESOURCE_TYPE re
 	
 	QDir app_dir(QCoreApplication::applicationDirPath());
 	
-#if defined(Mapper_PACKAGE_ASSISTANT) and defined(MAPPER_DEBIAN_PACKAGE_NAME)
+#if defined(Mapper_PACKAGE_ASSISTANT) and defined(MAPPER_PACKAGE_NAME)
 	// Linux: extra binaries in xxx/bin/../share/PACKAGE_NAME/bin
-	addIfExists(locations, app_dir.absoluteFilePath(QString("../lib/") + MAPPER_DEBIAN_PACKAGE_NAME + "/bin/" + program_name));
+	addIfExists(locations, app_dir.absoluteFilePath(QString("../lib/") + MAPPER_PACKAGE_NAME + "/bin/" + program_name));
 #endif
 	
 	// Find the program which is in the same directory as Mapper

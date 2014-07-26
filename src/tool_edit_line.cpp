@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2013, 2014 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -26,12 +27,11 @@
 #include <QtWidgets>
 
 #include "map.h"
-#include "map_undo.h"
+#include "object_undo.h"
 #include "map_widget.h"
 #include "object.h"
 #include "object_text.h"
 #include "renderable.h"
-#include "symbol_dock_widget.h"
 #include "symbol_combined.h"
 #include "symbol_line.h"
 #include "settings.h"
@@ -43,11 +43,13 @@
 #include "gui/modifier_key.h"
 #include "gui/widgets/key_button_bar.h"
 
+class SymbolWidget;
+
 
 int EditLineTool::max_objects_for_handle_display = 10;
 
-EditLineTool::EditLineTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget)
- : EditTool(editor, EditLine, symbol_widget, tool_button)
+EditLineTool::EditLineTool(MapEditorController* editor, QAction* tool_button)
+: EditTool(editor, EditLine, tool_button)
 {
 	hover_line = -2;
 	hover_object = NULL;
@@ -218,7 +220,7 @@ void EditLineTool::dragMove()
 	if (no_more_effect_on_click)
 		return;
 	
-	if (editing)
+	if (editingInProgress())
 	{
 		if (snapped_to_pos && handle_offset != MapCoordF(0, 0))
 		{
@@ -255,7 +257,7 @@ void EditLineTool::dragFinish()
 		return;
 	}
 	
-	if (editing)
+	if (editingInProgress())
 	{
 		finishEditing();
 		angle_helper->setActive(false);
@@ -279,10 +281,10 @@ bool EditLineTool::keyPress(QKeyEvent* event)
 		map()->clearObjectSelection(true);
 	else if (event->key() == Qt::Key_Control)
 	{
-		if (editing)
+		if (editingInProgress())
 			toggleAngleHelper();
 	}
-	else if (event->key() == Qt::Key_Shift && editing)
+	else if (event->key() == Qt::Key_Shift && editingInProgress())
 		activateSnapHelperWhileEditing();
 	else
 		return false;
@@ -299,7 +301,7 @@ bool EditLineTool::keyRelease(QKeyEvent* event)
 	else if (event->key() == Qt::Key_Shift)
 	{
 		snap_helper->setFilter(SnappingToolHelper::NoSnapping);
-		if (editing)
+		if (editingInProgress())
 		{
 			dragMove();
 			calcConstrainedPositions(cur_map_widget);
@@ -340,13 +342,13 @@ int EditLineTool::updateDirtyRectImpl(QRectF& rect)
 	map()->includeSelectionRect(selection_extent);
 	
 	rectInclude(rect, selection_extent);
-	int pixel_border = show_object_points ? (resolution_scale_factor * 6) : 1;
+	int pixel_border = show_object_points ? (scaleFactor() * 6) : 1;
 	
 	// Control points
 	if (show_object_points)
 	{
 		for (Map::ObjectSelection::const_iterator it = map()->selectedObjectsBegin(), end = map()->selectedObjectsEnd(); it != end; ++it)
-			includeControlPointRect(rect, *it);
+			(*it)->includeControlPointsRect(rect);
 	}
 	
 	// Box selection
@@ -366,13 +368,22 @@ void EditLineTool::drawImpl(QPainter* painter, MapWidget* widget)
 	{
 		drawSelectionOrPreviewObjects(painter, widget);
 		
-		if (selection_extent.isValid())
+		Object* object = *map()->selectedObjectsBegin();
+		if (num_selected_objects == 1 &&
+		    object->getType() == Object::Text &&
+		    !object->asText()->hasSingleAnchor())
+		{
+			drawBoundingPath(painter, widget, object->asText()->controlPoints(), hoveringOverFrame() ? active_color : selection_color);
+		}
+		else if (selection_extent.isValid())
+		{
 			drawBoundingBox(painter, widget, selection_extent, hoveringOverFrame() ? active_color : selection_color);
+		}
 		
 		if (num_selected_objects <= max_objects_for_handle_display)
 		{
 			for (Map::ObjectSelection::const_iterator it = map()->selectedObjectsBegin(), end = map()->selectedObjectsEnd(); it != end; ++it)
-				drawPointHandles(-2, painter, *it, widget, false, MapEditorTool::DisabledHandleState);
+				pointHandles().draw(painter, widget, *it, -2, false, PointHandles::DisabledHandleState);
 		}
 		
 		if (!highlight_renderables->isEmpty())
@@ -403,7 +414,7 @@ void EditLineTool::deleteHighlightObject()
 void EditLineTool::updateStatusText()
 {
 	QString text;
-	if (editing)
+	if (editingInProgress())
 	{
 		MapCoordF drag_vector = constrained_pos_map - click_pos_map;
 		text = EditTool::tr("<b>Coordinate offset:</b> %1, %2 mm  <b>Distance:</b> %3 m ").
@@ -526,7 +537,7 @@ void EditLineTool::updateHoverLine(MapCoordF cursor_pos)
 
 void EditLineTool::toggleAngleHelper()
 {
-	if (!editing)
+	if (!editingInProgress())
 		angle_helper->setActive(false);
 	else
 		activateAngleHelperWhileEditing(!angle_helper->isActive());

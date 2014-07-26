@@ -26,7 +26,7 @@
 #include <QPainter>
 
 #include "map.h"
-#include "map_undo.h"
+#include "object_undo.h"
 #include "map_widget.h"
 #include "object.h"
 #include "renderable.h"
@@ -54,7 +54,9 @@ void CutTool::init()
 {
 	connect(map(), SIGNAL(objectSelectionChanged()), this, SLOT(objectSelectionChanged()));
 	updateDirtyRect();
-    updateStatusText();
+	updateStatusText();
+	
+	MapEditorTool::init();
 }
 
 CutTool::~CutTool()
@@ -158,7 +160,7 @@ bool CutTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidg
 					
 					ReplaceObjectsUndoStep* replace_step = new ReplaceObjectsUndoStep(map);
 					replace_step->addObject(part->findObjectIndex(split_object), undo_duplicate);
-					map->objectUndoManager().addNewUndoStep(replace_step);
+					map->push(replace_step);
 					split_object->update(); // Make sure that the map display is updated
 				}
 				else
@@ -172,7 +174,7 @@ bool CutTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidg
 					float max_cut_pos = qMax(drag_start_len, drag_end_len);
 					float path_len = split_object->getPathCoordinateVector().at(split_object->getPathCoordinateVector().size() - 1).clen;
 					if (min_cut_pos <= 0 && max_cut_pos >= path_len)
-						map->objectUndoManager().addNewUndoStep(add_step);
+						map->push(add_step);
 					else
 					{
 						DeleteObjectsUndoStep* delete_step = new DeleteObjectsUndoStep(map);
@@ -194,10 +196,10 @@ bool CutTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidg
 							map->addObjectToSelection(part2, true);
 						}
 						
-						CombinedUndoStep* undo_step = new CombinedUndoStep((void*)map);
-						undo_step->addSubStep(delete_step);
-						undo_step->addSubStep(add_step);
-						map->objectUndoManager().addNewUndoStep(undo_step);
+						CombinedUndoStep* undo_step = new CombinedUndoStep(map);
+						undo_step->push(add_step);
+						undo_step->push(delete_step);
+						map->push(undo_step);
 					}
 				}
 				
@@ -233,7 +235,7 @@ bool CutTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidg
 			map->removeObjectFromSelection(split_object, false);
 			if (!out1 && !out2)
 			{
-				map->objectUndoManager().addNewUndoStep(add_step);
+				map->push(add_step);
 				map->emitSelectionChanged();
 				map->emitSelectionEdited();
 				return true;
@@ -255,14 +257,14 @@ bool CutTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidg
 			if (out2)
 				delete_step->addObject(part->findObjectIndex(out2));
 			
-			CombinedUndoStep* undo_step = new CombinedUndoStep((void*)map);
+			CombinedUndoStep* undo_step = new CombinedUndoStep(map);
+			if (add_step)
+				undo_step->push(add_step);
 			if (out1 || out2)
-				undo_step->addSubStep(delete_step);
+				undo_step->push(delete_step);
 			else
 				delete delete_step;
-			if (add_step)
-				undo_step->addSubStep(add_step);
-			map->objectUndoManager().addNewUndoStep(undo_step);
+			map->push(undo_step);
 			
 			updateDirtyRect();
 			map->emitSelectionEdited();
@@ -313,7 +315,7 @@ void CutTool::draw(QPainter* painter, MapWidget* widget)
 	map->drawSelection(painter, true, widget, NULL);
 	Map::ObjectSelection::const_iterator it_end = map->selectedObjectsEnd();
 	for (Map::ObjectSelection::const_iterator it = map->selectedObjectsBegin(); it != it_end; ++it)
-		drawPointHandles((hover_object == *it) ? hover_point : -2, painter, *it, widget);
+		pointHandles().draw(painter, widget, *it, (hover_object == *it) ? hover_point : -2);
 	
 	if (preview_path)
 	{
@@ -322,7 +324,7 @@ void CutTool::draw(QPainter* painter, MapWidget* widget)
 						   widget->height() / 2.0 + widget->getMapView()->getDragOffset().y());
 		widget->getMapView()->applyTransform(painter);
 		
-		renderables->draw(painter, widget->getMapView()->calculateViewedRect(widget->viewportToView(widget->rect())), true, widget->getMapView()->calculateFinalZoomFactor(), true, 0.5f);
+		renderables->draw(painter, widget->getMapView()->calculateViewedRect(widget->viewportToView(widget->rect())), true, widget->getMapView()->calculateFinalZoomFactor(), true, true, 0.5f);
 		
 		painter->restore();
 	}
@@ -341,7 +343,7 @@ void CutTool::updateDirtyRect(const QRectF* path_rect)
 	
 	Map::ObjectSelection::const_iterator it_end = map->selectedObjectsEnd();
 	for (Map::ObjectSelection::const_iterator it = map->selectedObjectsBegin(); it != it_end; ++it)
-		includeControlPointRect(rect, *it);
+		(*it)->includeControlPointsRect(rect);
 	
 	if (rect.isValid())
 		map->setDrawingBoundingBox(rect, 6, true);
@@ -677,10 +679,10 @@ void CutTool::pathFinished(PathObject* split_path)
 		map->addObjectToSelection(parts[i], false);
 	}
 	
-	CombinedUndoStep* undo_step = new CombinedUndoStep((void*)map);
-	undo_step->addSubStep(delete_step);
-	undo_step->addSubStep(add_step);
-	map->objectUndoManager().addNewUndoStep(undo_step);
+	CombinedUndoStep* undo_step = new CombinedUndoStep(map);
+	undo_step->push(add_step);
+	undo_step->push(delete_step);
+	map->push(undo_step);
 	map->setObjectsDirty();
 	
 	pathAborted();
@@ -703,7 +705,7 @@ void CutTool::startCuttingArea(const PathCoord& coord, MapWidget* widget)
 	drag_start_len = coord.clen;
 	edit_widget = widget;
 	
-	path_tool = new DrawPathTool(editor, NULL, NULL, false);
+	path_tool = new DrawPathTool(editor, NULL, true, false);
 	connect(path_tool, SIGNAL(dirtyRectChanged(QRectF)), this, SLOT(pathDirtyRectChanged(QRectF)));
 	connect(path_tool, SIGNAL(pathAborted()), this, SLOT(pathAborted()));
 	connect(path_tool, SIGNAL(pathFinished(PathObject*)), this, SLOT(pathFinished(PathObject*)));

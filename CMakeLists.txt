@@ -16,7 +16,8 @@
 #    You should have received a copy of the GNU General Public License
 #    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  
-cmake_minimum_required(VERSION 2.8.3 FATAL_ERROR)
+cmake_minimum_required(VERSION 2.8.8 FATAL_ERROR)
+include(FeatureSummary)
 
 # Project declaration
 
@@ -49,6 +50,7 @@ option(Mapper_TRANSLATIONS_EMBEDDED "Embed all translations in the program execu
 
 option(Mapper_DEBUG_TRANSLATIONS "Debug missing translations" OFF)
 
+set(Mapper_BUILD_CLIPPER_DEFAULT ON)
 if(WIN32 OR APPLE)
 	set(Mapper_BUILD_PROJ_DEFAULT ON)
 	set(Mapper_BUILD_QT_DEFAULT ON)
@@ -58,6 +60,8 @@ else()
 	set(Mapper_BUILD_QT_DEFAULT ON)
 	set(Mapper_PACKAGE_LINGUIST_DEFAULT OFF)
 endif()
+
+option(Mapper_BUILD_CLIPPER "Build the Clipper package from source" ${Mapper_BUILD_CLIPPER_DEFAULT})
 
 option(Mapper_BUILD_PROJ "Build the Proj library from source" ${Mapper_BUILD_PROJ_DEFAULT})
 
@@ -100,17 +104,22 @@ elseif(APPLE)
 	set(MAPPER_DATA_DESTINATION    "Mapper.app/Contents/Resources")
 	set(MAPPER_ABOUT_DESTINATION   "Mapper.app/Contents/Resources")
 else() # LINUX and alike
-	set(CPACK_DEBIAN_PACKAGE_NAME  "openorienteering-mapper")
+	set(Mapper_PACKAGE_NAME        "openorienteering-mapper" CACHE STRING
+	  "The package name"
+	)
 	set(MAPPER_RUNTIME_DESTINATION "/usr/bin")
-	set(MAPPER_LIBRARY_DESTINATION "/usr/lib/${CPACK_DEBIAN_PACKAGE_NAME}")
-	set(MAPPER_DATA_DESTINATION    "/usr/share/${CPACK_DEBIAN_PACKAGE_NAME}")
-	set(MAPPER_ABOUT_DESTINATION   "/usr/share/doc/${CPACK_DEBIAN_PACKAGE_NAME}")
+	set(MAPPER_LIBRARY_DESTINATION "/usr/lib/${Mapper_PACKAGE_NAME}")
+	set(MAPPER_DATA_DESTINATION    "/usr/share/${Mapper_PACKAGE_NAME}")
+	set(MAPPER_ABOUT_DESTINATION   "/usr/share/doc/${Mapper_PACKAGE_NAME}")
+endif()
+
+if(CMAKE_CROSSCOMPILING)
+	message(STATUS "Crosscompiling, host: ${CMAKE_HOST_SYSTEM_NAME}, target: ${CMAKE_SYSTEM_NAME}")
 endif()
 
 # Build definitons
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
-include(CMake28Quirks)
 
 if(APPLE AND Mapper_MACOSX_VERSION)
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -mmacosx-version-min=${Mapper_MACOSX_VERSION}")
@@ -121,9 +130,14 @@ endif()
 add_custom_target(Mapper_prerequisites)
 set(Mapper_prerequisites_FOUND TRUE)
 
-add_subdirectory("3rd-party/clipper")
-add_dependencies(Mapper_prerequisites Clipper)
-include_directories(${CLIPPER_INCLUDE_DIR})
+if(Mapper_BUILD_CLIPPER)
+	add_subdirectory(3rd-party/clipper)
+	add_dependencies(Mapper_prerequisites ${CLIPPER_LIBRARY})
+	set_package_properties(Clipper PROPERTIES
+	  DESCRIPTION "build from source, version: ${CLIPPER_VERSION}"
+	)
+endif()
+find_package(Clipper MODULE REQUIRED)
 
 if(Mapper_BUILD_PROJ)
 	add_subdirectory(3rd-party/proj)
@@ -153,17 +167,13 @@ endif()
 
 if(Mapper_prerequisites_FOUND)
 
-include(Qt5Quirks)
-if(WIN32)
-	# FIXME Get rid of all dependencies on private headers!
-	find_package(Qt5PrintSupport REQUIRED COMPONENTS Private)
-endif()
 foreach(qt5_module Qt5Core Qt5Gui Qt5Widgets Qt5Xml Qt5Network Qt5PrintSupport)
 	find_package(${qt5_module} REQUIRED)
 	add_definitions(${${qt5_module}_DEFINITIONS})
 	list(APPEND QT_INCLUDES ${${qt5_module}_INCLUDE_DIRS})
 	list(APPEND QT_LIBRARIES ${${qt5_module}_LIBRARIES})
 endforeach()
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${Qt5Core_EXECUTABLE_COMPILE_FLAGS}")
 if(Mapper_DEVELOPMENT_BUILD)
 	foreach(qt5_module Qt5Test)
 		find_package(${qt5_module} REQUIRED)
@@ -173,56 +183,34 @@ if(Mapper_DEVELOPMENT_BUILD)
 	endforeach()
 endif()
 # FIXME Get rid of all dependencies on private headers!
-foreach(qt5_module Qt5PrintSupport)
-	find_package(${qt5_module} REQUIRED)
-	if("${${qt5_module}_PRIVATE_INCLUDE_DIRS}" STREQUAL "")
-		# While "find_package(Qt5Xyz REQUIRED COMPONENTS Private)" is supposed to set
-		# Qt5Xyz_PRIVATE_INCLUDE_DIRS, it doesn't seem to take place in Qt 5.2.0
-		foreach(base_dir ${${qt5_module}_INCLUDE_DIRS})
-			string(REPLACE Qt5 Qt qt_module ${qt5_module})
-			if("${base_dir}" MATCHES "include/${qt_module}\$")
-				list(APPEND ${qt5_module}_PRIVATE_INCLUDE_DIRS "${base_dir}/${QT5_VERSION}/${qt_module}")
-			endif()
-		endforeach()
-	endif()
-	list(APPEND QT_INCLUDES ${${qt5_module}_PRIVATE_INCLUDE_DIRS})
-endforeach()
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${Qt5Core_EXECUTABLE_COMPILE_FLAGS}")
-
-if(CMAKE_CROSSCOMPILING)
-	message(STATUS "Crosscompiling, host: ${CMAKE_HOST_SYSTEM_NAME}, target: ${CMAKE_SYSTEM_NAME}")
-
-	qt5_find_host_program(Qt5Core_MOC_EXECUTABLE NAMES moc)
-	qt5_find_host_program(Qt5Core_RCC_EXECUTABLE NAMES rcc)
-elseif(UNIX AND NOT APPLE AND Mapper_BUILD_QT AND QT5_VERSION STREQUAL "5.0.2")
-	get_target_property(QT5_INSTALL_DIR Qt5 INSTALL_DIR)
-	foreach(qt5_target Qt5::moc Qt5::rcc ${QT_LIBRARIES})
-		foreach(imported_location 
-		  IMPORTED_LOCATION
-		  IMPORTED_LOCATION_RELEASE
-		  IMPORTED_LOCATION_DEBUG
-		)
-			get_target_property(qt5_tmp ${qt5_target} ${imported_location})
-			if(NOT "${qt5_tmp}" MATCHES NOTFOUND)
-				set_target_properties(${qt5_target} PROPERTIES
-				  ${imported_location} "${QT5_INSTALL_DIR}${qt5_tmp}"
-				)
-			endif()
-		endforeach()
+if(WIN32)
+	foreach(qt5_module Qt5Core Qt5Gui Qt5PrintSupport)
+		find_package(${qt5_module} REQUIRED)
+		if("${${qt5_module}_PRIVATE_INCLUDE_DIRS}" STREQUAL "")
+			# While "find_package(Qt5Xyz REQUIRED COMPONENTS Private)" is supposed to set
+			# Qt5Xyz_PRIVATE_INCLUDE_DIRS, it doesn't seem to take place in Qt 5.2.0
+			# Cf. https://bugreports.qt-project.org/browse/QTBUG-37417
+			foreach(base_dir ${${qt5_module}_INCLUDE_DIRS})
+				string(REPLACE Qt5 Qt qt_module ${qt5_module})
+				if("${base_dir}" MATCHES "include/${qt_module}\$")
+					list(APPEND ${qt5_module}_PRIVATE_INCLUDE_DIRS "${base_dir}/${QT5_MAJOR_MINOR_REVISION}/${qt_module}")
+				endif()
+			endforeach()
+		endif()
+		list(APPEND QT_INCLUDES ${${qt5_module}_PRIVATE_INCLUDE_DIRS})
 	endforeach()
-	string(REGEX REPLACE ";" ";${QT5_INSTALL_DIR}" QT_INCLUDES
-	  ";${QT_INCLUDES}"
-	)
-	list(REMOVE_AT QT_INCLUDES 0)
 endif()
+list(REMOVE_DUPLICATES QT_INCLUDES)
+list(REMOVE_DUPLICATES QT_LIBRARIES)
+list(REVERSE QT_LIBRARIES)
 
 if(UNIX AND NOT APPLE)
-#	set(CMAKE_INSTALL_RPATH "\$ORIGIN/../lib/${CPACK_DEBIAN_PACKAGE_NAME}/lib")
+#	set(CMAKE_INSTALL_RPATH "\$ORIGIN/../lib/${Mapper_PACKAGE_NAME}/lib")
 	set(CMAKE_INSTALL_RPATH "${MAPPER_LIBRARY_DESTINATION}/lib")
 endif()
 
 if (CMAKE_COMPILER_IS_GNUCXX)
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-long-long -Wno-deprecated -Wall -pedantic")
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-long-long -Wno-deprecated -Wno-variadic-macros -Wall -pedantic")
 	set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-O2 -g")
 	set(CMAKE_CXX_FLAGS_RELEASE "-g0 -O2 -s")
 	set(CMAKE_CXX_FLAGS_DEBUG "-g3 -O0 -DDEBUG")
@@ -257,7 +245,10 @@ add_subdirectory("symbol sets")
 add_subdirectory("help")
 add_subdirectory("translations")
 add_subdirectory("3rd-party/qbezier")
-add_subdirectory("3rd-party/qtsingleapplication")
+get_property(_definitions DIRECTORY PROPERTY COMPILE_DEFINITIONS)
+if(_definitions MATCHES "QT_NETWORK_LIB")
+	add_subdirectory("3rd-party/qtsingleapplication")
+endif()
 add_subdirectory("src/libocad")
 add_subdirectory("src")
 if(Mapper_BUILD_PACKAGE)
@@ -308,3 +299,5 @@ endif()
 
 add_subdirectory("docs/api")
 add_subdirectory("packaging/src")
+
+feature_summary(WHAT ALL)

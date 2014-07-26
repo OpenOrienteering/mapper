@@ -659,6 +659,65 @@ SymbolPropertiesWidget* Symbol::createPropertiesWidget(SymbolSettingDialog* dial
 }
 
 
+bool Symbol::compareByNumber(Symbol* s1, Symbol* s2)
+{
+	int n1 = s1->number_components, n2 = s2->number_components;
+	for (int i = 0; i < n1 && i < n2; i++)
+	{
+		if (s1->getNumberComponent(i) < s2->getNumberComponent(i)) return true;  // s1 < s2
+		if (s1->getNumberComponent(i) > s2->getNumberComponent(i)) return false; // s1 > s2
+		// if s1 == s2, loop to the next component
+	}
+	return false; // s1 == s2
+}
+
+bool Symbol::compareByColorPriority(Symbol* s1, Symbol* s2)
+{
+	const MapColor* c1 = s1->getDominantColorGuess();
+	const MapColor* c2 = s2->getDominantColorGuess();
+	
+	if (c1 && c2)
+		return c1->comparePriority(*c2);
+	else if (c2)
+		return true;
+	else if (c1)
+		return false;
+	
+	return false; // s1 == s2
+}
+
+Symbol::compareByColor::compareByColor(Map* map)
+{
+	int next_priority = map->getNumColors() - 1;
+	// Iterating in reverse order so identical colors are at the position where they appear with lowest priority.
+	for (int i = map->getNumColors() - 1; i >= 0; --i)
+	{
+		QRgb color_code = QRgb(*map->getColor(i));
+		if (!color_map.contains(color_code))
+		{
+			color_map.insert(color_code, next_priority);
+			--next_priority;
+		}
+	}
+}
+
+bool Symbol::compareByColor::operator() (Symbol* s1, Symbol* s2)
+{
+	const MapColor* c1 = s1->getDominantColorGuess();
+	const MapColor* c2 = s2->getDominantColorGuess();
+	
+	if (c1 && c2)
+		return color_map.value(QRgb(*c1)) < color_map.value(QRgb(*c2));
+	else if (c2)
+		return true;
+	else if (c1)
+		return false;
+	
+	return false; // s1 == s2
+}
+
+
+
 // ### SymbolDropDown ###
 
 // allow explicit use of Symbol pointers in QVariant

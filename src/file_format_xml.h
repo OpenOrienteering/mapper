@@ -49,9 +49,15 @@ public:
 	 */
 	static const int minimum_version;
 	
-	/** @brief The XML file format version created by this implementation.
+	/** @brief The optimal XML file format version created by this implementation.
 	 */
 	static const int current_version;
+	
+	/** @brief The actual XML file format version to be written.
+	 * 
+	 * This value must be less than or equal to current_version.
+	 */
+	static int active_version;
 	
 	/** @brief The characteristic magic string at the beginning of the file
 	 */

@@ -27,9 +27,17 @@ if (NOT TARGET Qt5::qdoc AND TARGET Qt5::moc)
     get_target_property(_qt5_moc_path Qt5::moc IMPORTED_LOCATION)
     get_filename_component(_qt5_bin_prefix "${_qt5_moc_path}" PATH)
     add_executable(Qt5::qdoc IMPORTED)
-    set_target_properties(Qt5::qdoc PROPERTIES
-        IMPORTED_LOCATION "${_qt5_bin_prefix}/qdoc"
-    )
+	set(imported_location ${_qt5_bin_prefix}/qdoc)
+	if(NOT EXISTS "${imported_location}")
+		message(FATAL_ERROR "qdoc executable does not exist: "
+		                    "${imported_location}")
+	endif()
+	set_target_properties(Qt5::qdoc PROPERTIES
+		IMPORTED_LOCATION ${imported_location}
+	)
+	if(TARGET Qt5)
+		add_dependencies(Qt5::qdoc Qt5)
+	endif()
 endif()
 set(Qt5Core_QDOC_EXECUTABLE Qt5::qdoc)
 
@@ -60,16 +68,27 @@ add_custom_command(
   DEPENDS   ${LICENSING_SRCS}
 )
 
-add_custom_command(
-  OUTPUT    licensing.qrc
-  COMMAND   ${CMAKE_COMMAND} -E copy "@CMAKE_CURRENT_SOURCE_DIR@/licensing.qrc" licensing.qrc
-  DEPENDS   licensing.qrc html/licensing.html
-)
-
-qt5_add_resources(LICENSING_QRC_CPP
-  "${CMAKE_CURRENT_BINARY_DIR}/licensing.qrc"
-  OPTIONS -compress 9 -threshold 50
-)
+if(NOT CMAKE_CURRENT_SOURCE_DIR STREQUAL ${CMAKE_CURRENT_BINARY_DIR})
+	add_custom_command(
+	  OUTPUT    licensing.qrc
+	  COMMAND   ${CMAKE_COMMAND} -E copy "@CMAKE_CURRENT_SOURCE_DIR@/licensing.qrc" licensing.qrc
+	  DEPENDS   "${CMAKE_CURRENT_SOURCE_DIR}/licensing.qrc" html/licensing.html
+	)
+	qt5_add_resources(LICENSING_QRC_CPP
+	  "${CMAKE_CURRENT_BINARY_DIR}/licensing.qrc"
+	  OPTIONS -compress 9 -threshold 50
+	)
+else()
+	add_custom_command(
+	  OUTPUT    licensing.tmp.qrc
+	  COMMAND   ${CMAKE_COMMAND} -E copy "@CMAKE_CURRENT_SOURCE_DIR@/licensing.qrc" licensing.tmp.qrc
+	  DEPENDS   "${CMAKE_CURRENT_SOURCE_DIR}/licensing.qrc" html/licensing.html
+	)
+	qt5_add_resources(LICENSING_QRC_CPP
+	  "${CMAKE_CURRENT_BINARY_DIR}/licensing.tmp.qrc"
+	  OPTIONS -compress 9 -threshold 50
+	)
+endif()
 
 add_library(docs-licensing
   STATIC

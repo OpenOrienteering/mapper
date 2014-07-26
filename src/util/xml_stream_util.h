@@ -1,5 +1,5 @@
 /*
- *    Copyright 2013 Kai Pastor
+ *    Copyright 2013, 2014 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -22,12 +22,13 @@
 
 #include <vector>
 
+#include <QHash>
 #include <QRectF>
 #include <QString>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
-#include "../file_import_export.h"
+#include "../file_format.h"
 
 
 // Originally defined in map_coord.h, but we want to avoid the depedency.
@@ -160,6 +161,11 @@ public:
 	 */
 	void write(const MapCoordVector& coords);
 	
+	/**
+	 * Writes tags.
+	 */
+	void write(const QHash<QString, QString>& tags);
+	
 private:
 	QXmlStreamWriter& xml;
 };
@@ -245,6 +251,11 @@ public:
 	 */
 	void read(MapCoordVector& coords) throw (FileFormatException);
 	
+	/**
+	 * Read tags.
+	 */
+	void read(QHash<QString, QString>& tags) throw (FileFormatException);
+	
 private:
 	QXmlStreamReader& xml;
 	const QXmlStreamAttributes attributes; // implicitly shared QVector
@@ -307,6 +318,13 @@ namespace XmlStreamLiteral
 	static const QLatin1String height("height");
 	
 	static const QLatin1String count("count");
+	
+	static const QLatin1String object("object");
+	static const QLatin1String tags("tags");
+	static const QLatin1String tag("tag"); ///< @deprecated
+	static const QLatin1String key("key"); ///< @deprecated
+	static const QLatin1String t("t");
+	static const QLatin1String k("k");
 }
 
 
@@ -435,6 +453,19 @@ void XmlElementWriter::write(const QSizeF& size, int precision)
 	writeAttribute( literal::height, size.height(), precision );
 }
 
+inline
+void XmlElementWriter::write(const QHash<QString, QString> &tags)
+{
+	namespace literal = XmlStreamLiteral;
+	typedef QHash<QString, QString> Tags;
+	
+	for (Tags::const_iterator tag = tags.constBegin(), end = tags.constEnd(); tag != end; ++tag)
+	{
+		XmlElementWriter tag_element(xml, literal::t);
+		tag_element.writeAttribute(literal::k, tag.key());
+		xml.writeCharacters(tag.value());
+	}
+}
 
 //### XmlElementReader inline implemenentation ###
 
@@ -584,5 +615,36 @@ void XmlElementReader::read(QSizeF& size)
 	size.setHeight(QString::fromRawData(ref.data(), ref.size()).toDouble());
 }
 
+inline
+void XmlElementReader::read(QHash<QString, QString> &tags) throw (FileFormatException)
+{
+	namespace literal = XmlStreamLiteral;
+	
+	tags.clear();
+	while (xml.readNextStartElement())
+	{
+		if (xml.name() == literal::t)
+		{
+			const QString key(xml.attributes().value(literal::k).toString());
+			tags.insert(key, xml.readElementText());
+		}
+		else if (xml.name() == literal::tag)
+		{
+			// Full keywords were used in pre-0.6.0 master branch
+			// TODO Remove after Mapper 0.6.x releases
+			const QString key(xml.attributes().value(literal::key).toString());
+			tags.insert(key, xml.readElementText());
+		}
+		else if (xml.name() == literal::tags)
+		{
+			// Fix for broken Object::save in pre-0.6.0 master branch
+			// TODO Remove after Mapper 0.6.x releases
+			const QString key(xml.attributes().value(literal::key).toString());
+			tags.insert(key, xml.readElementText());
+		}
+		else
+			xml.skipCurrentElement();
+	}
+}
 
 #endif

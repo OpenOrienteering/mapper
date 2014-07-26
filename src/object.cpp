@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2012, 2013, 2014 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -28,7 +29,7 @@
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
-#include <qbezier_p.h>
+#include <private/qbezier_p.h>
 
 #include "util.h"
 #include "file_import_export.h"
@@ -58,8 +59,6 @@ namespace literal
 	static const QLatin1String pattern("pattern");
 	static const QLatin1String rotation("rotation");
 	static const QLatin1String tags("tags");
-	static const QLatin1String key("key");
-	static const QLatin1String tag("tag");
 }
 
 
@@ -313,17 +312,10 @@ void Object::save(QXmlStreamWriter& xml) const
 		object_element.writeAttribute(literal::v_align, text->getVerticalAlignment());
 	}
 	
-	const int num_tags = object_tags.size();
-	if (num_tags > 0)
+	if (!object_tags.empty())
 	{
 		XmlElementWriter tags_element(xml, literal::tags);
-		tags_element.writeAttribute(literal::count, num_tags);
-		for (Tags::const_iterator tag = object_tags.constBegin(), end = object_tags.constEnd(); tag != end; ++tag)
-		{
-			XmlElementWriter tag_element(xml, literal::tag);
-			tag_element.writeAttribute(literal::key, tag.key());
-			xml.writeCharacters(tag.value());
-		}
+		tags_element.write(object_tags);
 	}
 	
 	{
@@ -366,6 +358,30 @@ Object* Object::load(QXmlStreamReader& xml, Map* map, const SymbolDictionary& sy
 		QString symbol_id =  object_element.attribute<QString>(literal::symbol);
 		object->symbol = symbol_dict[symbol_id]; // FIXME: cannot work for forward references
 		// NOTE: object->symbol may be NULL.
+	}
+	
+	if (!object->symbol || !object->symbol->isTypeCompatibleTo(object))
+	{
+		// Throwing an exception will cause loading to fail.
+		// Rather than not loading the broken file at all,
+		// use the same symbols which are used for importing GPS tracks etc.
+		// FIXME: Implement a way to send a warning to the user.
+		switch (object_type)
+		{
+			case Point:
+				object->symbol = Map::getUndefinedPoint();
+				break;
+			case Path:
+				object->symbol = Map::getUndefinedLine();
+				break;
+			case Text:
+				object->symbol = Map::getUndefinedText();
+				break;
+			default:
+				throw FileFormatException(
+				  ImportExport::tr("Unable to find symbol for object at %1:%2.").
+				  arg(xml.lineNumber()).arg(xml.columnNumber()) );
+		}
 	}
 	
 	if (object_type == Point)
@@ -420,51 +436,10 @@ Object* Object::load(QXmlStreamReader& xml, Map* map, const SymbolDictionary& sy
 		}
 		else if (xml.name() == literal::tags)
 		{
-			object->object_tags.clear();
-			while (xml.readNextStartElement())
-			{
-				if (xml.name() == literal::tag)
-				{
-					const QString key(xml.attributes().value(literal::key).toString());
-					object->object_tags.insert(key, xml.readElementText());
-				}
-				else if (xml.name() == literal::tags)
-				{
-					// Fix for broken Object::save in pre-0.6.0 master branch
-					// TODO Remove after Mapper 0.6.x releases
-					const QString key(xml.attributes().value(literal::key).toString());
-					object->object_tags.insert(key, xml.readElementText());
-				}
-				else
-					xml.skipCurrentElement();
-			}
+			XmlElementReader(xml).read(object->object_tags);
 		}
 		else
 			xml.skipCurrentElement(); // unknown
-	}
-	
-	if (!object->symbol)
-	{
-		// Throwing an exception will cause loading to fail.
-		// Rather than not loading the broken file at all,
-		// use the same symbols which are used for importing GPS tracks etc.
-		// FIXME: Implement a way to send a warning to the user.
-		switch (object_type)
-		{
-			case Point:
-				object->symbol = Map::getUndefinedPoint();
-				break;
-			case Path:
-				object->symbol = Map::getUndefinedLine();
-				break;
-			case Text:
-				object->symbol = (object->coords.size() > 1) ? static_cast<Symbol*>(Map::getUndefinedLine()) : static_cast<Symbol*>(Map::getUndefinedPoint());
-				break;
-			default:
-				throw FileFormatException(
-				  ImportExport::tr("Unable to find symbol for object at %1:%2.").
-				  arg(xml.lineNumber()).arg(xml.columnNumber()) );
-		}
 	}
 	
 	if (object_type == Path)
@@ -773,6 +748,25 @@ void Object::removeTag(const QString& key)
 		object_tags.remove(key);
 		if (map)
 			map->setObjectsDirty();
+	}
+}
+
+
+void Object::includeControlPointsRect(QRectF& rect) const
+{
+	if (type == Object::Path)
+	{
+		const PathObject* path = asPath();
+		int size = path->getCoordinateCount();
+		for (int i = 0; i < size; ++i)
+			rectInclude(rect, path->coords[i].toQPointF());
+	}
+	else if (type == Object::Text)
+	{
+		const TextObject* text = asText();
+		std::vector<QPointF> text_handles(text->controlPoints());
+		for (std::size_t i = 0; i < text_handles.size(); ++i)
+			rectInclude(rect, text_handles[i]);
 	}
 }
 
@@ -2209,16 +2203,37 @@ void PathObject::closeAllParts()
 	}
 }
 
-PathObject* PathObject::extractCoords(int start, int end)
+PathObject* PathObject::extractCoordsWithinPart(int start, int end)
 {
 	assert(start >= 0 && end < (int)coords.size());
 	PathObject* new_path = new PathObject(symbol);
 	new_path->setPatternRotation(getPatternRotation());
 	new_path->setPatternOrigin(getPatternOrigin());
 	
-	new_path->coords.reserve(end - start + 1);
-	for (int i = start; i <= end; ++i)
-		new_path->addCoordinate(getCoordinate(i));
+	int part_index = findPartIndexForIndex(start);
+	if (part_index != findPartIndexForIndex(end))
+	{
+		Q_ASSERT(!"extractCoordsWithinPart(): start and end are in different parts!");
+		return new_path;
+	}
+	PathPart& part = getPart(part_index);
+	
+	new_path->coords.reserve((start <= end) ? (end - start + 1) : (part.getNumCoords() - (start - end) + 1));
+	int i = start;
+	while (i != end)
+	{
+		MapCoord newCoord = getCoordinate(i);
+		newCoord.setClosePoint(false);
+		newCoord.setHolePoint(false);
+		new_path->addCoordinate(newCoord);
+		
+		++ i;
+		if (i > part.end_index)
+			i = part.start_index;
+	}
+	// Add last point
+	new_path->addCoordinate(getCoordinate(end));
+	
 	return new_path;
 }
 
@@ -2353,20 +2368,26 @@ void PathObject::convertRangeToCurves(int part_number, int start_index, int end_
 	++end_index;
 }
 
-bool PathObject::simplify(PathObject** undo_duplicate)
+bool PathObject::simplify(PathObject** undo_duplicate, float threshold)
 {
 	// Simple algorithm, trying to delete each point and keeping those where
 	// the deletion cost (= difference in the curves) is high
-	const float threshold = 0.12f;
 	const int num_iterations = 1;
 	
 	bool removed_a_point = false;
 	for (int iteration = 0; iteration < num_iterations; ++iteration)
 	{
+		// temp is the object in which we try to delete points,
+		// original is the original object before applying the iteration,
+		// this (the object on which the method is called) is the object to which
+		//    all successful deletions are applied.
 		PathObject* temp = duplicate()->asPath();
 		PathObject* original = duplicate()->asPath();
 		
-		// Note: curve handle indices may become incorrect
+		// original_indices provides a mapping from this object's indices to the
+		// equivalent original object indices in order to extract the relevant
+		// parts of the original object later for cost calculation.
+		// Note: curve handle indices may become incorrect, we don't need them.
 		std::vector< int > original_indices;
 		original_indices.resize(coords.size());
 		for (int i = 0, end = (int)coords.size(); i < end; ++i)
@@ -2374,91 +2395,141 @@ bool PathObject::simplify(PathObject** undo_duplicate)
 		
 		for (int part_number = 0; part_number < getNumParts(); ++part_number)
 		{
-			int start_coord = getPart(part_number).start_index;
-			if (!getPart(part_number).isClosed())
-				start_coord += getCoordinate(start_coord).isCurveStart() ? 3 : 1;
-			for (int c = start_coord; c < getPart(part_number).end_index; ++c)
+			// Use different step sizes to iterate through the points.
+			// If iterated over densely and continuously only, lines
+			// tend to be rotated into certain directions, changing the path shape.
+			for (int step_size = getPart(part_number).getNumCoords() / 2; step_size >= 1; step_size /= 2)
 			{
-				PathPart& part = getPart(part_number);
-				if (part.calcNumRegularPoints() <= 2 ||
-					(part.isClosed() && part.calcNumRegularPoints() <= 3))
-					break;
-				
-				// Delete the coordinate in temp
-				temp->deleteCoordinate(c, true, Settings::DeleteBezierPoint_RetainExistingShape);
-				
-				// Extract affected parts from this and temp, calculate cost,
-				// and decide whether to delete the point
-				int extract_start = shiftedCoordIndex(c, -1, part);
-				int extract_start_minus_3 = shiftedCoordIndex(c, -3, part);
-				if (extract_start_minus_3 >= 0 && getCoordinate(extract_start_minus_3).isCurveStart())
-					extract_start = extract_start_minus_3;
-				int extract_end = extract_start + (getCoordinate(extract_start).isCurveStart() ? 3 : 1);
-				
-				int temp_extract_start = temp->shiftedCoordIndex(c, -1, temp->getPart(part_number));
-				int temp_extract_start_minus_3 = temp->shiftedCoordIndex(c, -3, part);
-				if (temp_extract_start_minus_3 >= 0 && temp->getCoordinate(temp_extract_start_minus_3).isCurveStart())
-					temp_extract_start = temp_extract_start_minus_3;
-				int temp_extract_end = temp_extract_start + (temp->getCoordinate(temp_extract_start).isCurveStart() ? 3 : 1);
-				
-				PathObject* original_extract = original->extractCoords(original_indices[extract_start], original_indices[extract_end]);
-				PathObject* temp_extract = temp->extractCoords(temp_extract_start, temp_extract_end);
-				//float cost = original_extract->calcAverageDistanceTo(temp_extract);
-				float cost = original_extract->calcMaximumDistanceTo(temp_extract);
-				delete temp_extract;
-				delete original_extract;
-				
-				bool delete_point = cost < threshold;
-				
-				// Create undo duplicate?
-				if (delete_point && !removed_a_point)
+				int start_coord = getPart(part_number).start_index;
+				// Never delete the first point of open paths
+				if (!getPart(part_number).isClosed())
+					start_coord += getCoordinate(start_coord).isCurveStart() ? 3 : 1;
+				for (int c = start_coord; c < getPart(part_number).end_index; )
 				{
-					if (undo_duplicate)
-						*undo_duplicate = original;
-					removed_a_point = true;
-				}
-				
-				// Update coord index mapping
-				if (delete_point)
-				{
-					if (getCoordinate(c).isCurveStart() && getCoordinate(extract_start).isCurveStart())
+					PathPart& part = getPart(part_number);
+					if (part.calcNumRegularPoints() <= 2 ||
+						(part.isClosed() && part.calcNumRegularPoints() <= 3))
+						break;
+					
+					// Delete the coordinate in the temp object
+					temp->deleteCoordinate(c, true, Settings::DeleteBezierPoint_RetainExistingShape);
+					
+					// Extract the affected parts from this and temp, calculate cost (difference between them),
+					// and decide whether to delete the point
+					int extract_start = shiftedCoordIndex(c, -1, part);
+					int extract_start_minus_3 = shiftedCoordIndex(c, -3, part);
+					if (extract_start_minus_3 >= 0 && getCoordinate(extract_start_minus_3).isCurveStart())
+						extract_start = extract_start_minus_3;
+					int extract_end = c + (getCoordinate(c).isCurveStart() ? 3 : 1);
+					
+					int temp_extract_start = temp->shiftedCoordIndex(c, -1, temp->getPart(part_number));
+					int temp_extract_start_minus_3 = temp->shiftedCoordIndex(c, -3, temp->getPart(part_number));
+					if (temp_extract_start_minus_3 >= 0 && temp->getCoordinate(temp_extract_start_minus_3).isCurveStart())
+						temp_extract_start = temp_extract_start_minus_3;
+					int temp_extract_end = temp_extract_start + (temp->getCoordinate(temp_extract_start).isCurveStart() ? 3 : 1);
+					
+					// Debug check: start and end coords of the extracts should be at the same position
+					Q_ASSERT((int)original_indices.size() == getCoordinateCount()
+						&& extract_start >= 0 && extract_start < (int)original_indices.size()
+						&& extract_end >= 0 && extract_end < (int)original_indices.size());
+					Q_ASSERT(original->getCoordinate(original_indices[extract_start]).isPositionEqualTo(temp->getCoordinate(temp_extract_start)));
+					Q_ASSERT(original->getCoordinate(original_indices[extract_end]).isPositionEqualTo(temp->getCoordinate(temp_extract_end)));
+					
+					PathObject* original_extract = original->extractCoordsWithinPart(original_indices[extract_start], original_indices[extract_end]);
+					PathObject* temp_extract = temp->extractCoordsWithinPart(temp_extract_start, temp_extract_end);
+					//float cost = original_extract->calcAverageDistanceTo(temp_extract);
+					float cost = original_extract->calcMaximumDistanceTo(temp_extract);
+					delete temp_extract;
+					delete original_extract;
+					
+					bool delete_point = cost < threshold;
+					
+					// Create undo duplicate?
+					if (delete_point && !removed_a_point)
 					{
-						if (c == 0)
+						if (undo_duplicate)
+							*undo_duplicate = original;
+						removed_a_point = true;
+					}
+					
+					// Update coord index mapping - this must correspond to the
+					// logic in deleteCoordinate()!
+					if (delete_point)
+					{
+						if (getCoordinate(c).isCurveStart() && getCoordinate(extract_start).isCurveStart())
 						{
-							original_indices.erase(original_indices.begin() + 2);
-							original_indices.erase(original_indices.begin() + 1);
-							original_indices.erase(original_indices.begin() + 0);
+							int start_index = temp->getPart(part_number).start_index;
+							if (c == start_index)
+							{
+								original_indices.erase(original_indices.begin() + start_index+2);
+								original_indices.erase(original_indices.begin() + start_index+1);
+								original_indices.erase(original_indices.begin() + start_index);
+								if (! original_indices.empty())
+									original_indices[temp->getPart(part_number).end_index] = original_indices[start_index];
+							}
+							else
+							{
+								original_indices.erase(original_indices.begin() + c + 1);
+								original_indices.erase(original_indices.begin() + c);
+								original_indices.erase(original_indices.begin() + c - 1);
+							}
 						}
 						else
 						{
-							original_indices.erase(original_indices.begin() + c + 1);
 							original_indices.erase(original_indices.begin() + c);
-							original_indices.erase(original_indices.begin() + c - 1);
+							int start_index = temp->getPart(part_number).start_index;
+							if (c == start_index && ! original_indices.empty())
+							{
+								if (getCoordinate(c).isCurveStart())
+								{
+									// Curve handles are shifted to the end
+									original_indices.erase(original_indices.begin() + start_index+1);
+									original_indices.erase(original_indices.begin() + start_index);
+									original_indices.insert(original_indices.begin() + temp->getPart(part_number).end_index - 1, -1); // value doesn't matter
+									original_indices.insert(original_indices.begin() + temp->getPart(part_number).end_index, -1); // value doesn't matter
+								}
+								original_indices[temp->getPart(part_number).end_index] = original_indices[start_index];
+							}
 						}
+					}
+					
+					// Really delete the point if cost was below threshold, or reset temp
+					if (delete_point)
+						this->operator=(*(Object*)temp);
+					else
+						temp->operator=(*(Object*)this);
+					
+					// Advance to next point
+					if (step_size == 1)
+					{
+						if (delete_point)
+						{
+							// Test the new previous point (with the same index) again,
+							// so do not advance c.
+							// Below: check the case in which a straight line borders a curve.
+							int c_minus_1 = shiftedCoordIndex(c, -1, part);
+							if (c_minus_1 >= 0 && getCoordinate(c_minus_1).isCurveStart())
+								c = c_minus_1;
+						}
+						else
+							c += getCoordinate(c).isCurveStart() ? 3 : 1;
 					}
 					else
 					{
-						original_indices.erase(original_indices.begin() + c);
+						// Advance roughly by step_size (add offset and find a valid normal point).
+						// We will iterate over all points in the last iteration (see case above).
+						c += step_size;
+						if (c < getPart(part_number).end_index)
+						{
+							int c_minus_1 = shiftedCoordIndex(c, -1, part);
+							int c_minus_2 = shiftedCoordIndex(c, -2, part);
+							if (c_minus_1 >= 0 && getCoordinate(c_minus_1).isCurveStart())
+								c = c_minus_1 + 3;
+							else if (c_minus_2 >= 0 && getCoordinate(c_minus_2).isCurveStart())
+								c = c_minus_2 + 3;
+						}
 					}
 				}
-				
-				// Really delete the point, or reset temp
-				if (delete_point)
-					this->operator=(*(Object*)temp);
-				else
-					temp->operator=(*(Object*)this);
-				
-				// Advance to next point
-				if (delete_point)
-				{
-					int c_minus_3 = shiftedCoordIndex(c, -3, part);
-					if (c_minus_3 >= 0 && getCoordinate(c_minus_3).isCurveStart())
-						c = c_minus_3;
-					else
-						c = c - 1;
-				}
-				if (c >= 0 && getCoordinate(c).isCurveStart())
-					c += 2;
 			}
 		}
 		
