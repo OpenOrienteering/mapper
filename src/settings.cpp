@@ -85,7 +85,7 @@ Settings::Settings()
 	registerSetting(General_RecentFilesList, "recentFileList", QVariant(QStringList()));
 	registerSetting(General_OpenMRUFile, "openMRUFile", false);
 	registerSetting(General_Local8BitEncoding, "local_8bit_encoding", "Windows-1252");
-	registerSetting(General_NewOcd8Implementation, "new_ocd8_implementation", false);
+	registerSetting(General_NewOcd8Implementation, "new_ocd8_implementation", true);
 	registerSetting(General_StartDragDistance, "startDragDistance", start_drag_distance_default);
 	
 	registerSetting(HomeScreen_TipsVisible, "HomeScreen/tipsVisible", true);
