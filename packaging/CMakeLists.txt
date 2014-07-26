@@ -140,6 +140,7 @@ if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 	elseif(UNIX AND EXISTS /usr/bin/dpkg AND EXISTS /usr/bin/lsb_release)
 		# Packaging on Debian or similar
 		set(CPACK_GENERATOR_DEFAULT "DEB")
+		set(CPACK_DEBIAN_PACKAGE_NAME "openorienteering-mapper")
 		execute_process(
 		  COMMAND /usr/bin/lsb_release -sc 
 		  OUTPUT_VARIABLE CPACK_LSB_RELEASE 
@@ -246,38 +247,37 @@ if(Mapper_PACKAGE_QT)
 		  DESTINATION "${MAPPER_RUNTIME_DESTINATION}")
 	endif()
 	list(APPEND MAPPER_LIBS 
-	  Qt5Core Qt5Gui Qt5Widgets
-	  Qt5PrintSupport Qt5Network Qt5Xml)
+	  Qt5Core
+	  Qt5DBus
+	  Qt5Gui
+	  Qt5Network
+	  Qt5PrintSupport
+	  Qt5Widgets
+	  Qt5Xml
+	)
 	set(MAPPER_QT_PLUGINS
-	  accessible/libqtaccessiblequick
-	  accessible/libqtaccessiblewidgets
-	  designer/libqquickwidget
-	  generic/libqevdevkeyboardplugin
-	  generic/libqevdevmouseplugin
-	  generic/libqevdevtabletplugin
-	  generic/libqevdevtouchplugin
+	  accessible/qtaccessiblewidgets
+	  generic/qevdevkeyboardplugin
+	  generic/qevdevmouseplugin
+	  generic/qevdevtabletplugin
+	  generic/qevdevtouchplugin
 	  imageformats/qgif
-	  imageformats/libqicns
+	  imageformats/qicns
 	  imageformats/qico
 	  imageformats/qjp2
 	  imageformats/qjpeg
 	  imageformats/qtiff
 	  imageformats/qwebp
-	  platforminputcontexts/libcomposeplatforminputcontextplugin
-	  platforminputcontexts/libibusplatforminputcontextplugin
+	  platforminputcontexts/composeplatforminputcontextplugin
+	  platforminputcontexts/ibusplatforminputcontextplugin
 	  platforms/qcocoa
 	  platforms/qminimal
-	  platforms/libqoffscreen
-	  platforms/qwindowsplatforms/qxcb
-	  position/libqtposition_positionpoll
+	  platforms/qoffscreen
+	  platforms/qwindows
+	  platforms/qxcb
 	  printsupport/cocoaprintersupport
-	  printsupport/libcupsprintersupport
+	  printsupport/cupsprintersupport
 	  printsupport/windowsprintersupport
-	  sensorgestures/libqtsensorgestures_plugin
-	  sensorgestures/libqtsensorgestures_shakeplugin
-	  sensors/libqtsensors_dummy
-	  sensors/libqtsensors_generic
-	  sensors/libqtsensors_linuxsys
 	  CACHE INTERNAL "The plugins which need to be deployed"
 	)
 	# Cf. Qt5's qt_de.ts for dependencies - qt_de.ts would not load without them.
