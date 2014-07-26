@@ -132,7 +132,7 @@ TemplateWidget::TemplateWidget(Map* map, MapView* main_view, MapEditorController
 	all_templates_layout->addWidget(template_table, 1);
 	
 	QMenu* new_button_menu = new QMenu(this);
-	//new_button_menu->addAction(QIcon(":/images/open.png"), tr("Open..."), this, SLOT(openTemplate()));
+	new_button_menu->addAction(QIcon(":/images/open.png"), tr("Open..."), this, SLOT(openTemplate()));
 	new_button_menu->addAction(controller->getAction("reopentemplate"));
 	duplicate_action = new_button_menu->addAction(QIcon(":/images/tool-duplicate.png"), tr("Duplicate"), this, SLOT(duplicateTemplate()));
 #if 0
@@ -143,7 +143,7 @@ TemplateWidget::TemplateWidget(Map* map, MapView* main_view, MapEditorController
 #endif
 	
 	QToolButton* new_button = newToolButton(QIcon(":/images/plus.png"), tr("Add template..."));
-	new_button->setPopupMode(QToolButton::MenuButtonPopup);
+	new_button->setPopupMode(QToolButton::InstantPopup);
 	new_button->setMenu(new_button_menu);
 	
 	delete_button = newToolButton(QIcon(":/images/minus.png"), QString());
@@ -239,9 +239,6 @@ TemplateWidget::TemplateWidget(Map* map, MapView* main_view, MapEditorController
 	connect(template_table, SIGNAL(currentCellChanged(int,int,int,int)), this, SLOT(currentCellChange(int,int,int,int)));
 	connect(template_table, SIGNAL(cellDoubleClicked(int,int)), this, SLOT(cellDoubleClick(int,int)));
 	
-// 	connect(new_button_menu, SIGNAL(triggered(QAction*)), this, SLOT(newTemplate(QAction*)));
-	
-	connect(new_button, SIGNAL(clicked(bool)), this, SLOT(openTemplate()));
 	connect(delete_button, SIGNAL(clicked(bool)), this, SLOT(deleteTemplate()));
 	connect(move_up_button, SIGNAL(clicked(bool)), this, SLOT(moveTemplateUp()));
 	connect(move_down_button, SIGNAL(clicked(bool)), this, SLOT(moveTemplateDown()));
