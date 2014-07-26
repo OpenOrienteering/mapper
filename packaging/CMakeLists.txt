@@ -249,12 +249,35 @@ if(Mapper_PACKAGE_QT)
 	  Qt5Core Qt5Gui Qt5Widgets
 	  Qt5PrintSupport Qt5Network Qt5Xml)
 	set(MAPPER_QT_PLUGINS
-	  accessible/qtaccessiblewidgets
-	  iconengines/qsvgicon
-	  imageformats/qgif imageformats/qico imageformats/qjpeg imageformats/qmng
-	  imageformats/qsvg imageformats/qtga imageformats/qtiff imageformats/qwbmp
-	  platforms/qminimal platforms/qwindows platforms/qcocoa platforms/qxcb
-	  printsupport/windowsprintersupport printsupport/cocoaprintersupport printsupport/cupsprintersupport
+	  accessible/libqtaccessiblequick
+	  accessible/libqtaccessiblewidgets
+	  designer/libqquickwidget
+	  generic/libqevdevkeyboardplugin
+	  generic/libqevdevmouseplugin
+	  generic/libqevdevtabletplugin
+	  generic/libqevdevtouchplugin
+	  imageformats/qgif
+	  imageformats/libqicns
+	  imageformats/qico
+	  imageformats/qjp2
+	  imageformats/qjpeg
+	  imageformats/qtiff
+	  imageformats/qwebp
+	  platforminputcontexts/libcomposeplatforminputcontextplugin
+	  platforminputcontexts/libibusplatforminputcontextplugin
+	  platforms/qcocoa
+	  platforms/qminimal
+	  platforms/libqoffscreen
+	  platforms/qwindowsplatforms/qxcb
+	  position/libqtposition_positionpoll
+	  printsupport/cocoaprintersupport
+	  printsupport/libcupsprintersupport
+	  printsupport/windowsprintersupport
+	  sensorgestures/libqtsensorgestures_plugin
+	  sensorgestures/libqtsensorgestures_shakeplugin
+	  sensors/libqtsensors_dummy
+	  sensors/libqtsensors_generic
+	  sensors/libqtsensors_linuxsys
 	  CACHE INTERNAL "The plugins which need to be deployed"
 	)
 	# Cf. Qt5's qt_de.ts for dependencies - qt_de.ts would not load without them.
