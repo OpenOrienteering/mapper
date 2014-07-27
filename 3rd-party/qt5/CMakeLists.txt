@@ -286,11 +286,11 @@ function(WRITE_QT_CONF)
 endfunction()
 
 # Cross-compiling requires an extra host build in order to get 
-# qcollectiongenerator
-# Other system may have trouble with correct plugin version
-# when building newer version than installed.
+# qcollectiongenerator.
+# In addition, Linux may have trouble with loading the correct platform plugin
+# version when building a newer Qt version than installed.
 
-if(UNIX OR (CMAKE_CROSSCOMPILING AND NOT "${QT5_PLATFORM}" MATCHES "android"))
+if((UNIX AND NOT APPLE) OR (CMAKE_CROSSCOMPILING AND NOT "${QT5_PLATFORM}" MATCHES "android"))
 	set(QT5_EXTRA_HOST_DIR "${BINARY_DIR}/../Qt5-build-host")
 	
 	configure_file(qt5-config-host.in qt5-config-host.new @ONLY)
