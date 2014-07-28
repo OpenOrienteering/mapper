@@ -288,7 +288,8 @@ ReplaceObjectsUndoStep::ReplaceObjectsUndoStep(Map* map)
 
 ReplaceObjectsUndoStep::~ReplaceObjectsUndoStep()
 {
-	; // nothing
+	// Save the objects from being deleted in ~ObjectCreatingUndoStep()
+	objects.clear();
 }
 
 UndoStep* ReplaceObjectsUndoStep::undo()
@@ -306,7 +307,6 @@ UndoStep* ReplaceObjectsUndoStep::undo()
 		part->setObject(objects[i], modified_objects[i], false);
 	}
 	
-	objects.clear();
 	return undo_step;
 }
 
@@ -368,7 +368,8 @@ AddObjectsUndoStep::AddObjectsUndoStep(Map* map)
 
 AddObjectsUndoStep::~AddObjectsUndoStep()
 {
-	; // nothing
+	// Save the objects from being deleted in ~ObjectCreatingUndoStep()
+	objects.clear();
 }
 
 UndoStep* AddObjectsUndoStep::undo()
@@ -393,7 +394,6 @@ UndoStep* AddObjectsUndoStep::undo()
 		part->addObject(objects[order[i].first], order[i].second);
 	}
 	
-	objects.clear();
 	return undo_step;
 }
 
