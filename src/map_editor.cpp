@@ -2152,14 +2152,18 @@ void MapEditorController::switchSymbolClicked()
 		split_up = true;
 	
 	if (close_paths)
+	{
 		replace_step = new ReplaceObjectsUndoStep(map);
+	}
 	else if (split_up)
 	{
 		add_step = new AddObjectsUndoStep(map);
 		delete_step = new DeleteObjectsUndoStep(map);
 	}
 	else
+	{
 		switch_step = new SwitchSymbolUndoStep(map);
+	}
 	
 	Map::ObjectSelection::const_iterator it_end = map->selectedObjectsEnd();
 	for (Map::ObjectSelection::const_iterator it = map->selectedObjectsBegin(); it != it_end; ++it)
@@ -2167,22 +2171,31 @@ void MapEditorController::switchSymbolClicked()
 		Object* object = *it;
 		
 		if (close_paths)
+		{
 			replace_step->addObject(part->findObjectIndex(object), object->duplicate());
+		}
 		else if (split_up)
 		{
 			add_step->addObject(part->findObjectIndex(object), object);
 			old_objects.push_back(object);
 		}
 		else
-			switch_step->addObject(part->findObjectIndex(object), (object)->getSymbol());
+		{
+			switch_step->addObject(part->findObjectIndex(object), object->getSymbol());
+		}
 		
 		if (!split_up)
+		{
 			object->setSymbol(symbol, true);
+		}
+		
 		if (object->getType() == Object::Path)
 		{
 			PathObject* path_object = object->asPath();
 			if (close_paths)
+			{
 				path_object->closeAllParts();
+			}
 			else if (split_up)
 			{
 				for (int path_part = 0; path_part < path_object->getNumParts(); ++path_part)
@@ -2191,8 +2204,15 @@ void MapEditorController::switchSymbolClicked()
 					new_object->setSymbol(symbol, true);
 					new_objects.push_back(new_object);
 				}
+				
+				Q_ASSERT(!new_objects.empty());
+				if (!new_objects.empty())
+				{
+					new_objects.front()->setTags(path_object->tags());
+				}
 			}
 		}
+		
 		object->update(true);
 	}
 	
