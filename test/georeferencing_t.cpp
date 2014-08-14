@@ -86,7 +86,7 @@ void GeoreferencingTest::testProjection()
 {
 #if PJ_VERSION >= 480
 	const double max_dist_error = 2.2; // meter
-	const double max_angl_error = 0.00002; // degrees
+	const double max_angl_error = 0.00004; // degrees
 #else
 	const double max_dist_error = 5.5; // meter
 	const double max_angl_error = 0.00007; // degrees
