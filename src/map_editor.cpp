@@ -2322,7 +2322,7 @@ void MapEditorController::selectObjectsClicked(bool select_exclusively)
 
 	bool object_selected = false;	
 	MapPart* part = map->getCurrentPart();
-	for (int i = 0, size = map->getNumObjects(); i < size; ++i)
+	for (int i = 0, size = part->getNumObjects(); i < size; ++i)
 	{
 		Object* object = part->getObject(i);
 		if (symbol_widget->isSymbolSelected(object->getSymbol()) && !(!select_exclusively && map->isObjectSelected(object)))
@@ -2349,7 +2349,7 @@ void MapEditorController::deselectObjectsClicked()
 	bool selection_changed = false;
 	
 	MapPart* part = map->getCurrentPart();
-	for (int i = 0, size = map->getNumObjects(); i < size; ++i)
+	for (int i = 0, size = part->getNumObjects(); i < size; ++i)
 	{
 		Object* object = part->getObject(i);
 		if (symbol_widget->isSymbolSelected(object->getSymbol()) && map->isObjectSelected(object))
