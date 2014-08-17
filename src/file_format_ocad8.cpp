@@ -1844,6 +1844,9 @@ void OCAD8FileExport::exportCommonSymbolFields(Symbol* symbol, OCADSymbol* ocad_
 	ocad_symbol->number = symbol->getNumberComponent(0) * 10;
 	if (symbol->getNumberComponent(1) >= 0)
 		ocad_symbol->number += (symbol->getNumberComponent(1) % 10);
+	// Symbol number 0.0 is not valid
+	if (ocad_symbol->number == 0)
+		ocad_symbol->number = 1;
 	// Ensure uniqueness of the symbol number
 	while (symbol_numbers.find(ocad_symbol->number) != symbol_numbers.end())
 		++ocad_symbol->number;
@@ -1905,8 +1908,7 @@ int OCAD8FileExport::getPatternSize(PointSymbol* point)
 			if (point_symbol->getOuterWidth() > 0 && point_symbol->getOuterColor() != NULL)
 				++factor;
 		}
-		npts += factor * point->getElementObject(i)->getRawCoordinateVector().size();
-		npts += (factor > 0) ? 2 : 0;
+		npts += factor * (2 + point->getElementObject(i)->getRawCoordinateVector().size());
 	}
 	if (point->getInnerRadius() > 0 && point->getInnerColor() != NULL)
 		npts += 2 + 1;
