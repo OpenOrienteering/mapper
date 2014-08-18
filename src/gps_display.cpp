@@ -38,10 +38,11 @@
 
 GPSDisplay::GPSDisplay(MapWidget* widget, const Georeferencing& georeferencing)
  : QObject()
+ , visible(false)
+ , source(NULL)
+ , widget(widget)
  , georeferencing(georeferencing)
 {
-	this->widget = widget;
-	
 	gps_updated = false;
 	tracking_lost = false;
 	has_valid_position = false;
@@ -66,13 +67,12 @@ GPSDisplay::GPSDisplay(MapWidget* widget, const Georeferencing& georeferencing)
 	connect(source, SIGNAL(positionUpdated(const QGeoPositionInfo&)), this, SLOT(positionUpdated(const QGeoPositionInfo&)), Qt::QueuedConnection);
 	connect(source, SIGNAL(error(QGeoPositionInfoSource::Error)), this, SLOT(error(QGeoPositionInfoSource::Error)));
 	connect(source, SIGNAL(updateTimeout()), this, SLOT(updateTimeout()));
-#else
-	source = NULL;
-	
+#elif defined(MAPPER_DEVELOPMENT_BUILD)
 	// DEBUG
 	QTimer* debug_timer = new QTimer(this);
 	connect(debug_timer, SIGNAL(timeout()), this, SLOT(debugPositionUpdate()));
 	debug_timer->start(500);
+	visible = true;
 #endif
 
 	widget->setGPSDisplay(this);
