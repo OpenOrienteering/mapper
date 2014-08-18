@@ -2903,6 +2903,7 @@ void MapEditorController::enableGPSDisplay(bool enable)
 						// at this point; simply create a new file.
 						TemplateTrack* track = static_cast<TemplateTrack*>(map->getTemplate(i));
 						track->configureForGPSTrack();
+						track->setHasUnsavedChanges(true);
 					}
 					break;
 				}
