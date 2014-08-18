@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="de_DE">
+<TS version="2.1" language="de_DE">
 <context>
     <name>AboutDialog</name>
     <message>
@@ -3536,7 +3536,7 @@ gewählt</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="3072"/>
         <source>Merge this part with</source>
-        <translation>Diese Teil zusammenfügen mit</translation>
+        <translation>Dieses Teil zusammenfügen mit</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="3078"/>
