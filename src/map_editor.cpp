@@ -32,6 +32,7 @@
 #endif
 
 #include "core/georeferencing.h"
+#include "gui/configure_grid_dialog.h"
 #include "gui/georeferencing_dialog.h"
 #include "gui/widgets/action_grid_bar.h"
 #include "gui/widgets/symbol_widget.h"
@@ -43,7 +44,6 @@
 #include "map_dialog_rotate.h"
 #include "map_dialog_scale.h"
 #include "map_editor_activity.h"
-#include "map_grid.h"
 #include "map_part_undo.h"
 #include "object_undo.h"
 #include "map_widget.h"
@@ -1449,18 +1449,18 @@ void MapEditorController::spotColorPresenceChanged(bool has_spot_colors)
 void MapEditorController::showGrid()
 {
 	main_view->setGridVisible(show_grid_act->isChecked());
-	map->updateAllMapWidgets();
+	main_view->updateAllMapWidgets();
 }
 
 void MapEditorController::configureGrid()
 {
-	ConfigureGridDialog dialog(window, map, main_view);
+	ConfigureGridDialog dialog(window, map->getGrid(), show_grid_act->isChecked());
 	dialog.setWindowModality(Qt::WindowModal);
 	if (dialog.exec() == QDialog::Accepted)
 	{
-		show_grid_act->setChecked(main_view->isGridVisible());
-		map->updateAllMapWidgets();
-		map->setOtherDirty();
+		map->setGrid(dialog.grid());
+		if (dialog.gridVisible() != show_grid_act->isChecked())
+			show_grid_act->trigger();
 	}
 }
 

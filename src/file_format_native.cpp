@@ -23,11 +23,11 @@
 
 #include "core/georeferencing.h"
 #include "core/map_color.h"
+#include "core/map_grid.h"
 #include "core/map_printer.h"
 #include "core/map_view.h"
 #include "file_import_export.h"
 #include "map.h"
-#include "map_grid.h"
 #include "symbol.h"
 #include "template.h"
 #include "undo_manager.h"
@@ -193,7 +193,7 @@ void NativeFileImport::import(bool load_symbols_only) throw (FileFormatException
 	}
 	
 	if (version >= 24)
-		map->getGrid().load(stream, version);
+		map->setGrid(MapGrid().load(stream, version));
 	
 	if (version >= 25)
 	{

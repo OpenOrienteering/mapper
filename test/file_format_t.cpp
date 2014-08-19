@@ -25,7 +25,7 @@
 #include "../src/file_import_export.h"
 #include "../src/core/georeferencing.h"
 #include "../src/global.h"
-#include "../src/map_grid.h"
+#include "../src/core/map_grid.h"
 #include "../src/mapper_resource.h"
 #include "../src/object.h"
 #include "../src/template.h"
@@ -217,19 +217,10 @@ bool FileFormatTest::compareMaps(Map* a, Map* b, QString& error)
 		return false;
 	}
 	
-	MapGrid* a_grid = &a->getGrid();
-	MapGrid* b_grid = &b->getGrid();
+	const MapGrid* a_grid = &a->getGrid();
+	const MapGrid* b_grid = &b->getGrid();
 	
-	if (a_grid->isSnappingEnabled() != b_grid->isSnappingEnabled() ||
-		a_grid->getColor() != b_grid->getColor() ||
-		a_grid->getDisplayMode() != b_grid->getDisplayMode() ||
-		a_grid->getAlignment() != b_grid->getAlignment() ||
-		qAbs(a_grid->getAdditionalRotation() - b_grid->getAdditionalRotation()) > 1e-05 ||
-		a_grid->getUnit() != b_grid->getUnit() ||
-		a_grid->getHorizontalSpacing() != b_grid->getHorizontalSpacing() ||
-		a_grid->getVerticalSpacing() != b_grid->getVerticalSpacing() ||
-		a_grid->getHorizontalOffset() != b_grid->getHorizontalOffset() ||
-		a_grid->getVerticalOffset() != b_grid->getVerticalOffset())
+	if (a_grid != b_grid || !(a_grid == b_grid))
 	{
 		error = "The map grid differs.";
 		return false;

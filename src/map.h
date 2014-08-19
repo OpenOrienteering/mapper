@@ -33,6 +33,7 @@
 
 #include "global.h"
 #include "map_coord.h"
+#include "core/map_grid.h"
 #include "map_part.h"
 
 QT_BEGIN_NAMESPACE
@@ -1054,8 +1055,16 @@ public:
 	/** Returns the map's georeferencing object. */
 	inline const Georeferencing& getGeoreferencing() const {return *georeferencing;}
 	
-	/** Returns the map's grid object. */
-	inline MapGrid& getGrid() {return *grid;}
+	/**
+	 * Sets the map's grid settings from the given object and
+	 * may set the map to have unsaved changes.
+	 */
+	void setGrid(const MapGrid& grid);
+	
+	/**
+	 * Returns the map's grid settings.
+	 */
+	const MapGrid& getGrid() const;
 	
 	/**
 	 * TODO: These two options should really be view options, but are not due
@@ -1247,7 +1256,6 @@ private:
 	typedef std::vector<Template*> TemplateVector;
 	typedef std::vector<MapPart*> PartVector;
 	typedef std::vector<MapWidget*> WidgetVector;
-	typedef std::vector<MapView*> ViewVector;
 	
 	class MapColorSet : public QObject
 	{
@@ -1306,7 +1314,6 @@ private:
 	QScopedPointer<UndoManager> undo_manager;
 	std::size_t current_part_index;
 	WidgetVector widgets;
-	ViewVector views;
 	QScopedPointer<MapRenderables> renderables;
 	QScopedPointer<MapRenderables> selection_renderables;
 	
@@ -1314,7 +1321,7 @@ private:
 	
 	Georeferencing* georeferencing;
 	
-	MapGrid* grid;
+	MapGrid grid;
 	
 	bool area_hatching_enabled;
 	bool baseline_view_enabled;
@@ -1441,6 +1448,12 @@ inline
 std::size_t Map::getCurrentPartIndex() const
 {
 	return current_part_index;
+}
+
+inline
+const MapGrid& Map::getGrid() const
+{
+	return grid;
 }
 
 #endif

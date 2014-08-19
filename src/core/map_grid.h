@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2014 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -18,71 +19,64 @@
  */
 
 
-#ifndef _OPENORIENTEERING_MAP_DIALOG_GRID_H_
-#define _OPENORIENTEERING_MAP_DIALOG_GRID_H_
+#ifndef _OPENORIENTEERING_MAP_GRID_H_
+#define _OPENORIENTEERING_MAP_GRID_H_
 
-#include <map>
-
-#include <QDialog>
-
-#include "map_coord.h"
+#include <QColor>
 
 QT_BEGIN_NAMESPACE
-class QCheckBox;
-class QComboBox;
-class QDoubleSpinBox;
-class QLabel;
-class QLineEdit;
-class QRadioButton;
+class QPainter;
 class QXmlStreamReader;
 class QXmlStreamWriter;
 QT_END_NAMESPACE
 
 class Map;
-class MapView;
+class MapCoordF;
 
 
 /**
  * Class for displaying a grid on a map.
+ * 
  * Each map has an instance of this class which can be retrieved with map->getGrid().
- * The grid's visibility is defined per-view in the MapView.
+ * The grid's visibility is defined per MapView.
  */
 class MapGrid
 {
 public:
-	/** Options for aligning the grid with different north directions. */
+	/** Options for aligning the grid with different north concepts. */
 	enum Alignment
 	{
 		MagneticNorth = 0,
-		GridNorth = 1,
-		TrueNorth = 2
+		GridNorth     = 1,
+		TrueNorth     = 2
 	};
 	
 	/** Different units for specifying the grid interval. */
 	enum Unit
 	{
 		MillimetersOnMap = 0,
-		MetersInTerrain = 1
+		MetersInTerrain  = 1
 	};
 	
 	/** Different display modes for map grids. */
 	enum DisplayMode
 	{
-		AllLines = 0,
+		AllLines        = 0,
 		HorizontalLines = 1,
-		VerticalLines = 2
+		VerticalLines   = 2
 	};
 	
 	/** Creates a new map grid with default settings. */
 	MapGrid();
 	
 	/** Loads the grid in the old "native" format from the given file. */
-	void load(QIODevice* file, int version);
+	const MapGrid& load(QIODevice* file, int version);
 	
 	/** Saves the grid in xml format to the given stream. */
-	void save(QXmlStreamWriter& xml);
+	void save(QXmlStreamWriter& xml) const;
+	
 	/** Loads the grid in xml format from the given stream. */
-	void load(QXmlStreamReader& xml);
+	const MapGrid& load(QXmlStreamReader& xml);
 	
 	/**
 	 * Draws the map grid.
@@ -94,7 +88,7 @@ public:
 	 * @param on_screen If true, uses a cosmetic pen (one pixel wide),
 	 *                  otherwise uses a 0.1 mm wide pen.
 	 */
-	void draw(QPainter* painter, QRectF bounding_box, Map* map, bool on_screen);
+	void draw(QPainter* painter, QRectF bounding_box, Map* map, bool on_screen) const;
 	
 	/**
 	 * Calculates the "final" parameters with the following properties:
@@ -105,10 +99,10 @@ public:
 		double& final_horz_spacing, double& final_vert_spacing,
 		double& final_horz_offset, double& final_vert_offset,
 		double& final_rotation, Map* map
-	);
+	) const;
 	
 	/** Returns the grid point which is closest to the given position. */
-	MapCoordF getClosestPointOnGrid(MapCoordF position, Map* map);
+	MapCoordF getClosestPointOnGrid(MapCoordF position, Map* map) const;
 	
 	// Getters / Setters
 	
@@ -150,48 +144,22 @@ private:
 	double horz_offset;
 	double vert_offset;
 	
-	struct ProcessLine
-	{
-		QPainter* painter;
-		void processLine(QPointF a, QPointF b);
-	};
+	friend bool operator==(const MapGrid& lhs, const MapGrid& rhs);
 };
 
+/**
+ * Compares two map grid objects.
+ * 
+ * @return true if the objects are equal, false otherwise
+ */
+bool operator==(const MapGrid& lhs, const MapGrid& rhs);
 
-class ConfigureGridDialog : public QDialog
-{
-Q_OBJECT
-public:
-	ConfigureGridDialog(QWidget* parent, Map* map, MapView* main_view);
-	
-private slots:
-	void chooseColor();
-	void updateColorDisplay();
-	void okClicked();
-	void updateStates();
-	void showHelp();
-	
-private:
-	QCheckBox* show_grid_check;
-	QCheckBox* snap_to_grid_check;
-	QPushButton* choose_color_button;
-	QRgb current_color;
-	QComboBox* display_mode_combo;
+/**
+ * Compares two map grid objects for inequality.
+ * 
+ * @return true if the objects are not equal, false otherwise
+ */
+bool operator!=(const MapGrid& lhs, const MapGrid& rhs);
 
-	QRadioButton* mag_north_radio;
-	QRadioButton* grid_north_radio;
-	QRadioButton* true_north_radio;
-	QDoubleSpinBox* additional_rotation_edit;
-	
-	QComboBox* unit_combo;
-	QDoubleSpinBox* horz_spacing_edit;
-	QDoubleSpinBox* vert_spacing_edit;
-	QLabel* origin_label;
-	QDoubleSpinBox* horz_offset_edit;
-	QDoubleSpinBox* vert_offset_edit;
-	
-	Map* map;
-	MapView* main_view;
-};
 
 #endif

@@ -41,7 +41,6 @@
 #include "file_format_registry.h"
 #include "file_import_export.h"
 #include "map_editor.h"
-#include "map_grid.h"
 #include "map_part.h"
 #include "object_undo.h"
 #include "map_widget.h"
@@ -381,7 +380,6 @@ Map::Map()
 	
 	color_set = NULL;
 	georeferencing = new Georeferencing();
-	grid = new MapGrid();
 	area_hatching_enabled = false;
 	baseline_view_enabled = false;
 	
@@ -417,7 +415,6 @@ Map::~Map()
 	
 	color_set->dereference();
 	
-	delete grid;
 	delete georeferencing;
 }
 
@@ -987,7 +984,7 @@ void Map::drawColorSeparation(QPainter* painter, QRectF bounding_box, bool force
 
 void Map::drawGrid(QPainter* painter, QRectF bounding_box, bool on_screen)
 {
-	grid->draw(painter, bounding_box, this, on_screen);
+	grid.draw(painter, bounding_box, this, on_screen);
 }
 
 void Map::drawTemplates(QPainter* painter, QRectF bounding_box, int first_template, int last_template, MapView* view, bool on_screen)
@@ -2228,6 +2225,21 @@ void Map::setGeoreferencing(const Georeferencing& georeferencing)
 {
 	*this->georeferencing = georeferencing;
 	setOtherDirty();
+}
+
+void Map::setGrid(const MapGrid &grid)
+{
+	if (grid != this->grid)
+	{
+		this->grid = grid;
+		for (WidgetVector::iterator widget = widgets.begin(), end = widgets.end(); widget != end; ++widget)
+		{
+			MapView* view = (*widget)->getMapView();
+			if (view && view->isGridVisible())
+				view->updateAllMapWidgets();
+		}
+		setOtherDirty();
+	}
 }
 
 const MapPrinterConfig& Map::printerConfig()

@@ -32,11 +32,11 @@
 
 #include "core/georeferencing.h"
 #include "core/map_color.h"
+#include "core/map_grid.h"
 #include "core/map_printer.h"
 #include "core/map_view.h"
 #include "file_import_export.h"
 #include "map.h"
-#include "map_grid.h"
 #include "object.h"
 #include "object_text.h"
 #include "settings.h"
@@ -751,7 +751,7 @@ void XMLFileImporter::importView()
 	while (xml.readNextStartElement())
 	{
 		if (xml.name() == literal::grid)
-			map->getGrid().load(xml);
+			map->setGrid(MapGrid().load(xml));
 		else if (xml.name() == literal::map_view)
 			view->load(xml);
 		else

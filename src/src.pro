@@ -40,7 +40,6 @@ HEADERS += \
   map_dialog_rotate.h \
   map_editor.h \
   map_editor_activity.h \
-  map_grid.h \
   object_undo.h \
   map_widget.h \
   settings.h \
@@ -95,6 +94,7 @@ HEADERS += \
   fileformats/ocd_file_format_p.h \
   gui/about_dialog.h \
   gui/color_dialog.h \
+  gui/configure_grid_dialog.h \
   gui/georeferencing_dialog.h \
   gui/home_screen_controller.h \
   gui/main_window.h \
@@ -143,7 +143,6 @@ SOURCES += \
   map_dialog_new.cpp \
   map_dialog_scale.cpp \
   map_dialog_rotate.cpp \
-  map_grid.cpp \
   color_dock_widget.cpp \
   symbol.cpp \
   symbol_dialog_replace.cpp \
@@ -212,6 +211,7 @@ SOURCES += \
   core/georeferencing.cpp \
   core/latlon.cpp \
   core/map_color.cpp \
+  core/map_grid.cpp \
   core/map_printer.cpp \
   core/map_view.cpp \
   fileformats/ocd_file_format.cpp \
@@ -222,6 +222,7 @@ SOURCES += \
   gui/home_screen_controller.cpp \
   gui/main_window.cpp \
   gui/main_window_controller.cpp \
+  gui/configure_grid_dialog.cpp \
   gui/modifier_key.cpp \
   gui/point_handles.cpp \
   gui/print_progress_dialog.cpp \
