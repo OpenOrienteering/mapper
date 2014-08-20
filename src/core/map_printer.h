@@ -74,6 +74,12 @@ public:
 	qreal v_overlap;
 };
 
+/** Returns true iff the MapPrinterPageFormat values are equal. */
+bool operator==(const MapPrinterPageFormat& lhs, const MapPrinterPageFormat& rhs);
+
+/** Returns true iff the MapPrinterPageFormat values are not equal. */
+bool operator!=(const MapPrinterPageFormat& lhs, const MapPrinterPageFormat& rhs);
+
 
 
 /** MapPrinterOptions control how the map is rendered. */
@@ -323,24 +329,10 @@ protected:
 
 //### MapPrinterPageFormat inline code ###
 
-/** Returns true iff the MapPrinterPageFormat values are not equal. */
 inline
 bool operator!=(const MapPrinterPageFormat& lhs, const MapPrinterPageFormat& rhs)
 {
-	return
-	  lhs.paper_size       != rhs.paper_size       ||
-	  lhs.orientation      != rhs.orientation      ||
-	  lhs.paper_dimensions != rhs.paper_dimensions ||
-	  lhs.page_rect        != rhs.page_rect        ||
-	  lhs.h_overlap        != rhs.h_overlap        ||
-	  lhs.v_overlap        != rhs.v_overlap;
-}
-
-/** Returns true iff the MapPrinterPageFormat values are equal. */
-inline
-bool operator==(const MapPrinterPageFormat& lhs, const MapPrinterPageFormat& rhs)
-{
-	return !(lhs != rhs);
+	return !(lhs == rhs);
 }
 
 

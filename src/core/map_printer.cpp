@@ -82,7 +82,19 @@ MapPrinterPageFormat::MapPrinterPageFormat(QSizeF page_rect_size, qreal margin)
 	paper_dimensions = page_rect.size() + QSizeF(double_margin, double_margin);
 }
 
-
+bool operator==(const MapPrinterPageFormat& lhs, const MapPrinterPageFormat& rhs)
+{
+	return  lhs.paper_size  == rhs.paper_size &&
+	        lhs.orientation == rhs.orientation &&
+	        fabs(lhs.h_overlap - rhs.h_overlap) < 0.05 &&
+	        fabs(lhs.v_overlap - rhs.v_overlap) < 0.05 &&
+	        fabs(lhs.page_rect.top() - rhs.page_rect.top()) < 0.05 &&
+	        fabs(lhs.page_rect.left() - rhs.page_rect.left()) < 0.05 &&
+	        fabs(lhs.page_rect.right() - rhs.page_rect.right()) < 0.05 &&
+	        fabs(lhs.page_rect.bottom() - rhs.page_rect.bottom()) < 0.05 &&
+	        fabs(lhs.paper_dimensions.width() - rhs.paper_dimensions.width()) < 0.05 &&
+	        fabs(lhs.paper_dimensions.height() - rhs.paper_dimensions.width()) < 0.05;
+}
 
 // ### MapPrinterOptions ###
 
