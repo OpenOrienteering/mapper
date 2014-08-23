@@ -36,6 +36,19 @@ typedef void* projPJ;
 
 class FileFormatException;
 
+
+
+#if defined(Q_OS_ANDROID)
+
+/**
+ * Registers a file finder function needed by Proj.4 on Android.
+ */
+extern "C" void registerProjFileHelper();
+
+#endif
+
+
+
 /**
  * A Georeferencing defines a mapping between "map coordinates" (as measured on
  * paper) and coordinates in the real world. It provides functions for 

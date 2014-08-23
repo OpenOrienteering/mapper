@@ -660,3 +660,56 @@ QDebug operator<<(QDebug dbg, const Georeferencing &georef)
 	return dbg.space();
 }
 
+#if defined(Q_OS_ANDROID)
+
+QScopedPointer<QTemporaryDir> temp_dir;  // removed upon destruction
+QByteArray c_string;  // buffer for const char*
+
+extern "C"
+{
+	/**
+	 * @brief Provides required files for Proj.4 library.
+	 * 
+	 * This C function implements the interface required by pj_set_finder().
+	 * 
+	 * This functions checks if the requested file name is available in a
+	 * temporary directory. If not, it tries to copy the file from the proj
+	 * subfolder of the assets folder to this temporary directory.
+	 * 
+	 * If the file exists in the temporary folder (or copying was successful)
+	 * this function returns the full path of this file as a C string.
+	 * This string becomes invalid the next time this function is called.
+	 * Otherwise it returns NULL.
+	 */
+	const char* projFileHelperAndroid(const char *name)
+	{
+		if (temp_dir->isValid())
+		{
+			QString path = QDir(temp_dir->path()).filePath(name);
+			QFile file(path);
+			if (file.exists() || QFile::copy(QString("assets:/proj/") % QLatin1String(name), path))
+			{
+				c_string = path.toLocal8Bit();
+				return c_string.constData();
+			}
+		}
+		qDebug() << "Could not projection data file" << name;
+		return NULL;
+	}
+	
+	void registerProjFileHelper()
+	{
+		// TemporaryDir must not be constructed before QApplication
+		temp_dir.reset(new QTemporaryDir());
+		if (temp_dir->isValid())
+		{
+			pj_set_finder(&projFileHelperAndroid);
+		}
+		else
+		{
+			qDebug() << "Could not create a temporary directory for projection data.";
+		}
+	}
+}
+
+#endif
