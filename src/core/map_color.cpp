@@ -102,6 +102,7 @@ MapColor* MapColor::duplicate() const
 	copy->spot_color_method = spot_color_method;
 	copy->cmyk_color_method = cmyk_color_method;
 	copy->rgb_color_method  = rgb_color_method;
+	copy->flags = flags;
 	copy->spot_color_name = spot_color_name;
 	copy->components = components;
 	return copy;
@@ -273,15 +274,18 @@ void MapColor::setSpotColorComposition(const SpotColorComponents& components)
 
 void MapColor::setKnockout(bool flag)
 {
-	if (flag)
+	if (spot_color_method != MapColor::UndefinedMethod)
 	{
-		if (!getKnockout())
-			flags += MapColor::Knockout;
+		if (flag)
+		{
+			if (!getKnockout())
+				flags += MapColor::Knockout;
+		}
+		else if (getKnockout())
+			flags -= MapColor::Knockout;
+		
+		Q_ASSERT(getKnockout() == flag);
 	}
-	else if (getKnockout())
-		flags -= MapColor::Knockout;
-	
-	Q_ASSERT(getKnockout() == flag);
 }
 
 bool MapColor::getKnockout() const

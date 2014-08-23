@@ -145,8 +145,18 @@ void MapColorTest::equalsTest()
 	QVERIFY(black_1.equals(black, false));
 	QVERIFY(!black_1.equals(black, true));
 	
-	// Difference in knockout attribute.
+	// Difference in knockout attribute, spot color method undefined
+	QVERIFY(black_1.getSpotColorMethod() == MapColor::UndefinedMethod);
 	black_1.setKnockout(!black.getKnockout());
+	QVERIFY(!black_1.getKnockout()); // must not be set
+	QVERIFY(black_1.equals(black, false));
+	QVERIFY(!black_1.equals(black, true));
+	
+	// Difference in knockout attribute, spot color method defined
+	black_1.setSpotColorName("BLACK");
+	QVERIFY(black_1.getSpotColorMethod() == MapColor::SpotColor);
+	black_1.setKnockout(!black.getKnockout());
+	QVERIFY(black_1.getKnockout()); // must not be set
 	QVERIFY(!black_1.equals(black, false));
 	QVERIFY(!black_1.equals(black, true));
 	
@@ -167,6 +177,8 @@ void MapColorTest::equalsTest()
 
 void MapColorTest::spotColorTest()
 {
+	QScopedPointer<MapColor> duplicate;
+	
 	// Initalizing a spot color.
 	MapColor spot_cyan("Cyan", 0);
 	spot_cyan.setSpotColorName("CYAN");
@@ -184,6 +196,8 @@ void MapColorTest::spotColorTest()
 	// Cloning a spot color.
 	MapColor spot_cyan_copy(spot_cyan);
 	QCOMPARE(spot_cyan_copy, spot_cyan);
+	duplicate.reset(spot_cyan_copy.duplicate());
+	QCOMPARE(*duplicate, spot_cyan_copy);
 	
 	// Renaming the clone's spot color name.
 	spot_cyan_copy.setSpotColorName("CYAN2");
@@ -222,6 +236,8 @@ void MapColorTest::spotColorTest()
 	QCOMPARE(compo_copy.getCmykColorMethod(), MapColor::SpotColor);
 	QCOMPARE(compo_copy.getCmyk().c, 0.5f);
 	QCOMPARE(compo_copy, spot_cyan_copy);
+	duplicate.reset(spot_cyan_copy.duplicate());
+	QCOMPARE(*duplicate, spot_cyan_copy);
 	
 	MapColor spot_yellow("Yellow", 8);
 	spot_yellow.setCmyk(MapColorCmyk(0.0, 0.0, 1.0, 0.0));
@@ -245,6 +261,15 @@ void MapColorTest::spotColorTest()
 	spot_yellow_copy.setPriority(spot_yellow_copy.getPriority() + 1);
 	QVERIFY(compo_copy.equals(spot_cyan_copy, false));
 	QVERIFY(!compo_copy.equals(spot_cyan_copy, true));
+	
+	duplicate.reset(spot_cyan_copy.duplicate());
+	QCOMPARE(*duplicate, spot_cyan_copy);
+	spot_cyan_copy.setKnockout(!spot_cyan_copy.getKnockout());
+	QVERIFY(spot_cyan_copy != *duplicate);
+	duplicate.reset(spot_cyan_copy.duplicate());
+	QCOMPARE(*duplicate, spot_cyan_copy);
+	spot_cyan_copy.setKnockout(!spot_cyan_copy.getKnockout());
+	QVERIFY(spot_cyan_copy != *duplicate);
 }
 
 
