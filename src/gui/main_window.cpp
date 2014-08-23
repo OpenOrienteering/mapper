@@ -452,18 +452,9 @@ void MainWindow::keyReleaseEvent(QKeyEvent* event)
 #if defined(Q_OS_ANDROID)
 	if (event->key() == Qt::Key_Back)
 	{
-		if (controller && controller->isEditingInProgress())
+		if (!hasOpenedFile())
 		{
-			// Do nothing while editing is in progress
-		}
-		else if (close_act->isEnabled())
-		{
-			// Close the document when possible
-		    close_act->trigger();
-		}
-		else
-		{
-			// Otherwise close this whindow
+			// Close this whindow
 			this->close();
 		}
 		// Event is handled, do not pass to parent.

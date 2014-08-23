@@ -1266,6 +1266,22 @@ bool MapEditorController::keyPressEventFilter(QKeyEvent* event)
 
 bool MapEditorController::keyReleaseEventFilter(QKeyEvent* event)
 {
+#if defined(Q_OS_ANDROID)
+	if (event->key() == Qt::Key_Back)
+	{
+		if (symbol_widget && symbol_widget->isVisible())
+		{
+			mobileSymbolSelectorFinished();
+			return true;
+		}
+		if (toggle_template_menu && toggle_template_menu->isVisible())
+		{
+			toggle_template_menu->hide();
+			return true;
+		}
+	}
+#endif
+	
 	return map_widget->keyReleaseEventFilter(event);
 }
 
@@ -3110,7 +3126,6 @@ void MapEditorController::mobileSymbolSelectorClicked()
 {
 	// NOTE: this does not handle window resizes, however it is assumed that in
 	// mobile mode there is no window, instead the application is running fullscreen.
-#warning Test in mobile mode
 	symbol_widget->setGeometry(window->rect());
 	symbol_widget->raise();
 	symbol_widget->show();
@@ -3119,7 +3134,6 @@ void MapEditorController::mobileSymbolSelectorClicked()
 
 void MapEditorController::mobileSymbolSelectorFinished()
 {
-#warning Test in mobile mode
 	disconnect(symbol_widget, SIGNAL(selectedSymbolsChanged()), this, SLOT(mobileSymbolSelectorFinished()));
 	symbol_widget->hide();
 }
