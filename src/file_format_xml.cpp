@@ -480,6 +480,15 @@ void XMLFileImporter::importGeoreferencing(bool load_symbols_only)
 	Georeferencing georef;
 	georef.load(xml, load_symbols_only);
 	map->setGeoreferencing(georef);
+	if (!georef.isValid())
+	{
+		QString error_text = georef.getErrorText();
+		if (error_text.isEmpty())
+			error_text = tr("Unknown error");
+		addWarning(tr("Unsupported or invalid georeferencing specification '%1': %2").
+		           arg(georef.getProjectedCRSSpec()).
+		           arg(error_text));
+	}
 }
 
 /** Helper for delayed actions */
