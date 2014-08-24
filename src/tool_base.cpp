@@ -94,9 +94,7 @@ bool MapEditorToolBase::mousePressEvent(QMouseEvent* event, MapCoordF map_coord,
 	cur_pos = click_pos;
 	cur_pos_map = click_pos_map;
 	calcConstrainedPositions(widget);
-#ifdef ANDROID
 	mouseMove();
-#endif
 	clickPress();
 	return true;
 }
@@ -150,9 +148,7 @@ bool MapEditorToolBase::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coor
 	}
 	else
 	{
-#ifdef ANDROID
 		mouseMove();
-#endif
 		clickRelease();
 	}
 	
