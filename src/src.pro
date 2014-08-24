@@ -265,9 +265,6 @@ android {
   # Use sensors, positioning and extra modules
   QT += sensors positioning androidextras
   
-  HEADERS += android/gps_source_android.h
-  SOURCES += android/gps_source_android.cpp
-  
   # Add examples as resource
   RESOURCES += ../examples/examples.qrc
 }
