@@ -1261,11 +1261,6 @@ void MapEditorController::restoreWindowState()
 
 bool MapEditorController::keyPressEventFilter(QKeyEvent* event)
 {
-	return map_widget->keyPressEventFilter(event);
-}
-
-bool MapEditorController::keyReleaseEventFilter(QKeyEvent* event)
-{
 #if defined(Q_OS_ANDROID)
 	if (event->key() == Qt::Key_Back)
 	{
@@ -1274,14 +1269,14 @@ bool MapEditorController::keyReleaseEventFilter(QKeyEvent* event)
 			mobileSymbolSelectorFinished();
 			return true;
 		}
-		if (toggle_template_menu && toggle_template_menu->isVisible())
-		{
-			toggle_template_menu->hide();
-			return true;
-		}
 	}
 #endif
 	
+	return map_widget->keyPressEventFilter(event);
+}
+
+bool MapEditorController::keyReleaseEventFilter(QKeyEvent* event)
+{
 	return map_widget->keyReleaseEventFilter(event);
 }
 

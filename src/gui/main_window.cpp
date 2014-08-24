@@ -95,7 +95,12 @@ MainWindow::MainWindow(bool as_main_window)
 	if (as_main_window)
 		loadWindowSettings();
 	
+#if defined(Q_OS_ANDROID)
+	// Needed to catch Qt::Key_Back, cf. MainWindow::eventFilter()
+	qApp->installEventFilter(this);
+#else
 	installEventFilter(this);
+#endif
 	
 	connect(&Settings::getInstance(), SIGNAL(settingsChanged()), this, SLOT(settingsChanged()));
 }
@@ -430,14 +435,6 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
 		return;
 	}
 	
-#if defined(Q_OS_ANDROID)
-	if (event->key() == Qt::Key_Back)
-	{
-		// Event is handled, do not pass to parent.
-		return;
-	}
-#endif
-	
 	QMainWindow::keyPressEvent(event);
 }
 
@@ -448,19 +445,6 @@ void MainWindow::keyReleaseEvent(QKeyEvent* event)
 		// Event filtered, stop handling
 		return;
 	}
-	
-#if defined(Q_OS_ANDROID)
-	if (event->key() == Qt::Key_Back)
-	{
-		if (!hasOpenedFile())
-		{
-			// Close this whindow
-			this->close();
-		}
-		// Event is handled, do not pass to parent.
-		return;
-	}
-#endif
 	
 	QMainWindow::keyReleaseEvent(event);
 }
@@ -1000,17 +984,46 @@ void MainWindow::linkClicked(const QString &link)
 		QDesktopServices::openUrl(link);
 }
 
-bool MainWindow::eventFilter(QObject *object, QEvent *event){
+bool MainWindow::eventFilter(QObject *object, QEvent *event)
+{
 	Q_UNUSED(object)
-	if(event->type() == QEvent::WhatsThisClicked){
-		QWhatsThisClickedEvent* e = static_cast<QWhatsThisClickedEvent*>(event);
-		QStringList parts = e->href().split("#");
-		if(parts.size() == 0)
-			Util::showHelp(this);
-		else if(parts.size() == 1)
-			Util::showHelp(this, parts.at(0));
-		else if(parts.size() == 2)
-			Util::showHelp(this, parts.at(0), parts.at(1));
+	
+	switch(event->type())
+	{
+	case QEvent::WhatsThisClicked:
+		{
+			QWhatsThisClickedEvent* e = static_cast<QWhatsThisClickedEvent*>(event);
+			QStringList parts = e->href().split("#");
+			if(parts.size() == 0)
+				Util::showHelp(this);
+			else if(parts.size() == 1)
+				Util::showHelp(this, parts.at(0));
+			else if(parts.size() == 2)
+				Util::showHelp(this, parts.at(0), parts.at(1));
+		};
+		break;
+#if defined(Q_OS_ANDROID)
+	case QEvent::KeyRelease:
+		if (static_cast<QKeyEvent*>(event)->key() == Qt::Key_Back && hasOpenedFile())
+		{
+			/* Don't let Qt close the application in
+			 * QGuiApplicationPrivate::processKeyEvent() while a file is opened.
+			 * 
+			 * This must be the application-wide event filter in order to
+			 * catch Qt::Key_Back from popup menus (such as template list,
+			 * overflow actions).
+			 * 
+			 * Any widgets that want to handle Qt::Key_Back need to watch
+			 * for QEvent::KeyPress.
+			 */
+			event->accept();
+			return true;
+		}
+		break;
+#endif
+	default:
+		; // nothing
 	}
+	
 	return false;
 }

@@ -268,6 +268,8 @@ protected:
 	virtual void keyPressEvent(QKeyEvent* event);
 	virtual void keyReleaseEvent(QKeyEvent* event);
 	
+	virtual bool eventFilter(QObject* object, QEvent* event);
+	
 private:
 	enum {
 		max_recent_files = 10
@@ -293,8 +295,6 @@ private:
 	void createFileMenu();
 	void createHelpMenu();
 
-	bool eventFilter(QObject* object, QEvent* event);
-	
 	static MainWindow* findMainWindow(const QString& file_name);
 	
 	
