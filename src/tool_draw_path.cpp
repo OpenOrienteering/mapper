@@ -1010,7 +1010,7 @@ float DrawPathTool::calculateRotation(QPoint mouse_pos, MapCoordF mouse_pos_map)
 
 void DrawPathTool::updateDashPointDrawing()
 {
-	if (!is_helper_tool)
+	if (is_helper_tool)
 		return;
 	
 	Symbol* symbol = editor->activeSymbol();
