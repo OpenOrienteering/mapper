@@ -84,7 +84,7 @@ bool CombinedSymbol::containsColor(const MapColor* color) const
 {
 	for (int i = 0, size = (int)parts.size(); i < size; ++i)
 	{
-		if (parts[i]->containsColor(color))
+		if (parts[i] && parts[i]->containsColor(color))
 		{
 			return true;
 		}
@@ -319,7 +319,10 @@ float CombinedSymbol::calculateLargestLineExtent(Map* map)
 {
 	float result = 0;
 	for (size_t i = 0, end = parts.size(); i < end; ++i)
-		result = qMax(result, parts[i]->calculateLargestLineExtent(map));
+	{
+		if (parts[i])
+			result = qMax(result, parts[i]->calculateLargestLineExtent(map));
+	}
 	return result;
 }
 
