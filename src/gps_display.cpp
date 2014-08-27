@@ -87,9 +87,9 @@ bool GPSDisplay::checkGPSEnabled()
 	static bool translation_initialized = false;
 	if (!translation_initialized)
 	{
+		QAndroidJniObject gps_disabled_string = QAndroidJniObject::fromString(tr("GPS is disabled in the device settings. Open settings now?"));
 		QAndroidJniObject yes_string = QAndroidJniObject::fromString(tr("Yes"));
 		QAndroidJniObject no_string  = QAndroidJniObject::fromString(tr("No"));
-		QAndroidJniObject gps_disabled_string = QAndroidJniObject::fromString(tr("GPS is disabled in the device settings. Do you want to go there now?"));
 		QAndroidJniObject::callStaticMethod<void>(
 			"org/openorienteering/mapper/MapperActivity",
 			"setTranslatableStrings",

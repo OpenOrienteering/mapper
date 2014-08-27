@@ -472,42 +472,42 @@
 <context>
     <name>CombinedSymbolSettings</name>
     <message>
-        <location filename="../src/symbol_combined.cpp" line="356"/>
+        <location filename="../src/symbol_combined.cpp" line="359"/>
         <source>&amp;Number of parts:</source>
         <translation>&amp;Nombre d&apos;éléments:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_combined.cpp" line="371"/>
+        <location filename="../src/symbol_combined.cpp" line="374"/>
         <source>- Private line symbol -</source>
         <translation>- Symbole de ligne privé -</translation>
     </message>
     <message>
-        <location filename="../src/symbol_combined.cpp" line="372"/>
+        <location filename="../src/symbol_combined.cpp" line="375"/>
         <source>- Private area symbol -</source>
         <translation>- Symbole de surface privé -</translation>
     </message>
     <message>
-        <location filename="../src/symbol_combined.cpp" line="378"/>
+        <location filename="../src/symbol_combined.cpp" line="381"/>
         <source>Edit private symbol...</source>
         <translation>Editer les symboles privés...</translation>
     </message>
     <message>
-        <location filename="../src/symbol_combined.cpp" line="398"/>
+        <location filename="../src/symbol_combined.cpp" line="401"/>
         <source>Combination settings</source>
         <translation>Paramètres de combinaison</translation>
     </message>
     <message>
-        <location filename="../src/symbol_combined.cpp" line="451"/>
+        <location filename="../src/symbol_combined.cpp" line="454"/>
         <source>Change from public to private symbol</source>
         <translation>Changer ce symbole public en symbole privé</translation>
     </message>
     <message>
-        <location filename="../src/symbol_combined.cpp" line="452"/>
+        <location filename="../src/symbol_combined.cpp" line="455"/>
         <source>Take the old symbol as template for the private symbol?</source>
         <translation>Prendre l&apos;ancien symbole comme modèle pour le symbole privé?</translation>
     </message>
     <message>
-        <location filename="../src/symbol_combined.cpp" line="368"/>
+        <location filename="../src/symbol_combined.cpp" line="371"/>
         <source>Symbol %1:</source>
         <translation>Symbole %1:</translation>
     </message>
@@ -515,150 +515,150 @@
 <context>
     <name>ConfigureGridDialog</name>
     <message>
-        <location filename="../src/map_grid.cpp" line="189"/>
+        <location filename="../src/gui/configure_grid_dialog.cpp" line="42"/>
         <source>Configure grid</source>
         <translation>Configurer la grille</translation>
     </message>
     <message>
-        <location filename="../src/map_grid.cpp" line="191"/>
+        <location filename="../src/gui/configure_grid_dialog.cpp" line="44"/>
         <source>Show grid</source>
         <translation>Afficher la grille</translation>
     </message>
     <message>
-        <location filename="../src/map_grid.cpp" line="192"/>
+        <location filename="../src/gui/configure_grid_dialog.cpp" line="45"/>
         <source>Snap to grid</source>
         <translation>Accrochage sur la grille</translation>
     </message>
     <message>
-        <location filename="../src/map_grid.cpp" line="193"/>
+        <location filename="../src/gui/configure_grid_dialog.cpp" line="46"/>
         <source>Choose...</source>
         <translation>Choisir...</translation>
     </message>
     <message>
-        <location filename="../src/map_grid.cpp" line="196"/>
+        <location filename="../src/gui/configure_grid_dialog.cpp" line="49"/>
         <source>All lines</source>
         <translation>Toutes les lignes</translation>
     </message>
     <message>
-        <location filename="../src/map_grid.cpp" line="197"/>
+        <location filename="../src/gui/configure_grid_dialog.cpp" line="50"/>
         <source>Horizontal lines</source>
         <translation>Lignes horizontales</translation>
     </message>
     <message>
-        <location filename="../src/map_grid.cpp" line="198"/>
+        <location filename="../src/gui/configure_grid_dialog.cpp" line="51"/>
         <source>Vertical lines</source>
         <translation>Lignes verticales</translation>
     </message>
     <message>
-        <location filename="../src/map_grid.cpp" line="201"/>
+        <location filename="../src/gui/configure_grid_dialog.cpp" line="54"/>
         <source>Alignment</source>
         <translation>Alignement</translation>
     </message>
     <message>
-        <location filename="../src/map_grid.cpp" line="203"/>
+        <location filename="../src/gui/configure_grid_dialog.cpp" line="56"/>
         <source>Align with magnetic north</source>
         <translation>Aligner avec le nord magnétique</translation>
     </message>
     <message>
-        <location filename="../src/map_grid.cpp" line="204"/>
+        <location filename="../src/gui/configure_grid_dialog.cpp" line="57"/>
         <source>Align with grid north</source>
         <translation>Aligner avec le nord de la grille</translation>
     </message>
     <message>
-        <location filename="../src/map_grid.cpp" line="205"/>
+        <location filename="../src/gui/configure_grid_dialog.cpp" line="58"/>
         <source>Align with true north</source>
         <translation>Aligner avec le vrai nord</translation>
     </message>
     <message>
-        <location filename="../src/map_grid.cpp" line="207"/>
+        <location filename="../src/gui/configure_grid_dialog.cpp" line="60"/>
         <source>Additional rotation (counter-clockwise):</source>
         <translation>Rotation additionnelle (anti-horaire):</translation>
     </message>
     <message>
-        <location filename="../src/map_grid.cpp" line="208"/>
+        <location filename="../src/gui/configure_grid_dialog.cpp" line="61"/>
         <source>°</source>
         <translation>°</translation>
     </message>
     <message>
-        <location filename="../src/map_grid.cpp" line="212"/>
+        <location filename="../src/gui/configure_grid_dialog.cpp" line="65"/>
         <source>Positioning</source>
         <translation>Positionnement</translation>
     </message>
     <message>
-        <location filename="../src/map_grid.cpp" line="215"/>
+        <location filename="../src/gui/configure_grid_dialog.cpp" line="68"/>
         <source>meters in terrain</source>
         <translation>mètres sur le terrain</translation>
     </message>
     <message>
-        <location filename="../src/map_grid.cpp" line="216"/>
+        <location filename="../src/gui/configure_grid_dialog.cpp" line="69"/>
         <source>millimeters on map</source>
         <translation>millimètres sur la carte</translation>
     </message>
     <message>
-        <location filename="../src/map_grid.cpp" line="218"/>
+        <location filename="../src/gui/configure_grid_dialog.cpp" line="71"/>
         <source>Horizontal spacing:</source>
         <translation>Espacement horizontal:</translation>
     </message>
     <message>
-        <location filename="../src/map_grid.cpp" line="220"/>
+        <location filename="../src/gui/configure_grid_dialog.cpp" line="73"/>
         <source>Vertical spacing:</source>
         <translation>Espacement vertical:</translation>
     </message>
     <message>
-        <location filename="../src/map_grid.cpp" line="224"/>
+        <location filename="../src/gui/configure_grid_dialog.cpp" line="77"/>
         <source>Horizontal offset:</source>
         <translation>Décalage horizontal:</translation>
     </message>
     <message>
-        <location filename="../src/map_grid.cpp" line="226"/>
+        <location filename="../src/gui/configure_grid_dialog.cpp" line="79"/>
         <source>Vertical offset:</source>
         <translation>Décalage vertical:</translation>
     </message>
     <message>
-        <location filename="../src/map_grid.cpp" line="259"/>
+        <location filename="../src/gui/configure_grid_dialog.cpp" line="111"/>
         <source>Unit:</source>
         <comment>measurement unit</comment>
         <translation>Unité:</translation>
     </message>
     <message>
-        <location filename="../src/map_grid.cpp" line="271"/>
+        <location filename="../src/gui/configure_grid_dialog.cpp" line="123"/>
         <source>Line color:</source>
         <translation>Couleur de ligne:</translation>
     </message>
     <message>
-        <location filename="../src/map_grid.cpp" line="272"/>
+        <location filename="../src/gui/configure_grid_dialog.cpp" line="124"/>
         <source>Display:</source>
         <translation>Affichage:</translation>
     </message>
     <message>
-        <location filename="../src/map_grid.cpp" line="298"/>
+        <location filename="../src/gui/configure_grid_dialog.cpp" line="150"/>
         <source>Choose grid line color</source>
         <translation>Choisir la couleur de la grille</translation>
     </message>
     <message>
-        <location filename="../src/map_grid.cpp" line="356"/>
+        <location filename="../src/gui/configure_grid_dialog.cpp" line="207"/>
         <source>m</source>
         <comment>meters</comment>
         <translation>m</translation>
     </message>
     <message>
-        <location filename="../src/map_grid.cpp" line="356"/>
+        <location filename="../src/gui/configure_grid_dialog.cpp" line="207"/>
         <source>mm</source>
         <comment>millimeters</comment>
         <translation>mm</translation>
     </message>
     <message>
-        <location filename="../src/map_grid.cpp" line="362"/>
+        <location filename="../src/gui/configure_grid_dialog.cpp" line="213"/>
         <source>Origin at: %1</source>
         <translation>Origine à: %1</translation>
     </message>
     <message>
-        <location filename="../src/map_grid.cpp" line="364"/>
+        <location filename="../src/gui/configure_grid_dialog.cpp" line="215"/>
         <source>paper coordinates origin</source>
         <translation>Coordonnées papier d&apos;origine</translation>
     </message>
     <message>
-        <location filename="../src/map_grid.cpp" line="366"/>
+        <location filename="../src/gui/configure_grid_dialog.cpp" line="217"/>
         <source>projected coordinates origin</source>
         <translation>Coordonnées projetées d&apos;origine</translation>
     </message>
@@ -710,18 +710,18 @@
 <context>
     <name>CutoutTool</name>
     <message>
-        <location filename="../src/tool_cutout.cpp" line="129"/>
+        <location filename="../src/tool_cutout.cpp" line="134"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Clip the whole map. </source>
         <translation>&lt;b&gt;%1&lt;/b&gt;: Rogner toute la carte. </translation>
     </message>
     <message>
-        <location filename="../src/tool_cutout.cpp" line="130"/>
-        <location filename="../src/tool_cutout.cpp" line="134"/>
+        <location filename="../src/tool_cutout.cpp" line="135"/>
+        <location filename="../src/tool_cutout.cpp" line="139"/>
         <source>&lt;b&gt;%1+Click or drag&lt;/b&gt;: Select the objects to be clipped. </source>
         <translation>&lt;b&gt;%1+Clic ou Glisser&lt;/b&gt;: Sélectionner les objets à rogner. </translation>
     </message>
     <message>
-        <location filename="../src/tool_cutout.cpp" line="135"/>
+        <location filename="../src/tool_cutout.cpp" line="140"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Clip the selected objects. </source>
         <translation>&lt;b&gt;%1&lt;/b&gt;: Rogner les objets sélectionnés. </translation>
     </message>
@@ -1067,24 +1067,24 @@
 <context>
     <name>EditLineTool</name>
     <message>
-        <location filename="../src/tool_edit_line.cpp" line="323"/>
+        <location filename="../src/tool_edit_line.cpp" line="324"/>
         <source>Snap</source>
         <comment>Snap to existing objects</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/tool_edit_line.cpp" line="324"/>
+        <location filename="../src/tool_edit_line.cpp" line="325"/>
         <source>Toggle curve</source>
         <comment>Toggle between curved and flat segment</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/tool_edit_line.cpp" line="428"/>
+        <location filename="../src/tool_edit_line.cpp" line="429"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Free movement. </source>
         <translation>&lt;b&gt;%1&lt;/b&gt;: Mouvement libre. </translation>
     </message>
     <message>
-        <location filename="../src/tool_edit_line.cpp" line="447"/>
+        <location filename="../src/tool_edit_line.cpp" line="448"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on segment: Toggle between straight and curved. </source>
         <translation>&lt;b&gt;%1+Clic&lt;/b&gt; sur un segment: Choisir entre ligne droite et courbe. </translation>
     </message>
@@ -1092,45 +1092,45 @@
 <context>
     <name>EditPointTool</name>
     <message>
-        <location filename="../src/tool_edit_point.cpp" line="456"/>
+        <location filename="../src/tool_edit_point.cpp" line="457"/>
         <source>Snap</source>
         <comment>Snap to existing objects</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/tool_edit_point.cpp" line="457"/>
+        <location filename="../src/tool_edit_point.cpp" line="458"/>
         <source>Point / Angle</source>
         <comment>Modify points or use constrained angles</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/tool_edit_point.cpp" line="458"/>
+        <location filename="../src/tool_edit_point.cpp" line="459"/>
         <source>Toggle dash</source>
         <comment>Toggle dash points</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/tool_edit_point.cpp" line="602"/>
+        <location filename="../src/tool_edit_point.cpp" line="603"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Finish editing. </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/tool_edit_point.cpp" line="623"/>
+        <location filename="../src/tool_edit_point.cpp" line="624"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Keep opposite handle positions. </source>
         <translation>&lt;b&gt;%1&lt;/b&gt;: Conserver la position de la poignée opposée. </translation>
     </message>
     <message>
-        <location filename="../src/tool_edit_point.cpp" line="644"/>
+        <location filename="../src/tool_edit_point.cpp" line="645"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on point: Delete it; on path: Add a new dash point; with &lt;b&gt;%2&lt;/b&gt;: Add a normal point. </source>
         <translation>&lt;b&gt;%1+Clic&lt;/b&gt; sur un point pour le supprimer; sur un chemin pour ajouter un nouveau point symbole; avec &lt;b&gt;%2&lt;/b&gt;: Ajouter un point normal. </translation>
     </message>
     <message>
-        <location filename="../src/tool_edit_point.cpp" line="647"/>
+        <location filename="../src/tool_edit_point.cpp" line="648"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on point: Delete it; on path: Add a new point; with &lt;b&gt;%2&lt;/b&gt;: Add a dash point. </source>
         <translation>&lt;b&gt;%1+Clic&lt;/b&gt; sur un point pour le supprimer; sur un chemin pour ajouter un nouveau point; avec &lt;b&gt;%2&lt;/b&gt;: Ajouter un point symbole. </translation>
     </message>
     <message>
-        <location filename="../src/tool_edit_point.cpp" line="651"/>
+        <location filename="../src/tool_edit_point.cpp" line="652"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on point to switch between dash and normal point. </source>
         <translation>&lt;b&gt;%1+Clic&lt;/b&gt; sur un point pour choisir entre point normal et point symbole. </translation>
     </message>
@@ -1138,32 +1138,32 @@
 <context>
     <name>EditTool</name>
     <message>
-        <location filename="../src/tool_edit_point.cpp" line="607"/>
-        <location filename="../src/tool_edit_line.cpp" line="419"/>
+        <location filename="../src/tool_edit_point.cpp" line="608"/>
+        <location filename="../src/tool_edit_line.cpp" line="420"/>
         <source>&lt;b&gt;Coordinate offset:&lt;/b&gt; %1, %2 mm  &lt;b&gt;Distance:&lt;/b&gt; %3 m </source>
         <translation>&lt;b&gt;Déplacement en coordonnées:&lt;/b&gt; %1, %2 mm  &lt;b&gt;Distance:&lt;/b&gt; %3 m </translation>
     </message>
     <message>
-        <location filename="../src/tool_edit_point.cpp" line="614"/>
-        <location filename="../src/tool_edit_line.cpp" line="430"/>
+        <location filename="../src/tool_edit_point.cpp" line="615"/>
+        <location filename="../src/tool_edit_line.cpp" line="431"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Fixed angles. </source>
         <translation>&lt;b&gt;%1&lt;/b&gt;: Angles fixes. </translation>
     </message>
     <message>
-        <location filename="../src/tool_edit_point.cpp" line="627"/>
-        <location filename="../src/tool_edit_line.cpp" line="434"/>
+        <location filename="../src/tool_edit_point.cpp" line="628"/>
+        <location filename="../src/tool_edit_line.cpp" line="435"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Snap to existing objects. </source>
         <translation>&lt;b&gt;%1&lt;/b&gt;: Accrocher aux objets existants. </translation>
     </message>
     <message>
-        <location filename="../src/tool_edit_point.cpp" line="633"/>
-        <location filename="../src/tool_edit_line.cpp" line="439"/>
+        <location filename="../src/tool_edit_point.cpp" line="634"/>
+        <location filename="../src/tool_edit_line.cpp" line="440"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Select a single object. &lt;b&gt;Drag&lt;/b&gt;: Select multiple objects. &lt;b&gt;%1+Click&lt;/b&gt;: Toggle selection. </source>
         <translation>&lt;b&gt;Clic&lt;/b&gt;: Sélectionner un seul objet. &lt;b&gt;Glisser&lt;/b&gt;: Sélectionner plusieurs objets. &lt;b&gt;%1+Clic&lt;/b&gt;: Faire une sélection multiple. </translation>
     </message>
     <message>
-        <location filename="../src/tool_edit_point.cpp" line="636"/>
-        <location filename="../src/tool_edit_line.cpp" line="442"/>
+        <location filename="../src/tool_edit_point.cpp" line="637"/>
+        <location filename="../src/tool_edit_line.cpp" line="443"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Delete selected objects. </source>
         <translation>&lt;b&gt;%1&lt;/b&gt;: Supprimer les objets sélectionnés. </translation>
     </message>
@@ -1287,7 +1287,7 @@
 <context>
     <name>Exporter</name>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1544"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1546"/>
         <source>Could not create new file: %1</source>
         <translation>Impossible de créer le nouveau fichier: %1</translation>
     </message>
@@ -1295,42 +1295,58 @@
 <context>
     <name>FillTool</name>
     <message>
-        <location filename="../src/tool_fill.cpp" line="76"/>
+        <location filename="../src/tool_fill.cpp" line="99"/>
         <source>Warning</source>
         <translation type="unfinished">Attention</translation>
     </message>
     <message>
-        <location filename="../src/tool_fill.cpp" line="77"/>
+        <location filename="../src/tool_fill.cpp" line="100"/>
         <source>The map area is large. Use of the fill tool may be very slow. Do you want to use it anyway?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/tool_fill.cpp" line="94"/>
-        <location filename="../src/tool_fill.cpp" line="103"/>
-        <location filename="../src/tool_fill.cpp" line="148"/>
-        <location filename="../src/tool_fill.cpp" line="157"/>
+        <location filename="../src/tool_fill.cpp" line="85"/>
+        <location filename="../src/tool_fill.cpp" line="119"/>
+        <location filename="../src/tool_fill.cpp" line="167"/>
         <source>Error</source>
         <translation type="unfinished">Erreur</translation>
     </message>
     <message>
-        <location filename="../src/tool_fill.cpp" line="95"/>
-        <location filename="../src/tool_fill.cpp" line="158"/>
+        <location filename="../src/tool_fill.cpp" line="86"/>
         <source>The clicked area is not bounded by lines or areas, cannot fill this area.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/tool_fill.cpp" line="104"/>
+        <location filename="../src/tool_fill.cpp" line="120"/>
         <source>The clicked position is not free, cannot use the fill tool there.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/tool_fill.cpp" line="149"/>
+        <location filename="../src/tool_fill.cpp" line="168"/>
         <source>Failed to create the fill object.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/tool_fill.cpp" line="164"/>
+        <location filename="../src/tool_fill.cpp" line="179"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Fill area with active symbol. The area to be filled must be bounded by lines or areas, other symbols are not taken into account. </source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>GPSDisplay</name>
+    <message>
+        <location filename="../src/gps_display.cpp" line="90"/>
+        <source>GPS is disabled in the device settings. Open settings now?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gps_display.cpp" line="91"/>
+        <source>Yes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gps_display.cpp" line="92"/>
+        <source>No</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1821,73 +1837,73 @@
 <context>
     <name>HomeScreenWidgetDesktop</name>
     <message>
-        <location filename="../src/gui/widgets/home_screen_widget.cpp" line="120"/>
+        <location filename="../src/gui/widgets/home_screen_widget.cpp" line="121"/>
         <source>Activities</source>
         <translation type="unfinished">Actions</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/home_screen_widget.cpp" line="123"/>
+        <location filename="../src/gui/widgets/home_screen_widget.cpp" line="124"/>
         <source>Create a new map ...</source>
         <translation type="unfinished">Créer une nouvelle carte ...</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/home_screen_widget.cpp" line="126"/>
+        <location filename="../src/gui/widgets/home_screen_widget.cpp" line="127"/>
         <source>Open map ...</source>
         <translation type="unfinished">Ouvrir une carte ...</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/home_screen_widget.cpp" line="132"/>
+        <location filename="../src/gui/widgets/home_screen_widget.cpp" line="133"/>
         <source>Settings</source>
         <translation type="unfinished">Réglages</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/home_screen_widget.cpp" line="135"/>
+        <location filename="../src/gui/widgets/home_screen_widget.cpp" line="136"/>
         <source>About %1</source>
         <comment>As in &apos;About OpenOrienteering Mapper&apos;</comment>
         <translation type="unfinished">A propos de %1</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/home_screen_widget.cpp" line="138"/>
+        <location filename="../src/gui/widgets/home_screen_widget.cpp" line="139"/>
         <source>Help</source>
         <translation type="unfinished">Aide</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/home_screen_widget.cpp" line="141"/>
+        <location filename="../src/gui/widgets/home_screen_widget.cpp" line="142"/>
         <source>Exit</source>
         <translation type="unfinished">Quitter</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/home_screen_widget.cpp" line="161"/>
+        <location filename="../src/gui/widgets/home_screen_widget.cpp" line="162"/>
         <source>Recent maps</source>
         <translation type="unfinished">Cartes récentes</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/home_screen_widget.cpp" line="177"/>
+        <location filename="../src/gui/widgets/home_screen_widget.cpp" line="178"/>
         <source>Open most recently used file on start</source>
         <translation type="unfinished">Ouvrir le fichier le plus récent lors du démarrage</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/home_screen_widget.cpp" line="180"/>
+        <location filename="../src/gui/widgets/home_screen_widget.cpp" line="181"/>
         <source>Clear list</source>
         <translation type="unfinished">Effacer la liste</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/home_screen_widget.cpp" line="199"/>
+        <location filename="../src/gui/widgets/home_screen_widget.cpp" line="200"/>
         <source>Tip of the day</source>
         <translation type="unfinished">Astuce du jour</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/home_screen_widget.cpp" line="204"/>
+        <location filename="../src/gui/widgets/home_screen_widget.cpp" line="205"/>
         <source>Show tip of the day</source>
         <translation type="unfinished">Afficher l&apos;astuce du jour</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/home_screen_widget.cpp" line="208"/>
+        <location filename="../src/gui/widgets/home_screen_widget.cpp" line="209"/>
         <source>Previous</source>
         <translation type="unfinished">Précédent</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/home_screen_widget.cpp" line="210"/>
+        <location filename="../src/gui/widgets/home_screen_widget.cpp" line="211"/>
         <source>Next</source>
         <translation type="unfinished">Suivant</translation>
     </message>
@@ -1895,28 +1911,28 @@
 <context>
     <name>HomeScreenWidgetMobile</name>
     <message>
-        <location filename="../src/gui/widgets/home_screen_widget.cpp" line="291"/>
+        <location filename="../src/gui/widgets/home_screen_widget.cpp" line="292"/>
         <source>Examples</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/home_screen_widget.cpp" line="293"/>
+        <location filename="../src/gui/widgets/home_screen_widget.cpp" line="294"/>
         <source>About Mapper</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/home_screen_widget.cpp" line="295"/>
+        <location filename="../src/gui/widgets/home_screen_widget.cpp" line="296"/>
         <source>About Qt</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/home_screen_widget.cpp" line="391"/>
+        <location filename="../src/gui/widgets/home_screen_widget.cpp" line="392"/>
         <source>File list</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/home_screen_widget.cpp" line="418"/>
-        <source>No map files found!&lt;br/&gt;&lt;br/&gt;Copy a map file to /OOMapper or /sdcard/OOMapper to list it here.</source>
+        <location filename="../src/gui/widgets/home_screen_widget.cpp" line="443"/>
+        <source>No map files found!&lt;br/&gt;&lt;br/&gt;Copy map files to a top-level folder named &apos;OOMapper&apos; on the device or a memory card.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1943,17 +1959,17 @@
         <translation>Erreur lors du chargement d&apos;un objet de type %1.</translation>
     </message>
     <message>
-        <location filename="../src/object.cpp" line="390"/>
+        <location filename="../src/object.cpp" line="414"/>
         <source>Error while loading an object of type %1 at %2:%3: %4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/object.cpp" line="440"/>
+        <location filename="../src/object.cpp" line="382"/>
         <source>Unable to find symbol for object at %1:%2.</source>
         <translation>Impossible de trouver le symbole de l&apos;objet à %1:%2.</translation>
     </message>
     <message>
-        <location filename="../src/object.cpp" line="370"/>
+        <location filename="../src/object.cpp" line="394"/>
         <source>Point object with undefined or wrong symbol at %1:%2.</source>
         <translation>Objet ponctuel avec un symbole indéfini ou incorrect à %1:%2.</translation>
     </message>
@@ -1974,17 +1990,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/util/xml_stream_util.cpp" line="69"/>
+        <location filename="../src/util/xml_stream_util.cpp" line="70"/>
         <source>Could not parse the data.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/util/xml_stream_util.cpp" line="85"/>
+        <location filename="../src/util/xml_stream_util.cpp" line="86"/>
         <source>Could not parse the coordinates.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/util/xml_stream_util.cpp" line="104"/>
+        <location filename="../src/util/xml_stream_util.cpp" line="105"/>
         <source>Expected %1 coordinates, found %2.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2007,9 +2023,19 @@
         <translation>Le modèle &quot;%1&quot; a été chargé depuis le répertoire de la carte au lieu de l&apos;emplacement relatif au fichier de la carte où il se trouvait précédemment.</translation>
     </message>
     <message>
-        <location filename="../src/file_import_export.cpp" line="133"/>
+        <location filename="../src/file_import_export.cpp" line="135"/>
+        <location filename="../src/file_import_export.cpp" line="137"/>
+        <source>At least one template file could not be found.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/file_import_export.cpp" line="138"/>
+        <source>Click the red template name(s) in the Templates -&gt; Template setup window to locate the template file name(s).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>At least one template file could not be found. Click the red template name(s) in the Templates -&gt; Template setup window to locate the template file name(s).</source>
-        <translation>Au moins un fichier modèle n&apos;a pu être trouvé. Cliquez sur le nom du modèle en rouge dans Modèles -&gt; Fenêtre des modèles pour localiser le nom du fichier modèle.</translation>
+        <translation type="vanished">Au moins un fichier modèle n&apos;a pu être trouvé. Cliquez sur le nom du modèle en rouge dans Modèles -&gt; Fenêtre des modèles pour localiser le nom du fichier modèle.</translation>
     </message>
     <message>
         <location filename="../src/file_format_native.cpp" line="126"/>
@@ -2062,10 +2088,10 @@
         <location filename="../src/file_format_ocad8.cpp" line="113"/>
         <location filename="../src/file_format_ocad8.cpp" line="115"/>
         <location filename="../src/file_format_ocad8.cpp" line="118"/>
-        <location filename="../src/fileformats/ocd_file_format.cpp" line="1848"/>
-        <location filename="../src/fileformats/ocd_file_format.cpp" line="1851"/>
-        <location filename="../src/fileformats/ocd_file_format.cpp" line="1855"/>
-        <location filename="../src/fileformats/ocd_file_format.cpp" line="1889"/>
+        <location filename="../src/fileformats/ocd_file_format.cpp" line="1858"/>
+        <location filename="../src/fileformats/ocd_file_format.cpp" line="1861"/>
+        <location filename="../src/fileformats/ocd_file_format.cpp" line="1865"/>
+        <location filename="../src/fileformats/ocd_file_format.cpp" line="1899"/>
         <source>Could not read file: %1</source>
         <translation>Impossible de lire le fichier suivant: %1</translation>
     </message>
@@ -2083,274 +2109,274 @@
 <context>
     <name>LineSymbolSettings</name>
     <message>
-        <location filename="../src/symbol_line.cpp" line="2258"/>
+        <location filename="../src/symbol_line.cpp" line="2257"/>
         <source>Line settings</source>
         <translation>Paramètres de ligne</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="2038"/>
+        <location filename="../src/symbol_line.cpp" line="2037"/>
         <source>Line width:</source>
         <translation>Epaisseur de ligne:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="2039"/>
-        <location filename="../src/symbol_line.cpp" line="2054"/>
-        <location filename="../src/symbol_line.cpp" line="2065"/>
-        <location filename="../src/symbol_line.cpp" line="2108"/>
-        <location filename="../src/symbol_line.cpp" line="2111"/>
-        <location filename="../src/symbol_line.cpp" line="2122"/>
-        <location filename="../src/symbol_line.cpp" line="2160"/>
-        <location filename="../src/symbol_line.cpp" line="2175"/>
-        <location filename="../src/symbol_line.cpp" line="2178"/>
-        <location filename="../src/symbol_line.cpp" line="2485"/>
-        <location filename="../src/symbol_line.cpp" line="2491"/>
-        <location filename="../src/symbol_line.cpp" line="2515"/>
-        <location filename="../src/symbol_line.cpp" line="2518"/>
+        <location filename="../src/symbol_line.cpp" line="2038"/>
+        <location filename="../src/symbol_line.cpp" line="2053"/>
+        <location filename="../src/symbol_line.cpp" line="2064"/>
+        <location filename="../src/symbol_line.cpp" line="2107"/>
+        <location filename="../src/symbol_line.cpp" line="2110"/>
+        <location filename="../src/symbol_line.cpp" line="2121"/>
+        <location filename="../src/symbol_line.cpp" line="2159"/>
+        <location filename="../src/symbol_line.cpp" line="2174"/>
+        <location filename="../src/symbol_line.cpp" line="2177"/>
+        <location filename="../src/symbol_line.cpp" line="2484"/>
+        <location filename="../src/symbol_line.cpp" line="2490"/>
+        <location filename="../src/symbol_line.cpp" line="2514"/>
+        <location filename="../src/symbol_line.cpp" line="2517"/>
         <source>mm</source>
         <translation>mm</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="2041"/>
+        <location filename="../src/symbol_line.cpp" line="2040"/>
         <source>Line color:</source>
         <translation>Couleur de ligne:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="2053"/>
+        <location filename="../src/symbol_line.cpp" line="2052"/>
         <source>Minimum line length:</source>
         <translation>Longueur de ligne minimale:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="2056"/>
+        <location filename="../src/symbol_line.cpp" line="2055"/>
         <source>Line cap:</source>
         <translation>Extrémité de ligne:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="2058"/>
+        <location filename="../src/symbol_line.cpp" line="2057"/>
         <source>flat</source>
         <translation>plate</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="2059"/>
-        <location filename="../src/symbol_line.cpp" line="2070"/>
+        <location filename="../src/symbol_line.cpp" line="2058"/>
+        <location filename="../src/symbol_line.cpp" line="2069"/>
         <source>round</source>
         <translation>ronde</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="2060"/>
+        <location filename="../src/symbol_line.cpp" line="2059"/>
         <source>square</source>
         <translation>carrée</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="2061"/>
+        <location filename="../src/symbol_line.cpp" line="2060"/>
         <source>pointed</source>
         <translation>pointue</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="2067"/>
+        <location filename="../src/symbol_line.cpp" line="2066"/>
         <source>Line join:</source>
         <translation>Sommet de ligne:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="2069"/>
+        <location filename="../src/symbol_line.cpp" line="2068"/>
         <source>miter</source>
         <translation>aigu</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="2071"/>
+        <location filename="../src/symbol_line.cpp" line="2070"/>
         <source>bevel</source>
         <translation>rogné</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="2064"/>
+        <location filename="../src/symbol_line.cpp" line="2063"/>
         <source>Cap length:</source>
         <translation>Longueur des extrémités:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="2074"/>
+        <location filename="../src/symbol_line.cpp" line="2073"/>
         <source>Line is dashed</source>
         <translation>Ligne en pointillés</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="2180"/>
+        <location filename="../src/symbol_line.cpp" line="2179"/>
         <source>Show at least one mid symbol</source>
         <translation>Afficher au moins un symbole intérieur</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="2183"/>
+        <location filename="../src/symbol_line.cpp" line="2182"/>
         <source>Minimum mid symbol count:</source>
         <translation>Nombre de symboles intérieurs minimum:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="2186"/>
+        <location filename="../src/symbol_line.cpp" line="2185"/>
         <source>Minimum mid symbol count when closed:</source>
         <translation>Nombre de symboles intérieurs minimum pour une ligne close:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="2107"/>
+        <location filename="../src/symbol_line.cpp" line="2106"/>
         <source>Dash length:</source>
         <translation>Longueur d&apos;un pointillé:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="2103"/>
+        <location filename="../src/symbol_line.cpp" line="2102"/>
         <source>Dashed line</source>
         <translation>Ligne en pointillés</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="2110"/>
+        <location filename="../src/symbol_line.cpp" line="2109"/>
         <source>Break length:</source>
         <translation>Espacement des pointillés:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="2113"/>
+        <location filename="../src/symbol_line.cpp" line="2112"/>
         <source>Dashes grouped together:</source>
         <translation>Groupement de pointillés:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="2115"/>
+        <location filename="../src/symbol_line.cpp" line="2114"/>
         <source>none</source>
         <translation>aucun</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="2116"/>
+        <location filename="../src/symbol_line.cpp" line="2115"/>
         <source>2</source>
         <translation>2</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="2117"/>
+        <location filename="../src/symbol_line.cpp" line="2116"/>
         <source>3</source>
         <translation>3</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="2118"/>
+        <location filename="../src/symbol_line.cpp" line="2117"/>
         <source>4</source>
         <translation>4</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="2121"/>
+        <location filename="../src/symbol_line.cpp" line="2120"/>
         <source>In-group break length:</source>
         <translation>Espace entre les pointillés d&apos;un groupe:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="2124"/>
+        <location filename="../src/symbol_line.cpp" line="2123"/>
         <source>Half length of first and last dash</source>
         <translation>Demi-pointillés pour le début et la fin</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="2153"/>
+        <location filename="../src/symbol_line.cpp" line="2152"/>
         <source>Mid symbols</source>
         <translation>Symboles intérieurs</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="2156"/>
+        <location filename="../src/symbol_line.cpp" line="2155"/>
         <source>Mid symbols per spot:</source>
         <translation>Groupement de symboles intérieurs:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="2159"/>
+        <location filename="../src/symbol_line.cpp" line="2158"/>
         <source>Mid symbol distance:</source>
         <translation>Distance entre les symboles intérieurs:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="2215"/>
+        <location filename="../src/symbol_line.cpp" line="2214"/>
         <source>Borders</source>
         <translation>Bordures</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="2219"/>
+        <location filename="../src/symbol_line.cpp" line="2218"/>
         <source>Different borders on left and right sides</source>
         <translation>Bordures différentes sur les côtés droit et gauche</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="2224"/>
+        <location filename="../src/symbol_line.cpp" line="2223"/>
         <source>Left border:</source>
         <translation>Bordure gauche:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="2229"/>
+        <location filename="../src/symbol_line.cpp" line="2228"/>
         <source>Right border:</source>
         <translation>Bordure droite:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="2243"/>
+        <location filename="../src/symbol_line.cpp" line="2242"/>
         <source>Suppress the dash symbol at line start and line end</source>
         <translation>Supprimer le symbole en pointillés au début et à la fin de la ligne</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1663"/>
-        <location filename="../src/symbol_line.cpp" line="2263"/>
-        <location filename="../src/symbol_line.cpp" line="2721"/>
+        <location filename="../src/symbol_line.cpp" line="1662"/>
+        <location filename="../src/symbol_line.cpp" line="2262"/>
+        <location filename="../src/symbol_line.cpp" line="2720"/>
         <location filename="../src/file_format_ocad8.cpp" line="594"/>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="1018"/>
         <source>Start symbol</source>
         <translation>Symbole de début</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1667"/>
-        <location filename="../src/symbol_line.cpp" line="2263"/>
-        <location filename="../src/symbol_line.cpp" line="2721"/>
+        <location filename="../src/symbol_line.cpp" line="1666"/>
+        <location filename="../src/symbol_line.cpp" line="2262"/>
+        <location filename="../src/symbol_line.cpp" line="2720"/>
         <source>Mid symbol</source>
         <translation>Symbole intérieur</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1671"/>
-        <location filename="../src/symbol_line.cpp" line="2263"/>
-        <location filename="../src/symbol_line.cpp" line="2721"/>
+        <location filename="../src/symbol_line.cpp" line="1670"/>
+        <location filename="../src/symbol_line.cpp" line="2262"/>
+        <location filename="../src/symbol_line.cpp" line="2720"/>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="1025"/>
         <source>End symbol</source>
         <translation>Symbole de fin</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1675"/>
-        <location filename="../src/symbol_line.cpp" line="2241"/>
-        <location filename="../src/symbol_line.cpp" line="2263"/>
-        <location filename="../src/symbol_line.cpp" line="2721"/>
+        <location filename="../src/symbol_line.cpp" line="1674"/>
+        <location filename="../src/symbol_line.cpp" line="2240"/>
+        <location filename="../src/symbol_line.cpp" line="2262"/>
+        <location filename="../src/symbol_line.cpp" line="2720"/>
         <location filename="../src/file_format_ocad8.cpp" line="588"/>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="1011"/>
         <source>Dash symbol</source>
         <translation>Symbole en pointillés</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="2077"/>
+        <location filename="../src/symbol_line.cpp" line="2076"/>
         <source>Enable border lines</source>
         <translation>Activer les bordures</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="2174"/>
+        <location filename="../src/symbol_line.cpp" line="2173"/>
         <source>Distance between spots:</source>
         <translation>Distance entre chaque groupement:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="2177"/>
+        <location filename="../src/symbol_line.cpp" line="2176"/>
         <source>Distance from line end:</source>
         <translation>Distance depuis la fin de la ligne:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="2484"/>
+        <location filename="../src/symbol_line.cpp" line="2483"/>
         <source>Border width:</source>
         <translation>Epaisseur des bordures:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="2487"/>
+        <location filename="../src/symbol_line.cpp" line="2486"/>
         <source>Border color:</source>
         <translation>Couleur des bordures:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="2490"/>
+        <location filename="../src/symbol_line.cpp" line="2489"/>
         <source>Border shift:</source>
         <translation>Décalage des bordures:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="2493"/>
+        <location filename="../src/symbol_line.cpp" line="2492"/>
         <source>Border is dashed</source>
         <translation>Bordures en pointillés</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="2514"/>
+        <location filename="../src/symbol_line.cpp" line="2513"/>
         <source>Border dash length:</source>
         <translation>Longueur du pointillé:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="2517"/>
+        <location filename="../src/symbol_line.cpp" line="2516"/>
         <source>Border break length:</source>
         <translation>Espace entre les pointillés:</translation>
     </message>
@@ -2440,135 +2466,135 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="184"/>
+        <location filename="../src/gui/main_window.cpp" line="189"/>
         <source>&amp;New</source>
         <translation>&amp;Nouveau</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="186"/>
+        <location filename="../src/gui/main_window.cpp" line="191"/>
         <source>Create a new map</source>
         <translation>Créer une nouvelle carte</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="190"/>
+        <location filename="../src/gui/main_window.cpp" line="195"/>
         <source>&amp;Open...</source>
         <translation>&amp;Ouvrir...</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="192"/>
+        <location filename="../src/gui/main_window.cpp" line="197"/>
         <source>Open an existing file</source>
         <translation>Ouvrir un fichier existant</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="196"/>
+        <location filename="../src/gui/main_window.cpp" line="201"/>
         <source>Open &amp;recent</source>
         <translation>Ouvrir un fichier &amp;récent</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="207"/>
+        <location filename="../src/gui/main_window.cpp" line="212"/>
         <source>&amp;Save</source>
         <translation>&amp;Enregistrer</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="212"/>
+        <location filename="../src/gui/main_window.cpp" line="217"/>
         <source>Save &amp;as...</source>
         <translation>Enregistrer &amp;sous...</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="214"/>
+        <location filename="../src/gui/main_window.cpp" line="219"/>
         <source>Ctrl+Shift+S</source>
         <translation>Ctrl+Shift+S</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="220"/>
+        <location filename="../src/gui/main_window.cpp" line="225"/>
         <source>Settings...</source>
         <translation>Réglages...</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="227"/>
+        <location filename="../src/gui/main_window.cpp" line="232"/>
         <source>Close</source>
         <translation>Fermer</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="229"/>
+        <location filename="../src/gui/main_window.cpp" line="234"/>
         <source>Close this file</source>
         <translation>Fermer ce fichier</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="233"/>
+        <location filename="../src/gui/main_window.cpp" line="238"/>
         <source>E&amp;xit</source>
         <translation>Q&amp;uitter</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="235"/>
+        <location filename="../src/gui/main_window.cpp" line="240"/>
         <source>Exit the application</source>
         <translation>Quitter le programme</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="243"/>
+        <location filename="../src/gui/main_window.cpp" line="248"/>
         <source>&amp;File</source>
         <translation>&amp;Fichier</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="261"/>
+        <location filename="../src/gui/main_window.cpp" line="266"/>
         <source>General</source>
         <translation>Général</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="276"/>
+        <location filename="../src/gui/main_window.cpp" line="281"/>
         <source>Open &amp;Manual</source>
         <translation>Ouvrir &amp;l&apos;aide</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="277"/>
+        <location filename="../src/gui/main_window.cpp" line="282"/>
         <source>Show the help file for this application</source>
         <translation>Affiche le fichier d&apos;aide pour ce programme</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="281"/>
+        <location filename="../src/gui/main_window.cpp" line="286"/>
         <source>&amp;About %1</source>
         <translation>&amp;A propos de %1</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="282"/>
+        <location filename="../src/gui/main_window.cpp" line="287"/>
         <source>Show information about this application</source>
         <translation>Affiche les informations relatives à ce programme</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="288"/>
+        <location filename="../src/gui/main_window.cpp" line="293"/>
         <source>About &amp;Qt</source>
         <translation>A propose de &amp;Qt</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="289"/>
+        <location filename="../src/gui/main_window.cpp" line="294"/>
         <source>Show information about Qt</source>
         <translation>Affiche les informations relatives à Qt</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="297"/>
+        <location filename="../src/gui/main_window.cpp" line="302"/>
         <source>&amp;Help</source>
         <translation>&amp;Aide</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="488"/>
+        <location filename="../src/gui/main_window.cpp" line="463"/>
         <source>The file has been modified.
 Do you want to save your changes?</source>
         <translation>Le fichier a été modifié.
 Voulez vous sauvegarder les changements?</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="575"/>
+        <location filename="../src/gui/main_window.cpp" line="550"/>
         <source>Unsaved file</source>
         <translation>Sans titre</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="603"/>
-        <location filename="../src/gui/main_window.cpp" line="824"/>
+        <location filename="../src/gui/main_window.cpp" line="578"/>
+        <location filename="../src/gui/main_window.cpp" line="799"/>
         <source>Warning</source>
         <translation>Attention</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="603"/>
+        <location filename="../src/gui/main_window.cpp" line="578"/>
         <source>The selected map scale is 1:%1, but the chosen symbol set has a nominal scale of 1:%2.
 
 Do you want to scale the symbols to the selected scale?</source>
@@ -2577,58 +2603,58 @@ Do you want to scale the symbols to the selected scale?</source>
 Voulez vous redimensionner ces symboles à l&apos;échelle choisie?</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="657"/>
+        <location filename="../src/gui/main_window.cpp" line="632"/>
         <source>Crash warning</source>
         <translation>Avertissement de crash</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="658"/>
+        <location filename="../src/gui/main_window.cpp" line="633"/>
         <source>It seems that %1 crashed the last time this file was opened:&lt;br /&gt;&lt;tt&gt;%2&lt;/tt&gt;&lt;br /&gt;&lt;br /&gt;Really retry to open it?</source>
         <translation>Il semblerait que %1 ait crashé lorsque ce fichier a été ouvert pour la dernière fois:&lt;br /&gt;&lt;tt&gt;%2&lt;/tt&gt;&lt;br /&gt;&lt;br /&gt;Voulez vous vraiment réessayer de l&apos;ouvrir?</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="680"/>
+        <location filename="../src/gui/main_window.cpp" line="655"/>
         <source>File recovery</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="681"/>
+        <location filename="../src/gui/main_window.cpp" line="656"/>
         <source>There is an automatically saved version of &lt;br /&gt;&lt;tt&gt;%1&lt;/tt&gt;&lt;br /&gt;&lt;br /&gt;Load this version?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="791"/>
+        <location filename="../src/gui/main_window.cpp" line="766"/>
         <source>Auto-saving...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="801"/>
+        <location filename="../src/gui/main_window.cpp" line="776"/>
         <source>Auto-saving failed!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="866"/>
+        <location filename="../src/gui/main_window.cpp" line="841"/>
         <source>All maps</source>
         <translation>Toutes les cartes</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="870"/>
+        <location filename="../src/gui/main_window.cpp" line="845"/>
         <source>All files</source>
         <translation>Tous les fichiers</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="628"/>
+        <location filename="../src/gui/main_window.cpp" line="603"/>
         <source>Open file</source>
         <translation>Ouvrir un fichier</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="671"/>
-        <location filename="../src/gui/main_window.cpp" line="926"/>
+        <location filename="../src/gui/main_window.cpp" line="646"/>
+        <location filename="../src/gui/main_window.cpp" line="901"/>
         <source>Error</source>
         <translation>Erreur</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="671"/>
+        <location filename="../src/gui/main_window.cpp" line="646"/>
         <source>Cannot open file:
 %1
 
@@ -2639,12 +2665,12 @@ File format not recognized.</source>
 Format du fichier non reconnu.</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="742"/>
+        <location filename="../src/gui/main_window.cpp" line="717"/>
         <source>&amp;%1 %2</source>
         <translation>&amp;%1 %2</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="823"/>
+        <location filename="../src/gui/main_window.cpp" line="798"/>
         <source>This map is being saved as a &quot;%1&quot; file. Information may be lost.
 
 Press Yes to save in this format.
@@ -2655,22 +2681,22 @@ Appuyez sur Oui pour enregister dans ce format.
 Appuyez sur Non pour choisir un autre format.</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="906"/>
+        <location filename="../src/gui/main_window.cpp" line="881"/>
         <source>Save file</source>
         <translation>Enregistrer le fichier</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="927"/>
+        <location filename="../src/gui/main_window.cpp" line="902"/>
         <source>File could not be saved:</source>
         <translation>Le fichier ne peut être enregistré:</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="928"/>
+        <location filename="../src/gui/main_window.cpp" line="903"/>
         <source>There was a problem in determining the file format.</source>
         <translation>Un problème est survenu lors de la détermination du format du fichier.</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="929"/>
+        <location filename="../src/gui/main_window.cpp" line="904"/>
         <source>Please report this as a bug.</source>
         <translation>Signaler cela comme un bug.</translation>
     </message>
@@ -2678,18 +2704,18 @@ Appuyez sur Non pour choisir un autre format.</translation>
 <context>
     <name>Map</name>
     <message>
-        <location filename="../src/map.cpp" line="547"/>
-        <location filename="../src/map.cpp" line="552"/>
-        <location filename="../src/map.cpp" line="578"/>
-        <location filename="../src/map.cpp" line="624"/>
-        <location filename="../src/map.cpp" line="654"/>
-        <location filename="../src/map.cpp" line="738"/>
-        <location filename="../src/map.cpp" line="758"/>
+        <location filename="../src/map.cpp" line="546"/>
+        <location filename="../src/map.cpp" line="551"/>
+        <location filename="../src/map.cpp" line="577"/>
+        <location filename="../src/map.cpp" line="623"/>
+        <location filename="../src/map.cpp" line="653"/>
+        <location filename="../src/map.cpp" line="740"/>
+        <location filename="../src/map.cpp" line="760"/>
         <source>Error</source>
         <translation>Erreur</translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="552"/>
+        <location filename="../src/map.cpp" line="551"/>
         <source>Cannot export the map as
 &quot;%1&quot;
 because saving as %2 (.%3) is not supported.</source>
@@ -2698,7 +2724,7 @@ because saving as %2 (.%3) is not supported.</source>
 car enregistrer comme %2 (.%3) n&apos;est pas possible.</translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="547"/>
+        <location filename="../src/map.cpp" line="546"/>
         <source>Cannot export the map as
 &quot;%1&quot;
 because the format is unknown.</source>
@@ -2707,37 +2733,37 @@ because the format is unknown.</source>
 car le format est inconnu.</translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="578"/>
+        <location filename="../src/map.cpp" line="577"/>
         <source>File does not exist or insufficient permissions to open:
 %1</source>
         <translation>Le fichier n&apos;existe pas ou vous ne possèdez pas la permission de l&apos;ouvrir:
 %1</translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="615"/>
-        <location filename="../src/map.cpp" line="706"/>
+        <location filename="../src/map.cpp" line="614"/>
+        <location filename="../src/map.cpp" line="705"/>
         <source>Warning</source>
         <translation>Attention</translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="615"/>
+        <location filename="../src/map.cpp" line="614"/>
         <source>The map export generated warnings.</source>
         <translation>L&apos;exportation de la carte comporte des avertissements.</translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="624"/>
+        <location filename="../src/map.cpp" line="623"/>
         <source>Internal error while saving:
 %1</source>
         <translation>Erreur interne lors de l&apos;enregistrement:
 %1</translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="707"/>
+        <location filename="../src/map.cpp" line="706"/>
         <source>The map import generated warnings.</source>
         <translation>L&apos;importation de la carte comporte des avertissements.</translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="655"/>
+        <location filename="../src/map.cpp" line="654"/>
         <source>Cannot open file:
 %1
 for reading.</source>
@@ -2746,12 +2772,12 @@ for reading.</source>
 pour être lu.</translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="669"/>
+        <location filename="../src/map.cpp" line="668"/>
         <source>Invalid file type.</source>
         <translation>Type de fichier invalide.</translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="739"/>
+        <location filename="../src/map.cpp" line="741"/>
         <source>Cannot open file:
 %1
 
@@ -2762,17 +2788,17 @@ pour être lu.</translation>
 %2</translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="758"/>
+        <location filename="../src/map.cpp" line="760"/>
         <source>Nothing to import.</source>
         <translation>Rien à importer.</translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="765"/>
+        <location filename="../src/map.cpp" line="767"/>
         <source>Question</source>
         <translation>Question</translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="766"/>
+        <location filename="../src/map.cpp" line="768"/>
         <source>The scale of the imported data is 1:%1 which is different from this map&apos;s scale of 1:%2.
 
 Rescale the imported data?</source>
@@ -2781,12 +2807,12 @@ Rescale the imported data?</source>
 Redimensionner le fichier importé?</translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="929"/>
+        <location filename="../src/map.cpp" line="931"/>
         <source>default part</source>
         <translation>Partie par défaut</translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="1300"/>
+        <location filename="../src/map.cpp" line="1302"/>
         <source>New color</source>
         <translation>Nouvelle couleur</translation>
     </message>
@@ -2802,331 +2828,331 @@ Redimensionner le fichier importé?</translation>
 <context>
     <name>MapEditorController</name>
     <message>
-        <location filename="../src/map_editor.cpp" line="632"/>
+        <location filename="../src/map_editor.cpp" line="649"/>
         <source>Print...</source>
         <translation>Imprimer...</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="644"/>
+        <location filename="../src/map_editor.cpp" line="661"/>
         <source>Undo</source>
         <translation>Annuler</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="644"/>
+        <location filename="../src/map_editor.cpp" line="661"/>
         <source>Undo the last step</source>
         <translation>Annule la dernière action</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="645"/>
+        <location filename="../src/map_editor.cpp" line="662"/>
         <source>Redo</source>
         <translation>Rétablir</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="645"/>
+        <location filename="../src/map_editor.cpp" line="662"/>
         <source>Redo the last step</source>
         <translation>Rétablit la dernière action annulée</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="646"/>
+        <location filename="../src/map_editor.cpp" line="663"/>
         <source>Cu&amp;t</source>
         <translation>&amp;Couper</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="647"/>
+        <location filename="../src/map_editor.cpp" line="664"/>
         <source>C&amp;opy</source>
         <translation>&amp;Copier</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="648"/>
+        <location filename="../src/map_editor.cpp" line="665"/>
         <source>&amp;Paste</source>
         <translation>&amp;Coller</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="657"/>
+        <location filename="../src/map_editor.cpp" line="674"/>
         <source>Zoom in</source>
         <translation>Zoom avant</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="658"/>
+        <location filename="../src/map_editor.cpp" line="675"/>
         <source>Zoom out</source>
         <translation>Zoom arrière</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="660"/>
+        <location filename="../src/map_editor.cpp" line="677"/>
         <source>Toggle fullscreen mode</source>
         <translation>Activer le mode plein écran</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="661"/>
+        <location filename="../src/map_editor.cpp" line="678"/>
         <source>Set custom zoom factor...</source>
         <translation>Définir un facteur de zoom...</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="668"/>
+        <location filename="../src/map_editor.cpp" line="685"/>
         <source>Symbol window</source>
         <translation>Fenêtre des symboles</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="668"/>
+        <location filename="../src/map_editor.cpp" line="685"/>
         <source>Show/Hide the symbol window</source>
         <translation>Afficher/Masquer la fenêtre des symboles</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="669"/>
+        <location filename="../src/map_editor.cpp" line="686"/>
         <source>Color window</source>
         <translation>Fenêtre des couleurs</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="669"/>
+        <location filename="../src/map_editor.cpp" line="686"/>
         <source>Show/Hide the color window</source>
         <translation>Afficher/Masquer la fenêtre des couleurs</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="670"/>
+        <location filename="../src/map_editor.cpp" line="687"/>
         <source>Replace the symbols with those from another map file</source>
         <translation>Remplace les symboles par ceux provenant d&apos;un autre fichier</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="673"/>
+        <location filename="../src/map_editor.cpp" line="690"/>
         <source>Scale all symbols...</source>
         <translation>Redimensionner tous les symboles...</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="673"/>
+        <location filename="../src/map_editor.cpp" line="690"/>
         <source>Scale the whole symbol set</source>
         <translation>Redimensionne toute la bibliothèque de symboles</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="675"/>
+        <location filename="../src/map_editor.cpp" line="692"/>
         <source>Change map scale...</source>
         <translation>Changer l&apos;échelle de la carte...</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="675"/>
+        <location filename="../src/map_editor.cpp" line="692"/>
         <source>Change the map scale and adjust map objects and symbol sizes</source>
         <translation>Change l&apos;échelle de la carte et réajuste la taille des objets et des symboles dessinés</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="677"/>
+        <location filename="../src/map_editor.cpp" line="694"/>
         <source>Map notes...</source>
         <translation>Notes sur la carte...</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="679"/>
+        <location filename="../src/map_editor.cpp" line="696"/>
         <source>Template setup window</source>
         <translation>Fenêtre des modèles</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="679"/>
+        <location filename="../src/map_editor.cpp" line="696"/>
         <source>Show/Hide the template window</source>
         <translation>Afficher/Masquer la fenêtre des modèles</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="682"/>
+        <location filename="../src/map_editor.cpp" line="699"/>
         <source>Open template...</source>
         <translation>Ouvrir un modèle...</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="659"/>
+        <location filename="../src/map_editor.cpp" line="676"/>
         <source>Show whole map</source>
         <translation>Afficher toute la carte</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="687"/>
+        <location filename="../src/map_editor.cpp" line="704"/>
         <source>Edit objects</source>
         <translation>Outil d&apos;édition</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="689"/>
+        <location filename="../src/map_editor.cpp" line="706"/>
         <source>Set point objects</source>
         <translation>Outil point</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="690"/>
+        <location filename="../src/map_editor.cpp" line="707"/>
         <source>Draw paths</source>
         <translation>Outil chemins</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="691"/>
+        <location filename="../src/map_editor.cpp" line="708"/>
         <source>Draw circles and ellipses</source>
         <translation>Outil cercle et ellipse</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="695"/>
+        <location filename="../src/map_editor.cpp" line="712"/>
         <source>Write text</source>
         <translation>Outil texte</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="697"/>
+        <location filename="../src/map_editor.cpp" line="714"/>
         <source>Duplicate</source>
         <translation>Dupliquer</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="698"/>
+        <location filename="../src/map_editor.cpp" line="715"/>
         <source>Switch symbol</source>
         <translation>Echanger le symbole</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="699"/>
+        <location filename="../src/map_editor.cpp" line="716"/>
         <source>Fill / Create border</source>
         <translation>Remplir / Entourer l&apos;objet</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="700"/>
+        <location filename="../src/map_editor.cpp" line="717"/>
         <source>Switch dash direction</source>
         <translation>Inverser la direction des symboles</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="701"/>
+        <location filename="../src/map_editor.cpp" line="718"/>
         <source>Connect paths</source>
         <translation>Joindre des chemins</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="703"/>
+        <location filename="../src/map_editor.cpp" line="720"/>
         <source>Cut object</source>
         <translation>Couper l&apos;élément</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="719"/>
+        <location filename="../src/map_editor.cpp" line="736"/>
         <source>Rotate object(s)</source>
         <translation>Rotation d&apos;objet(s)</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="722"/>
+        <location filename="../src/map_editor.cpp" line="739"/>
         <source>Measure lengths and areas</source>
         <translation>Mesurer des longueurs et des surfaces</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="769"/>
+        <location filename="../src/map_editor.cpp" line="786"/>
         <source>Import...</source>
         <translation>Importer...</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="819"/>
+        <location filename="../src/map_editor.cpp" line="836"/>
         <location filename="../src/color_dock_widget.cpp" line="76"/>
         <location filename="../src/template_dock_widget.cpp" line="184"/>
         <source>&amp;Edit</source>
         <translation>&amp;Edition</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="831"/>
+        <location filename="../src/map_editor.cpp" line="848"/>
         <source>&amp;View</source>
         <translation>&amp;Vue</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="860"/>
+        <location filename="../src/map_editor.cpp" line="877"/>
         <source>&amp;Tools</source>
         <translation>&amp;Outils</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="914"/>
+        <location filename="../src/map_editor.cpp" line="931"/>
         <source>Sy&amp;mbols</source>
         <translation>&amp;Symboles</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="896"/>
+        <location filename="../src/map_editor.cpp" line="913"/>
         <source>M&amp;ap</source>
         <translation>&amp;Carte</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="924"/>
+        <location filename="../src/map_editor.cpp" line="941"/>
         <source>&amp;Templates</source>
         <translation>&amp;Modèles</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="979"/>
+        <location filename="../src/map_editor.cpp" line="996"/>
         <source>Drawing</source>
         <translation>Dessin</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="734"/>
+        <location filename="../src/map_editor.cpp" line="751"/>
         <source>Paint on template</source>
         <translation>Dessiner sur le modèle</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="651"/>
+        <location filename="../src/map_editor.cpp" line="668"/>
         <source>Show grid</source>
         <translation>Afficher la grille</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="652"/>
-        <location filename="../src/map_editor.cpp" line="955"/>
+        <location filename="../src/map_editor.cpp" line="669"/>
+        <location filename="../src/map_editor.cpp" line="972"/>
         <source>Configure grid...</source>
         <translation>Configurer la grille...</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="663"/>
+        <location filename="../src/map_editor.cpp" line="680"/>
         <source>Hatch areas</source>
         <translation>Hachurer les surfaces</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="664"/>
+        <location filename="../src/map_editor.cpp" line="681"/>
         <source>Baseline view</source>
         <translation>Voir les lignes de bases</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="665"/>
+        <location filename="../src/map_editor.cpp" line="682"/>
         <location filename="../src/template_dock_widget.cpp" line="89"/>
         <source>Hide all templates</source>
         <translation>Masquer tous les modèles</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="674"/>
+        <location filename="../src/map_editor.cpp" line="691"/>
         <source>Georeferencing...</source>
         <translation>Géoréférencement...</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="676"/>
+        <location filename="../src/map_editor.cpp" line="693"/>
         <source>Rotate map...</source>
         <translation>Tourner la carte...</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="676"/>
+        <location filename="../src/map_editor.cpp" line="693"/>
         <source>Rotate the whole map</source>
         <translation>Tourne toute la carte</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="683"/>
+        <location filename="../src/map_editor.cpp" line="700"/>
         <source>Reopen template...</source>
         <translation>Réouvrir le modèle...</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="692"/>
+        <location filename="../src/map_editor.cpp" line="709"/>
         <source>Draw rectangles</source>
         <translation>Outil rectangle</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="704"/>
+        <location filename="../src/map_editor.cpp" line="721"/>
         <source>Cut free form hole</source>
         <translation>Découper un trou</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="705"/>
+        <location filename="../src/map_editor.cpp" line="722"/>
         <source>Cut round hole</source>
         <translation>Découper un trou circulaire</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="709"/>
+        <location filename="../src/map_editor.cpp" line="726"/>
         <source>Cut rectangular hole</source>
         <translation>Découper un trou rectangulaire</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="720"/>
+        <location filename="../src/map_editor.cpp" line="737"/>
         <source>Rotate pattern</source>
         <translation>Rotation des motifs</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="721"/>
+        <location filename="../src/map_editor.cpp" line="738"/>
         <source>Scale object(s)</source>
         <translation>Redimensionner les objets</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="723"/>
+        <location filename="../src/map_editor.cpp" line="740"/>
         <source>Unify areas</source>
         <translation>Unifier les zones</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="724"/>
+        <location filename="../src/map_editor.cpp" line="741"/>
         <source>Intersect areas</source>
         <translation>Intersecter les zones</translation>
     </message>
@@ -3135,37 +3161,37 @@ Redimensionner le fichier importé?</translation>
         <translation type="vanished">Soustraire les zones</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="726"/>
+        <location filename="../src/map_editor.cpp" line="743"/>
         <source>Area XOr</source>
         <translation>Supprimer les double couches (XOr)</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="771"/>
+        <location filename="../src/map_editor.cpp" line="788"/>
         <source>Map coordinates</source>
         <translation>Coordonnées de la carte</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="773"/>
+        <location filename="../src/map_editor.cpp" line="790"/>
         <source>Projected coordinates</source>
         <translation>Coordonnées projetées</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="775"/>
+        <location filename="../src/map_editor.cpp" line="792"/>
         <source>Latitude/Longitude (Dec)</source>
         <translation>Latitude/Longitude (Déc)</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="777"/>
+        <location filename="../src/map_editor.cpp" line="794"/>
         <source>Latitude/Longitude (DMS)</source>
         <translation>Latitude/Longitude (DMS)</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="845"/>
+        <location filename="../src/map_editor.cpp" line="862"/>
         <source>Display coordinates as...</source>
         <translation>Définir les coordonnées comme...</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="713"/>
+        <location filename="../src/map_editor.cpp" line="730"/>
         <source>Cut hole</source>
         <translation>Découper un trou</translation>
     </message>
@@ -3174,496 +3200,496 @@ Redimensionner le fichier importé?</translation>
         <translation type="vanished">Factice</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="948"/>
+        <location filename="../src/map_editor.cpp" line="965"/>
         <source>View</source>
         <translation>Vue</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="997"/>
+        <location filename="../src/map_editor.cpp" line="1014"/>
         <source>Select template...</source>
         <translation>Sélectionner un modèle...</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1003"/>
+        <location filename="../src/map_editor.cpp" line="1020"/>
         <source>Editing</source>
         <translation>Editeur</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1028"/>
+        <location filename="../src/map_editor.cpp" line="1045"/>
         <source>Advanced editing</source>
         <translation>Editeur avancé</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1278"/>
-        <location filename="../src/map_editor.cpp" line="1298"/>
-        <location filename="../src/map_editor.cpp" line="1355"/>
-        <location filename="../src/map_editor.cpp" line="1375"/>
-        <location filename="../src/map_editor.cpp" line="1388"/>
-        <location filename="../src/map_editor.cpp" line="2614"/>
-        <location filename="../src/map_editor.cpp" line="2620"/>
-        <location filename="../src/map_editor.cpp" line="2626"/>
-        <location filename="../src/map_editor.cpp" line="2632"/>
-        <location filename="../src/map_editor.cpp" line="2641"/>
-        <location filename="../src/map_editor.cpp" line="3454"/>
-        <location filename="../src/map_editor.cpp" line="3472"/>
+        <location filename="../src/map_editor.cpp" line="1306"/>
+        <location filename="../src/map_editor.cpp" line="1326"/>
+        <location filename="../src/map_editor.cpp" line="1383"/>
+        <location filename="../src/map_editor.cpp" line="1403"/>
+        <location filename="../src/map_editor.cpp" line="1416"/>
+        <location filename="../src/map_editor.cpp" line="2685"/>
+        <location filename="../src/map_editor.cpp" line="2691"/>
+        <location filename="../src/map_editor.cpp" line="2697"/>
+        <location filename="../src/map_editor.cpp" line="2703"/>
+        <location filename="../src/map_editor.cpp" line="2712"/>
+        <location filename="../src/map_editor.cpp" line="3530"/>
+        <location filename="../src/map_editor.cpp" line="3548"/>
         <source>Error</source>
         <translation>Erreur</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1298"/>
+        <location filename="../src/map_editor.cpp" line="1326"/>
         <source>No undo steps available.</source>
         <translation>Pas d&apos;actions en arrière possible.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1311"/>
+        <location filename="../src/map_editor.cpp" line="1339"/>
         <source>Cut %1 object(s)</source>
         <translation>Coupé %1 objet(s)</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1355"/>
-        <location filename="../src/map_editor.cpp" line="1388"/>
+        <location filename="../src/map_editor.cpp" line="1383"/>
+        <location filename="../src/map_editor.cpp" line="1416"/>
         <source>An internal error occurred, sorry!</source>
         <translation>Une erreur interne est survenue, désolé!</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1366"/>
+        <location filename="../src/map_editor.cpp" line="1394"/>
         <source>Copied %1 object(s)</source>
         <translation>Copié.%1 objet(s)</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1375"/>
+        <location filename="../src/map_editor.cpp" line="1403"/>
         <source>There are no objects in clipboard which could be pasted!</source>
         <translation>Il n&apos;y a aucun objet dans le presse-papier qui pourrait être collé!</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1406"/>
+        <location filename="../src/map_editor.cpp" line="1434"/>
         <source>Pasted %1 object(s)</source>
         <translation>Collé%1 objet(s)</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1465"/>
+        <location filename="../src/map_editor.cpp" line="1493"/>
         <source>Set custom zoom factor</source>
         <translation>Définir un facteur de zoom</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1465"/>
+        <location filename="../src/map_editor.cpp" line="1493"/>
         <source>Zoom factor:</source>
         <translation>Facteur de zoom:</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1543"/>
+        <location filename="../src/map_editor.cpp" line="1571"/>
         <source>Symbols</source>
         <translation>Symboles</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1559"/>
+        <location filename="../src/map_editor.cpp" line="1587"/>
         <source>Colors</source>
         <translation>Couleurs</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1583"/>
+        <location filename="../src/map_editor.cpp" line="1611"/>
         <source>Scale all symbols</source>
         <translation>Redimensionner tous les symboles</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1583"/>
+        <location filename="../src/map_editor.cpp" line="1611"/>
         <source>Scale to percentage:</source>
         <translation>Facteur d&apos;échelle:</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1607"/>
+        <location filename="../src/map_editor.cpp" line="1635"/>
         <source>Map notes</source>
         <translation>Notes pour la carte</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1612"/>
+        <location filename="../src/map_editor.cpp" line="1640"/>
         <source>Cancel</source>
         <translation>Annuler</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1613"/>
+        <location filename="../src/map_editor.cpp" line="1641"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1645"/>
+        <location filename="../src/map_editor.cpp" line="1673"/>
         <source>Templates</source>
         <translation>Modèles</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1791"/>
+        <location filename="../src/map_editor.cpp" line="1819"/>
         <source>Place point objects on the map.</source>
         <translation>Permet de placer des objets ponctuels sur la carte.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1791"/>
+        <location filename="../src/map_editor.cpp" line="1819"/>
         <source>Select a point symbol to be able to use this tool.</source>
         <translation>Sélectionnez un symbole ponctuel pour utiliser cet outil.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1793"/>
+        <location filename="../src/map_editor.cpp" line="1821"/>
         <source>Draw polygonal and curved lines.</source>
         <translation>Permet de dessiner des lignes droites et courbes.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1793"/>
-        <location filename="../src/map_editor.cpp" line="1795"/>
-        <location filename="../src/map_editor.cpp" line="1797"/>
-        <location filename="../src/map_editor.cpp" line="1799"/>
-        <location filename="../src/map_editor.cpp" line="1801"/>
+        <location filename="../src/map_editor.cpp" line="1821"/>
+        <location filename="../src/map_editor.cpp" line="1823"/>
+        <location filename="../src/map_editor.cpp" line="1825"/>
+        <location filename="../src/map_editor.cpp" line="1827"/>
+        <location filename="../src/map_editor.cpp" line="1829"/>
         <source>Select a line, area or combined symbol to be able to use this tool.</source>
         <translation>Sélectionnez un symbole de ligne, de surface ou combiné pour utiliser cet outil.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1795"/>
+        <location filename="../src/map_editor.cpp" line="1823"/>
         <source>Draw circles and ellipses.</source>
         <translation>Permet de dessiner des cercles et des ellipses.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1909"/>
+        <location filename="../src/map_editor.cpp" line="1937"/>
         <source>Set the direction of area fill patterns or point objects.</source>
         <translation>Définir la direction des surfaces avec motifs ou des objets ponctuels.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1909"/>
+        <location filename="../src/map_editor.cpp" line="1937"/>
         <source>Select an area object with rotatable fill pattern or a rotatable point object to activate this tool.</source>
         <translation>Sélectionnez une surface-objet avec des motifs ou un objet ponctuel pouvant être tournés afin d&apos;activer cet outil.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1939"/>
+        <location filename="../src/map_editor.cpp" line="1967"/>
         <source>Resulting symbol: %1 %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1940"/>
+        <location filename="../src/map_editor.cpp" line="1968"/>
         <source>Select at least two area or path objects activate this tool.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1942"/>
+        <location filename="../src/map_editor.cpp" line="1970"/>
         <source>Unify overlapping objects.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1944"/>
+        <location filename="../src/map_editor.cpp" line="1972"/>
         <source>Remove all parts which are not overlaps with the first selected object.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1946"/>
+        <location filename="../src/map_editor.cpp" line="1974"/>
         <source>Remove overlapped parts of the first selected object.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1948"/>
+        <location filename="../src/map_editor.cpp" line="1976"/>
         <source>Remove all parts which overlap the first selected object.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1952"/>
+        <location filename="../src/map_editor.cpp" line="1980"/>
         <source>Merge area holes together, or merge holes with the object boundary to cut out this part.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1952"/>
+        <location filename="../src/map_editor.cpp" line="1980"/>
         <source>Select one area object with holes to activate this tool.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="2641"/>
+        <location filename="../src/map_editor.cpp" line="2712"/>
         <source>Merging holes failed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="2923"/>
+        <location filename="../src/map_editor.cpp" line="3000"/>
         <source>Clear temporary markers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="2923"/>
+        <location filename="../src/map_editor.cpp" line="3000"/>
         <source>Are you sure you want to delete all temporary GPS markers? This cannot be undone.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="3072"/>
+        <location filename="../src/map_editor.cpp" line="3147"/>
         <source>Merge this part with</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="3078"/>
+        <location filename="../src/map_editor.cpp" line="3153"/>
         <source>Move selected objects to</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="3132"/>
-        <location filename="../src/map_editor.cpp" line="3169"/>
+        <location filename="../src/map_editor.cpp" line="3207"/>
+        <location filename="../src/map_editor.cpp" line="3244"/>
         <source>Enter the name of the map part:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="3151"/>
+        <location filename="../src/map_editor.cpp" line="3226"/>
         <source>Do you want to remove map part &quot;%1&quot; and all its objects? This cannot be undone.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="3206"/>
-        <location filename="../src/map_editor.cpp" line="3236"/>
+        <location filename="../src/map_editor.cpp" line="3281"/>
+        <location filename="../src/map_editor.cpp" line="3311"/>
         <source>Merge map parts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="3207"/>
+        <location filename="../src/map_editor.cpp" line="3282"/>
         <source>Do you want to move all objects from map part &quot;%1&quot; to &quot;%2&quot;, and to remove &quot;%1&quot;?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="3237"/>
+        <location filename="../src/map_editor.cpp" line="3312"/>
         <source>Do you want to move all objects to map part &quot;%1&quot;, and to remove all other map parts?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="3472"/>
+        <location filename="../src/map_editor.cpp" line="3548"/>
         <source>Cannot import the selected map file because it could not be loaded.</source>
         <translation>Impossible d&apos;importer le fichier sélectionné car il ne pourrait pas être chargé.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1797"/>
+        <location filename="../src/map_editor.cpp" line="1825"/>
         <source>Draw rectangles.</source>
         <translation>Permet de dessiner des rectangles.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="369"/>
+        <location filename="../src/map_editor.cpp" line="383"/>
         <source>Editing in progress</source>
         <translation>Edition en cours</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="369"/>
+        <location filename="../src/map_editor.cpp" line="383"/>
         <source>The map is currently being edited. Please finish the edit operation before saving.</source>
         <translation>La carte est en cours d&apos;édition. Veuillez patienter avant la fin de l&apos;opération d&apos;édition pour sauvegarder.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="374"/>
+        <location filename="../src/map_editor.cpp" line="388"/>
         <source>Map saved</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="634"/>
+        <location filename="../src/map_editor.cpp" line="651"/>
         <source>&amp;Image</source>
         <translation>&amp;Image</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="636"/>
+        <location filename="../src/map_editor.cpp" line="653"/>
         <source>&amp;PDF</source>
         <translation>&amp;PDF</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="649"/>
+        <location filename="../src/map_editor.cpp" line="666"/>
         <source>Clear undo / redo history</source>
         <translation>Effacer l&apos;historique annuler/refaire</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="649"/>
+        <location filename="../src/map_editor.cpp" line="666"/>
         <source>Clear the undo / redo history to reduce map file size.</source>
         <translation>Efface l&apos;historique annuler/refaire afin de réduire la taille du fichier.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="656"/>
+        <location filename="../src/map_editor.cpp" line="673"/>
         <source>Pan</source>
         <translation>Déplacer</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="666"/>
+        <location filename="../src/map_editor.cpp" line="683"/>
         <source>Overprinting simulation</source>
         <translation>Simulation de surimpression</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="670"/>
+        <location filename="../src/map_editor.cpp" line="687"/>
         <source>Replace symbol set...</source>
         <translation>Remplacer la bibliothèque de symboles...</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="685"/>
+        <location filename="../src/map_editor.cpp" line="702"/>
         <source>Tag editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="685"/>
+        <location filename="../src/map_editor.cpp" line="702"/>
         <source>Show/Hide the tag editor window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="688"/>
+        <location filename="../src/map_editor.cpp" line="705"/>
         <source>Edit lines</source>
         <translation>Editer des lignes</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="693"/>
+        <location filename="../src/map_editor.cpp" line="710"/>
         <source>Draw free-handedly</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="694"/>
+        <location filename="../src/map_editor.cpp" line="711"/>
         <source>Fill bounded areas</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="696"/>
+        <location filename="../src/map_editor.cpp" line="713"/>
         <source>Delete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="725"/>
+        <location filename="../src/map_editor.cpp" line="742"/>
         <source>Cut away from area</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="727"/>
+        <location filename="../src/map_editor.cpp" line="744"/>
         <source>Merge area holes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="728"/>
+        <location filename="../src/map_editor.cpp" line="745"/>
         <source>Convert to curves</source>
         <translation>Convertir en courbes</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="729"/>
+        <location filename="../src/map_editor.cpp" line="746"/>
         <source>Simplify path</source>
         <translation>Simplifier le chemin</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="730"/>
+        <location filename="../src/map_editor.cpp" line="747"/>
         <source>Cutout</source>
         <translation>Découpage extérieur</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="731"/>
+        <location filename="../src/map_editor.cpp" line="748"/>
         <source>Cut away</source>
         <translation>Découpage intérieur</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="732"/>
+        <location filename="../src/map_editor.cpp" line="749"/>
         <source>Distribute points along path</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="739"/>
+        <location filename="../src/map_editor.cpp" line="756"/>
         <source>Paint on template settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="745"/>
+        <location filename="../src/map_editor.cpp" line="762"/>
         <source>Enable touch cursor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="746"/>
+        <location filename="../src/map_editor.cpp" line="763"/>
         <source>Enable GPS display</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="748"/>
+        <location filename="../src/map_editor.cpp" line="765"/>
         <source>Enable GPS distance rings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="750"/>
+        <location filename="../src/map_editor.cpp" line="767"/>
         <source>Set point object at GPS position</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="752"/>
+        <location filename="../src/map_editor.cpp" line="769"/>
         <source>Set temporary marker at GPS position</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="754"/>
+        <location filename="../src/map_editor.cpp" line="771"/>
         <source>Create temporary path at GPS position</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="756"/>
+        <location filename="../src/map_editor.cpp" line="773"/>
         <source>Clear temporary GPS markers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="759"/>
+        <location filename="../src/map_editor.cpp" line="776"/>
         <source>Enable compass display</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="760"/>
+        <location filename="../src/map_editor.cpp" line="777"/>
         <source>Align map with north</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="762"/>
-        <location filename="../src/map_editor.cpp" line="2981"/>
+        <location filename="../src/map_editor.cpp" line="779"/>
+        <location filename="../src/map_editor.cpp" line="3058"/>
         <source>Toggle template visibility</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="764"/>
-        <location filename="../src/map_editor.cpp" line="3131"/>
+        <location filename="../src/map_editor.cpp" line="781"/>
+        <location filename="../src/map_editor.cpp" line="3206"/>
         <source>Add new part...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="765"/>
-        <location filename="../src/map_editor.cpp" line="3168"/>
+        <location filename="../src/map_editor.cpp" line="782"/>
+        <location filename="../src/map_editor.cpp" line="3243"/>
         <source>Rename current part...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="766"/>
-        <location filename="../src/map_editor.cpp" line="3150"/>
+        <location filename="../src/map_editor.cpp" line="783"/>
+        <location filename="../src/map_editor.cpp" line="3225"/>
         <source>Remove current part</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="767"/>
+        <location filename="../src/map_editor.cpp" line="784"/>
         <source>Merge all parts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="811"/>
+        <location filename="../src/map_editor.cpp" line="828"/>
         <source>&amp;Export as...</source>
         <translation>&amp;Exporter comme...</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="966"/>
-        <location filename="../src/map_editor.cpp" line="971"/>
-        <location filename="../src/map_editor.cpp" line="3066"/>
+        <location filename="../src/map_editor.cpp" line="983"/>
+        <location filename="../src/map_editor.cpp" line="988"/>
+        <location filename="../src/map_editor.cpp" line="3141"/>
         <source>Map parts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1054"/>
+        <location filename="../src/map_editor.cpp" line="1071"/>
         <source>Select symbol</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1057"/>
+        <location filename="../src/map_editor.cpp" line="1074"/>
         <source>Hide top bar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1060"/>
+        <location filename="../src/map_editor.cpp" line="1077"/>
         <source>Show top bar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1278"/>
+        <location filename="../src/map_editor.cpp" line="1306"/>
         <source>Print / Export is not available in this program version!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1696"/>
+        <location filename="../src/map_editor.cpp" line="1724"/>
         <source>Tag Editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1755"/>
+        <location filename="../src/map_editor.cpp" line="1783"/>
         <source>No
 symbol
 selected</source>
@@ -3671,7 +3697,7 @@ selected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1756"/>
+        <location filename="../src/map_editor.cpp" line="1784"/>
         <source>Multiple
 symbols
 selected</source>
@@ -3679,86 +3705,86 @@ selected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1799"/>
+        <location filename="../src/map_editor.cpp" line="1827"/>
         <source>Draw paths free-handedly.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1801"/>
+        <location filename="../src/map_editor.cpp" line="1829"/>
         <source>Fill bounded areas.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1803"/>
+        <location filename="../src/map_editor.cpp" line="1831"/>
         <source>Write text on the map.</source>
         <translation>Permet d&apos;écrire du texte sur la carte.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1803"/>
+        <location filename="../src/map_editor.cpp" line="1831"/>
         <source>Select a text symbol to be able to use this tool.</source>
         <translation>Sélectionnez un symbole de texte pour utiliser cet outil.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1898"/>
+        <location filename="../src/map_editor.cpp" line="1926"/>
         <source>Deletes the selected object(s).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1900"/>
+        <location filename="../src/map_editor.cpp" line="1928"/>
         <source>Duplicate the selected object(s).</source>
         <translation>Duplique les objets sélectionnés.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1898"/>
-        <location filename="../src/map_editor.cpp" line="1900"/>
-        <location filename="../src/map_editor.cpp" line="1902"/>
-        <location filename="../src/map_editor.cpp" line="1904"/>
+        <location filename="../src/map_editor.cpp" line="1926"/>
+        <location filename="../src/map_editor.cpp" line="1928"/>
+        <location filename="../src/map_editor.cpp" line="1930"/>
+        <location filename="../src/map_editor.cpp" line="1932"/>
         <source>Select at least one object to activate this tool.</source>
         <translation>Sélectionnez au moins un objet pour activer cet outil.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1913"/>
+        <location filename="../src/map_editor.cpp" line="1941"/>
         <source>Switch the direction of symbols on line objects.</source>
         <translation>Inverse la direction des symboles pour une ligne-objet.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1913"/>
-        <location filename="../src/map_editor.cpp" line="1915"/>
+        <location filename="../src/map_editor.cpp" line="1941"/>
+        <location filename="../src/map_editor.cpp" line="1943"/>
         <source>Select at least one line object to activate this tool.</source>
         <translation>Sélectionnez au moins une ligne-objet pour activer cet outil.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1915"/>
+        <location filename="../src/map_editor.cpp" line="1943"/>
         <source>Connect endpoints of paths which are close together.</source>
         <translation>Joint les extrémités des chemins qui sont proches.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1919"/>
+        <location filename="../src/map_editor.cpp" line="1947"/>
         <source>Cut the selected object(s) into smaller parts.</source>
         <translation>Coupe l&apos;objet sélectionné en parties plus petites.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1919"/>
+        <location filename="../src/map_editor.cpp" line="1947"/>
         <source>Select at least one line or area object to activate this tool.</source>
         <translation>Sélectionnez au moins une ligne ou une surface-objet pour activer cet outil.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1928"/>
+        <location filename="../src/map_editor.cpp" line="1956"/>
         <source>Cut a hole into the selected area object.</source>
         <translation>Découpe un trou dans la surface-objet sélectionnée.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1928"/>
+        <location filename="../src/map_editor.cpp" line="1956"/>
         <source>Select a single area object to activate this tool.</source>
         <translation>Sélectionnez une seule surface-objet pour activer cet outil.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1902"/>
+        <location filename="../src/map_editor.cpp" line="1930"/>
         <source>Rotate the selected object(s).</source>
         <translation>Effectue une rotation des objets sélectionnés.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1904"/>
+        <location filename="../src/map_editor.cpp" line="1932"/>
         <source>Scale the selected object(s).</source>
         <translation>Redimensionne les objets sélectionnés.</translation>
     </message>
@@ -3787,130 +3813,130 @@ selected</source>
         <translation type="vanished">Supprime les zones de recoupement pour la première surface-objet sélectionnée.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1921"/>
+        <location filename="../src/map_editor.cpp" line="1949"/>
         <source>Turn paths made of straight segments into smooth bezier splines.</source>
         <translation>Change les chemins composés de segments en courbes de bézier lissées.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1921"/>
-        <location filename="../src/map_editor.cpp" line="1923"/>
+        <location filename="../src/map_editor.cpp" line="1949"/>
+        <location filename="../src/map_editor.cpp" line="1951"/>
         <source>Select a path object to activate this tool.</source>
         <translation>Sélectionnez un objet chemin pour activer cet outil.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1923"/>
+        <location filename="../src/map_editor.cpp" line="1951"/>
         <source>Reduce the number of points in path objects while trying to retain their shape.</source>
         <translation>Réduit le nombre de points dans des objets chemins en tentant de conserver leur forme.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1957"/>
+        <location filename="../src/map_editor.cpp" line="1985"/>
         <source>Create a cutout of some objects or the whole map.</source>
         <translation>Rogne les objets se trouvant à l&apos;extérieur de la zone choisie ou la carte entière.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1957"/>
-        <location filename="../src/map_editor.cpp" line="1959"/>
+        <location filename="../src/map_editor.cpp" line="1985"/>
+        <location filename="../src/map_editor.cpp" line="1987"/>
         <source>Select a closed path object as cutout shape to activate this tool.</source>
         <translation>Sélectionnez un objet chemin fermé comme forme de découpage pour activer cet outil.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1959"/>
+        <location filename="../src/map_editor.cpp" line="1987"/>
         <source>Cut away some objects or everything in a limited area.</source>
         <translation>Découpe tous les objets se trouvant à l&apos;intérieur de la zone choisie.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1988"/>
+        <location filename="../src/map_editor.cpp" line="2016"/>
         <source>Switches the symbol of the selected object(s) to the selected symbol.</source>
         <translation>Echange le symbole de l&apos;objet sélectionné par le symbole sélectionné.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1988"/>
-        <location filename="../src/map_editor.cpp" line="1990"/>
+        <location filename="../src/map_editor.cpp" line="2016"/>
+        <location filename="../src/map_editor.cpp" line="2018"/>
         <source>Select at least one object and a fitting, different symbol to activate this tool.</source>
         <translation>Sélectionnez au moins un objet et un symbole différent et compatible pour activer cet outil.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1990"/>
+        <location filename="../src/map_editor.cpp" line="2018"/>
         <source>Fill the selected line(s) or create a border for the selected area(s).</source>
         <translation>Remplit la ligne sélectionnée ou crée une bordure autour de la zone.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1995"/>
+        <location filename="../src/map_editor.cpp" line="2023"/>
         <source>Places evenly spaced point objects along an existing path object</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1995"/>
+        <location filename="../src/map_editor.cpp" line="2023"/>
         <source>Select at least one path object and a single point symbol to activate this tool.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="2116"/>
+        <location filename="../src/map_editor.cpp" line="2144"/>
         <source>%1 object(s) duplicated</source>
         <translation>%1 objet(s) dupliqué(s)</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="2308"/>
+        <location filename="../src/map_editor.cpp" line="2356"/>
         <source>Object selection</source>
         <translation>Sélection d&apos;objets</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="2308"/>
+        <location filename="../src/map_editor.cpp" line="2356"/>
         <source>No objects were selected because there are no objects with the selected symbol(s).</source>
         <translation>Aucun objet n&apos;a été sélectionné car il n&apos;y a pas d&apos;objet avec le(s) symbole(s) sélectionné(s).</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="2598"/>
+        <location filename="../src/map_editor.cpp" line="2669"/>
         <source>Measure</source>
         <translation>Mesure</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="2614"/>
+        <location filename="../src/map_editor.cpp" line="2685"/>
         <source>Unification failed.</source>
         <translation>L&apos;unification a échoué.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="2620"/>
+        <location filename="../src/map_editor.cpp" line="2691"/>
         <source>Intersection failed.</source>
         <translation>L&apos;intersection a échoué.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="2626"/>
+        <location filename="../src/map_editor.cpp" line="2697"/>
         <source>Difference failed.</source>
         <translation>La différence a échoué.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="2632"/>
+        <location filename="../src/map_editor.cpp" line="2703"/>
         <source>XOr failed.</source>
         <translation>La fonction XOr a échoué.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="3291"/>
+        <location filename="../src/map_editor.cpp" line="3366"/>
         <source>Paint free-handedly on a template</source>
         <translation>Dessiner à main levée sur le modèle</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="3293"/>
+        <location filename="../src/map_editor.cpp" line="3368"/>
         <source>Paint free-handedly on a template. Create or load a template which can be drawn onto to activate this button</source>
         <translation>Dessine à main levée sur le modèle. Créez ou chargez un modèle sur lequel il sera possible de dessiner à l&apos;aide de ce bouton</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="3421"/>
+        <location filename="../src/map_editor.cpp" line="3497"/>
         <source>Import %1, GPX, OSM or DXF file</source>
         <translation>Importer des fichiers %1, GPX, OSM ou DXF</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="3425"/>
+        <location filename="../src/map_editor.cpp" line="3501"/>
         <source>Importable files</source>
         <translation>Fichiers importables</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="3427"/>
+        <location filename="../src/map_editor.cpp" line="3503"/>
         <source>All files</source>
         <translation>Tous les fichiers</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="3454"/>
+        <location filename="../src/map_editor.cpp" line="3530"/>
         <source>Cannot import the selected file because its file format is not supported.</source>
         <translation>Impossible d&apos;importer le fichier sélectionné car son format n&apos;est pas supporté.</translation>
     </message>
@@ -3923,12 +3949,12 @@ selected</source>
         <location filename="../src/tool_draw_circle.cpp" line="300"/>
         <location filename="../src/tool_draw_rectangle.cpp" line="722"/>
         <location filename="../src/tool_draw_freehand.cpp" line="275"/>
-        <location filename="../src/tool_cutout.cpp" line="137"/>
+        <location filename="../src/tool_cutout.cpp" line="142"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Abort. </source>
         <translation>&lt;b&gt;%1&lt;/b&gt;: Annuler. </translation>
     </message>
     <message>
-        <location filename="../src/tool_edit_point.cpp" line="653"/>
+        <location filename="../src/tool_edit_point.cpp" line="654"/>
         <location filename="../src/tool_draw_path.cpp" line="1038"/>
         <location filename="../src/tool_draw_path.cpp" line="1039"/>
         <location filename="../src/tool_draw_rectangle.cpp" line="675"/>
@@ -3937,7 +3963,7 @@ selected</source>
         <translation>Plus avec %1, %2</translation>
     </message>
     <message>
-        <location filename="../src/tool_edit_line.cpp" line="449"/>
+        <location filename="../src/tool_edit_line.cpp" line="450"/>
         <source>More: %1</source>
         <translation>Plus avec %1</translation>
     </message>
@@ -3951,27 +3977,27 @@ selected</source>
 <context>
     <name>MapPrinter</name>
     <message>
-        <location filename="../src/core/map_printer.cpp" line="862"/>
+        <location filename="../src/core/map_printer.cpp" line="874"/>
         <source>Processing separations of page %1...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/core/map_printer.cpp" line="863"/>
+        <location filename="../src/core/map_printer.cpp" line="875"/>
         <source>Processing page %1...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/core/map_printer.cpp" line="968"/>
+        <location filename="../src/core/map_printer.cpp" line="980"/>
         <source>Canceled</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/core/map_printer.cpp" line="973"/>
+        <location filename="../src/core/map_printer.cpp" line="985"/>
         <source>Error</source>
         <translation type="unfinished">Erreur</translation>
     </message>
     <message>
-        <location filename="../src/core/map_printer.cpp" line="977"/>
+        <location filename="../src/core/map_printer.cpp" line="989"/>
         <source>Finished</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4206,77 +4232,77 @@ Zoomez en utilisant la molette de votre souris.</translation>
 <context>
     <name>OCAD8FileExport</name>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1540"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1542"/>
         <source>The map contains more than 256 colors which is not supported by ocd version 8.</source>
         <translation>La carte contient plus de 256 couleurs ce qui n&apos;est pas supporté par les versions ocd 8.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1544"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1546"/>
         <source>libocad returned %1</source>
         <translation>libocad renvoie %1</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1586"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1588"/>
         <source>Registration black is exported as a regular color.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1681"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1683"/>
         <source>Unable to export fill pattern shift for an area object</source>
         <translation>Impossible d&apos;exporter la couche de motifs pour une surface objet</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1829"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1831"/>
         <source>Unable to export template: file type of &quot;%1&quot; is not supported yet</source>
         <translation>Impossible d&apos;exporter le modèle: Le type du fichier (%1) n&apos;est pas supporté</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="2046"/>
+        <location filename="../src/file_format_ocad8.cpp" line="2050"/>
         <source>In line symbol &quot;%1&quot;, cannot represent cap/join combination.</source>
         <translation>Pour le symbole de ligne &quot;%1&quot;,impossible de réaliser la combinaison entre extrémité et jointure.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="2070"/>
+        <location filename="../src/file_format_ocad8.cpp" line="2074"/>
         <source>In line symbol &quot;%1&quot;, neglecting the dash grouping.</source>
         <translation>Pour le symbole de ligne &quot;%1&quot;,Le groupe de pointillés a été ignoré.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="2081"/>
+        <location filename="../src/file_format_ocad8.cpp" line="2085"/>
         <source>In line symbol &quot;%1&quot;, the number of dashes in a group has been reduced to 2.</source>
         <translation>Pour le symbole de ligne &quot;%1&quot;,Le nombre de pointillés par groupe a été réduit à 2.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="2137"/>
+        <location filename="../src/file_format_ocad8.cpp" line="2141"/>
         <source>In line symbol &quot;%1&quot;, cannot export the borders correctly.</source>
         <translation>Pour le symbole de ligne &quot;%1&quot;, impossible d&apos;exporter correctement les bordures.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="2196"/>
+        <location filename="../src/file_format_ocad8.cpp" line="2200"/>
         <source>In area symbol &quot;%1&quot;, skipping a fill pattern.</source>
         <translation>Pour le symbole de surface &quot;%1&quot;,une structure en motifs a été ignoré.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="2243"/>
+        <location filename="../src/file_format_ocad8.cpp" line="2247"/>
         <source>In area symbol &quot;%1&quot;, assuming a &quot;shifted rows&quot; point pattern. This might be correct as well as incorrect.</source>
         <translation>Pour le symbole de surface &quot;%1&quot;, les motifs de points sont considérés comme décalés . Ceci peut se révéler correct tout comme incorrect.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="2282"/>
+        <location filename="../src/file_format_ocad8.cpp" line="2286"/>
         <source>In text symbol %1: custom character spacing is set, its implementation does not match OCAD&apos;s behavior yet</source>
         <translation>Pour le symbole de texte &quot;%1&quot;: Un espacement personnalisé a été choisi entre les caractères, son utilisation n&apos;est pas encore compatible avec OCAD</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="2289"/>
+        <location filename="../src/file_format_ocad8.cpp" line="2293"/>
         <source>In text symbol %1: ignoring underlining</source>
         <translation>Pour le symbole de texte &quot;%1&quot;, le soulignement a été ignoré</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="2291"/>
+        <location filename="../src/file_format_ocad8.cpp" line="2295"/>
         <source>In text symbol %1: ignoring kerning</source>
         <translation>Pour le symbole de texte &quot;%1&quot;, le crénage a été ignoré</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="2666"/>
+        <location filename="../src/file_format_ocad8.cpp" line="2670"/>
         <source>String truncated (truncation marked with three &apos;|&apos;): %1</source>
         <translation>Chaîne de caractère tronquée (Les retraits sont marqués par trois &apos;|&apos;)%1</translation>
     </message>
@@ -4387,17 +4413,17 @@ Zoomez en utilisant la molette de votre souris.</translation>
         <translation>Lors de l&apos;importation du symbole de texte %1: Le contour du texte a été ignoré (mode %2)</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="945"/>
+        <location filename="../src/file_format_ocad8.cpp" line="947"/>
         <source>Unable to load object</source>
         <translation>Impossible de charger l&apos;objet</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="952"/>
+        <location filename="../src/file_format_ocad8.cpp" line="954"/>
         <source>Unable to import rectangle object</source>
         <translation>Impossible d&apos;importer l&apos;objet rectangulaire</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1000"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1002"/>
         <source>Not importing text symbol, couldn&apos;t figure out path&apos; (npts=%1): %2</source>
         <translation>Symbole de texte non importé, impossible de trouver le chemin (npts=%1): %2</translation>
     </message>
@@ -4406,18 +4432,18 @@ Zoomez en utilisant la molette de votre souris.</translation>
         <translation type="obsolete">Impossible d&apos;importer le modèle: %1</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1191"/>
-        <location filename="../src/file_format_ocad8.cpp" line="1300"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1193"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1302"/>
         <source>Unable to import template: background &quot;%1&quot; doesn&apos;t seem to be a raster image</source>
         <translation>Impossible d&apos;importer le modèle: L&apos;arrière-plan &quot;%1&quot; ne semble pas être une image raster</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1405"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1407"/>
         <source>Trying to import a text object with unknown coordinate format</source>
         <translation>Le format du texte voulant être importé est inconnu</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1504"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1506"/>
         <source>Color id not found: %1, ignoring this color</source>
         <translation>L&apos;id de la couleur est introuvable: %1, couleur ignorée</translation>
     </message>
@@ -4544,41 +4570,41 @@ Zoomez en utilisant la molette de votre souris.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_format.cpp" line="1503"/>
+        <location filename="../src/fileformats/ocd_file_format.cpp" line="1513"/>
         <source>Unable to load object</source>
         <translation type="unfinished">Impossible de charger l&apos;objet</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_format.cpp" line="1513"/>
+        <location filename="../src/fileformats/ocd_file_format.cpp" line="1523"/>
         <source>Unable to import rectangle object</source>
         <translation type="unfinished">Impossible d&apos;importer l&apos;objet rectangulaire</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_format.cpp" line="1554"/>
+        <location filename="../src/fileformats/ocd_file_format.cpp" line="1564"/>
         <source>Not importing text symbol, couldn&apos;t figure out path&apos; (npts=%1): %2</source>
         <translation type="unfinished">Symbole de texte non importé, impossible de trouver le chemin (npts=%1): %2</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_format.cpp" line="1830"/>
+        <location filename="../src/fileformats/ocd_file_format.cpp" line="1840"/>
         <source>Trying to import a text object with unknown coordinate format</source>
         <translation type="unfinished">Le format du texte voulant être importé est inconnu</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_format.cpp" line="1851"/>
-        <location filename="../src/fileformats/ocd_file_format.cpp" line="1855"/>
+        <location filename="../src/fileformats/ocd_file_format.cpp" line="1861"/>
+        <location filename="../src/fileformats/ocd_file_format.cpp" line="1865"/>
         <source>Invalid data.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_format.cpp" line="1867"/>
-        <location filename="../src/fileformats/ocd_file_format.cpp" line="1876"/>
-        <location filename="../src/fileformats/ocd_file_format.cpp" line="1880"/>
-        <location filename="../src/fileformats/ocd_file_format.cpp" line="1884"/>
+        <location filename="../src/fileformats/ocd_file_format.cpp" line="1877"/>
+        <location filename="../src/fileformats/ocd_file_format.cpp" line="1886"/>
+        <location filename="../src/fileformats/ocd_file_format.cpp" line="1890"/>
+        <location filename="../src/fileformats/ocd_file_format.cpp" line="1894"/>
         <source>Untested file importer for format: OCD %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_format.cpp" line="1890"/>
+        <location filename="../src/fileformats/ocd_file_format.cpp" line="1900"/>
         <source>OCD files of version %1 are not supported!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5124,7 +5150,7 @@ Zoomez en utilisant la molette de votre souris.</translation>
 <context>
     <name>ProjectedCRSSelector</name>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="858"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="860"/>
         <source>&amp;Coordinate reference system:</source>
         <translation>&amp;Système de coordonnées de référence:</translation>
     </message>
@@ -5524,52 +5550,52 @@ Zoomez en utilisant la molette de votre souris.</translation>
 <context>
     <name>SelectCRSDialog</name>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="891"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="893"/>
         <source>Select coordinate reference system</source>
         <translation>Sélectionner un système de coordonnées de références</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="897"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="899"/>
         <source>Same as map&apos;s</source>
         <translation>Même que la carte</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="901"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="903"/>
         <source>Local</source>
         <translation>Local</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="903"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="905"/>
         <source>Geographic coordinates (WGS84)</source>
         <translation>Coordonnées géographiques (WGS84)</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="905"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="907"/>
         <source>From list</source>
         <translation>De la liste</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="910"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="912"/>
         <source>From specification</source>
         <translation>De la spécification</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="920"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="922"/>
         <source>(local)</source>
         <translation>(local)</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="933"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="935"/>
         <source>CRS Specification:</source>
         <translation>Spécification CRS:</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="934"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="936"/>
         <source>Status:</source>
         <translation>Statut:</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="1015"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="1017"/>
         <source>valid</source>
         <translation>valide</translation>
     </message>
@@ -5704,65 +5730,75 @@ Zoomez en utilisant la molette de votre souris.</translation>
         <translation>Remplir / Créer des bordures pour les objets sélectionnés</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="244"/>
+        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="245"/>
         <source>Select symbols</source>
         <translation>Sélectionner des symboles</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="851"/>
+        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="857"/>
         <source>Scale symbol(s)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="909"/>
-        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="924"/>
-        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="937"/>
+        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="915"/>
+        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="930"/>
+        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="943"/>
         <source>Error</source>
         <translation>Erreur</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="909"/>
-        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="937"/>
+        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="915"/>
+        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="943"/>
         <source>An internal error occurred, sorry!</source>
         <translation>Une erreur interne est survenue, désolé!</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="924"/>
+        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="930"/>
         <source>There are no symbols in clipboard which could be pasted!</source>
         <translation>Il n&apos;y a aucun symbole dans le presse-papier qui ne pourrait être collé!</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1093"/>
+        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1099"/>
         <source>Select all objects with this symbol</source>
         <translation>Sélectionner tous les objets ayant ce symbole</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1095"/>
+        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1101"/>
+        <source>Remove all objects with this symbol from selection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1102"/>
         <source>Hide objects with this symbol</source>
         <translation>Masquer les objets ayant ce symbole</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1096"/>
+        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1103"/>
         <source>Protect objects with this symbol</source>
         <translation>Protéger les objets ayant ce symbole</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1101"/>
+        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1108"/>
         <source>Add all objects with selected symbols to selection</source>
         <translation>Ajouter tous les objets avec les symboles sélectionnés à la sélection</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1102"/>
+        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1109"/>
+        <source>Remove all objects with selected symbols from selection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1110"/>
         <source>Hide objects with selected symbols</source>
         <translation>Masquer les objets ayant les symboles sélectionnés</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1103"/>
+        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1111"/>
         <source>Protect objects with selected symbols</source>
         <translation>Protéger les objets ayant les symboles sélectionnés</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="248"/>
+        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="249"/>
         <source>Invert selection</source>
         <translation>Inverser la sélection</translation>
     </message>
@@ -5773,32 +5809,32 @@ Zoomez en utilisant la molette de votre souris.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="245"/>
+        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="246"/>
         <source>Select all</source>
         <translation>Tout sélectionner</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="246"/>
+        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="247"/>
         <source>Select unused</source>
         <translation>Sélectionner les inutulisés</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="251"/>
+        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="252"/>
         <source>Sort symbols</source>
         <translation>Classer les symboles</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="252"/>
+        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="253"/>
         <source>Sort by number</source>
         <translation>Classer par numéro</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="253"/>
+        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="254"/>
         <source>Sort by primary color</source>
         <translation>Classer par couleur primaire</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="254"/>
+        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="255"/>
         <source>Sort by primary color priority</source>
         <translation>Trier par ordre de priorité des couleurs primaires</translation>
     </message>
@@ -5807,27 +5843,27 @@ Zoomez en utilisant la molette de votre souris.</translation>
         <translation type="obsolete">Echelle du symbole %1</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="851"/>
+        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="857"/>
         <source>Scale to percentage:</source>
         <translation>Facteur:</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="873"/>
+        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="879"/>
         <source>Confirmation</source>
         <translation>Confirmation</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="873"/>
+        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="879"/>
         <source>The map contains objects with the symbol &quot;%1&quot;. Deleting it will delete those objects and clear the undo history! Do you really want to do that?</source>
         <translation>La carte contient des objets avec le symbole suivant&quot;%1&quot;. En le supprimant, vous supprimerez ces objets et effacerez l&apos;historique de vos dernières actions! Voulez vous vraiment continuer?</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1094"/>
+        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1100"/>
         <source>Add all objects with this symbol to selection</source>
         <translation>Ajouter tous les objets avec ce symbole à la sélection</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1100"/>
+        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1107"/>
         <source>Select all objects with selected symbols</source>
         <translation>Sélectionner tous les objets ayant les symbole sélectionnés</translation>
     </message>
@@ -5870,12 +5906,12 @@ Zoomez en utilisant la molette de votre souris.</translation>
         <translation>Centre de gravité sur l&apos;origine</translation>
     </message>
     <message>
-        <location filename="../src/symbol_setting_dialog.cpp" line="230"/>
+        <location filename="../src/symbol_setting_dialog.cpp" line="232"/>
         <source>Select background color</source>
         <translation>Sélectionner une couleur de fond</translation>
     </message>
     <message>
-        <location filename="../src/symbol_setting_dialog.cpp" line="415"/>
+        <location filename="../src/symbol_setting_dialog.cpp" line="417"/>
         <source>The quick brown fox
 takes the routechoice
 to jump over the lazy dog
@@ -6357,13 +6393,13 @@ La version maximale supportée est la version %2.</translation>
     </message>
     <message>
         <location filename="../src/template_dock_widget.cpp" line="139"/>
-        <location filename="../src/template_dock_widget.cpp" line="387"/>
+        <location filename="../src/template_dock_widget.cpp" line="384"/>
         <source>Sketch</source>
         <translation>Esquisser</translation>
     </message>
     <message>
         <location filename="../src/template_dock_widget.cpp" line="141"/>
-        <location filename="../src/template_dock_widget.cpp" line="391"/>
+        <location filename="../src/template_dock_widget.cpp" line="388"/>
         <source>GPS</source>
         <translation>GPS</translation>
     </message>
@@ -6443,7 +6479,7 @@ La version maximale supportée est la version %2.</translation>
         <translation>Déplacer à la main</translation>
     </message>
     <message>
-        <location filename="../src/template_dock_widget.cpp" line="313"/>
+        <location filename="../src/template_dock_widget.cpp" line="310"/>
         <source>Open image, GPS track or DXF file</source>
         <translation>Ouvrir une image, une trace GPS ou un fichier DXF</translation>
     </message>
@@ -6453,12 +6489,12 @@ La version maximale supportée est la version %2.</translation>
         <translation>Positionnement...</translation>
     </message>
     <message>
-        <location filename="../src/template_dock_widget.cpp" line="313"/>
+        <location filename="../src/template_dock_widget.cpp" line="310"/>
         <source>Template files</source>
         <translation>Fichiers modèles</translation>
     </message>
     <message>
-        <location filename="../src/template_dock_widget.cpp" line="313"/>
+        <location filename="../src/template_dock_widget.cpp" line="310"/>
         <source>All files</source>
         <translation>Tous les fichiers</translation>
     </message>
@@ -6468,14 +6504,14 @@ La version maximale supportée est la version %2.</translation>
         <translation>Ajuster...</translation>
     </message>
     <message>
-        <location filename="../src/template_dock_widget.cpp" line="323"/>
-        <location filename="../src/template_dock_widget.cpp" line="335"/>
+        <location filename="../src/template_dock_widget.cpp" line="320"/>
+        <location filename="../src/template_dock_widget.cpp" line="332"/>
         <location filename="../src/template_dock_widget.cpp" line="611"/>
         <source>Error</source>
         <translation>Erreur</translation>
     </message>
     <message>
-        <location filename="../src/template_dock_widget.cpp" line="323"/>
+        <location filename="../src/template_dock_widget.cpp" line="320"/>
         <source>Cannot open template:
 %1
 
@@ -6486,7 +6522,7 @@ File format not recognized.</source>
 Format de fichier non reconnu.</translation>
     </message>
     <message>
-        <location filename="../src/template_dock_widget.cpp" line="335"/>
+        <location filename="../src/template_dock_widget.cpp" line="332"/>
         <source>Cannot open template:
 %1
 
@@ -6539,38 +6575,38 @@ Le chargement du modèle a échoué. Le fichier existe-t-il et est-il valide?</t
 <context>
     <name>TextObjectAlignmentDockWidget</name>
     <message>
-        <location filename="../src/tool_draw_text.cpp" line="375"/>
+        <location filename="../src/tool_draw_text.cpp" line="377"/>
         <source>Alignment</source>
         <translation>Alignement</translation>
     </message>
     <message>
-        <location filename="../src/tool_draw_text.cpp" line="458"/>
+        <location filename="../src/tool_draw_text.cpp" line="460"/>
         <source>Left</source>
         <translation>Gauche</translation>
     </message>
     <message>
-        <location filename="../src/tool_draw_text.cpp" line="458"/>
-        <location filename="../src/tool_draw_text.cpp" line="474"/>
+        <location filename="../src/tool_draw_text.cpp" line="460"/>
+        <location filename="../src/tool_draw_text.cpp" line="476"/>
         <source>Center</source>
         <translation>Centre</translation>
     </message>
     <message>
-        <location filename="../src/tool_draw_text.cpp" line="458"/>
+        <location filename="../src/tool_draw_text.cpp" line="460"/>
         <source>Right</source>
         <translation>Droit</translation>
     </message>
     <message>
-        <location filename="../src/tool_draw_text.cpp" line="474"/>
+        <location filename="../src/tool_draw_text.cpp" line="476"/>
         <source>Top</source>
         <translation>Haut</translation>
     </message>
     <message>
-        <location filename="../src/tool_draw_text.cpp" line="474"/>
+        <location filename="../src/tool_draw_text.cpp" line="476"/>
         <source>Baseline</source>
         <translation>Sur la ligne de base</translation>
     </message>
     <message>
-        <location filename="../src/tool_draw_text.cpp" line="474"/>
+        <location filename="../src/tool_draw_text.cpp" line="476"/>
         <source>Bottom</source>
         <translation>Bas</translation>
     </message>
@@ -6842,22 +6878,32 @@ Le chargement du modèle a échoué. Le fichier existe-t-il et est-il valide?</t
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_xml.cpp" line="601"/>
+        <location filename="../src/file_format_xml.cpp" line="487"/>
+        <source>Unknown error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/file_format_xml.cpp" line="488"/>
+        <source>Unsupported or invalid georeferencing specification &apos;%1&apos;: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/file_format_xml.cpp" line="610"/>
         <source>Expected %1 colors, found %2.</source>
         <translation>%1 couleurs attendues, %2 trouvées.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_xml.cpp" line="617"/>
+        <location filename="../src/file_format_xml.cpp" line="626"/>
         <source>Spot color %1 not found while processing %2 (%3).</source>
         <translation>Ton direct %1 non trouvé lors du calcul %2 (%3).</translation>
     </message>
     <message>
-        <location filename="../src/file_format_xml.cpp" line="663"/>
+        <location filename="../src/file_format_xml.cpp" line="672"/>
         <source>Expected %1 symbols, found %2.</source>
         <translation>%1 symboles attendus, %2 trouvés.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_xml.cpp" line="694"/>
+        <location filename="../src/file_format_xml.cpp" line="703"/>
         <source>Expected %1 map parts, found %2.</source>
         <translation>%1 parties de carte attendues, %2 trouvées.</translation>
     </message>

@@ -1081,6 +1081,21 @@
     </message>
 </context>
 <context>
+    <name>GPSDisplay</name>
+    <message>
+        <source>GPS is disabled in the device settings. Open settings now?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Yes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>GeneralPage</name>
     <message>
         <source>Translation files (*.qm)</source>
@@ -1589,7 +1604,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>No map files found!&lt;br/&gt;&lt;br/&gt;Copy a map file to /OOMapper or /sdcard/OOMapper to list it here.</source>
+        <source>No map files found!&lt;br/&gt;&lt;br/&gt;Copy map files to a top-level folder named &apos;OOMapper&apos; on the device or a memory card.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1660,7 +1675,7 @@
     </message>
     <message>
         <source>At least one template file could not be found. Click the red template name(s) in the Templates -&gt; Template setup window to locate the template file name(s).</source>
-        <translation>Przynajmniej jeden podkład nie może być odnaleziony. Kliknij na czerwoną nazwę podkładu w Podkłady -&gt; Okno edycji podkładu aby znaleźć nazwę tego podkładu.</translation>
+        <translation type="vanished">Przynajmniej jeden podkład nie może być odnaleziony. Kliknij na czerwoną nazwę podkładu w Podkłady -&gt; Okno edycji podkładu aby znaleźć nazwę tego podkładu.</translation>
     </message>
     <message>
         <source>Error while loading a symbol with type %2.</source>
@@ -1713,6 +1728,14 @@
     <message>
         <source>Unsupported new file format version. Some map features will not be loaded or saved by this version of the program.</source>
         <translation>Nieobsługiwany, nowszy format wersji pliku. Niektóre właściwości mapy nie będą wszytane lub zapisane w tej wesji.</translation>
+    </message>
+    <message>
+        <source>At least one template file could not be found.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Click the red template name(s) in the Templates -&gt; Template setup window to locate the template file name(s).</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4743,6 +4766,14 @@ zoom using the mouse wheel, if available.</source>
         <source>Scale symbol(s)</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Remove all objects with this symbol from selection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove all objects with selected symbols from selection</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SymbolSettingDialog</name>
@@ -5580,6 +5611,14 @@ Nie udało się załadować podkładu. Czy plik istnieje i jest poprawny?</trans
     </message>
     <message>
         <source>unknown</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unknown error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unsupported or invalid georeferencing specification &apos;%1&apos;: %2</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
