@@ -350,16 +350,15 @@ void BooleanTool::PathObjectToPolygons(PathObject* object, ClipperLib::Paths& po
 	object->update();
 	
 	int part_count = object->getNumParts();
-	polygons.clear();
-	polygons.resize(part_count);
+	std::size_t polygon_index = polygons.size();
+	polygons.resize(polygon_index + part_count);
 	
 	const PathCoordVector& path_coords = object->getPathCoordinateVector();
-	
-	for (int part_number = 0; part_number < part_count; ++part_number)
+	for (int part_number = 0; part_number < part_count; ++part_number, ++polygon_index)
 	{
 		PathObject::PathPart& part = object->getPart(part_number);
 		
-		ClipperLib::Path& polygon = polygons[part_number];
+		ClipperLib::Path& polygon = polygons[polygon_index];
 		for (int i = part.path_coord_start_index + (part.isClosed() ? 1 : 0); i <= part.path_coord_end_index; ++i)
 		{
 			polygon.push_back(ClipperLib::IntPoint(path_coords[i].pos.getIntX(), path_coords[i].pos.getIntY()));
@@ -569,7 +568,7 @@ void BooleanTool::rebuildSegment(int start_index, int end_index, bool have_seque
 	PolyMap::const_iterator second_last_it = polymap.find(second_last_point);
 	while (second_it != polymap.end())
 	{
-		while (second_last_it != polymap.end())
+		while (second_last_it != polymap.end() && second_last_it.key() == second_last_point)
 		{
 			if (second_it->first == second_last_it->first)
 			{
@@ -600,7 +599,7 @@ void BooleanTool::rebuildSegment(int start_index, int end_index, bool have_seque
 	int original_index = second_info.second->index;
 	
 	PolyMap::const_iterator start_it = polymap.find(start_point);
-	while (start_it != polymap.end())
+	while (start_it != polymap.end() && start_it.key() == start_point)
 	{
 		if (start_it->first == original_path)
 			break;
@@ -610,7 +609,7 @@ void BooleanTool::rebuildSegment(int start_index, int end_index, bool have_seque
 		start_info = *start_it;
 	
 	PolyMap::const_iterator end_it = polymap.find(end_point);
-	while (end_it != polymap.end())
+	while (end_it != polymap.end() && end_it.key() == end_point)
 	{
 		if (end_it->first == original_path)
 			break;
