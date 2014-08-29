@@ -15,7 +15,11 @@ QT += core gui widgets printsupport network xml
 
 # Defines. Use fancy quotation marks to be able to define strings with spaces.
 CONFIG(debug, debug|release) {
-	DEFINES += \"APP_VERSION='\\"Debug 0.5.99\\"'\"
+	DEFINES += \"APP_VERSION='\\"Debug 0.5.99\\"'\" \
+	           MAPPER_DEVELOPMENT_BUILD \
+	           \"MAPPER_DEVELOPMENT_RES_DIR='\\"../\\"'\"
+	
+	unix:QMAKE_POST_LINK += $$quote($(COPY_DIR) \"$$PWD/../symbol sets\" \"$$OUT_PWD/../symbol sets\")
 }
 else {
 	DEFINES += \"APP_VERSION='\\"0.5.99\\"'\"
