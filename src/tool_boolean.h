@@ -30,9 +30,10 @@
 #include <clipper.hpp>
 #include "object.h"
 
-class Symbol;
-class PathObject;
+class CombinedUndoStep;
 class PathCoord;
+class PathObject;
+class Symbol;
 
 /**
  * Wraps some helper functions for boolean operations.
@@ -99,6 +100,9 @@ public:
 	/**
 	 * Executes the operation on particular objects.
 	 * 
+	 * This function does not (actively) change the collection of objects in the map
+	 * or the selection.
+	 * 
 	 * @param subject               The primary affected object.
 	 * @param result_objects_symbol Determines the symbol of the returned objects.
 	 * @param in_objects            All objects to operate on. Must contain subject.
@@ -126,6 +130,24 @@ private:
 	typedef std::pair< PathObject::PathPart*, const PathCoord* > PathCoordInfo;
 	
 	typedef QHash< ClipperLib::IntPoint, PathCoordInfo > PolyMap;
+	
+	/**
+	 * Executes the operation on particular objects, and provides undo steps.
+	 * 
+	 * This function changes the collection of objects in the map and the selection.
+	 * 
+	 * @param subject               The primary affected object.
+	 * @param result_objects_symbol Determines the symbol of the returned objects.
+	 * @param in_objects            All objects to operate on. Must contain subject.
+	 * @param out_objects           The resulting collection of objects.
+	 * @param undo_step             A combined undo step which will be filled with sub steps.
+	 */
+	bool executeForObjects(
+	        PathObject* subject,
+	        Symbol* result_objects_symbol,
+	        PathObjects& in_objects,
+	        PathObjects& out_objects,
+	        CombinedUndoStep& undo_step);
 	
 	/**
 	 * Converts a ClipperLib::PolyTree to PathObjects.

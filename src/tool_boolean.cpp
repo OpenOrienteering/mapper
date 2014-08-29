@@ -121,66 +121,24 @@ bool BooleanTool::execute()
 	}
 	
 	// Perform the core operation
+	QScopedPointer<CombinedUndoStep> undo_step(new CombinedUndoStep(map));
 	PathObjects out_objects;
-	if (!executeForObjects(primary_object->asPath(), primary_object->getSymbol(), in_objects, out_objects))
+	if (!executeForObjects(primary_object->asPath(), primary_object->getSymbol(), in_objects, out_objects, *undo_step))
 	{
 		Q_ASSERT(out_objects.size() == 0);
 		return false; // in release build
 	}
 	
-	// Add original objects to undo step, and remove them from map.
-	AddObjectsUndoStep* add_step = new AddObjectsUndoStep(map);
-	for (int i = 0; i < (int)in_objects.size(); ++i)
-	{
-		PathObject* object = in_objects.at(i);
-		if (op != Difference || object == primary_object)
-		{
-			add_step->addObject(object, object);
-		}
-	}
-	// Keep as separate loop to get the correct index in the previous loop
-	for (int i = 0; i < (int)in_objects.size(); ++i)
-	{
-		PathObject* object = in_objects.at(i);
-		if (op != Difference || object == primary_object)
-		{
-			map->removeObjectFromSelection(object, false);
-			map->getCurrentPart()->deleteObject(object, true);
-			object->setMap(map); // necessary so objects are saved correctly
-		}
-	}
-	
-	// Add resulting objects to map, and create delete step for them
-	DeleteObjectsUndoStep* delete_step = new DeleteObjectsUndoStep(map);
-	MapPart* part = map->getCurrentPart();
-	for (int i = 0; i < (int)out_objects.size(); ++i)
-	{
-		map->addObject(out_objects[i]);
-		map->addObjectToSelection(out_objects[i], false);
-	}
-	// Keep as separate loop to get the correct index
-	for (int i = 0; i < (int)out_objects.size(); ++i)
-	{
-		delete_step->addObject(part->findObjectIndex(out_objects[i]));
-	}
-	
-	CombinedUndoStep* undo_step = new CombinedUndoStep(map);
-	undo_step->push(add_step);
-	undo_step->push(delete_step);
-	map->push(undo_step);
+	map->push(undo_step.take());
 	map->setObjectsDirty();
-	
 	map->emitSelectionChanged();
 	map->emitSelectionEdited();
-	
 	return true;
 }
 
 bool BooleanTool::executePerSymbol()
 {
-	
-	typedef std::vector<Object*> ObjectList;
-	ObjectList backlog;
+	PathObjects backlog;
 	backlog.reserve(map->getNumSelectedObjects());
 	
 	// Filter area objects into initial backlog
@@ -190,35 +148,34 @@ bool BooleanTool::executePerSymbol()
 	     ++it)
 	{
 		if ((*it)->getSymbol()->getContainedTypes() & Symbol::Area)
-			backlog.push_back(*it);
+			backlog.push_back((*it)->asPath());
 	}
 	
 	QScopedPointer<CombinedUndoStep> undo_step(new CombinedUndoStep(map));
-	ObjectList new_backlog;
+	PathObjects new_backlog;
 	new_backlog.reserve(backlog.size()/2);
 	PathObjects in_objects;
 	in_objects.reserve(backlog.size()/2);
 	PathObjects out_objects;
 	while (!backlog.empty())
 	{
-		Object* const primary_object = backlog.front();
+		PathObject* const primary_object = backlog.front();
 		Symbol* const symbol = primary_object->getSymbol();
 		
 		// Filter objects by symbol into in_objects or new_backlog, respectively
 		new_backlog.clear();
 		in_objects.clear();
-		for (ObjectList::const_iterator it = backlog.begin(),
+		for (PathObjects::const_iterator it = backlog.begin(),
 		                               end = backlog.end();
 		     it != end;
 		     ++it)
 		{
-			Object* const object = *it;
+			PathObject* const object = *it;
 			if (object->getSymbol() == symbol)
 			{
-				PathObject* const path = object->asPath();
-				if (op != MergeHoles || (object->getSymbol()->getContainedTypes() & Symbol::Area && path->getNumParts() > 1 ))
+				if (op != MergeHoles || (object->getSymbol()->getContainedTypes() & Symbol::Area && object->getNumParts() > 1 ))
 				{
-					in_objects.push_back(path);
+					in_objects.push_back(object);
 				}
 			}
 			else
@@ -234,51 +191,7 @@ bool BooleanTool::executePerSymbol()
 		
 		// Perform the core operation
 		out_objects.clear();
-		if (!executeForObjects(primary_object->asPath(), primary_object->getSymbol(), in_objects, out_objects))
-		{
-			Q_ASSERT(out_objects.size() == 0);
-			continue; // in release build
-		}
-			
-		QScopedPointer<AddObjectsUndoStep> add_step(new AddObjectsUndoStep(map));
-		QScopedPointer<DeleteObjectsUndoStep> delete_step(new DeleteObjectsUndoStep(map));
-		
-		// Add original objects to undo step, and remove them from map.
-		for (int i = 0; i < (int)in_objects.size(); ++i)
-		{
-			PathObject* object = in_objects.at(i);
-			if (op != Difference || object == primary_object)
-			{
-				add_step->addObject(object, object);
-			}
-		}
-		// Keep as separate loop to get the correct index in the previous loop
-		for (int i = 0; i < (int)in_objects.size(); ++i)
-		{
-			PathObject* object = in_objects.at(i);
-			if (op != Difference || object == primary_object)
-			{
-				map->removeObjectFromSelection(object, false);
-				map->getCurrentPart()->deleteObject(object, true);
-				object->setMap(map); // necessary so objects are saved correctly
-			}
-		}
-		
-		// Add resulting objects to map, and create delete step for them
-		MapPart* part = map->getCurrentPart();
-		for (int i = 0; i < (int)out_objects.size(); ++i)
-		{
-			map->addObject(out_objects[i]);
-			map->addObjectToSelection(out_objects[i], false);
-		}
-		// Keep as separate loop to get the correct index
-		for (int i = 0; i < (int)out_objects.size(); ++i)
-		{
-			delete_step->addObject(part->findObjectIndex(out_objects[i]));
-		}
-		
-		undo_step->push(add_step.take());
-		undo_step->push(delete_step.take());
+		executeForObjects(primary_object, primary_object->getSymbol(), in_objects, out_objects, *undo_step);
 	}
 	
 	bool const have_changes = undo_step->getNumSubSteps() > 0;
@@ -290,6 +203,57 @@ bool BooleanTool::executePerSymbol()
 		map->emitSelectionEdited();
 	}
 	return have_changes;
+}
+
+bool BooleanTool::executeForObjects(PathObject* subject, Symbol* result_objects_symbol, PathObjects& in_objects, PathObjects& out_objects, CombinedUndoStep& undo_step)
+{
+	if (!executeForObjects(subject, result_objects_symbol, in_objects, out_objects))
+	{
+		Q_ASSERT(out_objects.size() == 0);
+		return false; // in release build
+	}
+	
+	// Add original objects to undo step, and remove them from map.
+	QScopedPointer<AddObjectsUndoStep> add_step(new AddObjectsUndoStep(map));
+	for (PathObjects::iterator it = in_objects.begin(), end = in_objects.end(); it != end; ++it)
+	{
+		PathObject* object = *it;
+		if (op != Difference || object == subject)
+		{
+			add_step->addObject(object, object);
+		}
+	}
+	// Keep as separate loop to get the correct index in the previous loop
+	for (PathObjects::iterator it = in_objects.begin(), end = in_objects.end(); it != end; ++it)
+	{
+		PathObject* object = *it;
+		if (op != Difference || object == subject)
+		{
+			map->removeObjectFromSelection(object, false);
+			map->getCurrentPart()->deleteObject(object, true);
+			object->setMap(map); // necessary so objects are saved correctly
+		}
+	}
+	
+	// Add resulting objects to map, and create delete step for them
+	QScopedPointer<DeleteObjectsUndoStep> delete_step(new DeleteObjectsUndoStep(map));
+	MapPart* part = map->getCurrentPart();
+	for (PathObjects::iterator it = out_objects.begin(), end = out_objects.end(); it != end; ++it)
+	{
+		PathObject* object = *it;
+		map->addObject(object);
+		map->addObjectToSelection(object, false);
+	}
+	// Keep as separate loop to get the correct index in the previous loop
+	for (PathObjects::iterator it = out_objects.begin(), end = out_objects.end(); it != end; ++it)
+	{
+		PathObject* object = *it;
+		delete_step->addObject(part->findObjectIndex(object));
+	}
+	
+	undo_step.push(add_step.take());
+	undo_step.push(delete_step.take());
+	return true;
 }
 
 bool BooleanTool::executeForObjects(PathObject* subject, Symbol* result_objects_symbol, PathObjects& in_objects, PathObjects& out_objects)
@@ -304,9 +268,9 @@ bool BooleanTool::executeForObjects(PathObject* subject, Symbol* result_objects_
 	PathObjectToPolygons(subject, subject_polygons, polymap);
 	
 	ClipperLib::Paths clip_polygons;
-	for (int object_number = 0; object_number < (int)in_objects.size(); ++object_number)
+	for (PathObjects::iterator it = in_objects.begin(), end = in_objects.end(); it != end; ++it)
 	{
-		PathObject* object = in_objects[object_number];
+		PathObject* object = *it;
 		if (object != subject)
 		{
 			PathObjectToPolygons(object, clip_polygons, polymap);
@@ -403,7 +367,7 @@ void BooleanTool::executeForLine(PathObject* area, PathObject* line, BooleanTool
 	PathObject* last_segment = NULL;
 	
 	// Only one segment?
-	if (intersections.size() == 0)
+	if (intersections.empty())
 	{
 		double middle_length = line->getPart(0).getLength();
 		PathCoord::calculatePositionAt(line->getRawCoordinateVector(), mapCoordVectorF, line->getPathCoordinateVector(), middle_length, line_coord_search_start, &middle_pos, NULL);
@@ -423,7 +387,7 @@ void BooleanTool::executeForLine(PathObject* area, PathObject* line, BooleanTool
 	}
 	
 	// Middle segments
-	for (int i = 0; i < (int)intersections.size() - 1; ++i)
+	for (std::size_t i = 0; i < intersections.size() - 1; ++i)
 	{
 		middle_length = (intersections[i].length + intersections[i+1].length) / 2;
 		PathCoord::calculatePositionAt(line->getRawCoordinateVector(), mapCoordVectorF, line->getPathCoordinateVector(), middle_length, line_coord_search_start, &middle_pos, NULL);
