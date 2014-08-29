@@ -176,6 +176,122 @@ bool BooleanTool::execute()
 	return true;
 }
 
+bool BooleanTool::executePerSymbol()
+{
+	
+	typedef std::vector<Object*> ObjectList;
+	ObjectList backlog;
+	backlog.reserve(map->getNumSelectedObjects());
+	
+	// Filter area objects into initial backlog
+	for (Map::ObjectSelection::const_iterator it = map->selectedObjectsBegin(),
+	                                         end = map->selectedObjectsEnd();
+	     it != end;
+	     ++it)
+	{
+		if ((*it)->getSymbol()->getContainedTypes() & Symbol::Area)
+			backlog.push_back(*it);
+	}
+	
+	QScopedPointer<CombinedUndoStep> undo_step(new CombinedUndoStep(map));
+	ObjectList new_backlog;
+	new_backlog.reserve(backlog.size()/2);
+	PathObjects in_objects;
+	in_objects.reserve(backlog.size()/2);
+	PathObjects out_objects;
+	while (!backlog.empty())
+	{
+		Object* const primary_object = backlog.front();
+		Symbol* const symbol = primary_object->getSymbol();
+		
+		// Filter objects by symbol into in_objects or new_backlog, respectively
+		new_backlog.clear();
+		in_objects.clear();
+		for (ObjectList::const_iterator it = backlog.begin(),
+		                               end = backlog.end();
+		     it != end;
+		     ++it)
+		{
+			Object* const object = *it;
+			if (object->getSymbol() == symbol)
+			{
+				PathObject* const path = object->asPath();
+				if (op != MergeHoles || (object->getSymbol()->getContainedTypes() & Symbol::Area && path->getNumParts() > 1 ))
+				{
+					in_objects.push_back(path);
+				}
+			}
+			else
+			{
+				new_backlog.push_back(object);
+			}
+		}
+		backlog.swap(new_backlog);
+		
+		// Short cut for single object of given symbol
+		if (in_objects.size() == 1)
+			continue;
+		
+		// Perform the core operation
+		out_objects.clear();
+		if (!executeForObjects(primary_object->asPath(), primary_object->getSymbol(), in_objects, out_objects))
+		{
+			Q_ASSERT(out_objects.size() == 0);
+			continue; // in release build
+		}
+			
+		QScopedPointer<AddObjectsUndoStep> add_step(new AddObjectsUndoStep(map));
+		QScopedPointer<DeleteObjectsUndoStep> delete_step(new DeleteObjectsUndoStep(map));
+		
+		// Add original objects to undo step, and remove them from map.
+		for (int i = 0; i < (int)in_objects.size(); ++i)
+		{
+			PathObject* object = in_objects.at(i);
+			if (op != Difference || object == primary_object)
+			{
+				add_step->addObject(object, object);
+			}
+		}
+		// Keep as separate loop to get the correct index in the previous loop
+		for (int i = 0; i < (int)in_objects.size(); ++i)
+		{
+			PathObject* object = in_objects.at(i);
+			if (op != Difference || object == primary_object)
+			{
+				map->removeObjectFromSelection(object, false);
+				map->getCurrentPart()->deleteObject(object, true);
+				object->setMap(map); // necessary so objects are saved correctly
+			}
+		}
+		
+		// Add resulting objects to map, and create delete step for them
+		MapPart* part = map->getCurrentPart();
+		for (int i = 0; i < (int)out_objects.size(); ++i)
+		{
+			map->addObject(out_objects[i]);
+			map->addObjectToSelection(out_objects[i], false);
+		}
+		// Keep as separate loop to get the correct index
+		for (int i = 0; i < (int)out_objects.size(); ++i)
+		{
+			delete_step->addObject(part->findObjectIndex(out_objects[i]));
+		}
+		
+		undo_step->push(add_step.take());
+		undo_step->push(delete_step.take());
+	}
+	
+	bool const have_changes = undo_step->getNumSubSteps() > 0;
+	if (have_changes)
+	{
+		map->push(undo_step.take());
+		map->setObjectsDirty();
+		map->emitSelectionChanged();
+		map->emitSelectionEdited();
+	}
+	return have_changes;
+}
+
 bool BooleanTool::executeForObjects(PathObject* subject, Symbol* result_objects_symbol, PathObjects& in_objects, PathObjects& out_objects)
 {
 	

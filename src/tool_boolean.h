@@ -76,8 +76,25 @@ public:
 	 * Executes the operation on the selected objects in the map.
 	 * 
 	 * The first selected object is treated special and must be a path.
+	 * 
+	 * @return True on success, false on error
 	 */
 	bool execute();
+	
+	/**
+	 * Executes the operation per symbol on the selected objects in the map.
+	 * 
+	 * Executes the operation independently for every group of path objects
+	 * which have got the same symbol. Objects which are not of type
+	 * Object::Path are ignored.
+	 * 
+	 * Errors during the operation are ignored, too. The original objects the
+	 * operation failed for remain unchanged. The operation continues for other
+	 * groups of objects.
+	 * 
+	 * @return True if the map was changed, false otherwise.
+	 */
+	bool executePerSymbol();
 	
 	/**
 	 * Executes the operation on particular objects.

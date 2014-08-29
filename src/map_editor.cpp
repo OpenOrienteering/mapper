@@ -2681,7 +2681,7 @@ void MapEditorController::measureClicked(bool checked)
 
 void MapEditorController::booleanUnionClicked()
 {
-	if (!BooleanTool(BooleanTool::Union, map).execute())
+	if (!BooleanTool(BooleanTool::Union, map).executePerSymbol())
 		QMessageBox::warning(window, tr("Error"), tr("Unification failed."));
 }
 
