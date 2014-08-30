@@ -86,11 +86,20 @@ bool operator!=(const MapPrinterPageFormat& lhs, const MapPrinterPageFormat& rhs
 class MapPrinterOptions
 {
 public:
+	/** Basic modes of printing. */
+	enum MapPrinterMode
+	{
+		Vector,        ///< Print in vector graphics mode
+		Raster,        ///< Print in raster graphics mode
+		Separations    ///< Print spot color separations (b/w vector)
+	};
+
 	/** Constructs new printer options.
 	 * 
-	 *  The scale and the resolution are initialized to the given values,
-	 *  all boolean properties are initialized to false. */
-	MapPrinterOptions(unsigned int scale, unsigned int resolution = 600);
+	 *  The scale, the mode and the resolution are initialized to the given
+	 *  values, all boolean properties are initialized to false.
+	 */
+	MapPrinterOptions(unsigned int scale, unsigned int resolution = 600, MapPrinterMode mode = Vector);
 	
 	/** The scale to be used for printing. */
 	unsigned int scale;
@@ -98,16 +107,28 @@ public:
 	/** The nominal resolution to be used. */
 	unsigned int resolution;
 	
-	/** Controls if spot color separations are to be printed. */
-	bool print_spot_color_separations;
+	/** The mode of printing.
+	 * 
+	 *  Note that other printing options may be available only in particular modes.
+	 */
+	MapPrinterMode mode;
 	
-	/** Controls if templates get printed. */
+	/** Controls if templates get printed.
+	 * 
+	 *  Not available in MapPrinterOptions::Separations mode.
+	 */
 	bool show_templates;
 	
-	/** Controls if the configured grid is printed. */
+	/** Controls if the configured grid is printed.
+	 * 
+	 *  Not available in MapPrinterOptions::Separations mode.
+	 */
 	bool show_grid;
 	
-	/** Controls if the desktop printing is to simulate spot color printing. */
+	/** Controls if the desktop printing is to simulate spot color printing.
+	 * 
+	 *  Only available in MapPrinterOptions::Raster mode.
+	 */
 	bool simulate_overprinting;
 };
 
@@ -168,8 +189,8 @@ public:
 	 *  These strings are not translated. */
 	static const QHash< int, const char* >& paperSizeNames();
 	
-	/** Constructs a new MapPrinter for the given map. */
-	MapPrinter(Map& map, QObject* parent = NULL);
+	/** Constructs a new MapPrinter for the given map and (optional) view. */
+	MapPrinter(Map& map, MapView* view, QObject* parent = NULL);
 	
 	/** Destructor. */
 	virtual ~MapPrinter();
@@ -257,10 +278,8 @@ public slots:
 	/** Sets the denominator of the map scale for printing. */
 	void setScale(const unsigned int value);
 	
-	/** Enables or disables the printing of spot color separations.
-	 *  Note that templates, grid, and overprinting simulation will be ignored
-	 *  in spot color mode. */
-	void setPrintSpotColorSeparations(bool enabled);
+	/** Sets the printing mode. */
+	void setMode(const MapPrinterOptions::MapPrinterMode mode);
 	
 	/** Controls whether to print templates. 
 	 *  If a MapView is given when enabling template printing, 
@@ -307,6 +326,15 @@ signals:
 	void printProgress(int value, QString status) const;
 	
 protected:
+	/** Returns true if vector mode is set. */
+	bool vectorModeSelected() const;
+	
+	/** Returns true if raster mode is set. */
+	bool rasterModeSelected() const;
+	
+	/** Returns true if separations mode is set. */
+	bool separationsModeSelected() const;
+	
 	/** Updates the paper dimensions from paper format and orientation. */
 	void updatePaperDimensions();
 	
@@ -445,6 +473,24 @@ inline
 const std::vector< qreal >& MapPrinter::verticalPagePositions() const
 {
 	return v_page_pos;
+}
+
+inline
+bool MapPrinter::vectorModeSelected() const
+{
+	return options.mode == MapPrinterOptions::Vector;
+}
+
+inline
+bool MapPrinter::rasterModeSelected() const
+{
+	return options.mode == MapPrinterOptions::Raster;
+}
+
+inline
+bool MapPrinter::separationsModeSelected() const
+{
+	return options.mode == MapPrinterOptions::Separations;
 }
 
 #endif
