@@ -42,6 +42,7 @@ public:
 	TemplateTrack(const QString& path, Map* map);
     virtual ~TemplateTrack();
 	virtual const QString getTemplateType() {return "TemplateTrack";}
+	virtual bool isRasterGraphics() const {return false;}
 	
 	virtual bool saveTemplateFile();
 	

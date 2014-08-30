@@ -50,6 +50,7 @@ public:
 	TemplateImage(const QString& path, Map* map);
     virtual ~TemplateImage();
 	virtual const QString getTemplateType() {return "TemplateImage";}
+	virtual bool isRasterGraphics() const {return true;}
 
 	virtual bool saveTemplateFile();
 	virtual bool loadTypeSpecificTemplateConfiguration(QIODevice* stream, int version);

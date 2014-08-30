@@ -92,6 +92,13 @@ public:
 	/// the class name. Very simple RTTI feature.
 	virtual const QString getTemplateType() = 0;
 	
+	/**
+	 * Returns true if the template is raster graphics.
+	 * 
+	 * Raster graphics cannot be printed in the foreground in vector mode.
+	 */
+	virtual bool isRasterGraphics() const = 0;
+	
 	
 	/// Saves template parameters such as filename, transformation, adjustment, etc. and
 	/// type-specific parameters (e.g. filtering mode for images)
