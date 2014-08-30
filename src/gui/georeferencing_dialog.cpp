@@ -224,11 +224,13 @@ void GeoreferencingDialog::setValuesFrom(Georeferencing* values)
 	{
 		crs_edit->selectCustomItem(0);
 		crs_spec_edit->setText("");
+		setKeepProjectedRefCoords();
 	}
 	else if (values->getState() == Georeferencing::Local)
 	{
 		crs_edit->selectCustomItem(2);
 		crs_spec_edit->setText("");
+		setKeepProjectedRefCoords();
 	}
 	else
 	{
