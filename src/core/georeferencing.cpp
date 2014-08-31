@@ -152,12 +152,13 @@ Georeferencing& Georeferencing::operator=(const Georeferencing& other)
 	projected_crs_parameters = other.projected_crs_parameters;
 	geographic_ref_point     = other.geographic_ref_point;
 	
-	// TODO: is this call unnecessary?
-	updateTransformation();
-	
 	if (projected_crs != NULL)
 		pj_free(projected_crs);
 	projected_crs       = pj_init_plus(projected_crs_spec.toLatin1());
+	
+	emit stateChanged();
+	emit transformationChanged();
+	emit declinationChanged();
 	emit projectionChanged();
 	
 	return *this;
@@ -262,7 +263,9 @@ void Georeferencing::load(QXmlStreamReader& xml, bool load_scale_only) throw (Fi
 		}
 	}
 	
+	emit stateChanged();
 	updateTransformation();
+	emit declinationChanged();
 	projected_crs = pj_init_plus(projected_crs_spec.toLatin1());
 	emit projectionChanged();
 }
@@ -331,55 +334,101 @@ void Georeferencing::save(QXmlStreamWriter& xml) const
 
 void Georeferencing::setState(Georeferencing::State value)
 {
-	this->state = value;
-	updateTransformation();
+	if (state != value)
+	{
+		state = value;
+		updateTransformation();
+		
+		if (state != Normal)
+			setProjectedCRS("Local");
+		
+		emit stateChanged();
+	}
 }
 
 void Georeferencing::setScaleDenominator(int value)
 {
-	scale_denominator = value;
-	updateTransformation();
+	Q_ASSERT(value > 0);
+	if (scale_denominator != (unsigned int)value)
+	{
+		scale_denominator = value;
+		updateTransformation();
+	}
 }
 
 void Georeferencing::setDeclination(double value)
 {
-	value = roundDeclination(value);
-	grivation += value - declination;
-	declination = value;
-	if (state == ScaleOnly)
-		state = Local;
-	updateTransformation();
+	double declination = roundDeclination(value);
+	double grivation = declination - getConvergence();
+	setDeclinationAndGrivation(declination, grivation);
 }
 
 void Georeferencing::setGrivation(double value)
 {
-	value = roundDeclination(value);
-	declination += value - grivation;
-	grivation = value;
-	if (state == ScaleOnly)
-		state = Local;
-	updateTransformation();
+	double grivation = roundDeclination(value);
+	double declination = grivation + getConvergence();
+	setDeclinationAndGrivation(declination, grivation);
+}
+
+void Georeferencing::setDeclinationAndGrivation(double declination, double grivation)
+{
+	bool declination_change = declination != this->declination;
+	if (declination_change || grivation != this->grivation)
+	{
+		this->declination = declination;
+		this->grivation   = grivation;
+		
+		if (state == ScaleOnly)
+			setState(Local);
+		
+		updateTransformation();
+		
+		if (declination_change)
+			emit declinationChanged();
+	}
 }
 
 void Georeferencing::setMapRefPoint(MapCoord point)
 {
-	map_ref_point = point;
-	if (state == ScaleOnly)
-		state = Local;
-	updateTransformation();
+	if (map_ref_point != point)
+	{
+		map_ref_point = point;
+		
+		if (state == ScaleOnly)
+			setState(Local);
+		
+		updateTransformation();
+	}
 }
 
 void Georeferencing::setProjectedRefPoint(QPointF point)
 {
-	projected_ref_point = point;
-	bool ok;
-	LatLon new_geo_ref = toGeographicCoords(point, &ok);
-	if (ok)
-		geographic_ref_point = new_geo_ref;
-	if (state == ScaleOnly)
-		state = Local;
-	updateGrivation();
-	updateTransformation();
+	if (projected_ref_point != point)
+	{
+		projected_ref_point = point;
+		bool ok;
+		LatLon new_geo_ref_point;
+		
+		switch (state)
+		{
+		default:
+			Q_ASSERT(false && "Undefined georeferencing state");
+			// fall through
+		case ScaleOnly:
+			setState(Local);
+			// fall through
+		case Local:
+			break;
+		case Normal:
+			new_geo_ref_point = toGeographicCoords(point, &ok);
+			if (ok)
+			{
+				geographic_ref_point = new_geo_ref_point;
+				updateGrivation();
+			}
+		}
+		updateTransformation();
+	}
 }
 
 QString Georeferencing::getProjectedCRSName() const
@@ -398,7 +447,7 @@ QString Georeferencing::getProjectedCRSName() const
 
 double Georeferencing::getConvergence() const
 {
-	if (!isValid() || isLocal())
+	if (state != Normal || !isValid())
 		return 0.0;
 	
 	// Second point on the same meridian
@@ -417,17 +466,20 @@ double Georeferencing::getConvergence() const
 
 void Georeferencing::setGeographicRefPoint(LatLon lat_lon)
 {
-	bool ok;
-	QPointF new_projected_ref = toProjectedCoords(lat_lon, &ok);
-	if (state != Normal)
-		state = Normal;
-	if (ok)
-		projected_ref_point = new_projected_ref;
-	geographic_ref_point = lat_lon;
-	if (ok)
+	if (geographic_ref_point != lat_lon)
 	{
-		updateGrivation();
-		updateTransformation();
+		geographic_ref_point = lat_lon;
+		if (state != Normal)
+			setState(Normal);
+		
+		bool ok;
+		QPointF new_projected_ref = toProjectedCoords(lat_lon, &ok);
+		if (ok)
+		{
+			projected_ref_point = new_projected_ref;
+			updateGrivation();
+			updateTransformation();
+		}
 	}
 }
 
@@ -454,30 +506,24 @@ void Georeferencing::updateTransformation()
 	}
 }
 
-bool Georeferencing::updateGrivation()
+
+void Georeferencing::updateGrivation()
 {
-	const double old_value = grivation;
-	grivation = declination - getConvergence();
-	return (old_value != grivation);
+	setDeclination(declination);
 }
 
 void Georeferencing::initDeclination()
 {
-	if (projected_crs == NULL)
-	{
-		// Maybe not yet initialized
-		projected_crs = pj_init_plus(projected_crs_spec.toLatin1());
-		if (projected_crs != NULL)
-			emit projectionChanged();
-	}
-
-	declination = grivation + getConvergence();
+	setGrivation(grivation);
 }
 
 void Georeferencing::setTransformationDirectly(const QTransform& transform)
 {
 	if (state == ScaleOnly)
+	{
 		state = Local;
+		emit stateChanged();
+	}
 	if (transform != to_projected)
 	{
 		to_projected = transform;
@@ -486,25 +532,55 @@ void Georeferencing::setTransformationDirectly(const QTransform& transform)
 	}
 }
 
-bool Georeferencing::setProjectedCRS(const QString& id, const QString& spec)
+bool Georeferencing::setProjectedCRS(const QString& id, const QString& spec, std::vector< QString > params)
 {
-	if (projected_crs != NULL)
-		pj_free(projected_crs);
-	
-	this->projected_crs_id = id;
-	this->projected_crs_spec = spec;
-	if (spec.isEmpty())
-		projected_crs = NULL;
-	else
-		projected_crs = pj_init_plus(projected_crs_spec.toLatin1());
-	if (updateGrivation())
-		updateTransformation();
-	
 	bool ok = projected_crs != NULL;
-	if (state != Normal)
-		state = Normal;
+	if (projected_crs_id != id || projected_crs_spec != spec)
+	{
+		bool was_valid_normal = (state == Normal && projected_crs != NULL);
+		
+		if (projected_crs != NULL)
+			pj_free(projected_crs);
+		
+		projected_crs_id = id;
+		projected_crs_spec = spec;
+		projected_crs_parameters.swap(params); // params was passed by value!
+		if (spec.isEmpty())
+			projected_crs = NULL;
+		else
+			projected_crs = pj_init_plus(projected_crs_spec.toLatin1());
+		
+		if (state != Normal && !projected_crs_spec.isEmpty())
+			setState(Normal);
+		
+		ok = projected_crs != NULL;
+		if (ok)
+		{
+			// Update corresponding reference point by projection
+			bool coord_ok;
+			if (was_valid_normal)
+			{
+				QPointF new_projected_ref = toProjectedCoords(geographic_ref_point, &coord_ok);
+				if (coord_ok)
+				{
+					projected_ref_point = new_projected_ref;
+					updateGrivation();
+				}
+			}
+			else
+			{
+				LatLon new_geo_ref_point = toGeographicCoords(projected_ref_point, &coord_ok);
+				if (coord_ok)
+				{
+					geographic_ref_point = new_geo_ref_point;
+					initDeclination();
+				}
+			}
+		}
+		
+		emit projectionChanged();
+	}
 	
-	emit projectionChanged();
 	return ok;
 }
 

@@ -279,11 +279,6 @@ public:
 	 */
 	std::vector< QString > getProjectedCRSParameters() const;
 	
-	/**
-	 * Sets the array of projected crs parameter values.
-	 */
-	void setProjectedCRSParameters(std::vector< QString > values);
-	
 	/** 
 	 * Returns the specification of the coordinate reference system (CRS) of the
 	 * projected coordinates
@@ -296,10 +291,12 @@ public:
 	 * This may trigger changes of the projected coordinates of the reference
 	 * point, the convergence, the grivation and the transformations.
 	 * 
+	 * @param id  an identifier
 	 * @param spec the PROJ.4 specification of the CRS
+	 * @param params parameter values
 	 * @return true if the specification is valid, false otherwise 
 	 */
-	bool setProjectedCRS(const QString& id, const QString& spec);
+	bool setProjectedCRS(const QString& id, const QString& spec = "", std::vector< QString > params = std::vector< QString >());
 	
 	/**
 	 * Calculates the meridian convergence at the reference point.
@@ -413,12 +410,8 @@ public:
 	 * The new value is calculated from the declination and the convergence.
 	 * For a local georeferencing, the convergence is zero, and grivation
 	 * is set to the same value as declination.
-	 * 
-	 * If the grivation changes, it is neccessary to call updateTransformation().
-	 * 
-	 * @return true if grivation changed, false otherwise.
 	 */
-	bool updateGrivation();
+	void updateGrivation();
 	
 	/**
 	 * Initializes the declination.
@@ -426,9 +419,6 @@ public:
 	 * The new value is calculated from the grivation and the convergence.
 	 * For a local georeferencing, the convergence is zero, and declination
 	 * is set to the same value as grivation.
-	 * 
-	 * This method intended for import of Version 17 OMAP files. It tries to
-	 * initialize the internal projection first if it is not yet defined.
 	 */
 	void initDeclination();
 	
@@ -440,6 +430,11 @@ public:
 	
 	
 signals:
+	/**
+	 * Indicates a change of the state property.
+	 */
+	void stateChanged();
+	
 	/**
 	 * Indicates a change to the transformation rules between map coordinates
 	 * and projected coordinates.
@@ -453,8 +448,18 @@ signals:
 	 */
 	void projectionChanged();
 	
+	/**
+	 * Indicates a change of the declination.
+	 * 
+	 * The declination has no direct influence on projection or transformation.
+	 * That's why there is an independent signal.
+	 */
+	void declinationChanged();
+	
 	
 private:
+	void setDeclinationAndGrivation(double declination, double grivation);
+	
 	State state;
 	
 	unsigned int scale_denominator;
@@ -564,12 +569,6 @@ inline
 std::vector<QString> Georeferencing::getProjectedCRSParameters() const
 {
 	return projected_crs_parameters;
-}
-
-inline
-void Georeferencing::setProjectedCRSParameters(std::vector<QString> values)
-{
-	projected_crs_parameters = values;
 }
 
 inline
