@@ -124,6 +124,11 @@ void FileFormatTest::saveAndLoad()
 	original->loadFrom(map_filename, NULL, NULL, false, false);
 	QVERIFY(!original->hasUnsavedChanged());
 	
+	// Fix precision of grid rotation
+	MapGrid grid = original->getGrid();
+	grid.setAdditionalRotation(Georeferencing::roundDeclination(grid.getAdditionalRotation()));
+	original->setGrid(grid);
+	
 	// If the export is lossy, do one export / import cycle first to get rid of all information which cannot be exported into this format
 	if (format->isExportLossy())
 	{
@@ -201,6 +206,10 @@ bool FileFormatTest::compareMaps(Map* a, Map* b, QString& error)
 	
 	const Georeferencing& a_geo = a->getGeoreferencing();
 	const Georeferencing& b_geo = b->getGeoreferencing();
+	if (a_geo.getProjectedCRSId() == "Local coordinates")
+		// Fix for old native OMAP test file
+		const_cast<Georeferencing&>(a_geo).setProjectedCRS("Local", a_geo.getProjectedCRSSpec());
+	
 	if (a_geo.isLocal() != b_geo.isLocal() ||
 		a_geo.getScaleDenominator() != b_geo.getScaleDenominator() ||
 		a_geo.getDeclination() != b_geo.getDeclination() ||
@@ -217,8 +226,8 @@ bool FileFormatTest::compareMaps(Map* a, Map* b, QString& error)
 		return false;
 	}
 	
-	const MapGrid* a_grid = &a->getGrid();
-	const MapGrid* b_grid = &b->getGrid();
+	const MapGrid& a_grid = a->getGrid();
+	const MapGrid& b_grid = b->getGrid();
 	
 	if (a_grid != b_grid || !(a_grid == b_grid))
 	{
