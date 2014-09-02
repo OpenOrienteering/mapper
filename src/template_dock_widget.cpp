@@ -853,25 +853,29 @@ void TemplateWidget::importClicked()
 		templ->getTransform(transform);
 		template_map->applyOnAllObjects(ApplyTemplateTransform(transform));
 		
-		double nominal_scale = template_map->getScaleDenominator() / map->getScaleDenominator();
+		double nominal_scale = (double)template_map->getScaleDenominator() / (double)map->getScaleDenominator();
 		double current_scale = 0.5 * (transform.template_scale_x + transform.template_scale_y);
 		double scale = 1.0;
 		bool ok = true;
-		if (qAbs(nominal_scale - 1.0) > 0.01 || qAbs(current_scale - 1.0) > 0.01)
+		QStringList scale_options;
+		if (qAbs(nominal_scale - 1.0) > 0.009)
+			scale_options.append(tr("Scale by nominal map scale ratio (%1 %)").arg(locale().toString(nominal_scale * 100.0, 'f', 1)));
+		if (qAbs(current_scale - 1.0) > 0.009 && qAbs(current_scale - nominal_scale) > 0.009)
+			scale_options.append(tr("Scale by current template scaling (%1 %)").arg(locale().toString(current_scale * 100.0, 'f', 1)));
+		if (!scale_options.isEmpty())
 		{
-			QStringList scale_options( QStringList() <<
-			  tr("Don't scale") <<
-			  tr("Scale by nominal map scale ratio (%1 %)").arg(locale().toString(nominal_scale * 100.0, 'f', 1)) <<
-			  tr("Scale by current template scaling (%1 %)").arg(locale().toString(current_scale * 100.0, 'f', 1)) );
+			scale_options.prepend(tr("Don't scale"));
 			QString option = QInputDialog::getItem( window(),
 			  tr("Template import"),
 			  tr("How shall the symbols of the imported template map be scaled?"),
 			  scale_options, 0, false, &ok );
 			if (option.isEmpty())
 				return;
+			else if (option == scale_options[0])
+				Q_ASSERT(scale == 1.0);
 			else if (option == scale_options[1])
 				scale = nominal_scale;
-			else if (option == scale_options[2])
+			else // This option may have been omitted.
 				scale = current_scale;
 		}
 		
