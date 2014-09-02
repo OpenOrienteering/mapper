@@ -1,5 +1,6 @@
 /*
- *    Copyright 2012, 2013 Thomas Schöps, Kai Pastor
+ *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2012, 2013, 2014 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -93,14 +94,28 @@ public:
 	 */
 	int exec();
 	
-	/**
-	 * Sets all values in the dialog's widgets to the values from the
-	 * given Georeferencing object.
-	 */
-	void setValuesFrom(Georeferencing* values);
-	
 	
 public slots:
+	/**
+	 * Updates the dialog from georeferencing state changes.
+	 */
+	void georefStateChanged();
+	
+	/**
+	  * Moves transformation properties from the georeferencing to the widgets.
+	  */
+	void transformationChanged();
+	
+	/**
+	  * Moves projection properties from the georeferencing to the widgets.
+	  */
+	void projectionChanged();
+	
+	/**
+	  * Updates the declination widget from the georeferencing.
+	  */
+	void declinationChanged();
+	
 	/**
 	 * Triggers an online request for the magnetic declination.
 	 * 
@@ -148,7 +163,6 @@ public slots:
 	void accept();
 	
 protected slots:
-	
 	/**
 	 * Updates enabled / disabled states of all widgets.
 	 */
@@ -160,12 +174,9 @@ protected slots:
 	void updateDeclinationButton();
 	
 	/** 
-	 * Notifies the dialog of a change in the CRS selector widget.
+	 * Notifies the dialog of a change in the CRS configuration.
 	 */
-	void crsEdited(bool system_changed);
-	
-	/** Calls crsEdited(true). */
-	void crsSystemEdited();
+	void crsEdited();
 	
 	/**
 	 * Hides the dialog and activates a GeoreferencingTool for selecting
@@ -176,28 +187,27 @@ protected slots:
 	/**
 	 * Notifies the dialog of a change in the map reference point fields.
 	 */
-	void mapRefChanged(double value);
+	void mapRefChanged();
 	
 	/**
 	 * Notifies the dialog of a change in the easting / northing fields.
 	 */
-	void eastingNorthingChanged(double value = -1);
+	void eastingNorthingEdited();
+	
+	/**
+	 * Notifies the dialog of change of the keep-coords buttons.
+	 */
+	void keepCoordsChanged();
 	
 	/**
 	 * Notifies the dialog of a change in the latitude / longitude fields.
-	 * update_zone determines if updateZone() should also be called (which
-	 * is necessary for UTM zone changes due to changed coordinates, but may be
-	 * unwanted).
 	 */
-	void latLonChanged(bool update_zone);
-	
-	/** Variant of latLonChanged() for use with widget signal, assuming update_zone = true. */
-	void latLonChanged(double value = -1);
+	void latLonEdited();
 	
 	/** 
 	 * Notifies the dialog of a change in the declination field.
 	 */
-	void declinationChanged(double value);
+	void declinationEdited(double value);
 	
 	/**
 	 * Handles replies from the online declination service.
@@ -217,16 +227,7 @@ protected:
 	void updateZone();
 	
 	/// Updates the grivation field from the underlying Georeferencing.
-	void updateNorth();
-	
-	/// Sets map reference point widget values from the given Georeferencing object
-	void setMapRefValuesFrom(Georeferencing* values);
-	
-	/// Sets easting / northing widget values from the given Georeferencing object
-	void setEastingNorthingValuesFrom(Georeferencing* values);
-	
-	/// Sets latitude / longitude widget values from the given Georeferencing object
-	void setLatLonValuesFrom(Georeferencing* values);
+	void updateGrivation();
 	
 private:
 	/* Internal state */
@@ -237,6 +238,8 @@ private:
 	bool allow_no_georeferencing;
 	bool tool_active;
 	bool declination_query_in_progress;
+	bool grivation_locked;
+	double original_declination;
 	
 	/* GUI elements */
 	ProjectedCRSSelector* crs_edit;
