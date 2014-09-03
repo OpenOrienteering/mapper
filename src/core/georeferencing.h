@@ -260,7 +260,7 @@ public:
 	 * This may trigger changes of the geographic coordinates of the reference
 	 * point, the convergence, the grivation and the transformations.
 	 */
-	void setProjectedRefPoint(QPointF point);
+	void setProjectedRefPoint(QPointF point, bool update_grivation = true);
 	
 	
 	/**
@@ -277,7 +277,7 @@ public:
 	/**
 	 * Returns the array of projected crs parameter values.
 	 */
-	std::vector< QString > getProjectedCRSParameters() const;
+	const std::vector<QString>& getProjectedCRSParameters() const;
 	
 	/** 
 	 * Returns the specification of the coordinate reference system (CRS) of the
@@ -286,10 +286,13 @@ public:
 	 */
 	QString getProjectedCRSSpec() const { return projected_crs_spec; }
 	
-	/** Sets the coordinate reference system (CRS) of the projected coordinates.
+	/**
+	 * Sets the coordinate reference system (CRS) of the projected coordinates.
 	 * 
-	 * This may trigger changes of the projected coordinates of the reference
-	 * point, the convergence, the grivation and the transformations.
+	 * This will not touch any of the reference points, the declination, the
+	 * grivation. It is up to the user to decide how to reestablish a valid
+	 * configuration of geographic reference point, projected reference point,
+	 * declination and grivation.
 	 * 
 	 * @param id  an identifier
 	 * @param spec the PROJ.4 specification of the CRS
@@ -319,7 +322,7 @@ public:
 	 * This may trigger changes of the projected coordinates of the reference
 	 * point, the convergence, the grivation and the transformations.
 	 */
-	void setGeographicRefPoint(LatLon lat_lon);
+	void setGeographicRefPoint(LatLon lat_lon, bool update_grivation = true);
 	
 	
 	/** 
@@ -443,8 +446,7 @@ signals:
 	
 	/**
 	 * Indicates a change to the projection rules between geographic coordinates
-	 * and projected coordinates. This signal is also emitted when the 
-	 * georeferencing becomes local.
+	 * and projected coordinates.
 	 */
 	void projectionChanged();
 	
@@ -566,7 +568,7 @@ QString Georeferencing::getProjectedCRSId() const
 }
 
 inline
-std::vector<QString> Georeferencing::getProjectedCRSParameters() const
+const std::vector<QString>& Georeferencing::getProjectedCRSParameters() const
 {
 	return projected_crs_parameters;
 }

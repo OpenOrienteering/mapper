@@ -42,6 +42,8 @@ TemplateTrack::TemplateTrack(const QString& path, Map* map)
 	const Georeferencing& georef = map->getGeoreferencing();
 	connect(&georef, SIGNAL(projectionChanged()), this, SLOT(updateGeoreferencing()));
 	connect(&georef, SIGNAL(transformationChanged()), this, SLOT(updateGeoreferencing()));
+	connect(&georef, SIGNAL(stateChanged()), this, SLOT(updateGeoreferencing()));
+	connect(&georef, SIGNAL(declinationChanged()), this, SLOT(updateGeoreferencing()));
 }
 
 TemplateTrack::~TemplateTrack()
@@ -495,9 +497,9 @@ void TemplateTrack::calculateLocalGeoreferencing()
 	
 	Georeferencing georef;
 	georef.setScaleDenominator(map->getScaleDenominator());
-	georef.setGeographicRefPoint(proj_center);
 	georef.setProjectedCRS("", QString("+proj=ortho +datum=WGS84 +lat_0=%1 +lon_0=%2")
 		.arg(proj_center.latitude()).arg(proj_center.longitude()));
+	georef.setGeographicRefPoint(proj_center);
 	track.changeMapGeoreferencing(georef);
 }
 

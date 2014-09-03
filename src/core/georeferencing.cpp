@@ -401,9 +401,9 @@ void Georeferencing::setMapRefPoint(MapCoord point)
 	}
 }
 
-void Georeferencing::setProjectedRefPoint(QPointF point)
+void Georeferencing::setProjectedRefPoint(QPointF point, bool update_grivation)
 {
-	if (projected_ref_point != point)
+	if (projected_ref_point != point || state == Normal)
 	{
 		projected_ref_point = point;
 		bool ok;
@@ -421,10 +421,12 @@ void Georeferencing::setProjectedRefPoint(QPointF point)
 			break;
 		case Normal:
 			new_geo_ref_point = toGeographicCoords(point, &ok);
-			if (ok)
+			if (ok && new_geo_ref_point != geographic_ref_point)
 			{
 				geographic_ref_point = new_geo_ref_point;
-				updateGrivation();
+				if (update_grivation)
+					updateGrivation();
+				emit projectionChanged();
 			}
 		}
 		updateTransformation();
@@ -464,9 +466,10 @@ double Georeferencing::getConvergence() const
 	return roundDeclination(RAD_TO_DEG * atan((projected_ref_point.x() - projected_other.x()) / denominator));
 }
 
-void Georeferencing::setGeographicRefPoint(LatLon lat_lon)
+void Georeferencing::setGeographicRefPoint(LatLon lat_lon, bool update_grivation)
 {
-	if (geographic_ref_point != lat_lon)
+	bool geo_ref_point_changed = geographic_ref_point != lat_lon;
+	if (geo_ref_point_changed || state == Normal)
 	{
 		geographic_ref_point = lat_lon;
 		if (state != Normal)
@@ -474,11 +477,17 @@ void Georeferencing::setGeographicRefPoint(LatLon lat_lon)
 		
 		bool ok;
 		QPointF new_projected_ref = toProjectedCoords(lat_lon, &ok);
-		if (ok)
+		if (ok && new_projected_ref != projected_ref_point)
 		{
 			projected_ref_point = new_projected_ref;
-			updateGrivation();
+			if (update_grivation)
+				updateGrivation();
 			updateTransformation();
+			emit projectionChanged();
+		}
+		else if (geo_ref_point_changed)
+		{
+			emit projectionChanged();
 		}
 	}
 }
@@ -535,10 +544,9 @@ void Georeferencing::setTransformationDirectly(const QTransform& transform)
 bool Georeferencing::setProjectedCRS(const QString& id, const QString& spec, std::vector< QString > params)
 {
 	bool ok = projected_crs != NULL;
+	// Changes in params shall already be recorded in spec
 	if (projected_crs_id != id || projected_crs_spec != spec)
 	{
-		bool was_valid_normal = (state == Normal && projected_crs != NULL);
-		
 		if (projected_crs != NULL)
 			pj_free(projected_crs);
 		
@@ -552,31 +560,6 @@ bool Georeferencing::setProjectedCRS(const QString& id, const QString& spec, std
 		
 		if (state != Normal && !projected_crs_spec.isEmpty())
 			setState(Normal);
-		
-		ok = projected_crs != NULL;
-		if (ok)
-		{
-			// Update corresponding reference point by projection
-			bool coord_ok;
-			if (was_valid_normal)
-			{
-				QPointF new_projected_ref = toProjectedCoords(geographic_ref_point, &coord_ok);
-				if (coord_ok)
-				{
-					projected_ref_point = new_projected_ref;
-					updateGrivation();
-				}
-			}
-			else
-			{
-				LatLon new_geo_ref_point = toGeographicCoords(projected_ref_point, &coord_ok);
-				if (coord_ok)
-				{
-					geographic_ref_point = new_geo_ref_point;
-					initDeclination();
-				}
-			}
-		}
 		
 		emit projectionChanged();
 	}
