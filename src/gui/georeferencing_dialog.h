@@ -224,7 +224,7 @@ protected:
 	
 	/// Updates the zone field in the dialog from the underlying Georeferencing if
 	/// UTM is used as coordinate reference system.
-	void updateZone();
+	bool updateZone(const Georeferencing& georef);
 	
 	/// Updates the grivation field from the underlying Georeferencing.
 	void updateGrivation();
