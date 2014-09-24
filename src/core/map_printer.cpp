@@ -733,6 +733,8 @@ void MapPrinter::drawPage(QPainter* device_painter, float units_per_inch, const 
 	device_painter->setRenderHint(QPainter::Antialiasing);
 	device_painter->setRenderHint(QPainter::SmoothPixmapTransform);
 	
+	QPainter* painter = device_painter;
+	
 	// Logical units per mm
 	qreal units_per_mm = units_per_inch / 25.4;
 	// Image pixels per mm
@@ -814,17 +816,16 @@ void MapPrinter::drawPage(QPainter* device_painter, float units_per_inch, const 
 #endif
 		scoped_buffer = QImage(w, h, QImage::Format_RGB32);
 		page_buffer = &scoped_buffer;
+		painter = new QPainter(page_buffer);
+		painter->setRenderHints(device_painter->renderHints());
 	}
 	
 	/*
 	 * Prepare the common background
 	 */
-	QPainter* painter = device_painter;
 	if (use_buffer_for_background)
 	{
 		page_buffer->fill(QColor(Qt::white));
-		painter = new QPainter(page_buffer);
-		painter->setRenderHints(device_painter->renderHints());
 	}
 	else if (white_background)
 	{
