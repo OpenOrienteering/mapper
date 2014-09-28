@@ -543,23 +543,31 @@ void Georeferencing::setTransformationDirectly(const QTransform& transform)
 
 bool Georeferencing::setProjectedCRS(const QString& id, const QString& spec, std::vector< QString > params)
 {
-	bool ok = projected_crs != NULL;
+	// Default return value if no change is neccessary
+	bool ok = (state == Normal || projected_crs_spec.isEmpty());
+	
 	// Changes in params shall already be recorded in spec
-	if (projected_crs_id != id || projected_crs_spec != spec)
+	if (projected_crs_id != id || projected_crs_spec != spec || (!ok && !spec.isEmpty()) )
 	{
 		if (projected_crs != NULL)
 			pj_free(projected_crs);
 		
 		projected_crs_id = id;
 		projected_crs_spec = spec;
-		projected_crs_parameters.swap(params); // params was passed by value!
-		if (spec.isEmpty())
+		if (projected_crs_spec.isEmpty())
+		{
+			projected_crs_parameters.clear();
 			projected_crs = NULL;
+			ok = (state != Normal);
+		}
 		else
+		{
+			projected_crs_parameters.swap(params); // params was passed by value!
 			projected_crs = pj_init_plus(projected_crs_spec.toLatin1());
-		
-		if (state != Normal && !projected_crs_spec.isEmpty())
-			setState(Normal);
+			ok = (0 == *pj_get_errno_ref());
+			if (ok && state != Normal)
+				setState(Normal);
+		}
 		
 		emit projectionChanged();
 	}

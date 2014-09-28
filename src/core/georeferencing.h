@@ -296,8 +296,8 @@ public:
 	 * 
 	 * @param id  an identifier
 	 * @param spec the PROJ.4 specification of the CRS
-	 * @param params parameter values
-	 * @return true if the specification is valid, false otherwise 
+	 * @param params parameter values (ignore for empty spec)
+	 * @return true if the specification is valid or empty, false otherwise
 	 */
 	bool setProjectedCRS(const QString& id, const QString& spec = "", std::vector< QString > params = std::vector< QString >());
 	
