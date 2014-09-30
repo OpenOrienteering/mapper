@@ -304,6 +304,13 @@ Q_ASSERT(temp->passpoints.size() == 0);
 		}
 	}
 	
+	// Fix template alignment problems caused by grivation rounding since version 0.6
+	const double correction = map.getGeoreferencing().getGrivationError();
+	if (!temp->is_georeferenced && qAbs(correction) != 0.0 && temp->getTemplateType() == "TemplateTrack" )
+	{
+		temp->setTemplateRotation(temp->getTemplateRotation() + Georeferencing::degToRad(correction));
+	}
+	
 	return temp;
 }
 

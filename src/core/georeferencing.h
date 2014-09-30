@@ -225,6 +225,26 @@ public:
 	double getGrivation() const;
 	
 	/**
+	 * Returns the deviation of the grivation from the one given in pre-0.6 files.
+	 * 
+	 * Only valid immediately after loading a georeferencing from a file.
+	 * Returns 0.0 in any other context.
+	 * 
+	 * Files from Mapper versions before 0.6 may have used any number of decimal
+	 * places for grivation. Since version 0.6, grivation is rounded to the
+	 * number of decimal places defined by declinationPrecision(). When this
+	 * rounding takes place (i.e. only when opening a file which has not been
+	 * saved by 0.6 or later), the difference between the original value and the
+	 * rounded value is temporarily provided by this function. This value can be
+	 * used to for correcting dependent data. Any changes to declination or
+	 * grivation will invalidate this value.
+	 * 
+	 * @see getGrivation()
+	 * @see declinationPrecision()
+	 */
+	double getGrivationError() const;
+	
+	/**
 	 * Sets the grivation (in degrees).
 	 * 
 	 * Grivation is the angle between magnetic north and grid north. 
@@ -467,6 +487,7 @@ private:
 	unsigned int scale_denominator;
 	double declination;
 	double grivation;
+	double grivation_error;
 	MapCoord map_ref_point;
 	
 	QPointF projected_ref_point;
@@ -547,6 +568,12 @@ inline
 double Georeferencing::getGrivation() const
 {
 	return grivation;
+}
+
+inline
+double Georeferencing::getGrivationError() const
+{
+	return grivation_error;
 }
 
 inline

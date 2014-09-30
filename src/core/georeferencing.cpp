@@ -82,6 +82,7 @@ Georeferencing::Georeferencing()
   scale_denominator(0),
   declination(0.0),
   grivation(0.0),
+  grivation_error(0.0),
   map_ref_point(0, 0),
   projected_ref_point(0, 0)
 {
@@ -114,6 +115,7 @@ Georeferencing::Georeferencing(const Georeferencing& other)
   scale_denominator(other.scale_denominator),
   declination(other.declination),
   grivation(other.grivation),
+  grivation_error(other.grivation_error),
   map_ref_point(other.map_ref_point),
   projected_ref_point(other.projected_ref_point),
   projected_crs_id(other.projected_crs_id),
@@ -142,6 +144,7 @@ Georeferencing& Georeferencing::operator=(const Georeferencing& other)
 	scale_denominator        = other.scale_denominator;
 	declination              = other.declination;
 	grivation                = other.grivation;
+	grivation_error          = other.grivation_error;
 	map_ref_point            = other.map_ref_point;
 	projected_ref_point      = other.projected_ref_point;
 	from_projected           = other.from_projected;
@@ -182,7 +185,10 @@ void Georeferencing::load(QXmlStreamReader& xml, bool load_scale_only) throw (Fi
 	if (georef_element.hasAttribute(literal::declination))
 		declination = roundDeclination(georef_element.attribute<double>(literal::declination));
 	if (georef_element.hasAttribute(literal::grivation))
+	{
 		grivation = roundDeclination(georef_element.attribute<double>(literal::grivation));
+		grivation_error = georef_element.attribute<double>(literal::grivation) - grivation;
+	}
 	
 	while (xml.readNextStartElement())
 	{
@@ -377,6 +383,7 @@ void Georeferencing::setDeclinationAndGrivation(double declination, double griva
 	{
 		this->declination = declination;
 		this->grivation   = grivation;
+		this->grivation_error = 0.0;
 		
 		if (state == ScaleOnly)
 			setState(Local);
