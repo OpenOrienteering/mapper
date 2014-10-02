@@ -106,7 +106,7 @@ bool DrawPathTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapW
 	
 	if (editingInProgress() &&
 		((event->button() == Qt::RightButton) &&
-		!Settings::getInstance().getSettingCached(Settings::MapEditor_DrawLastPointOnRightClick).toBool()))
+		!drawOnRightClickEnabled()))
 	{
 		finishDrawing();
 		return true;
@@ -121,7 +121,7 @@ bool DrawPathTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapW
 			finishDrawing();
 		return true;
 	}
-	else if ((event->button() == Qt::LeftButton) || (editingInProgress() && drawMouseButtonClicked(event)))
+	else if (isDrawingButton(event->button()))
 	{
 		dragging = false;
 		bool start_appending = false;
@@ -235,7 +235,7 @@ bool DrawPathTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapW
 
 bool DrawPathTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
-	bool mouse_down = drawMouseButtonHeld(event);
+	bool mouse_down = containsDrawingButtons(event->buttons());
 	if (mouse_down)
 		left_mouse_down = true;
 	cur_pos = event->pos();
@@ -333,7 +333,7 @@ bool DrawPathTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWi
 
 bool DrawPathTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
-	if (!drawMouseButtonClicked(event))
+	if (!isDrawingButton(event->button()))
 		return false;
 	left_mouse_down = false;
 	if (picking_angle)
@@ -347,7 +347,7 @@ bool DrawPathTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, Ma
 	if (following)
 	{
 		finishFollowing();
-		if ((event->button() == Qt::RightButton) && Settings::getInstance().getSettingCached(Settings::MapEditor_DrawLastPointOnRightClick).toBool())
+		if ((event->button() == Qt::RightButton) && drawOnRightClickEnabled())
 			finishDrawing();
 		return true;
 	}
@@ -392,7 +392,7 @@ bool DrawPathTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, Ma
 	path_has_preview_point = false;
 	dragging = false;
 	
-	if ((event->button() == Qt::RightButton) && Settings::getInstance().getSettingCached(Settings::MapEditor_DrawLastPointOnRightClick).toBool())
+	if ((event->button() == Qt::RightButton) && drawOnRightClickEnabled())
 		finishDrawing();
 	return true;
 }

@@ -96,7 +96,7 @@ bool DrawRectangleTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord,
 	ctrl_pressed = modifiers & Qt::ControlModifier;
 	shift_pressed = modifiers & Qt::ShiftModifier;
 	cur_map_widget = widget;
-	if (event->button() == Qt::LeftButton || (editingInProgress() && drawMouseButtonClicked(event)))
+	if (isDrawingButton(event->button()))
 	{
 		dragging = false;
 		click_pos = event->pos();
@@ -179,7 +179,7 @@ bool DrawRectangleTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, 
 	cur_pos = event->pos();
 	cur_pos_map = map_coord;
 	constrained_pos_map = cur_pos_map;
-	updateHover(drawMouseButtonHeld(event));
+	updateHover(containsDrawingButtons(event->buttons()));
 	return true;
 }
 
@@ -236,13 +236,13 @@ bool DrawRectangleTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coor
 	bool result = false;
 	if (editingInProgress())
 	{
-		if (drawMouseButtonClicked(event) && dragging)
+		if (isDrawingButton(event->button()) && dragging)
 		{
 			dragging = false;
 			result = mousePressEvent(event, cur_pos_map, widget);
 		}
 		
-		if (event->button() == Qt::RightButton && Settings::getInstance().getSettingCached(Settings::MapEditor_DrawLastPointOnRightClick).toBool())
+		if (event->button() == Qt::RightButton && drawOnRightClickEnabled())
 		{
 			if (!dragging)
 			{

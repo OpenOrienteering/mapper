@@ -59,11 +59,12 @@ MapEditorTool::MapEditorTool(MapEditorController* editor, Type type, QAction* to
 , uses_touch_cursor(true)
 , scale_factor(newScaleFactor())
 , point_handles(scale_factor)
+, draw_on_right_click(Settings::getInstance().getSettingCached(Settings::MapEditor_DrawLastPointOnRightClick).toBool())
 {
 	if (tool_action)
 		connect(tool_action, SIGNAL(destroyed()), this, SLOT(toolActionDestroyed()));
 	
-	connect(&Settings::getInstance(), SIGNAL(settingsChanged()), this, SLOT(updateScaleFactor()));
+	connect(&Settings::getInstance(), SIGNAL(settingsChanged()), this, SLOT(settingsChanged()));
 }
 
 MapEditorTool::~MapEditorTool()
@@ -325,7 +326,7 @@ void MapEditorTool::deleteOldSelectionRenderables(MapRenderables& old_renderable
 	old_renderables.clear(set_area_dirty);
 }
 
-int MapEditorTool::findHoverPoint(QPointF cursor, Object* object, bool include_curve_handles, QRectF* selection_extent, MapWidget* widget, MapCoordF* out_handle_pos)
+int MapEditorTool::findHoverPoint(QPointF cursor, Object* object, bool include_curve_handles, QRectF* selection_extent, MapWidget* widget, MapCoordF* out_handle_pos) const
 {
 	Q_UNUSED(selection_extent);
 	
@@ -390,26 +391,20 @@ int MapEditorTool::findHoverPoint(QPointF cursor, Object* object, bool include_c
 	return -1;
 }
 
-bool MapEditorTool::drawMouseButtonHeld(QMouseEvent* event)
+bool MapEditorTool::containsDrawingButtons(Qt::MouseButtons buttons) const
 {
-	if ((event->buttons() & Qt::LeftButton) ||
-		(Settings::getInstance().getSettingCached(Settings::MapEditor_DrawLastPointOnRightClick).toBool() == true &&
-		 event->buttons() & Qt::RightButton))
-	{
+	if (buttons.testFlag(Qt::LeftButton)) 
 		return true;
-	}
-	return false;
+	
+	return (draw_on_right_click && buttons.testFlag(Qt::RightButton) && editingInProgress());
 }
 
-bool MapEditorTool::drawMouseButtonClicked(QMouseEvent* event)
+bool MapEditorTool::isDrawingButton(Qt::MouseButton button) const
 {
-	if ((event->button() == Qt::LeftButton) ||
-		(Settings::getInstance().getSettingCached(Settings::MapEditor_DrawLastPointOnRightClick).toBool() == true &&
-		 event->button() == Qt::RightButton))
-	{
+	if (button == Qt::LeftButton) 
 		return true;
-	}
-	return false;
+	
+	return (draw_on_right_click && button == Qt::RightButton && editingInProgress());
 }
 
 // static
@@ -427,9 +422,9 @@ int MapEditorTool::newScaleFactor()
 }
 
 // slot
-void MapEditorTool::updateScaleFactor()
+void MapEditorTool::settingsChanged()
 {
 	scale_factor = newScaleFactor();
 	point_handles = PointHandles(scale_factor);
+	draw_on_right_click = Settings::getInstance().getSettingCached(Settings::MapEditor_DrawLastPointOnRightClick).toBool();
 }
-

@@ -195,6 +195,12 @@ public:
 	
 	
 	/**
+	 * Returns true if Mapper is configured to finish drawing on right click.
+	 */
+	bool drawOnRightClickEnabled() const;
+	
+	
+	/**
 	 * @brief Returns whether an editing operation is currently in progress.
 	 * 
 	 * Some editing operation, such as drawing a path, need several user inputs
@@ -287,18 +293,22 @@ protected:
 	 * 
 	 * Returns -1 if not hovering over a point.
 	 */
-	int findHoverPoint(QPointF cursor, Object* object, bool include_curve_handles, QRectF* selection_extent, MapWidget* widget, MapCoordF* out_handle_pos = NULL);
+	int findHoverPoint(QPointF cursor, Object* object, bool include_curve_handles, QRectF* selection_extent, MapWidget* widget, MapCoordF* out_handle_pos = NULL) const;
 	
 	
 	/**
-	 * Checks if a mouse button for drawing is currently held, according to the given event
+	 * Checks if the given buttons contain one which controls drawing.
+	 * 
+	 * To be used for mouse move events.
 	 */
-	bool drawMouseButtonHeld(QMouseEvent* event);
+	bool containsDrawingButtons(Qt::MouseButtons buttons) const;
 	
 	/**
-	 * Checks if a mouse button for drawing is clicked, according to the given event
+	 * Checks if the given event was triggered by press or release of a mouse button for drawing.
+	 * 
+	 * To be used for press and release events.
 	 */
-	bool drawMouseButtonClicked(QMouseEvent* event);
+	bool isDrawingButton(Qt::MouseButton button) const;
 	
 	
 	/**
@@ -313,9 +323,9 @@ private slots:
 	void toolActionDestroyed();
 	
 	/**
-	 * @brief Updates the point handles from the current settings.
+	 * Updates cached settings.
 	 */
-	void updateScaleFactor();
+	void settingsChanged();
 
 protected:
 	/**
@@ -330,6 +340,7 @@ private:
 	bool uses_touch_cursor;
 	int scale_factor;
 	PointHandles point_handles;
+	bool draw_on_right_click;
 };
 
 
@@ -352,6 +363,12 @@ inline
 bool MapEditorTool::usesTouchCursor() const
 {
 	return uses_touch_cursor;
+}
+
+inline
+bool MapEditorTool::drawOnRightClickEnabled() const
+{
+	return draw_on_right_click;
 }
 
 inline
