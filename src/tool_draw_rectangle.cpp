@@ -246,10 +246,11 @@ bool DrawRectangleTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coor
 		{
 			if (!dragging)
 			{
-				cur_pos_map = MapCoordF(preview_path->getCoordinate(angles.size() - 1));
+				constrained_pos_map = MapCoordF(preview_path->getCoordinate(angles.size() - 1));
 				undoLastPoint();
 			}
-			finishDrawing();
+			if (editingInProgress()) // despite undoLastPoint()
+				finishDrawing();
 			return true;
 		}
 	}
@@ -270,13 +271,13 @@ bool DrawRectangleTool::mouseDoubleClickEvent(QMouseEvent* event, MapCoordF map_
 		// As the double click is also reported as two single clicks first
 		// (in total: press - release - press - double - release),
 		// need to undo two steps in general.
+		if (angles.size() > 2 && !ctrl_pressed)
+			undoLastPoint();
 		if (angles.size() <= 1)
 			abortDrawing();
 		else
 		{
-			if (angles.size() > 2 && !ctrl_pressed)
-				undoLastPoint();
-			cur_pos_map = MapCoordF(preview_path->getCoordinate(angles.size() - 1));
+			constrained_pos_map = MapCoordF(preview_path->getCoordinate(angles.size() - 1));
 			undoLastPoint();
 			finishDrawing();
 		}
@@ -291,10 +292,14 @@ bool DrawRectangleTool::keyPressEvent(QKeyEvent* event)
 	{
 		if (editingInProgress())
 		{
-			constrained_pos_map = MapCoordF(preview_path->getCoordinate(angles.size() - 1));
-			undoLastPoint();
-			if (editingInProgress())
+			if (angles.size() <= 1)
+				abortDrawing();
+			else
+			{
+				constrained_pos_map = MapCoordF(preview_path->getCoordinate(angles.size() - 1));
+				undoLastPoint();
 				finishDrawing();
+			}
 		}
 	}
 	else if (event->key() == Qt::Key_Escape)
@@ -496,7 +501,7 @@ void DrawRectangleTool::undoLastPoint()
 	updateCloseVector();
 	
 	angle_helper->setCenter(MapCoordF(preview_path->getCoordinate(angles.size() - 1)));
-		
+	
 	updateRectangle();
 }
 
