@@ -21,6 +21,16 @@ set(Mapper_SYMBOL_SETS
   5000/ISSOM_5000.omap
   10000/ISOM_10000.omap
   15000/ISOM_15000.omap
+  
+  4000/ISSOM_Čeština_4000.omap
+  5000/ISSOM_Čeština_5000.omap
+  10000/ISOM_Čeština_10000.omap
+  15000/ISOM_Čeština_15000.omap
+  
+  4000/ISSOM_suomi_4000.omap
+  5000/ISSOM_suomi_5000.omap
+  10000/ISOM_suomi_10000.omap
+  15000/ISOM_suomi_15000.omap
 )
 
 set(_symbol_sets)
