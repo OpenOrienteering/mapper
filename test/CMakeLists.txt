@@ -113,6 +113,7 @@ add_dependencies(duplicate_equals_t Mapper_test_data)
 add_system_test(tools_t)
 add_system_test(path_object_t)
 add_system_test(undo_manager_t)
+add_system_test(symbol_set_t)
 
 
 # Collect the AUTORUN_TESTS
