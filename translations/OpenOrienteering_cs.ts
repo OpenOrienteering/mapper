@@ -5,7 +5,7 @@
     <name>AboutDialog</name>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="152"/>
-        <location filename="../src/gui/about_dialog.cpp" line="227"/>
+        <location filename="../src/gui/about_dialog.cpp" line="228"/>
         <source>About %1</source>
         <translation>%1</translation>
     </message>
@@ -20,27 +20,27 @@
         <translation>Klepnout pro zobrazení</translation>
     </message>
     <message>
-        <location filename="../src/gui/about_dialog.cpp" line="235"/>
+        <location filename="../src/gui/about_dialog.cpp" line="236"/>
         <source>This program is free software: you can redistribute it and/or modify it under the terms of the &lt;a %1&gt;GNU General Public License (GPL), version&amp;nbsp;3&lt;/a&gt;, as published by the Free Software Foundation.</source>
         <translation>Tento program je svobodným programovým vybavením. Můžete jej šířit a /nebo upravovat za podmínek &lt;a %1&gt;GNU General Public License (GPL), verze&amp;nbsp;3&lt;/a&gt;, jak byla zveřejněna Free Software Foundation.</translation>
     </message>
     <message>
-        <location filename="../src/gui/about_dialog.cpp" line="241"/>
+        <location filename="../src/gui/about_dialog.cpp" line="242"/>
         <source>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License (GPL), version&amp;nbsp;3, for &lt;a %1&gt;more details&lt;/a&gt;.</source>
         <translation>Tento program je šířen v naději, že bude užitečný, ale BEZ JAKÉKOLI ZÁRUKY; také bez předpokládané záruky PRODEJNOSTI nebo POUŽITELNOSTI PRO NĚJAKÝ URČITÝ ÚČEL. &lt;a %1&gt;Další podrobnosti&lt;/a&gt; najdete v GNU General Public License (GPL), verze&amp;nbsp;3.</translation>
     </message>
     <message>
-        <location filename="../src/gui/about_dialog.cpp" line="248"/>
+        <location filename="../src/gui/about_dialog.cpp" line="249"/>
         <source>&lt;a %1&gt;All about licenses, copyright notices, conditions and disclaimers.&lt;/a&gt;</source>
         <translation>&lt;a %1&gt;Vše o povoleních, upozorněních autorského práva, podmínkách a zřeknutí se právních nároků.&lt;/a&gt;</translation>
     </message>
     <message>
-        <location filename="../src/gui/about_dialog.cpp" line="252"/>
+        <location filename="../src/gui/about_dialog.cpp" line="253"/>
         <source>The OpenOrienteering developers in alphabetical order:</source>
         <translation>Vývojáři OpenOrienteering v abecedním pořadí:</translation>
     </message>
     <message>
-        <location filename="../src/gui/about_dialog.cpp" line="254"/>
+        <location filename="../src/gui/about_dialog.cpp" line="255"/>
         <source>(project initiator)</source>
         <translation>(původce projektu)</translation>
     </message>
@@ -49,7 +49,7 @@
         <translation type="vanished">Povolení</translation>
     </message>
     <message>
-        <location filename="../src/gui/about_dialog.cpp" line="231"/>
+        <location filename="../src/gui/about_dialog.cpp" line="232"/>
         <source>A free software for drawing orienteering maps</source>
         <translation>Svobodný program na kreslení map pro orientační běh</translation>
     </message>
@@ -62,7 +62,7 @@
         <translation type="vanished">Vývojáři v abecedním pořadí:</translation>
     </message>
     <message>
-        <location filename="../src/gui/about_dialog.cpp" line="256"/>
+        <location filename="../src/gui/about_dialog.cpp" line="257"/>
         <source>For contributions, thanks to:</source>
         <translation>Poděkování za přispění:</translation>
     </message>
@@ -860,7 +860,7 @@
     <name>DrawLineAndAreaTool</name>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1051"/>
-        <location filename="../src/tool_draw_rectangle.cpp" line="680"/>
+        <location filename="../src/tool_draw_rectangle.cpp" line="685"/>
         <source>&lt;b&gt;Dash points on.&lt;/b&gt; </source>
         <translation>&lt;b&gt;Symbolické body zapnuty.&lt;/b&gt; </translation>
     </message>
@@ -871,26 +871,26 @@
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1062"/>
-        <location filename="../src/tool_draw_rectangle.cpp" line="686"/>
+        <location filename="../src/tool_draw_rectangle.cpp" line="691"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt;: Pick direction from existing objects. </source>
         <translation>&lt;b&gt;%1 + klepnout&lt;/b&gt;: Převzít směr ze stávajících objektů.  </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1075"/>
-        <location filename="../src/tool_draw_rectangle.cpp" line="691"/>
-        <location filename="../src/tool_draw_rectangle.cpp" line="715"/>
+        <location filename="../src/tool_draw_rectangle.cpp" line="696"/>
+        <location filename="../src/tool_draw_rectangle.cpp" line="720"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt;: Snap to existing objects. </source>
         <translation>&lt;b&gt;%1 + klepnout&lt;/b&gt;: Zapadnout do stávajících objektů. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1081"/>
-        <location filename="../src/tool_draw_rectangle.cpp" line="705"/>
+        <location filename="../src/tool_draw_rectangle.cpp" line="710"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Fixed angles. </source>
         <translation>&lt;b&gt;%1&lt;/b&gt;: Pevné úhly. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1089"/>
-        <location filename="../src/tool_draw_rectangle.cpp" line="721"/>
+        <location filename="../src/tool_draw_rectangle.cpp" line="726"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Undo last point. </source>
         <translation>&lt;b&gt;%1&lt;/b&gt;: Odstranit poslední bod. </translation>
     </message>
@@ -1035,17 +1035,17 @@
         <translation>Přerušit</translation>
     </message>
     <message>
-        <location filename="../src/tool_draw_rectangle.cpp" line="696"/>
+        <location filename="../src/tool_draw_rectangle.cpp" line="701"/>
         <source>&lt;b&gt;Click or Drag&lt;/b&gt;: Start drawing a rectangle. </source>
         <translation>&lt;b&gt;Klepnout nebo táhnout&lt;/b&gt;: Začít kreslení obdélníku.</translation>
     </message>
     <message>
-        <location filename="../src/tool_draw_rectangle.cpp" line="709"/>
+        <location filename="../src/tool_draw_rectangle.cpp" line="714"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Snap to previous lines. </source>
         <translation>&lt;b&gt;%1&lt;/b&gt;: Zapadnout do předchozích linií. </translation>
     </message>
     <message>
-        <location filename="../src/tool_draw_rectangle.cpp" line="720"/>
+        <location filename="../src/tool_draw_rectangle.cpp" line="725"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set a corner point. &lt;b&gt;Right or double click&lt;/b&gt;: Finish the rectangle. </source>
         <translation>&lt;b&gt;Klepnout&lt;/b&gt;: Nastavit rohový bod. &lt;b&gt;Vpravo nebo dvojité klepnutí myší&lt;/b&gt;: Dokončit obdélník. </translation>
     </message>
@@ -1500,33 +1500,33 @@
         <translation>Číslo zóny (1 až 119)</translation>
     </message>
     <message>
-        <location filename="../src/core/georeferencing.cpp" line="173"/>
+        <location filename="../src/core/georeferencing.cpp" line="177"/>
         <source>Map scale specification invalid or missing.</source>
         <translation>Údaj o měřítku mapy je buď neplatný nebo chybí.</translation>
     </message>
     <message>
-        <location filename="../src/core/georeferencing.cpp" line="206"/>
-        <location filename="../src/core/georeferencing.cpp" line="234"/>
+        <location filename="../src/core/georeferencing.cpp" line="213"/>
+        <location filename="../src/core/georeferencing.cpp" line="241"/>
         <source>Unknown CRS specification language: %1</source>
         <translation>Neznámý jazyk popisu soustavy souřadnic: %1</translation>
     </message>
     <message>
-        <location filename="../src/core/georeferencing.cpp" line="237"/>
+        <location filename="../src/core/georeferencing.cpp" line="244"/>
         <source>Unsupported geographic CRS specification: %1</source>
         <translation>Nepodporovaný popis zeměpisné soustavy souřadnic: %1</translation>
     </message>
     <message>
-        <location filename="../src/core/georeferencing.cpp" line="388"/>
+        <location filename="../src/core/georeferencing.cpp" line="446"/>
         <source>Scale only</source>
         <translation>Jen měřítko</translation>
     </message>
     <message>
-        <location filename="../src/core/georeferencing.cpp" line="390"/>
+        <location filename="../src/core/georeferencing.cpp" line="448"/>
         <source>Local</source>
         <translation>Místní</translation>
     </message>
     <message>
-        <location filename="../src/core/georeferencing.cpp" line="396"/>
+        <location filename="../src/core/georeferencing.cpp" line="454"/>
         <source>Projected</source>
         <translation>Promítnuto</translation>
     </message>
@@ -1534,225 +1534,230 @@
 <context>
     <name>GeoreferencingDialog</name>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="70"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="74"/>
         <source>Map Georeferencing</source>
         <translation>Nastavení souřadnicového systému</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="447"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="523"/>
         <source>Lookup...</source>
         <translation>Vyhledat...</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="104"/>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="105"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="108"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="109"/>
         <source>m</source>
         <translation>m</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="172"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="185"/>
         <source>Declination:</source>
         <translation>Úhel místního zeměpisného a magnetického&lt;br&gt;poledníku (deklinace):</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="129"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="133"/>
         <source>Projected coordinates</source>
         <translation>Reálné souřadnice (m)</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="82"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="86"/>
         <source>Status:</source>
         <translation>Stav:</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="130"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="134"/>
         <source>Geographic coordinates</source>
         <translation>Zeměpisné souřadnice</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="125"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="129"/>
         <source>Show reference point in:</source>
         <translation>Ukázat referenční bod v:</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="385"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="346"/>
         <source>valid</source>
         <translation>platný</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="423"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="339"/>
         <source>&lt;a href=&quot;%1&quot;&gt;OpenStreetMap&lt;/a&gt; | &lt;a href=&quot;%2&quot;&gt;World of O Maps&lt;/a&gt;</source>
         <translation>&lt;a href=&quot;%1&quot;&gt;OpenStreetMap&lt;/a&gt; | &lt;a href=&quot;%2&quot;&gt;Svět map O&lt;/a&gt;</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="283"/>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="623"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="371"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="721"/>
         <source>Online declination lookup</source>
         <translation>Vyhledat úhel místního zeměpisného a magnetického poledníku</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="73"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="77"/>
         <source>Map coordinate reference system</source>
         <translation>Souřadnicový systém</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="76"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="80"/>
         <source>- none -</source>
         <translation>- žádná -</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="77"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="81"/>
         <source>- from Proj.4 specification -</source>
         <translation>- z popisu Proj. 4 -</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="78"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="82"/>
         <source>- local -</source>
         <translation>- místní -</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="80"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="84"/>
         <source>CRS specification:</source>
         <translation>Definice souřadnicového systému:</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="85"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="89"/>
         <source>Reference point</source>
         <translation>Referenční bod</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="87"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="91"/>
         <source>&amp;Pick on map</source>
         <translation>Vybrat na &amp;mapě</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="89"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="93"/>
         <source>(Datum: WGS84)</source>
         <translation>(Datum: WGS84)</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="92"/>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="93"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="96"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="97"/>
         <source>mm</source>
         <translation>mm</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="97"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="101"/>
         <source>X</source>
         <comment>x coordinate</comment>
         <translation>X</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="99"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="103"/>
         <source>Y</source>
         <comment>y coordinate</comment>
         <translation>Y</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="108"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="112"/>
         <source>E</source>
         <comment>west / east</comment>
         <translation>V</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="110"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="114"/>
         <source>N</source>
         <comment>north / south</comment>
         <translation>S</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="114"/>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="115"/>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="135"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="118"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="119"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="147"/>
         <source>°</source>
         <translation>°</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="118"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="122"/>
         <source>N</source>
         <comment>north</comment>
         <translation>S</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="120"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="124"/>
         <source>E</source>
         <comment>east</comment>
         <translation>V</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="133"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="145"/>
         <source>Map north</source>
         <translation>Sever na mapě</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="163"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="175"/>
         <source>Map coordinates:</source>
         <translation>Souřadnice mapy:</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="165"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="177"/>
         <source>Geographic coordinates:</source>
         <translation>Zeměpisné souřadnice:</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="167"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="180"/>
         <source>On CRS changes, keep:</source>
         <translation>Při změně souřadnicového systému zachovat:</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="173"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="186"/>
         <source>Grivation:</source>
         <translation>Úhel svíraný svislicemi pravoúhlého souřadnicového&lt;br&gt;systému a místním zeměpisným poledníkem + deklinace (grivace):</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="284"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="372"/>
         <source>The magnetic declination for the reference point %1° %2° will now be retrieved from &lt;a href=&quot;%3&quot;&gt;%3&lt;/a&gt;. Do you want to continue?</source>
         <translation>Magnetická deklinace pro referenční bod %1° %2° bude nyní načtena z &lt;a href=&quot;%3&quot;&gt;%3&lt;/a&gt;. Chcete pokračovat?</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="355"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="445"/>
         <source>Declination change</source>
         <translation>Změna úhlu místního zeměpisného a magnetického poledníku</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="355"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="445"/>
         <source>The declination has been changed. Do you want to rotate the map content accordingly, too?</source>
         <translation>Úhel místního zeměpisného a magnetického poledníku (deklinace) byl změněn. Chcete otočit odpovídajícím způsobem i obsah mapy?</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="396"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="488"/>
         <source>Projected coordinates:</source>
         <translation>Reálné souřadnice:</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="398"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="490"/>
         <source>Local coordinates:</source>
         <translation>Místní souřadnice:</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="447"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="523"/>
         <source>Loading...</source>
         <translation>Nahrává se ...</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="605"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="530"/>
+        <source>locked</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="703"/>
         <source>Could not parse data.</source>
         <translation>Nepodařilo se zpracovat data.</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="620"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="718"/>
         <source>Declination value not found.</source>
         <translation>Hodnota odchylky nenalezena.</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="624"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="722"/>
         <source>The online declination lookup failed:
 %1</source>
         <translation>Vyhledání odchylky na internetu se nezdařilo:
 %1</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="662"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="528"/>
         <source>%1 °</source>
         <comment>degree value</comment>
         <translation>%1 °</translation>
@@ -1761,7 +1766,7 @@
 <context>
     <name>GeoreferencingTool</name>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="713"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="778"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set the reference point. Another button to cancel.</source>
         <translation>&lt;b&gt;Klepnutí&lt;/b&gt;: Nastavit referenční bod. Stisknout jiné tlačítko myši pro zrušení.</translation>
     </message>
@@ -2063,32 +2068,32 @@
         <translation>Nepodporovaná nová verze souborového formátu. Některé mapové prvky nejsou touto verzí nahrány nebo uloženy. Aktualizujte, prosím, program.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_native.cpp" line="183"/>
+        <location filename="../src/file_format_native.cpp" line="190"/>
         <source>The geographic coordinate reference system of the map was &quot;%1&quot;. This CRS is not supported. Using &quot;%2&quot;.</source>
         <translation>Zeměpisná soustava souřadnic tohoto souboru byla &quot;%1&quot;. Tato soustava souřadnic není podporována. Používá se &quot;%2&quot;.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_native.cpp" line="298"/>
+        <location filename="../src/file_format_native.cpp" line="305"/>
         <source>Error while loading a symbol with type %2.</source>
         <translation>Chyba při nahrávání symbolu typu %2.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_native.cpp" line="303"/>
+        <location filename="../src/file_format_native.cpp" line="310"/>
         <source>Error while loading a symbol.</source>
         <translation>Chyba při nahrávání symbolu.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_native.cpp" line="366"/>
+        <location filename="../src/file_format_native.cpp" line="373"/>
         <source>Error while loading undo steps.</source>
         <translation>Chyba při nahrávání kroků zpět.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_native.cpp" line="376"/>
+        <location filename="../src/file_format_native.cpp" line="383"/>
         <source>Error while reading map part count.</source>
         <translation>Chyba při nahrávání počtu částí mapy.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_native.cpp" line="386"/>
+        <location filename="../src/file_format_native.cpp" line="393"/>
         <source>Error while loading map part %2.</source>
         <translation>Chyba při nahrávání části mapy %2.</translation>
     </message>
@@ -2395,43 +2400,43 @@
 <context>
     <name>LocalCRSPositioningDialog</name>
     <message>
-        <location filename="../src/template_track.cpp" line="511"/>
+        <location filename="../src/template_track.cpp" line="507"/>
         <source>Track scaling and positioning</source>
         <translation>Změna velikosti a umístění cesty</translation>
     </message>
     <message>
-        <location filename="../src/template_track.cpp" line="516"/>
+        <location filename="../src/template_track.cpp" line="512"/>
         <source>Coordinate system</source>
         <translation>Soustava souřadnic</translation>
     </message>
     <message>
-        <location filename="../src/template_track.cpp" line="517"/>
+        <location filename="../src/template_track.cpp" line="513"/>
         <source>Real</source>
         <translation>Skutečná</translation>
     </message>
     <message>
-        <location filename="../src/template_track.cpp" line="518"/>
+        <location filename="../src/template_track.cpp" line="514"/>
         <source>Map</source>
         <translation>Mapa</translation>
     </message>
     <message>
-        <location filename="../src/template_track.cpp" line="521"/>
+        <location filename="../src/template_track.cpp" line="517"/>
         <source>m</source>
         <comment>meters</comment>
         <translation>m</translation>
     </message>
     <message>
-        <location filename="../src/template_track.cpp" line="524"/>
+        <location filename="../src/template_track.cpp" line="520"/>
         <source>One coordinate unit equals:</source>
         <translation>Jedna jednotka souřadnic odpovídá:</translation>
     </message>
     <message>
-        <location filename="../src/template_track.cpp" line="526"/>
+        <location filename="../src/template_track.cpp" line="522"/>
         <source>Position track at given coordinates</source>
         <translation>Umístit cestu na zadané souřadnice</translation>
     </message>
     <message>
-        <location filename="../src/template_track.cpp" line="530"/>
+        <location filename="../src/template_track.cpp" line="526"/>
         <source>Position track at view center</source>
         <translation>Umístit cestu doprostřed pohledu na mapu</translation>
     </message>
@@ -2841,468 +2846,468 @@ Přepočítat zavedená data na měřítko mapy?</translation>
 <context>
     <name>MapEditorController</name>
     <message>
-        <location filename="../src/map_editor.cpp" line="649"/>
+        <location filename="../src/map_editor.cpp" line="653"/>
         <source>Print...</source>
         <translation>Tisk...</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="661"/>
+        <location filename="../src/map_editor.cpp" line="665"/>
         <source>Undo</source>
         <translation>Zpět</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="661"/>
+        <location filename="../src/map_editor.cpp" line="665"/>
         <source>Undo the last step</source>
         <translation>Poslední krok vrátit zpět</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="662"/>
+        <location filename="../src/map_editor.cpp" line="666"/>
         <source>Redo</source>
         <translation>Znovu</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="662"/>
+        <location filename="../src/map_editor.cpp" line="666"/>
         <source>Redo the last step</source>
         <translation>Poslední krok udělat znovu</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="663"/>
+        <location filename="../src/map_editor.cpp" line="667"/>
         <source>Cu&amp;t</source>
         <translation>Vyj&amp;mout</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="664"/>
+        <location filename="../src/map_editor.cpp" line="668"/>
         <source>C&amp;opy</source>
         <translation>&amp;Kopírovat</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="665"/>
+        <location filename="../src/map_editor.cpp" line="669"/>
         <source>&amp;Paste</source>
         <translation>&amp;Vložit</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="674"/>
+        <location filename="../src/map_editor.cpp" line="678"/>
         <source>Zoom in</source>
         <translation>Přiblížit</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="675"/>
+        <location filename="../src/map_editor.cpp" line="679"/>
         <source>Zoom out</source>
         <translation>Oddálit</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="677"/>
+        <location filename="../src/map_editor.cpp" line="681"/>
         <source>Toggle fullscreen mode</source>
         <translation>Přepnout zobrazení na celou obrazovku</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="678"/>
+        <location filename="../src/map_editor.cpp" line="682"/>
         <source>Set custom zoom factor...</source>
         <translation>Nastavit vlastní zvětšení...</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="685"/>
+        <location filename="../src/map_editor.cpp" line="689"/>
         <source>Symbol window</source>
         <translation>Okno se symboly</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="685"/>
+        <location filename="../src/map_editor.cpp" line="689"/>
         <source>Show/Hide the symbol window</source>
         <translation>Ukázat/Skrýt okno se symboly</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="686"/>
+        <location filename="../src/map_editor.cpp" line="690"/>
         <source>Color window</source>
         <translation>Okno s barvami</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="686"/>
+        <location filename="../src/map_editor.cpp" line="690"/>
         <source>Show/Hide the color window</source>
         <translation>Ukázat/Skrýt okno s barvami</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="687"/>
+        <location filename="../src/map_editor.cpp" line="691"/>
         <source>Replace the symbols with those from another map file</source>
         <translatorcomment>Replace map file with either map or file</translatorcomment>
         <translation>Symboly nahradit symboly z jiného souboru</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="690"/>
+        <location filename="../src/map_editor.cpp" line="694"/>
         <source>Scale all symbols...</source>
         <translation>Změnit velikost všech symbolů...</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="690"/>
+        <location filename="../src/map_editor.cpp" line="694"/>
         <source>Scale the whole symbol set</source>
         <translation>Změnit velikost celé sady symbolů</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="692"/>
+        <location filename="../src/map_editor.cpp" line="696"/>
         <source>Change map scale...</source>
         <translation>Změnit měřítko mapy...</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="692"/>
+        <location filename="../src/map_editor.cpp" line="696"/>
         <source>Change the map scale and adjust map objects and symbol sizes</source>
         <translation>Změnit měřítko mapy a změnit velikost všech objektů a symbolů</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="694"/>
+        <location filename="../src/map_editor.cpp" line="698"/>
         <source>Map notes...</source>
         <translation>Poznámky k mapě...</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="696"/>
+        <location filename="../src/map_editor.cpp" line="700"/>
         <source>Template setup window</source>
         <translation>Okno s nastavením podkladů</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="696"/>
+        <location filename="../src/map_editor.cpp" line="700"/>
         <source>Show/Hide the template window</source>
         <translation>Ukázat/Skrýt okno s podklady</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="699"/>
+        <location filename="../src/map_editor.cpp" line="703"/>
         <source>Open template...</source>
         <translation>Otevřít podklad...</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="676"/>
+        <location filename="../src/map_editor.cpp" line="680"/>
         <source>Show whole map</source>
         <translation>Ukázat celou mapu</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="704"/>
+        <location filename="../src/map_editor.cpp" line="708"/>
         <source>Edit objects</source>
         <translation>Upravit objekty</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="706"/>
+        <location filename="../src/map_editor.cpp" line="710"/>
         <source>Set point objects</source>
         <translation>Nastavit bodové objekty</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="707"/>
+        <location filename="../src/map_editor.cpp" line="711"/>
         <source>Draw paths</source>
         <translation>Kreslit cesty</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="708"/>
+        <location filename="../src/map_editor.cpp" line="712"/>
         <source>Draw circles and ellipses</source>
         <translation>Kreslit kruhy a elipsy</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="712"/>
+        <location filename="../src/map_editor.cpp" line="716"/>
         <source>Write text</source>
         <translation>Psát text</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="714"/>
+        <location filename="../src/map_editor.cpp" line="718"/>
         <source>Duplicate</source>
         <translation>Zdvojit</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="715"/>
+        <location filename="../src/map_editor.cpp" line="719"/>
         <source>Switch symbol</source>
         <translation>Zaměnit symbol</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="716"/>
+        <location filename="../src/map_editor.cpp" line="720"/>
         <source>Fill / Create border</source>
         <translatorcomment>Consider two separate actions or change text according to context</translatorcomment>
         <translation>Vyplnit/Vytvořit okraj</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="717"/>
+        <location filename="../src/map_editor.cpp" line="721"/>
         <source>Switch dash direction</source>
         <translation>Obrátit směr symbolů</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="718"/>
+        <location filename="../src/map_editor.cpp" line="722"/>
         <source>Connect paths</source>
         <translation>Spojit cesty</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="720"/>
+        <location filename="../src/map_editor.cpp" line="724"/>
         <source>Cut object</source>
         <translation>Vyjmout objekt</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="736"/>
+        <location filename="../src/map_editor.cpp" line="740"/>
         <source>Rotate object(s)</source>
         <translation>Otočit objekty</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="739"/>
+        <location filename="../src/map_editor.cpp" line="743"/>
         <source>Measure lengths and areas</source>
         <translation>Měřit délky a plochy</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="742"/>
+        <location filename="../src/map_editor.cpp" line="746"/>
         <source>Cut away from area</source>
         <translation>Vystřihnout z plochy</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="744"/>
+        <location filename="../src/map_editor.cpp" line="748"/>
         <source>Merge area holes</source>
         <translation>Sloučit díry plochy</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="756"/>
+        <location filename="../src/map_editor.cpp" line="760"/>
         <source>Paint on template settings</source>
         <translation>Nastavení pro kreslení na podklady</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="762"/>
+        <location filename="../src/map_editor.cpp" line="766"/>
         <source>Enable touch cursor</source>
         <translation>Povolit dotykové ukazovátko</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="763"/>
+        <location filename="../src/map_editor.cpp" line="767"/>
         <source>Enable GPS display</source>
         <translation>Povolit zobrazení GPS</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="765"/>
+        <location filename="../src/map_editor.cpp" line="769"/>
         <source>Enable GPS distance rings</source>
         <translation>Povolit vzdálenostní kruhy GPS</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="767"/>
+        <location filename="../src/map_editor.cpp" line="771"/>
         <source>Set point object at GPS position</source>
         <translation>Nastavit bodový objekt v poloze GPS</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="769"/>
+        <location filename="../src/map_editor.cpp" line="773"/>
         <source>Set temporary marker at GPS position</source>
         <translation>Nastavit dočasnou značku v poloze GPS</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="771"/>
+        <location filename="../src/map_editor.cpp" line="775"/>
         <source>Create temporary path at GPS position</source>
         <translation>Vytvořit dočasnou cestu v poloze GPS</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="773"/>
+        <location filename="../src/map_editor.cpp" line="777"/>
         <source>Clear temporary GPS markers</source>
         <translation>Smazat dočasné značky v poloze GPS</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="776"/>
+        <location filename="../src/map_editor.cpp" line="780"/>
         <source>Enable compass display</source>
         <translation>Povolit zobrazení kompasu</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="777"/>
+        <location filename="../src/map_editor.cpp" line="781"/>
         <source>Align map with north</source>
         <translation>Vyrovnat mapu podle severu</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="779"/>
-        <location filename="../src/map_editor.cpp" line="3058"/>
+        <location filename="../src/map_editor.cpp" line="783"/>
+        <location filename="../src/map_editor.cpp" line="3068"/>
         <source>Toggle template visibility</source>
         <translation>Přepnout viditelnost podkladu</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="781"/>
-        <location filename="../src/map_editor.cpp" line="3206"/>
+        <location filename="../src/map_editor.cpp" line="785"/>
+        <location filename="../src/map_editor.cpp" line="3216"/>
         <source>Add new part...</source>
         <translation>Přidat novou část mapy...</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="782"/>
-        <location filename="../src/map_editor.cpp" line="3243"/>
+        <location filename="../src/map_editor.cpp" line="786"/>
+        <location filename="../src/map_editor.cpp" line="3253"/>
         <source>Rename current part...</source>
         <translation>Přejmenovat nynější část...</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="783"/>
-        <location filename="../src/map_editor.cpp" line="3225"/>
+        <location filename="../src/map_editor.cpp" line="787"/>
+        <location filename="../src/map_editor.cpp" line="3235"/>
         <source>Remove current part</source>
         <translation>Odstranit nynější část</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="784"/>
+        <location filename="../src/map_editor.cpp" line="788"/>
         <source>Merge all parts</source>
         <translation>Sloučit všechny části</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="786"/>
+        <location filename="../src/map_editor.cpp" line="790"/>
         <source>Import...</source>
         <translation>Zavést...</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="836"/>
+        <location filename="../src/map_editor.cpp" line="840"/>
         <location filename="../src/color_dock_widget.cpp" line="76"/>
         <location filename="../src/template_dock_widget.cpp" line="184"/>
         <source>&amp;Edit</source>
         <translation>Úp&amp;ravy</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="848"/>
+        <location filename="../src/map_editor.cpp" line="852"/>
         <source>&amp;View</source>
         <translation>&amp;Pohled</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="877"/>
+        <location filename="../src/map_editor.cpp" line="881"/>
         <source>&amp;Tools</source>
         <translation>&amp;Nástroje</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="931"/>
+        <location filename="../src/map_editor.cpp" line="935"/>
         <source>Sy&amp;mbols</source>
         <translation>S&amp;ymboly</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="913"/>
+        <location filename="../src/map_editor.cpp" line="917"/>
         <source>M&amp;ap</source>
         <translation>&amp;Mapa</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="941"/>
+        <location filename="../src/map_editor.cpp" line="945"/>
         <source>&amp;Templates</source>
         <translation>Po&amp;dklady</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="996"/>
+        <location filename="../src/map_editor.cpp" line="1000"/>
         <source>Drawing</source>
         <translation>Kreslení</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="751"/>
+        <location filename="../src/map_editor.cpp" line="755"/>
         <source>Paint on template</source>
         <translatorcomment>To be checked</translatorcomment>
         <translation>Kreslit na podklad</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="383"/>
+        <location filename="../src/map_editor.cpp" line="387"/>
         <source>Editing in progress</source>
         <translation>Mapa je nyní upravována</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="383"/>
+        <location filename="../src/map_editor.cpp" line="387"/>
         <source>The map is currently being edited. Please finish the edit operation before saving.</source>
         <translation>Mapa je nyní upravována. Dokončete, prosím, krok úprav, předtím než ji uložíte.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="388"/>
+        <location filename="../src/map_editor.cpp" line="392"/>
         <source>Map saved</source>
         <translation>Mapa uložena</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="668"/>
+        <location filename="../src/map_editor.cpp" line="672"/>
         <source>Show grid</source>
         <translation>Ukázat mřížku</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="669"/>
-        <location filename="../src/map_editor.cpp" line="972"/>
+        <location filename="../src/map_editor.cpp" line="673"/>
+        <location filename="../src/map_editor.cpp" line="976"/>
         <source>Configure grid...</source>
         <translation>Nastavit mřížku...</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="680"/>
+        <location filename="../src/map_editor.cpp" line="684"/>
         <source>Hatch areas</source>
         <translation>Šrafovovat plochy</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="681"/>
+        <location filename="../src/map_editor.cpp" line="685"/>
         <source>Baseline view</source>
         <translation>Zobrazit základní čáru</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="682"/>
+        <location filename="../src/map_editor.cpp" line="686"/>
         <location filename="../src/template_dock_widget.cpp" line="89"/>
         <source>Hide all templates</source>
         <translation>Skrýt všechny podklady</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="687"/>
+        <location filename="../src/map_editor.cpp" line="691"/>
         <source>Replace symbol set...</source>
         <translation>Nahradit sadu symbolů...</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="691"/>
+        <location filename="../src/map_editor.cpp" line="695"/>
         <source>Georeferencing...</source>
         <translation>Nastavení souřadnicového systému...</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="693"/>
+        <location filename="../src/map_editor.cpp" line="697"/>
         <source>Rotate map...</source>
         <translation>Otočit mapu...</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="693"/>
+        <location filename="../src/map_editor.cpp" line="697"/>
         <source>Rotate the whole map</source>
         <translation>Otočit celou mapu</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="700"/>
+        <location filename="../src/map_editor.cpp" line="704"/>
         <source>Reopen template...</source>
         <translation>Otevřít podklad znovu...</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="702"/>
+        <location filename="../src/map_editor.cpp" line="706"/>
         <source>Tag editor</source>
         <translation>Editor značek</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="702"/>
+        <location filename="../src/map_editor.cpp" line="706"/>
         <source>Show/Hide the tag editor window</source>
         <translation>Ukázat/Skrýt okno s editorem značek</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="709"/>
+        <location filename="../src/map_editor.cpp" line="713"/>
         <source>Draw rectangles</source>
         <translation>Kreslit obdélníky</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="710"/>
+        <location filename="../src/map_editor.cpp" line="714"/>
         <source>Draw free-handedly</source>
         <translation>Kreslit volnou rukou</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="711"/>
+        <location filename="../src/map_editor.cpp" line="715"/>
         <source>Fill bounded areas</source>
         <translation>Vyplnit ohraničené plochy</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="713"/>
+        <location filename="../src/map_editor.cpp" line="717"/>
         <source>Delete</source>
         <translation>Smazat</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="721"/>
+        <location filename="../src/map_editor.cpp" line="725"/>
         <source>Cut free form hole</source>
         <translation>Vystřihnout nepravidelně tvarovaný otvor</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="722"/>
+        <location filename="../src/map_editor.cpp" line="726"/>
         <source>Cut round hole</source>
         <translation>Vystřihnout kulatý otvor</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="726"/>
+        <location filename="../src/map_editor.cpp" line="730"/>
         <source>Cut rectangular hole</source>
         <translation>Vystřihnout obdélníkový otvor</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="737"/>
+        <location filename="../src/map_editor.cpp" line="741"/>
         <source>Rotate pattern</source>
         <translation>Otočit vzor</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="738"/>
+        <location filename="../src/map_editor.cpp" line="742"/>
         <source>Scale object(s)</source>
         <translation>Změnit velikost objektů</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="740"/>
+        <location filename="../src/map_editor.cpp" line="744"/>
         <source>Unify areas</source>
         <translation>Sloučit plochy</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="741"/>
+        <location filename="../src/map_editor.cpp" line="745"/>
         <source>Intersect areas</source>
         <translation>Protnout plochy</translation>
     </message>
@@ -3311,52 +3316,52 @@ Přepočítat zavedená data na měřítko mapy?</translation>
         <translation type="vanished">Odečíst plochy</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="743"/>
+        <location filename="../src/map_editor.cpp" line="747"/>
         <source>Area XOr</source>
         <translation>Odstranit dvojité vrstvy (XOr)</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="747"/>
+        <location filename="../src/map_editor.cpp" line="751"/>
         <source>Cutout</source>
         <translation>Vystřihnout vně</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="748"/>
+        <location filename="../src/map_editor.cpp" line="752"/>
         <source>Cut away</source>
         <translation>Vystřihnout uvnitř</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="749"/>
+        <location filename="../src/map_editor.cpp" line="753"/>
         <source>Distribute points along path</source>
         <translation>Rozložit body podél cesty</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="788"/>
+        <location filename="../src/map_editor.cpp" line="792"/>
         <source>Map coordinates</source>
         <translation>Souřadnice mapy</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="790"/>
+        <location filename="../src/map_editor.cpp" line="794"/>
         <source>Projected coordinates</source>
         <translation>Reálné souřadnice (m)</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="792"/>
+        <location filename="../src/map_editor.cpp" line="796"/>
         <source>Latitude/Longitude (Dec)</source>
         <translation>Délka/Šířka (desetinná)</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="794"/>
+        <location filename="../src/map_editor.cpp" line="798"/>
         <source>Latitude/Longitude (DMS)</source>
         <translation>Délka/Šířka (DMS)</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="862"/>
+        <location filename="../src/map_editor.cpp" line="866"/>
         <source>Display coordinates as...</source>
         <translation>Zobrazit souřadnice jako...</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="730"/>
+        <location filename="../src/map_editor.cpp" line="734"/>
         <source>Cut hole</source>
         <translation>Vystřihnout otvor</translation>
     </message>
@@ -3365,157 +3370,157 @@ Přepočítat zavedená data na měřítko mapy?</translation>
         <translation type="vanished">Falešný</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="965"/>
+        <location filename="../src/map_editor.cpp" line="969"/>
         <source>View</source>
         <translation>Pohled</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="983"/>
-        <location filename="../src/map_editor.cpp" line="988"/>
-        <location filename="../src/map_editor.cpp" line="3141"/>
+        <location filename="../src/map_editor.cpp" line="987"/>
+        <location filename="../src/map_editor.cpp" line="992"/>
+        <location filename="../src/map_editor.cpp" line="3151"/>
         <source>Map parts</source>
         <translation>Části mapy</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1014"/>
+        <location filename="../src/map_editor.cpp" line="1018"/>
         <source>Select template...</source>
         <translation>Vybrat podklad...</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1020"/>
+        <location filename="../src/map_editor.cpp" line="1024"/>
         <source>Editing</source>
         <translation>Úpravy</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1045"/>
+        <location filename="../src/map_editor.cpp" line="1049"/>
         <source>Advanced editing</source>
         <translation>Pokročilé úpravy</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1071"/>
+        <location filename="../src/map_editor.cpp" line="1075"/>
         <source>Select symbol</source>
         <translation>Vybrat symbol</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1074"/>
+        <location filename="../src/map_editor.cpp" line="1078"/>
         <source>Hide top bar</source>
         <translation>Skrýt horní pruh</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1077"/>
+        <location filename="../src/map_editor.cpp" line="1081"/>
         <source>Show top bar</source>
         <translation>Ukázat horní pruh</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1306"/>
-        <location filename="../src/map_editor.cpp" line="1326"/>
-        <location filename="../src/map_editor.cpp" line="1383"/>
-        <location filename="../src/map_editor.cpp" line="1403"/>
-        <location filename="../src/map_editor.cpp" line="1416"/>
-        <location filename="../src/map_editor.cpp" line="2685"/>
-        <location filename="../src/map_editor.cpp" line="2691"/>
-        <location filename="../src/map_editor.cpp" line="2697"/>
-        <location filename="../src/map_editor.cpp" line="2703"/>
-        <location filename="../src/map_editor.cpp" line="2712"/>
-        <location filename="../src/map_editor.cpp" line="3530"/>
-        <location filename="../src/map_editor.cpp" line="3548"/>
+        <location filename="../src/map_editor.cpp" line="1310"/>
+        <location filename="../src/map_editor.cpp" line="1330"/>
+        <location filename="../src/map_editor.cpp" line="1387"/>
+        <location filename="../src/map_editor.cpp" line="1407"/>
+        <location filename="../src/map_editor.cpp" line="1420"/>
+        <location filename="../src/map_editor.cpp" line="2702"/>
+        <location filename="../src/map_editor.cpp" line="2708"/>
+        <location filename="../src/map_editor.cpp" line="2714"/>
+        <location filename="../src/map_editor.cpp" line="2720"/>
+        <location filename="../src/map_editor.cpp" line="2729"/>
+        <location filename="../src/map_editor.cpp" line="3540"/>
+        <location filename="../src/map_editor.cpp" line="3558"/>
         <source>Error</source>
         <translation>Chyba</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1306"/>
+        <location filename="../src/map_editor.cpp" line="1310"/>
         <source>Print / Export is not available in this program version!</source>
         <translation>Tisk/Vyvedení není v této verzi programu dostupné!</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1326"/>
+        <location filename="../src/map_editor.cpp" line="1330"/>
         <source>No undo steps available.</source>
         <translation>Kroky zpět nejsou možné.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1339"/>
+        <location filename="../src/map_editor.cpp" line="1343"/>
         <source>Cut %1 object(s)</source>
         <translation>Vyjmout %1 objekt(y)</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1383"/>
-        <location filename="../src/map_editor.cpp" line="1416"/>
+        <location filename="../src/map_editor.cpp" line="1387"/>
+        <location filename="../src/map_editor.cpp" line="1420"/>
         <source>An internal error occurred, sorry!</source>
         <translation>Vyskytla se vnitřní chyba, promiňte!</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1394"/>
+        <location filename="../src/map_editor.cpp" line="1398"/>
         <source>Copied %1 object(s)</source>
         <translation>Zkopírován %1 objekt(y)</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1403"/>
+        <location filename="../src/map_editor.cpp" line="1407"/>
         <source>There are no objects in clipboard which could be pasted!</source>
         <translation>Ve schránce se nenachází žádný dostupný objekt, jejž by bylo možné vložit!</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1434"/>
+        <location filename="../src/map_editor.cpp" line="1438"/>
         <source>Pasted %1 object(s)</source>
         <translation>Vložen %1 objekt(y)</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1493"/>
+        <location filename="../src/map_editor.cpp" line="1497"/>
         <source>Set custom zoom factor</source>
         <translation>Nastavit násobek zvětšení</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1493"/>
+        <location filename="../src/map_editor.cpp" line="1497"/>
         <source>Zoom factor:</source>
         <translation>Násobek zvětšení:</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1571"/>
+        <location filename="../src/map_editor.cpp" line="1575"/>
         <source>Symbols</source>
         <translation>Symboly</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1587"/>
+        <location filename="../src/map_editor.cpp" line="1591"/>
         <source>Colors</source>
         <translation>Barvy</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1611"/>
+        <location filename="../src/map_editor.cpp" line="1615"/>
         <source>Scale all symbols</source>
         <translation>Změnit velikost všech symbolů</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1611"/>
+        <location filename="../src/map_editor.cpp" line="1615"/>
         <source>Scale to percentage:</source>
         <translation>Změnit velikost na procentní hodnotu:</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1635"/>
+        <location filename="../src/map_editor.cpp" line="1639"/>
         <source>Map notes</source>
         <translation>Poznámky k mapě</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1640"/>
+        <location filename="../src/map_editor.cpp" line="1644"/>
         <source>Cancel</source>
         <translatorcomment>FIXME: Ersetzen durch ButtonBox.</translatorcomment>
         <translation>Zrušit</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1641"/>
+        <location filename="../src/map_editor.cpp" line="1645"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1673"/>
+        <location filename="../src/map_editor.cpp" line="1677"/>
         <source>Templates</source>
         <translation>Podklady</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1724"/>
+        <location filename="../src/map_editor.cpp" line="1728"/>
         <source>Tag Editor</source>
         <translation>Editor značek</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1783"/>
+        <location filename="../src/map_editor.cpp" line="1784"/>
         <source>No
 symbol
 selected</source>
@@ -3525,7 +3530,7 @@ selected</source>
 symbol</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1784"/>
+        <location filename="../src/map_editor.cpp" line="1785"/>
         <source>Multiple
 symbols
 selected</source>
@@ -3535,305 +3540,305 @@ více
 symbolů</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1819"/>
+        <location filename="../src/map_editor.cpp" line="1838"/>
         <source>Place point objects on the map.</source>
         <translation>Umístit bodové objekty na mapu.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1819"/>
+        <location filename="../src/map_editor.cpp" line="1838"/>
         <source>Select a point symbol to be able to use this tool.</source>
         <translation>Vyberte bodový symbol, abyste mohli tento nástroj používat.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1821"/>
+        <location filename="../src/map_editor.cpp" line="1840"/>
         <source>Draw polygonal and curved lines.</source>
         <translatorcomment>More information</translatorcomment>
         <translation>Kreslit hranaté nebo zahnuté linie.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1821"/>
-        <location filename="../src/map_editor.cpp" line="1823"/>
-        <location filename="../src/map_editor.cpp" line="1825"/>
-        <location filename="../src/map_editor.cpp" line="1827"/>
-        <location filename="../src/map_editor.cpp" line="1829"/>
+        <location filename="../src/map_editor.cpp" line="1840"/>
+        <location filename="../src/map_editor.cpp" line="1842"/>
+        <location filename="../src/map_editor.cpp" line="1844"/>
+        <location filename="../src/map_editor.cpp" line="1846"/>
+        <location filename="../src/map_editor.cpp" line="1848"/>
         <source>Select a line, area or combined symbol to be able to use this tool.</source>
         <translatorcomment>Distinction between line and combined symbol probably not relevant here.</translatorcomment>
         <translation>Vyberte symbol linie nebo plochy, abyste mohli tento nástroj používat.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1823"/>
+        <location filename="../src/map_editor.cpp" line="1842"/>
         <source>Draw circles and ellipses.</source>
         <translation>Kreslit kruhy a elipsy.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1827"/>
+        <location filename="../src/map_editor.cpp" line="1846"/>
         <source>Draw paths free-handedly.</source>
         <translation>Kreslit cesty volnou rukou.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1829"/>
+        <location filename="../src/map_editor.cpp" line="1848"/>
         <source>Fill bounded areas.</source>
         <translation>Vyplnit ohraničené plochy.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1926"/>
+        <location filename="../src/map_editor.cpp" line="1943"/>
         <source>Deletes the selected object(s).</source>
         <translation>Smazat vybrané objekty.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1937"/>
+        <location filename="../src/map_editor.cpp" line="1954"/>
         <source>Set the direction of area fill patterns or point objects.</source>
         <translation>Nastavit směr vzorů výplně plochy nebo bodových objektů.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1937"/>
+        <location filename="../src/map_editor.cpp" line="1954"/>
         <source>Select an area object with rotatable fill pattern or a rotatable point object to activate this tool.</source>
         <translation>Vyberte objekt plochy s otočným vzorem výplně nebo otočný bodový objekt, abyste tento nástroj zapnuli a mohli jej používat.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1967"/>
+        <location filename="../src/map_editor.cpp" line="1984"/>
         <source>Resulting symbol: %1 %2.</source>
         <translation>Výsledný symbol: %1 %2.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1968"/>
+        <location filename="../src/map_editor.cpp" line="1985"/>
         <source>Select at least two area or path objects activate this tool.</source>
         <translation>Vyberte alespoň dva objekty plochy nebo liniové objekty, abyste tento nástroj zapnuli.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1970"/>
+        <location filename="../src/map_editor.cpp" line="1987"/>
         <source>Unify overlapping objects.</source>
         <translation>Sloučit překrývající se objekty.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1972"/>
+        <location filename="../src/map_editor.cpp" line="1989"/>
         <source>Remove all parts which are not overlaps with the first selected object.</source>
         <translation>Odstranit všechny části, které nepřekrývají první vybraný objekt.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1974"/>
+        <location filename="../src/map_editor.cpp" line="1991"/>
         <source>Remove overlapped parts of the first selected object.</source>
         <translation>Odstranit všechny překryté části prvního vybraného objektu.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1976"/>
+        <location filename="../src/map_editor.cpp" line="1993"/>
         <source>Remove all parts which overlap the first selected object.</source>
         <translation>Odstranit všechny části, které překrývají první vybraný objekt.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1980"/>
+        <location filename="../src/map_editor.cpp" line="1997"/>
         <source>Merge area holes together, or merge holes with the object boundary to cut out this part.</source>
         <translation>Sloučit díry v plochách, nebo díry spojit s okrajem objektu pro vystřižení této části.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1980"/>
+        <location filename="../src/map_editor.cpp" line="1997"/>
         <source>Select one area object with holes to activate this tool.</source>
         <translation>Vyberte jeden objekty plochy s dírami, abyste tento nástroj zapnuli.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1985"/>
+        <location filename="../src/map_editor.cpp" line="2002"/>
         <source>Create a cutout of some objects or the whole map.</source>
         <translation>vytvořit vystřižení některých objektů nebo celé mapy.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1985"/>
-        <location filename="../src/map_editor.cpp" line="1987"/>
+        <location filename="../src/map_editor.cpp" line="2002"/>
+        <location filename="../src/map_editor.cpp" line="2004"/>
         <source>Select a closed path object as cutout shape to activate this tool.</source>
         <translation>Vyberte zavřený objekt cesty jako tvar vystřižení, abyste tento nástroj zapnuli.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1987"/>
+        <location filename="../src/map_editor.cpp" line="2004"/>
         <source>Cut away some objects or everything in a limited area.</source>
         <translation>Vystřihněte některé nebo všechny objekty nacházející se uvnitř vybrané (ohraničené) plochy.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="2023"/>
+        <location filename="../src/map_editor.cpp" line="2040"/>
         <source>Places evenly spaced point objects along an existing path object</source>
         <translation>Umístí rovnoměrně rozestavené bodové objekty podél stávajícího objektu cesty</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="2023"/>
+        <location filename="../src/map_editor.cpp" line="2040"/>
         <source>Select at least one path object and a single point symbol to activate this tool.</source>
         <translation>Vyberte alespoň jeden objekt cesty a jeden bodový symbol, abyste tento nástroj zapnuli.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="2712"/>
+        <location filename="../src/map_editor.cpp" line="2729"/>
         <source>Merging holes failed.</source>
         <translation>Sločení děr se nezdařilo.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="3000"/>
+        <location filename="../src/map_editor.cpp" line="3010"/>
         <source>Clear temporary markers</source>
         <translation>Smazat dočasné značky</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="3000"/>
+        <location filename="../src/map_editor.cpp" line="3010"/>
         <source>Are you sure you want to delete all temporary GPS markers? This cannot be undone.</source>
         <translation>Jste si jistý, že chcete smazat všechny dočasné značky GPS? Tento krok nelze vrátit zpět.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="3147"/>
+        <location filename="../src/map_editor.cpp" line="3157"/>
         <source>Merge this part with</source>
         <translation>Sloučit tuto část s</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="3153"/>
+        <location filename="../src/map_editor.cpp" line="3163"/>
         <source>Move selected objects to</source>
         <translation>Přesunout vybrané objekty do</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="3207"/>
-        <location filename="../src/map_editor.cpp" line="3244"/>
+        <location filename="../src/map_editor.cpp" line="3217"/>
+        <location filename="../src/map_editor.cpp" line="3254"/>
         <source>Enter the name of the map part:</source>
         <translation>Zadat název části mapy:</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="3226"/>
+        <location filename="../src/map_editor.cpp" line="3236"/>
         <source>Do you want to remove map part &quot;%1&quot; and all its objects? This cannot be undone.</source>
         <translation>Chcete odstranit část mapy &quot;%1&quot; a všechny její objekty? Tento krok nelze vrátit zpět.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="3281"/>
-        <location filename="../src/map_editor.cpp" line="3311"/>
+        <location filename="../src/map_editor.cpp" line="3291"/>
+        <location filename="../src/map_editor.cpp" line="3321"/>
         <source>Merge map parts</source>
         <translation>Sloučit mapové části</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="3282"/>
+        <location filename="../src/map_editor.cpp" line="3292"/>
         <source>Do you want to move all objects from map part &quot;%1&quot; to &quot;%2&quot;, and to remove &quot;%1&quot;?</source>
         <translation>Chcete přesunout všechny objekty z části mapy &quot;%1&quot; do &quot;%2&quot; a &quot;%1&quot; odstranit?</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="3312"/>
+        <location filename="../src/map_editor.cpp" line="3322"/>
         <source>Do you want to move all objects to map part &quot;%1&quot;, and to remove all other map parts?</source>
         <translation>Chcete přesunout všechny objekty do části mapy &quot;%1&quot; a odstranit všechny ostatní části mapy?</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="3548"/>
+        <location filename="../src/map_editor.cpp" line="3558"/>
         <source>Cannot import the selected map file because it could not be loaded.</source>
         <translation>Vybraný soubor s mapou se nepodařilo zavést, protože se jej nepodařilo nahrát.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1825"/>
+        <location filename="../src/map_editor.cpp" line="1844"/>
         <source>Draw rectangles.</source>
         <translation>Kreslit obdélníky.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="651"/>
+        <location filename="../src/map_editor.cpp" line="655"/>
         <source>&amp;Image</source>
         <translation>&amp;Obrázek</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="653"/>
+        <location filename="../src/map_editor.cpp" line="657"/>
         <source>&amp;PDF</source>
         <translation>&amp;PDF</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="666"/>
+        <location filename="../src/map_editor.cpp" line="670"/>
         <source>Clear undo / redo history</source>
         <translation>Vyprázdnit historii kroků zpět/znovu</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="666"/>
+        <location filename="../src/map_editor.cpp" line="670"/>
         <source>Clear the undo / redo history to reduce map file size.</source>
         <translation>Smazat historii kroků zpět/znovu kvůli zmenšení velikosti souboru.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="673"/>
+        <location filename="../src/map_editor.cpp" line="677"/>
         <source>Pan</source>
         <translation>Posunovat</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="683"/>
+        <location filename="../src/map_editor.cpp" line="687"/>
         <source>Overprinting simulation</source>
         <translation>Napodobení přetisku</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="705"/>
+        <location filename="../src/map_editor.cpp" line="709"/>
         <source>Edit lines</source>
         <translation>Upravit linie</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="745"/>
+        <location filename="../src/map_editor.cpp" line="749"/>
         <source>Convert to curves</source>
         <translation>Převést na křivky</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="746"/>
+        <location filename="../src/map_editor.cpp" line="750"/>
         <source>Simplify path</source>
         <translation>Zjednodušit cestu</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="828"/>
+        <location filename="../src/map_editor.cpp" line="832"/>
         <source>&amp;Export as...</source>
         <translation>&amp;Vyvést jako...</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1831"/>
+        <location filename="../src/map_editor.cpp" line="1850"/>
         <source>Write text on the map.</source>
         <translation>Psát text na mapu.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1831"/>
+        <location filename="../src/map_editor.cpp" line="1850"/>
         <source>Select a text symbol to be able to use this tool.</source>
         <translation>Vyberte symbol pro text, abyste mohli tento nástroj používat.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1928"/>
+        <location filename="../src/map_editor.cpp" line="1945"/>
         <source>Duplicate the selected object(s).</source>
         <translation>Zdvojit vybrané objekty.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1926"/>
-        <location filename="../src/map_editor.cpp" line="1928"/>
-        <location filename="../src/map_editor.cpp" line="1930"/>
-        <location filename="../src/map_editor.cpp" line="1932"/>
+        <location filename="../src/map_editor.cpp" line="1943"/>
+        <location filename="../src/map_editor.cpp" line="1945"/>
+        <location filename="../src/map_editor.cpp" line="1947"/>
+        <location filename="../src/map_editor.cpp" line="1949"/>
         <source>Select at least one object to activate this tool.</source>
         <translation>Vyberte alespoň jeden objekt, abyste tento nástroj zapnuli.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1941"/>
+        <location filename="../src/map_editor.cpp" line="1958"/>
         <source>Switch the direction of symbols on line objects.</source>
         <translation>Změnit směr symbolů pro objekt linie.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1941"/>
-        <location filename="../src/map_editor.cpp" line="1943"/>
+        <location filename="../src/map_editor.cpp" line="1958"/>
+        <location filename="../src/map_editor.cpp" line="1960"/>
         <source>Select at least one line object to activate this tool.</source>
         <translation>Vyberte alespoň jeden objekt linie, abyste tento nástroj zapnuli.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1943"/>
+        <location filename="../src/map_editor.cpp" line="1960"/>
         <source>Connect endpoints of paths which are close together.</source>
         <translation>Spojit dohromady konce cest, jež jsou blízko.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1947"/>
+        <location filename="../src/map_editor.cpp" line="1964"/>
         <source>Cut the selected object(s) into smaller parts.</source>
         <translation>Rozstříhat vybrané objekty na menší části.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1947"/>
+        <location filename="../src/map_editor.cpp" line="1964"/>
         <source>Select at least one line or area object to activate this tool.</source>
         <translation>Vyberte alespoň jeden liniový objekt nebo plošný objekt, abyste tento nástroj zapnuli.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1956"/>
+        <location filename="../src/map_editor.cpp" line="1973"/>
         <source>Cut a hole into the selected area object.</source>
         <translation>Vystřihnout otvor do vybraného objektu plochy.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1956"/>
+        <location filename="../src/map_editor.cpp" line="1973"/>
         <source>Select a single area object to activate this tool.</source>
         <translation>Vyberte jeden objekt plochy, abyste tento nástroj zapnuli.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1930"/>
+        <location filename="../src/map_editor.cpp" line="1947"/>
         <source>Rotate the selected object(s).</source>
         <translation>Otočit vybrané objekty.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1932"/>
+        <location filename="../src/map_editor.cpp" line="1949"/>
         <source>Scale the selected object(s).</source>
         <translation>Změnit velikost vybranných objektů.</translation>
     </message>
@@ -3862,105 +3867,105 @@ symbolů</translation>
         <translation type="vanished">Vypočítat nepřekrývající se části objektů ploch.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1949"/>
+        <location filename="../src/map_editor.cpp" line="1966"/>
         <source>Turn paths made of straight segments into smooth bezier splines.</source>
         <translation>Proměnit cesty, jež sestávají z rovných kousků, na hladké Beziérovy křivky.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1949"/>
-        <location filename="../src/map_editor.cpp" line="1951"/>
+        <location filename="../src/map_editor.cpp" line="1966"/>
+        <location filename="../src/map_editor.cpp" line="1968"/>
         <source>Select a path object to activate this tool.</source>
         <translation>Vyberte jeden objekt cesty, abyste tento nástroj zapnuli.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1951"/>
+        <location filename="../src/map_editor.cpp" line="1968"/>
         <source>Reduce the number of points in path objects while trying to retain their shape.</source>
         <translation>Zmenšit počet bodů u objektů cesty, zachovávaje pokud možno jejich tvar.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="2016"/>
+        <location filename="../src/map_editor.cpp" line="2033"/>
         <source>Switches the symbol of the selected object(s) to the selected symbol.</source>
         <translation>Vyměnit symbol nynějšího objektu za vybraný symbol.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="2016"/>
-        <location filename="../src/map_editor.cpp" line="2018"/>
+        <location filename="../src/map_editor.cpp" line="2033"/>
+        <location filename="../src/map_editor.cpp" line="2035"/>
         <source>Select at least one object and a fitting, different symbol to activate this tool.</source>
         <translation>Vyberte alespoň jeden objekt a příhodný náhradní symbol, abyste tento nástroj zapnuli.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="2018"/>
+        <location filename="../src/map_editor.cpp" line="2035"/>
         <source>Fill the selected line(s) or create a border for the selected area(s).</source>
         <translation>Vyplnit vybraný liniový objekt nebo vytvořit okrajovou čáru pro vybrané plochy.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="2144"/>
+        <location filename="../src/map_editor.cpp" line="2161"/>
         <source>%1 object(s) duplicated</source>
         <translation>Zdvojen %1 objekt(y)</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="2356"/>
+        <location filename="../src/map_editor.cpp" line="2373"/>
         <source>Object selection</source>
         <translation>Výběr objektu</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="2356"/>
+        <location filename="../src/map_editor.cpp" line="2373"/>
         <source>No objects were selected because there are no objects with the selected symbol(s).</source>
         <translation>Nebyly vybrány žádné objekty, protože nejsou žádné objekty s vybraným symbolem.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="2669"/>
+        <location filename="../src/map_editor.cpp" line="2686"/>
         <source>Measure</source>
         <translation>Měření</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="2685"/>
+        <location filename="../src/map_editor.cpp" line="2702"/>
         <source>Unification failed.</source>
         <translation>Sloučení se nezdařilo.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="2691"/>
+        <location filename="../src/map_editor.cpp" line="2708"/>
         <source>Intersection failed.</source>
         <translation>Protnutí se nezdařilo.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="2697"/>
+        <location filename="../src/map_editor.cpp" line="2714"/>
         <source>Difference failed.</source>
         <translation>Odečtení se nezdařilo.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="2703"/>
+        <location filename="../src/map_editor.cpp" line="2720"/>
         <source>XOr failed.</source>
         <translation>Operace XOr se nezdařila.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="3366"/>
+        <location filename="../src/map_editor.cpp" line="3376"/>
         <source>Paint free-handedly on a template</source>
         <translation>Kreslit volnou rukou na podklad</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="3368"/>
+        <location filename="../src/map_editor.cpp" line="3378"/>
         <source>Paint free-handedly on a template. Create or load a template which can be drawn onto to activate this button</source>
         <translatorcomment>First part duplicated. Check punctuation.</translatorcomment>
         <translation>Kreslit volnou rukou na podklad. Vytvořte nebo nahrajte podklad, na který je možné kreslit, pro zapnutí tohoto nástroje</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="3497"/>
+        <location filename="../src/map_editor.cpp" line="3507"/>
         <source>Import %1, GPX, OSM or DXF file</source>
         <translation>Zavést soubor %1, GPX, OSM nebo DXF</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="3501"/>
+        <location filename="../src/map_editor.cpp" line="3511"/>
         <source>Importable files</source>
         <translation>Zaveditelné soubory</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="3503"/>
+        <location filename="../src/map_editor.cpp" line="3513"/>
         <source>All files</source>
         <translation>Všechny soubory</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="3530"/>
+        <location filename="../src/map_editor.cpp" line="3540"/>
         <source>Cannot import the selected file because its file format is not supported.</source>
         <translation>Vybraný soubor se nepodařilo zavést, protože jeho formát není podporován.</translation>
     </message>
@@ -3971,7 +3976,7 @@ symbolů</translation>
         <location filename="../src/template_adjust.cpp" line="580"/>
         <location filename="../src/tool_draw_path.cpp" line="1090"/>
         <location filename="../src/tool_draw_circle.cpp" line="300"/>
-        <location filename="../src/tool_draw_rectangle.cpp" line="722"/>
+        <location filename="../src/tool_draw_rectangle.cpp" line="727"/>
         <location filename="../src/tool_draw_freehand.cpp" line="275"/>
         <location filename="../src/tool_cutout.cpp" line="142"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Abort. </source>
@@ -3981,8 +3986,8 @@ symbolů</translation>
         <location filename="../src/tool_edit_point.cpp" line="654"/>
         <location filename="../src/tool_draw_path.cpp" line="1038"/>
         <location filename="../src/tool_draw_path.cpp" line="1039"/>
-        <location filename="../src/tool_draw_rectangle.cpp" line="675"/>
-        <location filename="../src/tool_draw_rectangle.cpp" line="676"/>
+        <location filename="../src/tool_draw_rectangle.cpp" line="680"/>
+        <location filename="../src/tool_draw_rectangle.cpp" line="681"/>
         <source>More: %1, %2</source>
         <translation>Více: %1, %2</translation>
     </message>
@@ -3993,7 +3998,7 @@ symbolů</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1037"/>
-        <location filename="../src/tool_draw_rectangle.cpp" line="674"/>
+        <location filename="../src/tool_draw_rectangle.cpp" line="679"/>
         <source>More: %1, %2, %3</source>
         <translation>Více: %1, %2, %3</translation>
     </message>
@@ -4001,27 +4006,27 @@ symbolů</translation>
 <context>
     <name>MapPrinter</name>
     <message>
-        <location filename="../src/core/map_printer.cpp" line="874"/>
+        <location filename="../src/core/map_printer.cpp" line="1029"/>
         <source>Processing separations of page %1...</source>
         <translation>Probíhá zpracování dělení strany %1...</translation>
     </message>
     <message>
-        <location filename="../src/core/map_printer.cpp" line="875"/>
+        <location filename="../src/core/map_printer.cpp" line="1030"/>
         <source>Processing page %1...</source>
         <translation>Probíhá zpracování strany %1...</translation>
     </message>
     <message>
-        <location filename="../src/core/map_printer.cpp" line="980"/>
+        <location filename="../src/core/map_printer.cpp" line="1135"/>
         <source>Canceled</source>
         <translation>Zrušeno</translation>
     </message>
     <message>
-        <location filename="../src/core/map_printer.cpp" line="985"/>
+        <location filename="../src/core/map_printer.cpp" line="1140"/>
         <source>Error</source>
         <translation>Chyba</translation>
     </message>
     <message>
-        <location filename="../src/core/map_printer.cpp" line="989"/>
+        <location filename="../src/core/map_printer.cpp" line="1144"/>
         <source>Finished</source>
         <translation>Dokončeno</translation>
     </message>
@@ -4925,278 +4930,304 @@ mapy. Změna zvětšení je možná pomocí kolečka myši.</translation>
         <translation type="vanished">Vyvést jako PDF nebo PS</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="156"/>
+        <location filename="../src/gui/print_widget.cpp" line="184"/>
         <source>Show templates</source>
         <translation>Ukázat podklady</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="159"/>
+        <location filename="../src/gui/print_widget.cpp" line="195"/>
         <source>Show grid</source>
         <translation>Ukázat mřížku</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="91"/>
+        <location filename="../src/gui/print_widget.cpp" line="108"/>
         <source>Page orientation:</source>
         <translation>Natočení strany:</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="62"/>
+        <location filename="../src/gui/print_widget.cpp" line="79"/>
         <source>Printer:</source>
         <translation>Tiskárna:</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="84"/>
+        <location filename="../src/gui/print_widget.cpp" line="101"/>
         <source>Portrait</source>
         <translation>Na výšku</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="86"/>
+        <location filename="../src/gui/print_widget.cpp" line="103"/>
         <source>Landscape</source>
         <translation>Na šířku</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="65"/>
+        <location filename="../src/gui/print_widget.cpp" line="82"/>
         <source>Page format:</source>
         <translation>Formát strany:</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="94"/>
+        <location filename="../src/gui/print_widget.cpp" line="111"/>
         <source>Copies:</source>
         <translation>Počet kopií:</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="107"/>
+        <location filename="../src/gui/print_widget.cpp" line="124"/>
         <source>Left:</source>
         <translation>Vlevo:</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="110"/>
+        <location filename="../src/gui/print_widget.cpp" line="127"/>
         <source>Top:</source>
         <translation>Nahoře:</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="113"/>
+        <location filename="../src/gui/print_widget.cpp" line="130"/>
         <source>Width:</source>
         <translation>Šířka:</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="116"/>
+        <location filename="../src/gui/print_widget.cpp" line="133"/>
         <source>Height:</source>
         <translation>Výška:</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="168"/>
+        <location filename="../src/gui/print_widget.cpp" line="147"/>
+        <source>Vector
+graphics</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gui/print_widget.cpp" line="148"/>
+        <source>Raster
+graphics</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gui/print_widget.cpp" line="149"/>
+        <source>Color
+separations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gui/print_widget.cpp" line="162"/>
+        <source>Mode:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gui/print_widget.cpp" line="204"/>
         <source>Preview...</source>
         <translation>Náhled...</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="99"/>
+        <location filename="../src/gui/print_widget.cpp" line="116"/>
         <source>Single page</source>
         <translation>Jedna strana</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="100"/>
+        <location filename="../src/gui/print_widget.cpp" line="117"/>
         <source>Custom area</source>
         <translation>Vlastní oblast</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="101"/>
+        <location filename="../src/gui/print_widget.cpp" line="118"/>
         <source>Map area:</source>
         <translation>Oblast mapy:</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="103"/>
+        <location filename="../src/gui/print_widget.cpp" line="120"/>
         <source>Center print area</source>
         <translation>Vystředit oblast tisku</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="71"/>
-        <location filename="../src/gui/print_widget.cpp" line="75"/>
-        <location filename="../src/gui/print_widget.cpp" line="106"/>
-        <location filename="../src/gui/print_widget.cpp" line="109"/>
-        <location filename="../src/gui/print_widget.cpp" line="112"/>
-        <location filename="../src/gui/print_widget.cpp" line="115"/>
-        <location filename="../src/gui/print_widget.cpp" line="118"/>
+        <location filename="../src/gui/print_widget.cpp" line="88"/>
+        <location filename="../src/gui/print_widget.cpp" line="92"/>
+        <location filename="../src/gui/print_widget.cpp" line="123"/>
+        <location filename="../src/gui/print_widget.cpp" line="126"/>
+        <location filename="../src/gui/print_widget.cpp" line="129"/>
+        <location filename="../src/gui/print_widget.cpp" line="132"/>
+        <location filename="../src/gui/print_widget.cpp" line="135"/>
         <source>mm</source>
         <translation>mm</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="119"/>
+        <location filename="../src/gui/print_widget.cpp" line="136"/>
         <source>Page overlap:</source>
         <translation>Překrytí mezi stranami:</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="123"/>
+        <location filename="../src/gui/print_widget.cpp" line="140"/>
         <source>Options</source>
         <translation>Volby</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="129"/>
         <source>Normal output</source>
-        <translation>Obvyklý výstup</translation>
+        <translation type="vanished">Obvyklý výstup</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="131"/>
         <source>Color separations</source>
-        <translation>Oddělení barev</translation>
+        <translation type="vanished">Oddělení barev</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="141"/>
+        <location filename="../src/gui/print_widget.cpp" line="168"/>
         <source>Resolution:</source>
         <translation>Rozlišení:</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="143"/>
+        <location filename="../src/gui/print_widget.cpp" line="170"/>
         <source>Print in different scale:</source>
         <translation>Tisknout v jiném měřítku:</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="162"/>
+        <location filename="../src/gui/print_widget.cpp" line="191"/>
+        <source>Template appearance may differ.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gui/print_widget.cpp" line="198"/>
         <source>Simulate overprinting</source>
         <translation>Napodobení přetisku</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="170"/>
-        <location filename="../src/gui/print_widget.cpp" line="269"/>
+        <location filename="../src/gui/print_widget.cpp" line="206"/>
+        <location filename="../src/gui/print_widget.cpp" line="304"/>
         <source>Print</source>
         <translation>Tisk</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="174"/>
+        <location filename="../src/gui/print_widget.cpp" line="210"/>
         <source>Export...</source>
         <translation>Vyvést...</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="274"/>
+        <location filename="../src/gui/print_widget.cpp" line="309"/>
         <source>PDF export</source>
         <translation>Vyvést jako PDF</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="285"/>
+        <location filename="../src/gui/print_widget.cpp" line="320"/>
         <source>Image export</source>
         <translation>Vyvést jako obrázek</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="387"/>
+        <location filename="../src/gui/print_widget.cpp" line="422"/>
         <source>Save to PDF</source>
         <translation>Uložit jako PDF</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="728"/>
-        <location filename="../src/gui/print_widget.cpp" line="768"/>
+        <location filename="../src/gui/print_widget.cpp" line="784"/>
+        <location filename="../src/gui/print_widget.cpp" line="824"/>
         <source>dpi</source>
         <translation>dpi</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="867"/>
+        <location filename="../src/gui/print_widget.cpp" line="935"/>
         <source>Not supported on Android.</source>
         <translation>Nepodporováno pod Androidem.</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="873"/>
+        <location filename="../src/gui/print_widget.cpp" line="941"/>
         <source>Print Preview Progress</source>
         <translation>Postup náhledu</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="903"/>
+        <location filename="../src/gui/print_widget.cpp" line="971"/>
         <source>Warning</source>
         <translation>Varování</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="903"/>
+        <location filename="../src/gui/print_widget.cpp" line="971"/>
         <source>A non-standard view mode is activated. Are you sure to print / export the map like this?</source>
         <translation>Je zapnut zvláštní režim pohledu. Jste si jistý, že mapu chcete tisknout/vyvést takto?</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="914"/>
+        <location filename="../src/gui/print_widget.cpp" line="982"/>
         <source>PNG</source>
         <translation>PNG</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="915"/>
+        <location filename="../src/gui/print_widget.cpp" line="983"/>
         <source>BMP</source>
         <translation>BMP</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="916"/>
+        <location filename="../src/gui/print_widget.cpp" line="984"/>
         <source>TIFF</source>
         <translation>TIFF</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="917"/>
+        <location filename="../src/gui/print_widget.cpp" line="985"/>
         <source>JPEG</source>
         <translation>JPEG</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="921"/>
+        <location filename="../src/gui/print_widget.cpp" line="989"/>
         <source>PDF</source>
         <translation>PDF</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="924"/>
+        <location filename="../src/gui/print_widget.cpp" line="992"/>
         <source>Export map ...</source>
         <translatorcomment>Check original</translatorcomment>
         <translation>Vyvést mapu...</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="923"/>
+        <location filename="../src/gui/print_widget.cpp" line="991"/>
         <source>All files (*.*)</source>
         <translation>Všechny soubory (*.*)</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="867"/>
-        <location filename="../src/gui/print_widget.cpp" line="954"/>
-        <location filename="../src/gui/print_widget.cpp" line="1065"/>
+        <location filename="../src/gui/print_widget.cpp" line="935"/>
+        <location filename="../src/gui/print_widget.cpp" line="1022"/>
+        <location filename="../src/gui/print_widget.cpp" line="1133"/>
         <source>Error</source>
         <translation>Chyba</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="954"/>
+        <location filename="../src/gui/print_widget.cpp" line="1022"/>
         <source>Failed to save the image. Does the path exist? Do you have sufficient rights?</source>
         <translatorcomment>Check original.</translatorcomment>
         <translation>Nepodařilo se uložit obrázek. Cesta neexistuje, nebo nejsou dostatečná oprávnění?</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="958"/>
-        <location filename="../src/gui/print_widget.cpp" line="998"/>
+        <location filename="../src/gui/print_widget.cpp" line="1026"/>
+        <location filename="../src/gui/print_widget.cpp" line="1066"/>
         <source>Exported successfully to %1</source>
         <translatorcomment>Check original</translatorcomment>
         <translation>Vyvedení do %1 se zdařilo</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="930"/>
+        <location filename="../src/gui/print_widget.cpp" line="998"/>
         <source>Printing Progress</source>
         <translation>Postup tisku</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="982"/>
+        <location filename="../src/gui/print_widget.cpp" line="1050"/>
         <source>Canceled.</source>
         <translation>Zrušeno.</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="987"/>
+        <location filename="../src/gui/print_widget.cpp" line="1055"/>
         <source>Printing</source>
         <translation>Tisk</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="988"/>
+        <location filename="../src/gui/print_widget.cpp" line="1056"/>
         <source>The print job could not be stopped.</source>
         <translation>Tiskovou úlohu se nepodařilo zastavit.</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="994"/>
+        <location filename="../src/gui/print_widget.cpp" line="1062"/>
         <source>Successfully created print job</source>
         <translation>Tisková úloha úspěšně vytvořena</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1049"/>
-        <location filename="../src/gui/print_widget.cpp" line="1057"/>
+        <location filename="../src/gui/print_widget.cpp" line="1117"/>
+        <location filename="../src/gui/print_widget.cpp" line="1125"/>
         <source>Unknown</source>
         <comment>Paper size</comment>
         <translation>Neznámý</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1065"/>
+        <location filename="../src/gui/print_widget.cpp" line="1133"/>
         <source>The map area is empty. Output canceled.</source>
         <translation>Oblast mapy je prázdná. Výstup zrušen.</translation>
     </message>
@@ -5204,7 +5235,7 @@ mapy. Změna zvětšení je možná pomocí kolečka myši.</translation>
 <context>
     <name>ProjectedCRSSelector</name>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="860"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="927"/>
         <source>&amp;Coordinate reference system:</source>
         <translation>Soustava &amp;souřadnic:</translation>
     </message>
@@ -5623,52 +5654,52 @@ mapy. Změna zvětšení je možná pomocí kolečka myši.</translation>
 <context>
     <name>SelectCRSDialog</name>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="893"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="960"/>
         <source>Select coordinate reference system</source>
         <translation>Vybrat soustavu souřadnic</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="899"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="966"/>
         <source>Same as map&apos;s</source>
         <translation>Stejná jako soustava mapy</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="903"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="970"/>
         <source>Local</source>
         <translation>Místní</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="905"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="972"/>
         <source>Geographic coordinates (WGS84)</source>
         <translation>Zeměpisné souřadnice (WGS 84)</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="907"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="974"/>
         <source>From list</source>
         <translation>Ze seznamu</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="912"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="979"/>
         <source>From specification</source>
         <translation>Z popisu</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="922"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="989"/>
         <source>(local)</source>
         <translation>(místní)</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="935"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="1002"/>
         <source>CRS Specification:</source>
         <translation>Popis soustavy souřadnic:</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="936"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="1003"/>
         <source>Status:</source>
         <translation>Stav:</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="1017"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="1084"/>
         <source>valid</source>
         <translation>platný</translation>
     </message>
@@ -6072,22 +6103,22 @@ před chvílí, víme, vypadla z kabiny svého létadla.
 <context>
     <name>Template</name>
     <message>
-        <location filename="../src/template.cpp" line="330"/>
+        <location filename="../src/template.cpp" line="337"/>
         <source>Find the moved template file</source>
         <translation>Najít přesunutý soubor s podkladem</translation>
     </message>
     <message>
-        <location filename="../src/template.cpp" line="331"/>
+        <location filename="../src/template.cpp" line="338"/>
         <source>All files (*.*)</source>
         <translation>Všechny soubory (*.*)</translation>
     </message>
     <message>
-        <location filename="../src/template.cpp" line="346"/>
+        <location filename="../src/template.cpp" line="353"/>
         <source>Error</source>
         <translation>Chyba</translation>
     </message>
     <message>
-        <location filename="../src/template.cpp" line="346"/>
+        <location filename="../src/template.cpp" line="353"/>
         <source>Cannot change the template to this file! Is the format of the file correct for this template type?</source>
         <translation>Nelze změnit podklad tohoto souboru. Je soubor vybrán ve správném formátu?</translation>
     </message>
@@ -6341,48 +6372,48 @@ Pokud ovšem není vaším úmyslem na tento podklad kreslit, nejde o žádný p
 <context>
     <name>TemplateTrack</name>
     <message>
-        <location filename="../src/template_track.cpp" line="123"/>
+        <location filename="../src/template_track.cpp" line="125"/>
         <source>Select the coordinate reference system of the track coordinates</source>
         <translation>Vyberte vztažnou soustavu souřadnic pro souřadnice cesty</translation>
     </message>
     <message>
-        <location filename="../src/template_track.cpp" line="141"/>
+        <location filename="../src/template_track.cpp" line="143"/>
         <source>Opening track ...</source>
         <translation>Otevřít cestu...</translation>
     </message>
     <message>
-        <location filename="../src/template_track.cpp" line="142"/>
+        <location filename="../src/template_track.cpp" line="144"/>
         <source>Load the track in georeferenced or non-georeferenced mode?</source>
         <translation>Nahrát cestu v režimu vyjádřených prostorových vztahů nebo nevyjádřených prostorových vztahů?</translation>
     </message>
     <message>
-        <location filename="../src/template_track.cpp" line="144"/>
+        <location filename="../src/template_track.cpp" line="146"/>
         <source>Positions the track according to the map&apos;s georeferencing settings.</source>
         <translation>Umístí cestu podle nastavení pro vyjádření prostorových vztahů mapy.</translation>
     </message>
     <message>
-        <location filename="../src/template_track.cpp" line="146"/>
+        <location filename="../src/template_track.cpp" line="148"/>
         <source>These are not configured yet, so they will be shown as the next step.</source>
         <translatorcomment>Add explanation for &quot;these&quot;.</translatorcomment>
         <translation>Toto ještě není nastaveno, proto budou nastavení k tomu ukázána jako další krok.</translation>
     </message>
     <message>
-        <location filename="../src/template_track.cpp" line="147"/>
+        <location filename="../src/template_track.cpp" line="149"/>
         <source>Georeferenced</source>
         <translation>Prostorové vztahy vyjádřeny</translation>
     </message>
     <message>
-        <location filename="../src/template_track.cpp" line="148"/>
+        <location filename="../src/template_track.cpp" line="150"/>
         <source>Non-georeferenced</source>
         <translation>Prostorové vztahy nevyjádřeny</translation>
     </message>
     <message>
-        <location filename="../src/template_track.cpp" line="148"/>
+        <location filename="../src/template_track.cpp" line="150"/>
         <source>Projects the track using an orthographic projection with center at the track&apos;s coordinate average. Allows adjustment of the transformation and setting the map georeferencing using the adjusted track position.</source>
         <translation>Promítne cestu pomocí úhlojevného zobrazení (ortogonální projekce) se středem na středu souřadnic cesty. Umožňuje úpravu proměny a nastavení pro vyjádření prostorových vztahů mapy pomocí upravené polohy cesty.</translation>
     </message>
     <message>
-        <location filename="../src/template_track.cpp" line="381"/>
+        <location filename="../src/template_track.cpp" line="377"/>
         <location filename="../src/gps_track.cpp" line="501"/>
         <location filename="../src/gps_track.cpp" line="510"/>
         <location filename="../src/gps_track.cpp" line="515"/>
@@ -6390,27 +6421,27 @@ Pokud ovšem není vaším úmyslem na tento podklad kreslit, nejde o žádný p
         <translation>Chyba</translation>
     </message>
     <message>
-        <location filename="../src/template_track.cpp" line="381"/>
+        <location filename="../src/template_track.cpp" line="377"/>
         <source>The path is empty, there is nothing to import!</source>
         <translation>Prázdný nákres. Není co zavádět!</translation>
     </message>
     <message>
-        <location filename="../src/template_track.cpp" line="394"/>
+        <location filename="../src/template_track.cpp" line="390"/>
         <source>Question</source>
         <translation>Otázka</translation>
     </message>
     <message>
-        <location filename="../src/template_track.cpp" line="394"/>
+        <location filename="../src/template_track.cpp" line="390"/>
         <source>Should the waypoints be imported as a line going through all points?</source>
         <translation>Mají se body cesty zavádět jako body objekty linie (linie jdoucí přes všechny body)?</translation>
     </message>
     <message>
-        <location filename="../src/template_track.cpp" line="461"/>
+        <location filename="../src/template_track.cpp" line="457"/>
         <source>Import problems</source>
         <translation>Potíže při zavedení</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/template_track.cpp" line="462"/>
+        <location filename="../src/template_track.cpp" line="458"/>
         <source>%n path object(s) could not be imported (reason: missing coordinates).</source>
         <translation>
             <numerusform>%n objekt cesty se nepodařilo zavést (Důvod: Chybí souřadnice).</numerusform>
@@ -6650,32 +6681,32 @@ Nepodařilo se nahrát podklad. Soubor existuje a je platný?</translation>
         <translation>Zadejte celé číslo pro nastavení skupiny, nebo pole ponechejte prázdné pro zrušení seskupení tohoto podkladu!</translation>
     </message>
     <message>
-        <location filename="../src/template_dock_widget.cpp" line="863"/>
+        <location filename="../src/template_dock_widget.cpp" line="867"/>
         <source>Don&apos;t scale</source>
         <translation>Neměnit velikost</translation>
     </message>
     <message>
-        <location filename="../src/template_dock_widget.cpp" line="864"/>
+        <location filename="../src/template_dock_widget.cpp" line="862"/>
         <source>Scale by nominal map scale ratio (%1 %)</source>
         <translation>Měnit velikost podle poměru měřítka mapy (%1 %)</translation>
     </message>
     <message>
-        <location filename="../src/template_dock_widget.cpp" line="865"/>
+        <location filename="../src/template_dock_widget.cpp" line="864"/>
         <source>Scale by current template scaling (%1 %)</source>
         <translation>Měnit velikost podle nynějšího měřítka podkladu (%1 %)</translation>
     </message>
     <message>
-        <location filename="../src/template_dock_widget.cpp" line="867"/>
+        <location filename="../src/template_dock_widget.cpp" line="869"/>
         <source>Template import</source>
         <translation>Zavedení podkladu</translation>
     </message>
     <message>
-        <location filename="../src/template_dock_widget.cpp" line="868"/>
+        <location filename="../src/template_dock_widget.cpp" line="870"/>
         <source>How shall the symbols of the imported template map be scaled?</source>
         <translation>Jak se má měnit velikost symbolů zavedeného podkladu?</translation>
     </message>
     <message>
-        <location filename="../src/template_dock_widget.cpp" line="963"/>
+        <location filename="../src/template_dock_widget.cpp" line="967"/>
         <source>- Map -</source>
         <translation>- Mapa -</translation>
     </message>

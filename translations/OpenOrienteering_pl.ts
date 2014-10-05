@@ -1447,6 +1447,10 @@
         <comment>degree value</comment>
         <translation type="unfinished">%1 °</translation>
     </message>
+    <message>
+        <source>locked</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GeoreferencingTool</name>
@@ -4088,14 +4092,6 @@ zoom using the mouse wheel, if available.</source>
         <translation>Wysokość:</translation>
     </message>
     <message>
-        <source>Normal output</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Color separations</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Print Preview Progress</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4142,6 +4138,29 @@ zoom using the mouse wheel, if available.</source>
     </message>
     <message>
         <source>Not supported on Android.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Vector
+graphics</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Raster
+graphics</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Color
+separations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mode:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Template appearance may differ.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
