@@ -316,21 +316,15 @@ public slots:
 	void editGeoreferencing();
 	
 	/**
-	 * Adjusts the enabled state of various actions
-	 * after the selected symbol(s) have changed.
+	 * Makes the editor aware of a change of the selected symbols.
 	 */
 	void selectedSymbolsChanged();
+	
 	/**
-	 * Adjusts the enabled state of various actions
-	 * after the selected object(s) have changed.
+	 * Makes the editor aware of a change of the selected object.
 	 */
 	void objectSelectionChanged();
-	/**
-	 * Adjusts the enabled state of various actions
-	 * after the selected symbol(s) or object(s) have changed.
-	 * Internally called by selectedSymbolsChanged() and objectSelectionChanged().
-	 */
-	void selectedSymbolsOrObjectsChanged();
+	
 	/** Adjusts the enabled state of the undo / redo actions. */
 	void undoStepAvailabilityChanged();
 	/** Adjusts the enabled state of the paste action (specific signature required). */
@@ -509,6 +503,35 @@ signals:
 	void activeSymbolChanged(Symbol* symbol);
 	
 	void templatePositionDockWidgetClosed(Template* temp);
+
+protected:
+	/**
+	 * Adjusts the enabled state of various actions
+	 * after the selected symbol(s) have changed.
+	 * 
+	 * In addition, it disables actions as long as some editing is in progress.
+	 * 
+	 * The caller shall also call updateSymbolAndObjectDependentActions().
+	 */
+	void updateSymbolDependentActions();
+	
+	/**
+	 * Adjusts the enabled state of various actions
+	 * after the selected object(s) have changed.
+	 * 
+	 * In addition, it disables actions as long as some editing is in progress.
+	 * 
+	 * The caller shall also call updateSymbolAndObjectDependentActions().
+	 */
+	void updateObjectDependentActions();
+	
+	/**
+	 * Adjusts the enabled state of various actions
+	 * after the selected symbol(s) or object(s) have changed.
+	 * 
+	 * In addition, it disables actions as long as some editing is in progress.
+	 */
+	void updateSymbolAndObjectDependentActions();
 	
 protected slots:
 	void projectionChanged();
