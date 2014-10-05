@@ -22,16 +22,19 @@
 #include "../src/file_format_xml_p.h"
 #include "../src/map.h"
 #include "../src/symbol_area.h"
+#include "../src/settings.h"
 
 
 void SymbolSetTool::initTestCase()
 {
 	QCoreApplication::setOrganizationName("OpenOrienteering.org");
-	QCoreApplication::setApplicationName("Mapper");
+	QCoreApplication::setApplicationName("SymbolSetTool");
 	
 	doStaticInitializations();
 	
 	symbol_set_dir.cd(QFileInfo(__FILE__).dir().absoluteFilePath(QString("../symbol sets")));
+	
+	Settings::getInstance().setSetting(Settings::General_RetainCompatiblity, QVariant(false));
 }
 
 void SymbolSetTool::symbolSetDirExists()
