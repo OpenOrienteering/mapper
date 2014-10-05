@@ -1701,7 +1701,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="530"/>
         <source>locked</source>
-        <translation type="unfinished"></translation>
+        <translation>gesperrt</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="703"/>
@@ -4822,24 +4822,27 @@ Zoomen ist mit dem Mausrad möglich.</translation>
         <location filename="../src/gui/print_widget.cpp" line="147"/>
         <source>Vector
 graphics</source>
-        <translation type="unfinished"></translation>
+        <translation>Vektor-
+grafik</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="148"/>
         <source>Raster
 graphics</source>
-        <translation type="unfinished"></translation>
+        <translation>Raster-
+grafik</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="149"/>
         <source>Color
 separations</source>
-        <translation type="unfinished"></translation>
+        <translation>Farbsepa-
+rationen</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="162"/>
         <source>Mode:</source>
-        <translation type="unfinished"></translation>
+        <translation>Modus:</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="204"/>
@@ -4908,7 +4911,7 @@ separations</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="191"/>
         <source>Template appearance may differ.</source>
-        <translation type="unfinished"></translation>
+        <translation>Vorlagen können anders erscheinen.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="198"/>
