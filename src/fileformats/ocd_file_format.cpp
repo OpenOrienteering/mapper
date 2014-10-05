@@ -567,7 +567,7 @@ Template* OcdFileImport::importTemplate(const QString& param_string, const int o
 			case 'a':
 			case 'b':
 				// TODO: use the distinct angles correctly, not just the average
-				rotation += param_value.toDouble();
+				rotation += param_value.toDouble(&ok);
 				if (ok)
 					++num_rotation_params;
 				break;
