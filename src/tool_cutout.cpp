@@ -129,7 +129,7 @@ int CutoutTool::updateDirtyRectImpl(QRectF& rect)
 void CutoutTool::updateStatusText()
 {
 	QString text;
-	if (map()->getNumSelectedObjects() <= 1)
+	if (map()->getNumSelectedObjects() == 0)
 	{
 		text = tr("<b>%1</b>: Clip the whole map. ").arg(ModifierKey::return_key()) +
 		       tr("<b>%1+Click or drag</b>: Select the objects to be clipped. ").arg(ModifierKey::shift());
