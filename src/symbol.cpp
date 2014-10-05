@@ -132,7 +132,7 @@ CombinedSymbol* Symbol::asCombined()
 	return static_cast<CombinedSymbol*>(this);
 }
 
-bool Symbol::isTypeCompatibleTo(Object* object)
+bool Symbol::isTypeCompatibleTo(const Object* object) const
 {
 	if (type == Point && object->getType() == Object::Point)
 		return true;

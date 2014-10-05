@@ -1030,7 +1030,7 @@ void Map::insertRenderablesOfObject(Object* object)
 		addSelectionRenderables(object);
 }
 
-void Map::getSelectionToSymbolCompatibility(Symbol* symbol, bool& out_compatible, bool& out_different)
+void Map::getSelectionToSymbolCompatibility(const Symbol* symbol, bool& out_compatible, bool& out_different) const
 {
 	out_compatible = symbol != NULL && (getNumSelectedObjects() > 0);
 	out_different = false;

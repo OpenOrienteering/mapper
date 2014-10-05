@@ -898,13 +898,13 @@ public:
 	// Object selection
 	
 	/** Returns the number of selected objects. */
-	inline int getNumSelectedObjects() {return (int)object_selection.size();}
+	int getNumSelectedObjects() const;
 	
 	/** Returns an iterator allowing to iterate over the selected objects. */
-	inline ObjectSelection::const_iterator selectedObjectsBegin() {return object_selection.constBegin();}
+	ObjectSelection::const_iterator selectedObjectsBegin() const;
 	
 	/** Returns an end iterator allowing to iterate over the selected objects. */
-	inline ObjectSelection::const_iterator selectedObjectsEnd() {return object_selection.constEnd();}
+	ObjectSelection::const_iterator selectedObjectsEnd() const;
 	
 	/**
 	 * Returns the object in the selection which was selected first by the user.
@@ -922,7 +922,7 @@ public:
 	 * @param out_different returns if at least one of the selected objects'
 	 *     symbols is different to the given symbol
 	 */
-	void getSelectionToSymbolCompatibility(Symbol* symbol, bool& out_compatible, bool& out_different);
+	void getSelectionToSymbolCompatibility(const Symbol* symbol, bool& out_compatible, bool& out_different) const;
 	
 	/**
 	 * Deletes the selected objects and creates an undo step for this action.
@@ -1448,6 +1448,24 @@ inline
 std::size_t Map::getCurrentPartIndex() const
 {
 	return current_part_index;
+}
+
+inline
+int Map::getNumSelectedObjects() const
+{
+	return (int)object_selection.size();
+}
+
+inline
+Map::ObjectSelection::const_iterator Map::selectedObjectsBegin() const
+{
+	return object_selection.constBegin();
+}
+
+inline
+Map::ObjectSelection::const_iterator Map::selectedObjectsEnd() const
+{
+	return object_selection.constEnd();
 }
 
 inline
