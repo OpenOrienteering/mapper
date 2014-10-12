@@ -1705,7 +1705,7 @@ void MapEditorController::reopenTemplateClicked()
 {
 	hideAllTemplates(false);
 	
-	QString map_directory = window->getCurrentFilePath();
+	QString map_directory = window->currentPath();
 	if (!map_directory.isEmpty())
 		map_directory = QFileInfo(map_directory).canonicalPath();
 	ReopenTemplateDialog* dialog = new ReopenTemplateDialog(window, map, main_view, map_directory); 
@@ -2908,13 +2908,13 @@ void MapEditorController::enableGPSDisplay(bool enable)
 		
 		// Create gps_track_recorder if we can determine a template track filename
 		const float gps_track_draw_update_interval = 10 * 1000; // in milliseconds
-		if (! window->getCurrentFilePath().isEmpty())
+		if (! window->currentPath().isEmpty())
 		{
 			// Find or create a template for the track with a specific name
 			QString gpx_file_path =
-				QFileInfo(window->getCurrentFilePath()).absoluteDir().canonicalPath()
+				QFileInfo(window->currentPath()).absoluteDir().canonicalPath()
 				+ '/'
-				+ QFileInfo(window->getCurrentFilePath()).completeBaseName()
+				+ QFileInfo(window->currentPath()).completeBaseName()
 				+ " - GPS-"
 				+ QDate::currentDate().toString(Qt::ISODate)
 				+ ".gpx";

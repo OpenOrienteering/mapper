@@ -944,7 +944,7 @@ void PrintWidget::previewClicked()
 	
 	QPrinter* printer = map_printer->makePrinter();
 	printer->setCreator(main_window->appName());
-	printer->setDocName(QFileInfo(main_window->getCurrentFilePath()).baseName());
+	printer->setDocName(QFileInfo(main_window->currentPath()).baseName());
 #if !defined(Q_OS_MAC)
 	QPrintPreviewDialog preview(printer, this);
 #else
@@ -1031,7 +1031,7 @@ void PrintWidget::printClicked()
 	QPrinter* printer = map_printer->makePrinter();
 	printer->setNumCopies(copies_edit->value());
 	printer->setCreator(main_window->appName());
-	printer->setDocName(QFileInfo(main_window->getCurrentFilePath()).baseName());
+	printer->setDocName(QFileInfo(main_window->currentPath()).baseName());
 	if (map_printer->getTarget() == MapPrinter::pdfTarget())
 	{
 		printer->setOutputFormat(QPrinter::PdfFormat);

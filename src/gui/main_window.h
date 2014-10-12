@@ -59,7 +59,7 @@ public:
 	
 	
 	/** Change the controller to new_controller. */
-	void setController(MainWindowController* new_controller);
+	void setController(MainWindowController* new_controller, const QString& path = QString());
 	
 	/** Returns the current controller. */
 	inline MainWindowController* getController() const {return controller;}
@@ -68,7 +68,7 @@ public:
 	/** Returns the canonical path of the currently open file or 
 	 *  an empty string if no file is open.
 	 */
-	inline const QString& getCurrentFilePath() const {return current_path;}
+	inline const QString& currentPath() const {return current_path;}
 	
 	/** @brief Registers the given path as most recently used file.
 	 *  The path is added at (or moved to) the top of the list of most recently
@@ -247,12 +247,14 @@ protected slots:
 	void settingsChanged();
 	
 protected:
-	/** Notify main window of the current path where the content is saved.
-	 *  This will trigger updates to the window title, 
-	 *  to the list of recently used files, and 
-	 *  to the least recently used directory.
+	/** 
+	 * @brief Sets the path of the file edited by this windows' controller.
+	 * 
+	 * This will trigger updates to the window title, 
+	 * to the list of recently used files, and 
+	 * to the least recently used directory.
 	 */
-	void setCurrentFile(const QString& path);
+	void setCurrentPath(const QString& path);
 	
 	/** @brief Removes the autosave file if it exists. */
 	void removeAutosaveFile();

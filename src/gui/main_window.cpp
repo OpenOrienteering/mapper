@@ -75,7 +75,7 @@ MainWindow::MainWindow(bool as_main_window)
 	show_menu = create_menu;
 #endif
 	disable_shortcuts = false;
-	setCurrentFile("");
+	setCurrentPath(QString());
 	maximized_before_fullscreen = false;
 	general_toolbar = NULL;
 	file_menu = NULL;
@@ -145,7 +145,7 @@ void MainWindow::setCentralWidget(QWidget* widget)
 	}
 }
 
-void MainWindow::setController(MainWindowController* new_controller)
+void MainWindow::setController(MainWindowController* new_controller, const QString& path)
 {
 	if (controller)
 	{
@@ -162,7 +162,7 @@ void MainWindow::setController(MainWindowController* new_controller)
 	has_opened_file = false;
 	has_unsaved_changes = false;
 	disable_shortcuts = false;
-	setCurrentFile("");
+	setCurrentPath(path);
 	
 	if (create_menu)
 		createFileMenu();
@@ -308,7 +308,7 @@ void MainWindow::createHelpMenu()
 	}
 }
 
-void MainWindow::setCurrentFile(const QString& path)
+void MainWindow::setCurrentPath(const QString& path)
 {
 	current_path = QFileInfo(path).canonicalFilePath();
 	updateWindowTitle();
@@ -529,7 +529,7 @@ MainWindow* MainWindow::findMainWindow(const QString& file_name)
 	foreach (QWidget *widget, qApp->topLevelWidgets())
 	{
 		MainWindow* other = qobject_cast<MainWindow*>(widget);
-		if (other && other->getCurrentFilePath() == canonical_file_path)
+		if (other && other->currentPath() == canonical_file_path)
 			return other;
 	}
 	
@@ -545,7 +545,7 @@ void MainWindow::updateWindowTitle()
 	
 	if (has_opened_file)
 	{
-		const QString current_file_path = getCurrentFilePath();
+		const QString current_file_path = currentPath();
 		if (current_file_path.isEmpty())
 			window_title += tr("Unsaved file") + " - ";
 		else
@@ -671,8 +671,7 @@ bool MainWindow::openPath(const QString &path)
 		open_window = new MainWindow(true);
 	else
 		open_window = this;
-	open_window->setController(new_controller);
-	open_window->setCurrentFile(path);		// must be after setController()
+	open_window->setController(new_controller, path);
 	open_window->setHasUnsavedChanges(actual_path != path);
 	
 	open_window->show();
@@ -734,12 +733,12 @@ QString MainWindow::autosaveFileName(const QString &path)
 
 QString MainWindow::autosaveFileName() const
 {
-	return autosaveFileName(getCurrentFilePath());
+	return autosaveFileName(currentPath());
 }
 
 void MainWindow::removeAutosaveFile()
 {
-	QString path = getCurrentFilePath();
+	QString path = currentPath();
 	if (!path.isEmpty())
 	{
 		QFile auto_save_file(autosaveFileName());
@@ -752,7 +751,7 @@ void MainWindow::removeAutosaveFile()
 
 Autosave::AutosaveResult MainWindow::autosave()
 {
-	QString path = getCurrentFilePath();
+	QString path = currentPath();
 	if (path.isEmpty() || !controller)
 	{
 		return Autosave::PermanentFailure;
@@ -781,7 +780,7 @@ Autosave::AutosaveResult MainWindow::autosave()
 
 bool MainWindow::save()
 {
-	return savePath(getCurrentFilePath());
+	return savePath(currentPath());
 }
 
 bool MainWindow::savePath(const QString &path)
@@ -805,7 +804,7 @@ bool MainWindow::savePath(const QString &path)
 		return false;
 	
 	removeAutosaveFile();
-	setCurrentFile(path);
+	setCurrentPath(path);
 	setHasUnsavedChanges(false);
 	return true;
 }
@@ -855,7 +854,7 @@ bool MainWindow::showSaveAsDialog()
 		return false;
 	
 	// Try current directory first
-	QFileInfo current(getCurrentFilePath());
+	QFileInfo current(currentPath());
 	QString save_directory = current.canonicalPath();
 	if (save_directory.isEmpty())
 	{
