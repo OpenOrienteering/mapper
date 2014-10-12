@@ -247,6 +247,43 @@
     </message>
 </context>
 <context>
+    <name>AutosaveDialog</name>
+    <message>
+        <location filename="../src/gui/autosave_dialog.cpp" line="35"/>
+        <source>Autosaved file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../src/gui/autosave_dialog.cpp" line="37"/>
+        <location filename="../src/gui/autosave_dialog.cpp" line="43"/>
+        <source>%n bytes</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <location filename="../src/gui/autosave_dialog.cpp" line="41"/>
+        <source>File saved by the user</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gui/autosave_dialog.cpp" line="48"/>
+        <source>File recovery</source>
+        <translation type="unfinished">Recuperación de fichero</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/autosave_dialog.cpp" line="50"/>
+        <source>File %1 was not properly closed. At the moment, there are two versions:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gui/autosave_dialog.cpp" line="64"/>
+        <source>Save the active file to remove the conflicting version.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ColorDialog</name>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="37"/>
@@ -2454,37 +2491,37 @@
 <context>
     <name>MAC_APPLICATION_MENU</name>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="53"/>
+        <location filename="../src/gui/main_window.cpp" line="54"/>
         <source>Services</source>
         <translation>Servicios</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="54"/>
+        <location filename="../src/gui/main_window.cpp" line="55"/>
         <source>Hide %1</source>
         <translation>Ocultar %1</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="55"/>
+        <location filename="../src/gui/main_window.cpp" line="56"/>
         <source>Hide Others</source>
         <translation>Ocultar Otros</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="56"/>
+        <location filename="../src/gui/main_window.cpp" line="57"/>
         <source>Show All</source>
         <translation>Mostrar Todo</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="57"/>
+        <location filename="../src/gui/main_window.cpp" line="58"/>
         <source>Preferences...</source>
         <translation>Preferencias...</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="58"/>
+        <location filename="../src/gui/main_window.cpp" line="59"/>
         <source>Quit %1</source>
         <translation>Quitar %1</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="59"/>
+        <location filename="../src/gui/main_window.cpp" line="60"/>
         <source>About %1</source>
         <translation>Acerca de %1</translation>
     </message>
@@ -2492,135 +2529,140 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="189"/>
+        <location filename="../src/gui/main_window.cpp" line="192"/>
         <source>&amp;New</source>
         <translation>&amp;Nuevo</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="191"/>
+        <location filename="../src/gui/main_window.cpp" line="194"/>
         <source>Create a new map</source>
         <translation>Crea un mapa nuevo</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="195"/>
+        <location filename="../src/gui/main_window.cpp" line="198"/>
         <source>&amp;Open...</source>
         <translation>&amp;Abrir...</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="197"/>
+        <location filename="../src/gui/main_window.cpp" line="200"/>
         <source>Open an existing file</source>
         <translation>Abre un fichero existente</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="201"/>
+        <location filename="../src/gui/main_window.cpp" line="204"/>
         <source>Open &amp;recent</source>
         <translation>Abrir &amp;reciente</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="212"/>
+        <location filename="../src/gui/main_window.cpp" line="215"/>
         <source>&amp;Save</source>
         <translation>&amp;Grabar</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="217"/>
+        <location filename="../src/gui/main_window.cpp" line="220"/>
         <source>Save &amp;as...</source>
         <translation>Grabar &amp;como...</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="219"/>
+        <location filename="../src/gui/main_window.cpp" line="222"/>
         <source>Ctrl+Shift+S</source>
         <translation>Ctrl+May+S</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="225"/>
+        <location filename="../src/gui/main_window.cpp" line="228"/>
         <source>Settings...</source>
         <translation>Configuración...</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="232"/>
+        <location filename="../src/gui/main_window.cpp" line="235"/>
         <source>Close</source>
         <translation>Cerrar</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="234"/>
+        <location filename="../src/gui/main_window.cpp" line="237"/>
         <source>Close this file</source>
         <translation>Cierra este fichero</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="238"/>
+        <location filename="../src/gui/main_window.cpp" line="241"/>
         <source>E&amp;xit</source>
         <translation>&amp;Salir</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="240"/>
+        <location filename="../src/gui/main_window.cpp" line="243"/>
         <source>Exit the application</source>
         <translation>Sale de la aplicación</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="248"/>
+        <location filename="../src/gui/main_window.cpp" line="251"/>
         <source>&amp;File</source>
         <translation>&amp;Fichero</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="266"/>
+        <location filename="../src/gui/main_window.cpp" line="269"/>
         <source>General</source>
         <translation>General</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="281"/>
+        <location filename="../src/gui/main_window.cpp" line="284"/>
         <source>Open &amp;Manual</source>
         <translation>Abrir &amp;Manual</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="282"/>
+        <location filename="../src/gui/main_window.cpp" line="285"/>
         <source>Show the help file for this application</source>
         <translation>Muestra el fichero de ayuda de este programa</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="286"/>
+        <location filename="../src/gui/main_window.cpp" line="289"/>
         <source>&amp;About %1</source>
         <translation>&amp;Acerca de %1</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="287"/>
+        <location filename="../src/gui/main_window.cpp" line="290"/>
         <source>Show information about this application</source>
         <translation>Muestra informacióón acerca de este programa</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="293"/>
+        <location filename="../src/gui/main_window.cpp" line="296"/>
         <source>About &amp;Qt</source>
         <translation>Acerca de &amp;Qt</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="294"/>
+        <location filename="../src/gui/main_window.cpp" line="297"/>
         <source>Show information about Qt</source>
         <translation>Muestra información acerca de Qt</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="302"/>
+        <location filename="../src/gui/main_window.cpp" line="305"/>
         <source>&amp;Help</source>
         <translation>&amp;Ayuda</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="463"/>
+        <location filename="../src/gui/main_window.cpp" line="483"/>
+        <source>Do you want to remove the autosaved version?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gui/main_window.cpp" line="489"/>
         <source>The file has been modified.
 Do you want to save your changes?</source>
         <translation>El fichero ha sido modificado.
 ¿Quiere grabar los cambios?</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="550"/>
+        <location filename="../src/gui/main_window.cpp" line="590"/>
         <source>Unsaved file</source>
         <translation>Fichero no grabado</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="578"/>
-        <location filename="../src/gui/main_window.cpp" line="799"/>
+        <location filename="../src/gui/main_window.cpp" line="618"/>
+        <location filename="../src/gui/main_window.cpp" line="897"/>
         <source>Warning</source>
         <translation>Aviso</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="578"/>
+        <location filename="../src/gui/main_window.cpp" line="618"/>
         <source>The selected map scale is 1:%1, but the chosen symbol set has a nominal scale of 1:%2.
 
 Do you want to scale the symbols to the selected scale?</source>
@@ -2629,58 +2671,56 @@ Do you want to scale the symbols to the selected scale?</source>
 ¿Quiere cambiar la escala de los símbolos a la escala seleccionada?</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="632"/>
+        <location filename="../src/gui/main_window.cpp" line="672"/>
         <source>Crash warning</source>
         <translation>Aviso de accidente</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="633"/>
+        <location filename="../src/gui/main_window.cpp" line="673"/>
         <source>It seems that %1 crashed the last time this file was opened:&lt;br /&gt;&lt;tt&gt;%2&lt;/tt&gt;&lt;br /&gt;&lt;br /&gt;Really retry to open it?</source>
         <translation>Parece que %1 ha fallado la última vez que se abrió este fichero:&lt;br /&gt;&lt;tt&gt;%2&lt;/tt&gt;&lt;br /&gt;&lt;br /&gt;¿Realmente quiere tratar de abrirlo de nuevo?</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="655"/>
         <source>File recovery</source>
-        <translation>Recuperación de fichero</translation>
+        <translation type="vanished">Recuperación de fichero</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="656"/>
         <source>There is an automatically saved version of &lt;br /&gt;&lt;tt&gt;%1&lt;/tt&gt;&lt;br /&gt;&lt;br /&gt;Load this version?</source>
-        <translation>Hay una versión grabada automáticamente de &lt;br /&gt;&lt;tt&gt;%1&lt;/tt&gt;&lt;br /&gt;&lt;br /&gt;¿Cargar esta versión?</translation>
+        <translation type="vanished">Hay una versión grabada automáticamente de &lt;br /&gt;&lt;tt&gt;%1&lt;/tt&gt;&lt;br /&gt;&lt;br /&gt;¿Cargar esta versión?</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="766"/>
+        <location filename="../src/gui/main_window.cpp" line="864"/>
         <source>Autosaving...</source>
         <translation>Grabación automática...</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="776"/>
+        <location filename="../src/gui/main_window.cpp" line="874"/>
         <source>Autosaving failed!</source>
         <translation>¡Falló la grabación automática!</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="841"/>
+        <location filename="../src/gui/main_window.cpp" line="949"/>
         <source>All maps</source>
         <translation>Todos los mapas</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="845"/>
+        <location filename="../src/gui/main_window.cpp" line="953"/>
         <source>All files</source>
         <translation>Todos los ficheros</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="603"/>
+        <location filename="../src/gui/main_window.cpp" line="643"/>
         <source>Open file</source>
         <translation>Abrir fichero</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="646"/>
-        <location filename="../src/gui/main_window.cpp" line="901"/>
+        <location filename="../src/gui/main_window.cpp" line="686"/>
+        <location filename="../src/gui/main_window.cpp" line="1009"/>
         <source>Error</source>
         <translation>Error</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="646"/>
+        <location filename="../src/gui/main_window.cpp" line="686"/>
         <source>Cannot open file:
 %1
 
@@ -2691,12 +2731,18 @@ File format not recognized.</source>
 Formato de fichero no reconocido.</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="717"/>
+        <location filename="../src/gui/main_window.cpp" line="762"/>
+        <source>The file has been modified.
+Do you want to discard your changes?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gui/main_window.cpp" line="814"/>
         <source>&amp;%1 %2</source>
         <translation>&amp;%1 %2</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="798"/>
+        <location filename="../src/gui/main_window.cpp" line="896"/>
         <source>This map is being saved as a &quot;%1&quot; file. Information may be lost.
 
 Press Yes to save in this format.
@@ -2707,22 +2753,22 @@ Pulse Sí para grabar en este formato.
 Pulse No para seleccionar un formato diferente.</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="881"/>
+        <location filename="../src/gui/main_window.cpp" line="989"/>
         <source>Save file</source>
         <translation>Grabar fichero</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="902"/>
+        <location filename="../src/gui/main_window.cpp" line="1010"/>
         <source>File could not be saved:</source>
         <translation>El fichero no se ha podido grabar:</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="903"/>
+        <location filename="../src/gui/main_window.cpp" line="1011"/>
         <source>There was a problem in determining the file format.</source>
         <translation>Ha habido un problema tratando de determinar el formato de fichero.</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="904"/>
+        <location filename="../src/gui/main_window.cpp" line="1012"/>
         <source>Please report this as a bug.</source>
         <translation>Por favor, informe de esto como un error.</translation>
     </message>
@@ -6024,22 +6070,22 @@ para saltar sobre el perro perezoso
 <context>
     <name>Template</name>
     <message>
-        <location filename="../src/template.cpp" line="337"/>
+        <location filename="../src/template.cpp" line="347"/>
         <source>Find the moved template file</source>
         <translation>Encontrar el fichero de plantilla movido</translation>
     </message>
     <message>
-        <location filename="../src/template.cpp" line="338"/>
+        <location filename="../src/template.cpp" line="348"/>
         <source>All files (*.*)</source>
         <translation>Todos los ficheros (*.*)</translation>
     </message>
     <message>
-        <location filename="../src/template.cpp" line="353"/>
+        <location filename="../src/template.cpp" line="363"/>
         <source>Error</source>
         <translation>Error</translation>
     </message>
     <message>
-        <location filename="../src/template.cpp" line="353"/>
+        <location filename="../src/template.cpp" line="363"/>
         <source>Cannot change the template to this file! Is the format of the file correct for this template type?</source>
         <translation>¡No se puede cambiar la plantilla a este fichero! ¿El formato del fichero es correcto para este tipo de plantilla?</translation>
     </message>
@@ -6162,12 +6208,12 @@ para saltar sobre el perro perezoso
 <context>
     <name>TemplateImage</name>
     <message>
-        <location filename="../src/template_image.cpp" line="127"/>
+        <location filename="../src/template_image.cpp" line="126"/>
         <source>Warning</source>
         <translation>Aviso</translation>
     </message>
     <message>
-        <location filename="../src/template_image.cpp" line="127"/>
+        <location filename="../src/template_image.cpp" line="126"/>
         <source>Loading a GIF image template.
 Saving GIF files is not supported. This means that drawings on this template won&apos;t be saved!
 If you do not intend to draw on this template however, that is no problem.</source>
@@ -6176,7 +6222,7 @@ La grabación de ficheros GIF no está soportada. ¡Esto significa que los dibuj
 Sin embargo, si no pretende dibujar sobre esta plantilla, entonces no hay problema.</translation>
     </message>
     <message>
-        <location filename="../src/template_image.cpp" line="165"/>
+        <location filename="../src/template_image.cpp" line="164"/>
         <source>Select the coordinate reference system of the coordinates in the world file</source>
         <translation>Seleccione el sistema de coordenadas de referencia de las coordenadas del fichero de mundo</translation>
     </message>
@@ -6184,67 +6230,67 @@ Sin embargo, si no pretende dibujar sobre esta plantilla, entonces no hay proble
 <context>
     <name>TemplateImageOpenDialog</name>
     <message>
-        <location filename="../src/template_image.cpp" line="549"/>
+        <location filename="../src/template_image.cpp" line="548"/>
         <source>Opening %1</source>
         <translation>Abriendo %1</translation>
     </message>
     <message>
-        <location filename="../src/template_image.cpp" line="551"/>
+        <location filename="../src/template_image.cpp" line="550"/>
         <source>Image size:</source>
         <translation>Tamaño de imagen:</translation>
     </message>
     <message>
-        <location filename="../src/template_image.cpp" line="554"/>
+        <location filename="../src/template_image.cpp" line="553"/>
         <source>Specify how to position or scale the image:</source>
         <translation>Especifique cómo posicionar o escalar la imagen:</translation>
     </message>
     <message>
-        <location filename="../src/template_image.cpp" line="564"/>
+        <location filename="../src/template_image.cpp" line="563"/>
         <source>World file</source>
         <translation>Fichero de mundo</translation>
     </message>
     <message>
-        <location filename="../src/template_image.cpp" line="566"/>
+        <location filename="../src/template_image.cpp" line="565"/>
         <source>GeoTiff</source>
         <translation>GeoTiff</translation>
     </message>
     <message>
-        <location filename="../src/template_image.cpp" line="568"/>
+        <location filename="../src/template_image.cpp" line="567"/>
         <source>no georeferencing information</source>
         <translation>No hay información de georreferencia</translation>
     </message>
     <message>
-        <location filename="../src/template_image.cpp" line="570"/>
+        <location filename="../src/template_image.cpp" line="569"/>
         <source>Georeferenced</source>
         <translation>Georreferenciado</translation>
     </message>
     <message>
-        <location filename="../src/template_image.cpp" line="574"/>
+        <location filename="../src/template_image.cpp" line="573"/>
         <source>Meters per pixel:</source>
         <translation>Metros por pixel:</translation>
     </message>
     <message>
-        <location filename="../src/template_image.cpp" line="578"/>
+        <location filename="../src/template_image.cpp" line="577"/>
         <source>Scanned with</source>
         <translation>Escaneado con</translation>
     </message>
     <message>
-        <location filename="../src/template_image.cpp" line="581"/>
+        <location filename="../src/template_image.cpp" line="580"/>
         <source>dpi</source>
         <translation>ppp</translation>
     </message>
     <message>
-        <location filename="../src/template_image.cpp" line="583"/>
+        <location filename="../src/template_image.cpp" line="582"/>
         <source>Template scale:  1 :</source>
         <translation>Escala de plantilla:  1 :</translation>
     </message>
     <message>
-        <location filename="../src/template_image.cpp" line="609"/>
+        <location filename="../src/template_image.cpp" line="608"/>
         <source>Cancel</source>
         <translation>Cancelar</translation>
     </message>
     <message>
-        <location filename="../src/template_image.cpp" line="610"/>
+        <location filename="../src/template_image.cpp" line="609"/>
         <source>Open</source>
         <translation>Abrir</translation>
     </message>
@@ -6450,13 +6496,13 @@ La máxima versión soportada es %2.</translation>
     </message>
     <message>
         <location filename="../src/template_dock_widget.cpp" line="139"/>
-        <location filename="../src/template_dock_widget.cpp" line="384"/>
+        <location filename="../src/template_dock_widget.cpp" line="385"/>
         <source>Sketch</source>
         <translation>Croquis</translation>
     </message>
     <message>
         <location filename="../src/template_dock_widget.cpp" line="141"/>
-        <location filename="../src/template_dock_widget.cpp" line="388"/>
+        <location filename="../src/template_dock_widget.cpp" line="389"/>
         <source>GPS</source>
         <translation>GPS</translation>
     </message>
@@ -6491,12 +6537,12 @@ La máxima versión soportada es %2.</translation>
         <translation>Georreferenciado: %1</translation>
     </message>
     <message>
-        <location filename="../src/template_dock_widget.cpp" line="791"/>
+        <location filename="../src/template_dock_widget.cpp" line="792"/>
         <source>Delete</source>
         <translation>Borrar</translation>
     </message>
     <message>
-        <location filename="../src/template_dock_widget.cpp" line="791"/>
+        <location filename="../src/template_dock_widget.cpp" line="792"/>
         <source>Close</source>
         <translation>Cerrar</translation>
     </message>
@@ -6561,70 +6607,67 @@ La máxima versión soportada es %2.</translation>
         <translation>Ajustar...</translation>
     </message>
     <message>
-        <location filename="../src/template_dock_widget.cpp" line="320"/>
-        <location filename="../src/template_dock_widget.cpp" line="332"/>
-        <location filename="../src/template_dock_widget.cpp" line="611"/>
+        <location filename="../src/template_dock_widget.cpp" line="321"/>
+        <location filename="../src/template_dock_widget.cpp" line="335"/>
+        <location filename="../src/template_dock_widget.cpp" line="612"/>
         <source>Error</source>
         <translation>Error</translation>
     </message>
     <message>
-        <location filename="../src/template_dock_widget.cpp" line="320"/>
-        <source>Cannot open template:
-%1
-
-File format not recognized.</source>
-        <translation>No se puede abrir la plantilla:
-%1
-
-Formato de fichero no reconocido.</translation>
+        <location filename="../src/template_dock_widget.cpp" line="321"/>
+        <source>File format not recognized.</source>
+        <translation>Formato de fichero no reconocido.</translation>
     </message>
     <message>
-        <location filename="../src/template_dock_widget.cpp" line="332"/>
-        <source>Cannot open template:
-%1
-
-Failed to load template. Does the file exist and is it valid?</source>
-        <translation>No se puede abrir la plantilla:
-%1
-
-Falló la carga de la plantilla. ¿El fichero existe y es válido?</translation>
+        <location filename="../src/template_dock_widget.cpp" line="334"/>
+        <source>Failed to load template. Does the file exist and is it valid?</source>
+        <translation>Falló la carga de la plantilla. ¿El fichero existe y es válido?</translation>
     </message>
     <message>
         <source>Please enter a valid number from 0 to 1, or specify a percentage from 0 to 100!</source>
         <translation type="obsolete">¡Por favor, escriba un número válido de 0 a 1, ó especifique un porcentaje de 0 a 100!</translation>
     </message>
     <message>
-        <location filename="../src/template_dock_widget.cpp" line="611"/>
+        <location filename="../src/template_dock_widget.cpp" line="612"/>
         <source>Please enter a valid integer number to set a group or leave the field empty to ungroup the template!</source>
         <translation>¡Por favor, escriba un número entero válido para establecer un grupo o deje el campo vacío para desagrupar la plantilla!</translation>
     </message>
     <message>
-        <location filename="../src/template_dock_widget.cpp" line="867"/>
+        <location filename="../src/template_dock_widget.cpp" line="868"/>
         <source>Don&apos;t scale</source>
         <translation>No escalar</translation>
     </message>
     <message>
-        <location filename="../src/template_dock_widget.cpp" line="862"/>
+        <location filename="../src/template_dock_widget.cpp" line="863"/>
         <source>Scale by nominal map scale ratio (%1 %)</source>
         <translation>Escalar por un ratio de escalado nominal de mapa (%1 %)</translation>
     </message>
     <message>
-        <location filename="../src/template_dock_widget.cpp" line="864"/>
+        <location filename="../src/template_dock_widget.cpp" line="317"/>
+        <source>Cannot open template
+%1:
+%2</source>
+        <translation>No se puede abrir la plantilla
+%1:
+%2</translation>
+    </message>
+    <message>
+        <location filename="../src/template_dock_widget.cpp" line="865"/>
         <source>Scale by current template scaling (%1 %)</source>
         <translation>Escalar por el escalado de la plantilla actual (%1 %)</translation>
     </message>
     <message>
-        <location filename="../src/template_dock_widget.cpp" line="869"/>
+        <location filename="../src/template_dock_widget.cpp" line="870"/>
         <source>Template import</source>
         <translation>Importación de plantilla</translation>
     </message>
     <message>
-        <location filename="../src/template_dock_widget.cpp" line="870"/>
+        <location filename="../src/template_dock_widget.cpp" line="871"/>
         <source>How shall the symbols of the imported template map be scaled?</source>
         <translation>¿Cómo se tienen que escalar los símbolos del mapa importado?</translation>
     </message>
     <message>
-        <location filename="../src/template_dock_widget.cpp" line="967"/>
+        <location filename="../src/template_dock_widget.cpp" line="968"/>
         <source>- Map -</source>
         <translation>- Mapa -</translation>
     </message>

@@ -318,7 +318,7 @@ Template* TemplateWidget::showOpenTemplateDialog(QWidget* dialog_parent, MapEdit
 	QScopedPointer<Template> new_temp(Template::templateForFile(path, controller->getMap()));
 	if (!new_temp)
 	{
-		QMessageBox::warning(dialog_parent, tr("Error"), error.arg("File format not recognized."));
+		QMessageBox::warning(dialog_parent, tr("Error"), error.arg(tr("File format not recognized.")));
 		return NULL;
 	}
 	

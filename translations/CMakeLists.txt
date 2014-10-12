@@ -131,7 +131,7 @@ macro(QT5_TRANSLATIONS_SOURCES)
 		else()
 			get_filename_component(_ts_filename ${_arg} NAME_WE)
 			add_custom_target(${PROJECT_NAME}_${_ts_filename}_update
-			  COMMAND ${Qt5_LUPDATE_EXECUTABLE} @${${PROJECT_NAME}_TRANSLATIONS_LISTFILE} -ts ${Mapper_TRANS_DIR}/${_arg}
+			  COMMAND ${Qt5_LUPDATE_EXECUTABLE} -locations absolute @${${PROJECT_NAME}_TRANSLATIONS_LISTFILE} -ts ${Mapper_TRANS_DIR}/${_arg}
 			  DEPENDS ${${PROJECT_NAME}_TRANSLATIONS_LISTFILE}
 			  VERBATIM)
 			add_dependencies(${PROJECT_NAME}_translations_update ${PROJECT_NAME}_${_ts_filename}_update)
