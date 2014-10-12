@@ -314,30 +314,31 @@ Template* TemplateWidget::showOpenTemplateDialog(QWidget* dialog_parent, MapEdit
 	
 	settings.setValue("templateFileDirectory", QFileInfo(path).canonicalPath());
 	
-	Template* new_temp = Template::templateForFile(path, controller->getMap());
+	QString error = tr("Cannot open template\n%1:\n%2").arg(path);
+	QScopedPointer<Template> new_temp(Template::templateForFile(path, controller->getMap()));
 	if (!new_temp)
 	{
-		QMessageBox::warning(dialog_parent, tr("Error"), tr("Cannot open template:\n%1\n\nFile format not recognized.").arg(path));
+		QMessageBox::warning(dialog_parent, tr("Error"), error.arg("File format not recognized."));
 		return NULL;
 	}
 	
 	if (!new_temp->preLoadConfiguration(dialog_parent))
 	{
-		delete new_temp;
 		return NULL;
 	}
 	
 	if (!new_temp->loadTemplateFile(true))
 	{
-		QMessageBox::warning(dialog_parent, tr("Error"), tr("Cannot open template:\n%1\n\nFailed to load template. Does the file exist and is it valid?").arg(path));
-		delete new_temp;
+		QString error_detail = new_temp->errorString();
+		if (error_detail.isEmpty())
+			error_detail = tr("Failed to load template. Does the file exist and is it valid?");
+		QMessageBox::warning(dialog_parent, tr("Error"), error.arg(error_detail));
 		return NULL;
 	}
 	
 	bool center_in_view = true;
 	if (!new_temp->postLoadConfiguration(dialog_parent, center_in_view))
 	{
-		delete new_temp;
 		return NULL;
 	}
 	
@@ -350,7 +351,7 @@ Template* TemplateWidget::showOpenTemplateDialog(QWidget* dialog_parent, MapEdit
 		new_temp->setTemplateY(main_view->getPositionY() - qRound64(1000 * center.y()));
 	}
 	
-	return new_temp;
+	return new_temp.take();
 }
 
 bool TemplateWidget::eventFilter(QObject* watched, QEvent* event)

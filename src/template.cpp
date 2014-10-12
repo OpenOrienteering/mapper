@@ -136,6 +136,16 @@ Template* Template::duplicate()
 	return copy;
 }
 
+QString Template::errorString() const
+{
+	return error_string;
+}
+
+void Template::setErrorString(const QString &text)
+{
+	error_string = text;
+}
+
 bool Template::loadTemplateConfiguration(QIODevice* stream, int version)
 {
 	loadString(stream, template_file);

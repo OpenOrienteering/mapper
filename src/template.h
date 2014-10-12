@@ -93,6 +93,11 @@ public:
 	virtual const QString getTemplateType() = 0;
 	
 	/**
+	 * Returns a description of the last error that occurred.
+	 */
+	QString errorString() const;
+	
+	/**
 	 * Returns true if the template is raster graphics.
 	 * 
 	 * Raster graphics cannot be printed in the foreground in vector mode.
@@ -339,6 +344,11 @@ signals:
 	void templateStateChanged();
 	
 protected:
+	/**
+	 * Sets the error description which will be returned by errorString().
+	 */
+	void setErrorString(const QString &text);
+	
 	/// Derived classes must create a duplicate and transfer
 	/// type specific information over to the copy here.
 	/// This includes the content of the template file if it is loaded.
@@ -390,6 +400,9 @@ protected:
 	
 	/// The template lifetime state
 	State template_state;
+	
+	/// The description of the last error
+	QString error_string;
 	
 	/// Does the template itself (not its transformation) have unsaved changes (e.g. GPS track has changed, image has been painted on)
 	bool has_unsaved_changes;
