@@ -32,6 +32,7 @@ endif ()
 
 if (NOT SKIP_CHECK)
 	# Check that the working directory is clean.
+	set(ENV{LANG} C)
 	execute_process(
 	  COMMAND "@GIT_EXECUTABLE@" status
 	  WORKING_DIRECTORY "@PROJECT_SOURCE_DIR@"
