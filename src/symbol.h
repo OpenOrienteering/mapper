@@ -129,7 +129,7 @@ public:
 	 * Checks if the symbol can be applied to the given object.
 	 * TODO: refactor: use static areTypesCompatible() instead with the type of the object's symbol
 	 */
-	bool isTypeCompatibleTo(Object* object);
+	bool isTypeCompatibleTo(const Object* object) const;
 	
 	/** Returns if the symbol numbers are identical. */
 	bool numberEquals(Symbol* other, bool ignore_trailing_zeros);

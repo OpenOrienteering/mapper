@@ -567,7 +567,7 @@ Template* OcdFileImport::importTemplate(const QString& param_string, const int o
 			case 'a':
 			case 'b':
 				// TODO: use the distinct angles correctly, not just the average
-				rotation += param_value.toDouble();
+				rotation += param_value.toDouble(&ok);
 				if (ok)
 					++num_rotation_params;
 				break;
@@ -594,7 +594,7 @@ Template* OcdFileImport::importTemplate(const QString& param_string, const int o
 	}
 	
 	if (num_rotation_params)
-		templ->setTemplateRotation(convertAngle(rotation / num_rotation_params));
+		templ->setTemplateRotation(Georeferencing::degToRad(rotation / num_rotation_params));
 	
 	templ->setTemplateScaleX(scale_x * scale_factor);
 	templ->setTemplateScaleY(scale_y * scale_factor);

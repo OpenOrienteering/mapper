@@ -71,6 +71,11 @@ void doStaticInitializations()
 // 	FileFormats.registerFormat(new OCAD8FileFormat());
 	FileFormats.registerFormat(new NativeFileFormat()); // TODO: Remove before release 1.0
 	
+#if defined(Q_OS_ANDROID)
+	// Register file finder function needed by Proj.4
+	registerProjFileHelper();
+#endif
+	
 	// Register projection templates
 	registerProjectionTemplates();
 }

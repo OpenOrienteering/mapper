@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2012, 2013, 2014 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -455,6 +456,7 @@ void LineSymbol::shiftCoordinates(const MapCoordVector& flags, const MapCoordVec
 	bool ok_in, ok_out;
 	MapCoordF segment_start, 
 	          right_vector, end_right_vector,
+	          vector_in, vector_out,
 	          tangent_in, tangent_out, 
 	          middle0, middle1;
 	int last_i = size-1;
@@ -462,13 +464,31 @@ void LineSymbol::shiftCoordinates(const MapCoordVector& flags, const MapCoordVec
 	{
 		const MapCoordF& coords_i = coords[i];
 		const MapCoord& flags_i  = flags[i];
+
+		vector_in = PathCoord::calculateIncomingTangent(coords, path_closed, i, ok_in);
+		vector_out = PathCoord::calculateOutgoingTangent(coords, path_closed, i, ok_out);
 		
-		tangent_in = PathCoord::calculateIncomingTangent(coords, path_closed, i, ok_in);
+		if (!ok_in)
+		{
+			vector_in = vector_out;
+			ok_in = ok_out;
+		}
 		if (ok_in)
+		{
+			tangent_in = vector_in;
 			tangent_in.normalize();
-		tangent_out = PathCoord::calculateOutgoingTangent(coords, path_closed, i, ok_out);
+		}
+		
+		if (!ok_out)
+		{
+			vector_out = vector_in;
+			ok_out = ok_in;
+		}
 		if (ok_out)
+		{
+			tangent_out = vector_out;
 			tangent_out.normalize();
+		}
 		
 		if (!ok_in && !ok_out)
 		{
@@ -494,11 +514,6 @@ void LineSymbol::shiftCoordinates(const MapCoordVector& flags, const MapCoordVec
 		else
 		{
 			// Corner point
-			if (!ok_in)
-				tangent_in = tangent_out;
-			else if (!ok_out)
-				tangent_out = tangent_in;
-			
 			right_vector = tangent_out;
 			right_vector.perpRight();
 			
@@ -590,54 +605,24 @@ void LineSymbol::shiftCoordinates(const MapCoordVector& flags, const MapCoordVec
 				double phi = acos(middle0.getX() * tangent_in.getX() + middle0.getY() * tangent_in.getY());
 				double tan_phi = tan(phi);
 				offset = -fabs(shift/tan_phi);
-				segment_start = coords_i + shift * right_vector - offset * tangent_out;
 				
-				// Check critical cases
-				if (tan_phi < 1.0)
+				if (tan_phi >= 1.0)
 				{
-					a = 0.0; // negative values indicate inappropriate default solution
-					double len_in = coords_i.lengthToSquared(coords[(i - 1) % size]);
-					double len_out = coords_i.lengthToSquared(coords[(i + 1) % size]);
-					if (len_in < len_out)
-					{
-						// Check if default solution is further away than start of incoming border
-						MapCoordF predecessor = coords[(i - 1) % size];
-						MapCoordF pred_right = PathCoord::calculateOutgoingTangent(coords, path_closed, (i - 1) % size, ok_in);
-						pred_right.perpRight();
-						pred_right.normalize();
-						pred_right *= shift;
-						predecessor = predecessor + pred_right - segment_start;
-						a = (pred_right.getX() * predecessor.getY() - pred_right.getY() * predecessor.getX()) * shift;
-					}
-					else
-					{
-						// Check if default solution is further away than end of outgoing border
-						MapCoordF successor = coords[(i + 1) % size];
-						MapCoordF succ_right = PathCoord::calculateIncomingTangent(coords, path_closed, (i + 1) % size, ok_out);
-						succ_right.perpRight();
-						succ_right.normalize();
-						succ_right *= shift;
-						successor = segment_start - successor - succ_right;
-						a = (succ_right.getX() * successor.getY() - succ_right.getY() * successor.getX()) * shift;
-					}
+					segment_start = coords_i + shift * right_vector - offset * tangent_out;
+				}
+				else
+				{
+					// Critical case
+					double len_in  = vector_in.length();
+					double len_out = vector_out.length();
+					a = fabs(offset) - qMin(len_in, len_out);
 						
-					if (a < -0.0) 
+					if (a < -0.0)
 					{
-						// Default solution is too far off from main path
-						if (len_in < len_out)
-						{
-							segment_start = coords_i + shift * right_vector + sqrt(len_in) * tangent_out;
-						}
-						else
-						{
-							right_vector = tangent_in;
-							right_vector.perpRight();
-							segment_start = coords_i + shift * right_vector - sqrt(len_out) * tangent_in;
-						}
-					}
+						// Offset acceptable
+						segment_start = coords_i + shift * right_vector - offset * tangent_out;
+						
 #ifdef MAPPER_FILL_MITER_LIMIT_GAP
-					else
-					{
 						// Avoid miter limit effects by extra points
 						// This is be nice for ISOM roads, but not for powerlines...
 						// TODO: add another flag to the signature?
@@ -649,8 +634,22 @@ void LineSymbol::shiftCoordinates(const MapCoordVector& flags, const MapCoordVec
 						
 						// single or second border corner point
 						segment_start = coords_i + shift * right_vector - offset * tangent_out;
-					}
 #endif
+					}
+					else
+					{
+						// Default solution is too far off from main path
+						if (len_in < len_out)
+						{
+							segment_start = coords_i + shift * right_vector + len_in * tangent_out;
+						}
+						else
+						{
+							right_vector = tangent_in;
+							right_vector.perpRight();
+							segment_start = coords_i + shift * right_vector - len_out * tangent_in;
+						}
+					}
 				}
 			}
 		}

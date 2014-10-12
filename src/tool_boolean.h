@@ -30,9 +30,10 @@
 #include <clipper.hpp>
 #include "object.h"
 
-class Symbol;
-class PathObject;
+class CombinedUndoStep;
 class PathCoord;
+class PathObject;
+class Symbol;
 
 /**
  * Wraps some helper functions for boolean operations.
@@ -76,11 +77,31 @@ public:
 	 * Executes the operation on the selected objects in the map.
 	 * 
 	 * The first selected object is treated special and must be a path.
+	 * 
+	 * @return True on success, false on error
 	 */
 	bool execute();
 	
 	/**
+	 * Executes the operation per symbol on the selected objects in the map.
+	 * 
+	 * Executes the operation independently for every group of path objects
+	 * which have got the same symbol. Objects which are not of type
+	 * Object::Path are ignored.
+	 * 
+	 * Errors during the operation are ignored, too. The original objects the
+	 * operation failed for remain unchanged. The operation continues for other
+	 * groups of objects.
+	 * 
+	 * @return True if the map was changed, false otherwise.
+	 */
+	bool executePerSymbol();
+	
+	/**
 	 * Executes the operation on particular objects.
+	 * 
+	 * This function does not (actively) change the collection of objects in the map
+	 * or the selection.
 	 * 
 	 * @param subject               The primary affected object.
 	 * @param result_objects_symbol Determines the symbol of the returned objects.
@@ -109,6 +130,24 @@ private:
 	typedef std::pair< PathObject::PathPart*, const PathCoord* > PathCoordInfo;
 	
 	typedef QHash< ClipperLib::IntPoint, PathCoordInfo > PolyMap;
+	
+	/**
+	 * Executes the operation on particular objects, and provides undo steps.
+	 * 
+	 * This function changes the collection of objects in the map and the selection.
+	 * 
+	 * @param subject               The primary affected object.
+	 * @param result_objects_symbol Determines the symbol of the returned objects.
+	 * @param in_objects            All objects to operate on. Must contain subject.
+	 * @param out_objects           The resulting collection of objects.
+	 * @param undo_step             A combined undo step which will be filled with sub steps.
+	 */
+	bool executeForObjects(
+	        PathObject* subject,
+	        Symbol* result_objects_symbol,
+	        PathObjects& in_objects,
+	        PathObjects& out_objects,
+	        CombinedUndoStep& undo_step);
 	
 	/**
 	 * Converts a ClipperLib::PolyTree to PathObjects.

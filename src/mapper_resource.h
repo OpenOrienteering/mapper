@@ -36,7 +36,6 @@ namespace MapperResource
 	 * Various types of resources which are used by Mapper.
 	 */
 	enum RESOURCE_TYPE {
-		ABOUT,
 		ASSISTANT,
 		EXAMPLE,
 		MANUAL,

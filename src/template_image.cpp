@@ -31,7 +31,6 @@
 
 TemplateImage::TemplateImage(const QString& path, Map* map) : Template(path, map)
 {
-	image = NULL;
 	undo_index = 0;
 	georef.reset(new Georeferencing());
 	
@@ -47,7 +46,7 @@ TemplateImage::~TemplateImage()
 
 bool TemplateImage::saveTemplateFile()
 {
-	return image->save(template_path);
+	return image.save(template_path);
 }
 
 bool TemplateImage::loadTypeSpecificTemplateConfiguration(QIODevice* stream, int version)
@@ -89,11 +88,11 @@ bool TemplateImage::loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml)
 
 bool TemplateImage::loadTemplateFileImpl(bool configuring)
 {
-	image = new QImage(template_path);
-	if (image->isNull())
+	QImageReader reader(template_path);
+	image = reader.read();
+	if (image.isNull())
 	{
-		delete image;
-		image = NULL;
+		setErrorString(reader.errorString());
 		return false;
 	}
 	
@@ -138,7 +137,7 @@ bool TemplateImage::postLoadConfiguration(QWidget* dialog_parent, bool& out_cent
 			// Make sure that the map is georeferenced;
 			// use the center coordinates of the image as initial reference point.
 			calculateGeoreferencing();
-			QPointF template_coords_center = georef->toProjectedCoords(MapCoordF(0.5 * (image->width() - 1), 0.5 * (image->height() - 1)));
+			QPointF template_coords_center = georef->toProjectedCoords(MapCoordF(0.5 * (image.width() - 1), 0.5 * (image.height() - 1)));
 			bool template_coords_probably_geographic =
 				template_coords_center.x() >= -90 && template_coords_center.x() <= 90 &&
 				template_coords_center.y() >= -90 && template_coords_center.y() <= 90;
@@ -190,8 +189,7 @@ bool TemplateImage::postLoadConfiguration(QWidget* dialog_parent, bool& out_cent
 
 void TemplateImage::unloadTemplateFileImpl()
 {
-	delete image;
-	image = NULL;
+	image = QImage();
 }
 
 void TemplateImage::drawTemplate(QPainter* painter, QRectF& clip_rect, double scale, bool on_screen, float opacity)
@@ -204,28 +202,29 @@ void TemplateImage::drawTemplate(QPainter* painter, QRectF& clip_rect, double sc
 	
 	painter->setRenderHint(QPainter::SmoothPixmapTransform);
 	painter->setOpacity(opacity);
-	painter->drawImage(QPointF(-image->width() * 0.5, -image->height() * 0.5), *image);
+	painter->drawImage(QPointF(-image.width() * 0.5, -image.height() * 0.5), image);
 	painter->setRenderHint(QPainter::SmoothPixmapTransform, false);
 }
 QRectF TemplateImage::getTemplateExtent()
 {
     // If the image is invalid, the extent is an empty rectangle.
-    if (!image) return QRectF();
-	return QRectF(-image->width() * 0.5, -image->height() * 0.5, image->width(), image->height());
+    if (image.isNull())
+		return QRectF();
+	return QRectF(-image.width() * 0.5, -image.height() * 0.5, image.width(), image.height());
 }
 
 QPointF TemplateImage::calcCenterOfGravity(QRgb background_color)
 {
 	int num_points = 0;
 	QPointF center = QPointF(0, 0);
-	int width = image->width();
-	int height = image->height();
+	int width = image.width();
+	int height = image.height();
 	
 	for (int x = 0; x < width; ++x)
 	{
 		for (int y = 0; y < height; ++y)
 		{
-			QRgb pixel = image->pixel(x, y);
+			QRgb pixel = image.pixel(x, y);
 			if (qAlpha(pixel) < 127 || pixel == background_color)
 				continue;
 			
@@ -236,7 +235,7 @@ QPointF TemplateImage::calcCenterOfGravity(QRgb background_color)
 	
 	if (num_points > 0)
 		center = QPointF(center.x() / num_points, center.y() / num_points);
-	center -= QPointF(image->width() * 0.5 - 0.5, image->height() * 0.5 - 0.5);
+	center -= QPointF(image.width() * 0.5 - 0.5, image.height() * 0.5 - 0.5);
 	
 	return center;
 }
@@ -250,7 +249,7 @@ void TemplateImage::updateGeoreferencing()
 Template* TemplateImage::duplicateImpl()
 {
 	TemplateImage* new_template = new TemplateImage(template_path, map);
-	new_template->image = new QImage(*image);
+	new_template->image = image;
 	new_template->available_georef = available_georef;
 	return new_template;
 }
@@ -276,14 +275,14 @@ void TemplateImage::drawOntoTemplateImpl(MapCoordF* coords, int num_coords, QCol
 	// drawEllipse() in the tested Qt version (5.1.1) seems to have a bug with antialiasing here.
 	if (all_coords_equal)
 	{
-		const float ring_radius = 0.8f;
-		const float width_factor = 2.0f;
+		const qreal ring_radius = 0.8;
+		const qreal width_factor = 2.0;
 		
 		draw_iterations = 2;
 		width *= width_factor;
 		num_coords = 5;
 		points = new QPointF[5];
-		points[0] = mapToTemplateQPoint(coords[0]) + QPointF(image->width() * 0.5f, image->height() * 0.5f);
+		points[0] = mapToTemplateQPoint(coords[0]) + QPointF(image.width() * 0.5f, image.height() * 0.5f);
 		points[1] = points[0] + QPointF(ring_radius, 0);
 		points[2] = points[0] + QPointF(0, ring_radius);
 		points[3] = points[0] + QPointF(-ring_radius, 0);
@@ -300,31 +299,31 @@ void TemplateImage::drawOntoTemplateImpl(MapCoordF* coords, int num_coords, QCol
 		QRectF bbox;
 		for (int i = 0; i < num_coords; ++i)
 		{
-			points[i] = mapToTemplateQPoint(coords[i]) + QPointF(image->width() * 0.5f, image->height() * 0.5f);
+			points[i] = mapToTemplateQPoint(coords[i]) + QPointF(image.width() * 0.5f, image.height() * 0.5f);
 			rectIncludeSafe(bbox, points[i]);
 		}
 		radius_bbox = QRect(
 			qFloor(bbox.left() - width - 1), qFloor(bbox.top() - width - 1),
 			qCeil(bbox.width() + 2*width + 2.5f), qCeil(bbox.height() + 2*width + 2.5f)
 		);
-		radius_bbox = radius_bbox.intersected(QRect(0, 0, image->width(), image->height()));
+		radius_bbox = radius_bbox.intersected(QRect(0, 0, image.width(), image.height()));
 	}
 	
 	// Create undo step
 	DrawOnImageUndoStep undo_step;
 	undo_step.x = radius_bbox.left();
 	undo_step.y = radius_bbox.top();
-	undo_step.image = image->copy(radius_bbox);
+	undo_step.image = image.copy(radius_bbox);
 	addUndoStep(undo_step);
 	
 	// This conversion is to prevent a very strange bug where the behavior of the
 	// default QPainter composition mode seems to be incorrect for images which are
 	// loaded from a file without alpha and then painted over with the eraser
-	if (color.alpha() == 0 && image->format() != QImage::Format_ARGB32_Premultiplied)
-		*image = image->convertToFormat(QImage::Format_ARGB32_Premultiplied);
+	if (color.alpha() == 0 && image.format() != QImage::Format_ARGB32_Premultiplied)
+		image = image.convertToFormat(QImage::Format_ARGB32_Premultiplied);
 	
     QPainter painter;
-	painter.begin(image);
+	painter.begin(&image);
 	if (color.alpha() == 0)
 		painter.setCompositionMode(QPainter::CompositionMode_Clear);
 	else
@@ -361,15 +360,15 @@ void TemplateImage::drawOntoTemplateUndo(bool redo)
 	
 	DrawOnImageUndoStep& step = undo_steps[step_index];
 	QImage undo_image = step.image.copy();
-	step.image = image->copy(step.x, step.y, step.image.width(), step.image.height());
-	QPainter painter(image);
+	step.image = image.copy(step.x, step.y, step.image.width(), step.image.height());
+	QPainter painter(&image);
 	painter.setCompositionMode(QPainter::CompositionMode_Source);
 	painter.drawImage(step.x, step.y, undo_image);
 	
 	undo_index += redo ? 1 : -1;
 	
-	float template_left = step.x - 0.5 * image->width();
-	float template_top = step.y - 0.5 * image->height();
+	qreal template_left = step.x - 0.5 * image.width();
+	qreal template_top = step.y - 0.5 * image.height();
 	QRectF map_bbox;
 	rectIncludeSafe(map_bbox, templateToMap(QPointF(template_left, template_top)).toQPointF());
 	rectIncludeSafe(map_bbox, templateToMap(QPointF(template_left + step.image.width(), template_top)).toQPointF());
@@ -434,13 +433,13 @@ void TemplateImage::updatePosFromGeoreferencing()
 		qDebug() << "updatePosFromGeoreferencing() failed";
 		return; // TODO: proper error message?
 	}
-	MapCoordF top_right = map->getGeoreferencing().toMapCoordF(georef.data(), MapCoordF(image->width() - 0.5, -0.5), &ok);
+	MapCoordF top_right = map->getGeoreferencing().toMapCoordF(georef.data(), MapCoordF(image.width() - 0.5, -0.5), &ok);
 	if (!ok)
 	{
 		qDebug() << "updatePosFromGeoreferencing() failed";
 		return; // TODO: proper error message?
 	}
-	MapCoordF bottom_left = map->getGeoreferencing().toMapCoordF(georef.data(), MapCoordF(-0.5, image->height() - 0.5), &ok);
+	MapCoordF bottom_left = map->getGeoreferencing().toMapCoordF(georef.data(), MapCoordF(-0.5, image.height() - 0.5), &ok);
 	if (!ok)
 	{
 		qDebug() << "updatePosFromGeoreferencing() failed";
@@ -451,13 +450,13 @@ void TemplateImage::updatePosFromGeoreferencing()
 	PassPointList pp_list;
 	
 	PassPoint pp;
-	pp.src_coords = MapCoordF(-0.5 * image->width(), -0.5 * image->height());
+	pp.src_coords = MapCoordF(-0.5 * image.width(), -0.5 * image.height());
 	pp.dest_coords = top_left;
 	pp_list.push_back(pp);
-	pp.src_coords = MapCoordF(0.5 * image->width(), -0.5 * image->height());
+	pp.src_coords = MapCoordF(0.5 * image.width(), -0.5 * image.height());
 	pp.dest_coords = top_right;
 	pp_list.push_back(pp);
-	pp.src_coords = MapCoordF(-0.5 * image->width(), 0.5 * image->height());
+	pp.src_coords = MapCoordF(-0.5 * image.width(), 0.5 * image.height());
 	pp.dest_coords = bottom_left;
 	pp_list.push_back(pp);
 	
@@ -543,13 +542,13 @@ bool TemplateImage::WorldFile::tryToLoadForImage(const QString image_path)
 
 // ### TemplateImageOpenDialog ###
 
-TemplateImageOpenDialog::TemplateImageOpenDialog(TemplateImage* image, QWidget* parent)
- : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint), image(image)
+TemplateImageOpenDialog::TemplateImageOpenDialog(TemplateImage* templ, QWidget* parent)
+ : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint), templ(templ)
 {
-	setWindowTitle(tr("Opening %1").arg(image->getTemplateFilename()));
+	setWindowTitle(tr("Opening %1").arg(templ->getTemplateFilename()));
 	
 	QLabel* size_label = new QLabel("<b>" + tr("Image size:") + QString("</b> %1 x %2")
-		.arg(image->getQImage()->width()).arg(image->getQImage()->height()));
+		.arg(templ->getImage().width()).arg(templ->getImage().height()));
 	
 	QLabel* desc_label = new QLabel(tr("Specify how to position or scale the image:"));
 	
@@ -557,19 +556,19 @@ TemplateImageOpenDialog::TemplateImageOpenDialog(TemplateImage* image, QWidget* 
 	double meters_per_pixel;
 	double dpi;
 	double scale;
-	image->getMap()->getImageTemplateDefaults(use_meters_per_pixel, meters_per_pixel, dpi, scale);
+	templ->getMap()->getImageTemplateDefaults(use_meters_per_pixel, meters_per_pixel, dpi, scale);
 	
 	QString georef_type_string;
-	if (image->getAvailableGeoreferencing() == TemplateImage::Georeferencing_WorldFile)
+	if (templ->getAvailableGeoreferencing() == TemplateImage::Georeferencing_WorldFile)
 		georef_type_string = tr("World file");
-	else if (image->getAvailableGeoreferencing() == TemplateImage::Georeferencing_GeoTiff)
+	else if (templ->getAvailableGeoreferencing() == TemplateImage::Georeferencing_GeoTiff)
 		georef_type_string = tr("GeoTiff");
-	else if (image->getAvailableGeoreferencing() == TemplateImage::Georeferencing_None)
+	else if (templ->getAvailableGeoreferencing() == TemplateImage::Georeferencing_None)
 		georef_type_string = tr("no georeferencing information");
 	
 	georef_radio = new QRadioButton(tr("Georeferenced") +
 		(georef_type_string.isEmpty() ? "" : (" (" + georef_type_string + ")")));
-	georef_radio->setEnabled(image->getAvailableGeoreferencing() != TemplateImage::Georeferencing_None);
+	georef_radio->setEnabled(templ->getAvailableGeoreferencing() != TemplateImage::Georeferencing_None);
 	
 	mpp_radio = new QRadioButton(tr("Meters per pixel:"));
 	mpp_edit = new QLineEdit((meters_per_pixel > 0) ? QString::number(meters_per_pixel) : "");
@@ -645,7 +644,7 @@ double TemplateImageOpenDialog::getMpp() const
 	else
 	{
 		double dpi = dpi_edit->text().toDouble();			// dots/pixels per inch(on map)
-		double ipd = 1 / dpi;								// inch(on map) per pixel
+		double ipd = 1.0 / dpi;								// inch(on map) per pixel
 		double mpd = ipd * 0.0254;							// meters(on map) per pixel	
 		double mpp = mpd * scale_edit->text().toDouble();	// meters(in reality) per pixel
 		return mpp;
@@ -675,6 +674,6 @@ void TemplateImageOpenDialog::setOpenEnabled()
 }
 void TemplateImageOpenDialog::doAccept()
 {
-	image->getMap()->setImageTemplateDefaults(mpp_radio->isChecked(), mpp_edit->text().toDouble(), dpi_edit->text().toDouble(), scale_edit->text().toDouble());
+	templ->getMap()->setImageTemplateDefaults(mpp_radio->isChecked(), mpp_edit->text().toDouble(), dpi_edit->text().toDouble(), scale_edit->text().toDouble());
 	accept();
 }

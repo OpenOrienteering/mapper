@@ -17,6 +17,10 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+
+#ifndef _OPENORIENTEERING_KEY_BUTTON_BAR_H_
+#define _OPENORIENTEERING_KEY_BUTTON_BAR_H_
+
 #include <QWidget>
 #include <QIcon>
 
@@ -24,6 +28,7 @@ QT_BEGIN_NAMESPACE
 class QHBoxLayout;
 class QToolButton;
 QT_END_NAMESPACE
+
 class MapEditorController;
 class MapEditorTool;
 class MapWidget;
@@ -71,3 +76,5 @@ private:
 	MapWidget* map_widget;
 	MapEditorTool* tool;
 };
+
+#endif // _OPENORIENTEERING_KEY_BUTTON_BAR_H_

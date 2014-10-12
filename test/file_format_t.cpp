@@ -25,7 +25,7 @@
 #include "../src/file_import_export.h"
 #include "../src/core/georeferencing.h"
 #include "../src/global.h"
-#include "../src/map_grid.h"
+#include "../src/core/map_grid.h"
 #include "../src/mapper_resource.h"
 #include "../src/object.h"
 #include "../src/template.h"
@@ -124,6 +124,11 @@ void FileFormatTest::saveAndLoad()
 	original->loadFrom(map_filename, NULL, NULL, false, false);
 	QVERIFY(!original->hasUnsavedChanged());
 	
+	// Fix precision of grid rotation
+	MapGrid grid = original->getGrid();
+	grid.setAdditionalRotation(Georeferencing::roundDeclination(grid.getAdditionalRotation()));
+	original->setGrid(grid);
+	
 	// If the export is lossy, do one export / import cycle first to get rid of all information which cannot be exported into this format
 	if (format->isExportLossy())
 	{
@@ -201,6 +206,10 @@ bool FileFormatTest::compareMaps(Map* a, Map* b, QString& error)
 	
 	const Georeferencing& a_geo = a->getGeoreferencing();
 	const Georeferencing& b_geo = b->getGeoreferencing();
+	if (a_geo.getProjectedCRSId() == "Local coordinates")
+		// Fix for old native OMAP test file
+		const_cast<Georeferencing&>(a_geo).setProjectedCRS("Local", a_geo.getProjectedCRSSpec());
+	
 	if (a_geo.isLocal() != b_geo.isLocal() ||
 		a_geo.getScaleDenominator() != b_geo.getScaleDenominator() ||
 		a_geo.getDeclination() != b_geo.getDeclination() ||
@@ -217,19 +226,10 @@ bool FileFormatTest::compareMaps(Map* a, Map* b, QString& error)
 		return false;
 	}
 	
-	MapGrid* a_grid = &a->getGrid();
-	MapGrid* b_grid = &b->getGrid();
+	const MapGrid& a_grid = a->getGrid();
+	const MapGrid& b_grid = b->getGrid();
 	
-	if (a_grid->isSnappingEnabled() != b_grid->isSnappingEnabled() ||
-		a_grid->getColor() != b_grid->getColor() ||
-		a_grid->getDisplayMode() != b_grid->getDisplayMode() ||
-		a_grid->getAlignment() != b_grid->getAlignment() ||
-		qAbs(a_grid->getAdditionalRotation() - b_grid->getAdditionalRotation()) > 1e-05 ||
-		a_grid->getUnit() != b_grid->getUnit() ||
-		a_grid->getHorizontalSpacing() != b_grid->getHorizontalSpacing() ||
-		a_grid->getVerticalSpacing() != b_grid->getVerticalSpacing() ||
-		a_grid->getHorizontalOffset() != b_grid->getHorizontalOffset() ||
-		a_grid->getVerticalOffset() != b_grid->getVerticalOffset())
+	if (a_grid != b_grid || !(a_grid == b_grid))
 	{
 		error = "The map grid differs.";
 		return false;

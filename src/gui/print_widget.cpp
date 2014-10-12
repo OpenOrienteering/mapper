@@ -41,12 +41,29 @@
 #include "print_tool.h"
 
 
+namespace
+{
+	QToolButton* createPrintModeButton(const QIcon& icon, const QString& label, QWidget* parent = NULL)
+	{
+		static const QSize icon_size(48,48);
+		QToolButton* button = new QToolButton(parent);
+		button->setAutoRaise(true);
+		button->setCheckable(true);
+		button->setIconSize(icon_size);
+		button->setIcon(icon);
+		button->setText(label);
+		button->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+		return button;
+	}
+}
+
+//### PrintWidget ###
 
 PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, MapEditorController* editor, QWidget* parent)
 : QWidget(parent), 
   task(UNDEFINED_TASK),
   map(map), 
-  map_printer(new MapPrinter(*map)),
+  map_printer(new MapPrinter(*map, main_view)),
   main_window(main_window), 
   main_view(main_view), 
   editor(editor),
@@ -126,13 +143,23 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 	QBoxLayout* mode_layout = new QHBoxLayout();
 	mode_widget->setLayout(mode_layout);
 	mode_layout->setMargin(0);
-	normal_mode_check = new QRadioButton(tr("Normal output"));
-	mode_layout->addWidget(normal_mode_check);
-	separation_mode_check = new QRadioButton(tr("Color separations"));
-	mode_layout->addWidget(separation_mode_check);
+	
+	vector_mode_button = createPrintModeButton(QIcon(":/images/print-mode-vector.png"), tr("Vector\ngraphics"));
+	raster_mode_button = createPrintModeButton(QIcon(":/images/print-mode-raster.png"), tr("Raster\ngraphics"));
+	separations_mode_button = createPrintModeButton(QIcon(":/images/print-mode-separations.png"), tr("Color\nseparations"));
+	vector_mode_button->setChecked(true);
+	
+	QButtonGroup* mode_button_group = new QButtonGroup(this);
+	mode_button_group->addButton(vector_mode_button);
+	mode_button_group->addButton(raster_mode_button);
+	mode_button_group->addButton(separations_mode_button);
+	
+	mode_layout->addWidget(vector_mode_button);
+	mode_layout->addWidget(raster_mode_button);
+	mode_layout->addWidget(separations_mode_button);
 	mode_layout->addStretch(1);
-	normal_mode_check->setChecked(true);
-	layout->addRow(mode_widget);
+	
+	layout->addRow(tr("Mode:"), mode_widget);
 	
 	dpi_combo = new QComboBox();
 	dpi_combo->setEditable(true);
@@ -153,8 +180,17 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 	different_scale_edit->setMinimumHeight(different_scale_height);
 	layout->addRow(different_scale_check, different_scale_edit);
 	
-	show_templates_check = new QCheckBox(tr("Show templates"));	// this must be created before its value is used to determine the default setting of page_orientation_combo
-	layout->addRow(show_templates_check);
+	// this must be created before its value is used to determine the default setting of page_orientation_combo
+	show_templates_check = new QCheckBox(tr("Show templates"));
+	QHBoxLayout* templates_warning_layout = new QHBoxLayout();
+	QIcon warning_icon = style()->standardIcon(QStyle::SP_MessageBoxWarning);
+	templates_warning_icon = new QLabel();
+	int pixmap_size = qBound(8, style()->pixelMetric(QStyle::PM_IndicatorHeight), 32);
+	templates_warning_icon->setPixmap(warning_icon.pixmap(QSize(pixmap_size, pixmap_size)));
+	templates_warning_layout->addWidget(templates_warning_icon);
+	templates_warning_text = new QLabel(tr("Template appearance may differ."));
+	templates_warning_layout->addWidget(templates_warning_text, 1);
+	layout->addRow(show_templates_check, templates_warning_layout);
 	
 	show_grid_check = new QCheckBox(tr("Show grid"));
 	layout->addRow(show_grid_check);
@@ -191,10 +227,10 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 	connect(height_edit, SIGNAL(valueChanged(double)), this, SLOT(printAreaResized()));
 	connect(overlap_edit, SIGNAL(valueChanged(double)), this, SLOT(overlapEdited(double)));
 	
+	connect(mode_button_group, SIGNAL(buttonClicked(QAbstractButton*)), this, SLOT(printModeChanged(QAbstractButton*)));
 	connect(dpi_combo->lineEdit(), SIGNAL(editingFinished()), this, SLOT(resolutionEdited()));
 	connect(different_scale_check, SIGNAL(clicked(bool)), this, SLOT(differentScaleClicked(bool)));
 	connect(different_scale_edit, SIGNAL(valueChanged(int)), this, SLOT(differentScaleEdited(int)));
-	connect(separation_mode_check, SIGNAL(toggled(bool)), this, SLOT(separationModeChanged()));
 	connect(show_templates_check, SIGNAL(clicked(bool)), this, SLOT(showTemplatesClicked(bool)));
 	connect(show_grid_check, SIGNAL(clicked(bool)), this, SLOT(showGridClicked(bool)));
 	connect(overprinting_check, SIGNAL(clicked(bool)), this, SLOT(overprintingClicked(bool)));
@@ -222,7 +258,6 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 	setPrintArea(map_printer->getPrintArea());
 	connect(map_printer, SIGNAL(printAreaChanged(QRectF)), this, SLOT(setPrintArea(QRectF)));
 	
-// 	setTarget(exporter->getSettings().target);
 	connect(map_printer, SIGNAL(targetChanged(const QPrinterInfo*)), this, SLOT(setTarget(const QPrinterInfo*)));
 	
 	connect(this, SIGNAL(finished(int)), this, SLOT(savePrinterConfig()));
@@ -456,6 +491,15 @@ void PrintWidget::setTarget(const QPrinterInfo* target)
 	print_button->setDefault(is_printer);
 	export_button->setVisible(!is_printer);
 	export_button->setDefault(!is_printer);
+	
+	bool isImageTarget = target == MapPrinter::imageTarget();
+	vector_mode_button->setEnabled(!isImageTarget);
+	separations_mode_button->setEnabled(!isImageTarget && map->hasSpotColors());
+	if (isImageTarget)
+	{
+		raster_mode_button->setChecked(true);
+		printModeChanged(raster_mode_button);
+	}
 }
 
 // slot
@@ -692,38 +736,50 @@ void PrintWidget::setOverlapEditEnabled(bool state) const
 // slot
 void PrintWidget::setOptions(const MapPrinterOptions& options)
 {
+	using namespace Util::TristateCheckbox;
+	
 	ScopedMultiSignalsBlocker block;
 	block << dpi_combo->lineEdit() << show_templates_check 
 	      << show_grid_check << overprinting_check
-	      << normal_mode_check << separation_mode_check
+	      << vector_mode_button << raster_mode_button
+	      << separations_mode_button
 	      << different_scale_check << different_scale_edit;
 	
-	if (options.print_spot_color_separations)
+	switch (options.mode)
 	{
-		separation_mode_check->setChecked(true);
-		main_view->setHideAllTemplates(true);
-		show_templates_check->setChecked(false);
-		show_templates_check->setEnabled(false);
-		main_view->setGridVisible(false);
-		show_grid_check->setChecked(false);
-		show_grid_check->setEnabled(false);
-		main_view->setOverprintingSimulationEnabled(true);
-		overprinting_check->setChecked(false);
-		overprinting_check->setEnabled(false);
-	}
-	else
-	{
-		normal_mode_check->setChecked(true);
+	default:
+		Q_ASSERT(false && "Unhandled MapPrinterOptions::MapPrinterMode");
+		// fall through in release build
+	case MapPrinterOptions::Vector:
+		vector_mode_button->setChecked(true);
+		setEnabledAndChecked(show_templates_check, options.show_templates);
+		setEnabledAndChecked(show_grid_check,      options.show_grid);
+		setDisabledAndChecked(overprinting_check,  options.simulate_overprinting);
 		main_view->setHideAllTemplates(!options.show_templates);
-		show_templates_check->setChecked(options.show_templates);
-		show_templates_check->setEnabled(true);
 		main_view->setGridVisible(options.show_grid);
-		show_grid_check->setChecked(options.show_grid);
-		show_grid_check->setEnabled(true);
+		main_view->setOverprintingSimulationEnabled(false);
+		break;
+	case MapPrinterOptions::Raster:
+		raster_mode_button->setChecked(true);
+		setEnabledAndChecked(show_templates_check, options.show_templates);
+		setEnabledAndChecked(show_grid_check,      options.show_grid);
+		setEnabledAndChecked(overprinting_check,   options.simulate_overprinting);
+		main_view->setHideAllTemplates(!options.show_templates);
+		main_view->setGridVisible(options.show_grid);
 		main_view->setOverprintingSimulationEnabled(options.simulate_overprinting);
-		overprinting_check->setChecked(options.simulate_overprinting);
-		overprinting_check->setEnabled(true);
+		break;
+	case MapPrinterOptions::Separations:
+		separations_mode_button->setChecked(true);
+		setDisabledAndChecked(show_templates_check, options.show_templates);
+		setDisabledAndChecked(show_grid_check,      options.show_grid);
+		setDisabledAndChecked(overprinting_check,   options.simulate_overprinting);
+		main_view->setHideAllTemplates(true);
+		main_view->setGridVisible(false);
+		main_view->setOverprintingSimulationEnabled(true);
+		break;
 	}
+	
+	checkTemplateConfiguration();
 	
 	static QString dpi_template("%1 " + tr("dpi"));
 	dpi_combo->setEditText(dpi_template.arg(options.resolution));
@@ -821,30 +877,42 @@ void PrintWidget::differentScaleEdited(int value)
 // slot
 void PrintWidget::spotColorPresenceChanged(bool has_spot_colors)
 {
-	if (has_spot_colors)
+	separations_mode_button->setEnabled(has_spot_colors);
+	if (!has_spot_colors && separations_mode_button->isChecked())
 	{
-		separation_mode_check->setEnabled(true);
-		overprinting_check->setEnabled(true);
-	}
-	else
-	{
-		normal_mode_check->setChecked(true);
-		separation_mode_check->setEnabled(false);
-		overprinting_check->setChecked(false);
-		overprinting_check->setEnabled(false);
+		map_printer->setMode(MapPrinterOptions::Vector);
 	}
 }
 
 // slot
-void PrintWidget::separationModeChanged()
+void PrintWidget::printModeChanged(QAbstractButton* button)
 {
-	map_printer->setPrintSpotColorSeparations(separation_mode_check->isChecked());
+	if (button == vector_mode_button)
+	{
+		map_printer->setMode(MapPrinterOptions::Vector);
+	}
+	else if (button == raster_mode_button)
+	{
+		map_printer->setMode(MapPrinterOptions::Raster);
+	}
+	else
+	{
+		map_printer->setMode(MapPrinterOptions::Separations);
+	}
 }
 
 // slot
 void PrintWidget::showTemplatesClicked(bool checked)
 {
 	map_printer->setPrintTemplates(checked, main_view);
+	checkTemplateConfiguration();
+}
+
+void PrintWidget::checkTemplateConfiguration()
+{
+	bool visibility = vector_mode_button->isChecked() && show_templates_check->isChecked();
+	templates_warning_icon->setVisible(visibility);
+	templates_warning_text->setVisible(visibility);
 }
 
 // slot
@@ -876,7 +944,7 @@ void PrintWidget::previewClicked()
 	
 	QPrinter* printer = map_printer->makePrinter();
 	printer->setCreator(main_window->appName());
-	printer->setDocName(QFileInfo(main_window->getCurrentFilePath()).baseName());
+	printer->setDocName(QFileInfo(main_window->currentPath()).baseName());
 #if !defined(Q_OS_MAC)
 	QPrintPreviewDialog preview(printer, this);
 #else
@@ -963,7 +1031,7 @@ void PrintWidget::printClicked()
 	QPrinter* printer = map_printer->makePrinter();
 	printer->setNumCopies(copies_edit->value());
 	printer->setCreator(main_window->appName());
-	printer->setDocName(QFileInfo(main_window->getCurrentFilePath()).baseName());
+	printer->setDocName(QFileInfo(main_window->currentPath()).baseName());
 	if (map_printer->getTarget() == MapPrinter::pdfTarget())
 	{
 		printer->setOutputFormat(QPrinter::PdfFormat);

@@ -66,7 +66,7 @@ bool TranslationUtil::load(QTranslator& translator, QString translation_name)
 		if (translator.load(translation_name, translation_dir))
 			return true;
 	}
-	return false;
+	return (translator.load(translation_name));
 }
 
 

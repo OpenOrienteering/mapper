@@ -59,6 +59,9 @@
   <file>images/point-handles-2x.png</file>
   <file>images/point-handles-4x.png</file>
   <file>images/print.png</file>
+  <file>images/print-mode-vector.png</file>
+  <file>images/print-mode-raster.png</file>
+  <file>images/print-mode-separations.png</file>
   <file>images/redo.png</file>
   <file>images/rotate-map.png</file>
   <file>images/save.png</file>

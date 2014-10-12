@@ -130,7 +130,7 @@ bool LatLon::operator==(const LatLon& rhs) const
 inline
 bool LatLon::operator!=(const LatLon& rhs) const
 {
-	return (this->latitude_value != rhs.latitude_value) || (this->longitude_value != rhs.longitude_value);
+	return !(*this == rhs);
 }
 
 #endif

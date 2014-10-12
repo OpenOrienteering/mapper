@@ -166,8 +166,8 @@ protected slots:
 	 */
 	void spotColorPresenceChanged(bool has_spot_colors);
 	
-	/** This slot reacts to changes in the normal/separation mode radio buttons. */
-	void separationModeChanged();
+	/** This slot reacts to changes in the print mode buttons. */
+	void printModeChanged(QAbstractButton* button);
 	
 	/** This slot reacts to changes of the "Show template" option. */
 	void showTemplatesClicked(bool checked);
@@ -215,6 +215,9 @@ protected:
 	/** Sets the enabled state of the page overlap field. */
 	void setOverlapEditEnabled(bool state = true) const;
 	
+	/** Checks whether the template order warning needs to be displayed. */
+	void checkTemplateConfiguration();
+	
 private:
 	enum Exporters
 	{
@@ -235,6 +238,8 @@ private:
 	
 	QComboBox* dpi_combo;
 	QCheckBox* show_templates_check;
+	QLabel* templates_warning_icon;
+	QLabel* templates_warning_text;
 	QCheckBox* show_grid_check;
 	QCheckBox* overprinting_check;
 	QCheckBox* different_scale_check;
@@ -248,8 +253,9 @@ private:
 	QDoubleSpinBox* height_edit;
 	QDoubleSpinBox* overlap_edit;
 	
-	QRadioButton* normal_mode_check;
-	QRadioButton* separation_mode_check;
+	QToolButton* vector_mode_button;
+	QToolButton* raster_mode_button;
+	QToolButton* separations_mode_button;
 	
 	QPushButton* preview_button;
 	QPushButton* print_button;

@@ -627,6 +627,7 @@ void TextRenderable::render(QPainter& painter, QRectF& bounding_box, bool force_
 	{
 		QPen pen(painter.pen());
 		pen.setJoinStyle(Qt::MiterJoin);
+		pen.setMiterLimit(0.5);
 		painter.setPen(pen);
 	}
 	

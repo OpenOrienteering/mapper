@@ -36,7 +36,7 @@ RotateMapDialog::RotateMapDialog(QWidget* parent, Map* map) : QDialog(parent, Qt
 	
 	layout->addRow(Util::Headline::create(tr("Rotation parameters")));
 	
-	rotation_edit = Util::SpinBox::create(1, -180.0, +180.0, trUtf8("°"));
+	rotation_edit = Util::SpinBox::create(Georeferencing::declinationPrecision(), -180.0, +180.0, trUtf8("°"));
 	rotation_edit->setWrapping(true);
 	layout->addRow(tr("Angle (counter-clockwise):"), rotation_edit);
 	

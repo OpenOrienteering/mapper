@@ -75,7 +75,7 @@ bool DrawFreehandTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, M
 {
 	Q_UNUSED(widget);
 	
-	bool mouse_down = drawMouseButtonHeld(event);
+	bool mouse_down = containsDrawingButtons(event->buttons());
 	
 	if (!mouse_down)
 	{

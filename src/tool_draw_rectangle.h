@@ -61,7 +61,12 @@ protected:
 	virtual void finishDrawing();
 	virtual void abortDrawing();
 	
-	/** Deletes the last drawn point. */
+	/**
+	 * Deletes the last drawn point.
+	 * 
+	 * Calls updateRectangle() which will set the than-last point
+	 * to constrained_pos_map.
+	 */
 	void undoLastPoint();
 	
 	/** Picks a direction from an existing object. */
@@ -88,7 +93,11 @@ protected:
 	 */
 	void deleteClosePoint();
 	
-	/** Recalculates the rectangle shape based on the current input. */
+	/**
+	 * Recalculates the rectangle shape based on the current input.
+	 * 
+	 * This will set the "last" point to constrained_pos_map.
+	 */
 	void updateRectangle();
 	
 	void updateStatusText();

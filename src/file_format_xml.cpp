@@ -32,11 +32,11 @@
 
 #include "core/georeferencing.h"
 #include "core/map_color.h"
+#include "core/map_grid.h"
 #include "core/map_printer.h"
 #include "core/map_view.h"
 #include "file_import_export.h"
 #include "map.h"
-#include "map_grid.h"
 #include "object.h"
 #include "object_text.h"
 #include "settings.h"
@@ -480,6 +480,15 @@ void XMLFileImporter::importGeoreferencing(bool load_symbols_only)
 	Georeferencing georef;
 	georef.load(xml, load_symbols_only);
 	map->setGeoreferencing(georef);
+	if (!georef.isValid() && georef.getState() != Georeferencing::ScaleOnly)
+	{
+		QString error_text = georef.getErrorText();
+		if (error_text.isEmpty())
+			error_text = tr("Unknown error");
+		addWarning(tr("Unsupported or invalid georeferencing specification '%1': %2").
+		           arg(georef.getProjectedCRSSpec()).
+		           arg(error_text));
+	}
 }
 
 /** Helper for delayed actions */
@@ -751,7 +760,7 @@ void XMLFileImporter::importView()
 	while (xml.readNextStartElement())
 	{
 		if (xml.name() == literal::grid)
-			map->getGrid().load(xml);
+			map->setGrid(MapGrid().load(xml));
 		else if (xml.name() == literal::map_view)
 			view->load(xml);
 		else

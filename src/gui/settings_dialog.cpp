@@ -381,21 +381,21 @@ GeneralPage::GeneralPage(QWidget* parent) : SettingsPage(parent)
 	
 	// Possible point: limit size of undo/redo journal
 	
-	int auto_save_interval = Settings::getInstance().getSetting(Settings::General_AutoSaveInterval).toInt();
+	int autosave_interval = Settings::getInstance().getSetting(Settings::General_AutosaveInterval).toInt();
 	
 	row++;
-	QCheckBox* auto_save_check = new QCheckBox(tr("Save information for automatic recovery"));
-	auto_save_check->setChecked(auto_save_interval > 0);
-	layout->addWidget(auto_save_check, row, 1, 1, 2);
+	QCheckBox* autosave_check = new QCheckBox(tr("Save information for automatic recovery"));
+	autosave_check->setChecked(autosave_interval > 0);
+	layout->addWidget(autosave_check, row, 1, 1, 2);
 	
 	row++;
-	auto_save_interval_label = new QLabel(tr("Recovery information saving interval:"));
-	layout->addWidget(auto_save_interval_label, row, 1);
+	autosave_interval_label = new QLabel(tr("Recovery information saving interval:"));
+	layout->addWidget(autosave_interval_label, row, 1);
 	
-	auto_save_interval_edit = Util::SpinBox::create(1, 120, tr("min", "unit minutes"), 1);
-	auto_save_interval_edit->setValue(qAbs(auto_save_interval));
-	auto_save_interval_edit->setEnabled(auto_save_interval > 0);
-	layout->addWidget(auto_save_interval_edit, row, 2);
+	autosave_interval_edit = Util::SpinBox::create(1, 120, tr("min", "unit minutes"), 1);
+	autosave_interval_edit->setValue(qAbs(autosave_interval));
+	autosave_interval_edit->setEnabled(autosave_interval > 0);
+	layout->addWidget(autosave_interval_edit, row, 2);
 	
 	row++;
 	layout->addItem(Util::SpacerItem::create(this), row, 1);
@@ -449,8 +449,8 @@ GeneralPage::GeneralPage(QWidget* parent) : SettingsPage(parent)
 	connect(tips_visible_check, SIGNAL(clicked(bool)), this, SLOT(tipsVisibleClicked(bool)));
 	connect(encoding_box, SIGNAL(currentTextChanged(QString)), this, SLOT(encodingChanged(QString)));
 	connect(ocd_importer_check, SIGNAL(clicked(bool)), this, SLOT(ocdImporterClicked(bool)));
-	connect(auto_save_check, SIGNAL(clicked(bool)), this, SLOT(autoSaveChanged(bool)));
-	connect(auto_save_interval_edit, SIGNAL(valueChanged(int)), this, SLOT(autoSaveIntervalChanged(int)));
+	connect(autosave_check, SIGNAL(clicked(bool)), this, SLOT(autosaveChanged(bool)));
+	connect(autosave_interval_edit, SIGNAL(valueChanged(int)), this, SLOT(autosaveIntervalChanged(int)));
 	connect(compatibility_check, SIGNAL(clicked(bool)), this, SLOT(retainCompatibilityChanged(bool)));
 }
 
@@ -622,20 +622,20 @@ void GeneralPage::openTranslationFileDialog()
 	updateLanguageBox();
 }
 
-void GeneralPage::autoSaveChanged(bool state)
+void GeneralPage::autosaveChanged(bool state)
 {
-	auto_save_interval_label->setEnabled(state);
-	auto_save_interval_edit->setEnabled(state);
+	autosave_interval_label->setEnabled(state);
+	autosave_interval_edit->setEnabled(state);
 	
-	int interval = auto_save_interval_edit->value();
+	int interval = autosave_interval_edit->value();
 	if (!state)
 		interval = -interval;
-	changes.insert(Settings::getInstance().getSettingPath(Settings::General_AutoSaveInterval), interval);
+	changes.insert(Settings::getInstance().getSettingPath(Settings::General_AutosaveInterval), interval);
 }
 
-void GeneralPage::autoSaveIntervalChanged(int value)
+void GeneralPage::autosaveIntervalChanged(int value)
 {
-	changes.insert(Settings::getInstance().getSettingPath(Settings::General_AutoSaveInterval), value);
+	changes.insert(Settings::getInstance().getSettingPath(Settings::General_AutosaveInterval), value);
 }
 
 void GeneralPage::retainCompatibilityChanged(bool state)

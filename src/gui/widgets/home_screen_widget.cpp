@@ -20,6 +20,7 @@
 
 #include "home_screen_widget.h"
 
+#include <QProcessEnvironment>
 #include <QtWidgets>
 
 #include "../home_screen_controller.h"
@@ -409,18 +410,41 @@ QWidget* HomeScreenWidgetMobile::makeFileListWidget(HomeScreenController* contro
 	file_list_stack->addWidget(file_list);
 	
 	// Look for map files at device-specific locations
-//#ifdef Q_OS_ANDROID
-	addFilesToFileList(file_list, "/OOMapper");
-	addFilesToFileList(file_list, "/sdcard/OOMapper");
+#ifdef Q_OS_ANDROID
+	QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
+	// Actual SD card mount points may be found in secondary storage
+	QStringList folder_list = env.value("SECONDARY_STORAGE").split(':');
+	// The primary volume that can be accessed externally (from PC)
+	QString external_storage = env.value("EXTERNAL_STORAGE");
+	if (!external_storage.isEmpty())
+		folder_list.insert(0, external_storage);
+	// Optional fallback locations
+	folder_list << "/" << "/mnt" << "/mnt/sdcard" << "/sdcard" << "/storage";
+	
+	bool oomapper_found = false;
+	Q_FOREACH(QString path, folder_list)
+	{
+		if (oomapper_found && path == "/")
+			// Don't need fallback (avoid duplicate entries)
+			break;
+		
+		QDir dir(path);
+		if (dir.exists("OOMapper"))
+		{
+			oomapper_found = true;
+			addFilesToFileList(file_list, dir.filePath("OOMapper"));
+		}
+	}
+#endif
+	
 	file_list->sortItems();
 	if (file_list->count() == 0)
 	{
-		QLabel* message_label = new QLabel(tr("No map files found!<br/><br/>Copy a map file to /OOMapper or /sdcard/OOMapper to list it here."));
+		QLabel* message_label = new QLabel(tr("No map files found!<br/><br/>Copy map files to a top-level folder named 'OOMapper' on the device or a memory card."));
 		message_label->setWordWrap(true);
 		file_list_stack->addWidget(message_label);
 		file_list_stack->setCurrentWidget(message_label);
 	}
-//#endif
 	
 	connect(file_list, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(fileClicked(QListWidgetItem*)));
 	

@@ -23,6 +23,9 @@
 #include <QItemDelegate>
 #include <QStyledItemDelegate>
 
+QT_BEGIN_NAMESPACE
+class QTextDocument;
+QT_END_NAMESPACE
 
 /**
  * An item delegate which respects colors from the model even when the item is selected.
@@ -165,6 +168,63 @@ public:
 private:
 	const int step;
 	QString unit;
+};
+
+
+
+/**
+ * This delegate renders items as QTextDocument objects.
+ * 
+ * The text documents have to be provided through an object which implements
+ * the TextDocItemDelegate::Provider interface.
+ */
+class TextDocItemDelegate : public QStyledItemDelegate
+{
+Q_OBJECT
+public:
+	/**
+	 * An interface which provides const QTextDocument objects for a given index.
+	 */
+	class Provider
+	{
+	public:
+		/**
+		 * Returns the QTextDocument corresponding to the given index, or NULL.
+		 */
+		virtual const QTextDocument* textDoc(const QModelIndex& index) const = 0;
+	};
+	
+	/**
+	 * Constructs a new delegate.
+	 * 
+	 * The provider must not be NULL.
+	 */
+	TextDocItemDelegate(QObject* parent, const Provider* provider);
+	
+	/**
+	 * Destructor.
+	 */
+	virtual ~TextDocItemDelegate();
+	
+	/**
+	 * Paints the item using a QTextDocument if one is available from the Provider.
+	 * 
+	 * @override
+	 */
+	virtual void paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex & index) const;
+	
+	/**
+	* Determines the size hint from a QTextDocument if one is available from the Provider.
+	* 
+	* @override
+	*/
+	virtual QSize sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const;
+	
+protected:
+	/**
+	 * The QTextDocument provider.
+	 */
+	const Provider* const provider;
 };
 
 #endif

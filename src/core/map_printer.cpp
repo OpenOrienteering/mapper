@@ -22,6 +22,7 @@
 
 #include <limits>
 
+#include <QDebug>
 #include <QPainter>
 #include <QXmlStreamAttributes>
 #include <QXmlStreamReader>
@@ -35,6 +36,7 @@
 #include "../core/map_view.h"
 #include "../map.h"
 #include "../settings.h"
+#include "../template.h"
 #include "../util.h"
 #include "../util/xml_stream_util.h"
 
@@ -48,6 +50,10 @@ namespace literal
 	static const QLatin1String templates_visible("templates_visible");
 	static const QLatin1String grid_visible("grid_visible");
 	static const QLatin1String simulate_overprinting("simulate_overprinting");
+	static const QLatin1String mode("mode");
+	static const QLatin1String vector("vector");
+	static const QLatin1String raster("raster");
+	static const QLatin1String separations("separations");
 	static const QLatin1String page_format("page_format");
 	static const QLatin1String paper_size("paper_size");
 	static const QLatin1String orientation("orientation");
@@ -82,14 +88,26 @@ MapPrinterPageFormat::MapPrinterPageFormat(QSizeF page_rect_size, qreal margin)
 	paper_dimensions = page_rect.size() + QSizeF(double_margin, double_margin);
 }
 
-
+bool operator==(const MapPrinterPageFormat& lhs, const MapPrinterPageFormat& rhs)
+{
+	return  lhs.paper_size  == rhs.paper_size &&
+	        lhs.orientation == rhs.orientation &&
+	        fabs(lhs.h_overlap - rhs.h_overlap) < 0.05 &&
+	        fabs(lhs.v_overlap - rhs.v_overlap) < 0.05 &&
+	        fabs(lhs.page_rect.top() - rhs.page_rect.top()) < 0.05 &&
+	        fabs(lhs.page_rect.left() - rhs.page_rect.left()) < 0.05 &&
+	        fabs(lhs.page_rect.right() - rhs.page_rect.right()) < 0.05 &&
+	        fabs(lhs.page_rect.bottom() - rhs.page_rect.bottom()) < 0.05 &&
+	        fabs(lhs.paper_dimensions.width() - rhs.paper_dimensions.width()) < 0.05 &&
+	        fabs(lhs.paper_dimensions.height() - rhs.paper_dimensions.height()) < 0.05;
+}
 
 // ### MapPrinterOptions ###
 
-MapPrinterOptions::MapPrinterOptions(unsigned int scale, unsigned int resolution)
+MapPrinterOptions::MapPrinterOptions(unsigned int scale, unsigned int resolution, MapPrinterMode mode)
  : scale(scale),
    resolution(resolution),
-   print_spot_color_separations(false),
+   mode(mode),
    show_templates(false),
    show_grid(false),
    simulate_overprinting(false)
@@ -131,6 +149,18 @@ MapPrinterConfig::MapPrinterConfig(const Map& map, QXmlStreamReader& xml)
 	options.show_templates = printer_config_element.attribute<bool>(literal::templates_visible);
 	options.show_grid = printer_config_element.attribute<bool>(literal::grid_visible);
 	options.simulate_overprinting = printer_config_element.attribute<bool>(literal::simulate_overprinting);
+	QStringRef mode = printer_config_element.attribute<QStringRef>(literal::mode);
+	if (!mode.isEmpty())
+	{
+		if (mode == literal::vector)
+			options.mode = MapPrinterOptions::Vector;
+		else if (mode == literal::raster)
+			options.mode = MapPrinterOptions::Raster;
+		else if (mode == literal::separations)
+			options.mode = MapPrinterOptions::Separations;
+		else
+			qDebug() << "Unsupported map printing mode:" << mode;
+	}
 	
 	while (xml.readNextStartElement())
 	{
@@ -193,7 +223,22 @@ void MapPrinterConfig::save(QXmlStreamWriter& xml, const QLatin1String& element_
 	printer_config_element.writeAttribute(literal::templates_visible, options.show_templates);
 	printer_config_element.writeAttribute(literal::grid_visible, options.show_grid);
 	printer_config_element.writeAttribute(literal::simulate_overprinting, options.simulate_overprinting);
-	
+	switch (options.mode)
+	{
+	case MapPrinterOptions::Vector:
+		printer_config_element.writeAttribute(literal::mode, literal::vector);
+		break;
+	case MapPrinterOptions::Raster:
+		printer_config_element.writeAttribute(literal::mode, literal::raster);
+		break;
+	case MapPrinterOptions::Separations:
+		printer_config_element.writeAttribute(literal::mode, literal::separations);
+		break;
+	default:
+		// Do not fail on saving
+		qDebug() << "Unsupported map printig mode:" << options.mode;
+	}
+
 	{
 		XmlElementWriter page_format_element(xml, literal::page_format);
 #ifdef QT_PRINTSUPPORT_LIB
@@ -277,11 +322,11 @@ const QHash< int, const char* >& MapPrinter::paperSizeNames()
 }
 
 
-MapPrinter::MapPrinter(Map& map, QObject* parent)
+MapPrinter::MapPrinter(Map& map, MapView* view, QObject* parent)
 : QObject(parent),
   MapPrinterConfig(map.printerConfig()),
   map(map),
-  view(NULL),
+  view(view),
   target(NULL)
 {
 	scale_adjustment = map.getScaleDenominator() / (qreal) options.scale;
@@ -351,7 +396,7 @@ QPrinter* MapPrinter::makePrinter() const
 		printer->setPaperSize((QPrinter::PaperSize)page_format.paper_size);
 		printer->setOrientation((page_format.orientation == MapPrinterPageFormat::Portrait) ? QPrinter::Portrait : QPrinter::Landscape);
 	}
-	printer->setColorMode(options.print_spot_color_separations ? QPrinter::GrayScale : QPrinter::Color);
+	printer->setColorMode(separationsModeSelected() ? QPrinter::GrayScale : QPrinter::Color);
 	printer->setResolution(options.resolution);
 	
 	if (target == imageTarget() || page_format.paper_size == QPrinter::Custom)
@@ -527,11 +572,11 @@ void MapPrinter::setScale(const unsigned int value)
 }
 
 // slot
-void MapPrinter::setPrintSpotColorSeparations(bool enabled)
+void MapPrinter::setMode(const MapPrinterOptions::MapPrinterMode mode)
 {
-	if (options.print_spot_color_separations != enabled)
+	if (options.mode != mode)
 	{
-		options.print_spot_color_separations = enabled;
+		options.mode = mode;
 		emit optionsChanged(options);
 	}
 }
@@ -653,6 +698,34 @@ void MapPrinter::takePrinterSettings(const QPrinter* printer)
 	setResolution(printer->resolution());
 }
 
+// local
+void drawBuffer(QPainter* device_painter, const QImage* page_buffer, qreal pixel2units)
+{
+	Q_ASSERT(page_buffer);
+	
+	device_painter->save();
+	
+#if defined(Q_OS_MAC)
+	// Workaround for miss-scaled image export output
+	int logical_dpi = device_painter->device()->logicalDpiX();
+	if (logical_dpi != 0)
+	{
+		int physical_dpi = device_painter->device()->physicalDpiX();
+		if (physical_dpi != 0 && logical_dpi != physical_dpi)
+		{
+			qreal s = (qreal)logical_dpi / (qreal)physical_dpi;
+			//qreal s = physical_dpi / logical_dpi;
+			device_painter->scale(s, s);
+		}
+	}
+#endif
+	
+	device_painter->scale(pixel2units, pixel2units);
+	device_painter->setRenderHint(QPainter::SmoothPixmapTransform, false);
+	device_painter->drawImage(0, 0, *page_buffer);
+	device_painter->restore();
+}
+
 void MapPrinter::drawPage(QPainter* device_painter, float units_per_inch, const QRectF& page_extent, bool white_background, QImage* page_buffer) const
 {
 	device_painter->save();
@@ -660,24 +733,7 @@ void MapPrinter::drawPage(QPainter* device_painter, float units_per_inch, const 
 	device_painter->setRenderHint(QPainter::Antialiasing);
 	device_painter->setRenderHint(QPainter::SmoothPixmapTransform);
 	
-	// Painting transparently is not supported for print devices.
-	// If there are any transparent features, use a temporary image 
-	// which is drawn on the device printer as last step.
-	// If the target is an image, use the temporary image to enforce
-	// the given resolution during preview.
-	bool have_transparency = options.simulate_overprinting || target == imageTarget();
-	if (!have_transparency && view != NULL)
-	{
-		have_transparency = view->getMapVisibility()->visible && view->getMapVisibility()->opacity < 1.0f;
-		if (options.show_templates)
-		{
-			for (int i = 0; i < map.getNumTemplates() && !have_transparency; ++i)
-			{
-				TemplateVisibility* visibility = view->getTemplateVisibility(map.getTemplate(i));
-				have_transparency = visibility->visible && visibility->opacity < 1.0f;
-			}
-		}
-	}
+	QPainter* painter = device_painter;
 	
 	// Logical units per mm
 	qreal units_per_mm = units_per_inch / 25.4;
@@ -688,9 +744,60 @@ void MapPrinter::drawPage(QPainter* device_painter, float units_per_inch, const 
 	// The current painter's resolution
 	qreal scale = units_per_mm;
 	
-	QPainter* painter = device_painter;
+	/*
+	 * Analyse need for page buffer
+	 * 
+	 * Painting raster images with opacity is not supported on print devices.
+	 * This can only be solved by merging the images before sending them to
+	 * the printer. For the map itself, this may result in loss of sharpness
+	 * and increase in data volume.
+	 * 
+	 * In vector mode, a page buffer (raster image) is used to collect background
+	 * templates and raster foreground templates. After this buffer is sent to
+	 * to the printer, map, grid, and
+	 * non-raster foreground templates are drawn on top of it.
+	 * 
+	 * In raster mode, all map features are drawn to in regular order to
+	 * temporary images first.
+	 * 
+	 * When the target is an image, use the temporary image to enforce the given
+	 * resolution.
+	 */
+	bool use_buffer_for_map = (options.mode == MapPrinterOptions::Raster || target == imageTarget());
+	bool use_buffer_for_background = use_buffer_for_map && options.show_templates;
+	bool use_buffer_for_foreground = use_buffer_for_map && options.show_templates;
+	if (view != NULL && options.show_templates)
+	{
+		if (!use_buffer_for_background)
+		{
+			for (int i = 0; i < map.getFirstFrontTemplate() && !use_buffer_for_background; ++i)
+			{
+				if (map.getTemplate(i)->isRasterGraphics())
+				{
+					TemplateVisibility* visibility = view->getTemplateVisibility(map.getTemplate(i));
+					use_buffer_for_background = visibility->visible && visibility->opacity < 1.0f;
+				}
+			}
+		}
+		if (!use_buffer_for_foreground)
+		{
+			for (int i = map.getFirstFrontTemplate(); i < map.getNumTemplates() && !use_buffer_for_foreground; ++i)
+			{
+				if (map.getTemplate(i)->isRasterGraphics())
+				{
+					TemplateVisibility* visibility = view->getTemplateVisibility(map.getTemplate(i));
+					use_buffer_for_foreground = visibility->visible && visibility->opacity < 1.0f;
+				}
+			}
+		}
+	}
+	
+	// Prepare buffer if required
+	bool use_page_buffer = use_buffer_for_map ||
+	                       use_buffer_for_background ||
+	                       use_buffer_for_foreground;
 	QImage scoped_buffer;
-	if (have_transparency && !page_buffer)
+	if (use_page_buffer && !page_buffer)
 	{
 		scale = pixel_per_mm;
 		int w = qCeil(page_format.paper_dimensions.width() * scale);
@@ -709,15 +816,25 @@ void MapPrinter::drawPage(QPainter* device_painter, float units_per_inch, const 
 #endif
 		scoped_buffer = QImage(w, h, QImage::Format_RGB32);
 		page_buffer = &scoped_buffer;
-		page_buffer->fill(QColor(Qt::white));
 		painter = new QPainter(page_buffer);
 		painter->setRenderHints(device_painter->renderHints());
+	}
+	
+	/*
+	 * Prepare the common background
+	 */
+	if (use_buffer_for_background)
+	{
+		page_buffer->fill(QColor(Qt::white));
 	}
 	else if (white_background)
 	{
 		painter->fillRect(QRect(0, 0, painter->device()->width(), painter->device()->height()), Qt::white);
 	}
 	
+	/*
+	 * One-time setup of transformation and clipping
+	 */
 	// Translate for top left page margin 
 	painter->scale(scale, scale);
 	painter->translate(page_format.page_rect.left(), page_format.page_rect.top());
@@ -732,21 +849,57 @@ void MapPrinter::drawPage(QPainter* device_painter, float units_per_inch, const 
 	// Translate and clip for margins and print area
 	painter->translate(-page_extent.left(), -page_extent.top());
 	
+	QTransform transform = painter->transform();
+	
 	QRectF page_region_used(page_extent.intersected(print_area));
 	painter->setClipRect(page_region_used, Qt::ReplaceClip);
 	
+	/*
+	 * Draw templates in the background
+	 */
 	if (options.show_templates)
+	{
 		map.drawTemplates(painter, page_region_used, 0, map.getFirstFrontTemplate() - 1, view, false);
+		if (vectorModeSelected() && use_buffer_for_foreground)
+		{
+			for (int i = map.getFirstFrontTemplate(); i < map.getNumTemplates(); ++i)
+			{
+				if (map.getTemplate(i)->isRasterGraphics())
+					map.drawTemplates(painter, page_region_used, i, i, view, false);
+			}
+		}
+	}
 	
+	if (use_buffer_for_background && !use_buffer_for_map)
+	{
+		// Flush the buffer, reset painter
+		delete painter;
+		drawBuffer(device_painter, page_buffer, pixel2units);
+		
+		painter = device_painter;
+		painter->setTransform(transform);
+		painter->setClipRect(page_region_used, Qt::ReplaceClip);
+	}
+	
+	/*
+	 * Draw the map
+	 */
 	if (view == NULL || view->getMapVisibility()->visible)
 	{
 		QImage map_buffer;
 		QPainter* map_painter = painter;
-		if (have_transparency)
+		if (use_buffer_for_map)
 		{
 			// Draw map into a temporary buffer first which is printed with the map's opacity later.
 			// This prevents artifacts with overlapping objects.
-			map_buffer = QImage(page_buffer->size(), QImage::Format_ARGB32_Premultiplied);
+			if (painter == device_painter)
+			{
+				map_buffer = *page_buffer; // Use existing buffer
+			}
+			else
+			{
+				map_buffer = QImage(page_buffer->size(), QImage::Format_ARGB32_Premultiplied);
+			}
 			map_buffer.fill(QColor(Qt::transparent));
 			
 			map_painter = new QPainter(&map_buffer);
@@ -754,13 +907,16 @@ void MapPrinter::drawPage(QPainter* device_painter, float units_per_inch, const 
 			map_painter->setTransform(painter->transform());
 		}
 		
-		if (options.simulate_overprinting)
+		if (rasterModeSelected() && options.simulate_overprinting)
 			map.drawOverprintingSimulation(map_painter, page_region_used, false, scale, false, false);
+		else if (vectorModeSelected() && view)
+			map.draw(map_painter, page_region_used, false, scale, false, false, view->getMapVisibility()->opacity);
 		else
 			map.draw(map_painter, page_region_used, false, scale, false, false);
 			
 		if (map_painter != painter)
 		{
+			// Flush the buffer
 			delete map_painter;
 			map_painter = NULL;
 			
@@ -775,38 +931,49 @@ void MapPrinter::drawPage(QPainter* device_painter, float units_per_inch, const 
 		}
 	}
 	
+	/*
+	 * Draw the grid
+	 */
 	if (options.show_grid)
 		map.drawGrid(painter, print_area, false); // Maybe replace by page_region_used?
 	
+	/*
+	 * Draw the foreground templates
+	 */
 	if (options.show_templates)
-		map.drawTemplates(painter, page_region_used, map.getFirstFrontTemplate(), map.getNumTemplates() - 1, view, false);
-	
-	// If a temporary buffer has been used, paint it on the device painter
-	if (painter != device_painter)
 	{
-		delete painter; 
-		painter = NULL;
-		
-#if defined(Q_OS_MAC)
-		// Workaround for miss-scaled image export output
-		int logical_dpi = device_painter->device()->logicalDpiX(); 
-		if (logical_dpi != 0)
+		if (vectorModeSelected() && use_buffer_for_foreground)
 		{
-			int physical_dpi = device_painter->device()->physicalDpiX();
-			if (physical_dpi != 0 && logical_dpi != physical_dpi)
+			for (int i = map.getFirstFrontTemplate(); i < map.getNumTemplates(); ++i)
 			{
-				qreal s = (qreal)logical_dpi / (qreal)physical_dpi;
-				//qreal s = physical_dpi / logical_dpi;
-				device_painter->scale(s, s);
+				if (!map.getTemplate(i)->isRasterGraphics())
+					map.drawTemplates(painter, page_region_used, i, i, view, false);
 			}
 		}
-#endif
-		
-		device_painter->scale(pixel2units, pixel2units);
-		device_painter->setRenderHint(QPainter::SmoothPixmapTransform, false);
-		device_painter->drawImage(0, 0, *page_buffer);
+		else
+		{
+			if (use_buffer_for_foreground && !use_buffer_for_map)
+			{
+				page_buffer->fill(QColor(Qt::transparent));
+				painter = new QPainter(page_buffer);
+				painter->setRenderHints(device_painter->renderHints());
+				painter->setTransform(transform);
+				painter->setClipRect(page_region_used, Qt::ReplaceClip);
+			}
+			map.drawTemplates(painter, page_region_used, map.getFirstFrontTemplate(), map.getNumTemplates() - 1, view, false);
+		}
 	}
-	
+
+	/*
+	 * Cleanup: If a temporary buffer has been used, paint it on the device painter
+	 */
+	if (painter != device_painter)
+	{
+		delete painter;
+		painter = NULL;
+		device_painter->resetTransform();
+		drawBuffer(device_painter, page_buffer, pixel2units);
+	}
 	device_painter->restore();
 }
 
@@ -858,7 +1025,7 @@ void MapPrinter::printMap(QPrinter* printer)
 	int num_steps = v_page_pos.size() * h_page_pos.size();
 	int step = 0;
 	cancel_print_map = false;
-	const QString message_template( options.print_spot_color_separations ?
+	const QString message_template( (options.mode == MapPrinterOptions::Separations) ?
 	  tr("Processing separations of page %1...") :
 	  tr("Processing page %1...") );
 	
@@ -950,7 +1117,7 @@ void MapPrinter::printMap(QPrinter* printer)
 			}
 			
 			QRectF page_extent = QRectF(QPointF(hpos, vpos), extent_size);
-			if (options.print_spot_color_separations)
+			if (separationsModeSelected())
 			{
 				drawSeparationPages(printer, &painter, (float)options.resolution, page_extent);
 			}

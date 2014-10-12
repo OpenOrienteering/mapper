@@ -41,3 +41,10 @@ PROJ_PRI = \
   "ANDROID_EXTRA_LIBS += \"$$proj.target\""
 
 write_file($$OUT_PWD/proj.pri, PROJ_PRI)
+
+android {
+  proj_data.extra = $(MAKE) -C proj/Proj-prefix/src/Proj-build/nad install-data DESTDIR=$(INSTALL_ROOT) prefix= datarootdir=/assets
+  proj_data.path  = /assets/proj
+  
+  INSTALLS += proj_data
+}
