@@ -40,7 +40,7 @@ class MainWindowController;
  *  which provides the specific window content and behaviours.
  *  The controller can be exchanged while the window is visible.
  */
-class MainWindow : public QMainWindow, public Autosave
+class MainWindow : public QMainWindow, private Autosave
 {
 Q_OBJECT
 public:
@@ -200,10 +200,17 @@ public slots:
 	 */
 	virtual Autosave::AutosaveResult autosave();
 	
-	/** Close the file currently opened.
-	 *  This will close the window unless this is the last window.
+	/**
+	 * Close the file currently opened.
+	 * 
+	 * If there are changes to the current file, the user will be asked if he
+	 * wants to save it - the user may even cancel the closing of the file.
+	 * 
+	 * This will close the window unless this is the last window.
+	 * 
+	 * @return True if the file was actually closed, false otherwise.
 	 */
-	void closeFile();
+	bool closeFile();
 	
 	/** Toggle between normal window and fullscreen mode.
 	 */
@@ -234,8 +241,37 @@ public slots:
 	 */
 	void setHasUnsavedChanges(bool value);
 	
+signals:
+	/**
+	 * This signal is emitted when the actual path changes.
+	 * 
+	 * @see switchActualPath()
+	 */
+	void actualPathChanged(const QString &path);
+	
+	/**
+	 * This signal is emitted when an autosave conflict gets resolved.
+	 * 
+	 * @see setHasAutosaveConflict()
+	 */
+	void autosaveConflictResolved();
 	
 protected slots:
+	/**
+	 * Switches to a different controller and loads the given path.
+	 * 
+	 * This method is meant for switching between an original file and
+	 * autosaved versions. It does not touch current_path. The class of the new
+	 * controller is determined from the current_path (i.e. original file).
+	 * 
+	 * If the given path is the current actual_path, no change is made.
+	 * 
+	 * If the currently loaded file was modified, the user is asked whether he
+	 * really wants to switch to another file which means loosing the changes
+	 * he had made.
+	 */
+	void switchActualPath(const QString &path);
+	
 	/**
 	 * Open the files which have been registered by openPathLater().
 	 */
@@ -256,14 +292,20 @@ protected:
 	 */
 	void setCurrentPath(const QString& path);
 	
-	/** @brief Removes the autosave file if it exists. */
-	void removeAutosaveFile();
+	/**
+	 * @brief Notifies the windows of autosave conflicts.
+	 * 
+	 * An autosave conflict is the situation where a autosaved file exists
+	 * when the original file is opened. This autosaved file indicates that
+	 * the original file was not properly closed, i.e. the software crashed
+	 * before closing.
+	 */
+	void setHasAutosaveConflict(bool value);
 	
-	/** @brief Returns the autosave file path for the current path. */
-	QString autosaveFileName() const;
-	
-	/** @brief Returns the autosave file path for the given path. */
-	static QString autosaveFileName(const QString &path);
+	/**
+	 * @brief Removes the autosave file if it exists.
+	 */
+	void removeAutosaveFile() const;
 	
 	virtual bool event(QEvent* event);
 	virtual void closeEvent(QCloseEvent *event);
@@ -319,10 +361,14 @@ private:
 	
 	/// Canonical path to the currently open file or an empty string if the file was not saved yet ("untitled")
 	QString current_path;
+	/// The actual path loaded by the editor. @see switchActualPath()
+	QString actual_path;
 	/// Does the main window display a file? If yes, new controllers will be opened in new main windows instead of replacing the active controller of this one
 	bool has_opened_file;
 	/// If this window has an opened file: does this file have unsaved changes?
 	bool has_unsaved_changes;
+	/// Indicates the presence of an autosave conflict. @see setHasAutosaveConflict()
+	bool has_autosave_conflict;
 	
 	/// Was the window maximized before going into fullscreen mode? In this case, we have to show it maximized again when leaving fullscreen mode.
 	bool maximized_before_fullscreen;

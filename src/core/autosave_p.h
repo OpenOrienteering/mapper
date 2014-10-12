@@ -17,8 +17,8 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _OPENORIENTEERING_AUTO_SAVE_P_H
-#define _OPENORIENTEERING_AUTO_SAVE_P_H
+#ifndef _OPENORIENTEERING_AUTOSAVE_P_H
+#define _OPENORIENTEERING_AUTOSAVE_P_H
 
 #include <QObject>
 #include <QTimer>

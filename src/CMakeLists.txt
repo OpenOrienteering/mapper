@@ -137,6 +137,7 @@ set(Mapper_Common_SRCS
  fileformats/ocd_types.cpp
  
  gui/about_dialog.cpp
+ gui/autosave_dialog.cpp
  gui/color_dialog.cpp
  gui/georeferencing_dialog.cpp
  gui/home_screen_controller.cpp
@@ -241,6 +242,7 @@ set(Mapper_Common_MOC_INPUT
  fileformats/ocd_file_format_p.h
  
  gui/about_dialog.h
+ gui/autosave_dialog.h
  gui/color_dialog.h
  gui/configure_grid_dialog.h
  gui/georeferencing_dialog.h

@@ -17,8 +17,8 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _OPENORIENTEERING_AUTO_SAVE_H
-#define _OPENORIENTEERING_AUTO_SAVE_H
+#ifndef _OPENORIENTEERING_AUTOSAVE_H
+#define _OPENORIENTEERING_AUTOSAVE_H
 
 #include <QScopedPointer>
 
@@ -56,11 +56,17 @@ public:
 		TemporaryFailure  ///< Autosaving failed for some transient reason and shall be retried soon.
 	};
 	
+	/** @brief Returns the autosave file path for the given path. */
+	virtual QString autosavePath(const QString &path) const;
+	
 	/** @brief Performs an autosave, if possible. */
 	virtual AutosaveResult autosave() = 0;
 	
 	/** @brief Informs Autosave whether autosaving is needed or not. */
 	void setAutosaveNeeded(bool);
+	
+	/** @brief Returns true if autosave is known to be needed. */
+	bool autosaveNeeded() const;
 	
 protected:
 	/** @brief Initializes the autosave feature. */

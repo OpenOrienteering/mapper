@@ -104,6 +104,8 @@ void AutosavePrivate::autosave()
 
 
 
+// ### Autosave ###
+
 Autosave::Autosave()
 : autosave_controller(new AutosavePrivate(*this))
 {
@@ -115,7 +117,17 @@ Autosave::~Autosave()
 	// Nothing, not inlined
 }
 
+QString Autosave::autosavePath(const QString &path) const
+{
+	return path + ".autosave";
+}
+
 void Autosave::setAutosaveNeeded(bool needed)
 {
 	autosave_controller->setAutosaveNeeded(needed);
+}
+
+bool Autosave::autosaveNeeded() const
+{
+	return autosave_controller->autosaveNeeded();
 }
