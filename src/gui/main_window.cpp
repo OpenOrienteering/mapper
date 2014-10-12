@@ -361,7 +361,7 @@ void MainWindow::setHasOpenedFile(bool value)
 void MainWindow::setHasUnsavedChanges(bool value)
 {
 	has_unsaved_changes = value;
-	setAutoSaveNeeded(value);
+	setAutosaveNeeded(value);
 	updateWindowTitle();
 }
 
@@ -468,12 +468,12 @@ bool MainWindow::showSaveOnCloseDialog()
 		{
 			bool success = save();
 			if (success)
-				removeAutoSaveFile();
+				removeAutosaveFile();
 			return success;
 		}
 		else if (ret == QMessageBox::Discard)
 		{
-			removeAutoSaveFile();
+			removeAutosaveFile();
 			return true;
 		}
 		else //  ret == QMessageBox::Cancel
@@ -649,7 +649,7 @@ bool MainWindow::openPath(const QString &path)
 	}
 	
 	QString actual_path = path;
-	QString auto_save_path = autoSaveFileName(path);
+	QString auto_save_path = autosaveFileName(path);
 	if (QFileInfo(auto_save_path).exists())
 	{
 		int result = QMessageBox::warning(this, tr("File recovery"), 
@@ -727,22 +727,22 @@ void MainWindow::updateRecentFileActions()
 	open_recent_menu_inserted = num_recent_files > 0;
 }
 
-QString MainWindow::autoSaveFileName(const QString &path)
+QString MainWindow::autosaveFileName(const QString &path)
 {
 	return path % ".autosave";
 }
 
-QString MainWindow::autoSaveFileName() const
+QString MainWindow::autosaveFileName() const
 {
-	return autoSaveFileName(getCurrentFilePath());
+	return autosaveFileName(getCurrentFilePath());
 }
 
-void MainWindow::removeAutoSaveFile()
+void MainWindow::removeAutosaveFile()
 {
 	QString path = getCurrentFilePath();
 	if (!path.isEmpty())
 	{
-		QFile auto_save_file(autoSaveFileName());
+		QFile auto_save_file(autosaveFileName());
 		if (auto_save_file.exists())
 		{
 			auto_save_file.remove();
@@ -750,31 +750,31 @@ void MainWindow::removeAutoSaveFile()
 	}
 }
 
-AutoSave::AutoSaveResult MainWindow::autoSave()
+Autosave::AutosaveResult MainWindow::autosave()
 {
 	QString path = getCurrentFilePath();
 	if (path.isEmpty() || !controller)
 	{
-		return AutoSave::PermanentFailure;
+		return Autosave::PermanentFailure;
 	}
 	else if (controller->isEditingInProgress())
 	{
-		return AutoSave::TemporaryFailure;
+		return Autosave::TemporaryFailure;
 	}
 	else
 	{
-		showStatusBarMessage(tr("Auto-saving..."), 0);
-		if (controller->exportTo(autoSaveFileName(path)))
+		showStatusBarMessage(tr("Autosaving..."), 0);
+		if (controller->exportTo(autosaveFileName(path)))
 		{
 			// Success
 			clearStatusBarMessage();
-			return AutoSave::Success;
+			return Autosave::Success;
 		}
 		else
 		{
 			// Failure
-			showStatusBarMessage(tr("Auto-saving failed!"), 6000);
-			return AutoSave::PermanentFailure;
+			showStatusBarMessage(tr("Autosaving failed!"), 6000);
+			return Autosave::PermanentFailure;
 		}
 	}
 }
@@ -804,7 +804,7 @@ bool MainWindow::savePath(const QString &path)
 	if (!controller->save(path))
 		return false;
 	
-	removeAutoSaveFile();
+	removeAutosaveFile();
 	setCurrentFile(path);
 	setHasUnsavedChanges(false);
 	return true;

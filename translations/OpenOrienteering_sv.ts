@@ -2960,12 +2960,12 @@ Vill du skala om symbolerna till den valda skalan?</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="766"/>
-        <source>Auto-saving...</source>
+        <source>Autosaving...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="776"/>
-        <source>Auto-saving failed!</source>
+        <source>Autosaving failed!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

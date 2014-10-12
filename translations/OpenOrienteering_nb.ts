@@ -2642,12 +2642,12 @@ Vil du tilpasse symbolemene til den valgte målestokken?</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="766"/>
-        <source>Auto-saving...</source>
+        <source>Autosaving...</source>
         <translation>Autolagring...</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="776"/>
-        <source>Auto-saving failed!</source>
+        <source>Autosaving failed!</source>
         <translation>Feil ved autolagring!</translation>
     </message>
     <message>

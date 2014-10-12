@@ -24,7 +24,7 @@
 
 #include <QMainWindow>
 
-#include "../core/auto_save.h"
+#include "../core/autosave.h"
 #include "../file_format.h"
 
 QT_BEGIN_NAMESPACE
@@ -40,7 +40,7 @@ class MainWindowController;
  *  which provides the specific window content and behaviours.
  *  The controller can be exchanged while the window is visible.
  */
-class MainWindow : public QMainWindow, public AutoSave
+class MainWindow : public QMainWindow, public Autosave
 {
 Q_OBJECT
 public:
@@ -198,7 +198,7 @@ public slots:
 	
 	/** Save the current content to the current path.
 	 */
-	virtual AutoSave::AutoSaveResult autoSave();
+	virtual Autosave::AutosaveResult autosave();
 	
 	/** Close the file currently opened.
 	 *  This will close the window unless this is the last window.
@@ -254,14 +254,14 @@ protected:
 	 */
 	void setCurrentFile(const QString& path);
 	
-	/** @brief Removes the auto-save file if it exists. */
-	void removeAutoSaveFile();
+	/** @brief Removes the autosave file if it exists. */
+	void removeAutosaveFile();
 	
-	/** @brief Returns the auto-save file path for the current path. */
-	QString autoSaveFileName() const;
+	/** @brief Returns the autosave file path for the current path. */
+	QString autosaveFileName() const;
 	
-	/** @brief Returns the auto-save file path for the given path. */
-	static QString autoSaveFileName(const QString &path);
+	/** @brief Returns the autosave file path for the given path. */
+	static QString autosaveFileName(const QString &path);
 	
 	virtual bool event(QEvent* event);
 	virtual void closeEvent(QCloseEvent *event);

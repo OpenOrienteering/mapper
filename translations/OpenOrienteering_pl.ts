@@ -2196,11 +2196,11 @@ Czy chcesz przeskalować symbole?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Auto-saving...</source>
+        <source>Autosaving...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Auto-saving failed!</source>
+        <source>Autosaving failed!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

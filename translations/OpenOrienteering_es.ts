@@ -2650,12 +2650,12 @@ Do you want to scale the symbols to the selected scale?</source>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="766"/>
-        <source>Auto-saving...</source>
+        <source>Autosaving...</source>
         <translation>Grabación automática...</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="776"/>
-        <source>Auto-saving failed!</source>
+        <source>Autosaving failed!</source>
         <translation>¡Falló la grabación automática!</translation>
     </message>
     <message>

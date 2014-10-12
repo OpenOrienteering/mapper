@@ -2533,12 +2533,12 @@ Sollen alle Symbole auf den gewählten Maßstab skaliert werden?</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="766"/>
-        <source>Auto-saving...</source>
-        <translation>Automatisches Speicher...</translation>
+        <source>Autosaving...</source>
+        <translation>Automatisches Speichern...</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="776"/>
-        <source>Auto-saving failed!</source>
+        <source>Autosaving failed!</source>
         <translation>Automatisches Speichern fehlgeschlagen!</translation>
     </message>
     <message>

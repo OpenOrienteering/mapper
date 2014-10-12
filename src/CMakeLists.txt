@@ -124,7 +124,7 @@ set(Mapper_Common_SRCS
  file_format_ocad8.cpp
  file_format_xml.cpp
  
- core/auto_save.cpp
+ core/autosave.cpp
  core/crs_template.cpp
  core/georeferencing.cpp
  core/latlon.cpp
@@ -234,7 +234,7 @@ set(Mapper_Common_MOC_INPUT
  undo_manager.h
  util_task_dialog.h
  
- core/auto_save_p.h
+ core/autosave_p.h
  core/georeferencing.h
  core/map_printer.h
  
@@ -272,7 +272,7 @@ set(Mapper_Common_MOC_INPUT
 )
 
 set(Mapper_EXTRA_HEADERS
-  core/auto_save_p.h
+  core/autosave_p.h
   core/crs_template.h
   core/image_transparency_fixup.h
   core/latlon.h
