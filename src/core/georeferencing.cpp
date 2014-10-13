@@ -90,6 +90,7 @@ Georeferencing::Georeferencing()
 	
 	projected_crs_id = "Local";
 	projected_crs  = NULL;
+	*pj_get_errno_ref() = 0;
 	geographic_crs = pj_init_plus(geographic_crs_spec.toLatin1());
 	if (0 != *pj_get_errno_ref())
 	{
@@ -101,6 +102,7 @@ Georeferencing::Georeferencing()
 			QByteArray pj_searchpath = QDir::toNativeSeparators(location).toLocal8Bit();
 			const char* pj_searchpath_list = pj_searchpath.constData();
 			pj_set_searchpath(1, &pj_searchpath_list);
+			*pj_get_errno_ref() = 0;
 			geographic_crs = pj_init_plus(geographic_crs_spec.toLatin1());
 			if (0 == *pj_get_errno_ref())
 				break;
@@ -125,9 +127,10 @@ Georeferencing::Georeferencing(const Georeferencing& other)
 {
 	updateTransformation();
 	
-	projected_crs  = pj_init_plus(projected_crs_spec.toLatin1());
+	*pj_get_errno_ref() = 0;
 	geographic_crs = pj_init_plus(geographic_crs_spec.toLatin1());
 	Q_ASSERT(geographic_crs != NULL);
+	projected_crs  = pj_init_plus(projected_crs_spec.toLatin1());
 }
 
 Georeferencing::~Georeferencing()
@@ -157,6 +160,7 @@ Georeferencing& Georeferencing::operator=(const Georeferencing& other)
 	
 	if (projected_crs != NULL)
 		pj_free(projected_crs);
+	*pj_get_errno_ref() = 0;
 	projected_crs       = pj_init_plus(projected_crs_spec.toLatin1());
 	
 	emit stateChanged();
@@ -272,6 +276,7 @@ void Georeferencing::load(QXmlStreamReader& xml, bool load_scale_only) throw (Fi
 	emit stateChanged();
 	updateTransformation();
 	emit declinationChanged();
+	*pj_get_errno_ref() = 0;
 	projected_crs = pj_init_plus(projected_crs_spec.toLatin1());
 	emit projectionChanged();
 }
@@ -570,6 +575,7 @@ bool Georeferencing::setProjectedCRS(const QString& id, const QString& spec, std
 		else
 		{
 			projected_crs_parameters.swap(params); // params was passed by value!
+			*pj_get_errno_ref() = 0;
 			projected_crs = pj_init_plus(projected_crs_spec.toLatin1());
 			ok = (0 == *pj_get_errno_ref());
 			if (ok && state != Normal)
@@ -691,7 +697,7 @@ MapCoordF Georeferencing::toMapCoordF(Georeferencing* other, const MapCoordF& ma
 QString Georeferencing::getErrorText() const
 {
 	int err_no = *pj_get_errno_ref();
-	return (err_no == 0) ? "" : pj_strerrno(err_no);
+	return (err_no == 0) ? QString() : QString::fromLatin1(pj_strerrno(err_no));
 }
 
 double Georeferencing::radToDeg(double val)
