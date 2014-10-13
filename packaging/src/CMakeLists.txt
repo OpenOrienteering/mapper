@@ -1,5 +1,5 @@
 #
-#    Copyright 2013 Kai Pastor
+#    Copyright 2013, 2014 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -18,6 +18,9 @@
  
 message(STATUS "Configuring ${PROJECT_NAME} source packaging")
 
+set(Mapper_Source_PREFIX
+  "openorienteering-mapper-${Mapper_VERSION_MAJOR}.${Mapper_VERSION_MINOR}.${Mapper_VERSION_PATCH}")
+	
 set(Mapper_Source_FILE_NAME
   "openorienteering-mapper_${Mapper_VERSION_MAJOR}.${Mapper_VERSION_MINOR}.${Mapper_VERSION_PATCH}-src")
 	
@@ -31,5 +34,3 @@ if(GIT_EXECUTABLE)
 	  COMMAND ${CMAKE_COMMAND} -P "${CMAKE_CURRENT_BINARY_DIR}/Mapper_Source.cmake"
 	)
 endif()
-
-message(STATUS "Configuring ${PROJECT_NAME} source packaging - done")
