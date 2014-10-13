@@ -1825,6 +1825,30 @@ void MapEditorController::objectSelectionChanged()
 		return;
 	
 	updateObjectDependentActions();
+	
+	// Automatic symbol selection of selected objects
+	if (symbol_widget && !editing_in_progress)
+	{
+		bool uniform_symbol_selected = true;
+		Symbol* uniform_symbol       = NULL;
+		Map::ObjectSelection::const_iterator it_end = map->selectedObjectsEnd();
+		for (Map::ObjectSelection::const_iterator it = map->selectedObjectsBegin(); it != it_end; ++it)
+		{
+			Symbol* symbol = (*it)->getSymbol();
+			if (!uniform_symbol)
+			{
+				uniform_symbol = symbol;
+			}
+			else if (uniform_symbol != symbol)
+			{
+				uniform_symbol_selected = false;
+				break;
+			}
+		}
+		if (uniform_symbol_selected && Settings::getInstance().getSettingCached(Settings::MapEditor_ChangeSymbolWhenSelecting).toBool())
+			symbol_widget->selectSingleSymbol(uniform_symbol);
+	}
+	
 	updateSymbolAndObjectDependentActions();
 }
 
@@ -2002,10 +2026,6 @@ void MapEditorController::updateObjectDependentActions()
 	cutout_physical_act->setStatusTip(tr("Create a cutout of some objects or the whole map.") + (cutout_physical_act->isEnabled() ? "" : (" " + tr("Select a closed path object as cutout shape to activate this tool."))));
 	cutaway_physical_act->setEnabled(cutout_enabled);
 	cutaway_physical_act->setStatusTip(tr("Cut away some objects or everything in a limited area.") + (cutaway_physical_act->isEnabled() ? "" : (" " + tr("Select a closed path object as cutout shape to activate this tool."))));
-	
-	// Automatic symbol selection of selected objects
-	if (symbol_widget && uniform_symbol_selected && Settings::getInstance().getSettingCached(Settings::MapEditor_ChangeSymbolWhenSelecting).toBool())
-		symbol_widget->selectSingleSymbol(uniform_symbol);
 }
 
 void MapEditorController::updateSymbolAndObjectDependentActions()
