@@ -53,15 +53,15 @@ void SymbolSetTool::processSymbolSet_data()
 	QTest::newRow("ISSOM 1:5000") << "ISSOM" <<  5000u <<  5000u;
 	QTest::newRow("ISSOM 1:4000") << "ISSOM" <<  5000u <<  4000u;
 	
-	QTest::newRow("ISOM 1:15000 Czech") << "ISOM_Čeština"  << 15000u << 15000u;
-	QTest::newRow("ISOM 1:10000 Czech") << "ISOM_Čeština"  << 15000u << 10000u;
-	QTest::newRow("ISSOM 1:5000 Czech") << "ISSOM_Čeština" <<  5000u <<  5000u;
-	QTest::newRow("ISSOM 1:4000 Czech") << "ISSOM_Čeština" <<  5000u <<  4000u;
+	QTest::newRow("ISOM 1:15000 Czech") << "ISOM_cs"  << 15000u << 15000u;
+	QTest::newRow("ISOM 1:10000 Czech") << "ISOM_cs"  << 15000u << 10000u;
+	QTest::newRow("ISSOM 1:5000 Czech") << "ISSOM_cs" <<  5000u <<  5000u;
+	QTest::newRow("ISSOM 1:4000 Czech") << "ISSOM_cs" <<  5000u <<  4000u;
 	
-	QTest::newRow("ISOM 1:15000 Finnish") << "ISOM_suomi"  << 15000u << 15000u;
-	QTest::newRow("ISOM 1:10000 Finnish") << "ISOM_suomi"  << 15000u << 10000u;
-	QTest::newRow("ISSOM 1:5000 Finnish") << "ISSOM_suomi" <<  5000u <<  5000u;
-	QTest::newRow("ISSOM 1:4000 Finnish") << "ISSOM_suomi" <<  5000u <<  4000u;
+	QTest::newRow("ISOM 1:15000 Finnish") << "ISOM_fi"  << 15000u << 15000u;
+	QTest::newRow("ISOM 1:10000 Finnish") << "ISOM_fi"  << 15000u << 10000u;
+	QTest::newRow("ISSOM 1:5000 Finnish") << "ISSOM_fi" <<  5000u <<  5000u;
+	QTest::newRow("ISSOM 1:4000 Finnish") << "ISSOM_fi" <<  5000u <<  4000u;
 }
 
 void SymbolSetTool::processSymbolSet()
