@@ -560,6 +560,7 @@ void GeoreferencingDialog::crsEdited()
 		for (int i = 0; i < crs_template->getNumParams(); ++i)
 			crs_params.push_back(crs_edit->getParam(i));
 		georef_copy.setProjectedCRS(crs_template->getId(), spec, crs_params);
+		georef_copy.setState(Georeferencing::Normal); // Allow invalid spec
 		break;
 	case 0:
 		// None
@@ -568,6 +569,7 @@ void GeoreferencingDialog::crsEdited()
 	case 1:
 		// CRS from spec edit, no id
 		georef_copy.setProjectedCRS("Custom", spec);
+		georef_copy.setState(Georeferencing::Normal); // Allow invalid spec
 		break;
 	default:
 		Q_ASSERT(false && "Unsupported CRS item id");
