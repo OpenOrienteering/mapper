@@ -509,8 +509,9 @@ bool MainWindow::showSaveOnCloseDialog()
 			// fall through
 			
 		case QMessageBox::Yes:
+			setHasAutosaveConflict(false);
 			removeAutosaveFile();
-			// fall through
+			break;
 			
 		case QMessageBox::No:
 			setHasAutosaveConflict(false);
@@ -835,17 +836,14 @@ void MainWindow::setHasAutosaveConflict(bool value)
 	}
 }
 
-void MainWindow::removeAutosaveFile() const
+bool MainWindow::removeAutosaveFile() const
 {
-	QString path = currentPath();
-	if (!path.isEmpty() && !has_autosave_conflict)
+	if (!currentPath().isEmpty() && !has_autosave_conflict)
 	{
 		QFile autosave_file(autosavePath(currentPath()));
-		if (autosave_file.exists())
-		{
-			autosave_file.remove();
-		}
+		return !autosave_file.exists() || autosave_file.remove();
 	}
+	return false;
 }
 
 Autosave::AutosaveResult MainWindow::autosave()
@@ -904,8 +902,8 @@ bool MainWindow::savePath(const QString &path)
 	
 	setMostRecentlyUsedFile(path);
 	
-	removeAutosaveFile();
 	setHasAutosaveConflict(false);
+	removeAutosaveFile();
 	
 	if (path != current_path)
 	{
