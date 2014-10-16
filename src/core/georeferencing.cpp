@@ -507,27 +507,26 @@ void Georeferencing::setGeographicRefPoint(LatLon lat_lon, bool update_grivation
 
 void Georeferencing::updateTransformation()
 {
-	const QTransform old(to_projected);
-	to_projected.reset();
-	double scale = double(scale_denominator) / 1000.0;
+	QTransform transform;
 	if (state != ScaleOnly)
 	{
-		to_projected.translate(projected_ref_point.x(), projected_ref_point.y());
-		to_projected.rotate(-grivation);
+		transform.translate(projected_ref_point.x(), projected_ref_point.y());
+		transform.rotate(-grivation);
 	}
-	to_projected.scale(scale, -scale);
+	double scale = double(scale_denominator) / 1000.0;
+	transform.scale(scale, -scale);
 	if (state != ScaleOnly)
 	{
-		to_projected.translate(-map_ref_point.xd(), -map_ref_point.yd());
+		transform.translate(-map_ref_point.xd(), -map_ref_point.yd());
 	}
 	
-	if (old != to_projected)
+	if (to_projected != transform)
 	{
-		from_projected = to_projected.inverted();
+		to_projected   = transform;
+		from_projected = transform.inverted();
 		emit transformationChanged();
 	}
 }
-
 
 void Georeferencing::updateGrivation()
 {
