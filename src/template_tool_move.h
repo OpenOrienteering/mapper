@@ -42,7 +42,7 @@ public:
 	static QCursor* cursor;
 	
 public slots:
-	void templateDeleted(int index, Template* temp);
+	void templateDeleted(int index, const Template* temp);
 	
 private:
 	void updateDragging(MapCoordF mouse_pos_map);

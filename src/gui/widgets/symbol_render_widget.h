@@ -69,7 +69,7 @@ public:
 	/**
 	 * @brief Checks if the symbol is selected.
 	 */
-	bool isSymbolSelected(Symbol* symbol) const;
+	bool isSymbolSelected(const Symbol* symbol) const;
 	
 	/**
 	 * @brief Checks if the symbol with given index is selected.
@@ -88,7 +88,7 @@ public:
 	 * 
 	 * Deselects other symbols, if there was a different selection before.
 	 */
-	void selectSingleSymbol(Symbol *symbol);
+	void selectSingleSymbol(const Symbol* symbol);
 	
 	/**
 	 * @brief Selects the given symbol exclusively.
@@ -157,7 +157,7 @@ protected slots:
 	 * 
 	 * @see Map::symbolChanged()
 	 */
-	void symbolChanged(int pos, Symbol* new_symbol, Symbol* old_symbol);
+	void symbolChanged(int pos, const Symbol* new_symbol, const Symbol* old_symbol);
 	
 	void newPointSymbol();
 	void newLineSymbol();

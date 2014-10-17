@@ -259,10 +259,10 @@ SymbolRenderWidget::SymbolRenderWidget(Map* map, bool mobile_mode, QWidget* pare
 	// cf. http://qt-project.org/doc/qt-5/signalsandslots.html#signals
 	connect(this, SIGNAL(selectedSymbolsChanged()), this, SLOT(lockSelection()));
 
-	connect(map, SIGNAL(colorDeleted(int,const MapColor*)), this, SLOT(update()));
-	connect(map, SIGNAL(symbolAdded(int,Symbol*)), this, SLOT(updateAll()));
-	connect(map, SIGNAL(symbolDeleted(int,Symbol*)), this, SLOT(updateAll()));
-	connect(map, SIGNAL(symbolChanged(int,Symbol*,Symbol*)), this, SLOT(symbolChanged(int,Symbol*,Symbol*)));
+	connect(map, SIGNAL(colorDeleted(int, const MapColor*)), this, SLOT(update()));
+	connect(map, SIGNAL(symbolAdded(int, const Symbol*)), this, SLOT(updateAll()));
+	connect(map, SIGNAL(symbolDeleted(int, const Symbol*)), this, SLOT(updateAll()));
+	connect(map, SIGNAL(symbolChanged(int, const Symbol*, const Symbol*)), this, SLOT(symbolChanged(int, const Symbol*, const Symbol*)));
 	connect(map, SIGNAL(symbolIconChanged(int)), this, SLOT(updateSingleIcon(int)));
 }
 
@@ -271,7 +271,7 @@ SymbolRenderWidget::~SymbolRenderWidget()
 	; // nothing
 }
 
-void SymbolRenderWidget::symbolChanged(int pos, Symbol *new_symbol, Symbol *old_symbol)
+void SymbolRenderWidget::symbolChanged(int pos, const Symbol* new_symbol, const Symbol* old_symbol)
 {
 	Q_UNUSED(new_symbol);
 	Q_UNUSED(old_symbol);
@@ -334,7 +334,7 @@ Symbol* SymbolRenderWidget::singleSelectedSymbol() const
 	return map->getSymbol(*(selected_symbols.begin()));
 }
 
-bool SymbolRenderWidget::isSymbolSelected(Symbol* symbol) const
+bool SymbolRenderWidget::isSymbolSelected(const Symbol* symbol) const
 {
 	return isSymbolSelected(map->findSymbolIndex(symbol));
 }
@@ -344,7 +344,7 @@ bool SymbolRenderWidget::isSymbolSelected(int i) const
 	return selected_symbols.find(i) != selected_symbols.end();
 }
 
-void SymbolRenderWidget::selectSingleSymbol(Symbol *symbol)
+void SymbolRenderWidget::selectSingleSymbol(const Symbol *symbol)
 {
 	int index = map->findSymbolIndex(symbol);
     if (index >= 0)

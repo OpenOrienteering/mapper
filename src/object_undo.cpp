@@ -157,8 +157,8 @@ ObjectCreatingUndoStep::ObjectCreatingUndoStep(Type type, Map* map)
 : ObjectModifyingUndoStep(type, map)
 , valid(true)
 {
-	connect(map, SIGNAL(symbolChanged(int,Symbol*,Symbol*)), this, SLOT(symbolChanged(int,Symbol*,Symbol*)));
-	connect(map, SIGNAL(symbolDeleted(int,Symbol*)), this, SLOT(symbolDeleted(int,Symbol*)));
+	connect(map, SIGNAL(symbolChanged(int, const Symbol*, const Symbol*)), this, SLOT(symbolChanged(int, const Symbol*, const Symbol*)));
+	connect(map, SIGNAL(symbolDeleted(int, const Symbol*)), this, SLOT(symbolDeleted(int, const Symbol*)));
 }
 
 ObjectCreatingUndoStep::~ObjectCreatingUndoStep()
@@ -251,7 +251,7 @@ void ObjectCreatingUndoStep::loadImpl(QXmlStreamReader& xml, SymbolDictionary& s
 		ObjectModifyingUndoStep::loadImpl(xml, symbol_dict);
 }
 
-void ObjectCreatingUndoStep::symbolChanged(int pos, Symbol* new_symbol, Symbol* old_symbol)
+void ObjectCreatingUndoStep::symbolChanged(int pos, const Symbol* new_symbol, const Symbol* old_symbol)
 {
 	Q_UNUSED(pos);
 	int size = (int)objects.size();
@@ -262,7 +262,7 @@ void ObjectCreatingUndoStep::symbolChanged(int pos, Symbol* new_symbol, Symbol* 
 	}
 }
 
-void ObjectCreatingUndoStep::symbolDeleted(int pos, Symbol* old_symbol)
+void ObjectCreatingUndoStep::symbolDeleted(int pos,  const Symbol* old_symbol)
 {
 	Q_UNUSED(pos);
 	int size = (int)objects.size();
@@ -503,8 +503,8 @@ SwitchSymbolUndoStep::SwitchSymbolUndoStep(Map* map)
 : ObjectModifyingUndoStep(SwitchSymbolUndoStepType, map)
 , valid(true)
 {
-	connect(map, SIGNAL(symbolChanged(int,Symbol*,Symbol*)), this, SLOT(symbolChanged(int,Symbol*,Symbol*)));
-	connect(map, SIGNAL(symbolDeleted(int,Symbol*)), this, SLOT(symbolDeleted(int,Symbol*)));
+	connect(map, SIGNAL(symbolChanged(int, const Symbol*, const Symbol*)), this, SLOT(symbolChanged(int, const Symbol*, const Symbol*)));
+	connect(map, SIGNAL(symbolDeleted(int, const Symbol*)), this, SLOT(symbolDeleted(int, const Symbol*)));
 }
 
 SwitchSymbolUndoStep::~SwitchSymbolUndoStep()
@@ -517,7 +517,7 @@ bool SwitchSymbolUndoStep::isValid() const
 	return valid;
 }
 
-void SwitchSymbolUndoStep::addObject(int index, Symbol* target_symbol)
+void SwitchSymbolUndoStep::addObject(int index, const Symbol* target_symbol)
 {
 	ObjectModifyingUndoStep::addObject(index);
 	target_symbols.push_back(target_symbol);
@@ -596,7 +596,7 @@ void SwitchSymbolUndoStep::loadImpl(QXmlStreamReader& xml, SymbolDictionary& sym
 		ObjectModifyingUndoStep::loadImpl(xml, symbol_dict);
 }
 
-void SwitchSymbolUndoStep::symbolChanged(int pos, Symbol* new_symbol, Symbol* old_symbol)
+void SwitchSymbolUndoStep::symbolChanged(int pos, const Symbol* new_symbol, const Symbol* old_symbol)
 {
 	Q_UNUSED(pos);
 	int size = (int)target_symbols.size();
@@ -606,7 +606,7 @@ void SwitchSymbolUndoStep::symbolChanged(int pos, Symbol* new_symbol, Symbol* ol
 			target_symbols[i] = new_symbol;
 	}
 }
-void SwitchSymbolUndoStep::symbolDeleted(int pos, Symbol* old_symbol)
+void SwitchSymbolUndoStep::symbolDeleted(int pos, const Symbol* old_symbol)
 {
 	Q_UNUSED(pos);
 	int size = (int)target_symbols.size();

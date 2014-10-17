@@ -265,7 +265,7 @@ void MapEditorController::setOverrideTool(MapEditorTool* new_override_tool)
 	map_widget->setTool(override_tool ? override_tool : current_tool);
 }
 
-MapEditorTool* MapEditorController::getDefaultDrawToolForSymbol(Symbol* symbol)
+MapEditorTool* MapEditorController::getDefaultDrawToolForSymbol(const Symbol* symbol)
 {
 	if (!symbol)
 		return new EditPointTool(this, edit_tool_act);
@@ -1366,7 +1366,7 @@ void MapEditorController::copy()
 	copy_map->importMap(map, Map::ColorImport, window);
 	
 	// Export symbols and colors into copy_map
-	QHash<Symbol*, Symbol*> symbol_map;
+	QHash<const Symbol*, Symbol*> symbol_map;
 	copy_map->importMap(map, Map::MinimalSymbolImport, window, &symbol_filter, -1, true, &symbol_map);
 	
 	// Duplicate all selected objects into copy map
@@ -1830,11 +1830,11 @@ void MapEditorController::objectSelectionChanged()
 	if (symbol_widget && !editing_in_progress)
 	{
 		bool uniform_symbol_selected = true;
-		Symbol* uniform_symbol       = NULL;
+		const Symbol* uniform_symbol = NULL;
 		Map::ObjectSelection::const_iterator it_end = map->selectedObjectsEnd();
 		for (Map::ObjectSelection::const_iterator it = map->selectedObjectsBegin(); it != it_end; ++it)
 		{
-			Symbol* symbol = (*it)->getSymbol();
+			const Symbol* symbol = (*it)->getSymbol();
 			if (!uniform_symbol)
 			{
 				uniform_symbol = symbol;
@@ -1887,8 +1887,8 @@ void MapEditorController::updateObjectDependentActions()
 	int  num_selected_paths      = 0;
 	bool first_selected_is_path  = have_selection && map->getFirstSelectedObject()->getType() == Object::Path;
 	bool uniform_symbol_selected = true;
-	Symbol* uniform_symbol       = NULL;
-	Symbol* first_selected_symbol= have_selection ? map->getFirstSelectedObject()->getSymbol() : NULL;
+	const Symbol* uniform_symbol = NULL;
+	const Symbol* first_selected_symbol= have_selection ? map->getFirstSelectedObject()->getSymbol() : NULL;
 	std::vector< bool > symbols_in_selection(map->getNumSymbols(), false);
 	
 	if (!editing_in_progress)
@@ -1896,7 +1896,7 @@ void MapEditorController::updateObjectDependentActions()
 		Map::ObjectSelection::const_iterator it_end = map->selectedObjectsEnd();
 		for (Map::ObjectSelection::const_iterator it = map->selectedObjectsBegin(); it != it_end; ++it)
 		{
-			Symbol* symbol = (*it)->getSymbol();
+			const Symbol* symbol = (*it)->getSymbol();
 			int symbol_index = map->findSymbolIndex(symbol);
 			if (symbol_index >= 0 && symbol_index < (int)symbols_in_selection.size())
 				symbols_in_selection[symbol_index] = true;
@@ -3400,7 +3400,7 @@ void MapEditorController::updatePaintOnTemplateAction()
 	paint_on_template_settings_act->setEnabled(paint_on_template_act->isEnabled());
 }
 
-void MapEditorController::templateAdded(int pos, Template* temp)
+void MapEditorController::templateAdded(int pos, const Template* temp)
 {
 	Q_UNUSED(pos);
 	if (mode == MapEditor && temp->canBeDrawnOnto())
@@ -3409,7 +3409,7 @@ void MapEditorController::templateAdded(int pos, Template* temp)
 		templateAvailabilityChanged();
 }
 
-void MapEditorController::templateDeleted(int pos, Template* temp)
+void MapEditorController::templateDeleted(int pos, const Template* temp)
 {
 	Q_UNUSED(pos);
 	if (mode == MapEditor && temp->canBeDrawnOnto())
@@ -3439,8 +3439,8 @@ void MapEditorController::setMap(Map* map, bool create_new_map_view)
 	connect(&map->undoManager(), SIGNAL(canRedoChanged(bool)), this, SLOT(undoStepAvailabilityChanged()));
 	connect(&map->undoManager(), SIGNAL(canUndoChanged(bool)), this, SLOT(undoStepAvailabilityChanged()));
 	connect(map, SIGNAL(objectSelectionChanged()), this, SLOT(objectSelectionChanged()));
-	connect(map, SIGNAL(templateAdded(int,Template*)), this, SLOT(templateAdded(int,Template*)));
-	connect(map, SIGNAL(templateDeleted(int,Template*)), this, SLOT(templateDeleted(int,Template*)));
+	connect(map, SIGNAL(templateAdded(int, const Template*)), this, SLOT(templateAdded(int, const Template*)));
+	connect(map, SIGNAL(templateDeleted(int, const Template*)), this, SLOT(templateDeleted(int, const Template*)));
 	connect(map, SIGNAL(closedTemplateAvailabilityChanged()), this, SLOT(closedTemplateAvailabilityChanged()));
 	connect(map, SIGNAL(spotColorPresenceChanged(bool)), this, SLOT(spotColorPresenceChanged(bool)));
 	connect(map, SIGNAL(currentMapPartChanged(const MapPart*)), this, SLOT(updateMapPartsUI()));

@@ -84,7 +84,7 @@ void TemplateMap::unloadTemplateFileImpl()
 	template_map = NULL;
 }
 
-void TemplateMap::drawTemplate(QPainter* painter, QRectF& clip_rect, double scale, bool on_screen, float opacity)
+void TemplateMap::drawTemplate(QPainter* painter, QRectF& clip_rect, double scale, bool on_screen, float opacity) const
 {
 	if (!is_georeferenced)
 		applyTemplateTransform(painter);
@@ -109,14 +109,14 @@ void TemplateMap::drawTemplate(QPainter* painter, QRectF& clip_rect, double scal
 	template_map->draw(painter, transformed_clip_rect, false, scale, on_screen, false, opacity);
 }
 
-QRectF TemplateMap::getTemplateExtent()
+QRectF TemplateMap::getTemplateExtent() const
 {
     // If the template is invalid, the extent is an empty rectangle.
     if (!template_map) return QRectF();
 	return template_map->calculateExtent(false, false, NULL);
 }
 
-Template* TemplateMap::duplicateImpl()
+Template* TemplateMap::duplicateImpl() const
 {
 	TemplateMap* copy = new TemplateMap(template_path, map);
 	if (template_state == Loaded)

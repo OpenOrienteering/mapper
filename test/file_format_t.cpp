@@ -187,7 +187,7 @@ Map* FileFormatTest::saveAndLoadMap(Map* input, const FileFormat* format)
 	}
 }
 
-bool FileFormatTest::compareMaps(Map* a, Map* b, QString& error)
+bool FileFormatTest::compareMaps(const Map* a, const Map* b, QString& error)
 {
 	// TODO: This does not compare everything - yet ...
 	
@@ -265,7 +265,7 @@ bool FileFormatTest::compareMaps(Map* a, Map* b, QString& error)
 	}
 	for (int i = 0; i < a->getNumSymbols(); ++i)
 	{
-		Symbol* a_symbol = a->getSymbol(i);
+		const Symbol* a_symbol = a->getSymbol(i);
 		if (!a_symbol->equals(b->getSymbol(i), Qt::CaseSensitive, true))
 		{
 			error = QString("Symbol #%1 (%2) differs.").arg(i).arg(a_symbol->getName());

@@ -65,7 +65,7 @@ public:
 	static QCursor* cursor;
 	
 protected slots:
-	void setDrawingSymbol(Symbol* symbol);
+	void setDrawingSymbol(const Symbol* symbol);
 	
 	void selectionChanged(bool text_change);
 	
@@ -78,7 +78,7 @@ protected:
 	void setPreviewLetter();
 	void abortEditing();
 	
-	Symbol* drawing_symbol;
+	const Symbol* drawing_symbol;
 	
 	QPoint click_pos;
 	MapCoordF click_pos_map;

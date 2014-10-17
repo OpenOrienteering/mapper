@@ -414,6 +414,9 @@ protected:
 	SpotColorComponents components;
 };
 
+// Allow explicit use of MapColor pointers in QVariant
+Q_DECLARE_METATYPE(const MapColor*)
+
 /** Returns true if both MapColor are equal in all components. */
 bool operator==(const MapColor& lhs, const MapColor& rhs);
 

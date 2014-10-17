@@ -1607,7 +1607,7 @@ void OCAD8FileExport::doExport() throw (FileFormatException)
 		OCADColor *ocad_color = ocad_color_at(file, ocad_color_index);
 		ocad_color->number = ocad_color_index;
 		
-		MapColor* color = map->getColor(i);
+		const MapColor* color = map->getColor(i);
 		const MapColorCmyk& cmyk = color->getCmyk();
 		ocad_color->cyan = qRound(1 / 0.005f * cmyk.c);
 		ocad_color->magenta = qRound(1 / 0.005f * cmyk.m);
@@ -1621,7 +1621,7 @@ void OCAD8FileExport::doExport() throw (FileFormatException)
 	// Symbols
 	for (int i = 0; i < map->getNumSymbols(); ++i)
 	{
-		Symbol* symbol = map->getSymbol(i);
+		const Symbol* symbol = map->getSymbol(i);
 		
 		s16 index = -1;
 		if (symbol->getType() == Symbol::Point)
@@ -1648,9 +1648,9 @@ void OCAD8FileExport::doExport() throw (FileFormatException)
 	// Separate pass for combined symbols
 	for (int i = 0; i < map->getNumSymbols(); ++i)
 	{
-		Symbol* symbol = map->getSymbol(i);
+		const Symbol* symbol = map->getSymbol(i);
 		if (symbol->getType() == Symbol::Combined)
-			symbol_index.insert(symbol, exportCombinedSymbol(static_cast<CombinedSymbol*>(symbol)));
+			symbol_index.insert(symbol, exportCombinedSymbol(static_cast<const CombinedSymbol*>(symbol)));
 	}
 	
 	// Objects
@@ -1706,7 +1706,7 @@ void OCAD8FileExport::doExport() throw (FileFormatException)
 				if (object->getType() == Object::Text && symbol_index.contains(object->getSymbol()))
 				{
 					TextObject* text_object = static_cast<TextObject*>(object);
-					TextSymbol* text_symbol = static_cast<TextSymbol*>(object->getSymbol());
+					const TextSymbol* text_symbol = static_cast<const TextSymbol*>(object->getSymbol());
 					if (!text_format_map.contains(text_symbol))
 					{
 						// Adjust the formatting in the first created symbol to this object
@@ -1795,7 +1795,7 @@ void OCAD8FileExport::doExport() throw (FileFormatException)
 	// Templates
 	for (int i = map->getNumTemplates() - 1; i >= 0; --i)
 	{
-		Template* temp = map->getTemplate(i);
+		const Template* temp = map->getTemplate(i);
 		
 		QString template_path = temp->getTemplatePath();
 		if ( temp->getTemplateType() == "TemplateImage" ||
@@ -1837,7 +1837,7 @@ void OCAD8FileExport::doExport() throw (FileFormatException)
 	ocad_file_close(file);
 }
 
-void OCAD8FileExport::exportCommonSymbolFields(Symbol* symbol, OCADSymbol* ocad_symbol, int size)
+void OCAD8FileExport::exportCommonSymbolFields(const Symbol* symbol, OCADSymbol* ocad_symbol, int size)
 {
 	ocad_symbol->size = (s16)size;
 	convertPascalString(symbol->getPlainTextName(), ocad_symbol->name, 32);
@@ -1890,7 +1890,7 @@ void OCAD8FileExport::exportCommonSymbolFields(Symbol* symbol, OCADSymbol* ocad_
 	delete image;
 }
 
-int OCAD8FileExport::getPatternSize(PointSymbol* point)
+int OCAD8FileExport::getPatternSize(const PointSymbol* point)
 {
 	if (!point)
 		return 0;
@@ -1902,7 +1902,7 @@ int OCAD8FileExport::getPatternSize(PointSymbol* point)
 		if (point->getElementSymbol(i)->getType() == Symbol::Point)
 		{
 			factor = 0;
-			PointSymbol* point_symbol = static_cast<PointSymbol*>(point->getElementSymbol(i));
+			const PointSymbol* point_symbol = static_cast<const PointSymbol*>(point->getElementSymbol(i));
 			if (point_symbol->getInnerRadius() > 0 && point_symbol->getInnerColor() != NULL)
 				++factor;
 			if (point_symbol->getOuterWidth() > 0 && point_symbol->getOuterColor() != NULL)
@@ -1918,7 +1918,7 @@ int OCAD8FileExport::getPatternSize(PointSymbol* point)
 	return npts * sizeof(OCADPoint);
 }
 
-s16 OCAD8FileExport::exportPattern(PointSymbol* point, OCADPoint** buffer)
+s16 OCAD8FileExport::exportPattern(const PointSymbol* point, OCADPoint** buffer)
 {
 	if (!point)
 		return 0;
@@ -1931,14 +1931,14 @@ s16 OCAD8FileExport::exportPattern(PointSymbol* point, OCADPoint** buffer)
 	return num_coords;
 }
 
-s16 OCAD8FileExport::exportSubPattern(Object* object, Symbol* symbol, OCADPoint** buffer)
+s16 OCAD8FileExport::exportSubPattern(const Object* object, const Symbol* symbol, OCADPoint** buffer)
 {
 	s16 num_coords = 0;
 	OCADSymbolElement* element = (OCADSymbolElement*)*buffer;
 	
 	if (symbol->getType() == Symbol::Point)
 	{
-		PointSymbol* point_symbol = static_cast<PointSymbol*>(symbol);
+		const PointSymbol* point_symbol = static_cast<const PointSymbol*>(symbol);
 		if (point_symbol->getInnerRadius() > 0 && point_symbol->getInnerColor() != NULL)
 		{
 			element->type = 4;
@@ -1962,7 +1962,7 @@ s16 OCAD8FileExport::exportSubPattern(Object* object, Symbol* symbol, OCADPoint*
 	}
 	else if (symbol->getType() == Symbol::Line)
 	{
-		LineSymbol* line_symbol = static_cast<LineSymbol*>(symbol);
+		const LineSymbol* line_symbol = static_cast<const LineSymbol*>(symbol);
 		element->type = 1;
 		if (line_symbol->getCapStyle() == LineSymbol::RoundCap)
 			element->flags |= 1;
@@ -1976,7 +1976,7 @@ s16 OCAD8FileExport::exportSubPattern(Object* object, Symbol* symbol, OCADPoint*
 	}
 	else if (symbol->getType() == Symbol::Area)
 	{
-		AreaSymbol* area_symbol = static_cast<AreaSymbol*>(symbol);
+		const AreaSymbol* area_symbol = static_cast<const AreaSymbol*>(symbol);
 		element->type = 2;
 		element->color = convertColor(area_symbol->getColor());
 		(*buffer) += 2;
@@ -1988,7 +1988,7 @@ s16 OCAD8FileExport::exportSubPattern(Object* object, Symbol* symbol, OCADPoint*
 	return num_coords;
 }
 
-s16 OCAD8FileExport::exportPointSymbol(PointSymbol* point)
+s16 OCAD8FileExport::exportPointSymbol(const PointSymbol* point)
 {
 	int data_size = (sizeof(OCADPointSymbol) - sizeof(OCADPoint)) + getPatternSize(point);
 	OCADPointSymbol* ocad_symbol = (OCADPointSymbol*)ocad_symbol_new(file, data_size);
@@ -2008,7 +2008,7 @@ s16 OCAD8FileExport::exportPointSymbol(PointSymbol* point)
 	return ocad_symbol->number;
 }
 
-s16 OCAD8FileExport::exportLineSymbol(LineSymbol* line)
+s16 OCAD8FileExport::exportLineSymbol(const LineSymbol* line)
 {
 	int data_size = (sizeof(OCADLineSymbol) - sizeof(OCADPoint)) +
 					getPatternSize(line->getStartSymbol()) +
@@ -2164,7 +2164,7 @@ s16 OCAD8FileExport::exportLineSymbol(LineSymbol* line)
 	return ocad_symbol->number;
 }
 
-s16 OCAD8FileExport::exportAreaSymbol(AreaSymbol* area)
+s16 OCAD8FileExport::exportAreaSymbol(const AreaSymbol* area)
 {
 	int data_size = (sizeof(OCADAreaSymbol) - sizeof(OCADPoint));
 	for (int i = 0, end = area->getNumFillPatterns(); i < end; ++i)
@@ -2191,7 +2191,7 @@ s16 OCAD8FileExport::exportAreaSymbol(AreaSymbol* area)
 	ocad_symbol->hmode = 0;
 	for (int i = 0, end = area->getNumFillPatterns(); i < end; ++i)
 	{
-		AreaSymbol::FillPattern& pattern = area->getFillPattern(i);
+		const AreaSymbol::FillPattern& pattern = area->getFillPattern(i);
 		if (pattern.type == AreaSymbol::FillPattern::LinePattern)
 		{
 			if ( (ocad_symbol->hmode == 1 && ocad_symbol->hcolor != convertColor(pattern.line_color)) ||
@@ -2225,7 +2225,7 @@ s16 OCAD8FileExport::exportAreaSymbol(AreaSymbol* area)
 	PointSymbol* point_pattern = NULL;
 	for (int i = 0, end = area->getNumFillPatterns(); i < end; ++i)
 	{
-		AreaSymbol::FillPattern& pattern = area->getFillPattern(i);
+		const AreaSymbol::FillPattern& pattern = area->getFillPattern(i);
 		if (pattern.type == AreaSymbol::FillPattern::PointPattern)
 		{
 			if (pattern.rotatable)
@@ -2265,7 +2265,7 @@ s16 OCAD8FileExport::exportAreaSymbol(AreaSymbol* area)
 	return ocad_symbol->number;
 }
 
-s16 OCAD8FileExport::exportTextSymbol(TextSymbol* text)
+s16 OCAD8FileExport::exportTextSymbol(const TextSymbol* text)
 {
 	int data_size = sizeof(OCADTextSymbol);
 	OCADTextSymbol* ocad_symbol = (OCADTextSymbol*)ocad_symbol_new(file, data_size);
@@ -2334,7 +2334,7 @@ void OCAD8FileExport::setTextSymbolFormatting(OCADTextSymbol* ocad_symbol, TextO
 		ocad_symbol->halign = 2;
 }
 
-std::set< s16 > OCAD8FileExport::exportCombinedSymbol(CombinedSymbol* combination)
+std::set< s16 > OCAD8FileExport::exportCombinedSymbol(const CombinedSymbol* combination)
 {
 	// Insert public parts
 	std::vector<bool> map_bitfield;
@@ -2357,7 +2357,7 @@ std::set< s16 > OCAD8FileExport::exportCombinedSymbol(CombinedSymbol* combinatio
 	{
 		if (combination->isPartPrivate(i))
 		{
-			Symbol* part = combination->getPart(i);
+			const Symbol* part = combination->getPart(i);
 			int index = 0;
 			if (part->getType() == Symbol::Line)
 				index = exportLineSymbol(part->asLine());
@@ -2372,7 +2372,7 @@ std::set< s16 > OCAD8FileExport::exportCombinedSymbol(CombinedSymbol* combinatio
 	return result;
 }
 
-u16 OCAD8FileExport::exportCoordinates(const MapCoordVector& coords, OCADPoint** buffer, Symbol* symbol)
+u16 OCAD8FileExport::exportCoordinates(const MapCoordVector& coords, OCADPoint** buffer, const Symbol* symbol)
 {
 	s16 num_points = 0;
 	bool curve_start = false;
@@ -2391,7 +2391,7 @@ u16 OCAD8FileExport::exportCoordinates(const MapCoordVector& coords, OCADPoint**
 				p.y |= PY_CORNER;
 			else
 			{
-				LineSymbol* line_symbol = static_cast<LineSymbol*>(symbol);
+				const LineSymbol* line_symbol = static_cast<const LineSymbol*>(symbol);
 				if ((line_symbol->getDashSymbol() == NULL || line_symbol->getDashSymbol()->isEmpty()) && line_symbol->isDashed())
 					p.y |= PY_DASH;
 				else
@@ -2462,7 +2462,7 @@ u16 OCAD8FileExport::exportTextCoordinates(TextObject* object, OCADPoint** buffe
 	else
 	{
 		// As OCD 8 only supports Top alignment, we have to replace the top box coordinates by the top coordinates of the first line
-		TextSymbol* text_symbol = static_cast<TextSymbol*>(object->getSymbol());
+		const TextSymbol* text_symbol = static_cast<const TextSymbol*>(object->getSymbol());
 		QFontMetricsF metrics = text_symbol->getFontMetrics();
 		double internal_scaling = text_symbol->calculateInternalScaling();
 		TextObjectLineInfo* line0 = object->getLineInfo(0);
@@ -2549,21 +2549,17 @@ int OCAD8FileExport::getOcadColor(QRgb rgb)
 	return best_index;
 }
 
-s16 OCAD8FileExport::getPointSymbolExtent(PointSymbol* symbol)
+s16 OCAD8FileExport::getPointSymbolExtent(const PointSymbol* symbol)
 {
 	if (!symbol)
 		return 0;
 	QRectF extent;
 	for (int i = 0; i < symbol->getNumElements(); ++i)
 	{
-		Object* object = symbol->getElementObject(i);
-		Symbol* old_symbol = object->getSymbol();
+		QScopedPointer<Object> object(symbol->getElementObject(i)->duplicate());
 		object->setSymbol(symbol->getElementSymbol(i), true);
 		object->update(true, false);
-		
 		rectIncludeSafe(extent, object->getExtent());
-		
-		object->setSymbol(old_symbol, true);
 		object->clearRenderables();
 	}
 	float float_extent = 0.5f * qMax(extent.width(), extent.height());

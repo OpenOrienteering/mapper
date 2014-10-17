@@ -60,12 +60,12 @@ int SymbolWidget::selectedSymbolsCount() const
 	return render_widget->selectedSymbolsCount();
 }
 
-bool SymbolWidget::isSymbolSelected(Symbol* symbol) const
+bool SymbolWidget::isSymbolSelected(const Symbol* symbol) const
 {
 	return render_widget->isSymbolSelected(symbol);
 }
 
-void SymbolWidget::selectSingleSymbol(Symbol* symbol)
+void SymbolWidget::selectSingleSymbol(const Symbol* symbol)
 {
     render_widget->selectSingleSymbol(symbol);
 }

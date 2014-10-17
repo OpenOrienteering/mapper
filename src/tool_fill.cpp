@@ -40,7 +40,7 @@ FillTool::FillTool(MapEditorController* editor, QAction* tool_button)
 	drawing_symbol = editor->activeSymbol();
 	setDrawingSymbol(editor->activeSymbol());
 	
-	connect(editor, SIGNAL(activeSymbolChanged(Symbol*)), this, SLOT(setDrawingSymbol(Symbol*)));
+	connect(editor, SIGNAL(activeSymbolChanged(const Symbol*)), this, SLOT(setDrawingSymbol(const Symbol*)));
 }
 
 FillTool::~FillTool()
@@ -49,7 +49,7 @@ FillTool::~FillTool()
 }
 
 // TODO: create a way for tools to specify which symbols / selections they support and deactivate them automatically if these conditions are not satisfied anymore!
-void FillTool::setDrawingSymbol(Symbol* symbol)
+void FillTool::setDrawingSymbol(const Symbol* symbol)
 {
 	// Avoid using deleted symbol
 	if (map()->findSymbolIndex(drawing_symbol) == -1)

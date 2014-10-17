@@ -147,12 +147,12 @@ public:
 	 *  If a symbol is specified, it must be a text symbol.
 	 *  @param symbol the text symbol (optional)
 	 */
-	TextObject(Symbol* symbol = NULL);
+	TextObject(const Symbol* symbol = NULL);
 	
 	/** Create a duplicate of the object.
 	 *  @return a new object with same text, symbol and formatting.
 	 */
-	virtual Object* duplicate();
+	virtual Object* duplicate() const;
 	
     virtual Object& operator=(const Object& other);
 	
@@ -258,29 +258,33 @@ public:
 	 */
 	inline TextObjectLineInfo* getLineInfo(int i) {return &line_infos[i];}
 	
+	/** Returns the layout information about a particular line.
+	 */
+	inline const TextObjectLineInfo* getLineInfo(int i) const {return &line_infos[i];}
+	
 	/** Return the index of the character or the line number corresponding to a particular map coordinate.
 	 *  Returns -1 if the coordinate is not at a text position. 
 	 *  If find_line_only is true, the line number is returned, otherwise the index of the character.
 	 */
-	int calcTextPositionAt(MapCoordF coord, bool find_line_only);
+	int calcTextPositionAt(MapCoordF coord, bool find_line_only) const;
 	
 	/** Return the index of the character or the line number corresponding to a particular text coordinate.
 	 *  Returns -1 if the coordinate is not at a text position.
 	 *  If find_line_only is true, the line number is returned, otherwise the index of the character.
 	 */
-	int calcTextPositionAt(QPointF coord, bool find_line_only);
+	int calcTextPositionAt(QPointF coord, bool find_line_only) const;
 
 	/** Returns the line number for a particular index in the text.
 	 */
-	int findLineForIndex(int index);
+	int findLineForIndex(int index) const;
 	
 	/** Returns the line layout information for particular index.
 	 */
-	const TextObjectLineInfo& findLineInfoForIndex(int index);
+	const TextObjectLineInfo& findLineInfoForIndex(int index) const;
 	
 	/** Prepare the text layout information.
 	 */
-	void prepareLineInfos();
+	void prepareLineInfos() const;
 	
 private:
 	QString text;
@@ -290,7 +294,7 @@ private:
 	
 	/** Information about the text layout.
 	 */
-	LineInfoContainer line_infos;
+	mutable LineInfoContainer line_infos;
 };
 
 #endif

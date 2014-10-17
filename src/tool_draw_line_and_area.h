@@ -56,7 +56,7 @@ signals:
 	void pathFinished(PathObject* path);
 	
 protected slots:
-	virtual void setDrawingSymbol(Symbol* symbol);
+	virtual void setDrawingSymbol(const Symbol* symbol);
 	
 protected:
 	/**
@@ -66,10 +66,10 @@ protected:
 	void createPreviewPoints();
 	
 	/** Creates preview point symbols for the given symbol. */
-	void addPreviewPointSymbols(Symbol* symbol);
+	void addPreviewPointSymbols(const Symbol* symbol);
 	
 	/** Creates preview point symbols for the border of the given line symbol. */
-	void addPreviewPointSymbolsForBorder(LineSymbol* line, LineSymbolBorder* border);
+	void addPreviewPointSymbolsForBorder(const LineSymbol* line, const LineSymbolBorder* border);
 	
 	/**
 	 * Sets the position of the preview objects (after cursor movements).
@@ -110,7 +110,7 @@ protected:
 	
 	
 	bool is_helper_tool;
-	Symbol* drawing_symbol;
+	const Symbol* drawing_symbol;
 	
 	std::vector<PointSymbol*> preview_point_symbols;
 	std::vector<bool> preview_point_symbols_external;

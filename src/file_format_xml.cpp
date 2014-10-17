@@ -620,7 +620,7 @@ void XMLFileImporter::importColors()
 		SpotColorComponents out_components;
 		Q_FOREACH(SpotColorComponent in_component, item.components)
 		{
-			MapColor* out_color = map->getColor(in_component.spot_color->getPriority());
+			const MapColor* out_color = map->getColor(in_component.spot_color->getPriority());
 			if (out_color == NULL || out_color->getSpotColorMethod() != MapColor::SpotColor)
 			{
 				addWarning(tr("Spot color %1 not found while processing %2 (%3).").

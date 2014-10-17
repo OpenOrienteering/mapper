@@ -158,24 +158,24 @@ public:
 protected:
 	
 	// Symbol export
-	void exportCommonSymbolFields(Symbol* symbol, OCADSymbol* ocad_symbol, int size);
-	int getPatternSize(PointSymbol* point);
-	s16 exportPattern(PointSymbol* point, OCADPoint** buffer);		// returns the number of written coordinates, including the headers
-	s16 exportSubPattern(Object* object, Symbol* symbol, OCADPoint** buffer);
+	void exportCommonSymbolFields(const Symbol* symbol, OCADSymbol* ocad_symbol, int size);
+	int getPatternSize(const PointSymbol* point);
+	s16 exportPattern(const PointSymbol* point, OCADPoint** buffer);		// returns the number of written coordinates, including the headers
+	s16 exportSubPattern(const Object* object, const Symbol* symbol, OCADPoint** buffer);
 	
-	s16 exportPointSymbol(PointSymbol* point);
-	s16 exportLineSymbol(LineSymbol* line);
-	s16 exportAreaSymbol(AreaSymbol* area);
-	s16 exportTextSymbol(TextSymbol* text);
+	s16 exportPointSymbol(const PointSymbol* point);
+	s16 exportLineSymbol(const LineSymbol* line);
+	s16 exportAreaSymbol(const AreaSymbol* area);
+	s16 exportTextSymbol(const TextSymbol* text);
 	void setTextSymbolFormatting(OCADTextSymbol* ocad_symbol, TextObject* formatting);
-	std::set<s16> exportCombinedSymbol(CombinedSymbol* combination);
+	std::set<s16> exportCombinedSymbol(const CombinedSymbol* combination);
 	
 	// Helper functions
 	/// Returns the number of exported coordinates. If not NULL, the given symbol is used to determine the meaning of dash points.
-	u16 exportCoordinates(const MapCoordVector& coords, OCADPoint** buffer, Symbol* symbol);
+	u16 exportCoordinates(const MapCoordVector& coords, OCADPoint** buffer, const Symbol* symbol);
 	u16 exportTextCoordinates(TextObject* object, OCADPoint** buffer);
 	int getOcadColor(QRgb rgb);
-	s16 getPointSymbolExtent(PointSymbol* symbol);
+	s16 getPointSymbolExtent(const PointSymbol* symbol);
 	
 	// Conversion functions
 	void convertPascalString(const QString& text, char* buffer, int buffer_size);
@@ -210,7 +210,7 @@ private:
 	/// Maps OO Mapper symbol pointer to a list of OCAD symbol numbers.
 	/// Usually the list contains only one entry, except for combined symbols,
 	/// for which it contains the indices of all basic parts
-	QHash<Symbol*, std::set<s16> > symbol_index;
+	QHash<const Symbol*, std::set<s16> > symbol_index;
 	
 	/// In .ocd 8, text alignment needs to be specified in the text symbols instead of objects, so it is possible
 	/// that multiple ocd text symbols have to be created for one native TextSymbol.
@@ -220,7 +220,7 @@ private:
 	/// If there is no entry for a TextSymbol in this map yet, no object using this symbol has been encountered yet,
 	/// no no specific formatting was set in the corresponding symbol (which has to be looked up using symbol_index).
 	typedef std::vector< std::pair< TextObject*, s16 > > TextFormatList;
-	QHash<TextSymbol*, TextFormatList > text_format_map;
+	QHash<const TextSymbol*, TextFormatList > text_format_map;
 	
 	/// Helper object for pattern export
 	PointObject* origin_point_object;

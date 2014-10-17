@@ -124,7 +124,7 @@ public:
 	 * 
 	 * @todo Review for refactoring: no reimplementation found, maybe not in right class?
 	 */
-	virtual void switchToDefaultDrawTool(Symbol* symbol) const;
+	virtual void switchToDefaultDrawTool(const Symbol* symbol) const;
 	
 	/**
 	 * @brief Returns the cursor which should be used for the tool in the editor windows.

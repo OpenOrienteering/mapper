@@ -330,7 +330,7 @@ MapColorMap Map::MapColorSet::importSet(const Map::MapColorSet& other, std::vect
 					for (SpotColorComponents::iterator it = components.begin(), end = components.end(); it != end; ++it)
 					{
 						Q_ASSERT(out_pointermap.contains(it->spot_color));
-						it->spot_color = const_cast< MapColor* >(out_pointermap[it->spot_color]);
+						it->spot_color = out_pointermap[it->spot_color];
 					}
 					new_color->setSpotColorComposition(components);
 				}
@@ -385,9 +385,9 @@ Map::Map()
 	
 	clear();
 	
-	connect(this, SIGNAL(colorAdded(int,MapColor*)), SLOT(checkSpotColorPresence()));
-	connect(this, SIGNAL(colorChanged(int,MapColor*)), SLOT(checkSpotColorPresence()));
-	connect(this, SIGNAL(colorDeleted(int,const MapColor*)), SLOT(checkSpotColorPresence()));
+	connect(this, SIGNAL(colorAdded(int, const MapColor*)), SLOT(checkSpotColorPresence()));
+	connect(this, SIGNAL(colorChanged(int, const MapColor*)), SLOT(checkSpotColorPresence()));
+	connect(this, SIGNAL(colorDeleted(int, const MapColor*)), SLOT(checkSpotColorPresence()));
 	connect(undo_manager.data(), SIGNAL(cleanChanged(bool)), this, SLOT(undoCleanChanged(bool)));
 }
 
@@ -752,7 +752,7 @@ bool Map::loadFrom(const QString& path, QWidget* dialog_parent, MapEditorControl
 }
 
 void Map::importMap(Map* other, ImportMode mode, QWidget* dialog_parent, std::vector<bool>* filter, int symbol_insert_pos,
-					bool merge_duplicate_symbols, QHash<Symbol*, Symbol*>* out_symbol_map)
+					bool merge_duplicate_symbols, QHash<const Symbol*, Symbol*>* out_symbol_map)
 {
 	// Check if there is something to import
 	if (other->getNumColors() == 0 && other->getNumSymbols() == 0 && other->getNumObjects() == 0)
@@ -809,7 +809,7 @@ void Map::importMap(Map* other, ImportMode mode, QWidget* dialog_parent, std::ve
 	if (mode == ColorImport)
 		return;
 	
-	QHash<Symbol*, Symbol*> symbol_map;
+	QHash<const Symbol*, Symbol*> symbol_map;
 	if (other->getNumSymbols() > 0)
 	{
 		// Import symbols
@@ -1023,7 +1023,7 @@ void Map::removeRenderablesOfObject(Object* object, bool mark_area_as_dirty)
 	if (isObjectSelected(object))
 		removeSelectionRenderables(object);
 }
-void Map::insertRenderablesOfObject(Object* object)
+void Map::insertRenderablesOfObject(const Object* object)
 {
 	renderables->insertRenderablesOfObject(object);
 	if (isObjectSelected(object))
@@ -1158,9 +1158,9 @@ bool Map::removeSymbolFromSelection(Symbol* symbol, bool emit_selection_changed)
 		emit(objectSelectionChanged());
 	return removed_at_least_one_object;
 }
-bool Map::isObjectSelected(Object* object)
+bool Map::isObjectSelected(const Object* object) const
 {
-	return object_selection.contains(object);
+	return object_selection.contains(const_cast<Object*>(object));
 }
 bool Map::toggleObjectSelection(Object* object, bool emit_selection_changed)
 {
@@ -1460,11 +1460,11 @@ bool Map::hasSpotColors() const
 }
 
 void Map::importSymbols(Map* other, const MapColorMap& color_map, int insert_pos, bool merge_duplicates, std::vector< bool >* filter,
-						QHash< int, int >* out_indexmap, QHash< Symbol*, Symbol* >* out_pointermap)
+						QHash< int, int >* out_indexmap, QHash<const Symbol*, Symbol*>* out_pointermap)
 {
 	// We need a pointer map (and keep track of added symbols) to adjust the references of combined symbols
 	std::vector<Symbol*> added_symbols;
-	QHash< Symbol*, Symbol* > local_pointermap;
+	QHash<const Symbol*, Symbol*> local_pointermap;
 	if (!out_pointermap)
 		out_pointermap = &local_pointermap;
 	
@@ -1524,7 +1524,7 @@ void Map::importSymbols(Map* other, const MapColorMap& color_map, int insert_pos
 	// Notify added symbols of other "environment"
 	for (size_t i = 0, end = added_symbols.size(); i < end; ++i)
 	{
-		QHash<Symbol*, Symbol*>::iterator it = out_pointermap->begin();
+		QHash<const Symbol*, Symbol*>::iterator it = out_pointermap->begin();
 		while (it != out_pointermap->end())
 		{
 			added_symbols[i]->symbolChanged(it.key(), it.value());
@@ -1533,7 +1533,7 @@ void Map::importSymbols(Map* other, const MapColorMap& color_map, int insert_pos
 	}
 }
 
-void Map::addSelectionRenderables(Object* object)
+void Map::addSelectionRenderables(const Object* object)
 {
 	object->update(false);
 	selection_renderables->insertRenderablesOfObject(object);
@@ -1598,7 +1598,7 @@ void Map::moveSymbol(int from, int to)
 	setSymbolsDirty();
 }
 
-Symbol* Map::getSymbol(int i) const
+const Symbol* Map::getSymbol(int i) const
 {
 	if (i >= 0)
 		return symbols[i];
@@ -1613,6 +1613,11 @@ Symbol* Map::getSymbol(int i) const
 		assert(!"Invalid symbol index given");
 		return getUndefinedLine();
 	}
+}
+
+Symbol* Map::getSymbol(int i)
+{
+	return const_cast<Symbol*>(static_cast<const Map*>(this)->getSymbol(i));
 }
 
 void Map::setSymbol(Symbol* symbol, int pos)
@@ -1730,7 +1735,7 @@ void Map::determineSymbolsInUse(std::vector< bool >& out)
 	{
 		for (int o = 0; o < parts[l]->getNumObjects(); ++o)
 		{
-			Symbol* symbol = parts[l]->getObject(o)->getSymbol();
+			const Symbol* symbol = parts[l]->getObject(o)->getSymbol();
 			int index = findSymbolIndex(symbol);
 			if (index >= 0)
 				out[index] = true;

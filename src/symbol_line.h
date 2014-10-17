@@ -60,7 +60,7 @@ struct LineSymbolBorder
 	void assign(const LineSymbolBorder& other, const MapColorMap* color_map);
 	
 	bool isVisible() const;
-	void createSymbol(LineSymbol& out);
+	void createSymbol(LineSymbol& out) const;
 	void scale(double factor);
 };
 
@@ -92,8 +92,8 @@ public:
 	virtual ~LineSymbol();
 	virtual Symbol* duplicate(const MapColorMap* color_map) const;
 	
-	virtual void createRenderables(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output);
-	void createRenderables(Object* object, bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, PathCoordVector* path_coords, ObjectRenderables& output);
+	virtual void createRenderables(const Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output) const;
+	void createRenderables(const Object* object, bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, PathCoordVector* path_coords, ObjectRenderables& output) const;
 	virtual void colorDeleted(const MapColor* color);
 	virtual bool containsColor(const MapColor* color) const;
 	virtual const MapColor* getDominantColorGuess() const;
@@ -120,7 +120,7 @@ public:
 	/**
 	 * Returns the largest extent (half width) of the components of this line.
 	 */
-	virtual float calculateLargestLineExtent(Map* map);
+	virtual float calculateLargestLineExtent(Map* map) const;
 	
 	/**
 	 * Returns the limit for miter joins in units of the line width.
@@ -201,25 +201,25 @@ protected:
 	virtual void saveImpl(QXmlStreamWriter& xml, const Map& map) const;
 	virtual bool loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict);
 	PointSymbol* loadPointSymbol(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict);
-	virtual bool equalsImpl(Symbol* other, Qt::CaseSensitivity case_sensitivity);
+	virtual bool equalsImpl(const Symbol* other, Qt::CaseSensitivity case_sensitivity) const;
 	
-	void createBorderLines(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, bool path_closed, ObjectRenderables& output);
-	void createBorderLine(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, bool path_closed, ObjectRenderables& output, LineSymbolBorder& border, double main_shift);
-	void shiftCoordinates(const MapCoordVector& flags, const MapCoordVectorF& coords, bool path_closed, double main_shift, MapCoordVector& out_flags, MapCoordVectorF& out_coords);
-	void processContinuousLine(Object* object, bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, const PathCoordVector& line_coords,
+	void createBorderLines(const Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, bool path_closed, ObjectRenderables& output) const;
+	void createBorderLine(const Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, bool path_closed, ObjectRenderables& output, const LineSymbolBorder& border, double main_shift) const;
+	void shiftCoordinates(const MapCoordVector& flags, const MapCoordVectorF& coords, bool path_closed, double main_shift, MapCoordVector& out_flags, MapCoordVectorF& out_coords) const;
+	void processContinuousLine(const Object* object, bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, const PathCoordVector& line_coords,
 							   float start, float end, bool has_start, bool has_end, int& cur_line_coord,
-							   MapCoordVector& processed_flags, MapCoordVectorF& processed_coords, bool include_first_point, bool set_mid_symbols, ObjectRenderables& output);
-	void createPointedLineCap(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, const PathCoordVector& line_coords,
-							  float start, float end, int& cur_line_coord, bool is_end, ObjectRenderables& output);
-	void processDashedLine(Object* object, bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, MapCoordVector& out_flags, MapCoordVectorF& out_coords, ObjectRenderables& output);
-	void createDashSymbolRenderables(Object* object, bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output);
-    void createDottedRenderables(Object* object, bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output);
+							   MapCoordVector& processed_flags, MapCoordVectorF& processed_coords, bool include_first_point, bool set_mid_symbols, ObjectRenderables& output) const;
+	void createPointedLineCap(const Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, const PathCoordVector& line_coords,
+							  float start, float end, int& cur_line_coord, bool is_end, ObjectRenderables& output) const;
+	void processDashedLine(const Object* object, bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, MapCoordVector& out_flags, MapCoordVectorF& out_coords, ObjectRenderables& output) const;
+	void createDashSymbolRenderables(const Object* object, bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output) const;
+    void createDottedRenderables(const Object* object, bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output) const;
 	
 	void calculateCoordinatesForRange(const MapCoordVector& flags, const MapCoordVectorF& coords, const PathCoordVector& line_coords,
 									  float start, float end, int& cur_line_coord, bool include_start_coord, MapCoordVector& out_flags, MapCoordVectorF& out_coords,
-									  std::vector<float>* out_lengths, bool set_mid_symbols, ObjectRenderables& output);
+									  std::vector<float>* out_lengths, bool set_mid_symbols, ObjectRenderables& output) const;
 	void advanceCoordinateRangeTo(const MapCoordVector& flags, const MapCoordVectorF& coords, const PathCoordVector& line_coords, int& cur_line_coord, int& current_index, float cur_length,
-								  int start_bezier_index, MapCoordVector& out_flags, MapCoordVectorF& out_coords, std::vector<float>* out_lengths, const MapCoordF& o3, const MapCoordF& o4);
+								  int start_bezier_index, MapCoordVector& out_flags, MapCoordVectorF& out_coords, std::vector<float>* out_lengths, const MapCoordF& o3, const MapCoordF& o4) const;
 	void replaceSymbol(PointSymbol*& old_symbol, PointSymbol* replace_with, const QString& name);
 	
 	// Base line

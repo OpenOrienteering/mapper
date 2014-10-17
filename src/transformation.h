@@ -37,7 +37,7 @@ struct PassPoint
 {
 	void load(QIODevice* file, int version);
 	
-	void save(QXmlStreamWriter& xml);
+	void save(QXmlStreamWriter& xml) const;
 	static PassPoint load(QXmlStreamReader& xml);
 	
 	/** Start position specified by the user */

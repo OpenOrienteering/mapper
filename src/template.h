@@ -49,7 +49,7 @@ public:
 	
 	void load(QIODevice* file);
 	
-	void save(QXmlStreamWriter& xml, const QString role);
+	void save(QXmlStreamWriter& xml, const QString role) const;
  	void load(QXmlStreamReader& xml);
 	
 	/// Position in 1/1000 mm
@@ -86,11 +86,11 @@ public:
 	virtual ~Template();
 	
 	/// Creates a duplicate of the template
-	Template* duplicate();
+	Template* duplicate() const;
 	
 	/// Returns a string which should identify the type of the template uniquely:
 	/// the class name. Very simple RTTI feature.
-	virtual const QString getTemplateType() = 0;
+	virtual QString getTemplateType() const = 0;
 	
 	/**
 	 * Returns a description of the last error that occurred.
@@ -115,7 +115,7 @@ public:
 	
 	/// Saves the template itself, returns true if successful.
 	/// This is called when saving the map and the template's hasUnsavedChanges() returns true
-	virtual bool saveTemplateFile() {return false;}
+	virtual bool saveTemplateFile() const {return false;}
 	
 	/// Changes a template's file without changing the parameters.
 	/// Useful when a template file has been moved.
@@ -177,7 +177,7 @@ public:
 	/// the scale is the combined view & template scale,
 	/// which can be used to give a minimum size to elements.
 	/// The painter transformation is set to use template coordinates.
-    virtual void drawTemplate(QPainter* painter, QRectF& clip_rect, double scale, bool on_screen, float opacity) = 0;
+    virtual void drawTemplate(QPainter* painter, QRectF& clip_rect, double scale, bool on_screen, float opacity) const = 0;
 	
 	/// Calculates the template's bounding box in map coordinates.
 	virtual QRectF calculateTemplateBoundingBox();
@@ -196,7 +196,7 @@ public:
 	
 	
 	/// Must return if freehand drawing onto the template is possible
-	virtual bool canBeDrawnOnto() {return false;}
+	virtual bool canBeDrawnOnto() const {return false;}
 	
 	/// Draws onto the template. coords is an array of points with which the
 	/// drawn line is defined and must contain at least 2 points.
@@ -216,12 +216,12 @@ public:
 	/// The previous transformation of the painter must be the map transformation.
 	/// NOTE: for non-georeferenced templates only,
 	/// or if the template transformation has been set by the template nevertheless.
-	void applyTemplateTransform(QPainter* painter);
+	void applyTemplateTransform(QPainter* painter) const;
 	
 	/// Returns the extent of the template in template coordinates.
 	/// The default implementation returns a "very big" rectangle.
 	/// NOTE: for non-georeferenced templates only!
-	virtual QRectF getTemplateExtent();
+	virtual QRectF getTemplateExtent() const;
 	
 	/// Scales the template with the given scaling center.
 	/// NOTE: for non-georeferenced templates only!
@@ -234,12 +234,12 @@ public:
 	
 	// Coordinate transformations between template coordinates and map coordinates
 	
-	inline MapCoordF mapToTemplate(MapCoordF coords)
+	inline MapCoordF mapToTemplate(MapCoordF coords) const
 	{
 		return MapCoordF(map_to_template.get(0, 0) * coords.getX() + map_to_template.get(0, 1) * coords.getY() + map_to_template.get(0, 2),
 							map_to_template.get(1, 0) * coords.getX() + map_to_template.get(1, 1) * coords.getY() + map_to_template.get(1, 2));
 	}
-	inline MapCoordF mapToTemplateOther(MapCoordF coords)	// normally not needed - this uses the other transformation parameters
+	inline MapCoordF mapToTemplateOther(MapCoordF coords) const	// normally not needed - this uses the other transformation parameters
 	{
 		assert(!is_georeferenced);
 		// SLOW - cache this matrix if needed often
@@ -248,22 +248,22 @@ public:
 		return MapCoordF(map_to_template_other.get(0, 0) * coords.getX() + map_to_template_other.get(0, 1) * coords.getY() + map_to_template_other.get(0, 2),
 						 map_to_template_other.get(1, 0) * coords.getX() + map_to_template_other.get(1, 1) * coords.getY() + map_to_template_other.get(1, 2));
 	}
-	inline QPointF mapToTemplateQPoint(MapCoordF coords)
+	inline QPointF mapToTemplateQPoint(MapCoordF coords) const
 	{
 		return QPointF(map_to_template.get(0, 0) * coords.getX() + map_to_template.get(0, 1) * coords.getY() + map_to_template.get(0, 2),
 						map_to_template.get(1, 0) * coords.getX() + map_to_template.get(1, 1) * coords.getY() + map_to_template.get(1, 2));
 	}
-	inline MapCoordF templateToMap(MapCoordF coords)
+	inline MapCoordF templateToMap(MapCoordF coords) const
 	{
 		return MapCoordF(template_to_map.get(0, 0) * coords.getX() + template_to_map.get(0, 1) * coords.getY() + template_to_map.get(0, 2),
 							template_to_map.get(1, 0) * coords.getX() + template_to_map.get(1, 1) * coords.getY() + template_to_map.get(1, 2));
 	}
-	inline MapCoordF templateToMap(QPointF coords)
+	inline MapCoordF templateToMap(QPointF coords) const
 	{
 		return MapCoordF(template_to_map.get(0, 0) * coords.x() + template_to_map.get(0, 1) * coords.y() + template_to_map.get(0, 2),
 							template_to_map.get(1, 0) * coords.x() + template_to_map.get(1, 1) * coords.y() + template_to_map.get(1, 2));
 	}
-	inline MapCoordF templateToMapOther(MapCoordF coords)	// normally not needed - this uses the other transformation parameters
+	inline MapCoordF templateToMapOther(MapCoordF coords) const	// normally not needed - this uses the other transformation parameters
 	{
 		assert(!is_georeferenced);
 		return MapCoordF(template_to_map_other.get(0, 0) * coords.getX() + template_to_map_other.get(0, 1) * coords.getY() + template_to_map_other.get(0, 2),
@@ -273,6 +273,7 @@ public:
 	
 	// Pass points & adjustment
 	
+	inline const PassPointList& getPassPointList() const {return passpoints;}
 	inline PassPointList& getPassPointList() {return passpoints;}
 	inline int getNumPassPoints() const {return passpoints.size();}
 	inline PassPoint* getPassPoint(int i) {return &passpoints[i];}
@@ -282,9 +283,9 @@ public:
 	
 	/// Change from adjusted into original state or the other way round
 	void switchTransforms();
-	void getTransform(TemplateTransform& out);
+	void getTransform(TemplateTransform& out) const;
 	void setTransform(const TemplateTransform& transform);
-	void getOtherTransform(TemplateTransform& out);
+	void getOtherTransform(TemplateTransform& out) const;
 	void setOtherTransform(const TemplateTransform& transform);
 	
 	
@@ -352,13 +353,13 @@ protected:
 	/// Derived classes must create a duplicate and transfer
 	/// type specific information over to the copy here.
 	/// This includes the content of the template file if it is loaded.
-	virtual Template* duplicateImpl() = 0;
+	virtual Template* duplicateImpl() const = 0;
 	
 	/// Derived classes must load type specific template parameters here and return true if successful
 	virtual bool loadTypeSpecificTemplateConfiguration(QIODevice* stream, int version);
 	
 	/// Derived classes must save type specific template parameters here
-	virtual void saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml);
+	virtual void saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml) const;
 	
 	/// Derived classes must load type specific template parameters here and return false
 	/// if a critical error ocurrs and loading must be aborted.

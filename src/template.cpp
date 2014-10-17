@@ -54,7 +54,7 @@ void TemplateTransform::load(QIODevice* file)
 	file->read((char*)&template_rotation, sizeof(qint64));
 }
 
-void TemplateTransform::save(QXmlStreamWriter& xml, const QString role)
+void TemplateTransform::save(QXmlStreamWriter& xml, const QString role) const
 {
 	xml.writeStartElement("transformation");
 	xml.writeAttribute("role", role);
@@ -107,7 +107,7 @@ Template::~Template()
 	assert(template_state != Loaded);
 }
 
-Template* Template::duplicate()
+Template* Template::duplicate() const
 {
 	Template* copy = duplicateImpl();
 	
@@ -483,14 +483,14 @@ void Template::unloadTemplateFile()
 	emit templateStateChanged();
 }
 
-void Template::applyTemplateTransform(QPainter* painter)
+void Template::applyTemplateTransform(QPainter* painter) const
 {
 	painter->translate(transform.template_x / 1000.0, transform.template_y / 1000.0);
 	painter->rotate(-transform.template_rotation * (180 / M_PI));
 	painter->scale(transform.template_scale_x, transform.template_scale_y);
 }
 
-QRectF Template::getTemplateExtent()
+QRectF Template::getTemplateExtent() const
 {
 	assert(!is_georeferenced);
 	return infinteRectF();
@@ -597,7 +597,7 @@ void Template::switchTransforms()
 	setTemplateAreaDirty();
 	map->setTemplatesDirty();
 }
-void Template::getTransform(TemplateTransform& out)
+void Template::getTransform(TemplateTransform& out) const
 {
 	assert(!is_georeferenced);
 	out = transform;
@@ -613,7 +613,7 @@ void Template::setTransform(const TemplateTransform& transform)
 	setTemplateAreaDirty();
 	map->setTemplatesDirty();
 }
-void Template::getOtherTransform(TemplateTransform& out)
+void Template::getOtherTransform(TemplateTransform& out) const
 {
 	assert(!is_georeferenced);
 	out = other_transform;
@@ -669,7 +669,7 @@ bool Template::loadTypeSpecificTemplateConfiguration(QIODevice* stream, int vers
 	return true;
 }
 
-void Template::saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml)
+void Template::saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml) const
 {
 	Q_UNUSED(xml);
 	// nothing

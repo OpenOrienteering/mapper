@@ -49,8 +49,8 @@ DrawPointTool::DrawPointTool(MapEditorController* editor, QAction* tool_button)
 	angle_helper->setActive(false);
 	snap_helper->setFilter(SnappingToolHelper::NoSnapping);
 	
-	connect(editor, SIGNAL(activeSymbolChanged(Symbol*)), this, SLOT(activeSymbolChanged(Symbol*)));
-	connect(map(), SIGNAL(symbolDeleted(int,Symbol*)), this, SLOT(symbolDeleted(int,Symbol*)));
+	connect(editor, SIGNAL(activeSymbolChanged(const Symbol*)), this, SLOT(activeSymbolChanged(const Symbol*)));
+	connect(map(), SIGNAL(symbolDeleted(int, const Symbol*)), this, SLOT(symbolDeleted(int, const Symbol*)));
 }
 
 DrawPointTool::~DrawPointTool()
@@ -302,7 +302,7 @@ void DrawPointTool::objectSelectionChangedImpl()
 	// NOP
 }
 
-void DrawPointTool::activeSymbolChanged(Symbol* symbol)
+void DrawPointTool::activeSymbolChanged(const Symbol* symbol)
 {
 	if (symbol == NULL || symbol->getType() != Symbol::Point || symbol->isHidden())
 	{
@@ -315,7 +315,7 @@ void DrawPointTool::activeSymbolChanged(Symbol* symbol)
 		last_used_symbol = symbol;
 }
 
-void DrawPointTool::symbolDeleted(int pos, Symbol* old_symbol)
+void DrawPointTool::symbolDeleted(int pos, const Symbol* old_symbol)
 {
 	Q_UNUSED(pos);
 	

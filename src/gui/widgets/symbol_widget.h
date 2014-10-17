@@ -69,12 +69,12 @@ public:
 	/**
 	 * @brief Checks if the symbol is selected.
 	 */
-	bool isSymbolSelected(Symbol* symbol) const;
+	bool isSymbolSelected(const Symbol* symbol) const;
 	
 	/**
 	 * @brief Selects the symbol exclusively, deselecting all other symbols.
 	 */
-	void selectSingleSymbol(Symbol* symbol);
+	void selectSingleSymbol(const Symbol* symbol);
 	
 signals:
 	/**

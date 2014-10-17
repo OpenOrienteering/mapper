@@ -110,7 +110,7 @@ int TextObjectLineInfo::getIndex(double pos_x) const
 
 // ### TextObject ###
 
-TextObject::TextObject(Symbol* symbol): Object(Object::Text, symbol)
+TextObject::TextObject(const Symbol* symbol): Object(Object::Text, symbol)
 {
 	assert(!symbol || (symbol->getType() == Symbol::Text));
 	coords.push_back(MapCoord(0, 0));
@@ -120,7 +120,7 @@ TextObject::TextObject(Symbol* symbol): Object(Object::Text, symbol)
 	rotation = 0;
 }
 
-Object* TextObject::duplicate()
+Object* TextObject::duplicate() const
 {
 	TextObject* new_text = new TextObject(symbol);
 	new_text->coords = coords;
@@ -209,7 +209,7 @@ std::vector<QPointF> TextObject::controlPoints() const
 
 QTransform TextObject::calcTextToMapTransform() const
 {
-	TextSymbol* text_symbol = reinterpret_cast<TextSymbol*>(symbol);
+	const TextSymbol* text_symbol = reinterpret_cast<const TextSymbol*>(symbol);
 	
 	QTransform transform;
 	double scaling = 1.0f / text_symbol->calculateInternalScaling();
@@ -223,7 +223,7 @@ QTransform TextObject::calcTextToMapTransform() const
 
 QTransform TextObject::calcMapToTextTransform() const
 {
-	TextSymbol* text_symbol = reinterpret_cast<TextSymbol*>(symbol);
+	const TextSymbol* text_symbol = reinterpret_cast<const TextSymbol*>(symbol);
 	
 	QTransform transform;
 	double scaling = 1.0f / text_symbol->calculateInternalScaling();
@@ -260,19 +260,19 @@ void TextObject::setRotation(float new_rotation)
 	setOutputDirty();
 }
 
-int TextObject::calcTextPositionAt(MapCoordF coord, bool find_line_only)
+int TextObject::calcTextPositionAt(MapCoordF coord, bool find_line_only) const
 {
 	return calcTextPositionAt(calcMapToTextTransform().map(coord.toQPointF()), find_line_only);
 }
 
 // FIXME actually this is two functions, selected by parameter find_line_only; make two functions or return TextObjectLineInfo reference
-int TextObject::calcTextPositionAt(QPointF point, bool find_line_only)
+int TextObject::calcTextPositionAt(QPointF point, bool find_line_only) const
 {
 	float click_tolerance = Settings::getInstance().getMapEditorClickTolerancePx();
 	
 	for (int line = 0; line < getNumLines(); ++line)
 	{
-		TextObjectLineInfo* line_info = getLineInfo(line);
+		const TextObjectLineInfo* line_info = getLineInfo(line);
 		if (line_info->line_y - line_info->ascent > point.y())
 			return -1;	// NOTE: Only true as long as every line has a bigger or equal y value than the line before
 		
@@ -289,12 +289,12 @@ int TextObject::calcTextPositionAt(QPointF point, bool find_line_only)
 	return -1;
 }
 
-int TextObject::findLineForIndex(int index)
+int TextObject::findLineForIndex(int index) const
 {
 	int line_num = 0;
 	for (int line = 1; line < getNumLines(); ++line)
 	{
-		TextObjectLineInfo* line_info = getLineInfo(line);
+		const TextObjectLineInfo* line_info = getLineInfo(line);
 		if (index < line_info->start_index)
 			break;
 		line_num = line;
@@ -302,12 +302,12 @@ int TextObject::findLineForIndex(int index)
 	return line_num;
 }
 
-const TextObjectLineInfo& TextObject::findLineInfoForIndex(int index)
+const TextObjectLineInfo& TextObject::findLineInfoForIndex(int index) const
 {
-	TextObjectLineInfo* line_info = getLineInfo(0);
+	const TextObjectLineInfo* line_info = getLineInfo(0);
 	for (int line = 1; line < getNumLines(); ++line)
 	{
-		TextObjectLineInfo* next_line_info = getLineInfo(line);
+		const TextObjectLineInfo* next_line_info = getLineInfo(line);
 		if (index < next_line_info->start_index)
 			break;
 		line_info = next_line_info;
@@ -315,9 +315,9 @@ const TextObjectLineInfo& TextObject::findLineInfoForIndex(int index)
 	return *line_info;
 }
 
-void TextObject::prepareLineInfos()
+void TextObject::prepareLineInfos() const
 {
-	TextSymbol* text_symbol = reinterpret_cast<TextSymbol*>(symbol);
+	const TextSymbol* text_symbol = reinterpret_cast<const TextSymbol*>(symbol);
 	
 	double scaling = text_symbol->calculateInternalScaling();
 	QFontMetricsF metrics = text_symbol->getFontMetrics();
@@ -472,7 +472,7 @@ void TextObject::prepareLineInfos()
 		int num_lines = getNumLines();
 		for (int i = 0; i < num_lines; i++)
 		{
-			TextObjectLineInfo* line_info = getLineInfo(i);
+			TextObjectLineInfo* line_info = &line_infos[i];
 			
 			double delta_x = 0.0;
 			if (h_align == TextObject::AlignHCenter)

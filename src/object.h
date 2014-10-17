@@ -83,19 +83,19 @@ public:
 	
 	/** Creates an empty object with the given type,
 	 *  optionally also assigning a symbol. */
-	Object(Type type, Symbol* symbol = NULL);
+	Object(Type type, const Symbol* symbol = NULL);
 	
 	/** Destructs the object. */
 	virtual ~Object();
 	
 	/** Creates an identical copy of the object. */
-	virtual Object* duplicate() = 0;
+	virtual Object* duplicate() const = 0;
 	
 	/**
 	 * Checks for equality with another object. If compare_symbol is set,
 	 * also the symbols are compared for having the same properties.
 	 */
-	bool equals(Object* other, bool compare_symbol);
+	bool equals(const Object* other, bool compare_symbol) const;
 	
 	/** Assignment, replaces this object's content with that of the other. */
 	virtual Object& operator= (const Object& other);
@@ -130,7 +130,7 @@ public:
 	 * @param symbol If set, this symbol will be assigned to the object,
 	 *     if NULL, the symbol will be read from the stream.
 	 */
-	static Object* load(QXmlStreamReader& xml, Map* map, const SymbolDictionary& symbol_dict, Symbol* symbol = 0) throw (FileFormatException);
+	static Object* load(QXmlStreamReader& xml, Map* map, const SymbolDictionary& symbol_dict, const Symbol* symbol = 0) throw (FileFormatException);
 	
 	/**
 	 * Checks if the output_dirty flag is set and if yes,
@@ -140,7 +140,7 @@ public:
 	 * @param insert_new_renderables If the object has a map pointer and this
 	 *     flag is set, it will insert newly generated renderables into the map.
 	 */
-	bool update(bool force = false, bool insert_new_renderables = true);
+	bool update(bool force = false, bool insert_new_renderables = true) const;
 	
 	/** Moves the whole object
 	 * @param dx X offset in native map coordinates.
@@ -173,11 +173,11 @@ public:
 	 * symbol type the coord is
 	 * (important for combined symbols which can have areas and lines).
 	 */
-	int isPointOnObject(MapCoordF coord, float tolerance, bool treat_areas_as_paths, bool extended_selection);
+	int isPointOnObject(MapCoordF coord, float tolerance, bool treat_areas_as_paths, bool extended_selection) const;
 	
 	/** Checks if a path point (excluding curve control points)
 	 * is included in the given box */
-	bool intersectsBox(QRectF box);
+	bool intersectsBox(QRectF box) const;
 	
 	/** Takes ownership of the renderables */
 	void takeRenderables();
@@ -209,9 +209,9 @@ public:
 	 * compatible. If the old symbol pointer is no longer valid, you can
 	 * use no_checks to disable this.
 	 */
-	bool setSymbol(Symbol* new_symbol, bool no_checks);
+	bool setSymbol(const Symbol* new_symbol, bool no_checks);
 	/** Returns the object's symbol. */
-	inline Symbol* getSymbol() const {return symbol;}
+	inline const Symbol* getSymbol() const {return symbol;}
 	
 	/** NOTE: The extent is only valid after update() has been called! */
 	inline const QRectF& getExtent() const {return extent;}
@@ -222,7 +222,7 @@ public:
 	inline Map* getMap() const {return map;}
 	
 	/** Constructs an object of the given type with the given symbol. */
-	static Object* getObjectForType(Type type, Symbol* symbol = NULL);
+	static Object* getObjectForType(Type type, const Symbol* symbol = NULL);
 	
 	
 	/** Defines a type which maps keys to values, to be used for tagging objects. */
@@ -251,14 +251,14 @@ public:
 	
 protected:
 	Type type;
-	Symbol* symbol;
+	const Symbol* symbol;
 	MapCoordVector coords;
 	Map* map;
 	Tags object_tags;
 	
-	bool output_dirty;				// does the output have to be re-generated because of changes?
-	QRectF extent;					// only valid after calling update()
-	ObjectRenderables output;		// only valid after calling update()
+	mutable bool output_dirty;        // does the output have to be re-generated because of changes?
+	mutable QRectF extent;            // only valid after calling update()
+	mutable ObjectRenderables output; // only valid after calling update()
 };
 
 /**
@@ -296,7 +296,7 @@ public:
 		
 		/** Calculates the number of points in this part,
 		 *  excluding close points and curve handles. */
-		int calcNumRegularPoints();
+		int calcNumRegularPoints() const;
 		
 		/**
 		 * Returns if the path part is closed. Objects with area symbols must
@@ -329,10 +329,10 @@ public:
 		void connectEnds();
 		
 		/** Returns the length of the part. */
-		double getLength();
+		double getLength() const;
 		
 		/** Calculates the area of this part. */
-		double calculateArea();
+		double calculateArea() const;
 	};
 	
 	/** Returned by calcAllIntersectionsWith(). */
@@ -379,16 +379,16 @@ public:
 	
 	
 	/** Constructs a PathObject, optionally assigning a symbol. */
-	PathObject(Symbol* symbol = NULL);
+	PathObject(const Symbol* symbol = NULL);
 	
 	/** Constructs a PathObject, assigning initial coords and optionally the map pointer. */
-	PathObject(Symbol* symbol, const MapCoordVector& coords, Map* map = 0);
+	PathObject(const Symbol* symbol, const MapCoordVector& coords, Map* map = 0);
 	
 	/** Creates a duplicate of the path. Use asPath() on the result. */
-	virtual Object* duplicate();
+	virtual Object* duplicate() const;
 	
 	/** Creates a new PathObject which contains a duplicate of only one part of this object. */
-	PathObject* duplicatePart(int part_index);
+	PathObject* duplicatePart(int part_index) const;
 	
 	/** Replaces this object's contents by those of the other. */
 	virtual Object& operator=(const Object& other);
@@ -397,8 +397,10 @@ public:
 	
 	/** Returns the number of coordinates, including curve handles and close points. */
 	inline int getCoordinateCount() const {return (int)coords.size();}
-	/** Eeturns the i-th coordinate. */
+	/** Returns the i-th coordinate. */
 	inline MapCoord& getCoordinate(int pos) {Q_ASSERT(pos >= 0 && (std::size_t)pos < coords.size()); return coords[pos];}
+	/** Returns the i-th coordinate. */
+	inline const MapCoord& getCoordinate(int pos) const {Q_ASSERT(pos >= 0 && (std::size_t)pos < coords.size()); return coords[pos];}
 	
 	/** Replaces the i-th coordinate with c. */
 	void setCoordinate(int pos, MapCoord c);
@@ -428,7 +430,11 @@ public:
 	
 	/** Returns a coordinate with shifted index,
 	 *  see shiftedCoordIndex() for details. */
-	MapCoord& shiftedCoord(int base_index, int offset, PathPart& part);
+	const MapCoord& shiftedCoord(int base_index, int offset, const PathPart& part) const;
+	
+	/** Returns a coordinate with shifted index,
+	 *  see shiftedCoordIndex() for details. */
+	MapCoord& shiftedCoord(int base_index, int offset, const PathPart& part);
 	
 	/**
 	 * Calculates a shifted coordinate index, correctly handling wrap-around
@@ -438,16 +444,16 @@ public:
 	 * @param offset Offset from the base index.
 	 * @param part Reference to part in which the base_index is.
 	 */
-	int shiftedCoordIndex(int base_index, int offset, PathPart& part);
+	int shiftedCoordIndex(int base_index, int offset, const PathPart& part) const;
 	
 	/** Finds the path part containing the given coord index. */
-	PathPart& findPartForIndex(int coords_index);
+	const PathPart& findPartForIndex(int coords_index) const;
 	
 	/** Finds the path part containing the given coord index. */
-	int findPartIndexForIndex(int coords_index);
+	int findPartIndexForIndex(int coords_index) const;
 	
 	/** Checks if the coord with given index is a curve handle. */
-	bool isCurveHandle(int coord_index);
+	bool isCurveHandle(int coord_index) const;
 	
 	
 	/** Returns the number of path parts in this object */
@@ -455,6 +461,9 @@ public:
 	
 	/** Returns the i-th path part. */
 	inline PathPart& getPart(int index) {return parts[index];}
+	
+	/** Returns the i-th path part. */
+	inline const PathPart& getPart(int index) const {return parts[index];}
 	
 	/** Returns if the first path part (with index 0) is closed. */
 	inline bool isFirstPartClosed() const {return (getNumParts() > 0) ? parts[0].isClosed() : false;}
@@ -520,13 +529,13 @@ public:
 	 * to this specific path part.
 	 */
 	void calcClosestPointOnPath(MapCoordF coord, float& out_distance_sq,
-								PathCoord& out_path_coord, int part_index = -1);
+								PathCoord& out_path_coord, int part_index = -1) const;
 	
 	/**
 	 * Calculates the closest control point coordinate to the given coordiante,
 	 * returns the squared distance of these points and the index of the control point.
 	 */
-	void calcClosestCoordinate(MapCoordF coord, float& out_distance_sq, int& out_index);
+	void calcClosestCoordinate(MapCoordF coord, float& out_distance_sq, int& out_index) const;
 	
 	/**
 	 * Splits the segment beginning at the coordinate with the given index
@@ -538,7 +547,7 @@ public:
 	/**
 	 * Returns if connectIfClose() would change something with the given parameters
 	 */
-	bool canBeConnected(PathObject* other, double connect_threshold_sq);
+	bool canBeConnected(const PathObject* other, double connect_threshold_sq) const;
 	
 	/**
 	 * Returns if the objects were connected (if so, you can delete the other object).
@@ -588,7 +597,7 @@ public:
 	 * The range must be within one part, and end may be smaller than start
 	 * if the path is closed to wrap around.
 	 */
-	PathObject* extractCoordsWithinPart(int start, int end);
+	PathObject* extractCoordsWithinPart(int start, int end) const;
 	
 	/**
 	 * Converts all polygonal sections in this path to splines.
@@ -612,19 +621,19 @@ public:
 	
 	/** See Object::isPointOnObject() */
 	int isPointOnPath(MapCoordF coord, float tolerance,
-					  bool treat_areas_as_paths, bool extended_selection);
+					  bool treat_areas_as_paths, bool extended_selection) const;
 	
 	/**
 	 * Returns true if the given coordinate is inside the area
 	 * defined by this object, which must be closed.
 	 */
-	bool isPointInsideArea(MapCoordF coord);
+	bool isPointInsideArea(MapCoordF coord) const;
 	
 	/** Calculates the average distance (of the first part) to another path */
-	float calcAverageDistanceTo(PathObject* other);
+	float calcAverageDistanceTo(PathObject* other) const;
 	
 	/** Calculates the maximum distance (of the first part) to another path */
-	float calcMaximumDistanceTo(PathObject* other);
+	float calcMaximumDistanceTo(PathObject* other) const;
 	
 	/**
 	 * Calculates and adds all intersections with the other path to out.
@@ -632,10 +641,10 @@ public:
 	 * To clean them up, call clean() on the Intersections object after adding
 	 * all intersections with objects you are interested in.
 	 */
-	void calcAllIntersectionsWith(PathObject* other, Intersections& out);
+	void calcAllIntersectionsWith(PathObject* other, Intersections& out) const;
 	
 	/** Called by Object::update() */
-	void updatePathCoords(MapCoordVectorF& float_coords);
+	void updatePathCoords(MapCoordVectorF& float_coords) const;
 	
 	/** Called by Object::load() */
 	void recalculateParts();
@@ -682,7 +691,7 @@ protected:
 		MapCoordVectorF& out_coords,
 		const MapCoordF& o3,
 		const MapCoordF& o4
-	);
+	) const;
 	
 	/**
 	 * Calculates the factors which should be applied to the length of the
@@ -707,7 +716,7 @@ protected:
 		MapCoord q3,
 		double& out_pfactor,
 		double& out_qfactor
-	);
+	) const;
 	
 	/**
 	 * Uses nonlinear optimization to improve the first result obtained by
@@ -723,7 +732,7 @@ protected:
 		MapCoord q3,
 		double& out_pfactor,
 		double& out_qfactor
-	);
+	) const;
 	
 	/**
 	 * Is used internally by calcBezierPointDeletionRetainingShapeOptimization()
@@ -736,7 +745,7 @@ protected:
 		MapCoordF p2,
 		MapCoord p3,
 		PathObject* reference
-	);
+	) const;
 	
 	/**
 	 * Sets coord as the point which closes a part: sets the correct flags
@@ -758,11 +767,12 @@ protected:
 	 */
 	MapCoord pattern_origin;
 	
+private:
 	/** Path parts list */
-	std::vector<PathPart> parts;
+	mutable std::vector<PathPart> parts;
 	
 	/** Linearized shape information, only valid after calling update()! */
-	PathCoordVector path_coords;
+	mutable PathCoordVector path_coords;
 };
 
 /**
@@ -775,10 +785,10 @@ class PointObject : public Object
 {
 public:
 	/** Constructs a PointObject, optionally assigning the symbol. */
-	PointObject(Symbol* symbol = NULL);
+	PointObject(const Symbol* symbol = NULL);
 	
 	/** Creates a duplicate of the point, use asPoint() on the result. */
-	virtual Object* duplicate();
+	virtual Object* duplicate() const;
 	
 	/** Replaces the content of this object by that of anothe. */
 	virtual Object& operator=(const Object& other);

@@ -97,7 +97,7 @@ void MapEditorTool::deactivate()
 	deleteLater();
 }
 
-void MapEditorTool::switchToDefaultDrawTool(Symbol* symbol) const
+void MapEditorTool::switchToDefaultDrawTool(const Symbol* symbol) const
 {
 	editor->setTool(editor->getDefaultDrawToolForSymbol(symbol));
 }

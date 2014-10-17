@@ -46,8 +46,8 @@ public:
 	void setColor(const MapColor* color);
 	
 protected slots:
-	void colorAdded(int pos, MapColor* color);
-	void colorChanged(int pos, MapColor* color);
+	void colorAdded(int pos, const MapColor* color);
+	void colorChanged(int pos, const MapColor* color);
 	void colorDeleted(int pos, const MapColor* color);
 };
 

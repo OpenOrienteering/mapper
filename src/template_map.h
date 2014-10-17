@@ -32,18 +32,18 @@ Q_OBJECT
 public:
 	TemplateMap(const QString& path, Map* map);
     virtual ~TemplateMap();
-	virtual const QString getTemplateType() {return "TemplateMap";}
+	virtual QString getTemplateType() const {return "TemplateMap";}
 	virtual bool isRasterGraphics() const {return false;}
 	
 	virtual bool loadTemplateFileImpl(bool configuring);
 	virtual bool postLoadConfiguration(QWidget* dialog_parent, bool& out_center_in_view);
 	virtual void unloadTemplateFileImpl();
 	
-    virtual void drawTemplate(QPainter* painter, QRectF& clip_rect, double scale, bool on_screen, float opacity);
-	virtual QRectF getTemplateExtent();
+    virtual void drawTemplate(QPainter* painter, QRectF& clip_rect, double scale, bool on_screen, float opacity) const;
+	virtual QRectF getTemplateExtent() const;
 
 protected:
-	virtual Template* duplicateImpl();
+	virtual Template* duplicateImpl() const;
 	
 private:
 	Map* template_map;
