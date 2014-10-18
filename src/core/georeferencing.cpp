@@ -39,6 +39,7 @@
 #include "../mapper_resource.h"
 #include "../util_gui.h"
 #include "../util/xml_stream_util.h"
+#include "../util/scoped_signals_blocker.h"
 
 
 // ### A namespace which collects various string constants of type QLatin1String. ###
@@ -175,6 +176,12 @@ void Georeferencing::load(QXmlStreamReader& xml, bool load_scale_only) throw (Fi
 {
 	Q_ASSERT(xml.name() == literal::georeferencing);
 	
+	{
+		// Reset to default values
+		ScopedSignalsBlocker block(this);
+		*this = Georeferencing();
+	}
+	
 	XmlElementReader georef_element(xml);
 	scale_denominator = georef_element.attribute<int>(literal::scale);
 	if (scale_denominator <= 0)
@@ -201,6 +208,8 @@ void Georeferencing::load(QXmlStreamReader& xml, bool load_scale_only) throw (Fi
 				XmlElementReader ref_point_element(xml);
 				map_ref_point.setX(ref_point_element.attribute<double>(literal::x));
 				map_ref_point.setY(ref_point_element.attribute<double>(literal::y));
+				if (map_ref_point.lengthSquared() > 0)
+					state = Local;
 			}
 			else if (xml.name() == literal::projected_crs)
 			{
@@ -234,7 +243,6 @@ void Georeferencing::load(QXmlStreamReader& xml, bool load_scale_only) throw (Fi
 			}
 			else if (xml.name() == literal::geographic_crs)
 			{
-				state = Normal;
 				while (xml.readNextStartElement())
 				{
 					XmlElementReader current_element(xml);
@@ -278,7 +286,17 @@ void Georeferencing::load(QXmlStreamReader& xml, bool load_scale_only) throw (Fi
 	updateTransformation();
 	emit declinationChanged();
 	*pj_get_errno_ref() = 0;
-	projected_crs = pj_init_plus(projected_crs_spec.toLatin1());
+	if (!projected_crs_spec.isEmpty())
+	{
+		if (projected_crs != NULL)
+			pj_free(projected_crs);
+		projected_crs = pj_init_plus(projected_crs_spec.toLatin1());
+		if (0 == *pj_get_errno_ref())
+		{
+			state = Normal;
+			emit stateChanged();
+		}
+	}
 	emit projectionChanged();
 }
 
