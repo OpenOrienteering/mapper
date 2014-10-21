@@ -55,6 +55,7 @@ set(QT5_MD5SUMS
   5.2.1:a78408c887c04c34ce615da690e0b4c8
   5.3.1:a355749e4f200a6392ecad151d1d0cdc
   5.3.2:febb001129927a70174467ecb508a682
+  5.4.0-beta:a9b848f0a4f34273b248177637490b32:http://download.qt-project.org/development_releases/qt/5.4/5.4.0-beta/single/qt-everywhere-opensource-src-5.4.0-beta.tar.gz
 )
 foreach(line ${QT5_MD5SUMS})
 	if(${line} MATCHES "^${QT5_VERSION}:")
