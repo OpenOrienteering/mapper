@@ -1037,9 +1037,9 @@ void MapPrinter::printMap(QPrinter* printer)
 	QSizeF extent_size = page_format.page_rect.size() / scale_adjustment;
 	QPainter painter(printer);
 	
-#if defined(Q_OS_WIN)
 	float resolution = (float)options.resolution;
 	
+#if defined(Q_OS_WIN)
 	if (printer->paintEngine()->type() == QPaintEngine::Windows)
 	{
 		/* QWin32PrintEngine will (have to) do rounding when passing coordinates
@@ -1119,11 +1119,11 @@ void MapPrinter::printMap(QPrinter* printer)
 			QRectF page_extent = QRectF(QPointF(hpos, vpos), extent_size);
 			if (separationsModeSelected())
 			{
-				drawSeparationPages(printer, &painter, (float)options.resolution, page_extent);
+				drawSeparationPages(printer, &painter, resolution, page_extent);
 			}
 			else
 			{
-				drawPage(&painter, (float)options.resolution, page_extent, false);
+				drawPage(&painter, resolution, page_extent, false);
 			}
 			
 			need_new_page = true;
