@@ -433,7 +433,7 @@ public:
 	 * @param out Output parameter: a vector of the same size as the color list,
 	 *     where each element is set to true if the color is used by at least one symbol.
 	 */
-	void determineColorsInUse(const std::vector< bool >& by_which_symbols, std::vector< bool >& out);
+	void determineColorsInUse(const std::vector< bool >& by_which_symbols, std::vector< bool >& out) const;
 	
 	/** Returns true if the map contains spot colors. */
 	bool hasSpotColors() const;

@@ -1416,7 +1416,7 @@ void Map::adjustColorPriorities(int first, int last)
 		color_set->colors[i]->setPriority(i);
 }
 
-void Map::determineColorsInUse(const std::vector< bool >& by_which_symbols, std::vector< bool >& out)
+void Map::determineColorsInUse(const std::vector< bool >& by_which_symbols, std::vector< bool >& out) const
 {
 	if (getNumSymbols() == 0)
 	{

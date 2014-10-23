@@ -283,7 +283,7 @@ bool Symbol::loadFinished(Map* map)
 	return true;
 }
 
-bool Symbol::symbolChanged(const Symbol* old_symbol, Symbol* new_symbol)
+bool Symbol::symbolChanged(const Symbol* old_symbol, const Symbol* new_symbol)
 {
 	Q_UNUSED(old_symbol);
 	Q_UNUSED(new_symbol);

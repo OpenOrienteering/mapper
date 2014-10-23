@@ -193,7 +193,7 @@ public:
 	 * If new_symbol == NULL, the symbol is being deleted.
 	 * Must return true if this symbol contained the deleted symbol.
 	 */
-	virtual bool symbolChanged(const Symbol* old_symbol, Symbol* new_symbol);
+	virtual bool symbolChanged(const Symbol* old_symbol, const Symbol* new_symbol);
 	
 	/**
 	 * Must return if the given symbol is referenced by this symbol.
