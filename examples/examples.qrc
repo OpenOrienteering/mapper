@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/examples">
-        <file>sprint sample.xmap</file>
-        <file>forest sample.xmap</file>
+        <file>sprint sample.omap</file>
+        <file>forest sample.omap</file>
     </qresource>
 </RCC>

@@ -17,10 +17,10 @@
 #    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  
 set(Mapper_EXAMPLES
-  overprinting.xmap
-  forest\ sample.xmap
-  sprint\ sample.xmap
-  complete\ map.xmap
+  overprinting.omap
+  forest\ sample.omap
+  sprint\ sample.omap
+  complete\ map.omap
 )
 
 install(

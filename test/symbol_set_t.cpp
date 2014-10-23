@@ -33,6 +33,7 @@ void SymbolSetTool::initTestCase()
 	doStaticInitializations();
 	
 	symbol_set_dir.cd(QFileInfo(__FILE__).dir().absoluteFilePath(QString("../symbol sets")));
+	examples_dir.cd(QFileInfo(__FILE__).dir().absoluteFilePath(QString("../examples")));
 	
 	Settings::getInstance().setSetting(Settings::General_RetainCompatiblity, QVariant(false));
 }
@@ -152,6 +153,35 @@ void SymbolSetTool::processSymbolSet()
 	
 	QString target_filename = QString("%2/%1_%2.omap").arg(name).arg(target_scale);
 	QFile target_file(symbol_set_dir.absoluteFilePath(target_filename));
+	target_file.open(QFile::WriteOnly);
+	XMLFileExporter exporter(&target_file, &map, NULL);
+	exporter.doExport();
+}
+
+void SymbolSetTool::processExamples_data()
+{
+	QTest::addColumn<QString>("name");
+
+	QTest::newRow("complete map")  << "complete map";
+	QTest::newRow("forest sample") << "forest sample";
+	QTest::newRow("overprinting")  << "overprinting";
+	QTest::newRow("sprint sample") << "sprint sample";
+}
+
+void SymbolSetTool::processExamples()
+{
+	QFETCH(QString, name);
+	
+	QString source_filename = QString("src/%1.xmap").arg(name);
+	QVERIFY(examples_dir.exists(source_filename));
+	
+	QString source_path = examples_dir.absoluteFilePath(source_filename);
+	
+	Map map;
+	map.loadFrom(source_path, NULL, NULL, false, false);
+	
+	QString target_filename = QString("%1.omap").arg(name);
+	QFile target_file(examples_dir.absoluteFilePath(target_filename));
 	target_file.open(QFile::WriteOnly);
 	XMLFileExporter exporter(&target_file, &map, NULL);
 	exporter.doExport();
