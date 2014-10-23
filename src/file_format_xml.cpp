@@ -496,11 +496,12 @@ struct XMLFileImporterColorBacklogItem
 {
 	MapColor* color; // color which needs updating
 	SpotColorComponents components; // components of the color
+	bool knockout;
 	bool cmyk_from_spot; // determine CMYK from spot
 	bool rgb_from_spot; // determine RGB from spot
 	
 	XMLFileImporterColorBacklogItem(MapColor* color)
-	: color(color), cmyk_from_spot(false), rgb_from_spot(false)
+	: color(color), knockout(false), cmyk_from_spot(false), rgb_from_spot(false)
 	{}
 };
 typedef std::vector<XMLFileImporterColorBacklogItem> XMLFileImporterColorBacklog;
@@ -533,6 +534,7 @@ void XMLFileImporter::importColors()
 			cmyk.k = color_element.attribute<float>(literal::k);
 			color->setCmyk(cmyk);
 			
+			bool knockout = false;
 			SpotColorComponents components;
 			QString cmyk_method;
 			QString rgb_method;
@@ -543,13 +545,14 @@ void XMLFileImporter::importColors()
 				if (xml.name() == literal::spotcolors)
 				{
 					XmlElementReader spotcolors_element(xml);
-					color->setKnockout(spotcolors_element.attribute<bool>(literal::knockout));
+					knockout = spotcolors_element.attribute<bool>(literal::knockout);
 					
 					while(xml.readNextStartElement())
 					{
 						if (xml.name() == literal::namedcolor)
 						{
 							color->setSpotColorName(xml.readElementText());
+							color->setKnockout(knockout);
 						}
 						else if (xml.name() == literal::component)
 						{
@@ -587,8 +590,13 @@ void XMLFileImporter::importColors()
 				backlog.push_back(XMLFileImporterColorBacklogItem(color));
 				XMLFileImporterColorBacklogItem& item = backlog.back();
 				item.components = components;
+				item.knockout = knockout;
 				item.cmyk_from_spot = (cmyk_method == literal::spotcolor);
 				item.rgb_from_spot = (rgb_method == literal::spotcolor);
+			}
+			else if (knockout && !color->getKnockout())
+			{
+				addWarning(tr("Could not set knockout property of color '%1'.").arg(color->getName()));
 			}
 			
 			if (cmyk_method == literal::rgb)
@@ -639,10 +647,16 @@ void XMLFileImporter::importColors()
 		
 		// Update the current color
 		item.color->setSpotColorComposition(out_components);
+		item.color->setKnockout(item.knockout);
 		if (item.cmyk_from_spot)
 			item.color->setCmykFromSpotColors();
 		if (item.rgb_from_spot)
 			item.color->setRgbFromSpotColors();
+		
+		if (item.knockout && !item.color->getKnockout())
+		{
+			addWarning(tr("Could not set knockout property of color '%1'.").arg(item.color->getName()));
+		}
 	}
 }
 

@@ -11,21 +11,21 @@
             <rgb method="custom" r="0.800" g="0.000" b="1.000"/>
         </color>
         <color priority="1" name="Black" c="0.000" m="0.000" y="0.000" k="1.000" opacity="1.000">
-            <spotcolors>
+            <spotcolors knockout="true">
                 <namedcolor>BLACK</namedcolor>
             </spotcolors>
             <cmyk method="custom"/>
             <rgb method="custom" r="0.000" g="0.000" b="0.000"/>
         </color>
         <color priority="2" name="Brown 50%" c="0.000" m="0.280" y="0.500" k="0.090" opacity="1.000">
-            <spotcolors>
+            <spotcolors knockout="true">
                 <component factor="0.5" spotcolor="4"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
             <rgb method="spotcolor" r="0.910" g="0.680" b="0.500"/>
         </color>
         <color priority="3" name="Black below light browns" c="0.000" m="0.000" y="0.000" k="1.000" opacity="1.000">
-            <spotcolors>
+            <spotcolors knockout="true">
                 <component factor="1" spotcolor="1"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
@@ -47,7 +47,7 @@
             <rgb method="spotcolor" r="0.910" g="0.497" b="0.105"/>
         </color>
         <color priority="6" name="Opaque Blue" c="0.870" m="0.180" y="0.000" k="0.000" opacity="1.000">
-            <spotcolors>
+            <spotcolors knockout="true">
                 <component factor="1" spotcolor="7"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
@@ -61,14 +61,14 @@
             <rgb method="custom" r="0.130" g="0.820" b="1.000"/>
         </color>
         <color priority="8" name="Blue 50%" c="0.435" m="0.090" y="0.000" k="0.000" opacity="1.000">
-            <spotcolors>
+            <spotcolors knockout="true">
                 <component factor="0.5" spotcolor="7"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
             <rgb method="spotcolor" r="0.565" g="0.910" b="1.000"/>
         </color>
         <color priority="9" name="Black 30%" c="0.000" m="0.000" y="0.000" k="0.300" opacity="1.000">
-            <spotcolors>
+            <spotcolors knockout="true">
                 <component factor="0.3" spotcolor="1"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
@@ -90,14 +90,14 @@
             <rgb method="spotcolor" r="0.240" g="1.000" b="0.090"/>
         </color>
         <color priority="12" name="Opaque White over Green" c="0.000" m="0.000" y="0.000" k="0.000" opacity="1.000">
-            <spotcolors>
+            <spotcolors knockout="true">
                 <component factor="0" spotcolor="14"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
             <rgb method="spotcolor" r="1.000" g="1.000" b="1.000"/>
         </color>
         <color priority="13" name="Opaque Green" c="0.760" m="0.000" y="0.910" k="0.000" opacity="1.000">
-            <spotcolors>
+            <spotcolors knockout="true">
                 <component factor="1" spotcolor="14"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
@@ -111,14 +111,14 @@
             <rgb method="custom" r="0.240" g="1.000" b="0.090"/>
         </color>
         <color priority="15" name="Green 60%" c="0.456" m="0.000" y="0.546" k="0.000" opacity="1.000">
-            <spotcolors>
+            <spotcolors knockout="true">
                 <component factor="0.6" spotcolor="14"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
             <rgb method="spotcolor" r="0.544" g="1.000" b="0.454"/>
         </color>
         <color priority="16" name="Green 30%" c="0.228" m="0.000" y="0.273" k="0.000" opacity="1.000">
-            <spotcolors>
+            <spotcolors knockout="true">
                 <component factor="0.3" spotcolor="14"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
@@ -139,7 +139,7 @@
             <rgb method="custom" r="1.000" g="0.730" b="0.210"/>
         </color>
         <color priority="19" name="Yellow 50%" c="0.000" m="0.135" y="0.395" k="0.000" opacity="1.000">
-            <spotcolors>
+            <spotcolors knockout="true">
                 <component factor="0.5" spotcolor="18"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
@@ -153,7 +153,7 @@
             <rgb method="spotcolor" r="1.000" g="1.000" b="1.000"/>
         </color>
         <color priority="21" name="Yellow 70%" c="0.000" m="0.189" y="0.553" k="0.000" opacity="1.000">
-            <spotcolors>
+            <spotcolors knockout="true">
                 <component factor="0.7" spotcolor="18"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
@@ -7742,7 +7742,7 @@ Yhdysviiva menee hieman maaliympyrän sisäpuolelle, mikä on symbolin helppoude
     </templates>
     <view>
         <grid color="#646464" display="0" alignment="0" additional_rotation="0" unit="1" h_spacing="500" v_spacing="500" h_offset="0" v_offset="0" snapping_enabled="true"/>
-        <map_view zoom="0.353554" rotation="0" position_x="-3756" position_y="13872" view_x="0" view_y="0" drag_offset_x="0" drag_offset_y="0">
+        <map_view zoom="4" rotation="0" position_x="-3756" position_y="13872" view_x="0" view_y="0" drag_offset_x="0" drag_offset_y="0">
             <map opacity="1"/>
             <templates count="0"/>
         </map_view>
@@ -7755,407 +7755,7 @@ Yhdysviiva menee hieman maaliympyrän sisäpuolelle, mikä on symbolin helppoude
         <print_area left="0.000" top="0.000" width="0.000" height="0.000"/>
     </print>
     <barrier version="6" required="0.6.0">
-        <undo>
-            <step type="1">
-                <affected_objects part="0">
-                    <ref object="0"/>
-                </affected_objects>
-            </step>
-            <step type="1">
-                <affected_objects part="0">
-                    <ref object="1"/>
-                </affected_objects>
-            </step>
-            <step type="1">
-                <affected_objects part="0">
-                    <ref object="2"/>
-                </affected_objects>
-            </step>
-            <step type="1">
-                <affected_objects part="0">
-                    <ref object="3"/>
-                </affected_objects>
-            </step>
-            <step type="1">
-                <affected_objects part="0">
-                    <ref object="4"/>
-                </affected_objects>
-            </step>
-            <step type="2">
-                <affected_objects part="0">
-                    <ref object="4"/>
-                    <ref object="3"/>
-                    <ref object="0"/>
-                    <ref object="2"/>
-                    <ref object="1"/>
-                </affected_objects>
-                <contained_objects count="5">
-                    <object type="0" symbol="6" rotation="0">
-                        <coords count="1">
-                            <coord x="-31201" y="6000"/>
-                        </coords>
-                    </object>
-                    <object type="1" symbol="7">
-                        <coords count="3">
-                            <coord x="-14400" y="-1200" flags="32"/>
-                            <coord x="47202" y="-40601" flags="32"/>
-                            <coord x="44001" y="-4000" flags="32"/>
-                        </coords>
-                        <pattern rotation="0">
-                            <coord x="0" y="0"/>
-                        </pattern>
-                    </object>
-                    <object type="1" symbol="9">
-                        <coords count="2">
-                            <coord x="-68002" y="-28401" flags="32"/>
-                            <coord x="75602" y="-25201" flags="32"/>
-                        </coords>
-                        <pattern rotation="0">
-                            <coord x="0" y="0"/>
-                        </pattern>
-                    </object>
-                    <object type="0" symbol="8" rotation="0">
-                        <coords count="1">
-                            <coord x="15000" y="-57202"/>
-                        </coords>
-                    </object>
-                    <object type="0" symbol="8" rotation="-0.71883">
-                        <coords count="1">
-                            <coord x="-45801" y="-2000"/>
-                        </coords>
-                    </object>
-                </contained_objects>
-            </step>
-            <step type="1">
-                <affected_objects part="0">
-                    <ref object="0"/>
-                </affected_objects>
-            </step>
-            <step type="1">
-                <affected_objects part="0">
-                    <ref object="1"/>
-                </affected_objects>
-            </step>
-            <step type="1">
-                <affected_objects part="0">
-                    <ref object="2"/>
-                </affected_objects>
-            </step>
-            <step type="1">
-                <affected_objects part="0">
-                    <ref object="3"/>
-                </affected_objects>
-            </step>
-            <step type="1">
-                <affected_objects part="0">
-                    <ref object="4"/>
-                </affected_objects>
-            </step>
-            <step type="1">
-                <affected_objects part="0">
-                    <ref object="5"/>
-                </affected_objects>
-            </step>
-            <step type="2">
-                <affected_objects part="0">
-                    <ref object="3"/>
-                    <ref object="0"/>
-                    <ref object="1"/>
-                    <ref object="4"/>
-                    <ref object="5"/>
-                    <ref object="2"/>
-                </affected_objects>
-                <contained_objects count="6">
-                    <object type="0" symbol="156">
-                        <coords count="1">
-                            <coord x="4931" y="-40682"/>
-                        </coords>
-                    </object>
-                    <object type="1" symbol="88">
-                        <coords count="3">
-                            <coord x="-31070" y="-36682" flags="32"/>
-                            <coord x="13532" y="-14581" flags="32"/>
-                            <coord x="13432" y="-10681" flags="32"/>
-                        </coords>
-                        <pattern rotation="0">
-                            <coord x="0" y="0"/>
-                        </pattern>
-                    </object>
-                    <object type="0" symbol="132">
-                        <coords count="1">
-                            <coord x="-30770" y="10420"/>
-                        </coords>
-                    </object>
-                    <object type="1" symbol="134">
-                        <coords count="4">
-                            <coord x="-27370" y="-54082"/>
-                            <coord x="-26870" y="18120"/>
-                            <coord x="70733" y="17920"/>
-                            <coord x="-27370" y="-54082" flags="18"/>
-                        </coords>
-                        <pattern rotation="0">
-                            <coord x="0" y="0"/>
-                        </pattern>
-                    </object>
-                    <object type="1" symbol="134">
-                        <coords count="6">
-                            <coord x="-67440" y="-85701"/>
-                            <coord x="-66840" y="53303"/>
-                            <coord x="51364" y="51503"/>
-                            <coord x="50964" y="-90901"/>
-                            <coord x="-67840" y="-88301"/>
-                            <coord x="-67440" y="-85701" flags="18"/>
-                        </coords>
-                        <pattern rotation="0">
-                            <coord x="0" y="0"/>
-                        </pattern>
-                    </object>
-                    <object type="0" symbol="141">
-                        <coords count="1">
-                            <coord x="-16269" y="-3981"/>
-                        </coords>
-                    </object>
-                </contained_objects>
-            </step>
-            <step type="1">
-                <affected_objects part="0">
-                    <ref object="0"/>
-                </affected_objects>
-            </step>
-            <step type="2">
-                <affected_objects part="0">
-                    <ref object="0"/>
-                </affected_objects>
-                <contained_objects count="1">
-                    <object type="1">
-                        <coords count="4">
-                            <coord x="-88143" y="-31487" flags="32"/>
-                            <coord x="69971" y="-64298" flags="32"/>
-                            <coord x="20472" y="11224" flags="32"/>
-                            <coord x="-66081" y="50540" flags="32"/>
-                        </coords>
-                        <pattern rotation="0">
-                            <coord x="0" y="0"/>
-                        </pattern>
-                    </object>
-                </contained_objects>
-            </step>
-            <step type="1">
-                <affected_objects part="0">
-                    <ref object="0"/>
-                </affected_objects>
-            </step>
-            <step type="1">
-                <affected_objects part="0">
-                    <ref object="1"/>
-                </affected_objects>
-            </step>
-            <step type="1">
-                <affected_objects part="0">
-                    <ref object="2"/>
-                </affected_objects>
-            </step>
-            <step type="1">
-                <affected_objects part="0">
-                    <ref object="3"/>
-                </affected_objects>
-            </step>
-            <step type="1">
-                <affected_objects part="0">
-                    <ref object="4"/>
-                </affected_objects>
-            </step>
-            <step type="1">
-                <affected_objects part="0">
-                    <ref object="5"/>
-                </affected_objects>
-            </step>
-            <step type="1">
-                <affected_objects part="0">
-                    <ref object="6"/>
-                </affected_objects>
-            </step>
-            <step type="2">
-                <affected_objects part="0">
-                    <ref object="4"/>
-                    <ref object="0"/>
-                    <ref object="1"/>
-                    <ref object="6"/>
-                    <ref object="5"/>
-                    <ref object="2"/>
-                    <ref object="3"/>
-                </affected_objects>
-                <contained_objects count="7">
-                    <object type="1">
-                        <coords count="19">
-                            <coord x="-51287" y="-65446" flags="33"/>
-                            <coord x="-49693" y="-66996"/>
-                            <coord x="-49131" y="-68316"/>
-                            <coord x="-47187" y="-69396" flags="33"/>
-                            <coord x="-46821" y="-69600"/>
-                            <coord x="-46577" y="-70141"/>
-                            <coord x="-46237" y="-69896" flags="33"/>
-                            <coord x="-45232" y="-69173"/>
-                            <coord x="-44287" y="-68634"/>
-                            <coord x="-44287" y="-67396" flags="33"/>
-                            <coord x="-44287" y="-66652"/>
-                            <coord x="-44368" y="-66192"/>
-                            <coord x="-44737" y="-65546" flags="32"/>
-                            <coord x="-45987" y="-63546" flags="32"/>
-                            <coord x="-48687" y="-63046" flags="33"/>
-                            <coord x="-49703" y="-62623"/>
-                            <coord x="-51126" y="-62845"/>
-                            <coord x="-51187" y="-61746" flags="32"/>
-                            <coord x="-51537" y="-59796" flags="32"/>
-                        </coords>
-                        <pattern rotation="0">
-                            <coord x="0" y="0"/>
-                        </pattern>
-                    </object>
-                    <object type="1">
-                        <coords count="3">
-                            <coord x="-175354" y="12669" flags="32"/>
-                            <coord x="6803" y="-139505" flags="32"/>
-                            <coord x="51493" y="-85764" flags="32"/>
-                        </coords>
-                        <pattern rotation="0">
-                            <coord x="0" y="0"/>
-                        </pattern>
-                    </object>
-                    <object type="1">
-                        <coords count="17">
-                            <coord x="-74474" y="-67785" flags="33"/>
-                            <coord x="-72636" y="-68409"/>
-                            <coord x="-71729" y="-70044"/>
-                            <coord x="-69843" y="-69588" flags="33"/>
-                            <coord x="-68225" y="-69197"/>
-                            <coord x="-67024" y="-69280"/>
-                            <coord x="-65847" y="-68103" flags="33"/>
-                            <coord x="-65224" y="-67480"/>
-                            <coord x="-64802" y="-67210"/>
-                            <coord x="-64150" y="-66618" flags="33"/>
-                            <coord x="-63269" y="-65817"/>
-                            <coord x="-63438" y="-64472"/>
-                            <coord x="-62276" y="-64214" flags="33"/>
-                            <coord x="-60925" y="-63914"/>
-                            <coord x="-59951" y="-63790"/>
-                            <coord x="-58741" y="-64462" flags="32"/>
-                            <coord x="-57857" y="-65169" flags="32"/>
-                        </coords>
-                        <pattern rotation="0">
-                            <coord x="0" y="0"/>
-                        </pattern>
-                    </object>
-                    <object type="1">
-                        <coords count="5">
-                            <coord x="-43187" y="-56446" flags="33"/>
-                            <coord x="-56620" y="-56226"/>
-                            <coord x="-63903" y="-52296"/>
-                            <coord x="-77338" y="-52296" flags="32"/>
-                            <coord x="-78088" y="-54346" flags="32"/>
-                        </coords>
-                        <pattern rotation="0">
-                            <coord x="0" y="0"/>
-                        </pattern>
-                    </object>
-                    <object type="1">
-                        <coords count="46">
-                            <coord x="-49337" y="-59846" flags="32"/>
-                            <coord x="-47187" y="-60396" flags="33"/>
-                            <coord x="-46105" y="-60793"/>
-                            <coord x="-45555" y="-61155"/>
-                            <coord x="-44537" y="-61696" flags="33"/>
-                            <coord x="-43499" y="-62248"/>
-                            <coord x="-42857" y="-62668"/>
-                            <coord x="-42286" y="-63696" flags="33"/>
-                            <coord x="-41887" y="-64414"/>
-                            <coord x="-41766" y="-64885"/>
-                            <coord x="-41636" y="-65696" flags="33"/>
-                            <coord x="-41420" y="-67046"/>
-                            <coord x="-41170" y="-67951"/>
-                            <coord x="-41736" y="-69196" flags="33"/>
-                            <coord x="-42162" y="-70134"/>
-                            <coord x="-42184" y="-70843"/>
-                            <coord x="-42937" y="-71546" flags="33"/>
-                            <coord x="-44267" y="-72787"/>
-                            <coord x="-45173" y="-73706"/>
-                            <coord x="-46987" y="-73846" flags="33"/>
-                            <coord x="-48194" y="-73939"/>
-                            <coord x="-48901" y="-74141"/>
-                            <coord x="-50087" y="-73896" flags="33"/>
-                            <coord x="-51190" y="-73668"/>
-                            <coord x="-51983" y="-73526"/>
-                            <coord x="-52687" y="-72646" flags="33"/>
-                            <coord x="-53378" y="-71782"/>
-                            <coord x="-53646" y="-71101"/>
-                            <coord x="-53687" y="-69996" flags="33"/>
-                            <coord x="-53727" y="-68922"/>
-                            <coord x="-53664" y="-68314"/>
-                            <coord x="-53787" y="-67246" flags="33"/>
-                            <coord x="-53911" y="-66173"/>
-                            <coord x="-53870" y="-65494"/>
-                            <coord x="-54387" y="-64546" flags="33"/>
-                            <coord x="-55244" y="-62974"/>
-                            <coord x="-54939" y="-61515"/>
-                            <coord x="-56337" y="-60396" flags="33"/>
-                            <coord x="-57128" y="-59763"/>
-                            <coord x="-57704" y="-59542"/>
-                            <coord x="-58687" y="-59296" flags="33"/>
-                            <coord x="-60964" y="-58727"/>
-                            <coord x="-62243" y="-58266"/>
-                            <coord x="-64587" y="-58146" flags="32"/>
-                            <coord x="-73687" y="-58646" flags="32"/>
-                            <coord x="-76888" y="-58796" flags="32"/>
-                        </coords>
-                        <pattern rotation="0">
-                            <coord x="0" y="0"/>
-                        </pattern>
-                    </object>
-                    <object type="1">
-                        <coords count="19">
-                            <coord x="-71681" y="-71780" flags="33"/>
-                            <coord x="-70225" y="-72300"/>
-                            <coord x="-69230" y="-72782"/>
-                            <coord x="-67757" y="-72311" flags="33"/>
-                            <coord x="-66867" y="-72026"/>
-                            <coord x="-66257" y="-71983"/>
-                            <coord x="-65564" y="-71356" flags="33"/>
-                            <coord x="-64934" y="-70786"/>
-                            <coord x="-64697" y="-70349"/>
-                            <coord x="-64080" y="-69765" flags="32"/>
-                            <coord x="-61711" y="-67891" flags="32"/>
-                            <coord x="-60120" y="-68280" flags="33"/>
-                            <coord x="-59734" y="-68589"/>
-                            <coord x="-59556" y="-68845"/>
-                            <coord x="-59094" y="-69023" flags="33"/>
-                            <coord x="-57778" y="-69529"/>
-                            <coord x="-57101" y="-69968"/>
-                            <coord x="-55771" y="-70437" flags="32"/>
-                            <coord x="-55134" y="-70755" flags="32"/>
-                        </coords>
-                        <pattern rotation="0">
-                            <coord x="0" y="0"/>
-                        </pattern>
-                    </object>
-                    <object type="1">
-                        <coords count="9">
-                            <coord x="-63087" y="-75546" flags="32"/>
-                            <coord x="-55337" y="-74996" flags="33"/>
-                            <coord x="-51477" y="-75485"/>
-                            <coord x="-49333" y="-75939"/>
-                            <coord x="-45537" y="-76796" flags="33"/>
-                            <coord x="-43543" y="-77246"/>
-                            <coord x="-42560" y="-78024"/>
-                            <coord x="-40886" y="-79196" flags="32"/>
-                            <coord x="-39036" y="-80446" flags="32"/>
-                        </coords>
-                        <pattern rotation="0">
-                            <coord x="0" y="0"/>
-                        </pattern>
-                    </object>
-                </contained_objects>
-            </step>
-        </undo>
+        <undo/>
         <redo/>
     </barrier>
 </map>

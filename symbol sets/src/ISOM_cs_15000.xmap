@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map xmlns="http://oorienteering.sourceforge.net/mapper/xml/v2" version="5">
     <notes></notes>
-    <georeferencing scale="15000"/>
+    <georeferencing scale="15000" declination="0.00" grivation="0.00">
+        <ref_point x="0" y="0"/>
+        <projected_crs id="Local">
+            <spec language="PROJ.4"></spec>
+            <ref_point x="0.000000" y="0.000000"/>
+        </projected_crs>
+    </georeferencing>
     <colors count="22">
         <color priority="0" name="Fialová" c="0.200" m="1.000" y="0.000" k="0.000" opacity="1.000">
             <spotcolors>
@@ -11,21 +17,21 @@
             <rgb method="custom" r="0.800" g="0.000" b="1.000"/>
         </color>
         <color priority="1" name="Černá" c="0.000" m="0.000" y="0.000" k="1.000" opacity="1.000">
-            <spotcolors>
+            <spotcolors knockout="true">
                 <namedcolor>Černá</namedcolor>
             </spotcolors>
             <cmyk method="custom"/>
             <rgb method="custom" r="0.000" g="0.000" b="0.000"/>
         </color>
         <color priority="2" name="Hnědá 50%" c="0.000" m="0.280" y="0.500" k="0.090" opacity="1.000">
-            <spotcolors>
+            <spotcolors knockout="true">
                 <component factor="0.5" spotcolor="4"/>
             </spotcolors>
             <cmyk method="custom"/>
             <rgb method="custom" r="0.910" g="0.655" b="0.455"/>
         </color>
         <color priority="3" name="Černá pod světle hnědou" c="0.000" m="0.000" y="0.000" k="1.000" opacity="1.000">
-            <spotcolors>
+            <spotcolors knockout="true">
                 <component factor="1" spotcolor="1"/>
             </spotcolors>
             <cmyk method="custom"/>
@@ -47,7 +53,7 @@
             <rgb method="custom" r="0.910" g="0.479" b="0.096"/>
         </color>
         <color priority="6" name="Krycí modrá" c="0.870" m="0.180" y="0.000" k="0.000" opacity="1.000">
-            <spotcolors>
+            <spotcolors knockout="true">
                 <component factor="1" spotcolor="7"/>
             </spotcolors>
             <cmyk method="custom"/>
@@ -61,14 +67,14 @@
             <rgb method="custom" r="0.130" g="0.820" b="1.000"/>
         </color>
         <color priority="8" name="Modrá 50%" c="0.435" m="0.090" y="0.000" k="0.000" opacity="1.000">
-            <spotcolors>
+            <spotcolors knockout="true">
                 <component factor="0.5" spotcolor="7"/>
             </spotcolors>
             <cmyk method="custom"/>
             <rgb method="custom" r="0.565" g="0.910" b="1.000"/>
         </color>
         <color priority="9" name="Černá 30%" c="0.000" m="0.000" y="0.000" k="0.300" opacity="1.000">
-            <spotcolors>
+            <spotcolors knockout="true">
                 <component factor="0.3" spotcolor="1"/>
             </spotcolors>
             <cmyk method="custom"/>
@@ -90,14 +96,14 @@
             <rgb method="custom" r="0.240" g="1.000" b="0.090"/>
         </color>
         <color priority="12" name="Krycí bílá nad zelenou" c="0.000" m="0.000" y="0.000" k="0.000" opacity="1.000">
-            <spotcolors>
+            <spotcolors knockout="true">
                 <component factor="0" spotcolor="14"/>
             </spotcolors>
             <cmyk method="custom"/>
             <rgb method="custom" r="1.000" g="1.000" b="1.000"/>
         </color>
         <color priority="13" name="Krycí zelená" c="0.760" m="0.000" y="0.910" k="0.000" opacity="1.000">
-            <spotcolors>
+            <spotcolors knockout="true">
                 <component factor="1" spotcolor="14"/>
             </spotcolors>
             <cmyk method="custom"/>
@@ -111,14 +117,14 @@
             <rgb method="custom" r="0.240" g="1.000" b="0.090"/>
         </color>
         <color priority="15" name="Zelená 60%" c="0.456" m="0.000" y="0.546" k="0.000" opacity="1.000">
-            <spotcolors>
+            <spotcolors knockout="true">
                 <component factor="0.6" spotcolor="14"/>
             </spotcolors>
             <cmyk method="custom"/>
             <rgb method="custom" r="0.544" g="1.000" b="0.454"/>
         </color>
         <color priority="16" name="Zelená 30%" c="0.228" m="0.000" y="0.273" k="0.000" opacity="1.000">
-            <spotcolors>
+            <spotcolors knockout="true">
                 <component factor="0.3" spotcolor="14"/>
             </spotcolors>
             <cmyk method="custom"/>
@@ -139,7 +145,7 @@
             <rgb method="custom" r="1.000" g="0.730" b="0.210"/>
         </color>
         <color priority="19" name="Žlutá 50%" c="0.000" m="0.135" y="0.395" k="0.000" opacity="1.000">
-            <spotcolors>
+            <spotcolors knockout="true">
                 <component factor="0.5" spotcolor="18"/>
             </spotcolors>
             <cmyk method="custom"/>
@@ -153,7 +159,7 @@
             <rgb method="custom" r="1.000" g="1.000" b="1.000"/>
         </color>
         <color priority="21" name="Žlutá 70%" c="0.000" m="0.189" y="0.553" k="0.000" opacity="1.000">
-            <spotcolors>
+            <spotcolors knockout="true">
                 <component factor="0.7" spotcolor="18"/>
             </spotcolors>
             <cmyk method="custom"/>
@@ -7910,7 +7916,7 @@ Fialová čára se trchu rozšíří do symbolu pro cíl. To je nedostatek tohot
     </templates>
     <view>
         <grid color="#646464" display="0" alignment="0" additional_rotation="0" unit="1" h_spacing="500" v_spacing="500" h_offset="0" v_offset="0" snapping_enabled="true"/>
-        <map_view zoom="2" rotation="0" position_x="8201" position_y="3150" view_x="0" view_y="0" drag_offset_x="0" drag_offset_y="0">
+        <map_view zoom="4" rotation="0" position_x="7987" position_y="4132" view_x="0" view_y="0" drag_offset_x="0" drag_offset_y="0">
             <map opacity="1"/>
             <templates count="0"/>
         </map_view>
