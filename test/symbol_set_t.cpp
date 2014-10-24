@@ -79,6 +79,18 @@ void SymbolSetTool::processSymbolSet()
 	Map map;
 	map.loadFrom(source_path, NULL, NULL, false, false);
 	
+	const int num_symbols = map.getNumSymbols();
+	QStringList previous_numbers;
+	for (int i = 0; i < num_symbols; ++i)
+	{
+		const Symbol* symbol = map.getSymbol(i);
+		QString number = symbol->getNumberAsString();
+		QString number_and_name = number % " " % symbol->getPlainTextName();
+		QVERIFY2(!symbol->getName().isEmpty(), qPrintable(number_and_name));
+		QVERIFY2(!previous_numbers.contains(number), qPrintable(number_and_name));
+		previous_numbers.append(number);
+	}
+	
 	if (source_scale != target_scale)
 	{
 		map.setScaleDenominator(target_scale);
@@ -90,8 +102,7 @@ void SymbolSetTool::processSymbolSet()
 			
 			int symbols_changed = 0;
 			int north_lines_changed = 0;
-			const int size = map.getNumSymbols();
-			for (int i = 0; i < size; ++i)
+			for (int i = 0; i < num_symbols; ++i)
 			{
 				Symbol* symbol = map.getSymbol(i);
 				const int code = symbol->getNumberComponent(0);
@@ -125,8 +136,7 @@ void SymbolSetTool::processSymbolSet()
 		if (name == "ISSOM")
 		{
 			int north_lines_changed = 0;
-			const int size = map.getNumSymbols();
-			for (int i = 0; i < size; ++i)
+			for (int i = 0; i < num_symbols; ++i)
 			{
 				Symbol* symbol = map.getSymbol(i);
 				const int code = symbol->getNumberComponent(0);

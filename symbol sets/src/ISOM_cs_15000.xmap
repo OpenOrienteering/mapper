@@ -3708,26 +3708,26 @@ Barva: fialová.</description>
                 </dash_symbol>
             </line_symbol>
         </symbol>
-        <symbol type="2" id="150" code="709.1" name="Nepřístupná oblast, přerušovaná čára">
+        <symbol type="2" id="150" code="709.2" name="Nepřístupná oblast, přerušovaná čára">
             <description>Přerušovaná čára vyjadřuje přerušované značení v terénu.</description>
             <line_symbol color="0" line_width="250" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="3000" break_length="500" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                 <start_symbol>
-                    <symbol type="1" code="" name="Symbol pro začátek">
+                    <symbol type="1" code="" name="Start symbol">
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
                     </symbol>
                 </start_symbol>
                 <mid_symbol>
-                    <symbol type="1" code="" name="Vnitřní symbol">
+                    <symbol type="1" code="" name="Mid symbol">
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
                     </symbol>
                 </mid_symbol>
                 <end_symbol>
-                    <symbol type="1" code="" name="Symbol pro konec">
+                    <symbol type="1" code="" name="End symbol">
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
                     </symbol>
                 </end_symbol>
                 <dash_symbol>
-                    <symbol type="1" code="" name="Symbol pro čárku">
+                    <symbol type="1" code="" name="Dash symbol">
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
                     </symbol>
                 </dash_symbol>
