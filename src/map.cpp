@@ -1017,7 +1017,7 @@ void Map::updateObjects()
 		}
 	}
 }
-void Map::removeRenderablesOfObject(Object* object, bool mark_area_as_dirty)
+void Map::removeRenderablesOfObject(const Object* object, bool mark_area_as_dirty)
 {
 	renderables->removeRenderablesOfObject(object, mark_area_as_dirty);
 	if (isObjectSelected(object))
@@ -1135,7 +1135,7 @@ void Map::removeObjectFromSelection(Object* object, bool emit_selection_changed)
 	if (emit_selection_changed)
 		emit(objectSelectionChanged());
 }
-bool Map::removeSymbolFromSelection(Symbol* symbol, bool emit_selection_changed)
+bool Map::removeSymbolFromSelection(const Symbol* symbol, bool emit_selection_changed)
 {
 	bool removed_at_least_one_object = false;
 	ObjectSelection::iterator it_end = object_selection.end();
@@ -1538,12 +1538,12 @@ void Map::addSelectionRenderables(const Object* object)
 	object->update(false);
 	selection_renderables->insertRenderablesOfObject(object);
 }
-void Map::updateSelectionRenderables(Object* object)
+void Map::updateSelectionRenderables(const Object* object)
 {
 	removeSelectionRenderables(object);
 	addSelectionRenderables(object);
 }
-void Map::removeSelectionRenderables(Object* object)
+void Map::removeSelectionRenderables(const Object* object)
 {
 	selection_renderables->removeRenderablesOfObject(object, false);
 }
@@ -2200,15 +2200,15 @@ void Map::updateAllObjects()
 {
 	applyOnAllObjects(ObjectOp::Update(true));
 }
-void Map::updateAllObjectsWithSymbol(Symbol* symbol)
+void Map::updateAllObjectsWithSymbol(const Symbol* symbol)
 {
 	applyOnMatchingObjects(ObjectOp::Update(true), ObjectOp::HasSymbol(symbol));
 }
-void Map::changeSymbolForAllObjects(Symbol* old_symbol, Symbol* new_symbol)
+void Map::changeSymbolForAllObjects(const Symbol* old_symbol, const Symbol* new_symbol)
 {
 	applyOnMatchingObjects(ObjectOp::ChangeSymbol(new_symbol), ObjectOp::HasSymbol(old_symbol));
 }
-bool Map::deleteAllObjectsWithSymbol(Symbol* symbol)
+bool Map::deleteAllObjectsWithSymbol(const Symbol* symbol)
 {
 	bool exists = existsObject(ObjectOp::HasSymbol(symbol));
 	if (exists)
@@ -2221,7 +2221,8 @@ bool Map::deleteAllObjectsWithSymbol(Symbol* symbol)
 	}
 	return exists;
 }
-bool Map::existsObjectWithSymbol(Symbol* symbol)
+
+bool Map::existsObjectWithSymbol(const Symbol* symbol)
 {
 	return existsObject(ObjectOp::HasSymbol(symbol));
 }

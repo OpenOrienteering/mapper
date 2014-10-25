@@ -885,30 +885,30 @@ public:
 	void updateAllObjects();
 	
 	/** Forces an update of all objects with the given symbol. */
-	void updateAllObjectsWithSymbol(Symbol* symbol);
+	void updateAllObjectsWithSymbol(const Symbol* symbol);
 	
 	/** For all symbols with old_symbol, replaces the symbol by new_symbol. */
-	void changeSymbolForAllObjects(Symbol* old_symbol, Symbol* new_symbol);
+	void changeSymbolForAllObjects(const Symbol* old_symbol, const Symbol* new_symbol);
 	
 	/**
 	 * Deletes all objects with the given symbol.
 	 * 
 	 * @return True if at least one object was deleted, false otherwise
 	 */
-	bool deleteAllObjectsWithSymbol(Symbol* symbol);
+	bool deleteAllObjectsWithSymbol(const Symbol* symbol);
 	
 	/**
 	 * Returns if at least one object with the given symbol exists in the map.
 	 * WARNING: Even if no objects exist directly, the symbol could still be
 	 *          required by another (combined) symbol used by an object!
 	 */
-	bool existsObjectWithSymbol(Symbol* symbol);
+	bool existsObjectWithSymbol(const Symbol* symbol);
 	
 	/**
 	 * Removes the renderables of the given object from display (does not
 	 * delete them!).
 	 */
-	void removeRenderablesOfObject(Object* object, bool mark_area_as_dirty);
+	void removeRenderablesOfObject(const Object* object, bool mark_area_as_dirty);
 	
 	/**
 	 * Inserts the renderables of the given object, so they will be displayed.
@@ -991,7 +991,7 @@ public:
 	 * @param symbol The symbol of the objects to remove.
 	 * @param emit_selection_changed See addObjectToSelection().
 	 */
-	bool removeSymbolFromSelection(Symbol* symbol, bool emit_selection_changed);
+	bool removeSymbolFromSelection(const Symbol* symbol, bool emit_selection_changed);
 	
 	/** Returns true if the given object is selected. */
 	bool isObjectSelected(const Object* object) const;
@@ -1317,8 +1317,8 @@ private:
 					   QHash<int, int>* out_indexmap = NULL, QHash<const Symbol*, Symbol*>* out_pointermap = NULL);
 	
 	void addSelectionRenderables(const Object* object);
-	void updateSelectionRenderables(Object* object);
-	void removeSelectionRenderables(Object* object);
+	void updateSelectionRenderables(const Object* object);
+	void removeSelectionRenderables(const Object* object);
 	
 	static void initStatic();
 	

@@ -47,13 +47,13 @@ namespace ObjectOp
 	/** Returns true for objects with the given symbol. */
 	struct HasSymbol
 	{
-		inline HasSymbol(Symbol* symbol) : symbol(symbol) {}
+		inline HasSymbol(const Symbol* symbol) : symbol(symbol) {}
 		inline bool operator()(Object* object) const
 		{
 			return object->getSymbol() == symbol;
 		}
 	private:
-		Symbol* symbol;
+		const Symbol* symbol;
 	};
 	
 	/** Returns true for objects with the given symbol type. */
@@ -138,7 +138,7 @@ namespace ObjectOp
 	 */
 	struct ChangeSymbol
 	{
-		inline ChangeSymbol(Symbol* new_symbol) : new_symbol(new_symbol) {}
+		inline ChangeSymbol(const Symbol* new_symbol) : new_symbol(new_symbol) {}
 		inline bool operator()(Object* object, MapPart* part, int object_index) const
 		{
 			if (!object->setSymbol(new_symbol, false))
@@ -148,7 +148,7 @@ namespace ObjectOp
 			return true;
 		}
 	private:
-		Symbol* new_symbol;
+		const Symbol* new_symbol;
 	};
 	
 	/** Delete objects. */
