@@ -25,6 +25,7 @@
 
 #include "../../core/map_color.h"
 #include "../../map.h"
+#include "../../object.h"
 #include "../../settings.h"
 #include "../../symbol.h"
 #include "../../symbol_area.h"
@@ -255,13 +256,9 @@ SymbolRenderWidget::SymbolRenderWidget(Map* map, bool mobile_mode, QWidget* pare
 	sort_menu->addAction(tr("Sort by primary color priority"), this, SLOT(sortByColorPriority()));
 	context_menu->addMenu(sort_menu);
 	
-	// lockSelection() will be the first slot called by selectedSymbolsChanged().
-	// cf. http://qt-project.org/doc/qt-5/signalsandslots.html#signals
-	connect(this, SIGNAL(selectedSymbolsChanged()), this, SLOT(lockSelection()));
-
 	connect(map, SIGNAL(colorDeleted(int, const MapColor*)), this, SLOT(update()));
 	connect(map, SIGNAL(symbolAdded(int, const Symbol*)), this, SLOT(updateAll()));
-	connect(map, SIGNAL(symbolDeleted(int, const Symbol*)), this, SLOT(updateAll()));
+	connect(map, SIGNAL(symbolDeleted(int, const Symbol*)), this, SLOT(symbolDeleted(int, const Symbol*)));
 	connect(map, SIGNAL(symbolChanged(int, const Symbol*, const Symbol*)), this, SLOT(symbolChanged(int, const Symbol*, const Symbol*)));
 	connect(map, SIGNAL(symbolIconChanged(int)), this, SLOT(updateSingleIcon(int)));
 }
@@ -269,6 +266,30 @@ SymbolRenderWidget::SymbolRenderWidget(Map* map, bool mobile_mode, QWidget* pare
 SymbolRenderWidget::~SymbolRenderWidget()
 {
 	; // nothing
+}
+
+void SymbolRenderWidget::symbolDeleted(int pos, const Symbol *old_symbol)
+{
+	Q_UNUSED(old_symbol);
+	
+	std::set<int>::iterator it = selected_symbols.find(pos);
+	if (it != selected_symbols.end())
+	{
+		// Remove pos
+		std::set<int>::iterator new_it = it;
+		++new_it;
+		selected_symbols.erase(it);
+		// Renumber successors
+		for (it = new_it; it != selected_symbols.end(); it = ++new_it)
+		{
+				new_it = selected_symbols.insert(*it - 1).first;
+				selected_symbols.erase(it);
+		}
+		emitGuarded_selectedSymbolsChanged();
+	}
+	
+	adjustLayout();
+	update();
 }
 
 void SymbolRenderWidget::symbolChanged(int pos, const Symbol* new_symbol, const Symbol* old_symbol)
@@ -279,7 +300,7 @@ void SymbolRenderWidget::symbolChanged(int pos, const Symbol* new_symbol, const 
 	updateSingleIcon(pos);
 	
 	if (isSymbolSelected(pos))
-		emit selectedSymbolsChanged();
+		emitGuarded_selectedSymbolsChanged();
 }
 
 void SymbolRenderWidget::updateAll()
@@ -315,19 +336,21 @@ void SymbolRenderWidget::adjustLayout()
 	protected_symbol_decoration.reset(new ProtectedSymbolDecorator(icon_size));
 }
 
-void SymbolRenderWidget::lockSelection()
+void SymbolRenderWidget::emitGuarded_selectedSymbolsChanged()
 {
+	QScopedValueRollback<bool> save(selection_locked);
 	selection_locked = true;
-	// Unlock on return to event loop.
-	QTimer::singleShot(0, this, SLOT(unlockSelection()));
+	emit selectedSymbolsChanged();
 }
 
-void SymbolRenderWidget::unlockSelection()
+const Symbol* SymbolRenderWidget::singleSelectedSymbol() const
 {
-	selection_locked = false;
+	if (selected_symbols.size() != 1)
+		return NULL;
+	return static_cast<const Map*>(map)->getSymbol(*(selected_symbols.begin()));
 }
 
-Symbol* SymbolRenderWidget::singleSelectedSymbol() const
+Symbol* SymbolRenderWidget::singleSelectedSymbol()
 {
 	if (selected_symbols.size() != 1)
 		return NULL;
@@ -366,8 +389,9 @@ void SymbolRenderWidget::selectSingleSymbol(int i)
 		selected_symbols.insert(i);
 		updateSingleIcon(i);
 	}
+	current_symbol_index = i;
 	
-	emit selectedSymbolsChanged();
+	emitGuarded_selectedSymbolsChanged();
 }
 
 void SymbolRenderWidget::hover(QPoint pos)
@@ -631,7 +655,7 @@ void SymbolRenderWidget::mousePressEvent(QMouseEvent* event)
 					selected_symbols.insert(current_symbol_index);
 				else
 					selected_symbols.erase(current_symbol_index);
-				emit selectedSymbolsChanged();
+				emitGuarded_selectedSymbolsChanged();
 			}
 		}
 		else if (event->modifiers() & Qt::ShiftModifier)
@@ -655,7 +679,7 @@ void SymbolRenderWidget::mousePressEvent(QMouseEvent* event)
 					else
 						break;
 				}
-				emit selectedSymbolsChanged();
+				emitGuarded_selectedSymbolsChanged();
 			}
 		}
 		else
@@ -692,7 +716,7 @@ void SymbolRenderWidget::mouseReleaseEvent(QMouseEvent* event)
 		if (current_symbol_index >= 0 && !isSymbolSelected(current_symbol_index))
 			selectSingleSymbol(current_symbol_index);
 		else
-			emit selectedSymbolsChanged(); // HACK, will close the symbol selection screen
+			emitGuarded_selectedSymbolsChanged(); // HACK, will close the symbol selection screen
 	}
 }
 
@@ -872,16 +896,27 @@ void SymbolRenderWidget::scaleSymbol()
 
 void SymbolRenderWidget::deleteSymbols()
 {
-	for (std::set<int>::const_reverse_iterator it = selected_symbols.rbegin(); it != selected_symbols.rend(); ++it)
+	// save selected symbols
+	std::vector<const Symbol*> saved_selection;
+	saved_selection.reserve(selected_symbols.size());
+	for (std::set<int>::const_iterator it = selected_symbols.begin(); it != selected_symbols.end(); ++it)
 	{
-		if (map->existsObjectWithSymbol(map->getSymbol(*it)))
+		saved_selection.push_back(map->getSymbol(*it));
+	}
+	
+	// delete symbols in order
+	for (std::vector<const Symbol*>::iterator it = saved_selection.begin(); it != saved_selection.end(); ++it)
+	{
+		if (map->existsObjectWithSymbol(*it))
 		{
-			if (QMessageBox::warning(this, tr("Confirmation"), tr("The map contains objects with the symbol \"%1\". Deleting it will delete those objects and clear the undo history! Do you really want to do that?").arg(map->getSymbol(*it)->getName()), QMessageBox::Yes | QMessageBox::No) == QMessageBox::No)
+			if (QMessageBox::warning(this, tr("Confirmation"), tr("The map contains objects with the symbol \"%1\". Deleting it will delete those objects and clear the undo history! Do you really want to do that?").arg((*it)->getName()), QMessageBox::Yes | QMessageBox::No) == QMessageBox::No)
 				continue;
 		}
-		map->deleteSymbol(*it);
+		map->deleteSymbol(map->findSymbolIndex(*it));
 	}
-	selectSingleSymbol(-1);
+	
+	if (selected_symbols.empty() && map->getFirstSelectedObject())
+		selectSingleSymbol(map->getFirstSelectedObject()->getSymbol());
 }
 
 void SymbolRenderWidget::duplicateSymbol()
@@ -972,7 +1007,7 @@ void SymbolRenderWidget::setSelectedSymbolVisibility(bool checked)
 		map->emitSelectionChanged();
 	map->updateAllMapWidgets();
 	map->setSymbolsDirty();
-	emit selectedSymbolsChanged();
+	emitGuarded_selectedSymbolsChanged();
 }
 void SymbolRenderWidget::setSelectedSymbolProtection(bool checked)
 {
@@ -991,14 +1026,14 @@ void SymbolRenderWidget::setSelectedSymbolProtection(bool checked)
 	if (selection_changed)
 		map->emitSelectionChanged();
 	map->setSymbolsDirty();
-	emit selectedSymbolsChanged();
+	emitGuarded_selectedSymbolsChanged();
 }
 
 void SymbolRenderWidget::selectAll()
 {
 	for (int i = 0; i < map->getNumSymbols(); ++i)
 		selected_symbols.insert(i);
-	emit selectedSymbolsChanged();
+	emitGuarded_selectedSymbolsChanged();
 	update();
 }
 
@@ -1017,7 +1052,7 @@ void SymbolRenderWidget::selectUnused()
 			updateSingleIcon(i);
 		}
 	}
-	emit selectedSymbolsChanged();
+	emitGuarded_selectedSymbolsChanged();
 }
 
 void SymbolRenderWidget::invertSelection()
@@ -1029,7 +1064,7 @@ void SymbolRenderWidget::invertSelection()
 			new_set.insert(i);
 	}
 	swap(selected_symbols, new_set);
-	emit selectedSymbolsChanged();
+	emitGuarded_selectedSymbolsChanged();
 	update();
 }
 
@@ -1064,7 +1099,7 @@ void SymbolRenderWidget::updateContextMenuState()
 {
 	bool have_selection = selectedSymbolsCount() > 0;
 	bool single_selection = selectedSymbolsCount() == 1 && current_symbol_index >= 0;
-	Symbol* single_symbol = singleSelectedSymbol();
+	const Symbol* single_symbol = singleSelectedSymbol();
 	bool all_symbols_hidden = have_selection;
 	bool all_symbols_protected = have_selection;
 	for (std::set<int>::const_iterator it = selected_symbols.begin(); it != selected_symbols.end(); ++it)
@@ -1128,7 +1163,6 @@ bool SymbolRenderWidget::newSymbol(Symbol* prototype)
 	map->addSymbol(new_symbol, pos);
 	// Ensure that a change in selection is detected
 	selectSingleSymbol(-1);
-	unlockSelection();
 	selectSingleSymbol(pos);
 	return true;
 }
@@ -1137,17 +1171,20 @@ template<typename T>
 void SymbolRenderWidget::sort(T compare)
 {
 	// save selection
-	std::set<Symbol *> sel;
-	for (std::set<int>::const_iterator it = selected_symbols.begin(); it != selected_symbols.end(); ++it) {
-		sel.insert(map->getSymbol(*it));
+	std::set<const Symbol*> saved_selection;
+	for (std::set<int>::const_iterator it = selected_symbols.begin(); it != selected_symbols.end(); ++it)
+	{
+		saved_selection.insert(map->getSymbol(*it));
 	}
 	
 	map->sortSymbols(compare);
 	
 	// restore selection
 	selected_symbols.clear();
-	for (int i = 0; i < map->getNumSymbols(); i++) {
-		if (sel.find(map->getSymbol(i)) != sel.end()) selected_symbols.insert(i);
+	for (int i = 0; i < map->getNumSymbols(); ++i)
+	{
+		if (saved_selection.find(map->getSymbol(i)) != saved_selection.end())
+			selected_symbols.insert(i);
 	}
 	
 	update();

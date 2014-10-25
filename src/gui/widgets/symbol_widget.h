@@ -59,7 +59,14 @@ public:
 	 * 
 	 * Otherwise returns NULL.
 	 */
-	Symbol* getSingleSelectedSymbol() const;
+	const Symbol* getSingleSelectedSymbol() const;
+	
+	/**
+	 * @brief If exactly one symbol is selected, returns this symbol.
+	 * 
+	 * Otherwise returns NULL.
+	 */
+	Symbol* getSingleSelectedSymbol();
 	
 	/**
 	 * @brief Returns the number of selected symbols.

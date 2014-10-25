@@ -50,7 +50,12 @@ SymbolWidget::~SymbolWidget()
 	; // nothing
 }
 
-Symbol* SymbolWidget::getSingleSelectedSymbol() const
+const Symbol* SymbolWidget::getSingleSelectedSymbol() const
+{
+	return static_cast<const SymbolRenderWidget*>(render_widget)->singleSelectedSymbol();
+}
+
+Symbol* SymbolWidget::getSingleSelectedSymbol()
 {
 	return render_widget->singleSelectedSymbol();
 }
