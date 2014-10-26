@@ -287,14 +287,38 @@ void MapEditorController::setEditingInProgress(bool value)
 	{
 		editing_in_progress = value;
 		
+		// Widgets
+		map_widget->setGesturesEnabled(!editing_in_progress);
+		Q_ASSERT(symbol_widget);
+		symbol_widget->setEnabled(!editing_in_progress);
+		if (color_dock_widget)
+			color_dock_widget->widget()->setEnabled(!editing_in_progress);
+		if (mappart_selector_box)
+			mappart_selector_box->setEnabled(!editing_in_progress);
+		
+		// Edit menu
 		undo_act->setEnabled(!editing_in_progress && map->undoManager().canUndo());
 		redo_act->setEnabled(!editing_in_progress && map->undoManager().canRedo());
 		updatePasteAvailability();
 		
-		map_widget->setGesturesEnabled(!value);
+		// Map menu
+		georeferencing_act->setEnabled(!editing_in_progress);
+		scale_map_act->setEnabled(!editing_in_progress);
+		rotate_map_act->setEnabled(!editing_in_progress);
+		map_notes_act->setEnabled(!editing_in_progress);
 		
-		Q_ASSERT(symbol_widget);
-		symbol_widget->setEnabled(!value);
+		// Map menu, continued
+		const int num_parts = map->getNumParts();
+		mappart_add_act->setEnabled(!editing_in_progress);
+		mappart_rename_act->setEnabled(!editing_in_progress && num_parts > 0);
+		mappart_remove_act->setEnabled(!editing_in_progress && num_parts > 1);
+		mappart_move_menu->setEnabled(!editing_in_progress && num_parts > 1);
+		mappart_merge_act->setEnabled(!editing_in_progress && num_parts > 1);
+		mappart_merge_menu->setEnabled(!editing_in_progress && num_parts > 1);
+		
+		// Symbol menu
+		scale_all_symbols_act->setEnabled(!editing_in_progress);
+		load_symbols_from_act->setEnabled(!editing_in_progress);
 		
 		updateObjectDependentActions();
 		updateSymbolDependentActions();
@@ -1590,6 +1614,7 @@ void MapEditorController::showColorWindow(bool show)
 	{
 		color_dock_widget = new EditorDockWidget(tr("Colors"), color_window_act, this, window);
 		color_dock_widget->setWidget(new ColorWidget(map, window, color_dock_widget));
+		color_dock_widget->widget()->setEnabled(!editing_in_progress);
 		color_dock_widget->setObjectName("Color dock widget");
 		if (!window->restoreDockWidget(color_dock_widget))
 			window->addDockWidget(Qt::LeftDockWidgetArea, color_dock_widget, Qt::Vertical);
