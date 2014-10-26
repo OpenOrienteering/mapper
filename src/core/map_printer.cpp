@@ -823,7 +823,7 @@ void MapPrinter::drawPage(QPainter* device_painter, float units_per_inch, const 
 	/*
 	 * Prepare the common background
 	 */
-	if (use_buffer_for_background)
+	if (use_page_buffer)
 	{
 		page_buffer->fill(QColor(Qt::white));
 	}
