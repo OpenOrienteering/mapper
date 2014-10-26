@@ -413,7 +413,7 @@ void PrintWidget::updateTargets()
 	int saved_target_index = -1;
 	int default_printer_index = -1;
 	{
-		ScopedSignalsBlocker block(target_combo);
+		const QSignalBlocker block(target_combo);
 		target_combo->clear();
 		
 		if (task == PRINT_TASK)
@@ -531,7 +531,7 @@ void PrintWidget::updatePaperSizes(const QPrinterInfo* target) const
 	bool have_custom_size = false;
 	
 	{
-		ScopedSignalsBlocker block(paper_size_combo);
+		const QSignalBlocker block(paper_size_combo);
 		
 		paper_size_combo->clear();
 		QList<QPrinter::PaperSize> size_list;
@@ -828,7 +828,7 @@ void PrintWidget::updateResolutions(const QPrinterInfo* target) const
 	
 	QString dpi_text = dpi_combo->currentText();
 	{
-		ScopedSignalsBlocker block(dpi_combo);
+		const QSignalBlocker block(dpi_combo);
 		dpi_combo->clear();
 		dpi_combo->addItems(resolutions);
 	}

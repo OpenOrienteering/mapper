@@ -351,7 +351,7 @@ void GeoreferencingDialog::projectionChanged()
 // slot
 void GeoreferencingDialog::declinationChanged()
 {
-	ScopedSignalsBlocker block(declination_edit);
+	const QSignalBlocker block(declination_edit);
 	declination_edit->setValue(georef->getDeclination());
 }
 
@@ -538,7 +538,7 @@ void GeoreferencingDialog::crsEdited()
 	QString spec = crs_edit->getSelectedCRSSpec();
 	if (!spec.isEmpty())
 	{
-		ScopedSignalsBlocker block(crs_spec_edit);
+		const QSignalBlocker block(crs_spec_edit);
 		crs_spec_edit->setText(spec);
 	}
 	else
@@ -590,7 +590,7 @@ void GeoreferencingDialog::crsEdited()
 	
 	if (selected_item_id == -1)
 	{
-		ScopedSignalsBlocker block(crs_edit);
+		const QSignalBlocker block(crs_edit);
 		if (updateZone(georef_copy))
 		{
 			Q_ASSERT(crs_params.size() == (std::size_t)crs_template->getNumParams());
@@ -628,7 +628,7 @@ void GeoreferencingDialog::mapRefChanged()
 
 void GeoreferencingDialog::eastingNorthingEdited()
 {
-	ScopedSignalsBlocker block1(keep_geographic_radio), block2(keep_projected_radio);
+	const QSignalBlocker block1(keep_geographic_radio), block2(keep_projected_radio);
 	double easting   = easting_edit->value();
 	double northing  = northing_edit->value();
 	georef->setProjectedRefPoint(QPointF(easting, northing), !grivation_locked);
@@ -638,7 +638,7 @@ void GeoreferencingDialog::eastingNorthingEdited()
 
 void GeoreferencingDialog::latLonEdited()
 {
-	ScopedSignalsBlocker block1(keep_geographic_radio), block2(keep_projected_radio);
+	const QSignalBlocker block1(keep_geographic_radio), block2(keep_projected_radio);
 	double latitude  = lat_edit->value();
 	double longitude = lon_edit->value();
 	georef->setGeographicRefPoint(LatLon(latitude, longitude), !grivation_locked);
@@ -904,7 +904,7 @@ void ProjectedCRSSelector::setParam(int i, const QString& value)
 	QWidget* edit_widget = layout->itemAt(widget_index)->widget();
 	if (!edit_widget->hasFocus())
 	{
-		ScopedSignalsBlocker block(edit_widget);
+		const QSignalBlocker block(edit_widget);
 		temp->getParam(i).setValue(edit_widget, value);
 	}
 }

@@ -1,5 +1,5 @@
 /*
- *    Copyright 2012, 2013 Kai Pastor
+ *    Copyright 2012, 2013, 2014 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -27,42 +27,57 @@
 #include <QObject>
 
 /**
- * A ScopedSignalsBlocker disables the signals of a QObject for the scope
- * of a particular block.
+ * @brief A safe and scoped wrapper around QObject::blockSignals().
  * 
- * It sets a QObject's signalsBlocked property to true during construction, 
- * and resets its to its previous state during destruction.
+ * A ScopedSignalsBlocker disables the signals of a QObject for the scope of a
+ * particular block. It sets a QObject's signalsBlocked property to true during
+ * construction, and resets its to its previous state during destruction.
  * 
  * Synopsis:
  * 
  *     {
- *         ScopedSignalsBlocker block(my_widget);
+ *         const ScopedSignalsBlocker block(my_widget);
  *         my_widget->setSomeProperty("Hello World");
  *     }
+ * 
+ * Since Qt 5.3, a better implementation is available from Qt as QSignalBlocker.
  */
 class ScopedSignalsBlocker
 {
 public:
-	inline ScopedSignalsBlocker(QObject* obj)
-	: obj(obj), prev_state(obj->signalsBlocked())
+	inline explicit ScopedSignalsBlocker(QObject* obj)
+	: obj(obj)
+	, prev_state(obj && obj->blockSignals(true))
 	{
-		obj->blockSignals(true);
+		Q_ASSERT(!obj || obj->signalsBlocked());
 	}
 	
 	inline ~ScopedSignalsBlocker()
 	{
-		obj->blockSignals(prev_state);
+		if (obj)
+			obj->blockSignals(prev_state);
 	}
 	
 private:
+	Q_DISABLE_COPY(ScopedSignalsBlocker)
 	QObject* obj;
-	bool prev_state;
+	const bool prev_state;
 };
 
+#if QT_VERSION < 0x050300
+
+// We export our class under the name of the class introduced in Qt 5.3.
+// Note: Our class does not support the full API of QSignalBlocker.
+// However, this is normal for lower API versions anyway.
+typedef ScopedSignalsBlocker QSignalBlocker;
+
+#endif
+
 /**
- * A ScopedMultiSignalsBlocker allows to disable the signals of multiple
- * QObjects for the scope of a particular block.
+ * @brief A safe and scoped wrapper around QObject::blockSignals() of multiple objects.
  * 
+ * A ScopedMultiSignalsBlocker allows to disable the signals of multiple
+ * QObjects for the scope of a particular block. 
  * It sets the QObject's signalsBlocked property to true when they are added
  * (by operator <<), and resets its to its previous state during destruction.
  * 
@@ -85,18 +100,20 @@ public:
 	
 	inline ScopedMultiSignalsBlocker& operator<<(QObject* obj)
 	{
-		objects.push_back(std::make_pair(obj, obj->signalsBlocked()));
-		obj->blockSignals(true);
+		objects.push_back(std::make_pair(obj, obj && obj->blockSignals(true)));
+		Q_ASSERT(!obj || obj->signalsBlocked());
 		return *this;
 	}
 	
 	inline ~ScopedMultiSignalsBlocker()
 	{
-		Q_FOREACH(item_type item, objects)
-			item.first->blockSignals(item.second);
+		for (std::vector<item_type>::iterator item = objects.begin(); item != objects.end(); ++item)
+			if (item->first)
+				item->first->blockSignals(item->second);
 	}
 	
 private:
+	Q_DISABLE_COPY(ScopedMultiSignalsBlocker)
 	std::vector<item_type> objects;
 };
 

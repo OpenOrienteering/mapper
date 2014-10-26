@@ -3183,7 +3183,7 @@ void MapEditorController::updateMapPartsUI()
 		mappart_move_menu->setTitle(tr("Move selected objects to"));
 	}
 	
-	ScopedSignalsBlocker selector_box_blocker(mappart_selector_box);
+	const QSignalBlocker selector_box_blocker(mappart_selector_box);
 	mappart_selector_box->clear();
 	mappart_merge_menu->clear();
 	mappart_move_menu->clear();

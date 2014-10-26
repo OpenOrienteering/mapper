@@ -178,7 +178,7 @@ void Georeferencing::load(QXmlStreamReader& xml, bool load_scale_only) throw (Fi
 	
 	{
 		// Reset to default values
-		ScopedSignalsBlocker block(this);
+		const QSignalBlocker block(this);
 		*this = Georeferencing();
 	}
 	
