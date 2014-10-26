@@ -1,5 +1,6 @@
 /*
- *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2012, 2013, 2014 Thomas Schöps
+ *    Copyright 2012, 2013, 2014 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -50,7 +51,7 @@ void registerProjectionTemplates()
 		Georeferencing::tr("UTM", "UTM coordinate reference system"),
 		Georeferencing::tr("UTM coordinates"),
 		"+proj=utm +datum=WGS84 +zone=%1");
-	temp->addParam(new CRSTemplate::ZoneParam(Georeferencing::tr("UTM Zone (number north/south, e.g. \"32 N\", \"24 S\")")));
+	temp->addParam(new CRSTemplate::UTMZoneParam(Georeferencing::tr("UTM Zone (number north/south, e.g. \"32 N\", \"24 S\")")));
 	CRSTemplate::registerCRSTemplate(temp);
 	
 	// Gauss-Krueger

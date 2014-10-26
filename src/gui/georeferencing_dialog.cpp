@@ -803,7 +803,7 @@ ProjectedCRSSelector::ProjectedCRSSelector(QWidget* parent) : QWidget(parent)
 {
 	num_custom_items = 0;
 	crs_dropdown = new QComboBox();
-	for (int i = 0; i < CRSTemplate::getNumCRSTemplates(); ++i)
+	for (std::size_t i = 0; i < CRSTemplate::getNumCRSTemplates(); ++i)
 	{
 		CRSTemplate& temp = CRSTemplate::getCRSTemplate(i);
 		crs_dropdown->addItem(temp.getId(), qVariantFromValue<void*>(&temp));

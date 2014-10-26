@@ -1,5 +1,6 @@
 /*
  *    Copyright 2013, 2013, 2014 Thomas Schöps
+ *    Copyright 2014 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -30,22 +31,52 @@
 
 std::vector<CRSTemplate*> CRSTemplate::crs_templates;
 
+
+// ### CRSTemplate::Param ###
+
 CRSTemplate::Param::Param(const QString& desc)
  : desc(desc)
 {
+	// nothing
 }
 
-CRSTemplate::ZoneParam::ZoneParam(const QString& desc)
+CRSTemplate::Param::~Param()
+{
+	// nothing, not inlined
+}
+
+
+
+// ### CRSTemplate::UTMZoneParam ###
+
+CRSTemplate::UTMZoneParam::UTMZoneParam(const QString& desc)
  : Param(desc)
 {
+	// nothing
 }
-QWidget* CRSTemplate::ZoneParam::createEditWidget(QObject* edit_receiver) const
+
+QWidget* CRSTemplate::UTMZoneParam::createEditWidget(QObject* edit_receiver) const
 {
+	static const QRegExp zone_regexp("(?:[1-5][0-9]?|60?)(?: [NS])?");
+	static QStringList zone_list;
+	if (zone_list.isEmpty())
+	{
+		for (int i = 1; i <= 60; ++i)
+		{
+			zone_list << QString("%1 N").arg(i) << QString("%1 S").arg(i);
+		}
+	}
+	
 	QLineEdit* widget = new QLineEdit();
+	widget->setValidator(new QRegExpValidator(zone_regexp, widget));
+	QCompleter* completer = new QCompleter(zone_list, widget);
+	completer->setMaxVisibleItems(2);
+	widget->setCompleter(completer);
 	QObject::connect(widget, SIGNAL(textEdited(QString)), edit_receiver, SLOT(crsParamEdited(QString)));
 	return widget;
 }
-std::vector<QString> CRSTemplate::ZoneParam::getSpecValue(QWidget* edit_widget) const
+
+std::vector<QString> CRSTemplate::UTMZoneParam::getSpecValue(QWidget* edit_widget) const
 {
 	QString zone = getValue(edit_widget);
 	zone.replace(" N", "");
@@ -55,28 +86,38 @@ std::vector<QString> CRSTemplate::ZoneParam::getSpecValue(QWidget* edit_widget) 
 	out.push_back(zone);
 	return out;
 }
-QString CRSTemplate::ZoneParam::getValue(QWidget* edit_widget) const
+
+QString CRSTemplate::UTMZoneParam::getValue(QWidget* edit_widget) const
 {
 	QLineEdit* text_edit = static_cast<QLineEdit*>(edit_widget);
 	return text_edit->text();
 }
-void CRSTemplate::ZoneParam::setValue(QWidget* edit_widget, const QString& value)
+
+void CRSTemplate::UTMZoneParam::setValue(QWidget* edit_widget, const QString& value)
 {
 	QLineEdit* text_edit = static_cast<QLineEdit*>(edit_widget);
 	text_edit->setText(value);
 }
 
+
+
+// ### CRSTemplate::IntRangeParam ###
+
 CRSTemplate::IntRangeParam::IntRangeParam(const QString& desc, int min_value, int max_value)
-: Param(desc), min_value(min_value), max_value(max_value)
+: Param(desc)
+, min_value(min_value)
+, max_value(max_value)
 {
 	outputs.push_back(std::make_pair(1, 0));
 }
+
 QWidget* CRSTemplate::IntRangeParam::createEditWidget(QObject* edit_receiver) const
 {
 	QSpinBox* widget = Util::SpinBox::create(min_value, max_value);
 	QObject::connect(widget, SIGNAL(valueChanged(QString)), edit_receiver, SLOT(crsParamEdited(QString)));
 	return widget;
 }
+
 std::vector<QString> CRSTemplate::IntRangeParam::getSpecValue(QWidget* edit_widget) const
 {
 	QSpinBox* spin_box = static_cast<QSpinBox*>(edit_widget);
@@ -90,35 +131,47 @@ std::vector<QString> CRSTemplate::IntRangeParam::getSpecValue(QWidget* edit_widg
 	}
 	return out;
 }
+
 QString CRSTemplate::IntRangeParam::getValue(QWidget* edit_widget) const
 {
 	QSpinBox* spin_box = static_cast<QSpinBox*>(edit_widget);
 	return QString::number(spin_box->value());
 }
+
 void CRSTemplate::IntRangeParam::setValue(QWidget* edit_widget, const QString& value)
 {
 	QSpinBox* spin_box = static_cast<QSpinBox*>(edit_widget);
 	spin_box->setValue(value.toInt());
 }
+
 CRSTemplate::IntRangeParam* CRSTemplate::IntRangeParam::clearOutputs()
 {
 	outputs.clear();
 	return this;
 }
+
 CRSTemplate::IntRangeParam* CRSTemplate::IntRangeParam::addDerivedOutput(int factor, int bias)
 {
 	outputs.push_back(std::make_pair(factor, bias));
 	return this;
 }
 
+
+
+// ### CRSTemplate ###
+
 CRSTemplate::CRSTemplate(const QString& id, const QString& name, const QString& coordinates_name, const QString& spec_template)
-: id(id), name(name), coordinates_name(coordinates_name), spec_template(spec_template)
+: id(id)
+, name(name)
+, coordinates_name(coordinates_name)
+, spec_template(spec_template)
 {
+	// nothing
 }
 
 CRSTemplate::~CRSTemplate()
 {
-	for (int i = 0; i < (int)params.size(); ++i)
+	for (std::size_t i = 0; i < params.size(); ++i)
 		delete params[i];
 }
 
@@ -127,19 +180,19 @@ void CRSTemplate::addParam(Param* param)
 	params.push_back(param);
 }
 
-int CRSTemplate::getNumCRSTemplates()
+std::size_t CRSTemplate::getNumCRSTemplates()
 {
-	return (int)crs_templates.size();
+	return crs_templates.size();
 }
 
-CRSTemplate& CRSTemplate::getCRSTemplate(int index)
+CRSTemplate& CRSTemplate::getCRSTemplate(std::size_t index)
 {
 	return *crs_templates[index];
 }
 
 CRSTemplate* CRSTemplate::getCRSTemplate(const QString& id)
 {
-	for (size_t i = 0, end = crs_templates.size(); i < end; ++i)
+	for (std::size_t i = 0, end = crs_templates.size(); i < end; ++i)
 	{
 		if (crs_templates[i]->getId() == id)
 			return crs_templates[i];
