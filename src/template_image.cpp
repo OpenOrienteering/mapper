@@ -89,7 +89,26 @@ bool TemplateImage::loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml)
 bool TemplateImage::loadTemplateFileImpl(bool configuring)
 {
 	QImageReader reader(template_path);
-	image = reader.read();
+	const QSize size = reader.size();
+	const QImage::Format format = reader.imageFormat();
+	if (size.isEmpty() || format == QImage::Format_Invalid)
+	{
+		// Leave memory allocation to QImageReader
+		image = reader.read();
+	}
+	else
+	{
+		// Pre-allocate the memory in order to catch errors
+		image = QImage(size, format);
+		if (image.isNull())
+		{
+			setErrorString(tr("Not enough free memory (image size: %1x%2 pixels)").arg(size.width()).arg(size.height()));
+			return false;
+		}
+		// Read into pre-allocated image
+		reader.read(&image);
+	}
+	
 	if (image.isNull())
 	{
 		setErrorString(reader.errorString());
