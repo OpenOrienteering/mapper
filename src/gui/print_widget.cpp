@@ -198,9 +198,28 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 	overprinting_check = new QCheckBox(tr("Simulate overprinting"));
 	layout->addRow(overprinting_check);
 	
-	layout->addItem(Util::SpacerItem::create(this));
+	QWidget* scrolling_content = new QWidget();
+	scrolling_content->setLayout(layout);
+	
+	QBoxLayout* outer_layout = new QVBoxLayout();
+	outer_layout->setContentsMargins(QMargins());
+	
+	QScrollArea* scroll_area = new QScrollArea();
+	scroll_area->setWidget(scrolling_content);
+	scroll_area->setWidgetResizable(true);
+	scroll_area->setFrameShape(QFrame::NoFrame);
+	scroll_area->setMinimumWidth((scrolling_content->sizeHint() + scroll_area->verticalScrollBar()->sizeHint()).width());
+	scroll_area->setSizeAdjustPolicy(QAbstractScrollArea::AdjustToContentsOnFirstShow);
+	outer_layout->addWidget(scroll_area);
 	
 	QDialogButtonBox* button_box = new QDialogButtonBox();
+	QStyleOption style_option(QStyleOption::Version, QStyleOption::SO_DockWidget);
+	button_box->layout()->setContentsMargins(
+	    style()->pixelMetric(QStyle::PM_LayoutLeftMargin, &style_option),
+	    style()->pixelMetric(QStyle::PM_LayoutTopMargin, &style_option),
+	    style()->pixelMetric(QStyle::PM_LayoutRightMargin, &style_option),
+	    style()->pixelMetric(QStyle::PM_LayoutBottomMargin, &style_option)
+	);
 	preview_button = new QPushButton(tr("Preview..."));
 	button_box->addButton(preview_button, QDialogButtonBox::ActionRole);
 	print_button = new QPushButton(tr("Print"));
@@ -211,9 +230,9 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 	export_button->hide();
 	button_box->addButton(export_button, QDialogButtonBox::ActionRole);
 	QPushButton* close_button = button_box->addButton(QDialogButtonBox::Close);
-	layout->addRow(button_box);
+	outer_layout->addWidget(button_box);
 	
-	setLayout(layout);
+	setLayout(outer_layout);
 	
 	connect(target_combo, SIGNAL(currentIndexChanged(int)), this, SLOT(targetChanged(int)));
 	connect(paper_size_combo, SIGNAL(currentIndexChanged(int)), this, SLOT(paperSizeChanged(int)));
