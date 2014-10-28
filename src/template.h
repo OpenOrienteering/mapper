@@ -119,9 +119,8 @@ public:
 	
 	/// Changes a template's file without changing the parameters.
 	/// Useful when a template file has been moved.
-	/// If the template is loaded, reloads it using the new file. Otherwise, does nothing else.
-	/// To check for success, try to load the template if not loaded before and check its state.
-	void switchTemplateFile(const QString& new_path);
+	/// If load_file is true, tries to load the given file.
+	void switchTemplateFile(const QString& new_path, bool load_file);
 	
 	/// Shows the dialog to find a moved template. If the user selects a new file,
 	/// tries to switch to the selected template file using switchTemplateFile() and

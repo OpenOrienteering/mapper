@@ -324,7 +324,7 @@ Q_ASSERT(temp->passpoints.size() == 0);
 	return temp;
 }
 
-void Template::switchTemplateFile(const QString& new_path)
+void Template::switchTemplateFile(const QString& new_path, bool load_file)
 {
 	if (template_state == Loaded)
 	{
@@ -332,39 +332,48 @@ void Template::switchTemplateFile(const QString& new_path)
 		unloadTemplateFile();
 	}
 	
-	template_path = new_path;
-	if (! QFileInfo(new_path).canonicalFilePath().isEmpty())
-		template_path = QFileInfo(new_path).canonicalFilePath();
-	template_file = QFileInfo(new_path).fileName();
-	template_relative_path = "";
+	template_path          = new_path;
+	template_file          = QFileInfo(new_path).fileName();
+	template_relative_path = QString();
+	template_state         = Template::Unloaded;
 	
-	if (template_state == Loaded)
+	if (load_file)
 		loadTemplateFile(false);
 }
 
 bool Template::execSwitchTemplateFileDialog(QWidget* dialog_parent)
 {
-	QString path = QFileDialog::getOpenFileName(dialog_parent, tr("Find the moved template file"),
-												 QString(), tr("All files (*.*)"));
-	path = QFileInfo(path).canonicalFilePath();
-	if (path.isEmpty())
+	QString new_path = QFileDialog::getOpenFileName(dialog_parent,
+	                                                tr("Find the moved template file"),
+												    QString(),
+	                                                tr("All files (*.*)") );
+	new_path = QFileInfo(new_path).canonicalFilePath();
+	if (new_path.isEmpty())
 		return false;
 	
-	bool need_to_load = getTemplateState() != Template::Loaded;
-	QString old_path = getTemplatePath();
-	switchTemplateFile(path);
-	if (need_to_load)
-		loadTemplateFile(false);
+	const State   old_state = getTemplateState();
+	const QString old_path  = getTemplatePath();
 	
-	if (getTemplateState() == Template::Loaded)
-		return true;
-	else
+	switchTemplateFile(new_path, true);
+	if (getTemplateState() != Loaded)
 	{
-		QMessageBox::warning(dialog_parent, tr("Error"), tr("Cannot change the template to this file! Is the format of the file correct for this template type?"));
+		QString error_template = QCoreApplication::translate("TemplateWidget", "Cannot open template\n%1:\n%2").arg(new_path);
+		QString error = errorString();
+		Q_ASSERT(!error.isEmpty());
+		QMessageBox::warning(dialog_parent,
+		                     tr("Error"),
+		                     error_template.arg(error));
+		
 		// Revert change
-		switchTemplateFile(old_path);
+		switchTemplateFile(old_path, old_state == Loaded);
+		if (old_state == Invalid)
+		{
+			template_state = Invalid;
+		}
 		return false;
 	}
+	
+	return true;
 }
 
 bool Template::configureAndLoad(QWidget* dialog_parent, MapView* view)
@@ -399,19 +408,15 @@ bool Template::tryToFindAndReloadTemplateFile(QString map_directory, bool* out_l
 	if (out_loaded_from_map_dir)
 		*out_loaded_from_map_dir = false;
 	
+	const QString old_absolute_path = getTemplatePath();
+	
 	// First try relative path (if this information is available)
 	if (!getTemplateRelativePath().isEmpty() && !map_directory.isEmpty())
 	{
-		QString old_absolute_path = getTemplatePath();
 		setTemplatePath(map_directory + getTemplateRelativePath());
 		loadTemplateFile(false);
 		if (getTemplateState() == Template::Loaded)
 			return true;
-		else
-		{
-			// Failure: restore old absolute path
-			setTemplatePath(old_absolute_path);
-		}
 	}
 	
 	// Then try absolute path
@@ -422,7 +427,6 @@ bool Template::tryToFindAndReloadTemplateFile(QString map_directory, bool* out_l
 	// Then try the template filename in the map's directory
 	if (!map_directory.isEmpty())
 	{
-		QString old_absolute_path = getTemplatePath();
 		setTemplatePath(map_directory + getTemplateFilename());
 		loadTemplateFile(false);
 		if (getTemplateState() == Template::Loaded)
@@ -431,12 +435,9 @@ bool Template::tryToFindAndReloadTemplateFile(QString map_directory, bool* out_l
 				*out_loaded_from_map_dir = true;
 			return true;
 		}
-		else
-		{
-			// Failure: restore old absolute path
-			setTemplatePath(old_absolute_path);
-		}
 	}
+	
+	setTemplatePath(old_absolute_path);
 	return false;
 }
 
@@ -449,17 +450,39 @@ bool Template::preLoadConfiguration(QWidget* dialog_parent)
 bool Template::loadTemplateFile(bool configuring)
 {
 	assert(template_state != Loaded);
-	bool result = loadTemplateFileImpl(configuring);
-	if (result)
-	{
-		template_state = Loaded;
-		emit templateStateChanged();
-	}
-	else if (template_state != Invalid)
+	
+	const State old_state = template_state;
+	bool result = QFileInfo::exists(template_path);
+	if (!result)
 	{
 		template_state = Invalid;
-		emit templateStateChanged();
+		setErrorString(tr("No such file."));
 	}
+	else
+	{
+		setErrorString(QString());
+		result = loadTemplateFileImpl(configuring);
+		if (result)
+		{
+			template_state = Loaded;
+		}
+		else
+		{
+			template_state = Invalid;
+			if (errorString().isEmpty())
+			{
+				qDebug("%s: Missing error message from failure in %s::loadTemplateFileImpl(bool)", \
+				         Q_FUNC_INFO, \
+				         qPrintable(getTemplateType()) );
+				setErrorString(tr("Is the format of the file correct for this template type?"));
+			}
+		}
+		
+	}
+	
+	if (old_state != template_state)
+		emit templateStateChanged();
+		
 	return result;
 }
 

@@ -1055,12 +1055,9 @@ void TemplateWidget::changeTemplateFile()
 	int pos = posFromRow(row);
 	Template* temp = (row >= 0 && pos >= 0) ? map->getTemplate(pos) : NULL;
 	Q_ASSERT(temp);
-	
-	if (temp && temp->execSwitchTemplateFileDialog(this))
-	{
-		updateRow(row);
-		updateButtons();
-		temp->setTemplateAreaDirty();
-		map->setTemplatesDirty();
-	}
+	temp->execSwitchTemplateFileDialog(this);
+	updateRow(row);
+	updateButtons();
+	temp->setTemplateAreaDirty();
+	map->setTemplatesDirty();
 }
