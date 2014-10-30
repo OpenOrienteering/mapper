@@ -143,10 +143,12 @@ protected:
 	bool italic;
 	bool underline;
 	float line_spacing;			// as factor of original line spacing
+	// (BEGIN) DON'T CHANGE THE ORDER OF THESE FIELDS BEFORE SOLVING [tickets:#428]
 	int paragraph_spacing;		// in mm
 	float character_spacing;	// as a factor of the space character width
 	bool kerning;
 	QString icon_text;			// text to be drawn in the symbol's icon
+	//  (END)  DON'T CHANGE THE ORDER OF THESE FIELDS BEFORE SOLVING [tickets:#428]
 	
 	bool framing;
 	const MapColor* framing_color;
