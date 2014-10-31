@@ -259,11 +259,11 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 	connect(export_button, SIGNAL(clicked(bool)), this, SLOT(printClicked()));
 	connect(close_button, SIGNAL(clicked(bool)), this, SIGNAL(closeClicked()));
 	
-	policy = map->printerConfig().single_page_print_area ? SinglePage : CustomArea;
+	policy = map_printer->config().single_page_print_area ? SinglePage : CustomArea;
 	policy_combo->setCurrentIndex(policy_combo->findData(policy));
 	connect(policy_combo, SIGNAL(currentIndexChanged(int)), this, SLOT(printAreaPolicyChanged(int)));
 	
-	center_check->setChecked(map->printerConfig().center_print_area);
+	center_check->setChecked(map_printer->config().center_print_area);
 	connect(center_check, SIGNAL(clicked(bool)), this, SLOT(applyCenterPolicy()));
 	
 	setPageFormat(map_printer->getPageFormat());
