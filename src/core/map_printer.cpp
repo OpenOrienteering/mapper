@@ -72,20 +72,45 @@ namespace literal
 
 // #### MapPrinterPageFormat ###
 
-MapPrinterPageFormat::MapPrinterPageFormat(QSizeF page_rect_size, qreal margin) 
+MapPrinterPageFormat::MapPrinterPageFormat(QSizeF page_rect_size, qreal margin, qreal overlap) 
  :
 #ifdef QT_PRINTSUPPORT_LIB
-   paper_size(QPrinter::Custom),
+   paper_size(QPrinter::Custom)
 #else
-   paper_size(-1),
+   paper_size(-1)
 #endif
-   orientation(Portrait),
-   page_rect(QRectF(QPointF(margin, margin), page_rect_size)),
-   h_overlap(5.0), // mm
-   v_overlap(5.0)  // mm
+ , orientation(Portrait)
+ , page_rect(QRectF(QPointF(margin, margin), page_rect_size))
+ , paper_dimensions(page_rect.size() + 2.0* QSizeF(margin, margin))
+ , h_overlap(overlap)
+ , v_overlap(overlap)
 {
-	const qreal double_margin = 2 * margin;
-	paper_dimensions = page_rect.size() + QSizeF(double_margin, double_margin);
+	// nothing
+}
+
+#ifdef QT_PRINTSUPPORT_LIB
+
+MapPrinterPageFormat::MapPrinterPageFormat(const QPrinter& printer, qreal overlap)
+ : paper_size(printer.paperSize())
+ , orientation((printer.orientation() == QPrinter::Portrait) ? MapPrinterPageFormat::Portrait : MapPrinterPageFormat::Landscape)
+ , page_rect(printer.pageRect(QPrinter::Millimeter))
+ , paper_dimensions(printer.paperSize(QPrinter::Millimeter))
+ , h_overlap(overlap)
+ , v_overlap(overlap)
+{
+	// nothing
+}
+
+#endif
+
+MapPrinterPageFormat MapPrinterPageFormat::fromDefaultPrinter()
+{
+#ifdef QT_PRINTSUPPORT_LIB
+	QPrinter default_printer;
+	return MapPrinterPageFormat(default_printer);
+#else
+	return MapPrinterPageFormat();
+#endif
 }
 
 bool operator==(const MapPrinterPageFormat& lhs, const MapPrinterPageFormat& rhs)
@@ -122,7 +147,7 @@ MapPrinterOptions::MapPrinterOptions(unsigned int scale, unsigned int resolution
 MapPrinterConfig::MapPrinterConfig(const Map& map)
  : printer_name("DEFAULT"),
    print_area(map.calculateExtent()),
-   page_format(),                      // Use defaults.
+   page_format(MapPrinterPageFormat::fromDefaultPrinter()),
    options(map.getScaleDenominator()),
    center_print_area(false),
    single_page_print_area(false)
@@ -132,12 +157,15 @@ MapPrinterConfig::MapPrinterConfig(const Map& map)
 	options.show_grid = false;
 	options.show_templates = false;
 	options.simulate_overprinting = false;
+	
+	if (print_area.isEmpty())
+		print_area = page_format.page_rect;
 }
 
 MapPrinterConfig::MapPrinterConfig(const Map& map, QXmlStreamReader& xml)
  : printer_name("DEFAULT"),
    print_area(0.0, 0.0, 100.0, 100.0), // Avoid expensive calculation before loading.
-   page_format(),                      // Use defaults.
+   page_format(),
    options(map.getScaleDenominator()),
    center_print_area(false),
    single_page_print_area(false)
@@ -672,17 +700,10 @@ void MapPrinter::updatePageBreaks()
 
 void MapPrinter::takePrinterSettings(const QPrinter* printer)
 {
-	MapPrinterPageFormat f;
-	f.paper_size  = printer->paperSize();
-	f.orientation = (printer->orientation() == QPrinter::Portrait) ? MapPrinterPageFormat::Portrait : MapPrinterPageFormat::Landscape;
-	f.page_rect   = printer->paperRect(QPrinter::Millimeter); // temporary
-	f.paper_dimensions = f.page_rect.size();
-	
-	if (target != pdfTarget() && target != imageTarget())
+	MapPrinterPageFormat f(*printer);
+	if (target == pdfTarget() || target == imageTarget())
 	{
-		qreal left, top, right, bottom;
-		printer->getPageMargins(&left, &top, &right, &bottom, QPrinter::Millimeter);
-		f.page_rect.adjust(left, top, -right, -bottom);
+		f.page_rect = QRectF(QPointF(0.0, 0.0), f.paper_dimensions);
 	}
 	
 	if (f != page_format)
