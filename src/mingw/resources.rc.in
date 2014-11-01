@@ -1,5 +1,6 @@
 /*
- *    Copyright 2012, 2013 Thomas Schöps, Kai Pastor
+ *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2012, 2013, 2014 Kai Pastor
  *    
  *    This file is part of OpenOrienteering.
  * 
@@ -32,12 +33,12 @@ BEGIN
 		BLOCK "080904E4"
 		BEGIN
 			VALUE "CompanyName", "OpenOrienteering Developers"
-			VALUE "FileDescription", "Map drawing program from OpenOrienteering"
+			VALUE "FileDescription", "OpenOrienteering @CMAKE_PROJECT_NAME@ @Mapper_VERSION_MAJOR@.@Mapper_VERSION_MINOR@.@Mapper_VERSION_PATCH@"
 			VALUE "FileVersion", "@Mapper_VERSION_MAJOR@.@Mapper_VERSION_MINOR@.@Mapper_VERSION_PATCH@ @CMAKE_BUILD_TYPE@"
-			VALUE "InternalName", "Mapper"
-			VALUE "LegalCopyright", "(C) 2012, 2013 OpenOrienteering Developers"
+			VALUE "InternalName", "@CMAKE_PROJECT_NAME@"
+			VALUE "LegalCopyright", "@Mapper_COPYRIGHT@"
 			VALUE "OriginalFilename", "Mapper.exe"
-			VALUE "ProductName", "OpenOrienteering Mapper"
+			VALUE "ProductName", "OpenOrienteering @CMAKE_PROJECT_NAME@"
 			VALUE "ProductVersion", "@Mapper_VERSION_MAJOR@.@Mapper_VERSION_MINOR@.@Mapper_VERSION_PATCH@ @CMAKE_BUILD_TYPE@"
 		END
 	END

@@ -25,6 +25,8 @@ include(FeatureSummary)
 
 project(Mapper)
 
+set(Mapper_COPYRIGHT "(C) 2012-2014 OpenOrienteering developers")
+
 # All version components must be integers.
 # We use 99 to mark development builds.
 SET(Mapper_VERSION_MAJOR 0)
