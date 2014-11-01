@@ -341,8 +341,6 @@ set(Mapper_SRCS
 if(WIN32)
 	enable_language(RC)
 	if(MINGW)
-		# Cf. http://public.kitware.com/Bug/view.php?id=12480
-		cmake_minimum_required(VERSION 2.8.7 FATAL_ERROR)
 		# Cf. http://public.kitware.com/Bug/view.php?id=14865
 		if(CMAKE_RC_COMPILER MATCHES "windres\$" AND CMAKE_RC_COMPILE_OBJECT MATCHES "/fo")
 			include(Platform/${CMAKE_SYSTEM_NAME}-windres)
