@@ -44,8 +44,8 @@ public:
 	virtual void leaveEvent(QEvent* event);
 	
 protected slots:
-	void activeSymbolChanged(Symbol* symbol);
-	void symbolDeleted(int pos, Symbol* old_symbol);
+	void activeSymbolChanged(const Symbol* symbol);
+	void symbolDeleted(int pos, const Symbol* old_symbol);
 	
 protected:
 	/**
@@ -70,7 +70,7 @@ protected:
 	virtual bool keyRelease(QKeyEvent* event);
 	
 	bool rotating;
-	Symbol* last_used_symbol;
+	const Symbol* last_used_symbol;
 	PointObject* preview_object;
 	QScopedPointer<MapRenderables> renderables;
 	KeyButtonBar* key_button_bar;

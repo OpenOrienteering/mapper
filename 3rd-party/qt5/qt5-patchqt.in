@@ -82,6 +82,9 @@ for I in \
   qttools/src/designer/designer/* \
   qttools/src/designer/plugins/* \
   qttools/src/designer/src/lib/extensions/* \
+  qtwayland \
+  qtwebchannel \
+  qtwebengine \
   qtwebkit \
   qtwebkit-examples \
   qtwebkit-examples-and-demos \

@@ -48,8 +48,8 @@ public slots:
 	void newGPSPosition(MapCoordF coord, float accuracy);
 	
 protected slots:
-	void activeSymbolChanged(Symbol* symbol);
-	void symbolDeleted(int pos, Symbol* old_symbol);
+	void activeSymbolChanged(const Symbol* symbol);
+	void symbolDeleted(int pos, const Symbol* old_symbol);
 	
 protected:
 	virtual void initImpl();
@@ -65,7 +65,7 @@ protected:
 	double y_sum;
 	double weights_sum;
 	
-	Symbol* last_used_symbol;
+	const Symbol* last_used_symbol;
 	PointObject* preview_object;
 	QScopedPointer<MapRenderables> renderables;
 	QLabel* help_label;

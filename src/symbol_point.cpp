@@ -75,12 +75,12 @@ Symbol* PointSymbol::duplicate(const MapColorMap* color_map) const
 	return new_point;
 }
 
-void PointSymbol::createRenderables(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output)
+void PointSymbol::createRenderables(const Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output) const
 {
 	createRenderablesScaled(object, flags, coords, output, 1.0f);
 }
 
-void PointSymbol::createRenderablesScaled(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output, float coord_scale)
+void PointSymbol::createRenderablesScaled(const Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output, float coord_scale) const
 {
 	Q_UNUSED(flags);
 	
@@ -89,7 +89,7 @@ void PointSymbol::createRenderablesScaled(Object* object, const MapCoordVector& 
 	if (outer_color && outer_width > 0)
 		output.insertRenderable(new CircleRenderable(this, coords[0]));
 	
-	PointObject* point = reinterpret_cast<PointObject*>(object);
+	const PointObject* point = reinterpret_cast<const PointObject*>(object);
 	float rotation = rotatable ? (-point->getRotation()) : 0;
 	double offset_x = coords[0].getX();
 	double offset_y = coords[0].getY();
@@ -363,9 +363,9 @@ bool PointSymbol::loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictiona
 	return true;
 }
 
-bool PointSymbol::equalsImpl(Symbol* other, Qt::CaseSensitivity case_sensitivity)
+bool PointSymbol::equalsImpl(const Symbol* other, Qt::CaseSensitivity case_sensitivity) const
 {
-	PointSymbol* point = static_cast<PointSymbol*>(other);
+	const PointSymbol* point = static_cast<const PointSymbol*>(other);
 	
 	if (rotatable != point->rotatable)
 		return false;

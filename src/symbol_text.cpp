@@ -94,11 +94,11 @@ Symbol* TextSymbol::duplicate(const MapColorMap* color_map) const
 	return new_text;
 }
 
-void TextSymbol::createRenderables(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output)
+void TextSymbol::createRenderables(const Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output) const
 {
 	Q_UNUSED(flags);
 	
-	TextObject* text_object = reinterpret_cast<TextObject*>(object);
+	const TextObject* text_object = reinterpret_cast<const TextObject*>(object);
 	
 	double anchor_x = coords[0].getX();
 	double anchor_y = coords[0].getY();
@@ -122,9 +122,9 @@ void TextSymbol::createRenderables(Object* object, const MapCoordVector& flags, 
 	}
 }
 
-void TextSymbol::createLineBelowRenderables(Object* object, ObjectRenderables& output)
+void TextSymbol::createLineBelowRenderables(const Object* object, ObjectRenderables& output) const
 {
-	TextObject* text_object = reinterpret_cast<TextObject*>(object);
+	const TextObject* text_object = reinterpret_cast<const TextObject*>(object);
 	double scale_factor = calculateInternalScaling();
 	AreaSymbol area_symbol;
 	area_symbol.setColor(line_below_color);
@@ -135,7 +135,7 @@ void TextSymbol::createLineBelowRenderables(Object* object, ObjectRenderables& o
 	
 	for (int i = 0; i < text_object->getNumLines(); ++i)
 	{
-		TextObjectLineInfo* line_info = text_object->getLineInfo(i);
+		const TextObjectLineInfo* line_info = text_object->getLineInfo(i);
 		if (!line_info->paragraph_end)
 			continue;
 		
@@ -416,11 +416,11 @@ bool TextSymbol::loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionar
 	return true;
 }
 
-bool TextSymbol::equalsImpl(Symbol* other, Qt::CaseSensitivity case_sensitivity)
+bool TextSymbol::equalsImpl(const Symbol* other, Qt::CaseSensitivity case_sensitivity) const
 {
 	Q_UNUSED(case_sensitivity);
 	
-	TextSymbol* text = static_cast<TextSymbol*>(other);
+	const TextSymbol* text = static_cast<const TextSymbol*>(other);
 	
 	if (!MapColor::equal(color, text->color))
 		return false;

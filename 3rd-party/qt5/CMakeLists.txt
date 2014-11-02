@@ -30,6 +30,16 @@ set(QT5_VERSION ${QT5_VERSION_DEFAULT} CACHE STRING
   "Version number of the Qt5 library, recommended value: ${QT5_VERSION_DEFAULT}")
 mark_as_advanced(QT5_VERSION)
 
+string(REGEX MATCH "5.." QT5_MAJOR_MINOR ${QT5_VERSION})
+string(REGEX MATCH "5...." QT5_MAJOR_MINOR_REVISION ${QT5_VERSION})
+set(QT5_MAJOR_MINOR_REVISION ${QT5_MAJOR_MINOR_REVISION} CACHE STRING
+  "The Qt version number without additional release markers" FORCE) # Export
+if (NOT "${QT5_VERSION}" MATCHES "^${QT5_MAJOR_MINOR_REVISION}")
+	message(WARNING
+	  "The Qt5 library version is different from the current recommended version "
+	  "(${QT5_VERSION} vs. ${QT5_VERSION_DEFAULT}).")
+endif()
+
 
 if(NOT MAPPER_LIBRARY_DESTINATION AND CMAKE_BUILD_TYPE MATCHES "Debug")
 	# stand-alone debug build of Qt5
@@ -44,18 +54,13 @@ mark_as_advanced(QT5_DEBUG)
 
 message(STATUS "Configuring Qt ${QT5_VERSION}")
  
-if (NOT ${QT5_VERSION} STREQUAL ${QT5_VERSION_DEFAULT})
-	message(WARNING
-	  "The Qt5 library version is different from the current recommended version "
-	  "(${QT5_VERSION} vs. ${QT5_VERSION_DEFAULT}).")
-endif()
-
 set(QT5_MD5SUMS
   # Schema: VERSION:MD5[:DOWNLOAD_URL]
   5.2.1:a78408c887c04c34ce615da690e0b4c8
   5.3.1:a355749e4f200a6392ecad151d1d0cdc
   5.3.2:febb001129927a70174467ecb508a682
-  5.3.2-openorienteering-2014-10-12:96f2029f208ac68b7c5543b496f22892:https://sourceforge.net/projects/oorienteering/files/Mapper/Source/3rd-party/qt-everywhere-opensource-src-5.3.2-openorienteering-2014-10-12.tar.gz
+  5.3.2-openorienteering-2014-10-12:96f2029f208ac68b7c5543b496f22892
+  5.4.0-beta:a9b848f0a4f34273b248177637490b32:http://download.qt-project.org/development_releases/qt/5.4/5.4.0-beta/single/qt-everywhere-opensource-src-5.4.0-beta.tar.gz
 )
 foreach(line ${QT5_MD5SUMS})
 	if(${line} MATCHES "^${QT5_VERSION}:")
@@ -70,14 +75,13 @@ if(NOT QT5_MD5)
 	  "or specify the correct QT5_MD5 value at the command line.")
 endif()
 
-string(REGEX MATCH "5.." QT5_MAJOR_MINOR ${QT5_VERSION})
-string(REGEX MATCH "5...." QT5_MAJOR_MINOR_REVISION ${QT5_VERSION})
-set(QT5_MAJOR_MINOR_REVISION ${QT5_MAJOR_MINOR_REVISION} CACHE STRING
-  "The Qt version number without additional release markers" FORCE) # Export
-if(QT5_MD5 MATCHES :)
+if(QT5_MD5 MATCHES ":")
 	message(WARNING "Not using an official release of Qt.")
 	string(REGEX REPLACE "^[0-9a-fA-F]*:" "" QT5_URL "${QT5_MD5}")
 	string(REGEX REPLACE ":.*"      "" QT5_MD5 "${QT5_MD5}")
+elseif(QT5_VERSION MATCHES "-openorienteering-")
+	message(STATUS "Using a Qt tarball from OpenOrienteering")
+	set(QT5_URL "https://sourceforge.net/projects/oorienteering/files/Mapper/Source/3rd-party/qt-everywhere-opensource-src-${QT5_VERSION}.tar.gz")
 else()
 	set(QT5_URL "http://download.qt-project.org/archive/qt/${QT5_MAJOR_MINOR}/${QT5_VERSION}/single/qt-everywhere-opensource-src-${QT5_VERSION}.tar.gz")
 endif()

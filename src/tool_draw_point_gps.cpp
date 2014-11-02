@@ -48,8 +48,8 @@ DrawPointGPSTool::DrawPointGPSTool(GPSDisplay* gps_display, MapEditorController*
 		newGPSPosition(gps_display->getLatestGPSCoord(), gps_display->getLatestGPSCoordAccuracy());
 	
 	connect(gps_display, SIGNAL(mapPositionUpdated(MapCoordF,float)), this, SLOT(newGPSPosition(MapCoordF,float)));
-	connect(editor, SIGNAL(activeSymbolChanged(Symbol*)), this, SLOT(activeSymbolChanged(Symbol*)));
-	connect(map(), SIGNAL(symbolDeleted(int,Symbol*)), this, SLOT(symbolDeleted(int,Symbol*)));
+	connect(editor, SIGNAL(activeSymbolChanged(const Symbol*)), this, SLOT(activeSymbolChanged(const Symbol*)));
+	connect(map(), SIGNAL(symbolDeleted(int, const Symbol*)), this, SLOT(symbolDeleted(int, const Symbol*)));
 }
 
 DrawPointGPSTool::~DrawPointGPSTool()
@@ -182,7 +182,7 @@ void DrawPointGPSTool::objectSelectionChangedImpl()
 	// NOP
 }
 
-void DrawPointGPSTool::activeSymbolChanged(Symbol* symbol)
+void DrawPointGPSTool::activeSymbolChanged(const Symbol* symbol)
 {
 	if (symbol == NULL || symbol->getType() != Symbol::Point || symbol->isHidden())
 	{
@@ -195,7 +195,7 @@ void DrawPointGPSTool::activeSymbolChanged(Symbol* symbol)
 		last_used_symbol = symbol;
 }
 
-void DrawPointGPSTool::symbolDeleted(int pos, Symbol* old_symbol)
+void DrawPointGPSTool::symbolDeleted(int pos, const Symbol* old_symbol)
 {
 	Q_UNUSED(pos);
 	

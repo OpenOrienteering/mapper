@@ -39,7 +39,7 @@ PaintOnTemplateTool::PaintOnTemplateTool(MapEditorController* editor, QAction* t
 	dragging = false;
 	
 	this->temp = temp;
-	connect(map(), SIGNAL(templateDeleted(int,Template*)), this, SLOT(templateDeleted(int,Template*)));
+	connect(map(), SIGNAL(templateDeleted(int, const Template*)), this, SLOT(templateDeleted(int, const Template*)));
 	
 	if (!cursor)
 		cursor = new QCursor(QPixmap(":/images/cursor-paint-on-template.png"), 1, 1);
@@ -64,7 +64,7 @@ void PaintOnTemplateTool::init()
 	MapEditorTool::init();
 }
 
-void PaintOnTemplateTool::templateDeleted(int pos, Template* temp)
+void PaintOnTemplateTool::templateDeleted(int pos, const Template* temp)
 {
 	Q_UNUSED(pos);
 	if (temp == this->temp)

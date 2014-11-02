@@ -265,7 +265,7 @@ void MapEditorController::setOverrideTool(MapEditorTool* new_override_tool)
 	map_widget->setTool(override_tool ? override_tool : current_tool);
 }
 
-MapEditorTool* MapEditorController::getDefaultDrawToolForSymbol(Symbol* symbol)
+MapEditorTool* MapEditorController::getDefaultDrawToolForSymbol(const Symbol* symbol)
 {
 	if (!symbol)
 		return new EditPointTool(this, edit_tool_act);
@@ -287,14 +287,38 @@ void MapEditorController::setEditingInProgress(bool value)
 	{
 		editing_in_progress = value;
 		
+		// Widgets
+		map_widget->setGesturesEnabled(!editing_in_progress);
+		Q_ASSERT(symbol_widget);
+		symbol_widget->setEnabled(!editing_in_progress);
+		if (color_dock_widget)
+			color_dock_widget->widget()->setEnabled(!editing_in_progress);
+		if (mappart_selector_box)
+			mappart_selector_box->setEnabled(!editing_in_progress);
+		
+		// Edit menu
 		undo_act->setEnabled(!editing_in_progress && map->undoManager().canUndo());
 		redo_act->setEnabled(!editing_in_progress && map->undoManager().canRedo());
 		updatePasteAvailability();
 		
-		map_widget->setGesturesEnabled(!value);
+		// Map menu
+		georeferencing_act->setEnabled(!editing_in_progress);
+		scale_map_act->setEnabled(!editing_in_progress);
+		rotate_map_act->setEnabled(!editing_in_progress);
+		map_notes_act->setEnabled(!editing_in_progress);
 		
-		Q_ASSERT(symbol_widget);
-		symbol_widget->setEnabled(!value);
+		// Map menu, continued
+		const int num_parts = map->getNumParts();
+		mappart_add_act->setEnabled(!editing_in_progress);
+		mappart_rename_act->setEnabled(!editing_in_progress && num_parts > 0);
+		mappart_remove_act->setEnabled(!editing_in_progress && num_parts > 1);
+		mappart_move_menu->setEnabled(!editing_in_progress && num_parts > 1);
+		mappart_merge_act->setEnabled(!editing_in_progress && num_parts > 1);
+		mappart_merge_menu->setEnabled(!editing_in_progress && num_parts > 1);
+		
+		// Symbol menu
+		scale_all_symbols_act->setEnabled(!editing_in_progress);
+		load_symbols_from_act->setEnabled(!editing_in_progress);
 		
 		updateObjectDependentActions();
 		updateSymbolDependentActions();
@@ -1290,7 +1314,7 @@ void MapEditorController::printClicked(int task)
 	if (!print_dock_widget)
 	{
 		print_dock_widget = new EditorDockWidget(QString::null, NULL, this, window);
-		print_dock_widget->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea);
+		print_dock_widget->setAllowedAreas(Qt::NoDockWidgetArea);
 		print_widget = new PrintWidget(map, window, main_view, this, print_dock_widget);
 		connect(print_dock_widget, SIGNAL(visibilityChanged(bool)), print_widget, SLOT(setActive(bool)));
 		connect(print_widget, SIGNAL(closeClicked()), print_dock_widget, SLOT(close()));
@@ -1298,8 +1322,7 @@ void MapEditorController::printClicked(int task)
 		connect(print_widget, SIGNAL(taskChanged(QString)), print_dock_widget, SLOT(setWindowTitle(QString)));
 		print_dock_widget->setWidget(print_widget);
 		print_dock_widget->setObjectName("Print dock widget");
-		if (!window->restoreDockWidget(print_dock_widget))
-			addFloatingDockWidget(print_dock_widget);
+		addFloatingDockWidget(print_dock_widget);
 	}
 	
 	print_widget->setTask((PrintWidget::TaskFlags)task);
@@ -1366,7 +1389,7 @@ void MapEditorController::copy()
 	copy_map->importMap(map, Map::ColorImport, window);
 	
 	// Export symbols and colors into copy_map
-	QHash<Symbol*, Symbol*> symbol_map;
+	QHash<const Symbol*, Symbol*> symbol_map;
 	copy_map->importMap(map, Map::MinimalSymbolImport, window, &symbol_filter, -1, true, &symbol_map);
 	
 	// Duplicate all selected objects into copy map
@@ -1590,6 +1613,7 @@ void MapEditorController::showColorWindow(bool show)
 	{
 		color_dock_widget = new EditorDockWidget(tr("Colors"), color_window_act, this, window);
 		color_dock_widget->setWidget(new ColorWidget(map, window, color_dock_widget));
+		color_dock_widget->widget()->setEnabled(!editing_in_progress);
 		color_dock_widget->setObjectName("Color dock widget");
 		if (!window->restoreDockWidget(color_dock_widget))
 			window->addDockWidget(Qt::LeftDockWidgetArea, color_dock_widget, Qt::Vertical);
@@ -1830,11 +1854,11 @@ void MapEditorController::objectSelectionChanged()
 	if (symbol_widget && !editing_in_progress)
 	{
 		bool uniform_symbol_selected = true;
-		Symbol* uniform_symbol       = NULL;
+		const Symbol* uniform_symbol = NULL;
 		Map::ObjectSelection::const_iterator it_end = map->selectedObjectsEnd();
 		for (Map::ObjectSelection::const_iterator it = map->selectedObjectsBegin(); it != it_end; ++it)
 		{
-			Symbol* symbol = (*it)->getSymbol();
+			const Symbol* symbol = (*it)->getSymbol();
 			if (!uniform_symbol)
 			{
 				uniform_symbol = symbol;
@@ -1887,8 +1911,8 @@ void MapEditorController::updateObjectDependentActions()
 	int  num_selected_paths      = 0;
 	bool first_selected_is_path  = have_selection && map->getFirstSelectedObject()->getType() == Object::Path;
 	bool uniform_symbol_selected = true;
-	Symbol* uniform_symbol       = NULL;
-	Symbol* first_selected_symbol= have_selection ? map->getFirstSelectedObject()->getSymbol() : NULL;
+	const Symbol* uniform_symbol = NULL;
+	const Symbol* first_selected_symbol= have_selection ? map->getFirstSelectedObject()->getSymbol() : NULL;
 	std::vector< bool > symbols_in_selection(map->getNumSymbols(), false);
 	
 	if (!editing_in_progress)
@@ -1896,7 +1920,7 @@ void MapEditorController::updateObjectDependentActions()
 		Map::ObjectSelection::const_iterator it_end = map->selectedObjectsEnd();
 		for (Map::ObjectSelection::const_iterator it = map->selectedObjectsBegin(); it != it_end; ++it)
 		{
-			Symbol* symbol = (*it)->getSymbol();
+			const Symbol* symbol = (*it)->getSymbol();
 			int symbol_index = map->findSymbolIndex(symbol);
 			if (symbol_index >= 0 && symbol_index < (int)symbols_in_selection.size())
 				symbols_in_selection[symbol_index] = true;
@@ -2707,8 +2731,7 @@ void MapEditorController::measureClicked(bool checked)
 		MeasureWidget* measure_widget = new MeasureWidget(map);
 		measure_dock_widget->setWidget(measure_widget);
 		measure_dock_widget->setObjectName("Measure dock widget");
-		if (!window->restoreDockWidget(measure_dock_widget))
-			addFloatingDockWidget(measure_dock_widget);
+		addFloatingDockWidget(measure_dock_widget);
 	}
 	
 	measure_dock_widget->setVisible(checked);
@@ -2868,7 +2891,14 @@ void MapEditorController::addFloatingDockWidget(QDockWidget* dock_widget)
 	if (!window->restoreDockWidget(dock_widget))
 	{
 		dock_widget->setFloating(true);
-		dock_widget->move(window->geometry().left() + 40, window->geometry().top() + 100);
+		// We must set the size from the sizeHint() ourselves,
+		// otherwise QDockWidget may use the minimum size.
+		QRect geometry(window->pos(), dock_widget->sizeHint());
+		geometry.translate(window->width() - geometry.width(), window->centralWidget()->y());
+		const int max_height = window->centralWidget()->height();
+		if (geometry.height() > max_height)
+			geometry.setHeight(max_height);
+		dock_widget->setGeometry(geometry);
 		connect(dock_widget, SIGNAL(dockLocationChanged(Qt::DockWidgetArea)), SLOT(saveWindowState()));
 	}
 }
@@ -3183,7 +3213,7 @@ void MapEditorController::updateMapPartsUI()
 		mappart_move_menu->setTitle(tr("Move selected objects to"));
 	}
 	
-	ScopedSignalsBlocker selector_box_blocker(mappart_selector_box);
+	const QSignalBlocker selector_box_blocker(mappart_selector_box);
 	mappart_selector_box->clear();
 	mappart_merge_menu->clear();
 	mappart_move_menu->clear();
@@ -3400,7 +3430,7 @@ void MapEditorController::updatePaintOnTemplateAction()
 	paint_on_template_settings_act->setEnabled(paint_on_template_act->isEnabled());
 }
 
-void MapEditorController::templateAdded(int pos, Template* temp)
+void MapEditorController::templateAdded(int pos, const Template* temp)
 {
 	Q_UNUSED(pos);
 	if (mode == MapEditor && temp->canBeDrawnOnto())
@@ -3409,7 +3439,7 @@ void MapEditorController::templateAdded(int pos, Template* temp)
 		templateAvailabilityChanged();
 }
 
-void MapEditorController::templateDeleted(int pos, Template* temp)
+void MapEditorController::templateDeleted(int pos, const Template* temp)
 {
 	Q_UNUSED(pos);
 	if (mode == MapEditor && temp->canBeDrawnOnto())
@@ -3439,8 +3469,8 @@ void MapEditorController::setMap(Map* map, bool create_new_map_view)
 	connect(&map->undoManager(), SIGNAL(canRedoChanged(bool)), this, SLOT(undoStepAvailabilityChanged()));
 	connect(&map->undoManager(), SIGNAL(canUndoChanged(bool)), this, SLOT(undoStepAvailabilityChanged()));
 	connect(map, SIGNAL(objectSelectionChanged()), this, SLOT(objectSelectionChanged()));
-	connect(map, SIGNAL(templateAdded(int,Template*)), this, SLOT(templateAdded(int,Template*)));
-	connect(map, SIGNAL(templateDeleted(int,Template*)), this, SLOT(templateDeleted(int,Template*)));
+	connect(map, SIGNAL(templateAdded(int, const Template*)), this, SLOT(templateAdded(int, const Template*)));
+	connect(map, SIGNAL(templateDeleted(int, const Template*)), this, SLOT(templateDeleted(int, const Template*)));
 	connect(map, SIGNAL(closedTemplateAvailabilityChanged()), this, SLOT(closedTemplateAvailabilityChanged()));
 	connect(map, SIGNAL(spotColorPresenceChanged(bool)), this, SLOT(spotColorPresenceChanged(bool)));
 	connect(map, SIGNAL(currentMapPartChanged(const MapPart*)), this, SLOT(updateMapPartsUI()));

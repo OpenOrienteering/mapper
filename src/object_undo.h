@@ -208,12 +208,12 @@ public slots:
 	/**
 	 * Adapts the symbol pointers of objects referencing the changed symbol.
 	 */
-	virtual void symbolChanged(int pos, Symbol* new_symbol, Symbol* old_symbol);
+	virtual void symbolChanged(int pos, const Symbol* new_symbol, const Symbol* old_symbol);
 	
 	/**
 	 * Invalidates the undo step if a contained object references the deleted symbol.
 	 */
-	virtual void symbolDeleted(int pos, Symbol* old_symbol);
+	virtual void symbolDeleted(int pos, const Symbol* old_symbol);
 	
 protected:
 	/**
@@ -349,23 +349,23 @@ public:
 	
 	bool isValid() const;
 	
-	virtual void addObject(int index, Symbol* target_symbol);
+	virtual void addObject(int index, const Symbol* target_symbol);
 	
 	virtual UndoStep* undo();
 	
 	virtual bool load(QIODevice* file, int version);
 	
 public slots:
-	virtual void symbolChanged(int pos, Symbol* new_symbol, Symbol* old_symbol);
+	virtual void symbolChanged(int pos, const Symbol* new_symbol, const Symbol* old_symbol);
 	
-	virtual void symbolDeleted(int pos, Symbol* old_symbol);
+	virtual void symbolDeleted(int pos, const Symbol* old_symbol);
 	
 protected:
 	virtual void saveImpl(QXmlStreamWriter& xml) const;
 	
 	virtual void loadImpl(QXmlStreamReader& xml, SymbolDictionary& symbol_dict);
 	
-	std::vector<Symbol*> target_symbols;
+	std::vector<const Symbol*> target_symbols;
 	
 	bool valid;
 };

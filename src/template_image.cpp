@@ -44,7 +44,7 @@ TemplateImage::~TemplateImage()
 		unloadTemplateFile();
 }
 
-bool TemplateImage::saveTemplateFile()
+bool TemplateImage::saveTemplateFile() const
 {
 	return image.save(template_path);
 }
@@ -61,7 +61,7 @@ bool TemplateImage::loadTypeSpecificTemplateConfiguration(QIODevice* stream, int
 	return true;
 }
 
-void TemplateImage::saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml)
+void TemplateImage::saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml) const
 {
 	if (is_georeferenced)
 	{
@@ -89,7 +89,26 @@ bool TemplateImage::loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml)
 bool TemplateImage::loadTemplateFileImpl(bool configuring)
 {
 	QImageReader reader(template_path);
-	image = reader.read();
+	const QSize size = reader.size();
+	const QImage::Format format = reader.imageFormat();
+	if (size.isEmpty() || format == QImage::Format_Invalid)
+	{
+		// Leave memory allocation to QImageReader
+		image = reader.read();
+	}
+	else
+	{
+		// Pre-allocate the memory in order to catch errors
+		image = QImage(size, format);
+		if (image.isNull())
+		{
+			setErrorString(tr("Not enough free memory (image size: %1x%2 pixels)").arg(size.width()).arg(size.height()));
+			return false;
+		}
+		// Read into pre-allocated image
+		reader.read(&image);
+	}
+	
 	if (image.isNull())
 	{
 		setErrorString(reader.errorString());
@@ -192,7 +211,7 @@ void TemplateImage::unloadTemplateFileImpl()
 	image = QImage();
 }
 
-void TemplateImage::drawTemplate(QPainter* painter, QRectF& clip_rect, double scale, bool on_screen, float opacity)
+void TemplateImage::drawTemplate(QPainter* painter, QRectF& clip_rect, double scale, bool on_screen, float opacity) const
 {
 	Q_UNUSED(clip_rect);
 	Q_UNUSED(scale);
@@ -205,7 +224,7 @@ void TemplateImage::drawTemplate(QPainter* painter, QRectF& clip_rect, double sc
 	painter->drawImage(QPointF(-image.width() * 0.5, -image.height() * 0.5), image);
 	painter->setRenderHint(QPainter::SmoothPixmapTransform, false);
 }
-QRectF TemplateImage::getTemplateExtent()
+QRectF TemplateImage::getTemplateExtent() const
 {
     // If the image is invalid, the extent is an empty rectangle.
     if (image.isNull())
@@ -246,7 +265,7 @@ void TemplateImage::updateGeoreferencing()
 		updatePosFromGeoreferencing();
 }
 
-Template* TemplateImage::duplicateImpl()
+Template* TemplateImage::duplicateImpl() const
 {
 	TemplateImage* new_template = new TemplateImage(template_path, map);
 	new_template->image = image;

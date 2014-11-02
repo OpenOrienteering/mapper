@@ -251,7 +251,7 @@ TemplateWidget::TemplateWidget(Map* map, MapView* main_view, MapEditorController
 	//connect(group_button, SIGNAL(clicked(bool)), this, SLOT(groupClicked()));
 	//connect(more_button_menu, SIGNAL(triggered(QAction*)), this, SLOT(moreActionClicked(QAction*)));
 	
-	connect(map, SIGNAL(templateAdded(int,Template*)), this, SLOT(templateAdded(int,Template*)));
+	connect(map, SIGNAL(templateAdded(int, const Template*)), this, SLOT(templateAdded(int, const Template*)));
 	connect(controller, SIGNAL(templatePositionDockWidgetClosed(Template*)), this, SLOT(templatePositionDockWidgetClosed(Template*)));
 }
 
@@ -899,7 +899,7 @@ void TemplateWidget::moreActionClicked(QAction* action)
 	// TODO
 }
 
-void TemplateWidget::templateAdded(int pos, Template* temp)
+void TemplateWidget::templateAdded(int pos, const Template* temp)
 {
 	Q_UNUSED(temp);
 	int row = rowFromPos(pos);
@@ -1055,12 +1055,9 @@ void TemplateWidget::changeTemplateFile()
 	int pos = posFromRow(row);
 	Template* temp = (row >= 0 && pos >= 0) ? map->getTemplate(pos) : NULL;
 	Q_ASSERT(temp);
-	
-	if (temp && temp->execSwitchTemplateFileDialog(this))
-	{
-		updateRow(row);
-		updateButtons();
-		temp->setTemplateAreaDirty();
-		map->setTemplatesDirty();
-	}
+	temp->execSwitchTemplateFileDialog(this);
+	updateRow(row);
+	updateButtons();
+	temp->setTemplateAreaDirty();
+	map->setTemplatesDirty();
 }

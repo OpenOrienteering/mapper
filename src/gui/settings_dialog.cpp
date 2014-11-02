@@ -537,7 +537,7 @@ void GeneralPage::updateLanguageBox()
 	}
 	
 	// Update the language box
-	ScopedSignalsBlocker block(language_box);
+	const QSignalBlocker block(language_box);
 	language_box->clear();
 	
 	LanguageCollection::const_iterator end = language_map.constEnd();
@@ -581,7 +581,7 @@ void GeneralPage::encodingChanged(const QString& name)
 	if (codec && codec->name() != old_name)
 	{
 		changes.insert(Settings::getInstance().getSettingPath(Settings::General_Local8BitEncoding), codec->name());
-		ScopedSignalsBlocker block(encoding_box);
+		const QSignalBlocker block(encoding_box);
 		encoding_box->setCurrentText(codec->name());
 	}
 }

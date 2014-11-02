@@ -41,7 +41,7 @@ void PassPoint::load(QIODevice* file, int version)
 	file->read((char*)&error, sizeof(double));
 }
 
-void PassPoint::save(QXmlStreamWriter& xml)
+void PassPoint::save(QXmlStreamWriter& xml) const
 {
 	xml.writeStartElement("passpoint");
 	xml.writeAttribute("error", QString::number(error));

@@ -64,7 +64,7 @@ private:
 	
 	Map* map;
 	Map* symbol_map;
-	QHash<Symbol*, Symbol*> mapping;
+	QHash<const Symbol*, const Symbol*> mapping;
 	
 	QCheckBox* import_all_check;
 	QCheckBox* delete_unused_symbols_check;

@@ -108,9 +108,8 @@ public:
 	 * @param in_objects            All objects to operate on. Must contain subject.
 	 * @param out_objects           The resulting collection of objects.
 	 */
-	bool executeForObjects(
-	        PathObject* subject,
-	        Symbol* result_objects_symbol,
+	bool executeForObjects(PathObject* subject,
+	        const Symbol* result_objects_symbol,
 	        PathObjects& in_objects,
 	        PathObjects& out_objects );
 	
@@ -142,9 +141,8 @@ private:
 	 * @param out_objects           The resulting collection of objects.
 	 * @param undo_step             A combined undo step which will be filled with sub steps.
 	 */
-	bool executeForObjects(
-	        PathObject* subject,
-	        Symbol* result_objects_symbol,
+	bool executeForObjects(PathObject* subject,
+	        const Symbol* result_objects_symbol,
 	        PathObjects& in_objects,
 	        PathObjects& out_objects,
 	        CombinedUndoStep& undo_step);
@@ -157,7 +155,7 @@ private:
 	void polyTreeToPathObjects(
 	        const ClipperLib::PolyTree& tree,
 	        PathObjects& out_objects,
-	        Symbol* result_objects_symbol,
+	        const Symbol* result_objects_symbol,
 	        PolyMap& polymap );
 
 	/**
@@ -167,10 +165,9 @@ private:
 	 * 
 	 * This method operates recursively on all outer children.
 	 */
-	void outerPolyNodeToPathObjects(
-	        const ClipperLib::PolyNode& node,
+	void outerPolyNodeToPathObjects(const ClipperLib::PolyNode& node,
 	        PathObjects& out_objects,
-	        Symbol* result_objects_symbol,
+	        const Symbol* result_objects_symbol,
 	        PolyMap& polymap );
 	
 	/**

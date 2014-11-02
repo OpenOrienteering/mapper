@@ -1,5 +1,6 @@
 /*
  *    Copyright 2013, 2013, 2014 Thomas Schöps
+ *    Copyright 2014 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -25,19 +26,22 @@
 
 
 /**
- * A template for a coordinate reference system specification string,
- * which may contain one or more parameters described by the Param struct.
+ * A template for a coordinate reference system specification (CRS) string.
+ * 
+ * A CRSTemplate may contain one or more parameters described by the Param struct.
  * For each param, spec_template must contain a number of free parameters for QString::arg(),
  * e.g. "%1" for the first parameter.
  */
 class CRSTemplate
 {
 public:
-	/** Abstract base class for parameters in CRSTemplates. */
+	/**
+	 * Abstract base class for parameters in CRSTemplates.
+	 */
 	struct Param
 	{
 		Param(const QString& desc);
-		virtual ~Param() {}
+		virtual ~Param();
 		/** Must create a widget which can be used to edit the value. */
 		virtual QWidget* createEditWidget(QObject* edit_receiver) const = 0;
 		/** Must return the widget's value(s) in a form so they can be pasted into
@@ -49,20 +53,24 @@ public:
 		/** Must set the stored value in the widget */
 		virtual void setValue(QWidget* edit_widget, const QString& value) = 0;
 		
-		QString desc;
+		const QString desc;
 	};
 	
-	/** CRSTemplate parameter specifying a zone. */
-	struct ZoneParam : public Param
+	/**
+	 * CRSTemplate parameter specifying an UTM zone.
+	 */
+	struct UTMZoneParam : public Param
 	{
-		ZoneParam(const QString& desc);
+		UTMZoneParam(const QString& desc);
 		virtual QWidget* createEditWidget(QObject* edit_receiver) const;
 		virtual std::vector<QString> getSpecValue(QWidget* edit_widget) const;
 		virtual QString getValue(QWidget* edit_widget) const;
 		virtual void setValue(QWidget* edit_widget, const QString& value);
 	};
 	
-	/** CRSTemplate integer parameter, with values from an integer range. */
+	/**
+	 * CRSTemplate integer parameter, with values from an integer range.
+	 */
 	struct IntRangeParam : public Param
 	{
 		IntRangeParam(const QString& desc, int min_value, int max_value);
@@ -75,8 +83,8 @@ public:
 		IntRangeParam* clearOutputs();
 		IntRangeParam* addDerivedOutput(int factor, int bias);
 		
-		int min_value;
-		int max_value;
+		const int min_value;
+		const int max_value;
 		std::vector<std::pair<int, int> > outputs;
 	};
 	
@@ -115,10 +123,10 @@ public:
 	// CRS Registry
 	
 	/** Returns the number of CRS templates which are registered */
-	static int getNumCRSTemplates();
+	static std::size_t getNumCRSTemplates();
 	
 	/** Returns a registered CRS template by index */
-	static CRSTemplate& getCRSTemplate(int index);
+	static CRSTemplate& getCRSTemplate(std::size_t index);
 	
 	/**
 	 * Returns a registered CRS template by id,

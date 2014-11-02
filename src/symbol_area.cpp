@@ -156,7 +156,7 @@ void AreaSymbol::FillPattern::load(QXmlStreamReader& xml, const Map& map, Symbol
 	}
 }
 
-bool AreaSymbol::FillPattern::equals(AreaSymbol::FillPattern& other, Qt::CaseSensitivity case_sensitivity)
+bool AreaSymbol::FillPattern::equals(const AreaSymbol::FillPattern& other, Qt::CaseSensitivity case_sensitivity) const
 {
 	if (type != other.type)
 		return false;
@@ -195,7 +195,7 @@ bool AreaSymbol::FillPattern::equals(AreaSymbol::FillPattern& other, Qt::CaseSen
 	return true;
 }
 
-void AreaSymbol::FillPattern::createRenderables(QRectF extent, float delta_rotation, const MapCoord& pattern_origin, ObjectRenderables& output)
+void AreaSymbol::FillPattern::createRenderables(QRectF extent, float delta_rotation, const MapCoord& pattern_origin, ObjectRenderables& output) const
 {
 	if (line_spacing <= 0)
 		return;
@@ -379,7 +379,7 @@ void AreaSymbol::FillPattern::createRenderables(QRectF extent, float delta_rotat
 	}
 }
 
-void AreaSymbol::FillPattern::createLine(MapCoordVectorF& coords, float delta_offset, LineSymbol* line, PathObject* path, PointObject* point_object, ObjectRenderables& output)
+void AreaSymbol::FillPattern::createLine(MapCoordVectorF& coords, float delta_offset, LineSymbol* line, PathObject* path, PointObject* point_object, ObjectRenderables& output) const
 {
 	if (type == LinePattern)
 		line->createRenderables(path, path->getRawCoordinateVector(), coords, output);
@@ -455,7 +455,7 @@ Symbol* AreaSymbol::duplicate(const MapColorMap* color_map) const
 	return new_area;
 }
 
-void AreaSymbol::createRenderables(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output)
+void AreaSymbol::createRenderables(const Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output) const
 {
 	if (coords.size() < 3)
 		return;
@@ -466,14 +466,14 @@ void AreaSymbol::createRenderables(Object* object, const MapCoordVector& flags, 
 	else
 		createRenderablesNormal(object, flags, coords, output);
 }
-void AreaSymbol::createRenderablesNormal(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output)
+void AreaSymbol::createRenderablesNormal(const Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output) const
 {
 	if (coords.size() < 3)
 		return;
 	
 	// The shape output is even created if the area is not filled with a color
 	// because the QPainterPath created by it is needed as clip path for the fill objects
-	PathObject* path = static_cast<PathObject*>(object);
+	const PathObject* path = static_cast<const PathObject*>(object);
 	AreaRenderable* color_fill = new AreaRenderable(this, coords, flags, &path->getPathCoordinateVector());
 	output.insertRenderable(color_fill);
 	
@@ -621,9 +621,9 @@ bool AreaSymbol::loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionar
 	return true;
 }
 
-bool AreaSymbol::equalsImpl(Symbol* other, Qt::CaseSensitivity case_sensitivity)
+bool AreaSymbol::equalsImpl(const Symbol* other, Qt::CaseSensitivity case_sensitivity) const
 {
-	AreaSymbol* area = static_cast<AreaSymbol*>(other);
+	const AreaSymbol* area = static_cast<const AreaSymbol*>(other);
 	if (!MapColor::equal(color, area->color))
 		return false;
 	if (minimum_area != area->minimum_area)

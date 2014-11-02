@@ -50,7 +50,12 @@ SymbolWidget::~SymbolWidget()
 	; // nothing
 }
 
-Symbol* SymbolWidget::getSingleSelectedSymbol() const
+const Symbol* SymbolWidget::getSingleSelectedSymbol() const
+{
+	return static_cast<const SymbolRenderWidget*>(render_widget)->singleSelectedSymbol();
+}
+
+Symbol* SymbolWidget::getSingleSelectedSymbol()
 {
 	return render_widget->singleSelectedSymbol();
 }
@@ -60,12 +65,12 @@ int SymbolWidget::selectedSymbolsCount() const
 	return render_widget->selectedSymbolsCount();
 }
 
-bool SymbolWidget::isSymbolSelected(Symbol* symbol) const
+bool SymbolWidget::isSymbolSelected(const Symbol* symbol) const
 {
 	return render_widget->isSymbolSelected(symbol);
 }
 
-void SymbolWidget::selectSingleSymbol(Symbol* symbol)
+void SymbolWidget::selectSingleSymbol(const Symbol* symbol)
 {
     render_widget->selectSingleSymbol(symbol);
 }

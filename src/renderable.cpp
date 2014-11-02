@@ -319,7 +319,7 @@ void MapRenderables::draw(QPainter* painter, QRectF bounding_box, bool force_min
 		for (ObjectRenderablesMap::const_iterator object = color->second.begin(); object != end_of_objects; ++object)
 		{
 			// Settings check
-			Symbol* symbol = object->first->getSymbol();
+			const Symbol* symbol = object->first->getSymbol();
 			if (!show_helper_symbols && symbol->isHelperSymbol())
 				continue;
 			if (symbol->isHidden())
@@ -553,7 +553,7 @@ void MapRenderables::drawColorSeparation(QPainter* painter, QRectF bounding_box,
 	}
 	for (; color != end_of_colors; ++color)
 	{
-		SpotColorComponent drawing_color(const_cast<const Map*>(map)->getColor(color->first), 1.0f);
+		SpotColorComponent drawing_color(map->getColor(color->first), 1.0f);
 		
 		// Check whether the current color [priority] applies to the current separation.
 		if (color->first > MapColor::Reserved)
@@ -650,7 +650,7 @@ void MapRenderables::drawColorSeparation(QPainter* painter, QRectF bounding_box,
 		for (ObjectRenderablesMap::const_iterator object = color->second.begin(); object != end_of_objects; ++object)
 		{
 			// Check whether the symbol and object is to be drawn at all.
-			Symbol* symbol = object->first->getSymbol();
+			const Symbol* symbol = object->first->getSymbol();
 			if (!show_helper_symbols && symbol->isHelperSymbol())
 				continue;
 			if (symbol->isHidden())
@@ -768,7 +768,7 @@ void MapRenderables::removeRenderablesOfObject(const Object* object, bool mark_a
 	const_iterator end_of_colors = end();
 	for (iterator color = begin(); color != end_of_colors; ++color)
 	{
-		ObjectRenderablesMap::iterator obj = color->second.find(const_cast<Object*>(object));
+		ObjectRenderablesMap::iterator obj = color->second.find(object);
 		if (obj != color->second.end())
 		{
 			if (mark_area_as_dirty)

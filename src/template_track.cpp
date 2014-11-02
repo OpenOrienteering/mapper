@@ -61,7 +61,7 @@ bool TemplateTrack::loadTypeSpecificTemplateConfiguration(QIODevice* stream, int
 	return true;
 }
 
-void TemplateTrack::saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml)
+void TemplateTrack::saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml) const
 {
 	// Follow map georeferencing XML structure
 	xml.writeStartElement("crs_spec");
@@ -82,7 +82,7 @@ bool TemplateTrack::loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml)
 	return true;
 }
 
-bool TemplateTrack::saveTemplateFile()
+bool TemplateTrack::saveTemplateFile() const
 {
     return track.saveTo(template_path);
 }
@@ -207,7 +207,7 @@ void TemplateTrack::unloadTemplateFileImpl()
 	track.clear();
 }
 
-void TemplateTrack::drawTemplate(QPainter* painter, QRectF& clip_rect, double scale, bool on_screen, float opacity)
+void TemplateTrack::drawTemplate(QPainter* painter, QRectF& clip_rect, double scale, bool on_screen, float opacity) const
 {
 	Q_UNUSED(clip_rect);
 	Q_UNUSED(scale);
@@ -219,7 +219,7 @@ void TemplateTrack::drawTemplate(QPainter* painter, QRectF& clip_rect, double sc
 	painter->restore();
 }
 
-void TemplateTrack::drawTracks(QPainter* painter, bool on_screen)
+void TemplateTrack::drawTracks(QPainter* painter, bool on_screen) const
 {
 	painter->save();
 	if (!is_georeferenced)
@@ -264,7 +264,7 @@ void TemplateTrack::drawTracks(QPainter* painter, bool on_screen)
 	painter->restore();
 }
 
-void TemplateTrack::drawWaypoints(QPainter* painter)
+void TemplateTrack::drawWaypoints(QPainter* painter) const
 {
 	painter->save();
 	painter->setRenderHint(QPainter::Antialiasing);
@@ -302,7 +302,7 @@ void TemplateTrack::drawWaypoints(QPainter* painter)
 	painter->restore();
 }
 
-QRectF TemplateTrack::getTemplateExtent()
+QRectF TemplateTrack::getTemplateExtent() const
 {
 	// Infinite because the extent of the waypoint texts is unknown
 	return infinteRectF();
@@ -340,7 +340,7 @@ int TemplateTrack::getTemplateBoundingBoxPixelBorder()
 	return 10e8;
 }
 
-Template* TemplateTrack::duplicateImpl()
+Template* TemplateTrack::duplicateImpl() const
 {
 	TemplateTrack* copy = new TemplateTrack(template_path, map);
 	copy->track = track;

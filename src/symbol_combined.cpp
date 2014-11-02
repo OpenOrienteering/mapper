@@ -60,7 +60,7 @@ Symbol* CombinedSymbol::duplicate(const MapColorMap* color_map) const
 	return new_symbol;
 }
 
-void CombinedSymbol::createRenderables(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output)
+void CombinedSymbol::createRenderables(const Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output) const
 {
 	for (int i = 0, size = (int)parts.size(); i < size; ++i)
 	{
@@ -76,7 +76,8 @@ void CombinedSymbol::colorDeleted(const MapColor* color)
 	for (int i = 0, size = (int)parts.size(); i < size; ++i)
 	{
 		if (private_parts[i])
-			parts[i]->colorDeleted(color);
+			// Note on const_cast: private part is owned by this symbol.
+			const_cast<Symbol*>(parts[i])->colorDeleted(color);
 	}
 }
 
@@ -122,7 +123,7 @@ const MapColor* CombinedSymbol::getDominantColorGuess() const
 	return dominant_color;
 }
 
-bool CombinedSymbol::symbolChanged(Symbol* old_symbol, Symbol* new_symbol)
+bool CombinedSymbol::symbolChanged(const Symbol* old_symbol, const Symbol* new_symbol)
 {
 	bool have_symbol = false;
 	for (int i = 0, size = (int)parts.size(); i < size; ++i)
@@ -151,7 +152,7 @@ bool CombinedSymbol::containsSymbol(const Symbol* symbol) const
 			continue;
 		if (parts[i]->getType() == Symbol::Combined)	// TODO: see TODO in SymbolDropDown constructor.
 		{
-			CombinedSymbol* combined_symbol = reinterpret_cast<CombinedSymbol*>(parts[i]);
+			const CombinedSymbol* combined_symbol = reinterpret_cast<const CombinedSymbol*>(parts[i]);
 			if (combined_symbol->containsSymbol(symbol))
 				return true;
 		}
@@ -165,7 +166,8 @@ void CombinedSymbol::scale(double factor)
 	{
 		if (private_parts[i])
 		{
-			parts[i]->scale(factor);
+			// Note on const_cast: private part is owned by this symbol.
+			const_cast<Symbol*>(parts[i])->scale(factor);
 		}
 	}
 	
@@ -202,7 +204,8 @@ bool CombinedSymbol::loadImpl(QIODevice* file, int version, Map* map)
 		
 		if (is_private)
 		{
-			if (!Symbol::loadSymbol(parts[i], file, version, map))
+			// Note on const_cast: private part is owned by this symbol.
+			if (!Symbol::loadSymbol(const_cast<Symbol*&>(parts[i]), file, version, map))
 				return false;
 			temp_part_indices[i] = -1;
 		}
@@ -278,9 +281,9 @@ bool CombinedSymbol::loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDicti
 	return true;
 }
 
-bool CombinedSymbol::equalsImpl(Symbol* other, Qt::CaseSensitivity case_sensitivity)
+bool CombinedSymbol::equalsImpl(const Symbol* other, Qt::CaseSensitivity case_sensitivity) const
 {
-	CombinedSymbol* combination = static_cast<CombinedSymbol*>(other);
+	const CombinedSymbol* combination = static_cast<const CombinedSymbol*>(other);
 	if (parts.size() != combination->parts.size())
 		return false;
 	// TODO: parts are only compared in order
@@ -315,7 +318,7 @@ bool CombinedSymbol::loadFinished(Map* map)
 	return true;
 }
 
-float CombinedSymbol::calculateLargestLineExtent(Map* map)
+float CombinedSymbol::calculateLargestLineExtent(Map* map) const
 {
 	float result = 0;
 	for (size_t i = 0, end = parts.size(); i < end; ++i)
@@ -326,7 +329,7 @@ float CombinedSymbol::calculateLargestLineExtent(Map* map)
 	return result;
 }
 
-void CombinedSymbol::setPart(int i, Symbol* symbol, bool is_private)
+void CombinedSymbol::setPart(int i, const Symbol* symbol, bool is_private)
 {
 	if (private_parts[i])
 		delete parts[i];
@@ -473,13 +476,16 @@ void CombinedSymbolSettings::symbolChanged(int index)
 
 void CombinedSymbolSettings::editClicked(int index)
 {
-	Symbol* part = symbol->getPart(index);
-	SymbolSettingDialog sub_dialog(part, dialog->getSourceMap(), this);
+	Q_ASSERT(symbol->isPartPrivate(index));
+	if (!symbol->isPartPrivate(index))
+		return;
+	
+	QScopedPointer<Symbol> part(symbol->getPart(index)->duplicate());
+	SymbolSettingDialog sub_dialog(part.data(), dialog->getSourceMap(), this);
 	sub_dialog.setWindowModality(Qt::WindowModal);
 	if (sub_dialog.exec() == QDialog::Accepted)
 	{
-		part = sub_dialog.getNewSymbol();
-		symbol->setPart(index, part, true);
+		symbol->setPart(index, sub_dialog.getNewSymbol(), true);
 		emit propertiesModified();
 	}
 }

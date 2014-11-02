@@ -1,0 +1,79 @@
+; (C) 2014 Kai Pastor
+;
+;  This file is part of OpenOrienteering.
+; 
+;  OpenOrienteering is free software: you can redistribute it and/or modify
+;  it under the terms of the GNU General Public License as published by
+;  the Free Software Foundation, either version 3 of the License, or
+;  (at your option) any later version.
+; 
+;  OpenOrienteering is distributed in the hope that it will be useful,
+;  but WITHOUT ANY WARRANTY; without even the implied warranty of
+;  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;  GNU General Public License for more details.
+; 
+;  You should have received a copy of the GNU General Public License
+;  along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
+
+
+!define MUI_WELCOMEPAGE_TITLE_3LINES
+!define MUI_CUSTOMFUNCTION_GUIINIT check_x64
+
+Function check_x64
+  StrCmp "@CMAKE_SIZEOF_VOID_P@" "8" 0 +5
+    StrCmp "$PROGRAMFILES32" "$PROGRAMFILES64" 0 +3
+      MessageBox MB_ICONEXCLAMATION|MB_OK "The x64 package cannot be installed on a x32 Windows system. Installation aborted." /SD IDOK
+      Abort
+    ClearErrors
+FunctionEnd
+
+
+!define SHCNE_ASSOCCHANGED 0x8000000
+!define SHCNF_IDLIST 0
+
+Function installAssociations
+  ; The application
+  WriteRegStr HKLM "Software\Classes\OpenOrienteering.Map" "" "OpenOrienteering Map"
+  WriteRegStr HKLM "Software\Classes\OpenOrienteering.Map\DefaultIcon" "" "$INSTDIR\Mapper.exe"
+  
+  ReadRegStr $R0 HKLM "Software\Classes\OpenOrienteering.Map\shell\open\command" ""
+  StrCmp $R0 "" 0 +3
+    WriteRegStr HKLM "Software\Classes\OpenOrienteering.Map\shell" "" "open"
+    WriteRegStr HKLM "Software\Classes\OpenOrienteering.Map\shell\open\command" "" '"$INSTDIR\Mapper.exe" "%1"'
+  
+  ; The file type associations
+  WriteRegStr HKLM "Software\Classes\.omap" "" "OpenOrienteering.Map"
+  WriteRegStr HKLM "Software\Classes\.omap" "PerceivedType" "document"
+  WriteRegStr HKLM "Software\Classes\.xmap" "" "OpenOrienteering.Map"
+  WriteRegStr HKLM "Software\Classes\.xmap" "PerceivedType" "document"
+  
+  ReadRegStr $R0 HKLM "Software\Classes\.ocd" ""
+  StrCmp $R0 "" 0 +3
+    WriteRegStr HKLM "Software\Classes\.ocd" "" "OpenOrienteering.Map"
+    WriteRegStr HKLM "Software\Classes\.ocd" "PerceivedType" "document"
+  WriteRegStr HKLM "Software\Classes\.ocd\OpenWithProgIDs" "OpenOrienteering.Map" ""
+  
+  System::Call 'Shell32::SHChangeNotify(i ${SHCNE_ASSOCCHANGED}, i ${SHCNF_IDLIST}, p0, p0)'
+FunctionEnd
+
+Function un.installAssociations
+  ; The file type associations
+  ReadRegStr $R0 HKLM "Software\Classes\.omap" ""
+  StrCmp $R0 "OpenOrienteering.Map" 0 +2
+    DeleteRegKey HKLM "Software\Classes\.omap"
+  
+  ReadRegStr $R0 HKLM "Software\Classes\.xmap" ""
+  StrCmp $R0 "OpenOrienteering.Map" 0 +2
+    DeleteRegKey HKLM "Software\Classes\.xmap"
+  
+  DeleteRegValue HKLM "Software\Classes\.ocd\OpenWithProgIDs" "OpenOrienteering.Map"
+  ReadRegStr $R0 HKLM "Software\Classes\.ocd" ""
+  StrCmp $R0 "OpenOrienteering.Map" 0 +2
+    DeleteRegKey HKLM "Software\Classes\.ocd"
+  
+  ; The application
+  DeleteRegKey HKLM "Software\Classes\OpenOrienteering.Map"
+  
+  System::Call 'Shell32::SHChangeNotify(i ${SHCNE_ASSOCCHANGED}, i ${SHCNF_IDLIST}, p0, p0)'
+FunctionEnd
+

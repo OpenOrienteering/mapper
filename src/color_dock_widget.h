@@ -51,13 +51,13 @@ protected slots:
 	void moveColorUp();
 	void moveColorDown();
 	void editCurrentColor();
-	void showHelp();
+	void showHelp() const;
 	
 	void cellChange(int row, int column);
 	void currentCellChange(int current_row, int current_column, int previous_row, int previous_column);
 	
-	void colorAdded(int index, MapColor* color);
-	void colorChanged(int index, MapColor* color);
+	void colorAdded(int index, const MapColor* color);
+	void colorChanged(int index, const MapColor* color);
 	void colorDeleted(int index, const MapColor* color);
 	
 protected:
@@ -78,8 +78,8 @@ private:
 	QToolButton* move_down_button;
 	QToolButton* edit_button;
 	
-	Map* map;
-	MainWindow* window;
+	Map* const map;
+	MainWindow* const window;
 	bool react_to_changes;
 };
 

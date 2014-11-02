@@ -73,8 +73,8 @@ TemplatePositionDockWidget::TemplatePositionDockWidget(Template* temp, MapEditor
 	connect(scale_y_edit, SIGNAL(textEdited(QString)), this, SLOT(valueChanged()));
 	connect(rotation_edit, SIGNAL(textEdited(QString)), this, SLOT(valueChanged()));
 	
-	connect(controller->getMap(), SIGNAL(templateChanged(int,Template*)), this, SLOT(templateChanged(int,Template*)));
-	connect(controller->getMap(), SIGNAL(templateDeleted(int,Template*)), this, SLOT(templateDeleted(int,Template*)));
+	connect(controller->getMap(), SIGNAL(templateChanged(int, const Template*)), this, SLOT(templateChanged(int, const Template*)));
+	connect(controller->getMap(), SIGNAL(templateDeleted(int, const Template*)), this, SLOT(templateDeleted(int, const Template*)));
 }
 
 void TemplatePositionDockWidget::updateValues()
@@ -100,7 +100,7 @@ void TemplatePositionDockWidget::closeEvent(QCloseEvent* event)
 	controller->removeTemplatePositionDockWidget(temp);
 }
 
-void TemplatePositionDockWidget::templateChanged(int index, Template* temp)
+void TemplatePositionDockWidget::templateChanged(int index, const Template* temp)
 {
 	Q_UNUSED(index);
 	
@@ -110,7 +110,7 @@ void TemplatePositionDockWidget::templateChanged(int index, Template* temp)
 	updateValues();
 }
 
-void TemplatePositionDockWidget::templateDeleted(int index, Template* temp)
+void TemplatePositionDockWidget::templateDeleted(int index, const Template* temp)
 {
 	Q_UNUSED(index);
 	

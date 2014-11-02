@@ -42,7 +42,7 @@ private slots:
 private:
 	Map* saveAndLoadMap(Map* input, const FileFormat* format);
 	void comparePrinterConfig(const MapPrinterConfig& copy, const MapPrinterConfig& orig);
-	bool compareMaps(Map* a, Map* b, QString& error);
+	bool compareMaps(const Map* a, const Map* b, QString& error);
 	QStringList map_filenames;
 };
 

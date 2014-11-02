@@ -160,7 +160,7 @@ bool BooleanTool::executePerSymbol()
 	while (!backlog.empty())
 	{
 		PathObject* const primary_object = backlog.front();
-		Symbol* const symbol = primary_object->getSymbol();
+		const Symbol* const symbol = primary_object->getSymbol();
 		
 		// Filter objects by symbol into in_objects or new_backlog, respectively
 		new_backlog.clear();
@@ -205,7 +205,7 @@ bool BooleanTool::executePerSymbol()
 	return have_changes;
 }
 
-bool BooleanTool::executeForObjects(PathObject* subject, Symbol* result_objects_symbol, PathObjects& in_objects, PathObjects& out_objects, CombinedUndoStep& undo_step)
+bool BooleanTool::executeForObjects(PathObject* subject, const Symbol* result_objects_symbol, PathObjects& in_objects, PathObjects& out_objects, CombinedUndoStep& undo_step)
 {
 	if (!executeForObjects(subject, result_objects_symbol, in_objects, out_objects))
 	{
@@ -256,7 +256,7 @@ bool BooleanTool::executeForObjects(PathObject* subject, Symbol* result_objects_
 	return true;
 }
 
-bool BooleanTool::executeForObjects(PathObject* subject, Symbol* result_objects_symbol, PathObjects& in_objects, PathObjects& out_objects)
+bool BooleanTool::executeForObjects(PathObject* subject, const Symbol* result_objects_symbol, PathObjects& in_objects, PathObjects& out_objects)
 {
 	
 	// Convert the objects to Clipper polygons and
@@ -312,13 +312,13 @@ bool BooleanTool::executeForObjects(PathObject* subject, Symbol* result_objects_
 	return success;
 }
 
-void BooleanTool::polyTreeToPathObjects(const ClipperLib::PolyTree& tree, PathObjects& out_objects, Symbol* result_objects_symbol, PolyMap& polymap)
+void BooleanTool::polyTreeToPathObjects(const ClipperLib::PolyTree& tree, PathObjects& out_objects, const Symbol* result_objects_symbol, PolyMap& polymap)
 {
 	for (int i = 0, count = tree.ChildCount(); i < count; ++i)
 		outerPolyNodeToPathObjects(*tree.Childs[i], out_objects, result_objects_symbol, polymap);
 }
 
-void BooleanTool::outerPolyNodeToPathObjects(const ClipperLib::PolyNode& node, PathObjects& out_objects, Symbol* result_objects_symbol, PolyMap& polymap)
+void BooleanTool::outerPolyNodeToPathObjects(const ClipperLib::PolyNode& node, PathObjects& out_objects, const Symbol* result_objects_symbol, PolyMap& polymap)
 {
 	PathObject* object = new PathObject();
 	object->setSymbol(result_objects_symbol, true);

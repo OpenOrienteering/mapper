@@ -304,8 +304,10 @@ protected:
 	
 	/**
 	 * @brief Removes the autosave file if it exists.
+	 * 
+	 * Returns true if the file was removed or didn't exist, false otherwise.
 	 */
-	void removeAutosaveFile() const;
+	bool removeAutosaveFile() const;
 	
 	virtual bool event(QEvent* event);
 	virtual void closeEvent(QCloseEvent *event);

@@ -55,25 +55,25 @@ public:
 	virtual ~CombinedSymbol();
 	virtual Symbol* duplicate(const MapColorMap* color_map = NULL) const;
 	
-	virtual void createRenderables(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output);
+	virtual void createRenderables(const Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output) const;
 	virtual void colorDeleted(const MapColor* color);
 	virtual bool containsColor(const MapColor* color) const;
 	const MapColor* getDominantColorGuess() const;
-	virtual bool symbolChanged(Symbol* old_symbol, Symbol* new_symbol);
+	virtual bool symbolChanged(const Symbol* old_symbol, const Symbol* new_symbol);
 	virtual bool containsSymbol(const Symbol* symbol) const;
 	virtual void scale(double factor);
 	virtual Type getContainedTypes() const;
 	
 	virtual bool loadFinished(Map* map);
 	
-    virtual float calculateLargestLineExtent(Map* map);
+    virtual float calculateLargestLineExtent(Map* map) const;
 	
 	// Getters / Setter
 	inline int getNumParts() const {return (int)parts.size();}
 	inline void setNumParts(int num) {parts.resize(num, NULL); private_parts.resize(num, false);}
 	
-	inline Symbol* getPart(int i) const {return parts[i];}
-	void setPart(int i, Symbol* symbol, bool is_private);
+	inline const Symbol* getPart(int i) const {return parts[i];}
+	void setPart(int i, const Symbol* symbol, bool is_private);
 	
 	inline bool isPartPrivate(int i) const {return private_parts[i];}
 	inline void setPartPrivate(int i, bool set_private) {private_parts[i] = set_private;}
@@ -84,9 +84,9 @@ protected:
 	virtual bool loadImpl(QIODevice* file, int version, Map* map);
 	virtual void saveImpl(QXmlStreamWriter& xml, const Map& map) const;
 	virtual bool loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict);
-	virtual bool equalsImpl(Symbol* other, Qt::CaseSensitivity case_sensitivity);
+	virtual bool equalsImpl(const Symbol* other, Qt::CaseSensitivity case_sensitivity) const;
 	
-	std::vector<Symbol*> parts;
+	std::vector<const Symbol*> parts;
 	std::vector<bool> private_parts;
 	std::vector<int> temp_part_indices;	// temporary vector of the indices of the 'parts' symbols, used just for loading
 };

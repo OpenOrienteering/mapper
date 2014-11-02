@@ -132,7 +132,7 @@ bool LineSymbolBorder::isVisible() const
 	return width > 0 && color != NULL && !(dash_length == 0 && dashed);
 }
 
-void LineSymbolBorder::createSymbol(LineSymbol& out)
+void LineSymbolBorder::createSymbol(LineSymbol& out) const
 {
 	out.setLineWidth(0.001 * width);
 	out.setColor(color);
@@ -234,9 +234,9 @@ Symbol* LineSymbol::duplicate(const MapColorMap* color_map) const
 	return new_line;
 }
 
-void LineSymbol::createRenderables(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output)
+void LineSymbol::createRenderables(const Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output) const
 {
-	PathObject* path = reinterpret_cast<PathObject*>(object);
+	const PathObject* path = reinterpret_cast<const PathObject*>(object);
 	int num_parts = path->getNumParts();
 	if (num_parts == 1)
 		createRenderables(object, path->getPart(0).isClosed(), flags, coords, (PathCoordVector*)&path->getPathCoordinateVector(), output);
@@ -248,7 +248,7 @@ void LineSymbol::createRenderables(Object* object, const MapCoordVector& flags, 
 		PathCoordVector part_path_coords;
 		for (int i = 0; i < num_parts; ++i)
 		{
-			PathObject::PathPart& part = path->getPart(i);
+			const PathObject::PathPart& part = path->getPart(i);
 			part_flags.assign(flags.begin() + part.start_index, flags.begin() + (part.end_index + 1));
 			part_coords.assign(coords.begin() + part.start_index, coords.begin() + (part.end_index + 1));
 			part_path_coords.assign(path->getPathCoordinateVector().begin() + part.path_coord_start_index,
@@ -258,7 +258,7 @@ void LineSymbol::createRenderables(Object* object, const MapCoordVector& flags, 
 	}
 }
 
-void LineSymbol::createRenderables(Object* object, bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, PathCoordVector* path_coords, ObjectRenderables& output)
+void LineSymbol::createRenderables(const Object* object, bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, PathCoordVector* path_coords, ObjectRenderables& output) const
 {
 	// TODO: Optimization: Use pre-supplied path_coords in more places
 	
@@ -361,7 +361,7 @@ void LineSymbol::createRenderables(Object* object, bool path_closed, const MapCo
 	}
 }
 
-void LineSymbol::createBorderLines(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, bool path_closed, ObjectRenderables& output)
+void LineSymbol::createBorderLines(const Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, bool path_closed, ObjectRenderables& output) const
 {
 	double main_shift = 0.0005 * line_width;
 	
@@ -401,7 +401,7 @@ void LineSymbol::createBorderLines(Object* object, const MapCoordVector& flags, 
 	}
 }
 
-void LineSymbol::createBorderLine(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, bool path_closed, ObjectRenderables& output, LineSymbolBorder& border, double main_shift)
+void LineSymbol::createBorderLine(const Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, bool path_closed, ObjectRenderables& output, const LineSymbolBorder& border, double main_shift) const
 {
 	MapCoordVector border_flags;
 	MapCoordVectorF border_coords;
@@ -427,7 +427,7 @@ void LineSymbol::createBorderLine(Object* object, const MapCoordVector& flags, c
 	}
 }
 
-void LineSymbol::shiftCoordinates(const MapCoordVector& flags, const MapCoordVectorF& coords, bool path_closed, double main_shift, MapCoordVector& out_flags, MapCoordVectorF& out_coords)
+void LineSymbol::shiftCoordinates(const MapCoordVector& flags, const MapCoordVectorF& coords, bool path_closed, double main_shift, MapCoordVector& out_flags, MapCoordVectorF& out_coords) const
 {
 	const float curve_threshold = 0.03f;	// TODO: decrease for export/print?
 	const int MAX_OFFSET = 16;
@@ -710,9 +710,9 @@ void LineSymbol::shiftCoordinates(const MapCoordVector& flags, const MapCoordVec
 	}
 }
 
-void LineSymbol::processContinuousLine(Object* object, bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, const PathCoordVector& line_coords,
+void LineSymbol::processContinuousLine(const Object* object, bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, const PathCoordVector& line_coords,
 									   float start, float end, bool has_start, bool has_end, int& cur_line_coord,
-									   MapCoordVector& processed_flags, MapCoordVectorF& processed_coords, bool include_first_point, bool set_mid_symbols, ObjectRenderables& output)
+									   MapCoordVector& processed_flags, MapCoordVectorF& processed_coords, bool include_first_point, bool set_mid_symbols, ObjectRenderables& output) const
 {
 	Q_UNUSED(path_closed);
 	
@@ -752,8 +752,8 @@ void LineSymbol::processContinuousLine(Object* object, bool path_closed, const M
 		processed_flags[processed_flags.size() - 1].setHolePoint(true);
 }
 
-void LineSymbol::createPointedLineCap(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, const PathCoordVector& line_coords,
-									  float start, float end, int& cur_line_coord, bool is_end, ObjectRenderables& output)
+void LineSymbol::createPointedLineCap(const Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, const PathCoordVector& line_coords,
+									  float start, float end, int& cur_line_coord, bool is_end, ObjectRenderables& output) const
 {
 	Q_UNUSED(object);
 	
@@ -910,7 +910,7 @@ void LineSymbol::createPointedLineCap(Object* object, const MapCoordVector& flag
 	output.insertRenderable(new AreaRenderable(&area_symbol, cap_coords, cap_flags, NULL));
 }
 
-void LineSymbol::processDashedLine(Object* object, bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, MapCoordVector& out_flags, MapCoordVectorF& out_coords, ObjectRenderables& output)
+void LineSymbol::processDashedLine(const Object* object, bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, MapCoordVector& out_flags, MapCoordVectorF& out_coords, ObjectRenderables& output) const
 {
 	int last_coord = (int)coords.size() - 1;
 	
@@ -1071,7 +1071,7 @@ void LineSymbol::processDashedLine(Object* object, bool path_closed, const MapCo
 	}
 }
 
-void LineSymbol::createDashSymbolRenderables(Object* object, bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output)
+void LineSymbol::createDashSymbolRenderables(const Object* object, bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output) const
 {
 	Q_UNUSED(object);
 	
@@ -1099,7 +1099,7 @@ void LineSymbol::createDashSymbolRenderables(Object* object, bool path_closed, c
 	}
 }
 
-void LineSymbol::createDottedRenderables(Object* object, bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output)
+void LineSymbol::createDottedRenderables(const Object* object, bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output) const
 {
 	Q_UNUSED(object);
 	
@@ -1255,7 +1255,7 @@ void LineSymbol::createDottedRenderables(Object* object, bool path_closed, const
 
 void LineSymbol::calculateCoordinatesForRange(const MapCoordVector& flags, const MapCoordVectorF& coords, const PathCoordVector& line_coords,
 										float start, float end, int& cur_line_coord, bool include_start_coord, MapCoordVector& out_flags, MapCoordVectorF& out_coords,
-										std::vector<float>* out_lengths, bool set_mid_symbols, ObjectRenderables& output)
+										std::vector<float>* out_lengths, bool set_mid_symbols, ObjectRenderables& output) const
 {
 	Q_ASSERT(cur_line_coord > 0);
 	int line_coords_size = (int)line_coords.size();
@@ -1399,7 +1399,7 @@ void LineSymbol::calculateCoordinatesForRange(const MapCoordVector& flags, const
 }
 
 void LineSymbol::advanceCoordinateRangeTo(const MapCoordVector& flags, const MapCoordVectorF& coords, const PathCoordVector& line_coords, int& cur_line_coord, int& current_index, float cur_length,
-									 int start_bezier_index, MapCoordVector& out_flags, MapCoordVectorF& out_coords, std::vector<float>* out_lengths, const MapCoordF& o3, const MapCoordF& o4)
+									 int start_bezier_index, MapCoordVector& out_flags, MapCoordVectorF& out_coords, std::vector<float>* out_lengths, const MapCoordF& o3, const MapCoordF& o4) const
 {
 	int line_coords_size = (int)line_coords.size();
 	while (cur_line_coord < line_coords_size - 1 && line_coords[cur_line_coord].clen < cur_length)
@@ -1644,7 +1644,7 @@ void LineSymbol::cleanupPointSymbols()
 	}
 }
 
-float LineSymbol::calculateLargestLineExtent(Map* map)
+float LineSymbol::calculateLargestLineExtent(Map* map) const
 {
 	Q_UNUSED(map);
 	float line_extent_f = 0.001f * 0.5f * asLine()->getLineWidth();
@@ -1929,11 +1929,11 @@ PointSymbol* LineSymbol::loadPointSymbol(QXmlStreamReader& xml, const Map& map, 
 	return NULL;
 }
 
-bool LineSymbol::equalsImpl(Symbol* other, Qt::CaseSensitivity case_sensitivity)
+bool LineSymbol::equalsImpl(const Symbol* other, Qt::CaseSensitivity case_sensitivity) const
 {
 	Q_UNUSED(case_sensitivity);
 	
-	LineSymbol* line = static_cast<LineSymbol*>(other);
+	const LineSymbol* line = static_cast<const LineSymbol*>(other);
 	if (line_width != line->line_width)
 		return false;
 	if (minimum_length != line->minimum_length)

@@ -54,7 +54,7 @@ DrawLineAndAreaTool::DrawLineAndAreaTool(MapEditorController* editor, Type type,
 		
 	}
 	
-	connect(editor, SIGNAL(activeSymbolChanged(Symbol*)), this, SLOT(setDrawingSymbol(Symbol*)));
+	connect(editor, SIGNAL(activeSymbolChanged(const Symbol*)), this, SLOT(setDrawingSymbol(const Symbol*)));
 }
 
 DrawLineAndAreaTool::~DrawLineAndAreaTool()
@@ -70,7 +70,7 @@ void DrawLineAndAreaTool::leaveEvent(QEvent* event)
 		map()->clearDrawingBoundingBox();
 }
 
-void DrawLineAndAreaTool::setDrawingSymbol(Symbol* symbol)
+void DrawLineAndAreaTool::setDrawingSymbol(const Symbol* symbol)
 {
 	// Avoid using deleted symbol
 	if (map()->findSymbolIndex(drawing_symbol) == -1)
@@ -306,7 +306,7 @@ void DrawLineAndAreaTool::deletePreviewObjects()
 	//drawing_in_progress = false; // FIXME: does not belong here
 }
 
-void DrawLineAndAreaTool::addPreviewPointSymbols(Symbol* symbol)
+void DrawLineAndAreaTool::addPreviewPointSymbols(const Symbol* symbol)
 {
 	if (!symbol)
 	{
@@ -315,7 +315,7 @@ void DrawLineAndAreaTool::addPreviewPointSymbols(Symbol* symbol)
 	}
 	else if (symbol->getType() == Symbol::Line)
 	{
-		LineSymbol* line = reinterpret_cast<LineSymbol*>(symbol);
+		const LineSymbol* line = reinterpret_cast<const LineSymbol*>(symbol);
 		
 		bool has_main_line = line->getLineWidth() > 0 && line->getColor() != NULL;
 		bool has_border_line = line->hasBorder() && (line->getBorder().isVisible() || line->getRightBorder().isVisible());
@@ -350,7 +350,7 @@ void DrawLineAndAreaTool::addPreviewPointSymbols(Symbol* symbol)
 	}
 	else if (symbol->getType() == Symbol::Combined)
 	{
-		CombinedSymbol* combined = reinterpret_cast<CombinedSymbol*>(symbol);
+		const CombinedSymbol* combined = reinterpret_cast<const CombinedSymbol*>(symbol);
 		
 		int size = combined->getNumParts();
 		for (int i = 0; i < size; ++i)
@@ -361,7 +361,7 @@ void DrawLineAndAreaTool::addPreviewPointSymbols(Symbol* symbol)
 	}
 }
 
-void DrawLineAndAreaTool::addPreviewPointSymbolsForBorder(LineSymbol* line, LineSymbolBorder* border)
+void DrawLineAndAreaTool::addPreviewPointSymbolsForBorder(const LineSymbol* line, const LineSymbolBorder* border)
 {
 	if (!border->isVisible())
 		return;

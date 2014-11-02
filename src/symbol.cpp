@@ -56,7 +56,7 @@ Symbol::~Symbol()
 	delete icon;
 }
 
-bool Symbol::equals(Symbol* other, Qt::CaseSensitivity case_sensitivity, bool compare_state)
+bool Symbol::equals(const Symbol* other, Qt::CaseSensitivity case_sensitivity, bool compare_state) const
 {
 	if (type != other->type)
 		return false;
@@ -144,7 +144,7 @@ bool Symbol::isTypeCompatibleTo(const Object* object) const
 	return false;
 }
 
-bool Symbol::numberEquals(Symbol* other, bool ignore_trailing_zeros)
+bool Symbol::numberEquals(const Symbol* other, bool ignore_trailing_zeros)
 {
 	if (ignore_trailing_zeros)
 	{
@@ -283,7 +283,7 @@ bool Symbol::loadFinished(Map* map)
 	return true;
 }
 
-bool Symbol::symbolChanged(Symbol* old_symbol, Symbol* new_symbol)
+bool Symbol::symbolChanged(const Symbol* old_symbol, const Symbol* new_symbol)
 {
 	Q_UNUSED(old_symbol);
 	Q_UNUSED(new_symbol);
@@ -296,7 +296,7 @@ bool Symbol::containsSymbol(const Symbol* symbol) const
 	return false;
 }
 
-QImage* Symbol::getIcon(Map* map, bool update)
+QImage* Symbol::getIcon(const Map* map, bool update) const
 {
 	if (icon && !update)
 		return icon;
@@ -308,14 +308,15 @@ QImage* Symbol::getIcon(Map* map, bool update)
 	return new_icon;
 }
 
-QImage* Symbol::createIcon(Map* map, int side_length, bool antialiasing, int bottom_right_border, float best_zoom)
+QImage* Symbol::createIcon(const Map* map, int side_length, bool antialiasing, int bottom_right_border, float best_zoom) const
 {
 	QImage* image;
 	Type contained_types = getContainedTypes();
 	
 	// Create icon map and view
 	Map icon_map;
-	icon_map.useColorsFrom(map);
+	// const_cast promise: We won't change the colors, thus we won't change map.
+	icon_map.useColorsFrom(const_cast<Map*>(map));
 	icon_map.setScaleDenominator(map->getScaleDenominator());
 	MapView view(&icon_map);
 	
@@ -365,13 +366,13 @@ QImage* Symbol::createIcon(Map* map, int side_length, bool antialiasing, int bot
 	}
 	else if (type == Line || type == Combined)
 	{
-		Symbol* symbol_to_use = this;
+		const Symbol* symbol_to_use = this;
 		bool show_dash_symbol = false;
 		if (type == Line)
 		{
 			// If there are breaks in the line, scale them down so they fit into the icon exactly
 			// TODO: does not work for combined lines yet. Could be done by checking every contained line and scaling the painter horizontally
-			LineSymbol* line = asLine();
+			const LineSymbol* line = asLine();
 			if (line->isDashed() && line->getBreakLength() > 0)
 			{
 				LineSymbol* icon_line = duplicate()->asLine();
@@ -410,7 +411,7 @@ QImage* Symbol::createIcon(Map* map, int side_length, bool antialiasing, int bot
 		text->setAnchorPosition(0, 0);
 		text->setHorizontalAlignment(TextObject::AlignHCenter);
 		text->setVerticalAlignment(TextObject::AlignVCenter);
-		text->setText(dynamic_cast<TextSymbol*>(this)->getIconText());
+		text->setText(dynamic_cast<const TextSymbol*>(this)->getIconText());
 		object = text;
 	}
 	/*else if (type == Combined)
@@ -465,7 +466,7 @@ QImage* Symbol::createIcon(Map* map, int side_length, bool antialiasing, int bot
 	return image;
 }
 
-float Symbol::calculateLargestLineExtent(Map* map)
+float Symbol::calculateLargestLineExtent(Map* map) const
 {
 	Q_UNUSED(map);
 	return 0.0f;
@@ -528,7 +529,7 @@ bool Symbol::loadSymbol(Symbol*& symbol, QIODevice* stream, int version, Map* ma
 	return true;
 }
 
-void Symbol::createBaselineRenderables(Object* object, Symbol* symbol, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output, bool hatch_areas)
+void Symbol::createBaselineRenderables(const Object* object, const Symbol* symbol, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output, bool hatch_areas)
 {
 	Symbol::Type type = symbol->getType();
 	const MapColor* dominant_color = symbol->getDominantColorGuess();
@@ -548,7 +549,7 @@ void Symbol::createBaselineRenderables(Object* object, Symbol* symbol, const Map
 	else if (type == Text)
 	{
 		// Insert text boundary
-		TextObject* text_object = object->asText();
+		const TextObject* text_object = object->asText();
 		if (text_object->getNumLines() == 0)
 			return;
 		
@@ -556,11 +557,11 @@ void Symbol::createBaselineRenderables(Object* object, Symbol* symbol, const Map
 		line_symbol.setColor(dominant_color);
 		line_symbol.setLineWidth(0);
 		
-		TextObjectLineInfo* line = text_object->getLineInfo(0);
+		const TextObjectLineInfo* line = text_object->getLineInfo(0);
 		QRectF text_bbox(line->line_x, line->line_y - line->ascent, line->width, line->ascent + line->descent);
 		for (int i = 1; i < text_object->getNumLines(); ++i)
 		{
-			TextObjectLineInfo* line = text_object->getLineInfo(i);
+			const TextObjectLineInfo* line = text_object->getLineInfo(i);
 			rectInclude(text_bbox, QRectF(line->line_x, line->line_y - line->ascent, line->width, line->ascent + line->descent));
 		}
 		
@@ -583,7 +584,7 @@ void Symbol::createBaselineRenderables(Object* object, Symbol* symbol, const Map
 	{
 		// Line or area or combination
 		assert((symbol->getContainedTypes() & ~(Symbol::Line | Symbol::Area | Symbol::Combined)) == 0);
-		PathObject* path = object->asPath();
+		const PathObject* path = object->asPath();
 		
 		if (hatch_areas && (symbol->getContainedTypes() & Symbol::Area))
 		{
@@ -659,7 +660,7 @@ SymbolPropertiesWidget* Symbol::createPropertiesWidget(SymbolSettingDialog* dial
 }
 
 
-bool Symbol::compareByNumber(Symbol* s1, Symbol* s2)
+bool Symbol::compareByNumber(const Symbol* s1, const Symbol* s2)
 {
 	int n1 = s1->number_components, n2 = s2->number_components;
 	for (int i = 0; i < n1 && i < n2; i++)
@@ -671,7 +672,7 @@ bool Symbol::compareByNumber(Symbol* s1, Symbol* s2)
 	return false; // s1 == s2
 }
 
-bool Symbol::compareByColorPriority(Symbol* s1, Symbol* s2)
+bool Symbol::compareByColorPriority(const Symbol* s1, const Symbol* s2)
 {
 	const MapColor* c1 = s1->getDominantColorGuess();
 	const MapColor* c2 = s2->getDominantColorGuess();
@@ -701,7 +702,7 @@ Symbol::compareByColor::compareByColor(Map* map)
 	}
 }
 
-bool Symbol::compareByColor::operator() (Symbol* s1, Symbol* s2)
+bool Symbol::compareByColor::operator() (const Symbol* s1, const Symbol* s2)
 {
 	const MapColor* c1 = s1->getDominantColorGuess();
 	const MapColor* c2 = s2->getDominantColorGuess();
@@ -723,7 +724,7 @@ bool Symbol::compareByColor::operator() (Symbol* s1, Symbol* s2)
 // allow explicit use of Symbol pointers in QVariant
 Q_DECLARE_METATYPE(Symbol*)
 
-SymbolDropDown::SymbolDropDown(Map* map, int filter, Symbol* initial_symbol, const Symbol* excluded_symbol, QWidget* parent)
+SymbolDropDown::SymbolDropDown(const Map* map, int filter, const Symbol* initial_symbol, const Symbol* excluded_symbol, QWidget* parent)
  : QComboBox(parent)
 {
 	num_custom_items = 0;
@@ -732,36 +733,36 @@ SymbolDropDown::SymbolDropDown(Map* map, int filter, Symbol* initial_symbol, con
 	int size = map->getNumSymbols();
 	for (int i = 0; i < size; ++i)
 	{
-		Symbol* symbol = map->getSymbol(i);
+		const Symbol* symbol = map->getSymbol(i);
 		if (!(symbol->getType() & filter))
 			continue;
 		if (symbol == excluded_symbol)
 			continue;
 		if (symbol->getType() == Symbol::Combined)	// TODO: if point objects start to be able to contain objects of other ordinary symbols, add a check for these here, too, to prevent circular references
 		{
-			CombinedSymbol* combined_symbol = reinterpret_cast<CombinedSymbol*>(symbol);
+			const CombinedSymbol* combined_symbol = reinterpret_cast<const CombinedSymbol*>(symbol);
 			if (combined_symbol->containsSymbol(excluded_symbol))
 				continue;
 		}
 		
 		QString symbol_name = symbol->getNumberAsString() % " " % symbol->getPlainTextName();
-		addItem(QPixmap::fromImage(*symbol->getIcon(map)), symbol_name, QVariant::fromValue<Symbol*>(symbol));
+		addItem(QPixmap::fromImage(*symbol->getIcon(map)), symbol_name, QVariant::fromValue<const Symbol*>(symbol));
 	}
 	setSymbol(initial_symbol);
 }
 
-Symbol* SymbolDropDown::symbol() const
+const Symbol* SymbolDropDown::symbol() const
 {
 	QVariant data = itemData(currentIndex());
-	if (data.canConvert<Symbol*>())
-		return data.value<Symbol*>();
+	if (data.canConvert<const Symbol*>())
+		return data.value<const Symbol*>();
 	else
 		return NULL;
 }
 
-void SymbolDropDown::setSymbol(Symbol* symbol)
+void SymbolDropDown::setSymbol(const Symbol* symbol)
 {
-	setCurrentIndex(findData(QVariant::fromValue<Symbol*>(symbol)));
+	setCurrentIndex(findData(QVariant::fromValue<const Symbol*>(symbol)));
 }
 
 void SymbolDropDown::addCustomItem(const QString& text, int id)
@@ -797,8 +798,8 @@ QWidget* SymbolDropDownDelegate::createEditor(QWidget* parent, const QStyleOptio
 	Q_UNUSED(option);
 	QVariantList list = index.data(Qt::UserRole).toList();
 	SymbolDropDown* widget
-		= new SymbolDropDown(static_cast<Map*>(list.at(0).value<void*>()), symbol_type_filter,
-							  static_cast<Symbol*>(list.at(1).value<void*>()), NULL, parent);
+		= new SymbolDropDown(list.at(0).value<const Map*>(), symbol_type_filter,
+							 list.at(1).value<const Symbol*>(), NULL, parent);
 	
 	connect(widget, SIGNAL(currentIndexChanged(int)), this, SLOT(emitCommitData()));
 	return widget;
@@ -807,22 +808,22 @@ QWidget* SymbolDropDownDelegate::createEditor(QWidget* parent, const QStyleOptio
 void SymbolDropDownDelegate::setEditorData(QWidget* editor, const QModelIndex& index) const
 {
 	SymbolDropDown* widget = static_cast<SymbolDropDown*>(editor);
-	Symbol* symbol = static_cast<Symbol*>(index.data(Qt::UserRole).toList().at(1).value<void*>());
+	const Symbol* symbol = index.data(Qt::UserRole).toList().at(1).value<const Symbol*>();
 	widget->setSymbol(symbol);
 }
 
 void SymbolDropDownDelegate::setModelData(QWidget* editor, QAbstractItemModel* model, const QModelIndex& index) const
 {
 	SymbolDropDown* widget = static_cast<SymbolDropDown*>(editor);
-	Symbol* symbol = widget->symbol();
+	const Symbol* symbol = widget->symbol();
 	QVariantList list = index.data(Qt::UserRole).toList();
-	list[1] = qVariantFromValue<void*>(symbol);
+	list[1] = qVariantFromValue<const Symbol*>(symbol);
 	model->setData(index, list, Qt::UserRole);
 	
 	if (symbol)
 	{
 		model->setData(index, symbol->getNumberAsString() + " " + symbol->getPlainTextName(), Qt::EditRole);
-		model->setData(index, *symbol->getIcon(static_cast<Map*>(list[0].value<void*>())), Qt::DecorationRole);
+		model->setData(index, *symbol->getIcon(list[0].value<const Map*>()), Qt::DecorationRole);
 	}
 	else
 	{

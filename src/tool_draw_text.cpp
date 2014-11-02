@@ -53,7 +53,7 @@ DrawTextTool::DrawTextTool(MapEditorController* editor, QAction* tool_button)
 , text_editor(NULL)
 , renderables(new MapRenderables(map()))
 {
-	connect(editor, SIGNAL(activeSymbolChanged(Symbol*)), this, SLOT(setDrawingSymbol(Symbol*)));
+	connect(editor, SIGNAL(activeSymbolChanged(const Symbol*)), this, SLOT(setDrawingSymbol(const Symbol*)));
 	
 	if (!cursor)
 		cursor = new QCursor(QPixmap(":/images/cursor-draw-text.png"), 11, 11);
@@ -236,7 +236,7 @@ void DrawTextTool::draw(QPainter* painter, MapWidget* widget)
 	}
 }
 
-void DrawTextTool::setDrawingSymbol(Symbol* symbol)
+void DrawTextTool::setDrawingSymbol(const Symbol* symbol)
 {
 	// Avoid using deleted symbol
 	if (map()->findSymbolIndex(drawing_symbol) == -1)
@@ -325,7 +325,7 @@ void DrawTextTool::setPreviewLetter()
 		preview_text = new TextObject(drawing_symbol);
 	}
 	
-	preview_text->setText(static_cast<TextSymbol*>(drawing_symbol)->getIconText());
+	preview_text->setText(static_cast<const TextSymbol*>(drawing_symbol)->getIconText());
 	preview_text->setAnchorPosition(cur_pos_map);
 	updatePreviewText();
 }

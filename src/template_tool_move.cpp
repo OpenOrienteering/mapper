@@ -39,7 +39,7 @@ void TemplateMoveTool::init()
 {
 	setStatusBarText(tr("<b>Drag</b> to move the current template"));
 	
-	connect(map(), SIGNAL(templateDeleted(int,Template*)), this, SLOT(templateDeleted(int,Template*)));
+	connect(map(), SIGNAL(templateDeleted(int, const Template*)), this, SLOT(templateDeleted(int, const Template*)));
 	
 	MapEditorTool::init();
 }
@@ -77,7 +77,7 @@ bool TemplateMoveTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord
 	return true;
 }
 
-void TemplateMoveTool::templateDeleted(int index, Template* temp)
+void TemplateMoveTool::templateDeleted(int index, const Template* temp)
 {
 	Q_UNUSED(index);
 	if (templ == temp)
