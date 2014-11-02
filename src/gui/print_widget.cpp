@@ -198,21 +198,20 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 	overprinting_check = new QCheckBox(tr("Simulate overprinting"));
 	layout->addRow(overprinting_check);
 	
-	QWidget* scrolling_content = new QWidget();
+	scrolling_content = new QWidget();
 	scrolling_content->setLayout(layout);
 	
 	QBoxLayout* outer_layout = new QVBoxLayout();
 	outer_layout->setContentsMargins(QMargins());
 	
-	QScrollArea* scroll_area = new QScrollArea();
+	scroll_area = new QScrollArea();
 	scroll_area->setWidget(scrolling_content);
 	scroll_area->setWidgetResizable(true);
-	scroll_area->setFrameShape(QFrame::NoFrame);
 	scroll_area->setMinimumWidth((scrolling_content->sizeHint() + scroll_area->verticalScrollBar()->sizeHint()).width());
 	scroll_area->setSizeAdjustPolicy(QAbstractScrollArea::AdjustToContentsOnFirstShow);
 	outer_layout->addWidget(scroll_area);
 	
-	QDialogButtonBox* button_box = new QDialogButtonBox();
+	button_box = new QDialogButtonBox();
 	QStyleOption style_option(QStyleOption::Version, QStyleOption::SO_DockWidget);
 	button_box->layout()->setContentsMargins(
 	    style()->pixelMetric(QStyle::PM_LayoutLeftMargin, &style_option),
@@ -289,7 +288,12 @@ PrintWidget::~PrintWidget()
 
 QSize PrintWidget::sizeHint() const
 {
-	return QSize(200, 300);
+	QSize size = QWidget::sizeHint();
+	size.setHeight(scrolling_content->sizeHint().height() +
+	               2 * scroll_area->frameWidth() +
+	               button_box->sizeHint().height() +
+	               layout->horizontalSpacing() );
+	return size;
 }
 
 // slot

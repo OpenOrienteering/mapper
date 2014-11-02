@@ -1314,7 +1314,7 @@ void MapEditorController::printClicked(int task)
 	if (!print_dock_widget)
 	{
 		print_dock_widget = new EditorDockWidget(QString::null, NULL, this, window);
-		print_dock_widget->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea);
+		print_dock_widget->setAllowedAreas(Qt::NoDockWidgetArea);
 		print_widget = new PrintWidget(map, window, main_view, this, print_dock_widget);
 		connect(print_dock_widget, SIGNAL(visibilityChanged(bool)), print_widget, SLOT(setActive(bool)));
 		connect(print_widget, SIGNAL(closeClicked()), print_dock_widget, SLOT(close()));
@@ -1322,8 +1322,7 @@ void MapEditorController::printClicked(int task)
 		connect(print_widget, SIGNAL(taskChanged(QString)), print_dock_widget, SLOT(setWindowTitle(QString)));
 		print_dock_widget->setWidget(print_widget);
 		print_dock_widget->setObjectName("Print dock widget");
-		if (!window->restoreDockWidget(print_dock_widget))
-			addFloatingDockWidget(print_dock_widget);
+		addFloatingDockWidget(print_dock_widget);
 	}
 	
 	print_widget->setTask((PrintWidget::TaskFlags)task);
@@ -2732,8 +2731,7 @@ void MapEditorController::measureClicked(bool checked)
 		MeasureWidget* measure_widget = new MeasureWidget(map);
 		measure_dock_widget->setWidget(measure_widget);
 		measure_dock_widget->setObjectName("Measure dock widget");
-		if (!window->restoreDockWidget(measure_dock_widget))
-			addFloatingDockWidget(measure_dock_widget);
+		addFloatingDockWidget(measure_dock_widget);
 	}
 	
 	measure_dock_widget->setVisible(checked);
@@ -2893,7 +2891,14 @@ void MapEditorController::addFloatingDockWidget(QDockWidget* dock_widget)
 	if (!window->restoreDockWidget(dock_widget))
 	{
 		dock_widget->setFloating(true);
-		dock_widget->move(window->geometry().left() + 40, window->geometry().top() + 100);
+		// We must set the size from the sizeHint() ourselves,
+		// otherwise QDockWidget may use the minimum size.
+		QRect geometry(window->pos(), dock_widget->sizeHint());
+		geometry.translate(window->width() - geometry.width(), window->centralWidget()->y());
+		const int max_height = window->centralWidget()->height();
+		if (geometry.height() > max_height)
+			geometry.setHeight(max_height);
+		dock_widget->setGeometry(geometry);
 		connect(dock_widget, SIGNAL(dockLocationChanged(Qt::DockWidgetArea)), SLOT(saveWindowState()));
 	}
 }

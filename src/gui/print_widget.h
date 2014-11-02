@@ -227,6 +227,9 @@ private:
 	TaskFlags task;
 	
 	QFormLayout* layout;
+	QWidget* scrolling_content;
+	QScrollArea* scroll_area;
+	QDialogButtonBox* button_box;
 	
 	QComboBox* target_combo;
 	QComboBox* paper_size_combo;
