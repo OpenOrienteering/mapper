@@ -208,7 +208,6 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 	scroll_area->setWidget(scrolling_content);
 	scroll_area->setWidgetResizable(true);
 	scroll_area->setMinimumWidth((scrolling_content->sizeHint() + scroll_area->verticalScrollBar()->sizeHint()).width());
-	scroll_area->setSizeAdjustPolicy(QAbstractScrollArea::AdjustToContentsOnFirstShow);
 	outer_layout->addWidget(scroll_area);
 	
 	button_box = new QDialogButtonBox();
