@@ -452,7 +452,7 @@ bool Template::loadTemplateFile(bool configuring)
 	assert(template_state != Loaded);
 	
 	const State old_state = template_state;
-	bool result = QFileInfo::exists(template_path);
+	bool result = QFileInfo(template_path).exists();
 	if (!result)
 	{
 		template_state = Invalid;
