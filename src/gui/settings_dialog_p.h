@@ -20,12 +20,7 @@
 #ifndef _OPENORIENTEERING_SETTINGS_DIALOG_PRIVATE_H_
 #define _OPENORIENTEERING_SETTINGS_DIALOG_PRIVATE_H_
 
-#include <qglobal.h>
-#if QT_VERSION < 0x050000
-#include <QtGui>
-#else
 #include <QtWidgets>
-#endif
 
 class MainWindow;
 
