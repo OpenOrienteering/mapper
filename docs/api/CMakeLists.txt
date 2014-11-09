@@ -30,10 +30,10 @@ mark_as_advanced(DOXYGEN_EXECUTABLE)
 if(DOXYGEN_EXECUTABLE MATCHES NOTFOUND)
 	message(STATUS "doxygen executable not found.")
 else()
-	configure_file(${PROJECT_NAME}.doxygen.in ${PROJECT_NAME}.doxygen @ONLY)
+	configure_file(Doxyfile.in Doxyfile @ONLY)
 	add_custom_target(api-docs
 	  COMMAND   ${CMAKE_COMMAND} -E remove_directory html
-	  COMMAND   ${DOXYGEN_EXECUTABLE} ${PROJECT_NAME}.doxygen
+	  COMMAND   ${DOXYGEN_EXECUTABLE} Doxyfile
 	  COMMENT   "Generating API documentation"
 	  SOURCES   ${API_SRCS}
 	)
