@@ -268,9 +268,9 @@ endif()
 # Subdirectories
 
 add_subdirectory("docs/licensing")
+add_subdirectory("docs/manual")
 add_subdirectory("examples")
 add_subdirectory("symbol sets")
-add_subdirectory("help")
 add_subdirectory("translations")
 add_subdirectory("3rd-party/qbezier")
 get_property(_definitions DIRECTORY PROPERTY COMPILE_DEFINITIONS)

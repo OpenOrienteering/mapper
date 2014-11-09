@@ -236,8 +236,8 @@ void showHelp(QWidget* dialog_parent, QString filename, QString fragment)
 	}
 	else
 	{
-		const QString help_collection_path(MapperResource::locate(MapperResource::MANUAL, QLatin1String("Mapper ")+APP_VERSION+".qhc"));
-		const QString compiled_help_path(MapperResource::locate(MapperResource::MANUAL, QLatin1String("Mapper ")+APP_VERSION+".qch"));
+		const QString help_collection_path(MapperResource::locate(MapperResource::MANUAL, QLatin1String("Mapper ")+APP_VERSION+" Manual.qhc"));
+		const QString compiled_help_path(MapperResource::locate(MapperResource::MANUAL, QLatin1String("Mapper ")+APP_VERSION+" Manual.qch"));
 		if (help_collection_path.isEmpty() || compiled_help_path.isEmpty())
 		{
 			QMessageBox::warning(dialog_parent, QApplication::translate("Util", "Error"), QApplication::translate("Util", "Failed to locate the help files."));
@@ -288,7 +288,7 @@ void showHelp(QWidget* dialog_parent, QString filename, QString fragment)
 
 QString makeHelpUrl(QString filename, QString fragment)
 {
-	return QLatin1String("qthelp://") + MAPPER_HELP_NAMESPACE + "/oohelpdoc/help/html_en/" + filename + (fragment.isEmpty() ? "" : ("#" + fragment));
+	return QLatin1String("qthelp://") + MAPPER_HELP_NAMESPACE + "/manual/" + filename + (fragment.isEmpty() ? "" : ("#" + fragment));
 }
 
 float mmToPixelPhysical(float millimeters)

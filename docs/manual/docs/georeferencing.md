@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD html 4.01 Transitional//EN">
 <html>
 <head>
-<title>OpenOrienteering Mapper Help - Manual</title>
+<title>OpenOrienteering Mapper Help - Georeferencing</title>
 <link rel="stylesheet" href="oomap.css" type="text/css" title="OOMapper stylesheet">
 <meta name="author" content="Kai Pastor, Peter Hoban, Thomas Schoeps">
 <meta name="description" content="Open Orienteering Mapper help">

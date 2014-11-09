@@ -65,7 +65,7 @@ QStringList MapperResource::getLocations(MapperResource::RESOURCE_TYPE resource_
 			
 		case MANUAL:
 			// TODO: Support localized manual
-			resource_path = "/help";
+			resource_path = "/docs/manual";
 			break;
 			
 		case PROJ_DATA:
