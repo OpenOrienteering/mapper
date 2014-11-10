@@ -1,45 +1,91 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD html 4.01 Transitional//EN">
-<html>
-<head>
-<title>OpenOrienteering Mapper Help - Index</title>
-<link rel="stylesheet" href="oomap.css" type="text/css" title="OOMapper stylesheet">
-<meta name="author" content="Peter Hoban, Thomas Schoeps">
-<meta name="description" content="Open Orienteering Mapper help">
-<meta name="keywords" content="Help, Orienteering, mapping">
-</head>
-<body>
+User Manual    {#index}
+===========
+
+**Note:** The [OpenOrienteering Mapper user wiki](http://sourceforge.net/p/oorienteering/wiki/)
+is an online version of this documentation. It may contain additions and corrections.
+
+Contents    {#index_contents}
+========
+
+\subpage main_window <br/>
+Explanation of the main drawing window.
+
+\subpage new_map <br/>
+First steps
+
+\subpage georeferencing <br />
+Defining the relationship between map paper coordinates and real world coordinates system
+
+\subpage grid <br />
+Showing a helper grid in the map view.
+
+\subpage reference <br>
+Toolbar and menu items, including explanations for [all drawing tools](toolbars.html#drawing)
+
+\subpage templates_toc <br/>
+Working with templates
+
+\subpage colors_symbols <br/>
+Modifying map colors and symbols
+
+\subpage settings <br>
+Adjusting the program to your preferences.
+
+\ref faq <br>
+Frequently asked questions.
 
 
-<h3>Index</h3>
-<p>Welcome to the documentation for <b>OpenOrienteering Mapper 0.5</b>.<br/>
-Note that there is an online version of this documentation in form of a Wiki which may contain additions compared to this version: <a href="http://sourceforge.net/p/oorienteering/wiki/">OpenOrienteering Mapper user wiki</a>.</p>
+Online resources    {#index_online_resources}
+================
 
-<h4>Topics</h4>
+[Blog](http://www.openorienteering.org/) <br/>
+The latest news about OpenOrienteering
 
-<!--<p><a href="mapping/index.html">New to mapping? Start here.</a><br/>
-This section provides a very brief introdcution to orienteering mapping.</p>-->
+[Forum](http://sourceforge.net/p/oorienteering/discussion/) <br/>
+Questions about Mapper which are not answered elsewhere; general feedback
 
-<p><a href="index_manual.html">OpenOrienteering Mapper user manual</a><br/>
-This section explains the usage of OpenOrienteering Mapper in detail.</p>
-
-<p><a href="toolbars.html#drawing">All drawing tools</a><br/>
-A quick link to the list of drawing tools.</p>
-
-<p><a href="faq.html">FAQ</a><br/>
-Frequently asked questions.</p>
+[Ticket System](http://sourceforge.net/p/oorienteering/tickets/) <br/>
+Submitting bug reports, feature requests, and contributions
 
 
-<h4>External resources</h4>
 
-<ul>
-<li><a href="http://sourceforge.net/p/oorienteering/discussion/">Forum</a> for questions about Mapper which are not answered elsewhere or other kind of feedback</li>
-<li><a href="http://www.openorienteering.org/">Blog</a> for the latest news about OpenOrienteering</li>
-<li><a href="http://sourceforge.net/p/oorienteering/tickets/">Bug tracker</a> for entering information about bugs</li>
-</ul>
+\page reference Reference
+
+* \subpage toolbars
+  * [All drawing tools](toolbars.html#drawing)
 
 
-<p>&nbsp;</p>
-<hr/>
-<p><small>Updated on April 22, 2013</small></p>
-</body>
-</html>
+* \subpage file_menu
+* \subpage edit_menu
+* \subpage view_menu
+* \subpage tools_menu
+* \subpage map_menu
+* \subpage symbols_menu
+* \subpage templates_menu
+
+
+
+\page templates_toc Templates
+
+Working with templates
+
+\subpage templates <br />
+Types of templates, loading and positioning
+
+\subpage template_adjust <br />
+For non-georeferenced templates
+
+
+
+\page colors_symbols Colors and Symbols
+
+Modifying map colors and symbols
+
+\subpage color_dock_widget <br />
+Color system explanation and working with colors
+
+\subpage symbol_dock_widget <br />
+Types of symbols and how to create a new symbol
+
+\subpage symbol_replace_dialog <br />
+Replacing the current symbol set by another, useful for updating the symbol set version
