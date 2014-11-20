@@ -19,6 +19,15 @@
 TEMPLATE     = lib
 TARGET       = qbezier
 CONFIG      += staticlib
+CONFIG      -= debug_and_release
+INSTALLS    -= $$TARGET
+
+android {
+	# Avoid staticlib install by undocumented behaviour of qmake
+	INSTALLS     = target
+	target.extra = @test -d .
+}
+
 INCLUDEPATH += $$PWD/src
 
 SOURCES = \

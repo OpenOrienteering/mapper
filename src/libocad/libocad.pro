@@ -19,6 +19,13 @@
 TEMPLATE = lib
 TARGET   = ocd
 CONFIG  += staticlib
+CONFIG  -= debug_and_release
+
+android {
+	# Avoid staticlib install by undocumented behaviour of qmake
+	INSTALLS     = target
+	target.extra = @test -d .
+}
 
 QMAKE_CFLAGS += -std=c99 -Wno-sign-compare -Wno-type-limits -Wno-unused-parameter -Wno-format -Wno-pointer-to-int-cast -Wno-int-to-pointer-cast
 

@@ -4,14 +4,18 @@
 
 TEMPLATE = app
 TARGET   = Mapper
+CONFIG  -= debug_and_release
 
 include($$OUT_PWD/../prerequisites.pri)
-LIBS *= -lproj -lpolyclipping -lqtsingleapplication -locd
+LIBS *= -lpolyclipping -lqtsingleapplication -locd
+win32: LIBS *= -lproj-0
+else:  LIBS *= -lproj
 
 DEPENDPATH  += qmake
 INCLUDEPATH += qmake
 
 QT += core gui widgets printsupport network xml
+win32: QT += core-private gui-private printsupport-private
 
 # Defines. Use fancy quotation marks to be able to define strings with spaces.
 CONFIG(debug, debug|release) {
