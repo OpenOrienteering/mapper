@@ -534,7 +534,7 @@ void LineSymbol::shiftCoordinates(const MapCoordVector& flags, const MapCoordVec
 					double phi1 = acos(middle1.getX() * tangent_in.getX() + middle1.getY() * tangent_in.getY());
 					offset = tan(phi1) * u_border_shift;
 					
-					if (i > 0)
+					if (i > 0 && !qIsNaN(offset))
 					{
 						// First border corner point
 						end_right_vector = tangent_in;
@@ -565,7 +565,7 @@ void LineSymbol::shiftCoordinates(const MapCoordVector& flags, const MapCoordVec
 						double phi1 = acos(middle1.getX() * tangent_in.getX() + middle1.getY() * tangent_in.getY());
 						offset = miter_limit * fabs(main_shift) + tan(phi1) * u_border_shift;
 						
-						if (i > 0)
+						if (i > 0 && !qIsNaN(offset))
 						{
 							// First border corner point
 							end_right_vector = tangent_in;
@@ -580,6 +580,11 @@ void LineSymbol::shiftCoordinates(const MapCoordVector& flags, const MapCoordVec
 						double phi = acos(middle0.getX() * tangent_in.getX() + middle0.getY() * tangent_in.getY());
 						offset = fabs(1.0/tan(phi) * shift);
 					}
+				}
+				
+				if (qIsNaN(offset))
+				{
+					offset = 0.0;
 				}
 				
 				// single or second border corner point
@@ -615,7 +620,7 @@ void LineSymbol::shiftCoordinates(const MapCoordVector& flags, const MapCoordVec
 					// Critical case
 					double len_in  = vector_in.length();
 					double len_out = vector_out.length();
-					a = fabs(offset) - qMin(len_in, len_out);
+					a = qIsNaN(offset) ? 0.0 : (fabs(offset) - qMin(len_in, len_out));
 						
 					if (a < -0.0)
 					{
