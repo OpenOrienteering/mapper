@@ -128,19 +128,20 @@ int ocad_init() {
 		||	sizeof(OCADColor) != 0x48
 	){
 		fprintf(stderr, "*** WARNING: structure packing check failed. libocad was probably not compiled correctly.***\n");
-		fprintf(stderr, "magic       = %02lx\n", offsetof(OCADFileHeader, magic));
-        fprintf(stderr, "ftype       = %02lx\n", offsetof(OCADFileHeader, ftype));
-		fprintf(stderr, "major       = %02lx\n", offsetof(OCADFileHeader, major));
-		fprintf(stderr, "minor       = %02lx\n", offsetof(OCADFileHeader, minor));
-		fprintf(stderr, "osymidx     = %02lx\n", offsetof(OCADFileHeader, osymidx));
-		fprintf(stderr, "oobjidx     = %02lx\n", offsetof(OCADFileHeader, oobjidx));
-		fprintf(stderr, "osetup      = %02lx\n", offsetof(OCADFileHeader, osetup));
-		fprintf(stderr, "ssetup      = %02lx\n", offsetof(OCADFileHeader, ssetup));
-		fprintf(stderr, "Sizeof char is %lu\n", sizeof(char));
-		fprintf(stderr, "Sizeof short is %lu\n", sizeof(short));
-		fprintf(stderr, "Sizeof int is %lu\n", sizeof(int));
-		fprintf(stderr, "Sizeof long is %lu\n", sizeof(long));
-		fprintf(stderr, "Sizeof long long is %lu\n", sizeof(long long));
+		// The "(long unsigned int)" fixes a MinGW C99 peculiarity on x86_64.
+		fprintf(stderr, "magic       = %02lx\n", (long unsigned int)offsetof(OCADFileHeader, magic));
+		fprintf(stderr, "ftype       = %02lx\n", (long unsigned int)offsetof(OCADFileHeader, ftype));
+		fprintf(stderr, "major       = %02lx\n", (long unsigned int)offsetof(OCADFileHeader, major));
+		fprintf(stderr, "minor       = %02lx\n", (long unsigned int)offsetof(OCADFileHeader, minor));
+		fprintf(stderr, "osymidx     = %02lx\n", (long unsigned int)offsetof(OCADFileHeader, osymidx));
+		fprintf(stderr, "oobjidx     = %02lx\n", (long unsigned int)offsetof(OCADFileHeader, oobjidx));
+		fprintf(stderr, "osetup      = %02lx\n", (long unsigned int)offsetof(OCADFileHeader, osetup));
+		fprintf(stderr, "ssetup      = %02lx\n", (long unsigned int)offsetof(OCADFileHeader, ssetup));
+		fprintf(stderr, "Sizeof char is %lu\n",  (long unsigned int)sizeof(char));
+		fprintf(stderr, "Sizeof short is %lu\n", (long unsigned int)sizeof(short));
+		fprintf(stderr, "Sizeof int is %lu\n",   (long unsigned int)sizeof(int));
+		fprintf(stderr, "Sizeof long is %lu\n",  (long unsigned int)sizeof(long));
+		fprintf(stderr, "Sizeof long long is %lu\n", (long unsigned int)sizeof(long long));
 		exit(-10);
 	}
 	return 0;
