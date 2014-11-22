@@ -1041,7 +1041,7 @@ void DrawPathTool::updateStatusText()
 	
 	if (editingInProgress() && preview_path && preview_path->getCoordinateCount() >= 2)
 	{
-		//assert(!preview_path->isDirty());
+		//Q_ASSERT(!preview_path->isDirty());
 		float length = map()->getScaleDenominator() * preview_path->getPathCoordinateVector()[preview_path->getPart(0).path_coord_end_index].clen * 0.001f;
 		text += tr("<b>Length:</b> %1 m ").arg(QLocale().toString(length, 'f', 1));
 		text += "| ";

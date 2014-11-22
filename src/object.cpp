@@ -169,7 +169,7 @@ bool Object::equals(const Object* other, bool compare_symbol) const
 
 Object& Object::operator=(const Object& other)
 {
-	assert(type == other.type);
+	Q_ASSERT(type == other.type);
 	symbol = other.symbol;
 	coords = other.coords;
 	object_tags = other.object_tags;
@@ -178,37 +178,37 @@ Object& Object::operator=(const Object& other)
 
 PointObject* Object::asPoint()
 {
-	assert(type == Point);
+	Q_ASSERT(type == Point);
 	return static_cast<PointObject*>(this);
 }
 
 const PointObject* Object::asPoint() const
 {
-	assert(type == Point);
+	Q_ASSERT(type == Point);
 	return static_cast<const PointObject*>(this);
 }
 
 PathObject* Object::asPath()
 {
-	assert(type == Path);
+	Q_ASSERT(type == Path);
 	return static_cast<PathObject*>(this);
 }
 
 const PathObject* Object::asPath() const
 {
-	assert(type == Path);
+	Q_ASSERT(type == Path);
 	return static_cast<const PathObject*>(this);
 }
 
 TextObject* Object::asText()
 {
-	assert(type == Text);
+	Q_ASSERT(type == Text);
 	return static_cast<TextObject*>(this);
 }
 
 const TextObject* Object::asText() const
 {
-	assert(type == Text);
+	Q_ASSERT(type == Text);
 	return static_cast<const TextObject*>(this);
 }
 
@@ -483,7 +483,7 @@ bool Object::update(bool force, bool insert_new_renderables) const
 	else
 		symbol->createRenderables(this, coords, coordsF, output);
 	
-	assert(extent.right() < 999999);	// assert if bogus values are returned
+	Q_ASSERT(extent.right() < 999999);	// assert if bogus values are returned
 	output_dirty = false;
 	
 	if (map)
@@ -666,7 +666,7 @@ bool Object::intersectsBox(QRectF box) const
 			return isPointOnObject(MapCoordF(box.center()), 0, false, false);
 	}
 	else
-		assert(false);
+		Q_ASSERT(false);
 	
 	return false;
 }
@@ -710,7 +710,7 @@ Object* Object::getObjectForType(Object::Type type, const Symbol* symbol)
 		return new TextObject(symbol);
 	else
 	{
-		assert(false);
+		Q_ASSERT(false);
 		return NULL;
 	}
 }
@@ -852,14 +852,14 @@ double PathObject::PathPart::calculateArea() const
 
 PathObject::PathObject(const Symbol* symbol) : Object(Object::Path, symbol)
 {
-	assert(!symbol || (symbol->getType() == Symbol::Line || symbol->getType() == Symbol::Area || symbol->getType() == Symbol::Combined));
+	Q_ASSERT(!symbol || (symbol->getType() == Symbol::Line || symbol->getType() == Symbol::Area || symbol->getType() == Symbol::Combined));
 	pattern_rotation = 0;
 	pattern_origin = MapCoord(0, 0);
 }
 
 PathObject::PathObject(const Symbol* symbol, const MapCoordVector& coords, Map* map) : Object(Object::Path, symbol)
 {
-	assert(!symbol || (symbol->getType() == Symbol::Line || symbol->getType() == Symbol::Area || symbol->getType() == Symbol::Combined));
+	Q_ASSERT(!symbol || (symbol->getType() == Symbol::Line || symbol->getType() == Symbol::Area || symbol->getType() == Symbol::Combined));
 	pattern_rotation = 0;
 	pattern_origin = MapCoord(0, 0);
 	this->coords = coords;
@@ -913,7 +913,7 @@ Object& PathObject::operator=(const Object& other)
 const MapCoord& PathObject::shiftedCoord(int base_index, int offset, const PathPart& part) const
 {
 	int index = shiftedCoordIndex(base_index, offset, part);
-	assert(index >= 0);
+	Q_ASSERT(index >= 0);
 	return coords[index];
 }
 
@@ -945,7 +945,7 @@ const PathObject::PathPart& PathObject::findPartForIndex(int coords_index) const
 		if (coords_index >= parts[i].start_index && coords_index <= parts[i].end_index)
 			return parts[i];
 	}
-	assert(false);
+	Q_ASSERT(false);
 	return parts[0];
 }
 
@@ -957,7 +957,7 @@ int PathObject::findPartIndexForIndex(int coords_index) const
 		if (coords_index >= parts[i].start_index && coords_index <= parts[i].end_index)
 			return i;
 	}
-	assert(false);
+	Q_ASSERT(false);
 	return 0;
 }
 
@@ -1024,7 +1024,7 @@ void PathObject::calcClosestPointOnPath(MapCoordF coord, float& out_distance_sq,
 	}
 	for (int i = start; i < end - 1; ++i)
 	{
-		assert(path_coords[i].index < coords_size);
+		Q_ASSERT(path_coords[i].index < coords_size);
 		if (coords[path_coords[i].index].isHolePoint())
 			continue;
 		
@@ -1230,10 +1230,10 @@ bool PathObject::connectIfClose(PathObject* other, double connect_threshold_sq)
 
 void PathObject::connectPathParts(int part_index, PathObject* other, int other_part_index, bool prepend, bool merge_ends)
 {
-	assert(part_index < (int)parts.size());
+	Q_ASSERT(part_index < (int)parts.size());
 	PathPart& part = parts[part_index];
 	PathPart& other_part = other->parts[other_part_index];
-	assert(!part.isClosed() && !other_part.isClosed());
+	Q_ASSERT(!part.isClosed() && !other_part.isClosed());
 	
 	int other_part_size = other_part.getNumCoords();
 	int appended_part_size = other_part_size - (merge_ends ? 1 : 0);
@@ -1285,7 +1285,7 @@ void PathObject::connectPathParts(int part_index, PathObject* other, int other_p
 	}
 	
 	partSizeChanged(part_index, appended_part_size);
-	assert(!parts[part_index].isClosed());
+	Q_ASSERT(!parts[part_index].isClosed());
 }
 
 void PathObject::splitAt(const PathCoord& split_pos, Object*& out1, Object*& out2)
@@ -1406,15 +1406,15 @@ void PathObject::changePathBounds(int part_index, double start_len, double end_l
 	{
 		int index = path_coords[cur_path_coord].index;
 		float factor = (start_len - path_coords[cur_path_coord-1].clen) / (path_coords[cur_path_coord].clen - path_coords[cur_path_coord-1].clen);
-		assert(factor >= -0.01f && factor <= 1.01f);
+		Q_ASSERT(factor >= -0.01f && factor <= 1.01f);
 		if (factor > 1)
 			factor = 1;
 		else if (factor < 0)
 			factor = 0;
 		float prev_param = (path_coords[cur_path_coord-1].index == path_coords[cur_path_coord].index) ? path_coords[cur_path_coord-1].param : 0;
-		assert(prev_param <= path_coords[cur_path_coord].param);
+		Q_ASSERT(prev_param <= path_coords[cur_path_coord].param);
 		float p = prev_param + (path_coords[cur_path_coord].param - prev_param) * factor;
-		assert(p >= 0 && p <= 1);
+		Q_ASSERT(p >= 0 && p <= 1);
 		
 		MapCoordF o0, o1;
 		out_coordsF.push_back(MapCoordF(0, 0));
@@ -1473,15 +1473,15 @@ void PathObject::changePathBounds(int part_index, double start_len, double end_l
 		{
 			int index = path_coords[cur_path_coord].index - part.start_index;
 			float factor = (end_len - path_coords[cur_path_coord-1].clen) / (path_coords[cur_path_coord].clen - path_coords[cur_path_coord-1].clen);
-			assert(factor >= -0.01f && factor <= 1.01f);
+			Q_ASSERT(factor >= -0.01f && factor <= 1.01f);
 			if (factor > 1)
 				factor = 1;
 			else if (factor < 0)
 				factor = 0;
 			float prev_param = (path_coords[cur_path_coord-1].index == path_coords[cur_path_coord].index) ? path_coords[cur_path_coord-1].param : 0;
-			assert(prev_param <= path_coords[cur_path_coord].param);
+			Q_ASSERT(prev_param <= path_coords[cur_path_coord].param);
 			float p = prev_param + (path_coords[cur_path_coord].param - prev_param) * factor;
-			assert(p >= 0 && p <= 1);
+			Q_ASSERT(p >= 0 && p <= 1);
 			
 			out_coordsF.push_back(MapCoordF(0, 0));
 			out_coordsF.push_back(MapCoordF(0, 0));
@@ -1491,7 +1491,7 @@ void PathObject::changePathBounds(int part_index, double start_len, double end_l
 			{
 				// The dash end is in the same curve as the start, need to make a second split with the correct parameter
 				p = (p - start_bezier_split_param) / (1 - start_bezier_split_param);
-				assert(p >= 0 && p <= 1);
+				Q_ASSERT(p >= 0 && p <= 1);
 				
 				PathCoord::splitBezierCurve(out_coordsF[out_coordsF.size() - 4], o3, o4, (index < (int)coordsF.size() - 3) ? coordsF[index+3] : coordsF[0],
 											p, out_coordsF[out_coordsF.size() - 3], out_coordsF[out_coordsF.size() - 2],
@@ -1558,7 +1558,7 @@ bool PathObject::advanceCoordinateRangeTo(const MapCoordVector& flags, const Map
 		++cur_path_coord;
 		if (cur_path_coord > part.path_coord_end_index || flags[path_coords[cur_path_coord].index - part.start_index].isClosePoint())
 			cur_path_coord = part.path_coord_start_index + 1;
-		assert(cur_path_coord < path_coords_size);
+		Q_ASSERT(cur_path_coord < path_coords_size);
 		
 		int index = path_coords[cur_path_coord].index - part.start_index;
 		
@@ -1567,7 +1567,7 @@ bool PathObject::advanceCoordinateRangeTo(const MapCoordVector& flags, const Map
 			if (current_index == start_bezier_index && !(enforce_wrap && !have_to_wrap))
 			{
 				current_index += 3;
-				assert(current_index <= part.end_index);
+				Q_ASSERT(current_index <= part.end_index);
 				if (flags[current_index].isClosePoint())
 					current_index = 0;
 				
@@ -1590,17 +1590,17 @@ bool PathObject::advanceCoordinateRangeTo(const MapCoordVector& flags, const Map
 					out_flags[out_flags.size() - 1].setHolePoint(false);
 					out_coords.push_back(coords[current_index]);
 				}
-				assert(current_index == index);
+				Q_ASSERT(current_index == index);
 			}
 			else
 			{
-				//assert((!flags[current_index].isCurveStart() && current_index + 1 == line_coords[cur_line_coord].index) ||
+				//Q_ASSERT((!flags[current_index].isCurveStart() && current_index + 1 == line_coords[cur_line_coord].index) ||
 				//       (flags[current_index].isCurveStart() && current_index + 3 == line_coords[cur_line_coord].index) ||
 				//       (flags[current_index+1].isHolePoint() && current_index + 2 == line_coords[cur_line_coord].index));
 				do
 				{
 					++current_index;
-					assert(current_index <= part.end_index);
+					Q_ASSERT(current_index <= part.end_index);
 					if (flags[current_index].isClosePoint() || current_index == part.end_index)
 					{
 						if (coords[current_index] != coords[0])
@@ -2175,7 +2175,7 @@ void PathObject::reversePart(int part_index)
 		
 		if (!(c == part.start_index && part.isClosed()) && coords[c].isCurveStart())
 		{
-			assert((c - part.start_index) >= 3);
+			Q_ASSERT((c - part.start_index) >= 3);
 			coords[c - 3].setCurveStart(true);
 			if (!(c == part.end_index && part.isClosed()))
 				coords[c].setCurveStart(false);
@@ -2212,7 +2212,7 @@ void PathObject::closeAllParts()
 
 PathObject* PathObject::extractCoordsWithinPart(int start, int end) const
 {
-	assert(start >= 0 && end < (int)coords.size());
+	Q_ASSERT(start >= 0 && end < (int)coords.size());
 	PathObject* new_path = new PathObject(symbol);
 	new_path->setPatternRotation(getPatternRotation());
 	new_path->setPatternOrigin(getPatternOrigin());
@@ -2283,7 +2283,7 @@ bool PathObject::convertToCurves(PathObject** undo_duplicate)
 
 void PathObject::convertRangeToCurves(int part_number, int start_index, int end_index)
 {
-	assert(end_index > start_index);
+	Q_ASSERT(end_index > start_index);
 	PathPart& part = getPart(part_number);
 	
 	// Special case: last coordinate
@@ -2565,7 +2565,7 @@ int PathObject::isPointOnPath(MapCoordF coord, float tolerance, bool treat_areas
 		int size = (int)path_coords.size();
 		for (int i = 0; i < size - 1; ++i)
 		{
-			assert(path_coords[i].index < coords_size);
+			Q_ASSERT(path_coords[i].index < coords_size);
 			if (coords[path_coords[i].index].isHolePoint())
 				continue;
 			
@@ -3001,7 +3001,7 @@ void PathObject::calcAllIntersectionsWith(PathObject* other, PathObject::Interse
 
 void PathObject::setCoordinate(int pos, MapCoord c)
 {
-	assert(pos >= 0 && pos < getCoordinateCount());
+	Q_ASSERT(pos >= 0 && pos < getCoordinateCount());
 	
 	const PathPart& part = findPartForIndex(pos);
 	if (part.isClosed() && pos == part.end_index)
@@ -3015,7 +3015,7 @@ void PathObject::setCoordinate(int pos, MapCoord c)
 
 void PathObject::addCoordinate(int pos, MapCoord c)
 {
-	assert(pos >= 0 && pos <= getCoordinateCount());
+	Q_ASSERT(pos >= 0 && pos <= getCoordinateCount());
 	int part_index = coords.empty() ? -1 : findPartIndexForIndex(qMin(pos, (int)coords.size() - 1));
 	coords.insert(coords.begin() + pos, c);
 	
@@ -3056,7 +3056,7 @@ void PathObject::addCoordinate(MapCoord c, bool start_new_part)
 		if (start_new_part || parts.empty())
 		{
 			if (!parts.empty())
-				assert(parts[parts.size() - 1].isClosed());
+				Q_ASSERT(parts[parts.size() - 1].isClosed());
 			PathPart part;
 			part.start_index = (int)coords.size() - 1;
 			part.end_index = (int)coords.size() - 1;
@@ -3072,7 +3072,7 @@ void PathObject::addCoordinate(MapCoord c, bool start_new_part)
 
 void PathObject::deleteCoordinate(int pos, bool adjust_other_coords, int delete_bezier_point_action)
 {
-	assert(pos >= 0 && pos < getCoordinateCount());
+	Q_ASSERT(pos >= 0 && pos < getCoordinateCount());
 	MapCoord old_coord = coords[pos];
 	coords.erase(coords.begin() + pos);
 	
@@ -3169,7 +3169,7 @@ void PathObject::deleteCoordinate(int pos, bool adjust_other_coords, int delete_
 					qfactor = qMax(minimum_length / qMax(q3.lengthTo(q2), 0.01), qfactor);
 				}
 				else
-					assert(false);
+					Q_ASSERT(false);
 				
 				MapCoordF p0p1 = MapCoordF(p1) - MapCoordF(p0);
 				MapCoord r1 = MapCoord(p0.xd() + pfactor * p0p1.getX(), p0.yd() + pfactor * p0p1.getY());
@@ -3218,8 +3218,8 @@ void PathObject::updatePathCoords(MapCoordVectorF& float_coords) const
 	int path_coord_start = 0;
 	while (PathCoord::getNextPathPart(coords, float_coords, part_start, part_end, &path_coords, false, true))
 	{
-		assert(parts[part_index].start_index == part_start);
-		assert(parts[part_index].end_index == part_end);
+		Q_ASSERT(parts[part_index].start_index == part_start);
+		Q_ASSERT(parts[part_index].end_index == part_end);
 		parts[part_index].path_coord_start_index = path_coord_start;
 		parts[part_index].path_coord_end_index = path_coords.size() - 1;
 		path_coord_start = parts[part_index].path_coord_end_index + 1;
@@ -3273,7 +3273,7 @@ void PathObject::setClosingPoint(int index, MapCoord coord)
 
 PointObject::PointObject(const Symbol* symbol) : Object(Object::Point, symbol)
 {
-	assert(!symbol || (symbol->getType() == Symbol::Point));
+	Q_ASSERT(!symbol || (symbol->getType() == Symbol::Point));
 	rotation = 0;
 	coords.push_back(MapCoord(0, 0));
 }
@@ -3330,7 +3330,7 @@ MapCoord PointObject::getCoord() const
 void PointObject::setRotation(float new_rotation)
 {
 	const PointSymbol* point = reinterpret_cast<const PointSymbol*>(symbol);
-	assert(point && point->isRotatable());
+	Q_ASSERT(point && point->isRotatable());
 	
 	rotation = new_rotation;
 	setOutputDirty();

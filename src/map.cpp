@@ -21,7 +21,6 @@
 
 #include "map.h"
 
-#include <cassert>
 #include <algorithm>
 
 #include <QDebug>
@@ -754,7 +753,7 @@ void Map::importMap(Map* other, ImportMode mode, QWidget* dialog_parent, std::ve
 	}
 	else if (mode == MinimalSymbolImport && filter)
 	{
-		assert(filter->size() == symbol_filter.size());
+		Q_ASSERT(filter->size() == symbol_filter.size());
 		symbol_filter = *filter;
 		other->determineSymbolUseClosure(symbol_filter);
 	}
@@ -769,7 +768,7 @@ void Map::importMap(Map* other, ImportMode mode, QWidget* dialog_parent, std::ve
 	}
 	else if (mode == ColorImport && filter)
 	{
-		assert(filter->size() == color_filter.size());
+		Q_ASSERT(filter->size() == color_filter.size());
 		color_filter = *filter;
 	}
 	
@@ -1087,7 +1086,7 @@ void Map::drawSelection(QPainter* painter, bool force_min_size, MapWidget* widge
 
 void Map::addObjectToSelection(Object* object, bool emit_selection_changed)
 {
-	assert(!isObjectSelected(object));
+	Q_ASSERT(!isObjectSelected(object));
 	object_selection.insert(object);
 	addSelectionRenderables(object);
 	if (!first_selected_object)
@@ -1098,7 +1097,7 @@ void Map::addObjectToSelection(Object* object, bool emit_selection_changed)
 void Map::removeObjectFromSelection(Object* object, bool emit_selection_changed)
 {
 	bool removed = object_selection.remove(object);
-	assert(removed && "Map::removeObjectFromSelection: object was not selected!");
+	Q_ASSERT(removed && "Map::removeObjectFromSelection: object was not selected!");
 	removeSelectionRenderables(object);
 	if (first_selected_object == object)
 		first_selected_object = object_selection.isEmpty() ? NULL : *object_selection.begin();
@@ -1177,7 +1176,7 @@ void Map::removeMapWidget(MapWidget* widget)
 			return;
 		}
 	}
-	assert(false);
+	Q_ASSERT(false);
 }
 void Map::updateAllMapWidgets()
 {
@@ -1580,7 +1579,7 @@ const Symbol* Map::getSymbol(int i) const
 		return getUndefinedLine();
 	else
 	{
-		assert(!"Invalid symbol index given");
+		Q_ASSERT(!"Invalid symbol index given");
 		return getUndefinedLine();
 	}
 }
@@ -1804,7 +1803,7 @@ void Map::setTemplateAreaDirty(int i)
 {
 	if (i == -1)
 		return;	// no assert here as convenience, so setTemplateAreaDirty(-1) can be called without effect for the map part
-	assert(i >= 0 && i < (int)templates.size());
+	Q_ASSERT(i >= 0 && i < (int)templates.size());
 	
 	templates[i]->setTemplateAreaDirty();
 }
@@ -1816,7 +1815,7 @@ int Map::findTemplateIndex(const Template* temp) const
 		if (templates[i] == temp)
 			return i;
 	}
-	assert(false);
+	Q_ASSERT(false);
 	return -1;
 }
 void Map::setTemplatesDirty()

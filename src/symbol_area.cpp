@@ -20,8 +20,6 @@
 
 #include "symbol_area.h"
 
-#include <cassert>
-
 #include <QtWidgets>
 #include <QIODevice>
 #include <QXmlStreamWriter>
@@ -209,7 +207,7 @@ void AreaSymbol::FillPattern::createRenderables(QRectF extent, float delta_rotat
 	rotation = fmod(1.0 * rotation, M_PI);
 	if (rotation < 0)
 		rotation = M_PI + rotation;
-	assert(rotation >= 0 && rotation <= M_PI);
+	Q_ASSERT(rotation >= 0 && rotation <= M_PI);
 	
 	// Helpers
 	LineSymbol line;
@@ -820,7 +818,7 @@ AreaSymbolSettings::AreaSymbolSettings(AreaSymbol* symbol, SymbolSettingDialog* 
 
 void AreaSymbolSettings::reset(Symbol* symbol)
 {
-	assert(symbol->getType() == Symbol::Area);
+	Q_ASSERT(symbol->getType() == Symbol::Area);
 	
 	clearPatterns();
 	
@@ -853,8 +851,8 @@ void AreaSymbolSettings::clearPatterns()
 
 void AreaSymbolSettings::loadPatterns()
 {
-	assert(pattern_list->count() == 0);
-	assert(count() == 2); // General + Area tab
+	Q_ASSERT(pattern_list->count() == 0);
+	Q_ASSERT(count() == 2); // General + Area tab
 	
 	for (int i = 0; i < symbol->getNumFillPatterns(); ++i)
 	{
@@ -977,7 +975,7 @@ void AreaSymbolSettings::addPattern(AreaSymbol::FillPattern::Type type)
 	active_pattern = symbol->patterns.insert(symbol->patterns.begin() + index, AreaSymbol::FillPattern());
 	QString temp_name("new");
 	pattern_list->insertItem(index, temp_name);
-	assert(int(symbol->patterns.size()) == pattern_list->count());
+	Q_ASSERT(int(symbol->patterns.size()) == pattern_list->count());
 	
 	active_pattern->type = type;
 	if (type == AreaSymbol::FillPattern::PointPattern)
@@ -1078,28 +1076,28 @@ void AreaSymbolSettings::patternLineOffsetChanged(double value)
 
 void AreaSymbolSettings::patternOffsetAlongLineChanged(double value)
 {
-	assert(active_pattern->type == AreaSymbol::FillPattern::PointPattern);
+	Q_ASSERT(active_pattern->type == AreaSymbol::FillPattern::PointPattern);
 	active_pattern->offset_along_line = qRound(1000.0 * value);
 	emit propertiesModified();
 }
 
 void AreaSymbolSettings::patternColorChanged()
 {
-	assert(active_pattern->type == AreaSymbol::FillPattern::LinePattern);
+	Q_ASSERT(active_pattern->type == AreaSymbol::FillPattern::LinePattern);
 	active_pattern->line_color = pattern_color_edit->color();
 	emit propertiesModified();
 }
 
 void AreaSymbolSettings::patternLineWidthChanged(double value)
 {
-	assert(active_pattern->type == AreaSymbol::FillPattern::LinePattern);
+	Q_ASSERT(active_pattern->type == AreaSymbol::FillPattern::LinePattern);
 	active_pattern->line_width = qRound(1000.0 * value);
 	emit propertiesModified();
 }
 
 void AreaSymbolSettings::patternPointDistChanged(double value)
 {
-	assert(active_pattern->type == AreaSymbol::FillPattern::PointPattern);
+	Q_ASSERT(active_pattern->type == AreaSymbol::FillPattern::PointPattern);
 	active_pattern->point_distance = qRound(1000.0 * value);
 	emit propertiesModified();
 }

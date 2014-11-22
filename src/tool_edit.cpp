@@ -353,7 +353,7 @@ void ObjectMover::calculateConstraints()
 			// If a curve starts here, add first handle
 			if (path->getCoordinate(index).isCurveStart())
 			{
-				assert(index < path->getCoordinateCount() - 1);
+				Q_ASSERT(index < path->getCoordinateCount() - 1);
 				point_set.insert(index + 1);
 				could_be_handle = false;
 			}

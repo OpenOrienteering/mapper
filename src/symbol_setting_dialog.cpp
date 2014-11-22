@@ -211,7 +211,7 @@ void SymbolSettingDialog::loadTemplateClicked()
 
 void SymbolSettingDialog::centerTemplateBBox()
 {
-	assert(preview_map->getNumTemplates() == 1);
+	Q_ASSERT(preview_map->getNumTemplates() == 1);
 	Template* temp = preview_map->getTemplate(0);
 	
 	QRectF bbox = temp->calculateTemplateBoundingBox();
@@ -225,7 +225,7 @@ void SymbolSettingDialog::centerTemplateBBox()
 
 void SymbolSettingDialog::centerTemplateGravity()
 {
-	assert(preview_map->getNumTemplates() == 1);
+	Q_ASSERT(preview_map->getNumTemplates() == 1);
 	Template* temp = preview_map->getTemplate(0);
 	TemplateImage* image = reinterpret_cast<TemplateImage*>(temp);
 	

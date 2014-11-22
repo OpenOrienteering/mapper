@@ -495,7 +495,7 @@ double TextSymbol::getNextTab(double pos) const
 	}
 	
 	double next_tab = (floor(pos / tab_interval) + 1.0) * tab_interval;
-	assert(next_tab > pos);
+	Q_ASSERT(next_tab > pos);
  	return next_tab;
 }
 
@@ -1007,7 +1007,7 @@ void TextSymbolSettings::updateCompatibilityContents()
 
 void TextSymbolSettings::reset(Symbol* symbol)
 {
-	assert(symbol->getType() == Symbol::Text);
+	Q_ASSERT(symbol->getType() == Symbol::Text);
 	
 	SymbolPropertiesWidget::reset(symbol);
 	this->symbol = reinterpret_cast<TextSymbol*>(symbol);

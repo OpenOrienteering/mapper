@@ -83,52 +83,52 @@ bool Symbol::equals(const Symbol* other, Qt::CaseSensitivity case_sensitivity, b
 
 const PointSymbol* Symbol::asPoint() const
 {
-	assert(type == Point);
+	Q_ASSERT(type == Point);
 	return static_cast<const PointSymbol*>(this);
 }
 PointSymbol* Symbol::asPoint()
 {
-	assert(type == Point);
+	Q_ASSERT(type == Point);
 	return static_cast<PointSymbol*>(this);
 }
 const LineSymbol* Symbol::asLine() const
 {
-	assert(type == Line);
+	Q_ASSERT(type == Line);
 	return static_cast<const LineSymbol*>(this);
 }
 LineSymbol* Symbol::asLine()
 {
-	assert(type == Line);
+	Q_ASSERT(type == Line);
 	return static_cast<LineSymbol*>(this);
 }
 const AreaSymbol* Symbol::asArea() const
 {
-	assert(type == Area);
+	Q_ASSERT(type == Area);
 	return static_cast<const AreaSymbol*>(this);
 }
 AreaSymbol* Symbol::asArea()
 {
-	assert(type == Area);
+	Q_ASSERT(type == Area);
 	return static_cast<AreaSymbol*>(this);
 }
 const TextSymbol* Symbol::asText() const
 {
-	assert(type == Text);
+	Q_ASSERT(type == Text);
 	return static_cast<const TextSymbol*>(this);
 }
 TextSymbol* Symbol::asText()
 {
-	assert(type == Text);
+	Q_ASSERT(type == Text);
 	return static_cast<TextSymbol*>(this);
 }
 const CombinedSymbol* Symbol::asCombined() const
 {
-	assert(type == Combined);
+	Q_ASSERT(type == Combined);
 	return static_cast<const CombinedSymbol*>(this);
 }
 CombinedSymbol* Symbol::asCombined()
 {
-	assert(type == Combined);
+	Q_ASSERT(type == Combined);
 	return static_cast<CombinedSymbol*>(this);
 }
 
@@ -328,7 +328,7 @@ QImage* Symbol::createIcon(const Map* map, int side_length, bool antialiasing, i
 	else if (contained_types & Point || contained_types & Text)
 		white_border_pixels = 2;
 	else
-		assert(false);
+		Q_ASSERT(false);
 	const float max_icon_mm = 0.001f * view.pixelToLength(side_length - bottom_right_border - white_border_pixels);
 	const float max_icon_mm_half = 0.5f * max_icon_mm;
 	
@@ -423,7 +423,7 @@ QImage* Symbol::createIcon(const Map* map, int side_length, bool antialiasing, i
 		object = path;
 	}*/
 	else
-		assert(false);
+		Q_ASSERT(false);
 	
 	icon_map.addObject(object);
 	
@@ -512,7 +512,7 @@ Symbol* Symbol::getSymbolForType(Symbol::Type type)
 		return new CombinedSymbol();
 	else
 	{
-		assert(false);
+		Q_ASSERT(false);
 		return NULL;
 	}
 }
@@ -583,7 +583,7 @@ void Symbol::createBaselineRenderables(const Object* object, const Symbol* symbo
 	else
 	{
 		// Line or area or combination
-		assert((symbol->getContainedTypes() & ~(Symbol::Line | Symbol::Area | Symbol::Combined)) == 0);
+		Q_ASSERT((symbol->getContainedTypes() & ~(Symbol::Line | Symbol::Area | Symbol::Combined)) == 0);
 		const PathObject* path = object->asPath();
 		
 		if (hatch_areas && (symbol->getContainedTypes() & Symbol::Area))
@@ -635,7 +635,7 @@ int Symbol::getCompatibleTypes(Symbol::Type type)
 	else if (type == Text)
 		return Text;
 	
-	assert(false);
+	Q_ASSERT(false);
 	return type;
 }
 

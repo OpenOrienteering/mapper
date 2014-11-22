@@ -112,7 +112,7 @@ int TextObjectLineInfo::getIndex(double pos_x) const
 
 TextObject::TextObject(const Symbol* symbol): Object(Object::Text, symbol)
 {
-	assert(!symbol || (symbol->getType() == Symbol::Text));
+	Q_ASSERT(!symbol || (symbol->getType() == Symbol::Text));
 	coords.push_back(MapCoord(0, 0));
 	text = "";
 	h_align = AlignHCenter;

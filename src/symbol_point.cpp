@@ -100,7 +100,7 @@ void PointSymbol::createRenderablesScaled(const Object* object, const MapCoordVe
 	{
 		// Point symbol elements should not be entered into the map,
 		// otherwise map settings like area hatching affect them
-		assert(objects[i]->getMap() == NULL);
+		Q_ASSERT(objects[i]->getMap() == NULL);
 		
 		const MapCoordVector& object_flags = objects[i]->getRawCoordinateVector();
 		int coords_size = (int)object_flags.size();
@@ -420,7 +420,7 @@ PointSymbolSettings::PointSymbolSettings(PointSymbol* symbol, SymbolSettingDialo
 
 void PointSymbolSettings::reset(Symbol* symbol)
 {
-	assert(symbol->getType() == Symbol::Point);
+	Q_ASSERT(symbol->getType() == Symbol::Point);
 	
 	SymbolPropertiesWidget::reset(symbol);
 	this->symbol = reinterpret_cast<PointSymbol*>(symbol);

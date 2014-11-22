@@ -638,7 +638,7 @@ void DrawRectangleTool::updateRectangle()
 		preview_path->setCoordinate(cur_point_index + 1, coord);
 		
 		preview_path->getPart(0).setClosed(true, false);
-		assert(preview_path->getPart(0).end_index == cur_point_index + 2);
+		Q_ASSERT(preview_path->getPart(0).end_index == cur_point_index + 2);
 	}
 	
 	updatePreviewPath();

@@ -20,8 +20,6 @@
 
 #include "symbol_point_editor.h"
 
-#include <cassert>
-
 #include <QtWidgets>
 
 #include "map_editor.h"
@@ -308,9 +306,9 @@ bool PointSymbolEditorWidget::changeCurrentCoordinate(MapCoordF new_coord)
 		int row = coords_table->currentRow();
 		if (row < 0)
 			return false;
-		assert(object->getType() == Object::Path);
+		Q_ASSERT(object->getType() == Object::Path);
 		PathObject* path = reinterpret_cast<PathObject*>(object);
-		assert(row < path->getCoordinateCount());
+		Q_ASSERT(row < path->getCoordinateCount());
 		MapCoord coord = path->getCoordinate(row);
 		coord.setX(new_coord.getX());
 		coord.setY(new_coord.getY() - offset_y);
@@ -331,7 +329,7 @@ bool PointSymbolEditorWidget::addCoordinate(MapCoordF new_coord)
 	
 	if (object->getType() == Object::Point)
 		return changeCurrentCoordinate(new_coord);
-	assert(object->getType() == Object::Path);
+	Q_ASSERT(object->getType() == Object::Path);
 	PathObject* path = reinterpret_cast<PathObject*>(object);
 	
 	int row = coords_table->currentRow();
@@ -494,7 +492,7 @@ void PointSymbolEditorWidget::addAreaClicked()
 void PointSymbolEditorWidget::deleteCurrentElement()
 {
 	int row = element_list->currentRow();
-	assert(row > 0);
+	Q_ASSERT(row > 0);
 	int pos = row - 1;
 	symbol->deleteElement(pos);
 	delete element_list->item(row);
@@ -633,12 +631,12 @@ void PointSymbolEditorWidget::lineJoinChanged(int index)
 void PointSymbolEditorWidget::lineClosedClicked(bool checked)
 {
 	Object* object = getCurrentElementObject();
-	assert(object->getType() == Object::Path);
+	Q_ASSERT(object->getType() == Object::Path);
 	PathObject* path = reinterpret_cast<PathObject*>(object);
 	
 	if (!checked && path->getCoordinateCount() >= 4 && path->getCoordinate(path->getCoordinateCount() - 4).isCurveStart())
 		path->getCoordinate(path->getCoordinateCount() - 4).setCurveStart(false);
-	assert(path->getNumParts() > 0);
+	Q_ASSERT(path->getNumParts() > 0);
 	path->getPart(0).setClosed(checked, true);
 	if (!checked)
 		path->deleteCoordinate(path->getCoordinateCount() - 1, false);
@@ -681,9 +679,9 @@ void PointSymbolEditorWidget::coordinateChanged(int row, int column)
 			}
 			else
 			{
-				assert(object->getType() == Object::Path);
+				Q_ASSERT(object->getType() == Object::Path);
 				PathObject* path = reinterpret_cast<PathObject*>(object);
-				assert(row < path->getCoordinateCount());
+				Q_ASSERT(row < path->getCoordinateCount());
 				if (column == 0)
 					path->getCoordinate(row).setX(new_value);
 				else
@@ -711,9 +709,9 @@ void PointSymbolEditorWidget::coordinateChanged(int row, int column)
 	}
 	else
 	{
-		assert(object->getType() == Object::Path);
+		Q_ASSERT(object->getType() == Object::Path);
 		PathObject* path = reinterpret_cast<PathObject*>(object);
-		assert(row < path->getCoordinateCount());
+		Q_ASSERT(row < path->getCoordinateCount());
 		MapCoord coord = path->getCoordinate(row);
 		coord.setCurveStart(coords_table->item(row, column)->checkState() == Qt::Checked);
 		path->setCoordinate(row, coord);
@@ -727,7 +725,7 @@ void PointSymbolEditorWidget::coordinateChanged(int row, int column)
 void PointSymbolEditorWidget::addCoordClicked()
 {
 	Object* object = getCurrentElementObject();
-	assert(object->getType() == Object::Path);
+	Q_ASSERT(object->getType() == Object::Path);
 	PathObject* path = reinterpret_cast<PathObject*>(object);
 	
 	if (coords_table->currentRow() < 0)
@@ -743,7 +741,7 @@ void PointSymbolEditorWidget::addCoordClicked()
 void PointSymbolEditorWidget::deleteCoordClicked()
 {
 	Object* object = getCurrentElementObject();
-	assert(object->getType() == Object::Path);
+	Q_ASSERT(object->getType() == Object::Path);
 	PathObject* path = reinterpret_cast<PathObject*>(object);
 	
 	int row = coords_table->currentRow();
@@ -770,14 +768,14 @@ void PointSymbolEditorWidget::centerCoordsClicked()
 	}
 	else
 	{
-		assert(object->getType() == Object::Path);
+		Q_ASSERT(object->getType() == Object::Path);
 		PathObject* path = reinterpret_cast<PathObject*>(object);
 		
 		MapCoordF center = MapCoordF(0, 0);
 		int size = path->getCoordinateCount();
 		int change_size = path->isFirstPartClosed() ? (size - 1) : size;
 		
-		assert(change_size > 0);
+		Q_ASSERT(change_size > 0);
 		for (int i = 0; i < change_size; ++i)
 			center = MapCoordF(center.getX() + path->getCoordinate(i).xd(), center.getY() + path->getCoordinate(i).yd());
 		center = MapCoordF(center.getX() / change_size, center.getY() / change_size);
@@ -847,7 +845,7 @@ void PointSymbolEditorWidget::addCoordsRow(int row)
 
 void PointSymbolEditorWidget::updateCoordsRow(int row)
 {
-	assert(element_list->currentRow() > 0);
+	Q_ASSERT(element_list->currentRow() > 0);
 	Object* object = getCurrentElementObject();
 	
 	MapCoordF coordF(0, 0);
@@ -919,7 +917,7 @@ QString PointSymbolEditorWidget::getLabelForSymbol(const Symbol* symbol) const
 	else if (symbol->getType() == Symbol::Area)
 		return tr("Area");
 	
-	assert(false);
+	Q_ASSERT(false);
 	return tr("Unknown");
 }
 

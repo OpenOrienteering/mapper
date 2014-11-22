@@ -212,7 +212,7 @@ void MapView::removeMapWidget(MapWidget* widget)
 			return;
 		}
 	}
-	assert(false);
+	Q_ASSERT(false);
 	
 	map->removeMapWidget(widget);
 }

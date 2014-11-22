@@ -98,7 +98,7 @@ void DrawPointTool::mouseMove()
 			if (preview_object->getSymbol() != point)
 			{
 				bool success = preview_object->setSymbol(point, true);
-				assert(success);
+				Q_ASSERT(success);
 			}
 		}
 		

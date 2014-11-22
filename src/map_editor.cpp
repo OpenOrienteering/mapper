@@ -276,7 +276,7 @@ MapEditorTool* MapEditorController::getDefaultDrawToolForSymbol(const Symbol* sy
 	else if (symbol->getType() == Symbol::Text)
 		return new DrawTextTool(this, draw_text_act);
 	else
-		assert(false);
+		Q_ASSERT(false);
 	return NULL;
 }
 
@@ -346,7 +346,7 @@ void MapEditorController::setEditorActivity(MapEditorActivity* new_activity)
 
 void MapEditorController::addTemplatePositionDockWidget(Template* temp)
 {
-	assert(!existsTemplatePositionDockWidget(temp));
+	Q_ASSERT(!existsTemplatePositionDockWidget(temp));
 	TemplatePositionDockWidget* dock_widget = new TemplatePositionDockWidget(temp, this, window);
 	addFloatingDockWidget(dock_widget);
 	template_position_widgets.insert(temp, dock_widget);
@@ -358,7 +358,7 @@ void MapEditorController::removeTemplatePositionDockWidget(Template* temp)
 	
 	delete getTemplatePositionDockWidget(temp);
 	int num_deleted = template_position_widgets.remove(temp);
-	assert(num_deleted == 1);
+	Q_ASSERT(num_deleted == 1);
 }
 
 void MapEditorController::showPopupWidget(QWidget* child_widget, const QString& title)

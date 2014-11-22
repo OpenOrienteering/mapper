@@ -20,8 +20,6 @@
 
 #include "map_dialog_new.h"
 
-#include <cassert>
-
 #include <QtWidgets>
 #include <QDir>
 #include <QSettings>
@@ -105,7 +103,7 @@ QString NewMapDialog::getSelectedSymbolSetPath() const
 	if (! item || ! item->data(Qt::UserRole).isValid())
 	{
 		// FIXME: add proper error handling for release builds, or remove.
-		assert(false);
+		Q_ASSERT(false);
 		return "";
 	}
 

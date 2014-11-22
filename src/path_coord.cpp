@@ -20,8 +20,6 @@
 
 #include "path_coord.h"
 
-#include <cassert>
-
 #include "symbol_line.h"
 
 const float PathCoord::bezier_error = 0.005f;
@@ -95,7 +93,7 @@ PathCoord PathCoord::findPathCoordForCoorinate(const PathCoordVector* path_coord
 		else if (path_coords->at(i).param == 1 && index > path_coords->at(i).index)
 			return path_coords->at(i);
 	}
-	assert(false);
+	Q_ASSERT(false);
 	return path_coords->at(0);
 }
 void PathCoord::curveToPathCoordRec(MapCoordF c0, MapCoordF c1, MapCoordF c2, MapCoordF c3, int coord_index, float max_error, float max_segment_len, PathCoordVector* path_coords, float p0, float p1)
@@ -162,15 +160,15 @@ void PathCoord::calculatePositionAt(const MapCoordVector& flags, const MapCoordV
 		else if (flags[index].isCurveStart())
 		{
 			float factor = (length - path_coords[i-1].clen) / (path_coords[i].clen - path_coords[i-1].clen);
-			//assert(factor >= -0.01f && factor <= 1.01f); happens when using large break lengths as these are not adjusted
+			//Q_ASSERT(factor >= -0.01f && factor <= 1.01f); happens when using large break lengths as these are not adjusted
 			if (factor > 1)
 				factor = 1;
 			else if (factor < 0)
 				factor = 0;
 			float prev_param = (path_coords[i-1].index == path_coords[i].index) ? path_coords[i-1].param : 0;
-			assert(prev_param <= path_coords[i].param);
+			Q_ASSERT(prev_param <= path_coords[i].param);
 			float p = prev_param + (path_coords[i].param - prev_param) * factor;
-			assert(p >= 0 && p <= 1);
+			Q_ASSERT(p >= 0 && p <= 1);
 			MapCoordF o0, o1, o3, o4;
 			if (index < (int)flags.size() - 3)
 				splitBezierCurve(coords[index], coords[index+1], coords[index+2], coords[index+3], p, o0, o1, *out_pos, o3, o4);
@@ -187,7 +185,7 @@ void PathCoord::calculatePositionAt(const MapCoordVector& flags, const MapCoordV
 		else
 		{
 			float factor = (length - path_coords[i-1].clen) / (path_coords[i].clen - path_coords[i-1].clen);
-			//assert(factor >= -0.01f && factor <= 1.01f); happens when using large break lengths as these are not adjusted
+			//Q_ASSERT(factor >= -0.01f && factor <= 1.01f); happens when using large break lengths as these are not adjusted
 			if (factor > 1)
 				factor = 1;
 			else if (factor < 0)
@@ -206,7 +204,7 @@ void PathCoord::calculatePositionAt(const MapCoordVector& flags, const MapCoordV
 		return;
 	}
 	
-	//assert(length < path_coords[path_coords.size() - 1].clen + 0.01f); perhaps same problem as the commented assert above?
+	//Q_ASSERT(length < path_coords[path_coords.size() - 1].clen + 0.01f); perhaps same problem as the commented assert above?
 	*out_pos = path_coords[path_coords.size() - 1].pos;
 	if (out_right_vector)
 	{
@@ -306,7 +304,7 @@ MapCoordF PathCoord::calculateTangent(const MapCoordVector& coords, int i, bool 
 	MapCoordF tangent;
 	if (backward)
 	{
-		//assert(i >= 1);
+		//Q_ASSERT(i >= 1);
 		int k = i-1;
 		for (; k >= 0; --k)
 		{
@@ -338,7 +336,7 @@ MapCoordF PathCoord::calculateTangent(const MapCoordVector& coords, int i, bool 
 	else
 	{
 		int size = (int)coords.size();
-		//assert(i < size - 1);
+		//Q_ASSERT(i < size - 1);
 		int k = i+1;
 		for (; k < size; ++k)
 		{
@@ -386,7 +384,7 @@ MapCoordF PathCoord::calculateIncomingTangent(const MapCoordVectorF& coords, boo
 {
 	ok = true;
 	MapCoordF tangent;
-	//assert(i >= 1);
+	//Q_ASSERT(i >= 1);
 	for (int k = i-1; k >= 0; --k)
 	{
 		tangent = MapCoordF(coords[i].getX() - coords[k].getX(), coords[i].getY() - coords[k].getY());
@@ -414,7 +412,7 @@ MapCoordF PathCoord::calculateOutgoingTangent(const MapCoordVectorF& coords, boo
 	ok = true;
 	MapCoordF tangent;
 	int size = (int)coords.size();
-	//assert(i < size - 1);
+	//Q_ASSERT(i < size - 1);
 	for (int k = i+1; k < size; ++k)
 	{
 		tangent = MapCoordF(coords[k].getX() - coords[i].getX(), coords[k].getY() - coords[i].getY());

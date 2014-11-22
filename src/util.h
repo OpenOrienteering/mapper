@@ -139,7 +139,7 @@ namespace Util
 		rotation = fmod(1.0 * rotation, M_PI);
 		if (rotation < 0)
 			rotation = M_PI + rotation;
-		assert(rotation >= 0 && rotation <= M_PI);
+		Q_ASSERT(rotation >= 0 && rotation <= M_PI);
 		
 		if (qAbs(rotation - M_PI/2) < 0.0001)
 		{

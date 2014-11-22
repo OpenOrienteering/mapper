@@ -240,7 +240,7 @@ public:
 	}
 	inline MapCoordF mapToTemplateOther(MapCoordF coords) const	// normally not needed - this uses the other transformation parameters
 	{
-		assert(!is_georeferenced);
+		Q_ASSERT(!is_georeferenced);
 		// SLOW - cache this matrix if needed often
 		Matrix map_to_template_other;
 		template_to_map_other.invert(map_to_template_other);
@@ -264,7 +264,7 @@ public:
 	}
 	inline MapCoordF templateToMapOther(MapCoordF coords) const	// normally not needed - this uses the other transformation parameters
 	{
-		assert(!is_georeferenced);
+		Q_ASSERT(!is_georeferenced);
 		return MapCoordF(template_to_map_other.get(0, 0) * coords.getX() + template_to_map_other.get(0, 1) * coords.getY() + template_to_map_other.get(0, 2),
 						 template_to_map_other.get(1, 0) * coords.getX() + template_to_map_other.get(1, 1) * coords.getY() + template_to_map_other.get(1, 2));
 	}

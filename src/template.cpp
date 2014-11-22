@@ -104,7 +104,7 @@ Template::Template(const QString& path, Map* map) : map(map)
 }
 Template::~Template()
 {
-	assert(template_state != Loaded);
+	Q_ASSERT(template_state != Loaded);
 }
 
 Template* Template::duplicate() const
@@ -449,7 +449,7 @@ bool Template::preLoadConfiguration(QWidget* dialog_parent)
 
 bool Template::loadTemplateFile(bool configuring)
 {
-	assert(template_state != Loaded);
+	Q_ASSERT(template_state != Loaded);
 	
 	const State old_state = template_state;
 	bool result = QFileInfo(template_path).exists();
@@ -495,7 +495,7 @@ bool Template::postLoadConfiguration(QWidget* dialog_parent, bool& out_center_in
 
 void Template::unloadTemplateFile()
 {
-	assert(template_state == Loaded);
+	Q_ASSERT(template_state == Loaded);
 	if (hasUnsavedChanges())
 	{
 		// The changes are lost
@@ -515,13 +515,13 @@ void Template::applyTemplateTransform(QPainter* painter) const
 
 QRectF Template::getTemplateExtent() const
 {
-	assert(!is_georeferenced);
+	Q_ASSERT(!is_georeferenced);
 	return infinteRectF();
 }
 
 void Template::scale(double factor, const MapCoord& center)
 {
-	assert(!is_georeferenced);
+	Q_ASSERT(!is_georeferenced);
 	setTemplateX(qRound64(center.rawX() + factor * (getTemplateX() - center.rawX()) ));
 	setTemplateY(qRound64(center.rawY() + factor * (getTemplateY() - center.rawY()) ));
 	setTemplateScaleX(factor * getTemplateScaleX());
@@ -530,7 +530,7 @@ void Template::scale(double factor, const MapCoord& center)
 
 void Template::rotate(double rotation, const MapCoord& center)
 {
-	assert(!is_georeferenced);
+	Q_ASSERT(!is_georeferenced);
 	
 	setTemplateRotation(getTemplateRotation() + rotation);
 	
@@ -564,8 +564,8 @@ QRectF Template::calculateTemplateBoundingBox()
 
 void Template::drawOntoTemplate(MapCoordF* coords, int num_coords, QColor color, float width, QRectF map_bbox)
 {
-	assert(canBeDrawnOnto());
-	assert(num_coords > 1);
+	Q_ASSERT(canBeDrawnOnto());
+	Q_ASSERT(num_coords > 1);
 	
 	if (!map_bbox.isValid())
 	{
@@ -591,7 +591,7 @@ void Template::drawOntoTemplateUndo(bool redo)
 
 void Template::addPassPoint(const PassPoint& point, int pos)
 {
-	assert(!is_georeferenced);
+	Q_ASSERT(!is_georeferenced);
 	passpoints.insert(passpoints.begin() + pos, point);
 }
 void Template::deletePassPoint(int pos)
@@ -607,7 +607,7 @@ void Template::clearPassPoints()
 
 void Template::switchTransforms()
 {
-	assert(!is_georeferenced);
+	Q_ASSERT(!is_georeferenced);
 	setTemplateAreaDirty();
 	
 	TemplateTransform temp = transform;
@@ -622,12 +622,12 @@ void Template::switchTransforms()
 }
 void Template::getTransform(TemplateTransform& out) const
 {
-	assert(!is_georeferenced);
+	Q_ASSERT(!is_georeferenced);
 	out = transform;
 }
 void Template::setTransform(const TemplateTransform& transform)
 {
-	assert(!is_georeferenced);
+	Q_ASSERT(!is_georeferenced);
 	setTemplateAreaDirty();
 	
 	this->transform = transform;
@@ -638,12 +638,12 @@ void Template::setTransform(const TemplateTransform& transform)
 }
 void Template::getOtherTransform(TemplateTransform& out) const
 {
-	assert(!is_georeferenced);
+	Q_ASSERT(!is_georeferenced);
 	out = other_transform;
 }
 void Template::setOtherTransform(const TemplateTransform& transform)
 {
-	assert(!is_georeferenced);
+	Q_ASSERT(!is_georeferenced);
 	other_transform = transform;
 }
 

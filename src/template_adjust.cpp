@@ -280,7 +280,7 @@ void TemplateAdjustWidget::addPassPoint(MapCoordF src, MapCoordF dest)
 }
 void TemplateAdjustWidget::deletePassPoint(int number)
 {
-	assert(number >= 0 && number < temp->getNumPassPoints());
+	Q_ASSERT(number >= 0 && number < temp->getNumPassPoints());
 	
 	temp->deletePassPoint(number);
 	table->removeRow(number);

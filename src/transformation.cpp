@@ -214,7 +214,7 @@ bool PassPointList::estimateSimilarityTransformation(TemplateTransform* transfor
 bool PassPointList::estimateNonIsometricSimilarityTransform(QTransform* out)
 {
 	int num_pass_points = (int)size();
-	assert(num_pass_points >= 3);
+	Q_ASSERT(num_pass_points >= 3);
 	
 	// Create linear equation system and solve using the pseuo inverse
 	

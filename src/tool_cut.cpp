@@ -219,7 +219,7 @@ bool CutTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidg
 		if (findEditPoint(split_pos, edit_object, map_coord, (int)Symbol::Line, 0, widget))
 		{
 			if (edit_object->getType() != Object::Path)
-				assert(!"TODO: make this work for non-path objects");
+				Q_ASSERT(!"TODO: make this work for non-path objects");
 			split_object = reinterpret_cast<PathObject*>(edit_object);
 			
 			MapPart* part = map->getCurrentPart();
@@ -439,7 +439,7 @@ bool CutTool::findEditPoint(PathCoord& out_edit_point, PathObject*& out_edit_obj
 		// Hovering over a point of a line
 		if (hover_object->getType() != Object::Path)
 		{
-			assert(!"TODO: make this work for non-path objects");
+			Q_ASSERT(!"TODO: make this work for non-path objects");
 		}
 		PathObject* path = reinterpret_cast<PathObject*>(hover_object);
 		out_edit_point = PathCoord::findPathCoordForCoorinate(&path->getPathCoordinateVector(), hover_point);
@@ -456,7 +456,7 @@ bool CutTool::findEditPoint(PathCoord& out_edit_point, PathObject*& out_edit_obj
 				continue;
 			if ((*it)->getType() != Object::Path)
 			{
-				assert(!"TODO: make this work for non-path objects");
+				Q_ASSERT(!"TODO: make this work for non-path objects");
 			}
 			
 			PathObject* path = reinterpret_cast<PathObject*>(*it);
@@ -575,7 +575,7 @@ void CutTool::pathFinished(PathObject* split_path)
 		return;
 	}
 	
-	assert(split_path->getNumParts() == 1);
+	Q_ASSERT(split_path->getNumParts() == 1);
 	split_path->getPart(0).setClosed(false);
 	split_path->setCoordinate(split_path->getCoordinateCount() - 1, end_path_coord.pos.toMapCoord());
 	

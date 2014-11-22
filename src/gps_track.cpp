@@ -272,7 +272,7 @@ int Track::getNumSegments() const
 
 int Track::getSegmentPointCount(int segment_number) const
 {
-	assert(segment_number >= 0 && segment_number < (int)segment_starts.size());
+	Q_ASSERT(segment_number >= 0 && segment_number < (int)segment_starts.size());
 	if (segment_number == (int)segment_starts.size() - 1)
 		return segment_points.size() - segment_starts[segment_number];
 	else
@@ -281,7 +281,7 @@ int Track::getSegmentPointCount(int segment_number) const
 
 const TrackPoint& Track::getSegmentPoint(int segment_number, int point_number) const
 {
-	assert(segment_number >= 0 && segment_number < (int)segment_starts.size());
+	Q_ASSERT(segment_number >= 0 && segment_number < (int)segment_starts.size());
 	return segment_points[segment_starts[segment_number] + point_number];
 }
 

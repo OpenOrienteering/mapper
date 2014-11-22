@@ -262,8 +262,8 @@ int FillTool::traceBoundary(QImage image, QPoint start_pixel, QPoint test_pixel,
 	out_boundary.clear();
 	out_boundary.reserve(4096);
 	out_boundary.push_back(test_pixel);
-	assert(qAlpha(image.pixel(start_pixel)) == 0);
-	assert(qAlpha(image.pixel(test_pixel)) > 0);
+	Q_ASSERT(qAlpha(image.pixel(start_pixel)) == 0);
+	Q_ASSERT(qAlpha(image.pixel(test_pixel)) > 0);
 	
 	// Uncomment this and below references to debugImage to generate path visualizations
 // 	QImage debugImage = image.copy();

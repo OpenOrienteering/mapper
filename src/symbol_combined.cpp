@@ -492,7 +492,7 @@ void CombinedSymbolSettings::editClicked(int index)
 
 void CombinedSymbolSettings::reset(Symbol* symbol)
 {
-	assert(symbol->getType() == Symbol::Combined);
+	Q_ASSERT(symbol->getType() == Symbol::Combined);
 	
 	SymbolPropertiesWidget::reset(symbol);
 	

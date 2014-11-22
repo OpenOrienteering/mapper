@@ -267,7 +267,7 @@ void MapEditorTool::startEditingSelection(MapRenderables& old_renderables, std::
 
 void MapEditorTool::resetEditedObjects(std::vector< Object* >* undo_duplicates)
 {
-	assert(undo_duplicates);
+	Q_ASSERT(undo_duplicates);
 	Map* map = editor->getMap();
 	
 	size_t i = 0;

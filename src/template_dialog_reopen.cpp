@@ -133,7 +133,7 @@ void ReopenTemplateDialog::OpenTemplateList::dropEvent(QDropEvent* event)
 		else
 			in_front = true;
 	}
-	assert(target_pos <= dialog->map->getNumTemplates());
+	Q_ASSERT(target_pos <= dialog->map->getNumTemplates());
 	
 	if (!in_front)
 		dialog->map->setFirstFrontTemplate(dialog->map->getFirstFrontTemplate() + 1);

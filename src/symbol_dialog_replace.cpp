@@ -20,8 +20,6 @@
 
 #include "symbol_dialog_replace.h"
 
-#include <cassert>
-
 #include <QtWidgets>
 #include <QSet>
 

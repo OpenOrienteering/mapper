@@ -21,7 +21,6 @@
 #ifndef _OPENORIENTEERING_MAP_COORD_H_
 #define _OPENORIENTEERING_MAP_COORD_H_
 
-#include <cassert>
 #include <cmath>
 #include <vector>
 
@@ -207,7 +206,7 @@ public:
 	/** Divide by scalar factor */
 	inline MapCoord operator/ (const double scalar) const
 	{
-		assert(scalar != 0);
+		Q_ASSERT(scalar != 0);
 		MapCoord out(*this);
 		out.setX(out.xd() / scalar);
 		out.setY(out.yd() / scalar);
@@ -523,7 +522,7 @@ public:
 	/** Divide by a scalar */
 	inline MapCoordF operator/ (const double scalar) const
 	{
-		assert(scalar != 0);
+		Q_ASSERT(scalar != 0);
 		return MapCoordF(x/scalar, y/scalar);
 	}
 	/** Component-wise addition */
@@ -582,7 +581,7 @@ public:
 	/** Divide by a scalar */
 	inline MapCoordF& operator/= (const double scalar)
 	{
-		assert(scalar != 0);
+		Q_ASSERT(scalar != 0);
 		x /= scalar;
 		y /= scalar;
 		return *this;

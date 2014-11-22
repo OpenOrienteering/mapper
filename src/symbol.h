@@ -239,9 +239,9 @@ public:
 	/** Returns the symbol number as string. */
     QString getNumberAsString() const;
 	/** Returns the i-th component of the symbol number as int. */
-	inline int getNumberComponent(int i) const {assert(i >= 0 && i < number_components); return number[i];}
+	inline int getNumberComponent(int i) const {Q_ASSERT(i >= 0 && i < number_components); return number[i];}
 	/** Sets the i-th component of the symbol number. */
-	inline void setNumberComponent(int i, int new_number) {assert(i >= 0 && i < number_components); number[i] = new_number;}
+	inline void setNumberComponent(int i, int new_number) {Q_ASSERT(i >= 0 && i < number_components); number[i] = new_number;}
 	
 	/** Returns the symbol description. */
 	inline const QString& getDescription() const {return description;}

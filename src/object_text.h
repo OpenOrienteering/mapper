@@ -21,7 +21,6 @@
 #ifndef _OPENORIENTEERING_OBJECT_TEXT_H_
 #define _OPENORIENTEERING_OBJECT_TEXT_H_
 
-#include <cassert>
 #include <vector>
 
 #include <QString>
@@ -187,12 +186,12 @@ public:
 	/** Returns the width of the word wrap box.
 	 *  The text object must have a specified size.
 	 */
-	inline double getBoxWidth() const {assert(!hasSingleAnchor()); return coords[1].xd();}
+	inline double getBoxWidth() const {Q_ASSERT(!hasSingleAnchor()); return coords[1].xd();}
 	
 	/** Returns the height of the word wrap box.
 	 *  The text object must have a specified size.
 	 */
-	inline double getBoxHeight() const {assert(!hasSingleAnchor()); return coords[1].yd();}
+	inline double getBoxHeight() const {Q_ASSERT(!hasSingleAnchor()); return coords[1].yd();}
 	
 	
 	/**

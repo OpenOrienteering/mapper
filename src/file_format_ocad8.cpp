@@ -530,7 +530,7 @@ Symbol *OCAD8FileImport::importLineSymbol(const OCADLineSymbol *ocad_symbol)
 	// Border lines
 	if (has_border_line)
 	{
-		assert(line_for_borders);
+		Q_ASSERT(line_for_borders);
 		line_for_borders->have_border_lines = true;
 		LineSymbolBorder& border = line_for_borders->getBorder();
 		LineSymbolBorder& right_border = line_for_borders->getRightBorder();
@@ -1635,7 +1635,7 @@ void OCAD8FileExport::doExport() throw (FileFormatException)
 		else if (symbol->getType() == Symbol::Combined)
 			; // This is done as a second pass to ensure that all dependencies are added to the symbol_index
 		else
-			assert(false);
+			Q_ASSERT(false);
 		
 		if (index >= 0)
 		{
@@ -1984,7 +1984,7 @@ s16 OCAD8FileExport::exportSubPattern(const Object* object, const Symbol* symbol
 		num_coords += 2 + element->npts;
 	}
 	else
-		assert(false);
+		Q_ASSERT(false);
 	return num_coords;
 }
 
@@ -2004,7 +2004,7 @@ s16 OCAD8FileExport::exportPointSymbol(const PointSymbol* point)
 	
 	OCADPoint* pattern_buffer = ocad_symbol->pts;
 	exportPattern(point, &pattern_buffer);
-	assert((u8*)ocad_symbol + data_size == (u8*)pattern_buffer);
+	Q_ASSERT((u8*)ocad_symbol + data_size == (u8*)pattern_buffer);
 	return ocad_symbol->number;
 }
 
@@ -2160,7 +2160,7 @@ s16 OCAD8FileExport::exportLineSymbol(const LineSymbol* line)
 	// End symbol
 	ocad_symbol->senpts = exportPattern(line->getEndSymbol(), &pattern_buffer);
 	
-	assert((u8*)ocad_symbol + data_size == (u8*)pattern_buffer);
+	Q_ASSERT((u8*)ocad_symbol + data_size == (u8*)pattern_buffer);
 	return ocad_symbol->number;
 }
 
@@ -2260,7 +2260,7 @@ s16 OCAD8FileExport::exportAreaSymbol(const AreaSymbol* area)
 	{
 		OCADPoint* pattern_buffer = ocad_symbol->pts;
 		ocad_symbol->npts = exportPattern(point_pattern, &pattern_buffer);
-		assert((u8*)ocad_symbol + data_size == (u8*)pattern_buffer);
+		Q_ASSERT((u8*)ocad_symbol + data_size == (u8*)pattern_buffer);
 	}
 	return ocad_symbol->number;
 }
@@ -2318,7 +2318,7 @@ s16 OCAD8FileExport::exportTextSymbol(const TextSymbol* text)
 			ocad_symbol->fdpts = convertSize(text->getFramingLineHalfWidth());
 		}
 		else
-			assert(false);
+			Q_ASSERT(false);
 	}
 	
 	return ocad_symbol->number;
@@ -2364,7 +2364,7 @@ std::set< s16 > OCAD8FileExport::exportCombinedSymbol(const CombinedSymbol* comb
 			else if (part->getType() == Symbol::Area)
 				index = exportAreaSymbol(part->asArea());
 			else
-				assert(false);
+				Q_ASSERT(false);
 			result.insert(index);
 		}
 	}
@@ -2572,7 +2572,7 @@ s16 OCAD8FileExport::getPointSymbolExtent(const PointSymbol* symbol)
 
 void OCAD8FileExport::convertPascalString(const QString& text, char* buffer, int buffer_size)
 {
-	assert(buffer_size <= 256);		// not possible to store a bigger length in the first byte
+	Q_ASSERT(buffer_size <= 256);		// not possible to store a bigger length in the first byte
 	int max_size = buffer_size - 1;
 	
 	if (text.length() > max_size)

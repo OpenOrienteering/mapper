@@ -22,7 +22,6 @@
 #define _WORDS_MATRIX_H_
 
 #include <cstring>
-#include <cassert>
 #include <cstdio>
 #include <cmath>
 
@@ -128,7 +127,7 @@ public:
 	/** Exchanges the rows with indices a and b. */
 	void swapRows(int a, int b)
 	{
-		assert(a != b);
+		Q_ASSERT(a != b);
 		for (int i = 0; i < m; ++i)
 		{
 			double temp = get(a, i);
@@ -140,7 +139,7 @@ public:
 	/** Component-wise subtraction. */
 	void subtract(const Matrix& b, Matrix& out) const
 	{
-		assert(n == b.n && m == b.m);
+		Q_ASSERT(n == b.n && m == b.m);
 		out.setSize(n, m);
 		for (int i = 0; i < n*m; ++i)
 			out.d[i] = d[i] - b.d[i];
@@ -148,7 +147,7 @@ public:
 	/** Component-wise addition. */
 	void add(const Matrix& b, Matrix& out) const
 	{
-		assert(n == b.n && m == b.m);
+		Q_ASSERT(n == b.n && m == b.m);
 		out.setSize(n, m);
 		for (int i = 0; i < n*m; ++i)
 			out.d[i] = d[i] + b.d[i];
@@ -163,7 +162,7 @@ public:
 	/** Matrix multiplication. */
 	void multiply(const Matrix& b, Matrix& out) const
 	{
-		assert(m == b.n);
+		Q_ASSERT(m == b.n);
 		out.setSize(n, b.m);
 		out.setTo(0);
 		
@@ -175,7 +174,7 @@ public:
 	/** Matrix transpose. */
 	void transpose(Matrix& out)
 	{
-		assert(this != &out);
+		Q_ASSERT(this != &out);
 		out.setSize(m, n);
 		for (int i = 0; i < n; ++i)
 			for (int j = 0; j < m; ++j)
@@ -226,7 +225,7 @@ public:
 		if (std::isnan(result))
 		{
 			print();
-			assert(false);
+			Q_ASSERT(false);
 		}
 		
 		return result;
