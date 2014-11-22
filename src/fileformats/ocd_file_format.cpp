@@ -1869,29 +1869,26 @@ void OcdFileImport::import(bool load_symbols_only) throw (FileFormatException)
 	{
 		case 6:
 		case 7:
+			// We keep the following existing translation just in case
+			// we add support for version 6/7 to the new importer.
+			/* addWarning( */
+				tr("Untested file importer for format: OCD %1").arg(version)
+			/* ) */;
 			importImplementation< Ocd::FormatLegacyImporter >(load_symbols_only);
 			break;
 		case 8:
 			if (Settings::getInstance().getSetting(Settings::General_NewOcd8Implementation).toBool())
-			{
-				addWarning(tr("Untested file importer for format: OCD %1").arg(version));
 				importImplementation< Ocd::FormatV8 >(load_symbols_only);
-			}
 			else
-			{
 				importImplementation< Ocd::FormatLegacyImporter >(load_symbols_only);
-			}
 			break;
 		case 9:
-			addWarning(tr("Untested file importer for format: OCD %1").arg(version));
 			importImplementation< Ocd::FormatV9 >(load_symbols_only);
 			break;
 		case 10:
-			addWarning(tr("Untested file importer for format: OCD %1").arg(version));
 			importImplementation< Ocd::FormatV10 >(load_symbols_only);
 			break;
 		case 11:
-			addWarning(tr("Untested file importer for format: OCD %1").arg(version));
 			importImplementation< Ocd::FormatV11 >(load_symbols_only);
 			break;
 		default:
