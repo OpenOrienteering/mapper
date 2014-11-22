@@ -922,9 +922,11 @@ Symbol* OcdFileImport::importLineSymbol(const S& ocd_symbol)
 	}
 	
 	// Import a 'double' line?
-	bool has_border_line = ocd_symbol.double_left_width > 0 || ocd_symbol.double_right_width > 0;
+	bool has_border_line =
+	        (ocd_symbol.double_mode != 0) &&
+	        (ocd_symbol.double_left_width > 0 || ocd_symbol.double_right_width > 0);
 	OcdImportedLineSymbol *double_line = NULL;
-	if ( ocd_symbol.double_mode != 0 &&
+	if ( has_border_line &&
 		(ocd_symbol.double_flags & S::DoubleFillColorOn || (has_border_line && !line_for_borders)))
 	{
 		double_line = new OcdImportedLineSymbol();
@@ -1074,6 +1076,7 @@ Symbol* OcdFileImport::importLineSymbol(const S& ocd_symbol)
 			framing_line->setProtected(false);
 		}
 		full_line->setNumParts(part);
+		addSymbolWarning(symbol_line, tr("This symbol cannot be saved as a proper OCD symbol again."));
 		return full_line;
 	}
 }
