@@ -30,6 +30,7 @@
 #include <qmath.h>
 #include <QMessageBox>
 #include <QPainter>
+#include <QSaveFile>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
@@ -552,32 +553,6 @@ bool Map::exportTo(const QString& path, MapEditorController* map_editor, const F
 		return false;
 	}
 	
-	// If the given file exists already, instead of overwriting the old file directly which
-	// could lead to data loss if the program crashes while exporting, find a free temporary
-	// filename, export to this path first and copy this over the old file on success.
-	QString temp_path;
-	if (QFile::exists(path))
-	{
-		int num_attempts = 0;
-		const int max_attempts = 100;
-		do
-		{
-			temp_path = path + ".";
-			for (int i = 0; i < 6; ++i)
-				temp_path += 'A' + (qrand() % ('Z' - 'A' + 1));
-			++num_attempts;
-		} while (num_attempts < max_attempts && QFile::exists(temp_path));
-		if (num_attempts == max_attempts && QFile::exists(temp_path))
-			temp_path = QString();
-	}
-	
-	QFile file(temp_path.isEmpty() ? path : temp_path);
-	if (!file.open(QIODevice::WriteOnly))
-	{
-		QMessageBox::warning(NULL, tr("Error"), tr("File does not exist or insufficient permissions to open:\n%1").arg(path));
-		return false;
-	}
-	
 	// Update the relative paths of templates
 	QDir map_dir = QFileInfo(path).absoluteDir();
 	for (int i = 0; i < getNumTemplates(); ++i)
@@ -597,46 +572,50 @@ bool Map::exportTo(const QString& path, MapEditorController* map_editor, const F
 			temp->setTemplateRelativePath(map_dir.relativeFilePath(temp->getTemplatePath()));
 	}
 	
-	try
+	QSaveFile file(path);
+	QScopedPointer<Exporter> exporter(format->createExporter(&file, this, map_editor->main_view));
+	bool success = false;
+	if (file.open(QIODevice::WriteOnly))
 	{
-		QScopedPointer<Exporter> exporter(format->createExporter(&file, this, map_editor->main_view));
-		exporter->doExport();
-		
-		// Display any warnings.
-		if (!exporter->warnings().empty())
+		try
 		{
-			QString warnings = "";
-			for (std::vector<QString>::const_iterator it = exporter->warnings().begin(); it != exporter->warnings().end(); ++it) {
-				if (!warnings.isEmpty())
-					warnings += '\n';
-				warnings += *it;
-			}
-			QMessageBox msgBox(QMessageBox::Warning, tr("Warning"), tr("The map export generated warnings."), QMessageBox::Ok);
-			msgBox.setDetailedText(warnings);
-			msgBox.exec();
+			exporter->doExport();
 		}
-	}
-	catch (std::exception &e)
-	{
-		file.close();
+		catch (std::exception &e)
+		{
+			file.cancelWriting();
+			const QString error = QString::fromLocal8Bit(e.what());
+			QMessageBox::warning(NULL, tr("Error"), tr("Internal error while saving:\n%1").arg(error));
+			return false;
+		}
 		
-		QMessageBox::warning(NULL, tr("Error"), tr("Internal error while saving:\n%1").arg(QString::fromLocal8Bit(e.what())));
-		if (temp_path.isEmpty())
-			QFile::remove(path);
-		else
-			QFile::remove(temp_path);
-		
-		return false;
+		success = file.commit();
 	}
 	
-	file.close();
-	if (!temp_path.isEmpty())
+	if (!success)
 	{
-		QFile::remove(path);
-		QFile::rename(temp_path, path);
+		QMessageBox::warning(
+		  NULL,
+		  tr("Error"),
+		  /** @todo: Switch to the latter when translated. */ true ?
+		  tr("Cannot open file:\n%1\n\n%2").arg(path).arg(file.errorString()) :
+		  tr("Cannot save file\n%1:\n%2")
+		);
+	}
+	else if (!exporter->warnings().empty())
+	{
+		QString warnings = "";
+		for (std::vector<QString>::const_iterator it = exporter->warnings().begin(); it != exporter->warnings().end(); ++it) {
+			if (!warnings.isEmpty())
+				warnings += '\n';
+			warnings += *it;
+		}
+		QMessageBox msgBox(QMessageBox::Warning, tr("Warning"), tr("The map export generated warnings."), QMessageBox::Ok);
+		msgBox.setDetailedText(warnings);
+		msgBox.exec();
 	}
 	
-	return true;
+	return success;
 }
 
 bool Map::loadFrom(const QString& path, QWidget* dialog_parent, MapEditorController* map_editor, bool load_symbols_only, bool show_error_messages)
