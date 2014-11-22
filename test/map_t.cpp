@@ -1,5 +1,5 @@
 /*
- *    Copyright 2013 Kai Pastor
+ *    Copyright 2013,2014 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -51,18 +51,30 @@ void MapTest::specialColorsTest()
 	
 	Map map;               // non-const
 	const Map& cmap(map);  // const
-	QCOMPARE(map.getColor(MapColor::CoveringWhite), (MapColor*)NULL);
+	QCOMPARE(map.getMapColor(MapColor::CoveringWhite), (MapColor*)NULL);
+	QCOMPARE(cmap.getMapColor(MapColor::CoveringWhite), (MapColor*)NULL);
+	QCOMPARE(map.getColor(MapColor::CoveringWhite), Map::getCoveringWhite());
 	QCOMPARE(cmap.getColor(MapColor::CoveringWhite), Map::getCoveringWhite());
-	QCOMPARE(map.getColor(MapColor::CoveringRed), (MapColor*)NULL);
+	QCOMPARE(map.getMapColor(MapColor::CoveringRed), (MapColor*)NULL);
+	QCOMPARE(cmap.getMapColor(MapColor::CoveringRed), (MapColor*)NULL);
+	QCOMPARE(map.getColor(MapColor::CoveringRed), Map::getCoveringRed());
 	QCOMPARE(cmap.getColor(MapColor::CoveringRed), Map::getCoveringRed());
-	QCOMPARE(map.getColor(MapColor::Undefined), (MapColor*)NULL);
+	QCOMPARE(map.getMapColor(MapColor::Undefined), (MapColor*)NULL);
+	QCOMPARE(cmap.getMapColor(MapColor::Undefined), (MapColor*)NULL);
+	QCOMPARE(map.getColor(MapColor::Undefined), Map::getUndefinedColor());
 	QCOMPARE(cmap.getColor(MapColor::Undefined), Map::getUndefinedColor());
-	QCOMPARE(map.getColor(MapColor::Registration), (MapColor*)NULL);
+	QCOMPARE(map.getMapColor(MapColor::Registration), (MapColor*)NULL);
+	QCOMPARE(cmap.getMapColor(MapColor::Registration), (MapColor*)NULL);
+	QCOMPARE(map.getColor(MapColor::Registration), Map::getRegistrationColor());
 	QCOMPARE(cmap.getColor(MapColor::Registration), Map::getRegistrationColor());
 	
+	QCOMPARE(map.getMapColor(MapColor::Reserved), (MapColor*)NULL);
+	QCOMPARE(cmap.getMapColor(MapColor::Reserved), (MapColor*)NULL);
 	QCOMPARE(map.getColor(MapColor::Reserved), (MapColor*)NULL);
 	QCOMPARE(cmap.getColor(MapColor::Reserved), (MapColor*)NULL);
 	
+	QCOMPARE(map.getMapColor(map.getNumColors()), (MapColor*)NULL);
+	QCOMPARE(cmap.getMapColor(cmap.getNumColors()), (MapColor*)NULL);
 	QCOMPARE(map.getColor(map.getNumColors()), (MapColor*)NULL);
 	QCOMPARE(cmap.getColor(cmap.getNumColors()), (MapColor*)NULL);
 }
