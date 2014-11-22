@@ -96,6 +96,10 @@ include_directories("${CMAKE_CURRENT_BINARY_DIR}")
 
 
 # Unit tests
+if(Mapper_ENABLE_CXX11)
+	add_unit_test(cxx11_t)
+	add_dependencies(Mapper_Common cxx11_t)
+endif()
 add_unit_test(autosave_t ../src/core/autosave ../src/settings ../src/util ../src/mapper_resource)
 add_unit_test(georeferencing_t ../src/core/georeferencing ../src/core/latlon ../src/core/crs_template ../src/mapper_resource ../src/file_format)
 add_unit_test(map_color_t ../src/core/map_color)

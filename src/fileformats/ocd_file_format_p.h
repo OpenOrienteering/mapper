@@ -25,6 +25,8 @@
 
 #include <QTextCodec>
 
+#include <cmath>
+
 #include "ocd_types.h"
 #include "../file_import_export.h"
 #include "../object.h"

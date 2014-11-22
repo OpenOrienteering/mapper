@@ -46,8 +46,8 @@ if(NOT CMAKE_BUILD_TYPE)
 endif(NOT CMAKE_BUILD_TYPE)
 
 if(APPLE)
-	SET(Mapper_MACOSX_VERSION "10.6" CACHE STRING
-	  "Minimum Mac OS X version to build for, recommended: 10.6")
+	SET(Mapper_MACOSX_VERSION "10.7" CACHE STRING
+	  "Minimum Mac OS X version to build for, recommended: 10.7")
 endif()
 
 option(Mapper_TRANSLATIONS_EMBEDDED "Embed all translations in the program executable")
@@ -91,6 +91,28 @@ option(Mapper_PACKAGE_LINGUIST  "Build a Qt Linguist package"                   
 mark_as_advanced(Mapper_BUILD_PACKAGE Mapper_PACKAGE_QT Mapper_PACKAGE_ASSISTANT Mapper_PACKAGE_PROJ Mapper_PACKAGE_LINGUIST)
 
 unset(Mapper_PACKAGE_LIBRARIES CACHE) # Legacy
+
+
+# C++11
+
+# This option will be removed as soon as Mapper actually requires C++11.
+option(Mapper_ENABLE_CXX11 "Enable C++11 support" ON)
+mark_as_advanced(Mapper_ENABLE_CXX11)
+
+include(CheckCXXCompilerFlag)
+check_cxx_compiler_flag("-std=c++11" std_cxx11)
+check_cxx_compiler_flag("-std=c++0x" std_cxx0x)
+if(NOT Mapper_ENABLE_CXX11)
+	message(WARNING "Compiler C++11 support (${std_cxx11}/${std_cxx0x}) is not enforced.")
+elseif(std_cxx11)
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+elseif(std_cxx0x)
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
+elseif(CMAKE_COMPILER_IS_GNUXX)
+	message(FATAL_ERROR "The compiler does not support C++11.")
+else()
+	message(FATAL_ERROR "The compiler support for C++11 is not known.")
+endif()
 
 
 # Installation configuration
@@ -227,6 +249,8 @@ else (CMAKE_COMPILER_IS_GNUCXX)
 	set(CMAKE_CXX_FLAGS_DEBUG "-DDEBUG")
 endif (CMAKE_COMPILER_IS_GNUCXX)
 
+add_definitions(-D_USE_MATH_DEFINES)
+
 include_directories(${QT_INCLUDES} ${CMAKE_CURRENT_BINARY_DIR} ${PROJ_INCLUDE_DIR})
 
 if(Mapper_DEVELOPMENT_BUILD)
@@ -262,13 +286,9 @@ if(CMAKE_CROSSCOMPILING)
 	add_custom_target(TEST_WARNING ALL
 	  COMMENT "Crosscompiling, skipping all tests")
 	add_dependencies(TEST_WARNING Mapper)
-elseif(Mapper_DEVELOPMENT_BUILD)
+else()
 	enable_testing()
 	add_subdirectory("test")
-else()
-	add_custom_target(TEST_WARNING ALL
-	  COMMENT "Not a development build, skipping all tests")
-	add_dependencies(TEST_WARNING Mapper)
 endif()
 
 install(FILES COPYING 
