@@ -512,12 +512,9 @@ void Map::rotateMap(double rotation, const MapCoord& center, bool adjust_georefe
 	updateAllMapWidgets();
 }
 
-bool Map::saveTo(const QString& path, MapEditorController* map_editor)
+bool Map::saveTo(const QString& path, MapView* view)
 {
-	assert(map_editor && "Preserving the widget&view information without retrieving it from a MapEditorController is not implemented yet!");
-	
-	bool success = exportTo(path, map_editor);
-	
+	bool success = exportTo(path, view);
 	if (success)
 	{
 		colors_dirty = false;
@@ -526,15 +523,14 @@ bool Map::saveTo(const QString& path, MapEditorController* map_editor)
 		objects_dirty = false;
 		other_dirty = false;
 		unsaved_changes = false;
-		
 		undoManager().setClean();
 	}
 	return success;
 }
 
-bool Map::exportTo(const QString& path, MapEditorController* map_editor, const FileFormat* format)
+bool Map::exportTo(const QString& path, MapView* view, const FileFormat* format)
 {
-	assert(map_editor && "Preserving the widget&view information without retrieving it from a MapEditorController is not implemented yet!");
+	Q_ASSERT(view && "Saving a file without view information is not supported!");
 	
 	if (!format)
 		format = FileFormats.findFormatForFilename(path);
@@ -573,7 +569,7 @@ bool Map::exportTo(const QString& path, MapEditorController* map_editor, const F
 	}
 	
 	QSaveFile file(path);
-	QScopedPointer<Exporter> exporter(format->createExporter(&file, this, map_editor->main_view));
+	QScopedPointer<Exporter> exporter(format->createExporter(&file, this, view));
 	bool success = false;
 	if (file.open(QIODevice::WriteOnly))
 	{
@@ -618,10 +614,8 @@ bool Map::exportTo(const QString& path, MapEditorController* map_editor, const F
 	return success;
 }
 
-bool Map::loadFrom(const QString& path, QWidget* dialog_parent, MapEditorController* map_editor, bool load_symbols_only, bool show_error_messages)
+bool Map::loadFrom(const QString& path, QWidget* dialog_parent, MapView* view, bool load_symbols_only, bool show_error_messages)
 {
-	MapView *view = new MapView(this);
-
 	// Ensure the file exists and is readable.
 	QFile file(path);
 	if (!file.open(QIODevice::ReadOnly))
@@ -703,13 +697,10 @@ bool Map::loadFrom(const QString& path, QWidget* dialog_parent, MapEditorControl
 		if (import_complete) break;
 	}
 	
-	if (map_editor)
+	if (view)
 	{
 		view->setDragOffset(QPoint(0, 0), false);
-		map_editor->main_view = view;
 	}
-	else
-		delete view;	// TODO: HACK. Better not create the view at all in this case!
 
 	if (!import_complete)
 	{

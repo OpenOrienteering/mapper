@@ -359,10 +359,13 @@ void NativeFileImport::import(bool load_symbols_only) throw (FileFormatException
 
 		// Restore widgets and views
 		if (view)
+		{
 			view->load(stream, version);
+		}
 		else
 		{
-			// TODO
+			MapView tmp(map);
+			tmp.load(stream, version);
 		}
 
 		// Load undo steps

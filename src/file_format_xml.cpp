@@ -774,11 +774,18 @@ void XMLFileImporter::importView()
 	while (xml.readNextStartElement())
 	{
 		if (xml.name() == literal::grid)
+		{
 			map->setGrid(MapGrid().load(xml));
+		}
 		else if (xml.name() == literal::map_view)
-			view->load(xml);
+		{
+			if (view)
+				view->load(xml);
+		}
 		else
+		{
 			xml.skipCurrentElement(); // unsupported
+		}
 	}
 }
 

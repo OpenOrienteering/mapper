@@ -48,7 +48,6 @@ class MapColor;
 class MapColorMap;
 class MapWidget;
 class MapView;
-class MapEditorController;
 class MapPrinterConfig;
 class Symbol;
 class CombinedSymbol;
@@ -113,22 +112,26 @@ public:
 	~Map();
 	
 	/**
-	 * Attempts to save the map to the given file.
-	 * If a MapEditorController is given, the widget positions and MapViews
-	 * stored in the map file are also updated.
+	 * Saves the map to the given file.
+	 * 
+	 * If a MapView is given, is state will be saved.
 	 */
-	bool saveTo(const QString& path, MapEditorController* map_editor = NULL);
+	bool saveTo(const QString& path,
+	            MapView *view);
 	
 	/**
-	 * Attempts to save the map to the given file.
-	 * If a MapEditorController is given, the widget positions and MapViews
-	 * stored in the map file are also updated.
+	 * Exports the map to the given file and format.
+	 * 
+	 * If a MapView is given, is state will be saved.
 	 * If a FileFormat is given, it will be used, otherwise the file format
 	 * is determined from the filename.
+	 * 
 	 * If the map was modified, it will still be considered modified after
-	 * successfully saving a copy.
+	 * successful export.
 	 */
-	bool exportTo(const QString& path, MapEditorController* map_editor = NULL, const FileFormat* format = NULL);
+	bool exportTo(const QString& path,
+	              MapView* view = NULL,
+	              const FileFormat* format = NULL);
 	
 	/**
 	 * Attempts to load the map from the specified path. Returns true on success.
@@ -136,15 +139,14 @@ public:
 	 * @param path The file path to load the map from.
 	 * @param dialog_parent The parent widget for all dialogs.
 	 *     This should never be NULL in a QWidgets application.
-	 * @param map_editor If not NULL, restores that map editor controller.
-	 *     Restores widget positions and MapViews.
+	 * @param view If not NULL, restores this map view.
 	 * @param load_symbols_only Loads only symbols from the chosen file.
 	 *     Useful to load symbol sets.
 	 * @param show_error_messages Whether to show import errors and warnings.
 	 */
 	bool loadFrom(const QString& path,
 	              QWidget* dialog_parent,
-	              MapEditorController* map_editor = NULL,
+	              MapView* view = NULL,
 	              bool load_symbols_only = false, bool show_error_messages = true);
 	
 	/**

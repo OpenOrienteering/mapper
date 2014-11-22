@@ -19,6 +19,7 @@
 
 #include "symbol_set_t.h"
 
+#include "../src/core/map_view.h"
 #include "../src/file_format_xml_p.h"
 #include "../src/map.h"
 #include "../src/symbol_area.h"
@@ -188,12 +189,13 @@ void SymbolSetTool::processExamples()
 	QString source_path = examples_dir.absoluteFilePath(source_filename);
 	
 	Map map;
-	map.loadFrom(source_path, NULL, NULL, false, false);
+	MapView view(&map);
+	map.loadFrom(source_path, NULL, &view, false, false);
 	
 	QString target_filename = QString("%1.omap").arg(name);
 	QFile target_file(examples_dir.absoluteFilePath(target_filename));
 	target_file.open(QFile::WriteOnly);
-	XMLFileExporter exporter(&target_file, &map, NULL);
+	XMLFileExporter exporter(&target_file, &map, &view);
 	exporter.doExport();
 }
 

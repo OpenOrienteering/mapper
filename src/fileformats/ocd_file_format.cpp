@@ -630,24 +630,23 @@ void OcdFileImport::importExtras(const OcdFile< F >& file) throw (FileFormatExce
 template< >
 void OcdFileImport::importView< class Ocd::FormatV8 >(const OcdFile< Ocd::FormatV8 >& file) throw (FileFormatException)
 {
-	Q_ASSERT(view);
-	
-	const Ocd::FileHeaderV8* header = file.header();
-	const Ocd::SetupV8* setup = reinterpret_cast< const Ocd::SetupV8* >(file.byteArray().data() + header->setup_pos);
-	
-	if (setup->zoom >= MapView::zoom_out_limit && setup->zoom <= MapView::zoom_in_limit)
-		view->setZoom(setup->zoom);
-	
-	const MapCoord center = convertOcdPoint(setup->center);
-	view->setPositionX(center.rawX());
-	view->setPositionY(center.rawY());
+	if (view)
+	{
+		const Ocd::FileHeaderV8* header = file.header();
+		const Ocd::SetupV8* setup = reinterpret_cast< const Ocd::SetupV8* >(file.byteArray().data() + header->setup_pos);
+		
+		if (setup->zoom >= MapView::zoom_out_limit && setup->zoom <= MapView::zoom_in_limit)
+			view->setZoom(setup->zoom);
+		
+		const MapCoord center = convertOcdPoint(setup->center);
+		view->setPositionX(center.rawX());
+		view->setPositionY(center.rawY());
+	}
 }
 
 template< class F >
 void OcdFileImport::importView(const OcdFile< F >& file) throw (FileFormatException)
 {
-	Q_ASSERT(view);
-	
 	for (typename OcdFile< F >::StringIndex::iterator it = file.strings().begin(); it != file.strings().end(); ++it)
 	{
 		if (it->type == 1030)
@@ -660,8 +659,6 @@ void OcdFileImport::importView(const OcdFile< F >& file) throw (FileFormatExcept
 
 void OcdFileImport::importView(const QString& param_string)
 {
-	Q_ASSERT(view);
-	
 	const QChar* unicode = param_string.unicode();
 	
 	bool zoom_ok = false;
@@ -700,12 +697,15 @@ void OcdFileImport::importView(const QString& param_string)
 		i = next_i;
 	}
 	
-	view->setPositionX(qRound(offset_x * 1000));
-	view->setPositionY(-qRound(offset_y * 1000));
-	if ( zoom_ok &&
-	     zoom >= MapView::zoom_out_limit && zoom <= MapView::zoom_in_limit )
+	if (view)
 	{
-		view->setZoom(zoom);
+		view->setPositionX(qRound(offset_x * 1000));
+		view->setPositionY(-qRound(offset_y * 1000));
+		if ( zoom_ok &&
+			 zoom >= MapView::zoom_out_limit && zoom <= MapView::zoom_in_limit )
+		{
+			view->setZoom(zoom);
+		}
 	}
 }
 
