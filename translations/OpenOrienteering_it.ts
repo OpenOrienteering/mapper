@@ -79,141 +79,141 @@
 <context>
     <name>AreaSymbolSettings</name>
     <message>
-        <location filename="../src/symbol_area.cpp" line="663"/>
+        <location filename="../src/symbol_area.cpp" line="661"/>
         <source>mm²</source>
         <translation>mm²</translation>
     </message>
     <message>
-        <location filename="../src/symbol_area.cpp" line="664"/>
+        <location filename="../src/symbol_area.cpp" line="662"/>
         <source>Minimum size:</source>
         <translation>Dimensione minima:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_area.cpp" line="671"/>
+        <location filename="../src/symbol_area.cpp" line="669"/>
         <source>Fills</source>
         <translation>Riempie</translation>
     </message>
     <message>
-        <location filename="../src/symbol_area.cpp" line="684"/>
+        <location filename="../src/symbol_area.cpp" line="682"/>
         <source>Line fill</source>
         <translation>Riempimento con linee</translation>
     </message>
     <message>
-        <location filename="../src/symbol_area.cpp" line="685"/>
+        <location filename="../src/symbol_area.cpp" line="683"/>
         <source>Pattern fill</source>
         <translation>Riempimento con motivo</translation>
     </message>
     <message>
-        <location filename="../src/symbol_area.cpp" line="723"/>
-        <location filename="../src/symbol_area.cpp" line="734"/>
-        <location filename="../src/symbol_area.cpp" line="741"/>
-        <location filename="../src/symbol_area.cpp" line="760"/>
-        <location filename="../src/symbol_area.cpp" line="765"/>
+        <location filename="../src/symbol_area.cpp" line="721"/>
+        <location filename="../src/symbol_area.cpp" line="732"/>
+        <location filename="../src/symbol_area.cpp" line="739"/>
+        <location filename="../src/symbol_area.cpp" line="758"/>
+        <location filename="../src/symbol_area.cpp" line="763"/>
         <source>mm</source>
         <translation>mm</translation>
     </message>
     <message>
-        <location filename="../src/symbol_area.cpp" line="738"/>
+        <location filename="../src/symbol_area.cpp" line="736"/>
         <source>Single line</source>
         <translation>Lina Singola</translation>
     </message>
     <message>
-        <location filename="../src/symbol_area.cpp" line="752"/>
+        <location filename="../src/symbol_area.cpp" line="750"/>
         <source>Parallel lines</source>
         <translation>Linee Parallele</translation>
     </message>
     <message>
-        <location filename="../src/symbol_area.cpp" line="754"/>
+        <location filename="../src/symbol_area.cpp" line="752"/>
         <source>Line spacing:</source>
         <translation>Spaziatura linee:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_area.cpp" line="757"/>
+        <location filename="../src/symbol_area.cpp" line="755"/>
         <source>Single row</source>
         <translation>Riga singola</translation>
     </message>
     <message>
-        <location filename="../src/symbol_area.cpp" line="759"/>
+        <location filename="../src/symbol_area.cpp" line="757"/>
         <source>Pattern interval:</source>
         <translation>Passo del mootivo:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_area.cpp" line="764"/>
+        <location filename="../src/symbol_area.cpp" line="762"/>
         <source>Pattern offset:</source>
         <translation>Offset del motivo:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_area.cpp" line="769"/>
+        <location filename="../src/symbol_area.cpp" line="767"/>
         <source>Row offset:</source>
         <translation>Offset della riga:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_area.cpp" line="771"/>
+        <location filename="../src/symbol_area.cpp" line="769"/>
         <source>Parallel rows</source>
         <translation>Righe parallele</translation>
     </message>
     <message>
-        <location filename="../src/symbol_area.cpp" line="773"/>
+        <location filename="../src/symbol_area.cpp" line="771"/>
         <source>Row spacing:</source>
         <translation>Spaziatura rgihe:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_area.cpp" line="779"/>
+        <location filename="../src/symbol_area.cpp" line="777"/>
         <source>Fill rotation</source>
         <translation>Rotazione del riempimento</translation>
     </message>
     <message>
-        <location filename="../src/symbol_area.cpp" line="781"/>
+        <location filename="../src/symbol_area.cpp" line="779"/>
         <source>°</source>
         <translation>°</translation>
     </message>
     <message>
-        <location filename="../src/symbol_area.cpp" line="783"/>
+        <location filename="../src/symbol_area.cpp" line="781"/>
         <source>Angle:</source>
         <translation>Angolo:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_area.cpp" line="785"/>
+        <location filename="../src/symbol_area.cpp" line="783"/>
         <source>adjustable per object</source>
         <translation>Regolabile per oggetto</translation>
     </message>
     <message>
-        <location filename="../src/symbol_area.cpp" line="800"/>
+        <location filename="../src/symbol_area.cpp" line="798"/>
         <source>Area settings</source>
         <translation>Impostazioni area</translation>
     </message>
     <message>
-        <location filename="../src/symbol_area.cpp" line="881"/>
+        <location filename="../src/symbol_area.cpp" line="879"/>
         <source>Pattern fill %1</source>
         <translation>Riempimento con motivo %1</translation>
     </message>
     <message>
-        <location filename="../src/symbol_area.cpp" line="890"/>
+        <location filename="../src/symbol_area.cpp" line="888"/>
         <source>Line fill %1</source>
         <translation>Riempimento con linee %1</translation>
     </message>
     <message>
-        <location filename="../src/symbol_area.cpp" line="907"/>
+        <location filename="../src/symbol_area.cpp" line="905"/>
         <source>No fill selected</source>
         <translation>Nessun riempimeno selezionato</translation>
     </message>
     <message>
-        <location filename="../src/symbol_area.cpp" line="661"/>
+        <location filename="../src/symbol_area.cpp" line="659"/>
         <source>Area color:</source>
         <translation>Color dell&apos;area:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_area.cpp" line="750"/>
+        <location filename="../src/symbol_area.cpp" line="748"/>
         <source>Line offset:</source>
         <translation>Offset di linea:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_area.cpp" line="745"/>
+        <location filename="../src/symbol_area.cpp" line="743"/>
         <source>Line color:</source>
         <translation>Colore linea:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_area.cpp" line="740"/>
+        <location filename="../src/symbol_area.cpp" line="738"/>
         <source>Line width:</source>
         <translation>Spessore linea:</translation>
     </message>
@@ -265,12 +265,12 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="54"/>
         <source>Defines a spot color:</source>
-        <translation>Definisce un colore spot:</translation>
+        <translation>Definisce un colore di calamaio:</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="63"/>
         <source>Mixture of spot colors (screens and overprint):</source>
-        <translation>Miscela di colori spot (telai e sovrastampa):</translation>
+        <translation>Miscela di colori di calamio (telai e sovrastampa):</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="77"/>
@@ -285,13 +285,13 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="82"/>
         <source>Knockout: erases lower colors</source>
-        <translation>Knockout: cancella i colori sottostanti</translation>
+        <translation>Foratura: cancella i colori sottostanti</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="100"/>
         <location filename="../src/gui/color_dialog.cpp" line="157"/>
         <source>Calculate from spot colors</source>
-        <translation>Calcola colore a partire da un colore spot</translation>
+        <translation>Calcola colore a partire da un colore di calamio</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="105"/>
@@ -387,7 +387,7 @@
     <message>
         <location filename="../src/color_dock_widget.cpp" line="48"/>
         <source>Spot color</source>
-        <translation>Colore dello spot</translation>
+        <translation>Colore di calamaio</translation>
     </message>
     <message>
         <location filename="../src/color_dock_widget.cpp" line="48"/>
@@ -2645,18 +2645,18 @@ Premi No per scegliere un differente formato.</translation>
 <context>
     <name>Map</name>
     <message>
-        <location filename="../src/map.cpp" line="543"/>
-        <location filename="../src/map.cpp" line="548"/>
-        <location filename="../src/map.cpp" line="584"/>
-        <location filename="../src/map.cpp" line="595"/>
-        <location filename="../src/map.cpp" line="626"/>
-        <location filename="../src/map.cpp" line="710"/>
-        <location filename="../src/map.cpp" line="730"/>
+        <location filename="../src/map.cpp" line="542"/>
+        <location filename="../src/map.cpp" line="547"/>
+        <location filename="../src/map.cpp" line="583"/>
+        <location filename="../src/map.cpp" line="594"/>
+        <location filename="../src/map.cpp" line="625"/>
+        <location filename="../src/map.cpp" line="709"/>
+        <location filename="../src/map.cpp" line="729"/>
         <source>Error</source>
         <translation>Errore</translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="548"/>
+        <location filename="../src/map.cpp" line="547"/>
         <source>Cannot export the map as
 &quot;%1&quot;
 because saving as %2 (.%3) is not supported.</source>
@@ -2665,7 +2665,7 @@ because saving as %2 (.%3) is not supported.</source>
 perché il salvataggio come %2 (.%3) non è supportato.</translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="543"/>
+        <location filename="../src/map.cpp" line="542"/>
         <source>Cannot export the map as
 &quot;%1&quot;
 because the format is unknown.</source>
@@ -2680,30 +2680,30 @@ causa formato sconosciuto.</translation>
 %1</translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="609"/>
-        <location filename="../src/map.cpp" line="678"/>
+        <location filename="../src/map.cpp" line="608"/>
+        <location filename="../src/map.cpp" line="677"/>
         <source>Warning</source>
         <translation>Attenzione</translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="609"/>
+        <location filename="../src/map.cpp" line="608"/>
         <source>The map export generated warnings.</source>
         <translation>La mappa esportata ha generato warnings (attenzioni).</translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="584"/>
+        <location filename="../src/map.cpp" line="583"/>
         <source>Internal error while saving:
 %1</source>
         <translation>Errore interno mentre veniva salvato:
 %1</translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="679"/>
+        <location filename="../src/map.cpp" line="678"/>
         <source>The map import generated warnings.</source>
         <translation>La mappa importata ha generato avvertimenti (Warnings).</translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="627"/>
+        <location filename="../src/map.cpp" line="626"/>
         <source>Cannot open file:
 %1
 for reading.</source>
@@ -2712,13 +2712,13 @@ for reading.</source>
 in lettura.</translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="641"/>
+        <location filename="../src/map.cpp" line="640"/>
         <source>Invalid file type.</source>
         <translation>Tipo di file non valido.</translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="597"/>
-        <location filename="../src/map.cpp" line="711"/>
+        <location filename="../src/map.cpp" line="596"/>
+        <location filename="../src/map.cpp" line="710"/>
         <source>Cannot open file:
 %1
 
@@ -2729,24 +2729,24 @@ in lettura.</translation>
 %2</translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="598"/>
+        <location filename="../src/map.cpp" line="597"/>
         <source>Cannot save file
 %1:
 %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="730"/>
+        <location filename="../src/map.cpp" line="729"/>
         <source>Nothing to import.</source>
         <translation>Nulla da importare.</translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="737"/>
+        <location filename="../src/map.cpp" line="736"/>
         <source>Question</source>
         <translation>Domanda</translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="738"/>
+        <location filename="../src/map.cpp" line="737"/>
         <source>The scale of the imported data is 1:%1 which is different from this map&apos;s scale of 1:%2.
 
 Rescale the imported data?</source>
@@ -2755,7 +2755,7 @@ Rescale the imported data?</source>
 Riscalatura dei dati importati?</translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="901"/>
+        <location filename="../src/map.cpp" line="900"/>
         <source>default part</source>
         <translation>default part</translation>
     </message>
@@ -4093,58 +4093,58 @@ se disponibile si può zoomare con la rotella del mouse.</translation>
 <context>
     <name>NewMapDialog</name>
     <message>
-        <location filename="../src/map_dialog_new.cpp" line="37"/>
+        <location filename="../src/map_dialog_new.cpp" line="35"/>
         <source>Create new map</source>
         <translation>Crea un nuova mappa</translation>
     </message>
     <message>
-        <location filename="../src/map_dialog_new.cpp" line="39"/>
+        <location filename="../src/map_dialog_new.cpp" line="37"/>
         <source>Choose the scale and symbol set for the new map.</source>
         <translation>Scegli la scala e l&apos;insieme dei simboli per la nuova mappa.</translation>
     </message>
     <message>
-        <location filename="../src/map_dialog_new.cpp" line="41"/>
+        <location filename="../src/map_dialog_new.cpp" line="39"/>
         <source>Scale:  1 : </source>
         <translation>Scala:  1 : </translation>
     </message>
     <message>
-        <location filename="../src/map_dialog_new.cpp" line="46"/>
+        <location filename="../src/map_dialog_new.cpp" line="44"/>
         <source>Symbol sets:</source>
         <translation>Insieme simboli:</translation>
     </message>
     <message>
-        <location filename="../src/map_dialog_new.cpp" line="49"/>
+        <location filename="../src/map_dialog_new.cpp" line="47"/>
         <source>Only show symbol sets matching the selected scale</source>
         <translation>Solo insiemi simboli corrispondenti alla scala selezionata</translation>
     </message>
     <message>
-        <location filename="../src/map_dialog_new.cpp" line="51"/>
+        <location filename="../src/map_dialog_new.cpp" line="49"/>
         <source>Cancel</source>
         <translation>Annulla</translation>
     </message>
     <message>
-        <location filename="../src/map_dialog_new.cpp" line="52"/>
+        <location filename="../src/map_dialog_new.cpp" line="50"/>
         <source>Create</source>
         <translation>Crea</translation>
     </message>
     <message>
-        <location filename="../src/map_dialog_new.cpp" line="140"/>
+        <location filename="../src/map_dialog_new.cpp" line="138"/>
         <source>Empty symbol set</source>
         <translation>Insieme simboli vuoto</translation>
     </message>
     <message>
-        <location filename="../src/map_dialog_new.cpp" line="178"/>
-        <location filename="../src/map_dialog_new.cpp" line="233"/>
+        <location filename="../src/map_dialog_new.cpp" line="176"/>
+        <location filename="../src/map_dialog_new.cpp" line="231"/>
         <source>Load symbol set from a file...</source>
         <translation>Carica l&apos;insieme dei simboli da un file...</translation>
     </message>
     <message>
-        <location filename="../src/map_dialog_new.cpp" line="229"/>
+        <location filename="../src/map_dialog_new.cpp" line="227"/>
         <source>All symbol set files</source>
         <translation>Tutti i file di simboli</translation>
     </message>
     <message>
-        <location filename="../src/map_dialog_new.cpp" line="231"/>
+        <location filename="../src/map_dialog_new.cpp" line="229"/>
         <source>All files</source>
         <translation>Tutti i files</translation>
     </message>
@@ -4255,7 +4255,7 @@ se disponibile si può zoomare con la rotella del mouse.</translation>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="147"/>
         <source>Could not load the spot color definitions, error: %1</source>
-        <translation>Impossibile importare lo definizione dello &quot;spot color&quot;, errore: %1</translation>
+        <translation>Impossibile importare la definizione del colore di calamaio, errore: %1</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="207"/>
@@ -4380,7 +4380,7 @@ se disponibile si può zoomare con la rotella del mouse.</translation>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="311"/>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="324"/>
         <source>Spot color information was ignored.</source>
-        <translation>Le informazioni sullo spot color sono state ignorate.</translation>
+        <translation>Le informazioni sul colore di calamaio sono state ignorate.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="443"/>
@@ -4578,7 +4578,7 @@ se disponibile si può zoomare con la rotella del mouse.</translation>
 <context>
     <name>PointSymbolEditorTool</name>
     <message>
-        <location filename="../src/symbol_point_editor.cpp" line="957"/>
+        <location filename="../src/symbol_point_editor.cpp" line="955"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Add a coordinate. &lt;b&gt;%1+Click&lt;/b&gt;: Change the selected coordinate. </source>
         <translation>&lt;b&gt;Click&lt;/b&gt;: Aggiunge una coordinata. &lt;b&gt;%1+Click&lt;/b&gt;: Cambia la coordinata selezionata. </translation>
     </message>
@@ -4586,158 +4586,158 @@ se disponibile si può zoomare con la rotella del mouse.</translation>
 <context>
     <name>PointSymbolEditorWidget</name>
     <message>
-        <location filename="../src/symbol_point_editor.cpp" line="51"/>
+        <location filename="../src/symbol_point_editor.cpp" line="49"/>
         <source>Always oriented to north (not rotatable)</source>
         <translation>Sempre orientato a Nord (non ruotabile)</translation>
     </message>
     <message>
-        <location filename="../src/symbol_point_editor.cpp" line="54"/>
+        <location filename="../src/symbol_point_editor.cpp" line="52"/>
         <source>Elements</source>
         <translation>Elementi</translation>
     </message>
     <message>
-        <location filename="../src/symbol_point_editor.cpp" line="66"/>
-        <location filename="../src/symbol_point_editor.cpp" line="916"/>
+        <location filename="../src/symbol_point_editor.cpp" line="64"/>
+        <location filename="../src/symbol_point_editor.cpp" line="914"/>
         <source>Point</source>
         <translation>Punto</translation>
     </message>
     <message>
-        <location filename="../src/symbol_point_editor.cpp" line="67"/>
-        <location filename="../src/symbol_point_editor.cpp" line="918"/>
+        <location filename="../src/symbol_point_editor.cpp" line="65"/>
+        <location filename="../src/symbol_point_editor.cpp" line="916"/>
         <source>Line</source>
         <translation>Linea</translation>
     </message>
     <message>
-        <location filename="../src/symbol_point_editor.cpp" line="68"/>
-        <location filename="../src/symbol_point_editor.cpp" line="920"/>
+        <location filename="../src/symbol_point_editor.cpp" line="66"/>
+        <location filename="../src/symbol_point_editor.cpp" line="918"/>
         <source>Area</source>
         <translation>Area</translation>
     </message>
     <message>
-        <location filename="../src/symbol_point_editor.cpp" line="71"/>
+        <location filename="../src/symbol_point_editor.cpp" line="69"/>
         <source>Center all elements</source>
         <translation>Centra tutti gli elementi</translation>
     </message>
     <message>
-        <location filename="../src/symbol_point_editor.cpp" line="73"/>
+        <location filename="../src/symbol_point_editor.cpp" line="71"/>
         <source>Current element</source>
         <translation>Elemento corrente</translation>
     </message>
     <message>
-        <location filename="../src/symbol_point_editor.cpp" line="79"/>
+        <location filename="../src/symbol_point_editor.cpp" line="77"/>
         <source>Diameter &lt;b&gt;a&lt;/b&gt;:</source>
         <translation>Diametro &lt;b&gt;a&lt;/b&gt;:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_point_editor.cpp" line="80"/>
-        <location filename="../src/symbol_point_editor.cpp" line="86"/>
-        <location filename="../src/symbol_point_editor.cpp" line="114"/>
+        <location filename="../src/symbol_point_editor.cpp" line="78"/>
+        <location filename="../src/symbol_point_editor.cpp" line="84"/>
+        <location filename="../src/symbol_point_editor.cpp" line="112"/>
         <source>mm</source>
         <translation>mm</translation>
     </message>
     <message>
-        <location filename="../src/symbol_point_editor.cpp" line="82"/>
+        <location filename="../src/symbol_point_editor.cpp" line="80"/>
         <source>Inner color:</source>
         <translation>Colore dell&apos;interno:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_point_editor.cpp" line="85"/>
+        <location filename="../src/symbol_point_editor.cpp" line="83"/>
         <source>Outer width &lt;b&gt;b&lt;/b&gt;:</source>
         <translation>Spessore esterno &lt;b&gt;b&lt;/b&gt;:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_point_editor.cpp" line="88"/>
+        <location filename="../src/symbol_point_editor.cpp" line="86"/>
         <source>Outer color:</source>
         <translation>Colore esterno:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_point_editor.cpp" line="113"/>
+        <location filename="../src/symbol_point_editor.cpp" line="111"/>
         <source>Line width:</source>
         <translation>Spessore linea:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_point_editor.cpp" line="116"/>
+        <location filename="../src/symbol_point_editor.cpp" line="114"/>
         <source>Line color:</source>
         <translation>Colore linea:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_point_editor.cpp" line="119"/>
+        <location filename="../src/symbol_point_editor.cpp" line="117"/>
         <source>Line cap:</source>
         <translation>Cappello della linea:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_point_editor.cpp" line="121"/>
+        <location filename="../src/symbol_point_editor.cpp" line="119"/>
         <source>flat</source>
         <translation>piatto</translation>
     </message>
     <message>
-        <location filename="../src/symbol_point_editor.cpp" line="122"/>
-        <location filename="../src/symbol_point_editor.cpp" line="129"/>
+        <location filename="../src/symbol_point_editor.cpp" line="120"/>
+        <location filename="../src/symbol_point_editor.cpp" line="127"/>
         <source>round</source>
         <translation>arrotondato</translation>
     </message>
     <message>
-        <location filename="../src/symbol_point_editor.cpp" line="123"/>
+        <location filename="../src/symbol_point_editor.cpp" line="121"/>
         <source>square</source>
         <translation>quadrato</translation>
     </message>
     <message>
-        <location filename="../src/symbol_point_editor.cpp" line="126"/>
+        <location filename="../src/symbol_point_editor.cpp" line="124"/>
         <source>Line join:</source>
         <translation>giunto della linea:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_point_editor.cpp" line="128"/>
+        <location filename="../src/symbol_point_editor.cpp" line="126"/>
         <source>miter</source>
         <translation>Spigolo</translation>
     </message>
     <message>
-        <location filename="../src/symbol_point_editor.cpp" line="130"/>
+        <location filename="../src/symbol_point_editor.cpp" line="128"/>
         <source>bevel</source>
         <translation>spizza</translation>
     </message>
     <message>
-        <location filename="../src/symbol_point_editor.cpp" line="132"/>
+        <location filename="../src/symbol_point_editor.cpp" line="130"/>
         <source>Line closed</source>
         <translation>Linea chiusa</translation>
     </message>
     <message>
-        <location filename="../src/symbol_point_editor.cpp" line="152"/>
+        <location filename="../src/symbol_point_editor.cpp" line="150"/>
         <source>Area color:</source>
         <translation>Colore Area:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_point_editor.cpp" line="165"/>
+        <location filename="../src/symbol_point_editor.cpp" line="163"/>
         <source>Coordinates:</source>
         <translation>Coordinate:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_point_editor.cpp" line="170"/>
+        <location filename="../src/symbol_point_editor.cpp" line="168"/>
         <source>X</source>
         <translation>X</translation>
     </message>
     <message>
-        <location filename="../src/symbol_point_editor.cpp" line="170"/>
+        <location filename="../src/symbol_point_editor.cpp" line="168"/>
         <source>Y</source>
         <translation>Y</translation>
     </message>
     <message>
-        <location filename="../src/symbol_point_editor.cpp" line="170"/>
+        <location filename="../src/symbol_point_editor.cpp" line="168"/>
         <source>Curve start</source>
         <translation>Inizio curva</translation>
     </message>
     <message>
-        <location filename="../src/symbol_point_editor.cpp" line="181"/>
+        <location filename="../src/symbol_point_editor.cpp" line="179"/>
         <source>Center by coordinate average</source>
         <translation>Centra sulla media delle coordinate</translation>
     </message>
     <message>
-        <location filename="../src/symbol_point_editor.cpp" line="361"/>
+        <location filename="../src/symbol_point_editor.cpp" line="359"/>
         <source>[Midpoint]</source>
         <translation>[punto medio]</translation>
     </message>
     <message>
-        <location filename="../src/symbol_point_editor.cpp" line="923"/>
+        <location filename="../src/symbol_point_editor.cpp" line="921"/>
         <source>Unknown</source>
         <translation>Sconosciuto</translation>
     </message>
@@ -5137,82 +5137,82 @@ separations</source>
 <context>
     <name>ReplaceSymbolSetDialog</name>
     <message>
-        <location filename="../src/symbol_dialog_replace.cpp" line="39"/>
+        <location filename="../src/symbol_dialog_replace.cpp" line="37"/>
         <source>Replace symbol set</source>
         <translation>Rimpiazza l&apos;insieme dei simboli</translation>
     </message>
     <message>
-        <location filename="../src/symbol_dialog_replace.cpp" line="41"/>
+        <location filename="../src/symbol_dialog_replace.cpp" line="39"/>
         <source>Configure how the symbols should be replaced, and which.</source>
         <translation>Configura come e quali simboli vanno rimpiazzati.</translation>
     </message>
     <message>
-        <location filename="../src/symbol_dialog_replace.cpp" line="43"/>
+        <location filename="../src/symbol_dialog_replace.cpp" line="41"/>
         <source>Import all new symbols, even if not used as replacement</source>
         <translation>Importa tutti i simboli anche se non usati come rimpiazzo</translation>
     </message>
     <message>
-        <location filename="../src/symbol_dialog_replace.cpp" line="45"/>
+        <location filename="../src/symbol_dialog_replace.cpp" line="43"/>
         <source>Delete original symbols which are unused after the replacement</source>
         <translation>Cancella i simboli originali che restano inutilizzati dopo il rimpiazzo</translation>
     </message>
     <message>
-        <location filename="../src/symbol_dialog_replace.cpp" line="47"/>
+        <location filename="../src/symbol_dialog_replace.cpp" line="45"/>
         <source>Delete unused colors after the replacement</source>
         <translation>Cancella i colori che restano inutilizzati dopo il rimpiazzo</translation>
     </message>
     <message>
-        <location filename="../src/symbol_dialog_replace.cpp" line="50"/>
+        <location filename="../src/symbol_dialog_replace.cpp" line="48"/>
         <source>Symbol mapping:</source>
         <translation>Mappaggio (corrispondenza) dei simboli:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_dialog_replace.cpp" line="51"/>
+        <location filename="../src/symbol_dialog_replace.cpp" line="49"/>
         <source>Keep the symbols&apos; hidden / protected states of the old symbol set</source>
         <translation>Mantiene lo stato di nascosto / protetto come nel veccio insieme di simboli</translation>
     </message>
     <message>
-        <location filename="../src/symbol_dialog_replace.cpp" line="53"/>
+        <location filename="../src/symbol_dialog_replace.cpp" line="51"/>
         <source>Match replacement symbols by symbol number</source>
         <translation>Corrispondi il rimpiazzo dei simboli usando il loro numero</translation>
     </message>
     <message>
-        <location filename="../src/symbol_dialog_replace.cpp" line="59"/>
+        <location filename="../src/symbol_dialog_replace.cpp" line="57"/>
         <source>Original</source>
         <translation>Originale</translation>
     </message>
     <message>
-        <location filename="../src/symbol_dialog_replace.cpp" line="59"/>
+        <location filename="../src/symbol_dialog_replace.cpp" line="57"/>
         <source>Replacement</source>
         <translation>Rimpiazzo</translation>
     </message>
     <message>
-        <location filename="../src/symbol_dialog_replace.cpp" line="290"/>
+        <location filename="../src/symbol_dialog_replace.cpp" line="288"/>
         <source>- None -</source>
         <translation>- Nessuno -</translation>
     </message>
     <message>
-        <location filename="../src/symbol_dialog_replace.cpp" line="322"/>
+        <location filename="../src/symbol_dialog_replace.cpp" line="320"/>
         <source>Choose map file to load symbols from</source>
         <translation>Scegli una mappa da cui caricare i simboli</translation>
     </message>
     <message>
-        <location filename="../src/symbol_dialog_replace.cpp" line="330"/>
+        <location filename="../src/symbol_dialog_replace.cpp" line="328"/>
         <source>Error</source>
         <translation>Errore</translation>
     </message>
     <message>
-        <location filename="../src/symbol_dialog_replace.cpp" line="330"/>
+        <location filename="../src/symbol_dialog_replace.cpp" line="328"/>
         <source>Cannot load map file, aborting.</source>
         <translation>Impossibile caricare il file della mappa, aborto.</translation>
     </message>
     <message>
-        <location filename="../src/symbol_dialog_replace.cpp" line="336"/>
+        <location filename="../src/symbol_dialog_replace.cpp" line="334"/>
         <source>Warning</source>
         <translation>Attenzione</translation>
     </message>
     <message>
-        <location filename="../src/symbol_dialog_replace.cpp" line="337"/>
+        <location filename="../src/symbol_dialog_replace.cpp" line="335"/>
         <source>The chosen symbol set has a scale of 1:%1, while the map scale is 1:%2. Do you really want to choose this set?</source>
         <translation>L&apos;insiee dei simboli selezionato ha sacal 1:%1, mentre la scala della mappa è 1:%2. Vuoi veramente sceglier questo insieme simboli?</translation>
     </message>
@@ -6754,7 +6754,7 @@ La versione massima supportata è %2.</translation>
         <location filename="../src/file_format_xml.cpp" line="599"/>
         <location filename="../src/file_format_xml.cpp" line="658"/>
         <source>Could not set knockout property of color &apos;%1&apos;.</source>
-        <translation>Impossibile impostare la proprietà knockout del colore &apos;%1&apos;.</translation>
+        <translation>Impossibile impostare la proprietà di foratura del colore &apos;%1&apos;.</translation>
     </message>
     <message>
         <location filename="../src/file_format_xml.cpp" line="618"/>
@@ -6764,7 +6764,7 @@ La versione massima supportata è %2.</translation>
     <message>
         <location filename="../src/file_format_xml.cpp" line="634"/>
         <source>Spot color %1 not found while processing %2 (%3).</source>
-        <translation>Colore Spot %1 non trovato durante l&apos;elaborazione %2 (%3).</translation>
+        <translation>Colore di calamaio %1 non trovato durante l&apos;elaborazione %2 (%3).</translation>
     </message>
     <message>
         <location filename="../src/file_format_xml.cpp" line="686"/>
