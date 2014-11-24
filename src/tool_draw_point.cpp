@@ -99,6 +99,7 @@ void DrawPointTool::mouseMove()
 			{
 				bool success = preview_object->setSymbol(point, true);
 				Q_ASSERT(success);
+				Q_UNUSED(success);
 			}
 		}
 		

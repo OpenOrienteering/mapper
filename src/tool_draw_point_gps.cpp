@@ -99,6 +99,7 @@ void DrawPointGPSTool::newGPSPosition(MapCoordF coord, float accuracy)
 		{
 			bool success = preview_object->setSymbol(point, true);
 			Q_ASSERT(success);
+			Q_UNUSED(success);
 		}
 		
 		x_sum += weight * coord.getX();

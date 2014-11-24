@@ -359,6 +359,7 @@ void MapEditorController::removeTemplatePositionDockWidget(Template* temp)
 	delete getTemplatePositionDockWidget(temp);
 	int num_deleted = template_position_widgets.remove(temp);
 	Q_ASSERT(num_deleted == 1);
+	Q_UNUSED(num_deleted);
 }
 
 void MapEditorController::showPopupWidget(QWidget* child_widget, const QString& title)

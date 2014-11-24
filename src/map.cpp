@@ -1098,6 +1098,7 @@ void Map::removeObjectFromSelection(Object* object, bool emit_selection_changed)
 {
 	bool removed = object_selection.remove(object);
 	Q_ASSERT(removed && "Map::removeObjectFromSelection: object was not selected!");
+	Q_UNUSED(removed);
 	removeSelectionRenderables(object);
 	if (first_selected_object == object)
 		first_selected_object = object_selection.isEmpty() ? NULL : *object_selection.begin();

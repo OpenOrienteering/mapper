@@ -538,6 +538,7 @@ UndoStep* SwitchSymbolUndoStep::undo()
 		undo_step->addObject(modified_objects[i], object->getSymbol());
 		bool ok = object->setSymbol(target_symbols[i], false);
 		Q_ASSERT(ok);
+		Q_UNUSED(ok);
 	}
 	
 	return undo_step;

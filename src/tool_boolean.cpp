@@ -880,10 +880,7 @@ void BooleanTool::rebuildSegmentFromPathOnly(const ClipperLib::IntPoint& start_p
 
 void BooleanTool::rebuildTwoIndexSegment(int start_index, int end_index, bool sequence_increasing, const ClipperLib::Path& polygon, const PolyMap& polymap, PathObject* object)
 {
-	// sequence_increasing is only used in Q_ASSERT.
-#ifndef NDEBUG
-	Q_UNUSED(sequence_increasing);
-#endif
+	Q_UNUSED(sequence_increasing); // only used in Q_ASSERT.
 	
 	PathCoordInfo start_info = polymap.value(polygon.at(start_index));
 	PathCoordInfo end_info = polymap.value(polygon.at(end_index));

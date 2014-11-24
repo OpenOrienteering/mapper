@@ -1552,6 +1552,7 @@ bool PathObject::advanceCoordinateRangeTo(const MapCoordVector& flags, const Map
 	
 	bool advanced_current_index = false;
 	int path_coords_size = (int)path_coords.size();
+	Q_UNUSED(path_coords_size); // only used in Q_ASSERT.
 	bool have_to_wrap = enforce_wrap;
 	while (cur_length > path_coords[cur_path_coord].clen || cur_length < path_coords[cur_path_coord - 1].clen || have_to_wrap)
 	{
@@ -2551,6 +2552,7 @@ int PathObject::isPointOnPath(MapCoordF coord, float tolerance, bool treat_areas
 {
 	Symbol::Type contained_types = symbol->getContainedTypes();
 	int coords_size = (int)coords.size();
+	Q_UNUSED(coords_size); // only used in Q_ASSERT.
 	
 	float side_tolerance = tolerance;
 	if (extended_selection && map && (symbol->getType() == Symbol::Line || symbol->getType() == Symbol::Combined))
@@ -3329,8 +3331,7 @@ MapCoord PointObject::getCoord() const
 
 void PointObject::setRotation(float new_rotation)
 {
-	const PointSymbol* point = reinterpret_cast<const PointSymbol*>(symbol);
-	Q_ASSERT(point && point->isRotatable());
+	Q_ASSERT(symbol->asPoint()->isRotatable());
 	
 	rotation = new_rotation;
 	setOutputDirty();
