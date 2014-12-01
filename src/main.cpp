@@ -104,7 +104,9 @@ int main(int argc, char** argv)
 	first_window.setController(new HomeScreenController());
 	
 	QProxyStyle* style = new MapperProxyStyle();
+#ifndef Q_OS_ANDROID
 	if (QGuiApplication::platformName() == QLatin1String("xcb"))
+#endif
 	{
 		// Use the modern 'fusion' style instead of the 
 		// default "windows" style on X11.

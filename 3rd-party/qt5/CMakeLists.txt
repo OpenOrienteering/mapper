@@ -61,7 +61,7 @@ set(QT5_MD5SUMS
   5.3.2:febb001129927a70174467ecb508a682
   5.3.2-openorienteering-2014-10-12:96f2029f208ac68b7c5543b496f22892
   5.3.2-openorienteering-2014-11-22:649a48ea2a06b7070fb960fd1028f4b5
-  5.4.0-beta:a9b848f0a4f34273b248177637490b32:http://download.qt-project.org/development_releases/qt/5.4/5.4.0-beta/single/qt-everywhere-opensource-src-5.4.0-beta.tar.gz
+  5.4.0-rc:e47767b7b79eaafa4fff021933dcf5cc:http://download.qt-project.org/development_releases/qt/5.4/5.4.0-rc/single/qt-everywhere-opensource-src-5.4.0-rc.tar.gz
 )
 foreach(line ${QT5_MD5SUMS})
 	if(${line} MATCHES "^${QT5_VERSION}:")
