@@ -58,10 +58,12 @@ set(Mapper_BUILD_CLIPPER_DEFAULT ON)
 if(WIN32 OR APPLE)
 	set(Mapper_BUILD_PROJ_DEFAULT ON)
 	set(Mapper_BUILD_QT_DEFAULT ON)
+	set(Mapper_BUILD_DOXYGEN_DEFAULT ON)
 	set(Mapper_PACKAGE_LINGUIST_DEFAULT ON)
 else()
 	set(Mapper_BUILD_PROJ_DEFAULT OFF)
 	set(Mapper_BUILD_QT_DEFAULT ON)
+	set(Mapper_BUILD_DOXYGEN_DEFAULT OFF)
 	set(Mapper_PACKAGE_LINGUIST_DEFAULT OFF)
 endif()
 
@@ -70,6 +72,8 @@ option(Mapper_BUILD_CLIPPER "Build the Clipper package from source" ${Mapper_BUI
 option(Mapper_BUILD_PROJ "Build the Proj library from source" ${Mapper_BUILD_PROJ_DEFAULT})
 
 option(Mapper_BUILD_QT   "Build the Qt library from source" ${Mapper_BUILD_QT_DEFAULT})
+
+option(Mapper_BUILD_DOXYGEN "Build the doxygen tool from source" ${Mapper_BUILD_DOXYGEN_DEFAULT})
 
 if(NOT CMAKE_BUILD_TYPE MATCHES Release|MinSizeRel)
 	set(Mapper_DEVELOPMENT_BUILD_DEFAULT ON)
@@ -189,6 +193,11 @@ else()
 	# may require -DCMAKE_PREFIX_PATH=/path-to-qt5-dir
 	find_package(Qt5Core REQUIRED)
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${Qt5Core_EXECUTABLE_COMPILE_FLAGS}")
+endif()
+
+if(Mapper_BUILD_DOXYGEN)
+	add_subdirectory(3rd-party/doxygen)
+	add_feature_info(doxygen-project 1 "build from source, version: ${DOXYGEN_VERSION}")
 endif()
 
 if(Mapper_prerequisites_FOUND)
