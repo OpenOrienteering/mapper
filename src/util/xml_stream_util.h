@@ -330,6 +330,8 @@ namespace XmlStreamLiteral
 	static const QLatin1String key("key"); ///< @deprecated
 	static const QLatin1String t("t");
 	static const QLatin1String k("k");
+	
+	static const QLatin1String coord("coord");
 }
 
 

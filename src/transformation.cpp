@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2012, 2014 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -21,8 +22,9 @@
 #include "transformation.h"
 
 #include <qmath.h>
+#include <QXmlStreamWriter>
 
-#include "map_coord.h"
+#include "core/map_coord.h"
 #include "matrix.h"
 #include "template.h"
 

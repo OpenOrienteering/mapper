@@ -1,6 +1,6 @@
 /*
- *    Copyright 2012 Pete Curtis
- *    Copyright 2013, 2014 Pete Curtis, Kai Pastor
+ *    Copyright 2012, 2013 Pete Curtis
+ *    Copyright 2013, 2014 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -31,6 +31,7 @@
 
 #include "core/georeferencing.h"
 #include "core/map_color.h"
+#include "core/map_coord.h"
 #include "core/map_view.h"
 #include "file_format_xml.h"
 #include "file_import_export.h"

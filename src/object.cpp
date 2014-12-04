@@ -425,7 +425,7 @@ Object* Object::load(QXmlStreamReader& xml, Map* map, const SymbolDictionary& sy
 			path->setPatternRotation(element.attribute<float>(literal::rotation));
 			while (xml.readNextStartElement())
 			{
-				if (xml.name() == MapCoordLiteral::coord)
+				if (xml.name() == XmlStreamLiteral::coord)
 					path->setPatternOrigin(MapCoord::load(xml));
 				else
 					xml.skipCurrentElement(); // unknown

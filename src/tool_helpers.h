@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2012, 2013, 2014 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -27,7 +28,6 @@
 #include <QRectF>
 #include <QCursor>
 
-#include "map_coord.h"
 #include "path_coord.h"
 #include "tool.h"
 

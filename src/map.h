@@ -32,8 +32,9 @@
 #include <QExplicitlySharedDataPointer>
 
 #include "global.h"
-#include "map_coord.h"
+#include "core/map_coord.h"
 #include "core/map_grid.h"
+#include "file_format.h"
 #include "map_part.h"
 
 QT_BEGIN_NAMESPACE

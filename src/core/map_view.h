@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2014 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -23,7 +24,7 @@
 
 #include <QHash>
 
-#include "../map_coord.h"
+#include "../core/map_coord.h"
 #include "../matrix.h"
 
 class Map;
@@ -85,26 +86,26 @@ public:
 	MapCoord viewToMap(double x, double y);
 	
 	/** Converts the point (with origin at the center of the view) to map coordinates */
-	inline MapCoord viewToMap(QPointF point);
+	MapCoord viewToMap(QPointF point);
 	
 	/** Converts x, y (with origin at the center of the view) to map coordinates */
-	inline MapCoordF viewToMapF(double x, double y);
+	MapCoordF viewToMapF(double x, double y);
 	
 	/** Converts the point (with origin at the center of the view) to map coordinates */
-	inline MapCoordF viewToMapF(QPointF point);
+	MapCoordF viewToMapF(QPointF point);
 	
 	
 	/// Converts map coordinates to view coordinates (with origin at the center of the view)
-	inline void mapToView(MapCoord coords, double& out_x, double& out_y);
+	void mapToView(MapCoord coords, double& out_x, double& out_y);
 	
 	/// Converts map coordinates to view coordinates (with origin at the center of the view)
-	inline void mapToView(MapCoord coords, float& out_x, float& out_y);
+	void mapToView(MapCoord coords, float& out_x, float& out_y);
 	
 	/// Converts map coordinates to view coordinates (with origin at the center of the view)
-	inline QPointF mapToView(MapCoord coords);
+	QPointF mapToView(MapCoord coords);
 	
 	/// Converts map coordinates to view coordinates (with origin at the center of the view)
-	inline QPointF mapToView(MapCoordF coords);
+	QPointF mapToView(MapCoordF coords);
 	
 	
 	/**

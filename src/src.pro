@@ -220,6 +220,7 @@ SOURCES += \
   core/georeferencing.cpp \
   core/latlon.cpp \
   core/map_color.cpp \
+  core/map_coord.cpp \
   core/map_grid.cpp \
   core/map_printer.cpp \
   core/map_view.cpp \

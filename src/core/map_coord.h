@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2014 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -22,15 +23,19 @@
 #define _OPENORIENTEERING_MAP_COORD_H_
 
 #include <cmath>
-#include <vector>
 
 #include <QPointF>
-#include <QString>
-#include <QTextStream>
-#include <QXmlStreamReader>
-#include <QXmlStreamWriter>
 
-#include "util/xml_stream_util.h"
+
+namespace std
+{
+	template<typename Element, typename Allocator> class vector;
+}
+
+class QString;
+class QTextStream;
+class QXmlStreamReader;
+class QXmlStreamWriter;
 
 
 /**
@@ -592,185 +597,14 @@ private:
 	double y;
 };
 
+QTextStream& operator>>(QTextStream& stream, MapCoord& coord);
+
 typedef std::vector<MapCoord> MapCoordVector;
 typedef std::vector<MapCoordF> MapCoordVectorF;
 
 /**
- * Converts a vector of MapCoords to a vector of MapCoordFs.
+ * Converts a vector of MapCoord to a vector of MapCoordF.
  */
-inline void mapCoordVectorToF(const MapCoordVector& coords, MapCoordVectorF& out_coordsF)
-{
-	int size = coords.size();
-	out_coordsF.resize(size);
-	for (int i = 0; i < size; ++i)
-		out_coordsF[i] = MapCoordF(coords[i]);
-}
-
-
-
-/**
- * @brief Local namespace for \c QLatin1String constants
- * 
- * This namespace collects various \c QLatin1String constants in map_coord.h.
- * The namespace \link literal \endlink cannot be used directly in the
- * map_coord.h header because it would easily lead to name conflicts
- * in including files. However, MapCoordLiteral can be aliased to \c literal
- * locally in method definitions:
- * 
- * \code
- * void someFuntion()
- * {
- *     namespace literal = MapCoordLiteral;
- *     writeAttribute(literal::x, 37.0);
- * }
- * \endcode
- * 
- * @sa literal
- */
-namespace MapCoordLiteral
-{
-	static const QLatin1String coord("coord");
-	static const QLatin1String x("x");
-	static const QLatin1String y("y");
-	static const QLatin1String flags("flags");
-}
-
-
-
-//### MapCoord inline code ###
-
-inline
-void MapCoord::save(QXmlStreamWriter& xml) const
-{
-	namespace literal = MapCoordLiteral;
-	
-	XmlElementWriter element(xml, literal::coord);
-	element.writeAttribute(literal::x, rawX());
-	element.writeAttribute(literal::y, rawY());
-	int flags = getFlags();
-	if (flags)
-	{
-		element.writeAttribute(literal::flags, flags);
-	}
-}
-
-inline
-MapCoord MapCoord::load(QXmlStreamReader& xml)
-{
-	namespace literal = MapCoordLiteral;
-	
-	XmlElementReader element(xml);
-	qint64 x = element.attribute<qint64>(literal::x);
-	qint64 y = element.attribute<qint64>(literal::y);
-	MapCoord coord = MapCoord::fromRaw(x, y);
-	
-	int flags = element.attribute<int>(literal::flags);
-	if (flags)
-	{
-		coord.setFlags(flags);
-	}
-	
-	return coord;
-}
-
-inline
-QString MapCoord::toString() const
-{
-	/* The buffer size must allow for
-	 *  1x ';':   1
-	 *  2x '-':   2
-	 *  2x ' ':   2
-	 *  2x the decimal digits for values up to 0..2^59-1:
-	 *           34
-	 *  1x the decimal digits for 0..2^8-1:
-	 *            3
-	 *  Total:   42 */
-	static const std::size_t buf_size = 48;
-	static char encoded[11] = "0123456789";
-	char buffer[buf_size];
-	
-	// For efficiency, we construct the string from the back.
-	int j = buf_size - 1;
-	buffer[j] = ';';
-	--j;
-	
-	int flags = getFlags();
-	if (flags > 0)
-	{
-		do
-		{
-			buffer[j] = encoded[flags % 10];
-			flags = flags / 10;
-			--j;
-		}
-		while (flags != 0);
-		
-		buffer[j] = ' ';
-		--j;
-	}
-	
-	qint64 tmp = rawY();
-	char sign = 0;
-	if (tmp < 0)
-	{
-		sign = '-';
-		tmp = -tmp; // NOTE: tmp never exceeds -2^60
-	}
-	do
-	{
-		buffer[j] = encoded[tmp % 10];
-		tmp = tmp / 10;
-		--j;
-	}
-	while (tmp != 0);
-	if (sign)
-	{
-		buffer[j] = sign;
-		--j;
-		sign = 0;
-	}
-	
-	buffer[j] = ' ';
-	--j;
-	
-	tmp = rawX();
-	if (tmp < 0)
-	{
-		sign = '-';
-		tmp = -tmp; // NOTE: tmp never exceeds -2^60
-	}
-	do
-	{
-		buffer[j] = encoded[tmp % 10];
-		tmp = tmp / 10;
-		--j;
-	}
-	while (tmp != 0);
-	if (sign)
-	{
-		buffer[j] = sign;
-		--j;
-	}
-	
-	++j;
-	return QString::fromUtf8(buffer+j, buf_size-j);
-}
-
-inline
-QTextStream& operator>>(QTextStream& stream, MapCoord& coord)
-{
-	qint64 x, y;
-	int flags = 0;
-	char separator;
-	stream >> x >> y >> separator;
-	coord.setRawX(x);
-	coord.setRawY(y);
-	if (separator != ';')
-	{
-		stream >> flags >> separator;
-	}
-	coord.setFlags(flags);
-	return stream;
-}
+void mapCoordVectorToF(const MapCoordVector& coords, MapCoordVectorF& out_coordsF);
 
 #endif

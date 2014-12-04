@@ -20,7 +20,9 @@
 
 #include "xml_stream_util.h"
 
-#include "../map_coord.h"
+#include <QTextStream>
+
+#include "../core/map_coord.h"
 #include "../file_format_xml.h"
 #include "../file_import_export.h"
 
@@ -88,7 +90,7 @@ void XmlElementReader::read(MapCoordVector& coords) throw (FileFormatException)
 		}
 		else if (token == QXmlStreamReader::StartElement)
 		{
-			if (xml.name() == MapCoordLiteral::coord)
+			if (xml.name() == literal::coord)
 			{
 				coords.push_back(MapCoord::load(xml));
 			}

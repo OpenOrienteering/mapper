@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2013, 2014 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -27,7 +28,7 @@
 #include <QHash>
 
 #include "file_format.h"
-#include "map_coord.h"
+#include "core/map_coord.h"
 #include "path_coord.h"
 #include "renderable.h"
 #include "symbol.h"

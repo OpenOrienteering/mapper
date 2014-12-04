@@ -26,7 +26,7 @@
 
 #include <QAction>
 
-#include "map_coord.h"
+#include "core/map_coord.h"
 #include "gui/point_handles.h"
 
 class MainWindow;

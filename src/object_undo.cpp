@@ -28,6 +28,7 @@
 #include "map.h"
 #include "object.h"
 #include "symbol.h"
+#include "util/xml_stream_util.h"
 
 namespace literal
 {

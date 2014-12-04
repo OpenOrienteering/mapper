@@ -44,7 +44,6 @@ QT_END_NAMESPACE
 
 class Georeferencing;
 class Map;
-class MapCoord;
 class MapEditorController;
 class GeoreferencingTool;
 class ProjectedCRSSelector;

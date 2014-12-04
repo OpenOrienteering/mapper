@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2014 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -27,6 +28,7 @@
 #include "../map.h"
 #include "../map_widget.h"
 #include "../util.h"
+#include "../util/xml_stream_util.h"
 
 
 const double MapView::zoom_in_limit = 512;

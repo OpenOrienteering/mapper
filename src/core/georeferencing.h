@@ -26,15 +26,14 @@
 #include <QTransform>
 
 #include "latlon.h"
-#include "../map_coord.h"
+#include "../core/map_coord.h"
+#include "../file_format.h"
 
 class QDebug;
 class QXmlStreamReader;
 class QXmlStreamWriter;
 
 typedef void* projPJ;
-
-class FileFormatException;
 
 
 

@@ -30,7 +30,7 @@
 
 #include "georeferencing.h"
 #include "../map.h"
-#include "../map_coord.h"
+#include "../core/map_coord.h"
 #include "../util.h"
 
 struct ProcessLine

@@ -1,5 +1,6 @@
 /*
  *    Copyright 2013 Thomas Schöps
+ *    Copyright 2012, 2013, 2014 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -21,7 +22,6 @@
 #ifndef _OPENORIENTEERING_TOOL_CUTOUT_H_
 #define _OPENORIENTEERING_TOOL_CUTOUT_H_
 
-#include "tool.h"
 #include "tool_base.h"
 
 class PathObject;

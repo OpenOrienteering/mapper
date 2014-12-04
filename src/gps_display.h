@@ -27,7 +27,7 @@
 	#include <QtPositioning/QGeoPositionInfoSource>
 #endif
 
-#include "map_coord.h"
+#include "core/map_coord.h"
 
 QT_BEGIN_NAMESPACE
 class QPainter;

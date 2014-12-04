@@ -26,9 +26,9 @@
 #include <QPainter>
 
 #include "map.h"
-#include "object_undo.h"
 #include "map_widget.h"
 #include "object.h"
+#include "object_undo.h"
 #include "renderable.h"
 #include "settings.h"
 #include "symbol.h"

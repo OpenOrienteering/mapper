@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2012, 2014 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -29,8 +30,8 @@
 #include <QTransform>
 
 #include "object.h"
-#include "map_coord.h"
 
+class MapCoordF;
 class Symbol;
 
 /** TextObjectPartInfo contains layout information for a continuous sequence of printable characters

@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2012, 2013, 2014 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -21,7 +22,7 @@
 #ifndef _OPENORIENTEERING_PATH_COORD_H_
 #define _OPENORIENTEERING_PATH_COORD_H_
 
-#include "map_coord.h"
+#include "core/map_coord.h"
 
 class PathCoord;
 typedef std::vector<PathCoord> PathCoordVector;

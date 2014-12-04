@@ -1,5 +1,6 @@
 #
-#    Copyright 2012, 2013, 2014 Thomas Schöps, Kai Pastor
+#    Copyright 2012, 2013, 2014 Thomas Schöps
+#    Copyright 2012, 2013, 2014 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -129,6 +130,7 @@ set(Mapper_Common_SRCS
  core/georeferencing.cpp
  core/latlon.cpp
  core/map_color.cpp
+ core/map_coord.cpp
  core/map_grid.cpp
  core/map_printer.cpp
  core/map_view.cpp
@@ -278,6 +280,7 @@ set(Mapper_EXTRA_HEADERS
   core/crs_template.h
   core/image_transparency_fixup.h
   core/latlon.h
+  core/map_coord.h
   core/map_grid.h
   fileformats/ocd_file_format_p.h
   fileformats/ocd_types_v8.h
