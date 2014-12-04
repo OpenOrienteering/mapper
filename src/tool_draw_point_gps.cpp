@@ -20,7 +20,8 @@
 
 #include "tool_draw_point_gps.h"
 
-#include <QtWidgets>
+#include <QKeyEvent>
+#include <QLabel>
 
 #include "map.h"
 #include "map_editor.h"

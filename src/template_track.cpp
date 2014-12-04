@@ -21,7 +21,10 @@
 #include "template_track.h"
 
 #include <qmath.h>
-#include <QtWidgets>
+#include <QCommandLinkButton>
+#include <QFormLayout>
+#include <QMessageBox>
+#include <QRadioButton>
 
 #include "gui/georeferencing_dialog.h"
 #include "map_widget.h"

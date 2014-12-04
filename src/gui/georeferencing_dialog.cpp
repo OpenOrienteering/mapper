@@ -21,12 +21,23 @@
 
 #include "georeferencing_dialog.h"
 
-#include <QtWidgets>
+#include <QComboBox>
+#include <QDate>
+#include <QDebug>
+#include <QDialogButtonBox>
+#include <QHBoxLayout>
+#include <QFormLayout>
+#include <QLineEdit>
+#include <QMessageBox>
+#include <QMouseEvent>
+#include <QPushButton>
+#include <QRadioButton>
 #include <QXmlStreamReader>
 
 #if defined(QT_NETWORK_LIB)
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
+#include <QUrlQuery>
 #endif
 
 #include "../core/crs_template.h"

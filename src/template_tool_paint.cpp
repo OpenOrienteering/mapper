@@ -20,7 +20,12 @@
 
 #include "template_tool_paint.h"
 
-#include <QtWidgets>
+#include <QListWidget>
+#include <QListWidgetItem>
+#include <QMouseEvent>
+#include <QPushButton>
+#include <QSettings>
+#include <QVBoxLayout>
 
 #include "map_widget.h"
 #include "template.h"

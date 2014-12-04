@@ -19,7 +19,8 @@
 
 #include "segmented_button_layout.h"
 
-#include <QtWidgets>
+#include <QVariant>
+#include <QWidget>
 
 #include "mapper_proxystyle.h"
 

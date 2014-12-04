@@ -20,7 +20,15 @@
 
 #include "template_image.h"
 
-#include <QtWidgets>
+#include <QDebug>
+#include <QFile>
+#include <QHBoxLayout>
+#include <QImageReader>
+#include <QLabel>
+#include <QLineEdit>
+#include <QMessageBox>
+#include <QPushButton>
+#include <QRadioButton>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 

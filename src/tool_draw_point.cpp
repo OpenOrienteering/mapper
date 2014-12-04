@@ -20,7 +20,7 @@
 
 #include "tool_draw_point.h"
 
-#include <QtWidgets>
+#include <QKeyEvent>
 
 #include "map.h"
 #include "map_editor.h"

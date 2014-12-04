@@ -20,8 +20,14 @@
 
 #include "symbol_dialog_replace.h"
 
-#include <QtWidgets>
+#include <QCheckBox>
+#include <QDialogButtonBox>
+#include <QHeaderView>
+#include <QLabel>
+#include <QMessageBox>
 #include <QSet>
+#include <QTableWidget>
+#include <QVBoxLayout>
 
 #include "file_format.h"
 #include "gui/main_window.h"

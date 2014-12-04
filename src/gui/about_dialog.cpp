@@ -1,5 +1,6 @@
 /*
- *    Copyright 2012, 2013, 2014 Kai Pastor, Thomas Schöps
+ *    Copyright 2012, 2013, 2014 Thomas Schöps
+ *    Copyright 2012, 2013, 2014 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -19,7 +20,13 @@
 
 #include "about_dialog.h"
 
-#include <QtWidgets>
+#include <QApplication>
+#include <QDialog>
+#include <QPushButton>
+#include <QScrollBar>
+#include <QTextBrowser>
+#include <QToolTip>
+#include <QVBoxLayout>
 
 #include <mapper_config.h>
 

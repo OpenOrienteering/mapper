@@ -1,5 +1,5 @@
 /*
- *    Copyright 2012, 2013 Kai Pastor
+ *    Copyright 2012, 2013, 2014 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -19,6 +19,14 @@
 
 
 #include "color_dialog.h"
+
+#include <QButtonGroup>
+#include <QDialogButtonBox>
+#include <QGridLayout>
+#include <QLineEdit>
+#include <QPushButton>
+#include <QRadioButton>
+#include <QSettings>
 
 #include "../core/map_color.h"
 #include "../map.h"

@@ -1,5 +1,6 @@
 /*
- *    Copyright 2012, 2013 Jan Dalheimer, Kai Pastor
+ *    Copyright 2012, 2013 Jan Dalheimer
+ *    Copyright 2012, 2013, 2014 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -20,7 +21,18 @@
 #include "settings_dialog.h"
 #include "settings_dialog_p.h"
 
-#include <QtWidgets>
+#include <QApplication>
+#include <QComboBox>
+#include <QCompleter>
+#include <QDialog>
+#include <QDialogButtonBox>
+#include <QFileDialog>
+#include <QMessageBox>
+#include <QScreen>
+#include <QTabWidget>
+#include <QTextCodec>
+#include <QToolButton>
+#include <QVBoxLayout>
 
 #include "../settings.h"
 #include "../util.h"

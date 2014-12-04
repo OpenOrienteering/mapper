@@ -20,7 +20,11 @@
 
 #include "measure_widget.h"
 
-#include <QtWidgets>
+#include <QGridLayout>
+#include <QLabel>
+#include <QSettings>
+#include <QStackedWidget>
+#include <QStringBuilder>
 
 #include "../../map.h"
 #include "../../global.h"

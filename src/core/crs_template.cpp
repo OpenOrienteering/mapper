@@ -23,6 +23,7 @@
 
 #include <vector>
 
+#include <QCompleter>
 #include <QLineEdit>
 #include <QSpinBox>
 

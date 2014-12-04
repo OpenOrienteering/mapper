@@ -21,7 +21,18 @@
 
 #include "symbol_render_widget.h"
 
-#include <QtWidgets>
+#include <QApplication>
+#include <QBuffer>
+#include <QClipboard>
+#include <QDrag>
+#include <QInputDialog>
+#include <QMenu>
+#include <QMessageBox>
+#include <QMimeData>
+#include <QPainter>
+#include <QPaintEvent>
+#include <QResizeEvent>
+#include <QScopedValueRollback>
 
 #include "../../core/map_color.h"
 #include "../../map.h"

@@ -20,8 +20,18 @@
 
 #include "home_screen_widget.h"
 
+#include <QApplication>
+#include <QAbstractButton>
+#include <QCheckBox>
+#include <QCommandLinkButton>
+#include <QDirIterator>
+#include <QFileInfo>
+#include <QGridLayout>
+#include <QLabel>
+#include <QListWidget>
+#include <QPainter>
 #include <QProcessEnvironment>
-#include <QtWidgets>
+#include <QStackedLayout>
 
 #include "../home_screen_controller.h"
 #include "../main_window.h"

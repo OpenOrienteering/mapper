@@ -20,7 +20,16 @@
 
 #include "template_adjust.h"
 
-#include <QtWidgets>
+#include <QAbstractItemView>
+#include <QCheckBox>
+#include <QHeaderView>
+#include <QLabel>
+#include <QMessageBox>
+#include <QMouseEvent>
+#include <QPushButton>
+#include <QTableWidget>
+#include <QToolBar>
+#include <QVBoxLayout>
 
 #include "gui/main_window.h"
 #include "map_editor.h"

@@ -19,6 +19,14 @@
 
 #include "autosave_dialog.h"
 
+#include <QCloseEvent>
+#include <QDateTime>
+#include <QDialogButtonBox>
+#include <QFileInfo>
+#include <QLabel>
+#include <QListWidget>
+#include <QVBoxLayout>
+
 #include "main_window.h"
 
 AutosaveDialog::AutosaveDialog(QString path, QString autosave_path, QString actual_path, MainWindow* parent, Qt::WindowFlags f)

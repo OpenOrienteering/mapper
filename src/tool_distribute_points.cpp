@@ -21,7 +21,8 @@
 #include "tool_distribute_points.h"
 
 #include <qmath.h>
-#include <QtWidgets>
+#include <QDialogButtonBox>
+#include <QFormLayout>
 
 #include "map.h"
 #include "symbol_point.h"

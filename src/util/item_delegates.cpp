@@ -20,7 +20,11 @@
 
 #include "item_delegates.h"
 
-#include <QtWidgets>
+#include <QAbstractTextDocumentLayout>
+#include <QApplication>
+#include <QPainter>
+#include <QSignalMapper>
+#include <QTextDocument>
 
 #include "../util_gui.h"
 

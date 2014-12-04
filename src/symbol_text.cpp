@@ -20,8 +20,18 @@
 
 #include "symbol_text.h"
 
-#include <QtWidgets>
+#include <QDialogButtonBox>
+#include <QFontComboBox>
+#include <QFormLayout>
+#include <QHBoxLayout>
 #include <QIODevice>
+#include <QInputDialog>
+#include <QLineEdit>
+#include <QListWidget>
+#include <QPushButton>
+#include <QRadioButton>
+#include <QXmlStreamReader>
+#include <QXmlStreamWriter>
 
 #include "core/map_color.h"
 #include "map.h"

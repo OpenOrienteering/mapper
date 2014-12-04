@@ -21,9 +21,12 @@
 
 #include "tool_draw_text.h"
 
-#include <QApplication>
-#include <QClipboard>
-#include <QtWidgets>
+#include <QHBoxLayout>
+#include <QKeyEvent>
+#include <QMouseEvent>
+#include <QPushButton>
+#include <QSignalMapper>
+#include <QVBoxLayout>
 
 #include "map.h"
 #include "map_editor.h"

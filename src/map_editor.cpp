@@ -23,9 +23,28 @@
 
 #include <limits>
 
-#include <QtWidgets>
-#include <QSignalMapper>
 #include <qmath.h>
+#include <QApplication>
+#include <QBuffer>
+#include <QDir>
+#include <QEvent>
+#include <QFileDialog>
+#include <QFileInfo>
+#include <QHBoxLayout>
+#include <QInputDialog>
+#include <QLabel>
+#include <QMenu>
+#include <QMenuBar>
+#include <QMessageBox>
+#include <QMimeData>
+#include <QPushButton>
+#include <QSignalMapper>
+#include <QStatusBar>
+#include <QStringBuilder>
+#include <QTextEdit>
+#include <QToolBar>
+#include <QToolButton>
+#include <QVBoxLayout>
 
 #ifdef Q_OS_ANDROID
 #include <QtAndroidExtras/QAndroidJniObject>

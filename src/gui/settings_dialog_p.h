@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Jan Dalheimer
+ *    Copyright 2013, 2014 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -20,7 +21,14 @@
 #ifndef _OPENORIENTEERING_SETTINGS_DIALOG_PRIVATE_H_
 #define _OPENORIENTEERING_SETTINGS_DIALOG_PRIVATE_H_
 
-#include <QtWidgets>
+#include <QVariant>
+#include <QWidget>
+
+class QCheckBox;
+class QComboBox;
+class QLabel;
+class QDoubleSpinBox;
+class QSpinBox;
 
 class MainWindow;
 

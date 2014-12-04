@@ -20,10 +20,20 @@
 
 #include "map_dialog_new.h"
 
-#include <QtWidgets>
-#include <QDir>
-#include <QSettings>
+#include <QCheckBox>
+#include <QComboBox>
 #include <QCoreApplication>
+#include <QDebug>
+#include <QDir>
+#include <QFileDialog>
+#include <QHBoxLayout>
+#include <QIntValidator>
+#include <QLabel>
+#include <QListWidget>
+#include <QPushButton>
+#include <QSettings>
+#include <QStringBuilder>
+#include <QVBoxLayout>
 
 #include "file_format.h"
 #include "file_format_registry.h"

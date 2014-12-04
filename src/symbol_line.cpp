@@ -21,8 +21,11 @@
 
 #include "symbol_line.h"
 
-#include <QtWidgets>
+#include <QGridLayout>
 #include <QIODevice>
+#include <QScrollArea>
+#include <QScrollBar>
+#include <QTimer>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 

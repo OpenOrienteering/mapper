@@ -21,8 +21,10 @@
 
 #include "map_widget.h"
 
-#include <QtWidgets>
+#include <QApplication>
+#include <QLabel>
 #include <QPinchGesture>
+#include <QTimer>
 #include <QTouchEvent>
 
 #include "core/georeferencing.h"

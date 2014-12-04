@@ -20,7 +20,8 @@
 
 #include "tool_draw_circle.h"
 
-#include <QtWidgets>
+#include <QKeyEvent>
+#include <QMouseEvent>
 
 #include "map.h"
 #include "object.h"

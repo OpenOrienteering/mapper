@@ -20,7 +20,11 @@
 
 #include "map_dialog_scale.h"
 
-#include <QtWidgets>
+#include <QDialogButtonBox>
+#include <QFormLayout>
+#include <QLabel>
+#include <QLineEdit>
+#include <QRadioButton>
 
 #include "core/georeferencing.h"
 #include "map.h"

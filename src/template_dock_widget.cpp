@@ -20,6 +20,18 @@
 
 #include "template_dock_widget.h"
 
+#include <QApplication>
+#include <QCheckBox>
+#include <QFileDialog>
+#include <QHeaderView>
+#include <QInputDialog>
+#include <QKeyEvent>
+#include <QLabel>
+#include <QMenu>
+#include <QMessageBox>
+#include <QTableWidget>
+#include <QToolButton>
+
 #include "core/georeferencing.h"
 #include "gui/main_window.h"
 #include "gui/widgets/segmented_button_layout.h"

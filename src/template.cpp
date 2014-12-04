@@ -20,10 +20,15 @@
 
 #include "template.h"
 
-#include <QtWidgets>
+#include <QCoreApplication>
+#include <QDebug>
+#include <QFileDialog>
 #include <QFileInfo>
-#include <QPixmap>
+#include <QMessageBox>
 #include <QPainter>
+#include <QPixmap>
+#include <QXmlStreamReader>
+#include <QXmlStreamWriter>
 
 #include "core/map_view.h"
 #include "util.h"

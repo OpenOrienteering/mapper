@@ -20,8 +20,16 @@
 
 #include "symbol_area.h"
 
-#include <QtWidgets>
+#include <QDebug>
+#include <QDialogButtonBox>
+#include <QFormLayout>
 #include <QIODevice>
+#include <QListWidget>
+#include <QMenu>
+#include <QLabel>
+#include <QPushButton>
+#include <QStackedWidget>
+#include <QToolButton>
 #include <QXmlStreamWriter>
 
 #include "core/map_color.h"

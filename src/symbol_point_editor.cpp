@@ -20,7 +20,15 @@
 
 #include "symbol_point_editor.h"
 
-#include <QtWidgets>
+#include <QGridLayout>
+#include <QHeaderView>
+#include <QListWidget>
+#include <QMenu>
+#include <QMouseEvent>
+#include <QPushButton>
+#include <QStackedWidget>
+#include <QTableWidget>
+#include <QToolButton>
 
 #include "map_editor.h"
 #include "map_widget.h"

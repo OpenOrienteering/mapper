@@ -1,5 +1,6 @@
 /*
- *    Copyright 2012, 2013 Thomas Schöps, Kai Pastor
+ *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2012, 2013, 2014 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -24,7 +25,20 @@
 #define _OPENORIENTEERING_PRINT_WIDGET_H_
 
 #include <QPrinterInfo>
-#include <QtWidgets>
+#include <QWidget>
+
+class QAbstractButton;
+class QButtonGroup;
+class QCheckBox;
+class QComboBox;
+class QDialogButtonBox;
+class QDoubleSpinBox;
+class QFormLayout;
+class QLabel;
+class QPushButton;
+class QScrollArea;
+class QSpinBox;
+class QToolButton;
 
 class Map;
 class MapEditorController;

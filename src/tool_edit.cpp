@@ -22,7 +22,7 @@
 #include <limits>
 
 #include <qmath.h>
-#include <QtWidgets>
+#include <QPainter>
 
 #include "map.h"
 #include "map_widget.h"

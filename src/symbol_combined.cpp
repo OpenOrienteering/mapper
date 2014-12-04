@@ -20,8 +20,17 @@
 
 #include "symbol_combined.h"
 
-#include <QtWidgets>
+#include <QDebug>
+#include <QDialogButtonBox>
+#include <QFormLayout>
 #include <QIODevice>
+#include <QListWidget>
+#include <QMenu>
+#include <QMessageBox>
+#include <QLabel>
+#include <QPushButton>
+#include <QSignalMapper>
+#include <QSpinBox>
 #include <QXmlStreamWriter>
 
 #include "core/map_color.h"

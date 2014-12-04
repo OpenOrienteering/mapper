@@ -24,7 +24,7 @@
 #include <algorithm>
 #include <limits>
 
-#include <QtWidgets>
+#include <QKeyEvent>
 
 #include "map.h"
 #include "object_undo.h"

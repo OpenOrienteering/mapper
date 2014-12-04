@@ -23,11 +23,14 @@
 
 #include <cmath>
 
-#if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
-#include <QtGui>
-#else
-#include <QtWidgets>
-#endif
+#include <QCheckBox>
+#include <QCoreApplication>
+#include <QLabel>
+#include <QDoubleSpinBox>
+#include <QSpacerItem>
+#include <QSpinBox>
+#include <QStringBuilder>
+#include <QStyle>
 
 class MapCoordF;
 

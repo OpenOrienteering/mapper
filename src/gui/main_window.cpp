@@ -1,6 +1,6 @@
 /*
- *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2014 Thomas Schöps, Kai Pastor
+ *    Copyright 2012, 2013, 2014 Thomas Schöps
+ *    Copyright 2012, 2013, 2014 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -21,9 +21,21 @@
 
 #include "main_window.h"
 
-#include <QtWidgets>
+#include <QApplication>
+#include <QCloseEvent>
+#include <QDesktopServices>
+#include <QDir>
+#include <QFileDialog>
+#include <QLabel>
+#include <QMessageBox>
+#include <QMenuBar>
 #include <QProxyStyle>
 #include <QSettings>
+#include <QStackedWidget>
+#include <QStatusBar>
+#include <QStringBuilder>
+#include <QToolBar>
+#include <QWhatsThis>
 
 #include <mapper_config.h>
 

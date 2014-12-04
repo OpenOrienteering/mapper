@@ -1,5 +1,6 @@
 /*
- *    Copyright 2012, 2013 Thomas Schöps, Kai Pastor
+ *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2012, 2013, 2014 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -19,6 +20,14 @@
 
 
 #include "color_dock_widget.h"
+
+#include <QApplication>
+#include <QAction>
+#include <QHeaderView>
+#include <QMenu>
+#include <QMessageBox>
+#include <QTableWidget>
+#include <QToolButton>
 
 #include "core/map_color.h"
 #include "map.h"

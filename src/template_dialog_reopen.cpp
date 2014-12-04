@@ -21,7 +21,10 @@
 #include "template_dialog_reopen.h"
 
 #include <qmath.h>
-#include <QtWidgets>
+#include <QDialogButtonBox>
+#include <QGridLayout>
+#include <QLabel>
+#include <QPushButton>
 
 #include "map.h"
 #include "template.h"

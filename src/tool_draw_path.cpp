@@ -20,7 +20,8 @@
 
 #include "tool_draw_path.h"
 
-#include <QtWidgets>
+#include <QKeyEvent>
+#include <QMouseEvent>
 
 #include "map.h"
 #include "map_editor.h"

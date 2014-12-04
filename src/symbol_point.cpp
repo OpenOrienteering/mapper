@@ -20,7 +20,7 @@
 
 #include "symbol_point.h"
 
-#include <QtWidgets>
+#include <QVBoxLayout>
 #include <QXmlStreamAttributes>
 
 #include "core/map_color.h"

@@ -22,7 +22,8 @@
 
 #include <limits>
 
-#include <QtWidgets>
+#include <QKeyEvent>
+#include <QMouseEvent>
 
 #include "util.h"
 #include "object.h"

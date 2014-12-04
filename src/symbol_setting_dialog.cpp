@@ -21,7 +21,17 @@
 
 #include "symbol_setting_dialog.h"
 
-#include <QtWidgets>
+#include <QColorDialog>
+#include <QDialogButtonBox>
+#include <QGridLayout>
+#include <QHBoxLayout>
+#include <QLabel>
+#include <QMenu>
+#include <QPushButton>
+#include <QSplitter>
+#include <QStringBuilder>
+#include <QToolButton>
+#include <QVBoxLayout>
 
 #include "map.h"
 #include "object.h"

@@ -20,7 +20,7 @@
 
 #include "template_map.h"
 
-#include <QtWidgets>
+#include <QPainter>
 
 #include "map_widget.h"
 #include "settings.h"

@@ -20,6 +20,13 @@
 
 #include "tags_widget.h"
 
+#include <QHeaderView>
+#include <QLabel>
+#include <QMessageBox>
+#include <QTableWidget>
+#include <QToolButton>
+#include <QVBoxLayout>
+
 #include "../main_window.h"
 #include "../../map.h"
 #include "../../map_editor.h"

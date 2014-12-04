@@ -20,9 +20,12 @@
 
 #include "mapper_proxystyle.h"
 
-#include <QtWidgets>
+#include <QPainter>
+#include <QStyleOption>
+#include <QWidget>
 
 #include "segmented_button_layout.h"
+
 
 MapperProxyStyle::MapperProxyStyle(QStyle* base_style)
  : QProxyStyle(base_style)
