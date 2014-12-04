@@ -20,6 +20,7 @@
 
 #include "symbol_text.h"
 
+#include <QComboBox>
 #include <QDialogButtonBox>
 #include <QFontComboBox>
 #include <QFormLayout>

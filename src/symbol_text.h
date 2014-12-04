@@ -29,13 +29,14 @@
 #include "symbol_properties_widget.h"
 
 QT_BEGIN_NAMESPACE
-class QRadioButton;
 class QCheckBox;
+class QComboBox;
 class QDoubleSpinBox;
 class QFontComboBox;
 class QLineEdit;
 class QListWidget;
 class QPushButton;
+class QRadioButton;
 QT_END_NAMESPACE
 
 class ColorDropDown;

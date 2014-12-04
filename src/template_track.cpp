@@ -21,6 +21,7 @@
 #include "template_track.h"
 
 #include <qmath.h>
+#include <QComboBox>
 #include <QCommandLinkButton>
 #include <QFormLayout>
 #include <QMessageBox>

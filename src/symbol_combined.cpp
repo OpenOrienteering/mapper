@@ -34,6 +34,7 @@
 #include <QXmlStreamWriter>
 
 #include "core/map_color.h"
+#include "gui/widgets/symbol_dropdown.h"
 #include "map.h"
 #include "symbol_setting_dialog.h"
 #include "symbol_properties_widget.h"
@@ -145,8 +146,7 @@ bool CombinedSymbol::symbolChanged(const Symbol* old_symbol, const Symbol* new_s
 	}
 	
 	// always invalidate the icon, since the parts might have changed.
-	delete icon; 
-	icon = NULL;
+	resetIcon();
 	
 	return have_symbol;
 }

@@ -66,7 +66,7 @@ SymbolSettingDialog::SymbolSettingDialog(Symbol* source_symbol, Map* source_map,
 	symbol->setHidden(false);
 	
 	symbol_icon_label = new QLabel();
-	symbol_icon_label->setPixmap(QPixmap::fromImage(*symbol->getIcon(source_map)));
+	symbol_icon_label->setPixmap(QPixmap::fromImage(symbol->getIcon(source_map)));
 	
 	symbol_text_label = new QLabel();
 	updateSymbolLabel();
@@ -186,7 +186,7 @@ Symbol* SymbolSettingDialog::getNewSymbol() const
 
 void SymbolSettingDialog::updatePreview()
 {
-	symbol_icon_label->setPixmap(QPixmap::fromImage(*symbol->getIcon(source_map, true)));
+	symbol_icon_label->setPixmap(QPixmap::fromImage(symbol->getIcon(source_map, true)));
 	for (int l = 0; l < preview_map->getNumParts(); ++l)
 		for (int i = 0; i < preview_map->getPart(l)->getNumObjects(); ++i)
 		{
@@ -252,7 +252,7 @@ void SymbolSettingDialog::centerTemplateGravity()
 
 void SymbolSettingDialog::createPreviewMap()
 {
-	symbol_icon_label->setPixmap(QPixmap::fromImage(*symbol->getIcon(source_map)));
+	symbol_icon_label->setPixmap(QPixmap::fromImage(symbol->getIcon(source_map)));
 	
 	for (int i = 0; i < (int)preview_objects.size(); ++i)
 		preview_map->deleteObject(preview_objects[i], false);

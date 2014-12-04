@@ -495,7 +495,7 @@ void SymbolRenderWidget::drawIcon(QPainter &painter, int i) const
 	painter.save();
 	
 	Symbol* symbol = map->getSymbol(i);
-	painter.drawImage(0, 0, * symbol->getIcon(map));
+	painter.drawImage(0, 0, symbol->getIcon(map));
 	
 	if (isSymbolSelected(i) || i == current_symbol_index)
 	{

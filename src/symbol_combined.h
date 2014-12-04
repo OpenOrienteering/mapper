@@ -35,6 +35,7 @@ class QXmlStreamReader;
 class QXmlStreamWriter;
 QT_END_NAMESPACE
 
+class SymbolDropDown;
 class SymbolSettingDialog;
 
 /**

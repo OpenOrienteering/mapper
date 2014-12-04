@@ -26,6 +26,7 @@
 #include <qmath.h>
 #include <QApplication>
 #include <QBuffer>
+#include <QComboBox>
 #include <QDir>
 #include <QEvent>
 #include <QFileDialog>
@@ -1837,10 +1838,9 @@ void MapEditorController::selectedSymbolsChanged()
 		}
 		else //if (symbol_widget->getNumSelectedSymbols() == 1)
 		{
-			QImage* image = symbol->createIcon(map, qMin(icon_size.width(), icon_size.height()), Util::isAntialiasingRequired(), 0, 4.0f);
+			QImage image = symbol->createIcon(map, qMin(icon_size.width(), icon_size.height()), Util::isAntialiasingRequired(), 0, 4.0f);
 			QPainter painter(&pixmap);
-			painter.drawImage(pixmap.rect(), *image);
-			delete image;
+			painter.drawImage(pixmap.rect(), image);
 		}
 		mobile_symbol_selector_action->setIcon(QIcon(pixmap));
 	}

@@ -27,6 +27,7 @@
 
 QT_BEGIN_NAMESPACE
 class QCheckBox;
+class QComboBox;
 class QDoubleSpinBox;
 class QLabel;
 class QLineEdit;

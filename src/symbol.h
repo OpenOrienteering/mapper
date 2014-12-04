@@ -22,10 +22,9 @@
 #ifndef _OPENORIENTEERING_SYMBOL_H_
 #define _OPENORIENTEERING_SYMBOL_H_
 
-#include <vector>
-
-#include <QComboBox>
-#include <QItemDelegate>
+#include <QHash>
+#include <QImage>
+#include <QRgb>
 
 #include "core/map_coord.h"
 #include "path_coord.h"
@@ -51,7 +50,6 @@ class SymbolSettingDialog;
 class Renderable;
 class MapRenderables;
 class ObjectRenderables;
-typedef std::vector<Renderable*> RenderableVector;
 
 class Symbol;
 typedef QHash<QString, Symbol*> SymbolDictionary;
@@ -209,16 +207,16 @@ public:
 	 * Returns the symbol's icon, creates it if it was not created yet.
 	 * update == true forces an update of the icon.
 	 */
-	QImage* getIcon(const Map* map, bool update = false) const;
+	QImage getIcon(const Map* map, bool update = false) const;
 	
 	/**
 	 * Creates a new image with the given side length and draws the smybol icon onto it.
 	 * Returns an image pointer which you must delete yourself when no longer needed.
 	 */
-	QImage* createIcon(const Map* map, int side_length, bool antialiasing, int bottom_right_border = 0, float best_zoom = 2) const;
+	QImage createIcon(const Map* map, int side_length, bool antialiasing, int bottom_right_border = 0, float best_zoom = 2) const;
 	
 	/** Clear the symbol's icon. It will be recreated when it is needed. */
-	void resetIcon() { delete icon; icon = NULL; }
+	void resetIcon() { icon = QImage(); }
 	
 	/**
 	 * Returns the largest extent (half width) of all line symbols
@@ -388,69 +386,12 @@ protected:
 	mutable bool is_hidden;
 	/** Protected flag, see isProtected() */
 	bool is_protected;
+	
+private:
 	/** Pointer to symbol icon, if generated */
-	mutable QImage* icon;
+	mutable QImage icon;
 };
 
 Q_DECLARE_METATYPE(const Symbol*)
-
-/** Drop down combobox for selecting a symbol. */
-class SymbolDropDown : public QComboBox
-{
-Q_OBJECT
-public:
-	/**
-	 * Creates a SymbolDropDown.
-	 * @param map Map in which to choose a symbol.
-	 * @param filter Bitwise-or combination of the allowed Symbol::Type types.
-	 * @param initial_symbol Initial choice or NULL for "- none -".
-	 * @param excluded_symbol Symbol to exclude from the list or NULL.
-	 * @param parent QWidget parent.
-	 */
-	SymbolDropDown(const Map* map, int filter, const Symbol* initial_symbol = NULL, const Symbol* excluded_symbol = NULL, QWidget* parent = NULL);
-	
-	/** Returns the selected symbol or NULL if no symbol selected */
-	const Symbol* symbol() const;
-	
-	/** Sets the selection to the given symbol  */
-	void setSymbol(const Symbol* symbol);
-	
-	/** Adds a custom text item below the topmost "- none -" which
-	 *  can be identified by the given id. */
-	void addCustomItem(const QString& text, int id);
-	
-	/** Returns the id of the current item if it is a custom item,
-	 *  or -1 otherwise */
-	int customID() const;
-	
-	/** Sets the selection to the custom item with the given id */
-	void setCustomItem(int id);
-	
-protected slots:
-	// TODO: react to changes in the map (not important as long as that cannot
-	// happen as long as a SymbolDropDown is shown, which is the case currently)
-	
-private:
-	int num_custom_items;
-};
-
-/** Qt item delegate for SymbolDropDown. */
-class SymbolDropDownDelegate : public QItemDelegate
-{
-Q_OBJECT
-public:
-	SymbolDropDownDelegate(int symbol_type_filter, QObject* parent = 0);
-	
-	virtual QWidget* createEditor(QWidget* parent, const QStyleOptionViewItem& option, const QModelIndex& index) const;
-	virtual void setEditorData(QWidget* editor, const QModelIndex& index) const;
-	virtual void setModelData(QWidget* editor, QAbstractItemModel* model, const QModelIndex& index) const;
-	virtual void updateEditorGeometry(QWidget* editor, const QStyleOptionViewItem& option, const QModelIndex& index) const;
-	
-private slots:
-	void emitCommitData();
-	
-private:
-	int symbol_type_filter;
-};
 
 #endif

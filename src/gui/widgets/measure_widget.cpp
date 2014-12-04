@@ -22,9 +22,11 @@
 
 #include <QGridLayout>
 #include <QLabel>
+#include <QLocale>
 #include <QSettings>
 #include <QStackedWidget>
 #include <QStringBuilder>
+#include <QStyle>
 
 #include "../../map.h"
 #include "../../global.h"

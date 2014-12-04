@@ -1876,19 +1876,18 @@ void OCAD8FileExport::exportCommonSymbolFields(const Symbol* symbol, OCADSymbol*
 	
 	// Icon: 22x22 with 4 bit color code, origin at bottom left, some padding
 	const int icon_size = 22;
-	QImage* image = symbol->createIcon(map, icon_size, false, 0);
+	QImage image = symbol->createIcon(map, icon_size, false, 0);
 	u8* ocad_icon = (u8*)ocad_symbol->icon;
 	for (int y = icon_size - 1; y >= 0; --y)
 	{
 		for (int x = 0; x < icon_size; x += 2)
 		{
-			int first = getOcadColor(image->pixel(x, y));
-			int second = getOcadColor(image->pixel(x + 1, y));
+			int first = getOcadColor(image.pixel(x, y));
+			int second = getOcadColor(image.pixel(x + 1, y));
 			*(ocad_icon++) = (first << 4) + (second);
 		}
 		ocad_icon++;
 	}
-	delete image;
 }
 
 int OCAD8FileExport::getPatternSize(const PointSymbol* point)

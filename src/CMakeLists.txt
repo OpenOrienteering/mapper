@@ -161,6 +161,7 @@ set(Mapper_Common_SRCS
  gui/widgets/measure_widget.cpp
  gui/widgets/pie_menu.cpp
  gui/widgets/segmented_button_layout.cpp
+ gui/widgets/symbol_dropdown.cpp
  gui/widgets/symbol_render_widget.cpp
  gui/widgets/symbol_tooltip.cpp
  gui/widgets/symbol_widget.cpp
@@ -191,7 +192,6 @@ set(Mapper_Common_MOC_INPUT
  object_undo.h
  map_widget.h
  settings.h
- symbol.h
  symbol_area.h
  symbol_combined.h
  symbol_dialog_replace.h
@@ -265,6 +265,7 @@ set(Mapper_Common_MOC_INPUT
  gui/widgets/measure_widget.h
  gui/widgets/pie_menu.h
  gui/widgets/segmented_button_layout.h
+ gui/widgets/symbol_dropdown.h
  gui/widgets/symbol_render_widget.h
  gui/widgets/symbol_tooltip.h
  gui/widgets/symbol_widget.h
@@ -294,6 +295,7 @@ set(Mapper_EXTRA_HEADERS
   map_part.h
   map_part_undo.h
   object_operations.h
+  symbol.h
   undo.h
 )
 

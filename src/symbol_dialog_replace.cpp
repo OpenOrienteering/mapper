@@ -31,6 +31,7 @@
 
 #include "file_format.h"
 #include "gui/main_window.h"
+#include "gui/widgets/symbol_dropdown.h"
 #include "map.h"
 #include "object.h"
 #include "undo_manager.h"
@@ -282,7 +283,7 @@ void ReplaceSymbolSetDialog::updateMappingTable()
 		QVariantList original_item_data =
 			QVariantList() << qVariantFromValue<const Map*>(map) << qVariantFromValue<const Symbol*>(original_symbol);
 		original_item->setData(Qt::UserRole, QVariant(original_item_data));
-		original_item->setData(Qt::DecorationRole, *original_symbol->getIcon(map));
+		original_item->setData(Qt::DecorationRole, original_symbol->getIcon(map));
 		mapping_table->setItem(row, 0, original_item);
 		
 		// Note on const: this is not a const method.
@@ -296,7 +297,7 @@ void ReplaceSymbolSetDialog::updateMappingTable()
 			QVariantList() << qVariantFromValue<const Map*>(symbol_map) << qVariantFromValue<const Symbol*>(replacement_symbol);
 		replacement_item->setData(Qt::UserRole, QVariant(replacement_item_data));
 		if (replacement_symbol)
-			replacement_item->setData(Qt::DecorationRole, *replacement_symbol->getIcon(symbol_map));
+			replacement_item->setData(Qt::DecorationRole, replacement_symbol->getIcon(symbol_map));
 		mapping_table->setItem(row, 1, replacement_item);
 		
 		symbol_widget_delegates[row] = new SymbolDropDownDelegate(Symbol::getCompatibleTypes(original_symbol->getType()));
