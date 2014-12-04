@@ -21,6 +21,7 @@
 
 #include "symbol_line.h"
 
+#include <QtNumeric>
 #include <QGridLayout>
 #include <QIODevice>
 #include <QScrollArea>
