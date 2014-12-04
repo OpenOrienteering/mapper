@@ -26,6 +26,7 @@
 #include <QLabel>
 #include <QMessageBox>
 #include <QMouseEvent>
+#include <QPainter>
 #include <QPushButton>
 #include <QTableWidget>
 #include <QToolBar>

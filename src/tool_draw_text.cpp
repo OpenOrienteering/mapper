@@ -24,6 +24,7 @@
 #include <QHBoxLayout>
 #include <QKeyEvent>
 #include <QMouseEvent>
+#include <QPainter>
 #include <QPushButton>
 #include <QSignalMapper>
 #include <QVBoxLayout>

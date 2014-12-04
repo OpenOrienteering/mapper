@@ -24,6 +24,7 @@
 #include <QCommandLinkButton>
 #include <QFormLayout>
 #include <QMessageBox>
+#include <QPainter>
 #include <QRadioButton>
 
 #include "gui/georeferencing_dialog.h"

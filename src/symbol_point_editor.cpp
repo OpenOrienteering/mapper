@@ -25,6 +25,7 @@
 #include <QListWidget>
 #include <QMenu>
 #include <QMouseEvent>
+#include <QPainter>
 #include <QPushButton>
 #include <QStackedWidget>
 #include <QTableWidget>

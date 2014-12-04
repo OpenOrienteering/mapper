@@ -22,6 +22,7 @@
 
 #include <QKeyEvent>
 #include <QMouseEvent>
+#include <QPainter>
 
 #include "map.h"
 #include "map_editor.h"

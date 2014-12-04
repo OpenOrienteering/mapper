@@ -20,6 +20,8 @@
 
 #include "point_handles.h"
 
+#include <QPainter>
+
 #include "../map_widget.h"
 #include "../object.h"
 #include "../object_text.h"

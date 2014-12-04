@@ -27,6 +27,7 @@
 #include <QLabel>
 #include <QLineEdit>
 #include <QMessageBox>
+#include <QPainter>
 #include <QPushButton>
 #include <QRadioButton>
 #include <QXmlStreamReader>

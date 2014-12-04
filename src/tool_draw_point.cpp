@@ -21,6 +21,7 @@
 #include "tool_draw_point.h"
 
 #include <QKeyEvent>
+#include <QPainter>
 
 #include "map.h"
 #include "map_editor.h"

@@ -22,12 +22,18 @@
 #ifndef _OPENORIENTEERING_TOOL_H_
 #define _OPENORIENTEERING_TOOL_H_
 
-#include <vector>
-
-#include <QAction>
-
 #include "core/map_coord.h"
 #include "gui/point_handles.h"
+
+namespace std
+{
+	template<typename Element, typename Allocator> class vector;
+}
+
+class QAction;
+class QFocusEvent;
+class QKeyEvent;
+class QMouseEvent;
 
 class MainWindow;
 class Map;

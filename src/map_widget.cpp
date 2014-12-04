@@ -23,6 +23,7 @@
 
 #include <QApplication>
 #include <QLabel>
+#include <QPainter>
 #include <QPinchGesture>
 #include <QTimer>
 #include <QTouchEvent>

@@ -37,6 +37,7 @@
 #include <QMenuBar>
 #include <QMessageBox>
 #include <QMimeData>
+#include <QPainter>
 #include <QPushButton>
 #include <QSignalMapper>
 #include <QStatusBar>

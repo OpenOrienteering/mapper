@@ -25,6 +25,7 @@
 
 #include <QKeyEvent>
 #include <QMouseEvent>
+#include <QPainter>
 
 #include "util.h"
 #include "symbol.h"

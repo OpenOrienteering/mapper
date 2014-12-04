@@ -22,7 +22,6 @@
 #define _OPENORIENTEERING_POINT_HANDLES_H
 
 #include <QImage>
-#include <QPainter>
 #include <QPointF>
 
 class MapWidget;

@@ -23,6 +23,7 @@
 #include <QListWidget>
 #include <QListWidgetItem>
 #include <QMouseEvent>
+#include <QPainter>
 #include <QPushButton>
 #include <QSettings>
 #include <QVBoxLayout>

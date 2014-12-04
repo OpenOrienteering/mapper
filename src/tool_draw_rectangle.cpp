@@ -24,6 +24,7 @@
 
 #include <QKeyEvent>
 #include <QMouseEvent>
+#include <QPainter>
 
 #include "util.h"
 #include "object.h"

@@ -34,6 +34,7 @@
 #include <QHBoxLayout>
 #include <QLineEdit>
 #include <QMessageBox>
+#include <QPainter>
 #include <QPrintDialog>
 #include <QPrintPreviewDialog>
 #include <QPushButton>
