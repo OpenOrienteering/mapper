@@ -25,6 +25,7 @@
 
 #include <QCheckBox>
 #include <QCoreApplication>
+#include <QDebug>
 #include <QLabel>
 #include <QDoubleSpinBox>
 #include <QSpacerItem>

@@ -24,12 +24,13 @@
 #include <QCoreApplication>
 #include <QDebug>
 #include <QDir>
+#include <QLineEdit>
 #include <QLocale>
+#include <QSpinBox>
+#include <QTemporaryDir>
 #include <QXmlStreamAttributes>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
-#include <QSpinBox>
-#include <QLineEdit>
 
 #include <proj_api.h>
 

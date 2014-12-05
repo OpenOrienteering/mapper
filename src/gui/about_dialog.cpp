@@ -24,6 +24,7 @@
 #include <QDialog>
 #include <QPushButton>
 #include <QScrollBar>
+#include <QScroller>
 #include <QTextBrowser>
 #include <QToolTip>
 #include <QVBoxLayout>

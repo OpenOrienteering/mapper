@@ -24,6 +24,7 @@
 #include <QApplication>
 #include <QCloseEvent>
 #include <QDesktopServices>
+#include <QDesktopWidget>
 #include <QDir>
 #include <QFileDialog>
 #include <QLabel>
