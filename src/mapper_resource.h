@@ -21,7 +21,8 @@
 #ifndef _OPENORIENTEERING_MAPPER_RESOURCE_H_
 #define _OPENORIENTEERING_MAPPER_RESOURCE_H_
 
-#include <QStringList>
+#include <QString>
+class QStringList;
 
 /**
  * Utility for locating and loading resources.
@@ -58,7 +59,7 @@ namespace MapperResource
 	 * If the name parameter is given, it is understood as a filename in the 
 	 * resource directory identified by resource_type.
 	 */
-	QString locate(MapperResource::RESOURCE_TYPE resource_type, const QString name = "");
+	QString locate(MapperResource::RESOURCE_TYPE resource_type, const QString name = QString());
 }
 
 #endif

@@ -22,15 +22,18 @@
 #ifndef _OPENORIENTEERING_UNDO_H_
 #define _OPENORIENTEERING_UNDO_H_
 
-#include <set>
-#include <vector>
-
-#include <QXmlStreamReader>
-#include <QXmlStreamWriter>
-
 #include "symbol.h" // provides SymbolDictionary typedef
 
+#include <set>
+
+namespace std
+{
+	template<typename Element, typename Allocator> class vector;
+}
+
 class Map;
+class QXmlStreamReader;
+class QXmlStreamWriter;
 
 /**
  * Abstract base class for map editing undo steps.

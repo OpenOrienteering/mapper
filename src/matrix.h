@@ -22,20 +22,14 @@
 #define _WORDS_MATRIX_H_
 
 #include <cstring>
-#include <cstdio>
-#include <cmath>
 
-#include <QObject>
+#include <QtNumeric>
 
 QT_BEGIN_NAMESPACE
 class QIODevice;
 class QXmlStreamReader;
 class QXmlStreamWriter;
 QT_END_NAMESPACE
-
-#ifdef _MSC_VER
-	#define isnan _isnan
-#endif
 
 /** Dynamically sized matrix of doubles. */
 class Matrix
@@ -180,136 +174,15 @@ public:
 			for (int j = 0; j < m; ++j)
 				out.set(j, i, get(i, j));
 	}
+	
 	/** Calculates the determinant. */
-	double determinant() const
-	{
-		Matrix a = Matrix(*this);
-		
-		double result = 1;
-		for (int i = 1; i < n; ++i)
-		{
-			// Pivot search
-			if (a.get(i - 1, i - 1) <= 0.001)
-			{
-				double highest = a.get(i - 1, i - 1);
-				int highest_pos = i - 1;
-				for (int k = i; k < n; ++k)
-				{
-					double v = a.get(k, i - 1);
-					if (v > highest)
-					{
-						highest = v;
-						highest_pos = k;
-					}
-				}
-				if (highest == 0)
-					return 0;
-				if (i - 1 != highest_pos)
-				{
-					a.swapRows(i - 1, highest_pos);
-					result = -result;
-				}
-			}
-			
-			result *= a.get(i-1, i-1);
-			
-			for (int k = i; k < n; ++k)
-			{
-				double factor = -a.get(k, i - 1) / a.get(i - 1, i - 1);
-				for (int j = i; j < m; ++j)
-					a.set(k, j, a.get(k, j) + factor * a.get(i - 1, j));
-			}
-		}
-		result *= a.get(n-1, n-1);
-		
-		if (std::isnan(result))
-		{
-			print();
-			Q_ASSERT(false);
-		}
-		
-		return result;
-	}
+	double determinant() const;
+	
 	/** Tries to inverts the matrix. Returns true if successful. */
-	bool invert(Matrix& out) const
-	{
-		Matrix a = Matrix(*this);
-		out.setSize(n, m);
-		for (int i = 0; i < n; ++i)
-			for (int j = 0; j < m; ++j)
-				out.set(i, j, (i == j) ? 1 : 0);
-		
-		for (int i = 1; i < n; ++i)
-		{
-			// Pivot search
-			if (true) //a.get(i - 1, i - 1) <= 0.001)
-			{
-				double highest = qAbs(a.get(i - 1, i - 1));
-				int highest_pos = i - 1;
-				for (int k = i; k < n; ++k)
-				{
-					double v = qAbs(a.get(k, i - 1));
-					if (v > highest)
-					{
-						highest = v;
-						highest_pos = k;
-					}
-				}
-				if (highest == 0)
-					return false;
-				if (i - 1 != highest_pos)
-				{
-					a.swapRows(i - 1, highest_pos);
-					out.swapRows(i - 1, highest_pos);
-				}
-			}
-			
-			for (int k = i; k < n; ++k)
-			{
-				double factor = -a.get(k, i - 1) / a.get(i - 1, i - 1);
-				for (int j = 0; j < m; ++j)
-				{
-					a.set(k, j, a.get(k, j) + factor * a.get(i - 1, j));
-					out.set(k, j, out.get(k, j) + factor * out.get(i - 1, j));
-				}
-			}
-		}
-		for (int i = n - 2; i >= 0; --i)
-		{
-			for (int k = i; k >= 0; --k)
-			{
-				double factor = -a.get(k, i + 1) / a.get(i + 1, i + 1);
-				for (int j = 0; j < m; ++j)
-				{
-					a.set(k, j, a.get(k, j) + factor * a.get(i + 1, j));
-					out.set(k, j, out.get(k, j) + factor * out.get(i + 1, j));
-				}
-			}
-		}
-		for (int i = 0; i < n; ++i)
-		{
-			double factor = 1 / a.get(i, i);
-			for (int j = 0; j < m; ++j)
-				out.set(i, j, out.get(i, j) * factor);
-		}
-		
-		return true;
-	}
+	bool invert(Matrix& out) const;
 	
 	/** Outputs the matrix to stdout for debugging purposes. */
-	void print() const
-	{
-		for (int i = 0; i < n; ++i)
-		{
-			printf("( ");
-			for (int j = 0; j < m; ++j)
-			{
-				printf("%f ", get(i, j));
-			}
-			printf(")\n");
-		}
-		printf("\n");
-	}
+	void print() const;
 	
 private:
 	

@@ -29,7 +29,6 @@
 #include <QHash>
 #include <QSet>
 #include <QScopedPointer>
-#include <QExplicitlySharedDataPointer>
 
 #include "global.h"
 #include "core/map_coord.h"

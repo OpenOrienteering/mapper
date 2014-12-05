@@ -22,12 +22,11 @@
 #include "settings.h"
 
 #include <QApplication>
+#include <QDebug>
 #include <QLocale>
-#include <QVariant>
 #include <QScreen>
 #include <QSettings>
 #include <QStringList>
-#include <QDebug>
 
 #include "util.h"
 

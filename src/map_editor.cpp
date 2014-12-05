@@ -40,6 +40,7 @@
 #include <QMimeData>
 #include <QPainter>
 #include <QPushButton>
+#include <QSettings>
 #include <QSignalMapper>
 #include <QStatusBar>
 #include <QStringBuilder>

@@ -21,6 +21,11 @@
 
 #include "undo.h"
 
+#include <vector>
+
+#include <QXmlStreamReader>
+#include <QXmlStreamWriter>
+
 #include "map.h"
 #include "object_undo.h"
 #include "map_part_undo.h"

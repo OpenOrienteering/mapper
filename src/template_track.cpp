@@ -27,6 +27,8 @@
 #include <QMessageBox>
 #include <QPainter>
 #include <QRadioButton>
+#include <QXmlStreamReader>
+#include <QXmlStreamWriter>
 
 #include "gui/georeferencing_dialog.h"
 #include "map_widget.h"

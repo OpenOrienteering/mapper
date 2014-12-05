@@ -21,6 +21,8 @@
 
 #include "undo_manager.h"
 
+#include <vector>
+
 #include <QMessageBox>
 #include <QWidget>
 

@@ -20,8 +20,11 @@
 
 #include "matrix.h"
 
+#include <cstdio>
+
 #include <QDebug>
 #include <QIODevice>
+#include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
 void Matrix::load(QIODevice* file)
@@ -74,4 +77,133 @@ void Matrix::load(QXmlStreamReader& xml)
 		qDebug() << "Too few elements for a" << new_n << "x" << new_m
 		         << "matrix at line" << xml.lineNumber();
 	}
+}
+
+double Matrix::determinant() const
+{
+	Matrix a = Matrix(*this);
+	
+	double result = 1;
+	for (int i = 1; i < n; ++i)
+	{
+		// Pivot search
+		if (a.get(i - 1, i - 1) <= 0.001)
+		{
+			double highest = a.get(i - 1, i - 1);
+			int highest_pos = i - 1;
+			for (int k = i; k < n; ++k)
+			{
+				double v = a.get(k, i - 1);
+				if (v > highest)
+				{
+					highest = v;
+					highest_pos = k;
+				}
+			}
+			if (highest == 0)
+				return 0;
+			if (i - 1 != highest_pos)
+			{
+				a.swapRows(i - 1, highest_pos);
+				result = -result;
+			}
+		}
+		
+		result *= a.get(i-1, i-1);
+		
+		for (int k = i; k < n; ++k)
+		{
+			double factor = -a.get(k, i - 1) / a.get(i - 1, i - 1);
+			for (int j = i; j < m; ++j)
+				a.set(k, j, a.get(k, j) + factor * a.get(i - 1, j));
+		}
+	}
+	result *= a.get(n-1, n-1);
+	
+	if (qIsNaN(result))
+	{
+		print();
+		Q_ASSERT(false);
+	}
+	
+	return result;
+}
+
+bool Matrix::invert(Matrix& out) const
+{
+	Matrix a = Matrix(*this);
+	out.setSize(n, m);
+	for (int i = 0; i < n; ++i)
+		for (int j = 0; j < m; ++j)
+			out.set(i, j, (i == j) ? 1 : 0);
+	
+	for (int i = 1; i < n; ++i)
+	{
+		// Pivot search
+		if (true) //a.get(i - 1, i - 1) <= 0.001)
+		{
+			double highest = qAbs(a.get(i - 1, i - 1));
+			int highest_pos = i - 1;
+			for (int k = i; k < n; ++k)
+			{
+				double v = qAbs(a.get(k, i - 1));
+				if (v > highest)
+				{
+					highest = v;
+					highest_pos = k;
+				}
+			}
+			if (highest == 0)
+				return false;
+			if (i - 1 != highest_pos)
+			{
+				a.swapRows(i - 1, highest_pos);
+				out.swapRows(i - 1, highest_pos);
+			}
+		}
+		
+		for (int k = i; k < n; ++k)
+		{
+			double factor = -a.get(k, i - 1) / a.get(i - 1, i - 1);
+			for (int j = 0; j < m; ++j)
+			{
+				a.set(k, j, a.get(k, j) + factor * a.get(i - 1, j));
+				out.set(k, j, out.get(k, j) + factor * out.get(i - 1, j));
+			}
+		}
+	}
+	for (int i = n - 2; i >= 0; --i)
+	{
+		for (int k = i; k >= 0; --k)
+		{
+			double factor = -a.get(k, i + 1) / a.get(i + 1, i + 1);
+			for (int j = 0; j < m; ++j)
+			{
+				a.set(k, j, a.get(k, j) + factor * a.get(i + 1, j));
+				out.set(k, j, out.get(k, j) + factor * out.get(i + 1, j));
+			}
+		}
+	}
+	for (int i = 0; i < n; ++i)
+	{
+		double factor = 1 / a.get(i, i);
+		for (int j = 0; j < m; ++j)
+			out.set(i, j, out.get(i, j) * factor);
+	}
+	
+	return true;
+}
+
+void Matrix::print() const
+{
+	for (int i = 0; i < n; ++i)
+	{
+		printf("( ");
+		for (int j = 0; j < m; ++j)
+		{
+			printf("%f ", get(i, j));
+		}
+		printf(")\n");
+	}
+	printf("\n");
 }

@@ -29,6 +29,7 @@
 #include <QLabel>
 #include <QMenu>
 #include <QMessageBox>
+#include <QSettings>
 #include <QTableWidget>
 #include <QToolButton>
 

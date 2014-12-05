@@ -25,7 +25,7 @@
 #include <QCoreApplication>
 #include <QDir>
 #include <QFile>
-
+#include <QStringList>
 /**
  * Private MapperResource utilities
  */

@@ -23,6 +23,7 @@
 #define _OPENORIENTEERING_MAP_VIEW_H_
 
 #include <QHash>
+#include <QRectF>
 
 #include "../core/map_coord.h"
 #include "../matrix.h"

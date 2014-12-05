@@ -29,6 +29,7 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QScreen>
+#include <QSettings>
 #include <QTabWidget>
 #include <QTextCodec>
 #include <QToolButton>
