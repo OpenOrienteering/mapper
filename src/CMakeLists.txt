@@ -277,21 +277,17 @@ set(Mapper_Common_MOC_INPUT
 )
 
 set(Mapper_EXTRA_HEADERS
-  core/autosave_p.h
   core/crs_template.h
   core/image_transparency_fixup.h
   core/latlon.h
   core/map_coord.h
   core/map_grid.h
-  fileformats/ocd_file_format_p.h
   fileformats/ocd_types_v8.h
   fileformats/ocd_types_v9.h
   fileformats/ocd_types_v10.h
   fileformats/ocd_types_v11.h
   gui/point_handles.h
-  gui/settings_dialog_p.h
   util/scoped_signals_blocker.h
-  file_format_ocad8_p.h
   map_part.h
   map_part_undo.h
   object_operations.h
@@ -388,6 +384,6 @@ endif()
 # qmake configuration
 
 set(MAPPER_PRO_GENERATOR "Generated in CMakeLists.txt from src.pro.in")
-string(REPLACE ";" " \\\n  " MAPPER_PRO_HEADERS "${Mapper_Common_MOC_INPUT}")
+string(REPLACE ";" " \\\n  " MAPPER_PRO_HEADERS "${Mapper_Common_MOC_INPUT};${Mapper_EXTRA_HEADERS}")
 string(REPLACE ";" " \\\n  " MAPPER_PRO_SOURCES "${Mapper_Common_SRCS}")
 configure_file(${PROJECT_SOURCE_DIR}/src/src.pro.in ${PROJECT_SOURCE_DIR}/src/src.pro @ONLY)

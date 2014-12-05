@@ -127,7 +127,23 @@ HEADERS += \
   gui/widgets/tags_widget.h \
   util/item_delegates.h \
   util/overriding_shortcut.h \
-  util/recording_translator.h
+  util/recording_translator.h \
+  core/crs_template.h \
+  core/image_transparency_fixup.h \
+  core/latlon.h \
+  core/map_coord.h \
+  core/map_grid.h \
+  fileformats/ocd_types_v8.h \
+  fileformats/ocd_types_v9.h \
+  fileformats/ocd_types_v10.h \
+  fileformats/ocd_types_v11.h \
+  gui/point_handles.h \
+  util/scoped_signals_blocker.h \
+  map_part.h \
+  map_part_undo.h \
+  object_operations.h \
+  symbol.h \
+  undo.h
 
 SOURCES += \
   main.cpp \
