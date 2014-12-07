@@ -25,11 +25,7 @@
 #include "symbol.h" // provides SymbolDictionary typedef
 
 #include <set>
-
-namespace std
-{
-	template<typename Element, typename Allocator> class vector;
-}
+#include <vector>
 
 class Map;
 class QXmlStreamReader;

@@ -22,6 +22,8 @@
 #ifndef _OPENORIENTEERING_TRANSFORMATION_H_
 #define _OPENORIENTEERING_TRANSFORMATION_H_
 
+#include <vector>
+
 #include "core/map_coord.h"
 
 QT_BEGIN_NAMESPACE

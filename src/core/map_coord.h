@@ -23,14 +23,9 @@
 #define _OPENORIENTEERING_MAP_COORD_H_
 
 #include <cmath>
+#include <vector>
 
 #include <QPointF>
-
-
-namespace std
-{
-	template<typename Element, typename Allocator> class vector;
-}
 
 class QString;
 class QTextStream;

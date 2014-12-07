@@ -20,6 +20,8 @@
 
 #include "about_dialog.h"
 
+#include <cmath>
+
 #include <QApplication>
 #include <QDialog>
 #include <QPushButton>
