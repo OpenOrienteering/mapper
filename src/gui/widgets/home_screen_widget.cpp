@@ -53,22 +53,20 @@ AbstractHomeScreenWidget::~AbstractHomeScreenWidget()
 	// nothing
 }
 
-void AbstractHomeScreenWidget::paintEvent(QPaintEvent* event)
-{
-	Q_UNUSED(event);
-	
-	// Background
-	QPainter p(this);
-	p.setPen(Qt::NoPen);
-	p.setBrush(Qt::gray);
-	p.drawRect(rect());
-}
-
 QLabel* AbstractHomeScreenWidget::makeHeadline(const QString& text, QWidget* parent) const
 {
 	QLabel* title_label = new QLabel(text, parent);
 	QFont title_font = title_label->font();
-	title_font.setPointSize(2 * title_font.pointSize());
+	int pixel_size = title_font.pixelSize();
+	if (pixel_size > 0)
+	{
+		title_font.setPixelSize(pixel_size * 2);
+	}
+	else
+	{
+		pixel_size = title_font.pointSize();
+		title_font.setPointSize(pixel_size * 2);
+	}
 	title_font.setBold(true);
 	title_label->setFont(title_font);
 	title_label->setAlignment(Qt::AlignLeft | Qt::AlignTop);
@@ -79,7 +77,16 @@ QAbstractButton* AbstractHomeScreenWidget::makeButton(const QString& text, QWidg
 {
 	QAbstractButton* button = new QCommandLinkButton(text, parent);
 	QFont button_font = button->font();
-	button_font.setPointSize((int)(1.5 * button_font.pointSize()));
+	int pixel_size = button_font.pixelSize();
+	if (pixel_size > 0)
+	{
+		button_font.setPixelSize(pixel_size * 3 / 2);
+	}
+	else
+	{
+		pixel_size = button_font.pointSize();
+		button_font.setPointSize(pixel_size * 3 / 2);
+	}
 	button->setFont(button_font);
 	return button;
 }
@@ -174,9 +181,18 @@ QWidget* HomeScreenWidgetDesktop::makeRecentFilesWidget(HomeScreenController* co
 	
 	recent_files_list = new QListWidget();
 	QFont list_font = recent_files_list->font();
-	list_font.setPointSize((int)list_font.pointSize()*1.5);
+	int pixel_size = list_font.pixelSize();
+	if (pixel_size > 0)
+	{
+		list_font.setPixelSize(pixel_size * 3 / 2);
+	}
+	else
+	{
+		pixel_size = list_font.pointSize();
+		list_font.setPointSize(pixel_size * 3 / 2);
+	}
 	recent_files_list->setFont(list_font);
-	recent_files_list->setSpacing(list_font.pointSize()/2);
+	recent_files_list->setSpacing(pixel_size/2);
 	recent_files_list->setCursor(Qt::PointingHandCursor);
 	recent_files_list->setStyleSheet(" \
 	  QListWidget::item:hover { \
@@ -260,6 +276,15 @@ void HomeScreenWidgetDesktop::recentFileClicked(QListWidgetItem* item)
 	controller->getWindow()->openPath(path);
 }
 
+void HomeScreenWidgetDesktop::paintEvent(QPaintEvent*)
+{
+	// Background
+	QPainter p(this);
+	p.setPen(Qt::NoPen);
+	p.setBrush(Qt::gray);
+	p.drawRect(rect());
+}
+
 void HomeScreenWidgetDesktop::setOpenMRUFileChecked(bool state)
 {
 	open_mru_file_check->setChecked(state);
@@ -295,7 +320,6 @@ HomeScreenWidgetMobile::HomeScreenWidgetMobile(HomeScreenController* controller,
 	title_label = new QLabel();
 	title_label->setPixmap(title_pixmap);
 	title_label->setAlignment(Qt::AlignCenter);
-	adjustTitlePixmapSize();
 	
 	QWidget* file_list_widget = makeFileListWidget(controller, parent);
 	
@@ -336,10 +360,16 @@ void HomeScreenWidgetMobile::resizeEvent(QResizeEvent* event)
 void HomeScreenWidgetMobile::adjustTitlePixmapSize()
 {
 	QSize label_size = title_label->size();
-	QSize padding = label_size - title_pixmap.size();
-	if (!padding.isValid())
+	int scaled_width = qRound(title_pixmap.devicePixelRatio() * label_size.width());
+	if (title_pixmap.width() > scaled_width &&
+	    title_label->pixmap()->width() != scaled_width )
 	{
+		label_size.setHeight(title_pixmap.height());
 		title_label->setPixmap(title_pixmap.scaled(label_size, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+	}
+	else if (title_label->pixmap()->width() != title_pixmap.width())
+	{
+		title_label->setPixmap(title_pixmap);
 	}
 }
 
@@ -408,9 +438,18 @@ QWidget* HomeScreenWidgetMobile::makeFileListWidget(HomeScreenController* contro
 	
 	file_list = new QListWidget();
 	QFont list_font = file_list->font();
-	list_font.setPointSize((int)list_font.pointSize()*1.5);
+	int pixel_size = list_font.pixelSize();
+	if (pixel_size > 0)
+	{
+		list_font.setPixelSize(pixel_size * 3 / 2);
+	}
+	else
+	{
+		pixel_size = list_font.pointSize();
+		list_font.setPointSize(pixel_size * 3 / 2);
+	}
 	file_list->setFont(list_font);
-	file_list->setSpacing(list_font.pointSize()/2);
+	file_list->setSpacing(pixel_size/2);
 	file_list->setCursor(Qt::PointingHandCursor);
 	file_list->setStyleSheet(" \
 	  QListWidget::item:hover { \

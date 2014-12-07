@@ -46,6 +46,11 @@
 
 int main(int argc, char** argv)
 {
+#ifdef Q_OS_ANDROID
+	// Android native style is activated later.
+	qputenv("QT_USE_ANDROID_NATIVE_STYLE", "0");
+#endif
+	
 #if MAPPER_USE_QTSINGLEAPPLICATION
 	// Create single-instance application.
 	// Use "oo-mapper" instead of the executable as identifier, in case we launch from different paths.
@@ -98,22 +103,24 @@ int main(int argc, char** argv)
 	// Initialize static things like the file format registry.
 	doStaticInitializations();
 	
+	QStyle* base_style = nullptr;
+#if defined(Q_OS_ANDROID)
+	base_style = QStyleFactory::create("android");
+#elif !defined(Q_OS_WIN) && !defined(Q_OS_MAC)
+	if (QGuiApplication::platformName() == QLatin1String("xcb"))
+	{
+		// Use the modern 'fusion' style instead of the 
+		// default "windows" style on X11.
+		base_style = QStyleFactory::create("fusion");
+	}
+#endif
+	QApplication::setStyle(new MapperProxyStyle(base_style));
+	QApplication::setPalette(QApplication::style()->standardPalette());
+	
 	// Create first main window
 	MainWindow first_window(true);
 	first_window.setAttribute(Qt::WA_DeleteOnClose, false);
 	first_window.setController(new HomeScreenController());
-	
-	QProxyStyle* style = new MapperProxyStyle();
-#ifndef Q_OS_ANDROID
-	if (QGuiApplication::platformName() == QLatin1String("xcb"))
-#endif
-	{
-		// Use the modern 'fusion' style instead of the 
-		// default "windows" style on X11.
-		style->setBaseStyle(QStyleFactory::create("fusion"));
-	}
-	QApplication::setStyle(style);
-	QApplication::setPalette(QApplication::style()->standardPalette());
 	
 	// Open given files later, i.e. after the initial home screen has been
 	// displayed. In this way, error messages for missing files will show on 

@@ -780,7 +780,16 @@ void MapWidget::showHelpMessage(QPainter* painter, const QString& text)
 	painter->fillRect(rect(), QColor(Qt::gray));
 	
 	QFont font = painter->font();
-	font.setPointSize(2 * font.pointSize());
+	int pixel_size = font.pixelSize();
+	if (pixel_size > 0)
+	{
+		font.setPixelSize(pixel_size * 2);
+	}
+	else
+	{
+		pixel_size = font.pointSize();
+		font.setPointSize(pixel_size * 2);
+	}
 	font.setBold(true);
 	painter->setFont(font);
 	painter->drawText(QRect(0, 0, width(), height()), Qt::AlignCenter, text);
