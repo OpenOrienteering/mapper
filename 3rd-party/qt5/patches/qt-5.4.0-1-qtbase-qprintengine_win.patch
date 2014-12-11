@@ -1,0 +1,15 @@
+2014-12-07 Kai Pastor
+- Fix QTBUG-43124: QPrinter::{width,height} return incorrect size
+
+diff -up a/qtbase/src/printsupport/kernel/qprintengine_win.cpp.orig b/qtbase/src/printsupport/kernel/qprintengine_win.cpp
+--- a/qtbase/src/printsupport/kernel/qprintengine_win.cpp.orig	2014-12-07 10:16:20.284863210 +0100
++++ b/qtbase/src/printsupport/kernel/qprintengine_win.cpp	2014-12-07 10:16:10.901005787 +0100
+@@ -931,6 +931,8 @@ void QWin32PrintEnginePrivate::initHDC()
+     default:
+         break;
+     }
++    
++    updateMetrics();
+ }
+ 
+ void QWin32PrintEnginePrivate::release()

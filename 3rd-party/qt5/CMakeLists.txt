@@ -25,7 +25,7 @@ include(ExternalProject)
 
 # Configuration options
 
-set(QT5_VERSION_DEFAULT 5.3.2-openorienteering-2014-11-22)
+set(QT5_VERSION_DEFAULT 5.4.0)
 set(QT5_VERSION ${QT5_VERSION_DEFAULT} CACHE STRING
   "Version number of the Qt5 library, recommended value: ${QT5_VERSION_DEFAULT}")
 mark_as_advanced(QT5_VERSION)
@@ -61,7 +61,7 @@ set(QT5_MD5SUMS
   5.3.2:febb001129927a70174467ecb508a682
   5.3.2-openorienteering-2014-10-12:96f2029f208ac68b7c5543b496f22892
   5.3.2-openorienteering-2014-11-22:649a48ea2a06b7070fb960fd1028f4b5
-  5.4.0-rc:e47767b7b79eaafa4fff021933dcf5cc:http://download.qt-project.org/development_releases/qt/5.4/5.4.0-rc/single/qt-everywhere-opensource-src-5.4.0-rc.tar.gz
+  5.4.0:e8654e4b37dd98039ba20da7a53877e6
 )
 foreach(line ${QT5_MD5SUMS})
 	if(${line} MATCHES "^${QT5_VERSION}:")
@@ -348,5 +348,3 @@ endif()
 
 # Don't let Xcode re-root the install
 set_target_properties(Qt5 PROPERTIES XCODE_ATTRIBUTE_INSTALL_ROOT "")
-
-message(STATUS "Configuring Qt ${QT5_VERSION} - done")
