@@ -966,7 +966,7 @@ void MapWidget::paintEvent(QPaintEvent* event)
 	painter.end();
 }
 
-void MapWidget::resizeEvent(QResizeEvent* /* event */)
+void MapWidget::resizeEvent(QResizeEvent* event)
 {
 	map_cache_dirty_rect = rect();
 	below_template_cache_dirty_rect = map_cache_dirty_rect;
@@ -978,6 +978,14 @@ void MapWidget::resizeEvent(QResizeEvent* /* event */)
 		map_cache = QImage();
 		below_template_cache = QImage();
 		above_template_cache = QImage();
+	}
+	
+	Q_FOREACH(QObject* const child, children())
+	{
+		if (QWidget* child_widget = qobject_cast<QWidget*>(child))
+		{
+			child_widget->resize(event->size().width(), child_widget->sizeHint().height());
+		}
 	}
 }
 
