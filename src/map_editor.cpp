@@ -389,6 +389,8 @@ void MapEditorController::showPopupWidget(QWidget* child_widget, const QString& 
 {
 	if (mobile_mode)
 	{
+		// FIXME: This is used for KeyButtonBar only
+		//        and not related to mobile_mode!
 		QSize size = child_widget->sizeHint();
 		QRect map_widget_rect = map_widget->rect();
 		

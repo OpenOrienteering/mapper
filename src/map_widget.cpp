@@ -30,6 +30,8 @@
 
 #include "core/georeferencing.h"
 #include "core/map_color.h"
+#include "gui/widgets/action_grid_bar.h"
+#include "gui/widgets/key_button_bar.h"
 #include "map.h"
 #include "map_editor_activity.h"
 #include "settings.h"
@@ -982,9 +984,20 @@ void MapWidget::resizeEvent(QResizeEvent* event)
 	
 	Q_FOREACH(QObject* const child, children())
 	{
-		if (QWidget* child_widget = qobject_cast<QWidget*>(child))
+		if (QWidget* child_widget = qobject_cast<ActionGridBar*>(child))
 		{
 			child_widget->resize(event->size().width(), child_widget->sizeHint().height());
+		}
+		else if (QWidget* child_widget = qobject_cast<KeyButtonBar*>(child))
+		{
+			QSize size = child_widget->sizeHint();
+			QRect map_widget_rect = rect();
+			child_widget->setGeometry(
+				qMax(0, qRound(map_widget_rect.center().x() - 0.5f * size.width())),
+				qMax(0, map_widget_rect.bottom() - size.height()),
+				qMin(size.width(), map_widget_rect.width()),
+				qMin(size.height(), map_widget_rect.height())
+				);
 		}
 	}
 }
