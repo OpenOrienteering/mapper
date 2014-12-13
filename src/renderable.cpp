@@ -19,7 +19,6 @@
 
 #include "renderable.h"
 
-#include <QDebug>
 #include <QPainter>
 #include <qmath.h>
 
@@ -294,6 +293,10 @@ void MapRenderables::draw(QPainter* painter, QRectF bounding_box, bool force_min
 {
 	// TODO: improve performance by using some spatial acceleration structure?
 	
+#ifdef Q_OS_ANDROID
+	const qreal min_dimension = 1.0/scaling;
+#endif
+	
 	Map::ColorVector& colors = map->color_set->colors;
 	
 	QPainterPath initial_clip = painter->clipPath();
@@ -417,7 +420,7 @@ void MapRenderables::draw(QPainter* painter, QRectF bounding_box, bool force_min
 					}
 					current_clip = new_states.clip_path;
 				}
-					
+				
 				RenderableVector::const_iterator r_end = it->second.end();
 				for (RenderableVector::const_iterator renderable = it->second.begin(); renderable != r_end; ++renderable)
 				{
@@ -428,6 +431,10 @@ void MapRenderables::draw(QPainter* painter, QRectF bounding_box, bool force_min
 					if (extent.bottom() < bounding_box.y())	continue;
 					if (extent.x() > bounding_box.right())	continue;
 					if (extent.y() > bounding_box.bottom())	continue;
+#ifdef Q_OS_ANDROID
+					if (extent.width() < min_dimension && extent.height() < min_dimension)
+						continue;
+#endif
 					
 					// Render the renderable
 					(*renderable)->render(*painter, bounding_box, force_min_size, scaling, on_screen);

@@ -1328,9 +1328,11 @@ void MapWidget::updateMapCache(bool use_background)
 
 	painter.translate(width() / 2.0, height() / 2.0);
 	view->applyTransform(&painter);
+#ifndef Q_OS_ANDROID
 	if (view->isOverprintingSimulationEnabled())
 		map->drawOverprintingSimulation(&painter, map_view_rect, !use_antialiasing, view->calculateFinalZoomFactor(), true, true);
 	else
+#endif
 		map->draw(&painter, map_view_rect, !use_antialiasing, view->calculateFinalZoomFactor(), true, true);
 	
 	if (view->isGridVisible())
