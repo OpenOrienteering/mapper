@@ -22,8 +22,9 @@
 #ifndef _OPENORIENTEERING_MAP_WIDGET_H_
 #define _OPENORIENTEERING_MAP_WIDGET_H_
 
-#include <QWidget>
+#include <QImage>
 #include <QTime>
+#include <QWidget>
 
 #include "core/map_view.h"
 #include "map.h"
@@ -378,7 +379,7 @@ private:
 	 * @param use_background If set to true, fills the cache with white before
 	 *     drawing the templates, else makes it transparent.
 	 */
-	void updateTemplateCache(QImage*& cache, QRect& dirty_rect, int first_template, int last_template, bool use_background);
+	void updateTemplateCache(QImage& cache, QRect& dirty_rect, int first_template, int last_template, bool use_background);
 	/**
 	 * Redraws the map cache in the map cache dirty rect.
 	 * @param use_background If set to true, fills the cache with white before
@@ -388,7 +389,7 @@ private:
 	/** Redraws all dirty caches. */
 	void updateAllDirtyCaches();
 	/** Shifts the content in the cache by the given amount of pixels. */
-	void shiftCache(int sx, int sy, QImage*& cache);
+	void shiftCache(int sx, int sy, QImage& cache);
 	
 	/**
 	 * Calculates the bounding box of the given map coordinates rect and
@@ -449,14 +450,15 @@ private:
 	
 	// Template caches
 	/** Cache for templates below map layer */
-	QImage* below_template_cache;
+	QImage below_template_cache;
 	QRect below_template_cache_dirty_rect;
+	
 	/** Cache for templates above map layer */
-	QImage* above_template_cache;
+	QImage above_template_cache;
 	QRect above_template_cache_dirty_rect;
 	
-	// Map cache
-	QImage* map_cache;
+	/** Map layer cache  */
+	QImage map_cache;
 	QRect map_cache_dirty_rect;
 	
 	// Dirty regions for drawings (tools) and activities

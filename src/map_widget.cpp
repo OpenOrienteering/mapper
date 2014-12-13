@@ -58,9 +58,6 @@ MapWidget::MapWidget(bool show_help, bool force_antialiasing, QWidget* parent)
 	tool = NULL;
 	dragging = false;
 	drag_offset = QPoint(0, 0);
-	below_template_cache = NULL;
-	above_template_cache = NULL;
-	map_cache = NULL;
 	drawing_dirty_rect_old = QRect();
 	drawing_dirty_rect_new = QRectF();
 	drawing_dirty_rect_new_border = -1;
@@ -96,10 +93,6 @@ MapWidget::~MapWidget()
 {
 	if (view)
 		view->removeMapWidget(this);
-	
-	delete below_template_cache;
-	delete above_template_cache;
-	delete map_cache;
 	
 	delete touch_cursor;
 }
@@ -900,29 +893,29 @@ void MapWidget::paintEvent(QPaintEvent* event)
 		// TODO: Make sure that some cache (below_cache or map_cache) contains the background (white?) or it is drawn here
 		
 		// Draw caches
-		if (!view->areAllTemplatesHidden() && isBelowTemplateVisible() && below_template_cache && view->getMap()->getFirstFrontTemplate() > 0)
-			painter.drawImage(drag_offset, *below_template_cache, rect());
+		if (!view->areAllTemplatesHidden() && isBelowTemplateVisible() && !below_template_cache.isNull() && view->getMap()->getFirstFrontTemplate() > 0)
+			painter.drawImage(drag_offset, below_template_cache, rect());
 		else
 			painter.fillRect(QRect(drag_offset.x(), drag_offset.y(), width(), height()), Qt::white);	// TODO: It's not as easy as that, see above.
 		
-		if (map_cache && view->getMapVisibility()->visible)
+		if (!map_cache.isNull() && view->getMapVisibility()->visible)
 		{
 			float map_opacity = view->getMapVisibility()->opacity;
 			if (map_opacity < 1.0)
 			{
 				painter.save();
 				painter.setOpacity(map_opacity);
-				painter.drawImage(drag_offset, *map_cache, rect());
+				painter.drawImage(drag_offset, map_cache, rect());
 				painter.restore();
 			}
 			else
 			{
-				painter.drawImage(drag_offset, *map_cache, rect());
+				painter.drawImage(drag_offset, map_cache, rect());
 			}
 		}
 		
-		if (!view->areAllTemplatesHidden() && isAboveTemplateVisible() && above_template_cache && view->getMap()->getNumTemplates() - view->getMap()->getFirstFrontTemplate() > 0)
-			painter.drawImage(drag_offset, *above_template_cache, rect());
+		if (!view->areAllTemplatesHidden() && isAboveTemplateVisible() && !above_template_cache.isNull() && view->getMap()->getNumTemplates() - view->getMap()->getFirstFrontTemplate() > 0)
+			painter.drawImage(drag_offset, above_template_cache, rect());
 	}
 	
 	// Show current drawings
@@ -975,23 +968,21 @@ void MapWidget::paintEvent(QPaintEvent* event)
 
 void MapWidget::resizeEvent(QResizeEvent* event)
 {
-	if (below_template_cache && below_template_cache->size() != event->size())
+	if (!below_template_cache.isNull() && below_template_cache.size() != event->size())
 	{
-		delete below_template_cache;
-		below_template_cache = NULL;
+		below_template_cache = QImage();
 		below_template_cache_dirty_rect = rect();
 	}
-	if (above_template_cache && above_template_cache->size() != event->size())
+	
+	if (!above_template_cache.isNull() && above_template_cache.size() != event->size())
 	{
-		delete above_template_cache;
-		above_template_cache = NULL;
+		above_template_cache = QImage();
 		above_template_cache_dirty_rect = rect();
 	}
 	
-	if (map_cache && map_cache->size() != event->size())
+	if (!map_cache.isNull() && map_cache.size() != event->size())
 	{
-		delete map_cache;
-		map_cache = NULL;
+		map_cache = QImage();
 		map_cache_dirty_rect = rect();
 	}
 }
@@ -1245,14 +1236,14 @@ bool MapWidget::containsVisibleTemplate(int first_template, int last_template)
 	return false;
 }
 
-void MapWidget::updateTemplateCache(QImage*& cache, QRect& dirty_rect, int first_template, int last_template, bool use_background)
+void MapWidget::updateTemplateCache(QImage& cache, QRect& dirty_rect, int first_template, int last_template, bool use_background)
 {
 	Q_ASSERT(containsVisibleTemplate(first_template, last_template));
 	
-	if (!cache)
+	if (cache.isNull())
 	{
 		// Lazy allocation of cache image
-		cache = new QImage(size(), QImage::Format_ARGB32_Premultiplied);
+		cache = QImage(size(), QImage::Format_ARGB32_Premultiplied);
 		dirty_rect = rect();
 	}
 	
@@ -1260,8 +1251,7 @@ void MapWidget::updateTemplateCache(QImage*& cache, QRect& dirty_rect, int first
 	dirty_rect = dirty_rect.intersected(rect());
 	
 	// Start drawing
-	QPainter painter;
-	painter.begin(cache);
+	QPainter painter(&cache);
 	painter.setClipRect(dirty_rect);
 	
 	// Fill with background color (TODO: make configurable)
@@ -1293,10 +1283,10 @@ void MapWidget::updateTemplateCache(QImage*& cache, QRect& dirty_rect, int first
 
 void MapWidget::updateMapCache(bool use_background)
 {
-	if (!map_cache)
+	if (map_cache.isNull())
 	{
 		// Lazy allocation of cache image
-		map_cache = new QImage(size(), QImage::Format_ARGB32_Premultiplied);
+		map_cache = QImage(size(), QImage::Format_ARGB32_Premultiplied);
 		map_cache_dirty_rect = rect();
 	}
 	
@@ -1305,7 +1295,7 @@ void MapWidget::updateMapCache(bool use_background)
 	
 	// Start drawing
 	QPainter painter;
-	painter.begin(map_cache);
+	painter.begin(&map_cache);
 	painter.setClipRect(map_cache_dirty_rect);
 	
 	// Fill with background color (TODO: make configurable)
@@ -1355,15 +1345,15 @@ void MapWidget::updateAllDirtyCaches()
 		updateMapCache(false);
 }
 
-void MapWidget::shiftCache(int sx, int sy, QImage*& cache)
+void MapWidget::shiftCache(int sx, int sy, QImage& cache)
 {
-	if (!cache) return;
-	QImage* new_cache = new QImage(cache->size(), cache->format());
-	QPainter painter;
-	painter.begin(new_cache);
-	painter.setCompositionMode(QPainter::CompositionMode_Source);
-	painter.drawImage(sx, sy, *cache);
-	painter.end();
-	delete cache;
-	cache = new_cache;
+	if (!cache.isNull())
+	{
+		QImage new_cache(cache.size(), cache.format());
+		QPainter painter(&new_cache);
+		painter.setCompositionMode(QPainter::CompositionMode_Source);
+		painter.drawImage(sx, sy, cache);
+		painter.end();
+		cache = new_cache;
+	}
 }
