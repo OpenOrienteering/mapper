@@ -966,24 +966,18 @@ void MapWidget::paintEvent(QPaintEvent* event)
 	painter.end();
 }
 
-void MapWidget::resizeEvent(QResizeEvent* event)
+void MapWidget::resizeEvent(QResizeEvent* /* event */)
 {
-	if (!below_template_cache.isNull() && below_template_cache.size() != event->size())
-	{
-		below_template_cache = QImage();
-		below_template_cache_dirty_rect = rect();
-	}
+	map_cache_dirty_rect = rect();
+	below_template_cache_dirty_rect = map_cache_dirty_rect;
+	above_template_cache_dirty_rect = map_cache_dirty_rect;
 	
-	if (!above_template_cache.isNull() && above_template_cache.size() != event->size())
-	{
-		above_template_cache = QImage();
-		above_template_cache_dirty_rect = rect();
-	}
-	
-	if (!map_cache.isNull() && map_cache.size() != event->size())
+	if (map_cache.width() < map_cache_dirty_rect.width() ||
+	    map_cache.height() < map_cache_dirty_rect.height())
 	{
 		map_cache = QImage();
-		map_cache_dirty_rect = rect();
+		below_template_cache = QImage();
+		above_template_cache = QImage();
 	}
 }
 
