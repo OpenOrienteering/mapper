@@ -488,6 +488,7 @@ void MapEditorController::attach(MainWindow* window)
 	color_dock_widget = NULL;
 	symbol_dock_widget = NULL;
 	template_dock_widget = NULL;
+	QLabel* statusbar_zoom_label = NULL;
 	
 	this->window = window;
 	if (mode == MapEditor)
@@ -499,9 +500,11 @@ void MapEditorController::attach(MainWindow* window)
                                        "lockOrientation",
                                        "()V");
 #endif
-	
-	QLabel* statusbar_zoom_label = NULL;
-	if (!mobile_mode)
+	if (mobile_mode)
+	{
+		window->setWindowState(window->windowState() | Qt::WindowFullScreen);
+	}
+	else
 	{
 		// Add zoom / cursor position field to status bar
 		QLabel* statusbar_zoom_icon = new QLabel();
@@ -556,7 +559,9 @@ void MapEditorController::attach(MainWindow* window)
 	{
 		createActions();
 		if (mobile_mode)
+		{
 			createMobileGUI();
+		}
 		else
 		{
 			map_widget->setZoomLabel(statusbar_zoom_label);
@@ -1296,6 +1301,8 @@ void MapEditorController::detach()
                                        "()V");
 #endif
 	
+	if (mobile_mode)
+		window->setWindowState(window->windowState() & ~Qt::WindowFullScreen);
 }
 
 void MapEditorController::saveWindowState()

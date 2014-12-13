@@ -736,7 +736,7 @@ bool MainWindow::openPath(const QString &path)
 	open_window->setHasAutosaveConflict(new_autosave_conflict);
 	open_window->setHasUnsavedChanges(/*actual_path != path*/false);
 	
-	open_window->show();
+	open_window->setVisible(true); // Respect the window flags set by new_controller.
 	open_window->raise();
 	num_open_files++;
 	settings.remove(reopen_blocker);
