@@ -248,6 +248,8 @@ void TextSymbol::updateQFont()
 	tab_interval = 8.0 * metrics.averageCharWidth();
 }
 
+#ifndef NO_NATIVE_FILE_FORMAT
+
 bool TextSymbol::loadImpl(QIODevice* file, int version, Map* map)
 {
 	int temp;
@@ -294,6 +296,8 @@ bool TextSymbol::loadImpl(QIODevice* file, int version, Map* map)
 	updateQFont();
 	return true;
 }
+
+#endif
 
 void TextSymbol::saveImpl(QXmlStreamWriter& xml, const Map& map) const
 {

@@ -49,6 +49,8 @@ TemplateTransform::TemplateTransform()
 }
 
 
+#ifndef NO_NATIVE_FILE_FORMAT
+
 void TemplateTransform::load(QIODevice* file)
 {
 	file->read((char*)&template_x, sizeof(qint64));
@@ -58,6 +60,8 @@ void TemplateTransform::load(QIODevice* file)
 	file->read((char*)&template_scale_y, sizeof(qint64));
 	file->read((char*)&template_rotation, sizeof(qint64));
 }
+
+#endif
 
 void TemplateTransform::save(QXmlStreamWriter& xml, const QString role) const
 {
@@ -151,6 +155,8 @@ void Template::setErrorString(const QString &text)
 	error_string = text;
 }
 
+#ifndef NO_NATIVE_FILE_FORMAT
+
 bool Template::loadTemplateConfiguration(QIODevice* stream, int version)
 {
 	loadString(stream, template_file);
@@ -199,6 +205,8 @@ bool Template::loadTemplateConfiguration(QIODevice* stream, int version)
 	}
 	return true;
 }
+
+#endif
 
 void Template::saveTemplateConfiguration(QXmlStreamWriter& xml, bool open)
 {

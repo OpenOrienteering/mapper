@@ -194,6 +194,8 @@ void CombinedUndoStep::getModifiedObjects(int part_index, ObjectSet &out) const
 	}
 }
 
+#ifndef NO_NATIVE_FILE_FORMAT
+
 bool CombinedUndoStep::load(QIODevice* file, int version)
 {
 	int size;
@@ -209,6 +211,8 @@ bool CombinedUndoStep::load(QIODevice* file, int version)
 	}
 	return success;
 }
+
+#endif
 
 void CombinedUndoStep::saveImpl(QXmlStreamWriter& xml) const
 {
@@ -285,9 +289,12 @@ UndoStep* NoOpUndoStep::undo()
 	return new NoOpUndoStep(map, true);
 }
 
+#ifndef NO_NATIVE_FILE_FORMAT
+
 bool NoOpUndoStep::load(QIODevice*, int)
 {
 	qWarning("InvalidUndoStep::load(QIODevice*, int) must not be called");
 	return false;
 }
 
+#endif

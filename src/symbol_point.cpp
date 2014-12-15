@@ -268,6 +268,8 @@ void PointSymbol::scale(double factor)
 	resetIcon();
 }
 
+#ifndef NO_NATIVE_FILE_FORMAT
+
 bool PointSymbol::loadImpl(QIODevice* file, int version, Map* map)
 {
 	file->read((char*)&rotatable, sizeof(bool));
@@ -304,6 +306,8 @@ bool PointSymbol::loadImpl(QIODevice* file, int version, Map* map)
 	
 	return true;
 }
+
+#endif
 
 void PointSymbol::saveImpl(QXmlStreamWriter& xml, const Map& map) const
 {

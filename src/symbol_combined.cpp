@@ -197,6 +197,8 @@ Symbol::Type CombinedSymbol::getContainedTypes() const
 	return (Type)type;
 }
 
+#ifndef NO_NATIVE_FILE_FORMAT
+
 bool CombinedSymbol::loadImpl(QIODevice* file, int version, Map* map)
 {
 	int size;
@@ -227,6 +229,8 @@ bool CombinedSymbol::loadImpl(QIODevice* file, int version, Map* map)
 	}
 	return true;
 }
+
+#endif
 
 void CombinedSymbol::saveImpl(QXmlStreamWriter& xml, const Map& map) const
 {

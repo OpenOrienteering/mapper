@@ -27,6 +27,8 @@
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
+#ifndef NO_NATIVE_FILE_FORMAT
+
 void Matrix::load(QIODevice* file)
 {
 	int new_n, new_m;
@@ -36,6 +38,8 @@ void Matrix::load(QIODevice* file)
 	setSize(new_n, new_m);
 	file->read((char*)d, n*m * sizeof(double));
 }
+
+#endif
 
 void Matrix::save(QXmlStreamWriter& xml, const QString role) const
 {

@@ -30,6 +30,8 @@
 
 // ### PassPoint ###
 
+#ifndef NO_NATIVE_FILE_FORMAT
+
 void PassPoint::load(QIODevice* file, int version)
 {
 	if (version < 27)
@@ -42,6 +44,8 @@ void PassPoint::load(QIODevice* file, int version)
 	file->read((char*)&calculated_coords, sizeof(MapCoordF));
 	file->read((char*)&error, sizeof(double));
 }
+
+#endif
 
 void PassPoint::save(QXmlStreamWriter& xml) const
 {

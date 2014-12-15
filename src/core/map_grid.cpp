@@ -62,6 +62,8 @@ MapGrid::MapGrid()
 	vert_offset = 0;
 }
 
+#ifndef NO_NATIVE_FILE_FORMAT
+
 const MapGrid& MapGrid::load(QIODevice* file, int version)
 {
 	Q_UNUSED(version);
@@ -82,6 +84,8 @@ const MapGrid& MapGrid::load(QIODevice* file, int version)
 	
 	return *this;
 }
+
+#endif
 
 void MapGrid::save(QXmlStreamWriter& xml) const
 {

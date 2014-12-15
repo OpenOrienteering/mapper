@@ -198,7 +198,9 @@ public:
 	virtual SymbolPropertiesWidget* createPropertiesWidget(SymbolSettingDialog* dialog);
 	
 protected:
+#ifndef NO_NATIVE_FILE_FORMAT
 	virtual bool loadImpl(QIODevice* file, int version, Map* map);
+#endif
 	virtual void saveImpl(QXmlStreamWriter& xml, const Map& map) const;
 	virtual bool loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict);
 	PointSymbol* loadPointSymbol(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict);

@@ -295,4 +295,9 @@ android {
   
   # Add examples as resource
   RESOURCES += ../examples/examples.qrc
+  
+  # Remove legacy code
+  DEFINES += NO_NATIVE_FILE_FORMAT
+  HEADERS -= file_format_native.h
+  SOURCES -= file_format_native.cpp
 }

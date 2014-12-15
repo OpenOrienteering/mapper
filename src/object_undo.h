@@ -98,11 +98,13 @@ public:
 	virtual void getModifiedObjects(int part_index, ObjectSet& out) const;
 	
 	
+#ifndef NO_NATIVE_FILE_FORMAT
 	/**
 	 * Loads the undo step from the file in the old "native" format.
 	 * @deprecated Old file format.
 	 */
 	virtual bool load(QIODevice* file, int version);
+#endif
 	
 protected:
 	/**
@@ -198,11 +200,13 @@ public:
 	virtual void getModifiedObjects(int, ObjectSet&) const;
 	
 	
+#ifndef NO_NATIVE_FILE_FORMAT
 	/**
 	 * @copybrief UndoStep::load()
 	 * @deprecated Old file format.
 	 */
 	virtual bool load(QIODevice* file, int version);
+#endif
 	
 public slots:
 	/**
@@ -324,7 +328,9 @@ public:
 	
 	virtual UndoStep* undo();
 	
+#ifndef NO_NATIVE_FILE_FORMAT
 	virtual bool load(QIODevice* file, int version);
+#endif
 	
 protected:
 	virtual void saveImpl(QXmlStreamWriter& xml) const;
@@ -353,7 +359,9 @@ public:
 	
 	virtual UndoStep* undo();
 	
+#ifndef NO_NATIVE_FILE_FORMAT
 	virtual bool load(QIODevice* file, int version);
+#endif
 	
 public slots:
 	virtual void symbolChanged(int pos, const Symbol* new_symbol, const Symbol* old_symbol);

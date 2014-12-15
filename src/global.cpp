@@ -69,8 +69,9 @@ void doStaticInitializations()
 	// Register the supported file formats
 	FileFormats.registerFormat(new XMLFileFormat());
 	FileFormats.registerFormat(new OcdFileFormat());
-// 	FileFormats.registerFormat(new OCAD8FileFormat());
+#ifndef NO_NATIVE_FILE_FORMAT
 	FileFormats.registerFormat(new NativeFileFormat()); // TODO: Remove before release 1.0
+#endif
 	
 #if defined(Q_OS_ANDROID)
 	// Register file finder function needed by Proj.4

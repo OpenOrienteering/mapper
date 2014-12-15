@@ -71,6 +71,8 @@ void MapPart::setName(const QString new_name)
 }
 
 
+#ifndef NO_NATIVE_FILE_FORMAT
+
 bool MapPart::load(QIODevice* file, int version, Map* map)
 {
 	loadString(file, name);
@@ -91,6 +93,7 @@ bool MapPart::load(QIODevice* file, int version, Map* map)
 	return true;
 }
 
+#endif
 
 void MapPart::save(QXmlStreamWriter& xml) const
 {

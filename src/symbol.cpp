@@ -178,6 +178,8 @@ bool Symbol::numberEquals(const Symbol* other, bool ignore_trailing_zeros)
 	return true;
 }
 
+#ifndef NO_NATIVE_FILE_FORMAT
+
 bool Symbol::load(QIODevice* file, int version, Map* map)
 {
 	loadString(file, name);
@@ -192,6 +194,8 @@ bool Symbol::load(QIODevice* file, int version, Map* map)
 	
 	return loadImpl(file, version, map);
 }
+
+#endif
 
 void Symbol::save(QXmlStreamWriter& xml, const Map& map) const
 {
@@ -518,6 +522,8 @@ Symbol* Symbol::getSymbolForType(Symbol::Type type)
 	}
 }
 
+#ifndef NO_NATIVE_FILE_FORMAT
+
 bool Symbol::loadSymbol(Symbol*& symbol, QIODevice* stream, int version, Map* map)
 {
 	int save_type;
@@ -529,6 +535,8 @@ bool Symbol::loadSymbol(Symbol*& symbol, QIODevice* stream, int version, Map* ma
 		return false;
 	return true;
 }
+
+#endif
 
 void Symbol::createBaselineRenderables(const Object* object, const Symbol* symbol, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output, bool hatch_areas)
 {

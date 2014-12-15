@@ -212,6 +212,8 @@ const TextObject* Object::asText() const
 	return static_cast<const TextObject*>(this);
 }
 
+#ifndef NO_NATIVE_FILE_FORMAT
+
 void Object::load(QIODevice* file, int version, Map* map)
 {
 	this->map = map;
@@ -288,6 +290,8 @@ void Object::load(QIODevice* file, int version, Map* map)
 	
 	output_dirty = true;
 }
+
+#endif
 
 void Object::save(QXmlStreamWriter& xml) const
 {

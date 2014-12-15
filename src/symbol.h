@@ -342,10 +342,12 @@ public:
 	static const int number_components = 3;
 	
 protected:
+#ifndef NO_NATIVE_FILE_FORMAT
 	/**
 	 * Must be overridden to load type-specific symbol properties. See saveImpl()
 	 */
 	virtual bool loadImpl(QIODevice* file, int version, Map* map) = 0;
+#endif
 	
 	/**
 	 * Must be overridden to save type-specific symbol properties.

@@ -57,6 +57,8 @@ void LineSymbolBorder::reset()
 	break_length = 1 * 1000;
 }
 
+#ifndef NO_NATIVE_FILE_FORMAT
+
 bool LineSymbolBorder::load(QIODevice* file, int version, Map* map)
 {
 	Q_UNUSED(version);
@@ -70,6 +72,8 @@ bool LineSymbolBorder::load(QIODevice* file, int version, Map* map)
 	file->read((char*)&break_length, sizeof(int));
 	return true;
 }
+
+#endif
 
 void LineSymbolBorder::save(QXmlStreamWriter& xml, const Map& map) const
 {
@@ -1689,6 +1693,8 @@ void LineSymbol::replaceSymbol(PointSymbol*& old_symbol, PointSymbol* replace_wi
 	replace_with->setName(name);
 }
 
+#ifndef NO_NATIVE_FILE_FORMAT
+
 bool LineSymbol::loadImpl(QIODevice* file, int version, Map* map)
 {
 	file->read((char*)&line_width, sizeof(int));
@@ -1774,6 +1780,8 @@ bool LineSymbol::loadImpl(QIODevice* file, int version, Map* map)
 	}
 	return true;
 }
+
+#endif
 
 void LineSymbol::saveImpl(QXmlStreamWriter& xml, const Map& map) const
 {

@@ -63,6 +63,8 @@ AreaSymbol::FillPattern::FillPattern()
 	point = NULL;
 }
 
+#ifndef NO_NATIVE_FILE_FORMAT
+
 bool AreaSymbol::FillPattern::load(QIODevice* file, int version, Map* map)
 {
 	qint32 itype;
@@ -103,6 +105,8 @@ bool AreaSymbol::FillPattern::load(QIODevice* file, int version, Map* map)
 	}
 	return true;
 }
+
+#endif
 
 void AreaSymbol::FillPattern::save(QXmlStreamWriter& xml, const Map& map) const
 {
@@ -570,6 +574,8 @@ bool AreaSymbol::hasRotatableFillPattern() const
 	return false;
 }
 
+#ifndef NO_NATIVE_FILE_FORMAT
+
 bool AreaSymbol::loadImpl(QIODevice* file, int version, Map* map)
 {
 	int temp;
@@ -587,6 +593,8 @@ bool AreaSymbol::loadImpl(QIODevice* file, int version, Map* map)
 	
 	return true;
 }
+
+#endif
 
 void AreaSymbol::saveImpl(QXmlStreamWriter& xml, const Map& map) const
 {

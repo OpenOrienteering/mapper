@@ -20,6 +20,8 @@
 #ifndef NATIVE_FILE_FORMAT_H
 #define NATIVE_FILE_FORMAT_H
 
+#ifndef NO_NATIVE_FILE_FORMAT
+
 #include "file_format.h"
 
 /** Provides a description of the old native file format. 
@@ -61,5 +63,7 @@ public:
 	 */
 	static const char magic_bytes[4];
 };
+
+#endif // NO_NATIVE_FILE_FORMAT
 
 #endif // NATIVE_FILE_FORMAT_H

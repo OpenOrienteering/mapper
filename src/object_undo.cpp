@@ -93,6 +93,8 @@ void ObjectModifyingUndoStep::getModifiedObjects(int part_index, ObjectSet& out)
 	}
 }
 
+#ifndef NO_NATIVE_FILE_FORMAT
+
 bool ObjectModifyingUndoStep::load(QIODevice* file, int version)
 {
 	Q_UNUSED(version);
@@ -104,6 +106,8 @@ bool ObjectModifyingUndoStep::load(QIODevice* file, int version)
 		file->read((char*)&modified_objects[i], sizeof(int));
 	return true;
 }
+
+#endif
 
 void ObjectModifyingUndoStep::saveImpl(QXmlStreamWriter& xml) const
 {
@@ -194,6 +198,8 @@ void ObjectCreatingUndoStep::addObject(Object* existing, Object* object)
 	addObject(index, object);
 }
 
+#ifndef NO_NATIVE_FILE_FORMAT
+
 bool ObjectCreatingUndoStep::load(QIODevice* file, int version)
 {
 	if (!ObjectModifyingUndoStep::load(file, version))
@@ -213,6 +219,7 @@ bool ObjectCreatingUndoStep::load(QIODevice* file, int version)
 	return true;
 }
 
+#endif
 void ObjectCreatingUndoStep::getModifiedObjects(int part_index, ObjectSet& out) const
 {
 	if (part_index == getPartIndex())
@@ -469,12 +476,16 @@ UndoStep* SwitchPartUndoStep::undo()
 	return undo;
 }
 
+#ifndef NO_NATIVE_FILE_FORMAT
+
 // virtual
 bool SwitchPartUndoStep::load(QIODevice *, int)
 {
 	Q_ASSERT(false); // Not used in legacy file format
 	return false;
 }
+
+#endif
 
 // virtual
 void SwitchPartUndoStep::saveImpl(QXmlStreamWriter &xml) const
@@ -545,6 +556,8 @@ UndoStep* SwitchSymbolUndoStep::undo()
 	return undo_step;
 }
 
+#ifndef NO_NATIVE_FILE_FORMAT
+
 bool SwitchSymbolUndoStep::load(QIODevice* file, int version)
 {
 	if (!ObjectModifyingUndoStep::load(file, version))
@@ -560,6 +573,8 @@ bool SwitchSymbolUndoStep::load(QIODevice* file, int version)
 	}
 	return true;
 }
+
+#endif
 
 void SwitchSymbolUndoStep::saveImpl(QXmlStreamWriter& xml) const
 {

@@ -60,6 +60,8 @@ MapView::~MapView()
 	delete map_visibility;
 }
 
+#ifndef NO_NATIVE_FILE_FORMAT
+
 void MapView::load(QIODevice* file, int version)
 {
 	file->read((char*)&zoom, sizeof(double));
@@ -96,6 +98,8 @@ void MapView::load(QIODevice* file, int version)
 	if (version >= 24)
 		file->read((char*)&grid_visible, sizeof(bool));
 }
+
+#endif
 
 void MapView::save(QXmlStreamWriter& xml, const QString& element_name, bool skip_templates)
 {
