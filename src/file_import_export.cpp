@@ -44,7 +44,7 @@ Importer::~Importer()
 	// Nothing, not inlined
 }
 
-void Importer::doImport(bool load_symbols_only, const QString& map_path) throw (FileFormatException)
+void Importer::doImport(bool load_symbols_only, const QString& map_path)
 {
 	import(load_symbols_only);
 	
@@ -140,7 +140,7 @@ void Importer::doImport(bool load_symbols_only, const QString& map_path) throw (
 	}
 }
 
-void Importer::finishImport() throw (FileFormatException)
+void Importer::finishImport()
 {
 	// Nothing, not inlined
 }

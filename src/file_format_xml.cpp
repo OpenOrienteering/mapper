@@ -74,12 +74,12 @@ bool XMLFileFormat::understands(const unsigned char *buffer, size_t sz) const
 	return false;
 }
 
-Importer *XMLFileFormat::createImporter(QIODevice* stream, Map *map, MapView *view) const throw (FileFormatException)
+Importer *XMLFileFormat::createImporter(QIODevice* stream, Map *map, MapView *view) const
 {
 	return new XMLFileImporter(stream, map, view);
 }
 
-Exporter *XMLFileFormat::createExporter(QIODevice* stream, Map *map, MapView *view) const throw (FileFormatException)
+Exporter *XMLFileFormat::createExporter(QIODevice* stream, Map *map, MapView *view) const
 {
 	return new XMLFileExporter(stream, map, view);
 }
@@ -167,7 +167,7 @@ XMLFileExporter::XMLFileExporter(QIODevice* stream, Map *map, MapView *view)
 	setOption("autoFormatting", auto_formatting);
 }
 
-void XMLFileExporter::doExport() throw (FileFormatException)
+void XMLFileExporter::doExport()
 {
 	if (option("autoFormatting").toBool() == true)
 		xml.setAutoFormatting(true);
@@ -396,7 +396,7 @@ void XMLFileImporter::addWarningUnsupportedElement()
 	);
 }
 
-void XMLFileImporter::import(bool load_symbols_only) throw (FileFormatException)
+void XMLFileImporter::import(bool load_symbols_only)
 {
 	if (!xml.readNextStartElement() || xml.name() != literal::map)
 	{
@@ -415,7 +415,7 @@ void XMLFileImporter::import(bool load_symbols_only) throw (FileFormatException)
 	importElements(load_symbols_only);
 }
 
-void XMLFileImporter::importElements(bool load_symbols_only) throw (FileFormatException)
+void XMLFileImporter::importElements(bool load_symbols_only)
 {
 	while (xml.readNextStartElement())
 	{

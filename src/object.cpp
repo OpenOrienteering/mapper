@@ -340,7 +340,7 @@ void Object::save(QXmlStreamWriter& xml) const
 	}
 }
 
-Object* Object::load(QXmlStreamReader& xml, Map* map, const SymbolDictionary& symbol_dict, const Symbol* symbol) throw (FileFormatException)
+Object* Object::load(QXmlStreamReader& xml, Map* map, const SymbolDictionary& symbol_dict, const Symbol* symbol)
 {
 	Q_ASSERT(xml.name() == literal::object);
 	

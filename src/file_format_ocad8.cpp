@@ -67,12 +67,12 @@ bool OCAD8FileFormat::understands(const unsigned char* buffer, size_t sz) const
     return false;
 }
 
-Importer* OCAD8FileFormat::createImporter(QIODevice* stream, Map *map, MapView *view) const throw (FileFormatException)
+Importer* OCAD8FileFormat::createImporter(QIODevice* stream, Map *map, MapView *view) const
 {
 	return new OCAD8FileImport(stream, map, view);
 }
 
-Exporter* OCAD8FileFormat::createExporter(QIODevice* stream, Map* map, MapView* view) const throw (FileFormatException)
+Exporter* OCAD8FileFormat::createExporter(QIODevice* stream, Map* map, MapView* view) const
 {
     return new OCAD8FileExport(stream, map, view);
 }
@@ -102,7 +102,7 @@ bool OCAD8FileImport::isRasterImageFile(const QString &filename)
 	return QImageReader::supportedImageFormats().contains(extension.toLatin1());
 }
 
-void OCAD8FileImport::import(bool load_symbols_only) throw (FileFormatException)
+void OCAD8FileImport::import(bool load_symbols_only)
 {
     //qint64 start = QDateTime::currentMSecsSinceEpoch();
 	
@@ -1536,7 +1536,7 @@ OCAD8FileExport::~OCAD8FileExport()
 	delete origin_point_object;
 }
 
-void OCAD8FileExport::doExport() throw (FileFormatException)
+void OCAD8FileExport::doExport()
 {
 	uses_registration_color = map->isColorUsedByASymbol(map->getRegistrationColor());
 	if (map->getNumColors() > (uses_registration_color ? 255 : 256))

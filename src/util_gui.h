@@ -63,16 +63,16 @@ namespace Util
 		typedef double basetype;
 		
 		/** The minimum input value. */
-		inline static double min() throw()   { return -99999999.99; }
+		inline static double min() noexcept   { return -99999999.99; }
 		
 		/** The maximum input value. */
-		inline static double max() throw()   { return +99999999.99; }
+		inline static double max() noexcept   { return +99999999.99; }
 		
 		/** The spinbox step width. */
-		inline static double step() throw()  { return 1.0; }
+		inline static double step() noexcept  { return 1.0; }
 		
 		/** The number of decimals. */
-		inline static int decimals() throw() { return 2; }
+		inline static int decimals() noexcept { return 2; }
 		
 		/** The unit of measurement, translated in context UnitOfMeasurement. */
 		inline static QString unit()
@@ -98,16 +98,16 @@ namespace Util
 		typedef double basetype;
 		
 		/** The minimum input value. */
-		inline static double min() throw()   { return -99999999.99; }
+		inline static double min() noexcept   { return -99999999.99; }
 		
 		/** The maximum input value. */
-		inline static double max() throw()   { return +99999999.99; }
+		inline static double max() noexcept   { return +99999999.99; }
 		
 		/** The spinbox step width. */
-		inline static double step() throw()  { return 1.0; }
+		inline static double step() noexcept  { return 1.0; }
 		
 		/** The number of decimals. */
-		inline static int decimals() throw() { return 2; }
+		inline static int decimals() noexcept { return 2; }
 		
 		/** The unit of measurement, translated in context UnitOfMeasurement. */
 		inline static QString unit()

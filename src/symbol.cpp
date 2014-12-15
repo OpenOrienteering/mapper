@@ -215,7 +215,7 @@ void Symbol::save(QXmlStreamWriter& xml, const Map& map) const
 	xml.writeEndElement(/*symbol*/);
 }
 
-Symbol* Symbol::load(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict) throw (FileFormatException)
+Symbol* Symbol::load(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict)
 {
 	Q_ASSERT(xml.name() == "symbol");
 	

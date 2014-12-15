@@ -30,8 +30,8 @@ public:
 	OCAD8FileFormat();
 	
 	bool understands(const unsigned char *buffer, size_t sz) const;
-	virtual Importer* createImporter(QIODevice* stream, Map *map, MapView *view) const throw (FileFormatException);
-	virtual Exporter* createExporter(QIODevice* stream, Map* map, MapView* view) const throw (FileFormatException);
+	virtual Importer* createImporter(QIODevice* stream, Map *map, MapView *view) const;
+	virtual Exporter* createExporter(QIODevice* stream, Map* map, MapView* view) const;
 };
 
 #endif // OCAD8_FILE_IMPORT_H

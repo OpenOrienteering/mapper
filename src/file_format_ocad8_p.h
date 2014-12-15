@@ -77,7 +77,7 @@ public:
 	static const float ocad_pt_in_mm;
 
 protected:
-	void import(bool load_symbols_only) throw (FileFormatException);
+	void import(bool load_symbols_only);
 	
 	// Symbol import
 	Symbol *importPointSymbol(const OCADPointSymbol *ocad_symbol);
@@ -153,7 +153,7 @@ public:
 	OCAD8FileExport(QIODevice* stream, Map *map, MapView *view);
 	~OCAD8FileExport();
 	
-	void doExport() throw (FileFormatException);
+	void doExport();
 	
 protected:
 	

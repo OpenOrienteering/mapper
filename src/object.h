@@ -131,7 +131,7 @@ public:
 	 * @param symbol If set, this symbol will be assigned to the object,
 	 *     if NULL, the symbol will be read from the stream.
 	 */
-	static Object* load(QXmlStreamReader& xml, Map* map, const SymbolDictionary& symbol_dict, const Symbol* symbol = 0) throw (FileFormatException);
+	static Object* load(QXmlStreamReader& xml, Map* map, const SymbolDictionary& symbol_dict, const Symbol* symbol = 0);
 	
 	/**
 	 * Checks if the output_dirty flag is set and if yes,

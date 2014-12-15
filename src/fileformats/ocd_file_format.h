@@ -44,12 +44,12 @@ public:
 	 * Creates an importer object and configures for the given input stream
 	 * and output map and view.
 	 */
-	virtual Importer* createImporter(QIODevice* stream, Map *map, MapView *view) const throw (FileFormatException);
+	virtual Importer* createImporter(QIODevice* stream, Map *map, MapView *view) const;
 	
 	/**
 	 * Creates an OCAD8FileFormat exporter.
 	 */
-	virtual Exporter* createExporter(QIODevice* stream, Map* map, MapView* view) const throw (FileFormatException);
+	virtual Exporter* createExporter(QIODevice* stream, Map* map, MapView* view) const;
 };
 
 #endif // _OPENORIENTEERING_OCD_FILE_FORMAT_

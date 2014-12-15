@@ -41,12 +41,12 @@ public:
 	
 	/** Creates an importer for this file type.
 	 */
-	Importer *createImporter(QIODevice* stream, Map *map, MapView *view) const throw (FileFormatException);
+	Importer *createImporter(QIODevice* stream, Map *map, MapView *view) const;
 	
 #ifdef MAPPER_ENABLE_NATIVE_EXPORTER
 	/** Creates an exporter for this file type.
 	 */
-	Exporter *createExporter(QIODevice* stream, Map *map, MapView *view) const throw (FileFormatException);
+	Exporter *createExporter(QIODevice* stream, Map *map, MapView *view) const;
 #endif
 	
 	/** Constant describing the earliest OMAP version supported by this file format.

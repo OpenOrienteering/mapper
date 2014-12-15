@@ -152,7 +152,7 @@ public:
 	 * @param map Reference to the map containing the symbol.
 	 * @param symbol_dict Dictionary mapping symbol IDs to symbol pointers.
 	 */
-	static Symbol* load(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict) throw (FileFormatException);
+	static Symbol* load(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict);
 	
 	/**
 	 * Called after loading of the map is finished.

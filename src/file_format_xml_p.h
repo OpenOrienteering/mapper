@@ -36,7 +36,7 @@ public:
 	XMLFileExporter(QIODevice* stream, Map *map, MapView *view);
 	virtual ~XMLFileExporter() {}
 	
-	virtual void doExport() throw (FileFormatException);
+	virtual void doExport();
 	
 protected:
 	void exportGeoreferencing();
@@ -63,9 +63,9 @@ public:
 	virtual ~XMLFileImporter() {}
 
 protected:
-	virtual void import(bool load_symbols_only) throw (FileFormatException);
+	virtual void import(bool load_symbols_only);
 	
-	void importElements(bool load_symbols_only) throw (FileFormatException);
+	void importElements(bool load_symbols_only);
 	
 	void addWarningUnsupportedElement();
 	void importGeoreferencing(bool load_symbols_only);

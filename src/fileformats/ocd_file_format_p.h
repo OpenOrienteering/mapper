@@ -131,40 +131,40 @@ public:
 	
 	void addSymbolWarning(TextSymbol* symbol, const QString& warning);
 	
-	virtual void finishImport() throw (FileFormatException);
+	virtual void finishImport();
 	
 protected:
-	virtual void import(bool load_symbols_only) throw (FileFormatException);
+	virtual void import(bool load_symbols_only);
 	
 	template< class F >
-	void importImplementation(bool load_symbols_only) throw (FileFormatException);
+	void importImplementation(bool load_symbols_only);
 	
 	template< class F >
-	void importGeoreferencing(const OcdFile< F >& file) throw (FileFormatException);
+	void importGeoreferencing(const OcdFile< F >& file);
 	
 	void importGeoreferencing(const QString& param_string);
 	
 	template< class F >
-	void importColors(const OcdFile< F >& file) throw (FileFormatException);
+	void importColors(const OcdFile< F >& file);
 	
 	MapColor* importColor(const QString& param_string);
 	
 	template< class F >
-	void importSymbols(const OcdFile< F >& file) throw (FileFormatException);
+	void importSymbols(const OcdFile< F >& file);
 	
 	template< class F >
-	void importObjects(const OcdFile< F >& file) throw (FileFormatException);
+	void importObjects(const OcdFile< F >& file);
 	
 	template< class F >
-	void importTemplates(const OcdFile< F >& file) throw (FileFormatException);
+	void importTemplates(const OcdFile< F >& file);
 	
 	Template* importTemplate(const QString& param_string, const int ocd_version);
 	
 	template< class F >
-	void importExtras(const OcdFile< F >& file) throw (FileFormatException);
+	void importExtras(const OcdFile< F >& file);
 	
 	template< class F >
-	void importView(const OcdFile< F >& file) throw (FileFormatException);
+	void importView(const OcdFile< F >& file);
 	
 	void importView(const QString& param_string);
 	

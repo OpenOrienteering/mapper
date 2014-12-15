@@ -44,19 +44,19 @@ public:
 	
 	/** Copy-constructor (C++ FAQ 17.17).
 	 */
-	FileFormatException(const FileFormatException& other) throw();
+	FileFormatException(const FileFormatException& other) noexcept;
 	
 	/** Destroys the exception object.
 	 */
-	virtual ~FileFormatException() throw();
+	virtual ~FileFormatException() noexcept;
 	
 	/** Returns the message as a QString. 
 	 */
-	const QString& message() const throw();
+	const QString& message() const noexcept;
 	
 	/** Returns the message as a C string.
 	 */
-	virtual const char* what() const throw();
+	virtual const char* what() const noexcept;
 	
 private:
 	QString const msg;
@@ -77,11 +77,11 @@ private:
  *      MyCustomFileFormat : FileFormat("custom", ImportExport::tr("Custom file"), "custom", true, true) {
  *      }
  *
- *      Importer *createImporter(QIODevice* stream, Map *map, MapView *view) const throw (FileFormatException) {
+ *      Importer *createImporter(QIODevice* stream, Map *map, MapView *view) const {
  *          return new CustomImporter(stream, map, view);
  *      }
  *
- *      Exporter *createExporter(QIODevice* stream, Map *map, MapView *view) const throw (FileFormatException) {
+ *      Exporter *createExporter(QIODevice* stream, Map *map, MapView *view) const {
  *          return new CustomExporter(stream, map, view);
  *      }
  *  }
@@ -197,7 +197,7 @@ public:
 	 *
 	 *  If the Importer could not be created, then this method should throw a FormatException.
 	 */
-	virtual Importer* createImporter(QIODevice* stream, Map *map, MapView *view) const throw(FileFormatException);
+	virtual Importer* createImporter(QIODevice* stream, Map *map, MapView *view) const;
 	
 	/** Creates an Exporter that will save the given map and view into the given stream.
 	 *  The caller can then call doExport() in the returned object to start the export process. The caller
@@ -205,7 +205,7 @@ public:
 	 *
 	 *  If the Exporter could not be created, then this method should throw a FormatException.
 	 */
-	virtual Exporter *createExporter(QIODevice* stream, Map *map, MapView *view) const throw (FileFormatException);
+	virtual Exporter *createExporter(QIODevice* stream, Map *map, MapView *view) const;
 	
 private:
 	FileType file_type;
@@ -228,7 +228,7 @@ FileFormatException::FileFormatException(const QString& message)
 }
 
 inline
-FileFormatException::FileFormatException(const FileFormatException& other) throw()
+FileFormatException::FileFormatException(const FileFormatException& other) noexcept
  : msg(other.msg)
  , msg_c(other.msg_c)
 {
@@ -236,7 +236,7 @@ FileFormatException::FileFormatException(const FileFormatException& other) throw
 }
 
 inline
-const QString& FileFormatException::message() const throw()
+const QString& FileFormatException::message() const noexcept
 {
 	return msg;
 }

@@ -54,7 +54,7 @@ void XmlElementWriter::write(const MapCoordVector& coords)
 }
 
 
-void XmlElementReader::read(MapCoordVector& coords) throw (FileFormatException)
+void XmlElementReader::read(MapCoordVector& coords)
 {
 	namespace literal = XmlStreamLiteral;
 	

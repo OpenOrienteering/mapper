@@ -173,7 +173,7 @@ Georeferencing& Georeferencing::operator=(const Georeferencing& other)
 	return *this;
 }
 
-void Georeferencing::load(QXmlStreamReader& xml, bool load_scale_only) throw (FileFormatException)
+void Georeferencing::load(QXmlStreamReader& xml, bool load_scale_only)
 {
 	Q_ASSERT(xml.name() == literal::georeferencing);
 	

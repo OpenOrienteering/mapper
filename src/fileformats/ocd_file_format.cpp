@@ -69,12 +69,12 @@ bool OcdFileFormat::understands(const unsigned char* buffer, size_t sz) const
 	return (sz >= 2 && *reinterpret_cast<const quint16*>(buffer) == 0x0cad);
 }
 
-Importer* OcdFileFormat::createImporter(QIODevice* stream, Map *map, MapView *view) const throw (FileFormatException)
+Importer* OcdFileFormat::createImporter(QIODevice* stream, Map *map, MapView *view) const
 {
 	return new OcdFileImport(stream, map, view);
 }
 
-Exporter* OcdFileFormat::createExporter(QIODevice* stream, Map* map, MapView* view) const throw (FileFormatException)
+Exporter* OcdFileFormat::createExporter(QIODevice* stream, Map* map, MapView* view) const
 {
 	return new OCAD8FileExport(stream, map, view);
 }
@@ -151,7 +151,7 @@ qint64 OcdFileImport::convertLength< quint32 >(quint32 ocd_length) const
 #endif // !NDEBUG
 
 template< >
-void OcdFileImport::importImplementation< Ocd::FormatLegacyImporter >(bool load_symbols_only) throw (FileFormatException)
+void OcdFileImport::importImplementation< Ocd::FormatLegacyImporter >(bool load_symbols_only)
 {
 	QBuffer new_stream(&buffer);
 	new_stream.open(QIODevice::ReadOnly);
@@ -171,7 +171,7 @@ void OcdFileImport::importImplementation< Ocd::FormatLegacyImporter >(bool load_
 }
 
 template< class F >
-void OcdFileImport::importImplementation(bool load_symbols_only) throw (FileFormatException)
+void OcdFileImport::importImplementation(bool load_symbols_only)
 {
 	OcdFile< F > file(buffer);
 #if 0
@@ -197,7 +197,7 @@ void OcdFileImport::importImplementation(bool load_symbols_only) throw (FileForm
 }
 
 template< >
-void OcdFileImport::importGeoreferencing< Ocd::FormatV8 >(const OcdFile< Ocd::FormatV8 >& file) throw (FileFormatException)
+void OcdFileImport::importGeoreferencing< Ocd::FormatV8 >(const OcdFile< Ocd::FormatV8 >& file)
 {
 	const Ocd::FileHeaderV8* header = file.header();
 	const Ocd::SetupV8* setup = reinterpret_cast< const Ocd::SetupV8* >(file.byteArray().data() + header->setup_pos);
@@ -213,7 +213,7 @@ void OcdFileImport::importGeoreferencing< Ocd::FormatV8 >(const OcdFile< Ocd::Fo
 }
 
 template< class F >
-void OcdFileImport::importGeoreferencing(const OcdFile< F >& file) throw (FileFormatException)
+void OcdFileImport::importGeoreferencing(const OcdFile< F >& file)
 {
 	for (typename OcdFile< F >::StringIndex::iterator it = file.strings().begin(); it != file.strings().end(); ++it)
 	{
@@ -283,7 +283,7 @@ void OcdFileImport::importGeoreferencing(const QString& param_string)
 }
 
 template< >
-void OcdFileImport::importColors< class Ocd::FormatV8 >(const OcdFile< Ocd::FormatV8 >& file) throw (FileFormatException)
+void OcdFileImport::importColors< class Ocd::FormatV8 >(const OcdFile< Ocd::FormatV8 >& file)
 {
 	const Ocd::SymbolHeaderV8 & symbol_header = file.header()->symbol_header;
 	int num_colors = symbol_header.num_colors;
@@ -312,7 +312,7 @@ void OcdFileImport::importColors< class Ocd::FormatV8 >(const OcdFile< Ocd::Form
 }
 
 template< class F >
-void OcdFileImport::importColors(const OcdFile< F >& file) throw (FileFormatException)
+void OcdFileImport::importColors(const OcdFile< F >& file)
 {
 	for (typename OcdFile< F >::StringIndex::iterator it = file.strings().begin(); it != file.strings().end(); ++it)
 	{
@@ -404,7 +404,7 @@ MapColor* OcdFileImport::importColor(const QString& param_string)
 }
 
 template< class F >
-void OcdFileImport::importSymbols(const OcdFile< F >& file) throw (FileFormatException)
+void OcdFileImport::importSymbols(const OcdFile< F >& file)
 {
 	for (typename OcdFile< F >::SymbolIndex::iterator it = file.symbols().begin(); it != file.symbols().end(); ++it)
 	{
@@ -454,7 +454,7 @@ void OcdFileImport::importSymbols(const OcdFile< F >& file) throw (FileFormatExc
 }
 
 template< >
-void OcdFileImport::importObjects< class Ocd::FormatV8 >(const OcdFile< Ocd::FormatV8 >& file) throw (FileFormatException)
+void OcdFileImport::importObjects< class Ocd::FormatV8 >(const OcdFile< Ocd::FormatV8 >& file)
 {
 	MapPart* part = map->getCurrentPart();
 	Q_ASSERT(part);
@@ -475,7 +475,7 @@ void OcdFileImport::importObjects< class Ocd::FormatV8 >(const OcdFile< Ocd::For
 }
 
 template< class F >
-void OcdFileImport::importObjects(const OcdFile< F >& file) throw (FileFormatException)
+void OcdFileImport::importObjects(const OcdFile< F >& file)
 {
 	MapPart* part = map->getCurrentPart();
 	Q_ASSERT(part);
@@ -498,7 +498,7 @@ void OcdFileImport::importObjects(const OcdFile< F >& file) throw (FileFormatExc
 }
 
 template< class F >
-void OcdFileImport::importTemplates(const OcdFile< F >& file) throw (FileFormatException)
+void OcdFileImport::importTemplates(const OcdFile< F >& file)
 {
 	for (typename OcdFile< F >::StringIndex::iterator it = file.strings().begin(); it != file.strings().end(); ++it)
 	{
@@ -614,21 +614,21 @@ Template* OcdFileImport::importTemplate(const QString& param_string, const int o
 }
 
 template< >
-void OcdFileImport::importExtras< class Ocd::FormatV8 >(const OcdFile< Ocd::FormatV8 >& file) throw (FileFormatException)
+void OcdFileImport::importExtras< class Ocd::FormatV8 >(const OcdFile< Ocd::FormatV8 >& file)
 {
 	const Ocd::FileHeaderV8* header = file.header();
 	map->setMapNotes(convertOcdString< Ocd::FormatV8::Encoding >(file.byteArray().data() + header->info_pos, header->info_size));
 }
 
 template< class F >
-void OcdFileImport::importExtras(const OcdFile< F >& file) throw (FileFormatException)
+void OcdFileImport::importExtras(const OcdFile< F >& file)
 {
 	Q_UNUSED(file);
 	; // TODO
 }
 
 template< >
-void OcdFileImport::importView< class Ocd::FormatV8 >(const OcdFile< Ocd::FormatV8 >& file) throw (FileFormatException)
+void OcdFileImport::importView< class Ocd::FormatV8 >(const OcdFile< Ocd::FormatV8 >& file)
 {
 	if (view)
 	{
@@ -645,7 +645,7 @@ void OcdFileImport::importView< class Ocd::FormatV8 >(const OcdFile< Ocd::Format
 }
 
 template< class F >
-void OcdFileImport::importView(const OcdFile< F >& file) throw (FileFormatException)
+void OcdFileImport::importView(const OcdFile< F >& file)
 {
 	for (typename OcdFile< F >::StringIndex::iterator it = file.strings().begin(); it != file.strings().end(); ++it)
 	{
@@ -1851,7 +1851,7 @@ bool OcdFileImport::fillTextPathCoords(TextObject *object, TextSymbol *symbol, q
 	return true;
 }
 
-void OcdFileImport::import(bool load_symbols_only) throw (FileFormatException)
+void OcdFileImport::import(bool load_symbols_only)
 {
 	Q_ASSERT(buffer.isEmpty());
 	
@@ -1902,7 +1902,7 @@ void OcdFileImport::import(bool load_symbols_only) throw (FileFormatException)
 	}
 }
 
-void OcdFileImport::finishImport() throw (FileFormatException)
+void OcdFileImport::finishImport()
 {
 	if (delegate)
 	{

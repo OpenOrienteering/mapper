@@ -254,12 +254,12 @@ public:
 	 * Reads the coordinates vector from a simple text format.
 	 * This is much more efficient than loading each coordinate from rich XML.
 	 */
-	void read(MapCoordVector& coords) throw (FileFormatException);
+	void read(MapCoordVector& coords);
 	
 	/**
 	 * Read tags.
 	 */
-	void read(QHash<QString, QString>& tags) throw (FileFormatException);
+	void read(QHash<QString, QString>& tags);
 	
 private:
 	QXmlStreamReader& xml;
@@ -636,7 +636,7 @@ void XmlElementReader::read(QSizeF& size)
 }
 
 inline
-void XmlElementReader::read(QHash<QString, QString> &tags) throw (FileFormatException)
+void XmlElementReader::read(QHash<QString, QString> &tags)
 {
 	namespace literal = XmlStreamLiteral;
 	

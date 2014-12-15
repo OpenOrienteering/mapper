@@ -55,7 +55,7 @@ public:
 protected:
 	/** Imports a native file.
 	 */
-	void import(bool load_symbols_only) throw (FileFormatException);
+	void import(bool load_symbols_only);
 };
 
 
@@ -97,7 +97,7 @@ bool NativeFileFormat::understands(const unsigned char *buffer, size_t sz) const
 	return (sz >= 4 && memcmp(buffer, magic_bytes, 4) == 0);
 }
 
-Importer *NativeFileFormat::createImporter(QIODevice* stream, Map* map, MapView* view) const throw (FileFormatException)
+Importer *NativeFileFormat::createImporter(QIODevice* stream, Map* map, MapView* view) const
 {
 	return new NativeFileImport(stream, map, view);
 }
@@ -114,7 +114,7 @@ NativeFileImport::~NativeFileImport()
 {
 }
 
-void NativeFileImport::import(bool load_symbols_only) throw (FileFormatException)
+void NativeFileImport::import(bool load_symbols_only)
 {
     char buffer[4];
     stream->read(buffer, 4); // read the magic

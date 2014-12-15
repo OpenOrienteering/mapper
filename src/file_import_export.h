@@ -69,7 +69,7 @@ public:
 	 *  a value - either a default value assigned in the constructor, or a custom value assigned
 	 *  through setOption() - then a FormatException will be thrown.
 	 */
-	QVariant option(const QString& name) const throw (FileFormatException);
+	QVariant option(const QString& name) const;
 	
 	protected:
 	/** Adds an import/export warning to the current list of warnings. The provided message
@@ -145,17 +145,17 @@ public:
 	 *  generally an Importer should not succeed unless the map is populated sufficiently
 	 *  to be useful.
 	 */
-	void doImport(bool load_symbols_only, const QString& map_path = QString()) throw (FileFormatException);
+	void doImport(bool load_symbols_only, const QString& map_path = QString());
 	
 	/** Once all action items are satisfied, this method should be called to complete the
 	 *  import process. This class defines a default implementation, that does nothing.
 	 */
-	virtual void finishImport() throw (FileFormatException);
+	virtual void finishImport();
 	
 protected:
 	/** Implementation of doImport().
 	 */
-	virtual void import(bool load_symbols_only) throw (FileFormatException) = 0;
+	virtual void import(bool load_symbols_only) = 0;
 	
 	/** Adds an action item to the current list.
 	 */
@@ -192,7 +192,7 @@ public:
 	 *  proceed, but information might be lost in the process, than it should call
 	 *  addWarning() with a translated, useful description of the issue.
 	 */
-	virtual void doExport() throw (FileFormatException) = 0;
+	virtual void doExport() = 0;
 };
 
 
@@ -224,7 +224,7 @@ void ImportExport::setOption(const QString& name, QVariant value)
 }
 
 inline
-QVariant ImportExport::option(const QString& name) const throw (FileFormatException)
+QVariant ImportExport::option(const QString& name) const
 {
 	if (!options.contains(name))
 		throw FileFormatException(ImportExport::tr("No such option: %1", "No such import / export option").arg(name));
