@@ -1,10 +1,25 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionName="0.5.99" android:versionCode="1" package="org.openorienteering.mapper" android:installLocation="auto">
     <application android:name="org.qtproject.qt5.android.bindings.QtApplication" android:label="@string/app_name" android:icon="@drawable/icon">
-        <activity android:configChanges="orientation|uiMode|screenLayout|screenSize|smallestScreenSize|locale|fontScale|keyboard|keyboardHidden|navigation" android:name="org.openorienteering.mapper.MapperActivity" android:label="@string/app_name">
+        <activity android:configChanges="orientation|uiMode|screenLayout|screenSize|smallestScreenSize|locale|fontScale|keyboard|keyboardHidden|navigation"
+                  android:name="org.openorienteering.mapper.MapperActivity"
+                  android:label="@string/app_name"
+                  android:launchMode="singleTask" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+            <intent-filter android:label="@string/app_name" android:icon="@drawable/icon" android:priority="1">
+                <action android:name="android.intent.action.VIEW"/>
+                <action android:name="android.intent.action.EDIT"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:scheme="file"/>
+                <data android:host="*"/>
+                <data android:mimeType="*/*"/>
+                <data android:pathPattern=".*\\.omap"/>
+                <data android:pathPattern=".*\\.xmap"/>
+                <data android:pathPattern=".*\\.ocd"/>
             </intent-filter>
             <meta-data android:value="Mapper" android:name="android.app.lib_name"/>
             <meta-data android:resource="@array/qt_sources" android:name="android.app.qt_sources_resource_id"/>
@@ -31,7 +46,7 @@
             <!-- Splash screen -->
         </activity>
     </application>
-    <uses-sdk android:targetSdkVersion="14" android:minSdkVersion="9"/>
+    <uses-sdk android:targetSdkVersion="19" android:minSdkVersion="9"/>
     <supports-screens android:largeScreens="true" android:anyDensity="true" android:normalScreens="true" android:smallScreens="true"/>
     <!-- %%INSERT_PERMISSIONS -->
     <!-- %%INSERT_FEATURES -->

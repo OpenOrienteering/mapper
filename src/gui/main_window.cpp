@@ -79,6 +79,7 @@ int MainWindow::num_open_files = 0;
 MainWindow::MainWindow(bool as_main_window)
 : QMainWindow()
 , has_autosave_conflict(false)
+, homescreen_disabled(false)
 {
 	controller = NULL;
 	has_unsaved_changes = false;
@@ -159,6 +160,11 @@ void MainWindow::setCentralWidget(QWidget* widget)
 		central_widget->removeWidget(w);
 		w->deleteLater();
 	}
+}
+
+void MainWindow::setHomeScreenDisabled(bool disabled)
+{
+	homescreen_disabled = disabled;
 }
 
 void MainWindow::setController(MainWindowController* new_controller, const QString& path)
@@ -419,7 +425,7 @@ bool MainWindow::closeFile()
 			num_open_files--;
 			has_opened_file = false;
 		}
-		if (num_open_files > 0)
+		if (homescreen_disabled || num_open_files > 0)
 			close();
 		else
 			setController(new HomeScreenController());
@@ -664,8 +670,10 @@ void MainWindow::showOpenDialog()
 
 bool MainWindow::openPath(const QString &path)
 {
+#ifndef Q_OS_ANDROID
 	// Empty path does nothing. This also helps with the single instance application code.
-	if (path.isEmpty()) return true;
+	if (path.isEmpty())
+		return true;
 	
 	MainWindow* const existing = findMainWindow(path);
 	if (existing)
@@ -675,6 +683,7 @@ bool MainWindow::openPath(const QString &path)
 		existing->activateWindow();
 		return true;
 	}
+#endif
 	
 	// Check a blocker that prevents immediate re-opening of crashing files.
 	// Needed for stopping auto-loading a crashing file on startup.
@@ -726,15 +735,16 @@ bool MainWindow::openPath(const QString &path)
 		return false;
 	}
 	
-	MainWindow* open_window;
+	MainWindow* open_window = this;
+#if defined(Q_OS_ANDROID)
 	if (has_opened_file)
 		open_window = new MainWindow(true);
-	else
-		open_window = this;
+#endif
+	
 	open_window->setController(new_controller, path);
 	open_window->actual_path = new_actual_path;
 	open_window->setHasAutosaveConflict(new_autosave_conflict);
-	open_window->setHasUnsavedChanges(/*actual_path != path*/false);
+	open_window->setHasUnsavedChanges(false);
 	
 	open_window->setVisible(true); // Respect the window flags set by new_controller.
 	open_window->raise();

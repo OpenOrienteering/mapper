@@ -49,7 +49,7 @@ public:
 	 *  with value false (in SymbolSettingDialog).
 	 *  @param as_main_window if false, disables the loading of save windows geometry and hides the bottom-right handle for resizing.
 	 */
-	MainWindow(bool as_main_window = true);
+	explicit MainWindow(bool as_main_window = true);
 	
 	/** Destroys a main window. */
 	virtual ~MainWindow();
@@ -153,6 +153,23 @@ public:
 	 * NEVER call QMainWindow::setCentralWidget(...) on a MainWindow.
 	 */
 	void setCentralWidget(QWidget* widget);
+	
+	
+	/**
+	 * Indicates whether the home screen is disabled.
+	 * 
+	 * Normally the last main window will return to the home screen when a file
+	 * is closed. When the home screen is disabled, the last window will be
+	 * closed instead.
+	 */
+	bool homeScreenDisabled() const;
+	
+	/**
+	 * Sets whether to show the home screen after closing the last file.
+	 * 
+	 * @see homeScreenDisabled()
+	 */
+	void setHomeScreenDisabled(bool disabled);
 	
 public slots:
 	/** Show a wizard for creating new maps.
@@ -374,6 +391,8 @@ private:
 	
 	/// Was the window maximized before going into fullscreen mode? In this case, we have to show it maximized again when leaving fullscreen mode.
 	bool maximized_before_fullscreen;
+	
+	bool homescreen_disabled;
 
 	/// Number of active main windows. The last window shall not close on File > Close.
 	static int num_open_files;
@@ -384,5 +403,14 @@ private:
 	/// A list of paths to be opened later
 	QStringList path_backlog;
 };
+
+
+// ### MainWindow inline code ###
+
+inline
+bool MainWindow::homeScreenDisabled() const
+{
+	return homescreen_disabled;
+}
 
 #endif
