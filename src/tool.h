@@ -29,6 +29,7 @@
 
 class QAction;
 class QFocusEvent;
+class QGestureEvent;
 class QKeyEvent;
 class QMouseEvent;
 
@@ -155,6 +156,17 @@ public:
 	virtual bool keyPressEvent(QKeyEvent* event);
 	virtual bool keyReleaseEvent(QKeyEvent* event);
 	virtual void focusOutEvent(QFocusEvent* event);
+	
+	// Gesture input
+	virtual bool gestureEvent(QGestureEvent* event, MapWidget* widget);
+	
+	/**
+	 * This is called to signal the start of a gesture.
+	 * 
+	 * Tools may reimplement this if they want to cancel ongoing interactions
+	 * such as dragging.
+	 */	
+	virtual void gestureStarted();
 	
 	/**
 	 * @brief Returns the type of this tool.

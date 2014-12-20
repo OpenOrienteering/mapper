@@ -184,6 +184,16 @@ void MapEditorTool::focusOutEvent(QFocusEvent* event)
 	// nothing
 }
 
+bool MapEditorTool::gestureEvent(QGestureEvent*, MapWidget*)
+{
+	return false;
+}
+
+void MapEditorTool::gestureStarted()
+{
+	// nothing
+}
+
 
 void MapEditorTool::useTouchCursor(bool enabled)
 {

@@ -87,7 +87,7 @@ bool PrintTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidge
 	{
 		if (region == Outside)
 		{
-			mapWidget()->getMapView()->setDragOffset(event->pos() - click_pos);
+			mapWidget()->getMapView()->setPanOffset(event->pos() - click_pos);
 		}
 		else
 		{
@@ -106,7 +106,7 @@ bool PrintTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWi
 	{
 		if (region == Outside)
 		{
-			mapWidget()->getMapView()->completeDragging(event->pos() - click_pos);
+			mapWidget()->getMapView()->finishPanning(event->pos() - click_pos);
 		}
 		else
 		{

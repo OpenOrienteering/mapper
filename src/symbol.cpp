@@ -458,7 +458,7 @@ QImage Symbol::createIcon(const Map* map, int side_length, bool antialiasing, in
 		view.setZoom(best_zoom * (max_icon_mm_half / real_icon_mm_half));
 	
 	painter.translate(0.5f * (side_length - bottom_right_border), 0.5f * (side_length - bottom_right_border));
-	view.applyTransform(&painter);
+	painter.setWorldTransform(view.worldTransform(), true);
 	
 	bool was_hidden = is_hidden;
 	is_hidden = false; // ensure that an icon is created for hidden symbols.

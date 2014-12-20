@@ -23,6 +23,7 @@
 #define _OPENORIENTEERING_MAP_WIDGET_H_
 
 #include <QImage>
+#include <QPixmap>
 #include <QTime>
 #include <QWidget>
 
@@ -190,10 +191,10 @@ public:
 	void panView(qint64 x, qint64 y);
 	
 	/** Sets the current drag offset during a map pan operation. */
-	void setDragOffset(QPoint offset, bool do_update = true);
+	void setPanOffset(QPoint offset);
 	
 	/** Returns the current drag offset during a map pan operation. */
-	QPoint getDragOffset() const;
+	QPoint dragOffset() const;
 	
 	/**
 	 * Completes a map panning operation. Calls panView() internally and
@@ -201,7 +202,7 @@ public:
 	 * @param dx X offset of the total view change in native map coordinates
 	 * @param dy Y offset of the total view change in native map coordinates
 	 */
-	void completeDragging(qint64 dx, qint64 dy, bool do_update = true);
+	void finishPanning(qint64 dx, qint64 dy);
 	
 	/**
 	 * Adjusts the viewport so the given rect is inside the view.
@@ -390,6 +391,7 @@ private:
 	void updateAllDirtyCaches();
 	/** Shifts the content in the cache by the given amount of pixels. */
 	void shiftCache(int sx, int sy, QImage& cache);
+	void shiftCache(int sx, int sy, QPixmap& cache);
 	
 	/**
 	 * Calculates the bounding box of the given map coordinates rect and
@@ -401,19 +403,28 @@ private:
 	/** Internal method for removing the dirty state of a cache. */
 	void clearDynamicBoundingBox(QRect& dirty_rect_old, QRectF& dirty_rect_new, int& dirty_rect_new_border);
 	
-	/** Changes the dirty rect's coordinates as a zoom operation would do. */
-	void zoomDirtyRect(QRect& dirty_rect, qreal zoom_factor);
-	/** Changes the dirty rect's coordinates as a zoom operation would do. */
-	void zoomDirtyRect(QRectF& dirty_rect, qreal zoom_factor);
 	/** Moves the dirty rect by the given amount of pixels. */
 	void moveDirtyRect(QRect& dirty_rect, qreal x, qreal y);
-	/** Moves the dirty rect by the given amount of pixels. */
-	void moveDirtyRect(QRectF& dirty_rect, qreal x, qreal y);
 	
-	/** Starts panning the map, given the current cursor position on the widget. */
-	void startPanning(QPoint cursor_pos);
-	/** Ends panning the map, given the current cursor position on the widget. */
-	void finishPanning(QPoint cursor_pos);
+	/** Starts a dragging interaction at the given cursor position. */
+	void startDragging(QPoint cursor_pos);
+	/** Submits a new cursor position during a dragging interaction. */
+	void updateDragging(QPoint cursor_pos);
+	/** Ends a dragging interaction at the given cursor position. */
+	void finishDragging(QPoint cursor_pos);
+	/** Cancels a dragging interaction. */
+	void cancelDragging();
+	
+	/** Starts a pinching interaction at the given cursor position.
+	 *  Returns the initial zoom factor. */
+	qreal startPinching(QPoint center);
+	/** Updates a pinching interaction at the given cursor position. */
+	void updatePinching(QPoint center, qreal factor);
+	/** Ends a pinching interaction at the given cursor position. */
+	void finishPinching(QPoint center, qreal factor);
+	/** Cancels a pinching interaction. */
+	void cancelPinching();
+	
 	/** Moves the map a given number of big "steps" in x and/or y direction. */
 	void moveMap(int steps_x, int steps_y);
 	
@@ -441,12 +452,19 @@ private:
 	bool show_help;
 	bool force_antialiasing;
 	
-	// Panning
+	// Dragging (interaction)
 	bool dragging;
 	QPoint drag_start_pos;
-	QPoint drag_offset;
 	/** Cursor used when not dragging */
 	QCursor normal_cursor;
+	
+	// Pinching (interaction)
+	bool pinching;
+	qreal pinching_factor;
+	QPoint pinching_center;
+	
+	// Panning (operation)
+	QPoint pan_offset;
 	
 	// Template caches
 	/** Cache for templates below map layer */
@@ -513,6 +531,12 @@ inline
 bool MapWidget::gesturesEnabled() const
 {
 	return gestures_enabled;
+}
+
+inline
+QPoint MapWidget::dragOffset() const
+{
+	return pan_offset;
 }
 
 #endif

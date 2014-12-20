@@ -319,12 +319,13 @@ void CutTool::draw(QPainter* painter, MapWidget* widget)
 	
 	if (preview_path)
 	{
+		const MapView* map_view = widget->getMapView();
 		painter->save();
-		painter->translate(widget->width() / 2.0 + widget->getMapView()->getDragOffset().x(),
-						   widget->height() / 2.0 + widget->getMapView()->getDragOffset().y());
-		widget->getMapView()->applyTransform(painter);
+		painter->translate(widget->width() / 2.0 + map_view->panOffset().x(),
+						   widget->height() / 2.0 + map_view->panOffset().y());
+		painter->setWorldTransform(map_view->worldTransform(), true);
 		
-		renderables->draw(painter, widget->getMapView()->calculateViewedRect(widget->viewportToView(widget->rect())), true, widget->getMapView()->calculateFinalZoomFactor(), true, true, 0.5f);
+		renderables->draw(painter, map_view->calculateViewedRect(widget->viewportToView(widget->rect())), true, map_view->calculateFinalZoomFactor(), true, true, 0.5f);
 		
 		painter->restore();
 	}

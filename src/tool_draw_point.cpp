@@ -88,7 +88,7 @@ void DrawPointTool::mouseMove()
 {
 	PointSymbol* point = reinterpret_cast<PointSymbol*>(editor->activeSymbol());
 	
-	if (!dragging)
+	if (!isDragging())
 	{
 		// Show preview object at this position
 		if (!preview_object)
@@ -176,7 +176,7 @@ bool DrawPointTool::keyPress(QKeyEvent* event)
 		deactivate();
 	else if (event->key() == Qt::Key_Control)
 	{
-		if (dragging && rotating)
+		if (isDragging() && rotating)
 		{
 			angle_helper->setActive(true, preview_object->getCoordF());
 			calcConstrainedPositions(cur_map_widget);
@@ -187,7 +187,7 @@ bool DrawPointTool::keyPress(QKeyEvent* event)
 	{
 		snap_helper->setFilter(SnappingToolHelper::AllTypes);
 		calcConstrainedPositions(cur_map_widget);
-		if (dragging)
+		if (isDragging())
 			dragMove();
 		else
 			mouseMove();
@@ -203,14 +203,14 @@ bool DrawPointTool::keyRelease(QKeyEvent* event)
 	{
 		angle_helper->setActive(false);
 		calcConstrainedPositions(cur_map_widget);
-		if (dragging)
+		if (isDragging())
 			dragMove();
 	}
 	else if (event->key() == Qt::Key_Shift)
 	{
 		snap_helper->setFilter(SnappingToolHelper::NoSnapping);
 		calcConstrainedPositions(cur_map_widget);
-		if (dragging)
+		if (isDragging())
 			dragMove();
 		else
 			mouseMove();
@@ -224,17 +224,18 @@ void DrawPointTool::drawImpl(QPainter* painter, MapWidget* widget)
 {
 	if (preview_object)
 	{
+		const MapView* map_view = widget->getMapView();
 		painter->save();
-		painter->translate(widget->width() / 2.0 + widget->getMapView()->getDragOffset().x(),
-						   widget->height() / 2.0 + widget->getMapView()->getDragOffset().y());
-		widget->getMapView()->applyTransform(painter);
+		painter->translate(widget->width() / 2.0 + map_view->panOffset().x(),
+						   widget->height() / 2.0 + map_view->panOffset().y());
+		painter->setWorldTransform(map_view->worldTransform(), true);
 		
-		renderables->draw(painter, widget->getMapView()->calculateViewedRect(widget->viewportToView(widget->rect())), true, widget->getMapView()->calculateFinalZoomFactor(), true, true, 0.5f);
+		renderables->draw(painter, map_view->calculateViewedRect(widget->viewportToView(widget->rect())), true, map_view->calculateFinalZoomFactor(), true, true, 0.5f);
 		
 		painter->restore();
 	}
 	
-	if (dragging && rotating)
+	if (isDragging() && rotating)
 	{
 		painter->setRenderHint(QPainter::Antialiasing);
 		
@@ -254,7 +255,7 @@ void DrawPointTool::drawImpl(QPainter* painter, MapWidget* widget)
 
 int DrawPointTool::updateDirtyRectImpl(QRectF& rect)
 {
-	if (dragging)
+	if (isDragging())
 	{
 		rectIncludeSafe(rect, click_pos_map.toQPointF());
 		rectInclude(rect, constrained_pos_map.toQPointF());
@@ -277,7 +278,7 @@ int DrawPointTool::updateDirtyRectImpl(QRectF& rect)
 float DrawPointTool::calculateRotation(QPointF mouse_pos, MapCoordF mouse_pos_map)
 {
 	QPoint preview_object_pos = cur_map_widget->mapToViewport(preview_object->getCoordF()).toPoint();
-	if (dragging && (mouse_pos - preview_object_pos).manhattanLength() >= Settings::getInstance().getStartDragDistancePx())
+	if (isDragging() && (mouse_pos - preview_object_pos).manhattanLength() >= Settings::getInstance().getStartDragDistancePx())
 		return -atan2(mouse_pos_map.getX() - preview_object->getCoordF().getX(), preview_object->getCoordF().getY() - mouse_pos_map.getY());
 	else
 		return 0;
@@ -285,7 +286,7 @@ float DrawPointTool::calculateRotation(QPointF mouse_pos, MapCoordF mouse_pos_ma
 
 void DrawPointTool::updateStatusText()
 {
-	if (dragging && rotating)
+	if (isDragging() && rotating)
 	{
 		static const double pi_x_2 = M_PI * 2.0;
 		static const double to_deg = 180.0 / M_PI;

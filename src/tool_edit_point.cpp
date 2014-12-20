@@ -26,6 +26,7 @@
 #include <QKeyEvent>
 #include <QMouseEvent>
 #include <QPainter>
+#include <QScopedValueRollback>
 
 #include "util.h"
 #include "symbol.h"
@@ -104,7 +105,6 @@ bool EditPointTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, M
 	{
 		if (event->button() == Qt::LeftButton)
 		{
-			dragging = false;
 			box_selection = false;
 		}
 		if (!text_editor->mouseReleaseEvent(event, map_coord, widget))
@@ -162,7 +162,9 @@ void EditPointTool::clickPress()
 		if (distance_sq <= click_tolerance_map_sq)
 		{
 			startEditing();
-			dragging = true;	// necessary to prevent second call to startEditing()
+			QScopedValueRollback<bool> no_effect_rollback(no_more_effect_on_click);
+			no_more_effect_on_click = true;
+			startDragging();
 			hover_point = path->subdivide(path_coord.index, path_coord.param);
 			if (addDashPointDefault() ^ space_pressed)
 			{
@@ -503,7 +505,7 @@ int EditPointTool::updateDirtyRectImpl(QRectF& rect)
 		text_editor->includeDirtyRect(rect);
 	
 	// Box selection
-	if (dragging && box_selection)
+	if (isDragging() && box_selection)
 	{
 		rectIncludeSafe(rect, click_pos_map.toQPointF());
 		rectIncludeSafe(rect, cur_pos_map.toQPointF());
@@ -551,7 +553,7 @@ void EditPointTool::drawImpl(QPainter* painter, MapWidget* widget)
 	}
 	
 	// Box selection
-	if (dragging && box_selection)
+	if (isDragging() && box_selection)
 		drawSelectionBox(painter, widget, click_pos_map, cur_pos_map);
 }
 

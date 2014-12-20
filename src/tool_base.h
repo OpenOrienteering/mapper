@@ -98,6 +98,15 @@ protected:
 	/// Called when the mouse is moved without the left mouse button being pressed
 	virtual void mouseMove();
 	
+	virtual void gestureStarted() override;
+	
+	void startDragging();
+	void updateDragging();
+	void finishDragging();
+	void cancelDragging();
+	/// Is the left mouse button pressed and has a drag move been started (by moving the mouse a minimum amount of pixels)?
+	bool isDragging() const;
+	
 	/// Called when a drag operation is started. This happens when dragging the mouse some pixels
 	/// away from the mouse press position. The distance is determined by start_drag_distance.
 	/// dragMove() is called immediately after this call to account for the already moved distance.
@@ -107,6 +116,8 @@ protected:
 	/// Called when a drag operation is finished. There is no need to update the edit operation with the
 	/// current cursor coordinates in this call as it is ensured that dragMove() is called before.
 	virtual void dragFinish();
+	
+	virtual void dragCanceled();
 	
 	/// Called when a key is pressed down. Return true if the key was processed by the tool.
 	virtual bool keyPress(QKeyEvent* event);
@@ -158,8 +169,6 @@ protected:
 	MapCoordF constrained_pos_map;
 	/// This is set to true when constrained_pos(_map) is a snapped position
 	bool snapped_to_pos;
-	/// Is the left mouse button pressed and has a drag move been started (by moving the mouse a minimum amount of pixels)?
-	bool dragging;
 	/// The amount of pixels the mouse has to be moved to start dragging. Defaults to Settings::getInstance().getStartDragDistancePx().
 	int start_drag_distance;
 	
@@ -189,9 +198,17 @@ private:
 	// Miscellaneous internals
 	QCursor cursor;
 	bool preview_update_triggered;
+	bool dragging;
+	bool dragging_canceled;
 	std::vector<Object*> undo_duplicates;
 	QScopedPointer<MapRenderables> renderables;
 	QScopedPointer<MapRenderables> old_renderables;
 };
+
+inline
+bool MapEditorToolBase::isDragging() const
+{
+	return dragging;
+}
 
 #endif

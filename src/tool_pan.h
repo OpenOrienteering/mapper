@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2014 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -34,12 +35,13 @@ public:
 	virtual ~PanTool();
 	
 protected:
-	virtual void updateStatusText();
-	virtual void objectSelectionChangedImpl();
-	
-	virtual void dragStart();
-	virtual void dragMove();
-	virtual void dragFinish();
+	virtual void updateStatusText() override;
+	virtual void objectSelectionChangedImpl() override;
+	virtual void clickPress() override;
+	virtual void dragStart() override;
+	virtual void dragMove() override;
+	virtual void dragFinish() override;
+	virtual void dragCanceled() override;
 };
 
 #endif

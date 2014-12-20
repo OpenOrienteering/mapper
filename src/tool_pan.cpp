@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2014 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -33,6 +34,11 @@ PanTool::~PanTool()
 	// Nothing, not inlined
 }
 
+void PanTool::clickPress()
+{
+	startDragging();
+}
+
 void PanTool::dragStart()
 {
 	cur_map_widget->setCursor(Qt::ClosedHandCursor);
@@ -41,13 +47,22 @@ void PanTool::dragStart()
 void PanTool::dragMove()
 {
 	MapView* view = mapWidget()->getMapView();
-	view->setDragOffset(cur_pos - click_pos);
+	view->setPanOffset(cur_pos - click_pos);
 }
 
 void PanTool::dragFinish()
 {
 	MapView* view = mapWidget()->getMapView();
-	view->completeDragging(cur_pos - click_pos);
+	view->finishPanning(cur_pos - click_pos);
+	
+	cur_map_widget->setCursor(Qt::OpenHandCursor);
+}
+
+void PanTool::dragCanceled()
+{
+	// finalize current panning
+	MapView* view = mapWidget()->getMapView();
+	view->finishPanning(view->panOffset());
 	
 	cur_map_widget->setCursor(Qt::OpenHandCursor);
 }
@@ -59,4 +74,5 @@ void PanTool::updateStatusText()
 
 void PanTool::objectSelectionChangedImpl()
 {
+	// Nothing
 }

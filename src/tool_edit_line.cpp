@@ -352,7 +352,7 @@ int EditLineTool::updateDirtyRectImpl(QRectF& rect)
 	}
 	
 	// Box selection
-	if (dragging && box_selection)
+	if (isDragging() && box_selection)
 	{
 		rectIncludeSafe(rect, click_pos_map.toQPointF());
 		rectIncludeSafe(rect, cur_pos_map.toQPointF());
@@ -391,7 +391,7 @@ void EditLineTool::drawImpl(QPainter* painter, MapWidget* widget)
 	}
 	
 	// Box selection
-	if (dragging && box_selection)
+	if (isDragging() && box_selection)
 		drawSelectionBox(painter, widget, click_pos_map, cur_pos_map);
 }
 

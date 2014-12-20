@@ -134,7 +134,7 @@ bool RotateTool::keyPress(QKeyEvent* event)
 	if (event->key() == Qt::Key_Control)
 	{
 		angle_helper->setActive(true, rotation_center);
-		if (dragging)
+		if (isDragging())
 			dragMove();
 	}
     return false;
@@ -144,7 +144,7 @@ bool RotateTool::keyRelease(QKeyEvent* event)
 	if (event->key() == Qt::Key_Control && angle_helper->isActive())
 	{
 		angle_helper->setActive(false);
-		if (dragging)
+		if (isDragging())
 			dragMove();
 		return true;
 	}

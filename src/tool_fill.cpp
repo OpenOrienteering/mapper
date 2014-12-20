@@ -215,7 +215,7 @@ QImage FillTool::rasterizeMap(const QRectF& extent, QTransform& out_transform)
 	
 	// Draw map
 	painter.translate(image_size.width() / 2.0, image_size.height() / 2.0);
-	view->applyTransform(&painter);
+	painter.setWorldTransform(view->worldTransform(), true);
 	drawObjectIDs(map(), &painter, extent, view->calculateFinalZoomFactor());
 	
 	// Temporarily enable baseline view and draw map again.

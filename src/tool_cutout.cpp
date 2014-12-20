@@ -85,7 +85,7 @@ void CutoutTool::drawImpl(QPainter* painter, MapWidget* widget)
 	drawSelectionOrPreviewObjects(painter, widget, true);
 
 	// Box selection
-	if (dragging)
+	if (isDragging())
 		drawSelectionBox(painter, widget, click_pos_map, cur_pos_map);
 }
 
@@ -117,7 +117,7 @@ int CutoutTool::updateDirtyRectImpl(QRectF& rect)
 	map()->includeSelectionRect(rect);
 	
 	// Box selection
-	if (dragging)
+	if (isDragging())
 	{
 		rectIncludeSafe(rect, click_pos_map.toQPointF());
 		rectIncludeSafe(rect, cur_pos_map.toQPointF());

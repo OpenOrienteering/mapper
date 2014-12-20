@@ -92,7 +92,7 @@ void RotatePatternTool::draw(QPainter* painter, MapWidget* widget)
 {
 	drawSelectionOrPreviewObjects(painter, widget);
 	
-	if (dragging)
+	if (isDragging())
 	{
 		painter->setPen(MapEditorTool::active_color);
 		painter->setBrush(Qt::NoBrush);
@@ -108,7 +108,7 @@ bool RotatePatternTool::keyPressEvent(QKeyEvent* event)
     if (event->key() == Qt::Key_Control)
 	{
 		angle_helper->setActive(true, click_pos_map);
-		if (dragging)
+		if (isDragging())
 			dragMove();
 	}
 	return false;
@@ -118,7 +118,7 @@ bool RotatePatternTool::keyReleaseEvent(QKeyEvent* event)
 	if (event->key() == Qt::Key_Control && angle_helper->isActive())
 	{
 		angle_helper->setActive(false);
-		if (dragging)
+		if (isDragging())
 			dragMove();
 		return true;
 	}
@@ -127,7 +127,7 @@ bool RotatePatternTool::keyReleaseEvent(QKeyEvent* event)
 
 int RotatePatternTool::updateDirtyRectImpl(QRectF& rect)
 {
-	if (dragging)
+	if (isDragging())
 	{
 		rectIncludeSafe(rect, click_pos_map.toQPointF());
 		rectIncludeSafe(rect, cur_pos_map.toQPointF());
@@ -147,7 +147,7 @@ void RotatePatternTool::objectSelectionChangedImpl()
 
 void RotatePatternTool::updateStatusText()
 {
-	if (dragging)
+	if (isDragging())
 	{
 		static const double pi_x_1_5 = M_PI * 1.5;
 		static const double pi_x_2 = M_PI * 2.0;

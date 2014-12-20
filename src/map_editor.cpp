@@ -1527,7 +1527,6 @@ void MapEditorController::spotColorPresenceChanged(bool has_spot_colors)
 void MapEditorController::showGrid()
 {
 	main_view->setGridVisible(show_grid_act->isChecked());
-	main_view->updateAllMapWidgets();
 }
 
 void MapEditorController::configureGrid()
@@ -1590,7 +1589,6 @@ void MapEditorController::overprintingSimulation(bool checked)
 		checked = false;
 	}
 	main_view->setOverprintingSimulationEnabled(checked);
-	map->updateAllMapWidgets();
 }
 
 void MapEditorController::coordsDisplayChanged()

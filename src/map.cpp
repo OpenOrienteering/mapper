@@ -698,7 +698,7 @@ bool Map::loadFrom(const QString& path, QWidget* dialog_parent, MapView* view, b
 	
 	if (view)
 	{
-		view->setDragOffset(QPoint(0, 0), false);
+		view->setPanOffset(QPoint(0, 0));
 	}
 
 	if (!import_complete)
@@ -1074,8 +1074,8 @@ void Map::drawSelection(QPainter* painter, bool force_min_size, MapWidget* widge
 	MapView* view = widget->getMapView();
 	
 	painter->save();
-	painter->translate(widget->width() / 2.0 + view->getDragOffset().x(), widget->height() / 2.0 + view->getDragOffset().y());
-	view->applyTransform(painter);
+	painter->translate(widget->width() / 2.0 + view->panOffset().x(), widget->height() / 2.0 + view->panOffset().y());
+	painter->setWorldTransform(view->worldTransform(), true);
 	
 	if (!replacement_renderables)
 		replacement_renderables = selection_renderables.data();
