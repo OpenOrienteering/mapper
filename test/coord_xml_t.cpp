@@ -18,6 +18,14 @@
  */
 
 #include "coord_xml_t.h"
+#include "../src/util/xml_stream_util.h"
+
+namespace literal
+{
+	static const QLatin1String x("x");
+	static const QLatin1String y("y");
+	static const QLatin1String flags("flags");
+}
 
 
 void CoordXmlTest::initTestCase()
@@ -46,13 +54,11 @@ void CoordXmlTest::writeXml_data()
 
 void CoordXmlTest::writeXml_implementation(MapCoordVector& coords, QXmlStreamWriter& xml)
 {
-	namespace literal = MapCoordLiteral;
-	
 	for (MapCoordVector::iterator coord = coords.begin(), end = coords.end();
 	     coord != end;
 	     ++coord)
 	{
-		xml.writeStartElement(literal::coord);
+		xml.writeStartElement(XmlStreamLiteral::coord);
 		xml.writeAttribute(literal::x, QString::number(coord->rawX()));
 		xml.writeAttribute(literal::y, QString::number(coord->rawY()));
 		xml.writeAttribute(literal::flags, QString::number(coord->getFlags()));
@@ -103,7 +109,7 @@ void CoordXmlTest::writeHumanReadableStream_implementation(MapCoordVector& coord
 
 void CoordXmlTest::writeHumanReadableStream()
 {
-	namespace literal = MapCoordLiteral;
+	namespace literal = XmlStreamLiteral;
 	
 	buffer.open(QBuffer::ReadWrite);
 	QXmlStreamWriter xml(&buffer);
@@ -224,7 +230,7 @@ void CoordXmlTest::writeHumanReadableString_implementation(MapCoordVector& coord
 
 void CoordXmlTest::writeHumanReadableString()
 {
-	namespace literal = MapCoordLiteral;
+	namespace literal = XmlStreamLiteral;
 	
 	buffer.open(QBuffer::ReadWrite);
 	QXmlStreamWriter xml(&buffer);
@@ -303,7 +309,7 @@ void CoordXmlTest::writeCompressed_implementation(MapCoordVector& coords, QXmlSt
 
 void CoordXmlTest::writeCompressed()
 {
-	namespace literal = MapCoordLiteral;
+	namespace literal = XmlStreamLiteral;
 	
 	buffer.open(QBuffer::ReadWrite);
 	QXmlStreamWriter xml(&buffer);
@@ -329,8 +335,6 @@ void CoordXmlTest::readXml_data()
 
 void CoordXmlTest::readXml()
 {
-	namespace literal = MapCoordLiteral;
-	
 	QFETCH(int, num_coords);
 	MapCoordVector coords(num_coords, proto_coord);
 	
@@ -380,7 +384,7 @@ void CoordXmlTest::readXml()
 		
 		while(xml.readNextStartElement())
 		{
-			if (xml.name() != literal::coord)
+			if (xml.name() != XmlStreamLiteral::coord)
 			{
 				failed = true;
 				break;
@@ -417,7 +421,7 @@ void CoordXmlTest::readHumanReadableStream_data()
 
 void CoordXmlTest::readHumanReadableStream()
 {
-	namespace literal = MapCoordLiteral;
+	namespace literal = XmlStreamLiteral;
 	
 	QFETCH(int, num_coords);
 	MapCoordVector coords(num_coords, proto_coord);
@@ -533,8 +537,6 @@ void CoordXmlTest::readCompressed_data()
 
 void CoordXmlTest::readCompressed()
 {
-	namespace literal = MapCoordLiteral;
-	
 	QFETCH(int, num_coords);
 	MapCoordVector coords(num_coords, proto_coord);
 	

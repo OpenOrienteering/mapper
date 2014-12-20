@@ -26,7 +26,7 @@
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
-#include "../src/map_coord.h"
+#include "../src/core/map_coord.h"
 
 
 /**
