@@ -22,6 +22,7 @@
 #include "tool.h"
 
 #include <QApplication>
+#include <QAction>
 #include <QPainter>
 #include <QMouseEvent>
 #include <QTimer>

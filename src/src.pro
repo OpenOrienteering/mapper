@@ -47,6 +47,7 @@ HEADERS += \
   map_dialog_scale.h \
   map_dialog_rotate.h \
   map_editor.h \
+  map_editor_p.h \
   map_editor_activity.h \
   object_undo.h \
   map_widget.h \

@@ -20,6 +20,7 @@
 
 
 #include "map_editor.h"
+#include "map_editor_p.h"
 
 #include <limits>
 
@@ -43,6 +44,7 @@
 #include <QPushButton>
 #include <QSettings>
 #include <QSignalMapper>
+#include <QSizeGrip>
 #include <QStatusBar>
 #include <QStringBuilder>
 #include <QTextEdit>
@@ -3670,13 +3672,17 @@ EditorDockWidget::EditorDockWidget(const QString title, QAction* action, MapEdit
 {
 	if (editor)
 	{
-		connect(this, SIGNAL(dockLocationChanged(Qt::DockWidgetArea)), editor, SLOT(saveWindowState()));
+		connect(this, &EditorDockWidget::dockLocationChanged, editor, &MapEditorController::saveWindowState);
 	}
 	
 	if (action)
 	{
-		connect(this, SIGNAL(visibilityChanged(bool)), action, SLOT(setChecked(bool)));
+		connect(this, &EditorDockWidget::visibilityChanged, action, &QAction::setChecked);
 	}
+	
+#ifdef Q_OS_ANDROID
+	size_grip = new QSizeGrip(this);
+#endif
 }
 
 bool EditorDockWidget::event(QEvent* event)
@@ -3684,6 +3690,20 @@ bool EditorDockWidget::event(QEvent* event)
 	if (event->type() == QEvent::ShortcutOverride && editor->getWindow()->areShortcutsDisabled())
 		event->accept();
 	return QDockWidget::event(event);
+}
+
+void EditorDockWidget::resizeEvent(QResizeEvent* event)
+{
+#ifdef Q_OS_ANDROID
+	QRect rect(QPoint(0,0), size_grip->sizeHint());
+	rect.moveBottomRight(geometry().bottomRight() - geometry().topLeft());
+	int fw = style()->pixelMetric(QStyle::PM_DockWidgetFrameWidth, 0, this);
+	rect.translate(-fw, -fw);
+	size_grip->setGeometry(rect);
+	size_grip->raise();
+#endif
+	
+	QDockWidget::resizeEvent(event);
 }
 
 

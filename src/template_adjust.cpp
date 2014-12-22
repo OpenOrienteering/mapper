@@ -21,6 +21,7 @@
 #include "template_adjust.h"
 
 #include <QAbstractItemView>
+#include <QAction>
 #include <QCheckBox>
 #include <QHeaderView>
 #include <QLabel>
