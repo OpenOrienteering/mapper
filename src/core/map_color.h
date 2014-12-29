@@ -178,11 +178,11 @@ public:
 	 */
 	enum SpecialPriorities
 	{
-		CoveringRed   = -1005,
-		CoveringWhite = -1000,  // used for tool helper line colors	
-		Registration  = -900,   // used for registration marks: all printed colors
-		Undefined     = -500,
-		Reserved      = -1      // used to mark renderables which should not be inserted into the map
+		CoveringRed   = -1005,  ///< Foreground color for tool helper lines
+		CoveringWhite = -1000,  ///< Background color for tool helper lines
+		Registration  = -900,   ///< Registration Black: all printed colors
+		Undefined     = -500,   ///< Color for objects with undefined symbol
+		Reserved      = -1      ///< Never drawn
 	};
 	
 	/** 
@@ -805,7 +805,7 @@ const MapColor* MapColorMap::value(const MapColor* key) const
 	{
 		return mapping.value(key);
 	}
-	else if (key != NULL && key->getPriority() <= MapColor::Reserved)
+	else if (key != NULL && key->getPriority() < 0)
 	{
 		return key;
 	}
