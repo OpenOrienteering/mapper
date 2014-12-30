@@ -23,6 +23,7 @@
 #include <QPainter>
 
 #include "map_widget.h"
+#include "renderable.h"
 #include "settings.h"
 #include "util.h"
 
@@ -31,6 +32,7 @@ QStringList TemplateMap::locked_maps;
 TemplateMap::TemplateMap(const QString& path, Map* map) : Template(path, map), template_map(NULL)
 {
 }
+
 TemplateMap::~TemplateMap()
 {
 	if (template_state == Loaded)
@@ -105,8 +107,12 @@ void TemplateMap::drawTemplate(QPainter* painter, QRectF& clip_rect, double scal
 		// TODO!
 	}
 	
+	RenderConfig::Options options;
+	if (on_screen)
+		options |= RenderConfig::Screen;
+	RenderConfig config = { *template_map, transformed_clip_rect, scale, options, opacity };
 	// TODO: introduce template-specific options, adjustable by the user, to allow changing some of these parameters
-	template_map->draw(painter, transformed_clip_rect, false, scale, on_screen, false, opacity);
+	template_map->draw(painter, config);
 }
 
 QRectF TemplateMap::getTemplateExtent() const

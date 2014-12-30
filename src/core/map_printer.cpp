@@ -35,6 +35,7 @@
 #include "../core/map_color.h"
 #include "../core/map_view.h"
 #include "../map.h"
+#include "../renderable.h"
 #include "../settings.h"
 #include "../template.h"
 #include "../util.h"
@@ -928,12 +929,19 @@ void MapPrinter::drawPage(QPainter* device_painter, float units_per_inch, const 
 			map_painter->setTransform(painter->transform());
 		}
 		
+		RenderConfig config = { map, page_region_used, scale, RenderConfig::NoOptions, 1.0 };
+		
 		if (rasterModeSelected() && options.simulate_overprinting)
-			map.drawOverprintingSimulation(map_painter, page_region_used, false, scale, false, false);
-		else if (vectorModeSelected() && view)
-			map.draw(map_painter, page_region_used, false, scale, false, false, view->getMapVisibility()->opacity);
+		{
+			map.drawOverprintingSimulation(map_painter, config);
+		}
 		else
-			map.draw(map_painter, page_region_used, false, scale, false, false);
+		{
+			if (vectorModeSelected() && view)
+				config.opacity = view->getMapVisibility()->opacity;
+		
+			map.draw(map_painter, config);
+		}
 			
 		if (map_painter != painter)
 		{
@@ -1032,7 +1040,9 @@ void MapPrinter::drawSeparationPages(QPrinter* printer, QPainter* device_painter
 			{
 				printer->newPage();
 			}
-			map.drawColorSeparation(device_painter, page_extent, false, scale, false, false, color);
+			
+			RenderConfig config = { map, page_extent, scale, RenderConfig::NoOptions, 1.0 };
+			map.drawColorSeparation(device_painter, config, color);
 			need_new_page = true;
 		}
 	}

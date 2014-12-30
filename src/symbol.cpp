@@ -460,9 +460,10 @@ QImage Symbol::createIcon(const Map* map, int side_length, bool antialiasing, in
 	painter.translate(0.5f * (side_length - bottom_right_border), 0.5f * (side_length - bottom_right_border));
 	painter.setWorldTransform(view.worldTransform(), true);
 	
+	RenderConfig config = { *map, QRectF(-10000, -10000, 20000, 20000), view.calculateFinalZoomFactor(), RenderConfig::HelperSymbols, 1.0 };
 	bool was_hidden = is_hidden;
 	is_hidden = false; // ensure that an icon is created for hidden symbols.
-	icon_map.draw(&painter, QRectF(-10000, -10000, 20000, 20000), false, view.calculateFinalZoomFactor(), false, true);
+	icon_map.draw(&painter, config);
 	is_hidden = was_hidden;
 	
 	delete icon_symbol;

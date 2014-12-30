@@ -214,9 +214,12 @@ QImage FillTool::rasterizeMap(const QRectF& extent, QTransform& out_transform)
 	painter.setCompositionMode(mode);
 	
 	// Draw map
+	RenderConfig::Options options = RenderConfig::Screen | RenderConfig::ForceMinSize;
+	RenderConfig config = { *map(), extent, view->calculateFinalZoomFactor(), options, 1.0 };
+	
 	painter.translate(image_size.width() / 2.0, image_size.height() / 2.0);
 	painter.setWorldTransform(view->worldTransform(), true);
-	drawObjectIDs(map(), &painter, extent, view->calculateFinalZoomFactor());
+	drawObjectIDs(map(), &painter, config);
 	
 	// Temporarily enable baseline view and draw map again.
 	// This makes it possible to fill areas bounded by e.g. dashed paths.
@@ -224,7 +227,7 @@ QImage FillTool::rasterizeMap(const QRectF& extent, QTransform& out_transform)
 	{
 		map()->setBaselineViewEnabled(true);
 		map()->updateAllObjects();
-		drawObjectIDs(map(), &painter, extent, view->calculateFinalZoomFactor());
+		drawObjectIDs(map(), &painter, config);
 		map()->setBaselineViewEnabled(false);
 		map()->updateAllObjects();
 	}
@@ -235,7 +238,7 @@ QImage FillTool::rasterizeMap(const QRectF& extent, QTransform& out_transform)
 	return image;
 }
 
-void FillTool::drawObjectIDs(Map* map, QPainter* painter, QRectF bounding_box, float scaling)
+void FillTool::drawObjectIDs(Map* map, QPainter* painter, const RenderConfig &config)
 {
 	MapPart* part = map->getCurrentPart();
 	for (int o = 0, num_objects = part->getNumObjects(); o < num_objects; ++o)
@@ -250,9 +253,7 @@ void FillTool::drawObjectIDs(Map* map, QPainter* painter, QRectF bounding_box, f
 		object->renderables().draw(
 			qRgb(o % 256, (o / 256) % 256, (o / (256 * 256)) % 256),
 			painter,
-			bounding_box,
-			true,
-			scaling
+			config
 		);
 	}
 }

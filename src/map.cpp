@@ -924,31 +924,31 @@ void Map::clear()
 	unsaved_changes = false;
 }
 
-void Map::draw(QPainter* painter, QRectF bounding_box, bool force_min_size, float scaling, bool on_screen, bool show_helper_symbols, float opacity)
+void Map::draw(QPainter* painter, const RenderConfig& config)
 {
 	// Update the renderables of all objects marked as dirty
 	updateObjects();
 	
 	// The actual drawing
-	renderables->draw(painter, bounding_box, force_min_size, scaling, on_screen, show_helper_symbols, opacity);
+	renderables->draw(painter, config);
 }
 
-void Map::drawOverprintingSimulation(QPainter* painter, QRectF bounding_box, bool force_min_size, float scaling, bool on_screen, bool show_helper_symbols)
+void Map::drawOverprintingSimulation(QPainter* painter, const RenderConfig& config)
 {
 	// Update the renderables of all objects marked as dirty
 	updateObjects();
 	
 	// The actual drawing
-	renderables->drawOverprintingSimulation(painter, bounding_box, force_min_size, scaling, on_screen, show_helper_symbols);
+	renderables->drawOverprintingSimulation(painter, config);
 }
 
-void Map::drawColorSeparation(QPainter* painter, QRectF bounding_box, bool force_min_size, float scaling, bool on_screen, bool show_helper_symbols, const MapColor* spot_color, bool use_color)
+void Map::drawColorSeparation(QPainter* painter, const RenderConfig& config, const MapColor* spot_color, bool use_color)
 {
 	// Update the renderables of all objects marked as dirty
 	updateObjects();
 	
 	// The actual drawing
-	renderables->drawColorSeparation(painter, bounding_box, force_min_size, scaling, on_screen, show_helper_symbols, spot_color, use_color);
+	renderables->drawColorSeparation(painter, config, spot_color, use_color);
 }
 
 void Map::drawGrid(QPainter* painter, QRectF bounding_box, bool on_screen)
@@ -1069,8 +1069,6 @@ void Map::includeSelectionRect(QRectF& rect)
 }
 void Map::drawSelection(QPainter* painter, bool force_min_size, MapWidget* widget, MapRenderables* replacement_renderables, bool draw_normal)
 {
-	const float selection_opacity_factor = draw_normal ? 1 : 0.4f;
-	
 	MapView* view = widget->getMapView();
 	
 	painter->save();
@@ -1079,7 +1077,18 @@ void Map::drawSelection(QPainter* painter, bool force_min_size, MapWidget* widge
 	
 	if (!replacement_renderables)
 		replacement_renderables = selection_renderables.data();
-	replacement_renderables->draw(painter, view->calculateViewedRect(widget->viewportToView(widget->rect())), force_min_size, view->calculateFinalZoomFactor(), true, true, selection_opacity_factor, !draw_normal);
+	
+	RenderConfig::Options options = RenderConfig::Screen | RenderConfig::HelperSymbols;
+	qreal selection_opacity = 1.0;
+	if (force_min_size)
+		options |= RenderConfig::ForceMinSize;
+	if (!draw_normal)
+	{
+		options |= RenderConfig::Highlighted;
+		selection_opacity = 0.4;
+	}
+	RenderConfig config = { *this, view->calculateViewedRect(widget->viewportToView(widget->rect())), view->calculateFinalZoomFactor(), options, selection_opacity };
+	replacement_renderables->draw(painter, config);
 	
 	painter->restore();
 }

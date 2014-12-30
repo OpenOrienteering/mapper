@@ -143,6 +143,8 @@ HEADERS += \
   map_part.h \
   map_part_undo.h \
   object_operations.h \
+  renderable.h \
+  renderable_implementation.h \
   symbol.h \
   undo.h
 

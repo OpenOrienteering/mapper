@@ -393,7 +393,7 @@ void MapEditorToolBase::updatePreviewObjectsAsynchronously()
 
 void MapEditorToolBase::drawSelectionOrPreviewObjects(QPainter* painter, MapWidget* widget, bool draw_opaque)
 {
-	map()->drawSelection(painter, true, widget, renderables->isEmpty() ? NULL : renderables.data(), draw_opaque);
+	map()->drawSelection(painter, true, widget, renderables->empty() ? NULL : renderables.data(), draw_opaque);
 }
 
 void MapEditorToolBase::startEditing()

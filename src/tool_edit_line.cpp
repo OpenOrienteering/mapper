@@ -386,7 +386,7 @@ void EditLineTool::drawImpl(QPainter* painter, MapWidget* widget)
 				pointHandles().draw(painter, widget, *it, -2, false, PointHandles::DisabledHandleState);
 		}
 		
-		if (!highlight_renderables->isEmpty())
+		if (!highlight_renderables->empty())
 			map()->drawSelection(painter, true, widget, highlight_renderables.data(), true);
 	}
 	

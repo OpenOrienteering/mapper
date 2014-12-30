@@ -1356,21 +1356,26 @@ void MapWidget::updateMapCache(bool use_background)
 		painter.setCompositionMode(mode);
 	}
 	
+	RenderConfig::Options options(RenderConfig::Screen | RenderConfig::HelperSymbols);
 	bool use_antialiasing = force_antialiasing || Settings::getInstance().getSettingCached(Settings::MapDisplay_Antialiasing).toBool();
 	if (use_antialiasing)
 		painter.setRenderHint(QPainter::Antialiasing);
+	else
+		options |= RenderConfig::ForceMinSize;
 		
 	Map* map = view->getMap();
 	QRectF map_view_rect = view->calculateViewedRect(viewportToView(map_cache_dirty_rect));
 
+	RenderConfig config = { *map, map_view_rect, view->calculateFinalZoomFactor(), options, 1.0 };
+	
 	painter.translate(width() / 2.0, height() / 2.0);
 	painter.setWorldTransform(view->worldTransform(), true);
 #ifndef Q_OS_ANDROID
 	if (view->isOverprintingSimulationEnabled())
-		map->drawOverprintingSimulation(&painter, map_view_rect, !use_antialiasing, view->calculateFinalZoomFactor(), true, true);
+		map->drawOverprintingSimulation(&painter, config);
 	else
 #endif
-		map->draw(&painter, map_view_rect, !use_antialiasing, view->calculateFinalZoomFactor(), true, true);
+		map->draw(&painter, config);
 	
 	if (view->isGridVisible())
 		map->drawGrid(&painter, map_view_rect, true);

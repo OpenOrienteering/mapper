@@ -54,7 +54,7 @@ class CombinedSymbol;
 class LineSymbol;
 class PointSymbol;
 class Object;
-class Renderable;
+class RenderConfig;
 class MapRenderables;
 class Template;
 class TextSymbol;
@@ -187,33 +187,18 @@ public:
 	 * Draws the part of the map which is visible in the bounding box.
 	 * 
 	 * @param painter The QPainter used for drawing.
-	 * @param bounding_box Bounding box of area to draw, given in map coordinates.
-	 * @param force_min_size Forces a minimum size of 1 pixel for objects. Makes
-	 *     maps look better at small zoom levels without antialiasing.
-	 * @param scaling The used scaling factor. Used to calculate the final object
-	 *     sizes when force_min_size is set.
-	 * @param on_screen Set to true if drawing the map on screen. Potentially
-	 *     enables optimizations which result in slightly lower
-	 *     display quality (e.g. disable antialiasing for texts).
-	 * @param show_helper_symbols Set this if symbols with the "helper symbol"
-	 *     flag should be shown.
-	 * @param opacity Opacity to draw the map with.
+	 * @param config  The rendering configuration
 	 */
-	void draw(QPainter* painter, QRectF bounding_box,
-		bool force_min_size, float scaling, bool on_screen,
-		bool show_helper_symbols, float opacity = 1.0);
+	void draw(QPainter* painter, const RenderConfig& config);
 	
 	/**
 	 * Draws a spot color overprinting simulation for the part of the map
 	 * which is visible in the given bounding box.
 	 * 
-	 * See draw() for an explanation of the parameters.
-	 * 
 	 * @param painter Must be a QPainter on a QImage of Format_ARGB32_Premultiplied.
+	 * @param config  The rendering configuration
 	 */
-	void drawOverprintingSimulation(QPainter* painter, QRectF bounding_box,
-		bool force_min_size, float scaling, bool on_screen,
-		bool show_helper_symbols);
+	void drawOverprintingSimulation(QPainter* painter, const RenderConfig& config);
 	
 	/**
 	 * Draws the separation for a particular spot color for the part of the
@@ -223,14 +208,12 @@ public:
 	 * full tone of the spot color. The parameter use_color can be used to
 	 * draw in the actual spot color instead.
 	 *
-	 * See draw() for an explanation of the remaining parameters.
-	 * 
+	 * @param painter The QPainter used for drawing.
+	 * @param config  The rendering configuration
 	 * @param spot_color The spot color to draw the separation for.
 	 * @param use_color  If true, forces the separation to be drawn in its actual color.
 	 */
-	void drawColorSeparation(QPainter* painter, QRectF bounding_box,
-		bool force_min_size, float scaling, bool on_screen,
-		bool show_helper_symbols,
+	void drawColorSeparation(QPainter* painter, const RenderConfig& config,
 		const MapColor* spot_color, bool use_color = false);
 	
 	/**

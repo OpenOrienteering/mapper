@@ -61,7 +61,6 @@ class SymbolWidget;
 class Template;
 class TemplatePositionDockWidget;
 
-typedef std::vector<Renderable*> RenderableVector;
 
 /**
  * MainWindowController for editing a map.

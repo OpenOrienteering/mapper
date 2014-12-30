@@ -131,7 +131,7 @@ bool ScaleTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWi
 
 void ScaleTool::draw(QPainter* painter, MapWidget* widget)
 {
-	map()->drawSelection(painter, true, widget, renderables->isEmpty() ? NULL : renderables.data());
+	map()->drawSelection(painter, true, widget, renderables->empty() ? NULL : renderables.data());
 	
 	if (scaling_center_set)
 	{
