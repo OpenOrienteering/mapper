@@ -125,8 +125,8 @@ void MapView::save(QXmlStreamWriter& xml, const QLatin1String& element_name, boo
 	mapview_element.writeAttribute(literal::position_y, position_y);
 	mapview_element.writeAttribute(literal::view_x, view_x);
 	mapview_element.writeAttribute(literal::view_y, view_y);
-	mapview_element.writeAttribute(literal::grid, true);
-	mapview_element.writeAttribute(literal::overprinting_simulation_enabled, true);
+	mapview_element.writeAttribute(literal::grid, grid_visible);
+	mapview_element.writeAttribute(literal::overprinting_simulation_enabled, overprinting_simulation_enabled);
 	
 	{
 		XmlElementWriter map_element(xml, literal::map);
