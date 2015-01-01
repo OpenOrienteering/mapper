@@ -1,6 +1,6 @@
 #
 #    Copyright 2012, 2013, 2014 Thomas Schöps
-#    Copyright 2012, 2013, 2014 Kai Pastor
+#    Copyright 2012-2015 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -152,6 +152,7 @@ set(Mapper_Common_SRCS
  gui/print_tool.cpp
  gui/print_widget.cpp
  gui/settings_dialog.cpp
+ gui/text_browser_dialog.cpp
  
  gui/widgets/action_grid_bar.cpp
  gui/widgets/color_dropdown.cpp
@@ -257,6 +258,7 @@ set(Mapper_Common_MOC_INPUT
  gui/print_widget.h
  gui/settings_dialog.h
  gui/settings_dialog_p.h
+ gui/text_browser_dialog.h
  
  gui/widgets/action_grid_bar.h
  gui/widgets/color_dropdown.h

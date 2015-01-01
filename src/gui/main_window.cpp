@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013, 2014 Thomas Schöps
- *    Copyright 2012, 2013, 2014 Kai Pastor
+ *    Copyright 2012-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -52,6 +52,7 @@
 #include "../file_format.h"
 #include "../settings.h"
 #include "settings_dialog.h"
+#include "text_browser_dialog.h"
 #include "../util.h"
 
 #if defined(ANDROID)

@@ -10,16 +10,6 @@
         <translation>Acerca de %1</translation>
     </message>
     <message>
-        <location filename="../src/gui/about_dialog.cpp" line="167"/>
-        <source>External link: %1</source>
-        <translation>Enlace externo: %1</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/about_dialog.cpp" line="171"/>
-        <source>Click to view</source>
-        <translation>Clic para vista</translation>
-    </message>
-    <message>
         <location filename="../src/gui/about_dialog.cpp" line="237"/>
         <source>This program is free software: you can redistribute it and/or modify it under the terms of the &lt;a %1&gt;GNU General Public License (GPL), version&amp;nbsp;3&lt;/a&gt;, as published by the Free Software Foundation.</source>
         <translation>Este programa es libre: puede redistribuirlo y/o modificarlo bajo los términos de &lt;a %1&gt;GNU General Public License (GPL), versión&amp;nbsp;3&lt;/a&gt;, tal y como está publicada en la Free Software Foundation.</translation>
@@ -6685,6 +6675,19 @@ La máxima versión soportada es %2.</translation>
         <location filename="../src/template_dock_widget.cpp" line="968"/>
         <source>- Map -</source>
         <translation>- Mapa -</translation>
+    </message>
+</context>
+<context>
+    <name>TextBrowserDialog</name>
+    <message>
+        <location filename="../src/gui/about_dialog.cpp" line="167"/>
+        <source>External link: %1</source>
+        <translation>Enlace externo: %1</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/about_dialog.cpp" line="171"/>
+        <source>Click to view</source>
+        <translation>Clic para vista</translation>
     </message>
 </context>
 <context>

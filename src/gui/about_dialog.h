@@ -1,5 +1,6 @@
 /*
- *    Copyright 2012, 2013, 2014 Kai Pastor, Thomas Schöps
+ *    Copyright 2012, 2013, 2014 Thomas Schöps
+ *    Copyright 2012-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -20,21 +21,19 @@
 #ifndef _OPENORIENTEERING_ABOUT_DIALOG_H_
 #define _OPENORIENTEERING_ABOUT_DIALOG_H_
 
-#include <QDialog>
-#include <QTextBrowser>
-#include <QUrl>
+#include "text_browser_dialog.h"
 
 /**
  * @brief A dialog which shows information about Mapper and its components.
  */
-class AboutDialog : public QDialog
+class AboutDialog : public TextBrowserDialog
 {
 Q_OBJECT
 public:
 	/**
 	 * @brief Construct a new AboutDialog.
 	 */
-	AboutDialog(QWidget* parent = NULL);
+	AboutDialog(QWidget* parent = nullptr);
 	
 	/**
 	 * @brief Returns the basic information about this software.
@@ -42,32 +41,16 @@ public:
 	 */
 	static QString about();
 	
-protected slots:
+protected:
 	/**
 	 * @brief Sets custom HTML content when the URL identifies the first page.
 	 */
-	void sourceChanged(QUrl url);
+	virtual void sourceChanged(const QUrl& url) override;
 	
 	/**
 	 * @brief Updates the window title from the current document title.
 	 */
-	void updateWindowTitle();
-	
-	/**
-	 * @brief Shows a tooltip showing the link if is an external document.
-	 */
-	void highlighted(QString link);
-	
-protected:
-	/**
-	 * @brief Returns a size hint based on the text browser's content.
-	 */
-	virtual QSize sizeHint() const;
-	
-	/**
-	 * @brief The TextBrowser is the main widget of the AboutDialog.
-	 */
-	QTextBrowser* text_browser;
+	void updateWindowTitle() override;
 };
 
 #endif

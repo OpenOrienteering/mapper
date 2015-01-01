@@ -53,16 +53,6 @@
         <translation>Twórca projektu</translation>
     </message>
     <message>
-        <location filename="../src/gui/about_dialog.cpp" line="167"/>
-        <source>External link: %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/gui/about_dialog.cpp" line="171"/>
-        <source>Click to view</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/gui/about_dialog.cpp" line="250"/>
         <source>&lt;a %1&gt;All about licenses, copyright notices, conditions and disclaimers.&lt;/a&gt;</source>
         <translation type="unfinished"></translation>
@@ -6757,6 +6747,19 @@ Not an OSM file.</source>
         <translation>Nie można otworzyć podkładu
 %1:
 %2</translation>
+    </message>
+</context>
+<context>
+    <name>TextBrowserDialog</name>
+    <message>
+        <location filename="../src/gui/about_dialog.cpp" line="167"/>
+        <source>External link: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gui/about_dialog.cpp" line="171"/>
+        <source>Click to view</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -113,6 +113,7 @@ HEADERS += \
   gui/print_widget.h \
   gui/settings_dialog.h \
   gui/settings_dialog_p.h \
+  gui/text_browser_dialog.h \
   gui/widgets/action_grid_bar.h \
   gui/widgets/color_dropdown.h \
   gui/widgets/home_screen_widget.h \
@@ -259,6 +260,7 @@ SOURCES += \
   gui/print_tool.cpp \
   gui/print_widget.cpp \
   gui/settings_dialog.cpp \
+  gui/text_browser_dialog.cpp \
   gui/widgets/action_grid_bar.cpp \
   gui/widgets/color_dropdown.cpp \
   gui/widgets/home_screen_widget.cpp \

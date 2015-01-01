@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013, 2014 Thomas Schöps
- *    Copyright 2012, 2013, 2014 Kai Pastor
+ *    Copyright 2012-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -23,13 +23,7 @@
 #include <cmath>
 
 #include <QApplication>
-#include <QDialog>
-#include <QPushButton>
-#include <QScrollBar>
-#include <QScroller>
 #include <QTextBrowser>
-#include <QToolTip>
-#include <QVBoxLayout>
 
 #include <mapper_config.h>
 
@@ -41,115 +35,52 @@
  * But an empty URL will be ignored by QTextBrowser's history, leading to
  * unexpected behaviour of backward navigation.
  */
-const QUrl about_page_url = QUrl("#ABOUT");
+const QUrl about_page_url = QUrl(QStringLiteral("#ABOUT"));
 
 /**
  * Puts the items of a QStringList into an HTML block or a sequence of blocks.
  */
-static QString formatBlock(QStringList items)
+static QString formatBlock(const QStringList& items)
 {
 #if defined(Q_OS_ANDROID) // or any other small-screen device
-	QString block = "<p>";
-	block.append(items.join(", "));
-	block.append("</p>");
+	QString block = QStringLiteral("<p>");
+	block.append(items.join(QStringLiteral(", ")));
+	block.append(QStringLiteral("</p>"));
 	return block;
 #else
 	const int columns = 3;
 	const int rows = (int)ceil((double)items.size() / columns);
-	QString table("<table><tr><td>");
+	QString table(QStringLiteral("<table><tr><td>"));
 	for(int i = 0, row = 1; i < items.size(); ++i)
 	{
 		table.append(items[i]);
 		if (rows != row)
 		{
-			table.append("<br/>");
+			table.append(QStringLiteral("<br/>"));
 			++row;
 		}
 		else if (i < items.size())
 		{
-			table.append("</td><td>&nbsp;&nbsp;&nbsp;</td><td>");
+			table.append(QStringLiteral("</td><td>&nbsp;&nbsp;&nbsp;</td><td>"));
 			row = 1;
 		}
 	}
-	table.append("</tr></table>");
+	table.append(QStringLiteral("</tr></table>"));
 	return table;
 #endif
 }
 
 
 AboutDialog::AboutDialog(QWidget* parent)
- : QDialog(parent)
+ : TextBrowserDialog(about_page_url, parent)
 {
-	if (parent)
-	{
-		setWindowModality(Qt::WindowModal);
-	}
-	
-	QVBoxLayout* layout = new QVBoxLayout();
-	setLayout(layout);
-	
-	int left, top, right, bottom;
-	layout->getContentsMargins(&left, &top, &right, &bottom);
-	layout->setContentsMargins(0, 0, 0, 0);
-	layout->setSpacing(0);
-	
-	text_browser = new QTextBrowser();
-	text_browser->setOpenExternalLinks(true);
-	text_browser->setSearchPaths(QStringList() << ":/" << ":/docs/licensing/html/");
-	layout->addWidget(text_browser);
-	
-	QHBoxLayout* buttons_layout = new QHBoxLayout();
-	buttons_layout->setContentsMargins(left, top, right, bottom);
-	
-	QPushButton* back_button  = new QPushButton(QIcon(":/images/arrow-left.png"), QApplication::translate("QFileDialog", "Back"));
-	buttons_layout->addWidget(back_button);
-	
-	buttons_layout->addStretch(1);
-	
-	QPushButton* close_button  = new QPushButton(QApplication::translate("QDialogButtonBox", "&Close"));
-	close_button->setDefault(true);
-	buttons_layout->addWidget(close_button);
-	
-	layout->addLayout(buttons_layout);
-	
-	connect(text_browser, SIGNAL(sourceChanged(QUrl)), this, SLOT(sourceChanged(QUrl)));
-	connect(text_browser, SIGNAL(textChanged()), this, SLOT(updateWindowTitle()));
-	connect(text_browser, SIGNAL(backwardAvailable(bool)), back_button, SLOT(setEnabled(bool)));
-// Android: Crash in Qt 5.3.0 beta,
-// cf. https://bugreports.qt-project.org/browse/QTBUG-38434
-// and highlighting won't work anyway due to missing (stylus) hover events,
-// cf. https://bugreports.qt-project.org/browse/QTBUG-36105
-#if !defined(Q_OS_ANDROID) || QT_VERSION > 0x050300
-	connect(text_browser, SIGNAL(highlighted(QString)), this, SLOT(highlighted(QString)));
-#endif
-	connect(back_button,  SIGNAL(clicked()), text_browser, SLOT(backward()));
-	connect(close_button, SIGNAL(clicked()), this, SLOT(accept()));
-	
-	text_browser->setSource(about_page_url);
-	text_browser->document()->adjustSize();  // needed for sizeHint()
-	
-#if defined(Q_OS_ANDROID)
-	QScroller::grabGesture(text_browser, QScroller::LeftMouseButtonGesture);
-	// Disable selection, so that it doesn't interfere with scrolling
-	text_browser->setTextInteractionFlags(Qt::TextInteractionFlags(Qt::TextBrowserInteraction) & ~Qt::TextSelectableByMouse);
-	// Note: Only the above combination of QScroller::LeftMouseButtonGesture
-	// and ~Qt::TextSelectableByMouse seems to achieve the desired behaviour
-	// (touch-scrolling without selecting text.)
-	
-	setWindowState((windowState() & ~(Qt::WindowMinimized | Qt::WindowFullScreen))
-                   | Qt::WindowMaximized);
-#endif
+	text_browser->setSearchPaths(text_browser->searchPaths() << QStringLiteral(":/docs/licensing/html/"));
+	text_browser->setHtml(about());
+	text_browser->document()->adjustSize();
+	updateWindowTitle();
 }
 
-QSize AboutDialog::sizeHint() const
-{
-	QSize size = text_browser->document()->size().toSize();
-	if (text_browser->verticalScrollBar())
-		size.rwidth() += text_browser->verticalScrollBar()->width();
-	return size;
-}
-
-void AboutDialog::sourceChanged(QUrl url)
+void AboutDialog::sourceChanged(const QUrl& url)
 {
 	if (url == about_page_url)
 		text_browser->setHtml(about());
@@ -163,56 +94,33 @@ void AboutDialog::updateWindowTitle()
 	setWindowTitle(title);
 }
 
-void AboutDialog::highlighted(QString link)
-{
-	if (link.isEmpty())
-	{
-		QToolTip::hideText();
-		return;
-	}
-	
-	QString tooltip_text;
-	if (link.contains("://"))
-	{
-		tooltip_text = tr("External link: %1").arg(link);
-	}
-	else
-	{
-		tooltip_text = tr("Click to view");
-	}
-	/// @todo: Position near mouse pointer
-	QPoint tooltip_pos   = pos() + text_browser->pos();
-	tooltip_pos.ry()    += text_browser->height();
-	QToolTip::showText(tooltip_pos, tooltip_text, this, QRect());
-}
-
 QString AboutDialog::about()
 {
 	static QStringList developers_list( QStringList()
-	  << "Peter Curtis"
-	  << "Kai Pastor"
-	  << "Thomas Schöps %1"
+	  << QStringLiteral("Peter Curtis")
+	  << QStringLiteral("Kai Pastor")
+	  << QStringLiteral("Thomas Schöps %1")
 	);
 	
 	static QStringList contributors_list( QStringList()
-	  << "Javier Arufe"
-	  << "Jon Cundill"
-	  << "Sławomir Cygler"
-	  << "Jan Dalheimer"
-	  << "Davide De Nardis"
-	  << "Eugeniy Fedirets"
-	  << "Pavel Fric"
-	  << "Anders Gressli"
-	  << "Peter Hoban"
-	  << "Henrik Johansson"
-	  << "Panu Karhu"
-	  << "Oskar Karlin"
-	  << "Matthias Kühlewein"
-	  << "Tojo Masaya"
-	  << "Vincent Poinsignon"
-	  << "Russell Porter"
-	  << "Christopher Schive"
-	  << "Aivars Zogla"
+	  << QStringLiteral("Javier Arufe")
+	  << QStringLiteral("Jon Cundill")
+	  << QStringLiteral("Sławomir Cygler")
+	  << QStringLiteral("Jan Dalheimer")
+	  << QStringLiteral("Davide De Nardis")
+	  << QStringLiteral("Eugeniy Fedirets")
+	  << QStringLiteral("Pavel Fric")
+	  << QStringLiteral("Anders Gressli")
+	  << QStringLiteral("Peter Hoban")
+	  << QStringLiteral("Henrik Johansson")
+	  << QStringLiteral("Panu Karhu")
+	  << QStringLiteral("Oskar Karlin")
+	  << QStringLiteral("Matthias Kühlewein")
+	  << QStringLiteral("Tojo Masaya")
+	  << QStringLiteral("Vincent Poinsignon")
+	  << QStringLiteral("Russell Porter")
+	  << QStringLiteral("Christopher Schive")
+	  << QStringLiteral("Aivars Zogla")
 	);
 	
 	QString mapper_about(
@@ -259,7 +167,7 @@ QString AboutDialog::about()
 	    // %7
 	    arg(tr("<a %1>All about licenses, copyright notices, conditions and "
 	           "disclaimers.</a>").
-	           arg("href=\"licensing.html\"")).
+	           arg(QStringLiteral("href=\"licensing.html\""))).
 	    // %8
 	    arg(tr("The OpenOrienteering developers in alphabetical order:")).
 	    // %9

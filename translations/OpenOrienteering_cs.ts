@@ -10,16 +10,6 @@
         <translation>%1</translation>
     </message>
     <message>
-        <location filename="../src/gui/about_dialog.cpp" line="167"/>
-        <source>External link: %1</source>
-        <translation>Vnější odkaz: %1</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/about_dialog.cpp" line="171"/>
-        <source>Click to view</source>
-        <translation>Klepnout pro zobrazení</translation>
-    </message>
-    <message>
         <location filename="../src/gui/about_dialog.cpp" line="237"/>
         <source>This program is free software: you can redistribute it and/or modify it under the terms of the &lt;a %1&gt;GNU General Public License (GPL), version&amp;nbsp;3&lt;/a&gt;, as published by the Free Software Foundation.</source>
         <translation>Tento program je svobodným programovým vybavením. Můžete jej šířit a /nebo upravovat za podmínek &lt;a %1&gt;GNU General Public License (GPL), verze&amp;nbsp;3&lt;/a&gt;, jak byla zveřejněna Free Software Foundation.</translation>
@@ -6769,6 +6759,19 @@ Nejvyšší podporovaná verze je %2.</translation>
         <location filename="../src/template_dock_widget.cpp" line="968"/>
         <source>- Map -</source>
         <translation>- Mapa -</translation>
+    </message>
+</context>
+<context>
+    <name>TextBrowserDialog</name>
+    <message>
+        <location filename="../src/gui/about_dialog.cpp" line="167"/>
+        <source>External link: %1</source>
+        <translation>Vnější odkaz: %1</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/about_dialog.cpp" line="171"/>
+        <source>Click to view</source>
+        <translation>Klepnout pro zobrazení</translation>
     </message>
 </context>
 <context>

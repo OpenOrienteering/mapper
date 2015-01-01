@@ -10,16 +10,6 @@
         <translation>Informazioni %1</translation>
     </message>
     <message>
-        <location filename="../src/gui/about_dialog.cpp" line="167"/>
-        <source>External link: %1</source>
-        <translation>Link Esterno: %1</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/about_dialog.cpp" line="171"/>
-        <source>Click to view</source>
-        <translation>Cliccare per vedere</translation>
-    </message>
-    <message>
         <location filename="../src/gui/about_dialog.cpp" line="250"/>
         <source>&lt;a %1&gt;All about licenses, copyright notices, conditions and disclaimers.&lt;/a&gt;</source>
         <translation>&lt;a %1&gt;Tutto su licenze, note di copyright, condizioni e liberatorie.&lt;/a&gt;</translation>
@@ -6433,6 +6423,19 @@ La versione massima supportata è %2.</translation>
         <location filename="../src/template_dock_widget.cpp" line="968"/>
         <source>- Map -</source>
         <translation>- Mappa -</translation>
+    </message>
+</context>
+<context>
+    <name>TextBrowserDialog</name>
+    <message>
+        <location filename="../src/gui/about_dialog.cpp" line="167"/>
+        <source>External link: %1</source>
+        <translation>Link Esterno: %1</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/about_dialog.cpp" line="171"/>
+        <source>Click to view</source>
+        <translation>Cliccare per vedere</translation>
     </message>
 </context>
 <context>

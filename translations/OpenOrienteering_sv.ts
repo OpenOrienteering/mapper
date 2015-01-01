@@ -10,16 +10,6 @@
         <translation type="unfinished">Om %1</translation>
     </message>
     <message>
-        <location filename="../src/gui/about_dialog.cpp" line="167"/>
-        <source>External link: %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/gui/about_dialog.cpp" line="171"/>
-        <source>Click to view</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/gui/about_dialog.cpp" line="250"/>
         <source>&lt;a %1&gt;All about licenses, copyright notices, conditions and disclaimers.&lt;/a&gt;</source>
         <translation type="unfinished"></translation>
@@ -7653,6 +7643,19 @@ Högsta versionen som stöds är %2.</translation>
     <message>
         <source>Cannot change the template to this file! Is the format of the file correct for this template type?</source>
         <translation type="obsolete">Kan inte ändra bakgrundsbilden till denna fil! Är filformatet korrekt för denna typ av bakgrundsbild?</translation>
+    </message>
+</context>
+<context>
+    <name>TextBrowserDialog</name>
+    <message>
+        <location filename="../src/gui/about_dialog.cpp" line="167"/>
+        <source>External link: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gui/about_dialog.cpp" line="171"/>
+        <source>Click to view</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
