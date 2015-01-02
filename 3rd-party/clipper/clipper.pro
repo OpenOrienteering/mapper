@@ -17,6 +17,7 @@
 #    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
 
 TEMPLATE = aux
+CONFIG  += c++11
 CONFIG  -= debug_and_release
 
 clipper.dir      = $$OUT_PWD/clipper

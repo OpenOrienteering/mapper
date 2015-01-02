@@ -19,6 +19,7 @@
 TEMPLATE     = lib
 TARGET       = qbezier
 CONFIG      += staticlib
+CONFIG      += c++11
 CONFIG      -= debug_and_release
 INSTALLS    -= $$TARGET
 

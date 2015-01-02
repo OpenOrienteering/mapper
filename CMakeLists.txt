@@ -1,5 +1,6 @@
 #
-#    Copyright 2012, 2013, 2014 Thomas Schöps, Kai Pastor
+#    Copyright 2012, 2013, 2014 Thomas Schöps
+#    Copyright 2012-2015 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -25,13 +26,26 @@ include(FeatureSummary)
 
 project(Mapper)
 
-set(Mapper_COPYRIGHT "(C) 2012-2014 OpenOrienteering developers")
+set(Mapper_COPYRIGHT "(C) 2012-2015 OpenOrienteering developers")
 
 # All version components must be integers.
 # We use 99 to mark development builds.
-SET(Mapper_VERSION_MAJOR 0)
-SET(Mapper_VERSION_MINOR 5)
-SET(Mapper_VERSION_PATCH 99)
+set(Mapper_VERSION_MAJOR 0)
+set(Mapper_VERSION_MINOR 5)
+set(Mapper_VERSION_PATCH 99)
+
+set(MAPPER_VERSION_PRI "${PROJECT_SOURCE_DIR}/oo-mapper-version.pri")
+file(READ "${MAPPER_VERSION_PRI}" current)
+string(MD5 file_md5 "${current}")
+set(output "# Generated in CMakeLists.txt, do not edit here.
+Mapper_VERSION_MAJOR = ${Mapper_VERSION_MAJOR}
+Mapper_VERSION_MINOR = ${Mapper_VERSION_MINOR}
+Mapper_VERSION_PATCH = ${Mapper_VERSION_PATCH}
+")
+string(MD5 output_md5 "${output}")
+if(NOT "${output_md5}" STREQUAL "${file_md5}")
+	file(WRITE "${MAPPER_VERSION_PRI}" "${output}")
+endif()
 
 if(${CMAKE_CURRENT_BINARY_DIR} STREQUAL ${PROJECT_SOURCE_DIR})
 	message(FATAL_ERROR "You must not use the source directory as build directory.")

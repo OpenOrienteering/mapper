@@ -19,6 +19,7 @@
 TEMPLATE = lib
 TARGET   = qtsingleapplication
 CONFIG  += staticlib
+CONFIG  += c++11
 CONFIG  -= debug_and_release
 
 android {
