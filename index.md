@@ -31,6 +31,9 @@ Modifying map colors and symbols
 \subpage settings <br>
 Adjusting the program to your preferences.
 
+\subpage android-index <br>
+Working with the Android version of Mapper.
+
 \ref faq <br>
 Frequently asked questions.
 
