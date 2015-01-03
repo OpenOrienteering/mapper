@@ -1,5 +1,5 @@
 #
-#    Copyright 2014 Kai Pastor
+#    Copyright 2014, 2015 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -16,7 +16,7 @@
 #    You should have received a copy of the GNU General Public License
 #    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
 
-PROJECT_NAME           = "@PROJECT_NAME@"
+PROJECT_NAME           = "Mapper"
 PROJECT_NUMBER         = "@Mapper_VERSION_MAJOR@.@Mapper_VERSION_MINOR@.@Mapper_VERSION_PATCH@"
 PROJECT_BRIEF          = "User Manual"
 PROJECT_LOGO           = "@CMAKE_CURRENT_SOURCE_DIR@/../openorienteering.png"
@@ -26,7 +26,7 @@ QUIET                  = YES
 INPUT                  = "@CMAKE_CURRENT_BINARY_DIR@/docs"
 STRIP_FROM_PATH        = "@CMAKE_CURRENT_BINARY_DIR@/docs"
 IMAGE_PATH             = "@CMAKE_CURRENT_SOURCE_DIR@/docs/images"
-IMAGE_PATH            += "@PROJECT_SOURCE_DIR@/images"
+IMAGE_PATH            += "@CMAKE_CURRENT_SOURCE_DIR@/../../images"
 ENABLE_PREPROCESSING   = NO
 USE_MATHJAX            = NO
 
@@ -37,6 +37,8 @@ SEARCHENGINE           = NO
 HTML_HEADER            = "@CMAKE_CURRENT_SOURCE_DIR@/header.html"
 HTML_FOOTER            = "@CMAKE_CURRENT_SOURCE_DIR@/footer.html"
 HTML_STYLESHEET        = "@CMAKE_CURRENT_SOURCE_DIR@/style.css"
+HTML_EXTRA_FILES       = "@CMAKE_CURRENT_SOURCE_DIR@/docs/attachment/scribble_1024.png"
+HTML_EXTRA_FILES      += "@CMAKE_CURRENT_SOURCE_DIR@/docs/attachment/scribble_2048.png"
 
 GENERATE_QHP           = YES
 QCH_FILE               = "../Mapper ${Mapper_VERSION_DISPLAY}.qch"

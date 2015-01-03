@@ -1,5 +1,5 @@
 #
-#    Copyright 2014 Kai Pastor
+#    Copyright 2014, 2015 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -37,10 +37,14 @@ foreach(file ${input_files})
 		string(REPLACE       "_"     " " pagename_spaces "${pagename}")
 		string(REGEX REPLACE "[-_ ]" "_" pagename_safe   "${pagename}")
 		set(output "${pagename_spaces} {#${pagename_safe}}\n======\n\n${output}")
+		string(REGEX REPLACE "^[^{]*({#.*}.*)<title *>(OpenOrienteering Mapper Help - )?(.*)</title>" "\\3  \\1" output "${output}")
+		string(REGEX REPLACE " *{#.*$" "" title "${output}")
+		string(REGEX REPLACE "^(${title} *{#.*}.*)<h3>${title} *</h3>" "\\1" output "${output}")
+	elseif(NOT output MATCHES "^[^\n\r{]*{#[^\n\r]*\r?\n")
+		string(REGEX REPLACE "[.]md$" ""  pagename        "${file}")
+		string(REGEX REPLACE "[_ ]" "_" pagename_safe   "${pagename}")
+		string(REGEX REPLACE "^(.[^\n\r]*)(.*)" "\\1 {#${pagename_safe}}\\2" output "${output}")
 	endif()
-	string(REGEX REPLACE "^[^{]*({#.*}.*)<title *>(OpenOrienteering Mapper Help - )?(.*)</title>" "\\3  \\1" output "${output}")
-	string(REGEX REPLACE " *{#.*$" "" title "${output}")
-	string(REGEX REPLACE "^(${title} *{#.*}.*)<h3>${title} *</h3>" "\\1" output "${output}")
 	string(REGEX REPLACE "</?(!DOCTYPE|html|head|title|link|meta|body)[^>]*>" "" output "${output}")
 	string(REGEX REPLACE "<hr */?>\r?\n?" "\n---\n" output "${output}")
 	string(REGEX REPLACE "src=\"../../images/" "src=\"" output "${output}")
@@ -48,6 +52,7 @@ foreach(file ${input_files})
 	string(REGEX REPLACE "\\[\\[img +(src=)?([^] ]+) *]]" "![](\\2)" output "${output}")
 	string(REGEX REPLACE "\\[\\[img +(src=)?([^] ]+) +alt=\"([^\"]+)\" *]]" "![\\3](\\2)" output "${output}")
 	string(REGEX REPLACE "\\[\\[img +(src=)?([^] ]+) +alt=([^]]*) *]]" "![\\3](\\2)" output "${output}")
+	string(REGEX REPLACE "href=\"attachment/" "href=\"" output "${output}")
 	string(MD5 output_md5 "${output}")
 	set(file_md5)
 	if(EXISTS "docs/${file}")
