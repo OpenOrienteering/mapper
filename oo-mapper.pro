@@ -112,6 +112,7 @@ write_file($$OUT_PWD/toolchain.cmake, CMAKE_TOOLCHAIN)
 
 # Mapper build
 
+SUBDIRS  += docs/manual
 SUBDIRS  += src
 
 OTHER_FILES += \

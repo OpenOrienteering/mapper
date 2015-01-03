@@ -1093,7 +1093,13 @@ void MainWindow::showAbout()
 
 void MainWindow::showHelp()
 {
+#ifdef Q_OS_ANDROID
+	const QUrl help_url = QUrl::fromLocalFile(QStringLiteral("assets:/docs/manual/index.html"));
+	TextBrowserDialog help_dialog(help_url, this);
+	help_dialog.exec();
+#else
 	Util::showHelp(this);
+#endif
 }
 
 void MainWindow::linkClicked(const QString &link)

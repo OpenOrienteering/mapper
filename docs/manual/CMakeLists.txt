@@ -1,5 +1,6 @@
 #
-#    Copyright 2012, 2013, 2014 Thomas Schöps, Kai Pastor
+#    Copyright 2012, 2013, 2014 Thomas Schöps
+#    Copyright 2012-2015 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -16,8 +17,16 @@
 #    You should have received a copy of the GNU General Public License
 #    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
 
-message(STATUS "Configuring ${PROJECT_NAME} user manual")
+if(NOT PROJECT_NAME)
+	project(Mapper_Manual NONE)
+	cmake_minimum_required(VERSION 2.8.8)
+else()
+	message(STATUS "Configuring ${PROJECT_NAME} user manual")
+endif()
 
+if(NOT ANDROID) # ---------------------------------------------------
+
+enable_language(CXX)
 find_package(Qt5Help REQUIRED)
 
 # Not exported from Qt5
@@ -43,6 +52,8 @@ find_program(Qt5Help_ASSISTANT_EXECUTABLE NAMES assistant${CMAKE_EXECUTABLE_SUFF
   NO_DEFAULT_PATH)
 mark_as_advanced(Qt5Help_ASSISTANT_EXECUTABLE)
 
+endif(NOT ANDROID) # ---------------------------------------------------
+
 set(Mapper_HELP_NAMESPACE "openorienteering.mapper-${Mapper_VERSION_MAJOR}.${Mapper_VERSION_MINOR}.${Mapper_VERSION_PATCH}.help"
   CACHE INTERNAL "The namespace where the current version's help will be located.")
 
@@ -64,6 +75,7 @@ else()
 	)
 
 	configure_file(Doxyfile.in Doxyfile @ONLY)
+	
 	configure_file(postprocess-qhp.cmake.in postprocess-qhp.cmake @ONLY)
 	add_custom_command( 
 	  OUTPUT    ${CMAKE_CURRENT_BINARY_DIR}/html/index.qhp
@@ -85,6 +97,10 @@ else()
 	)
     set_source_files_properties(preprocess-markdown.stamp PROPERTIES GENERATED 1)
 
+	if(NOT ANDROID) # ---------------------------------------------------
+	
+	set(MAPPER_MANUAL_TARGET "${Mapper_HELP_COLLECTION}")
+
 	add_custom_command( 
 	  OUTPUT    ${Mapper_HELP_COLLECTION} ${Mapper_COMPRESSED_HELP}
 	  COMMAND   ${Qt5Help_QCOLLECTIONGENERATOR_EXECUTABLE}
@@ -95,14 +111,6 @@ else()
 	            ${CMAKE_CURRENT_BINARY_DIR}/html/index.qhp
 	  WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
 	  COMMENT   "Running qcollectiongenerator on the manual"
-	)
-
-	add_custom_target(Mapper-manual ALL
-	  DEPENDS   "${Mapper_HELP_COLLECTION}"
-	  # Sources to be listed in Qt Creator
-	  SOURCES   header.html
-	            footer.html
-	            style.css
 	)
 
 	if(NOT CMAKE_CROSSCOMPILING)
@@ -118,5 +126,34 @@ else()
 	  FILES "${CMAKE_CURRENT_BINARY_DIR}/${Mapper_HELP_COLLECTION}" 
 	        "${CMAKE_CURRENT_BINARY_DIR}/${Mapper_COMPRESSED_HELP}" 
 	  DESTINATION "${MAPPER_DATA_DESTINATION}/docs/manual")
+	
+	elseif(ANDROID) # ---------------------------------------------------
+	
+	set(MAPPER_MANUAL_TARGET "${CMAKE_CURRENT_BINARY_DIR}/html/index.qhp")
+	
+	file(APPEND "${CMAKE_CURRENT_BINARY_DIR}/Doxyfile" \n
+	  "FILE_PATTERNS          = android* toolbar*" \n
+	  "USE_MDFILE_AS_MAINPAGE = android-index.md" \n
+	)
+	
+	install(CODE "
+	  file(READ \"${CMAKE_CURRENT_BINARY_DIR}/html/index.qhp\" index_qhp)
+	  string(REGEX MATCHALL \"<file>[^<]*</file>\" matches \${index_qhp})
+	  foreach(match \${matches})
+	    string(REGEX REPLACE \".*<file>\"  \"\" match \"\${match}\")
+	    string(REGEX REPLACE \"</file>.*\" \"\" match \"\${match}\")
+	    file(INSTALL DESTINATION /assets/docs/manual FILES \"${CMAKE_CURRENT_BINARY_DIR}/html/\${match}\")
+	  endforeach()
+	")
+	
+	endif() # ---------------------------------------------------
+	
+	add_custom_target(Mapper-manual ALL
+	  DEPENDS   "${MAPPER_MANUAL_TARGET}"
+	  # Sources to be listed in Qt Creator
+	  SOURCES   header.html
+	            footer.html
+	            style.css
+	)
 	
 endif()

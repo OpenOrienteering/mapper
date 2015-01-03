@@ -1,5 +1,6 @@
 /*
- *    Copyright 2012, 2013, 2014 Thomas Schöps, Kai Pastor
+ *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2012-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -324,17 +325,17 @@ HomeScreenWidgetMobile::HomeScreenWidgetMobile(HomeScreenController* controller,
 	QWidget* file_list_widget = makeFileListWidget(controller, parent);
 	
 	examples_button = new QPushButton(tr("Examples"));
-	connect(examples_button, SIGNAL(clicked(bool)), this, SLOT(showExamples()));
+	connect(examples_button, &QPushButton::clicked, this, &HomeScreenWidgetMobile::showExamples);
+	QPushButton* help_button = new QPushButton(HomeScreenWidgetDesktop::tr("Help"));
+	connect(help_button, &QPushButton::clicked, controller->getWindow(), &MainWindow::showHelp);
 	QPushButton* about_button = new QPushButton(tr("About Mapper"));
-	connect(about_button, SIGNAL(clicked(bool)), controller->getWindow(), SLOT(showAbout()));
-	QPushButton* about_qt_button = new QPushButton(tr("About Qt"));
-	connect(about_qt_button, SIGNAL(clicked(bool)), qApp, SLOT(aboutQt()));
+	connect(about_button, &QPushButton::clicked, controller->getWindow(), &MainWindow::showAbout);
 	QHBoxLayout* buttons_layout = new QHBoxLayout();
 	buttons_layout->setContentsMargins(0, 0, 0, 0);
 	buttons_layout->addWidget(examples_button);
 	buttons_layout->addStretch(1);
+	buttons_layout->addWidget(help_button);
 	buttons_layout->addWidget(about_button);
-	buttons_layout->addWidget(about_qt_button);
 	
 	QGridLayout* layout = new QGridLayout();
 	layout->setSpacing(2 * layout->spacing());
