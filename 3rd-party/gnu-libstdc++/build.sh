@@ -1,4 +1,4 @@
-#!/bin/sh -e
+#!/bin/bash -e
 #
 #    Copyright 2014 Kai Pastor
 #    
@@ -42,7 +42,7 @@ then
 fi
 
 echo "Building GNU libstdc++..."
-bash "$(pwd)/build/tools/build-gnu-libstdc++.sh" "$(pwd)/src" --gcc-version-list=4.8 --ndk-dir="$NDK_DIR" $TRY64 $*
+ANDROID_NDK_ROOT="$NDK_DIR" bash "$(pwd)/build/tools/build-gnu-libstdc++.sh" "$(pwd)/src" --gcc-version-list=4.8 --abis=armeabi-v7a,x86 --ndk-dir="$NDK_DIR" $TRY64 $*
 
 echo "Creating source code archiv..."
 ARCHIVE_NAME=$(basename "$(pwd)")

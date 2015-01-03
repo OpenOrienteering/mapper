@@ -21,11 +21,6 @@ The source code in the src subdirectory was taken from
 The selected git revision is documented in the file REVISION.
 
 The build scripts and patches in the build/tools/ directory were taken from the
-Android NDK release's directory
-
-  build/tools/
-
-and patched with the supplied build-tools.patch.
-
-The patches in build/tools/toolchain-patches/ were already applied to the
-source code in src and are included in this distribution for reference.
+Android NDK release's directory build/tools/. The gcc patches in
+build/tools/toolchain-patches/ were already applied to the source code in src
+and are included in this distribution for reference
