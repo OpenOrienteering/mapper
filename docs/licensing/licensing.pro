@@ -1,5 +1,5 @@
 #
-#    Copyright 2014 Kai Pastor
+#    Copyright 2014, 2015 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -41,19 +41,28 @@ LICENSING_SRCS = \
   $$PWD/src/apache-2.0.qdoc \
   $$PWD/src/gpl-3.0.qdoc \
   $$PWD/src/lgpl-2.1.qdoc \
+  $$PWD/src/lgpl-3.0.qdoc \
   $$PWD/src/gcc-runtime-library-exception.qdoc
 
+OTHER_FILES = \
+  $$LICENSING_SRCS \
+  CMakeLists.txt \
+  licensing.css \
+  licensing.qdocconf \
+  licensing-html.qdocconf \
+  licensing.qrc
 
 QMAKE_DIR = $$dirname(QMAKE_QMAKE)
 
 licensing_html.target = html/licensing.html
 licensing_html.commands = \
   $$shell_quote($$QMAKE_DIR/qdoc) $$shell_quote($$PWD/licensing.qdocconf) -outputdir $$shell_quote($$OUT_PWD/html)
-licensing_html.depends = $$LICENSING_SRCS
+licensing_html.depends = $$LICENSING_SRCS Makefile
 
 licensing_qrc.target = licensing.qrc
 licensing_qrc.commands = \
   $(COPY_FILE) $$shell_quote($$PWD/licensing.qrc) licensing.qrc
+licensing_qrc.depends = $$PWD/licensing.qrc
 
 licensing_qrc_cpp.target = licensing_qrc.cpp
 licensing_qrc_cpp.commands = \

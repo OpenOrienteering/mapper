@@ -1,5 +1,5 @@
 #
-#    Copyright 2014 Kai Pastor
+#    Copyright 2014, 2015 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -52,6 +52,7 @@ set(LICENSING_SRCS
   src/apache-2.0.qdoc
   src/gpl-3.0.qdoc
   src/lgpl-2.1.qdoc
+  src/lgpl-3.0.qdoc
   src/gcc-runtime-library-exception.qdoc
 )
 

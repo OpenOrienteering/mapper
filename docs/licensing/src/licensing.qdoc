@@ -1,5 +1,5 @@
 /*
- *    Copyright 2014 Kai Pastor
+ *    Copyright 2014, 2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -28,7 +28,7 @@
 \e {OpenOrienteering Mapper is a free software for drawing orienteering maps.} \break
 \l http://openorienteering.org
 
-Copyright (C) 2012, 2013, 2014 Kai Pastor, Thomas Schöps
+Copyright (C) 2012-2015 Kai Pastor, Thomas Schöps
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the \l{GNU General Public License} as published by
@@ -63,7 +63,7 @@ Mapper may not contain code covered by one or more of the licenses listed here.
 \l http://www.angusj.com/delphi/clipper.php
 
 \quotation
-Copyright (C) 2010-2013 Angus Johnson
+Copyright (C) 2010-2014 Angus Johnson
 
 The Clipper Library (including Delphi, C++ & C# source code, other accompanying
 code, examples and documentation), hereafter called "the Software", has been 
@@ -102,6 +102,8 @@ THE SOFTWARE.
 \l http://gcc.gnu.org/libstdc++/
 
 \quotation
+    Copyright (C) 2014 Free Software Foundation, Inc.
+
                                                    This library is free
     software; you can redistribute it and/or modify it under the
     terms of the \l{GNU General Public License} as published by the
@@ -153,12 +155,12 @@ DEALINGS IN THE SOFTWARE.
 \l http://qt-project.org
 
 \quotation
-    Copyright (C) 2013 Digia Plc and/or its subsidiary(-ies) and other contributors.
+    Copyright (C) 2015 Digia Plc and/or its subsidiary(-ies) and other contributors.
 \endquotation
 
 Qt can be used under open source or commercial terms.
 OpenOrienteering Mapper uses Qt under the terms of the
-\l{GNU General Public License} (GPL) version 3.0.
+\l{GNU Lesser General Public License Version 3}.
 
 \include qt-licensing.qdocinc
 
@@ -175,6 +177,7 @@ OpenOrienteering Mapper uses Qt under the terms of the
   \li \l{GCC Runtime Library Exception}, version 3.1
   \li \l{GNU General Public License} (GPL), version 3.0
   \li \l{GNU Lesser General Public License} (LGPL), version 2.1
+  \li \l{GNU Lesser General Public License Version 3} (LGPLv3)
 \endlist
 
 */

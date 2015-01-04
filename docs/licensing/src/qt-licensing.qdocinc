@@ -24,7 +24,8 @@
 \section2 Licenses Used in Qt
 
 This section lists other licenses used in Qt or in libraries that are supplied
-alongside Qt modules, not provided under the \l{GNU General Public License} (GPL).
+alongside Qt modules, not provided under the
+\l{GNU Lesser General Public License Version 3}.
 
 \note Depending on the actual package, a particular copy of OpenOrienteering Mapper
       may not contain code covered by one or more of the licenses listed here.
