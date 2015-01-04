@@ -30,7 +30,6 @@
   -shared \
   -gui \
   -widgets \
-  -qt-sql-sqlite \
   -no-sql-db2 \
   -no-sql-ibase \
   -no-sql-mysql \
@@ -39,13 +38,10 @@
   -no-sql-psql \
   -no-sql-sqlite2 \
   -no-sql-tds \
-  -qt-zlib \
-  -qt-libpng \
-  -qt-libjpeg \
   -no-openssl \
-  -qt-pcre \
   -no-directfb \
   -no-linuxfb \
+  -make tools \
   -nomake examples \
   -nomake tests \
   -system-proxies \

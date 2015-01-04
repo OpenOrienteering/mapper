@@ -258,10 +258,14 @@ if(${QT5_VERSION} MATCHES "5.[0-2]")
 	set(QT5_CONFIG_EXTRA_OPTS "${QT5_CONFIG_EXTRA_OPTS} -no-javascript-jit")
 endif()
 if("${QT5_PLATFORM}" MATCHES "android")
-	# cf. https://bugreports.qt-project.org/browse/QTBUG-38452
-	set(QT5_CONFIG_EXTRA_OPTS "${QT5_CONFIG_EXTRA_OPTS} -nomake tools")
-else()
-	set(QT5_CONFIG_EXTRA_OPTS "${QT5_CONFIG_EXTRA_OPTS} -make tools")
+	# cf. https://qt.gitorious.org/qtsdk/qtsdk/source/v5.4.0-packaging:packaging-tools/bld_config/configure_android_armv7_opensource
+	set(QT5_CONFIG_EXTRA_OPTS
+	  "${QT5_CONFIG_EXTRA_OPTS} -opengl es2 -sysconfdir /etc/xdg -no-icu -no-sql-sqlite -nomake tools -skip qttranslations -no-warnings-are-errors")
+endif()
+if(MINGW)
+	# cf. https://qt.gitorious.org/qtsdk/qtsdk/source/v5.4.0-packaging:packaging-tools/bld_config/configure_win_opengl_opensource
+	set(QT5_CONFIG_EXTRA_OPTS
+	  "${QT5_CONFIG_EXTRA_OPTS} -qt-zlib -qt-libpng -qt-libjpeg -qt-sql-sqlite -qt-pcre")
 endif()
 
 configure_file(qt5-patchqt.in qt5-patchqt.new @ONLY)
@@ -295,7 +299,7 @@ endfunction()
 # version when building a newer Qt version than installed.
 
 if((UNIX AND NOT APPLE) OR (CMAKE_CROSSCOMPILING AND NOT "${QT5_PLATFORM}" MATCHES "android"))
-	set(QT5_EXTRA_HOST_DIR "${BINARY_DIR}/../Qt5-build-host")
+	set(QT5_EXTRA_HOST_DIR "${BINARY_DIR}-host")
 	
 	configure_file(qt5-config-host.in qt5-config-host.new @ONLY)
 	if(NOT ${QT5_VERSION} MATCHES "5.[0-2]")
@@ -325,11 +329,6 @@ if((UNIX AND NOT APPLE) OR (CMAKE_CROSSCOMPILING AND NOT "${QT5_PLATFORM}" MATCH
 	  COMMAND ${QT5_MAKE_COMMAND} -C "${QT5_EXTRA_HOST_DIR}" module-qttools-qmake_all
 	  COMMAND ${QT5_MAKE_COMMAND} -C "${QT5_EXTRA_HOST_DIR}/qttools/src/assistant" sub-qcollectiongenerator
 	  DEPENDEES configure-host
-	)
-	ExternalProject_Add_Step(Qt5 install-host
-	  # not needed: COMMAND ${QT5_MAKE_COMMAND} -C "${QT5_EXTRA_HOST_DIR}/qttools/src/assistant" sub-qcollectiongenerator-install_subtargets
-	  DEPENDEES build-host
-	  DEPENDERS install
 	)
 	
 	if(NOT TARGET Qt5::qcollectiongenerator)
