@@ -362,11 +362,13 @@ void HomeScreenWidgetMobile::adjustTitlePixmapSize()
 {
 	QSize label_size = title_label->size();
 	int scaled_width = qRound(title_pixmap.devicePixelRatio() * label_size.width());
-	if (title_pixmap.width() > scaled_width &&
-	    title_label->pixmap()->width() != scaled_width )
+	if (title_pixmap.width() > scaled_width)
 	{
-		label_size.setHeight(title_pixmap.height());
-		title_label->setPixmap(title_pixmap.scaled(label_size, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+		if (title_label->pixmap()->width() != scaled_width)
+		{
+			label_size.setHeight(title_pixmap.height());
+			title_label->setPixmap(title_pixmap.scaled(label_size, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+		}
 	}
 	else if (title_label->pixmap()->width() != title_pixmap.width())
 	{
