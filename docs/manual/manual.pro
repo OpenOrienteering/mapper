@@ -37,7 +37,7 @@ QMAKE_CLEAN         += $$manual.target \
                        $$manual.dir/html/*
 android {
 	INSTALLS += manual_data
-	manual_data.path = /assets/docs/manual
+	manual_data.path = /assets/doc/manual
 	manual_data.extra = $(MAKE) -C manual install DESTDIR=$(INSTALL_ROOT)
 }
 

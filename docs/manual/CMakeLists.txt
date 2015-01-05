@@ -125,7 +125,7 @@ else()
 	install(
 	  FILES "${CMAKE_CURRENT_BINARY_DIR}/${Mapper_HELP_COLLECTION}" 
 	        "${CMAKE_CURRENT_BINARY_DIR}/${Mapper_COMPRESSED_HELP}" 
-	  DESTINATION "${MAPPER_DATA_DESTINATION}/docs/manual")
+	  DESTINATION "${MAPPER_DATA_DESTINATION}/doc/manual")
 	
 	elseif(ANDROID) # ---------------------------------------------------
 	
@@ -142,7 +142,7 @@ else()
 	  foreach(match \${matches})
 	    string(REGEX REPLACE \".*<file>\"  \"\" match \"\${match}\")
 	    string(REGEX REPLACE \"</file>.*\" \"\" match \"\${match}\")
-	    file(INSTALL DESTINATION /assets/docs/manual FILES \"${CMAKE_CURRENT_BINARY_DIR}/html/\${match}\")
+	    file(INSTALL DESTINATION /assets/doc/manual FILES \"${CMAKE_CURRENT_BINARY_DIR}/html/\${match}\")
 	  endforeach()
 	")
 	

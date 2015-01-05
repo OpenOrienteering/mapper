@@ -65,7 +65,7 @@ QStringList MapperResource::getLocations(MapperResource::RESOURCE_TYPE resource_
 			
 		case MANUAL:
 			// TODO: Support localized manual
-			resource_path = "/docs/manual";
+			resource_path = "/doc/manual";
 			break;
 			
 		case PROJ_DATA:
@@ -120,6 +120,10 @@ QStringList MapperResource::getLocations(MapperResource::RESOURCE_TYPE resource_
 	// Windows: load resources from the application directory
 	QString win_dir(app_dir.absolutePath() + resource_path);
 	addIfExists(locations, win_dir);
+#elif defined(Q_OS_ANDROID)
+	// Android: load resources from the application directory
+	QString assets_dir(QStringLiteral("assets:") + resource_path);
+	addIfExists(locations, assets_dir);
 #else
 	Q_UNUSED(app_dir);
 #endif

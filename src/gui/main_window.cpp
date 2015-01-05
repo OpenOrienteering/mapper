@@ -1094,7 +1094,8 @@ void MainWindow::showAbout()
 void MainWindow::showHelp()
 {
 #ifdef Q_OS_ANDROID
-	const QUrl help_url = QUrl::fromLocalFile(QStringLiteral("assets:/docs/manual/index.html"));
+	const QString manual_path = MapperResource::locate(MapperResource::MANUAL, "index.html");
+	const QUrl help_url = QUrl::fromLocalFile(manual_path);
 	TextBrowserDialog help_dialog(help_url, this);
 	help_dialog.exec();
 #else
