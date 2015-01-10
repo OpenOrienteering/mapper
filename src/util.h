@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012, 2014 Kai Pastor
+ *    Copyright 2012, 2014, 2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -128,7 +128,7 @@ namespace Util
 	 * @param filename the name of the help html file
 	 * @param fragment the fragment in the specified file to jump to
 	 */
-	void showHelp(QWidget* dialog_parent, QString filename = "index.html", QString fragment = "");
+	void showHelp(QWidget* dialog_parent, QString filename = QStringLiteral("index.html"), QString fragment = QString());
 	
 	/** Converts the given help file name to a string
 	 *  which can be used to access it inside QtHelp. */

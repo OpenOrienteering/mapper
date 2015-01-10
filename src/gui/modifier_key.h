@@ -1,5 +1,5 @@
 /*
- *    Copyright 2013 Kai Pastor
+ *    Copyright 2013, 2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -102,7 +102,7 @@ inline
 ModifierKey::ModifierKey(Qt::KeyboardModifiers keys)
 {
 	native_text = QKeySequence((int)keys).toString(QKeySequence::NativeText);
-	if (native_text.endsWith('+'))
+	if (native_text.endsWith(QLatin1Char('+')))
 	{
 		native_text.chop(1);
 	}
@@ -112,7 +112,7 @@ inline
 ModifierKey::ModifierKey(int keys)
 {
 	native_text = QKeySequence(keys).toString(QKeySequence::NativeText);
-	if (native_text.endsWith('+'))
+	if (native_text.endsWith(QLatin1Char('+')))
 	{
 		native_text.chop(1);
 	}
