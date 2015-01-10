@@ -4,9 +4,9 @@
 2014-09-19 Kai Pastor (OpenOrienteering)
 - Never fail on missing CMake tests, as we remove all tests from source dir.
 
-diff -up Qt5/qtbase/mkspecs/features/create_cmake.prf.orig Qt5/qtbase/mkspecs/features/create_cmake.prf
---- Qt5/qtbase/mkspecs/features/create_cmake.prf.orig
-+++ Qt5/qtbase/mkspecs/features/create_cmake.prf
+diff -up Qt5/mkspecs/features/create_cmake.prf.orig Qt5/mkspecs/features/create_cmake.prf
+--- Qt5/mkspecs/features/create_cmake.prf.orig
++++ Qt5/mkspecs/features/create_cmake.prf
 @@ -305,7 +305,8 @@
  # with 'CONFIG -= create_cmake'
  !equals(CMAKE_MODULE_TESTS, -) {

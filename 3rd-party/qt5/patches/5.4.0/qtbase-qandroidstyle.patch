@@ -1,6 +1,6 @@
-diff -urw a/qtbase/src/widgets/styles/qfusionstyle.cpp b/src/widgets/styles/qfusionstyle.cpp
---- a/qtbase/src/widgets/styles/qfusionstyle.cpp	2014-12-05 22:17:05.988465490 +0100
-+++ b/qtbase/src/widgets/styles/qfusionstyle.cpp	2014-12-09 03:02:17.117028249 +0100
+diff -urw a/src/widgets/styles/qfusionstyle.cpp b/src/widgets/styles/qfusionstyle.cpp
+--- a/src/widgets/styles/qfusionstyle.cpp	2014-12-05 22:17:05.988465490 +0100
++++ b/src/widgets/styles/qfusionstyle.cpp	2014-12-09 03:02:17.117028249 +0100
 @@ -1746,9 +1746,9 @@
                  painter->drawPixmap(visualPos(button->direction, button->rect, point), pixmap);
  
@@ -13,9 +13,9 @@ diff -urw a/qtbase/src/widgets/styles/qfusionstyle.cpp b/src/widgets/styles/qfus
  
                  // left-align text if there is
                  if (!button->text.isEmpty())
-diff -urw a/qtbase/src/widgets/styles/qstyle.cpp b/src/widgets/styles/qstyle.cpp
---- a/qtbase/src/widgets/styles/qstyle.cpp	2014-12-05 22:17:05.992465431 +0100
-+++ b/qtbase/src/widgets/styles/qstyle.cpp	2014-12-09 03:01:29.213766493 +0100
+diff -urw a/src/widgets/styles/qstyle.cpp b/src/widgets/styles/qstyle.cpp
+--- a/src/widgets/styles/qstyle.cpp	2014-12-05 22:17:05.992465431 +0100
++++ b/src/widgets/styles/qstyle.cpp	2014-12-09 03:01:29.213766493 +0100
 @@ -2102,7 +2102,7 @@
  {
      if (direction == Qt::LeftToRight)

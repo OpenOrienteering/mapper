@@ -1,5 +1,4 @@
 2014-12-21 Kai Pastor
-- Adjust paths for OpenOrienteering's Qt patching
 - Remove tests from patch
 
 From 938541e670249a4dfdcc8a3d787746b0af7114ec Mon Sep 17 00:00:00 2001
@@ -18,10 +17,10 @@ Task-number: QTBUG-39874
 Task-number: QTBUG-38145
 Change-Id: I620b2fa64941f84838f9a386851480285336e8d1
 
-diff --git a/qtbase/src/network/kernel/qnetworkproxy_win.cpp b/qtbase/src/network/kernel/qnetworkproxy_win.cpp
+diff --git a/src/network/kernel/qnetworkproxy_win.cpp b/src/network/kernel/qnetworkproxy_win.cpp
 index da2c020..f2176d6 100644
---- a/qtbase/src/network/kernel/qnetworkproxy_win.cpp
-+++ b/qtbase/src/network/kernel/qnetworkproxy_win.cpp
+--- a/src/network/kernel/qnetworkproxy_win.cpp
++++ b/src/network/kernel/qnetworkproxy_win.cpp
 @@ -130,10 +130,17 @@ static bool currentProcessIsService()
          DWORD size = UNLEN;
          if (ptrGetUserName(userName, &size)) {

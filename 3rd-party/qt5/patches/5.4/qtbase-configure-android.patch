@@ -1,9 +1,9 @@
 Kai Pastor (OpenOrienteering)
 - Use the correct tools prefix and toolchain prefix (fixes Android x86 build)
 
-diff -up Qt5/qtbase/configure-orig Qt5/qtbase/configure
---- Qt5/qtbase/configure-orig	2014-02-23 16:49:35.497321634 +0100
-+++ Qt5/qtbase/configure	2014-02-23 16:50:01.952928372 +0100
+diff -up Qt5/configure-orig Qt5/configure
+--- Qt5/configure-orig	2014-02-23 16:49:35.497321634 +0100
++++ Qt5/configure	2014-02-23 16:50:01.952928372 +0100
 @@ -3368,18 +3368,22 @@ TEST_COMPILER=$QMAKE_CONF_COMPILER
  
  if [ "$XPLATFORM_ANDROID" = "yes" ] ; then
