@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Jan Dalheimer
- *    Copyright 2012, 2013, 2014 Kai Pastor
+ *    Copyright 2012-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -58,15 +58,14 @@ SettingsDialog::SettingsDialog(QWidget* parent)
 	layout->addWidget(tab_widget);
 	
 	button_box = new QDialogButtonBox(
-		QDialogButtonBox::Ok | QDialogButtonBox::Apply | QDialogButtonBox::Cancel | QDialogButtonBox::Help,
+	  QDialogButtonBox::Ok | QDialogButtonBox::Apply | QDialogButtonBox::Cancel | QDialogButtonBox::Help,
 	  Qt::Horizontal );
 	layout->addWidget(button_box);
-	connect(button_box, SIGNAL(clicked(QAbstractButton*)), this, SLOT(buttonPressed(QAbstractButton*)));
+	connect(button_box, &QDialogButtonBox::clicked, this, &SettingsDialog::buttonPressed);
 	
 	// Add all pages
 	addPage(new GeneralPage(this));
 	addPage(new EditorPage(this));
-	//addPage(new PrintingPage(this));
 }
 
 SettingsDialog::~SettingsDialog()
@@ -82,34 +81,53 @@ void SettingsDialog::addPage(SettingsPage* page)
 void SettingsDialog::buttonPressed(QAbstractButton* button)
 {
 	QDialogButtonBox::StandardButton id = button_box->standardButton(button);
-	int count = tab_widget->count();
-	if (id == QDialogButtonBox::Ok)
+	const int count = tab_widget->count();
+	int i;
+	switch (id)
 	{
-		for (int i = 0; i < count; i++)
+	case QDialogButtonBox::Ok:
+		for (i = 0; i < count; i++)
 			static_cast< SettingsPage* >(tab_widget->widget(i))->ok();
 		Settings::getInstance().applySettings();
 		this->accept();
-	}
-	else if (id == QDialogButtonBox::Apply)
-	{
-		for (int i = 0; i < count; i++)
+		break;
+		
+	case QDialogButtonBox::Apply:
+		for (i = 0; i < count; i++)
 			static_cast< SettingsPage* >(tab_widget->widget(i))->apply();
 		Settings::getInstance().applySettings();
-	}
-	else if (id == QDialogButtonBox::Cancel)
-	{
-		for (int i = 0; i < count; i++)
+		break;
+		
+	case QDialogButtonBox::Cancel:
+		for (i = 0; i < count; i++)
 			static_cast< SettingsPage* >(tab_widget->widget(i))->cancel();
 		this->reject();
-	}
-	else if (id == QDialogButtonBox::Help)
-	{
-		Util::showHelp(this, "settings.html");
+		break;
+		
+	case QDialogButtonBox::Help:
+		Util::showHelp(this, QStringLiteral("settings.html"));
+		break;
+		
+	default:
+		Q_UNREACHABLE();
+		break;
 	}
 }
 
 
+
 // ### SettingsPage ###
+
+SettingsPage::SettingsPage(QWidget* parent)
+ : QWidget(parent)
+{
+	// nothing
+}
+
+void SettingsPage::cancel()
+{
+	changes.clear();
+}
 
 void SettingsPage::apply()
 {
@@ -119,10 +137,17 @@ void SettingsPage::apply()
 	changes.clear();
 }
 
+void SettingsPage::ok()
+{
+	this->apply();
+}
+
+
 
 // ### EditorPage ###
 
-EditorPage::EditorPage(QWidget* parent) : SettingsPage(parent)
+EditorPage::EditorPage(QWidget* parent)
+ : SettingsPage(parent)
 {
 	QGridLayout* layout = new QGridLayout();
 	this->setLayout(layout);
@@ -166,7 +191,7 @@ EditorPage::EditorPage(QWidget* parent) : SettingsPage(parent)
 	
 	
 	layout->setRowMinimumHeight(row++, 16);
-	layout->addWidget(new QLabel("<b>" % tr("Edit tool:") % "</b>"), row++, 0, 1, 2);
+	layout->addWidget(Util::Headline::create(tr("Edit tool:")), row++, 0, 1, 2);
 	
 	edit_tool_delete_bezier_point_action = new QComboBox();
 	edit_tool_delete_bezier_point_action->addItem(tr("Retain old shape"), (int)Settings::DeleteBezierPoint_RetainExistingShape);
@@ -183,7 +208,7 @@ EditorPage::EditorPage(QWidget* parent) : SettingsPage(parent)
 	layout->addWidget(edit_tool_delete_bezier_point_action_alternative, row++, 1);
 	
 	layout->setRowMinimumHeight(row++, 16);
-	layout->addWidget(new QLabel("<b>" % tr("Rectangle tool:") % "</b>"), row++, 0, 1, 2);
+	layout->addWidget(Util::Headline::create(tr("Rectangle tool:")), row++, 0, 1, 2);
 	
 	QLabel* rectangle_helper_cross_radius_label = new QLabel(tr("Radius of helper cross:"));
 	QSpinBox* rectangle_helper_cross_radius = Util::SpinBox::create(0, 999999, tr("mm", "millimeters"));
@@ -214,21 +239,26 @@ EditorPage::EditorPage(QWidget* parent) : SettingsPage(parent)
 	
 	updateWidgets();
 
-	connect(antialiasing, SIGNAL(toggled(bool)), this, SLOT(antialiasingClicked(bool)));
-	connect(text_antialiasing, SIGNAL(toggled(bool)), this, SLOT(textAntialiasingClicked(bool)));
-	connect(tolerance, SIGNAL(valueChanged(int)), this, SLOT(toleranceChanged(int)));
-	connect(snap_distance, SIGNAL(valueChanged(int)), this, SLOT(snapDistanceChanged(int)));
-	connect(fixed_angle_stepping, SIGNAL(valueChanged(int)), this, SLOT(fixedAngleSteppingChanged(int)));
-	connect(select_symbol_of_objects, SIGNAL(clicked(bool)), this, SLOT(selectSymbolOfObjectsClicked(bool)));
-	connect(zoom_out_away_from_cursor, SIGNAL(clicked(bool)), this, SLOT(zoomOutAwayFromCursorClicked(bool)));
-	connect(draw_last_point_on_right_click, SIGNAL(clicked(bool)), this, SLOT(drawLastPointOnRightClickClicked(bool)));
-	connect(keep_settings_of_closed_templates, SIGNAL(clicked(bool)), this, SLOT(keepSettingsOfClosedTemplatesClicked(bool)));
+	connect(antialiasing, &QAbstractButton::toggled, this, &EditorPage::antialiasingClicked);
+	connect(text_antialiasing, &QAbstractButton::toggled, this, &EditorPage::textAntialiasingClicked);
+	connect(tolerance, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &EditorPage::toleranceChanged);
+	connect(snap_distance, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &EditorPage::snapDistanceChanged);
+	connect(fixed_angle_stepping, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &EditorPage::fixedAngleSteppingChanged);
+	connect(select_symbol_of_objects, &QAbstractButton::clicked, this, &EditorPage::selectSymbolOfObjectsClicked);
+	connect(zoom_out_away_from_cursor, &QAbstractButton::clicked, this, &EditorPage::zoomOutAwayFromCursorClicked);
+	connect(draw_last_point_on_right_click, &QAbstractButton::clicked, this, &EditorPage::drawLastPointOnRightClickClicked);
+	connect(keep_settings_of_closed_templates, &QAbstractButton::clicked, this, &EditorPage::keepSettingsOfClosedTemplatesClicked);
 	
-	connect(edit_tool_delete_bezier_point_action, SIGNAL(currentIndexChanged(int)), this, SLOT(editToolDeleteBezierPointActionChanged(int)));
-	connect(edit_tool_delete_bezier_point_action_alternative, SIGNAL(currentIndexChanged(int)), this, SLOT(editToolDeleteBezierPointActionAlternativeChanged(int)));
+	connect(edit_tool_delete_bezier_point_action, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &EditorPage::editToolDeleteBezierPointActionChanged);
+	connect(edit_tool_delete_bezier_point_action_alternative, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &EditorPage::editToolDeleteBezierPointActionAlternativeChanged);
 	
-	connect(rectangle_helper_cross_radius,  SIGNAL(valueChanged(int)), this, SLOT(rectangleHelperCrossRadiusChanged(int)));
-	connect(rectangle_preview_line_width, SIGNAL(clicked(bool)), this, SLOT(rectanglePreviewLineWidthChanged(bool)));
+	connect(rectangle_helper_cross_radius,  static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &EditorPage::rectangleHelperCrossRadiusChanged);
+	connect(rectangle_preview_line_width, &QAbstractButton::clicked, this, &EditorPage::rectanglePreviewLineWidthChanged);
+}
+
+QString EditorPage::title() const
+{
+	return tr("Editor");
 }
 
 void EditorPage::updateWidgets()
@@ -302,32 +332,14 @@ void EditorPage::rectanglePreviewLineWidthChanged(bool checked)
 	changes.insert(Settings::getInstance().getSettingPath(Settings::RectangleTool_PreviewLineWidth), QVariant(checked));
 }
 
-// ### PrintingPage ###
 
-/*PrintingPage::PrintingPage(QWidget* parent) : SettingsPage(parent)
-{
-	QGridLayout* layout = new QGridLayout();
-	this->setLayout(layout);
-	
-	int row = 0;
-	
-	QLabel* preview_border_label = new QLabel(tr("Preview border size per side:"));
-	QDoubleSpinBox* preview_border_edit = Util::SpinBox::create(1, 0, 999999, tr("mm", "millimeters"));
-	layout->addWidget(preview_border_label, row, 0);
-	layout->addWidget(preview_border_edit, row++, 1);
-	
-	preview_border_edit->setValue(Settings::getInstance().getSetting(Settings::Printing_PreviewBorder).toDouble());
-	
-	layout->setRowStretch(row, 1);
-	
-	connect(preview_border_edit, SIGNAL(valueChanged(double)), this, SLOT(previewBorderChanged(double)));
-}*/
 
 // ### GeneralPage ###
 
 const int GeneralPage::TranslationFromFile = -1;
 
-GeneralPage::GeneralPage(QWidget* parent) : SettingsPage(parent)
+GeneralPage::GeneralPage(QWidget* parent)
+ : SettingsPage(parent)
 {
 	QGridLayout* layout = new QGridLayout();
 	setLayout(layout);
@@ -344,7 +356,7 @@ GeneralPage::GeneralPage(QWidget* parent) : SettingsPage(parent)
 	layout->addWidget(language_box, row, 2);
 	
 	QAbstractButton* language_file_button = new QToolButton();
-	language_file_button->setIcon(QIcon(":/images/open.png"));
+	language_file_button->setIcon(QIcon(QStringLiteral(":/images/open.png")));
 	layout->addWidget(language_file_button, row, 3);
 	
 	row++;
@@ -362,7 +374,7 @@ GeneralPage::GeneralPage(QWidget* parent) : SettingsPage(parent)
 	layout->addWidget(ppi_edit, row, 2);
 	
 	QAbstractButton* ppi_calculate_button = new QToolButton();
-	ppi_calculate_button->setIcon(QIcon(":/images/settings.png"));
+	ppi_calculate_button->setIcon(QIcon(QStringLiteral(":/images/settings.png")));
 	layout->addWidget(ppi_calculate_button, row, 3);
 	
 	row++;
@@ -388,7 +400,7 @@ GeneralPage::GeneralPage(QWidget* parent) : SettingsPage(parent)
 	layout->addWidget(Util::Headline::create(tr("Saving files")), row, 1, 1, 2);
 	
 	row++;
-	QCheckBox* compatibility_check = new QCheckBox(tr("Retain compatibility with Mapper %1").arg("0.5"));
+	QCheckBox* compatibility_check = new QCheckBox(tr("Retain compatibility with Mapper %1").arg(QStringLiteral("0.5")));
 	compatibility_check->setChecked(Settings::getInstance().getSetting(Settings::General_RetainCompatiblity).toBool());
 	layout->addWidget(compatibility_check, row, 1, 1, 2);
 	
@@ -421,16 +433,16 @@ GeneralPage::GeneralPage(QWidget* parent) : SettingsPage(parent)
 	layout->addWidget(encoding_label, row, 1);
 	
 	encoding_box = new QComboBox();
-	encoding_box->addItem("System");
-	encoding_box->addItem("Windows-1250");
-	encoding_box->addItem("Windows-1252");
-	encoding_box->addItem("ISO-8859-1");
-	encoding_box->addItem("ISO-8859-15");
+	encoding_box->addItem(QStringLiteral("System"));
+	encoding_box->addItem(QStringLiteral("Windows-1250"));
+	encoding_box->addItem(QStringLiteral("Windows-1252"));
+	encoding_box->addItem(QStringLiteral("ISO-8859-1"));
+	encoding_box->addItem(QStringLiteral("ISO-8859-15"));
 	encoding_box->setEditable(true);
 	QStringList availableCodecs;
 	Q_FOREACH(QByteArray item, QTextCodec::availableCodecs())
 	{
-		availableCodecs.append(QString(item));
+		availableCodecs.append(QString::fromUtf8(item));
 	}
 	QCompleter* completer = new QCompleter(availableCodecs, this);
 	completer->setCaseSensitivity(Qt::CaseInsensitive);
@@ -454,17 +466,22 @@ GeneralPage::GeneralPage(QWidget* parent) : SettingsPage(parent)
 	layout->setColumnStretch(2, 2);
 	layout->setColumnStretch(layout->columnCount(), 2);
 	
-	connect(language_box, SIGNAL(currentIndexChanged(int)), this, SLOT(languageChanged(int)));
-	connect(language_file_button, SIGNAL(clicked(bool)), this, SLOT(openTranslationFileDialog()));
-	connect(ppi_edit, SIGNAL(valueChanged(double)), this, SLOT(ppiChanged(double)));
-	connect(ppi_calculate_button, SIGNAL(clicked(bool)), this, SLOT(openPPICalculationDialog()));
-	connect(open_mru_check, SIGNAL(clicked(bool)), this, SLOT(openMRUFileClicked(bool)));
-	connect(tips_visible_check, SIGNAL(clicked(bool)), this, SLOT(tipsVisibleClicked(bool)));
-	connect(encoding_box, SIGNAL(currentTextChanged(QString)), this, SLOT(encodingChanged(QString)));
-	connect(ocd_importer_check, SIGNAL(clicked(bool)), this, SLOT(ocdImporterClicked(bool)));
-	connect(autosave_check, SIGNAL(clicked(bool)), this, SLOT(autosaveChanged(bool)));
-	connect(autosave_interval_edit, SIGNAL(valueChanged(int)), this, SLOT(autosaveIntervalChanged(int)));
-	connect(compatibility_check, SIGNAL(clicked(bool)), this, SLOT(retainCompatibilityChanged(bool)));
+	connect(language_box, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &GeneralPage::languageChanged);
+	connect(language_file_button, &QAbstractButton::clicked, this, &GeneralPage::openTranslationFileDialog);
+	connect(ppi_edit, static_cast<void (QDoubleSpinBox::*)(double)>(&QDoubleSpinBox::valueChanged), this, &GeneralPage::ppiChanged);
+	connect(ppi_calculate_button, &QAbstractButton::clicked, this, &GeneralPage::openPPICalculationDialog);
+	connect(open_mru_check, &QAbstractButton::clicked, this, &GeneralPage::openMRUFileClicked);
+	connect(tips_visible_check, &QAbstractButton::clicked, this, &GeneralPage::tipsVisibleClicked);
+	connect(encoding_box, &QComboBox::currentTextChanged, this, &GeneralPage::encodingChanged);
+	connect(ocd_importer_check, &QAbstractButton::clicked, this, &GeneralPage::ocdImporterClicked);
+	connect(autosave_check, &QAbstractButton::clicked, this, &GeneralPage::autosaveChanged);
+	connect(autosave_interval_edit, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &GeneralPage::autosaveIntervalChanged);
+	connect(compatibility_check, &QAbstractButton::clicked, this, &GeneralPage::retainCompatibilityChanged);
+}
+
+QString GeneralPage::title() const
+{
+	return tr("General");
 }
 
 void GeneralPage::apply()
@@ -492,7 +509,7 @@ void GeneralPage::apply()
 			qApp->installTranslator(&translation.getAppTranslator());
 			if (lang.toInt() <= 1 || lang.toInt() == 31) // cf. QLocale::Language
 			{
-				QMessageBox::information(window(), "Notice", "The program must be restarted for the language change to take effect!");
+				QMessageBox::information(window(), QStringLiteral("Notice"), QStringLiteral("The program must be restarted for the language change to take effect!"));
 			}
 			else
 			{
@@ -595,7 +612,7 @@ void GeneralPage::encodingChanged(const QString& name)
 	{
 		changes.insert(Settings::getInstance().getSettingPath(Settings::General_Local8BitEncoding), codec->name());
 		const QSignalBlocker block(encoding_box);
-		encoding_box->setCurrentText(codec->name());
+		encoding_box->setCurrentText(QString::fromUtf8(codec->name()));
 	}
 }
 
@@ -679,7 +696,7 @@ void GeneralPage::openPPICalculationDialog()
 	layout->addWidget(resolution_label, row, 0);
 	
 	
-	QLabel* resolution_display = new QLabel(QString("%1 x %2").arg(primary_screen_width).arg(primary_screen_height));
+	QLabel* resolution_display = new QLabel(QStringLiteral("%1 x %2").arg(primary_screen_width).arg(primary_screen_height));
 	layout->addWidget(resolution_display, row, 1);
 	
 	row++;
@@ -698,8 +715,8 @@ void GeneralPage::openPPICalculationDialog()
 	layout->addWidget(button_box, row, 0, 1, 2);
 	
 	dialog->setLayout(layout);
-	connect(button_box, SIGNAL(accepted()), dialog, SLOT(accept()));
-	connect(button_box, SIGNAL(rejected()), dialog, SLOT(reject()));
+	connect(button_box, &QDialogButtonBox::accepted, dialog, &QDialog::accept);
+	connect(button_box, &QDialogButtonBox::rejected, dialog, &QDialog::reject);
 	dialog->exec();
 	
 	if (dialog->result() == QDialog::Accepted)

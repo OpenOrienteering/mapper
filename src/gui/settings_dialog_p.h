@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Jan Dalheimer
- *    Copyright 2013, 2014 Kai Pastor
+ *    Copyright 2013-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -32,28 +32,30 @@ class QSpinBox;
 
 class MainWindow;
 
+
 class SettingsPage : public QWidget
 {
 Q_OBJECT
 public:
-	SettingsPage(QWidget* parent = 0) : QWidget(parent) {}
-	virtual void cancel() { changes.clear(); }
+	explicit SettingsPage(QWidget* parent = nullptr);
+	virtual QString title() const = 0;
+	virtual void cancel();
 	virtual void apply();
-	virtual void ok() { this->apply(); }
-	virtual QString title() = 0;
+	virtual void ok();
 
 protected:
 	// The changes to be done when accepted
 	QHash<QString, QVariant> changes;
 };
 
+
+
 class EditorPage : public SettingsPage
 {
 Q_OBJECT
 public:
-	EditorPage(QWidget* parent = 0);
-
-	virtual QString title() { return tr("Editor"); }
+	explicit EditorPage(QWidget* parent = nullptr);
+	QString title() const override;
 
 private slots:
 	void antialiasingClicked(bool checked);
@@ -82,27 +84,16 @@ private:
 	QComboBox* edit_tool_delete_bezier_point_action_alternative;
 };
 
-/*class PrintingPage : public SettingsPage
-{
-Q_OBJECT
-public:
-	PrintingPage(QWidget* parent = 0);
-	
-	virtual QString title() { return tr("Printing"); }
-	
-private slots:
-	
-};*/
+
 
 class GeneralPage : public SettingsPage
 {
 Q_OBJECT
 public:
-	GeneralPage(QWidget* parent = 0);
-
-	virtual void apply();
-	virtual QString title() { return tr("General"); }
-
+	explicit GeneralPage(QWidget* parent = nullptr);
+	QString title() const override;
+	void apply() override;
+	
 private slots:
 	void languageChanged(int index);
 	
@@ -139,8 +130,8 @@ private:
 	
 	QComboBox* encoding_box;
 	
-	QLabel*       autosave_interval_label;
-	QSpinBox*     autosave_interval_edit;
+	QLabel*    autosave_interval_label;
+	QSpinBox*  autosave_interval_edit;
 };
 
 #endif
