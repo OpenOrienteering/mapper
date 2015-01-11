@@ -94,6 +94,10 @@ public:
 	QString title() const override;
 	void apply() override;
 	
+protected:
+	/** This event filter stops LanguageChange events. */
+	bool eventFilter(QObject* watched, QEvent* event) override;
+	
 private slots:
 	void languageChanged(int index);
 	

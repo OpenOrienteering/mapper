@@ -503,6 +503,7 @@ void GeneralPage::apply()
 		if ( settings.getSetting(Settings::General_Language) != lang ||
 		     settings.getSetting(Settings::General_TranslationFile) != translation_file )
 		{
+			qApp->installEventFilter(this);
 			// Show an message box in the new language.
 			TranslationUtil translation((QLocale::Language)lang.toInt(), translation_file.toString());
 			qApp->installTranslator(&translation.getQtTranslator());
@@ -517,6 +518,7 @@ void GeneralPage::apply()
 			}
 			qApp->removeTranslator(&translation.getAppTranslator());
 			qApp->removeTranslator(&translation.getQtTranslator());
+			qApp->removeEventFilter(this);
 
 #if defined(Q_OS_MAC)
 			// The native [file] dialogs will use the first element of the
@@ -528,6 +530,14 @@ void GeneralPage::apply()
 		}
 	}
 	SettingsPage::apply();
+}
+
+bool GeneralPage::eventFilter(QObject* /* watched */, QEvent* event)
+{
+	if (event->type() == QEvent::LanguageChange)
+		return true;
+	
+	return false;
 }
 
 void GeneralPage::languageChanged(int index)
