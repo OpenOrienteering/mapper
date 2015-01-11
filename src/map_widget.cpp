@@ -880,7 +880,7 @@ void MapWidget::paintEvent(QPaintEvent* event)
 		return;
 	}
 	
-	// No colors defined? Provide a litte help message ...
+	// No colors, symbols, or objects? Provide a litte help message ...
 	bool no_contents = view->getMap()->getNumObjects() == 0 && view->getMap()->getNumTemplates() == 0 && !view->isGridVisible();
 	if (show_help && no_contents)
 	{
@@ -890,52 +890,50 @@ void MapWidget::paintEvent(QPaintEvent* event)
 			showHelpMessage(&painter, tr("No symbols!\n\nNow define some symbols:\nRight-click in the symbol bar\nand select \"New symbol\"\nto create one."));
 		else
 			showHelpMessage(&painter, tr("Ready to draw!\n\nStart drawing or load a base map.\nTo load a base map, click\nTemplates -> Open template...") + "\n\n" + tr("Hint: Hold the middle mouse button to drag the map,\nzoom using the mouse wheel, if available."));
+	}
+	else
+	{
+		QTransform transform = painter.worldTransform();
 		
-		return;
+		// Update all dirty caches
+		// TODO: It would be an idea to do these updates in a background thread and use the old caches in the meantime
+		updateAllDirtyCaches();
+		
+		QRect target = exposed;
+		if (pinching)
+		{
+			// Just draw the scaled map and templates
+			painter.fillRect(exposed, QColor(Qt::gray));
+			painter.translate(pinching_center.x(), pinching_center.y());
+			painter.scale(pinching_factor, pinching_factor);
+			painter.translate(-drag_start_pos.x(), -drag_start_pos.y());
+		}
+		else
+		{
+			target.translate(pan_offset);
+		}
+		
+		if (!view->areAllTemplatesHidden() && isBelowTemplateVisible() && !below_template_cache.isNull() && view->getMap()->getFirstFrontTemplate() > 0)
+			painter.drawImage(target, below_template_cache, exposed);
+		else
+			painter.fillRect(rect(), Qt::white);
+		
+		if (!map_cache.isNull() && view->getMapVisibility()->visible)
+		{
+			qreal map_opacity = view->getMapVisibility()->opacity;
+			qreal saved_opacity = painter.opacity();
+			painter.setOpacity(map_opacity);
+			painter.drawImage(target, map_cache, exposed);
+			painter.setOpacity(saved_opacity);
+		}
+		
+		if (!view->areAllTemplatesHidden() && isAboveTemplateVisible() && !above_template_cache.isNull() && view->getMap()->getNumTemplates() - view->getMap()->getFirstFrontTemplate() > 0)
+			painter.drawImage(target, above_template_cache, exposed);
+		
+		painter.setWorldTransform(transform, false);
 	}
 	
-	// Update all dirty caches
-	// TODO: It would be an idea to do these updates in a background thread and use the old caches in the meantime
-	updateAllDirtyCaches();
-	
-	QRect target = exposed;
-	if (pinching)
-	{
-		// Just draw the scaled map and templates
-		painter.fillRect(exposed, QColor(Qt::gray));
-		painter.translate(pinching_center.x(), pinching_center.y());
-		painter.scale(pinching_factor, pinching_factor);
-		painter.translate(-drag_start_pos.x(), -drag_start_pos.y());
-	}
-	else
-	{
-		target.translate(pan_offset);
-	}
-	
-	if (!view->areAllTemplatesHidden() && isBelowTemplateVisible() && !below_template_cache.isNull() && view->getMap()->getFirstFrontTemplate() > 0)
-		painter.drawImage(target, below_template_cache, exposed);
-	else
-		painter.fillRect(rect(), Qt::white);
-	
-	if (!map_cache.isNull() && view->getMapVisibility()->visible)
-	{
-		qreal map_opacity = view->getMapVisibility()->opacity;
-		qreal saved_opacity = painter.opacity();
-		painter.setOpacity(map_opacity);
-		painter.drawImage(target, map_cache, exposed);
-		painter.setOpacity(saved_opacity);
-	}
-	
-	if (!view->areAllTemplatesHidden() && isAboveTemplateVisible() && !above_template_cache.isNull() && view->getMap()->getNumTemplates() - view->getMap()->getFirstFrontTemplate() > 0)
-		painter.drawImage(target, above_template_cache, exposed);
-	
-	if (pinching)
-	{
-		// Painter transformed, won't restore
-		return;
-	}
-	
-	if (pan_offset != QPoint())
+	if (pan_offset != QPoint() && !(show_help && no_contents))
 	{
 		// Background color
 		if (pan_offset.x() > 0)
@@ -975,6 +973,8 @@ void MapWidget::paintEvent(QPaintEvent* event)
 		
 		drawing_dirty_rect_old = viewport_dirty_rect;
 	}
+	
+	painter.setClipRect(exposed);
 	
 	// Draw temporary GPS marker display
 	if (marker_display)
