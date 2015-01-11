@@ -1,5 +1,5 @@
 #
-#    Copyright 2014 Kai Pastor
+#    Copyright 2014-2015 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -21,6 +21,7 @@ CONFIG  -= debug_and_release
 
 proj.dir      = $$OUT_PWD/proj
 proj.target   = $$proj.dir/Proj-prefix/lib/libproj.so
+osx: proj.target = $$proj.dir/Proj-prefix/lib/libproj.0.dylib
 win32: proj.target = $$proj.dir/Proj-prefix/bin/libproj-0.dll
 proj.depends  = $$OUT_PWD/../../toolchain.cmake
 proj.version  = 4.8.0
@@ -30,7 +31,7 @@ proj.commands = \
   cd "$$proj.dir" && \
   if [ -d CMakeFiles -o -f CMakeCache.txt ] ; then rm -R CMake*; fi && \
   cmake "$$PWD" -DCMAKE_TOOLCHAIN_FILE="$$OUT_PWD/../../toolchain.cmake" -DPROJ_VERSION=$$proj.version && \
-  PATH="$$NDK_TOOLCHAIN_PATH/bin:${PATH}" $(MAKE) LDFLAGS=\"$$QMAKE_LFLAGS\" all && \
+  PATH="$$NDK_TOOLCHAIN_PATH/bin:${PATH}" $(MAKE) all && \
   $(MAKE) clean
 
 QMAKE_EXTRA_TARGETS += proj
