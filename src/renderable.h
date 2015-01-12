@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012, 2013, 2014 Kai Pastor
+ *    Copyright 2012-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -245,7 +245,7 @@ class ObjectRenderables : protected std::map<int, SharedRenderables::Pointer>
 {
 friend class MapRenderables;
 public:
-	ObjectRenderables(Object* object, QRectF& extent);
+	ObjectRenderables(Object& object);
 	~ObjectRenderables();
 	
 	inline void insertRenderable(Renderable* r);
@@ -262,12 +262,11 @@ public:
 	void draw(const QColor& color, QPainter* painter, const RenderConfig& config) const;
 	
 	void setClipPath(QPainterPath* path);
-	inline QPainterPath* getClipPath() const {return clip_path;}
+	QPainterPath* getClipPath() const;
 	
-	const QRectF& getExtent() const { return extent; }
+	const QRectF& getExtent() const;
 	
 private:
-	Object* const object;
 	QRectF& extent;
 	QPainterPath* clip_path; // no memory management here!
 };
@@ -435,6 +434,18 @@ inline
 void ObjectRenderables::insertRenderable(Renderable* r)
 {
 	insertRenderable(r, r->getPainterConfig(clip_path));
+}
+
+inline
+QPainterPath*ObjectRenderables::getClipPath() const
+{
+	return clip_path;
+}
+
+inline
+const QRectF &ObjectRenderables::getExtent() const
+{
+	return extent;
 }
 
 

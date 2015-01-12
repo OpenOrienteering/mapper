@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012, 2013, 2014 Kai Pastor
+ *    Copyright 2012-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -124,9 +124,8 @@ void SharedRenderables::compact()
 
 // ### ObjectRenderables ###
 
-ObjectRenderables::ObjectRenderables(Object* object, QRectF& extent)
-: object(object),
-  extent(extent),
+ObjectRenderables::ObjectRenderables(Object& object)
+: extent(object.extent),
   clip_path(NULL)
 {
 	;
@@ -144,17 +143,16 @@ void ObjectRenderables::draw(const QColor& color, QPainter* painter, const Rende
 	
 	painter->save();
 	
-	for (const_iterator object_it = begin(); object_it != end(); ++object_it)
+	for (auto color_renderables : *this)
 	{
-		SharedRenderables::const_iterator it_end = object_it->second->end();
-		for (SharedRenderables::const_iterator it = object_it->second->begin(); it != it_end; ++it)
+		for (auto config_renderables : *color_renderables.second)
 		{
 			// Render the renderables
-			const PainterConfig& state = it->first;
+			const PainterConfig& state = config_renderables.first;
 			if (!state.activate(painter, current_clip, config, color, initial_clip))
 				continue;
 			
-			for (Renderable* renderable : it->second)
+			for (Renderable* renderable : config_renderables.second)
 			{
 				if (renderable->intersects(config.bounding_box))
 				{

@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012, 2013, 2014 Kai Pastor
+ *    Copyright 2012-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -71,7 +71,7 @@ Object::Object(Object::Type type, const Symbol* symbol)
   map(NULL),
   output_dirty(true),
   extent(),
-  output(this, extent)
+  output(*this)
 {
 	// nothing
 }
