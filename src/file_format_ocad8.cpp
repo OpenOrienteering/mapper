@@ -1035,8 +1035,10 @@ bool OCAD8FileImport::importRectangleObject(const OCADObject* ocad_object, MapPa
 		return false;
 	
 	// Convert corner points
+#ifdef Q_CC_CLANG
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warray-bounds"
+#endif
 	s32 buf[3];
 	ocad_point(buf, &(ocad_object->pts[3]));
 	MapCoord top_left;
@@ -1050,7 +1052,9 @@ bool OCAD8FileImport::importRectangleObject(const OCADObject* ocad_object, MapPa
 	ocad_point(buf, &(ocad_object->pts[1]));
 	MapCoord bottom_right;
 	convertPoint(bottom_right, buf[0], buf[1]);
+#ifdef Q_CC_CLANG
 #pragma clang diagnostic pop
+#endif
 	
 	MapCoordF top_left_f = MapCoordF(top_left);
 	MapCoordF top_right_f = MapCoordF(top_right);
