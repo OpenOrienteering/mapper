@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -58,13 +59,13 @@ public:
 	
 protected slots:
 	void updateDirtyRect();
-	virtual void setDrawingSymbol(Symbol* symbol);
+	void setDrawingSymbol(const Symbol* symbol) override;
 	
 	/** This slot listens to changes in the map's object selection. */
 	virtual void objectSelectionChanged();
 	
 protected:
-    virtual void updatePreviewPath();
+	virtual void updatePreviewPath();
 	/** Should be called when moving the cursor without the draw button being held */
 	void updateHover();
 	/** Called by updateHover() if the user is currently drawing */

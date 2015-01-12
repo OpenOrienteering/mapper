@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2014 Kai Pastor
+ *    Copyright 2014, 2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -355,6 +355,7 @@ public:
 	
 	bool isValid() const;
 	
+	using ObjectModifyingUndoStep::addObject;
 	virtual void addObject(int index, const Symbol* target_symbol);
 	
 	virtual UndoStep* undo();

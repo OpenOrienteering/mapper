@@ -1,5 +1,5 @@
 /*
- *    Copyright 2013 Kai Pastor
+ *    Copyright 2013-2015 Kai Pastor
  *
  *    Some parts taken from file_format_oc*d8{.h,_p.h,cpp} which are
  *    Copyright 2012 Pete Curtis
@@ -283,7 +283,7 @@ void OcdFileImport::importGeoreferencing(const QString& param_string)
 }
 
 template< >
-void OcdFileImport::importColors< class Ocd::FormatV8 >(const OcdFile< Ocd::FormatV8 >& file)
+void OcdFileImport::importColors< struct Ocd::FormatV8 >(const OcdFile< Ocd::FormatV8 >& file)
 {
 	const Ocd::SymbolHeaderV8 & symbol_header = file.header()->symbol_header;
 	int num_colors = symbol_header.num_colors;
@@ -454,7 +454,7 @@ void OcdFileImport::importSymbols(const OcdFile< F >& file)
 }
 
 template< >
-void OcdFileImport::importObjects< class Ocd::FormatV8 >(const OcdFile< Ocd::FormatV8 >& file)
+void OcdFileImport::importObjects< struct Ocd::FormatV8 >(const OcdFile< Ocd::FormatV8 >& file)
 {
 	MapPart* part = map->getCurrentPart();
 	Q_ASSERT(part);
@@ -614,7 +614,7 @@ Template* OcdFileImport::importTemplate(const QString& param_string, const int o
 }
 
 template< >
-void OcdFileImport::importExtras< class Ocd::FormatV8 >(const OcdFile< Ocd::FormatV8 >& file)
+void OcdFileImport::importExtras< struct Ocd::FormatV8 >(const OcdFile< Ocd::FormatV8 >& file)
 {
 	const Ocd::FileHeaderV8* header = file.header();
 	map->setMapNotes(convertOcdString< Ocd::FormatV8::Encoding >(file.byteArray().data() + header->info_pos, header->info_size));
@@ -628,7 +628,7 @@ void OcdFileImport::importExtras(const OcdFile< F >& file)
 }
 
 template< >
-void OcdFileImport::importView< class Ocd::FormatV8 >(const OcdFile< Ocd::FormatV8 >& file)
+void OcdFileImport::importView< struct Ocd::FormatV8 >(const OcdFile< Ocd::FormatV8 >& file)
 {
 	if (view)
 	{
@@ -1589,7 +1589,7 @@ Object* OcdFileImport::importObject(const O& ocd_object, MapPart* part)
 
 template< >
 inline
-QString OcdFileImport::getObjectText< class Ocd::ObjectV8 >(const Ocd::ObjectV8& ocd_object) const
+QString OcdFileImport::getObjectText< struct Ocd::ObjectV8 >(const Ocd::ObjectV8& ocd_object) const
 {
 	QString object_text;
 	if (ocd_object.unicode)
@@ -1875,7 +1875,7 @@ void OcdFileImport::import(bool load_symbols_only)
 			// We keep the following existing translation just in case
 			// we add support for version 6/7 to the new importer.
 			/* addWarning( */
-				tr("Untested file importer for format: OCD %1").arg(version)
+				(void)tr("Untested file importer for format: OCD %1").arg(version)
 			/* ) */;
 			importImplementation< Ocd::FormatLegacyImporter >(load_symbols_only);
 			break;

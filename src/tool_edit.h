@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -110,7 +111,6 @@ private:
 	void calculateConstraints();
 	
 	// Basic information
-	Map* map;
 	MapCoordF start_position;
 	qint64 prev_drag_x;
 	qint64 prev_drag_y;

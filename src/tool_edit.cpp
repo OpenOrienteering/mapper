@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -181,8 +182,9 @@ bool ObjectSelector::selectionInfosEqual(const SelectionInfoVector& a, const Sel
 // ### ObjectMover ###
 
 ObjectMover::ObjectMover(Map* map, const MapCoordF& start_pos)
-: map(map), start_position(start_pos), prev_drag_x(0), prev_drag_y(0), constraints_calculated(true)
+: start_position(start_pos), prev_drag_x(0), prev_drag_y(0), constraints_calculated(true)
 {
+	Q_UNUSED(map);
 }
 
 void ObjectMover::setStartPos(const MapCoordF& start_pos)

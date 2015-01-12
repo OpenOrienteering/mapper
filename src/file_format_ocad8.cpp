@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Pete Curtis
- *    Copyright 2013, 2014 Kai Pastor
+ *    Copyright 2013-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -1035,6 +1035,8 @@ bool OCAD8FileImport::importRectangleObject(const OCADObject* ocad_object, MapPa
 		return false;
 	
 	// Convert corner points
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warray-bounds"
 	s32 buf[3];
 	ocad_point(buf, &(ocad_object->pts[3]));
 	MapCoord top_left;
@@ -1048,6 +1050,7 @@ bool OCAD8FileImport::importRectangleObject(const OCADObject* ocad_object, MapPa
 	ocad_point(buf, &(ocad_object->pts[1]));
 	MapCoord bottom_right;
 	convertPoint(bottom_right, buf[0], buf[1]);
+#pragma clang diagnostic pop
 	
 	MapCoordF top_left_f = MapCoordF(top_left);
 	MapCoordF top_right_f = MapCoordF(top_right);

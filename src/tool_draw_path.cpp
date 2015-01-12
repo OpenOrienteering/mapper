@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -848,7 +849,7 @@ void DrawPathTool::updateDirtyRect()
 	}
 }
 
-void DrawPathTool::setDrawingSymbol(Symbol* symbol)
+void DrawPathTool::setDrawingSymbol(const Symbol* symbol)
 {
 	if (is_helper_tool)
 		return;

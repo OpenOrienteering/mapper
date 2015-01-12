@@ -60,20 +60,6 @@
 #endif
 
 
-#if (defined Q_OS_MAC)
-// Cf. qtbase/src/plugins/platforms/cocoa/qcocoamenuloader.mm.
-// These translations should come with Qt, but are missing
-// for some language (at least for de in Qt 5.0.1).
-static const char *application_menu_strings[] = {
-  QT_TRANSLATE_NOOP("MAC_APPLICATION_MENU", "Services"),
-  QT_TRANSLATE_NOOP("MAC_APPLICATION_MENU", "Hide %1"),
-  QT_TRANSLATE_NOOP("MAC_APPLICATION_MENU", "Hide Others"),
-  QT_TRANSLATE_NOOP("MAC_APPLICATION_MENU", "Show All"),
-  QT_TRANSLATE_NOOP("MAC_APPLICATION_MENU", "Preferences..."),
-  QT_TRANSLATE_NOOP("MAC_APPLICATION_MENU", "Quit %1"),
-  QT_TRANSLATE_NOOP("MAC_APPLICATION_MENU", "About %1")
-};
-#endif
 
 int MainWindow::num_open_files = 0;
 
@@ -82,6 +68,22 @@ MainWindow::MainWindow(bool as_main_window)
 , has_autosave_conflict(false)
 , homescreen_disabled(false)
 {
+#if (defined Q_OS_MAC)
+	// Cf. qtbase/src/plugins/platforms/cocoa/qcocoamenuloader.mm.
+	// These translations should come with Qt, but were missing
+	// for some languages (at least for de in Qt 5.0.1).
+	static const char *application_menu_strings[] = {
+	  QT_TRANSLATE_NOOP("MAC_APPLICATION_MENU", "Services"),
+	  QT_TRANSLATE_NOOP("MAC_APPLICATION_MENU", "Hide %1"),
+	  QT_TRANSLATE_NOOP("MAC_APPLICATION_MENU", "Hide Others"),
+	  QT_TRANSLATE_NOOP("MAC_APPLICATION_MENU", "Show All"),
+	  QT_TRANSLATE_NOOP("MAC_APPLICATION_MENU", "Preferences..."),
+	  QT_TRANSLATE_NOOP("MAC_APPLICATION_MENU", "Quit %1"),
+	  QT_TRANSLATE_NOOP("MAC_APPLICATION_MENU", "About %1")
+	};
+	Q_UNUSED(application_menu_strings)
+#endif
+
 	controller = NULL;
 	has_unsaved_changes = false;
 	has_opened_file = false;

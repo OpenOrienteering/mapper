@@ -27,7 +27,15 @@ android {
 	target.extra = @test -d .
 }
 
-QMAKE_CFLAGS += -std=c99 -Wno-sign-compare -Wno-type-limits -Wno-unused-parameter -Wno-format -Wno-pointer-to-int-cast -Wno-int-to-pointer-cast
+QMAKE_CFLAGS += -std=c99
+QMAKE_CFLAGS_WARN_ON += \
+  -Wno-sign-compare \
+  -Wno-type-limits \
+  -Wno-unused-parameter \
+  -Wno-format \
+  -Wno-pointer-to-int-cast \
+  -Wno-int-to-pointer-cast \
+  -Wno-tautological-compare
 
 HEADERS = \
   libocad.h \
