@@ -562,7 +562,7 @@ public:
 	 * Connects the given parts, optionally merging the end coordinates at the
 	 * center position, and copying over the coordindates from other.
 	 */
-	void connectPathParts(int part_index, PathObject* other,
+	void connectPathParts(int part_index, const PathObject* other,
 						  int other_part_index, bool prepend, bool merge_ends = true);
 	
 	/**
@@ -576,11 +576,11 @@ public:
 	void changePathBounds(int part_index, double start_len, double end_len);
 	
 	/** Appends (copies) the coordinates of other to this path. */
-	void appendPath(PathObject* other);
+	void appendPath(const PathObject* other);
 	
 	/** Appends (copies) the coordinates of a specific part
 	 *  of the other path to this path. */
-	void appendPathPart(PathObject* other, int part_index);
+	void appendPathPart(const PathObject* other, int part_index);
 	
 	/**
 	 * Reverses the object's coordinates, resulting in switching
@@ -632,10 +632,10 @@ public:
 	bool isPointInsideArea(MapCoordF coord) const;
 	
 	/** Calculates the average distance (of the first part) to another path */
-	float calcAverageDistanceTo(PathObject* other) const;
+	float calcAverageDistanceTo(const PathObject* other) const;
 	
 	/** Calculates the maximum distance (of the first part) to another path */
-	float calcMaximumDistanceTo(PathObject* other) const;
+	float calcMaximumDistanceTo(const PathObject* other) const;
 	
 	/**
 	 * Calculates and adds all intersections with the other path to out.
@@ -643,15 +643,15 @@ public:
 	 * To clean them up, call clean() on the Intersections object after adding
 	 * all intersections with objects you are interested in.
 	 */
-	void calcAllIntersectionsWith(PathObject* other, Intersections& out) const;
+	void calcAllIntersectionsWith(const PathObject* other, Intersections& out) const;
 	
 	/** Called by Object::update() */
-	void updatePathCoords(MapCoordVectorF& float_coords) const;
+	void updatePathCoords(const MapCoordVectorF& float_coords) const;
 	
 	/** Called by Object::load() */
 	void recalculateParts();
 	
-protected:
+private: // Too complicated for general use
 	/**
 	 * Advances the cur_path_coord and current_index variables until they are
 	 * at the path coord segment containing the cumulative length cur_length.
@@ -695,6 +695,7 @@ protected:
 		const MapCoordF& o4
 	) const;
 	
+protected:
 	/**
 	 * Calculates the factors which should be applied to the length of the
 	 * remaining bezier curve handle vectors when deleting a point joining
@@ -708,7 +709,7 @@ protected:
 	 * out_pfactor is set to the factor to apply to the vector (p1 - p0),
 	 * out_qfactor is set to the factor to apply to the vector (q2 - q3),
 	 */
-	void calcBezierPointDeletionRetainingShapeFactors(
+	static void calcBezierPointDeletionRetainingShapeFactors(
 		MapCoord p0,
 		MapCoord p1,
 		MapCoord p2,
@@ -718,13 +719,13 @@ protected:
 		MapCoord q3,
 		double& out_pfactor,
 		double& out_qfactor
-	) const;
+	);
 	
 	/**
 	 * Uses nonlinear optimization to improve the first result obtained by
 	 * calcBezierPointDeletionRetainingShapeFactors().
 	 */
-	void calcBezierPointDeletionRetainingShapeOptimization(
+	static void calcBezierPointDeletionRetainingShapeOptimization(
 		MapCoord p0,
 		MapCoord p1,
 		MapCoord p2,
@@ -734,20 +735,20 @@ protected:
 		MapCoord q3,
 		double& out_pfactor,
 		double& out_qfactor
-	) const;
+	);
 	
 	/**
 	 * Is used internally by calcBezierPointDeletionRetainingShapeOptimization()
 	 * to calculate the current cost. Evaluates the distance between p0 ... p3
 	 * and the reference path.
 	 */
-	float calcBezierPointDeletionRetainingShapeCost(
+	static float calcBezierPointDeletionRetainingShapeCost(
 		MapCoord p0,
 		MapCoordF p1,
 		MapCoordF p2,
 		MapCoord p3,
 		PathObject* reference
-	) const;
+	);
 	
 	/**
 	 * Sets coord as the point which closes a part: sets the correct flags

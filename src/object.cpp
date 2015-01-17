@@ -943,14 +943,13 @@ int PathObject::shiftedCoordIndex(int base_index, int offset, const PathObject::
 
 const PathObject::PathPart& PathObject::findPartForIndex(int coords_index) const
 {
-	int num_parts = (int)parts.size();
-	for (int i = 0; i < num_parts; ++i)
+	for (const PathObject::PathPart& part : parts)
 	{
-		if (coords_index >= parts[i].start_index && coords_index <= parts[i].end_index)
-			return parts[i];
+		if (coords_index >= part.start_index && coords_index <= part.end_index)
+			return part;
 	}
 	Q_ASSERT(false);
-	return parts[0];
+	return parts.front();
 }
 
 int PathObject::findPartIndexForIndex(int coords_index) const
@@ -1232,7 +1231,7 @@ bool PathObject::connectIfClose(PathObject* other, double connect_threshold_sq)
 	return did_connect_path;
 }
 
-void PathObject::connectPathParts(int part_index, PathObject* other, int other_part_index, bool prepend, bool merge_ends)
+void PathObject::connectPathParts(int part_index, const PathObject* other, int other_part_index, bool prepend, bool merge_ends)
 {
 	Q_ASSERT(part_index < (int)parts.size());
 	PathPart& part = parts[part_index];
@@ -1632,7 +1631,7 @@ bool PathObject::advanceCoordinateRangeTo(const MapCoordVector& flags, const Map
 	return advanced_current_index;
 }
 
-void PathObject::calcBezierPointDeletionRetainingShapeFactors(MapCoord p0, MapCoord p1, MapCoord p2, MapCoord q0, MapCoord q1, MapCoord q2, MapCoord q3, double& out_pfactor, double& out_qfactor) const
+void PathObject::calcBezierPointDeletionRetainingShapeFactors(MapCoord p0, MapCoord p1, MapCoord p2, MapCoord q0, MapCoord q1, MapCoord q2, MapCoord q3, double& out_pfactor, double& out_qfactor)
 {
 	// Heuristic for the split parameter sp (zero to one)
 	QBezier p_curve = QBezier::fromPoints(p0.toQPointF(), p1.toQPointF(), p2.toQPointF(), q0.toQPointF());
@@ -1970,7 +1969,7 @@ void PathObject::calcBezierPointDeletionRetainingShapeFactors(MapCoord p0, MapCo
 		out_qfactor = -0.1 * out_qfactor;
 }
 
-float PathObject::calcBezierPointDeletionRetainingShapeCost(MapCoord p0, MapCoordF p1, MapCoordF p2, MapCoord p3, PathObject* reference) const
+float PathObject::calcBezierPointDeletionRetainingShapeCost(MapCoord p0, MapCoordF p1, MapCoordF p2, MapCoord p3, PathObject* reference)
 {
 	const int num_test_points = 20;
 	QBezier curve = QBezier::fromPoints(p0.toQPointF(), p1.toQPointF(), p2.toQPointF(), p3.toQPointF());
@@ -1988,7 +1987,7 @@ float PathObject::calcBezierPointDeletionRetainingShapeCost(MapCoord p0, MapCoor
 	return cost * (50 / 20.0f);
 }
 
-void PathObject::calcBezierPointDeletionRetainingShapeOptimization(MapCoord p0, MapCoord p1, MapCoord p2, MapCoord q0, MapCoord q1, MapCoord q2, MapCoord q3, double& out_pfactor, double& out_qfactor) const
+void PathObject::calcBezierPointDeletionRetainingShapeOptimization(MapCoord p0, MapCoord p1, MapCoord p2, MapCoord q0, MapCoord q1, MapCoord q2, MapCoord q3, double& out_pfactor, double& out_qfactor)
 {
 	const float gradient_abort_threshold = 0.05f;	// if the gradient magnitude is lower than this over num_abort_steps step, the optimization is aborted
 	const float decrease_abort_threshold = 0.004f;	// if the cost descrease if lower than this over num_abort_steps step, the optimization is aborted
@@ -1998,8 +1997,8 @@ void PathObject::calcBezierPointDeletionRetainingShapeOptimization(MapCoord p0, 
 	const int max_num_line_search_iterations = 5;
 	float step_size_stepping_base = 0.001f;
 	
-	PathObject old_curve;
-	old_curve.setSymbol(map->getCoveringRedLine(), true);	// HACK; needed to generate path coords
+	static LineSymbol line_symbol;
+	PathObject old_curve(&line_symbol);
 	p0.setCurveStart(true);
 	old_curve.addCoordinate(p0);
 	old_curve.addCoordinate(p1);
@@ -2127,7 +2126,7 @@ void PathObject::calcBezierPointDeletionRetainingShapeOptimization(MapCoord p0, 
 	}
 }
 
-void PathObject::appendPath(PathObject* other)
+void PathObject::appendPath(const PathObject* other)
 {
 	int coords_size = coords.size();
 	int other_coords_size = (int)other->coords.size();
@@ -2141,10 +2140,10 @@ void PathObject::appendPath(PathObject* other)
 	setOutputDirty();
 }
 
-void PathObject::appendPathPart(PathObject* other, int part_index)
+void PathObject::appendPathPart(const PathObject* other, int part_index)
 {
 	int coords_size = coords.size();
-	PathPart& part = other->getPart(part_index);
+	const PathPart& part = other->getPart(part_index);
 	
 	coords.resize(coords_size + part.getNumCoords());
 	
@@ -2632,7 +2631,7 @@ bool PathObject::isPointInsideArea(MapCoordF coord) const
 	return inside;
 }
 
-float PathObject::calcAverageDistanceTo(PathObject* other) const
+float PathObject::calcAverageDistanceTo(const PathObject* other) const
 {
 	const float test_points_per_mm = 2;
 	
@@ -2670,7 +2669,7 @@ float PathObject::calcAverageDistanceTo(PathObject* other) const
 	return distance / total_num_test_points;
 }
 
-float PathObject::calcMaximumDistanceTo(PathObject* other) const
+float PathObject::calcMaximumDistanceTo(const PathObject* other) const
 {
 	const float test_points_per_mm = 2;
 	
@@ -2740,7 +2739,7 @@ void PathObject::Intersections::clean()
 	}
 }
 
-void PathObject::calcAllIntersectionsWith(PathObject* other, PathObject::Intersections& out) const
+void PathObject::calcAllIntersectionsWith(const PathObject* other, PathObject::Intersections& out) const
 {
 	update();
 	other->update();
@@ -2794,7 +2793,7 @@ void PathObject::calcAllIntersectionsWith(PathObject* other, PathObject::Interse
 			
 			for (size_t other_part_index = 0; other_part_index < other->parts.size(); ++other_part_index)
 			{
-				PathPart& other_part = other->getPart(part_index);
+				const PathPart& other_part = other->getPart(part_index);
 				for (int k = other_part.path_coord_start_index + 1; k <= other_part.path_coord_end_index; ++k)
 				{
 					// Test the two line segments against each other.
@@ -3214,7 +3213,7 @@ void PathObject::clearCoordinates()
 	setOutputDirty();
 }
 
-void PathObject::updatePathCoords(MapCoordVectorF& float_coords) const
+void PathObject::updatePathCoords(const MapCoordVectorF& float_coords) const
 {
 	path_coords.clear();
 	
