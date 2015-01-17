@@ -83,7 +83,7 @@ bool PathCoord::getNextPathPart(const MapCoordVector& flags, const MapCoordVecto
 	part_end = size - 1;
 	return true;
 }
-PathCoord PathCoord::findPathCoordForCoorinate(const PathCoordVector* path_coords, int index)
+PathCoord PathCoord::findPathCoordForCoordinate(const PathCoordVector* path_coords, int index)
 {
 	int path_coords_size = path_coords->size();
 	for (int i = path_coords_size - 1; i >= 0; --i)

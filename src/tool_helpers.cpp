@@ -897,7 +897,7 @@ FollowPathToolHelper::FollowPathToolHelper()
 void FollowPathToolHelper::startFollowingFromCoord(PathObject* path, int coord_index)
 {
 	path->update(false);
-	PathCoord path_coord = PathCoord::findPathCoordForCoorinate(&path->getPathCoordinateVector(), coord_index);
+	PathCoord path_coord = PathCoord::findPathCoordForCoordinate(&path->getPathCoordinateVector(), coord_index);
 	startFollowingFromPathCoord(path, path_coord);
 }
 void FollowPathToolHelper::startFollowingFromPathCoord(PathObject* path, PathCoord& coord)

@@ -105,7 +105,7 @@ public:
 	 * @param path_coords Path coord vector of the object.
 	 * @param index Index of normal MapCoord for which to create the PathCoord.
 	 */
-	static PathCoord findPathCoordForCoorinate(
+	static PathCoord findPathCoordForCoordinate(
 		const PathCoordVector* path_coords,
 		int index
 	);

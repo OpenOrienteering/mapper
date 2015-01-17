@@ -368,7 +368,7 @@ void CutTool::updateDragging(MapCoordF cursor_pos_map, MapWidget* widget)
 			path->calcClosestPointOnPath(cursor_pos_map, distance_sq, path_coord);
 		}
 		else
-			path_coord = PathCoord::findPathCoordForCoorinate(&path->getPathCoordinateVector(), hover_point);
+			path_coord = PathCoord::findPathCoordForCoordinate(&path->getPathCoordinateVector(), hover_point);
 		
 		if (edit_object->findPartIndexForIndex(path_coord.index) != drag_part_index)
 			return;	// dragging on a different part
@@ -444,7 +444,7 @@ bool CutTool::findEditPoint(PathCoord& out_edit_point, PathObject*& out_edit_obj
 			Q_ASSERT(!"TODO: make this work for non-path objects");
 		}
 		PathObject* path = reinterpret_cast<PathObject*>(hover_object);
-		out_edit_point = PathCoord::findPathCoordForCoorinate(&path->getPathCoordinateVector(), hover_point);
+		out_edit_point = PathCoord::findPathCoordForCoordinate(&path->getPathCoordinateVector(), hover_point);
 		out_edit_object = path;
 	}
 	else
