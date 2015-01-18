@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012, 2014 Kai Pastor
+ *    Copyright 2012, 2014, 2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -34,38 +34,33 @@
 class MapCoordF;
 class Symbol;
 
-/** TextObjectPartInfo contains layout information for a continuous sequence of printable characters
- *  in a longer text.
+/** 
+ * TextObjectPartInfo contains layout information for a continuous sequence of printable characters
+ * in a longer text.
+ * 
+ * Use the implicit initializer list constructor to create a new object of this class.
  */
-struct TextObjectPartInfo
+class TextObjectPartInfo
 {
+public:
 	QString part_text;		/// The sequence of printable characters which makes up this part
 	int start_index;		/// The index of the part's first character in the original string
 	int end_index;			/// The index of the part's last character in the original string
 	double part_x;			/// The left endpoint of the baseline of this part in text coordinates
 	double width;			/// The width of the rendered part in text coordinates
-	
-	/** Create a new TextObjectPartInfo.
-	 *  All information must be supplied as parameters.
-	 *  (Assumes that the values have been precalculated in a layout algorithm.)
-	 */
-	inline TextObjectPartInfo(const QString& text, int start_index, int end_index, double part_x, double width, const QFontMetricsF& metrics)
-	 : part_text(text), start_index(start_index), end_index(end_index), part_x(part_x), width(width), metrics(metrics) {}
+	QFontMetricsF metrics;	/// The metrics of the font that is used to render the part
 	
 	/** Get the horizontal position of a particular character in a part.
 	 *  @param index the index of the character in the original string
 	 *  @return      the character's horizontal position in text coordinates
 	 */
-	inline double getX(int index) const { return part_x + metrics.width(part_text.left(index - start_index)); }
+	double getX(int index) const;
 	
 	/** Find the index of the character corresponding to a particular position.
 	 *  @param pos_x the position for which the index is requested
 	 *  @return      the character's index in the original string
 	 */
 	int getIndex(double pos_x) const;
-	
-protected:
-	 QFontMetricsF metrics;	// The metrics of the font that is used to render the part
 };
 
 
@@ -88,13 +83,6 @@ struct TextObjectLineInfo
 	double ascent;			/// The height of the rendered text above the baseline 
 	double descent;			/// The height of the rendered text below the baseline 
 	PartInfoContainer part_infos; /// The sequence of parts which make up this line
-	
-	/** Create a new TextObjectLineInfo.
-	 *  All information must be supplied as parameters.
-	 *  (Assumes that the values have been precalculated in a layout algorithm.)
-	 */
-	inline TextObjectLineInfo(int start_index, int end_index, bool paragraph_end, double line_x, double line_y, double width, double ascent, double descent, PartInfoContainer& part_infos)
-	 : start_index(start_index), end_index(end_index), paragraph_end(paragraph_end), line_x(line_x), line_y(line_y), width(width), ascent(ascent), descent(descent), part_infos(part_infos) {}
 	
 	/** Get the horizontal position of a particular character in a line.
 	 *  @param pos the index of the character in the original string
@@ -147,19 +135,22 @@ public:
 	 *  If a symbol is specified, it must be a text symbol.
 	 *  @param symbol the text symbol (optional)
 	 */
-	TextObject(const Symbol* symbol = NULL);
+	explicit TextObject(const Symbol* symbol = nullptr);
 	
-	/** Create a duplicate of the object.
+	/** Constructs a TextObject, initalized from the given prototype. */
+	explicit TextObject(const TextObject& proto);
+	
+	/** Creates a duplicate of the text object.
 	 *  @return a new object with same text, symbol and formatting.
 	 */
-	virtual Object* duplicate() const;
+	Object* duplicate() const override;
 	
-    virtual Object& operator=(const Object& other);
+	Object& operator=(const Object& other) override;
 	
 	
 	/** Returns true if the text object has a single anchor, false if it has as word wrap box
 	 */
-	inline bool hasSingleAnchor() const {return coords.size() == 1;}
+	bool hasSingleAnchor() const;
 	
 	/** Sets the position of the anchor point to (x,y). 
 	 *  This will drop an existing word wrap box.
@@ -170,10 +161,6 @@ public:
 	 *  This will drop an existing word wrap box.
 	 */
 	void setAnchorPosition(MapCoordF coord);
-	
-	/* Not used:
-	void getAnchorPosition(qint64& x, qint64& y) const;	// or midpoint if a box is used
-	*/
 	
 	/** Returns the coordinates of the anchor point or midpoint */
 	MapCoordF getAnchorCoordF() const;
@@ -187,12 +174,12 @@ public:
 	/** Returns the width of the word wrap box.
 	 *  The text object must have a specified size.
 	 */
-	inline double getBoxWidth() const {Q_ASSERT(!hasSingleAnchor()); return coords[1].xd();}
+	double getBoxWidth() const;
 	
 	/** Returns the height of the word wrap box.
 	 *  The text object must have a specified size.
 	 */
-	inline double getBoxHeight() const {Q_ASSERT(!hasSingleAnchor()); return coords[1].yd();}
+	double getBoxHeight() const;
 	
 	
 	/**
@@ -210,7 +197,7 @@ public:
 	
 	/** Returns the text of the object.
 	 */
-	inline const QString& getText() const {return text;}
+	const QString& getText() const;
 	
 	/** Sets the horizontal alignment of the text.
 	 */ 
@@ -218,7 +205,7 @@ public:
 	
 	/** Returns the horizontal alignment of the text.
 	 */ 
-	inline HorizontalAlignment getHorizontalAlignment() const {return h_align;}
+	HorizontalAlignment getHorizontalAlignment() const;
 	
 	/** Sets the vertical alignment of the text.
 	 */ 
@@ -226,7 +213,7 @@ public:
 	
 	/** Returns the vertical alignment of the text.
 	 */ 
-	inline VerticalAlignment getVerticalAlignment() const {return v_align;}
+	VerticalAlignment getVerticalAlignment() const;
 		
 	/** Sets the rotation of the text.
 	 *  The rotation is measured in radians. The center of rotation is the anchor point.
@@ -236,7 +223,7 @@ public:
 	/** Returns the rotation of the text.
 	 *  The rotation is measured in radians. The center of rotation is the anchor point.
 	 */ 
-	inline float getRotation() const {return rotation;}
+	float getRotation() const;
 	
 	
 	/** Returns a QTransform from text coordinates to map coordinates.
@@ -252,15 +239,15 @@ public:
 	 * For a text object with a word wrap box, the number of rendered lines
 	 * may be higher than the number of explicit line breaks in the original text.
 	 */
-	inline int getNumLines() const {return (int)line_infos.size();}
+	int getNumLines() const;
 	
 	/** Returns the layout information about a particular line.
 	 */
-	inline TextObjectLineInfo* getLineInfo(int i) {return &line_infos[i];}
+	TextObjectLineInfo* getLineInfo(int i);
 	
 	/** Returns the layout information about a particular line.
 	 */
-	inline const TextObjectLineInfo* getLineInfo(int i) const {return &line_infos[i];}
+	const TextObjectLineInfo* getLineInfo(int i) const;
 	
 	/** Return the index of the character or the line number corresponding to a particular map coordinate.
 	 *  Returns -1 if the coordinate is not at a text position. 
@@ -296,5 +283,83 @@ private:
 	 */
 	mutable LineInfoContainer line_infos;
 };
+
+
+
+//### TextObjectPartInfo inline code ###
+
+inline
+double TextObjectPartInfo::getX(int index) const
+{
+	return part_x + metrics.width(part_text.left(index - start_index));
+}
+
+
+
+//### TextObject inline code ###
+
+inline
+bool TextObject::hasSingleAnchor() const
+{
+	return coords.size() == 1;
+}
+
+inline
+double TextObject::getBoxWidth() const
+{
+	Q_ASSERT(!hasSingleAnchor());
+	return coords[1].xd();
+}
+
+inline
+double TextObject::getBoxHeight() const
+{
+	Q_ASSERT(!hasSingleAnchor());
+	return coords[1].yd();
+}
+
+inline
+const QString&TextObject::getText() const
+{
+	return text;
+}
+
+inline
+TextObject::HorizontalAlignment TextObject::getHorizontalAlignment() const
+{
+	return h_align;
+}
+
+inline
+TextObject::VerticalAlignment TextObject::getVerticalAlignment() const
+{
+	return v_align;
+}
+
+inline
+float TextObject::getRotation() const
+{
+	return rotation;
+}
+
+inline
+int TextObject::getNumLines() const
+{
+	return (int)line_infos.size();
+}
+
+inline
+TextObjectLineInfo*TextObject::getLineInfo(int i)
+{
+	return &line_infos[i];
+}
+
+inline
+const TextObjectLineInfo*TextObject::getLineInfo(int i) const
+{
+	return &line_infos[i];
+}
+
+
 
 #endif

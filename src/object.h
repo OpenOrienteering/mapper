@@ -83,14 +83,31 @@ public:
 		Text = 4
 	};
 	
-	/** Creates an empty object with the given type,
-	 *  optionally also assigning a symbol. */
-	Object(Type type, const Symbol* symbol = NULL);
+	/** Creates an empty object with the given type and (optional) symbol. */
+	explicit Object(Type type, const Symbol* symbol = nullptr);
+	
+	/** Creates an empty object with the given type, symbol, coords and (optional) map. */
+	explicit Object(Type type, const Symbol* symbol, const MapCoordVector& coords, Map* map = nullptr);
+	
+	/**
+	 * Constructs a Object, initialized from the given prototype.
+	 * 
+	 * Note that the object is NOT added to a map, and consequently,
+	 * the map pointer is initialized to nullptr.
+	 */
+	explicit Object(const Object& proto);
 	
 	/** Destructs the object. */
 	virtual ~Object();
 	
-	/** Creates an identical copy of the object. */
+	/** Assignment, replaces this object's content with that of the other. */
+	virtual Object& operator= (const Object& other);
+	
+	/** Creates an identical copy of the object.
+	 *
+	 * This needs to be implemented in non-abstract subclasses.
+	 * Implementation should use the copy constructor to ensure proper initialization.
+	 */
 	virtual Object* duplicate() const = 0;
 	
 	/**
@@ -99,11 +116,8 @@ public:
 	 */
 	bool equals(const Object* other, bool compare_symbol) const;
 	
-	/** Assignment, replaces this object's content with that of the other. */
-	virtual Object& operator= (const Object& other);
-	
 	/** Returns the object type determined by the subclass */
-	inline Type getType() const {return type;}
+	inline Type getType() const;
 	
 	/** Convenience cast to PointObject with type checking */
 	PointObject* asPoint();
@@ -126,13 +140,14 @@ public:
 	/**
 	 * Loads the object in xml format from the given stream.
 	 * @param xml The stream to load the object from, must be at the correct tag.
-	 * @param map The map in which the object will be inserted. Is assigned to
-	 *     the object's map pointer and may be NULL.
+	 * @param map The map in which the object will be inserted.
+	 *            This value will be assigned to the object's map pointer
+	 *            It may be nullptr.
 	 * @param symbol_dict A dictionary mapping symbol IDs to symbol pointers.
-	 * @param symbol If set, this symbol will be assigned to the object,
-	 *     if NULL, the symbol will be read from the stream.
+	 * @param symbol If set, this symbol will be assigned to the object, rather
+	 *               than reading the symbol from the stream.
 	 */
-	static Object* load(QXmlStreamReader& xml, Map* map, const SymbolDictionary& symbol_dict, const Symbol* symbol = 0);
+	static Object* load(QXmlStreamReader& xml, Map* map, const SymbolDictionary& symbol_dict, const Symbol* symbol = nullptr);
 	
 	/**
 	 * Checks if the output_dirty flag is set and if yes,
@@ -188,7 +203,7 @@ public:
 	void clearRenderables();
 	
 	/** Returns the renderables, read-only */
-	inline const ObjectRenderables& renderables() const {return output;}
+	const ObjectRenderables& renderables() const;
 	
 	// Getters / Setters
 	
@@ -196,12 +211,12 @@ public:
 	 * Returns the raw MapCoordVector of the object.
 	 * It's layout and interpretation depends on the object type.
 	 */
-	inline const MapCoordVector& getRawCoordinateVector() const {return coords;}
+	const MapCoordVector& getRawCoordinateVector() const;
 	
 	/** Sets the object output's dirty state. */
-	inline void setOutputDirty(bool dirty = true) {output_dirty = dirty;}
+	void setOutputDirty(bool dirty = true);
 	/** Returns if the object's output must be regenerated. */
-	inline bool isOutputDirty() const {return output_dirty;}
+	bool isOutputDirty() const;
 	
 	/**
 	 * Changes the object's symbol, returns if successful.
@@ -213,18 +228,22 @@ public:
 	 */
 	bool setSymbol(const Symbol* new_symbol, bool no_checks);
 	/** Returns the object's symbol. */
-	inline const Symbol* getSymbol() const {return symbol;}
+	const Symbol* getSymbol() const;
 	
 	/** NOTE: The extent is only valid after update() has been called! */
-	inline const QRectF& getExtent() const {return extent;}
+	const QRectF& getExtent() const;
 	
-	/** Sets the object's map pointer. May be NULL if the object is not in a map. */
-	inline void setMap(Map* map) {this->map = map;}
+	/**
+	 * Sets the object's map pointer.
+	 * 
+	 * May be nullptr if the object is not in a map.
+	 */
+	void setMap(Map* map);
 	/** Returns the object's map pointer. */
-	inline Map* getMap() const {return map;}
+	Map* getMap() const;
 	
 	/** Constructs an object of the given type with the given symbol. */
-	static Object* getObjectForType(Type type, const Symbol* symbol = NULL);
+	static Object* getObjectForType(Type type, const Symbol* symbol = nullptr);
 	
 	
 	/** Defines a type which maps keys to values, to be used for tagging objects. */
@@ -263,6 +282,8 @@ protected:
 	mutable ObjectRenderables output; // only valid after calling update()
 };
 
+
+
 /**
  * Object type which can be used for line, area and combined symbols.
  * Has a dynamic number of coordinates.
@@ -294,7 +315,7 @@ public:
 		
 		/** Returns the number of coordinates which make up this part.
 		 *  See also calcNumRegularPoints(). */
-		inline int getNumCoords() const {return end_index - start_index + 1;}
+		int getNumCoords() const;
 		
 		/** Calculates the number of points in this part,
 		 *  excluding close points and curve handles. */
@@ -311,11 +332,7 @@ public:
 		 * 
 		 * Parts can be closed and opened with setClosed() or connectEnds().
 		 */
-		inline bool isClosed() const
-		{
-			Q_ASSERT(end_index >= 0 && end_index < (int)path->coords.size());
-			return path->coords[end_index].isClosePoint();
-		}
+		bool isClosed() const;
 		
 		/**
 		 * Closes or opens the sub-path.
@@ -351,19 +368,6 @@ public:
 		/** Length of other path until this intersection point */
 		double other_length;
 		
-		/** Compares the length attribute. */
-		inline bool operator< (const Intersection& b) const {return length < b.length;}
-		/** Fuzzy equality check. */
-		inline bool operator== (const Intersection& b) const
-		{
-			// NOTE: coord is not compared, as the intersection is defined by the other params already.
-			const double epsilon = 1e-10;
-			return part_index == b.part_index &&
-				qAbs(length - b.length) <= epsilon &&
-				other_part_index == b.other_part_index &&
-				qAbs(other_length - b.other_length) <= epsilon;
-		}
-		
 		/**
 		 * Creates an Intersection at the position specified by factors a and b
 		 * between the a0/a1 and b0/b1 PathCoords in the given parts.
@@ -381,28 +385,35 @@ public:
 	
 	
 	/** Constructs a PathObject, optionally assigning a symbol. */
-	PathObject(const Symbol* symbol = NULL);
+	explicit PathObject(const Symbol* symbol = nullptr);
 	
 	/** Constructs a PathObject, assigning initial coords and optionally the map pointer. */
-	PathObject(const Symbol* symbol, const MapCoordVector& coords, Map* map = 0);
+	explicit PathObject(const Symbol* symbol, const MapCoordVector& coords, Map* map = nullptr);
 	
-	/** Creates a duplicate of the path. Use asPath() on the result. */
-	virtual Object* duplicate() const;
+	/** Constructs a PathObject, initalized from the given prototype. */
+	explicit PathObject(const PathObject& proto);
+	
+	/**
+	 * Creates a duplicate of the path object.
+	 * 
+	 * Use asPath() on the result to obtain an object of type PathObject.
+	 */
+	Object* duplicate() const override;
 	
 	/** Creates a new PathObject which contains a duplicate of only one part of this object. */
 	PathObject* duplicatePart(int part_index) const;
 	
 	/** Replaces this object's contents by those of the other. */
-	virtual Object& operator=(const Object& other);
+	Object& operator=(const Object& other) override;
 	
 	// Coordinate access methods
 	
 	/** Returns the number of coordinates, including curve handles and close points. */
-	inline int getCoordinateCount() const {return (int)coords.size();}
+	int getCoordinateCount() const;
 	/** Returns the i-th coordinate. */
-	inline MapCoord& getCoordinate(int pos) {Q_ASSERT(pos >= 0 && (std::size_t)pos < coords.size()); return coords[pos];}
+	MapCoord& getCoordinate(int pos);
 	/** Returns the i-th coordinate. */
-	inline const MapCoord& getCoordinate(int pos) const {Q_ASSERT(pos >= 0 && (std::size_t)pos < coords.size()); return coords[pos];}
+	const MapCoord& getCoordinate(int pos) const;
 	
 	/** Replaces the i-th coordinate with c. */
 	void setCoordinate(int pos, MapCoord c);
@@ -459,16 +470,16 @@ public:
 	
 	
 	/** Returns the number of path parts in this object */
-	inline int getNumParts() const {return (int)parts.size();}
+	int getNumParts() const;
 	
 	/** Returns the i-th path part. */
-	inline PathPart& getPart(int index) {return parts[index];}
+	PathPart& getPart(int index);
 	
 	/** Returns the i-th path part. */
-	inline const PathPart& getPart(int index) const {return parts[index];}
+	const PathPart& getPart(int index) const;
 	
 	/** Returns if the first path part (with index 0) is closed. */
-	inline bool isFirstPartClosed() const {return (getNumParts() > 0) ? parts[0].isClosed() : false;}
+	bool isFirstPartClosed() const;
 	
 	/** Deletes the i-th path part. */
 	void deletePart(int part_index);
@@ -485,10 +496,10 @@ public:
 	 * Returns the PathCoord vector, giving linearized information about the
 	 * path's shape. This is only valid if the object is not dirty!
 	 */
-	inline const PathCoordVector& getPathCoordinateVector() const {return path_coords;}
+	const PathCoordVector& getPathCoordinateVector() const;
 	
 	/** Clears the PathCoord vector. */
-	inline void clearPathCoordinates() {path_coords.clear();}
+	void clearPathCoordinates();
 	
 	
 	// Pattern methods
@@ -497,25 +508,25 @@ public:
 	 * Returns the rotation of the object pattern. Only has an effect in
 	 * combination with a symbol interpreting this value.
 	 */
-	inline float getPatternRotation() const {return pattern_rotation;}
+	float getPatternRotation() const;
 	
 	/**
 	 * Sets the rotation of the object pattern. Only has an effect in
 	 * combination with a symbol interpreting this value.
 	 */
-	inline void setPatternRotation(float rotation) {pattern_rotation = rotation; output_dirty = true;}
+	void setPatternRotation(float rotation);
 	
 	/**
 	 * Returns the origin of the object pattern. Only has an effect in
 	 * combination with a symbol interpreting this value.
 	 */
-	inline MapCoord getPatternOrigin() const {return pattern_origin;}
+	MapCoord getPatternOrigin() const;
 	
 	/**
 	 * Sets the origin of the object pattern. Only has an effect in
 	 * combination with a symbol interpreting this value.
 	 */
-	inline void setPatternOrigin(const MapCoord& origin) {pattern_origin = origin; output_dirty = true;}
+	void setPatternOrigin(const MapCoord& origin);
 	
 	
 	// Operations
@@ -620,7 +631,7 @@ public:
 	 * If at least one section is converted, returns true and
 	 * returns an undo duplicate if the corresponding pointer is set.
 	 */
-	bool convertToCurves(PathObject** undo_duplicate = NULL);
+	bool convertToCurves(PathObject** undo_duplicate = nullptr);
 	
 	/**
 	 * Converts the given range of coordinates to a spline by inserting handles.
@@ -771,7 +782,7 @@ protected:
 	 */
 	void setClosingPoint(int index, MapCoord coord);
 	
-	
+private:
 	/**
 	 * Rotation angle of the object pattern. Only used if the object
 	 * has a symbol which interprets this value.
@@ -784,13 +795,35 @@ protected:
 	 */
 	MapCoord pattern_origin;
 	
-private:
 	/** Path parts list */
 	mutable std::vector<PathPart> parts;
 	
 	/** Linearized shape information, only valid after calling update()! */
 	mutable PathCoordVector path_coords;
 };
+
+
+
+/** Compares the length of the intersections. */
+inline
+bool operator< (const PathObject::Intersection& lhs, const PathObject::Intersection& rhs)
+{
+	return lhs.length < rhs.length;
+}
+
+/** Fuzzy equality check. */
+inline
+bool operator== (const PathObject::Intersection& lhs, const PathObject::Intersection& rhs)
+{
+	// NOTE: coord is not compared, as the intersection is defined by the other params already.
+	const double epsilon = 1e-10;
+	return lhs.part_index == rhs.part_index &&
+	       lhs.other_part_index == rhs.other_part_index &&
+	       qAbs(lhs.length - rhs.length) <= epsilon &&
+	       qAbs(lhs.other_length - rhs.other_length) <= epsilon;
+}
+
+
 
 /**
  * Object type which can only be used for point symbols,
@@ -802,13 +835,20 @@ class PointObject : public Object
 {
 public:
 	/** Constructs a PointObject, optionally assigning the symbol. */
-	PointObject(const Symbol* symbol = NULL);
+	explicit PointObject(const Symbol* symbol = nullptr);
 	
-	/** Creates a duplicate of the point, use asPoint() on the result. */
-	virtual Object* duplicate() const;
+	/** Constructs a PointObject, initalized from the given prototype. */
+	explicit PointObject(const PointObject& proto);
+	
+	/**
+	 * Creates a duplicate of the point.
+	 * 
+	 * Use asPoint() on the result to obtain an object of type PointObject.
+	 */
+	Object* duplicate() const override;
 	
 	/** Replaces the content of this object by that of anothe. */
-	virtual Object& operator=(const Object& other);
+	Object& operator=(const Object& other) override;
 	
 	
 	/** Sets the point's position to a new position given in native map coordinates. */
@@ -816,9 +856,6 @@ public:
 	
 	/** Changes the point's position. */
 	void setPosition(MapCoordF coord);
-	
-	/** Returns the point's position in native map coordinates. */
-	void getPosition(qint64& x, qint64& y) const;
 	
 	/** Returns the point's position as MapCoordF. */
 	MapCoordF getCoordF() const;
@@ -837,7 +874,7 @@ public:
 	 * Returns the point object's rotation (in radians). This is only used
 	 * if the object has a symbol which interprets this value.
 	 */
-	inline float getRotation() const {return rotation;}
+	float getRotation() const;
 	
 	
 private:
@@ -846,7 +883,62 @@ private:
 };
 
 
+
 //### Object inline code ###
+
+inline
+Object::Type Object::getType() const
+{
+	return type;
+}
+
+inline
+const ObjectRenderables& Object::renderables() const
+{
+	return output;
+}
+
+inline
+const MapCoordVector& Object::getRawCoordinateVector() const
+{
+	return coords;
+}
+
+inline
+void Object::setOutputDirty(bool dirty)
+{
+	output_dirty = dirty;
+}
+
+inline
+bool Object::isOutputDirty() const
+{
+	return output_dirty;
+}
+
+inline
+const Symbol* Object::getSymbol() const
+{
+	return symbol;
+}
+
+inline
+const QRectF& Object::getExtent() const
+{
+	return extent;
+}
+
+inline
+void Object::setMap(Map* map)
+{
+	this->map = map;
+}
+
+inline
+Map* Object::getMap() const
+{
+	return map;
+}
 
 inline
 const Object::Tags& Object::tags() const
@@ -861,4 +953,105 @@ QString Object::getTag(const QString& key) const
 }
 
 
+
+//### PathObject::PathPart inline code ###
+
+inline
+int PathObject::PathPart::getNumCoords() const
+{
+	return end_index - start_index + 1;
+}
+
+inline
+bool PathObject::PathPart::isClosed() const
+{
+	Q_ASSERT(end_index >= 0 && end_index < (int)path->coords.size());
+	return path->coords[end_index].isClosePoint();
+}
+
+
+
+//### PathObject inline code ###
+
+inline
+int PathObject::getCoordinateCount() const
+{
+	return (int)coords.size();
+}
+
+inline
+MapCoord& PathObject::getCoordinate(int pos)
+{
+	Q_ASSERT(pos >= 0 && (std::size_t)pos < coords.size());
+	return coords[pos];
+}
+
+inline
+const MapCoord& PathObject::getCoordinate(int pos) const
+{
+	Q_ASSERT(pos >= 0 && (std::size_t)pos < coords.size());
+	return coords[pos];
+}
+
+inline
+int PathObject::getNumParts() const
+{
+	return (int)parts.size();
+}
+
+inline
+PathObject::PathPart& PathObject::getPart(int index)
+{
+	return parts[index];
+}
+
+inline
+const PathObject::PathPart& PathObject::getPart(int index) const
+{
+	return parts[index];
+}
+
+inline
+bool PathObject::isFirstPartClosed() const
+{
+	return !parts.empty() && parts.front().isClosed();
+}
+
+inline
+const PathCoordVector& PathObject::getPathCoordinateVector() const
+{
+	return path_coords;
+}
+
+inline
+void PathObject::clearPathCoordinates()
+{
+	path_coords.clear();
+}
+
+inline
+float PathObject::getPatternRotation() const
+{
+	return pattern_rotation;
+}
+
+inline
+MapCoord PathObject::getPatternOrigin() const
+{
+	return pattern_origin;
+}
+
+
+
+//### PointObject inline code ###
+
+inline
+float PointObject::getRotation() const
+{
+	return rotation;
+}
+
+
+
 #endif
+

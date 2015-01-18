@@ -74,10 +74,17 @@ void DuplicateEqualsTest::objects()
 		MapPart* part = map->getPart(part_number);
 		for (int object = 0; object < part->getNumObjects(); ++object)
 		{
-			Object* original = part->getObject(object);
+			const Object* original = part->getObject(object);
 			Object* duplicate = original->duplicate();
 			QVERIFY(original->equals(duplicate, true));
+			QVERIFY(!duplicate->getMap());
 			delete duplicate;
+			
+			Object* assigned = Object::getObjectForType(original->getType(), original->getSymbol());
+			QVERIFY(assigned);
+			*assigned = *original;
+			QVERIFY(original->equals(assigned, true));
+			QVERIFY(!assigned->getMap());
 		}
 	}
 	

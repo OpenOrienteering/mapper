@@ -68,10 +68,35 @@ namespace literal
 Object::Object(Object::Type type, const Symbol* symbol)
 : type(type),
   symbol(symbol),
-  map(NULL),
+  map(nullptr),
   output_dirty(true),
   extent(),
   output(*this)
+{
+	// nothing
+}
+
+Object::Object(Object::Type type, const Symbol* symbol, const MapCoordVector& coords, Map* map)
+ : type(type),
+   symbol(symbol),
+   coords(coords),
+   map(map),
+   output_dirty(true),
+   extent(),
+   output(*this)
+{
+	// nothing
+}
+
+Object::Object(const Object& proto)
+ : type(proto.type)
+ , symbol(proto.symbol)
+ , coords(proto.coords)
+ , map(nullptr)
+ , object_tags(proto.object_tags)
+ , output_dirty(true)
+ , extent(proto.extent)
+ , output(*this)
 {
 	// nothing
 }
@@ -81,14 +106,26 @@ Object::~Object()
 	// nothing
 }
 
+Object& Object::operator=(const Object& other)
+{
+	Q_ASSERT(type == other.type);
+	symbol = other.symbol;
+	coords = other.coords;
+	// map unchanged!
+	object_tags = other.object_tags;
+	output_dirty = true;
+	extent = other.extent;
+	return *this;
+}
+
 bool Object::equals(const Object* other, bool compare_symbol) const
 {
 	if (type != other->type)
 		return false;
 	if (compare_symbol)
 	{
-		if ((symbol == NULL && other->symbol != NULL) ||
-			(symbol != NULL && other->symbol == NULL))
+		if ((!symbol && other->symbol) ||
+			(symbol && !other->symbol))
 			return false;
 		if (symbol && !symbol->equals(other->symbol))
 			return false;
@@ -165,15 +202,6 @@ bool Object::equals(const Object* other, bool compare_symbol) const
 	}
 	
 	return true;
-}
-
-Object& Object::operator=(const Object& other)
-{
-	Q_ASSERT(type == other.type);
-	symbol = other.symbol;
-	coords = other.coords;
-	object_tags = other.object_tags;
-	return *this;
 }
 
 PointObject* Object::asPoint()
@@ -503,17 +531,16 @@ bool Object::update(bool force, bool insert_new_renderables) const
 
 void Object::move(qint64 dx, qint64 dy)
 {
-	int coords_size = coords.size();
-	
-	if (type == Text && coords_size == 2)
-		coords_size = 1;	// don't touch box width / height for box texts
-	
-	for (int c = 0; c < coords_size; ++c)
+	if (type == Text && coords.size() == 2)
 	{
-		MapCoord coord = coords[c];
+		MapCoord& coord = coords.front();
 		coord.setRawX(dx + coord.rawX());
 		coord.setRawY(dy + coord.rawY());
-		coords[c] = coord;
+	}
+	else for (MapCoord& coord : coords)
+	{
+		coord.setRawX(dx + coord.rawX());
+		coord.setRawY(dy + coord.rawY());
 	}
 	
 	setOutputDirty();
@@ -521,33 +548,30 @@ void Object::move(qint64 dx, qint64 dy)
 
 void Object::scale(MapCoordF center, double factor)
 {
-	int coords_size = coords.size();
-	if (type == Text && coords_size == 2)
+	if (type == Text && coords.size() == 2)
 	{
 		coords[0].setX(center.getX() + (coords[0].xd() - center.getX()) * factor);
 		coords[0].setY(center.getY() + (coords[0].yd() - center.getY()) * factor);
 		coords[1].setX(coords[1].xd() * factor);
 		coords[1].setY(coords[1].yd() * factor);
 	}
-	else
+	else for (MapCoord& coord : coords)
 	{
-		for (int c = 0; c < coords_size; ++c)
-		{
-			coords[c].setX(center.getX() + (coords[c].xd() - center.getX()) * factor);
-			coords[c].setY(center.getY() + (coords[c].yd() - center.getY()) * factor);
-		}
+		coord.setX(center.getX() + (coord.xd() - center.getX()) * factor);
+		coord.setY(center.getY() + (coord.yd() - center.getY()) * factor);
 	}
+	
 	setOutputDirty();
 }
 
 void Object::scale(double factor_x, double factor_y)
 {
-	int coords_size = coords.size();
-	for (int c = 0; c < coords_size; ++c)
+	for (MapCoord& coord : coords)
 	{
-		coords[c].setX(coords[c].xd() * factor_x);
-		coords[c].setY(coords[c].yd() * factor_y);
+		coord.setX(coord.xd() * factor_x);
+		coord.setY(coord.yd() * factor_y);
 	}
+	
 	setOutputDirty();
 }
 
@@ -715,7 +739,7 @@ Object* Object::getObjectForType(Object::Type type, const Symbol* symbol)
 	else
 	{
 		Q_ASSERT(false);
-		return NULL;
+		return nullptr;
 	}
 }
 
@@ -735,7 +759,7 @@ void Object::setTags(const Object::Tags& tags)
 
 void Object::setTag(const QString& key, const QString& value)
 {
-	if (!object_tags.contains(key) || object_tags.value("key") != value)
+	if (!object_tags.contains(key) || object_tags.value(key) != value)
 	{
 		object_tags.insert(key, value);
 		if (map)
@@ -852,38 +876,41 @@ double PathObject::PathPart::calculateArea() const
 	return qAbs(area) / 2;
 }
 
+
+
 // ### PathObject ###
 
-PathObject::PathObject(const Symbol* symbol) : Object(Object::Path, symbol)
+PathObject::PathObject(const Symbol* symbol)
+ : Object(Object::Path, symbol)
+ , pattern_rotation(0.0)
+ , pattern_origin(0, 0)
 {
 	Q_ASSERT(!symbol || (symbol->getType() == Symbol::Line || symbol->getType() == Symbol::Area || symbol->getType() == Symbol::Combined));
-	pattern_rotation = 0;
-	pattern_origin = MapCoord(0, 0);
 }
 
-PathObject::PathObject(const Symbol* symbol, const MapCoordVector& coords, Map* map) : Object(Object::Path, symbol)
+PathObject::PathObject(const Symbol* symbol, const MapCoordVector& coords, Map* map)
+ : Object(Object::Path, symbol, coords, map)
+ , pattern_rotation(0.0)
+ , pattern_origin(0, 0)
 {
 	Q_ASSERT(!symbol || (symbol->getType() == Symbol::Line || symbol->getType() == Symbol::Area || symbol->getType() == Symbol::Combined));
-	pattern_rotation = 0;
-	pattern_origin = MapCoord(0, 0);
-	this->coords = coords;
 	recalculateParts();
-	if (map)
-		setMap(map);
+}
+
+PathObject::PathObject(const PathObject& proto)
+ : Object(proto)
+ , pattern_rotation(proto.pattern_rotation)
+ , pattern_origin(proto.pattern_origin)
+ , parts(proto.parts)
+ , path_coords(proto.path_coords)
+{
+	for (auto& part : parts)
+		part.path = this;
 }
 
 Object* PathObject::duplicate() const
 {
-	PathObject* new_path = new PathObject(symbol);
-	new_path->pattern_rotation = pattern_rotation;
-	new_path->pattern_origin = pattern_origin;
-	new_path->coords = coords;
-	new_path->object_tags = object_tags;
-	new_path->parts = parts;
-	int parts_size = parts.size();
-	for (int i = 0; i < parts_size; ++i)
-		new_path->parts[i].path = new_path;
-	return new_path;
+	return new PathObject(*this);
 }
 
 PathObject* PathObject::duplicatePart(int part_index) const
@@ -904,13 +931,13 @@ PathObject* PathObject::duplicatePart(int part_index) const
 Object& PathObject::operator=(const Object& other)
 {
 	Object::operator=(other);
-	const PathObject* path_other = (&other)->asPath();
-	setPatternRotation(path_other->getPatternRotation());
-	setPatternOrigin(path_other->getPatternOrigin());
-	parts = path_other->parts;
-	path_coords = path_other->path_coords;
-	for (size_t i = 0, end = parts.size(); i < end; ++i)
-		parts[i].path = this;
+	const PathObject& other_path = *other.asPath();
+	pattern_rotation = other_path.getPatternRotation();
+	pattern_origin = other_path.getPatternOrigin();
+	parts = other_path.parts;
+	path_coords = other_path.path_coords;
+	for (PathPart& part : parts)
+		part.path = this;
 	return *this;
 }
 
@@ -996,6 +1023,18 @@ void PathObject::partSizeChanged(int part_index, int change)
 		parts[i].start_index += change;
 		parts[i].end_index += change;
 	}
+}
+
+void PathObject::setPatternRotation(float rotation)
+{
+	pattern_rotation = rotation;
+	output_dirty = true;
+}
+
+void PathObject::setPatternOrigin(const MapCoord& origin)
+{
+	pattern_origin = origin;
+	output_dirty = true;
 }
 
 void PathObject::calcClosestPointOnPath(MapCoordF coord, float& out_distance_sq, PathCoord& out_path_coord, int part_index) const
@@ -1439,7 +1478,7 @@ void PathObject::changePathBounds(int part_index, double start_len, double end_l
 	else
 	{
 		out_coordsF.push_back(MapCoordF(0, 0));
-		PathCoord::calculatePositionAt(*p_coords, coordsF, path_coords, start_len, cur_path_coord, &out_coordsF[out_coordsF.size() - 1], NULL);
+		PathCoord::calculatePositionAt(*p_coords, coordsF, path_coords, start_len, cur_path_coord, &out_coordsF[out_coordsF.size() - 1], nullptr);
 		out_coords.push_back(out_coordsF[out_coordsF.size() - 1].toMapCoord());
 	}
 	
@@ -1520,7 +1559,7 @@ void PathObject::changePathBounds(int part_index, double start_len, double end_l
 		}
 		else
 		{
-			PathCoord::calculatePositionAt(*p_coords, coordsF, path_coords, end_len, cur_path_coord, &out_coordsF[out_coordsF.size() - 1], NULL);
+			PathCoord::calculatePositionAt(*p_coords, coordsF, path_coords, end_len, cur_path_coord, &out_coordsF[out_coordsF.size() - 1], nullptr);
 			out_coords.push_back(out_coordsF[out_coordsF.size() - 1].toMapCoord());
 		}
 	}
@@ -2551,7 +2590,7 @@ bool PathObject::simplify(PathObject** undo_duplicate, float threshold)
 			}
 		}
 		
-		if (!removed_a_point || undo_duplicate == NULL)
+		if (!removed_a_point || !undo_duplicate)
 			delete original;
 		delete temp;
 	}
@@ -3290,19 +3329,22 @@ PointObject::PointObject(const Symbol* symbol) : Object(Object::Point, symbol)
 	coords.push_back(MapCoord(0, 0));
 }
 
+PointObject::PointObject(const PointObject& proto)
+ : Object(proto)
+ , rotation(proto.rotation)
+{
+	// nothing
+}
+
 Object* PointObject::duplicate() const
 {
-	PointObject* new_point = new PointObject(symbol);
-	new_point->coords = coords;
-	new_point->rotation = rotation;
-	new_point->object_tags = object_tags;
-	return new_point;
+	return new PointObject(*this);
 }
 
 Object& PointObject::operator=(const Object& other)
 {
 	Object::operator=(other);
-	const PointObject* point_other = (&other)->asPoint();
+	const PointObject* point_other = other.asPoint();
 	const PointSymbol* point_symbol = getSymbol()->asPoint();
 	if (point_symbol && point_symbol->isRotatable())
 		setRotation(point_other->getRotation());
@@ -3323,20 +3365,14 @@ void PointObject::setPosition(MapCoordF coord)
 	setOutputDirty();
 }
 
-void PointObject::getPosition(qint64& x, qint64& y) const
-{
-	x = coords[0].rawX();
-	y = coords[0].rawY();
-}
-
 MapCoordF PointObject::getCoordF() const
 {
-	return MapCoordF(coords[0]);
+	return MapCoordF(coords.front());
 }
 
 MapCoord PointObject::getCoord() const
 {
-	return coords[0];
+	return coords.front();
 }
 
 void PointObject::setRotation(float new_rotation)
