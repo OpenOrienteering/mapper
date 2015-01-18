@@ -1291,73 +1291,80 @@ void PathObject::connectPathParts(int part_index, const PathObject* other, int o
 	Q_ASSERT(!parts[part_index].isClosed());
 }
 
-void PathObject::splitAt(const PathCoord& split_pos, Object*& out1, Object*& out2)
+std::vector<PathObject*> PathObject::removeFromLine(int part_index, qreal begin, qreal end) const
 {
-	out1 = NULL;
-	out2 = NULL;
+	Q_ASSERT(parts.size() == 1); // TODO
+	Q_ASSERT(symbol->getContainedTypes() == Symbol::Line);
 	
-	int part_index = findPartIndexForIndex(split_pos.index);
-	PathPart& part = parts[part_index];
-	if (part.isClosed())
-	{
-		PathObject* path1 = new PathObject(symbol, coords, map);
-		out1 = path1;
-		
-		if (split_pos.clen == path_coords[part.path_coord_start_index].clen || split_pos.clen == path_coords[part.path_coord_end_index].clen)
-		{
-			(path1->parts[part_index]).setClosed(false);
-			return;
-		}
-		
-		path1->changePathBounds(part_index, split_pos.clen, split_pos.clen);
-		return;
-	}
+	const PathPart& part = parts[part_index];
+	Q_ASSERT(path_coords[part.path_coord_start_index].clen <= begin);
+	Q_ASSERT(path_coords[part.path_coord_start_index].clen <= end);
+	Q_ASSERT(path_coords[part.path_coord_end_index].clen >= begin);
+	Q_ASSERT(path_coords[part.path_coord_end_index].clen >= end);
 	
-	if (split_pos.clen == path_coords[part.path_coord_start_index].clen)
+	std::vector<PathObject*> objects;
+	
+	if (end < begin || part.isClosed())
 	{
-		if (part.calcNumRegularPoints() > 2)
-		{
-			PathObject* path1 = new PathObject(symbol, coords, map);
-			out1 = path1;
-			
-			if (coords[part.start_index].isCurveStart())
-			{
-				path1->deleteCoordinate(part.start_index + 2, false);
-				path1->deleteCoordinate(part.start_index + 1, false);
-				path1->deleteCoordinate(part.start_index + 0, false);
-			}
-			else
-				path1->deleteCoordinate(part.start_index + 0, false);
-		}
-	}
-	else if (split_pos.clen == path_coords[part.path_coord_end_index].clen)
-	{
-		if (part.calcNumRegularPoints() > 2)
-		{
-			PathObject* path1 = new PathObject(symbol, coords, map);
-			out1 = path1;
-			
-			if (part.getNumCoords() >= 4 && coords[part.end_index - 3].isCurveStart())
-			{
-				path1->deleteCoordinate(path1->parts[part_index].end_index, false);
-				path1->deleteCoordinate(path1->parts[part_index].end_index, false);
-				path1->deleteCoordinate(path1->parts[part_index].end_index, false);
-				path1->coords[path1->parts[part_index].end_index].setCurveStart(false);
-			}
-			else
-				path1->deleteCoordinate(path1->parts[part_index].end_index, false);
-		}
+		PathObject* obj = duplicate()->asPath();
+		obj->changePathBounds(part_index, end, begin);
+		objects.push_back(obj);
 	}
 	else
 	{
-		PathObject* path1 = new PathObject(symbol, coords, map);
-		out1 = path1;
-		PathObject* path2 = new PathObject(symbol, coords, map);
-		out2 = path2;
-		
-		path1->changePathBounds(part_index, path_coords[part.path_coord_start_index].clen, split_pos.clen);
-		path2->changePathBounds(part_index, split_pos.clen, path_coords[part.path_coord_end_index].clen);
+		if (begin > path_coords[part.path_coord_start_index].clen)
+		{
+			PathObject* obj = duplicate()->asPath();
+			obj->changePathBounds(part_index, path_coords[part.path_coord_start_index].clen, begin);
+			objects.push_back(obj);
+		}
+		if (end < path_coords[part.path_coord_end_index].clen)
+		{
+			PathObject* obj = duplicate()->asPath();
+			obj->changePathBounds(part_index, end, path_coords[part.path_coord_end_index].clen);
+			objects.push_back(obj);
+		}
 	}
+	
+	return objects;
+}
+
+std::vector<PathObject*> PathObject::splitLineAt(const PathCoord& split_pos) const
+{
+	Q_ASSERT(parts.size() == 1); // TODO
+	Q_ASSERT(symbol->getContainedTypes() == Symbol::Line);
+	
+	std::vector<PathObject*> objects;
+	
+	const int part_index = findPartIndexForIndex(split_pos.index);
+	const PathPart& part = parts[part_index];
+	if (part.isClosed())
+	{
+		PathObject* obj = duplicate()->asPath();
+		if ( split_pos.clen == path_coords[part.path_coord_start_index].clen || 
+		     split_pos.clen == path_coords[part.path_coord_end_index].clen)
+		{
+			(obj->parts[part_index]).setClosed(false);
+		}
+		else
+		{
+			obj->changePathBounds(part_index, split_pos.clen, split_pos.clen);
+		}
+		objects.push_back(obj);
+	}
+	else if ( split_pos.clen != path_coords[part.path_coord_start_index].clen &&
+	          split_pos.clen != path_coords[part.path_coord_end_index].clen)
+	{
+		PathObject* obj1 = duplicate()->asPath();
+		obj1->changePathBounds(part_index, path_coords[part.path_coord_start_index].clen, split_pos.clen);
+		objects.push_back(obj1);
+		
+		PathObject* obj2 = duplicate()->asPath();
+		obj2->changePathBounds(part_index, split_pos.clen, path_coords[part.path_coord_end_index].clen);
+		objects.push_back(obj2);
+	}
+	
+	return objects;
 }
 
 void PathObject::changePathBounds(int part_index, double start_len, double end_len)

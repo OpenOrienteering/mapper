@@ -63,10 +63,34 @@ public slots:
 	void pathFinished(PathObject* split_path);
 	
 protected:
+	/**
+	 * Splits the given path object, removing the section between begin and end.
+	 * 
+	 * This may remove the object from the map and add new objects instead.
+	 */
+	void splitLine(PathObject* object, int part_index, qreal begin, qreal end) const;
+	
+	/**
+	 * Splits the path object at the given position.
+	 * 
+	 * This may remove the object from the map and add new objects instead.
+	 */
+	void splitLine(PathObject* object, const PathCoord& split_pos) const;
+	
+	/**
+	 * Replaces the given object in the map with the replacement objects.
+	 * 
+	 * Creates the neccessary undo steps. If replacement is empty, the object is
+	 * deleted without replacement.
+	 * 
+	 * @todo Consider moving this to a more general class (Map, MapPart).
+	 */
+	void replaceObject(PathObject* object, const std::vector<PathObject*>& replacement) const;
+	
 	void updateStatusText();
 	void updatePreviewObjects();
 	void deletePreviewPath();
-	void updateDirtyRect(const QRectF* path_rect = NULL);
+	void updateDirtyRect(const QRectF* path_rect = nullptr) const;
 	void updateDragging(MapCoordF cursor_pos_map, MapWidget* widget);
 	void updateHoverPoint(QPointF cursor_pos_screen, MapWidget* widget);
 	bool findEditPoint(PathCoord& out_edit_point, PathObject*& out_edit_object, MapCoordF cursor_pos_map, int with_type, int without_type, MapWidget* widget);

@@ -136,7 +136,6 @@ bool CutTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidg
 	
 	if (event->button() != Qt::LeftButton)
 		return false;
-	Map* map = this->map();
 	
 	if (dragging)
 	{
@@ -144,134 +143,23 @@ bool CutTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidg
 		
 		if (dragging_on_line)
 		{
-			if (drag_start_len != drag_end_len)
-			{
-				MapPart* part = map->getCurrentPart();
-				PathObject* split_object = reinterpret_cast<PathObject*>(edit_object);
-				
-				if (split_object->getPart(drag_part_index).isClosed())
-				{
-					Object* undo_duplicate = split_object->duplicate();
-					
-					if (!drag_forward)
-						split_object->changePathBounds(drag_part_index, drag_start_len, drag_end_len);
-					else
-						split_object->changePathBounds(drag_part_index, drag_end_len, drag_start_len);
-					
-					ReplaceObjectsUndoStep* replace_step = new ReplaceObjectsUndoStep(map);
-					replace_step->addObject(part->findObjectIndex(split_object), undo_duplicate);
-					map->push(replace_step);
-					split_object->update(); // Make sure that the map display is updated
-				}
-				else
-				{
-					AddObjectsUndoStep* add_step = new AddObjectsUndoStep(map);
-					add_step->addObject(part->findObjectIndex(split_object), split_object);
-					map->removeObjectFromSelection(split_object, false);
-					map->deleteObject(split_object, true);
-					
-					float min_cut_pos = qMin(drag_start_len, drag_end_len);
-					float max_cut_pos = qMax(drag_start_len, drag_end_len);
-					float path_len = split_object->getPathCoordinateVector().at(split_object->getPathCoordinateVector().size() - 1).clen;
-					if (min_cut_pos <= 0 && max_cut_pos >= path_len)
-						map->push(add_step);
-					else
-					{
-						DeleteObjectsUndoStep* delete_step = new DeleteObjectsUndoStep(map);
-						
-						if (min_cut_pos > 0)
-						{
-							PathObject* part1 = reinterpret_cast<PathObject*>(split_object->duplicate());
-							part1->changePathBounds(drag_part_index, 0, min_cut_pos);
-							map->addObject(part1);
-							delete_step->addObject(part->findObjectIndex(part1));
-							map->addObjectToSelection(part1, !(max_cut_pos < path_len));
-						}
-						if (max_cut_pos < path_len)
-						{
-							PathObject* part2 = reinterpret_cast<PathObject*>(split_object->duplicate());
-							part2->changePathBounds(drag_part_index, max_cut_pos, path_len);
-							map->addObject(part2);
-							delete_step->addObject(part->findObjectIndex(part2));
-							map->addObjectToSelection(part2, true);
-						}
-						
-						CombinedUndoStep* undo_step = new CombinedUndoStep(map);
-						undo_step->push(add_step);
-						undo_step->push(delete_step);
-						map->push(undo_step);
-					}
-				}
-				
-				map->setObjectsDirty();
-				map->emitSelectionEdited();
-			}
-			
-			deletePreviewPath();
-			updateDirtyRect();
+			Q_ASSERT(edit_object->getType() == Object::Path);
+			splitLine(edit_object->asPath(), drag_part_index, drag_start_len, drag_end_len);
 		}
+		
+		deletePreviewPath();
+		dragging = false;
 	}
 	else
 	{
 		PathCoord split_pos;
-		PathObject* split_object;
-		
 		if (findEditPoint(split_pos, edit_object, map_coord, (int)Symbol::Line, 0, widget))
 		{
-			if (edit_object->getType() != Object::Path)
-				Q_ASSERT(!"TODO: make this work for non-path objects");
-			split_object = reinterpret_cast<PathObject*>(edit_object);
-			
-			MapPart* part = map->getCurrentPart();
-			AddObjectsUndoStep* add_step = new AddObjectsUndoStep(map);
-			
-			Object* out1 = NULL;
-			Object* out2 = NULL;
-			split_object->splitAt(split_pos, out1, out2);
-			
-			add_step->addObject(part->findObjectIndex(split_object), split_object);
-			map->deleteObject(split_object, true);
-			map->setObjectsDirty();
-			map->removeObjectFromSelection(split_object, false);
-			if (!out1 && !out2)
-			{
-				map->push(add_step);
-				map->emitSelectionChanged();
-				map->emitSelectionEdited();
-				return true;
-			}
-			
-			if (out1)
-			{
-				map->addObject(out1);
-				map->addObjectToSelection(out1, !out2);
-			}
-			if (out2)
-			{
-				map->addObject(out2);
-				map->addObjectToSelection(out2, true);
-			}
-			DeleteObjectsUndoStep* delete_step = new DeleteObjectsUndoStep(map);
-			if (out1)
-				delete_step->addObject(part->findObjectIndex(out1));
-			if (out2)
-				delete_step->addObject(part->findObjectIndex(out2));
-			
-			CombinedUndoStep* undo_step = new CombinedUndoStep(map);
-			if (add_step)
-				undo_step->push(add_step);
-			if (out1 || out2)
-				undo_step->push(delete_step);
-			else
-				delete delete_step;
-			map->push(undo_step);
-			
-			updateDirtyRect();
-			map->emitSelectionEdited();
+			Q_ASSERT(edit_object->getType() == Object::Path);
+			splitLine(edit_object->asPath(), split_pos);
 		}
 	}
 	
-	dragging = false;
 	setEditingInProgress(false);
 	return true;
 }
@@ -335,7 +223,7 @@ void CutTool::draw(QPainter* painter, MapWidget* widget)
 		path_tool->draw(painter, widget);
 }
 
-void CutTool::updateDirtyRect(const QRectF* path_rect)
+void CutTool::updateDirtyRect(const QRectF* path_rect) const
 {
 	Map* map = this->map();
 	QRectF rect;
@@ -688,6 +576,48 @@ void CutTool::pathFinished(PathObject* split_path)
 	map->setObjectsDirty();
 	
 	pathAborted();
+}
+
+void CutTool::splitLine(PathObject* object, int part_index, qreal begin, qreal end) const
+{
+	if (!drag_forward)
+		qSwap(begin, end);
+	
+	auto split_objects = object->asPath()->removeFromLine(part_index, begin, end);
+	replaceObject(object, split_objects);
+}
+
+void CutTool::splitLine(PathObject* object, const PathCoord& split_pos) const
+{
+	auto split_objects = object->asPath()->splitLineAt(split_pos);
+	if (!split_objects.empty())
+		replaceObject(object, split_objects);
+}
+
+void CutTool::replaceObject(PathObject* object, const std::vector<PathObject*>& replacement) const
+{
+	Map* map = this->map();
+	MapPart* map_part = map->getCurrentPart();
+	
+	AddObjectsUndoStep* add_step = new AddObjectsUndoStep(map);
+	add_step->addObject(map_part->findObjectIndex(object), object);
+	map->removeObjectFromSelection(object, false);
+	map->deleteObject(object, true);
+	
+	DeleteObjectsUndoStep* delete_step = new DeleteObjectsUndoStep(map);
+	for (Object* new_object : replacement)
+	{
+		map->addObject(new_object);
+		map->addObjectToSelection(new_object, false);
+		delete_step->addObject(map_part->findObjectIndex(new_object));
+	}
+	
+	CombinedUndoStep* undo_step = new CombinedUndoStep(map);
+	undo_step->push(add_step);
+	undo_step->push(delete_step);
+	map->push(undo_step);
+	
+	map->emitSelectionChanged();
 }
 
 void CutTool::updateStatusText()

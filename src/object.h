@@ -566,9 +566,23 @@ public:
 						  int other_part_index, bool prepend, bool merge_ends = true);
 	
 	/**
-	 * Splits the path into up to two parts at the given position.
+	 * Returns the result of removing the section between begin and end from the path.
+	 * 
+	 * begin and end must belong to the path part with the given part_index.
+	 * However, any part_index value other than 1 is not supported at the moment.
+	 * 
+	 * Returns an empty vector when nothing remains after removal.
 	 */
-	void splitAt(const PathCoord& split_pos, Object*& out1, Object*& out2);
+	std::vector<PathObject*> removeFromLine(int part_index, qreal begin, qreal end) const;
+									   
+	/**
+	 * Returns the result of splitting the path at the given inner position.
+	 * 
+	 * Returns an empty vector when the object is not changed by the split.
+	 * This happens when the path is not closed and split_pos is the begin or
+	 * end of the path.
+	 */
+	std::vector<PathObject*> splitLineAt(const PathCoord& split_pos) const;
 	
 	/**
 	 * Replaces the path with a range of it starting and ending at the given lengths.
