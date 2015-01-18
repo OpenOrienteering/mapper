@@ -143,9 +143,9 @@ void ObjectRenderables::draw(const QColor& color, QPainter* painter, const Rende
 	
 	painter->save();
 	
-	for (auto color_renderables : *this)
+	for (const auto& color_renderables : *this)
 	{
-		for (auto config_renderables : *color_renderables.second)
+		for (const auto& config_renderables : *color_renderables.second)
 		{
 			// Render the renderables
 			const PainterConfig& state = config_renderables.first;
@@ -187,7 +187,7 @@ void ObjectRenderables::insertRenderable(Renderable* r, PainterConfig state)
 
 void ObjectRenderables::clear()
 {
-	for (auto renderables : *this)
+	for (auto& renderables : *this)
 	{
 		renderables.second->clear();
 	}
