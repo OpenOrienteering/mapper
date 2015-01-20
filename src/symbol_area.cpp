@@ -252,7 +252,7 @@ void AreaSymbol::FillPattern::createRenderables(QRectF extent, float delta_rotat
 	else
 	{
 		// TODO: Ugly method to get the point's extent
-		point_object.update1(true);
+		point_object.update();
 		fill_extent = point_object.getExtent();
 	}
 	extent = QRectF(extent.topLeft() - fill_extent.bottomRight(), extent.bottomRight() - fill_extent.topLeft());

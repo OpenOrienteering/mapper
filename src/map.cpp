@@ -2177,11 +2177,11 @@ void Map::rotateAllObjects(double rotation, const MapCoord& center)
 }
 void Map::updateAllObjects()
 {
-	applyOnAllObjects(ObjectOp::Update(true));
+	applyOnAllObjects(ObjectOp::ForceUpdate());
 }
 void Map::updateAllObjectsWithSymbol(const Symbol* symbol)
 {
-	applyOnMatchingObjects(ObjectOp::Update(true), ObjectOp::HasSymbol(symbol));
+	applyOnMatchingObjects(ObjectOp::ForceUpdate(), ObjectOp::HasSymbol(symbol));
 }
 void Map::changeSymbolForAllObjects(const Symbol* old_symbol, const Symbol* new_symbol)
 {

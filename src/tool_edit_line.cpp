@@ -117,7 +117,7 @@ void EditLineTool::clickPress()
 			hover_object->addCoordinate(hover_line + 2, handle);
 		}
 		
-		hover_object->update1(true);
+		hover_object->update();
 		map()->emitSelectionEdited();
 		
 		// Make sure that the highlight object is recreated
@@ -524,7 +524,7 @@ void EditLineTool::updateHoverLine(MapCoordF cursor_pos)
 			end_coord.setHolePoint(false);
 			highlight_object->addCoordinate(end_coord);
 			
-			highlight_object->update1(true);
+			highlight_object->update();
 			highlight_renderables->insertRenderablesOfObject(highlight_object);
 		}
 		

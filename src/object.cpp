@@ -486,54 +486,10 @@ Object* Object::load(QXmlStreamReader& xml, Map* map, const SymbolDictionary& sy
 	return object;
 }
 
-bool Object::update2(bool force, bool insert_new_renderables) const
+void Object::forceUpdate() const
 {
-	if (!force && !output_dirty)
-		return false;
-	
-	if (map && extent.isValid())
-		map->setObjectAreaDirty(extent);
-	
-	output.deleteRenderables();
-	
-	// Calculate float coordinates
-	MapCoordVectorF coordsF;
-	mapCoordVectorToF(coords, coordsF);
-	
-	// If the symbol contains a line or area symbol, calculate path coordinates
-	if (symbol->getContainedTypes() & (Symbol::Area | Symbol::Line))
-	{
-		const PathObject* path = reinterpret_cast<const PathObject*>(this);
-		path->updatePathCoords(coordsF);
-	}
-	
-	// Create renderables
-	extent = QRectF();
-	
-	if (map && map->isBaselineViewEnabled())
-		Symbol::createBaselineRenderables(this, symbol, coords, coordsF, output, map->isAreaHatchingEnabled());
-	else
-		symbol->createRenderables(this, coords, coordsF, output);
-	
-	Q_ASSERT(extent.right() < 999999);	// assert if bogus values are returned
-	output_dirty = false;
-	
-	if (map)
-	{
-		if (insert_new_renderables)
-			map->insertRenderablesOfObject(this);
-		if (extent.isValid())
-			map->setObjectAreaDirty(extent);
-	}
-	
-	return true;
-}
-
-bool Object::update1(bool force) const
-{
-	if (force)
-		const_cast<Object*>(this)->setOutputDirty();
-	return update();
+	output_dirty = true;
+	update();
 }
 
 bool Object::update() const
@@ -1001,6 +957,7 @@ const MapCoord& PathObject::shiftedCoord(int base_index, int offset, const PathP
 
 MapCoord& PathObject::shiftedCoord(int base_index, int offset, const PathObject::PathPart& part)
 {
+	setOutputDirty();
 	return const_cast<MapCoord&>(static_cast<const PathObject*>(this)->shiftedCoord(base_index, offset, part));
 }
 
@@ -1064,10 +1021,14 @@ void PathObject::deletePart(int part_index)
 		parts[i].start_index -= num_part_coords;
 		parts[i].end_index -= num_part_coords;
 	}
+	
+	setOutputDirty();
 }
 
 void PathObject::partSizeChanged(int part_index, int change)
 {
+	Q_ASSERT(isOutputDirty());
+	
 	parts[part_index].end_index += change;
 	for (int i = part_index + 1; i < (int)parts.size(); ++i)
 	{
@@ -1079,13 +1040,13 @@ void PathObject::partSizeChanged(int part_index, int change)
 void PathObject::setPatternRotation(float rotation)
 {
 	pattern_rotation = rotation;
-	output_dirty = true;
+	setOutputDirty();
 }
 
 void PathObject::setPatternOrigin(const MapCoord& origin)
 {
 	pattern_origin = origin;
-	output_dirty = true;
+	setOutputDirty();
 }
 
 void PathObject::calcClosestPointOnPath(MapCoordF coord, float& out_distance_sq, PathCoord& out_path_coord, int part_index) const
@@ -1224,11 +1185,13 @@ int PathObject::subdivide(int index, float param)
 		middle_coord.setCurveStart(true);
 		addCoordinate(index + 2, middle_coord);
 		addCoordinate(index + 2, o1.toMapCoord());
+		Q_ASSERT(isOutputDirty());
 		return index + 3;
 	}
 	else
 	{
 		addCoordinate(index + 1, (MapCoordF(coords[index]) + (MapCoordF(coords[index+1]) - MapCoordF(coords[index])) * param).toMapCoord());
+		Q_ASSERT(isOutputDirty());
 		return index + 1;
 	}
 }
@@ -1315,7 +1278,7 @@ bool PathObject::connectIfClose(PathObject* other, double connect_threshold_sq)
 				appendPathPart(other, i);
 		}
 		
-		output_dirty = true;
+		Q_ASSERT(isOutputDirty());
 	}
 	
 	return did_connect_path;
@@ -1377,6 +1340,7 @@ void PathObject::connectPathParts(int part_index, const PathObject* other, int o
 			coords[i] = other->coords[i - part.end_index + other_part.start_index - (merge_ends ? 0 : 1)];
 	}
 	
+	setOutputDirty();
 	partSizeChanged(part_index, appended_part_size);
 	Q_ASSERT(!parts[part_index].isClosed());
 }
@@ -1463,6 +1427,7 @@ void PathObject::changePathBounds(int part_index, double start_len, double end_l
 	//	return;
 	
 	update();
+	
 	PathPart& part = parts[part_index];
 	int part_size = part.end_index - part.start_index + 1;
 	
@@ -1640,7 +1605,7 @@ void PathObject::changePathBounds(int part_index, double start_len, double end_l
 	
 	for (int i = part.start_index; i < part.start_index + (int)out_coords.size(); ++i)
 		coords[i] = out_coords[i - part.start_index];
-	//partSizeChanged(part_index, out_coords.size() - part_size);
+	
 	recalculateParts();
 	setOutputDirty();
 }
@@ -2256,6 +2221,7 @@ void PathObject::reverse()
 	int parts_size = parts.size();
 	for (int i = 0; i < parts_size; ++i)
 		reversePart(i);
+	setOutputDirty();
 }
 
 void PathObject::reversePart(int part_index)
@@ -2350,12 +2316,11 @@ bool PathObject::convertToCurves(PathObject** undo_duplicate)
 	bool converted_a_range = false;
 	for (int part_number = 0; part_number < getNumParts(); ++part_number)
 	{
-		PathPart& part = getPart(part_number);
+		PathPart& part = parts[part_number];
 		int start_index = -1;
 		for (int c = part.start_index; c <= part.end_index; ++c)
 		{
-			if (c >= part.end_index ||
-				getCoordinate(c).isCurveStart())
+			if (c >= part.end_index || coords[c].isCurveStart())
 			{
 				if (start_index >= 0)
 				{
@@ -2364,6 +2329,7 @@ bool PathObject::convertToCurves(PathObject** undo_duplicate)
 						if (undo_duplicate)
 							*undo_duplicate = duplicate()->asPath();
 						converted_a_range = true;
+						setOutputDirty();
 					}
 					
 					convertRangeToCurves(part_number, start_index, c);
@@ -2645,6 +2611,10 @@ bool PathObject::simplify(PathObject** undo_duplicate, float threshold)
 			delete original;
 		delete temp;
 	}
+	
+	if (removed_a_point)
+		setOutputDirty();
+	
 	return removed_a_point;
 }
 
@@ -3118,6 +3088,7 @@ void PathObject::setCoordinate(int pos, MapCoord c)
 void PathObject::addCoordinate(int pos, MapCoord c)
 {
 	Q_ASSERT(pos >= 0 && pos <= getCoordinateCount());
+	
 	int part_index = coords.empty() ? -1 : findPartIndexForIndex(qMin(pos, (int)coords.size() - 1));
 	coords.insert(coords.begin() + pos, c);
 	
@@ -3174,6 +3145,8 @@ void PathObject::addCoordinate(MapCoord c, bool start_new_part)
 
 void PathObject::deleteCoordinate(int pos, bool adjust_other_coords, int delete_bezier_point_action)
 {
+	// Note: Each early return must take care of marking the output as dirty.
+	
 	Q_ASSERT(pos >= 0 && pos < getCoordinateCount());
 	MapCoord old_coord = coords[pos];
 	coords.erase(coords.begin() + pos);
@@ -3271,7 +3244,9 @@ void PathObject::deleteCoordinate(int pos, bool adjust_other_coords, int delete_
 					qfactor = qMax(minimum_length / qMax(q3.lengthTo(q2), 0.01), qfactor);
 				}
 				else
+				{
 					Q_ASSERT(false);
+				}
 				
 				MapCoordF p0p1 = MapCoordF(p1) - MapCoordF(p0);
 				MapCoord r1 = MapCoord(p0.xd() + pfactor * p0p1.getX(), p0.yd() + pfactor * p0p1.getY());
@@ -3332,6 +3307,7 @@ void PathObject::updatePathCoords(const MapCoordVectorF& float_coords) const
 
 void PathObject::recalculateParts()
 {
+	setOutputDirty();
 	
 	parts.clear();
 	

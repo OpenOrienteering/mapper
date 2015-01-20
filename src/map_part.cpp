@@ -161,9 +161,8 @@ void MapPart::setObject(Object* object, int pos, bool delete_old)
 		delete objects[pos];
 	
 	objects[pos] = object;
-	bool delete_old_renderables = object->getMap() == map;
 	object->setMap(map);
-	object->update2(true, delete_old_renderables);
+	object->update();
 	map->setObjectsDirty(); // TODO: remove from here, dirty state handling should be separate
 }
 
@@ -171,7 +170,7 @@ void MapPart::addObject(Object* object, int pos)
 {
 	objects.insert(objects.begin() + pos, object);
 	object->setMap(map);
-	object->update1(true);
+	object->update();
 	
 	if (map->getNumObjects() == 1)
 		map->updateAllMapWidgets();
@@ -223,7 +222,7 @@ void MapPart::importPart(MapPart* other, QHash<const Symbol*, Symbol*>& symbol_m
 		
 		objects.push_back(new_object);
 		new_object->setMap(map);
-		new_object->update1(true);
+		new_object->update();
 		
 		undo_step->addObject((int)objects.size() - 1);
 		if (select_new_objects)

@@ -2558,7 +2558,7 @@ s16 OCAD8FileExport::getPointSymbolExtent(const PointSymbol* symbol)
 	{
 		QScopedPointer<Object> object(symbol->getElementObject(i)->duplicate());
 		object->setSymbol(symbol->getElementSymbol(i), true);
-		object->update2(true, false); // (any, false)
+		object->update();
 		rectIncludeSafe(extent, object->getExtent());
 		object->clearRenderables();
 	}

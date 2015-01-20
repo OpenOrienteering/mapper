@@ -120,16 +120,28 @@ namespace ObjectOp
 	/** Calls update() on the objects. */
 	struct Update
 	{
-		inline Update(bool force = true) : force(force) {}
 		inline bool operator()(Object* object, MapPart* part, int object_index) const
 		{
 			Q_UNUSED(part);
 			Q_UNUSED(object_index);
-			object->update1(force);
+			object->update();
 			return true;
 		}
 	private:
 		bool force;
+	};
+	
+	/** Calls update() on the objects. */
+	struct ForceUpdate
+	{
+		inline bool operator()(Object* object, MapPart* part, int object_index) const
+		{
+			Q_UNUSED(part);
+			Q_UNUSED(object_index);
+			object->setOutputDirty();
+			object->update();
+			return true;
+		}
 	};
 	
 	/**

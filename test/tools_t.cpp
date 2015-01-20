@@ -169,7 +169,7 @@ void ToolsTest::editTool()
 	MapWidget* map_widget = editor.map_widget;
 	PathObject* object = map.line_object;
 	
-	MapCoord& coord = object->getCoordinate(0);
+	const MapCoord& coord = object->getCoordinate(0);
 	QPointF coord_pos = map_widget->mapToViewport(coord);
 	
 	QPointF target_coord_pos = coord_pos + QPointF(0, -50);

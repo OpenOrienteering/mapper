@@ -735,7 +735,7 @@ bool DrawPathTool::removeLastPointFromSelectedPath()
 		potential_curve_start.setCurveStart(false);
 	}
 		
-	path->update1(true);
+	path->update();
 	map()->setObjectsDirty();
 	map()->emitSelectionEdited();
 	return true;

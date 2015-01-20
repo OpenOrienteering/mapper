@@ -270,7 +270,8 @@ void DrawTextTool::setDrawingSymbol(const Symbol* symbol)
 
 void DrawTextTool::selectionChanged(bool text_change)
 {
-	Q_UNUSED(text_change);	
+	Q_UNUSED(text_change);
+	preview_text->setOutputDirty(); // TODO: Check if neccessary here.
 	updatePreviewText();
 }
 
@@ -308,7 +309,7 @@ void DrawTextTool::updateStatusText()
 void DrawTextTool::updatePreviewText()
 {
 	renderables->removeRenderablesOfObject(preview_text, false);
-	preview_text->update1(true);
+	preview_text->update();
 	renderables->insertRenderablesOfObject(preview_text);
 	updateDirtyRect();
 }

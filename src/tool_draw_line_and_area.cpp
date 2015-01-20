@@ -194,7 +194,7 @@ void DrawLineAndAreaTool::startDrawing()
 void DrawLineAndAreaTool::updatePreviewPath()
 {
 	renderables->removeRenderablesOfObject(preview_path, false);
-	preview_path->update1(true);
+	preview_path->update();
 	renderables->insertRenderablesOfObject(preview_path);
 }
 

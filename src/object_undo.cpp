@@ -664,7 +664,7 @@ UndoStep* SwitchDashesUndoStep::undo()
 	{
 		PathObject* object = reinterpret_cast<PathObject*>(part->getObject(*it));
 		object->reverse();
-		object->update1(true);
+		object->update();
 		
 		undo_step->addObject(*it);
 	}

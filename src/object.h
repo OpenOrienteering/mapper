@@ -149,17 +149,19 @@ public:
 	 */
 	static Object* load(QXmlStreamReader& xml, Map* map, const SymbolDictionary& symbol_dict, const Symbol* symbol = nullptr);
 	
+	
 	/**
-	 * Checks if the output_dirty flag is set and if yes,
-	 * regenerates output and extent; returns true if output was previously dirty.
-	 * @param force If set to true, recalculates the output and extent even
-	 *     if the dirty flag is not set.
-	 * @param insert_new_renderables If the object has a map pointer and this
-	 *     flag is set, it will insert newly generated renderables into the map.
+	 * If the output_dirty flag is set, regenerates output and extent, and updates the object's map (if set).
+	 * 
+	 * Returns true if output was dirty.
 	 */
-	bool update2(bool force, bool insert_new_renderables) const;
-	bool update1(bool force) const; // insert_new_renderables = true;
-	bool update() const; // force = false, insert_new_renderables = true;
+	bool update() const;
+	
+	/**
+	 * Always regenerates output and extent, and updates the object's map (if set).
+	 */
+	void forceUpdate() const;
+	
 	
 	/** Moves the whole object
 	 * @param dx X offset in native map coordinates.
@@ -279,6 +281,7 @@ protected:
 	Map* map;
 	Tags object_tags;
 	
+private:
 	mutable bool output_dirty;        // does the output have to be re-generated because of changes?
 	mutable QRectF extent;            // only valid after calling update()
 	mutable ObjectRenderables output; // only valid after calling update()
@@ -413,9 +416,9 @@ public:
 	/** Returns the number of coordinates, including curve handles and close points. */
 	int getCoordinateCount() const;
 	/** Returns the i-th coordinate. */
-	MapCoord& getCoordinate(int pos);
-	/** Returns the i-th coordinate. */
 	const MapCoord& getCoordinate(int pos) const;
+	/** Returns the i-th coordinate. */
+	MapCoord& getCoordinate(int pos);
 	
 	/** Replaces the i-th coordinate with c. */
 	void setCoordinate(int pos, MapCoord c);
@@ -475,10 +478,10 @@ public:
 	int getNumParts() const;
 	
 	/** Returns the i-th path part. */
-	PathPart& getPart(int index);
+	const PathPart& getPart(int index) const;
 	
 	/** Returns the i-th path part. */
-	const PathPart& getPart(int index) const;
+	PathPart& getPart(int index);
 	
 	/** Returns if the first path part (with index 0) is closed. */
 	bool isFirstPartClosed() const;
@@ -486,14 +489,17 @@ public:
 	/** Deletes the i-th path part. */
 	void deletePart(int part_index);
 	
+protected:
 	/**
 	 * Adjusts the start/end index attributes of all affected parts after
 	 * the part with the given index has changed its size by change.
 	 * This includes the changed part.
+	 * 
+	 * output_dirty must be set before calling this function.
 	 */
 	void partSizeChanged(int part_index, int change);
 	
-	
+public:
 	/**
 	 * Returns the PathCoord vector, giving linearized information about the
 	 * path's shape. This is only valid if the object is not dirty!
@@ -934,6 +940,7 @@ inline
 void Object::setMap(Map* map)
 {
 	this->map = map;
+	setOutputDirty();
 }
 
 inline
@@ -982,16 +989,17 @@ int PathObject::getCoordinateCount() const
 }
 
 inline
-MapCoord& PathObject::getCoordinate(int pos)
+const MapCoord& PathObject::getCoordinate(int pos) const
 {
 	Q_ASSERT(pos >= 0 && (std::size_t)pos < coords.size());
 	return coords[pos];
 }
 
 inline
-const MapCoord& PathObject::getCoordinate(int pos) const
+MapCoord& PathObject::getCoordinate(int pos)
 {
 	Q_ASSERT(pos >= 0 && (std::size_t)pos < coords.size());
+	setOutputDirty();
 	return coords[pos];
 }
 
@@ -1002,14 +1010,15 @@ int PathObject::getNumParts() const
 }
 
 inline
-PathObject::PathPart& PathObject::getPart(int index)
+const PathObject::PathPart& PathObject::getPart(int index) const
 {
 	return parts[index];
 }
 
 inline
-const PathObject::PathPart& PathObject::getPart(int index) const
+PathObject::PathPart& PathObject::getPart(int index)
 {
+	setOutputDirty();
 	return parts[index];
 }
 
