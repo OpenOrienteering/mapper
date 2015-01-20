@@ -2322,7 +2322,7 @@ void MapEditorController::switchSymbolClicked()
 			}
 		}
 		
-		object->update(true);
+		object->update();
 	}
 	
 	if (split_up)	
@@ -2489,7 +2489,7 @@ void MapEditorController::switchDashesClicked()
 		{
 			PathObject* path = reinterpret_cast<PathObject*>(*it);
 			path->reverse();
-			(*it)->update(true);
+			(*it)->update1(true);
 			
 			undo_step->addObject(part->findObjectIndex(*it));
 		}
@@ -2555,7 +2555,7 @@ void MapEditorController::connectPathsClicked()
 	{
 		if ((*it)->getSymbol()->getContainedTypes() & Symbol::Line && (*it)->getType() == Object::Path)
 		{
-			(*it)->update(false);
+			(*it)->update();
 			objects.push_back(*it);
 			undo_objects.push_back(NULL);
 		}
@@ -2694,7 +2694,7 @@ void MapEditorController::connectPathsClicked()
 		if (undo_objects[i])
 		{
 			// The object was changed, update the new version
-			objects[i]->update(true);
+			objects[i]->update1(true);
 			
 			// Add the old version to the undo step
 			if (!replace_step)
@@ -2829,7 +2829,7 @@ void MapEditorController::convertToCurvesClicked()
 			const float threshold = 0.08f;
 			path->simplify(NULL, threshold);
 		}
-		path->update(true);
+		path->update1(true);
 	}
 	
 	if (undo_step->isEmpty())
@@ -2860,7 +2860,7 @@ void MapEditorController::simplifyPathClicked()
 		PathObject* undo_duplicate = NULL;
 		if (path->simplify(&undo_duplicate, threshold))
 			undo_step->addObject(part->findObjectIndex(path), undo_duplicate);
-		path->update(true);
+		path->update1(true);
 	}
 	
 	if (undo_step->isEmpty())

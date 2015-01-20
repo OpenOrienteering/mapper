@@ -1514,7 +1514,7 @@ void Map::importSymbols(Map* other, const MapColorMap& color_map, int insert_pos
 
 void Map::addSelectionRenderables(const Object* object)
 {
-	object->update(false);
+	object->update();
 	selection_renderables->insertRenderablesOfObject(object);
 }
 void Map::updateSelectionRenderables(const Object* object)

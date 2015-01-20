@@ -157,7 +157,9 @@ public:
 	 * @param insert_new_renderables If the object has a map pointer and this
 	 *     flag is set, it will insert newly generated renderables into the map.
 	 */
-	bool update(bool force = false, bool insert_new_renderables = true) const;
+	bool update2(bool force, bool insert_new_renderables) const;
+	bool update1(bool force) const; // insert_new_renderables = true;
+	bool update() const; // force = false, insert_new_renderables = true;
 	
 	/** Moves the whole object
 	 * @param dx X offset in native map coordinates.

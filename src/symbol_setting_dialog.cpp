@@ -190,7 +190,7 @@ void SymbolSettingDialog::updatePreview()
 	for (int l = 0; l < preview_map->getNumParts(); ++l)
 		for (int i = 0; i < preview_map->getPart(l)->getNumObjects(); ++i)
 		{
-			preview_map->getPart(l)->getObject(i)->update(true);
+			preview_map->getPart(l)->getObject(i)->update1(true);
 		}
 }
 

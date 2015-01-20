@@ -380,7 +380,7 @@ void CutTool::updatePreviewObjects()
 	else
 		preview_path->changePathBounds(0, drag_end_len, drag_start_len);
 	
-	preview_path->update(true);
+	preview_path->update1(true);
 	renderables->insertRenderablesOfObject(preview_path);
 	
 	updateDirtyRect();

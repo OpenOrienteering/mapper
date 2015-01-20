@@ -107,7 +107,7 @@ void DrawPointTool::mouseMove()
 		preview_object->setPosition(constrained_pos_map);
 		if (point->isRotatable())
 			preview_object->setRotation(0);
-		preview_object->update(true);
+		preview_object->update();
 		renderables->insertRenderablesOfObject(preview_object);
 		updateDirtyRect();
 		
@@ -157,7 +157,7 @@ void DrawPointTool::dragMove()
 	{
 		renderables->removeRenderablesOfObject(preview_object, false);
 		preview_object->setRotation(calculateRotation(constrained_pos, constrained_pos_map));
-		preview_object->update(true);
+		preview_object->update();
 		renderables->insertRenderablesOfObject(preview_object);
 	}
 	

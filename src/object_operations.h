@@ -92,7 +92,7 @@ namespace ObjectOp
 			Q_UNUSED(part);
 			Q_UNUSED(object_index);
 			object->scale(center, factor);
-			object->update(true, true);
+			object->update();
 			return true;
 		}
 	private:
@@ -109,7 +109,7 @@ namespace ObjectOp
 			Q_UNUSED(part);
 			Q_UNUSED(object_index);
 			object->rotateAround(center, angle);
-			object->update(true, true);
+			object->update();
 			return true;
 		}
 	private:
@@ -125,7 +125,7 @@ namespace ObjectOp
 		{
 			Q_UNUSED(part);
 			Q_UNUSED(object_index);
-			object->update(force, true);
+			object->update1(force);
 			return true;
 		}
 	private:
@@ -144,7 +144,7 @@ namespace ObjectOp
 			if (!object->setSymbol(new_symbol, false))
 				part->deleteObject(object_index, false);
 			else
-				object->update(true, true);
+				object->update();
 			return true;
 		}
 	private:

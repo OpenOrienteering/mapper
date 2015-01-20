@@ -308,7 +308,7 @@ void DrawTextTool::updateStatusText()
 void DrawTextTool::updatePreviewText()
 {
 	renderables->removeRenderablesOfObject(preview_text, false);
-	preview_text->update(true);
+	preview_text->update1(true);
 	renderables->insertRenderablesOfObject(preview_text);
 	updateDirtyRect();
 }

@@ -113,7 +113,7 @@ void DrawPointGPSTool::newGPSPosition(MapCoordF coord, float accuracy)
 	preview_object->setPosition(avg_position);
 	if (point->isRotatable())
 		preview_object->setRotation(0);
-	preview_object->update(true);
+	preview_object->update();
 	renderables->insertRenderablesOfObject(preview_object);
 	updateDirtyRect();
 }

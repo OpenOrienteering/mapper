@@ -486,7 +486,7 @@ Object* Object::load(QXmlStreamReader& xml, Map* map, const SymbolDictionary& sy
 	return object;
 }
 
-bool Object::update(bool force, bool insert_new_renderables) const
+bool Object::update2(bool force, bool insert_new_renderables) const
 {
 	if (!force && !output_dirty)
 		return false;
@@ -522,6 +522,55 @@ bool Object::update(bool force, bool insert_new_renderables) const
 	{
 		if (insert_new_renderables)
 			map->insertRenderablesOfObject(this);
+		if (extent.isValid())
+			map->setObjectAreaDirty(extent);
+	}
+	
+	return true;
+}
+
+bool Object::update1(bool force) const
+{
+	if (force)
+		const_cast<Object*>(this)->setOutputDirty();
+	return update();
+}
+
+bool Object::update() const
+{
+	if (!output_dirty)
+		return false;
+	
+	if (map && extent.isValid())
+		map->setObjectAreaDirty(extent);
+	
+	output.deleteRenderables();
+	
+	// Calculate float coordinates
+	MapCoordVectorF coordsF;
+	mapCoordVectorToF(coords, coordsF);
+	
+	// If the symbol contains a line or area symbol, calculate path coordinates
+	if (symbol->getContainedTypes() & (Symbol::Area | Symbol::Line))
+	{
+		const PathObject* path = reinterpret_cast<const PathObject*>(this);
+		path->updatePathCoords(coordsF);
+	}
+	
+	// Create renderables
+	extent = QRectF();
+	
+	if (map && map->isBaselineViewEnabled())
+		Symbol::createBaselineRenderables(this, symbol, coords, coordsF, output, map->isAreaHatchingEnabled());
+	else
+		symbol->createRenderables(this, coords, coordsF, output);
+	
+	Q_ASSERT(extent.right() < 999999);	// assert if bogus values are returned
+	output_dirty = false;
+	
+	if (map)
+	{
+		map->insertRenderablesOfObject(this);
 		if (extent.isValid())
 			map->setObjectAreaDirty(extent);
 	}
@@ -602,6 +651,7 @@ void Object::rotateAround(MapCoordF center, double angle)
 		TextObject* text = reinterpret_cast<TextObject*>(this);
 		text->setRotation(text->getRotation() + angle);
 	}
+	setOutputDirty();
 }
 
 void Object::rotate(double angle)
@@ -631,6 +681,7 @@ void Object::rotate(double angle)
 		TextObject* text = reinterpret_cast<TextObject*>(this);
 		text->setRotation(text->getRotation() + angle);
 	}
+	setOutputDirty();
 }
 
 int Object::isPointOnObject(MapCoordF coord, float tolerance, bool treat_areas_as_paths, bool extended_selection) const
@@ -1039,7 +1090,7 @@ void PathObject::setPatternOrigin(const MapCoord& origin)
 
 void PathObject::calcClosestPointOnPath(MapCoordF coord, float& out_distance_sq, PathCoord& out_path_coord, int part_index) const
 {
-	update(false);
+	update();
 	
 	int coords_size = (int)coords.size();
 	if (coords_size == 0)
@@ -1129,7 +1180,7 @@ void PathObject::calcClosestPointOnPath(MapCoordF coord, float& out_distance_sq,
 
 void PathObject::calcClosestCoordinate(MapCoordF coord, float& out_distance_sq, int& out_index) const
 {
-	update(false);
+	update();
 	
 	int coords_size = (int)coords.size();
 	if (coords_size == 0)
@@ -1158,7 +1209,7 @@ void PathObject::calcClosestCoordinate(MapCoordF coord, float& out_distance_sq, 
 
 int PathObject::subdivide(int index, float param)
 {
-	update(false);
+	update();
 	
 	if (coords[index].isCurveStart())
 	{
@@ -2612,7 +2663,7 @@ int PathObject::isPointOnPath(MapCoordF coord, float tolerance, bool treat_areas
 	
 	if ((contained_types & Symbol::Line || treat_areas_as_paths) && tolerance > 0)
 	{
-		update(false);
+		update();
 		int size = (int)path_coords.size();
 		for (int i = 0; i < size - 1; ++i)
 		{
@@ -2660,7 +2711,7 @@ int PathObject::isPointOnPath(MapCoordF coord, float tolerance, bool treat_areas
 
 bool PathObject::isPointInsideArea(MapCoordF coord) const
 {
-	update(false);
+	update();
 	bool inside = false;
 	for (int part = 0, end = (int)parts.size(); part < end; ++part)
 	{

@@ -211,7 +211,7 @@ void CutHoleTool::pathFinished(PathObject* hole_path)
 	
 	edited_path->clearCoordinates();
 	edited_path->appendPath(out_objects.front());
-	edited_path->update(true);
+	edited_path->update1(true);
 	updateDirtyRect();
 	
 	while (!out_objects.empty())

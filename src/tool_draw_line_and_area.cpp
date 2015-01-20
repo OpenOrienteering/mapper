@@ -124,7 +124,7 @@ void DrawLineAndAreaTool::setPreviewPointsPosition(MapCoordF map_coord, int inde
 		if (preview_points_shown)
 			renderables->removeRenderablesOfObject(preview_points[index][i], false);
 		preview_points[index][i]->setPosition(map_coord);
-		preview_points[index][i]->update(true);
+		preview_points[index][i]->update();
 		renderables->insertRenderablesOfObject(preview_points[index][i]);
 	}
 	preview_points_shown = true;
@@ -194,7 +194,7 @@ void DrawLineAndAreaTool::startDrawing()
 void DrawLineAndAreaTool::updatePreviewPath()
 {
 	renderables->removeRenderablesOfObject(preview_path, false);
-	preview_path->update(true);
+	preview_path->update1(true);
 	renderables->insertRenderablesOfObject(preview_path);
 }
 

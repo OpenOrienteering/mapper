@@ -273,7 +273,7 @@ void MapEditorTool::finishEditingSelection(MapRenderables& renderables, MapRende
 		if (!delete_objects)
 		{
 			object->setMap(map());
-			object->update(true);
+			object->update1(true);
 		}
 		
 		if (create_undo_step)
@@ -296,7 +296,7 @@ void MapEditorTool::updateSelectionEditPreview(MapRenderables& renderables)
 {
 	for (Object* object : map()->selectedObjects())
 	{
-		object->update(true);
+		object->update1(true);
 		// NOTE: only necessary because of setMap(nullptr) in startEditingSelection(..)
 		renderables.insertRenderablesOfObject(object);
 	}
