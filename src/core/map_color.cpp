@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -27,7 +28,7 @@
 
 
 MapColor::MapColor()
-: name("?"),
+: name(QApplication::translate("Map", "New color")),
   priority(Undefined),
   opacity(1.0f),
   q_color(Qt::black),
@@ -41,7 +42,7 @@ MapColor::MapColor()
 }
 
 MapColor::MapColor(int priority)
-: name("?"),
+: name(QApplication::translate("Map", "New color")),
   priority(priority),
   opacity(1.0f),
   q_color(Qt::black),

@@ -179,7 +179,7 @@ public:
     virtual void drawTemplate(QPainter* painter, QRectF& clip_rect, double scale, bool on_screen, float opacity) const = 0;
 	
 	/// Calculates the template's bounding box in map coordinates.
-	virtual QRectF calculateTemplateBoundingBox();
+	virtual QRectF calculateTemplateBoundingBox() const;
 	
 	/// Returns the extent of the template out of the bounding box,
 	/// which is defined in map coordinates, in pixels. This is useful for elements which

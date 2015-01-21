@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012, 2013, 2014 Kai Pastor
+ *    Copyright 2012-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -111,12 +111,12 @@ public:
 	/**
 	 * Returns the i-th object from the part.
 	 */
-	Object* getObject(int i);
+	const Object* getObject(int i) const;
 	
 	/**
 	 * Returns the i-th object from the part.
 	 */
-	const Object* getObject(int i) const;
+	Object* getObject(int i);
 	
 	/**
 	 * Returns the index of the object.
@@ -188,12 +188,12 @@ public:
 	/** 
 	 * @see Map::countObjectsInRect().
 	 */
-	int countObjectsInRect(QRectF map_coord_rect, bool include_hidden_objects);
+	int countObjectsInRect(QRectF map_coord_rect, bool include_hidden_objects) const;
 	
 	/**
 	 * Calculates and returns the bounding box of all objects in this map part.
 	 */
-	QRectF calculateExtent(bool include_helper_symbols);
+	QRectF calculateExtent(bool include_helper_symbols) const;
 	
 	
 	/**
@@ -202,7 +202,7 @@ public:
 	 * @return True if there is an object matching the condition, false otherwise.
 	 */
 	template<typename Condition>
-	bool existsObject(const Condition& condition);
+	bool existsObject(const Condition& condition) const;
 	
 	/**
 	 * @copybrief   Map::applyOnAllObjects()
@@ -262,7 +262,7 @@ const Object* MapPart::getObject(int i) const
 }
 
 template<typename Condition>
-bool MapPart::existsObject(const Condition& condition)
+bool MapPart::existsObject(const Condition& condition) const
 {
    for (ObjectList::const_iterator object = objects.begin(), end = objects.end(); object != end; ++object)
    {

@@ -136,7 +136,7 @@ void TagsWidget::objectTagsChanged()
 	react_to_changes = false;
 	
 	int row = 0;
-	Object* object = map->getFirstSelectedObject();
+	const Object* object = map->getFirstSelectedObject();
 	if (object)
 	{
 		const Object::Tags& tags = object->tags();

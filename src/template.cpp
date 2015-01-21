@@ -563,7 +563,7 @@ void Template::setTemplateAreaDirty()
 	map->setTemplateAreaDirty(this, template_area, getTemplateBoundingBoxPixelBorder());	// TODO: Would be better to do this with the corner points, instead of the bounding box
 }
 
-QRectF Template::calculateTemplateBoundingBox()
+QRectF Template::calculateTemplateBoundingBox() const
 {
 	// Create bounding box by calculating the positions of all corners of the transformed extent rect
 	QRectF extent = getTemplateExtent();

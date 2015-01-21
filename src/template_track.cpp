@@ -315,7 +315,7 @@ QRectF TemplateTrack::getTemplateExtent() const
 	return infinteRectF();
 }
 
-QRectF TemplateTrack::calculateTemplateBoundingBox()
+QRectF TemplateTrack::calculateTemplateBoundingBox() const
 {
 	QRectF bbox;
 	

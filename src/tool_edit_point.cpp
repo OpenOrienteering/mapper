@@ -662,7 +662,7 @@ void EditPointTool::updateStatusText()
 
 void EditPointTool::updateHoverPoint(MapCoordF cursor_pos)
 {
-	Object* new_hover_object = NULL;
+	const Object* new_hover_object = NULL;
 	int new_hover_point = -2;
 	if (map()->getNumSelectedObjects() <= max_objects_for_handle_display)
 	{
@@ -731,7 +731,8 @@ void EditPointTool::updateHoverPoint(MapCoordF cursor_pos)
 		new_hover_point != hover_point)
 	{
 		updateDirtyRect();
-		hover_object = new_hover_object;
+		// We have got a Map*, so we may get a Object*.
+		hover_object = const_cast<Object*>(new_hover_object);
 		hover_point = new_hover_point;
 		start_drag_distance = (hover_point >= -1) ? 0 : Settings::getInstance().getStartDragDistancePx();
 	}

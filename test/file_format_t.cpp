@@ -322,7 +322,7 @@ bool FileFormatTest::compareMaps(const Map* a, const Map* b, QString& error)
 		error = "The first selected object differs.";
 		return false;
 	}
-	for (QSet< Object* >::const_iterator it = a->selectedObjectsBegin(), end = a->selectedObjectsEnd(); it != end; ++it)
+	for (Map::ObjectSelection::const_iterator it = a->selectedObjectsBegin(), end = a->selectedObjectsEnd(); it != end; ++it)
 	{
 		if (!b->isObjectSelected(b->getCurrentPart()->getObject(a->getCurrentPart()->findObjectIndex(*it))))
 		{
