@@ -959,7 +959,6 @@ Object *OCAD8FileImport::importObject(const OCADObject* ocad_object, MapPart* pa
     else
 		symbol = symbol_index[ocad_object->symbol];
 
-    Object *object = NULL;
     if (symbol->getType() == Symbol::Point)
     {
         PointObject *p = new PointObject();
@@ -1020,13 +1019,7 @@ Object *OCAD8FileImport::importObject(const OCADObject* ocad_object, MapPart* pa
 		return p;
     }
 
-    if (object == NULL) return NULL;
-
-    // Set some common fields
-    object->map = map;
-    object->output_dirty = true;
-
-    return object;
+    return NULL;
 }
 
 bool OCAD8FileImport::importRectangleObject(const OCADObject* ocad_object, MapPart* part, const OCAD8FileImport::RectangleInfo& rect)
