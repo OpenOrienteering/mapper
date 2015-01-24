@@ -1,6 +1,6 @@
 /*
- *    Copyright 2012 Thomas Schöps
- *    Copyright 2013, 2014 Thomas Schöps, Kai Pastor
+ *    Copyright 2012-2014 Thomas Schöps
+ *    Copyright 2013-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -87,7 +87,7 @@ public:
 	 *     Useful for the symbol editor.
 	 * @param parent Optional QWidget parent.
 	 */
-	MapWidget(bool show_help, bool force_antialiasing, QWidget* parent = NULL);
+	MapWidget(bool show_help, bool force_antialiasing, QWidget* parent = nullptr);
 	
 	/** Destructs the MapWidget. */
 	~MapWidget();
@@ -96,7 +96,7 @@ public:
 	void setMapView(MapView* view);
 	
 	/** Returns the map view used for display. */
-	inline MapView* getMapView() const {return view;}
+	MapView* getMapView() const;
 	
 	
 	/** Sets the tool to use in this widget. Does not take ownership of the tool. */
@@ -129,39 +129,39 @@ public:
 	 * map objects with map coordinates and have them correctly displayed in
 	 * the widget with the settings of the used MapView.
 	 */
-	void applyMapTransform(QPainter* painter);
+	void applyMapTransform(QPainter* painter) const;
 	
 	// Coordinate transformations
 	
 	/** Maps viewport (GUI) coordinates to view coordinates (see MapView). */
-	QRectF viewportToView(const QRect& input);
+	QRectF viewportToView(const QRect& input) const;
 	/** Maps viewport (GUI) coordinates to view coordinates (see MapView). */
-	QPointF viewportToView(QPoint input);
+	QPointF viewportToView(QPoint input) const;
 	/** Maps viewport (GUI) coordinates to view coordinates (see MapView). */
-	QPointF viewportToView(QPointF input);
+	QPointF viewportToView(QPointF input) const;
 	/** Maps view coordinates (see MapView) to viewport (GUI) coordinates. */
-	QRectF viewToViewport(const QRectF& input);
+	QRectF viewToViewport(const QRectF& input) const;
 	/** Maps view coordinates (see MapView) to viewport (GUI) coordinates. */
-	QRectF viewToViewport(const QRect& input);
+	QRectF viewToViewport(const QRect& input) const;
 	/** Maps view coordinates (see MapView) to viewport (GUI) coordinates. */
-	QPointF viewToViewport(QPoint input);
+	QPointF viewToViewport(QPoint input) const;
 	/** Maps view coordinates (see MapView) to viewport (GUI) coordinates. */
-	QPointF viewToViewport(QPointF input);
+	QPointF viewToViewport(QPointF input) const;
 	
 	/** Maps viewport (GUI) coordinates to map coordinates. */
-	MapCoord viewportToMap(QPoint input);
+	MapCoord viewportToMap(QPoint input) const;
 	/** Maps viewport (GUI) coordinates to map coordinates. */
-	MapCoordF viewportToMapF(QPoint input);
+	MapCoordF viewportToMapF(QPoint input) const;
 	/** Maps viewport (GUI) coordinates to map coordinates. */
-	MapCoordF viewportToMapF(QPointF input);
+	MapCoordF viewportToMapF(QPointF input) const;
 	/** Maps map coordinates to viewport (GUI) coordinates. */
-	QPointF mapToViewport(MapCoord input);
+	QPointF mapToViewport(MapCoord input) const;
 	/** Maps map coordinates to viewport (GUI) coordinates. */
-	QPointF mapToViewport(MapCoordF input);
+	QPointF mapToViewport(MapCoordF input) const;
 	/** Maps map coordinates to viewport (GUI) coordinates. */
-	QPointF mapToViewport(QPointF input);
+	QPointF mapToViewport(QPointF input) const;
 	/** Maps map coordinates to viewport (GUI) coordinates. */
-	QRectF mapToViewport(const QRectF& input);
+	QRectF mapToViewport(const QRectF& input) const;
 	
 	// View changes
 	
@@ -299,7 +299,7 @@ public:
 	 */
 	void setCoordsDisplay(CoordsType type);
 	/** Returns the coordinate display type set by setCoordsDisplay(). */
-	inline CoordsType getCoordsDisplay() const {return coords_type;}
+	inline CoordsType getCoordsDisplay() const;
 	
 	/** Returns the time in milliseconds since the last user interaction
 	 *  (mouse press or drag) with the widget. */
@@ -366,11 +366,11 @@ protected:
 private:
 	/** Checks if there is a visible template in the range
 	 *  from first_template to last_template. */
-	bool containsVisibleTemplate(int first_template, int last_template);
+	bool containsVisibleTemplate(int first_template, int last_template) const;
 	/** Checks if there is any visible template above the map. */
-	inline bool isAboveTemplateVisible() {return containsVisibleTemplate(view->getMap()->getFirstFrontTemplate(), view->getMap()->getNumTemplates() - 1);}
+	bool isAboveTemplateVisible() const;
 	/** Checks if there is any visible template below the map. */
-	inline bool isBelowTemplateVisible() {return containsVisibleTemplate(0, view->getMap()->getFirstFrontTemplate() - 1);}
+	bool isBelowTemplateVisible() const;
 	/**
 	 * Redraws the template cache.
 	 * @param cache Reference to pointer to the cache.
@@ -429,7 +429,7 @@ private:
 	void moveMap(int steps_x, int steps_y);
 	
 	/** Draws a help message at the center of the MapWidget. */
-	void showHelpMessage(QPainter* painter, const QString& text);
+	void showHelpMessage(QPainter* painter, const QString& text) const;
 	
 	/** Updates the content of the zoom label, set by setZoomLabel(). */
 	void updateZoomLabel();
@@ -503,7 +503,7 @@ private:
 	PieMenu* context_menu;
 	
 	/** Optional touch cursor for mobile devices */
-	TouchCursor* touch_cursor;
+	QScopedPointer<TouchCursor> touch_cursor;
 	
 	/** For checking for interaction with the widget: the last QTime where
 	 *  a mouse release event happened. Check for current_pressed_buttons == 0
@@ -528,6 +528,12 @@ private:
 // ### MapWidget inline code ###
 
 inline
+MapView* MapWidget::getMapView() const
+{
+	return view;
+}
+
+inline
 bool MapWidget::gesturesEnabled() const
 {
 	return gestures_enabled;
@@ -537,6 +543,12 @@ inline
 QPoint MapWidget::dragOffset() const
 {
 	return pan_offset;
+}
+
+inline
+MapWidget::CoordsType MapWidget::getCoordsDisplay() const
+{
+	return coords_type;
 }
 
 #endif
