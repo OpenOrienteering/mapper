@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2014 Kai Pastor
+ *    Copyright 2014, 2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -42,21 +42,21 @@ QRgb PointHandles::stateColor(PointHandleState state) const
 	case ActiveHandleState:    return qRgb(255, 150,   0);
 	case SelectedHandleState:  return qRgb(255,   0,   0);
 	case DisabledHandleState:  return qRgb(106, 106, 106);
-	default:                   Q_ASSERT(false);
+	default:                   Q_UNREACHABLE();
 	                           return qRgb(255,   0,   0);
 	}
 }
 
-void PointHandles::draw(QPainter* painter, MapWidget* widget, Object* object, int hover_point, bool draw_curve_handles, PointHandleState base_state) const
+void PointHandles::draw(QPainter* painter, const MapWidget* widget, const Object* object, int hover_point, bool draw_curve_handles, PointHandleState base_state) const
 {
 	if (object->getType() == Object::Point)
 	{
-		PointObject* point = reinterpret_cast<PointObject*>(object);
+		const PointObject* point = reinterpret_cast<const PointObject*>(object);
 		draw(painter, widget->mapToViewport(point->getCoordF()), NormalHandle, (hover_point == 0) ? ActiveHandleState : base_state);
 	}
 	else if (object->getType() == Object::Text)
 	{
-		TextObject* text = reinterpret_cast<TextObject*>(object);
+		const TextObject* text = reinterpret_cast<const TextObject*>(object);
 		std::vector<QPointF> text_handles(text->controlPoints());
 		for (std::size_t i = 0; i < text_handles.size(); ++i)
 			draw(painter, widget->mapToViewport(text_handles[i]), NormalHandle, (hover_point == (int)i) ? ActiveHandleState : base_state);
@@ -65,12 +65,12 @@ void PointHandles::draw(QPainter* painter, MapWidget* widget, Object* object, in
 	{
 		painter->setBrush(Qt::NoBrush); // for handle lines
 		
-		PathObject* path = reinterpret_cast<PathObject*>(object);
+		const PathObject* path = reinterpret_cast<const PathObject*>(object);
 		
 		int num_parts = path->getNumParts();
 		for (int part_index = 0; part_index < num_parts; ++part_index)
 		{
-			PathObject::PathPart& part = path->getPart(part_index);
+			const PathObject::PathPart& part = path->getPart(part_index);
 			bool have_curve = part.isClosed() && part.getNumCoords() > 3 && path->getCoordinate(part.end_index - 3).isCurveStart();
 			PointHandleType handle_type = NormalHandle;
 			
@@ -164,11 +164,11 @@ void PointHandles::drawCurveHandleLine(QPainter* painter, QPointF anchor_point, 
 const QImage PointHandles::loadHandleImage(int factor)
 {
 	static const QStringList image_names = (
-	  QStringList() << "" // not used
-	                << ":/images/point-handles.png"
-	                << ":/images/point-handles-2x.png"
-	                << "" // not used
-					<< ":/images/point-handles-4x.png"
+	  QStringList() << QString() // not used
+	                << QStringLiteral(":/images/point-handles.png")
+	                << QStringLiteral(":/images/point-handles-2x.png")
+	                << QString() // not used
+					<< QStringLiteral(":/images/point-handles-4x.png")
 	);
 	
 	Q_ASSERT(factor < image_names.size());
