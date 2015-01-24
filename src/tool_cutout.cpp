@@ -217,7 +217,7 @@ struct PhysicalCutoutOperation
 				in_objects.push_back(cutout_object);
 				in_objects.push_back(object->asPath());
 				BooleanTool::PathObjects out_objects;
-				if (!boolean_tool.executeForObjects(object->asPath(), object->getSymbol(), in_objects, out_objects))
+				if (!boolean_tool.executeForObjects(object->asPath(), in_objects, out_objects))
 					return true;
 				
 				add_step->addObject(object, object);

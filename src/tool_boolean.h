@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2014 Kai Pastor
+ *    Copyright 2014, 2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -104,12 +104,11 @@ public:
 	 * or the selection.
 	 * 
 	 * @param subject               The primary affected object.
-	 * @param result_objects_symbol Determines the symbol of the returned objects.
 	 * @param in_objects            All objects to operate on. Must contain subject.
 	 * @param out_objects           The resulting collection of objects.
 	 */
-	bool executeForObjects(PathObject* subject,
-	        const Symbol* result_objects_symbol,
+	bool executeForObjects(
+	        PathObject* subject,
 	        PathObjects& in_objects,
 	        PathObjects& out_objects );
 	
@@ -126,7 +125,7 @@ public:
 	        PathObjects& out_objects );
 	
 private:
-	typedef std::pair< PathObject::PathPart*, const PathCoord* > PathCoordInfo;
+	typedef std::pair< const PathObject::PathPart*, const PathCoord* > PathCoordInfo;
 	
 	typedef QHash< ClipperLib::IntPoint, PathCoordInfo > PolyMap;
 	
@@ -136,16 +135,15 @@ private:
 	 * This function changes the collection of objects in the map and the selection.
 	 * 
 	 * @param subject               The primary affected object.
-	 * @param result_objects_symbol Determines the symbol of the returned objects.
 	 * @param in_objects            All objects to operate on. Must contain subject.
 	 * @param out_objects           The resulting collection of objects.
 	 * @param undo_step             A combined undo step which will be filled with sub steps.
 	 */
-	bool executeForObjects(PathObject* subject,
-	        const Symbol* result_objects_symbol,
+	bool executeForObjects(
+	        PathObject* subject,
 	        PathObjects& in_objects,
 	        PathObjects& out_objects,
-	        CombinedUndoStep& undo_step);
+	        CombinedUndoStep& undo_step );
 	
 	/**
 	 * Converts a ClipperLib::PolyTree to PathObjects.
@@ -155,8 +153,8 @@ private:
 	void polyTreeToPathObjects(
 	        const ClipperLib::PolyTree& tree,
 	        PathObjects& out_objects,
-	        const Symbol* result_objects_symbol,
-	        PolyMap& polymap );
+	        const PathObject* proto,
+	        const PolyMap& polymap );
 
 	/**
 	 * Converts a ClipperLib::PolyNode to PathObjects.
@@ -165,16 +163,17 @@ private:
 	 * 
 	 * This method operates recursively on all outer children.
 	 */
-	void outerPolyNodeToPathObjects(const ClipperLib::PolyNode& node,
+	void outerPolyNodeToPathObjects(
+	        const ClipperLib::PolyNode& node,
 	        PathObjects& out_objects,
-	        const Symbol* result_objects_symbol,
-	        PolyMap& polymap );
+	        const PathObject* proto,
+	        const PolyMap& polymap );
 	
 	/**
 	 * Constructs ClipperLib::Paths from a PathObject.
 	 */
-	static void PathObjectToPolygons(
-	        PathObject* object,
+	static void pathObjectToPolygons(
+	        const PathObject* object,
 	        ClipperLib::Paths& polygons,
 	        PolyMap& polymap );
 	
@@ -184,7 +183,8 @@ private:
 	 * Curves are reconstructed with the help of the polymap, mapping locations
 	 * to path coords of the original objects.
 	 */
-	static void polygonToPathPart(const ClipperLib::Path& polygon,
+	static void polygonToPathPart(
+	        const ClipperLib::Path& polygon,
 	        const PolyMap& polymap,
 	        PathObject* object );
 	
@@ -253,7 +253,7 @@ private:
 	 *                      or false otherwise.
 	 */
 	static bool checkSegmentMatch(
-	        PathObject* original,
+	        const PathObject* original,
 	        int coord_index,
 	        const ClipperLib::Path& polygon,
 	        int start_index,

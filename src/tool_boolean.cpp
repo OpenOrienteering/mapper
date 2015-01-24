@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2014 Kai Pastor
+ *    Copyright 2014, 2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -106,10 +106,8 @@ bool BooleanTool::execute()
 	// Filter selected objects into in_objects
 	PathObjects in_objects;
 	in_objects.reserve(map->getNumSelectedObjects());
-	Map::ObjectSelection::const_iterator it_end = map->selectedObjectsEnd();
-	for (Map::ObjectSelection::const_iterator it = map->selectedObjectsBegin(); it != it_end; ++it)
+	for (Object* object : map->selectedObjects())
 	{
-		Object* const object = *it;
 		if (object->getType() == Object::Path)
 		{
 			PathObject* const path = object->asPath();
@@ -123,7 +121,7 @@ bool BooleanTool::execute()
 	// Perform the core operation
 	QScopedPointer<CombinedUndoStep> undo_step(new CombinedUndoStep(map));
 	PathObjects out_objects;
-	if (!executeForObjects(primary_object->asPath(), primary_object->getSymbol(), in_objects, out_objects, *undo_step))
+	if (!executeForObjects(primary_object->asPath(), in_objects, out_objects, *undo_step))
 	{
 		Q_ASSERT(out_objects.size() == 0);
 		return false; // in release build
@@ -142,13 +140,10 @@ bool BooleanTool::executePerSymbol()
 	backlog.reserve(map->getNumSelectedObjects());
 	
 	// Filter area objects into initial backlog
-	for (Map::ObjectSelection::const_iterator it = map->selectedObjectsBegin(),
-	                                         end = map->selectedObjectsEnd();
-	     it != end;
-	     ++it)
+	for (Object* object : map->selectedObjects())
 	{
-		if ((*it)->getSymbol()->getContainedTypes() & Symbol::Area)
-			backlog.push_back((*it)->asPath());
+		if (object->getSymbol()->getContainedTypes() & Symbol::Area)
+			backlog.push_back(object->asPath());
 	}
 	
 	QScopedPointer<CombinedUndoStep> undo_step(new CombinedUndoStep(map));
@@ -165,12 +160,8 @@ bool BooleanTool::executePerSymbol()
 		// Filter objects by symbol into in_objects or new_backlog, respectively
 		new_backlog.clear();
 		in_objects.clear();
-		for (PathObjects::const_iterator it = backlog.begin(),
-		                               end = backlog.end();
-		     it != end;
-		     ++it)
+		for (PathObject* object : backlog)
 		{
-			PathObject* const object = *it;
 			if (object->getSymbol() == symbol)
 			{
 				if (op != MergeHoles || (object->getSymbol()->getContainedTypes() & Symbol::Area && object->getNumParts() > 1 ))
@@ -191,7 +182,7 @@ bool BooleanTool::executePerSymbol()
 		
 		// Perform the core operation
 		out_objects.clear();
-		executeForObjects(primary_object, primary_object->getSymbol(), in_objects, out_objects, *undo_step);
+		executeForObjects(primary_object, in_objects, out_objects, *undo_step);
 	}
 	
 	bool const have_changes = undo_step->getNumSubSteps() > 0;
@@ -205,9 +196,9 @@ bool BooleanTool::executePerSymbol()
 	return have_changes;
 }
 
-bool BooleanTool::executeForObjects(PathObject* subject, const Symbol* result_objects_symbol, PathObjects& in_objects, PathObjects& out_objects, CombinedUndoStep& undo_step)
+bool BooleanTool::executeForObjects(PathObject* subject, PathObjects& in_objects, PathObjects& out_objects, CombinedUndoStep& undo_step)
 {
-	if (!executeForObjects(subject, result_objects_symbol, in_objects, out_objects))
+	if (!executeForObjects(subject, in_objects, out_objects))
 	{
 		Q_ASSERT(out_objects.size() == 0);
 		return false; // in release build
@@ -215,18 +206,16 @@ bool BooleanTool::executeForObjects(PathObject* subject, const Symbol* result_ob
 	
 	// Add original objects to undo step, and remove them from map.
 	QScopedPointer<AddObjectsUndoStep> add_step(new AddObjectsUndoStep(map));
-	for (PathObjects::iterator it = in_objects.begin(), end = in_objects.end(); it != end; ++it)
+	for (PathObject* object : in_objects)
 	{
-		PathObject* object = *it;
 		if (op != Difference || object == subject)
 		{
 			add_step->addObject(object, object);
 		}
 	}
 	// Keep as separate loop to get the correct index in the previous loop
-	for (PathObjects::iterator it = in_objects.begin(), end = in_objects.end(); it != end; ++it)
+	for (PathObject* object : in_objects)
 	{
-		PathObject* object = *it;
 		if (op != Difference || object == subject)
 		{
 			map->removeObjectFromSelection(object, false);
@@ -238,16 +227,14 @@ bool BooleanTool::executeForObjects(PathObject* subject, const Symbol* result_ob
 	// Add resulting objects to map, and create delete step for them
 	QScopedPointer<DeleteObjectsUndoStep> delete_step(new DeleteObjectsUndoStep(map));
 	MapPart* part = map->getCurrentPart();
-	for (PathObjects::iterator it = out_objects.begin(), end = out_objects.end(); it != end; ++it)
+	for (PathObject* object : out_objects)
 	{
-		PathObject* object = *it;
 		map->addObject(object);
 		map->addObjectToSelection(object, false);
 	}
 	// Keep as separate loop to get the correct index in the previous loop
-	for (PathObjects::iterator it = out_objects.begin(), end = out_objects.end(); it != end; ++it)
+	for (PathObject* object : out_objects)
 	{
-		PathObject* object = *it;
 		delete_step->addObject(part->findObjectIndex(object));
 	}
 	
@@ -256,24 +243,22 @@ bool BooleanTool::executeForObjects(PathObject* subject, const Symbol* result_ob
 	return true;
 }
 
-bool BooleanTool::executeForObjects(PathObject* subject, const Symbol* result_objects_symbol, PathObjects& in_objects, PathObjects& out_objects)
+bool BooleanTool::executeForObjects(PathObject* subject, PathObjects& in_objects, PathObjects& out_objects)
 {
-	
 	// Convert the objects to Clipper polygons and
 	// create a hash map, mapping point positions to the PathCoords.
 	// These paths are to be regarded as closed.
 	PolyMap polymap;
 	
 	ClipperLib::Paths subject_polygons;
-	PathObjectToPolygons(subject, subject_polygons, polymap);
+	pathObjectToPolygons(subject, subject_polygons, polymap);
 	
 	ClipperLib::Paths clip_polygons;
-	for (PathObjects::iterator it = in_objects.begin(), end = in_objects.end(); it != end; ++it)
+	for (PathObject* object : in_objects)
 	{
-		PathObject* object = *it;
 		if (object != subject)
 		{
-			PathObjectToPolygons(object, clip_polygons, polymap);
+			pathObjectToPolygons(object, clip_polygons, polymap);
 		}
 	}
 	
@@ -306,22 +291,22 @@ bool BooleanTool::executeForObjects(PathObject* subject, const Symbol* result_ob
 	if (success)
 	{
 		// Try to convert the solution polygons to objects again
-		polyTreeToPathObjects(solution, out_objects, result_objects_symbol, polymap);
+		polyTreeToPathObjects(solution, out_objects, subject, polymap);
 	}
 	
 	return success;
 }
 
-void BooleanTool::polyTreeToPathObjects(const ClipperLib::PolyTree& tree, PathObjects& out_objects, const Symbol* result_objects_symbol, PolyMap& polymap)
+void BooleanTool::polyTreeToPathObjects(const ClipperLib::PolyTree& tree, PathObjects& out_objects, const PathObject* proto, const PolyMap& polymap)
 {
 	for (int i = 0, count = tree.ChildCount(); i < count; ++i)
-		outerPolyNodeToPathObjects(*tree.Childs[i], out_objects, result_objects_symbol, polymap);
+		outerPolyNodeToPathObjects(*tree.Childs[i], out_objects, proto, polymap);
 }
 
-void BooleanTool::outerPolyNodeToPathObjects(const ClipperLib::PolyNode& node, PathObjects& out_objects, const Symbol* result_objects_symbol, PolyMap& polymap)
+void BooleanTool::outerPolyNodeToPathObjects(const ClipperLib::PolyNode& node, PathObjects& out_objects, const PathObject* proto, const PolyMap& polymap)
 {
-	PathObject* object = new PathObject();
-	object->setSymbol(result_objects_symbol, true);
+	PathObject* object = static_cast<PathObject*>(proto->duplicate());
+	object->clearCoordinates();
 	
 	polygonToPathPart(node.Contour, polymap, object);
 	for (int i = 0, i_count = node.ChildCount(); i < i_count; ++i)
@@ -330,7 +315,7 @@ void BooleanTool::outerPolyNodeToPathObjects(const ClipperLib::PolyNode& node, P
 		
 		// Add outer polygons contained by (nested within) holes ...
 		for (int j = 0, j_count = node.Childs[i]->ChildCount(); j < j_count; ++j)
-			outerPolyNodeToPathObjects(*node.Childs[i]->Childs[j], out_objects, result_objects_symbol, polymap);
+			outerPolyNodeToPathObjects(*node.Childs[i]->Childs[j], out_objects, proto, polymap);
 	}
 	
 	out_objects.push_back(object);
@@ -425,7 +410,7 @@ void BooleanTool::executeForLine(PathObject* area, PathObject* line, BooleanTool
 	}
 }
 
-void BooleanTool::PathObjectToPolygons(PathObject* object, ClipperLib::Paths& polygons, PolyMap& polymap)
+void BooleanTool::pathObjectToPolygons(const PathObject* object, ClipperLib::Paths& polygons, PolyMap& polymap)
 {
 	object->update();
 	
@@ -436,7 +421,7 @@ void BooleanTool::PathObjectToPolygons(PathObject* object, ClipperLib::Paths& po
 	const PathCoordVector& path_coords = object->getPathCoordinateVector();
 	for (int part_number = 0; part_number < part_count; ++part_number, ++polygon_index)
 	{
-		PathObject::PathPart& part = object->getPart(part_number);
+		const PathObject::PathPart& part = object->getPart(part_number);
 		
 		ClipperLib::Path& polygon = polygons[polygon_index];
 		for (int i = part.path_coord_start_index + (part.isClosed() ? 1 : 0); i <= part.path_coord_end_index; ++i)
@@ -674,8 +659,8 @@ void BooleanTool::rebuildSegment(int start_index, int end_index, bool have_seque
 	second_last_info = *second_last_it;
 	
 	// Also try to find consistent outer coordinates
-	PathObject::PathPart* original_path = second_info.first;
-	PathObject* original = original_path->path;
+	const PathObject::PathPart* original_path = second_info.first;
+	const PathObject* original = original_path->path;
 	int original_index = second_info.second->index;
 	
 	PolyMap::const_iterator start_it = polymap.find(start_point);
@@ -920,6 +905,7 @@ void BooleanTool::rebuildTwoIndexSegment(int start_index, int end_index, bool se
 	
 	if (!is_curve)
 		object->getCoordinate(object->getCoordinateCount() - 1).setCurveStart(false);
+	
 	if (coords_increasing)
 	{
 		object->addCoordinate(resetCoordinate(original->getCoordinate(coord_index + 1)));
@@ -955,7 +941,7 @@ void BooleanTool::rebuildCoordinate(int index, const ClipperLib::Path& polygon, 
 }
 
 bool BooleanTool::checkSegmentMatch(
-        PathObject* original,
+        const PathObject* original,
         int coord_index,
         const ClipperLib::Path& polygon,
         int start_index,
@@ -964,9 +950,9 @@ bool BooleanTool::checkSegmentMatch(
         bool& out_is_curve )
 {
 	
-	MapCoord& first = original->getCoordinate(coord_index);
+	const MapCoord& first = original->getCoordinate(coord_index);
 	out_is_curve = first.isCurveStart();
-	MapCoord& other = original->getCoordinate(coord_index + (out_is_curve ? 3 : 1));
+	const MapCoord& other = original->getCoordinate(coord_index + (out_is_curve ? 3 : 1));
 	
 	bool found = true;
 	if (first == polygon.at(start_index) && other == polygon.at(end_index))

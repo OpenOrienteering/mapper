@@ -204,10 +204,11 @@ void CutHoleTool::pathFinished(PathObject* hole_path)
 	Q_ASSERT(hole_path->getNumParts() == 1);
 	hole_path->getPart(0).setClosed(true, true);
 	
-	PathObject* edited_path = reinterpret_cast<PathObject*>(edited_object);
 	BooleanTool::PathObjects in_objects, out_objects;
 	in_objects.push_back(hole_path);
-	BooleanTool(BooleanTool::Difference, map()).executeForObjects(edited_path, edited_object->getSymbol(), in_objects, out_objects);
+	
+	PathObject* edited_path = reinterpret_cast<PathObject*>(edited_object);
+	BooleanTool(BooleanTool::Difference, map()).executeForObjects(edited_path, in_objects, out_objects);
 	
 	edited_path->clearCoordinates();
 	edited_path->appendPath(out_objects.front());
