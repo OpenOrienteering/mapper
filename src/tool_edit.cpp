@@ -480,7 +480,7 @@ void EditTool::createReplaceUndoStep(Object* object)
 
 bool EditTool::pointOverRectangle(QPointF point, const QRectF& rect)
 {
-	float click_tolerance = Settings::getInstance().getMapEditorClickTolerancePx();
+	float click_tolerance = clickTolerance();
 	if (point.x() < rect.left() - click_tolerance) return false;
 	if (point.y() < rect.top() - click_tolerance) return false;
 	if (point.x() > rect.right() + click_tolerance) return false;

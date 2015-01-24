@@ -298,7 +298,7 @@ void CutTool::updateHoverPoint(QPointF cursor_pos_screen, MapWidget* widget)
 	Map::ObjectSelection::const_iterator it_end = map->selectedObjectsEnd();
 	for (Map::ObjectSelection::const_iterator it = map->selectedObjectsBegin(); it != it_end; ++it)
 	{
-		int new_hover_point = findHoverPoint(cursor_pos_screen, *it, false, NULL, widget);
+		int new_hover_point = findHoverPoint(cursor_pos_screen, widget, *it, false, NULL);
 		if (new_hover_point > -2)
 		{
 			has_hover_point = true;
@@ -320,7 +320,6 @@ void CutTool::updateHoverPoint(QPointF cursor_pos_screen, MapWidget* widget)
 
 bool CutTool::findEditPoint(PathCoord& out_edit_point, PathObject*& out_edit_object, MapCoordF cursor_pos_map, int with_type, int without_type, MapWidget* widget)
 {
-	float click_tolerance = Settings::getInstance().getMapEditorClickTolerancePx();
 	Map* map = this->map();
 	
 	out_edit_object = NULL;
@@ -354,7 +353,7 @@ bool CutTool::findEditPoint(PathCoord& out_edit_point, PathObject*& out_edit_obj
 			PathCoord path_coord;
 			path->calcClosestPointOnPath(cursor_pos_map, distance_sq, path_coord);
 			
-			float click_tolerance_map = 0.001f * widget->getMapView()->pixelToLength(click_tolerance);
+			float click_tolerance_map = 0.001f * widget->getMapView()->pixelToLength(clickTolerance());
 			if (distance_sq < smallest_distance_sq && distance_sq <= click_tolerance_map*click_tolerance_map)
 			{
 				smallest_distance_sq = distance_sq;
@@ -433,7 +432,6 @@ void CutTool::pathAborted()
 
 void CutTool::pathFinished(PathObject* split_path)
 {
-	float click_tolerance = Settings::getInstance().getMapEditorClickTolerancePx();
 	Map* map = this->map();
 	
 	// Get path endpoint and check if it is on the area boundary
@@ -445,7 +443,7 @@ void CutTool::pathFinished(PathObject* split_path)
 	float distance_sq;
 	edited_path->calcClosestPointOnPath(MapCoordF(path_end), distance_sq, end_path_coord);
 	
-	float click_tolerance_map = 0.001 * edit_widget->getMapView()->pixelToLength(click_tolerance);
+	float click_tolerance_map = 0.001 * edit_widget->getMapView()->pixelToLength(clickTolerance());
 	if (distance_sq > click_tolerance_map*click_tolerance_map)
 	{
 		QMessageBox::warning(window(), tr("Error"), tr("The split line must end on the area boundary!"));

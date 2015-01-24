@@ -146,8 +146,7 @@ void EditLineTool::clickRelease()
 		&& click_timer.elapsed() >= selection_click_time_threshold)
 		return;
 	
-	float click_tolerance = Settings::getInstance().getMapEditorClickTolerancePx();
-	object_selector->selectAt(cur_pos_map, cur_map_widget->getMapView()->pixelToLength(click_tolerance), active_modifiers & Qt::ShiftModifier);
+	object_selector->selectAt(cur_pos_map, cur_map_widget->getMapView()->pixelToLength(clickTolerance()), active_modifiers & Qt::ShiftModifier);
 	updateHoverLine(cur_pos_map);
 }
 
@@ -456,8 +455,7 @@ void EditLineTool::updateStatusText()
 
 void EditLineTool::updateHoverLine(MapCoordF cursor_pos)
 {
-	float click_tolerance = Settings::getInstance().getMapEditorClickTolerancePx();
-	float click_tolerance_sq = qPow(0.001f * cur_map_widget->getMapView()->pixelToLength(click_tolerance), 2);
+	float click_tolerance_sq = qPow(0.001f * cur_map_widget->getMapView()->pixelToLength(clickTolerance()), 2);
 	float best_distance_sq = std::numeric_limits<float>::max();
 	PathObject* new_hover_object = NULL;
 	int new_hover_line = -2;

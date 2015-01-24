@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2013, 2014 Kai Pastor
+ *    Copyright 2013-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -23,6 +23,9 @@
 #define _OPENORIENTEERING_TOOL_H_
 
 #include <vector>
+
+#include <QAction>
+#include <QPointer>
 
 #include "core/map_coord.h"
 #include "gui/point_handles.h"
@@ -88,7 +91,7 @@ public:
 	 * @param tool_action  Optional button which will be unchecked on
 	 *                     destruction of this tool.
 	 */
-	MapEditorTool(MapEditorController* editor, Type tool_type, QAction* tool_action = NULL);
+	MapEditorTool(MapEditorController* editor, Type tool_type, QAction* tool_action = nullptr);
 	
 	/**
 	 * @brief Destructs the MapEditorTool.
@@ -255,6 +258,11 @@ public:
 	 */
 	int scaleFactor() const;
 	
+	/**
+	 * @brief A value representing how close the user must click or hover to select a point.
+	 */
+	float clickTolerance() const;
+	
 	// General color definitions which are used by all tools
 	
 	/// Color for normal (not active) elements
@@ -297,9 +305,9 @@ protected:
 	
 	
 	// Helper methods for editing the selected objects with preview
-	void startEditingSelection(MapRenderables& old_renderables, std::vector<Object*>* undo_duplicates = NULL);
-	void resetEditedObjects(std::vector<Object*>* undo_duplicates);
-	void finishEditingSelection(MapRenderables& renderables, MapRenderables& old_renderables, bool create_undo_step, std::vector<Object*>* undo_duplicates = NULL, bool delete_objects = false);
+	void startEditingSelection(MapRenderables& old_renderables);
+	void resetEditedObjects();
+	void finishEditingSelection(MapRenderables& renderables, MapRenderables& old_renderables, bool create_undo_step, bool delete_objects = false);
 	void updateSelectionEditPreview(MapRenderables& renderables);
 	void deleteOldSelectionRenderables(MapRenderables& old_renderables, bool set_area_dirty);
 	
@@ -308,7 +316,7 @@ protected:
 	 * 
 	 * Returns -1 if not hovering over a point.
 	 */
-	int findHoverPoint(QPointF cursor, Object* object, bool include_curve_handles, QRectF* selection_extent, MapWidget* widget, MapCoordF* out_handle_pos = NULL) const;
+	int findHoverPoint(QPointF cursor, const MapWidget* widget, const Object* object, bool include_curve_handles, QRectF* selection_extent, MapCoordF* out_handle_pos = nullptr) const;
 	
 	
 	/**
@@ -333,11 +341,6 @@ protected:
 	
 private slots:
 	/**
-	 * @brief Listens to the destruction of the tool's action.
-	 */
-	void toolActionDestroyed();
-	
-	/**
 	 * Updates cached settings.
 	 */
 	void settingsChanged();
@@ -349,13 +352,15 @@ protected:
 	MapEditorController* const editor;
 	
 private:	
-	QAction* tool_action;
+	QPointer<QAction> tool_action;
 	Type tool_type;
+	float click_tolerance;
+	int scale_factor;
 	bool editing_in_progress;
 	bool uses_touch_cursor;
-	int scale_factor;
-	PointHandles point_handles;
 	bool draw_on_right_click;
+	PointHandles point_handles;
+	std::vector<Object*> undo_duplicates;
 };
 
 
@@ -402,6 +407,12 @@ inline
 int MapEditorTool::scaleFactor() const
 {
 	return point_handles.scaleFactor();
+}
+
+inline
+float MapEditorTool::clickTolerance() const
+{
+	return click_tolerance;
 }
 
 #endif

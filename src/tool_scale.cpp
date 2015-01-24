@@ -98,7 +98,7 @@ bool ScaleTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidge
 		// Start scaling
 		scaling = true;
 		original_scale = (map_coord - scaling_center).length();
-		startEditingSelection(*old_renderables, &undo_duplicates);
+		startEditingSelection(*old_renderables);
 	}
 	return true;
 }
@@ -119,7 +119,7 @@ bool ScaleTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWi
 	{
 		scaling = false;
 		updateDragging(map_coord);
-		finishEditingSelection(*renderables, *old_renderables, true, &undo_duplicates);
+		finishEditingSelection(*renderables, *old_renderables, true);
 		map()->setObjectsDirty();
 		map()->emitSelectionEdited();
 	}
@@ -176,7 +176,7 @@ void ScaleTool::updateDragging(const MapCoordF cursor_pos_map)
 		double scaling = (cursor_pos_map - scaling_center).length();
 		scaling_factor = scaling / qMax(1e-7, original_scale);
 		
-		resetEditedObjects(&undo_duplicates);
+		resetEditedObjects();
 		Map::ObjectSelection::const_iterator it_end = map()->selectedObjectsEnd();
 		for (Map::ObjectSelection::const_iterator it = map()->selectedObjectsBegin(); it != it_end; ++it)
 			(*it)->scale(scaling_center, scaling_factor);

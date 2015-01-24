@@ -401,15 +401,15 @@ void MapEditorToolBase::startEditing()
 	Q_ASSERT(!editingInProgress());
 	
 	setEditingInProgress(true);
-	startEditingSelection(*old_renderables, &undo_duplicates);
+	startEditingSelection(*old_renderables);
 }
 
 void MapEditorToolBase::abortEditing()
 {
 	Q_ASSERT(editingInProgress());
 	
-	resetEditedObjects(&undo_duplicates);
-	finishEditingSelection(*renderables, *old_renderables, false, &undo_duplicates);
+	resetEditedObjects();
+	finishEditingSelection(*renderables, *old_renderables, false);
 	setEditingInProgress(false);
 }
 
@@ -423,7 +423,7 @@ void MapEditorToolBase::finishEditing(bool delete_objects, bool create_undo_step
 {
 	Q_ASSERT(editingInProgress());
 	
-	finishEditingSelection(*renderables, *old_renderables, create_undo_step, &undo_duplicates, delete_objects);
+	finishEditingSelection(*renderables, *old_renderables, create_undo_step, delete_objects);
 	map()->setObjectsDirty();
 	map()->emitSelectionEdited();
 	MapEditorTool::finishEditing();

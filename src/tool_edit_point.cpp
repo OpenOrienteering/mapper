@@ -155,8 +155,7 @@ void EditPointTool::clickPress()
 		PathCoord path_coord;
 		path->calcClosestPointOnPath(cur_pos_map, distance_sq, path_coord);
 		
-		float click_tolerance = Settings::getInstance().getMapEditorClickTolerancePx();
-		float click_tolerance_map_sq = cur_map_widget->getMapView()->pixelToLength(click_tolerance);
+		float click_tolerance_map_sq = cur_map_widget->getMapView()->pixelToLength(clickTolerance());
 		click_tolerance_map_sq = click_tolerance_map_sq * click_tolerance_map_sq;
 		
 		if (distance_sq <= click_tolerance_map_sq)
@@ -292,8 +291,7 @@ void EditPointTool::clickRelease()
 		&& click_timer.elapsed() >= selection_click_time_threshold)
 		return;
 	
-	float click_tolerance = Settings::getInstance().getMapEditorClickTolerancePx();
-	object_selector->selectAt(cur_pos_map, cur_map_widget->getMapView()->pixelToLength(click_tolerance), active_modifiers & Qt::ShiftModifier);
+	object_selector->selectAt(cur_pos_map, cur_map_widget->getMapView()->pixelToLength(clickTolerance()), active_modifiers & Qt::ShiftModifier);
 	updateHoverPoint(cur_pos_map);
 }
 
@@ -672,7 +670,7 @@ void EditPointTool::updateHoverPoint(MapCoordF cursor_pos)
 		for (Map::ObjectSelection::const_iterator it = map()->selectedObjectsBegin(), end = map()->selectedObjectsEnd(); it != end; ++it)
 		{
 			MapCoordF handle_pos;
-			int hover_point = findHoverPoint(cur_map_widget->mapToViewport(cursor_pos), *it, true, &selection_extent, cur_map_widget, &handle_pos);
+			int hover_point = findHoverPoint(cur_map_widget->mapToViewport(cursor_pos), cur_map_widget, *it, true, &selection_extent, &handle_pos);
 			float distance_sq = (hover_point >= 0) ? cursor_pos.lengthToSquared(handle_pos) : -1;
 			if (hover_point >= 0 && distance_sq < new_hover_point_dist_sq)
 			{

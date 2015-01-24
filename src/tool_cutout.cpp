@@ -150,8 +150,7 @@ void CutoutTool::objectSelectionChangedImpl()
 
 void CutoutTool::clickRelease()
 {
-	float click_tolerance = Settings::getInstance().getMapEditorClickTolerancePx();
-	object_selector->selectAt(cur_pos_map, cur_map_widget->getMapView()->pixelToLength(click_tolerance), active_modifiers & Qt::ShiftModifier);
+	object_selector->selectAt(cur_pos_map, cur_map_widget->getMapView()->pixelToLength(clickTolerance()), active_modifiers & Qt::ShiftModifier);
 	updateStatusText();
 }
 

@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2013, 2014 Kai Pastor
+ *    Copyright 2013-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -52,32 +52,24 @@ const QRgb MapEditorTool::active_color = qRgb(255, 150, 0);
 const QRgb MapEditorTool::selection_color = qRgb(210, 0, 229);
 
 MapEditorTool::MapEditorTool(MapEditorController* editor, Type type, QAction* tool_action)
-: QObject(NULL)
+: QObject(nullptr)
 , editor(editor)
 , tool_action(tool_action)
 , tool_type(type)
+, click_tolerance(Settings::getInstance().getMapEditorClickTolerancePx())
+, scale_factor(newScaleFactor())
 , editing_in_progress(false)
 , uses_touch_cursor(true)
-, scale_factor(newScaleFactor())
-, point_handles(scale_factor)
 , draw_on_right_click(Settings::getInstance().getSettingCached(Settings::MapEditor_DrawLastPointOnRightClick).toBool())
+, point_handles(scale_factor)
 {
-	if (tool_action)
-		connect(tool_action, SIGNAL(destroyed()), this, SLOT(toolActionDestroyed()));
-	
-	connect(&Settings::getInstance(), SIGNAL(settingsChanged()), this, SLOT(settingsChanged()));
+	connect(&Settings::getInstance(), &Settings::settingsChanged, this, &MapEditorTool::settingsChanged);
 }
 
 MapEditorTool::~MapEditorTool()
 {
 	if (tool_action)
 		tool_action->setChecked(false);
-}
-
-// slot
-void MapEditorTool::toolActionDestroyed()
-{
-	tool_action = NULL;
 }
 
 void MapEditorTool::init()
@@ -91,7 +83,7 @@ void MapEditorTool::deactivate()
 	if (editor->getTool() == this)
 	{
 		if (toolType() == MapEditorTool::EditPoint)
-			editor->setTool(NULL);
+			editor->setTool(nullptr);
 		else
 			editor->setEditTool();
 	}
@@ -119,68 +111,49 @@ void MapEditorTool::setEditingInProgress(bool state)
 }
 
 
-void MapEditorTool::draw(QPainter* painter, MapWidget* widget)
+void MapEditorTool::draw(QPainter*, MapWidget*)
 {
-	Q_UNUSED(painter);
-	Q_UNUSED(widget);
 	// nothing
 }
 
 
-bool MapEditorTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+bool MapEditorTool::mousePressEvent(QMouseEvent*, MapCoordF, MapWidget* )
 {
-	Q_UNUSED(event);
-	Q_UNUSED(map_coord);
-	Q_UNUSED(widget);
 	return false;
 }
 
-bool MapEditorTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+bool MapEditorTool::mouseMoveEvent(QMouseEvent*, MapCoordF, MapWidget*)
 {
-	Q_UNUSED(event);
-	Q_UNUSED(map_coord);
-	Q_UNUSED(widget);
 	return false;
 }
 
-bool MapEditorTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+bool MapEditorTool::mouseReleaseEvent(QMouseEvent*, MapCoordF, MapWidget*)
 {
-	Q_UNUSED(event);
-	Q_UNUSED(map_coord);
-	Q_UNUSED(widget);
 	return false;
 }
 
-bool MapEditorTool::mouseDoubleClickEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+bool MapEditorTool::mouseDoubleClickEvent(QMouseEvent*, MapCoordF, MapWidget*)
 {
-	Q_UNUSED(event);
-	Q_UNUSED(map_coord);
-	Q_UNUSED(widget);
 	return false;
 }
 
-void MapEditorTool::leaveEvent(QEvent* event)
+void MapEditorTool::leaveEvent(QEvent*)
 {
-	Q_UNUSED(event);
 	// nothing
 }
 
-
-bool MapEditorTool::keyPressEvent(QKeyEvent* event)
+bool MapEditorTool::keyPressEvent(QKeyEvent*)
 {
-	Q_UNUSED(event);
 	return false;
 }
 
-bool MapEditorTool::keyReleaseEvent(QKeyEvent* event)
+bool MapEditorTool::keyReleaseEvent(QKeyEvent*)
 {
-	Q_UNUSED(event);
 	return false;
 }
 
-void MapEditorTool::focusOutEvent(QFocusEvent* event)
+void MapEditorTool::focusOutEvent(QFocusEvent*)
 {
-	Q_UNUSED(event);
 	// nothing
 }
 
@@ -255,80 +228,77 @@ void MapEditorTool::drawSelectionBox(QPainter* painter, MapWidget* widget, const
 	painter->drawRect(QRect(top_left + QPoint(1, 1), bottom_right - QPoint(2, 2)));
 }
 
-void MapEditorTool::startEditingSelection(MapRenderables& old_renderables, std::vector< Object* >* undo_duplicates)
+void MapEditorTool::startEditingSelection(MapRenderables& old_renderables)
 {
-	Map* map = editor->getMap();
+	Q_ASSERT(undo_duplicates.empty());
 	
-	// Temporarily take the edited objects out of the map so their map renderables are not updated, and make duplicates of them before for the edit step
-	Map::ObjectSelection::const_iterator it_end = map->selectedObjectsEnd();
-	for (Map::ObjectSelection::const_iterator it = map->selectedObjectsBegin(); it != it_end; ++it)
+	const Map::ObjectSelection& selectedObjects { map()->selectedObjects() };
+	undo_duplicates.reserve(selectedObjects.size());
+	for (Object* object : selectedObjects)
 	{
-		if (undo_duplicates)
-			undo_duplicates->push_back((*it)->duplicate());
+		undo_duplicates.push_back(object->duplicate());
 		
-		(*it)->setMap(NULL);
+		object->setMap(nullptr); // This is to keep the renderables out of the normal map.
 		
 		// Cache old renderables until the object is inserted into the map again
-		old_renderables.insertRenderablesOfObject(*it);
- 		(*it)->takeRenderables();
+		old_renderables.insertRenderablesOfObject(object);
+ 		object->takeRenderables();
 	}
 	
 	editor->setEditingInProgress(true);
 }
 
-void MapEditorTool::resetEditedObjects(std::vector< Object* >* undo_duplicates)
+void MapEditorTool::resetEditedObjects()
 {
-	Q_ASSERT(undo_duplicates);
-	Map* map = editor->getMap();
+	Q_ASSERT(undo_duplicates.size() == map()->selectedObjects().size());
 	
-	size_t i = 0;
-	Map::ObjectSelection::const_iterator it_end = map->selectedObjectsEnd();
-	for (Map::ObjectSelection::const_iterator it = map->selectedObjectsBegin(); it != it_end; ++it)
+	std::size_t i = 0;
+	for (Object* object : map()->selectedObjects())
 	{
-		*(*it) = *undo_duplicates->at(i);
-		(*it)->setMap(NULL);
+		*object = *undo_duplicates[i];
+		object->setMap(nullptr); // This is to keep the renderables out of the normal map.
 		++i;
 	}
 }
 
-void MapEditorTool::finishEditingSelection(MapRenderables& renderables, MapRenderables& old_renderables, bool create_undo_step, std::vector< Object* >* undo_duplicates, bool delete_objects)
+void MapEditorTool::finishEditingSelection(MapRenderables& renderables, MapRenderables& old_renderables, bool create_undo_step, bool delete_objects)
 {
-	ReplaceObjectsUndoStep* undo_step = create_undo_step ? new ReplaceObjectsUndoStep(editor->getMap()) : NULL;
+	Q_ASSERT(undo_duplicates.size() == map()->selectedObjects().size());
 	
-	int i = 0;
-	Map::ObjectSelection::const_iterator it_end = editor->getMap()->selectedObjectsEnd();
-	for (Map::ObjectSelection::const_iterator it = editor->getMap()->selectedObjectsBegin(); it != it_end; ++it)
+	ReplaceObjectsUndoStep* undo_step = create_undo_step ? new ReplaceObjectsUndoStep(map()) : nullptr;
+	
+	std::size_t i = 0;
+	for (Object* object : map()->selectedObjects())
 	{
 		if (!delete_objects)
 		{
-			(*it)->setMap(editor->getMap());
-			(*it)->update(true);
+			object->setMap(map());
+			object->update(true);
 		}
 		
 		if (create_undo_step)
-			undo_step->addObject(*it, undo_duplicates->at(i));
+			undo_step->addObject(object, undo_duplicates[i]);
 		else
-			delete undo_duplicates->at(i);
+			delete undo_duplicates[i];
 		++i;
 	}
 	renderables.clear();
 	deleteOldSelectionRenderables(old_renderables, true);
 	
-	undo_duplicates->clear();
+	undo_duplicates.clear();
 	if (create_undo_step)
-		editor->getMap()->push(undo_step);
+		map()->push(undo_step);
 	
 	editor->setEditingInProgress(false);
 }
 
 void MapEditorTool::updateSelectionEditPreview(MapRenderables& renderables)
 {
-	Map::ObjectSelection::const_iterator it_end = editor->getMap()->selectedObjectsEnd();
-	for (Map::ObjectSelection::const_iterator it = editor->getMap()->selectedObjectsBegin(); it != it_end; ++it)
+	for (Object* object : map()->selectedObjects())
 	{
-		(*it)->update(true);
-		// NOTE: only necessary because of setMap(NULL) in startEditingSelection(..)
-		renderables.insertRenderablesOfObject(*it);
+		object->update(true);
+		// NOTE: only necessary because of setMap(nullptr) in startEditingSelection(..)
+		renderables.insertRenderablesOfObject(object);
 	}
 }
 
@@ -337,16 +307,15 @@ void MapEditorTool::deleteOldSelectionRenderables(MapRenderables& old_renderable
 	old_renderables.clear(set_area_dirty);
 }
 
-int MapEditorTool::findHoverPoint(QPointF cursor, Object* object, bool include_curve_handles, QRectF* selection_extent, MapWidget* widget, MapCoordF* out_handle_pos) const
+int MapEditorTool::findHoverPoint(QPointF cursor, const MapWidget* widget, const Object* object, bool include_curve_handles, QRectF* selection_extent, MapCoordF* out_handle_pos) const
 {
 	Q_UNUSED(selection_extent);
 	
-	float click_tolerance = Settings::getInstance().getMapEditorClickTolerancePx();
 	const float click_tolerance_squared = click_tolerance * click_tolerance;
 	
 	if (object->getType() == Object::Point)
 	{
-		PointObject* point = reinterpret_cast<PointObject*>(object);
+		const PointObject* point = reinterpret_cast<const PointObject*>(object);
 		if (distanceSquared(widget->mapToViewport(point->getCoordF()), cursor) <= click_tolerance_squared)
 		{
 			if (out_handle_pos)
@@ -356,7 +325,7 @@ int MapEditorTool::findHoverPoint(QPointF cursor, Object* object, bool include_c
 	}
 	else if (object->getType() == Object::Text)
 	{
-		TextObject* text = reinterpret_cast<TextObject*>(object);
+		const TextObject* text = reinterpret_cast<const TextObject*>(object);
 		std::vector<QPointF> text_handles(text->controlPoints());
 		for (std::size_t i = 0; i < text_handles.size(); ++i)
 		{
@@ -370,7 +339,7 @@ int MapEditorTool::findHoverPoint(QPointF cursor, Object* object, bool include_c
 	}
 	else if (object->getType() == Object::Path)
 	{
-		PathObject* path = reinterpret_cast<PathObject*>(object);
+		const PathObject* path = reinterpret_cast<const PathObject*>(object);
 		int size = path->getCoordinateCount();
 		
 		int best_index = -1;
@@ -435,6 +404,7 @@ int MapEditorTool::newScaleFactor()
 // slot
 void MapEditorTool::settingsChanged()
 {
+	click_tolerance = Settings::getInstance().getMapEditorClickTolerancePx();
 	scale_factor = newScaleFactor();
 	point_handles = PointHandles(scale_factor);
 	draw_on_right_click = Settings::getInstance().getSettingCached(Settings::MapEditor_DrawLastPointOnRightClick).toBool();

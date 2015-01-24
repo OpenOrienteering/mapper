@@ -200,7 +200,6 @@ private:
 	bool preview_update_triggered;
 	bool dragging;
 	bool dragging_canceled;
-	std::vector<Object*> undo_duplicates;
 	QScopedPointer<MapRenderables> renderables;
 	QScopedPointer<MapRenderables> old_renderables;
 };

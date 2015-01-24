@@ -70,7 +70,6 @@ protected:
 	double original_scale;
 	double scaling_factor;
 	
-	std::vector<Object*> undo_duplicates;
 	QScopedPointer<MapRenderables> old_renderables;
 	QScopedPointer<MapRenderables> renderables;
 };
