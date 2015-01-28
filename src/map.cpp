@@ -977,9 +977,10 @@ void Map::drawTemplates(QPainter* painter, QRectF bounding_box, int first_templa
 		float opacity = 1.0f;
 		if (view)
 		{
-			visible &= view->isTemplateVisible(temp);
+			const TemplateVisibility* visibility = view->getTemplateVisibility(temp);
+			visible &= visibility->visible;
+			opacity  = visibility->opacity;
 			scale   *= view->getZoom();
-			opacity  = view->getTemplateVisibility(temp)->opacity;
 		}
 		if (visible)
 		{

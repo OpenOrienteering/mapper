@@ -650,7 +650,7 @@ void MapPrinter::setSimulateOverprinting(bool enabled)
 bool MapPrinter::isOutputEmpty() const
 {
 	return (
-	  (map.getNumObjects() == 0 || (view && (view->getMapVisibility()->visible == false || view->getMapVisibility()->opacity < 0.0005f))) &&
+	  (map.getNumObjects() == 0 || (view && !view->effectiveMapVisibility()->visible)) &&
 	  (!options.show_templates || map.getNumTemplates() == 0) &&
 	  !options.show_grid
 	);
@@ -907,7 +907,7 @@ void MapPrinter::drawPage(QPainter* device_painter, float units_per_inch, const 
 	/*
 	 * Draw the map
 	 */
-	if (!view || view->getMapVisibility()->visible)
+	if (!view || view->effectiveMapVisibility()->visible)
 	{
 		QImage map_buffer;
 		QPainter* map_painter = painter;
@@ -939,7 +939,7 @@ void MapPrinter::drawPage(QPainter* device_painter, float units_per_inch, const 
 		else
 		{
 			if (vectorModeSelected() && view)
-				config.opacity = view->getMapVisibility()->opacity;
+				config.opacity = view->effectiveMapVisibility()->opacity;
 		
 			map.draw(map_painter, config);
 		}
@@ -954,7 +954,7 @@ void MapPrinter::drawPage(QPainter* device_painter, float units_per_inch, const 
 			painter->save();
 			painter->resetTransform();
 			if (view)
-				painter->setOpacity(view->getMapVisibility()->opacity);
+				painter->setOpacity(view->effectiveMapVisibility()->opacity);
 			painter->setRenderHint(QPainter::SmoothPixmapTransform, false);
 			painter->drawImage(0, 0, map_buffer);
 			painter->restore();

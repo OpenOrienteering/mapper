@@ -60,7 +60,7 @@ MapView::MapView(Map* map) : map(map)
 	position_y = 0;
 	view_x = 0;
 	view_y = 0;
-	map_visibility = new TemplateVisibility();
+	map_visibility = new TemplateVisibility { 1.0f, true };
 	map_visibility->visible = true;
 	all_templates_hidden = false;
 	grid_visible = false;
@@ -442,9 +442,16 @@ void MapView::updateTransform()
 	world_transform = map_to_view.transposed();
 }
 
-const TemplateVisibility* MapView::getMapVisibility() const
+const TemplateVisibility* MapView::effectiveMapVisibility() const
 {
-	return map_visibility;
+	static TemplateVisibility opaque    { 1.0f, true };
+	static TemplateVisibility invisible { 0.0f, false };
+	if (all_templates_hidden)
+		return &opaque;
+	else if (map_visibility->opacity < 0.005f)
+		return &invisible;
+	else
+		return map_visibility;
 }
 
 TemplateVisibility* MapView::getMapVisibility()
@@ -467,7 +474,7 @@ const TemplateVisibility* MapView::getTemplateVisibility(const Template* temp) c
 {
 	if (!template_visibilities.contains(temp))
 	{
-		static const TemplateVisibility dummy;
+		static const TemplateVisibility dummy { 1.0f, false };
 		return &dummy;
 	}
 	return template_visibilities.value(temp);
@@ -477,7 +484,7 @@ TemplateVisibility* MapView::getTemplateVisibility(const Template* temp)
 {
 	if (!template_visibilities.contains(temp))
 	{
-		template_visibilities.insert(temp, new TemplateVisibility());
+		template_visibilities.insert(temp, new TemplateVisibility { 1.0, true });
 	}
 	
 	return const_cast<TemplateVisibility*>(static_cast<const MapView*>(this)->getTemplateVisibility(temp));

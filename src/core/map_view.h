@@ -239,10 +239,16 @@ public:
 	
 	// Map and template visibilities
 	
-	/** Returns the visibility settings of the map. */
-	const TemplateVisibility* getMapVisibility() const;
+	/** Returns the effectiv visibility settings of the map drawing.
+	 *
+	 * Other than getMapVisibility, this will always return an (100 %) opaque,
+	 * visible configuration when areAllTemplatesHidden() is true,
+	 * and it return an invisible configuration when the map's opacity is
+	 * below 0.005.
+	 */
+	const TemplateVisibility* effectiveMapVisibility() const;
 	
-	/** Returns the visibility settings of the map. */
+	/** Returns the visibility settings of the map drawing. */
 	TemplateVisibility* getMapVisibility();
 	
 	/**
@@ -327,8 +333,7 @@ private:
 
 
 /**
- * Contains all visibility information for a template.
- * This is stored in the MapViews.
+ * Contains the visibility information for a template (or the map).
  */
 class TemplateVisibility
 {
@@ -339,8 +344,7 @@ public:
 	/** Visibility flag */
 	bool visible;
 	
-	/** Creates an opaque, but invisible TemplateVisibility. */
-	TemplateVisibility() : opacity(1.0f), visible(false) { }
+	TemplateVisibility(float opacity, bool visible);
 };
 
 
@@ -498,6 +502,18 @@ inline
 bool MapView::isOverprintingSimulationEnabled() const
 {
 	return overprinting_simulation_enabled;
+}
+
+
+
+// ### TemplateVisibility inline code ###
+
+inline
+TemplateVisibility::TemplateVisibility(float opacity, bool visible)
+ : opacity(opacity)
+ , visible(visible)
+{
+	// nothing
 }
 
 #endif

@@ -918,11 +918,11 @@ void MapWidget::paintEvent(QPaintEvent* event)
 		else
 			painter.fillRect(rect(), Qt::white);
 		
-		if (!map_cache.isNull() && view->getMapVisibility()->visible)
+		const auto map_visibility = view->effectiveMapVisibility();
+		if (!map_cache.isNull() && map_visibility->visible)
 		{
-			qreal map_opacity = view->getMapVisibility()->opacity;
 			qreal saved_opacity = painter.opacity();
-			painter.setOpacity(map_opacity);
+			painter.setOpacity(map_visibility->opacity);
 			painter.drawImage(target, map_cache, exposed);
 			painter.setOpacity(saved_opacity);
 		}
