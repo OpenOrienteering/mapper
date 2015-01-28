@@ -1,5 +1,6 @@
 /*
- *    Copyright 2012, 2013 Thomas Schöps, Kai Pastor
+ *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2012-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -351,12 +352,12 @@ const QHash< int, const char* >& MapPrinter::paperSizeNames()
 }
 
 
-MapPrinter::MapPrinter(Map& map, MapView* view, QObject* parent)
+MapPrinter::MapPrinter(Map& map, const MapView* view, QObject* parent)
 : QObject(parent),
   MapPrinterConfig(map.printerConfig()),
   map(map),
   view(view),
-  target(NULL)
+  target(nullptr)
 {
 	scale_adjustment = map.getScaleDenominator() / (qreal) options.scale;
 	updatePaperDimensions();
@@ -378,7 +379,7 @@ void MapPrinter::setTarget(const QPrinterInfo* new_target)
 	if (new_target != target)
 	{
 		const QPrinterInfo* old_target = target;
-		if (new_target == NULL)
+		if (!new_target)
 			target = new_target;
 		else if (new_target == pdfTarget())
 			target = new_target;
@@ -408,8 +409,8 @@ void MapPrinter::setTarget(const QPrinterInfo* new_target)
 
 QPrinter* MapPrinter::makePrinter() const
 {
-	QPrinter* printer = (target==NULL) ? 
-	  new QPrinter(QPrinter::HighResolution) : new QPrinter(*target, QPrinter::HighResolution);
+	QPrinter* printer = target ? new QPrinter(*target, QPrinter::HighResolution)
+	                           : new QPrinter(QPrinter::HighResolution);
 	if (!printer->isValid())
 		printer->setOutputFormat(QPrinter::PdfFormat);
 	
@@ -436,7 +437,7 @@ QPrinter* MapPrinter::makePrinter() const
 
 bool MapPrinter::isPrinter() const
 {
-	if (target == NULL)
+	if (!target)
 		return false;
 	else if (target == pdfTarget())
 		return false;
@@ -543,8 +544,8 @@ void MapPrinter::updatePaperDimensions()
 		return;
 	}
 	
-	QPrinter* printer = (target==NULL) ? 
-	  new QPrinter(QPrinter::HighResolution) : new QPrinter(*target, QPrinter::HighResolution);
+	QPrinter* printer = target ? new QPrinter(*target, QPrinter::HighResolution)
+	                           : new QPrinter(QPrinter::HighResolution);
 	if (!printer->isValid())
 		printer->setOutputFormat(QPrinter::PdfFormat);
 	  
@@ -611,12 +612,12 @@ void MapPrinter::setMode(const MapPrinterOptions::MapPrinterMode mode)
 }
 
 // slot
-void MapPrinter::setPrintTemplates(const bool visible, MapView* view)
+void MapPrinter::setPrintTemplates(const bool visible, const MapView* view)
 {
 	if (options.show_templates != visible || this->view != view)
 	{
 		options.show_templates = visible;
-		this->view = visible ? view : NULL;
+		this->view = visible ? view : nullptr;
 		emit optionsChanged(options);
 	}
 }
@@ -649,7 +650,7 @@ void MapPrinter::setSimulateOverprinting(bool enabled)
 bool MapPrinter::isOutputEmpty() const
 {
 	return (
-	  (map.getNumObjects() == 0 || (view != NULL && (view->getMapVisibility()->visible == false || view->getMapVisibility()->opacity < 0.0005f))) &&
+	  (map.getNumObjects() == 0 || (view && (view->getMapVisibility()->visible == false || view->getMapVisibility()->opacity < 0.0005f))) &&
 	  (!options.show_templates || map.getNumTemplates() == 0) &&
 	  !options.show_grid
 	);
@@ -677,8 +678,8 @@ void MapPrinter::updatePageBreaks()
 		// Center the print area on the pages total area.
 		// Don't pre-calculate this offset to avoid FP precision problems
 		const qreal h_offset = 0.5 * (h_pos + h_overlap - print_area.right());
-		for (std::vector<qreal>::iterator it=h_page_pos.begin(); it != h_page_pos.end(); ++it)
-			*it -= h_offset;
+		for (auto& pos : h_page_pos)
+			pos -= h_offset;
 	}
 	
 	v_page_pos.clear();
@@ -694,8 +695,8 @@ void MapPrinter::updatePageBreaks()
 		
 		// Don't pre-calculate offset to avoid FP precision problems
 		const qreal v_offset = 0.5 * (v_pos + v_overlap - print_area.bottom());
-		for (std::vector<qreal>::iterator it=v_page_pos.begin(); it != v_page_pos.end(); ++it)
-			*it -= v_offset;
+		for (auto& pos : v_page_pos)
+			pos -= v_offset;
 	}
 }
 
@@ -788,7 +789,7 @@ void MapPrinter::drawPage(QPainter* device_painter, float units_per_inch, const 
 	bool use_buffer_for_map = (options.mode == MapPrinterOptions::Raster || target == imageTarget());
 	bool use_buffer_for_background = use_buffer_for_map && options.show_templates;
 	bool use_buffer_for_foreground = use_buffer_for_map && options.show_templates;
-	if (view != NULL && options.show_templates)
+	if (view && options.show_templates)
 	{
 		if (!use_buffer_for_background)
 		{
@@ -796,7 +797,7 @@ void MapPrinter::drawPage(QPainter* device_painter, float units_per_inch, const 
 			{
 				if (map.getTemplate(i)->isRasterGraphics())
 				{
-					TemplateVisibility* visibility = view->getTemplateVisibility(map.getTemplate(i));
+					const TemplateVisibility* visibility = view->getTemplateVisibility(map.getTemplate(i));
 					use_buffer_for_background = visibility->visible && visibility->opacity < 1.0f;
 				}
 			}
@@ -807,7 +808,7 @@ void MapPrinter::drawPage(QPainter* device_painter, float units_per_inch, const 
 			{
 				if (map.getTemplate(i)->isRasterGraphics())
 				{
-					TemplateVisibility* visibility = view->getTemplateVisibility(map.getTemplate(i));
+					const TemplateVisibility* visibility = view->getTemplateVisibility(map.getTemplate(i));
 					use_buffer_for_foreground = visibility->visible && visibility->opacity < 1.0f;
 				}
 			}
@@ -906,7 +907,7 @@ void MapPrinter::drawPage(QPainter* device_painter, float units_per_inch, const 
 	/*
 	 * Draw the map
 	 */
-	if (view == NULL || view->getMapVisibility()->visible)
+	if (!view || view->getMapVisibility()->visible)
 	{
 		QImage map_buffer;
 		QPainter* map_painter = painter;
@@ -947,12 +948,12 @@ void MapPrinter::drawPage(QPainter* device_painter, float units_per_inch, const 
 		{
 			// Flush the buffer
 			delete map_painter;
-			map_painter = NULL;
+			map_painter = nullptr;
 			
 			// Print buffer with map opacity
 			painter->save();
 			painter->resetTransform();
-			if (view != NULL)
+			if (view)
 				painter->setOpacity(view->getMapVisibility()->opacity);
 			painter->setRenderHint(QPainter::SmoothPixmapTransform, false);
 			painter->drawImage(0, 0, map_buffer);
@@ -999,7 +1000,7 @@ void MapPrinter::drawPage(QPainter* device_painter, float units_per_inch, const 
 	if (painter != device_painter)
 	{
 		delete painter;
-		painter = NULL;
+		painter = nullptr;
 		device_painter->resetTransform();
 		drawBuffer(device_painter, page_buffer, pixel2units);
 	}
@@ -1102,9 +1103,9 @@ void MapPrinter::printMap(QPrinter* printer)
 		{
 			// Establish the transformation
 			SetMapMode (dc, MM_ISOTROPIC);
-			SetWindowExtEx(dc, hires_width, hires_height, NULL);
-			SetViewportExtEx(dc, phys_width, phys_height, NULL);
-			SetViewportOrgEx(dc, -phys_off_x, -phys_off_y, NULL);
+			SetWindowExtEx(dc, hires_width, hires_height, nullptr);
+			SetViewportExtEx(dc, phys_width, phys_height, nullptr);
+			SetViewportOrgEx(dc, -phys_off_x, -phys_off_y, nullptr);
 			resolution *= ((double)hires_width / phys_width);
 		}
 	}

@@ -967,18 +967,26 @@ void Map::drawGrid(QPainter* painter, QRectF bounding_box, bool on_screen)
 	grid.draw(painter, bounding_box, this, on_screen);
 }
 
-void Map::drawTemplates(QPainter* painter, QRectF bounding_box, int first_template, int last_template, MapView* view, bool on_screen)
+void Map::drawTemplates(QPainter* painter, QRectF bounding_box, int first_template, int last_template, const MapView* view, bool on_screen) const
 {
 	for (int i = first_template; i <= last_template; ++i)
 	{
-		Template* temp = getTemplate(i);
-		if ((view && !view->isTemplateVisible(temp)) || (temp->getTemplateState() != Template::Loaded))
-			continue;
-		float scale = (view ? view->getZoom() : 1) * std::max(temp->getTemplateScaleX(), temp->getTemplateScaleY());
-		
-		painter->save();
-		temp->drawTemplate(painter, bounding_box, scale, on_screen, view ? view->getTemplateVisibility(temp)->opacity : 1);
-		painter->restore();
+		const Template* temp = getTemplate(i);
+		bool visible  = temp->getTemplateState() == Template::Loaded;
+		double scale  = std::max(temp->getTemplateScaleX(), temp->getTemplateScaleY());
+		float opacity = 1.0f;
+		if (view)
+		{
+			visible &= view->isTemplateVisible(temp);
+			scale   *= view->getZoom();
+			opacity  = view->getTemplateVisibility(temp)->opacity;
+		}
+		if (visible)
+		{
+			painter->save();
+			temp->drawTemplate(painter, bounding_box, scale, on_screen, opacity);
+			painter->restore();
+		}
 	}
 }
 

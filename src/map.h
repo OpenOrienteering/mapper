@@ -259,7 +259,7 @@ public:
 	 *     decrease drawing quality. Should be enabled when drawing on-screen.
 	 */
 	void drawTemplates(QPainter* painter, QRectF bounding_box, int first_template,
-					   int last_template, MapView* view, bool on_screen);
+					   int last_template, const MapView* view, bool on_screen) const;
 	
 	
 	/**
