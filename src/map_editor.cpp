@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012, 2013, 2014 Kai Pastor
+ *    Copyright 2012-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -1273,6 +1273,10 @@ void MapEditorController::createMobileGUI()
 
 void MapEditorController::detach()
 {
+	// Terminate all editing
+	setTool(nullptr);
+	setOverrideTool(nullptr);
+	
 	if (!mobile_mode)
 		saveWindowState();
 	being_destructed = true;
