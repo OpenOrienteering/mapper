@@ -440,9 +440,15 @@ GeneralPage::GeneralPage(QWidget* parent)
 	encoding_box->addItem(QStringLiteral("ISO-8859-15"));
 	encoding_box->setEditable(true);
 	QStringList availableCodecs;
-	Q_FOREACH(QByteArray item, QTextCodec::availableCodecs())
+	for (const QByteArray& item : QTextCodec::availableCodecs())
 	{
 		availableCodecs.append(QString::fromUtf8(item));
+	}
+	if (!availableCodecs.empty())
+	{
+		availableCodecs.sort(Qt::CaseInsensitive);
+		availableCodecs.removeDuplicates();
+		encoding_box->addItem(tr("More..."));
 	}
 	QCompleter* completer = new QCompleter(availableCodecs, this);
 	completer->setCaseSensitivity(Qt::CaseInsensitive);
@@ -605,24 +611,26 @@ void GeneralPage::tipsVisibleClicked(bool state)
 	changes.insert(Settings::getInstance().getSettingPath(Settings::HomeScreen_TipsVisible), state);
 }
 
+// slot
 void GeneralPage::encodingChanged(const QString& name)
 {
-	QByteArray old_name = Settings::getInstance().getSetting(Settings::General_Local8BitEncoding).toByteArray();
-	QTextCodec* codec = QTextCodec::codecForName(name.toLatin1());
-	if (!codec)
+	const QSignalBlocker block(encoding_box);
+	
+	if (name == tr("More..."))
 	{
-		codec = QTextCodec::codecForName(old_name);
-	}
-	if (!codec)
-	{
-		codec = QTextCodec::codecForLocale();
+		encoding_box->setCurrentText(QString());
+		encoding_box->completer()->setCompletionPrefix(QString());
+		encoding_box->completer()->complete();
+		return;
 	}
 	
-	if (codec && codec->name() != old_name)
+	QTextCodec* codec = (name == QStringLiteral("System"))
+	                    ? QTextCodec::codecForLocale()
+	                    : QTextCodec::codecForName(name.toLatin1());
+	if (codec)
 	{
-		changes.insert(Settings::getInstance().getSettingPath(Settings::General_Local8BitEncoding), codec->name());
-		const QSignalBlocker block(encoding_box);
-		encoding_box->setCurrentText(QString::fromUtf8(codec->name()));
+		changes.insert(Settings::getInstance().getSettingPath(Settings::General_Local8BitEncoding), name.toUtf8());
+		encoding_box->setCurrentText(name);
 	}
 }
 

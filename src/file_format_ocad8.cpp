@@ -83,7 +83,9 @@ Exporter* OCAD8FileFormat::createExporter(QIODevice* stream, Map* map, MapView* 
 OCAD8FileImport::OCAD8FileImport(QIODevice* stream, Map* map, MapView* view) : Importer(stream, map, view), file(NULL)
 {
     ocad_init();
-    encoding_1byte = QTextCodec::codecForName(Settings::getInstance().getSetting(Settings::General_Local8BitEncoding).toByteArray());
+    const QByteArray enc_name = Settings::getInstance().getSetting(Settings::General_Local8BitEncoding).toByteArray();
+    encoding_1byte = (enc_name == "System") ? QTextCodec::codecForLocale()
+                                            : QTextCodec::codecForName(enc_name);
     encoding_2byte = QTextCodec::codecForName("UTF-16LE");
     offset_x = offset_y = 0;
 }
