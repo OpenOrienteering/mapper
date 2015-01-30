@@ -1618,7 +1618,7 @@ bool PathObject::advanceCoordinateRangeTo(const MapCoordVector& flags, const Map
 	bool advanced_current_index = false;
 	int path_coords_size = (int)path_coords.size();
 	Q_UNUSED(path_coords_size); // only used in Q_ASSERT.
-	bool have_to_wrap = enforce_wrap;
+	bool have_to_wrap = enforce_wrap && (part.path_coord_end_index - part.path_coord_start_index) > 1;
 	while (cur_length > path_coords[cur_path_coord].clen || cur_length < path_coords[cur_path_coord - 1].clen || have_to_wrap)
 	{
 		++cur_path_coord;
