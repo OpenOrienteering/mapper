@@ -3145,7 +3145,7 @@ void PathObject::addCoordinate(MapCoord c, bool start_new_part)
 
 void PathObject::deleteCoordinate(int pos, bool adjust_other_coords, int delete_bezier_point_action)
 {
-	// Note: Each early return must take care of marking the output as dirty.
+	setOutputDirty();
 	
 	Q_ASSERT(pos >= 0 && pos < getCoordinateCount());
 	MapCoord old_coord = coords[pos];
@@ -3274,8 +3274,6 @@ void PathObject::deleteCoordinate(int pos, bool adjust_other_coords, int delete_
 			}
 		}
 	}
-	
-	setOutputDirty();
 }
 
 void PathObject::clearCoordinates()
