@@ -140,6 +140,9 @@ HEADERS += \
   core/latlon.h \
   core/map_coord.h \
   core/map_grid.h \
+  core/path_coord.h \
+  core/virtual_path.cpp \
+  core/virtual_coord_vector.h \
   fileformats/ocd_types_v8.h \
   fileformats/ocd_types_v9.h \
   fileformats/ocd_types_v10.h \
@@ -156,6 +159,18 @@ HEADERS += \
 
 SOURCES += \
   main.cpp \
+  core/autosave.cpp \
+  core/crs_template.cpp \
+  core/georeferencing.cpp \
+  core/latlon.cpp \
+  core/map_color.cpp \
+  core/map_coord.cpp \
+  core/map_grid.cpp \
+  core/map_printer.cpp \
+  core/map_view.cpp \
+  core/path_coord.cpp \
+  core/virtual_path.cpp \
+  core/virtual_coord_vector.cpp \
   global.cpp \
   util.cpp \
   util_task_dialog.cpp \
@@ -192,7 +207,6 @@ SOURCES += \
   renderable_implementation.cpp \
   object.cpp \
   object_text.cpp \
-  path_coord.cpp \
   template.cpp \
   template_image.cpp \
   template_track.cpp \
@@ -240,15 +254,6 @@ SOURCES += \
   file_format_native.cpp \
   file_format_ocad8.cpp \
   file_format_xml.cpp \
-  core/autosave.cpp \
-  core/crs_template.cpp \
-  core/georeferencing.cpp \
-  core/latlon.cpp \
-  core/map_color.cpp \
-  core/map_coord.cpp \
-  core/map_grid.cpp \
-  core/map_printer.cpp \
-  core/map_view.cpp \
   fileformats/ocd_file_format.cpp \
   fileformats/ocd_types.cpp \
   gui/about_dialog.cpp \

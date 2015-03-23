@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2013-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -201,8 +202,8 @@ void CutHoleTool::pathFinished(PathObject* hole_path)
 	Object* undo_duplicate = edited_object->duplicate();
 	
 	// Close the hole path
-	Q_ASSERT(hole_path->getNumParts() == 1);
-	hole_path->getPart(0).setClosed(true, true);
+	Q_ASSERT(hole_path->parts().size() == 1);
+	hole_path->parts().front().setClosed(true, true);
 	
 	BooleanTool::PathObjects in_objects, out_objects;
 	in_objects.push_back(hole_path);

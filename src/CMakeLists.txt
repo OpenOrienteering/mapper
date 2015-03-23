@@ -31,6 +31,19 @@ include_directories("${CMAKE_CURRENT_BINARY_DIR}")
 include_directories(AFTER "../3rd-party/qbezier/src") # Always, last
 
 set(Mapper_Common_SRCS
+  core/autosave.cpp
+  core/crs_template.cpp
+  core/georeferencing.cpp
+  core/latlon.cpp
+  core/map_color.cpp
+  core/map_coord.cpp
+  core/map_grid.cpp
+  core/map_printer.cpp
+  core/map_view.cpp
+  core/path_coord.cpp
+  core/virtual_path.cpp
+  core/virtual_coord_vector.cpp
+ 
  global.cpp
  util.cpp
  util_task_dialog.cpp
@@ -71,7 +84,6 @@ set(Mapper_Common_SRCS
  renderable_implementation.cpp
  object.cpp
  object_text.cpp
- path_coord.cpp
 
  template.cpp
  template_image.cpp
@@ -124,16 +136,6 @@ set(Mapper_Common_SRCS
  file_format_native.cpp
  file_format_ocad8.cpp
  file_format_xml.cpp
- 
- core/autosave.cpp
- core/crs_template.cpp
- core/georeferencing.cpp
- core/latlon.cpp
- core/map_color.cpp
- core/map_coord.cpp
- core/map_grid.cpp
- core/map_printer.cpp
- core/map_view.cpp
  
  fileformats/ocd_file_format.cpp
  fileformats/ocd_types.cpp
@@ -285,12 +287,19 @@ set(Mapper_EXTRA_HEADERS
   core/latlon.h
   core/map_coord.h
   core/map_grid.h
+  core/path_coord.h
+  core/virtual_path.cpp
+  core/virtual_coord_vector.h
+
   fileformats/ocd_types_v8.h
   fileformats/ocd_types_v9.h
   fileformats/ocd_types_v10.h
   fileformats/ocd_types_v11.h
+
   gui/point_handles.h
+
   util/scoped_signals_blocker.h
+
   map_part.h
   map_part_undo.h
   object_operations.h

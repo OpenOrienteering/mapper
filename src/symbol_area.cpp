@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2012-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -212,6 +213,9 @@ void AreaSymbol::FillPattern::createRenderables(QRectF extent, float delta_rotat
 	if (type == PointPattern && point_distance <= 0)
 		return;
 	
+	auto line_width_f = 0.001*line_width;
+	auto line_spacing_f = 0.001*line_spacing;
+	
 	// Make rotation unique
 	double rotation = angle;
 	if (rotatable)
@@ -223,31 +227,29 @@ void AreaSymbol::FillPattern::createRenderables(QRectF extent, float delta_rotat
 	
 	// Helpers
 	LineSymbol line;
-	PathObject path(NULL);
-	PointObject point_object(point);
-	if (point && point->isRotatable())
-		point_object.setRotation(delta_rotation);
-	MapCoordVectorF coords;
 	if (type == LinePattern)
 	{
 		line.setColor(line_color);
-		line.setLineWidth(0.001*line_width);
+		line.setLineWidth(line_width_f);
 	}
-	path.addCoordinate(0, MapCoord(0, 0));
-	path.addCoordinate(1, MapCoord(0, 0));
-	coords.push_back(MapCoordF(0, 0));
-	coords.push_back(MapCoordF(0, 0));
+	
+	PointObject point_object(point);
+	if (point && point->isRotatable())
+		point_object.setRotation(delta_rotation);
+	
+	MapCoordF first, second;
 	
 	// Determine real extent to fill
 	QRectF fill_extent;
 	if (type == LinePattern)
 	{
+		
 		if (qAbs(rotation - M_PI/2) < 0.0001)
-			fill_extent = QRectF(-0.5 * 0.001*line_width, 0, 0.001*line_width, 0);	// horizontal lines
+			fill_extent = QRectF(-0.5 * line_width_f, 0, line_width_f, 0);	// horizontal lines
 		else if (qAbs(rotation - 0) < 0.0001)
-			fill_extent = QRectF(0, -0.5 * 0.001*line_width, 0, 0.001*line_width);	// verticallines
+			fill_extent = QRectF(0, -0.5 * line_width_f, 0, line_width_f);	// verticallines
 		else
-			fill_extent = QRectF(-0.5 * 0.001*line_width, -0.5 * 0.001*line_width, 0.001*line_width, 0.001*line_width);	// not the 100% optimum but the performance gain is surely neglegible
+			fill_extent = QRectF(-0.5 * line_width_f, -0.5 * line_width_f, line_width_f, line_width_f);	// not the 100% optimum but the performance gain is surely neglegible
 	}
 	else
 	{
@@ -279,23 +281,23 @@ void AreaSymbol::FillPattern::createRenderables(QRectF extent, float delta_rotat
 		// Special case: vertical lines
 		delta_along_line_offset = -delta_along_line_offset;
 		
-		double first = offset + ceil((extent.left() - offset) / (0.001*line_spacing)) * 0.001*line_spacing;
-		for (double cur = first; cur < extent.right(); cur += 0.001*line_spacing)
+		double first_offset = offset + ceil((extent.left() - offset) / line_spacing_f) * line_spacing_f;
+		for (double cur = first_offset; cur < extent.right(); cur += line_spacing_f)
 		{
-			coords[0] = MapCoordF(cur, extent.top());
-			coords[1] = MapCoordF(cur, extent.bottom());
-			createLine(coords, delta_along_line_offset, &line, &path, &point_object, output);
+			first = MapCoordF(cur, extent.top());
+			second = MapCoordF(cur, extent.bottom());
+			createLine(first, second, delta_along_line_offset, &line, &point_object, output);
 		}
 	}
 	else if (qAbs(rotation - 0) < 0.0001)
 	{
 		// Special case: horizontal lines
-		double first = offset + ceil((extent.top() - offset) / (0.001*line_spacing)) * 0.001*line_spacing;
-		for (double cur = first; cur < extent.bottom(); cur += 0.001*line_spacing)
+		double first_offset = offset + ceil((extent.top() - offset) / line_spacing_f) * line_spacing_f;
+		for (double cur = first_offset; cur < extent.bottom(); cur += line_spacing_f)
 		{
-			coords[0] = MapCoordF(extent.left(), cur);
-			coords[1] = MapCoordF(extent.right(), cur);
-			createLine(coords, delta_along_line_offset, &line, &path, &point_object, output);
+			first = MapCoordF(extent.left(), cur);
+			second = MapCoordF(extent.right(), cur);
+			createLine(first, second, delta_along_line_offset, &line, &point_object, output);
 		}
 	}
 	else
@@ -307,8 +309,8 @@ void AreaSymbol::FillPattern::createRenderables(QRectF extent, float delta_rotat
 		float xfactor = 1.0f / sin(rotation);
 		float yfactor = 1.0f / cos(rotation);
 		
-		float dist_x = xfactor * 0.001*line_spacing;
-		float dist_y = yfactor * 0.001*line_spacing;
+		float dist_x = xfactor * line_spacing_f;
+		float dist_y = yfactor * line_spacing_f;
 		float offset_x = xfactor * offset;
 		float offset_y = yfactor * offset;
 		
@@ -340,9 +342,9 @@ void AreaSymbol::FillPattern::createRenderables(QRectF extent, float delta_rotat
 					break;
 				
 				// Create the renderable(s)
-				coords[0] = MapCoordF(start_x, start_y);
-				coords[1] = MapCoordF(end_x, end_y);
-				createLine(coords, delta_along_line_offset, &line, &path, &point_object, output);
+				first = MapCoordF(start_x, start_y);
+				second = MapCoordF(end_x, end_y);
+				createLine(first, second, delta_along_line_offset, &line, &point_object, output);
 				
 				// Move to next position
 				start_x += dist_x;
@@ -377,9 +379,9 @@ void AreaSymbol::FillPattern::createRenderables(QRectF extent, float delta_rotat
 					break;
 				
 				// Create the renderable(s)
-				coords[0] = MapCoordF(start_x, start_y);
-				coords[1] = MapCoordF(end_x, end_y);
-				createLine(coords, delta_along_line_offset, &line, &path, &point_object, output);
+				first = MapCoordF(start_x, start_y);
+				second = MapCoordF(end_x, end_y);
+				createLine(first, second, delta_along_line_offset, &line, &point_object, output);
 				
 				// Move to next position
 				start_x += dist_x;
@@ -389,32 +391,30 @@ void AreaSymbol::FillPattern::createRenderables(QRectF extent, float delta_rotat
 	}
 }
 
-void AreaSymbol::FillPattern::createLine(MapCoordVectorF& coords, float delta_offset, LineSymbol* line, PathObject* path, PointObject* point_object, ObjectRenderables& output) const
+void AreaSymbol::FillPattern::createLine(MapCoordF first, MapCoordF second, float delta_offset, LineSymbol* line, PointObject* point_object, ObjectRenderables& output) const
 {
 	if (type == LinePattern)
-		line->createRenderables(path, path->getRawCoordinateVector(), coords, output);
+	{
+		output.insertRenderable(new LineRenderable(line, first.toQPointF(), second.toQPointF()));
+	}
 	else
 	{
-		MapCoordF to_end = MapCoordF(coords[1].getX() - coords[0].getX(), coords[1].getY() - coords[0].getY());
-		float length = to_end.length();
-		float dir_x = to_end.getX() / length;
-		float dir_y = to_end.getY() / length;
+		auto direction = second - first;
+		auto length = direction.length();
+		direction /= length; // normalize
 		
-		float offset = 0.001f * offset_along_line + delta_offset;
-		float base_dist = dir_x * coords[0].getX() + dir_y * coords[0].getY();	// distance of coords[0] from the zero line
-		float first = (offset + ceil((base_dist - offset) / (0.001*point_distance)) * 0.001*point_distance) - base_dist;
+		auto offset       = direction.dot(first) - 0.001 * offset_along_line - delta_offset;
+		auto step_length  = 0.001 * point_distance;
+		auto start_length = ceil((offset) / step_length) * step_length - offset;
 		
-		coords[0].setX(coords[0].getX() + dir_x * first);
-		coords[0].setY(coords[0].getY() + dir_y * first);
-		float step_x = dir_x * 0.001*point_distance;
-		float step_y = dir_y * 0.001*point_distance;
+		auto to_next = direction * step_length;
 		
-		for (float cur = first; cur < length; cur += 0.001*point_distance)
+		auto coord = first + direction * start_length;
+		auto rotation = -point_object->getRotation();
+		for (auto cur = start_length; cur < length; cur += step_length)
 		{
-			// TODO: hack-ish misuse of the point symbol here (with a different point object and with coords.size() == 2 instead of 1)
-			point->createRenderables(point_object, point_object->getRawCoordinateVector(), coords, output);
-			coords[0].setX(coords[0].getX() + step_x);
-			coords[0].setY(coords[0].getY() + step_y);
+			point->createRenderablesScaled(coord, rotation, output);
+			coord += to_next;
 		}
 	}
 }
@@ -465,35 +465,51 @@ Symbol* AreaSymbol::duplicate(const MapColorMap* color_map) const
 	return new_area;
 }
 
-void AreaSymbol::createRenderables(const Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output) const
+void AreaSymbol::createRenderables(const Object* object, const VirtualCoordVector& coords, ObjectRenderables& output) const
 {
 	if (coords.size() < 3)
 		return;
 	
+	auto path = static_cast<const PathObject*>(object);
+	PathPartVector path_parts = PathPart::calculatePathParts(coords);
+	createRenderables(path, path_parts, output);
+}
+
+void AreaSymbol::createRenderables(const PathObject* object, const PathPartVector& path_parts, ObjectRenderables &output) const
+{
 	Map* map = object->getMap();
 	if (map && map->isAreaHatchingEnabled())
-		Symbol::createBaselineRenderables(object, this, flags, coords, output, true);
+	{
+		createBaselineRenderables(object, path_parts, output, true);
+	}
 	else
-		createRenderablesNormal(object, flags, coords, output);
+	{
+		createRenderablesNormal(object, path_parts, output);
+	}
 }
-void AreaSymbol::createRenderablesNormal(const Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output) const
+
+void AreaSymbol::createRenderablesNormal(const PathObject* object, const PathPartVector& path_parts, ObjectRenderables& output) const
 {
-	if (coords.size() < 3)
-		return;
-	
 	// The shape output is even created if the area is not filled with a color
 	// because the QPainterPath created by it is needed as clip path for the fill objects
-	const PathObject* path = static_cast<const PathObject*>(object);
-	AreaRenderable* color_fill = new AreaRenderable(this, coords, flags, &path->getPathCoordinateVector());
+	AreaRenderable* color_fill = new AreaRenderable(this, path_parts);
 	output.insertRenderable(color_fill);
 	
-	QPainterPath* old_clip_path = output.getClipPath();
-	output.setClipPath(color_fill->getPainterPath());
-	int size = (int)patterns.size();
-	for (int i = 0; i < size; ++i)
-		patterns[i].createRenderables(color_fill->getExtent(), path->getPatternRotation(), path->getPatternOrigin(), output);
-	output.setClipPath(old_clip_path);
+	if (!patterns.empty())
+	{
+		QPainterPath* old_clip_path = output.getClipPath();
+		output.setClipPath(color_fill->getPainterPath());
+		auto extent = color_fill->getExtent();
+		auto rotation = object->getPatternRotation();
+		auto origin = object->getPatternOrigin();
+		for (const auto& pattern: patterns)
+		{
+			pattern.createRenderables(extent, rotation, origin, output);
+		}
+		output.setClipPath(old_clip_path);
+	}
 }
+
 void AreaSymbol::colorDeleted(const MapColor* color)
 {
 	bool change = false;

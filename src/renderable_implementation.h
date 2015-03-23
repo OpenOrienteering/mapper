@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012, 2014 Kai Pastor
+ *    Copyright 2012-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -22,35 +22,32 @@
 #ifndef _OPENORIENTEERING_RENDERABLE_IMPLENTATION_H_
 #define _OPENORIENTEERING_RENDERABLE_IMPLENTATION_H_
 
-#include <vector>
-
 #include <QPainter>
 
-#include <map>
-
-#include "path_coord.h"
+#include "object.h"
 #include "renderable.h"
 
 class QPainterPath;
 
+class AreaSymbol;
+class LineSymbol;
 class Map;
 class MapColor;
 class MapCoordF;
 class Object;
-class Symbol;
+class PathCoordVector;
 class PointSymbol;
-class LineSymbol;
-class AreaSymbol;
-class TextSymbol;
+class Symbol;
 class TextObject;
 struct TextObjectLineInfo;
+class TextSymbol;
 
 /** Renderable for displaying a filled dot. */
 class DotRenderable : public Renderable
 {
 public:
 	DotRenderable(const PointSymbol* symbol, MapCoordF coord);
-	DotRenderable(const DotRenderable& other);
+	explicit DotRenderable(const DotRenderable& other);
 	virtual void render(QPainter& painter, const RenderConfig& config) const override;
 	virtual PainterConfig getPainterConfig(QPainterPath* clip_path = nullptr) const override;
 };
@@ -60,7 +57,7 @@ class CircleRenderable : public Renderable
 {
 public:
 	CircleRenderable(const PointSymbol* symbol, MapCoordF coord);
-	CircleRenderable(const CircleRenderable& other);
+	explicit CircleRenderable(const CircleRenderable& other);
 	virtual void render(QPainter& painter, const RenderConfig& config) const override;
 	virtual PainterConfig getPainterConfig(QPainterPath* clip_path = nullptr) const override;
 	
@@ -73,14 +70,16 @@ protected:
 class LineRenderable : public Renderable
 {
 public:
-	LineRenderable(const LineSymbol* symbol, const MapCoordVectorF& transformed_coords, const MapCoordVector& coords, const PathCoordVector& path_coords, bool closed);
-	LineRenderable(const LineRenderable& other);
+	LineRenderable(const LineSymbol* symbol, const VirtualPath& virtual_path, bool closed);
+	LineRenderable(const LineSymbol* symbol, QPointF first, QPointF second);
+	explicit LineRenderable(const LineRenderable& other);
 	virtual void render(QPainter& painter, const RenderConfig& config) const override;
 	virtual PainterConfig getPainterConfig(QPainterPath* clip_path = nullptr) const override;
 	
 protected:
-	void extentIncludeCap(std::size_t i, float half_line_width, bool end_cap, const LineSymbol* symbol, const MapCoordVectorF& transformed_coords, const MapCoordVector& coords, bool closed);
-	void extentIncludeJoin(std::size_t i, float half_line_width, const LineSymbol* symbol, const MapCoordVectorF& transformed_coords, const MapCoordVector& coords, bool closed);
+	void extentIncludeCap(quint32 i, float half_line_width, bool end_cap, const LineSymbol* symbol, const VirtualPath& path);
+	
+	void extentIncludeJoin(quint32 i, float half_line_width, const LineSymbol* symbol, const VirtualPath& path);
 	
 	const float line_width;
 	QPainterPath path;
@@ -92,14 +91,17 @@ protected:
 class AreaRenderable : public Renderable
 {
 public:
-	AreaRenderable(const AreaSymbol* symbol, const MapCoordVectorF& transformed_coords, const MapCoordVector& coords, const PathCoordVector* path_coords);
-	AreaRenderable(const AreaRenderable& other);
+	AreaRenderable(const AreaSymbol* symbol, const PathPartVector& path_parts);
+	AreaRenderable(const AreaSymbol* symbol, const VirtualPath& path);
+	explicit AreaRenderable(const AreaRenderable& other);
 	virtual void render(QPainter& painter, const RenderConfig& config) const override;
 	virtual PainterConfig getPainterConfig(QPainterPath* clip_path = nullptr) const override;
 	
 	inline QPainterPath* getPainterPath() {return &path;}
 	
 protected:
+	void addSubpath(const VirtualPath& virtual_path);
+	
 	QPainterPath path;
 };
 
@@ -108,7 +110,7 @@ class TextRenderable : public Renderable
 {
 public:
 	TextRenderable(const TextSymbol* symbol, const TextObject* text_object, const MapColor* color, double anchor_x, double anchor_y, bool framing_line = false);
-	TextRenderable(const TextRenderable& other);
+	explicit TextRenderable(const TextRenderable& other);
 	virtual void render(QPainter& painter, const RenderConfig& config) const override;
 	virtual PainterConfig getPainterConfig(QPainterPath* clip_path = nullptr) const override;
 	

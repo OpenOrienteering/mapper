@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2012-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -56,7 +57,9 @@ public:
 	virtual ~CombinedSymbol();
 	virtual Symbol* duplicate(const MapColorMap* color_map = NULL) const;
 	
-	virtual void createRenderables(const Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output) const;
+	void createRenderables(const Object *object, const VirtualCoordVector &coords, ObjectRenderables &output) const override;
+	void createRenderables(const PathObject* object, const PathPartVector& path_parts, ObjectRenderables &output) const override;
+	
 	virtual void colorDeleted(const MapColor* color);
 	virtual bool containsColor(const MapColor* color) const;
 	const MapColor* getDominantColorGuess() const;

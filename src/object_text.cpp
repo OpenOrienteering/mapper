@@ -259,6 +259,11 @@ void TextObject::setRotation(float new_rotation)
 	setOutputDirty();
 }
 
+bool TextObject::intersectsBox(QRectF box) const
+{
+	return getExtent().intersects(box);
+}
+
 int TextObject::calcTextPositionAt(MapCoordF coord, bool find_line_only) const
 {
 	return calcTextPositionAt(calcMapToTextTransform().map(coord.toQPointF()), find_line_only);

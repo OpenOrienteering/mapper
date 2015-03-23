@@ -1,5 +1,6 @@
 /*
  *    Copyright 2013 Thomas Schöps
+ *    Copyright 2014, 2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -47,8 +48,7 @@ void DistributePointsTool::execute(PathObject* path, PointSymbol* point, const D
 	path->update();
 	
 	// This places the points only on the first part.
-	PathObject::PathPart& part = path->getPart(0);
-	double total_length = part.getLength();
+	PathPart& part = path->parts().front();
 	
 	// Check how to distribute the points over the part length
 	int total, start, end;
@@ -71,32 +71,27 @@ void DistributePointsTool::execute(PathObject* path, PointSymbol* point, const D
 		end = total - 1;
 	}
 	
+	auto distance = part.length() / total;
+	auto coords = path->getRawCoordinateVector();
+	auto split = SplitPathCoord::begin(part.path_coords);
+	
 	// Create the objects
-	MapCoordVectorF coords;
-	mapCoordVectorToF(path->getRawCoordinateVector(), coords);
-	int path_coord_search_start = -1;
 	for (int i = start; i <= end; ++i)
 	{
-		double at_length = total_length * (i / static_cast<double>(total));
-		
-		MapCoordF pos, right;
-		PathCoord::calculatePositionAt(
-			path->getRawCoordinateVector(),
-			coords,
-			path->getPathCoordinateVector(),
-			at_length,
-			path_coord_search_start,
-			&pos,
-			&right
-		);
+		auto clen = distance * i;
+		split = SplitPathCoord::at(part.path_coords, clen);
 		
 		PointObject* object = new PointObject(point);
-		object->setPosition(pos);
+		object->setPosition(split.pos);
 		if (point->isRotatable())
 		{
 			double rotation = settings.additional_rotation;
 			if (settings.rotate_symbols)
+			{
+				auto right = split.tangentVector();
+				right.perpRight();
 				rotation -= right.getAngle();
+			}
 			object->setRotation(rotation);
 		}
 		out_objects->push_back(object);

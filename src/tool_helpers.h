@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012, 2013, 2014 Kai Pastor
+ *    Copyright 2012-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -24,11 +24,11 @@
 
 #include <set>
 
+#include <QCursor>
 #include <QObject>
 #include <QRectF>
-#include <QCursor>
 
-#include "path_coord.h"
+#include "core/path_coord.h"
 #include "tool.h"
 
 QT_BEGIN_NAMESPACE
@@ -45,7 +45,6 @@ class TextObject;
 class TextObjectAlignmentDockWidget;
 class Object;
 class PathObject;
-class PathCoord;
 
 /**
  * Helper class to enable text editing (using the DrawTextTool and the EditTool).
@@ -308,9 +307,9 @@ public:
 	SnappingToolHelper::SnapObjects type;
 	/** Object snapped onto, if type is ObjectCorners or ObjectPaths, else NULL */
 	Object* object;
-	/** Index of the coordinate which was snapped onto if type is ObjectCorners,
+	/** Index of the map coordinate which was snapped onto if type is ObjectCorners,
 	 *  else -1 (not snapped to a specific coordinate) */
-	int coord_index;
+	MapCoordVector::size_type coord_index;
 	/** The closest point on the snapped path is returned
 	 *  in path_coord if type == ObjectPaths  */
 	PathCoord path_coord;
@@ -327,7 +326,7 @@ public:
 	 * Starts following the given object from a coordinate.
 	 * FollowPathToolHelpers can be reused for following different paths.
 	 */
-	void startFollowingFromCoord(PathObject* path, int coord_index);
+	void startFollowingFromCoord(PathObject* path, MapCoordVector::size_type coord_index);
 	
 	/**
 	 * Starts following the given object from an arbitrary position indicated by the path coord.
@@ -347,14 +346,14 @@ public:
 	bool updateFollowing(PathCoord& end_coord, PathObject*& result);
 	
 	/** Returns the index of the path part which is being followed */
-	inline int getPartIndex() const {return part_index;}
+	inline std::size_t getPartIndex() const {return part_index;}
 	
 private:
 	PathObject* path;
 	
-	float start_clen;
-	float end_clen;
-	int part_index;
+	PathCoord::length_type start_clen;
+	PathCoord::length_type end_clen;
+	std::size_t part_index;
 	bool drag_forward;
 };
 

@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2012-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -21,8 +22,8 @@
 #ifndef _OPENORIENTEERING_SYMBOL_LINE_H_
 #define _OPENORIENTEERING_SYMBOL_LINE_H_
 
+#include "object.h"
 #include "symbol.h"
-#include "path_coord.h"
 #include "symbol_properties_widget.h"
 
 QT_BEGIN_NAMESPACE
@@ -93,8 +94,25 @@ public:
 	virtual ~LineSymbol();
 	virtual Symbol* duplicate(const MapColorMap* color_map) const;
 	
-	virtual void createRenderables(const Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output) const;
-	void createRenderables(const Object* object, bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, PathCoordVector* path_coords, ObjectRenderables& output) const;
+	void createRenderables(const Object *object, const VirtualCoordVector &coords, ObjectRenderables &output) const override;
+	
+	void createRenderables(const PathObject* object, const PathPartVector& path_parts, ObjectRenderables &output) const override;
+	
+	/**
+	 * Creates the renderables for a single path.
+	 * 
+	 * @deprecated
+	 * 
+	 * Calls to this function need to be replaced by calls to createPathCoordRenderables()
+	 * as soon as it is no longer neccesary to update the PathCoordVector in advance.
+	 */
+	void createPathRenderables(const Object* object, bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output) const;
+	
+	/**
+	 * Creates the renderables for a single VirtualPath.
+	 */
+	void createPathCoordRenderables(const Object* object, const VirtualPath& path, bool path_closed, ObjectRenderables& output) const;
+	
 	virtual void colorDeleted(const MapColor* color);
 	virtual bool containsColor(const MapColor* color) const;
 	virtual const MapColor* getDominantColorGuess() const;
@@ -206,23 +224,81 @@ protected:
 	PointSymbol* loadPointSymbol(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict);
 	virtual bool equalsImpl(const Symbol* other, Qt::CaseSensitivity case_sensitivity) const;
 	
-	void createBorderLines(const Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, bool path_closed, ObjectRenderables& output) const;
-	void createBorderLine(const Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, bool path_closed, ObjectRenderables& output, const LineSymbolBorder& border, double main_shift) const;
-	void shiftCoordinates(const MapCoordVector& flags, const MapCoordVectorF& coords, bool path_closed, double main_shift, MapCoordVector& out_flags, MapCoordVectorF& out_coords) const;
-	void processContinuousLine(const Object* object, bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, const PathCoordVector& line_coords,
-							   float start, float end, bool has_start, bool has_end, int& cur_line_coord,
-							   MapCoordVector& processed_flags, MapCoordVectorF& processed_coords, bool include_first_point, bool set_mid_symbols, ObjectRenderables& output) const;
-	void createPointedLineCap(const Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, const PathCoordVector& line_coords,
-							  float start, float end, int& cur_line_coord, bool is_end, ObjectRenderables& output) const;
-	void processDashedLine(const Object* object, bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, MapCoordVector& out_flags, MapCoordVectorF& out_coords, ObjectRenderables& output) const;
-	void createDashSymbolRenderables(const Object* object, bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output) const;
-    void createDottedRenderables(const Object* object, bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output) const;
+	void createBorderLines(
+	        const Object* object,
+	        const VirtualPath& path,
+	        ObjectRenderables& output
+	) const;
 	
-	void calculateCoordinatesForRange(const MapCoordVector& flags, const MapCoordVectorF& coords, const PathCoordVector& line_coords,
-									  float start, float end, int& cur_line_coord, bool include_start_coord, MapCoordVector& out_flags, MapCoordVectorF& out_coords,
-									  std::vector<float>* out_lengths, bool set_mid_symbols, ObjectRenderables& output) const;
-	void advanceCoordinateRangeTo(const MapCoordVector& flags, const MapCoordVectorF& coords, const PathCoordVector& line_coords, int& cur_line_coord, int& current_index, float cur_length,
-								  int start_bezier_index, MapCoordVector& out_flags, MapCoordVectorF& out_coords, std::vector<float>* out_lengths, const MapCoordF& o3, const MapCoordF& o4) const;
+	void createBorderLine(
+	        const Object* object,
+	        const VirtualPath& path,
+	        bool path_closed,
+	        ObjectRenderables& output,
+	        const LineSymbolBorder& border,
+	        double main_shift
+	) const;
+	
+	void shiftCoordinates(
+	        const VirtualPath& path,
+	        double main_shift,
+	        MapCoordVector& out_flags,
+	        MapCoordVectorF& out_coords
+	) const;
+	
+	void processContinuousLine(
+	        const VirtualPath& path,
+	        const SplitPathCoord& start,
+	        const SplitPathCoord& end,
+	        bool has_start,
+	        bool has_end,
+	        MapCoordVector& processed_flags,
+	        MapCoordVectorF& processed_coords,
+	        bool set_mid_symbols,
+	        ObjectRenderables& output
+	) const;
+	
+	void createPointedLineCap(
+	        const VirtualPath& path,
+	        const SplitPathCoord& start,
+	        const SplitPathCoord& end,
+	        bool is_end,
+	        ObjectRenderables& output
+	) const;
+	
+	void processDashedLine(
+	        const VirtualPath& path,
+	        bool path_closed,
+	        MapCoordVector& out_flags,
+	        MapCoordVectorF& out_coords,
+	        ObjectRenderables& output
+	) const;
+	
+	SplitPathCoord createDashGroups(
+	        const VirtualPath& path,
+	        bool path_closed,
+	        const SplitPathCoord& line_start,
+	        const SplitPathCoord& start,
+	        const SplitPathCoord& end,
+	        bool is_part_start,
+	        bool is_part_end,
+	        MapCoordVector& out_flags,
+	        MapCoordVectorF& out_coords,
+	        ObjectRenderables& output
+	) const;
+	
+	void createDashSymbolRenderables(
+	        const VirtualPath& path,
+	        bool path_closed,
+	        ObjectRenderables& output
+	) const;
+	
+	void createMidSymbolRenderables(
+	        const VirtualPath& path,
+	        bool path_closed,
+	        ObjectRenderables& output
+	) const;
+	
 	void replaceSymbol(PointSymbol*& old_symbol, PointSymbol* replace_with, const QString& name);
 	
 	// Base line

@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2013, 2014 Kai Pastor
+ *    Copyright 2013-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -45,18 +45,27 @@
 
 class SymbolWidget;
 
+namespace
+{
+	/**
+	 * Maximum number of objects in the selection for which point handles
+	 * will still be displayed (and can be edited).
+	 */
+	static unsigned int max_objects_for_handle_display = 10;
+}
 
-int EditLineTool::max_objects_for_handle_display = 10;
+
 
 EditLineTool::EditLineTool(MapEditorController* editor, QAction* tool_button)
-: EditTool(editor, EditLine, tool_button)
+ : EditTool(editor, EditLine, tool_button)
+ , hover_state(OverNothing)
+ , hover_object(nullptr)
+ , highlight_object(nullptr)
+ , box_selection(false)
+ , no_more_effect_on_click(false)
+ , highlight_renderables(new MapRenderables(map()))
 {
-	hover_line = -2;
-	hover_object = NULL;
-	highlight_object = NULL;
-	highlight_renderables.reset(new MapRenderables(map()));
-	box_selection = false;
-	no_more_effect_on_click = false;
+	// nothing
 }
 
 EditLineTool::~EditLineTool()
@@ -68,15 +77,19 @@ EditLineTool::~EditLineTool()
 
 void EditLineTool::mouseMove()
 {
-	updateHoverLine(cur_pos_map);
+	updateHoverState(cur_pos_map);
 }
 
 void EditLineTool::clickPress()
 {
-	if (hover_object &&
-		hover_line >= 0 &&
+	if (hover_state == OverPathEdge &&
 		active_modifiers & Qt::ControlModifier)
 	{
+		Q_ASSERT(hover_object);
+		Q_ASSERT(hover_object->getType() == Object::Path);
+		
+		auto path = hover_object->asPath()->findPartForIndex(hover_line);
+		
 		// Toggle segment between straight line and curve
 		createReplaceUndoStep(hover_object);
 		
@@ -84,24 +97,24 @@ void EditLineTool::clickPress()
 		if (start_coord.isCurveStart())
 		{
 			// Convert to straight segment
-			start_coord.setCurveStart(false);
-			hover_object->deleteCoordinate(hover_line + 2, false);
+			/// \todo Provide a PathObject::convertToStraight(hover_line) ?
 			hover_object->deleteCoordinate(hover_line + 1, false);
 		}
 		else
 		{
 			// Convert to curve
+			/// \todo Provide a PathObject::convertToCurve(hover_line) ?
 			start_coord.setCurveStart(true);
 			MapCoord end_coord = hover_object->getCoordinate(hover_line + 1);
 			double baseline = start_coord.lengthTo(end_coord);
 			
 			bool tangent_ok = false;
-			MapCoordF start_tangent = PathCoord::calculateTangent(hover_object->getRawCoordinateVector(), hover_line, true, tangent_ok);
+			MapCoordF start_tangent = path->calculateTangent(hover_line, true, tangent_ok);
 			if (!tangent_ok)
 				start_tangent = MapCoordF(end_coord - start_coord);
 			start_tangent.normalize();
 			
-			MapCoordF end_tangent = PathCoord::calculateTangent(hover_object->getRawCoordinateVector(), hover_line + 1, false, tangent_ok);
+			MapCoordF end_tangent = path->calculateTangent(hover_line + 1, false, tangent_ok);
 			if (!tangent_ok)
 				end_tangent = MapCoordF(start_coord - end_coord);
 			else
@@ -122,7 +135,7 @@ void EditLineTool::clickPress()
 		
 		// Make sure that the highlight object is recreated
 		deleteHighlightObject();
-		updateHoverLine(cur_pos_map);
+		updateHoverState(cur_pos_map);
 		no_more_effect_on_click = true;
 	}
 	
@@ -142,12 +155,15 @@ void EditLineTool::clickRelease()
 		no_more_effect_on_click = false;
 		return;
 	}
-	if (hover_line >= -1
-		&& click_timer.elapsed() >= selection_click_time_threshold)
+	
+	if (hover_state != OverNothing &&
+		click_timer.elapsed() >= selection_click_time_threshold)
+	{
 		return;
+	}
 	
 	object_selector->selectAt(cur_pos_map, cur_map_widget->getMapView()->pixelToLength(clickTolerance()), active_modifiers & Qt::ShiftModifier);
-	updateHoverLine(cur_pos_map);
+	updateHoverState(cur_pos_map);
 }
 
 void EditLineTool::dragStart()
@@ -155,10 +171,14 @@ void EditLineTool::dragStart()
 	if (no_more_effect_on_click)
 		return;
 	
-	updateHoverLine(click_pos_map);
+	updateHoverState(click_pos_map);
 	
 	Map* map = this->map();
-	if (hover_line >= -1)
+	if (hover_state == OverNothing)
+	{
+		box_selection = true;
+	}
+	else
 	{
 		startEditing();
 		snap_exclude_object = hover_object;
@@ -172,6 +192,8 @@ void EditLineTool::dragStart()
 		}
 		else
 		{
+			Q_ASSERT(hover_object);
+			
 			object_mover->addLine(hover_object, hover_line);
 			
 			if (!hover_object->getCoordinate(hover_line).isCurveStart())
@@ -180,24 +202,28 @@ void EditLineTool::dragStart()
 		
 		// Set up angle tool helper
 		angle_helper->setCenter(click_pos_map);
-		if (hover_line == -1)
-			setupAngleHelperFromSelectedObjects();
-		else
+		if (hoveringOverFrame())
 		{
+			setupAngleHelperFromSelectedObjects();
+		}
+		else if (hover_object->getType() == Object::Path)
+		{
+			auto path = hover_object->asPath()->findPartForIndex(hover_line);
+			
 			angle_helper->clearAngles();
 			bool ok = false;
-			MapCoordF tangent = PathCoord::calculateTangent(hover_object->getRawCoordinateVector(), hover_line, false, ok);
+			MapCoordF tangent = path->calculateTangent(hover_line, false, ok);
 			if (ok)
 				angle_helper->addAngles(-tangent.getAngle(), M_PI/2);
-			tangent = PathCoord::calculateTangent(hover_object->getRawCoordinateVector(), hover_line, true, ok);
+			tangent = path->calculateTangent(hover_line, true, ok);
 			if (ok)
 				angle_helper->addAngles(-tangent.getAngle(), M_PI/2);
 			
 			int end_index = hover_line + (hover_object->getCoordinate(hover_line).isCurveStart() ? 3 : 1);
-			tangent = PathCoord::calculateTangent(hover_object->getRawCoordinateVector(), end_index, false, ok);
+			tangent = path->calculateTangent(end_index, false, ok);
 			if (ok)
 				angle_helper->addAngles(-tangent.getAngle(), M_PI/2);
-			tangent = PathCoord::calculateTangent(hover_object->getRawCoordinateVector(), end_index, true, ok);
+			tangent = path->calculateTangent(end_index, true, ok);
 			if (ok)
 				angle_helper->addAngles(-tangent.getAngle(), M_PI/2);
 		}
@@ -207,10 +233,6 @@ void EditLineTool::dragStart()
 			toggleAngleHelper();
 		if (active_modifiers & Qt::ShiftModifier)
 			activateSnapHelperWhileEditing();
-	}
-	else if (hover_line == -2)
-	{
-		box_selection = true;
 	}
 }
 
@@ -328,14 +350,14 @@ void EditLineTool::initImpl()
 
 void EditLineTool::objectSelectionChangedImpl()
 {
-	updateHoverLine(cur_pos_map);
+	updateHoverState(cur_pos_map);
 	updateDirtyRect();
 	updateStatusText();
 }
 
 int EditLineTool::updateDirtyRectImpl(QRectF& rect)
 {
-	bool show_object_points = map()->getNumSelectedObjects() <= max_objects_for_handle_display;
+	bool show_object_points = map()->selectedObjects().size() <= max_objects_for_handle_display;
 	
 	selection_extent = QRectF();
 	map()->includeSelectionRect(selection_extent);
@@ -362,7 +384,7 @@ int EditLineTool::updateDirtyRectImpl(QRectF& rect)
 
 void EditLineTool::drawImpl(QPainter* painter, MapWidget* widget)
 {
-	int num_selected_objects = map()->getNumSelectedObjects();
+	auto num_selected_objects = map()->selectedObjects().size();
 	if (num_selected_objects > 0)
 	{
 		drawSelectionOrPreviewObjects(painter, widget);
@@ -381,8 +403,11 @@ void EditLineTool::drawImpl(QPainter* painter, MapWidget* widget)
 		
 		if (num_selected_objects <= max_objects_for_handle_display)
 		{
-			for (Map::ObjectSelection::const_iterator it = map()->selectedObjectsBegin(), end = map()->selectedObjectsEnd(); it != end; ++it)
-				pointHandles().draw(painter, widget, *it, -2, false, PointHandles::DisabledHandleState);
+			for (const auto object: map()->selectedObjects())
+			{
+				auto hover_point = std::numeric_limits<MapCoordVector::size_type>::max();
+				pointHandles().draw(painter, widget, object, hover_point, false, PointHandles::DisabledHandleState);
+			}
 		}
 		
 		if (!highlight_renderables->empty())
@@ -406,7 +431,7 @@ void EditLineTool::deleteHighlightObject()
 	{
 		highlight_renderables->removeRenderablesOfObject(highlight_object, false);
 		delete highlight_object;
-		highlight_object = NULL;
+		highlight_object = nullptr;
 	}
 }
 
@@ -441,7 +466,7 @@ void EditLineTool::updateStatusText()
 		{
 			text += EditTool::tr("<b>%1</b>: Delete selected objects. ").arg(ModifierKey(delete_object_key));
 			
-			if (map()->getNumSelectedObjects() <= max_objects_for_handle_display)
+			if (map()->selectedObjects().size() <= max_objects_for_handle_display)
 			{
 				if (active_modifiers & Qt::ControlModifier)
 					text = tr("<b>%1+Click</b> on segment: Toggle between straight and curved. ").arg(ModifierKey::control());
@@ -453,82 +478,81 @@ void EditLineTool::updateStatusText()
 	setStatusBarText(text);
 }
 
-void EditLineTool::updateHoverLine(MapCoordF cursor_pos)
+void EditLineTool::updateHoverState(MapCoordF cursor_pos)
 {
-	float click_tolerance_sq = qPow(0.001f * cur_map_widget->getMapView()->pixelToLength(clickTolerance()), 2);
-	float best_distance_sq = std::numeric_limits<float>::max();
-	PathObject* new_hover_object = NULL;
-	int new_hover_line = -2;
-	PathCoord hover_path_coord;
+	HoverState new_hover_state = OverNothing;
+	const PathObject* new_hover_object = nullptr;
+	MapCoordVector::size_type new_hover_line = 0;
 	
-	// Check objects
-	if (map()->getNumSelectedObjects() <= max_objects_for_handle_display)
+	if (!map()->selectedObjects().empty())
 	{
-		for (Map::ObjectSelection::const_iterator it = map()->selectedObjectsBegin(), end = map()->selectedObjectsEnd(); it != end; ++it)
+		// Check selected objects
+		if (map()->selectedObjects().size() <= max_objects_for_handle_display)
 		{
-			Object* object = *it;
-			if (object->getType() != Object::Path)
-				continue;
+			float click_tolerance_sq = qPow(0.001f * cur_map_widget->getMapView()->pixelToLength(clickTolerance()), 2);
+			float best_distance_sq = std::numeric_limits<float>::max();
+			PathCoord hover_path_coord;
 			
-			float distance_sq;
-			PathCoord path_coord;
-			PathObject* path = object->asPath();
-			path->calcClosestPointOnPath(cursor_pos, distance_sq, path_coord);
-			
-			if (distance_sq < best_distance_sq &&
-				distance_sq < qMax(click_tolerance_sq, (float)qPow(path->getSymbol()->calculateLargestLineExtent(map()), 2)))
+			for (auto object : map()->selectedObjects())
 			{
-				best_distance_sq = distance_sq;
-				new_hover_object = path;
-				new_hover_line = path_coord.index;
-				hover_path_coord = path_coord;
-				handle_offset = hover_path_coord.pos - cursor_pos;
+				if (object->getType() == Object::Path)
+				{
+					PathObject* path = object->asPath();
+					float distance_sq;
+					PathCoord path_coord;
+					path->calcClosestPointOnPath(cursor_pos, distance_sq, path_coord);
+					
+					if (distance_sq >= +0.0 &&
+					    distance_sq < best_distance_sq &&
+					    distance_sq < qMax(click_tolerance_sq, (float)qPow(path->getSymbol()->calculateLargestLineExtent(map()), 2)))
+					{
+						new_hover_state  = OverPathEdge;
+						new_hover_object = path;
+						new_hover_line   = path_coord.index;
+						best_distance_sq = distance_sq;
+						hover_path_coord = path_coord;
+						handle_offset    = hover_path_coord.pos - cursor_pos;
+					}
+				}
+			}
+		}
+		
+		// Check bounding box
+		if (new_hover_state != OverPathEdge && selection_extent.isValid())
+		{
+			QRectF selection_extent_viewport = cur_map_widget->mapToViewport(selection_extent);
+			if (pointOverRectangle(cur_map_widget->mapToViewport(cursor_pos), selection_extent_viewport))
+			{
+				new_hover_state = OverFrame;
+				new_hover_object  = nullptr;
+				handle_offset = closestPointOnRect(cursor_pos, selection_extent) - cursor_pos;
 			}
 		}
 	}
-	
-	// Check bounding box
-	if (new_hover_line < 0 &&
-		map()->getNumSelectedObjects() > 0 &&
-		selection_extent.isValid())
-	{
-		QRectF selection_extent_viewport = cur_map_widget->mapToViewport(selection_extent);
-		new_hover_line = pointOverRectangle(cur_map_widget->mapToViewport(cursor_pos), selection_extent_viewport) ? -1 : -2;
-		handle_offset = closestPointOnRect(cursor_pos, selection_extent) - cursor_pos;
-	}
-	
+		
 	// Apply possible changes
-	if (new_hover_line != hover_line ||
+	if (new_hover_state  != hover_state ||
+	    new_hover_line   != hover_line  ||
 		new_hover_object != hover_object)
 	{
-		hover_line = new_hover_line;
-		hover_object = new_hover_object;
-		
 		deleteHighlightObject();
-		if (hover_object)
+		
+		hover_state  = new_hover_state;
+		// We have got a Map*, so we may get a PathObject*.
+		hover_object = const_cast<PathObject*>(new_hover_object);
+		hover_line   = new_hover_line;
+		
+		if (hover_state == OverPathEdge)
 		{
-			// Extract hover line
-			highlight_object = new PathObject(map()->getCoveringCombinedLine());
-			MapCoord& start_coord = hover_object->getCoordinate(hover_line);
-			highlight_object->addCoordinate(start_coord);
-			int end_coord_offset = 1;
-			if (start_coord.isCurveStart())
-			{
-				highlight_object->addCoordinate(hover_object->getCoordinate(hover_line + 1));
-				highlight_object->addCoordinate(hover_object->getCoordinate(hover_line + 2));
-				end_coord_offset = 3;
-			}
-			MapCoord end_coord = hover_object->getCoordinate(hover_line + end_coord_offset);
-			end_coord.setClosePoint(false);
-			end_coord.setCurveStart(false);
-			end_coord.setHolePoint(false);
-			highlight_object->addCoordinate(end_coord);
+			Q_ASSERT(hover_object);
 			
+			// Extract hover line
+			highlight_object = new PathObject(map()->getCoveringCombinedLine(), *hover_object, hover_line);
 			highlight_object->update();
 			highlight_renderables->insertRenderablesOfObject(highlight_object);
 		}
 		
-		start_drag_distance = (hover_line >= -1) ? 0 : Settings::getInstance().getStartDragDistancePx();
+		start_drag_distance = (hover_state != OverNothing) ? 0 : Settings::getInstance().getStartDragDistancePx();
 		updateDirtyRect();
 	}
 }

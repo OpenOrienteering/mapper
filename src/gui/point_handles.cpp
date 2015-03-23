@@ -47,7 +47,13 @@ QRgb PointHandles::stateColor(PointHandleState state) const
 	}
 }
 
-void PointHandles::draw(QPainter* painter, const MapWidget* widget, const Object* object, int hover_point, bool draw_curve_handles, PointHandleState base_state) const
+void PointHandles::draw(
+        QPainter* painter,
+        const MapWidget* widget,
+        const Object* object,
+        MapCoordVector::size_type hover_point,
+        bool draw_curve_handles,
+        PointHandleState base_state ) const
 {
 	if (object->getType() == Object::Point)
 	{
@@ -59,7 +65,7 @@ void PointHandles::draw(QPainter* painter, const MapWidget* widget, const Object
 		const TextObject* text = reinterpret_cast<const TextObject*>(object);
 		std::vector<QPointF> text_handles(text->controlPoints());
 		for (std::size_t i = 0; i < text_handles.size(); ++i)
-			draw(painter, widget->mapToViewport(text_handles[i]), NormalHandle, (hover_point == (int)i) ? ActiveHandleState : base_state);
+			draw(painter, widget->mapToViewport(text_handles[i]), NormalHandle, (hover_point == i) ? ActiveHandleState : base_state);
 	}
 	else if (object->getType() == Object::Path)
 	{
@@ -67,14 +73,12 @@ void PointHandles::draw(QPainter* painter, const MapWidget* widget, const Object
 		
 		const PathObject* path = reinterpret_cast<const PathObject*>(object);
 		
-		int num_parts = path->getNumParts();
-		for (int part_index = 0; part_index < num_parts; ++part_index)
+		for (const auto& part : path->parts())
 		{
-			const PathObject::PathPart& part = path->getPart(part_index);
-			bool have_curve = part.isClosed() && part.getNumCoords() > 3 && path->getCoordinate(part.end_index - 3).isCurveStart();
+			bool have_curve = part.isClosed() && part.size() > 3 && path->getCoordinate(part.last_index - 3).isCurveStart();
 			PointHandleType handle_type = NormalHandle;
 			
-			for (int i = part.start_index; i <= part.end_index; ++i)
+			for (auto i = part.first_index; i <= part.last_index; ++i)
 			{
 				MapCoord coord = path->getCoordinate(i);
 				if (coord.isClosePoint())
@@ -82,9 +86,9 @@ void PointHandles::draw(QPainter* painter, const MapWidget* widget, const Object
 				QPointF point = widget->mapToViewport(coord);
 				bool is_active = hover_point == i;
 				
-				if (i == part.start_index && !part.isClosed()) // || (i > part.start_index && path->getCoordinate(i-1).isHolePoint()))
+				if (i == part.first_index && !part.isClosed()) // || (i > part.start_index && path->getCoordinate(i-1).isHolePoint()))
 					handle_type = StartHandle;
-				else if (i == part.end_index && !part.isClosed()) // || coord.isHolePoint())
+				else if (i == part.last_index && !part.isClosed()) // || coord.isHolePoint())
 					handle_type = EndHandle;
 				else
 					handle_type = coord.isDashPoint() ? DashHandle : NormalHandle;
@@ -93,7 +97,7 @@ void PointHandles::draw(QPainter* painter, const MapWidget* widget, const Object
 				QPointF curve_handle;
 				if (draw_curve_handles && have_curve)
 				{
-					int curve_index = (i == part.start_index) ? (part.end_index - 1) : (i - 1);
+					auto curve_index = (i == part.first_index) ? (part.last_index - 1) : (i - 1);
 					curve_handle = widget->mapToViewport(path->getCoordinate(curve_index));
 					drawCurveHandleLine(painter, point, curve_handle, handle_type, is_active ? ActiveHandleState : base_state);
 					draw(painter, curve_handle, CurveHandle, (is_active || hover_point == curve_index) ? ActiveHandleState : base_state);

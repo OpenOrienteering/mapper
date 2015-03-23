@@ -2002,7 +2002,7 @@ void MapEditorController::updateObjectDependentActions()
 				if (contained_types & Symbol::Area)
 				{
 					have_area = true;
-					have_area_with_holes |= (*it)->asPath()->getNumParts() > 1;
+					have_area_with_holes |= (*it)->asPath()->parts().size() > 1;
 				}
 			}
 		}
@@ -2086,7 +2086,7 @@ void MapEditorController::updateObjectDependentActions()
 	boolean_merge_holes_act->setStatusTip(tr("Merge area holes together, or merge holes with the object boundary to cut out this part.") + (boolean_merge_holes_act->isEnabled() ? "" : (" " + tr("Select one area object with holes to activate this tool."))));
 	
 	// cutout_enabled
-	bool const cutout_enabled = single_object_selected && (have_area || have_line) && !have_area_with_holes && (*(map->selectedObjectsBegin()))->asPath()->getPart(0).isClosed();
+	bool const cutout_enabled = single_object_selected && (have_area || have_line) && !have_area_with_holes && (*(map->selectedObjectsBegin()))->asPath()->parts().front().isClosed();
 	cutout_physical_act->setEnabled(cutout_enabled);
 	cutout_physical_act->setStatusTip(tr("Create a cutout of some objects or the whole map.") + (cutout_physical_act->isEnabled() ? "" : (" " + tr("Select a closed path object as cutout shape to activate this tool."))));
 	cutaway_physical_act->setEnabled(cutout_enabled);
@@ -2311,9 +2311,9 @@ void MapEditorController::switchSymbolClicked()
 			}
 			else if (split_up)
 			{
-				for (int path_part = 0; path_part < path_object->getNumParts(); ++path_part)
+				for (const auto& part : path_object->parts())
 				{
-					PathObject* new_object = path_object->duplicatePart(path_part);
+					PathObject* new_object = new PathObject { part };
 					new_object->setSymbol(symbol, true);
 					new_objects.push_back(new_object);
 				}
@@ -2392,9 +2392,9 @@ void MapEditorController::fillBorderClicked()
 		if (split_up && object->getType() == Object::Path)
 		{
 			PathObject* path_object = object->asPath();
-			for (int path_part = 0; path_part < path_object->getNumParts(); ++path_part)
+			for (const auto& part : path_object->parts())
 			{
-				PathObject* new_object = path_object->duplicatePart(path_part);
+				PathObject* new_object = new PathObject { part };
 				new_object->setSymbol(symbol, true);
 				map->addObject(new_object);
 				new_objects.push_back(new_object);
@@ -2504,7 +2504,8 @@ void MapEditorController::switchDashesClicked()
 	map->emitSelectionEdited();
 }
 
-float connectPaths_FindClosestEnd(const std::vector<Object*>& objects, PathObject* a, int a_index, int path_part_a, bool path_part_a_begin, PathObject** out_b, int* out_b_index, int* out_path_part_b, bool* out_path_part_b_begin)
+/// \todo Review use of container API
+float connectPaths_FindClosestEnd(const std::vector<Object*>& objects, PathObject* a, int a_index, PathPartVector::size_type path_part_a, bool path_part_a_begin, PathObject** out_b, int* out_b_index, int* out_path_part_b, bool* out_path_part_b_begin)
 {
 	float best_dist_sq = std::numeric_limits<float>::max();
 	for (int i = a_index; i < (int)objects.size(); ++i)
@@ -2513,10 +2514,10 @@ float connectPaths_FindClosestEnd(const std::vector<Object*>& objects, PathObjec
 		if (b->getSymbol() != a->getSymbol())
 			continue;
 		
-		int num_parts = b->getNumParts();
-		for (int path_part_b = (a == b) ? path_part_a : 0; path_part_b < num_parts; ++path_part_b)
+		auto num_parts = b->parts().size();
+		for (PathPartVector::size_type path_part_b = (a == b) ? path_part_a : 0; path_part_b < num_parts; ++path_part_b)
 		{
-			PathObject::PathPart& part = b->getPart(path_part_b);
+			PathPart& part = b->parts()[path_part_b];
 			if (!part.isClosed())
 			{
 				for (int begin = 0; begin < 2; ++begin)
@@ -2525,8 +2526,8 @@ float connectPaths_FindClosestEnd(const std::vector<Object*>& objects, PathObjec
 					if (a == b && path_part_a == path_part_b && path_part_a_begin == path_part_b_begin)
 						continue;
 					
-					MapCoord& coord_a = a->getCoordinate(path_part_a_begin ? a->getPart(path_part_a).start_index : a->getPart(path_part_a).end_index);
-					MapCoord& coord_b = b->getCoordinate(path_part_b_begin ? b->getPart(path_part_b).start_index : b->getPart(path_part_b).end_index);
+					MapCoord& coord_a = a->getCoordinate(path_part_a_begin ? a->parts()[path_part_a].first_index : (a->parts()[path_part_a].last_index));
+					MapCoord& coord_b = b->getCoordinate(path_part_b_begin ? b->parts()[path_part_b].first_index : (b->parts()[path_part_b].last_index));
 					float distance_sq = coord_a.lengthSquaredTo(coord_b);
 					if (distance_sq < best_dist_sq)
 					{
@@ -2576,8 +2577,8 @@ void MapEditorController::connectPathsClicked()
 		PathObject* best_object_b = NULL;
 		int best_object_a_index = 0;
 		int best_object_b_index = 0;
-		int best_part_a = 0;
-		int best_part_b = 0;
+		auto best_part_a = PathPartVector::size_type { 0 };
+		auto best_part_b = PathPartVector::size_type { 0 };
 		bool best_part_a_begin = false;
 		bool best_part_b_begin = false;
 		float best_dist_sq = std::numeric_limits<float>::max();
@@ -2592,10 +2593,10 @@ void MapEditorController::connectPathsClicked()
 			close_distance_sq = qMax(close_distance_sq, 0.001f * main_view->pixelToLength(6));
 			close_distance_sq = qPow(close_distance_sq, 2);
 			
-			int num_parts = a->getNumParts();
-			for (int path_part_a = 0; path_part_a < num_parts; ++path_part_a)
+			auto num_parts = a->parts().size();
+			for (PathPartVector::size_type path_part_a = 0; path_part_a < num_parts; ++path_part_a)
 			{
-				PathObject::PathPart& part = a->getPart(path_part_a);
+				PathPart& part = a->parts()[path_part_a];
 				if (!part.isClosed())
 				{
 					PathObject* b;
@@ -2638,26 +2639,26 @@ void MapEditorController::connectPathsClicked()
 		// Connect the best parts
 		if (best_part_a_begin && best_part_b_begin)
 		{
-			best_object_b->reversePart(best_part_b);
+			best_object_b->parts()[best_part_b].reverse();
 			best_object_a->connectPathParts(best_part_a, best_object_b, best_part_b, true);
 		}
 		else if (best_part_a_begin && !best_part_b_begin)
 		{
 			if (best_object_a == best_object_b && best_part_a == best_part_b)
-				best_object_a->getPart(best_part_a).connectEnds();
+				best_object_a->parts()[best_part_a].connectEnds();
 			else
 				best_object_a->connectPathParts(best_part_a, best_object_b, best_part_b, true);
 		}
 		else if (!best_part_a_begin && best_part_b_begin)
 		{
 			if (best_object_a == best_object_b && best_part_a == best_part_b)
-				best_object_a->getPart(best_part_a).connectEnds();
+				best_object_a->parts()[best_part_a].connectEnds();
 			else
 				best_object_a->connectPathParts(best_part_a, best_object_b, best_part_b, false);
 		}
 		else //if (!best_part_a_begin && !best_part_b_begin)
 		{
-			best_object_b->reversePart(best_part_b);
+			best_object_b->parts()[best_part_b].reverse();
 			best_object_a->connectPathParts(best_part_a, best_object_b, best_part_b, false);
 		}
 		
@@ -2665,10 +2666,10 @@ void MapEditorController::connectPathsClicked()
 		{
 			// Copy all remaining parts of object b over to a
 			best_object_a->getCoordinate(best_object_a->getCoordinateCount() - 1).setHolePoint(true);
-			for (int i = 0; i < best_object_b->getNumParts(); ++i)
+			for (auto i = PathPartVector::size_type { 0 }; i < best_object_b->parts().size(); ++i)
 			{
 				if (i != best_part_b)
-					best_object_a->appendPathPart(best_object_b, i);
+					best_object_a->appendPathPart(best_object_b->parts()[i]);
 			}
 			
 			// Create an add step for b
@@ -2830,7 +2831,7 @@ void MapEditorController::convertToCurvesClicked()
 		{
 			undo_step->addObject(part->findObjectIndex(path), undo_duplicate);
 			// TODO: make threshold configurable?
-			const float threshold = 0.08f;
+			const auto threshold = 0.08;
 			path->simplify(NULL, threshold);
 		}
 		path->update();
@@ -2849,7 +2850,7 @@ void MapEditorController::convertToCurvesClicked()
 void MapEditorController::simplifyPathClicked()
 {
 	// TODO: make threshold configurable!
-	const float threshold = 0.1f;
+	const auto threshold = 0.1;
 	
 	ReplaceObjectsUndoStep* undo_step = new ReplaceObjectsUndoStep(map);
 	MapPart* part = map->getCurrentPart();
@@ -3329,7 +3330,7 @@ void MapEditorController::removeMapPart()
 	
 	if (button == QMessageBox::Yes)
 	{
-		std::size_t index = map->getCurrentPartIndex();
+		auto index = map->getCurrentPartIndex();
 		map->push(new MapPartUndoStep(map, MapPartUndoStep::AddMapPart, index));
 		map->removePart(index);
 	}
@@ -3363,8 +3364,8 @@ void MapEditorController::changeMapPart(int index)
 
 void MapEditorController::reassignObjectsToMapPart(int target)
 {
-	std::size_t current = map->getCurrentPartIndex();
-	std::size_t begin   = map->reassignObjectsToMapPart(map->selectedObjectsBegin(), map->selectedObjectsEnd(), current, target);
+	auto current = map->getCurrentPartIndex();
+	auto begin   = map->reassignObjectsToMapPart(map->selectedObjectsBegin(), map->selectedObjectsEnd(), current, target);
 	
 	SwitchPartUndoStep* undo = new SwitchPartUndoStep(map, target, current);
 	for (std::size_t i = begin, end = map->getPart(target)->getNumObjects(); i < end; ++i)
@@ -3387,10 +3388,10 @@ void MapEditorController::mergeCurrentMapPartTo(int target)
 	{
 		// Beware that the source part is removed, and
 		// the target part's index might change during merge.
-		std::size_t source = map->getCurrentPartIndex();
+		auto source = map->getCurrentPartIndex();
 		UndoStep* add_part_step = new MapPartUndoStep(map, MapPartUndoStep::AddMapPart, source);
 		
-		std::size_t begin  = map->mergeParts(source, target);
+		auto begin  = map->mergeParts(source, target);
 		
 		SwitchPartUndoStep* switch_part_undo = new SwitchPartUndoStep(map, target, source);
 		for (std::size_t i = begin, end = target_part->getNumObjects(); i < end; ++i)
@@ -3422,10 +3423,10 @@ void MapEditorController::mergeAllMapParts()
 		map->setCurrentPartIndex(0);
 		MapPart* target_part = map->getPart(0);
 		
-		for (std::size_t i = map->getNumParts() - 1; i > 0; --i)
+		for (auto i = map->getNumParts() - 1; i > 0; --i)
 		{
 			UndoStep* add_part_step = new MapPartUndoStep(map, MapPartUndoStep::AddMapPart, i);
-			std::size_t begin = map->mergeParts(i, 0);
+			auto begin = map->mergeParts(i, 0);
 			SwitchPartUndoStep* switch_part_undo = new SwitchPartUndoStep(map, 0, i);
 			for (std::size_t j = begin, end = target_part->getNumObjects(); j < end; ++j)
 				switch_part_undo->addObject(j);

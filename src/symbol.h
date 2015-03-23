@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012, 2013, 2014 Kai Pastor
+ *    Copyright 2012-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -27,7 +27,6 @@
 #include <QRgb>
 
 #include "core/map_coord.h"
-#include "path_coord.h"
 #include "file_format.h"
 
 QT_BEGIN_NAMESPACE
@@ -36,22 +35,25 @@ class QXmlStreamReader;
 class QXmlStreamWriter;
 QT_END_NAMESPACE
 
+class AreaSymbol;
+class CombinedSymbol;
+class LineSymbol;
 class Map;
 class MapColor;
 class MapColorMap;
+class MapRenderables;
 class Object;
-class CombinedSymbol;
-class TextSymbol;
-class AreaSymbol;
-class LineSymbol;
+class ObjectRenderables;
+class PathObject;
+class PathPartVector;
 class PointSymbol;
+class Renderable;
+class Symbol;
 class SymbolPropertiesWidget;
 class SymbolSettingDialog;
-class Renderable;
-class MapRenderables;
-class ObjectRenderables;
+class TextSymbol;
+class VirtualCoordVector;
 
-class Symbol;
 typedef QHash<QString, Symbol*> SymbolDictionary;
 
 
@@ -162,14 +164,46 @@ public:
 	
 	
 	/**
-	 * Creates renderables to display one specific instance of this symbol
-	 * defined by the given object and coordinates.
+	 * Creates renderables for a generic object.
+	 * 
+	 * This will create the renderables according to the object's properties
+	 * and the given coordinates.
 	 * 
 	 * NOTE: methods which implement this should use the given coordinates
 	 * instead of the object's coordinates, as those can be an updated,
 	 * transformed version of the object's coords!
 	 */
-	virtual void createRenderables(const Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output) const = 0;
+	virtual void createRenderables(const Object *object, const VirtualCoordVector &coords, ObjectRenderables &output) const = 0;
+	
+	/**
+	 * Creates renderables for a path object.
+	 * 
+	 * This will create the renderables according to the object's properties
+	 * and the coordinates given by the path_parts. This allows the immediate
+	 * use of precalculated meta-information on paths.
+	 * 
+	 * \see createRenderables()
+	 */
+	virtual void createRenderables(const PathObject* object, const PathPartVector& path_parts, ObjectRenderables &output) const;
+	
+	
+	/**
+	 * Creates baseline renderables for a generic object.
+	 *
+	 * Baseline renderables show the coordinate paths with minimum line width,
+	 * and optionally a hatching pattern for areas.
+	 * 
+	 * \see createRenderables()
+	 */
+	virtual void createBaselineRenderables(const Object *object, const VirtualCoordVector &coords, ObjectRenderables &output) const;
+	
+	/**
+	 * Creates baseline renderables for a path object.
+	 * 
+	 * \see createBaselineRenderables()
+	 */
+	virtual void createBaselineRenderables(const PathObject *object, const PathPartVector& path_parts, ObjectRenderables &output, bool hatch_areas) const;
+	
 	
 	/**
 	 * Called by the map in which the symbol is to notify it of a color being
@@ -275,13 +309,6 @@ public:
 	/** Static read function; reads the type number, creates a symbol of
 	 *  this type and loads it. Returns true if successful. */
 	static bool loadSymbol(Symbol*& symbol, QIODevice* stream, int version, Map* map);
-	
-	/**
-	 * Creates "baseline" renderables for an object - symbol combination.
-	 * These only show the coordinate paths with minimum line width,
-	 * and optionally a hatching pattern for areas.
-	 */
-	static void createBaselineRenderables(const Object* object, const Symbol* symbol, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output, bool hatch_areas);
 	
 	/**
 	 * Returns if the symbol types can be applied to the same object types

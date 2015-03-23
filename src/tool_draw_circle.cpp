@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2013-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -262,7 +263,7 @@ void DrawCircleTool::updateCircle()
 	preview_path->addCoordinate((first_pos_map - right + across).toCurveStartMapCoord());
 	preview_path->addCoordinate((first_pos_map - right + m_kappa * across).toMapCoord());
 	preview_path->addCoordinate((first_pos_map - kappa * right).toMapCoord());
-	preview_path->getPart(0).setClosed(true, false);
+	preview_path->parts().front().setClosed(true, false);
 	
 	updatePreviewPath();
 	setDirtyRect();

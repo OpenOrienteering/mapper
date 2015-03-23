@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012, 2013, 2014 Kai Pastor
+ *    Copyright 2012-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -242,134 +242,142 @@ Symbol* LineSymbol::duplicate(const MapColorMap* color_map) const
 	return new_line;
 }
 
-void LineSymbol::createRenderables(const Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output) const
+void LineSymbol::createRenderables(const Object* object, const VirtualCoordVector& coords, ObjectRenderables& output) const
 {
-	const PathObject* path = reinterpret_cast<const PathObject*>(object);
-	int num_parts = path->getNumParts();
-	if (num_parts == 1)
-		createRenderables(object, path->getPart(0).isClosed(), flags, coords, (PathCoordVector*)&path->getPathCoordinateVector(), output);
-	else if (num_parts > 1)
+	PathPartVector path_parts = PathPart::calculatePathParts(coords);
+	for (const auto& part : path_parts)
 	{
-		// TODO: optimize, remove the copying
-		MapCoordVector part_flags;
-		MapCoordVectorF part_coords;
-		PathCoordVector part_path_coords;
-		for (int i = 0; i < num_parts; ++i)
-		{
-			const PathObject::PathPart& part = path->getPart(i);
-			part_flags.assign(flags.begin() + part.start_index, flags.begin() + (part.end_index + 1));
-			part_coords.assign(coords.begin() + part.start_index, coords.begin() + (part.end_index + 1));
-			part_path_coords.assign(path->getPathCoordinateVector().begin() + part.path_coord_start_index,
-									 path->getPathCoordinateVector().begin() + (part.path_coord_end_index + 1));
-			createRenderables(object, part.isClosed(), part_flags, part_coords, &part_path_coords, output);
-		}
+		createPathCoordRenderables(object, part, part.isClosed(), output);
 	}
 }
 
-void LineSymbol::createRenderables(const Object* object, bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, PathCoordVector* path_coords, ObjectRenderables& output) const
+void LineSymbol::createRenderables(const PathObject* object, const PathPartVector& path_parts, ObjectRenderables& output) const
 {
-	// TODO: Optimization: Use pre-supplied path_coords in more places
+	for (const auto& part : path_parts)
+	{
+		createPathCoordRenderables(object, part, part.isClosed(), output);
+	}
+}
+
+void LineSymbol::createPathRenderables(const Object* object, bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output) const
+{
+	auto path = VirtualPath { flags, coords };
+	auto last = path.path_coords.update(0);
+	createPathCoordRenderables(object, path, path_closed, output);
 	
-	if (coords.size() < 2)
+	Q_ASSERT(last+1 == coords.size()); Q_UNUSED(last);
+}
+
+void LineSymbol::createPathCoordRenderables(const Object* object, const VirtualPath& path, bool path_closed, ObjectRenderables& output) const
+{
+	if (path.size() < 2)
 		return;
 	
-	PathCoordVector local_path_coords;
-	if (!path_coords)
-	{
-		PathCoord::calculatePathCoords(flags, coords, &local_path_coords);
-		path_coords = &local_path_coords;
-	}
+	auto& coords = path.coords;
 	
 	// Start or end symbol?
-	if (start_symbol)
+	if (start_symbol && !start_symbol->isEmpty())
 	{
-		bool ok;
-		MapCoordF tangent = PathCoord::calculateTangent(coords, 0, false, ok);
-		if (ok)
+		auto orientation = 0.0f;
+		if (start_symbol->isRotatable())
 		{
-			// NOTE: misuse of the point symbol
-			PointObject point_object(start_symbol);
-			if (point_object.getSymbol()->asPoint()->isRotatable())
-				point_object.setRotation(atan2(-tangent.getY(), tangent.getX()));
-			start_symbol->createRenderables(&point_object, point_object.getRawCoordinateVector(), coords, output);
+			bool ok;
+			MapCoordF tangent = path.calculateOutgoingTangent(0, ok);
+			if (ok)
+				orientation = tangent.getAngle();
 		}
+		start_symbol->createRenderablesScaled(coords[0], orientation, output);
 	}
-	if (end_symbol)
+	
+	if (end_symbol && !end_symbol->isEmpty())
 	{
 		size_t last = coords.size() - 1;
-		
-		bool ok;
-		MapCoordF tangent = PathCoord::calculateTangent(coords, last, true, ok);
-		if (ok)
+		auto orientation = 0.0f;
+		if (end_symbol->isRotatable())
 		{
-			PointObject point_object(end_symbol);
-			if (point_object.getSymbol()->asPoint()->isRotatable())
-				point_object.setRotation(atan2(-tangent.getY(), tangent.getX()));
-			MapCoordVectorF end_coord;
-			end_coord.push_back(coords[last]);
-			end_symbol->createRenderables(&point_object, point_object.getRawCoordinateVector(), end_coord, output);
-		}
+			bool ok;
+			MapCoordF tangent = path.calculateIncomingTangent(last, ok);
+			if (ok)
+				orientation = tangent.getAngle();
+		}				
+		end_symbol->createRenderablesScaled(coords[last], orientation, output);
 	}
 	
 	// Dash symbols?
 	if (dash_symbol && !dash_symbol->isEmpty())
-		createDashSymbolRenderables(object, path_closed, flags, coords, output);
+	{
+		createDashSymbolRenderables(path, path_closed, output);
+	}
 	
 	// The line itself
 	MapCoordVector processed_flags;
 	MapCoordVectorF processed_coords;
 	bool create_border = have_border_lines && (border.isVisible() || right_border.isVisible());
+	bool pointed_cap = cap_style == PointedCap && pointed_cap_length > 0;
 	if (!dashed)
 	{
 		// Base line?
 		if (line_width > 0)
 		{
-			if (color && (cap_style != PointedCap || pointed_cap_length == 0) && !create_border)
-				output.insertRenderable(new LineRenderable(this, coords, flags, *path_coords, path_closed));
-			else if (create_border || (cap_style == PointedCap && pointed_cap_length > 0))
+			if (color && !pointed_cap && !create_border)
 			{
-				int part_start = 0;
-				int part_end = 0;
-				PathCoordVector line_coords;
-				while (PathCoord::getNextPathPart(flags, coords, part_start, part_end, &line_coords, false, false))
-				{
-					int cur_line_coord = 1;
-					bool has_start = !(part_start == 0 && path_closed);
-					bool has_end = !(part_end == (int)flags.size() - 1 && path_closed);
-					
-					processContinuousLine(object, path_closed, flags, coords, line_coords, 0, line_coords[line_coords.size() - 1].clen,
-										  has_start, has_end, cur_line_coord, processed_flags, processed_coords, true, false, output);
-				}
+				output.insertRenderable(new LineRenderable(this, path, path_closed));
+			}
+			else if (create_border || pointed_cap)
+			{
+				auto last = coords.size();
+				auto part_start = MapCoordVector::size_type { 0 };
+				auto next_part_start = last; //path_coords.update(part_start);
+				
+				bool has_start = !(part_start == 0 && path_closed);
+				bool has_end = !(next_part_start == last && path_closed);
+				
+				auto start = SplitPathCoord::begin(path.path_coords);
+				auto end   = SplitPathCoord::end(path.path_coords);
+				processContinuousLine(path, start, end,
+				                      has_start, has_end, processed_flags, processed_coords, false, output);
+				
 			}
 		}
 		
 		// Symbols?
 		if (mid_symbol && !mid_symbol->isEmpty() && segment_length > 0)
-			createDottedRenderables(object, path_closed, flags, coords, output);
+			createMidSymbolRenderables(path, path_closed, output);
+	}
+	else if (dash_length > 0)
+	{
+		// Dashed lines
+		processDashedLine(path, path_closed, processed_flags, processed_coords, output);
 	}
 	else
 	{
-		// Dashed lines
-		if (dash_length > 0)
-			processDashedLine(object, path_closed, flags, coords, processed_flags, processed_coords, output);
-		else
-			return;	// wrong parameter
+		// Invalid configuration
+		return;	
 	}
 	
-	Q_ASSERT(processed_coords.size() != 1);
-	if (processed_coords.size() >= 2)
+	if (!processed_coords.empty() && (color || create_border))
 	{
-		// Create main line renderable
-		if (color)
-			output.insertRenderable(new LineRenderable(this, processed_coords, processed_flags, *path_coords, path_closed));
+		Q_ASSERT(processed_coords.size() != 1);
 		
-		// Border lines?
+		VirtualPath path = { processed_flags, processed_coords };
+		path.path_coords.update(path.first_index);
+		
+		if (color)
+		{
+			output.insertRenderable(new LineRenderable(this, path, path_closed));
+		}
+		
 		if (create_border)
-			createBorderLines(object, processed_flags, processed_coords, path_closed, output);
+		{
+			createBorderLines(object, path, output);
+		}
 	}
 }
 
-void LineSymbol::createBorderLines(const Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, bool path_closed, ObjectRenderables& output) const
+void LineSymbol::createBorderLines(
+        const Object* object,
+        const VirtualPath& path,
+        ObjectRenderables& output) const
 {
 	double main_shift = 0.0005 * line_width;
 	
@@ -385,31 +393,37 @@ void LineSymbol::createBorderLines(const Object* object, const MapCoordVector& f
 		{
 			MapCoordVector dashed_flags;
 			MapCoordVectorF dashed_coords;
-			
-			border_symbol.processDashedLine(object, path_closed, flags, coords, dashed_flags, dashed_coords, output);
+			border_symbol.processDashedLine(path, path.isClosed(), dashed_flags, dashed_coords, output);
 			border_symbol.dashed = false;	// important, otherwise more dashes might be added by createRenderables()!
 			
-			shiftCoordinates(dashed_flags, dashed_coords, path_closed, main_shift, border_flags, border_coords);
-			border_symbol.createRenderables(object, path_closed, border_flags, border_coords, NULL, output);
-			shiftCoordinates(dashed_flags, dashed_coords, path_closed, -main_shift, border_flags, border_coords);
-			border_symbol.createRenderables(object, path_closed, border_flags, border_coords, NULL, output);
+			auto dashed_path = VirtualPath { dashed_flags, dashed_coords };
+			shiftCoordinates(dashed_path, main_shift, border_flags, border_coords);
+			border_symbol.createPathRenderables(object, path.isClosed(), border_flags, border_coords, output);
+			shiftCoordinates(dashed_path, -main_shift, border_flags, border_coords);
+			border_symbol.createPathRenderables(object, path.isClosed(), border_flags, border_coords, output);
 		}
 		else
 		{
-			shiftCoordinates(flags, coords, path_closed, main_shift, border_flags, border_coords);
-			border_symbol.createRenderables(object, path_closed, border_flags, border_coords, NULL, output);
-			shiftCoordinates(flags, coords, path_closed, -main_shift, border_flags, border_coords);
-			border_symbol.createRenderables(object, path_closed, border_flags, border_coords, NULL, output);
+			shiftCoordinates(path, main_shift, border_flags, border_coords);
+			border_symbol.createPathRenderables(object, path.isClosed(), border_flags, border_coords, output);
+			shiftCoordinates(path, -main_shift, border_flags, border_coords);
+			border_symbol.createPathRenderables(object, path.isClosed(), border_flags, border_coords, output);
 		}
 	}
 	else
 	{
-		createBorderLine(object, flags, coords, path_closed, output, border, -main_shift);
-		createBorderLine(object, flags, coords, path_closed, output, right_border, main_shift);
+		createBorderLine(object, path, path.isClosed(), output, border, -main_shift);
+		createBorderLine(object, path, path.isClosed(), output, right_border, main_shift);
 	}
 }
 
-void LineSymbol::createBorderLine(const Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, bool path_closed, ObjectRenderables& output, const LineSymbolBorder& border, double main_shift) const
+void LineSymbol::createBorderLine(
+        const Object* object,
+        const VirtualPath& path,
+        bool path_closed,
+        ObjectRenderables& output,
+        const LineSymbolBorder& border,
+        double main_shift ) const
 {
 	MapCoordVector border_flags;
 	MapCoordVectorF border_coords;
@@ -422,20 +436,21 @@ void LineSymbol::createBorderLine(const Object* object, const MapCoordVector& fl
 		MapCoordVector dashed_flags;
 		MapCoordVectorF dashed_coords;
 		
-		border_symbol.processDashedLine(object, path_closed, flags, coords, dashed_flags, dashed_coords, output);
+		border_symbol.processDashedLine(path, path_closed, dashed_flags, dashed_coords, output);
 		border_symbol.dashed = false;	// important, otherwise more dashes might be added by createRenderables()!
 		
-		shiftCoordinates(dashed_flags, dashed_coords, path_closed, main_shift, border_flags, border_coords);
-		border_symbol.createRenderables(object, path_closed, border_flags, border_coords, NULL, output);
+		auto dashed_path = VirtualPath { dashed_flags, dashed_coords };
+		shiftCoordinates(dashed_path, main_shift, border_flags, border_coords);
 	}
 	else
 	{
-		shiftCoordinates(flags, coords, path_closed, main_shift, border_flags, border_coords);
-		border_symbol.createRenderables(object, path_closed, border_flags, border_coords, NULL, output);
+		shiftCoordinates(path, main_shift, border_flags, border_coords);
 	}
+	
+	border_symbol.createPathRenderables(object, path_closed, border_flags, border_coords, output);
 }
 
-void LineSymbol::shiftCoordinates(const MapCoordVector& flags, const MapCoordVectorF& coords, bool path_closed, double main_shift, MapCoordVector& out_flags, MapCoordVectorF& out_coords) const
+void LineSymbol::shiftCoordinates(const VirtualPath& path, double main_shift, MapCoordVector& out_flags, MapCoordVectorF& out_coords) const
 {
 	const float curve_threshold = 0.03f;	// TODO: decrease for export/print?
 	const int MAX_OFFSET = 16;
@@ -453,7 +468,7 @@ void LineSymbol::shiftCoordinates(const MapCoordVector& flags, const MapCoordVec
 	double u_border_shift = 0.001 * ((main_shift > 0.0 && areBordersDifferent()) ? right_border.shift : border.shift);
 	double shift = main_shift + ((main_shift > 0.0) ? u_border_shift : -u_border_shift);
 	
-	int size = flags.size();
+	auto size = path.size();
 	out_flags.clear();
 	out_coords.clear();
 	out_flags.reserve(size);
@@ -467,14 +482,14 @@ void LineSymbol::shiftCoordinates(const MapCoordVector& flags, const MapCoordVec
 	          vector_in, vector_out,
 	          tangent_in, tangent_out, 
 	          middle0, middle1;
-	int last_i = size-1;
-	for (int i = 0; i < size; ++i)
+	auto last_i = path.last_index;
+	for (auto i = path.first_index; i < size; ++i)
 	{
-		const MapCoordF& coords_i = coords[i];
-		const MapCoord& flags_i  = flags[i];
+		auto coords_i = path.coords[i];
+		const auto& flags_i  = path.coords.flags[i];
 
-		vector_in = PathCoord::calculateIncomingTangent(coords, path_closed, i, ok_in);
-		vector_out = PathCoord::calculateOutgoingTangent(coords, path_closed, i, ok_out);
+		vector_in  = path.calculateIncomingTangent(i, ok_in);
+		vector_out = path.calculateOutgoingTangent(i, ok_out);
 		
 		if (!ok_in)
 		{
@@ -505,14 +520,14 @@ void LineSymbol::shiftCoordinates(const MapCoordVector& flags, const MapCoordVec
 			//qDebug() << "No valid tangent at" << __FILE__ << __LINE__;
 			segment_start = coords_i;
 		}
-		else if (!path_closed && i == 0)
+		else if (i == 0 && !path.isClosed())
 		{
 			// Simple start point
 			right_vector = tangent_out;
 			right_vector.perpRight();
 			segment_start = coords_i + shift * right_vector;
 		}
-		else if (!path_closed && i == last_i)
+		else if (i == last_i && !path.isClosed())
 		{
 			// Simple end point
 			right_vector = tangent_in;
@@ -525,7 +540,7 @@ void LineSymbol::shiftCoordinates(const MapCoordVector& flags, const MapCoordVec
 			right_vector = tangent_out;
 			right_vector.perpRight();
 			
-			middle0 = MapCoordF(tangent_in.getX() + tangent_out.getX(), tangent_in.getY() + tangent_out.getY());
+			middle0 = tangent_in + tangent_out;
 			middle0.normalize();
 			double offset;
 				
@@ -537,9 +552,9 @@ void LineSymbol::shiftCoordinates(const MapCoordVector& flags, const MapCoordVec
 				
 				if (join_style == BevelJoin || join_style == RoundJoin)
 				{
-					middle1 = MapCoordF(tangent_in.getX() + middle0.getX(), tangent_in.getY() + middle0.getY());
+					middle1 = tangent_in + middle0;
 					middle1.normalize();
-					double phi1 = acos(middle1.getX() * tangent_in.getX() + middle1.getY() * tangent_in.getY());
+					double phi1 = acos(middle1.dot(tangent_in));
 					offset = tan(phi1) * u_border_shift;
 					
 					if (i > 0 && !qIsNaN(offset))
@@ -564,13 +579,13 @@ void LineSymbol::shiftCoordinates(const MapCoordVector& flags, const MapCoordVec
 				{
 					// miter_check has no concrete interpretation, 
 					// but was derived by mathematical simplifications.
-					double miter_check = middle0.getX() * tangent_in.getX() + middle0.getY() * tangent_in.getY();
+					double miter_check = middle0.dot(tangent_in);
 					if (miter_check <= miter_reference)
 					{
 						// Two border corner points
-						middle1 = MapCoordF(tangent_in.getX() + middle0.getX(), tangent_in.getY() + middle0.getY());
+						middle1 = tangent_in + middle0;
 						middle1.normalize();
-						double phi1 = acos(middle1.getX() * tangent_in.getX() + middle1.getY() * tangent_in.getY());
+						double phi1 = acos(middle1.dot(tangent_in));
 						offset = miter_limit * fabs(main_shift) + tan(phi1) * u_border_shift;
 						
 						if (i > 0 && !qIsNaN(offset))
@@ -585,7 +600,7 @@ void LineSymbol::shiftCoordinates(const MapCoordVector& flags, const MapCoordVec
 					else
 					{
 						middle0.perpRight();
-						double phi = acos(middle0.getX() * tangent_in.getX() + middle0.getY() * tangent_in.getY());
+						double phi = acos(middle0.dot(tangent_in));
 						offset = fabs(1.0/tan(phi) * shift);
 					}
 				}
@@ -598,13 +613,13 @@ void LineSymbol::shiftCoordinates(const MapCoordVector& flags, const MapCoordVec
 				// single or second border corner point
 				segment_start = coords_i + shift * right_vector - offset * tangent_out;
 			}
-			else if (i > 2 && flags[i-3].isCurveStart() && flags_i.isCurveStart())
+			else if (i > 2 && path.coords.flags[i-3].isCurveStart() && flags_i.isCurveStart())
 			{
 				// Inner side of corner (or no corner), and both sides are beziers
 				// old behaviour
 				right_vector = middle0;
 				right_vector.perpRight();
-				double phi = acos(right_vector.getX() * tangent_in.getX() + right_vector.getY() * tangent_in.getY());
+				double phi = acos(right_vector.dot(tangent_in));
 				double sin_phi = sin(phi);
 				double inset = (sin_phi > (1.0/miter_limit)) ? (1.0 / sin_phi) : miter_limit;
 				segment_start = coords_i + (shift * inset) * right_vector;
@@ -615,7 +630,7 @@ void LineSymbol::shiftCoordinates(const MapCoordVector& flags, const MapCoordVec
 				
 				// Default solution
 				middle0.perpRight();
-				double phi = acos(middle0.getX() * tangent_in.getX() + middle0.getY() * tangent_in.getY());
+				double phi = acos(middle0.dot(tangent_in));
 				double tan_phi = tan(phi);
 				offset = -fabs(shift/tan_phi);
 				
@@ -667,53 +682,55 @@ void LineSymbol::shiftCoordinates(const MapCoordVector& flags, const MapCoordVec
 			}
 		}
 		
-		out_flags.push_back(flags_i);
+		out_flags.emplace_back(flags_i);
 		out_flags.back().setCurveStart(false); // Must not be set if bezier.shifted() fails!
-		out_coords.push_back(segment_start);
+		out_coords.emplace_back(segment_start);
 		
 		if (flags_i.isCurveStart())
 		{
+			Q_ASSERT(i+2 < path.last_index);
+			
 			// Use QBezierCopy code to shift the curve, but set start and end point manually to get the correct end points (because of line joins)
 			// TODO: it may be necessary to remove some of the generated curves in the case an outer point is moved inwards
 			if (main_shift > 0.0)
 			{
-				QBezier bezier = QBezier::fromPoints(coords[(i+3) % size].toQPointF(), coords[i+2].toQPointF(), coords[i+1].toQPointF(), coords_i.toQPointF());
-				int count = bezier.shifted(offsetCurves, MAX_OFFSET, qAbs(shift), curve_threshold);
-				for (int j = count - 1; j >= 0; --j)
+				QBezier bezier = QBezier::fromPoints(path.coords[i+3].toQPointF(), path.coords[i+2].toQPointF(), path.coords[i+1].toQPointF(), coords_i.toQPointF());
+				auto count = bezier.shifted(offsetCurves, MAX_OFFSET, qAbs(shift), curve_threshold);
+				for (auto j = count - 1; j >= 0; --j)
 				{
-					out_flags[out_flags.size() - 1].setCurveStart(true);
+					out_flags.back().setCurveStart(true);
 					
-					out_flags.push_back(no_flags);
-					out_coords.push_back(MapCoordF(offsetCurves[j].pt3().x(), offsetCurves[j].pt3().y()));
+					out_flags.emplace_back();
+					out_coords.emplace_back(offsetCurves[j].pt3());
 					
-					out_flags.push_back(no_flags);
-					out_coords.push_back(MapCoordF(offsetCurves[j].pt2().x(), offsetCurves[j].pt2().y()));
+					out_flags.emplace_back();
+					out_coords.emplace_back(offsetCurves[j].pt2());
 					
 					if (j > 0)
 					{
-						out_flags.push_back(no_flags);
-						out_coords.push_back(MapCoordF(offsetCurves[j].pt1().x(), offsetCurves[j].pt1().y()));
+						out_flags.emplace_back();
+						out_coords.emplace_back(offsetCurves[j].pt1());
 					}
 				}
 			}
 			else
 			{
-				QBezier bezier = QBezier::fromPoints(coords[i].toQPointF(), coords[i+1].toQPointF(), coords[i+2].toQPointF(), coords[(i+3) % size].toQPointF());
+				QBezier bezier = QBezier::fromPoints(path.coords[i].toQPointF(), path.coords[i+1].toQPointF(), path.coords[i+2].toQPointF(), path.coords[i+3].toQPointF());
 				int count = bezier.shifted(offsetCurves, MAX_OFFSET, qAbs(shift), curve_threshold);
 				for (int j = 0; j < count; ++j)
 				{
-					out_flags[out_flags.size() - 1].setCurveStart(true);
+					out_flags.back().setCurveStart(true);
 					
-					out_flags.push_back(no_flags);
-					out_coords.push_back(MapCoordF(offsetCurves[j].pt2().x(), offsetCurves[j].pt2().y()));
+					out_flags.emplace_back();
+					out_coords.emplace_back(offsetCurves[j].pt2());
 					
-					out_flags.push_back(no_flags);
-					out_coords.push_back(MapCoordF(offsetCurves[j].pt3().x(), offsetCurves[j].pt3().y()));
+					out_flags.emplace_back();
+					out_coords.emplace_back(offsetCurves[j].pt3());
 					
 					if (j < count - 1)
 					{
-						out_flags.push_back(no_flags);
-						out_coords.push_back(MapCoordF(offsetCurves[j].pt4().x(), offsetCurves[j].pt4().y()));
+						out_flags.emplace_back();
+						out_coords.emplace_back(offsetCurves[j].pt4());
 					}
 				}
 			}
@@ -723,53 +740,109 @@ void LineSymbol::shiftCoordinates(const MapCoordVector& flags, const MapCoordVec
 	}
 }
 
-void LineSymbol::processContinuousLine(const Object* object, bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, const PathCoordVector& line_coords,
-									   float start, float end, bool has_start, bool has_end, int& cur_line_coord,
-									   MapCoordVector& processed_flags, MapCoordVectorF& processed_coords, bool include_first_point, bool set_mid_symbols, ObjectRenderables& output) const
+void LineSymbol::processContinuousLine(
+        const VirtualPath& path,
+        const SplitPathCoord& start,
+        const SplitPathCoord& end,
+        bool has_start,
+        bool has_end,
+        MapCoordVector& processed_flags,
+        MapCoordVectorF& processed_coords,
+        bool set_mid_symbols,
+        ObjectRenderables& output ) const
 {
-	Q_UNUSED(path_closed);
-	
-	float pointed_cap_length_f = (cap_style == PointedCap) ? (0.001f * pointed_cap_length) : 0;
-	float line_length = end - start;
-	
 	bool create_line = true;
-	int num_caps = 2 - (has_end ? 0 : 1) - (has_start ? 0 : 1);
-	float adapted_cap_length = pointed_cap_length_f;
-	if (num_caps > 0 && line_length / num_caps <= adapted_cap_length)
+	float effective_cap_length = 0.0f;
+	if (cap_style == PointedCap && (has_start || has_end))
 	{
-		create_line = false;
-		adapted_cap_length = line_length / num_caps;
+		effective_cap_length = 0.001f * pointed_cap_length;
+		int num_caps = 2 - (has_end ? 0 : 1) - (has_start ? 0 : 1);
+		auto max_effective_cap_length = (end.clen - start.clen) / num_caps;
+		if (effective_cap_length >= max_effective_cap_length)
+		{
+			create_line = false;
+			effective_cap_length = max_effective_cap_length;
+		}
 	}
-	bool has_start_cap = has_start && adapted_cap_length > 0;
-	bool has_end_cap = has_end && adapted_cap_length > 0;
 	
-	if (has_start_cap)
+	auto split      = start;
+	auto next_split = SplitPathCoord();
+	
+	if (has_start && effective_cap_length > 0.0f)
 	{
 		// Create pointed line cap start
-		createPointedLineCap(object, flags, coords, line_coords, start, start + adapted_cap_length, cur_line_coord, false, output);
+		next_split = SplitPathCoord::at(start.clen + effective_cap_length, start);
+		createPointedLineCap(path, split, next_split, false, output);
+		split = next_split;
 	}
 	
 	if (create_line)
 	{
 		// Add line to processed_coords/flags
-		calculateCoordinatesForRange(flags, coords, line_coords, start + (has_start_cap ? adapted_cap_length : 0), end - (has_end_cap ? adapted_cap_length : 0), cur_line_coord,
-									 include_first_point, processed_flags, processed_coords, NULL, set_mid_symbols, output);
+		
+		PathCoord::length_type mid_symbol_distance_f = 0.001 * mid_symbol_distance;
+		auto mid_symbols_length   = (qMax(1, mid_symbols_per_spot) - 1) * mid_symbol_distance_f;
+		auto effective_end_length = end.clen;
+		if (has_end)
+		{
+			effective_end_length -= effective_cap_length;
+		}
+		
+		set_mid_symbols = set_mid_symbols && mid_symbol && !mid_symbol->isEmpty() && mid_symbols_per_spot;
+		if (set_mid_symbols && mid_symbols_length <= effective_end_length - split.clen)
+		{
+			auto mid_position = (split.clen + effective_end_length - mid_symbols_length) / 2;
+			next_split   = SplitPathCoord::at(mid_position, split);
+			path.copy(split, next_split, processed_flags, processed_coords);
+			split = next_split;
+			
+			auto orientation = 0.0f;
+			bool mid_symbol_rotatable = bool(mid_symbol) && mid_symbol->isRotatable();
+			for (auto i = mid_symbols_per_spot; i > 0; --i)
+			{
+				if (mid_symbol_rotatable)
+					orientation = split.tangentVector().getAngle();
+				mid_symbol->createRenderablesScaled(split.pos, orientation, output);
+				
+				if (i > 1)
+				{
+					mid_position += mid_symbol_distance_f;
+					next_split = SplitPathCoord::at(mid_position, split);
+					path.copy(split, next_split, processed_flags, processed_coords);
+					split = next_split;
+				}
+			}
+		}
+		
+		// End position
+		next_split = SplitPathCoord::at(effective_end_length, split);
+		path.copy(split, next_split, processed_flags, processed_coords);
+		split = next_split;
+		
+		processed_flags.back().setGapPoint(true);
+		Q_ASSERT(!processed_flags[processed_flags.size()-2].isCurveStart());
 	}
 	
-	if (has_end_cap)
+	if (has_end && effective_cap_length > 0.0f)
 	{
 		// Create pointed line cap end
-		createPointedLineCap(object, flags, coords, line_coords, end - adapted_cap_length, end, cur_line_coord, true, output);
+		next_split = end;
+		if (end.is_curve_end)
+		{
+			// Get updated curve end
+			next_split = SplitPathCoord::at(end.clen, split);
+		}
+		createPointedLineCap(path, split, next_split, true, output);
 	}
-	if (has_end && !processed_flags.empty())
-		processed_flags[processed_flags.size() - 1].setHolePoint(true);
 }
 
-void LineSymbol::createPointedLineCap(const Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, const PathCoordVector& line_coords,
-									  float start, float end, int& cur_line_coord, bool is_end, ObjectRenderables& output) const
+void LineSymbol::createPointedLineCap(
+        const VirtualPath& path,
+        const SplitPathCoord& start,
+        const SplitPathCoord& end,
+        bool is_end,
+        ObjectRenderables& output ) const
 {
-	Q_UNUSED(object);
-	
 	AreaSymbol area_symbol;
 	area_symbol.setColor(color);
 	
@@ -779,86 +852,74 @@ void LineSymbol::createPointedLineCap(const Object* object, const MapCoordVector
 	
 	MapCoordVector cap_flags;
 	MapCoordVectorF cap_middle_coords;
-	std::vector<float> cap_lengths;
+	path.copy(start, end, cap_flags, cap_middle_coords);
 	
-	calculateCoordinatesForRange(flags, coords, line_coords, start, end, cur_line_coord, true, cap_flags, cap_middle_coords, &cap_lengths, false, output);
+	auto cap_size = VirtualPath::size_type(cap_middle_coords.size());
+	auto cap_middle_path = VirtualPath { cap_flags, cap_middle_coords };
+	
+	std::vector<float> cap_lengths;
+	cap_lengths.reserve(cap_size);
+	path.copyLengths(start, end, cap_lengths);
+	Q_ASSERT(cap_middle_coords.size() == cap_lengths.size());
 	
 	// Calculate coordinates on the left and right side of the line
-	int cap_size = (int)cap_middle_coords.size();
 	MapCoordVectorF cap_coords;
 	MapCoordVectorF cap_coords_left;
 	float sign = is_end ? (-1) : 1;
-	for (int i = 0; i < cap_size; ++i)
+	for (MapCoordVectorF::size_type i = 0; i < cap_size; ++i)
 	{
-		float dist_from_start = is_end ? (end - cap_lengths[i]) : (cap_lengths[i] - start);
+		float dist_from_start = is_end ? (end.clen - cap_lengths[i]) : (cap_lengths[i] - start.clen);
 		float factor = dist_from_start / cap_length;
 		//Q_ASSERT(factor >= -0.01f && factor <= 1.01f); happens when using large break lengths as these are not adjusted
-		factor = qMax(0.0f, qMin(1.0f, factor));
+		factor = qBound(0.0f, factor, 1.0f);
 		
-		MapCoordF right_vector;
-		float scaling;
-		int orig_start_index = line_coords[cur_line_coord].index;
-		int orig_end_index = line_coords[cur_line_coord].index + (flags[line_coords[cur_line_coord].index].isCurveStart() ? 3 : 1);
-		if (orig_end_index >= (int)coords.size())
-			orig_end_index = 0;
-		if (cap_middle_coords[i].lengthToSquared(coords[orig_start_index]) < 0.001f*0.001f)
-			right_vector = PathCoord::calculateRightVector(flags, coords, false, orig_start_index, &scaling);
-		else if (cap_middle_coords[i].lengthToSquared(coords[orig_end_index]) < 0.001f*0.001f)
-			right_vector = PathCoord::calculateRightVector(flags, coords, false, orig_end_index, &scaling);
-		else
-			right_vector = PathCoord::calculateRightVector(cap_flags, cap_middle_coords, false, i, &scaling);
-		Q_ASSERT(right_vector.lengthSquared() < 1.01f);
-		float radius = factor * scaling * line_half_width;
-		if (radius > 2 * line_half_width)
-			radius = 2 * line_half_width;
-		else if (radius < 0)
-			radius = 0;
+		auto tangent_info = cap_middle_path.calculateTangentScaling(i);
+		MapCoordF& right_vector = tangent_info.first;
+		right_vector.perpRight();
+		right_vector.normalize();
+		
+		auto radius = qBound(0.0, line_half_width*factor*tangent_info.second, line_half_width*2.0);
 		
 		cap_flags[i].setHolePoint(false);
-		cap_coords.push_back(MapCoordF(cap_middle_coords[i].getX() + radius * right_vector.getX(), cap_middle_coords[i].getY() + radius * right_vector.getY()));
-		cap_coords_left.push_back(MapCoordF(cap_middle_coords[i].getX() - radius * right_vector.getX(), cap_middle_coords[i].getY() - radius * right_vector.getY()));
+		cap_coords.emplace_back(cap_middle_coords[i] + radius * right_vector);
+		cap_coords_left.emplace_back(cap_middle_coords[i] - radius * right_vector);
 		
 		// Control points for bezier curves
 		if (i >= 3 && cap_flags[i-3].isCurveStart())
 		{
-			cap_coords.push_back(cap_coords[cap_coords.size() - 1]);
-			cap_coords_left.push_back(cap_coords_left[cap_coords_left.size() - 1]);
+			cap_coords.emplace_back(cap_coords.back());
+			cap_coords_left.emplace_back(cap_coords_left.back());
 			
-			MapCoordF tangent = MapCoordF(cap_middle_coords[i].getX() - cap_middle_coords[i-1].getX(), cap_middle_coords[i].getY() - cap_middle_coords[i-1].getY());
+			MapCoordF tangent = cap_middle_coords[i] - cap_middle_coords[i-1];
 			Q_ASSERT(tangent.lengthSquared() < 999*999);
-			float right_scale = tangent.length() * tan_angle * sign;
-			cap_coords[i-1] = MapCoordF(cap_coords[i].getX() - tangent.getX() - right_vector.getX() * right_scale, cap_coords[i].getY() - tangent.getY() - right_vector.getY() * right_scale);
-			cap_coords_left[i-1] = MapCoordF(cap_coords_left[i].getX() - tangent.getX() + right_vector.getX() * right_scale, cap_coords_left[i].getY() - tangent.getY() + right_vector.getY() * right_scale);
+			auto right_scale = tangent.length() * tan_angle * sign;
+			cap_coords[i-1] = cap_coords[i] - tangent - right_vector * right_scale;
+			cap_coords_left[i-1] = cap_coords_left[i] - tangent + right_vector * right_scale;
 		}
 		if (cap_flags[i].isCurveStart())
 		{
 			// TODO: Tangent scaling depending on curvature? Adaptive subdivision of the curves?
-			MapCoordF tangent = MapCoordF(cap_middle_coords[i+1].getX() - cap_middle_coords[i].getX(), cap_middle_coords[i+1].getY() - cap_middle_coords[i].getY());
+			MapCoordF tangent = cap_middle_coords[i+1] - cap_middle_coords[i];
 			Q_ASSERT(tangent.lengthSquared() < 999*999);
 			float right_scale = tangent.length() * tan_angle * sign;
-			cap_coords.push_back(MapCoordF(cap_coords[i].getX() + tangent.getX() + right_vector.getX() * right_scale, cap_coords[i].getY() + tangent.getY() + right_vector.getY() * right_scale));
-			cap_coords_left.push_back(MapCoordF(cap_coords_left[i].getX() + tangent.getX() - right_vector.getX() * right_scale, cap_coords_left[i].getY() + tangent.getY() - right_vector.getY() * right_scale));
+			cap_coords.emplace_back(cap_coords[i] + tangent + right_vector * right_scale);
+			cap_coords_left.emplace_back(cap_coords_left[i] + tangent - right_vector * right_scale);
 			i += 2;
-		}
-		else
-		{
-			if (i < cap_size - 1 && cap_lengths[i] == cap_lengths[i+1])
-				++i;
 		}
 	}
 	
 	// Create small overlap to avoid visual glitches with the on-screen display (should not matter for printing, could probably turn it off for this)
 	const float overlap_length = 0.05f;
-	if (end - start > 4 * overlap_length)
+	if (end.clen - start.clen > 4 * overlap_length)
 	{
 		bool ok;
 		int end_pos = is_end ? 0 : (cap_size - 1);
 		int end_cap_pos = is_end ? 0 : (cap_coords.size() - 1);
-		MapCoordF tangent = PathCoord::calculateTangent(cap_middle_coords, end_pos, !is_end, ok);
+		MapCoordF tangent = cap_middle_path.calculateTangent(end_pos, !is_end, ok);
 		if (ok)
 		{
 			tangent.normalize();
-			tangent = MapCoordF(tangent.getX() * overlap_length * sign, tangent.getY() * overlap_length * sign);
+			tangent *= overlap_length * sign;
 			MapCoordF right = is_end ? tangent : -tangent;
 			right.perpRight();
 			
@@ -876,9 +937,9 @@ void LineSymbol::createPointedLineCap(const Object* object, const MapCoordVector
 			}
 			else
 			{
-				cap_flags.push_back(MapCoord());
-				cap_coords.push_back(shifted_coord);
-				cap_coords_left.push_back(shifted_coord_left);
+				cap_flags.emplace_back();
+				cap_coords.emplace_back(shifted_coord);
+				cap_coords_left.emplace_back(shifted_coord_left);
 			}
 		}
 	}
@@ -889,239 +950,352 @@ void LineSymbol::createPointedLineCap(const Object* object, const MapCoordVector
 	
 	MapCoord curve_start;
 	curve_start.setCurveStart(true);
-	MapCoord no_flag;
-	for (int i = (int)cap_coords_left.size() - (is_end ? 2 : 1); i >= 0; --i)
+	if (!is_end)
 	{
-		if (i >= 3 && cap_flags[i - 3].isCurveStart())
+		for (auto i = cap_coords_left.size(); i > 0; )
 		{
-			cap_flags.push_back(curve_start);
-			cap_flags.push_back(no_flag);
-			cap_flags.push_back(no_flag);
-			cap_coords.push_back(cap_coords_left[i]);
-			cap_coords.push_back(cap_coords_left[i-1]);
-			cap_coords.push_back(cap_coords_left[i-2]);
-			i -= 2;
+			--i;
+			if (i >= 3 && cap_flags[i-3].isCurveStart())
+			{
+				cap_flags.emplace_back(curve_start);
+				cap_flags.emplace_back();
+				cap_flags.emplace_back();
+				cap_coords.emplace_back(cap_coords_left[i]);
+				cap_coords.emplace_back(cap_coords_left[i-1]);
+				cap_coords.emplace_back(cap_coords_left[i-2]);
+				i -= 2;
+			}
+			else
+			{
+				cap_flags.emplace_back();
+				cap_coords.emplace_back(cap_coords_left[i]);
+			}
 		}
-		else if (is_end && i >= 2 && i == (int)cap_coords_left.size() - 2 && cap_flags[i - 2].isCurveStart())
+	}
+	else
+	{
+		for (auto i = cap_coords_left.size() - 1; i > 0; )
 		{
-			cap_flags[cap_flags.size() - 1].setCurveStart(true);
-			cap_flags.push_back(no_flag);
-			cap_flags.push_back(no_flag);
-			cap_coords.push_back(cap_coords_left[i]);
-			cap_coords.push_back(cap_coords_left[i-1]);
-			i -= 1;
-		}
-		else
-		{
-			cap_flags.push_back(no_flag);
-			cap_coords.push_back(cap_coords_left[i]);
+			--i;
+			if (i >= 3 && cap_flags[i - 3].isCurveStart())
+			{
+				cap_flags.emplace_back(curve_start);
+				cap_flags.emplace_back();
+				cap_flags.emplace_back();
+				cap_coords.emplace_back(cap_coords_left[i]);
+				cap_coords.emplace_back(cap_coords_left[i-1]);
+				cap_coords.emplace_back(cap_coords_left[i-2]);
+				i -= 2;
+			}
+			else if (i >= 2 && i == cap_coords_left.size() - 2 && cap_flags[i - 2].isCurveStart())
+			{
+				cap_flags[cap_flags.size() - 1].setCurveStart(true);
+				cap_flags.emplace_back();
+				cap_flags.emplace_back();
+				cap_coords.emplace_back(cap_coords_left[i]);
+				cap_coords.emplace_back(cap_coords_left[i-1]);
+				i -= 1;
+			}
+			else
+			{
+				cap_flags.emplace_back();
+				cap_coords.emplace_back(cap_coords_left[i]);
+			}
 		}
 	}
 	
 	// Add renderable
-	Q_ASSERT(cap_coords.size() >= 3 && cap_coords.size() == cap_flags.size());
-	output.insertRenderable(new AreaRenderable(&area_symbol, cap_coords, cap_flags, NULL));
+	Q_ASSERT(cap_coords.size() >= 3);
+	Q_ASSERT(cap_coords.size() == cap_flags.size());
+	
+	VirtualPath cap_path { cap_flags, cap_coords };
+	cap_path.path_coords.update(0);
+	output.insertRenderable(new AreaRenderable(&area_symbol, cap_path));
 }
 
-void LineSymbol::processDashedLine(const Object* object, bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, MapCoordVector& out_flags, MapCoordVectorF& out_coords, ObjectRenderables& output) const
+void LineSymbol::processDashedLine(
+        const VirtualPath& path,
+        bool path_closed,
+        MapCoordVector& out_flags,
+        MapCoordVectorF& out_coords,
+        ObjectRenderables& output ) const
 {
-	int last_coord = (int)coords.size() - 1;
+	auto& path_coords = path.path_coords;
+	Q_ASSERT(!path_coords.empty());
 	
-	PointObject point_object(mid_symbol);
-	bool point_object_rotatable = mid_symbol ? point_object.getSymbol()->asPoint()->isRotatable() : false;
-	MapCoordVectorF point_coord;
-	point_coord.push_back(MapCoordF(0, 0));
-	MapCoordF right_vector;
+	auto out_coords_size = path.size() * 4;
+	out_flags.reserve(out_coords_size);
+	out_coords.reserve(out_coords_size);
+	
+	auto last = path.last_index;
+	
+	auto groups_start = SplitPathCoord::begin(path_coords);
+	auto line_start   = groups_start;
+	for (bool is_part_end = false; !is_part_end; )
+	{
+		auto groups_end_path_coord_index = path_coords.findNextDashPoint(groups_start.path_coord_index);
+		auto groups_end_index = path_coords[groups_end_path_coord_index].index;
+		auto groups_end = SplitPathCoord::at(path_coords, groups_end_path_coord_index);
+		
+		// Intentionally look at groups_start (current node),
+		// not line_start (where to continue drawing)!
+		bool is_part_start = (groups_start.index == path.first_index);
+		is_part_end = (groups_end_index == last);
+		
+		line_start = createDashGroups(path, path_closed,
+		                              line_start, groups_start, groups_end,
+		                              is_part_start, is_part_end,
+		                              out_flags, out_coords, output);
+		
+		groups_start = groups_end; // Search then next split (node) after groups_end (current node).
+	}
+	Q_ASSERT(line_start.clen == groups_start.clen);
+}
+
+SplitPathCoord LineSymbol::createDashGroups(
+        const VirtualPath& path,
+        bool path_closed,
+        const SplitPathCoord& line_start,
+        const SplitPathCoord& start,
+        const SplitPathCoord& end,
+        bool is_part_start,
+        bool is_part_end,
+        MapCoordVector& out_flags,
+        MapCoordVectorF& out_coords,
+        ObjectRenderables& output ) const
+{
+	auto& flags = path.coords.flags;
+	auto& path_coords = path.path_coords;
+	
+	auto orientation = 0.0f;
+	bool mid_symbol_rotatable = bool(mid_symbol) && mid_symbol->isRotatable();
+	
+	double mid_symbol_distance_f = 0.001 * mid_symbol_distance;
+	
+	bool half_first_group = is_part_start ? (half_outer_dashes || path_closed)
+	                                      : (flags[start.index].isDashPoint() && dashes_in_group == 1);
+	
+	bool ends_with_dashpoint  = is_part_end ? path_closed : true;
 	
 	double dash_length_f           = 0.001 * dash_length;
 	double break_length_f          = 0.001 * break_length;
 	double in_group_break_length_f = 0.001 * in_group_break_length;
-	double mid_symbol_distance_f   = 0.001 * mid_symbol_distance;
 	
 	double total_in_group_dash_length  = dashes_in_group * dash_length_f;
 	double total_in_group_break_length = (dashes_in_group - 1) * in_group_break_length_f;
-	double total_dash_group_length = total_in_group_dash_length + total_in_group_break_length + break_length_f;
-	double switch_deviation        = 0.2 * total_dash_group_length / dashes_in_group;
-	double minimum_optimum_length  = 2.0 * total_dash_group_length;
+	double total_group_length = total_in_group_dash_length + total_in_group_break_length;
+	double total_group_and_break_length = total_group_length + break_length_f;
 	
-	int part_start = 0;
-	int part_end = 0;
-	PathCoordVector line_coords;
-	std::size_t out_coords_size = 4 * coords.size();
-	out_flags.reserve(out_coords_size);
-	out_coords.reserve(out_coords_size);
+	double length = end.clen - start.clen;
+	double length_plus_break = length + break_length_f;
 	
-	bool dash_point_incomplete = path_closed;
-	double cur_length = 0.0;
-	double old_length = 0.0;	// length from line part(s) before dash point(s) which is not accounted for yet
-	int first_line_coord = 0;
-	int cur_line_coord = 1;
-	while (PathCoord::getNextPathPart(flags, coords, part_start, part_end, &line_coords, true, true))
+	bool half_last_group  = is_part_end ? (half_outer_dashes || path_closed)
+	                                    : (ends_with_dashpoint && dashes_in_group == 1);
+	int num_half_groups = (half_first_group ? 1 : 0) + (half_last_group ? 1 : 0);
+	
+	double num_dashgroups_f = num_half_groups +
+	                          (length_plus_break - num_half_groups * 0.5 * dash_length_f) / total_group_and_break_length;
+
+	int lower_dashgroup_count = qRound(floor(num_dashgroups_f));
+	
+	double minimum_optimum_num_dashes = dashes_in_group * 2.0 - num_half_groups * 0.5;
+	double minimum_optimum_length  = 2.0 * total_group_and_break_length;
+	double switch_deviation        = 0.2 * total_group_and_break_length / dashes_in_group;
+	
+	bool set_mid_symbols = length >= dash_length_f - switch_deviation;
+	if (mid_symbols_per_spot > 0 && mid_symbol && !mid_symbol->isEmpty())
 	{
-		if (dash_point_incomplete)
+		if (line_start.clen < start.clen || (!is_part_start && flags[start.index].isDashPoint()))
 		{
-			double position = line_coords[first_line_coord].clen + ((mid_symbols_per_spot+1)%2) * 0.5 * mid_symbol_distance_f;
-			int line_coord_search_start = first_line_coord;
-			for (int s = 1; s < mid_symbols_per_spot; s+=2)
+			set_mid_symbols = false;
+			
+			// Handle mid symbols at begin for explicit dash points when we draw the whole dash here
+			auto split = SplitPathCoord::begin(path_coords);
+			
+			PathCoord::length_type position = start.clen - (mid_symbols_per_spot - 1) * 0.5 * mid_symbol_distance_f;
+			for (int s = 0; s < mid_symbols_per_spot; s+=2)
 			{
-				PathCoord::calculatePositionAt(flags, coords, line_coords, position, line_coord_search_start, &point_coord[0], &right_vector);
-				if (point_object_rotatable)
-					point_object.setRotation(atan2(right_vector.getX(), right_vector.getY()));
-				mid_symbol->createRenderables(&point_object, point_object.getRawCoordinateVector(), point_coord, output);
-				position += mid_symbol_distance_f;
+				if (position >= split.clen)
+				{
+					auto next_split = SplitPathCoord::at(position, split);
+					if (mid_symbol_rotatable)
+						orientation = next_split.tangentVector().getAngle();
+					mid_symbol->createRenderablesScaled(next_split.pos, orientation, output);
+					split = next_split;
+				}
+				position  += mid_symbol_distance_f;
 			}
-			dash_point_incomplete = false;
 		}
-		
-		if (part_start > 0 && flags[part_start-1].isHolePoint())
+		if (half_first_group)
 		{
-			++first_line_coord;
-			cur_line_coord = first_line_coord + 1;
-			while (line_coords[cur_line_coord].clen == 0.0f)
-				++cur_line_coord;	// TODO: Debug where double identical line coords with clen == 0 can come from? Happened with pointed line ends + dashed border lines in a closed path
-			cur_length = line_coords[first_line_coord].clen;
-		}
-		
-		bool starts_with_dashpoint = (part_start == 0) ? path_closed : flags[part_start].isDashPoint();
-		bool ends_with_dashpoint = (part_end < last_coord) ? flags[part_end].isDashPoint() : path_closed;
-		bool ends_with_holepoint = flags[part_end].isHolePoint();
-		bool ends_with_closepoint = flags[part_end].isClosePoint();
-		bool half_first_dash = (part_start == 0 && (half_outer_dashes || path_closed)) || (starts_with_dashpoint && dashes_in_group == 1);
-		bool half_last_dash = (part_end == last_coord && (half_outer_dashes || path_closed)) || (ends_with_dashpoint && dashes_in_group == 1);
-		int half_first_last_dash = (half_first_dash ? 1 : 0) + (half_last_dash ? 1 : 0);
-		
-		int last_line_coord = (int)line_coords.size() - 1;
-		double length = line_coords[last_line_coord].clen - line_coords[first_line_coord].clen;
-		
-		double length_plus_break = length + break_length_f;
-		
-		double num_dashgroups_f = half_first_last_dash +
-		  (length_plus_break - half_first_last_dash * 0.5 * dash_length_f) / total_dash_group_length;
-		int lower_dashgroup_count = qRound(floor(num_dashgroups_f));
-		double minimum_optimum_num_dashes = dashes_in_group * 2.0 - half_first_last_dash * 0.5;
-		
-		if (length <= 0.0 || (lower_dashgroup_count <= 1 && length < minimum_optimum_length - minimum_optimum_num_dashes * switch_deviation))
-		{
-			// Line part too short for dashes, use just one continuous line for it
-			if (!ends_with_dashpoint || ends_with_holepoint)
+			// Handle mid symbols at start for closing point or explicit dash points.
+			auto split = start;
+			
+			PathCoord::length_type position = split.clen + (mid_symbols_per_spot%2 + 1) * 0.5 * mid_symbol_distance_f;
+			for (int s = 1; s < mid_symbols_per_spot && position <= path_coords.back().clen; s+=2)
 			{
-				processContinuousLine(object, path_closed, flags, coords, line_coords, cur_length, cur_length + length + old_length,
-									  (!path_closed && out_flags.empty()) || (!out_flags.empty() && out_flags.back().isHolePoint()), !(path_closed && part_end == last_coord),
-									  cur_line_coord, out_flags, out_coords, true, old_length == 0 && length >= dash_length_f - switch_deviation, output);
-				cur_length += length + old_length;
-				old_length = 0.0;
+				auto next_split = SplitPathCoord::at(position, split);
+				if (mid_symbol_rotatable)
+					orientation = next_split.tangentVector().getAngle();
+				mid_symbol->createRenderablesScaled(next_split.pos, orientation, output);
+				
+				position  += mid_symbol_distance_f;
+				split = next_split;
 			}
-			else
-				old_length += length;
+		}
+	}
+	
+	if (length <= 0.0 || (lower_dashgroup_count <= 1 && length < minimum_optimum_length - minimum_optimum_num_dashes * switch_deviation))
+	{
+		// Line part too short for dashes
+		if (is_part_end)
+		{
+			// Can't be handled correctly by the next round of dash groups drawing:
+			// Just draw a continuous line.
+			processContinuousLine(path,
+			                      line_start, end,
+			                      !half_first_group, !half_last_group,
+			                      out_flags, out_coords, set_mid_symbols, output);
 		}
 		else
 		{
-			int higher_dashgroup_count = qRound(ceil(num_dashgroups_f));
-			double lower_dashgroup_deviation  = (length_plus_break - lower_dashgroup_count * total_dash_group_length)  / lower_dashgroup_count;
-			double higher_dashgroup_deviation = (higher_dashgroup_count * total_dash_group_length - length_plus_break) / higher_dashgroup_count;
-			Q_ASSERT(half_first_dash || half_last_dash || (lower_dashgroup_deviation >= -0.001 && higher_dashgroup_deviation >= -0.001)); // TODO; seems to fail as long as halving first/last dashes affects the outermost dash only
-			int num_dashgroups = (lower_dashgroup_deviation > higher_dashgroup_deviation) ? higher_dashgroup_count : lower_dashgroup_count;
-			Q_ASSERT(num_dashgroups >= 2);
+			// Give this length to the next round of dash groups drawing.
+			return line_start;
+		}
+	}
+	else
+	{
+		int higher_dashgroup_count = qRound(ceil(num_dashgroups_f));
+		double lower_dashgroup_deviation  = (length_plus_break - lower_dashgroup_count * total_group_and_break_length)  / lower_dashgroup_count;
+		double higher_dashgroup_deviation = (higher_dashgroup_count * total_group_and_break_length - length_plus_break) / higher_dashgroup_count;
+		Q_ASSERT(half_first_group || half_last_group || (lower_dashgroup_deviation >= -0.001 && higher_dashgroup_deviation >= -0.001)); // TODO; seems to fail as long as halving first/last dashes affects the outermost dash only
+		int num_dashgroups = (lower_dashgroup_deviation > higher_dashgroup_deviation) ? higher_dashgroup_count : lower_dashgroup_count;
+		Q_ASSERT(num_dashgroups >= 2);
+		
+		int num_half_dashes = 2*num_dashgroups*dashes_in_group - num_half_groups;
+		double adjusted_dash_length = (length - (num_dashgroups-1) * break_length_f - num_dashgroups * total_in_group_break_length) / (0.5 * num_half_dashes);
+		adjusted_dash_length = qMax(adjusted_dash_length, 0.0);	// could be negative for large break lengths
+		
+		double cur_length = start.clen;
+		SplitPathCoord dash_start = line_start;
+		
+		for (int dashgroup = 1; dashgroup <= num_dashgroups; ++dashgroup)
+		{
+			bool is_first_dashgroup = dashgroup == 1;
+			bool is_last_dashgroup  = dashgroup == num_dashgroups;
 			
-			int num_half_dashes = 2*num_dashgroups*dashes_in_group - half_first_last_dash;
-			double adapted_dash_length = (length - (num_dashgroups-1) * break_length_f - num_dashgroups * total_in_group_break_length) / (0.5 * num_half_dashes);
-			adapted_dash_length = qMax(adapted_dash_length, 0.0);	// could be negative for large break lengths
-			
-			for (int dashgroup = 1; dashgroup <= num_dashgroups; ++dashgroup)
+			for (int dash = 1; dash <= dashes_in_group; ++dash)
 			{
-				for (int dash = 1; dash <= dashes_in_group; ++dash)
+				// Draw a single dash
+				bool is_first_dash = is_first_dashgroup && dash == 1;
+				bool is_last_dash  = is_last_dashgroup  && dash == dashes_in_group;
+				
+				// The dash has an start if it is not the first dash in a half first group.
+				bool has_start = !(is_first_dash && half_first_group);
+				// The dash has an end if it is not the last dash in a half last group.
+				bool has_end   = !(is_last_dash && half_last_group);
+				
+				Q_ASSERT(has_start || has_end); // At least one half must be left...
+				
+				bool is_half_dash = has_start != has_end;
+				double cur_dash_length = is_half_dash ? adjusted_dash_length / 2 : adjusted_dash_length;
+				set_mid_symbols = !is_half_dash;
+				
+				if (!is_first_dash)
 				{
-					bool is_first_dash = dashgroup == 1 && dash == 1;
-					bool is_half_dash = (is_first_dash && half_first_dash) || (dashgroup == num_dashgroups && dash == dashes_in_group && half_last_dash);
-					double cur_dash_length = is_half_dash ? adapted_dash_length / 2 : adapted_dash_length;
-					
-					// Process immediately if this is not the last dash before a dash point,
-					// or if it is the last point and the path is closed
-					if ((ends_with_closepoint && (dash == dashes_in_group && dashgroup == num_dashgroups)) ||
-						!(ends_with_dashpoint && dash == dashes_in_group && dashgroup == num_dashgroups))
-					{
-						// The dash has an end if it is not the last dash in a closed path
-						bool has_end = !(dash == dashes_in_group && dashgroup == num_dashgroups && path_closed && part_end == last_coord);
-						
-						processContinuousLine(object, path_closed, flags, coords, line_coords, cur_length, cur_length + old_length + cur_dash_length,
-											  (!path_closed && out_flags.empty()) || (!out_flags.empty() && out_flags.back().isHolePoint()), has_end,
-											  cur_line_coord, out_flags, out_coords, true, !is_half_dash, output);
-						cur_length += old_length + cur_dash_length;
-						old_length = 0;
-						//dash_point_before = false;
-						
-						if (dash < dashes_in_group)
-							cur_length += in_group_break_length_f;
-					}
-					else
-						old_length += cur_dash_length;
+					auto next_dash_start = SplitPathCoord::at(cur_length, dash_start);
+					path.copy(dash_start, next_dash_start, out_flags, out_coords);
+					out_flags.back().setGapPoint(true);
+					dash_start = next_dash_start;
+				}
+				if (is_last_dash && !is_part_end)
+				{
+					// Last dash before a dash point (which is not the closing point):
+					// Give the remaining length to the next round of dash groups drawing.
+					return dash_start;
 				}
 				
-				if (dashgroup < num_dashgroups)
-					cur_length += break_length_f;
+				SplitPathCoord dash_end = SplitPathCoord::at(cur_length + cur_dash_length, dash_start);
+				processContinuousLine(path,
+				                      dash_start, dash_end,
+				                      has_start, has_end,
+				                      out_flags, out_coords, set_mid_symbols, output);
+				cur_length += cur_dash_length;
+				dash_start = dash_end;
+				
+				if (dash < dashes_in_group)
+					cur_length += in_group_break_length_f;
 			}
+			
+			if (dashgroup < num_dashgroups)
+				cur_length += break_length_f;
 		}
 		
-		if ((ends_with_dashpoint || ends_with_holepoint) && dashes_in_group == 1 && mid_symbol && !mid_symbol->isEmpty())
+		if (half_last_group && mid_symbols_per_spot > 0 && mid_symbol && !mid_symbol->isEmpty())
 		{
-			double position = line_coords[last_line_coord].clen - (mid_symbols_per_spot-1) * 0.5 * mid_symbol_distance_f;
-			int line_coord_search_start = 0;
+			// Handle mid symbols at end for closing point or for (some) explicit dash points.
+			auto split = start;
+			
+			PathCoord::length_type position = end.clen - (mid_symbols_per_spot-1) * 0.5 * mid_symbol_distance_f;
 			for (int s = 0; s < mid_symbols_per_spot; s+=2)
 			{
-				PathCoord::calculatePositionAt(flags, coords, line_coords, position, line_coord_search_start, &point_coord[0], &right_vector);
-				if (point_object_rotatable)
-					point_object.setRotation(atan2(right_vector.getX(), right_vector.getY()));
-				mid_symbol->createRenderables(&point_object, point_object.getRawCoordinateVector(), point_coord, output);
-				position += mid_symbol_distance_f;
+				auto next_split = SplitPathCoord::at(position, split);
+				if (mid_symbol_rotatable)
+					orientation = next_split.tangentVector().getAngle();
+				mid_symbol->createRenderablesScaled(next_split.pos, orientation, output);
+				
+				position  += mid_symbol_distance_f;
+				split = next_split;
 			}
-			if (mid_symbols_per_spot > 1)
-				dash_point_incomplete = true;
 		}
-		
-		cur_length = line_coords[last_line_coord].clen - old_length;
-		
-		first_line_coord = last_line_coord;
 	}
+	
+	return end;
 }
 
-void LineSymbol::createDashSymbolRenderables(const Object* object, bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output) const
+void LineSymbol::createDashSymbolRenderables(
+        const VirtualPath& path,
+        bool path_closed ,
+        ObjectRenderables& output) const
 {
-	Q_UNUSED(object);
+	Q_ASSERT(dash_symbol);
 	
-	PointObject point_object(dash_symbol);
-	MapCoordVectorF point_coord;
-	point_coord.push_back(MapCoordF(0, 0));
-	MapCoordF right_vector;
+	auto& flags  = path.coords.flags;
+	auto& coords = path.coords;
 	
-	int size = (int)coords.size();
-	for (int i = 0; i < size; ++i)
+	auto last = path.last_index;
+	auto i = path.first_index;
+	if (suppress_dash_symbol_at_ends && path.size() > 0)
 	{
-		// Only apply the symbol at dash points
-		if (!flags[i].isDashPoint()) continue;
-		
 		// Suppress dash symbol at line ends
-		if (suppress_dash_symbol_at_ends && (i == 0 || i+1 == size)) continue;
-		
-		float scaling;
-		MapCoordF right = PathCoord::calculateRightVector(flags, coords, path_closed, i, &scaling);
-		
-		if (point_object.getSymbol()->asPoint()->isRotatable())
-			point_object.setRotation(atan2(right.getX(), right.getY()));
-		point_coord[0] = coords[i];
-		dash_symbol->createRenderablesScaled(&point_object, point_object.getRawCoordinateVector(), point_coord, output, scaling);
+		++i;
+		--last;
+	}
+	else if (path_closed)
+	{
+		++i;
+	}
+	
+	for (; i <= last; ++i)
+	{
+		if (flags[i].isDashPoint())
+		{
+			auto params = path.calculateTangentScaling(i);
+			//params.first.perpRight();
+			params.second = qMin(params.second, 2.0 * LineSymbol::miterLimit());
+			dash_symbol->createRenderablesScaled(coords[i], params.first.getAngle(), output, params.second);
+		}
 	}
 }
 
-void LineSymbol::createDottedRenderables(const Object* object, bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output) const
+void LineSymbol::createMidSymbolRenderables(
+        const VirtualPath& path,
+        bool path_closed,
+        ObjectRenderables& output) const
 {
-	Q_UNUSED(object);
-	
-	Q_ASSERT(mid_symbol != NULL);
-	PointObject point_object(mid_symbol);
-	bool point_object_rotatable = point_object.getSymbol()->asPoint()->isRotatable();
-	MapCoordVectorF point_coord;
-	point_coord.push_back(MapCoordF(0, 0));
-	MapCoordF right_vector;
+	Q_ASSERT(mid_symbol);
+	auto orientation = 0.0f;
+	bool mid_symbol_rotatable = bool(mid_symbol) && mid_symbol->isRotatable();
 	
 	int mid_symbol_num_gaps       = mid_symbols_per_spot - 1;
 	
@@ -1131,37 +1305,33 @@ void LineSymbol::createDottedRenderables(const Object* object, bool path_closed,
 	double mid_symbol_distance_f  = 0.001 * mid_symbol_distance;
 	double mid_symbols_length     = mid_symbol_num_gaps * mid_symbol_distance_f;
 	
-	bool is_first_part = true;
-	int part_start = 0;
-	int part_end = 0;
-	PathCoordVector line_coords;
-	while (PathCoord::getNextPathPart(flags, coords, part_start, part_end, &line_coords, true, false))
+	auto& path_coords = path.path_coords;
+	Q_ASSERT(!path_coords.empty());
+	
+	auto groups_start = SplitPathCoord::begin(path_coords);
+	if (end_length == 0 && !path_closed)
 	{
-		if (is_first_part)
-		{
-			if (end_length == 0)
-			{
-				// Insert point at start coordinate
-				right_vector = PathCoord::calculateRightVector(flags, coords, path_closed, part_start, NULL);
-				if (point_object_rotatable)
-					point_object.setRotation(atan2(right_vector.getX(), right_vector.getY()));
-				point_coord[0] = coords[part_start];
-				mid_symbol->createRenderables(&point_object, point_object.getRawCoordinateVector(), point_coord, output);
-			}
-			
-			is_first_part = false;
-		}
+		// Insert point at start coordinate
+		if (mid_symbol_rotatable)
+			orientation = groups_start.tangentVector().getAngle();
+		mid_symbol->createRenderablesScaled(groups_start.pos, orientation, output);
+	}
+	
+	auto part_end = path.last_index;
+	while (groups_start.index != part_end)
+	{
+		auto groups_end_path_coord_index = path_coords.findNextDashPoint(groups_start.path_coord_index);
+		auto groups_end = SplitPathCoord::at(path_coords, groups_end_path_coord_index);
 		
 		// The total length of the current continuous part
-		double length = line_coords.back().clen;
+		double length = groups_end.clen - groups_start.clen;
 		// The length which is available for placing mid symbols
 		double segmented_length = qMax(0.0, length - end_length_twice_f) - mid_symbols_length;
 		// The number of segments to be created by mid symbols
 		double segment_count_raw = qMax((end_length == 0) ? 1.0 : 0.0, (segmented_length / (segment_length_f + mid_symbols_length)));
-		int lower_segment_count = (int)floor(segment_count_raw);
-		int higher_segment_count = (int)ceil(segment_count_raw);
-
-		int line_coord_search_start = 0;
+		int lower_segment_count = qFloor(segment_count_raw);
+		int higher_segment_count = qCeil(segment_count_raw);
+		
 		if (end_length > 0)
 		{
 			if (length <= mid_symbols_length)
@@ -1169,22 +1339,14 @@ void LineSymbol::createDottedRenderables(const Object* object, bool path_closed,
 				if (show_at_least_one_symbol)
 				{
 					// Insert point at start coordinate
-					if (point_object_rotatable)
-					{
-						right_vector = PathCoord::calculateRightVector(flags, coords, path_closed, part_start, NULL);
-						point_object.setRotation(atan2(right_vector.getX(), right_vector.getY()));
-					}
-					point_coord[0] = coords[part_start];
-					mid_symbol->createRenderables(&point_object, point_object.getRawCoordinateVector(), point_coord, output);
+					if (mid_symbol_rotatable)
+						orientation = groups_start.tangentVector().getAngle();
+					mid_symbol->createRenderablesScaled(groups_start.pos, orientation, output);
 					
 					// Insert point at end coordinate
-					if (point_object_rotatable)
-					{
-						right_vector = PathCoord::calculateRightVector(flags, coords, path_closed, part_end, NULL);
-						point_object.setRotation(atan2(right_vector.getX(), right_vector.getY()));
-					}
-					point_coord[0] = coords[part_end];
-					mid_symbol->createRenderables(&point_object, point_object.getRawCoordinateVector(), point_coord, output);
+					if (mid_symbol_rotatable)
+						orientation = groups_end.tangentVector().getAngle();
+					mid_symbol->createRenderablesScaled(groups_end.pos, orientation, output);
 				}
 			}
 			else
@@ -1195,22 +1357,24 @@ void LineSymbol::createDottedRenderables(const Object* object, bool path_closed,
 				
 				double deviation = (lower_abs_deviation >= higher_abs_deviation) ? -higher_abs_deviation : lower_abs_deviation;
 				double ideal_length = segment_count * segment_length_f + end_length_twice_f;
-				double adapted_end_length = end_length_f + deviation * (end_length_f / ideal_length);
-				double adapted_segment_length = segment_length_f + deviation * (segment_length_f / ideal_length);
-				Q_ASSERT(qAbs(2*adapted_end_length + segment_count*adapted_segment_length + (segment_count + 1)*mid_symbols_length - length) < 0.001);
+				double adjusted_end_length = end_length_f + deviation * (end_length_f / ideal_length);
+				double adjusted_segment_length = segment_length_f + deviation * (segment_length_f / ideal_length);
+				Q_ASSERT(qAbs(2*adjusted_end_length + segment_count*adjusted_segment_length + (segment_count + 1)*mid_symbols_length - length) < 0.001);
 				
-				if (adapted_segment_length >= 0 && (show_at_least_one_symbol || higher_segment_count > 0 || length > end_length_twice_f - 0.5 * (segment_length_f + mid_symbols_length)))
+				if (adjusted_segment_length >= 0 && (show_at_least_one_symbol || higher_segment_count > 0 || length > end_length_twice_f - 0.5 * (segment_length_f + mid_symbols_length)))
 				{
-					adapted_segment_length += mid_symbols_length;
+					adjusted_segment_length += mid_symbols_length;
+					auto split = groups_start;
 					for (int i = 0; i < segment_count + 1; ++i)
 					{
-						double base_position = adapted_end_length + i * adapted_segment_length;
+						double position = groups_start.clen + adjusted_end_length + i * adjusted_segment_length - mid_symbol_distance_f;
 						for (int s = 0; s < mid_symbols_per_spot; ++s)
 						{
-							PathCoord::calculatePositionAt(flags, coords, line_coords, base_position + s * mid_symbol_distance_f, line_coord_search_start, &point_coord[0], &right_vector);
-							if (point_object_rotatable)
-								point_object.setRotation(atan2(right_vector.getX(), right_vector.getY()));
-							mid_symbol->createRenderables(&point_object, point_object.getRawCoordinateVector(), point_coord, output);
+							position += mid_symbol_distance_f;
+							split = SplitPathCoord::at(position, split);
+							if (mid_symbol_rotatable)
+								orientation = split.tangentVector().getAngle();
+							mid_symbol->createRenderablesScaled(split.pos, orientation, output);
 						}
 					}
 				}
@@ -1218,6 +1382,7 @@ void LineSymbol::createDottedRenderables(const Object* object, bool path_closed,
 		}
 		else
 		{
+			// end_length == 0
 			if (length > mid_symbols_length)
 			{
 				double lower_segment_deviation = qAbs(length - lower_segment_count * segment_length_f - (lower_segment_count+1)*mid_symbols_length) / lower_segment_count;
@@ -1228,232 +1393,37 @@ void LineSymbol::createDottedRenderables(const Object* object, bool path_closed,
 				
 				if (adapted_segment_length >= mid_symbols_length)
 				{
+					auto split = groups_start;
 					for (int i = 0; i <= segment_count; ++i)
 					{
-						double base_position = i * adapted_segment_length;
+						double position = groups_start.clen + i * adapted_segment_length - mid_symbol_distance_f;
 						for (int s = 0; s < mid_symbols_per_spot; ++s)
 						{
+							position += mid_symbol_distance_f;
+							
 							// The outermost symbols are handled outside this loop
 							if (i == 0 && s == 0)
 								continue;
 							if (i == segment_count && s == mid_symbol_num_gaps)
 								break;
 							
-							PathCoord::calculatePositionAt(flags, coords, line_coords, base_position + s * mid_symbol_distance_f, line_coord_search_start, &point_coord[0], &right_vector);
-							if (point_object_rotatable)
-								point_object.setRotation(atan2(right_vector.getX(), right_vector.getY()));
-							mid_symbol->createRenderables(&point_object, point_object.getRawCoordinateVector(), point_coord, output);
+							split = SplitPathCoord::at(position, split);
+							if (mid_symbol_rotatable)
+								orientation = split.tangentVector().getAngle();
+							mid_symbol->createRenderablesScaled(split.pos, orientation, output);
 						}
 					}
 				}
 			}
-		}
-		
-		if (end_length == 0)
-		{
+			
 			// Insert point at end coordinate
-			if (point_object_rotatable)
-			{
-				right_vector = PathCoord::calculateRightVector(flags, coords, path_closed, part_end, NULL);
-				point_object.setRotation(atan2(right_vector.getX(), right_vector.getY()));
-			}
-			point_coord[0] = coords[part_end];
-			mid_symbol->createRenderables(&point_object, point_object.getRawCoordinateVector(), point_coord, output);
+			if (mid_symbol_rotatable)
+				orientation = groups_end.tangentVector().getAngle();
+			mid_symbol->createRenderablesScaled(groups_end.pos, orientation, output);
 		}
 		
-		if (flags[part_end].isHolePoint())
-			is_first_part = true;
+		groups_start = groups_end; // Search then next split (node) after groups_end (current node).
 	}
-}
-
-void LineSymbol::calculateCoordinatesForRange(const MapCoordVector& flags, const MapCoordVectorF& coords, const PathCoordVector& line_coords,
-										float start, float end, int& cur_line_coord, bool include_start_coord, MapCoordVector& out_flags, MapCoordVectorF& out_coords,
-										std::vector<float>* out_lengths, bool set_mid_symbols, ObjectRenderables& output) const
-{
-	Q_ASSERT(cur_line_coord > 0);
-	int line_coords_size = (int)line_coords.size();
-	while (cur_line_coord < line_coords_size - 1 && line_coords[cur_line_coord].clen < start)
-		++cur_line_coord;
-	
-	// Start position
-	int start_bezier_index = -1;		// if the range starts at a bezier curve, this is the curve's index, otherwise -1
-	float start_bezier_split_param = 0;	// the parameter value where the split of the curve for the range start was made
-	MapCoordF o3, o4;					// temporary bezier control points
-	if (flags[line_coords[cur_line_coord].index].isCurveStart())
-	{
-		int index = line_coords[cur_line_coord].index;
-		float factor = (start - line_coords[cur_line_coord-1].clen) / qMax(1e-7f, (line_coords[cur_line_coord].clen - line_coords[cur_line_coord-1].clen));
-		//Q_ASSERT(factor >= -0.01f && factor <= 1.01f); happens when using large break lengths as these are not adjusted
-		if (factor > 1)
-			factor = 1;
-		else if (factor < 0)
-			factor = 0;
-		float prev_param = (line_coords[cur_line_coord-1].index == line_coords[cur_line_coord].index) ? line_coords[cur_line_coord-1].param : 0;
-		Q_ASSERT(prev_param <= line_coords[cur_line_coord].param);
-		float p = prev_param + (line_coords[cur_line_coord].param - prev_param) * factor;
-		Q_ASSERT(p >= 0 && p <= 1);
-		
-		MapCoordF o0, o1;
-		if (!include_start_coord)
-		{
-			MapCoordF o2;
-			PathCoord::splitBezierCurve(coords[index], coords[index+1], coords[index+2], (index < (int)flags.size() - 3) ? coords[index+3] : coords[0], p, o0, o1, o2, o3, o4);
-		}
-		else
-		{
-			out_coords.push_back(MapCoordF(0, 0));
-			PathCoord::splitBezierCurve(coords[index], coords[index+1], coords[index+2], (index < (int)flags.size() - 3) ? coords[index+3] : coords[0], p, o0, o1, out_coords[out_coords.size() - 1], o3, o4);
-			MapCoord flag(0, 0);
-			flag.setCurveStart(true);
-			out_flags.push_back(flag);
-			if (out_lengths)
-				out_lengths->push_back(start);
-		}
-		
-		start_bezier_split_param = p;
-		start_bezier_index = index;
-	}
-	else if (include_start_coord)
-	{
-		out_coords.push_back(MapCoordF(0, 0));
-		PathCoord::calculatePositionAt(flags, coords, line_coords, start, cur_line_coord, &out_coords[out_coords.size() - 1], NULL);
-		out_flags.push_back(MapCoord(0, 0));
-		if (out_lengths)
-			out_lengths->push_back(start);
-	}
-	
-	int current_index = line_coords[cur_line_coord].index;
-	
-	// Middle position
-	int num_mid_symbols = qMax(1, mid_symbols_per_spot);
-	if (set_mid_symbols && mid_symbol && !mid_symbol->isEmpty() && (num_mid_symbols-1) * 0.001f * mid_symbol_distance <= end - start)
-	{
-		PointObject point_object(mid_symbol);
-		MapCoordVectorF point_coord;
-		point_coord.push_back(MapCoordF(0, 0));
-		MapCoordF right_vector;
-		
-		float mid_position = (end + start) / 2 - ((num_mid_symbols-1) * 0.001f * mid_symbol_distance) / 2;
-		advanceCoordinateRangeTo(flags, coords, line_coords, cur_line_coord, current_index, mid_position, start_bezier_index, out_flags, out_coords, out_lengths, o3, o4);
-		
-		for (int i = 0; i < num_mid_symbols; ++i)
-		{
-			PathCoord::calculatePositionAt(flags, coords, line_coords, mid_position, cur_line_coord, &point_coord[0], &right_vector);
-			
-			if (point_object.getSymbol()->asPoint()->isRotatable())
-				point_object.setRotation(atan2(right_vector.getX(), right_vector.getY()));
-			mid_symbol->createRenderables(&point_object, point_object.getRawCoordinateVector(), point_coord, output);
-			
-			mid_position += 0.001f * mid_symbol_distance;
-			if (i < num_mid_symbols - 1)
-				advanceCoordinateRangeTo(flags, coords, line_coords, cur_line_coord, current_index, mid_position, start_bezier_index, out_flags, out_coords, out_lengths, o3, o4);
-		}
-	}
-	
-	// End position
-	advanceCoordinateRangeTo(flags, coords, line_coords, cur_line_coord, current_index, end, start_bezier_index, out_flags, out_coords, out_lengths, o3, o4);
-	
-	out_coords.push_back(MapCoordF(0, 0));
-	if (flags[current_index].isCurveStart())
-	{
-		int index = line_coords[cur_line_coord].index;
-		float factor = (end - line_coords[cur_line_coord-1].clen) / qMax(1e-7f, (line_coords[cur_line_coord].clen - line_coords[cur_line_coord-1].clen));
-		//Q_ASSERT(factor >= -0.01f && factor <= 1.01f); happens when using large break lengths as these are not adjusted
-		if (factor > 1)
-			factor = 1;
-		else if (factor < 0)
-			factor = 0;
-		float prev_param = (line_coords[cur_line_coord-1].index == line_coords[cur_line_coord].index) ? line_coords[cur_line_coord-1].param : 0;
-		Q_ASSERT(prev_param <= line_coords[cur_line_coord].param);
-		float p = prev_param + (line_coords[cur_line_coord].param - prev_param) * factor;
-		Q_ASSERT(p >= 0 && p <= 1);
-		
-		out_flags.push_back(MapCoord(0, 0));
-		out_coords.push_back(MapCoordF(0, 0));
-		out_flags.push_back(MapCoord(0, 0));
-		out_coords.push_back(MapCoordF(0, 0));
-		if (out_lengths)
-		{
-			out_lengths->push_back(-1);
-			out_lengths->push_back(-1);
-		}
-		MapCoordF unused, unused2;
-		
-		out_flags.push_back(MapCoord(0, 0));
-		if (start_bezier_index == current_index)
-		{
-			// The dash end is in the same curve as the start, need to make a second split with the correct parameter
-			p = (p - start_bezier_split_param) / (1 - start_bezier_split_param);
-			if (!(p <= 1))
-				p = 1;
-			else if (!(p >= 0))
-				p = 0;
-			
-			PathCoord::splitBezierCurve(out_coords[out_coords.size() - 4], o3, o4, (index < (int)flags.size() - 3) ? coords[index+3] : coords[0],
-										p, out_coords[out_coords.size() - 3], out_coords[out_coords.size() - 2],
-										out_coords[out_coords.size() - 1], unused, unused2);
-		}
-		else
-		{
-			PathCoord::splitBezierCurve(coords[index], coords[index+1], coords[index+2], (index < (int)flags.size() - 3) ? coords[index+3] : coords[0],
-										p, out_coords[out_coords.size() - 3], out_coords[out_coords.size() - 2],
-										out_coords[out_coords.size() - 1], unused, unused2);
-		}
-		if (out_lengths)
-			out_lengths->push_back(end);
-	}
-	else
-	{
-		out_flags.push_back(MapCoord(0, 0));
-		PathCoord::calculatePositionAt(flags, coords, line_coords, end, cur_line_coord, &out_coords[out_coords.size() - 1], NULL);
-		if (out_lengths)
-			out_lengths->push_back(end);
-	}
-}
-
-void LineSymbol::advanceCoordinateRangeTo(const MapCoordVector& flags, const MapCoordVectorF& coords, const PathCoordVector& line_coords, int& cur_line_coord, int& current_index, float cur_length,
-									 int start_bezier_index, MapCoordVector& out_flags, MapCoordVectorF& out_coords, std::vector<float>* out_lengths, const MapCoordF& o3, const MapCoordF& o4) const
-{
-	int line_coords_size = (int)line_coords.size();
-	while (cur_line_coord < line_coords_size - 1 && line_coords[cur_line_coord].clen < cur_length)
-	{
-		++cur_line_coord;
-		if (line_coords[cur_line_coord].index != current_index)
-		{
-			if (current_index == start_bezier_index)
-			{
-				out_flags.push_back(MapCoord(0, 0));
-				out_coords.push_back(o3);
-				if (out_lengths)
-					out_lengths->push_back(-1);
-				out_flags.push_back(MapCoord(0, 0));
-				out_coords.push_back(o4);
-				if (out_lengths)
-					out_lengths->push_back(-1);
-				out_flags.push_back(flags[current_index + 3]);
-				out_coords.push_back(coords[current_index + 3]);
-				if (out_lengths)
-					out_lengths->push_back(line_coords[cur_line_coord-1].clen);
-				
-				current_index += 3;
-				Q_ASSERT(current_index == line_coords[cur_line_coord].index);
-			}
-			else
-			{
-				Q_ASSERT((!flags[current_index].isCurveStart() && current_index + 1 == line_coords[cur_line_coord].index) ||
-				       (flags[current_index].isCurveStart() && current_index + 3 == line_coords[cur_line_coord].index) ||
-				       (flags[current_index+1].isHolePoint() && current_index + 2 == line_coords[cur_line_coord].index));
-				do
-				{
-					++current_index;
-					out_flags.push_back(flags[current_index]);
-					out_coords.push_back(coords[current_index]);
-					if (out_lengths)
-						out_lengths->push_back(line_coords[cur_line_coord-1].clen);
-				} while (current_index < line_coords[cur_line_coord].index);
-			}
-		}
-	}	
 }
 
 void LineSymbol::colorDeleted(const MapColor* color)

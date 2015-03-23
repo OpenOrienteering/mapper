@@ -1,6 +1,6 @@
 /*
  *    Copyright 2013 Thomas Schöps
- *    Copyright 2014 Kai Pastor
+ *    Copyright 2014, 2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -427,18 +427,22 @@ bool FillTool::fillBoundary(const QImage& image, const std::vector< QPoint >& bo
 	
 	// Create fill object
 	PathObject* path = new PathObject(drawing_symbol);
-	for (size_t s = 0, end = sections.size(); s < end; ++s)
+	for (auto& section : sections)
 	{
-		PathSection& section = sections[s];
-		if (section.start_clen > section.object->getPart(0).getLength()
-			|| section.end_clen > section.object->getPart(0).getLength())
+		const auto& part = section.object->parts().front();
+		if (section.start_clen > part.length() || section.end_clen > part.length())
 			continue;
 		
-		PathObject* part_copy = section.object->duplicatePart(section.part);
-		bool reverse = section.end_clen < section.start_clen;
-		part_copy->changePathBounds(0, reverse ? section.end_clen : section.start_clen, reverse ? section.start_clen : section.end_clen);
-		if (reverse)
+		PathObject* part_copy = new PathObject { section.object->parts()[section.part] };
+		if (section.end_clen < section.start_clen)
+		{
+			part_copy->changePathBounds(0, section.end_clen, section.start_clen);
 			part_copy->reverse();
+		}
+		else
+		{
+			part_copy->changePathBounds(0, section.start_clen, section.end_clen);
+		}
 		
 		if (path->getCoordinateCount() == 0)
 			path->appendPath(part_copy);
@@ -447,13 +451,16 @@ bool FillTool::fillBoundary(const QImage& image, const std::vector< QPoint >& bo
 		
 		delete part_copy;
 	}
+	
 	if (path->getCoordinateCount() < 2)
 	{
 		delete path;
 		return false;
 	}
+	
 	path->closeAllParts();
-	const float simplify_epsilon = 1e-2f;
+	
+	const auto simplify_epsilon = 1e-2;
 	path->simplify(NULL, simplify_epsilon);
 	
 	int index = map()->addObject(path);

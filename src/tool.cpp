@@ -307,11 +307,10 @@ void MapEditorTool::deleteOldSelectionRenderables(MapRenderables& old_renderable
 	old_renderables.clear(set_area_dirty);
 }
 
-int MapEditorTool::findHoverPoint(QPointF cursor, const MapWidget* widget, const Object* object, bool include_curve_handles, QRectF* selection_extent, MapCoordF* out_handle_pos) const
+MapCoordVector::size_type MapEditorTool::findHoverPoint(QPointF cursor, const MapWidget* widget, const Object* object, bool include_curve_handles, MapCoordF* out_handle_pos) const
 {
-	Q_UNUSED(selection_extent);
-	
 	const float click_tolerance_squared = click_tolerance * click_tolerance;
+	auto best_index = std::numeric_limits<MapCoordVector::size_type>::max();
 	
 	if (object->getType() == Object::Point)
 	{
@@ -340,11 +339,10 @@ int MapEditorTool::findHoverPoint(QPointF cursor, const MapWidget* widget, const
 	else if (object->getType() == Object::Path)
 	{
 		const PathObject* path = reinterpret_cast<const PathObject*>(object);
-		int size = path->getCoordinateCount();
+		auto size = path->getCoordinateCount();
 		
-		int best_index = -1;
 		float best_dist_sq = click_tolerance_squared;
-		for (int i = size - 1; i >= 0; --i)
+		for (auto i = size - 1; i < size; --i)
 		{
 			if (!path->getCoordinate(i).isClosePoint())
 			{
@@ -360,15 +358,15 @@ int MapEditorTool::findHoverPoint(QPointF cursor, const MapWidget* widget, const
 			if (!include_curve_handles && i >= 3 && path->getCoordinate(i - 3).isCurveStart())
 				i -= 2;
 		}
-		if (best_index >= 0)
+		
+		if (out_handle_pos &&
+		    best_index < std::numeric_limits<MapCoordVector::size_type>::max())
 		{
-			if (out_handle_pos)
-				*out_handle_pos = MapCoordF(path->getCoordinate(best_index));
-			return best_index;
+			*out_handle_pos = MapCoordF(path->getCoordinate(best_index));
 		}
 	}
 	
-	return -1;
+	return best_index;
 }
 
 bool MapEditorTool::containsDrawingButtons(Qt::MouseButtons buttons) const

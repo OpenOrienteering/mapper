@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012, 2013, 2014 Kai Pastor
+ *    Copyright 2012-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -24,16 +24,28 @@
 
 #include <QScopedPointer>
 
+#include "core/path_coord.h"
 #include "tool.h"
+#include "tool_edit.h"
 
 class DrawPathTool;
-class PathCoord;
 class PathObject;
 class MapRenderables;
 
-/** Tool to cut objects (lines or areas) into smaller pieces */
+/**
+ * A tool to cut objects into smaller pieces.
+ * 
+ * May cut lines and areas.
+ * 
+ * \todo This tool has some similarities with EditPointTool and maybe should use
+ *       the same base class (EditTool).
+ */
 class CutTool : public MapEditorTool
 {
+public:
+	using HoverFlag  = EditTool::HoverFlag;
+	using HoverState = EditTool::HoverState;
+	
 Q_OBJECT
 public:
 	CutTool(MapEditorController* editor, QAction* tool_action);
@@ -68,7 +80,7 @@ protected:
 	 * 
 	 * This may remove the object from the map and add new objects instead.
 	 */
-	void splitLine(PathObject* object, int part_index, qreal begin, qreal end) const;
+	void splitLine(PathObject* object, std::size_t part_index, qreal begin, qreal end) const;
 	
 	/**
 	 * Splits the path object at the given position.
@@ -92,7 +104,7 @@ protected:
 	void deletePreviewPath();
 	void updateDirtyRect(const QRectF* path_rect = nullptr) const;
 	void updateDragging(MapCoordF cursor_pos_map, MapWidget* widget);
-	void updateHoverPoint(QPointF cursor_pos_screen, MapWidget* widget);
+	void updateHoverState(QPointF cursor_pos_screen, MapWidget* widget);
 	bool findEditPoint(PathCoord& out_edit_point, PathObject*& out_edit_object, MapCoordF cursor_pos_map, int with_type, int without_type, MapWidget* widget);
 	
 	void startCuttingArea(const PathCoord& coord, MapWidget* widget);
@@ -104,12 +116,13 @@ protected:
 	MapCoordF cur_pos_map;
 	bool dragging;
 	
-	int hover_point;
+	HoverState hover_state;
 	Object* hover_object;
+	MapCoordVector::size_type hover_point;
 	PathObject* edit_object;
 	
 	// For removing segments from lines
-	int drag_part_index;
+	quint32 drag_part_index; // PathPartVector::size_type
 	float drag_start_len;
 	float drag_end_len;
 	bool drag_forward;		// true if [drag_start_len; drag_end_len] is the drag range, else [drag_end_len; drag_start_len]

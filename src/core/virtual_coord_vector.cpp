@@ -1,5 +1,4 @@
 /*
- *    Copyright 2013 Thomas Schöps
  *    Copyright 2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
@@ -18,40 +17,20 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
-#ifndef _OPENORIENTEERING_PATH_OBJECT_T_H
-#define _OPENORIENTEERING_PATH_OBJECT_T_H
-
-#include <QtTest/QtTest>
-
-#include "../src/object.h"
+#include "virtual_coord_vector.h"
 
 
-/**
- * @test Tests PathObject, MapCoord(F) and VirtualPath.
- *
- * @todo Extent this test.
- */
-class PathObjectTest : public QObject
+
+//### VirtualCoordVector ###
+
+MapCoordF VirtualCoordVector::fromMapCoordF(size_type index) const
 {
-Q_OBJECT
-public:
-	/** Constructor */
-	explicit PathObjectTest(QObject* parent = NULL);
-	
-private slots:
-	void initTestCase();
-	
-	/** Tests MapCoordF. */
-	void mapCoordTest();
-	
-	/** Tests VirtualPath. */
-	void virtualPathTest();
-	
-	/** Tests finding intersections with calcAllIntersectionsWith(). */
-	void calcIntersectionsTest();
-	void calcIntersectionsTest_data();
-	
-};
+	return (*coords)[index];
+}
 
-#endif
+MapCoordF VirtualCoordVector::fromMapCoord(size_type index) const
+{
+	return MapCoordF(flags[index]);
+}
+
+

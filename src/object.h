@@ -22,14 +22,16 @@
 #ifndef _OPENORIENTEERING_OBJECT_H_
 #define _OPENORIENTEERING_OBJECT_H_
 
+#include <limits>
 #include <vector>
 
 #include <QRectF>
 #include <QHash>
 
-#include "file_format.h"
 #include "core/map_coord.h"
-#include "path_coord.h"
+#include "core/path_coord.h"
+#include "core/virtual_path.h"
+#include "file_format.h"
 #include "renderable.h"
 #include "symbol.h"
 
@@ -196,9 +198,10 @@ public:
 	 */
 	int isPointOnObject(MapCoordF coord, float tolerance, bool treat_areas_as_paths, bool extended_selection) const;
 	
-	/** Checks if a path point (excluding curve control points)
-	 * is included in the given box */
-	bool intersectsBox(QRectF box) const;
+	/**
+	 * Checks if a path point (excluding curve control points) is included in the given box.
+	 */
+	virtual bool intersectsBox(QRectF box) const = 0;
 	
 	/** Takes ownership of the renderables */
 	void takeRenderables();
@@ -275,6 +278,12 @@ public:
 	void includeControlPointsRect(QRectF& rect) const;
 	
 protected:
+	virtual void updateEvent() const;
+	
+	virtual void createRenderables(ObjectRenderables& output) const;
+	
+	virtual void createBaselineRenderables(ObjectRenderables& output) const;
+	
 	Type type;
 	const Symbol* symbol;
 	MapCoordVector coords;
@@ -289,6 +298,96 @@ private:
 
 
 
+class PathPartVector;
+
+
+/**
+ * Helper struct with information about parts of paths.
+ * A part is a path segment which is separated from other parts by
+ * a hole point at its end.
+ */
+struct PathPart : public VirtualPath
+{
+	/** Pointer to path part containing this part */
+	PathObject* path;
+	
+	PathPart(
+	        PathObject& path,
+	        MapCoordVector::size_type start_index,
+	        MapCoordVector::size_type end_index
+	);
+	
+	PathPart(
+	        const VirtualCoordVector& coords,
+	        MapCoordVector::size_type start_index,
+	        MapCoordVector::size_type end_index
+	);
+	
+	PathPart(
+	        PathObject& path,
+	        const PathCoordVector& path_coords
+	);
+	
+	PathPart& operator=(const PathPart& rhs);
+	
+	/**
+	 * Closes or opens the sub-path.
+	 * 
+	 * If closed == true and may_use_existing_close_point == false,
+	 * a new point is added as closing point even if its coordinates
+	 * are identical to the existing last point. Else, the last point
+	 * may be reused.
+	 */
+	void setClosed(bool closed, bool may_use_existing_close_point = false);
+	
+	/**
+	 * Closes the subpath, merging the start and end point at their center.
+	 * 
+	 * \see PathPart::setClosed()
+	 */
+	void connectEnds();
+	
+	/**
+	 * Reverses the part's coordinates.
+	 * 
+	 * Reversing the coordinates results in switching the start/end/mid/dash
+	 * symbol direction for line symbols.
+	 * 
+	 * \see PathObject::reverse()
+	 */
+	void reverse();
+	
+	static PathPartVector calculatePathParts(const VirtualCoordVector& coords);
+};
+
+
+
+class PathPartVector : public std::vector<PathPart> 
+{
+public:
+	/**
+	 * This is dangerous when copying objects (which own a PathPartVector).
+	 * 
+	 * Objects need to deal with the PathParts explicitly, at least as long as
+	 * the PathPart contains distinct references to the object and to the
+	 * coordinates.
+	 * 
+	 * Other use cases may consider using std::vector<PathPart>.
+	 */
+	PathPartVector& operator=(const PathPartVector&) = delete;
+	
+	/**
+	 * Returns true if the part's end_index is lower than index.
+	 * 
+	 * This function can be used for doing a binary search on a sorted PathPartVector.
+	 * 
+	 * @see std::lower_bound()
+	 */
+	static bool compareEndIndex(const PathPart& part, VirtualPath::size_type index);
+};
+
+
+
 /**
  * Object type which can be used for line, area and combined symbols.
  * Has a dynamic number of coordinates.
@@ -299,65 +398,9 @@ private:
  */
 class PathObject : public Object
 {
+	friend class PathPart;
+	
 public:
-	/**
-	 * Helper struct with information about parts of paths.
-	 * A part is a path segment which is separated from other parts by
-	 * a hole point at its end.
-	 */
-	struct PathPart
-	{
-		/** Index of first coordinate of this part in the coords vector */
-		int start_index;
-		/** Index of last coordinate of this part in the coords vector */
-		int end_index;
-		/** Index of first coordinate of this part in the PathCoord vector */
-		int path_coord_start_index;
-		/** Index of last coordinate of this part in the PathCoord vector */
-		int path_coord_end_index;
-		/** Pointer to path part containing this part */
-		PathObject* path;
-		
-		/** Returns the number of coordinates which make up this part.
-		 *  See also calcNumRegularPoints(). */
-		int getNumCoords() const;
-		
-		/** Calculates the number of points in this part,
-		 *  excluding close points and curve handles. */
-		int calcNumRegularPoints() const;
-		
-		/**
-		 * Returns if the path part is closed. Objects with area symbols must
-		 * always be closed.
-		 * 
-		 * For closed parts, the last coordinate is at the same position as the
-		 * first coordinate of the part and has the "close point" flag set.
-		 * These coords will move together when moved by the user, appearing as
-		 * just one coordinate.
-		 * 
-		 * Parts can be closed and opened with setClosed() or connectEnds().
-		 */
-		bool isClosed() const;
-		
-		/**
-		 * Closes or opens the sub-path.
-		 * 
-		 * If closed == true and may_use_existing_close_point == false,
-		 * a new point is added as closing point even if its coordinates
-		 * are identical to the existing last point. Else, the last point
-		 * may be reused.
-		 */
-		void setClosed(bool closed, bool may_use_existing_close_point = false);
-		
-		/** Like setClosed(true), but merges start and end point at their center */
-		void connectEnds();
-		
-		/** Returns the length of the part. */
-		double getLength() const;
-		
-		/** Calculates the area of this part. */
-		double calculateArea() const;
-	};
 	
 	/** Returned by calcAllIntersectionsWith(). */
 	struct Intersection
@@ -365,19 +408,27 @@ public:
 		/** Coordinate of the intersection */
 		MapCoordF coord;
 		/** Part index of intersection */
-		int part_index;
+		PathPartVector::size_type part_index;
 		/** Length of path until this intersection point */
-		double length;
+		PathCoord::length_type length;
 		/** Part index of intersection in other path */
-		int other_part_index;
+		PathPartVector::size_type other_part_index;
 		/** Length of other path until this intersection point */
-		double other_length;
+		PathCoord::length_type other_length;
 		
 		/**
 		 * Creates an Intersection at the position specified by factors a and b
 		 * between the a0/a1 and b0/b1 PathCoords in the given parts.
 		 */
-		static Intersection makeIntersectionAt(double a, double b, const PathCoord& a0, const PathCoord& a1, const PathCoord& b0, const PathCoord& b1, int part_index, int other_part_index);
+		static Intersection makeIntersectionAt(
+		        double a,
+		        double b,
+		        const PathCoord& a0,
+		        const PathCoord& a1,
+		        const PathCoord& b0,
+		        const PathCoord& b1,
+		        PathPartVector::size_type part_index,
+		        PathPartVector::size_type other_part_index );
 	};
 	
 	/** std::vector of Intersection with the ability to sort them and remove duplicates. */
@@ -385,7 +436,7 @@ public:
 	{
 	public:
 		/** Sorts the intersections and removes duplicates. */
-		void clean();
+		void normalize();
 	};
 	
 	
@@ -393,10 +444,16 @@ public:
 	explicit PathObject(const Symbol* symbol = nullptr);
 	
 	/** Constructs a PathObject, assigning initial coords and optionally the map pointer. */
-	explicit PathObject(const Symbol* symbol, const MapCoordVector& coords, Map* map = nullptr);
+	PathObject(const Symbol* symbol, const MapCoordVector& coords, Map* map = nullptr);
+	
+	/** Constructs a PathObject, assigning initial coords from a single piece of a line. */
+	PathObject(const Symbol* symbol, const PathObject& proto, MapCoordVector::size_type piece);
 	
 	/** Constructs a PathObject, initalized from the given prototype. */
 	explicit PathObject(const PathObject& proto);
+	
+	/** Constructs a PathObject, initalized from the given part of another object. */
+	explicit PathObject(const PathPart& proto_part);
 	
 	/**
 	 * Creates a duplicate of the path object.
@@ -405,26 +462,30 @@ public:
 	 */
 	Object* duplicate() const override;
 	
-	/** Creates a new PathObject which contains a duplicate of only one part of this object. */
-	PathObject* duplicatePart(int part_index) const;
+	/** Replaces this object's contents by those of the other. */
+	PathObject& operator=(const PathObject& other);
 	
 	/** Replaces this object's contents by those of the other. */
 	Object& operator=(const Object& other) override;
 	
+	
+	bool intersectsBox(QRectF box) const override;
+	
+	
 	// Coordinate access methods
 	
 	/** Returns the number of coordinates, including curve handles and close points. */
-	int getCoordinateCount() const;
+	MapCoordVector::size_type getCoordinateCount() const;
 	/** Returns the i-th coordinate. */
-	const MapCoord& getCoordinate(int pos) const;
+	const MapCoord& getCoordinate(MapCoordVector::size_type pos) const;
 	/** Returns the i-th coordinate. */
-	MapCoord& getCoordinate(int pos);
+	MapCoord& getCoordinate(MapCoordVector::size_type pos);
 	
 	/** Replaces the i-th coordinate with c. */
-	void setCoordinate(int pos, MapCoord c);
+	void setCoordinate(MapCoordVector::size_type pos, MapCoord c);
 	
 	/** Adds the coordinate at the given index. */
-	void addCoordinate(int pos, MapCoord c);
+	void addCoordinate(MapCoordVector::size_type pos, MapCoord c);
 	
 	/** Adds the coordinate at the end, optionally starting a new part.
 	 *  If starting a new part, make sure that the last coord of the old part
@@ -433,6 +494,13 @@ public:
 	
 	/**
 	 * Deletes a coordinate from the path.
+	 * 
+	 * When requesting a control point of a bezier arc to be deleted, the other
+	 * control point is deleted, too.
+	 * 
+	 * If the number of regular points in the coordinate's part is not more
+	 * than two, the whole part is delete from the object. 
+	 * 
 	 * @param pos Index of the coordinate to delete.
 	 * @param adjust_other_coords If set and the deleted coordinate was joining
 	 *     two bezier curves, adapts the adjacent curves with a strategy defined
@@ -441,73 +509,64 @@ public:
 	 * @param delete_bezier_point_action Must be an enum value from
 	 *     Settings::DeleteBezierPointAction if adjust_other_coords is set.
 	 */
-	void deleteCoordinate(int pos, bool adjust_other_coords, int delete_bezier_point_action = -1);
+	void deleteCoordinate(MapCoordVector::size_type pos, bool adjust_other_coords, int delete_bezier_point_action = -1);
 	
 	/** Deletes all coordinates of the object. */
 	void clearCoordinates();
 	
-	/** Returns a coordinate with shifted index,
-	 *  see shiftedCoordIndex() for details. */
-	const MapCoord& shiftedCoord(int base_index, int offset, const PathPart& part) const;
-	
-	/** Returns a coordinate with shifted index,
-	 *  see shiftedCoordIndex() for details. */
-	MapCoord& shiftedCoord(int base_index, int offset, const PathPart& part);
-	
 	/**
-	 * Calculates a shifted coordinate index, correctly handling wrap-around
-	 * for closed parts. Returns -1 if going over an open path end or after
-	 * looping around once in a closed path.
-	 * @param base_index The base index from which to start.
-	 * @param offset Offset from the base index.
-	 * @param part Reference to part in which the base_index is.
+	 * Assigns the given prototype's coordinates subset to this object's coordinates.
+	 *
+	 * The range must be within one part. Last may be smaller than first iff
+	 * the path is closed.
 	 */
-	int shiftedCoordIndex(int base_index, int offset, const PathPart& part) const;
+	void assignCoordinates(const PathObject& proto, MapCoordVector::size_type first, MapCoordVector::size_type last);
+	
 	
 	/** Finds the path part containing the given coord index. */
-	const PathPart& findPartForIndex(int coords_index) const;
+	PathPartVector::const_iterator findPartForIndex(MapCoordVector::size_type coords_index) const;
 	
 	/** Finds the path part containing the given coord index. */
-	int findPartIndexForIndex(int coords_index) const;
+	PathPartVector::iterator findPartForIndex(MapCoordVector::size_type coords_index);
 	
-	/** Checks if the coord with given index is a curve handle. */
-	bool isCurveHandle(int coord_index) const;
-	
-	
-	/** Returns the number of path parts in this object */
-	int getNumParts() const;
-	
-	/** Returns the i-th path part. */
-	const PathPart& getPart(int index) const;
-	
-	/** Returns the i-th path part. */
-	PathPart& getPart(int index);
-	
-	/** Returns if the first path part (with index 0) is closed. */
-	bool isFirstPartClosed() const;
-	
-	/** Deletes the i-th path part. */
-	void deletePart(int part_index);
-	
-protected:
 	/**
-	 * Adjusts the start/end index attributes of all affected parts after
-	 * the part with the given index has changed its size by change.
-	 * This includes the changed part.
+	 * Finds the path part containing the given coord index.
 	 * 
-	 * output_dirty must be set before calling this function.
+	 * \todo Review where this signature can be replace by the one returning an iterator.
 	 */
-	void partSizeChanged(int part_index, int change);
+	PathPartVector::size_type findPartIndexForIndex(MapCoordVector::size_type coords_index) const;
 	
-public:
+	
 	/**
-	 * Returns the PathCoord vector, giving linearized information about the
-	 * path's shape. This is only valid if the object is not dirty!
+	 * Returns the path coordinate for the map coordinate with given index.
+	 * 
+	 * @param index Index of normal MapCoord for which to create the PathCoord.
 	 */
-	const PathCoordVector& getPathCoordinateVector() const;
+	PathCoord findPathCoordForIndex(MapCoordVector::size_type index) const;
 	
-	/** Clears the PathCoord vector. */
-	void clearPathCoordinates();
+	
+	/**
+	 * Returns true if the given index is a curve handle.
+	 */
+	bool isCurveHandle(MapCoordVector::size_type index) const;
+	
+	
+	/**
+	 * Returns the vector of path parts.
+	 */
+	const PathPartVector& parts() const;
+	
+	/**
+	 * Returns the vector of path parts.
+	 * 
+	 * Marks the output as dirty.
+	 */
+	PathPartVector& parts();
+	
+	/**
+	 * Deletes the i-th path part.
+	 */
+	void deletePart(PathPartVector::size_type part_index);
 	
 	
 	// Pattern methods
@@ -548,22 +607,50 @@ public:
 	 * usually called to find the position on the path the user clicked on.
 	 * part_index can be set to a valid part index to constrain searching
 	 * to this specific path part.
+	 * 
+	 * \todo Convert out_distance_sq to double (so avoiding conversions).
+	 * \todo Return PathCoord rather than writing to the provided reference.
 	 */
-	void calcClosestPointOnPath(MapCoordF coord, float& out_distance_sq,
-								PathCoord& out_path_coord, int part_index = -1) const;
+	void calcClosestPointOnPath(
+	        MapCoordF coord,
+	        float& out_distance_sq,
+	        PathCoord& out_path_coord,
+	        MapCoordVector::size_type start_index = 0,
+	        MapCoordVector::size_type end_index = std::numeric_limits<PathPartVector::size_type>::max()
+	) const;
 	
 	/**
 	 * Calculates the closest control point coordinate to the given coordiante,
 	 * returns the squared distance of these points and the index of the control point.
+	 * 
+	 * \todo Convert out_distance_sq to double (so avoiding conversions).
+	 * \todo Return index rather than writing to the provided reference.
 	 */
-	void calcClosestCoordinate(MapCoordF coord, float& out_distance_sq, int& out_index) const;
+	void calcClosestCoordinate(
+	        MapCoordF coord,
+	        float& out_distance_sq,
+	        MapCoordVector::size_type& out_index) const;
 	
 	/**
-	 * Splits the segment beginning at the coordinate with the given index
-	 * with the given bezier curve parameter or split ratio.
+	 * Splits the path at the position given by path_coord.
+	 * 
+	 * Must not be called while isOutputDirty() returns true.
+	 * 
 	 * Returns the index of the added point.
 	 */
-	int subdivide(int index, float param);
+	MapCoordVector::size_type subdivide(const PathCoord& path_coord);
+	
+	/**
+	 * Splits the path in the curve which starts at the given index.
+	 * 
+	 * The second parameter determines the split position between begin and end
+	 * of the curve (0.0 ... 1.0).
+	 * 
+	 * Must not be called while isOutputDirty() returns true.
+	 * 
+	 * @return The index of the added point.
+	 */
+	MapCoordVector::size_type subdivide(MapCoordVector::size_type index, float param);
 	
 	/**
 	 * Returns if connectIfClose() would change something with the given parameters
@@ -574,6 +661,8 @@ public:
 	 * Returns if the objects were connected (if so, you can delete the other object).
 	 * If one of the paths has to be reversed, it is done for the "other" path.
 	 * Otherwise, the "other" path is not changed.
+	 * 
+	 * \todo Review documentation, container usage,
 	 */
 	bool connectIfClose(PathObject* other, double connect_threshold_sq);
 	
@@ -581,8 +670,13 @@ public:
 	 * Connects the given parts, optionally merging the end coordinates at the
 	 * center position, and copying over the coordindates from other.
 	 */
-	void connectPathParts(int part_index, const PathObject* other,
-						  int other_part_index, bool prepend, bool merge_ends = true);
+	void connectPathParts(
+	        PathPartVector::size_type part_index,
+	        const PathObject* other,
+	        PathPartVector::size_type other_part_index,
+	        bool prepend,
+	        bool merge_ends = true
+	);
 	
 	/**
 	 * Returns the result of removing the section between begin and end from the path.
@@ -592,28 +686,43 @@ public:
 	 * 
 	 * Returns an empty vector when nothing remains after removal.
 	 */
-	std::vector<PathObject*> removeFromLine(int part_index, qreal begin, qreal end) const;
+	std::vector<PathObject*> removeFromLine(
+	        PathPartVector::size_type part_index,
+	        qreal begin,
+	        qreal end
+	) const;
 									   
 	/**
 	 * Returns the result of splitting the path at the given inner position.
 	 * 
 	 * Returns an empty vector when the object is not changed by the split.
 	 * This happens when the path is not closed and split_pos is the begin or
-	 * end of the path.
+	 * end of the path, or when the object has got more than a single PathPart.
 	 */
 	std::vector<PathObject*> splitLineAt(const PathCoord& split_pos) const;
 	
 	/**
 	 * Replaces the path with a range of it starting and ending at the given lengths.
+	 * 
+	 * \todo Partially duplicated in LineSymbol::calculatePathCoordinates()
 	 */
-	void changePathBounds(int part_index, double start_len, double end_len);
+	void changePathBounds(
+	        PathPartVector::size_type part_index,
+	        PathCoord::length_type start_len,
+	        PathCoord::length_type end_len
+	);
 	
-	/** Appends (copies) the coordinates of other to this path. */
+	/**
+	 * Appends (copies) the coordinates of other to this path.
+	 */
 	void appendPath(const PathObject* other);
 	
-	/** Appends (copies) the coordinates of a specific part
-	 *  of the other path to this path. */
-	void appendPathPart(const PathObject* other, int part_index);
+	/**
+	 * Appends (copies) the coordinates of a specific part to this path.
+	 * 
+	 * The other object is determined from the part's path property.
+	 */
+	void appendPathPart(const PathPart& part);
 	
 	/**
 	 * Reverses the object's coordinates, resulting in switching
@@ -621,18 +730,8 @@ public:
 	 */
 	void reverse();
 	
-	/** Like reverse(), but only for the given part. */
-	void reversePart(int part_index);
-	
 	/** Ensures that all parts are closed. Useful for objects with area-only symbols. */
 	void closeAllParts();
-	
-	/**
-	 * Creates a new path object containing the given coordinate range.
-	 * The range must be within one part, and end may be smaller than start
-	 * if the path is closed to wrap around.
-	 */
-	PathObject* extractCoordsWithinPart(int start, int end) const;
 	
 	/**
 	 * Converts all polygonal sections in this path to splines.
@@ -644,19 +743,25 @@ public:
 	/**
 	 * Converts the given range of coordinates to a spline by inserting handles.
 	 * The range must consist of only polygonal segments before.
+	 * 
+	 * @return The new index of the end of the range.
 	 */
-	void convertRangeToCurves(int part_number, int start_index, int end_index);
+	int convertRangeToCurves(const PathPart& part, MapCoordVector::size_type start_index, MapCoordVector::size_type end_index);
 	
 	/**
 	 * Tries to remove points while retaining the path shape as much as possible.
 	 * If at least one point is changed, returns true and
 	 * returns an undo duplicate if the corresponding pointer is set.
 	 */
-	bool simplify(PathObject** undo_duplicate, float threshold);
+	bool simplify(PathObject** undo_duplicate, double threshold);
 	
 	/** See Object::isPointOnObject() */
-	int isPointOnPath(MapCoordF coord, float tolerance,
-					  bool treat_areas_as_paths, bool extended_selection) const;
+	int isPointOnPath(
+	        MapCoordF coord,
+	        float tolerance,
+	        bool treat_areas_as_paths,
+	        bool extended_selection
+	) const;
 	
 	/**
 	 * Returns true if the given coordinate is inside the area
@@ -664,11 +769,16 @@ public:
 	 */
 	bool isPointInsideArea(MapCoordF coord) const;
 	
-	/** Calculates the average distance (of the first part) to another path */
-	float calcAverageDistanceTo(const PathObject* other) const;
-	
-	/** Calculates the maximum distance (of the first part) to another path */
-	float calcMaximumDistanceTo(const PathObject* other) const;
+	/**
+	 * Calculates the maximum distance of the given coord ranges of two objects.
+	 */
+	double calcMaximumDistanceTo(
+	        MapCoordVector::size_type start_index,
+	        MapCoordVector::size_type end_index,
+	        const PathObject* other,
+	        MapCoordVector::size_type other_start_index,
+	        MapCoordVector::size_type other_end_index
+	) const;
 	
 	/**
 	 * Calculates and adds all intersections with the other path to out.
@@ -679,56 +789,22 @@ public:
 	void calcAllIntersectionsWith(const PathObject* other, Intersections& out) const;
 	
 	/** Called by Object::update() */
-	void updatePathCoords(const MapCoordVectorF& float_coords) const;
+	void updatePathCoords() const;
 	
 	/** Called by Object::load() */
 	void recalculateParts();
 	
-private: // Too complicated for general use
-	/**
-	 * Advances the cur_path_coord and current_index variables until they are
-	 * at the path coord segment containing the cumulative length cur_length.
-	 * While doing so, adds all coords it passes to the out_flags and out_coords.
-	 * TODO: put this into a PathCoordIterator, internally! This is far too complex.
-	 * 
-	 * @param flags Coordinate flags of the object to iterate over.
-	 * @param coords Coordinate positions of the object to iterate over.
-	 * @param path_coords PathCoords of the object to iterate over.
-	 * @param cur_path_coord Current path coord index, will be updated.
-	 * @param current_index Current MapCoord index, will be updated.
-	 * @param cur_length Target cumulative path length (TODO: rename)
-	 * @param enforce_wrap Enforce wrapping around a closed part once.
-	 * @param start_bezier_index Index of first point of bezier curve, if this
-	 *     bezier curve has been split to determine the start position which
-	 *     must already be in out_flags and out_coords. -1 if this start
-	 *     position was not determined by a curve split.
-	 * @param out_flags Passed flags will be appended here.
-	 * @param out_coords Passed coords will be appended here.
-	 * @param o3 If start_bezier_index is valid, pass in the first handle of
-	 *     the second part of the split bezier curve.
-	 * @param o4 If start_bezier_index is valid, pass in the second handle of
-	 *     the second part of the split bezier curve.
-	 *     This and o3 needs to be added to out_... if passing over a coordinate.
-	 *     If not passing over a coordinate, instead the curve made up by
-	 *     the start coordinate, o3, o4 and the next path coordinate needs
-	 *     to be split again and added to the output.
-	 */
-	bool advanceCoordinateRangeTo(
-		const MapCoordVector& flags,
-		const MapCoordVectorF& coords,
-		const PathCoordVector& path_coords,
-		int& cur_path_coord,
-		int& current_index,
-		float cur_length,
-		bool enforce_wrap,
-		int start_bezier_index,
-		MapCoordVector& out_flags,
-		MapCoordVectorF& out_coords,
-		const MapCoordF& o3,
-		const MapCoordF& o4
-	) const;
-	
 protected:
+	/**
+	 * Adjusts the end index of the given part and the start/end indexes of the following parts.
+	 * 
+	 * output_dirty must be set before calling this function.
+	 */
+	void partSizeChanged(PathPartVector::iterator part, MapCoordVector::difference_type change);
+	
+	
+	void prepareDeleteBezierPoint(MapCoordVector::size_type pos, int delete_bezier_point_action);
+	
 	/**
 	 * Calculates the factors which should be applied to the length of the
 	 * remaining bezier curve handle vectors when deleting a point joining
@@ -788,7 +864,13 @@ protected:
 	 * on it and replaces the coord at the given index by it.
 	 * TODO: make separate methods? Setting coords exists already.
 	 */
-	void setClosingPoint(int index, MapCoord coord);
+	void setClosingPoint(MapCoordVector::size_type index, MapCoord coord);
+	
+	void updateEvent() const override;
+	
+	void createRenderables(ObjectRenderables& output) const override;
+	
+	void createBaselineRenderables(ObjectRenderables& output) const override;
 	
 private:
 	/**
@@ -804,10 +886,7 @@ private:
 	MapCoord pattern_origin;
 	
 	/** Path parts list */
-	mutable std::vector<PathPart> parts;
-	
-	/** Linearized shape information, only valid after calling update()! */
-	mutable PathCoordVector path_coords;
+	mutable PathPartVector path_parts;
 };
 
 
@@ -879,10 +958,18 @@ public:
 	void setRotation(float new_rotation);
 	
 	/**
+	 * Sets the point object's rotation according to the given vector.
+	 */
+	void setRotation(MapCoordF vector);
+	
+	/**
 	 * Returns the point object's rotation (in radians). This is only used
 	 * if the object has a symbol which interprets this value.
 	 */
 	float getRotation() const;
+	
+	
+	bool intersectsBox(QRectF box) const override;
 	
 	
 private:
@@ -963,19 +1050,36 @@ QString Object::getTag(const QString& key) const
 
 
 
-//### PathObject::PathPart inline code ###
+//### PathPart inline code ###
 
 inline
-int PathObject::PathPart::getNumCoords() const
+PathPart::PathPart(
+        const VirtualCoordVector& coords,
+        MapCoordVector::size_type start_index,
+        MapCoordVector::size_type end_index)
+ : VirtualPath(coords, start_index, end_index)
+ , path(nullptr)
 {
-	return end_index - start_index + 1;
+	// nothing else
 }
 
 inline
-bool PathObject::PathPart::isClosed() const
+PathPart::PathPart(
+        PathObject& path,
+        MapCoordVector::size_type start_index,
+        MapCoordVector::size_type end_index )
+ : VirtualPath(path.getRawCoordinateVector(), start_index, end_index)
+ , path(&path)
 {
-	Q_ASSERT(end_index >= 0 && end_index < (int)path->coords.size());
-	return path->coords[end_index].isClosePoint();
+	// nothing else
+}
+
+inline
+PathPart& PathPart::operator=(const PathPart& rhs)
+{
+	Q_ASSERT(path = rhs.path);
+	VirtualPath::operator=(rhs);
+	return *this;
 }
 
 
@@ -983,61 +1087,37 @@ bool PathObject::PathPart::isClosed() const
 //### PathObject inline code ###
 
 inline
-int PathObject::getCoordinateCount() const
+MapCoordVector::size_type PathObject::getCoordinateCount() const
 {
-	return (int)coords.size();
+	return coords.size();
 }
 
 inline
-const MapCoord& PathObject::getCoordinate(int pos) const
+const MapCoord& PathObject::getCoordinate(MapCoordVector::size_type pos) const
 {
-	Q_ASSERT(pos >= 0 && (std::size_t)pos < coords.size());
+	Q_ASSERT(pos < coords.size());
 	return coords[pos];
 }
 
 inline
-MapCoord& PathObject::getCoordinate(int pos)
+MapCoord& PathObject::getCoordinate(MapCoordVector::size_type pos)
 {
-	Q_ASSERT(pos >= 0 && (std::size_t)pos < coords.size());
+	Q_ASSERT(pos < coords.size());
 	setOutputDirty();
 	return coords[pos];
 }
 
 inline
-int PathObject::getNumParts() const
+const PathPartVector& PathObject::parts() const
 {
-	return (int)parts.size();
+	return path_parts;
 }
 
 inline
-const PathObject::PathPart& PathObject::getPart(int index) const
-{
-	return parts[index];
-}
-
-inline
-PathObject::PathPart& PathObject::getPart(int index)
+PathPartVector& PathObject::parts()
 {
 	setOutputDirty();
-	return parts[index];
-}
-
-inline
-bool PathObject::isFirstPartClosed() const
-{
-	return !parts.empty() && parts.front().isClosed();
-}
-
-inline
-const PathCoordVector& PathObject::getPathCoordinateVector() const
-{
-	return path_coords;
-}
-
-inline
-void PathObject::clearPathCoordinates()
-{
-	path_coords.clear();
+	return path_parts;
 }
 
 inline
@@ -1065,4 +1145,3 @@ float PointObject::getRotation() const
 
 
 #endif
-

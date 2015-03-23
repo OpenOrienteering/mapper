@@ -87,10 +87,10 @@ public:
 	void addObject(Object* object);
 	
 	/** Adds a point to the set of elements to move. */
-	void addPoint(PathObject* object, int point_index);
+	void addPoint(PathObject* object, MapCoordVector::size_type point_index);
 	
 	/** Adds a line to the set of elements to move. */
-	void addLine(PathObject* object, int start_point_index);
+	void addLine(PathObject* object, MapCoordVector::size_type start_point_index);
 	
 	/** Adds a text handle to the set of elements to move. */
 	void addTextHandle(TextObject* text, int handle);
@@ -107,15 +107,18 @@ public:
 	void move(qint64 dx, qint64 dy, bool move_opposite_handles);
 	
 private:
-	QSet< int >* insertPointObject(PathObject* object);
+	using ObjectSet = QSet<Object*>;
+	using CoordIndexSet = QSet<MapCoordVector::size_type>;
+	
+	CoordIndexSet* insertPointObject(PathObject* object);
 	void calculateConstraints();
 	
 	// Basic information
 	MapCoordF start_position;
 	qint64 prev_drag_x;
 	qint64 prev_drag_y;
-	QSet< Object* > objects;
-	QHash< PathObject*, QSet< int > > points;
+	ObjectSet objects;
+	QHash< PathObject*, CoordIndexSet> points;
 	QHash< TextObject*, int > text_handles;
 	
 	/** Constraints calculated from the basic information */
@@ -140,50 +143,99 @@ private:
 
 
 /**
- * Base class for edit tools.
+ * Base class for object editing tools.
  */
 class EditTool : public MapEditorToolBase
 {
+public:
+	/**
+	 * @brief A type for general information on what is hovered over.
+	 */
+	enum HoverFlag
+	{
+		OverNothing      = 0,
+		OverFrame        = 1,
+		OverObjectNode   = 2,
+		OverPathEdge     = 4,
+	};
+	Q_DECLARE_FLAGS(HoverState, HoverFlag)
+	
 Q_OBJECT
 public:
 	EditTool(MapEditorController* editor, MapEditorTool::Type tool_type, QAction* tool_action);
+	
 	virtual ~EditTool();
 	
+	/**
+	 * The platform's key for deleting selected objects.
+	 * 
+	 * OS X use the backspace key for deleting selected objects,
+	 * while other platforms use the delete key.
+	 * 
+	 * This causes translation issues and inconsistent behaviour on OS X:
+	 * - In Finder, moving an object to trash is Cmd+Backspace.
+	 * - Other programs are reported to use [forward] delete.
+	 * - Some programs are reported to support multiple keys,
+	 *   e.g. Delete and Backspace.
+	 * - A major source of irritation is the absence of a delete key on some
+	 *   Macbooks. On these keyboards, delete is entered as Fn+Backspace.
+	 * - Some programs use another key for delete, e.g. "x".
+	 *   (Note that Cmd-x (aka Cut) will have a similar effect.)
+	 * 
+	 * \todo Either use a function for testing whether a key means
+	 *       "delete object", or switch to a QAction based implementation
+	 *       since QAction supports alternative QKeySequences.
+	 */
 	static const Qt::Key delete_object_key;
 	
 protected:
-	/** Deletes all selected objects and updates the status text. */
+	/**
+	 * Deletes all selected objects and updates the status text.
+	 */
 	void deleteSelectedObjects();
 	
-	/** Creates a replace object undo step for the given object. */
+	/**
+	 * Creates a replace object undo step for the given object.
+	 */
 	void createReplaceUndoStep(Object* object);
 	
-	/** Returns if the point is inside the click_tolerance from the rect's border. */
-	bool pointOverRectangle(QPointF point, const QRectF& rect);
-	
-	/** Returns the point on the rect which is closest to the given point. */
-	MapCoordF closestPointOnRect(MapCoordF point, const QRectF& rect);
+	/**
+	 * Returns if the point is inside the click_tolerance from the rect's border.
+	 */
+	bool pointOverRectangle(QPointF point, const QRectF& rect) const;
 	
 	/**
-	 * Tries to determine the primary directions from the selected objects and
-	 * sets them in the angle helper. If no primary directions are found,
-	 * the default directions are set.
+	 * Returns the point on the rect which is closest to the given point.
+	 */
+	static MapCoordF closestPointOnRect(MapCoordF point, const QRectF& rect);
+	
+	/**
+	 * Configures the angle helper from the primary directions of the selected objects.
+	 * 
+	 * If no primary directions are found, the default directions are set.
 	 */
 	void setupAngleHelperFromSelectedObjects();
 	
 	/**
 	 * Draws a bounding box with a dashed line of the given color.
+	 * 
 	 * @param bounding_box the box extent in map coordinates
 	 */
 	void drawBoundingBox(QPainter* painter, MapWidget* widget, const QRectF& bounding_box, const QRgb& color);
 	
 	/**
 	 * Draws a bounding path with a dashed line of the given color.
+	 * 
 	 * @param bounding_box the box extent in map coordinates
 	 */
 	void drawBoundingPath(QPainter* painter, MapWidget* widget, const std::vector<QPointF>& bounding_path, const QRgb& color);
 	
+	/**
+	 * An utility implementing object selection logic.
+	 */
 	QScopedPointer<ObjectSelector> object_selector;
 };
+
+Q_DECLARE_OPERATORS_FOR_FLAGS(EditTool::HoverState)
 
 #endif

@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2012-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -39,6 +40,7 @@
 #include "object_text.h"
 #include "renderable_implementation.h"
 #include "symbol_area.h"
+#include "symbol_line.h"
 #include "symbol_setting_dialog.h"
 #include "util.h"
 #include "util_gui.h"
@@ -105,14 +107,13 @@ Symbol* TextSymbol::duplicate(const MapColorMap* color_map) const
 	return new_text;
 }
 
-void TextSymbol::createRenderables(const Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output) const
+void TextSymbol::createRenderables(const Object* object, const VirtualCoordVector& coords, ObjectRenderables& output) const
 {
-	Q_UNUSED(flags);
+	const TextObject* text_object = static_cast<const TextObject*>(object);
 	
-	const TextObject* text_object = reinterpret_cast<const TextObject*>(object);
-	
-	double anchor_x = coords[0].getX();
-	double anchor_y = coords[0].getY();
+	auto anchor = coords[0];
+	double anchor_x = anchor.getX();
+	double anchor_y = anchor.getY();
 	
 	text_object->prepareLineInfos();
 	if (color)
@@ -133,56 +134,86 @@ void TextSymbol::createRenderables(const Object* object, const MapCoordVector& f
 	}
 }
 
+void TextSymbol::createBaselineRenderables(const Object* object, const VirtualCoordVector& coords, ObjectRenderables& output) const
+{
+	const MapColor* dominant_color = getDominantColorGuess();
+	const TextObject* text_object = static_cast<const TextObject*>(object);
+	if (dominant_color && text_object->getNumLines() > 0)
+	{
+		// Insert text boundary
+		LineSymbol line_symbol;
+		line_symbol.setColor(dominant_color);
+		line_symbol.setLineWidth(0);
+		
+		const TextObjectLineInfo* line = text_object->getLineInfo(0);
+		QRectF text_bbox(line->line_x, line->line_y - line->ascent, line->width, line->ascent + line->descent);
+		for (int i = 1; i < text_object->getNumLines(); ++i)
+		{
+			const TextObjectLineInfo* line = text_object->getLineInfo(i);
+			rectInclude(text_bbox, QRectF(line->line_x, line->line_y - line->ascent, line->width, line->ascent + line->descent));
+		}
+		
+		Q_UNUSED(coords); // coords should be used for calcTextToMapTransform()
+		QTransform text_to_map = text_object->calcTextToMapTransform();
+		PathObject path;
+		path.addCoordinate(MapCoord(text_to_map.map(text_bbox.topLeft())));
+		path.addCoordinate(MapCoord(text_to_map.map(text_bbox.topRight())));
+		path.addCoordinate(MapCoord(text_to_map.map(text_bbox.bottomRight())));
+		path.addCoordinate(MapCoord(text_to_map.map(text_bbox.bottomLeft())));
+		path.parts().front().setClosed(true, true);
+		path.updatePathCoords();
+		
+		LineRenderable* line_renderable = new LineRenderable(&line_symbol, path.parts().front(), false);
+		output.insertRenderable(line_renderable);
+	}
+}
+
 void TextSymbol::createLineBelowRenderables(const Object* object, ObjectRenderables& output) const
 {
 	const TextObject* text_object = reinterpret_cast<const TextObject*>(object);
-	double scale_factor = calculateInternalScaling();
-	AreaSymbol area_symbol;
-	area_symbol.setColor(line_below_color);
-	MapCoordVectorF line_coords;
-	line_coords.reserve(text_object->getNumLines() * 4);
-	
-	QTransform transform = text_object->calcTextToMapTransform();
-	
-	for (int i = 0; i < text_object->getNumLines(); ++i)
+	if (text_object->getNumLines())
 	{
-		const TextObjectLineInfo* line_info = text_object->getLineInfo(i);
-		if (!line_info->paragraph_end)
-			continue;
+		double scale_factor = calculateInternalScaling();
+		AreaSymbol area_symbol;
+		area_symbol.setColor(line_below_color);
 		
-		double line_below_x0;
-		double line_below_x1;
-		if (text_object->hasSingleAnchor())
+		MapCoordVector  line_flags(4);
+		MapCoordVectorF line_coords(4);
+		VirtualPath line_path = { line_flags, line_coords };
+		line_flags.back().setHolePoint(true);
+		
+		QTransform transform = text_object->calcTextToMapTransform();
+		
+		for (int i = 0; i < text_object->getNumLines(); ++i)
 		{
-			line_below_x0 = line_info->line_x;
-			line_below_x1 = line_below_x0 + line_info->width;
+			const TextObjectLineInfo* line_info = text_object->getLineInfo(i);
+			if (!line_info->paragraph_end)
+				continue;
+			
+			double line_below_x0;
+			double line_below_x1;
+			if (text_object->hasSingleAnchor())
+			{
+				line_below_x0 = line_info->line_x;
+				line_below_x1 = line_below_x0 + line_info->width;
+			}
+			else
+			{
+				double box_width = text_object->getBoxWidth() * scale_factor;
+				line_below_x0 = -0.5 * box_width;
+				line_below_x1 = line_below_x0 + box_width;
+			}
+			double line_below_y0 = line_info->line_y + getLineBelowDistance() * scale_factor;
+			double line_below_y1 = line_below_y0 + getLineBelowWidth() * scale_factor;
+			line_coords[0] = MapCoordF(transform.map(QPointF(line_below_x0, line_below_y0)));
+			line_coords[1] = MapCoordF(transform.map(QPointF(line_below_x1, line_below_y0)));
+			line_coords[2] = MapCoordF(transform.map(QPointF(line_below_x1, line_below_y1)));
+			line_coords[3] = MapCoordF(transform.map(QPointF(line_below_x0, line_below_y1)));
+			
+			line_path.path_coords.update(0);
+			output.insertRenderable(new AreaRenderable(&area_symbol, line_path));
 		}
-		else
-		{
-			double box_width = text_object->getBoxWidth() * scale_factor;
-			line_below_x0 = -0.5 * box_width;
-			line_below_x1 = line_below_x0 + box_width;
-		}
-		double line_below_y0 = line_info->line_y + getLineBelowDistance() * scale_factor;
-		double line_below_y1 = line_below_y0 + getLineBelowWidth() * scale_factor;
-		line_coords.push_back(MapCoordF(transform.map(MapCoordF(line_below_x0, line_below_y0).toQPointF())));
-		line_coords.push_back(MapCoordF(transform.map(MapCoordF(line_below_x1,  line_below_y0).toQPointF())));
-		line_coords.push_back(MapCoordF(transform.map(MapCoordF(line_below_x1,  line_below_y1).toQPointF())));
-		line_coords.push_back(MapCoordF(transform.map(MapCoordF(line_below_x0, line_below_y1).toQPointF())));
 	}
-	
-	if (line_coords.empty())
-		return;
-	
-	MapCoord no_flags;
-	MapCoord hole_flag;
-	hole_flag.setHolePoint(true);
-	MapCoordVector line_flags;
-	line_flags.resize(line_coords.size());
-	for (int i = 0; i < (int)line_coords.size(); ++i)
-		line_flags[i] = ((i % 4 == 3) ? hole_flag : no_flags);
-	
-	output.insertRenderable(new AreaRenderable(&area_symbol, line_coords, line_flags, NULL));
 }
 
 void TextSymbol::colorDeleted(const MapColor* color)

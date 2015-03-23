@@ -1091,7 +1091,7 @@ bool OCAD8FileImport::importRectangleObject(const OCADObject* ocad_object, MapPa
 		coords.push_back((top_left_f + right * rect.corner_radius).toMapCoord());
 	}
 	PathObject *border_path = new PathObject(rect.border_line, coords, map);
-	border_path->getPart(0).setClosed(true, false);
+	border_path->parts().front().setClosed(true, false);
 	part->objects.push_back(border_path);
 	
 	if (rect.has_grid && rect.cell_width > 0 && rect.cell_height > 0)

@@ -226,6 +226,9 @@ public:
 	float getRotation() const;
 	
 	
+	bool intersectsBox(QRectF box) const override;
+	
+	
 	/** Returns a QTransform from text coordinates to map coordinates.
 	 */
 	QTransform calcTextToMapTransform() const;

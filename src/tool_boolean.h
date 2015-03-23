@@ -120,12 +120,12 @@ public:
 	 * @param out_objects           The resulting collection of objects.
 	 */
 	void executeForLine(
-	        PathObject* area,
-	        PathObject* line,
+	        const PathObject* area,
+	        const PathObject* line,
 	        PathObjects& out_objects );
 	
 private:
-	typedef std::pair< const PathObject::PathPart*, const PathCoord* > PathCoordInfo;
+	typedef std::pair< const PathPart*, const PathCoord* > PathCoordInfo;
 	
 	typedef QHash< ClipperLib::IntPoint, PathCoordInfo > PolyMap;
 	
@@ -194,9 +194,8 @@ private:
 	 * The first coordinate of the segment is assumed to be already added.
 	 */
 	static void rebuildSegment(
-	        int start_index,
-	        int end_index,
-	        bool have_sequence,
+	        ClipperLib::Path::size_type start_index,
+	        ClipperLib::Path::size_type end_index,
 	        bool sequence_increasing,
 	        const ClipperLib::Path& polygon,
 	        const PolyMap& polymap,
@@ -216,8 +215,8 @@ private:
 	 * Special case of rebuildSegment() for straight or very short lines.
 	 */
 	static void rebuildTwoIndexSegment(
-	        int start_index,
-	        int end_index,
+	        ClipperLib::Path::size_type start_index,
+	        ClipperLib::Path::size_type end_index,
 	        bool sequence_increasing,
 	        const ClipperLib::Path& polygon,
 	        const PolyMap& polymap,
@@ -229,7 +228,7 @@ private:
 	 * Uses the polymap to check whether the coorinate should be a dash point.
 	 */
 	static void rebuildCoordinate(
-	        int index,
+	        ClipperLib::Path::size_type index,
 	        const ClipperLib::Path& polygon,
 	        const PolyMap& polymap,
 	        PathObject* object,
@@ -256,8 +255,8 @@ private:
 	        const PathObject* original,
 	        int coord_index,
 	        const ClipperLib::Path& polygon,
-	        int start_index,
-	        int end_index,
+	        ClipperLib::Path::size_type start_index,
+	        ClipperLib::Path::size_type end_index,
 	        bool& out_coords_increasing,
 	        bool& out_is_curve );
 	

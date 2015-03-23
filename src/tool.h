@@ -314,9 +314,9 @@ protected:
 	/**
 	 * @brief Finds and returns the point of the given object over which the cursor hovers.
 	 * 
-	 * Returns -1 if not hovering over a point.
+	 * Returns no_point if not hovering over a point.
 	 */
-	int findHoverPoint(QPointF cursor, const MapWidget* widget, const Object* object, bool include_curve_handles, QRectF* selection_extent, MapCoordF* out_handle_pos = nullptr) const;
+	MapCoordVector::size_type findHoverPoint(QPointF cursor, const MapWidget* widget, const Object* object, bool include_curve_handles, MapCoordF* out_handle_pos = nullptr) const;
 	
 	
 	/**

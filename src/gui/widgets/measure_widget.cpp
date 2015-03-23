@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2012-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -120,6 +121,7 @@ void MeasureWidget::objectSelectionChanged()
 	else
 	{
 		Object* object = *map->selectedObjectsBegin();
+		object->update();
 		
 		const Symbol* symbol = object->getSymbol();
 		headline_label->setText(symbol->getNumberAsString() % " <b>" % symbol->getName() % "</b>");
@@ -130,29 +132,29 @@ void MeasureWidget::objectSelectionChanged()
 		}
 		else
 		{
-			bool contains_area = symbol->getContainedTypes() & Symbol::Area;
-			length_stack->setCurrentIndex(contains_area ? 1 : 2);
+			const PathPartVector& parts = static_cast<PathObject*>(object)->parts();
+			Q_ASSERT(!parts.empty());
 			
-			PathObject* path = reinterpret_cast<PathObject*>(object);
-			path->update();
+			double mm_to_meters  = 0.001 * map->getScaleDenominator();
 			
-			double mm_to_meters = 0.001 * map->getScaleDenominator();
-			
-			Q_ASSERT(path->getNumParts() > 0);
-			double length_mm = path->getPart(0).getLength();
+			double length_mm     = parts.front().length();
 			double length_meters = length_mm * mm_to_meters;
 			
 			paper_length_label->setText(locale().toString(length_mm, 'f', 2) % " " % tr("mm", "millimeters"));
 			real_length_label->setText(locale().toString(length_meters, 'f', 0) % " " % tr("m", "meters"));
 			
-			if (contains_area)
+			if (symbol->getContainedTypes() & Symbol::Area)
 			{
+				length_stack->setCurrentIndex(1);
 				area_stack->setCurrentIndex(1);
 				
-				double area_mm = 0;
-				area_mm += path->getPart(0).calculateArea();
-				for (int i = 1; i < path->getNumParts(); ++ i)
-					area_mm -= path->getPart(i).calculateArea();
+				double area_mm = { parts.front().calculateArea() };
+				if (parts.size() > 1)
+				{
+					area_mm *= 2;
+					for (auto part : parts)
+						area_mm -= part.calculateArea();
+				}
 				double area_meters = area_mm * mm_to_meters * mm_to_meters;
 				
 				paper_area_label->setText(locale().toString(area_mm, 'f', 2) % " " % trUtf8("mm²", "square millimeters"));
@@ -164,9 +166,16 @@ void MeasureWidget::objectSelectionChanged()
 				else
 					warning_label->setText(tr("Note: Boundary length and area are correct only if there are no self-intersections and holes are used as such."));
 			}
-			else if (symbol->getType() == Symbol::Line && static_cast<const LineSymbol*>(symbol)->getMinimumLength() > 1000*length_mm)
-				warning_label->setText("<b>" % tr("This line is too short.") % "</b><br/>" %
-				                       tr("The minimum length is %1 %2.").arg(locale().toString(static_cast<const LineSymbol*>(symbol)->getMinimumLength()/1000.0, 'f', 2), tr("mm")));
+			else
+			{
+				length_stack->setCurrentIndex(2);
+				if (symbol->getType() == Symbol::Line && static_cast<const LineSymbol*>(symbol)->getMinimumLength() > 1000*length_mm)
+				{
+					auto length_string = locale().toString(static_cast<const LineSymbol*>(symbol)->getMinimumLength()/1000.0, 'f', 2);
+					warning_label->setText("<b>" % tr("This line is too short.") % "</b><br/>" %
+					                       tr("The minimum length is %1 %2.").arg(length_string).arg(tr("mm")));
+				}
+			}
 		}
 	}
 }

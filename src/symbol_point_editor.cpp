@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2012-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -315,9 +316,11 @@ bool PointSymbolEditorWidget::changeCurrentCoordinate(MapCoordF new_coord)
 		int row = coords_table->currentRow();
 		if (row < 0)
 			return false;
-		Q_ASSERT(object->getType() == Object::Path);
-		PathObject* path = reinterpret_cast<PathObject*>(object);
-		Q_ASSERT(row < path->getCoordinateCount());
+		
+		PathObject* path = object->asPath();
+		
+		Q_ASSERT((MapCoordVector::size_type)row < path->getCoordinateCount());
+		
 		MapCoord coord = path->getCoordinate(row);
 		coord.setX(new_coord.getX());
 		coord.setY(new_coord.getY() - offset_y);
@@ -352,7 +355,7 @@ bool PointSymbolEditorWidget::addCoordinate(MapCoordF new_coord)
 	if (path->getCoordinateCount() == 1)
 	{
 		if (object->getSymbol()->getType() == Symbol::Area)
-			path->getPart(0).setClosed(true, false);
+			path->parts().front().setClosed(true, false);
 	}
 	
 	updateCoordsTable();
@@ -407,8 +410,9 @@ void PointSymbolEditorWidget::changeElement(int row)
 				line_cap_edit->setCurrentIndex(line_cap_edit->findData(QVariant(line->getCapStyle())));
 				line_join_edit->setCurrentIndex(line_join_edit->findData(QVariant(line->getJoinStyle())));
 				
-				line_closed_check->setChecked(path->isFirstPartClosed());
-				line_closed_check->setEnabled(path->getNumParts() > 0);
+				const auto& parts = path->parts();
+				line_closed_check->setChecked(!parts.empty() && parts.front().isClosed());
+				line_closed_check->setEnabled(!parts.empty());
 				
 				line_width_edit->blockSignals(false);
 				line_color_edit->blockSignals(false);
@@ -554,7 +558,7 @@ void PointSymbolEditorWidget::centerAllElements()
 			else if (object->getType() == Object::Path)
 			{
 				PathObject* path = object->asPath();
-				for (int c = 0; c < path->getCoordinateCount(); ++c)
+				for (MapCoordVector::size_type c = 0; c < path->getCoordinateCount(); ++c)
 				{
 					MapCoord& coord = path->getCoordinate(c);
 					coord.setRawX(coord.rawX() - center_x);
@@ -646,8 +650,9 @@ void PointSymbolEditorWidget::lineClosedClicked(bool checked)
 	
 	if (!checked && path->getCoordinateCount() >= 4 && path->getCoordinate(path->getCoordinateCount() - 4).isCurveStart())
 		path->getCoordinate(path->getCoordinateCount() - 4).setCurveStart(false);
-	Q_ASSERT(path->getNumParts() > 0);
-	path->getPart(0).setClosed(checked, true);
+	
+	Q_ASSERT(!path->parts().empty());
+	path->parts().front().setClosed(checked, true);
 	if (!checked)
 		path->deleteCoordinate(path->getCoordinateCount() - 1, false);
 	
@@ -691,7 +696,7 @@ void PointSymbolEditorWidget::coordinateChanged(int row, int column)
 			{
 				Q_ASSERT(object->getType() == Object::Path);
 				PathObject* path = reinterpret_cast<PathObject*>(object);
-				Q_ASSERT(row < path->getCoordinateCount());
+				Q_ASSERT((MapCoordVector::size_type)row < path->getCoordinateCount());
 				if (column == 0)
 					path->getCoordinate(row).setX(new_value);
 				else
@@ -721,7 +726,7 @@ void PointSymbolEditorWidget::coordinateChanged(int row, int column)
 	{
 		Q_ASSERT(object->getType() == Object::Path);
 		PathObject* path = reinterpret_cast<PathObject*>(object);
-		Q_ASSERT(row < path->getCoordinateCount());
+		Q_ASSERT((MapCoordVector::size_type)row < path->getCoordinateCount());
 		MapCoord coord = path->getCoordinate(row);
 		coord.setCurveStart(coords_table->item(row, column)->checkState() == Qt::Checked);
 		path->setCoordinate(row, coord);
@@ -783,7 +788,7 @@ void PointSymbolEditorWidget::centerCoordsClicked()
 		
 		MapCoordF center = MapCoordF(0, 0);
 		int size = path->getCoordinateCount();
-		int change_size = path->isFirstPartClosed() ? (size - 1) : size;
+		int change_size = (!path->parts().empty() && path->parts().front().isClosed()) ? (size - 1) : size;
 		
 		Q_ASSERT(change_size > 0);
 		for (int i = 0; i < change_size; ++i)
@@ -816,7 +821,7 @@ void PointSymbolEditorWidget::updateCoordsTable()
 	{
 		PathObject* path = reinterpret_cast<PathObject*>(object);
 		num_rows = path->getCoordinateCount();
-		if (num_rows > 0 && path->getPart(0).isClosed())
+		if (num_rows > 0 && path->parts().front().isClosed())
 			--num_rows;
 		if (path->getSymbol()->getType() == Symbol::Line)
 			line_closed_check->setEnabled(num_rows > 0);
@@ -870,7 +875,7 @@ void PointSymbolEditorWidget::updateCoordsRow(int row)
 	if (object->getType() == Object::Path)
 	{
 		PathObject* path = reinterpret_cast<PathObject*>(object);
-		bool has_curve_start_box = (row < path->getCoordinateCount() - 3) &&
+		bool has_curve_start_box = ((MapCoordVector::size_type)row+3 < path->getCoordinateCount()) &&
 									(!path->getCoordinate(row+1).isCurveStart() && !path->getCoordinate(row+2).isCurveStart()) &&
 									(row <= 0 || !path->getCoordinate(row-1).isCurveStart()) &&
 									(row <= 1 || !path->getCoordinate(row-2).isCurveStart());

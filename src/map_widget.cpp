@@ -239,8 +239,6 @@ void MapWidget::zoom(float zoom)
 
 void MapWidget::moveView(qint64 x, qint64 y)
 {
-	Q_UNUSED(x);
-	Q_UNUSED(y);
 	panView(x, y);
 }
 

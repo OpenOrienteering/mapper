@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2014, 2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -73,7 +74,7 @@ protected:
 	void pickDirection(MapCoordF coord, MapWidget* widget);
 	
 	/** Checks if the current drawing direction is parallel to the angle. */
-	bool drawingParallelTo(double angle);
+	bool drawingParallelTo(double angle) const;
 	
 	/** 
 	 * Updates the preview after cursor position changes.
@@ -82,10 +83,12 @@ protected:
 	void updateHover(bool mouse_down);
 	
 	/**
-	 * Recalculates the "close vector"
-	 * (direction from current drawing perpendicular to the start point)
+	 * Calculates the closing vector.
+	 * 
+	 * The "closing vector" gives the direction from the current drawing position
+	 * perpendicular to the start point.
 	 */
-	void updateCloseVector();
+	MapCoordF calculateClosingVector() const;
 	
 	/**
 	 * Deletes all points from the preview path which were introduced to close
@@ -131,9 +134,6 @@ protected:
 	
 	/** Vector in forward drawing direction */
 	MapCoordF forward_vector;
-	
-	/** Direction from current drawing perpendicular to the start point */
-	MapCoordF close_vector;
 	
 	QScopedPointer<ConstrainAngleToolHelper> angle_helper;
 	QScopedPointer<SnappingToolHelper> snap_helper;

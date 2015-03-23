@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2012-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -113,6 +114,7 @@ public:
 		 * TODO: should the transient name really be compared?!
 		 */
 		bool equals(const FillPattern& other, Qt::CaseSensitivity case_sensitivity) const;
+		
 		/**
 		 * Creates renderables for this pattern in the area given by extent.
 		 * @param extent Rectangular area to create renderables for.
@@ -126,12 +128,12 @@ public:
 			const MapCoord& pattern_origin,
 			ObjectRenderables& output
 		) const;
+		
 		/** Creates one line of renderables, called by createRenderables(). */
 		void createLine(
-			MapCoordVectorF& coords,
+			MapCoordF first, MapCoordF second,
 			float delta_offset,
 			LineSymbol* line,
-			PathObject* path,
 			PointObject* point_object,
 			ObjectRenderables& output
 		) const;
@@ -143,8 +145,11 @@ public:
 	virtual ~AreaSymbol();
 	virtual Symbol* duplicate(const MapColorMap* color_map = NULL) const;
 	
-	virtual void createRenderables(const Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output) const;
-	void createRenderablesNormal(const Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output) const;
+	void createRenderables(const Object *object, const VirtualCoordVector &coords, ObjectRenderables &output) const override;
+	void createRenderables(const PathObject* object, const PathPartVector& path_parts, ObjectRenderables &output) const override;
+	
+	void createRenderablesNormal(const PathObject* object, const PathPartVector& path_parts, ObjectRenderables& output) const;
+	
 	virtual void colorDeleted(const MapColor* color);
 	virtual bool containsColor(const MapColor* color) const;
 	virtual const MapColor* getDominantColorGuess() const;

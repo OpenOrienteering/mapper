@@ -1,5 +1,7 @@
 /*
  *    Copyright 2012, 2013 Pete Curtis
+ *    Copyright 2013, 2014 Thomas Schöps
+ *    Copyright 2013-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -81,28 +83,35 @@ void Importer::doImport(bool load_symbols_only, const QString& map_path)
 				if (contained_types & Symbol::Area && !(contained_types & Symbol::Line))
 					path->closeAllParts();
 				
-				for (int i = 0; i < path->getCoordinateCount(); ++i)
+				for (MapCoordVector::size_type i = 0; i < path->getCoordinateCount(); ++i)
 				{
-					if (!path->getCoordinate(i).isCurveStart())
-						continue;
-					
-					if (i >= path->getCoordinateCount() - 3)
+					if (path->getCoordinate(i).isCurveStart())
 					{
-						path->getCoordinate(i).setCurveStart(false);
-						continue;
-					}
-					if (path->getCoordinate(i + 1).isClosePoint() || path->getCoordinate(i + 1).isHolePoint() ||
-						path->getCoordinate(i + 2).isClosePoint() || path->getCoordinate(i + 2).isHolePoint())
-					{
-						path->getCoordinate(i).setCurveStart(false);
-						continue;
+						if (i+3 >= path->getCoordinateCount())
+						{
+							path->getCoordinate(i).setCurveStart(false);
+							continue;
+						}
+						
+						if (path->getCoordinate(i + 1).isClosePoint() || path->getCoordinate(i + 1).isHolePoint() ||
+						    path->getCoordinate(i + 2).isClosePoint() || path->getCoordinate(i + 2).isHolePoint())
+						{
+							path->getCoordinate(i).setCurveStart(false);
+							continue;
+						}
+						
+						path->getCoordinate(i + 1).setCurveStart(false);
+						path->getCoordinate(i + 1).setDashPoint(false);
+						path->getCoordinate(i + 2).setCurveStart(false);
+						path->getCoordinate(i + 2).setDashPoint(false);
+						i += 2;
 					}
 					
-					path->getCoordinate(i + 1).setCurveStart(false);
-					path->getCoordinate(i + 1).setDashPoint(false);
-					path->getCoordinate(i + 2).setCurveStart(false);
-					path->getCoordinate(i + 2).setDashPoint(false);
-					i += 2;
+					if (i > 0 && path->getCoordinate(i).isHolePoint())
+					{
+						if (path->getCoordinate(i-1).isHolePoint())
+							path->deleteCoordinate(i, false);
+					}
 				}
 			}
 		}

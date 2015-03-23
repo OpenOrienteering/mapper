@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2012-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -36,6 +37,7 @@
 #include "core/map_color.h"
 #include "gui/widgets/symbol_dropdown.h"
 #include "map.h"
+#include "object.h"
 #include "symbol_setting_dialog.h"
 #include "symbol_properties_widget.h"
 
@@ -70,12 +72,19 @@ Symbol* CombinedSymbol::duplicate(const MapColorMap* color_map) const
 	return new_symbol;
 }
 
-void CombinedSymbol::createRenderables(const Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output) const
+void CombinedSymbol::createRenderables(const Object* object, const VirtualCoordVector& coords, ObjectRenderables& output) const
 {
-	for (int i = 0, size = (int)parts.size(); i < size; ++i)
+	auto path = static_cast<const PathObject*>(object);
+	PathPartVector path_parts = PathPart::calculatePathParts(coords);
+	createRenderables(path, path_parts, output);
+}
+
+void CombinedSymbol::createRenderables(const PathObject* object, const PathPartVector& path_parts, ObjectRenderables& output) const
+{
+	for (auto subsymbol : parts)
 	{
-		if (parts[i])
-			parts[i]->createRenderables(object, flags, coords, output);
+		if (subsymbol)
+			subsymbol->createRenderables(object, path_parts, output);
 	}
 }
 

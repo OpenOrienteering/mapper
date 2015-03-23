@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2015 Kai Pastor
+ *    Copyright 2013-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -275,20 +275,7 @@ bool DrawPathTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWi
 			{
 				// Remove preview
 				int last = preview_path->getCoordinateCount() - 1;
-				if (last >= 3 && preview_path->getCoordinate(last-3).isCurveStart())
-				{
-					preview_path->deleteCoordinate(last, false);
-					preview_path->deleteCoordinate(last-1, false);
-					preview_path->deleteCoordinate(last-2, false);
-					
-					MapCoord coord = preview_path->getCoordinate(last-3);
-					coord.setCurveStart(false);
-					preview_path->setCoordinate(last-3, coord);
-				}
-				else if (last >= 1)
-				{
-					preview_path->deleteCoordinate(last, false);
-				}
+				preview_path->deleteCoordinate(last, false);
 				
 				path_has_preview_point = false;
 				dragging = false;
@@ -603,6 +590,7 @@ void DrawPathTool::createPreviewCurve(MapCoord position, float direction)
 		preview_path->addCoordinate(MapCoord(0, 0));
 		if (draw_dash_points)
 			position.setDashPoint(true);
+		position.setCurveStart(false);
 		preview_path->addCoordinate(position);
 		
 		path_has_preview_point = true;
@@ -626,14 +614,18 @@ void DrawPathTool::undoLastPoint()
 {
 	Q_ASSERT(editingInProgress());
 	
-	if (preview_path->getCoordinateCount() <= (preview_path->getPart(0).isClosed() ? 3 : (path_has_preview_point ? 2 : 1)))
+	if (preview_path->getCoordinateCount() <= (preview_path->parts().front().isClosed() ? 3 : (path_has_preview_point ? 2 : 1)))
 	{
 		abortDrawing();
 		return;
 	}
 	
 	int last = preview_path->getCoordinateCount() - 1;
-	preview_path->deleteCoordinate(last, false);
+	if (path_has_preview_point)
+	{
+		preview_path->deleteCoordinate(last, false);
+		last = preview_path->getCoordinateCount() - 1;
+	}
 	
 	if (last >= 3 && preview_path->getCoordinate(last - 3).isCurveStart())
 	{
@@ -645,35 +637,18 @@ void DrawPathTool::undoLastPoint()
 		previous_pos_map = MapCoordF(first);
 		previous_drag_map = MapCoordF((first.xd() + second.xd()) / 2, (first.yd() + second.yd()) / 2);
 		
-		preview_path->deleteCoordinate(last - 1, false);
-		preview_path->deleteCoordinate(last - 2, false);
-		
-		first.setCurveStart(false);
-		preview_path->setCoordinate(last - 3, first);
 	}
 	else
 	{
-		int curve_test = path_has_preview_point ? 5 : 4;	// "possible_previous_curve_start_offset"
-		if (path_has_preview_point)
-			preview_path->deleteCoordinate(last - 1, false);
-		
-		if (last >= curve_test && preview_path->getCoordinate(last - curve_test).isCurveStart())
-		{
-			MapCoord first = preview_path->getCoordinate(last - curve_test + 2);
-			MapCoord second = preview_path->getCoordinate(last - curve_test + 3);
-			
-			previous_point_is_curve_point = true;
-			previous_point_direction = -atan2(second.xd() - first.xd(), first.yd() - second.yd());
-			previous_pos_map = MapCoordF(second);
-			previous_drag_map = MapCoordF(second.xd() + (second.xd() - first.xd()) / 2, second.yd() + (second.yd() - first.yd()) / 2);
-		}
-		else
-			previous_point_is_curve_point = false;
+		previous_point_is_curve_point = false;
 	}
+	
+	preview_path->deleteCoordinate(last, false);
 	
 	path_has_preview_point = false;
 	dragging = false;
 	
+	updateHover();
 	updatePreviewPath();
 	updateAngleHelper();
 	cur_pos_map = click_pos_map;
@@ -694,7 +669,7 @@ bool DrawPathTool::removeLastPointFromSelectedPath()
 	}
 	
 	PathObject* path = object->asPath();
-	if (path->getNumParts() != 1)
+	if (path->parts().size() != 1)
 	{
 		return false;
 	}
@@ -724,17 +699,9 @@ bool DrawPathTool::removeLastPointFromSelectedPath()
 	map()->push(undo_step);
 	updateDirtyRect();
 	
-	path->getPart(0).setClosed(false);
+	path->parts().front().setClosed(false);
 	path->deleteCoordinate(num_coords - 1, false);
 	
-	MapCoord& potential_curve_start = path->getCoordinate(qMax(0, num_coords - 4));
-	if (num_coords >= 4 && potential_curve_start.isCurveStart())
-	{
-		path->deleteCoordinate(num_coords - 2, false);
-		path->deleteCoordinate(num_coords - 3, false);
-		potential_curve_start.setCurveStart(false);
-	}
-		
 	path->update();
 	map()->setObjectsDirty();
 	map()->emitSelectionEdited();
@@ -762,8 +729,8 @@ void DrawPathTool::closeDrawing()
 		path_has_preview_point = false;
 	}
 	
-	if (preview_path->getNumParts() > 0)
-		preview_path->getPart(0).setClosed(true, true);
+	if (!preview_path->parts().empty())
+		preview_path->parts().front().setClosed(true, true);
 }
 
 void DrawPathTool::finishDrawing()
@@ -772,12 +739,12 @@ void DrawPathTool::finishDrawing()
 	
 	// Does the symbols contain only areas? If so, auto-close the path if not done yet
 	bool contains_only_areas = !is_helper_tool && (drawing_symbol->getContainedTypes() & ~(Symbol::Area | Symbol::Combined)) == 0 && (drawing_symbol->getContainedTypes() & Symbol::Area);
-	if (contains_only_areas && preview_path->getNumParts() > 0)
-		preview_path->getPart(0).setClosed(true, true);
+	if (contains_only_areas && !preview_path->parts().empty())
+		preview_path->parts().front().setClosed(true, true);
 	
 	// Remove last point if closed and first and last points are equal, or if the last point was just a preview
 	if (path_has_preview_point && !dragging)
-		preview_path->deleteCoordinate(preview_path->getCoordinateCount() - (preview_path->getPart(0).isClosed() ? 2 : 1), false);
+		preview_path->deleteCoordinate(preview_path->getCoordinateCount() - (preview_path->parts().front().isClosed() ? 2 : 1), false);
 	
 	if (preview_path->getCoordinateCount() < (contains_only_areas ? 3 : 2))
 	{
@@ -874,14 +841,14 @@ void DrawPathTool::updateAngleHelper()
 		return;
 	}
 	updatePreviewPath();
-	const MapCoordVector& map_coords = preview_path->getRawCoordinateVector();
+	const auto& part = preview_path->parts().back();
 	
 	bool rectangular_stepping = true;
 	double angle;
-	if (map_coords.size() >= 2)
+	if (part.size() >= 2)
 	{
 		bool ok = false;
-		MapCoordF tangent = PathCoord::calculateTangent(map_coords, map_coords.size() - 1, true, ok);
+		MapCoordF tangent = part.calculateTangent(part.size()-1, true, ok);
 		if (!ok)
 			tangent = MapCoordF(1, 0);
 		angle = -tangent.getAngle();
@@ -897,8 +864,8 @@ void DrawPathTool::updateAngleHelper()
 		}
 	}
 	
-	if (!map_coords.empty())
-		angle_helper->setCenter(MapCoordF(map_coords[map_coords.size() - 1]));
+	if (!part.empty())
+		angle_helper->setCenter(part.coords.back());
 	angle_helper->clearAngles();
 	if (rectangular_stepping)
 		angle_helper->addAnglesDeg(angle * 180 / M_PI, 45);
@@ -963,13 +930,15 @@ void DrawPathTool::updateFollowing()
 {
 	PathCoord path_coord;
 	float distance_sq;
-	follow_object->calcClosestPointOnPath(cur_pos_map, distance_sq, path_coord, follow_helper->getPartIndex());
+	const auto& part = follow_object->parts()[follow_helper->getPartIndex()];
+	follow_object->calcClosestPointOnPath(cur_pos_map, distance_sq, path_coord, part.first_index, part.last_index);
 	PathObject* temp_object;
 	bool success = follow_helper->updateFollowing(path_coord, temp_object);
 	
 	// Append the temporary object to the preview object at follow_start_index
 	for (int i = preview_path->getCoordinateCount() - 1; i >= follow_start_index; --i)
 		preview_path->deleteCoordinate(i, false);
+	
 	if (success)
 	{
 		preview_path->appendPath(temp_object);
@@ -1045,7 +1014,7 @@ void DrawPathTool::updateStatusText()
 	if (editingInProgress() && preview_path && preview_path->getCoordinateCount() >= 2)
 	{
 		//Q_ASSERT(!preview_path->isDirty());
-		float length = map()->getScaleDenominator() * preview_path->getPathCoordinateVector()[preview_path->getPart(0).path_coord_end_index].clen * 0.001f;
+		float length = map()->getScaleDenominator() * preview_path->parts().front().path_coords.back().clen * 0.001f;
 		text += tr("<b>Length:</b> %1 m ").arg(QLocale().toString(length, 'f', 1));
 		text += "| ";
 	}

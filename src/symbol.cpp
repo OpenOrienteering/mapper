@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012, 2013, 2014 Kai Pastor
+ *    Copyright 2012-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -293,6 +293,53 @@ bool Symbol::loadFinished(Map* map)
 	return true;
 }
 
+void Symbol::createRenderables(const PathObject*, const PathPartVector&, ObjectRenderables&) const
+{
+	qWarning("Missing implementation of Symbol::createRenderables(const PathObject*, const PathPartVector&, ObjectRenderables&)");
+}
+
+void Symbol::createBaselineRenderables(const Object*, const VirtualCoordVector&, ObjectRenderables&) const
+{
+	qWarning("Missing implementation of or invalid call tp Symbol::createBaselineRenderables(const Object*, const VirtualCoordVector&, ObjectRenderables&)");
+}
+
+void Symbol::createBaselineRenderables(const PathObject* object, const PathPartVector& path_parts, ObjectRenderables& output, bool hatch_areas) const
+{
+	const MapColor* dominant_color = getDominantColorGuess();
+	if (dominant_color)
+	{
+		auto contained_types = getContainedTypes();
+		Q_ASSERT((contained_types & ~(Symbol::Line | Symbol::Area | Symbol::Combined)) == 0);
+		
+		if (hatch_areas && (contained_types & Symbol::Area))
+		{
+			// Insert hatched area renderable
+			AreaSymbol area_symbol;
+			
+			area_symbol.setNumFillPatterns(1);
+			AreaSymbol::FillPattern& pattern = area_symbol.getFillPattern(0);
+			pattern.type = AreaSymbol::FillPattern::LinePattern;
+			pattern.angle = 45 * M_PI / 180.0f;
+			pattern.line_spacing = 1000;
+			pattern.line_offset = 0;
+			pattern.line_color = dominant_color;
+			pattern.line_width = 70;
+			
+			area_symbol.createRenderablesNormal(object, path_parts, output);
+		}
+			
+		// Insert line renderable
+		LineSymbol line_symbol;
+		line_symbol.setColor(dominant_color);
+		line_symbol.setLineWidth(0);
+		for (const auto& part : path_parts)
+		{
+			auto line_renderable = new LineRenderable(&line_symbol, part, false);
+			output.insertRenderable(line_renderable);
+		}
+	}
+}
+
 bool Symbol::symbolChanged(const Symbol* old_symbol, const Symbol* new_symbol)
 {
 	Q_UNUSED(old_symbol);
@@ -366,7 +413,7 @@ QImage Symbol::createIcon(const Map* map, int side_length, bool antialiasing, in
 		path->addCoordinate(1, MapCoord(max_icon_mm_half, -max_icon_mm_half));
 		path->addCoordinate(2, MapCoord(max_icon_mm_half, max_icon_mm_half));
 		path->addCoordinate(3, MapCoord(-max_icon_mm_half, max_icon_mm_half));
-		path->getPart(0).setClosed(true, true);
+		path->parts().front().setClosed(true, true);
 		object = path;
 	}
 	else if (type == Line || type == Combined)
@@ -424,7 +471,7 @@ QImage Symbol::createIcon(const Map* map, int side_length, bool antialiasing, in
 		PathObject* path = new PathObject(this);
 		for (int i = 0; i < 5; ++i)
 			path->addCoordinate(i, MapCoord(sin(2*M_PI * i/5.0) * max_icon_mm_half, -cos(2*M_PI * i/5.0) * max_icon_mm_half));
-		path->getPart(0).setClosed(true, false);
+		path->parts().front().setClosed(true, false);
 		object = path;
 	}*/
 	else
@@ -538,98 +585,6 @@ bool Symbol::loadSymbol(Symbol*& symbol, QIODevice* stream, int version, Map* ma
 }
 
 #endif
-
-void Symbol::createBaselineRenderables(const Object* object, const Symbol* symbol, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output, bool hatch_areas)
-{
-	Symbol::Type type = symbol->getType();
-	const MapColor* dominant_color = symbol->getDominantColorGuess();
-	if (dominant_color == NULL)
-		return;
-	
-	if (type == Symbol::Point)
-	{
-		PointSymbol* point = Map::getUndefinedPoint();
-		const MapColor* temp_color = point->getInnerColor();
-		point->setInnerColor(dominant_color);
-		
-		point->createRenderables(object, flags, coords, output);
-		
-		point->setInnerColor(temp_color);
-	}
-	else if (type == Text)
-	{
-		// Insert text boundary
-		const TextObject* text_object = object->asText();
-		if (text_object->getNumLines() == 0)
-			return;
-		
-		LineSymbol line_symbol;
-		line_symbol.setColor(dominant_color);
-		line_symbol.setLineWidth(0);
-		
-		const TextObjectLineInfo* line = text_object->getLineInfo(0);
-		QRectF text_bbox(line->line_x, line->line_y - line->ascent, line->width, line->ascent + line->descent);
-		for (int i = 1; i < text_object->getNumLines(); ++i)
-		{
-			const TextObjectLineInfo* line = text_object->getLineInfo(i);
-			rectInclude(text_bbox, QRectF(line->line_x, line->line_y - line->ascent, line->width, line->ascent + line->descent));
-		}
-		
-		QTransform text_to_map = text_object->calcTextToMapTransform();
-		PathObject path;
-		path.addCoordinate(MapCoord(text_to_map.map(text_bbox.topLeft())));
-		path.addCoordinate(MapCoord(text_to_map.map(text_bbox.topRight())));
-		path.addCoordinate(MapCoord(text_to_map.map(text_bbox.bottomRight())));
-		path.addCoordinate(MapCoord(text_to_map.map(text_bbox.bottomLeft())));
-		path.getPart(0).setClosed(true, true);
-		
-		MapCoordVectorF coordsF;
-		mapCoordVectorToF(path.getRawCoordinateVector(), coordsF);
-		
-		PathCoordVector empty_path_coords;
-		LineRenderable* line_renderable = new LineRenderable(&line_symbol, coordsF, path.getRawCoordinateVector(), empty_path_coords, false);
-		output.insertRenderable(line_renderable);
-	}
-	else
-	{
-		// Line or area or combination
-		Q_ASSERT((symbol->getContainedTypes() & ~(Symbol::Line | Symbol::Area | Symbol::Combined)) == 0);
-		const PathObject* path = object->asPath();
-		
-		if (hatch_areas && (symbol->getContainedTypes() & Symbol::Area))
-		{
-			// Insert hatched area renderable
-			AreaSymbol area_symbol;
-			
-			area_symbol.setNumFillPatterns(1);
-			AreaSymbol::FillPattern& pattern = area_symbol.getFillPattern(0);
-			pattern.type = AreaSymbol::FillPattern::LinePattern;
-			pattern.angle = 45 * M_PI / 180.0f;
-			pattern.line_spacing = 1000;
-			pattern.line_offset = 0;
-			pattern.line_color = dominant_color;
-			pattern.line_width = 70;
-			
-			area_symbol.createRenderablesNormal(path, flags, coords, output);
-			
-			// Insert boundary line renderable
-			LineSymbol line_symbol;
-			line_symbol.setColor(dominant_color);
-			line_symbol.setLineWidth(0);
-			LineRenderable* line_renderable = new LineRenderable(&line_symbol, coords, flags, path->getPathCoordinateVector(), false);
-			output.insertRenderable(line_renderable);
-		}
-		else
-		{
-			// Insert line renderable
-			LineSymbol line_symbol;
-			line_symbol.setColor(dominant_color);
-			line_symbol.setLineWidth(0);
-			LineRenderable* line_renderable = new LineRenderable(&line_symbol, coords, flags, path->getPathCoordinateVector(), false);
-			output.insertRenderable(line_renderable);
-		}
-	}
-}
 
 bool Symbol::areTypesCompatible(Symbol::Type a, Symbol::Type b)
 {

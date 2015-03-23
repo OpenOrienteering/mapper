@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2014 Kai Pastor
+ *    Copyright 2014, 2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -177,6 +177,14 @@ public:
 	/** Sets the close point flag. */
 	inline void setClosePoint(bool value) {x = (x & (~2)) | (value ? 2 : 0);}
 	
+	
+	/** Is this coordinate a gap point? */
+	bool isGapPoint() const;
+	
+	/** Sets the gap point flag. */
+	void setGapPoint(bool value);
+	
+	
 	/** Assignment operator */
 	inline MapCoord& operator= (const MapCoord& other)
 	{
@@ -329,7 +337,7 @@ class MapCoordF
 public:
 	
 	/** Creates an uninitialized MapCoordF. */
-	inline MapCoordF() : x(0.0), y(0.0) {}
+	constexpr MapCoordF() : x(0.0), y(0.0) {}
 	/** Creates a MapCoordF with the given position in map coordinates. */
 	inline MapCoordF(double x, double y) {setX(x); setY(y);}
 	/** Creates a MapCoordF from a MapCoord, skipping its flags. */
@@ -337,7 +345,7 @@ public:
 	/** Creates a MapCoordF from a QPointF. */
 	inline explicit MapCoordF(QPointF point) {setX(point.x()); setY(point.y());}
 	/** Copy constructor. */
-	inline MapCoordF(const MapCoordF& copy) {x = copy.x; y = copy.y;}
+	constexpr MapCoordF(const MapCoordF& copy) = default;
 	
 	/** Sets the x coordinate to a new value in map coordinates. */
 	inline void setX(double x) {this->x = x;}
@@ -601,5 +609,23 @@ typedef std::vector<MapCoordF> MapCoordVectorF;
  * Converts a vector of MapCoord to a vector of MapCoordF.
  */
 void mapCoordVectorToF(const MapCoordVector& coords, MapCoordVectorF& out_coordsF);
+
+
+
+// ### MapCoord inline code ###
+
+inline
+bool MapCoord::isGapPoint() const
+{
+	return y & 4;
+}
+
+inline
+void MapCoord::setGapPoint(bool value)
+{
+	y = (y & (~4)) | (value ? 4 : 0);
+}
+
+
 
 #endif

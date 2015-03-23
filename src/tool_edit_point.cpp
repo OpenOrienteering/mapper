@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2013, 2014 Kai Pastor
+ *    Copyright 2013-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -49,23 +49,38 @@
 class SymbolWidget;
 
 
-int EditPointTool::max_objects_for_handle_display = 10;
+namespace
+{
+	/**
+	 * Maximum number of objects in the selection for which point handles
+	 * will still be displayed (and can be edited).
+	 */
+	static unsigned int max_objects_for_handle_display = 10;
+	
+	/**
+	 * The value which indicates that no point of the current object is hovered.
+	 */
+	static auto no_point = std::numeric_limits<MapCoordVector::size_type>::max();
+}
+
+
 
 EditPointTool::EditPointTool(MapEditorController* editor, QAction* tool_button)
-: EditTool(editor, EditPoint, tool_button)
+ : EditTool { editor, EditPoint, tool_button }
+ , hover_state { OverNothing }
+ , hover_object { nullptr }
+ , hover_point { 0 }
+ , box_selection { false }
+ , no_more_effect_on_click { false }
+ , space_pressed { false }
+ , text_editor { nullptr }
 {
-	hover_point = -2;
-	hover_object = NULL;
-	text_editor = NULL;
-	box_selection = false;
-	space_pressed = false;
-	no_more_effect_on_click = false;
+	// noting else
 }
 
 EditPointTool::~EditPointTool()
 {
-	if (text_editor)
-		delete text_editor;
+	delete text_editor;
 }
 
 bool EditPointTool::addDashPointDefault() const
@@ -75,7 +90,7 @@ bool EditPointTool::addDashPointDefault() const
 	// could also check for combined symbols containing lines with dash points
 	return ( hover_object &&
 	         hover_object->getSymbol()->getType() == Symbol::Line &&
-	         hover_object->getSymbol()->asLine()->getDashSymbol() != NULL );
+	         hover_object->getSymbol()->asLine()->getDashSymbol() != nullptr );
 }
 
 bool EditPointTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
@@ -90,6 +105,7 @@ bool EditPointTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, Map
 	else
 		return MapEditorToolBase::mousePressEvent(event, map_coord, widget);
 }
+
 bool EditPointTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
 	// TODO: port TextObjectEditorHelper to MapEditorToolBase
@@ -98,6 +114,7 @@ bool EditPointTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapW
 	else
 		return MapEditorToolBase::mouseMoveEvent(event, map_coord, widget);
 }
+
 bool EditPointTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
 	// TODO: port TextObjectEditorHelper to MapEditorToolBase
@@ -117,7 +134,7 @@ bool EditPointTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, M
 
 void EditPointTool::mouseMove()
 {
-	updateHoverPoint(cur_pos_map);
+	updateHoverState(cur_pos_map);
 	
 	// For texts, decide whether to show the beam cursor
 	if (hoveringOverSingleText())
@@ -128,25 +145,12 @@ void EditPointTool::mouseMove()
 
 void EditPointTool::clickPress()
 {
-	if (space_pressed &&
-		hover_point >= 0 &&
-		hover_object &&
-		hover_object->getType() == Object::Path &&
-		!hover_object->asPath()->isCurveHandle(hover_point))
-	{
-		// Switch point between dash / normal point
-		createReplaceUndoStep(hover_object);
-		
-		MapCoord& hover_coord = hover_object->asPath()->getCoordinate(hover_point);
-		hover_coord.setDashPoint(!hover_coord.isDashPoint());
-		hover_object->update();
-		updateDirtyRect();
-		no_more_effect_on_click = true;
-	}
-	else if (hover_object &&
-		hover_object->getType() == Object::Path &&
-		hover_point < 0 &&
-		active_modifiers & Qt::ControlModifier)
+	Q_ASSERT(!hover_state.testFlag(OverObjectNode) ||
+	         !hover_state.testFlag(OverPathEdge) ||
+	         hover_object);
+	
+	if (hover_state.testFlag(OverPathEdge) &&
+	    active_modifiers & Qt::ControlModifier)
 	{
 		// Add new point to path
 		PathObject* path = hover_object->asPath();
@@ -164,7 +168,8 @@ void EditPointTool::clickPress()
 			QScopedValueRollback<bool> no_effect_rollback(no_more_effect_on_click);
 			no_more_effect_on_click = true;
 			startDragging();
-			hover_point = path->subdivide(path_coord.index, path_coord.param);
+			hover_state = OverObjectNode;
+			hover_point = path->subdivide(path_coord);
 			if (addDashPointDefault() ^ space_pressed)
 			{
 				MapCoord point = path->getCoordinate(hover_point);
@@ -176,96 +181,99 @@ void EditPointTool::clickPress()
 			updatePreviewObjects();
 		}
 	}
-	else if (hover_object &&
-		hover_object->getType() == Object::Path &&
-		hover_point >= 0 &&
-		active_modifiers & Qt::ControlModifier)
+    else if (hover_state.testFlag(OverObjectNode) &&
+	         hover_object->getType() == Object::Path)
 	{
-		PathObject* path = hover_object->asPath();
-		int hover_point_part_index = path->findPartIndexForIndex(hover_point);
-		PathObject::PathPart& hover_point_part = path->getPart(hover_point_part_index);
+		PathObject* hover_object = this->hover_object->asPath();
+		Q_ASSERT(hover_point < hover_object->getCoordinateCount());
 		
-		if (path->isCurveHandle(hover_point))
+		if (space_pressed &&
+		    !hover_object->isCurveHandle(hover_point))
 		{
-			// Convert the curve into a straight line
-			createReplaceUndoStep(path);
-			path->deleteCoordinate(hover_point, false);
-			if (path->getCoordinate(hover_point - 1).isCurveStart())
-			{
-				path->getCoordinate(hover_point - 1).setCurveStart(false);
-				path->deleteCoordinate(hover_point, false);
-			}
-			else // if (path->getCoordinate(hover_point - 2).isCurveStart())
-			{
-				path->getCoordinate(hover_point - 2).setCurveStart(false);
-				path->deleteCoordinate(hover_point - 1, false);
-			}
+			// Switch point between dash / normal point
+			createReplaceUndoStep(hover_object);
 			
-			path->update();
-			map()->emitSelectionEdited();
-			updateHoverPoint(cur_pos_map);
+			MapCoord& hover_coord = hover_object->getCoordinate(hover_point);
+			hover_coord.setDashPoint(!hover_coord.isDashPoint());
+			hover_object->update();
 			updateDirtyRect();
 			no_more_effect_on_click = true;
 		}
-		else
+		else if (active_modifiers & Qt::ControlModifier)
 		{
-			// Delete the point
-			if (hover_point_part.calcNumRegularPoints() <= 2 || (!(path->getSymbol()->getContainedTypes() & Symbol::Line) && hover_point_part.getNumCoords() <= 3))
+			auto hover_point_part_index = hover_object->findPartIndexForIndex(hover_point);
+			PathPart& hover_point_part = hover_object->parts()[hover_point_part_index];
+			
+			if (hover_object->isCurveHandle(hover_point))
 			{
-				// Not enough remaining points -> delete the part and maybe object
-				if (path->getNumParts() == 1)
-					deleteSelectedObjects();
-				else
-				{
-					createReplaceUndoStep(path);
-					path->deletePart(hover_point_part_index);
-					path->update();
-					map()->emitSelectionEdited();
-					updateHoverPoint(cur_pos_map);
-					updateDirtyRect();
-				}
+				// Convert the curve into a straight line
+				createReplaceUndoStep(hover_object);
+				hover_object->deleteCoordinate(hover_point, false);
+				hover_object->update();
+				map()->emitSelectionEdited();
+				updateHoverState(cur_pos_map);
+				updateDirtyRect();
 				no_more_effect_on_click = true;
 			}
 			else
 			{
-				// Delete the point only
-				createReplaceUndoStep(path);
-				int delete_bezier_spline_point_setting;
-				if (active_modifiers & Qt::ShiftModifier)
-					delete_bezier_spline_point_setting = Settings::EditTool_DeleteBezierPointActionAlternative;
+				// Delete the point
+				if (hover_point_part.countRegularNodes() <= 2 ||
+				    ( !(hover_object->getSymbol()->getContainedTypes() & Symbol::Line) &&
+				      hover_point_part.size() <= 3 ) )
+				{
+					// Not enough remaining points -> delete the part and maybe object
+					if (hover_object->parts().size() == 1)
+						deleteSelectedObjects();
+					else
+					{
+						createReplaceUndoStep(hover_object);
+						hover_object->deletePart(hover_point_part_index);
+						hover_object->update();
+						map()->emitSelectionEdited();
+						updateHoverState(cur_pos_map);
+						updateDirtyRect();
+					}
+					no_more_effect_on_click = true;
+				}
 				else
-					delete_bezier_spline_point_setting = Settings::EditTool_DeleteBezierPointAction;
-				path->deleteCoordinate(hover_point, true, Settings::getInstance().getSettingCached((Settings::SettingsEnum)delete_bezier_spline_point_setting).toInt());
-				path->update();
-				map()->emitSelectionEdited();
-				updateHoverPoint(cur_pos_map);
-				updateDirtyRect();
-				no_more_effect_on_click = true;
+				{
+					// Delete the point only
+					createReplaceUndoStep(hover_object);
+					int delete_bezier_spline_point_setting;
+					if (active_modifiers & Qt::ShiftModifier)
+						delete_bezier_spline_point_setting = Settings::EditTool_DeleteBezierPointActionAlternative;
+					else
+						delete_bezier_spline_point_setting = Settings::EditTool_DeleteBezierPointAction;
+					hover_object->deleteCoordinate(hover_point, true, Settings::getInstance().getSettingCached((Settings::SettingsEnum)delete_bezier_spline_point_setting).toInt());
+					hover_object->update();
+					map()->emitSelectionEdited();
+					updateHoverState(cur_pos_map);
+					updateDirtyRect();
+					no_more_effect_on_click = true;
+				}
 			}
 		}
 	}
-	else if (hover_point == -2 &&
-		hover_object &&
-		hover_object->getType() == Object::Text &&
-		hoveringOverSingleText())
+	else if (hoveringOverSingleText())
 	{
-		TextObject* text_object = hover_object->asText();
+		TextObject* hover_object = map()->getFirstSelectedObject()->asText();
 		startEditing();
 		
 		// Don't show the original text while editing
-		map()->removeRenderablesOfObject(text_object, true);
+		map()->removeRenderablesOfObject(hover_object, true);
 		
 		// Make sure that the TextObjectEditorHelper remembers the correct standard cursor
 		cur_map_widget->setCursor(*getCursor());
 		
-		old_text = text_object->getText();
-		old_horz_alignment = (int)text_object->getHorizontalAlignment();
-		old_vert_alignment = (int)text_object->getVerticalAlignment();
-		text_editor = new TextObjectEditorHelper(text_object, editor);
+		old_text = hover_object->getText();
+		old_horz_alignment = (int)hover_object->getHorizontalAlignment();
+		old_vert_alignment = (int)hover_object->getVerticalAlignment();
+		text_editor = new TextObjectEditorHelper(hover_object, editor);
 		connect(text_editor, SIGNAL(selectionChanged(bool)), this, SLOT(textSelectionChanged(bool)));
 		
 		// Select clicked position
-		int pos = text_object->calcTextPositionAt(cur_pos_map, false);
+		int pos = hover_object->calcTextPositionAt(cur_pos_map, false);
 		text_editor->setSelection(pos, pos);
 		
 		updatePreviewObjects();
@@ -287,21 +295,28 @@ void EditPointTool::clickRelease()
 		no_more_effect_on_click = false;
 		return;
 	}
-	if (hover_point >= -1
-		&& click_timer.elapsed() >= selection_click_time_threshold)
+	if (hover_state != OverNothing &&
+	    click_timer.elapsed() >= selection_click_time_threshold)
+	{
 		return;
+	}
 	
 	object_selector->selectAt(cur_pos_map, cur_map_widget->getMapView()->pixelToLength(clickTolerance()), active_modifiers & Qt::ShiftModifier);
-	updateHoverPoint(cur_pos_map);
+	updateHoverState(cur_pos_map);
 }
 
 void EditPointTool::dragStart()
 {
 	if (no_more_effect_on_click)
 		return;
-	updateHoverPoint(click_pos_map);
 	
-	if (hover_point >= -1)
+	updateHoverState(click_pos_map);
+	
+	if (hover_state == OverNothing)
+	{
+		box_selection = true;
+	}
+	else
 	{
 		startEditing();
 		startEditingSetup();
@@ -311,16 +326,13 @@ void EditPointTool::dragStart()
 		if (active_modifiers & Qt::ShiftModifier)
 			activateSnapHelperWhileEditing();
 	}
-	else if (hover_point == -2)
-	{
-		box_selection = true;
-	}
 }
 
 void EditPointTool::dragMove()
 {
 	if (no_more_effect_on_click)
 		return;
+	
 	if (editingInProgress())
 	{
 		if (snapped_to_pos && handle_offset != MapCoordF(0, 0))
@@ -384,9 +396,13 @@ bool EditPointTool::keyPress(QKeyEvent* event)
 	int num_selected_objects = map()->getNumSelectedObjects();
 	
 	if (num_selected_objects > 0 && event->key() == delete_object_key)
+	{
 		deleteSelectedObjects();
+	}
 	else if (num_selected_objects > 0 && event->key() == Qt::Key_Escape)
+	{
 		map()->clearObjectSelection(true);
+	}
 	else if (event->key() == Qt::Key_Control)
 	{
 		if (editingInProgress())
@@ -394,8 +410,7 @@ bool EditPointTool::keyPress(QKeyEvent* event)
 	}
 	else if (event->key() == Qt::Key_Shift && editingInProgress())
 	{
-		if (hover_object != NULL &&
-			hover_point >= 0 &&
+		if (hover_state == OverObjectNode &&
 			hover_object->getType() == Object::Path &&
 			hover_object->asPath()->isCurveHandle(hover_point))
 		{
@@ -410,7 +425,10 @@ bool EditPointTool::keyPress(QKeyEvent* event)
 		space_pressed = true;
 	}
 	else
+	{
 		return false;
+	}
+	
 	updateStatusText();
 	return true;
 }
@@ -443,7 +461,10 @@ bool EditPointTool::keyRelease(QKeyEvent* event)
 		space_pressed = false;
 	}
 	else
+	{
 		return false;
+	}
+	
 	updateStatusText();
 	return true;
 }
@@ -476,14 +497,14 @@ void EditPointTool::objectSelectionChangedImpl()
 		return;
 	}
 	
-	updateHoverPoint(cur_pos_map);
+	updateHoverState(cur_pos_map);
 	updateDirtyRect();
 	updateStatusText();
 }
 
 int EditPointTool::updateDirtyRectImpl(QRectF& rect)
 {
-	bool show_object_points = map()->getNumSelectedObjects() <= max_objects_for_handle_display;
+	bool show_object_points = map()->selectedObjects().size() <= max_objects_for_handle_display;
 	
 	selection_extent = QRectF();
 	map()->includeSelectionRect(selection_extent);
@@ -514,10 +535,10 @@ int EditPointTool::updateDirtyRectImpl(QRectF& rect)
 
 void EditPointTool::drawImpl(QPainter* painter, MapWidget* widget)
 {
-	int num_selected_objects = map()->getNumSelectedObjects();
+	auto num_selected_objects = map()->selectedObjects().size();
 	if (num_selected_objects > 0)
 	{
-		drawSelectionOrPreviewObjects(painter, widget, text_editor != NULL);
+		drawSelectionOrPreviewObjects(painter, widget, text_editor != nullptr);
 		
 		if (!text_editor)
 		{
@@ -526,17 +547,22 @@ void EditPointTool::drawImpl(QPainter* painter, MapWidget* widget)
 			    object->getType() == Object::Text &&
 			    !object->asText()->hasSingleAnchor())
 			{
-				drawBoundingPath(painter, widget, object->asText()->controlPoints(), hoveringOverFrame() ? active_color : selection_color);
+				drawBoundingPath(painter, widget, object->asText()->controlPoints(), hover_state.testFlag(OverFrame) ? active_color : selection_color);
 			}
 			else if (selection_extent.isValid())
 			{
-				drawBoundingBox(painter, widget, selection_extent, hoveringOverFrame() ? active_color : selection_color);
+				auto active = hover_state.testFlag(OverFrame) && !hover_state.testFlag(OverObjectNode);
+				drawBoundingBox(painter, widget, selection_extent, active ? active_color : selection_color);
 			}
 			
 			if (num_selected_objects <= max_objects_for_handle_display)
 			{
-				for (Map::ObjectSelection::const_iterator it = map()->selectedObjectsBegin(), end = map()->selectedObjectsEnd(); it != end; ++it)
-					pointHandles().draw(painter, widget, *it, (hover_object == *it) ? hover_point : -2, true, PointHandles::NormalHandleState);
+				for (const auto object: map()->selectedObjects())
+				{
+					auto active = hover_state.testFlag(OverObjectNode) && hover_object == object;
+					auto hover_point = active ? this->hover_point : no_point;
+					pointHandles().draw(painter, widget, object, hover_point, true, PointHandles::NormalHandleState);
+				}
 			}
 		}
 	}
@@ -569,7 +595,7 @@ void EditPointTool::finishEditing()
 	if (text_editor)
 	{
 		delete text_editor;
-		text_editor = NULL;
+		text_editor = nullptr;
 		
 		TextObject* text_object = reinterpret_cast<TextObject*>(*map()->selectedObjectsBegin());
 		if (text_object->getText().isEmpty())
@@ -588,6 +614,7 @@ void EditPointTool::finishEditing()
 	
 	if (delete_objects)
 		deleteSelectedObjects();
+	
 	updateStatusText();
 }
 
@@ -618,8 +645,7 @@ void EditPointTool::updateStatusText()
 		
 		if (!(active_modifiers & Qt::ShiftModifier))
 		{
-			if (hover_object != NULL &&
-				hover_point >= 0 &&
+			if (hover_state == OverObjectNode &&
 				hover_object->getType() == Object::Path &&
 				hover_object->asPath()->isCurveHandle(hover_point))
 			{
@@ -638,7 +664,7 @@ void EditPointTool::updateStatusText()
 		{
 			text += EditTool::tr("<b>%1</b>: Delete selected objects. ").arg(ModifierKey(delete_object_key));
 			
-			if (map()->getNumSelectedObjects() <= max_objects_for_handle_display)
+			if (map()->selectedObjects().size() <= max_objects_for_handle_display)
 			{
 				// TODO: maybe show this only if at least one PathObject among the selected objects?
 				if (active_modifiers & Qt::ControlModifier)
@@ -660,81 +686,121 @@ void EditPointTool::updateStatusText()
 	setStatusBarText(text);
 }
 
-void EditPointTool::updateHoverPoint(MapCoordF cursor_pos)
+void EditPointTool::updateHoverState(MapCoordF cursor_pos)
 {
-	const Object* new_hover_object = NULL;
-	int new_hover_point = -2;
-	if (map()->getNumSelectedObjects() <= max_objects_for_handle_display)
+	HoverState new_hover_state = OverNothing;
+	const Object* new_hover_object = nullptr;
+	MapCoordVector::size_type new_hover_point = no_point;
+	
+	if (text_editor)
 	{
-		float new_hover_point_dist_sq = std::numeric_limits<float>::max();
-		for (Map::ObjectSelection::const_iterator it = map()->selectedObjectsBegin(), end = map()->selectedObjectsEnd(); it != end; ++it)
+		handle_offset = MapCoordF(0, 0);
+	}
+	else if (!map()->selectedObjects().empty())
+	{
+		if (map()->selectedObjects().size() <= max_objects_for_handle_display)
 		{
-			MapCoordF handle_pos;
-			int hover_point = findHoverPoint(cur_map_widget->mapToViewport(cursor_pos), cur_map_widget, *it, true, &selection_extent, &handle_pos);
-			float distance_sq = (hover_point >= 0) ? cursor_pos.lengthToSquared(handle_pos) : -1;
-			if (hover_point >= 0 && distance_sq < new_hover_point_dist_sq)
+			// Try to find object node.
+			auto best_distance_sq = std::numeric_limits<double>::max();
+			for (const auto object : map()->selectedObjects())
 			{
-				new_hover_object = *it;
-				new_hover_point = hover_point;
-				new_hover_point_dist_sq = distance_sq;
-				handle_offset = handle_pos - cursor_pos;
+				MapCoordF handle_pos;
+				auto hover_point = findHoverPoint(cur_map_widget->mapToViewport(cursor_pos), cur_map_widget, object, true, &handle_pos);
+				if (hover_point == no_point)
+					continue;
+				
+				auto distance_sq = cursor_pos.lengthToSquared(handle_pos);
+				if (distance_sq < best_distance_sq)
+				{
+					new_hover_state |= OverObjectNode;
+					new_hover_object = object;
+					new_hover_point  = hover_point;
+					best_distance_sq = distance_sq;
+					handle_offset    = handle_pos - cursor_pos;
+				}
+			}
+			
+			if (!new_hover_state.testFlag(OverObjectNode))
+			{
+				// No object node found. Try to find path object edge.
+				/// \todo De-duplicate: Copied from EditLineTool
+				auto click_tolerance_sq = qPow(0.001 * cur_map_widget->getMapView()->pixelToLength(clickTolerance()), 2);
+				
+				for (auto object : map()->selectedObjects())
+				{
+					if (object->getType() == Object::Path)
+					{
+						PathObject* path = object->asPath();
+						float distance_sq;
+						PathCoord path_coord;
+						path->calcClosestPointOnPath(cursor_pos, distance_sq, path_coord);
+						
+						if (distance_sq >= +0.0 &&
+						    distance_sq < best_distance_sq &&
+						    distance_sq < qMax(click_tolerance_sq, qPow(path->getSymbol()->calculateLargestLineExtent(map()), 2)))
+						{
+							new_hover_state |= OverPathEdge;
+							new_hover_object = path;
+							new_hover_point  = path_coord.index;
+							best_distance_sq = distance_sq;
+							handle_offset    = path_coord.pos - cursor_pos;
+						}
+					}
+				}
+			}
+		}
+		
+		if (!new_hover_state.testFlag(OverObjectNode) && selection_extent.isValid())
+		{
+			QRectF selection_extent_viewport = cur_map_widget->mapToViewport(selection_extent);
+			if (pointOverRectangle(cur_map_widget->mapToViewport(cursor_pos), selection_extent_viewport))
+			{
+				new_hover_state |= OverFrame;
+				handle_offset    = closestPointOnRect(cursor_pos, selection_extent) - cursor_pos;
 			}
 		}
 	}
 	
-	if (new_hover_point < 0 && map()->getNumSelectedObjects() > 0)
+	if (new_hover_state  != hover_state  ||
+	    new_hover_object != hover_object ||
+	    new_hover_point  != hover_point)
 	{
-		const Object* object = *map()->selectedObjectsBegin();
-		if (object->getType() == Object::Text &&
-		    !object->asText()->hasSingleAnchor() &&
-		    map()->getNumSelectedObjects() == 1)
-		{
-			const TextObject* text_object = object->asText();
-			const QPointF anchor = text_object->getAnchorCoordF().toQPointF();
-			const QRectF normal_box( anchor.x()-text_object->getBoxWidth()/2,
-			                         anchor.y()-text_object->getBoxHeight()/2,
-			                         text_object->getBoxWidth(),
-			                         text_object->getBoxHeight() );
-			const QRectF normal_box_viewport = cur_map_widget->mapToViewport(normal_box);
-			
-			QTransform normalization;
-			normalization.translate(+anchor.x(), +anchor.y());
-			normalization.rotateRadians(text_object->getRotation());
-			normalization.translate(-anchor.x(), -anchor.y());
-			
-			MapCoordF normalized_cursor_pos = MapCoordF(normalization.map(cursor_pos.toQPointF()));
-			new_hover_point = pointOverRectangle(cur_map_widget->mapToViewport(normalized_cursor_pos), normal_box_viewport) ? -1 : -2;
-			handle_offset = closestPointOnRect(normalized_cursor_pos, normal_box) - normalized_cursor_pos;
-		}
-		else if (selection_extent.isValid())
-		{
-			QRectF selection_extent_viewport = cur_map_widget->mapToViewport(selection_extent);
-			new_hover_point = pointOverRectangle(cur_map_widget->mapToViewport(cursor_pos), selection_extent_viewport) ? -1 : -2;
-			handle_offset = closestPointOnRect(cursor_pos, selection_extent) - cursor_pos;
-		}
-	}
-	
-	// TODO: this is a HACK to make it possible to create new points with Ctrl
-	// (there has to be a hover_object for that).
-	// Make it possible to insert points into any selected object (and multiple at once,
-	// if at the same position)
-	if (new_hover_point < 0 && map()->getNumSelectedObjects() == 1)
-		new_hover_object = map()->getFirstSelectedObject();
-	
-	if (text_editor)
-	{
-		new_hover_point = -2;
-		new_hover_object = NULL;
-		handle_offset = MapCoordF(0, 0);
-	}
-	if (new_hover_object != hover_object ||
-		new_hover_point != hover_point)
-	{
-		updateDirtyRect();
-		// We have got a Map*, so we may get a Object*.
+		hover_state = new_hover_state;
+		// We have got a Map*, so we may get an non-const Object*.
 		hover_object = const_cast<Object*>(new_hover_object);
-		hover_point = new_hover_point;
-		start_drag_distance = (hover_point >= -1) ? 0 : Settings::getInstance().getStartDragDistancePx();
+		hover_point  = new_hover_point;
+		if (hover_state != OverNothing)
+			start_drag_distance = 0;
+		else
+			start_drag_distance = Settings::getInstance().getStartDragDistancePx();
+		updateDirtyRect();
+	}
+	
+	Q_ASSERT((hover_state.testFlag(OverObjectNode) || hover_state.testFlag(OverPathEdge)) == (hover_object != nullptr));
+}
+
+void EditPointTool::setupAngleHelperFromHoverObject()
+{
+	Q_ASSERT(hover_object->getType() == Object::Path);
+	
+	angle_helper->clearAngles();
+	bool forward_ok = false;
+	auto part = hover_object->asPath()->findPartForIndex(hover_point);
+	MapCoordF forward_tangent = part->calculateTangent(hover_point, false, forward_ok);
+	if (forward_ok)
+		angle_helper->addAngles(-forward_tangent.getAngle(), M_PI/2);
+	bool backward_ok = false;
+	MapCoordF backward_tangent = part->calculateTangent(hover_point, true, backward_ok);
+	if (backward_ok)
+		angle_helper->addAngles(-backward_tangent.getAngle(), M_PI/2);
+	
+	if (forward_ok && backward_ok)
+	{
+		double angle = (-backward_tangent.getAngle() - forward_tangent.getAngle()) / 2;
+		angle_helper->addAngle(angle);
+		angle_helper->addAngle(angle + M_PI/2);
+		angle_helper->addAngle(angle + M_PI);
+		angle_helper->addAngle(angle + 3*M_PI/2);
 	}
 }
 
@@ -744,70 +810,46 @@ void EditPointTool::startEditingSetup()
 	
 	// Collect elements to move
 	object_mover.reset(new ObjectMover(map(), click_pos_map));
-	if (hoveringOverFrame())
+	if (hover_state.testFlag(OverObjectNode))
 	{
-		for (Map::ObjectSelection::const_iterator it = map()->selectedObjectsBegin(), it_end = map()->selectedObjectsEnd(); it != it_end; ++it)
-			object_mover->addObject(*it);
-		setupAngleHelperFromSelectedObjects();
-	}
-	else
-	{
-		if (hover_object->getType() == Object::Point)
+		switch (hover_object->getType())
 		{
+		case Object::Point:
 			object_mover->addObject(hover_object);
 			setupAngleHelperFromSelectedObjects();
-		}
-		else if (hover_object->getType() == Object::Path)
+			break;
+			
+		case Object::Path:
 			object_mover->addPoint(hover_object->asPath(), hover_point);
-		else if (hover_object->getType() == Object::Text)
-		{
-			TextObject* text = hover_object->asText();
-			if (text->hasSingleAnchor())
+			setupAngleHelperFromHoverObject();
+			break;
+			
+		case Object::Text:
+			if (hover_object->asText()->hasSingleAnchor())
 				object_mover->addObject(hover_object);
 			else
-				object_mover->addTextHandle(text, hover_point);
+				object_mover->addTextHandle(hover_object->asText(), hover_point);
 			setupAngleHelperFromSelectedObjects();
+			break;
+			
+		default:
+			Q_UNREACHABLE();
 		}
+		angle_helper->setCenter(click_pos_map);
 	}
-	
-	// Set up angle tool helper (for path points)
-	angle_helper->setCenter(click_pos_map);
-	if (hover_point >= 0 &&
-		hover_object &&
-		hover_object->getType() == Object::Path)
+	else if (hover_state.testFlag(OverFrame))
 	{
-		angle_helper->clearAngles();
-		bool forward_ok = false;
-		MapCoordF forward_tangent = PathCoord::calculateTangent(hover_object->getRawCoordinateVector(), hover_point, false, forward_ok);
-		if (forward_ok)
-			angle_helper->addAngles(-forward_tangent.getAngle(), M_PI/2);
-		bool backward_ok = false;
-		MapCoordF backward_tangent = PathCoord::calculateTangent(hover_object->getRawCoordinateVector(), hover_point, true, backward_ok);
-		if (backward_ok)
-			angle_helper->addAngles(-backward_tangent.getAngle(), M_PI/2);
-		
-		if (forward_ok && backward_ok)
-		{
-			double angle = (-backward_tangent.getAngle() - forward_tangent.getAngle()) / 2;
-			angle_helper->addAngle(angle);
-			angle_helper->addAngle(angle + M_PI/2);
-			angle_helper->addAngle(angle + M_PI);
-			angle_helper->addAngle(angle + 3*M_PI/2);
-		}
+		for (auto object : map()->selectedObjects())
+			object_mover->addObject(object);
+		setupAngleHelperFromSelectedObjects();
+		angle_helper->setCenter(click_pos_map);
 	}
 }
 
-bool EditPointTool::hoveringOverSingleText()
+bool EditPointTool::hoveringOverSingleText() const
 {
-	if (hover_point != -2)
-		return false;
-	
-	// TODO: make editing of text objects possible when multiple objects are selected
-	Object* single_selected_object = (map()->getNumSelectedObjects() == 1) ? *map()->selectedObjectsBegin() : NULL;
-	if (single_selected_object && single_selected_object->getType() == Object::Text)
-	{
-		TextObject* text_object = reinterpret_cast<TextObject*>(single_selected_object);
-		return text_object->calcTextPositionAt(cur_pos_map, true) >= 0;
-	}
-	return false;
+	return hover_state == OverNothing &&
+	       map()->selectedObjects().size() == 1 &&
+	       map()->getFirstSelectedObject()->getType() == Object::Text &&
+	       map()->getFirstSelectedObject()->asText()->calcTextPositionAt(cur_pos_map, true) >= 0;
 }
