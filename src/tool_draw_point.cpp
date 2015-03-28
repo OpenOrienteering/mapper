@@ -1,5 +1,6 @@
 /*
- *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2012-2014 Thomas Schöps
+ *    Copyright 2013-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -76,6 +77,14 @@ void DrawPointTool::initImpl()
 		key_button_bar->addModifierKey(Qt::Key_Control, Qt::ControlModifier, tr("Angle", "Using constrained angles"));
 		editor->showPopupWidget(key_button_bar, "");
 	}
+	
+	if (!preview_object)
+	{
+		if (editor->activeSymbol()->getType() == Symbol::Point)
+			preview_object = new PointObject(editor->activeSymbol()->asPoint());
+		else
+			preview_object = new PointObject(Map::getUndefinedPoint());
+	}
 }
 
 void DrawPointTool::leaveEvent(QEvent* event)
@@ -91,17 +100,12 @@ void DrawPointTool::mouseMove()
 	if (!isDragging())
 	{
 		// Show preview object at this position
-		if (!preview_object)
-			preview_object = new PointObject(point);
-		else
+		renderables->removeRenderablesOfObject(preview_object, false);
+		if (preview_object->getSymbol() != point)
 		{
-			renderables->removeRenderablesOfObject(preview_object, false);
-			if (preview_object->getSymbol() != point)
-			{
-				bool success = preview_object->setSymbol(point, true);
-				Q_ASSERT(success);
-				Q_UNUSED(success);
-			}
+			bool success = preview_object->setSymbol(point, true);
+			Q_ASSERT(success);
+			Q_UNUSED(success);
 		}
 		
 		preview_object->setPosition(constrained_pos_map);
