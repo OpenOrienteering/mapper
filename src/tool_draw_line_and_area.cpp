@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2014 Kai Pastor
+ *    Copyright 2013-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -41,7 +41,7 @@ DrawLineAndAreaTool::DrawLineAndAreaTool(MapEditorController* editor, Type type,
 , drawing_symbol(NULL)
 , preview_point_radius(0)
 , preview_points_shown(false)
-, path_combination(new CombinedSymbol())
+, path_combination(Map::getCoveringCombinedLine()->duplicate()->asCombined())
 , preview_path(NULL)
 , renderables(new MapRenderables(map()))
 {
@@ -180,11 +180,16 @@ void DrawLineAndAreaTool::drawPreviewObjects(QPainter* painter, MapWidget* widge
 
 void DrawLineAndAreaTool::startDrawing()
 {
-	path_combination->setNumParts(is_helper_tool ? 2 : 3);
-	path_combination->setPart(0, Map::getCoveringWhiteLine(), false);
-	path_combination->setPart(1, Map::getCoveringRedLine(), false);
+	auto num_symbol_parts = Map::getCoveringCombinedLine()->getNumParts();
 	if (drawing_symbol)
-		path_combination->setPart(2, drawing_symbol, false);
+	{
+		path_combination->setNumParts(num_symbol_parts + 1);
+		path_combination->setPart(num_symbol_parts, drawing_symbol, false);
+	}
+	else
+	{
+		path_combination->setNumParts(num_symbol_parts);
+	}
 	
 	preview_path = new PathObject(path_combination.data());
 	

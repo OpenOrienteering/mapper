@@ -1526,11 +1526,11 @@ void Map::initStatic()
 	
 	covering_white_line = new LineSymbol();
 	covering_white_line->setColor(&covering_white);
-	covering_white_line->setLineWidth(3);
+	covering_white_line->setLineWidth(3.0);
 	
 	covering_red_line = new LineSymbol();
 	covering_red_line->setColor(&covering_red);
-	covering_red_line->setLineWidth(0.1);
+	covering_red_line->setLineWidth(1.0);
 	
 	covering_combined_line = new CombinedSymbol();
 	covering_combined_line->setNumParts(2);
