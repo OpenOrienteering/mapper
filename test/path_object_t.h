@@ -1,5 +1,6 @@
 /*
  *    Copyright 2013 Thomas Schöps
+ *    Copyright 2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -27,7 +28,7 @@
 
 
 /**
- * @test Tests PathObject. Still very incomplete
+ * @test Tests PathObject, MapCoord(F) and MapCoordVector(F).
  *
  * @todo Extent this test.
  */
@@ -40,6 +41,12 @@ public:
 	
 private slots:
 	void initTestCase();
+	
+	/** Tests MapCoordF. */
+	void mapCoordTest();
+	
+	/** Tests MapCoordVector/MapCoordVectorF together with PathCoord. */
+	void mapCoordVectorTest();
 	
 	/** Tests finding intersections with calcAllIntersectionsWith(). */
 	void calcIntersectionsTest();

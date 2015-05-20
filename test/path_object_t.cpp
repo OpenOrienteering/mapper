@@ -1,5 +1,6 @@
 /*
  *    Copyright 2013 Thomas Schöps
+ *    Copyright 2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -43,6 +44,79 @@ void PathObjectTest::initTestCase()
 	doStaticInitializations();
 	// Static map initializations
 	Map map;
+}
+
+void PathObjectTest::mapCoordTest()
+{
+	auto vector = MapCoordF { 2.0, 0.0 };
+	QCOMPARE(vector.getX(), 2.0);
+	QCOMPARE(vector.getY(), 0.0);
+	QCOMPARE(vector.length(), 2.0);
+	QCOMPARE(vector.getAngle(), 0.0);
+	
+	vector.perpRight();
+	QCOMPARE(vector.getX(), 0.0);
+	QCOMPARE(vector.getY(), 2.0); // This looks like left, but our y axis is mirrored.
+	QCOMPARE(vector.length(), 2.0);
+	QCOMPARE(vector.getAngle(), M_PI/2); // Remember, our y axis is mirrored.
+}
+
+void PathObjectTest::mapCoordVectorTest()
+{
+	// Test open path
+	auto coords = MapCoordVector { { 0.0, 0.0 }, { 2.0, 0.0 }, { 2.0, 1.0 }, { 2.0, -1.0 } };
+	auto coords_f = MapCoordVectorF {};
+	mapCoordVectorToF(coords, coords_f);
+	
+	float scaling;
+	auto right = PathCoord::calculateRightVector(coords, coords_f, false, 0, &scaling);
+	QCOMPARE(right.length(), 1.0); // Already normalized
+	QCOMPARE(right.getX(), 0.0);
+	QCOMPARE(right.getY(), 1.0); // This looks like left, but our y axis is mirrored.
+	QCOMPARE(right.getAngle(), M_PI/2);
+	QCOMPARE(scaling, 1.0f);
+	
+	right = PathCoord::calculateRightVector(coords, coords_f, false, 1, &scaling);
+	QCOMPARE(right.length(), 1.0);
+	QCOMPARE(right.getX(), -sqrt(2.0)/2);
+	QCOMPARE(right.getY(), sqrt(2.0)/2);
+	QCOMPARE(right.getAngle(), 3*M_PI/4);
+	QCOMPARE(scaling, float(sqrt(2.0)));
+	
+	right = PathCoord::calculateRightVector(coords, coords_f, false, 2, &scaling);
+	// The following is the actual result. 
+	// However, one might argue that right should be MapCoordF { 0.0, 1.0 }.
+	QCOMPARE(right.length(), 0.0);
+	QCOMPARE(right.getX(), 0.0);
+	QCOMPARE(right.getY(), 0.0);
+	QCOMPARE(scaling, 1.0f);
+	
+	right = PathCoord::calculateRightVector(coords, coords_f, false, 3, &scaling);
+	QCOMPARE(right.length(), 1.0);
+	QCOMPARE(right.getX(), 1.0);
+	QCOMPARE(right.getY(), 0.0);
+	QCOMPARE(right.getAngle(), 0.0);
+	QCOMPARE(scaling, 1.0f);
+	
+	// Test close point
+	coords.emplace_back( 0.0, -1.0 );
+	coords.emplace_back( 0.0, 0.0 );
+	coords.back().setClosePoint(true);
+	mapCoordVectorToF(coords, coords_f);
+	
+	right = PathCoord::calculateRightVector(coords, coords_f, true, 0, &scaling);
+	QCOMPARE(right.length(), 1.0);
+	QCOMPARE(right.getX(), -sqrt(2.0)/2);
+	QCOMPARE(right.getY(), sqrt(2.0)/2);
+	QCOMPARE(right.getAngle(), 3*M_PI/4);
+	QCOMPARE(scaling, float(sqrt(2.0)));
+	
+	right = PathCoord::calculateRightVector(coords, coords_f, true, coords.size()-1, &scaling);
+	QCOMPARE(right.length(), 1.0);
+	QCOMPARE(right.getX(), -sqrt(2.0)/2);
+	QCOMPARE(right.getY(), sqrt(2.0)/2);
+	QCOMPARE(right.getAngle(), 3*M_PI/4);
+	QCOMPARE(scaling, float(sqrt(2.0)));
 }
 
 void PathObjectTest::calcIntersectionsTest()
