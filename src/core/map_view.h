@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2014 Kai Pastor
+ *    Copyright 2014, 2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -99,12 +99,6 @@ public:
 	/** Converts the point (with origin at the center of the view) to map coordinates */
 	MapCoordF viewToMapF(QPointF point) const;
 	
-	
-	/// Converts map coordinates to view coordinates (with origin at the center of the view)
-	void mapToView(MapCoord coords, double& out_x, double& out_y) const;
-	
-	/// Converts map coordinates to view coordinates (with origin at the center of the view)
-	void mapToView(MapCoord coords, float& out_x, float& out_y) const;
 	
 	/// Converts map coordinates to view coordinates (with origin at the center of the view)
 	QPointF mapToView(MapCoord coords) const;
@@ -224,19 +218,6 @@ public:
 	 */
 	void setPositionY(qint64 value);
 	
-	/** Returns the view x offset from the rotation center. */
-	int getViewX() const;
-	
-	/** Sets the view x offset from the rotation center. */
-	void setViewX(int value);
-	
-	/** Returns the view y offset from the rotation center. */
-	int getViewY() const;
-	
-	/** Sets the view y offset from the rotation center. */
-	void setViewY(int value);
-	
-	
 	// Map and template visibilities
 	
 	/** Returns the effectiv visibility settings of the map drawing.
@@ -313,8 +294,6 @@ private:
 	double rotation;	// counterclockwise 0 to 2*PI. This is the viewer rotation, so the map is rotated clockwise
 	qint64 position_x;	// position of the viewer, positive values move the map to the left; the position is in 1/1000 mm
 	qint64 position_y;
-	int view_x;			// view offset (so the view can be rotated around a point which is not in its center) ...
-	int view_y;			// ... this can be used to always look ahead of the GPS position if a digital compass is present
 	QPoint pan_offset;	// the distance the content of the view was dragged with the mouse, in pixels
 	
 	QTransform view_to_map;
@@ -378,20 +357,6 @@ MapCoordF MapView::viewToMapF(QPointF point) const
 }
 
 inline
-void MapView::mapToView(MapCoord coords, double& out_x, double& out_y) const
-{
-	out_x = map_to_view.m11() * coords.xd() + map_to_view.m12() * coords.yd() + map_to_view.m13();
-	out_y = map_to_view.m21() * coords.xd() + map_to_view.m22() * coords.yd() + map_to_view.m23();
-}
-
-inline
-void MapView::mapToView(MapCoord coords, float& out_x, float& out_y) const
-{
-	out_x = map_to_view.m11() * coords.xd() + map_to_view.m12() * coords.yd() + map_to_view.m13();
-	out_y = map_to_view.m21() * coords.xd() + map_to_view.m22() * coords.yd() + map_to_view.m23();
-}
-
-inline
 QPointF MapView::mapToView(MapCoord coords) const
 {
 	return QPointF(map_to_view.m11() * coords.xd() + map_to_view.m12() * coords.yd() + map_to_view.m13(),
@@ -452,32 +417,6 @@ inline
 qint64 MapView::getPositionY() const
 {
 	return position_y;
-}
-
-inline
-int MapView::getViewX() const
-{
-	return view_x;
-}
-
-inline
-void MapView::setViewX(int value)
-{
-	view_x = value;
-	updateTransform();
-}
-
-inline
-int MapView::getViewY() const
-{
-	return view_y;
-}
-
-inline
-void MapView::setViewY(int value)
-{
-	view_y = value;
-	updateTransform();
 }
 
 inline

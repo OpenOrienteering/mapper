@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2014 Kai Pastor
+ *    Copyright 2014, 2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -35,8 +35,6 @@ namespace literal
 	static const QLatin1String rotation("rotation");
 	static const QLatin1String position_x("position_x");
 	static const QLatin1String position_y("position_y");
-	static const QLatin1String view_x("view_x");
-	static const QLatin1String view_y("view_y");
 	static const QLatin1String grid("grid");
 	static const QLatin1String overprinting_simulation_enabled("overprinting_simulation_enabled");
 	static const QLatin1String map("map");
@@ -58,8 +56,6 @@ MapView::MapView(Map* map) : map(map)
 	rotation = 0;
 	position_x = 0;
 	position_y = 0;
-	view_x = 0;
-	view_y = 0;
 	map_visibility = new TemplateVisibility { 1.0f, true };
 	map_visibility->visible = true;
 	all_templates_hidden = false;
@@ -79,12 +75,13 @@ MapView::~MapView()
 
 void MapView::load(QIODevice* file, int version)
 {
+	int unused;
 	file->read((char*)&zoom, sizeof(double));
 	file->read((char*)&rotation, sizeof(double));
 	file->read((char*)&position_x, sizeof(qint64));
 	file->read((char*)&position_y, sizeof(qint64));
-	file->read((char*)&view_x, sizeof(int));
-	file->read((char*)&view_y, sizeof(int));
+	file->read((char*)&unused /*view_x*/, sizeof(int));
+	file->read((char*)&unused /*view_y*/, sizeof(int));
 	file->read((char*)&pan_offset, sizeof(QPoint));
 	updateTransform();
 	
@@ -123,8 +120,6 @@ void MapView::save(QXmlStreamWriter& xml, const QLatin1String& element_name, boo
 	mapview_element.writeAttribute(literal::rotation, rotation);
 	mapview_element.writeAttribute(literal::position_x, position_x);
 	mapview_element.writeAttribute(literal::position_y, position_y);
-	mapview_element.writeAttribute(literal::view_x, view_x);
-	mapview_element.writeAttribute(literal::view_y, view_y);
 	mapview_element.writeAttribute(literal::grid, grid_visible);
 	mapview_element.writeAttribute(literal::overprinting_simulation_enabled, overprinting_simulation_enabled);
 	
@@ -162,8 +157,6 @@ void MapView::load(QXmlStreamReader& xml)
 	rotation = mapview_element.attribute<double>(literal::rotation);
 	position_x = mapview_element.attribute<qint64>(literal::position_x);
 	position_y = mapview_element.attribute<qint64>(literal::position_y);
-	view_x = mapview_element.attribute<int>(literal::view_x);
-	view_y = mapview_element.attribute<int>(literal::view_y);
 	grid_visible = mapview_element.attribute<bool>(literal::grid);
 	overprinting_simulation_enabled = mapview_element.attribute<bool>(literal::overprinting_simulation_enabled);
 	updateTransform();
@@ -435,8 +428,8 @@ void MapView::updateTransform()
 	double pos_y_by_1000 = position_y / 1000.0;
 	
 	// Create map_to_view
-	map_to_view.setMatrix(final_zoom_cosr, -final_zoom_sinr, -final_zoom_cosr * pos_x_by_1000 + final_zoom_sinr * pos_y_by_1000 - view_x,
-	                      final_zoom_sinr,  final_zoom_cosr, -final_zoom_sinr * pos_x_by_1000 - final_zoom_cosr * pos_y_by_1000 - view_y,
+	map_to_view.setMatrix(final_zoom_cosr, -final_zoom_sinr, -final_zoom_cosr * pos_x_by_1000 + final_zoom_sinr * pos_y_by_1000,
+	                      final_zoom_sinr,  final_zoom_cosr, -final_zoom_sinr * pos_x_by_1000 - final_zoom_cosr * pos_y_by_1000,
 	                      0, 0, 1);
 	view_to_map     = map_to_view.inverted();
 	world_transform = map_to_view.transposed();
