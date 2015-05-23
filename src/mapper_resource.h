@@ -1,5 +1,5 @@
 /*
- *    Copyright 2012, 2013 Kai Pastor
+ *    Copyright 2012-2014 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -22,6 +22,7 @@
 #define _OPENORIENTEERING_MAPPER_RESOURCE_H_
 
 #include <QString>
+
 class QStringList;
 
 /**

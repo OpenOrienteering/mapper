@@ -1,5 +1,5 @@
 /*
- *    Copyright 2012, 2013, 2014 Kai Pastor
+ *    Copyright 2012-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -26,6 +26,9 @@
 #include <QDir>
 #include <QFile>
 #include <QStringList>
+
+
+
 /**
  * Private MapperResource utilities
  */
@@ -53,6 +56,7 @@ QStringList MapperResource::getLocations(MapperResource::RESOURCE_TYPE resource_
 {
 	QStringList locations;
 	QString resource_path;
+	QDir app_dir(QCoreApplication::applicationDirPath());
 	
 	switch (resource_type)
 	{
@@ -85,6 +89,7 @@ QStringList MapperResource::getLocations(MapperResource::RESOURCE_TYPE resource_
 			break;
 			
 		case TEST_DATA:
+			addIfExists(locations, app_dir.absoluteFilePath("data"));
 			resource_path = "/test/data";
 			break;
 	
@@ -107,7 +112,6 @@ QStringList MapperResource::getLocations(MapperResource::RESOURCE_TYPE resource_
 	addIfExists(locations, build_dir);
 #endif
 	
-	QDir app_dir(QCoreApplication::applicationDirPath());
 #if defined(MAPPER_PACKAGE_NAME)
 	// Linux: program in xxx/bin, resources in xxx/bin/../share/PACKAGE_NAME
 	QString linux_dir(app_dir.absoluteFilePath(QString("../share/") + MAPPER_PACKAGE_NAME + resource_path));
@@ -124,8 +128,6 @@ QStringList MapperResource::getLocations(MapperResource::RESOURCE_TYPE resource_
 	// Android: load resources from the application directory
 	QString assets_dir(QStringLiteral("assets:") + resource_path);
 	addIfExists(locations, assets_dir);
-#else
-	Q_UNUSED(app_dir);
 #endif
 	
 	// General default path: Qt resource system
