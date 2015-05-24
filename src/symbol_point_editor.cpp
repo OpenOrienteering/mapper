@@ -307,9 +307,9 @@ bool PointSymbolEditorWidget::changeCurrentCoordinate(MapCoordF new_coord)
 	{
 		PointObject* point = reinterpret_cast<PointObject*>(object);
 		MapCoordF coord = point->getCoordF();
-		coord.setX(new_coord.getX());
-		coord.setY(new_coord.getY() - offset_y);
-		point->setPosition(coord.getIntX(), coord.getIntY());
+		coord.setX(new_coord.x());
+		coord.setY(new_coord.y() - offset_y);
+		point->setPosition(coord);
 	}
 	else
 	{
@@ -322,8 +322,8 @@ bool PointSymbolEditorWidget::changeCurrentCoordinate(MapCoordF new_coord)
 		Q_ASSERT((MapCoordVector::size_type)row < path->getCoordinateCount());
 		
 		MapCoord coord = path->getCoordinate(row);
-		coord.setX(new_coord.getX());
-		coord.setY(new_coord.getY() - offset_y);
+		coord.setX(new_coord.x());
+		coord.setY(new_coord.y() - offset_y);
 		path->setCoordinate(row, coord);
 	}
 	
@@ -350,7 +350,7 @@ bool PointSymbolEditorWidget::addCoordinate(MapCoordF new_coord)
 	else
 		++row;
 	
-	path->addCoordinate(row, MapCoordF(new_coord.getX(), new_coord.getY() - offset_y).toMapCoord());
+	path->addCoordinate(row, { new_coord.x(), new_coord.y() - offset_y });
 	
 	if (path->getCoordinateCount() == 1)
 	{
@@ -712,7 +712,7 @@ void PointSymbolEditorWidget::coordinateChanged(int row, int column)
 			if (object->getType() == Object::Point)
 			{
 				PointObject* point = reinterpret_cast<PointObject*>(object);
-				coords_table->item(row, column)->setText(QString::number((column == 0) ? point->getCoordF().getX() : (-point->getCoordF().getY())));
+				coords_table->item(row, column)->setText(QString::number((column == 0) ? point->getCoordF().x() : (-point->getCoordF().y())));
 			}
 			else if (object->getType() == Object::Path)
 			{
@@ -792,15 +792,15 @@ void PointSymbolEditorWidget::centerCoordsClicked()
 		
 		Q_ASSERT(change_size > 0);
 		for (int i = 0; i < change_size; ++i)
-			center = MapCoordF(center.getX() + path->getCoordinate(i).xd(), center.getY() + path->getCoordinate(i).yd());
-		center = MapCoordF(center.getX() / change_size, center.getY() / change_size);
+			center = MapCoordF(center.x() + path->getCoordinate(i).xd(), center.y() + path->getCoordinate(i).yd());
+		center = MapCoordF(center.x() / change_size, center.y() / change_size);
 		
 		
 		for (int i = 0; i < change_size; ++i)
 		{
 			MapCoord coord = path->getCoordinate(i);
-			coord.setX(coord.xd() - center.getX());
-			coord.setY(coord.yd() - center.getY());
+			coord.setX(coord.xd() - center.x());
+			coord.setY(coord.yd() - center.y());
 			path->setCoordinate(i, coord);
 		}
 		
@@ -869,8 +869,8 @@ void PointSymbolEditorWidget::updateCoordsRow(int row)
 	else if (object->getType() == Object::Path)
 		coordF = MapCoordF(reinterpret_cast<PathObject*>(object)->getCoordinate(row));
 	
-	coords_table->item(row, 0)->setText(QString::number(coordF.getX()));
-	coords_table->item(row, 1)->setText(QString::number(-coordF.getY()));
+	coords_table->item(row, 0)->setText(QString::number(coordF.x()));
+	coords_table->item(row, 1)->setText(QString::number(-coordF.y()));
 	
 	if (object->getType() == Object::Path)
 	{

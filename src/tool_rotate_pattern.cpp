@@ -60,7 +60,7 @@ void RotatePatternTool::dragStart()
 void RotatePatternTool::dragMove()
 {
 	angle_helper->getConstrainedCursorPositions(cur_pos_map, constrained_pos_map, constrained_pos, cur_map_widget);
-	double rotation = -M_PI / 2 - (constrained_pos_map - click_pos_map).getAngle();
+	double rotation = -M_PI / 2 - (constrained_pos_map - click_pos_map).angle();
 	
 	Map::ObjectSelection::const_iterator it_end = map()->selectedObjectsEnd();
 	for (Map::ObjectSelection::const_iterator it = map()->selectedObjectsBegin(); it != it_end; ++it)
@@ -74,7 +74,7 @@ void RotatePatternTool::dragMove()
 		}
 		else if (object->getType() == Object::Path)
 		{
-			object->asPath()->setPatternOrigin(click_pos_map.toMapCoord());
+			object->asPath()->setPatternOrigin(MapCoord(click_pos_map));
 			object->asPath()->setPatternRotation(rotation);
 		}
 	}
@@ -153,7 +153,7 @@ void RotatePatternTool::updateStatusText()
 		static const double pi_x_1_5 = M_PI * 1.5;
 		static const double pi_x_2 = M_PI * 2.0;
 		static const double to_deg = 180.0 / M_PI;
-		double rotation = fmod(-(constrained_pos_map - click_pos_map).getAngle() + pi_x_1_5, pi_x_2) * to_deg;
+		double rotation = fmod(-(constrained_pos_map - click_pos_map).angle() + pi_x_1_5, pi_x_2) * to_deg;
 		setStatusBarText( trUtf8("<b>Angle:</b> %1° ").arg(QLocale().toString(rotation, 'f', 1)) + "| " +
 		                  tr("<b>%1</b>: Fixed angles. ").arg(ModifierKey::control()) );
 	}

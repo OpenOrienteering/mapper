@@ -109,7 +109,7 @@ int FillTool::fill(const QRectF& extent)
 	QImage image = rasterizeMap(extent, transform);
 	
 	// Calculate click position in image and check if it is inside the map area and free
-	QPoint clicked_pixel = transform.map(QPointF(cur_map_widget->viewportToMapF(click_pos))).toPoint();
+	QPoint clicked_pixel = transform.map(cur_map_widget->viewportToMapF(click_pos)).toPoint();
 	if (!image.rect().contains(clicked_pixel, true))
 		return 0;
 	if (qAlpha(image.pixel(clicked_pixel)) > 0)
@@ -335,7 +335,7 @@ bool FillTool::fillBoundary(const QImage& image, const std::vector< QPoint >& bo
 	// does not work properly like this (would need fixing of path->simplify() and dilatation of path)
 // 	PathObject* path = new PathObject(last_used_symbol);
 // 	for (size_t b = 0, end = boundary.size(); b < end; ++b)
-// 		path->addCoordinate(MapCoordF(image_to_map.map(QPointF(boundary[b]))).toMapCoord());
+// 		path->addCoordinate(MapCoord(image_to_map.map(QPointF(boundary[b]))));
 // 	path->closeAllParts();
 // 	
 // 	path->convertToCurves();
@@ -368,7 +368,7 @@ bool FillTool::fillBoundary(const QImage& image, const std::vector< QPoint >& bo
 			|| sections.back().object != path
 			|| sections.back().part != part
 			|| (sections.back().end_clen - sections.back().start_clen) * (path_coord.clen - sections.back().end_clen) < 0
-			|| qAbs(path_coord.clen - sections.back().end_clen) > 5 * (map_pos.lengthTo(MapCoordF(image_to_map.map(QPointF(boundary[b - 1])))));
+			|| qAbs(path_coord.clen - sections.back().end_clen) > 5 * (map_pos.distanceTo(MapCoordF(image_to_map.map(QPointF(boundary[b - 1])))));
 		
 		if (start_new_section)
 		{

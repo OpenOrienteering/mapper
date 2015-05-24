@@ -112,8 +112,8 @@ void TextSymbol::createRenderables(const Object* object, const VirtualCoordVecto
 	const TextObject* text_object = static_cast<const TextObject*>(object);
 	
 	auto anchor = coords[0];
-	double anchor_x = anchor.getX();
-	double anchor_y = anchor.getY();
+	double anchor_x = anchor.x();
+	double anchor_y = anchor.y();
 	
 	text_object->prepareLineInfos();
 	if (color)

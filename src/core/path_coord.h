@@ -24,15 +24,12 @@
 
 #include <vector>
 
-#include <QRectF>
-
 #include "map_coord.h"
-#include "virtual_coord_vector.h"
-
 
 class PathCoordVector;
 class SplitPathCoord;
-class VirtualPath;
+
+
 
 /**
  * A PathCoord represents a node in a polygonal approximation of a path.

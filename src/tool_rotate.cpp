@@ -75,7 +75,7 @@ void RotateTool::dragStart()
 	{
 		// Start rotating
 		rotating = true;
-		old_rotation = (cur_pos_map - rotation_center).getAngle();
+		old_rotation = (cur_pos_map - rotation_center).angle();
 		original_rotation = old_rotation;
 		angle_helper->clearAngles();
 		angle_helper->addDefaultAnglesDeg(-original_rotation * 180 / M_PI);
@@ -88,7 +88,7 @@ void RotateTool::dragMove()
 	{
 		angle_helper->getConstrainedCursorPositions(cur_pos_map, constrained_pos_map, constrained_pos, cur_map_widget);
 		
-		double rotation = (constrained_pos_map - rotation_center).getAngle();
+		double rotation = (constrained_pos_map - rotation_center).angle();
 		double delta_rotation = rotation - old_rotation;
 		
 		Map::ObjectSelection::const_iterator it_end = map()->selectedObjectsEnd();

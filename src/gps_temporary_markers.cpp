@@ -50,7 +50,7 @@ bool GPSTemporaryMarkers::addPoint()
 	if (!gps_display->hasValidPosition())
 		return false;
 	
-	points.push_back(QPointF(gps_display->getLatestGPSCoord()));
+	points.push_back(gps_display->getLatestGPSCoord());
 	updateMapWidget();
 	return true;
 }
@@ -115,7 +115,7 @@ void GPSTemporaryMarkers::newGPSPosition(MapCoordF coord, float accuracy)
 	if (recording_path && ! paths.empty())
 	{
 		std::vector< QPointF >& path_coords = paths.back();
-		path_coords.push_back(QPointF(coord));
+		path_coords.push_back(coord);
 		updateMapWidget();
 	}
 }

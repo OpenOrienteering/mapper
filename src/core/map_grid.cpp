@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2014 Kai Pastor
+ *    Copyright 2014, 2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -171,12 +171,12 @@ void MapGrid::calculateFinalParameters(double& final_horz_spacing, double& final
 		final_rotation += georeferencing.getGrivation() * M_PI / 180;
 		
 		// Shift origin to projected coordinates origin
-		double prev_horz_offset = MapCoordF(0, -1).rotate(final_rotation).dot(MapCoordF(georeferencing.getMapRefPoint().xd(), -1 * georeferencing.getMapRefPoint().yd()));
-		double target_horz_offset = MapCoordF(0, -1).rotate(additional_rotation + M_PI / 2).dot(MapCoordF(georeferencing.getProjectedRefPoint().x(), georeferencing.getProjectedRefPoint().y()));
+		double prev_horz_offset = MapCoordF::dotProduct(MapCoordF(0, -1).rotated(final_rotation), MapCoordF(georeferencing.getMapRefPoint().xd(), -1 * georeferencing.getMapRefPoint().yd()));
+		double target_horz_offset = MapCoordF::dotProduct(MapCoordF(0, -1).rotated(additional_rotation + M_PI / 2), MapCoordF(georeferencing.getProjectedRefPoint().x(), georeferencing.getProjectedRefPoint().y()));
 		final_horz_offset -= factor * target_horz_offset - prev_horz_offset;
 		
-		double prev_vert_offset = MapCoordF(1, 0).rotate(final_rotation).dot(MapCoordF(georeferencing.getMapRefPoint().xd(), -1 * georeferencing.getMapRefPoint().yd()));
-		double target_vert_offset = MapCoordF(1, 0).rotate(additional_rotation + M_PI / 2).dot(MapCoordF(georeferencing.getProjectedRefPoint().x(), georeferencing.getProjectedRefPoint().y()));
+		double prev_vert_offset = MapCoordF::dotProduct(MapCoordF(1, 0).rotated(final_rotation), MapCoordF(georeferencing.getMapRefPoint().xd(), -1 * georeferencing.getMapRefPoint().yd()));
+		double target_vert_offset = MapCoordF::dotProduct(MapCoordF(1, 0).rotated(additional_rotation + M_PI / 2), MapCoordF(georeferencing.getProjectedRefPoint().x(), georeferencing.getProjectedRefPoint().y()));
 		final_vert_offset += factor * target_vert_offset - prev_vert_offset;
 	}
 	else if (alignment == TrueNorth)
@@ -191,8 +191,8 @@ MapCoordF MapGrid::getClosestPointOnGrid(MapCoordF position, Map* map) const
 	calculateFinalParameters(final_horz_spacing, final_vert_spacing, final_horz_offset, final_vert_offset, final_rotation, map);
 	
 	position.rotate(final_rotation - M_PI / 2);
-	return MapCoordF(qRound((position.getX() - final_horz_offset) / final_horz_spacing) * final_horz_spacing + final_horz_offset,
-					 qRound((position.getY() - final_vert_offset) / final_vert_spacing) * final_vert_spacing + final_vert_offset).rotate(-1 * (final_rotation - M_PI / 2));
+	return MapCoordF(qRound((position.x() - final_horz_offset) / final_horz_spacing) * final_horz_spacing + final_horz_offset,
+					 qRound((position.y() - final_vert_offset) / final_vert_spacing) * final_vert_spacing + final_vert_offset).rotated(-1 * (final_rotation - M_PI / 2));
 }
 
 

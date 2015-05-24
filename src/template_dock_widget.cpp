@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2012-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -359,9 +360,9 @@ Template* TemplateWidget::showOpenTemplateDialog(QWidget* dialog_parent, MapEdit
 	if (!new_temp->isTemplateGeoreferenced() && center_in_view)
 	{
 		MapView* main_view = controller->getMainWidget()->getMapView();
-		QPointF center = new_temp->calculateTemplateBoundingBox().center();
-		new_temp->setTemplateX(main_view->getPositionX() - qRound64(1000 * center.x()));
-		new_temp->setTemplateY(main_view->getPositionY() - qRound64(1000 * center.y()));
+		auto view_pos = MapCoord::fromRaw(main_view->getPositionX(), main_view->getPositionY());
+		auto offset = MapCoord { new_temp->calculateTemplateBoundingBox().center() };
+		new_temp->setTemplatePosition(view_pos - offset);
 	}
 	
 	return new_temp.take();

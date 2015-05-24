@@ -266,13 +266,13 @@ void AreaSymbol::FillPattern::createRenderables(QRectF extent, float delta_rotat
 	{
 		MapCoordF line_normal(0, -1);
 		line_normal.rotate(rotation);
-		line_normal.setY(-line_normal.getY());
-		delta_line_offset = line_normal.dot(MapCoordF(pattern_origin));
+		line_normal.setY(-line_normal.y());
+		delta_line_offset = MapCoordF::dotProduct(line_normal, MapCoordF(pattern_origin));
 		
 		MapCoordF line_tangent(1, 0);
 		line_tangent.rotate(rotation);
-		line_tangent.setY(-line_tangent.getY());
-		delta_along_line_offset = line_tangent.dot(MapCoordF(pattern_origin));
+		line_tangent.setY(-line_tangent.y());
+		delta_along_line_offset = MapCoordF::dotProduct(line_tangent, MapCoordF(pattern_origin));
 	}
 	
 	const float offset = 0.001f * line_offset + delta_line_offset;
@@ -395,7 +395,7 @@ void AreaSymbol::FillPattern::createLine(MapCoordF first, MapCoordF second, floa
 {
 	if (type == LinePattern)
 	{
-		output.insertRenderable(new LineRenderable(line, QPointF(first), QPointF(second)));
+		output.insertRenderable(new LineRenderable(line, first, second));
 	}
 	else
 	{
@@ -403,7 +403,7 @@ void AreaSymbol::FillPattern::createLine(MapCoordF first, MapCoordF second, floa
 		auto length = direction.length();
 		direction /= length; // normalize
 		
-		auto offset       = direction.dot(first) - 0.001 * offset_along_line - delta_offset;
+		auto offset       = MapCoordF::dotProduct(direction, first) - 0.001 * offset_along_line - delta_offset;
 		auto step_length  = 0.001 * point_distance;
 		auto start_length = ceil((offset) / step_length) * step_length - offset;
 		

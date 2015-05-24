@@ -338,7 +338,7 @@ void CutTool::updateHoverState(QPointF cursor_pos_screen, MapWidget* widget)
 			if (hover_point == std::numeric_limits<MapCoordVector::size_type>::max())
 				continue;
 			
-			auto distance_sq = widget->viewportToMapF(cursor_pos_screen).lengthToSquared(handle_pos);
+			auto distance_sq = widget->viewportToMapF(cursor_pos_screen).distanceSquaredTo(handle_pos);
 			if (distance_sq < best_distance_sq)
 			{
 				new_hover_state  = HoverFlag::OverObjectNode;
@@ -511,7 +511,7 @@ void CutTool::pathFinished(PathObject* split_path)
 	
 	Q_ASSERT(split_path->parts().size() == 1);
 	split_path->parts().front().setClosed(false);
-	split_path->setCoordinate(split_path->getCoordinateCount() - 1, end_path_coord.pos.toMapCoord());
+	split_path->setCoordinate(split_path->getCoordinateCount() - 1, MapCoord(end_path_coord.pos));
 	
 	// Do the splitting
 	const double split_threshold = 0.01;

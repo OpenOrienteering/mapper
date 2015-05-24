@@ -100,7 +100,7 @@ bool PaintOnTemplateTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coor
 	if (event->button() == Qt::LeftButton || event->button() == Qt::RightButton)
 	{
 		coords.push_back(map_coord);
-		map_bbox = QRectF(map_coord.getX(), map_coord.getY(), 0, 0);
+		map_bbox = QRectF(map_coord.x(), map_coord.y(), 0, 0);
 		dragging = true;
 		erasing = (event->button() == Qt::RightButton) || (paint_color == qRgb(255, 255, 255));
 		return true;

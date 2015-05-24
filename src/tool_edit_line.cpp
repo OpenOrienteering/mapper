@@ -122,10 +122,10 @@ void EditLineTool::clickPress()
 			end_tangent.normalize();
 			
 			double handle_distance = baseline * BEZIER_HANDLE_DISTANCE;
-			MapCoord handle = start_coord + (start_tangent * handle_distance).toMapCoord();
+			MapCoord handle = start_coord + MapCoord(start_tangent * handle_distance);
 			handle.setFlags(0);
 			hover_object->addCoordinate(hover_line + 1, handle);
-			handle = end_coord + (end_tangent * handle_distance).toMapCoord();
+			handle = end_coord + MapCoord(end_tangent * handle_distance);
 			handle.setFlags(0);
 			hover_object->addCoordinate(hover_line + 2, handle);
 		}
@@ -214,18 +214,18 @@ void EditLineTool::dragStart()
 			bool ok = false;
 			MapCoordF tangent = path->calculateTangent(hover_line, false, ok);
 			if (ok)
-				angle_helper->addAngles(-tangent.getAngle(), M_PI/2);
+				angle_helper->addAngles(-tangent.angle(), M_PI/2);
 			tangent = path->calculateTangent(hover_line, true, ok);
 			if (ok)
-				angle_helper->addAngles(-tangent.getAngle(), M_PI/2);
+				angle_helper->addAngles(-tangent.angle(), M_PI/2);
 			
 			int end_index = hover_line + (hover_object->getCoordinate(hover_line).isCurveStart() ? 3 : 1);
 			tangent = path->calculateTangent(end_index, false, ok);
 			if (ok)
-				angle_helper->addAngles(-tangent.getAngle(), M_PI/2);
+				angle_helper->addAngles(-tangent.angle(), M_PI/2);
 			tangent = path->calculateTangent(end_index, true, ok);
 			if (ok)
-				angle_helper->addAngles(-tangent.getAngle(), M_PI/2);
+				angle_helper->addAngles(-tangent.angle(), M_PI/2);
 		}
 		
 		// Activate tool helpers if modifier pressed
@@ -442,8 +442,8 @@ void EditLineTool::updateStatusText()
 	{
 		MapCoordF drag_vector = constrained_pos_map - click_pos_map;
 		text = EditTool::tr("<b>Coordinate offset:</b> %1, %2 mm  <b>Distance:</b> %3 m ").
-		       arg(QLocale().toString(drag_vector.getX(), 'f', 1)).
-		       arg(QLocale().toString(-drag_vector.getY(), 'f', 1)).
+		       arg(QLocale().toString(drag_vector.x(), 'f', 1)).
+		       arg(QLocale().toString(-drag_vector.y(), 'f', 1)).
 		       arg(QLocale().toString(0.001 * map()->getScaleDenominator() * drag_vector.length(), 'f', 1)) +
 		       "| ";
 		

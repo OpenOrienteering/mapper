@@ -22,6 +22,8 @@
 #ifndef _OPENORIENTEERING_MAP_WIDGET_H_
 #define _OPENORIENTEERING_MAP_WIDGET_H_
 
+#include <type_traits>
+
 #include <QImage>
 #include <QPixmap>
 #include <QTime>
@@ -537,6 +539,20 @@ inline
 bool MapWidget::gesturesEnabled() const
 {
 	return gestures_enabled;
+}
+
+inline
+QPointF MapWidget::mapToViewport(QPointF input) const
+{
+	// This is a convenience method for situations when we have got a plain QPointF.
+	// We rely on MapCoordF adding nothing but functions to its base, QPointF.
+	static_assert(std::is_base_of<QPointF, MapCoordF>::value,
+	              "MapCoordF must be derived from QPointF");
+	static_assert(!std::has_virtual_destructor<MapCoordF>::value,
+	              "MapCoordF and its base must not have virtual members");
+	static_assert(sizeof(QPointF) == sizeof(MapCoordF),
+	              "MapCoordF must have the same size as QPointF");
+	return mapToViewport(static_cast<MapCoordF>(input));
 }
 
 inline

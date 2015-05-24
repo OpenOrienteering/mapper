@@ -105,7 +105,7 @@ VirtualCoordVector::size_type PathCoordVector::update(VirtualCoordVector::size_t
 			
 			// Add end point
 			const PathCoord& prev = back();
-			emplace_back(virtual_coords[index], index, 0.0, prev.clen + prev.pos.lengthTo(virtual_coords[index]));
+			emplace_back(virtual_coords[index], index, 0.0, prev.clen + prev.pos.distanceTo(virtual_coords[index]));
 			
 			Q_ASSERT(back().index == index);
 			
@@ -162,7 +162,7 @@ double PathCoordVector::calculateArea() const
 	
 	for (auto i = 0u; i <= end_index; ++i)
 	{
-		area += ((*this)[j].pos.getX() + (*this)[i].pos.getX()) * ((*this)[j].pos.getY() - (*this)[i].pos.getY()); 
+		area += ((*this)[j].pos.x() + (*this)[i].pos.x()) * ((*this)[j].pos.y() - (*this)[i].pos.y()); 
 		j = i;
 	}
 	return qAbs(area) / 2;
@@ -174,12 +174,12 @@ QRectF PathCoordVector::calculateExtent() const
 	if (!empty())
 	{
 		auto pc = begin();
-		extent = QRectF(pc->pos.getX(), pc->pos.getY(), 0.0001, 0.0001);
+		extent = QRectF(pc->pos.x(), pc->pos.y(), 0.0001, 0.0001);
 		
 		auto last = end();
 		for (++pc; pc != last; ++pc)
 		{
-			rectInclude(extent, QPointF(pc->pos));
+			rectInclude(extent, pc->pos);
 		}
 		
 		Q_ASSERT(extent.isValid());
@@ -192,11 +192,10 @@ bool PathCoordVector::intersectsBox(QRectF box) const
 	bool result = false;
 	if (!empty())
 	{
-		/// \todo Get rid of QPointF conversion by either changing MapCoordF or lineIntersectsRect.
-		auto last_pos = QPointF(front().pos);
+		auto last_pos = front().pos;
 		result = std::any_of(begin()+1, end(), [&box, &last_pos](const PathCoord& pc)
 		{
-			auto pos = QPointF(pc.pos);
+			auto pos = pc.pos;
 			auto result = lineIntersectsRect(box, last_pos, pos); /// \todo Implement this here, used nowhere else
 			last_pos = pos;
 			return result;
@@ -214,9 +213,9 @@ bool PathCoordVector::isPointInside(MapCoordF coord) const
 		for(const auto& path_coord : *this)
 		{
 			auto pos = path_coord.pos;
-			if ( ((pos.getY() > coord.getY()) != (last_pos.getY() > coord.getY())) &&
-			     (coord.getX() < (last_pos.getX() - pos.getX()) *
-			      (coord.getY() - pos.getY()) / (last_pos.getY() - pos.getY()) + pos.getX()) )
+			if ( ((pos.y() > coord.y()) != (last_pos.y() > coord.y())) &&
+			     (coord.x() < (last_pos.x() - pos.x()) *
+			      (coord.y() - pos.y()) / (last_pos.y() - pos.y()) + pos.x()) )
 			{
 				inside = !inside;
 			}
@@ -237,23 +236,23 @@ void PathCoordVector::curveToPathCoord(
 {
 	// Common
 	auto p_half = (p0 + p1) * 0.5;
-	MapCoordF c12((c1.getX() + c2.getX()) * 0.5, (c1.getY() + c2.getY()) * 0.5);
+	MapCoordF c12((c1.x() + c2.x()) * 0.5, (c1.y() + c2.y()) * 0.5);
 	
-	auto inner_len_sq = c0.lengthToSquared(c3);
-	auto outer_len    = [&]() { return c0.lengthTo(c1) + c1.lengthTo(c2) + c2.lengthTo(c3); };
+	auto inner_len_sq = c0.distanceSquaredTo(c3);
+	auto outer_len    = [&]() { return c0.distanceTo(c1) + c1.distanceTo(c2) + c2.distanceTo(c3); };
 	if (inner_len_sq <= bezier_segment_maxlen_squared && outer_len() - sqrt(inner_len_sq) <= bezier_error)
 	{
 		const PathCoord& prev = back();
-		emplace_back(c12, edge_start, p_half, prev.clen + float(prev.pos.lengthTo(c12)));
+		emplace_back(c12, edge_start, p_half, prev.clen + float(prev.pos.distanceTo(c12)));
 	}
 	else
 	{
 		// Split in two
-		MapCoordF c01((c0.getX() + c1.getX()) * 0.5f, (c0.getY() + c1.getY()) * 0.5f);
-		MapCoordF c23((c2.getX() + c3.getX()) * 0.5f, (c2.getY() + c3.getY()) * 0.5f);
-		MapCoordF c012((c01.getX() + c12.getX()) * 0.5f, (c01.getY() + c12.getY()) * 0.5f);
-		MapCoordF c123((c12.getX() + c23.getX()) * 0.5f, (c12.getY() + c23.getY()) * 0.5f);
-		MapCoordF c0123((c012.getX() + c123.getX()) * 0.5f, (c012.getY() + c123.getY()) * 0.5f);
+		MapCoordF c01((c0.x() + c1.x()) * 0.5f, (c0.y() + c1.y()) * 0.5f);
+		MapCoordF c23((c2.x() + c3.x()) * 0.5f, (c2.y() + c3.y()) * 0.5f);
+		MapCoordF c012((c01.x() + c12.x()) * 0.5f, (c01.y() + c12.y()) * 0.5f);
+		MapCoordF c123((c12.x() + c23.x()) * 0.5f, (c12.y() + c23.y()) * 0.5f);
+		MapCoordF c0123((c012.x() + c123.x()) * 0.5f, (c012.y() + c123.y()) * 0.5f);
 		
 		curveToPathCoord(c0, c01, c012, c0123, edge_start, p0, p_half);
 		curveToPathCoord(c0123, c123, c23, c3, edge_start, p_half, p1);
@@ -378,7 +377,7 @@ PathCoord VirtualPath::findClosestPointTo(
 		tangent.normalize();
 		
 		auto to_coord = coord - pos;
-		float dist_along_line = to_coord.dot(tangent);
+		float dist_along_line = MapCoordF::dotProduct(to_coord, tangent);
 		if (dist_along_line <= 0)
 		{
 			if (to_coord.lengthSquared() < distance_squared)
@@ -392,18 +391,17 @@ PathCoord VirtualPath::findClosestPointTo(
 		float line_length = next_pc->clen - pc->clen;
 		if (dist_along_line >= line_length)
 		{
-			if (coord.lengthToSquared(next_pos) < distance_squared)
+			if (coord.distanceSquaredTo(next_pos) < distance_squared)
 			{
-				distance_squared = coord.lengthToSquared(next_pos);
+				distance_squared = coord.distanceSquaredTo(next_pos);
 				result = *next_pc;
 			}
 			continue;
 		}
 		
-		auto right = tangent;
-		right.perpRight();
+		auto right = tangent.perpRight();
 		
-		float dist_from_line = right.dot(to_coord);
+		float dist_from_line = MapCoordF::dotProduct(right, to_coord);
 		auto dist_from_line_sq = dist_from_line * dist_from_line;
 		if (dist_from_line_sq < distance_squared)
 		{
@@ -529,14 +527,14 @@ std::pair<MapCoordF, double> VirtualPath::calculateTangentScaling(size_type i) c
 		to_next.normalize();
 		if (to_next == -to_coord)
 		{
-			to_next.perpRight();
+			to_next = to_next.perpRight();
 			scaling = std::numeric_limits<double>::infinity();
 		}
 		else
 		{
 			to_next += to_coord;
 			to_next.normalize();
-			scaling = 1.0/to_next.dot(to_coord);
+			scaling = 1.0/MapCoordF::dotProduct(to_next, to_coord);
 		}
 	}
 	
@@ -627,9 +625,9 @@ void VirtualPath::copy(
 	// Handle first coordinate and its flags.
 	if (out_coords.empty() ||
 	    out_coords.back().isHolePoint() ||
-	    !out_coords.back().isPositionEqualTo(first.pos.toMapCoord()) )
+	    !out_coords.back().isPositionEqualTo(MapCoord(first.pos)) )
 	{
-		out_coords.emplace_back(first.pos.toMapCoord());
+		out_coords.emplace_back(first.pos);
 	}
 	else
 	{
@@ -654,14 +652,14 @@ void VirtualPath::copy(
 		auto index = first.index + 1;
 		if (first.is_curve_start)
 		{
-			out_coords.emplace_back(first.curve_start[0].toMapCoord());
-			out_coords.emplace_back(first.curve_start[1].toMapCoord());
+			out_coords.emplace_back(first.curve_start[0]);
+			out_coords.emplace_back(first.curve_start[1]);
 			index += 2;
 		}
 		
 		for (; index <= stop_index; ++index)
 		{
-			out_coords.emplace_back(coords[index].toMapCoord());
+			out_coords.emplace_back(coords[index]);
 			out_coords.back().setFlags(flags[index].getFlags());
 		}
 	}
@@ -669,11 +667,11 @@ void VirtualPath::copy(
 	if (out_coords.back().isCurveStart())
 	{
 		Q_ASSERT(last.is_curve_end);
-		out_coords.emplace_back(last.curve_end[0].toMapCoord());
-		out_coords.emplace_back(last.curve_end[1].toMapCoord());
+		out_coords.emplace_back(last.curve_end[0]);
+		out_coords.emplace_back(last.curve_end[1]);
 	}
 	
-	out_coords.emplace_back(last.pos.toMapCoord());
+	out_coords.emplace_back(last.pos);
 	if (last.param == 0.0)
 	{
 		out_coords.back().setHolePoint(flags[last.index].isHolePoint());

@@ -213,11 +213,6 @@ QPointF MapWidget::mapToViewport(MapCoordF input) const
 	return viewToViewport(view->mapToView(input));
 }
 
-QPointF MapWidget::mapToViewport(QPointF input) const
-{
-	return viewToViewport(view->mapToView(MapCoordF(input.x(), input.y())));
-}
-
 QRectF MapWidget::mapToViewport(const QRectF& input) const
 {
 	QRectF result;
@@ -265,9 +260,9 @@ void MapWidget::panView(qint64 x, qint64 y)
 	MapCoordF screen_offset(x, y);
 	screen_offset.rotate(view->getRotation());
 	
-	float px = view->lengthToPixel(screen_offset.getX());
+	float px = view->lengthToPixel(screen_offset.x());
 	int ix = qRound(px);
-	float py = view->lengthToPixel(screen_offset.getY());
+	float py = view->lengthToPixel(screen_offset.y());
 	int iy = qRound(py);
 	float int_deviation = qMax(qAbs(px - ix), qAbs(py - iy));
 	
@@ -675,8 +670,8 @@ void MapWidget::updateCursorposLabel(const MapCoordF pos)
 	if (coords_type == MAP_COORDS)
 	{
 		cursorpos_label->setText( QStringLiteral("%1 %2 (%3)").
-		  arg(locale().toString(pos.getX(), 'f', 2)).
-		  arg(locale().toString(-pos.getY(), 'f', 2)).
+		  arg(locale().toString(pos.x(), 'f', 2)).
+		  arg(locale().toString(-pos.y(), 'f', 2)).
 		  arg(tr("mm", "millimeters")));
 	}
 	else

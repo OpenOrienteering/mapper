@@ -59,18 +59,6 @@ void blockSignalsRecursively(QObject* obj, bool block)
 		blockSignalsRecursively(*it, block);
 }
 
-void rectInclude(QRectF& rect, MapCoordF point)
-{
-	if (point.getX() < rect.left())
-		rect.setLeft(point.getX());
-	else if (point.getX() > rect.right())
-		rect.setRight(point.getX());
-	
-	if (point.getY() < rect.top())
-		rect.setTop(point.getY());
-	else if (point.getY() > rect.bottom())
-		rect.setBottom(point.getY());
-}
 void rectInclude(QRectF& rect, QPointF point)
 {
 	if (point.x() < rect.left())
@@ -83,13 +71,7 @@ void rectInclude(QRectF& rect, QPointF point)
 	else if (point.y() > rect.bottom())
 		rect.setBottom(point.y());
 }
-void rectIncludeSafe(QRectF& rect, MapCoordF point)
-{
-	if (rect.isValid())
-		rectInclude(rect, point);
-	else
-		rect = QRectF(point.getX(), point.getY(), 0.0001, 0.0001);
-}
+
 void rectIncludeSafe(QRectF& rect, QPointF point)
 {
 	if (rect.isValid())
@@ -97,6 +79,7 @@ void rectIncludeSafe(QRectF& rect, QPointF point)
 	else
 		rect = QRectF(point.x(), point.y(), 0.0001, 0.0001);
 }
+
 void rectInclude(QRectF& rect, const QRectF& other_rect)
 {
 	if (other_rect.left() < rect.left())
@@ -212,9 +195,9 @@ double parameterOfPointOnLine(double x0, double y0, double dx, double dy, double
 bool isPointOnSegment(const MapCoordF& seg_start, const MapCoordF& seg_end, const MapCoordF& point)
 {
 	bool ok;
-	double param = parameterOfPointOnLine(seg_start.getX(), seg_start.getY(),
-										  seg_end.getX() - seg_start.getX(), seg_end.getY() - seg_start.getY(),
-										  point.getX(), point.getY(), ok);
+	double param = parameterOfPointOnLine(seg_start.x(), seg_start.y(),
+	                                      seg_end.x() - seg_start.x(), seg_end.y() - seg_start.y(),
+	                                      point.x(), point.y(), ok);
 	return ok && param >= 0 && param <= 1;
 }
 

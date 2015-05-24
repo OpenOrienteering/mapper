@@ -255,16 +255,16 @@ void TemplateTrack::drawTracks(QPainter* painter, bool on_screen) const
 			{
 				if (track.getSegmentPoint(i, k - 1).is_curve_start && k < track.getSegmentPointCount(i) - 2)
 				{
-					path.cubicTo(QPointF(point.map_coord),
-					             QPointF(track.getSegmentPoint(i, k + 1).map_coord),
-					             QPointF(track.getSegmentPoint(i, k + 2).map_coord));
+					path.cubicTo(point.map_coord,
+					             track.getSegmentPoint(i, k + 1).map_coord,
+					             track.getSegmentPoint(i, k + 2).map_coord);
 					k += 2;
 				}
 				else
-					path.lineTo(point.map_coord.getX(), point.map_coord.getY());
+					path.lineTo(point.map_coord.x(), point.map_coord.y());
 			}
 			else
-				path.moveTo(point.map_coord.getX(), point.map_coord.getY());
+				path.moveTo(point.map_coord.x(), point.map_coord.y());
 		}
 		painter->drawPath(path);
 	}
@@ -292,13 +292,13 @@ void TemplateTrack::drawWaypoints(QPainter* painter) const
 		const QString& point_name = track.getWaypointName(i);
 		
 		double const radius = 0.25;
-		painter->drawEllipse(QPointF(point.map_coord), radius, radius);
+		painter->drawEllipse(point.map_coord, radius, radius);
 		if (!point_name.isEmpty())
 		{
 			painter->setPen(qRgb(255, 0, 0));
 			int width = painter->fontMetrics().width(point_name);
-			painter->drawText(QRect(point.map_coord.getX() - 0.5*width,
-			                        point.map_coord.getY() - height,
+			painter->drawText(QRect(point.map_coord.x() - 0.5*width,
+			                        point.map_coord.y() - height,
 			                        width,
 			                        height),
 			                  Qt::AlignCenter,
@@ -405,7 +405,7 @@ bool TemplateTrack::import(QWidget* dialog_parent)
 		{
 			PathObject* path = importPathStart();
 			for (int i = 0; i < track.getNumWaypoints(); i++)
-				path->addCoordinate(templateToMap(track.getWaypoint(i).map_coord).toMapCoord());
+				path->addCoordinate(MapCoord(templateToMap(track.getWaypoint(i).map_coord)));
 			importPathEnd(path);
 			path->setTag("name", "");
 			result.push_back(path);
@@ -436,7 +436,7 @@ bool TemplateTrack::import(QWidget* dialog_parent)
 		for (int j = 0; j < segment_size; j++)
 		{
 			const TrackPoint& track_point = track.getSegmentPoint(i, j);
-			MapCoord coord = templateToMap(track_point.map_coord).toMapCoord();
+			auto coord = MapCoord { templateToMap(track_point.map_coord) };
 			if (track_point.is_curve_start && j < segment_size - 3)
 				coord.setCurveStart(true);
 			path->addCoordinate(coord);

@@ -88,9 +88,8 @@ void DistributePointsTool::execute(PathObject* path, PointSymbol* point, const D
 			double rotation = settings.additional_rotation;
 			if (settings.rotate_symbols)
 			{
-				auto right = split.tangentVector();
-				right.perpRight();
-				rotation -= right.getAngle();
+				auto right = split.tangentVector().perpRight();
+				rotation -= right.angle();
 			}
 			object->setRotation(rotation);
 		}

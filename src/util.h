@@ -75,14 +75,7 @@ inline double fmod_pos(double x, double y)
 
 /** Enlarges the rect to include the given point.
  *  WARNING, does not work if rect is an invalid rect before! */
-void rectInclude(QRectF& rect, MapCoordF point);
-
-/** Enlarges the rect to include the given point.
- *  WARNING, does not work if rect is an invalid rect before! */
 void rectInclude(QRectF& rect, QPointF point);
-
-/** Enlarges the rect to include the given point. */
-void rectIncludeSafe(QRectF& rect, MapCoordF point);
 
 /** Enlarges the rect to include the given point. */
 void rectIncludeSafe(QRectF& rect, QPointF point);

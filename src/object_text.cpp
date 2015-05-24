@@ -163,8 +163,8 @@ void TextObject::setAnchorPosition(qint64 x, qint64 y)
 void TextObject::setAnchorPosition(MapCoordF coord)
 {
 	coords.resize(1);
-	coords[0].setX(coord.getX());
-	coords[0].setY(coord.getY());
+	coords[0].setX(coord.x());
+	coords[0].setY(coord.y());
 	setOutputDirty();
 }
 
@@ -184,7 +184,7 @@ void TextObject::setBox(qint64 mid_x, qint64 mid_y, double width, double height)
 
 std::vector<QPointF> TextObject::controlPoints() const
 {
-	const QPointF anchor = QPointF(getAnchorCoordF());
+	auto anchor = getAnchorCoordF();
 	std::vector<QPointF> handles(4, anchor);
 	
 	if (hasSingleAnchor())
@@ -266,7 +266,7 @@ bool TextObject::intersectsBox(QRectF box) const
 
 int TextObject::calcTextPositionAt(MapCoordF coord, bool find_line_only) const
 {
-	return calcTextPositionAt(calcMapToTextTransform().map(QPointF(coord)), find_line_only);
+	return calcTextPositionAt(calcMapToTextTransform().map(coord), find_line_only);
 }
 
 // FIXME actually this is two functions, selected by parameter find_line_only; make two functions or return TextObjectLineInfo reference

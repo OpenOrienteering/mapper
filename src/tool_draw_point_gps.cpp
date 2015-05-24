@@ -1,5 +1,6 @@
 /*
  *    Copyright 2014 Thomas Schöps
+ *    Copyright 2014, 2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -90,8 +91,8 @@ void DrawPointGPSTool::newGPSPosition(MapCoordF coord, float accuracy)
 		// This is the first received position.
 		preview_object = new PointObject(point);
 
-		x_sum = weight * coord.getX();
-		y_sum = weight * coord.getY();
+		x_sum = weight * coord.x();
+		y_sum = weight * coord.y();
 		weights_sum = weight;
 	}
 	else
@@ -104,8 +105,8 @@ void DrawPointGPSTool::newGPSPosition(MapCoordF coord, float accuracy)
 			Q_UNUSED(success);
 		}
 		
-		x_sum += weight * coord.getX();
-		y_sum += weight * coord.getY();
+		x_sum += weight * coord.x();
+		y_sum += weight * coord.y();
 		weights_sum += weight;
 	}
 	

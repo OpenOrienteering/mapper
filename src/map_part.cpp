@@ -258,9 +258,7 @@ void MapPart::findObjectsAt(MapCoordF coord, float tolerance, bool treat_areas_a
 
 void MapPart::findObjectsAtBox(MapCoordF corner1, MapCoordF corner2, bool include_hidden_objects, bool include_protected_objects, std::vector< Object* >& out)
 {
-	QRectF rect = QRectF(QPointF(qMin(corner1.getX(), corner2.getX()), qMin(corner1.getY(), corner2.getY())),
-						 QPointF(qMax(corner1.getX(), corner2.getX()), qMax(corner1.getY(), corner2.getY())));
-	
+	auto rect = QRectF(corner1, corner2).normalized();
 	for (Object* object : objects)
 	{
 		if (!include_hidden_objects && object->getSymbol()->isHidden())

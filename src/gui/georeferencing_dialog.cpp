@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012, 2013, 2014 Kai Pastor
+ *    Copyright 2012-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -798,7 +798,7 @@ bool GeoreferencingTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coo
 	Q_UNUSED(widget);
 	if (event->button() == Qt::LeftButton)
 	{
-		dialog->setMapRefPoint(map_coord.toMapCoord());
+		dialog->setMapRefPoint(MapCoord(map_coord));
 	}
 	QTimer::singleShot(0, dialog, SIGNAL(exec()));
 	return true;

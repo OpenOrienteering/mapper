@@ -407,9 +407,9 @@ bool Template::configureAndLoad(QWidget* dialog_parent, MapView* view)
 	// If the template is not georeferenced, position it at the viewport midpoint
 	if (!isTemplateGeoreferenced() && center_in_view)
 	{
-		QPointF center = calculateTemplateBoundingBox().center();
-		setTemplateX(view->getPositionX() - qRound64(1000 * center.x()));
-		setTemplateY(view->getPositionY() - qRound64(1000 * center.y()));
+		auto view_position = MapCoord::fromRaw(view->getPositionX(), view->getPositionY());
+		auto offset = MapCoord { calculateTemplateBoundingBox().center() };
+		setTemplatePosition(view_position - offset);
 	}
 	
 	return true;
@@ -536,8 +536,7 @@ QRectF Template::getTemplateExtent() const
 void Template::scale(double factor, const MapCoord& center)
 {
 	Q_ASSERT(!is_georeferenced);
-	setTemplateX(qRound64(center.rawX() + factor * (getTemplateX() - center.rawX()) ));
-	setTemplateY(qRound64(center.rawY() + factor * (getTemplateY() - center.rawY()) ));
+	setTemplatePosition(center + factor * (templatePosition() - center));
 	setTemplateScaleX(factor * getTemplateScaleX());
 	setTemplateScaleY(factor * getTemplateScaleY());
 }
@@ -548,14 +547,9 @@ void Template::rotate(double rotation, const MapCoord& center)
 	
 	setTemplateRotation(getTemplateRotation() + rotation);
 	
-	double sinr = sin(rotation);
-	double cosr = cos(rotation);
-	qint64 offset_x = getTemplateX() - center.rawX();
-	qint64 offset_y = getTemplateY() - center.rawY();
-	qint64 temp_x = qRound64(1000.0 * (cosr * (offset_x/1000.0) + sinr * (offset_y/1000.0)));
-	qint64 temp_y = qRound64(1000.0 * (-sinr * (offset_x/1000.0) + cosr * (offset_y/1000.0)));
-	setTemplateX(center.rawX() + temp_x);
-	setTemplateY(center.rawY() + temp_y);
+	MapCoordF offset = MapCoordF { templatePosition() - center };
+	offset.rotate(rotation);
+	setTemplatePosition(MapCoord { offset });
 }
 
 void Template::setTemplateAreaDirty()
@@ -583,7 +577,7 @@ void Template::drawOntoTemplate(MapCoordF* coords, int num_coords, QColor color,
 	
 	if (!map_bbox.isValid())
 	{
-		map_bbox = QRectF(coords[0].getX(), coords[0].getY(), 0, 0);
+		map_bbox = QRectF(coords[0].x(), coords[0].y(), 0, 0);
 		for (int i = 1; i < num_coords; ++i)
 			rectInclude(map_bbox, coords[i]);
 	}
@@ -725,6 +719,19 @@ void Template::drawOntoTemplateImpl(MapCoordF* coords, int num_coords, QColor co
 	Q_UNUSED(color);
 	Q_UNUSED(width);
 	// nothing
+}
+
+MapCoord Template::templatePosition() const
+{
+	return MapCoord::fromRaw(transform.template_x, transform.template_y);
+}
+
+
+void Template::setTemplatePosition(MapCoord coord)
+{
+	transform.template_x = coord.rawX();
+	transform.template_y = coord.rawY();
+	updateTransformationMatrices();
 }
 
 void Template::updateTransformationMatrices()

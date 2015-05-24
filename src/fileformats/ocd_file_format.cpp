@@ -1639,7 +1639,7 @@ Object* OcdFileImport::importRectangleObject(const O& ocd_object, MapPart* part,
 	MapCoordF bottom_left_f = MapCoordF(bottom_left);
 	MapCoordF bottom_right_f = MapCoordF(bottom_right);
 	MapCoordF right = MapCoordF(top_right.xd() - top_left.xd(), top_right.yd() - top_left.yd());
-	double angle = right.getAngle();
+	double angle = right.angle();
 	MapCoordF down = MapCoordF(bottom_left.xd() - top_left.xd(), bottom_left.yd() - top_left.yd());
 	right.normalize();
 	down.normalize();
@@ -1648,30 +1648,30 @@ Object* OcdFileImport::importRectangleObject(const O& ocd_object, MapPart* part,
 	MapCoordVector coords;
 	if (rect.corner_radius == 0)
 	{
-		coords.push_back(top_left);
-		coords.push_back(top_right);
-		coords.push_back(bottom_right);
-		coords.push_back(bottom_left);
+		coords.emplace_back(top_left);
+		coords.emplace_back(top_right);
+		coords.emplace_back(bottom_right);
+		coords.emplace_back(bottom_left);
 	}
 	else
 	{
 		double handle_radius = (1 - BEZIER_KAPPA) * rect.corner_radius;
-		coords.push_back((top_right_f - right * rect.corner_radius).toCurveStartMapCoord());
-		coords.push_back((top_right_f - right * handle_radius).toMapCoord());
-		coords.push_back((top_right_f + down * handle_radius).toMapCoord());
-		coords.push_back((top_right_f + down * rect.corner_radius).toMapCoord());
-		coords.push_back((bottom_right_f - down * rect.corner_radius).toCurveStartMapCoord());
-		coords.push_back((bottom_right_f - down * handle_radius).toMapCoord());
-		coords.push_back((bottom_right_f - right * handle_radius).toMapCoord());
-		coords.push_back((bottom_right_f - right * rect.corner_radius).toMapCoord());
-		coords.push_back((bottom_left_f + right * rect.corner_radius).toCurveStartMapCoord());
-		coords.push_back((bottom_left_f + right * handle_radius).toMapCoord());
-		coords.push_back((bottom_left_f - down * handle_radius).toMapCoord());
-		coords.push_back((bottom_left_f - down * rect.corner_radius).toMapCoord());
-		coords.push_back((top_left_f + down * rect.corner_radius).toCurveStartMapCoord());
-		coords.push_back((top_left_f + down * handle_radius).toMapCoord());
-		coords.push_back((top_left_f + right * handle_radius).toMapCoord());
-		coords.push_back((top_left_f + right * rect.corner_radius).toMapCoord());
+		coords.emplace_back(top_right_f - right * rect.corner_radius, MapCoord::CurveStart);
+		coords.emplace_back(top_right_f - right * handle_radius);
+		coords.emplace_back(top_right_f + down * handle_radius);
+		coords.emplace_back(top_right_f + down * rect.corner_radius);
+		coords.emplace_back(bottom_right_f - down * rect.corner_radius, MapCoord::CurveStart);
+		coords.emplace_back(bottom_right_f - down * handle_radius);
+		coords.emplace_back(bottom_right_f - right * handle_radius);
+		coords.emplace_back(bottom_right_f - right * rect.corner_radius);
+		coords.emplace_back(bottom_left_f + right * rect.corner_radius, MapCoord::CurveStart);
+		coords.emplace_back(bottom_left_f + right * handle_radius);
+		coords.emplace_back(bottom_left_f - down * handle_radius);
+		coords.emplace_back(bottom_left_f - down * rect.corner_radius);
+		coords.emplace_back(top_left_f + down * rect.corner_radius, MapCoord::CurveStart);
+		coords.emplace_back(top_left_f + down * handle_radius);
+		coords.emplace_back(top_left_f + right * handle_radius);
+		coords.emplace_back(top_left_f + right * rect.corner_radius);
 	}
 	PathObject *border_path = new PathObject(rect.border_line, coords, map);
 	border_path->parts().front().setClosed(true, false);
@@ -1691,16 +1691,16 @@ Object* OcdFileImport::importRectangleObject(const O& ocd_object, MapPart* part,
 		coords.resize(2);
 		for (int x = 1; x < num_cells_x; ++x)
 		{
-			coords[0] = (top_left_f + x * cell_width * right).toMapCoord();
-			coords[1] = (bottom_left_f + x * cell_width * right).toMapCoord();
+			coords[0] = MapCoord(top_left_f + x * cell_width * right);
+			coords[1] = MapCoord(bottom_left_f + x * cell_width * right);
 			
 			PathObject *path = new PathObject(rect.inner_line, coords, map);
 			part->addObject(path, part->getNumObjects());
 		}
 		for (int y = 1; y < num_cells_y; ++y)
 		{
-			coords[0] = (top_left_f + y * cell_height * down).toMapCoord();
-			coords[1] = (top_right_f + y * cell_height * down).toMapCoord();
+			coords[0] = MapCoord(top_left_f + y * cell_height * down);
+			coords[1] = MapCoord(top_right_f + y * cell_height * down);
 			
 			PathObject *path = new PathObject(rect.inner_line, coords, map);
 			part->addObject(path, part->getNumObjects());
@@ -1829,8 +1829,8 @@ bool OcdFileImport::fillTextPathCoords(TextObject *object, TextSymbol *symbol, q
 		double top_adjust = -symbol->getFontSize() + (metrics.ascent() + metrics.descent() + 0.5) / symbol->calculateInternalScaling();
 		
 		MapCoordF adjust_vector = MapCoordF(top_adjust * sin(object->getRotation()), top_adjust * cos(object->getRotation()));
-		top_left = MapCoord(top_left.xd() + adjust_vector.getX(), top_left.yd() + adjust_vector.getY());
-		top_right = MapCoord(top_right.xd() + adjust_vector.getX(), top_right.yd() + adjust_vector.getY());
+		top_left = MapCoord(top_left.xd() + adjust_vector.x(), top_left.yd() + adjust_vector.y());
+		top_right = MapCoord(top_right.xd() + adjust_vector.x(), top_right.yd() + adjust_vector.y());
 		
 		object->setBox((bottom_left.rawX() + top_right.rawX()) / 2, (bottom_left.rawY() + top_right.rawY()) / 2,
 					   top_left.distanceTo(top_right), top_left.distanceTo(bottom_left));

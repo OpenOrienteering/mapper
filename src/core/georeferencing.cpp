@@ -614,12 +614,12 @@ QPointF Georeferencing::toProjectedCoords(const MapCoord& map_coords) const
 
 QPointF Georeferencing::toProjectedCoords(const MapCoordF& map_coords) const
 {
-	return to_projected.map(QPointF(map_coords));
+	return to_projected.map(map_coords);
 }
 
 MapCoord Georeferencing::toMapCoords(const QPointF& projected_coords) const
 {
-	return MapCoordF(from_projected.map(projected_coords)).toMapCoord();
+	return MapCoord(from_projected.map(projected_coords));
 }
 
 MapCoordF Georeferencing::toMapCoordF(const QPointF& projected_coords) const

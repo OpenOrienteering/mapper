@@ -220,12 +220,8 @@ void SymbolSettingDialog::centerTemplateBBox()
 	Q_ASSERT(preview_map->getNumTemplates() == 1);
 	Template* temp = preview_map->getTemplate(0);
 	
-	QRectF bbox = temp->calculateTemplateBoundingBox();
-	QPointF center = bbox.center();
-	
 	preview_map->setTemplateAreaDirty(0);
-	temp->setTemplateX(temp->getTemplateX() - qRound64(1000 * center.x()));
-	temp->setTemplateY(temp->getTemplateY() - qRound64(1000 * center.y()));
+	temp->setTemplatePosition(temp->templatePosition() - MapCoord { temp->calculateTemplateBoundingBox().center() } );
 	preview_map->setTemplateAreaDirty(0);
 }
 
@@ -238,11 +234,11 @@ void SymbolSettingDialog::centerTemplateGravity()
 	QColor background_color = QColorDialog::getColor(Qt::white, this, tr("Select background color"));
 	if (!background_color.isValid())
 		return;
-	MapCoordF map_center_current = temp->templateToMap(image->calcCenterOfGravity(background_color.rgb()));
+	
+	auto map_center_current = MapCoord { temp->templateToMap(image->calcCenterOfGravity(background_color.rgb())) };
 	
 	preview_map->setTemplateAreaDirty(0);
-	temp->setTemplateX(temp->getTemplateX() - qRound64(1000 * map_center_current.getX()));
-	temp->setTemplateY(temp->getTemplateY() - qRound64(1000 * map_center_current.getY()));
+	temp->setTemplatePosition(temp->templatePosition() - map_center_current);
 	preview_map->setTemplateAreaDirty(0);
 }
 
@@ -273,26 +269,26 @@ void SymbolSettingDialog::createPreviewMap()
 			float y = y_start + i * y_offset;
 			
 			PathObject* path = new PathObject(line);
-			path->addCoordinate(0, MapCoordF(x_offset - length, y).toMapCoord());
-			path->addCoordinate(1, MapCoordF(x_offset, y).toMapCoord());
+			path->addCoordinate(0, { x_offset - length, y });
+			path->addCoordinate(1, { x_offset, y });
 			preview_map->addObject(path);
 			
 			preview_objects.push_back(path);
 		}
 		
 		const int num_circular_lines = 12;
-		const float inner_radius = 4;
-		const float center_x = 2*inner_radius + 0.5f * max_length;
-		const float center_y = 0.5f * y_start;
+		const auto inner_radius = 4;
+		auto center = MapCoordF { 2*inner_radius + 0.5 * max_length, 0.5f * y_start };
 		
 		for (int i = 0; i < num_circular_lines; ++i)
 		{
-			float angle = (i / (float)num_circular_lines) * 2*M_PI;
-			float length = min_length + (i / (float)(num_circular_lines - 1)) * (max_length - min_length);
+			auto angle = M_PI * 2 * i / num_circular_lines;
+			auto direction = MapCoordF::fromPolar(1.0, angle);
+			float length = min_length + (max_length - min_length) * i / (num_circular_lines - 1);
 			
 			PathObject* path = new PathObject(line);
-			path->addCoordinate(0, ((MapCoordF(sin(angle), -cos(angle)) * inner_radius) + MapCoordF(center_x, center_y)).toMapCoord());
-			path->addCoordinate(1, ((MapCoordF(sin(angle), -cos(angle)) * (inner_radius + length)) + MapCoordF(center_x, center_y)).toMapCoord());
+			path->addCoordinate(0, MapCoord(center + direction * inner_radius));
+			path->addCoordinate(1, MapCoord(center + direction * (inner_radius + length)));
 			preview_map->addObject(path);
 			
 			preview_objects.push_back(path);
@@ -408,10 +404,10 @@ void SymbolSettingDialog::createPreviewMap()
 		const float offset_y = 0;
 		
 		PathObject* path = new PathObject(symbol);
-		path->addCoordinate(0, MapCoordF(-half_radius, -half_radius + offset_y).toMapCoord());
-		path->addCoordinate(1, MapCoordF(half_radius, -half_radius + offset_y).toMapCoord());
-		path->addCoordinate(2, MapCoordF(half_radius, half_radius + offset_y).toMapCoord());
-		path->addCoordinate(3, MapCoordF(-half_radius, half_radius + offset_y).toMapCoord());
+		path->addCoordinate(0, { -half_radius, -half_radius + offset_y });
+		path->addCoordinate(1, { half_radius,  -half_radius + offset_y });
+		path->addCoordinate(2, { half_radius,  half_radius + offset_y });
+		path->addCoordinate(3, { -half_radius, half_radius + offset_y });
 		preview_map->addObject(path);
 		
 		preview_objects.push_back(path);

@@ -366,8 +366,8 @@ QPointF MapView::mapToView(MapCoord coords) const
 inline
 QPointF MapView::mapToView(MapCoordF coords) const
 {
-	return QPointF(map_to_view.m11() * coords.getX() + map_to_view.m12() * coords.getY() + map_to_view.m13(),
-				   map_to_view.m21() * coords.getX() + map_to_view.m22() * coords.getY() + map_to_view.m23());
+	return QPointF(map_to_view.m11() * coords.x() + map_to_view.m12() * coords.y() + map_to_view.m13(),
+				   map_to_view.m21() * coords.x() + map_to_view.m22() * coords.y() + map_to_view.m23());
 }
 
 inline

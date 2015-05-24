@@ -284,7 +284,7 @@ void LineSymbol::createPathCoordRenderables(const Object* object, const VirtualP
 			bool ok;
 			MapCoordF tangent = path.calculateOutgoingTangent(0, ok);
 			if (ok)
-				orientation = tangent.getAngle();
+				orientation = tangent.angle();
 		}
 		start_symbol->createRenderablesScaled(coords[0], orientation, output);
 	}
@@ -298,7 +298,7 @@ void LineSymbol::createPathCoordRenderables(const Object* object, const VirtualP
 			bool ok;
 			MapCoordF tangent = path.calculateIncomingTangent(last, ok);
 			if (ok)
-				orientation = tangent.getAngle();
+				orientation = tangent.angle();
 		}				
 		end_symbol->createRenderablesScaled(coords[last], orientation, output);
 	}
@@ -523,29 +523,26 @@ void LineSymbol::shiftCoordinates(const VirtualPath& path, double main_shift, Ma
 		else if (i == 0 && !path.isClosed())
 		{
 			// Simple start point
-			right_vector = tangent_out;
-			right_vector.perpRight();
+			right_vector = tangent_out.perpRight();
 			segment_start = coords_i + shift * right_vector;
 		}
 		else if (i == last_i && !path.isClosed())
 		{
 			// Simple end point
-			right_vector = tangent_in;
-			right_vector.perpRight();
+			right_vector = tangent_in.perpRight();
 			segment_start = coords_i + shift * right_vector;
 		}
 		else
 		{
 			// Corner point
-			right_vector = tangent_out;
-			right_vector.perpRight();
+			right_vector = tangent_out.perpRight();
 			
 			middle0 = tangent_in + tangent_out;
 			middle0.normalize();
 			double offset;
 				
 			// Determine type of corner (inner vs. outer side of corner)
-			double a = (tangent_out.getX() * tangent_in.getY() - tangent_in.getX() * tangent_out.getY()) * main_shift;
+			double a = (tangent_out.x() * tangent_in.y() - tangent_in.x() * tangent_out.y()) * main_shift;
 			if (a > 0.0)
 			{
 				// Outer side of corner
@@ -554,14 +551,13 @@ void LineSymbol::shiftCoordinates(const VirtualPath& path, double main_shift, Ma
 				{
 					middle1 = tangent_in + middle0;
 					middle1.normalize();
-					double phi1 = acos(middle1.dot(tangent_in));
+					double phi1 = acos(MapCoordF::dotProduct(middle1, tangent_in));
 					offset = tan(phi1) * u_border_shift;
 					
 					if (i > 0 && !qIsNaN(offset))
 					{
 						// First border corner point
-						end_right_vector = tangent_in;
-						end_right_vector.perpRight();
+						end_right_vector = tangent_in.perpRight();
 						out_flags.push_back(no_flags);
 						out_coords.push_back(coords_i + shift * end_right_vector + offset * tangent_in);
 						
@@ -569,9 +565,8 @@ void LineSymbol::shiftCoordinates(const VirtualPath& path, double main_shift, Ma
 						{
 							// Extra border corner point
 							// TODO: better approximation of round corner / use bezier curve
-							middle0.perpRight();
 							out_flags.push_back(no_flags);
-							out_coords.push_back(coords_i + shift * middle0);
+							out_coords.push_back(coords_i + shift * middle0.perpRight());
 						}
 					}
 				}
@@ -579,28 +574,26 @@ void LineSymbol::shiftCoordinates(const VirtualPath& path, double main_shift, Ma
 				{
 					// miter_check has no concrete interpretation, 
 					// but was derived by mathematical simplifications.
-					double miter_check = middle0.dot(tangent_in);
+					double miter_check = MapCoordF::dotProduct(middle0, tangent_in);
 					if (miter_check <= miter_reference)
 					{
 						// Two border corner points
 						middle1 = tangent_in + middle0;
 						middle1.normalize();
-						double phi1 = acos(middle1.dot(tangent_in));
+						double phi1 = acos(MapCoordF::dotProduct(middle1, tangent_in));
 						offset = miter_limit * fabs(main_shift) + tan(phi1) * u_border_shift;
 						
 						if (i > 0 && !qIsNaN(offset))
 						{
 							// First border corner point
-							end_right_vector = tangent_in;
-							end_right_vector.perpRight();
+							end_right_vector = tangent_in.perpRight();
 							out_flags.push_back(no_flags);
 							out_coords.push_back(coords_i + shift * end_right_vector + offset * tangent_in);
 						}
 					}
 					else
 					{
-						middle0.perpRight();
-						double phi = acos(middle0.dot(tangent_in));
+						double phi = acos(MapCoordF::dotProduct(middle0.perpRight(), tangent_in));
 						offset = fabs(1.0/tan(phi) * shift);
 					}
 				}
@@ -617,9 +610,8 @@ void LineSymbol::shiftCoordinates(const VirtualPath& path, double main_shift, Ma
 			{
 				// Inner side of corner (or no corner), and both sides are beziers
 				// old behaviour
-				right_vector = middle0;
-				right_vector.perpRight();
-				double phi = acos(right_vector.dot(tangent_in));
+				right_vector = middle0.perpRight();
+				double phi = acos(MapCoordF::dotProduct(right_vector, tangent_in));
 				double sin_phi = sin(phi);
 				double inset = (sin_phi > (1.0/miter_limit)) ? (1.0 / sin_phi) : miter_limit;
 				segment_start = coords_i + (shift * inset) * right_vector;
@@ -629,8 +621,7 @@ void LineSymbol::shiftCoordinates(const VirtualPath& path, double main_shift, Ma
 				// Inner side of corner (or no corner), and no more than on bezier involved
 				
 				// Default solution
-				middle0.perpRight();
-				double phi = acos(middle0.dot(tangent_in));
+				double phi = acos(MapCoordF::dotProduct(middle0.perpRight(), tangent_in));
 				double tan_phi = tan(phi);
 				offset = -fabs(shift/tan_phi);
 				
@@ -673,8 +664,7 @@ void LineSymbol::shiftCoordinates(const VirtualPath& path, double main_shift, Ma
 						}
 						else
 						{
-							right_vector = tangent_in;
-							right_vector.perpRight();
+							right_vector = tangent_in.perpRight();
 							segment_start = coords_i + shift * right_vector - len_out * tangent_in;
 						}
 					}
@@ -694,7 +684,7 @@ void LineSymbol::shiftCoordinates(const VirtualPath& path, double main_shift, Ma
 			// TODO: it may be necessary to remove some of the generated curves in the case an outer point is moved inwards
 			if (main_shift > 0.0)
 			{
-				QBezier bezier = QBezier::fromPoints(QPointF(path.coords[i+3]), QPointF(path.coords[i+2]), QPointF(path.coords[i+1]), QPointF(coords_i));
+				QBezier bezier = QBezier::fromPoints(path.coords[i+3], path.coords[i+2], path.coords[i+1], coords_i);
 				auto count = bezier.shifted(offsetCurves, MAX_OFFSET, qAbs(shift), curve_threshold);
 				for (auto j = count - 1; j >= 0; --j)
 				{
@@ -715,7 +705,7 @@ void LineSymbol::shiftCoordinates(const VirtualPath& path, double main_shift, Ma
 			}
 			else
 			{
-				QBezier bezier = QBezier::fromPoints(QPointF(path.coords[i]), QPointF(path.coords[i+1]), QPointF(path.coords[i+2]), QPointF(path.coords[i+3]));
+				QBezier bezier = QBezier::fromPoints(path.coords[i], path.coords[i+1], path.coords[i+2], path.coords[i+3]);
 				int count = bezier.shifted(offsetCurves, MAX_OFFSET, qAbs(shift), curve_threshold);
 				for (int j = 0; j < count; ++j)
 				{
@@ -801,7 +791,7 @@ void LineSymbol::processContinuousLine(
 			for (auto i = mid_symbols_per_spot; i > 0; --i)
 			{
 				if (mid_symbol_rotatable)
-					orientation = split.tangentVector().getAngle();
+					orientation = split.tangentVector().angle();
 				mid_symbol->createRenderablesScaled(split.pos, orientation, output);
 				
 				if (i > 1)
@@ -874,8 +864,7 @@ void LineSymbol::createPointedLineCap(
 		factor = qBound(0.0f, factor, 1.0f);
 		
 		auto tangent_info = cap_middle_path.calculateTangentScaling(i);
-		MapCoordF& right_vector = tangent_info.first;
-		right_vector.perpRight();
+		auto right_vector = tangent_info.first.perpRight();
 		right_vector.normalize();
 		
 		auto radius = qBound(0.0, line_half_width*factor*tangent_info.second, line_half_width*2.0);
@@ -918,10 +907,8 @@ void LineSymbol::createPointedLineCap(
 		MapCoordF tangent = cap_middle_path.calculateTangent(end_pos, !is_end, ok);
 		if (ok)
 		{
-			tangent.normalize();
-			tangent *= overlap_length * sign;
-			MapCoordF right = is_end ? tangent : -tangent;
-			right.perpRight();
+			tangent.setLength(overlap_length * sign);
+			auto right = MapCoordF{ is_end ? tangent : -tangent }.perpRight();
 			
 			MapCoordF shifted_coord = cap_coords[end_cap_pos];
 			shifted_coord += tangent + right;
@@ -1119,7 +1106,7 @@ SplitPathCoord LineSymbol::createDashGroups(
 				{
 					auto next_split = SplitPathCoord::at(position, split);
 					if (mid_symbol_rotatable)
-						orientation = next_split.tangentVector().getAngle();
+						orientation = next_split.tangentVector().angle();
 					mid_symbol->createRenderablesScaled(next_split.pos, orientation, output);
 					split = next_split;
 				}
@@ -1136,7 +1123,7 @@ SplitPathCoord LineSymbol::createDashGroups(
 			{
 				auto next_split = SplitPathCoord::at(position, split);
 				if (mid_symbol_rotatable)
-					orientation = next_split.tangentVector().getAngle();
+					orientation = next_split.tangentVector().angle();
 				mid_symbol->createRenderablesScaled(next_split.pos, orientation, output);
 				
 				position  += mid_symbol_distance_f;
@@ -1241,7 +1228,7 @@ SplitPathCoord LineSymbol::createDashGroups(
 			{
 				auto next_split = SplitPathCoord::at(position, split);
 				if (mid_symbol_rotatable)
-					orientation = next_split.tangentVector().getAngle();
+					orientation = next_split.tangentVector().angle();
 				mid_symbol->createRenderablesScaled(next_split.pos, orientation, output);
 				
 				position  += mid_symbol_distance_f;
@@ -1283,7 +1270,7 @@ void LineSymbol::createDashSymbolRenderables(
 			auto params = path.calculateTangentScaling(i);
 			//params.first.perpRight();
 			params.second = qMin(params.second, 2.0 * LineSymbol::miterLimit());
-			dash_symbol->createRenderablesScaled(coords[i], params.first.getAngle(), output, params.second);
+			dash_symbol->createRenderablesScaled(coords[i], params.first.angle(), output, params.second);
 		}
 	}
 }
@@ -1313,7 +1300,7 @@ void LineSymbol::createMidSymbolRenderables(
 	{
 		// Insert point at start coordinate
 		if (mid_symbol_rotatable)
-			orientation = groups_start.tangentVector().getAngle();
+			orientation = groups_start.tangentVector().angle();
 		mid_symbol->createRenderablesScaled(groups_start.pos, orientation, output);
 	}
 	
@@ -1340,12 +1327,12 @@ void LineSymbol::createMidSymbolRenderables(
 				{
 					// Insert point at start coordinate
 					if (mid_symbol_rotatable)
-						orientation = groups_start.tangentVector().getAngle();
+						orientation = groups_start.tangentVector().angle();
 					mid_symbol->createRenderablesScaled(groups_start.pos, orientation, output);
 					
 					// Insert point at end coordinate
 					if (mid_symbol_rotatable)
-						orientation = groups_end.tangentVector().getAngle();
+						orientation = groups_end.tangentVector().angle();
 					mid_symbol->createRenderablesScaled(groups_end.pos, orientation, output);
 				}
 			}
@@ -1373,7 +1360,7 @@ void LineSymbol::createMidSymbolRenderables(
 							position += mid_symbol_distance_f;
 							split = SplitPathCoord::at(position, split);
 							if (mid_symbol_rotatable)
-								orientation = split.tangentVector().getAngle();
+								orientation = split.tangentVector().angle();
 							mid_symbol->createRenderablesScaled(split.pos, orientation, output);
 						}
 					}
@@ -1409,7 +1396,7 @@ void LineSymbol::createMidSymbolRenderables(
 							
 							split = SplitPathCoord::at(position, split);
 							if (mid_symbol_rotatable)
-								orientation = split.tangentVector().getAngle();
+								orientation = split.tangentVector().angle();
 							mid_symbol->createRenderablesScaled(split.pos, orientation, output);
 						}
 					}
@@ -1418,7 +1405,7 @@ void LineSymbol::createMidSymbolRenderables(
 			
 			// Insert point at end coordinate
 			if (mid_symbol_rotatable)
-				orientation = groups_end.tangentVector().getAngle();
+				orientation = groups_end.tangentVector().angle();
 			mid_symbol->createRenderablesScaled(groups_end.pos, orientation, output);
 		}
 		

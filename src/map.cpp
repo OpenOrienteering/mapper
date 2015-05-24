@@ -535,7 +535,7 @@ void Map::rotateMap(double rotation, const MapCoord& center, bool adjust_georefe
 	{
 		MapCoordF reference_point = MapCoordF(georeferencing->getMapRefPoint() - center);
 		reference_point.rotate(-rotation);
-		georeferencing->setMapRefPoint(center + reference_point.toMapCoord());
+		georeferencing->setMapRefPoint(MapCoord(MapCoordF(center) + reference_point));
 	}
 	if (adjust_declination)
 	{

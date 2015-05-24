@@ -197,7 +197,7 @@ bool DrawPathTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapW
 		}
 
 		// Set path point
-		MapCoord coord = click_pos_map.toMapCoord();
+		auto coord = MapCoord { click_pos_map };
 		if (draw_dash_points)
 			coord.setDashPoint(true);
 		
@@ -305,7 +305,7 @@ bool DrawPathTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWi
 				
 				// Add a new node or convert the last node into a corner?
 				if ((widget->mapToViewport(previous_pos_map) - click_pos).manhattanLength() >= Settings::getInstance().getStartDragDistancePx())
-					createPreviewCurve(click_pos_map.toMapCoord(), drag_direction);
+					createPreviewCurve(MapCoord(click_pos_map), drag_direction);
 				else
 				{
 					create_spline_corner = true;
@@ -354,10 +354,10 @@ bool DrawPathTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, Ma
 		{
 			QPointF constrained_pos;
 			angle_helper->getConstrainedCursorPositions(map_coord, constrained_pos_map, constrained_pos, widget);
-			coord = constrained_pos_map.toMapCoord();
+			coord = MapCoord(constrained_pos_map);
 		}
 		else
-			coord = map_coord.toMapCoord();
+			coord = MapCoord(map_coord);
 		if (draw_dash_points)
 			coord.setDashPoint(true);
 		preview_path->addCoordinate(coord);
@@ -564,10 +564,10 @@ void DrawPathTool::updateDrawHover()
 		
 		if (!path_has_preview_point)
 		{
-			preview_path->addCoordinate(constrained_pos_map.toMapCoord());
+			preview_path->addCoordinate(MapCoord(constrained_pos_map));
 			path_has_preview_point = true;
 		}
-		preview_path->setCoordinate(preview_path->getCoordinateCount() - 1, constrained_pos_map.toMapCoord());
+		preview_path->setCoordinate(preview_path->getCoordinateCount() - 1, MapCoord(constrained_pos_map));
 		
 		updatePreviewPath();
 		updateDirtyRect();	// TODO: Possible optimization: mark only the last segment as dirty
@@ -721,7 +721,7 @@ void DrawPathTool::closeDrawing()
 		path_has_preview_point = false;
 		
 		if (dragging)
-			previous_point_direction = -atan2(cur_pos_map.getX() - click_pos_map.getX(), click_pos_map.getY() - cur_pos_map.getY());
+			previous_point_direction = -atan2(cur_pos_map.x() - click_pos_map.x(), click_pos_map.y() - cur_pos_map.y());
 		
 		MapCoord first = preview_path->getCoordinate(0);
 		MapCoord second = preview_path->getCoordinate(1);
@@ -851,7 +851,7 @@ void DrawPathTool::updateAngleHelper()
 		MapCoordF tangent = part.calculateTangent(part.size()-1, true, ok);
 		if (!ok)
 			tangent = MapCoordF(1, 0);
-		angle = -tangent.getAngle();
+		angle = -tangent.angle();
 	}
 	else
 	{
@@ -975,7 +975,7 @@ void DrawPathTool::finishFollowing()
 float DrawPathTool::calculateRotation(QPoint mouse_pos, MapCoordF mouse_pos_map)
 {
 	if (dragging && (mouse_pos - click_pos).manhattanLength() >= Settings::getInstance().getStartDragDistancePx())
-		return -atan2(mouse_pos_map.getX() - click_pos_map.getX(), click_pos_map.getY() - mouse_pos_map.getY());
+		return -atan2(mouse_pos_map.x() - click_pos_map.x(), click_pos_map.y() - mouse_pos_map.y());
 	else
 		return 0;
 }

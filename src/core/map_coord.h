@@ -310,281 +310,165 @@ QTextStream& operator>>(QTextStream& stream, MapCoord& coord);
 
 
 /**
- * Floating point map coordinates, only for rendering.
- * Store the coordinate position in doubles as millimeters on the map paper.
- * In contrast to MapCoord, does not store flags.
+ * Map coordinates stored as floating point numbers.
  * 
- * TODO: replace with QPointF everywhere? Derive from QPointF and add nice-to-have features?
+ * The unit is millimeters on the map paper.
+ * 
+ * This type was initially meant as intermediate format for rendering but
+ * is currently used in a wide range of functions related to editing.
+ * In contrast to MapCoord, MapCoordF does not store flags.
+ * 
+ * The type is based on QPointF and provides additional methods for using it to
+ * represent 2D vectors. (Some of the methods do have counterparts in QLineF
+ * rather than QPointF.) Similar to QPointF, many operators return const values,
+ * although one might argue that it is no longer good practice in C++11.
  */
-class MapCoordF
+class MapCoordF : public QPointF
 {
 public:
 	
-	/** Creates an uninitialized MapCoordF. */
-	constexpr MapCoordF() : x(0.0), y(0.0) {}
+	/** Creates a MapCoordF with both values set to zero. */
+	constexpr MapCoordF();
+	
 	/** Creates a MapCoordF with the given position in map coordinates. */
-	constexpr MapCoordF(double x, double y) : x{x}, y{y} {}
-	/** Creates a MapCoordF from a MapCoord, skipping its flags. */
-	constexpr explicit MapCoordF(MapCoord coord) : x{coord.xd()}, y{coord.yd()} {}
-	/** Creates a MapCoordF from a QPointF. */
-	constexpr explicit MapCoordF(QPointF point) : x{point.x()}, y{point.y()} {}
+	constexpr MapCoordF(qreal x, qreal y);
+	
+	/** Creates a MapCoordF from a MapCoord, dropping its flags. */
+	explicit constexpr MapCoordF(MapCoord coord);
 	
 	/** Copy constructor. */
-	MapCoordF(const MapCoordF&) = default;
+	constexpr MapCoordF(const MapCoordF&) = default;
+	
+	/** Copy constructor for QPointF prototypes. */
+	explicit constexpr MapCoordF(const QPointF& point);
+	
+	
+	/** Returns a vector with the given length and angle. */
+	static constexpr const MapCoordF fromPolar(qreal length, qreal angle);
 	
 	
 	/** Assignment operator. */
-	MapCoordF& operator= (const MapCoordF&) = default;
+	MapCoordF& operator= (const QPointF& point);
 	
-	
-	/** Sets the x coordinate to a new value in map coordinates. */
-	inline void setX(double x) {this->x = x;}
-	/** Sets the y coordinate to a new value in map coordinates. */
-	inline void setY(double y) {this->y = y;}
-	/** Sets the x coordinate to a new value in native map coordinates. */
-	inline void setIntX(qint64 x) {this->x = 0.001 * x;}
-	/** Sets the y coordinate to a new value in native map coordinates. */
-	inline void setIntY(qint64 y) {this->y = 0.001 * y;}
-	
-	/** Returns the x coordinate in map coordinates. */
-	double getX() const {return x;}
-	/** Returns the y coordinate in map coordinates. */
-	double getY() const {return y;}
-	/** Returns the x coordinate in native map coordinates. */
-	qint64 getIntX() const {return qRound64(1000 * x);}
-	/** Returns the y coordinate in native map coordinates. */
-	qint64 getIntY() const {return qRound64(1000 * y);}
-	
-	/** Adds the given offset (in map coordinates) to the position. */
-	inline void move(double dx, double dy) {x += dx; y += dy;}
-	/** Adds the given offset (in native map coordinates) to the position. */
-	inline void moveInt(qint64 dx, qint64 dy) {x += 0.001 * dx; y += 0.001 * dy;}
 	
 	/**
-	 * Normalizes the length of the vector from the origin
-	 * to the coordinate position to one (in map coordinates).
-	 */
-	inline void normalize()
-	{
-		double length_squared = x*x + y*y;
-		if (length_squared > 1e-16)
-		{
-			double length = sqrt(length_squared);
-			x /= length;
-			y /= length;
-		}
-	}
-	
-	/**
-	 * Returns the length of the vector from the origin to the
-	 * coordinate position (in map coordinates).
-	 */
-	inline double length() const {return sqrt(x*x + y*y);}
-	/**
-	 * Returns the squared length of the vector from the origin to the
-	 * coordinate position (in map coordinates). Faster than length().
-	 */
-	inline double lengthSquared() const {return x*x + y*y;}
-	
-	/**
-	 * Returns the length of the coordinate to the other coordinate
-	 * (in map coordinates).
-	 */
-	inline double lengthTo(const MapCoordF& to) const
-	{
-		double dx = to.getX() - getX();
-		double dy = to.getY() - getY();
-		return sqrt(dx*dx + dy*dy);
-	}
-	/**
-	 * Returns the squared length of the coordinate to the other coordinate
-	 * (in map coordinates). Faster than lengthTo().
-	 */
-	inline double lengthToSquared(const MapCoordF& to) const
-	{
-		double dx = to.getX() - getX();
-		double dy = to.getY() - getY();
-		return dx*dx + dy*dy;
-	}
-	
-	/**
-	 * Treats this coordinate as vector and changes its length
-	 * to the given target length, while keeping the vector's direction.
-	 * Does nothing if the vector is very close to (0, 0).
-	 */
-	inline void toLength(float target_length)
-	{
-		double len = length();
-		if (len > 1e-08)
-		{
-			double factor = target_length / len;
-			x *= factor;
-			y *= factor;
-		}
-	}
-	
-	/** Returns the dot product between this and the other coordinate. */
-	inline double dot(const MapCoordF& other) const
-	{
-		return x * other.x + y * other.y;
-	}
-
-	/** Returns the cross product between this and the other coordinate. */
-    inline double cross(const MapCoordF& other) const
-    {
-        return x * other.y - y * other.x;
-    }
-	
-	/**
-	 * Returns the angle of the vector relative to the vector (1, 0) in radians,
-	 * range [-PI; +PI].
+	 * Returns the length of the vector.
 	 * 
-	 * Vector3(0, 1).getAngle() returns +PI/2,
-	 * Vector3(0, -1).getAngle() returns -PI/2.
+	 * The value returned the from this function is the MapCoords distance to
+	 * the origin of the coordinate system.
 	 */
-	inline double getAngle() const
-	{
-		return atan2(y, x);
-	}
+	constexpr qreal length() const;
 	
 	/**
-	 * Rotates the vector. Positive values for angle (in radians) result
-	 * in a counter-clockwise rotation in a coordinate system where the x-axis
-	 * is right and the y-axis is up.
+	 * Returns the square of the length of the vector.
+	 * 
+	 * This is a slightly faster alternative to MapCoordF::length() which
+	 * preserves comparability.
 	 */
-	inline MapCoordF& rotate(double angle)
-	{
-		double new_angle = getAngle() + angle;
-		double len = length();
-		x = cos(new_angle) * len;
-		y = sin(new_angle) * len;
-		return *this;
-	}
-	
-	/** Replaces this vector with a perpendicular vector pointing to the right. */
-	inline void perpRight()
-	{
-		double x = getX();
-		setX(-getY());
-		setY(x);
-	}
+	constexpr qreal lengthSquared() const;
 	
 	/**
-	 * Converts the MapCoordF to a MapCoord (without flags).
-	 * See also toCurveStartMapCoord().
+	 * Returns the distance of the coordinate to another coordinate.
 	 */
-	constexpr MapCoord toMapCoord() const
-	{
-		return MapCoord(x, y);
-	}
+	constexpr qreal distanceTo(const MapCoordF& to) const;
 	
 	/**
-	 * Converts the MapCoordF to a MapCoord (with the curve start flag set).
+	 * Returns the square of the distance of this coordinate to another coordinate.
+	 * 
+	 * This is a silghtly faster alternative to MapCoordF::distanceTo() which
+	 * preserves comparability.
 	 */
-	MapCoord toCurveStartMapCoord() const
-	{
-		MapCoord coord = MapCoord(x, y);
-		coord.setCurveStart(true);
-		return coord;
-	}
+	constexpr qreal distanceSquaredTo(const MapCoordF& to) const;
 	
 	/**
-	 * Converts the MapCoordF to a QPointf.
+	 * Changes the length of the vector.
+	 * 
+	 * The MapCoordF is interpreted as a vector and adjusted to a vector of the
+	 * same direction but having the given lenght.
+	 * It does nothing if the vector is very close to (0, 0).
 	 */
-	inline explicit operator QPointF() const
-	{
-		return QPointF(x, y);
-	}
+	void setLength(qreal new_length);
 	
-	/** Tests for exact equality. Be aware of floating point inaccuracies! */
-	inline bool operator== (const MapCoordF& other) const
-	{
-		return (other.x == x) && (other.y == y);
-	}
-	/** Tests for exact inequality. Be aware of floating point inaccuracies! */
-	inline bool operator != (const MapCoordF& other) const
-	{
-		return (other.x != x) || (other.y != y);
-	}
-	/** Multiply with a scalar */
-	inline MapCoordF operator* (const double factor) const
-	{
-		return MapCoordF(factor*x, factor*y);
-	}
-	/** Divide by a scalar */
-	inline MapCoordF operator/ (const double scalar) const
-	{
-		Q_ASSERT(scalar != 0);
-		return MapCoordF(x/scalar, y/scalar);
-	}
-	/** Component-wise addition */
-	inline MapCoordF operator+ (const MapCoordF& other) const
-	{
-		return MapCoordF(x+other.x, y+other.y);
-	}
-	/** Component-wise subtraction */
-	inline MapCoordF operator- (const MapCoordF& other) const
-	{
-		return MapCoordF(x-other.x, y-other.y);
-	}
-	/** no-operation */
-	inline MapCoordF& operator+ ()
-	{
-		return *this;
-	}
+	/**
+	 * Normalizes the length of the vector.
+	 * 
+	 * The MapCoordF is interpreted as a vector and adjusted to a vector of the
+	 * same direction but length 1 (i.e. unit vector).
+	 */
+	void normalize();
+	
+	
+	/**
+	 * Returns the angle of the vector relative to the vector (1, 0).
+	 * 
+	 * The returned value is in radians, in the range range [-PI; +PI].
+	 * MapCoordF { 0, 1 }.getAngle() returns +PI/2,
+	 * MapCoordF { 0, -1 }.getAngle() returns -PI/2.
+	 */
+	constexpr qreal angle() const;
+	
+	/**
+	 * Rotates the vector.
+	 * 
+	 * The argument is to be given in radians.
+	 * Positive arguments result in a counter-clockwise rotation.
+	 */
+	void rotate(qreal angle);
+	
+	/**
+	 * Returns a vector which is the result of rotating this vector.
+	 * 
+	 * The argument is to be given in radians.
+	 * Positive arguments result in a counter-clockwise rotation.
+	 */
+	constexpr const MapCoordF rotated(qreal angle) const;
+	
+	/**
+	 * Returns a vector with the same length that is perpendicular to this vector.
+	 * 
+	 * Note that in contrast to normalVector(), this function returns a
+	 * perpendicular vector pointing to the right.
+	 * 
+	 * \todo Replace with normalVector(), similar to QLineF API.
+	 */
+	constexpr const MapCoordF perpRight() const;
+	
+	/**
+	 * Returns a vector with the same length that is perpendicular to this vector.
+	 * 
+	 * \see QLineF::normalVector()
+	 */
+	constexpr const MapCoordF normalVector() const;
+	
+	
 	/** Additive inverse */
-	inline MapCoordF operator- ()
-	{
-		return MapCoordF(-x, -y);
-	}
-	
-	/** Multiply with a scalar */
-	inline friend MapCoordF operator* (double scalar, const MapCoordF& rhs_vector)
-	{
-		return MapCoordF(scalar * rhs_vector.getX(), scalar * rhs_vector.getY());
-	}
-	/** Divide by a scalar */
-	inline friend MapCoordF operator/ (double scalar, const MapCoordF& rhs_vector)
-	{
-		return MapCoordF(scalar / rhs_vector.getX(), scalar / rhs_vector.getY());
-	}
+	constexpr const MapCoordF operator-();
 	
 	/** Component-wise addition */
-	inline MapCoordF& operator+= (const MapCoordF& rhs_vector)
-	{
-		x += rhs_vector.x;
-		y += rhs_vector.y;
-		return *this;
-	}
-	/** Component-wise subtraction */
-	inline MapCoordF& operator-= (const MapCoordF& rhs_vector)
-	{
-		x -= rhs_vector.x;
-		y -= rhs_vector.y;
-		return *this;
-	}
-	/** Multiply with a scalar */
-	inline MapCoordF& operator*= (const double factor)
-	{
-		x *= factor;
-		y *= factor;
-		return *this;
-	}
-	/** Divide by a scalar */
-	inline MapCoordF& operator/= (const double scalar)
-	{
-		Q_ASSERT(scalar != 0);
-		x /= scalar;
-		y /= scalar;
-		return *this;
-	}
+	MapCoordF& operator+= (const MapCoordF& rhs);
 	
-private:
-	double x;
-	double y;
+	/** Component-wise subtraction */
+	MapCoordF& operator-= (const MapCoordF& rhs);
+	
+	/** Multiply with a scalar */
+	MapCoordF& operator*= (qreal factor);
+	
+	/** Divide by a scalar */
+	MapCoordF& operator/= (qreal divisor);
+	
+	using QPointF::dotProduct;
 };
 
-QTextStream& operator>>(QTextStream& stream, MapCoord& coord);
+constexpr const MapCoordF operator+(const MapCoordF& lhs, const MapCoordF& rhs);
+
+constexpr const MapCoordF operator-(const MapCoordF& lhs, const MapCoordF& rhs);
+
+constexpr const MapCoordF operator*(const MapCoordF& lhs, qreal factor);
+constexpr const MapCoordF operator*(qreal factor, const MapCoordF& rhs);
+
+constexpr const MapCoordF operator/(const MapCoordF& lhs, qreal divisor);
+
+
 
 typedef std::vector<MapCoord> MapCoordVector;
 typedef std::vector<MapCoordF> MapCoordVectorF;
@@ -866,6 +750,169 @@ constexpr MapCoord operator*(double factor, const MapCoord& rhs)
 constexpr MapCoord operator/(const MapCoord& lhs, double divisor)
 {
 	return MapCoord{ lhs.x / divisor, lhs.y / divisor };
+}
+
+
+
+// ### MapCoordF inline code  ###
+
+constexpr MapCoordF::MapCoordF()
+ : QPointF {}
+{
+	// Nothing else
+}
+
+constexpr MapCoordF::MapCoordF(qreal x, qreal y)
+ : QPointF { x, y }
+{
+	// Nothing else
+}
+
+constexpr MapCoordF::MapCoordF(MapCoord coord)
+ : QPointF { coord.xd(), coord.yd() }
+{
+	// Nothing else
+}
+
+constexpr MapCoordF::MapCoordF(const QPointF& point)
+ : QPointF { point }
+{
+	// Nothing else
+}
+
+// static
+constexpr const MapCoordF MapCoordF::fromPolar(qreal length, qreal angle)
+{
+	return MapCoordF(cos(angle) * length, sin(angle) * length);
+}
+
+inline
+MapCoordF& MapCoordF::operator=(const QPointF& point)
+{
+	return static_cast<MapCoordF&>(*static_cast<QPointF*>(this) = point);
+}
+
+constexpr qreal MapCoordF::length() const
+{
+	return sqrt(lengthSquared());
+}
+
+constexpr qreal MapCoordF::lengthSquared() const
+{
+	return x()*x() + y()*y();
+}
+
+constexpr qreal MapCoordF::distanceTo(const MapCoordF& to) const
+{
+	return sqrt(distanceSquaredTo(to));
+}
+
+constexpr qreal MapCoordF::distanceSquaredTo(const MapCoordF& to) const
+{
+	return (to - *this).lengthSquared();
+}
+
+inline
+void MapCoordF::setLength(qreal new_length)
+{
+	auto length_squared = lengthSquared();
+	if (length_squared > 1e-16)
+	{
+		auto factor = new_length / sqrt(length_squared);
+		rx() *= factor;
+		ry() *= factor;
+	}
+}
+
+inline
+void MapCoordF::normalize()
+{
+	setLength(1.0);
+}
+
+constexpr qreal MapCoordF::angle() const
+{
+	return atan2(y(), x());
+}
+
+inline
+void MapCoordF::rotate(qreal angle)
+{
+	angle += this->angle();
+	auto len = length();
+	rx() = cos(angle) * len;
+	ry() = sin(angle) * len;
+}
+
+constexpr const MapCoordF MapCoordF::rotated(qreal angle) const
+{
+	return MapCoordF::fromPolar(length(), angle + this->angle());
+}
+
+constexpr const MapCoordF MapCoordF::perpRight() const
+{
+	return MapCoordF { -y(), x() };
+}
+
+constexpr const MapCoordF MapCoordF::normalVector() const
+{
+	return MapCoordF { y(), -x() };
+}
+
+constexpr const MapCoordF MapCoordF::operator-()
+{
+	return static_cast<const MapCoordF>(-static_cast<const QPointF&>(*this));
+}
+
+inline
+MapCoordF& MapCoordF::operator+=(const MapCoordF& rhs)
+{
+	return static_cast<MapCoordF&>(static_cast<QPointF&>(*this) += rhs);
+}
+
+inline
+MapCoordF& MapCoordF::operator-=(const MapCoordF& rhs)
+{
+	return static_cast<MapCoordF&>(static_cast<QPointF&>(*this) -= rhs);
+}
+
+inline
+MapCoordF& MapCoordF::operator*=(qreal factor)
+{
+	return static_cast<MapCoordF&>(static_cast<QPointF&>(*this) *= factor);
+}
+
+inline
+MapCoordF& MapCoordF::operator/=(qreal divisor)
+{
+	return static_cast<MapCoordF&>(static_cast<QPointF&>(*this) /= divisor);
+}
+
+
+
+constexpr const MapCoordF operator+(const MapCoordF& lhs, const MapCoordF& rhs)
+{
+	return static_cast<const MapCoordF>(static_cast<const QPointF&>(lhs) + static_cast<const QPointF&>(rhs));
+}
+
+constexpr const MapCoordF operator-(const MapCoordF& lhs, const MapCoordF& rhs)
+{
+	return static_cast<const MapCoordF>(static_cast<const QPointF&>(lhs) - static_cast<const QPointF&>(rhs));
+}
+
+constexpr const MapCoordF operator*(const MapCoordF& lhs, qreal factor)
+{
+	return static_cast<const MapCoordF>(static_cast<const QPointF&>(lhs) * factor);
+}
+
+constexpr const MapCoordF operator*(qreal factor, const MapCoordF& rhs)
+{
+	return static_cast<const MapCoordF>(factor * static_cast<const QPointF&>(rhs));
+}
+
+constexpr const MapCoordF operator/(const MapCoordF& lhs, qreal divisor)
+{
+	return static_cast<const MapCoordF>(static_cast<const QPointF&>(lhs) / divisor);
 }
 
 

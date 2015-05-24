@@ -526,7 +526,7 @@ double ConstrainAngleToolHelper::getConstrainedCursorPos(const QPoint& in_pos, Q
 double ConstrainAngleToolHelper::getConstrainedCursorPosMap(const MapCoordF& in_pos, MapCoordF& out_pos)
 {
 	MapCoordF to_cursor = in_pos - center;
-	double in_angle = -1 * to_cursor.getAngle();
+	double in_angle = -1 * to_cursor.angle();
 	if (!active)
 	{
 		out_pos = in_pos;
@@ -573,7 +573,7 @@ double ConstrainAngleToolHelper::getConstrainedCursorPosMap(const MapCoordF& in_
 	}
 	
 	MapCoordF unit_direction = MapCoordF(cos(active_angle), -sin(active_angle));
-	to_cursor = unit_direction.dot(to_cursor) * unit_direction;
+	to_cursor = MapCoordF::dotProduct(unit_direction, to_cursor) * unit_direction;
 	out_pos = center + to_cursor;
 	
 	return active_angle;
@@ -656,7 +656,7 @@ void ConstrainAngleToolHelper::draw(QPainter* painter, MapWidget* widget)
 void ConstrainAngleToolHelper::includeDirtyRect(QRectF& rect)
 {
 	if (!active) return;
-	rectIncludeSafe(rect, QPointF(center));
+	rectIncludeSafe(rect, center);
 }
 
 void ConstrainAngleToolHelper::settingsChanged()
@@ -696,7 +696,7 @@ MapCoord SnappingToolHelper::snapToObject(MapCoordF position, MapWidget* widget,
 	if (snap_distance < 0)
 		snap_distance = 0.001f * widget->getMapView()->pixelToLength(Settings::getInstance().getMapEditorSnapDistancePx());
 	float closest_distance_sq = snap_distance * snap_distance;
-	MapCoord result_position = position.toMapCoord();
+	auto result_position = MapCoord { position };
 	SnappingToolHelperSnapInfo result_info;
 	result_info.type = NoSnapping;
 	result_info.object = NULL;
@@ -723,7 +723,7 @@ MapCoord SnappingToolHelper::snapToObject(MapCoordF position, MapWidget* widget,
 			if (object->getType() == Object::Point && filter & ObjectCorners)
 			{
 				PointObject* point = object->asPoint();
-				distance_sq = point->getCoordF().lengthToSquared(position);
+				distance_sq = point->getCoordF().distanceSquaredTo(position);
 				if (distance_sq < closest_distance_sq)
 				{
 					closest_distance_sq = distance_sq;
@@ -743,7 +743,7 @@ MapCoord SnappingToolHelper::snapToObject(MapCoordF position, MapWidget* widget,
 					if (distance_sq < closest_distance_sq)
 					{
 						closest_distance_sq = distance_sq;
-						result_position = path_coord.pos.toMapCoord();
+						result_position = MapCoord(path_coord.pos);
 						result_info.object = object;
 						if (path_coord.param == 0.0)
 						{
@@ -785,11 +785,11 @@ MapCoord SnappingToolHelper::snapToObject(MapCoordF position, MapWidget* widget,
 		map->getGrid().isSnappingEnabled() && map->getGrid().getDisplayMode() == MapGrid::AllLines)
 	{
 		MapCoordF closest_grid_point = map->getGrid().getClosestPointOnGrid(position, map);
-		float distance_sq = closest_grid_point.lengthToSquared(position);
+		float distance_sq = closest_grid_point.distanceSquaredTo(position);
 		if (distance_sq < closest_distance_sq)
 		{
 			closest_distance_sq = distance_sq;
-			result_position = closest_grid_point.toMapCoord();
+			result_position = MapCoord(closest_grid_point);
 			result_info.type = GridCorners;
 			result_info.object = NULL;
 			result_info.coord_index = -1;
@@ -843,11 +843,11 @@ bool SnappingToolHelper::snapToDirection(MapCoordF position, MapWidget* widget, 
 			// Forward tangent
 			MapCoordF tangent = path->findPartForIndex(info.coord_index)->calculateTangent(info.coord_index, false, ok);
 			if (ok)
-				angle_tool->addAngles(-tangent.getAngle(), M_PI/2);
+				angle_tool->addAngles(-tangent.angle(), M_PI/2);
 			// Backward tangent
 			tangent = path->findPartForIndex(info.coord_index)->calculateTangent(info.coord_index, true, ok);
 			if (ok)
-				angle_tool->addAngles(-tangent.getAngle(), M_PI/2);
+				angle_tool->addAngles(-tangent.angle(), M_PI/2);
 			return true;
 		}
 		return false;
@@ -858,9 +858,8 @@ bool SnappingToolHelper::snapToDirection(MapCoordF position, MapWidget* widget, 
 			angle_tool->clearAngles();
 			auto part   = path->findPartForIndex(info.path_coord.index);
 			auto split  = SplitPathCoord::at(part->path_coords, info.path_coord.clen);
-			auto right = split.tangentVector();
-			right.perpRight();
-			angle_tool->addAngles(-right.getAngle(), M_PI/2);
+			auto right = split.tangentVector().perpRight();
+			angle_tool->addAngles(-right.angle(), M_PI/2);
 		}
 		return true;
 		

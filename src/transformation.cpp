@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012, 2014 Kai Pastor
+ *    Copyright 2012-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -53,15 +53,15 @@ void PassPoint::save(QXmlStreamWriter& xml) const
 	xml.writeAttribute("error", QString::number(error));
 	
 	xml.writeStartElement("source");
-	src_coords.toMapCoord().save(xml);
+	MapCoord(src_coords).save(xml);
 	xml.writeEndElement();
 	
 	xml.writeStartElement("destination");
-	dest_coords.toMapCoord().save(xml);
+	MapCoord(dest_coords).save(xml);
 	xml.writeEndElement();
 	
 	xml.writeStartElement("calculated");
-	calculated_coords.toMapCoord().save(xml);
+	MapCoord(calculated_coords).save(xml);
 	xml.writeEndElement();
 	
 	xml.writeEndElement(/*passpoint*/);
@@ -109,8 +109,8 @@ bool PassPointList::estimateSimilarityTransformation(TemplateTransform* transfor
 		PassPoint* point = &at(0);
 		MapCoordF offset = point->dest_coords - point->src_coords;
 		
-		transform->template_x += qRound64(1000 * offset.getX());
-		transform->template_y += qRound64(1000 * offset.getY());
+		transform->template_x += qRound64(1000 * offset.x());
+		transform->template_y += qRound64(1000 * offset.y());
 		point->calculated_coords = point->dest_coords;
 		point->error = 0;
 	}
@@ -152,17 +152,17 @@ bool PassPointList::estimateSimilarityTransformation(TemplateTransform* transfor
 		for (int i = 0; i < num_pass_points; ++i)
 		{
 			PassPoint* point = &at(i);
-			mat.set(2*i, 0, point->src_coords.getX());
-			mat.set(2*i, 1, point->src_coords.getY());
+			mat.set(2*i, 0, point->src_coords.x());
+			mat.set(2*i, 1, point->src_coords.y());
 			mat.set(2*i, 2, 1);
 			mat.set(2*i, 3, 0);
-			mat.set(2*i+1, 0, point->src_coords.getY());
-			mat.set(2*i+1, 1, -point->src_coords.getX());
+			mat.set(2*i+1, 0, point->src_coords.y());
+			mat.set(2*i+1, 1, -point->src_coords.x());
 			mat.set(2*i+1, 2, 0);
 			mat.set(2*i+1, 3, 1);
 			
-			values.set(2*i, 0, point->dest_coords.getX());
-			values.set(2*i+1, 0, point->dest_coords.getY());
+			values.set(2*i, 0, point->dest_coords.x());
+			values.set(2*i+1, 0, point->dest_coords.y());
 		}
 		
 		Matrix transposed;
@@ -208,9 +208,9 @@ bool PassPointList::estimateSimilarityTransformation(TemplateTransform* transfor
 		{
 			PassPoint* point = &at(i);
 			
-			point->calculated_coords = MapCoordF(trans_change.get(0, 0) * point->src_coords.getX() + trans_change.get(0, 1) * point->src_coords.getY() + trans_change.get(0, 2),
-												 trans_change.get(1, 0) * point->src_coords.getX() + trans_change.get(1, 1) * point->src_coords.getY() + trans_change.get(1, 2));
-			point->error = point->calculated_coords.lengthTo(point->dest_coords);
+			point->calculated_coords = MapCoordF(trans_change.get(0, 0) * point->src_coords.x() + trans_change.get(0, 1) * point->src_coords.y() + trans_change.get(0, 2),
+												 trans_change.get(1, 0) * point->src_coords.x() + trans_change.get(1, 1) * point->src_coords.y() + trans_change.get(1, 2));
+			point->error = point->calculated_coords.distanceTo(point->dest_coords);
 		}
 	}
 	
@@ -240,8 +240,8 @@ bool PassPointList::estimateNonIsometricSimilarityTransform(QTransform* out)
 	for (int i = 0; i < num_pass_points; ++i)
 	{
 		PassPoint* point = &at(i);
-		mat.set(2*i, 0, point->src_coords.getX());
-		mat.set(2*i, 1, point->src_coords.getY());
+		mat.set(2*i, 0, point->src_coords.x());
+		mat.set(2*i, 1, point->src_coords.y());
 		mat.set(2*i, 2, 1);
 		mat.set(2*i, 3, 0);
 		mat.set(2*i, 4, 0);
@@ -249,12 +249,12 @@ bool PassPointList::estimateNonIsometricSimilarityTransform(QTransform* out)
 		mat.set(2*i+1, 0, 0);
 		mat.set(2*i+1, 1, 0);
 		mat.set(2*i+1, 2, 0);
-		mat.set(2*i+1, 3, point->src_coords.getX());
-		mat.set(2*i+1, 4, point->src_coords.getY());
+		mat.set(2*i+1, 3, point->src_coords.x());
+		mat.set(2*i+1, 4, point->src_coords.y());
 		mat.set(2*i+1, 5, 1);
 		
-		values.set(2*i, 0, point->dest_coords.getX());
-		values.set(2*i+1, 0, point->dest_coords.getY());
+		values.set(2*i, 0, point->dest_coords.x());
+		values.set(2*i+1, 0, point->dest_coords.y());
 	}
 	
 	Matrix transposed;

@@ -239,10 +239,10 @@ QRectF MapView::calculateViewedRect(QRectF rect) const
 	MapCoordF bottom_right = viewToMapF(max.x(), max.y());
 	MapCoordF bottom_left = viewToMapF(min.x(), max.y());
 	
-	rect.setCoords(top_left.getX(), top_left.getY(), top_left.getX(), top_left.getY());
-	rectInclude(rect, QPointF(top_right.getX(), top_right.getY()));
-	rectInclude(rect, QPointF(bottom_right.getX(), bottom_right.getY()));
-	rectInclude(rect, QPointF(bottom_left.getX(), bottom_left.getY()));
+	rect.setCoords(top_left.x(), top_left.y(), top_left.x(), top_left.y());
+	rectInclude(rect, top_right);
+	rectInclude(rect, bottom_right);
+	rectInclude(rect, bottom_left);
 	rect.adjust(-0.001, -0.001, +0.001, +0.001);
 	return rect;
 }
@@ -274,8 +274,8 @@ void MapView::finishPanning(QPoint offset)
 	rotated_offset.rotate(-rotation);
 	
 	pan_offset = QPoint();
-	qint64 move_x = -pixelToLength(rotated_offset.getX());
-	qint64 move_y = -pixelToLength(rotated_offset.getY());
+	qint64 move_x = -pixelToLength(rotated_offset.x());
+	qint64 move_y = -pixelToLength(rotated_offset.y());
 	
 	position_x += move_x;
 	position_y += move_y;
@@ -309,15 +309,15 @@ bool MapView::zoomSteps(float num_steps, bool preserve_cursor_pos, QPointF curso
 		if (preserve_cursor_pos)
 		{
 			mouse_pos_map = viewToMapF(cursor_pos_view);
-			mouse_pos_to_view_center = MapCoordF(getPositionX()/1000.0 - mouse_pos_map.getX(), getPositionY()/1000.0 - mouse_pos_map.getY());
-			mouse_pos_to_view_center = MapCoordF(mouse_pos_to_view_center.getX() * 1 / zoom_factor, mouse_pos_to_view_center.getY() * 1 / zoom_factor);
+			mouse_pos_to_view_center = MapCoordF(getPositionX()/1000.0 - mouse_pos_map.x(), getPositionY()/1000.0 - mouse_pos_map.y());
+			mouse_pos_to_view_center = MapCoordF(mouse_pos_to_view_center.x() * 1 / zoom_factor, mouse_pos_to_view_center.y() * 1 / zoom_factor);
 		}
 		
 		setZoom(set_to_limit ? zoom_in_limit : (getZoom() * zoom_factor));
 		if (preserve_cursor_pos)
 		{
-			setPositionX(qRound64(1000 * (mouse_pos_map.getX() + mouse_pos_to_view_center.getX())));
-			setPositionY(qRound64(1000 * (mouse_pos_map.getY() + mouse_pos_to_view_center.getY())));
+			setPositionX(qRound64(1000 * (mouse_pos_map.x() + mouse_pos_to_view_center.x())));
+			setPositionY(qRound64(1000 * (mouse_pos_map.y() + mouse_pos_to_view_center.y())));
 		}
 	}
 	else
@@ -340,16 +340,16 @@ bool MapView::zoomSteps(float num_steps, bool preserve_cursor_pos, QPointF curso
 		if (preserve_cursor_pos)
 		{
 			mouse_pos_map = viewToMapF(cursor_pos_view);
-			mouse_pos_to_view_center = MapCoordF(getPositionX()/1000.0 - mouse_pos_map.getX(), getPositionY()/1000.0 - mouse_pos_map.getY());
-			mouse_pos_to_view_center = MapCoordF(mouse_pos_to_view_center.getX() * 1 / zoom_factor, mouse_pos_to_view_center.getY() * 1 / zoom_factor);
+			mouse_pos_to_view_center = MapCoordF(getPositionX()/1000.0 - mouse_pos_map.x(), getPositionY()/1000.0 - mouse_pos_map.y());
+			mouse_pos_to_view_center = MapCoordF(mouse_pos_to_view_center.x() * 1 / zoom_factor, mouse_pos_to_view_center.y() * 1 / zoom_factor);
 		}
 		
 		setZoom(set_to_limit ? zoom_out_limit : (getZoom() * zoom_factor));
 		
 		if (preserve_cursor_pos)
 		{
-			setPositionX(qRound64(1000 * (mouse_pos_map.getX() + mouse_pos_to_view_center.getX())));
-			setPositionY(qRound64(1000 * (mouse_pos_map.getY() + mouse_pos_to_view_center.getY())));
+			setPositionX(qRound64(1000 * (mouse_pos_map.x() + mouse_pos_to_view_center.x())));
+			setPositionY(qRound64(1000 * (mouse_pos_map.y() + mouse_pos_to_view_center.y())));
 		}
 		else
 		{
@@ -380,13 +380,13 @@ void MapView::setZoom(double value, QPointF center)
 	double zoom_factor = value / getZoom();
 	
 	MapCoordF zoom_center_map = viewToMapF(center);
-	MapCoordF view_center_map = MapCoordF(getPositionX()/1000.0 - zoom_center_map.getX(), getPositionY()/1000.0 - zoom_center_map.getY());
-	view_center_map = MapCoordF(view_center_map.getX() / zoom_factor, view_center_map.getY() / zoom_factor);
+	MapCoordF view_center_map = MapCoordF(getPositionX()/1000.0 - zoom_center_map.x(), getPositionY()/1000.0 - zoom_center_map.y());
+	view_center_map = MapCoordF(view_center_map.x() / zoom_factor, view_center_map.y() / zoom_factor);
 	
 	setZoom(value);
 	
-	setPositionX(qRound64(1000 * (zoom_center_map.getX() + view_center_map.getX())));
-	setPositionY(qRound64(1000 * (zoom_center_map.getY() + view_center_map.getY())));
+	setPositionX(qRound64(1000 * (zoom_center_map.x() + view_center_map.x())));
+	setPositionY(qRound64(1000 * (zoom_center_map.y() + view_center_map.y())));
 }
 
 void MapView::setPositionX(qint64 value)

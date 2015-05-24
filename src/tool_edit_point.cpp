@@ -635,8 +635,8 @@ void EditPointTool::updateStatusText()
 	{
 		MapCoordF drag_vector = constrained_pos_map - click_pos_map;
 		text = EditTool::tr("<b>Coordinate offset:</b> %1, %2 mm  <b>Distance:</b> %3 m ").
-		       arg(QLocale().toString(drag_vector.getX(), 'f', 1)).
-		       arg(QLocale().toString(-drag_vector.getY(), 'f', 1)).
+		       arg(QLocale().toString(drag_vector.x(), 'f', 1)).
+		       arg(QLocale().toString(-drag_vector.y(), 'f', 1)).
 		       arg(QLocale().toString(0.001 * map()->getScaleDenominator() * drag_vector.length(), 'f', 1)) +
 		       "| ";
 		
@@ -709,7 +709,7 @@ void EditPointTool::updateHoverState(MapCoordF cursor_pos)
 				if (hover_point == no_point)
 					continue;
 				
-				auto distance_sq = cursor_pos.lengthToSquared(handle_pos);
+				auto distance_sq = cursor_pos.distanceSquaredTo(handle_pos);
 				if (distance_sq < best_distance_sq)
 				{
 					new_hover_state |= OverObjectNode;
@@ -788,15 +788,15 @@ void EditPointTool::setupAngleHelperFromHoverObject()
 	auto part = hover_object->asPath()->findPartForIndex(hover_point);
 	MapCoordF forward_tangent = part->calculateTangent(hover_point, false, forward_ok);
 	if (forward_ok)
-		angle_helper->addAngles(-forward_tangent.getAngle(), M_PI/2);
+		angle_helper->addAngles(-forward_tangent.angle(), M_PI/2);
 	bool backward_ok = false;
 	MapCoordF backward_tangent = part->calculateTangent(hover_point, true, backward_ok);
 	if (backward_ok)
-		angle_helper->addAngles(-backward_tangent.getAngle(), M_PI/2);
+		angle_helper->addAngles(-backward_tangent.angle(), M_PI/2);
 	
 	if (forward_ok && backward_ok)
 	{
-		double angle = (-backward_tangent.getAngle() - forward_tangent.getAngle()) / 2;
+		double angle = (-backward_tangent.angle() - forward_tangent.angle()) / 2;
 		angle_helper->addAngle(angle);
 		angle_helper->addAngle(angle + M_PI/2);
 		angle_helper->addAngle(angle + M_PI);

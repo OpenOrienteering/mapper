@@ -473,10 +473,10 @@ void TemplateAdjustWidget::updateRow(int row)
 	else
 		src_coords_template = temp->mapToTemplate(point.src_coords);
 	
-	table->item(row, 0)->setText(QString::number(src_coords_template.getX()));
-	table->item(row, 1)->setText(QString::number(src_coords_template.getY()));
-	table->item(row, 2)->setText(QString::number(point.dest_coords.getX()));
-	table->item(row, 3)->setText(QString::number(point.dest_coords.getY()));
+	table->item(row, 0)->setText(QString::number(src_coords_template.x()));
+	table->item(row, 1)->setText(QString::number(src_coords_template.y()));
+	table->item(row, 2)->setText(QString::number(point.dest_coords.x()));
+	table->item(row, 3)->setText(QString::number(point.dest_coords.y()));
 	table->item(row, 4)->setText((point.error > 0) ? QString::number(point.error) : "?");
 	
 	react_to_changes = true;
@@ -490,7 +490,7 @@ void TemplateAdjustWidget::updateDirtyRect(bool redraw)
 		temp->getMap()->clearActivityBoundingBox();
 	else
 	{
-		QRectF rect = QRectF(QPointF(adjusted ? temp->getPassPoint(0)->calculated_coords : temp->getPassPoint(0)->src_coords), QSizeF(0, 0));
+		QRectF rect = QRectF(adjusted ? temp->getPassPoint(0)->calculated_coords : temp->getPassPoint(0)->src_coords, QSizeF(0, 0));
 		rectInclude(rect, temp->getPassPoint(0)->dest_coords);
 		for (int i = 1; i < temp->getNumPassPoints(); ++i)
 		{
@@ -543,12 +543,12 @@ void TemplateAdjustEditTool::findHoverPoint(QPoint mouse_pos, MapWidget* map_wid
 			if (active_point_is_src)
 			{
 				if (adjusted)
-					map()->setDrawingBoundingBox(QRectF(point->calculated_coords.getX(), point->calculated_coords.getY(), 0, 0), TemplateAdjustActivity::cross_radius);
+					map()->setDrawingBoundingBox(QRectF(point->calculated_coords.x(), point->calculated_coords.y(), 0, 0), TemplateAdjustActivity::cross_radius);
 				else
-					map()->setDrawingBoundingBox(QRectF(point->src_coords.getX(), point->src_coords.getY(), 0, 0), TemplateAdjustActivity::cross_radius);
+					map()->setDrawingBoundingBox(QRectF(point->src_coords.x(), point->src_coords.y(), 0, 0), TemplateAdjustActivity::cross_radius);
 			}
 			else
-				map()->setDrawingBoundingBox(QRectF(point->dest_coords.getX(), point->dest_coords.getY(), 0, 0), TemplateAdjustActivity::cross_radius);
+				map()->setDrawingBoundingBox(QRectF(point->dest_coords.x(), point->dest_coords.y(), 0, 0), TemplateAdjustActivity::cross_radius);
 		}
 		else
 			map()->clearDrawingBoundingBox();
@@ -641,17 +641,16 @@ void TemplateAdjustAddTool::draw(QPainter* painter, MapWidget* widget)
 		MapCoordF to_end = MapCoordF((end - start).x(), (end - start).y());
 		if (to_end.lengthSquared() > 3*3)
 		{
-			double length = to_end.length();
-			to_end.setX(to_end.getX() * ((length - 3) / length));
-			to_end.setY(to_end.getY() * ((length - 3) / length));
-			painter->drawLine(start, start + QPointF(to_end.getX(), to_end.getY()));
+			auto length = to_end.length();
+			to_end *= (length - 3) / length;
+			painter->drawLine(start, start + to_end);
 		}
 	}
 }
 
 void TemplateAdjustAddTool::setDirtyRect(MapCoordF mouse_pos)
 {
-	QRectF rect = QRectF(first_point.getX(), first_point.getY(), 0, 0);
+	QRectF rect = QRectF(first_point.x(), first_point.y(), 0, 0);
 	rectInclude(rect, mouse_pos);
 	map()->setDrawingBoundingBox(rect, TemplateAdjustActivity::cross_radius);
 }
@@ -701,7 +700,7 @@ bool TemplateAdjustMoveTool::mousePressEvent(QMouseEvent* event, MapCoordF map_c
 			point_coords = &point->dest_coords;
 		
 		dragging = true;
-		dragging_offset = MapCoordF(point_coords->getX() - map_coord.getX(), point_coords->getY() - map_coord.getY());
+		dragging_offset = MapCoordF(point_coords->x() - map_coord.x(), point_coords->y() - map_coord.y());
 		
 		widget->setCursor(*cursor_invisible);
 	}
@@ -760,11 +759,11 @@ void TemplateAdjustMoveTool::setActivePointPosition(MapCoordF map_coord)
 	}
 	else
 		changed_coords = &point->dest_coords;
-	QRectF changed_rect = QRectF(QPointF(adjusted ? point->calculated_coords : point->src_coords), QSizeF(0, 0));
+	QRectF changed_rect = QRectF(adjusted ? point->calculated_coords : point->src_coords, QSizeF(0, 0));
 	rectInclude(changed_rect, point->dest_coords);
 	rectInclude(changed_rect, map_coord);
 	
-	*changed_coords = MapCoordF(map_coord.getX() + dragging_offset.getX(), map_coord.getY() + dragging_offset.getY());
+	*changed_coords = MapCoordF(map_coord.x() + dragging_offset.x(), map_coord.y() + dragging_offset.y());
 	if (active_point_is_src)
 	{
 		if (adjusted)
@@ -777,7 +776,7 @@ void TemplateAdjustMoveTool::setActivePointPosition(MapCoordF map_coord)
 	
 	this->widget->updateRow(active_point);
 	
-	map()->setDrawingBoundingBox(QRectF(changed_coords->getX(), changed_coords->getY(), 0, 0), TemplateAdjustActivity::cross_radius + 1, false);
+	map()->setDrawingBoundingBox(QRectF(changed_coords->x(), changed_coords->y(), 0, 0), TemplateAdjustActivity::cross_radius + 1, false);
 	map()->updateDrawing(changed_rect, TemplateAdjustActivity::cross_radius + 1);
 	widget->updateDirtyRect();
 	
@@ -814,7 +813,7 @@ bool TemplateAdjustDeleteTool::mousePressEvent(QMouseEvent* event, MapCoordF map
 	if (active_point >= 0)
 	{
 		PassPoint* point = this->widget->getTemplate()->getPassPoint(active_point);
-		QRectF changed_rect = QRectF(QPointF(adjusted ? point->calculated_coords : point->src_coords), QSizeF(0, 0));
+		QRectF changed_rect = QRectF(adjusted ? point->calculated_coords : point->src_coords, QSizeF(0, 0));
 		rectInclude(changed_rect, point->dest_coords);
 		
 		this->widget->deletePassPoint(active_point);

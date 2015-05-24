@@ -76,13 +76,13 @@ MapCoordF SplitPathCoord::tangentVector() const
 	
 	/// Check distances, advance to a significant length, handle closed paths.
 	MapCoordF next = curve_start[0];
-	if (pos.lengthToSquared(next) >= PathCoord::tangentEpsilonSquared())
+	if (pos.distanceSquaredTo(next) >= PathCoord::tangentEpsilonSquared())
 		goto next_found;
 
 	if (is_curve_start)
 	{
 		next = curve_start[1];
-		if (pos.lengthToSquared(next) >= PathCoord::tangentEpsilonSquared())
+		if (pos.distanceSquaredTo(next) >= PathCoord::tangentEpsilonSquared())
 			goto next_found;
 	}
 	
@@ -93,7 +93,7 @@ MapCoordF SplitPathCoord::tangentVector() const
 		{
 			++index;
 			next = path_coords[index].pos;
-			if (pos.lengthToSquared(next) >= PathCoord::tangentEpsilonSquared())
+			if (pos.distanceSquaredTo(next) >= PathCoord::tangentEpsilonSquared())
 				goto next_found;
 		}
 		while (path_coords[index].param != 0.0);
@@ -108,7 +108,7 @@ MapCoordF SplitPathCoord::tangentVector() const
 	{
 		++index;
 		next = coords[index];
-		if (pos.lengthToSquared(next) >= PathCoord::tangentEpsilonSquared())
+		if (pos.distanceSquaredTo(next) >= PathCoord::tangentEpsilonSquared())
 			goto next_found;
 	}
 	
@@ -120,14 +120,14 @@ MapCoordF SplitPathCoord::tangentVector() const
 		{
 			++index;
 			next = coords[index];
-			if (pos.lengthToSquared(next) >= PathCoord::tangentEpsilonSquared())
+			if (pos.distanceSquaredTo(next) >= PathCoord::tangentEpsilonSquared())
 				goto next_found;
 		}
 		
 		if (flags[path_coords[index].index].isCurveStart())
 		{
 			next = coords[index+1];
-			if (pos.lengthToSquared(next) >= PathCoord::tangentEpsilonSquared())
+			if (pos.distanceSquaredTo(next) >= PathCoord::tangentEpsilonSquared())
 				goto next_found;
 		}
 		
@@ -140,7 +140,7 @@ MapCoordF SplitPathCoord::tangentVector() const
 		last_index = path_coord_index;
 		while (index < last_index);
 		{
-			if (pos.lengthToSquared(next) >= PathCoord::tangentEpsilonSquared())
+			if (pos.distanceSquaredTo(next) >= PathCoord::tangentEpsilonSquared())
 				goto next_found;
 			
 			++index;
@@ -157,13 +157,13 @@ next_found:
 	
 	
 	MapCoordF prev = curve_end[1];
-	if (pos.lengthToSquared(prev) >= PathCoord::tangentEpsilonSquared())
+	if (pos.distanceSquaredTo(prev) >= PathCoord::tangentEpsilonSquared())
 		goto prev_found;
 	
 	if (is_curve_end)
 	{
 		prev = curve_end[0];
-		if (pos.lengthToSquared(prev) >= PathCoord::tangentEpsilonSquared())
+		if (pos.distanceSquaredTo(prev) >= PathCoord::tangentEpsilonSquared())
 			goto prev_found;
 	}
 	
@@ -176,7 +176,7 @@ next_found:
 		{
 			--index;
 			prev = path_coords[index].pos;
-			if (pos.lengthToSquared(prev) >= PathCoord::tangentEpsilonSquared())
+			if (pos.distanceSquaredTo(prev) >= PathCoord::tangentEpsilonSquared())
 				goto prev_found;
 		}
 	}
@@ -189,7 +189,7 @@ next_found:
 	{
 		--index;
 		prev = coords[index];
-		if (pos.lengthToSquared(prev) >= PathCoord::tangentEpsilonSquared())
+		if (pos.distanceSquaredTo(prev) >= PathCoord::tangentEpsilonSquared())
 			goto prev_found;
 	}
 	
@@ -202,7 +202,7 @@ next_found:
 		{
 			--index;
 			prev = coords[index];
-			if (pos.lengthToSquared(prev) >= PathCoord::tangentEpsilonSquared())
+			if (pos.distanceSquaredTo(prev) >= PathCoord::tangentEpsilonSquared())
 				goto prev_found;
 		}
 		
@@ -216,7 +216,7 @@ next_found:
 		{
 			--index;
 			prev = path_coords[index].pos;
-			if (pos.lengthToSquared(prev) >= PathCoord::tangentEpsilonSquared())
+			if (pos.distanceSquaredTo(prev) >= PathCoord::tangentEpsilonSquared())
 				goto prev_found;
 		}
 	}
@@ -229,7 +229,6 @@ prev_found:
 	next -= prev;
 	return next;
 }
-
 
 // static
 SplitPathCoord SplitPathCoord::begin(const PathCoordVector& path_coords)

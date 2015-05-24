@@ -22,6 +22,7 @@
 
 #include <type_traits>
 
+#include <QLineF>
 #include <QTextStream>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
@@ -35,10 +36,12 @@ static_assert((-3 >> 1) == -2,
 static_assert(std::is_nothrow_move_constructible<MapCoord>::value, "MapCoord must be nothrow move constructible.");
 static_assert(std::is_nothrow_move_assignable<MapCoord>::value, "MapCoord must be nothrow move assignable.");
 
-static_assert(MapCoord(1, 1) == MapCoordF(1.0, 1.0).toMapCoord(),
+static_assert(MapCoordF(1.0, 1.0) == QPointF(1.0, 1.0),
+              "MapCoordF and QPointF constructors must use the same unit of measurement");
+static_assert(MapCoord(1, 1) == MapCoord(MapCoordF(1.0, 1.0)),
               "MapCoord and MapCoordF constructors must use the same unit of measurement");
-static_assert(MapCoord(1.0, 1.0) == MapCoordF(1.0, 1.0).toMapCoord(),
-              "MapCoord and MapCoordF constructors must use the same unit of measurement");
+static_assert(MapCoord(1.0, 1.0) == MapCoord(QPointF(1.0, 1.0)),
+              "MapCoord and QPointF constructors must use the same unit of measurement");
 static_assert(MapCoord(1, 1) == MapCoord::fromRaw(1000, 1000),
               "MapCoord::fromRaw must use the native unit of measurement");
 
@@ -79,6 +82,19 @@ static_assert(!MapCoord(0.0, 0.0).isGapPoint(),
               "MapCoord::isGapPoint() must return false by default.");
 static_assert(MapCoord(0.0, 0.0, MapCoord::GapPoint).isGapPoint(),
               "MapCoord::GapPoint must result in MapCoord::isGapPoint() returning true.");
+
+#ifndef MAPPER_NO_QREAL_CHECK
+// Check that QPointF/MapCoorF will actually use double.
+static_assert(std::is_same<qreal, double>::value, "qreal is not double. This could work but was not tested.");
+#endif
+
+static_assert(std::is_nothrow_move_constructible<MapCoordF>::value, "MapCoord must be nothrow move constructible.");
+static_assert(std::is_nothrow_move_assignable<MapCoordF>::value, "MapCoord must be nothrow move assignable.");
+
+static_assert(QLineF(QPointF(0,0), -MapCoordF(1,0).perpRight()) == QLineF(QPointF(0,0), QPointF(1,0)).normalVector(),
+              "MapCoordF::perpRight() must return a vector in opposite direction of QLineF::normalVector().");
+static_assert(QLineF(QPointF(0,0), MapCoordF(1,0).normalVector()) == QLineF(QPointF(0,0), QPointF(1,0)).normalVector(),
+              "MapCoordF::normalVector() must behave like QLineF::normalVector().");
 
 
 
@@ -211,6 +227,3 @@ QTextStream& operator>>(QTextStream& stream, MapCoord& coord)
 	coord.setFlags(flags);
 	return stream;
 }
-
-
-

@@ -561,15 +561,15 @@ void Object::scale(MapCoordF center, double factor)
 {
 	if (type == Text && coords.size() == 2)
 	{
-		coords[0].setX(center.getX() + (coords[0].xd() - center.getX()) * factor);
-		coords[0].setY(center.getY() + (coords[0].yd() - center.getY()) * factor);
+		coords[0].setX(center.x() + (coords[0].xd() - center.x()) * factor);
+		coords[0].setY(center.y() + (coords[0].yd() - center.y()) * factor);
 		coords[1].setX(coords[1].xd() * factor);
 		coords[1].setY(coords[1].yd() * factor);
 	}
 	else for (MapCoord& coord : coords)
 	{
-		coord.setX(center.getX() + (coord.xd() - center.getX()) * factor);
-		coord.setY(center.getY() + (coord.yd() - center.getY()) * factor);
+		coord.setX(center.x() + (coord.xd() - center.x()) * factor);
+		coord.setY(center.y() + (coord.yd() - center.y()) * factor);
 	}
 	
 	setOutputDirty();
@@ -596,9 +596,9 @@ void Object::rotateAround(MapCoordF center, double angle)
 		coords_size = 1;	// don't touch box width / height for box texts
 	for (int c = 0; c < coords_size; ++c)
 	{
-		MapCoordF center_to_coord = MapCoordF(coords[c].xd() - center.getX(), coords[c].yd() - center.getY());
-		coords[c].setX(center.getX() + cos_angle * center_to_coord.getX() + sin_angle * center_to_coord.getY());
-		coords[c].setY(center.getY() - sin_angle * center_to_coord.getX() + cos_angle * center_to_coord.getY());
+		MapCoordF center_to_coord = MapCoordF(coords[c].xd() - center.x(), coords[c].yd() - center.y());
+		coords[c].setX(center.x() + cos_angle * center_to_coord.x() + sin_angle * center_to_coord.y());
+		coords[c].setY(center.y() - sin_angle * center_to_coord.x() + cos_angle * center_to_coord.y());
 	}
 	
 	if (type == Point)
@@ -655,17 +655,17 @@ int Object::isPointOnObject(MapCoordF coord, float tolerance, bool treat_areas_a
 	if (type == Symbol::Point)
 	{
 		if (!extended_selection)
-			return (coord.lengthToSquared(MapCoordF(coords[0])) <= tolerance) ? Symbol::Point : Symbol::NoSymbol;
+			return (coord.distanceSquaredTo(MapCoordF(coords[0])) <= tolerance) ? Symbol::Point : Symbol::NoSymbol;
 		else
-			return extent.contains(QPointF(coord)) ? Symbol::Point : Symbol::NoSymbol;
+			return extent.contains(coord) ? Symbol::Point : Symbol::NoSymbol;
 	}
 	
 	// First check using extent
 	float extent_extension = ((contained_types & Symbol::Line) || treat_areas_as_paths) ? tolerance : 0;
-	if (coord.getX() < extent.left() - extent_extension) return Symbol::NoSymbol;
-	if (coord.getY() < extent.top() - extent_extension) return Symbol::NoSymbol;
-	if (coord.getX() > extent.right() + extent_extension) return Symbol::NoSymbol;
-	if (coord.getY() > extent.bottom() + extent_extension) return Symbol::NoSymbol;
+	if (coord.x() < extent.left() - extent_extension) return Symbol::NoSymbol;
+	if (coord.y() < extent.top() - extent_extension) return Symbol::NoSymbol;
+	if (coord.x() > extent.right() + extent_extension) return Symbol::NoSymbol;
+	if (coord.y() > extent.bottom() + extent_extension) return Symbol::NoSymbol;
 	
 	if (type == Symbol::Text)
 	{
@@ -1168,19 +1168,19 @@ MapCoordVector::size_type PathObject::subdivide(MapCoordVector::size_type index,
 		PathCoord::splitBezierCurve(MapCoordF(coords[index]), MapCoordF(coords[index+1]),
 									MapCoordF(coords[index+2]), MapCoordF(coords[index+3]),
 									param, o0, o1, o2, o3, o4);
-		coords[index + 1] = o0.toMapCoord();
-		coords[index + 2] = o4.toMapCoord();
-		addCoordinate(index + 2, o3.toMapCoord());
-		MapCoord middle_coord = o2.toMapCoord();
+		coords[index + 1] = MapCoord(o0);
+		coords[index + 2] = MapCoord(o4);
+		addCoordinate(index + 2, MapCoord(o3));
+		MapCoord middle_coord = MapCoord(o2);
 		middle_coord.setCurveStart(true);
 		addCoordinate(index + 2, middle_coord);
-		addCoordinate(index + 2, o1.toMapCoord());
+		addCoordinate(index + 2, MapCoord(o1));
 		Q_ASSERT(isOutputDirty());
 		return index + 3;
 	}
 	else
 	{
-		addCoordinate(index + 1, (MapCoordF(coords[index]) + (MapCoordF(coords[index+1]) - MapCoordF(coords[index])) * param).toMapCoord());
+		addCoordinate(index + 1, MapCoord(MapCoordF(coords[index]) + (MapCoordF(coords[index+1]) - MapCoordF(coords[index])) * param));
 		Q_ASSERT(isOutputDirty());
 		return index + 1;
 	}
@@ -1811,7 +1811,7 @@ float PathObject::calcBezierPointDeletionRetainingShapeCost(MapCoord p0, MapCoor
 	float cost = 0;
 	for (int i = 0; i < num_test_points; ++i)
 	{
-		QPointF point = curve.pointAt((i + 1) / (float)(num_test_points + 1));
+		auto point = MapCoordF { curve.pointAt((i + 1) / (float)(num_test_points + 1)) };
 		float distance_sq;
 		PathCoord path_coord;
 		reference->calcClosestPointOnPath(MapCoordF(point), distance_sq, path_coord);
@@ -2052,8 +2052,8 @@ int PathObject::convertRangeToCurves(const PathPart& part, MapCoordVector::size_
 	
 	MapCoord end_handle = coords[end_index];
 	end_handle.setFlags(0);
-	float baseline = (coords[end_index] - coords[end_index - 1]).length();
-	end_handle = end_handle + (tangent * (-1 * BEZIER_HANDLE_DISTANCE * baseline)).toMapCoord();
+	auto baseline = (coords[end_index] - coords[end_index - 1]).length() * BEZIER_HANDLE_DISTANCE;
+	end_handle = end_handle - MapCoord(tangent * baseline);
 	
 	// Special case: first coordinate
 	if (start_index != part.first_index)
@@ -2077,8 +2077,8 @@ int PathObject::convertRangeToCurves(const PathPart& part, MapCoordVector::size_
 	
 	MapCoord handle = coords[start_index];
 	handle.setFlags(0);
-	baseline = (coords[start_index + 1] - coords[start_index]).length();
-	handle = handle + (tangent * (BEZIER_HANDLE_DISTANCE * baseline)).toMapCoord();
+	baseline = (coords[start_index + 1] - coords[start_index]).length() * BEZIER_HANDLE_DISTANCE;
+	handle = handle + MapCoord(tangent * baseline);
 	addCoordinate(start_index + 1, handle);
 	++end_index;
 	
@@ -2092,8 +2092,8 @@ int PathObject::convertRangeToCurves(const PathPart& part, MapCoordVector::size_
 		// Add previous handle
 		handle = coords[c];
 		handle.setFlags(0);
-		baseline = (coords[c] - coords[c - 2]).length();
-		handle = handle + (tangent * (-1 * BEZIER_HANDLE_DISTANCE * baseline)).toMapCoord();
+		baseline = (coords[c] - coords[c - 2]).length() * BEZIER_HANDLE_DISTANCE;
+		handle = handle - MapCoord(tangent * baseline);
 		
 		addCoordinate(c, handle);
 		++c;
@@ -2106,8 +2106,8 @@ int PathObject::convertRangeToCurves(const PathPart& part, MapCoordVector::size_
 		// Add next handle
 		handle = coords[c];
 		handle.setFlags(0);
-		baseline = (coords[c + 1] - coords[c]).length();
-		handle = handle + (tangent * (BEZIER_HANDLE_DISTANCE * baseline)).toMapCoord();
+		baseline = (coords[c + 1] - coords[c]).length() * BEZIER_HANDLE_DISTANCE;
+		handle = handle + MapCoord(tangent * baseline);
 		
 		addCoordinate(c + 1, handle);
 		++c;
@@ -2353,12 +2353,12 @@ int PathObject::isPointOnPath(MapCoordF coord, float tolerance, bool treat_areas
 				if (coords[path_coords[i].index].isHolePoint())
 					continue;
 				
-				MapCoordF to_coord = MapCoordF(coord.getX() - path_coords[i].pos.getX(), coord.getY() - path_coords[i].pos.getY());
-				MapCoordF to_next = MapCoordF(path_coords[i+1].pos.getX() - path_coords[i].pos.getX(), path_coords[i+1].pos.getY() - path_coords[i].pos.getY());
+				MapCoordF to_coord = coord - path_coords[i].pos;
+				MapCoordF to_next = path_coords[i+1].pos - path_coords[i].pos;
 				MapCoordF tangent = to_next;
 				tangent.normalize();
 				
-				float dist_along_line = to_coord.dot(tangent);
+				float dist_along_line = MapCoordF::dotProduct(to_coord, tangent);
 				if (dist_along_line < -tolerance)
 					continue;
 				else if (dist_along_line < 0 && to_coord.lengthSquared() <= tolerance*tolerance)
@@ -2369,13 +2369,12 @@ int PathObject::isPointOnPath(MapCoordF coord, float tolerance, bool treat_areas
 					continue;
 				if (dist_along_line > line_length + tolerance)
 					continue;
-				else if (dist_along_line > line_length && coord.lengthToSquared(path_coords[i+1].pos) <= tolerance*tolerance)
+				else if (dist_along_line > line_length && coord.distanceSquaredTo(path_coords[i+1].pos) <= tolerance*tolerance)
 					return Symbol::Line;
 				
-				MapCoordF right = tangent;
-				right.perpRight();
+				auto right = tangent.perpRight();
 				
-				float dist_from_line = qAbs(right.dot(to_coord));
+				float dist_from_line = qAbs(MapCoordF::dotProduct(right, to_coord));
 				if (dist_from_line <= side_tolerance)
 					return Symbol::Line;
 			}
@@ -2472,7 +2471,7 @@ double PathObject::calcMaximumDistanceTo(
 PathObject::Intersection PathObject::Intersection::makeIntersectionAt(double a, double b, const PathCoord& a0, const PathCoord& a1, const PathCoord& b0, const PathCoord& b1, PathPartVector::size_type part_index, PathPartVector::size_type other_part_index)
 {
 	PathObject::Intersection new_intersection;
-	new_intersection.coord = MapCoordF(a0.pos.getX() + a * (a1.pos.getX() - a0.pos.getX()), a0.pos.getY() + a * (a1.pos.getY() - a0.pos.getY()));
+	new_intersection.coord = MapCoordF(a0.pos.x() + a * (a1.pos.x() - a0.pos.x()), a0.pos.y() + a * (a1.pos.y() - a0.pos.y()));
 	new_intersection.part_index = part_index;
 	new_intersection.length = a0.clen + a * (a1.clen - a0.clen);
 	new_intersection.other_part_index = other_part_index;
@@ -2562,7 +2561,7 @@ void PathObject::calcAllIntersectionsWith(const PathObject* other, PathObject::I
 						{
 							// Enter intersection at start of other segment
 							bool ok;
-							double a = parameterOfPointOnLine(a0.pos.getX(), a0.pos.getY(), a1.pos.getX() - a0.pos.getX(), a1.pos.getY() - a0.pos.getY(), b0.pos.getX(), b0.pos.getY(), ok);
+							double a = parameterOfPointOnLine(a0.pos.x(), a0.pos.y(), a1.pos.x() - a0.pos.x(), a1.pos.y() - a0.pos.y(), b0.pos.x(), b0.pos.y(), ok);
 							Q_ASSERT(ok);
 							out.push_back(Intersection::makeIntersectionAt(a, 0, a0, a1, b0, b1, part_index, other_part_index));
 						}
@@ -2576,20 +2575,20 @@ void PathObject::calcAllIntersectionsWith(const PathObject* other, PathObject::I
 						{
 							// Enter intersection at end of other segment
 							bool ok;
-							double a = parameterOfPointOnLine(a0.pos.getX(), a0.pos.getY(), a1.pos.getX() - a0.pos.getX(), a1.pos.getY() - a0.pos.getY(), b1.pos.getX(), b1.pos.getY(), ok);
+							double a = parameterOfPointOnLine(a0.pos.x(), a0.pos.y(), a1.pos.x() - a0.pos.x(), a1.pos.y() - a0.pos.y(), b1.pos.x(), b1.pos.y(), ok);
 							Q_ASSERT(ok);
 							out.push_back(Intersection::makeIntersectionAt(a, 1, a0, a1, b0, b1, part_index, other_part_index));
 						}
 					}
 					
-					double denominator = a0.pos.getX()*b0.pos.getY() - a0.pos.getY()*b0.pos.getX() - a0.pos.getX()*b1.pos.getY() - a1.pos.getX()*b0.pos.getY() + a0.pos.getY()*b1.pos.getX() + a1.pos.getY()*b0.pos.getX() + a1.pos.getX()*b1.pos.getY() - a1.pos.getY()*b1.pos.getX();
+					double denominator = a0.pos.x()*b0.pos.y() - a0.pos.y()*b0.pos.x() - a0.pos.x()*b1.pos.y() - a1.pos.x()*b0.pos.y() + a0.pos.y()*b1.pos.x() + a1.pos.y()*b0.pos.x() + a1.pos.x()*b1.pos.y() - a1.pos.y()*b1.pos.x();
 					if (denominator == 0)
 					{
 						// Parallel lines, calculate parameters for b's start and end points in a and b.
 						// This also checks whether the lines are actually on the same level.
 						bool ok;
 						double b_start = 0;
-						double a_start = parameterOfPointOnLine(a0.pos.getX(), a0.pos.getY(), a1.pos.getX() - a0.pos.getX(), a1.pos.getY() - a0.pos.getY(), b0.pos.getX(), b0.pos.getY(), ok);
+						double a_start = parameterOfPointOnLine(a0.pos.x(), a0.pos.y(), a1.pos.x() - a0.pos.x(), a1.pos.y() - a0.pos.y(), b0.pos.x(), b0.pos.y(), ok);
 						if (!ok)
 						{
 							if (colliding) out.push_back(last_intersection);
@@ -2597,7 +2596,7 @@ void PathObject::calcAllIntersectionsWith(const PathObject* other, PathObject::I
 							continue;
 						}
 						double b_end = 1;
-						double a_end = parameterOfPointOnLine(a0.pos.getX(), a0.pos.getY(), a1.pos.getX() - a0.pos.getX(), a1.pos.getY() - a0.pos.getY(), b1.pos.getX(), b1.pos.getY(), ok);
+						double a_end = parameterOfPointOnLine(a0.pos.x(), a0.pos.y(), a1.pos.x() - a0.pos.x(), a1.pos.y() - a0.pos.y(), b1.pos.x(), b1.pos.y(), ok);
 						if (!ok)
 						{
 							if (colliding) out.push_back(last_intersection);
@@ -2629,7 +2628,7 @@ void PathObject::calcAllIntersectionsWith(const PathObject* other, PathObject::I
 								Q_ASSERT(a_end >= 0);
 								
 								// Check for parallel tangent case
-								if (!has_segment_before || b_direction.dot(ingoing_direction) < 1 - epsilon)
+								if (!has_segment_before || MapCoordF::dotProduct(b_direction, ingoing_direction) < 1 - epsilon)
 								{
 									// Enter intersection at a=0
 									double b = b_start + (0 - a_start) / (a_end - a_start) * (b_end - b_start);
@@ -2644,7 +2643,7 @@ void PathObject::calcAllIntersectionsWith(const PathObject* other, PathObject::I
 								Q_ASSERT(a_end <= 1);
 								
 								// Check for parallel tangent case
-								if (!has_segment_after || -1 * b_direction.dot(outgoing_direction) < 1 - epsilon)
+								if (!has_segment_after || -1 * MapCoordF::dotProduct(b_direction, outgoing_direction) < 1 - epsilon)
 								{
 									// Enter intersection at a=1
 									double b = b_start + (1 - a_start) / (a_end - a_start) * (b_end - b_start);
@@ -2664,7 +2663,7 @@ void PathObject::calcAllIntersectionsWith(const PathObject* other, PathObject::I
 								Q_ASSERT(a_start <= 1);
 								
 								// Check for parallel tangent case
-								if (!has_segment_after || b_direction.dot(outgoing_direction) < 1 - epsilon)
+								if (!has_segment_after || MapCoordF::dotProduct(b_direction, outgoing_direction) < 1 - epsilon)
 								{
 									// Enter intersection at a=1
 									double b = b_start + (1 - a_start) / (a_end - a_start) * (b_end - b_start);
@@ -2679,7 +2678,7 @@ void PathObject::calcAllIntersectionsWith(const PathObject* other, PathObject::I
 								Q_ASSERT(a_start >= 1);
 								
 								// Check for parallel tangent case
-								if (!has_segment_before || -1 * b_direction.dot(ingoing_direction) < 1 - epsilon)
+								if (!has_segment_before || -1 * MapCoordF::dotProduct(b_direction, ingoing_direction) < 1 - epsilon)
 								{
 									// Enter intersection at a=0
 									double b = b_start + (0 - a_start) / (a_end - a_start) * (b_end - b_start);
@@ -2702,7 +2701,7 @@ void PathObject::calcAllIntersectionsWith(const PathObject* other, PathObject::I
 					else
 					{
 						// Non-parallel lines, calculate intersection parameters and check if in range
-						double a = +(a0.pos.getX()*b0.pos.getY() - a0.pos.getY()*b0.pos.getX() - a0.pos.getX()*b1.pos.getY() + a0.pos.getY()*b1.pos.getX() + b0.pos.getX()*b1.pos.getY() - b1.pos.getX()*b0.pos.getY()) / denominator;
+						double a = +(a0.pos.x()*b0.pos.y() - a0.pos.y()*b0.pos.x() - a0.pos.x()*b1.pos.y() + a0.pos.y()*b1.pos.x() + b0.pos.x()*b1.pos.y() - b1.pos.x()*b0.pos.y()) / denominator;
 						if (a < zero_minus_epsilon || a > one_plus_epsilon)
 						{
 							if (colliding) out.push_back(last_intersection);
@@ -2710,7 +2709,7 @@ void PathObject::calcAllIntersectionsWith(const PathObject* other, PathObject::I
 							continue;
 						}
 						
-						double b = -(a0.pos.getX()*a1.pos.getY() - a1.pos.getX()*a0.pos.getY() - a0.pos.getX()*b0.pos.getY() + a0.pos.getY()*b0.pos.getX() + a1.pos.getX()*b0.pos.getY() - a1.pos.getY()*b0.pos.getX()) / denominator;
+						double b = -(a0.pos.x()*a1.pos.y() - a1.pos.x()*a0.pos.y() - a0.pos.x()*b0.pos.y() + a0.pos.y()*b0.pos.x() + a1.pos.x()*b0.pos.y() - a1.pos.y()*b0.pos.x()) / denominator;
 						if (b < zero_minus_epsilon || b > one_plus_epsilon)
 						{
 							if (colliding) out.push_back(last_intersection);
@@ -2725,14 +2724,14 @@ void PathObject::calcAllIntersectionsWith(const PathObject* other, PathObject::I
 						if (has_segment_before && a <= 0 + epsilon)
 						{
 							// Ingoing direction
-							dot = b_direction.dot(ingoing_direction);
+							dot = MapCoordF::dotProduct(b_direction, ingoing_direction);
 							if (b <= 0 + epsilon)
 								dot = -1 * dot;
 						}
 						else if (has_segment_after && a >= 1 - epsilon)
 						{
 							// Outgoing direction
-							dot = b_direction.dot(outgoing_direction);
+							dot = MapCoordF::dotProduct(b_direction, outgoing_direction);
 							if (b >= 1 - epsilon)
 								dot = -1 * dot;
 						}
@@ -2951,10 +2950,10 @@ void PathObject::prepareDeleteBezierPoint(MapCoordVector::size_type pos, int del
 	}
 	
 	MapCoordF p0p1 = MapCoordF(p1) - MapCoordF(p0);
-	p1 = MapCoord(p0.xd() + pfactor * p0p1.getX(), p0.yd() + pfactor * p0p1.getY());
+	p1 = MapCoord(p0.xd() + pfactor * p0p1.x(), p0.yd() + pfactor * p0p1.y());
 	
 	MapCoordF q3q2 = MapCoordF(q2) - MapCoordF(q3);
-	q2 = MapCoord(q3.xd() + qfactor * q3q2.getX(), q3.yd() + qfactor * q3q2.getY());
+	q2 = MapCoord(q3.xd() + qfactor * q3q2.x(), q3.yd() + qfactor * q3q2.y());
 }
 
 void PathObject::clearCoordinates()
@@ -3112,8 +3111,8 @@ void PointObject::setPosition(qint64 x, qint64 y)
 
 void PointObject::setPosition(MapCoordF coord)
 {
-	coords[0].setX(coord.getX());
-	coords[0].setY(coord.getY());
+	coords[0].setX(coord.x());
+	coords[0].setY(coord.y());
 	setOutputDirty();
 }
 
@@ -3140,7 +3139,7 @@ void PointObject::setRotation(float new_rotation)
 
 void PointObject::setRotation(MapCoordF vector)
 {
-	setRotation(atan2(vector.getX(), vector.getY()));
+	setRotation(atan2(vector.x(), vector.y()));
 }
 
 bool PointObject::intersectsBox(QRectF box) const

@@ -423,7 +423,8 @@ void BooleanTool::pathObjectToPolygons(
 		ClipperLib::Path polygon;
 		for (auto i = 0u; i < path_coords_end; ++i)
 		{
-			polygon.push_back(ClipperLib::IntPoint(path_coords[i].pos.getIntX(), path_coords[i].pos.getIntY()));
+			auto point = MapCoord { path_coords[i].pos };
+			polygon.push_back(ClipperLib::IntPoint(point.rawX(), point.rawY()));
 			polymap.insertMulti(polygon.back(), std::make_pair(&part, &path_coords[i]));
 		}
 		
@@ -744,10 +745,10 @@ void BooleanTool::rebuildSegment(
 			                            MapCoordF(original->getCoordinate(edge_start + 2)), MapCoordF(original->getCoordinate(edge_start + 3)),
 			                            start_param,
 			                            unused, unused, o2, o3, o4);
-			start_tangent = o3.toMapCoord();
-			end_tangent = o4.toMapCoord();
+			start_tangent = MapCoord(o3);
+			end_tangent = MapCoord(o4);
 			
-			start_error_sq = start_coord.distanceSquaredTo(o2.toMapCoord());
+			start_error_sq = start_coord.distanceSquaredTo(MapCoord(o2));
 			if (start_error_sq > error_bound)
 				qDebug() << "BooleanTool::rebuildSegment: start error too high in increasing general case: " << sqrt(start_error_sq);
 		}
@@ -788,9 +789,9 @@ void BooleanTool::rebuildSegment(
 			                            MapCoordF(end_tangent), MapCoordF(original->getCoordinate(edge_start + 3)),
 			                            end_param,
 			                            o0, o1, o2, unused, unused);
-			start_tangent = o0.toMapCoord();
-			end_tangent = o1.toMapCoord();
-			end_coord = o2.toMapCoord();
+			start_tangent = MapCoord(o0);
+			end_tangent = MapCoord(o1);
+			end_coord = MapCoord(o2);
 			
 			auto test_x = end_point.X - end_coord.rawX();
 			auto test_y = end_point.Y - end_coord.rawY();
@@ -835,10 +836,10 @@ void BooleanTool::rebuildSegment(
 			                            MapCoordF(original->getCoordinate(edge_start + 1)), MapCoordF(original->getCoordinate(edge_start + 0)),
 			                            start_param,
 			                            unused, unused, o2, o3, o4);
-			start_tangent = o3.toMapCoord();
-			end_tangent = o4.toMapCoord();
+			start_tangent = MapCoord(o3);
+			end_tangent = MapCoord(o4);
 			
-			start_error_sq = start_coord.distanceSquaredTo(o2.toMapCoord());
+			start_error_sq = start_coord.distanceSquaredTo(MapCoord(o2));
 			if (start_error_sq > error_bound)
 				qDebug() << "BooleanTool::rebuildSegment: start error too high in decreasing general case: " << sqrt(start_error_sq);
 		}
@@ -876,9 +877,9 @@ void BooleanTool::rebuildSegment(
 			                            MapCoordF(end_tangent), MapCoordF(original->getCoordinate(edge_start + 0)),
 			                            end_param,
 			                            o0, o1, o2, unused, unused);
-			start_tangent = o0.toMapCoord();
-			end_tangent = o1.toMapCoord();
-			end_coord = o2.toMapCoord();
+			start_tangent = MapCoord(o0);
+			end_tangent = MapCoord(o1);
+			end_coord = MapCoord(o2);
 			
 			auto test_x = end_point.X - end_coord.rawX();
 			auto test_y = end_point.Y - end_coord.rawY();
@@ -920,8 +921,8 @@ void BooleanTool::rebuildSegmentFromPathOnly(
 	polygon_end_tangent.normalize();
 	
 	double tangent_length = BEZIER_HANDLE_DISTANCE * start_point_c.distanceTo(end_point_c);
-	object->addCoordinate((MapCoordF(start_point_c) + tangent_length * polygon_start_tangent).toMapCoord());
-	object->addCoordinate((MapCoordF(end_point_c) + tangent_length * polygon_end_tangent).toMapCoord());
+	object->addCoordinate(MapCoord(MapCoordF(start_point_c) + tangent_length * polygon_start_tangent));
+	object->addCoordinate(MapCoord((MapCoordF(end_point_c) + tangent_length * polygon_end_tangent)));
 	object->addCoordinate(end_point_c);
 }
 

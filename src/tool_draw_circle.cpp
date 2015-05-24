@@ -228,14 +228,13 @@ void DrawCircleTool::updateCircle()
 	else
 		first_pos_map = circle_start_pos_map;
 	
-	float radius = 0.5f * first_pos_map.lengthTo(opposite_pos_map);
+	float radius = 0.5f * first_pos_map.distanceTo(opposite_pos_map);
 	float kappa = BEZIER_KAPPA;
 	float m_kappa = 1 - BEZIER_KAPPA;
 	
 	MapCoordF across = opposite_pos_map - first_pos_map;
-	across.toLength(radius);
-	MapCoordF right = across;
-	right.perpRight();
+	across.setLength(radius);
+	MapCoordF right = across.perpRight();
 	
 	float right_radius = radius;
 	if (second_point_set && dragging)
@@ -245,24 +244,24 @@ void DrawCircleTool::updateCircle()
 		else
 		{
 			MapCoordF to_cursor = cur_pos_map - first_pos_map;
-			right_radius = to_cursor.dot(right) / right.length();
+			right_radius = MapCoordF::dotProduct(to_cursor, right) / right.length();
 		}
 	}
-	right.toLength(right_radius);
+	right.setLength(right_radius);
 	
 	preview_path->clearCoordinates();
-	preview_path->addCoordinate(first_pos_map.toCurveStartMapCoord());
-	preview_path->addCoordinate((first_pos_map + kappa * right).toMapCoord());
-	preview_path->addCoordinate((first_pos_map + right + m_kappa * across).toMapCoord());
-	preview_path->addCoordinate((first_pos_map + right + across).toCurveStartMapCoord());
-	preview_path->addCoordinate((first_pos_map + right + (1 + kappa) * across).toMapCoord());
-	preview_path->addCoordinate((first_pos_map + kappa * right + 2 * across).toMapCoord());
-	preview_path->addCoordinate((first_pos_map + 2 * across).toCurveStartMapCoord());
-	preview_path->addCoordinate((first_pos_map - kappa * right + 2 * across).toMapCoord());
-	preview_path->addCoordinate((first_pos_map - right + (1 + kappa) * across).toMapCoord());
-	preview_path->addCoordinate((first_pos_map - right + across).toCurveStartMapCoord());
-	preview_path->addCoordinate((first_pos_map - right + m_kappa * across).toMapCoord());
-	preview_path->addCoordinate((first_pos_map - kappa * right).toMapCoord());
+	preview_path->addCoordinate(MapCoord(first_pos_map, MapCoord::CurveStart));
+	preview_path->addCoordinate(MapCoord(first_pos_map + kappa * right));
+	preview_path->addCoordinate(MapCoord(first_pos_map + right + m_kappa * across));
+	preview_path->addCoordinate(MapCoord(first_pos_map + right + across, MapCoord::CurveStart));
+	preview_path->addCoordinate(MapCoord(first_pos_map + right + (1 + kappa) * across));
+	preview_path->addCoordinate(MapCoord(first_pos_map + kappa * right + 2 * across));
+	preview_path->addCoordinate(MapCoord(first_pos_map + 2 * across, MapCoord::CurveStart));
+	preview_path->addCoordinate(MapCoord(first_pos_map - kappa * right + 2 * across));
+	preview_path->addCoordinate(MapCoord(first_pos_map - right + (1 + kappa) * across));
+	preview_path->addCoordinate(MapCoord(first_pos_map - right + across, MapCoord::CurveStart));
+	preview_path->addCoordinate(MapCoord(first_pos_map - right + m_kappa * across));
+	preview_path->addCoordinate(MapCoord(first_pos_map - kappa * right));
 	preview_path->parts().front().setClosed(true, false);
 	
 	updatePreviewPath();

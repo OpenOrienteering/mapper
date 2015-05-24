@@ -107,8 +107,8 @@ void PointSymbol::createRenderablesScaled(MapCoordF coord, float rotation, Objec
 	
 	if (!objects.empty())
 	{
-		auto offset_x = coord.getX();
-		auto offset_y = coord.getY();
+		auto offset_x = coord.x();
+		auto offset_y = coord.y();
 		auto cosr = 1.0;
 		auto sinr = 0.0;
 		if (rotation != 0.0)

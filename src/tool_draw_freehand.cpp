@@ -1,5 +1,6 @@
 /*
  *    Copyright 2014 Thomas Schöps
+ *    Copyright 2014, 2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -192,24 +193,22 @@ void DrawFreehandTool::checkLineSegment(int a, int b, std::vector< bool >& point
 		
 		float distance_sq;
 		
-		float dist_along_line = to_coord.dot(tangent);
+		float dist_along_line = MapCoordF::dotProduct(to_coord, tangent);
 		if (dist_along_line <= 0)
 		{
 			distance_sq = to_coord.lengthSquared();
 		}
 		else
 		{
-			float line_length = MapCoordF(end_coord).lengthTo(MapCoordF(start_coord));
+			float line_length = MapCoordF(end_coord).distanceTo(MapCoordF(start_coord));
 			if (dist_along_line >= line_length)
 			{
-				distance_sq = MapCoordF(coord).lengthToSquared(MapCoordF(end_coord));
+				distance_sq = MapCoordF(coord).distanceSquaredTo(MapCoordF(end_coord));
 			}
 			else
 			{
-				MapCoordF right = tangent;
-				right.perpRight();
-			
-				distance_sq = qAbs(right.dot(to_coord));
+				auto right = tangent.perpRight();
+				distance_sq = qAbs(MapCoordF::dotProduct(right, to_coord));
 				distance_sq = distance_sq*distance_sq;
 			}
 		}
@@ -239,13 +238,13 @@ void DrawFreehandTool::updatePath()
 	if (!dragging)
 	{
 		preview_path->clearCoordinates();
-		preview_path->addCoordinate(cur_pos_map.toMapCoord());
+		preview_path->addCoordinate(MapCoord(cur_pos_map));
 	}
 	else
 	{
-		if (last_pos_map.lengthToSquared(cur_pos_map) < length_threshold_sq)
+		if (last_pos_map.distanceSquaredTo(cur_pos_map) < length_threshold_sq)
 			return;
-		preview_path->addCoordinate(cur_pos_map.toMapCoord());
+		preview_path->addCoordinate(MapCoord(cur_pos_map));
 	}
 	last_pos_map = cur_pos_map;
 	

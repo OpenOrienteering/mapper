@@ -49,16 +49,16 @@ void PathObjectTest::initTestCase()
 void PathObjectTest::mapCoordTest()
 {
 	auto vector = MapCoordF { 2.0, 0.0 };
-	QCOMPARE(vector.getX(), 2.0);
-	QCOMPARE(vector.getY(), 0.0);
+	QCOMPARE(vector.x(), 2.0);
+	QCOMPARE(vector.y(), 0.0);
 	QCOMPARE(vector.length(), 2.0);
-	QCOMPARE(vector.getAngle(), 0.0);
+	QCOMPARE(vector.angle(), 0.0);
 	
-	vector.perpRight();
-	QCOMPARE(vector.getX(), 0.0);
-	QCOMPARE(vector.getY(), 2.0); // This looks like left, but our y axis is mirrored.
+	vector = vector.perpRight();
+	QCOMPARE(vector.x(), 0.0);
+	QCOMPARE(vector.y(), 2.0); // This looks like left, but our y axis is mirrored.
 	QCOMPARE(vector.length(), 2.0);
-	QCOMPARE(vector.getAngle(), M_PI/2); // Remember, our y axis is mirrored.
+	QCOMPARE(vector.angle(), M_PI/2); // Remember, our y axis is mirrored.
 }
 
 void PathObjectTest::virtualPathTest()
@@ -69,40 +69,38 @@ void PathObjectTest::virtualPathTest()
 	
 	auto tangent_scaling = path.calculateTangentScaling(0);
 	auto& scaling = tangent_scaling.second;
-	auto& right = tangent_scaling.first;
-	right.perpRight();
+	auto right = tangent_scaling.first.perpRight();
 	right.normalize();
-	QCOMPARE(right.length(), 1.0); // Already normalized
-	QCOMPARE(right.getX(), 0.0);
-	QCOMPARE(right.getY(), 1.0); // This looks like left, but our y axis is mirrored.
-	QCOMPARE(right.getAngle(), M_PI/2);
+	QCOMPARE(right.length(), 1.0);
+	QCOMPARE(right.x(), 0.0);
+	QCOMPARE(right.y(), 1.0); // This looks like left, but our y axis is mirrored.
+	QCOMPARE(right.angle(), M_PI/2);
 	QCOMPARE(scaling, 1.0);
 	
 	tangent_scaling = path.calculateTangentScaling(1);
-	right.perpRight();
+	right = tangent_scaling.first.perpRight();
 	right.normalize();
-	QCOMPARE(right.length(), 1.0);
-	QCOMPARE(right.getX(), -sqrt(2.0)/2);
-	QCOMPARE(right.getY(), sqrt(2.0)/2);
-	QCOMPARE(right.getAngle(), 3*M_PI/4);
+	QCOMPARE(right.x(), -sqrt(2.0)/2);
+	QCOMPARE(right.y(), sqrt(2.0)/2);
+	QCOMPARE(right.angle(), 3*M_PI/4);
 	QCOMPARE(scaling, sqrt(2.0));
 	
 	tangent_scaling = path.calculateTangentScaling(2);
-	right.perpRight();
+	right = tangent_scaling.first.perpRight();
 	right.normalize();
 	QCOMPARE(right.length(), 1.0);
-	QCOMPARE(right.getX(), 0.0);
-	QCOMPARE(right.getY(), 1.0);
-	QCOMPARE(right.getAngle(), M_PI/2);
+	QCOMPARE(right.x(), 0.0);
+	QCOMPARE(right.y(), 1.0);
+	QCOMPARE(right.angle(), M_PI/2);
 	QVERIFY(qIsInf(scaling));
 	
 	tangent_scaling = path.calculateTangentScaling(3);
-	right.perpRight();
+	right = tangent_scaling.first.perpRight();
 	right.normalize();
 	QCOMPARE(right.length(), 1.0);
-	QCOMPARE(right.getX(), 1.0);
-	QCOMPARE(right.getY(), 0.0);
-	QCOMPARE(right.getAngle(), 0.0);
+	QCOMPARE(right.x(), 1.0);
+	QCOMPARE(right.y(), 0.0);
+	QCOMPARE(right.angle(), 0.0);
 	QCOMPARE(scaling, 1.0);
 	
 	// Test close point
@@ -112,21 +110,21 @@ void PathObjectTest::virtualPathTest()
 	path.last_index += 2;
 	
 	tangent_scaling = path.calculateTangentScaling(0);
-	right.perpRight();
+	right = tangent_scaling.first.perpRight();
 	right.normalize();
 	QCOMPARE(right.length(), 1.0);
-	QCOMPARE(right.getX(), -sqrt(2.0)/2);
-	QCOMPARE(right.getY(), sqrt(2.0)/2);
-	QCOMPARE(right.getAngle(), 3*M_PI/4);
+	QCOMPARE(right.x(), -sqrt(2.0)/2);
+	QCOMPARE(right.y(), sqrt(2.0)/2);
+	QCOMPARE(right.angle(), 3*M_PI/4);
 	QCOMPARE(scaling, sqrt(2.0));
 	
 	tangent_scaling = path.calculateTangentScaling(coords.size()-1);
-	right.perpRight();
+	right = tangent_scaling.first.perpRight();
 	right.normalize();
 	QCOMPARE(right.length(), 1.0);
-	QCOMPARE(right.getX(), -sqrt(2.0)/2);
-	QCOMPARE(right.getY(), sqrt(2.0)/2);
-	QCOMPARE(right.getAngle(), 3*M_PI/4);
+	QCOMPARE(right.x(), -sqrt(2.0)/2);
+	QCOMPARE(right.y(), sqrt(2.0)/2);
+	QCOMPARE(right.angle(), 3*M_PI/4);
 	QCOMPARE(scaling, sqrt(2.0));
 }
 
@@ -148,16 +146,16 @@ void PathObjectTest::calcIntersectionsTest()
 		for (size_t i = 0; i < predicted_intersections->size(); ++i)
 		{
 			qDebug() << "# Predicted " << i;
-			qDebug() << "  X: " << predicted_intersections->at(i).coord.getX();
-			qDebug() << "  Y: " << predicted_intersections->at(i).coord.getY();
+			qDebug() << "  X: " << predicted_intersections->at(i).coord.x();
+			qDebug() << "  Y: " << predicted_intersections->at(i).coord.y();
 			qDebug() << "  len: " << predicted_intersections->at(i).length;
 			qDebug() << "  other_len: " << predicted_intersections->at(i).other_length;
 		}
 		for (size_t i = 0; i < actual_intersections.size(); ++i)
 		{
 			qDebug() << "# Actual " << i;
-			qDebug() << "  X: " << actual_intersections.at(i).coord.getX();
-			qDebug() << "  Y: " << actual_intersections.at(i).coord.getY();
+			qDebug() << "  X: " << actual_intersections.at(i).coord.x();
+			qDebug() << "  Y: " << actual_intersections.at(i).coord.y();
 			qDebug() << "  len: " << actual_intersections.at(i).length;
 			qDebug() << "  other_len: " << actual_intersections.at(i).other_length;
 		}
@@ -165,8 +163,8 @@ void PathObjectTest::calcIntersectionsTest()
 	QCOMPARE(actual_intersections.size(), predicted_intersections->size());
 	for (size_t i = 0; i < qMin(actual_intersections.size(), predicted_intersections->size()); ++i)
 	{
-		QCOMPARE(actual_intersections[i].coord.getX(), predicted_intersections->at(i).coord.getX());
-		QCOMPARE(actual_intersections[i].coord.getY(), predicted_intersections->at(i).coord.getY());
+		QCOMPARE(actual_intersections[i].coord.x(), predicted_intersections->at(i).coord.x());
+		QCOMPARE(actual_intersections[i].coord.y(), predicted_intersections->at(i).coord.y());
 		QCOMPARE(actual_intersections[i].part_index, predicted_intersections->at(i).part_index);
 		QCOMPARE(actual_intersections[i].length, predicted_intersections->at(i).length);
 		QCOMPARE(actual_intersections[i].other_part_index, predicted_intersections->at(i).other_part_index);

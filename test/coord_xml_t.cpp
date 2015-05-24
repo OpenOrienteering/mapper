@@ -481,21 +481,17 @@ void CoordXmlTest::readHumanReadableStream()
 				QString data = QString::fromRawData(text.constData(), text.length());
 				QTextStream stream(&data, QIODevice::ReadOnly);
 				stream.setIntegerBase(10);
-				MapCoord coord;
 				while (!stream.atEnd())
 				{
 					qint64 x, y;
 					int flags = 0;
 					char separator;
 					stream >> x >> y >> separator;
-					coord.setRawX(x);
-					coord.setRawY(y);
 					if (separator != ';')
 					{
 						stream >> flags >> separator;
 					}
-					coord.setFlags(flags);
-					coords.push_back(coord);
+					coords.push_back(MapCoord::fromRaw(x, y, flags));
 				}
 				if (stream.status() == QTextStream::ReadCorruptData)
 				{

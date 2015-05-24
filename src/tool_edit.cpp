@@ -230,8 +230,8 @@ void ObjectMover::addTextHandle(TextObject* text, int handle)
 
 void ObjectMover::move(const MapCoordF& cursor_pos, bool move_opposite_handles, qint64* out_dx, qint64* out_dy)
 {
-	qint64 delta_x = qRound64(1000 * (cursor_pos.getX() - start_position.getX())) - prev_drag_x;
-	qint64 delta_y = qRound64(1000 * (cursor_pos.getY() - start_position.getY())) - prev_drag_y;
+	qint64 delta_x = qRound64(1000 * (cursor_pos.x() - start_position.x())) - prev_drag_x;
+	qint64 delta_y = qRound64(1000 * (cursor_pos.y() - start_position.y())) - prev_drag_y;
 	if (out_dx)
 		*out_dx = delta_x;
 	if (out_dy)
@@ -278,8 +278,8 @@ void ObjectMover::move(qint64 dx, qint64 dy, bool move_opposite_handles)
 			to_hover_point.normalize();
 			
 			MapCoord control = constraint.object->getCoordinate(constraint.opposite_handle_index);
-			control.setX(anchor_point.xd() - constraint.opposite_handle_dist * to_hover_point.getX());
-			control.setY(anchor_point.yd() - constraint.opposite_handle_dist * to_hover_point.getY());
+			control.setX(anchor_point.xd() - constraint.opposite_handle_dist * to_hover_point.x());
+			control.setY(anchor_point.yd() - constraint.opposite_handle_dist * to_hover_point.y());
 			constraint.object->setCoordinate(constraint.opposite_handle_index, control);
 		}
 	}
@@ -301,8 +301,9 @@ void ObjectMover::move(qint64 dx, qint64 dy, bool move_opposite_handles)
 		double new_box_width = qMax(text_symbol->getFontSize() / 2, text_object->getBoxWidth() + 0.001 * x_sign * delta_point.x());
 		double new_box_height = qMax(text_symbol->getFontSize() / 2, text_object->getBoxHeight() + 0.001 * y_sign * delta_point.y());
 		
+		auto anchor = MapCoord { text_object->getAnchorCoordF() };
 		text_object->move(dx / 2, dy / 2);
-		text_object->setBox(text_object->getAnchorCoordF().getIntX(), text_object->getAnchorCoordF().getIntY(), new_box_width, new_box_height);
+		text_object->setBox(anchor.rawX(), anchor.rawY(), new_box_width, new_box_height);
 	}
 }
 
@@ -498,22 +499,22 @@ bool EditTool::pointOverRectangle(QPointF point, const QRectF& rect) const
 MapCoordF EditTool::closestPointOnRect(MapCoordF point, const QRectF& rect)
 {
 	MapCoordF result = point;
-	if (result.getX() < rect.left()) result.setX(rect.left());
-	if (result.getY() < rect.top()) result.setY(rect.top());
-	if (result.getX() > rect.right()) result.setX(rect.right());
-	if (result.getY() > rect.bottom()) result.setY(rect.bottom());
+	if (result.x() < rect.left()) result.setX(rect.left());
+	if (result.y() < rect.top()) result.setY(rect.top());
+	if (result.x() > rect.right()) result.setX(rect.right());
+	if (result.y() > rect.bottom()) result.setY(rect.bottom());
 	if (rect.height() > 0 && rect.width() > 0)
 	{
-		if ((result.getX() - rect.left()) / rect.width() > (result.getY() - rect.top()) / rect.height())
+		if ((result.x() - rect.left()) / rect.width() > (result.y() - rect.top()) / rect.height())
 		{
-			if ((result.getX() - rect.left()) / rect.width() > (rect.bottom() - result.getY()) / rect.height())
+			if ((result.x() - rect.left()) / rect.width() > (rect.bottom() - result.y()) / rect.height())
 				result.setX(rect.right());
 			else
 				result.setY(rect.top());
 		}
 		else
 		{
-			if ((result.getX() - rect.left()) / rect.width() > (rect.bottom() - result.getY()) / rect.height())
+			if ((result.x() - rect.left()) / rect.width() > (rect.bottom() - result.y()) / rect.height())
 				result.setY(rect.bottom());
 			else
 				result.setX(rect.left());
@@ -557,7 +558,7 @@ void EditTool::setupAngleHelperFromSelectedObjects()
 				if (!path->getCoordinate(c).isCurveStart())
 				{
 					MapCoordF segment = MapCoordF(path->getCoordinate(c + 1) - path->getCoordinate(c));
-					float angle = fmod_pos(-1 * segment.getAngle(), M_PI / 2);
+					float angle = fmod_pos(-1 * segment.angle(), M_PI / 2);
 					float length = segment.length();
 					
 					QMap< float, float >::iterator angle_it = path_directions.find(angle);
