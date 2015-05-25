@@ -291,6 +291,8 @@ set(Mapper_EXTRA_HEADERS
   core/virtual_path.cpp
   core/virtual_coord_vector.h
 
+  fileformats/ocd_file_format.h
+  fileformats/ocd_types.h
   fileformats/ocd_types_v8.h
   fileformats/ocd_types_v9.h
   fileformats/ocd_types_v10.h
