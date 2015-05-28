@@ -236,13 +236,13 @@ public:
 	/** Component-wise addition. */
 	MapCoord& operator+= (const MapCoord& rhs_vector);
 	
-	/** Component-wise addition. */
+	/** Component-wise addition of this and a MapCoordF/QPointF. */
 	MapCoord& operator+= (const QPointF& rhs_vector);
 	
 	/** Component-wise subtraction. */
 	MapCoord& operator-= (const MapCoord& rhs_vector);
 	
-	/** Component-wise subtraction. */
+	/** Component-wise subtraction of this and a MapCoordF/QPointF. */
 	MapCoord& operator-= (const QPointF& rhs_vector);
 	
 	/** Multiply with scalar factor. */
@@ -271,7 +271,9 @@ public:
 	
 	friend constexpr bool operator==(const MapCoord& lhs, const MapCoord& rhs);
 	friend constexpr MapCoord operator+(const MapCoord& lhs, const MapCoord& rhs);
+	friend constexpr MapCoord operator+(const MapCoord& lhs, const QPointF& rhs);
 	friend constexpr MapCoord operator-(const MapCoord& lhs, const MapCoord& rhs);
+	friend constexpr MapCoord operator-(const MapCoord& lhs, const QPointF& rhs);
 	friend constexpr MapCoord operator*(const MapCoord& lhs, qreal factor);
 	friend constexpr MapCoord operator*(qreal factor, const MapCoord& rhs);
 	friend constexpr MapCoord operator/(const MapCoord& lhs, qreal divisor);
@@ -288,8 +290,14 @@ constexpr bool operator!=(const MapCoord& lhs, const MapCoord& rhs);
 /** Component-wise addition of MapCoord. */
 constexpr MapCoord operator+(const MapCoord& lhs, const MapCoord& rhs);
 
+/** Component-wise addition of MapCoord and MapCoordF/QPointF. */
+constexpr MapCoord operator+(const MapCoord& lhs, const QPointF& rhs);
+
 /** Component-wise subtraction of MapCoord. */
 constexpr MapCoord operator-(const MapCoord& lhs, const MapCoord& rhs);
+
+/** Component-wise subtraction of MapCoord and MapCoordF/QPointF. */
+constexpr MapCoord operator-(const MapCoord& lhs, const QPointF& rhs);
 
 /** Multiply MapCoord with scalar factor. */
 constexpr MapCoord operator*(const MapCoord& lhs, qreal factor);
@@ -685,10 +693,24 @@ MapCoord& MapCoord::operator+=(const MapCoord& rhs_vector)
 }
 
 inline
+MapCoord& MapCoord::operator+=(const QPointF& rhs_vector)
+{
+	*this += MapCoord{ rhs_vector };
+	return *this;
+}
+
+inline
 MapCoord& MapCoord::operator-=(const MapCoord& rhs_vector)
 {
 	x -= rhs_vector.x;
 	y -= rhs_vector.y;
+	return *this;
+}
+
+inline
+MapCoord& MapCoord::operator-=(const QPointF& rhs_vector)
+{
+	*this -= MapCoord{ rhs_vector };
 	return *this;
 }
 
@@ -732,9 +754,19 @@ constexpr MapCoord operator+(const MapCoord& lhs, const MapCoord& rhs)
 	return MapCoord{ lhs.x + rhs.x, lhs.y + rhs.y };
 }
 
+constexpr MapCoord operator+(const MapCoord& lhs, const QPointF& rhs)
+{
+	return lhs + MapCoord{ rhs };
+}
+
 constexpr MapCoord operator-(const MapCoord& lhs, const MapCoord& rhs)
 {
 	return MapCoord{ lhs.x - rhs.x, lhs.y - rhs.y };
+}
+
+constexpr MapCoord operator-(const MapCoord& lhs, const QPointF& rhs)
+{
+	return lhs - MapCoord{ rhs };
 }
 
 constexpr MapCoord operator*(const MapCoord& lhs, double factor)
