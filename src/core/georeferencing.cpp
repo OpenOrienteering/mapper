@@ -609,12 +609,12 @@ bool Georeferencing::setProjectedCRS(const QString& id, const QString& spec, std
 
 QPointF Georeferencing::toProjectedCoords(const MapCoord& map_coords) const
 {
-	return to_projected.map(map_coords.toQPointF());
+	return to_projected.map(QPointF(map_coords));
 }
 
 QPointF Georeferencing::toProjectedCoords(const MapCoordF& map_coords) const
 {
-	return to_projected.map(map_coords.toQPointF());
+	return to_projected.map(QPointF(map_coords));
 }
 
 MapCoord Georeferencing::toMapCoords(const QPointF& projected_coords) const

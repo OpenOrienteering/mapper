@@ -1,5 +1,6 @@
 /*
- *    Copyright 2012, 2013 Thomas Schöps, Kai Pastor
+ *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2012-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -265,7 +266,7 @@ void PrintTool::updatePrintArea()
 
 void PrintTool::updateDragging(MapCoordF mouse_pos_map)
 {
-	QPointF delta = (mouse_pos_map - click_pos_map).toQPointF();
+	QPointF delta = QPointF(mouse_pos_map - click_pos_map);
 	QRectF area = map_printer->getPrintArea();
 	switch (region)
 	{

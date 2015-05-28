@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2013-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -254,9 +255,9 @@ void TemplateTrack::drawTracks(QPainter* painter, bool on_screen) const
 			{
 				if (track.getSegmentPoint(i, k - 1).is_curve_start && k < track.getSegmentPointCount(i) - 2)
 				{
-					path.cubicTo(point.map_coord.toQPointF(),
-					             track.getSegmentPoint(i, k + 1).map_coord.toQPointF(),
-					             track.getSegmentPoint(i, k + 2).map_coord.toQPointF());
+					path.cubicTo(QPointF(point.map_coord),
+					             QPointF(track.getSegmentPoint(i, k + 1).map_coord),
+					             QPointF(track.getSegmentPoint(i, k + 2).map_coord));
 					k += 2;
 				}
 				else
@@ -291,7 +292,7 @@ void TemplateTrack::drawWaypoints(QPainter* painter) const
 		const QString& point_name = track.getWaypointName(i);
 		
 		double const radius = 0.25;
-		painter->drawEllipse(point.map_coord.toQPointF(), radius, radius);
+		painter->drawEllipse(QPointF(point.map_coord), radius, radius);
 		if (!point_name.isEmpty())
 		{
 			painter->setPen(qRgb(255, 0, 0));
@@ -324,7 +325,7 @@ QRectF TemplateTrack::calculateTemplateBoundingBox() const
 	{
 		const TrackPoint& track_point = track.getWaypoint(i);
 		MapCoordF point = track_point.map_coord;
-		rectIncludeSafe(bbox, is_georeferenced ? point.toQPointF() : templateToMap(point).toQPointF());
+		rectIncludeSafe(bbox, is_georeferenced ? point : templateToMap(point));
 	}
 	for (int i = 0; i < track.getNumSegments(); ++i)
 	{
@@ -333,7 +334,7 @@ QRectF TemplateTrack::calculateTemplateBoundingBox() const
 		{
 			const TrackPoint& track_point = track.getSegmentPoint(i, k);
 			MapCoordF point = track_point.map_coord;
-			rectIncludeSafe(bbox, is_georeferenced ? point.toQPointF() : templateToMap(point).toQPointF());
+			rectIncludeSafe(bbox, is_georeferenced ? point : templateToMap(point));
 		}
 	}
 	

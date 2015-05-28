@@ -431,29 +431,29 @@ void DrawRectangleTool::draw(QPainter* painter, MapWidget* widget)
 		painter->setPen((angles.size() > 1) ? inactive_color : active_color);
 		if (preview_point_radius == 0 || !use_preview_radius)
 		{
-			painter->drawLine(widget->mapToViewport(cur_pos_map) + helper_cross_radius * forward_vector.toQPointF(),
-							  widget->mapToViewport(cur_pos_map) - helper_cross_radius * forward_vector.toQPointF());
+			painter->drawLine(widget->mapToViewport(cur_pos_map) + helper_cross_radius * QPointF(forward_vector),
+							  widget->mapToViewport(cur_pos_map) - helper_cross_radius * QPointF(forward_vector));
 		}
 		else
 		{
-			painter->drawLine(widget->mapToViewport(cur_pos_map + 0.001f * preview_point_radius * perp_vector) + helper_cross_radius * forward_vector.toQPointF(),
-							  widget->mapToViewport(cur_pos_map + 0.001f * preview_point_radius * perp_vector) - helper_cross_radius * forward_vector.toQPointF());
-			painter->drawLine(widget->mapToViewport(cur_pos_map - 0.001f * preview_point_radius * perp_vector) + helper_cross_radius * forward_vector.toQPointF(),
-							  widget->mapToViewport(cur_pos_map - 0.001f * preview_point_radius * perp_vector) - helper_cross_radius * forward_vector.toQPointF());
+			painter->drawLine(widget->mapToViewport(cur_pos_map + 0.001f * preview_point_radius * perp_vector) + helper_cross_radius * QPointF(forward_vector),
+							  widget->mapToViewport(cur_pos_map + 0.001f * preview_point_radius * perp_vector) - helper_cross_radius * QPointF(forward_vector));
+			painter->drawLine(widget->mapToViewport(cur_pos_map - 0.001f * preview_point_radius * perp_vector) + helper_cross_radius * QPointF(forward_vector),
+							  widget->mapToViewport(cur_pos_map - 0.001f * preview_point_radius * perp_vector) - helper_cross_radius * QPointF(forward_vector));
 		}
 		
 		painter->setPen(active_color);
 		if (preview_point_radius == 0 || !use_preview_radius)
 		{
-			painter->drawLine(widget->mapToViewport(cur_pos_map) + helper_cross_radius * perp_vector.toQPointF(),
-							  widget->mapToViewport(cur_pos_map) - helper_cross_radius * perp_vector.toQPointF());
+			painter->drawLine(widget->mapToViewport(cur_pos_map) + helper_cross_radius * QPointF(perp_vector),
+							  widget->mapToViewport(cur_pos_map) - helper_cross_radius * QPointF(perp_vector));
 		}
 		else
 		{
-			painter->drawLine(widget->mapToViewport(cur_pos_map + 0.001f * preview_point_radius * forward_vector) + helper_cross_radius * perp_vector.toQPointF(),
-							  widget->mapToViewport(cur_pos_map + 0.001f * preview_point_radius * forward_vector) - helper_cross_radius * perp_vector.toQPointF());
-			painter->drawLine(widget->mapToViewport(cur_pos_map - 0.001f * preview_point_radius * forward_vector) + helper_cross_radius * perp_vector.toQPointF(),
-							  widget->mapToViewport(cur_pos_map - 0.001f * preview_point_radius * forward_vector) - helper_cross_radius * perp_vector.toQPointF());
+			painter->drawLine(widget->mapToViewport(cur_pos_map + 0.001f * preview_point_radius * forward_vector) + helper_cross_radius * QPointF(perp_vector),
+							  widget->mapToViewport(cur_pos_map + 0.001f * preview_point_radius * forward_vector) - helper_cross_radius * QPointF(perp_vector));
+			painter->drawLine(widget->mapToViewport(cur_pos_map - 0.001f * preview_point_radius * forward_vector) + helper_cross_radius * QPointF(perp_vector),
+							  widget->mapToViewport(cur_pos_map - 0.001f * preview_point_radius * forward_vector) - helper_cross_radius * QPointF(perp_vector));
 		}
 	}
 	
@@ -625,14 +625,14 @@ void DrawRectangleTool::updateRectangle()
 					MapCoordF rotated_direction = direction;
 					rotated_direction.rotate(angle_offset + k * angle_step);
 					
-					QLineF a(preview_path->getCoordinate(cur_point_index - 1).toQPointF(), (MapCoordF(preview_path->getCoordinate(cur_point_index - 1)) + forward_vector).toQPointF());
-					QLineF b(preview_path->getCoordinate(i).toQPointF(), (MapCoordF(preview_path->getCoordinate(i)) + rotated_direction).toQPointF());
+					QLineF a(QPointF(preview_path->getCoordinate(cur_point_index - 1)), QPointF(MapCoordF(preview_path->getCoordinate(cur_point_index - 1)) + forward_vector));
+					QLineF b(QPointF(preview_path->getCoordinate(i)), QPointF(MapCoordF(preview_path->getCoordinate(i)) + rotated_direction));
 					QPointF intersection_point;
 					QLineF::IntersectType intersection_type = a.intersect(b, &intersection_point);
 					if (intersection_type == QLineF::NoIntersection)
 						continue;
 					
-					float snap_distance_sq = original_coord.lengthSquaredTo(MapCoord(intersection_point));
+					float snap_distance_sq = original_coord.distanceSquaredTo(MapCoord(intersection_point));
 					if (snap_distance_sq > best_snap_distance_sq)
 						continue;
 					

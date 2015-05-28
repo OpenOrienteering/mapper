@@ -134,7 +134,7 @@ LineRenderable::LineRenderable(const LineSymbol* symbol, const VirtualPath& virt
 	QPainterPath first_subpath;
 	
 	auto i = virtual_path.first_index;
-	path.moveTo(coords[i].toQPointF());
+	path.moveTo(QPointF(coords[i]));
 	extent = QRectF(coords[i].getX(), coords[i].getY(), 0.0001f, 0.0001f);
 	extentIncludeCap(i, half_line_width, false, symbol, virtual_path);
 	
@@ -155,7 +155,7 @@ LineRenderable::LineRenderable(const LineSymbol* symbol, const VirtualPath& virt
 					first_subpath = path;
 					path = QPainterPath();
 				}
-				path.moveTo(coords[i].toQPointF());
+				path.moveTo(QPointF(coords[i]));
 				extentIncludeCap(i, half_line_width, false, symbol, virtual_path);
 			}
 			continue;
@@ -169,7 +169,7 @@ LineRenderable::LineRenderable(const LineSymbol* symbol, const VirtualPath& virt
 				first_subpath = path;
 				path = QPainterPath();
 			}
-			path.moveTo(coords[i].toQPointF());
+			path.moveTo(QPointF(coords[i]));
 			extentIncludeCap(i, half_line_width, false, symbol, virtual_path);
 			hole = false;
 			continue;
@@ -179,11 +179,11 @@ LineRenderable::LineRenderable(const LineSymbol* symbol, const VirtualPath& virt
 		{
 			Q_ASSERT(i < virtual_path.last_index-1);
 			has_curve = true;
-			path.cubicTo(coords[i].toQPointF(), coords[i+1].toQPointF(), coords[i+2].toQPointF());
+			path.cubicTo(QPointF(coords[i]), QPointF(coords[i+1]), QPointF(coords[i+2]));
 			i += 2;
 		}
 		else
-			path.lineTo(coords[i].toQPointF());
+			path.lineTo(QPointF(coords[i]));
 		
 		if (flags[i].isHolePoint())
 			hole = true;
@@ -514,18 +514,18 @@ void AreaRenderable::addSubpath(const VirtualPath& virtual_path)
 	Q_ASSERT(!flags.data().empty());
 	
 	auto i = virtual_path.first_index;
-	path.moveTo(coords[i].toQPointF());
+	path.moveTo(QPointF(coords[i]));
 	for (++i; i <= virtual_path.last_index; ++i)
 	{
 		if (flags[i-1].isCurveStart())
 		{
 			Q_ASSERT(i+2 < coords.size());
-			path.cubicTo(coords[i].toQPointF(), coords[i+1].toQPointF(), coords[i+2].toQPointF());
+			path.cubicTo(QPointF(coords[i]), QPointF(coords[i+1]), QPointF(coords[i+2]));
 			i += 2;
 		}
 		else
 		{
-			path.lineTo(coords[i].toQPointF());
+			path.lineTo(QPointF(coords[i]));
 		}
 	}
 	path.closeSubpath();

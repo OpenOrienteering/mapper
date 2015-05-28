@@ -395,7 +395,7 @@ void AreaSymbol::FillPattern::createLine(MapCoordF first, MapCoordF second, floa
 {
 	if (type == LinePattern)
 	{
-		output.insertRenderable(new LineRenderable(line, first.toQPointF(), second.toQPointF()));
+		output.insertRenderable(new LineRenderable(line, QPointF(first), QPointF(second)));
 	}
 	else
 	{

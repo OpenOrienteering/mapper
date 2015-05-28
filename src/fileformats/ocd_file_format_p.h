@@ -1,5 +1,5 @@
 /*
- *    Copyright 2013, 2014 Kai Pastor
+ *    Copyright 2013-2015 Kai Pastor
  *
  *    Some parts taken from file_format_oc*d8{.h,_p.h,cpp} which are
  *    Copyright 2012 Pete Curtis
@@ -295,17 +295,7 @@ QString OcdFileImport::convertOcdString(const QChar* src) const
 inline
 MapCoord OcdFileImport::convertOcdPoint(const Ocd::OcdPoint32& ocd_point) const
 {
-	// Behavior of operator>>() on negative integers is implementation defined.
-	// Define SHIFT_OPERATOR_IS_BINARY if the compiler does not implement
-	// operator>>() as arithmetic shift (maintaining the sign).
-#if defined(SHIFT_OPERATOR_IS_BINARY)
-	const qint64 x = (ocd_point.x > 0) ? (ocd_point.x >> 8) : (-1 - ((-1-ocd_point.x) >> 8));
-	const qint64 y = (ocd_point.y > 0) ? (ocd_point.y >> 8) : (-1 - ((-1-ocd_point.y) >> 8));
-	return MapCoord::fromRaw(x * 10, y * -10);
-#else // shift operator is arithmetic
-	Q_ASSERT( (-3 >> 1) == -2 );
 	return MapCoord::fromRaw(qint64(ocd_point.x >> 8) * 10, qint64(ocd_point.y >> 8) * -10);
-#endif
 }
 
 inline

@@ -1679,8 +1679,8 @@ Object* OcdFileImport::importRectangleObject(const O& ocd_object, MapPart* part,
 	if (rect.has_grid && rect.cell_width > 0 && rect.cell_height > 0)
 	{
 		// Calculate grid sizes
-		double width = top_left.lengthTo(top_right);
-		double height = top_left.lengthTo(bottom_left);
+		double width = top_left.distanceTo(top_right);
+		double height = top_left.distanceTo(bottom_left);
 		int num_cells_x = qMax(1, qRound(width / rect.cell_width));
 		int num_cells_y = qMax(1, qRound(height / rect.cell_height));
 		
@@ -1833,7 +1833,7 @@ bool OcdFileImport::fillTextPathCoords(TextObject *object, TextSymbol *symbol, q
 		top_right = MapCoord(top_right.xd() + adjust_vector.getX(), top_right.yd() + adjust_vector.getY());
 		
 		object->setBox((bottom_left.rawX() + top_right.rawX()) / 2, (bottom_left.rawY() + top_right.rawY()) / 2,
-					   top_left.lengthTo(top_right), top_left.lengthTo(bottom_left));
+					   top_left.distanceTo(top_right), top_left.distanceTo(bottom_left));
 		object->setVerticalAlignment(TextObject::AlignTop);
 	}
 	else

@@ -447,8 +447,8 @@ QImage Symbol::createIcon(const Map* map, int side_length, bool antialiasing, in
 		}
 		
 		PathObject* path = new PathObject(symbol_to_use);
-		path->addCoordinate(0, MapCoord(-max_icon_mm_half, 0));
-		path->addCoordinate(1, MapCoord(max_icon_mm_half, 0));
+		path->addCoordinate(0, MapCoord(-max_icon_mm_half, 0.0));
+		path->addCoordinate(1, MapCoord(max_icon_mm_half, 0.0));
 		if (show_dash_symbol)
 		{
 			MapCoord dash_coord(0, 0);

@@ -601,7 +601,7 @@ void DrawPathTool::createPreviewCurve(MapCoord position, float direction)
 	MapCoord previous_point = preview_path->getCoordinate(last - 3);
 	MapCoord last_point = preview_path->getCoordinate(last);
 	
-	double bezier_handle_distance = BEZIER_HANDLE_DISTANCE * previous_point.lengthTo(last_point);
+	double bezier_handle_distance = BEZIER_HANDLE_DISTANCE * previous_point.distanceTo(last_point);
 	
 	preview_path->setCoordinate(last - 2, MapCoord(previous_point.xd() - bezier_handle_distance * sin(previous_point_direction),
 												   previous_point.yd() - bezier_handle_distance * cos(previous_point_direction)));
@@ -787,13 +787,13 @@ void DrawPathTool::updateDirtyRect()
 	
 	if (dragging)
 	{
-		rectIncludeSafe(rect, click_pos_map.toQPointF());
-		rectInclude(rect, cur_pos_map.toQPointF());
+		rectIncludeSafe(rect, click_pos_map);
+		rectInclude(rect, cur_pos_map);
 	}
 	if (editingInProgress() && previous_point_is_curve_point)
 	{
-		rectIncludeSafe(rect, previous_pos_map.toQPointF());
-		rectInclude(rect, previous_drag_map.toQPointF());
+		rectIncludeSafe(rect, previous_pos_map);
+		rectInclude(rect, previous_drag_map);
 	}
 	if ((editingInProgress() && !dragging) ||
 		(!editingInProgress() && !shift_pressed && ctrl_pressed) ||

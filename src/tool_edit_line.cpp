@@ -106,7 +106,7 @@ void EditLineTool::clickPress()
 			/// \todo Provide a PathObject::convertToCurve(hover_line) ?
 			start_coord.setCurveStart(true);
 			MapCoord end_coord = hover_object->getCoordinate(hover_line + 1);
-			double baseline = start_coord.lengthTo(end_coord);
+			double baseline = start_coord.distanceTo(end_coord);
 			
 			bool tangent_ok = false;
 			MapCoordF start_tangent = path->calculateTangent(hover_line, true, tangent_ok);
@@ -375,8 +375,8 @@ int EditLineTool::updateDirtyRectImpl(QRectF& rect)
 	// Box selection
 	if (isDragging() && box_selection)
 	{
-		rectIncludeSafe(rect, click_pos_map.toQPointF());
-		rectIncludeSafe(rect, cur_pos_map.toQPointF());
+		rectIncludeSafe(rect, click_pos_map);
+		rectIncludeSafe(rect, cur_pos_map);
 	}
 	
 	return pixel_border;

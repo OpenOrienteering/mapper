@@ -1,6 +1,6 @@
 /*
  *    Copyright 2013 Thomas Schöps
- *    Copyright 2014 Kai Pastor
+ *    Copyright 2013-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -119,8 +119,8 @@ int CutoutTool::updateDirtyRectImpl(QRectF& rect)
 	// Box selection
 	if (isDragging())
 	{
-		rectIncludeSafe(rect, click_pos_map.toQPointF());
-		rectIncludeSafe(rect, cur_pos_map.toQPointF());
+		rectIncludeSafe(rect, click_pos_map);
+		rectIncludeSafe(rect, cur_pos_map);
 	}
 	
 	return 0;

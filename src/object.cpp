@@ -657,7 +657,7 @@ int Object::isPointOnObject(MapCoordF coord, float tolerance, bool treat_areas_a
 		if (!extended_selection)
 			return (coord.lengthToSquared(MapCoordF(coords[0])) <= tolerance) ? Symbol::Point : Symbol::NoSymbol;
 		else
-			return extent.contains(coord.toQPointF()) ? Symbol::Point : Symbol::NoSymbol;
+			return extent.contains(QPointF(coord)) ? Symbol::Point : Symbol::NoSymbol;
 	}
 	
 	// First check using extent
@@ -766,7 +766,7 @@ void Object::includeControlPointsRect(QRectF& rect) const
 		const PathObject* path = asPath();
 		int size = path->getCoordinateCount();
 		for (int i = 0; i < size; ++i)
-			rectInclude(rect, path->coords[i].toQPointF());
+			rectInclude(rect, QPointF(path->coords[i]));
 	}
 	else if (type == Object::Text)
 	{
@@ -1198,13 +1198,13 @@ bool PathObject::canBeConnected(const PathObject* other, double connect_threshol
 			if (other_part.isClosed())
 				continue;
 			
-			if (coords[part.first_index].lengthSquaredTo(other->coords[other_part.first_index]) <= connect_threshold_sq)
+			if (coords[part.first_index].distanceSquaredTo(other->coords[other_part.first_index]) <= connect_threshold_sq)
 				return true;
-			else if (coords[part.first_index].lengthSquaredTo(other->coords[other_part.last_index]) <= connect_threshold_sq)
+			else if (coords[part.first_index].distanceSquaredTo(other->coords[other_part.last_index]) <= connect_threshold_sq)
 				return true;
-			else if (coords[part.last_index].lengthSquaredTo(other->coords[other_part.first_index]) <= connect_threshold_sq)
+			else if (coords[part.last_index].distanceSquaredTo(other->coords[other_part.first_index]) <= connect_threshold_sq)
 				return true;
-			else if (coords[part.last_index].lengthSquaredTo(other->coords[other_part.last_index]) <= connect_threshold_sq)
+			else if (coords[part.last_index].distanceSquaredTo(other->coords[other_part.last_index]) <= connect_threshold_sq)
 				return true;
 		}
 	}
@@ -1230,16 +1230,16 @@ bool PathObject::connectIfClose(PathObject* other, double connect_threshold_sq)
 			if (!other_parts[k] || other->path_parts[k].isClosed())
 				continue;
 	
-			if (coords[path_parts[i].first_index].lengthSquaredTo(other->coords[other->path_parts[k].first_index]) <= connect_threshold_sq)
+			if (coords[path_parts[i].first_index].distanceSquaredTo(other->coords[other->path_parts[k].first_index]) <= connect_threshold_sq)
 			{
 				other->path_parts[k].reverse();
 				connectPathParts(i, other, k, true);
 			}
-			else if (coords[path_parts[i].first_index].lengthSquaredTo(other->coords[other->path_parts[k].last_index]) <= connect_threshold_sq)
+			else if (coords[path_parts[i].first_index].distanceSquaredTo(other->coords[other->path_parts[k].last_index]) <= connect_threshold_sq)
 				connectPathParts(i, other, k, true);
-			else if (coords[path_parts[i].last_index].lengthSquaredTo(other->coords[other->path_parts[k].first_index]) <= connect_threshold_sq)
+			else if (coords[path_parts[i].last_index].distanceSquaredTo(other->coords[other->path_parts[k].first_index]) <= connect_threshold_sq)
 				connectPathParts(i, other, k, false);
-			else if (coords[path_parts[i].last_index].lengthSquaredTo(other->coords[other->path_parts[k].last_index]) <= connect_threshold_sq)
+			else if (coords[path_parts[i].last_index].distanceSquaredTo(other->coords[other->path_parts[k].last_index]) <= connect_threshold_sq)
 			{
 				other->path_parts[k].reverse();
 				connectPathParts(i, other, k, false);
@@ -1247,7 +1247,7 @@ bool PathObject::connectIfClose(PathObject* other, double connect_threshold_sq)
 			else
 				continue;
 			
-			if (coords[path_parts[i].first_index].lengthSquaredTo(coords[path_parts[i].last_index]) <= connect_threshold_sq)
+			if (coords[path_parts[i].first_index].distanceSquaredTo(coords[path_parts[i].last_index]) <= connect_threshold_sq)
 				path_parts[i].connectEnds();
 			
 			did_connect_path = true;
@@ -1468,9 +1468,9 @@ void PathObject::changePathBounds(
 void PathObject::calcBezierPointDeletionRetainingShapeFactors(MapCoord p0, MapCoord p1, MapCoord p2, MapCoord q0, MapCoord q1, MapCoord q2, MapCoord q3, double& out_pfactor, double& out_qfactor)
 {
 	// Heuristic for the split parameter sp (zero to one)
-	QBezier p_curve = QBezier::fromPoints(p0.toQPointF(), p1.toQPointF(), p2.toQPointF(), q0.toQPointF());
+	QBezier p_curve = QBezier::fromPoints(QPointF(p0), QPointF(p1), QPointF(p2), QPointF(q0));
 	double p_length = p_curve.length(PathCoord::bezierError());
-	QBezier q_curve = QBezier::fromPoints(q0.toQPointF(), q1.toQPointF(), q2.toQPointF(), q3.toQPointF());
+	QBezier q_curve = QBezier::fromPoints(QPointF(q0), QPointF(q1), QPointF(q2), QPointF(q3));
 	double q_length = q_curve.length(PathCoord::bezierError());
 	double sp = p_length / qMax(1e-08, p_length + q_length);
 	
@@ -1806,7 +1806,7 @@ void PathObject::calcBezierPointDeletionRetainingShapeFactors(MapCoord p0, MapCo
 float PathObject::calcBezierPointDeletionRetainingShapeCost(MapCoord p0, MapCoordF p1, MapCoordF p2, MapCoord p3, PathObject* reference)
 {
 	const int num_test_points = 20;
-	QBezier curve = QBezier::fromPoints(p0.toQPointF(), p1.toQPointF(), p2.toQPointF(), p3.toQPointF());
+	QBezier curve = QBezier::fromPoints(QPointF(p0), QPointF(p1), QPointF(p2), QPointF(p3));
 	
 	float cost = 0;
 	for (int i = 0; i < num_test_points; ++i)
@@ -2924,9 +2924,9 @@ void PathObject::prepareDeleteBezierPoint(MapCoordVector::size_type pos, int del
 	double pfactor, qfactor;
 	if (delete_bezier_point_action == Settings::DeleteBezierPoint_ResetHandles)
 	{
-		double target_length = BEZIER_HANDLE_DISTANCE * p0.lengthTo(q3);
-		pfactor = target_length / qMax(p0.lengthTo(p1), 0.01);
-		qfactor = target_length / qMax(q3.lengthTo(q2), 0.01);
+		double target_length = BEZIER_HANDLE_DISTANCE * p0.distanceTo(q3);
+		pfactor = target_length / qMax(p0.distanceTo(p1), 0.01);
+		qfactor = target_length / qMax(q3.distanceTo(q2), 0.01);
 	}
 	else if (delete_bezier_point_action == Settings::DeleteBezierPoint_RetainExistingShape)
 	{
@@ -2939,9 +2939,9 @@ void PathObject::prepareDeleteBezierPoint(MapCoordVector::size_type pos, int del
 		
 		calcBezierPointDeletionRetainingShapeOptimization(p0, p1, p2, q0, q1, q2, q3, pfactor, qfactor);
 		
-		double minimum_length = 0.01 * p0.lengthTo(q3);
-		pfactor = qMax(minimum_length / qMax(p0.lengthTo(p1), 0.01), pfactor);
-		qfactor = qMax(minimum_length / qMax(q3.lengthTo(q2), 0.01), qfactor);
+		double minimum_length = 0.01 * p0.distanceTo(q3);
+		pfactor = qMax(minimum_length / qMax(p0.distanceTo(p1), 0.01), pfactor);
+		qfactor = qMax(minimum_length / qMax(q3.distanceTo(q2), 0.01), qfactor);
 	}
 	else
 	{
@@ -3145,5 +3145,5 @@ void PointObject::setRotation(MapCoordF vector)
 
 bool PointObject::intersectsBox(QRectF box) const
 {
-	return box.contains(coords.front().toQPointF());
+	return box.contains(QPointF(coords.front()));
 }

@@ -526,8 +526,8 @@ int EditPointTool::updateDirtyRectImpl(QRectF& rect)
 	// Box selection
 	if (isDragging() && box_selection)
 	{
-		rectIncludeSafe(rect, click_pos_map.toQPointF());
-		rectIncludeSafe(rect, cur_pos_map.toQPointF());
+		rectIncludeSafe(rect, click_pos_map);
+		rectIncludeSafe(rect, cur_pos_map);
 	}
 	
 	return pixel_border;

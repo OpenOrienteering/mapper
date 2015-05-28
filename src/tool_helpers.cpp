@@ -656,7 +656,7 @@ void ConstrainAngleToolHelper::draw(QPainter* painter, MapWidget* widget)
 void ConstrainAngleToolHelper::includeDirtyRect(QRectF& rect)
 {
 	if (!active) return;
-	rectIncludeSafe(rect, center.toQPointF());
+	rectIncludeSafe(rect, QPointF(center));
 }
 
 void ConstrainAngleToolHelper::settingsChanged()
@@ -882,7 +882,7 @@ void SnappingToolHelper::draw(QPainter* painter, MapWidget* widget)
 void SnappingToolHelper::includeDirtyRect(QRectF& rect)
 {
 	if (snapped_type != NoSnapping)
-		rectIncludeSafe(rect, snap_mark.toQPointF());
+		rectIncludeSafe(rect, QPointF(snap_mark));
 }
 
 

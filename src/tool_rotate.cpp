@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2012-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -155,7 +156,7 @@ int RotateTool::updateDirtyRectImpl(QRectF& rect)
 {
 	if (rotation_center_set)
 	{
-		rectIncludeSafe(rect, rotation_center.toQPointF());
+		rectIncludeSafe(rect, rotation_center);
 		return qMax(angle_helper->getDisplayRadius(), 5);
 	}
 	else

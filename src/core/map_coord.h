@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2014, 2015 Kai Pastor
+ *    Copyright 2013-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -27,280 +27,240 @@
 
 #include <QPointF>
 
+#include "map_coord_p.h"
+
 class QString;
 class QTextStream;
 class QXmlStreamReader;
 class QXmlStreamWriter;
 
-
 /**
- * Coordinates of a point in a map, defined in native map coordinates,
- * with optional flags about the type of the point.
- * Saved as 64bit integers, where the flags are be stored in the lowest 4 bits.
+ * Coordinates of a point in a map, with optional flags.
  * 
- * One unit in native map coordinates equals 1/1000th of a millimeter on the
- * map paper.
+ * This coordinate uses what we call native map coordinates.
+ * One unit in native map coordinates is 1/1000th of a millimeter on the map paper.
  * 
  * The possible flags are:
  * 
  * <ul>
- * <li><b>isCurveStart():</b> if set, this coord is the first of a sequence of
+ * <li><b>isCurveStart():</b> If set, this point is the first one in a sequence of
  *     four points which define a cubic bezier curve.</li>
- * <li><b>isHolePoint():</b> if set, this point marks the beginning of a hole in
- *     a line (i.e. is the last point of a segment), or is the last point of
- *     a component of an area object (i.e. the next point begins a new hole
- *     in the area). This is usually always set at the end of a path object's
- *     coordinate list, if the object is not closed.<li>
- * <li><b>isDashPoint():</b> marks special points which are interpreted differently
- *     depending on the object's symbol.</li>
- * <li><b>isClosePoint():</b> is set for the last point in closed parts in
- *     objects. Its position must be equal to the first point in the path part.</li>
+ * <li><b>isHolePoint():</b> If set, this point marks the end of a distinct path.
+ *     Only area objects may have more than one path. The first path can be
+ *     understood as outline, while the remaining paths can be seen as holes in
+ *     the area, subject to the filling rule.
+ * <li><b>isDashPoint():</b> This flag marks special points in the path.
+ *     The effect depends on the type of symbol.
+ * <li><b>isClosePoint():</b> If this flag is set for the last point of a path,
+ *     this path is treated as closed. The point's coordinates must be equal to
+ *     the first point's coordinates in this path.</li>
+ * <li><b>isGapPoint():</b> This flag is used to indicate the begin and the end
+ *     of gaps in a path. This only used internally at the moment (for dealing
+ *     with dashed lines.)
  * </ul>
+ * 
+ * These coordinates are implemented as 64 bit integers where lowest 4 bits are
+ * used to store the flags.
+ * 
+ * MapCoord (and other parts of Mapper) rely on an arithmetic implementation of
+ * the operator>>(). However, the behavior of operator>>() on negative integers
+ * is implementation defined. This class comes with static and dynamic tests for
+ * this prerequisite.
  */
 class MapCoord
 {
-public:
+private:
 	/** Benchmark */
 	friend class CoordXmlTest;
 	
-	/** Creates a MapCoord with position at the origin and without any flags set. */
-	inline MapCoord() : x(0), y(0) {}
+	MapCoordElement x;
+	MapCoordElement y;
 	
-	/** Creates coordinates from a position given in millimeters on the map. */
-	inline MapCoord(double x, double y)
+public:
+	enum Flag
 	{
-		this->x = qRound64(x * 1000) << 4;
-		this->y = qRound64(y * 1000) << 4;
-	}
+		CurveStart = 1 << 0,
+		ClosePoint = 1 << 1,
+		HolePoint  = 1 << 4,
+		DashPoint  = 1 << 5,
+		GapPoint   = 1 << 6,
+	};
+	
+	/** Creates a MapCoord with position at the origin and without any flags set. */
+	constexpr MapCoord();
+	
+	/** Copy constructor. */
+	constexpr MapCoord(const MapCoord&) = default;
+	
+	/** Creates a MapCoord from a position given in millimeters on the map.
+	 * 
+	 * This is a convenience constructor for efficient construction of a point
+	 * at the origin i.e. MapCoord(0, 0), or for simple vectors i.e. 
+	 * MapCoord(1, 0). There intentionally is no version with flags - you need
+	 * to use other argument types than int if the compiler complains about
+	 * ambiguity.
+	 */
+	constexpr MapCoord(int x, int y);
+	
+	/** Creates a MapCoord from a position given in millimeters on the map. */
+	constexpr MapCoord(qreal x, qreal y);
+	
+	/** Creates a MapCoord with the given flags from a position given in millimeters on the map. */
+	constexpr MapCoord(qreal x, qreal y, int flags);
 	
 	/** Creates a MapCoord with the position taken from a QPointF. */
-	inline explicit MapCoord(QPointF point)
-	{
-		this->x = qRound64(point.x() * 1000) << 4;
-		this->y = qRound64(point.y() * 1000) << 4;
-	}
+	explicit constexpr MapCoord(QPointF point);
+	
+	/** Creates a MapCoord with the given flags and with the position taken from a QPointF. */
+	constexpr MapCoord(QPointF point, int flags);
+	
+private:
+	/** Creates a MapCoord with internal-format elements. */
+	constexpr MapCoord(MapCoordElement x, MapCoordElement y);
+	
+public:
+	/** Creates a MapCoord from native map coordinates. */
+	static constexpr MapCoord fromRaw(qint64 x, qint64 y);
 	
 	/** Creates a MapCoord from native map coordinates. */
-	static inline MapCoord fromRaw(qint64 x, qint64 y)
-	{
-		MapCoord new_coord;
-		new_coord.x = x << 4;
-		new_coord.y = y << 4;
-		return new_coord;
-	}
+	static constexpr MapCoord fromRaw(qint64 x, qint64 y, int flags);
 	
-	/** Sets the coord's x position to a value in millimeters on the map. */
-	inline void setX(double x) {this->x = (qRound64(x * 1000) << 4) | (this->x & 15);}
-	/** Sets the coord's y position to a value in millimeters on the map. */
-	inline void setY(double y) {this->y = (qRound64(y * 1000) << 4) | (this->y & 15);}
-	/** Sets the coord's x position to a value in native map coords. */
-	inline void setRawX(qint64 new_x) {this->x = (new_x << 4) | (this->x & 15);}
-	/** Sets the coord's y position to a value in native map coords. */
-	inline void setRawY(qint64 new_y) {this->y = (new_y << 4) | (this->y & 15);}
+	/** Assignment operator */
+	MapCoord& operator= (const MapCoord& other) = default;
+	
 	
 	/** Returns the coord's x position in millimeters on the map. */
-	inline double xd() const {return (x >> 4) / 1000.0;}
+	constexpr qreal xd() const;
+	
 	/** Returns the coord's y position in millimeters on the map. */
-	inline double yd() const {return (y >> 4) / 1000.0;}
+	constexpr qreal yd() const;
+	
+	/** Sets the coord's x position to a value in millimeters on the map. */
+	inline void setX(qreal x);
+	
+	/** Sets the coord's y position to a value in millimeters on the map. */
+	inline void setY(qreal y);
+	
+	
 	/** Returns the coord's x position in native map coords. */
-	inline qint64 rawX() const {return x >> 4;}
+	constexpr qint64 rawX() const;
+	
 	/** Returns the coord's y position in native map coords. */
-	inline qint64 rawY() const {return y >> 4;}
-	/** Returns the coord's x position as is, i.e. with flags in the lowest 4 bits. */
-	inline qint64 internalX() const {return x;}
-	/** Returns the coord's y position as is, i.e. with flags in the lowest 4 bits. */
-	inline qint64 internalY() const {return y;}
-
+	constexpr qint64 rawY() const;
+	
+	/** Sets the coord's x position to a value in native map coords. */
+	inline void setRawX(qint64 new_x);
+	
+	/** Sets the coord's y position to a value in native map coords. */
+	inline void setRawY(qint64 new_y);
+	
+	
 	/** Returns the coord's flags separately, merged into the lowest 8 bits of an int. */
-	inline int getFlags() const {return (x & 15) | ((y & 15) << 4);}
+	constexpr int getFlags() const;
+	
 	/** Sets the flags as retrieved by getFlags(). */
-	inline void setFlags(int flags) {x = (x & ~15) | (flags & 15); y = (y & ~15) | ((flags >> 4) & 15);}
-
+	void setFlags(int flags);
+	
+	
 	/**
 	 * Returns the length of this coord, seen as a vector from the origin
 	 * to the given coordinate, in millimeters on the map.
 	 */
-	inline double length() const {return sqrt(xd()*xd() + yd()*yd());}
+	constexpr qreal length() const;
+	
 	/**
 	 * Returns the squared length of this coord, seen as a vector from the origin
 	 * to the given coordinate, in millimeters on the map. Faster than length().
 	 */
-	inline double lengthSquared() const {return xd()*xd() + yd()*yd();}
-
+	constexpr qreal lengthSquared() const;
+	
 	/**
-	 * Returns the length from this coord to the other
+	 * Returns the distance from this coord to the other
 	 * in millimeters on the map.
 	 */
-	inline double lengthTo(const MapCoord& other) const
-	{
-		return sqrt(lengthSquaredTo(other));
-	}
+	constexpr qreal distanceTo(const MapCoord& other) const;
+	
 	/**
-	 * Returns the squared length from this coord to the other
+	 * Returns the squared distance from this coord to the other
 	 * in millimeters on the map. Faster than lengthTo().
 	 */
-	inline double lengthSquaredTo(const MapCoord& other) const
-	{
-		double dx = xd() - other.xd();
-		double dy = yd() - other.yd();
-		return dx*dx + dy*dy;
-	}
+	constexpr qreal distanceSquaredTo(const MapCoord& other) const;
+	
 	
 	/**
 	 * Returns if this coord's position is equal to that of the other one.
 	 */
-	inline bool isPositionEqualTo(const MapCoord& other) const
-	{
-		return ((x >> 4) == (other.x >> 4)) && ((y >> 4) == (other.y >> 4));
-	}
+	constexpr bool isPositionEqualTo(const MapCoord& other) const;
+	
 	
 	/** Is this point the first point of a cubic bezier curve segment? */
-	inline bool isCurveStart() const {return x & 1;}
+	constexpr bool isCurveStart() const;
+	
 	/** Sets the curve start flag. */
-	inline void setCurveStart(bool value) {x = (x & (~1)) | (value ? 1 : 0);}
-	
-	/** Is this the start of a hole for a line? */
-	inline bool isHolePoint() const {return y & 1;}
-	/** Sets the hole point flag. */
-	inline void setHolePoint(bool value) {y = (y & (~1)) | (value ? 1 : 0);}
-	
-	/** Is this coordinate a special dash point? */
-	inline bool isDashPoint() const {return y & 2;}
-	/** Sets the dash point flag. */
-	inline void setDashPoint(bool value) {y = (y & (~2)) | (value ? 2 : 0);}
+	void setCurveStart(bool value);
 	
 	/**
 	 * Is this the last point of a closed path, which is at the same position
 	 * as the first point? This is set in addition to isHolePoint().
 	 */
-	inline bool isClosePoint() const {return x & 2;}
+	constexpr bool isClosePoint() const;
+	
 	/** Sets the close point flag. */
-	inline void setClosePoint(bool value) {x = (x & (~2)) | (value ? 2 : 0);}
+	void setClosePoint(bool value);
+	
+	
+	/** Is this the start of a hole for a line? */
+	constexpr bool isHolePoint() const;
+	
+	/** Sets the hole point flag. */
+	void setHolePoint(bool value);
+	
+	
+	/** Is this coordinate a special dash point? */
+	constexpr bool isDashPoint() const;
+	
+	/** Sets the dash point flag. */
+	void setDashPoint(bool value);
 	
 	
 	/** Is this coordinate a gap point? */
-	bool isGapPoint() const;
+	constexpr bool isGapPoint() const;
 	
 	/** Sets the gap point flag. */
 	void setGapPoint(bool value);
 	
 	
-	/** Assignment operator */
-	inline MapCoord& operator= (const MapCoord& other)
-	{
-		x = other.x;
-		y = other.y;
-		return *this;
-	}
-	/** Compare for equality */
-	inline bool operator== (const MapCoord& other) const
-	{
-		return (other.x == x) && (other.y == y);
-	}
-	/** Compare for inequality */
-	inline bool operator != (const MapCoord& other) const
-	{
-		return (other.x != x) || (other.y != y);
-	}
+	/** Additive inverse. */
+	constexpr MapCoord operator-() const;
 	
-	/** Multiply with scalar factor */
-	inline MapCoord operator* (const double factor) const
-	{
-		MapCoord out(*this);
-		out.setX(out.xd() * factor);
-		out.setY(out.yd() * factor);
-		return out;
-	}
-	/** Divide by scalar factor */
-	inline MapCoord operator/ (const double scalar) const
-	{
-		Q_ASSERT(scalar != 0);
-		MapCoord out(*this);
-		out.setX(out.xd() / scalar);
-		out.setY(out.yd() / scalar);
-		return out;
-	}
-	/** Component-wise addition */
-	inline MapCoord operator+ (const MapCoord& other) const
-	{
-		MapCoord out(*this);
-		out.setRawX(out.rawX() + other.rawX());
-		out.setRawY(out.rawY() + other.rawY());
-		return out;
-	}
-	/** Component-wise subtraction */
-	inline MapCoord operator- (const MapCoord& other) const
-	{
-		MapCoord out(*this);
-		out.setRawX(out.rawX() - other.rawX());
-		out.setRawY(out.rawY() - other.rawY());
-		return out;
-	}
-	/** no-operation */
-	inline MapCoord& operator+ ()
-	{
-		return *this;
-	}
-	/** additive inverse */
-	inline MapCoord operator- ()
-	{
-		MapCoord out(*this);
-		out.setRawX(-out.rawX());
-		out.setRawY(-out.rawY());
-		return out;
-	}
+	/** Component-wise addition. */
+	MapCoord& operator+= (const MapCoord& rhs_vector);
 	
-	/** Multiply with scalar factor */
-	inline friend MapCoord operator* (double scalar, const MapCoord& rhs_vector)
-	{
-		MapCoord out(rhs_vector);
-		out.setRawX(qRound64(scalar * out.rawX()));
-		out.setRawY(qRound64(scalar * out.rawY()));
-		return out;
-	}
-	/** Divide by scalar factor */
-	inline friend MapCoord operator/ (double scalar, const MapCoord& rhs_vector)
-	{
-		MapCoord out(rhs_vector);
-		out.setRawX(qRound64(out.rawX() / scalar));
-		out.setRawY(qRound64(out.rawY() / scalar));
-		return out;
-	}
+	/** Component-wise addition. */
+	MapCoord& operator+= (const QPointF& rhs_vector);
 	
-	/** Component-wise addition */
-	inline MapCoord& operator+= (const MapCoord& rhs_vector)
-	{
-		setRawX(rawX() + rhs_vector.rawX());
-		setRawY(rawY() + rhs_vector.rawY());
-		return *this;
-	}
-	/** Component-wise subtraction */
-	inline MapCoord& operator-= (const MapCoord& rhs_vector)
-	{
-		setRawX(rawX() - rhs_vector.rawX());
-		setRawY(rawY() - rhs_vector.rawY());
-		return *this;
-	}
-	/** Multiply with scalar factor */
-	inline MapCoord& operator*= (const double factor)
-	{
-		setRawX(qRound64(factor * rawX()));
-		setRawY(qRound64(factor * rawY()));
-		return *this;
-	}
-	/** Divide by scalar factor */
-	inline MapCoord& operator/= (const double scalar)
-	{
-		setRawX(qRound64(rawX() / scalar));
-		setRawY(qRound64(rawY() / scalar));
-		return *this;
-	}
+	/** Component-wise subtraction. */
+	MapCoord& operator-= (const MapCoord& rhs_vector);
+	
+	/** Component-wise subtraction. */
+	MapCoord& operator-= (const QPointF& rhs_vector);
+	
+	/** Multiply with scalar factor. */
+	MapCoord& operator*= (qreal factor);
+	
+	/** Divide by scalar factor. */
+	MapCoord& operator/= (qreal scalar);
+	
 	
 	/** Converts the coord's position to a QPointF. */
-	inline QPointF toQPointF() const
-	{
-		return QPointF(xd(), yd());
-	}
+	constexpr explicit operator QPointF() const;
+	
+	
+	/**
+	 * Writes raw coordinates and flags to a string.
+	 */
+	QString toString() const;
+	
 	
 	/** Saves the MapCoord in xml format to the stream. */
 	void save(QXmlStreamWriter& xml) const;
@@ -308,21 +268,45 @@ public:
 	/** Loads the MapCoord in xml format from the stream. */
 	static MapCoord load(QXmlStreamReader& xml);
 	
-	/**
-	 * Writes raw coordinates and flags to a string.
-	 */
-	QString toString() const;
 	
-private:
-	qint64 x;
-	qint64 y;
+	friend constexpr bool operator==(const MapCoord& lhs, const MapCoord& rhs);
+	friend constexpr MapCoord operator+(const MapCoord& lhs, const MapCoord& rhs);
+	friend constexpr MapCoord operator-(const MapCoord& lhs, const MapCoord& rhs);
+	friend constexpr MapCoord operator*(const MapCoord& lhs, qreal factor);
+	friend constexpr MapCoord operator*(qreal factor, const MapCoord& rhs);
+	friend constexpr MapCoord operator/(const MapCoord& lhs, qreal divisor);
+	
 };
+
+/** Compare MapCoord for equality. */
+constexpr bool operator==(const MapCoord& lhs, const MapCoord& rhs);
+
+/** Compare MapCoord for inequality. */
+constexpr bool operator!=(const MapCoord& lhs, const MapCoord& rhs);
+
+
+/** Component-wise addition of MapCoord. */
+constexpr MapCoord operator+(const MapCoord& lhs, const MapCoord& rhs);
+
+/** Component-wise subtraction of MapCoord. */
+constexpr MapCoord operator-(const MapCoord& lhs, const MapCoord& rhs);
+
+/** Multiply MapCoord with scalar factor. */
+constexpr MapCoord operator*(const MapCoord& lhs, qreal factor);
+
+/** Multiply MapCoord with scalar factor. */
+constexpr MapCoord operator*(qreal factor, const MapCoord& rhs);
+
+/** Divide MapCoord by scalar factor. */
+constexpr MapCoord operator/(const MapCoord& lhs, qreal divisor);
+
 
 /**
  * Reads raw coordinates and flags from a text stream.
  * @see MapCoord::toString()
  */
 QTextStream& operator>>(QTextStream& stream, MapCoord& coord);
+
 
 
 /**
@@ -339,13 +323,19 @@ public:
 	/** Creates an uninitialized MapCoordF. */
 	constexpr MapCoordF() : x(0.0), y(0.0) {}
 	/** Creates a MapCoordF with the given position in map coordinates. */
-	inline MapCoordF(double x, double y) {setX(x); setY(y);}
+	constexpr MapCoordF(double x, double y) : x{x}, y{y} {}
 	/** Creates a MapCoordF from a MapCoord, skipping its flags. */
-	inline explicit MapCoordF(MapCoord coord) {setX(coord.xd()); setY(coord.yd());}
+	constexpr explicit MapCoordF(MapCoord coord) : x{coord.xd()}, y{coord.yd()} {}
 	/** Creates a MapCoordF from a QPointF. */
-	inline explicit MapCoordF(QPointF point) {setX(point.x()); setY(point.y());}
+	constexpr explicit MapCoordF(QPointF point) : x{point.x()}, y{point.y()} {}
+	
 	/** Copy constructor. */
-	constexpr MapCoordF(const MapCoordF& copy) = default;
+	MapCoordF(const MapCoordF&) = default;
+	
+	
+	/** Assignment operator. */
+	MapCoordF& operator= (const MapCoordF&) = default;
+	
 	
 	/** Sets the x coordinate to a new value in map coordinates. */
 	inline void setX(double x) {this->x = x;}
@@ -376,12 +366,13 @@ public:
 	 */
 	inline void normalize()
 	{
-		double length = sqrt(getX()*getX() + getY()*getY());
-		if (length < 1e-08)
-			return;
-		
-		setX(getX() / length);
-		setY(getY() / length);
+		double length_squared = x*x + y*y;
+		if (length_squared > 1e-16)
+		{
+			double length = sqrt(length_squared);
+			x /= length;
+			y /= length;
+		}
 	}
 	
 	/**
@@ -482,7 +473,7 @@ public:
 	 * Converts the MapCoordF to a MapCoord (without flags).
 	 * See also toCurveStartMapCoord().
 	 */
-	MapCoord toMapCoord() const
+	constexpr MapCoord toMapCoord() const
 	{
 		return MapCoord(x, y);
 	}
@@ -500,18 +491,11 @@ public:
 	/**
 	 * Converts the MapCoordF to a QPointf.
 	 */
-	inline QPointF toQPointF() const
+	inline explicit operator QPointF() const
 	{
 		return QPointF(x, y);
 	}
 	
-	/** Assignment operator. */
-	inline MapCoordF& operator= (const MapCoordF& other)
-	{
-		x = other.x;
-		y = other.y;
-		return *this;
-	}
 	/** Tests for exact equality. Be aware of floating point inaccuracies! */
 	inline bool operator== (const MapCoordF& other) const
 	{
@@ -605,25 +589,283 @@ QTextStream& operator>>(QTextStream& stream, MapCoord& coord);
 typedef std::vector<MapCoord> MapCoordVector;
 typedef std::vector<MapCoordF> MapCoordVectorF;
 
-/**
- * Converts a vector of MapCoord to a vector of MapCoordF.
- */
-void mapCoordVectorToF(const MapCoordVector& coords, MapCoordVectorF& out_coordsF);
-
 
 
 // ### MapCoord inline code ###
 
-inline
-bool MapCoord::isGapPoint() const
+constexpr MapCoord::MapCoord()
+ : x { 0 }
+ , y { 0 }
 {
-	return y & 4;
+	// nothing else
+}
+
+constexpr MapCoord::MapCoord(int x, int y)
+ : x { x*1000 }
+ , y { y*1000 }
+{
+	// nothing else
+}
+
+constexpr MapCoord::MapCoord(qreal x, qreal y)
+ : x { qRound64(x*1000) }
+ , y { qRound64(y*1000) }
+{
+	// nothing else
+}
+
+constexpr MapCoord::MapCoord(qreal x, qreal y, int flags)
+ : x { qRound64(x*1000), flags }
+ , y { qRound64(y*1000), flags >> MapCoordElement::bitsForFlags }
+{
+	// nothing else
+}
+
+constexpr MapCoord::MapCoord(QPointF point)
+ : MapCoord { point.x(), point.y() }
+{
+	// nothing else
+}
+
+constexpr MapCoord::MapCoord(QPointF point, int flags)
+ : MapCoord { point.x(), point.y(), flags }
+{
+	// nothing else
+}
+
+constexpr MapCoord::MapCoord(MapCoordElement x, MapCoordElement y)
+ : x { x }
+ , y { y }
+{
+	// nothing else
+}
+
+constexpr MapCoord MapCoord::fromRaw(qint64 x, qint64 y)
+{
+	return MapCoord{ MapCoordElement{ x }, MapCoordElement{ y } };
+}
+
+constexpr MapCoord MapCoord::fromRaw(qint64 x, qint64 y, int flags)
+{
+	return MapCoord{ MapCoordElement{ x, flags }, MapCoordElement{ y, flags >> MapCoordElement::bitsForFlags} };
+}
+
+constexpr qreal MapCoord::xd() const
+{
+	return rawX() / 1000.0;
+}
+
+constexpr qreal MapCoord::yd() const
+{
+	return rawY() / 1000.0;
+}
+
+inline
+void MapCoord::setX(qreal x)
+{
+	this->x.setValue(qRound64(x * 1000));
+}
+
+inline
+void MapCoord::setY(qreal y)
+{
+	this->y.setValue(qRound64(y * 1000));
+}
+
+constexpr qint64 MapCoord::rawX() const
+{
+	return x.value();
+}
+
+constexpr qint64 MapCoord::rawY() const
+{
+	return y.value();
+}
+
+inline
+void MapCoord::setRawX(qint64 new_x)
+{
+	x.setValue(new_x);
+}
+
+inline
+void MapCoord::setRawY(qint64 new_y)
+{
+	y.setValue(new_y);
+}
+
+constexpr int MapCoord::getFlags() const
+{
+	return x.flags() | (y.flags() << MapCoordElement::bitsForFlags);
+}
+
+inline
+void MapCoord::setFlags(int flags)
+{
+	x.setFlags(flags);
+	y.setFlags(flags >> MapCoordElement::bitsForFlags);
+}
+
+constexpr qreal MapCoord::length() const
+{
+	return sqrt(lengthSquared());
+}
+
+constexpr qreal MapCoord::lengthSquared() const
+{
+	return xd()*xd() + yd()*yd();
+}
+
+constexpr qreal MapCoord::distanceTo(const MapCoord& other) const
+{
+	return sqrt(distanceSquaredTo(other));
+}
+
+constexpr qreal MapCoord::distanceSquaredTo(const MapCoord& other) const
+{
+	return (*this - other).lengthSquared();
+}
+
+constexpr bool MapCoord::isPositionEqualTo(const MapCoord& other) const
+{
+	return (x.rawValue() == other.x.rawValue()) && (y.rawValue() == other.y.rawValue());
+}
+
+constexpr bool MapCoord::isCurveStart() const {
+	return x.flags() & 1;
+}
+
+inline
+void MapCoord::setCurveStart(bool value)
+{
+	x.setFlags((x.flags() & ~1) | (value<<0));
+}
+
+constexpr bool MapCoord::isClosePoint() const
+{
+	return x.flags() & 2;
+}
+
+inline
+void MapCoord::setClosePoint(bool value)
+{
+	x.setFlags((x.flags() & ~2) | (value<<1));
+}
+
+constexpr bool MapCoord::isHolePoint() const
+{
+	return y.flags() & 1;
+}
+
+inline
+void MapCoord::setHolePoint(bool value)
+{
+	y.setFlags((y.flags() & ~1) | (value<<0));
+	//y = (y & (~1)) | (value ? 1 : 0);
+}
+
+constexpr bool MapCoord::isDashPoint() const
+{
+	return y.flags() & 2;
+}
+
+inline
+void MapCoord::setDashPoint(bool value)
+{
+	y.setFlags((y.flags() & ~2) | (value<<1));
+}
+
+constexpr bool MapCoord::isGapPoint() const
+{
+	return y.flags() & 4;
 }
 
 inline
 void MapCoord::setGapPoint(bool value)
 {
-	y = (y & (~4)) | (value ? 4 : 0);
+	y.setFlags((y.flags() & ~4) | (value<<2));
+}
+
+
+constexpr MapCoord MapCoord::operator-() const
+{
+	return MapCoord { -x, -y };
+}
+
+inline
+MapCoord& MapCoord::operator+=(const MapCoord& rhs_vector)
+{
+	x += rhs_vector.x;
+	y += rhs_vector.y;
+	return *this;
+}
+
+inline
+MapCoord& MapCoord::operator-=(const MapCoord& rhs_vector)
+{
+	x -= rhs_vector.x;
+	y -= rhs_vector.y;
+	return *this;
+}
+
+inline
+MapCoord& MapCoord::operator*=(qreal factor)
+{
+	x *= factor;
+	y *= factor;
+	return *this;
+}
+
+inline
+MapCoord& MapCoord::operator/=(qreal divisor)
+{
+	x /= divisor;
+	y /= divisor;
+	return *this;
+}
+
+constexpr MapCoord::operator QPointF() const
+{
+	return QPointF(xd(), yd());
+}
+
+
+
+constexpr bool operator==(const MapCoord& lhs, const MapCoord& rhs)
+{
+	return (lhs.x == rhs.x) && (lhs.y == rhs.y);
+}
+
+
+constexpr bool operator!=(const MapCoord& lhs, const MapCoord& rhs)
+{
+	return !(lhs == rhs);
+}
+
+
+constexpr MapCoord operator+(const MapCoord& lhs, const MapCoord& rhs)
+{
+	return MapCoord{ lhs.x + rhs.x, lhs.y + rhs.y };
+}
+
+constexpr MapCoord operator-(const MapCoord& lhs, const MapCoord& rhs)
+{
+	return MapCoord{ lhs.x - rhs.x, lhs.y - rhs.y };
+}
+
+constexpr MapCoord operator*(const MapCoord& lhs, double factor)
+{
+	return MapCoord{ lhs.x * factor, lhs.y * factor };
+}
+
+constexpr MapCoord operator*(double factor, const MapCoord& rhs)
+{
+	return MapCoord{ factor * rhs.x, factor * rhs.y };
+}
+
+constexpr MapCoord operator/(const MapCoord& lhs, double divisor)
+{
+	return MapCoord{ lhs.x / divisor, lhs.y / divisor };
 }
 
 

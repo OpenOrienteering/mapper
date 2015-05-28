@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2012-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -117,7 +118,7 @@ bool PaintOnTemplateTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord
 		float scale = qMin(temp->getTemplateScaleX(), temp->getTemplateScaleY());
 		
 		coords.push_back(map_coord);
-		rectInclude(map_bbox, map_coord.toQPointF());
+		rectInclude(map_bbox, map_coord);
 		
 		map()->setDrawingBoundingBox(map_bbox, widget->getMapView()->lengthToPixel((erasing ? (erase_width/2) : 1) * 1000 * scale * 1));
 		
@@ -135,7 +136,7 @@ bool PaintOnTemplateTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_co
 	if (dragging)
 	{
 		coords.push_back(map_coord);
-		rectInclude(map_bbox, map_coord.toQPointF());
+		rectInclude(map_bbox, map_coord);
 		
 		temp->drawOntoTemplate(&coords[0], coords.size(), erasing ? QColor(255, 255, 255, 0) : paint_color, erasing ? erase_width : 0, map_bbox);
 		

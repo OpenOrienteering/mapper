@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2013, 2014 Kai Pastor
+ *    Copyright 2013-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -82,6 +82,13 @@ void rectInclude(QRectF& rect, QPointF point)
 		rect.setTop(point.y());
 	else if (point.y() > rect.bottom())
 		rect.setBottom(point.y());
+}
+void rectIncludeSafe(QRectF& rect, MapCoordF point)
+{
+	if (rect.isValid())
+		rectInclude(rect, point);
+	else
+		rect = QRectF(point.getX(), point.getY(), 0.0001, 0.0001);
 }
 void rectIncludeSafe(QRectF& rect, QPointF point)
 {

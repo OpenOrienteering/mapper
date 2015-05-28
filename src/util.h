@@ -82,6 +82,9 @@ void rectInclude(QRectF& rect, MapCoordF point);
 void rectInclude(QRectF& rect, QPointF point);
 
 /** Enlarges the rect to include the given point. */
+void rectIncludeSafe(QRectF& rect, MapCoordF point);
+
+/** Enlarges the rect to include the given point. */
 void rectIncludeSafe(QRectF& rect, QPointF point);
 
 /** Enlarges the rect to include the given rect.

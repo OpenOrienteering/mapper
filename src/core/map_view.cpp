@@ -249,24 +249,14 @@ QRectF MapView::calculateViewedRect(QRectF rect) const
 
 QRectF MapView::calculateViewBoundingBox(QRectF rect) const
 {
-	QPointF min = rect.topLeft();
-	MapCoord map_min = MapCoord(min.x(), min.y());
-	QPointF max = rect.bottomRight();
-	MapCoord map_max = MapCoord(max.x(), max.y());
+	auto top_left     = QPointF{ mapToView(MapCoordF{ rect.topLeft() }) };
+	auto top_right    = QPointF{ mapToView(MapCoordF{ rect.topRight() }) };
+	auto bottom_right = QPointF{ mapToView(MapCoordF{ rect.bottomRight() }) };
+	auto bottom_left  = QPointF{ mapToView(MapCoordF{ rect.bottomLeft() }) };
 	
-	QPointF top_left = mapToView(map_min);
-	QPointF bottom_right = mapToView(map_max);
-	
-	MapCoord map_top_right = MapCoord(max.x(), min.y());
-	QPointF top_right = mapToView(map_top_right);
-	
-	MapCoord map_bottom_left = MapCoord(min.x(), max.y());
-	QPointF bottom_left = mapToView(map_bottom_left);
-	
-	rect.setCoords(top_left.x(), top_left.y(), top_left.x(), top_left.y());
-	rectInclude(rect, QPointF(top_right.x(), top_right.y()));
-	rectInclude(rect, QPointF(bottom_right.x(), bottom_right.y()));
-	rectInclude(rect, QPointF(bottom_left.x(), bottom_left.y()));
+	rect = QRectF{ top_left, bottom_right }.normalized();
+	rectInclude(rect, top_right);
+	rectInclude(rect, bottom_left);
 	rect.adjust(-1.0, -1.0, +1.0, +1.0);
 	return rect;
 }

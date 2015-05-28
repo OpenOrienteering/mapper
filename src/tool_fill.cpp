@@ -109,7 +109,7 @@ int FillTool::fill(const QRectF& extent)
 	QImage image = rasterizeMap(extent, transform);
 	
 	// Calculate click position in image and check if it is inside the map area and free
-	QPoint clicked_pixel = transform.map(cur_map_widget->viewportToMapF(click_pos).toQPointF()).toPoint();
+	QPoint clicked_pixel = transform.map(QPointF(cur_map_widget->viewportToMapF(click_pos))).toPoint();
 	if (!image.rect().contains(clicked_pixel, true))
 		return 0;
 	if (qAlpha(image.pixel(clicked_pixel)) > 0)

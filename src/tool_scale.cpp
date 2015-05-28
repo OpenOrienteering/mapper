@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2013-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -152,7 +153,7 @@ void ScaleTool::updateDirtyRect()
 	
 	if (scaling_center_set)
 	{
-		rectIncludeSafe(rect, scaling_center.toQPointF());
+		rectIncludeSafe(rect, scaling_center);
 		map()->setDrawingBoundingBox(rect, 5, true);
 	}
 	else if (rect.isValid())

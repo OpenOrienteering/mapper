@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2014 Kai Pastor
+ *    Copyright 2014, 2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -20,13 +20,66 @@
 
 #include "map_coord.h"
 
-#include <vector>
+#include <type_traits>
 
 #include <QTextStream>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
 #include "../util/xml_stream_util.h"
+
+
+static_assert((-3 >> 1) == -2,
+              "MapCoord assumes an arithmetic implementation of the shift operator");
+
+static_assert(std::is_nothrow_move_constructible<MapCoord>::value, "MapCoord must be nothrow move constructible.");
+static_assert(std::is_nothrow_move_assignable<MapCoord>::value, "MapCoord must be nothrow move assignable.");
+
+static_assert(MapCoord(1, 1) == MapCoordF(1.0, 1.0).toMapCoord(),
+              "MapCoord and MapCoordF constructors must use the same unit of measurement");
+static_assert(MapCoord(1.0, 1.0) == MapCoordF(1.0, 1.0).toMapCoord(),
+              "MapCoord and MapCoordF constructors must use the same unit of measurement");
+static_assert(MapCoord(1, 1) == MapCoord::fromRaw(1000, 1000),
+              "MapCoord::fromRaw must use the native unit of measurement");
+
+static_assert(MapCoord(1, 1) + MapCoord (2, -1) == MapCoord(3, 0),
+              "MapCoord has component-wise operator+");
+static_assert(MapCoord(1, 1) - MapCoord (2, -1) == MapCoord(-1, 2),
+              "MapCoord has component-wise operator-");
+static_assert(MapCoord(1, 1) * 2.1 == MapCoord(2.1, 2.1),
+              "MapCoord has component-wise operator*(coord, factor)");
+static_assert(0.5 * MapCoord(1, 1) == MapCoord(0.5, 0.5),
+              "MapCoord has component-wise operator*(factor, coord)");
+static_assert(MapCoord(1, 1) / 4 == MapCoord(0.25, 0.25),
+              "MapCoord has component-wise operator/(coord, divisor");
+static_assert(-MapCoord(-2, 1) == MapCoord(2, -1),
+              "MapCoord has unary operator-()");
+
+static_assert(!MapCoord(0.0, 0.0).isCurveStart(),
+              "MapCoord::isCurveStart() must return false by default.");
+static_assert(MapCoord(0.0, 0.0, MapCoord::CurveStart).isCurveStart(),
+              "MapCoord::CurveStart must result in MapCoord::isCurveStart() returning true.");
+
+static_assert(!MapCoord(0.0, 0.0).isClosePoint(),
+              "MapCoord::isClosePoint() must return false by default.");
+static_assert(MapCoord(0.0, 0.0, MapCoord::ClosePoint).isClosePoint(),
+              "MapCoord::ClosePoint must result in MapCoord::isClosePoint() returning true.");
+
+static_assert(!MapCoord(0.0, 0.0).isHolePoint(),
+              "MapCoord::isHolePoint() must return false by default.");
+static_assert(MapCoord(0.0, 0.0, MapCoord::HolePoint).isHolePoint(),
+              "MapCoord::HolePoint must result in MapCoord::isHolePoint() returning true.");
+
+static_assert(!MapCoord(0.0, 0.0).isDashPoint(),
+              "MapCoord::isDashPoint() must return false by default.");
+static_assert(MapCoord(0.0, 0.0, MapCoord::DashPoint).isDashPoint(),
+              "MapCoord::DashPoint must result in MapCoord::isDashPoint() returning true.");
+
+static_assert(!MapCoord(0.0, 0.0).isGapPoint(),
+              "MapCoord::isGapPoint() must return false by default.");
+static_assert(MapCoord(0.0, 0.0, MapCoord::GapPoint).isGapPoint(),
+              "MapCoord::GapPoint must result in MapCoord::isGapPoint() returning true.");
+
 
 
 namespace literal
@@ -55,15 +108,8 @@ MapCoord MapCoord::load(QXmlStreamReader& xml)
 	XmlElementReader element(xml);
 	qint64 x = element.attribute<qint64>(literal::x);
 	qint64 y = element.attribute<qint64>(literal::y);
-	MapCoord coord = MapCoord::fromRaw(x, y);
-	
-	const int flags = element.attribute<int>(literal::flags);
-	if (flags)
-	{
-		coord.setFlags(flags);
-	}
-	
-	return coord;
+	int flags = element.attribute<int>(literal::flags);
+	return MapCoord::fromRaw(x, y, flags);
 }
 
 QString MapCoord::toString() const
@@ -168,10 +214,3 @@ QTextStream& operator>>(QTextStream& stream, MapCoord& coord)
 
 
 
-void mapCoordVectorToF(const MapCoordVector& coords, MapCoordVectorF& out_coordsF)
-{
-	std::size_t size = coords.size();
-	out_coordsF.resize(size);
-	for (std::size_t i = 0; i < size; ++i)
-		out_coordsF[i] = MapCoordF(coords[i]);
-}

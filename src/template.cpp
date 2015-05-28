@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2013-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -568,10 +569,10 @@ QRectF Template::calculateTemplateBoundingBox() const
 	// Create bounding box by calculating the positions of all corners of the transformed extent rect
 	QRectF extent = getTemplateExtent();
 	QRectF bbox;
-	rectIncludeSafe(bbox, templateToMap(extent.topLeft()).toQPointF());
-	rectInclude(bbox, templateToMap(extent.topRight()).toQPointF());
-	rectInclude(bbox, templateToMap(extent.bottomRight()).toQPointF());
-	rectInclude(bbox, templateToMap(extent.bottomLeft()).toQPointF());
+	rectIncludeSafe(bbox, templateToMap(extent.topLeft()));
+	rectInclude(bbox, templateToMap(extent.topRight()));
+	rectInclude(bbox, templateToMap(extent.bottomRight()));
+	rectInclude(bbox, templateToMap(extent.bottomLeft()));
 	return bbox;
 }
 
@@ -584,7 +585,7 @@ void Template::drawOntoTemplate(MapCoordF* coords, int num_coords, QColor color,
 	{
 		map_bbox = QRectF(coords[0].getX(), coords[0].getY(), 0, 0);
 		for (int i = 1; i < num_coords; ++i)
-			rectInclude(map_bbox, coords[i].toQPointF());
+			rectInclude(map_bbox, coords[i]);
 	}
 	float radius = qMin(getTemplateScaleX(), getTemplateScaleY()) * qMax((width+1) / 2, 1.0f);
 	QRectF radius_bbox = QRectF(map_bbox.left() - radius, map_bbox.top() - radius,

@@ -412,7 +412,7 @@ void ObjectMover::calculateConstraints()
 					constraint.curve_anchor_index = index - 1;
 					constraint.opposite_handle_index = curve_anchor_index - 1;
 					constraint.opposite_handle_original_position = path->getCoordinate(constraint.opposite_handle_index);
-					constraint.opposite_handle_dist = constraint.opposite_handle_original_position.lengthTo(path->getCoordinate(constraint.curve_anchor_index));
+					constraint.opposite_handle_dist = constraint.opposite_handle_original_position.distanceTo(path->getCoordinate(constraint.curve_anchor_index));
 					handle_constraints.push_back(constraint);
 				}
 			}
@@ -432,7 +432,7 @@ void ObjectMover::calculateConstraints()
 					constraint.curve_anchor_index = curve_anchor_index;
 					constraint.opposite_handle_index = curve_anchor_index + 1;
 					constraint.opposite_handle_original_position = path->getCoordinate(constraint.opposite_handle_index);
-					constraint.opposite_handle_dist = constraint.opposite_handle_original_position.lengthTo(path->getCoordinate(constraint.curve_anchor_index));
+					constraint.opposite_handle_dist = constraint.opposite_handle_original_position.distanceTo(path->getCoordinate(constraint.curve_anchor_index));
 					handle_constraints.push_back(constraint);
 				}
 			}

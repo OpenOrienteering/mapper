@@ -262,8 +262,8 @@ int DrawPointTool::updateDirtyRectImpl(QRectF& rect)
 {
 	if (isDragging())
 	{
-		rectIncludeSafe(rect, click_pos_map.toQPointF());
-		rectInclude(rect, constrained_pos_map.toQPointF());
+		rectIncludeSafe(rect, click_pos_map);
+		rectInclude(rect, constrained_pos_map);
 		if (preview_object)
 			rectInclude(rect, preview_object->getExtent());
 		return qMax(1, angle_helper->getDisplayRadius());

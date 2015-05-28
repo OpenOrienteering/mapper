@@ -2528,7 +2528,7 @@ float connectPaths_FindClosestEnd(const std::vector<Object*>& objects, PathObjec
 					
 					MapCoord& coord_a = a->getCoordinate(path_part_a_begin ? a->parts()[path_part_a].first_index : (a->parts()[path_part_a].last_index));
 					MapCoord& coord_b = b->getCoordinate(path_part_b_begin ? b->parts()[path_part_b].first_index : (b->parts()[path_part_b].last_index));
-					float distance_sq = coord_a.lengthSquaredTo(coord_b);
+					float distance_sq = coord_a.distanceSquaredTo(coord_b);
 					if (distance_sq < best_dist_sq)
 					{
 						best_dist_sq = distance_sq;

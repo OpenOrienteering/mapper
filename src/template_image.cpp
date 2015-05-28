@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2012-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -398,10 +399,10 @@ void TemplateImage::drawOntoTemplateUndo(bool redo)
 	qreal template_left = step.x - 0.5 * image.width();
 	qreal template_top = step.y - 0.5 * image.height();
 	QRectF map_bbox;
-	rectIncludeSafe(map_bbox, templateToMap(QPointF(template_left, template_top)).toQPointF());
-	rectIncludeSafe(map_bbox, templateToMap(QPointF(template_left + step.image.width(), template_top)).toQPointF());
-	rectIncludeSafe(map_bbox, templateToMap(QPointF(template_left, template_top + step.image.height())).toQPointF());
-	rectIncludeSafe(map_bbox, templateToMap(QPointF(template_left + step.image.width(), template_top + step.image.height())).toQPointF());
+	rectIncludeSafe(map_bbox, templateToMap(QPointF(template_left, template_top)));
+	rectIncludeSafe(map_bbox, templateToMap(QPointF(template_left + step.image.width(), template_top)));
+	rectIncludeSafe(map_bbox, templateToMap(QPointF(template_left, template_top + step.image.height())));
+	rectIncludeSafe(map_bbox, templateToMap(QPointF(template_left + step.image.width(), template_top + step.image.height())));
 	map->setTemplateAreaDirty(this, map_bbox, 0);
 	
 	setHasUnsavedChanges(true);

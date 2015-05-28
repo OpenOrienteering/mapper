@@ -723,7 +723,7 @@ void BooleanTool::rebuildSegment(
 			start_tangent = original->getCoordinate(edge_start + 1);
 			end_tangent = original->getCoordinate(edge_start + 2);
 			
-			start_error_sq = start_coord.lengthSquaredTo(original->getCoordinate(edge_start + 0));
+			start_error_sq = start_coord.distanceSquaredTo(original->getCoordinate(edge_start + 0));
 			if (start_error_sq > error_bound)
 				qDebug() << "BooleanTool::rebuildSegment: start error too high in increasing direct case: " << sqrt(start_error_sq);
 		}
@@ -747,7 +747,7 @@ void BooleanTool::rebuildSegment(
 			start_tangent = o3.toMapCoord();
 			end_tangent = o4.toMapCoord();
 			
-			start_error_sq = start_coord.lengthSquaredTo(o2.toMapCoord());
+			start_error_sq = start_coord.distanceSquaredTo(o2.toMapCoord());
 			if (start_error_sq > error_bound)
 				qDebug() << "BooleanTool::rebuildSegment: start error too high in increasing general case: " << sqrt(start_error_sq);
 		}
@@ -811,7 +811,7 @@ void BooleanTool::rebuildSegment(
 			start_tangent = original->getCoordinate(edge_start + 2);
 			end_tangent = original->getCoordinate(edge_start + 1);
 			
-			start_error_sq = start_coord.lengthSquaredTo(original->getCoordinate(edge_start + 3));
+			start_error_sq = start_coord.distanceSquaredTo(original->getCoordinate(edge_start + 3));
 			if (start_error_sq > error_bound)
 				qDebug() << "BooleanTool::rebuildSegment: start error too high in decreasing direct case: " << sqrt(start_error_sq);
 		}
@@ -838,7 +838,7 @@ void BooleanTool::rebuildSegment(
 			start_tangent = o3.toMapCoord();
 			end_tangent = o4.toMapCoord();
 			
-			start_error_sq = start_coord.lengthSquaredTo(o2.toMapCoord());
+			start_error_sq = start_coord.distanceSquaredTo(o2.toMapCoord());
 			if (start_error_sq > error_bound)
 				qDebug() << "BooleanTool::rebuildSegment: start error too high in decreasing general case: " << sqrt(start_error_sq);
 		}
@@ -919,7 +919,7 @@ void BooleanTool::rebuildSegmentFromPathOnly(
 	MapCoordF polygon_end_tangent = MapCoordF(second_last_point_c - end_point_c);
 	polygon_end_tangent.normalize();
 	
-	double tangent_length = BEZIER_HANDLE_DISTANCE * start_point_c.lengthTo(end_point_c);
+	double tangent_length = BEZIER_HANDLE_DISTANCE * start_point_c.distanceTo(end_point_c);
 	object->addCoordinate((MapCoordF(start_point_c) + tangent_length * polygon_start_tangent).toMapCoord());
 	object->addCoordinate((MapCoordF(end_point_c) + tangent_length * polygon_end_tangent).toMapCoord());
 	object->addCoordinate(end_point_c);

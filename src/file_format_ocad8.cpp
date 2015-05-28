@@ -1097,8 +1097,8 @@ bool OCAD8FileImport::importRectangleObject(const OCADObject* ocad_object, MapPa
 	if (rect.has_grid && rect.cell_width > 0 && rect.cell_height > 0)
 	{
 		// Calculate grid sizes
-		double width = top_left.lengthTo(top_right);
-		double height = top_left.lengthTo(bottom_left);
+		double width = top_left.distanceTo(top_right);
+		double height = top_left.distanceTo(bottom_left);
 		int num_cells_x = qMax(1, qRound(width / rect.cell_width));
 		int num_cells_y = qMax(1, qRound(height / rect.cell_height));
 		
@@ -1399,7 +1399,7 @@ bool OCAD8FileImport::fillTextPathCoords(TextObject *object, TextSymbol *symbol,
 		top_right = MapCoord(top_right.xd() + adjust_vector.getX(), top_right.yd() + adjust_vector.getY());
 		
 		object->setBox((bottom_left.rawX() + top_right.rawX()) / 2, (bottom_left.rawY() + top_right.rawY()) / 2,
-					   top_left.lengthTo(top_right), top_left.lengthTo(bottom_left));
+					   top_left.distanceTo(top_right), top_left.distanceTo(bottom_left));
 
 		object->setVerticalAlignment(TextObject::AlignTop);
 	}
@@ -2435,7 +2435,7 @@ u16 OCAD8FileExport::exportTextCoordinates(TextObject* object, OCADPoint** buffe
 		// 3 - top right
 		// 4 - top left
 		
-		QPointF anchor = object->getAnchorCoordF().toQPointF();
+		QPointF anchor = QPointF(object->getAnchorCoordF());
 		QPointF anchor_text = map_to_text.map(anchor);
 		
 		TextObjectLineInfo* line0 = object->getLineInfo(0);

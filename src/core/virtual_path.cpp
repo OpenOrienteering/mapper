@@ -179,7 +179,7 @@ QRectF PathCoordVector::calculateExtent() const
 		auto last = end();
 		for (++pc; pc != last; ++pc)
 		{
-			rectInclude(extent, pc->pos.toQPointF());
+			rectInclude(extent, QPointF(pc->pos));
 		}
 		
 		Q_ASSERT(extent.isValid());
@@ -192,10 +192,11 @@ bool PathCoordVector::intersectsBox(QRectF box) const
 	bool result = false;
 	if (!empty())
 	{
-		auto last_pos = front().pos.toQPointF();
+		/// \todo Get rid of QPointF conversion by either changing MapCoordF or lineIntersectsRect.
+		auto last_pos = QPointF(front().pos);
 		result = std::any_of(begin()+1, end(), [&box, &last_pos](const PathCoord& pc)
 		{
-			auto pos = pc.pos.toQPointF();
+			auto pos = QPointF(pc.pos);
 			auto result = lineIntersectsRect(box, last_pos, pos); /// \todo Implement this here, used nowhere else
 			last_pos = pos;
 			return result;

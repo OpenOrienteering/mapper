@@ -694,7 +694,7 @@ void LineSymbol::shiftCoordinates(const VirtualPath& path, double main_shift, Ma
 			// TODO: it may be necessary to remove some of the generated curves in the case an outer point is moved inwards
 			if (main_shift > 0.0)
 			{
-				QBezier bezier = QBezier::fromPoints(path.coords[i+3].toQPointF(), path.coords[i+2].toQPointF(), path.coords[i+1].toQPointF(), coords_i.toQPointF());
+				QBezier bezier = QBezier::fromPoints(QPointF(path.coords[i+3]), QPointF(path.coords[i+2]), QPointF(path.coords[i+1]), QPointF(coords_i));
 				auto count = bezier.shifted(offsetCurves, MAX_OFFSET, qAbs(shift), curve_threshold);
 				for (auto j = count - 1; j >= 0; --j)
 				{
@@ -715,7 +715,7 @@ void LineSymbol::shiftCoordinates(const VirtualPath& path, double main_shift, Ma
 			}
 			else
 			{
-				QBezier bezier = QBezier::fromPoints(path.coords[i].toQPointF(), path.coords[i+1].toQPointF(), path.coords[i+2].toQPointF(), path.coords[i+3].toQPointF());
+				QBezier bezier = QBezier::fromPoints(QPointF(path.coords[i]), QPointF(path.coords[i+1]), QPointF(path.coords[i+2]), QPointF(path.coords[i+3]));
 				int count = bezier.shifted(offsetCurves, MAX_OFFSET, qAbs(shift), curve_threshold);
 				for (int j = 0; j < count; ++j)
 				{
