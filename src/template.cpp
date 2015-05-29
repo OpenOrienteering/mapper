@@ -407,9 +407,8 @@ bool Template::configureAndLoad(QWidget* dialog_parent, MapView* view)
 	// If the template is not georeferenced, position it at the viewport midpoint
 	if (!isTemplateGeoreferenced() && center_in_view)
 	{
-		auto view_position = MapCoord::fromRaw(view->getPositionX(), view->getPositionY());
 		auto offset = MapCoord { calculateTemplateBoundingBox().center() };
-		setTemplatePosition(view_position - offset);
+		setTemplatePosition(view->center() - offset);
 	}
 	
 	return true;

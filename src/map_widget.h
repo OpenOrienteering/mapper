@@ -165,46 +165,21 @@ public:
 	/** Maps map coordinates to viewport (GUI) coordinates. */
 	QRectF mapToViewport(const QRectF& input) const;
 	
-	// View changes
 	
-	/**
-	 * Notifies the MapWidget of the view having zoomed,
-	 * making it repaint its widget area.
-	 * 
-	 * @param factor The ratio new_zoom / old_zoom
+	/** Notifies the MapWidget of the view having zoomed, moved or rotated. */
+	void viewChanged(MapView::ChangeFlags changes);
+	
+	
+	/** 
+	 * Returns the current offset (in pixel) during a map pan operation.
 	 */
-	void zoom(float factor);
+	QPoint panOffset() const;
 	
-	/**
-	 * Notifies the MapWidget of the view having moved.
-	 * Internally, just redraws the complete widget area.
-	 * 
-	 * @param x X offset of the view change in native map coordinates
-	 * @param y Y offset of the view change in native map coordinates
+	/** 
+	 * Sets the current offset (in pixel) during a map pan operation.
 	 */
-	void moveView(qint64 x, qint64 y);
-	
-	/**
-	 * Notifies the MapWidget of the user having finished panning the map.
-	 * Internally, decides whether to do a complete or partial redraw.
-	 * @param x X offset of the total view change in native map coordinates
-	 * @param y Y offset of the total view change in native map coordinates
-	 */
-	void panView(qint64 x, qint64 y);
-	
-	/** Sets the current drag offset during a map pan operation. */
 	void setPanOffset(QPoint offset);
 	
-	/** Returns the current drag offset during a map pan operation. */
-	QPoint dragOffset() const;
-	
-	/**
-	 * Completes a map panning operation. Calls panView() internally and
-	 * resets the current drag offset.
-	 * @param dx X offset of the total view change in native map coordinates
-	 * @param dy Y offset of the total view change in native map coordinates
-	 */
-	void finishPanning(qint64 dx, qint64 dy);
 	
 	/**
 	 * Adjusts the viewport so the given rect is inside the view.
@@ -271,7 +246,15 @@ public:
 	 * @param pixel_border Additional affected extent around the map rect in
 	 *     pixels. Allows to specify zoom-independent extents.
 	 */
-	void updateDrawing(QRectF map_rect, int pixel_border);
+	void updateDrawing(const QRectF& map_rect, int pixel_border);
+	/**
+	 * Triggers a redraw of the MapWidget at the given area.
+	 */
+	void updateMapRect(const QRectF& map_rect, int pixel_border, QRect& cache_dirty_rect);
+	/**
+	 * Triggers a redraw of the MapWidget at the given area.
+	 */
+	void updateViewportRect(QRect viewport_rect, QRect& cache_dirty_rect);
 	/**
 	 * Variant of updateDrawing() which waits for some milliseconds before
 	 * calling update() in order to avoid excessive redraws.
@@ -482,21 +465,23 @@ private:
 	QRect map_cache_dirty_rect;
 	
 	// Dirty regions for drawings (tools) and activities
-	/**
-	 * Dirty rect for dynamic display which has been drawn
-	 * (and will have to be erased by the next draw operation)
-	 */
-	QRect drawing_dirty_rect_old;
-	/**
-	 * Dirty rect for dynamic display which has maybe not been drawn yet,
-	 * but must be drawn by the next draw operation
-	 */
-	QRectF drawing_dirty_rect_new;
-	int drawing_dirty_rect_new_border;
+	/** Dirty rect for the current tool, in viewport coordinates (pixels). */
+	QRect drawing_dirty_rect;
 	
-	QRect activity_dirty_rect_old;
-	QRectF activity_dirty_rect_new;
-	int activity_dirty_rect_new_border;
+	/** Dirty rect for the current tool, in map coordinates. */
+	QRectF drawing_dirty_rect_map;
+	
+	/** Additional pixel border for the tool dirty rect, in pixels. */
+	int drawing_dirty_rect_border;
+	
+	/** Dirty rect for the current activity, in viewport coordinates (pixels). */
+	QRect activity_dirty_rect;
+	
+	/** Dirty rect for the current activity, in map coordinates. */
+	QRectF activity_dirty_rect_map;
+	
+	/** Additional pixel border for the activity dirty rect, in pixels. */
+	int activity_dirty_rect_border;
 	
 	/** Cached updates */
 	QRect cached_update_rect;
@@ -556,7 +541,7 @@ QPointF MapWidget::mapToViewport(QPointF input) const
 }
 
 inline
-QPoint MapWidget::dragOffset() const
+QPoint MapWidget::panOffset() const
 {
 	return pan_offset;
 }

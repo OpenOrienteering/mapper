@@ -559,6 +559,20 @@ void Object::move(qint64 dx, qint64 dy)
 	setOutputDirty();
 }
 
+void Object::move(MapCoord offset)
+{
+	if (type == Text && coords.size() == 2)
+	{
+		coords.front() += offset;
+	}
+	else for (MapCoord& coord : coords)
+	{
+		coord += offset;
+	}
+	
+	setOutputDirty();
+}
+
 void Object::scale(MapCoordF center, double factor)
 {
 	if (type == Text && coords.size() == 2)

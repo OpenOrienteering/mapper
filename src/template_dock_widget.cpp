@@ -360,7 +360,7 @@ Template* TemplateWidget::showOpenTemplateDialog(QWidget* dialog_parent, MapEdit
 	if (!new_temp->isTemplateGeoreferenced() && center_in_view)
 	{
 		MapView* main_view = controller->getMainWidget()->getMapView();
-		auto view_pos = MapCoord::fromRaw(main_view->getPositionX(), main_view->getPositionY());
+		auto view_pos = main_view->center();
 		auto offset = MapCoord { new_temp->calculateTemplateBoundingBox().center() };
 		new_temp->setTemplatePosition(view_pos - offset);
 	}

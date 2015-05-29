@@ -638,9 +638,7 @@ void OcdFileImport::importView< struct Ocd::FormatV8 >(const OcdFile< Ocd::Forma
 		if (setup->zoom >= MapView::zoom_out_limit && setup->zoom <= MapView::zoom_in_limit)
 			view->setZoom(setup->zoom);
 		
-		const MapCoord center = convertOcdPoint(setup->center);
-		view->setPositionX(center.rawX());
-		view->setPositionY(center.rawY());
+		view->setCenter(convertOcdPoint(setup->center));
 	}
 }
 
@@ -699,10 +697,8 @@ void OcdFileImport::importView(const QString& param_string)
 	
 	if (view)
 	{
-		view->setPositionX(qRound(offset_x * 1000));
-		view->setPositionY(-qRound(offset_y * 1000));
-		if ( zoom_ok &&
-			 zoom >= MapView::zoom_out_limit && zoom <= MapView::zoom_in_limit )
+		view->setCenter(MapCoord(offset_x, -offset_y));
+		if (zoom_ok)
 		{
 			view->setZoom(zoom);
 		}

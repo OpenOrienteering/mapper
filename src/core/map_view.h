@@ -48,6 +48,16 @@ class QXmlStreamWriter;
 class MapView
 {
 public:
+	enum ChangeFlag
+	{
+		NoChange       = 0,
+		CenterChange   = 1,
+		ZoomChange     = 2,
+		RotationChange = 4,
+	};
+	
+	Q_DECLARE_FLAGS(ChangeFlags, ChangeFlag)
+	
 	/** Creates a default view looking at the origin */
 	MapView(Map* map);
 	
@@ -86,6 +96,7 @@ public:
 	 * Try to do partial updates instead, if possible.
 	 */
 	void updateAllMapWidgets();
+	
 	
 	/** Converts x, y (with origin at the center of the view) to map coordinates */
 	MapCoord viewToMap(double x, double y) const;
@@ -146,17 +157,22 @@ public:
 	
 	// Panning
 	
-	/** Returns the current drag offset (when dragging the map). */
+	/** Returns the current pan offset (when dragging the map). */
 	QPoint panOffset() const;
 	
-	/** Sets the current drag offset while the map is being dragged. */
+	/** Sets the current pan offset while the map is being dragged. */
 	void setPanOffset(QPoint offset);
 	
 	/**
 	 * Finishes panning the map.
+	 * 
 	 * @param offset The final offset, relative to the start of the operation.
 	 */
 	void finishPanning(QPoint offset);
+	
+	
+	/** Returns the map this view is defined on. */
+	Map* getMap() const;
 	
 	
 	/**
@@ -168,25 +184,23 @@ public:
 	 * @param cursor_pos_view The cursor position in view coordinates, must be
 	 *     set if preserve_cursor_pos is used.
 	 */
-	bool zoomSteps(float num_steps, bool preserve_cursor_pos, QPointF cursor_pos_view = QPointF());
-	
-	/** Returns the map this view is defined on. */
-	Map* getMap() const;
+	void zoomSteps(float num_steps, bool preserve_cursor_pos, QPointF cursor_pos_view = QPointF());
 	
 	/**
 	 * Returns the final zoom factor for use in transformations.
 	 * Depends on the pixel per millimeter of the display.
 	 */
-	float calculateFinalZoomFactor() const;
+	double calculateFinalZoomFactor() const;
 	
 	/** Returns the raw zoom facor, see also calculateFinalZoomFactor(). */
-	float getZoom() const;
+	double getZoom() const;
+	
+	/** Sets the zoom factor relative to the given point.*/
+	void setZoom(double value, QPointF center);
 	
 	/** Sets the zoom factor. */
-	void setZoom(float value);
+	void setZoom(double value);
 	
-	/** @brief Sets the zoom factor relative to the given point.*/
-	void setZoom(double value, QPointF center);
 	
 	/** Returns the view rotation (in radians). */
 	float getRotation() const;
@@ -194,29 +208,13 @@ public:
 	/** Sets the view roation (in radians). */
 	void setRotation(float value);
 	
-	/**
-	 * Returns the x position of the view center in native map coordinates.
-	 * (1/1000th of a millimeter on the map paper)
-	 */
-	qint64 getPositionX() const;
 	
-	/**
-	 * Sets the x position of the view center in native map coordinates.
-	 * (1/1000th of a millimeter on the map paper)
-	 */
-	void setPositionX(qint64 value);
+	/** Returns the position of the view center. */
+	MapCoord center() const;
 	
-	/**
-	 * Returns the y position of the view center in native map coordinates.
-	 * (1/1000th of a millimeter on the map paper)
-	 */
-	qint64 getPositionY() const;
+	/** Sets the position of the view center. */
+	void setCenter(MapCoord pos);
 	
-	/**
-	 * Sets the y position of the view center in native map coordinates.
-	 * (1/1000th of a millimeter on the map paper)
-	 */
-	void setPositionY(qint64 value);
 	
 	// Map and template visibilities
 	
@@ -286,14 +284,13 @@ public:
 private:
 	typedef std::vector<MapWidget*> WidgetVector;
 	
-	void updateTransform();		// recalculates the x_to_y matrices
+	void updateTransform(MapView::ChangeFlags change);		// recalculates the x_to_y matrices
 	
 	Map* map;
 	
 	double zoom;		// factor
 	double rotation;	// counterclockwise 0 to 2*PI. This is the viewer rotation, so the map is rotated clockwise
-	qint64 position_x;	// position of the viewer, positive values move the map to the left; the position is in 1/1000 mm
-	qint64 position_y;
+	MapCoord center_pos;// position of the viewer, positive values move the map to the left; the position is in 1/1000 mm
 	QPoint pan_offset;	// the distance the content of the view was dragged with the mouse, in pixels
 	
 	QTransform view_to_map;
@@ -322,32 +319,18 @@ public:
 	
 	/** Visibility flag */
 	bool visible;
-	
-	TemplateVisibility(float opacity, bool visible);
 };
 
 
 
 // ### MapView inline code ###
 
-inline
-MapCoord MapView::viewToMap(double x, double y) const
-{
-	return MapCoord(view_to_map.m11() * x + view_to_map.m12() * y + view_to_map.m13(),
-	                view_to_map.m21() * x + view_to_map.m22() * y + view_to_map.m23());
-}
+Q_DECLARE_OPERATORS_FOR_FLAGS(MapView::ChangeFlags)
 
 inline
 MapCoord MapView::viewToMap(QPointF point) const
 {
 	return viewToMap(point.x(), point.y());
-}
-
-inline
-MapCoordF MapView::viewToMapF(double x, double y) const
-{
-	return MapCoordF(view_to_map.m11() * x + view_to_map.m12() * y + view_to_map.m13(),
-	                 view_to_map.m21() * x + view_to_map.m22() * y + view_to_map.m23());
 }
 
 inline
@@ -357,21 +340,7 @@ MapCoordF MapView::viewToMapF(QPointF point) const
 }
 
 inline
-QPointF MapView::mapToView(MapCoord coords) const
-{
-	return QPointF(map_to_view.m11() * coords.xd() + map_to_view.m12() * coords.yd() + map_to_view.m13(),
-				   map_to_view.m21() * coords.xd() + map_to_view.m22() * coords.yd() + map_to_view.m23());
-}
-
-inline
-QPointF MapView::mapToView(MapCoordF coords) const
-{
-	return QPointF(map_to_view.m11() * coords.x() + map_to_view.m12() * coords.y() + map_to_view.m13(),
-				   map_to_view.m21() * coords.x() + map_to_view.m22() * coords.y() + map_to_view.m23());
-}
-
-inline
-const QTransform&MapView::worldTransform() const
+const QTransform& MapView::worldTransform() const
 {
 	return world_transform;
 }
@@ -383,13 +352,13 @@ Map* MapView::getMap() const
 }
 
 inline
-float MapView::calculateFinalZoomFactor() const
+double MapView::calculateFinalZoomFactor() const
 {
 	return lengthToPixel(1000);
 }
 
 inline
-float MapView::getZoom() const
+double MapView::getZoom() const
 {
 	return zoom;
 }
@@ -401,22 +370,9 @@ float MapView::getRotation() const
 }
 
 inline
-void MapView::setRotation(float value)
+MapCoord MapView::center() const
 {
-	rotation = value;
-	updateTransform();
-}
-
-inline
-qint64 MapView::getPositionX() const
-{
-	return position_x;
-}
-
-inline
-qint64 MapView::getPositionY() const
-{
-	return position_y;
+	return center_pos;
 }
 
 inline
@@ -444,15 +400,5 @@ bool MapView::isOverprintingSimulationEnabled() const
 }
 
 
-
-// ### TemplateVisibility inline code ###
-
-inline
-TemplateVisibility::TemplateVisibility(float opacity, bool visible)
- : opacity(opacity)
- , visible(visible)
-{
-	// nothing
-}
 
 #endif

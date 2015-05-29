@@ -171,6 +171,9 @@ public:
 	 */
 	void move(qint64 dx, qint64 dy);
 	
+	/** Moves the whole object by the given offset. */
+	void move(MapCoord offset);
+	
 	/** Scales all coordinates, with the given scaling center */
 	void scale(MapCoordF center, double factor);
 	

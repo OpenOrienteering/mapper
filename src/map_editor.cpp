@@ -1491,12 +1491,11 @@ void MapEditorController::paste()
 	// Move objects in paste_map so their bounding box center is at this map's viewport center.
 	// This makes the pasted objects appear at the center of the viewport.
 	QRectF paste_extent = paste_map->calculateExtent(true, false, NULL);
-	qint64 dx = main_view->getPositionX() - paste_extent.center().x() * 1000;
-	qint64 dy = main_view->getPositionY() - paste_extent.center().y() * 1000;
+	auto offset = main_view->center() - paste_extent.center();
 	
 	MapPart* part = paste_map->getCurrentPart();
 	for (int i = 0; i < part->getNumObjects(); ++i)
-		part->getObject(i)->move(dx, dy);
+		part->getObject(i)->move(offset);
 	
 	// Import pasted map. Do not blindly import all colors.
 	map->importMap(paste_map, Map::MinimalObjectImport, window);
@@ -3135,7 +3134,6 @@ void MapEditorController::alignMapWithNorth(bool enable)
 		Compass::getInstance().stopUsage();
 		
 		main_view->setRotation(0);
-		main_view->updateAllMapWidgets();
 	}
 }
 
@@ -3149,7 +3147,6 @@ void MapEditorController::alignMapWithNorthUpdate()
 	
 	// Set map rotation
 	main_view->setRotation(-1 * M_PI / 180.0f * Compass::getInstance().getCurrentAzimuth());
-	main_view->updateAllMapWidgets();
 }
 
 void MapEditorController::toggleTemplateClicked()

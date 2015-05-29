@@ -195,8 +195,7 @@ QImage FillTool::rasterizeMap(const QRectF& extent, QTransform& out_transform)
 	
 	// Create map view centered on the extent
 	MapView* view = new MapView(map());
-	view->setPositionX(extent.center().x() * 1000);
-	view->setPositionY(extent.center().y() * 1000);
+	view->setCenter(MapCoord{ extent.center() });
 	view->setZoom(zoom_level);
 	
 	// Allocate the image

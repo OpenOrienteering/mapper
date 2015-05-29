@@ -327,8 +327,7 @@ void OCAD8FileImport::import(bool load_symbols_only)
 			ocad_point(buf, &file->setup->center);
 			MapCoord center_pos;
 			convertPoint(center_pos, buf[0], buf[1]);
-			view->setPositionX(center_pos.rawX());
-			view->setPositionY(center_pos.rawY());
+			view->setCenter(center_pos);
 		}
 		
 		// TODO: read template visibilities
@@ -1567,7 +1566,7 @@ void OCAD8FileExport::doExport()
 	OCADSetup* setup = file->setup;
 	if (view)
 	{
-		setup->center = convertPoint(view->getPositionX(), view->getPositionY());
+		setup->center = convertPoint(view->center());
 		setup->zoom = view->getZoom();
 	}
 	else

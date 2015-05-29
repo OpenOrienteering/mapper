@@ -435,7 +435,6 @@ void PrintWidget::setActive(bool active)
 			QXmlStreamReader reader(saved_view_state);
 			reader.readNextStartElement();
 			main_view->load(reader);
-			main_view->updateAllMapWidgets();
 			
 			editor->setViewOptionsEnabled(true);
 		}
