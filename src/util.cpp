@@ -283,34 +283,33 @@ QString makeHelpUrl(QString filename, QString fragment)
 	return QLatin1String("qthelp://") + MAPPER_HELP_NAMESPACE + "/manual/" + filename + (fragment.isEmpty() ? "" : ("#" + fragment));
 }
 
-float mmToPixelPhysical(float millimeters)
+qreal mmToPixelPhysical(qreal millimeters)
 {
-	float ppi = Settings::getInstance().getSettingCached(Settings::General_PixelsPerInch).toFloat();
+	auto ppi = Settings::getInstance().getSettingCached(Settings::General_PixelsPerInch).toReal();
+	return millimeters * ppi / 25.4;
+}
+
+qreal pixelToMMPhysical(qreal pixels)
+{
+	auto ppi = Settings::getInstance().getSettingCached(Settings::General_PixelsPerInch).toReal();
+	return pixels * 25.4 / ppi;
+}
+
+qreal mmToPixelLogical(qreal millimeters)
+{
+	auto ppi = QApplication::primaryScreen()->logicalDotsPerInch();
 	return millimeters * ppi / 25.4f;
 }
 
-float pixelToMMPhysical(float pixels)
+qreal pixelToMMLogical(qreal pixels)
 {
-	float ppi = Settings::getInstance().getSettingCached(Settings::General_PixelsPerInch).toFloat();
+	auto ppi = QApplication::primaryScreen()->logicalDotsPerInch();
 	return pixels * 25.4f / ppi;
 }
 
-float mmToPixelLogical(float millimeters)
+bool isAntialiasingRequired()
 {
-	float ppi = QApplication::primaryScreen()->logicalDotsPerInch();
-	return millimeters * ppi / 25.4f;
-}
-
-float pixelToMMLogical(float pixels)
-{
-	float ppi = QApplication::primaryScreen()->logicalDotsPerInch();
-	return pixels * 25.4f / ppi;
-}
-
-bool isAntialiasingRequired(Settings* settings)
-{
-	float ppi = settings ? settings->getSettingCached(Settings::General_PixelsPerInch).toFloat() : Settings::getInstance().getSettingCached(Settings::General_PixelsPerInch).toFloat();
-	return ppi < 200;
+	return isAntialiasingRequired(Settings::getInstance().getSettingCached(Settings::General_PixelsPerInch).toReal());
 }
 
 }

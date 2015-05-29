@@ -269,10 +269,10 @@ namespace Util
 	 * Mapper's settings. This should be used to calculate sizes of map elements.
 	 * @sa mmToPixelLogical()
 	 */
-	float mmToPixelPhysical(float millimeters);
+	qreal mmToPixelPhysical(qreal millimeters);
 	
 	/** Inverse of mmToPixelPhysical(). */
-	float pixelToMMPhysical(float pixels);
+	qreal pixelToMMPhysical(qreal pixels);
 	
 	/**
 	 * Converts millimeters to pixels using the "logical" dpi setting of
@@ -280,13 +280,23 @@ namespace Util
 	 * elements.
 	 * @sa mmToPixelPhysical()
 	 */
-	float mmToPixelLogical(float millimeters);
+	qreal mmToPixelLogical(qreal millimeters);
 	
 	/** Inverse of mmToPixelLogical(). */
-	float pixelToMMLogical(float pixels);
+	qreal pixelToMMLogical(qreal pixels);
 	
 	/** Returns true for low-dpi screens, false for high-dpi screens. */
-	bool isAntialiasingRequired(Settings* settings = NULL);
+	bool isAntialiasingRequired();
+	
+	/** Returns true for low-dpi screens, false for high-dpi screens. */
+	constexpr bool isAntialiasingRequired(qreal ppi);
+	
+	
+	
+	constexpr bool isAntialiasingRequired(qreal ppi)
+	{
+		return ppi < 200;
+	}
 }
 
 #endif

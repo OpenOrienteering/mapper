@@ -1,6 +1,6 @@
 /*
- *    Copyright 2012 Thomas Schöps
- *    Copyright 2013, 2014 Thomas Schöps, Kai Pastor
+ *    Copyright 2012-2014 Thomas Schöps
+ *    Copyright 2013-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -91,7 +91,7 @@ Settings::Settings()
 	registerSetting(HomeScreen_CurrentTip, "HomeScreen/currentTip", -1);
 	
 	// Set antialiasing default depending on screen pixels per inch
-	registerSetting(MapDisplay_Antialiasing, "MapDisplay/antialiasing", Util::isAntialiasingRequired(this));
+	registerSetting(MapDisplay_Antialiasing, "MapDisplay/antialiasing", Util::isAntialiasingRequired(getSetting(General_PixelsPerInch).toReal()));
 	
 	// Migrate old settings
 	static QVariant current_version("0.5.9");
