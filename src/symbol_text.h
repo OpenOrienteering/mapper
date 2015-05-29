@@ -127,7 +127,6 @@ public:
 	
 	double getNextTab(double pos) const;
 	
-	static const float pt_in_mm;	// 1 pt in mm
 	static const float internal_point_size;
 	
 	virtual SymbolPropertiesWidget* createPropertiesWidget(SymbolSettingDialog* dialog);

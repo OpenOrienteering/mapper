@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Pete Curtis
- *    Copyright 2014 Kai Pastor
+ *    Copyright 2014, 2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -73,8 +73,6 @@ public:
 	~OCAD8FileImport();
 
 	void setStringEncodings(const char *narrow, const char *wide = "UTF-16LE");
-
-	static const float ocad_pt_in_mm;
 
 protected:
 	void import(bool load_symbols_only);
