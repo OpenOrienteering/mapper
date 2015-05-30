@@ -311,7 +311,7 @@ void TemplateImage::drawOntoTemplateImpl(MapCoordF* coords, int num_coords, QCol
 		width *= width_factor;
 		num_coords = 5;
 		points = new QPointF[5];
-		points[0] = mapToTemplateQPoint(coords[0]) + QPointF(image.width() * 0.5f, image.height() * 0.5f);
+		points[0] = mapToTemplate(coords[0]) + QPointF(image.width() * 0.5f, image.height() * 0.5f);
 		points[1] = points[0] + QPointF(ring_radius, 0);
 		points[2] = points[0] + QPointF(0, ring_radius);
 		points[3] = points[0] + QPointF(-ring_radius, 0);
@@ -328,7 +328,7 @@ void TemplateImage::drawOntoTemplateImpl(MapCoordF* coords, int num_coords, QCol
 		QRectF bbox;
 		for (int i = 0; i < num_coords; ++i)
 		{
-			points[i] = mapToTemplateQPoint(coords[i]) + QPointF(image.width() * 0.5f, image.height() * 0.5f);
+			points[i] = mapToTemplate(coords[i]) + QPointF(image.width() * 0.5f, image.height() * 0.5f);
 			rectIncludeSafe(bbox, points[i]);
 		}
 		radius_bbox = QRect(

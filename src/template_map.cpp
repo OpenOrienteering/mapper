@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2012-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -97,10 +98,10 @@ void TemplateMap::drawTemplate(QPainter* painter, QRectF& clip_rect, double scal
 	QRectF transformed_clip_rect;
 	if (!is_georeferenced)
 	{
-		rectIncludeSafe(transformed_clip_rect, mapToTemplateQPoint(MapCoordF(clip_rect.topLeft())));
-		rectIncludeSafe(transformed_clip_rect, mapToTemplateQPoint(MapCoordF(clip_rect.topRight())));
-		rectIncludeSafe(transformed_clip_rect, mapToTemplateQPoint(MapCoordF(clip_rect.bottomLeft())));
-		rectIncludeSafe(transformed_clip_rect, mapToTemplateQPoint(MapCoordF(clip_rect.bottomRight())));
+		rectIncludeSafe(transformed_clip_rect, mapToTemplate(MapCoordF(clip_rect.topLeft())));
+		rectIncludeSafe(transformed_clip_rect, mapToTemplate(MapCoordF(clip_rect.topRight())));
+		rectIncludeSafe(transformed_clip_rect, mapToTemplate(MapCoordF(clip_rect.bottomLeft())));
+		rectIncludeSafe(transformed_clip_rect, mapToTemplate(MapCoordF(clip_rect.bottomRight())));
 	}
 	else
 	{
