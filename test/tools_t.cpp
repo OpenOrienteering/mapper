@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -136,7 +137,7 @@ void TestMapEditor::simulateDrag(QPoint start_pos, QPoint end_pos)
 	// NOTE: the implementation of QTest::mouseMove() does not seem to work (tries to set the real cursor position ...)
 	//QTest::mouseMove(map_widget, end_pos);
 	// Use manual workaround instead which sends an event directly:
-	QMouseEvent event(QEvent::MouseMove, map_widget->mapToGlobal(end_pos), Qt::NoButton, Qt::LeftButton, Qt::NoModifier);
+	QMouseEvent event(QEvent::MouseMove, end_pos, map_widget->mapToGlobal(end_pos), Qt::NoButton, Qt::LeftButton, Qt::NoModifier);
 	QApplication::sendEvent(map_widget, &event);
 	
 	QTest::mouseRelease(map_widget, Qt::LeftButton, 0, end_pos);
@@ -162,7 +163,7 @@ void ToolsTest::editTool()
 	// Initialization
 	TestMap map;
 	TestMapEditor editor(map.map);
-	EditTool* tool = new EditPointTool(editor.editor, NULL);	// TODO: Refactor EditTool: MapEditorController and SymbolWidget pointers could be unnecessary
+	EditTool* tool = new EditPointTool(editor.editor, nullptr);	// TODO: Refactor EditTool: MapEditorController and SymbolWidget pointers could be unnecessary
 	editor.editor->setTool(tool);
 	
 	// Move the first coordinate of the line object
@@ -170,24 +171,27 @@ void ToolsTest::editTool()
 	PathObject* object = map.line_object;
 	
 	const MapCoord& coord = object->getCoordinate(0);
-	QPointF coord_pos = map_widget->mapToViewport(coord);
+	QPointF drag_start_pos = map_widget->mapToViewport(coord);
+	QPointF drag_end_pos = drag_start_pos + QPointF(0, -50);
 	
-	QPointF target_coord_pos = coord_pos + QPointF(0, -50);
-	//MapCoord target_coord = map_widget->viewportToMap(target_coord_pos.toPoint());
+	// Clear selection.
+	map.map->clearObjectSelection(false);
+	QVERIFY(map.map->selectedObjects().empty());
 	
 	// Click to select the object
-	editor.simulateClick(coord_pos);
+	editor.simulateClick(drag_start_pos);
+	QCOMPARE(map.map->getFirstSelectedObject(), object);
 	
 	// Drag the coordinate to the new position
-	editor.simulateDrag(coord_pos, target_coord_pos);
+	editor.simulateDrag(drag_start_pos, drag_end_pos);
 	
 	// Check position deviation
-	QPointF difference = map_widget->mapToViewport(coord) - target_coord_pos;
-	QVERIFY(qAbs(difference.x()) == 0);
-	QVERIFY(qAbs(difference.y()) < 0.1);
+	QPointF difference = map_widget->mapToViewport(coord) - drag_end_pos;
+	QCOMPARE(qMax(qAbs(difference.x()), 0.1), 0.1);
+	QCOMPARE(qMax(qAbs(difference.y()), 0.1), 0.1);
 	
 	// Cleanup
-	editor.editor->setTool(NULL);
+	editor.editor->setTool(nullptr);
 }
 
 
