@@ -1,5 +1,5 @@
 /*
- *    Copyright 2012, 2013, 2014 Kai Pastor
+ *    Copyright 2012-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -81,7 +81,7 @@ const QString Georeferencing::geographic_crs_spec("+proj=latlong +datum=WGS84");
 
 Georeferencing::Georeferencing()
 : state(ScaleOnly),
-  scale_denominator(0),
+  scale_denominator(1),
   declination(0.0),
   grivation(0.0),
   grivation_error(0.0),
