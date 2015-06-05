@@ -21,6 +21,8 @@
 
 #include "object.h"
 
+#include <cmath>
+
 #include <qmath.h>
 #include <QtCore/qnumeric.h>
 #include <QDebug>
@@ -2158,7 +2160,7 @@ bool PathObject::simplify(PathObject** undo_duplicate, double threshold)
 			return (part->size() <= 7 && part->countRegularNodes() < minimum_part_size);
 		};
 		
-		auto minimum_cost_step = threshold / qMax(std::log2(part->size() / 64), 4.0);
+		auto minimum_cost_step = threshold / qMax(std::log2(part->size() / 64.0), 4.0);
 		auto minimum_cost = 0.0;
 		
 		// Delete nodes in max n runs (where n = max. part.end_index - part.start_index)
