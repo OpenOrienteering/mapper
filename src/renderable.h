@@ -379,12 +379,7 @@ const QRectF&Renderable::getExtent() const
 inline
 bool Renderable::intersects(const QRectF& rect) const
 {
-	// NOTE: !bounding_box.intersects(extent) should be logical equivalent to the following
-	if (extent.right() < rect.x())	return false;
-	if (extent.bottom() < rect.y())	return false;
-	if (extent.x() > rect.right())	return false;
-	if (extent.y() > rect.bottom())	return false;
-	return true;
+	return extent.intersects(rect);
 }
 
 
