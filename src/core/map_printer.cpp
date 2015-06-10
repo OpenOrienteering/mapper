@@ -212,6 +212,11 @@ MapPrinterConfig::MapPrinterConfig(const Map& map, QXmlStreamReader& xml)
 			value = page_format_element.attribute<QString>(literal::orientation);
 			page_format.orientation =
 			  (value == literal::portrait) ? MapPrinterPageFormat::Portrait : MapPrinterPageFormat::Landscape;
+			if (page_format_element.hasAttribute(literal::h_overlap))
+				page_format.h_overlap = page_format_element.attribute<qreal>(literal::h_overlap);
+			if (page_format_element.hasAttribute(literal::v_overlap))
+				page_format.v_overlap = page_format_element.attribute<qreal>(literal::v_overlap);
+			
 			while (xml.readNextStartElement())
 			{
 				if (xml.name() == literal::dimensions)

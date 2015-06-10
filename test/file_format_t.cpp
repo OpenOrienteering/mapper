@@ -1,5 +1,6 @@
 /*
- *    Copyright 2012, 2013 Thomas Schöps, Kai Pastor
+ *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2012-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -40,23 +41,24 @@ namespace QTest
 	template<>
 	char* toString(const MapPrinterPageFormat& page_format)
 	{
-		QByteArray ba = "MapPrinterPageFormat(";
+		QByteArray ba = "";
 		ba += MapPrinter::paperSizeNames()[page_format.paper_size];
-		ba += (page_format.orientation == MapPrinterPageFormat::Landscape) ? ", Landscape, " : ", Portrait, ";
-		ba += QByteArray::number(page_format.paper_dimensions.width()) + "x";
-		ba += QByteArray::number(page_format.paper_dimensions.height()) + ", ";
-		ba += QByteArray::number(page_format.page_rect.left()) + ",";
-		ba += QByteArray::number(page_format.page_rect.top()) + "+";
-		ba += QByteArray::number(page_format.page_rect.width()) + "x";
-		ba += QByteArray::number(page_format.page_rect.height());
-		ba += ")";
+		ba += (page_format.orientation == MapPrinterPageFormat::Landscape) ? " landscape (" : " portrait (";
+		ba += QByteArray::number(page_format.paper_dimensions.width(), 'f', 2) + "x";
+		ba += QByteArray::number(page_format.paper_dimensions.height(), 'f', 2) + "), ";
+		ba += QByteArray::number(page_format.page_rect.left(), 'f', 2) + ",";
+		ba += QByteArray::number(page_format.page_rect.top(), 'f', 2) + "+";
+		ba += QByteArray::number(page_format.page_rect.width(), 'f', 2) + "x";
+		ba += QByteArray::number(page_format.page_rect.height(), 'f', 2) + ", overlap ";
+		ba += QByteArray::number(page_format.h_overlap, 'f', 2) + ",";
+		ba += QByteArray::number(page_format.v_overlap, 'f', 2);
 		return qstrdup(ba.data());
 	}
 	
 	template<>
 	char* toString(const MapPrinterOptions& options)
 	{
-		QByteArray ba = "MapPrinterOptions(";
+		QByteArray ba = "";
 		ba += "1:" + QByteArray::number(options.scale) + ", ";
 		ba += QByteArray::number(options.resolution) + " dpi, ";
 		if (options.show_templates)
@@ -65,7 +67,6 @@ namespace QTest
 			ba += ", grid";
 		if (options.simulate_overprinting)
 			ba += ", overprinting";
-		ba += ")";
 		return qstrdup(ba.data());
 	}
 }
@@ -128,6 +129,12 @@ void FileFormatTest::saveAndLoad()
 	MapGrid grid = original->getGrid();
 	grid.setAdditionalRotation(Georeferencing::roundDeclination(grid.getAdditionalRotation()));
 	original->setGrid(grid);
+	
+	// Manipulate some data
+	auto printer_config = original->printerConfig();
+	printer_config.page_format.h_overlap += 2.0;
+	printer_config.page_format.v_overlap += 4.0;
+	original->setPrinterConfig(printer_config);
 	
 	// If the export is lossy, do one export / import cycle first to get rid of all information which cannot be exported into this format
 	if (format->isExportLossy())
