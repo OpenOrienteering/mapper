@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012, 2013, 2014 Kai Pastor
+ *    Copyright 2012-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -1050,6 +1050,12 @@ void PrintWidget::printClicked()
 		int print_width = qRound(map_printer->getPrintAreaPaperSize().width() * pixel_per_mm);
 		int print_height = qRound(map_printer->getPrintAreaPaperSize().height() * pixel_per_mm);
 		QImage image(print_width, print_height, QImage::Format_ARGB32_Premultiplied);
+		if (image.isNull())
+		{
+			QMessageBox::warning(this, tr("Error"), tr("Failed to prepare the image. Not enough memory."));
+			return;
+		}
+		
 		int dots_per_meter = qRound(pixel_per_mm * 1000);
 		image.setDotsPerMeterX(dots_per_meter);
 		image.setDotsPerMeterY(dots_per_meter);
