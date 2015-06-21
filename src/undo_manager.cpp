@@ -196,7 +196,7 @@ void UndoManager::updateMapState(const UndoStep *step) const
 		map->addObjectToSelection(*object, i == size);
 	}
 	
-	map->ensureVisibilityOfSelectedObjects();
+	map->ensureVisibilityOfSelectedObjects(Map::PartialVisibility);
 }
 
 

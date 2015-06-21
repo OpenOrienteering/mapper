@@ -106,6 +106,16 @@ public:
 		CompleteImport
 	};
 	
+	
+	/** Options for zooming to visibility of selection. */
+	enum SelectionVisibility
+	{
+		FullVisibility,
+		PartialVisibility,
+		IgnoreVisibilty
+	};	
+	
+	
 	/** Creates a new, empty map. */
 	Map();
 	
@@ -299,7 +309,7 @@ public:
 	 * Makes sure that the selected object(s) are visible in all map widgets
 	 * by moving the views in the widgets to the selected objects.
 	 */
-	void ensureVisibilityOfSelectedObjects();
+	void ensureVisibilityOfSelectedObjects(SelectionVisibility visibility);
 	
 	
 	// Current drawing

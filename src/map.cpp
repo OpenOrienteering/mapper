@@ -886,7 +886,7 @@ void Map::importMap(Map* other, ImportMode mode, QWidget* dialog_parent, std::ve
 			bool select_and_center_objects = dest_part == temp_current_part;
 			dest_part->importPart(part_to_import, symbol_map, select_and_center_objects);
 			if (select_and_center_objects)
-				ensureVisibilityOfSelectedObjects();
+				ensureVisibilityOfSelectedObjects(Map::FullVisibility);
 			
 			current_part_index = findPartIndex(temp_current_part);
 		}
@@ -1197,14 +1197,33 @@ void Map::updateAllMapWidgets()
 }
 
 
-void Map::ensureVisibilityOfSelectedObjects()
+void Map::ensureVisibilityOfSelectedObjects(SelectionVisibility visibility)
 {
 	if (!object_selection.empty())
 	{
 		QRectF rect;
 		includeSelectionRect(rect);
+		
 		for (MapWidget* widget : widgets)
-			widget->ensureVisibilityOfRect(rect, MapWidget::DiscreteZoom);
+		{
+			switch (visibility)
+			{
+			case FullVisibility:
+				widget->ensureVisibilityOfRect(rect, MapWidget::DiscreteZoom);
+				break;
+				
+			case PartialVisibility:
+				if (!widget->getMapView()->calculateViewedRect(widget->viewportToView(widget->geometry())).intersects(rect))
+					widget->ensureVisibilityOfRect(rect, MapWidget::DiscreteZoom);
+				break;
+				
+			case IgnoreVisibilty:
+				break; // Do nothing
+				
+			default:
+				Q_UNREACHABLE();
+			}
+		}
 	}
 }
 
