@@ -1053,6 +1053,7 @@ void MapEditorController::createMenuAndToolbars()
 		mappart_selector_box = new QComboBox(toolbar_mapparts);
 		mappart_selector_box->setToolTip(tr("Map parts"));
 	}
+	mappart_selector_box->setSizeAdjustPolicy(QComboBox::AdjustToContents);
 	connect(mappart_selector_box, SIGNAL(currentIndexChanged(int)), this, SLOT(changeMapPart(int)));
 	toolbar_mapparts->addWidget(mappart_selector_box);
 	
