@@ -693,44 +693,58 @@ void GeoreferencingDialog::declinationReplyFinished(QNetworkReply* reply)
 	}
 	else
 	{
-		QXmlStreamReader xml(reply);	
-		if (xml.readNextStartElement() && xml.name() == "maggridresult")
+		QXmlStreamReader xml(reply);
+		while (xml.readNextStartElement())
 		{
-			if (xml.readNextStartElement() && xml.name() == "result")
+			if (xml.name() == "maggridresult")
 			{
-				while (xml.readNextStartElement())
+				while(xml.readNextStartElement())
 				{
-					if (xml.name() == "declination")
+					if (xml.name() == "result")
 					{
-						QString text = xml.readElementText(QXmlStreamReader::IncludeChildElements);
-						bool ok;
-						double declination = text.toDouble(&ok);
-						if (ok)
+						while (xml.readNextStartElement())
 						{
-							// success
-							declination_edit->setValue(Georeferencing::roundDeclination(declination));
-							return;
-						}
-						else 
-						{
-							error_string = tr("Could not parse data.") % ' ';
+							if (xml.name() == "declination")
+							{
+								QString text = xml.readElementText(QXmlStreamReader::IncludeChildElements);
+								bool ok;
+								double declination = text.toDouble(&ok);
+								if (ok)
+								{
+									declination_edit->setValue(Georeferencing::roundDeclination(declination));
+									return;
+								}
+								else 
+								{
+									error_string = tr("Could not parse data.") % ' ';
+								}
+							}
+							
+							xml.skipCurrentElement(); // child of result
 						}
 					}
-					xml.skipCurrentElement();
+					
+					xml.skipCurrentElement(); // child of mapgridresult
 				}
 			}
-		}
-		else if (xml.readNextStartElement() && xml.name() == "errors")
-		{
-			error_string.append(xml.readElementText(QXmlStreamReader::IncludeChildElements) % ' ');
+			else if (xml.name() == "errors")
+			{
+				error_string.append(xml.readElementText(QXmlStreamReader::IncludeChildElements) % ' ');
+			}
+			
+			xml.skipCurrentElement(); // child of root
 		}
 		
 		if (xml.error() != QXmlStreamReader::NoError)
+		{
 			error_string.append(xml.errorString());
+		}
 		else if (error_string.isEmpty())
+		{
 			error_string = tr("Declination value not found.");
+		}
 	}
-		
+	
 	int result = QMessageBox::critical(this, tr("Online declination lookup"),
 		tr("The online declination lookup failed:\n%1").arg(error_string),
 		QMessageBox::Retry | QMessageBox::Close,
