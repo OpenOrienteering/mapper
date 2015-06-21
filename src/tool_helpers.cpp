@@ -710,7 +710,7 @@ MapCoord SnappingToolHelper::snapToObject(MapCoordF position, MapWidget* widget,
 	{
 		// Find map objects at the given position
 		SelectionInfoVector objects;
-		map->findObjectsAt(position, snap_distance, true, false, false, true, objects);
+		map->findAllObjectsAt(position, snap_distance, true, false, false, true, objects);
 		
 		// Find closest snap spot from map objects
 		for (SelectionInfoVector::const_iterator it = objects.begin(), end = objects.end(); it != end; ++it)

@@ -2161,12 +2161,37 @@ void Map::setObjectAreaDirty(QRectF map_coords_rect)
 		widget->markObjectAreaDirty(map_coords_rect);
 }
 
-void Map::findObjectsAt(MapCoordF coord, float tolerance, bool treat_areas_as_paths, bool extended_selection, bool include_hidden_objects, bool include_protected_objects, SelectionInfoVector& out)
+void Map::findObjectsAt(
+        MapCoordF coord,
+        float tolerance,
+        bool treat_areas_as_paths,
+        bool extended_selection,
+        bool include_hidden_objects,
+        bool include_protected_objects,
+        SelectionInfoVector& out ) const
 {
 	getCurrentPart()->findObjectsAt(coord, tolerance, treat_areas_as_paths, extended_selection, include_hidden_objects, include_protected_objects, out);
 }
 
-void Map::findObjectsAtBox(MapCoordF corner1, MapCoordF corner2, bool include_hidden_objects, bool include_protected_objects, std::vector< Object* >& out)
+void Map::findAllObjectsAt(
+        MapCoordF coord,
+        float tolerance,
+        bool treat_areas_as_paths,
+        bool extended_selection,
+        bool include_hidden_objects,
+        bool include_protected_objects,
+        SelectionInfoVector& out ) const
+{
+	for (const MapPart* part : parts)
+		part->findObjectsAt(coord, tolerance, treat_areas_as_paths, extended_selection, include_hidden_objects, include_protected_objects, out);
+}
+
+void Map::findObjectsAtBox(
+        MapCoordF corner1,
+        MapCoordF corner2,
+        bool include_hidden_objects,
+        bool include_protected_objects,
+        std::vector< Object* >& out ) const
 {
 	getCurrentPart()->findObjectsAtBox(corner1, corner2, include_hidden_objects, include_protected_objects, out);
 }

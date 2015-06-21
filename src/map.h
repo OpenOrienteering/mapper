@@ -772,7 +772,7 @@ public:
 	void setObjectAreaDirty(QRectF map_coords_rect);
 	
 	/**
-	 * Finds and returns all objects at the given position.
+	 * Finds and returns all objects at the given position in the current part.
 	 * 
 	 * @param coord Coordinate where to query objects.
 	 * @param tolerance Allowed distance from the query coordinate to the objects.
@@ -797,11 +797,19 @@ public:
 	 */
 	void findObjectsAt(MapCoordF coord, float tolerance, bool treat_areas_as_paths,
 		bool extended_selection, bool include_hidden_objects,
-		bool include_protected_objects, SelectionInfoVector& out);
+		bool include_protected_objects, SelectionInfoVector& out) const;
 	
 	/**
-	 * Finds and returns all objects at the given box, i.e. objects that
-	 * intersect the box.
+	 * Finds and returns all objects at the given position in all parts.
+	 * 
+	 * @see Map::findObjectsAt
+	 */
+	void findAllObjectsAt(MapCoordF coord, float tolerance, bool treat_areas_as_paths,
+		bool extended_selection, bool include_hidden_objects,
+		bool include_protected_objects, SelectionInfoVector& out) const;
+	
+	/**
+	 * Finds and returns all objects intersecting the given box in the current part.
 	 * 
 	 * @param corner1 First corner of the query box.
 	 * @param corner2 Second corner of the query box.
@@ -811,10 +819,11 @@ public:
 	 */
 	void findObjectsAtBox(MapCoordF corner1, MapCoordF corner2,
 		bool include_hidden_objects, bool include_protected_objects,
-		std::vector<Object*>& out);
+		std::vector<Object*>& out) const;
 	
 	/**
 	 * Counts the objects whose bounding boxes intersect the given rect.
+	 * 
 	 * This may be inaccurate because the true object shapes usually differ
 	 * from the bounding boxes.
 	 * 

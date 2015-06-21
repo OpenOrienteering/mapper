@@ -240,7 +240,14 @@ void MapPart::importPart(MapPart* other, QHash<const Symbol*, Symbol*>& symbol_m
 		map->updateAllMapWidgets();
 }
 
-void MapPart::findObjectsAt(MapCoordF coord, float tolerance, bool treat_areas_as_paths, bool extended_selection, bool include_hidden_objects, bool include_protected_objects, SelectionInfoVector& out)
+void MapPart::findObjectsAt(
+        MapCoordF coord,
+        float tolerance,
+        bool treat_areas_as_paths,
+        bool extended_selection,
+        bool include_hidden_objects,
+        bool include_protected_objects,
+        SelectionInfoVector& out ) const
 {
 	for (Object* object : objects)
 	{
@@ -252,11 +259,16 @@ void MapPart::findObjectsAt(MapCoordF coord, float tolerance, bool treat_areas_a
 		object->update();
 		int selected_type = object->isPointOnObject(coord, tolerance, treat_areas_as_paths, extended_selection);
 		if (selected_type != (int)Symbol::NoSymbol)
-			out.push_back(std::pair<int, Object*>(selected_type, object));
+			out.emplace_back(selected_type, object);
 	}
 }
 
-void MapPart::findObjectsAtBox(MapCoordF corner1, MapCoordF corner2, bool include_hidden_objects, bool include_protected_objects, std::vector< Object* >& out)
+void MapPart::findObjectsAtBox(
+        MapCoordF corner1,
+        MapCoordF corner2,
+        bool include_hidden_objects,
+        bool include_protected_objects,
+        std::vector< Object* >& out ) const
 {
 	auto rect = QRectF(corner1, corner2).normalized();
 	for (Object* object : objects)
