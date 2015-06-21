@@ -1204,7 +1204,7 @@ void Map::ensureVisibilityOfSelectedObjects()
 		QRectF rect;
 		includeSelectionRect(rect);
 		for (MapWidget* widget : widgets)
-			widget->ensureVisibilityOfRect(rect, true, true);
+			widget->ensureVisibilityOfRect(rect, MapWidget::DiscreteZoom);
 	}
 }
 

@@ -79,6 +79,13 @@ public:
 		GEOGRAPHIC_COORDS_DMS
 	};
 	
+	/** Describes how a zoom level can be determined. */
+	enum ZoomOption
+	{
+		ContinuousZoom, ///< Allow any zoom value in the valid range.
+		DiscreteZoom,   ///< Adjust the zoom to the closes valid step.
+	};
+	
 	/**
 	 * Constructs a new MapWidget.
 	 * 
@@ -183,20 +190,13 @@ public:
 	
 	/**
 	 * Adjusts the viewport so the given rect is inside the view.
-	 * @param show_completely If true, the method ensures that 100% of the rect
-	 *     is visible. If false, a weaker definition of "visible" is used:
-	 *     then a certain area of the rect must be visible.
-	 * @param zoom_in_steps If true, zoom is done in the usual power-of-two
-	 *     steps only. If false, the zoom level is chosen to fit the rect.
 	 */
-	void ensureVisibilityOfRect(const QRectF& map_rect, bool show_completely, bool zoom_in_steps);
+	void ensureVisibilityOfRect(const QRectF& map_rect, ZoomOption zoom_option);
 	
 	/**
 	 * Sets the view so the rect is centered and zooomed to fill the widget.
-	 * @param zoom_in_steps If true, zoom is done in the usual power-of-two
-	 *     steps only. If false, the zoom level is chosen to fit the rect.
 	 */
-	void adjustViewToRect(const QRectF& map_rect, bool zoom_in_steps);
+	void adjustViewToRect(const QRectF& map_rect, ZoomOption zoom_option);
 	
 	/**
 	 * Mark a rectangular region of a template cache as "dirty", i.e. redraw needed.

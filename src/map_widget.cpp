@@ -318,7 +318,7 @@ void MapWidget::moveMap(int steps_x, int steps_y)
 	}
 }
 
-void MapWidget::ensureVisibilityOfRect(const QRectF& map_rect, bool show_completely, bool zoom_in_steps)
+void MapWidget::ensureVisibilityOfRect(const QRectF& map_rect, ZoomOption zoom_option)
 {
 	// Amount in pixels that is scrolled "too much" if the rect is not completely visible
 	// TODO: change to absolute size using dpi value
@@ -326,15 +326,6 @@ void MapWidget::ensureVisibilityOfRect(const QRectF& map_rect, bool show_complet
 	auto viewport_rect = mapToViewport(map_rect).toAlignedRect();
 	
 	// TODO: this method assumes that the viewport is not rotated.
-	
-	if (!show_completely)
-	{
-		// Check if enough of the rect is visible
-		auto intersected_rect = rect().intersected(viewport_rect);
-		auto visible_area = intersected_rect.width() * intersected_rect.height();
-		if (visible_area >= 120 * 100)
-			return;
-	}
 	
 	if (rect().contains(viewport_rect.topLeft()) && rect().contains(viewport_rect.bottomRight()))
 		return;
@@ -357,10 +348,10 @@ void MapWidget::ensureVisibilityOfRect(const QRectF& map_rect, bool show_complet
 	// If the rect is still not completely in view, we have to zoom out
 	viewport_rect = mapToViewport(map_rect).toAlignedRect();
 	if (!(rect().contains(viewport_rect.topLeft()) && rect().contains(viewport_rect.bottomRight())))
-		adjustViewToRect(map_rect, zoom_in_steps);
+		adjustViewToRect(map_rect, zoom_option);
 }
 
-void MapWidget::adjustViewToRect(const QRectF& map_rect, bool zoom_in_steps)
+void MapWidget::adjustViewToRect(const QRectF& map_rect, ZoomOption zoom_option)
 {
 	view->setCenter(MapCoord{ map_rect.center() });
 	
@@ -374,7 +365,7 @@ void MapWidget::adjustViewToRect(const QRectF& map_rect, bool zoom_in_steps)
 			float zoom_factor = qMin(height() / (view->lengthToPixel(1000 * map_rect.height()) + 2*pixel_border),
 			                         width() / (view->lengthToPixel(1000 * map_rect.width()) + 2*pixel_border));
 			float zoom = view->getZoom() * zoom_factor;
-			if (zoom_in_steps)
+			if (zoom_option == DiscreteZoom)
 			{
 				zoom = pow(2, 0.5 * floor(2.0 * (std::log2(zoom) - std::log2(initial_zoom))) + std::log2(initial_zoom));
 			}

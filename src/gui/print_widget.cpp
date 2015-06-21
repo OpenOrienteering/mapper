@@ -410,13 +410,13 @@ void PrintWidget::setActive(bool active)
 			{
 				// Ensure the visibility of the whole map.
 				QRectF map_extent = map->calculateExtent(true, !main_view->areAllTemplatesHidden(), main_view);
-				editor->getMainWidget()->ensureVisibilityOfRect(map_extent, true, false);
+				editor->getMainWidget()->ensureVisibilityOfRect(map_extent, MapWidget::ContinuousZoom);
 			}
 			else
 			{
 				// Ensure the visibility of the print area.
 				QRectF print_area(map_printer->getPrintArea());
-				editor->getMainWidget()->ensureVisibilityOfRect(print_area, true, false);
+				editor->getMainWidget()->ensureVisibilityOfRect(print_area, MapWidget::ContinuousZoom);
 			}
 			
 			// Activate PrintTool.

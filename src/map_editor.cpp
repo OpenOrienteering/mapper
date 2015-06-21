@@ -2160,7 +2160,7 @@ void MapEditorController::templateAvailabilityChanged()
 void MapEditorController::showWholeMap()
 {
 	QRectF map_extent = map->calculateExtent(true, !main_view->areAllTemplatesHidden(), main_view);
-	map_widget->adjustViewToRect(map_extent, false);
+	map_widget->adjustViewToRect(map_extent, MapWidget::ContinuousZoom);
 }
 
 void MapEditorController::editToolClicked()
