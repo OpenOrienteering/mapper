@@ -32,7 +32,12 @@
 #include "util.h"
 #include "util_gui.h"
 
-bool DistributePointsTool::showSettingsDialog(QWidget* parent, PointSymbol* point, DistributePointsTool::Settings& settings)
+
+
+bool DistributePointsTool::showSettingsDialog(
+        QWidget* parent,
+        const PointSymbol* point,
+        DistributePointsTool::Settings& settings )
 {
 	DistributePointsSettingsDialog dialog(parent, point, settings);
 	dialog.setWindowModality(Qt::WindowModal);
@@ -43,7 +48,11 @@ bool DistributePointsTool::showSettingsDialog(QWidget* parent, PointSymbol* poin
 	return true;
 }
 
-void DistributePointsTool::execute(PathObject* path, PointSymbol* point, const DistributePointsTool::Settings& settings, std::vector<PointObject*>* out_objects)
+void DistributePointsTool::execute(
+        PathObject* path,
+        PointSymbol* point,
+        const DistributePointsTool::Settings& settings,
+        std::vector<PointObject*>& out_objects )
 {
 	path->update();
 	
@@ -58,28 +67,33 @@ void DistributePointsTool::execute(PathObject* path, PointSymbol* point, const D
 		start = 0;
 		end = total - 1;
 	}
-	else if (settings.points_at_ends)
-	{
-		total = settings.num_points_per_line - 1;
-		start = 0;
-		end = total;
-	}
-	else
+	else if (!settings.points_at_ends)
 	{
 		total = settings.num_points_per_line + 1;
 		start = 1;
 		end = total - 1;
 	}
+	else if (settings.num_points_per_line == 1)
+	{
+		total = 1;
+		start = 1;
+		end = 1;
+	}
+	else
+	{
+		total = settings.num_points_per_line - 1;
+		start = 0;
+		end = total;
+	}
 	
 	auto distance = part.length() / total;
-	auto coords = path->getRawCoordinateVector();
 	auto split = SplitPathCoord::begin(part.path_coords);
 	
 	// Create the objects
 	for (int i = start; i <= end; ++i)
 	{
 		auto clen = distance * i;
-		split = SplitPathCoord::at(part.path_coords, clen);
+		split = SplitPathCoord::at(clen, split);
 		
 		PointObject* object = new PointObject(point);
 		object->setPosition(split.pos);
@@ -93,19 +107,22 @@ void DistributePointsTool::execute(PathObject* path, PointSymbol* point, const D
 			}
 			object->setRotation(rotation);
 		}
-		out_objects->push_back(object);
+		out_objects.push_back(object);
 	}
 }
 
 
-DistributePointsSettingsDialog::DistributePointsSettingsDialog(QWidget* parent, PointSymbol* point, DistributePointsTool::Settings& settings)
+DistributePointsSettingsDialog::DistributePointsSettingsDialog(
+        QWidget* parent,
+        const PointSymbol* point,
+        const DistributePointsTool::Settings& settings )
  : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint)
 {
 	setWindowTitle(tr("Distribute points evenly along path"));
 	
 	QFormLayout* layout = new QFormLayout();
 	
-	num_points_edit = Util::SpinBox::create(settings.points_at_ends ? 2 : 1, 9999);
+	num_points_edit = Util::SpinBox::create(1, 9999);
 	num_points_edit->setValue(settings.num_points_per_line);
 	layout->addRow(tr("Number of points per path:"), num_points_edit);
 	
@@ -113,24 +130,26 @@ DistributePointsSettingsDialog::DistributePointsSettingsDialog(QWidget* parent, 
 	points_at_ends_check->setChecked(settings.points_at_ends);
 	layout->addRow(points_at_ends_check);
 	
-	
 	layout->addItem(Util::SpacerItem::create(this));
-	layout->addRow(Util::Headline::create(tr("Rotation settings")));
+	
+	auto rotation_headline = Util::Headline::create(tr("Rotation settings"));
+	layout->addRow(rotation_headline);
 	
 	rotate_symbols_check = new QCheckBox(tr("Align points with direction of line"));
 	rotate_symbols_check->setChecked(settings.rotate_symbols);
 	layout->addRow(rotate_symbols_check);
 	
-	additional_rotation_edit = Util::SpinBox::create(1, 0, 360, trUtf8("°", "degrees"));
-	additional_rotation_edit->setValue(settings.additional_rotation * 180 / M_PI);
+	additional_rotation_edit = Util::SpinBox::create(1, 0, 360, trUtf8("°", "degrees"), 5);
+	additional_rotation_edit->setValue(qRadiansToDegrees(settings.additional_rotation));
 	layout->addRow(tr("Additional rotation angle (counter-clockwise):"), additional_rotation_edit);
 	
 	if (!point->isRotatable())
 	{
+		rotation_headline->setEnabled(false);
 		rotate_symbols_check->setEnabled(false);
 		additional_rotation_edit->setEnabled(false);
+		layout->labelForField(additional_rotation_edit)->setEnabled(false);
 	}
-	
 	
 	layout->addItem(Util::SpacerItem::create(this));
 	QDialogButtonBox* button_box = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal);
@@ -138,9 +157,8 @@ DistributePointsSettingsDialog::DistributePointsSettingsDialog(QWidget* parent, 
 	
 	setLayout(layout);
 	
-	connect(points_at_ends_check, SIGNAL(clicked(bool)), this, SLOT(updateWidgets()));
-	connect(button_box, SIGNAL(accepted()), this, SLOT(accept()));
-	connect(button_box, SIGNAL(rejected()), this, SLOT(reject()));
+	connect(button_box, &QDialogButtonBox::accepted, this, &QDialog::accept);
+	connect(button_box, &QDialogButtonBox::rejected, this, &QDialog::reject);
 }
 
 void DistributePointsSettingsDialog::getValues(DistributePointsTool::Settings& settings)
@@ -148,10 +166,5 @@ void DistributePointsSettingsDialog::getValues(DistributePointsTool::Settings& s
 	settings.num_points_per_line = num_points_edit->value();
 	settings.points_at_ends = points_at_ends_check->isChecked();
 	settings.rotate_symbols = rotate_symbols_check->isChecked();
-	settings.additional_rotation = additional_rotation_edit->value() * M_PI / 180.0;
-}
-
-void DistributePointsSettingsDialog::updateWidgets()
-{
-	num_points_edit->setMinimum(points_at_ends_check->isChecked() ? 2 : 1);
+	settings.additional_rotation = qDegreesToRadians(additional_rotation_edit->value());
 }

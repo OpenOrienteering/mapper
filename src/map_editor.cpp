@@ -2905,7 +2905,7 @@ void MapEditorController::distributePointsClicked()
 		if ((*it)->getType() != Object::Path)
 			continue;
 		
-		DistributePointsTool::execute((*it)->asPath(), point, settings, &created_objects);
+		DistributePointsTool::execute((*it)->asPath(), point, settings, created_objects);
 	}
 	if (created_objects.empty())
 		return;

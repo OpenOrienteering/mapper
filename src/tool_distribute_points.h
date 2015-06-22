@@ -1,5 +1,6 @@
 /*
  *    Copyright 2013 Thomas Schöps
+ *    Copyright 2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -38,6 +39,8 @@ QT_END_NAMESPACE
 
 /**
  * Provides methods to create evenly spaced point objects along a line.
+ * 
+ * \todo Integrate implementation of MapEditorController::distributePointsClicked().
  */
 class DistributePointsTool
 {
@@ -60,43 +63,63 @@ public:
 		double additional_rotation;
 		
 		/** Constructor, sets default values. */
-		inline Settings()
+		constexpr Settings()
+		 : num_points_per_line{ 3 }
+		 , points_at_ends{ true }
+		 , rotate_symbols{ true }
+		 , additional_rotation{ 0.0 }
 		{
-			num_points_per_line = 3;
-			points_at_ends = true;
-			rotate_symbols = true;
-			additional_rotation = 0;
+			// Nothing else
 		}
 	};
 	
-	/** Shows the settings dialog. If the user presses Ok, returns true
-	 *  and writes the chosen values to settings, otherwise returns false.
-	 *  settings is also used as initial values for the dialog.
-	 *  The point symbol is used to determine the enabled state of some options. */
-	static bool showSettingsDialog(QWidget* parent, PointSymbol* point, Settings& settings);
+	/**
+	 * Shows a settings dialog for the tool.
+	 * 
+	 * If the user presses Ok, returns true and saves the chosen values to
+	 * settings, otherwise returns false.
+	 * 
+	 * The settings parameter is also used as initial values for the dialog.
+	 * The point symbol is used to determine the enabled state of some options.
+	 */
+	static bool showSettingsDialog(
+	        QWidget* parent,
+	        const PointSymbol* point,
+	        DistributePointsTool::Settings& settings
+	);
 	
-	/** Executes the tool in the map on the path,
-	 *  creating points according to settings. Appends the created objects to
-	 *  the out_objects vector, if set (for creating undo steps in the calling code).
-	 *  You have to add the objects to a map yourself if you want to. */
-	static void execute(PathObject* path, PointSymbol* point,
-				 const Settings& settings, std::vector<PointObject*>* out_objects = NULL);
+	/** 
+	 * Executes the tool on the path, creating points according to settings.
+	 * 
+	 * Appends the created objects to the out_objects vector, but does not add
+	 * them to the map.
+	 */
+	static void execute(
+	        PathObject* path,
+	        PointSymbol* point,
+	        const DistributePointsTool::Settings& settings,
+	        std::vector<PointObject*>& out_objects
+	);
 };
 
-/** Settings dialog for DistributePointsTool */
+
+
+/**
+ * Settings dialog for DistributePointsTool
+ */
 class DistributePointsSettingsDialog : public QDialog
 {
 Q_OBJECT
 public:
 	/** Creates a new DistributePointsSettingsDialog. */
-	DistributePointsSettingsDialog(QWidget* parent, PointSymbol* point,
-								   DistributePointsTool::Settings& settings);
+	DistributePointsSettingsDialog(
+	        QWidget* parent,
+	        const PointSymbol* point,
+	        const DistributePointsTool::Settings& settings
+	);
 	
 	/** After the dialog finished successfully, returns the entered values. */
 	void getValues(DistributePointsTool::Settings& settings);
-	
-private slots:
-	void updateWidgets();
 	
 private:
 	QSpinBox* num_points_edit;
@@ -104,8 +127,6 @@ private:
 	
 	QCheckBox* rotate_symbols_check;
 	QDoubleSpinBox* additional_rotation_edit;
-	
-	Map* map;
 };
 
 #endif
