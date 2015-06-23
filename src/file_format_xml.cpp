@@ -470,7 +470,11 @@ void XMLFileImporter::importElements(bool load_symbols_only)
 	}
 	
 	if (xml.error())
-		throw FileFormatException(xml.errorString());
+		throw FileFormatException(
+		        tr("Error at line %1 column %2: %3")
+		        .arg(xml.lineNumber())
+		        .arg(xml.columnNumber())
+		        .arg(xml.errorString()) );
 }
 
 void XMLFileImporter::importGeoreferencing(bool load_symbols_only)

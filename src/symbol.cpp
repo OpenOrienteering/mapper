@@ -281,7 +281,12 @@ Symbol* Symbol::load(QXmlStreamReader& xml, const Map& map, SymbolDictionary& sy
 	if (xml.error())
 	{
 		delete symbol;
-		throw FileFormatException(ImportExport::tr("Error while loading a symbol."));
+		throw FileFormatException(
+		            ImportExport::tr("Error while loading a symbol of type %1 at line %2 column %3: %4")
+		            .arg(symbol_type)
+		            .arg(xml.lineNumber())
+		            .arg(xml.columnNumber())
+		            .arg(xml.errorString()) );
 	}
 	
 	return symbol;
