@@ -237,7 +237,16 @@ LineRenderable::LineRenderable(const LineSymbol* symbol, QPointF first, QPointF 
  , cap_style(Qt::FlatCap)
  , join_style(Qt::MiterJoin)
 {
-	extent = QRectF(first, second).normalized();
+	qreal half_line_width = (color_priority < 0) ? 0.0f : 0.5f * line_width;
+	
+	auto right = MapCoordF(second - first).perpRight();
+	right.normalize();
+	right *= half_line_width;
+	
+	extent.setTopLeft(first + right);
+	rectInclude(extent, first - right);
+	rectInclude(extent, second - right);
+	rectInclude(extent, second + right);
 	
 	path.moveTo(first);
 	path.lineTo(second);
