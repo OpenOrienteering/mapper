@@ -621,8 +621,27 @@ void OcdFileImport::importExtras< struct Ocd::FormatV8 >(const OcdFile< Ocd::For
 template< class F >
 void OcdFileImport::importExtras(const OcdFile< F >& file)
 {
-	Q_UNUSED(file);
-	; // TODO
+	QString notes;
+	
+	for (auto&& string : file.strings())
+	{
+		switch (string.type)
+		{
+		case 11:
+			// OCD 9, 10
+			notes.append(convertOcdString< typename F::Encoding >(file[string]));
+			notes.append("\n");
+			break;
+		case 1061:
+			// OCD 11
+			notes.append(convertOcdString< typename F::Encoding >(file[string]));
+			break;
+		default:
+			; // nothing
+		}
+	}
+	
+	map->setMapNotes(notes);
 }
 
 template< >
