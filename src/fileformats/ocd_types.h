@@ -1,5 +1,5 @@
 /*
- *    Copyright 2013 Kai Pastor
+ *    Copyright 2013, 2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -174,7 +174,7 @@ namespace Ocd
 	 */
 	struct FormatGeneric
 	{
-		static inline int version() { return -1; };
+		static constexpr int version() { return -1; }
 		
 		typedef FileHeaderGeneric FileHeader;
 		
@@ -188,7 +188,7 @@ namespace Ocd
 	 */
 	struct FormatLegacyImporter
 	{
-		static inline int version() { return 8; };
+		static constexpr int version() { return 8; }
 		
 		typedef FileHeaderGeneric FileHeader;
 	};
@@ -429,7 +429,7 @@ public:
 	/**
 	 * Destructs the object.
 	 */
-	~OcdFile() {};
+	~OcdFile() {}
 	
 	/**
 	 * Returns the raw data.
@@ -452,9 +452,9 @@ public:
 	const StringIndex& strings() const;
 	
 	/**
-	 * Returns the raw data of the string referenced by a string index iterator.
+	 * Returns the raw data of the string.
 	 */
-	const QByteArray operator[](const typename StringIndex::iterator& it) const;
+	const QByteArray operator[](const typename StringIndex::EntryType& string) const;
 	
 	/**
 	 * Returns a const reference to the symbol index.
@@ -469,7 +469,7 @@ public:
 	/**
 	 * Returns a const referenc to the object referenced by an object index iterator.
 	 */
-	const typename F::Object& operator[](const typename ObjectIndex::iterator& it) const;
+	const typename F::Object& operator[](const typename ObjectIndex::EntryType& object_entry) const;
 	
 private:
 	QByteArray byte_array;
@@ -488,7 +488,7 @@ quint32 FirstIndexBlock<F,T>::operator()(const OcdFile<F>* file) const
 {
 	Q_UNUSED(file);
 	
-	T* valid_entity_type = NULL;
+	T* valid_entity_type = nullptr;
 	Q_ASSERT(valid_entity_type);
 	
 	return 0;
@@ -517,9 +517,9 @@ quint32 FirstIndexBlock<F,typename F::Object>::operator()(const OcdFile<F>* file
 
 template< class F, class T, class E >
 OcdEntityIndexIterator<F,T,E>::OcdEntityIndexIterator(const OcdFile<F>* file, const IndexBlock* first_block)
- : data(NULL),
-   block(NULL),
-   index(0)
+ : data(nullptr)
+ , block(nullptr)
+ , index(0)
 {
 	if (file && first_block)
 	{
@@ -548,8 +548,8 @@ const OcdEntityIndexIterator<F,T,E>& OcdEntityIndexIterator<F,T,E>::operator++()
 				}
 				else
 				{
-					block = NULL;
-					data = NULL;
+					block = nullptr;
+					data = nullptr;
 				}
 			}
 		}
@@ -592,8 +592,8 @@ bool OcdEntityIndexIterator<F,T,E>::operator!=(const OcdEntityIndexIterator<F,T,
 
 template< class F, class T >
 OcdEntityIndexIterator<F,T,quint32>::OcdEntityIndexIterator(const OcdFile<F>* file, const IndexBlock* first_block)
- : data(NULL),
-   block(NULL),
+ : data(nullptr),
+   block(nullptr),
    index(0)
 {
 	if (file && first_block)
@@ -623,8 +623,8 @@ const OcdEntityIndexIterator<F,T,quint32>& OcdEntityIndexIterator<F,T,quint32>::
 				}
 				else
 				{
-					block = NULL;
-					data = NULL;
+					block = nullptr;
+					data = nullptr;
 				}
 			}
 		}
@@ -667,7 +667,7 @@ bool OcdEntityIndexIterator<F,T,quint32>::operator!=(const OcdEntityIndexIterato
 
 template< class F, class T >
 OcdEntityIndex<F,T>::OcdEntityIndex()
- : data(NULL)
+ : data(nullptr)
 {
 }
 
@@ -685,17 +685,17 @@ void OcdEntityIndex<F,T>::setData(const OcdFile< F >* file)
 template< class F, class T >
 typename OcdEntityIndex<F,T>::iterator OcdEntityIndex<F,T>::begin() const
 {
-	Q_ASSERT(data != NULL);
+	Q_ASSERT(data != nullptr);
 	
 	quint32 file_pos = FirstIndexBlock<F,T>()(data);
-	iterator it(data, reinterpret_cast<const typename iterator::IndexBlock*>(file_pos ? &(*data)[file_pos] : NULL));
+	iterator it(data, reinterpret_cast<const typename iterator::IndexBlock*>(file_pos ? &(*data)[file_pos] : nullptr));
 	return it;
 }
 
 template< class F, class T >
 typename OcdEntityIndex<F,T>::iterator OcdEntityIndex<F,T>::end() const
 {
-	static iterator it(NULL, NULL);
+	static iterator it(nullptr, nullptr);
 	return it;
 }
 
@@ -732,7 +732,7 @@ template< class F >
 inline
 const typename F::FileHeader* OcdFile<F>::header() const
 {
-	return (byte_array.size() < (int)sizeof(FileHeader)) ? NULL : (const FileHeader*)byte_array.constData();
+	return (byte_array.size() < (int)sizeof(FileHeader)) ? nullptr : (const FileHeader*)byte_array.constData();
 }
 
 template< class F >
@@ -744,9 +744,9 @@ const typename OcdFile<F>::StringIndex& OcdFile<F>::strings() const
 
 template< class F >
 inline
-const QByteArray OcdFile<F>::operator[](const typename OcdFile<F>::StringIndex::iterator& it) const
+const QByteArray OcdFile<F>::operator[](const typename OcdFile<F>::StringIndex::EntryType& string) const
 {
-	return QByteArray::fromRawData(&(*this)[it->pos], it->size);
+	return QByteArray::fromRawData(&(*this)[string.pos], string.size);
 }
 
 template< class F >
@@ -765,9 +765,9 @@ const typename OcdFile<F>::ObjectIndex& OcdFile<F>::objects() const
 
 template< class F >
 inline
-const typename F::Object& OcdFile<F>::operator[](const typename OcdFile<F>::ObjectIndex::iterator& it) const
+const typename F::Object& OcdFile<F>::operator[](const typename OcdFile<F>::ObjectIndex::EntryType& object_entry) const
 {
-	return reinterpret_cast<const typename F::Object&>((*this)[it->pos]);
+	return reinterpret_cast<const typename F::Object&>((*this)[object_entry.pos]);
 }
 
 #endif

@@ -1,5 +1,5 @@
 /*
- *    Copyright 2013 Kai Pastor
+ *    Copyright 2013, 2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -442,7 +442,7 @@ namespace Ocd
 	/** OCD file format version 8 trait. */
 	struct FormatV8
 	{
-		static inline int version() { return 8; }
+		static constexpr int version() { return 8; }
 		
 		typedef FileHeaderV8 FileHeader;
 		
