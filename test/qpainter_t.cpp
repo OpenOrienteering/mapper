@@ -131,4 +131,4 @@ QImage QPainterTest::compose(const QImage& source, const QImage& dest, QPainter:
 }
 
 
-QTEST_MAIN(QPainterTest)
+QTEST_GUILESS_MAIN(QPainterTest)

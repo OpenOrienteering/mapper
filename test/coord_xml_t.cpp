@@ -768,4 +768,4 @@ bool CoordXmlTest::compare_all(MapCoordVector& coords, MapCoord& expected) const
 }
 
 
-QTEST_MAIN(CoordXmlTest)
+QTEST_GUILESS_MAIN(CoordXmlTest)

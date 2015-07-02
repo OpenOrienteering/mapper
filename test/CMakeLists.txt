@@ -127,6 +127,9 @@ if(Mapper_AUTORUN_UNIT_TESTS)
 endif()
 if(Mapper_AUTORUN_SYSTEM_TESTS)
 	list(APPEND Mapper_AUTORUN_TESTS ${Mapper_SYSTEM_TESTS})
+else()
+	# Don't autorun expensive unit tests unless system tests are autorun, too.
+	list(REMOVE_ITEM Mapper_AUTORUN_TESTS autosave_t coord_xml_t)
 endif()
 configure_file(AUTORUN_TESTS.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/AUTORUN_TESTS.cmake @ONLY)
 

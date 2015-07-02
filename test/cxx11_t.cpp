@@ -70,4 +70,4 @@ void Cxx11Test::testInitializers()
 }
 
 
-QTEST_MAIN(Cxx11Test)
+QTEST_GUILESS_MAIN(Cxx11Test)

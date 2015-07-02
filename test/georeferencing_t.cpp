@@ -122,4 +122,4 @@ void GeoreferencingTest::testProjection()
 }
 
 
-QTEST_MAIN(GeoreferencingTest)
+QTEST_GUILESS_MAIN(GeoreferencingTest)
