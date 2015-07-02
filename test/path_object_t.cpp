@@ -416,4 +416,4 @@ void PathObjectTest::calcIntersectionsTest_data()
 	QTest::newRow("b inside a") << (void*)aib2 << (void*)aib1 << (void*)intersections_bia;
 }
 
-QTEST_MAIN(PathObjectTest)
+QTEST_GUILESS_MAIN(PathObjectTest)

@@ -238,4 +238,4 @@ void UndoManagerTest::canRedoChanged(bool can_redo)
 }
 
 
-QTEST_MAIN(UndoManagerTest)
+QTEST_GUILESS_MAIN(UndoManagerTest)

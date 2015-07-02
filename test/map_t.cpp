@@ -80,4 +80,4 @@ void MapTest::specialColorsTest()
 }
 
 
-QTEST_MAIN(MapTest)
+QTEST_GUILESS_MAIN(MapTest)
