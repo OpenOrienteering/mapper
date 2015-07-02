@@ -516,7 +516,7 @@ void PointSymbolEditorWidget::deleteCurrentElement()
 void PointSymbolEditorWidget::centerAllElements()
 {
 	bool has_coordinates = false;
-	qint64 min_x, min_y, max_x, max_y;
+	qint32 min_x, min_y, max_x, max_y;
 	
 	for (int i = 0; i < symbol->getNumElements(); ++i)
 	{
@@ -544,8 +544,8 @@ void PointSymbolEditorWidget::centerAllElements()
 	
 	if (has_coordinates)
 	{
-		qint64 center_x = (min_x + max_x) / 2;
-		qint64 center_y = (min_y + max_y) / 2;
+		auto center_x = (min_x + max_x) / 2;
+		auto center_y = (min_y + max_y) / 2;
 		
 		for (int i = 0; i < symbol->getNumElements(); ++i)
 		{

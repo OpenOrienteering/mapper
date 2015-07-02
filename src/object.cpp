@@ -549,7 +549,7 @@ void Object::createBaselineRenderables(ObjectRenderables& output) const
 	symbol->createBaselineRenderables(this, VirtualCoordVector(coords), output);
 }
 
-void Object::move(qint64 dx, qint64 dy)
+void Object::move(qint32 dx, qint32 dy)
 {
 	if (type == Text && coords.size() == 2)
 	{
@@ -3125,7 +3125,7 @@ Object& PointObject::operator=(const Object& other)
 	return *this;
 }
 
-void PointObject::setPosition(qint64 x, qint64 y)
+void PointObject::setPosition(qint32 x, qint32 y)
 {
 	coords[0].setNativeX(x);
 	coords[0].setNativeY(y);

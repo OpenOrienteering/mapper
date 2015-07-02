@@ -101,10 +101,10 @@ public:
 	 * @param out_dx returns the move along the x coordinate in map units
 	 * @param out_dy returns the move along the y coordinate in map units
 	 */
-	void move(const MapCoordF& cursor_pos, bool move_opposite_handles, qint64* out_dx = NULL, qint64* out_dy = NULL);
+	void move(const MapCoordF& cursor_pos, bool move_opposite_handles, qint32* out_dx = NULL, qint32* out_dy = NULL);
 	
 	/** Overload of move() taking delta values. */
-	void move(qint64 dx, qint64 dy, bool move_opposite_handles);
+	void move(qint32 dx, qint32 dy, bool move_opposite_handles);
 	
 private:
 	using ObjectSet = QSet<Object*>;
@@ -115,8 +115,8 @@ private:
 	
 	// Basic information
 	MapCoordF start_position;
-	qint64 prev_drag_x;
-	qint64 prev_drag_y;
+	qint32 prev_drag_x;
+	qint32 prev_drag_y;
 	ObjectSet objects;
 	QHash< PathObject*, CoordIndexSet> points;
 	QHash< TextObject*, int > text_handles;

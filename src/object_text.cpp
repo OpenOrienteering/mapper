@@ -152,7 +152,7 @@ Object& TextObject::operator=(const Object& other)
 	return *this;
 }
 
-void TextObject::setAnchorPosition(qint64 x, qint64 y)
+void TextObject::setAnchorPosition(qint32 x, qint32 y)
 {
 	coords.resize(1);
 	coords[0].setNativeX(x);
@@ -173,7 +173,7 @@ MapCoordF TextObject::getAnchorCoordF() const
 	return MapCoordF(coords[0]);
 }
 
-void TextObject::setBox(qint64 mid_x, qint64 mid_y, double width, double height)
+void TextObject::setBox(qint32 mid_x, qint32 mid_y, double width, double height)
 {
 	coords.resize(2);
 	coords[0].setNativeX(mid_x);

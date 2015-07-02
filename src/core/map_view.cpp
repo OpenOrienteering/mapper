@@ -156,8 +156,8 @@ void MapView::load(QXmlStreamReader& xml)
 	if (zoom < 0.001)
 		zoom = 1.0;
 	rotation = mapview_element.attribute<double>(literal::rotation);
-	qint64 center_x = mapview_element.attribute<qint64>(literal::position_x);
-	qint64 center_y = mapview_element.attribute<qint64>(literal::position_y);
+	auto center_x = mapview_element.attribute<qint32>(literal::position_x);
+	auto center_y = mapview_element.attribute<qint32>(literal::position_y);
 	center_pos = MapCoord::fromNative(center_x, center_y);
 	grid_visible = mapview_element.attribute<bool>(literal::grid);
 	overprinting_simulation_enabled = mapview_element.attribute<bool>(literal::overprinting_simulation_enabled);

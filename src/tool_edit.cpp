@@ -228,10 +228,10 @@ void ObjectMover::addTextHandle(TextObject* text, int handle)
 	text_handles.insert(text, handle);
 }
 
-void ObjectMover::move(const MapCoordF& cursor_pos, bool move_opposite_handles, qint64* out_dx, qint64* out_dy)
+void ObjectMover::move(const MapCoordF& cursor_pos, bool move_opposite_handles, qint32* out_dx, qint32* out_dy)
 {
-	qint64 delta_x = qRound64(1000 * (cursor_pos.x() - start_position.x())) - prev_drag_x;
-	qint64 delta_y = qRound64(1000 * (cursor_pos.y() - start_position.y())) - prev_drag_y;
+	auto delta_x = qRound(1000 * (cursor_pos.x() - start_position.x())) - prev_drag_x;
+	auto delta_y = qRound(1000 * (cursor_pos.y() - start_position.y())) - prev_drag_y;
 	if (out_dx)
 		*out_dx = delta_x;
 	if (out_dy)
@@ -243,7 +243,7 @@ void ObjectMover::move(const MapCoordF& cursor_pos, bool move_opposite_handles, 
 	prev_drag_y += delta_y;
 }
 
-void ObjectMover::move(qint64 dx, qint64 dy, bool move_opposite_handles)
+void ObjectMover::move(qint32 dx, qint32 dy, bool move_opposite_handles)
 {
 	calculateConstraints();
 	

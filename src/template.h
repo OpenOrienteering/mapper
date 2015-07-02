@@ -53,8 +53,8 @@ public:
  	void load(QXmlStreamReader& xml);
 	
 	/// Position in 1/1000 mm
-	qint64 template_x;
-	qint64 template_y;
+	qint32 template_x;
+	qint32 template_y;
 	/// Scaling relative to "1 painter unit == 1 mm on map"
 	double template_scale_x;
 	double template_scale_y;

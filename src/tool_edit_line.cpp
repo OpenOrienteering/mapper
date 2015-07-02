@@ -252,7 +252,7 @@ void EditLineTool::dragMove()
 			handle_offset = MapCoordF(0, 0);
 		}
 		
-		qint64 dx, dy;
+		qint32 dx, dy;
 		object_mover->move(constrained_pos_map, !(active_modifiers & Qt::ShiftModifier), &dx, &dy);
 		if (highlight_object)
 		{

@@ -155,7 +155,7 @@ public:
 	/** Sets the position of the anchor point to (x,y). 
 	 *  This will drop an existing word wrap box.
 	 */
-	void setAnchorPosition(qint64 x, qint64 y);
+	void setAnchorPosition(qint32 x, qint32 y);
 	
 	/** Sets the position of the anchor point to coord. 
 	 *  This will drop an existing word wrap box.
@@ -169,7 +169,7 @@ public:
 	 *  The midpoint is set to (mid_x, mid_y), the size is specifed by the parameters
 	 *  width and heigt.
 	 */
-	void setBox(qint64 mid_x, qint64 mid_y, double width, double height);
+	void setBox(qint32 mid_x, qint32 mid_y, double width, double height);
 	
 	/** Returns the width of the word wrap box.
 	 *  The text object must have a specified size.

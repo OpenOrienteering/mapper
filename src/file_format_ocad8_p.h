@@ -110,7 +110,7 @@ protected:
 	QString convertWideCString(const char *p, size_t n, bool ignore_first_newline);
 	float convertRotation(int angle);
 	void convertPoint(MapCoord &c, int ocad_x, int ocad_y);
-	qint64 convertSize(int ocad_size);
+	qint32 convertSize(int ocad_size);
 	const MapColor *convertColor(int color);
 	double convertTemplateScale(double ocad_scale);
 	
@@ -181,10 +181,10 @@ protected:
 	/// Returns the number of bytes written into buffer
 	int convertWideCString(const QString& text, unsigned char* buffer, int buffer_size);
 	int convertRotation(float angle);
-	OCADPoint convertPoint(qint64 x, qint64 y);
+	OCADPoint convertPoint(qint32 x, qint32 y);
 	/// Attention: this ignores the coordinate flags!
 	OCADPoint convertPoint(const MapCoord& coord);
-	s32 convertSize(qint64 size);
+	s32 convertSize(qint32 size);
 	s16 convertColor(const MapColor* color) const;
 	double convertTemplateScale(double mapper_scale);
 	

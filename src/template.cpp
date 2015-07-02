@@ -54,9 +54,14 @@ TemplateTransform::TemplateTransform()
 
 void TemplateTransform::load(QIODevice* file)
 {
-	file->read((char*)&template_x, sizeof(qint64));
-	file->read((char*)&template_y, sizeof(qint64));
+	qint64 tmp;
+	file->read((char*)&tmp, sizeof(qint64));
+	template_x = tmp;
+	file->read((char*)&tmp, sizeof(qint64));
+	template_y = tmp;
 	
+	static_assert(sizeof(qint64) == sizeof(double),
+	              "Legacy file format relies on sizeof(qint64) == sizeof(double)");
 	file->read((char*)&template_scale_x, sizeof(qint64));
 	file->read((char*)&template_scale_y, sizeof(qint64));
 	file->read((char*)&template_rotation, sizeof(qint64));

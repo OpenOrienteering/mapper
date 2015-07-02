@@ -687,7 +687,7 @@ Symbol *OCAD8FileImport::importAreaSymbol(const OCADAreaSymbol *ocad_symbol)
         // OCAD 8 has a "staggered" pattern mode, where successive rows are shifted width/2 relative
         // to each other. We need to simulate this in Mapper with two overlapping patterns, each with
         // twice the height. The second is then offset by width/2, height/2.
-        qint64 spacing = convertSize(ocad_symbol->pheight);
+        auto spacing = convertSize(ocad_symbol->pheight);
         if (ocad_symbol->pmode == 2) spacing *= 2;
         int n = symbol->patterns.size(); symbol->patterns.resize(n + 1); pat = &(symbol->patterns[n]);
         pat->type = AreaSymbol::FillPattern::PointPattern;
@@ -1490,15 +1490,15 @@ void OCAD8FileImport::convertPoint(MapCoord &coord, int ocad_x, int ocad_y)
 {
     // OCAD uses hundredths of a millimeter.
     // oo-mapper uses 1/1000 mm
-    coord.setNativeX(offset_x + (qint64)ocad_x * 10);
+    coord.setNativeX(offset_x + (qint32)ocad_x * 10);
     // Y-axis is flipped.
-    coord.setNativeY(offset_y + (qint64)ocad_y * (-10));
+    coord.setNativeY(offset_y + (qint32)ocad_y * (-10));
 }
 
-qint64 OCAD8FileImport::convertSize(int ocad_size) {
+qint32 OCAD8FileImport::convertSize(int ocad_size) {
     // OCAD uses hundredths of a millimeter.
     // oo-mapper uses 1/1000 mm
-    return ((qint64)ocad_size) * 10;
+    return ((qint32)ocad_size) * 10;
 }
 
 const MapColor *OCAD8FileImport::convertColor(int color) {
@@ -2627,7 +2627,7 @@ int OCAD8FileExport::convertRotation(float angle)
 	return qRound(10 * (angle * 180 / M_PI));
 }
 
-OCADPoint OCAD8FileExport::convertPoint(qint64 x, qint64 y)
+OCADPoint OCAD8FileExport::convertPoint(qint32 x, qint32 y)
 {
 	OCADPoint result;
 	result.x = (s32)qRound(x / 10.0) << 8;
@@ -2639,7 +2639,7 @@ OCADPoint OCAD8FileExport::convertPoint(const MapCoord& coord)
 	return convertPoint(coord.nativeX(), coord.nativeY());
 }
 
-s32 OCAD8FileExport::convertSize(qint64 size)
+s32 OCAD8FileExport::convertSize(qint32 size)
 {
 	return (s32)(size / 10);
 }

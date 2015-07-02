@@ -147,7 +147,7 @@ void CoordXmlTest::writeHumanReadableString_implementation(MapCoordVector& coord
 		buffer[j] = ';';
 		--j;
 		
-		qint64 tmp = coord.flags();
+		qint32 tmp = coord.flags();
 		char sign = 0;
 		if (tmp != 0)
 		{
@@ -400,9 +400,9 @@ void CoordXmlTest::readXml()
 			}
 			
 			XmlElementReader element(xml);
-			qint64 x = element.attribute<qint64>(literal::x);
-			qint64 y = element.attribute<qint64>(literal::y);
-			int flags = element.attribute<int>(literal::flags);
+			auto x = element.attribute<qint32>(literal::x);
+			auto y = element.attribute<qint32>(literal::y);
+			auto flags = element.attribute<int>(literal::flags);
 			coords.push_back(MapCoord::fromNative(x, y, flags));
 		}
 	}
@@ -499,7 +499,7 @@ void CoordXmlTest::readHumanReadableStream()
 				stream.setIntegerBase(10);
 				while (!stream.atEnd())
 				{
-					qint64 x, y;
+					qint32 x, y;
 					int flags = 0;
 					char separator;
 					stream >> x >> y >> separator;

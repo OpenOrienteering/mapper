@@ -169,7 +169,7 @@ public:
 	 * @param dx X offset in native map coordinates.
 	 * @param dy Y offset in native map coordinates.
 	 */
-	void move(qint64 dx, qint64 dy);
+	void move(qint32 dx, qint32 dy);
 	
 	/** Moves the whole object by the given offset. */
 	void move(MapCoord offset);
@@ -942,7 +942,7 @@ public:
 	
 	
 	/** Sets the point's position to a new position given in native map coordinates. */
-	void setPosition(qint64 x, qint64 y);
+	void setPosition(qint32 x, qint32 y);
 	
 	/** Changes the point's position. */
 	void setPosition(MapCoordF coord);
