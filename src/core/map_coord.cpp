@@ -30,9 +30,6 @@
 #include "../util/xml_stream_util.h"
 
 
-static_assert((-3 >> 1) == -2,
-              "MapCoord assumes an arithmetic implementation of the shift operator");
-
 static_assert(std::is_nothrow_move_constructible<MapCoord>::value, "MapCoord must be nothrow move constructible.");
 static_assert(std::is_nothrow_move_assignable<MapCoord>::value, "MapCoord must be nothrow move assignable.");
 

@@ -508,7 +508,7 @@ constexpr MapCoord::MapCoord(qreal x, qreal y)
 
 constexpr MapCoord::MapCoord(qreal x, qreal y, int flags)
  : x { qRound64(x*1000), flags }
- , y { qRound64(y*1000), flags >> MapCoordElement::bitsForFlags }
+ , y { qRound64(y*1000), flags / (1<<MapCoordElement::bitsForFlags) }
 {
 	// nothing else
 }
@@ -539,7 +539,7 @@ constexpr MapCoord MapCoord::fromRaw(qint64 x, qint64 y)
 
 constexpr MapCoord MapCoord::fromRaw(qint64 x, qint64 y, int flags)
 {
-	return MapCoord{ MapCoordElement{ x, flags }, MapCoordElement{ y, flags >> MapCoordElement::bitsForFlags} };
+	return MapCoord{ MapCoordElement{ x, flags }, MapCoordElement{ y, flags / (1<<MapCoordElement::bitsForFlags) } };
 }
 
 constexpr qreal MapCoord::xd() const
@@ -588,14 +588,14 @@ void MapCoord::setRawY(qint64 new_y)
 
 constexpr int MapCoord::getFlags() const
 {
-	return x.flags() | (y.flags() << MapCoordElement::bitsForFlags);
+	return x.flags() | (y.flags() * (1<<MapCoordElement::bitsForFlags));
 }
 
 inline
 void MapCoord::setFlags(int flags)
 {
 	x.setFlags(flags);
-	y.setFlags(flags >> MapCoordElement::bitsForFlags);
+	y.setFlags(flags / (1<<MapCoordElement::bitsForFlags));
 }
 
 constexpr qreal MapCoord::length() const
