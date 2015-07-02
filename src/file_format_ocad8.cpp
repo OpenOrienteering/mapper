@@ -1811,8 +1811,8 @@ void OCAD8FileExport::doExport()
 			int s = 1;	// enabled
 			int t = 0;
 			OCADPoint pos = convertPoint(temp->getTemplateX(), temp->getTemplateY());
-			int x = pos.x / (1<<8);
-			int y = pos.y / (1<<8);
+			int x = pos.x >> 8;
+			int y = pos.y >> 8;
 			double u = convertTemplateScale(temp->getTemplateScaleX());
 			double v = convertTemplateScale(temp->getTemplateScaleY());
 			
@@ -1884,7 +1884,7 @@ void OCAD8FileExport::exportCommonSymbolFields(const Symbol* symbol, OCADSymbol*
 		{
 			int first = getOcadColor(image.pixel(x, y));
 			int second = getOcadColor(image.pixel(x + 1, y));
-			*(ocad_icon++) = (first * (1<<4)) + (second);
+			*(ocad_icon++) = (first << 4) + (second);
 		}
 		ocad_icon++;
 	}
@@ -2382,8 +2382,8 @@ u16 OCAD8FileExport::exportCoordinates(const MapCoordVector& coords, OCADPoint**
 	{
 		const MapCoord& point = coords[i];
 		OCADPoint p;
-		p.x = (point.rawX() / 10) * (1<<8);
-		p.y = (point.rawY() / -10) * (1<<8);
+		p.x = (point.rawX() / 10) << 8;
+		p.y = (point.rawY() / -10) << 8;
 		
 		if (point.isDashPoint())
 		{
@@ -2630,8 +2630,8 @@ int OCAD8FileExport::convertRotation(float angle)
 OCADPoint OCAD8FileExport::convertPoint(qint64 x, qint64 y)
 {
 	OCADPoint result;
-	result.x = (s32)qRound(x / 10.0) * (1<<8);
-	result.y = (s32)qRound(y / -10.0) * (1<<8);
+	result.x = (s32)qRound(x / 10.0) << 8;
+	result.y = (s32)qRound(y / -10.0) << 8;
 	return result;
 }
 OCADPoint OCAD8FileExport::convertPoint(const MapCoord& coord)
