@@ -288,8 +288,8 @@ void GeoreferencingDialog::transformationChanged()
 	block << map_x_edit << map_y_edit
 	      << easting_edit << northing_edit;
 	
-	map_x_edit->setValue(georef->getMapRefPoint().xd());
-	map_y_edit->setValue(-1 * georef->getMapRefPoint().yd());
+	map_x_edit->setValue(georef->getMapRefPoint().x());
+	map_y_edit->setValue(-1 * georef->getMapRefPoint().y());
 	
 	easting_edit->setValue(georef->getProjectedRefPoint().x());
 	northing_edit->setValue(georef->getProjectedRefPoint().y());

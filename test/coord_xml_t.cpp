@@ -33,7 +33,7 @@ namespace literal
 
 void CoordXmlTest::initTestCase()
 {
-	proto_coord = MapCoord::fromRaw(12345, -6789, 3);
+	proto_coord = MapCoord::fromNative(12345, -6789, 3);
 	buffer.buffer().reserve(5000000);
 }
 
@@ -58,9 +58,9 @@ void CoordXmlTest::writeXml_implementation(MapCoordVector& coords, QXmlStreamWri
 	for (const auto& coord : coords)
 	{
 		xml.writeStartElement(XmlStreamLiteral::coord);
-		xml.writeAttribute(literal::x, QString::number(coord.rawX()));
-		xml.writeAttribute(literal::y, QString::number(coord.rawY()));
-		xml.writeAttribute(literal::flags, QString::number(coord.getFlags()));
+		xml.writeAttribute(literal::x, QString::number(coord.nativeX()));
+		xml.writeAttribute(literal::y, QString::number(coord.nativeY()));
+		xml.writeAttribute(literal::flags, QString::number(coord.flags()));
 		xml.writeEndElement();
 	}
 }
@@ -96,9 +96,9 @@ void CoordXmlTest::writeHumanReadableStream_implementation(MapCoordVector& coord
 	QTextStream stream(&data);
 	for (const auto& coord : coords)
 	{
-		stream << coord.rawX() << ' '
-		       << coord.rawY() << ' '
-		       << coord.getFlags() << ';';
+		stream << coord.nativeX() << ' '
+		       << coord.nativeY() << ' '
+		       << coord.flags() << ';';
 	}
 	stream.flush();
 	xml.writeCharacters(data);
@@ -147,7 +147,7 @@ void CoordXmlTest::writeHumanReadableString_implementation(MapCoordVector& coord
 		buffer[j] = ';';
 		--j;
 		
-		qint64 tmp = coord.getFlags();
+		qint64 tmp = coord.flags();
 		char sign = 0;
 		if (tmp != 0)
 		{
@@ -174,7 +174,7 @@ void CoordXmlTest::writeHumanReadableString_implementation(MapCoordVector& coord
 			--j;
 		}
 		
-		tmp = coord.rawY();
+		tmp = coord.nativeY();
 		if (tmp < 0)
 		{
 			sign = '-';
@@ -196,7 +196,7 @@ void CoordXmlTest::writeHumanReadableString_implementation(MapCoordVector& coord
 		buffer[j] = ' ';
 		--j;
 		
-		tmp = coord.rawX();
+		tmp = coord.nativeX();
 		sign = 0;
 		if (tmp < 0)
 		{
@@ -261,7 +261,7 @@ void CoordXmlTest::writeCompressed_implementation(MapCoordVector& coords, QXmlSt
 		                          "abcdefghijklmnopqrstuvwxyz"
 		                          "0123456789=/";
 		QByteArray buffer((int)buf_size, 0);
-		qint64 tmp = coord.x.internal_value;
+		auto tmp = coord.xp;
 		char sign = '+';
 		if (tmp < 0)
 		{
@@ -278,7 +278,23 @@ void CoordXmlTest::writeCompressed_implementation(MapCoordVector& coords, QXmlSt
 		buffer[j] = sign;
 		++j;
 		
-		tmp = coord.y.internal_value;
+		tmp = coord.yp;
+		sign = '+';
+		if (tmp < 0)
+		{
+			sign = '-';
+			tmp = -tmp; // TODO catch -MAX
+		}
+		while (tmp != 0)
+		{
+			buffer[j] = encoded[tmp & 63];
+			tmp = tmp >> 6;
+			++j;
+		}
+		buffer[j] = sign;
+		++j;
+		
+		tmp = coord.fp;
 		sign = '+';
 		if (tmp < 0)
 		{
@@ -387,7 +403,7 @@ void CoordXmlTest::readXml()
 			qint64 x = element.attribute<qint64>(literal::x);
 			qint64 y = element.attribute<qint64>(literal::y);
 			int flags = element.attribute<int>(literal::flags);
-			coords.push_back(MapCoord::fromRaw(x, y, flags));
+			coords.push_back(MapCoord::fromNative(x, y, flags));
 		}
 	}
 	
@@ -491,7 +507,7 @@ void CoordXmlTest::readHumanReadableStream()
 					{
 						stream >> flags >> separator;
 					}
-					coords.push_back(MapCoord::fromRaw(x, y, flags));
+					coords.push_back(MapCoord::fromNative(x, y, flags));
 				}
 				if (stream.status() == QTextStream::ReadCorruptData)
 				{
@@ -594,7 +610,7 @@ void CoordXmlTest::readCompressed()
 				{
 					coords.resize(coords.size() + 1);
 					quint8 c;
-					qint64 x = 0;
+					decltype(MapCoord::xp) x = 0;
 					int i = 0;
 					
 					const int len = data.length();
@@ -640,7 +656,7 @@ void CoordXmlTest::readCompressed()
 						i += 6;
 					}
 					
-					qint64 y = 0;
+					decltype(MapCoord::yp) y = 0;
 					i = 0;
 					while (pos < len)
 					{
@@ -683,8 +699,54 @@ void CoordXmlTest::readCompressed()
 						y = y | (c << i );
 						i += 6;
 					}
-					coords.back().x.internal_value = x;
-					coords.back().y.internal_value = y;
+					
+					int f = 0;
+					i = 0;
+					while (pos < len)
+					{
+						c = data[pos];
+						pos++;
+						
+						if (c >= 'A' && c <= 'Z')
+						{
+						c =  c - 'A';
+						}
+						else if (c >= 'a' && c <= 'z')
+						{
+							c = (c - 'a') + 26;
+						}
+						else if (c >= '0' && c <= '9')
+						{
+							c = (c - '0') + 52;
+						}
+						else if (c == '/')
+						{
+							c = 63;
+						}
+						else if (c == '=')
+						{
+							c = 62;
+						}
+						else if (c == '+')
+						{
+							break;
+						}
+						else if (c == '-')
+						{
+							f = -f;
+							break;
+						}
+						else
+						{
+							c = 0;
+						}
+						f = f | (c << i );
+						i += 6;
+					}
+					
+					coords.back().xp = x;
+					coords.back().yp = y;
+					coords.back().fp = decltype(MapCoord::fp)(f);
 				}
 			}
 			// otherwise: ignore element

@@ -660,7 +660,7 @@ void VirtualPath::copy(
 		for (; index <= stop_index; ++index)
 		{
 			out_coords.emplace_back(coords[index]);
-			out_coords.back().setFlags(flags[index].getFlags());
+			out_coords.back().setFlags(flags[index].flags());
 		}
 	}
 		

@@ -1438,7 +1438,7 @@ void OcdFileImport::setupPointSymbolPattern(PointSymbol* symbol, std::size_t dat
 						if (element->num_coords)
 						{
 							const MapCoord coord = convertOcdPoint(coords[0]);
-							element_object->setPosition(coord.rawX(), coord.rawY());
+							element_object->setPosition(coord.nativeX(), coord.nativeY());
 						}
 						symbol->addElement(symbol->getNumElements(), element_object, working_symbol);
 					}
@@ -1466,7 +1466,7 @@ void OcdFileImport::setupPointSymbolPattern(PointSymbol* symbol, std::size_t dat
 						if (element->num_coords)
 						{
 							const MapCoord coord = convertOcdPoint(coords[0]);
-							element_object->setPosition(coord.rawX(), coord.rawY());
+							element_object->setPosition(coord.nativeX(), coord.nativeY());
 						}
 						symbol->addElement(symbol->getNumElements(), element_object, working_symbol);
 					}
@@ -1561,7 +1561,7 @@ Object* OcdFileImport::importObject(const O& ocd_object, MapPart* part)
 		}
 		
 		const MapCoord pos = convertOcdPoint(ocd_object.coords[0]);
-		p->setPosition(pos.rawX(), pos.rawY());
+		p->setPosition(pos.nativeX(), pos.nativeY());
 		
 		p->setMap(map);
 		return p;
@@ -1651,9 +1651,9 @@ Object* OcdFileImport::importRectangleObject(const O& ocd_object, MapPart* part,
 	MapCoordF top_right_f = MapCoordF(top_right);
 	MapCoordF bottom_left_f = MapCoordF(bottom_left);
 	MapCoordF bottom_right_f = MapCoordF(bottom_right);
-	MapCoordF right = MapCoordF(top_right.xd() - top_left.xd(), top_right.yd() - top_left.yd());
+	MapCoordF right = MapCoordF(top_right.x() - top_left.x(), top_right.y() - top_left.y());
 	double angle = right.angle();
-	MapCoordF down = MapCoordF(bottom_left.xd() - top_left.xd(), bottom_left.yd() - top_left.yd());
+	MapCoordF down = MapCoordF(bottom_left.x() - top_left.x(), bottom_left.y() - top_left.y());
 	right.normalize();
 	down.normalize();
 	
@@ -1842,10 +1842,10 @@ bool OcdFileImport::fillTextPathCoords(TextObject *object, TextSymbol *symbol, q
 		double top_adjust = -symbol->getFontSize() + (metrics.ascent() + metrics.descent() + 0.5) / symbol->calculateInternalScaling();
 		
 		MapCoordF adjust_vector = MapCoordF(top_adjust * sin(object->getRotation()), top_adjust * cos(object->getRotation()));
-		top_left = MapCoord(top_left.xd() + adjust_vector.x(), top_left.yd() + adjust_vector.y());
-		top_right = MapCoord(top_right.xd() + adjust_vector.x(), top_right.yd() + adjust_vector.y());
+		top_left = MapCoord(top_left.x() + adjust_vector.x(), top_left.y() + adjust_vector.y());
+		top_right = MapCoord(top_right.x() + adjust_vector.x(), top_right.y() + adjust_vector.y());
 		
-		object->setBox((bottom_left.rawX() + top_right.rawX()) / 2, (bottom_left.rawY() + top_right.rawY()) / 2,
+		object->setBox((bottom_left.nativeX() + top_right.nativeX()) / 2, (bottom_left.nativeY() + top_right.nativeY()) / 2,
 					   top_left.distanceTo(top_right), top_left.distanceTo(bottom_left));
 		object->setVerticalAlignment(TextObject::AlignTop);
 	}
@@ -1857,7 +1857,7 @@ bool OcdFileImport::fillTextPathCoords(TextObject *object, TextSymbol *symbol, q
 		
 		// anchor point
 		MapCoord coord = convertOcdPoint(ocd_points[0]);
-		object->setAnchorPosition(coord.rawX(), coord.rawY());
+		object->setAnchorPosition(coord.nativeX(), coord.nativeY());
 		object->setVerticalAlignment(text_valign_map.value(symbol));
 	}
 	

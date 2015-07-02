@@ -603,10 +603,10 @@ void DrawPathTool::createPreviewCurve(MapCoord position, float direction)
 	
 	double bezier_handle_distance = BEZIER_HANDLE_DISTANCE * previous_point.distanceTo(last_point);
 	
-	preview_path->setCoordinate(last - 2, MapCoord(previous_point.xd() - bezier_handle_distance * sin(previous_point_direction),
-												   previous_point.yd() - bezier_handle_distance * cos(previous_point_direction)));
-	preview_path->setCoordinate(last - 1, MapCoord(last_point.xd() + bezier_handle_distance * sin(direction),
-												   last_point.yd() + bezier_handle_distance * cos(direction)));
+	preview_path->setCoordinate(last - 2, MapCoord(previous_point.x() - bezier_handle_distance * sin(previous_point_direction),
+	                                               previous_point.y() - bezier_handle_distance * cos(previous_point_direction)));
+	preview_path->setCoordinate(last - 1, MapCoord(last_point.x() + bezier_handle_distance * sin(direction),
+	                                               last_point.y() + bezier_handle_distance * cos(direction)));
 	updatePreviewPath();	
 }
 
@@ -633,9 +633,9 @@ void DrawPathTool::undoLastPoint()
 		MapCoord second = preview_path->getCoordinate(last - 2);
 		
 		previous_point_is_curve_point = true;
-		previous_point_direction = -atan2(second.xd() - first.xd(), first.yd() - second.yd());
+		previous_point_direction = -atan2(second.x() - first.x(), first.y() - second.y());
 		previous_pos_map = MapCoordF(first);
-		previous_drag_map = MapCoordF((first.xd() + second.xd()) / 2, (first.yd() + second.yd()) / 2);
+		previous_drag_map = MapCoordF((first.x() + second.x()) / 2, (first.y() + second.y()) / 2);
 		
 	}
 	else
@@ -725,7 +725,7 @@ void DrawPathTool::closeDrawing()
 		
 		MapCoord first = preview_path->getCoordinate(0);
 		MapCoord second = preview_path->getCoordinate(1);
-		createPreviewCurve(first, -atan2(second.xd() - first.xd(), first.yd() - second.yd()));
+		createPreviewCurve(first, -atan2(second.x() - first.x(), first.y() - second.y()));
 		path_has_preview_point = false;
 	}
 	
@@ -962,9 +962,9 @@ void DrawPathTool::finishFollowing()
 		MapCoord second = preview_path->getCoordinate(last);
 		
 		previous_point_is_curve_point = true;
-		previous_point_direction = -atan2(second.xd() - first.xd(), first.yd() - second.yd());
+		previous_point_direction = -atan2(second.x() - first.x(), first.y() - second.y());
 		previous_pos_map = MapCoordF(second);
-		previous_drag_map = MapCoordF(second.xd() + (second.xd() - first.xd()) / 2, second.yd() + (second.yd() - first.yd()) / 2);
+		previous_drag_map = MapCoordF(second.x() + (second.x() - first.x()) / 2, second.y() + (second.y() - first.y()) / 2);
 	}
 	else
 		previous_point_is_curve_point = false;

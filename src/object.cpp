@@ -256,8 +256,15 @@ void Object::load(QIODevice* file, int version, Map* map)
 	
 	int num_coords;
 	file->read((char*)&num_coords, sizeof(int));
-	coords.resize(num_coords);
-	file->read((char*)&coords[0], num_coords * sizeof(MapCoord));
+	coords.clear();
+	coords.reserve(num_coords);
+	
+	LegacyMapCoord coord;
+	for (int i = 0; i < num_coords; ++i)
+	{
+		file->read((char*)&coord, sizeof(LegacyMapCoord));
+		coords.emplace_back(coord);
+	}
 	
 	if (version <= 8)
 	{
@@ -288,8 +295,8 @@ void Object::load(QIODevice* file, int version, Map* map)
 				float rotation;
 				file->read((char*)&rotation, sizeof(float));
 				path->setPatternRotation(rotation);
-				MapCoord origin;
-				file->read((char*)&origin, sizeof(MapCoord));
+				LegacyMapCoord origin;
+				file->read((char*)&origin, sizeof(LegacyMapCoord));
 				path->setPatternOrigin(origin);
 			}
 		}
@@ -547,13 +554,13 @@ void Object::move(qint64 dx, qint64 dy)
 	if (type == Text && coords.size() == 2)
 	{
 		MapCoord& coord = coords.front();
-		coord.setRawX(dx + coord.rawX());
-		coord.setRawY(dy + coord.rawY());
+		coord.setNativeX(dx + coord.nativeX());
+		coord.setNativeY(dy + coord.nativeY());
 	}
 	else for (MapCoord& coord : coords)
 	{
-		coord.setRawX(dx + coord.rawX());
-		coord.setRawY(dy + coord.rawY());
+		coord.setNativeX(dx + coord.nativeX());
+		coord.setNativeY(dy + coord.nativeY());
 	}
 	
 	setOutputDirty();
@@ -577,15 +584,15 @@ void Object::scale(MapCoordF center, double factor)
 {
 	if (type == Text && coords.size() == 2)
 	{
-		coords[0].setX(center.x() + (coords[0].xd() - center.x()) * factor);
-		coords[0].setY(center.y() + (coords[0].yd() - center.y()) * factor);
-		coords[1].setX(coords[1].xd() * factor);
-		coords[1].setY(coords[1].yd() * factor);
+		coords[0].setX(center.x() + (coords[0].x() - center.x()) * factor);
+		coords[0].setY(center.y() + (coords[0].y() - center.y()) * factor);
+		coords[1].setX(coords[1].x() * factor);
+		coords[1].setY(coords[1].y() * factor);
 	}
 	else for (MapCoord& coord : coords)
 	{
-		coord.setX(center.x() + (coord.xd() - center.x()) * factor);
-		coord.setY(center.y() + (coord.yd() - center.y()) * factor);
+		coord.setX(center.x() + (coord.x() - center.x()) * factor);
+		coord.setY(center.y() + (coord.y() - center.y()) * factor);
 	}
 	
 	setOutputDirty();
@@ -595,8 +602,8 @@ void Object::scale(double factor_x, double factor_y)
 {
 	for (MapCoord& coord : coords)
 	{
-		coord.setX(coord.xd() * factor_x);
-		coord.setY(coord.yd() * factor_y);
+		coord.setX(coord.x() * factor_x);
+		coord.setY(coord.y() * factor_y);
 	}
 	
 	setOutputDirty();
@@ -612,7 +619,7 @@ void Object::rotateAround(MapCoordF center, double angle)
 		coords_size = 1;	// don't touch box width / height for box texts
 	for (int c = 0; c < coords_size; ++c)
 	{
-		MapCoordF center_to_coord = MapCoordF(coords[c].xd() - center.x(), coords[c].yd() - center.y());
+		MapCoordF center_to_coord = MapCoordF(coords[c].x() - center.x(), coords[c].y() - center.y());
 		coords[c].setX(center.x() + cos_angle * center_to_coord.x() + sin_angle * center_to_coord.y());
 		coords[c].setY(center.y() - sin_angle * center_to_coord.x() + cos_angle * center_to_coord.y());
 	}
@@ -643,8 +650,8 @@ void Object::rotate(double angle)
 	for (int c = 0; c < coords_size; ++c)
 	{
 		MapCoord coord = coords[c];
-		coords[c].setX(cos_angle * coord.xd() + sin_angle * coord.yd());
-		coords[c].setY(cos_angle * coord.yd() - sin_angle * coord.xd());
+		coords[c].setX(cos_angle * coord.x() + sin_angle * coord.y());
+		coords[c].setY(cos_angle * coord.y() - sin_angle * coord.x());
 	}
 	
 	if (type == Point)
@@ -1307,8 +1314,8 @@ void PathObject::connectPathParts(PathPartVector::size_type part_index, const Pa
 		MapCoord& join_coord = coords[part.first_index + appended_part_size];
 		if (merge_ends)
 		{
-			join_coord.setRawX((join_coord.rawX() + other->coords[other_part.last_index].rawX()) / 2);
-			join_coord.setRawY((join_coord.rawY() + other->coords[other_part.last_index].rawY()) / 2);
+			join_coord.setNativeX((join_coord.nativeX() + other->coords[other_part.last_index].nativeX()) / 2);
+			join_coord.setNativeY((join_coord.nativeY() + other->coords[other_part.last_index].nativeY()) / 2);
 		}
 		join_coord.setHolePoint(false);
 		join_coord.setClosePoint(false);
@@ -1330,8 +1337,8 @@ void PathObject::connectPathParts(PathPartVector::size_type part_index, const Pa
 		if (merge_ends)
 		{
 			MapCoord coord = other->coords[other_part.first_index];	// take flags from first coord of path to append
-			coord.setRawX((coords[end_index].rawX() + coord.rawX()) / 2);
-			coord.setRawY((coords[end_index].rawY() + coord.rawY()) / 2);
+			coord.setNativeX((coords[end_index].nativeX() + coord.nativeX()) / 2);
+			coord.setNativeY((coords[end_index].nativeY() + coord.nativeY()) / 2);
 			coords[end_index] = coord;
 		}
 		else
@@ -1522,10 +1529,10 @@ void PathObject::calcBezierPointDeletionRetainingShapeFactors(MapCoord p0, MapCo
 	 
 	 */
 	
-	double P0x = p0.xd(), P1x = p1.xd(), P2x = p2.xd(), P3x = q0.xd();
-	double Q1x = q1.xd(), Q2x = q2.xd(), Q3x = q3.xd();
-	double P0y = p0.yd(), P1y = p1.yd(), P2y = p2.yd(), P3y = q0.yd();
-	double Q1y = q1.yd(), Q2y = q2.yd(), Q3y = q3.yd();
+	double P0x = p0.x(), P1x = p1.x(), P2x = p2.x(), P3x = q0.x();
+	double Q1x = q1.x(), Q2x = q2.x(), Q3x = q3.x();
+	double P0y = p0.y(), P1y = p1.y(), P2y = p2.y(), P3y = q0.y();
+	double Q1y = q1.y(), Q2y = q2.y(), Q3y = q3.y();
 	
 	out_pfactor = -(126*P0x*pow(Q2x,3.0)*pow(sp,3.0) - 49*pow(P0x,2.0)*pow(Q3x,2.0) - 88*pow(P0x,2.0)*pow(Q2y,2.0) - 88*pow(P0y,2.0)*pow(Q2x,2.0) - 88*pow(P0x,2.0)*pow(Q3y,2.0) - 88*pow(P0y,2.0)*pow(Q3x,2.0) - 49*pow(P0y,2.0)*pow(Q2y,2.0) -
 	49*pow(P0y,2.0)*pow(Q3y,2.0) - 49*pow(P0x,2.0)*pow(Q2x,2.0) + 21*P0x*pow(Q3x,3.0)*pow(sp,2.0) - 84*P0x*pow(Q2x,3.0)*pow(sp,4.0) + 14*P0x*pow(Q3x,3.0)*pow(sp,3.0) - 126*P1x*pow(Q2x,3.0)*pow(sp,3.0) -
@@ -2966,10 +2973,10 @@ void PathObject::prepareDeleteBezierPoint(MapCoordVector::size_type pos, int del
 	}
 	
 	MapCoordF p0p1 = MapCoordF(p1) - MapCoordF(p0);
-	p1 = MapCoord(p0.xd() + pfactor * p0p1.x(), p0.yd() + pfactor * p0p1.y());
+	p1 = MapCoord(p0.x() + pfactor * p0p1.x(), p0.y() + pfactor * p0p1.y());
 	
 	MapCoordF q3q2 = MapCoordF(q2) - MapCoordF(q3);
-	q2 = MapCoord(q3.xd() + qfactor * q3q2.x(), q3.yd() + qfactor * q3q2.y());
+	q2 = MapCoord(q3.x() + qfactor * q3q2.x(), q3.y() + qfactor * q3q2.y());
 }
 
 void PathObject::clearCoordinates()
@@ -3120,8 +3127,8 @@ Object& PointObject::operator=(const Object& other)
 
 void PointObject::setPosition(qint64 x, qint64 y)
 {
-	coords[0].setRawX(x);
-	coords[0].setRawY(y);
+	coords[0].setNativeX(x);
+	coords[0].setNativeY(y);
 	setOutputDirty();
 }
 

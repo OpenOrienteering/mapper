@@ -26,13 +26,25 @@
 #include <vector>
 
 #include <QPointF>
-
-#include "map_coord_p.h"
+#include <QFlags>
 
 class QString;
 class QTextStream;
 class QXmlStreamReader;
 class QXmlStreamWriter;
+
+/**
+ * The legacy MapCoord structure, only used for legacy native file format.
+ * 
+ * @deprecated
+ */
+struct LegacyMapCoord
+{
+	qint64 x;
+	qint64 y;
+};
+
+
 
 /**
  * Coordinates of a point in a map, with optional flags.
@@ -59,49 +71,73 @@ class QXmlStreamWriter;
  *     with dashed lines.)
  * </ul>
  * 
- * These coordinates are implemented as 64 bit integers where lowest 4 bits are
- * used to store the flags.
- * 
- * MapCoord (and other parts of Mapper) rely on an arithmetic implementation of
- * the operator>>(). However, the behavior of operator>>() on negative integers
- * is implementation defined. This class comes with static and dynamic tests for
- * this prerequisite.
+ * These coordinates are implemented as 32 bit integers,
+ * the flags are store separately. 
  */
 class MapCoord
 {
-private:
-	/** Benchmark */
-	friend class CoordXmlTest;
-	
-	MapCoordElement x;
-	MapCoordElement y;
-	
 public:
+	/**
+	 * These flags provide extra information on each coordinate in a path.
+	 * 
+	 * Don't change the values, they are used in import/export.
+	 */
 	enum Flag
 	{
 		CurveStart = 1 << 0,
 		ClosePoint = 1 << 1,
+		GapPoint   = 1 << 2,
+		//unused     1 << 3,
 		HolePoint  = 1 << 4,
 		DashPoint  = 1 << 5,
-		GapPoint   = 1 << 6,
+		//...
 	};
+	Q_DECLARE_FLAGS(Flags, Flag)
 	
+private:
+	/** Benchmark */
+	friend class CoordXmlTest;
+	
+	qint32 xp;
+	qint32 yp;
+	Flags  fp;
+	
+public:
 	/** Creates a MapCoord with position at the origin and without any flags set. */
-	constexpr MapCoord();
+	constexpr MapCoord() noexcept;
 	
 	/** Copy constructor. */
-	constexpr MapCoord(const MapCoord&) = default;
+	constexpr MapCoord(const MapCoord&) noexcept = default;
+	
+#ifndef NO_NATIVE_FILE_FORMAT
+	
+	/** Creates a MapCoord from the legacy structure.
+	 * 
+	 * @deprecated
+	 */
+	MapCoord(const LegacyMapCoord& coord);
+
+#endif	
 	
 	/** Creates a MapCoord from a position given in millimeters on the map.
 	 * 
 	 * This is a convenience constructor for efficient construction of a point
 	 * at the origin i.e. MapCoord(0, 0), or for simple vectors i.e. 
-	 * MapCoord(1, 0). There intentionally is no version with flags - you need
-	 * to use other argument types than int if the compiler complains about
-	 * ambiguity.
+	 * MapCoord(1, 0). Intentionally, there is no public version with flags -
+	 * you need to use other argument types than int if the compiler complains
+	 * about ambiguity.
 	 */
 	constexpr MapCoord(int x, int y);
 	
+private:
+	/** Creates a MapCoord from native map coordinates.
+	 *
+	 * This is exposed via fromNative() - you must be explicit when you want to
+	 * use native units.
+	 */
+	constexpr MapCoord(qint32 x, qint32 y, int flags);
+	
+public:
 	/** Creates a MapCoord from a position given in millimeters on the map. */
 	constexpr MapCoord(qreal x, qreal y);
 	
@@ -114,26 +150,21 @@ public:
 	/** Creates a MapCoord with the given flags and with the position taken from a QPointF. */
 	constexpr MapCoord(QPointF point, int flags);
 	
-private:
-	/** Creates a MapCoord with internal-format elements. */
-	constexpr MapCoord(MapCoordElement x, MapCoordElement y);
-	
-public:
 	/** Creates a MapCoord from native map coordinates. */
-	static constexpr MapCoord fromRaw(qint64 x, qint64 y);
+	static constexpr MapCoord fromNative(qint32 x, qint32 y);
 	
 	/** Creates a MapCoord from native map coordinates. */
-	static constexpr MapCoord fromRaw(qint64 x, qint64 y, int flags);
+	static constexpr MapCoord fromNative(qint32 x, qint32 y, int flags);
 	
 	/** Assignment operator */
 	MapCoord& operator= (const MapCoord& other) = default;
 	
 	
 	/** Returns the coord's x position in millimeters on the map. */
-	constexpr qreal xd() const;
+	constexpr qreal x() const;
 	
 	/** Returns the coord's y position in millimeters on the map. */
-	constexpr qreal yd() const;
+	constexpr qreal y() const;
 	
 	/** Sets the coord's x position to a value in millimeters on the map. */
 	inline void setX(qreal x);
@@ -143,22 +174,22 @@ public:
 	
 	
 	/** Returns the coord's x position in native map coords. */
-	constexpr qint64 rawX() const;
+	constexpr qint64 nativeX() const;
 	
 	/** Returns the coord's y position in native map coords. */
-	constexpr qint64 rawY() const;
+	constexpr qint64 nativeY() const;
 	
 	/** Sets the coord's x position to a value in native map coords. */
-	inline void setRawX(qint64 new_x);
+	inline void setNativeX(qint64 new_x);
 	
 	/** Sets the coord's y position to a value in native map coords. */
-	inline void setRawY(qint64 new_y);
+	inline void setNativeY(qint64 new_y);
 	
 	
 	/** Returns the coord's flags separately, merged into the lowest 8 bits of an int. */
-	constexpr int getFlags() const;
+	constexpr int flags() const;
 	
-	/** Sets the flags as retrieved by getFlags(). */
+	/** Sets the flags as retrieved by flags(). */
 	void setFlags(int flags);
 	
 	
@@ -277,7 +308,7 @@ public:
 	friend constexpr MapCoord operator*(const MapCoord& lhs, qreal factor);
 	friend constexpr MapCoord operator*(qreal factor, const MapCoord& rhs);
 	friend constexpr MapCoord operator/(const MapCoord& lhs, qreal divisor);
-	
+	friend QTextStream& operator>>(QTextStream& stream, MapCoord& coord);
 };
 
 /** Compare MapCoord for equality. */
@@ -485,30 +516,44 @@ typedef std::vector<MapCoordF> MapCoordVectorF;
 
 // ### MapCoord inline code ###
 
-constexpr MapCoord::MapCoord()
- : x { 0 }
- , y { 0 }
+Q_DECLARE_OPERATORS_FOR_FLAGS(MapCoord::Flags)
+
+constexpr MapCoord::MapCoord() noexcept
+ : xp{ 0 }
+ , yp{ 0 }
+ , fp{ 0 }
 {
 	// nothing else
 }
 
 constexpr MapCoord::MapCoord(int x, int y)
- : x { x*1000 }
- , y { y*1000 }
+ : xp{ x*1000 }
+ , yp{ y*1000 }
+ , fp{ 0 }
+{
+	// nothing else
+}
+
+constexpr MapCoord::MapCoord(qint32 x, qint32 y, int flags)
+ : xp{ x }
+ , yp{ y }
+ , fp{ flags }
 {
 	// nothing else
 }
 
 constexpr MapCoord::MapCoord(qreal x, qreal y)
- : x { qRound64(x*1000) }
- , y { qRound64(y*1000) }
+ : xp{ qRound(x*1000) }
+ , yp{ qRound(y*1000) }
+ , fp{ 0 }
 {
 	// nothing else
 }
 
 constexpr MapCoord::MapCoord(qreal x, qreal y, int flags)
- : x { qRound64(x*1000), flags }
- , y { qRound64(y*1000), flags / (1<<MapCoordElement::bitsForFlags) }
+ : xp{ qRound(x*1000) }
+ , yp{ qRound(y*1000) }
+ , fp{ flags }
 {
 	// nothing else
 }
@@ -525,77 +570,69 @@ constexpr MapCoord::MapCoord(QPointF point, int flags)
 	// nothing else
 }
 
-constexpr MapCoord::MapCoord(MapCoordElement x, MapCoordElement y)
- : x { x }
- , y { y }
+constexpr MapCoord MapCoord::fromNative(qint32 x, qint32 y)
 {
-	// nothing else
+	return MapCoord{ x, y, Flags() };
 }
 
-constexpr MapCoord MapCoord::fromRaw(qint64 x, qint64 y)
+constexpr MapCoord MapCoord::fromNative(qint32 x, qint32 y, int flags)
 {
-	return MapCoord{ MapCoordElement{ x }, MapCoordElement{ y } };
+	return MapCoord{ x, y, flags };
 }
 
-constexpr MapCoord MapCoord::fromRaw(qint64 x, qint64 y, int flags)
+constexpr qreal MapCoord::x() const
 {
-	return MapCoord{ MapCoordElement{ x, flags }, MapCoordElement{ y, flags / (1<<MapCoordElement::bitsForFlags) } };
+	return nativeX() / 1000.0;
 }
 
-constexpr qreal MapCoord::xd() const
+constexpr qreal MapCoord::y() const
 {
-	return rawX() / 1000.0;
-}
-
-constexpr qreal MapCoord::yd() const
-{
-	return rawY() / 1000.0;
+	return nativeY() / 1000.0;
 }
 
 inline
 void MapCoord::setX(qreal x)
 {
-	this->x.setValue(qRound64(x * 1000));
+	this->xp = qRound64(x * 1000);
 }
 
 inline
 void MapCoord::setY(qreal y)
 {
-	this->y.setValue(qRound64(y * 1000));
+	this->yp = qRound64(y * 1000);
 }
 
-constexpr qint64 MapCoord::rawX() const
+constexpr qint64 MapCoord::nativeX() const
 {
-	return x.value();
+	return xp;
 }
 
-constexpr qint64 MapCoord::rawY() const
+constexpr qint64 MapCoord::nativeY() const
 {
-	return y.value();
-}
-
-inline
-void MapCoord::setRawX(qint64 new_x)
-{
-	x.setValue(new_x);
+	return yp;
 }
 
 inline
-void MapCoord::setRawY(qint64 new_y)
+void MapCoord::setNativeX(qint64 new_x)
 {
-	y.setValue(new_y);
+	xp = new_x;
 }
 
-constexpr int MapCoord::getFlags() const
+inline
+void MapCoord::setNativeY(qint64 new_y)
 {
-	return x.flags() | (y.flags() * (1<<MapCoordElement::bitsForFlags));
+	yp = new_y;
+}
+
+constexpr int MapCoord::flags() const
+{
+	return fp;
 }
 
 inline
 void MapCoord::setFlags(int flags)
 {
-	x.setFlags(flags);
-	y.setFlags(flags / (1<<MapCoordElement::bitsForFlags));
+	fp = Flags(flags);
 }
 
 constexpr qreal MapCoord::length() const
@@ -605,7 +642,7 @@ constexpr qreal MapCoord::length() const
 
 constexpr qreal MapCoord::lengthSquared() const
 {
-	return xd()*xd() + yd()*yd();
+	return x()*x() + y()*y();
 }
 
 constexpr qreal MapCoord::distanceTo(const MapCoord& other) const
@@ -620,75 +657,79 @@ constexpr qreal MapCoord::distanceSquaredTo(const MapCoord& other) const
 
 constexpr bool MapCoord::isPositionEqualTo(const MapCoord& other) const
 {
-	return (x.rawValue() == other.x.rawValue()) && (y.rawValue() == other.y.rawValue());
+	return (xp == other.xp) && (yp == other.yp);
 }
 
 constexpr bool MapCoord::isCurveStart() const {
-	return x.flags() & 1;
+	return fp.testFlag(CurveStart);
 }
 
 inline
 void MapCoord::setCurveStart(bool value)
 {
-	x.setFlags((x.flags() & ~1) | (value<<0));
+	if (fp.testFlag(CurveStart) != value)
+		fp ^= CurveStart;
 }
 
 constexpr bool MapCoord::isClosePoint() const
 {
-	return x.flags() & 2;
+	return fp.testFlag(ClosePoint);
 }
 
 inline
 void MapCoord::setClosePoint(bool value)
 {
-	x.setFlags((x.flags() & ~2) | (value<<1));
+	if (fp.testFlag(ClosePoint) != value)
+		fp ^= ClosePoint;
 }
 
 constexpr bool MapCoord::isHolePoint() const
 {
-	return y.flags() & 1;
+	return fp.testFlag(HolePoint);
 }
 
 inline
 void MapCoord::setHolePoint(bool value)
 {
-	y.setFlags((y.flags() & ~1) | (value<<0));
-	//y = (y & (~1)) | (value ? 1 : 0);
+	if (fp.testFlag(HolePoint) != value)
+		fp ^= HolePoint;
 }
 
 constexpr bool MapCoord::isDashPoint() const
 {
-	return y.flags() & 2;
+	return fp.testFlag(DashPoint);
 }
 
 inline
 void MapCoord::setDashPoint(bool value)
 {
-	y.setFlags((y.flags() & ~2) | (value<<1));
+	if (fp.testFlag(DashPoint) != value)
+		fp ^= DashPoint;
 }
 
 constexpr bool MapCoord::isGapPoint() const
 {
-	return y.flags() & 4;
+	return fp.testFlag(GapPoint);
 }
 
 inline
 void MapCoord::setGapPoint(bool value)
 {
-	y.setFlags((y.flags() & ~4) | (value<<2));
+	if (fp.testFlag(GapPoint) != value)
+		fp ^= GapPoint;
 }
 
 
 constexpr MapCoord MapCoord::operator-() const
 {
-	return MapCoord { -x, -y };
+	return MapCoord { -xp, -yp, fp };
 }
 
 inline
 MapCoord& MapCoord::operator+=(const MapCoord& rhs_vector)
 {
-	x += rhs_vector.x;
-	y += rhs_vector.y;
+	xp += rhs_vector.xp;
+	yp += rhs_vector.yp;
 	return *this;
 }
 
@@ -702,8 +743,8 @@ MapCoord& MapCoord::operator+=(const QPointF& rhs_vector)
 inline
 MapCoord& MapCoord::operator-=(const MapCoord& rhs_vector)
 {
-	x -= rhs_vector.x;
-	y -= rhs_vector.y;
+	xp -= rhs_vector.xp;
+	yp -= rhs_vector.yp;
 	return *this;
 }
 
@@ -717,29 +758,29 @@ MapCoord& MapCoord::operator-=(const QPointF& rhs_vector)
 inline
 MapCoord& MapCoord::operator*=(qreal factor)
 {
-	x *= factor;
-	y *= factor;
+	xp *= factor;
+	yp *= factor;
 	return *this;
 }
 
 inline
 MapCoord& MapCoord::operator/=(qreal divisor)
 {
-	x /= divisor;
-	y /= divisor;
+	xp /= divisor;
+	yp /= divisor;
 	return *this;
 }
 
 constexpr MapCoord::operator QPointF() const
 {
-	return QPointF(xd(), yd());
+	return QPointF(x(), y());
 }
 
 
 
 constexpr bool operator==(const MapCoord& lhs, const MapCoord& rhs)
 {
-	return (lhs.x == rhs.x) && (lhs.y == rhs.y);
+	return (lhs.xp == rhs.xp) && (lhs.yp == rhs.yp) && (lhs.fp == rhs.fp);
 }
 
 
@@ -751,7 +792,7 @@ constexpr bool operator!=(const MapCoord& lhs, const MapCoord& rhs)
 
 constexpr MapCoord operator+(const MapCoord& lhs, const MapCoord& rhs)
 {
-	return MapCoord{ lhs.x + rhs.x, lhs.y + rhs.y };
+	return MapCoord::fromNative(lhs.xp + rhs.xp, lhs.yp + rhs.yp);
 }
 
 constexpr MapCoord operator+(const MapCoord& lhs, const QPointF& rhs)
@@ -761,7 +802,7 @@ constexpr MapCoord operator+(const MapCoord& lhs, const QPointF& rhs)
 
 constexpr MapCoord operator-(const MapCoord& lhs, const MapCoord& rhs)
 {
-	return MapCoord{ lhs.x - rhs.x, lhs.y - rhs.y };
+	return MapCoord::fromNative(lhs.xp - rhs.xp, lhs.yp - rhs.yp);
 }
 
 constexpr MapCoord operator-(const MapCoord& lhs, const QPointF& rhs)
@@ -771,17 +812,17 @@ constexpr MapCoord operator-(const MapCoord& lhs, const QPointF& rhs)
 
 constexpr MapCoord operator*(const MapCoord& lhs, double factor)
 {
-	return MapCoord{ lhs.x * factor, lhs.y * factor };
+	return MapCoord::fromNative(qRound(lhs.xp * factor), qRound(lhs.yp * factor));
 }
 
 constexpr MapCoord operator*(double factor, const MapCoord& rhs)
 {
-	return MapCoord{ factor * rhs.x, factor * rhs.y };
+	return MapCoord::fromNative(qRound(factor * rhs.xp), qRound(factor * rhs.yp));
 }
 
 constexpr MapCoord operator/(const MapCoord& lhs, double divisor)
 {
-	return MapCoord{ lhs.x / divisor, lhs.y / divisor };
+	return MapCoord::fromNative(qRound(lhs.xp / divisor), qRound(lhs.yp / divisor));
 }
 
 
@@ -801,7 +842,7 @@ constexpr MapCoordF::MapCoordF(qreal x, qreal y)
 }
 
 constexpr MapCoordF::MapCoordF(MapCoord coord)
- : QPointF { coord.xd(), coord.yd() }
+ : QPointF { coord.x(), coord.y() }
 {
 	// Nothing else
 }

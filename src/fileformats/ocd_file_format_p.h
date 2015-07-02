@@ -295,7 +295,7 @@ QString OcdFileImport::convertOcdString(const QChar* src) const
 inline
 MapCoord OcdFileImport::convertOcdPoint(const Ocd::OcdPoint32& ocd_point) const
 {
-	return MapCoord::fromRaw(qint64(ocd_point.x >> 8) * 10, qint64(ocd_point.y >> 8) * -10);
+	return MapCoord::fromNative(qint64(ocd_point.x >> 8) * 10, qint64(ocd_point.y >> 8) * -10);
 }
 
 inline

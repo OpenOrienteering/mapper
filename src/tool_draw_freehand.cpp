@@ -186,8 +186,8 @@ void DrawFreehandTool::checkLineSegment(int a, int b, std::vector< bool >& point
 	{
 		const MapCoord& coord = preview_path->getRawCoordinateVector()[i];
 		
-		MapCoordF to_coord = MapCoordF(coord.xd() - start_coord.xd(), coord.yd() - start_coord.yd());
-		MapCoordF to_next = MapCoordF(end_coord.xd() - start_coord.xd(), end_coord.yd() - start_coord.yd());
+		MapCoordF to_coord = MapCoordF(coord.x() - start_coord.x(), coord.y() - start_coord.y());
+		MapCoordF to_next = MapCoordF(end_coord.x() - start_coord.x(), end_coord.y() - start_coord.y());
 		MapCoordF tangent = to_next;
 		tangent.normalize();
 		

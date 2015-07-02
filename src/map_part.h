@@ -206,21 +206,21 @@ public:
 	
 	/**
 	 * @copybrief   Map::applyOnAllObjects()
-	 * @copydetails Map::applyOnAllObjects()
+	 * @copyetails Map::applyOnAllObjects()
 	 */
 	template<typename Operation, typename Condition>
 	bool applyOnMatchingObjects(const Operation& operation, const Condition& condition);
 	
 	/**
 	 * @copybrief   Map::applyOnAllObjects()
-	 * @copydetails Map::applyOnAllObjects()
+	 * @copyetails Map::applyOnAllObjects()
 	 */
 	template<typename Operation>
 	bool applyOnAllObjects(const Operation& operation);
 	
 	/**
 	 * @copybrief   Map::applyOnAllObjects()
-	 * @copydetails Map::applyOnAllObjects()
+	 * @copyetails Map::applyOnAllObjects()
 	 */
 	template<typename Operation>
 	bool applyOnAllObjects(Operation& operation);

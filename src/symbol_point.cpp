@@ -131,8 +131,8 @@ void PointSymbol::createRenderablesScaled(MapCoordF coord, float rotation, Objec
 			transformed_coords.reserve(object_coords.size());
 			for (auto& coord : object_coords)
 			{
-				auto ox = coord_scale * coord.xd();
-				auto oy = coord_scale * coord.yd();
+				auto ox = coord_scale * coord.x();
+				auto oy = coord_scale * coord.y();
 				transformed_coords.emplace_back(ox * cosr - oy * sinr + offset_x,
 				                                oy * cosr + ox * sinr + offset_y);
 			}

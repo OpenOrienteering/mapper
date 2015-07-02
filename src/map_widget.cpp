@@ -312,7 +312,7 @@ void MapWidget::moveMap(int steps_x, int steps_y)
 	if (steps_x != 0 || steps_y != 0)
 	{
 		const float move_factor = 0.25f;
-		auto offset = MapCoord::fromRaw(view->pixelToLength(width() * steps_x * move_factor),
+		auto offset = MapCoord::fromNative(view->pixelToLength(width() * steps_x * move_factor),
 		                                view->pixelToLength(height() * steps_y * move_factor));
 		view->setCenter(view->center() + offset);
 	}

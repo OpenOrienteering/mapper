@@ -286,7 +286,6 @@ set(Mapper_EXTRA_HEADERS
   core/image_transparency_fixup.h
   core/latlon.h
   core/map_coord.h
-  core/map_coord_p.h
   core/map_grid.h
   core/path_coord.h
   core/virtual_path.cpp

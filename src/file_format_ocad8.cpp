@@ -1054,9 +1054,9 @@ bool OCAD8FileImport::importRectangleObject(const OCADObject* ocad_object, MapPa
 	MapCoordF top_right_f = MapCoordF(top_right);
 	MapCoordF bottom_left_f = MapCoordF(bottom_left);
 	MapCoordF bottom_right_f = MapCoordF(bottom_right);
-	MapCoordF right = MapCoordF(top_right.xd() - top_left.xd(), top_right.yd() - top_left.yd());
+	MapCoordF right = MapCoordF(top_right.x() - top_left.x(), top_right.y() - top_left.y());
 	double angle = right.angle();
-	MapCoordF down = MapCoordF(bottom_left.xd() - top_left.xd(), bottom_left.yd() - top_left.yd());
+	MapCoordF down = MapCoordF(bottom_left.x() - top_left.x(), bottom_left.y() - top_left.y());
 	right.normalize();
 	down.normalize();
 	
@@ -1289,8 +1289,8 @@ Template *OCAD8FileImport::importRasterTemplate(const OCADBackground &background
         TemplateImage* templ = new TemplateImage(filename, map);
         MapCoord c;
         convertPoint(c, background.trnx, background.trny);
-        templ->setTemplateX(c.rawX());
-        templ->setTemplateY(c.rawY());
+        templ->setTemplateX(c.nativeX());
+        templ->setTemplateY(c.nativeY());
         templ->setTemplateRotation(M_PI / 180 * background.angle);
         templ->setTemplateScaleX(convertTemplateScale(background.sclx));
         templ->setTemplateScaleY(convertTemplateScale(background.scly));
@@ -1393,10 +1393,10 @@ bool OCAD8FileImport::fillTextPathCoords(TextObject *object, TextSymbol *symbol,
 		double top_adjust = -symbol->getFontSize() + (metrics.ascent() + metrics.descent() + 0.5) / symbol->calculateInternalScaling();
 		
 		MapCoordF adjust_vector = MapCoordF(top_adjust * sin(object->getRotation()), top_adjust * cos(object->getRotation()));
-		top_left = MapCoord(top_left.xd() + adjust_vector.x(), top_left.yd() + adjust_vector.y());
-		top_right = MapCoord(top_right.xd() + adjust_vector.x(), top_right.yd() + adjust_vector.y());
+		top_left = MapCoord(top_left.x() + adjust_vector.x(), top_left.y() + adjust_vector.y());
+		top_right = MapCoord(top_right.x() + adjust_vector.x(), top_right.y() + adjust_vector.y());
 		
-		object->setBox((bottom_left.rawX() + top_right.rawX()) / 2, (bottom_left.rawY() + top_right.rawY()) / 2,
+		object->setBox((bottom_left.nativeX() + top_right.nativeX()) / 2, (bottom_left.nativeY() + top_right.nativeY()) / 2,
 					   top_left.distanceTo(top_right), top_left.distanceTo(bottom_left));
 
 		object->setVerticalAlignment(TextObject::AlignTop);
@@ -1412,7 +1412,7 @@ bool OCAD8FileImport::fillTextPathCoords(TextObject *object, TextSymbol *symbol,
 		
 		MapCoord coord;
 		convertPoint(coord, buf[0], buf[1]);
-		object->setAnchorPosition(coord.rawX(), coord.rawY());
+		object->setAnchorPosition(coord.nativeX(), coord.nativeY());
 		
 		object->setVerticalAlignment(TextObject::AlignBaseline);
 	}
@@ -1490,9 +1490,9 @@ void OCAD8FileImport::convertPoint(MapCoord &coord, int ocad_x, int ocad_y)
 {
     // OCAD uses hundredths of a millimeter.
     // oo-mapper uses 1/1000 mm
-    coord.setRawX(offset_x + (qint64)ocad_x * 10);
+    coord.setNativeX(offset_x + (qint64)ocad_x * 10);
     // Y-axis is flipped.
-    coord.setRawY(offset_y + (qint64)ocad_y * (-10));
+    coord.setNativeY(offset_y + (qint64)ocad_y * (-10));
 }
 
 qint64 OCAD8FileImport::convertSize(int ocad_size) {
@@ -2382,8 +2382,8 @@ u16 OCAD8FileExport::exportCoordinates(const MapCoordVector& coords, OCADPoint**
 	{
 		const MapCoord& point = coords[i];
 		OCADPoint p;
-		p.x = (point.rawX() / 10) << 8;
-		p.y = (point.rawY() / -10) << 8;
+		p.x = (point.nativeX() / 10) << 8;
+		p.y = (point.nativeY() / -10) << 8;
 		
 		if (point.isDashPoint())
 		{
@@ -2636,7 +2636,7 @@ OCADPoint OCAD8FileExport::convertPoint(qint64 x, qint64 y)
 }
 OCADPoint OCAD8FileExport::convertPoint(const MapCoord& coord)
 {
-	return convertPoint(coord.rawX(), coord.rawY());
+	return convertPoint(coord.nativeX(), coord.nativeY());
 }
 
 s32 OCAD8FileExport::convertSize(qint64 size)

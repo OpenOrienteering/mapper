@@ -722,14 +722,14 @@ void Template::drawOntoTemplateImpl(MapCoordF* coords, int num_coords, QColor co
 
 MapCoord Template::templatePosition() const
 {
-	return MapCoord::fromRaw(transform.template_x, transform.template_y);
+	return MapCoord::fromNative(transform.template_x, transform.template_y);
 }
 
 
 void Template::setTemplatePosition(MapCoord coord)
 {
-	transform.template_x = coord.rawX();
-	transform.template_y = coord.rawY();
+	transform.template_x = coord.nativeX();
+	transform.template_y = coord.nativeY();
 	updateTransformationMatrices();
 }
 

@@ -83,7 +83,7 @@ void MapView::load(QIODevice* file, int version)
 	file->read((char*)&unused /*view_y*/, sizeof(int));
 	file->read((char*)&pan_offset, sizeof(QPoint));
 	
-	center_pos = MapCoord::fromRaw(center_x, center_y);
+	center_pos = MapCoord::fromNative(center_x, center_y);
 	updateTransform(CenterChange | ZoomChange | RotationChange);
 	
 	if (version >= 26)
@@ -119,8 +119,8 @@ void MapView::save(QXmlStreamWriter& xml, const QLatin1String& element_name, boo
 	XmlElementWriter mapview_element(xml, element_name);
 	mapview_element.writeAttribute(literal::zoom, zoom);
 	mapview_element.writeAttribute(literal::rotation, rotation);
-	mapview_element.writeAttribute(literal::position_x, center_pos.rawX());
-	mapview_element.writeAttribute(literal::position_y, center_pos.rawY());
+	mapview_element.writeAttribute(literal::position_x, center_pos.nativeX());
+	mapview_element.writeAttribute(literal::position_y, center_pos.nativeY());
 	mapview_element.writeAttribute(literal::grid, grid_visible);
 	mapview_element.writeAttribute(literal::overprinting_simulation_enabled, overprinting_simulation_enabled);
 	
@@ -158,7 +158,7 @@ void MapView::load(QXmlStreamReader& xml)
 	rotation = mapview_element.attribute<double>(literal::rotation);
 	qint64 center_x = mapview_element.attribute<qint64>(literal::position_x);
 	qint64 center_y = mapview_element.attribute<qint64>(literal::position_y);
-	center_pos = MapCoord::fromRaw(center_x, center_y);
+	center_pos = MapCoord::fromNative(center_x, center_y);
 	grid_visible = mapview_element.attribute<bool>(literal::grid);
 	overprinting_simulation_enabled = mapview_element.attribute<bool>(literal::overprinting_simulation_enabled);
 	updateTransform(CenterChange | ZoomChange | RotationChange);
@@ -236,8 +236,8 @@ MapCoordF MapView::viewToMapF(double x, double y) const
 
 QPointF MapView::mapToView(MapCoord coords) const
 {
-	return QPointF(map_to_view.m11() * coords.xd() + map_to_view.m12() * coords.yd() + map_to_view.m13(),
-	               map_to_view.m21() * coords.xd() + map_to_view.m22() * coords.yd() + map_to_view.m23());
+	return QPointF(map_to_view.m11() * coords.x() + map_to_view.m12() * coords.y() + map_to_view.m13(),
+	               map_to_view.m21() * coords.x() + map_to_view.m22() * coords.y() + map_to_view.m23());
 }
 
 QPointF MapView::mapToView(MapCoordF coords) const
@@ -298,7 +298,7 @@ void MapView::finishPanning(QPoint offset)
 {
 	setPanOffset({0,0});
 	
-	auto rotated_offset = MapCoordF{ MapCoord::fromRaw(-pixelToLength(offset.x()),
+	auto rotated_offset = MapCoordF{ MapCoord::fromNative(-pixelToLength(offset.x()),
 	                                                   -pixelToLength(offset.y())) };
 	rotated_offset.rotate(-rotation);
 	auto move = MapCoord{ rotated_offset };
@@ -361,8 +361,8 @@ void MapView::updateTransform(ChangeFlags change)
 	double final_zoom = lengthToPixel(1000);
 	double final_zoom_cosr = final_zoom * cos(rotation);
 	double final_zoom_sinr = final_zoom * sin(rotation);
-	auto center_x = center_pos.xd();
-	auto center_y = center_pos.yd();
+	auto center_x = center_pos.x();
+	auto center_y = center_pos.y();
 	
 	// Create map_to_view
 	map_to_view.setMatrix(final_zoom_cosr, -final_zoom_sinr, -final_zoom_cosr * center_x + final_zoom_sinr * center_y,

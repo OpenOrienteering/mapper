@@ -39,7 +39,7 @@ static_assert(MapCoord(1, 1) == MapCoord(MapCoordF(1.0, 1.0)),
               "MapCoord and MapCoordF constructors must use the same unit of measurement");
 static_assert(MapCoord(1.0, 1.0) == MapCoord(QPointF(1.0, 1.0)),
               "MapCoord and QPointF constructors must use the same unit of measurement");
-static_assert(MapCoord(1, 1) == MapCoord::fromRaw(1000, 1000),
+static_assert(MapCoord(1, 1) == MapCoord::fromNative(1000, 1000),
               "MapCoord::fromRaw must use the native unit of measurement");
 
 static_assert(MapCoord(1, 1) + MapCoord (2, -1) == MapCoord(3, 0),
@@ -80,6 +80,16 @@ static_assert(!MapCoord(0.0, 0.0).isGapPoint(),
 static_assert(MapCoord(0.0, 0.0, MapCoord::GapPoint).isGapPoint(),
               "MapCoord::GapPoint must result in MapCoord::isGapPoint() returning true.");
 
+static_assert(MapCoord(-1.0, 2.0).x() == -1,
+              "MapCoord::x() must return original value (w/o flags)");
+static_assert(MapCoord(-1.0, 2.0, 255).x() == -1.0,
+              "MapCoord::x() must return original value (with flags)");
+
+static_assert(MapCoord::fromNative(-1, 2).nativeX() == -1,
+              "MapCoord::nativeX() must return original value (w/o flags)");
+static_assert(MapCoord::fromNative(-1, 2, 255).nativeX() == -1,
+              "MapCoord::nativeX() must return original value (with flags)");
+
 #ifndef MAPPER_NO_QREAL_CHECK
 // Check that QPointF/MapCoorF will actually use double.
 static_assert(std::is_same<qreal, double>::value, "qreal is not double. This could work but was not tested.");
@@ -107,22 +117,29 @@ namespace literal
 void MapCoord::save(QXmlStreamWriter& xml) const
 {
 	XmlElementWriter element(xml, XmlStreamLiteral::coord);
-	element.writeAttribute(literal::x, rawX());
-	element.writeAttribute(literal::y, rawY());
-	const int flags = getFlags();
-	if (flags)
+	element.writeAttribute(literal::x, xp);
+	element.writeAttribute(literal::y, yp);
+	if (fp)
 	{
-		element.writeAttribute(literal::flags, flags);
+		element.writeAttribute(literal::flags, Flags::Int(fp));
 	}
 }
 
 MapCoord MapCoord::load(QXmlStreamReader& xml)
 {
 	XmlElementReader element(xml);
-	qint64 x = element.attribute<qint64>(literal::x);
-	qint64 y = element.attribute<qint64>(literal::y);
-	int flags = element.attribute<int>(literal::flags);
-	return MapCoord::fromRaw(x, y, flags);
+	return MapCoord::fromNative(
+	            element.attribute<decltype(MapCoord::xp)>(literal::x),
+	            element.attribute<decltype(MapCoord::yp)>(literal::y),
+	            element.attribute<Flags::Int>(literal::flags) );
+}
+
+MapCoord::MapCoord(const LegacyMapCoord& coord)
+ : xp{ decltype(xp)(coord.x >> 4) }
+ , yp{ decltype(yp)(coord.y >> 4) }
+ , fp{ decltype(fp)((coord.x & 0xf) | ((coord.y & 0xf) << 4)) }
+{
+	//nothing
 }
 
 QString MapCoord::toString() const
@@ -145,7 +162,7 @@ QString MapCoord::toString() const
 	buffer[j] = ';';
 	--j;
 	
-	int flags = getFlags();
+	int flags = fp;
 	if (flags > 0)
 	{
 		do
@@ -160,7 +177,7 @@ QString MapCoord::toString() const
 		--j;
 	}
 	
-	qint64 tmp = rawY();
+	auto tmp = yp;
 	char sign = 0;
 	if (tmp < 0)
 	{
@@ -184,7 +201,7 @@ QString MapCoord::toString() const
 	buffer[j] = ' ';
 	--j;
 	
-	tmp = rawX();
+	tmp = xp;
 	if (tmp < 0)
 	{
 		sign = '-';
@@ -211,12 +228,9 @@ QString MapCoord::toString() const
 
 QTextStream& operator>>(QTextStream& stream, MapCoord& coord)
 {
-	qint64 x, y;
 	int flags = 0;
 	char separator;
-	stream >> x >> y >> separator;
-	coord.setRawX(x);
-	coord.setRawY(y);
+	stream >> coord.xp >> coord.yp >> separator;
 	if (separator != ';')
 	{
 		stream >> flags >> separator;

@@ -312,8 +312,8 @@ void Georeferencing::save(QXmlStreamWriter& xml) const
 		
 		{
 			XmlElementWriter ref_point_element(xml, literal::ref_point);
-			ref_point_element.writeAttribute(literal::x, map_ref_point.xd());
-			ref_point_element.writeAttribute(literal::y, map_ref_point.yd());
+			ref_point_element.writeAttribute(literal::x, map_ref_point.x());
+			ref_point_element.writeAttribute(literal::y, map_ref_point.y());
 		}
 		
 		{
@@ -536,7 +536,7 @@ void Georeferencing::updateTransformation()
 	transform.scale(scale, -scale);
 	if (state != ScaleOnly)
 	{
-		transform.translate(-map_ref_point.xd(), -map_ref_point.yd());
+		transform.translate(-map_ref_point.x(), -map_ref_point.y());
 	}
 	
 	if (to_projected != transform)
@@ -798,7 +798,7 @@ extern "C"
 	
 	void registerProjFileHelper()
 	{
-		// TemporaryDir must not be constructed before QApplication
+		// QTemporaryDir must not be constructed before QApplication
 		temp_dir.reset(new QTemporaryDir());
 		if (temp_dir->isValid())
 		{

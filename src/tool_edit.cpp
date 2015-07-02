@@ -258,8 +258,8 @@ void ObjectMover::move(qint64 dx, qint64 dy, bool move_opposite_handles)
 		for (auto pit = it.value().constBegin(), pit_end = it.value().constEnd(); pit != pit_end; ++pit)
 		{
 			MapCoord coord = path->getCoordinate(*pit);
-			coord.setRawX(coord.rawX() + dx);
-			coord.setRawY(coord.rawY() + dy);
+			coord.setNativeX(coord.nativeX() + dx);
+			coord.setNativeY(coord.nativeY() + dy);
 			path->setCoordinate(*pit, coord);
 		}
 	}
@@ -278,8 +278,8 @@ void ObjectMover::move(qint64 dx, qint64 dy, bool move_opposite_handles)
 			to_hover_point.normalize();
 			
 			MapCoord control = constraint.object->getCoordinate(constraint.opposite_handle_index);
-			control.setX(anchor_point.xd() - constraint.opposite_handle_dist * to_hover_point.x());
-			control.setY(anchor_point.yd() - constraint.opposite_handle_dist * to_hover_point.y());
+			control.setX(anchor_point.x() - constraint.opposite_handle_dist * to_hover_point.x());
+			control.setY(anchor_point.y() - constraint.opposite_handle_dist * to_hover_point.y());
 			constraint.object->setCoordinate(constraint.opposite_handle_index, control);
 		}
 	}
@@ -303,7 +303,7 @@ void ObjectMover::move(qint64 dx, qint64 dy, bool move_opposite_handles)
 		
 		auto anchor = MapCoord { text_object->getAnchorCoordF() };
 		text_object->move(dx / 2, dy / 2);
-		text_object->setBox(anchor.rawX(), anchor.rawY(), new_box_width, new_box_height);
+		text_object->setBox(anchor.nativeX(), anchor.nativeY(), new_box_width, new_box_height);
 	}
 }
 

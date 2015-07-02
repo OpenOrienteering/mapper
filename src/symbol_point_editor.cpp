@@ -526,17 +526,17 @@ void PointSymbolEditorWidget::centerAllElements()
 			MapCoord coord = object->getRawCoordinateVector().at(c);
 			if (has_coordinates)
 			{
-				min_x = std::min(min_x, coord.rawX());
-				min_y = std::min(min_y, coord.rawY());
-				max_x = std::max(max_x, coord.rawX());
-				max_y = std::max(max_y, coord.rawY());
+				min_x = std::min(min_x, coord.nativeX());
+				min_y = std::min(min_y, coord.nativeY());
+				max_x = std::max(max_x, coord.nativeX());
+				max_y = std::max(max_y, coord.nativeY());
 			}
 			else
 			{
-				min_x = coord.rawX();
-				min_y = coord.rawY();
-				max_x = coord.rawX();
-				max_y = coord.rawY();
+				min_x = coord.nativeX();
+				min_y = coord.nativeY();
+				max_x = coord.nativeX();
+				max_y = coord.nativeY();
 				has_coordinates = true;
 			}
 		}
@@ -553,7 +553,7 @@ void PointSymbolEditorWidget::centerAllElements()
 			if (object->getType() == Object::Point)
 			{
 				PointObject* point = object->asPoint();
-				point->setPosition(point->getCoord().rawX() - center_x, point->getCoord().rawY() - center_y);
+				point->setPosition(point->getCoord().nativeX() - center_x, point->getCoord().nativeY() - center_y);
 			}
 			else if (object->getType() == Object::Path)
 			{
@@ -561,8 +561,8 @@ void PointSymbolEditorWidget::centerAllElements()
 				for (MapCoordVector::size_type c = 0; c < path->getCoordinateCount(); ++c)
 				{
 					MapCoord& coord = path->getCoordinate(c);
-					coord.setRawX(coord.rawX() - center_x);
-					coord.setRawY(coord.rawY() - center_y);
+					coord.setNativeX(coord.nativeX() - center_x);
+					coord.setNativeY(coord.nativeY() - center_y);
 				}
 				path->setOutputDirty();
 			}
@@ -717,7 +717,7 @@ void PointSymbolEditorWidget::coordinateChanged(int row, int column)
 			else if (object->getType() == Object::Path)
 			{
 				PathObject* path = reinterpret_cast<PathObject*>(object);
-				coords_table->item(row, column)->setText(QString::number((column == 0) ? path->getCoordinate(row).xd() : (-path->getCoordinate(row).yd())));
+				coords_table->item(row, column)->setText(QString::number((column == 0) ? path->getCoordinate(row).x() : (-path->getCoordinate(row).y())));
 			}
 			coords_table->blockSignals(false);
 		}
@@ -792,15 +792,15 @@ void PointSymbolEditorWidget::centerCoordsClicked()
 		
 		Q_ASSERT(change_size > 0);
 		for (int i = 0; i < change_size; ++i)
-			center = MapCoordF(center.x() + path->getCoordinate(i).xd(), center.y() + path->getCoordinate(i).yd());
+			center = MapCoordF(center.x() + path->getCoordinate(i).x(), center.y() + path->getCoordinate(i).y());
 		center = MapCoordF(center.x() / change_size, center.y() / change_size);
 		
 		
 		for (int i = 0; i < change_size; ++i)
 		{
 			MapCoord coord = path->getCoordinate(i);
-			coord.setX(coord.xd() - center.x());
-			coord.setY(coord.yd() - center.y());
+			coord.setX(coord.x() - center.x());
+			coord.setY(coord.y() - center.y());
 			path->setCoordinate(i, coord);
 		}
 		

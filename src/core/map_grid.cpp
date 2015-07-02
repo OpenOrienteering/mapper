@@ -171,11 +171,11 @@ void MapGrid::calculateFinalParameters(double& final_horz_spacing, double& final
 		final_rotation += georeferencing.getGrivation() * M_PI / 180;
 		
 		// Shift origin to projected coordinates origin
-		double prev_horz_offset = MapCoordF::dotProduct(MapCoordF(0, -1).rotated(final_rotation), MapCoordF(georeferencing.getMapRefPoint().xd(), -1 * georeferencing.getMapRefPoint().yd()));
+		double prev_horz_offset = MapCoordF::dotProduct(MapCoordF(0, -1).rotated(final_rotation), MapCoordF(georeferencing.getMapRefPoint().x(), -1 * georeferencing.getMapRefPoint().y()));
 		double target_horz_offset = MapCoordF::dotProduct(MapCoordF(0, -1).rotated(additional_rotation + M_PI / 2), MapCoordF(georeferencing.getProjectedRefPoint().x(), georeferencing.getProjectedRefPoint().y()));
 		final_horz_offset -= factor * target_horz_offset - prev_horz_offset;
 		
-		double prev_vert_offset = MapCoordF::dotProduct(MapCoordF(1, 0).rotated(final_rotation), MapCoordF(georeferencing.getMapRefPoint().xd(), -1 * georeferencing.getMapRefPoint().yd()));
+		double prev_vert_offset = MapCoordF::dotProduct(MapCoordF(1, 0).rotated(final_rotation), MapCoordF(georeferencing.getMapRefPoint().x(), -1 * georeferencing.getMapRefPoint().y()));
 		double target_vert_offset = MapCoordF::dotProduct(MapCoordF(1, 0).rotated(additional_rotation + M_PI / 2), MapCoordF(georeferencing.getProjectedRefPoint().x(), georeferencing.getProjectedRefPoint().y()));
 		final_vert_offset += factor * target_vert_offset - prev_vert_offset;
 	}

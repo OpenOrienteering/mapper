@@ -311,14 +311,14 @@ inline
 double TextObject::getBoxWidth() const
 {
 	Q_ASSERT(!hasSingleAnchor());
-	return coords[1].xd();
+	return coords[1].x();
 }
 
 inline
 double TextObject::getBoxHeight() const
 {
 	Q_ASSERT(!hasSingleAnchor());
-	return coords[1].yd();
+	return coords[1].y();
 }
 
 inline

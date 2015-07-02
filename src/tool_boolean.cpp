@@ -69,7 +69,7 @@ static MapCoord resetCoordinate(MapCoord in)
  */
 bool operator==(const MapCoord& lhs, const ClipperLib::IntPoint& rhs)
 {
-	return lhs.rawX() == rhs.X && lhs.rawY() == rhs.Y;
+	return lhs.nativeX() == rhs.X && lhs.nativeY() == rhs.Y;
 }
 
 /**
@@ -424,7 +424,7 @@ void BooleanTool::pathObjectToPolygons(
 		for (auto i = 0u; i < path_coords_end; ++i)
 		{
 			auto point = MapCoord { path_coords[i].pos };
-			polygon.push_back(ClipperLib::IntPoint(point.rawX(), point.rawY()));
+			polygon.push_back(ClipperLib::IntPoint(point.nativeX(), point.nativeY()));
 			polymap.insertMulti(polygon.back(), std::make_pair(&part, &path_coords[i]));
 		}
 		
@@ -763,8 +763,8 @@ void BooleanTool::rebuildSegment(
 			// Take coordinates directly
 			end_coord = original->getCoordinate(edge_start + 3);
 			
-			auto test_x = end_point.X - end_coord.rawX();
-			auto test_y = end_point.Y - end_coord.rawY();
+			auto test_x = end_point.X - end_coord.nativeX();
+			auto test_y = end_point.Y - end_coord.nativeY();
 			end_error_sq = 0.001 * sqrt(test_x*test_x + test_y*test_y);
 			if (end_error_sq > error_bound)
 				qDebug() << "BooleanTool::rebuildSegment: end error too high in increasing direct case: " << sqrt(end_error_sq);
@@ -793,8 +793,8 @@ void BooleanTool::rebuildSegment(
 			end_tangent = MapCoord(o1);
 			end_coord = MapCoord(o2);
 			
-			auto test_x = end_point.X - end_coord.rawX();
-			auto test_y = end_point.Y - end_coord.rawY();
+			auto test_x = end_point.X - end_coord.nativeX();
+			auto test_y = end_point.Y - end_coord.nativeY();
 			end_error_sq = 0.001 * sqrt(test_x*test_x + test_y*test_y);
 			if (end_error_sq > error_bound)
 				qDebug() << "BooleanTool::rebuildSegment: end error too high in increasing general case: " << sqrt(end_error_sq);
@@ -854,8 +854,8 @@ void BooleanTool::rebuildSegment(
 			// Take coordinates directly
 			end_coord = original->getCoordinate(edge_start + 0);
 			
-			auto test_x = end_point.X - end_coord.rawX();
-			auto test_y = end_point.Y - end_coord.rawY();
+			auto test_x = end_point.X - end_coord.nativeX();
+			auto test_y = end_point.Y - end_coord.nativeY();
 			end_error_sq = 0.001 * sqrt(test_x*test_x + test_y*test_y);
 			if (end_error_sq > error_bound)
 				qDebug() << "BooleanTool::rebuildSegment: end error too high in decreasing direct case: " << sqrt(end_error_sq);
@@ -881,8 +881,8 @@ void BooleanTool::rebuildSegment(
 			end_tangent = MapCoord(o1);
 			end_coord = MapCoord(o2);
 			
-			auto test_x = end_point.X - end_coord.rawX();
-			auto test_y = end_point.Y - end_coord.rawY();
+			auto test_x = end_point.X - end_coord.nativeX();
+			auto test_y = end_point.Y - end_coord.nativeY();
 			end_error_sq = 0.001 * sqrt(test_x*test_x + test_y*test_y);
 			if (end_error_sq > error_bound)
 				qDebug() << "BooleanTool::rebuildSegment: end error too high in decreasing general case: " << sqrt(end_error_sq);
@@ -910,10 +910,10 @@ void BooleanTool::rebuildSegmentFromPathOnly(
         const ClipperLib::IntPoint& end_point,
         PathObject* object)
 {
-	MapCoord start_point_c = MapCoord::fromRaw(start_point.X, start_point.Y);
-	MapCoord second_point_c = MapCoord::fromRaw(second_point.X, second_point.Y);
-	MapCoord second_last_point_c = MapCoord::fromRaw(second_last_point.X, second_last_point.Y);
-	MapCoord end_point_c = MapCoord::fromRaw(end_point.X, end_point.Y);
+	MapCoord start_point_c = MapCoord::fromNative(start_point.X, start_point.Y);
+	MapCoord second_point_c = MapCoord::fromNative(second_point.X, second_point.Y);
+	MapCoord second_last_point_c = MapCoord::fromNative(second_last_point.X, second_last_point.Y);
+	MapCoord end_point_c = MapCoord::fromNative(end_point.X, end_point.Y);
 	
 	MapCoordF polygon_start_tangent = MapCoordF(second_point_c - start_point_c);
 	polygon_start_tangent.normalize();

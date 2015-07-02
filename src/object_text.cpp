@@ -155,8 +155,8 @@ Object& TextObject::operator=(const Object& other)
 void TextObject::setAnchorPosition(qint64 x, qint64 y)
 {
 	coords.resize(1);
-	coords[0].setRawX(x);
-	coords[0].setRawY(y);
+	coords[0].setNativeX(x);
+	coords[0].setNativeY(y);
 	setOutputDirty();
 }
 
@@ -176,8 +176,8 @@ MapCoordF TextObject::getAnchorCoordF() const
 void TextObject::setBox(qint64 mid_x, qint64 mid_y, double width, double height)
 {
 	coords.resize(2);
-	coords[0].setRawX(mid_x);
-	coords[0].setRawY(mid_y);
+	coords[0].setNativeX(mid_x);
+	coords[0].setNativeY(mid_y);
 	coords[1] = MapCoord(width, height);
 	setOutputDirty();
 }
@@ -212,7 +212,7 @@ QTransform TextObject::calcTextToMapTransform() const
 	
 	QTransform transform;
 	double scaling = 1.0f / text_symbol->calculateInternalScaling();
-	transform.translate(coords[0].xd(), coords[0].yd());
+	transform.translate(coords[0].x(), coords[0].y());
 	if (rotation != 0)
 		transform.rotate(-rotation * 180 / M_PI);
 	transform.scale(scaling, scaling);
@@ -229,7 +229,7 @@ QTransform TextObject::calcMapToTextTransform() const
 	transform.scale(1.0f / scaling, 1.0f / scaling);
 	if (rotation != 0)
 		transform.rotate(rotation * 180 / M_PI);
-	transform.translate(-coords[0].xd(), -coords[0].yd());
+	transform.translate(-coords[0].x(), -coords[0].y());
 	
 	return transform;
 }

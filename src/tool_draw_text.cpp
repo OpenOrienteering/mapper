@@ -146,7 +146,7 @@ bool DrawTextTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, Ma
 		double width = qAbs(cur_pos_map.x() - click_pos_map.x());
 		double height = qAbs(cur_pos_map.y() - click_pos_map.y());
 		auto midpoint = MapCoord { 0.5 * (cur_pos_map + click_pos_map) };
-		preview_text->setBox(midpoint.rawX(), midpoint.rawY(), width, height);
+		preview_text->setBox(midpoint.nativeX(), midpoint.nativeY(), width, height);
 		
 		dragging = false;
 		updateDirtyRect();
