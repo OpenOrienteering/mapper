@@ -33,6 +33,8 @@ class QTextStream;
 class QXmlStreamReader;
 class QXmlStreamWriter;
 
+#ifndef NO_NATIVE_FILE_FORMAT
+	
 /**
  * The legacy MapCoord structure, only used for legacy native file format.
  * 
@@ -43,6 +45,8 @@ struct LegacyMapCoord
 	qint64 x;
 	qint64 y;
 };
+
+#endif
 
 
 
@@ -174,16 +178,16 @@ public:
 	
 	
 	/** Returns the coord's x position in native map coords. */
-	constexpr qint64 nativeX() const;
+	constexpr qint32 nativeX() const;
 	
 	/** Returns the coord's y position in native map coords. */
-	constexpr qint64 nativeY() const;
+	constexpr qint32 nativeY() const;
 	
 	/** Sets the coord's x position to a value in native map coords. */
-	inline void setNativeX(qint64 new_x);
+	inline void setNativeX(qint32 new_x);
 	
 	/** Sets the coord's y position to a value in native map coords. */
-	inline void setNativeY(qint64 new_y);
+	inline void setNativeY(qint32 new_y);
 	
 	
 	/** Returns the coord's flags separately, merged into the lowest 8 bits of an int. */
@@ -602,24 +606,24 @@ void MapCoord::setY(qreal y)
 	this->yp = qRound64(y * 1000);
 }
 
-constexpr qint64 MapCoord::nativeX() const
+constexpr qint32 MapCoord::nativeX() const
 {
 	return xp;
 }
 
-constexpr qint64 MapCoord::nativeY() const
+constexpr qint32 MapCoord::nativeY() const
 {
 	return yp;
 }
 
 inline
-void MapCoord::setNativeX(qint64 new_x)
+void MapCoord::setNativeX(qint32 new_x)
 {
 	xp = new_x;
 }
 
 inline
-void MapCoord::setNativeY(qint64 new_y)
+void MapCoord::setNativeY(qint32 new_y)
 {
 	yp = new_y;
 }

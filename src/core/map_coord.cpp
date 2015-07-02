@@ -134,13 +134,17 @@ MapCoord MapCoord::load(QXmlStreamReader& xml)
 	            element.attribute<Flags::Int>(literal::flags) );
 }
 
+#ifndef NO_NATIVE_FILE_FORMAT
+	
 MapCoord::MapCoord(const LegacyMapCoord& coord)
  : xp{ decltype(xp)(coord.x >> 4) }
  , yp{ decltype(yp)(coord.y >> 4) }
- , fp{ decltype(fp)((coord.x & 0xf) | ((coord.y & 0xf) << 4)) }
+ , fp{ Flags::Int((coord.x & 0xf) | ((coord.y & 0xf) << 4)) }
 {
 	//nothing
 }
+
+#endif
 
 QString MapCoord::toString() const
 {
