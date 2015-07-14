@@ -26,6 +26,17 @@ endif()
 
 if(NOT ANDROID) # ---------------------------------------------------
 
+if (CMAKE_CROSSCOMPILING)
+	find_program(Qt5Help_QCOLLECTIONGENERATOR_EXECUTABLE
+	  NAMES qcollectiongenerator-qt5 qcollectiongenerator
+	  DOC "The path of the Qt Assistant executable"
+	)
+	add_executable(Qt5::qcollectiongenerator IMPORTED)
+	set_target_properties(Qt5::qcollectiongenerator PROPERTIES
+		IMPORTED_LOCATION ${Qt5Help_QCOLLECTIONGENERATOR_EXECUTABLE}
+	)
+endif()
+
 enable_language(CXX)
 find_package(Qt5Help REQUIRED)
 
