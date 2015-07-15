@@ -26,7 +26,7 @@ endif()
 
 if(NOT ANDROID) # ---------------------------------------------------
 
-if (CMAKE_CROSSCOMPILING)
+if (CMAKE_CROSSCOMPILING AND NOT TARGET Qt5::qcollectiongenerator)
 	find_program(Qt5Help_QCOLLECTIONGENERATOR_EXECUTABLE
 	  NAMES qcollectiongenerator-qt5 qcollectiongenerator
 	  DOC "The path of the Qt Assistant executable"
