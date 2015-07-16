@@ -73,7 +73,7 @@ QStringList MapperResource::getLocations(MapperResource::RESOURCE_TYPE resource_
 			break;
 			
 		case PROJ_DATA:
-#if defined(Mapper_BUILD_PROJ)
+#if defined(Mapper_BUILD_PROJ) || defined(Q_OS_WIN)
 			resource_path = "/proj";
 			break;
 #else
@@ -116,7 +116,9 @@ QStringList MapperResource::getLocations(MapperResource::RESOURCE_TYPE resource_
 	// Linux: program in xxx/bin, resources in xxx/bin/../share/PACKAGE_NAME
 	QString linux_dir(app_dir.absoluteFilePath(QString("../share/") + MAPPER_PACKAGE_NAME + resource_path));
 	addIfExists(locations, linux_dir);
-#elif defined(Q_OS_MAC)
+#endif
+	
+#if defined(Q_OS_MAC)
 	// Mac OS X: load resources from the Resources directory of the bundle
 	QString osx_dir(app_dir.absoluteFilePath("../Resources" + resource_path));
 	addIfExists(locations, osx_dir);
