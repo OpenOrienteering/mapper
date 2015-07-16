@@ -62,6 +62,8 @@ set(QT5_MD5SUMS
   5.3.2-openorienteering-2014-10-12:96f2029f208ac68b7c5543b496f22892
   5.3.2-openorienteering-2014-11-22:649a48ea2a06b7070fb960fd1028f4b5
   5.4.0:e8654e4b37dd98039ba20da7a53877e6
+  5.4.2:fa1c4d819b401b267eb246a543a63ea5
+  5.5.0:828594c91ba736ce2cd3e1e8a6146452
 )
 foreach(line ${QT5_MD5SUMS})
 	if(${line} MATCHES "^${QT5_VERSION}:")
