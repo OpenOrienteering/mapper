@@ -29,10 +29,13 @@ project(Mapper)
 set(Mapper_COPYRIGHT "(C) 2012-2015 OpenOrienteering developers")
 
 # All version components must be integers.
-# We use 99 to mark development builds.
+# We use Mapper_VERSION_PATCH >= 99 to mark development builds.
 set(Mapper_VERSION_MAJOR 0)
 set(Mapper_VERSION_MINOR 5)
-set(Mapper_VERSION_PATCH 99)
+if(NOT Mapper_VERSION_PATCH)
+	# This can be configured when running cmake
+	set(Mapper_VERSION_PATCH 99)
+endif()
 
 set(MAPPER_VERSION_PRI "${PROJECT_SOURCE_DIR}/oo-mapper-version.pri")
 file(READ "${MAPPER_VERSION_PRI}" current)
@@ -273,7 +276,9 @@ else()
 	add_definitions(-DQT_NO_DEBUG -DQT_NO_DEBUG_OUTPUT -DQT_NO_WARNING_OUTPUT -DNDEBUG)
 endif()
 
-if(Mapper_DEVELOPMENT_BUILD OR NOT CMAKE_BUILD_TYPE MATCHES Release|MinSizeRel)
+if(NOT Mapper_VERSION_PATCH LESS 99)
+	set(Mapper_VERSION_DISPLAY "unstable ${Mapper_VERSION_MAJOR}.${Mapper_VERSION_MINOR}.${Mapper_VERSION_PATCH}")
+elseif(Mapper_DEVELOPMENT_BUILD OR NOT CMAKE_BUILD_TYPE MATCHES Rel)
 	set(Mapper_VERSION_DISPLAY "${CMAKE_BUILD_TYPE} ${Mapper_VERSION_MAJOR}.${Mapper_VERSION_MINOR}.${Mapper_VERSION_PATCH}")
 else()
 	set(Mapper_VERSION_DISPLAY "${Mapper_VERSION_MAJOR}.${Mapper_VERSION_MINOR}.${Mapper_VERSION_PATCH}")
