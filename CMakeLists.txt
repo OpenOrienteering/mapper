@@ -92,15 +92,15 @@ option(Mapper_BUILD_QT   "Build the Qt library from source" ${Mapper_BUILD_QT_DE
 
 option(Mapper_BUILD_DOXYGEN "Build the doxygen tool from source" ${Mapper_BUILD_DOXYGEN_DEFAULT})
 
-if(NOT CMAKE_BUILD_TYPE MATCHES Release|MinSizeRel)
-	set(Mapper_DEVELOPMENT_BUILD_DEFAULT ON)
-else()
+if(CMAKE_BUILD_TYPE MATCHES Release|MinSizeRel|RelWithDebInfo)
 	set(Mapper_DEVELOPMENT_BUILD_DEFAULT OFF)
+else()
+	set(Mapper_DEVELOPMENT_BUILD_DEFAULT ON)
 endif()
 option(Mapper_DEVELOPMENT_BUILD "Configure development build (loading resource from the build directory)" ${Mapper_DEVELOPMENT_BUILD_DEFAULT})
 mark_as_advanced(Mapper_DEVELOPMENT_BUILD)
 
-option(Mapper_AUTORUN_UNIT_TESTS "Run the unit tests as part of the default target"   ON)
+option(Mapper_AUTORUN_UNIT_TESTS "Run the unit tests as part of the default target"   ${Mapper_DEVELOPMENT_BUILD})
 option(Mapper_AUTORUN_SYSTEM_TESTS "Run the system tests as part of the default target" OFF)
 mark_as_advanced(Mapper_AUTORUN_UNIT_TESTS Mapper_AUTORUN_SYSTEM_TESTS)
 
@@ -278,8 +278,6 @@ endif()
 
 if(NOT Mapper_VERSION_PATCH LESS 99)
 	set(Mapper_VERSION_DISPLAY "unstable ${Mapper_VERSION_MAJOR}.${Mapper_VERSION_MINOR}.${Mapper_VERSION_PATCH}")
-elseif(Mapper_DEVELOPMENT_BUILD OR NOT CMAKE_BUILD_TYPE MATCHES Rel)
-	set(Mapper_VERSION_DISPLAY "${CMAKE_BUILD_TYPE} ${Mapper_VERSION_MAJOR}.${Mapper_VERSION_MINOR}.${Mapper_VERSION_PATCH}")
 else()
 	set(Mapper_VERSION_DISPLAY "${Mapper_VERSION_MAJOR}.${Mapper_VERSION_MINOR}.${Mapper_VERSION_PATCH}")
 endif()
