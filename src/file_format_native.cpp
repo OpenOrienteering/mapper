@@ -202,15 +202,16 @@ void NativeFileImport::import(bool load_symbols_only)
 	if (version >= 24)
 		map->setGrid(MapGrid().load(stream, version));
 	
+	map->renderable_options = Symbol::RenderNormal;
 	if (version >= 25)
 	{
-		stream->read((char*)&map->area_hatching_enabled, sizeof(bool));
-		stream->read((char*)&map->baseline_view_enabled, sizeof(bool));
-	}
-	else
-	{
-		map->area_hatching_enabled = false;
-		map->baseline_view_enabled = false;
+		bool area_hatching_enabled, baseline_view_enabled;
+		stream->read((char*)&area_hatching_enabled, sizeof(bool));
+		stream->read((char*)&baseline_view_enabled, sizeof(bool));
+		if (area_hatching_enabled)
+			map->renderable_options |= Symbol::RenderAreasHatched;
+		if (baseline_view_enabled)
+			map->renderable_options |= Symbol::RenderBaselines;
 	}
 	
 	if (version >= 6)

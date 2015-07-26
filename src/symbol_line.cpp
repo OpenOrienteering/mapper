@@ -242,8 +242,13 @@ Symbol* LineSymbol::duplicate(const MapColorMap* color_map) const
 	return new_line;
 }
 
-void LineSymbol::createRenderables(const Object* object, const VirtualCoordVector& coords, ObjectRenderables& output) const
+void LineSymbol::createRenderables(
+        const Object* object,
+        const VirtualCoordVector& coords,
+        ObjectRenderables& output,
+        RenderableOptions options ) const
 {
+	Q_UNUSED(options);
 	PathPartVector path_parts = PathPart::calculatePathParts(coords);
 	for (const auto& part : path_parts)
 	{
@@ -251,11 +256,22 @@ void LineSymbol::createRenderables(const Object* object, const VirtualCoordVecto
 	}
 }
 
-void LineSymbol::createRenderables(const PathObject* object, const PathPartVector& path_parts, ObjectRenderables& output) const
+void LineSymbol::createRenderables(
+        const PathObject* object,
+        const PathPartVector& path_parts,
+        ObjectRenderables& output,
+        RenderableOptions options ) const
 {
-	for (const auto& part : path_parts)
+	if (options.testFlag(Symbol::RenderBaselines))
 	{
-		createPathCoordRenderables(object, part, part.isClosed(), output);
+		createBaselineRenderables(object, path_parts, output, guessDominantColor());
+	}
+	else
+	{
+		for (const auto& part : path_parts)
+		{
+			createPathCoordRenderables(object, part, part.isClosed(), output);
+		}
 	}
 }
 
@@ -1470,7 +1486,7 @@ bool LineSymbol::containsColor(const MapColor* color) const
     return false;
 }
 
-const MapColor* LineSymbol::getDominantColorGuess() const
+const MapColor* LineSymbol::guessDominantColor() const
 {
 	bool has_main_line = line_width > 0 && color;
 	bool has_border = hasBorder() && border.width > 0 && border.color;
@@ -1515,16 +1531,16 @@ const MapColor* LineSymbol::getDominantColorGuess() const
 		}
 	}
 	
-	const MapColor* dominant_color = mid_symbol ? mid_symbol->getDominantColorGuess() : NULL;
+	const MapColor* dominant_color = mid_symbol ? mid_symbol->guessDominantColor() : NULL;
 	if (dominant_color) return dominant_color;
 	
-	dominant_color = start_symbol ? start_symbol->getDominantColorGuess() : NULL;
+	dominant_color = start_symbol ? start_symbol->guessDominantColor() : NULL;
 	if (dominant_color) return dominant_color;
 	
-	dominant_color = end_symbol ? end_symbol->getDominantColorGuess() : NULL;
+	dominant_color = end_symbol ? end_symbol->guessDominantColor() : NULL;
 	if (dominant_color) return dominant_color;
 	
-	dominant_color = dash_symbol ? dash_symbol->getDominantColorGuess() : NULL;
+	dominant_color = dash_symbol ? dash_symbol->guessDominantColor() : NULL;
 	if (dominant_color) return dominant_color;
 	
 	return NULL;

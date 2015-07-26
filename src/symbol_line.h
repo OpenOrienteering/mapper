@@ -94,9 +94,17 @@ public:
 	virtual ~LineSymbol();
 	virtual Symbol* duplicate(const MapColorMap* color_map) const;
 	
-	void createRenderables(const Object *object, const VirtualCoordVector &coords, ObjectRenderables &output) const override;
+	void createRenderables(
+	        const Object *object,
+	        const VirtualCoordVector &coords,
+	        ObjectRenderables &output,
+	        Symbol::RenderableOptions options ) const override;
 	
-	void createRenderables(const PathObject* object, const PathPartVector& path_parts, ObjectRenderables &output) const override;
+	void createRenderables(
+	        const PathObject* object,
+	        const PathPartVector& path_parts,
+	        ObjectRenderables &output,
+	        Symbol::RenderableOptions options ) const override;
 	
 	/**
 	 * Creates the renderables for a single path.
@@ -115,7 +123,7 @@ public:
 	
 	virtual void colorDeleted(const MapColor* color);
 	virtual bool containsColor(const MapColor* color) const;
-	virtual const MapColor* getDominantColorGuess() const;
+	virtual const MapColor* guessDominantColor() const;
 	virtual void scale(double factor);
 	
 	/**

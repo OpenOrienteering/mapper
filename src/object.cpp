@@ -506,8 +506,13 @@ bool Object::update() const
 	if (!output_dirty)
 		return false;
 	
-	if (map && extent.isValid())
-		map->setObjectAreaDirty(extent);
+	Symbol::RenderableOptions options = Symbol::RenderNormal;
+	if (map)
+	{
+		options = QFlag(map->renderableOptions());
+		if (extent.isValid())
+			map->setObjectAreaDirty(extent);
+	}
 	
 	output.deleteRenderables();
 	
@@ -515,11 +520,7 @@ bool Object::update() const
 	
 	updateEvent();
 	
-	// Create renderables
-	if (map && map->isBaselineViewEnabled())
-		createBaselineRenderables(output);
-	else
-		createRenderables(output);
+	createRenderables(output, options);
 	
 	Q_ASSERT(extent.right() < 999999);	// assert if bogus values are returned
 	output_dirty = false;
@@ -539,14 +540,9 @@ void Object::updateEvent() const
 	// nothing here
 }
 
-void Object::createRenderables(ObjectRenderables& output) const
+void Object::createRenderables(ObjectRenderables& output, Symbol::RenderableOptions options) const
 {
-	symbol->createRenderables(this, VirtualCoordVector(coords), output);
-}
-
-void Object::createBaselineRenderables(ObjectRenderables& output) const
-{
-	symbol->createBaselineRenderables(this, VirtualCoordVector(coords), output);
+	symbol->createRenderables(this, VirtualCoordVector(coords), output, options);
 }
 
 void Object::move(qint32 dx, qint32 dy)
@@ -3081,14 +3077,9 @@ void PathObject::updateEvent() const
 	updatePathCoords();
 }
 
-void PathObject::createRenderables(ObjectRenderables& output) const
+void PathObject::createRenderables(ObjectRenderables& output, Symbol::RenderableOptions options) const
 {
-	symbol->createRenderables(this, path_parts, output);
-}
-
-void PathObject::createBaselineRenderables(ObjectRenderables& output) const
-{
-	symbol->createBaselineRenderables(this, path_parts, output, map->isAreaHatchingEnabled());
+	symbol->createRenderables(this, path_parts, output, options);
 }
 
 

@@ -57,12 +57,21 @@ public:
 	virtual ~CombinedSymbol();
 	virtual Symbol* duplicate(const MapColorMap* color_map = NULL) const;
 	
-	void createRenderables(const Object *object, const VirtualCoordVector &coords, ObjectRenderables &output) const override;
-	void createRenderables(const PathObject* object, const PathPartVector& path_parts, ObjectRenderables &output) const override;
+	void createRenderables(
+	        const Object *object,
+	        const VirtualCoordVector &coords,
+	        ObjectRenderables &output,
+	        Symbol::RenderableOptions options) const override;
+	
+	void createRenderables(
+	        const PathObject* object,
+	        const PathPartVector& path_parts,
+	        ObjectRenderables &output,
+	        Symbol::RenderableOptions options) const override;
 	
 	virtual void colorDeleted(const MapColor* color);
 	virtual bool containsColor(const MapColor* color) const;
-	const MapColor* getDominantColorGuess() const;
+	const MapColor* guessDominantColor() const;
 	virtual bool symbolChanged(const Symbol* old_symbol, const Symbol* new_symbol);
 	virtual bool containsSymbol(const Symbol* symbol) const;
 	virtual void scale(double factor);

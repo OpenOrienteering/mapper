@@ -42,6 +42,7 @@ QT_END_NAMESPACE
 
 class ColorDropDown;
 class SymbolSettingDialog;
+class TextObject;
 
 /** Symbol for text, can be applied to TextObjects.
  * 
@@ -81,14 +82,21 @@ public:
 	virtual ~TextSymbol();
 	virtual Symbol* duplicate(const MapColorMap* color_map = NULL) const;
 	
-	void createRenderables(const Object *object, const VirtualCoordVector &coords, ObjectRenderables &output) const override;
+	void createRenderables(
+	        const Object *object,
+	        const VirtualCoordVector &coords,
+	        ObjectRenderables &output,
+	        Symbol::RenderableOptions options) const override;
 	
-	void createBaselineRenderables(const Object *object, const VirtualCoordVector &coords, ObjectRenderables &output) const override;
+	void createBaselineRenderables(
+	        const TextObject* text_object,
+	        const VirtualCoordVector &coords,
+	        ObjectRenderables &output) const;
 	
 	void createLineBelowRenderables(const Object* object, ObjectRenderables& output) const;
 	virtual void colorDeleted(const MapColor* color);
 	virtual bool containsColor(const MapColor* color) const;
-	virtual const MapColor* getDominantColorGuess() const;
+	virtual const MapColor* guessDominantColor() const;
 	virtual void scale(double factor);
 	
 	/** Updates the internal QFont from the font settings. */

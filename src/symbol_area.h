@@ -145,14 +145,36 @@ public:
 	virtual ~AreaSymbol();
 	virtual Symbol* duplicate(const MapColorMap* color_map = NULL) const;
 	
-	void createRenderables(const Object *object, const VirtualCoordVector &coords, ObjectRenderables &output) const override;
-	void createRenderables(const PathObject* object, const PathPartVector& path_parts, ObjectRenderables &output) const override;
+	void createRenderables(
+	        const Object *object,
+	        const VirtualCoordVector &coords,
+	        ObjectRenderables &output,
+	        Symbol::RenderableOptions options) const override;
 	
-	void createRenderablesNormal(const PathObject* object, const PathPartVector& path_parts, ObjectRenderables& output) const;
+	void createRenderables(
+	        const PathObject* object,
+	        const PathPartVector& path_parts,
+	        ObjectRenderables &output,
+	        Symbol::RenderableOptions options) const override;
+	
+	void createRenderablesNormal(
+	        const PathObject* object,
+	        const PathPartVector& path_parts,
+	        ObjectRenderables& output) const;
+	
+	/**
+	 * Creates area hatching renderables for a path object.
+	 */
+	void createHatchingRenderables(
+	        const PathObject *object,
+	        const PathPartVector& path_parts,
+	        ObjectRenderables &output,
+	        const MapColor* color) const;
+	
 	
 	virtual void colorDeleted(const MapColor* color);
 	virtual bool containsColor(const MapColor* color) const;
-	virtual const MapColor* getDominantColorGuess() const;
+	virtual const MapColor* guessDominantColor() const;
 	virtual void scale(double factor);
 	
 	// Getters / Setters

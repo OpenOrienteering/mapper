@@ -1114,6 +1114,9 @@ public:
 	void setBaselineViewEnabled(bool enabled);
 	
 	
+	/** Returns the rendering options as an int representing Symbol::RenderableOptions. */
+	int renderableOptions() const;
+	
 	/** Returns a const reference to the current print configuration. */
 	const MapPrinterConfig& printerConfig();
 	
@@ -1379,8 +1382,7 @@ private:
 	
 	MapGrid grid;
 	
-	bool area_hatching_enabled;
-	bool baseline_view_enabled;
+	int renderable_options;
 	
 	QScopedPointer<MapPrinterConfig> printer_config;
 	
@@ -1646,15 +1648,9 @@ const MapGrid& Map::getGrid() const
 }
 
 inline
-bool Map::isAreaHatchingEnabled() const
+int Map::renderableOptions() const
 {
-	return area_hatching_enabled;
-}
-
-inline
-bool Map::isBaselineViewEnabled() const
-{
-	return baseline_view_enabled;
+	return renderable_options;
 }
 
 inline

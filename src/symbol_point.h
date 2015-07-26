@@ -61,14 +61,17 @@ public:
 	virtual ~PointSymbol();
 	virtual Symbol* duplicate(const MapColorMap* color_map = NULL) const;
 	
-	void createRenderables(const Object *object, const VirtualCoordVector &coords, ObjectRenderables &output) const override;
-	
-	void createBaselineRenderables(const Object *object, const VirtualCoordVector &coords, ObjectRenderables &output) const override;
+	void createRenderables(
+	        const Object *object,
+	        const VirtualCoordVector &coords,
+	        ObjectRenderables &output,
+	        RenderableOptions options ) const override;
 	
 	void createRenderablesScaled(MapCoordF coord, float rotation, ObjectRenderables& output, float coord_scale = 1.0f) const;
+	
 	virtual void colorDeleted(const MapColor* color);
 	virtual bool containsColor(const MapColor* color) const;
-	const MapColor* getDominantColorGuess() const;
+	const MapColor* guessDominantColor() const;
 	virtual void scale(double factor);
 	
 	// Contained objects and symbols (elements)

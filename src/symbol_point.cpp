@@ -76,25 +76,32 @@ Symbol* PointSymbol::duplicate(const MapColorMap* color_map) const
 	return new_point;
 }
 
-void PointSymbol::createRenderables(const Object* object, const VirtualCoordVector& coords, ObjectRenderables& output) const
+void PointSymbol::createRenderables(
+        const Object* object,
+        const VirtualCoordVector& coords,
+        ObjectRenderables& output,
+        RenderableOptions options ) const
 {
 	auto point = object->asPoint();
 	auto rotation = isRotatable() ? -point->getRotation() : 0.0f;
-	createRenderablesScaled(coords[0], rotation, output, 1.0f);
-}
-
-void PointSymbol::createBaselineRenderables(const Object* object, const VirtualCoordVector& coords, ObjectRenderables& output) const
-{
-	const MapColor* dominant_color = getDominantColorGuess();
-	if (dominant_color)
+	
+	if (options.testFlag(Symbol::RenderBaselines))
 	{
-		PointSymbol* point = Map::getUndefinedPoint();
-		const MapColor* temp_color = point->getInnerColor();
-		point->setInnerColor(dominant_color);
-		
-		point->createRenderables(object, coords, output);
-		
-		point->setInnerColor(temp_color);
+		const MapColor* dominant_color = guessDominantColor();
+		if (dominant_color)
+		{
+			PointSymbol* point = Map::getUndefinedPoint();
+			const MapColor* temp_color = point->getInnerColor();
+			point->setInnerColor(dominant_color);
+			
+			point->createRenderablesScaled(coords[0], rotation, output, 1.0f);
+			
+			point->setInnerColor(temp_color);
+		}
+	}
+	else
+	{
+		createRenderablesScaled(coords[0], rotation, output, 1.0f);
 	}
 }
 
@@ -139,7 +146,7 @@ void PointSymbol::createRenderablesScaled(MapCoordF coord, float rotation, Objec
 			
 			// TODO: if this point is rotated, it has to pass it on to its children to make it work that rotatable point objects can be children.
 			// But currently only basic, rotationally symmetric points can be children, so it does not matter for now.
-			symbols[i]->createRenderables(objects[i], VirtualCoordVector(object_coords, transformed_coords), output);
+			symbols[i]->createRenderables(objects[i], VirtualCoordVector(object_coords, transformed_coords), output, Symbol::RenderNormal);
 		}
 	}
 }
@@ -237,7 +244,7 @@ bool PointSymbol::containsColor(const MapColor* color) const
 	return false;
 }
 
-const MapColor* PointSymbol::getDominantColorGuess() const
+const MapColor* PointSymbol::guessDominantColor() const
 {
 	bool have_inner_color = inner_color && inner_radius > 0;
 	bool have_outer_color = outer_color && outer_width > 0;
@@ -256,7 +263,7 @@ const MapColor* PointSymbol::getDominantColorGuess() const
 	{
 		// Hope that the first element's color is representative
 		if (symbols.size() > 0)
-			return symbols[0]->getDominantColorGuess();
+			return symbols[0]->guessDominantColor();
 		else
 			return NULL;
 	}

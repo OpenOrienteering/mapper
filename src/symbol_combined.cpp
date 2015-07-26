@@ -72,19 +72,27 @@ Symbol* CombinedSymbol::duplicate(const MapColorMap* color_map) const
 	return new_symbol;
 }
 
-void CombinedSymbol::createRenderables(const Object* object, const VirtualCoordVector& coords, ObjectRenderables& output) const
+void CombinedSymbol::createRenderables(
+        const Object *object,
+        const VirtualCoordVector &coords,
+        ObjectRenderables &output,
+        Symbol::RenderableOptions options) const        
 {
 	auto path = static_cast<const PathObject*>(object);
 	PathPartVector path_parts = PathPart::calculatePathParts(coords);
-	createRenderables(path, path_parts, output);
+	createRenderables(path, path_parts, output, options);
 }
 
-void CombinedSymbol::createRenderables(const PathObject* object, const PathPartVector& path_parts, ObjectRenderables& output) const
+void CombinedSymbol::createRenderables(
+        const PathObject* object,
+        const PathPartVector& path_parts,
+        ObjectRenderables &output,
+        Symbol::RenderableOptions options) const
 {
 	for (auto subsymbol : parts)
 	{
 		if (subsymbol)
-			subsymbol->createRenderables(object, path_parts, output);
+			subsymbol->createRenderables(object, path_parts, output, options);
 	}
 }
 
@@ -112,7 +120,7 @@ bool CombinedSymbol::containsColor(const MapColor* color) const
 	return false;
 }
 
-const MapColor* CombinedSymbol::getDominantColorGuess() const
+const MapColor* CombinedSymbol::guessDominantColor() const
 {
 	// Speculative heuristic. Prefers areas and non-white colors.
 	const MapColor* dominant_color = NULL;
@@ -120,7 +128,7 @@ const MapColor* CombinedSymbol::getDominantColorGuess() const
 	{
 		if (parts[i] && parts[i]->getContainedTypes() & Symbol::Area)
 		{
-			dominant_color = parts[i]->getDominantColorGuess();
+			dominant_color = parts[i]->guessDominantColor();
 			if (! dominant_color->isWhite())
 				return dominant_color;
 		}
@@ -133,7 +141,7 @@ const MapColor* CombinedSymbol::getDominantColorGuess() const
 	{
 		if (parts[i] && !(parts[i]->getContainedTypes() & Symbol::Area))
 		{
-			dominant_color = parts[i]->getDominantColorGuess();
+			dominant_color = parts[i]->guessDominantColor();
 			if (dominant_color->isWhite())
 				return dominant_color;
 		}

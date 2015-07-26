@@ -298,44 +298,24 @@ bool Symbol::loadFinished(Map* map)
 	return true;
 }
 
-void Symbol::createRenderables(const PathObject*, const PathPartVector&, ObjectRenderables&) const
+void Symbol::createRenderables(const PathObject*, const PathPartVector&, ObjectRenderables&, Symbol::RenderableOptions) const
 {
 	qWarning("Missing implementation of Symbol::createRenderables(const PathObject*, const PathPartVector&, ObjectRenderables&)");
 }
 
-void Symbol::createBaselineRenderables(const Object*, const VirtualCoordVector&, ObjectRenderables&) const
+void Symbol::createBaselineRenderables(
+        const PathObject*,
+        const PathPartVector& path_parts,
+        ObjectRenderables& output,
+        const MapColor* color) const
 {
-	qWarning("Missing implementation of or invalid call tp Symbol::createBaselineRenderables(const Object*, const VirtualCoordVector&, ObjectRenderables&)");
-}
-
-void Symbol::createBaselineRenderables(const PathObject* object, const PathPartVector& path_parts, ObjectRenderables& output, bool hatch_areas) const
-{
-	const MapColor* dominant_color = getDominantColorGuess();
-	if (dominant_color)
+	Q_ASSERT((getContainedTypes() & ~(Symbol::Line | Symbol::Area | Symbol::Combined)) == 0);
+	
+	if (color)
 	{
-		auto contained_types = getContainedTypes();
-		Q_ASSERT((contained_types & ~(Symbol::Line | Symbol::Area | Symbol::Combined)) == 0);
-		
-		if (hatch_areas && (contained_types & Symbol::Area))
-		{
-			// Insert hatched area renderable
-			AreaSymbol area_symbol;
-			
-			area_symbol.setNumFillPatterns(1);
-			AreaSymbol::FillPattern& pattern = area_symbol.getFillPattern(0);
-			pattern.type = AreaSymbol::FillPattern::LinePattern;
-			pattern.angle = 45 * M_PI / 180.0f;
-			pattern.line_spacing = 1000;
-			pattern.line_offset = 0;
-			pattern.line_color = dominant_color;
-			pattern.line_width = 70;
-			
-			area_symbol.createRenderablesNormal(object, path_parts, output);
-		}
-			
 		// Insert line renderable
 		LineSymbol line_symbol;
-		line_symbol.setColor(dominant_color);
+		line_symbol.setColor(color);
 		line_symbol.setLineWidth(0);
 		for (const auto& part : path_parts)
 		{
@@ -642,8 +622,8 @@ bool Symbol::compareByNumber(const Symbol* s1, const Symbol* s2)
 
 bool Symbol::compareByColorPriority(const Symbol* s1, const Symbol* s2)
 {
-	const MapColor* c1 = s1->getDominantColorGuess();
-	const MapColor* c2 = s2->getDominantColorGuess();
+	const MapColor* c1 = s1->guessDominantColor();
+	const MapColor* c2 = s2->guessDominantColor();
 	
 	if (c1 && c2)
 		return c1->comparePriority(*c2);
@@ -672,8 +652,8 @@ Symbol::compareByColor::compareByColor(Map* map)
 
 bool Symbol::compareByColor::operator() (const Symbol* s1, const Symbol* s2)
 {
-	const MapColor* c1 = s1->getDominantColorGuess();
-	const MapColor* c2 = s2->getDominantColorGuess();
+	const MapColor* c1 = s1->guessDominantColor();
+	const MapColor* c2 = s2->guessDominantColor();
 	
 	if (c1 && c2)
 		return color_map.value(QRgb(*c1)) < color_map.value(QRgb(*c2));

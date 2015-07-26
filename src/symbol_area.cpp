@@ -465,30 +465,46 @@ Symbol* AreaSymbol::duplicate(const MapColorMap* color_map) const
 	return new_area;
 }
 
-void AreaSymbol::createRenderables(const Object* object, const VirtualCoordVector& coords, ObjectRenderables& output) const
+void AreaSymbol::createRenderables(
+        const Object *object,
+        const VirtualCoordVector &coords,
+        ObjectRenderables &output,
+        Symbol::RenderableOptions options) const        
 {
 	if (coords.size() < 3)
 		return;
 	
 	auto path = static_cast<const PathObject*>(object);
 	PathPartVector path_parts = PathPart::calculatePathParts(coords);
-	createRenderables(path, path_parts, output);
+	createRenderables(path, path_parts, output, options);
 }
 
-void AreaSymbol::createRenderables(const PathObject* object, const PathPartVector& path_parts, ObjectRenderables &output) const
+void AreaSymbol::createRenderables(
+        const PathObject* object,
+        const PathPartVector& path_parts,
+        ObjectRenderables &output,
+        Symbol::RenderableOptions options) const
 {
-	Map* map = object->getMap();
-	if (map && map->isAreaHatchingEnabled())
-	{
-		createBaselineRenderables(object, path_parts, output, true);
-	}
-	else
+	if (options == Symbol::RenderNormal)
 	{
 		createRenderablesNormal(object, path_parts, output);
 	}
+	else
+	{
+		const MapColor* dominant_color = guessDominantColor();
+		createBaselineRenderables(object, path_parts, output, dominant_color);
+		
+		if (options.testFlag(Symbol::RenderAreasHatched))
+		{
+			createHatchingRenderables(object, path_parts, output, dominant_color);
+		}
+	}
 }
 
-void AreaSymbol::createRenderablesNormal(const PathObject* object, const PathPartVector& path_parts, ObjectRenderables& output) const
+void AreaSymbol::createRenderablesNormal(
+        const PathObject* object,
+        const PathPartVector& path_parts,
+        ObjectRenderables& output) const
 {
 	// The shape output is even created if the area is not filled with a color
 	// because the QPainterPath created by it is needed as clip path for the fill objects
@@ -507,6 +523,31 @@ void AreaSymbol::createRenderablesNormal(const PathObject* object, const PathPar
 			pattern.createRenderables(extent, rotation, origin, output);
 		}
 		output.setClipPath(old_clip_path);
+	}
+}
+
+void AreaSymbol::createHatchingRenderables(
+        const PathObject* object,
+        const PathPartVector& path_parts,
+        ObjectRenderables& output,
+        const MapColor* color) const
+{
+	Q_ASSERT(getContainedTypes() & Symbol::Area);
+	
+	if (color)
+	{
+		// Insert hatched area renderable
+		AreaSymbol area_symbol;
+		area_symbol.setNumFillPatterns(1);
+		AreaSymbol::FillPattern& pattern = area_symbol.getFillPattern(0);
+		pattern.type = AreaSymbol::FillPattern::LinePattern;
+		pattern.angle = 45 * M_PI / 180.0f;
+		pattern.line_spacing = 1000;
+		pattern.line_offset = 0;
+		pattern.line_color = color;
+		pattern.line_width = 70;
+		
+		area_symbol.createRenderablesNormal(object, path_parts, output);
 	}
 }
 
@@ -549,7 +590,7 @@ bool AreaSymbol::containsColor(const MapColor* color) const
 	return false;
 }
 
-const MapColor* AreaSymbol::getDominantColorGuess() const
+const MapColor* AreaSymbol::guessDominantColor() const
 {
 	if (color)
 		return color;
@@ -559,7 +600,7 @@ const MapColor* AreaSymbol::getDominantColorGuess() const
 	{
 		if (patterns[i].type == FillPattern::PointPattern && patterns[i].point)
 		{
-			const MapColor* dominant_color = patterns[i].point->getDominantColorGuess();
+			const MapColor* dominant_color = patterns[i].point->guessDominantColor();
 			if (dominant_color) return dominant_color;
 		}
 		else if (patterns[i].type == FillPattern::LinePattern && patterns[i].line_color)

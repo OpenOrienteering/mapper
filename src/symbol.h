@@ -82,6 +82,17 @@ public:
 		AllSymbols = Point | Line | Area | Text | Combined
 	};
 	
+	/**
+	 * RenderableOptions denominate variations in painting symbols.
+	 */
+	enum RenderableOption
+	{
+		RenderBaselines    = 1 << 0,   ///< Paint cosmetique contours and baselines
+		RenderAreasHatched = 1 << 1,   ///< Paint hatching instead of opaque fill
+		RenderNormal       = 0         ///< Paint normally
+	};
+	Q_DECLARE_FLAGS(RenderableOptions, RenderableOption)
+	
 	/** Constructs an empty symbol */
 	Symbol(Type type);
 	virtual ~Symbol();
@@ -173,7 +184,11 @@ public:
 	 * instead of the object's coordinates, as those can be an updated,
 	 * transformed version of the object's coords!
 	 */
-	virtual void createRenderables(const Object *object, const VirtualCoordVector &coords, ObjectRenderables &output) const = 0;
+	virtual void createRenderables(
+	        const Object *object,
+	        const VirtualCoordVector &coords,
+	        ObjectRenderables &output,
+	        Symbol::RenderableOptions options) const = 0;
 	
 	/**
 	 * Creates renderables for a path object.
@@ -184,26 +199,24 @@ public:
 	 * 
 	 * \see createRenderables()
 	 */
-	virtual void createRenderables(const PathObject* object, const PathPartVector& path_parts, ObjectRenderables &output) const;
-	
-	
-	/**
-	 * Creates baseline renderables for a generic object.
-	 *
-	 * Baseline renderables show the coordinate paths with minimum line width,
-	 * and optionally a hatching pattern for areas.
-	 * 
-	 * \see createRenderables()
-	 */
-	virtual void createBaselineRenderables(const Object *object, const VirtualCoordVector &coords, ObjectRenderables &output) const;
+	virtual void createRenderables(
+	        const PathObject* object,
+	        const PathPartVector& path_parts,
+	        ObjectRenderables &output,
+	        Symbol::RenderableOptions options) const;
 	
 	/**
 	 * Creates baseline renderables for a path object.
+	 *
+	 * Baseline renderables show the coordinate paths with minimum line width.
 	 * 
-	 * \see createBaselineRenderables()
+	 * \see createRenderables()
 	 */
-	virtual void createBaselineRenderables(const PathObject *object, const PathPartVector& path_parts, ObjectRenderables &output, bool hatch_areas) const;
-	
+	virtual void createBaselineRenderables(
+	        const PathObject* object,
+	        const PathPartVector& path_parts,
+	        ObjectRenderables &output,
+	        const MapColor* color) const;
 	
 	/**
 	 * Called by the map in which the symbol is to notify it of a color being
@@ -218,7 +231,7 @@ public:
 	 * Returns the dominant color of this symbol, or a guess for this color
 	 * in case it is impossible to determine it uniquely.
 	 */
-	virtual const MapColor* getDominantColorGuess() const = 0;
+	virtual const MapColor* guessDominantColor() const = 0;
 	
 	/**
 	 * Called by the map in which the symbol is to notify it of a symbol being
@@ -422,5 +435,7 @@ private:
 };
 
 Q_DECLARE_METATYPE(const Symbol*)
+
+Q_DECLARE_OPERATORS_FOR_FLAGS(Symbol::RenderableOptions)
 
 #endif

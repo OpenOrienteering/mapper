@@ -107,37 +107,53 @@ Symbol* TextSymbol::duplicate(const MapColorMap* color_map) const
 	return new_text;
 }
 
-void TextSymbol::createRenderables(const Object* object, const VirtualCoordVector& coords, ObjectRenderables& output) const
+void TextSymbol::createRenderables(
+        const Object *object,
+        const VirtualCoordVector &coords,
+        ObjectRenderables &output,
+        Symbol::RenderableOptions options) const
 {
+	Q_ASSERT(object);
+	
 	const TextObject* text_object = static_cast<const TextObject*>(object);
-	
-	auto anchor = coords[0];
-	double anchor_x = anchor.x();
-	double anchor_y = anchor.y();
-	
 	text_object->prepareLineInfos();
-	if (color)
-		output.insertRenderable(new TextRenderable(this, text_object, color, anchor_x, anchor_y));
-	if (line_below && line_below_color && line_below_width > 0)
-		createLineBelowRenderables(object, output);
 	
-	if (framing && framing_color != NULL)
+	if (options.testFlag(Symbol::RenderBaselines))
 	{
-		if (framing_mode == LineFraming && framing_line_half_width > 0)
+		createBaselineRenderables(text_object, coords, output);
+	}
+	else
+	{
+		auto anchor = coords[0];
+		double anchor_x = anchor.x();
+		double anchor_y = anchor.y();
+		
+		if (color)
+			output.insertRenderable(new TextRenderable(this, text_object, color, anchor_x, anchor_y));
+		
+		if (line_below && line_below_color && line_below_width > 0)
+			createLineBelowRenderables(object, output);
+		
+		if (framing && framing_color)
 		{
-			output.insertRenderable(new TextRenderable(this, text_object, framing_color, anchor_x, anchor_y, true));
-		}
-		else if (framing_mode == ShadowFraming)
-		{
-			output.insertRenderable(new TextRenderable(this, text_object, framing_color, anchor_x + 0.001 * framing_shadow_x_offset, anchor_y + 0.001 * framing_shadow_y_offset));
+			if (framing_mode == LineFraming && framing_line_half_width > 0)
+			{
+				output.insertRenderable(new TextRenderable(this, text_object, framing_color, anchor_x, anchor_y, true));
+			}
+			else if (framing_mode == ShadowFraming)
+			{
+				output.insertRenderable(new TextRenderable(this, text_object, framing_color, anchor_x + 0.001 * framing_shadow_x_offset, anchor_y + 0.001 * framing_shadow_y_offset));
+			}
 		}
 	}
 }
 
-void TextSymbol::createBaselineRenderables(const Object* object, const VirtualCoordVector& coords, ObjectRenderables& output) const
+void TextSymbol::createBaselineRenderables(
+        const TextObject* text_object,
+        const VirtualCoordVector& coords,
+        ObjectRenderables& output) const
 {
-	const MapColor* dominant_color = getDominantColorGuess();
-	const TextObject* text_object = static_cast<const TextObject*>(object);
+	const MapColor* dominant_color = guessDominantColor();
 	if (dominant_color && text_object->getNumLines() > 0)
 	{
 		// Insert text boundary
@@ -239,7 +255,7 @@ bool TextSymbol::containsColor(const MapColor* color) const
 	return false;
 }
 
-const MapColor* TextSymbol::getDominantColorGuess() const
+const MapColor* TextSymbol::guessDominantColor() const
 {
 	if (color)
 		return color;

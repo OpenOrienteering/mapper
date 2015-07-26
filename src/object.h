@@ -283,9 +283,7 @@ public:
 protected:
 	virtual void updateEvent() const;
 	
-	virtual void createRenderables(ObjectRenderables& output) const;
-	
-	virtual void createBaselineRenderables(ObjectRenderables& output) const;
+	virtual void createRenderables(ObjectRenderables& output, Symbol::RenderableOptions options) const;
 	
 	Type type;
 	const Symbol* symbol;
@@ -871,9 +869,7 @@ protected:
 	
 	void updateEvent() const override;
 	
-	void createRenderables(ObjectRenderables& output) const override;
-	
-	void createBaselineRenderables(ObjectRenderables& output) const override;
+	void createRenderables(ObjectRenderables& output, Symbol::RenderableOptions options) const override;
 	
 private:
 	/**

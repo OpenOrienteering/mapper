@@ -391,8 +391,7 @@ Map::Map()
  , undo_manager(new UndoManager(this))
  , renderables(new MapRenderables(this))
  , selection_renderables(new MapRenderables(this))
- , area_hatching_enabled(false)
- , baseline_view_enabled(false)
+ , renderable_options(Symbol::RenderNormal)
  , printer_config(nullptr)
 {
 	if (!static_initialized)
@@ -2288,15 +2287,34 @@ void Map::setGrid(const MapGrid &grid)
 	}
 }
 
+
+bool Map::isAreaHatchingEnabled() const
+{
+	return renderable_options & Symbol::RenderAreasHatched;
+}
+
 void Map::setAreaHatchingEnabled(bool enabled)
 {
-	area_hatching_enabled = enabled;
+	if (enabled)
+		renderable_options |= Symbol::RenderAreasHatched;
+	else
+		renderable_options &= ~Symbol::RenderAreasHatched;
+}
+
+
+bool Map::isBaselineViewEnabled() const
+{
+	return renderable_options & Symbol::RenderBaselines;
 }
 
 void Map::setBaselineViewEnabled(bool enabled)
 {
-	baseline_view_enabled = enabled;
+	if (enabled)
+		renderable_options |= Symbol::RenderBaselines;
+	else
+		renderable_options &= ~Symbol::RenderBaselines;
 }
+
 
 const MapPrinterConfig& Map::printerConfig()
 {

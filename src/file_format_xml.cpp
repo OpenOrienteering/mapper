@@ -352,8 +352,8 @@ void XMLFileExporter::exportView()
 {
 	XmlElementWriter view_element(xml, literal::view);
 	
-	view_element.writeAttribute(literal::area_hatching_enabled, map->area_hatching_enabled);
-	view_element.writeAttribute(literal::baseline_view_enabled, map->baseline_view_enabled);
+	view_element.writeAttribute(literal::area_hatching_enabled, bool(map->renderable_options & Symbol::RenderAreasHatched));
+	view_element.writeAttribute(literal::baseline_view_enabled, bool(map->renderable_options & Symbol::RenderBaselines));
 	
 	map->getGrid().save(xml);
 	
@@ -772,8 +772,10 @@ void XMLFileImporter::importView()
 	Q_ASSERT(xml.name() == literal::view);
 	
 	XmlElementReader view_element(xml);
-	map->area_hatching_enabled = view_element.attribute<bool>(literal::area_hatching_enabled);
-	map->baseline_view_enabled = view_element.attribute<bool>(literal::baseline_view_enabled);
+	if (view_element.attribute<bool>(literal::area_hatching_enabled))
+		map->renderable_options |= Symbol::RenderAreasHatched;
+	if (view_element.attribute<bool>(literal::baseline_view_enabled))
+		map->renderable_options |= Symbol::RenderBaselines;
 	
 	while (xml.readNextStartElement())
 	{
