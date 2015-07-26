@@ -547,6 +547,24 @@ void AreaSymbol::createHatchingRenderables(
 		pattern.line_color = color;
 		pattern.line_width = 70;
 		
+		auto symbol = object->getSymbol();
+		if (symbol && symbol->getType() == Symbol::Area)
+		{
+			const AreaSymbol* orig_symbol = symbol->asArea();
+			if (!orig_symbol->getColor()
+			    && orig_symbol->getNumFillPatterns() >= 1)
+			{
+				const AreaSymbol::FillPattern& orig_pattern = orig_symbol->getFillPattern(0);
+				pattern.angle = orig_pattern.angle;
+				pattern.rotatable = orig_pattern.rotatable;
+				if (orig_pattern.type == AreaSymbol::FillPattern::LinePattern)
+				{
+					pattern.line_spacing = std::max(1000, orig_pattern.line_spacing);
+					pattern.line_offset = orig_pattern.line_offset;
+				}
+			}
+		}
+		
 		area_symbol.createRenderablesNormal(object, path_parts, output);
 	}
 }
