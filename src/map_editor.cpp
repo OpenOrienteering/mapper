@@ -3319,17 +3319,40 @@ void MapEditorController::addMapPart()
 
 void MapEditorController::removeMapPart()
 {
+	auto part = map->getCurrentPart();
+	
 	QMessageBox::StandardButton button =
 	        QMessageBox::question(
 	            window,
                 tr("Remove current part"),
-                tr("Do you want to remove map part \"%1\" and all its objects? This cannot be undone.").arg(map->getCurrentPart()->getName()),
+                tr("Do you want to remove map part \"%1\" and all its objects?").arg(part->getName()),
                 QMessageBox::Yes | QMessageBox::No );
 	
 	if (button == QMessageBox::Yes)
 	{
 		auto index = map->getCurrentPartIndex();
-		map->push(new MapPartUndoStep(map, MapPartUndoStep::AddMapPart, index));
+		UndoStep* undo_step = new MapPartUndoStep(map, MapPartUndoStep::AddMapPart, index);
+		
+		auto i = part->getNumObjects();
+		if (i > 0)
+		{
+			auto add_step = new AddObjectsUndoStep(map);
+			do
+			{
+				--i;
+				auto object = part->getObject(i);
+				add_step->addObject(i, object);
+				part->deleteObject(object, true);
+			}
+			while (i > 0);
+			
+			auto combined_step = new CombinedUndoStep(map);
+			combined_step->push(add_step);
+			combined_step->push(undo_step);
+			undo_step = combined_step;
+		}
+		
+		map->push(undo_step);
 		map->removePart(index);
 	}
 }
