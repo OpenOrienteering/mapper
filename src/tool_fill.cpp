@@ -189,7 +189,8 @@ QImage FillTool::rasterizeMap(const QRectF& extent, QTransform& out_transform)
 	// - specific zoom factor (resolution)
 	// - no antialiasing
 	// - encode object ids in object colors
-	// - draw centerlines in addition to normal rendering
+	// - draw baselines in advance to normal rendering
+	//   This makes it possible to fill areas bounded by e.g. dashed paths.
 	
 	const float zoom_level = 4;
 	
@@ -218,18 +219,19 @@ QImage FillTool::rasterizeMap(const QRectF& extent, QTransform& out_transform)
 	
 	painter.translate(image_size.width() / 2.0, image_size.height() / 2.0);
 	painter.setWorldTransform(view->worldTransform(), true);
-	drawObjectIDs(map(), &painter, config);
 	
-	// Temporarily enable baseline view and draw map again.
-	// This makes it possible to fill areas bounded by e.g. dashed paths.
 	if (!map()->isBaselineViewEnabled())
 	{
+		// Temporarily enable baseline view and draw map once.
 		map()->setBaselineViewEnabled(true);
 		map()->updateAllObjects();
 		drawObjectIDs(map(), &painter, config);
 		map()->setBaselineViewEnabled(false);
 		map()->updateAllObjects();
 	}
+	
+	// Draw the map in original mode.
+	drawObjectIDs(map(), &painter, config);
 	
 	out_transform = painter.combinedTransform();
 	painter.end();
