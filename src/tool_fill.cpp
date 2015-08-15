@@ -220,6 +220,12 @@ QImage FillTool::rasterizeMap(const QRectF& extent, QTransform& out_transform)
 	painter.translate(image_size.width() / 2.0, image_size.height() / 2.0);
 	painter.setWorldTransform(view->worldTransform(), true);
 	
+	auto original_area_hatching = map()->isAreaHatchingEnabled();
+	if (original_area_hatching)
+	{
+		map()->setAreaHatchingEnabled(false);
+	}
+	
 	if (!map()->isBaselineViewEnabled())
 	{
 		// Temporarily enable baseline view and draw map once.
@@ -229,9 +235,19 @@ QImage FillTool::rasterizeMap(const QRectF& extent, QTransform& out_transform)
 		map()->setBaselineViewEnabled(false);
 		map()->updateAllObjects();
 	}
+	else if (original_area_hatching)
+	{
+		map()->updateAllObjects();
+	}
 	
-	// Draw the map in original mode.
+	// Draw the map in original mode (but without area hatching)
 	drawObjectIDs(map(), &painter, config);
+	
+	if (original_area_hatching)
+	{
+		map()->setAreaHatchingEnabled(original_area_hatching);
+		map()->updateAllObjects();
+	}
 	
 	out_transform = painter.combinedTransform();
 	painter.end();
