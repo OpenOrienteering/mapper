@@ -25,8 +25,9 @@
 
 #include <qmath.h>
 #include <QColor>
-#include <QString>
 #include <QHash>
+#include <QMetaType>
+#include <QString>
 
 class Map;
 class MapColor;

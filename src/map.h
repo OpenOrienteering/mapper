@@ -26,9 +26,10 @@
 #include <set>
 
 #include <QHash>
+#include <QObject>
 #include <QRect>
-#include <QSharedData>
 #include <QScopedPointer>
+#include <QSharedData>
 #include <QString>
 
 #include "global.h"
@@ -40,6 +41,7 @@
 QT_BEGIN_NAMESPACE
 class QIODevice;
 class QPainter;
+class QWidget;
 class QXmlStreamReader;
 class QXmlStreamWriter;
 QT_END_NAMESPACE
