@@ -266,7 +266,7 @@ if(CMAKE_COMPILER_IS_GNUCXX)
 	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99 -Wall -Wpedantic")
 endif()
 
-add_definitions(-D_USE_MATH_DEFINES)
+add_definitions(-D_USE_MATH_DEFINES -DUNICODE)
 
 include_directories(${QT_INCLUDES} ${CMAKE_CURRENT_BINARY_DIR} ${PROJ_INCLUDE_DIR})
 
