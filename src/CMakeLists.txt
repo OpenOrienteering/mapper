@@ -381,7 +381,7 @@ endif()
 
 target_link_libraries(Mapper
   Mapper_Common
-  docs-licensing
+  doc-licensing
   ${PROJ_LIBRARY}
   ${QT_LIBRARIES}
   ${CLIPPER_LIBRARIES}

@@ -63,7 +63,7 @@ addPrerequisite(qbezier, 3rd-party/qbezier)
 !android:addPrerequisite(qtsingleapplication, 3rd-party/qtsingleapplication)
 !linux:addPrerequisite(proj, 3rd-party/proj)
 android:addPrerequisite(proj, 3rd-party/proj)
-addPrerequisite(licensing, docs/licensing)
+addPrerequisite(licensing, doc/licensing)
 
 write_file($$OUT_PWD/prerequisites.pri, PREREQUISITES_PRI)
 
@@ -112,7 +112,7 @@ write_file($$OUT_PWD/toolchain.cmake, CMAKE_TOOLCHAIN)
 
 # Mapper build
 
-SUBDIRS  += docs/manual
+SUBDIRS  += doc/manual
 SUBDIRS  += src
 
 OTHER_FILES += \

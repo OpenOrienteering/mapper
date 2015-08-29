@@ -91,11 +91,11 @@ else()
 	)
 endif()
 
-add_library(docs-licensing
+add_library(doc-licensing
   STATIC
   ${LICENSING_QRC_CPP}
 )
 
 if (TARGET Qt5)
-	add_dependencies(docs-licensing Qt5)
+	add_dependencies(doc-licensing Qt5)
 endif()

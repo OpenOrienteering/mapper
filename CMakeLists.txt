@@ -284,8 +284,8 @@ endif()
 
 # Subdirectories
 
-add_subdirectory("docs/licensing")
-add_subdirectory("docs/manual")
+add_subdirectory("doc/licensing")
+add_subdirectory("doc/manual")
 add_subdirectory("examples")
 add_subdirectory("symbol sets")
 add_subdirectory("translations")
@@ -338,7 +338,7 @@ else() # NOT Mapper_prerequisites_FOUND AND NOT MAPPER_SUPERBUILD
 
 endif()
 
-add_subdirectory("docs/api")
+add_subdirectory("doc/api")
 add_subdirectory("packaging/src")
 
 feature_summary(WHAT ALL)

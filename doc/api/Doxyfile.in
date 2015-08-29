@@ -26,7 +26,7 @@ QUIET                  = YES
 INPUT                  = "@PROJECT_SOURCE_DIR@/src"
 INPUT                 += "@PROJECT_SOURCE_DIR@/android/src"
 INPUT                 += "@PROJECT_SOURCE_DIR@/test"
-INPUT                 += "@PROJECT_SOURCE_DIR@/docs/api/extra"
+INPUT                 += "@PROJECT_SOURCE_DIR@/doc/api/extra"
 RECURSIVE              = YES
 STRIP_FROM_PATH        = "@PROJECT_SOURCE_DIR@"
 

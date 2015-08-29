@@ -74,7 +74,7 @@ static QString formatBlock(const QStringList& items)
 AboutDialog::AboutDialog(QWidget* parent)
  : TextBrowserDialog(about_page_url, parent)
 {
-	text_browser->setSearchPaths(text_browser->searchPaths() << QStringLiteral(":/docs/licensing/html/"));
+	text_browser->setSearchPaths(text_browser->searchPaths() << QStringLiteral(":/doc/licensing/html/"));
 	text_browser->setHtml(about());
 	text_browser->document()->adjustSize();
 	updateWindowTitle();

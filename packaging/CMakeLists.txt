@@ -72,7 +72,6 @@ if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 	  "openorienteering-mapper_${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}-src")
 	set(CPACK_SOURCE_IGNORE_FILES 
 	  "${PROJECT_BINARY_DIR}"
-	  "/docs/"
 	  "/[.]git/"
 	  "/3rd-party/clipper/download/"
 	  "/3rd-party/proj/download/"
@@ -435,7 +434,7 @@ endif()
 
 if(UNIX AND NOT APPLE)
 	install(
-	  FILES "${PROJECT_SOURCE_DIR}/docs/man/Mapper.1"
+	  FILES "${PROJECT_SOURCE_DIR}/doc/man/Mapper.1"
 	  DESTINATION "share/man/man1")
 	install(
 	  FILES "debian/Mapper.desktop"
