@@ -51,7 +51,7 @@ if(NOT "${output_md5}" STREQUAL "${file_md5}")
 endif()
 
 if(${CMAKE_CURRENT_BINARY_DIR} STREQUAL ${PROJECT_SOURCE_DIR})
-	message(FATAL_ERROR "You must not use the source directory as build directory.")
+	message(AUTHOR_WARNING "In-source builds are discouraged for development.")
 endif()
 
 # Build configuration options
