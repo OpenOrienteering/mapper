@@ -696,10 +696,19 @@ bool PainterConfig::activate(QPainter* painter, const QPainterPath*& current_cli
 		if (color_priority == MapColor::Reserved)
 			return false;
 		
-		// this is not undone here anywhere as it should apply to 
-		// all special symbols and these are always painted last
-		painter->setRenderHint(QPainter::Antialiasing, true);
+		if (!config.testFlag(RenderConfig::DisableAntialiasing))
+		{
+			// this is not undone here anywhere as it should apply to 
+			// all special symbols and these are always painted last
+			painter->setRenderHint(QPainter::Antialiasing, true);
+		}
+		
 		actual_pen_width /= config.scaling;
+	}
+	else if (config.testFlag(RenderConfig::DisableAntialiasing))
+	{
+		painter->setRenderHint(QPainter::Antialiasing, false);
+		painter->setRenderHint(QPainter::TextAntialiasing, false);
 	}
 	
 	QBrush brush(config.testFlag(RenderConfig::Highlighted) ? highlightedColor(color) : color);

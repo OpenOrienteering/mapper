@@ -664,7 +664,10 @@ void TextRenderable::render(QPainter &painter, const RenderConfig &config) const
 	
 	bool disable_antialiasing = config.options.testFlag(RenderConfig::Screen) && !(Settings::getInstance().getSettingCached(Settings::MapDisplay_TextAntialiasing).toBool());
 	if (disable_antialiasing)
+	{
 		painter.setRenderHint(QPainter::Antialiasing, false);
+		painter.setRenderHint(QPainter::TextAntialiasing, false);
+	}
 	
 	if (framing_line)
 	{

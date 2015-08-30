@@ -55,17 +55,18 @@ public:
 	 */
 	enum Option
 	{
-		Screen            = 0x01, ///< Indicates that the drawing is for the screen.
-		                          ///  Can turn on optimizations which result in slightly lower
-		                          ///  display quality (e.g. disable antialiasing for texts)
-                                  ///  for the benefit of speed.
-		ForceMinSize      = 0x02, ///< Forces a minimum size of app. 1 pixel for objects. 
-		                          ///  Makes maps look better at small zoom levels without antialiasing.
-		HelperSymbols     = 0x04, ///< Activates display of symbols with the "helper symbol" flag.
-		Highlighted       = 0x08, ///< Makes the color appear highlighted.
-		RequireSpotColor  = 0x10, ///< Skips colors which do not have a spot color definition.
-		Tool              = Screen | ForceMinSize | HelperSymbols, ///< The recommended flags for tools.
-		NoOptions         = 0x00  ///< No option activated.
+		Screen              = 1<<0, ///< Indicates that the drawing is for the screen.
+		                            ///  Can turn on optimizations which result in slightly
+		                            ///  lower display quality (e.g. disable antialiasing
+		                            ///  for texts) for the benefit of speed.
+		DisableAntialiasing = 1<<1, ///< Forces disabling of Antialiasing.
+		ForceMinSize        = 1<<2, ///< Forces a minimum size of app. 1 pixel for objects. 
+		                            ///  Makes maps look better at small zoom levels without antialiasing.
+		HelperSymbols       = 1<<3, ///< Activates display of symbols with the "helper symbol" flag.
+		Highlighted         = 1<<4, ///< Makes the color appear highlighted.
+		RequireSpotColor    = 1<<5, ///< Skips colors which do not have a spot color definition.
+		Tool                = Screen | ForceMinSize | HelperSymbols, ///< The recommended flags for tools.
+		NoOptions           = 0     ///< No option activated.
 	};
 	
 	/**

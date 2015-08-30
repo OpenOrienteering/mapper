@@ -1240,7 +1240,7 @@ void MapWidget::updateMapCache(bool use_background)
 	if (use_antialiasing)
 		painter.setRenderHint(QPainter::Antialiasing);
 	else
-		options |= RenderConfig::ForceMinSize;
+		options |= RenderConfig::DisableAntialiasing | RenderConfig::ForceMinSize;
 		
 	Map* map = view->getMap();
 	QRectF map_view_rect = view->calculateViewedRect(viewportToView(map_cache_dirty_rect));

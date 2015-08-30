@@ -214,7 +214,7 @@ QImage FillTool::rasterizeMap(const QRectF& extent, QTransform& out_transform)
 	painter.setCompositionMode(mode);
 	
 	// Draw map
-	RenderConfig::Options options = RenderConfig::Screen | RenderConfig::ForceMinSize;
+	RenderConfig::Options options = RenderConfig::DisableAntialiasing | RenderConfig::ForceMinSize;
 	RenderConfig config = { *map(), extent, view->calculateFinalZoomFactor(), options, 1.0 };
 	
 	painter.translate(image_size.width() / 2.0, image_size.height() / 2.0);
