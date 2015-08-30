@@ -320,7 +320,11 @@ int FillTool::traceBoundary(QImage image, QPoint start_pixel, QPoint test_pixel,
 		
 		QPoint cur_free_pixel = cur_pixel + fwd_vector;
 		if (cur_pixel == test_pixel && cur_free_pixel == start_pixel)
+		{
+			// Close the path.
+			out_boundary.push_back(cur_pixel);
 			break;
+		}
 		
 // 		debugImage.setPixel(cur_pixel, qRgb(0, 0, 255));
 		
