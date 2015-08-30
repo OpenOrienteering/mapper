@@ -138,9 +138,18 @@ endif()
 
 # Installation configuration
 
+set(Mapper_PACKAGE_NAME "openorienteering-mapper" CACHE STRING
+  "The package name"
+)
+
 # These value are used for the DESTINATION parameter of the install command
 # and must not be empty.
-if(WIN32)
+if(WIN32 AND BIN_INSTALL_DIR)
+	set(MAPPER_RUNTIME_DESTINATION "${BIN_INSTALL_DIR}")
+	set(MAPPER_LIBRARY_DESTINATION "${LIB_INSTALL_DIR}")
+	set(MAPPER_DATA_DESTINATION    "${SHARE_INSTALL_DIR}/${Mapper_PACKAGE_NAME}")
+	set(MAPPER_ABOUT_DESTINATION   "${SHARE_INSTALL_DIR}/doc/${Mapper_PACKAGE_NAME}")
+elseif(WIN32)
 	set(MAPPER_RUNTIME_DESTINATION .)
 	set(MAPPER_LIBRARY_DESTINATION .)
 	set(MAPPER_DATA_DESTINATION    .)
@@ -151,9 +160,6 @@ elseif(APPLE)
 	set(MAPPER_DATA_DESTINATION    "Mapper.app/Contents/Resources")
 	set(MAPPER_ABOUT_DESTINATION   "Mapper.app/Contents/Resources")
 else() # LINUX and alike
-	set(Mapper_PACKAGE_NAME        "openorienteering-mapper" CACHE STRING
-	  "The package name"
-	)
 	set(MAPPER_RUNTIME_DESTINATION "/usr/bin")
 	set(MAPPER_LIBRARY_DESTINATION "/usr/lib/${Mapper_PACKAGE_NAME}")
 	set(MAPPER_DATA_DESTINATION    "/usr/share/${Mapper_PACKAGE_NAME}")
