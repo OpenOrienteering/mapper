@@ -138,7 +138,7 @@ MapCoordF SplitPathCoord::tangentVector() const
 		auto pc = std::lower_bound(std::begin(path_coords), std::begin(path_coords)+path_coord_index, index, PathCoord::indexLessThanValue);
 		index = std::distance(std::begin(path_coords), pc);
 		last_index = path_coord_index;
-		while (index < last_index);
+		while (index < last_index)
 		{
 			if (pos.distanceSquaredTo(next) >= PathCoord::tangentEpsilonSquared())
 				goto next_found;
@@ -212,7 +212,7 @@ next_found:
 		// Attention, switching from MapCoordVectorF index to PathCoordVector index.
 		index = std::upper_bound(std::begin(path_coords)+path_coord_index, std::end(path_coords)-1, index, PathCoord::valueLessThanIndex)->index;
 		last_index = path_coord_index + 1;
-		while (index > path_coord_index);
+		while (index > path_coord_index)
 		{
 			--index;
 			prev = path_coords[index].pos;
