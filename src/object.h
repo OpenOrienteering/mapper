@@ -303,12 +303,13 @@ class PathPartVector;
 
 
 /**
- * Helper struct with information about parts of paths.
+ * Helper class with information about parts of paths.
  * A part is a path segment which is separated from other parts by
  * a hole point at its end.
  */
-struct PathPart : public VirtualPath
+class PathPart : public VirtualPath
 {
+public:
 	/** Pointer to path part containing this part */
 	PathObject* path;
 	
