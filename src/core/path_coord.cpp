@@ -197,7 +197,7 @@ next_found:
 	if (path_closed && path_coord_index != last_index)
 	{
 		index = path_coords[last_index].index;
-		last_index = path_coords[path_coord_index].index + flags[path_coord_index].isCurveStart() ? 3 : 1;
+		last_index = path_coords[path_coord_index].index + (flags[path_coord_index].isCurveStart() ? 3 : 1);
 		while (index > last_index)
 		{
 			--index;
