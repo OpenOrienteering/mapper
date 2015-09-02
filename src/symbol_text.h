@@ -88,6 +88,7 @@ public:
 	        ObjectRenderables &output,
 	        Symbol::RenderableOptions options) const override;
 	
+	using Symbol::createBaselineRenderables;
 	void createBaselineRenderables(
 	        const TextObject* text_object,
 	        const VirtualCoordVector &coords,
