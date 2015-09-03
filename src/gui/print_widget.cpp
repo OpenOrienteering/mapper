@@ -975,7 +975,12 @@ void PrintWidget::previewClicked()
 	if (checkForEmptyMap())
 		return;
 	
+#ifdef Q_OS_MAC
+	// Workaround for dialog being hidden by this widget.
+	PrintProgressDialog progress(this);
+#else
 	PrintProgressDialog progress(main_window);
+#endif
 	progress.setWindowTitle(tr("Print Preview Progress"));
 	progress.attach(map_printer);
 	progress.show();
@@ -983,14 +988,8 @@ void PrintWidget::previewClicked()
 	QPrinter* printer = map_printer->makePrinter();
 	printer->setCreator(main_window->appName());
 	printer->setDocName(QFileInfo(main_window->currentPath()).baseName());
-#if !defined(Q_OS_MAC)
+	
 	QPrintPreviewDialog preview(printer, this);
-#else
-	// https://bugreports.qt-project.org/browse/QTBUG-10206 :
-	//   Mac QPrintPreviewDialog is missing Close icon
-	QPrintPreviewDialog preview(printer, this, 
-		Qt::Window | Qt::CustomizeWindowHint | Qt::WindowSystemMenuHint );
-#endif
 	connect(&preview, SIGNAL(paintRequested(QPrinter*)), map_printer, SLOT(printMap(QPrinter*)));
 	preview.exec();
 	
