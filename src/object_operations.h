@@ -127,8 +127,6 @@ namespace ObjectOp
 			object->update();
 			return true;
 		}
-	private:
-		bool force;
 	};
 	
 	/** Calls update() on the objects. */
