@@ -84,7 +84,7 @@ TextBrowserDialog::TextBrowserDialog(const QUrl& initial_url, QWidget* parent)
 	text_browser->document()->adjustSize();  // needed for sizeHint()
 	
 #if defined(Q_OS_ANDROID)
-	QScroller::grabGesture(text_browser, QScroller::LeftMouseButtonGesture);
+	QScroller::grabGesture(text_browser->viewport(), QScroller::LeftMouseButtonGesture);
 	// Disable selection, so that it doesn't interfere with scrolling
 	text_browser->setTextInteractionFlags(Qt::TextInteractionFlags(Qt::TextBrowserInteraction) & ~Qt::TextSelectableByMouse);
 	// Note: Only the above combination of QScroller::LeftMouseButtonGesture
