@@ -9,7 +9,7 @@ diff -urw a/src/widgets/styles/qfusionstyle.cpp b/src/widgets/styles/qfusionstyl
 +                    ir.setLeft(point.x() - w);
                  else
 -                    ir.translate(point.x() + w, 0);
-+                    ir.setLeft(point.x() + w) + 2);
++                    ir.setLeft(point.x() + w + 2);
  
                  // left-align text if there is
                  if (!button->text.isEmpty())
