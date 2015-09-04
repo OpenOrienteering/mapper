@@ -533,18 +533,18 @@ void CutTool::pathFinished(PathObject* split_path)
 	}
 	
 	bool ok; Q_UNUSED(ok); // "ok" is only used in Q_ASSERT.
-	PathObject* parts[2] = { new PathObject { edited_path->parts().front() }, nullptr };
+	PathObject* out_paths[2] = { new PathObject { edited_path->parts().front() }, nullptr };
 	const PathPart& drag_part = edited_path->parts()[drag_part_index];
 	if (drag_part.isClosed())
 	{
-		parts[1] = new PathObject { *parts[0] };
+		out_paths[1] = new PathObject { *out_paths[0] };
 		
-		parts[0]->changePathBounds(drag_part_index, drag_start_len, end_path_coord.clen);
-		ok = parts[0]->connectIfClose(split_path, split_threshold);
+		out_paths[0]->changePathBounds(drag_part_index, drag_start_len, end_path_coord.clen);
+		ok = out_paths[0]->connectIfClose(split_path, split_threshold);
 		Q_ASSERT(ok);
 
-		parts[1]->changePathBounds(drag_part_index, end_path_coord.clen, drag_start_len);
-		ok = parts[1]->connectIfClose(split_path, split_threshold);
+		out_paths[1]->changePathBounds(drag_part_index, end_path_coord.clen, drag_start_len);
+		ok = out_paths[1]->connectIfClose(split_path, split_threshold);
 		Q_ASSERT(ok);
 	}
 	else
@@ -554,40 +554,40 @@ void CutTool::pathFinished(PathObject* split_path)
 		float path_len = drag_part.path_coords.back().clen;
 		if (min_cut_pos <= 0 && max_cut_pos >= path_len)
 		{
-			ok = parts[0]->connectIfClose(split_path, split_threshold);
+			ok = out_paths[0]->connectIfClose(split_path, split_threshold);
 			Q_ASSERT(ok);
 			
-			parts[1] = new PathObject { *split_path };
-			parts[1]->setSymbol(edited_path->getSymbol(), false);
+			out_paths[1] = new PathObject { *split_path };
+			out_paths[1]->setSymbol(edited_path->getSymbol(), false);
 		}
 		else if (min_cut_pos <= 0 || max_cut_pos >= path_len)
 		{
 			float cut_pos = (min_cut_pos <= 0) ? max_cut_pos : min_cut_pos;
-			parts[1] = new PathObject { *parts[0] };
+			out_paths[1] = new PathObject { *out_paths[0] };
 			
-			parts[0]->changePathBounds(drag_part_index, 0, cut_pos);
-			ok = parts[0]->connectIfClose(split_path, split_threshold);
+			out_paths[0]->changePathBounds(drag_part_index, 0, cut_pos);
+			ok = out_paths[0]->connectIfClose(split_path, split_threshold);
 			Q_ASSERT(ok);
 			
-			parts[1]->changePathBounds(drag_part_index, cut_pos, path_len);
-			ok = parts[1]->connectIfClose(split_path, split_threshold);
+			out_paths[1]->changePathBounds(drag_part_index, cut_pos, path_len);
+			ok = out_paths[1]->connectIfClose(split_path, split_threshold);
 			Q_ASSERT(ok);
 		}
 		else
 		{
-			parts[1] = new PathObject { *parts[0] };
-			PathObject* temp_path = new PathObject { *parts[0] };
+			out_paths[1] = new PathObject { *out_paths[0] };
+			PathObject* temp_path = new PathObject { *out_paths[0] };
 			
-			parts[0]->changePathBounds(drag_part_index, min_cut_pos, max_cut_pos);
-			ok = parts[0]->connectIfClose(split_path, split_threshold);
+			out_paths[0]->changePathBounds(drag_part_index, min_cut_pos, max_cut_pos);
+			ok = out_paths[0]->connectIfClose(split_path, split_threshold);
 			Q_ASSERT(ok);
 			
-			parts[1]->changePathBounds(drag_part_index, 0, min_cut_pos);
-			ok = parts[1]->connectIfClose(split_path, split_threshold);
+			out_paths[1]->changePathBounds(drag_part_index, 0, min_cut_pos);
+			ok = out_paths[1]->connectIfClose(split_path, split_threshold);
 			Q_ASSERT(ok);
 			
 			temp_path->changePathBounds(drag_part_index, max_cut_pos, path_len);
-			ok = parts[1]->connectIfClose(temp_path, split_threshold);
+			ok = out_paths[1]->connectIfClose(temp_path, split_threshold);
 			Q_ASSERT(ok);
 			
 			delete temp_path;
@@ -599,13 +599,13 @@ void CutTool::pathFinished(PathObject* split_path)
 	{
 		for (const auto& hole : holes->parts())
 		{
-			PathPartVector::size_type part_index = (parts[0]->isPointOnPath(MapCoordF(holes->getCoordinate(hole.first_index)), 0, false, false) != Symbol::NoSymbol) ? 0 : 1;
-			parts[part_index]->getCoordinate(parts[part_index]->getCoordinateCount() - 1).setHolePoint(true);
-			parts[part_index]->appendPathPart(hole);
+			PathPartVector::size_type part_index = (out_paths[0]->isPointOnPath(MapCoordF(holes->getCoordinate(hole.first_index)), 0, false, false) != Symbol::NoSymbol) ? 0 : 1;
+			out_paths[part_index]->getCoordinate(out_paths[part_index]->getCoordinateCount() - 1).setHolePoint(true);
+			out_paths[part_index]->appendPathPart(hole);
 		}
 	}
 	
-	for (auto& object : parts)
+	for (auto& object : out_paths)
 	{
 		map->addObject(object);
 		delete_step->addObject(part->findObjectIndex(object));
