@@ -69,7 +69,7 @@ public:
 	/**
 	 * Constructs a tool for the given operation and map.
 	 * 
-	 * map must be NULL.
+	 * map must not be NULL (for some member functions).
 	 */
 	BooleanTool(Operation op, Map* map);
 	
