@@ -34,6 +34,7 @@
 #include "settings.h"
 #include "symbol.h"
 #include "symbol_combined.h"
+#include "tool_boolean.h"
 #include "tool_draw_path.h"
 #include "util.h"
 
@@ -594,19 +595,22 @@ void CutTool::pathFinished(PathObject* split_path)
 		}
 	}
 	
-	// If the object had holes, check into which parts they go
-	if (holes)
+	for (auto&& object : out_paths)
 	{
-		for (const auto& hole : holes->parts())
+		if (holes)
 		{
-			PathPartVector::size_type part_index = (out_paths[0]->isPointOnPath(MapCoordF(holes->getCoordinate(hole.first_index)), 0, false, false) != Symbol::NoSymbol) ? 0 : 1;
-			out_paths[part_index]->getCoordinate(out_paths[part_index]->getCoordinateCount() - 1).setHolePoint(true);
-			out_paths[part_index]->appendPathPart(hole);
+			BooleanTool hole_tool = { BooleanTool::Intersection, map };
+			BooleanTool::PathObjects out_objects;
+			for (auto&& hole : holes->parts())
+			{
+				out_objects.clear();
+				PathObject hole_object(hole);
+				hole_tool.executeForLine(object, &hole_object, out_objects);
+				for (auto&& new_hole : out_objects)
+					object->appendPathPart(new_hole->parts().front());
+			}
 		}
-	}
-	
-	for (auto& object : out_paths)
-	{
+		
 		map->addObject(object);
 		delete_step->addObject(part->findObjectIndex(object));
 		map->addObjectToSelection(object, false);
