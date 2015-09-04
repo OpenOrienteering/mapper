@@ -1088,9 +1088,11 @@ void PathObject::deletePart(PathPartVector::size_type part_index)
 	setOutputDirty();
 	
 	auto part = begin(path_parts) + part_index;
+	auto first_index = part->first_index;
+	auto end_index   = part->last_index + 1;
 	auto first_coord = begin(coords);
-	coords.erase(first_coord + part->first_index, first_coord + (part->last_index+1));
-	partSizeChanged(part, part->first_index - part->last_index + 1);
+	coords.erase(first_coord + first_index, first_coord + end_index);
+	partSizeChanged(part, first_index - end_index);
 	path_parts.erase(part);
 }
 
