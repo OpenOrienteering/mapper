@@ -723,7 +723,7 @@ bool MainWindow::openPath(const QString &path)
 		// Assuming small screen, showing dialog before opening the file
 		AutosaveDialog* autosave_dialog = new AutosaveDialog(path, autosave_path, autosave_path, this);
 		int result = autosave_dialog->exec();
-		actual_path = (result == QDialog::Accepted) ? autosave_dialog->selectedPath() : QString();
+		new_actual_path = (result == QDialog::Accepted) ? autosave_dialog->selectedPath() : QString();
 		delete autosave_dialog;
 #else
 		// Assuming large screen, dialog will be shown while the autosaved file is open
