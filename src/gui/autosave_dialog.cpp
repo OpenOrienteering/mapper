@@ -36,19 +36,23 @@ AutosaveDialog::AutosaveDialog(QString path, QString autosave_path, QString actu
 , autosave_path(autosave_path)
 , resolved(false)
 {
-	const QString text_template = QString("<b>%1</b><br/>%2<br>%3");
+	const QString text_template = QString("<b>%1</b><br/>%2<br/>%3");
 	
 	QFileInfo autosaved_file_info(autosave_path);
-	autosaved_text.setHtml(text_template.
+	auto autosaved_html = text_template.
 	   arg(tr("Autosaved file")).
 	   arg(autosaved_file_info.lastModified().toLocalTime().toString()).
-	   arg(tr("%n bytes", 0, autosaved_file_info.size())));
+	   arg(tr("%n bytes", 0, autosaved_file_info.size()));
+	autosaved_html.replace("<br/><br/>", "<br/>");
+	autosaved_text.setHtml(autosaved_html);
 	
 	QFileInfo user_saved_file_info(path);
-	user_saved_text.setHtml(text_template.
+	auto user_saved_html = text_template.
 	   arg(tr("File saved by the user")).
 	   arg(user_saved_file_info.lastModified().toLocalTime().toString()).
-	   arg(tr("%n bytes", 0, user_saved_file_info.size())));
+	   arg(tr("%n bytes", 0, user_saved_file_info.size()));
+	user_saved_html.replace("<br/><br/>", "<br/>");
+	user_saved_text.setHtml(user_saved_html);
 	
 	layout = new QVBoxLayout();
 	setLayout(layout);
@@ -76,6 +80,11 @@ AutosaveDialog::AutosaveDialog(QString path, QString autosave_path, QString actu
 	setSelectedPath(actual_path);
 	
 	connect(list_widget, SIGNAL(currentRowChanged(int)), this, SLOT(currentRowChanged(int)), Qt::QueuedConnection);
+	
+#if defined(Q_OS_ANDROID)
+	setWindowState((windowState() & ~(Qt::WindowMinimized | Qt::WindowFullScreen))
+                   | Qt::WindowMaximized);
+#endif
 }
 
 AutosaveDialog::~AutosaveDialog()
