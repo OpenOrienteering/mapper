@@ -47,6 +47,10 @@ SOURCES += \
 RESOURCES += \
   ../resources.qrc
 
+CONFIG(debug, release|debug) {
+  RESOURCES += ../examples/autosave-example.qrc
+}
+
 OTHER_FILES += \
   CMakeLists.txt \
   src.pro.in
