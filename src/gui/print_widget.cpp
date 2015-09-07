@@ -1039,9 +1039,13 @@ void PrintWidget::printClicked()
 	
 	if (map_printer->getTarget() == MapPrinter::imageTarget())
 	{
-		if (!path.endsWith(".bmp", Qt::CaseInsensitive) && !path.endsWith(".png", Qt::CaseInsensitive) && !path.endsWith(".jpg", Qt::CaseInsensitive) &&
-			!path.endsWith(".tiff", Qt::CaseInsensitive) && !path.endsWith(".jpeg", Qt::CaseInsensitive))
+		if (!path.endsWith(".png", Qt::CaseInsensitive)
+		    && !path.endsWith(".bmp", Qt::CaseInsensitive)
+		    && !path.endsWith(".tif", Qt::CaseInsensitive) && !path.endsWith(".tiff", Qt::CaseInsensitive)
+		    && !path.endsWith(".jpg", Qt::CaseInsensitive) && !path.endsWith(".jpeg", Qt::CaseInsensitive) )
+		{
 			path.append(".png");
+		}
 		
 		qreal pixel_per_mm = map_printer->getOptions().resolution / 25.4;
 		
