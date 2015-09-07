@@ -39,20 +39,16 @@ AutosaveDialog::AutosaveDialog(QString path, QString autosave_path, QString actu
 	const QString text_template = QString("<b>%1</b><br/>%2<br/>%3");
 	
 	QFileInfo autosaved_file_info(autosave_path);
-	auto autosaved_html = text_template.
+	autosaved_text.setHtml(text_template.
 	   arg(tr("Autosaved file")).
 	   arg(autosaved_file_info.lastModified().toLocalTime().toString()).
-	   arg(tr("%n bytes", 0, autosaved_file_info.size()));
-	autosaved_html.replace("<br/><br/>", "<br/>");
-	autosaved_text.setHtml(autosaved_html);
+	   arg(tr("%n bytes", 0, autosaved_file_info.size())));
 	
 	QFileInfo user_saved_file_info(path);
-	auto user_saved_html = text_template.
+	user_saved_text.setHtml(text_template.
 	   arg(tr("File saved by the user")).
 	   arg(user_saved_file_info.lastModified().toLocalTime().toString()).
-	   arg(tr("%n bytes", 0, user_saved_file_info.size()));
-	user_saved_html.replace("<br/><br/>", "<br/>");
-	user_saved_text.setHtml(user_saved_html);
+	   arg(tr("%n bytes", 0, user_saved_file_info.size())));
 	
 	layout = new QVBoxLayout();
 	setLayout(layout);
@@ -83,7 +79,7 @@ AutosaveDialog::AutosaveDialog(QString path, QString autosave_path, QString actu
 	
 #if defined(Q_OS_ANDROID)
 	setWindowState((windowState() & ~(Qt::WindowMinimized | Qt::WindowFullScreen))
-                   | Qt::WindowMaximized);
+	               | Qt::WindowMaximized);
 #endif
 }
 
