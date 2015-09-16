@@ -1,5 +1,5 @@
 /*
- *    Copyright 2013 Kai Pastor
+ *    Copyright 2013-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -25,28 +25,52 @@
 
 #include <QProgressDialog>
 
+class QPrinter;
 class MapPrinter;
 
-/** 
- * PrintProgressDialog is a variation of the QProgressDialog which can be 
- * directly connected to the MapPrint::printMapProgress() signal.
+/**
+ * PrintProgressDialog is a variation of QProgressDialog to be used with MapPrinter.
+ * 
+ * PrintProgressDialog connects to the MapPrint::printMapProgress() signal.
+ * It provides a paintRequested slot which is to be connected to the
+ * corresponding QPrintPreviewDialog signal.
+ * 
+ * This dialog is modal (for the application) by default.
  */
 class PrintProgressDialog : public QProgressDialog
 {
 Q_OBJECT
 public:
-	/** Constructs a new dialog. */
-	PrintProgressDialog(QWidget* parent = NULL, Qt::WindowFlags f = 0);
+	/**
+	 * Constructs a new dialog for the given MapPrinter.
+	 * 
+	 * map_printer must not be nullptr.
+	 */
+	PrintProgressDialog(MapPrinter* map_printer, QWidget* parent = nullptr, Qt::WindowFlags f = 0);
 	
-	/** Connects this progress dialog to the given printer. */
-	void attach(MapPrinter* printer);
+public slots:
+	/**
+	 * Listens to and forwards paint requests, and reparents the dialog.
+	 * 
+	 * Resets the parent to the current sender(), if the sender is a
+	 * QPrintPreviewDialog and the dialog is not visible at the moment.
+	 */
+	void paintRequested(QPrinter* printer);
 	
 protected slots:
-	/** Listens to printing progress messages. */
+	/**
+	 * Listens to printing progress messages.
+	 * 
+	 * Shows the dialog if it was hidden, and processes events before returning.
+	 * This makes it possible to react on the dialog's Cancel button, and to
+	 * draw UI updates.
+	 */
 	void setProgress(int value, QString status);
 	
+private:
+	MapPrinter* const map_printer;
 };
 
 #endif
 
-#endif
+#endif // QT_PRINTSUPPORT_LIB

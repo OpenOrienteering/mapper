@@ -1,5 +1,5 @@
 /*
- *    Copyright 2013 Kai Pastor
+ *    Copyright 2013-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -23,22 +23,33 @@
 #include "print_progress_dialog.h"
 
 #include <QApplication>
+#include <QPrintPreviewDialog>
 
 #include "../core/map_printer.h"
 
 
-PrintProgressDialog::PrintProgressDialog(QWidget* parent, Qt::WindowFlags f)
+PrintProgressDialog::PrintProgressDialog(MapPrinter* map_printer, QWidget* parent, Qt::WindowFlags f)
  : QProgressDialog(parent, f)
+ , map_printer(map_printer)
 {
+	setWindowModality(Qt::ApplicationModal);
 	setRange(0, 100);
 	setMinimumDuration(0);
 	setValue(0);
+	
+	Q_ASSERT(map_printer);
+	connect(map_printer, &MapPrinter::printProgress, this, &PrintProgressDialog::setProgress);
+	connect(this, &PrintProgressDialog::canceled, map_printer, &MapPrinter::cancelPrintMap);
 }
 
-void PrintProgressDialog::attach(MapPrinter* printer)
+void PrintProgressDialog::paintRequested(QPrinter* printer)
 {
-	connect(printer, SIGNAL(printProgress(int, QString)), this, SLOT(setProgress(int,QString)));
-	connect(this, SIGNAL(canceled()), printer, SLOT(cancelPrintMap()));
+	// Make sure that the dialog is on top of QPrintPreviewDialog.
+	auto w = qobject_cast<QPrintPreviewDialog*>(sender());
+	if (w && isHidden())
+		setParent(w);
+	
+	map_printer->printMap(printer);
 }
 
 void PrintProgressDialog::setProgress(int value, QString status)
@@ -46,8 +57,10 @@ void PrintProgressDialog::setProgress(int value, QString status)
 	if (isHidden())
 	{
 		show();
+		raise();
 		QApplication::processEvents(QEventLoop::ExcludeUserInputEvents);
 	}
+	
 	setLabelText(status);
 	setValue(value);
 	QApplication::processEvents(); // Drawing and Cancel events

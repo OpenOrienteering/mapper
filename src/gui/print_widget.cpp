@@ -975,22 +975,16 @@ void PrintWidget::previewClicked()
 	if (checkForEmptyMap())
 		return;
 	
-#ifdef Q_OS_MAC
-	// Workaround for dialog being hidden by this widget.
-	PrintProgressDialog progress(this);
-#else
-	PrintProgressDialog progress(main_window);
-#endif
-	progress.setWindowTitle(tr("Print Preview Progress"));
-	progress.attach(map_printer);
-	progress.show();
-	
 	QPrinter* printer = map_printer->makePrinter();
 	printer->setCreator(main_window->appName());
 	printer->setDocName(QFileInfo(main_window->currentPath()).baseName());
 	
 	QPrintPreviewDialog preview(printer, this);
-	connect(&preview, SIGNAL(paintRequested(QPrinter*)), map_printer, SLOT(printMap(QPrinter*)));
+	
+	PrintProgressDialog progress(map_printer, &preview);
+	progress.setWindowTitle(tr("Print Preview Progress"));
+	connect(&preview, &QPrintPreviewDialog::paintRequested, &progress, &PrintProgressDialog::paintRequested);
+	connect(&progress, &QProgressDialog::canceled, &preview, &QPrintPreviewDialog::hide);
 	preview.exec();
 	
 	delete printer;
@@ -1031,11 +1025,10 @@ void PrintWidget::printClicked()
 			return;
 	}
 	
-	PrintProgressDialog progress(main_window);
+	PrintProgressDialog progress(map_printer, main_window);
 	progress.setWindowTitle(tr("Printing Progress"));
-	progress.setWindowModality(Qt::WindowModal);
-	progress.attach(map_printer);
 	progress.show();
+	progress.raise();
 	
 	if (map_printer->getTarget() == MapPrinter::imageTarget())
 	{
