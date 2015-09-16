@@ -247,7 +247,18 @@ public:
 	 *  and generates signals for changing properties. */
 	void takePrinterSettings(const QPrinter* printer);
 	
+	/** Prints the map to the given printer.
+	 * 
+	 *  This will first update this object's properties from the printer's properties.
+	 *
+	 *  @return true on success, false on error. */
+	bool printMap(QPrinter* printer);
+	
 	/** Draws a single page to the painter.
+	 * 
+	 *  In case of an error, the painter will be inactive when returning from
+	 *  this function.
+	 * 
 	 *  When the actual paint device is a QImage, pass it as page_buffer.
 	 *  This helps to determine the exact dimensions and to avoid the allocation
 	 *  of another buffer.
@@ -305,10 +316,6 @@ public slots:
 	
 	/** Saves the print parameter (to the map). */
 	void saveConfig() const;
-	
-	/** Prints the map to the given printer. 
-	 *  This will first update this object's properties from the printer's properties. */
-	void printMap(QPrinter* printer);
 	
 	/** Cancels a running printMap(), if possible.
 	 *  This can only be used during handlers of the printMapProgress() signal. */

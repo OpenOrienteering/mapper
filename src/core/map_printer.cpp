@@ -842,7 +842,16 @@ void MapPrinter::drawPage(QPainter* device_painter, float units_per_inch, const 
 			h = qCeil(page_format.paper_dimensions.height() * scale * corr);
 		}
 #endif
+		
 		scoped_buffer = QImage(w, h, QImage::Format_RGB32);
+		if (scoped_buffer.isNull())
+		{
+			// Allocation failed
+			device_painter->restore();
+			device_painter->end(); // Signal error
+			return;
+		}
+		
 		page_buffer = &scoped_buffer;
 		painter = new QPainter(page_buffer);
 		painter->setRenderHints(device_painter->renderHints());
@@ -1056,8 +1065,7 @@ void MapPrinter::drawSeparationPages(QPrinter* printer, QPainter* device_painter
 	device_painter->restore();
 }
 
-// slot
-void MapPrinter::printMap(QPrinter* printer)
+bool MapPrinter::printMap(QPrinter* printer)
 {
 	int num_steps = v_page_pos.size() * h_page_pos.size();
 	int step = 0;
@@ -1170,15 +1178,17 @@ void MapPrinter::printMap(QPrinter* printer)
 	if (cancel_print_map)
 	{
 		emit printProgress(100, tr("Canceled"));
-		return;
 	}
 	else if (!painter.isActive())
 	{
 		emit printProgress(100, tr("Error"));
-		return;
+		return false;
 	}
-	
-	emit printProgress(100, tr("Finished"));
+	else
+	{
+		emit printProgress(100, tr("Finished"));
+	}
+	return true;
 }
 
 void MapPrinter::cancelPrintMap()

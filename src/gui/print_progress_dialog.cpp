@@ -23,6 +23,7 @@
 #include "print_progress_dialog.h"
 
 #include <QApplication>
+#include <QMessageBox>
 #include <QPrintPreviewDialog>
 
 #include "../core/map_printer.h"
@@ -49,7 +50,13 @@ void PrintProgressDialog::paintRequested(QPrinter* printer)
 	if (w && isHidden())
 		setParent(w);
 	
-	map_printer->printMap(printer);
+	if (!map_printer->printMap(printer))
+	{
+		QMessageBox::warning(
+		  parentWidget(), tr("Printing", "PrintWidget"),
+		  tr("An error occured during processing.", "PrintWidget"),
+		  QMessageBox::Ok, QMessageBox::Ok );
+	}
 }
 
 void PrintProgressDialog::setProgress(int value, QString status)

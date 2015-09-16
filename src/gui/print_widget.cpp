@@ -1081,29 +1081,37 @@ void PrintWidget::printClicked()
 	}
 	
 	// Print the map
-	map_printer->printMap(printer);
-	
-	if (progress.wasCanceled())
+	if (map_printer->printMap(printer))
 	{
-		if (printer->abort() || !map_printer->isPrinter())
+		if (progress.wasCanceled())
 		{
-			main_window->showStatusBarMessage(tr("Canceled."), 4000);
+			if (printer->abort() || !map_printer->isPrinter())
+			{
+				main_window->showStatusBarMessage(tr("Canceled."), 4000);
+			}
+			else
+			{
+				QMessageBox::warning(
+				  main_window, tr("Printing"),
+				  tr("The print job could not be stopped."),
+				  QMessageBox::Ok, QMessageBox::Ok );
+			}
+		}
+		else if (map_printer->isPrinter())
+		{
+			main_window->showStatusBarMessage(tr("Successfully created print job"), 4000);
 		}
 		else
 		{
-			QMessageBox::warning(
-			  main_window, tr("Printing"),
-			  tr("The print job could not be stopped."),
-			  QMessageBox::Ok, QMessageBox::Ok );
+			main_window->showStatusBarMessage(tr("Exported successfully to %1").arg(path), 4000);
 		}
-	}
-	else if (map_printer->isPrinter())
-	{
-		main_window->showStatusBarMessage(tr("Successfully created print job"), 4000);
 	}
 	else
 	{
-		main_window->showStatusBarMessage(tr("Exported successfully to %1").arg(path), 4000);
+		QMessageBox::warning(
+		  main_window, tr("Printing"),
+		  tr("An error occured during processing."),
+		  QMessageBox::Ok, QMessageBox::Ok );
 	}
 	
 	delete printer;
