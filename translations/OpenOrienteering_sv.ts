@@ -6290,7 +6290,7 @@ Högsta versionen som stöds är %2.</translation>
         <location filename="../src/map_dialog_rotate.cpp" line="59"/>
         <source>X:</source>
         <comment>x coordinate</comment>
-        <translatio></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/map_dialog_rotate.cpp" line="61"/>
