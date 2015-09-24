@@ -665,7 +665,8 @@ void GeoreferencingDialog::declinationReplyFinished(QNetworkReply* reply)
 // ### GeoreferencingTool ###
 
 GeoreferencingTool::GeoreferencingTool(GeoreferencingDialog* dialog, MapEditorController* controller, QAction* action)
-: MapEditorTool(controller, Other, action), dialog(dialog)
+ : MapEditorTool(controller, Other, action)
+ , dialog(dialog)
 {
 	// nothing
 }
@@ -677,24 +678,47 @@ GeoreferencingTool::~GeoreferencingTool()
 
 void GeoreferencingTool::init()
 {
-	setStatusBarText(tr("<b>Click</b>: Set the reference point. Another button to cancel."));
-	
+	setStatusBarText(tr("<b>Click</b>: Set the reference point. <b>Right click</b>: Cancel."));
 	MapEditorTool::init();
 }
 
-bool GeoreferencingTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+bool GeoreferencingTool::mousePressEvent(QMouseEvent* event, MapCoordF, MapWidget*)
 {
-	Q_UNUSED(widget);
-	if (event->button() == Qt::LeftButton)
+	bool handled = false;
+	switch (event->button())
 	{
-		dialog->setMapRefPoint(MapCoord(map_coord));
+	case Qt::LeftButton:
+	case Qt::RightButton:
+		handled = true;
+		break;
+	default:
+		; // nothing
 	}
-	QTimer::singleShot(0, dialog, SIGNAL(exec()));
-	return true;
+
+	return handled;
+}
+
+bool GeoreferencingTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget*)
+{
+	bool handled = false;
+	switch (event->button())
+	{
+	case Qt::LeftButton:
+		dialog->setMapRefPoint(MapCoord(map_coord));
+		// fall through
+	case Qt::RightButton:
+		QTimer::singleShot(0, dialog, SIGNAL(exec()));
+		handled = true;
+		break;
+	default:
+		; // nothing
+	}
+	
+	return handled;
 }
 
 const QCursor& GeoreferencingTool::getCursor() const
 {
-	static auto const cursor = QCursor(QPixmap(":/images/cursor-crosshair.png"), 11, 11); // TODO: custom icon
+	static auto const cursor = QCursor(QPixmap(":/images/cursor-crosshair.png"), 11, 11);
 	return cursor;
 }

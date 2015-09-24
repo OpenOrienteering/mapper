@@ -285,7 +285,11 @@ public:
 	/** 
 	 * Constructs a new tool for the given dialog and controller.
 	 */
-	GeoreferencingTool(GeoreferencingDialog* dialog, MapEditorController* controller, QAction* toolAction = NULL);
+	GeoreferencingTool(
+	        GeoreferencingDialog* dialog,
+	        MapEditorController* controller,
+	        QAction* toolAction = nullptr
+	);
 	
 	/**
 	 * Notifies the dialog that the tool is deleted.
@@ -295,18 +299,23 @@ public:
 	/**
 	 * Activates the tool.
 	 */
-	void init();
+	void init() override;
 	
 	/** 
-	 * Reacts to the user activity by sending the reference point
-	 * coordinates to the dialog and reactivating the dialog.
+	 * Consumes left and right clicks. They are handled in mouseReleaseEvent.
 	 */
-	bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
+	bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
+	
+	/** 
+	 * Reacts to the user activity by sending the reference point coordinates
+	 * to the dialog (on left click) and reactivating the dialog.
+	 */
+	bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
 	
 	/**
 	 * Returns the mouse cursor that will be shown when the tool is active.
 	 */
-	const QCursor& getCursor() const;
+	const QCursor& getCursor() const override;
 	
 private:
 	GeoreferencingDialog* const dialog;
