@@ -43,15 +43,13 @@ public:
 	virtual ~PaintOnTemplateTool();
 	
 	virtual void init();
-	virtual QCursor* getCursor() {return cursor;}
+	virtual const QCursor& getCursor() const;
 	
 	virtual bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
 	virtual bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
 	virtual bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
 	
 	virtual void draw(QPainter* painter, MapWidget* widget);
-	
-	static QCursor* cursor;
 	
 public slots:
 	void templateDeleted(int pos, const Template* temp);

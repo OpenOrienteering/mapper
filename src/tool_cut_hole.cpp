@@ -38,15 +38,11 @@
 #include "util.h"
 #include "gui/modifier_key.h"
 
-QCursor* CutHoleTool::cursor = NULL;
 
 CutHoleTool::CutHoleTool(MapEditorController* editor, QAction* tool_button, CutHoleTool::HoleType hole_type)
  : MapEditorTool(editor, Other, tool_button), hole_type(hole_type)
 {
 	path_tool = NULL;
-	
-	if (!cursor)
-		cursor = new QCursor(QPixmap(":/images/cursor-cut.png"), 11, 11);
 }
 
 void CutHoleTool::init()
@@ -56,6 +52,12 @@ void CutHoleTool::init()
 	updateStatusText();
 	
 	MapEditorTool::init();
+}
+
+const QCursor& CutHoleTool::getCursor() const
+{
+	static auto const cursor = QCursor(QPixmap(":/images/cursor-cut.png"), 11, 11);
+	return cursor;
 }
 
 CutHoleTool::~CutHoleTool()

@@ -55,10 +55,10 @@ void PrintTool::init()
 	MapEditorTool::init();
 }
 
-QCursor* PrintTool::getCursor()
+const QCursor& PrintTool::getCursor() const
 {
-	static QCursor cursor(Qt::ArrowCursor);
-	return &cursor;
+	static auto const cursor = QCursor(Qt::ArrowCursor);
+	return cursor;
 }
 
 bool PrintTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)

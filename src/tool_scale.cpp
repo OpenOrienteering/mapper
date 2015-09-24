@@ -33,7 +33,6 @@
 #include "settings.h"
 #include "util.h"
 
-QCursor* ScaleTool::cursor = NULL;
 
 ScaleTool::ScaleTool(MapEditorController* editor, QAction* tool_button)
 : MapEditorTool(editor, Other, tool_button),
@@ -43,9 +42,6 @@ ScaleTool::ScaleTool(MapEditorController* editor, QAction* tool_button)
 	scaling_center_set = false;
 	scaling = false;
 	scaling_factor = 1;
-	
-	if (!cursor)
-		cursor = new QCursor(QPixmap(":/images/cursor-scale.png"), 1, 1);
 }
 
 void ScaleTool::init()
@@ -65,6 +61,12 @@ void ScaleTool::init()
 	updateStatusText();
 	
 	MapEditorTool::init();
+}
+
+const QCursor& ScaleTool::getCursor() const
+{
+	static auto const cursor = QCursor(QPixmap(":/images/cursor-scale.png"), 1, 1);
+	return cursor;
 }
 
 ScaleTool::~ScaleTool()

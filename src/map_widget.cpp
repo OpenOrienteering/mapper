@@ -120,7 +120,7 @@ void MapWidget::setTool(MapEditorTool* tool)
 	this->tool = tool;
 	
 	if (tool)
-		setCursor(*tool->getCursor());
+		setCursor(tool->getCursor());
 	else
 		unsetCursor();
 	if (redrawTouchCursor)

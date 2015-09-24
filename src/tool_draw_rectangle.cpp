@@ -39,8 +39,6 @@
 class SymbolWidget;
 
 
-QCursor* DrawRectangleTool::cursor = NULL;
-
 DrawRectangleTool::DrawRectangleTool(MapEditorController* editor, QAction* tool_button, bool is_helper_tool)
 : DrawLineAndAreaTool(editor, DrawRectangle, tool_button, is_helper_tool)
 , angle_helper(new ConstrainAngleToolHelper())
@@ -61,9 +59,6 @@ DrawRectangleTool::DrawRectangleTool(MapEditorController* editor, QAction* tool_
 	
 	snap_helper->setFilter(SnappingToolHelper::AllTypes);
 	connect(snap_helper.data(), SIGNAL(displayChanged()), this, SLOT(updateDirtyRect()));
-	
-	if (!cursor)
-		cursor = new QCursor(QPixmap(":/images/cursor-draw-rectangle.png"), 11, 11);
 }
 
 DrawRectangleTool::~DrawRectangleTool()
@@ -90,6 +85,12 @@ void DrawRectangleTool::init()
 	}
 	
 	MapEditorTool::init();
+}
+
+const QCursor& DrawRectangleTool::getCursor() const
+{
+	static auto const cursor = QCursor(QPixmap(":/images/cursor-draw-rectangle.png"), 11, 11);
+	return cursor;
 }
 
 bool DrawRectangleTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)

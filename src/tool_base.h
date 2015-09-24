@@ -44,11 +44,11 @@ class MapEditorToolBase : public MapEditorTool
 {
 Q_OBJECT
 public:
-	MapEditorToolBase(const QCursor cursor, MapEditorTool::Type tool_type, MapEditorController* editor, QAction* tool_action);
+	MapEditorToolBase(const QCursor& cursor, MapEditorTool::Type tool_type, MapEditorController* editor, QAction* tool_action);
 	virtual ~MapEditorToolBase();
 	
 	virtual void init();
-	virtual QCursor* getCursor() {return &cursor;}
+	virtual const QCursor& getCursor() const;
 	
 	virtual bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
 	virtual bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);

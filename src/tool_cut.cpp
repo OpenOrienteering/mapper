@@ -50,8 +50,6 @@ namespace
 
 
 
-QCursor* CutTool::cursor = nullptr;
-
 CutTool::CutTool(MapEditorController* editor, QAction* tool_action)
  : MapEditorTool { editor, Other, tool_action }
  , dragging { false }
@@ -62,8 +60,7 @@ CutTool::CutTool(MapEditorController* editor, QAction* tool_action)
  , preview_path { nullptr }
  , renderables { new MapRenderables(map()) }
 {
-	if (!cursor)
-		cursor = new QCursor(QPixmap(":/images/cursor-cut.png"), 11, 11);
+	// nothing
 }
 
 void CutTool::init()
@@ -73,6 +70,12 @@ void CutTool::init()
 	updateStatusText();
 	
 	MapEditorTool::init();
+}
+
+const QCursor& CutTool::getCursor() const
+{
+	static auto const cursor = QCursor(QPixmap(":/images/cursor-cut.png"), 11, 11);
+	return cursor;
 }
 
 CutTool::~CutTool()

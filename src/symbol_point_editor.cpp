@@ -956,13 +956,10 @@ Symbol* PointSymbolEditorWidget::getCurrentElementSymbol()
 
 // ### PointSymbolEditorTool ###
 
-QCursor* PointSymbolEditorTool::cursor = NULL;
-
 PointSymbolEditorTool::PointSymbolEditorTool(MapEditorController* editor, PointSymbolEditorWidget* symbol_editor)
 : MapEditorTool(editor, Other), symbol_editor(symbol_editor)
 {
-	if (!cursor)
-		cursor = new QCursor(QPixmap(":/images/cursor-crosshair.png"), 11, 11);
+	// nothing
 }
 
 void PointSymbolEditorTool::init()
@@ -984,6 +981,12 @@ bool PointSymbolEditorTool::mousePressEvent(QMouseEvent* event, MapCoordF map_co
 		return true;
 	}
 	return false;
+}
+
+const QCursor& PointSymbolEditorTool::getCursor() const
+{
+	static auto const cursor = QCursor(QPixmap(":/images/cursor-crosshair.png"), 11, 11);
+	return cursor;
 }
 
 

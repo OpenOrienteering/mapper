@@ -37,7 +37,6 @@
 
 // ### PaintOnTemplateTool ###
 
-QCursor* PaintOnTemplateTool::cursor = NULL;
 int PaintOnTemplateTool::erase_width = 4;
 
 PaintOnTemplateTool::PaintOnTemplateTool(MapEditorController* editor, QAction* tool_button, Template* temp) : MapEditorTool(editor, Other, tool_button)
@@ -47,9 +46,6 @@ PaintOnTemplateTool::PaintOnTemplateTool(MapEditorController* editor, QAction* t
 	
 	this->temp = temp;
 	connect(map(), SIGNAL(templateDeleted(int, const Template*)), this, SLOT(templateDeleted(int, const Template*)));
-	
-	if (!cursor)
-		cursor = new QCursor(QPixmap(":/images/cursor-paint-on-template.png"), 1, 1);
 }
 
 PaintOnTemplateTool::~PaintOnTemplateTool()
@@ -69,6 +65,12 @@ void PaintOnTemplateTool::init()
 	colorSelected(widget->getSelectedColor());
 	
 	MapEditorTool::init();
+}
+
+const QCursor&PaintOnTemplateTool::getCursor() const
+{
+	static auto const cursor = QCursor(QPixmap(":/images/cursor-paint-on-template.png"), 1, 1);
+	return cursor;
 }
 
 void PaintOnTemplateTool::templateDeleted(int pos, const Template* temp)

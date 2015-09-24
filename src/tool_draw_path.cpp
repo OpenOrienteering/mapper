@@ -41,8 +41,6 @@
 #include "map_editor.h"
 
 
-QCursor* DrawPathTool::cursor = NULL;
-
 DrawPathTool::DrawPathTool(MapEditorController* editor, QAction* tool_button, bool is_helper_tool, bool allow_closing_paths)
 : DrawLineAndAreaTool(editor, DrawPath, tool_button, is_helper_tool)
 , allow_closing_paths(allow_closing_paths)
@@ -67,9 +65,6 @@ DrawPathTool::DrawPathTool(MapEditorController* editor, QAction* tool_button, bo
 	draw_dash_points = false;
 	shift_pressed = false;
 	ctrl_pressed = false;
-	
-	if (!cursor)
-		cursor = new QCursor(QPixmap(":/images/cursor-draw-path.png"), 11, 11);
 	
 	connect(map(), SIGNAL(objectSelectionChanged()), this, SLOT(objectSelectionChanged()));
 }
@@ -100,6 +95,12 @@ void DrawPathTool::init()
 	}
 	
 	MapEditorTool::init();
+}
+
+const QCursor&DrawPathTool::getCursor() const
+{
+	static auto const cursor = QCursor(QPixmap(":/images/cursor-draw-path.png"), 11, 11);
+	return cursor;
 }
 
 bool DrawPathTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)

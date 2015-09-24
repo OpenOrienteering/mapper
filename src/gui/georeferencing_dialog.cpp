@@ -791,8 +791,7 @@ bool GeoreferencingDialog::updateZone(const Georeferencing& georef)
 GeoreferencingTool::GeoreferencingTool(GeoreferencingDialog* dialog, MapEditorController* controller, QAction* action)
 : MapEditorTool(controller, Other, action), dialog(dialog)
 {
-	if (!cursor)
-		cursor = new QCursor(QPixmap(":/images/cursor-crosshair.png"), 11, 11); // TODO: custom icon
+	// nothing
 }
 
 GeoreferencingTool::~GeoreferencingTool()
@@ -818,7 +817,11 @@ bool GeoreferencingTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coo
 	return true;
 }
 
-QCursor* GeoreferencingTool::cursor = NULL;
+const QCursor& GeoreferencingTool::getCursor() const
+{
+	static auto const cursor = QCursor(QPixmap(":/images/cursor-crosshair.png"), 11, 11); // TODO: custom icon
+	return cursor;
+}
 
 
 

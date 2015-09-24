@@ -307,12 +307,10 @@ public:
 	/**
 	 * Returns the mouse cursor that will be shown when the tool is active.
 	 */
-	QCursor* getCursor() { return cursor; }
+	const QCursor& getCursor() const;
 	
 private:
 	GeoreferencingDialog* const dialog;
-	
-	static QCursor* cursor;
 };
 
 

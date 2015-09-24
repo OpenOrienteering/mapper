@@ -32,7 +32,6 @@
 #include "gui/widgets/key_button_bar.h"
 #include "map_editor.h"
 
-QCursor* DrawCircleTool::cursor = NULL;
 
 DrawCircleTool::DrawCircleTool(MapEditorController* editor, QAction* tool_button, bool is_helper_tool)
  : DrawLineAndAreaTool(editor, DrawCircle, tool_button, is_helper_tool),
@@ -41,9 +40,6 @@ DrawCircleTool::DrawCircleTool(MapEditorController* editor, QAction* tool_button
 	dragging = false;
 	first_point_set = false;
 	second_point_set = false;
-	
-	if (!cursor)
-		cursor = new QCursor(QPixmap(":/images/cursor-draw-circle.png"), 11, 11);
 }
 
 DrawCircleTool::~DrawCircleTool()
@@ -63,6 +59,12 @@ void DrawCircleTool::init()
 		key_button_bar->addModifierKey(Qt::Key_Control, Qt::ControlModifier, tr("From center", "Draw circle starting from center"));
 		editor->showPopupWidget(key_button_bar, "");
 	}
+}
+
+const QCursor& DrawCircleTool::getCursor() const
+{
+	static auto const cursor = QCursor(QPixmap(":/images/cursor-draw-circle.png"), 11, 11);
+	return cursor;
 }
 
 bool DrawCircleTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)

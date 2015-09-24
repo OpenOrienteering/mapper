@@ -40,7 +40,7 @@ public:
 	virtual ~ScaleTool();
 	
     virtual void init();
-    virtual QCursor* getCursor() {return cursor;}
+    virtual const QCursor& getCursor() const;
 	
     virtual bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
 	virtual bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
@@ -58,8 +58,6 @@ protected:
 	
 	/** Updates the preview object to the cursor pos (while dragging). */
 	void updateDragging(const MapCoordF cursor_pos_map);
-	
-	static QCursor* cursor;
 	
 	// Mouse handling
 	QPoint click_pos;

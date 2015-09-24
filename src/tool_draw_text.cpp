@@ -47,7 +47,6 @@
 #undef DrawText
 #endif
 
-QCursor* DrawTextTool::cursor = NULL;
 
 DrawTextTool::DrawTextTool(MapEditorController* editor, QAction* tool_button)
 : MapEditorTool(editor, DrawText, tool_button)
@@ -58,9 +57,6 @@ DrawTextTool::DrawTextTool(MapEditorController* editor, QAction* tool_button)
 , renderables(new MapRenderables(map()))
 {
 	connect(editor, SIGNAL(activeSymbolChanged(const Symbol*)), this, SLOT(setDrawingSymbol(const Symbol*)));
-	
-	if (!cursor)
-		cursor = new QCursor(QPixmap(":/images/cursor-draw-text.png"), 11, 11);
 }
 
 void DrawTextTool::init()
@@ -68,6 +64,12 @@ void DrawTextTool::init()
 	updateStatusText();
 	
 	MapEditorTool::init();
+}
+
+const QCursor& DrawTextTool::getCursor() const
+{
+	static auto const cursor = QCursor(QPixmap(":/images/cursor-draw-text.png"), 11, 11);
+	return cursor;
 }
 
 DrawTextTool::~DrawTextTool()

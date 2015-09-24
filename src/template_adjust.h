@@ -162,15 +162,13 @@ public:
 	TemplateAdjustAddTool(MapEditorController* editor, QAction* tool_action, TemplateAdjustWidget* widget);
 	
 	virtual void init();
-	virtual QCursor* getCursor() {return cursor;}
+	virtual const QCursor& getCursor() const;
 	
 	virtual bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
 	virtual bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
 	virtual bool keyPressEvent(QKeyEvent* event);
 	
 	virtual void draw(QPainter* painter, MapWidget* widget);
-	
-	static QCursor* cursor;
 	
 protected:
 	void setDirtyRect(MapCoordF mouse_pos);
@@ -190,7 +188,7 @@ public:
 	TemplateAdjustMoveTool(MapEditorController* editor, QAction* tool_action, TemplateAdjustWidget* widget);
 	
 	virtual void init();
-	virtual QCursor* getCursor() {return cursor;}
+	virtual const QCursor& getCursor() const;
 	
 	virtual bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
 	virtual bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
@@ -217,9 +215,7 @@ public:
 	virtual bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
 	
 	virtual void init();
-	virtual QCursor* getCursor() {return cursor;}
-	
-	static QCursor* cursor;
+	virtual const QCursor& getCursor() const;
 };
 
 #endif

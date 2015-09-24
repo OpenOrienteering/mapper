@@ -26,14 +26,9 @@
 #include "map.h"
 #include "template.h"
 
-QCursor* TemplateMoveTool::cursor = NULL;
-
 TemplateMoveTool::TemplateMoveTool(Template* templ, MapEditorController* editor, QAction* action) : MapEditorTool(editor, Other, action), templ(templ)
 {
 	dragging = false;
-	
-	if (!cursor)
-		cursor = new QCursor(Qt::SizeAllCursor);
 }
 
 void TemplateMoveTool::init()
@@ -43,6 +38,12 @@ void TemplateMoveTool::init()
 	connect(map(), SIGNAL(templateDeleted(int, const Template*)), this, SLOT(templateDeleted(int, const Template*)));
 	
 	MapEditorTool::init();
+}
+
+const QCursor& TemplateMoveTool::getCursor() const
+{
+	static auto const cursor = QCursor(Qt::SizeAllCursor);
+	return cursor;
 }
 
 bool TemplateMoveTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)

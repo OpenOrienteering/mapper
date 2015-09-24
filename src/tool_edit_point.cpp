@@ -140,7 +140,7 @@ void EditPointTool::mouseMove()
 	if (hoveringOverSingleText())
 		cur_map_widget->setCursor(QCursor(Qt::IBeamCursor));
 	else
-		cur_map_widget->setCursor(*getCursor());
+		cur_map_widget->setCursor(getCursor());
 }
 
 void EditPointTool::clickPress()
@@ -264,7 +264,7 @@ void EditPointTool::clickPress()
 		map()->removeRenderablesOfObject(hover_object, true);
 		
 		// Make sure that the TextObjectEditorHelper remembers the correct standard cursor
-		cur_map_widget->setCursor(*getCursor());
+		cur_map_widget->setCursor(getCursor());
 		
 		old_text = hover_object->getText();
 		old_horz_alignment = (int)hover_object->getHorizontalAlignment();

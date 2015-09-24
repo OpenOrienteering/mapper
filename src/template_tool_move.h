@@ -33,13 +33,11 @@ public:
 	TemplateMoveTool(Template* templ, MapEditorController* editor, QAction* toolAction = NULL);
 	
 	virtual void init();
-	virtual QCursor* getCursor() {return cursor;}
+	virtual const QCursor& getCursor() const;
 	
 	virtual bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
 	virtual bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
 	virtual bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
-	
-	static QCursor* cursor;
 	
 public slots:
 	void templateDeleted(int index, const Template* temp);

@@ -557,21 +557,23 @@ void TemplateAdjustEditTool::findHoverPoint(QPoint mouse_pos, MapWidget* map_wid
 
 // ### TemplateAdjustAddTool ###
 
-QCursor* TemplateAdjustAddTool::cursor = NULL;
-
 TemplateAdjustAddTool::TemplateAdjustAddTool(MapEditorController* editor, QAction* tool_button, TemplateAdjustWidget* widget): MapEditorTool(editor, Other, tool_button), widget(widget)
 {
 	first_point_set = false;
-	
-	if (!cursor)
-		cursor = new QCursor(QPixmap(":/images/cursor-georeferencing-add.png"), 11, 11);
 }
+
 void TemplateAdjustAddTool::init()
 {
 	// NOTE: this is called by other methods to set this text again. Change that behavior if adding stuff here
 	setStatusBarText(tr("<b>Click</b>: Set the template position of the pass point. "));
 	
 	MapEditorTool::init();
+}
+
+const QCursor& TemplateAdjustAddTool::getCursor() const
+{
+	static auto const cursor = QCursor(QPixmap(":/images/cursor-georeferencing-add.png"), 11, 11);
+	return cursor;
 }
 
 bool TemplateAdjustAddTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
@@ -675,6 +677,11 @@ void TemplateAdjustMoveTool::init()
 	setStatusBarText(tr("<b>Drag</b>: Move pass points. "));
 	
 	MapEditorTool::init();
+}
+
+const QCursor& TemplateAdjustMoveTool::getCursor() const
+{
+	return *cursor;
 }
 
 bool TemplateAdjustMoveTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
@@ -785,12 +792,9 @@ void TemplateAdjustMoveTool::setActivePointPosition(MapCoordF map_coord)
 
 // ### TemplateAdjustDeleteTool ###
 
-QCursor* TemplateAdjustDeleteTool::cursor = NULL;
-
 TemplateAdjustDeleteTool::TemplateAdjustDeleteTool(MapEditorController* editor, QAction* tool_button, TemplateAdjustWidget* widget): TemplateAdjustEditTool(editor, tool_button, widget)
 {
-	if (!cursor)
-		cursor = new QCursor(QPixmap(":/images/cursor-delete.png"), 1, 1);
+	// nothing
 }
 
 void TemplateAdjustDeleteTool::init()
@@ -798,6 +802,12 @@ void TemplateAdjustDeleteTool::init()
 	setStatusBarText(tr("<b>Click</b>: Delete pass points. "));
 	
 	MapEditorTool::init();
+}
+
+const QCursor& TemplateAdjustDeleteTool::getCursor() const
+{
+	static auto const cursor = QCursor(QPixmap(":/images/cursor-delete.png"), 1, 1);
+	return cursor;
 }
 
 bool TemplateAdjustDeleteTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)

@@ -138,7 +138,7 @@ public:
 	 * 
 	 * @todo How to change the cursor for all map widgets while a tool is active?
 	 */
-	virtual QCursor* getCursor() = 0;
+	virtual const QCursor& getCursor() const = 0;
 	
 	/**
 	 * @brief Draws the tool's visualisation for a map widget.

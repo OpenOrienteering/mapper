@@ -39,7 +39,7 @@
 #include "util.h"
 
 
-MapEditorToolBase::MapEditorToolBase(const QCursor cursor, MapEditorTool::Type type, MapEditorController* editor, QAction* tool_button)
+MapEditorToolBase::MapEditorToolBase(const QCursor& cursor, MapEditorTool::Type type, MapEditorController* editor, QAction* tool_button)
 : MapEditorTool(editor, type, tool_button),
   start_drag_distance(Settings::getInstance().getStartDragDistancePx()),
   angle_helper(new ConstrainAngleToolHelper()),
@@ -73,6 +73,11 @@ void MapEditorToolBase::init()
 	updateStatusText();
 	
 	MapEditorTool::init();
+}
+
+const QCursor& MapEditorToolBase::getCursor() const
+{
+	return cursor;
 }
 
 bool MapEditorToolBase::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)

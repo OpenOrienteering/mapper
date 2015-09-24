@@ -31,15 +31,11 @@
 #include "gui/widgets/key_button_bar.h"
 #include "map_editor.h"
 
-QCursor* DrawFreehandTool::cursor = NULL;
 
 DrawFreehandTool::DrawFreehandTool(MapEditorController* editor, QAction* tool_button, bool is_helper_tool)
 : DrawLineAndAreaTool(editor, DrawFreehand, tool_button, is_helper_tool)
 {
 	dragging = false;
-	
-	if (!cursor)
-		cursor = new QCursor(QPixmap(":/images/cursor-draw-path.png"), 11, 11);
 }
 
 DrawFreehandTool::~DrawFreehandTool()
@@ -51,6 +47,12 @@ void DrawFreehandTool::init()
 	updateStatusText();
 	
 	MapEditorTool::init();
+}
+
+const QCursor& DrawFreehandTool::getCursor() const
+{
+	static auto const cursor = QCursor(QPixmap(":/images/cursor-draw-path.png"), 11, 11);
+	return cursor;
 }
 
 bool DrawFreehandTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
