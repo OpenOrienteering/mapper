@@ -36,11 +36,11 @@ class CRSTemplate;
 
 /// Combobox for projected coordinate reference system (CRS) selection,
 /// with edit widgets below to specify the free parameters, if necessary.
-class ProjectedCRSSelector : public QWidget, public CRSParameterWidgetObserver
+class CRSSelector : public QWidget, public CRSParameterWidgetObserver
 {
 Q_OBJECT
 public:
-	ProjectedCRSSelector(const Georeferencing& georef, QWidget* parent = NULL);
+	CRSSelector(const Georeferencing& georef, QWidget* parent = NULL);
 	
 	/// Adds a custom text item at the top which can be identified by the given id.
 	void addCustomItem(const QString& text, int id);

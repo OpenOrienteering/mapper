@@ -30,7 +30,7 @@
 #include "../../util/scoped_signals_blocker.h"
 
 
-ProjectedCRSSelector::ProjectedCRSSelector(const Georeferencing& georef, QWidget* parent)
+CRSSelector::CRSSelector(const Georeferencing& georef, QWidget* parent)
  : QWidget(parent)
  , georef(georef)
 {
@@ -47,7 +47,7 @@ ProjectedCRSSelector::ProjectedCRSSelector(const Georeferencing& georef, QWidget
 	crsDropdownChanged(crs_dropdown->currentIndex());
 }
 
-void ProjectedCRSSelector::addCustomItem(const QString& text, int id)
+void CRSSelector::addCustomItem(const QString& text, int id)
 {
 	crs_dropdown->insertItem(num_custom_items, text, QVariant(id));
 	if (num_custom_items == 0)
@@ -55,7 +55,7 @@ void ProjectedCRSSelector::addCustomItem(const QString& text, int id)
 	++num_custom_items;
 }
 
-const CRSTemplate* ProjectedCRSSelector::getSelectedCRSTemplate()
+const CRSTemplate* CRSSelector::getSelectedCRSTemplate()
 {
 	QVariant item_data = crs_dropdown->itemData(crs_dropdown->currentIndex());
 	if (!item_data.canConvert<void*>())
@@ -63,7 +63,7 @@ const CRSTemplate* ProjectedCRSSelector::getSelectedCRSTemplate()
 	return static_cast<CRSTemplate*>(item_data.value<void*>());
 }
 
-QString ProjectedCRSSelector::getSelectedCRSSpec()
+QString CRSSelector::getSelectedCRSSpec()
 {
 	QVariant item_data = crs_dropdown->itemData(crs_dropdown->currentIndex());
 	if (!item_data.canConvert<void*>())
@@ -85,7 +85,7 @@ QString ProjectedCRSSelector::getSelectedCRSSpec()
 	return spec;
 }
 
-int ProjectedCRSSelector::getSelectedCustomItemId()
+int CRSSelector::getSelectedCustomItemId()
 {
 	QVariant item_data = crs_dropdown->itemData(crs_dropdown->currentIndex());
 	if (!item_data.canConvert<int>())
@@ -93,7 +93,7 @@ int ProjectedCRSSelector::getSelectedCustomItemId()
 	return item_data.toInt();
 }
 
-void ProjectedCRSSelector::selectItem(const CRSTemplate* temp)
+void CRSSelector::selectItem(const CRSTemplate* temp)
 {
 	int index = crs_dropdown->findData(qVariantFromValue<void*>(const_cast<CRSTemplate*>(temp)));
 	blockSignals(true);
@@ -101,7 +101,7 @@ void ProjectedCRSSelector::selectItem(const CRSTemplate* temp)
 	blockSignals(false);
 }
 
-void ProjectedCRSSelector::selectCustomItem(int id)
+void CRSSelector::selectCustomItem(int id)
 {
 	int index = crs_dropdown->findData(QVariant(id));
 	blockSignals(true);
@@ -109,7 +109,7 @@ void ProjectedCRSSelector::selectCustomItem(int id)
 	blockSignals(false);
 }
 
-int ProjectedCRSSelector::getNumParams()
+int CRSSelector::getNumParams()
 {
 	auto temp = getSelectedCRSTemplate();
 	if (temp == NULL)
@@ -118,7 +118,7 @@ int ProjectedCRSSelector::getNumParams()
 		return (int)temp->parameters().size();
 }
 
-QString ProjectedCRSSelector::getParam(int i)
+QString CRSSelector::getParam(int i)
 {
 	auto temp = getSelectedCRSTemplate();
 	Q_ASSERT(temp != NULL);
@@ -128,7 +128,7 @@ QString ProjectedCRSSelector::getParam(int i)
 	return temp->parameters().at(i)->value(layout->itemAt(widget_index)->widget());
 }
 
-void ProjectedCRSSelector::setParam(int i, const QString& value)
+void CRSSelector::setParam(int i, const QString& value)
 {
 	auto temp = getSelectedCRSTemplate();
 	Q_ASSERT(temp != NULL);
@@ -143,12 +143,12 @@ void ProjectedCRSSelector::setParam(int i, const QString& value)
 	}
 }
 
-const Georeferencing& ProjectedCRSSelector::georeferencing() const
+const Georeferencing& CRSSelector::georeferencing() const
 {
 	return georef;
 }
 
-void ProjectedCRSSelector::crsDropdownChanged(int index)
+void CRSSelector::crsDropdownChanged(int index)
 {
 	Q_UNUSED(index);
 	if (layout)
@@ -182,7 +182,7 @@ void ProjectedCRSSelector::crsDropdownChanged(int index)
 	emit crsEdited(true);
 }
 
-void ProjectedCRSSelector::crsParameterEdited()
+void CRSSelector::crsParameterEdited()
 {
 	emit crsEdited(false);
 }

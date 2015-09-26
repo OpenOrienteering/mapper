@@ -88,7 +88,7 @@ void GeoreferencingDialog::init(const Georeferencing* initial)
 	// Create widgets
 	QLabel* map_crs_label = Util::Headline::create(tr("Map coordinate reference system"));
 	
-	crs_edit = new ProjectedCRSSelector(*georef);
+	crs_edit = new CRSSelector(*georef);
 	crs_edit->addCustomItem(tr("- none -"), 0);
 	crs_edit->addCustomItem(tr("- from Proj.4 specification -"), 1);
 	crs_edit->addCustomItem(tr("- local -"), 2);

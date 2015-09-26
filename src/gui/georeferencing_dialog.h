@@ -47,7 +47,7 @@ class Georeferencing;
 class Map;
 class MapEditorController;
 class GeoreferencingTool;
-class ProjectedCRSSelector;
+class CRSSelector;
 class CRSTemplate;
 
 /**
@@ -242,7 +242,7 @@ private:
 	double original_declination;
 	
 	/* GUI elements */
-	ProjectedCRSSelector* crs_edit;
+	CRSSelector* crs_edit;
 	QLabel* crs_spec_label;
 	QLineEdit* crs_spec_edit;
 	QLabel* status_label;

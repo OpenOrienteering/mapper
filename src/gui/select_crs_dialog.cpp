@@ -61,7 +61,7 @@ SelectCRSDialog::SelectCRSDialog(Map* map, QWidget* parent, bool show_take_from_
 	projected_radio = new QRadioButton(tr("From list"));
 	if (!map_radio)
 		projected_radio->setChecked(true);
-	crs_edit = new ProjectedCRSSelector(map->getGeoreferencing());
+	crs_edit = new CRSSelector(map->getGeoreferencing());
 	
 	spec_radio = new QRadioButton(tr("From specification"));
 	

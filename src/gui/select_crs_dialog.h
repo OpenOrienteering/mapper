@@ -35,7 +35,7 @@ QT_END_NAMESPACE
 
 class Georeferencing;
 class Map;
-class ProjectedCRSSelector;
+class CRSSelector;
 
 
 /** Dialog to select a coordinate reference system (CRS) */
@@ -74,7 +74,7 @@ private:
 	QRadioButton* geographic_radio;
 	QRadioButton* projected_radio;
 	QRadioButton* spec_radio;
-	ProjectedCRSSelector* crs_edit;
+	CRSSelector* crs_edit;
 	QFormLayout* crs_spec_layout;
 	QLineEdit* crs_spec_edit;
 	QLabel* status_label;
