@@ -154,12 +154,14 @@ set(Mapper_Common_SRCS
  gui/print_progress_dialog.cpp
  gui/print_tool.cpp
  gui/print_widget.cpp
+ gui/select_crs_dialog.cpp
  gui/settings_dialog.cpp
  gui/text_browser_dialog.cpp
  
  gui/widgets/action_grid_bar.cpp
  gui/widgets/color_dropdown.cpp
  gui/widgets/crs_param_widgets.cpp
+ gui/widgets/crs_selector.cpp
  gui/widgets/home_screen_widget.cpp
  gui/widgets/key_button_bar.cpp
  gui/widgets/mapper_proxystyle.cpp
@@ -260,6 +262,7 @@ set(Mapper_Common_MOC_INPUT
  gui/print_progress_dialog.h
  gui/print_tool.h
  gui/print_widget.h
+ gui/select_crs_dialog.h
  gui/settings_dialog.h
  gui/settings_dialog_p.h
  gui/text_browser_dialog.h
@@ -267,6 +270,7 @@ set(Mapper_Common_MOC_INPUT
  gui/widgets/action_grid_bar.h
  gui/widgets/color_dropdown.h
  gui/widgets/crs_param_widgets.h
+ gui/widgets/crs_selector.h
  gui/widgets/home_screen_widget.h
  gui/widgets/key_button_bar.h
  gui/widgets/mapper_proxystyle.h

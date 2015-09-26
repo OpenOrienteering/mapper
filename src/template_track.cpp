@@ -32,6 +32,7 @@
 #include <QXmlStreamWriter>
 
 #include "gui/georeferencing_dialog.h"
+#include "gui/select_crs_dialog.h"
 #include "map_widget.h"
 #include "object_undo.h"
 #include "object.h"
