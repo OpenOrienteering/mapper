@@ -57,38 +57,6 @@ public:
 	};
 	
 	/**
-	 * CRSTemplate parameter specifying an UTM zone.
-	 */
-	struct UTMZoneParam : public Param
-	{
-		UTMZoneParam(const QString& desc);
-		virtual QWidget* createEditWidget(QObject* edit_receiver) const;
-		virtual std::vector<QString> getSpecValue(QWidget* edit_widget) const;
-		virtual QString getValue(QWidget* edit_widget) const;
-		virtual void setValue(QWidget* edit_widget, const QString& value);
-	};
-	
-	/**
-	 * CRSTemplate integer parameter, with values from an integer range.
-	 */
-	struct IntRangeParam : public Param
-	{
-		IntRangeParam(const QString& desc, int min_value, int max_value);
-		virtual QWidget* createEditWidget(QObject* edit_receiver) const;
-		virtual std::vector<QString> getSpecValue(QWidget* edit_widget) const;
-		virtual QString getValue(QWidget* edit_widget) const;
-		virtual void setValue(QWidget* edit_widget, const QString& value);
-		
-		// These methods return this to allow for stacking.
-		IntRangeParam* clearOutputs();
-		IntRangeParam* addDerivedOutput(int factor, int bias);
-		
-		const int min_value;
-		const int max_value;
-		std::vector<std::pair<int, int> > outputs;
-	};
-	
-	/**
 	 * Creates a new CRS template.
 	 * The id must be unique and different from "Local".
 	 */

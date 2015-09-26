@@ -33,6 +33,7 @@ include_directories(AFTER "../3rd-party/qbezier/src") # Always, last
 set(Mapper_Common_SRCS
   core/autosave.cpp
   core/crs_template.cpp
+  core/crs_template_implementation.cpp
   core/georeferencing.cpp
   core/latlon.cpp
   core/map_color.cpp
@@ -283,6 +284,7 @@ set(Mapper_Common_MOC_INPUT
 
 set(Mapper_EXTRA_HEADERS
   core/crs_template.h
+  core/crs_template_implementation.h
   core/image_transparency_fixup.h
   core/latlon.h
   core/map_coord.h

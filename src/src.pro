@@ -136,6 +136,7 @@ HEADERS += \
   util/overriding_shortcut.h \
   util/recording_translator.h \
   core/crs_template.h \
+  core/crs_template_implementation.h \
   core/image_transparency_fixup.h \
   core/latlon.h \
   core/map_coord.h \
@@ -163,6 +164,7 @@ SOURCES += \
   main.cpp \
   core/autosave.cpp \
   core/crs_template.cpp \
+  core/crs_template_implementation.cpp \
   core/georeferencing.cpp \
   core/latlon.cpp \
   core/map_color.cpp \
