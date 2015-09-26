@@ -1,5 +1,5 @@
 /*
- *    Copyright 2012, 2013, 2014 Kai Pastor
+ *    Copyright 2012-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -26,6 +26,20 @@
 
 
 int XMLFileFormat::active_version = 6;
+
+
+// Mockup
+namespace CRSTemplates
+{
+
+CRSTemplateRegistry::TemplateList defaultList()
+{
+	return CRSTemplateRegistry::TemplateList();
+}
+
+} // namespace CRSTemplates
+
+
 
 double GeoreferencingTest::degFromDMS(double d, double m, double s)
 {

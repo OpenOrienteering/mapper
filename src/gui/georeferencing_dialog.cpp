@@ -87,7 +87,7 @@ void GeoreferencingDialog::init(const Georeferencing* initial)
 	// Create widgets
 	QLabel* map_crs_label = Util::Headline::create(tr("Map coordinate reference system"));
 	
-	crs_edit = new ProjectedCRSSelector();
+	crs_edit = new ProjectedCRSSelector(*georef);
 	crs_edit->addCustomItem(tr("- none -"), 0);
 	crs_edit->addCustomItem(tr("- from Proj.4 specification -"), 1);
 	crs_edit->addCustomItem(tr("- local -"), 2);
@@ -313,8 +313,8 @@ void GeoreferencingDialog::projectionChanged()
 		else
 		{
 			const std::vector< QString >& params = georef->getProjectedCRSParameters();
-			CRSTemplate* temp = CRSTemplate::getCRSTemplate(georef->getProjectedCRSId());
-			if (!temp || temp->getNumParams() != (int)params.size())
+			auto temp = CRSTemplateRegistry().find(georef->getProjectedCRSId());
+			if (!temp || temp->parameters().size() != params.size())
 			{
 				// The CRS id is not there anymore or the number of parameters has changed.
 				// Enter as custom spec.
@@ -500,7 +500,7 @@ void GeoreferencingDialog::updateWidgets()
 	else if (crs_edit->getSelectedCustomItemId() == 2)
 		projected_ref_label_string = tr("Local coordinates:");
 	else if (dialog_enabled)
-		projected_ref_label_string = crs_edit->getSelectedCRSTemplate()->getCoordinatesName() + ":";
+		projected_ref_label_string = crs_edit->getSelectedCRSTemplate()->coordinatesName() + ":";
 	if (!projected_ref_label_string.isEmpty())
 		projected_ref_label->setText(projected_ref_label_string);
 	
@@ -559,7 +559,7 @@ void GeoreferencingDialog::crsEdited()
 			spec = "?";
 	}
 	
-	CRSTemplate* crs_template = crs_edit->getSelectedCRSTemplate();
+	auto crs_template = crs_edit->getSelectedCRSTemplate();
 	std::vector<QString> crs_params;
 	
 	int selected_item_id = crs_edit->getSelectedCustomItemId();
@@ -568,9 +568,9 @@ void GeoreferencingDialog::crsEdited()
 	case -1:
 		// CRS from list
 		Q_ASSERT(crs_template != NULL);
-		for (int i = 0; i < crs_template->getNumParams(); ++i)
+		for (auto i = 0u; i < crs_template->parameters().size(); ++i)
 			crs_params.push_back(crs_edit->getParam(i));
-		georef_copy.setProjectedCRS(crs_template->getId(), spec, crs_params);
+		georef_copy.setProjectedCRS(crs_template->id(), spec, crs_params);
 		georef_copy.setState(Georeferencing::Normal); // Allow invalid spec
 		break;
 	case 0:
@@ -604,11 +604,11 @@ void GeoreferencingDialog::crsEdited()
 		const QSignalBlocker block(crs_edit);
 		if (updateZone(georef_copy))
 		{
-			Q_ASSERT(crs_params.size() == (std::size_t)crs_template->getNumParams());
+			Q_ASSERT(crs_params.size() == crs_template->parameters().size());
 			spec = crs_edit->getSelectedCRSSpec();
-			for (int i = 0; i < crs_template->getNumParams(); ++i)
+			for (auto i = 0u; i < crs_template->parameters().size(); ++i)
 				crs_params[i] = crs_edit->getParam(i);
-			georef_copy.setProjectedCRS(crs_template->getId(), spec, crs_params);
+			georef_copy.setProjectedCRS(crs_template->id(), spec, crs_params);
 			if (keep_geographic_radio->isChecked())
 				georef_copy.setGeographicRefPoint(georef->getGeographicRefPoint(), !grivation_locked);
 			else
@@ -758,8 +758,8 @@ void GeoreferencingDialog::declinationReplyFinished(QNetworkReply* reply)
 
 bool GeoreferencingDialog::updateZone(const Georeferencing& georef)
 {
-	CRSTemplate* temp = crs_edit->getSelectedCRSTemplate();
-	if (!temp || temp->getId() != "UTM")
+	auto temp = crs_edit->getSelectedCRSTemplate();
+	if (!temp || temp->id() != "UTM")
 		return false;
 	
 	const LatLon ref_point(georef.getGeographicRefPoint());
@@ -827,14 +827,15 @@ const QCursor& GeoreferencingTool::getCursor() const
 
 // ### ProjectedCRSSelector ###
 
-ProjectedCRSSelector::ProjectedCRSSelector(QWidget* parent) : QWidget(parent)
+ProjectedCRSSelector::ProjectedCRSSelector(const Georeferencing& georef, QWidget* parent)
+ : QWidget(parent)
+ , georef(georef)
 {
 	num_custom_items = 0;
 	crs_dropdown = new QComboBox();
-	for (std::size_t i = 0; i < CRSTemplate::getNumCRSTemplates(); ++i)
+	for (auto&& temp : CRSTemplateRegistry().list())
 	{
-		CRSTemplate& temp = CRSTemplate::getCRSTemplate(i);
-		crs_dropdown->addItem(temp.getId(), qVariantFromValue<void*>(&temp));
+		crs_dropdown->addItem(temp->id(), qVariantFromValue<void*>(const_cast<CRSTemplate*>(temp.get())));
 	}
 	
 	connect(crs_dropdown, SIGNAL(currentIndexChanged(int)), this, SLOT(crsDropdownChanged(int)));
@@ -851,7 +852,7 @@ void ProjectedCRSSelector::addCustomItem(const QString& text, int id)
 	++num_custom_items;
 }
 
-CRSTemplate* ProjectedCRSSelector::getSelectedCRSTemplate()
+const CRSTemplate* ProjectedCRSSelector::getSelectedCRSTemplate()
 {
 	QVariant item_data = crs_dropdown->itemData(crs_dropdown->currentIndex());
 	if (!item_data.canConvert<void*>())
@@ -866,14 +867,16 @@ QString ProjectedCRSSelector::getSelectedCRSSpec()
 		return QString();
 	
 	CRSTemplate* temp = static_cast<CRSTemplate*>(item_data.value<void*>());
-	QString spec = temp->getSpecTemplate();
+	QString spec = temp->specificationTemplate();
 	
-	for (int param = 0; param < temp->getNumParams(); ++param)
+	int row = 0;
+	for (auto&& param : temp->parameters())
 	{
-		QWidget* edit_widget = layout->itemAt(1 + param, QFormLayout::FieldRole)->widget();
-		std::vector<QString> spec_value_list = temp->getParam(param).getSpecValue(edit_widget);
-		for (std::size_t i = 0; i < spec_value_list.size(); ++ i)
-			spec = spec.arg(spec_value_list[i]);
+		++row;
+		QWidget* edit_widget = layout->itemAt(row, QFormLayout::FieldRole)->widget();
+		auto spec_values = param->specValues(param->value(edit_widget));
+		for (auto&& value :  spec_values)
+			spec = spec.arg(value);
 	}
 	
 	return spec;
@@ -887,9 +890,9 @@ int ProjectedCRSSelector::getSelectedCustomItemId()
 	return item_data.toInt();
 }
 
-void ProjectedCRSSelector::selectItem(CRSTemplate* temp)
+void ProjectedCRSSelector::selectItem(const CRSTemplate* temp)
 {
-	int index = crs_dropdown->findData(qVariantFromValue<void*>(temp));
+	int index = crs_dropdown->findData(qVariantFromValue<void*>(const_cast<CRSTemplate*>(temp)));
 	blockSignals(true);
 	crs_dropdown->setCurrentIndex(index);
 	blockSignals(false);
@@ -905,36 +908,41 @@ void ProjectedCRSSelector::selectCustomItem(int id)
 
 int ProjectedCRSSelector::getNumParams()
 {
-	CRSTemplate* temp = getSelectedCRSTemplate();
+	auto temp = getSelectedCRSTemplate();
 	if (temp == NULL)
 		return 0;
 	else
-		return temp->getNumParams();
+		return (int)temp->parameters().size();
 }
 
 QString ProjectedCRSSelector::getParam(int i)
 {
-	CRSTemplate* temp = getSelectedCRSTemplate();
+	auto temp = getSelectedCRSTemplate();
 	Q_ASSERT(temp != NULL);
-	Q_ASSERT(i < temp->getNumParams());
+	Q_ASSERT(i < (int)temp->parameters().size());
 	
 	int widget_index = 3 + 2 * i;
-	return temp->getParam(i).getValue(layout->itemAt(widget_index)->widget());
+	return temp->parameters().at(i)->value(layout->itemAt(widget_index)->widget());
 }
 
 void ProjectedCRSSelector::setParam(int i, const QString& value)
 {
-	CRSTemplate* temp = getSelectedCRSTemplate();
+	auto temp = getSelectedCRSTemplate();
 	Q_ASSERT(temp != NULL);
-	Q_ASSERT(i < temp->getNumParams());
+	Q_ASSERT(i < (int)temp->parameters().size());
 	
 	int widget_index = 3 + 2 * i;
 	QWidget* edit_widget = layout->itemAt(widget_index)->widget();
 	if (!edit_widget->hasFocus())
 	{
 		const QSignalBlocker block(edit_widget);
-		temp->getParam(i).setValue(edit_widget, value);
+		temp->parameters().at(i)->setValue(edit_widget, value);
 	}
+}
+
+const Georeferencing& ProjectedCRSSelector::georeferencing() const
+{
+	return georef;
 }
 
 void ProjectedCRSSelector::crsDropdownChanged(int index)
@@ -960,9 +968,9 @@ void ProjectedCRSSelector::crsDropdownChanged(int index)
 	if (item_data.canConvert<void*>())
 	{
 		CRSTemplate* temp = static_cast<CRSTemplate*>(item_data.value<void*>());
-		for (int param = 0; param < temp->getNumParams(); ++param)
+		for (auto&& param : temp->parameters())
 		{
-			layout->addRow(temp->getParam(param).desc + ":", temp->getParam(param).createEditWidget(this));
+			layout->addRow(param->name() + ":", param->createEditor(*this));
 		}
 	}
 	
@@ -971,7 +979,7 @@ void ProjectedCRSSelector::crsDropdownChanged(int index)
 	emit crsEdited(true);
 }
 
-void ProjectedCRSSelector::crsParamEdited(QString)
+void ProjectedCRSSelector::crsParameterEdited()
 {
 	emit crsEdited(false);
 }
@@ -1004,7 +1012,7 @@ SelectCRSDialog::SelectCRSDialog(Map* map, QWidget* parent, bool show_take_from_
 	projected_radio = new QRadioButton(tr("From list"));
 	if (!map_radio)
 		projected_radio->setChecked(true);
-	crs_edit = new ProjectedCRSSelector();
+	crs_edit = new ProjectedCRSSelector(map->getGeoreferencing());
 	
 	spec_radio = new QRadioButton(tr("From specification"));
 	

@@ -1,6 +1,6 @@
 /*
- *    Copyright 2013, 2013, 2014 Thomas Schöps
- *    Copyright 2014 Kai Pastor
+ *    Copyright 2013, 2014 Thomas Schöps
+ *    Copyright 2014, 2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -21,76 +21,85 @@
 
 #include "crs_template.h"
 
-#include <vector>
-
-#include <QCompleter>
-#include <QLineEdit>
-#include <QSpinBox>
-
-#include "../util_gui.h"
 
 
-std::vector<CRSTemplate*> CRSTemplate::crs_templates;
+// From crs_template_implementation.h/.cpp
+namespace CRSTemplates
+{
+	CRSTemplateRegistry::TemplateList defaultList();
+}
 
 
-// ### CRSTemplate::Param ###
 
-CRSTemplate::Param::Param(const QString& desc)
- : desc(desc)
+// ### CRSTemplateParameter ###
+
+CRSTemplateParameter::CRSTemplateParameter(const QString& key, const QString& description)
+ : param_id(key)
+ , param_name(description)
 {
 	// nothing
 }
 
-CRSTemplate::Param::~Param()
+CRSTemplateParameter::~CRSTemplateParameter()
 {
 	// nothing, not inlined
+}
+
+std::vector<QString> CRSTemplateParameter::specValues(const QString& edit_value) const
+{
+	return { edit_value };
 }
 
 
 
 // ### CRSTemplate ###
 
-CRSTemplate::CRSTemplate(const QString& id, const QString& name, const QString& coordinates_name, const QString& spec_template)
-: id(id)
-, name(name)
-, coordinates_name(coordinates_name)
-, spec_template(spec_template)
+CRSTemplate::CRSTemplate(
+        const QString& id,
+        const QString& name,
+        const QString& coordinates_name,
+        const QString& spec_template,
+        ParameterList&& parameters)
+ : template_id(id)
+ , template_name(name)
+ , coordinates_name(coordinates_name)
+ , spec_template(spec_template)
+ , params(std::move(parameters))
 {
 	// nothing
 }
 
 CRSTemplate::~CRSTemplate()
 {
-	for (std::size_t i = 0; i < params.size(); ++i)
-		delete params[i];
+	for (auto&& param : params)
+		delete param;
 }
 
-void CRSTemplate::addParam(Param* param)
+
+
+// ### CRSTemplateRegistry ###
+
+CRSTemplateRegistry::CRSTemplateRegistry()
 {
-	params.push_back(param);
+	static auto shared_list = CRSTemplates::defaultList();
+	this->templates = &shared_list;
 }
 
-std::size_t CRSTemplate::getNumCRSTemplates()
+const CRSTemplate* CRSTemplateRegistry::find(const QString& id) const
 {
-	return crs_templates.size();
-}
-
-CRSTemplate& CRSTemplate::getCRSTemplate(std::size_t index)
-{
-	return *crs_templates[index];
-}
-
-CRSTemplate* CRSTemplate::getCRSTemplate(const QString& id)
-{
-	for (std::size_t i = 0, end = crs_templates.size(); i < end; ++i)
+	const CRSTemplate* ret = nullptr;
+	for (auto&& temp : *templates)
 	{
-		if (crs_templates[i]->getId() == id)
-			return crs_templates[i];
+		if (temp->id() == id) {
+			ret = temp.get();
+			break;
+		}
+			
 	}
-	return NULL;
+	return ret;
 }
 
-void CRSTemplate::registerCRSTemplate(CRSTemplate* temp)
+void CRSTemplateRegistry::add(std::unique_ptr<const CRSTemplate> temp)
 {
-	crs_templates.push_back(temp);
+	templates->push_back(std::move(temp));
 }

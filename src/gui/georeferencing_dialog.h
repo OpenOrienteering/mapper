@@ -28,6 +28,7 @@
 #include <QScopedPointer>
 
 #include "../tool.h"
+#include "../core/crs_template.h"
 
 QT_BEGIN_NAMESPACE
 class QComboBox;
@@ -317,11 +318,11 @@ private:
 
 /// Combobox for projected coordinate reference system (CRS) selection,
 /// with edit widgets below to specify the free parameters, if necessary.
-class ProjectedCRSSelector : public QWidget
+class ProjectedCRSSelector : public QWidget, public CRSParameterWidgetObserver
 {
 Q_OBJECT
 public:
-	ProjectedCRSSelector(QWidget* parent = NULL);
+	ProjectedCRSSelector(const Georeferencing& georef, QWidget* parent = NULL);
 	
 	/// Adds a custom text item at the top which can be identified by the given id.
 	void addCustomItem(const QString& text, int id);
@@ -329,7 +330,7 @@ public:
 	
 	/// Returns the selected CRS template,
 	/// or NULL if a custom item is selected
-	CRSTemplate* getSelectedCRSTemplate();
+	const CRSTemplate* getSelectedCRSTemplate();
 	
 	/// Returns the selected CRS specification string,
 	/// or an empty string if a custom item is selected
@@ -341,7 +342,7 @@ public:
 	
 
 	/// Selects the given item
-	void selectItem(CRSTemplate* temp);
+	void selectItem(const CRSTemplate* temp);
 	
 	/// Selects the given item
 	void selectCustomItem(int id);
@@ -358,6 +359,12 @@ public:
 	/// Does not emit crsEdited().
 	void setParam(int i, const QString& value);
 	
+	
+	/**
+	 * Returns the current georeferencing.
+	 */
+	const Georeferencing& georeferencing() const override;
+	
 signals:
 	/// Called when the user edit the CRS.
 	/// system_changed is true if the whole system was switched,
@@ -366,9 +373,10 @@ signals:
 	
 private slots:
 	void crsDropdownChanged(int index);
-	void crsParamEdited(QString dont_use);
+	void crsParameterEdited() override;
 	
 private:
+	const Georeferencing& georef;
 	QComboBox* crs_dropdown;
 	int num_custom_items;
 	

@@ -1,6 +1,6 @@
 /*
- *    Copyright 2013, 2013, 2014 Thomas Schöps
- *    Copyright 2014 Kai Pastor
+ *    Copyright 2013, 2014 Thomas Schöps
+ *    Copyright 2014, 2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -22,98 +22,280 @@
 #ifndef _OPENORIENTEERING_CRS_TEMPLATE_H_
 #define _OPENORIENTEERING_CRS_TEMPLATE_H_
 
-#include <QWidget>
+#include <memory>
+#include <vector>
+
+#include <QString>
+
+class QObject;
+class QWidget;
+
+class Georeferencing;
+
+/**
+ * Abstract base class for users of CRS parameter widgets.
+ */
+class CRSParameterWidgetObserver
+{
+public:
+	/**
+	 * Informs the observer about a change in a CRS parameter widget.
+	 */
+	virtual void crsParameterEdited() = 0;
+	
+	/**
+	 * Returns the current georeferencing.
+	 * 
+	 * CRS parameter widgets may use this georeferencing for calculating values.
+	 */
+	virtual const Georeferencing& georeferencing() const = 0;
+};
+
+
+
+/**
+ * Abstract base class for parameters in CRSTemplates.
+ */
+class CRSTemplateParameter
+{
+public:
+	using WidgetObserver = CRSParameterWidgetObserver;
+	
+	/**
+	 * Constructs a new parameter with the given key and description.
+	 */
+	CRSTemplateParameter(const QString& id, const QString& name);
+	
+	/**
+	 * Destructor.
+	 */
+	virtual ~CRSTemplateParameter();
+	
+	/**
+	 * Returns the parameter's permanent unique ID.
+	 */
+	QString id() const;
+	
+	/**
+	 * Returns the parameter's display name.
+	 */
+	QString name() const;
+	
+	/**
+	 * Creates a widget which can be used to edit the value.
+	 * 
+	 * The widget should be simple in the sense that it can be used as a field
+	 * in a QFormLayout, together with the parameter's label.
+	 */
+	virtual QWidget* createEditor(WidgetObserver& widget_observer) const = 0;
+	
+	/**
+	 * Return a list of actual specification parameters values from a value in
+	 * storage format.
+	 * 
+	 * The default implementation returns a vector which contains just the
+	 * single edit_value.
+	 */
+	virtual std::vector<QString> specValues(const QString& edit_value) const;
+	
+	/** 
+	 * Return the widget's value(s) in form of a single string.
+	 * 
+	 * This string can be stored and used for restoring the widget.
+	 * 
+	 * \see CRSTemplateParameter::setValue
+	 */
+	virtual QString value(const QWidget* edit_widget) const = 0;
+	
+	/**
+	 * Sets the widget to a stored value.
+	 * 
+	 * \see CRSTemplateParameter::value
+	 */
+	virtual void setValue(QWidget* edit_widget, const QString& value) = 0;
+	
+private:
+	const QString param_id;
+	const QString param_name;
+};
+
 
 
 /**
  * A template for a coordinate reference system specification (CRS) string.
  * 
- * A CRSTemplate may contain one or more parameters described by the Param struct.
- * For each param, spec_template must contain a number of free parameters for QString::arg(),
- * e.g. "%1" for the first parameter.
+ * A CRSTemplate may contain one or more parameters described by the 
+ * CRSTemplateParameter class. For each parameter, spec_template must contain a
+ * number of free parameters for QString::arg(), e.g. "%1" for the first parameter.
  */
-class CRSTemplate
+struct CRSTemplate
 {
 public:
-	/**
-	 * Abstract base class for parameters in CRSTemplates.
-	 */
-	struct Param
-	{
-		Param(const QString& desc);
-		virtual ~Param();
-		/** Must create a widget which can be used to edit the value. */
-		virtual QWidget* createEditWidget(QObject* edit_receiver) const = 0;
-		/** Must return the widget's value(s) in a form so they can be pasted into
-		 *  the CRS specification.
-		 */
-		virtual std::vector<QString> getSpecValue(QWidget* edit_widget) const = 0;
-		/** Must return the widget's value in a form so it can be stored */
-		virtual QString getValue(QWidget* edit_widget) const = 0;
-		/** Must set the stored value in the widget */
-		virtual void setValue(QWidget* edit_widget, const QString& value) = 0;
-		
-		const QString desc;
-	};
+	using Parameter = CRSTemplateParameter;
+	
+	using ParameterList = std::vector<Parameter*>;
 	
 	/**
 	 * Creates a new CRS template.
+	 * 
 	 * The id must be unique and different from "Local".
+	 * The template takes ownership of the parameters in the list.
 	 */
-	CRSTemplate(const QString& id, const QString& name,
-				const QString& coordinates_name, const QString& spec_template);
+	CRSTemplate(
+	        const QString& template_id,
+	        const QString& template_name,
+	        const QString& coordinates_name,
+	        const QString& spec_template,
+	        ParameterList&& parameters
+	);
+	
+	// Copying of parameters is not implemented here.
+	CRSTemplate(const CRSTemplate&) = delete;
+	
+	/**
+	 * Destructor.
+	 * 
+	 * This deletes the parameters.
+	 */
 	~CRSTemplate();
 	
-	/**
-	 * Adds a parameter to this template.
-	 * A corresponding "%x" (%0, %1, ...) entry must exist in the spec template,
-	 * where the parameter value will be pasted using QString.arg() when
-	 * applying the CRSTemplate.
-	 */
-	void addParam(Param* param);
+	// Copying of parameters is not implemented here.
+	CRSTemplate& operator=(const CRSTemplate&) = delete;
 	
-	/** Returns the unique ID of this template. */
-	inline const QString& getId() const {return id;}
-	/** Returns the user-visible name of this template. */
-	inline const QString& getName() const {return name;}
-	/**
-	 * Returns the name for the coordinates of this template, e.g.
-	 * "UTM coordinates".
-	 */
-	inline const QString& getCoordinatesName() const {return coordinates_name;}
-	/** Returns the specification string template in Proj.4 format. */
-	inline const QString& getSpecTemplate() const {return spec_template;}
-	/** Returns the number of free parameters in this template. */
-	inline int getNumParams() const {return (int)params.size();}
-	/** Returns a reference to the i-th parameter. */
-	inline Param& getParam(int index) {return *params[index];}
-	
-	// CRS Registry
-	
-	/** Returns the number of CRS templates which are registered */
-	static std::size_t getNumCRSTemplates();
-	
-	/** Returns a registered CRS template by index */
-	static CRSTemplate& getCRSTemplate(std::size_t index);
 	
 	/**
-	 * Returns a registered CRS template by id,
-	 * or NULL if the given id does not exist
+	 * Returns the unique ID of this template.
 	 */
-	static CRSTemplate* getCRSTemplate(const QString& id);
+	QString id() const;
 	
-	/** Registers a CRS template */
-	static void registerCRSTemplate(CRSTemplate* temp);
+	/**
+	 * Returns the display name of this template.
+	 */
+	QString name() const;
+	
+	/**
+	 * Returns the display name for the coordinates of this template,
+	 * e.g. "UTM coordinates".
+	 */
+	QString coordinatesName() const;
+	
+	/** 
+	 * Returns the specification string template in Proj.4 format.
+	 */
+	QString specificationTemplate() const;
+	
+	/**
+	 * Returns the parameters.
+	 */
+	const ParameterList& parameters() const;
+	
 	
 private:
-	QString id;
-	QString name;
-	QString coordinates_name;
-	QString spec_template;
-	std::vector<Param*> params;
-	
-	// CRS Registry
-	static std::vector<CRSTemplate*> crs_templates;
+	const QString template_id;
+	const QString template_name;
+	const QString coordinates_name;
+	const QString spec_template;
+	const ParameterList params;
 };
+
+
+
+/**
+ * A directory of known CRS templates.
+ * 
+ * All instances of this class provide access to the same list.
+ */
+class CRSTemplateRegistry
+{
+public:
+	using TemplateList = std::vector< std::unique_ptr<const CRSTemplate> >;
+	
+	/**
+	 * Creates an object for accessing the CRS template directory.
+	 */
+	CRSTemplateRegistry();
+	
+	/**
+	 * Returns the list of registered CRS templates.
+	 */
+	const TemplateList& list() const;
+	
+	/**
+	 * Finds the registered CRS template with the given id,
+	 * or returns nullptr if the given id does not exist.
+	 */
+	const CRSTemplate* find(const QString& id) const;
+	
+	/**
+	 * Registers a CRS template.
+	 * 
+	 * Note that the directory and thus the template outlives the
+	 * CRSTemplateRegistry object.
+ 	 */
+	void add(std::unique_ptr<const CRSTemplate> temp);
+	
+private:
+	TemplateList* templates;
+};
+
+
+
+//### CRSTemplateParameter inline code ###
+
+inline
+QString CRSTemplateParameter::id() const
+{
+	return param_id;
+}
+
+inline
+QString CRSTemplateParameter::name() const
+{
+	return param_name;
+}
+
+
+
+//### CRSTemplate inline code ###
+
+inline
+QString CRSTemplate::id() const
+{
+	return template_id;
+}
+
+inline
+QString CRSTemplate::name() const
+{
+	return template_name;
+}
+
+inline
+QString CRSTemplate::coordinatesName() const
+{
+	return coordinates_name;
+}
+
+inline
+QString CRSTemplate::specificationTemplate() const
+{
+	return spec_template;
+}
+
+inline
+const CRSTemplate::ParameterList& CRSTemplate::parameters() const
+{
+	return params;
+}
+
+
+
+//### CRSTemplateRegistry inline code ###
+
+inline
+const CRSTemplateRegistry::TemplateList& CRSTemplateRegistry::list() const
+{
+	return *templates;
+}
 
 #endif

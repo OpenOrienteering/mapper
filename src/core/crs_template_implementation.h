@@ -22,34 +22,80 @@
 #ifndef _OPENORIENTEERING_CRS_TEMPLATE_IMPLEMENTATION_H_
 #define _OPENORIENTEERING_CRS_TEMPLATE_IMPLEMENTATION_H_
 
-
 #include "crs_template.h"
+
+#include <memory>
+
+class QLineEdit;
+class QVariant;
+class QWidget;
+
+class LatLon;
 
 
 /**
- * This namespace collects CRS templates implementation.
+ * This namespace collects CRS template implementations
  */
 namespace CRSTemplates
 {
 
 /**
- * Registers a list of known CRS Templates.
+ * Creates and returns a list of known CRS Templates.
  */
-void registerProjectionTemplates();
+CRSTemplateRegistry::TemplateList defaultList();
 
 
 
 /**
- * CRSTemplate parameter specifying an UTM zone.
+ * CRSTemplate parameter specifying a text parameter.
  */
-class UTMZoneParam : public CRSTemplate::Param
+class TextParameter : public CRSTemplateParameter
 {
 public:
-	UTMZoneParam(const QString& desc);
-	QWidget* createEditWidget(QObject* edit_receiver) const override;
-	std::vector<QString> getSpecValue(QWidget* edit_widget) const override;
-	QString getValue(QWidget* edit_widget) const override;
+	TextParameter(const QString& id, const QString& name);
+	QWidget* createEditor(WidgetObserver& observer) const override;
+	QString value(const QWidget* edit_widget) const override;
 	void setValue(QWidget* edit_widget, const QString& value) override;
+	
+protected:
+	/// The type of editor widget returned from createEditor.
+	using Editor = QLineEdit;
+};
+
+
+
+/**
+ * CRSTemplate parameter giving a full specification.
+ */
+class FullSpecParameter : public TextParameter
+{
+public:
+	FullSpecParameter(const QString& id, const QString& name);
+	QWidget* createEditor(WidgetObserver& observer) const override;
+	void setValue(QWidget* edit_widget, const QString& value) override;
+};
+
+
+
+/**
+ * CRSTemplate parameter specifying a UTM zone.
+ */
+class UTMZoneParameter : public CRSTemplateParameter
+{
+public:
+	UTMZoneParameter(const QString& id, const QString& name);
+	~UTMZoneParameter();
+	QWidget* createEditor(WidgetObserver& observer) const override;
+	std::vector<QString> specValues(const QString& edit_value) const override;
+	QString value(const QWidget* edit_widget) const override;
+	void setValue(QWidget* edit_widget, const QString& value) override;
+	
+	/**
+	 * Determines the UTM zone from the given latitude and longitude.
+	 * 
+	 * Returns a null value on error.
+	 */
+	static QVariant calculateUTMZone(const LatLon lat_lon);
 };
 
 
@@ -57,23 +103,23 @@ public:
 /**
  * CRSTemplate integer parameter, with values from an integer range.
  */
-class IntRangeParam : public CRSTemplate::Param
+class IntRangeParameter : public CRSTemplateParameter
 {
 public:
-	IntRangeParam(const QString& desc, int min_value, int max_value);
-	QWidget* createEditWidget(QObject* edit_receiver) const override;
-	std::vector<QString> getSpecValue(QWidget* edit_widget) const override;
-	QString getValue(QWidget* edit_widget) const override;
-	void setValue(QWidget* edit_widget, const QString& value) override;
+	using OutputList = std::vector< std::pair<int, int> >;
 	
-	// These methods return this to allow for stacking.
-	IntRangeParam* clearOutputs();
-	IntRangeParam* addDerivedOutput(int factor, int bias);
+	IntRangeParameter(const QString& id, const QString& name, int min_value, int max_value);
+	IntRangeParameter(const QString& id, const QString& name, int min_value, int max_value, OutputList&& outputs);
+	~IntRangeParameter();
+	QWidget* createEditor(WidgetObserver& observer) const override;
+	std::vector<QString> specValues(const QString& edit_value) const override;
+	QString value(const QWidget* edit_widget) const override;
+	void setValue(QWidget* edit_widget, const QString& value) override;
 	
 private:
 	const int min_value;
 	const int max_value;
-	std::vector<std::pair<int, int> > outputs;
+	const OutputList outputs;
 };
 
 } // namespace CRSTemplates

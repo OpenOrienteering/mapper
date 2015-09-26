@@ -472,9 +472,9 @@ QString Georeferencing::getProjectedCRSName() const
 	else if (state == Local)
 		return tr("Local");
 	
-	CRSTemplate* temp = CRSTemplate::getCRSTemplate(projected_crs_id);
+	auto temp = CRSTemplateRegistry().find(projected_crs_id);
 	if (temp)
-		return temp->getName();
+		return temp->name();
 	else
 		return tr("Projected");
 }

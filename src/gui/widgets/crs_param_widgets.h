@@ -1,6 +1,5 @@
 /*
- *    Copyright 2012, 2013, 2014 Thomas Schöps
- *    Copyright 2012, 2013, 2014 Kai Pastor
+ *    Copyright 2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -19,27 +18,37 @@
  */
 
 
-#include "global.h"
+#ifndef OPENORIENTEERING_CRS_PARAM_WIDGETS_H
+#define OPENORIENTEERING_CRS_PARAM_WIDGETS_H
 
-#include <mapper_config.h>
+#include <QWidget>
 
-#include "file_format_registry.h"
-#include "file_format_native.h"
-#include "file_format_ocad8.h"
-#include "file_format_xml.h"
-#include "fileformats/ocd_file_format.h"
+class QLineEdit;
 
-void doStaticInitializations()
+class BaseGeoreferencingDialog;
+class CRSParameterWidgetObserver;
+class LatLon;
+
+
+class UTMZoneEdit : public QWidget
 {
-	// Register the supported file formats
-	FileFormats.registerFormat(new XMLFileFormat());
-	FileFormats.registerFormat(new OcdFileFormat());
-#ifndef NO_NATIVE_FILE_FORMAT
-	FileFormats.registerFormat(new NativeFileFormat()); // TODO: Remove before release 1.0
-#endif
+	Q_OBJECT
+public:
+	UTMZoneEdit(CRSParameterWidgetObserver& observer, QWidget* parent = nullptr);
+	virtual ~UTMZoneEdit();
 	
-#if defined(Q_OS_ANDROID)
-	// Register file finder function needed by Proj.4
-	registerProjFileHelper();
+	QString text() const;
+	void setText(const QString& text);
+	bool calculateValue();
+	
+signals:
+	void textEdited(const QString& text); // TODO: rename to textChanged, see QLineEdit
+	
+private:
+	CRSParameterWidgetObserver& observer;
+	QLineEdit* line_edit;
+};
+
+
+
 #endif
-}

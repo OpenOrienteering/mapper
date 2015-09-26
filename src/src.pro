@@ -121,6 +121,7 @@ HEADERS += \
   gui/text_browser_dialog.h \
   gui/widgets/action_grid_bar.h \
   gui/widgets/color_dropdown.h \
+  gui/widgets/crs_param_widgets.h \
   gui/widgets/home_screen_widget.h \
   gui/widgets/key_button_bar.h \
   gui/widgets/mapper_proxystyle.h \
@@ -277,6 +278,7 @@ SOURCES += \
   gui/text_browser_dialog.cpp \
   gui/widgets/action_grid_bar.cpp \
   gui/widgets/color_dropdown.cpp \
+  gui/widgets/crs_param_widgets.cpp \
   gui/widgets/home_screen_widget.cpp \
   gui/widgets/key_button_bar.cpp \
   gui/widgets/mapper_proxystyle.cpp \
