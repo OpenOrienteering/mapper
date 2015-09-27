@@ -204,7 +204,7 @@ void GeoreferencingDialog::init(const Georeferencing* initial)
 	
 	setLayout(layout);
 	
-	connect(crs_edit, SIGNAL(crsEdited(bool)), this, SLOT(crsEdited()));
+	connect(crs_edit, SIGNAL(crsChanged()), this, SLOT(crsEdited()));
 	connect(crs_spec_edit, SIGNAL(textEdited(QString)), this, SLOT(crsEdited()));
 	
 	connect(map_x_edit, SIGNAL(valueChanged(double)), this, SLOT(mapRefChanged()));
@@ -259,7 +259,7 @@ void GeoreferencingDialog::georefStateChanged()
 	switch (georef->getState())
 	{
 	case Georeferencing::Local:
-		crs_edit->selectCustomItem(2);
+		crs_edit->setCurrentItem(2);
 		crs_spec_edit->clear();
 		keep_geographic_radio->setEnabled(false);
 		keep_projected_radio->setChecked(true);
@@ -302,7 +302,7 @@ void GeoreferencingDialog::projectionChanged()
 	{
 		if (georef->getProjectedCRSId().isEmpty())
 		{
-			crs_edit->selectCustomItem(1);
+			crs_edit->setCurrentItem(1);
 		}
 		else
 		{
@@ -312,13 +312,11 @@ void GeoreferencingDialog::projectionChanged()
 			{
 				// The CRS id is not there anymore or the number of parameters has changed.
 				// Enter as custom spec.
-				crs_edit->selectCustomItem(1);
+				crs_edit->setCurrentItem(1);
 			}
 			else
 			{
-				crs_edit->selectItem(temp);
-				for (int i = 0; i < crs_edit->getNumParams(); ++i)
-					crs_edit->setParam(i, params[i]);
+				crs_edit->setCurrentCRS(temp, params);
 				
 				Georeferencing georef_copy(*georef);
 				updateZone(georef_copy); // will trigger crsEdited() if neccessary
@@ -477,22 +475,22 @@ void GeoreferencingDialog::updateWidgets()
 	status_label->setVisible(georef->getState() != Georeferencing::Local);
 	status_display_label->setVisible(georef->getState() != Georeferencing::Local);
 	
-	bool proj_spec_visible = crs_edit->getSelectedCustomItemId() == 1;
+	bool proj_spec_visible = crs_edit->currentCustomItem() == 1;
 	crs_spec_label->setVisible(proj_spec_visible);
 	crs_spec_edit->setVisible(proj_spec_visible);
 	
 	QString projected_ref_label_string;
 	if (proj_spec_visible)
 		projected_ref_label_string = tr("Projected coordinates:");
-	else if (crs_edit->getSelectedCustomItemId() == 2)
+	else if (crs_edit->currentCustomItem() == 2)
 		projected_ref_label_string = tr("Local coordinates:");
 	else
-		projected_ref_label_string = crs_edit->getSelectedCRSTemplate()->coordinatesName() + ":";
+		projected_ref_label_string = crs_edit->currentCRSTemplate()->coordinatesName() + ":";
 	projected_ref_label->setText(projected_ref_label_string);
 	
 	bool geographic_coords_enabled =
 		(proj_spec_visible ||
-		 crs_edit->getSelectedCustomItemId() == -1);
+		 crs_edit->currentCustomItem() == -1);
 	lat_edit->setEnabled(geographic_coords_enabled);
 	lon_edit->setEnabled(geographic_coords_enabled);
 	link_label->setEnabled(geographic_coords_enabled);
@@ -506,12 +504,12 @@ void GeoreferencingDialog::updateWidgets()
 void GeoreferencingDialog::updateDeclinationButton()
 {
 	/*
-	bool dialog_enabled = crs_edit->getSelectedCustomItemId() != 0;
-	bool proj_spec_visible = crs_edit->getSelectedCustomItemId() == 1;
+	bool dialog_enabled = crs_edit->currentCustomItem() != 0;
+	bool proj_spec_visible = crs_edit->currentCustomItem() == 1;
 	bool geographic_coords_enabled =
 		dialog_enabled &&
 		(proj_spec_visible ||
-		 crs_edit->getSelectedCustomItemId() == -1);
+		 crs_edit->currentCustomItem() == -1);
 	*/
 	bool enabled = lat_edit->isEnabled() && !declination_query_in_progress;
 	declination_button->setEnabled(enabled);
@@ -530,7 +528,7 @@ void GeoreferencingDialog::crsEdited()
 {
 	Georeferencing georef_copy = *georef;
 	
-	QString spec = crs_edit->getSelectedCRSSpec();
+	QString spec = crs_edit->currentCRSSpec();
 	if (!spec.isEmpty())
 	{
 		const QSignalBlocker block(crs_spec_edit);
@@ -543,17 +541,16 @@ void GeoreferencingDialog::crsEdited()
 			spec = "?";
 	}
 	
-	auto crs_template = crs_edit->getSelectedCRSTemplate();
+	auto crs_template = crs_edit->currentCRSTemplate();
 	std::vector<QString> crs_params;
 	
-	int selected_item_id = crs_edit->getSelectedCustomItemId();
+	int selected_item_id = crs_edit->currentCustomItem();
 	switch (selected_item_id)
 	{
 	case -1:
 		// CRS from list
 		Q_ASSERT(crs_template != NULL);
-		for (auto i = 0u; i < crs_template->parameters().size(); ++i)
-			crs_params.push_back(crs_edit->getParam(i));
+		crs_params = crs_edit->parameters();
 		georef_copy.setProjectedCRS(crs_template->id(), spec, crs_params);
 		georef_copy.setState(Georeferencing::Normal); // Allow invalid spec
 		break;
@@ -585,9 +582,8 @@ void GeoreferencingDialog::crsEdited()
 		if (updateZone(georef_copy))
 		{
 			Q_ASSERT(crs_params.size() == crs_template->parameters().size());
-			spec = crs_edit->getSelectedCRSSpec();
-			for (auto i = 0u; i < crs_template->parameters().size(); ++i)
-				crs_params[i] = crs_edit->getParam(i);
+			spec = crs_edit->currentCRSSpec();
+			crs_params = crs_edit->parameters();
 			georef_copy.setProjectedCRS(crs_template->id(), spec, crs_params);
 			if (keep_geographic_radio->isChecked())
 				georef_copy.setGeographicRefPoint(georef->getGeographicRefPoint(), !grivation_locked);
@@ -738,7 +734,7 @@ void GeoreferencingDialog::declinationReplyFinished(QNetworkReply* reply)
 
 bool GeoreferencingDialog::updateZone(const Georeferencing& georef)
 {
-	auto temp = crs_edit->getSelectedCRSTemplate();
+	auto temp = crs_edit->currentCRSTemplate();
 	if (!temp || temp->id() != "UTM")
 		return false;
 	
@@ -754,9 +750,11 @@ bool GeoreferencingDialog::updateZone(const Georeferencing& georef)
 			zone_no = 2 * (int(floor(lon) + 3.0) / 12) + 31; // Svalbard
 		QString zone = QString::number(zone_no);
 		zone.append((lat >= 0.0) ? " N" : " S");
-		if (zone != crs_edit->getParam(0))
+		auto crs_params = crs_edit->parameters();
+		if (!crs_params.empty() && zone != crs_params[0])
 		{
-			crs_edit->setParam(0, zone);
+			crs_params[0] = zone;
+			crs_edit->setCurrentCRS(crs_edit->currentCRSTemplate(), crs_params);
 			return true;
 		}
 	}

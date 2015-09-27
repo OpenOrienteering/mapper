@@ -116,7 +116,7 @@ SelectCRSDialog::SelectCRSDialog(Map* map, QWidget* parent, bool show_take_from_
 		connect(geographic_radio, SIGNAL(clicked()), this, SLOT(updateWidgets()));
 	connect(projected_radio, SIGNAL(clicked()), this, SLOT(updateWidgets()));
 	connect(spec_radio, SIGNAL(clicked()), this, SLOT(updateWidgets()));
-	connect(crs_edit, SIGNAL(crsEdited(bool)), this, SLOT(updateWidgets()));
+	connect(crs_edit, SIGNAL(crsChanged()), this, SLOT(updateWidgets()));
 	connect(crs_spec_edit, SIGNAL(textEdited(QString)), this, SLOT(crsSpecEdited(QString)));
 	connect(button_box, SIGNAL(accepted()), this, SLOT(accept()));
 	connect(button_box, SIGNAL(rejected()), this, SLOT(reject()));
@@ -145,7 +145,7 @@ void SelectCRSDialog::updateWidgets()
 	else if (geographic_radio && geographic_radio->isChecked())
 		crs_spec_edit->setText("+proj=latlong +datum=WGS84");
 	else if (projected_radio->isChecked())
-		crs_spec_edit->setText(crs_edit->getSelectedCRSSpec());
+		crs_spec_edit->setText(crs_edit->currentCRSSpec());
 	
 	crs_edit->setEnabled(projected_radio->isChecked());
 	crs_spec_layout->itemAt(0, QFormLayout::LabelRole)->widget()->setVisible(spec_radio->isChecked());
