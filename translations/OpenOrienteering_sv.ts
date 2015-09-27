@@ -7,7 +7,7 @@
         <location filename="../src/gui/about_dialog.cpp" line="152"/>
         <location filename="../src/gui/about_dialog.cpp" line="229"/>
         <source>About %1</source>
-        <translation type="unfinished">Om %1</translation>
+        <translation>Om %1</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="250"/>
@@ -17,7 +17,7 @@
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="254"/>
         <source>The OpenOrienteering developers in alphabetical order:</source>
-        <translation type="unfinished"></translation>
+        <translation>OpenOrienteerings utvecklarna i alfabetisk ordning:</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="256"/>
@@ -27,12 +27,12 @@
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="233"/>
         <source>A free software for drawing orienteering maps</source>
-        <translation type="unfinished"></translation>
+        <translation>Fri mjukvara för att rita orienteringskartor</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="237"/>
         <source>This program is free software: you can redistribute it and/or modify it under the terms of the &lt;a %1&gt;GNU General Public License (GPL), version&amp;nbsp;3&lt;/a&gt;, as published by the Free Software Foundation.</source>
-        <translation type="unfinished"></translation>
+        <translation>Detta program är öppen mjukvara: du kan sprida den och/eller modifiera den under vilkoren i &lt;a %1&gt;GNU General Public License (GPL), version&amp;nbsp;3&lt;/a&gt;, publicerad av Free Software Foundation</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="243"/>
@@ -42,7 +42,7 @@
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="258"/>
         <source>For contributions, thanks to:</source>
-        <translation type="unfinished"></translation>
+        <translation>Tack till dessa bidragsgivare:</translation>
     </message>
     <message>
         <source>This program uses the &lt;b&gt;Clipper library&lt;/b&gt; by Angus Johnson.</source>
@@ -62,12 +62,12 @@
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="362"/>
         <source>Open most recently used file</source>
-        <translation type="unfinished"></translation>
+        <translation>Öppna den senast använda filen</translation>
     </message>
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="367"/>
         <source>Show tip of the day</source>
-        <translation type="unfinished"></translation>
+        <translation>Visa dagens tips:</translation>
     </message>
 </context>
 <context>
@@ -438,12 +438,12 @@
     <message>
         <location filename="../src/color_dock_widget.cpp" line="48"/>
         <source>CMYK</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/color_dock_widget.cpp" line="48"/>
         <source>RGB</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/color_dock_widget.cpp" line="48"/>
@@ -484,7 +484,7 @@
     <message>
         <location filename="../src/color_dock_widget.cpp" line="100"/>
         <source>Double-click a color value to open a dialog.</source>
-        <translation type="unfinished"></translation>
+        <translation>Dubbelklicka ett färg värde för att öppna en dialog.</translation>
     </message>
     <message>
         <location filename="../src/color_dock_widget.cpp" line="178"/>
@@ -509,18 +509,18 @@
     <message>
         <location filename="../src/color_dock_widget.cpp" line="301"/>
         <source>Please enter a percentage from 0% to 100%!</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj ett värde från 0% till 100%!</translation>
     </message>
     <message>
         <location filename="../src/color_dock_widget.cpp" line="368"/>
         <location filename="../src/color_dock_widget.cpp" line="410"/>
         <source>Double click to define the color</source>
-        <translation type="unfinished"></translation>
+        <translation>Dubbelklicka för att definiera färgen</translation>
     </message>
     <message>
         <location filename="../src/color_dock_widget.cpp" line="375"/>
         <source>Click to select the name and click again to edit.</source>
-        <translation type="unfinished"></translation>
+        <translation>Klicka för att välja namnet, klicka igen för att redigera.</translation>
     </message>
     <message>
         <source>Please enter a valid number from 0 to 255, or specify a percentage from 0 to 100!</source>
@@ -541,17 +541,17 @@
     <message>
         <location filename="../src/symbol_combined.cpp" line="377"/>
         <source>- Private line symbol -</source>
-        <translation type="unfinished"></translation>
+        <translation>- Privat linje symbol -</translation>
     </message>
     <message>
         <location filename="../src/symbol_combined.cpp" line="378"/>
         <source>- Private area symbol -</source>
-        <translation type="unfinished"></translation>
+        <translation>- Privat yt symbol -</translation>
     </message>
     <message>
         <location filename="../src/symbol_combined.cpp" line="384"/>
         <source>Edit private symbol...</source>
-        <translation type="unfinished"></translation>
+        <translation>Redigera privat symbol...</translation>
     </message>
     <message>
         <location filename="../src/symbol_combined.cpp" line="404"/>
@@ -3231,7 +3231,7 @@ Skala om den importerade datan?</translation>
     <message>
         <location filename="../src/map.cpp" line="931"/>
         <source>default part</source>
-        <translation type="unfinished"></translation>
+        <translation>förvald del</translation>
     </message>
     <message>
         <location filename="../src/map.cpp" line="1302"/>
@@ -3256,7 +3256,7 @@ Skala om den importerade datan?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="677"/>
         <source>Print...</source>
-        <translation type="unfinished">Skriv ut…</translation>
+        <translation>Skriv ut…</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="689"/>
@@ -3311,7 +3311,7 @@ Skala om den importerade datan?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="706"/>
         <source>Set custom zoom factor...</source>
-        <translation>Ställ in egen zoom…</translation>
+        <translation>Ställ in egen zoomfaktor…</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="713"/>
@@ -3373,7 +3373,7 @@ Skala om den importerade datan?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="722"/>
         <source>Map notes...</source>
-        <translation>Kartnoteringar...</translation>
+        <translation>Kartanteckningar…</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="724"/>
@@ -3438,7 +3438,7 @@ Skala om den importerade datan?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="744"/>
         <source>Fill / Create border</source>
-        <translation>Fyll / skapa kantlinje</translation>
+        <translation>Fyll / Skapa kantlinje</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="745"/>
@@ -3519,13 +3519,13 @@ Skala om den importerade datan?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="696"/>
         <source>Show grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Visa rutnät</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="697"/>
         <location filename="../src/map_editor.cpp" line="1000"/>
         <source>Configure grid...</source>
-        <translation type="unfinished"></translation>
+        <translation>Redigera rutnät...</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="708"/>
@@ -3541,7 +3541,7 @@ Skala om den importerade datan?</translation>
         <location filename="../src/map_editor.cpp" line="710"/>
         <location filename="../src/template_dock_widget.cpp" line="89"/>
         <source>Hide all templates</source>
-        <translation type="unfinished"></translation>
+        <translation>Dölj alla backgrundsbilder</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="719"/>
@@ -3551,12 +3551,12 @@ Skala om den importerade datan?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="721"/>
         <source>Rotate map...</source>
-        <translation type="unfinished"></translation>
+        <translation>Rotera karta...</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="721"/>
         <source>Rotate the whole map</source>
-        <translation type="unfinished"></translation>
+        <translation>Rotera hela kartan</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="728"/>
@@ -3586,7 +3586,7 @@ Skala om den importerade datan?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="765"/>
         <source>Rotate pattern</source>
-        <translation type="unfinished"></translation>
+        <translation>Rotera mönster</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="766"/>
@@ -3596,7 +3596,7 @@ Skala om den importerade datan?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="768"/>
         <source>Unify areas</source>
-        <translation>Sätt ihop ytor</translation>
+        <translation>Slå ihop ytor</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="769"/>
@@ -3824,22 +3824,22 @@ Skala om den importerade datan?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="411"/>
         <source>The map is currently being edited. Please finish the edit operation before saving.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kartan redigeras, var vänlig avsluta redigeringen innan du sparar.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="416"/>
         <source>Map saved</source>
-        <translation type="unfinished"></translation>
+        <translation>Kartan sparades</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="679"/>
         <source>&amp;Image</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Bild</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="681"/>
         <source>&amp;PDF</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="694"/>
@@ -3854,7 +3854,7 @@ Skala om den importerade datan?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="701"/>
         <source>Pan</source>
-        <translation type="unfinished"></translation>
+        <translation>Panorera</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="711"/>
@@ -3864,7 +3864,7 @@ Skala om den importerade datan?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="715"/>
         <source>Replace symbol set...</source>
-        <translation type="unfinished"></translation>
+        <translation>Ersätt symboler...</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="730"/>
@@ -3879,17 +3879,17 @@ Skala om den importerade datan?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="733"/>
         <source>Edit lines</source>
-        <translation type="unfinished"></translation>
+        <translation>Redigera linjer</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="738"/>
         <source>Draw free-handedly</source>
-        <translation type="unfinished"></translation>
+        <translation>Rita på frihand</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="739"/>
         <source>Fill bounded areas</source>
-        <translation type="unfinished"></translation>
+        <translation>Fyll slutna ytor</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="741"/>
@@ -3899,42 +3899,42 @@ Skala om den importerade datan?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="770"/>
         <source>Cut away from area</source>
-        <translation type="unfinished"></translation>
+        <translation>Klip ut från yta</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="772"/>
         <source>Merge area holes</source>
-        <translation type="unfinished"></translation>
+        <translation>Slå ihop ythål</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="773"/>
         <source>Convert to curves</source>
-        <translation type="unfinished"></translation>
+        <translation>Konvertera till ytor</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="774"/>
         <source>Simplify path</source>
-        <translation type="unfinished"></translation>
+        <translation>Förenkla linje</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="775"/>
         <source>Cutout</source>
-        <translation type="unfinished"></translation>
+        <translation>Klipp ut</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="776"/>
-        <source>Cut away</source>
+        <source>Klipp bort</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="777"/>
         <source>Distribute points along path</source>
-        <translation type="unfinished"></translation>
+        <translation>Fördela punkter längs linje</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="784"/>
         <source>Paint on template settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Rita på bakgrund inställningar</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="790"/>
@@ -3979,7 +3979,7 @@ Skala om den importerade datan?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="805"/>
         <source>Align map with north</source>
-        <translation type="unfinished"></translation>
+        <translation>Justera kartan mot norr</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="807"/>
@@ -3991,7 +3991,7 @@ Skala om den importerade datan?</translation>
         <location filename="../src/map_editor.cpp" line="809"/>
         <location filename="../src/map_editor.cpp" line="3266"/>
         <source>Add new part...</source>
-        <translation type="unfinished"></translation>
+        <translation>Lägg till en ny del</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="810"/>
@@ -4013,34 +4013,34 @@ Skala om den importerade datan?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="856"/>
         <source>&amp;Export as...</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportera som...</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1011"/>
         <location filename="../src/map_editor.cpp" line="1016"/>
         <location filename="../src/map_editor.cpp" line="3201"/>
         <source>Map parts</source>
-        <translation type="unfinished"></translation>
+        <translation>Kartdelar</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1099"/>
         <source>Select symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj symbol</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1102"/>
         <source>Hide top bar</source>
-        <translation type="unfinished"></translation>
+        <translation>Dölj topp fältet</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1105"/>
         <source>Show top bar</source>
-        <translation type="unfinished"></translation>
+        <translation>Visa topp fältet</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1333"/>
         <source>Print / Export is not available in this program version!</source>
-        <translation type="unfinished"></translation>
+        <translation>Skriv ut / Exportera finns inte tillgänglig i denna version.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1752"/>
@@ -4053,7 +4053,9 @@ Skala om den importerade datan?</translation>
 symbol
 selected</source>
         <comment>Keep it short. Should not be much longer per line than the longest word in the original.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ingen
+symbol
+vald</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1809"/>
@@ -4061,7 +4063,9 @@ selected</source>
 symbols
 selected</source>
         <comment>Keep it short. Should not be much longer per line than the longest word in the original.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Flera
+symboler
+valda</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1894"/>
@@ -4071,7 +4075,7 @@ selected</source>
     <message>
         <location filename="../src/map_editor.cpp" line="1896"/>
         <source>Fill bounded areas.</source>
-        <translation type="unfinished"></translation>
+        <translation>Fyll slutna ytor.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1898"/>
@@ -4086,7 +4090,7 @@ selected</source>
     <message>
         <location filename="../src/map_editor.cpp" line="1991"/>
         <source>Deletes the selected object(s).</source>
-        <translation type="unfinished"></translation>
+        <translation>Radera valda object.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1993"/>
@@ -4297,12 +4301,12 @@ selected</source>
     <message>
         <location filename="../src/map_editor.cpp" line="2751"/>
         <source>Intersection failed.</source>
-        <translation type="unfinished">Delning misslyckades.</translation>
+        <translation>Delning misslyckades.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2757"/>
         <source>Difference failed.</source>
-        <translation type="unfinished">Differens misslyckades.</translation>
+        <translation>Differens misslyckades.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2763"/>
@@ -5062,7 +5066,7 @@ zooma med scrollhjulet om tillgängligt.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="1900"/>
         <source>OCD files of version %1 are not supported!</source>
-        <translation type="unfinished"></translation>
+        <translation>OCD %1 filer stödjs ej!</translation>
     </message>
 </context>
 <context>
@@ -5114,7 +5118,7 @@ zooma med scrollhjulet om tillgängligt.</translation>
         <location filename="../src/util/item_delegates.cpp" line="147"/>
         <location filename="../src/util/item_delegates.cpp" line="154"/>
         <source>%</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -5174,7 +5178,7 @@ zooma med scrollhjulet om tillgängligt.</translation>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="71"/>
         <source>Center all elements</source>
-        <translation type="unfinished"></translation>
+        <translation>Centera alla element</translation>
     </message>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="73"/>
@@ -5331,12 +5335,12 @@ zooma med scrollhjulet om tillgängligt.</translation>
     <message>
         <location filename="../src/gui/print_tool.cpp" line="354"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the print area. </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;b&gt;Dra&lt;/b&gt;: Flytta utskriftsområdet. </translation>
     </message>
     <message>
         <location filename="../src/gui/print_tool.cpp" line="358"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the map. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Dra&lt;/b&gt;: Flytta kartan. </translation>
     </message>
     <message>
         <location filename="../src/gui/print_tool.cpp" line="363"/>
@@ -5373,7 +5377,7 @@ zooma med scrollhjulet om tillgängligt.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="195"/>
         <source>Show grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Visa rutnät</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="108"/>
@@ -5383,7 +5387,7 @@ zooma med scrollhjulet om tillgängligt.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="79"/>
         <source>Printer:</source>
-        <translation type="unfinished"></translation>
+        <translation>Skrivare:</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="101"/>
@@ -5445,7 +5449,7 @@ zooma med scrollhjulet om tillgängligt.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="116"/>
         <source>Single page</source>
-        <translation type="unfinished"></translation>
+        <translation>En sida</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="117"/>
@@ -5455,12 +5459,12 @@ zooma med scrollhjulet om tillgängligt.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="118"/>
         <source>Map area:</source>
-        <translation type="unfinished"></translation>
+        <translation>Kartyta:</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="120"/>
         <source>Center print area</source>
-        <translation type="unfinished"></translation>
+        <translation>Centrera utskriftområde</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="88"/>
@@ -5471,7 +5475,7 @@ zooma med scrollhjulet om tillgängligt.</translation>
         <location filename="../src/gui/print_widget.cpp" line="132"/>
         <location filename="../src/gui/print_widget.cpp" line="135"/>
         <source>mm</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="136"/>
@@ -5481,17 +5485,17 @@ zooma med scrollhjulet om tillgängligt.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="140"/>
         <source>Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Inställningar</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="168"/>
         <source>Resolution:</source>
-        <translation type="unfinished"></translation>
+        <translation>Upplösning:</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="170"/>
         <source>Print in different scale:</source>
-        <translation type="unfinished"></translation>
+        <translation>Skriv ut i annan skala:</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="191"/>
@@ -5512,33 +5516,33 @@ zooma med scrollhjulet om tillgängligt.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="228"/>
         <source>Export...</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportera...</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="332"/>
         <source>PDF export</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="343"/>
         <source>Image export</source>
-        <translation type="unfinished"></translation>
+        <translation>Bild export</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="445"/>
         <source>Save to PDF</source>
-        <translation type="unfinished"></translation>
+        <translation>Spara som PDF</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="807"/>
         <location filename="../src/gui/print_widget.cpp" line="847"/>
         <source>dpi</source>
-        <translation type="unfinished">dpi</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="958"/>
         <source>Not supported on Android.</source>
-        <translation type="unfinished"></translation>
+        <translation>Stödjs ej på Android.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="964"/>
@@ -5558,27 +5562,27 @@ zooma med scrollhjulet om tillgängligt.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1005"/>
         <source>PNG</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1006"/>
         <source>BMP</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1007"/>
         <source>TIFF</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1008"/>
         <source>JPEG</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1012"/>
         <source>PDF</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1015"/>
@@ -5606,13 +5610,13 @@ zooma med scrollhjulet om tillgängligt.</translation>
         <location filename="../src/gui/print_widget.cpp" line="147"/>
         <source>Vector
 graphics</source>
-        <translation type="unfinished"></translation>
+        <translation>Vektorgrafik</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="148"/>
         <source>Raster
 graphics</source>
-        <translation type="unfinished"></translation>
+        <translation>Rastergrafik</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="149"/>
@@ -5639,17 +5643,17 @@ separations</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1073"/>
         <source>Canceled.</source>
-        <translation type="unfinished"></translation>
+        <translation>Avbruten.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1078"/>
         <source>Printing</source>
-        <translation type="unfinished"></translation>
+        <translation>Skriver ut</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1079"/>
         <source>The print job could not be stopped.</source>
-        <translation type="unfinished"></translation>
+        <translation>Utskriften kunde inte stoppas.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1085"/>
@@ -5661,12 +5665,12 @@ separations</source>
         <location filename="../src/gui/print_widget.cpp" line="1148"/>
         <source>Unknown</source>
         <comment>Paper size</comment>
-        <translation type="unfinished">Okänd</translation>
+        <translation>Okänd</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1156"/>
         <source>The map area is empty. Output canceled.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kartområdet är tomt.</translation>
     </message>
     <message>
         <source>Custom</source>
@@ -5713,7 +5717,7 @@ separations</source>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="94"/>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Tillbaka</translation>
     </message>
 </context>
 <context>
@@ -6120,7 +6124,7 @@ Högsta versionen som stöds är %2.</translation>
     <message>
         <location filename="../src/template_dialog_reopen.cpp" line="32"/>
         <source>Reopen template</source>
-        <translation type="unfinished"></translation>
+        <translation>Återöppna bakgrundsbild</translation>
     </message>
     <message>
         <location filename="../src/template_dialog_reopen.cpp" line="34"/>
@@ -6130,7 +6134,7 @@ Högsta versionen som stöds är %2.</translation>
     <message>
         <location filename="../src/template_dialog_reopen.cpp" line="36"/>
         <source>Closed templates:</source>
-        <translation type="unfinished"></translation>
+        <translation>Stängda bakgrundsbilder:</translation>
     </message>
     <message>
         <location filename="../src/template_dialog_reopen.cpp" line="39"/>
@@ -6140,7 +6144,7 @@ Högsta versionen som stöds är %2.</translation>
     <message>
         <location filename="../src/template_dialog_reopen.cpp" line="42"/>
         <source>Active templates:</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktiva bakgrundsbilder</translation>
     </message>
     <message>
         <location filename="../src/template_dialog_reopen.cpp" line="51"/>
@@ -6153,7 +6157,7 @@ Högsta versionen som stöds är %2.</translation>
     <message>
         <location filename="../src/symbol_dialog_replace.cpp" line="39"/>
         <source>Replace symbol set</source>
-        <translation type="unfinished"></translation>
+        <translation>Ersätt symboluppsättning</translation>
     </message>
     <message>
         <location filename="../src/symbol_dialog_replace.cpp" line="41"/>
@@ -6193,7 +6197,7 @@ Högsta versionen som stöds är %2.</translation>
     <message>
         <location filename="../src/symbol_dialog_replace.cpp" line="59"/>
         <source>Original</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/symbol_dialog_replace.cpp" line="59"/>
@@ -6203,7 +6207,7 @@ Högsta versionen som stöds är %2.</translation>
     <message>
         <location filename="../src/symbol_dialog_replace.cpp" line="290"/>
         <source>- None -</source>
-        <translation type="unfinished"></translation>
+        <translation>- Inga -</translation>
     </message>
     <message>
         <location filename="../src/symbol_dialog_replace.cpp" line="322"/>
@@ -6218,12 +6222,12 @@ Högsta versionen som stöds är %2.</translation>
     <message>
         <location filename="../src/symbol_dialog_replace.cpp" line="330"/>
         <source>Cannot load map file, aborting.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan inte öppna kartfil, avbryter.</translation>
     </message>
     <message>
         <location filename="../src/symbol_dialog_replace.cpp" line="336"/>
         <source>Warning</source>
-        <translation type="unfinished">Varning</translation>
+        <translation>Varning</translation>
     </message>
     <message>
         <location filename="../src/symbol_dialog_replace.cpp" line="337"/>
@@ -6236,68 +6240,68 @@ Högsta versionen som stöds är %2.</translation>
     <message>
         <location filename="../src/map_dialog_rotate.cpp" line="33"/>
         <source>Rotate map</source>
-        <translation type="unfinished"></translation>
+        <translation>Rotera karta</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_rotate.cpp" line="41"/>
         <source>Angle (counter-clockwise):</source>
-        <translation type="unfinished"></translation>
+        <translation>Grader(motsols):</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_rotate.cpp" line="39"/>
         <source>°</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/map_dialog_rotate.cpp" line="37"/>
         <source>Rotation parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>Rotationsparametrar</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_rotate.cpp" line="43"/>
         <source>Rotate around:</source>
-        <translation type="unfinished"></translation>
+        <translation>Rotera runt:</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_rotate.cpp" line="45"/>
         <source>Map coordinate system origin</source>
         <comment>Rotation center point</comment>
-        <translation type="unfinished"></translation>
+        <translation>Rotationscentrums koordinater</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_rotate.cpp" line="49"/>
         <source>Georeferencing reference point</source>
         <comment>Rotation center point</comment>
-        <translation type="unfinished"></translation>
+        <translation>Georefererat rotationscentrum</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_rotate.cpp" line="54"/>
         <source>Other point,</source>
         <comment>Rotation center point</comment>
-        <translation type="unfinished"></translation>
+        <translation>Annan rotationscentrums punkt</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_rotate.cpp" line="55"/>
         <location filename="../src/map_dialog_rotate.cpp" line="56"/>
         <source>mm</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/map_dialog_rotate.cpp" line="59"/>
         <source>X:</source>
         <comment>x coordinate</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/map_dialog_rotate.cpp" line="61"/>
         <source>Y:</source>
         <comment>y coordinate</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/map_dialog_rotate.cpp" line="67"/>
         <source>Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Inställningar</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_rotate.cpp" line="69"/>
@@ -6320,12 +6324,12 @@ Högsta versionen som stöds är %2.</translation>
     <message>
         <location filename="../src/tool_rotate_pattern.cpp" line="156"/>
         <source>&lt;b&gt;Angle:&lt;/b&gt; %1° </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Vinkel:&lt;/b&gt; %1° </translation>
     </message>
     <message>
         <location filename="../src/tool_rotate_pattern.cpp" line="157"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Fixed angles. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Fasta vinklar. </translation>
     </message>
     <message>
         <location filename="../src/tool_rotate_pattern.cpp" line="161"/>
@@ -6346,23 +6350,23 @@ Högsta versionen som stöds är %2.</translation>
     <message>
         <location filename="../src/tool_rotate.cpp" line="184"/>
         <source>&lt;b&gt;Rotation:&lt;/b&gt; %1° </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/tool_rotate.cpp" line="185"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Fixed angles. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Fasta vinklar. </translation>
     </message>
     <message>
         <location filename="../src/tool_rotate.cpp" line="189"/>
         <location filename="../src/tool_rotate.cpp" line="193"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set the center of rotation. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Klicka&lt;/b&gt;: Sätt rotationscentrum. </translation>
     </message>
     <message>
         <location filename="../src/tool_rotate.cpp" line="194"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Rotate the selected objects. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Dra&lt;/b&gt;: Rotera valda objekt. </translation>
     </message>
 </context>
 <context>
@@ -6375,7 +6379,7 @@ Högsta versionen som stöds är %2.</translation>
     <message>
         <location filename="../src/map_dialog_scale.cpp" line="36"/>
         <source>Scaling parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>Skalningsparametrar</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_scale.cpp" line="40"/>
@@ -6385,7 +6389,7 @@ Högsta versionen som stöds är %2.</translation>
     <message>
         <location filename="../src/map_dialog_scale.cpp" line="42"/>
         <source>Scaling center:</source>
-        <translation type="unfinished"></translation>
+        <translation>Skalningscentrum:</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_scale.cpp" line="44"/>
@@ -6403,30 +6407,30 @@ Högsta versionen som stöds är %2.</translation>
         <location filename="../src/map_dialog_scale.cpp" line="53"/>
         <source>Other point,</source>
         <comment>Scaling center point</comment>
-        <translation type="unfinished"></translation>
+        <translation>Annan punkt,</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_scale.cpp" line="54"/>
         <location filename="../src/map_dialog_scale.cpp" line="55"/>
         <source>mm</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/map_dialog_scale.cpp" line="58"/>
         <source>X:</source>
         <comment>x coordinate</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/map_dialog_scale.cpp" line="60"/>
         <source>Y:</source>
         <comment>y coordinate</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/map_dialog_scale.cpp" line="65"/>
         <source>Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Inställningar</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_scale.cpp" line="67"/>
@@ -6499,42 +6503,42 @@ Högsta versionen som stöds är %2.</translation>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="972"/>
         <source>Local</source>
-        <translation type="unfinished"></translation>
+        <translation>Lokal</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="974"/>
         <source>Geographic coordinates (WGS84)</source>
-        <translation type="unfinished"></translation>
+        <translation>Koordinater (WGS84)</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="976"/>
         <source>From list</source>
-        <translation type="unfinished"></translation>
+        <translation>Från lista</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="981"/>
         <source>From specification</source>
-        <translation type="unfinished"></translation>
+        <translation>Från specifikation</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="991"/>
         <source>(local)</source>
-        <translation type="unfinished"></translation>
+        <translation>(lokal)</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="1004"/>
         <source>CRS Specification:</source>
-        <translation type="unfinished"></translation>
+        <translation>CRS Specifikation:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="1005"/>
         <source>Status:</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="1086"/>
         <source>valid</source>
-        <translation type="unfinished">giltig</translation>
+        <translation>giltig</translation>
     </message>
 </context>
 <context>
@@ -6558,7 +6562,7 @@ Högsta versionen som stöds är %2.</translation>
     <message>
         <location filename="../src/symbol.cpp" line="830"/>
         <source>- None -</source>
-        <translation type="unfinished"></translation>
+        <translation>- ingen -</translation>
     </message>
 </context>
 <context>
@@ -6725,7 +6729,7 @@ Högsta versionen som stöds är %2.</translation>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1144"/>
         <source>Remove all objects with selected symbols from selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Tabort alla objekt med den/de valda symbolerna</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1145"/>
@@ -6746,12 +6750,12 @@ Högsta versionen som stöds är %2.</translation>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="207"/>
         <source>F1</source>
         <comment>Shortcut for displaying the symbol&apos;s description</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="248"/>
         <source>Select unused</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj oanvända</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="250"/>
@@ -6761,7 +6765,7 @@ Högsta versionen som stöds är %2.</translation>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="253"/>
         <source>Sort symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>Sortera symboler</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="254"/>
@@ -6790,7 +6794,7 @@ Högsta versionen som stöds är %2.</translation>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="881"/>
         <source>Scale symbol(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>Skala symbol(er)</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="912"/>
@@ -6932,12 +6936,12 @@ to jump over the lazy dog
     <message>
         <location filename="../src/gui/widgets/tags_widget.cpp" line="46"/>
         <source>Key</source>
-        <translation type="unfinished"></translation>
+        <translation>Nyckel</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tags_widget.cpp" line="46"/>
         <source>Value</source>
-        <translation type="unfinished"></translation>
+        <translation>Värde</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tags_widget.cpp" line="56"/>
@@ -6947,12 +6951,12 @@ to jump over the lazy dog
     <message>
         <location filename="../src/gui/widgets/tags_widget.cpp" line="226"/>
         <source>Key exists</source>
-        <translation type="unfinished"></translation>
+        <translation>Nyckel existerar</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tags_widget.cpp" line="227"/>
         <source>The key &quot;%1&quot; already exists and must not be used twice.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nyckeln &quot;%1&quot; existerar redan.</translation>
     </message>
 </context>
 <context>
@@ -6975,12 +6979,12 @@ to jump over the lazy dog
     <message>
         <location filename="../src/template.cpp" line="459"/>
         <source>No such file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ingen sådan fil.</translation>
     </message>
     <message>
         <location filename="../src/template.cpp" line="477"/>
         <source>Is the format of the file correct for this template type?</source>
-        <translation type="unfinished"></translation>
+        <translation>Är filens format korrekt för denna bakgrundstyp?</translation>
     </message>
     <message>
         <source>Cannot change the template to this file! Is the format of the file correct for this template type?</source>
@@ -7173,12 +7177,12 @@ Tänker du inte rita på bakgrundsbilden är det inget problem.</translation>
     <message>
         <location filename="../src/template_image.cpp" line="567"/>
         <source>Opening %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Öppnar %1</translation>
     </message>
     <message>
         <location filename="../src/template_image.cpp" line="569"/>
         <source>Image size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Bildens storlek:</translation>
     </message>
     <message>
         <location filename="../src/template_image.cpp" line="572"/>
@@ -7188,12 +7192,12 @@ Tänker du inte rita på bakgrundsbilden är det inget problem.</translation>
     <message>
         <location filename="../src/template_image.cpp" line="582"/>
         <source>World file</source>
-        <translation type="unfinished"></translation>
+        <translation>World fil</translation>
     </message>
     <message>
         <location filename="../src/template_image.cpp" line="584"/>
         <source>GeoTiff</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/template_image.cpp" line="586"/>
@@ -7218,7 +7222,7 @@ Tänker du inte rita på bakgrundsbilden är det inget problem.</translation>
     <message>
         <location filename="../src/template_image.cpp" line="599"/>
         <source>dpi</source>
-        <translation>dpi</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/template_image.cpp" line="601"/>
@@ -7291,7 +7295,7 @@ Tänker du inte rita på bakgrundsbilden är det inget problem.</translation>
     <message>
         <location filename="../src/template_track.cpp" line="143"/>
         <source>Opening track ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Öppnar spår ...</translation>
     </message>
     <message>
         <location filename="../src/template_track.cpp" line="144"/>
@@ -7329,17 +7333,17 @@ Tänker du inte rita på bakgrundsbilden är det inget problem.</translation>
         <location filename="../src/gps_track.cpp" line="510"/>
         <location filename="../src/gps_track.cpp" line="515"/>
         <source>Error</source>
-        <translation type="unfinished">Fel</translation>
+        <translation>Fel</translation>
     </message>
     <message>
         <location filename="../src/template_track.cpp" line="377"/>
         <source>The path is empty, there is nothing to import!</source>
-        <translation type="unfinished">Sökvägen är tom, det finns inget att importera!</translation>
+        <translation>Sökvägen är tom, det finns inget att importera!</translation>
     </message>
     <message>
         <location filename="../src/template_track.cpp" line="390"/>
         <source>Question</source>
-        <translation type="unfinished">Fråga</translation>
+        <translation>Fråga</translation>
     </message>
     <message>
         <location filename="../src/template_track.cpp" line="390"/>
@@ -7349,7 +7353,7 @@ Tänker du inte rita på bakgrundsbilden är det inget problem.</translation>
     <message>
         <location filename="../src/template_track.cpp" line="457"/>
         <source>Import problems</source>
-        <translation type="unfinished"></translation>
+        <translation>Import problem</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/template_track.cpp" line="458"/>
@@ -7385,7 +7389,7 @@ Tänker du inte rita på bakgrundsbilden är det inget problem.</translation>
         <location filename="../src/gps_track.cpp" line="501"/>
         <source>%1:
 Not an OSM file.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1: ingen OSM fil.</translation>
     </message>
     <message>
         <location filename="../src/gps_track.cpp" line="510"/>
@@ -7404,7 +7408,7 @@ Högsta versionen som stöds är %2.</translation>
     <message>
         <location filename="../src/gps_track.cpp" line="614"/>
         <source>Problems</source>
-        <translation type="unfinished">Problem</translation>
+        <translation>Problem</translation>
     </message>
     <message>
         <location filename="../src/gps_track.cpp" line="614"/>
@@ -7478,7 +7482,7 @@ Högsta versionen som stöds är %2.</translation>
     <message>
         <location filename="../src/template_dock_widget.cpp" line="145"/>
         <source>Add template...</source>
-        <translation type="unfinished"></translation>
+        <translation>Lägg till bakgrund...</translation>
     </message>
     <message>
         <location filename="../src/template_dock_widget.cpp" line="157"/>
@@ -7493,7 +7497,7 @@ Högsta versionen som stöds är %2.</translation>
     <message>
         <location filename="../src/template_dock_widget.cpp" line="182"/>
         <source>Import and remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Importera och ta bort</translation>
     </message>
     <message>
         <location filename="../src/template_dock_widget.cpp" line="202"/>
@@ -7595,7 +7599,7 @@ Högsta versionen som stöds är %2.</translation>
     <message>
         <location filename="../src/template_dock_widget.cpp" line="868"/>
         <source>Don&apos;t scale</source>
-        <translation type="unfinished"></translation>
+        <translation>Skala inte</translation>
     </message>
     <message>
         <location filename="../src/template_dock_widget.cpp" line="863"/>
@@ -7620,7 +7624,7 @@ Högsta versionen som stöds är %2.</translation>
     <message>
         <location filename="../src/template_dock_widget.cpp" line="870"/>
         <source>Template import</source>
-        <translation type="unfinished"></translation>
+        <translation>Bakgrundsimportering</translation>
     </message>
     <message>
         <location filename="../src/template_dock_widget.cpp" line="871"/>
@@ -7650,12 +7654,12 @@ Högsta versionen som stöds är %2.</translation>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="167"/>
         <source>External link: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Extern länk: %1</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="171"/>
         <source>Click to view</source>
-        <translation type="unfinished"></translation>
+        <translation>Klicka för att visa</translation>
     </message>
 </context>
 <context>
@@ -7940,12 +7944,12 @@ Högsta versionen som stöds är %2.</translation>
         <location filename="../src/util.cpp" line="250"/>
         <location filename="../src/util.cpp" line="277"/>
         <source>Error</source>
-        <translation type="unfinished">Fel</translation>
+        <translation>Fel</translation>
     </message>
     <message>
         <location filename="../src/util.cpp" line="243"/>
         <source>Failed to locate the help files.</source>
-        <translation type="unfinished">Kunde inte hitta hjälpfilerna.</translation>
+        <translation>Kunde inte hitta hjälpfilerna.</translation>
     </message>
     <message>
         <location filename="../src/util.cpp" line="250"/>
@@ -7976,7 +7980,7 @@ Högsta versionen som stöds är %2.</translation>
     <message>
         <location filename="../src/file_format_xml.cpp" line="437"/>
         <source>unknown</source>
-        <translation type="unfinished"></translation>
+        <translation>okänd</translation>
     </message>
     <message>
         <location filename="../src/file_format_xml.cpp" line="438"/>
@@ -7986,7 +7990,7 @@ Högsta versionen som stöds är %2.</translation>
     <message>
         <location filename="../src/file_format_xml.cpp" line="487"/>
         <source>Unknown error</source>
-        <translation type="unfinished"></translation>
+        <translation>Okänt fel</translation>
     </message>
     <message>
         <location filename="../src/file_format_xml.cpp" line="488"/>
@@ -8002,7 +8006,7 @@ Högsta versionen som stöds är %2.</translation>
     <message>
         <location filename="../src/file_format_xml.cpp" line="618"/>
         <source>Expected %1 colors, found %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>Väntade %1 färger, hittade %2.</translation>
     </message>
     <message>
         <location filename="../src/file_format_xml.cpp" line="634"/>
@@ -8012,12 +8016,12 @@ Högsta versionen som stöds är %2.</translation>
     <message>
         <location filename="../src/file_format_xml.cpp" line="686"/>
         <source>Expected %1 symbols, found %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>Väntade %1 symboler, hittade %2.</translation>
     </message>
     <message>
         <location filename="../src/file_format_xml.cpp" line="717"/>
         <source>Expected %1 map parts, found %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>Väntade %1 kartdelar, hittade %2.</translation>
     </message>
 </context>
 </TS>
