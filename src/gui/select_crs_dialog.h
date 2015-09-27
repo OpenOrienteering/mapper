@@ -27,15 +27,11 @@
 
 QT_BEGIN_NAMESPACE
 class QDialogButtonBox;
-class QFormLayout;
 class QLabel;
-class QLineEdit;
-class QRadioButton;
 QT_END_NAMESPACE
 
-class Georeferencing;
-class Map;
 class CRSSelector;
+class Georeferencing;
 
 
 /** Dialog to select a coordinate reference system (CRS) */
@@ -43,42 +39,53 @@ class SelectCRSDialog : public QDialog
 {
 Q_OBJECT
 public:
+	
+	/**
+	 * Georeferencing alternatives
+	 */
+	enum GeorefAlternative
+	{
+		TakeFromMap = 1 << 0,
+		Local       = 1 << 1,
+		Geographic  = 1 << 2,
+		None        = 0
+	};
+	Q_DECLARE_FLAGS(GeorefAlternatives, GeorefAlternative)
+	
 	/**
 	 * Creates a SelectCRSDialog.
 	 * 
-	 * @param map The map to create the dialog for.
-	 * @param parent The parent widget.
-	 * @param show_take_from_map Toggle whether to show the "Take the map's CRS" option.
-	 * @param show_local Toggle whether to show the "Local" option.
-	 * @param show_geographic Toggle whether to show the "Geographic (WGS84)" option.
-	 * @param desc_text Optional description text for the dialog. Should explain
-	 *                  for what the selected CRS will be used for.
+	 * @param georef       A default georeferencing (usually the map's one).
+	 * @param parent       The parent widget.
+	 * @param alternatives The georeferencing alternatives to be offered.
+	 * @param description  Optional description text for the dialog.
+	 *                     Should explain what the selected CRS will be used for.
 	 */
-	SelectCRSDialog(Map* map, QWidget* parent, bool show_take_from_map,
-					bool show_local, bool show_geographic, const QString& desc_text = QString());
+	SelectCRSDialog(
+	        const Georeferencing& georef,
+	        QWidget* parent,
+	        GeorefAlternatives alternatives,
+	        const QString& description = QString()
+	);
 	
-	/** Returns the chosen CRS spec after the dialog has completed. */
-	QString getCRSSpec() const;
+	/** 
+	 * Returns the current CRS specification string.
+	 */
+	QString currentCRSSpec() const;
 	
-private slots:
-	void crsSpecEdited(QString text);
+protected:
+	/** 
+	 * Update the status field and enables/disables the OK button.
+	 */
 	void updateWidgets();
 	
 private:
-	/* Internal state */
-	Map* const map;
-	
-	/* GUI elements */
-	QRadioButton* map_radio;
-	QRadioButton* local_radio;
-	QRadioButton* geographic_radio;
-	QRadioButton* projected_radio;
-	QRadioButton* spec_radio;
-	CRSSelector* crs_edit;
-	QFormLayout* crs_spec_layout;
-	QLineEdit* crs_spec_edit;
+	const Georeferencing& georef;
+	CRSSelector* crs_selector;
 	QLabel* status_label;
 	QDialogButtonBox* button_box;
 };
+
+Q_DECLARE_OPERATORS_FOR_FLAGS(SelectCRSDialog::GeorefAlternatives)
 
 #endif

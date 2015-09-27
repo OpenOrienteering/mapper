@@ -132,10 +132,14 @@ bool TemplateTrack::postLoadConfiguration(QWidget* dialog_parent, bool& out_cent
 		}
 		else
 		{
-			SelectCRSDialog dialog(map, dialog_parent, true, true, true, tr("Select the coordinate reference system of the track coordinates"));
+			SelectCRSDialog dialog(
+			            map->getGeoreferencing(),
+			            dialog_parent,
+			            SelectCRSDialog::TakeFromMap | SelectCRSDialog::Local | SelectCRSDialog::Geographic,
+			            tr("Select the coordinate reference system of the track coordinates") );
 			if (dialog.exec() == QDialog::Rejected)
 				return false;
-			track_crs_spec = dialog.getCRSSpec();
+			track_crs_spec = dialog.currentCRSSpec();
 		}
 		
 		Georeferencing* track_crs = new Georeferencing();

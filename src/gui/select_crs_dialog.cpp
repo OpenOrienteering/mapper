@@ -21,152 +21,113 @@
 
 #include "select_crs_dialog.h"
 
+#include <QCoreApplication>
 #include <QDialogButtonBox>
 #include <QFormLayout>
-#include <QHBoxLayout>
-#include <QLineEdit>
 #include <QPushButton>
-#include <QRadioButton>
+#include <QVBoxLayout>
 
 #include "../core/georeferencing.h"
-#include "../map.h"
-#include "../map_editor.h"
 #include "../util_gui.h"
-#include "../util.h"
-#include "../util/scoped_signals_blocker.h"
 #include "widgets/crs_selector.h"
 
 
-SelectCRSDialog::SelectCRSDialog(Map* map, QWidget* parent, bool show_take_from_map,
-                                 bool show_local, bool show_geographic, const QString& desc_text)
- : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint), map(map)
+namespace {
+
+enum SpecialCRS {
+	SameAsMap  = 1,
+	Local      = 2,
+	Geographic = 3
+};
+
+}
+
+SelectCRSDialog::SelectCRSDialog(
+        const Georeferencing& georef,
+        QWidget* parent,
+        GeorefAlternatives alternatives,
+        const QString& description )
+ : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint)
+ , georef(georef)
 {
 	setWindowModality(Qt::WindowModal);
 	setWindowTitle(tr("Select coordinate reference system"));
 	
-	QLabel* desc_label = NULL;
-	if (!desc_text.isEmpty())
-		desc_label = new QLabel(desc_text);
+	crs_selector = new CRSSelector(georef, nullptr);
+	if (georef.isLocal())
+		crs_selector->clear();
 	
-	map_radio = show_take_from_map ? (new QRadioButton(tr("Same as map's"))) : NULL;
-	if (map_radio)
-		map_radio->setChecked(true);
+	if (alternatives.testFlag(TakeFromMap) && !georef.isLocal())
+	{
+		crs_selector->addCustomItem(tr("Same as map"), SpecialCRS::SameAsMap);
+		crs_selector->setCurrentIndex(0); // TakeFromMap
+	}
 	
-	local_radio = show_local ? (new QRadioButton(tr("Local"))) : NULL;
+	if (alternatives.testFlag(Local) || georef.isLocal())
+	{
+		crs_selector->addCustomItem(tr("Local"), SpecialCRS::Local);
+		crs_selector->setCurrentIndex(0); // TakeFromMap or Local, both is fine.
+	}
 	
-	geographic_radio = show_geographic ? (new QRadioButton(tr("Geographic coordinates (WGS84)"))) : NULL;
+	if (alternatives.testFlag(Geographic) && !georef.isLocal())
+		crs_selector->addCustomItem(tr("Geographic coordinates (WGS84)"), SpecialCRS::Geographic);
 	
-	projected_radio = new QRadioButton(tr("From list"));
-	if (!map_radio)
-		projected_radio->setChecked(true);
-	crs_edit = new CRSSelector(map->getGeoreferencing());
-	
-	spec_radio = new QRadioButton(tr("From specification"));
-	
-	crs_spec_edit = new QLineEdit();
 	status_label = new QLabel();
-	
 	button_box = new QDialogButtonBox(QDialogButtonBox::Cancel | QDialogButtonBox::Ok);
 	
-	if (map->getGeoreferencing().isLocal())
+	auto form_layout = new QFormLayout();
+	if (!description.isEmpty())
 	{
-		if (map_radio)
-			map_radio->setText(map_radio->text() + " " + tr("(local)"));
-		if (geographic_radio)
-			geographic_radio->setEnabled(false);
-		projected_radio->setEnabled(false);
-		spec_radio->setEnabled(false);
-		crs_spec_edit->setEnabled(false);
+		form_layout->addRow(new QLabel(description));
+		form_layout->addItem(Util::SpacerItem::create(this));
 	}
+	form_layout->addRow(QCoreApplication::translate("GeoreferencingDialog", "&Coordinate reference system:"), crs_selector);
+	form_layout->addRow(tr("Status:"), status_label);
+	form_layout->addItem(Util::SpacerItem::create(this));
+	crs_selector->setDialogLayout(form_layout);
 	
-	QHBoxLayout* crs_layout = new QHBoxLayout();
-	crs_layout->addSpacing(16);
-	crs_layout->addWidget(crs_edit);
-	
-	crs_spec_layout = new QFormLayout();
-	crs_spec_layout->addRow(tr("CRS Specification:"), crs_spec_edit);
-	crs_spec_layout->addRow(tr("Status:"), status_label);
-	
-	QVBoxLayout* layout = new QVBoxLayout();
-	if (desc_label)
-	{
-		layout->addWidget(desc_label);
-		layout->addSpacing(16);
-	}
-	if (map_radio)
-		layout->addWidget(map_radio);
-	if (local_radio)
-		layout->addWidget(local_radio);
-	if (geographic_radio)
-		layout->addWidget(geographic_radio);
-	layout->addWidget(projected_radio);
-	layout->addLayout(crs_layout);
-	layout->addWidget(spec_radio);
-	layout->addSpacing(16);
-	layout->addLayout(crs_spec_layout);
-	layout->addSpacing(16);
-	layout->addWidget(button_box);
+	auto layout = new QVBoxLayout();
+	layout->addLayout(form_layout, 1);
+	layout->addWidget(button_box, 0);
 	setLayout(layout);
 	
-	if (map_radio)
-		connect(map_radio, SIGNAL(clicked()), this, SLOT(updateWidgets()));
-	if (local_radio)
-		connect(local_radio, SIGNAL(clicked()), this, SLOT(updateWidgets()));
-	if (geographic_radio)
-		connect(geographic_radio, SIGNAL(clicked()), this, SLOT(updateWidgets()));
-	connect(projected_radio, SIGNAL(clicked()), this, SLOT(updateWidgets()));
-	connect(spec_radio, SIGNAL(clicked()), this, SLOT(updateWidgets()));
-	connect(crs_edit, SIGNAL(crsChanged()), this, SLOT(updateWidgets()));
-	connect(crs_spec_edit, SIGNAL(textEdited(QString)), this, SLOT(crsSpecEdited(QString)));
-	connect(button_box, SIGNAL(accepted()), this, SLOT(accept()));
-	connect(button_box, SIGNAL(rejected()), this, SLOT(reject()));
+	connect(crs_selector, &CRSSelector::crsChanged, this, &SelectCRSDialog::updateWidgets);
+	connect(button_box, &QDialogButtonBox::accepted, this, &SelectCRSDialog::accept);
+	connect(button_box, &QDialogButtonBox::rejected, this, &SelectCRSDialog::reject);
 	
 	updateWidgets();
 }
 
-QString SelectCRSDialog::getCRSSpec() const
+QString SelectCRSDialog::currentCRSSpec() const
 {
-	return crs_spec_edit->text();
-}
+	QString spec;
+	switch (crs_selector->currentCustomItem())
+	{
+	case SpecialCRS::SameAsMap:
+		spec = georef.getProjectedCRSSpec();
+		break;
+	case SpecialCRS::Local:
+		// nothing
+		break;
+	case SpecialCRS::Geographic:
+		spec = QLatin1String("+proj=latlong +datum=WGS84");
+		break;
+	default:
+		spec = crs_selector->currentCRSSpec();
+	}
 
-void SelectCRSDialog::crsSpecEdited(QString)
-{
-	spec_radio->setChecked(true);
-	
-	updateWidgets();
+	return spec;
 }
 
 void SelectCRSDialog::updateWidgets()
 {
-	if (map_radio && map_radio->isChecked())
-		crs_spec_edit->setText(map->getGeoreferencing().isLocal() ? "" : map->getGeoreferencing().getProjectedCRSSpec());
-	else if (local_radio && local_radio->isChecked())
-		crs_spec_edit->setText("");
-	else if (geographic_radio && geographic_radio->isChecked())
-		crs_spec_edit->setText("+proj=latlong +datum=WGS84");
-	else if (projected_radio->isChecked())
-		crs_spec_edit->setText(crs_edit->currentCRSSpec());
-	
-	crs_edit->setEnabled(projected_radio->isChecked());
-	crs_spec_layout->itemAt(0, QFormLayout::LabelRole)->widget()->setVisible(spec_radio->isChecked());
-	crs_spec_edit->setVisible(spec_radio->isChecked());
-	
-	// Update status field and enable/disable ok button
-	bool valid;
-	QString error_text;
-	if (crs_spec_edit->text().isEmpty())
-		valid = true;
-	else
-	{
-		Georeferencing georef;
-		valid = georef.setProjectedCRS("", crs_spec_edit->text());
-		if (!valid)
-			error_text = georef.getErrorText();
-	}
+	Georeferencing georef;
+	auto spec =  currentCRSSpec();
+	auto valid = spec.isEmpty() || georef.setProjectedCRS("", spec);
 	
 	button_box->button(QDialogButtonBox::Ok)->setEnabled(valid);
-	if (error_text.length() == 0)
+	if (valid)
 		status_label->setText(tr("valid"));
 	else
-		status_label->setText(QString("<b>") % error_text % "</b>");
+		status_label->setText(QString("<b style=\"color:red\">") % georef.getErrorText() % "</b>");
 }
