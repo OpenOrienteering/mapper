@@ -315,21 +315,26 @@ void Georeferencing::save(QXmlStreamWriter& xml) const
 		ref_point_element.writeAttribute(literal::y, map_ref_point.y());
 	}
 	
-	if (!projected_crs_spec.isNull() || !qIsNull(projected_ref_point.manhattanLength()))
 	{
 		XmlElementWriter crs_element(xml, literal::projected_crs);
-		crs_element.writeAttribute(literal::id, projected_crs_id);
+		if (!projected_crs_id.isEmpty())
+			crs_element.writeAttribute(literal::id, projected_crs_id);
+		
+		if (!projected_crs_spec.isEmpty())
 		{
 			XmlElementWriter spec_element(xml, literal::spec);
 			spec_element.writeAttribute(literal::language, literal::proj_4);
 			xml.writeCharacters(projected_crs_spec);
+			
+			for (size_t i = 0; i < projected_crs_parameters.size(); ++i)
+			{
+				XmlElementWriter parameter_element(xml, literal::parameter);
+				xml.writeCharacters(projected_crs_parameters[i]);
+				Q_UNUSED(parameter_element); // Suppress compiler warnings
+			}
 		}
-		for (size_t i = 0; i < projected_crs_parameters.size(); ++i)
-		{
-			XmlElementWriter parameter_element(xml, literal::parameter);
-			xml.writeCharacters(projected_crs_parameters[i]);
-			Q_UNUSED(parameter_element); // Suppress compiler warnings
-		}
+		
+		if (!qIsNull(projected_ref_point.manhattanLength()))
 		{
 			XmlElementWriter ref_point_element(xml, literal::ref_point);
 			ref_point_element.writeAttribute(literal::x, projected_ref_point.x(), 6);
