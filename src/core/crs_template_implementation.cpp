@@ -165,21 +165,6 @@ void FullSpecParameter::setValue(QWidget* edit_widget, const QString& value)
 
 // ### UTMZoneParameter ###
 
-namespace
-{
-
-QStringList utmZoneList()
-{
-	QStringList zone_list;
-	for (int i = 1; i <= 60; ++i)
-	{
-		zone_list << QString("%1 N").arg(i) << QString("%1 S").arg(i);
-	}
-	return zone_list;
-}
-
-} // namespace
-
 UTMZoneParameter::UTMZoneParameter(const QString& key, const QString& name)
  : CRSTemplateParameter(key, name)
 {
