@@ -213,10 +213,6 @@ bool FileFormatTest::compareMaps(const Map* a, const Map* b, QString& error)
 	
 	const Georeferencing& a_geo = a->getGeoreferencing();
 	const Georeferencing& b_geo = b->getGeoreferencing();
-	if (a_geo.getProjectedCRSId() == "Local coordinates")
-		// Fix for old native OMAP test file
-		const_cast<Georeferencing&>(a_geo).setProjectedCRS("Local", a_geo.getProjectedCRSSpec());
-	
 	if (a_geo.isLocal() != b_geo.isLocal() ||
 		a_geo.getScaleDenominator() != b_geo.getScaleDenominator() ||
 		a_geo.getDeclination() != b_geo.getDeclination() ||
