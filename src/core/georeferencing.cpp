@@ -551,7 +551,11 @@ bool Georeferencing::setProjectedCRS(const QString& id, const QString& spec, std
 	bool ok = (state == Normal || projected_crs_spec.isEmpty());
 	
 	// Changes in params shall already be recorded in spec
-	if (projected_crs_id != id || projected_crs_spec != spec || (!ok && !spec.isEmpty()) )
+	if (projected_crs_id != id
+	    || projected_crs_spec != spec
+	    || projected_crs_parameters.size() != params.size()
+	    || !std::equal(begin(params), end(params), begin(projected_crs_parameters))
+	    || (!ok && !spec.isEmpty()) )
 	{
 		if (projected_crs != NULL)
 			pj_free(projected_crs);
