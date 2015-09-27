@@ -80,7 +80,7 @@ namespace literal
 const QString Georeferencing::geographic_crs_spec("+proj=latlong +datum=WGS84");
 
 Georeferencing::Georeferencing()
-: state(ScaleOnly),
+: state(Local),
   scale_denominator(1),
   declination(0.0),
   grivation(0.0),
@@ -187,7 +187,8 @@ void Georeferencing::load(QXmlStreamReader& xml, bool load_scale_only)
 	scale_denominator = georef_element.attribute<int>(literal::scale);
 	if (scale_denominator <= 0)
 		throw FileFormatException(tr("Map scale specification invalid or missing."));
-	state = ScaleOnly;
+	
+	state = Local;
 	if (load_scale_only)
 	{
 		xml.skipCurrentElement();
@@ -209,13 +210,10 @@ void Georeferencing::load(QXmlStreamReader& xml, bool load_scale_only)
 				XmlElementReader ref_point_element(xml);
 				map_ref_point.setX(ref_point_element.attribute<double>(literal::x));
 				map_ref_point.setY(ref_point_element.attribute<double>(literal::y));
-				if (map_ref_point.lengthSquared() > 0)
-					state = Local;
 			}
 			else if (xml.name() == literal::projected_crs)
 			{
 				XmlElementReader crs_element(xml);
-				state = Local;
 				projected_crs_id = crs_element.attribute<QString>(literal::id);
 				while (xml.readNextStartElement())
 				{
@@ -305,59 +303,60 @@ void Georeferencing::save(QXmlStreamWriter& xml) const
 {
 	XmlElementWriter georef_element(xml, literal::georeferencing);
 	georef_element.writeAttribute(literal::scale, scale_denominator);
-	if (state != ScaleOnly)
-	{
+	if (!qIsNull(declination))
 		georef_element.writeAttribute(literal::declination, declination, declinationPrecision());
+	if (!qIsNull(grivation))
 		georef_element.writeAttribute(literal::grivation, grivation, declinationPrecision());
 		
+	if (!qIsNull(map_ref_point.lengthSquared()))
+	{
+		XmlElementWriter ref_point_element(xml, literal::ref_point);
+		ref_point_element.writeAttribute(literal::x, map_ref_point.x());
+		ref_point_element.writeAttribute(literal::y, map_ref_point.y());
+	}
+	
+	if (!projected_crs_spec.isNull() || !qIsNull(projected_ref_point.manhattanLength()))
+	{
+		XmlElementWriter crs_element(xml, literal::projected_crs);
+		crs_element.writeAttribute(literal::id, projected_crs_id);
+		{
+			XmlElementWriter spec_element(xml, literal::spec);
+			spec_element.writeAttribute(literal::language, literal::proj_4);
+			xml.writeCharacters(projected_crs_spec);
+		}
+		for (size_t i = 0; i < projected_crs_parameters.size(); ++i)
+		{
+			XmlElementWriter parameter_element(xml, literal::parameter);
+			xml.writeCharacters(projected_crs_parameters[i]);
+			Q_UNUSED(parameter_element); // Suppress compiler warnings
+		}
 		{
 			XmlElementWriter ref_point_element(xml, literal::ref_point);
-			ref_point_element.writeAttribute(literal::x, map_ref_point.x());
-			ref_point_element.writeAttribute(literal::y, map_ref_point.y());
+			ref_point_element.writeAttribute(literal::x, projected_ref_point.x(), 6);
+			ref_point_element.writeAttribute(literal::y, projected_ref_point.y(), 6);
 		}
-		
+	}
+	
+	if (state == Normal)
+	{
+		XmlElementWriter crs_element(xml, literal::geographic_crs);
+		crs_element.writeAttribute(literal::id, literal::geographic_coordinates);
 		{
-			XmlElementWriter crs_element(xml, literal::projected_crs);
-			crs_element.writeAttribute(literal::id, projected_crs_id);
-			{
-				XmlElementWriter spec_element(xml, literal::spec);
-				spec_element.writeAttribute(literal::language, literal::proj_4);
-				xml.writeCharacters(projected_crs_spec);
-			}
-			for (size_t i = 0; i < projected_crs_parameters.size(); ++i)
-			{
-				XmlElementWriter parameter_element(xml, literal::parameter);
-				xml.writeCharacters(projected_crs_parameters[i]);
-				Q_UNUSED(parameter_element); // Suppress compiler warnings
-			}
-			{
-				XmlElementWriter ref_point_element(xml, literal::ref_point);
-				ref_point_element.writeAttribute(literal::x, projected_ref_point.x(), 6);
-				ref_point_element.writeAttribute(literal::y, projected_ref_point.y(), 6);
-			}
+			XmlElementWriter spec_element(xml, literal::spec);
+			spec_element.writeAttribute(literal::language, literal::proj_4);
+			xml.writeCharacters(geographic_crs_spec);
 		}
-		
-		if (state == Normal)
+		if (XMLFileFormat::active_version < 6)
 		{
-			XmlElementWriter crs_element(xml, literal::geographic_crs);
-			crs_element.writeAttribute(literal::id, literal::geographic_coordinates);
-			{
-				XmlElementWriter spec_element(xml, literal::spec);
-				spec_element.writeAttribute(literal::language, literal::proj_4);
-				xml.writeCharacters(geographic_crs_spec);
-			}
-			if (XMLFileFormat::active_version < 6)
-			{
-				// Legacy compatibility
-				XmlElementWriter ref_point_element(xml, literal::ref_point);
-				ref_point_element.writeAttribute(literal::lat, degToRad(geographic_ref_point.latitude()), 10);
-				ref_point_element.writeAttribute(literal::lon, degToRad(geographic_ref_point.longitude()), 10);
-			}
-			{
-				XmlElementWriter ref_point_element(xml, literal::ref_point_deg);
-				ref_point_element.writeAttribute(literal::lat, geographic_ref_point.latitude(), 8);
-				ref_point_element.writeAttribute(literal::lon, geographic_ref_point.longitude(), 8);
-			}
+			// Legacy compatibility
+			XmlElementWriter ref_point_element(xml, literal::ref_point);
+			ref_point_element.writeAttribute(literal::lat, degToRad(geographic_ref_point.latitude()), 10);
+			ref_point_element.writeAttribute(literal::lon, degToRad(geographic_ref_point.longitude()), 10);
+		}
+		{
+			XmlElementWriter ref_point_element(xml, literal::ref_point_deg);
+			ref_point_element.writeAttribute(literal::lat, geographic_ref_point.latitude(), 8);
+			ref_point_element.writeAttribute(literal::lon, geographic_ref_point.longitude(), 8);
 		}
 	}
 }
@@ -409,10 +408,6 @@ void Georeferencing::setDeclinationAndGrivation(double declination, double griva
 		this->declination = declination;
 		this->grivation   = grivation;
 		this->grivation_error = 0.0;
-		
-		if (state == ScaleOnly)
-			setState(Local);
-		
 		updateTransformation();
 		
 		if (declination_change)
@@ -425,10 +420,6 @@ void Georeferencing::setMapRefPoint(MapCoord point)
 	if (map_ref_point != point)
 	{
 		map_ref_point = point;
-		
-		if (state == ScaleOnly)
-			setState(Local);
-		
 		updateTransformation();
 	}
 }
@@ -445,9 +436,6 @@ void Georeferencing::setProjectedRefPoint(QPointF point, bool update_grivation)
 		{
 		default:
 			Q_ASSERT(false && "Undefined georeferencing state");
-			// fall through
-		case ScaleOnly:
-			setState(Local);
 			// fall through
 		case Local:
 			break;
@@ -467,16 +455,11 @@ void Georeferencing::setProjectedRefPoint(QPointF point, bool update_grivation)
 
 QString Georeferencing::getProjectedCRSName() const
 {
-	if (state == ScaleOnly)
-		return tr("Scale only");
-	else if (state == Local)
-		return tr("Local");
+	QString name = tr("Local");
+	if (auto temp = CRSTemplateRegistry().find(projected_crs_id))
+		name = temp->name();
 	
-	auto temp = CRSTemplateRegistry().find(projected_crs_id);
-	if (temp)
-		return temp->name();
-	else
-		return tr("Projected");
+	return name;
 }
 
 double Georeferencing::getConvergence() const
@@ -527,17 +510,12 @@ void Georeferencing::setGeographicRefPoint(LatLon lat_lon, bool update_grivation
 void Georeferencing::updateTransformation()
 {
 	QTransform transform;
-	if (state != ScaleOnly)
-	{
-		transform.translate(projected_ref_point.x(), projected_ref_point.y());
-		transform.rotate(-grivation);
-	}
+	transform.translate(projected_ref_point.x(), projected_ref_point.y());
+	transform.rotate(-grivation);
+	
 	double scale = double(scale_denominator) / 1000.0;
 	transform.scale(scale, -scale);
-	if (state != ScaleOnly)
-	{
-		transform.translate(-map_ref_point.x(), -map_ref_point.y());
-	}
+	transform.translate(-map_ref_point.x(), -map_ref_point.y());
 	
 	if (to_projected != transform)
 	{
@@ -559,11 +537,6 @@ void Georeferencing::initDeclination()
 
 void Georeferencing::setTransformationDirectly(const QTransform& transform)
 {
-	if (state == ScaleOnly)
-	{
-		state = Local;
-		emit stateChanged();
-	}
 	if (transform != to_projected)
 	{
 		to_projected = transform;
@@ -678,8 +651,7 @@ MapCoordF Georeferencing::toMapCoordF(Georeferencing* other, const MapCoordF& ma
 			*ok = true;
 		return map_coords;
 	}
-	else if (isLocal() || getState() == ScaleOnly ||
-		other->isLocal() || other->getState() == ScaleOnly)
+	else if (isLocal() || other->isLocal())
 	{
 		if (ok)
 			*ok = true;
@@ -749,9 +721,7 @@ QDebug operator<<(QDebug dbg, const Georeferencing &georef)
 	  << "deg, " << georef.projected_crs_id
 	  << " (" << georef.projected_crs_spec
 	  << ") " << QString::number(georef.projected_ref_point.x(), 'f', 8) << "," << QString::number(georef.projected_ref_point.y(), 'f', 8);
-	if (georef.getState() == Georeferencing::ScaleOnly)
-		dbg.nospace() << ", scale only)";
-	else if (georef.isLocal())
+	if (georef.isLocal())
 		dbg.nospace() << ", local)";
 	else
 		dbg.nospace() << ", geographic)";

@@ -89,7 +89,6 @@ void GeoreferencingDialog::init(const Georeferencing* initial)
 	QLabel* map_crs_label = Util::Headline::create(tr("Map coordinate reference system"));
 	
 	crs_edit = new CRSSelector(*georef);
-	crs_edit->addCustomItem(tr("- none -"), 0);
 	crs_edit->addCustomItem(tr("- from Proj.4 specification -"), 1);
 	crs_edit->addCustomItem(tr("- local -"), 2);
 	
@@ -259,12 +258,6 @@ void GeoreferencingDialog::georefStateChanged()
 	
 	switch (georef->getState())
 	{
-	case Georeferencing::ScaleOnly:
-		crs_edit->selectCustomItem(0);
-		crs_spec_edit->clear();
-		keep_geographic_radio->setEnabled(false);
-		keep_projected_radio->setChecked(true);
-		break;
 	case Georeferencing::Local:
 		crs_edit->selectCustomItem(2);
 		crs_spec_edit->clear();
@@ -370,7 +363,7 @@ void GeoreferencingDialog::declinationChanged()
 void GeoreferencingDialog::requestDeclination(bool no_confirm)
 {
 #if defined(QT_NETWORK_LIB)
-	if (georef->isLocal() || georef->getState() == Georeferencing::ScaleOnly)
+	if (georef->isLocal())
 		return;
 	
 	// TODO: Move to resources or preferences. Assess security risks of url distinction.
@@ -479,34 +472,25 @@ void GeoreferencingDialog::accept()
 
 void GeoreferencingDialog::updateWidgets()
 {
-	// Dialog is enabled if anything different from "none" is selected
-	bool dialog_enabled = crs_edit->getSelectedCustomItemId() != 0;
-	map_x_edit->setEnabled(dialog_enabled);
-	map_y_edit->setEnabled(dialog_enabled);
-	ref_point_button->setEnabled(dialog_enabled && controller != NULL);
-	easting_edit->setEnabled(dialog_enabled);
-	northing_edit->setEnabled(dialog_enabled);
-	declination_edit->setEnabled(dialog_enabled);
+	ref_point_button->setEnabled(controller != nullptr);
 	
-	status_label->setVisible(dialog_enabled && georef->getState() != Georeferencing::Local);
-	status_display_label->setVisible(dialog_enabled && georef->getState() != Georeferencing::Local);
+	status_label->setVisible(georef->getState() != Georeferencing::Local);
+	status_display_label->setVisible(georef->getState() != Georeferencing::Local);
 	
 	bool proj_spec_visible = crs_edit->getSelectedCustomItemId() == 1;
 	crs_spec_label->setVisible(proj_spec_visible);
 	crs_spec_edit->setVisible(proj_spec_visible);
 	
 	QString projected_ref_label_string;
-	if (proj_spec_visible || !dialog_enabled)
+	if (proj_spec_visible)
 		projected_ref_label_string = tr("Projected coordinates:");
 	else if (crs_edit->getSelectedCustomItemId() == 2)
 		projected_ref_label_string = tr("Local coordinates:");
-	else if (dialog_enabled)
+	else
 		projected_ref_label_string = crs_edit->getSelectedCRSTemplate()->coordinatesName() + ":";
-	if (!projected_ref_label_string.isEmpty())
-		projected_ref_label->setText(projected_ref_label_string);
+	projected_ref_label->setText(projected_ref_label_string);
 	
 	bool geographic_coords_enabled =
-		dialog_enabled &&
 		(proj_spec_visible ||
 		 crs_edit->getSelectedCustomItemId() == -1);
 	lat_edit->setEnabled(geographic_coords_enabled);
@@ -516,8 +500,7 @@ void GeoreferencingDialog::updateWidgets()
 	
 	updateDeclinationButton();
 	
-	bool ok_enabled = (georef->getState() == Georeferencing::ScaleOnly && allow_no_georeferencing) || georef->isValid();
-	buttons_box->button(QDialogButtonBox::Ok)->setEnabled(ok_enabled);
+	buttons_box->button(QDialogButtonBox::Ok)->setEnabled(georef->isValid());
 }
 
 void GeoreferencingDialog::updateDeclinationButton()
@@ -573,10 +556,6 @@ void GeoreferencingDialog::crsEdited()
 			crs_params.push_back(crs_edit->getParam(i));
 		georef_copy.setProjectedCRS(crs_template->id(), spec, crs_params);
 		georef_copy.setState(Georeferencing::Normal); // Allow invalid spec
-		break;
-	case 0:
-		// None
-		georef_copy.setState(Georeferencing::ScaleOnly);
 		break;
 	case 1:
 		// CRS from spec edit, no id

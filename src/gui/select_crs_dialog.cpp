@@ -41,8 +41,6 @@ SelectCRSDialog::SelectCRSDialog(Map* map, QWidget* parent, bool show_take_from_
                                  bool show_local, bool show_geographic, const QString& desc_text)
  : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint), map(map)
 {
-	Q_ASSERT(map->getGeoreferencing().getState() != Georeferencing::ScaleOnly);
-	
 	setWindowModality(Qt::WindowModal);
 	setWindowTitle(tr("Select coordinate reference system"));
 	

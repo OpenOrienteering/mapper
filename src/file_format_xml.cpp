@@ -484,7 +484,7 @@ void XMLFileImporter::importGeoreferencing(bool load_symbols_only)
 	Georeferencing georef;
 	georef.load(xml, load_symbols_only);
 	map->setGeoreferencing(georef);
-	if (!georef.isValid() && georef.getState() != Georeferencing::ScaleOnly)
+	if (!georef.isValid())
 	{
 		QString error_text = georef.getErrorText();
 		if (error_text.isEmpty())

@@ -82,15 +82,12 @@ public:
 	/// Georeferencing state
 	enum State
 	{
-		/// The settings have not been set yet. Only the scale denominator is valid.
-		ScaleOnly = 0,
-		
-		/// Only conversions between map and projected coordinates are possible.
-		Local,
+		/// Only conversions between map and local projected coordinates are possible.
+		Local  = 1,
 		
 		/// All coordinate conversions are possible (if there is no error in the
 		/// crs specification).
-		Normal
+		Normal = 2
 	};
 	
 	
@@ -179,8 +176,8 @@ public:
 	/**
 	 * Sets the georeferencing state.
 	 * 
-	 * This is only neccessary to decrease the state to Local or ScaleOnly,
-	 * as otherwise it will be automatically changed when setting the respective values.
+	 * This is only neccessary to decrease the state to Local, as otherwise it
+	 * will be automatically changed when setting the respective values.
 	 */
 	void setState(State value);
 	

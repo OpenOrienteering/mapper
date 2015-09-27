@@ -126,9 +126,10 @@ bool TemplateTrack::postLoadConfiguration(QWidget* dialog_parent, bool& out_cent
 	// If no track CRS is given by the template file, ask the user
 	if (!track.hasTrackCRS())
 	{
-		if (map->getGeoreferencing().getState() == Georeferencing::ScaleOnly ||
-			map->getGeoreferencing().isLocal())
+		if (map->getGeoreferencing().isLocal())
+		{
 			track_crs_spec = "";
+		}
 		else
 		{
 			SelectCRSDialog dialog(map, dialog_parent, true, true, true, tr("Select the coordinate reference system of the track coordinates"));
