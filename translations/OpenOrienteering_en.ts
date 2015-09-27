@@ -4,8 +4,8 @@
 <context>
     <name>AutosaveDialog</name>
     <message numerus="yes">
-        <location filename="../src/gui/autosave_dialog.cpp" line="37"/>
-        <location filename="../src/gui/autosave_dialog.cpp" line="43"/>
+        <location filename="../src/gui/autosave_dialog.cpp" line="45"/>
+        <location filename="../src/gui/autosave_dialog.cpp" line="51"/>
         <source>%n bytes</source>
         <translation>
             <numerusform>%n byte</numerusform>
@@ -16,7 +16,7 @@
 <context>
     <name>OCAD8FileImport</name>
     <message numerus="yes">
-        <location filename="../src/file_format_ocad8.cpp" line="142"/>
+        <location filename="../src/file_format_ocad8.cpp" line="145"/>
         <source>%n color separation(s) were skipped, reason: Import disabled.</source>
         <translation>
             <numerusform>%n color separation was skipped, reason: Import disabled.</numerusform>
@@ -27,7 +27,7 @@
 <context>
     <name>TemplateTrack</name>
     <message numerus="yes">
-        <location filename="../src/template_track.cpp" line="458"/>
+        <location filename="../src/template_track.cpp" line="472"/>
         <source>%n path object(s) could not be imported (reason: missing coordinates).</source>
         <translation>
             <numerusform>%n path object could not be imported (reason: missing coordinates).</numerusform>
