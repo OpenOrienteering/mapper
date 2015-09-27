@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012, 2013, 2014 Kai Pastor
+ *    Copyright 2012-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -28,7 +28,6 @@
 #include <QScopedPointer>
 
 #include "../tool.h"
-#include "../core/crs_template.h"
 
 QT_BEGIN_NAMESPACE
 class QComboBox;
@@ -43,12 +42,12 @@ class QSpinBox;
 class QNetworkReply;
 QT_END_NAMESPACE
 
+class CRSSelector;
 class Georeferencing;
+class GeoreferencingTool;
 class Map;
 class MapEditorController;
-class GeoreferencingTool;
-class CRSSelector;
-class CRSTemplate;
+
 
 /**
  * A GeoreferencingDialog allows the user to adjust the georeferencing properties
@@ -65,7 +64,7 @@ public:
 	 * allow_no_georeferencing determines if the okay button can
 	 * be clicked while "- none -" is selected.
 	 */
-	GeoreferencingDialog(MapEditorController* controller, const Georeferencing* initial = NULL, bool allow_no_georeferencing = true);
+	GeoreferencingDialog(MapEditorController* controller, const Georeferencing* initial = nullptr, bool allow_no_georeferencing = true);
 	
 	/**
 	 * Constructs a new georeferencing dialog for the given map. The optional 
@@ -75,27 +74,37 @@ public:
 	 * The parameter allow_no_georeferencing determines if the okay button can
 	 * be clicked while "- none -" is selected.
 	 */
-	GeoreferencingDialog(QWidget* parent, Map* map, const Georeferencing* initial = NULL, bool allow_no_georeferencing = true);
+	GeoreferencingDialog(QWidget* parent, Map* map, const Georeferencing* initial = nullptr, bool allow_no_georeferencing = true);
 	
+protected:
+	/**
+	 * Constructs a new georeferencing dialog.
+	 * 
+	 * The map parameter must not be nullptr, and it must not be a different
+	 * map than the one handled by controller.
+	 * 
+	 * @param parent                  A parent widget.
+	 * @param controller              A controller which operates on the map.
+	 * @param map                     The map.
+	 * @param initial                 An override of the map's georeferencing
+	 * @param allow_no_georeferencing Determines if the okay button can be
+	 *                                be clicked while "- none -" is selected.
+	 */
+	GeoreferencingDialog(
+	        QWidget* parent,
+	        MapEditorController* controller,
+	        Map* map,
+	        const Georeferencing* initial,
+	        bool allow_no_georeferencing
+	);
+	
+public:
 	/**
 	 * Releases resources.
 	 */
 	virtual ~GeoreferencingDialog();
 	
-	/**
-	 * Shows the dialog as a modal dialog, blocking until it is hidden.
-	 * 
-	 * If the GeoreferencingTool (for selecting the reference point) is active
-	 * it will be destroyed before showing the dialog.
-	 * 
-	 * Note that this function will also return when the dialog is temporary 
-	 * hidden for activating the GeoreferencingTool. The GeoreferencingTool
-	 * takes care of reactivating exec().
-	 */
-	int exec();
 	
-	
-public slots:
 	/**
 	 * Updates the dialog from georeferencing state changes.
 	 */
@@ -160,9 +169,9 @@ public slots:
 	 * and closes the dialog. The dialog's result is set to QDialog::Accepted,
 	 * and the active exec() function will return.
 	 */
-	void accept();
+	void accept() override;
 	
-protected slots:
+protected:
 	/**
 	 * Updates enabled / disabled states of all widgets.
 	 */
@@ -172,6 +181,7 @@ protected slots:
 	 * Updates enabled / disabled state and text of the declination query button.
 	 */
 	void updateDeclinationButton();
+	
 	
 	/** 
 	 * Notifies the dialog of a change in the CRS configuration.
@@ -214,27 +224,17 @@ protected slots:
 	 */
 	void declinationReplyFinished(QNetworkReply* reply);
 	
-protected:
 	/**
-	 * Dialog initialization common to all constructors.
+	 * Updates the grivation field from the underlying Georeferencing.
 	 */
-	void init(const Georeferencing* initial);
-	
-	// Helper methods for handling value changes
-	
-	/// Updates the zone field in the dialog from the underlying Georeferencing if
-	/// UTM is used as coordinate reference system.
-	bool updateZone(const Georeferencing& georef);
-	
-	/// Updates the grivation field from the underlying Georeferencing.
 	void updateGrivation();
 	
 private:
 	/* Internal state */
 	MapEditorController* const controller;
 	Map* const map;
-	QScopedPointer<Georeferencing> georef;
 	const Georeferencing* initial_georef;
+	QScopedPointer<Georeferencing> georef; // A working copy of the current or given initial Georeferencing
 	bool allow_no_georeferencing;
 	bool tool_active;
 	bool declination_query_in_progress;
@@ -242,11 +242,9 @@ private:
 	double original_declination;
 	
 	/* GUI elements */
-	CRSSelector* crs_edit;
-	QLabel* crs_spec_label;
-	QLineEdit* crs_spec_edit;
+	CRSSelector* crs_selector;
 	QLabel* status_label;
-	QLabel* status_display_label;
+	QLabel* status_field;
 	
 	QDoubleSpinBox* map_x_edit;
 	QDoubleSpinBox* map_y_edit;
