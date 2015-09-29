@@ -202,6 +202,7 @@ bool TemplateTrack::postLoadConfiguration(QWidget* dialog_parent, bool& out_cent
 		
 		// Show the parameter dialog
 		GeoreferencingDialog dialog(dialog_parent, map, &georef);
+		dialog.setKeepGeographicRefCoords();
 		if (dialog.exec() == QDialog::Rejected || map->getGeoreferencing().isLocal())
 			return false;
 	}
