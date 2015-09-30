@@ -162,7 +162,7 @@ XMLFileExporter::XMLFileExporter(QIODevice* stream, Map *map, MapView *view)
   xml(stream)
 {
 	// Determine auto-formatting default from filename, if possible.
-	const QFile* file = qobject_cast< const QFile* >(stream);
+	auto file = qobject_cast<const QFileDevice*>(stream);
 	bool auto_formatting = (file && file->fileName().contains(".xmap"));
 	setOption("autoFormatting", auto_formatting);
 }
