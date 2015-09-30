@@ -325,7 +325,10 @@ void Georeferencing::save(QXmlStreamWriter& xml) const
 			XmlElementWriter spec_element(xml, literal::spec);
 			spec_element.writeAttribute(literal::language, literal::proj_4);
 			xml.writeCharacters(projected_crs_spec);
-			
+		}
+		
+		if (!projected_crs_parameters.empty())
+		{
 			for (size_t i = 0; i < projected_crs_parameters.size(); ++i)
 			{
 				XmlElementWriter parameter_element(xml, literal::parameter);
