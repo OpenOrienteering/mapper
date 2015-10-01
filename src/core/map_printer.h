@@ -408,23 +408,23 @@ bool operator==(const MapPrinterOptions& lhs, const MapPrinterOptions& rhs)
 
 // ### MapPrinterConfig ###
 
-/** Returns true iff the MapPrinterConfig values are not equal. */
-inline
-bool operator!=(const MapPrinterConfig& lhs, const MapPrinterConfig& rhs)
-{
-	return
-	  lhs.printer_name           != rhs.printer_name            ||
-	  lhs.page_format            != rhs.page_format             ||
-	  lhs.options                != rhs.options                 ||
-	  lhs.center_print_area      != rhs.center_print_area       ||
-	  lhs.single_page_print_area != rhs.single_page_print_area;
-}
-
 /** Returns true iff the MapPrinterConfig values are equal. */
 inline
 bool operator==(const MapPrinterConfig& lhs, const MapPrinterConfig& rhs)
 {
-	return !(lhs != rhs);
+	return     lhs.printer_name           == rhs.printer_name
+	        && lhs.print_area             == rhs.print_area
+	        && lhs.page_format            == rhs.page_format
+	        && lhs.options                == rhs.options
+	        && lhs.center_print_area      == rhs.center_print_area
+	        && lhs.single_page_print_area == rhs.single_page_print_area;
+}
+
+/** Returns true iff the MapPrinterConfig values are not equal. */
+inline
+bool operator!=(const MapPrinterConfig& lhs, const MapPrinterConfig& rhs)
+{
+	return !(lhs == rhs);
 }
 
 
