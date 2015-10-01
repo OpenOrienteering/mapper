@@ -1,5 +1,7 @@
 /*
- *    Copyright 2012, 2013 Thomas Schöps, Pete Curtis
+ *    Copyright 2012 Pete Curtis
+ *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2012-2015  Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -116,6 +118,10 @@ NativeFileImport::~NativeFileImport()
 
 void NativeFileImport::import(bool load_symbols_only)
 {
+    addWarning(tr("This file uses an obsolete format. "
+                  "Support for this format is to be removed from this program soon. "
+                  "To be able to open the file in the future, save it again."));
+
     char buffer[4];
     stream->read(buffer, 4); // read the magic
 
