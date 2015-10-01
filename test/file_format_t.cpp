@@ -86,14 +86,15 @@ void FileFormatTest::initTestCase()
 	map_filenames 
 	  << "COPY_OF_test_map.omap"
 	  << "COPY_OF_spotcolor_overprint.xmap";
-	  
-	for (int i = 0; i < map_filenames.size(); ++i)
+	
+	for (auto&& filename : map_filenames)
 	{
-		QString filename = MapperResource::locate(MapperResource::TEST_DATA, map_filenames[i]);
-		QVERIFY2(!filename.isEmpty(), QString("Unable to locate %1").arg(map_filenames[i]).toLocal8Bit());
-		map_filenames[i] = filename;
+		QString path = MapperResource::locate(MapperResource::TEST_DATA, filename);
+		QVERIFY2(!path.isEmpty(), QString("Unable to locate %1").arg(filename).toLocal8Bit());
+		filename = path;
 	}
 }
+
 
 void FileFormatTest::saveAndLoad_data()
 {
@@ -101,12 +102,15 @@ void FileFormatTest::saveAndLoad_data()
 	QTest::addColumn<QString>("format_id");
 	QTest::addColumn<QString>("map_filename");
 	
-	Q_FOREACH(const FileFormat* format, FileFormats.formats())
+	for (auto format : FileFormats.formats())
 	{
 		if (format->supportsExport() && format->supportsImport())
 		{
-			Q_FOREACH(QString filename, map_filenames)
-				QTest::newRow(format->id().toLocal8Bit()) << format->id() << filename;
+			for (const auto& filename : map_filenames)
+			{
+				auto id = QString { QFileInfo(filename).fileName() % " <> " % format->id() };
+				QTest::newRow(id.toLocal8Bit()) << format->id() << filename;
+			}
 		}
 	}
 }
@@ -222,8 +226,8 @@ bool FileFormatTest::compareMaps(const Map* a, const Map* b, QString& error)
 		a_geo.getProjectedCRSId() != b_geo.getProjectedCRSId() ||
 		a_geo.getProjectedCRSName() != b_geo.getProjectedCRSName() ||
 		a_geo.getProjectedCRSSpec() != b_geo.getProjectedCRSSpec() ||
-		a_geo.getGeographicRefPoint().latitude() != b_geo.getGeographicRefPoint().latitude() ||
-		a_geo.getGeographicRefPoint().longitude() != b_geo.getGeographicRefPoint().longitude())
+		qAbs(a_geo.getGeographicRefPoint().latitude() - b_geo.getGeographicRefPoint().latitude()) > 0.5e-8 ||
+		qAbs(a_geo.getGeographicRefPoint().longitude() - b_geo.getGeographicRefPoint().longitude())  > 0.5e-8)
 	{
 		error = "The georeferencing differs.";
 		return false;
