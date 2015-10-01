@@ -211,7 +211,7 @@ void GPSDisplay::paint(QPainter* painter)
 		const int num_distance_rings = 2;
 		const float distance_ring_radius_meters = 10;
 		
-		float distance_ring_radius_pixels = widget->getMapView()->lengthToPixel(1000*1000 * distance_ring_radius_meters / georeferencing.getScaleDenominator());
+		float distance_ring_radius_pixels = widget->getMapView()->lengthToPixel(100000.0 * distance_ring_radius_meters / georeferencing.getScaleDenominator());
 		painter->setPen(QPen(Qt::gray, Util::mmToPixelLogical(0.1f)));
 		painter->setBrush(Qt::NoBrush);
 		for (int i = 0; i < num_distance_rings; ++ i)
@@ -225,7 +225,7 @@ void GPSDisplay::paint(QPainter* painter)
 	if (latest_gps_coord_accuracy >= 0)
 	{
 		float accuracy_meters = latest_gps_coord_accuracy;
-		float accuracy_pixels = widget->getMapView()->lengthToPixel(1000*1000 * accuracy_meters / georeferencing.getScaleDenominator());
+		float accuracy_pixels = widget->getMapView()->lengthToPixel(1000000.0 * accuracy_meters / georeferencing.getScaleDenominator());
 		
 		painter->setPen(QPen(tracking_lost ? Qt::gray : Qt::red, Util::mmToPixelLogical(0.2f)));
 		painter->setBrush(Qt::NoBrush);

@@ -362,8 +362,8 @@ void MapWidget::adjustViewToRect(const QRectF& map_rect, ZoomOption zoom_option)
 		const float initial_zoom = view->getZoom();
 		for (int i = 0; i < 10; ++i)
 		{
-			float zoom_factor = qMin(height() / (view->lengthToPixel(1000 * map_rect.height()) + 2*pixel_border),
-			                         width() / (view->lengthToPixel(1000 * map_rect.width()) + 2*pixel_border));
+			float zoom_factor = qMin(height() / (view->lengthToPixel(1000.0 * map_rect.height()) + 2*pixel_border),
+			                         width() / (view->lengthToPixel(1000.0 * map_rect.width()) + 2*pixel_border));
 			float zoom = view->getZoom() * zoom_factor;
 			if (zoom_option == DiscreteZoom)
 			{

@@ -246,14 +246,14 @@ QPointF MapView::mapToView(MapCoordF coords) const
 	               map_to_view.m21() * coords.x() + map_to_view.m22() * coords.y() + map_to_view.m23());
 }
 
-double MapView::lengthToPixel(qint64 length) const
+qreal MapView::lengthToPixel(qreal length) const
 {
-	return Util::mmToPixelPhysical(zoom * (length / 1000.0));
+	return Util::mmToPixelPhysical(zoom * length / 1000.0);
 }
 
-qint64 MapView::pixelToLength(double pixel) const
+qreal MapView::pixelToLength(qreal pixel) const
 {
-	return qRound64(1000 * Util::pixelToMMPhysical(pixel / zoom));
+	return Util::pixelToMMPhysical(pixel / zoom) * 1000.0;
 }
 
 QRectF MapView::calculateViewedRect(QRectF rect) const
@@ -298,10 +298,11 @@ void MapView::finishPanning(QPoint offset)
 {
 	setPanOffset({0,0});
 	
-	auto rotated_offset = MapCoordF{ MapCoord::fromNative(-pixelToLength(offset.x()),
-	                                                   -pixelToLength(offset.y())) };
-	rotated_offset.rotate(-rotation);
-	auto move = MapCoord{ rotated_offset };
+	auto rotated_offset = MapCoord::fromNative(qRound64(-pixelToLength(offset.x())),
+	                                           qRound64(-pixelToLength(offset.y())) );
+	auto rotated_offset_f = MapCoordF{ rotated_offset };
+	rotated_offset_f.rotate(-rotation);
+	auto move = MapCoord{ rotated_offset_f };
 	setCenter(center() + move);
 }
 
@@ -358,7 +359,7 @@ void MapView::setCenter(MapCoord pos)
 
 void MapView::updateTransform(ChangeFlags change)
 {
-	double final_zoom = lengthToPixel(1000);
+	double final_zoom = calculateFinalZoomFactor();
 	double final_zoom_cosr = final_zoom * cos(rotation);
 	double final_zoom_sinr = final_zoom * sin(rotation);
 	auto center_x = center_pos.x();

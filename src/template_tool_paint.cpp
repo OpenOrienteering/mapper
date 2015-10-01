@@ -122,7 +122,8 @@ bool PaintOnTemplateTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord
 		coords.push_back(map_coord);
 		rectInclude(map_bbox, map_coord);
 		
-		map()->setDrawingBoundingBox(map_bbox, widget->getMapView()->lengthToPixel((erasing ? (erase_width/2) : 1) * 1000 * scale * 1));
+		auto pixel_border = widget->getMapView()->lengthToPixel(1000.0 * scale * (erasing ? erase_width/2 : 1));
+		map()->setDrawingBoundingBox(map_bbox, pixel_border);
 		
 		return true;
 	}
@@ -157,7 +158,7 @@ void PaintOnTemplateTool::draw(QPainter* painter, MapWidget* widget)
 	float scale = qMin(temp->getTemplateScaleX(), temp->getTemplateScaleY());
 	
 	QPen pen(erasing ? qRgb(255, 255, 255) : paint_color);
-	pen.setWidthF(widget->getMapView()->lengthToPixel(1000 * scale * (erasing ? erase_width : 1)));
+	pen.setWidthF(widget->getMapView()->lengthToPixel(1000.0 * scale * (erasing ? erase_width : 1)));
 	pen.setCapStyle(Qt::RoundCap);
 	pen.setJoinStyle(Qt::RoundJoin);
 	painter->setPen(pen);

@@ -119,18 +119,15 @@ public:
 	
 	
 	/**
-	 * Converts a length defined in native map coordinates (i.e. 1 unit equals
-	 * 1 / 1000th millimeter on the map paper) to the corresponding length in pixels
-	 * with the current view settings.
+	 * Converts a length from native map coordinates to the current length in view pixels.
 	 */
-	double lengthToPixel(qint64 length) const;
+	qreal lengthToPixel(qreal length) const;
 	
 	/**
-	 * Converts a length defined in pixels to the corresponding length in native
-	 * map coordinates (i.e. 1 unit equals 1 / 1000th millimeter on the map paper)
-	 * with the current view settings.
+	 * Converts a length from current view pixels to native map coordinates.
 	 */
-	qint64 pixelToLength(double pixel) const;
+	qreal pixelToLength(qreal pixel) const;
+	
 	
 	/**
 	 * Calculates the bounding box of the map coordinates which can be viewed
@@ -354,7 +351,7 @@ Map* MapView::getMap() const
 inline
 double MapView::calculateFinalZoomFactor() const
 {
-	return lengthToPixel(1000);
+	return lengthToPixel(1000.0);
 }
 
 inline

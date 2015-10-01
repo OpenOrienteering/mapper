@@ -2581,8 +2581,8 @@ void MapEditorController::connectPathsClicked()
 			
 			// Choose connection threshold as maximum of 0.35mm, 1.5 * largest line extent, and 6 pixels
 			// TODO: instead of 6 pixels, use a physical size as soon as screen dpi is in the settings
-			float close_distance_sq = qMax(0.35f, 1.5f * a->getSymbol()->calculateLargestLineExtent(map));
-			close_distance_sq = qMax(close_distance_sq, 0.001f * main_view->pixelToLength(6));
+			auto close_distance_sq = qMax(0.35, 1.5 * a->getSymbol()->calculateLargestLineExtent(map));
+			close_distance_sq = qMax(close_distance_sq, 0.001 * main_view->pixelToLength(6));
 			close_distance_sq = qPow(close_distance_sq, 2);
 			
 			auto num_parts = a->parts().size();
