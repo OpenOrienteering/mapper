@@ -83,9 +83,11 @@ void FileFormatTest::initTestCase()
 	
 	doStaticInitializations();
 	
-	map_filenames 
-	  << "COPY_OF_test_map.omap"
-	  << "COPY_OF_spotcolor_overprint.xmap";
+	map_filenames
+	  << "COPY_OF_issue-513-coords-outside-printable.xmap"
+	  << "COPY_OF_issue-513-coords-outside-qint32.omap"
+	  << "COPY_OF_spotcolor_overprint.xmap"
+	  << "COPY_OF_test_map.omap";
 	
 	for (auto&& filename : map_filenames)
 	{
@@ -93,6 +95,43 @@ void FileFormatTest::initTestCase()
 		QVERIFY2(!path.isEmpty(), QString("Unable to locate %1").arg(filename).toLocal8Bit());
 		filename = path;
 	}
+}
+
+
+void FileFormatTest::issue_513_high_coordinates_data()
+{
+	QTest::addColumn<QString>("filename");
+	
+	for (const auto& filename : map_filenames)
+	{
+		if (filename.contains(QString("issue-513")))
+			QTest::newRow(QFileInfo(filename).fileName().toLocal8Bit()) << filename;
+	}
+}
+
+void FileFormatTest::issue_513_high_coordinates()
+{
+	QFETCH(QString, filename);
+	
+	// Load the test map
+	Map map {};
+	QVERIFY(map.loadFrom(filename, nullptr, nullptr, false, false));
+	
+	for (int i = 0; i < map.getNumParts(); ++i)
+	{
+		auto part = map.getPart(i);
+		auto extent = part->calculateExtent(true);
+		QVERIFY2(extent.top()    <  1000000.0, "extent.top() outside printable range");
+		QVERIFY2(extent.left()   > -1000000.0, "extent.left() outside printable range");
+		QVERIFY2(extent.bottom() > -1000000.0, "extent.bottom() outside printable range");
+		QVERIFY2(extent.right()  <  1000000.0, "extent.right() outside printable range");
+	}
+	
+	auto print_area = map.printerConfig().print_area;
+	QVERIFY2(print_area.top()    <  1000000.0, "extent.top() outside printable range");
+	QVERIFY2(print_area.left()   > -1000000.0, "extent.left() outside printable range");
+	QVERIFY2(print_area.bottom() > -1000000.0, "extent.bottom() outside printable range");
+	QVERIFY2(print_area.right()  <  1000000.0, "extent.right() outside printable range");
 }
 
 

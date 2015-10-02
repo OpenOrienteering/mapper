@@ -1,5 +1,6 @@
 /*
- *    Copyright 2012, 2013 Thomas Schöps, Kai Pastor
+ *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2012-2015  Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -27,8 +28,8 @@
 
 
 /**
- * @test Tests that maps contain the same information before and after saving
- *       them and loading them again.
+ * @test Tests concerning the file formats, import and export.
+ * 
  */
 class FileFormatTest : public QObject
 {
@@ -36,8 +37,22 @@ Q_OBJECT
 	
 private slots:
 	void initTestCase();
-	void saveAndLoad_data();
+	
+	/**
+	 * Tests that high coordinates are correctly moved to the central region
+	 * of the map.
+	 * 
+	 * \see issue #513
+	 */
+	void issue_513_high_coordinates();
+	void issue_513_high_coordinates_data();
+	
+	/**
+	 * Tests that maps contain the same information before and after saving
+     * them and loading them again.
+     */
 	void saveAndLoad();
+	void saveAndLoad_data();
 	
 private:
 	Map* saveAndLoadMap(Map* input, const FileFormat* format);

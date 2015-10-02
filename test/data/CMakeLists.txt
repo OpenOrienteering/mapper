@@ -17,8 +17,10 @@
 #    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  
 set(Mapper_TEST_DATA
-  test_map.omap
+  issue-513-coords-outside-printable.xmap
+  issue-513-coords-outside-qint32.omap
   spotcolor_overprint.xmap
+  test_map.omap
 )
 
 set(_test_data)
