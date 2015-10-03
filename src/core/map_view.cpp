@@ -83,7 +83,15 @@ void MapView::load(QIODevice* file, int version)
 	file->read((char*)&unused /*view_y*/, sizeof(int));
 	file->read((char*)&pan_offset, sizeof(QPoint));
 	
-	center_pos = MapCoord::fromNative(center_x, center_y);
+	try
+	{
+		center_pos = MapCoord::fromNative64withOffset(center_x, center_y);
+	}
+	catch (std::range_error)
+	{
+		// leave center_pos unchanged
+	}
+	
 	updateTransform(CenterChange | ZoomChange | RotationChange);
 	
 	if (version >= 26)
@@ -156,9 +164,18 @@ void MapView::load(QXmlStreamReader& xml)
 	if (zoom < 0.001)
 		zoom = 1.0;
 	rotation = mapview_element.attribute<double>(literal::rotation);
-	auto center_x = mapview_element.attribute<qint32>(literal::position_x);
-	auto center_y = mapview_element.attribute<qint32>(literal::position_y);
-	center_pos = MapCoord::fromNative(center_x, center_y);
+	
+	auto center_x = mapview_element.attribute<qint64>(literal::position_x);
+	auto center_y = mapview_element.attribute<qint64>(literal::position_y);
+	try
+	{
+		center_pos = MapCoord::fromNative64withOffset(center_x, center_y);
+	}
+	catch (std::range_error)
+	{
+		// leave center_pos unchanged
+	}
+	
 	grid_visible = mapview_element.attribute<bool>(literal::grid);
 	overprinting_simulation_enabled = mapview_element.attribute<bool>(literal::overprinting_simulation_enabled);
 	updateTransform(CenterChange | ZoomChange | RotationChange);
@@ -297,13 +314,19 @@ void MapView::setPanOffset(QPoint offset)
 void MapView::finishPanning(QPoint offset)
 {
 	setPanOffset({0,0});
-	
-	auto rotated_offset = MapCoord::fromNative(qRound64(-pixelToLength(offset.x())),
-	                                           qRound64(-pixelToLength(offset.y())) );
-	auto rotated_offset_f = MapCoordF{ rotated_offset };
-	rotated_offset_f.rotate(-rotation);
-	auto move = MapCoord{ rotated_offset_f };
-	setCenter(center() + move);
+	try
+	{
+		auto rotated_offset = MapCoord::fromNative64(qRound64(-pixelToLength(offset.x())),
+													 qRound64(-pixelToLength(offset.y())) );
+		auto rotated_offset_f = MapCoordF{ rotated_offset };
+		rotated_offset_f.rotate(-rotation);
+		auto move = MapCoord{ rotated_offset_f };
+		setCenter(center() + move);
+	}
+	catch (std::range_error)
+	{
+		// Do nothing
+	}
 }
 
 void MapView::zoomSteps(float num_steps, bool preserve_cursor_pos, QPointF cursor_pos_view)

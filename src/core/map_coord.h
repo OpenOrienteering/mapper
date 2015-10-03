@@ -25,8 +25,9 @@
 #include <cmath>
 #include <vector>
 
-#include <QPointF>
+#include <QCoreApplication>
 #include <QFlags>
+#include <QPointF>
 
 class QString;
 class QTextStream;
@@ -80,6 +81,8 @@ struct LegacyMapCoord
  */
 class MapCoord
 {
+	Q_DECLARE_TR_FUNCTIONS(MapCoord)
+	
 public:
 	/**
 	 * These flags provide extra information on each coordinate in a path.
@@ -98,6 +101,50 @@ public:
 	};
 	Q_DECLARE_FLAGS(Flags, Flag)
 	
+	/**
+	 * Offset and flag for importing and moving out-of-bounds MapCoords.
+	 *
+	 * Since reducing MapCoord bits from 60 (64 minus flags) to 32, we need to
+	 * deal with old files possibly having out-of-bounds coordinates.
+	 * 
+	 * In addition, we need to deal with files suffering from out-of-print range
+	 * coordinates (issue #513). In the print dialog, the printable area is up
+	 * to 1000 m of paper [!] wide and high. The top left point is allowed to be
+	 * up 1000 m away from the origin in each direction. Every point to be
+	 * printed (from the UI) must be within this area.
+	 * 
+	 * The idea for correcting maps during loading (where we may hit the
+	 * out-of-bounds coordinates for the first time) is to look at the first
+	 * point in the map (the georeferencing reference point or the coordinates
+	 * of the first object). If this point is more than 500 m of paper [!] from
+	 * the origin, it is moved to the origin, and the same offset is applied to
+	 * all other coordinates. After that adjustment, anything up to 1000 m of
+	 * paper away from the first point will be in the printable area.
+	 * 
+	 * The current implementation uses a global variable and thus can handle
+	 * only one file at the same time. However, the global variables is
+	 * initially configured to a neutral value. Any code activating the tracking
+	 * of out-of-bounds coordinates it responsible to rollback this neutral
+	 * configuration when finished.
+	 * 
+	 * Since symbol definitions are stored in MapCoords, too, extra care needs
+	 * to be taken not to adjust coordinates of the symbols' elements.
+	 * 
+	 * \see XMLFileImporter::import
+	 */
+	struct BoundsOffset
+	{
+		qint64 x = 0;
+		qint64 y = 0;
+		bool check_for_offset = false;
+		
+		/** Returns true if both x and y are equal to zero. */
+		constexpr bool isZero() const;
+		
+		/** Resets x and y to zero, and sets check_for_offset. */
+		void reset(bool check_for_offset);
+	};
+	
 private:
 	/** Benchmark */
 	friend class CoordXmlTest;
@@ -107,6 +154,14 @@ private:
 	Flags  fp;
 	
 public:
+	/** Returns the global bounds offset.
+	 *
+	 * It is returned as a non-const reference, so that it can be used in
+	 * QScopedValueRollack.
+	 */
+	static BoundsOffset& boundsOffset();
+	
+	
 	/** Creates a MapCoord with position at the origin and without any flags set. */
 	constexpr MapCoord() noexcept;
 	
@@ -154,11 +209,35 @@ public:
 	/** Creates a MapCoord with the given flags and with the position taken from a QPointF. */
 	constexpr MapCoord(QPointF point, int flags);
 	
+	
 	/** Creates a MapCoord from native map coordinates. */
 	static constexpr MapCoord fromNative(qint32 x, qint32 y);
 	
 	/** Creates a MapCoord from native map coordinates. */
 	static constexpr MapCoord fromNative(qint32 x, qint32 y, int flags);
+	
+	/** It is illegal to call MapCoord::fromNative with qint64 arguments.
+	 *
+	 * Use fromNative64 instead. That method tests the values against the bounds of qint32.
+	 */
+	static MapCoord fromNative(qint64 x, qint64 y) = delete;
+	
+	/** Creates a MapCoord from native map coordinates.
+	 *
+	 * The coordinates are expected to be in the bounds of qint32.
+	 * 
+	 * \todo Raise (and handle exceptions) when out of bounds.
+	 */
+	static MapCoord fromNative64(qint64 x, qint64 y);
+	
+	/** Creates a MapCoord from native map coordinates.
+	 * 
+	 * This will apply the BoundsOffset() and throw a std::range_error if the
+	 * adjusted coordinates are out of bounds for qint32.
+	 * It does not modify BoundsOffset()!
+	 */
+	static MapCoord fromNative64withOffset(qint64 x, qint64 y);
+	
 	
 	/** Assignment operator */
 	MapCoord& operator= (const MapCoord& other) = default;
@@ -300,7 +379,12 @@ public:
 	/** Saves the MapCoord in xml format to the stream. */
 	void save(QXmlStreamWriter& xml) const;
 	
-	/** Loads the MapCoord in xml format from the stream. */
+	/** Loads the MapCoord in xml format from the stream.
+	 *
+	 * This will initialize the boundsOffset() if neccessary. Otherwise it will
+	 * apply the BoundsOffset() and throw a std::range_error if the adjusted
+	 * coordinates are out of bounds for qint32.
+	 */
 	static MapCoord load(QXmlStreamReader& xml);
 	
 	
@@ -346,6 +430,11 @@ constexpr MapCoord operator/(const MapCoord& lhs, qreal divisor);
 
 /**
  * Reads raw coordinates and flags from a text stream.
+ * 
+ * This will initialize the boundsOffset() if neccessary. Otherwise it will
+ * apply the BoundsOffset() and throw a std::range_error if the adjusted
+ * coordinates are out of bounds for qint32.
+ * 
  * @see MapCoord::toString()
  */
 QTextStream& operator>>(QTextStream& stream, MapCoord& coord);
@@ -521,6 +610,21 @@ typedef std::vector<MapCoordF> MapCoordVectorF;
 // ### MapCoord inline code ###
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(MapCoord::Flags)
+
+
+constexpr bool MapCoord::BoundsOffset::isZero() const
+{
+	return x==0 && y==0;
+}
+
+inline
+void MapCoord::BoundsOffset::reset(bool check_for_offset)
+{
+	this->check_for_offset = check_for_offset;
+	x = 0;
+	y = 0;
+}
+
 
 constexpr MapCoord::MapCoord() noexcept
  : xp{ 0 }

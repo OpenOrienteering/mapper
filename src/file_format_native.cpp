@@ -22,6 +22,7 @@
 #include "file_format_native.h"
 
 #include <QFile>
+#include <QScopedValueRollback>
 
 #include "core/georeferencing.h"
 #include "core/map_color.h"
@@ -121,6 +122,8 @@ void NativeFileImport::import(bool load_symbols_only)
     addWarning(tr("This file uses an obsolete format. "
                   "Support for this format is to be removed from this program soon. "
                   "To be able to open the file in the future, save it again."));
+
+    MapCoord::boundsOffset().reset(true);
 
     char buffer[4];
     stream->read(buffer, 4); // read the magic
@@ -303,6 +306,9 @@ void NativeFileImport::import(bool load_symbols_only)
 
     for (int i = 0; i < num_symbols; ++i)
     {
+        QScopedValueRollback<MapCoord::BoundsOffset> offset { MapCoord::boundsOffset() };
+        MapCoord::boundsOffset().reset(false);
+
         int symbol_type;
         stream->read((char*)&symbol_type, sizeof(int));
 

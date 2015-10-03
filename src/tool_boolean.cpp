@@ -22,6 +22,7 @@
 #include "tool_boolean.h"
 
 #include <algorithm>
+#include <memory>
 
 #include <QDebug>
 
@@ -303,20 +304,27 @@ void BooleanTool::polyTreeToPathObjects(const ClipperLib::PolyTree& tree, PathOb
 
 void BooleanTool::outerPolyNodeToPathObjects(const ClipperLib::PolyNode& node, PathObjects& out_objects, const PathObject* proto, const PolyMap& polymap)
 {
-	PathObject* object = new PathObject(*proto);
+	auto object = std::unique_ptr<PathObject>{ new PathObject{ *proto } };
 	object->clearCoordinates();
 	
-	polygonToPathPart(node.Contour, polymap, object);
-	for (int i = 0, i_count = node.ChildCount(); i < i_count; ++i)
+	try
 	{
-		polygonToPathPart(node.Childs[i]->Contour, polymap, object);
+		polygonToPathPart(node.Contour, polymap, object.get());
+		for (int i = 0, i_count = node.ChildCount(); i < i_count; ++i)
+		{
+			polygonToPathPart(node.Childs[i]->Contour, polymap, object.get());
+			
+			// Add outer polygons contained by (nested within) holes ...
+			for (int j = 0, j_count = node.Childs[i]->ChildCount(); j < j_count; ++j)
+				outerPolyNodeToPathObjects(*node.Childs[i]->Childs[j], out_objects, proto, polymap);
+		}
 		
-		// Add outer polygons contained by (nested within) holes ...
-		for (int j = 0, j_count = node.Childs[i]->ChildCount(); j < j_count; ++j)
-			outerPolyNodeToPathObjects(*node.Childs[i]->Childs[j], out_objects, proto, polymap);
+		out_objects.push_back(object.release());
 	}
-	
-	out_objects.push_back(object);
+	catch (std::range_error)
+	{
+		// Do nothing
+	}
 }
 
 
@@ -910,10 +918,10 @@ void BooleanTool::rebuildSegmentFromPathOnly(
         const ClipperLib::IntPoint& end_point,
         PathObject* object)
 {
-	MapCoord start_point_c = MapCoord::fromNative(start_point.X, start_point.Y);
-	MapCoord second_point_c = MapCoord::fromNative(second_point.X, second_point.Y);
-	MapCoord second_last_point_c = MapCoord::fromNative(second_last_point.X, second_last_point.Y);
-	MapCoord end_point_c = MapCoord::fromNative(end_point.X, end_point.Y);
+	MapCoord start_point_c = MapCoord::fromNative64(start_point.X, start_point.Y);
+	MapCoord second_point_c = MapCoord::fromNative64(second_point.X, second_point.Y);
+	MapCoord second_last_point_c = MapCoord::fromNative64(second_last_point.X, second_last_point.Y);
+	MapCoord end_point_c = MapCoord::fromNative64(end_point.X, end_point.Y);
 	
 	MapCoordF polygon_start_tangent = MapCoordF(second_point_c - start_point_c);
 	polygon_start_tangent.normalize();

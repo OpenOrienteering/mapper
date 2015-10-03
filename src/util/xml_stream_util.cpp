@@ -62,42 +62,50 @@ void XmlElementReader::read(MapCoordVector& coords)
 	const auto num_coords = attribute<unsigned int>(literal::count);
 	coords.reserve(std::min(num_coords, 500000u));
 	
-	for( xml.readNext(); xml.tokenType() != QXmlStreamReader::EndElement; xml.readNext() )
+	try
 	{
-		const QXmlStreamReader::TokenType token = xml.tokenType();
-		if (xml.error() || token == QXmlStreamReader::EndDocument)
+		for( xml.readNext(); xml.tokenType() != QXmlStreamReader::EndElement; xml.readNext() )
 		{
-			throw FileFormatException(ImportExport::tr("Could not parse the data."));
-		}
-		else if (token == QXmlStreamReader::Characters && !xml.isWhitespace())
-		{
-			QStringRef text = xml.text();
-			QString data = QString::fromRawData(text.constData(), text.length());
-			
-			QTextStream stream(&data, QIODevice::ReadOnly);
-			stream.setIntegerBase(10);
-			while (!stream.atEnd())
-			{
-				coords.emplace_back();
-				stream >> coords.back();
-			}
-			if (stream.status() == QTextStream::ReadCorruptData)
+			const QXmlStreamReader::TokenType token = xml.tokenType();
+			if (xml.error() || token == QXmlStreamReader::EndDocument)
 			{
 				throw FileFormatException(ImportExport::tr("Could not parse the coordinates."));
 			}
-		}
-		else if (token == QXmlStreamReader::StartElement)
-		{
-			if (xml.name() == literal::coord)
+			else if (token == QXmlStreamReader::Characters && !xml.isWhitespace())
 			{
-				coords.emplace_back(MapCoord::load(xml));
+				QStringRef text = xml.text();
+				QString data = QString::fromRawData(text.constData(), text.length());
+				
+				QTextStream stream(&data, QIODevice::ReadOnly);
+				stream.setIntegerBase(10);
+				while (!stream.atEnd())
+				{
+					coords.emplace_back();
+					stream >> coords.back();
+				}
+				
+				if (stream.status() == QTextStream::ReadCorruptData)
+				{
+					throw FileFormatException(ImportExport::tr("Could not parse the coordinates."));
+				}
 			}
-			else
+			else if (token == QXmlStreamReader::StartElement)
 			{
-				xml.skipCurrentElement();
+				if (xml.name() == literal::coord)
+				{
+					coords.emplace_back(MapCoord::load(xml));
+				}
+				else
+				{
+					xml.skipCurrentElement();
+				}
 			}
+			// otherwise: ignore element
 		}
-		// otherwise: ignore element
+	}
+	catch (std::range_error &e)
+	{
+		throw FileFormatException(MapCoord::tr(e.what()));
 	}
 	
 	if (coords.size() != num_coords)

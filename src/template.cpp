@@ -32,11 +32,12 @@
 #include <QXmlStreamWriter>
 
 #include "core/map_view.h"
-#include "util.h"
 #include "map.h"
 #include "template_image.h"
-#include "template_track.h"
 #include "template_map.h"
+#include "template_track.h"
+#include "util.h"
+#include "util/xml_stream_util.h"
 
 // ### TemplateTransform ###
 
@@ -85,12 +86,15 @@ void TemplateTransform::load(QXmlStreamReader& xml)
 {
 	Q_ASSERT(xml.name() == "transformation");
 	
-	template_x = xml.attributes().value("x").toString().toLongLong();
-	template_y = xml.attributes().value("y").toString().toLongLong();
-	template_scale_x = xml.attributes().value("scale_x").toString().toDouble();
-	template_scale_y = xml.attributes().value("scale_y").toString().toDouble();
-	template_rotation = xml.attributes().value("rotation").toString().toDouble();
-	xml.skipCurrentElement();
+	XmlElementReader element { xml };
+	auto x64 = element.attribute<qint64>(QLatin1String("x"));
+	auto y64 = element.attribute<qint64>(QLatin1String("y"));
+	auto coord = MapCoord::fromNative64withOffset(x64, y64);
+	template_x = coord.nativeX();
+	template_y = coord.nativeY();
+	template_scale_x = element.attribute<double>(QLatin1String("scale_x"));
+	template_scale_y = element.attribute<double>(QLatin1String("scale_y"));
+	template_rotation = element.attribute<double>(QLatin1String("rotation"));
 }
 
 
@@ -333,11 +337,25 @@ Q_ASSERT(temp->passpoints.size() == 0);
 		}
 	}
 	
-	// Fix template alignment problems caused by grivation rounding since version 0.6
-	const double correction = map.getGeoreferencing().getGrivationError();
-	if (!temp->is_georeferenced && qAbs(correction) != 0.0 && temp->getTemplateType() == "TemplateTrack" )
+	if (!temp->is_georeferenced)
 	{
-		temp->setTemplateRotation(temp->getTemplateRotation() + Georeferencing::degToRad(correction));
+		// Fix template adjustment after moving objects during import (cf. #513)
+		const auto offset = MapCoord::boundsOffset();
+		if (!offset.isZero())
+		{
+			temp->template_to_map.set(0, 2, temp->template_to_map_other.get(0, 2) - offset.x / 1000.0);
+			temp->template_to_map.set(1, 2, temp->template_to_map_other.get(1, 2) - offset.y / 1000.0);
+			temp->template_to_map.invert(temp->map_to_template);
+			temp->template_to_map_other.set(0, 2, temp->template_to_map_other.get(0, 2) - offset.x / 1000.0);
+			temp->template_to_map_other.set(1, 2, temp->template_to_map_other.get(1, 2) - offset.y / 1000.0);
+		}
+		
+		// Fix template alignment problems caused by grivation rounding since version 0.6
+		const double correction = map.getGeoreferencing().getGrivationError();
+		if (qAbs(correction) != 0.0 && temp->getTemplateType() == "TemplateTrack")
+		{
+			temp->setTemplateRotation(temp->getTemplateRotation() + Georeferencing::degToRad(correction));
+		}
 	}
 	
 	return temp;

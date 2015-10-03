@@ -467,9 +467,20 @@ Object* Object::load(QXmlStreamReader& xml, Map* map, const SymbolDictionary& sy
 			while (xml.readNextStartElement())
 			{
 				if (xml.name() == XmlStreamLiteral::coord)
-					path->setPatternOrigin(MapCoord::load(xml));
+				{
+					try
+					{
+						path->setPatternOrigin(MapCoord::load(xml));
+					}
+					catch (std::range_error& e)
+					{
+						throw FileFormatException(MapCoord::tr(e.what()));
+					}
+				}
 				else
+				{
 					xml.skipCurrentElement(); // unknown
+				}
 			}
 		}
 		else if (xml.name() == literal::text && object_type == Text)

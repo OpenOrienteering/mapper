@@ -1,5 +1,7 @@
 /*
- *    Copyright 2012, 2013, 2014 Pete Curtis, Kai Pastor
+ *    Copyright 2012 Pete Curtis
+ *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2012-2015  Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -22,6 +24,7 @@
 
 #include <QDebug>
 #include <QFile>
+#include <QScopedValueRollback>
 #include <QStringBuilder>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
@@ -412,7 +415,41 @@ void XMLFileImporter::import(bool load_symbols_only)
 	else if (version > XMLFileFormat::current_version)
 		addWarning(Importer::tr("Unsupported new file format version. Some map features will not be loaded or saved by this version of the program."));
 	
+	QScopedValueRollback<MapCoord::BoundsOffset> rollback { MapCoord::boundsOffset() };
+	MapCoord::boundsOffset().reset(true);
+	georef_offset_adjusted = false;
 	importElements(load_symbols_only);
+	
+	auto offset = MapCoord::boundsOffset();
+	if (!load_symbols_only && !offset.isZero())
+	{
+		addWarning(tr("Some coordinates were out of bounds for printing. Map content was adjusted."));
+		
+		MapCoordF offset_f { offset.x / 1000.0, offset.y / 1000.0 };
+		
+		// Apply the offset
+		auto printer_config = map->printerConfig();
+		auto& print_area = printer_config.print_area;
+		print_area.translate( -offset_f );
+		
+		// Verify the adjusted print area, and readjust if necessary
+		if (print_area.top() <= -1000000.0 || print_area.bottom() > 1000000.0)
+			print_area.moveTop(-print_area.width() / 2);
+		if (print_area.left() <= -1000000.0 || print_area.right() > 1000000.0)
+			print_area.moveLeft(-print_area.width() / 2);
+		
+		map->setPrinterConfig(printer_config);
+		
+		if (!georef_offset_adjusted)
+		{
+			// We need to adjust the georeferencing.
+			auto georef = map->getGeoreferencing();
+			auto ref_point = MapCoordF { georef.getMapRefPoint() };
+			auto new_projected = georef.toProjectedCoords(ref_point + offset_f);
+			georef.setProjectedRefPoint(new_projected, false);
+			map->setGeoreferencing(georef);
+		}
+	}
 }
 
 void XMLFileImporter::importElements(bool load_symbols_only)
@@ -481,6 +518,8 @@ void XMLFileImporter::importGeoreferencing(bool load_symbols_only)
 {
 	Q_ASSERT(xml.name() == literal::georeferencing);
 	
+	bool check_for_offset = MapCoord::boundsOffset().check_for_offset;
+	
 	Georeferencing georef;
 	georef.load(xml, load_symbols_only);
 	map->setGeoreferencing(georef);
@@ -493,6 +532,13 @@ void XMLFileImporter::importGeoreferencing(bool load_symbols_only)
 		           arg(georef.getProjectedCRSSpec()).
 		           arg(error_text));
 	}
+	
+	if (MapCoord::boundsOffset().isZero())
+		// Georeferencing was not adjusted on import.
+		MapCoord::boundsOffset().reset(check_for_offset);
+	else if (check_for_offset)
+		// Georeferencing was adjusted on import, before other coordinates.
+		georef_offset_adjusted = true;
 }
 
 /** Helper for delayed actions */
@@ -666,6 +712,9 @@ void XMLFileImporter::importColors()
 
 void XMLFileImporter::importSymbols()
 {
+	QScopedValueRollback<MapCoord::BoundsOffset> offset { MapCoord::boundsOffset() };
+	MapCoord::boundsOffset().reset(false);
+	
 	XmlElementReader symbols_element(xml);
 	int num_symbols = symbols_element.attribute<int>(literal::count);
 	map->symbols.reserve(qMin(num_symbols, 1000)); // 1000 is not a limit
@@ -799,15 +848,41 @@ void XMLFileImporter::importPrint()
 {
 	Q_ASSERT(xml.name() == literal::print);
 	
-	map->setPrinterConfig(MapPrinterConfig(*map, xml));
+	try
+	{
+		map->setPrinterConfig(MapPrinterConfig(*map, xml));
+	}
+	catch (FileFormatException& e)
+	{
+		addWarning(ImportExport::tr("Error while loading the printing configuration at %1:%2: %3")
+		           .arg(xml.lineNumber()).arg(xml.columnNumber()).arg(e.message()));
+	}
 }
 
 void XMLFileImporter::importUndo()
 {
-	map->undoManager().loadUndo(xml, symbol_dict);
+	try
+	{
+		map->undoManager().loadUndo(xml, symbol_dict);
+	}
+	catch (FileFormatException& e)
+	{
+		addWarning(ImportExport::tr("Error while loading the undo/redo steps at %1:%2: %3")
+		           .arg(xml.lineNumber()).arg(xml.columnNumber()).arg(e.message()));
+		map->undoManager().clear();
+	}
 }
 
 void XMLFileImporter::importRedo()
 {
-	map->undoManager().loadRedo(xml, symbol_dict);
+	try
+	{
+		map->undoManager().loadRedo(xml, symbol_dict);
+	}
+	catch (FileFormatException& e)
+	{
+		addWarning(ImportExport::tr("Error while loading the undo/redo steps at %1:%2: %3")
+		           .arg(xml.lineNumber()).arg(xml.columnNumber()).arg(e.message()));
+		map->undoManager().clear();
+	}
 }

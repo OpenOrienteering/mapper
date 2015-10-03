@@ -22,9 +22,11 @@
 #include "transformation.h"
 
 #include <qmath.h>
+#include <QScopedValueRollback>
 #include <QXmlStreamWriter>
 
 #include "core/map_coord.h"
+#include "file_format.h"
 #include "matrix.h"
 #include "template.h"
 
@@ -76,19 +78,25 @@ PassPoint PassPoint::load(QXmlStreamReader& xml)
 	while (xml.readNextStartElement())
 	{
 		QStringRef name = xml.name();
-		MapCoord coord;
 		while (xml.readNextStartElement())
 		{
 			if (xml.name() == "coord")
 			{
-				if (name == "source")
-					p.src_coords = MapCoordF(MapCoord::load(xml));
-				else if (name == "destination")
-					p.dest_coords = MapCoordF(MapCoord::load(xml));
-				else if (name == "calculated")
-					p.calculated_coords = MapCoordF(MapCoord::load(xml));
-				else
-					xml.skipCurrentElement(); // unsupported
+				try
+				{
+					if (name == "source")
+						p.src_coords = MapCoordF(MapCoord::load(xml));
+					else if (name == "destination")
+						p.dest_coords = MapCoordF(MapCoord::load(xml));
+					else if (name == "calculated")
+						p.calculated_coords = MapCoordF(MapCoord::load(xml));
+					else
+						xml.skipCurrentElement(); // unsupported
+				}
+				catch (std::range_error& e)
+				{
+					throw FileFormatException(MapCoord::tr(e.what()));
+				}
 			}
 			else
 				xml.skipCurrentElement(); // unsupported

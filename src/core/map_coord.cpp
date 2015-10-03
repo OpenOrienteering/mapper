@@ -30,6 +30,15 @@
 #include "../util/xml_stream_util.h"
 
 
+static_assert(!MapCoord::BoundsOffset().check_for_offset,
+              "Default-constructed BoundsOffset must have check_for_offset == false.");
+static_assert(MapCoord::BoundsOffset().x == 0,
+              "Default-constructed BoundsOffset must have x == 0.");
+static_assert(MapCoord::BoundsOffset().y == 0,
+              "Default-constructed BoundsOffset must have y == 0.");
+static_assert(MapCoord::BoundsOffset().isZero(),
+              "Default-constructed BoundsOffset must be null.");
+
 static_assert(std::is_nothrow_move_constructible<MapCoord>::value, "MapCoord must be nothrow move constructible.");
 static_assert(std::is_nothrow_move_assignable<MapCoord>::value, "MapCoord must be nothrow move assignable.");
 
@@ -114,6 +123,83 @@ namespace literal
 
 
 
+namespace
+{
+
+// Acceptable coord bounds on import, derived from printing UI bounds
+constexpr qint64 min_coord = -500000000;
+constexpr qint64 max_coord = +500000000;
+
+MapCoord::BoundsOffset bounds_offset;
+
+inline
+void applyBoundsOffset(qint64& x64, qint64& y64)
+{
+	x64 -= bounds_offset.x;
+	y64 -= bounds_offset.y;
+}
+	
+inline
+void handleBoundsOffset(qint64& x64, qint64& y64)
+{
+	if (bounds_offset.check_for_offset)
+	{
+		bounds_offset.check_for_offset = false;
+		if (x64 < min_coord || x64 > max_coord)
+		{
+			bounds_offset.x = x64;
+			x64 = 0;
+		}
+		if (y64 < min_coord || y64 > max_coord)
+		{
+			bounds_offset.y = y64;
+			y64 = 0;
+		}
+	}
+	else
+	{
+		applyBoundsOffset(x64, y64);
+	}
+}
+
+inline
+void ensureBoundsForQint32(qint64 x64, qint64 y64)
+{
+	if ( x64 < std::numeric_limits<qint32>::min()
+		 || x64 > std::numeric_limits<qint32>::max()
+		 || y64 < std::numeric_limits<qint32>::min()
+		 || y64 > std::numeric_limits<qint32>::max() )
+	{
+		throw std::range_error(QT_TR_NOOP("Coordinates are out-of-bounds."));
+	}
+}
+
+} // namespace
+
+
+
+MapCoord::BoundsOffset& MapCoord::boundsOffset()
+{
+	return bounds_offset;
+}
+
+
+MapCoord MapCoord::fromNative64(qint64 x64, qint64 y64)
+{
+	// We only need to check the storage bounds here because 
+	// this is the technical invariant.
+	// Printing bounds will be checked during map loading ATM.
+	ensureBoundsForQint32(x64, y64);
+	return MapCoord{ static_cast<qint32>(x64), static_cast<qint32>(y64), Flags() };
+}
+
+MapCoord MapCoord::fromNative64withOffset(qint64 x64, qint64 y64)
+{
+	applyBoundsOffset(x64, y64);
+	ensureBoundsForQint32(x64, y64);
+	return MapCoord { static_cast<qint32>(x64), static_cast<qint32>(y64), Flags() };
+}
+
 void MapCoord::save(QXmlStreamWriter& xml) const
 {
 	XmlElementWriter element(xml, XmlStreamLiteral::coord);
@@ -128,10 +214,13 @@ void MapCoord::save(QXmlStreamWriter& xml) const
 MapCoord MapCoord::load(QXmlStreamReader& xml)
 {
 	XmlElementReader element(xml);
-	return MapCoord::fromNative(
-	            element.attribute<decltype(MapCoord::xp)>(literal::x),
-	            element.attribute<decltype(MapCoord::yp)>(literal::y),
-	            element.attribute<Flags::Int>(literal::flags) );
+	auto x64 = element.attribute<qint64>(literal::x);
+	auto y64 = element.attribute<qint64>(literal::y);
+	auto flags = element.attribute<Flags::Int>(literal::flags);
+	
+	handleBoundsOffset(x64, y64);
+	ensureBoundsForQint32(x64, y64);
+	return MapCoord { static_cast<qint32>(x64), static_cast<qint32>(y64), flags };
 }
 
 #ifndef NO_NATIVE_FILE_FORMAT
@@ -243,8 +332,15 @@ QString MapCoord::toString() const
 QTextStream& operator>>(QTextStream& stream, MapCoord& coord)
 {
 	// Always update all MapCoord members here (xp, yp, flags).
+	qint64 x64, y64;
 	QChar separator;
-	stream >> coord.xp >> coord.yp >> separator;
+	stream >> x64 >> y64 >> separator;
+	
+	handleBoundsOffset(x64, y64);
+	ensureBoundsForQint32(x64, y64);
+	
+	coord.xp = static_cast<qint32>(x64);
+	coord.yp = static_cast<qint32>(y64);
 	
 	int flags = 0;
 	if (separator == QChar::Space)

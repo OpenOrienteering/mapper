@@ -311,10 +311,17 @@ void MapWidget::moveMap(int steps_x, int steps_y)
 {
 	if (steps_x != 0 || steps_y != 0)
 	{
-		const float move_factor = 0.25f;
-		auto offset = MapCoord::fromNative(view->pixelToLength(width() * steps_x * move_factor),
-		                                view->pixelToLength(height() * steps_y * move_factor));
-		view->setCenter(view->center() + offset);
+		try
+		{
+			constexpr auto move_factor = 0.25;
+			auto offset = MapCoord::fromNative64( qRound64(view->pixelToLength(width() * steps_x * move_factor)),
+			                                      qRound64(view->pixelToLength(height() * steps_y * move_factor)) );
+			view->setCenter(view->center() + offset);
+		}
+		catch (std::range_error)
+		{
+			// Do nothing
+		}
 	}
 }
 
