@@ -39,6 +39,11 @@ private slots:
 	void initTestCase();
 	
 	/**
+	 * Tests the MapCoord::toString() implementation which is used for export.
+	 */
+	void mapCoordtoString();
+	
+	/**
 	 * Tests that high coordinates are correctly moved to the central region
 	 * of the map.
 	 * 

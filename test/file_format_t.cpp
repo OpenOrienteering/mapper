@@ -98,6 +98,19 @@ void FileFormatTest::initTestCase()
 }
 
 
+void FileFormatTest::mapCoordtoString()
+{
+	QCOMPARE(MapCoord().toString(), QString("0 0;"));
+	
+	// Verify toString for native coordinates at the numeric limits.
+	auto native_x = MapCoord().nativeX();
+	using bounds = std::numeric_limits<decltype(native_x)>;
+	static_assert(sizeof(decltype(native_x)) == sizeof(qint32), "This test assumes qint32 native coordinates");
+	QCOMPARE(MapCoord::fromNative(bounds::max(), bounds::max(), 8).toString(), QString("2147483647 2147483647 8;"));
+	QCOMPARE(MapCoord::fromNative(bounds::min(), bounds::min(), 1).toString(), QString("-2147483648 -2147483648 1;"));
+}
+
+
 void FileFormatTest::issue_513_high_coordinates_data()
 {
 	QTest::addColumn<QString>("filename");
