@@ -25,7 +25,6 @@
 
 #include "file_format_registry.h"
 #include "file_format_native.h"
-#include "file_format_ocad8.h"
 #include "file_format_xml.h"
 #include "fileformats/ocd_file_format.h"
 
