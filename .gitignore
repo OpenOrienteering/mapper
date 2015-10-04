@@ -1,7 +1,8 @@
 .DS_Store
 CMakeLists.txt.user
 *.kdev4
-*.pro.user
+*.pro.user*
+CMakeLists.txt.user*
 *~
 build*/
 help/*.qhc
