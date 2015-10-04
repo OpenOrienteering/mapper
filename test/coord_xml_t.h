@@ -1,5 +1,5 @@
 /*
- *    Copyright 2013 Kai Pastor
+ *    Copyright 2013-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -57,6 +57,10 @@ private slots:
 	void writeCompressed();
 	void writeCompressed_data();
 	
+	/** Calls the actual fast implementation from MapCoord. */
+	void writeFastImplementation();
+	void writeFastImplementation_data();
+	
 	/** Reads rich XML. */
 	void readXml();
 	void readXml_data();
@@ -68,6 +72,10 @@ private slots:
 	/** Reads a dense base64-like format. */
 	void readCompressed();
 	void readCompressed_data();
+	
+	/** Calls the actual fast implementation from MapCoord. */
+	void readFastImplementation();
+	void readFastImplementation_data();
 	
 private:
 	/** The common test data setup. */

@@ -106,7 +106,7 @@ add_unit_test(map_color_t ../src/core/map_color)
 add_unit_test(qpainter_t)
 
 # Benchmarks
-add_unit_test(coord_xml_t)
+add_system_test(coord_xml_t)
 
 # System tests
 add_system_test(map_t)

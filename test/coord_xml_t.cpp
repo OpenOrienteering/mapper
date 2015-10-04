@@ -21,6 +21,7 @@
 
 #include <algorithm>
 
+#include "../src/file_format_xml.h"
 #include "../src/util/xml_stream_util.h"
 
 namespace literal
@@ -337,6 +338,33 @@ void CoordXmlTest::writeCompressed()
 }
 
 
+void CoordXmlTest::writeFastImplementation_data()
+{
+	common_data();
+}
+
+void CoordXmlTest::writeFastImplementation()
+{
+	buffer.open(QBuffer::ReadWrite);
+	QXmlStreamWriter xml(&buffer);
+	xml.setAutoFormatting(false);
+	xml.writeStartDocument();
+	
+	XMLFileFormat::active_version = 6; // Activate fast text format.
+	XmlElementWriter element(xml, QLatin1String("root"));
+	
+	QFETCH(int, num_coords);
+	MapCoordVector coords(num_coords, proto_coord);
+	QBENCHMARK
+	{
+		element.write(coords);
+	}
+	
+	xml.writeEndDocument();
+	buffer.close();
+}
+
+
 void CoordXmlTest::readXml_data()
 {
 	common_data();
@@ -532,6 +560,7 @@ void CoordXmlTest::readCompressed_data()
 {
 	common_data();
 }
+
 
 void CoordXmlTest::readCompressed()
 {
@@ -753,6 +782,78 @@ void CoordXmlTest::readCompressed()
 		}
 	}
 	
+	QVERIFY(!failed);
+	QCOMPARE((int)coords.size(), num_coords);
+	QVERIFY(compare_all(coords, proto_coord));
+	
+	header.close();
+	buffer.close();
+}
+
+
+void CoordXmlTest::readFastImplementation_data()
+{
+	common_data();
+}
+
+void CoordXmlTest::readFastImplementation()
+{
+	QFETCH(int, num_coords);
+	MapCoordVector coords(num_coords, proto_coord);
+	
+	buffer.buffer().truncate(0);
+	QBuffer header;
+	{
+		QXmlStreamWriter xml(&header);
+		
+		header.open(QBuffer::ReadWrite);
+		xml.setAutoFormatting(false);
+		xml.setAutoFormatting(false);
+		xml.writeStartDocument();
+		
+		XMLFileFormat::active_version = 6; // Activate fast text format.
+		
+		xml.writeStartElement("root");
+		xml.writeCharacters(""); // flush root start element
+		
+		buffer.open(QBuffer::ReadWrite);
+		xml.setDevice(&buffer);
+		{
+			XmlElementWriter element(xml, QLatin1String("coords"));
+			element.write(coords);
+		}
+		
+		xml.setDevice(NULL);
+		
+		buffer.close();
+		header.close();
+	}
+	
+	header.open(QBuffer::ReadOnly);
+	buffer.open(QBuffer::ReadOnly);
+	QXmlStreamReader xml;
+	xml.addData(header.buffer());
+	xml.readNextStartElement();
+	QCOMPARE(xml.name().toString(), QString("root"));
+	
+	bool failed = false;
+	QBENCHMARK
+	{
+		// benchmark iteration overhead
+		coords.clear();
+		xml.addData(buffer.data());
+		
+		xml.readNextStartElement();
+		if (xml.name() != "coords")
+		{
+			failed = true;
+			break;
+		}
+		
+		XmlElementReader element(xml);
+		element.read(coords);
+	}
+		
 	QVERIFY(!failed);
 	QCOMPARE((int)coords.size(), num_coords);
 	QVERIFY(compare_all(coords, proto_coord));
