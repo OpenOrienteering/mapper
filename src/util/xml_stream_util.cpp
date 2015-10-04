@@ -1,5 +1,5 @@
 /*
- *    Copyright 2013, 2014 Kai Pastor
+ *    Copyright 2013-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -31,24 +31,23 @@ void XmlElementWriter::write(const MapCoordVector& coords)
 {
 	namespace literal = XmlStreamLiteral;
 	
-	int num_coords = (int)coords.size();
-	writeAttribute(literal::count, num_coords);
+	writeAttribute(literal::count, coords.size());
 	
 	if (XMLFileFormat::active_version < 6 || xml.autoFormatting())
 	{
 		// XMAP files and old format: syntactically rich output
-		for (MapCoordVector::const_iterator coord = coords.begin(), end = coords.end(); coord != end; ++coord)
-			coord->save(xml);
+		for (auto& coord : coords)
+			coord.save(xml);
 	}
 	else
 	{
 		// Default: efficient plain text format
+		//   Note that it is more efficient to concatenate the data
+		// than to call writeCharacters() multiple times.
 		QString data;
 		data.reserve(coords.size() * 16);
-		for (MapCoordVector::const_iterator coord = coords.begin(), end = coords.end(); coord != end; ++coord)
-		{
-			data.append(coord->toString());
-		}
+		for (auto& coord : coords)
+			data.append(coord.toString());
 		xml.writeCharacters(data);
 	}
 }
@@ -58,11 +57,10 @@ void XmlElementReader::read(MapCoordVector& coords)
 {
 	namespace literal = XmlStreamLiteral;
 	
-	const unsigned int num_coords = attribute<unsigned int>(literal::count);
 	coords.clear();
-	coords.reserve(qMin(num_coords, 500000u));
 	
-	MapCoord coord;
+	const auto num_coords = attribute<unsigned int>(literal::count);
+	coords.reserve(std::min(num_coords, 500000u));
 	
 	for( xml.readNext(); xml.tokenType() != QXmlStreamReader::EndElement; xml.readNext() )
 	{
@@ -80,8 +78,8 @@ void XmlElementReader::read(MapCoordVector& coords)
 			stream.setIntegerBase(10);
 			while (!stream.atEnd())
 			{
-				stream >> coord;
-				coords.push_back(coord);
+				coords.emplace_back();
+				stream >> coords.back();
 			}
 			if (stream.status() == QTextStream::ReadCorruptData)
 			{
@@ -92,7 +90,7 @@ void XmlElementReader::read(MapCoordVector& coords)
 		{
 			if (xml.name() == literal::coord)
 			{
-				coords.push_back(MapCoord::load(xml));
+				coords.emplace_back(MapCoord::load(xml));
 			}
 			else
 			{
