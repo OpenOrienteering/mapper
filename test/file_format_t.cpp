@@ -20,15 +20,17 @@
 
 #include "file_format_t.h"
 
-#include "../src/core/map_color.h"
-#include "../src/core/map_printer.h"
-#include "../src/file_format_registry.h"
-#include "../src/file_import_export.h"
 #include "../src/core/georeferencing.h"
-#include "../src/global.h"
+#include "../src/core/map_color.h"
 #include "../src/core/map_grid.h"
+#include "../src/core/map_printer.h"
+#include "../src/file_import_export.h"
+#include "../src/file_format_ocad8.h"
+#include "../src/file_format_registry.h"
+#include "../src/global.h"
 #include "../src/mapper_resource.h"
 #include "../src/object.h"
+#include "../src/settings.h"
 #include "../src/template.h"
 #include "../src/undo_manager.h"
 
@@ -77,11 +79,13 @@ namespace QTest
 
 void FileFormatTest::initTestCase()
 {
-	// Needed to load current developer preferences, if possible
 	QCoreApplication::setOrganizationName("OpenOrienteering.org");
-	QCoreApplication::setApplicationName("Mapper");
+	QCoreApplication::setApplicationName("FileFormatTest");
+	Settings::getInstance().setSetting(Settings::General_NewOcd8Implementation, true);
 	
 	doStaticInitializations();
+	if (!FileFormats.findFormat("OCAD78"))
+		FileFormats.registerFormat(new OCAD8FileFormat());
 	
 	map_filenames
 	  << "COPY_OF_issue-513-coords-outside-printable.xmap"
