@@ -152,18 +152,20 @@ QString MapCoord::toString() const
 	 *  1x ';':   1
 	 *  2x '-':   2
 	 *  2x ' ':   2
-	 *  2x the decimal digits for values up to 0..2^59-1:
-	 *           34
+	 *  2x the decimal digits for values up to 0..2^31:
+	 *           20
 	 *  1x the decimal digits for 0..2^8-1:
 	 *            3
-	 *  Total:   42 */
-	static const std::size_t buf_size = 48;
-	static char encoded[11] = "0123456789";
-	char buffer[buf_size];
+	 *  Total:   28 */
+	constexpr std::size_t buf_size = 1+2+2+20+3;
+	static QChar encoded[10] = {
+	    '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'
+	};
+	QChar buffer[buf_size];
 	
 	// For efficiency, we construct the string from the back.
-	int j = buf_size - 1;
-	buffer[j] = ';';
+	std::size_t j = buf_size - 1;
+	buffer[j] = QChar{ ';' };
 	--j;
 	
 	int flags = fp;
@@ -177,16 +179,19 @@ QString MapCoord::toString() const
 		}
 		while (flags != 0);
 		
-		buffer[j] = ' ';
+		buffer[j] = QChar::Space;
 		--j;
 	}
 	
-	auto tmp = yp;
-	char sign = 0;
+	qint64 tmp = yp;
+	static_assert(sizeof(decltype(tmp)) > sizeof(decltype(MapCoord::yp)),
+	              "decltype(tmp) must be large enough to hold"
+	              "-std::numeric_limits<decltype(MapCoord::yp)>::min()" );
+	QChar sign { QChar::Null };
 	if (tmp < 0)
 	{
-		sign = '-';
-		tmp = -tmp; // NOTE: tmp never exceeds -2^60
+		sign = QChar{ '-' };
+		tmp = -tmp;
 	}
 	do
 	{
@@ -195,21 +200,24 @@ QString MapCoord::toString() const
 		--j;
 	}
 	while (tmp != 0);
-	if (sign)
+	if (!sign.isNull())
 	{
 		buffer[j] = sign;
 		--j;
-		sign = 0;
+		sign = QChar::Null;
 	}
 	
-	buffer[j] = ' ';
+	buffer[j] = QChar::Space;
 	--j;
 	
+	static_assert(sizeof(decltype(tmp)) > sizeof(decltype(MapCoord::xp)),
+	              "decltype(tmp) must be large enough to hold"
+	              "-std::numeric_limits<decltype(MapCoord::xp)>::min()" );
 	tmp = xp;
 	if (tmp < 0)
 	{
-		sign = '-';
-		tmp = -tmp; // NOTE: tmp never exceeds -2^60
+		sign = QChar{ '-' };
+		tmp = -tmp;
 	}
 	do
 	{
@@ -218,27 +226,32 @@ QString MapCoord::toString() const
 		--j;
 	}
 	while (tmp != 0);
-	if (sign)
+	if (!sign.isNull())
 	{
 		buffer[j] = sign;
 		--j;
 	}
 	
 	++j;
-	return QString::fromUtf8(buffer+j, buf_size-j);
+	Q_ASSERT(j < buf_size);
+	j = qMin(j, buf_size);
+	return QString(buffer+j, buf_size-j);
 }
 
 
 
 QTextStream& operator>>(QTextStream& stream, MapCoord& coord)
 {
-	int flags = 0;
-	char separator;
+	// Always update all MapCoord members here (xp, yp, flags).
+	QChar separator;
 	stream >> coord.xp >> coord.yp >> separator;
-	if (separator != ';')
+	
+	int flags = 0;
+	if (separator == QChar::Space)
 	{
 		stream >> flags >> separator;
 	}
 	coord.setFlags(flags);
+	
 	return stream;
 }
