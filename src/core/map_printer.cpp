@@ -29,6 +29,7 @@
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
+
 #if defined(QT_PRINTSUPPORT_LIB) && defined(Q_OS_WIN)
 #include <private/qprintengine_win_p.h>
 #endif
@@ -463,6 +464,12 @@ QPrinter* MapPrinter::makePrinter() const
 					printer->setResolution(supported.back());
 			}
 		}
+	}
+	
+	if (printer->resolution() == 0)
+	{
+		// Workaround for Wine
+		printer->setResolution(resolution);
 	}
 	
 	if (target == imageTarget() || page_format.paper_size == QPrinter::Custom)
@@ -1112,6 +1119,10 @@ bool MapPrinter::printMap(QPrinter* printer)
 	QPainter painter(printer);
 	
 	float resolution = printer->resolution();
+	if (qIsNull(resolution))
+	{
+		return false;
+	}
 	
 #if defined(Q_OS_WIN)
 	if (printer->paintEngine()->type() == QPaintEngine::Windows)
@@ -1149,10 +1160,6 @@ bool MapPrinter::printMap(QPrinter* printer)
 			SetViewportExtEx(dc, phys_width, phys_height, nullptr);
 			SetViewportOrgEx(dc, -phys_off_x, -phys_off_y, nullptr);
 			resolution = (double)options.resolution * (double)hires_width / phys_width;
-		}
-		else
-		{
-			resolution = (double)options.resolution;
 		}
 	}
 	else if (printer->paintEngine()->type() == QPaintEngine::Picture)
