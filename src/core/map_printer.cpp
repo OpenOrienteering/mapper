@@ -413,10 +413,17 @@ void MapPrinter::setTarget(const QPrinterInfo* new_target)
 	}
 }
 
-QPrinter* MapPrinter::makePrinter() const
+std::unique_ptr<QPrinter> MapPrinter::makePrinter() const
 {
-	QPrinter* printer = target ? new QPrinter(*target, QPrinter::HighResolution)
-	                           : new QPrinter(QPrinter::HighResolution);
+	std::unique_ptr<QPrinterInfo> default_info;
+	const QPrinterInfo* info = this->target;
+	if (!info)
+	{
+		default_info.reset(new QPrinterInfo(QPrinterInfo::defaultPrinter()));
+		info = default_info.get();
+	}
+		                 
+	std::unique_ptr<QPrinter> printer{ new QPrinter(*info, QPrinter::HighResolution) };
 	if (!printer->isValid())
 		printer->setOutputFormat(QPrinter::PdfFormat);
 	
@@ -472,7 +479,7 @@ QPrinter* MapPrinter::makePrinter() const
 		printer->setResolution(resolution);
 	}
 	
-	if (target == imageTarget() || page_format.paper_size == QPrinter::Custom)
+	if (info == imageTarget() || page_format.paper_size == QPrinter::Custom)
 		printer->setPageMargins(0.0, 0.0, 0.0, 0.0, QPrinter::Millimeter);
 	
 	return printer;

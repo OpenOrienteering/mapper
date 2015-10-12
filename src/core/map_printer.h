@@ -22,6 +22,7 @@
 #ifndef _OPENORIENTEERING_MAP_PRINTER_H_
 #define _OPENORIENTEERING_MAP_PRINTER_H_
 
+#include <memory>
 #include <vector>
 
 #include <QHash>
@@ -241,7 +242,7 @@ public:
 	const std::vector< qreal >& verticalPagePositions() const;
 	
 	/** Creates a printer configured according to the current settings. */
-	QPrinter* makePrinter() const;
+	std::unique_ptr<QPrinter> makePrinter() const;
 	
 	/** Takes the settings from the given printer, 
 	 *  and generates signals for changing properties. */

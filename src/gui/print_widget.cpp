@@ -975,19 +975,17 @@ void PrintWidget::previewClicked()
 	if (checkForEmptyMap())
 		return;
 	
-	QPrinter* printer = map_printer->makePrinter();
+	auto printer = map_printer->makePrinter();
 	printer->setCreator(main_window->appName());
 	printer->setDocName(QFileInfo(main_window->currentPath()).baseName());
 	
-	QPrintPreviewDialog preview(printer, this);
+	QPrintPreviewDialog preview(printer.get(), this);
 	
 	PrintProgressDialog progress(map_printer, &preview);
 	progress.setWindowTitle(tr("Print Preview Progress"));
 	connect(&preview, &QPrintPreviewDialog::paintRequested, &progress, &PrintProgressDialog::paintRequested);
 	connect(&progress, &QProgressDialog::canceled, &preview, &QPrintPreviewDialog::hide);
 	preview.exec();
-	
-	delete printer;
 #endif
 }
 
@@ -1068,7 +1066,7 @@ void PrintWidget::printClicked()
 		return;
 	}
 	
-	QPrinter* printer = map_printer->makePrinter();
+	auto printer = map_printer->makePrinter();
 	printer->setNumCopies(copies_edit->value());
 	printer->setCreator(main_window->appName());
 	printer->setDocName(QFileInfo(main_window->currentPath()).baseName());
@@ -1081,7 +1079,7 @@ void PrintWidget::printClicked()
 	}
 	
 	// Print the map
-	if (map_printer->printMap(printer))
+	if (map_printer->printMap(printer.get()))
 	{
 		if (progress.wasCanceled())
 		{
@@ -1114,7 +1112,6 @@ void PrintWidget::printClicked()
 		  QMessageBox::Ok, QMessageBox::Ok );
 	}
 	
-	delete printer;
 	emit finished(0);
 }
 
