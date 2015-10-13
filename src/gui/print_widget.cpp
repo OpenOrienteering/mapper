@@ -976,6 +976,12 @@ void PrintWidget::previewClicked()
 		return;
 	
 	auto printer = map_printer->makePrinter();
+	if (!printer)
+	{
+		QMessageBox::warning(this, tr("Error"), tr("Failed to prepare the preview."));
+		return;
+	}
+	
 	printer->setCreator(main_window->appName());
 	printer->setDocName(QFileInfo(main_window->currentPath()).baseName());
 	
@@ -997,122 +1003,168 @@ void PrintWidget::printClicked()
 	
 	if (map->isAreaHatchingEnabled() || map->isBaselineViewEnabled())
 	{
-		if (QMessageBox::question(this, tr("Warning"), tr("A non-standard view mode is activated. Are you sure to print / export the map like this?"), QMessageBox::Ok | QMessageBox::Cancel) == QMessageBox::Cancel)
+		if (QMessageBox::question(this, tr("Warning"), 
+		                          tr("A non-standard view mode is activated. "
+		                             "Are you sure to print / export the map like this?"),
+		                          QMessageBox::Ok | QMessageBox::Cancel) == QMessageBox::Cancel)
 			return;
 	}
 	
-	QString path;
-	if (!map_printer->isPrinter())
+	if (map_printer->getTarget() == MapPrinter::imageTarget())
+		exportToImage();
+	else if (map_printer->getTarget() == MapPrinter::pdfTarget())
+		exportToPdf();
+	else
+		print();
+}
+
+void PrintWidget::exportToImage()
+{
+	static const QString filter_template("%1 (%2)");
+	QStringList filters = { filter_template.arg(tr("PNG")).arg("*.png"),
+	                        filter_template.arg(tr("BMP")).arg("*.bmp"),
+	                        filter_template.arg(tr("TIFF")).arg("*.tif *.tiff"),
+	                        filter_template.arg(tr("JPEG")).arg("*.jpg *.jpeg"),
+	                        tr("All files (*.*)") };
+	QString path = QFileDialog::getSaveFileName(this, tr("Export map ..."), {}, filters.join(";;"));
+	if (path.isEmpty())
+		return;
+	
+	if (!path.endsWith(".png", Qt::CaseInsensitive)
+	    && !path.endsWith(".bmp", Qt::CaseInsensitive)
+	    && !path.endsWith(".tif", Qt::CaseInsensitive) && !path.endsWith(".tiff", Qt::CaseInsensitive)
+	    && !path.endsWith(".jpg", Qt::CaseInsensitive) && !path.endsWith(".jpeg", Qt::CaseInsensitive) )
 	{
-		const QString filter_template("%1 (%2)");
-		QStringList filters;
-		if (map_printer->getTarget() == MapPrinter::imageTarget())
-		{
-			filters << filter_template.arg(tr("PNG")).arg("*.png");
-			filters << filter_template.arg(tr("BMP")).arg("*.bmp");
-			filters << filter_template.arg(tr("TIFF")).arg("*.tif *.tiff");
-			filters << filter_template.arg(tr("JPEG")).arg("*.jpg *.jpeg");
-		}
-		else if (map_printer->getTarget() == MapPrinter::pdfTarget())
-		{
-			filters << filter_template.arg(tr("PDF")).arg("*.pdf");
-		}
-		filters << tr("All files (*.*)");
-		path = QFileDialog::getSaveFileName(this, tr("Export map ..."), QString(), filters.join(";;"));
-		if (path.isEmpty())
-			return;
+		path.append(".png");
 	}
+	
+	qreal pixel_per_mm = map_printer->getOptions().resolution / 25.4;
+	int print_width = qRound(map_printer->getPrintAreaPaperSize().width() * pixel_per_mm);
+	int print_height = qRound(map_printer->getPrintAreaPaperSize().height() * pixel_per_mm);
+	QImage image(print_width, print_height, QImage::Format_ARGB32_Premultiplied);
+	if (image.isNull())
+	{
+		QMessageBox::warning(this, tr("Error"), tr("Failed to prepare the image. Not enough memory."));
+		return;
+	}
+	
+	int dots_per_meter = qRound(pixel_per_mm * 1000);
+	image.setDotsPerMeterX(dots_per_meter);
+	image.setDotsPerMeterY(dots_per_meter);
+	
+#if 0  // Pointless unless drawPage drives the event loop and sends progress
+	PrintProgressDialog progress(map_printer, main_window);
+	progress.setWindowTitle(tr("Export map ..."));
+	progress.show();
+	progress.raise();
+	QCoreApplication::processEvents(QEventLoop::ExcludeUserInputEvents);
+#endif
+	
+	// Export the map
+	QPainter p(&image);
+	map_printer->drawPage(&p, map_printer->getOptions().resolution, map_printer->getPrintArea(), true, &image);
+	p.end();
+	if (!image.save(path))
+	{
+		QMessageBox::warning(this, tr("Error"), tr("Failed to save the image. Does the path exist? Do you have sufficient rights?"));
+	}
+	else
+	{
+		main_window->showStatusBarMessage(tr("Exported successfully to %1").arg(path), 4000);
+		emit finished(0);
+	}
+	return;
+}
+
+void PrintWidget::exportToPdf()
+{
+	auto printer = map_printer->makePrinter();
+	if (!printer)
+	{
+		QMessageBox::warning(this, tr("Error"), tr("Failed to prepare the PDF export."));
+		return;
+	}
+	
+	printer->setOutputFormat(QPrinter::PdfFormat);
+	printer->setNumCopies(copies_edit->value());
+	printer->setCreator(main_window->appName());
+	printer->setDocName(QFileInfo(main_window->currentPath()).baseName());
+	
+	static const QString filter_template("%1 (%2)");
+	QStringList filters = { filter_template.arg(tr("PDF")).arg("*.pdf"),
+	                        tr("All files (*.*)") };
+	QString path = QFileDialog::getSaveFileName(this, tr("Export map ..."), {}, filters.join(";;"));
+	if (path.isEmpty())
+	{
+		return;
+	}
+	else if (!path.endsWith(".pdf", Qt::CaseInsensitive))
+	{
+		path.append(".pdf");
+	}
+	printer->setOutputFileName(path);
+	
+	PrintProgressDialog progress(map_printer, main_window);
+	progress.setWindowTitle(tr("Export map ..."));
+	progress.show();
+	progress.raise();
+	QCoreApplication::processEvents(QEventLoop::ExcludeUserInputEvents);
+	
+	// Export the map
+	if (!map_printer->printMap(printer.get()))
+	{
+		QFile(path).remove();
+		QMessageBox::warning(this, tr("Error"), tr("Failed to finish the PDF export."));
+	}
+	else if (!progress.wasCanceled())
+	{
+		main_window->showStatusBarMessage(tr("Exported successfully to %1").arg(path), 4000);
+		emit finished(0);
+	}
+	else
+	{
+		QFile(path).remove();
+		main_window->showStatusBarMessage(tr("Canceled."), 4000);
+	}
+}
+
+void PrintWidget::print()
+{
+	auto printer = map_printer->makePrinter();
+	if (!printer)
+	{
+		QMessageBox::warning(this, tr("Error"), tr("Failed to prepare the printing."));
+		return;
+	}
+	
+	printer->setNumCopies(copies_edit->value());
+	printer->setCreator(main_window->appName());
+	printer->setDocName(QFileInfo(main_window->currentPath()).baseName());
 	
 	PrintProgressDialog progress(map_printer, main_window);
 	progress.setWindowTitle(tr("Printing Progress"));
 	progress.show();
 	progress.raise();
-	
-	if (map_printer->getTarget() == MapPrinter::imageTarget())
-	{
-		if (!path.endsWith(".png", Qt::CaseInsensitive)
-		    && !path.endsWith(".bmp", Qt::CaseInsensitive)
-		    && !path.endsWith(".tif", Qt::CaseInsensitive) && !path.endsWith(".tiff", Qt::CaseInsensitive)
-		    && !path.endsWith(".jpg", Qt::CaseInsensitive) && !path.endsWith(".jpeg", Qt::CaseInsensitive) )
-		{
-			path.append(".png");
-		}
-		
-		qreal pixel_per_mm = map_printer->getOptions().resolution / 25.4;
-		
-		int print_width = qRound(map_printer->getPrintAreaPaperSize().width() * pixel_per_mm);
-		int print_height = qRound(map_printer->getPrintAreaPaperSize().height() * pixel_per_mm);
-		QImage image(print_width, print_height, QImage::Format_ARGB32_Premultiplied);
-		if (image.isNull())
-		{
-			QMessageBox::warning(this, tr("Error"), tr("Failed to prepare the image. Not enough memory."));
-			return;
-		}
-		
-		int dots_per_meter = qRound(pixel_per_mm * 1000);
-		image.setDotsPerMeterX(dots_per_meter);
-		image.setDotsPerMeterY(dots_per_meter);
-		QPainter p(&image);
-		map_printer->drawPage(&p, map_printer->getOptions().resolution, map_printer->getPrintArea(), true, &image);
-		p.end();
-		if (!image.save(path))
-		{
-			QMessageBox::warning(this, tr("Error"), tr("Failed to save the image. Does the path exist? Do you have sufficient rights?"));
-			return;
-		}
-		
-		main_window->showStatusBarMessage(tr("Exported successfully to %1").arg(path), 4000);
-		emit finished(0);
-		return;
-	}
-	
-	auto printer = map_printer->makePrinter();
-	printer->setNumCopies(copies_edit->value());
-	printer->setCreator(main_window->appName());
-	printer->setDocName(QFileInfo(main_window->currentPath()).baseName());
-	if (map_printer->getTarget() == MapPrinter::pdfTarget())
-	{
-		printer->setOutputFormat(QPrinter::PdfFormat);
-		if (!path.endsWith(".pdf", Qt::CaseInsensitive))
-			path.append(".pdf");
-		printer->setOutputFileName(path);
-	}
+	QCoreApplication::processEvents(QEventLoop::ExcludeUserInputEvents);
 	
 	// Print the map
-	if (map_printer->printMap(printer.get()))
+	if (!map_printer->printMap(printer.get()))
 	{
-		if (progress.wasCanceled())
-		{
-			if (printer->abort() || !map_printer->isPrinter())
-			{
-				main_window->showStatusBarMessage(tr("Canceled."), 4000);
-			}
-			else
-			{
-				QMessageBox::warning(
-				  main_window, tr("Printing"),
-				  tr("The print job could not be stopped."),
-				  QMessageBox::Ok, QMessageBox::Ok );
-			}
-		}
-		else if (map_printer->isPrinter())
-		{
-			main_window->showStatusBarMessage(tr("Successfully created print job"), 4000);
-		}
-		else
-		{
-			main_window->showStatusBarMessage(tr("Exported successfully to %1").arg(path), 4000);
-		}
+		QMessageBox::warning(main_window, tr("Error"), tr("An error occured during printing."));
+	}
+	else if (!progress.wasCanceled())
+	{
+		main_window->showStatusBarMessage(tr("Successfully created print job"), 4000);
+		emit finished(0);
+	}
+	else if (printer->abort())
+	{
+		main_window->showStatusBarMessage(tr("Canceled."), 4000);
 	}
 	else
 	{
-		QMessageBox::warning(
-		  main_window, tr("Printing"),
-		  tr("An error occured during processing."),
-		  QMessageBox::Ok, QMessageBox::Ok );
+		QMessageBox::warning(main_window, tr("Error"), tr("The print job could not be stopped."));
 	}
-	
-	emit finished(0);
 }
 
 QList<QPrinter::PaperSize> PrintWidget::defaultPaperSizes() const

@@ -232,6 +232,15 @@ protected:
 	/** Checks whether the template order warning needs to be displayed. */
 	void checkTemplateConfiguration();
 	
+	/** Exports to an image file. */
+	void exportToImage();
+	
+	/** Exports to a PDF file. */
+	void exportToPdf();
+	
+	/** Print to a printer. */
+	void print();
+	
 private:
 	enum Exporters
 	{
