@@ -385,23 +385,23 @@ bool operator!=(const MapPrinterPageFormat& lhs, const MapPrinterPageFormat& rhs
 
 //### MapPrinterOptions inline code ###
 
-/** Returns true iff the MapPrinterOptions values are not equal. */
-inline
-bool operator!=(const MapPrinterOptions& lhs, const MapPrinterOptions& rhs)
-{
-	return
-	  lhs.resolution            != rhs.resolution            ||
-	  lhs.scale                 != rhs.scale                 ||
-	  lhs.show_templates        != rhs.show_templates        ||
-	  lhs.show_grid             != rhs.show_grid             ||
-	  lhs.simulate_overprinting != rhs.simulate_overprinting;
-}
-
 /** Returns true iff the MapPrinterOptions values are equal. */
 inline
 bool operator==(const MapPrinterOptions& lhs, const MapPrinterOptions& rhs)
 {
-	return !(lhs != rhs);
+	return     lhs.mode                  == rhs.mode
+	        && lhs.resolution            == rhs.resolution
+	        && lhs.scale                 == rhs.scale
+	        && lhs.show_templates        == rhs.show_templates
+	        && lhs.show_grid             == rhs.show_grid
+	        && lhs.simulate_overprinting == rhs.simulate_overprinting;
+}
+
+/** Returns true iff the MapPrinterOptions values are not equal. */
+inline
+bool operator!=(const MapPrinterOptions& lhs, const MapPrinterOptions& rhs)
+{
+	return !(lhs == rhs);
 }
 
 
