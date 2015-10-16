@@ -2326,10 +2326,8 @@ const MapPrinterConfig& Map::printerConfig()
 
 MapPrinterConfig Map::printerConfig() const
 {
-	if (printer_config.isNull())
-		return MapPrinterConfig(*this);
-	
-	return *printer_config;
+	MapPrinterConfig ret = printer_config.isNull() ? MapPrinterConfig{ *this } : *printer_config;
+	return ret;
 }
 
 void Map::setPrinterConfig(const MapPrinterConfig& config)

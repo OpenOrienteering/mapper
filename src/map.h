@@ -1119,13 +1119,25 @@ public:
 	/** Returns the rendering options as an int representing Symbol::RenderableOptions. */
 	int renderableOptions() const;
 	
-	/** Returns a const reference to the current print configuration. */
+	
+	/** Returns true if the map has a print configuration. */
+	bool hasPrinterConfig();
+	
+	/** Returns a const reference to the current print configuration.
+	 * 
+	 * If the map does not have a print configuration, a default configuration
+	 * is created first.
+	 */
 	const MapPrinterConfig& printerConfig();
 	
-	/** Returns a copy of the current print configuration. */
+	/** Returns a copy of the current print configuration.
+	 *
+	 * If the map does not have a print configuration, the function will return
+	 * a default configuration for this map.
+	 */
 	MapPrinterConfig printerConfig() const;
 	
-	/** Sets the current print configuration. */
+	/** Sets the print configuration. */
 	void setPrinterConfig(const MapPrinterConfig& config);
 	
 	
@@ -1653,6 +1665,12 @@ inline
 int Map::renderableOptions() const
 {
 	return renderable_options;
+}
+
+inline
+bool Map::hasPrinterConfig()
+{
+	return !printer_config.isNull();
 }
 
 inline

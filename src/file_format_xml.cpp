@@ -366,7 +366,8 @@ void XMLFileExporter::exportView()
 
 void XMLFileExporter::exportPrint()
 {
-	map->printerConfig().save(xml, literal::print);
+	if (map->hasPrinterConfig())
+		map->printerConfig().save(xml, literal::print);
 }
 
 void XMLFileExporter::exportUndo()
