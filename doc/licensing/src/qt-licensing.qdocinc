@@ -1,6 +1,6 @@
 \omit
 /*
- *    Copyright 2014 Kai Pastor
+ *    Copyright 2014, 2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -21,7 +21,7 @@
 
 
 
-\section2 Licenses Used in Qt
+\section2 Licenses Used in Qt 5.5.1
 
 This section lists other licenses used in Qt or in libraries that are supplied
 alongside Qt modules, not provided under the
@@ -248,13 +248,31 @@ This license applies to parts of some files in
 
 
 
+\section3 Drag and Drop
+
+    Copyright 1996 Daniel Dardailler.
+	
+    Permission to use, copy, modify, distribute, and sell this software for any
+    purpose is hereby granted without fee, provided that the above copyright
+    notice appear in all copies and that both that copyright notice and this
+    permission notice appear in supporting documentation, and that the name of
+    Daniel Dardailler not be used in advertising or publicity pertaining to
+    distribution of the software without specific, written prior permission.
+    Daniel Dardailler makes no representations about the suitability of this
+    software for any purpose. It is provided "as is" without express or implied
+    warranty.
+	
+    Modifications Copyright 1999 Matt Koss, under the same license as above.
+
+
+
 \section3 Easing Equations
 
 This license applies to
 \c{qtbase/src/3rdparty/easing/easing.cpp}.
 
 \quotation
-    Copyright \copyright 2001 Robert Penner
+    Copyright \copyright 2001 Robert Penner \break
     All rights reserved.
 
     Redistribution and use in source and binary forms, with or without modification,
@@ -355,6 +373,79 @@ This license applies to parts of some files in
 
 
 
+\section3 forkfd
+
+This license applies to files in
+\c{qtbase/src/3rdparty/forkfd/}.
+
+\quotation
+    Copyright (C) 2014 Intel Corporation \break
+    Copyright (C) 2015 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
+
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files (the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions:
+
+    The above copyright notice and this permission notice shall be included in
+    all copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+    THE SOFTWARE.
+\endquotation
+
+
+
+\section3 FreeBSD strtoll and strtoull
+
+This license applies to files in
+\c{qtbase/src/3rdparty/freebsd/}.
+
+\quotation
+    Copyright (c) 1992, 1993 \break
+    The Regents of the University of California.  All rights reserved.
+
+    Copyright (c) 2011 The FreeBSD Foundation \break
+    All rights reserved.  \break
+    Portions of this software were developed by David Chisnall
+    under sponsorship from the FreeBSD Foundation.
+
+    Redistribution and use in source and binary forms, with or without
+    modification, are permitted provided that the following conditions
+    are met:
+\list 1
+   \li Redistributions of source code must retain the above copyright
+       notice, this list of conditions and the following disclaimer.
+   \li Redistributions in binary form must reproduce the above copyright
+       notice, this list of conditions and the following disclaimer in the
+       documentation and/or other materials provided with the distribution.
+   \li Neither the name of the University nor the names of its contributors
+       may be used to endorse or promote products derived from this software
+       without specific prior written permission.
+\endlist
+
+    THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND
+    ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+    IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+    ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE
+    FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+    DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+    OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+    HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+    LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+    OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+    SUCH DAMAGE.
+\endquotation
+
+
+
 \section3 GBK Text Codec
 
 This license applies to parts of some files in
@@ -370,9 +461,9 @@ This license applies to parts of some files in
     are met:
 
 \list 1
-    \li Redistributions of source code must retain the above copyright
+   \li Redistributions of source code must retain the above copyright
        notice, this list of conditions and the following disclaimer.
-    \li Redistributions in binary form must reproduce the above copyright
+   \li Redistributions in binary form must reproduce the above copyright
        notice, this list of conditions and the following disclaimer in the
        documentation and/or other materials provided with the distribution.
 \endlist
@@ -439,9 +530,9 @@ This license applies to files in
 \c{qtbase/src/3rdparty/iaccessible2/}.
 
 \quotation
-    Copyright (c) 2007, 2010 Linux Foundation
-    Copyright (c) 2006 IBM Corporation
-    Copyright (c) 2000, 2006 Sun Microsystems, Inc.
+    Copyright (c) 2007, 2010 Linux Foundation \break
+    Copyright (c) 2006 IBM Corporation \break
+    Copyright (c) 2000, 2006 Sun Microsystems, Inc. \break
     All rights reserved.
 
     Redistribution and use in source and binary forms, with or without
@@ -710,6 +801,29 @@ This license applies to some files in
 
 
 
+\section3 Native Style for Android
+
+This license applies to
+\c{qtbase/src/3rdparty/android/extract}.
+
+\quotation
+    Copyright (C) 2005 The Android Open Source Project
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+         http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+\endquotation
+
+
+
 \section3 PCRE library
 
 This licence applies to files in
@@ -728,7 +842,7 @@ This licence applies to files in
     University of Cambridge Computing Service,
     Cambridge, England.
 
-    Copyright (c) 1997-2013 University of Cambridge
+    Copyright (c) 1997-2015 University of Cambridge
     All rights reserved.
 
 
@@ -739,7 +853,7 @@ This licence applies to files in
     Email local part: hzmester
     Emain domain:     freemail.hu
 
-    Copyright(c) 2010-2013 Zoltan Herczeg
+    Copyright(c) 2010-2015 Zoltan Herczeg
     All rights reserved.
 
 
@@ -750,7 +864,7 @@ This licence applies to files in
     Email local part: hzmester
     Emain domain:     freemail.hu
 
-    Copyright(c) 2009-2013 Zoltan Herczeg
+    Copyright(c) 2009-2015 Zoltan Herczeg
     All rights reserved.
 
 
@@ -864,6 +978,26 @@ This license applies to files in
 
 
 
+\section3 QCrashHandler class
+
+This license applies to parts of
+\c{qtbase/src/corelib/kernel/qcrashhandler.cpp}.
+
+\quotation
+    Copyright (c) 1998 by Bjorn Reese <breese@imada.ou.dk>
+
+    Permission to use, copy, modify, and distribute this software for any
+    purpose with or without fee is hereby granted, provided that the above
+    copyright notice and this permission notice appear in all copies.
+
+    THIS SOFTWARE IS PROVIDED ``AS IS'' AND WITHOUT ANY EXPRESS OR IMPLIED
+    WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED WARRANTIES OF
+    MERCHANTIBILITY AND FITNESS FOR A PARTICULAR PURPOSE. THE AUTHORS AND
+    CONTRIBUTORS ACCEPT NO RESPONSIBILITY IN ANY CONCEIVABLE MANNER.
+\endquotation
+
+
+
 \section3 QImage smooth scaling
 
 For smooth scaling, the \c{QImage::transformed()} functions use code based on
@@ -897,22 +1031,33 @@ smooth scaling algorithm by Daniel M. Duley.
 
 
 
-\section3 QCrashHandler class
+\section3 QKeyMapper class on X11 platforms
 
 This license applies to parts of
-\c{qtbase/src/corelib/kernel/qcrashhandler.cpp}.
+the internal QKeyMapper class on X11 platforms.
 
 \quotation
-    Copyright (c) 1998 by Bjorn Reese <breese@imada.ou.dk>
+    Copyright 1985, 1987, 1998  The Open Group
 
-    Permission to use, copy, modify, and distribute this software for any
-    purpose with or without fee is hereby granted, provided that the above
-    copyright notice and this permission notice appear in all copies.
+    Permission to use, copy, modify, distribute, and sell this software and its
+    documentation for any purpose is hereby granted without fee, provided that
+    the above copyright notice appear in all copies and that both that
+    copyright notice and this permission notice appear in supporting
+    documentation.
 
-    THIS SOFTWARE IS PROVIDED ``AS IS'' AND WITHOUT ANY EXPRESS OR IMPLIED
-    WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED WARRANTIES OF
-    MERCHANTIBILITY AND FITNESS FOR A PARTICULAR PURPOSE. THE AUTHORS AND
-    CONTRIBUTORS ACCEPT NO RESPONSIBILITY IN ANY CONCEIVABLE MANNER.
+    The above copyright notice and this permission notice shall be included in
+    all copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL THE
+    OPEN GROUP BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN
+    AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+    CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+    Except as contained in this notice, the name of The Open Group shall not be
+    used in advertising or otherwise to promote the sale, use or other dealings
+    in this Software without prior written authorization from The Open Group.
 \endquotation
 
 
@@ -1088,39 +1233,6 @@ This license applies to parts of some files in
     LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
     NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
     EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-\endquotation
-
-
-
-\section3 Stack-less Just-In-Time compiler
-
-This license applies to files in
-\c{qtbase/src/3rdparty/pcre/sljit/}.
-
-\quotation
-    Copyright 2009-2012 Zoltan Herczeg (hzmester@freemail.hu). All rights reserved.
-
-    Redistribution and use in source and binary forms, with or without modification, are
-    permitted provided that the following conditions are met:
-
-\list 1
-    \li  Redistributions of source code must retain the above copyright notice, this list of
-         conditions and the following disclaimer.
-
-    \li  Redistributions in binary form must reproduce the above copyright notice, this list
-         of conditions and the following disclaimer in the documentation and/or other materials
-         provided with the distribution.
-\endlist
-
-    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDER(S) AND CONTRIBUTORS ``AS IS'' AND ANY
-    EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-    OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT
-    SHALL THE COPYRIGHT HOLDER(S) OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-    INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED
-    TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
-    BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
-    CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
-    ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 \endquotation
 
 
@@ -1455,35 +1567,6 @@ The following is a list of copyright notices and license statements in
 
 
 
-\section3 Zlib Data Compression Library
-
-This license applies to files in
-\c{qtbase/src/3rdparty/zlib/}.
-
-\quotation
- (C) 1995-2010 Jean-loup Gailly and Mark Adler
-
-  This software is provided 'as-is', without any express or implied
-  warranty.  In no event will the authors be held liable for any damages
-  arising from the use of this software.
-
-  Permission is granted to anyone to use this software for any purpose,
-  including commercial applications, and to alter it and redistribute it
-  freely, subject to the following restrictions:
-
-\list 1
- \li The origin of this software must not be misrepresented; you must not
-     claim that you wrote the original software. If you use this software
-     in a product, an acknowledgment in the product documentation would be
-     appreciated but is not required.
- \li Altered source versions must be plainly marked as such, and must not be
-     misrepresented as being the original software.
- \li This notice may not be removed or altered from any source distribution.
-\endlist
-\endquotation
-
-
-
 \section3 Additional Credits and Acknowledgements
 
 This software is based in part on the work of the Independent JPEG Group.
@@ -1491,8 +1574,8 @@ This software is based in part on the work of the Independent JPEG Group.
 Portions of this software are copyright \copyright 2012 The FreeType Project
 (\l{http://www.freetype.org}).  All rights reserved.
 
-We are very grateful to the following projects and people which are used in or
-distributed alongside Qt:
+We are very grateful to the following projects which are used in or distributed
+alongside this software, and to the people behind these projects:
 
 \list
 \li The \l{http://zlib.net/ zlib} Data Compression Library

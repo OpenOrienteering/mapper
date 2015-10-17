@@ -1,6 +1,6 @@
 \omit
 /*
- *    Copyright 2014 Kai Pastor
+ *    Copyright 2014, 2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -20,20 +20,10 @@
 \endomit
 
 
+Qt and the Qt logo are trademarks of The Qt Company Ltd.
 
-Apple and Cocoa are trademarks of Apple Computer, Inc., 
-registered in the U.S. and other countries.
-
-Digia, the Digia logo, Qt, and the Qt logo are trademarks of Digia Plc and/or
+Digia and the Digia logo are trademarks of Digia Plc and/or
 its subsidiaries in Finland and other countries.
-
-IAccessible2 is a trademark of the Linux Foundation.
-
-Linux is a trademark of Linus Torvalds in the United States, other
-countries or both.
-
-Unicode and the Unicode logo are trademarks of Unicode, Inc. in the United
-States and other countries.
 
 All other company, product, or service names may be trademarks or service marks
 of others and are the property of their respective owners.
