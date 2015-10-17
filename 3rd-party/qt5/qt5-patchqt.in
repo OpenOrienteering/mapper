@@ -169,36 +169,6 @@ do
         exit 1
     fi
 done
-# @TODO Remove this loop (required for Qt < 5.4)
-for I in \
-  "@PROJECT_SOURCE_DIR@"/patches/qt-@QT5_MAJOR_MINOR@-[1-9]*.patch \
-  "@PROJECT_SOURCE_DIR@"/patches/qt-@QT5_MAJOR_MINOR_REVISION@-[1-9]*.patch
-do
-    PATCH=$(basename "$I")
-	if [ ! -e "$I" ]
-	then
-		true # no patch
-	elif [ ! -f "$I" ]
-	then
-		echo "Unknown element $I" >&2
-	    exit 1
-    elif [ ! -f "OpenOrienteering/patches/$PATCH" ]
-    then
-        # Apply normally
-        patch -p1 < "$I"
-        cp "$I" "OpenOrienteering/patches/$PATCH"
-        echo "  $PATCH " >> ${OO_LOG}
-    elif diff -q "$I" "OpenOrienteering/patches/$PATCH"
-    then
-        # Reapply for verification
-        patch --silent --reverse -p1 < "$I"
-        patch -p1 < "$I"
-        echo "  $PATCH " >> ${OO_LOG}
-    else
-        echo "A different patch named $PATCH was already applied." >&2
-        exit 1
-    fi
-done
 
 for I in OpenOrienteering/patches/*
 do
