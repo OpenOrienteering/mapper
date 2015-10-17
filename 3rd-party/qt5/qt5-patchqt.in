@@ -40,7 +40,9 @@ for I in \
   qt*/src/doc/* \
   qt*/src/*/doc/* \
   qt*/tests \
+  qt3d \
   qtactiveqt \
+  qtandroidextras \
   qtbase/doc/src \
   qtbase/include/QtANGLE \
   qtbase/include/QtNetwork/[Qq][Ss]sl* \
@@ -58,11 +60,10 @@ for I in \
   qtbase/src/sql/drivers/psql \
   qtbase/src/sql/drivers/sqlite2 \
   qtbase/src/sql/drivers/tds \
+  qtcanvas3d \
   qtconnectivity \
-  qtdoc/demos \
-  qtdoc/doc/images \
-  qtdoc/doc/snippets \
-  qtdoc/doc/src/* \
+  qtdeclarative \
+  qtdoc \
   qtenginio \
   qtgraphicaleffects \
   qtimageformats/src/3rdparty/libmng* \
@@ -72,6 +73,7 @@ for I in \
   qtimageformats/src/plugins/imageformats/wbmp/* \
   qtjsbackend \
   qtlocation/src/positioning/doc/snippets/* \
+  qtmacextras \
   qtmultimedia \
   qtquick1 \
   qtquickcontrols \
@@ -89,6 +91,8 @@ for I in \
   qtwebkit-examples \
   qtwebkit-examples-and-demos \
   qtwebsockets \
+  qtwinextras \
+  qtx11extras \
   qtxmlpatterns
 do
     if [ -d "./$I" ]
