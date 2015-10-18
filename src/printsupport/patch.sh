@@ -1,6 +1,6 @@
 #!/bin/bash
 
-SUBDIR=qt-5.2.1
+SUBDIR=qt-5.4.2
 PRETTY_DATE=$(date +%Y-%m-%d)
 
 for I in $SUBDIR/*.h $SUBDIR/*.cpp
@@ -13,7 +13,6 @@ cd $SUBDIR
 patch -p1 < ../patches/producer.diff || exit 1
 patch -p1 < ../patches/devicecmyk.diff || exit 1
 patch -p1 < ../patches/enginetype.diff || exit 1
-patch -p1 < ../patches/papersize.diff || exit 1
 cd
 
 exit 0

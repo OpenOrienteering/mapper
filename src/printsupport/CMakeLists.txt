@@ -18,14 +18,20 @@
 
 find_package(ZLIB REQUIRED)
 
+if (${Qt5Core_VERSION} VERSION_LESS 5.3.0)
+	set(FORK_VERSION qt-5.2.1)
+else()
+	set(FORK_VERSION qt-5.4.2)
+endif()
+
 set(PRINTSUPPORT_SRCS
   advanced_pdf_printer.cpp
-  qt-5.2.1/advanced_pdf.cpp
-  qt-5.2.1/printengine_advanced_pdf.cpp
-  qt-5.2.1/qfontsubset.cpp
+  ${FORK_VERSION}/advanced_pdf.cpp
+  ${FORK_VERSION}/printengine_advanced_pdf.cpp
+  ${FORK_VERSION}/qfontsubset.cpp
 )
 
-include_directories("${CMAKE_CURRENT_SOURCE_DIR}/qt-5.2.1")
+include_directories("${CMAKE_CURRENT_SOURCE_DIR}/${FORK_VERSION}")
 
 add_library(printsupport STATIC ${PRINTSUPPORT_SRCS})
 

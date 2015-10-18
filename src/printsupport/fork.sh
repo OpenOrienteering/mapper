@@ -1,6 +1,6 @@
 #!/bin/bash
 
-SUBDIR=qt-5.2.1
+SUBDIR=qt-5.4.2
 
 if [ -n "$1" -a -d "$1/qtbase/src" ] ; then
 	SOURCE_DIR=$1/qtbase/src
@@ -11,6 +11,10 @@ elif [ -d "$1" ] ; then
 else
 	echo "Usage: $0 QTBASE_SRC_DIR"
 	exit 1
+fi
+
+if [ ! -d "$SUBDIR" ] ; then
+	mkdir "$SUBDIR"
 fi
 
 for I in \
