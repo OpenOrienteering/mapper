@@ -739,7 +739,7 @@ bool MainWindow::openPath(const QString &path)
 	}
 	
 	MainWindow* open_window = this;
-#if defined(Q_OS_ANDROID)
+#if !defined(Q_OS_ANDROID)
 	if (has_opened_file)
 		open_window = new MainWindow(true);
 #endif
