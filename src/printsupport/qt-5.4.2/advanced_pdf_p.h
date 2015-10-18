@@ -1,38 +1,37 @@
+/**
+ * This file is part of OpenOrienteering.
+ *
+ * This is a modified version of a file from the Qt Toolkit.
+ * You can redistribute it and/or modify it under the terms of
+ * the GNU General Public License, version 3, as published by
+ * the Free Software Foundation.
+ *
+ * OpenOrienteering is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>
+ *
+ * Changes:
+ * 2015-10-18 Kai Pastor <dg0yt@darc.de>
+ * - Adjustment of legal information
+ * - Modifications required for separate compilation:
+ *   - Renaming of selected files, classes, members and macros
+ *   - Adjustment of include statements
+ *   - Removal of Q_XXX_EXPORT
+ *   - Distinct paint engine type
+ */
 /****************************************************************************
 **
 ** Copyright (C) 2014 Digia Plc and/or its subsidiary(-ies).
 ** Contact: http://www.qt-project.org/legal
 **
-** This file is part of the QtGui module of the Qt Toolkit.
-**
-** $QT_BEGIN_LICENSE:LGPL21$
-** Commercial License Usage
-** Licensees holding valid commercial Qt licenses may use this file in
-** accordance with the commercial license agreement provided with the
-** Software or, alternatively, in accordance with the terms contained in
-** a written agreement between you and Digia. For licensing terms and
-** conditions see http://qt.digia.com/licensing. For further information
-** use the contact form at http://qt.digia.com/contact-us.
-**
-** GNU Lesser General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU Lesser
-** General Public License version 2.1 or version 3 as published by the Free
-** Software Foundation and appearing in the file LICENSE.LGPLv21 and
-** LICENSE.LGPLv3 included in the packaging of this file. Please review the
-** following information to ensure the GNU Lesser General Public License
-** requirements will be met: https://www.gnu.org/licenses/lgpl.html and
-** http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** In addition, as a special exception, Digia gives you certain additional
-** rights. These rights are described in the Digia Qt LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** $QT_END_LICENSE$
-**
 ****************************************************************************/
 
-#ifndef QPDF_P_H
-#define QPDF_P_H
+#ifndef ADVANCED_PDF_P_H
+#define ADVANCED_PDF_P_H
 
 //
 //  W A R N I N G
@@ -52,9 +51,9 @@
 #include "QtGui/qmatrix.h"
 #include "QtCore/qstring.h"
 #include "QtCore/qvector.h"
-#include "private/qstroker_p.h"
-#include "private/qpaintengine_p.h"
-#include "private/qfontengine_p.h"
+#include <private/qstroker_p.h>
+#include <private/qpaintengine_p.h>
+#include <private/qfontengine_p.h>
 #include "private/qfontsubset_p.h"
 #include "qpagelayout.h"
 
@@ -65,7 +64,7 @@ QT_BEGIN_NAMESPACE
 const char *qt_real_to_string(qreal val, char *buf);
 const char *qt_int_to_string(int val, char *buf);
 
-namespace QPdf {
+namespace AdvancedPdf {
 
     class ByteStream
     {
@@ -142,10 +141,10 @@ namespace QPdf {
 }
 
 
-class QPdfPage : public QPdf::ByteStream
+class AdvancedPdfPage : public AdvancedPdf::ByteStream
 {
 public:
-    QPdfPage();
+    AdvancedPdfPage();
 
     QVector<uint> images;
     QVector<uint> graphicStates;
@@ -159,17 +158,24 @@ public:
 private:
 };
 
-class QPdfWriter;
-class QPdfEnginePrivate;
+class AdvancedPdfWriter;
+class AdvancedPdfEnginePrivate;
 
-class Q_GUI_EXPORT QPdfEngine : public QPaintEngine
+class AdvancedPdfEngine : public QPaintEngine
 {
-    Q_DECLARE_PRIVATE(QPdfEngine)
-    friend class QPdfWriter;
+    Q_DECLARE_PRIVATE(AdvancedPdfEngine)
+    friend class AdvancedPdfWriter;
 public:
-    QPdfEngine();
-    QPdfEngine(QPdfEnginePrivate &d);
-    ~QPdfEngine() {}
+    static struct PaintEngineTypeStruct
+    {
+        constexpr operator QPaintEngine::Type() const {
+            return QPaintEngine::Type(QPaintEngine::User + 1);
+        }
+    } PaintEngineType;
+
+    AdvancedPdfEngine();
+    AdvancedPdfEngine(AdvancedPdfEnginePrivate &d);
+    ~AdvancedPdfEngine() {}
 
     void setOutputFilename(const QString &filename);
 
@@ -218,12 +224,12 @@ private:
     void updateClipPath(const QPainterPath & path, Qt::ClipOperation op);
 };
 
-class Q_GUI_EXPORT QPdfEnginePrivate : public QPaintEnginePrivate
+class AdvancedPdfEnginePrivate : public QPaintEnginePrivate
 {
-    Q_DECLARE_PUBLIC(QPdfEngine)
+    Q_DECLARE_PUBLIC(AdvancedPdfEngine)
 public:
-    QPdfEnginePrivate();
-    ~QPdfEnginePrivate();
+    AdvancedPdfEnginePrivate();
+    ~AdvancedPdfEnginePrivate();
 
     inline uint requestObject() { return currentObject++; }
 
@@ -242,8 +248,8 @@ public:
 
     int currentObject;
 
-    QPdfPage* currentPage;
-    QPdf::Stroker stroker;
+    AdvancedPdfPage* currentPage;
+    AdvancedPdf::Stroker stroker;
 
     QPointF brushOrigin;
     QBrush brush;
@@ -316,5 +322,5 @@ QT_END_NAMESPACE
 
 #endif // QT_NO_PDF
 
-#endif // QPDF_P_H
+#endif // ADVANCED_PDF_P_H
 

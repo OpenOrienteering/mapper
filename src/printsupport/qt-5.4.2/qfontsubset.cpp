@@ -1,33 +1,31 @@
+/**
+ * This file is part of OpenOrienteering.
+ *
+ * This is a modified version of a file from the Qt Toolkit.
+ * You can redistribute it and/or modify it under the terms of
+ * the GNU General Public License, version 3, as published by
+ * the Free Software Foundation.
+ *
+ * OpenOrienteering is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>
+ *
+ * Changes:
+ * 2015-10-18 Kai Pastor <dg0yt@darc.de>
+ * - Adjustment of legal information
+ * - Modifications required for separate compilation:
+ *   - Renaming of selected files, classes, members and macros
+ *   - Adjustment of include statements
+ *   - Removal of Q_XXX_EXPORT
+ */
 /****************************************************************************
 **
 ** Copyright (C) 2014 Digia Plc and/or its subsidiary(-ies).
 ** Contact: http://www.qt-project.org/legal
-**
-** This file is part of the QtGui module of the Qt Toolkit.
-**
-** $QT_BEGIN_LICENSE:LGPL21$
-** Commercial License Usage
-** Licensees holding valid commercial Qt licenses may use this file in
-** accordance with the commercial license agreement provided with the
-** Software or, alternatively, in accordance with the terms contained in
-** a written agreement between you and Digia. For licensing terms and
-** conditions see http://qt.digia.com/licensing. For further information
-** use the contact form at http://qt.digia.com/contact-us.
-**
-** GNU Lesser General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU Lesser
-** General Public License version 2.1 or version 3 as published by the Free
-** Software Foundation and appearing in the file LICENSE.LGPLv21 and
-** LICENSE.LGPLv3 included in the packaging of this file. Please review the
-** following information to ensure the GNU Lesser General Public License
-** requirements will be met: https://www.gnu.org/licenses/lgpl.html and
-** http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** In addition, as a special exception, Digia gives you certain additional
-** rights. These rights are described in the Digia Qt LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** $QT_END_LICENSE$
 **
 ****************************************************************************/
 
@@ -35,8 +33,8 @@
 #include <qdebug.h>
 #include <qendian.h>
 #include <qpainterpath.h>
-#include "private/qpdf_p.h"
-#include "private/qfunctions_p.h"
+#include "advanced_pdf_p.h"
+#include <private/qfunctions_p.h>
 
 #include "qfontsubset_agl.cpp"
 
@@ -101,7 +99,7 @@ QByteArray QFontSubset::glyphName(unsigned short unicode, bool symbol)
     buffer[0] = 'u';
     buffer[1] = 'n';
     buffer[2] = 'i';
-    QPdf::toHex(unicode, buffer+3);
+    AdvancedPdf::toHex(unicode, buffer+3);
     return buffer;
 }
 
@@ -113,7 +111,7 @@ QByteArray QFontSubset::glyphName(unsigned int glyph, const QVector<int> &revers
         return "/.notdef";
 
     QByteArray ba;
-    QPdf::ByteStream s(&ba);
+    AdvancedPdf::ByteStream s(&ba);
     if (reverseMap[glyphIndex] && reverseMap[glyphIndex] < 0x10000) {
         s << '/' << glyphName(reverseMap[glyphIndex], false);
     } else {
@@ -130,7 +128,7 @@ QByteArray QFontSubset::widthArray() const
     QFontEngine::Properties properties = fontEngine->properties();
 
     QByteArray width;
-    QPdf::ByteStream s(&width);
+    AdvancedPdf::ByteStream s(&width);
     QFixed scale = QFixed(1000)/emSquare;
 
     QFixed defWidth = widths[0];
@@ -180,7 +178,7 @@ QByteArray QFontSubset::widthArray() const
     return width;
 }
 
-static void checkRanges(QPdf::ByteStream &ts, QByteArray &ranges, int &nranges)
+static void checkRanges(AdvancedPdf::ByteStream &ts, QByteArray &ranges, int &nranges)
 {
     if (++nranges > 100) {
         ts << nranges << "beginbfrange\n"
@@ -206,7 +204,7 @@ QByteArray QFontSubset::createToUnicodeMap() const
     QVector<int> reverseMap = getReverseMap();
 
     QByteArray touc;
-    QPdf::ByteStream ts(&touc);
+    AdvancedPdf::ByteStream ts(&touc);
     ts << "/CIDInit /ProcSet findresource begin\n"
         "12 dict begin\n"
         "begincmap\n"
@@ -219,7 +217,7 @@ QByteArray QFontSubset::createToUnicodeMap() const
 
     int nranges = 1;
     QByteArray ranges = "<0000> <0000> <0000>\n";
-    QPdf::ByteStream s(&ranges);
+    AdvancedPdf::ByteStream s(&ranges);
 
     char buf[5];
     for (int g = 1; g < nGlyphs(); ) {
@@ -253,14 +251,14 @@ QByteArray QFontSubset::createToUnicodeMap() const
         int endnonlinear = startLinear ? startLinear : g;
         // qDebug("    startLinear=%x endnonlinear=%x", startLinear,endnonlinear);
         if (endnonlinear > start) {
-            s << '<' << QPdf::toHex((ushort)start, buf) << "> <";
-            s << QPdf::toHex((ushort)(endnonlinear - 1), buf) << "> ";
+            s << '<' << AdvancedPdf::toHex((ushort)start, buf) << "> <";
+            s << AdvancedPdf::toHex((ushort)(endnonlinear - 1), buf) << "> ";
             if (endnonlinear == start + 1) {
-                s << '<' << QPdf::toHex((ushort)reverseMap[start], buf) << ">\n";
+                s << '<' << AdvancedPdf::toHex((ushort)reverseMap[start], buf) << ">\n";
             } else {
                 s << '[';
                 for (int i = start; i < endnonlinear; ++i) {
-                    s << '<' << QPdf::toHex((ushort)reverseMap[i], buf) << "> ";
+                    s << '<' << AdvancedPdf::toHex((ushort)reverseMap[i], buf) << "> ";
                 }
                 s << "]\n";
             }
@@ -273,9 +271,9 @@ QByteArray QFontSubset::createToUnicodeMap() const
                 int uc_end = uc_start + len - 1;
                 if ((uc_end >> 8) != (uc_start >> 8))
                     len = 256 - (uc_start & 0xff);
-                s << '<' << QPdf::toHex((ushort)startLinear, buf) << "> <";
-                s << QPdf::toHex((ushort)(startLinear + len - 1), buf) << "> ";
-                s << '<' << QPdf::toHex((ushort)reverseMap[startLinear], buf) << ">\n";
+                s << '<' << AdvancedPdf::toHex((ushort)startLinear, buf) << "> <";
+                s << AdvancedPdf::toHex((ushort)(startLinear + len - 1), buf) << "> ";
+                s << '<' << AdvancedPdf::toHex((ushort)reverseMap[startLinear], buf) << ">\n";
                 checkRanges(ts, ranges, nranges);
                 startLinear += len;
             }

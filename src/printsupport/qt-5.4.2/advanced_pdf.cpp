@@ -1,37 +1,38 @@
+/**
+ * This file is part of OpenOrienteering.
+ *
+ * This is a modified version of a file from the Qt Toolkit.
+ * You can redistribute it and/or modify it under the terms of
+ * the GNU General Public License, version 3, as published by
+ * the Free Software Foundation.
+ *
+ * OpenOrienteering is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>
+ *
+ * Changes:
+ * 2015-10-18 Kai Pastor <dg0yt@darc.de>
+ * - Adjustment of legal information
+ * - Modifications required for separate compilation:
+ *   - Renaming of selected files, classes, members and macros
+ *   - Adjustment of include statements
+ *   - Removal of Q_XXX_EXPORT
+ * - Change of the PDF Producer property
+ * - Use of DeviceCMYK color space in PDF output
+ * - Distinct paint engine type
+ */
 /****************************************************************************
 **
 ** Copyright (C) 2014 Digia Plc and/or its subsidiary(-ies).
 ** Contact: http://www.qt-project.org/legal
 **
-** This file is part of the QtGui module of the Qt Toolkit.
-**
-** $QT_BEGIN_LICENSE:LGPL21$
-** Commercial License Usage
-** Licensees holding valid commercial Qt licenses may use this file in
-** accordance with the commercial license agreement provided with the
-** Software or, alternatively, in accordance with the terms contained in
-** a written agreement between you and Digia. For licensing terms and
-** conditions see http://qt.digia.com/licensing. For further information
-** use the contact form at http://qt.digia.com/contact-us.
-**
-** GNU Lesser General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU Lesser
-** General Public License version 2.1 or version 3 as published by the Free
-** Software Foundation and appearing in the file LICENSE.LGPLv21 and
-** LICENSE.LGPLv3 included in the packaging of this file. Please review the
-** following information to ensure the GNU Lesser General Public License
-** requirements will be met: https://www.gnu.org/licenses/lgpl.html and
-** http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** In addition, as a special exception, Digia gives you certain additional
-** rights. These rights are described in the Digia Qt LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** $QT_END_LICENSE$
-**
 ****************************************************************************/
 
-#include "qpdf_p.h"
+#include "advanced_pdf_p.h"
 
 #ifndef QT_NO_PDF
 
@@ -42,7 +43,7 @@
 #include <private/qmath_p.h>
 #include <private/qpainter_p.h>
 #include <qnumeric.h>
-#include "private/qfont_p.h"
+#include <private/qfont_p.h>
 #include <qimagewriter.h>
 #include "qbuffer.h"
 #include "QtCore/qdatetime.h"
@@ -156,7 +157,7 @@ const char *qt_int_to_string(int val, char *buf) {
 }
 
 
-namespace QPdf {
+namespace AdvancedPdf {
     ByteStream::ByteStream(QByteArray *byteArray, bool fileBacking)
             : dev(new QBuffer(byteArray)),
             fileBackingEnabled(fileBacking),
@@ -288,7 +289,7 @@ namespace QPdf {
 
 #define QT_PATH_ELEMENT(elm)
 
-QByteArray QPdf::generatePath(const QPainterPath &path, const QTransform &matrix, PathFlags flags)
+QByteArray AdvancedPdf::generatePath(const QPainterPath &path, const QTransform &matrix, PathFlags flags)
 {
     QByteArray result;
     if (!path.elementCount())
@@ -321,7 +322,7 @@ QByteArray QPdf::generatePath(const QPainterPath &path, const QTransform &matrix
             i += 2;
             break;
         default:
-            qFatal("QPdf::generatePath(), unhandled type: %d", elm.type);
+            qFatal("AdvancedPdf::generatePath(), unhandled type: %d", elm.type);
         }
     }
     if (start >= 0
@@ -350,7 +351,7 @@ QByteArray QPdf::generatePath(const QPainterPath &path, const QTransform &matrix
     return result;
 }
 
-QByteArray QPdf::generateMatrix(const QTransform &matrix)
+QByteArray AdvancedPdf::generateMatrix(const QTransform &matrix)
 {
     QByteArray result;
     ByteStream s(&result);
@@ -364,7 +365,7 @@ QByteArray QPdf::generateMatrix(const QTransform &matrix)
     return result;
 }
 
-QByteArray QPdf::generateDashes(const QPen &pen)
+QByteArray AdvancedPdf::generateDashes(const QPen &pen)
 {
     QByteArray result;
     ByteStream s(&result);
@@ -540,7 +541,7 @@ static const char* pattern_for_brush[] = {
     "S\n", // DiagCrossPattern
 };
 
-QByteArray QPdf::patternForBrush(const QBrush &b)
+QByteArray AdvancedPdf::patternForBrush(const QBrush &b)
 {
     int style = b.style();
     if (style > Qt::DiagCrossPattern)
@@ -586,7 +587,7 @@ static void writeTriangleLine(uchar *&data, int xpos, int ypos, int xoff, int yo
 }
 
 
-QByteArray QPdf::generateLinearGradientShader(const QLinearGradient *gradient, const QPointF *page_rect, bool alpha)
+QByteArray AdvancedPdf::generateLinearGradientShader(const QLinearGradient *gradient, const QPointF *page_rect, bool alpha)
 {
     // generate list of triangles with colors
     QPointF start = gradient->start();
@@ -714,7 +715,7 @@ QByteArray QPdf::generateLinearGradientShader(const QLinearGradient *gradient, c
     triangles.resize((char *)data - triangles.constData());
 
     QByteArray shader;
-    QPdf::ByteStream s(&shader);
+    AdvancedPdf::ByteStream s(&shader);
     s << "<<\n"
         "/ShadingType 4\n"
         "/ColorSpace " << (alpha ? "/DeviceGray\n" : "/DeviceRGB\n") <<
@@ -734,7 +735,7 @@ QByteArray QPdf::generateLinearGradientShader(const QLinearGradient *gradient, c
 
 static void moveToHook(qfixed x, qfixed y, void *data)
 {
-    QPdf::Stroker *t = (QPdf::Stroker *)data;
+    AdvancedPdf::Stroker *t = (AdvancedPdf::Stroker *)data;
     if (!t->first)
         *t->stream << "h\n";
     if (!t->cosmeticPen)
@@ -745,7 +746,7 @@ static void moveToHook(qfixed x, qfixed y, void *data)
 
 static void lineToHook(qfixed x, qfixed y, void *data)
 {
-    QPdf::Stroker *t = (QPdf::Stroker *)data;
+    AdvancedPdf::Stroker *t = (AdvancedPdf::Stroker *)data;
     if (!t->cosmeticPen)
         t->matrix.map(x, y, &x, &y);
     *t->stream << x << y << "l\n";
@@ -756,7 +757,7 @@ static void cubicToHook(qfixed c1x, qfixed c1y,
                         qfixed ex, qfixed ey,
                         void *data)
 {
-    QPdf::Stroker *t = (QPdf::Stroker *)data;
+    AdvancedPdf::Stroker *t = (AdvancedPdf::Stroker *)data;
     if (!t->cosmeticPen) {
         t->matrix.map(c1x, c1y, &c1x, &c1y);
         t->matrix.map(c2x, c2y, &c2x, &c2y);
@@ -768,7 +769,7 @@ static void cubicToHook(qfixed c1x, qfixed c1y,
                << "c\n";
 }
 
-QPdf::Stroker::Stroker()
+AdvancedPdf::Stroker::Stroker()
     : stream(0),
     first(true),
     dashStroker(&basicStroker)
@@ -781,7 +782,7 @@ QPdf::Stroker::Stroker()
     basicStroker.setStrokeWidth(.1);
 }
 
-void QPdf::Stroker::setPen(const QPen &pen, QPainter::RenderHints hints)
+void AdvancedPdf::Stroker::setPen(const QPen &pen, QPainter::RenderHints hints)
 {
     if (pen.style() == Qt::NoPen) {
         stroker = 0;
@@ -812,7 +813,7 @@ void QPdf::Stroker::setPen(const QPen &pen, QPainter::RenderHints hints)
     }
 }
 
-void QPdf::Stroker::strokePath(const QPainterPath &path)
+void AdvancedPdf::Stroker::strokePath(const QPainterPath &path)
 {
     if (!stroker)
         return;
@@ -822,7 +823,7 @@ void QPdf::Stroker::strokePath(const QPainterPath &path)
     *stream << "h f\n";
 }
 
-QByteArray QPdf::ascii85Encode(const QByteArray &input)
+QByteArray AdvancedPdf::ascii85Encode(const QByteArray &input)
 {
     int isize = input.size()/4*4;
     QByteArray output;
@@ -878,7 +879,7 @@ QByteArray QPdf::ascii85Encode(const QByteArray &input)
     return output;
 }
 
-const char *QPdf::toHex(ushort u, char *buffer)
+const char *AdvancedPdf::toHex(ushort u, char *buffer)
 {
     int i = 3;
     while (i >= 0) {
@@ -894,7 +895,7 @@ const char *QPdf::toHex(ushort u, char *buffer)
     return buffer;
 }
 
-const char *QPdf::toHex(uchar u, char *buffer)
+const char *AdvancedPdf::toHex(uchar u, char *buffer)
 {
     int i = 1;
     while (i >= 0) {
@@ -911,12 +912,12 @@ const char *QPdf::toHex(uchar u, char *buffer)
 }
 
 
-QPdfPage::QPdfPage()
-    : QPdf::ByteStream(true) // Enable file backing
+AdvancedPdfPage::AdvancedPdfPage()
+    : AdvancedPdf::ByteStream(true) // Enable file backing
 {
 }
 
-void QPdfPage::streamImage(int w, int h, int object)
+void AdvancedPdfPage::streamImage(int w, int h, int object)
 {
     *this << w << "0 0 " << -h << "0 " << h << "cm /Im" << object << " Do\n";
     if (!images.contains(object))
@@ -924,29 +925,29 @@ void QPdfPage::streamImage(int w, int h, int object)
 }
 
 
-QPdfEngine::QPdfEngine(QPdfEnginePrivate &dd)
+AdvancedPdfEngine::AdvancedPdfEngine(AdvancedPdfEnginePrivate &dd)
     : QPaintEngine(dd, qt_pdf_decide_features())
 {
 }
 
-QPdfEngine::QPdfEngine()
-    : QPaintEngine(*new QPdfEnginePrivate(), qt_pdf_decide_features())
+AdvancedPdfEngine::AdvancedPdfEngine()
+    : QPaintEngine(*new AdvancedPdfEnginePrivate(), qt_pdf_decide_features())
 {
 }
 
-void QPdfEngine::setOutputFilename(const QString &filename)
+void AdvancedPdfEngine::setOutputFilename(const QString &filename)
 {
-    Q_D(QPdfEngine);
+    Q_D(AdvancedPdfEngine);
     d->outputFileName = filename;
 }
 
 
-void QPdfEngine::drawPoints (const QPointF *points, int pointCount)
+void AdvancedPdfEngine::drawPoints (const QPointF *points, int pointCount)
 {
     if (!points)
         return;
 
-    Q_D(QPdfEngine);
+    Q_D(AdvancedPdfEngine);
     QPainterPath p;
     for (int i=0; i!=pointCount;++i) {
         p.moveTo(points[i]);
@@ -959,12 +960,12 @@ void QPdfEngine::drawPoints (const QPointF *points, int pointCount)
     d->hasBrush = hadBrush;
 }
 
-void QPdfEngine::drawLines (const QLineF *lines, int lineCount)
+void AdvancedPdfEngine::drawLines (const QLineF *lines, int lineCount)
 {
     if (!lines)
         return;
 
-    Q_D(QPdfEngine);
+    Q_D(AdvancedPdfEngine);
     QPainterPath p;
     for (int i=0; i!=lineCount;++i) {
         p.moveTo(lines[i].p1());
@@ -976,12 +977,12 @@ void QPdfEngine::drawLines (const QLineF *lines, int lineCount)
     d->hasBrush = hadBrush;
 }
 
-void QPdfEngine::drawRects (const QRectF *rects, int rectCount)
+void AdvancedPdfEngine::drawRects (const QRectF *rects, int rectCount)
 {
     if (!rects)
         return;
 
-    Q_D(QPdfEngine);
+    Q_D(AdvancedPdfEngine);
 
     if (d->clipEnabled && d->allClipped)
         return;
@@ -992,7 +993,7 @@ void QPdfEngine::drawRects (const QRectF *rects, int rectCount)
     if (d->simplePen || !d->hasPen) {
         // draw strokes natively in this case for better output
         if(!d->simplePen && !d->stroker.matrix.isIdentity())
-            *d->currentPage << "q\n" << QPdf::generateMatrix(d->stroker.matrix);
+            *d->currentPage << "q\n" << AdvancedPdf::generateMatrix(d->stroker.matrix);
         for (int i = 0; i < rectCount; ++i)
             *d->currentPage << rects[i].x() << rects[i].y() << rects[i].width() << rects[i].height() << "re\n";
         *d->currentPage << (d->hasPen ? (d->hasBrush ? "B\n" : "S\n") : "f\n");
@@ -1006,9 +1007,9 @@ void QPdfEngine::drawRects (const QRectF *rects, int rectCount)
     }
 }
 
-void QPdfEngine::drawPolygon(const QPointF *points, int pointCount, PolygonDrawMode mode)
+void AdvancedPdfEngine::drawPolygon(const QPointF *points, int pointCount, PolygonDrawMode mode)
 {
-    Q_D(QPdfEngine);
+    Q_D(AdvancedPdfEngine);
 
     if (!points || !pointCount)
         return;
@@ -1042,9 +1043,9 @@ void QPdfEngine::drawPolygon(const QPointF *points, int pointCount, PolygonDrawM
     d->hasBrush = hb;
 }
 
-void QPdfEngine::drawPath (const QPainterPath &p)
+void AdvancedPdfEngine::drawPath (const QPainterPath &p)
 {
-    Q_D(QPdfEngine);
+    Q_D(AdvancedPdfEngine);
 
     if (d->clipEnabled && d->allClipped)
         return;
@@ -1053,10 +1054,10 @@ void QPdfEngine::drawPath (const QPainterPath &p)
 
     if (d->simplePen) {
         // draw strokes natively in this case for better output
-        *d->currentPage << QPdf::generatePath(p, QTransform(), d->hasBrush ? QPdf::FillAndStrokePath : QPdf::StrokePath);
+        *d->currentPage << AdvancedPdf::generatePath(p, QTransform(), d->hasBrush ? AdvancedPdf::FillAndStrokePath : AdvancedPdf::StrokePath);
     } else {
         if (d->hasBrush)
-            *d->currentPage << QPdf::generatePath(p, d->stroker.matrix, QPdf::FillPath);
+            *d->currentPage << AdvancedPdf::generatePath(p, d->stroker.matrix, AdvancedPdf::FillPath);
         if (d->hasPen) {
             *d->currentPage << "q\n";
             QBrush b = d->brush;
@@ -1069,11 +1070,11 @@ void QPdfEngine::drawPath (const QPainterPath &p)
     }
 }
 
-void QPdfEngine::drawPixmap (const QRectF &rectangle, const QPixmap &pixmap, const QRectF &sr)
+void AdvancedPdfEngine::drawPixmap (const QRectF &rectangle, const QPixmap &pixmap, const QRectF &sr)
 {
     if (sr.isEmpty() || rectangle.isEmpty() || pixmap.isNull())
         return;
-    Q_D(QPdfEngine);
+    Q_D(AdvancedPdfEngine);
 
     QBrush b = d->brush;
 
@@ -1087,7 +1088,7 @@ void QPdfEngine::drawPixmap (const QRectF &rectangle, const QPixmap &pixmap, con
 
     *d->currentPage << "q\n/GSa gs\n";
     *d->currentPage
-        << QPdf::generateMatrix(QTransform(rectangle.width() / sr.width(), 0, 0, rectangle.height() / sr.height(),
+        << AdvancedPdf::generateMatrix(QTransform(rectangle.width() / sr.width(), 0, 0, rectangle.height() / sr.height(),
                                            rectangle.x(), rectangle.y()) * (d->simplePen ? QTransform() : d->stroker.matrix));
     if (bitmap) {
         // set current pen as d->brush
@@ -1100,11 +1101,11 @@ void QPdfEngine::drawPixmap (const QRectF &rectangle, const QPixmap &pixmap, con
     d->brush = b;
 }
 
-void QPdfEngine::drawImage(const QRectF &rectangle, const QImage &image, const QRectF &sr, Qt::ImageConversionFlags)
+void AdvancedPdfEngine::drawImage(const QRectF &rectangle, const QImage &image, const QRectF &sr, Qt::ImageConversionFlags)
 {
     if (sr.isEmpty() || rectangle.isEmpty() || image.isNull())
         return;
-    Q_D(QPdfEngine);
+    Q_D(AdvancedPdfEngine);
 
     QRect sourceRect = sr.toRect();
     QImage im = sourceRect != image.rect() ? image.copy(sourceRect) : image;
@@ -1115,16 +1116,16 @@ void QPdfEngine::drawImage(const QRectF &rectangle, const QImage &image, const Q
 
     *d->currentPage << "q\n/GSa gs\n";
     *d->currentPage
-        << QPdf::generateMatrix(QTransform(rectangle.width() / sr.width(), 0, 0, rectangle.height() / sr.height(),
+        << AdvancedPdf::generateMatrix(QTransform(rectangle.width() / sr.width(), 0, 0, rectangle.height() / sr.height(),
                                            rectangle.x(), rectangle.y()) * (d->simplePen ? QTransform() : d->stroker.matrix));
     setBrush();
     d->currentPage->streamImage(im.width(), im.height(), object);
     *d->currentPage << "Q\n";
 }
 
-void QPdfEngine::drawTiledPixmap (const QRectF &rectangle, const QPixmap &pixmap, const QPointF &point)
+void AdvancedPdfEngine::drawTiledPixmap (const QRectF &rectangle, const QPixmap &pixmap, const QPointF &point)
 {
-    Q_D(QPdfEngine);
+    Q_D(AdvancedPdfEngine);
 
     bool bitmap = (pixmap.depth() == 1);
     QBrush b = d->brush;
@@ -1152,9 +1153,9 @@ void QPdfEngine::drawTiledPixmap (const QRectF &rectangle, const QPixmap &pixmap
     d->brushOrigin = bo;
 }
 
-void QPdfEngine::drawTextItem(const QPointF &p, const QTextItem &textItem)
+void AdvancedPdfEngine::drawTextItem(const QPointF &p, const QTextItem &textItem)
 {
-    Q_D(QPdfEngine);
+    Q_D(AdvancedPdfEngine);
 
     if (!d->hasPen || (d->clipEnabled && d->allClipped))
         return;
@@ -1166,7 +1167,7 @@ void QPdfEngine::drawTextItem(const QPointF &p, const QTextItem &textItem)
 
     *d->currentPage << "q\n";
     if(!d->simplePen)
-        *d->currentPage << QPdf::generateMatrix(d->stroker.matrix);
+        *d->currentPage << AdvancedPdf::generateMatrix(d->stroker.matrix);
 
     bool hp = d->hasPen;
     d->hasPen = false;
@@ -1183,9 +1184,9 @@ void QPdfEngine::drawTextItem(const QPointF &p, const QTextItem &textItem)
 }
 
 
-void QPdfEngine::updateState(const QPaintEngineState &state)
+void AdvancedPdfEngine::updateState(const QPaintEngineState &state)
 {
-    Q_D(QPdfEngine);
+    Q_D(AdvancedPdfEngine);
 
     QPaintEngine::DirtyFlags flags = state.state();
 
@@ -1246,9 +1247,9 @@ void QPdfEngine::updateState(const QPaintEngineState &state)
     setupGraphicsState(flags);
 }
 
-void QPdfEngine::setupGraphicsState(QPaintEngine::DirtyFlags flags)
+void AdvancedPdfEngine::setupGraphicsState(QPaintEngine::DirtyFlags flags)
 {
-    Q_D(QPdfEngine);
+    Q_D(AdvancedPdfEngine);
     if (flags & DirtyClipPath)
         flags |= DirtyTransform|DirtyPen|DirtyBrush;
 
@@ -1270,7 +1271,7 @@ void QPdfEngine::setupGraphicsState(QPaintEngine::DirtyFlags flags)
             }
             if (!d->allClipped) {
                 for (int i = 0; i < d->clips.size(); ++i) {
-                    *d->currentPage << QPdf::generatePath(d->clips.at(i), QTransform(), QPdf::ClipPath);
+                    *d->currentPage << AdvancedPdf::generatePath(d->clips.at(i), QTransform(), AdvancedPdf::ClipPath);
                 }
             }
         }
@@ -1279,7 +1280,7 @@ void QPdfEngine::setupGraphicsState(QPaintEngine::DirtyFlags flags)
     if (flags & DirtyTransform) {
         *d->currentPage << "q\n";
         if (d->simplePen && !d->stroker.matrix.isIdentity())
-            *d->currentPage << QPdf::generateMatrix(d->stroker.matrix);
+            *d->currentPage << AdvancedPdf::generateMatrix(d->stroker.matrix);
     }
     if (flags & DirtyBrush)
         setBrush();
@@ -1289,9 +1290,9 @@ void QPdfEngine::setupGraphicsState(QPaintEngine::DirtyFlags flags)
 
 extern QPainterPath qt_regionToPath(const QRegion &region);
 
-void QPdfEngine::updateClipPath(const QPainterPath &p, Qt::ClipOperation op)
+void AdvancedPdfEngine::updateClipPath(const QPainterPath &p, Qt::ClipOperation op)
 {
-    Q_D(QPdfEngine);
+    Q_D(AdvancedPdfEngine);
     QPainterPath path = d->stroker.matrix.map(p);
     //qDebug() << "updateClipPath: " << d->stroker.matrix << p.boundingRect() << path.boundingRect() << op;
 
@@ -1312,9 +1313,9 @@ void QPdfEngine::updateClipPath(const QPainterPath &p, Qt::ClipOperation op)
     }
 }
 
-void QPdfEngine::setPen()
+void AdvancedPdfEngine::setPen()
 {
-    Q_D(QPdfEngine);
+    Q_D(AdvancedPdfEngine);
     if (d->pen.style() == Qt::NoPen)
         return;
     QBrush b = d->pen.brush();
@@ -1322,12 +1323,13 @@ void QPdfEngine::setPen()
 
     QColor rgba = b.color();
     if (d->grayscale) {
-        qreal gray = qGray(rgba.rgba())/255.;
-        *d->currentPage << gray << gray << gray;
+        qreal gray = (255-qGray(rgba.rgba()))/255.0;
+        *d->currentPage << 0.0 << 0.0 << 0.0 << gray;
     } else {
-        *d->currentPage << rgba.redF()
-                        << rgba.greenF()
-                        << rgba.blueF();
+        *d->currentPage << rgba.cyanF()
+                        << rgba.magentaF()
+                        << rgba.yellowF()
+                        << rgba.blackF();
     }
     *d->currentPage << "SCN\n";
 
@@ -1367,13 +1369,13 @@ void QPdfEngine::setPen()
     }
     *d->currentPage << pdfJoinStyle << "j ";
 
-    *d->currentPage << QPdf::generateDashes(d->pen) << " 0 d\n";
+    *d->currentPage << AdvancedPdf::generateDashes(d->pen) << " 0 d\n";
 }
 
 
-void QPdfEngine::setBrush()
+void AdvancedPdfEngine::setBrush()
 {
-    Q_D(QPdfEngine);
+    Q_D(AdvancedPdfEngine);
     Qt::BrushStyle style = d->brush.style();
     if (style == Qt::NoBrush)
         return;
@@ -1386,12 +1388,13 @@ void QPdfEngine::setBrush()
     if (specifyColor) {
         QColor rgba = d->brush.color();
         if (d->grayscale) {
-            qreal gray = qGray(rgba.rgba())/255.;
-            *d->currentPage << gray << gray << gray;
+            qreal gray = (255-qGray(rgba.rgba()))/255.0;
+            *d->currentPage << 0.0 << 0.0 << 0.0 << gray;
         } else {
-            *d->currentPage << rgba.redF()
-                            << rgba.greenF()
-                            << rgba.blueF();
+            *d->currentPage << rgba.cyanF()
+                            << rgba.magentaF()
+                            << rgba.yellowF()
+                            << rgba.blackF();
         }
     }
     if (patternObject)
@@ -1405,9 +1408,9 @@ void QPdfEngine::setBrush()
 }
 
 
-bool QPdfEngine::newPage()
+bool AdvancedPdfEngine::newPage()
 {
-    Q_D(QPdfEngine);
+    Q_D(AdvancedPdfEngine);
     if (!isActive())
         return false;
     d->newPage();
@@ -1419,58 +1422,60 @@ bool QPdfEngine::newPage()
     return true;
 }
 
-QPaintEngine::Type QPdfEngine::type() const
+AdvancedPdfEngine::PaintEngineTypeStruct AdvancedPdfEngine::PaintEngineType = {};
+
+QPaintEngine::Type AdvancedPdfEngine::type() const
 {
-    return QPaintEngine::Pdf;
+    return PaintEngineType;
 }
 
-void QPdfEngine::setResolution(int resolution)
+void AdvancedPdfEngine::setResolution(int resolution)
 {
-    Q_D(QPdfEngine);
+    Q_D(AdvancedPdfEngine);
     d->resolution = resolution;
 }
 
-int QPdfEngine::resolution() const
+int AdvancedPdfEngine::resolution() const
 {
-    Q_D(const QPdfEngine);
+    Q_D(const AdvancedPdfEngine);
     return d->resolution;
 }
 
-void QPdfEngine::setPageLayout(const QPageLayout &pageLayout)
+void AdvancedPdfEngine::setPageLayout(const QPageLayout &pageLayout)
 {
-    Q_D(QPdfEngine);
+    Q_D(AdvancedPdfEngine);
     d->m_pageLayout = pageLayout;
 }
 
-void QPdfEngine::setPageSize(const QPageSize &pageSize)
+void AdvancedPdfEngine::setPageSize(const QPageSize &pageSize)
 {
-    Q_D(QPdfEngine);
+    Q_D(AdvancedPdfEngine);
     d->m_pageLayout.setPageSize(pageSize);
 }
 
-void QPdfEngine::setPageOrientation(QPageLayout::Orientation orientation)
+void AdvancedPdfEngine::setPageOrientation(QPageLayout::Orientation orientation)
 {
-    Q_D(QPdfEngine);
+    Q_D(AdvancedPdfEngine);
     d->m_pageLayout.setOrientation(orientation);
 }
 
-void QPdfEngine::setPageMargins(const QMarginsF &margins, QPageLayout::Unit units)
+void AdvancedPdfEngine::setPageMargins(const QMarginsF &margins, QPageLayout::Unit units)
 {
-    Q_D(QPdfEngine);
+    Q_D(AdvancedPdfEngine);
     d->m_pageLayout.setUnits(units);
     d->m_pageLayout.setMargins(margins);
 }
 
-QPageLayout QPdfEngine::pageLayout() const
+QPageLayout AdvancedPdfEngine::pageLayout() const
 {
-    Q_D(const QPdfEngine);
+    Q_D(const AdvancedPdfEngine);
     return d->m_pageLayout;
 }
 
 // Metrics are in Device Pixels
-int QPdfEngine::metric(QPaintDevice::PaintDeviceMetric metricType) const
+int AdvancedPdfEngine::metric(QPaintDevice::PaintDeviceMetric metricType) const
 {
-    Q_D(const QPdfEngine);
+    Q_D(const AdvancedPdfEngine);
     int val;
     switch (metricType) {
     case QPaintDevice::PdmWidth:
@@ -1503,13 +1508,13 @@ int QPdfEngine::metric(QPaintDevice::PaintDeviceMetric metricType) const
         val = 1;
         break;
     default:
-        qWarning("QPdfWriter::metric: Invalid metric command");
+        qWarning("AdvancedPdfWriter::metric: Invalid metric command");
         return 0;
     }
     return val;
 }
 
-QPdfEnginePrivate::QPdfEnginePrivate()
+AdvancedPdfEnginePrivate::AdvancedPdfEnginePrivate()
     : clipEnabled(false), allClipped(false), hasPen(true), hasBrush(false), simplePen(false),
       outDevice(0), ownsDevice(false),
       embedFonts(true),
@@ -1526,9 +1531,9 @@ QPdfEnginePrivate::QPdfEnginePrivate()
     stream = new QDataStream;
 }
 
-bool QPdfEngine::begin(QPaintDevice *pdev)
+bool AdvancedPdfEngine::begin(QPaintDevice *pdev)
 {
-    Q_D(QPdfEngine);
+    Q_D(AdvancedPdfEngine);
     d->pdev = pdev;
 
     if (!d->outDevice) {
@@ -1547,7 +1552,7 @@ bool QPdfEngine::begin(QPaintDevice *pdev)
 
     d->currentObject = 1;
 
-    d->currentPage = new QPdfPage;
+    d->currentPage = new AdvancedPdfPage;
     d->stroker.stream = d->currentPage;
     d->opacity = 1.0;
 
@@ -1578,9 +1583,9 @@ bool QPdfEngine::begin(QPaintDevice *pdev)
     return true;
 }
 
-bool QPdfEngine::end()
+bool AdvancedPdfEngine::end()
 {
-    Q_D(QPdfEngine);
+    Q_D(AdvancedPdfEngine);
     d->writeTail();
 
     d->stream->unsetDevice();
@@ -1600,14 +1605,14 @@ bool QPdfEngine::end()
     return true;
 }
 
-QPdfEnginePrivate::~QPdfEnginePrivate()
+AdvancedPdfEnginePrivate::~AdvancedPdfEnginePrivate()
 {
     qDeleteAll(fonts);
     delete currentPage;
     delete stream;
 }
 
-void QPdfEnginePrivate::writeHeader()
+void AdvancedPdfEnginePrivate::writeHeader()
 {
     addXrefEntry(0,false);
 
@@ -1638,11 +1643,11 @@ void QPdfEnginePrivate::writeHeader()
 
     // color space for pattern
     patternColorSpace = addXrefEntry(-1);
-    xprintf("[/Pattern /DeviceRGB]\n"
+    xprintf("[/Pattern /DeviceCMYK]\n"
             "endobj\n");
 }
 
-void QPdfEnginePrivate::writeInfo()
+void AdvancedPdfEnginePrivate::writeInfo()
 {
     info = addXrefEntry(-1);
     xprintf("<<\n/Title ");
@@ -1650,7 +1655,7 @@ void QPdfEnginePrivate::writeInfo()
     xprintf("\n/Creator ");
     printString(creator);
     xprintf("\n/Producer ");
-    printString(QString::fromLatin1("Qt " QT_VERSION_STR));
+    printString(QString::fromLatin1("OpenOrienteering"));
     QDateTime now = QDateTime::currentDateTime().toUTC();
     QTime t = now.time();
     QDate d = now.date();
@@ -1665,7 +1670,7 @@ void QPdfEnginePrivate::writeInfo()
             "endobj\n");
 }
 
-void QPdfEnginePrivate::writePageRoot()
+void AdvancedPdfEnginePrivate::writePageRoot()
 {
     addXrefEntry(pageRoot);
 
@@ -1687,7 +1692,7 @@ void QPdfEnginePrivate::writePageRoot()
 }
 
 
-void QPdfEnginePrivate::embedFont(QFontSubset *font)
+void AdvancedPdfEnginePrivate::embedFont(QFontSubset *font)
 {
     //qDebug() << "embedFont" << font->object_id;
     int fontObject = font->object_id;
@@ -1713,7 +1718,7 @@ void QPdfEnginePrivate::embedFont(QFontSubset *font)
         qreal scale = 1000/properties.emSquare.toReal();
         addXrefEntry(fontDescriptor);
         QByteArray descriptor;
-        QPdf::ByteStream s(&descriptor);
+        AdvancedPdf::ByteStream s(&descriptor);
         s << "<< /Type /FontDescriptor\n"
             "/FontName /Q";
         int tag = fontDescriptor;
@@ -1740,7 +1745,7 @@ void QPdfEnginePrivate::embedFont(QFontSubset *font)
     {
         addXrefEntry(fontstream);
         QByteArray header;
-        QPdf::ByteStream s(&header);
+        AdvancedPdf::ByteStream s(&header);
 
         int length_object = requestObject();
         s << "<<\n"
@@ -1761,7 +1766,7 @@ void QPdfEnginePrivate::embedFont(QFontSubset *font)
     {
         addXrefEntry(cidfont);
         QByteArray cid;
-        QPdf::ByteStream s(&cid);
+        AdvancedPdf::ByteStream s(&cid);
         s << "<< /Type /Font\n"
             "/Subtype /CIDFontType2\n"
             "/BaseFont /" << properties.postscriptName << "\n"
@@ -1785,7 +1790,7 @@ void QPdfEnginePrivate::embedFont(QFontSubset *font)
     {
         addXrefEntry(fontObject);
         QByteArray font;
-        QPdf::ByteStream s(&font);
+        AdvancedPdf::ByteStream s(&font);
         s << "<< /Type /Font\n"
             "/Subtype /Type0\n"
             "/BaseFont /" << properties.postscriptName << "\n"
@@ -1799,7 +1804,7 @@ void QPdfEnginePrivate::embedFont(QFontSubset *font)
 }
 
 
-void QPdfEnginePrivate::writeFonts()
+void AdvancedPdfEnginePrivate::writeFonts()
 {
     for (QHash<QFontEngine::FaceId, QFontSubset *>::iterator it = fonts.begin(); it != fonts.end(); ++it) {
         embedFont(*it);
@@ -1808,7 +1813,7 @@ void QPdfEnginePrivate::writeFonts()
     fonts.clear();
 }
 
-void QPdfEnginePrivate::writePage()
+void AdvancedPdfEnginePrivate::writePage()
 {
     if (pages.empty())
         return;
@@ -1838,7 +1843,7 @@ void QPdfEnginePrivate::writePage()
     xprintf("<<\n"
             "/ColorSpace <<\n"
             "/PCSp %d 0 R\n"
-            "/CSp /DeviceRGB\n"
+            "/CSp /DeviceCMYK\n"
             "/CSpg /DeviceGray\n"
             ">>\n"
             "/ExtGState <<\n"
@@ -1892,7 +1897,7 @@ void QPdfEnginePrivate::writePage()
     xprintf("%d\nendobj\n",len);
 }
 
-void QPdfEnginePrivate::writeTail()
+void AdvancedPdfEnginePrivate::writeTail()
 {
     writePage();
     writeFonts();
@@ -1916,7 +1921,7 @@ void QPdfEnginePrivate::writeTail()
             xrefPositions.size()-1, info, catalog, xrefPositions.last());
 }
 
-int QPdfEnginePrivate::addXrefEntry(int object, bool printostr)
+int AdvancedPdfEnginePrivate::addXrefEntry(int object, bool printostr)
 {
     if (object < 0)
         object = requestObject();
@@ -1931,7 +1936,7 @@ int QPdfEnginePrivate::addXrefEntry(int object, bool printostr)
     return object;
 }
 
-void QPdfEnginePrivate::printString(const QString &string) {
+void AdvancedPdfEnginePrivate::printString(const QString &string) {
     // The 'text string' type in PDF is encoded either as PDFDocEncoding, or
     // Unicode UTF-16 with a Unicode byte order mark as the first character
     // (0xfeff), with the high-order byte first.
@@ -1952,7 +1957,7 @@ void QPdfEnginePrivate::printString(const QString &string) {
 
 
 // For strings up to 10000 bytes only !
-void QPdfEnginePrivate::xprintf(const char* fmt, ...)
+void AdvancedPdfEnginePrivate::xprintf(const char* fmt, ...)
 {
     if (!stream)
         return;
@@ -1972,18 +1977,18 @@ void QPdfEnginePrivate::xprintf(const char* fmt, ...)
     streampos += bufsize;
 }
 
-int QPdfEnginePrivate::writeCompressed(QIODevice *dev)
+int AdvancedPdfEnginePrivate::writeCompressed(QIODevice *dev)
 {
 #ifndef QT_NO_COMPRESS
     if (do_compress) {
-        int size = QPdfPage::chunkSize();
+        int size = AdvancedPdfPage::chunkSize();
         int sum = 0;
         ::z_stream zStruct;
         zStruct.zalloc = Z_NULL;
         zStruct.zfree = Z_NULL;
         zStruct.opaque = Z_NULL;
         if (::deflateInit(&zStruct, Z_DEFAULT_COMPRESSION) != Z_OK) {
-            qWarning("QPdfStream::writeCompressed: Error in deflateInit()");
+            qWarning("AdvancedPdfStream::writeCompressed: Error in deflateInit()");
             return sum;
         }
         zStruct.avail_in = 0;
@@ -1995,7 +2000,7 @@ int QPdfEnginePrivate::writeCompressed(QIODevice *dev)
                 zStruct.avail_in = in.size();
                 zStruct.next_in = reinterpret_cast<unsigned char*>(in.data());
                 if (in.size() <= 0) {
-                    qWarning("QPdfStream::writeCompressed: Error in read()");
+                    qWarning("AdvancedPdfStream::writeCompressed: Error in read()");
                     ::deflateEnd(&zStruct);
                     return sum;
                 }
@@ -2003,7 +2008,7 @@ int QPdfEnginePrivate::writeCompressed(QIODevice *dev)
             zStruct.next_out = reinterpret_cast<unsigned char*>(out.data());
             zStruct.avail_out = out.size();
             if (::deflate(&zStruct, 0) != Z_OK) {
-                qWarning("QPdfStream::writeCompressed: Error in deflate()");
+                qWarning("AdvancedPdfStream::writeCompressed: Error in deflate()");
                 ::deflateEnd(&zStruct);
                 return sum;
             }
@@ -2018,7 +2023,7 @@ int QPdfEnginePrivate::writeCompressed(QIODevice *dev)
             zStruct.avail_out = out.size();
             ret = ::deflate(&zStruct, Z_FINISH);
             if (ret != Z_OK && ret != Z_STREAM_END) {
-                qWarning("QPdfStream::writeCompressed: Error in deflate()");
+                qWarning("AdvancedPdfStream::writeCompressed: Error in deflate()");
                 ::deflateEnd(&zStruct);
                 return sum;
             }
@@ -2037,7 +2042,7 @@ int QPdfEnginePrivate::writeCompressed(QIODevice *dev)
         QByteArray arr;
         int sum = 0;
         while (!dev->atEnd()) {
-            arr = dev->read(QPdfPage::chunkSize());
+            arr = dev->read(AdvancedPdfPage::chunkSize());
             stream->writeRawData(arr.constData(), arr.size());
             streampos += arr.size();
             sum += arr.size();
@@ -2046,7 +2051,7 @@ int QPdfEnginePrivate::writeCompressed(QIODevice *dev)
     }
 }
 
-int QPdfEnginePrivate::writeCompressed(const char *src, int len)
+int AdvancedPdfEnginePrivate::writeCompressed(const char *src, int len)
 {
 #ifndef QT_NO_COMPRESS
     if(do_compress) {
@@ -2055,7 +2060,7 @@ int QPdfEnginePrivate::writeCompressed(const char *src, int len)
         if (Z_OK == ::compress(dest, &destLen, (const Bytef*) src, (uLongf)len)) {
             stream->writeRawData((const char*)dest, destLen);
         } else {
-            qWarning("QPdfStream::writeCompressed: Error in compress()");
+            qWarning("AdvancedPdfStream::writeCompressed: Error in compress()");
             destLen = 0;
         }
         delete [] dest;
@@ -2069,7 +2074,7 @@ int QPdfEnginePrivate::writeCompressed(const char *src, int len)
     return len;
 }
 
-int QPdfEnginePrivate::writeImage(const QByteArray &data, int width, int height, int depth,
+int AdvancedPdfEnginePrivate::writeImage(const QByteArray &data, int width, int height, int depth,
                                   int maskObject, int softMaskObject, bool dct)
 {
     int image = addXrefEntry(-1);
@@ -2117,7 +2122,7 @@ int QPdfEnginePrivate::writeImage(const QByteArray &data, int width, int height,
 }
 
 #ifdef USE_NATIVE_GRADIENTS
-int QPdfEnginePrivate::gradientBrush(const QBrush &b, const QMatrix &matrix, int *gStateObject)
+int AdvancedPdfEnginePrivate::gradientBrush(const QBrush &b, const QMatrix &matrix, int *gStateObject)
 {
     const QGradient *gradient = b.gradient();
     if (!gradient)
@@ -2135,9 +2140,9 @@ int QPdfEnginePrivate::gradientBrush(const QBrush &b, const QMatrix &matrix, int
     QByteArray alphaShader;
     if (gradient->type() == QGradient::LinearGradient) {
         const QLinearGradient *lg = static_cast<const QLinearGradient *>(gradient);
-        shader = QPdf::generateLinearGradientShader(lg, page_rect);
+        shader = AdvancedPdf::generateLinearGradientShader(lg, page_rect);
         if (!opaque)
-            alphaShader = QPdf::generateLinearGradientShader(lg, page_rect, true);
+            alphaShader = AdvancedPdf::generateLinearGradientShader(lg, page_rect, true);
     } else {
         // #############
         return 0;
@@ -2146,7 +2151,7 @@ int QPdfEnginePrivate::gradientBrush(const QBrush &b, const QMatrix &matrix, int
     write(shader);
 
     QByteArray str;
-    QPdf::ByteStream s(&str);
+    AdvancedPdf::ByteStream s(&str);
     s << "<<\n"
         "/Type /Pattern\n"
         "/PatternType 2\n"
@@ -2182,11 +2187,11 @@ int QPdfEnginePrivate::gradientBrush(const QBrush &b, const QMatrix &matrix, int
             write(alphaShader);
 
             QByteArray content;
-            QPdf::ByteStream c(&content);
+            AdvancedPdf::ByteStream c(&content);
             c << "/Shader" << alphaShaderObject << "sh\n";
 
             QByteArray form;
-            QPdf::ByteStream f(&form);
+            AdvancedPdf::ByteStream f(&form);
             f << "<<\n"
                 "/Type /XObject\n"
                 "/Subtype /Form\n"
@@ -2216,7 +2221,7 @@ int QPdfEnginePrivate::gradientBrush(const QBrush &b, const QMatrix &matrix, int
 }
 #endif
 
-int QPdfEnginePrivate::addConstantAlphaObject(int brushAlpha, int penAlpha)
+int AdvancedPdfEnginePrivate::addConstantAlphaObject(int brushAlpha, int penAlpha)
 {
     if (brushAlpha == 255 && penAlpha == 255)
         return 0;
@@ -2224,7 +2229,7 @@ int QPdfEnginePrivate::addConstantAlphaObject(int brushAlpha, int penAlpha)
     if (!object) {
         object = addXrefEntry(-1);
         QByteArray alphaDef;
-        QPdf::ByteStream s(&alphaDef);
+        AdvancedPdf::ByteStream s(&alphaDef);
         s << "<<\n/ca " << (brushAlpha/qreal(255.)) << '\n';
         s << "/CA " << (penAlpha/qreal(255.)) << "\n>>";
         xprintf("%s\nendobj\n", alphaDef.constData());
@@ -2236,7 +2241,7 @@ int QPdfEnginePrivate::addConstantAlphaObject(int brushAlpha, int penAlpha)
     return object;
 }
 
-int QPdfEnginePrivate::addBrushPattern(const QTransform &m, bool *specifyColor, int *gStateObject)
+int AdvancedPdfEnginePrivate::addBrushPattern(const QTransform &m, bool *specifyColor, int *gStateObject)
 {
     int paintType = 2; // Uncolored tiling
     int w = 8;
@@ -2265,7 +2270,7 @@ int QPdfEnginePrivate::addBrushPattern(const QTransform &m, bool *specifyColor, 
                                                qRound(pen.color().alpha() * opacity));
 
     int imageObject = -1;
-    QByteArray pattern = QPdf::patternForBrush(brush);
+    QByteArray pattern = AdvancedPdf::patternForBrush(brush);
     if (pattern.isEmpty()) {
         if (brush.style() != Qt::TexturePattern)
             return 0;
@@ -2281,14 +2286,14 @@ int QPdfEnginePrivate::addBrushPattern(const QTransform &m, bool *specifyColor, 
             w = image.width();
             h = image.height();
             QTransform m(w, 0, 0, -h, 0, h);
-            QPdf::ByteStream s(&pattern);
-            s << QPdf::generateMatrix(m);
+            AdvancedPdf::ByteStream s(&pattern);
+            s << AdvancedPdf::generateMatrix(m);
             s << "/Im" << imageObject << " Do\n";
         }
     }
 
     QByteArray str;
-    QPdf::ByteStream s(&str);
+    AdvancedPdf::ByteStream s(&str);
     s << "<<\n"
         "/Type /Pattern\n"
         "/PatternType 1\n"
@@ -2325,7 +2330,7 @@ int QPdfEnginePrivate::addBrushPattern(const QTransform &m, bool *specifyColor, 
 /*!
  * Adds an image to the pdf and return the pdf-object id. Returns -1 if adding the image failed.
  */
-int QPdfEnginePrivate::addImage(const QImage &img, bool *bitmap, qint64 serial_no)
+int AdvancedPdfEnginePrivate::addImage(const QImage &img, bool *bitmap, qint64 serial_no)
 {
     if (img.isNull())
         return -1;
@@ -2453,9 +2458,9 @@ int QPdfEnginePrivate::addImage(const QImage &img, bool *bitmap, qint64 serial_n
     return object;
 }
 
-void QPdfEnginePrivate::drawTextItem(const QPointF &p, const QTextItemInt &ti)
+void AdvancedPdfEnginePrivate::drawTextItem(const QPointF &p, const QTextItemInt &ti)
 {
-    Q_Q(QPdfEngine);
+    Q_Q(AdvancedPdfEngine);
 
     if (ti.charFormat.isAnchor()) {
         qreal size = ti.fontEngine->fontDef.pixelSize;
@@ -2579,7 +2584,7 @@ void QPdfEnginePrivate::drawTextItem(const QPointF &p, const QTextItemInt &ti)
         char buf[5];
         int g = font->addGlyph(glyphs[i]);
         *currentPage << x - last_x << last_y - y << "Td <"
-                     << QPdf::toHex((ushort)g, buf) << "> Tj\n";
+                     << AdvancedPdf::toHex((ushort)g, buf) << "> Tj\n";
         last_x = x;
         last_y = y;
     }
@@ -2599,7 +2604,7 @@ void QPdfEnginePrivate::drawTextItem(const QPointF &p, const QTextItemInt &ti)
             char buf[5];
             int g = font->addGlyph(glyphs[i]);
             *currentPage << x - last_x << last_y - y << "Td <"
-                        << QPdf::toHex((ushort)g, buf) << "> Tj\n";
+                        << AdvancedPdf::toHex((ushort)g, buf) << "> Tj\n";
             last_x = x;
             last_y = y;
         }
@@ -2610,7 +2615,7 @@ void QPdfEnginePrivate::drawTextItem(const QPointF &p, const QTextItemInt &ti)
     *currentPage << "ET\n";
 }
 
-QTransform QPdfEnginePrivate::pageMatrix() const
+QTransform AdvancedPdfEnginePrivate::pageMatrix() const
 {
     qreal scale = 72./resolution;
     QTransform tmp(scale, 0.0, 0.0, -scale, 0.0, m_pageLayout.fullRectPoints().height());
@@ -2621,20 +2626,20 @@ QTransform QPdfEnginePrivate::pageMatrix() const
     return tmp;
 }
 
-void QPdfEnginePrivate::newPage()
+void AdvancedPdfEnginePrivate::newPage()
 {
     if (currentPage && currentPage->pageSize.isEmpty())
         currentPage->pageSize = m_pageLayout.fullRectPoints().size();
     writePage();
 
     delete currentPage;
-    currentPage = new QPdfPage;
+    currentPage = new AdvancedPdfPage;
     currentPage->pageSize = m_pageLayout.fullRectPoints().size();
     stroker.stream = currentPage;
     pages.append(requestObject());
 
     *currentPage << "/GSa gs /CSp cs /CSp CS\n"
-                 << QPdf::generateMatrix(pageMatrix())
+                 << AdvancedPdf::generateMatrix(pageMatrix())
                  << "q q\n";
 }
 
