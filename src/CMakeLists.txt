@@ -26,6 +26,7 @@ execute_process(
   COMMAND "${CMAKE_COMMAND}" -E copy_if_different mapper_config.h.tmp mapper_config.h
   WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
 )
+include_directories(${PRINTSUPPORT_INCLUDE_DIRECTORIES})
 include_directories(${CLIPPER_INCLUDE_DIRS})
 include_directories("${CMAKE_CURRENT_BINARY_DIR}")
 include_directories(AFTER "../3rd-party/qbezier/src") # Always, last
@@ -350,6 +351,7 @@ add_dependencies(Mapper_Common
 )
 target_link_libraries(Mapper_Common
   libocad
+  ${PRINTSUPPORT_LIBRARIES}
 )
 
 qt5_translations_sources(

@@ -105,6 +105,16 @@ public:
 		Raster,        ///< Print in raster graphics mode
 		Separations    ///< Print spot color separations (b/w vector)
 	};
+	
+	/** Color modes.
+	 * 
+	 * At the moment, only PDF supports a different mode than the default.
+	 */
+	enum ColorMode
+	{
+		DefaultColorMode,  ///< Use the target engine's default color mode.
+		DeviceCmyk         ///< Use device-dependent CMYK for vector data.
+	};
 
 	/** Constructs new printer options.
 	 * 
@@ -124,6 +134,9 @@ public:
 	 *  Note that other printing options may be available only in particular modes.
 	 */
 	MapPrinterMode mode;
+	
+	/** The color mode. */
+	ColorMode color_mode;
 	
 	/** Controls if templates get printed.
 	 * 
@@ -315,6 +328,9 @@ public slots:
 	/** Controls whether to print in overprinting simulation mode. */
 	void setSimulateOverprinting(bool enabled);
 	
+	/** Controls the color mode. */
+	void setColorMode(MapPrinterOptions::ColorMode color_mode);
+	
 	/** Saves the print parameter (to the map). */
 	void saveConfig() const;
 	
@@ -391,6 +407,7 @@ inline
 bool operator==(const MapPrinterOptions& lhs, const MapPrinterOptions& rhs)
 {
 	return     lhs.mode                  == rhs.mode
+	        && lhs.color_mode            == rhs.color_mode
 	        && lhs.resolution            == rhs.resolution
 	        && lhs.scale                 == rhs.scale
 	        && lhs.show_templates        == rhs.show_templates

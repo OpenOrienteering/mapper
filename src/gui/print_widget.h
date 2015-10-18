@@ -192,6 +192,9 @@ protected slots:
 	/** This slot reacts to changes of the "Simulate overprinting" option. */
 	void overprintingClicked(bool checked);
 	
+	/** This slot reacts to changes of the "Color mode" option. */
+	void colorModeChanged();
+	
 	/** Opens a preview window. */
 	void previewClicked();
 	
@@ -214,6 +217,9 @@ protected:
 	
 	/** Updates the list of resolutions from the given target. */
 	void updateResolutions(const QPrinterInfo* target) const;
+	
+	/** Updates the color mode combobox from target and mode settings. */
+	void updateColorMode();
 	
 	/** A list of paper sizes which is used when the target does not specify
 	 *  supported paper sizes. */
@@ -270,6 +276,7 @@ private:
 	QCheckBox* overprinting_check;
 	QCheckBox* different_scale_check;
 	QSpinBox* different_scale_edit;
+	QComboBox* color_mode_combo;
 	
 	QComboBox* policy_combo;
 	QCheckBox* center_check;

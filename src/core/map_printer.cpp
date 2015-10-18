@@ -24,7 +24,9 @@
 #include <limits>
 
 #include <QDebug>
+#include <QPaintEngine>
 #include <QPainter>
+#include <QScopedValueRollback>
 #include <QXmlStreamAttributes>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
@@ -33,6 +35,8 @@
 #if defined(QT_PRINTSUPPORT_LIB) && defined(Q_OS_WIN)
 #include <private/qprintengine_win_p.h>
 #endif
+
+#include <advanced_pdf_printer.h>
 
 #include "../core/map_color.h"
 #include "../core/map_view.h"
@@ -57,6 +61,9 @@ namespace literal
 	static const QLatin1String vector("vector");
 	static const QLatin1String raster("raster");
 	static const QLatin1String separations("separations");
+	static const QLatin1String color_mode("color_mode");
+	static const QLatin1String default_color_mode("default");
+	static const QLatin1String device_cmyk("DeviceCMYK");
 	static const QLatin1String page_format("page_format");
 	static const QLatin1String paper_size("paper_size");
 	static const QLatin1String orientation("orientation");
@@ -136,6 +143,7 @@ MapPrinterOptions::MapPrinterOptions(unsigned int scale, unsigned int resolution
  : scale(scale),
    resolution(resolution),
    mode(mode),
+   color_mode(DefaultColorMode),
    show_templates(false),
    show_grid(false),
    simulate_overprinting(false)
@@ -191,6 +199,16 @@ MapPrinterConfig::MapPrinterConfig(const Map& map, QXmlStreamReader& xml)
 			options.mode = MapPrinterOptions::Separations;
 		else
 			qDebug() << "Unsupported map printing mode:" << mode;
+	}
+	QStringRef color_mode = printer_config_element.attribute<QStringRef>(literal::color_mode);
+	if (!color_mode.isEmpty())
+	{
+		if (color_mode == literal::default_color_mode)
+			options.color_mode = MapPrinterOptions::DefaultColorMode;
+		else if (color_mode == literal::device_cmyk)
+			options.color_mode = MapPrinterOptions::DeviceCmyk;
+		else
+			qDebug() << "Unsupported map color mode:" << color_mode;
 	}
 	
 	while (xml.readNextStartElement())
@@ -273,6 +291,20 @@ void MapPrinterConfig::save(QXmlStreamWriter& xml, const QLatin1String& element_
 	default:
 		// Do not fail on saving
 		qDebug() << "Unsupported map printig mode:" << options.mode;
+	}
+
+	switch (options.color_mode)
+	{
+	case MapPrinterOptions::DefaultColorMode:
+		// No need to write an attribute for default mode.
+		// printer_config_element.writeAttribute(literal::color_mode, literal::default_color_mode);
+		break;
+	case MapPrinterOptions::DeviceCmyk:
+		printer_config_element.writeAttribute(literal::color_mode, literal::device_cmyk);
+		break;
+	default:
+		// Do not fail on saving
+		qDebug() << "Unsupported map color mode:" << options.color_mode;
 	}
 
 	{
@@ -415,19 +447,32 @@ void MapPrinter::setTarget(const QPrinterInfo* new_target)
 
 std::unique_ptr<QPrinter> MapPrinter::makePrinter() const
 {
-	std::unique_ptr<QPrinterInfo> default_info;
-	const QPrinterInfo* info = this->target;
-	if (!info)
+	std::unique_ptr<QPrinter> printer;
+	if (!target)
 	{
-		default_info.reset(new QPrinterInfo(QPrinterInfo::defaultPrinter()));
-		info = default_info.get();
+		printer.reset(new QPrinter(QPrinter::HighResolution));
 	}
-		                 
-	std::unique_ptr<QPrinter> printer{ new QPrinter(*info, QPrinter::HighResolution) };
-	if (!printer->isValid())
+	else if (isPrinter())
+	{
+		printer.reset(new QPrinter(*target, QPrinter::HighResolution));
+	}
+	else if (options.color_mode == MapPrinterOptions::DeviceCmyk)
+	{
+		printer.reset(new AdvancedPdfPrinter(*target, QPrinter::HighResolution));
+	}
+	else
+	{
+		printer.reset(new QPrinter(*target, QPrinter::HighResolution));
 		printer->setOutputFormat(QPrinter::PdfFormat);
+	}
 	
-	printer->setDocName("MAP"/* FIXME QFileInfo(main_window->getCurrentFilePath()).fileName()*/);
+	if (!printer->isValid())
+	{
+		printer.reset();
+		return printer;
+	}
+	
+	printer->setDocName(tr("- Map -"));
 	printer->setFullPage(true);
 	if (page_format.paper_size == QPrinter::Custom)
 	{
@@ -479,22 +524,20 @@ std::unique_ptr<QPrinter> MapPrinter::makePrinter() const
 		printer->setResolution(resolution);
 	}
 	
-	if (info == imageTarget() || page_format.paper_size == QPrinter::Custom)
+	if (page_format.paper_size == QPrinter::Custom || !isPrinter())
+	{
 		printer->setPageMargins(0.0, 0.0, 0.0, 0.0, QPrinter::Millimeter);
+	}
 	
 	return printer;
 }
 
 bool MapPrinter::isPrinter() const
 {
-	if (!target)
-		return false;
-	else if (target == pdfTarget())
-		return false;
-	else if (target == imageTarget())
-		return false;
-	
-	return true;
+	bool is_printer = target
+	                  && target != imageTarget()
+	                  && target != pdfTarget();
+	return is_printer;
 }
 
 // slot
@@ -693,6 +736,15 @@ void MapPrinter::setSimulateOverprinting(bool enabled)
 	else if (options.simulate_overprinting != enabled)
 	{
 		options.simulate_overprinting = enabled;
+		emit optionsChanged(options);
+	}
+}
+
+void MapPrinter::setColorMode(MapPrinterOptions::ColorMode color_mode)
+{
+	if (options.color_mode != color_mode)
+	{
+		options.color_mode = color_mode;
 		emit optionsChanged(options);
 	}
 }

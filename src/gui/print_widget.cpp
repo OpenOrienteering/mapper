@@ -215,6 +215,12 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 	overprinting_check = new QCheckBox(tr("Simulate overprinting"));
 	layout->addRow(overprinting_check);
 	
+	color_mode_combo = new QComboBox();
+	color_mode_combo->setEditable(false);
+	color_mode_combo->addItem(tr("Default"), QVariant());
+	color_mode_combo->addItem(tr("Device CMYK (experimental)"), QVariant(true));	
+	layout->addRow(tr("Color mode:"), color_mode_combo);
+	
 	scrolling_content = new QWidget();
 	scrolling_content->setLayout(layout);
 	
@@ -268,6 +274,7 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 	connect(show_templates_check, SIGNAL(clicked(bool)), this, SLOT(showTemplatesClicked(bool)));
 	connect(show_grid_check, SIGNAL(clicked(bool)), this, SLOT(showGridClicked(bool)));
 	connect(overprinting_check, SIGNAL(clicked(bool)), this, SLOT(overprintingClicked(bool)));
+	connect(color_mode_combo, &QComboBox::currentTextChanged, this, &PrintWidget::colorModeChanged);
 	
 	connect(preview_button, SIGNAL(clicked(bool)), this, SLOT(previewClicked()));
 	connect(print_button, SIGNAL(clicked(bool)), this, SLOT(printClicked()));
@@ -530,14 +537,16 @@ void PrintWidget::setTarget(const QPrinterInfo* target)
 	export_button->setVisible(!is_printer);
 	export_button->setDefault(!is_printer);
 	
-	bool isImageTarget = target == MapPrinter::imageTarget();
-	vector_mode_button->setEnabled(!isImageTarget);
-	separations_mode_button->setEnabled(!isImageTarget && map->hasSpotColors());
-	if (isImageTarget)
+	bool is_image_target = target == MapPrinter::imageTarget();
+	vector_mode_button->setEnabled(!is_image_target);
+	separations_mode_button->setEnabled(!is_image_target && map->hasSpotColors());
+	if (is_image_target)
 	{
 		raster_mode_button->setChecked(true);
 		printModeChanged(raster_mode_button);
 	}
+	
+	updateColorMode();
 }
 
 // slot
@@ -779,6 +788,7 @@ void PrintWidget::setOptions(const MapPrinterOptions& options)
 	ScopedMultiSignalsBlocker block;
 	block << dpi_combo->lineEdit() << show_templates_check 
 	      << show_grid_check << overprinting_check
+	      << color_mode_combo
 	      << vector_mode_button << raster_mode_button
 	      << separations_mode_button
 	      << different_scale_check << different_scale_edit;
@@ -817,7 +827,21 @@ void PrintWidget::setOptions(const MapPrinterOptions& options)
 		break;
 	}
 	
+	switch (options.color_mode)
+	{
+	default:
+		Q_ASSERT(false && "Unhandled MapPrinterOptions::ColorMode");
+		// fall through in release build
+	case MapPrinterOptions::DefaultColorMode:
+		color_mode_combo->setCurrentIndex(0);
+		break;
+	case MapPrinterOptions::DeviceCmyk:
+		color_mode_combo->setCurrentIndex(1);
+		break;
+	}
+	
 	checkTemplateConfiguration();
+	updateColorMode();
 	
 	static QString dpi_template("%1 " + tr("dpi"));
 	dpi_combo->setEditText(dpi_template.arg(options.resolution));
@@ -871,6 +895,16 @@ void PrintWidget::updateResolutions(const QPrinterInfo* target) const
 		dpi_combo->addItems(resolutions);
 	}
 	dpi_combo->lineEdit()->setText(dpi_text.isEmpty() ? dpi_template.arg(600) : dpi_text);
+}
+
+void PrintWidget::updateColorMode()
+{
+	bool enable = map_printer->getTarget() == MapPrinter::pdfTarget()
+	              && !raster_mode_button->isChecked();
+	color_mode_combo->setEnabled(enable);
+	layout->labelForField(color_mode_combo)->setEnabled(enable);
+	if (!enable)
+		color_mode_combo->setCurrentIndex(0);
 }
 
 // slot
@@ -963,6 +997,14 @@ void PrintWidget::showGridClicked(bool checked)
 void PrintWidget::overprintingClicked(bool checked)
 {
 	map_printer->setSimulateOverprinting(checked);
+}
+
+void PrintWidget::colorModeChanged()
+{
+	if (color_mode_combo->currentData().toBool())
+		map_printer->setColorMode(MapPrinterOptions::DeviceCmyk);
+	else
+		map_printer->setColorMode(MapPrinterOptions::DefaultColorMode);
 }
 
 // slot
