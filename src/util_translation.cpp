@@ -88,8 +88,12 @@ LanguageCollection TranslationUtil::getAvailableLanguages()
 		{
 			name.remove(0, base_name.length());
 			name.remove(name.length()-3, 3);
-			QString language_name = QLocale(name).nativeLanguageName();
-			language_map.insert(language_name, QLocale(name).language());
+			
+			if (name != "en")
+			{
+				QString language_name = QLocale(name).nativeLanguageName();
+				language_map.insert(language_name, QLocale(name).language());
+			}
 		}
 	}
 	
