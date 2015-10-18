@@ -53,7 +53,7 @@
 #include "util.h"
 
 SymbolSettingDialog::SymbolSettingDialog(Symbol* source_symbol, Map* source_map, QWidget* parent)
-: QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint), 
+: QDialog(parent, Qt::CustomizeWindowHint | Qt::WindowTitleHint | Qt::WindowMaximizeButtonHint),
   source_map(source_map),
   source_symbol(source_symbol),
   source_symbol_copy(source_symbol->duplicate())	// don't rely on external entity
