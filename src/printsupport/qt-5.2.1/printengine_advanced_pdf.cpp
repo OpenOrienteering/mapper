@@ -1,45 +1,36 @@
+/**
+ * This file is part of OpenOrienteering.
+ *
+ * This is a modified version of a file from the Qt Toolkit.
+ * You can redistribute it and/or modify it under the terms of
+ * the GNU General Public License, version 3, as published by
+ * the Free Software Foundation.
+ *
+ * OpenOrienteering is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>
+ *
+ * Changes:
+ * 2015-10-18 Kai Pastor <dg0yt@darc.de>
+ * - Adjustment of legal information
+ * - Modifications required for separate compilation:
+ *   - Renaming of selected files, classes, members and macros
+ *   - Adjustment of include statements
+ *   - Removal of Q_XXX_EXPORT
+ *   - Reimplementation of paperSize(QPrinter::PaperSize)
+ */
 /****************************************************************************
 **
 ** Copyright (C) 2013 Digia Plc and/or its subsidiary(-ies).
 ** Contact: http://www.qt-project.org/legal
 **
-** This file is part of the QtGui module of the Qt Toolkit.
-**
-** $QT_BEGIN_LICENSE:LGPL$
-** Commercial License Usage
-** Licensees holding valid commercial Qt licenses may use this file in
-** accordance with the commercial license agreement provided with the
-** Software or, alternatively, in accordance with the terms contained in
-** a written agreement between you and Digia.  For licensing terms and
-** conditions see http://qt.digia.com/licensing.  For further information
-** use the contact form at http://qt.digia.com/contact-us.
-**
-** GNU Lesser General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU Lesser
-** General Public License version 2.1 as published by the Free Software
-** Foundation and appearing in the file LICENSE.LGPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU Lesser General Public License version 2.1 requirements
-** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** In addition, as a special exception, Digia gives you certain additional
-** rights.  These rights are described in the Digia Qt LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
-**
-**
-** $QT_END_LICENSE$
-**
 ****************************************************************************/
 
-#include "qprintengine_pdf_p.h"
+#include "printengine_advanced_pdf_p.h"
 
 #ifndef QT_NO_PRINTER
 
@@ -54,7 +45,7 @@
 
 
 #ifdef Q_OS_UNIX
-#include "private/qcore_unix_p.h" // overrides QT_OPEN
+#include <private/qcore_unix_p.h> // overrides QT_OPEN
 #endif
 
 #ifdef Q_OS_WIN
@@ -78,38 +69,41 @@ static const char * const psToStr[QPrinter::NPageSize+1] =
     "DLE", "Folio", "Ledger", "Tabloid", 0
 };
 
-QPdf::PaperSize QPdf::paperSize(QPrinter::PaperSize paperSize)
+AdvancedPdf::PaperSize AdvancedPdf::paperSize(QPrinter::PaperSize paperSize)
 {
-    QSizeF s = qt_paperSizeToQSizeF(paperSize);
-    PaperSize p = { Q_MM(s.width()), Q_MM(s.height()) };
+    QPrinter pr;
+    pr.setOutputFormat(QPrinter::PdfFormat);
+    pr.setPaperSize(paperSize);
+    QSizeF s = pr.paperSize(QPrinter::Point);
+    PaperSize p = { qRound(s.width()), qRound(s.height()) };
     return p;
 }
 
-const char *QPdf::paperSizeToString(QPrinter::PaperSize paperSize)
+const char *AdvancedPdf::paperSizeToString(QPrinter::PaperSize paperSize)
 {
     return psToStr[paperSize];
 }
 
 
-QPdfPrintEngine::QPdfPrintEngine(QPrinter::PrinterMode m)
-    : QPdfEngine(*new QPdfPrintEnginePrivate(m))
+AdvancedPdfPrintEngine::AdvancedPdfPrintEngine(QPrinter::PrinterMode m)
+    : AdvancedPdfEngine(*new AdvancedPdfPrintEnginePrivate(m))
 {
     state = QPrinter::Idle;
 }
 
-QPdfPrintEngine::QPdfPrintEngine(QPdfPrintEnginePrivate &p)
-    : QPdfEngine(p)
+AdvancedPdfPrintEngine::AdvancedPdfPrintEngine(AdvancedPdfPrintEnginePrivate &p)
+    : AdvancedPdfEngine(p)
 {
     state = QPrinter::Idle;
 }
 
-QPdfPrintEngine::~QPdfPrintEngine()
+AdvancedPdfPrintEngine::~AdvancedPdfPrintEngine()
 {
 }
 
-bool QPdfPrintEngine::begin(QPaintDevice *pdev)
+bool AdvancedPdfPrintEngine::begin(QPaintDevice *pdev)
 {
-    Q_D(QPdfPrintEngine);
+    Q_D(AdvancedPdfPrintEngine);
 
     if (!d->openPrintDevice()) {
         state = QPrinter::Error;
@@ -117,14 +111,14 @@ bool QPdfPrintEngine::begin(QPaintDevice *pdev)
     }
     state = QPrinter::Active;
 
-    return QPdfEngine::begin(pdev);
+    return AdvancedPdfEngine::begin(pdev);
 }
 
-bool QPdfPrintEngine::end()
+bool AdvancedPdfPrintEngine::end()
 {
-    Q_D(QPdfPrintEngine);
+    Q_D(AdvancedPdfPrintEngine);
 
-    QPdfEngine::end();
+    AdvancedPdfEngine::end();
 
     d->closePrintDevice();
     state = QPrinter::Idle;
@@ -132,19 +126,19 @@ bool QPdfPrintEngine::end()
     return true;
 }
 
-bool QPdfPrintEngine::newPage()
+bool AdvancedPdfPrintEngine::newPage()
 {
-    return QPdfEngine::newPage();
+    return AdvancedPdfEngine::newPage();
 }
 
-int QPdfPrintEngine::metric(QPaintDevice::PaintDeviceMetric m) const
+int AdvancedPdfPrintEngine::metric(QPaintDevice::PaintDeviceMetric m) const
 {
-    return QPdfEngine::metric(m);
+    return AdvancedPdfEngine::metric(m);
 }
 
-void QPdfPrintEngine::setProperty(PrintEnginePropertyKey key, const QVariant &value)
+void AdvancedPdfPrintEngine::setProperty(PrintEnginePropertyKey key, const QVariant &value)
 {
-    Q_D(QPdfPrintEngine);
+    Q_D(AdvancedPdfPrintEngine);
 
     switch (int(key)) {
     case PPK_CollateCopies:
@@ -221,9 +215,9 @@ void QPdfPrintEngine::setProperty(PrintEnginePropertyKey key, const QVariant &va
     }
 }
 
-QVariant QPdfPrintEngine::property(PrintEnginePropertyKey key) const
+QVariant AdvancedPdfPrintEngine::property(PrintEnginePropertyKey key) const
 {
-    Q_D(const QPdfPrintEngine);
+    Q_D(const AdvancedPdfPrintEngine);
 
     QVariant ret;
     switch (int(key)) {
@@ -314,7 +308,7 @@ QVariant QPdfPrintEngine::property(PrintEnginePropertyKey key) const
 }
 
 
-bool QPdfPrintEnginePrivate::openPrintDevice()
+bool AdvancedPdfPrintEnginePrivate::openPrintDevice()
 {
     if (outDevice)
         return false;
@@ -331,7 +325,7 @@ bool QPdfPrintEnginePrivate::openPrintDevice()
     return true;
 }
 
-void QPdfPrintEnginePrivate::closePrintDevice()
+void AdvancedPdfPrintEnginePrivate::closePrintDevice()
 {
     if (outDevice) {
         outDevice->close();
@@ -349,8 +343,8 @@ void QPdfPrintEnginePrivate::closePrintDevice()
 
 
 
-QPdfPrintEnginePrivate::QPdfPrintEnginePrivate(QPrinter::PrinterMode m)
-    : QPdfEnginePrivate(),
+AdvancedPdfPrintEnginePrivate::AdvancedPdfPrintEnginePrivate(QPrinter::PrinterMode m)
+    : AdvancedPdfEnginePrivate(),
       duplex(QPrinter::DuplexNone),
       collate(false),
       copies(1),
@@ -367,17 +361,17 @@ QPdfPrintEnginePrivate::QPdfPrintEnginePrivate(QPrinter::PrinterMode m)
         resolution = qt_defaultDpi();
 }
 
-QPdfPrintEnginePrivate::~QPdfPrintEnginePrivate()
+AdvancedPdfPrintEnginePrivate::~AdvancedPdfPrintEnginePrivate()
 {
 }
 
 
-void QPdfPrintEnginePrivate::updatePaperSize()
+void AdvancedPdfPrintEnginePrivate::updatePaperSize()
 {
     if (printerPaperSize == QPrinter::Custom) {
         paperSize = customPaperSize;
     } else {
-        QPdf::PaperSize s = QPdf::paperSize(printerPaperSize);
+        AdvancedPdf::PaperSize s = AdvancedPdf::paperSize(printerPaperSize);
         paperSize = QSize(s.width, s.height);
     }
 }

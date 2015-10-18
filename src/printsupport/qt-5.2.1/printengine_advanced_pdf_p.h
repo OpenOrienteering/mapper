@@ -1,46 +1,36 @@
+/**
+ * This file is part of OpenOrienteering.
+ *
+ * This is a modified version of a file from the Qt Toolkit.
+ * You can redistribute it and/or modify it under the terms of
+ * the GNU General Public License, version 3, as published by
+ * the Free Software Foundation.
+ *
+ * OpenOrienteering is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>
+ *
+ * Changes:
+ * 2015-10-18 Kai Pastor <dg0yt@darc.de>
+ * - Adjustment of legal information
+ * - Modifications required for separate compilation:
+ *   - Renaming of selected files, classes, members and macros
+ *   - Adjustment of include statements
+ *   - Removal of Q_XXX_EXPORT
+ */
 /****************************************************************************
 **
 ** Copyright (C) 2013 Digia Plc and/or its subsidiary(-ies).
 ** Contact: http://www.qt-project.org/legal
 **
-** This file is part of the QtGui module of the Qt Toolkit.
-**
-** $QT_BEGIN_LICENSE:LGPL$
-** Commercial License Usage
-** Licensees holding valid commercial Qt licenses may use this file in
-** accordance with the commercial license agreement provided with the
-** Software or, alternatively, in accordance with the terms contained in
-** a written agreement between you and Digia.  For licensing terms and
-** conditions see http://qt.digia.com/licensing.  For further information
-** use the contact form at http://qt.digia.com/contact-us.
-**
-** GNU Lesser General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU Lesser
-** General Public License version 2.1 as published by the Free Software
-** Foundation and appearing in the file LICENSE.LGPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU Lesser General Public License version 2.1 requirements
-** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** In addition, as a special exception, Digia gives you certain additional
-** rights.  These rights are described in the Digia Qt LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
-**
-**
-** $QT_END_LICENSE$
-**
 ****************************************************************************/
 
-#ifndef QPRINTENGINE_PDF_P_H
-#define QPRINTENGINE_PDF_P_H
+#ifndef PRINTENGINE_ADVANCED_PDF_P_H
+#define PRINTENGINE_ADVANCED_PDF_P_H
 
 //
 //  W A R N I N G
@@ -64,9 +54,9 @@
 #include "QtGui/qpainterpath.h"
 #include "QtCore/qdatastream.h"
 
-#include "private/qfontengine_p.h"
-#include "private/qpdf_p.h"
-#include "private/qpaintengine_p.h"
+#include <private/qfontengine_p.h>
+#include "advanced_pdf_p.h"
+#include <private/qpaintengine_p.h>
 #include "qprintengine.h"
 
 QT_BEGIN_NAMESPACE
@@ -77,25 +67,25 @@ class QPen;
 class QPointF;
 class QRegion;
 class QFile;
-class QPdfPrintEngine;
+class AdvancedPdfPrintEngine;
 
-namespace QPdf {
+namespace AdvancedPdf {
 
     struct PaperSize {
         int width, height; // in postscript points
     };
-    Q_PRINTSUPPORT_EXPORT PaperSize paperSize(QPrinter::PaperSize paperSize);
-    Q_PRINTSUPPORT_EXPORT const char *paperSizeToString(QPrinter::PaperSize paperSize);
+    PaperSize paperSize(QPrinter::PaperSize paperSize);
+    const char *paperSizeToString(QPrinter::PaperSize paperSize);
 }
 
-class QPdfPrintEnginePrivate;
+class AdvancedPdfPrintEnginePrivate;
 
-class Q_PRINTSUPPORT_EXPORT QPdfPrintEngine : public QPdfEngine, public QPrintEngine
+class AdvancedPdfPrintEngine : public AdvancedPdfEngine, public QPrintEngine
 {
-    Q_DECLARE_PRIVATE(QPdfPrintEngine)
+    Q_DECLARE_PRIVATE(AdvancedPdfPrintEngine)
 public:
-    QPdfPrintEngine(QPrinter::PrinterMode m);
-    virtual ~QPdfPrintEngine();
+    AdvancedPdfPrintEngine(QPrinter::PrinterMode m);
+    virtual ~AdvancedPdfPrintEngine();
 
     // reimplementations QPaintEngine
     bool begin(QPaintDevice *pdev);
@@ -115,18 +105,18 @@ public:
     QPrinter::PrinterState state;
 
 protected:
-    QPdfPrintEngine(QPdfPrintEnginePrivate &p);
+    AdvancedPdfPrintEngine(AdvancedPdfPrintEnginePrivate &p);
 
 private:
-    Q_DISABLE_COPY(QPdfPrintEngine)
+    Q_DISABLE_COPY(AdvancedPdfPrintEngine)
 };
 
-class Q_PRINTSUPPORT_EXPORT QPdfPrintEnginePrivate : public QPdfEnginePrivate
+class AdvancedPdfPrintEnginePrivate : public AdvancedPdfEnginePrivate
 {
-    Q_DECLARE_PUBLIC(QPdfPrintEngine)
+    Q_DECLARE_PUBLIC(AdvancedPdfPrintEngine)
 public:
-    QPdfPrintEnginePrivate(QPrinter::PrinterMode m);
-    ~QPdfPrintEnginePrivate();
+    AdvancedPdfPrintEnginePrivate(QPrinter::PrinterMode m);
+    ~AdvancedPdfPrintEnginePrivate();
 
     virtual bool openPrintDevice();
     virtual void closePrintDevice();
@@ -134,7 +124,7 @@ public:
     virtual void updatePaperSize();
 
 private:
-    Q_DISABLE_COPY(QPdfPrintEnginePrivate)
+    Q_DISABLE_COPY(AdvancedPdfPrintEnginePrivate)
 
     friend class QCupsPrintEngine;
     friend class QCupsPrintEnginePrivate;
@@ -159,4 +149,4 @@ QT_END_NAMESPACE
 
 #endif // QT_NO_PRINTER
 
-#endif // QPRINTENGINE_PDF_P_H
+#endif // PRINTENGINE_ADVANCED_PDF_P_H
