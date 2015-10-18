@@ -4,11 +4,10 @@ This document is about building OpenOrienteering Mapper from source code.
 
 The general build process prerequisites are:
  - A supported platform: 
-   - Windows 7. Windows XP or newer may work. 64-bit builds not tested.
-   - Mac OS X 10.7 (Lion). Mac OS X 10.6 or newer may work.
+   - Mac OS X 10.10 (Yosemite). Mac OS X 10.7 or newer may work.
    - Linux. Ubuntu 14.04 is known to work.
  - The OpenOrienteering Mapper source code.
- - CMake 2.8. The recommended version is 2.8.9 or newer.
+ - CMake >= 2.8.8.
    CMake is available from http://www.cmake.org/.
  - A supported C++ compiler toolchain. 
 
@@ -20,8 +19,9 @@ See below for platform-specific details and build instructions.
 This program uses the Qt library from http://qt-project.org which is released
 under the terms of the GNU General Public License, Version 3. 
 The program is known to work with 5.2 and not to compile with 
-Qt 4.8 or earlier. Qt 5.3.2 is the recommended version. By default build
-settings, Qt 5.3.2 will be downloaded and built as part of the build process.
+Qt 4.8 or earlier. Qt 5.5.1 is the recommended version. By default CMake build
+settings for OS X and Windows, a special OpenOrienteering source package of
+Qt 5.5.1 will be downloaded and built as part of the build process.
 You can change the cmake option `Mapper_BUILD_QT` to adjust this.
 
 
@@ -34,6 +34,7 @@ which is released under the terms of the Boost Software License, Version 1.0.
 The program is known to work with release 6.1.3a and not compile with releases
 5.x.x or earlier. By default build settings, clipper 6.1.3a will be downloaded
 and built as part of the build process. 
+You can change the cmake option `Mapper_BUILD_CLIPPER` to adjust this.
 
 
 ## PROJ.4 Cartographic Projections Library
@@ -44,69 +45,24 @@ The program is known to work with the releases 4.7.0 (as contained in Ubuntu
 10.04 and 12.04) and 4.8.0. By default build settings, proj 4.8.0 will be
 downloaded and built as part of the build process. On Linux, default settings
 will use the installed proj library.
+You can change the cmake option `Mapper_BUILD_PROJ` to adjust this.
 
 
 ## Getting the Source
 
 Download a tarball from
 
-http://sourceforge.net/projects/oorienteering/files/Mapper/Source/
+https://github.com/OpenOrienteering/mapper/releases
 
 and unpack it, or checkout the source code with git:
 
 
 ```
-git clone git://git.code.sf.net/p/oorienteering/code oorienteering-code
+git clone https://github.com/OpenOrienteering/mapper.git
 ```
 
 The directory created by unpacking or checkout will be referred to as the
 source directory (`SOURCE_DIR`).
-
-On Windows, try to keep the path of the source directory as short as possible.
-Otherwise you may get some strange errors when building Qt.
-
-
-## Compiling on Windows
-
-**This configuration has not been tested for a while. At least a more recent
-gcc is recommended.**
-
-The supported compiler is MinGW-builds gcc 4.7.2 (32-bit), as used in a Qt 5
-reference configuration, from
-http://sourceforge.net/projects/mingwbuilds/files/host-windows/releases/4.7.2/32-bit/threads-posix/sjlj/x32-4.7.2-release-posix-sjlj-rev8.7z
-
-In addition to MinGW and CMake, you will also need MSYS, a collection of GNU
-utilities, from http://www.mingw.org/wiki/MSYS. MSYS can be installed by means
-of mingw-get. (Note: The mingw compiler from mingw-get will not be used here.)
-
-Optionally, you may install NSIS from http://nsis.sourceforge.net/. If
-`makensis.exe` is found from the PATH during configuration, an NSIS based
-installer can be generated.
-
-Open a command prompt. Make sure that cmake, gcc from MinGW-builds gcc 4.7.2,
-and optionally makensis can be found from the PATH. The MSYS tools must *not*
-be found from the PATH. We will specify the path to `sh.exe` explicitly in the
-next step.
-
-Now create a build directory, e.g. as subdirectory build in the source
-directory, and change to that directory. In the build directory, configure
-the build like this:
-
-```
-cmake PATH\TO\SOURCE_DIR -G"MinGW Makefiles" -DSH_PROGRAM=PATH\TO\SH
-```
-
-Now you may start the build process by running
-
-```
-mingw32-make
-```
-
-and generate ZIP and optionally NSIS packages by
-
-```
-mingw32-make package
-```
 
 
 ## Compiling on Linux
@@ -142,11 +98,10 @@ make deb
 (The deb target works around some issues with CMake's DEB generator.)
 
 
-## Compiling on Mac OS X
+## Compiling on OS X
 
-The supported compiler is clang from the Command Line Tools for Xcode - November
-2012 (from Apple, tested with the package for OS X Lion). The January 2013
-package is not able to compile to Qt 5.0.0/5.0.1, due to a Qt bug.
+The supported compiler is clang from the Command Line Tools for Xcode.
+XCode 7.0.1 and the accompanying command line tools are known to work.
 
 Now create a build directory, e.g. as subdirectory build in the source
 directory, and change to that directory. In the build directory, configure
@@ -188,12 +143,13 @@ make
 make package
 ```
 
+
 ## Cross-Compiling on Linux for Android
 
 In addition to the general build process prerequisites, you need:
  - the Android SDK
  - the Android NDK
- - Qt 5.2 for Android which includes Qt Creator
+ - Qt 5.5.1 for Android which includes Qt Creator
 
 When downloading packages for specific Android API levels,
 keep in mind that Qt5 requires at least API Level 9 to work, and apps
