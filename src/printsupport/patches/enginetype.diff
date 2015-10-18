@@ -1,0 +1,49 @@
+diff -urw a/advanced_pdf.cpp b/advanced_pdf.cpp
+--- a/advanced_pdf.cpp	2015-10-14 10:09:43.463176489 +0200
++++ b/advanced_pdf.cpp	2015-10-14 10:10:02.823272511 +0200
+@@ -23,6 +23,7 @@
+  *   - Removal of Q_XXX_EXPORT
+  * - Change of the PDF Producer property
+  * - Use of DeviceCMYK color space in PDF output
++ * - Distinct paint engine type
+  */
+ /****************************************************************************
+ **
+@@ -1421,9 +1422,11 @@
+     return true;
+ }
+ 
++AdvancedPdfEngine::PaintEngineTypeStruct AdvancedPdfEngine::PaintEngineType = {};
++
+ QPaintEngine::Type AdvancedPdfEngine::type() const
+ {
+-    return QPaintEngine::Pdf;
++    return PaintEngineType;
+ }
+ 
+ void AdvancedPdfEngine::setResolution(int resolution)
+diff -urw a/advanced_pdf_p.h b/advanced_pdf_p.h
+--- a/advanced_pdf_p.h	2015-10-14 10:09:43.463176489 +0200
++++ b/advanced_pdf_p.h	2015-10-14 10:10:02.823272511 +0200
+@@ -21,6 +21,7 @@
+  *   - Renaming of selected files, classes, members and macros
+  *   - Adjustment of include statements
+  *   - Removal of Q_XXX_EXPORT
++ *   - Distinct paint engine type
+  */
+ /****************************************************************************
+ **
+@@ -165,6 +166,13 @@
+     Q_DECLARE_PRIVATE(AdvancedPdfEngine)
+     friend class AdvancedPdfWriter;
+ public:
++    static struct PaintEngineTypeStruct
++    {
++        constexpr operator QPaintEngine::Type() const {
++            return QPaintEngine::Type(QPaintEngine::User + 1);
++        }
++    } PaintEngineType;
++
+     AdvancedPdfEngine();
+     AdvancedPdfEngine(AdvancedPdfEnginePrivate &d);
+     ~AdvancedPdfEngine() {}

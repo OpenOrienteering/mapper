@@ -1,0 +1,25 @@
+diff -uw a/printengine_advanced_pdf.cpp b/printengine_advanced_pdf.cpp
+--- a/printengine_advanced_pdf.cpp	2015-10-12 09:24:27.755341792 +0200
++++ b/printengine_advanced_pdf.cpp	2015-10-12 09:18:40.401619358 +0200
+@@ -21,6 +21,7 @@
+  *   - Renaming of selected files, classes, members and macros
+  *   - Adjustment of include statements
+  *   - Removal of Q_XXX_EXPORT
++ *   - Reimplementation of paperSize(QPrinter::PaperSize)
+  */
+ /****************************************************************************
+ **
+@@ -70,8 +71,11 @@
+ 
+ AdvancedPdf::PaperSize AdvancedPdf::paperSize(QPrinter::PaperSize paperSize)
+ {
+-    QSizeF s = qt_paperSizeToQSizeF(paperSize);
+-    PaperSize p = { Q_MM(s.width()), Q_MM(s.height()) };
++    QPrinter pr;
++    pr.setOutputFormat(QPrinter::PdfFormat);
++    pr.setPaperSize(paperSize);
++    QSizeF s = pr.paperSize(QPrinter::Point);
++    PaperSize p = { qRound(s.width()), qRound(s.height()) };
+     return p;
+ }
+ 

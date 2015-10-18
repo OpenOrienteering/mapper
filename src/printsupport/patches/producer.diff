@@ -1,0 +1,19 @@
+--- a/advanced_pdf.cpp	2015-10-14 08:58:59.370131169 +0200
++++ b/advanced_pdf.cpp	2015-10-14 08:59:53.742400785 +0200
+@@ -21,6 +21,7 @@
+  *   - Renaming of selected files, classes, members and macros
+  *   - Adjustment of include statements
+  *   - Removal of Q_XXX_EXPORT
++ * - Change of the PDF Producer property
+  */
+ /****************************************************************************
+ **
+@@ -1648,7 +1649,7 @@
+     xprintf("\n/Creator ");
+     printString(creator);
+     xprintf("\n/Producer ");
+-    printString(QString::fromLatin1("Qt " QT_VERSION_STR));
++    printString(QString::fromLatin1("OpenOrienteering"));
+     QDateTime now = QDateTime::currentDateTime().toUTC();
+     QTime t = now.time();
+     QDate d = now.date();
