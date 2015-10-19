@@ -47,7 +47,7 @@ The latest news about OpenOrienteering
 [Forum](http://sourceforge.net/p/oorienteering/discussion/) <br/>
 Questions about Mapper which are not answered elsewhere; general feedback
 
-[Ticket System](http://sourceforge.net/p/oorienteering/tickets/) <br/>
+[Ticket System](https://github.com/OpenOrienteering/mapper/issues) <br/>
 Submitting bug reports, feature requests, and contributions
 
 

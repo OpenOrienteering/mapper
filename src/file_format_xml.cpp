@@ -60,7 +60,7 @@ const int XMLFileFormat::current_version = 6;
 int XMLFileFormat::active_version = 5; // updated by XMLFileExporter::doExport()
 
 const QString XMLFileFormat::magic_string = "<?xml ";
-const QString XMLFileFormat::mapper_namespace = "http://oorienteering.sourceforge.net/mapper/xml/v2";
+const QString XMLFileFormat::mapper_namespace = "http://openorienteering.org/apps/mapper/xml/v2";
 
 XMLFileFormat::XMLFileFormat()
  : FileFormat(MapFile, "XML", ImportExport::tr("OpenOrienteering Mapper"), "omap", 

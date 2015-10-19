@@ -99,7 +99,7 @@ if(Mapper_BUILD_PACKAGE)
 			# A path to the executable that contains the uninstaller icon.
 			set(CPACK_NSIS_INSTALLED_ICON_NAME Mapper.exe)
 			# URL to a web site providing more information about your application.
-			set(CPACK_NSIS_URL_INFO_ABOUT "http://oorienteering.sourceforge.net/?cat=3")
+			set(CPACK_NSIS_URL_INFO_ABOUT "http://openorienteering.org/apps/mapper/")
 			# Extra NSIS include
 			configure_file(windows/custom.nsi.in windows/custom.nsi @ONLY)
 			set(CPACK_NSIS_DEFINES "!include \\\"${CMAKE_CURRENT_BINARY_DIR}\\\\windows\\\\custom.nsi\\\"")
@@ -153,7 +153,7 @@ if(Mapper_BUILD_PACKAGE)
 		   "Kai Pastor <dg0yt@darc.de>")
 		set(CPACK_DEBIAN_SECTION "graphics")
 		set(CPACK_DEBIAN_PACKAGE_HOMEPAGE 
-		  "http://oorienteering.sourceforge.net/?cat=3")
+		  "http://openorienteering.org/apps/mapper/")
 		set(CPACK_DEBIAN_PACKAGE_SHLIBDEPS "ON")
 		
 		unset(FAKEROOT_EXECUTABLE CACHE)

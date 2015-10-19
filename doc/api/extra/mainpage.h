@@ -1,5 +1,6 @@
 /*
- *    Copyright 2012, 2013, 2014 Thomas Schöps, Kai Pastor
+ *    Copyright 2012 Thomas Schöps
+ *    Copyright 2013-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -30,13 +31,13 @@
 
 \section links Web Links
 
-- <a href="http://sourceforge.net/apps/mediawiki/oorienteering/">OpenOrienteering Developer Wiki</a>
-- <a href="http://sourceforge.net/projects/oorienteering/">OpenOrienteering SourceForge Pages</a>
-- <a href="http://qt-project.org/doc/qt-5/">Qt 5 documentation</a>
+- <a href="https://github.com/OpenOrienteering/mapper/wiki">OpenOrienteering Developer Wiki</a>
+- <a href="https://github.com/OpenOrienteering/mapper">OpenOrienteering GitHub Pages</a>
+- <a href="doc.qt.io/qt-5">Qt 5 documentation</a>
 - <a href="http://www.stack.nl/~dimitri/doxygen/manual/">Doxygen documentation</a>
 
 <hr>
 
-Qt® is a registered trade mark of Digia Plc and/or its subsidiaries.
+Qt is a trademark of The Qt Company Ltd.
 
  **/
