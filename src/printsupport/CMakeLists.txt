@@ -16,11 +16,13 @@
 #    You should have received a copy of the GNU General Public License
 #    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
 
+find_package(Qt5Gui REQUIRED COMPONENTS Private)
+find_package(Qt5PrintSupport REQUIRED COMPONENTS Private)
 find_package(ZLIB REQUIRED)
 
-if (${Qt5Core_VERSION} VERSION_LESS 5.3.0)
+if (${Qt5PrintSupport_VERSION} VERSION_LESS 5.3.0)
 	set(FORK_VERSION qt-5.2.1)
-elseif (${Qt5Core_VERSION} VERSION_LESS 5.5.0)
+elseif (${Qt5PrintSupport_VERSION} VERSION_LESS 5.5.0)
 	set(FORK_VERSION qt-5.4.2)
 else()
 	set(FORK_VERSION qt-5.5.1)
@@ -33,14 +35,33 @@ set(PRINTSUPPORT_SRCS
   ${FORK_VERSION}/qfontsubset.cpp
 )
 
-include_directories("${CMAKE_CURRENT_SOURCE_DIR}/${FORK_VERSION}")
 
 add_library(printsupport STATIC ${PRINTSUPPORT_SRCS})
 
-set(PRINTSUPPORT_INCLUDE_DIRECTORIES ${CMAKE_CURRENT_SOURCE_DIR} PARENT_SCOPE)
-set(PRINTSUPPORT_LIBRARIES printsupport ${ZLIB_LIBRARY} PARENT_SCOPE)
+target_include_directories(printsupport
+  BEFORE PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/${FORK_VERSION}"
+  INTERFACE "${CMAKE_CURRENT_SOURCE_DIR}"
+)
 
-# For super-builds (e.g. cross-compilation), wait for the Qt build.
-if(TARGET Qt5)
-	add_dependencies(printsupport Qt5)
-endif()
+target_link_libraries(printsupport
+  Qt5::PrintSupport
+  Qt5::Gui
+  ${ZLIB_LIBRARY}
+)
+
+
+# Workaround Qt private include dir issue
+# Cf. https://bugreports.qt.io/browse/QTBUG-37417
+
+foreach(module Core Gui PrintSupport)
+	set(qt_module Qt${module})
+	set(qt5_module Qt5${module})
+	if("${${qt5_module}_PRIVATE_INCLUDE_DIRS}" STREQUAL "")
+		foreach(base_dir ${${qt5_module}_INCLUDE_DIRS})
+			if("${base_dir}" MATCHES "/${qt_module}\$")
+				list(APPEND ${qt5_module}_PRIVATE_INCLUDE_DIRS "${base_dir}/${${qt5_module}_VERSION}/${qt_module}")
+			endif()
+		endforeach()
+	endif()
+	target_include_directories(printsupport PRIVATE ${${qt5_module}_PRIVATE_INCLUDE_DIRS})
+endforeach()

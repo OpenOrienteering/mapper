@@ -351,7 +351,7 @@ add_dependencies(Mapper_Common
 )
 target_link_libraries(Mapper_Common
   libocad
-  ${PRINTSUPPORT_LIBRARIES}
+  printsupport
 )
 
 qt5_translations_sources(
