@@ -32,7 +32,7 @@ if(APPLE)
 	endif()
 endif()
 
-if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
+if(Mapper_BUILD_PACKAGE)
 	# cf. http://www.cmake.org/cmake/help/cmake-2-8-docs.html#module:CPack
 	# cf. http://www.cmake.org/Wiki/CMake:CPackPackageGenerators
 	set(CPACK_PACKAGE_NAME "OpenOrienteering ${CMAKE_PROJECT_NAME}")
