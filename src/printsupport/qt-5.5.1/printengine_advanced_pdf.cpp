@@ -1,37 +1,35 @@
+/**
+ * This file is part of OpenOrienteering.
+ *
+ * This is a modified version of a file from the Qt Toolkit.
+ * You can redistribute it and/or modify it under the terms of
+ * the GNU General Public License, version 3, as published by
+ * the Free Software Foundation.
+ *
+ * OpenOrienteering is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>
+ *
+ * Changes:
+ * 2015-10-18 Kai Pastor <dg0yt@darc.de>
+ * - Adjustment of legal information
+ * - Modifications required for separate compilation:
+ *   - Renaming of selected files, classes, members and macros
+ *   - Adjustment of include statements
+ *   - Removal of Q_XXX_EXPORT
+ */
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
 ** Contact: http://www.qt.io/licensing/
 **
-** This file is part of the QtGui module of the Qt Toolkit.
-**
-** $QT_BEGIN_LICENSE:LGPL21$
-** Commercial License Usage
-** Licensees holding valid commercial Qt licenses may use this file in
-** accordance with the commercial license agreement provided with the
-** Software or, alternatively, in accordance with the terms contained in
-** a written agreement between you and The Qt Company. For licensing terms
-** and conditions see http://www.qt.io/terms-conditions. For further
-** information use the contact form at http://www.qt.io/contact-us.
-**
-** GNU Lesser General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU Lesser
-** General Public License version 2.1 or version 3 as published by the Free
-** Software Foundation and appearing in the file LICENSE.LGPLv21 and
-** LICENSE.LGPLv3 included in the packaging of this file. Please review the
-** following information to ensure the GNU Lesser General Public License
-** requirements will be met: https://www.gnu.org/licenses/lgpl.html and
-** http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** $QT_END_LICENSE$
-**
 ****************************************************************************/
 
-#include "qprintengine_pdf_p.h"
+#include "printengine_advanced_pdf_p.h"
 
 #ifndef QT_NO_PRINTER
 
@@ -43,7 +41,7 @@
 #include <QtGui/qpagelayout.h>
 
 #ifdef Q_OS_UNIX
-#include "private/qcore_unix_p.h" // overrides QT_OPEN
+#include <private/qcore_unix_p.h> // overrides QT_OPEN
 #endif
 
 #ifdef Q_OS_WIN
@@ -52,25 +50,25 @@
 
 QT_BEGIN_NAMESPACE
 
-QPdfPrintEngine::QPdfPrintEngine(QPrinter::PrinterMode m)
-    : QPdfEngine(*new QPdfPrintEnginePrivate(m))
+AdvancedPdfPrintEngine::AdvancedPdfPrintEngine(QPrinter::PrinterMode m)
+    : AdvancedPdfEngine(*new AdvancedPdfPrintEnginePrivate(m))
 {
     state = QPrinter::Idle;
 }
 
-QPdfPrintEngine::QPdfPrintEngine(QPdfPrintEnginePrivate &p)
-    : QPdfEngine(p)
+AdvancedPdfPrintEngine::AdvancedPdfPrintEngine(AdvancedPdfPrintEnginePrivate &p)
+    : AdvancedPdfEngine(p)
 {
     state = QPrinter::Idle;
 }
 
-QPdfPrintEngine::~QPdfPrintEngine()
+AdvancedPdfPrintEngine::~AdvancedPdfPrintEngine()
 {
 }
 
-bool QPdfPrintEngine::begin(QPaintDevice *pdev)
+bool AdvancedPdfPrintEngine::begin(QPaintDevice *pdev)
 {
-    Q_D(QPdfPrintEngine);
+    Q_D(AdvancedPdfPrintEngine);
 
     if (!d->openPrintDevice()) {
         state = QPrinter::Error;
@@ -78,14 +76,14 @@ bool QPdfPrintEngine::begin(QPaintDevice *pdev)
     }
     state = QPrinter::Active;
 
-    return QPdfEngine::begin(pdev);
+    return AdvancedPdfEngine::begin(pdev);
 }
 
-bool QPdfPrintEngine::end()
+bool AdvancedPdfPrintEngine::end()
 {
-    Q_D(QPdfPrintEngine);
+    Q_D(AdvancedPdfPrintEngine);
 
-    QPdfEngine::end();
+    AdvancedPdfEngine::end();
 
     d->closePrintDevice();
     state = QPrinter::Idle;
@@ -93,19 +91,19 @@ bool QPdfPrintEngine::end()
     return true;
 }
 
-bool QPdfPrintEngine::newPage()
+bool AdvancedPdfPrintEngine::newPage()
 {
-    return QPdfEngine::newPage();
+    return AdvancedPdfEngine::newPage();
 }
 
-int QPdfPrintEngine::metric(QPaintDevice::PaintDeviceMetric m) const
+int AdvancedPdfPrintEngine::metric(QPaintDevice::PaintDeviceMetric m) const
 {
-    return QPdfEngine::metric(m);
+    return AdvancedPdfEngine::metric(m);
 }
 
-void QPdfPrintEngine::setProperty(PrintEnginePropertyKey key, const QVariant &value)
+void AdvancedPdfPrintEngine::setProperty(PrintEnginePropertyKey key, const QVariant &value)
 {
-    Q_D(QPdfPrintEngine);
+    Q_D(AdvancedPdfPrintEngine);
 
     switch (int(key)) {
 
@@ -231,9 +229,9 @@ void QPdfPrintEngine::setProperty(PrintEnginePropertyKey key, const QVariant &va
     }
 }
 
-QVariant QPdfPrintEngine::property(PrintEnginePropertyKey key) const
+QVariant AdvancedPdfPrintEngine::property(PrintEnginePropertyKey key) const
 {
-    Q_D(const QPdfPrintEngine);
+    Q_D(const AdvancedPdfPrintEngine);
 
     QVariant ret;
     switch (int(key)) {
@@ -344,7 +342,7 @@ QVariant QPdfPrintEngine::property(PrintEnginePropertyKey key) const
 }
 
 
-bool QPdfPrintEnginePrivate::openPrintDevice()
+bool AdvancedPdfPrintEnginePrivate::openPrintDevice()
 {
     if (outDevice)
         return false;
@@ -361,7 +359,7 @@ bool QPdfPrintEnginePrivate::openPrintDevice()
     return true;
 }
 
-void QPdfPrintEnginePrivate::closePrintDevice()
+void AdvancedPdfPrintEnginePrivate::closePrintDevice()
 {
     if (outDevice) {
         outDevice->close();
@@ -379,8 +377,8 @@ void QPdfPrintEnginePrivate::closePrintDevice()
 
 
 
-QPdfPrintEnginePrivate::QPdfPrintEnginePrivate(QPrinter::PrinterMode m)
-    : QPdfEnginePrivate(),
+AdvancedPdfPrintEnginePrivate::AdvancedPdfPrintEnginePrivate(QPrinter::PrinterMode m)
+    : AdvancedPdfEnginePrivate(),
       duplex(QPrint::DuplexNone),
       collate(true),
       copies(1),
@@ -395,7 +393,7 @@ QPdfPrintEnginePrivate::QPdfPrintEnginePrivate(QPrinter::PrinterMode m)
         resolution = qt_defaultDpi();
 }
 
-QPdfPrintEnginePrivate::~QPdfPrintEnginePrivate()
+AdvancedPdfPrintEnginePrivate::~AdvancedPdfPrintEnginePrivate()
 {
 }
 
