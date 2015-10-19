@@ -323,7 +323,7 @@ set(Mapper_EXTRA_HEADERS
   undo.h
 )
 
-qt5_wrap_cpp(Mapper_Common_MOC ${Mapper_Common_MOC_INPUT})
+qt5_wrap_cpp(Mapper_Common_MOC ${Mapper_Common_MOC_INPUT} TARGET Mapper_Common)
 
 # Resources (from project root)
 
