@@ -20,7 +20,7 @@
 message(STATUS "Configuring ${PROJECT_NAME} licensing documentation")
 
 
-find_package(Qt5Core)
+find_package(Qt5Core REQUIRED)
 
 # Like Qt5::moc, Qt5::qdoc should come from Qt5CoreConfigExtra.cmake
 if (NOT TARGET Qt5::qdoc AND TARGET Qt5::moc)
@@ -96,6 +96,6 @@ add_library(doc-licensing
   ${LICENSING_QRC_CPP}
 )
 
-if (TARGET Qt5)
-	add_dependencies(doc-licensing Qt5)
-endif()
+target_link_libraries(doc-licensing
+  PUBLIC Qt5::Core
+)

@@ -17,6 +17,11 @@
 #    You should have received a copy of the GNU General Public License
 #    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
 
+find_package(Qt5Widgets REQUIRED)
+find_package(Qt5Network)
+find_package(Qt5Xml REQUIRED)
+find_package(Qt5PrintSupport)
+
 if(Mapper_PACKAGE_QT AND UNIX AND NOT APPLE AND NOT Mapper_DEVELOPMENT_BUILD)
 	set(MAPPER_USE_QT_CONF_QRC 1)
 endif()
@@ -26,8 +31,6 @@ execute_process(
   COMMAND "${CMAKE_COMMAND}" -E copy_if_different mapper_config.h.tmp mapper_config.h
   WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
 )
-include_directories(${PRINTSUPPORT_INCLUDE_DIRECTORIES})
-include_directories(${CLIPPER_INCLUDE_DIRS})
 include_directories("${CMAKE_CURRENT_BINARY_DIR}")
 include_directories(AFTER "../3rd-party/qbezier/src") # Always, last
 
@@ -351,6 +354,7 @@ add_dependencies(Mapper_Common
 )
 target_link_libraries(Mapper_Common
   libocad
+  polyclipping
   printsupport
 )
 
@@ -385,7 +389,6 @@ add_executable(Mapper
 )
 
 if(TARGET QtSingleApplication)
-	include_directories("../3rd-party/qtsingleapplication/src")
 	target_link_libraries(Mapper QtSingleApplication)
 endif()
 
@@ -394,7 +397,6 @@ target_link_libraries(Mapper
   doc-licensing
   ${PROJ_LIBRARY}
   ${QT_LIBRARIES}
-  ${CLIPPER_LIBRARIES}
 )
 
 install(TARGETS Mapper
@@ -405,6 +407,28 @@ install(TARGETS Mapper
 if(Mapper_BUILD_QT)
 	write_qt_conf()
 endif()
+
+
+# Workaround Qt private include dir issue
+# Cf. https://bugreports.qt.io/browse/QTBUG-37417
+
+if(WIN32)
+	set(PRIVATE_MODULES Core Gui PrintSupport)
+else()
+	set(PRIVATE_MODULES)
+endif()
+foreach(module ${PRIVATE_MODULES})
+	set(qt_module Qt${module})
+	set(qt5_module Qt5${module})
+	if("${${qt5_module}_PRIVATE_INCLUDE_DIRS}" STREQUAL "")
+		foreach(base_dir ${${qt5_module}_INCLUDE_DIRS})
+			if("${base_dir}" MATCHES "/${qt_module}\$")
+				list(APPEND ${qt5_module}_PRIVATE_INCLUDE_DIRS "${base_dir}/${${qt5_module}_VERSION}/${qt_module}")
+			endif()
+		endforeach()
+	endif()
+	target_include_directories(Mapper_Common PRIVATE ${${qt5_module}_PRIVATE_INCLUDE_DIRS})
+endforeach()
 
 
 # qmake configuration

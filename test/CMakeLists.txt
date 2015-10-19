@@ -1,5 +1,5 @@
 #
-#    Copyright 2012, 2013, 2014 Kai Pastor
+#    Copyright 2012-2015 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -20,11 +20,8 @@
 # Prerequisite
 add_subdirectory(data)
 
-find_package(Qt5Test QUIET REQUIRED)
-set(QT_QTTEST_LIBRARY ${Qt5Test_LIBRARIES})
-
-
-include_directories(${CLIPPER_INCLUDE_DIRS})
+find_package(Qt5Widgets REQUIRED)
+find_package(Qt5Test REQUIRED)
 
 
 # This macro defines a unit test from a list of source file names 
@@ -50,7 +47,7 @@ macro(add_unit_test testname)
 	qt5_wrap_cpp(TEST_${testname}_MOC ${testname}.h)
 	qt5_wrap_cpp(TEST_${testname}_XTRA_MOC ${TEST_${testname}_HDRS} OPTIONS -nw)
 	add_executable(${testname} ${testname}.cpp ${TEST_${testname}_SRCS} ${TEST_${testname}_MOC} ${TEST_${testname}_XTRA_MOC})
-	target_link_libraries(${testname} ${QT_QTTEST_LIBRARY} libocad ${PROJ_LIBRARY} ${QT_LIBRARIES})
+	target_link_libraries(${testname} libocad ${PROJ_LIBRARY} Qt5::Test Qt5::Widgets polyclipping)
 	add_test(${testname} ${CMAKE_COMMAND} -P ${testname}-RUN.cmake)
 	list(APPEND Mapper_UNIT_TESTS ${testname})
 	set(TESTNAME ${testname}) # required for configure_file
@@ -81,7 +78,7 @@ macro(add_system_test testname)
 	qt5_wrap_cpp(TEST_${testname}_MOC ${testname}.h)
 	qt5_wrap_cpp(TEST_${testname}_XTRA_MOC ${TEST_${testname}_HDRS} OPTIONS -nw)
 	add_executable(${testname} ${testname}.cpp ${TEST_${testname}_SRCS} ${TEST_${testname}_MOC} ${TEST_${testname}_XTRA_MOC})
-	target_link_libraries(${testname} ${QT_QTTEST_LIBRARY} Mapper_Common libocad ${PROJ_LIBRARY} ${QT_LIBRARIES} ${CLIPPER_LIBRARIES})
+	target_link_libraries(${testname} Mapper_Common libocad ${PROJ_LIBRARY} Qt5::Test Qt5::Widgets polyclipping)
 	add_test(${testname} ${CMAKE_COMMAND} -P ${testname}-RUN.cmake)
 	list(APPEND Mapper_SYSTEM_TESTS ${testname})
 	set(TESTNAME ${testname}) # required for configure_file
