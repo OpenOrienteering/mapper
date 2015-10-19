@@ -163,7 +163,7 @@ GeoreferencingDialog::GeoreferencingDialog(
 #if defined(QT_NETWORK_LIB)
 	declination_layout->addWidget(declination_button, 0);
 #else
-	connect(this, &QObject::destroyed, declination_button, &Object::deleteLater);
+	connect(this, &QObject::destroyed, declination_button, &QObject::deleteLater);
 #endif
 	
 	grivation_label = new QLabel();
