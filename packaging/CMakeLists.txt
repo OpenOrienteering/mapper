@@ -193,7 +193,7 @@ if(Mapper_BUILD_PACKAGE)
 	include(CPack)
 else()
 	message(STATUS "CPack not found, target 'package' will not be available")
-endif(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
+endif(Mapper_BUILD_PACKAGE)
 
 
 if(WIN32)

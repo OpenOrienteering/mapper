@@ -20,8 +20,9 @@
 # Prerequisite
 add_subdirectory(data)
 
-find_package(Qt5Widgets REQUIRED)
+find_package(Qt5PrintSupport REQUIRED)
 find_package(Qt5Test REQUIRED)
+find_package(Qt5Widgets REQUIRED)
 
 
 # This macro defines a unit test from a list of source file names 
