@@ -32,7 +32,13 @@ if(APPLE)
 	endif()
 endif()
 
-if(Mapper_BUILD_PACKAGE)
+if(NOT Mapper_BUILD_PACKAGE)
+    # Don't configure and include CPack
+
+elseif(NOT EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
+	message(WARNING "CPack not found, target 'package' will not be available")
+
+else()
 	# cf. http://www.cmake.org/cmake/help/cmake-2-8-docs.html#module:CPack
 	# cf. http://www.cmake.org/Wiki/CMake:CPackPackageGenerators
 	set(CPACK_PACKAGE_NAME "OpenOrienteering ${CMAKE_PROJECT_NAME}")
@@ -191,8 +197,7 @@ if(Mapper_BUILD_PACKAGE)
 	mark_as_advanced(CPACK_GENERATOR CPACK_SOURCE_GENERATOR)
 
 	include(CPack)
-else()
-	message(STATUS "CPack not found, target 'package' will not be available")
+
 endif(Mapper_BUILD_PACKAGE)
 
 
