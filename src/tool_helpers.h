@@ -22,6 +22,7 @@
 #ifndef _OPENORIENTEERING_TOOL_HELPERS_H_
 #define _OPENORIENTEERING_TOOL_HELPERS_H_
 
+#include <memory>
 #include <set>
 
 #include <QCursor>
@@ -316,45 +317,61 @@ public:
 };
 
 
-/** Helper class to 'follow' (i.e. extract continuous parts from) PathObjects */
+/**
+ * Helper class to 'follow' (i.e. extract continuous parts from) PathObjects.
+ * 
+ * A FollowPathToolHelper can be reused for following different paths.
+ */
 class FollowPathToolHelper
 {
 public:
+	/**
+	 * Constructs a new helper.
+	 */
 	FollowPathToolHelper();
 	
 	/**
 	 * Starts following the given object from a coordinate.
-	 * FollowPathToolHelpers can be reused for following different paths.
 	 */
-	void startFollowingFromCoord(PathObject* path, MapCoordVector::size_type coord_index);
+	void startFollowingFromCoord(const PathObject* path, MapCoordVector::size_type coord_index);
 	
 	/**
 	 * Starts following the given object from an arbitrary position indicated by the path coord.
+	 * 
 	 * The path coord does not need to be from the object's path coord vector.
-	 * FollowPathToolHelpers can be reused for following different paths.
 	 */
-	void startFollowingFromPathCoord(PathObject* path, PathCoord& coord);
+	void startFollowingFromPathCoord(const PathObject* path, const PathCoord& coord);
 	
 	/**
-	 * Updates the process and returns the followed part of the path as a
-	 * new path object in 'result' (ownership of this object is transferred
-	 * to the caller!)
+	 * Updates the process and returns the followed part of the path.
 	 * 
-	 * Returns false if the following failed, e.g. because the path coord is
-	 * on another path part than the beginning or path and end are the same.
+	 * Returns a pointer that owns nothing if the following failed, e.g.
+	 * because the path coord is on another path part than the beginning or
+	 * path and end are the same.
 	 */
-	bool updateFollowing(PathCoord& end_coord, PathObject*& result);
+	std::unique_ptr<PathObject> updateFollowing(const PathCoord& end_coord);
 	
-	/** Returns the index of the path part which is being followed */
-	inline std::size_t getPartIndex() const {return part_index;}
+	/**
+	 * Returns the index of the path part which is being followed.
+	 */
+	std::size_t getPartIndex() const;
 	
 private:
-	PathObject* path;
+	const PathObject* path;
 	
 	PathCoord::length_type start_clen;
 	PathCoord::length_type end_clen;
 	std::size_t part_index;
 	bool drag_forward;
 };
+
+
+
+// ### FollowPathToolHelper inline code ###
+inline
+std::size_t FollowPathToolHelper::getPartIndex() const
+{
+	return part_index;
+}
 
 #endif

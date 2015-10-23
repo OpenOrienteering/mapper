@@ -888,68 +888,81 @@ void SnappingToolHelper::includeDirtyRect(QRectF& rect)
 // ### FollowPathToolHelper ###
 
 FollowPathToolHelper::FollowPathToolHelper()
+: path{nullptr}
 {
-	path = NULL;
+	// nothing else
 }
 
-void FollowPathToolHelper::startFollowingFromCoord(PathObject* path, MapCoordVector::size_type coord_index)
+void FollowPathToolHelper::startFollowingFromCoord(const PathObject* path, MapCoordVector::size_type coord_index)
 {
 	path->update();
-	PathCoord path_coord = path->findPathCoordForIndex(coord_index);
-	startFollowingFromPathCoord(path, path_coord);
+	PathCoord coord = path->findPathCoordForIndex(coord_index);
+	startFollowingFromPathCoord(path, coord);
 }
 
-void FollowPathToolHelper::startFollowingFromPathCoord(PathObject* path, PathCoord& coord)
+void FollowPathToolHelper::startFollowingFromPathCoord(const PathObject* path, const PathCoord& coord)
 {
 	path->update();
 	this->path = path;
 	
 	start_clen = coord.clen;
-	end_clen = start_clen;
+	end_clen   = start_clen;
 	part_index = path->findPartIndexForIndex(coord.index);
 	drag_forward = true;
 }
 
-bool FollowPathToolHelper::updateFollowing(PathCoord& end_coord, PathObject*& result)
+std::unique_ptr<PathObject> FollowPathToolHelper::updateFollowing(const PathCoord& end_coord)
 {
-	if (path->findPartIndexForIndex(end_coord.index) != part_index)
-		return false;	// dragging on a different part
+	std::unique_ptr<PathObject> result;
 	
-	// Update end_clen
-	float new_end_clen = end_coord.clen;
-	const auto& part = path->parts()[part_index];
-	if (part.isClosed())
+	if (path && path->findPartIndexForIndex(end_coord.index) == part_index)
 	{
-		// Positive length to add to end_clen to get to new_end_clen with wrapping
-		float path_length = part.length();
-		double forward_diff = fmod_pos(new_end_clen - end_clen, path_length);
-		float delta_forward = forward_diff >= 0 && forward_diff < 0.5f * path_length;
+		// Update end_clen
+		auto new_end_clen = end_coord.clen;
+		const auto& part = path->parts()[part_index];
+		if (part.isClosed())
+		{
+			// Positive length to add to end_clen to get to new_end_clen with wrapping
+			auto path_length = part.length();
+			auto forward_diff = fmod_pos(new_end_clen - end_clen, path_length);
+			auto delta_forward = forward_diff >= 0 && forward_diff < 0.5f * path_length;
+			
+			if (delta_forward
+			    && !drag_forward
+			    && fmod_pos(end_clen - start_clen, path_length) > 0.5f * path_length
+			    && fmod_pos(new_end_clen - start_clen, path_length) <= 0.5f * path_length )
+			{
+				drag_forward = true;
+			}
+			else if (!delta_forward
+			         && drag_forward
+			         && fmod_pos(end_clen - start_clen, path_length) <= 0.5f * path_length
+			         && fmod_pos(new_end_clen - start_clen, path_length) > 0.5f * path_length)
+			{
+				drag_forward = false;
+			}
+		}
+		else
+		{
+			drag_forward = new_end_clen >= start_clen;
+		}
 		
-		if (delta_forward && !drag_forward &&
-			fmod_pos(end_clen - start_clen, path_length) > 0.5f * path_length &&
-			fmod_pos(new_end_clen - start_clen, path_length) <= 0.5f * path_length)
-			drag_forward = true;
-		else if (!delta_forward && drag_forward &&
-			fmod_pos(end_clen - start_clen, path_length) <= 0.5f * path_length &&
-			fmod_pos(new_end_clen - start_clen, path_length) > 0.5f * path_length)
-			drag_forward = false;
+		end_clen = new_end_clen;
+		if (end_clen != start_clen)
+		{
+			// Create output path
+			result.reset(new PathObject { part });
+			if (drag_forward)
+			{
+				result->changePathBounds(0, start_clen, end_clen);
+			}
+			else
+			{
+				result->changePathBounds(0, end_clen, start_clen);
+				result->reverse();
+			}
+		}
 	}
-	else
-		drag_forward = new_end_clen >= start_clen;
 	
-	end_clen = new_end_clen;
-	
-	if (end_clen == start_clen)
-		return false;
-	
-	// Create output path
-	result = new PathObject { part };
-	if (drag_forward)
-		result->changePathBounds(0, start_clen, end_clen);
-	else
-	{
-		result->changePathBounds(0, end_clen, start_clen);
-		result->reverse();
-	}
-	return true;
+	return result;
 }
