@@ -320,7 +320,7 @@ void TemplateTrack::drawWaypoints(QPainter* painter) const
 QRectF TemplateTrack::getTemplateExtent() const
 {
 	// Infinite because the extent of the waypoint texts is unknown
-	return infinteRectF();
+	return infiniteRectF();
 }
 
 QRectF TemplateTrack::calculateTemplateBoundingBox() const

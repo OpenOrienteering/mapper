@@ -552,7 +552,7 @@ void Template::applyTemplateTransform(QPainter* painter) const
 QRectF Template::getTemplateExtent() const
 {
 	Q_ASSERT(!is_georeferenced);
-	return infinteRectF();
+	return infiniteRectF();
 }
 
 void Template::scale(double factor, const MapCoord& center)

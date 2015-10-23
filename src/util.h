@@ -88,7 +88,7 @@ public:
 void blockSignalsRecursively(QObject* obj, bool block);
 
 /** Returns a practically "infinitely" big QRectF. */
-inline QRectF infinteRectF()
+inline QRectF infiniteRectF()
 {
 	return QRectF(-10e10, -10e10, 20e10, 20e10);
 }
