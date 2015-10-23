@@ -937,13 +937,19 @@ void DrawPathTool::updateFollowing()
 	bool success = follow_helper->updateFollowing(path_coord, temp_object);
 	
 	// Append the temporary object to the preview object at follow_start_index
-	for (int i = preview_path->getCoordinateCount() - 1; i >= follow_start_index; --i)
+	// 1. Delete everything appended, except for the point where following started
+	//    (thus avoiding deletion of the whole part).
+	for (auto i = preview_path->getCoordinateCount() - 1;
+	     i > follow_start_index + 1;
+	     i = preview_path->getCoordinateCount() - 1)
+	{
 		preview_path->deleteCoordinate(i, false);
-	
+	}
+	// 2. Merge segments at the point where following started.
 	if (success)
 	{
-		preview_path->appendPath(temp_object);
-		preview_path->getCoordinate(preview_path->getCoordinateCount() - 1).setHolePoint(false);
+		preview_path->connectPathParts(preview_path->findPartIndexForIndex(follow_start_index),
+		                               temp_object, 0, false, true);
 		delete temp_object;
 	}
 	updatePreviewPath();

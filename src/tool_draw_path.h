@@ -146,7 +146,7 @@ protected:
 	bool following;
 	QScopedPointer<FollowPathToolHelper> follow_helper;
 	PathObject* follow_object;
-	int follow_start_index;
+	MapCoordVector::size_type follow_start_index;
 	
 	KeyButtonBar* key_button_bar;
 };
