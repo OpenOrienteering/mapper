@@ -198,7 +198,7 @@ else()
 
 	include(CPack)
 
-endif(Mapper_BUILD_PACKAGE)
+endif()
 
 
 if(WIN32)
