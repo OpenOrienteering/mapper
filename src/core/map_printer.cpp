@@ -485,44 +485,7 @@ std::unique_ptr<QPrinter> MapPrinter::makePrinter() const
 		printer->setOrientation((page_format.orientation == MapPrinterPageFormat::Portrait) ? QPrinter::Portrait : QPrinter::Landscape);
 	}
 	printer->setColorMode(separationsModeSelected() ? QPrinter::GrayScale : QPrinter::Color);
-	
-	auto resolution = (int)options.resolution;
-	if (printer->resolution() < resolution)
-	{
-		QList<int> supported = printer->supportedResolutions();
-		if (supported.size() > 1)
-		{
-			// The printer supports different resolutions. For good quality,
-			// either set the requested resolution if supported,
-			// or set twice the requested resolution if supported,
-			// or set the lowest supported resolution which is at least as high
-			// as requested,
-			// or as a last resort, set the highest supported resolution.
-			std::sort(supported.begin(), supported.end());
-			if (supported.contains(resolution))
-			{
-				printer->setResolution(resolution);
-			}
-			else if (supported.contains(2*resolution))
-			{
-				printer->setResolution(2*resolution);
-			}
-			else
-			{
-				auto match = std::lower_bound(supported.begin(), supported.end(), resolution);
-				if (match != supported.end())
-					printer->setResolution(*match);
-				else
-					printer->setResolution(supported.back());
-			}
-		}
-	}
-	
-	if (printer->resolution() == 0)
-	{
-		// Workaround for Wine
-		printer->setResolution(resolution);
-	}
+	printer->setResolution(options.resolution);
 	
 	if (page_format.paper_size == QPrinter::Custom || !isPrinter())
 	{
@@ -819,6 +782,8 @@ void MapPrinter::takePrinterSettings(const QPrinter* printer)
 		updatePageBreaks();
 		emit pageFormatChanged(page_format);
 	}
+
+	setResolution(printer->resolution());
 }
 
 // local
@@ -1177,13 +1142,15 @@ bool MapPrinter::printMap(QPrinter* printer)
 	QSizeF extent_size = page_format.page_rect.size() / scale_adjustment;
 	QPainter painter(printer);
 	
-	float resolution = printer->resolution();
-	if (qIsNull(resolution))
+	float resolution = (float)options.resolution;
+	
+#if defined(Q_OS_WIN)
+	// Workaround for Wine
+	if (printer->resolution() == 0)
 	{
 		return false;
 	}
 	
-#if defined(Q_OS_WIN)
 	if (printer->paintEngine()->type() == QPaintEngine::Windows)
 	{
 		/* QWin32PrintEngine will (have to) do rounding when passing coordinates
@@ -1218,7 +1185,7 @@ bool MapPrinter::printMap(QPrinter* printer)
 			SetWindowExtEx(dc, hires_width, hires_height, nullptr);
 			SetViewportExtEx(dc, phys_width, phys_height, nullptr);
 			SetViewportOrgEx(dc, -phys_off_x, -phys_off_y, nullptr);
-			resolution = (double)options.resolution * (double)hires_width / phys_width;
+			resolution *= ((double)hires_width / phys_width);
 		}
 	}
 	else if (printer->paintEngine()->type() == QPaintEngine::Picture)
