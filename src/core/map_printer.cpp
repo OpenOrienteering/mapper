@@ -636,8 +636,7 @@ void MapPrinter::updatePaperDimensions()
 // slot
 void MapPrinter::setResolution(const unsigned int dpi)
 {
-	Q_ASSERT(dpi >= 0.05f);
-	if (options.resolution != dpi)
+	if (dpi > 0 && options.resolution != dpi)
 	{
 		options.resolution = dpi;
 		emit optionsChanged(options);

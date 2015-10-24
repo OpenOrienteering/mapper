@@ -307,8 +307,11 @@ public slots:
 	/** Sets the overlapping of the pages at the margins. */
 	void setOverlap(qreal h_overlap, qreal v_overlap);
 	
-	/** Sets the desired printing resolution in dpi. 
-	 *  The actual resolution will	be set by the printer. */
+	/** Sets the desired printing resolution in dpi.
+	 *  The actual resolution will	be set by the printer.
+	 * 
+	 * Does nothing if dpi is 0.
+	 */
 	void setResolution(const unsigned int dpi);
 	
 	/** Sets the denominator of the map scale for printing. */
