@@ -22,8 +22,6 @@ find_package(ZLIB REQUIRED)
 
 if (${Qt5PrintSupport_VERSION} VERSION_LESS 5.3.0)
 	set(FORK_VERSION qt-5.2.1)
-elseif (${Qt5PrintSupport_VERSION} VERSION_LESS 5.5.0)
-	set(FORK_VERSION qt-5.4.2)
 else()
 	set(FORK_VERSION qt-5.5.1)
 endif()
