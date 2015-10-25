@@ -95,7 +95,7 @@ ExternalProject_Add(
   PATCH_COMMAND "${SH_PROGRAM}" -l -e ${CMAKE_CURRENT_BINARY_DIR}/proj-patch
   CONFIGURE_COMMAND "${SH_PROGRAM}" -l -e ${CMAKE_CURRENT_BINARY_DIR}/proj-config
   BUILD_COMMAND ${PROJ_MAKE_COMMAND}
-  INSTALL_COMMAND ${PROJ_MAKE_COMMAND} install
+  INSTALL_COMMAND ${PROJ_MAKE_COMMAND} -j1 install
                && "${SH_PROGRAM}" -l -e ${CMAKE_CURRENT_BINARY_DIR}/proj-postinstall
 )
 ExternalProject_Get_Property(Proj SOURCE_DIR)

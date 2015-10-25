@@ -75,6 +75,7 @@ ExternalProject_Add(
   doxygen-project
   ${DOXYGEN_SOURCE}
   # Check that the license hasn't changed.
+  PATCH_COMMAND sed -e "/This version of Mac OS X is unsupported/d" -i .orig qtools/qglobal.h
   UPDATE_COMMAND ${CMAKE_COMMAND} -E compare_files <SOURCE_DIR>/LICENSE "${DOXYGEN_LICENSE_FILE}"
   CONFIGURE_COMMAND "<SOURCE_DIR>/configure" "--release" "--prefix" "<INSTALL_DIR>"
   BUILD_IN_SOURCE 1

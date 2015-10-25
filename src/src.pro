@@ -22,14 +22,14 @@ win32:   QT += core-private gui-private printsupport-private
 
 # Defines. Use fancy quotation marks to be able to define strings with spaces.
 CONFIG(debug, release|debug) {
-	DEFINES += \"APP_VERSION='\\"Debug $${Mapper_VERSION_MAJOR}.$${Mapper_VERSION_MINOR}.$${Mapper_VERSION_PATCH}\\"'\" \
+	DEFINES += APP_VERSION=\"'\\"Debug $${Mapper_VERSION_MAJOR}.$${Mapper_VERSION_MINOR}.$${Mapper_VERSION_PATCH}\\"'\" \
 	           MAPPER_DEVELOPMENT_BUILD \
-	           \"MAPPER_DEVELOPMENT_RES_DIR='\\"../\\"'\"
-	
-	unix:QMAKE_POST_LINK += $$quote($(COPY_DIR) \"$$PWD/../symbol sets\" \"$$OUT_PWD/../symbol sets\")
+	           MAPPER_DEVELOPMENT_RES_DIR=\"'\\"$$clean_path($$OUT_PWD/..)\\"'\"
+	osx:  DEFINES += QT_QTASSISTANT_EXECUTABLE=\"'\\"$$replace(QMAKE_QMAKE, qmake, Assistant.app/Contents/MacOS/Assistant)\\"'\"
+	else: DEFINES += QT_QTASSISTANT_EXECUTABLE=\"'\\"$$replace(QMAKE_QMAKE, qmake, assistant)\\"'\"
 }
 else {
-	DEFINES += \"APP_VERSION='\\"$${Mapper_VERSION_MAJOR}.$${Mapper_VERSION_MINOR}.$${Mapper_VERSION_PATCH}\\"'\" \
+	DEFINES += APP_VERSION=\"'\\"$${Mapper_VERSION_MAJOR}.$${Mapper_VERSION_MINOR}.$${Mapper_VERSION_PATCH}\\"'\" \
 	           QT_NO_DEBUG QT_NO_DEBUG_OUTPUT
 }
 DEFINES += \"CLIPPER_VERSION='\\"6.1.3a\\"'\"
