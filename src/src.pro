@@ -18,7 +18,7 @@ INCLUDEPATH += qmake
 
 QT += core gui widgets printsupport network xml
 android: QT += core-private gui-private
-win32: QT += core-private gui-private printsupport-private
+win32:   QT += core-private gui-private printsupport-private
 
 # Defines. Use fancy quotation marks to be able to define strings with spaces.
 CONFIG(debug, release|debug) {

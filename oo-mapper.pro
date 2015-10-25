@@ -64,6 +64,7 @@ addPrerequisite(qbezier, 3rd-party/qbezier)
 !linux:addPrerequisite(proj, 3rd-party/proj)
 android:addPrerequisite(proj, 3rd-party/proj)
 addPrerequisite(licensing, doc/licensing)
+!android:addPrerequisite(printsupport, src/printsupport)
 
 write_file($$OUT_PWD/prerequisites.pri, PREREQUISITES_PRI)
 
