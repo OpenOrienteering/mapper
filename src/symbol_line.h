@@ -92,7 +92,7 @@ public:
 	/** Constructs an empty line symbol. */
 	LineSymbol();
 	virtual ~LineSymbol();
-	virtual Symbol* duplicate(const MapColorMap* color_map) const;
+	Symbol* duplicate(const MapColorMap* color_map) const override;
 	
 	void createRenderables(
 	        const Object *object,
@@ -121,10 +121,10 @@ public:
 	 */
 	void createPathCoordRenderables(const Object* object, const VirtualPath& path, bool path_closed, ObjectRenderables& output) const;
 	
-	virtual void colorDeleted(const MapColor* color);
-	virtual bool containsColor(const MapColor* color) const;
-	virtual const MapColor* guessDominantColor() const;
-	virtual void scale(double factor);
+	void colorDeleted(const MapColor* color) override;
+	bool containsColor(const MapColor* color) const override;
+	const MapColor* guessDominantColor() const override;
+	void scale(double factor) override;
 	
 	/**
 	 * Creates empty point symbols for contained NULL symbols
@@ -147,7 +147,7 @@ public:
 	/**
 	 * Returns the largest extent (half width) of the components of this line.
 	 */
-	virtual float calculateLargestLineExtent(Map* map) const;
+	float calculateLargestLineExtent(Map* map) const override;
 	
 	/**
 	 * Returns the limit for miter joins in units of the line width.
@@ -221,16 +221,16 @@ public:
 	inline LineSymbolBorder& getRightBorder() {return right_border;}
 	inline const LineSymbolBorder& getRightBorder() const {return right_border;}
 	
-	virtual SymbolPropertiesWidget* createPropertiesWidget(SymbolSettingDialog* dialog);
+	SymbolPropertiesWidget* createPropertiesWidget(SymbolSettingDialog* dialog) override;
 	
 protected:
 #ifndef NO_NATIVE_FILE_FORMAT
-	virtual bool loadImpl(QIODevice* file, int version, Map* map);
+	bool loadImpl(QIODevice* file, int version, Map* map) override;
 #endif
-	virtual void saveImpl(QXmlStreamWriter& xml, const Map& map) const;
-	virtual bool loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict);
+	void saveImpl(QXmlStreamWriter& xml, const Map& map) const override;
+	bool loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict) override;
 	PointSymbol* loadPointSymbol(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict);
-	virtual bool equalsImpl(const Symbol* other, Qt::CaseSensitivity case_sensitivity) const;
+	bool equalsImpl(const Symbol* other, Qt::CaseSensitivity case_sensitivity) const override;
 	
 	void createBorderLines(
 	        const Object* object,

@@ -143,7 +143,7 @@ public:
 	
 	AreaSymbol();
 	virtual ~AreaSymbol();
-	virtual Symbol* duplicate(const MapColorMap* color_map = NULL) const;
+	Symbol* duplicate(const MapColorMap* color_map = NULL) const override;
 	
 	void createRenderables(
 	        const Object *object,
@@ -172,10 +172,10 @@ public:
 	        const MapColor* color) const;
 	
 	
-	virtual void colorDeleted(const MapColor* color);
-	virtual bool containsColor(const MapColor* color) const;
-	virtual const MapColor* guessDominantColor() const;
-	virtual void scale(double factor);
+	void colorDeleted(const MapColor* color) override;
+	bool containsColor(const MapColor* color) const override;
+	const MapColor* guessDominantColor() const override;
+	void scale(double factor) override;
 	
 	// Getters / Setters
 	inline const MapColor* getColor() const {return color;}
@@ -186,15 +186,15 @@ public:
 	inline FillPattern& getFillPattern(int i) {return patterns[i];}
 	inline const FillPattern& getFillPattern(int i) const {return patterns[i];}
 	bool hasRotatableFillPattern() const;
-	virtual SymbolPropertiesWidget* createPropertiesWidget(SymbolSettingDialog* dialog);
+	SymbolPropertiesWidget* createPropertiesWidget(SymbolSettingDialog* dialog) override;
 	
 protected:
 #ifndef NO_NATIVE_FILE_FORMAT
-	virtual bool loadImpl(QIODevice* file, int version, Map* map);
+	bool loadImpl(QIODevice* file, int version, Map* map) override;
 #endif
-	virtual void saveImpl(QXmlStreamWriter& xml, const Map& map) const;
-	virtual bool loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict);
-	virtual bool equalsImpl(const Symbol* other, Qt::CaseSensitivity case_sensitivity) const;
+	void saveImpl(QXmlStreamWriter& xml, const Map& map) const override;
+	bool loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict) override;
+	bool equalsImpl(const Symbol* other, Qt::CaseSensitivity case_sensitivity) const override;
 	
 	const MapColor* color;
 	int minimum_area;	// in mm^2 // FIXME: unit (factor) wrong

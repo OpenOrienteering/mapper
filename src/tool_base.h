@@ -47,20 +47,20 @@ public:
 	MapEditorToolBase(const QCursor& cursor, MapEditorTool::Type tool_type, MapEditorController* editor, QAction* tool_action);
 	virtual ~MapEditorToolBase();
 	
-	virtual void init();
-	virtual const QCursor& getCursor() const;
+	void init() override;
+	const QCursor& getCursor() const override;
 	
-	virtual bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
-	virtual bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
-	virtual bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
+	bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
+	bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
+	bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
 	
-	virtual bool keyPressEvent(QKeyEvent* event);
-	virtual bool keyReleaseEvent(QKeyEvent* event);
+	bool keyPressEvent(QKeyEvent* event) override;
+	bool keyReleaseEvent(QKeyEvent* event) override;
 	
 	/// Draws the preview renderables. Should be overridden to draw custom elements.
-	virtual void draw(QPainter* painter, MapWidget* widget);
+	void draw(QPainter* painter, MapWidget* widget) override;
 	
-	virtual void finishEditing();
+	void finishEditing() override;
 	
 protected slots:
 	void updateDirtyRect();

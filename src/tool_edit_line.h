@@ -67,7 +67,7 @@ protected:
 	/** Deletes the highlight object if it exists and correctly removes its renderables. */
 	void deleteHighlightObject();
 	
-	void updateStatusText();
+	void updateStatusText() override;
 	
 	/** Recalculates hover_line. */
 	void updateHoverState(MapCoordF cursor_pos);

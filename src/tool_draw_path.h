@@ -42,18 +42,18 @@ public:
 	DrawPathTool(MapEditorController* editor, QAction* tool_action, bool is_helper_tool, bool allow_closing_paths);
 	virtual ~DrawPathTool();
 	
-	virtual void init();
-	virtual const QCursor& getCursor() const;
+	void init() override;
+	const QCursor& getCursor() const override;
 	
-	virtual bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
-	virtual bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
-	virtual bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
-	virtual bool mouseDoubleClickEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
+	bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
+	bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
+	bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
+	bool mouseDoubleClickEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
 	
-	virtual bool keyPressEvent(QKeyEvent* event);
-	virtual bool keyReleaseEvent(QKeyEvent* event);
+	bool keyPressEvent(QKeyEvent* event) override;
+	bool keyReleaseEvent(QKeyEvent* event) override;
 	
-	virtual void draw(QPainter* painter, MapWidget* widget);
+	void draw(QPainter* painter, MapWidget* widget) override;
 	
 protected slots:
 	void updateDirtyRect();
@@ -63,7 +63,7 @@ protected slots:
 	virtual void objectSelectionChanged();
 	
 protected:
-	virtual void updatePreviewPath();
+	void updatePreviewPath() override;
 	/** Should be called when moving the cursor without the draw button being held */
 	void updateHover();
 	/** Called by updateHover() if the user is currently drawing */
@@ -72,8 +72,8 @@ protected:
 	void createPreviewCurve(MapCoord position, float direction);
 	/** Closes the preview path */
 	void closeDrawing();
-	virtual void finishDrawing();
-	virtual void abortDrawing();
+	void finishDrawing() override;
+	void abortDrawing() override;
 	void undoLastPoint();
 	/** When not drawing but when the current selection is a single path,
 	 *  removes the last point from that path, or deletes the whole path if

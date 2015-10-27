@@ -55,7 +55,7 @@ friend class OCAD8FileImport;
 public:
 	CombinedSymbol();
 	virtual ~CombinedSymbol();
-	virtual Symbol* duplicate(const MapColorMap* color_map = NULL) const;
+	Symbol* duplicate(const MapColorMap* color_map = NULL) const override;
 	
 	void createRenderables(
 	        const Object *object,
@@ -69,17 +69,17 @@ public:
 	        ObjectRenderables &output,
 	        Symbol::RenderableOptions options) const override;
 	
-	virtual void colorDeleted(const MapColor* color);
-	virtual bool containsColor(const MapColor* color) const;
-	const MapColor* guessDominantColor() const;
-	virtual bool symbolChanged(const Symbol* old_symbol, const Symbol* new_symbol);
-	virtual bool containsSymbol(const Symbol* symbol) const;
-	virtual void scale(double factor);
-	virtual Type getContainedTypes() const;
+	void colorDeleted(const MapColor* color) override;
+	bool containsColor(const MapColor* color) const override;
+	const MapColor* guessDominantColor() const override;
+	bool symbolChanged(const Symbol* old_symbol, const Symbol* new_symbol) override;
+	bool containsSymbol(const Symbol* symbol) const override;
+	void scale(double factor) override;
+	Type getContainedTypes() const override;
 	
-	virtual bool loadFinished(Map* map);
+	bool loadFinished(Map* map) override;
 	
-    virtual float calculateLargestLineExtent(Map* map) const;
+    float calculateLargestLineExtent(Map* map) const override;
 	
 	// Getters / Setter
 	inline int getNumParts() const {return (int)parts.size();}
@@ -91,15 +91,15 @@ public:
 	inline bool isPartPrivate(int i) const {return private_parts[i];}
 	inline void setPartPrivate(int i, bool set_private) {private_parts[i] = set_private;}
 	
-	virtual SymbolPropertiesWidget* createPropertiesWidget(SymbolSettingDialog* dialog);
+	SymbolPropertiesWidget* createPropertiesWidget(SymbolSettingDialog* dialog) override;
 	
 protected:
 #ifndef NO_NATIVE_FILE_FORMAT
-	virtual bool loadImpl(QIODevice* file, int version, Map* map);
+	bool loadImpl(QIODevice* file, int version, Map* map) override;
 #endif
-	virtual void saveImpl(QXmlStreamWriter& xml, const Map& map) const;
-	virtual bool loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict);
-	virtual bool equalsImpl(const Symbol* other, Qt::CaseSensitivity case_sensitivity) const;
+	void saveImpl(QXmlStreamWriter& xml, const Map& map) const override;
+	bool loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict) override;
+	bool equalsImpl(const Symbol* other, Qt::CaseSensitivity case_sensitivity) const override;
 	
 	std::vector<const Symbol*> parts;
 	std::vector<bool> private_parts;
