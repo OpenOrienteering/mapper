@@ -212,7 +212,7 @@ QVariant UTMZoneParameter::calculateUTMZone(const LatLon lat_lon)
 	QVariant ret;
 	
 	const double lat = lat_lon.latitude();
-	if (abs(lat) < 84.0)
+	if (fabs(lat) < 84.0)
 	{
 		const double lon = lat_lon.longitude();
 		int zone_no = int(floor(lon) + 180) / 6 % 60 + 1;
