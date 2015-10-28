@@ -112,7 +112,7 @@ int main(int argc, char** argv)
 	QStyle* base_style = nullptr;
 #if defined(Q_OS_ANDROID)
 	base_style = QStyleFactory::create("android");
-#elif !defined(Q_OS_WIN) && !defined(Q_OS_MAC)
+#elif !defined(Q_OS_WIN) && !defined(Q_OS_OSX)
 	if (QGuiApplication::platformName() == QLatin1String("xcb"))
 	{
 		// Use the modern 'fusion' style instead of the 
@@ -121,7 +121,9 @@ int main(int argc, char** argv)
 	}
 #endif
 	QApplication::setStyle(new MapperProxyStyle(base_style));
+#if !defined(Q_OS_OSX)
 	QApplication::setPalette(QApplication::style()->standardPalette());
+#endif
 	
 	// Create first main window
 	MainWindow first_window(true);
