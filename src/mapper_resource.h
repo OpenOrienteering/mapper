@@ -60,7 +60,7 @@ namespace MapperResource
 	 * If the name parameter is given, it is understood as a filename in the 
 	 * resource directory identified by resource_type.
 	 */
-	QString locate(MapperResource::RESOURCE_TYPE resource_type, const QString name = QString());
+	QString locate(MapperResource::RESOURCE_TYPE resource_type, const QString& name = QString());
 }
 
 #endif

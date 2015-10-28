@@ -100,7 +100,7 @@ protected:
 		bool load(const QString& path);
 		
 		/// Tries to find and load a world file for the given image path.
-		bool tryToLoadForImage(const QString image_path);
+		bool tryToLoadForImage(const QString& image_path);
 	};
 	
 	/** Information about an undo step for the paint-on-template functionality. */

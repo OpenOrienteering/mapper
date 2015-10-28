@@ -545,7 +545,7 @@ bool TemplateImage::WorldFile::load(const QString& path)
 	return true;
 }
 
-bool TemplateImage::WorldFile::tryToLoadForImage(const QString image_path)
+bool TemplateImage::WorldFile::tryToLoadForImage(const QString& image_path)
 {
 	int last_dot_index = image_path.lastIndexOf('.');
 	if (last_dot_index < 0)

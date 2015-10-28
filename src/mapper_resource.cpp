@@ -180,7 +180,7 @@ QStringList MapperResource::getProgramLocations(MapperResource::RESOURCE_TYPE re
 }
 
 
-QString MapperResource::locate(MapperResource::RESOURCE_TYPE resource_type, const QString name)
+QString MapperResource::locate(MapperResource::RESOURCE_TYPE resource_type, const QString& name)
 {
 	QStringList locations = getLocations(resource_type);
 	if (locations.isEmpty())

@@ -76,7 +76,7 @@ class TemplateAdjustDockWidget : public QDockWidget
 {
 Q_OBJECT
 public:
-	TemplateAdjustDockWidget(const QString title, MapEditorController* controller, QWidget* parent = 0);
+	TemplateAdjustDockWidget(const QString& title, MapEditorController* controller, QWidget* parent = 0);
 	virtual bool event(QEvent* event);
 	virtual void closeEvent(QCloseEvent* event);
 	

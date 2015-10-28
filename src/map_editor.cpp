@@ -3684,7 +3684,10 @@ void MapEditorController::setViewOptionsEnabled(bool enabled)
 
 // ### EditorDockWidget ###
 
-EditorDockWidget::EditorDockWidget(const QString title, QAction* action, MapEditorController* editor, QWidget* parent): QDockWidget(title, parent), action(action), editor(editor)
+EditorDockWidget::EditorDockWidget(const QString& title, QAction* action, MapEditorController* editor, QWidget* parent)
+: QDockWidget(title, parent)
+, action(action)
+, editor(editor)
 {
 	if (editor)
 	{

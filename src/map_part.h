@@ -100,7 +100,7 @@ public:
 	/**
 	 * Sets the part's name.
 	 */
-	void setName(const QString new_name);
+	void setName(const QString& new_name);
 	
 	
 	/**

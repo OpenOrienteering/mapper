@@ -162,9 +162,13 @@ void TemplateAdjustActivity::templateDeleted(int index, const Template* temp)
 
 // ### TemplateAdjustDockWidget ###
 
-TemplateAdjustDockWidget::TemplateAdjustDockWidget(const QString title, MapEditorController* controller, QWidget* parent): QDockWidget(title, parent), controller(controller)
+TemplateAdjustDockWidget::TemplateAdjustDockWidget(const QString& title, MapEditorController* controller, QWidget* parent)
+: QDockWidget(title, parent)
+, controller(controller)
 {
+	// nothing else
 }
+
 bool TemplateAdjustDockWidget::event(QEvent* event)
 {
 	if (event->type() == QEvent::ShortcutOverride && controller->getWindow()->areShortcutsDisabled())

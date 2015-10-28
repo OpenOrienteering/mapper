@@ -62,7 +62,7 @@ MapPart::~MapPart()
 }
 
 
-void MapPart::setName(const QString new_name)
+void MapPart::setName(const QString& new_name)
 {
 	name = new_name;
 	if (map)

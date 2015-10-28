@@ -41,7 +41,7 @@ class EditorDockWidget : public QDockWidget
 {
 Q_OBJECT
 public:
-	EditorDockWidget(const QString title, QAction* action,
+	EditorDockWidget(const QString& title, QAction* action,
 					 MapEditorController* editor, QWidget* parent = nullptr);
 	
 protected:
