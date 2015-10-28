@@ -432,7 +432,7 @@ bool Track::loadFromDXF(QFile* file, bool project_points, QWidget* dialog_parent
 	//       containing a track is re-loaded, and in this case the question should
 	//       not be asked again.
 	//int res = QMessageBox::question(dialog_parent, TemplateTrack::tr("Question"), TemplateTrack::tr("Are the coordinates in the DXF file in degrees?"), QMessageBox::Yes|QMessageBox::No);
-	foreach (DXFPath path, paths)
+	for (auto&& path : paths)
 	{
 		if (path.type == POINT)
 		{
@@ -452,7 +452,7 @@ bool Track::loadFromDXF(QFile* file, bool project_points, QWidget* dialog_parent
 			segment_starts.push_back(segment_points.size());
 			segment_names.push_back(path.layer);
 			int i = 0;
-			foreach(DXFCoordinate coord, path.coords)
+			for (auto&& coord : path.coords)
 			{
 				TrackPoint point = TrackPoint(LatLon(coord.y, coord.x), QDateTime());
 				if (project_points)

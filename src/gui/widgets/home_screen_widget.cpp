@@ -262,7 +262,7 @@ QWidget* HomeScreenWidgetDesktop::makeTipsWidget(HomeScreenController* controlle
 void HomeScreenWidgetDesktop::setRecentFiles(const QStringList& files)
 {
 	recent_files_list->clear();
-	Q_FOREACH(QString file, files)
+	for (auto&& file : files)
 	{
 		QListWidgetItem* new_item = new QListWidgetItem(QFileInfo(file).fileName());
 		new_item->setData(Qt::UserRole, file);
@@ -299,7 +299,7 @@ void HomeScreenWidgetDesktop::setTipOfTheDay(const QString& text)
 void HomeScreenWidgetDesktop::setTipsVisible(bool state)
 {
 	QGridLayout* layout = qobject_cast<QGridLayout*>(this->layout());
-	Q_FOREACH(QWidget* widget, tips_children)
+	for (auto widget : tips_children)
 	{
 		widget->setVisible(state);
 	}
@@ -474,7 +474,7 @@ QWidget* HomeScreenWidgetMobile::makeFileListWidget(HomeScreenController* contro
 	folder_list << "/" << "/mnt" << "/mnt/sdcard" << "/sdcard" << "/storage";
 	
 	bool oomapper_found = false;
-	Q_FOREACH(QString path, folder_list)
+	for (auto&& path, folder_list)
 	{
 		if (oomapper_found && path == "/")
 			// Don't need fallback (avoid duplicate entries)

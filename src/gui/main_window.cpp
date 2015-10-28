@@ -589,7 +589,7 @@ MainWindow* MainWindow::findMainWindow(const QString& file_name)
 	if (canonical_file_path.isEmpty())
 		return NULL;
 	
-	foreach (QWidget *widget, qApp->topLevelWidgets())
+	for (auto widget : qApp->topLevelWidgets())
 	{
 		MainWindow* other = qobject_cast<MainWindow*>(widget);
 		if (other && other->currentPath() == canonical_file_path)
@@ -815,7 +815,7 @@ void MainWindow::openPathLater(const QString& path)
 
 void MainWindow::openPathBacklog()
 {
-	Q_FOREACH(QString path, path_backlog)
+	for (auto&& path : path_backlog)
 		openPath(path);
 	path_backlog.clear();
 }
@@ -953,7 +953,7 @@ QString MainWindow::getOpenFileName(QWidget* parent, const QString& title, FileF
 	
 	if (types.testFlag(FileFormat::MapFile))
 	{
-		Q_FOREACH(const FileFormat *format, FileFormats.formats())
+		for (auto format : FileFormats.formats())
 		{
 			if (format->supportsImport())
 			{
@@ -998,7 +998,7 @@ bool MainWindow::showSaveAsDialog()
 	
 	// Build the list of supported file filters based on the file format registry
 	QString filters;
-	Q_FOREACH(const FileFormat *format, FileFormats.formats())
+	for (auto format : FileFormats.formats())
 	{
 		if (format->supportsExport())
 		{
@@ -1044,7 +1044,7 @@ bool MainWindow::showSaveAsDialog()
 	QStringList selected_extensions(format->fileExtensions());
 	selected_extensions.replaceInStrings(QRegExp("^"), ".");
 	bool has_extension = false;
-	Q_FOREACH(QString selected_extension, selected_extensions)
+	for (auto selected_extension : selected_extensions)
 	{
 		if (path.endsWith(selected_extension, Qt::CaseInsensitive))
 		{

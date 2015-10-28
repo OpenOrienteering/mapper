@@ -587,7 +587,7 @@ void PrintWidget::updatePaperSizes(const QPrinterInfo* target) const
 		if (size_list.isEmpty())
 			size_list = defaultPaperSizes();
 		
-		foreach (QPrinter::PaperSize size, size_list)
+		for (auto size : size_list)
 		{
 			if (size == QPrinter::Custom)
 				have_custom_size = true; // add it once after all other entires
@@ -885,7 +885,7 @@ void PrintWidget::updateResolutions(const QPrinterInfo* target) const
 	// Resolution list item with unit "dpi"
 	static QString dpi_template("%1 " + tr("dpi"));
 	QStringList resolutions;
-	Q_FOREACH(int resolution, supported_resolutions)
+	for (auto resolution : supported_resolutions)
 		resolutions << dpi_template.arg(resolution);
 	
 	QString dpi_text = dpi_combo->currentText();

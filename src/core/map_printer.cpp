@@ -1197,14 +1197,14 @@ bool MapPrinter::printMap(QPrinter* printer)
 #endif
 	
 	bool need_new_page = false;
-	Q_FOREACH(qreal vpos, v_page_pos)
+	for (auto vpos : v_page_pos)
 	{
 		if (!painter.isActive())
 		{
 			break;
 		}
 		
-		Q_FOREACH(qreal hpos, h_page_pos)
+		for (auto hpos : h_page_pos)
 		{
 			if (!painter.isActive())
 			{

@@ -64,7 +64,7 @@ MapView::MapView(Map* map)
 
 MapView::~MapView()
 {
-	foreach (TemplateVisibility* vis, template_visibilities)
+	for (auto vis : template_visibilities)
 		delete vis;
 	delete map_visibility;
 }

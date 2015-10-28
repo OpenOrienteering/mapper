@@ -162,7 +162,7 @@ int main(int argc, char** argv)
 	// Treat all program parameters as files to be opened
 	QStringList args(qapp.arguments());
 	args.removeFirst(); // the program name
-	Q_FOREACH(QString arg, args)
+	for (auto&& arg : args)
 	{
 		if (arg[0] != '-')
 		{

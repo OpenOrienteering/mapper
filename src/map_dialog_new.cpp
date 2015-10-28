@@ -154,7 +154,7 @@ void NewMapDialog::updateSymbolSetList()
 	SymbolSetMap::iterator it = symbol_set_map.find(scale);
 	if (it != symbol_set_map.end())
 	{
-		foreach (const QFileInfo& symbol_set, it->second)
+		for (auto&& symbol_set : it->second)
 		{
 			item = new QListWidgetItem(symbol_set.completeBaseName());
 			item->setData(Qt::UserRole, symbol_set.canonicalFilePath());
@@ -173,7 +173,7 @@ void NewMapDialog::updateSymbolSetList()
 			bool is_scale = (it->first.toInt() > 0);
 			QString remark = " (" % QString(is_scale ? ("1 : ") : "") % it->first % ")";
 			
-			foreach (const QFileInfo& symbol_set, it->second)
+			for (auto&& symbol_set : it->second)
 			{
 				item = new QListWidgetItem(symbol_set.completeBaseName() % remark);
 				item->setData(Qt::UserRole, symbol_set.canonicalFilePath());
@@ -217,7 +217,7 @@ void NewMapDialog::showFileDialog()
 	
 	// Build the list of supported file filters based on the file format registry
 	QString filters, extensions;
-	Q_FOREACH(const FileFormat *format, FileFormats.formats())
+	for (auto format : FileFormats.formats())
 	{
 		if (format->supportsImport())
 		{
@@ -252,14 +252,14 @@ void NewMapDialog::loadSymbolSetMap()
 	QString app_dir = QCoreApplication::applicationDirPath();
 	
 	QStringList locations = MapperResource::getLocations(MapperResource::SYMBOLSET);
-	Q_FOREACH(QString symbol_set_dir, locations)
+	for (auto&& symbol_set_dir : locations)
 		loadSymbolSetDir(symbol_set_dir);
 }
 
 void NewMapDialog::loadSymbolSetDir(const QDir& symbol_set_dir)
 {
 	QStringList subdirs = symbol_set_dir.entryList(QDir::Dirs | QDir::Hidden | QDir::NoSymLinks | QDir::NoDotAndDotDot, QDir::NoSort);
-	Q_FOREACH(const QString dir_name, subdirs)
+	for (auto&& dir_name : subdirs)
 	{
 		//int scale = dir_name.toInt();
 		//if (scale == 0)
@@ -275,7 +275,7 @@ void NewMapDialog::loadSymbolSetDir(const QDir& symbol_set_dir)
 		}
 		
 		QStringList symbol_set_filters;
-		Q_FOREACH(const FileFormat *format, FileFormats.formats())
+		for (auto format : FileFormats.formats())
 		{
 			if (format->supportsImport())
 				symbol_set_filters << QStringList(format->fileExtensions()).replaceInStrings(QRegExp("^"), "*.");

@@ -2252,7 +2252,7 @@ LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, SymbolSettingDialog* 
 	symbol->ensurePointSymbols(tr("Start symbol"), tr("Mid symbol"), tr("End symbol"), tr("Dash symbol"));
 	QList<PointSymbol*> point_symbols;
 	point_symbols << symbol->getStartSymbol() << symbol->getMidSymbol() << symbol->getEndSymbol() << symbol->getDashSymbol();
-	Q_FOREACH(PointSymbol* point_symbol, point_symbols)
+	for (auto point_symbol : point_symbols)
 	{
 		point_symbol_editor = new PointSymbolEditorWidget(controller, point_symbol, 16);
 		addPropertiesGroup(point_symbol->getName(), point_symbol_editor);
@@ -2573,7 +2573,7 @@ void LineSymbolSettings::updateStates()
 	color_edit->setEnabled(symbol_active);
 	
 	const bool line_active = symbol_active && symbol->color != NULL;
-	Q_FOREACH(QWidget* line_settings_widget, line_settings_list)
+	for (auto line_settings_widget : line_settings_list)
 	{
 		line_settings_widget->setEnabled(line_active);
 	}
@@ -2586,11 +2586,11 @@ void LineSymbolSettings::updateStates()
 	const bool line_dashed = symbol->dashed && symbol->color != NULL;
 	if (line_dashed)
 	{
-		Q_FOREACH(QWidget* undashed_widget, undashed_widget_list)
+		for (auto undashed_widget : undashed_widget_list)
 		{
 			undashed_widget->setVisible(false);
 		}
-		Q_FOREACH(QWidget* dashed_widget, dashed_widget_list)
+		for (auto dashed_widget : dashed_widget_list)
 		{
 			dashed_widget->setVisible(true);
 			dashed_widget->setEnabled(line_active);
@@ -2601,19 +2601,19 @@ void LineSymbolSettings::updateStates()
 	}
 	else
 	{
-		Q_FOREACH(QWidget* undashed_widget, undashed_widget_list)
+		for (auto undashed_widget : undashed_widget_list)
 		{
 			undashed_widget->setVisible(true);
 			undashed_widget->setEnabled(!symbol->mid_symbol->isEmpty());
 		}
 		show_at_least_one_symbol_check->setEnabled(show_at_least_one_symbol_check->isEnabled() && symbol->end_length > 0);
-		Q_FOREACH(QWidget* dashed_widget, dashed_widget_list)
+		for (auto dashed_widget : dashed_widget_list)
 		{
 			dashed_widget->setVisible(false);
 		}
 	}
 	
-	Q_FOREACH(QWidget* mid_symbol_widget, mid_symbol_widget_list)
+	for (auto mid_symbol_widget : mid_symbol_widget_list)
 	{
 		mid_symbol_widget->setEnabled(!symbol->mid_symbol->isEmpty());
 	}
@@ -2621,23 +2621,23 @@ void LineSymbolSettings::updateStates()
 	mid_symbol_distance_edit->setEnabled(mid_symbol_distance_edit->isEnabled() && symbol->mid_symbols_per_spot > 1);
 	
 	const bool border_active = symbol_active && symbol->have_border_lines;
-	Q_FOREACH(QWidget* border_widget, border_widget_list)
+	for (auto border_widget : border_widget_list)
 	{
 		border_widget->setVisible(border_active);
 		border_widget->setEnabled(border_active);
 	}
-	Q_FOREACH(QWidget* border_dash_widget, border_widgets.dash_widget_list)
+	for (auto border_dash_widget : border_widgets.dash_widget_list)
 	{
 		border_dash_widget->setVisible(border_active);
 		border_dash_widget->setEnabled(border_active && symbol->getBorder().dashed);
 	}
 	const bool different_borders = border_active && different_borders_check->isChecked();
-	Q_FOREACH(QWidget* different_border_widget, different_borders_widget_list)
+	for (auto different_border_widget : different_borders_widget_list)
 	{
 		different_border_widget->setVisible(different_borders);
 		different_border_widget->setEnabled(different_borders);
 	}
-	Q_FOREACH(QWidget* border_dash_widget, right_border_widgets.dash_widget_list)
+	for (auto border_dash_widget : right_border_widgets.dash_widget_list)
 	{
 		border_dash_widget->setVisible(different_borders);
 		border_dash_widget->setEnabled(different_borders && symbol->getRightBorder().dashed);
@@ -2683,7 +2683,7 @@ void LineSymbolSettings::updateContents()
 	
 	QList<PointSymbol*> point_symbols;
 	point_symbols << symbol->getStartSymbol() << symbol->getMidSymbol() << symbol->getEndSymbol() << symbol->getDashSymbol();
-	Q_FOREACH(PointSymbol* point_symbol, point_symbols)
+	for (auto point_symbol : point_symbols)
 	{
 		point_symbol_editor = new PointSymbolEditorWidget(controller, point_symbol, 16);
 		addPropertiesGroup(point_symbol->getName(), point_symbol_editor);
@@ -2710,7 +2710,7 @@ void LineSymbolSettings::reset(Symbol* symbol)
 	this->symbol->ensurePointSymbols(tr("Start symbol"), tr("Mid symbol"), tr("End symbol"), tr("Dash symbol"));
 	QList<PointSymbol*> point_symbols;
 	point_symbols << this->symbol->getStartSymbol() << this->symbol->getMidSymbol() << this->symbol->getEndSymbol() << this->symbol->getDashSymbol();
-	Q_FOREACH(PointSymbol* point_symbol, point_symbols)
+	for (auto point_symbol : point_symbols)
 	{
 		point_symbol_editor = new PointSymbolEditorWidget(controller, point_symbol, 16);
 		connect(point_symbol_editor, SIGNAL(symbolEdited()), this, SLOT(pointSymbolEdited()));

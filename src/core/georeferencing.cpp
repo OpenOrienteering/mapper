@@ -97,7 +97,7 @@ Georeferencing::Georeferencing()
 	if (0 != *pj_get_errno_ref())
 	{
 		QStringList locations = MapperResource::getLocations(MapperResource::PROJ_DATA);
-		Q_FOREACH(QString location, locations)
+		for (auto&& location : locations)
 		{
 			if (geographic_crs != NULL)
 				pj_free(geographic_crs);

@@ -697,7 +697,7 @@ bool Map::loadFrom(const QString& path, QWidget* dialog_parent, MapView* view, b
 
 	bool import_complete = false;
 	QString error_msg = tr("Invalid file type.");
-	Q_FOREACH(const FileFormat *format, FileFormats.formats())
+	for (auto format : FileFormats.formats())
 	{
 		// If the format supports import, and thinks it can understand the file header, then proceed.
 		if (format->supportsImport() && format->understands(buffer, total_read))

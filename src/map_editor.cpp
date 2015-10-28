@@ -3596,7 +3596,7 @@ void MapEditorController::importClicked()
 	
 	QStringList map_names;
 	QStringList map_extensions;
-	Q_FOREACH(const FileFormat* format, FileFormats.formats())
+	for (auto format : FileFormats.formats())
 	{
 		if (!format->supportsImport())
 			continue;
@@ -3630,7 +3630,7 @@ void MapEditorController::importClicked()
 	else
 	{
 		bool is_map_format = false;
-		Q_FOREACH(const QString& ext, map_extensions)
+		for (auto&& ext : map_extensions)
 		{
 			if (filename.endsWith("." + ext, Qt::CaseInsensitive))
 			{

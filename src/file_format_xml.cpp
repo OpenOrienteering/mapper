@@ -261,7 +261,7 @@ void XMLFileExporter::exportColors()
 					xml.writeTextElement(literal::namedcolor, color->getSpotColorName());
 					break;
 				case MapColor::CustomColor:
-					Q_FOREACH(component, color->getComponents())
+					for (auto&& component : color->getComponents())
 					{
 						XmlElementWriter component_element(xml, literal::component);
 						component_element.writeAttribute(literal::factor, component.factor);
@@ -673,11 +673,11 @@ void XMLFileImporter::importColors()
 	
 	// All spot colors are loaded at this point.
 	// Now deal with depending color compositions from the backlog.
-	Q_FOREACH(XMLFileImporterColorBacklogItem item, backlog)
+	for (auto&& item : backlog)
 	{
 		// Process the list of spot color components.
 		SpotColorComponents out_components;
-		Q_FOREACH(SpotColorComponent in_component, item.components)
+		for (auto&& in_component : item.components)
 		{
 			const MapColor* out_color = map->getColor(in_component.spot_color->getPriority());
 			if (out_color == NULL || out_color->getSpotColorMethod() != MapColor::SpotColor)
