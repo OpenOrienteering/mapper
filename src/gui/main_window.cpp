@@ -1115,9 +1115,8 @@ void MainWindow::linkClicked(const QString &link)
 		showAbout();
 	else if (link.startsWith("examples:", Qt::CaseInsensitive))
 	{
-		const QString example(link.mid(9));
-		QString example_path = MapperResource::locate(MapperResource::EXAMPLE, example);
-		openPathLater(example_path);
+		auto example = link.midRef(9);
+		openPathLater(MapperResource::locate(MapperResource::EXAMPLE) % '/' % example);
 	}
 	else
 		QDesktopServices::openUrl(link);
