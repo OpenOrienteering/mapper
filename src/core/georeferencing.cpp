@@ -73,6 +73,22 @@ namespace literal
 	static const QLatin1String geographic_coordinates("Geographic coordinates");
 }
 
+namespace
+{
+	/** Helper for PROJ.4 initialization.
+	 * 
+	 * This helper adds "+no_defs" if it is not already part of the
+	 * specification.
+	 */
+	projPJ pj_init_plus_no_defs(const QString& spec)
+	{
+		auto spec_latin1 = spec.toLatin1();
+		if (!spec_latin1.contains("+no_defs"))
+			spec_latin1.append(" +no_defs");
+		
+		return pj_init_plus(spec_latin1);
+	}
+}
 
 
 //### Georeferencing ###
@@ -93,7 +109,7 @@ Georeferencing::Georeferencing()
 	projected_crs_id = "Local";
 	projected_crs  = NULL;
 	*pj_get_errno_ref() = 0;
-	geographic_crs = pj_init_plus(geographic_crs_spec.toLatin1());
+	geographic_crs = pj_init_plus_no_defs(geographic_crs_spec);
 	if (0 != *pj_get_errno_ref())
 	{
 		QStringList locations = MapperResource::getLocations(MapperResource::PROJ_DATA);
@@ -105,7 +121,7 @@ Georeferencing::Georeferencing()
 			const char* pj_searchpath_list = pj_searchpath.constData();
 			pj_set_searchpath(1, &pj_searchpath_list);
 			*pj_get_errno_ref() = 0;
-			geographic_crs = pj_init_plus(geographic_crs_spec.toLatin1());
+			geographic_crs = pj_init_plus_no_defs(geographic_crs_spec);
 			if (0 == *pj_get_errno_ref())
 				break;
 		}
@@ -130,9 +146,9 @@ Georeferencing::Georeferencing(const Georeferencing& other)
 	updateTransformation();
 	
 	*pj_get_errno_ref() = 0;
-	geographic_crs = pj_init_plus(geographic_crs_spec.toLatin1());
+	geographic_crs = pj_init_plus_no_defs(geographic_crs_spec);
 	Q_ASSERT(geographic_crs != NULL);
-	projected_crs  = pj_init_plus(projected_crs_spec.toLatin1());
+	projected_crs  = pj_init_plus_no_defs(projected_crs_spec);
 }
 
 Georeferencing::~Georeferencing()
@@ -163,7 +179,7 @@ Georeferencing& Georeferencing::operator=(const Georeferencing& other)
 	if (projected_crs != NULL)
 		pj_free(projected_crs);
 	*pj_get_errno_ref() = 0;
-	projected_crs       = pj_init_plus(projected_crs_spec.toLatin1());
+	projected_crs       = pj_init_plus_no_defs(projected_crs_spec);
 	
 	emit stateChanged();
 	emit transformationChanged();
@@ -289,7 +305,7 @@ void Georeferencing::load(QXmlStreamReader& xml, bool load_scale_only)
 	{
 		if (projected_crs != NULL)
 			pj_free(projected_crs);
-		projected_crs = pj_init_plus(projected_crs_spec.toLatin1());
+		projected_crs = pj_init_plus_no_defs(projected_crs_spec);
 		if (0 == *pj_get_errno_ref())
 		{
 			state = Normal;
@@ -580,7 +596,7 @@ bool Georeferencing::setProjectedCRS(const QString& id, const QString& spec, std
 		{
 			projected_crs_parameters.swap(params); // params was passed by value!
 			*pj_get_errno_ref() = 0;
-			projected_crs = pj_init_plus(projected_crs_spec.toLatin1());
+			projected_crs = pj_init_plus_no_defs(projected_crs_spec);
 			ok = (0 == *pj_get_errno_ref());
 			if (ok && state != Normal)
 				setState(Normal);
