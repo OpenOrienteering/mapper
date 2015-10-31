@@ -1126,13 +1126,6 @@ void MapPrinter::drawSeparationPages(QPrinter* printer, QPainter* device_painter
 
 bool MapPrinter::printMap(QPrinter* printer)
 {
-	int num_steps = v_page_pos.size() * h_page_pos.size();
-	int step = 0;
-	cancel_print_map = false;
-	const QString message_template( (options.mode == MapPrinterOptions::Separations) ?
-	  tr("Processing separations of page %1...") :
-	  tr("Processing page %1...") );
-	
 	// Printer settings may have been changed by preview or application.
 	// We need to use them for printing.
 	printer->setFullPage(true);
@@ -1195,6 +1188,15 @@ bool MapPrinter::printMap(QPrinter* printer)
 		    -page_format.page_rect.top()*resolution / 25.4   );
 	}
 #endif
+	
+	cancel_print_map = false;
+	int step = 0;
+	int num_steps = v_page_pos.size() * h_page_pos.size();
+	const QString message_template( (options.mode == MapPrinterOptions::Separations) ?
+	  tr("Processing separations of page %1...") :
+	  tr("Processing page %1...") );
+	auto message = message_template.arg(1);
+	emit printProgress(0, message);
 	
 	bool need_new_page = false;
 	for (auto vpos : v_page_pos)
