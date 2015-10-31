@@ -33,7 +33,7 @@ PrintProgressDialog::PrintProgressDialog(MapPrinter* map_printer, QWidget* paren
  : QProgressDialog(parent, f)
  , map_printer(map_printer)
 {
-	setWindowModality(Qt::ApplicationModal);
+	setWindowModality(Qt::ApplicationModal); // Required for OSX, cf. QTBUG-40112
 	setRange(0, 100);
 	setMinimumDuration(0);
 	setValue(0);
@@ -45,11 +45,6 @@ PrintProgressDialog::PrintProgressDialog(MapPrinter* map_printer, QWidget* paren
 
 void PrintProgressDialog::paintRequested(QPrinter* printer)
 {
-	// Make sure that the dialog is on top of QPrintPreviewDialog.
-	auto w = qobject_cast<QPrintPreviewDialog*>(sender());
-	if (w && isHidden())
-		setParent(w);
-	
 	if (!map_printer->printMap(printer))
 	{
 		QMessageBox::warning(
@@ -61,15 +56,13 @@ void PrintProgressDialog::paintRequested(QPrinter* printer)
 
 void PrintProgressDialog::setProgress(int value, QString status)
 {
-	if (isHidden())
-	{
-		show();
-		raise();
-		QApplication::processEvents(QEventLoop::ExcludeUserInputEvents);
-	}
-	
 	setLabelText(status);
 	setValue(value);
+	if (!isVisible() && value < maximum())
+	{
+		show();
+	}
+	
 	QApplication::processEvents(); // Drawing and Cancel events
 }
 

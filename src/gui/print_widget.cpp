@@ -1027,12 +1027,15 @@ void PrintWidget::previewClicked()
 	printer->setCreator(main_window->appName());
 	printer->setDocName(QFileInfo(main_window->currentPath()).baseName());
 	
-	QPrintPreviewDialog preview(printer.get(), this);
+	QPrintPreviewDialog preview(printer.get(), editor->getWindow());
+	preview.setWindowModality(Qt::ApplicationModal); // Required for OSX, cf. QTBUG-40112
 	
-	PrintProgressDialog progress(map_printer, &preview);
+	PrintProgressDialog progress(map_printer, editor->getWindow());
 	progress.setWindowTitle(tr("Print Preview Progress"));
 	connect(&preview, &QPrintPreviewDialog::paintRequested, &progress, &PrintProgressDialog::paintRequested);
-	connect(&progress, &QProgressDialog::canceled, &preview, &QPrintPreviewDialog::hide);
+	// Doesn't work as expected, on OSX at least.
+	//connect(&progress, &QProgressDialog::canceled, &preview, &QPrintPreviewDialog::reject);
+	
 	preview.exec();
 #endif
 }
@@ -1097,9 +1100,6 @@ void PrintWidget::exportToImage()
 #if 0  // Pointless unless drawPage drives the event loop and sends progress
 	PrintProgressDialog progress(map_printer, main_window);
 	progress.setWindowTitle(tr("Export map ..."));
-	progress.show();
-	progress.raise();
-	QCoreApplication::processEvents(QEventLoop::ExcludeUserInputEvents);
 #endif
 	
 	// Export the map
@@ -1148,9 +1148,6 @@ void PrintWidget::exportToPdf()
 	
 	PrintProgressDialog progress(map_printer, main_window);
 	progress.setWindowTitle(tr("Export map ..."));
-	progress.show();
-	progress.raise();
-	QCoreApplication::processEvents(QEventLoop::ExcludeUserInputEvents);
 	
 	// Export the map
 	if (!map_printer->printMap(printer.get()))
@@ -1185,9 +1182,6 @@ void PrintWidget::print()
 	
 	PrintProgressDialog progress(map_printer, main_window);
 	progress.setWindowTitle(tr("Printing Progress"));
-	progress.show();
-	progress.raise();
-	QCoreApplication::processEvents(QEventLoop::ExcludeUserInputEvents);
 	
 	// Print the map
 	if (!map_printer->printMap(printer.get()))

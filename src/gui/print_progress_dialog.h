@@ -50,10 +50,9 @@ public:
 	
 public slots:
 	/**
-	 * Listens to and forwards paint requests, and reparents the dialog.
+	 * Listens to and forwards paint requests.
 	 * 
-	 * Resets the parent to the current sender(), if the sender is a
-	 * QPrintPreviewDialog and the dialog is not visible at the moment.
+	 * Shows an error message if printing fails.
 	 */
 	void paintRequested(QPrinter* printer);
 	
@@ -64,8 +63,11 @@ protected slots:
 	 * Shows the dialog if it was hidden, and processes events before returning.
 	 * This makes it possible to react on the dialog's Cancel button, and to
 	 * draw UI updates.
+	 * 
+	 * @param value   The progress, from 0 (not started) to 100 (finished).
+	 * @param message The text to be shown as a label to the progress.
 	 */
-	void setProgress(int value, QString status);
+	void setProgress(int value, QString message);
 	
 private:
 	MapPrinter* const map_printer;
