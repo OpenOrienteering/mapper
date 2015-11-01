@@ -3063,8 +3063,7 @@ void PathObject::recalculateParts()
 			if (coords[i].isHolePoint())
 			{
 				path_parts.emplace_back(*this, start_index, i);
-				++i;	// assume that there are never two hole points in a row
-				start_index = i;
+				start_index = i+1;
 			}
 			else if (coords[i].isCurveStart())
 			{
