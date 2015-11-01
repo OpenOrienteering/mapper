@@ -7,7 +7,7 @@ The general build process prerequisites are:
    - Mac OS X 10.10 (Yosemite). Mac OS X 10.7 or newer may work.
    - Linux. Ubuntu 14.04 is known to work.
  - The OpenOrienteering Mapper source code.
- - CMake >= 2.8.8.
+ - CMake >= 2.8.12.
    CMake is available from http://www.cmake.org/.
  - A supported C++ compiler toolchain. 
 
@@ -41,8 +41,8 @@ You can change the cmake option `Mapper_BUILD_CLIPPER` to adjust this.
 
 The program uses the PROJ.4 Cartographic Projections Library from
 http://trac.osgeo.org/proj/ which is released under permissive license terms.
-The program is known to work with the releases 4.7.0 (as contained in Ubuntu
-10.04 and 12.04) and 4.8.0. By default build settings, proj 4.8.0 will be
+The program is known to work with the releases 4.8.0 (as contained in Ubuntu
+14.04), 4.9.1 and 4.9.2. By default build settings, proj 4.8.0 will be
 downloaded and built as part of the build process. On Linux, default settings
 will use the installed proj library.
 You can change the cmake option `Mapper_BUILD_PROJ` to adjust this.
@@ -68,9 +68,9 @@ source directory (`SOURCE_DIR`).
 ## Compiling on Linux
 
 The standard g++ compiler from a recent distribution should work. The Ubuntu
-14.04 g++ is known to work. Make sure that the PROJ.4 library is installed.
-For a Ubuntu or Debian system, install libproj0 and libproj-dev.
-To create a DEB package, fakeroot must be installed.
+14.04 g++ is known to work. Make sure that the development packages of the
+PROJ.4 library and of CUPS are installed. For a Ubuntu or Debian system, installlibproj-dev and libcups2-dev.
+To create a DEB package from CMake, fakeroot must be installed.
 For using the Qt libraries provided by the repositories, the following packages
 need to be installed:
 `qt5-default` (>= 5), `qttools5-dev`, `qttools5-dev-tools`, `libqt5sql5-sqlite`
