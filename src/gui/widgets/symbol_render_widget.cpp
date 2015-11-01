@@ -265,6 +265,8 @@ SymbolRenderWidget::SymbolRenderWidget(Map* map, bool mobile_mode, QWidget* pare
 	sort_menu->addAction(tr("Sort by number"), this, SLOT(sortByNumber()));
 	sort_menu->addAction(tr("Sort by primary color"), this, SLOT(sortByColor()));
 	sort_menu->addAction(tr("Sort by primary color priority"), this, SLOT(sortByColorPriority()));
+	sort_manual_action = sort_menu->addAction(tr("Enable drag and drop"));
+	sort_manual_action->setCheckable(true);
 	context_menu->addMenu(sort_menu);
 	
 	connect(map, SIGNAL(colorDeleted(int, const MapColor*)), this, SLOT(update()));
@@ -611,12 +613,14 @@ void SymbolRenderWidget::mouseMoveEvent(QMouseEvent* event)
 		{
 			if ((event->pos() - last_click_pos).manhattanLength() < Settings::getInstance().getStartDragDistancePx())
 				return;
-			dragging = true;
+			dragging = sort_manual_action->isChecked();
 		}
 	}
 	else
 	{
-		if (event->buttons() & Qt::LeftButton && current_symbol_index >= 0)
+		if (event->buttons() & Qt::LeftButton
+		    && current_symbol_index >= 0
+		    && sort_manual_action->isChecked())
 		{
 			if ((event->pos() - last_click_pos).manhattanLength() < Settings::getInstance().getStartDragDistancePx())
 				return;

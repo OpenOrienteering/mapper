@@ -340,6 +340,7 @@ private:
 	QAction* select_objects_action;
 	QAction* select_objects_additionally_action;
 	QAction* deselect_objects_action;
+	QAction* sort_manual_action;
 	
 	SymbolToolTip* tooltip;
 	
