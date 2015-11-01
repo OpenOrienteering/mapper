@@ -87,9 +87,9 @@ VirtualCoordVector::size_type PathCoordVector::update(VirtualCoordVector::size_t
 		
 		if (flags[part_start].isHolePoint())
 		{
-			qWarning("PathCoordVector 0x%s has an invalid hole at index %d",
-			         QString::number((long int)this, 16).toLocal8Bit().constData(),
-			         part_start);
+			auto pos = virtual_coords[0];
+			qWarning("PathCoordVector at %g %g (mm) has an invalid hole at index %d.",
+			         pos.x(), -pos.y(), part_start);
 		}
 		
 		clear();
