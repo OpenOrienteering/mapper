@@ -32,11 +32,12 @@
 #include <QXmlStreamWriter>
 
 
-#if defined(QT_PRINTSUPPORT_LIB) && defined(Q_OS_WIN)
-#include <private/qprintengine_win_p.h>
+#if defined(QT_PRINTSUPPORT_LIB)
+#  include <advanced_pdf_printer.h>
+#  if defined(Q_OS_WIN)
+#    include <private/qprintengine_win_p.h>
+#  endif
 #endif
-
-#include <advanced_pdf_printer.h>
 
 #include "../core/map_color.h"
 #include "../core/map_view.h"

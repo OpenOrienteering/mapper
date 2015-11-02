@@ -28,6 +28,10 @@
 #include "file_format_xml.h"
 #include "fileformats/ocd_file_format.h"
 
+#if defined(Q_OS_ANDROID)
+#  include "core/georeferencing.h"
+#endif
+
 void doStaticInitializations()
 {
 	// Register the supported file formats

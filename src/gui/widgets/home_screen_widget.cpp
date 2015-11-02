@@ -474,7 +474,7 @@ QWidget* HomeScreenWidgetMobile::makeFileListWidget(HomeScreenController* contro
 	folder_list << "/" << "/mnt" << "/mnt/sdcard" << "/sdcard" << "/storage";
 	
 	bool oomapper_found = false;
-	for (auto&& path, folder_list)
+	for (auto&& path : folder_list)
 	{
 		if (oomapper_found && path == "/")
 			// Don't need fallback (avoid duplicate entries)
