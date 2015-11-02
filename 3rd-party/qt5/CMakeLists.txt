@@ -25,7 +25,7 @@ include(ExternalProject)
 
 # Configuration options
 
-set(QT5_VERSION_DEFAULT 5.5.1-openorienteering-2015-10-17)
+set(QT5_VERSION_DEFAULT 5.5.1-openorienteering-2015-11-02)
 set(QT5_VERSION ${QT5_VERSION_DEFAULT} CACHE STRING
   "Version number of the Qt5 library, recommended value: ${QT5_VERSION_DEFAULT}")
 mark_as_advanced(QT5_VERSION)
@@ -58,7 +58,7 @@ set(QT5_MD5SUMS
   # Schema: VERSION:MD5[:DOWNLOAD_URL]
   5.4.2:fa1c4d819b401b267eb246a543a63ea5
   5.5.1:59f0216819152b77536cf660b015d784
-  5.5.1-openorienteering-2015-10-17:bfcb9f0cdd85e27bb08f005e0df27492
+  5.5.1-openorienteering-2015-11-02:cd904d4a093e740f3aaaeef9dda00a09
 )
 foreach(line ${QT5_MD5SUMS})
 	if(${line} MATCHES "^${QT5_VERSION}:")
@@ -67,7 +67,7 @@ foreach(line ${QT5_MD5SUMS})
 	endif()
 endforeach()
 if(NOT QT5_MD5)
-	message(FATAL_ERROR
+	message(WARNING
 	  "Unknown MD5 sum for Qt5 library ${QT5_VERSION}. "
 	  "Edit ${PROJECT_SOURCE_DIR}/CMakeLists.txt, "
 	  "or specify the correct QT5_MD5 value at the command line.")
@@ -243,6 +243,7 @@ if(QT5_INSTALL_ROOT AND NOT "${QT5_PLATFORM}" MATCHES "android")
 		set(QT5_CONFIG_EXTRA_OPTS "-R '${INSTALL_DIR}${QT5_BINARY_DESTINATION}/lib' ${QT5_CONFIG_EXTRA_OPTS}")
 	endif()
 endif()
+# Cf. http://code.qt.io/cgit/qtsdk/qtsdk.git/tree/packaging-tools/releases/release-55?h=v5.5.1-packaging
 if(APPLE)
 	set(QT5_CONFIG_EXTRA_OPTS "${QT5_CONFIG_EXTRA_OPTS} -no-framework -no-securetransport")
 endif()
@@ -251,12 +252,10 @@ if(UNIX AND NOT APPLE AND NOT "${QT5_PLATFORM}" MATCHES "android")
 	set(QT5_CONFIG_EXTRA_OPTS "${QT5_CONFIG_EXTRA_OPTS} -qt-xcb")
 endif()
 if("${QT5_PLATFORM}" MATCHES "android")
-	# cf. https://qt.gitorious.org/qtsdk/qtsdk/source/v5.4.0-packaging:packaging-tools/bld_config/configure_android_armv7_opensource
 	set(QT5_CONFIG_EXTRA_OPTS
-	  "${QT5_CONFIG_EXTRA_OPTS} -opengl es2 -sysconfdir /etc/xdg -no-icu -no-sql-sqlite -nomake tools -skip qttranslations -no-warnings-are-errors")
+	  "${QT5_CONFIG_EXTRA_OPTS} -opengl es2 -sysconfdir /etc/xdg -no-icu -no-sql-sqlite -no-warnings-are-errors")
 endif()
 if(MINGW)
-	# cf. https://qt.gitorious.org/qtsdk/qtsdk/source/v5.4.0-packaging:packaging-tools/bld_config/configure_win_opengl_opensource
 	set(QT5_CONFIG_EXTRA_OPTS
 	  "${QT5_CONFIG_EXTRA_OPTS} -qt-zlib -qt-libpng -qt-libjpeg -qt-sql-sqlite -qt-pcre")
 endif()

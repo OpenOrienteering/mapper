@@ -42,7 +42,6 @@ for I in \
   qt*/tests \
   qt3d \
   qtactiveqt \
-  qtandroidextras \
   qtbase/doc/src \
   qtbase/include/QtANGLE \
   qtbase/include/QtNetwork/[Qq][Ss]sl* \
@@ -62,7 +61,6 @@ for I in \
   qtbase/src/sql/drivers/tds \
   qtcanvas3d \
   qtconnectivity \
-  qtdeclarative \
   qtdoc \
   qtenginio \
   qtgraphicaleffects \
