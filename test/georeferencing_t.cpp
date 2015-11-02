@@ -68,7 +68,8 @@ void GeoreferencingTest::testCRS_data()
 	QTest::addColumn<QString>("id");
 	QTest::addColumn<QString>("spec");
 	
-	QTest::newRow("UTM") << "UTM" << utm32_spec;
+	QTest::newRow("EPSG:4326") << "EPSG:4326" << QString("+init=epsg:4326");
+	QTest::newRow("UTM")       << "UTM"       << utm32_spec;
 }
 
 void GeoreferencingTest::testCRS()

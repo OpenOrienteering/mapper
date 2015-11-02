@@ -75,6 +75,26 @@ namespace literal
 
 namespace
 {
+	/** Helper for PROJ.4 searchpath initialization.
+	 *
+	 * Intented to be used as static object in the right place.
+	 */
+	class ProjSearchPathSetup
+	{
+	public:
+		ProjSearchPathSetup()
+		{
+			QVarLengthArray<QByteArray,3> buffer;
+			QVarLengthArray<const char*,3> data;
+			for (auto&& location : MapperResource::getLocations(MapperResource::PROJ_DATA))
+			{
+				buffer.append(location.toLocal8Bit());
+				data.append(buffer.back().data());
+			}
+			pj_set_searchpath(data.size(), data.data());
+		}
+	};
+	
 	/** Helper for PROJ.4 initialization.
 	 * 
 	 * This helper adds "+no_defs" if it is not already part of the
@@ -105,26 +125,13 @@ Georeferencing::Georeferencing()
   map_ref_point(0, 0),
   projected_ref_point(0, 0)
 {
+	static ProjSearchPathSetup run_once;
+	
 	updateTransformation();
 	
 	projected_crs_id = "Local";
 	projected_crs  = NULL;
 	geographic_crs = pj_init_plus_no_defs(geographic_crs_spec);
-	if (0 != *pj_get_errno_ref())
-	{
-		QStringList locations = MapperResource::getLocations(MapperResource::PROJ_DATA);
-		for (auto&& location : locations)
-		{
-			if (geographic_crs != NULL)
-				pj_free(geographic_crs);
-			QByteArray pj_searchpath = QDir::toNativeSeparators(location).toLocal8Bit();
-			const char* pj_searchpath_list = pj_searchpath.constData();
-			pj_set_searchpath(1, &pj_searchpath_list);
-			geographic_crs = pj_init_plus_no_defs(geographic_crs_spec);
-			if (0 == *pj_get_errno_ref())
-				break;
-		}
-	}	
 	Q_ASSERT(geographic_crs != NULL);
 }
 
