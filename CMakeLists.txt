@@ -180,8 +180,6 @@ endif()
 
 add_custom_target(Mapper_prerequisites
   SOURCES # Extra files to be shown in IDE
-    .gitattributes
-    .gitignore
     INSTALL.md
     README.md
     oo-mapper.pro
