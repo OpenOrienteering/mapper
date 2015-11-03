@@ -285,7 +285,7 @@ void GPSDisplay::updateTimeout()
 
 void GPSDisplay::debugPositionUpdate()
 {
-#if QT_VERSION >= 0x050200
+#if MAPPER_DEVELOPMENT_BUILD
 	if (! visible)
 		return;
 	

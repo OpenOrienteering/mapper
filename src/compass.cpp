@@ -542,7 +542,7 @@ float Compass::getCurrentAzimuth()
 {
 #ifdef QT_SENSORS_LIB
 	return p->getLatestAzimuth();
-#elif QT_VERSION >= 0x050200
+#elif MAPPER_DEVELOPMENT_BUILD
 	// DEBUG: rotate around ...
 	QTime now = QTime::currentTime();
 	return 360 * (now.msecsSinceStartOfDay() % (10 * 1000)) / (float)(10 * 1000);
