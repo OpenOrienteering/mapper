@@ -269,9 +269,10 @@ void GeoreferencingDialog::georefStateChanged()
 // slot
 void GeoreferencingDialog::transformationChanged()
 {
-	ScopedMultiSignalsBlocker block;
-	block << map_x_edit << map_y_edit
-	      << easting_edit << northing_edit;
+	ScopedMultiSignalsBlocker block(
+	            map_x_edit, map_y_edit,
+	            easting_edit, northing_edit
+	);
 	
 	map_x_edit->setValue(georef->getMapRefPoint().x());
 	map_y_edit->setValue(-1 * georef->getMapRefPoint().y());
@@ -285,9 +286,10 @@ void GeoreferencingDialog::transformationChanged()
 // slot
 void GeoreferencingDialog::projectionChanged()
 {
-	ScopedMultiSignalsBlocker block;
-	block << crs_selector
-	      << lat_edit << lon_edit;
+	ScopedMultiSignalsBlocker block(
+	            crs_selector,
+	            lat_edit, lon_edit
+	);
 	
 	if (georef->getState() == Georeferencing::Normal)
 	{

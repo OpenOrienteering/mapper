@@ -611,8 +611,11 @@ void PrintWidget::updatePaperSizes(const QPrinterInfo* target) const
 // slot
 void PrintWidget::setPageFormat(const MapPrinterPageFormat& format)
 {
-	ScopedMultiSignalsBlocker block;
-	block << paper_size_combo << page_orientation_group << overlap_edit << page_width_edit << page_height_edit;
+	ScopedMultiSignalsBlocker block(
+	            paper_size_combo, page_orientation_group,
+	            page_width_edit, page_height_edit,
+	            overlap_edit
+	);
 	paper_size_combo->setCurrentIndex(paper_size_combo->findData(format.paper_size));
 	page_orientation_group->button(format.orientation)->setChecked(true);
 	page_width_edit->setValue(format.paper_dimensions.width());
@@ -701,8 +704,10 @@ void PrintWidget::centerOnMap(QRectF& area) const
 // slot
 void PrintWidget::setPrintArea(const QRectF& area)
 {
-	ScopedMultiSignalsBlocker block;
-	block << left_edit << top_edit << width_edit << height_edit;
+	ScopedMultiSignalsBlocker block(
+	            left_edit, top_edit,
+	            width_edit, height_edit
+	);
 	
 	left_edit->setValue(area.left());
 	top_edit->setValue(-area.top()); // Flip sign!
@@ -785,13 +790,18 @@ void PrintWidget::setOptions(const MapPrinterOptions& options)
 {
 	using namespace Util::TristateCheckbox;
 	
-	ScopedMultiSignalsBlocker block;
-	block << dpi_combo->lineEdit() << show_templates_check 
-	      << show_grid_check << overprinting_check
-	      << color_mode_combo
-	      << vector_mode_button << raster_mode_button
-	      << separations_mode_button
-	      << different_scale_check << different_scale_edit;
+	ScopedMultiSignalsBlocker block(
+	            dpi_combo->lineEdit(),
+	            show_templates_check,
+	            show_grid_check,
+	            overprinting_check,
+	            color_mode_combo,
+	            vector_mode_button,
+	            raster_mode_button,
+	            separations_mode_button,
+	            different_scale_check,
+	            different_scale_edit
+	);
 	
 	switch (options.mode)
 	{
