@@ -297,6 +297,7 @@ SOURCES += \
   util/item_delegates.cpp \
   util/overriding_shortcut.cpp \
   util/recording_translator.cpp \
+  util/scoped_signals_blocker.cpp \
   util/xml_stream_util.cpp
 
 RESOURCES += \
