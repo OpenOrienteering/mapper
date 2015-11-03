@@ -178,7 +178,15 @@ if(CMAKE_COMPILER_IS_GNUCXX)
 	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99 -Wall -Wpedantic")
 endif()
 
-add_custom_target(Mapper_prerequisites)
+add_custom_target(Mapper_prerequisites
+  SOURCES # Extra files to be shown in IDE
+    .gitattributes
+    .gitignore
+    INSTALL.md
+    README.md
+    oo-mapper.pro
+    ${MAPPER_VERSION_PRI}
+)
 set(Mapper_prerequisites_FOUND TRUE)
 
 if(Mapper_BUILD_CLIPPER)

@@ -293,7 +293,8 @@ set(Mapper_Common_MOC_INPUT
  util/recording_translator.h
 )
 
-set(Mapper_EXTRA_HEADERS
+# Extra header to show in the IDE, but not be written to src.pro
+set(Mapper_Common_HEADERS
   core/crs_template.h
   core/crs_template_implementation.h
   core/image_transparency_fixup.h
@@ -335,18 +336,13 @@ set(Mapper_RESOURCES ${Mapper_RESOURCES} ${PROJECT_SOURCE_DIR}/resources.qrc)
 qt5_add_resources(Mapper_RESOURCES_RCC ${Mapper_RESOURCES} OPTIONS -no-compress)
 
 
-# Mapper_Extra_Header: dummy target to indicate extra headers to IDEs
-
-add_custom_target(Mapper_Extras
-  SOURCES ${Mapper_EXTRA_HEADERS}
-)
-
 # Mapper common: static library of full runtime 
 # (To be used by Mapper executable and by system tests.)
 
 add_library(Mapper_Common STATIC
   ${Mapper_Common_SRCS}
   ${Mapper_Common_MOC}
+  ${Mapper_Common_HEADERS}
   ${Mapper_RESOURCES_RCC}
 )
 add_dependencies(Mapper_Common
@@ -447,6 +443,6 @@ endforeach()
 # qmake configuration
 
 set(MAPPER_PRO_GENERATOR "Generated in CMakeLists.txt from src.pro.in")
-string(REPLACE ";" " \\\n  " MAPPER_PRO_HEADERS "${Mapper_Common_MOC_INPUT};${Mapper_EXTRA_HEADERS}")
+string(REPLACE ";" " \\\n  " MAPPER_PRO_HEADERS "${Mapper_Common_MOC_INPUT};${Mapper_Common_HEADERS}")
 string(REPLACE ";" " \\\n  " MAPPER_PRO_SOURCES "${Mapper_Common_SRCS}")
 configure_file(${PROJECT_SOURCE_DIR}/src/src.pro.in ${PROJECT_SOURCE_DIR}/src/src.pro @ONLY)
