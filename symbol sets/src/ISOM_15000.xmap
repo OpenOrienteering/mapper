@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map xmlns="http://oorienteering.sourceforge.net/mapper/xml/v2" version="5">
+<map xmlns="http://openorienteering.org/apps/mapper/xml/v2" version="5">
     <notes></notes>
     <georeferencing scale="15000"/>
     <colors count="22">
