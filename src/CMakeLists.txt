@@ -17,9 +17,10 @@
 #    You should have received a copy of the GNU General Public License
 #    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
 
+find_package(Qt5Core 5.2 REQUIRED)
 find_package(Qt5Widgets REQUIRED)
-find_package(Qt5Network)
 find_package(Qt5Xml REQUIRED)
+find_package(Qt5Network)
 find_package(Qt5PrintSupport)
 
 if(Mapper_PACKAGE_QT AND UNIX AND NOT APPLE AND NOT Mapper_DEVELOPMENT_BUILD)
@@ -356,7 +357,21 @@ target_link_libraries(Mapper_Common
   libocad
   polyclipping
   printsupport
+  ${PROJ_LIBRARY}
+  Qt5::Widgets
+  Qt5::Xml
 )
+if(Qt5Network_FOUND)
+	target_link_libraries(Mapper_Common
+	  Qt5::Network
+	)
+endif()
+if(Qt5PrintSupport_FOUND)
+	target_link_libraries(Mapper_Common
+	  Qt5::PrintSupport
+	)
+endif()
+
 
 qt5_translations_sources(
   SOURCES ${Mapper_Common_SRCS} ${Mapper_COMMON_MOC_INPUT}
@@ -395,8 +410,6 @@ endif()
 target_link_libraries(Mapper
   Mapper_Common
   doc-licensing
-  ${PROJ_LIBRARY}
-  ${QT_LIBRARIES}
 )
 
 install(TARGETS Mapper
