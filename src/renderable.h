@@ -28,12 +28,13 @@
 #include <QSharedData>
 #include <QExplicitlySharedDataPointer>
 
+#include "core/map_color.h"
+
 class QColor;
 class QPainter;
 class QPainterPath;
 
 class Map;
-class MapColor;
 class Object;
 class PainterConfig;
 
@@ -111,7 +112,7 @@ class Renderable
 {
 protected:
 	/** The constructor for new renderables. */
-	explicit Renderable(int color_priority);
+	explicit Renderable(const MapColor* color);
 	
 	/** The copy constructor is needed by containers. */
 	Renderable(const Renderable& other);
@@ -357,8 +358,8 @@ bool RenderConfig::testFlag(const RenderConfig::Option flag) const
 // ### Renderable ###
 
 inline
-Renderable::Renderable(int color_priority)
- : color_priority(color_priority)
+Renderable::Renderable(const MapColor* color)
+ : color_priority(color ? color->getPriority() : MapColor::Reserved)
 {
 	; // nothing
 }

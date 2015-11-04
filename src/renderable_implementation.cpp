@@ -36,7 +36,7 @@
 // ### DotRenderable ###
 
 DotRenderable::DotRenderable(const PointSymbol* symbol, MapCoordF coord)
- : Renderable(symbol->getInnerColor()->getPriority())
+ : Renderable(symbol->getInnerColor())
 {
 	double x = coord.x();
 	double y = coord.y();
@@ -68,7 +68,7 @@ void DotRenderable::render(QPainter &painter, const RenderConfig &config) const
 // ### CircleRenderable ###
 
 CircleRenderable::CircleRenderable(const PointSymbol* symbol, MapCoordF coord)
- : Renderable(symbol->getOuterColor()->getPriority())
+ : Renderable(symbol->getOuterColor())
  , line_width(0.001f * symbol->getOuterWidth())
 {
 	double x = coord.x();
@@ -104,7 +104,7 @@ void CircleRenderable::render(QPainter &painter, const RenderConfig &config) con
 // ### LineRenderable ###
 
 LineRenderable::LineRenderable(const LineSymbol* symbol, const VirtualPath& virtual_path, bool closed)
- : Renderable(symbol->getColor()->getPriority())
+ : Renderable(symbol->getColor())
  , line_width(0.001f * symbol->getLineWidth())
 {
 	Q_ASSERT(virtual_path.size() >= 2);
@@ -232,7 +232,7 @@ LineRenderable::LineRenderable(const LineSymbol* symbol, const VirtualPath& virt
 }
 
 LineRenderable::LineRenderable(const LineSymbol* symbol, QPointF first, QPointF second)
- : Renderable(symbol->getColor()->getPriority())
+ : Renderable(symbol->getColor())
  , line_width(0.001f * symbol->getLineWidth())
  , cap_style(Qt::FlatCap)
  , join_style(Qt::MiterJoin)
@@ -477,7 +477,7 @@ void LineRenderable::render(QPainter &painter, const RenderConfig &config) const
 // ### AreaRenderable ###
 
 AreaRenderable::AreaRenderable(const AreaSymbol* symbol, const PathPartVector& path_parts)
- : Renderable(symbol->getColor() ? symbol->getColor()->getPriority() : MapColor::Reserved)
+ : Renderable(symbol->getColor())
 {
 	if (!path_parts.empty())
 	{
@@ -499,7 +499,7 @@ AreaRenderable::AreaRenderable(const AreaSymbol* symbol, const PathPartVector& p
 }
 
 AreaRenderable::AreaRenderable(const AreaSymbol* symbol, const VirtualPath& virtual_path)
- : Renderable(symbol->getColor() ? symbol->getColor()->getPriority() : MapColor::Reserved)
+ : Renderable(symbol->getColor())
 {
 	extent = virtual_path.path_coords.calculateExtent();
 	addSubpath(virtual_path);
@@ -562,7 +562,7 @@ void AreaRenderable::render(QPainter &painter, const RenderConfig &) const
 // ### TextRenderable ###
 
 TextRenderable::TextRenderable(const TextSymbol* symbol, const TextObject* text_object, const MapColor* color, double anchor_x, double anchor_y, bool framing_line)
- : Renderable(color->getPriority())
+ : Renderable(color)
 {
 	const QFont& font(symbol->getQFont());
 	const QFontMetricsF& metrics(symbol->getFontMetrics());
