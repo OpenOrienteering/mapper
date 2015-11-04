@@ -1280,7 +1280,7 @@
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="261"/>
         <source>Editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Editor</translation>
     </message>
 </context>
 <context>
@@ -1416,7 +1416,7 @@
         <location filename="../src/gui/settings_dialog.cpp" line="451"/>
         <location filename="../src/gui/settings_dialog.cpp" line="619"/>
         <source>More...</source>
-        <translation type="unfinished"></translation>
+        <translation>Weitere...</translation>
     </message>
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="460"/>
@@ -1426,7 +1426,7 @@
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="490"/>
         <source>General</source>
-        <translation type="unfinished">Allgemein</translation>
+        <translation>Allgemein</translation>
     </message>
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="523"/>
@@ -1491,7 +1491,7 @@
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="61"/>
         <source>UTM Zone (number north/south)</source>
-        <translation type="unfinished"></translation>
+        <translation>UTM-Zone (Zahl Nord/Süd)</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="68"/>
@@ -1514,30 +1514,30 @@
         <location filename="../src/core/crs_template_implementation.cpp" line="80"/>
         <source>by EPSG code</source>
         <comment>as in: The CRS is specified by EPSG code</comment>
-        <translation type="unfinished"></translation>
+        <translation>mit EPSG-Code</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="81"/>
         <location filename="../src/core/crs_template_implementation.cpp" line="92"/>
         <source>Local coordinates</source>
-        <translation type="unfinished"></translation>
+        <translation>Lokale Koordinaten</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="84"/>
         <source>EPSG code</source>
-        <translation type="unfinished"></translation>
+        <translation>EPSG Code</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="91"/>
         <source>Custom PROJ.4</source>
         <comment>PROJ.4 specification</comment>
-        <translation type="unfinished"></translation>
+        <translation>PROJ.4-Spezifikation</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="95"/>
         <source>Specification</source>
         <comment>PROJ.4 specification</comment>
-        <translation type="unfinished"></translation>
+        <translation>Spezifikation</translation>
     </message>
     <message>
         <location filename="../src/core/georeferencing.cpp" line="209"/>
@@ -1723,7 +1723,7 @@
         <location filename="../src/gui/georeferencing_dialog.cpp" line="181"/>
         <location filename="../src/gui/select_crs_dialog.cpp" line="84"/>
         <source>&amp;Coordinate reference system:</source>
-        <translation type="unfinished">&amp;Koordinatenbezugssystem:</translation>
+        <translation>&amp;Koordinatenbezugssystem:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="187"/>
@@ -1812,7 +1812,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="683"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set the reference point. &lt;b&gt;Right click&lt;/b&gt;: Cancel.</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Klick&lt;/b&gt;: Referenzpunkt setzen. &lt;b&gt;Rechtsklick&lt;/b&gt;: Abbrechen.</translation>
     </message>
 </context>
 <context>
@@ -1944,7 +1944,7 @@
     <message>
         <location filename="../src/symbol.cpp" line="285"/>
         <source>Error while loading a symbol of type %1 at line %2 column %3: %4</source>
-        <translation type="unfinished"></translation>
+        <translation>Fehler beim Laden eines Symbols vom Typ %1 in Zeile %2 Spalte %3: %4</translation>
     </message>
     <message>
         <source>Error while loading a symbol.</source>
@@ -2004,13 +2004,13 @@
     <message>
         <location filename="../src/file_format_xml.cpp" line="858"/>
         <source>Error while loading the printing configuration at %1:%2: %3</source>
-        <translation type="unfinished"></translation>
+        <translation>Fehler beim Laden der Druckkonfiguration bei %1:%2: %3</translation>
     </message>
     <message>
         <location filename="../src/file_format_xml.cpp" line="871"/>
         <location filename="../src/file_format_xml.cpp" line="885"/>
         <source>Error while loading the undo/redo steps at %1:%2: %3</source>
-        <translation type="unfinished"></translation>
+        <translation>Fehler beim Laden der Rückgängig-/Wiederholen-Schritte bei %1:%2: %3</translation>
     </message>
 </context>
 <context>
@@ -2048,7 +2048,7 @@
     <message>
         <location filename="../src/file_format_native.cpp" line="122"/>
         <source>This file uses an obsolete format. Support for this format is to be removed from this program soon. To be able to open the file in the future, save it again.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Diese Datei nutzt ein veraltetes Format. Die Unterstützung für dieses Format wird bald aus der Software entfernt. Um die Datei auch in Zukunft öffnen zu können, speichern Sie es bitte erneut.</translation>
     </message>
     <message>
         <location filename="../src/file_format_native.cpp" line="135"/>
@@ -3936,7 +3936,7 @@ gewählt</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="3320"/>
         <source>Do you want to remove map part &quot;%1&quot; and all its objects?</source>
-        <translation type="unfinished"></translation>
+        <translation>Wollen Sie Kartenteil &quot;%1&quot; und alle seine Objekte entfernen?</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="3481"/>
@@ -4006,11 +4006,6 @@ gewählt</translation>
 <context>
     <name>MapPrinter</name>
     <message>
-        <location filename="../src/core/map_printer.cpp" line="476"/>
-        <source>- Map -</source>
-        <translation type="unfinished">- Karte -</translation>
-    </message>
-    <message>
         <location filename="../src/core/map_printer.cpp" line="1197"/>
         <source>Processing separations of page %1...</source>
         <translation>Verarbeite Separationen von Seite %1...</translation>
@@ -4034,6 +4029,11 @@ gewählt</translation>
         <location filename="../src/core/map_printer.cpp" line="1257"/>
         <source>Finished</source>
         <translation>Abgeschlossen</translation>
+    </message>
+    <message>
+        <location filename="../src/core/map_printer.cpp" line="476"/>
+        <source>- Map -</source>
+        <translation>- Karte -</translation>
     </message>
 </context>
 <context>
@@ -4201,6 +4201,13 @@ Zoomen ist mit dem Mausrad möglich.</translation>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="176"/>
         <source>mm</source>
         <translation>mm</translation>
+    </message>
+</context>
+<context>
+    <name>NativeFileImport</name>
+    <message>
+        <source>This file uses an obsolete format. Support for this format is to be removed from this program soon. To be able to open the file in the future, save it again.</source>
+        <translation type="vanished">Diese Datei nutzt ein veraltetes Format. Die Unterstützung für dieses Format wird bald aus der Software entfernt. Um die Datei auch in Zukunft öffnen zu können, speichern Sie es bitte erneut.</translation>
     </message>
 </context>
 <context>
@@ -4870,13 +4877,13 @@ Zoomen ist mit dem Mausrad möglich.</translation>
         <location filename="../src/gui/print_progress_dialog.cpp" line="51"/>
         <source>Printing</source>
         <comment>PrintWidget</comment>
-        <translation type="unfinished">Drucken</translation>
+        <translation>Drucken</translation>
     </message>
     <message>
         <location filename="../src/gui/print_progress_dialog.cpp" line="52"/>
         <source>An error occured during processing.</source>
         <comment>PrintWidget</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bei der Verarbeitung ist ein Fehler aufgetreten.</translation>
     </message>
 </context>
 <context>
@@ -5073,21 +5080,6 @@ rationen</translation>
         <translation>Überdruck-Simulation</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="220"/>
-        <source>Default</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/gui/print_widget.cpp" line="221"/>
-        <source>Device CMYK (experimental)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/gui/print_widget.cpp" line="222"/>
-        <source>Color mode:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/gui/print_widget.cpp" line="246"/>
         <location filename="../src/gui/print_widget.cpp" line="350"/>
         <source>Print</source>
@@ -5125,11 +5117,6 @@ rationen</translation>
         <translation>Unter Android nicht unterstützt.</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1033"/>
-        <source>Failed to prepare the preview.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/gui/print_widget.cpp" line="1044"/>
         <source>Print Preview Progress</source>
         <translation>Druckvorschauerzeugung</translation>
@@ -5165,19 +5152,9 @@ rationen</translation>
         <translation>JPEG</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1136"/>
-        <source>Failed to prepare the PDF export.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/gui/print_widget.cpp" line="1146"/>
         <source>PDF</source>
         <translation>PDF</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/print_widget.cpp" line="1199"/>
-        <source>An error occured during printing.</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1084"/>
@@ -5222,16 +5199,6 @@ rationen</translation>
         <translation>Erfolgreich nach %1 exportiert.</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1166"/>
-        <source>Failed to finish the PDF export.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/gui/print_widget.cpp" line="1185"/>
-        <source>Failed to prepare the printing.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/gui/print_widget.cpp" line="1194"/>
         <source>Printing Progress</source>
         <translation>Druckfortschritt</translation>
@@ -5239,7 +5206,7 @@ rationen</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1102"/>
         <source>Failed to prepare the image. Not enough memory.</source>
-        <translation type="unfinished"></translation>
+        <translation>Das Bild konnte nicht erstellt werden. Nicht genügend Arbeitsspeicher.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1176"/>
@@ -5274,6 +5241,46 @@ rationen</translation>
         <source>The map area is empty. Output canceled.</source>
         <translation>Der Kartenbereich ist leer. Ausgabe abgebrochen.</translation>
     </message>
+    <message>
+        <location filename="../src/gui/print_widget.cpp" line="220"/>
+        <source>Default</source>
+        <translation>Standard</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/print_widget.cpp" line="221"/>
+        <source>Device CMYK (experimental)</source>
+        <translation>Geräteabhängiges CMYK (experimentell)</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/print_widget.cpp" line="222"/>
+        <source>Color mode:</source>
+        <translation>Farbmodus:</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/print_widget.cpp" line="1033"/>
+        <source>Failed to prepare the preview.</source>
+        <translation>Die Vorschau konnte nicht erstellt werden.</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/print_widget.cpp" line="1136"/>
+        <source>Failed to prepare the PDF export.</source>
+        <translation>Fehler beim Vorbereiten des PDF-Exports.</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/print_widget.cpp" line="1166"/>
+        <source>Failed to finish the PDF export.</source>
+        <translation>Der PDF-Export konnte nicht abgeschlossen werden.</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/print_widget.cpp" line="1185"/>
+        <source>Failed to prepare the printing.</source>
+        <translation>Fehler beim Vorbereiten des Druckens.</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/print_widget.cpp" line="1199"/>
+        <source>An error occured during printing.</source>
+        <translation>Beim Drucken ist ein Fehler aufgetreten.</translation>
+    </message>
 </context>
 <context>
     <name>ProjectedCRSSelector</name>
@@ -5287,7 +5294,7 @@ rationen</translation>
     <message>
         <location filename="../src/gui/text_browser_dialog.cpp" line="64"/>
         <source>&amp;Close</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -5295,7 +5302,7 @@ rationen</translation>
     <message>
         <location filename="../src/gui/text_browser_dialog.cpp" line="59"/>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -5658,7 +5665,7 @@ rationen</translation>
     <message>
         <location filename="../src/gui/select_crs_dialog.cpp" line="62"/>
         <source>Same as map</source>
-        <translation type="unfinished"></translation>
+        <translation>Gleiches wie das der Karte</translation>
     </message>
     <message>
         <location filename="../src/gui/select_crs_dialog.cpp" line="68"/>
@@ -5833,11 +5840,6 @@ rationen</translation>
         <translation>Symbole auswählen</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="268"/>
-        <source>Enable drag and drop</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="896"/>
         <source>Scale symbol(s)</source>
         <translation>Symbol(e) skalieren</translation>
@@ -5965,6 +5967,11 @@ rationen</translation>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1157"/>
         <source>Select all objects with selected symbols</source>
         <translation>Alle Objekte mit den ausgewählten Symbolen auswählen</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="268"/>
+        <source>Enable drag and drop</source>
+        <translation>Drag and drop aktivieren</translation>
     </message>
 </context>
 <context>
@@ -6889,7 +6896,7 @@ Die höchste unterstütze Version ist %2.</translation>
     <message>
         <location filename="../src/gui/widgets/crs_param_widgets.cpp" line="60"/>
         <source>Calculate</source>
-        <translation type="unfinished"></translation>
+        <translation>Berechnen</translation>
     </message>
 </context>
 <context>
@@ -6963,11 +6970,6 @@ Die höchste unterstütze Version ist %2.</translation>
         <translation>Element nicht unterstützt: %1 (Zeile %2 Spalte %3)</translation>
     </message>
     <message>
-        <location filename="../src/file_format_xml.cpp" line="427"/>
-        <source>Some coordinates were out of bounds for printing. Map content was adjusted.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/file_format_xml.cpp" line="475"/>
         <source>unknown</source>
         <translation>unbekannt</translation>
@@ -6980,7 +6982,7 @@ Die höchste unterstütze Version ist %2.</translation>
     <message>
         <location filename="../src/file_format_xml.cpp" line="512"/>
         <source>Error at line %1 column %2: %3</source>
-        <translation type="unfinished"></translation>
+        <translation>Fehler in Zeil %1 Spalte %2: %3</translation>
     </message>
     <message>
         <location filename="../src/file_format_xml.cpp" line="531"/>
@@ -7017,6 +7019,11 @@ Die höchste unterstütze Version ist %2.</translation>
         <location filename="../src/file_format_xml.cpp" line="771"/>
         <source>Expected %1 map parts, found %2.</source>
         <translation>%1 Kartenteile erwartet, %2 gefunden.</translation>
+    </message>
+    <message>
+        <location filename="../src/file_format_xml.cpp" line="427"/>
+        <source>Some coordinates were out of bounds for printing. Map content was adjusted.</source>
+        <translation>Einige Koordinaten waren außerhalb des druckbaren Bereichs. Der Karteninhalt wurde korrigiert.</translation>
     </message>
 </context>
 </TS>
