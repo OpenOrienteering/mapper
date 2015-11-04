@@ -119,9 +119,9 @@ NativeFileImport::~NativeFileImport()
 
 void NativeFileImport::import(bool load_symbols_only)
 {
-    addWarning(tr("This file uses an obsolete format. "
-                  "Support for this format is to be removed from this program soon. "
-                  "To be able to open the file in the future, save it again."));
+    addWarning(Importer::tr("This file uses an obsolete format. "
+                            "Support for this format is to be removed from this program soon. "
+                            "To be able to open the file in the future, save it again."));
 
     MapCoord::boundsOffset().reset(true);
 

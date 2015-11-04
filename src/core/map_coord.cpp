@@ -170,7 +170,7 @@ void ensureBoundsForQint32(qint64 x64, qint64 y64)
 		 || y64 < std::numeric_limits<qint32>::min()
 		 || y64 > std::numeric_limits<qint32>::max() )
 	{
-		throw std::range_error(QT_TR_NOOP("Coordinates are out-of-bounds."));
+		throw std::range_error(QT_TRANSLATE_NOOP("MapCoord", "Coordinates are out-of-bounds."));
 	}
 }
 
