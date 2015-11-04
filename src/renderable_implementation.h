@@ -47,7 +47,6 @@ class DotRenderable : public Renderable
 {
 public:
 	DotRenderable(const PointSymbol* symbol, MapCoordF coord);
-	explicit DotRenderable(const DotRenderable& other);
 	virtual void render(QPainter& painter, const RenderConfig& config) const override;
 	virtual PainterConfig getPainterConfig(const QPainterPath* clip_path = nullptr) const override;
 };
@@ -57,7 +56,6 @@ class CircleRenderable : public Renderable
 {
 public:
 	CircleRenderable(const PointSymbol* symbol, MapCoordF coord);
-	explicit CircleRenderable(const CircleRenderable& other);
 	virtual void render(QPainter& painter, const RenderConfig& config) const override;
 	virtual PainterConfig getPainterConfig(const QPainterPath* clip_path = nullptr) const override;
 	
@@ -72,7 +70,6 @@ class LineRenderable : public Renderable
 public:
 	LineRenderable(const LineSymbol* symbol, const VirtualPath& virtual_path, bool closed);
 	LineRenderable(const LineSymbol* symbol, QPointF first, QPointF second);
-	explicit LineRenderable(const LineRenderable& other);
 	virtual void render(QPainter& painter, const RenderConfig& config) const override;
 	virtual PainterConfig getPainterConfig(const QPainterPath* clip_path = nullptr) const override;
 	
@@ -93,7 +90,6 @@ class AreaRenderable : public Renderable
 public:
 	AreaRenderable(const AreaSymbol* symbol, const PathPartVector& path_parts);
 	AreaRenderable(const AreaSymbol* symbol, const VirtualPath& path);
-	explicit AreaRenderable(const AreaRenderable& other);
 	virtual void render(QPainter& painter, const RenderConfig& config) const override;
 	virtual PainterConfig getPainterConfig(const QPainterPath* clip_path = nullptr) const override;
 	
@@ -110,7 +106,6 @@ class TextRenderable : public Renderable
 {
 public:
 	TextRenderable(const TextSymbol* symbol, const TextObject* text_object, const MapColor* color, double anchor_x, double anchor_y, bool framing_line = false);
-	explicit TextRenderable(const TextRenderable& other);
 	virtual void render(QPainter& painter, const RenderConfig& config) const override;
 	virtual PainterConfig getPainterConfig(const QPainterPath* clip_path = nullptr) const override;
 	

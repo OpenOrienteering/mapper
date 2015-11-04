@@ -23,13 +23,9 @@
 
 #include "tool.h"
 
-#include <vector>
-
 #include <QScopedPointer>
 
-class Renderable;
 class MapRenderables;
-typedef std::vector<Renderable*> RenderableVector;
 
 /** Tool to scale objects. */
 class ScaleTool : public MapEditorTool

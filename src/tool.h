@@ -44,7 +44,6 @@ class MapWidget;
 class Object;
 class Renderable;
 class Symbol;
-typedef std::vector<Renderable*> RenderableVector;
 
 /** 
  * @brief An abstract tool for editing a map.

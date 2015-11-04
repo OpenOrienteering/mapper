@@ -44,12 +44,6 @@ DotRenderable::DotRenderable(const PointSymbol* symbol, MapCoordF coord)
 	extent = QRectF(x - radius, y - radius, 2 * radius, 2 * radius);
 }
 
-DotRenderable::DotRenderable(const DotRenderable& other)
- : Renderable(other)
-{
-	; // nothing
-}
-
 PainterConfig DotRenderable::getPainterConfig(const QPainterPath* clip_path) const
 {
 	return { color_priority, PainterConfig::BrushOnly, 0, clip_path };
@@ -76,14 +70,6 @@ CircleRenderable::CircleRenderable(const PointSymbol* symbol, MapCoordF coord)
 	double radius = (0.001 * symbol->getInnerRadius()) + 0.5f * line_width;
 	rect = QRectF(x - radius, y - radius, 2 * radius, 2 * radius);
 	extent = QRectF(rect.x() - 0.5*line_width, rect.y() - 0.5*line_width, rect.width() + line_width, rect.height() + line_width);
-}
-
-CircleRenderable::CircleRenderable(const CircleRenderable& other)
- : Renderable(other)
- , line_width(other.line_width)
- , rect(other.rect)
-{
-	; // nothing
 }
 
 PainterConfig CircleRenderable::getPainterConfig(const QPainterPath* clip_path) const
@@ -299,16 +285,6 @@ void LineRenderable::extentIncludeJoin(quint32 i, float half_line_width, const L
 	rectInclude(extent, coords[i] - offset);
 }
 
-LineRenderable::LineRenderable(const LineRenderable& other)
- : Renderable(other)
- , line_width(other.line_width)
- , path(other.path)
- , cap_style(other.cap_style)
- , join_style(other.join_style)
-{
-	; // nothing
-}
-
 PainterConfig LineRenderable::getPainterConfig(const QPainterPath* clip_path) const
 {
 	return { color_priority, PainterConfig::PenOnly, line_width, clip_path };
@@ -505,12 +481,6 @@ AreaRenderable::AreaRenderable(const AreaSymbol* symbol, const VirtualPath& virt
 	addSubpath(virtual_path);
 }
 
-AreaRenderable::AreaRenderable(const AreaRenderable& other)
- : Renderable(other)
-{
-	path = other.path;
-}
-
 void AreaRenderable::addSubpath(const VirtualPath& virtual_path)
 {
 	auto& flags  = virtual_path.coords.flags;
@@ -638,18 +608,6 @@ TextRenderable::TextRenderable(const TextSymbol* symbol, const TextObject* text_
 	extent = QRectF(extent.left() + anchor_x, extent.top() + anchor_y, extent.width(), extent.height());
 	
 	Q_ASSERT(extent.right() < 999999);	// assert if bogus values are returned
-}
-
-TextRenderable::TextRenderable(const TextRenderable& other)
- : Renderable(other)
-{
-	path = other.path;
-	anchor_x = other.anchor_x;
-	anchor_y = other.anchor_y;
-	rotation = other.rotation;
-	scale_factor = other.scale_factor;
-	framing_line = other.framing_line;
-	framing_line_width = other.framing_line_width;
 }
 
 PainterConfig TextRenderable::getPainterConfig(const QPainterPath* clip_path) const

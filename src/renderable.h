@@ -114,8 +114,11 @@ protected:
 	/** The constructor for new renderables. */
 	explicit Renderable(const MapColor* color);
 	
-	/** The copy constructor is needed by containers. */
-	Renderable(const Renderable& other);
+	/** The copy constructor is default but protected. */
+	explicit Renderable(const Renderable&) = default;
+	
+	/** The assignment operator is default but protected. */
+	Renderable& operator=(const Renderable&) = default;
 	
 public:
 	/**
@@ -360,14 +363,6 @@ bool RenderConfig::testFlag(const RenderConfig::Option flag) const
 inline
 Renderable::Renderable(const MapColor* color)
  : color_priority(color ? color->getPriority() : MapColor::Reserved)
-{
-	; // nothing
-}
-
-inline
-Renderable::Renderable(const Renderable& other)
- : color_priority(other.color_priority)
- , extent(other.extent)
 {
 	; // nothing
 }
