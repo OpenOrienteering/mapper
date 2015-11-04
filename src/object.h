@@ -326,10 +326,11 @@ public:
 	);
 	
 	PathPart(
-	        PathObject& path,
-	        const PathCoordVector& path_coords
+	        PathObject& object,
+	        const VirtualPath& path
 	);
 	
+public:
 	PathPart& operator=(const PathPart& rhs);
 	
 	/**

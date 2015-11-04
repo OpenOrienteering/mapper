@@ -817,17 +817,14 @@ void Object::includeControlPointsRect(QRectF& rect) const
 static_assert(std::is_same<PathPartVector::size_type, std::size_t>::value,
               "PathCoordVector::size_type is not std::size_t");
 
-
-PathPart::PathPart(PathObject& path, const PathCoordVector& path_coords)
- : VirtualPath(path.getRawCoordinateVector(), 0, 0)
+PathPart::PathPart(PathObject& path, const VirtualPath& proto)
+ : VirtualPath(path.getRawCoordinateVector(), proto.first_index, proto.last_index)
  , path(&path)
 {
-	if (!path_coords.empty())
+	if (!proto.path_coords.empty())
 	{
-		first_index = path_coords.front().index;
-		last_index  = path_coords.back().index;
-		this->path_coords.reserve(path_coords.size());
-		this->path_coords.insert(end(this->path_coords), begin(path_coords), end(path_coords));
+		path_coords.reserve(proto.path_coords.size());
+		path_coords.insert(end(path_coords), begin(proto.path_coords), end(proto.path_coords));
 	}
 }
 
@@ -993,7 +990,7 @@ PathObject::PathObject(const PathObject& proto)
 	path_parts.reserve(proto.path_parts.size());
 	for (const PathPart& part : proto.path_parts)
 	{
-		path_parts.emplace_back(*this, part.path_coords);
+		path_parts.emplace_back(*this, part);
 	}
 }
 
@@ -1005,7 +1002,7 @@ PathObject::PathObject(const PathPart &proto_part)
 	auto begin = proto_part.path->coords.begin();
 	coords.reserve(proto_part.size());
 	coords.assign(begin + proto_part.first_index, begin + (proto_part.last_index+1));
-	path_parts.emplace_back(*this, proto_part.path_coords);
+	path_parts.emplace_back(*this, proto_part);
 }
    
 Object* PathObject::duplicate() const
@@ -1029,7 +1026,7 @@ Object& PathObject::operator=(const Object& other)
 	path_parts.reserve(other_path.path_parts.size());
 	for (const PathPart& part : other_path.path_parts)
 	{
-		path_parts.emplace_back(*this, part.path_coords);
+		path_parts.emplace_back(*this, part);
 	}
 	return *this;
 }
