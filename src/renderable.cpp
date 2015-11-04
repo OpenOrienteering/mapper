@@ -165,7 +165,7 @@ void ObjectRenderables::draw(const QColor& color, QPainter* painter, const Rende
 	painter->restore();
 }
 
-void ObjectRenderables::setClipPath(QPainterPath* path)
+void ObjectRenderables::setClipPath(const QPainterPath* path)
 {
 	clip_path = path;
 }

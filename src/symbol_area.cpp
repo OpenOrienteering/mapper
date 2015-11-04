@@ -513,8 +513,8 @@ void AreaSymbol::createRenderablesNormal(
 	
 	if (!patterns.empty())
 	{
-		QPainterPath* old_clip_path = output.getClipPath();
-		output.setClipPath(color_fill->getPainterPath());
+		const QPainterPath* old_clip_path = output.getClipPath();
+		output.setClipPath(color_fill->painterPath());
 		auto extent = color_fill->getExtent();
 		auto rotation = object->getPatternRotation();
 		auto origin = object->getPatternOrigin();

@@ -138,7 +138,7 @@ public:
 	 * 
 	 * This configuration must be set when rendering this renderable.
 	 */
-	virtual PainterConfig getPainterConfig(QPainterPath* clip_path = nullptr) const = 0;
+	virtual PainterConfig getPainterConfig(const QPainterPath* clip_path = nullptr) const = 0;
 	
 	/**
 	 * Renders the renderable with the given painter and rendering configuration.
@@ -263,14 +263,14 @@ public:
 	 */
 	void draw(const QColor& color, QPainter* painter, const RenderConfig& config) const;
 	
-	void setClipPath(QPainterPath* path);
-	QPainterPath* getClipPath() const;
+	void setClipPath(const QPainterPath* path);
+	const QPainterPath* getClipPath() const;
 	
 	const QRectF& getExtent() const;
 	
 private:
 	QRectF& extent;
-	QPainterPath* clip_path; // no memory management here!
+	const QPainterPath* clip_path; // no memory management here!
 };
 
 
@@ -434,7 +434,7 @@ void ObjectRenderables::insertRenderable(Renderable* r)
 }
 
 inline
-QPainterPath*ObjectRenderables::getClipPath() const
+const QPainterPath* ObjectRenderables::getClipPath() const
 {
 	return clip_path;
 }

@@ -50,7 +50,7 @@ DotRenderable::DotRenderable(const DotRenderable& other)
 	; // nothing
 }
 
-PainterConfig DotRenderable::getPainterConfig(QPainterPath* clip_path) const
+PainterConfig DotRenderable::getPainterConfig(const QPainterPath* clip_path) const
 {
 	return { color_priority, PainterConfig::BrushOnly, 0, clip_path };
 }
@@ -86,7 +86,7 @@ CircleRenderable::CircleRenderable(const CircleRenderable& other)
 	; // nothing
 }
 
-PainterConfig CircleRenderable::getPainterConfig(QPainterPath* clip_path) const
+PainterConfig CircleRenderable::getPainterConfig(const QPainterPath* clip_path) const
 {
 	return { color_priority, PainterConfig::PenOnly, line_width, clip_path };
 }
@@ -309,7 +309,7 @@ LineRenderable::LineRenderable(const LineRenderable& other)
 	; // nothing
 }
 
-PainterConfig LineRenderable::getPainterConfig(QPainterPath* clip_path) const
+PainterConfig LineRenderable::getPainterConfig(const QPainterPath* clip_path) const
 {
 	return { color_priority, PainterConfig::PenOnly, line_width, clip_path };
 }
@@ -535,7 +535,7 @@ void AreaRenderable::addSubpath(const VirtualPath& virtual_path)
 	path.closeSubpath();
 }
 
-PainterConfig AreaRenderable::getPainterConfig(QPainterPath* clip_path) const
+PainterConfig AreaRenderable::getPainterConfig(const QPainterPath* clip_path) const
 {
 	return { color_priority, PainterConfig::BrushOnly, 0, clip_path };
 }
@@ -652,7 +652,7 @@ TextRenderable::TextRenderable(const TextRenderable& other)
 	framing_line_width = other.framing_line_width;
 }
 
-PainterConfig TextRenderable::getPainterConfig(QPainterPath* clip_path) const
+PainterConfig TextRenderable::getPainterConfig(const QPainterPath* clip_path) const
 {
 	return framing_line ? PainterConfig{ color_priority, PainterConfig::PenOnly, framing_line_width, clip_path }
 	                    : PainterConfig{ color_priority, PainterConfig::BrushOnly, 0, clip_path };
