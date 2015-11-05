@@ -1,0 +1,34 @@
+#!/bin/sh -e
+#
+#    Copyright 2015 Kai Pastor
+#    
+#    This file is part of OpenOrienteering.
+# 
+#    OpenOrienteering is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+# 
+#    OpenOrienteering is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+# 
+#    You should have received a copy of the GNU General Public License
+#    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
+
+# Usage: api-docs.sh DOXYGEN_EXECUTABLE
+
+SOURCE_DIR=$(echo "@PROJECT_SOURCE_DIR@/" | sed -e "s/\//\\\\\//g")
+
+for I in html/*; do
+	rm -Rf "$I"
+done
+
+"$1" Doxyfile 2>&1 \
+| sed -e "s/${SOURCE_DIR}//g" > html/doxygen-warnings.txt
+
+sed -i -e "
+  s/\( ([^( ]* rev ......., [A-Za-z0-9 ]*)\)\(<\/a>\)/\2\1/ # Footer of class documentation
+  s/\([^( ]*\) rev \(.......\), /<a href=\"https:\/\/github.com\/OpenOrienteering\/mapper\/blob\/\2\/\1\"><tt>\2<\/tt><\/a> on /
+" html/*.html

@@ -29,8 +29,13 @@ INPUT                 += "@PROJECT_SOURCE_DIR@/test"
 INPUT                 += "@PROJECT_SOURCE_DIR@/doc/api/extra"
 RECURSIVE              = YES
 STRIP_FROM_PATH        = "@PROJECT_SOURCE_DIR@"
+FILE_VERSION_FILTER    = "@CMAKE_CURRENT_BINARY_DIR@/versionfilter.sh"
+SOURCE_BROWSER         = NO
+VERBATIM_HEADERS       = NO
 
+INCLUDE_PATH          += "@PROJECT_SOURCE_DIR@/src/printsupport/qt-5.5.1"
 PREDEFINED             = QT_PRINTSUPPORT_LIB QT_SENSORS_LIB QT_LOCATION_LIB
+PREDEFINED            += Qt5Core_VERSION=5.5 Qt5PrintSupport_VERSION=5.5
 JAVADOC_AUTOBRIEF      = YES
 QT_AUTOBRIEF           = YES
 BUILTIN_STL_SUPPORT    = YES
@@ -45,3 +50,4 @@ TAGFILES              += qtnetwork.tags=http://qt-project.org/doc/qt-5/
 TAGFILES              += qtprintsupport.tags=http://qt-project.org/doc/qt-5/
 
 GENERATE_LATEX         = NO
+HTML_TIMESTAMP         = NO
