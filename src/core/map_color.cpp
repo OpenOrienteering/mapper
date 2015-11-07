@@ -22,9 +22,6 @@
 #include "map_color.h"
 
 #include <QApplication>
-#include <QDebug>
-
-#include "../map.h"
 
 
 MapColor::MapColor()
@@ -36,7 +33,7 @@ MapColor::MapColor()
   cmyk_color_method(MapColor::CustomColor),
   rgb_color_method(MapColor::CmykColor),
   flags(0),
-  spot_color_name("")
+  spot_color_name()
 {
 	Q_ASSERT(isBlack());
 }
@@ -50,7 +47,7 @@ MapColor::MapColor(int priority)
   cmyk_color_method(MapColor::CustomColor),
   rgb_color_method(MapColor::CmykColor),
   flags(0),
-  spot_color_name("")
+  spot_color_name()
 {
 	Q_ASSERT(isBlack());
 	
@@ -190,87 +187,37 @@ void MapColor::setSpotColorName(const QString& spot_color_name)
 	spot_color_method = MapColor::SpotColor;
 	this->spot_color_name = spot_color_name;
 	components.clear();
-	
-	if (cmyk_color_method == MapColor::SpotColor)
-	{
-		// CMYK cannot be determined from a pure spot color.
-		cmyk_color_method = MapColor::CustomColor;
-		q_color = cmyk;
-	}
-	
-	if (rgb_color_method == MapColor::SpotColor)
-	{
-		// RGB cannot be determined from a pure spot color.
-		rgb_color_method = MapColor::CustomColor;
-	}
+	updateCalculatedColors();
 }
 
 void MapColor::setSpotColorComposition(const SpotColorComponents& components)
 {
 	this->components = components;
-	spot_color_name = "";
+	if (components.empty())
+		spot_color_method = UndefinedMethod;
+	else 
+		spot_color_method = CustomColor;
 	
-	if (components.size() > 0)
+	removeSpotColorComponent(this);
+	updateCompositionName();
+	updateCalculatedColors();
+}
+
+bool MapColor::removeSpotColorComponent(const MapColor* color)
+{
+	auto size_before = components.size();
+	auto match = [this, color](const SpotColorComponent& scc) { return scc.spot_color == color; };
+	components.erase(std::remove_if(begin(components), end(components), match), end(components));
+	bool changed = components.size() != size_before;
+	if (changed)
 	{
-		spot_color_method = MapColor::CustomColor;
+		if (components.empty())
+			spot_color_method = UndefinedMethod;
 		
-		// Determine a display name.
-		for (SpotColorComponents::const_iterator it = components.begin(); ; )
-		{
-			spot_color_name += QString("%1 %2%").
-			  arg(it->spot_color->getSpotColorName()).
-			  arg(QString::number(it->factor * 100) /* % */
-			);
-			it++;
-			if (it == components.end())
-				break;
-			spot_color_name += ", ";
-		}
-			  
-		
-		if (cmyk_color_method == MapColor::SpotColor)
-		{
-			// Update CMYK from spot colors
-			cmyk = cmykFromSpotColors();
-			q_color = cmyk;
-			
-			if (rgb_color_method == MapColor::CmykColor)
-				// Update RGB from CMYK
-				rgb = MapColorRgb(q_color);
-		}
-		
-		if (rgb_color_method == MapColor::SpotColor)
-		{
-			// Update RGB from spot colors
-			rgb = rgbFromSpotColors();
-			
-			if (cmyk_color_method == MapColor::RgbColor)
-			{
-				// Update CMYK from RGB
-				q_color = rgb;
-				cmyk = MapColorCmyk(q_color);
-			}
-		}
+		updateCompositionName();
+		updateCalculatedColors();
 	}
-	else if (spot_color_method == MapColor::CustomColor)
-	{
-		// An empty composition is not a valid custom spot color
-		spot_color_method = MapColor::UndefinedMethod;
-		
-		if (cmyk_color_method == MapColor::SpotColor)
-			// Cannot determine CMYK from empty composition
-			cmyk_color_method = MapColor::CustomColor;
-		
-		if (rgb_color_method == MapColor::SpotColor)
-			// Cannot determine RGB from empty composition
-			rgb_color_method = MapColor::CustomColor;
-	}
-	else
-		spot_color_method = MapColor::UndefinedMethod;
-	
-	Q_ASSERT(this->components.size() == 0 || spot_color_method == MapColor::CustomColor);
-	Q_ASSERT(this->components.size() >  0 || spot_color_method != MapColor::CustomColor);
-	Q_ASSERT(this->components.size() >  0 || cmyk_color_method != MapColor::SpotColor);
+	return changed;
 }
 
 void MapColor::setKnockout(bool flag)
@@ -295,38 +242,19 @@ bool MapColor::getKnockout() const
 }
 
 
-void MapColor::setCmyk(const MapColorCmyk& cmyk)
+void MapColor::setCmyk(const MapColorCmyk& new_cmyk)
 {
 	cmyk_color_method = MapColor::CustomColor;
-	this->cmyk = cmyk;
-	q_color = cmyk;
-	
-	if (rgb_color_method == MapColor::CmykColor)
-		// Update RGB from CMYK
-		rgb = MapColorRgb(q_color);
+	cmyk = new_cmyk;
+	updateCalculatedColors();
 }
 
 void MapColor::setCmykFromSpotColors()
 {
 	if (spot_color_method == MapColor::CustomColor)
 	{
-		if (components.size() > 0)
-		{
-			cmyk_color_method = MapColor::SpotColor;
-			cmyk = cmykFromSpotColors();
-			q_color = cmyk;
-			if (rgb_color_method == MapColor::CmykColor)
-				rgb = MapColorRgb(q_color);
-		}
-		else if (components.size() == 0)
-		{
-			// Switch from invalid to valid state
-			spot_color_method = MapColor::UndefinedMethod;
-			if (cmyk_color_method == MapColor::SpotColor)
-				cmyk_color_method = MapColor::CustomColor;
-			if (rgb_color_method == MapColor::SpotColor)
-				rgb_color_method = MapColor::CustomColor;
-		}
+		cmyk_color_method = MapColor::SpotColor;
+		updateCalculatedColors();
 	}
 }
 
@@ -336,46 +264,23 @@ void MapColor::setCmykFromRgb()
 		rgb_color_method = MapColor::CustomColor;
 	
 	cmyk_color_method = MapColor::RgbColor;
-	q_color = rgb;
-	cmyk = MapColorCmyk(q_color);
+	updateCalculatedColors();
 }
 
 
-void MapColor::setRgb(const MapColorRgb& rgb)
+void MapColor::setRgb(const MapColorRgb& new_rgb)
 {
 	rgb_color_method = MapColor::CustomColor;
-	this->rgb = rgb;
-	
-	if (cmyk_color_method == MapColor::RgbColor)
-	{
-		q_color = rgb;
-		cmyk = q_color;
-	}
+	rgb = new_rgb;
+	updateCalculatedColors();
 }
 
 void MapColor::setRgbFromSpotColors()
 {
 	if (spot_color_method == MapColor::CustomColor)
 	{
-		if (components.size() > 0)
-		{
-			rgb_color_method = MapColor::SpotColor;
-			rgb = rgbFromSpotColors();
-			if (cmyk_color_method == MapColor::RgbColor)
-			{
-				q_color = rgb;
-				cmyk = MapColorCmyk(q_color);
-			}
-		}
-		else if (components.size() == 0)
-		{
-			// Switch from invalid to valid state
-			spot_color_method = MapColor::UndefinedMethod;
-			if (cmyk_color_method == MapColor::SpotColor)
-				cmyk_color_method = MapColor::CustomColor;
-			if (rgb_color_method == MapColor::SpotColor)
-				rgb_color_method = MapColor::CustomColor;
-		}
+		rgb_color_method = MapColor::SpotColor;
+		updateCalculatedColors();
 	}
 }
 
@@ -385,8 +290,62 @@ void MapColor::setRgbFromCmyk()
 		cmyk_color_method = MapColor::CustomColor;
 	
 	rgb_color_method = MapColor::CmykColor;
-	q_color = cmyk;
-	rgb = MapColorRgb(q_color);
+	updateCalculatedColors();
+}
+
+void MapColor::updateCompositionName()
+{
+	if (spot_color_method != MapColor::SpotColor)
+	{
+		spot_color_name.clear();
+		for (auto& component : components)
+		{
+			if (!spot_color_name.isEmpty())
+				spot_color_name += QLatin1String(", ");
+			spot_color_name += QString("%1 %2%").arg(
+			  component.spot_color->getSpotColorName(),
+			  QString::number(component.factor * 100) /* % */);
+		}
+	}
+}
+
+void MapColor::updateCalculatedColors()
+{
+	Q_ASSERT(components.size() == 0 || spot_color_method == CustomColor);
+	Q_ASSERT(components.size() >  0 || spot_color_method != CustomColor);
+	Q_ASSERT(!((cmyk_color_method == RgbColor) && (rgb_color_method == CmykColor)));
+	
+	if (spot_color_method != CustomColor)
+	{
+		// No composition, thus cannot determine CMYK or RGB from spot colors.
+		if (cmyk_color_method == MapColor::SpotColor)
+			cmyk_color_method = MapColor::CustomColor;
+		
+		if (rgb_color_method == MapColor::SpotColor)
+			rgb_color_method = MapColor::CustomColor;
+	}
+	else
+	{
+		if (cmyk_color_method == MapColor::SpotColor)
+			cmyk = cmykFromSpotColors();
+			
+		if (rgb_color_method == MapColor::SpotColor)
+			rgb = rgbFromSpotColors();
+	}
+	
+	if (cmyk_color_method == MapColor::RgbColor)
+		cmyk = MapColorCmyk(rgb);
+	
+	if (rgb_color_method == MapColor::CmykColor)
+		rgb = MapColorRgb(cmyk);
+	
+	if (cmyk_color_method != RgbColor)
+		q_color = cmyk;
+	else
+		q_color = rgb;
+	
+	Q_ASSERT(components.size() >  0 || cmyk_color_method != MapColor::SpotColor);
+	Q_ASSERT(components.size() >  0 || rgb_color_method  != MapColor::SpotColor);
 }
 
 MapColorCmyk MapColor::cmykFromSpotColors() const
