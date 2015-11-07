@@ -34,16 +34,14 @@
 class MapTest : public QObject
 {
 Q_OBJECT
-public:
-	/** Constructor. */
-	explicit MapTest(QObject* parent = NULL);
-	
 private slots:
 	void initTestCase();
 	
 	/** Tests if special colors are correctly handled. */
 	void specialColorsTest();
 	
+	void importTest_data();
+	void importTest();
 };
 
 #endif

@@ -71,6 +71,7 @@ class MapGrid;
 class Map : public QObject
 {
 Q_OBJECT
+friend class MapTest;
 friend class MapRenderables;
 friend class OCAD8FileImport;
 friend class XMLFileImport;
