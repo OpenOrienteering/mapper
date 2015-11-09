@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -37,7 +38,10 @@ public:
 	 * Constructs a new ColorDropDown for the colors of the given map.
 	 * If spot_colors_only is true, it will only display fulltone spot colors.
 	 */
-	ColorDropDown(const Map* map, const MapColor* initial_color = 0, bool spot_colors_only = false, QWidget* parent = 0);
+	ColorDropDown(const Map* map, const MapColor* initial_color = nullptr, bool spot_colors_only = false, QWidget* parent = nullptr);
+	
+	/** Destructor. */
+	~ColorDropDown();
 	
 	/** Returns the selected color or NULL if no color selected. */
 	const MapColor* color() const;
@@ -45,10 +49,21 @@ public:
 	/** Sets the selection to the given color. */
 	void setColor(const MapColor* color);
 	
-protected slots:
-	void colorAdded(int pos, const MapColor* color);
-	void colorChanged(int pos, const MapColor* color);
-	void colorDeleted(int pos, const MapColor* color);
+	/** Adds a color to the list. */
+	void addColor(const MapColor* color);
+	
+	/** Updates a color in the list. */
+	void updateColor(const MapColor* color);
+	
+	/** Removes a color from the list. */
+	void removeColor(const MapColor* color);
+	
+protected:
+	void onColorAdded(int, const MapColor* color);
+	void onColorChanged(int, const MapColor* color);
+	void onColorDeleted(int, const MapColor* color);
+	
+	const bool spot_colors_only;
 };
 
 #endif
