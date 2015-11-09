@@ -1,5 +1,5 @@
 #
-#    Copyright 2012, 2013, 2014 Kai Pastor
+#    Copyright 2012-2015 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -257,7 +257,6 @@ if(Mapper_PACKAGE_QT)
 	  Qt5Xml
 	)
 	set(MAPPER_QT_PLUGINS
-	  accessible/qtaccessiblewidgets
 	  generic/qevdevkeyboardplugin
 	  generic/qevdevmouseplugin
 	  generic/qevdevtabletplugin
@@ -272,13 +271,12 @@ if(Mapper_PACKAGE_QT)
 	  platforminputcontexts/composeplatforminputcontextplugin
 	  platforminputcontexts/ibusplatforminputcontextplugin
 	  platforms/qcocoa
-	  platforms/qminimal
-	  platforms/qoffscreen
 	  platforms/qwindows
 	  platforms/qxcb
 	  printsupport/cocoaprintersupport
 	  printsupport/cupsprintersupport
 	  printsupport/windowsprintersupport
+	  sqldrivers/qsqlite.dll
 	  CACHE INTERNAL "The plugins which need to be deployed"
 	)
 	# Cf. Qt5's qt_de.ts for dependencies - qt_de.ts would not load without them.
