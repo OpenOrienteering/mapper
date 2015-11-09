@@ -1261,7 +1261,7 @@ void Map::updateDrawing(QRectF map_coords_rect, int pixel_border)
 
 void Map::setColor(MapColor* color, int pos)
 {
-	MapColor* old_color = color_set->colors[pos];
+	// MapColor* old_color = color_set->colors[pos];
 	
 	color_set->colors[pos] = color;
 	color->setPriority(pos);
@@ -1271,35 +1271,39 @@ void Map::setColor(MapColor* color, int pos)
 		// Update dependent colors
 		for (MapColor* map_color : color_set->colors)
 		{
-			if (map_color->getSpotColorMethod() != MapColor::CustomColor)
-				continue;
-			
-			for (const SpotColorComponent& component : map_color->getComponents())
+			if (map_color->getSpotColorMethod() == MapColor::CustomColor)
 			{
-				if (component.spot_color == old_color)
+				for (const SpotColorComponent& component : map_color->getComponents())
 				{
-					// Assuming each spot color is rarely used more than once per composition
-					if (map_color->getCmykColorMethod() == MapColor::SpotColor)
-						map_color->setCmykFromSpotColors();
-					if (map_color->getRgbColorMethod() == MapColor::SpotColor)
-						map_color->setRgbFromSpotColors();
-					emit colorChanged(map_color->getPriority(), map_color);
+					if (component.spot_color == color)
+					{
+						// Assuming each spot color is rarely used more than once per composition
+						if (map_color->getCmykColorMethod() == MapColor::SpotColor)
+							map_color->setCmykFromSpotColors();
+						if (map_color->getRgbColorMethod() == MapColor::SpotColor)
+							map_color->setRgbFromSpotColors();
+						updateSymbolIcons(map_color);
+						emit colorChanged(map_color->getPriority(), map_color);
+					}
 				}
 			}
 		}
 	}
-	
-	// Regenerate all symbols' icons
-	int size = (int)symbols.size();
-	for (int i = 0; i < size; ++i)
+	else
 	{
-		if (symbols[i]->containsColor(color))
+		// Remove from dependent colors
+		for (MapColor* map_color : color_set->colors)
 		{
-			symbols[i]->resetIcon();
-			emit(symbolIconChanged(i));
+			if (map_color->getSpotColorMethod() == MapColor::CustomColor
+			    && map_color->removeSpotColorComponent(color))
+			{
+				updateSymbolIcons(map_color);
+				emit colorChanged(map_color->getPriority(), map_color);
+			}
 		}
 	}
 	
+	updateSymbolIcons(color);
 	emit(colorChanged(pos, color));
 }
 
@@ -1324,22 +1328,10 @@ void Map::deleteColor(int pos)
 		// Update dependent colors
 		for (MapColor* map_color : color_set->colors)
 		{
-			if (map_color->getSpotColorMethod() != MapColor::CustomColor)
-				continue;
-			
-			SpotColorComponents out_components = map_color->getComponents();
-			SpotColorComponents::iterator com_it = out_components.begin();
-			while(com_it != out_components.end())
+			if (map_color->removeSpotColorComponent(color))
 			{
-				if (com_it->spot_color == color)
-				{
-					com_it = out_components.erase(com_it);
-					// Assuming each spot color is rarely used more than once per composition
-					map_color->setSpotColorComposition(out_components);
-					emit colorChanged(map_color->getPriority(), map_color);
-				}
-				else
-					com_it++;
+				updateSymbolIcons(map_color);
+				emit colorChanged(map_color->getPriority(), map_color);
 			}
 		}
 	}
@@ -1709,6 +1701,18 @@ void Map::setSymbolsDirty()
 {
 	symbols_dirty = true;
 	setHasUnsavedChanges(true);
+}
+
+void Map::updateSymbolIcons(const MapColor* color)
+{
+	for (std::size_t i = 0, size = symbols.size(); i < size; ++i)
+	{
+		if (symbols[i]->containsColor(color))
+		{
+			symbols[i]->resetIcon();
+			emit(symbolIconChanged(i));
+		}
+	}
 }
 
 void Map::scaleAllSymbols(double factor)

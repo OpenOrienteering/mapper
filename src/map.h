@@ -394,7 +394,8 @@ public:
 	/**
 	 * Replaces the color at index pos with the given color, updates dependent
 	 * colors and symbol icons.
-	 * Emits colorChanged().
+	 * 
+	 * Emits colorChanged(). Does not delete the replaced color.
 	 */
 	void setColor(MapColor* color, int pos);
 	
@@ -500,6 +501,11 @@ public:
 	 * Emits hasUnsavedChanges(true) if the map did not have unsaved changed before.
 	 */
 	void setSymbolsDirty();
+	
+	/**
+	 * Updates the icons of all symbols with the given color.
+	 */
+	void updateSymbolIcons(const MapColor* color);
 	
 	/**
 	 * Scales all symbols by the given factor.
