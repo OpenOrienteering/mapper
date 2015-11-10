@@ -18,6 +18,43 @@
  
 message(STATUS "Configuring ${PROJECT_NAME} packaging")
 
+option(Mapper_PACKAGE_QT_ALL_TRANSLATIONS "Add all Qt translation to the packages" TRUE)
+
+macro(deploy_qt_translations basename)
+	find_package(Qt5LinguistTools REQUIRED QUIET)
+	get_target_property(LCONVERT_EXECUTABLE Qt5::lconvert IMPORTED_LOCATION)
+	set(install_translations_code )
+	if(Mapper_PACKAGE_QT_ALL_TRANSLATIONS)
+		file(GLOB basename_files RELATIVE "${QT_TRANSLATIONS_DIR}" "${QT_TRANSLATIONS_DIR}/${basename}_??.qm")
+	else()
+		unset(basename_files)
+		foreach(_mapper_trans ${Mapper_TRANS})
+			get_filename_component(basename_file ${_mapper_trans} NAME_WE)
+			string(REPLACE OpenOrienteering_ ${basename} basename_file ${basename_file})
+			if(EXISTS "${QT_TRANSLATIONS_DIR}/${basename_file}")
+				list(append ${basename_file})
+ 			endif()
+		endforeach()
+	endif()
+	foreach(basename_file ${basename_files})
+		set(input_files "\"${QT_TRANSLATIONS_DIR}/${basename_file}\"")
+		foreach(arg ${ARGN})
+			string(REPLACE ${basename} ${arg} extra_file ${basename_file})
+			if(EXISTS "${QT_TRANSLATIONS_DIR}/${extra_file}")
+				set(input_files "${input_files} \"${QT_TRANSLATIONS_DIR}/${extra_file}\"")
+			endif()
+		endforeach()
+		list(APPEND install_translations_code
+		  "execute_process(COMMAND \"${LCONVERT_EXECUTABLE}\" -o \"${CMAKE_CURRENT_BINARY_DIR}/${basename_file}\" ${input_files})"
+		  "file(INSTALL DESTINATION \"\${CMAKE_INSTALL_PREFIX}/translations\" TYPE FILE FILES \"${CMAKE_CURRENT_BINARY_DIR}/${basename_file}\")"
+		)
+	endforeach()
+	string(REPLACE ";" "\n  " install_translations_code "${install_translations_code}")
+	install(CODE "${install_translations_code}")
+endmacro(deploy_qt_translations)
+
+
+
 if(APPLE)
 	# Set some Qt4 variables to reasonable values for Qt5, too.
 	# (needed for DeployQt5.cmake)
@@ -210,7 +247,6 @@ include(InstallRequiredSystemLibraries)
 # Cleanup obsolete cache items
 unset(MAPPER_LIBS CACHE)
 unset(MAPPER_QT_PLUGINS CACHE)
-unset(MAPPER_QT_TRANSLATIONS CACHE)
 
 unset(MAPPER_LIB_HINTS)
 unset(MAPPER_LIBS)
@@ -238,7 +274,6 @@ if(Mapper_PACKAGE_PROJ)
 endif()
 
 unset(MAPPER_QT_PLUGINS)
-unset(MAPPER_QT_TRANSLATIONS)
 if(Mapper_PACKAGE_QT)
 	set(QT_LIB_SUFFIX "")
 	list(APPEND MAPPER_LIB_HINTS ${QT_BINARY_DIR})
@@ -279,8 +314,9 @@ if(Mapper_PACKAGE_QT)
 	  sqldrivers/qsqlite.dll
 	  CACHE INTERNAL "The plugins which need to be deployed"
 	)
+
 	# Cf. Qt5's qt_de.ts for dependencies - qt_de.ts would not load without them.
-	list(APPEND MAPPER_QT_TRANSLATIONS qt qtbase qtscript qtquick1 qtmultimedia qtxmlpatterns)
+	deploy_qt_translations(qt qtbase)
 endif()
 
 unset(FIXUP_ASSISTANT)
@@ -311,7 +347,8 @@ if(Mapper_PACKAGE_ASSISTANT)
 	if(APPLE)
 		set(FIXUP_ASSISTANT "Mapper.app/Contents/MacOS/Assistant")
 	endif()
-	list(APPEND MAPPER_QT_TRANSLATIONS qt_help assistant)
+
+	deploy_qt_translations(assistant qt_help)
 endif(Mapper_PACKAGE_ASSISTANT)
 
 if(CMAKE_CROSSCOMPILING AND MINGW)
@@ -396,46 +433,6 @@ elseif(UNIX)
 	install(CODE "file(MAKE_DIRECTORY \"\$ENV{DESTDIR}/DEBIAN\")") 
 endif()
 
-# Install Qt translations
-set(Mapper_PACKAGE_QT_ALL_TRANSLATIONS TRUE)
-if(Mapper_PACKAGE_QT AND Mapper_PACKAGE_QT_ALL_TRANSLATIONS)
-	# Simply install Qt translations for all languages
-	foreach(_qt_component ${MAPPER_QT_TRANSLATIONS})
-		install(
-		  DIRECTORY "${QT_TRANSLATIONS_DIR}/"
-		  DESTINATION "${MAPPER_DATA_DESTINATION}/translations"
-		  FILES_MATCHING PATTERN "${_qt_component}_*.qm")
-	endforeach()
-elseif(Mapper_PACKAGE_QT AND NOT Mapper_PACKAGE_QT_ALL_TRANSLATIONS)
-	# Install Qt translations only for existing Mapper translations
-	message(STATUS "Checking for Qt translations")
-	unset(_install_translations)
-	foreach(_mapper_trans ${Mapper_TRANS})
-		unset(_found_translations)
-		
-		get_filename_component(_qt_translation ${_mapper_trans} NAME_WE)
-		string(REPLACE OpenOrienteering_ "" _mapper_lang ${_qt_translation})
-		
-		foreach(_qt_component ${MAPPER_QT_TRANSLATIONS})
-			set(_qt_translation "${_qt_component}_${_mapper_lang}")
-			set(_qt_translation_path "${QT_TRANSLATIONS_DIR}/${_qt_translation}.qm")
-			if(EXISTS "${_qt_translation_path}")
-				list(APPEND _found_translations ${_qt_translation})
-				list(APPEND _install_translations "${_qt_translation_path}")
-			endif()
-		endforeach()
-		if (_found_translations)
-			message(STATUS "Checking for Qt translations - ${_mapper_lang} found: ${_found_translations}")
-		else()
-			message(STATUS "Checking for Qt translations - ${_mapper_lang} not found")
-		endif()
-	endforeach(_mapper_trans)
-	install(
-	  FILES ${_install_translations} 
-	  DESTINATION "${MAPPER_DATA_DESTINATION}/translations")
-endif()
-
-
 if(UNIX AND NOT APPLE)
 	install(
 	  FILES "${PROJECT_SOURCE_DIR}/doc/man/Mapper.1"
@@ -453,7 +450,7 @@ if(UNIX AND NOT APPLE)
 	endforeach()
 endif()
 
-message(STATUS "Configuring ${PROJECT_NAME} packaging - done")
+
 
 if(Mapper_BUILD_QT AND Mapper_PACKAGE_LINGUIST)
 	include(ExternalProject)
