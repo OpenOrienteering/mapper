@@ -48,6 +48,11 @@ public:
 	 */
 	PrintProgressDialog(MapPrinter* map_printer, QWidget* parent = nullptr, Qt::WindowFlags f = 0);
 	
+	/**
+	 * Destructor.
+	 */
+	~PrintProgressDialog();
+	
 public slots:
 	/**
 	 * Listens to and forwards paint requests.

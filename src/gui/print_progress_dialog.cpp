@@ -43,6 +43,11 @@ PrintProgressDialog::PrintProgressDialog(MapPrinter* map_printer, QWidget* paren
 	connect(this, &PrintProgressDialog::canceled, map_printer, &MapPrinter::cancelPrintMap);
 }
 
+PrintProgressDialog::~PrintProgressDialog()
+{
+	// nothing, not inlined
+}
+
 void PrintProgressDialog::paintRequested(QPrinter* printer)
 {
 	if (!map_printer->printMap(printer))
