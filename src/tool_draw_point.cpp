@@ -41,30 +41,25 @@
 
 DrawPointTool::DrawPointTool(MapEditorController* editor, QAction* tool_button)
 : MapEditorToolBase(QCursor(QPixmap(":/images/cursor-draw-point.png"), 11, 11), DrawPoint, editor, tool_button)
+, rotating(false)
 , renderables(new MapRenderables(map()))
-, key_button_bar(NULL)
 {
-	rotating = false;
-	preview_object = NULL;
-	
 	angle_helper->addDefaultAnglesDeg(0);
 	angle_helper->setActive(false);
+	
 	snap_helper->setFilter(SnappingToolHelper::NoSnapping);
 	
-	connect(editor, SIGNAL(activeSymbolChanged(const Symbol*)), this, SLOT(activeSymbolChanged(const Symbol*)));
-	connect(map(), SIGNAL(symbolDeleted(int, const Symbol*)), this, SLOT(symbolDeleted(int, const Symbol*)));
+	connect(editor, &MapEditorController::activeSymbolChanged, this, &DrawPointTool::activeSymbolChanged);
+	connect(map(), &Map::symbolDeleted, this, &DrawPointTool::symbolDeleted);
 }
 
 DrawPointTool::~DrawPointTool()
 {
 	if (preview_object)
-	{
-		renderables->removeRenderablesOfObject(preview_object, false);
-		delete preview_object;
-	}
+		renderables->removeRenderablesOfObject(preview_object.get(), false);
 	
 	if (key_button_bar)
-		editor->deletePopupWidget(key_button_bar);
+		editor->deletePopupWidget(key_button_bar.get());
 }
 
 void DrawPointTool::initImpl()
@@ -72,50 +67,60 @@ void DrawPointTool::initImpl()
 	if (editor->isInMobileMode())
 	{
 		// Create key replacement bar
-		key_button_bar = new KeyButtonBar(this, editor->getMainWidget());
+		key_button_bar.reset(new KeyButtonBar(this, editor->getMainWidget()));
 		key_button_bar->addModifierKey(Qt::Key_Shift, Qt::ShiftModifier, tr("Snap", "Snap to existing objects"));
 		key_button_bar->addModifierKey(Qt::Key_Control, Qt::ControlModifier, tr("Angle", "Using constrained angles"));
-		editor->showPopupWidget(key_button_bar, "");
+		editor->showPopupWidget(key_button_bar.get(), "");
 	}
 	
 	if (!preview_object)
 	{
 		if (editor->activeSymbol()->getType() == Symbol::Point)
-			preview_object = new PointObject(editor->activeSymbol()->asPoint());
+			preview_object.reset(new PointObject(editor->activeSymbol()->asPoint()));
 		else
-			preview_object = new PointObject(Map::getUndefinedPoint());
+			preview_object.reset(new PointObject(Map::getUndefinedPoint()));
 	}
 }
 
-void DrawPointTool::leaveEvent(QEvent* event)
+void DrawPointTool::activeSymbolChanged(const Symbol* symbol)
 {
-	Q_UNUSED(event);
+	if (!symbol)
+		switchToDefaultDrawTool(nullptr);
+	else if (symbol->isHidden())
+		deactivate();
+	else if (symbol->getType() != Symbol::Point)
+		switchToDefaultDrawTool(symbol);
+	else if (preview_object)
+	{
+		renderables->removeRenderablesOfObject(preview_object.get(), false);
+		if (static_cast<const PointSymbol*>(preview_object->getSymbol())->isRotatable())
+			preview_object->setRotation(0);
+		preview_object->setSymbol(symbol, true);
+		// Let update happen on later event.
+	}
+}
+
+void DrawPointTool::symbolDeleted(int, const Symbol* symbol)
+{
+	if (preview_object && preview_object->getSymbol() == symbol)
+		deactivate();
+}
+
+void DrawPointTool::leaveEvent(QEvent*)
+{
 	map()->clearDrawingBoundingBox();
 }
 
 void DrawPointTool::mouseMove()
 {
-	PointSymbol* point = reinterpret_cast<PointSymbol*>(editor->activeSymbol());
-	
-	if (!isDragging())
+	if (!editingInProgress())
 	{
 		// Show preview object at this position
-		renderables->removeRenderablesOfObject(preview_object, false);
-		if (preview_object->getSymbol() != point)
-		{
-			bool success = preview_object->setSymbol(point, true);
-			Q_ASSERT(success);
-			Q_UNUSED(success);
-		}
-		
+		renderables->removeRenderablesOfObject(preview_object.get(), false);
 		preview_object->setPosition(constrained_pos_map);
-		if (point->isRotatable())
-			preview_object->setRotation(0);
 		preview_object->update();
-		renderables->insertRenderablesOfObject(preview_object);
+		renderables->insertRenderablesOfObject(preview_object.get());
 		updateDirtyRect();
-		
-		return;
 	}
 }
 
@@ -133,7 +138,7 @@ void DrawPointTool::clickRelease()
 	map()->addObjectToSelection(point, true);
 	map()->setObjectsDirty();
 	map()->clearDrawingBoundingBox();
-	renderables->removeRenderablesOfObject(preview_object, false);
+	renderables->removeRenderablesOfObject(preview_object.get(), false);
 	
 	DeleteObjectsUndoStep* undo_step = new DeleteObjectsUndoStep(map());
 	undo_step->addObject(index);
@@ -159,10 +164,10 @@ void DrawPointTool::dragMove()
 	
 	if (rotating)
 	{
-		renderables->removeRenderablesOfObject(preview_object, false);
+		renderables->removeRenderablesOfObject(preview_object.get(), false);
 		preview_object->setRotation(calculateRotation(constrained_pos, constrained_pos_map));
 		preview_object->update();
-		renderables->insertRenderablesOfObject(preview_object);
+		renderables->insertRenderablesOfObject(preview_object.get());
 	}
 	
 	updateDirtyRect();
@@ -176,52 +181,67 @@ void DrawPointTool::dragFinish()
 
 bool DrawPointTool::keyPress(QKeyEvent* event)
 {
-	if (event->key() == Qt::Key_Tab)
-		deactivate();
-	else if (event->key() == Qt::Key_Control)
+	bool result = true;
+	switch (event->key())
 	{
+	case Qt::Key_Tab:
+		deactivate();
+		break;
+		
+	case Qt::Key_Control:
 		if (isDragging() && rotating)
 		{
 			angle_helper->setActive(true, preview_object->getCoordF());
 			calcConstrainedPositions(cur_map_widget);
 			dragMove();
 		}
-	}
-	else if (event->key() == Qt::Key_Shift)
-	{
+		break;
+		
+	case Qt::Key_Shift:
 		snap_helper->setFilter(SnappingToolHelper::AllTypes);
 		calcConstrainedPositions(cur_map_widget);
 		if (isDragging())
 			dragMove();
 		else
 			mouseMove();
+		break;
+		
+	default:
+		result = false;
 	}
-	else
-		return false;
-	return true;
+	
+	return result;
 }
 
 bool DrawPointTool::keyRelease(QKeyEvent* event)
 {
-	if (event->key() == Qt::Key_Control && angle_helper->isActive())
+	bool result = true;
+	switch (event->key())
 	{
-		angle_helper->setActive(false);
-		calcConstrainedPositions(cur_map_widget);
-		if (isDragging())
-			dragMove();
-	}
-	else if (event->key() == Qt::Key_Shift)
-	{
+	case Qt::Key_Control:
+		if (angle_helper->isActive())
+		{
+			angle_helper->setActive(false);
+			calcConstrainedPositions(cur_map_widget);
+			if (isDragging())
+				dragMove();
+		}
+		break;
+		
+	case Qt::Key_Shift:
 		snap_helper->setFilter(SnappingToolHelper::NoSnapping);
 		calcConstrainedPositions(cur_map_widget);
 		if (isDragging())
 			dragMove();
 		else
 			mouseMove();
+		break;
+		
+	default:
+		result = false;
 	}
-	else
-		return false;
-	return true;
+	
+	return result;
 }
 
 void DrawPointTool::drawImpl(QPainter* painter, MapWidget* widget)
@@ -260,33 +280,34 @@ void DrawPointTool::drawImpl(QPainter* painter, MapWidget* widget)
 
 int DrawPointTool::updateDirtyRectImpl(QRectF& rect)
 {
+	int result = -1;
 	if (isDragging())
 	{
 		rectIncludeSafe(rect, click_pos_map);
 		rectInclude(rect, constrained_pos_map);
 		if (preview_object)
 			rectInclude(rect, preview_object->getExtent());
-		return qMax(1, angle_helper->getDisplayRadius());
+		result = qMax(1, angle_helper->getDisplayRadius());
 	}
-	else
+	else if (preview_object)
 	{
-		if (preview_object)
-		{
-			rectIncludeSafe(rect, preview_object->getExtent());
-			return 0;
-		}
-		else
-			return -1;
+		rectIncludeSafe(rect, preview_object->getExtent());
+		result = 0;
 	}
+	
+	return result;
 }
 
-float DrawPointTool::calculateRotation(QPointF mouse_pos, MapCoordF mouse_pos_map)
+double DrawPointTool::calculateRotation(QPointF mouse_pos, MapCoordF mouse_pos_map) const
 {
-	QPoint preview_object_pos = cur_map_widget->mapToViewport(preview_object->getCoordF()).toPoint();
-	if (isDragging() && (mouse_pos - preview_object_pos).manhattanLength() >= Settings::getInstance().getStartDragDistancePx())
-		return -atan2(mouse_pos_map.x() - preview_object->getCoordF().x(), preview_object->getCoordF().y() - mouse_pos_map.y());
-	else
-		return 0;
+	double result = 0.0;
+	if (isDragging())
+	{
+		QPoint preview_object_pos = cur_map_widget->mapToViewport(preview_object->getCoordF()).toPoint();
+		if ((mouse_pos - preview_object_pos).manhattanLength() >= Settings::getInstance().getStartDragDistancePx())
+			result = -atan2(mouse_pos_map.x() - preview_object->getCoordF().x(), preview_object->getCoordF().y() - mouse_pos_map.y());
+	}
+	return result;
 }
 
 void DrawPointTool::updateStatusText()
@@ -307,26 +328,5 @@ void DrawPointTool::updateStatusText()
 
 void DrawPointTool::objectSelectionChangedImpl()
 {
-	// NOP
-}
-
-void DrawPointTool::activeSymbolChanged(const Symbol* symbol)
-{
-	if (symbol == NULL || symbol->getType() != Symbol::Point || symbol->isHidden())
-	{
-		if (symbol && symbol->isHidden())
-			deactivate();
-		else
-			switchToDefaultDrawTool(symbol);
-	}
-	else
-		last_used_symbol = symbol;
-}
-
-void DrawPointTool::symbolDeleted(int pos, const Symbol* old_symbol)
-{
-	Q_UNUSED(pos);
-	
-	if (last_used_symbol == old_symbol)
-		deactivate();
+	// nothing
 }
