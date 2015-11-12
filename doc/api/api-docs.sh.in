@@ -20,6 +20,9 @@
 # Usage: api-docs.sh DOXYGEN_EXECUTABLE
 
 SOURCE_DIR=$(echo "@PROJECT_SOURCE_DIR@/" | sed -e "s/\//\\\\\//g")
+DOC_DIR=$(echo "@CMAKE_CURRENT_BINARY_DIR@/" | sed -e "s/\//\\\\\//g")
+
+test -d html || mkdir html
 
 for I in html/*; do
 	rm -Rf "$I"
@@ -31,4 +34,6 @@ done
 sed -i -e "
   s/\( ([^( ]* rev ......., [A-Za-z0-9 ]*)\)\(<\/a>\)/\2\1/ # Footer of class documentation
   s/\([^( ]*\) rev \(.......\), /<a href=\"https:\/\/github.com\/OpenOrienteering\/mapper\/blob\/\2\/\1\"><tt>\2<\/tt><\/a> on /
+  s/\"${DOC_DIR}/\"/g
+  s/\"${SOURCE_DIR}/\"/g
 " html/*.html

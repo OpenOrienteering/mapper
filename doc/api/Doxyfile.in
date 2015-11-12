@@ -42,12 +42,12 @@ BUILTIN_STL_SUPPORT    = YES
 EXTRACT_ALL            = YES
 HAVE_DOT               = YES
 GENERATE_TAGFILE       = oomapper.tags
-TAGFILES              += qtcore.tags=http://qt-project.org/doc/qt-5/
-TAGFILES              += qtgui.tags=http://qt-project.org/doc/qt-5/
-TAGFILES              += qtwidgets.tags=http://qt-project.org/doc/qt-5/
-TAGFILES              += qtxml.tags=http://qt-project.org/doc/qt-5/
-TAGFILES              += qtnetwork.tags=http://qt-project.org/doc/qt-5/
-TAGFILES              += qtprintsupport.tags=http://qt-project.org/doc/qt-5/
+TAGFILES              += qtcore.tags=http://doc.qt.io/qt-5/
+TAGFILES              += qtgui.tags=http://doc.qt.io/qt-5/
+TAGFILES              += qtwidgets.tags=http://doc.qt.io/qt-5/
+TAGFILES              += qtxml.tags=http://doc.qt.io/qt-5/
+TAGFILES              += qtnetwork.tags=http://doc.qt.io/qt-5/
+TAGFILES              += qtprintsupport.tags=http://doc.qt.io/qt-5/
 
 GENERATE_LATEX         = NO
 HTML_TIMESTAMP         = NO

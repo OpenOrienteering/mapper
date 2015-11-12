@@ -27,7 +27,7 @@ if [ ! -f repository.txt -o "$(cat repository.txt)" != "$1" ]; then
 fi
 
 if [ ! -d repository ]; then
-	git clone "$1" -b "$2" repository
+	git clone --depth 5 "$1" -b "$2" repository
 	cd repository
 else
 	cd repository
