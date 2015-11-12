@@ -312,8 +312,8 @@ void MapEditorToolBase::updateDragging()
 void MapEditorToolBase::finishDragging()
 {
 	Q_ASSERT(dragging);
-	dragging = false;
 	dragMove();
+	dragging = false;
 	dragFinish();
 }
 
