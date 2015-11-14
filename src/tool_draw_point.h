@@ -81,7 +81,6 @@ protected:
 	bool rotating;
 	std::unique_ptr<PointObject> preview_object;
 	std::unique_ptr<MapRenderables> renderables;
-	std::unique_ptr<KeyButtonBar> key_button_bar;
 };
 
 #endif

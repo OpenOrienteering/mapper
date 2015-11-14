@@ -57,9 +57,6 @@ DrawPointTool::~DrawPointTool()
 {
 	if (preview_object)
 		renderables->removeRenderablesOfObject(preview_object.get(), false);
-	
-	if (key_button_bar)
-		editor->deletePopupWidget(key_button_bar.get());
 }
 
 void DrawPointTool::initImpl()
@@ -67,11 +64,11 @@ void DrawPointTool::initImpl()
 	if (editor->isInMobileMode())
 	{
 		// Create key replacement bar
-		key_button_bar.reset(new KeyButtonBar(this, editor->getMainWidget()));
+		key_button_bar = new KeyButtonBar(this, editor->getMainWidget());
 		key_button_bar->addModifierKey(Qt::Key_Shift, Qt::ShiftModifier, tr("Snap", "Snap to existing objects"));
 		key_button_bar->addModifierKey(Qt::Key_Control, Qt::ControlModifier, tr("Angle", "Using constrained angles"));
 		key_button_bar->addPressKey(Qt::Key_Escape, tr("Reset", "Reset rotation"));
-		editor->showPopupWidget(key_button_bar.get(), "");
+		editor->showPopupWidget(key_button_bar, "");
 	}
 	
 	if (!preview_object)
@@ -195,8 +192,9 @@ bool DrawPointTool::keyPress(QKeyEvent* event)
 		{
 			preview_object->setRotation(0);
 			rotating = false;
-			mouseMove();
 			updateStatusText();
+			if (!editor->isInMobileMode())
+				mouseMove();
 		}
 		break;
 		
