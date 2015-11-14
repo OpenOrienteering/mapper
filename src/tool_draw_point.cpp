@@ -70,6 +70,7 @@ void DrawPointTool::initImpl()
 		key_button_bar.reset(new KeyButtonBar(this, editor->getMainWidget()));
 		key_button_bar->addModifierKey(Qt::Key_Shift, Qt::ShiftModifier, tr("Snap", "Snap to existing objects"));
 		key_button_bar->addModifierKey(Qt::Key_Control, Qt::ControlModifier, tr("Angle", "Using constrained angles"));
+		key_button_bar->addPressKey(Qt::Key_Escape, tr("Reset", "Reset rotation"));
 		editor->showPopupWidget(key_button_bar.get(), "");
 	}
 	
@@ -186,6 +187,17 @@ bool DrawPointTool::keyPress(QKeyEvent* event)
 	{
 	case Qt::Key_Tab:
 		deactivate();
+		break;
+	
+	case Qt::Key_Escape:
+	case Qt::Key_0:
+		if (!editingInProgress())
+		{
+			preview_object->setRotation(0);
+			rotating = false;
+			mouseMove();
+			updateStatusText();
+		}
 		break;
 		
 	case Qt::Key_Control:
@@ -314,15 +326,28 @@ void DrawPointTool::updateStatusText()
 {
 	if (isDragging() && rotating)
 	{
-		static const double pi_x_2 = M_PI * 2.0;
-		static const double to_deg = 180.0 / M_PI;
-		double angle = fmod(calculateRotation(constrained_pos, constrained_pos_map) + pi_x_2, pi_x_2) * to_deg;
+		auto angle = qRadiansToDegrees(preview_object->getRotation());
 		setStatusBarText( trUtf8("<b>Angle:</b> %1° ").arg(QLocale().toString(angle, 'f', 1)) + "| " +
 		                  tr("<b>%1</b>: Fixed angles. ").arg(ModifierKey::control()) );
 	}
+	else if (static_cast<const PointSymbol*>(preview_object->getSymbol())->isRotatable())
+	{
+		auto parts = QStringList {
+		    tr("<b>Click</b>: Create a point object."),
+		    tr("<b>Drag</b>: Create an object and set its orientation."),
+		};
+		auto angle = qRadiansToDegrees(preview_object->getRotation());
+		if (!qIsNull(angle))
+		{
+			parts.push_front(trUtf8("<b>Angle:</b> %1° ").arg(QLocale().toString(angle, 'f', 1)) + "|");
+			parts.push_back(tr("<b>%1, 0</b>: Reset rotation.").arg(ModifierKey::escape()));
+		}
+		setStatusBarText(parts.join(QLatin1String(" ")));
+	}
 	else
 	{
-		setStatusBarText( tr("<b>Click</b>: Create a point object. <b>Drag</b>: Create an object and set its orientation (if rotatable). "));
+		// Same as click_text above.
+		setStatusBarText(tr("<b>Click</b>: Create a point object."));
 	}
 }
 
