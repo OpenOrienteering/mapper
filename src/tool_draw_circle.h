@@ -21,6 +21,8 @@
 #ifndef _OPENORIENTEERING_DRAW_CIRCLE_H_
 #define _OPENORIENTEERING_DRAW_CIRCLE_H_
 
+#include <QPointer>
+
 #include "tool_draw_line_and_area.h"
 
 class KeyButtonBar;
@@ -62,7 +64,7 @@ protected:
 	bool start_from_center;
 	bool first_point_set;
 	bool second_point_set;
-	KeyButtonBar* key_button_bar;
+	QPointer<KeyButtonBar> key_button_bar;
 };
 
 #endif

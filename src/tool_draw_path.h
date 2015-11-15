@@ -22,6 +22,7 @@
 #ifndef _OPENORIENTEERING_DRAW_PATH_H_
 #define _OPENORIENTEERING_DRAW_PATH_H_
 
+#include <QPointer>
 #include <QScopedPointer>
 
 #include "tool_draw_line_and_area.h"
@@ -148,7 +149,7 @@ protected:
 	PathObject* follow_object;
 	MapCoordVector::size_type follow_start_index;
 	
-	KeyButtonBar* key_button_bar;
+	QPointer<KeyButtonBar> key_button_bar;
 };
 
 #endif

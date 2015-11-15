@@ -24,6 +24,7 @@
 
 #include "tool_draw_line_and_area.h"
 
+#include <QPointer>
 #include <QScopedPointer>
 
 class ConstrainAngleToolHelper;
@@ -137,7 +138,7 @@ protected:
 	QScopedPointer<SnappingToolHelper> snap_helper;
 	MapWidget* cur_map_widget;
 	
-	KeyButtonBar* key_button_bar;
+	QPointer<KeyButtonBar> key_button_bar;
 };
 
 #endif

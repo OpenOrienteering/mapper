@@ -22,6 +22,7 @@
 #define _OPENORIENTEERING_TEMPLATE_TOOL_PAINT_H_
 
 #include <QDialog>
+#include <QPointer>
 
 #include "tool.h"
 
@@ -65,7 +66,7 @@ private:
 	std::vector<MapCoordF> coords;
 	
 	Template* temp;
-	PaintOnTemplatePaletteWidget* widget;
+	QPointer<PaintOnTemplatePaletteWidget> widget;
 	
 	static int erase_width;
 };

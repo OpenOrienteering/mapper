@@ -24,9 +24,10 @@
 
 #include <vector>
 
-#include <QHash>
-#include <QScopedPointer>
 #include <QAction>
+#include <QHash>
+#include <QPointer>
+#include <QScopedPointer>
 
 #include "tool.h"
 
@@ -192,7 +193,7 @@ protected:
 	/// Must be set by derived classes if a key button bar is used.
 	/// MapEditorToolBase will take care of including its modifiers into
 	/// active_modifiers and destruct it when the tool is destructed.
-	KeyButtonBar* key_button_bar;
+	QPointer<KeyButtonBar> key_button_bar;
 	
 private:
 	// Miscellaneous internals

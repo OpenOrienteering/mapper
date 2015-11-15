@@ -734,8 +734,6 @@ private:
 
 	QSignalMapper* mappart_merge_mapper;
 	QSignalMapper* mappart_move_mapper;
-	
-	bool being_destructed;
 };
 
 

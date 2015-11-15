@@ -182,8 +182,6 @@ MapEditorController::MapEditorController(OperatingMode mode, Map* map)
 	compass_display = NULL;
 	gps_marker_display = NULL;
 	
-	being_destructed = false;
-	
 	actionsById[""] = new QAction(this); // dummy action
 	
 	connect(mappart_merge_mapper, SIGNAL(mapped(int)), this, SLOT(mergeCurrentMapPartTo(int)));
@@ -192,7 +190,6 @@ MapEditorController::MapEditorController(OperatingMode mode, Map* map)
 
 MapEditorController::~MapEditorController()
 {
-	being_destructed = true;
 	paste_act = NULL;
 	delete current_tool;
 	delete override_tool;
@@ -422,12 +419,13 @@ void MapEditorController::deletePopupWidget(QWidget* child_widget)
 {
 	if (mobile_mode)
 	{
-		if (being_destructed)
-			return;
-			delete child_widget;
+		delete child_widget;
 	}
 	else
+	{
+		// Delete the dock widget
 		delete child_widget->parentWidget();
+	}
 }
 
 bool MapEditorController::save(const QString& path)
@@ -486,7 +484,6 @@ bool MapEditorController::load(const QString& path, QWidget* dialog_parent)
 
 void MapEditorController::attach(MainWindow* window)
 {
-	being_destructed = false;
 	print_dock_widget = NULL;
 	measure_dock_widget = NULL;
 	color_dock_widget = NULL;
@@ -1278,9 +1275,7 @@ void MapEditorController::detach()
 	setTool(nullptr);
 	setOverrideTool(nullptr);
 	
-	if (!mobile_mode)
-		saveWindowState();
-	being_destructed = true;
+	saveWindowState();
 	
 	// Avoid a crash triggered by pressing Ctrl-W during loading.
 	if (NULL != symbol_dock_widget)
@@ -1316,20 +1311,24 @@ void MapEditorController::detach()
 
 void MapEditorController::saveWindowState()
 {
-	if (mode == SymbolEditor || being_destructed)
-		return;
-	QSettings settings;
-	settings.beginGroup(metaObject()->className());
-	settings.setValue("state", window->saveState());
+	if (!mobile_mode && mode != SymbolEditor)
+	{
+		QSettings settings;
+		settings.beginGroup(metaObject()->className());
+		settings.setValue("state", window->saveState());
+	}
 }
 
 void MapEditorController::restoreWindowState()
 {
-	QSettings settings;
-	settings.beginGroup(metaObject()->className());
-	window->restoreState(settings.value("state").toByteArray());
-	if (toolbar_mapparts && mappart_selector_box)
-		toolbar_mapparts->setVisible(mappart_selector_box->count() > 1);
+	if (!mobile_mode)
+	{
+		QSettings settings;
+		settings.beginGroup(metaObject()->className());
+		window->restoreState(settings.value("state").toByteArray());
+		if (toolbar_mapparts && mappart_selector_box)
+			toolbar_mapparts->setVisible(mappart_selector_box->count() > 1);
+	}
 }
 
 bool MapEditorController::keyPressEventFilter(QKeyEvent* event)
