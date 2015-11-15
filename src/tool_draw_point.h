@@ -55,6 +55,10 @@ protected:
 	 */
 	void symbolDeleted(int pos, const Symbol* symbol);
 	
+	void updatePreviewObject(MapCoordF pos);
+	
+	void createObject();
+	
 	/**
 	 * Calculates the object's rotation for the given mouse position.
 	 * 
@@ -78,7 +82,6 @@ protected:
 	void updateStatusText() override;
 	void objectSelectionChangedImpl() override;
 	
-	bool rotating;
 	std::unique_ptr<PointObject> preview_object;
 	std::unique_ptr<MapRenderables> renderables;
 };
