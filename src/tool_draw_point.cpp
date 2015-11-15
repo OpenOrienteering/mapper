@@ -91,8 +91,7 @@ void DrawPointTool::activeSymbolChanged(const Symbol* symbol)
 	else if (preview_object)
 	{
 		renderables->removeRenderablesOfObject(preview_object.get(), false);
-		if (static_cast<const PointSymbol*>(preview_object->getSymbol())->isRotatable())
-			preview_object->setRotation(0);
+		preview_object->setRotation(0);
 		preview_object->setSymbol(symbol, true);
 		// Let update happen on later event.
 	}

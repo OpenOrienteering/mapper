@@ -954,7 +954,10 @@ public:
 	
 	/**
 	 * Sets the point object's rotation (in radians).
-	 * This may only be done if the object's symbol is rotatable!
+	 * 
+	 * This does nothing if the object's symbol isn't rotable. However, it is an
+	 * error to call setRotation on such an object with an argument other than
+	 * binary 0.
 	 */
 	void setRotation(float new_rotation);
 	

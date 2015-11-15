@@ -3151,9 +3151,8 @@ MapCoord PointObject::getCoord() const
 
 void PointObject::setRotation(float new_rotation)
 {
-	Q_ASSERT(symbol->asPoint()->isRotatable());
-	
-	if (!qIsNaN(new_rotation))
+	Q_ASSERT(symbol->asPoint()->isRotatable() || qIsNull(new_rotation));
+	if (!qIsNaN(new_rotation) && symbol->asPoint()->isRotatable())
 	{
 		rotation = new_rotation;
 		setOutputDirty();
