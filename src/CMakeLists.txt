@@ -134,7 +134,6 @@ set(Mapper_Common_SRCS
  dxfparser.cpp
  
  compass.cpp
- compass_display.cpp
 
  file_format.cpp
  file_format_registry.cpp
@@ -165,6 +164,7 @@ set(Mapper_Common_SRCS
  
  gui/widgets/action_grid_bar.cpp
  gui/widgets/color_dropdown.cpp
+ gui/widgets/compass_display.cpp
  gui/widgets/crs_param_widgets.cpp
  gui/widgets/crs_selector.cpp
  gui/widgets/home_screen_widget.cpp
@@ -189,7 +189,6 @@ set(Mapper_Common_SRCS
 set(Mapper_Common_MOC_INPUT
  color_dock_widget.h
  compass.h
- compass_display.h
  file_format_ocad8_p.h
  file_format_xml_p.h
  file_import_export.h
@@ -275,6 +274,7 @@ set(Mapper_Common_MOC_INPUT
  
  gui/widgets/action_grid_bar.h
  gui/widgets/color_dropdown.h
+ gui/widgets/compass_display.h
  gui/widgets/crs_param_widgets.h
  gui/widgets/crs_selector.h
  gui/widgets/home_screen_widget.h

@@ -1,5 +1,6 @@
 /*
  *    Copyright 2013 Thomas Schöps
+ *    Copyright 2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -21,49 +22,48 @@
 #ifndef _OPENORIENTEERING_COMPASS_DISPLAY_H_
 #define _OPENORIENTEERING_COMPASS_DISPLAY_H_
 
-#include <QObject>
 #include <QTime>
-
-QT_BEGIN_NAMESPACE
-class QPainter;
-QT_END_NAMESPACE
-class MapWidget;
-
+#include <QWidget>
 
 /**
- * Displays a compass on a MapWidget based on digital compass readings.
+ * A widget which displays a compass.
+ * 
+ * By default, this widget is transparent (Qt::WA_NoSystemBackground), i.e. it
+ * it does not draw a background. For proper background drawing, it shall not be
+ * a child but a sibling of the background widget.
  */
-class CompassDisplay : public QObject
+class CompassDisplay : public QWidget
 {
 Q_OBJECT
 public:
-	/// Creates a compass display for the given map widget.
-	CompassDisplay(MapWidget* map_widget);
-	/// Destructor, removes the compass display from the map widget.
-	~CompassDisplay();
+	/** 
+	 * Creates a compass display.
+	 */
+	CompassDisplay(QWidget* parent = nullptr);
 	
-	/// Enables or disables compass display (by default it is disabled).
-	void enable(bool enabled);
+	/** 
+	 * Destructor.
+	 */
+	~CompassDisplay() override;
 	
-	/// This is called from the MapWidget drawing code to draw the compass.
-	void paint(QPainter* painter);
+	/** 
+	 * Sets the compass direction, and updates the widget.
+	 * 
+	 * This does nothing unless at least 200 ms elapsed since the last change.
+	 */
+	void setAzimuth(float azimuth_deg);
 	
-public slots:
-	/// Called internally to update the value
-	void valueChanged(float azimuth_deg);
+	QSize sizeHint() const override;
 	
-private:
-	void updateMapWidget();
-	QRectF calcBoundingBox();
+protected:
+	void showEvent(QShowEvent* event) override;
 	
+	void hideEvent(QHideEvent* event) override;
 	
-	bool have_value;
-	qreal value_azimuth;
-	qreal value_calibration;
+	void paintEvent(QPaintEvent* event) override;
+	
+	qreal azimuth;
 	QTime last_update_time;
-	
-	bool enabled;
-	MapWidget* widget;
 };
 
 #endif

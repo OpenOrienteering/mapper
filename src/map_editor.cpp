@@ -60,10 +60,10 @@
 #include "gui/configure_grid_dialog.h"
 #include "gui/georeferencing_dialog.h"
 #include "gui/widgets/action_grid_bar.h"
+#include "gui/widgets/compass_display.h"
 #include "gui/widgets/symbol_widget.h"
 #include "color_dock_widget.h"
 #include "compass.h"
-#include "compass_display.h"
 #include "file_format_registry.h"
 #include "map.h"
 #include "map_dialog_rotate.h"
@@ -547,13 +547,14 @@ void MapEditorController::attach(MainWindow* window)
 	if (mode == MapEditor)
 	{
 		gps_display = new GPSDisplay(map_widget, map->getGeoreferencing());
-		compass_display = new CompassDisplay(map_widget);
 		gps_marker_display = new GPSTemporaryMarkers(map_widget, gps_display);
 		
 		createActions();
 		if (mobile_mode)
 		{
 			createMobileGUI();
+			compass_display = new CompassDisplay(map_widget->parentWidget());
+			compass_display->setVisible(false);
 		}
 		else
 		{
@@ -3093,7 +3094,25 @@ void MapEditorController::gpsTemporaryClearClicked()
 
 void MapEditorController::enableCompassDisplay(bool enable)
 {
-	compass_display->enable(enable);
+	if (!compass_display || !show_top_bar_button || !top_action_bar)
+	{
+		Q_ASSERT(!"Prerequisites must be initialized");
+	}
+	else if (enable)
+	{
+		auto size = compass_display->sizeHint();
+		if (top_action_bar->isVisible())
+			compass_display->setGeometry(0, top_action_bar->size().height(), size.width(), size.height());
+		else
+			compass_display->setGeometry(show_top_bar_button->size().width(), 0, size.width(), size.height());
+		connect(&Compass::getInstance(), &Compass::azimuthChanged, compass_display, &CompassDisplay::setAzimuth);
+		compass_display->show();
+	}
+	else
+	{
+		disconnect(&Compass::getInstance(), &Compass::azimuthChanged, compass_display, &CompassDisplay::setAzimuth);
+		compass_display->hide();
+	}
 }
 
 void MapEditorController::alignMapWithNorth(bool enable)
@@ -3192,12 +3211,17 @@ void MapEditorController::hideTopActionBar()
 	top_action_bar->hide();
 	show_top_bar_button->show();
 	show_top_bar_button->raise();
+	
+	compass_display->move(show_top_bar_button->size().width(), 0);
 }
 
 void MapEditorController::showTopActionBar()
 {
 	show_top_bar_button->hide();
 	top_action_bar->show();
+	top_action_bar->raise();
+	
+	compass_display->move(0, top_action_bar->size().height());
 }
 
 void MapEditorController::mobileSymbolSelectorClicked()

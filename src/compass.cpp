@@ -20,8 +20,9 @@
 #include "compass.h"
 
 #include <qmath.h>
-#include <QTime>
+#include <QMetaMethod>
 #include <QMutex>
+#include <QTime>
 
 
 namespace SensorHelpers
@@ -568,6 +569,18 @@ void Compass::disconnectFromAzimuthChanges(const QObject* receiver)
 #else
 	Q_UNUSED(receiver);
 #endif
+}
+
+void Compass::connectNotify(const QMetaMethod& signal)
+{
+	if (signal == QMetaMethod::fromSignal(&Compass::azimuthChanged))
+	    startUsage();
+}
+
+void Compass::disconnectNotify(const QMetaMethod& signal)
+{
+	if (signal == QMetaMethod::fromSignal(&Compass::azimuthChanged))
+	    stopUsage();
 }
 
 void Compass::emitAzimuthChanged(float value)

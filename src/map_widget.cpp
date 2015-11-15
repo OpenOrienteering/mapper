@@ -44,7 +44,6 @@
 #include "touch_cursor.h"
 #include "util.h"
 #include "gps_display.h"
-#include "compass_display.h"
 #include "gps_temporary_markers.h"
 #include "gui/widgets/pie_menu.h"
 
@@ -71,7 +70,6 @@ MapWidget::MapWidget(bool show_help, bool force_antialiasing, QWidget* parent)
  , last_mouse_release_time(QTime::currentTime())
  , current_pressed_buttons(0)
  , gps_display(nullptr)
- , compass_display(nullptr)
  , marker_display(nullptr)
 {
 	context_menu = new PieMenu(this);
@@ -649,11 +647,6 @@ void MapWidget::setGPSDisplay(GPSDisplay* gps_display)
 	this->gps_display = gps_display;
 }
 
-void MapWidget::setCompassDisplay(CompassDisplay* compass_display)
-{
-	this->compass_display = compass_display;
-}
-
 void MapWidget::setTemporaryMarkerDisplay(GPSTemporaryMarkers* marker_display)
 {
 	this->marker_display = marker_display;
@@ -859,10 +852,6 @@ void MapWidget::paintEvent(QPaintEvent* event)
 	
 	
 	painter.setWorldTransform(transform, false);
-	
-	// Draw compass display
-	if (compass_display)
-		compass_display->paint(&painter);
 }
 
 void MapWidget::resizeEvent(QResizeEvent* event)
