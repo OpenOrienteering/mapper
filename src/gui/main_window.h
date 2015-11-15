@@ -58,6 +58,15 @@ public:
 	const QString& appName() const;
 	
 	
+	/**
+	 * Returns whether the window is operating in mobile mode.
+	 * 
+	 * Mobile mode is the default on Android. The default may be overwritten by
+	 * setting the environment variable MAPPER_MOBILE_GUI to 0 or 1.
+	 */
+	bool mobileMode() const;
+	
+	
 	/** Change the controller to new_controller. */
 	void setController(MainWindowController* new_controller, const QString& path = QString());
 	

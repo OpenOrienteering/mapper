@@ -55,7 +55,7 @@
 #include "text_browser_dialog.h"
 #include "../util.h"
 
-#if defined(ANDROID)
+#if defined(Q_OS_ANDROID)
 #include <QtAndroidExtras/QAndroidJniObject>
 #endif
 
@@ -87,13 +87,10 @@ MainWindow::MainWindow(bool as_main_window)
 	controller = NULL;
 	has_unsaved_changes = false;
 	has_opened_file = false;
-#if defined(ANDROID)
+
 	create_menu = as_main_window;
-	show_menu = false;
-#else
-	create_menu = as_main_window;
-	show_menu = create_menu;
-#endif
+	show_menu = create_menu && !mobileMode();
+	
 	disable_shortcuts = false;
 	setCurrentPath(QString());
 	maximized_before_fullscreen = false;
@@ -104,10 +101,10 @@ MainWindow::MainWindow(bool as_main_window)
 	setAttribute(Qt::WA_DeleteOnClose);
 	
 	status_label = new QLabel();
-#if ! defined(ANDROID)
 	statusBar()->addWidget(status_label, 1);
 	statusBar()->setSizeGripEnabled(as_main_window);
-#endif
+	if (mobileMode())
+		statusBar()->hide();
 	
 	central_widget = new QStackedWidget(this);
 	QMainWindow::setCentralWidget(central_widget);
@@ -144,6 +141,20 @@ const QString& MainWindow::appName() const
 {
 	static QString app_name(APP_NAME);
 	return app_name;
+}
+
+bool MainWindow::mobileMode() const
+{
+#ifdef Q_OS_ANDROID
+	static bool mobile_mode = qEnvironmentVariableIsSet("MAPPER_MOBILE_GUI")
+	                          ? (qgetenv("MAPPER_MOBILE_GUI") != "0")
+	                          : 1;
+#else
+	static bool mobile_mode = qEnvironmentVariableIsSet("MAPPER_MOBILE_GUI")
+	                          ? (qgetenv("MAPPER_MOBILE_GUI") != "0")
+	                          : 0;
+#endif
+	return mobile_mode;
 }
 
 void MainWindow::setCentralWidget(QWidget* widget)
@@ -398,7 +409,7 @@ void MainWindow::setStatusBarText(const QString& text)
 
 void MainWindow::showStatusBarMessage(const QString& text, int timeout)
 {
-#if defined(ANDROID)
+#if defined(Q_OS_ANDROID)
 	Q_UNUSED(timeout);
 	QAndroidJniObject java_string = QAndroidJniObject::fromString(text);
 	QAndroidJniObject::callStaticMethod<void>(
@@ -413,7 +424,7 @@ void MainWindow::showStatusBarMessage(const QString& text, int timeout)
 
 void MainWindow::clearStatusBarMessage()
 {
-#if ! defined(ANDROID)
+#if !defined(Q_OS_ANDROID)
 	statusBar()->clearMessage();
 #endif
 }

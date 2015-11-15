@@ -131,13 +131,7 @@ MapEditorController::MapEditorController(OperatingMode mode, Map* map)
 , mappart_move_mapper(new QSignalMapper(this))
 {
 	this->mode = mode;
-	
-	// TODO: Allow to change this in the settings
-#if defined(Q_OS_ANDROID) || defined(FORCE_MOBILE_GUI)
-	mobile_mode = true;
-#else
-	mobile_mode = false;
-#endif
+	mobile_mode = false; // Updated in attach()
 	
 	this->map = NULL;
 	main_view = NULL;
@@ -484,6 +478,7 @@ bool MapEditorController::load(const QString& path, QWidget* dialog_parent)
 
 void MapEditorController::attach(MainWindow* window)
 {
+	mobile_mode = window->mobileMode();
 	print_dock_widget = NULL;
 	measure_dock_widget = NULL;
 	color_dock_widget = NULL;
@@ -548,16 +543,13 @@ void MapEditorController::attach(MainWindow* window)
 	map_widget = new MapWidget(mode == MapEditor, mode == SymbolEditor);
 	map_widget->setMapView(main_view);
 	
+	// Create menu and toolbar together, so actions can be inserted into one or both
 	if (mode == MapEditor)
 	{
 		gps_display = new GPSDisplay(map_widget, map->getGeoreferencing());
 		compass_display = new CompassDisplay(map_widget);
 		gps_marker_display = new GPSTemporaryMarkers(map_widget, gps_display);
-	}
-	
-	// Create menu and toolbar together, so actions can be inserted into one or both
-	if (mode == MapEditor)
-	{
+		
 		createActions();
 		if (mobile_mode)
 		{
