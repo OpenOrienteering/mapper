@@ -986,7 +986,7 @@
         <location filename="../src/tool_draw_point.cpp" line="62"/>
         <source>Reset</source>
         <comment>Reset rotation</comment>
-        <translation type="unfinished"></translation>
+        <translation>Zurücksetzen</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_point.cpp" line="329"/>
@@ -1003,17 +1003,17 @@
         <location filename="../src/tool_draw_point.cpp" line="335"/>
         <location filename="../src/tool_draw_point.cpp" line="349"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Create a point object.</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Klick&lt;/b&gt;: Punktobjekt erstellen.</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_point.cpp" line="336"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Create an object and set its orientation.</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Ziehen&lt;/b&gt;: Objekt erstellen und Ausrichtung festlegen.</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_point.cpp" line="342"/>
         <source>&lt;b&gt;%1, 0&lt;/b&gt;: Reset rotation.</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1, 0&lt;/b&gt;: Drehung zurücksetzen.</translation>
     </message>
     <message>
         <source>&lt;b&gt;Click&lt;/b&gt;: Create a point object. &lt;b&gt;Drag&lt;/b&gt;: Create an object and set its orientation (if rotatable). </source>
@@ -2070,7 +2070,7 @@
     <message>
         <location filename="../src/file_format_native.cpp" line="122"/>
         <source>This file uses an obsolete format. Support for this format is to be removed from this program soon. To be able to open the file in the future, save it again.</source>
-        <translation type="unfinished">Diese Datei nutzt ein veraltetes Format. Die Unterstützung für dieses Format wird bald aus der Software entfernt. Um die Datei auch in Zukunft öffnen zu können, speichern Sie es bitte erneut.</translation>
+        <translation>Diese Datei nutzt ein veraltetes Format. Die Unterstützung für dieses Format wird bald aus der Software entfernt. Um die Datei auch in Zukunft öffnen zu können, speichern Sie es bitte erneut.</translation>
     </message>
     <message>
         <location filename="../src/file_format_native.cpp" line="135"/>
@@ -2890,7 +2890,7 @@ Importierte Daten auf Kartenmaßstab umrechnen?</translation>
     <message>
         <location filename="../src/core/map_coord.cpp" line="173"/>
         <source>Coordinates are out-of-bounds.</source>
-        <translation type="unfinished"></translation>
+        <translation>Koordinaten liegen außerhalb der Schranken.</translation>
     </message>
 </context>
 <context>
