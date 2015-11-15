@@ -319,93 +319,93 @@
         <translation>Mix av dekorfärger (skärmar och övertryck)</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="85"/>
-        <location filename="../src/gui/color_dialog.cpp" line="123"/>
-        <location filename="../src/gui/color_dialog.cpp" line="128"/>
-        <location filename="../src/gui/color_dialog.cpp" line="133"/>
-        <location filename="../src/gui/color_dialog.cpp" line="138"/>
-        <location filename="../src/gui/color_dialog.cpp" line="346"/>
+        <location filename="../src/gui/color_dialog.cpp" line="86"/>
+        <location filename="../src/gui/color_dialog.cpp" line="124"/>
+        <location filename="../src/gui/color_dialog.cpp" line="129"/>
+        <location filename="../src/gui/color_dialog.cpp" line="134"/>
+        <location filename="../src/gui/color_dialog.cpp" line="139"/>
+        <location filename="../src/gui/color_dialog.cpp" line="349"/>
         <source>%</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="90"/>
+        <location filename="../src/gui/color_dialog.cpp" line="91"/>
         <source>Knockout: erases lower colors</source>
         <translation>Knockout: tar bort lägre färger</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="108"/>
-        <location filename="../src/gui/color_dialog.cpp" line="165"/>
+        <location filename="../src/gui/color_dialog.cpp" line="109"/>
+        <location filename="../src/gui/color_dialog.cpp" line="166"/>
         <source>Calculate from spot colors</source>
         <translation>Beräkna från dekorfärger</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="113"/>
+        <location filename="../src/gui/color_dialog.cpp" line="114"/>
         <source>Calculate from RGB color</source>
         <translation>Beräkna från RGB färg</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="118"/>
+        <location filename="../src/gui/color_dialog.cpp" line="119"/>
         <source>Custom process color:</source>
         <translation>Egen process färg:</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="124"/>
+        <location filename="../src/gui/color_dialog.cpp" line="125"/>
         <source>Cyan</source>
         <translation>Turkos</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="129"/>
+        <location filename="../src/gui/color_dialog.cpp" line="130"/>
         <source>Magenta</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="134"/>
+        <location filename="../src/gui/color_dialog.cpp" line="135"/>
         <source>Yellow</source>
         <translation>Gul</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="139"/>
+        <location filename="../src/gui/color_dialog.cpp" line="140"/>
         <source>Black</source>
         <translation>Svart</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="170"/>
+        <location filename="../src/gui/color_dialog.cpp" line="171"/>
         <source>Calculate from CMYK color</source>
         <translation>Beräkna från CMYK färg</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="175"/>
+        <location filename="../src/gui/color_dialog.cpp" line="176"/>
         <source>Custom RGB color:</source>
         <translation>Egen RGB färg:</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="181"/>
+        <location filename="../src/gui/color_dialog.cpp" line="182"/>
         <source>Red</source>
         <translation>Röd</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="186"/>
+        <location filename="../src/gui/color_dialog.cpp" line="187"/>
         <source>Green</source>
         <translation>Grön</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="191"/>
+        <location filename="../src/gui/color_dialog.cpp" line="192"/>
         <source>Blue</source>
         <translation>Blå</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="196"/>
+        <location filename="../src/gui/color_dialog.cpp" line="197"/>
         <source>#RRGGBB</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="214"/>
+        <location filename="../src/gui/color_dialog.cpp" line="215"/>
         <source>Desktop</source>
         <translation>Skrivbord</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="215"/>
+        <location filename="../src/gui/color_dialog.cpp" line="216"/>
         <source>Professional printing</source>
         <translation>Professionell utskrift</translation>
     </message>
@@ -413,7 +413,7 @@
 <context>
     <name>ColorDropDown</name>
     <message>
-        <location filename="../src/gui/widgets/color_dropdown.cpp" line="30"/>
+        <location filename="../src/gui/widgets/color_dropdown.cpp" line="32"/>
         <source>- none -</source>
         <translation>- ingen -</translation>
     </message>
@@ -1077,31 +1077,53 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
         <translation type="obsolete">&lt;b&gt;Klicka&lt;/b&gt; för att placera ett punktobjekt, &lt;b&gt;Dra&lt;/b&gt; för att rotera symbolen om den är roterbar</translation>
     </message>
     <message>
-        <location filename="../src/tool_draw_point.cpp" line="76"/>
+        <location filename="../src/tool_draw_point.cpp" line="60"/>
         <source>Snap</source>
         <comment>Snap to existing objects</comment>
         <translation>Snäpp</translation>
     </message>
     <message>
-        <location filename="../src/tool_draw_point.cpp" line="77"/>
+        <location filename="../src/tool_draw_point.cpp" line="61"/>
         <source>Angle</source>
         <comment>Using constrained angles</comment>
         <translation>Vinkel</translation>
     </message>
     <message>
-        <location filename="../src/tool_draw_point.cpp" line="299"/>
+        <location filename="../src/tool_draw_point.cpp" line="62"/>
+        <source>Reset</source>
+        <comment>Reset rotation</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/tool_draw_point.cpp" line="329"/>
+        <location filename="../src/tool_draw_point.cpp" line="341"/>
         <source>&lt;b&gt;Angle:&lt;/b&gt; %1° </source>
         <translation>&lt;b&gt;Vinkel:&lt;/b&gt; %1° </translation>
     </message>
     <message>
-        <location filename="../src/tool_draw_point.cpp" line="300"/>
+        <location filename="../src/tool_draw_point.cpp" line="330"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Fixed angles. </source>
         <translation>&lt;b&gt;%1&lt;/b&gt;: Låsta vinklar. </translation>
     </message>
     <message>
-        <location filename="../src/tool_draw_point.cpp" line="304"/>
+        <location filename="../src/tool_draw_point.cpp" line="335"/>
+        <location filename="../src/tool_draw_point.cpp" line="349"/>
+        <source>&lt;b&gt;Click&lt;/b&gt;: Create a point object.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/tool_draw_point.cpp" line="336"/>
+        <source>&lt;b&gt;Drag&lt;/b&gt;: Create an object and set its orientation.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/tool_draw_point.cpp" line="342"/>
+        <source>&lt;b&gt;%1, 0&lt;/b&gt;: Reset rotation.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>&lt;b&gt;Click&lt;/b&gt;: Create a point object. &lt;b&gt;Drag&lt;/b&gt;: Create an object and set its orientation (if rotatable). </source>
-        <translation>&lt;b&gt;Klicka&lt;/b&gt;: Skapa ett punkt objekt. &lt;b&gt;Dra&lt;/b&gt;: Skapa ett objekt och rotera det(om möjligt). </translation>
+        <translation type="vanished">&lt;b&gt;Klicka&lt;/b&gt;: Skapa ett punkt objekt. &lt;b&gt;Dra&lt;/b&gt;: Skapa ett objekt och rotera det(om möjligt). </translation>
     </message>
 </context>
 <context>
@@ -3305,8 +3327,8 @@ Skala om den importerade datan?</translation>
         <translation>förvald del</translation>
     </message>
     <message>
-        <location filename="../src/core/map_color.cpp" line="31"/>
-        <location filename="../src/core/map_color.cpp" line="45"/>
+        <location filename="../src/core/map_color.cpp" line="28"/>
+        <location filename="../src/core/map_color.cpp" line="42"/>
         <source>New color</source>
         <translation>Ny färg</translation>
     </message>
@@ -3314,7 +3336,7 @@ Skala om den importerade datan?</translation>
 <context>
     <name>MapColor</name>
     <message>
-        <location filename="../src/core/map_color.cpp" line="74"/>
+        <location filename="../src/core/map_color.cpp" line="71"/>
         <source>Registration black (all printed colors)</source>
         <translation>Registrerings svart (alla utskrivna färgerna)</translation>
     </message>
@@ -5414,13 +5436,13 @@ zooma med scrollhjulet om tillgängligt.</translation>
 <context>
     <name>PrintProgressDialog</name>
     <message>
-        <location filename="../src/gui/print_progress_dialog.cpp" line="51"/>
+        <location filename="../src/gui/print_progress_dialog.cpp" line="56"/>
         <source>Printing</source>
         <comment>PrintWidget</comment>
         <translation>Skriver ut</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_progress_dialog.cpp" line="52"/>
+        <location filename="../src/gui/print_progress_dialog.cpp" line="57"/>
         <source>An error occured during processing.</source>
         <comment>PrintWidget</comment>
         <translation>Ett fel inträffade under bearbetning.</translation>

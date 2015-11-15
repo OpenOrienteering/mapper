@@ -263,93 +263,93 @@
         <translation>Miscela di colori di calamio (telai e sovrastampa):</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="85"/>
-        <location filename="../src/gui/color_dialog.cpp" line="123"/>
-        <location filename="../src/gui/color_dialog.cpp" line="128"/>
-        <location filename="../src/gui/color_dialog.cpp" line="133"/>
-        <location filename="../src/gui/color_dialog.cpp" line="138"/>
-        <location filename="../src/gui/color_dialog.cpp" line="346"/>
+        <location filename="../src/gui/color_dialog.cpp" line="86"/>
+        <location filename="../src/gui/color_dialog.cpp" line="124"/>
+        <location filename="../src/gui/color_dialog.cpp" line="129"/>
+        <location filename="../src/gui/color_dialog.cpp" line="134"/>
+        <location filename="../src/gui/color_dialog.cpp" line="139"/>
+        <location filename="../src/gui/color_dialog.cpp" line="349"/>
         <source>%</source>
         <translation>%</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="90"/>
+        <location filename="../src/gui/color_dialog.cpp" line="91"/>
         <source>Knockout: erases lower colors</source>
         <translation>Foratura: cancella i colori sottostanti</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="108"/>
-        <location filename="../src/gui/color_dialog.cpp" line="165"/>
+        <location filename="../src/gui/color_dialog.cpp" line="109"/>
+        <location filename="../src/gui/color_dialog.cpp" line="166"/>
         <source>Calculate from spot colors</source>
         <translation>Calcola colore a partire da un colore di calamio</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="113"/>
+        <location filename="../src/gui/color_dialog.cpp" line="114"/>
         <source>Calculate from RGB color</source>
         <translation>Calcola colore a partire da RGB</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="118"/>
+        <location filename="../src/gui/color_dialog.cpp" line="119"/>
         <source>Custom process color:</source>
         <translation>Colore di processo custom:</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="124"/>
+        <location filename="../src/gui/color_dialog.cpp" line="125"/>
         <source>Cyan</source>
         <translation>Cyan (Ciano)</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="129"/>
+        <location filename="../src/gui/color_dialog.cpp" line="130"/>
         <source>Magenta</source>
         <translation>Magenta</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="134"/>
+        <location filename="../src/gui/color_dialog.cpp" line="135"/>
         <source>Yellow</source>
         <translation>Yellow (Giallo)</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="139"/>
+        <location filename="../src/gui/color_dialog.cpp" line="140"/>
         <source>Black</source>
         <translation>Black (Nero)</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="170"/>
+        <location filename="../src/gui/color_dialog.cpp" line="171"/>
         <source>Calculate from CMYK color</source>
         <translation>Calcola colore a partire da CMYK</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="175"/>
+        <location filename="../src/gui/color_dialog.cpp" line="176"/>
         <source>Custom RGB color:</source>
         <translation>Colore RGB custom:</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="181"/>
+        <location filename="../src/gui/color_dialog.cpp" line="182"/>
         <source>Red</source>
         <translation>Red (Rosso)</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="186"/>
+        <location filename="../src/gui/color_dialog.cpp" line="187"/>
         <source>Green</source>
         <translation>Green (Verde)</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="191"/>
+        <location filename="../src/gui/color_dialog.cpp" line="192"/>
         <source>Blue</source>
         <translation>Blue (Blu)</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="196"/>
+        <location filename="../src/gui/color_dialog.cpp" line="197"/>
         <source>#RRGGBB</source>
         <translation>#RRGGBB</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="214"/>
+        <location filename="../src/gui/color_dialog.cpp" line="215"/>
         <source>Desktop</source>
         <translation>Desktop</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="215"/>
+        <location filename="../src/gui/color_dialog.cpp" line="216"/>
         <source>Professional printing</source>
         <translation>Stampa professionale</translation>
     </message>
@@ -357,7 +357,7 @@
 <context>
     <name>ColorDropDown</name>
     <message>
-        <location filename="../src/gui/widgets/color_dropdown.cpp" line="30"/>
+        <location filename="../src/gui/widgets/color_dropdown.cpp" line="32"/>
         <source>- none -</source>
         <translation>- nessuno -</translation>
     </message>
@@ -967,31 +967,53 @@
 <context>
     <name>DrawPointTool</name>
     <message>
-        <location filename="../src/tool_draw_point.cpp" line="76"/>
+        <location filename="../src/tool_draw_point.cpp" line="60"/>
         <source>Snap</source>
         <comment>Snap to existing objects</comment>
         <translation>Aggancia</translation>
     </message>
     <message>
-        <location filename="../src/tool_draw_point.cpp" line="77"/>
+        <location filename="../src/tool_draw_point.cpp" line="61"/>
         <source>Angle</source>
         <comment>Using constrained angles</comment>
         <translation>Angolo</translation>
     </message>
     <message>
-        <location filename="../src/tool_draw_point.cpp" line="299"/>
+        <location filename="../src/tool_draw_point.cpp" line="62"/>
+        <source>Reset</source>
+        <comment>Reset rotation</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/tool_draw_point.cpp" line="329"/>
+        <location filename="../src/tool_draw_point.cpp" line="341"/>
         <source>&lt;b&gt;Angle:&lt;/b&gt; %1° </source>
         <translation>&lt;b&gt;Angolo:&lt;/b&gt; %1° </translation>
     </message>
     <message>
-        <location filename="../src/tool_draw_point.cpp" line="300"/>
+        <location filename="../src/tool_draw_point.cpp" line="330"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Fixed angles. </source>
         <translation>&lt;b&gt;%1&lt;/b&gt;: Angoli fissati. </translation>
     </message>
     <message>
-        <location filename="../src/tool_draw_point.cpp" line="304"/>
+        <location filename="../src/tool_draw_point.cpp" line="335"/>
+        <location filename="../src/tool_draw_point.cpp" line="349"/>
+        <source>&lt;b&gt;Click&lt;/b&gt;: Create a point object.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/tool_draw_point.cpp" line="336"/>
+        <source>&lt;b&gt;Drag&lt;/b&gt;: Create an object and set its orientation.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/tool_draw_point.cpp" line="342"/>
+        <source>&lt;b&gt;%1, 0&lt;/b&gt;: Reset rotation.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>&lt;b&gt;Click&lt;/b&gt;: Create a point object. &lt;b&gt;Drag&lt;/b&gt;: Create an object and set its orientation (if rotatable). </source>
-        <translation>&lt;b&gt;Click&lt;/b&gt;: Crea un oggetto di tipo punto. &lt;b&gt;Trascina&lt;/b&gt;: Crea un oggetto ed imposta la rotazione (se esso è ruotatabile). </translation>
+        <translation type="vanished">&lt;b&gt;Click&lt;/b&gt;: Crea un oggetto di tipo punto. &lt;b&gt;Trascina&lt;/b&gt;: Crea un oggetto ed imposta la rotazione (se esso è ruotatabile). </translation>
     </message>
 </context>
 <context>
@@ -2823,8 +2845,8 @@ Riscalatura dei dati importati?</translation>
         <translation>default part</translation>
     </message>
     <message>
-        <location filename="../src/core/map_color.cpp" line="31"/>
-        <location filename="../src/core/map_color.cpp" line="45"/>
+        <location filename="../src/core/map_color.cpp" line="28"/>
+        <location filename="../src/core/map_color.cpp" line="42"/>
         <source>New color</source>
         <translation>Nuovo colore</translation>
     </message>
@@ -2832,7 +2854,7 @@ Riscalatura dei dati importati?</translation>
 <context>
     <name>MapColor</name>
     <message>
-        <location filename="../src/core/map_color.cpp" line="74"/>
+        <location filename="../src/core/map_color.cpp" line="71"/>
         <source>Registration black (all printed colors)</source>
         <translation>Calibrazione del nero (tutti i colori stampati)</translation>
     </message>
@@ -4834,13 +4856,13 @@ se disponibile si può zoomare con la rotella del mouse.</translation>
 <context>
     <name>PrintProgressDialog</name>
     <message>
-        <location filename="../src/gui/print_progress_dialog.cpp" line="51"/>
+        <location filename="../src/gui/print_progress_dialog.cpp" line="56"/>
         <source>Printing</source>
         <comment>PrintWidget</comment>
         <translation type="unfinished">Stampa in corso</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_progress_dialog.cpp" line="52"/>
+        <location filename="../src/gui/print_progress_dialog.cpp" line="57"/>
         <source>An error occured during processing.</source>
         <comment>PrintWidget</comment>
         <translation type="unfinished"></translation>

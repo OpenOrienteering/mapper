@@ -292,93 +292,93 @@
         <translation>Směs barev místa (rastr a přetisk):</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="85"/>
-        <location filename="../src/gui/color_dialog.cpp" line="123"/>
-        <location filename="../src/gui/color_dialog.cpp" line="128"/>
-        <location filename="../src/gui/color_dialog.cpp" line="133"/>
-        <location filename="../src/gui/color_dialog.cpp" line="138"/>
-        <location filename="../src/gui/color_dialog.cpp" line="346"/>
+        <location filename="../src/gui/color_dialog.cpp" line="86"/>
+        <location filename="../src/gui/color_dialog.cpp" line="124"/>
+        <location filename="../src/gui/color_dialog.cpp" line="129"/>
+        <location filename="../src/gui/color_dialog.cpp" line="134"/>
+        <location filename="../src/gui/color_dialog.cpp" line="139"/>
+        <location filename="../src/gui/color_dialog.cpp" line="349"/>
         <source>%</source>
         <translation>%</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="90"/>
+        <location filename="../src/gui/color_dialog.cpp" line="91"/>
         <source>Knockout: erases lower colors</source>
         <translation>Rozhodující úder: Smaže barvy ležící pod</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="118"/>
+        <location filename="../src/gui/color_dialog.cpp" line="119"/>
         <source>Custom process color:</source>
         <translation>Vlastní barva procesu:</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="124"/>
+        <location filename="../src/gui/color_dialog.cpp" line="125"/>
         <source>Cyan</source>
         <translation>Modrozelená</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="129"/>
+        <location filename="../src/gui/color_dialog.cpp" line="130"/>
         <source>Magenta</source>
         <translation>Červenorudá</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="134"/>
+        <location filename="../src/gui/color_dialog.cpp" line="135"/>
         <source>Yellow</source>
         <translation>Žlutá</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="139"/>
+        <location filename="../src/gui/color_dialog.cpp" line="140"/>
         <source>Black</source>
         <translation>Černá</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="108"/>
-        <location filename="../src/gui/color_dialog.cpp" line="165"/>
+        <location filename="../src/gui/color_dialog.cpp" line="109"/>
+        <location filename="../src/gui/color_dialog.cpp" line="166"/>
         <source>Calculate from spot colors</source>
         <translation>Vypočítat z barev místa</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="113"/>
+        <location filename="../src/gui/color_dialog.cpp" line="114"/>
         <source>Calculate from RGB color</source>
         <translation>Vypočítat z barvy RGB</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="170"/>
+        <location filename="../src/gui/color_dialog.cpp" line="171"/>
         <source>Calculate from CMYK color</source>
         <translation>Vypočítat z barvy CMYK</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="175"/>
+        <location filename="../src/gui/color_dialog.cpp" line="176"/>
         <source>Custom RGB color:</source>
         <translation>Vlastní barva RGB:</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="181"/>
+        <location filename="../src/gui/color_dialog.cpp" line="182"/>
         <source>Red</source>
         <translation>Červená</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="186"/>
+        <location filename="../src/gui/color_dialog.cpp" line="187"/>
         <source>Green</source>
         <translation>Zelená</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="191"/>
+        <location filename="../src/gui/color_dialog.cpp" line="192"/>
         <source>Blue</source>
         <translation>Modrá</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="196"/>
+        <location filename="../src/gui/color_dialog.cpp" line="197"/>
         <source>#RRGGBB</source>
         <translation>#RRGGBB</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="214"/>
+        <location filename="../src/gui/color_dialog.cpp" line="215"/>
         <source>Desktop</source>
         <translation>Pracovní plocha</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="215"/>
+        <location filename="../src/gui/color_dialog.cpp" line="216"/>
         <source>Professional printing</source>
         <translation>Profesionální tisk</translation>
     </message>
@@ -386,7 +386,7 @@
 <context>
     <name>ColorDropDown</name>
     <message>
-        <location filename="../src/gui/widgets/color_dropdown.cpp" line="30"/>
+        <location filename="../src/gui/widgets/color_dropdown.cpp" line="32"/>
         <source>- none -</source>
         <translation>- žádná -</translation>
     </message>
@@ -1000,31 +1000,53 @@
 <context>
     <name>DrawPointTool</name>
     <message>
-        <location filename="../src/tool_draw_point.cpp" line="76"/>
+        <location filename="../src/tool_draw_point.cpp" line="60"/>
         <source>Snap</source>
         <comment>Snap to existing objects</comment>
         <translation>Zapadnout</translation>
     </message>
     <message>
-        <location filename="../src/tool_draw_point.cpp" line="77"/>
+        <location filename="../src/tool_draw_point.cpp" line="61"/>
         <source>Angle</source>
         <comment>Using constrained angles</comment>
         <translation>Úhel</translation>
     </message>
     <message>
-        <location filename="../src/tool_draw_point.cpp" line="299"/>
+        <location filename="../src/tool_draw_point.cpp" line="62"/>
+        <source>Reset</source>
+        <comment>Reset rotation</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/tool_draw_point.cpp" line="329"/>
+        <location filename="../src/tool_draw_point.cpp" line="341"/>
         <source>&lt;b&gt;Angle:&lt;/b&gt; %1° </source>
         <translation>&lt;b&gt;Úhel:&lt;/b&gt; %1° </translation>
     </message>
     <message>
-        <location filename="../src/tool_draw_point.cpp" line="300"/>
+        <location filename="../src/tool_draw_point.cpp" line="330"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Fixed angles. </source>
         <translation>&lt;b&gt;%1&lt;/b&gt;: Pevné úhly. </translation>
     </message>
     <message>
-        <location filename="../src/tool_draw_point.cpp" line="304"/>
+        <location filename="../src/tool_draw_point.cpp" line="335"/>
+        <location filename="../src/tool_draw_point.cpp" line="349"/>
+        <source>&lt;b&gt;Click&lt;/b&gt;: Create a point object.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/tool_draw_point.cpp" line="336"/>
+        <source>&lt;b&gt;Drag&lt;/b&gt;: Create an object and set its orientation.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/tool_draw_point.cpp" line="342"/>
+        <source>&lt;b&gt;%1, 0&lt;/b&gt;: Reset rotation.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>&lt;b&gt;Click&lt;/b&gt;: Create a point object. &lt;b&gt;Drag&lt;/b&gt;: Create an object and set its orientation (if rotatable). </source>
-        <translation>&lt;b&gt;Klepnout&lt;/b&gt;: Vytvořit bodový objekt. &lt;b&gt;Táhnout&lt;/b&gt;: Vytvořit objekt a nastavit jeho natočení (pokud je otočný). </translation>
+        <translation type="vanished">&lt;b&gt;Klepnout&lt;/b&gt;: Vytvořit bodový objekt. &lt;b&gt;Táhnout&lt;/b&gt;: Vytvořit objekt a nastavit jeho natočení (pokud je otočný). </translation>
     </message>
 </context>
 <context>
@@ -2947,8 +2969,8 @@ Přepočítat zavedená data na měřítko mapy?</translation>
         <translation>Výchozí část</translation>
     </message>
     <message>
-        <location filename="../src/core/map_color.cpp" line="31"/>
-        <location filename="../src/core/map_color.cpp" line="45"/>
+        <location filename="../src/core/map_color.cpp" line="28"/>
+        <location filename="../src/core/map_color.cpp" line="42"/>
         <source>New color</source>
         <translation>Nová barva  </translation>
     </message>
@@ -2956,7 +2978,7 @@ Přepočítat zavedená data na měřítko mapy?</translation>
 <context>
     <name>MapColor</name>
     <message>
-        <location filename="../src/core/map_color.cpp" line="74"/>
+        <location filename="../src/core/map_color.cpp" line="71"/>
         <source>Registration black (all printed colors)</source>
         <translation>Černá zápisu je (všechny tištěné barvy)</translation>
     </message>
@@ -5028,13 +5050,13 @@ mapy. Změna zvětšení je možná pomocí kolečka myši.</translation>
 <context>
     <name>PrintProgressDialog</name>
     <message>
-        <location filename="../src/gui/print_progress_dialog.cpp" line="51"/>
+        <location filename="../src/gui/print_progress_dialog.cpp" line="56"/>
         <source>Printing</source>
         <comment>PrintWidget</comment>
         <translation type="unfinished">Tisk</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_progress_dialog.cpp" line="52"/>
+        <location filename="../src/gui/print_progress_dialog.cpp" line="57"/>
         <source>An error occured during processing.</source>
         <comment>PrintWidget</comment>
         <translation type="unfinished"></translation>
