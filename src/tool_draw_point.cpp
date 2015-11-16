@@ -158,7 +158,6 @@ void DrawPointTool::dragStart()
 
 void DrawPointTool::dragMove()
 {
-	
 	if (preview_object->getSymbol()->asPoint()->isRotatable())
 	{
 		bool enable_angle_helper = active_modifiers & Qt::ControlModifier;
@@ -254,55 +253,53 @@ bool DrawPointTool::keyRelease(QKeyEvent* event)
 
 void DrawPointTool::drawImpl(QPainter* painter, MapWidget* widget)
 {
-	if (preview_object)
-	{
-		const MapView* map_view = widget->getMapView();
-		painter->save();
-		painter->translate(widget->width() / 2.0 + map_view->panOffset().x(),
-						   widget->height() / 2.0 + map_view->panOffset().y());
-		painter->setWorldTransform(map_view->worldTransform(), true);
-		
-		RenderConfig config = { *map(), map_view->calculateViewedRect(widget->viewportToView(widget->rect())), map_view->calculateFinalZoomFactor(), RenderConfig::Tool, 0.5 };
-		renderables->draw(painter, config);
-		
-		painter->restore();
-	}
+	Q_ASSERT(preview_object);
 	
-	if (isDragging())
-	{
-		painter->setRenderHint(QPainter::Antialiasing);
-		
-		QPen pen(qRgb(255, 255, 255));
-		pen.setWidth(3);
-		painter->setPen(pen);
-		painter->drawLine(widget->mapToViewport(preview_object->getCoordF()), widget->mapToViewport(constrained_pos_map));
-		painter->setPen(active_color);
-		painter->drawLine(widget->mapToViewport(preview_object->getCoordF()), widget->mapToViewport(constrained_pos_map));
-		
-		angle_helper->draw(painter, widget);
-	}
+	const MapView* map_view = widget->getMapView();
+	painter->save();
+	painter->translate(widget->width() / 2.0 + map_view->panOffset().x(),
+	                   widget->height() / 2.0 + map_view->panOffset().y());
+	painter->setWorldTransform(map_view->worldTransform(), true);
 	
-	if (active_modifiers & Qt::ShiftModifier)
+	RenderConfig config = { *map(), map_view->calculateViewedRect(widget->viewportToView(widget->rect())), map_view->calculateFinalZoomFactor(), RenderConfig::Tool, 0.5 };
+	renderables->draw(painter, config);
+	
+	painter->restore();
+	
+	if (preview_object->getSymbol()->asPoint()->isRotatable())
 	{
-		snap_helper->draw(painter, widget);
+		if (isDragging())
+		{
+			painter->setRenderHint(QPainter::Antialiasing);
+			
+			QPen pen(qRgb(255, 255, 255));
+			pen.setWidth(3);
+			painter->setPen(pen);
+			painter->drawLine(widget->mapToViewport(preview_object->getCoordF()), widget->mapToViewport(constrained_pos_map));
+			painter->setPen(active_color);
+			painter->drawLine(widget->mapToViewport(preview_object->getCoordF()), widget->mapToViewport(constrained_pos_map));
+			
+			angle_helper->draw(painter, widget);
+		}
+		
+		if (active_modifiers & Qt::ShiftModifier)
+		{
+			snap_helper->draw(painter, widget);
+		}
 	}
 }
 
 int DrawPointTool::updateDirtyRectImpl(QRectF& rect)
 {
-	int result = -1;
-	if (isDragging())
+	Q_ASSERT(preview_object);
+	
+	int result = 0;
+	rectIncludeSafe(rect, preview_object->getExtent());
+	if (isDragging() && preview_object->getSymbol()->asPoint()->isRotatable())
 	{
-		rectIncludeSafe(rect, click_pos_map);
+		rectInclude(rect, click_pos_map);
 		rectInclude(rect, constrained_pos_map);
-		if (preview_object)
-			rectInclude(rect, preview_object->getExtent());
 		result = qMax(1, angle_helper->getDisplayRadius());
-	}
-	else if (preview_object)
-	{
-		rectIncludeSafe(rect, preview_object->getExtent());
-		result = 0;
 	}
 	
 	return result;
