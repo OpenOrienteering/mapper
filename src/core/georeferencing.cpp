@@ -75,14 +75,14 @@ namespace literal
 
 namespace
 {
-	/** Helper for PROJ.4 searchpath initialization.
+	/** Helper for PROJ.4 initialization.
 	 *
-	 * Intented to be used as static object in the right place.
+	 * To be used as static object in the right place.
 	 */
-	class ProjSearchPathSetup
+	class ProjSetup
 	{
 	public:
-		ProjSearchPathSetup()
+		ProjSetup()
 		{
 			QVarLengthArray<QByteArray,3> buffer;
 			QVarLengthArray<const char*,3> data;
@@ -92,6 +92,11 @@ namespace
 				data.append(buffer.back().data());
 			}
 			pj_set_searchpath(data.size(), data.data());
+			
+#if defined(Q_OS_ANDROID)
+			// Register file finder function needed by Proj.4
+			registerProjFileHelper();
+#endif
 		}
 	};
 	
@@ -125,7 +130,7 @@ Georeferencing::Georeferencing()
   map_ref_point(0, 0),
   projected_ref_point(0, 0)
 {
-	static ProjSearchPathSetup run_once;
+	static ProjSetup run_once;
 	
 	updateTransformation();
 	

@@ -28,10 +28,6 @@
 #include "file_format_xml.h"
 #include "fileformats/ocd_file_format.h"
 
-#if defined(Q_OS_ANDROID)
-#  include "core/georeferencing.h"
-#endif
-
 void doStaticInitializations()
 {
 	// Register the supported file formats
@@ -39,10 +35,5 @@ void doStaticInitializations()
 	FileFormats.registerFormat(new OcdFileFormat());
 #ifndef NO_NATIVE_FILE_FORMAT
 	FileFormats.registerFormat(new NativeFileFormat()); // TODO: Remove before release 1.0
-#endif
-	
-#if defined(Q_OS_ANDROID)
-	// Register file finder function needed by Proj.4
-	registerProjFileHelper();
 #endif
 }
