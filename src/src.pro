@@ -10,7 +10,7 @@ CONFIG  -= debug_and_release
 include(../oo-mapper-version.pri)
 include($$OUT_PWD/../prerequisites.pri)
 LIBS *= -lpolyclipping -lqtsingleapplication -locd
-win32: LIBS *= -lproj-0
+win32: LIBS *= -lproj-9
 else:  LIBS *= -lproj
 
 DEPENDPATH  += qmake

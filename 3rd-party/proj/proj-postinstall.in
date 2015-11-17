@@ -1,6 +1,6 @@
 #!/bin/sh -e
 #
-#    Copyright 2012 Kai Pastor
+#    Copyright 2012, 2015 Kai Pastor
 #
 #    This file is part of OpenOrienteering.
 #
@@ -23,7 +23,7 @@ if test -n "@CMAKE_RUNTIME_OUTPUT_DIRECTORY@"; then
 
 	if test -n "@WIN32@"; then
 		test -n "$VERBOSE" && echo "cp -a bin/libproj-0.dll \"@CMAKE_RUNTIME_OUTPUT_DIRECTORY@/\""
-		cp -a bin/libproj-0.dll "@CMAKE_RUNTIME_OUTPUT_DIRECTORY@/"
+		cp -a bin/libproj-9.dll "@CMAKE_RUNTIME_OUTPUT_DIRECTORY@/"
 	# else 
 		# Libtool will already have generated a message on how to set
 		# LD_LIBRARY_PATH in order to use the library.

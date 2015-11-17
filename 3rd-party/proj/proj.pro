@@ -27,14 +27,14 @@ if (exists($$CMAKE_TOOLCHAIN_FILE)) {
 
 proj.dir      = $$OUT_PWD/proj
 proj.target   = $$proj.dir/Proj-prefix/lib/libproj.so
-osx: proj.target = $$proj.dir/Proj-prefix/lib/libproj.0.dylib
-win32: proj.target = $$proj.dir/Proj-prefix/bin/libproj-0.dll
+osx: proj.target = $$proj.dir/Proj-prefix/lib/libproj.9.dylib
+win32: proj.target = $$proj.dir/Proj-prefix/bin/libproj-9.dll
 proj.cflags   = $$QMAKE_CFLAGS -Wno-declaration-after-statement -Wno-int-to-pointer-cast
 proj.commands = \
   mkdir -p "$$proj.dir" && \
   cd "$$proj.dir" && \
   if [ -d CMakeFiles -o -f CMakeCache.txt ] ; then rm -R CMake*; fi && \
-  if [ -d proj-prefix ] ; then rm -R proj-prefix; fi && \
+  if [ -d Proj-prefix ] ; then rm -R Proj-prefix; fi && \
   cmake "$$PWD" $$CMAKE_ARGS && \
   PATH="$$NDK_TOOLCHAIN_PATH/bin:${PATH}" $(MAKE) VERBOSE=$(VERBOSE) all && \
   $(MAKE) clean VERBOSE=$(VERBOSE)

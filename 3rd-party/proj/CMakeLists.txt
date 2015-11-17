@@ -1,5 +1,5 @@
 #
-#    Copyright 2012, 2013, 2014 Kai Pastor
+#    Copyright 2012-2015 Kai Pastor
 #
 #    This file is part of OpenOrienteering.
 #
@@ -28,7 +28,7 @@ endif()
 
 # Configuration options
 
-set(PROJ_VERSION_DEFAULT 4.8.0)
+set(PROJ_VERSION_DEFAULT 4.9.2)
 set(PROJ_VERSION ${PROJ_VERSION_DEFAULT} CACHE STRING
   "Version number of the Proj library, recommended value: ${PROJ_VERSION_DEFAULT}")
 mark_as_advanced(PROJ_VERSION)
@@ -42,9 +42,7 @@ if (NOT ${PROJ_VERSION} STREQUAL ${PROJ_VERSION_DEFAULT})
 endif()
 
 set(PROJ_MD5SUMS
-  4.8.0:d815838c92a29179298c126effbb1537
-  4.9.0b1:5c0fd7deed207b9f97030730ce036ec7
-  4.9.0b2:d43fd87b991831faaf7e6fb5570b86aa
+  4.9.2:9843131676e31bbd903d60ae7dc76cf9
 )
 foreach(line ${PROJ_MD5SUMS})
 	if(${line} MATCHES "^${PROJ_VERSION}:")

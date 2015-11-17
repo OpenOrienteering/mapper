@@ -265,7 +265,7 @@ if(Mapper_PACKAGE_PROJ)
 	  DIRECTORY "${PROJ_BINARY_DIR}/../share/proj"
 	  DESTINATION "${MAPPER_DATA_DESTINATION}")
 	if(WIN32)
-		set(PROJ_LIB_SUFFIX -0)
+		set(PROJ_LIB_SUFFIX -9)
 	else()
 		set(PROJ_LIB_SUFFIX "")
 	endif()
