@@ -50,13 +50,13 @@ Note that key F6 starts panning immediately.</td></tr>
 <tr><td><a name="fullscreen"><h4>Toggle Fullscreen</h4></a></td><td><h4>F11</h4></td><td></td><td>
 <p>This toggle switches the display to full-screen mode and back.</p></td></tr>
 
-<tr><td><h4>Color Window</h4></td><td><h4>Ctrl + Shift + F7</h4></td><td></td><td>
+<tr><td><h4>Color Window</h4></td><td><h4>Ctrl + Shift + 7</h4></td><td></td><td>
 <p>This toggle shows or hides the <a href="color_dock_widget.html">color window</a>.</p></td></tr>
 
-<tr><td><h4>Symbol Window</h4></td><td><h4>Ctrl + Shift + F8</h4></td><td></td><td>
+<tr><td><h4>Symbol Window</h4></td><td><h4>Ctrl + Shift + 8</h4></td><td></td><td>
 <p>This toggle shows or hides the <a href="symbol_dock_widget.html">symbol pane</a>.</p></td></tr>
 
-<tr><td><h4>Template Setup Window</h4></td><td><h4>Ctrl + Shift + F9</h4></td><td></td><td>
+<tr><td><h4>Template Setup Window</h4></td><td><h4>Ctrl + Shift + 9</h4></td><td></td><td>
 <p>This toggle shows or hides the <a href="templates.html#setup">template setup window</a>.</p></td></tr>
 
 </table>
