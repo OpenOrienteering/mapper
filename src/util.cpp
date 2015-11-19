@@ -258,7 +258,13 @@ void showHelp(QWidget* dialog_parent, QString filename, QString fragment)
 			// style on X11.
 			args << QLatin1String("-style") << QLatin1String("fusion");
 		}
-		 
+		
+#if defined(Q_OS_LINUX) && !defined(Q_OS_ANDROID)
+		auto env = QProcessEnvironment::systemEnvironment();
+		env.insert(QLatin1String("QT_SELECT"), QLatin1String("qt5")); // #541
+		assistant_process.setProcessEnvironment(env);
+#endif
+		
 		assistant_process.start(assistant_path, args);
 		
 		// FIXME: Calling waitForStarted() from the main thread might cause the user interface to freeze.
