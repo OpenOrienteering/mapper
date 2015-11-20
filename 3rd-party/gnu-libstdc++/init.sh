@@ -1,6 +1,6 @@
 #!/bin/sh -e
 #
-#    Copyright 2014 Kai Pastor
+#    Copyright 2015 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -25,7 +25,7 @@ then
 	exit 1
 fi
 
-PATCHES_DIR=$NDK_DIR/build/tools/toolchain-patches/gcc
+PATCHES_DIR="$NDK_DIR/build/tools/toolchain-patches/gcc"
 if [ ! -d "$PATCHES_DIR" ]
 then
 	echo "Error: No build/tools/toolchain-patches/gcc in $NDK_DIR"
@@ -34,7 +34,8 @@ fi
 
 mkdir -p src/build && touch src/build/configure
 
-export GIT_DIR=$(pwd)/gcc/.git
+#rm -Rf $(pwd)/gcc/.git
+export GIT_DIR="$(pwd)/gcc/.git"
 if [ ! -d "$GIT_DIR" ]
 then
 	echo "Creating local git repository..."
@@ -44,40 +45,48 @@ else
 	git fetch
 fi
 
-REVISION=39dbe572beead93798002c03b4897afaf018cd04
+REVISION=$(sed -e '/gcc.git/!d;s/^[^ ]* *\|([^ ]* *\| .*//g' "$NDK_DIR/toolchains/arm-linux-androideabi-4.9/prebuilt/linux-x86_64/SOURCES")
 echo $REVISION > REVISION
 echo "Checking out revision $REVISION..."
 (
 	mkdir -p src/gcc &&
 	cd src/gcc &&
 	git checkout -f $REVISION -- \
-	  gcc-4.6/gcc/config/i386/arm_neon.h \
-	  gcc-4.6/gcc/config/linux*.h \
-	  gcc-4.6/gcc/gthr-posix.h \
-	  gcc-4.6/libstdc++-v3/src/Makefile.in \
-	  gcc-4.8/ChangeLog* \
-	  gcc-4.8/config* \
-	  gcc-4.8/COPYING* \
-	  gcc-4.8/gcc/BASE-VER \
-	  gcc-4.8/gcc/DATESTAMP \
-	  gcc-4.8/gcc/config/i386/arm_neon.h \
-	  gcc-4.8/gcc/config/linux*.h \
-	  gcc-4.8/include \
-	  gcc-4.8/install-sh \
-	  gcc-4.8/LAST_UPDATED* \
-	  gcc-4.8/libgcc \
-	  gcc-4.8/libiberty \
-	  gcc-4.8/libstdc++-v3 \
-	  gcc-4.8/libtool* \
-	  gcc-4.8/lt* \
-	  gcc-4.8/MAINTAINERS* \
-	  gcc-4.8/mkinstalldirs \
-	  gcc-4.8/NEWS* \
-	  gcc-4.8/README* \
-	  gcc-4.9/gcc/config/i386/arm_neon.h \
-	  gcc-4.9/gcc/config/linux*.h \
+	  gcc-4.9/libstdc++-v3 \
+	  \
+	  gcc-4.9/ChangeLog* \
+	  gcc-4.9/config\* \
+	  gcc-4.9/COPYING* \
+	  gcc-4.9/gcc/DATESTAMP \
+	  gcc-4.9/include \
+	  gcc-4.9/install-sh \
+	  gcc-4.9/libgcc \
+	  gcc-4.9/libiberty \
+	  gcc-4.9/libtool* \
+	  gcc-4.9/lt* \
+	  gcc-4.9/MAINTAINERS* \
+	  gcc-4.9/mkinstalldirs \
+	  gcc-4.9/README* \
+	  \
+	  gcc-4.8/gcc/config/linux-android.h \
+	  gcc-4.9/gcc/config/linux-android.h \
+	  \
+	  gcc-4.8/libgcc/gthr-posix.h \
 	  gcc-4.9/libgcc/gthr-posix.h \
+	  \
+	  gcc-4.8/libstdc++-v3/src/Makefile.in \
 	  gcc-4.9/libstdc++-v3/src/Makefile.in \
+	  \
+	  gcc-4.9/gcc/BASE-VER \
+	  \
+	  gcc-4.9/gcc/ChangeLog \
+	  gcc-4.9/gcc/config/arm/arm.md \
+	  gcc-4.9/gcc/testsuite/ChangeLog \
+	  \
+	  gcc-4.8/gcc/config/i386/arm_neon.h \
+	  gcc-4.9/gcc/config/i386/arm_neon.h \
+	  \
+	  # End. Covers libstdc++ sources, build dependencies, and extra files touched by patches.
 )
 
 echo "Copying build scripts and patches..."
@@ -100,7 +109,7 @@ then
 	mkdir -p build/tools/toolchain-patches/gcc
 	for PATCH in $PATCHES
 	do
-		grep -q gcc-4.8 "$PATCH" &&
+		grep -q gcc-4.9 "$PATCH" &&
 		  cp "$PATCH" build/tools/toolchain-patches/gcc/
 	done
 fi
@@ -121,10 +130,10 @@ then
 fi
 
 echo "Cleanup..."
-for I in src/gcc/gcc-4.6 src/gcc/gcc-4.8/lto-plugin src/gcc/gcc-4.8/libgcc/config/* src/gcc/gcc-4.9
+for I in src/gcc/gcc-4.8 src/gcc/gcc-4.9/lto-plugin src/gcc/gcc-4.9/libgcc/config/*
 do
 	case $(basename "$I") in
-	arm|mips|i386)
+	aarch64|arm|mips|i386)
 		;; 
 	*)
 		if [ -d "$I" ]

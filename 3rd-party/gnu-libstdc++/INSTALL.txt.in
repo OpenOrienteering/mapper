@@ -10,7 +10,7 @@ You may add options as understood by the NDK's build-gnu-libstdc++.sh, e.g.
 
 ATTENTION:
 Before running build.sh, you need to backup (if desired) and remove
-/PATH/TO/NDK/sources/cxx-stl/gnu-libstdc++/4.8 which come with the NDK.
+/PATH/TO/NDK/sources/cxx-stl/gnu-libstdc++/4.9 which come with the NDK.
 The build process will write new libstdc++ files to this directory!
 
 

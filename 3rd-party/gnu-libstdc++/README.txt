@@ -5,7 +5,7 @@ It is to be used by doing an out-of-source build configured by qmake from the
 supplied gnu-libstdc++.pro. You need to set ANDROID_NDK_ROOT, e.g. by choosing
 an Android kit in Qt Creator.
 
-The GCC 4.8 libstdc++ source code will be taken from
+The GCC 4.9 libstdc++ source code will be taken from
 
   https://android.googlesource.com/toolchain/gcc.git
 

@@ -1,6 +1,6 @@
 #!/bin/bash -e
 #
-#    Copyright 2014 Kai Pastor
+#    Copyright 2014, 2015 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -26,26 +26,31 @@ then
 	exit 1
 fi
 
-if [ -d "$NDK_DIR/sources/cxx-stl/gnu-libstdc++/4.8" ]
+if [ -d "$NDK_DIR/sources/cxx-stl/gnu-libstdc++/4.9" ]
 then
 	echo -n "$0: Error: Before running $0, you must (backup! and) remove " >&2
-	echo "$NDK_DIR/sources/cxx-stl/gnu-libstdc++/4.8." >&2
+	echo "$NDK_DIR/sources/cxx-stl/gnu-libstdc++/4.9." >&2
 	exit 3
 fi
 
 shift
 
 TRY64=
-if [ -d "$NDK_DIR/toolchains/x86-4.8/prebuilt/linux-x86_64" ]
+if [ -d "$NDK_DIR/toolchains/x86-4.9/prebuilt/linux-x86_64" ]
 then
 	TRY64=--try-64
 fi
 
 echo "Building GNU libstdc++..."
-ANDROID_NDK_ROOT="$NDK_DIR" bash "$(pwd)/build/tools/build-gnu-libstdc++.sh" "$(pwd)/src" --gcc-version-list=4.8 --abis=armeabi-v7a,x86 --ndk-dir="$NDK_DIR" $TRY64 $*
+ANDROID_NDK_ROOT="$NDK_DIR" bash "$(pwd)/build/tools/build-gnu-libstdc++.sh" \
+  "$(pwd)/src" \
+  --gcc-version-list=4.9 \
+  --ndk-dir="$NDK_DIR" \
+  $TRY64 \
+  $*
 
 echo "Creating source code archiv..."
 ARCHIVE_NAME=$(basename "$(pwd)")
-( cd .. && tar czf "$ARCHIVE_NAME.tgz" --exclude="$ARCHIVE_NAME/gcc" --exclude="*~"  "$ARCHIVE_NAME" )
+( cd .. && tar cJf "$ARCHIVE_NAME.tar.xz" --exclude="$ARCHIVE_NAME/gcc" --exclude="*~"  "$ARCHIVE_NAME" )
 
-echo "*** $ARCHIVE_NAME.tgz: done"
+echo "*** $ARCHIVE_NAME.tar.xz: done"

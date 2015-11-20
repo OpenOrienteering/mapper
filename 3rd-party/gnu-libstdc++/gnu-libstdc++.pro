@@ -1,5 +1,5 @@
 #
-#    Copyright 2014 Kai Pastor
+#    Copyright 2014, 2015 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -22,10 +22,8 @@ TEMPLATE = aux
 
 # Files to be listed in Qt Creator project tree
 OTHER_FILES = \
-    build-tools-r9c.patch \
     build.sh \
-    init-r9c.sh \
-    init-r10d.sh \
+    init.sh \
     INSTALL.txt.in \
     README.txt
 
@@ -39,6 +37,7 @@ isEmpty(ANDROID_NDK_ROOT) {
 RELEASE_FILE = "$$ANDROID_NDK_ROOT/RELEASE.TXT"
 RELEASE_FULL = $$cat("$$RELEASE_FILE", true)
 RELEASE = $$split(RELEASE_FULL, " ")
+RELEASE = $$split(RELEASE, "-")
 RELEASE = $$first(RELEASE)
 
 isEmpty(RELEASE) {
@@ -48,7 +47,7 @@ isEmpty(RELEASE) {
 }
 
 # Verify that init and build script exist for this release
-init.script = $$PWD/init-$${RELEASE}.sh
+init.script = $$PWD/init.sh
 exists($$init.script) {
 	message("Android NDK Release: $$RELEASE_FULL")
 } else {
