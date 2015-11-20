@@ -49,7 +49,7 @@ bool TemplateMap::loadTemplateFileImpl(bool configuring)
 	
 	locked_maps.append(template_path);
 	Map* new_template_map = new Map();
-	bool new_template_valid = new_template_map->loadFrom(template_path, NULL, false, configuring);
+	bool new_template_valid = new_template_map->loadFrom(template_path, NULL, NULL, false, configuring);
 	locked_maps.removeAll(template_path);
 	
 	if (!new_template_valid)

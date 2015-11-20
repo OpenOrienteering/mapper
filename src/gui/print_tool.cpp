@@ -189,11 +189,18 @@ void PrintTool::draw(QPainter* painter, MapWidget* widget)
 		  map_printer->getPageFormat().page_rect.height() );
 	}
 	
-	Q_FOREACH(qreal hpos, map_printer->horizontalPagePositions())
+	std::vector<qreal>::const_iterator hpos = map_printer->horizontalPagePositions().begin();
+	std::vector<qreal>::const_iterator hend = map_printer->horizontalPagePositions().end();
+	for (int h = 0; hpos != hend; ++hpos, ++h)
 	{
-		Q_FOREACH(qreal vpos, map_printer->verticalPagePositions())
+		std::vector<qreal>::const_iterator vpos = map_printer->verticalPagePositions().begin();
+		std::vector<qreal>::const_iterator vend = map_printer->verticalPagePositions().end();
+		for (int v = 0; vpos != vend; ++vpos, ++v)
 		{
-			QPointF pos = widget->mapToViewport(MapCoordF(hpos, vpos));
+			if (h+v > 100) // Don't visualize too many pages.
+				continue;
+			
+			QPointF pos = widget->mapToViewport(MapCoordF(*hpos, *vpos));
 			painter->setPen(top_left_margin_color);
 			// Left vertical line
 			painter->drawLine(pos.x(), pos.y(), pos.x(), pos.y()+drawing_size.height());

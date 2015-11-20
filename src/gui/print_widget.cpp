@@ -128,7 +128,9 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 	layout->addRow(tr("Resolution:"), dpi_combo);
 	
 	different_scale_check = new QCheckBox(tr("Print in different scale:"));
-	different_scale_edit = Util::SpinBox::create(1, std::numeric_limits<int>::max(), "", 500);
+	// Limit the difference between nominal and printing scale in order to limit the number of page breaks.
+	int min_scale = qMax((unsigned int)1, map->getScaleDenominator() / 10000 * 100);
+	different_scale_edit = Util::SpinBox::create(min_scale, std::numeric_limits<int>::max(), "", 500);
 	different_scale_edit->setPrefix("1 : ");
 	different_scale_edit->setEnabled(false);
 	int different_scale_height = qMax(
@@ -775,6 +777,15 @@ void PrintWidget::differentScaleEdited(int value)
 	{
 		// Adjust the print area.
 		applyPrintAreaPolicy();
+	}
+	
+	if (different_scale_edit->value() < 500)
+	{
+		different_scale_edit->setSingleStep(500 - different_scale_edit->value());
+	}
+	else
+	{
+		different_scale_edit->setSingleStep(500);
 	}
 }
 

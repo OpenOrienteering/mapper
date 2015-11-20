@@ -97,7 +97,7 @@ public:
 	QAction* getAction(const char* id);
 	
 	virtual bool save(const QString& path);
-	virtual bool load(const QString& path);
+	virtual bool load(const QString& path, QWidget* dialog_parent = NULL);
 	
 	virtual void attach(MainWindow* window);
 	virtual void detach();

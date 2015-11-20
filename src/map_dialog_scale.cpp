@@ -20,9 +20,6 @@
 
 #include "map_dialog_scale.h"
 
-#include <cassert>
-#include <limits>
-
 #if QT_VERSION < 0x050000
 #include <QtGui>
 #else
@@ -58,8 +55,8 @@ ScaleMapDialog::ScaleMapDialog(QWidget* parent, Map* map) : QDialog(parent, Qt::
 	layout->addRow(center_georef_radio);
 	
 	center_other_radio = new QRadioButton(tr("Other point,", "Scaling center point"));
-	other_x_edit = Util::SpinBox::create(2, -1 * std::numeric_limits<double>::max(), std::numeric_limits<double>::max(), tr("mm"));
-	other_y_edit = Util::SpinBox::create(2, -1 * std::numeric_limits<double>::max(), std::numeric_limits<double>::max(), tr("mm"));
+	other_x_edit = Util::SpinBox::create<MapCoordF>(tr("mm"));
+	other_y_edit = Util::SpinBox::create<MapCoordF>(tr("mm"));
 	QHBoxLayout* other_center_layout = new QHBoxLayout();
 	other_center_layout->addWidget(center_other_radio);
 	other_center_layout->addWidget(new QLabel(tr("X:", "x coordinate")), 0);
@@ -67,7 +64,6 @@ ScaleMapDialog::ScaleMapDialog(QWidget* parent, Map* map) : QDialog(parent, Qt::
 	other_center_layout->addWidget(new QLabel(tr("Y:", "y coordinate")), 0);
 	other_center_layout->addWidget(other_y_edit, 1);
 	layout->addRow(other_center_layout);
-	
 	
 	layout->addItem(Util::SpacerItem::create(this));
 	layout->addRow(Util::Headline::create(tr("Options")));

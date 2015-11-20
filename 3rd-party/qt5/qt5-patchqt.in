@@ -34,9 +34,13 @@ for I in \
   qtjsbackend \
   qtmultimedia \
   qtquick1 \
+  qtquickcontrols \
   qtscript \
-  qtwebkit-examples-and-demos \
+  qtsensors \
+  qtserialport \
   qtwebkit \
+  qtwebkit-examples \
+  qtwebkit-examples-and-demos \
   qtxmlpatterns
 do
        if [ -d "./$I" ]

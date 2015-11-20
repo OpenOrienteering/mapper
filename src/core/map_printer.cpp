@@ -118,7 +118,7 @@ MapPrinterConfig::MapPrinterConfig(const Map& map, QXmlStreamReader& xml)
 			  (value == "portrait") ? QPrinter::Portrait : QPrinter::Landscape;
 			while (xml.readNextStartElement())
 			{
-				if (xml.name() == "paper_dimensions")
+				if (xml.name() == "dimensions")
 				{
 					ScopedXmlReaderElement(xml).read(page_format.paper_dimensions);
 				}
@@ -135,7 +135,7 @@ MapPrinterConfig::MapPrinterConfig(const Map& map, QXmlStreamReader& xml)
 			ScopedXmlReaderElement print_area_element(xml);
 			print_area_element.read(print_area);
 			print_area_element.readAttribute("center_area", center_print_area);
-			print_area_element.readAttribute("single_page_print_area", single_page_print_area);
+			print_area_element.readAttribute("single_page", single_page_print_area);
 		}
 		else
 			xml.skipCurrentElement();

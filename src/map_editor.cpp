@@ -261,12 +261,15 @@ bool MapEditorController::save(const QString& path)
 		return false;
 }
 
-bool MapEditorController::load(const QString& path)
+bool MapEditorController::load(const QString& path, QWidget* dialog_parent)
 {
+	if (!dialog_parent)
+		dialog_parent = window;
+	
 	if (!map)
 		map = new Map();
 	
-	bool result = map->loadFrom(path, this);
+	bool result = map->loadFrom(path, dialog_parent, this);
 	if (result)
 		setMap(map, false);
 	else
@@ -472,6 +475,9 @@ void MapEditorController::createMenuAndToolbars()
 	
 	show_grid_act = newCheckAction("showgrid", tr("Show grid"), this, SLOT(showGrid()), "grid.png", QString::null, "grid.html");
 	QAction* configure_grid_act = newAction("configuregrid", tr("Configure grid..."), this, SLOT(configureGrid()), "grid.png", QString::null, "grid.html");
+#if defined(Q_OS_MAC)
+	configure_grid_act->setMenuRole(QAction::NoRole);
+#endif
 	pan_act = newToolAction("panmap", tr("Pan"), this, SLOT(pan()), "move.png", QString::null, "view_menu.html");
 	QAction* zoom_in_act = newAction("zoomin", tr("Zoom in"), this, SLOT(zoomIn()), "view-zoom-in.png", QString::null, "view_menu.html");
 	QAction* zoom_out_act = newAction("zoomout", tr("Zoom out"), this, SLOT(zoomOut()), "view-zoom-out.png", QString::null, "view_menu.html");
@@ -2422,7 +2428,7 @@ void MapEditorController::importGeoFile(const QString& filename)
 bool MapEditorController::importMapFile(const QString& filename)
 {
 	Map* imported_map = new Map();
-	bool result = imported_map->loadFrom(filename);
+	bool result = imported_map->loadFrom(filename, window, NULL);
 	if (!result)
 	{
 		QMessageBox::critical(window, tr("Error"), tr("Cannot import the selected map file because it could not be loaded."));

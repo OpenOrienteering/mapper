@@ -29,10 +29,90 @@
 #include <QtWidgets>
 #endif
 
+class MapCoordF;
+
 /* A collection of GUI utility functions. */
 
 namespace Util
 {
+	/**
+	 * Provides information about the properties of Mapper types
+	 * for the purpose of customizing input widgets.
+	 * 
+	 * The generic class is empty.
+	 * Template specializations provide the actual values.
+	 * See InputProperties<MapCoordF> for an example.
+	 */
+	template< class T >
+	struct InputProperties
+	{
+		// intentionally left empty
+	};
+	
+	/**
+	 * Provides information about the properties of MapCoordF
+	 * for the purpose of customizing input widgets.
+	 */
+	template< >
+	struct InputProperties< MapCoordF >
+	{
+		/** The underlying fundamental type. */
+		typedef double basetype;
+		
+		/** The minimum input value. */
+		inline static double min() throw()   { return -99999999.99; }
+		
+		/** The maximum input value. */
+		inline static double max() throw()   { return +99999999.99; }
+		
+		/** The spinbox step width. */
+		inline static double step() throw()  { return 1.0; }
+		
+		/** The number of decimals. */
+		inline static int decimals() throw() { return 2; }
+		
+		/** The unit of measurement, translated in context UnitOfMeasurement. */
+		inline static QString unit()
+		{
+			return QCoreApplication::translate("UnitOfMeasurement", "mm", "millimeters");
+		}
+	};
+	
+	/** Identifies the type double representing real meters */
+	struct RealMeters
+	{
+		// intentionally left empty
+	};
+	
+	/**
+	 * Provides information about the type double representing real meters
+	 * for the purpose of customizing input widgets.
+	 */
+	template< >
+	struct InputProperties< RealMeters >
+	{
+		/** The underlying fundamental type. */
+		typedef double basetype;
+		
+		/** The minimum input value. */
+		inline static double min() throw()   { return -99999999.99; }
+		
+		/** The maximum input value. */
+		inline static double max() throw()   { return +99999999.99; }
+		
+		/** The spinbox step width. */
+		inline static double step() throw()  { return 1.0; }
+		
+		/** The number of decimals. */
+		inline static int decimals() throw() { return 2; }
+		
+		/** The unit of measurement, translated in context UnitOfMeasurement. */
+		inline static QString unit()
+		{
+			return QCoreApplication::translate("UnitOfMeasurement", "m", "meters");
+		}
+	};
+	
 	namespace Headline
 	{
 		/** 
@@ -74,6 +154,18 @@ namespace Util
 	
 	namespace SpinBox
 	{
+#ifndef NDEBUG
+		/**
+		 * Returns the maximum number of digits in a spinbox which is regarded
+		 * as normal. Exceedings this number in Util::SpinBox::create() will
+		 * print a runtime warning in development builds.
+		 */
+		inline int max_digits()
+		{
+			return 13;
+		}
+#endif
+		
 		/**
 		 * Creates and initializes a QSpinBox.
 		 * 
@@ -93,6 +185,16 @@ namespace Util
 				box->setSuffix(QString(' ') % unit);
 			if (step > 0)
 				box->setSingleStep(step);
+#ifndef NDEBUG
+			if (box->locale().toString(min).remove(box->locale().groupSeparator()).length() > max_digits())
+				qDebug().nospace()
+				  << "WARNING: Util::SpinBox::create() will create a very large widget because of min="
+			      << box->locale().toString(min);
+			if (box->locale().toString(max).remove(box->locale().groupSeparator()).length() > max_digits())
+				qDebug().nospace()
+				  << "WARNING: Util::SpinBox::create() will create a very large widget because of max="
+			      << box->locale().toString(max);
+#endif
 			return box;
 		}
 		
@@ -127,7 +229,52 @@ namespace Util
 					default: 	box->setSingleStep(5.0 * pow(10.0, -decimals));
 				}
 			}
+#ifndef NDEBUG
+			if (box->textFromValue(min).remove(box->locale().groupSeparator()).length() > max_digits())
+				qDebug().nospace()
+				  << "WARNING: Util::SpinBox::create() will create a very large widget because of min="
+			      << box->locale().toString(min, 'f', decimals);
+			if (box->textFromValue(max).remove(box->locale().groupSeparator()).length() > max_digits())
+				qDebug().nospace()
+				  << "WARNING: Util::SpinBox::create() will create a very large widget because of max="
+			      << box->locale().toString(max, 'f', decimals);
+#endif
 			return box;
+		}
+		
+		/**
+		 * Creates and initializes a QDoubleSpinBox.
+		 * 
+		 * This method allows to initialize the most frequent options of
+		 * QDoubleSpinBox in a single call, determining the actual properties
+		 * via InputProperties<T>.
+		 */
+		template< class T >
+		inline QDoubleSpinBox* create()
+		{
+			typedef InputProperties<T> P;
+			return create(P::decimals(), P::min(), P::max(), P::unit(), P::step());
+		}
+		
+		/**
+		 * @deprecated Transitional method.
+		 * 
+		 * Creates and initializes a QDoubleSpinBox.
+		 * 
+		 * This method allows to initialize the most frequent options of
+		 * QDoubleSpinBox in a single call, determining the actual properties
+		 * via InputProperties<T>.
+		 * 
+		 * The unit of measurement is taken from the actual parameter. This is
+		 * meant to support the transition from code where the translation of
+		 * units still exists in the context of the client code, instead of
+		 * in the context UnitOfMeasurement.
+		 */
+		template< class T >
+		inline QDoubleSpinBox* create(const QString& unit)
+		{
+			typedef InputProperties<T> P;
+			return create(P::decimals(), P::min(), P::max(), unit, P::step());
 		}
 	}
 }

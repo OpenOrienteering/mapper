@@ -181,7 +181,10 @@ void OcdFileImport::importImplementation(bool load_symbols_only) throw (FileForm
 		importExtras< F >(file);
 		importObjects< F >(file);
 		importTemplates< F >(file);
-		importView< F >(file);
+		if (view)
+		{
+			importView< F >(file);
+		}
 	}
 }
 
@@ -297,7 +300,7 @@ void OcdFileImport::importColors< class Ocd::FormatV8 >(const OcdFile< Ocd::Form
 		color_index[color_info.number] = color;
 	}
 	
-	addWarning(tr("Spot color information was ignored."));
+	addWarning(OcdFileImport::tr("Spot color information was ignored."));
 }
 
 template< class F >
@@ -493,12 +496,12 @@ void OcdFileImport::importTemplates(const OcdFile< F >& file) throw (FileFormatE
 	{
 		if (it->type == 8)
 		{
-			importTemplate(convertOcdString< typename F::Encoding >(file[it]));
+			importTemplate(convertOcdString< typename F::Encoding >(file[it]), F::version());
 		}
 	}
 }
 
-Template* OcdFileImport::importTemplate(const QString& param_string)
+Template* OcdFileImport::importTemplate(const QString& param_string, const int ocd_version)
 {
 	const QChar* unicode = param_string.unicode();
 	
@@ -508,7 +511,6 @@ Template* OcdFileImport::importTemplate(const QString& param_string)
 	const QString extension = QFileInfo(clean_path).suffix().toLower();
 	
 	Template* templ = NULL;
-	double scale_factor = 1.0;
 	if (extension.compare("ocd") == 0)
 	{
 		templ = new TemplateMap(clean_path, map);
@@ -516,7 +518,6 @@ Template* OcdFileImport::importTemplate(const QString& param_string)
 	else if (QImageReader::supportedImageFormats().contains(extension.toLatin1()))
 	{
 		templ = new TemplateImage(clean_path, map);
-		scale_factor = 0.01;
 	}
 	else
 	{
@@ -524,6 +525,8 @@ Template* OcdFileImport::importTemplate(const QString& param_string)
 		return NULL;
 	}
 	
+	// 8 or 9 or 10 ? Only tested with 8 and 11
+	double scale_factor = (ocd_version <= 8) ? 0.01 : 1.0;
 	unsigned int num_rotation_params = 0;
 	double rotation = 0.0;
 	double scale_x = 1.0;
@@ -546,12 +549,12 @@ Template* OcdFileImport::importTemplate(const QString& param_string)
 			case 'x':
 				value = param_value.toDouble(&ok);
 				if (ok)
-					templ->setTemplateX(qRound64(value*1000));
+					templ->setTemplateX(qRound64(value*1000*scale_factor));
 				break;
 			case 'y':
 				value = param_value.toDouble(&ok);
 				if (ok)
-					templ->setTemplateY(-qRound64(value*1000));
+					templ->setTemplateY(-qRound64(value*1000*scale_factor));
 				break;
 			case 'a':
 			case 'b':
@@ -562,12 +565,12 @@ Template* OcdFileImport::importTemplate(const QString& param_string)
 				break;
 			case 'u':
 				value = param_value.toDouble(&ok);
-				if (ok && qAbs(value) >= 0.0001)
+				if (ok && qAbs(value) >= 0.0000000001)
 					scale_x = value;
 				break;
 			case 'v':
 				value = param_value.toDouble(&ok);
-				if (ok && qAbs(value) >= 0.0001)
+				if (ok && qAbs(value) >= 0.0000000001)
 					scale_y = value;
 				break;
 			case 'd':
@@ -589,12 +592,15 @@ Template* OcdFileImport::importTemplate(const QString& param_string)
 	templ->setTemplateScaleY(scale_y * scale_factor);
 	
 	int template_pos = map->getFirstFrontTemplate();
-	map->addTemplate(templ, template_pos, view);
+	map->addTemplate(templ, 0, view);
 	map->setFirstFrontTemplate(template_pos+1);
 	
-	TemplateVisibility* visibility = view->getTemplateVisibility(templ);
-	visibility->opacity = qMax(0.0, qMin(1.0, 0.01 * (100 - dimming)));
-	visibility->visible = visible;
+	if (view)
+	{
+		TemplateVisibility* visibility = view->getTemplateVisibility(templ);
+		visibility->opacity = qMax(0.0, qMin(1.0, 0.01 * (100 - dimming)));
+		visibility->visible = visible;
+	}
 	
 	return templ;
 }
@@ -615,8 +621,7 @@ void OcdFileImport::importExtras(const OcdFile< F >& file) throw (FileFormatExce
 template< >
 void OcdFileImport::importView< class Ocd::FormatV8 >(const OcdFile< Ocd::FormatV8 >& file) throw (FileFormatException)
 {
-	if (!view)
-		return;
+	Q_ASSERT(view);
 	
 	const Ocd::FileHeaderV8* header = file.header();
 	const Ocd::SetupV8* setup = reinterpret_cast< const Ocd::SetupV8* >(file.byteArray().data() + header->setup_pos);
@@ -632,6 +637,8 @@ void OcdFileImport::importView< class Ocd::FormatV8 >(const OcdFile< Ocd::Format
 template< class F >
 void OcdFileImport::importView(const OcdFile< F >& file) throw (FileFormatException)
 {
+	Q_ASSERT(view);
+	
 	for (typename OcdFile< F >::StringIndex::iterator it = file.strings().begin(); it != file.strings().end(); ++it)
 	{
 		if (it->type == 1030)
@@ -644,6 +651,8 @@ void OcdFileImport::importView(const OcdFile< F >& file) throw (FileFormatExcept
 
 void OcdFileImport::importView(const QString& param_string)
 {
+	Q_ASSERT(view);
+	
 	const QChar* unicode = param_string.unicode();
 	
 	bool zoom_ok = false;

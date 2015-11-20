@@ -1,5 +1,4 @@
-#
-#    Copyright 2012, 2013 Thomas Schöps, Kai Pastor
+#    Copyright 2013 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -15,20 +14,26 @@
 # 
 #    You should have received a copy of the GNU General Public License
 #    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
- 
-set(Mapper_EXAMPLES
-  overprinting.xmap
-  forest\ sample.xmap
-  sprint\ sample.xmap
-  complete\ map.xmap
-)
 
-install(
-  FILES ${Mapper_EXAMPLES}
-  DESTINATION "${MAPPER_DATA_DESTINATION}/examples/${_dir}"
-)
+set(ENV{PATH} "@MSYS_DIR@/bin")
+set(PROJECT_SOURCE_DIR "@PROJECT_SOURCE_DIR@")
 
-foreach(_example ${Mapper_EXAMPLES})
-	configure_file(${_example} ${_example} COPYONLY)
-endforeach()
+include("${PROJECT_SOURCE_DIR}/functions.cmake")
 
+check_stamp(match toolchains "@MINGW_TOOLCHAIN_URL@")
+if(NOT match)
+
+	download_as_needed("@MINGW_TOOLCHAIN_URL@" "@MINGW_TOOLCHAIN_MD5@")
+	file(MAKE_DIRECTORY toolchains)
+	extract_download("@MINGW_TOOLCHAIN_URL@" toolchains)
+
+	foreach(file download.marker uncompress.marker)
+		if(NOT EXISTS "toolchains/mingw-@MINGW_GCC_ARCH@-${file}")
+			file(WRITE "toolchains/mingw-@MINGW_GCC_ARCH@-${file}" "")
+		endif()
+	endforeach()
+	
+	# Mark as done
+	
+	make_stamp(toolchains "@MINGW_TOOLCHAIN_URL@")
+endif()
