@@ -1,18 +1,18 @@
 /*
- *    Copyright 2012 Thomas Schöps
- *    
+ *    Copyright 2012, 2013 Thomas Schöps
+ *
  *    This file is part of OpenOrienteering.
- * 
+ *
  *    OpenOrienteering is free software: you can redistribute it and/or modify
  *    it under the terms of the GNU General Public License as published by
  *    the Free Software Foundation, either version 3 of the License, or
  *    (at your option) any later version.
- * 
+ *
  *    OpenOrienteering is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
  *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *    GNU General Public License for more details.
- * 
+ *
  *    You should have received a copy of the GNU General Public License
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -28,6 +28,7 @@
 #include <QHash>
 #include <QSet>
 #include <QScopedPointer>
+#include <QExplicitlySharedDataPointer>
 
 #include "global.h"
 #include "undo.h"
@@ -43,10 +44,11 @@ class QXmlStreamWriter;
 QT_END_NAMESPACE
 
 class Map;
-struct MapColor;
+class MapColor;
 class MapWidget;
 class MapView;
 class MapEditorController;
+class MapPrinterConfig;
 class Symbol;
 class CombinedSymbol;
 class LineSymbol;
@@ -94,7 +96,7 @@ public:
 	~Map();
 	
 	/// Attempts to save the map to the given file. If a MapEditorController is given, the widget positions and MapViews stored in the map file are also updated.
-    bool saveTo(const QString& path, MapEditorController* map_editor = NULL);
+	bool saveTo(const QString& path, MapEditorController* map_editor = NULL);
 	/// Attempts to load the map from the specified path. Returns true on success.
 	bool loadFrom(const QString& path, MapEditorController* map_editor = NULL, bool load_symbols_only = false, bool show_error_messages = true);
 	/// Imports the other map into this map with the following strategy:
@@ -104,27 +106,44 @@ public:
 	/// WARNING: this method potentially changes the 'other' map if the scales differ (by rescaling to fit this map's scale)!
 	void importMap(Map* other, ImportMode mode, QWidget* dialog_parent = NULL, std::vector<bool>* filter = NULL, int symbol_insert_pos = -1,
 				   bool merge_duplicate_symbols = true, QHash<Symbol*, Symbol*>* out_symbol_map = NULL);
-	/// Serializes the map directly into the given IO device in native map format. Returns true if successful
-	bool exportToNative(QIODevice* stream);
-	/// Loads the map directly from the given IO device, where the data must be in native map format. Returns true if successful
-	bool importFromNative(QIODevice* stream);
+	
+	/// Serializes the map directly into the given IO device in a known format.
+	/// This can be imported again using importFromIODevice().
+	/// Returns true if successful.
+	bool exportToIODevice(QIODevice* stream);
+	
+	/// Loads the map directly from the given IO device,
+	/// where the data must have been written by exportToIODevice().
+	/// Returns true if successful.
+	bool importFromIODevice(QIODevice* stream);
 	
 	/// Deletes all map data and resets the map to its initial state containing one default part
 	void clear();
 	
 	/// Draws the part of the map which is visible in the given bounding box in map coordinates
-	void draw(QPainter* painter, QRectF bounding_box, bool force_min_size, float scaling, bool show_helper_symbols, float opacity = 1.0);
+	void draw(QPainter* painter, QRectF bounding_box, bool force_min_size, float scaling, bool on_screen, bool show_helper_symbols, float opacity = 1.0);
+	/// Draws a spot color overprinting simualation for the part of the map which is visible in the given bounding box in map coordinates
+	void drawOverprintingSimulation(QPainter* painter, QRectF bounding_box, bool force_min_size, float scaling, bool on_screen, bool show_helper_symbols, float opacity = 1.0);
+	/// Draws a particular spot color for the part of the map which is visible in the given bounding box in map coordinates
+	/// This will not update the renderables of modified objects.
+	void drawColorSeparation(QPainter* painter, MapColor* spot_color, QRectF bounding_box, bool force_min_size, float scaling, bool on_screen, bool show_helper_symbols, float opacity = 1.0);
 	/// Draws the map grid
 	void drawGrid(QPainter* painter, QRectF bounding_box);
 	/// Draws the templates first_template until last_template which are visible in the given bouding box.
 	/// view determines template visibility and can be NULL to show all templates.
 	/// The initial transform of the given QPainter must be the map-to-paintdevice transformation.
-	void drawTemplates(QPainter* painter, QRectF bounding_box, int first_template, int last_template, MapView* view);
+    /// If on_screen is set to true, some optimizations will be applied, leading to a possibly lower display quality.
+	void drawTemplates(QPainter* painter, QRectF bounding_box, int first_template, int last_template, MapView* view, bool on_screen);
 	/// Updates the renderables and extent of all objects which have been changed. This is automatically called by draw(), you normally do not need it
 	void updateObjects();
-	/// Calculates the extent of all map objects (and possibly templates). If templates should be included, a view can be given to take the template visibilities from.
-	/// view can also be NULL to include all templates.
-	QRectF calculateExtent(bool include_helper_symbols, bool include_templates, MapView* view);
+	
+	/** 
+	 * Calculates the extent of all map elements. 
+	 * 
+	 * If templates shall be included, view may either be NULL to include all 
+	 * templates, or specify a MapView to take the template visibilities from.
+	 */
+	QRectF calculateExtent(bool include_helper_symbols = false, bool include_templates = false, const MapView* view = NULL) const;
 	
 	/// Must be called to notify the map of new widgets displaying it. Useful to notify the widgets about which parts of the map have changed and need to be redrawn
 	void addMapWidget(MapWidget* widget);
@@ -153,16 +172,16 @@ public:
 	// Colors
 	
 	inline int getNumColors() const {return (int)color_set->colors.size();}
-	inline MapColor* getColor(int i) const {return color_set->colors[i];}
+	inline MapColor* getColor(int i) const {return (0 <= i && i < (int)color_set->colors.size()) ? color_set->colors[i] : NULL;}
 	void setColor(MapColor* color, int pos);
 	MapColor* addColor(int pos);
 	void addColor(MapColor* color, int pos);
 	void deleteColor(int pos);
-	int findColorIndex(MapColor* color) const;	// returns -1 if not found
+	int findColorIndex(const MapColor* color) const;	// returns -1 if not found
 	void setColorsDirty();
 	
 	void useColorsFrom(Map* map);
-	bool isColorUsedByASymbol(MapColor* color);
+	bool isColorUsedByASymbol(const MapColor* color) const;
 	
 	/// Returns a vector of the same size as the color list, where each element is set to true if
 	/// the color is used by at least one symbol.
@@ -216,7 +235,7 @@ public:
 	void deleteTemplate(int pos);
 	void setTemplateAreaDirty(Template* temp, QRectF area, int pixel_border);	// marks the respective regions in the template caches as dirty; area is given in map coords (mm). Does nothing if the template is not visible in a widget! So make sure to call this and showing/hiding a template in the correct order!
 	void setTemplateAreaDirty(int i);											// this does nothing for i == -1
-	int findTemplateIndex(Template* temp);
+	int findTemplateIndex(const Template* temp) const;
 	void setTemplatesDirty();
 	void emitTemplateChanged(Template* temp);
 	
@@ -293,8 +312,8 @@ public:
 		}
 		return (ObjectOperationResult::Enum)result;
 	}
-	void scaleAllObjects(double factor);
-	void rotateAllObjects(double rotation);
+	void scaleAllObjects(double factor, const MapCoord& scaling_center);
+	void rotateAllObjects(double rotation, const MapCoord& center);
 	void updateAllObjects();
 	void updateAllObjectsWithSymbol(Symbol* symbol);
 	void changeSymbolForAllObjects(Symbol* old_symbol, Symbol* new_symbol);
@@ -344,10 +363,10 @@ public:
 	
 	// Other settings
 	
-	void setScaleDenominator(int value);
-	int getScaleDenominator() const;
-	void changeScale(int new_scale_denominator, bool scale_symbols, bool scale_objects, bool scale_georeferencing, bool scale_templates);
-	void rotateMap(double rotation, bool adjust_georeferencing, bool adjust_declination, bool adjust_templates);
+	void setScaleDenominator(unsigned int value);
+	unsigned int getScaleDenominator() const;
+	void changeScale(unsigned int new_scale_denominator, const MapCoord& scaling_center, bool scale_symbols, bool scale_objects, bool scale_georeferencing, bool scale_templates);
+	void rotateMap(double rotation, const MapCoord& center, bool adjust_georeferencing, bool adjust_declination, bool adjust_templates);
 	
 	inline const QString& getMapNotes() const {return map_notes;}
 	inline void setMapNotes(const QString& text) {map_notes = text;}
@@ -363,9 +382,16 @@ public:
 	inline bool isBaselineViewEnabled() const {return baseline_view_enabled;}
 	inline void setBaselineViewEnabled(bool enabled) {baseline_view_enabled = enabled;}
 	
-	inline bool arePrintParametersSet() const {return print_params_set;}
-	void setPrintParameters(int orientation, int format, float dpi, bool show_templates, bool show_grid, bool center, float left, float top, float width, float height, bool different_scale_enabled, int different_scale);
-	void getPrintParameters(int& orientation, int& format, float& dpi, bool& show_templates, bool& show_grid, bool& center, float& left, float& top, float& width, float& height, bool& different_scale_enabled, int& different_scale);
+	
+	/** Returns a copy of the current print configuration. */
+	MapPrinterConfig printerConfig() const;
+	
+	/** Returns a const reference to the current print configuration. */
+	const MapPrinterConfig& printerConfig();
+	
+	/** Sets the current print configuration. */
+	void setPrinterConfig(const MapPrinterConfig& config);
+	
 	
 	void setImageTemplateDefaults(bool use_meters_per_pixel, double meters_per_pixel, double dpi, double scale);
 	void getImageTemplateDefaults(bool& use_meters_per_pixel, double& meters_per_pixel, double& dpi, double& scale);
@@ -401,7 +427,7 @@ signals:
 	
 	void colorAdded(int pos, MapColor* color);
 	void colorChanged(int pos, MapColor* color);
-	void colorDeleted(int pos, MapColor* old_color);
+	void colorDeleted(int pos, const MapColor* old_color);
 	
 	void symbolAdded(int pos, Symbol* symbol);
 	void symbolChanged(int pos, Symbol* new_symbol, Symbol* old_symbol);
@@ -438,14 +464,20 @@ private:
 		void addReference();
 		void dereference();
 		
-		/// Imports the other set into this set, only importing the colors for
-		/// which filter[color_index] == true and returning the map
-		/// from color indices in other to imported indices.
-		/// Imported colors are placed below the color they were below before,
-		/// if this color exists in both sets, otherwise above the existing colors.
-		/// If a map is given, the color is properly inserted into the map.
-		void importSet(MapColorSet* other, Map* map = NULL, std::vector<bool>* filter = NULL, QHash<int, int>* out_indexmap = NULL,
-					   QHash<MapColor*, MapColor*>* out_pointermap = NULL);
+		/** Merges another MapColorSet into this set, trying to maintain
+		 *  the relative order of colors.
+		 *  If a filter is given, imports only the colors for  which
+		 *  filter[color_index] is true, or which are spot colors referenced
+		 *  by the selected colors.
+		 *  If a map is given, this color set is modified through the map's
+		 *  color accessor methods so that other object become aware of the
+		 *  changes.
+		 *  @return a mapping from the imported color pointer in the other set
+		 *          to color pointers in this set.
+		 */
+		MapColorMap importSet(const MapColorSet& other, 
+		                      std::vector<bool>* filter = NULL,
+		                      Map* map = NULL);
 		
 	private:
 		int ref_count;
@@ -459,7 +491,7 @@ private:
 	
 	/// Imports the other symbol set into this set, only importing the symbols for which filter[color_index] == true and
 	/// returning the map from symbol indices in other to imported indices. Imported symbols are placed after the existing symbols.
-	void importSymbols(Map* other, const QHash<MapColor*, MapColor*>& color_map, int insert_pos = -1, bool merge_duplicates = true, std::vector<bool>* filter = NULL,
+	void importSymbols(Map* other, const MapColorMap& color_map, int insert_pos = -1, bool merge_duplicates = true, std::vector<bool>* filter = NULL,
 					   QHash<int, int>* out_indexmap = NULL, QHash<Symbol*, Symbol*>* out_pointermap = NULL);
 	
 	void addSelectionRenderables(Object* object);
@@ -492,19 +524,7 @@ private:
 	bool area_hatching_enabled;
 	bool baseline_view_enabled;
 	
-	bool print_params_set;			// have the parameters been set (are they valid)?
-	int print_orientation;			// QPrinter::Orientation
-	int print_format;				// QPrinter::PaperSize
-	float print_dpi;
-	bool print_show_templates;
-	bool print_show_grid;
-	bool print_center;
-	float print_area_left;
-	float print_area_top;
-	float print_area_width;
-	float print_area_height;
-	bool print_different_scale_enabled;
-	int print_different_scale;
+	QScopedPointer<MapPrinterConfig> printer_config;
 	
 	bool image_template_use_meters_per_pixel;
 	double image_template_meters_per_pixel;
@@ -644,7 +664,7 @@ public:
 	// Template visibilities
 	
 	/// Checks if the template is visible without creating a template visibility object if none exists
-	bool isTemplateVisible(Template* temp);
+	bool isTemplateVisible(const Template* temp) const;
 	
 	/// Returns the template visibility object, creates one if not there yet with the default settings (invisible)
 	TemplateVisibility* getTemplateVisibility(Template* temp);
@@ -659,6 +679,9 @@ public:
 	// Grid visibility
 	inline bool isGridVisible() const {return grid_visible;}
 	inline void setGridVisible(bool visible) {grid_visible = visible;}
+	
+	inline bool isOverprintingSimulationEnabled() const {return overprinting_simulation_enabled;}
+	inline void setOverprintingSimulationEnabled(bool enabled) {overprinting_simulation_enabled = enabled;}
 	
 	// Static
 	static const double zoom_in_limit;
@@ -683,10 +706,12 @@ private:
 	Matrix map_to_view;
 	
     TemplateVisibility* map_visibility;
-	QHash<Template*, TemplateVisibility*> template_visibilities;
+	QHash<const Template*, TemplateVisibility*> template_visibilities;
 	bool all_templates_hidden;
 	
 	bool grid_visible;
+	
+	bool overprinting_simulation_enabled;
 	
 	WidgetVector widgets;
 };

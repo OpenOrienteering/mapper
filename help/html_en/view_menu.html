@@ -1,61 +1,68 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD html 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD html 4.01 Transitional//EN">
 <html>
 <head>
-<title>Open O-Mapper help - View menu</title>
-<link rev="made" href="mailto:peterhhoban@gmail.com">
+<title>OpenOrienteering Mapper Help - View menu</title>
 <link rel="stylesheet" href="oomap.css" type="text/css" title="OOMapper stylesheet">
-<script type="text/javascript">
-function goBack()
-  {
-  window.history.back()
-  }
-</script>
+<meta name="author" content="Peter Hoban, Thomas Schoeps">
+<meta name="description" content="Open Orienteering Mapper help">
+<meta name="keywords" content="Help, Orienteering, mapping">
 </head>
 <body>
-<p style="text-align: left"><a href="map_screen.html"><button type="button">Home</button></a> &nbsp;  <input type="button" value="Back" onclick="goBack()" /></p>
 
-<img class=small src="../../images/title.png" height="33" width="301" border="0" alt="" /><h1> Help</h1>
+
 <h3>View menu</h3>
 
-<table><tr><td width="180"><h4>Zoom in</h4></td><td width="50"><h4>F7</h4></td><td width="40"><img class=small src="../../images/view-zoom-in.png" width="32" height="32" border="0" alt="" /></td><td width="400">
-<p>Zoom in (enlarge) to view the map closer, centred on the present view. </td></tr>
+<table><tr><td width="180"><h4>Pan</h4></td><td width="60"><h4>F6</h4></td><td width="40"><img class=small src="../../images/move.png" width="32" height="32" border="0" alt="" /></td><td width="400">
+<p>Activates the <a href="toolbars.html#pan_map">pan tool</a> which can be used to move the map.</td></tr>
+
+<tr><td><h4>Zoom in</h4></td><td><h4>F7</h4></td><td><img class=small src="../../images/view-zoom-in.png" width="32" height="32" border="0" alt="" /></td><td width="400">
+<p>Zoom in (enlarge) to view the map closer. </td></tr>
 
 <tr><td><h4>Zoom out</h4></td><td><h4>F8</h4></td><td><img class=small src="../../images/view-zoom-out.png" width="32" height="32" border="0" alt="" /></td><td>
-<p>Zoom out (shrink) the map to see more of it, centred on the present view.</p></td></tr>
+<p>Zoom out (shrink) the map to see more of it.</p></td></tr>
 
 <tr><td><h4><a name="zoom-all">Show whole map</a></h4></td><td><h4></h4></td><td><img class=small src="../../images/view-show-all.png" width="32" height="32" border="0" alt="" /></td><td>
 <p>Use this tool to display the whole map on your screen.  </p></td></tr>
 
-<tr><td><h4>Set Zoom factor</h4></td><td><h4></h4></td><td></td><td>
-<p>Choose your zoom, centred on the present view.</p></td></tr>
+<tr><td><h4>Set custom zoom factor...</h4></td><td><h4></h4></td><td></td><td>
+<p>Shows a dialog to enter a specific zoom factor. Note that the zoom factor on the screen is not necessarily equal to the printed scale of the map.</p></td></tr>
+
+<tr><td><h4>Show grid</h4></td><td><h4>G</h4></td><td><img class=small src="../../images/grid.png" width="32" height="32" border="0" alt="" /></td><td>
+<p>Shows or hides the <a href="grid.html">map grid</a>.</p></td></tr>
+
+<tr><td><h4>Hatch areas</h4></td><td><h4>F2</h4></td><td></td><td>
+<p>When this toggle is activated, all area objects in the map will be drawn in a hatched, semi-transparent style. This is useful to be able to see any templates below the map.</p></td></tr>
+
+<tr><td><h4>Baseline view</h4></td><td><h4>F2</h4></td><td></td><td>
+<p>When this toggle is activated, instead of the normal appearance of map objects only their midpoints respectively baselines are displayed. This can be combined with Hatch areas to see anything below the map even better.</p></td></tr>
+
+<tr><td><h4>Hide all templates</h4></td><td><h4>F10</h4></td><td></td><td>
+<p>When this toggle is activated, no templates will be displayed. This is useful to check the appearance of the map alone.</p></td></tr>
+
+<tr><td><h4><a name="overprinting">Overprinting simulation</a></h4></td><td><h4></h4></td><td></td><td>
+<p>When this toggle is activated, the effect of printing the map with layers of spot colors on top of each other will be simulated. This leads to improved map readability. This function requires a color set with spot color definitions.</p></td></tr>
 
 <tr><td colspan="4"><a name="coorddisplay"><h4>Display coordinates as ...</h4></a>
-<p>The coordinates of the cursor on the map are shown in the position box at the bottom right corner of your screen.  Paper coordinates refer to positions on a paper print, from an arbitrary origin (make this the bottom left corner of your page).  If your map has been georeferenced (<a href="map_menu.html#georeference">details here</a>) additional coordinate systems will be available.  UTM coordinates are metres of easting and northing from the origin point for your zone.  Latitude & longitude may be expressed in decimal degrees or in degrees, minutes and seconds.  </p><p>The coordinate system may also be selected by a right-click on the position box at the bottom right corner of your screen which will provide the same choices.</p></td></tr>
+<p>The coordinates of the cursor on the map are shown in the position box at the bottom right corner of the program window. Paper coordinates refer to positions on a paper print, from an arbitrary origin. If your map has been <a href="georeferencing.html">georeferenced</a>, additional coordinate systems will be available. Projected coordinates are meters of easting and northing. Latitude &amp; longitude may be expressed in decimal degrees or in degrees, minutes and seconds.</p>
+<p>The coordinate system may also be selected by a right-click on the position box at the bottom right corner of your screen which will provide the same choices.<br/><br/></p></td></tr>
 
-<tr><td><a name="fullscreen"><h4>Toggle Fullscreen</h4></td><td><h4>F11</h4></td><td></td><td>
-<p>This toggle control switches the display to full-screen mode and back.</p></td></tr>
+<tr><td><a name="fullscreen"><h4>Toggle Fullscreen</h4></a></td><td><h4>F11</h4></td><td></td><td>
+<p>This toggle switches the display to full-screen mode and back.</p></td></tr>
+
+<tr><td><h4>Color Window</h4></td><td><h4>Ctrl + Shift + F7</h4></td><td></td><td>
+<p>This toggle shows or hides the <a href="color_dock_widget.html">color window</a>.</p></td></tr>
+
+<tr><td><h4>Symbol Window</h4></td><td><h4>Ctrl + Shift + F8</h4></td><td></td><td>
+<p>This toggle shows or hides the <a href="symbol_dock_widget.html">symbol pane</a>.</p></td></tr>
+
+<tr><td><h4>Template Setup Window</h4></td><td><h4>Ctrl + Shift + F9</h4></td><td></td><td>
+<p>This toggle shows or hides the <a href="templates.html#setup">template setup window</a>.</p></td></tr>
 
 </table>
 
-<a name="zoom"><h4>Scale and Zoom</h4></a>
-<p>The scale at which the map will be printed was set before drawing started.  The scale at which it appears on the screen is not related to the printing scale.  Zoom in by rolling the middle scroll wheel of your mouse (or repeated F7 keystrokes) to make the image as large as convenient to permit very precise placement and adjustment of features.  The zoom indicator near the bottom right corner of your screen shows approximately the current magnification of your map image.</p>
 
-<p>Sometimes if there appears to be no map image at all, it may be that you are zoomed in so close that the screen is filled with white space.  Zoom out for a broader view - this changes nothing on your map.  As you zoom in, hover the mouse over the feature you wish to see more precisely so that it stays in the visible area.  (If this does not work check File / Settings / Editing / Zoom to/from cursor, and <a href="settings.html#zoomaway">find help here.</a>)</p>
-
-<p>Move the map image around the window by pick-&-drag with the middle (scroll wheel) mouse button.  Users without a wheel mouse can move the map with the cursor keys.</p>
-
-<a name="coords"><h4>Cursor position</h4></a>
-<p>The coordinates of the cursor on the map are shown in the position box at the bottom right corner of your screen.  The position shown here is in millimetres (with an accuracy of 1/100 mm - 10 microns on the page and 0.15 m or 6" on the ground at 1:15k) right, and up, from the origin which is set when you place the first item on your drawing (placing that item gives it a physical location - choose it appropriately).  Locations below or left of that origin will have negative coordinates.  </p>
-
-<p>The first symbol placed on the map fixes the position of the map image with respect to the cursor coordinates.  If planning to make your map fit a standard sheet of paper, it may be helpful to start with a rectangle (border) close to the edges of the sheet to help position your map on both the sheet and the coordinate system.  Set the bottom left corner of that rectangle at 0,0 and your coordinates will always be positive while you are inside the rectangle.  </p>
-
-<p>Use of other coordinate systems (eg GPS) are planned but not yet implemented.</p>
-
-
-
-<p style="text-align: left"><a href="map_screen.html"><button type="button">Home</button></a> &nbsp; <input type="button" value="Back" onclick="goBack()"></p>
-<hr width="70%">
-<p><small>Updated on ... April 1, 2012</small></p>
+<p>&nbsp;</p>
+<hr/>
+<p><small>Updated on February 26th, 2013</small></p>
 </body>
 </html>

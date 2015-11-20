@@ -1,18 +1,18 @@
 /*
- *    Copyright 2012 Thomas Schöps
- *    
+ *    Copyright 2012, 2013 Thomas Schöps
+ *
  *    This file is part of OpenOrienteering.
- * 
+ *
  *    OpenOrienteering is free software: you can redistribute it and/or modify
  *    it under the terms of the GNU General Public License as published by
  *    the Free Software Foundation, either version 3 of the License, or
  *    (at your option) any later version.
- * 
+ *
  *    OpenOrienteering is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
  *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *    GNU General Public License for more details.
- * 
+ *
  *    You should have received a copy of the GNU General Public License
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -60,6 +60,7 @@ public:
 	virtual bool load(QIODevice* file, int version);
 	
 	virtual void getAffectedOutcome(std::vector< Object* >& out) const {out = objects;}
+	inline bool isEmpty() const {return objects.empty();}
 	
 public slots:
 	virtual void symbolChanged(int pos, Symbol* new_symbol, Symbol* old_symbol);
@@ -91,6 +92,7 @@ public:
 	virtual UndoStep* undo();
 	
 	virtual void getAffectedOutcome(std::vector< Object* >& out) const {out.clear();}
+	inline bool isEmpty() const {return affected_objects.empty();}
 };
 
 class AddObjectsUndoStep : public ObjectContainingUndoStep
@@ -99,6 +101,12 @@ Q_OBJECT
 public:
 	AddObjectsUndoStep(Map* map);
 	virtual UndoStep* undo();
+	
+	/// Removes all contained objects from the map.
+	/// This can be useful after constructing the undo step,
+	/// as it is often impractical to remove the objects directly
+	/// when adding them as the indexing would be changed this way.
+	void removeContainedObjects(bool emit_selection_changed);
 protected:
 	static bool sortOrder(const std::pair<int, int>& a, const std::pair<int, int>& b);
 };

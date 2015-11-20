@@ -1,18 +1,18 @@
 /*
- *    Copyright 2012 Thomas Schöps
- *    
+ *    Copyright 2012, 2013 Thomas Schöps
+ *
  *    This file is part of OpenOrienteering.
- * 
+ *
  *    OpenOrienteering is free software: you can redistribute it and/or modify
  *    it under the terms of the GNU General Public License as published by
  *    the Free Software Foundation, either version 3 of the License, or
  *    (at your option) any later version.
- * 
+ *
  *    OpenOrienteering is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
  *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *    GNU General Public License for more details.
- * 
+ *
  *    You should have received a copy of the GNU General Public License
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -21,7 +21,6 @@
 #ifndef _OPENORIENTEERING_OBJECT_H_
 #define _OPENORIENTEERING_OBJECT_H_
 
-#include <cassert>
 #include <vector>
 
 #include <QRectF>
@@ -61,19 +60,22 @@ public:
 	virtual ~Object();
 	virtual Object* duplicate() = 0;
 	bool equals(Object* other, bool compare_symbol);
-	Object& operator= (const Object& other);
+	virtual Object& operator= (const Object& other);
 	
 	/// Returns the object type determined by the subclass
-    inline Type getType() const {return type;}
-    // Convenience casts with type checking
-    PointObject* asPoint();
+	inline Type getType() const {return type;}
+	// Convenience casts with type checking
+	PointObject* asPoint();
+	const PointObject* asPoint() const;
 	PathObject* asPath();
+	const PathObject* asPath() const;
 	TextObject* asText();
+	const TextObject* asText() const;
 	
 	void save(QIODevice* file);
 	void load(QIODevice* file, int version, Map* map);
 	void save(QXmlStreamWriter& xml) const;
-	static Object* load(QXmlStreamReader& xml, Map& map, const SymbolDictionary& symbol_dict, Symbol* symbol = 0) throw (FormatException);
+	static Object* load(QXmlStreamReader& xml, Map* map, const SymbolDictionary& symbol_dict, Symbol* symbol = 0) throw (FileFormatException);
 	
 	/// Checks if the output_dirty flag is set and if yes, regenerates output and extent; returns true if output was previously dirty.
 	/// Use force == true to force a redraw
@@ -82,8 +84,8 @@ public:
 	/// Moves the whole object
 	void move(qint64 dx, qint64 dy);
 	
-	/// Scales all coordinates, with the origin as scaling center
-	void scale(double factor);
+	/// Scales all coordinates, with the given scaling center
+	void scale(MapCoordF center, double factor);
 	
 	/// Rotates the whole object. The angle must be given in radians.
 	void rotateAround(MapCoordF center, double angle);
@@ -159,7 +161,7 @@ public:
 		PathObject* path;
 		
 		inline int getNumCoords() const {return end_index - start_index + 1;}
-		inline bool isClosed() const {assert(end_index < (int)path->coords.size()); return path->coords[end_index].isClosePoint();}
+		inline bool isClosed() const {Q_ASSERT(end_index >= 0 && end_index < (int)path->coords.size()); return path->coords[end_index].isClosePoint();}
 		/// Closes or opens the sub-path.
 		/// If closed == true and may_use_existing_close_point == false, a new point is added as closing point even if its coordinates are identical to the existing last point.
 		void setClosed(bool closed, bool may_use_existing_close_point = false);
@@ -168,19 +170,57 @@ public:
 		/// Calculates the number of points, excluding close points and curve handles
 		int calcNumRegularPoints();
 		
+		/// This returns the *cumulative length* at the part end!
+		/// TODO: rename method
 		double getLength();
 		double calculateArea();
 	};
 	
+	/// Returned by calcAllIntersectionsWith().
+	struct Intersection
+	{
+		/// Coordinate of the intersection
+		MapCoordF coord;
+		/// Part index of intersection
+		int part_index;
+		/// Length of path until this intersection point
+		double length;
+		/// Part index of intersection in other path
+		int other_part_index;
+		/// Length of other path until this intersection point
+		double other_length;
+		
+		inline bool operator< (const Intersection& b) const {return length < b.length;}
+		inline bool operator== (const Intersection& b) const
+		{
+			// NOTE: coord is not compared, as the intersection is defined by the other params already.
+			const double epsilon = 1e-10;
+			return part_index == b.part_index &&
+				qAbs(length - b.length) <= epsilon &&
+				other_part_index == b.other_part_index &&
+				qAbs(other_length - b.other_length) <= epsilon;
+		}
+		
+		static Intersection makeIntersectionAt(double a, double b, const PathCoord& a0, const PathCoord& a1, const PathCoord& b0, const PathCoord& b1, int part_index, int other_part_index);
+	};
+	class Intersections : public std::vector<Intersection>
+	{
+	public:
+		/// Sorts the intersections and removes duplicates.
+		void clean();
+	};
+	
+	
 	PathObject(Symbol* symbol = NULL);
 	PathObject(Symbol* symbol, const MapCoordVector& coords, Map* map = 0);
-    virtual Object* duplicate();
+	virtual Object* duplicate();
 	PathObject* duplicatePart(int part_index);
+	virtual Object& operator=(const Object& other);
 	
 	// Coordinate access methods
 	
 	inline int getCoordinateCount() const {return (int)coords.size();}
-	inline MapCoord& getCoordinate(int pos) {return coords[pos];}
+	inline MapCoord& getCoordinate(int pos) {Q_ASSERT(pos >= 0 && pos < (int)coords.size()); return coords[pos];}
 	void setCoordinate(int pos, MapCoord c);
 	void addCoordinate(int pos, MapCoord c);
 	void addCoordinate(MapCoord c, bool start_new_part = false);
@@ -194,6 +234,7 @@ public:
 	int shiftedCoordIndex(int base_index, int offset, PathPart& part); // Returns the base_index shifted by offset, correctly handling holes in areas and closed paths. Returns -1 if the index is invalid (happens if going over a path end or after looping around once in a closed path)
 	PathPart& findPartForIndex(int coords_index);
 	int findPartIndexForIndex(int coords_index);
+	bool isCurveHandle(int coord_index);
 	
 	inline int getNumParts() const {return (int)parts.size();}
 	inline PathPart& getPart(int index) {return parts[index];}
@@ -225,6 +266,8 @@ public:
 	bool canBeConnected(PathObject* other, double connect_threshold_sq);
 	/// Returns if the objects were connected (if so, you can delete the other object). If one of the paths has to be reversed, it is done for the "other" path. Otherwise, the "other" path is not changed.
 	bool connectIfClose(PathObject* other, double connect_threshold_sq);
+	/// Connects the given parts, merging the end coordinates at the center position and copying over the coordindates from other.
+	void connectPathParts(int part_index, PathObject* other, int other_part_index, bool prepend);
 	/// Splits the path into up to two parts at the given position
 	void splitAt(const PathCoord& split_pos, Object*& out1, Object*& out2);
 	/// Replaces the path with a range of it starting and ending at the given lengths
@@ -237,8 +280,34 @@ public:
 	void reverse();
 	/// Like reverse(), but only for the given part
 	void reversePart(int part_index);
+	/// Ensures that all parts are closed. Useful for objects with area-only symbols.
+	void closeAllParts();
+	/// Creates a new path object containing the given coordinate range.
+	PathObject* extractCoords(int start, int end);
+	/// Converts all polygonal sections in this path to splines.
+	/// If at least one section is converted, returns true and
+	/// returns an undo duplicate if the corresponding pointer is set.
+	bool convertToCurves(PathObject** undo_duplicate = NULL);
+	/// Converts the given range of coordinates to a spline by inserting handles.
+	/// The range must consist of only polygonal segments before.
+	void convertRangeToCurves(int part_number, int start_index, int end_index);
+	/// Tries to remove points while retaining the path shape as much as possible.
+	/// If at least one point is changed, returns true and
+	/// returns an undo duplicate if the corresponding pointer is set.
+	bool simplify(PathObject** undo_duplicate = NULL);
 	/// See Object::isPointOnObject()
-	int isPointOnPath(MapCoordF coord, float tolerance, bool treat_areas_as_paths);
+	int isPointOnPath(MapCoordF coord, float tolerance, bool treat_areas_as_paths, bool extended_selection);
+	/// Returns true if the given coordinate is inside the area defined by this object, which must be closed.
+	bool isPointInsideArea(MapCoordF coord);
+	/// Calculates the average distance (of the first part) to another path
+	float calcAverageDistanceTo(PathObject* other);
+	/// Calculates the maximum distance (of the first part) to another path
+	float calcMaximumDistanceTo(PathObject* other);
+	/// Calculates and adds all intersections with the other path to out.
+	/// Note: intersections are not sorted and may contain duplicates!
+	/// To clean them up, call clean() on the Intersections object after adding
+	/// all intersections with objects you are interested in.
+	void calcAllIntersectionsWith(PathObject* other, Intersections& out);
 	
 	/// Called by Object::update()
 	void updatePathCoords(MapCoordVectorF& float_coords);
@@ -246,7 +315,6 @@ public:
 	void recalculateParts();
 	
 protected:
-	void connectPathParts(int part_index, PathObject* other, int other_part_index, bool prepend);
 	bool advanceCoordinateRangeTo(const MapCoordVector& flags, const MapCoordVectorF& coords, const PathCoordVector& path_coords, int& cur_path_coord, int& current_index, float cur_length,
 								  bool enforce_wrap, int start_bezier_index, MapCoordVector& out_flags, MapCoordVectorF& out_coords, const MapCoordF& o3, const MapCoordF& o4);
 	void calcBezierPointDeletionRetainingShapeFactors(MapCoord p0, MapCoord p1, MapCoord p2, MapCoord q0, MapCoord q1, MapCoord q2, MapCoord q3, double& out_pfactor, double& out_qfactor);
@@ -268,7 +336,8 @@ class PointObject : public Object
 {
 public:
 	PointObject(Symbol* symbol = NULL);
-    virtual Object* duplicate();
+	virtual Object* duplicate();
+	virtual Object& operator=(const Object& other);
 	
 	void setPosition(qint64 x, qint64 y);
 	void setPosition(MapCoordF coord);

@@ -1,5 +1,5 @@
 /*
- *    Copyright 2012 Thomas Schöps
+ *    Copyright 2012, 2013 Thomas Schöps
  *
  *    This file is part of OpenOrienteering.
  *
@@ -29,9 +29,11 @@
 #endif
 #include <QSet>
 
-#include "main_window.h"
+#include "file_format.h"
+#include "gui/main_window.h"
 #include "map.h"
 #include "object.h"
+#include "util.h"
 
 ReplaceSymbolSetDialog::ReplaceSymbolSetDialog(QWidget* parent, Map* map, Map* symbol_map)
  : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint), map(map), symbol_map(symbol_map)
@@ -55,11 +57,17 @@ ReplaceSymbolSetDialog::ReplaceSymbolSetDialog(QWidget* parent, Map* map, Map* s
 	mapping_table->verticalHeader()->setVisible(false);
 	mapping_table->setColumnCount(2);
 	mapping_table->setHorizontalHeaderLabels(QStringList() << tr("Original") << tr("Replacement"));
+#if QT_VERSION < 0x050000
 	mapping_table->horizontalHeader()->setClickable(false);
 	mapping_table->horizontalHeader()->setResizeMode(0, QHeaderView::Stretch);
 	mapping_table->horizontalHeader()->setResizeMode(1, QHeaderView::Stretch);
+#else
+	mapping_table->horizontalHeader()->setSectionsClickable(false);
+	mapping_table->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
+	mapping_table->horizontalHeader()->setSectionResizeMode(1, QHeaderView::Stretch);
+#endif
 	
-	QDialogButtonBox* button_box = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal);
+	QDialogButtonBox* button_box = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel | QDialogButtonBox::Help, Qt::Horizontal);
 	
 	QVBoxLayout* layout = new QVBoxLayout();
 	layout->addWidget(desc_label);
@@ -76,6 +84,7 @@ ReplaceSymbolSetDialog::ReplaceSymbolSetDialog(QWidget* parent, Map* map, Map* s
 	setLayout(layout);
 	
 	connect(match_by_number_check, SIGNAL(clicked(bool)), this, SLOT(matchByNumberClicked(bool)));
+	connect(button_box, SIGNAL(helpRequested()), this, SLOT(showHelp()));
 	connect(button_box, SIGNAL(accepted()), this, SLOT(apply()));
 	connect(button_box, SIGNAL(rejected()), this, SLOT(reject()));
 	
@@ -103,6 +112,11 @@ void ReplaceSymbolSetDialog::matchByNumberClicked(bool checked)
 		mapping_table->item(row, 1)->setFlags(checked ?
 			Qt::NoItemFlags : (Qt::ItemIsEnabled | Qt::ItemIsEditable));
 	}
+}
+
+void ReplaceSymbolSetDialog::showHelp()
+{
+	Util::showHelp(this, "symbol_replace_dialog.html");
 }
 
 struct ReplaceSymbolSetOperation
@@ -215,16 +229,31 @@ void ReplaceSymbolSetDialog::calculateNumberMatchMapping()
 	for (int i = 0; i < map->getNumSymbols(); ++i)
 	{
 		Symbol* original = map->getSymbol(i);
-		for (int k = 0; k < symbol_map->getNumSymbols(); ++k)
+		Symbol* replacement = findNumberMatch(original, false);
+		if (replacement)
+			mapping.insert(original, replacement);
+		else
 		{
-			Symbol* replacement = symbol_map->getSymbol(k);
-			if (original->numberEquals(replacement) &&
-				Symbol::areTypesCompatible(original->getType(), replacement->getType()))
-			{
+			// No match found. Do second pass which ignores trailing zeros
+			replacement = findNumberMatch(original, true);
+			if (replacement)
 				mapping.insert(original, replacement);
-			}
 		}
 	}
+}
+
+Symbol* ReplaceSymbolSetDialog::findNumberMatch(Symbol* original, bool ignore_trailing_zeros)
+{
+	for (int k = 0; k < symbol_map->getNumSymbols(); ++k)
+	{
+		Symbol* replacement = symbol_map->getSymbol(k);
+		if (original->numberEquals(replacement, ignore_trailing_zeros) &&
+			Symbol::areTypesCompatible(original->getType(), replacement->getType()))
+		{
+			return replacement;
+		}
+	}
+	return NULL;
 }
 
 void ReplaceSymbolSetDialog::updateMappingTable()
@@ -285,7 +314,7 @@ bool ReplaceSymbolSetDialog::showDialog(QWidget* parent, Map* map)
 	while (true)
 	{
 		QString path = MainWindow::getOpenFileName(parent, tr("Choose map file to load symbols from"),
-													FileType::Map);
+													FileFormat::MapFile);
 		if (path.isEmpty())
 			return false;
 		

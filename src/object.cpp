@@ -1,18 +1,18 @@
 /*
- *    Copyright 2012 Thomas Schöps
- *    
+ *    Copyright 2012, 2013 Thomas Schöps
+ *
  *    This file is part of OpenOrienteering.
- * 
+ *
  *    OpenOrienteering is free software: you can redistribute it and/or modify
  *    it under the terms of the GNU General Public License as published by
  *    the Free Software Foundation, either version 3 of the License, or
  *    (at your option) any later version.
- * 
+ *
  *    OpenOrienteering is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
  *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *    GNU General Public License for more details.
- * 
+ *
  *    You should have received a copy of the GNU General Public License
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -21,6 +21,7 @@
 #include "object.h"
 
 #include <qmath.h>
+#include <QtCore/qnumeric.h>
 #include <QDebug>
 #include <QIODevice>
 #include <QXmlStreamAttributes>
@@ -28,11 +29,12 @@
 #include <QXmlStreamWriter>
 
 #include "util.h"
+#include "file_import_export.h"
 #include "symbol.h"
 #include "symbol_point.h"
 #include "symbol_line.h"
 #include "symbol_text.h"
-#include "map_editor.h"
+#include "map.h"
 #include "object_text.h"
 #include "renderable.h"
 #include "qbezier_p.h"
@@ -47,6 +49,7 @@ Object::Object(Object::Type type, Symbol* symbol)
   output(this, extent)
 {
 }
+
 Object::~Object()
 {
 }
@@ -139,35 +142,6 @@ Object& Object::operator=(const Object& other)
 	assert(type == other.type);
 	symbol = other.symbol;
 	coords = other.coords;
-	
-	if (type == Point)
-	{
-		PointObject* point_this = static_cast<PointObject*>(this);
-		const PointObject* point_other = static_cast<const PointObject*>(&other);
-		
-		PointSymbol* point_symbol = static_cast<PointSymbol*>(point_this->getSymbol());
-		if (point_symbol && point_symbol->isRotatable())
-			point_this->setRotation(point_other->getRotation());
-	}
-	else if (type == Path)
-	{
-		PathObject* path_this = static_cast<PathObject*>(this);
-		const PathObject* path_other = static_cast<const PathObject*>(&other);
-		
-		path_this->setPatternRotation(path_other->getPatternRotation());
-		path_this->setPatternOrigin(path_other->getPatternOrigin());
-	}
-	else if (type == Text)
-	{
-		TextObject* text_this = static_cast<TextObject*>(this);
-		const TextObject* text_other = static_cast<const TextObject*>(&other);
-		
-		text_this->setText(text_other->getText());
-		text_this->setHorizontalAlignment(text_other->getHorizontalAlignment());
-		text_this->setVerticalAlignment(text_other->getVerticalAlignment());
-		text_this->setRotation(text_other->getRotation());
-	}
-	
 	return *this;
 }
 
@@ -176,15 +150,35 @@ PointObject* Object::asPoint()
 	assert(type == Point);
 	return static_cast<PointObject*>(this);
 }
+
+const PointObject* Object::asPoint() const
+{
+	assert(type == Point);
+	return static_cast<const PointObject*>(this);
+}
+
 PathObject* Object::asPath()
 {
 	assert(type == Path);
 	return static_cast<PathObject*>(this);
 }
+
+const PathObject* Object::asPath() const
+{
+	assert(type == Path);
+	return static_cast<const PathObject*>(this);
+}
+
 TextObject* Object::asText()
 {
 	assert(type == Text);
 	return static_cast<TextObject*>(this);
+}
+
+const TextObject* Object::asText() const
+{
+	assert(type == Text);
+	return static_cast<const TextObject*>(this);
 }
 
 void Object::save(QIODevice* file)
@@ -356,7 +350,7 @@ void Object::save(QXmlStreamWriter& xml) const
 	xml.writeEndElement(/*object*/);
 }
 
-Object* Object::load(QXmlStreamReader& xml, Map& map, const SymbolDictionary& symbol_dict, Symbol* symbol) throw (FormatException)
+Object* Object::load(QXmlStreamReader& xml, Map* map, const SymbolDictionary& symbol_dict, Symbol* symbol) throw (FileFormatException)
 {
 	Q_ASSERT(xml.name() == "object");
 	
@@ -365,9 +359,9 @@ Object* Object::load(QXmlStreamReader& xml, Map& map, const SymbolDictionary& sy
 	int object_type = attributes.value("type").toString().toInt();
 	Object* object = Object::getObjectForType(static_cast<Object::Type>(object_type));
 	if (!object)
-		throw FormatException(QObject::tr("Error while loading an object of type %1.").arg(object_type));
+		throw FileFormatException(ImportExport::tr("Error while loading an object of type %1.").arg(object_type));
 	
-	object->map = &map;
+	object->map = map;
 	
 	if (symbol)
 		object->symbol = symbol;
@@ -375,8 +369,7 @@ Object* Object::load(QXmlStreamReader& xml, Map& map, const SymbolDictionary& sy
 	{
 		QString symbol_id = attributes.value("symbol").toString();
 		object->symbol = symbol_dict[symbol_id]; // FIXME: cannot work for forward references
-		if (!object->symbol)
-			throw FormatException(QObject::tr("Unable to find symbol for object at %1:%2.").arg(xml.lineNumber()).arg(xml.columnNumber()));
+		// NOTE: object->symbol may be NULL.
 	}
 	
 	if (object_type == Point)
@@ -386,7 +379,7 @@ Object* Object::load(QXmlStreamReader& xml, Map& map, const SymbolDictionary& sy
 		if (point_symbol && point_symbol->isRotatable())
 			point->setRotation(attributes.value("rotation").toString().toFloat());
 		else if (!point_symbol)
-			throw FormatException(QObject::tr("Point object with undefined or wrong symbol at %1:%2.").arg(xml.lineNumber()).arg(xml.columnNumber()));
+			throw FileFormatException(ImportExport::tr("Point object with undefined or wrong symbol at %1:%2.").arg(xml.lineNumber()).arg(xml.columnNumber()));
 	}
 	else if (object_type == Text)
 	{
@@ -404,7 +397,12 @@ Object* Object::load(QXmlStreamReader& xml, Map& map, const SymbolDictionary& sy
 			object->coords.clear();
 			object->coords.reserve(qMin(num_coords, 20)); // 20 is not a limit
 			for (int i = 0; xml.readNextStartElement(); i++)
-				object->coords.push_back(MapCoord::load(xml));
+			{
+				if (xml.name() == "coord")
+					object->coords.push_back(MapCoord::load(xml));
+				else
+					xml.skipCurrentElement();
+			}
 		}
 		else if (xml.name() == "pattern" && object_type == Path)
 		{
@@ -425,6 +423,30 @@ Object* Object::load(QXmlStreamReader& xml, Map& map, const SymbolDictionary& sy
 		}
 		else
 			xml.skipCurrentElement(); // unknown
+	}
+	
+	if (!object->symbol)
+	{
+		// Throwing an exception will cause loading to fail.
+		// Rather than not loading the broken file at all,
+		// use the same symbols which are used for importing GPS tracks etc.
+		// FIXME: Implement a way to send a warning to the user.
+		switch (object_type)
+		{
+			case Point:
+				object->symbol = map->getUndefinedPoint();
+				break;
+			case Path:
+				object->symbol = map->getUndefinedLine();
+				break;
+			case Text:
+				object->symbol = (object->coords.size() > 1) ? static_cast<Symbol*>(map->getUndefinedLine()) : static_cast<Symbol*>(map->getUndefinedPoint());
+				break;
+			default:
+				throw FileFormatException(
+				  ImportExport::tr("Unable to find symbol for object at %1:%2.").
+				  arg(xml.lineNumber()).arg(xml.columnNumber()) );
+		}
 	}
 	
 	if (object_type == Path)
@@ -498,15 +520,24 @@ void Object::move(qint64 dx, qint64 dy)
 	setOutputDirty();
 }
 
-void Object::scale(double factor)
+void Object::scale(MapCoordF center, double factor)
 {
 	int coords_size = coords.size();
-	for (int c = 0; c < coords_size; ++c)
+	if (type == Text && coords_size == 2)
 	{
-		coords[c].setX(coords[c].xd() * factor);
-		coords[c].setY(coords[c].yd() * factor);
+		coords[0].setX(center.getX() + (coords[0].xd() - center.getX()) * factor);
+		coords[0].setY(center.getY() + (coords[0].yd() - center.getY()) * factor);
+		coords[1].setX(coords[1].xd() * factor);
+		coords[1].setY(coords[1].yd() * factor);
 	}
-	
+	else
+	{
+		for (int c = 0; c < coords_size; ++c)
+		{
+			coords[c].setX(center.getX() + (coords[c].xd() - center.getX()) * factor);
+			coords[c].setY(center.getY() + (coords[c].yd() - center.getY()) * factor);
+		}
+	}
 	setOutputDirty();
 }
 
@@ -570,9 +601,10 @@ int Object::isPointOnObject(MapCoordF coord, float tolerance, bool treat_areas_a
 	{
 		// Path objects
 		PathObject* path = reinterpret_cast<PathObject*>(this);
-		return path->isPointOnPath(coord, tolerance, treat_areas_as_paths);
+		return path->isPointOnPath(coord, tolerance, treat_areas_as_paths, true);
 	}
 }
+
 bool Object::intersectsBox(QRectF box)
 {
 	if (type == Text)
@@ -679,6 +711,7 @@ void PathObject::PathPart::setClosed(bool closed, bool may_use_existing_close_po
 		path->setOutputDirty();
 	}
 }
+
 void PathObject::PathPart::connectEnds()
 {
 	if (isClosed())
@@ -689,6 +722,7 @@ void PathObject::PathPart::connectEnds()
 	path->setClosingPoint(end_index, path->coords[start_index]);
 	path->setOutputDirty();
 }
+
 int PathObject::PathPart::calcNumRegularPoints()
 {
 	int num_regular_points = 0;
@@ -707,6 +741,7 @@ double PathObject::PathPart::getLength()
 {
 	return path->path_coords[path_coord_end_index].clen;
 }
+
 double PathObject::PathPart::calculateArea()
 {
 	double area = 0;
@@ -728,6 +763,7 @@ PathObject::PathObject(Symbol* symbol) : Object(Object::Path, symbol)
 	pattern_rotation = 0;
 	pattern_origin = MapCoord(0, 0);
 }
+
 PathObject::PathObject(Symbol* symbol, const MapCoordVector& coords, Map* map) : Object(Object::Path, symbol)
 {
 	assert(!symbol || (symbol->getType() == Symbol::Line || symbol->getType() == Symbol::Area || symbol->getType() == Symbol::Combined));
@@ -738,6 +774,7 @@ PathObject::PathObject(Symbol* symbol, const MapCoordVector& coords, Map* map) :
 	if (map)
 		setMap(map);
 }
+
 Object* PathObject::duplicate()
 {
 	PathObject* new_path = new PathObject(symbol);
@@ -750,6 +787,7 @@ Object* PathObject::duplicate()
 		new_path->parts[i].path = new_path;
 	return new_path;
 }
+
 PathObject* PathObject::duplicatePart(int part_index)
 {
 	PathObject* new_path = new PathObject(symbol);
@@ -765,12 +803,26 @@ PathObject* PathObject::duplicatePart(int part_index)
 	return new_path;
 }
 
+Object& PathObject::operator=(const Object& other)
+{
+	Object::operator=(other);
+	const PathObject* path_other = (&other)->asPath();
+	setPatternRotation(path_other->getPatternRotation());
+	setPatternOrigin(path_other->getPatternOrigin());
+	parts = path_other->parts;
+	path_coords = path_other->path_coords;
+	for (size_t i = 0, end = parts.size(); i < end; ++i)
+		parts[i].path = this;
+	return *this;
+}
+
 MapCoord& PathObject::shiftedCoord(int base_index, int offset, PathObject::PathPart& part)
 {
 	int index = shiftedCoordIndex(base_index, offset, part);
 	assert(index >= 0);
 	return coords[index];
 }
+
 int PathObject::shiftedCoordIndex(int base_index, int offset, PathObject::PathPart& part)
 {
 	if (part.isClosed())
@@ -785,6 +837,7 @@ int PathObject::shiftedCoordIndex(int base_index, int offset, PathObject::PathPa
 		return (base_index < 0 || base_index > part.end_index) ? -1 : base_index;
 	}
 }
+
 PathObject::PathPart& PathObject::findPartForIndex(int coords_index)
 {
 	int num_parts = (int)parts.size();
@@ -796,6 +849,7 @@ PathObject::PathPart& PathObject::findPartForIndex(int coords_index)
 	assert(false);
 	return parts[0];
 }
+
 int PathObject::findPartIndexForIndex(int coords_index)
 {
 	int num_parts = (int)parts.size();
@@ -807,6 +861,19 @@ int PathObject::findPartIndexForIndex(int coords_index)
 	assert(false);
 	return 0;
 }
+
+bool PathObject::isCurveHandle(int coord_index)
+{
+	PathPart& part = findPartForIndex(coord_index);
+	int index_minus_2 = shiftedCoordIndex(coord_index, -2, part);
+	if (index_minus_2 >= 0 && getCoordinate(index_minus_2).isCurveStart())
+		return true;
+	int index_minus_1 = shiftedCoordIndex(coord_index, -1, part);
+	if (index_minus_1 >= 0 && getCoordinate(index_minus_1).isCurveStart())
+		return true;
+	return false;
+}
+
 void PathObject::deletePart(int part_index)
 {
 	coords.erase(coords.begin() + parts[part_index].start_index, coords.begin() + (parts[part_index].end_index + 1));
@@ -818,6 +885,7 @@ void PathObject::deletePart(int part_index)
 		parts[i].end_index -= num_part_coords;
 	}
 }
+
 void PathObject::partSizeChanged(int part_index, int change)
 {
 	parts[part_index].end_index += change;
@@ -1000,6 +1068,7 @@ bool PathObject::canBeConnected(PathObject* other, double connect_threshold_sq)
 	
 	return false;
 }
+
 bool PathObject::connectIfClose(PathObject* other, double connect_threshold_sq)
 {
 	bool did_connect_path = false;
@@ -1059,6 +1128,7 @@ bool PathObject::connectIfClose(PathObject* other, double connect_threshold_sq)
 	
 	return did_connect_path;
 }
+
 void PathObject::connectPathParts(int part_index, PathObject* other, int other_part_index, bool prepend)
 {
 	PathPart& part = parts[part_index];
@@ -1149,7 +1219,7 @@ void PathObject::splitAt(const PathCoord& split_pos, Object*& out1, Object*& out
 				path1->deleteCoordinate(path1->parts[part_index].end_index, false);
 				path1->deleteCoordinate(path1->parts[part_index].end_index, false);
 				path1->deleteCoordinate(path1->parts[part_index].end_index, false);
-				coords[path1->parts[part_index].end_index].setCurveStart(false);
+				path1->coords[path1->parts[part_index].end_index].setCurveStart(false);
 			}
 			else
 				path1->deleteCoordinate(path1->parts[part_index].end_index, false);
@@ -1166,6 +1236,7 @@ void PathObject::splitAt(const PathCoord& split_pos, Object*& out1, Object*& out
 		path2->changePathBounds(part_index, split_pos.clen, path_coords[part.path_coord_end_index].clen);
 	}
 }
+
 void PathObject::changePathBounds(int part_index, double start_len, double end_len)
 {
 	//if (start_len == end_len)
@@ -1202,6 +1273,9 @@ void PathObject::changePathBounds(int part_index, double start_len, double end_l
 	
 	int cur_path_coord = part.path_coord_start_index + 1;
 	while (cur_path_coord < part.path_coord_end_index && path_coords[cur_path_coord].clen < start_len)
+		++cur_path_coord;
+	
+	if (path_coords[cur_path_coord].clen == start_len && cur_path_coord < part.path_coord_end_index)
 		++cur_path_coord;
 	
 	// Start position
@@ -1346,6 +1420,7 @@ void PathObject::changePathBounds(int part_index, double start_len, double end_l
 	recalculateParts();
 	setOutputDirty();
 }
+
 bool PathObject::advanceCoordinateRangeTo(const MapCoordVector& flags, const MapCoordVectorF& coords, const PathCoordVector& path_coords, int& cur_path_coord, int& current_index, float cur_length,
 										  bool enforce_wrap, int start_bezier_index, MapCoordVector& out_flags, MapCoordVectorF& out_coords, const MapCoordF& o3, const MapCoordF& o4)
 {
@@ -1404,7 +1479,7 @@ bool PathObject::advanceCoordinateRangeTo(const MapCoordVector& flags, const Map
 					assert(current_index <= part.end_index);
 					if (flags[current_index].isClosePoint() || current_index == part.end_index)
 					{
-						if (out_coords[current_index] != out_coords[0])
+						if (coords[current_index] != coords[0])
 						{
 							out_flags.push_back(flags[current_index]);
 							out_flags[out_flags.size() - 1].setClosePoint(false);
@@ -1435,7 +1510,7 @@ void PathObject::calcBezierPointDeletionRetainingShapeFactors(MapCoord p0, MapCo
 	double p_length = p_curve.length(PathCoord::bezier_error);
 	QBezierCopy q_curve = QBezierCopy::fromPoints(q0.toQPointF(), q1.toQPointF(), q2.toQPointF(), q3.toQPointF());
 	double q_length = q_curve.length(PathCoord::bezier_error);
-	double sp = p_length / (p_length + q_length);
+	double sp = p_length / qMax(1e-08, p_length + q_length);
 	
 	// Least squares curve fitting with the constraint that handles are on the same line as before.
 	// To reproduce the formulas, run the following Matlab script:
@@ -1783,6 +1858,7 @@ float PathObject::calcBezierPointDeletionRetainingShapeCost(MapCoord p0, MapCoor
 	// Just some random scaling to pretend that we have 50 sample points
 	return cost * (50 / 20.0f);
 }
+
 void PathObject::calcBezierPointDeletionRetainingShapeOptimization(MapCoord p0, MapCoord p1, MapCoord p2, MapCoord q0, MapCoord q1, MapCoord q2, MapCoord q3, double& out_pfactor, double& out_qfactor)
 {
 	const float gradient_abort_threshold = 0.05f;	// if the gradient magnitude is lower than this over num_abort_steps step, the optimization is aborted
@@ -1809,7 +1885,7 @@ void PathObject::calcBezierPointDeletionRetainingShapeOptimization(MapCoord p0, 
 	old_curve.addCoordinate(q3);
 	old_curve.update();
 	
-	float cur_cost;
+	float cur_cost = 0;
 	int num_no_improvement_iterations = 0;
 	float old_gradient[2];
 	float old_step_dir[2];
@@ -1908,7 +1984,7 @@ void PathObject::calcBezierPointDeletionRetainingShapeOptimization(MapCoord p0, 
 		{
 			++num_no_improvement_iterations;
 			if (num_no_improvement_iterations == num_abort_steps)
-				return;
+				break;
 		}
 		else
 			num_no_improvement_iterations = 0;
@@ -1935,6 +2011,7 @@ void PathObject::appendPath(PathObject* other)
 	recalculateParts();
 	setOutputDirty();
 }
+
 void PathObject::appendPathPart(PathObject* other, int part_index)
 {
 	int coords_size = coords.size();
@@ -2000,10 +2077,286 @@ void PathObject::reversePart(int part_index)
 	setOutputDirty();
 }
 
-int PathObject::isPointOnPath(MapCoordF coord, float tolerance, bool treat_areas_as_paths)
+void PathObject::closeAllParts()
+{
+	for (int path_part = 0; path_part < getNumParts(); ++path_part)
+	{
+		if (!getPart(path_part).isClosed())
+			getPart(path_part).setClosed(true, true);
+	}
+}
+
+PathObject* PathObject::extractCoords(int start, int end)
+{
+	assert(start >= 0 && end < (int)coords.size());
+	PathObject* new_path = new PathObject(symbol);
+	new_path->setPatternRotation(getPatternRotation());
+	new_path->setPatternOrigin(getPatternOrigin());
+	
+	new_path->coords.reserve(end - start + 1);
+	for (int i = start; i <= end; ++i)
+		new_path->addCoordinate(getCoordinate(i));
+	return new_path;
+}
+
+bool PathObject::convertToCurves(PathObject** undo_duplicate)
+{
+	bool converted_a_range = false;
+	for (int part_number = 0; part_number < getNumParts(); ++part_number)
+	{
+		PathPart& part = getPart(part_number);
+		int start_index = -1;
+		for (int c = part.start_index; c <= part.end_index; ++c)
+		{
+			if (c >= part.end_index ||
+				getCoordinate(c).isCurveStart())
+			{
+				if (start_index >= 0)
+				{
+					if (!converted_a_range)
+					{
+						if (undo_duplicate)
+							*undo_duplicate = duplicate()->asPath();
+						converted_a_range = true;
+					}
+					
+					convertRangeToCurves(part_number, start_index, c);
+					c += 2 * (c - start_index);
+					start_index = -1;
+				}
+				
+				c += 2;
+				continue;
+			}
+			
+			if (start_index < 0)
+				start_index = c;
+		}
+	}
+	return converted_a_range;
+}
+
+void PathObject::convertRangeToCurves(int part_number, int start_index, int end_index)
+{
+	assert(end_index > start_index);
+	PathPart& part = getPart(part_number);
+	
+	// Special case: last coordinate
+	MapCoord direction;
+	if (end_index == part.end_index && part.isClosed())
+	{
+		// Use average direction at close point
+		direction = shiftedCoord(end_index, 1, part) - getCoordinate(end_index - 1);
+	}
+	else if (end_index == part.end_index && !part.isClosed())
+	{
+		// Use direction of last segment
+		direction = getCoordinate(end_index) - getCoordinate(end_index - 1);
+	}
+	else
+	{
+		// Use direction of next segment
+		direction = getCoordinate(end_index + 1) - getCoordinate(end_index);
+	}
+	MapCoordF tangent = MapCoordF(direction);
+	tangent.normalize();
+	
+	MapCoord end_handle = getCoordinate(end_index);
+	end_handle.setFlags(0);
+	float baseline = (getCoordinate(end_index) - getCoordinate(end_index - 1)).length();
+	end_handle = end_handle + (tangent * (-1 * BEZIER_HANDLE_DISTANCE * baseline)).toMapCoord();
+	
+	// Special case: first coordinate
+	if (start_index == part.start_index && part.isClosed())
+	{
+		// Use average direction at close point
+		direction = getCoordinate(start_index + 1) - shiftedCoord(start_index, -1, part);
+	}
+	else if (start_index == part.start_index && !part.isClosed())
+	{
+		// Use direction of first segment
+		direction = getCoordinate(start_index + 1) - getCoordinate(start_index);
+	}
+	else
+	{
+		// Use direction of previous segment
+		direction = getCoordinate(start_index) - getCoordinate(start_index - 1);
+	}
+	tangent = MapCoordF(direction);
+	tangent.normalize();
+	
+	getCoordinate(start_index).setCurveStart(true);
+	MapCoord handle = getCoordinate(start_index);
+	handle.setFlags(0);
+	baseline = (getCoordinate(start_index + 1) - getCoordinate(start_index)).length();
+	handle = handle + (tangent * (BEZIER_HANDLE_DISTANCE * baseline)).toMapCoord();
+	
+	addCoordinate(start_index + 1, handle);
+	++end_index;
+	
+	// In-between coordinates
+	for (int c = start_index + 2; c < end_index; ++c)
+	{
+		direction = getCoordinate(c + 1) - getCoordinate(c - 2);
+		tangent = MapCoordF(direction);
+		tangent.normalize();
+		
+		// Add previous handle
+		handle = getCoordinate(c);
+		handle.setFlags(0);
+		baseline = (getCoordinate(c) - getCoordinate(c - 2)).length();
+		handle = handle + (tangent * (-1 * BEZIER_HANDLE_DISTANCE * baseline)).toMapCoord();
+		
+		addCoordinate(c, handle);
+		++c;
+		++end_index;
+		
+		// Set curve start flag on point
+		getCoordinate(c).setCurveStart(true);
+		
+		// Add next handle
+		handle = getCoordinate(c);
+		handle.setFlags(0);
+		baseline = (getCoordinate(c + 1) - getCoordinate(c)).length();
+		handle = handle + (tangent * (BEZIER_HANDLE_DISTANCE * baseline)).toMapCoord();
+		
+		addCoordinate(c + 1, handle);
+		++c;
+		++end_index;
+	}
+	
+	// Add last handle
+	addCoordinate(end_index, end_handle);
+	++end_index;
+}
+
+bool PathObject::simplify(PathObject** undo_duplicate)
+{
+	// Simple algorithm, trying to delete each point and keeping those where
+	// the deletion cost (= difference in the curves) is high
+	const float threshold = 0.12f;
+	const int num_iterations = 1;
+	
+	bool removed_a_point = false;
+	for (int iteration = 0; iteration < num_iterations; ++iteration)
+	{
+		PathObject* temp = duplicate()->asPath();
+		PathObject* original = duplicate()->asPath();
+		
+		// Note: curve handle indices may become incorrect
+		std::vector< int > original_indices;
+		original_indices.resize(coords.size());
+		for (int i = 0, end = (int)coords.size(); i < end; ++i)
+			original_indices[i] = i;
+		
+		for (int part_number = 0; part_number < getNumParts(); ++part_number)
+		{
+			int start_coord = getPart(part_number).start_index;
+			if (!getPart(part_number).isClosed())
+				start_coord += getCoordinate(start_coord).isCurveStart() ? 3 : 1;
+			for (int c = start_coord; c < getPart(part_number).end_index; ++c)
+			{
+				PathPart& part = getPart(part_number);
+				if (part.calcNumRegularPoints() <= 2 ||
+					(part.isClosed() && part.calcNumRegularPoints() <= 3))
+					break;
+				
+				// Delete the coordinate in temp
+				temp->deleteCoordinate(c, true, Settings::DeleteBezierPoint_RetainExistingShape);
+				
+				// Extract affected parts from this and temp, calculate cost,
+				// and decide whether to delete the point
+				int extract_start = shiftedCoordIndex(c, -1, part);
+				int extract_start_minus_3 = shiftedCoordIndex(c, -3, part);
+				if (extract_start_minus_3 >= 0 && getCoordinate(extract_start_minus_3).isCurveStart())
+					extract_start = extract_start_minus_3;
+				int extract_end = extract_start + (getCoordinate(extract_start).isCurveStart() ? 3 : 1);
+				
+				int temp_extract_start = temp->shiftedCoordIndex(c, -1, temp->getPart(part_number));
+				int temp_extract_start_minus_3 = temp->shiftedCoordIndex(c, -3, part);
+				if (temp_extract_start_minus_3 >= 0 && temp->getCoordinate(temp_extract_start_minus_3).isCurveStart())
+					temp_extract_start = temp_extract_start_minus_3;
+				int temp_extract_end = temp_extract_start + (temp->getCoordinate(temp_extract_start).isCurveStart() ? 3 : 1);
+				
+				PathObject* original_extract = original->extractCoords(original_indices[extract_start], original_indices[extract_end]);
+				PathObject* temp_extract = temp->extractCoords(temp_extract_start, temp_extract_end);
+				//float cost = original_extract->calcAverageDistanceTo(temp_extract);
+				float cost = original_extract->calcMaximumDistanceTo(temp_extract);
+				delete temp_extract;
+				delete original_extract;
+				
+				bool delete_point = cost < threshold;
+				
+				// Create undo duplicate?
+				if (delete_point && !removed_a_point)
+				{
+					if (undo_duplicate)
+						*undo_duplicate = original;
+					removed_a_point = true;
+				}
+				
+				// Update coord index mapping
+				if (delete_point)
+				{
+					if (getCoordinate(c).isCurveStart() && getCoordinate(extract_start).isCurveStart())
+					{
+						if (c == 0)
+						{
+							original_indices.erase(original_indices.begin() + 2);
+							original_indices.erase(original_indices.begin() + 1);
+							original_indices.erase(original_indices.begin() + 0);
+						}
+						else
+						{
+							original_indices.erase(original_indices.begin() + c + 1);
+							original_indices.erase(original_indices.begin() + c);
+							original_indices.erase(original_indices.begin() + c - 1);
+						}
+					}
+					else
+					{
+						original_indices.erase(original_indices.begin() + c);
+					}
+				}
+				
+				// Really delete the point, or reset temp
+				if (delete_point)
+					this->operator=(*(Object*)temp);
+				else
+					temp->operator=(*(Object*)this);
+				
+				// Advance to next point
+				if (delete_point)
+				{
+					int c_minus_3 = shiftedCoordIndex(c, -3, part);
+					if (c_minus_3 >= 0 && getCoordinate(c_minus_3).isCurveStart())
+						c = c_minus_3;
+					else
+						c = c - 1;
+				}
+				if (c >= 0 && getCoordinate(c).isCurveStart())
+					c += 2;
+			}
+		}
+		
+		if (!removed_a_point || undo_duplicate == NULL)
+			delete original;
+		delete temp;
+	}
+	return removed_a_point;
+}
+
+int PathObject::isPointOnPath(MapCoordF coord, float tolerance, bool treat_areas_as_paths, bool extended_selection)
 {
 	Symbol::Type contained_types = symbol->getContainedTypes();
 	int coords_size = (int)coords.size();
+	
+	float side_tolerance = tolerance;
+	if (extended_selection && map && (symbol->getType() == Symbol::Line || symbol->getType() == Symbol::Combined))
+	{
+		// TODO: precalculate largest line extent for all symbols to move it out of this time critical method?
+		side_tolerance = qMax(side_tolerance, symbol->calculateLargestLineExtent(map));
+	}
 	
 	if ((contained_types & Symbol::Line || treat_areas_as_paths) && tolerance > 0)
 	{
@@ -2038,7 +2391,7 @@ int PathObject::isPointOnPath(MapCoordF coord, float tolerance, bool treat_areas
 			right.perpRight();
 			
 			float dist_from_line = qAbs(right.dot(to_coord));
-			if (dist_from_line <= tolerance)
+			if (dist_from_line <= side_tolerance)
 				return Symbol::Line;
 		}
 	}
@@ -2046,25 +2399,403 @@ int PathObject::isPointOnPath(MapCoordF coord, float tolerance, bool treat_areas
 	// Check for area selection
 	if ((contained_types & Symbol::Area) && !treat_areas_as_paths)
 	{
-		update(false);
-		bool inside = false;
-		for (int part = 0, end = (int)parts.size(); part < end; ++part)
-		{
-			int size = parts[part].path_coord_end_index + 1;
-			int i, j;
-			for (i = parts[part].path_coord_start_index, j = size - 1; i < size; j = i++)
-			{
-				if ( ((path_coords[i].pos.getY() > coord.getY()) != (path_coords[j].pos.getY() > coord.getY())) &&
-					(coord.getX() < (path_coords[j].pos.getX() - path_coords[i].pos.getX()) *
-					(coord.getY() - path_coords[i].pos.getY()) / (path_coords[j].pos.getY() - path_coords[i].pos.getY()) + path_coords[i].pos.getX()) )
-					inside = !inside;
-			}
-		}
-		if (inside)
+		if (isPointInsideArea(coord))
 			return Symbol::Area;
 	}
 	
 	return Symbol::NoSymbol;
+}
+
+bool PathObject::isPointInsideArea(MapCoordF coord)
+{
+	update(false);
+	bool inside = false;
+	for (int part = 0, end = (int)parts.size(); part < end; ++part)
+	{
+		int size = parts[part].path_coord_end_index + 1;
+		int i, j;
+		for (i = parts[part].path_coord_start_index, j = size - 1; i < size; j = i++)
+		{
+			if ( ((path_coords[i].pos.getY() > coord.getY()) != (path_coords[j].pos.getY() > coord.getY())) &&
+				(coord.getX() < (path_coords[j].pos.getX() - path_coords[i].pos.getX()) *
+				(coord.getY() - path_coords[i].pos.getY()) / (path_coords[j].pos.getY() - path_coords[i].pos.getY()) + path_coords[i].pos.getX()) )
+				inside = !inside;
+		}
+	}
+	return inside;
+}
+
+float PathObject::calcAverageDistanceTo(PathObject* other)
+{
+	const float test_points_per_mm = 2;
+	
+	update();
+	other->update();
+	PathPart& part = getPart(0);
+	
+	float distance = 0;
+	int total_num_test_points = 0;
+	for (int i = part.path_coord_start_index; i <= part.path_coord_end_index; ++i)
+	{
+		int num_test_points;
+		if (i == part.path_coord_start_index)
+			num_test_points = 1;
+		else
+			num_test_points = qMax(1, qRound((path_coords[i].clen - path_coords[i-1].clen) * test_points_per_mm));
+		
+		for (int p = 1; p <= num_test_points; ++p)
+		{
+			MapCoordF point;
+			if (p == num_test_points)
+				point = path_coords[i].pos;
+			else
+				point = path_coords[i-1].pos + (path_coords[i].pos - path_coords[i-1].pos) * (p / (float)num_test_points);
+			
+			float distance_sq;
+			PathCoord path_coord;
+			other->calcClosestPointOnPath(point, distance_sq, path_coord);
+			
+			distance += sqrt(distance_sq);
+			++total_num_test_points;
+		}
+	}
+	
+	return distance / total_num_test_points;
+}
+
+float PathObject::calcMaximumDistanceTo(PathObject* other)
+{
+	const float test_points_per_mm = 2;
+	
+	update();
+	other->update();
+	PathPart& part = getPart(0);
+	
+	float max_distance = 0;
+	for (int i = part.path_coord_start_index; i <= part.path_coord_end_index; ++i)
+	{
+		int num_test_points;
+		if (i == part.path_coord_start_index)
+			num_test_points = 1;
+		else
+			num_test_points = qMax(1, qRound((path_coords[i].clen - path_coords[i-1].clen) * test_points_per_mm));
+		
+		for (int p = 1; p <= num_test_points; ++p)
+		{
+			MapCoordF point;
+			if (p == num_test_points)
+				point = path_coords[i].pos;
+			else
+				point = path_coords[i-1].pos + (path_coords[i].pos - path_coords[i-1].pos) * (p / (float)num_test_points);
+			
+			float distance_sq;
+			PathCoord path_coord;
+			other->calcClosestPointOnPath(point, distance_sq, path_coord);
+			
+			float distance = sqrt(distance_sq);
+			if (distance > max_distance)
+				max_distance = distance;
+		}
+	}
+	
+	return max_distance;
+}
+
+PathObject::Intersection PathObject::Intersection::makeIntersectionAt(double a, double b, const PathCoord& a0, const PathCoord& a1, const PathCoord& b0, const PathCoord& b1, int part_index, int other_part_index)
+{
+	PathObject::Intersection new_intersection;
+	new_intersection.coord = MapCoordF(a0.pos.getX() + a * (a1.pos.getX() - a0.pos.getX()), a0.pos.getY() + a * (a1.pos.getY() - a0.pos.getY()));
+	new_intersection.part_index = part_index;
+	new_intersection.length = a0.clen + a * (a1.clen - a0.clen);
+	new_intersection.other_part_index = other_part_index;
+	new_intersection.other_length = b0.clen + b * (b1.clen - b0.clen);
+	return new_intersection;
+}
+
+void PathObject::Intersections::clean()
+{
+	// Sort
+	std::sort(begin(), end());
+	
+	// Remove duplicates
+	if (size() > 1)
+	{
+		size_t i = size() - 1;
+		size_t next = i - 1;
+		while (next < i)
+		{
+			if (at(i) == at(next))
+				erase(begin() + i);
+			
+			i = next;
+			--next;
+		}
+	}
+}
+
+void PathObject::calcAllIntersectionsWith(PathObject* other, PathObject::Intersections& out)
+{
+	update();
+	other->update();
+	
+	const double epsilon = 1e-10;
+	const double zero_minus_epsilon = 0 - epsilon;
+	const double one_plus_epsilon = 1 + epsilon;
+	
+	for (size_t part_index = 0; part_index < parts.size(); ++part_index)
+	{
+		PathPart& part = getPart(part_index);
+		for (int i = part.path_coord_start_index + 1; i <= part.path_coord_end_index; ++i)
+		{
+			// Get information about this path coord
+			bool has_segment_before = (i > part.path_coord_start_index + 1) || part.isClosed();
+			MapCoordF ingoing_direction;
+			if (has_segment_before && i == part.path_coord_start_index + 1)
+			{
+				Q_ASSERT(part.path_coord_end_index >= 1 && part.path_coord_end_index < (int)path_coords.size());
+				ingoing_direction = path_coords[part.path_coord_end_index].pos - path_coords[part.path_coord_end_index - 1].pos;
+				ingoing_direction.normalize();
+			}
+			else if (has_segment_before)
+			{
+				Q_ASSERT(i >= 1 && i < (int)path_coords.size());
+				ingoing_direction = path_coords[i-1].pos - path_coords[i-2].pos;
+				ingoing_direction.normalize();
+			}
+			
+			bool has_segment_after = (i < part.path_coord_end_index) || part.isClosed();
+			MapCoordF outgoing_direction;
+			if (has_segment_after && i == part.path_coord_end_index)
+			{
+				Q_ASSERT(part.path_coord_start_index >= 0 && part.path_coord_start_index < (int)path_coords.size() - 1);
+				outgoing_direction = path_coords[part.path_coord_start_index+1].pos - path_coords[part.path_coord_start_index].pos;
+				outgoing_direction.normalize();
+			}
+			else if (has_segment_after)
+			{
+				Q_ASSERT(i >= 0 && i < (int)path_coords.size() - 1);
+				outgoing_direction = path_coords[i+1].pos - path_coords[i].pos;
+				outgoing_direction.normalize();
+			}
+			
+			// Collision state with other object at current other path coord
+			bool colliding = false;
+			// Last known intersecting point.
+			// This is valid as long as colliding == true and entered as intersection
+			// when the next segment suddenly is not colliding anymore.
+			Intersection last_intersection;
+			
+			for (size_t other_part_index = 0; other_part_index < other->parts.size(); ++other_part_index)
+			{
+				PathPart& other_part = other->getPart(part_index);
+				for (int k = other_part.path_coord_start_index + 1; k <= other_part.path_coord_end_index; ++k)
+				{
+					// Test the two line segments against each other.
+					// Naming: segment in this path is a, segment in other path is b
+					PathCoord& a0 = path_coords[i-1];
+					PathCoord& a1 = path_coords[i];
+					PathCoord& b0 = other->path_coords[k-1];
+					PathCoord& b1 = other->path_coords[k];
+					MapCoordF b_direction = b1.pos - b0.pos;
+					b_direction.normalize();
+					
+					bool first_other_segment = (k == other_part.path_coord_start_index + 1);
+					if (first_other_segment)
+					{
+						colliding = isPointOnSegment(a0.pos, a1.pos, b0.pos);
+						if (colliding && !other_part.isClosed())
+						{
+							// Enter intersection at start of other segment
+							bool ok;
+							double a = parameterOfPointOnLine(a0.pos.getX(), a0.pos.getY(), a1.pos.getX() - a0.pos.getX(), a1.pos.getY() - a0.pos.getY(), b0.pos.getX(), b0.pos.getY(), ok);
+							Q_ASSERT(ok);
+							out.push_back(Intersection::makeIntersectionAt(a, 0, a0, a1, b0, b1, part_index, other_part_index));
+						}
+					}
+					
+					bool last_other_segment = (k == other_part.path_coord_end_index);
+					if (last_other_segment)
+					{
+						bool collision_at_end = isPointOnSegment(a0.pos, a1.pos, b1.pos);
+						if (collision_at_end && !other_part.isClosed())
+						{
+							// Enter intersection at end of other segment
+							bool ok;
+							double a = parameterOfPointOnLine(a0.pos.getX(), a0.pos.getY(), a1.pos.getX() - a0.pos.getX(), a1.pos.getY() - a0.pos.getY(), b1.pos.getX(), b1.pos.getY(), ok);
+							Q_ASSERT(ok);
+							out.push_back(Intersection::makeIntersectionAt(a, 1, a0, a1, b0, b1, part_index, other_part_index));
+						}
+					}
+					
+					double denominator = a0.pos.getX()*b0.pos.getY() - a0.pos.getY()*b0.pos.getX() - a0.pos.getX()*b1.pos.getY() - a1.pos.getX()*b0.pos.getY() + a0.pos.getY()*b1.pos.getX() + a1.pos.getY()*b0.pos.getX() + a1.pos.getX()*b1.pos.getY() - a1.pos.getY()*b1.pos.getX();
+					if (denominator == 0)
+					{
+						// Parallel lines, calculate parameters for b's start and end points in a and b.
+						// This also checks whether the lines are actually on the same level.
+						bool ok;
+						double b_start = 0;
+						double a_start = parameterOfPointOnLine(a0.pos.getX(), a0.pos.getY(), a1.pos.getX() - a0.pos.getX(), a1.pos.getY() - a0.pos.getY(), b0.pos.getX(), b0.pos.getY(), ok);
+						if (!ok)
+						{
+							if (colliding) out.push_back(last_intersection);
+							colliding = false;
+							continue;
+						}
+						double b_end = 1;
+						double a_end = parameterOfPointOnLine(a0.pos.getX(), a0.pos.getY(), a1.pos.getX() - a0.pos.getX(), a1.pos.getY() - a0.pos.getY(), b1.pos.getX(), b1.pos.getY(), ok);
+						if (!ok)
+						{
+							if (colliding) out.push_back(last_intersection);
+							colliding = false;
+							continue;
+						}
+						
+						// Cull ranges
+						if (a_start < zero_minus_epsilon && a_end < zero_minus_epsilon)
+						{
+							if (colliding) out.push_back(last_intersection);
+							colliding = false;
+							continue;
+						}
+						if (a_start > one_plus_epsilon && a_end > one_plus_epsilon)
+						{
+							if (colliding) out.push_back(last_intersection);
+							colliding = false;
+							continue;
+						}
+						
+						// b overlaps somehow with a, check if we have to enter one or two collisions
+						// (provided the incoming / outgoing tangents are not parallel!)
+						if (!colliding)
+						{
+							if (a_start <= 0)
+							{
+								// b comes in over the start of a
+								Q_ASSERT(a_end >= 0);
+								
+								// Check for parallel tangent case
+								if (!has_segment_before || b_direction.dot(ingoing_direction) < 1 - epsilon)
+								{
+									// Enter intersection at a=0
+									double b = b_start + (0 - a_start) / (a_end - a_start) * (b_end - b_start);
+									out.push_back(Intersection::makeIntersectionAt(0, b, a0, a1, b0, b1, part_index, other_part_index));
+								}
+								
+								colliding = true;
+							}
+							else if (a_start >= 1)
+							{
+								// b comes in over the end of a
+								Q_ASSERT(a_end <= 1);
+								
+								// Check for parallel tangent case
+								if (!has_segment_after || -1 * b_direction.dot(outgoing_direction) < 1 - epsilon)
+								{
+									// Enter intersection at a=1
+									double b = b_start + (1 - a_start) / (a_end - a_start) * (b_end - b_start);
+									out.push_back(Intersection::makeIntersectionAt(1, b, a0, a1, b0, b1, part_index, other_part_index));
+								}
+								
+								colliding = true;
+							}
+							else
+								Q_ASSERT(false);
+						}
+						if (colliding)
+						{
+							if (a_end > 1)
+							{
+								// b goes out over the end of a
+								Q_ASSERT(a_start <= 1);
+								
+								// Check for parallel tangent case
+								if (!has_segment_after || b_direction.dot(outgoing_direction) < 1 - epsilon)
+								{
+									// Enter intersection at a=1
+									double b = b_start + (1 - a_start) / (a_end - a_start) * (b_end - b_start);
+									out.push_back(Intersection::makeIntersectionAt(1, b, a0, a1, b0, b1, part_index, other_part_index));
+								}
+								
+								colliding = false;
+							}
+							else if (a_end < 0)
+							{
+								// b goes out over the start of a
+								Q_ASSERT(a_start >= 1);
+								
+								// Check for parallel tangent case
+								if (!has_segment_before || -1 * b_direction.dot(ingoing_direction) < 1 - epsilon)
+								{
+									// Enter intersection at a=0
+									double b = b_start + (0 - a_start) / (a_end - a_start) * (b_end - b_start);
+									out.push_back(Intersection::makeIntersectionAt(1, b, a0, a1, b0, b1, part_index, other_part_index));
+								}
+								
+								colliding = false;
+							}
+							else
+							{
+								// b stops in the middle of a.
+								// Remember last known colliding point, the endpoint of b.
+								last_intersection = Intersection::makeIntersectionAt(a_end, 1, a0, a1, b0, b1, part_index, other_part_index);
+							}
+						}
+						
+						// Check if there is a collision at the endpoint
+						Q_ASSERT(colliding == (a_end >= 0 && a_end <= 1));
+					}
+					else
+					{
+						// Non-parallel lines, calculate intersection parameters and check if in range
+						double a = +(a0.pos.getX()*b0.pos.getY() - a0.pos.getY()*b0.pos.getX() - a0.pos.getX()*b1.pos.getY() + a0.pos.getY()*b1.pos.getX() + b0.pos.getX()*b1.pos.getY() - b1.pos.getX()*b0.pos.getY()) / denominator;
+						if (a < zero_minus_epsilon || a > one_plus_epsilon)
+						{
+							if (colliding) out.push_back(last_intersection);
+							colliding = false;
+							continue;
+						}
+						
+						double b = -(a0.pos.getX()*a1.pos.getY() - a1.pos.getX()*a0.pos.getY() - a0.pos.getX()*b0.pos.getY() + a0.pos.getY()*b0.pos.getX() + a1.pos.getX()*b0.pos.getY() - a1.pos.getY()*b0.pos.getX()) / denominator;
+						if (b < zero_minus_epsilon || b > one_plus_epsilon)
+						{
+							if (colliding) out.push_back(last_intersection);
+							colliding = false;
+							continue;
+						}
+						
+						// Special case for overlapping (cloned / traced) polylines: check if b is parallel to adjacent direction.
+						// If so, set colliding to true / false without entering an intersection because the other line
+						// simply continues along / comes from the path of both polylines instead of intersecting.
+						double dot = -1;
+						if (has_segment_before && a <= 0 + epsilon)
+						{
+							// Ingoing direction
+							dot = b_direction.dot(ingoing_direction);
+							if (b <= 0 + epsilon)
+								dot = -1 * dot;
+						}
+						else if (has_segment_after && a >= 1 - epsilon)
+						{
+							// Outgoing direction
+							dot = b_direction.dot(outgoing_direction);
+							if (b >= 1 - epsilon)
+								dot = -1 * dot;
+						}
+						if (dot >= 1 - epsilon)
+						{
+							colliding = (b > 0.5);
+							continue;
+						}
+						
+						// Enter the intersection
+						last_intersection = Intersection::makeIntersectionAt(a, b, a0, a1, b0, b1, part_index, other_part_index);
+						out.push_back(last_intersection);
+						colliding = (b == 1);
+					}
+				}
+			}
+		}
+	}
 }
 
 void PathObject::setCoordinate(int pos, MapCoord c)
@@ -2080,6 +2811,7 @@ void PathObject::setCoordinate(int pos, MapCoord c)
 	
 	setOutputDirty();
 }
+
 void PathObject::addCoordinate(int pos, MapCoord c)
 {
 	assert(pos >= 0 && pos <= getCoordinateCount());
@@ -2109,6 +2841,7 @@ void PathObject::addCoordinate(int pos, MapCoord c)
 	
 	setOutputDirty();
 }
+
 void PathObject::addCoordinate(MapCoord c, bool start_new_part)
 {
 	if (!start_new_part && !parts.empty() && parts[parts.size() - 1].isClosed())
@@ -2135,6 +2868,7 @@ void PathObject::addCoordinate(MapCoord c, bool start_new_part)
 	
 	setOutputDirty();
 }
+
 void PathObject::deleteCoordinate(int pos, bool adjust_other_coords, int delete_bezier_point_action)
 {
 	assert(pos >= 0 && pos < getCoordinateCount());
@@ -2142,10 +2876,17 @@ void PathObject::deleteCoordinate(int pos, bool adjust_other_coords, int delete_
 	coords.erase(coords.begin() + pos);
 	
 	int part_index = findPartIndexForIndex(pos);
+	Q_ASSERT(part_index >= 0 && part_index < (int)parts.size());
 	PathPart& part = parts[part_index];
 	partSizeChanged(part_index, -1);
 	
-	if (parts[part_index].isClosed())
+	// Check this before isClosed(), otherwise illegal accesses will happen!
+	if (parts[part_index].end_index - parts[part_index].start_index == -1)
+	{
+		deletePart(part_index);
+		return;
+	}
+	else if (parts[part_index].isClosed())
 	{
 		if (parts[part_index].end_index - parts[part_index].start_index == 0)
 		{
@@ -2154,11 +2895,6 @@ void PathObject::deleteCoordinate(int pos, bool adjust_other_coords, int delete_
 		}
 		else if (pos == parts[part_index].start_index)
 			setClosingPoint(parts[part_index].end_index, coords[parts[part_index].start_index]);
-	}
-	else if (parts[part_index].end_index - parts[part_index].start_index == -1)
-	{
-		deletePart(part_index);
-		return;
 	}
 	
 	if (adjust_other_coords && part.getNumCoords() >= 2)
@@ -2212,13 +2948,19 @@ void PathObject::deleteCoordinate(int pos, bool adjust_other_coords, int delete_
 				}
 				else if (delete_bezier_point_action == Settings::DeleteBezierPoint_ResetHandles)
 				{
-					double target_length = 0.4 * p0.lengthTo(q3);
+					double target_length = BEZIER_HANDLE_DISTANCE * p0.lengthTo(q3);
 					pfactor = target_length / qMax(p0.lengthTo(p1), 0.01);
 					qfactor = target_length / qMax(q3.lengthTo(q2), 0.01);
 				}
 				else if (delete_bezier_point_action == Settings::DeleteBezierPoint_RetainExistingShape)
 				{
 					calcBezierPointDeletionRetainingShapeFactors(p0, p1, p2, q0, q1, q2, q3, pfactor, qfactor);
+					
+					if (qIsInf(pfactor))
+						pfactor = 1;
+					if (qIsInf(qfactor))
+						qfactor = 1;
+					
 					calcBezierPointDeletionRetainingShapeOptimization(p0, p1, p2, q0, q1, q2, q3, pfactor, qfactor);
 					
 					double minimum_length = 0.01 * p0.lengthTo(q3);
@@ -2257,6 +2999,7 @@ void PathObject::deleteCoordinate(int pos, bool adjust_other_coords, int delete_
 	
 	setOutputDirty();
 }
+
 void PathObject::clearCoordinates()
 {
 	coords.clear();
@@ -2288,13 +3031,14 @@ void PathObject::recalculateParts()
 {
 	parts.clear();
 	
-	int start = 0;
 	int coords_size = coords.size();
+	if (coords_size == 0)
+		return;
+	
+	int start = 0;
 	for (int i = 0; i < coords_size - 1; ++i)
 	{
-		if (coords[i].isCurveStart())
-			i += 2;
-		else if (coords[i].isHolePoint())
+		if (coords[i].isHolePoint())
 		{
 			PathPart part;
 			part.start_index = start;
@@ -2304,6 +3048,8 @@ void PathObject::recalculateParts()
 			start = i + 1;
 			++i;	// assume that there are never two hole points in a row
 		}
+		else if (coords[i].isCurveStart())
+			i += 2;
 	}
 	
 	PathPart part;
@@ -2312,6 +3058,7 @@ void PathObject::recalculateParts()
 	part.path = this;
 	parts.push_back(part);
 }
+
 void PathObject::setClosingPoint(int index, MapCoord coord)
 {
 	coord.setCurveStart(false);
@@ -2328,6 +3075,7 @@ PointObject::PointObject(Symbol* symbol) : Object(Object::Point, symbol)
 	rotation = 0;
 	coords.push_back(MapCoord(0, 0));
 }
+
 Object* PointObject::duplicate()
 {
 	PointObject* new_point = new PointObject(symbol);
@@ -2336,31 +3084,46 @@ Object* PointObject::duplicate()
 	return new_point;
 }
 
+Object& PointObject::operator=(const Object& other)
+{
+	Object::operator=(other);
+	const PointObject* point_other = (&other)->asPoint();
+	PointSymbol* point_symbol = getSymbol()->asPoint();
+	if (point_symbol && point_symbol->isRotatable())
+		setRotation(point_other->getRotation());
+	return *this;
+}
+
 void PointObject::setPosition(qint64 x, qint64 y)
 {
 	coords[0].setRawX(x);
 	coords[0].setRawY(y);
 	setOutputDirty();
 }
+
 void PointObject::setPosition(MapCoordF coord)
 {
 	coords[0].setX(coord.getX());
 	coords[0].setY(coord.getY());
 	setOutputDirty();
 }
+
 void PointObject::getPosition(qint64& x, qint64& y) const
 {
 	x = coords[0].rawX();
 	y = coords[0].rawY();
 }
+
 MapCoordF PointObject::getCoordF() const
 {
 	return MapCoordF(coords[0]);
 }
+
 MapCoord PointObject::getCoord() const
 {
 	return coords[0];
 }
+
 void PointObject::setRotation(float new_rotation)
 {
 	PointSymbol* point = reinterpret_cast<PointSymbol*>(symbol);

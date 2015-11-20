@@ -1,5 +1,5 @@
 /*
- *    Copyright 2012 Thomas Schöps
+ *    Copyright 2012, 2013 Thomas Schöps
  *
  *    This file is part of OpenOrienteering.
  *
@@ -43,6 +43,7 @@ public:
 	
 private slots:
 	void matchByNumberClicked(bool checked);
+	void showHelp();
 	void apply();
 	
 private:
@@ -50,6 +51,7 @@ private:
     virtual ~ReplaceSymbolSetDialog();
 	
 	void calculateNumberMatchMapping();
+	Symbol* findNumberMatch(Symbol* original, bool ignore_trailing_zeros);
 	void updateMappingTable();
 	void updateMappingFromTable();
 	

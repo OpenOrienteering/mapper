@@ -1,18 +1,18 @@
 /*
- *    Copyright 2012 Thomas Schöps
- *    
+ *    Copyright 2012, 2013 Thomas Schöps
+ *
  *    This file is part of OpenOrienteering.
- * 
+ *
  *    OpenOrienteering is free software: you can redistribute it and/or modify
  *    it under the terms of the GNU General Public License as published by
  *    the Free Software Foundation, either version 3 of the License, or
  *    (at your option) any later version.
- * 
+ *
  *    OpenOrienteering is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
  *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *    GNU General Public License for more details.
- * 
+ *
  *    You should have received a copy of the GNU General Public License
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -23,17 +23,13 @@
 
 #include <vector>
 
-#include <QString>
-#include <QRect>
 #include <QHash>
-#include <QSet>
+#include <QRect>
 #include <QScopedPointer>
+#include <QSet>
+#include <QString>
 
-#include "global.h"
-#include "undo.h"
-#include "matrix.h"
 #include "map_coord.h"
-#include "symbol.h"
 
 QT_BEGIN_NAMESPACE
 class QIODevice;
@@ -42,21 +38,23 @@ class QXmlStreamReader;
 class QXmlStreamWriter;
 QT_END_NAMESPACE
 
-class Map;
-struct MapColor;
-class MapWidget;
-class MapView;
-class MapEditorController;
 class CombinedSymbol;
-class LineSymbol;
-class PointSymbol;
-class Object;
-class Renderable;
-class MapRenderables;
-class Template;
-class OCAD8FileImport;
 class Georeferencing;
+class LineSymbol;
+class Map;
+class MapColor;
+class MapEditorController;
 class MapGrid;
+class MapRenderables;
+class MapView;
+class MapWidget;
+class Object;
+class OCAD8FileImport;
+class Symbol;
+typedef QHash<QString, Symbol*> SymbolDictionary; // from symbol.h
+class PointSymbol;
+class Renderable;
+class Template;
 
 typedef std::vector< std::pair< int, Object* > > SelectionInfoVector;
 
@@ -65,8 +63,8 @@ struct ObjectOperationResult
 	enum Enum
 	{
 		NoResult = 0,
-		Success = 1 << 0,
-		Abort = 1 << 1
+		Success  = 1 << 0,
+		Abort    = 1 << 1
 	};
 };
 
@@ -87,7 +85,7 @@ public:
 	
 	inline int getNumObjects() const {return (int)objects.size();}
 	inline Object* getObject(int i) {return objects[i];}
-    inline const Object* getObject(int i) const {return objects[i];}
+	inline const Object* getObject(int i) const {return objects[i];}
 	int findObjectIndex(Object* object);					// asserts that the object is contained in the part
 	void setObject(Object* object, int pos, bool delete_old);
 	void addObject(Object* object, int pos);
@@ -138,8 +136,22 @@ public:
 		}
 		return (ObjectOperationResult::Enum)result;
 	}
-	void scaleAllObjects(double factor);
-	void rotateAllObjects(double rotation);
+	template<typename Processor> ObjectOperationResult::Enum operationOnAllObjects(Processor& processor)
+	{
+		int size = (int)objects.size();
+		int result = size >= 1 ? ObjectOperationResult::Success : ObjectOperationResult::NoResult;
+		for (int i = size - 1; i >= 0; --i)
+		{
+			if (!processor(objects[i], this, i))
+			{
+				result |= ObjectOperationResult::Abort;
+				return (ObjectOperationResult::Enum)result;
+			}
+		}
+		return (ObjectOperationResult::Enum)result;
+	}
+	void scaleAllObjects(double factor, const MapCoord& scaling_center);
+	void rotateAllObjects(double rotation, const MapCoord& center);
 	void updateAllObjects();
 	void updateAllObjectsWithSymbol(Symbol* symbol);
 	void changeSymbolForAllObjects(Symbol* old_symbol, Symbol* new_symbol);

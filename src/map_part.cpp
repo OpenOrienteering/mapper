@@ -1,18 +1,18 @@
 /*
- *    Copyright 2012 Thomas Schöps
- *    
+ *    Copyright 2012, 2013 Thomas Schöps
+ *
  *    This file is part of OpenOrienteering.
- * 
+ *
  *    OpenOrienteering is free software: you can redistribute it and/or modify
  *    it under the terms of the GNU General Public License as published by
  *    the Free Software Foundation, either version 3 of the License, or
  *    (at your option) any later version.
- * 
+ *
  *    OpenOrienteering is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
  *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *    GNU General Public License for more details.
- * 
+ *
  *    You should have received a copy of the GNU General Public License
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -20,46 +20,35 @@
 
 #include "map.h"
 
-#include <cassert>
 #include <algorithm>
 
-#include <QDebug>
-#include <QFile>
 #include <qmath.h>
+#include <QDebug>
 #include <QDir>
+#include <QFile>
 #include <QMessageBox>
 #include <QPainter>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
-#include "map_color.h"
-#include "map_editor.h"
-#include "map_grid.h"
-#include "map_widget.h"
+#include "map.h"
 #include "map_undo.h"
 #include "util.h"
-#include "template.h"
-#include "gps_coordinates.h"
 #include "object.h"
 #include "object_operations.h"
 #include "renderable.h"
-#include "symbol.h"
-#include "symbol_point.h"
-#include "symbol_line.h"
-#include "symbol_combined.h"
-#include "file_format_ocad8.h"
-#include "file_format_xml.h"
-#include "georeferencing.h"
 
 MapPart::MapPart(const QString& name, Map* map) : name(name), map(map)
 {
 }
+
 MapPart::~MapPart()
 {
 	int size = (int)objects.size();
 	for (int i = 0; i < size; ++i)
 		delete objects[i];
 }
+
 void MapPart::save(QIODevice* file, Map* map)
 {
 	saveString(file, name);
@@ -127,7 +116,7 @@ MapPart* MapPart::load(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol
 			while (xml.readNextStartElement())
 			{
 				if (xml.name() == "object")
-					part->objects.push_back(Object::load(xml, map, symbol_dict));
+					part->objects.push_back(Object::load(xml, &map, symbol_dict));
 				else
 					xml.skipCurrentElement(); // unknown
 			}
@@ -147,9 +136,10 @@ int MapPart::findObjectIndex(Object* object)
 		if (objects[i] == object)
 			return i;
 	}
-	assert(false);
+	Q_ASSERT(false);
 	return -1;
 }
+
 void MapPart::setObject(Object* object, int pos, bool delete_old)
 {
 	map->removeRenderablesOfObject(objects[pos], true);
@@ -160,18 +150,19 @@ void MapPart::setObject(Object* object, int pos, bool delete_old)
 	bool delete_old_renderables = object->getMap() == map;
 	object->setMap(map);
 	object->update(true, delete_old_renderables);
-	map->setObjectsDirty();
+	map->setObjectsDirty(); // TODO: remove from here, dirty state handling should be separate
 }
+
 void MapPart::addObject(Object* object, int pos)
 {
 	objects.insert(objects.begin() + pos, object);
 	object->setMap(map);
 	object->update(true, true);
-	map->setObjectsDirty();
 	
 	if (map->getNumObjects() == 1)
 		map->updateAllMapWidgets();
 }
+
 void MapPart::deleteObject(int pos, bool remove_only)
 {
 	map->removeRenderablesOfObject(objects[pos], true);
@@ -180,11 +171,11 @@ void MapPart::deleteObject(int pos, bool remove_only)
 	else
 		delete objects[pos];
 	objects.erase(objects.begin() + pos);
-	map->setObjectsDirty();
 	
 	if (map->getNumObjects() == 0)
 		map->updateAllMapWidgets();
 }
+
 bool MapPart::deleteObject(Object* object, bool remove_only)
 {
 	int size = objects.size();
@@ -252,9 +243,11 @@ void MapPart::findObjectsAt(MapCoordF coord, float tolerance, bool treat_areas_a
 			out.push_back(std::pair<int, Object*>(selected_type, objects[i]));
 	}
 }
+
 void MapPart::findObjectsAtBox(MapCoordF corner1, MapCoordF corner2, bool include_hidden_objects, bool include_protected_objects, std::vector< Object* >& out)
 {
-	QRectF rect = QRectF(corner1.toQPointF(), corner2.toQPointF());
+	QRectF rect = QRectF(QPointF(qMin(corner1.getX(), corner2.getX()), qMin(corner1.getY(), corner2.getY())),
+						 QPointF(qMax(corner1.getX(), corner2.getX()), qMax(corner1.getY(), corner2.getY())));
 	
 	int size = objects.size();
 	for (int i = 0; i < size; ++i)
@@ -312,13 +305,14 @@ QRectF MapPart::calculateExtent(bool include_helper_symbols)
 	
 	return rect;
 }
-void MapPart::scaleAllObjects(double factor)
+
+void MapPart::scaleAllObjects(double factor, const MapCoord& scaling_center)
 {
-	operationOnAllObjects(ObjectOp::Scale(factor));
+	operationOnAllObjects(ObjectOp::Scale(factor, scaling_center));
 }
-void MapPart::rotateAllObjects(double rotation)
+void MapPart::rotateAllObjects(double rotation, const MapCoord& center)
 {
-	operationOnAllObjects(ObjectOp::Rotate(rotation));
+	operationOnAllObjects(ObjectOp::Rotate(rotation, center));
 }
 void MapPart::updateAllObjects()
 {

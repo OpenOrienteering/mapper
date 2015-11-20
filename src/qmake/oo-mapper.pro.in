@@ -1,0 +1,46 @@
+######################################################################
+# @MAPPER_PRO_GENERATOR@
+#####################################################################
+
+TEMPLATE = app
+TARGET = @PROJECT_NAME@
+DEPENDPATH += . src
+INCLUDEPATH += . src src/qmake
+
+# Needed for QtSingleApplication
+QT += network xml
+
+# Needed when compiling pure C code
+QMAKE_CFLAGS += -std=c99
+
+# PROJ.4 library
+QMAKE_LIBS += -lproj
+
+# Input
+HEADERS += \
+  @MAPPER_PRO_HEADERS@ \
+  3rd-party/qtsingleapplication/src/qtlocalpeer.h \
+  3rd-party/qtsingleapplication/src/qtsingleapplication.h \
+  libocad/libocad.h \
+  libocad/array.h \
+  libocad/geometry.h \
+  libocad/types.h
+
+SOURCES += \
+  @MAPPER_PRO_SOURCES@ \
+  src/main.cpp \
+  3rd-party/qtsingleapplication/src/qtlocalpeer.cpp \
+  3rd-party/qtsingleapplication/src/qtsingleapplication.cpp \
+  libocad/types.c \
+  libocad/array.c \
+  libocad/geometry.c \
+  libocad/path.c \
+  libocad/file.c \
+  libocad/setup.c \
+  libocad/color.c \
+  libocad/ocad_symbol.c \
+  libocad/ocad_object.c \
+  libocad/string.c
+
+RESOURCES += \
+  resources.qrc

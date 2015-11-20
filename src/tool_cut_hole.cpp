@@ -1,18 +1,18 @@
 /*
- *    Copyright 2012 Thomas Schöps
- *    
+ *    Copyright 2012, 2013 Thomas Schöps
+ *
  *    This file is part of OpenOrienteering.
- * 
+ *
  *    OpenOrienteering is free software: you can redistribute it and/or modify
  *    it under the terms of the GNU General Public License as published by
  *    the Free Software Foundation, either version 3 of the License, or
  *    (at your option) any later version.
- * 
+ *
  *    OpenOrienteering is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
  *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *    GNU General Public License for more details.
- * 
+ *
  *    You should have received a copy of the GNU General Public License
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -24,15 +24,16 @@
 #include <QMouseEvent>
 #include <QMessageBox>
 
-#include "map_editor.h"
+#include "map.h"
+#include "map_undo.h"
 #include "map_widget.h"
-#include "util.h"
 #include "symbol.h"
 #include "symbol_combined.h"
-#include "map_undo.h"
-#include "tool_draw_path.h"
 #include "tool_draw_circle.h"
+#include "tool_draw_path.h"
 #include "tool_draw_rectangle.h"
+#include "util.h"
+#include "gui/modifier_key.h"
 
 QCursor* CutHoleTool::cursor = NULL;
 
@@ -43,12 +44,14 @@ CutHoleTool::CutHoleTool(MapEditorController* editor, QAction* tool_button, Path
 	if (!cursor)
 		cursor = new QCursor(QPixmap(":/images/cursor-cut.png"), 11, 11);
 }
+
 void CutHoleTool::init()
 {
-	connect(editor->getMap(), SIGNAL(objectSelectionChanged()), this, SLOT(objectSelectionChanged()));
+	connect(map(), SIGNAL(objectSelectionChanged()), this, SLOT(objectSelectionChanged()));
 	updateDirtyRect();
     updateStatusText();
 }
+
 CutHoleTool::~CutHoleTool()
 {
 	delete path_tool;
@@ -80,6 +83,7 @@ bool CutHoleTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWi
 	
 	return true;
 }
+
 bool CutHoleTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
 	if (path_tool)
@@ -87,6 +91,7 @@ bool CutHoleTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWid
 	
 	return false;
 }
+
 bool CutHoleTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
 	if (path_tool)
@@ -101,6 +106,7 @@ bool CutHoleTool::mouseDoubleClickEvent(QMouseEvent* event, MapCoordF map_coord,
 		return path_tool->mouseDoubleClickEvent(event, map_coord, widget);
 	return false;
 }
+
 void CutHoleTool::leaveEvent(QEvent* event)
 {
 	if (path_tool)
@@ -113,12 +119,14 @@ bool CutHoleTool::keyPressEvent(QKeyEvent* event)
 		return path_tool->keyPressEvent(event);
 	return false;
 }
+
 bool CutHoleTool::keyReleaseEvent(QKeyEvent* event)
 {
 	if (path_tool)
 		return path_tool->keyReleaseEvent(event);
 	return false;
 }
+
 void CutHoleTool::focusOutEvent(QFocusEvent* event)
 {
 	if (path_tool)
@@ -127,47 +135,56 @@ void CutHoleTool::focusOutEvent(QFocusEvent* event)
 
 void CutHoleTool::draw(QPainter* painter, MapWidget* widget)
 {
-	Map* map = editor->getMap();
-	map->drawSelection(painter, true, widget, NULL);
+	map()->drawSelection(painter, true, widget, NULL);
 	
 	if (path_tool)
 		path_tool->draw(painter, widget);
 }
+
 void CutHoleTool::updateDirtyRect(const QRectF* path_rect)
 {
 	QRectF rect;
 	if (path_rect)
 		rect = *path_rect;
-	editor->getMap()->includeSelectionRect(rect);
+	map()->includeSelectionRect(rect);
 	
 	if (rect.isValid())
-		editor->getMap()->setDrawingBoundingBox(rect, 6, true);
+		map()->setDrawingBoundingBox(rect, 6, true);
 	else
-		editor->getMap()->clearDrawingBoundingBox();
+		map()->clearDrawingBoundingBox();
 }
 
 void CutHoleTool::objectSelectionChanged()
 {
-	Map* map = editor->getMap();
+	Map* map = this->map();
 	if (map->getNumSelectedObjects() != 1 || !((*map->selectedObjectsBegin())->getSymbol()->getContainedTypes() & Symbol::Area))
-		editor->setEditTool();
+		deactivate();
 	else
 		updateDirtyRect();
 }
+
 void CutHoleTool::pathDirtyRectChanged(const QRectF& rect)
 {
 	updateDirtyRect(&rect);
 }
+
 void CutHoleTool::pathAborted()
 {
 	delete path_tool;
 	path_tool = NULL;
 	updateDirtyRect();
+	updateStatusText();
 }
+
 void CutHoleTool::pathFinished(PathObject* hole_path)
 {
-	Map* map = editor->getMap();
-	Object* edited_object = *map->selectedObjectsBegin();
+	if (map()->getNumSelectedObjects() == 0)
+	{
+		pathAborted();
+		return;
+	}
+	
+	Object* edited_object = *map()->selectedObjectsBegin();
 	Object* undo_duplicate = edited_object->duplicate();
 	
 	// Close the hole path
@@ -183,15 +200,20 @@ void CutHoleTool::pathFinished(PathObject* hole_path)
 	edited_path->update(true);
 	updateDirtyRect();
 	
-	ReplaceObjectsUndoStep* undo_step = new ReplaceObjectsUndoStep(map);
+	ReplaceObjectsUndoStep* undo_step = new ReplaceObjectsUndoStep(map());
 	undo_step->addObject(edited_object, undo_duplicate);
-	map->objectUndoManager().addNewUndoStep(undo_step);
-	map->setObjectsDirty();
-	map->emitSelectionEdited();
+	map()->objectUndoManager().addNewUndoStep(undo_step);
+	map()->setObjectsDirty();
+	map()->emitSelectionEdited();
 	
 	pathAborted();
 }
+
 void CutHoleTool::updateStatusText()
 {
-	setStatusBarText(tr("<b>Click</b> on a line to split it into two, <b>Drag</b> along a line to remove this line part, <b>Click or Drag</b> at an area boundary to start drawing a split line"));
+	if (!path_tool)
+	{
+		// FIXME: The path_tool would have better instrution, but is not initialized yet.
+		setStatusBarText(tr("<b>Click or drag</b>: Start drawing the hole. "));
+	}
 }

@@ -1,5 +1,5 @@
 /*
- *    Copyright 2012 Thomas Schöps
+ *    Copyright 2012, 2013 Thomas Schöps
  *
  *    This file is part of OpenOrienteering.
  *
@@ -23,6 +23,7 @@
 
 #include <QObject>
 #include <QHash>
+#include <QSettings>
 #include <QVariant>
 
 /** Singleton which handles the global application settings.
@@ -36,6 +37,7 @@ public:
 	enum SettingsEnum
 	{
 		MapDisplay_Antialiasing = 0,
+		MapDisplay_TextAntialiasing,
 		MapEditor_ClickTolerance,
 		MapEditor_SnapDistance,
 		MapEditor_FixedAngleStepping,
@@ -47,7 +49,13 @@ public:
 		RectangleTool_HelperCrossRadius,
 		RectangleTool_PreviewLineWidth,
 		Templates_KeepSettingsOfClosed,
-		General_Language
+		General_Language,
+		General_RecentFilesList,
+		General_TranslationFile,
+		General_OpenMRUFile,
+		HomeScreen_TipsVisible,
+		HomeScreen_CurrentTip,
+		END_OF_SETTINGSENUM /* Don't add items below this line. */
 	};
 	
 	enum DeleteBezierPointAction
@@ -66,13 +74,20 @@ public:
 	/// Change a setting, but only in the cache. Do not use this if in doubt.
 	void setSettingInCache(Settings::SettingsEnum setting, QVariant value);
 	
-	/// This must be called after the settings have been changed or on application startup.
+	/// This must be called after cached settings have been changed and on application startup.
 	void applySettings();
+	
+	/// Change a setting immediately.
+	void setSetting(Settings::SettingsEnum setting, QVariant value);
+	
+	/// Removes a setting immediately. Next reading will return the default value.
+	void remove(Settings::SettingsEnum setting);
 	
 	// TODO: Methods for settings import / export?
 	
 	/// Returns the path to use with QSettings
 	inline QString getSettingPath(SettingsEnum setting) const { return setting_paths[setting]; }
+	
 	/// Returns the default value for the setting
 	inline QVariant getDefaultValue(SettingsEnum setting) const { return setting_defaults[setting]; }
 	
@@ -88,6 +103,10 @@ signals:
 private:
 	Settings();
 	void registerSetting(SettingsEnum id, const QString& path, const QVariant& default_value);
+	
+	/** Migrates a value from an old key to a new key.
+	 *  Uses the given or a newly constructed QSettings object. */
+	void migrateValue(const QString& old_key, SettingsEnum new_setting, QSettings& settings) const;
 	
 	QHash<SettingsEnum, QVariant> settings_cache;
 	QHash<SettingsEnum, QString> setting_paths;

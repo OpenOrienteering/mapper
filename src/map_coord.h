@@ -1,18 +1,18 @@
 /*
- *    Copyright 2012 Thomas Schöps
- *    
+ *    Copyright 2012, 2013 Thomas Schöps
+ *
  *    This file is part of OpenOrienteering.
- * 
+ *
  *    OpenOrienteering is free software: you can redistribute it and/or modify
  *    it under the terms of the GNU General Public License as published by
  *    the Free Software Foundation, either version 3 of the License, or
  *    (at your option) any later version.
- * 
+ *
  *    OpenOrienteering is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
  *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *    GNU General Public License for more details.
- * 
+ *
  *    You should have received a copy of the GNU General Public License
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -51,6 +51,14 @@ public:
 		this->y = qRound64(point.y() * 1000) << 4;
 	}
 	
+	static inline MapCoord fromRaw(qint64 x, qint64 y)
+	{
+		MapCoord new_coord;
+		new_coord.x = x << 4;
+		new_coord.y = y << 4;
+		return new_coord;
+	}
+	
 	inline void setX(double x) {this->x = (qRound64(x * 1000) << 4) | (this->x & 15);}
 	inline void setY(double y) {this->y = (qRound64(y * 1000) << 4) | (this->y & 15);}
 	inline void setRawX(qint64 new_x) {this->x = (new_x << 4) | (this->x & 15);}
@@ -60,11 +68,14 @@ public:
 	inline double yd() const {return (y >> 4) / 1000.0;}
 	inline qint64 rawX() const {return x >> 4;}
 	inline qint64 rawY() const {return y >> 4;}
-    inline qint64 internalX() const {return x;}
-    inline qint64 internalY() const {return y;}
-    
-    inline int getFlags() const {return (x & 15) | ((y & 15) << 4);}
-    inline void setFlags(int flags) {x = (x & ~15) | (flags & 15); y = (y & ~15) | ((flags >> 4) & 15);}
+	inline qint64 internalX() const {return x;}
+	inline qint64 internalY() const {return y;}
+
+	inline int getFlags() const {return (x & 15) | ((y & 15) << 4);}
+	inline void setFlags(int flags) {x = (x & ~15) | (flags & 15); y = (y & ~15) | ((flags >> 4) & 15);}
+
+	inline double length() const {return sqrt(xd()*xd() + yd()*yd());}
+	inline double lengthSquared() const {return xd()*xd() + yd()*yd();}
 
 	inline double lengthSquaredTo(const MapCoord& other)
 	{

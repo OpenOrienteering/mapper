@@ -24,5 +24,7 @@
 
 cd "@BINARY_DIR@"
 
+unset MAKE
+unset MAKEFLAGS
 make "$@"
 

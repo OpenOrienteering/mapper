@@ -1,5 +1,5 @@
 /*
- *    Copyright 2012 Thomas Schöps
+ *    Copyright 2012, 2013 Thomas Schöps
  *
  *    This file is part of OpenOrienteering.
  *
@@ -17,14 +17,15 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "util_task_dialog.h"
 
 #if QT_VERSION < 0x050000
 #include <QtGui>
 #else
 #include <QtWidgets>
 #endif
+#include <QVBoxLayout>
 
-#include "util_task_dialog.h"
 
 TaskDialog::TaskDialog(QWidget* parent, const QString& title, const QString& text, QDialogButtonBox::StandardButtons buttons)
  : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint)

@@ -1,18 +1,18 @@
 /*
- *    Copyright 2012 Thomas Schöps
- *    
+ *    Copyright 2012, 2013 Thomas Schöps
+ *
  *    This file is part of OpenOrienteering.
- * 
+ *
  *    OpenOrienteering is free software: you can redistribute it and/or modify
  *    it under the terms of the GNU General Public License as published by
  *    the Free Software Foundation, either version 3 of the License, or
  *    (at your option) any later version.
- * 
+ *
  *    OpenOrienteering is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
  *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *    GNU General Public License for more details.
- * 
+ *
  *    You should have received a copy of the GNU General Public License
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -25,14 +25,16 @@
 #include <QMouseEvent>
 #include <QPainter>
 
-#include "tool_helpers.h"
-#include "map_editor.h"
+#include "map.h"
 #include "map_widget.h"
 #include "object.h"
 #include "renderable.h"
-#include "util.h"
 #include "symbol.h"
 #include "symbol_point.h"
+#include "tool_helpers.h"
+#include "util.h"
+#include "gui/modifier_key.h"
+
 
 RotatePatternTool::RotatePatternTool(MapEditorController* editor, QAction* tool_button)
 : MapEditorToolBase(QCursor(QPixmap(":/images/cursor-rotate.png"), 1, 1), Other, editor, tool_button),
@@ -41,6 +43,11 @@ RotatePatternTool::RotatePatternTool(MapEditorController* editor, QAction* tool_
 	angle_helper->addDefaultAnglesDeg(0);
 	angle_helper->setActive(false);
 	connect(angle_helper.data(), SIGNAL(displayChanged()), this, SLOT(updateDirtyRect()));
+}
+
+RotatePatternTool::~RotatePatternTool()
+{
+	// nothing, not inlined!
 }
 
 void RotatePatternTool::dragStart()
@@ -54,10 +61,11 @@ void RotatePatternTool::dragMove()
 	angle_helper->getConstrainedCursorPositions(cur_pos_map, constrained_pos_map, constrained_pos, cur_map_widget);
 	double rotation = -M_PI / 2 - (constrained_pos_map - click_pos_map).getAngle();
 	
-	Map::ObjectSelection::const_iterator it_end = editor->getMap()->selectedObjectsEnd();
-	for (Map::ObjectSelection::const_iterator it = editor->getMap()->selectedObjectsBegin(); it != it_end; ++it)
+	Map::ObjectSelection::const_iterator it_end = map()->selectedObjectsEnd();
+	for (Map::ObjectSelection::const_iterator it = map()->selectedObjectsBegin(); it != it_end; ++it)
 	{
 		Object* object = *it;
+		// TODO: Refactor, provided unified interface for rotation in Object
 		if (object->getType() == Object::Point)
 		{
 			if (object->getSymbol()->asPoint()->isRotatable())
@@ -82,7 +90,7 @@ void RotatePatternTool::dragFinish()
 
 void RotatePatternTool::draw(QPainter* painter, MapWidget* widget)
 {
-	MapEditorToolBase::draw(painter, widget);
+	drawSelectionOrPreviewObjects(painter, widget);
 	
 	if (dragging)
 	{
@@ -131,8 +139,8 @@ int RotatePatternTool::updateDirtyRectImpl(QRectF& rect)
 
 void RotatePatternTool::objectSelectionChangedImpl()
 {
-	if (editor->getMap()->getNumSelectedObjects() == 0)
-		editor->setEditTool();
+	if (map()->getNumSelectedObjects() == 0)
+		deactivate();
 	else
 		updateDirtyRect();
 }
@@ -141,11 +149,15 @@ void RotatePatternTool::updateStatusText()
 {
 	if (dragging)
 	{
-		double rotation = fmod(-1 * (constrained_pos_map - click_pos_map).getAngle() + 3*M_PI/2, 2*M_PI);
-		setStatusBarText(trUtf8("<b>Angle:</b> %1°  %2")
-			.arg(rotation * 180 / M_PI, 0, 'f', 1)
-			.arg(angle_helper->isActive() ? "" : tr("(<u>Ctrl</u> for fixed angles)")));
+		static const double pi_x_1_5 = M_PI * 1.5;
+		static const double pi_x_2 = M_PI * 2.0;
+		static const double to_deg = 180.0 / M_PI;
+		double rotation = fmod(-(constrained_pos_map - click_pos_map).getAngle() + pi_x_1_5, pi_x_2) * to_deg;
+		setStatusBarText( trUtf8("<b>Angle:</b> %1° ").arg(QLocale().toString(rotation, 'f', 1)) + "| " +
+		                  tr("<b>%1</b>: Fixed angles. ").arg(ModifierKey::control()) );
 	}
 	else
-		setStatusBarText(tr("<b>Drag</b> to set the direction of area fill patterns or point objects"));
+	{
+		setStatusBarText(tr("<b>Drag</b>: Set the direction of area fill patterns or point objects. "));
+	}
 }

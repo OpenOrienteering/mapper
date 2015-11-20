@@ -1,18 +1,18 @@
 /*
- *    Copyright 2012 Thomas Schöps
- *    
+ *    Copyright 2012, 2013 Thomas Schöps
+ *
  *    This file is part of OpenOrienteering.
- * 
+ *
  *    OpenOrienteering is free software: you can redistribute it and/or modify
  *    it under the terms of the GNU General Public License as published by
  *    the Free Software Foundation, either version 3 of the License, or
  *    (at your option) any later version.
- * 
+ *
  *    OpenOrienteering is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
  *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *    GNU General Public License for more details.
- * 
+ *
  *    You should have received a copy of the GNU General Public License
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -26,14 +26,15 @@
 #include <QtWidgets>
 #endif
 
-#include "util.h"
+#include "map.h"
 #include "object.h"
-#include "map_editor.h"
+#include "util.h"
+#include "gui/modifier_key.h"
 
 QCursor* DrawCircleTool::cursor = NULL;
 
 DrawCircleTool::DrawCircleTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget)
- : DrawLineAndAreaTool(editor, tool_button, symbol_widget)
+ : DrawLineAndAreaTool(editor, DrawCircle, tool_button, symbol_widget)
 {
 	dragging = false;
 	first_point_set = false;
@@ -86,6 +87,7 @@ bool DrawCircleTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, Ma
 	}
 	return false;
 }
+
 bool DrawCircleTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
 	bool mouse_down = drawMouseButtonHeld(event);
@@ -131,6 +133,7 @@ bool DrawCircleTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, Map
 	}
 	return true;
 }
+
 bool DrawCircleTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
 	if (!drawMouseButtonClicked(event))
@@ -163,7 +166,7 @@ bool DrawCircleTool::keyPressEvent(QKeyEvent* event)
 		abortDrawing();
 	else if (event->key() == Qt::Key_Tab)
 	{
-		editor->setEditTool();
+		deactivate();
 		return true;
 	}
 	return false;
@@ -182,6 +185,7 @@ void DrawCircleTool::finishDrawing()
 	updateStatusText();
 	
 	DrawLineAndAreaTool::finishDrawing();
+	// Do not add stuff here as the tool might get deleted in DrawLineAndAreaTool::finishDrawing()!
 }
 void DrawCircleTool::abortDrawing()
 {
@@ -235,6 +239,7 @@ void DrawCircleTool::updateCircle()
 	updatePreviewPath();
 	setDirtyRect();
 }
+
 void DrawCircleTool::setDirtyRect()
 {
 	QRectF rect;
@@ -245,15 +250,23 @@ void DrawCircleTool::setDirtyRect()
 	else
 	{
 		if (rect.isValid())
-			editor->getMap()->setDrawingBoundingBox(rect, 0, true);
+			map()->setDrawingBoundingBox(rect, 0, true);
 		else
-			editor->getMap()->clearDrawingBoundingBox();
+			map()->clearDrawingBoundingBox();
 	}
 }
+
 void DrawCircleTool::updateStatusText()
 {
 	if (!first_point_set || (!second_point_set && dragging))
-		setStatusBarText(tr("<b>Click</b> to start a circle or ellipse, <b>Drag</b> to draw a circle"));
+	{
+		setStatusBarText( tr("<b>Click</b>: Start a circle or ellipse. ") + 
+		                  tr("<b>Drag</b>: Draw a circle. ") );
+	}
 	else
-		setStatusBarText(tr("<b>Click</b> to draw a circle, <b>Drag</b> to draw an ellipse, <b>Esc</b> to abort"));
+	{
+		setStatusBarText( tr("<b>Click</b>: Finish the circle. ") +
+		                  tr("<b>Drag</b>: Draw an ellipse. ") +
+		                  MapEditorTool::tr("<b>%1</b>: Abort. ").arg(ModifierKey::escape()) );
+	}
 }

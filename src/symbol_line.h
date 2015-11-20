@@ -1,18 +1,18 @@
 /*
- *    Copyright 2012 Thomas Schöps
- *    
+ *    Copyright 2012, 2013 Thomas Schöps
+ *
  *    This file is part of OpenOrienteering.
- * 
+ *
  *    OpenOrienteering is free software: you can redistribute it and/or modify
  *    it under the terms of the GNU General Public License as published by
  *    the Free Software Foundation, either version 3 of the License, or
  *    (at your option) any later version.
- * 
+ *
  *    OpenOrienteering is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
  *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *    GNU General Public License for more details.
- * 
+ *
  *    You should have received a copy of the GNU General Public License
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -44,7 +44,7 @@ class PointSymbol;
 
 struct LineSymbolBorder
 {
-	MapColor* color;
+	const MapColor* color;
 	int width;
 	int shift;
 	bool dashed;
@@ -57,7 +57,7 @@ struct LineSymbolBorder
 	void save(QXmlStreamWriter& xml, const Map& map) const;
 	bool load(QXmlStreamReader& xml, Map& map);
 	bool equals(const LineSymbolBorder* other) const;
-	void assign(const LineSymbolBorder& other, const QHash<MapColor*, MapColor*>* color_map);
+	void assign(const LineSymbolBorder& other, const MapColorMap* color_map);
 	
 	bool isVisible() const;
 	void createSymbol(LineSymbol& out);
@@ -89,30 +89,34 @@ public:
 	/// Constructs an empty line symbol
 	LineSymbol();
 	virtual ~LineSymbol();
-	virtual Symbol* duplicate(const QHash<MapColor*, MapColor*>* color_map = NULL) const;
+	virtual Symbol* duplicate(const MapColorMap* color_map) const;
 	
 	virtual void createRenderables(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output);
 	void createRenderables(Object* object, bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, PathCoordVector* path_coords, ObjectRenderables& output);
-	virtual void colorDeleted(MapColor* color);
-    virtual bool containsColor(MapColor* color);
-    virtual MapColor* getDominantColorGuess();
-    virtual void scale(double factor);
+	virtual void colorDeleted(const MapColor* color);
+	virtual bool containsColor(const MapColor* color) const;
+	virtual const MapColor* getDominantColorGuess() const;
+	virtual void scale(double factor);
 	
 	/// Creates empty point symbols for contained NULL symbols with the given names
     void ensurePointSymbols(const QString& start_name, const QString& mid_name, const QString& end_name, const QString& dash_name);
 	/// Deletes unused point symbols and sets them to NULL
 	void cleanupPointSymbols();
 	
+	/// Returns the largest extent (half width) of the components of this line.
+	virtual float calculateLargestLineExtent(Map* map);
+	
 	/// Returns the limit for miter joins in units of the line width.
 	/// See the Qt docs for QPainter::setMiterJoin().
 	/// TODO: Should that better be a line property?
+// FIXME: shall be 0 for border lines.
 	static const float miterLimit() {return 1;}
 	
 	// Getters / Setters
 	inline int getLineWidth() const {return line_width;}
 	inline void setLineWidth(double width) {line_width = qRound(1000 * width);}
-	inline MapColor* getColor() const {return color;}
-	inline void setColor(MapColor* color) {this->color = color;}
+	inline const MapColor* getColor() const {return color;}
+	inline void setColor(const MapColor* color) {this->color = color;}
 	inline int getMinimumLength() const {return minimum_length;}
 	inline void setMinimumLength(int length) {this->minimum_length = length;}
 	inline CapStyle getCapStyle() const {return cap_style;}
@@ -137,6 +141,9 @@ public:
 	inline void setMidSymbolsPerSpot(int value) {mid_symbols_per_spot = value;}
 	inline int getMidSymbolDistance() const {return mid_symbol_distance;}
 	inline void setMidSymbolDistance(int value) {mid_symbol_distance = value;}
+	
+	inline bool getSuppressDashSymbolAtLineEnds() const {return suppress_dash_symbol_at_ends;}
+	inline void setSuppressDashSymbolAtLineEnds(bool value) {suppress_dash_symbol_at_ends = value;}
 	
 	inline int getSegmentLength() const {return segment_length;}
 	inline void setSegmentLength(int value) {segment_length = value;}
@@ -176,11 +183,12 @@ protected:
 	virtual bool loadImpl(QIODevice* file, int version, Map* map);
 	virtual void saveImpl(QXmlStreamWriter& xml, const Map& map) const;
 	virtual bool loadImpl(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol_dict);
+	PointSymbol* loadPointSymbol(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol_dict);
 	virtual bool equalsImpl(Symbol* other, Qt::CaseSensitivity case_sensitivity);
 	
 	void createBorderLines(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, bool path_closed, ObjectRenderables& output);
-	void createBorderLine(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, bool path_closed, ObjectRenderables& output, LineSymbolBorder& border, float shift);
-	void shiftCoordinates(const MapCoordVector& flags, const MapCoordVectorF& coords, bool path_closed, float shift, MapCoordVector& out_flags, MapCoordVectorF& out_coords);
+	void createBorderLine(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, bool path_closed, ObjectRenderables& output, LineSymbolBorder& border, double main_shift);
+	void shiftCoordinates(const MapCoordVector& flags, const MapCoordVectorF& coords, bool path_closed, double main_shift, MapCoordVector& out_flags, MapCoordVectorF& out_coords);
 	void processContinuousLine(Object* object, bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, const PathCoordVector& line_coords,
 							   float start, float end, bool has_start, bool has_end, int& cur_line_coord,
 							   MapCoordVector& processed_flags, MapCoordVectorF& processed_coords, bool include_first_point, bool set_mid_symbols, ObjectRenderables& output);
@@ -199,7 +207,7 @@ protected:
 	
 	// Base line
 	int line_width;		// in 1/1000 mm
-	MapColor* color;
+	const MapColor* color;
 	int minimum_length;
 	CapStyle cap_style;
 	JoinStyle join_style;
@@ -211,10 +219,11 @@ protected:
 	PointSymbol* start_symbol;
 	PointSymbol* mid_symbol;
 	PointSymbol* end_symbol;
-    PointSymbol* dash_symbol;
-
+	PointSymbol* dash_symbol;
+	
 	int mid_symbols_per_spot;
 	int mid_symbol_distance;
+	bool suppress_dash_symbol_at_ends;
 	
 	// Not dashed
 	int segment_length;
@@ -317,6 +326,7 @@ protected slots:
 	void borderCheckClicked(bool checked);
 	void differentBordersClicked(bool checked);
 	void borderChanged();
+	void suppressDashSymbolClicked(bool checked);
 	
 private slots:
 	/** Ensure that a predetermined widget is visible in the scoll area.
@@ -370,6 +380,8 @@ private:
 	QList<QWidget *> different_borders_widget_list;
 	BorderWidgets border_widgets;
 	BorderWidgets right_border_widgets;
+	
+	QCheckBox* supress_dash_symbol_check;
 	
 	QScrollArea* scroll_area;
 	QWidget* widget_to_ensure_visible;

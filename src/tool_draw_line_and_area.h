@@ -1,18 +1,18 @@
 /*
- *    Copyright 2012 Thomas Schöps
- *    
+ *    Copyright 2012, 2013 Thomas Schöps
+ *
  *    This file is part of OpenOrienteering.
- * 
+ *
  *    OpenOrienteering is free software: you can redistribute it and/or modify
  *    it under the terms of the GNU General Public License as published by
  *    the Free Software Foundation, either version 3 of the License, or
  *    (at your option) any later version.
- * 
+ *
  *    OpenOrienteering is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
  *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *    GNU General Public License for more details.
- * 
+ *
  *    You should have received a copy of the GNU General Public License
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -35,13 +35,15 @@ class SymbolWidget;
 class LineSymbol;
 struct LineSymbolBorder;
 
-/// Base class for drawing tools for line and area symbols.
-/// Provides some common functionality like for example displaying the preview objects.
+/**
+ * A base class for drawing tools for line and area symbols.
+ * Provides some common functionality like for example displaying the preview objects.
+ */
 class DrawLineAndAreaTool : public MapEditorTool
 {
 Q_OBJECT
 public:
-	DrawLineAndAreaTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget);
+	DrawLineAndAreaTool(MapEditorController* editor, Type type, QAction* tool_button, SymbolWidget* symbol_widget);
 	virtual ~DrawLineAndAreaTool();
 	
 	virtual void leaveEvent(QEvent* event);
@@ -52,7 +54,7 @@ signals:
 	void pathFinished(PathObject* path);
 	
 protected slots:
-	void selectedSymbolsChanged();
+	virtual void selectedSymbolsChanged();
 	void symbolChanged(int pos, Symbol* new_symbol, Symbol* old_symbol);
 	void symbolDeleted(int pos, Symbol* old_symbol);
 	
@@ -64,9 +66,10 @@ protected:
 	void hidePreviewPoints();
 	
 	void startDrawing();
-	void updatePreviewPath();
+	virtual void updatePreviewPath();
 	virtual void abortDrawing();
-	virtual void finishDrawing(PathObject* append_to_object = NULL);
+	virtual void finishDrawing();
+	void finishDrawing(PathObject* append_to_object);
 	void deletePreviewObjects();
 	
 	void includePreviewRects(QRectF& rect);

@@ -1,18 +1,18 @@
 /*
- *    Copyright 2012 Thomas Schöps
- *    
+ *    Copyright 2012, 2013 Thomas Schöps
+ *
  *    This file is part of OpenOrienteering.
- * 
+ *
  *    OpenOrienteering is free software: you can redistribute it and/or modify
  *    it under the terms of the GNU General Public License as published by
  *    the Free Software Foundation, either version 3 of the License, or
  *    (at your option) any later version.
- * 
+ *
  *    OpenOrienteering is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
  *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *    GNU General Public License for more details.
- * 
+ *
  *    You should have received a copy of the GNU General Public License
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -20,7 +20,12 @@
 
 #include "util.h"
 
-#include <QFile>
+#include <QIODevice>
+#include <QProcess>
+#include <QMessageBox>
+#include <QDir>
+
+#include "mapper_resource.h"
 
 DoubleValidator::DoubleValidator(double bottom, double top, QObject* parent, int decimals) : QDoubleValidator(bottom, top, decimals, parent)
 {
@@ -146,6 +151,37 @@ bool lineIntersectsRect(const QRectF& rect, const QPointF& p1, const QPointF& p2
 	return false;
 }
 
+double parameterOfPointOnLine(double x0, double y0, double dx, double dy, double x, double y, bool& ok)
+{
+	const double epsilon = 1e-5;
+	ok = true;
+	
+	if (qAbs(dx) > qAbs(dy))
+	{
+		double param = (x - x0) / dx;
+		if (qAbs(y0 + param * dy - y) < epsilon)
+			return param;
+	}
+	else if (dy != 0)
+	{
+		double param = (y - y0) / dy;
+		if (qAbs(x0 + param * dx - x) < epsilon)
+			return param;
+	}
+	
+	ok = false;
+	return -1;
+}
+
+bool isPointOnSegment(const MapCoordF& seg_start, const MapCoordF& seg_end, const MapCoordF& point)
+{
+	bool ok;
+	double param = parameterOfPointOnLine(seg_start.getX(), seg_start.getY(),
+										  seg_end.getX() - seg_start.getX(), seg_end.getY() - seg_start.getY(),
+										  point.getX(), point.getY(), ok);
+	return ok && param >= 0 && param <= 1;
+}
+
 void saveString(QIODevice* file, const QString& str)
 {
 	int length = str.length();
@@ -165,4 +201,87 @@ void loadString(QIODevice* file, QString& str)
 	}
 	else
 		str = "";
+}
+
+namespace Util
+{
+
+void showHelp(QWidget* dialog_parent, QString filename, QString fragment)
+{
+	static QProcess assistant_process;
+	if (assistant_process.state() == QProcess::Running)
+	{
+		QString command("setSource " + makeHelpUrl(filename, fragment) + "\n");
+		assistant_process.write(command.toLatin1());
+	}
+	else
+	{
+		QString manual_path = MapperResource::locate(MapperResource::MANUAL);
+		if (manual_path.isEmpty())
+		{
+			QMessageBox::warning(dialog_parent, QFile::tr("Error"), QFile::tr("Failed to locate the help files."));
+			return;
+		}
+		
+		QString assistant_path = MapperResource::locate(MapperResource::ASSISTANT);
+		if (assistant_path.isEmpty())
+		{
+			QMessageBox::warning(dialog_parent, QFile::tr("Error"), QFile::tr("Failed to locate the help browser (\"Qt Assistant\")."));
+			return;
+		}
+		
+		// Try to start the Qt Assistant process
+		QStringList args;
+		args << QLatin1String("-collectionFile")
+			 << QDir::toNativeSeparators(manual_path)
+			 << QLatin1String("-showUrl")
+			 << makeHelpUrl(filename, fragment)
+			 << QLatin1String("-enableRemoteControl");
+		
+		assistant_process.start(assistant_path, args);
+		
+		// FIXME: Calling waitForStarted() from the main thread might cause the user interface to freeze.
+		if (!assistant_process.waitForStarted())
+		{
+			QMessageBox msg_box;
+			msg_box.setIcon(QMessageBox::Warning);
+			msg_box.setWindowTitle(QFile::tr("Error"));
+			
+			QString assistant_install_cmd;
+#ifdef MAPPER_DEBIAN_PACKAGE_NAME
+			QDir usr_bin("/usr/bin");
+			if (!usr_bin.exists("assistant") && usr_bin.exists("software-center"))
+				assistant_install_cmd = "/usr/bin/software-center qt4-dev-tools";
+#endif
+			if (!assistant_install_cmd.isEmpty())
+			{
+				msg_box.setText(QFile::tr("The help browser (\"Qt Assistant\") is not installed.") + "\n" +
+				                QFile::tr("Do you want to install it now?"));
+				msg_box.setStandardButtons(QMessageBox::Cancel);
+				msg_box.addButton(QFile::tr("Install..."), QMessageBox::ActionRole);
+			}
+			else
+			{
+				msg_box.setText(QFile::tr("Failed to launch the help browser (\"Qt Assistant\")."));
+				msg_box.setStandardButtons(QMessageBox::Ok);
+				QString details = assistant_process.readAllStandardError();
+				if (! details.isEmpty())
+					msg_box.setDetailedText(details);
+			}
+			
+			int result = msg_box.exec();
+			if ( result != QMessageBox::Ok && result != QMessageBox::Cancel &&
+			     !assistant_install_cmd.isEmpty() )
+			{
+				QProcess::startDetached(assistant_install_cmd);
+			}
+		}
+	}
+}
+
+QString makeHelpUrl(QString filename, QString fragment)
+{
+	return "qthelp://openorienteering.mapper.help/oohelpdoc/help/html_en/" + filename + (fragment.isEmpty() ? "" : ("#" + fragment));
+}
+	
 }

@@ -1,18 +1,18 @@
 /*
- *    Copyright 2012 Thomas Schöps, Kai Pastor
- *    
+ *    Copyright 2012, 2013 Thomas Schöps, Kai Pastor
+ *
  *    This file is part of OpenOrienteering.
- * 
+ *
  *    OpenOrienteering is free software: you can redistribute it and/or modify
  *    it under the terms of the GNU General Public License as published by
  *    the Free Software Foundation, either version 3 of the License, or
  *    (at your option) any later version.
- * 
+ *
  *    OpenOrienteering is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
  *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *    GNU General Public License for more details.
- * 
+ *
  *    You should have received a copy of the GNU General Public License
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -32,6 +32,7 @@ class QPainter;
 class QPainterPath;
 
 class Map;
+class MapColor;
 class Object;
 class RenderStates;
 
@@ -50,7 +51,7 @@ public:
 	inline const QRectF& getExtent() const {return extent;}
 	
 	/// Renders the renderable with the given painter
-	virtual void render(QPainter& painter, bool force_min_size, float scaling) const = 0;
+	virtual void render(QPainter& painter, QRectF& bounding_box, bool force_min_size, float scaling, bool on_screen) const = 0;
 	
 	/// Creates the render state information which must be set when rendering this renderable
 	virtual void getRenderStates(RenderStates& out) const = 0;
@@ -66,8 +67,9 @@ protected:
  * 
  * Used to group renderables by common render attributes.
  */
-struct RenderStates
+class RenderStates
 {
+public:
 	enum RenderMode
 	{
 		Reserved = -1,
@@ -188,7 +190,9 @@ class MapRenderables : protected std::map<int, ObjectRenderablesMap>
 public:
 	MapRenderables(Map* map);
 	
-	void draw(QPainter* painter, QRectF bounding_box, bool force_min_size, float scaling, bool show_helper_symbols, float opacity_factor = 1.0f, bool highlighted = false) const;
+	void draw(QPainter* painter, QRectF bounding_box, bool force_min_size, float scaling, bool on_screen, bool show_helper_symbols, float opacity_factor = 1.0f, bool highlighted = false) const;
+	void drawOverprintingSimulation(QPainter* painter, QRectF bounding_box, bool force_min_size, float scaling, bool on_screen, bool show_helper_symbols, float opacity_factor = 1.0f, bool highlighted = false) const;
+	void drawColorSeparation(QPainter* painter, MapColor* separation, QRectF bounding_box, bool force_min_size, float scaling, bool on_screen, bool show_helper_symbols, float opacity_factor = 1.0f, bool highlighted = false) const;
 	
 	void insertRenderablesOfObject(const Object* object);
 	void removeRenderablesOfObject(const Object* object, bool mark_area_as_dirty);	// NOTE: does not delete the renderables, just removes them from display

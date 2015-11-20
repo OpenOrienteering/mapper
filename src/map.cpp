@@ -1,18 +1,18 @@
 /*
- *    Copyright 2012 Thomas Schöps
- *    
+ *    Copyright 2012, 2013 Thomas Schöps
+ *
  *    This file is part of OpenOrienteering.
- * 
+ *
  *    OpenOrienteering is free software: you can redistribute it and/or modify
  *    it under the terms of the GNU General Public License as published by
  *    the Free Software Foundation, either version 3 of the License, or
  *    (at your option) any later version.
- * 
+ *
  *    OpenOrienteering is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
  *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *    GNU General Public License for more details.
- * 
+ *
  *    You should have received a copy of the GNU General Public License
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -32,7 +32,8 @@
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
-#include "map_color.h"
+#include "core/map_color.h"
+#include "core/map_printer.h"
 #include "map_editor.h"
 #include "map_grid.h"
 #include "map_part.h"
@@ -49,6 +50,8 @@
 #include "symbol_line.h"
 #include "symbol_combined.h"
 #include "file_format_ocad8.h"
+#include "file_format_registry.h"
+#include "file_import_export.h"
 #include "georeferencing.h"
 
 // ### MapColorSet ###
@@ -73,137 +76,262 @@ void Map::MapColorSet::dereference()
 	}
 }
 
-void Map::MapColorSet::importSet(Map::MapColorSet* other, Map* map, std::vector< bool >* filter, QHash< int, int >* out_indexmap, QHash<MapColor*, MapColor*>* out_pointermap)
+// ### MapColorMergeItem ###
+
+/** A record of information about the mapping of a color in a source MapColorSet
+ *  to a color in a destination MapColorSet.
+ */
+struct MapColorSetMergeItem
 {
-	// Count colors to import
-	size_t import_count;
+	MapColor* src_color;
+	MapColor* dest_color;
+	std::size_t dest_index;
+	std::size_t lower_bound;
+	std::size_t upper_bound;
+	int lower_errors;
+	int upper_errors;
+	bool filter;
+	
+	MapColorSetMergeItem()
+	 : src_color(NULL),
+	   dest_color(NULL),
+	   dest_index(0),
+	   lower_bound(0),
+	   upper_bound(0),
+	   lower_errors(0),
+	   upper_errors(0),
+	   filter(false)
+	{ }
+};
+
+/** The mapping of all colors in a source MapColorSet
+ *  to colors in a destination MapColorSet. */
+typedef std::vector<MapColorSetMergeItem> MapColorSetMergeList;
+
+// This algorithm tries to maintain the relative order of colors.
+MapColorMap Map::MapColorSet::importSet(const Map::MapColorSet& other, std::vector< bool >* filter, Map* map)
+{
+	MapColorMap out_pointermap;
+	
+	// Determine number of colors to import
+	std::size_t import_count = other.colors.size();
 	if (filter)
 	{
-		import_count = 0;
-		for (size_t i = 0, end = other->colors.size(); i < end; ++i)
-		{
-			if (filter->at(i))
-				++import_count;
-		}
-	}
-	else
-		import_count = other->colors.size();
-	if (import_count == 0)
-		return;
-	
-	colors.reserve(colors.size() + import_count);
-	
-	// Import colors
-	int start_insertion_index = 0;
-	bool priorities_changed = false;
-	for (int i = 0; i < (int)other->colors.size(); ++i)
-	{
-		if (filter && !filter->at(i))
-			continue;
-		MapColor* other_color = other->colors.at(i);
+		Q_ASSERT(filter->size() == other.colors.size());
 		
-		// Check if color is already present, first with comparing the priority, then without
-		// TODO: priorities are shifted as soon as one new color is inserted, so this breaks
-		int found_index = -1;
-		for (size_t k = 0, colors_size = colors.size(); k < colors_size; ++k)
+		for (std::size_t i = 0, end = other.colors.size(); i != end; ++i)
 		{
-			if (colors.at(k)->equals(*other_color, true))
+			MapColor* color = other.colors[i];
+			if (!(*filter)[i] || out_pointermap.contains(color))
 			{
-				found_index = k;
-				break;
+				continue;
 			}
-		}
-		if (found_index == -1)
-		{
-			for (size_t k = 0, colors_size = colors.size(); k < colors_size; ++k)
+			
+			out_pointermap[color] = NULL; // temporary used as a flag
+			
+			// Determine referenced spot colors, and add them to the filter
+			if (color->getSpotColorMethod() == MapColor::CustomColor)
 			{
-				if (colors.at(k)->equals(*other_color, false))
+				SpotColorComponents components(color->getComponents());
+				for (SpotColorComponents::iterator it = components.begin(), end = components.end(); it != end; ++it)
 				{
-					found_index = k;
-					break;
+					if (!out_pointermap.contains(it->spot_color))
+					{
+						// Add this spot color to the filter
+						int i = 0;
+						while (other.colors[i] != it->spot_color)
+							++i;
+						(*filter)[i] = true;
+						out_pointermap[it->spot_color] = NULL;
+					}
 				}
 			}
 		}
+		import_count = out_pointermap.size();
+		out_pointermap.clear();
+	}
+	
+	if (import_count > 0)
+	{
+		colors.reserve(colors.size() + import_count);
 		
-		if (found_index >= 0)
+		MapColorSetMergeList merge_list;
+		merge_list.resize(other.colors.size());
+		
+		bool priorities_changed = false;
+		
+		// Initialize merge_list
+		MapColorSetMergeList::iterator merge_list_item = merge_list.begin();
+		for (std::size_t i = 0; i < other.colors.size(); ++i)
 		{
-			if (out_indexmap)
-				out_indexmap->insert(i, found_index);
-			if (out_pointermap)
-				out_pointermap->insert(other_color, colors[found_index]);
-		}
-		else
-		{
-			// Color does not exist in this map yet.
-			// Check if the color above in other also exists in this set
-			int found_above_index = -1;
-			if (i > 0)
+			merge_list_item->filter = (!filter || (*filter)[i]);
+			
+			MapColor* src_color = other.colors[i];
+			merge_list_item->src_color = src_color;
+			for (std::size_t k = 0, colors_size = colors.size(); k < colors_size; ++k)
 			{
-				MapColor* other_color_above = other->colors.at(i - 1);
-				for (size_t k = 0, colors_size = colors.size(); k < colors_size; ++k)
+				if (colors[k]->equals(*src_color, false))
 				{
-					if (colors.at(k)->equals(*other_color_above, false))
+					merge_list_item->dest_color = colors[k];
+					merge_list_item->dest_index = k;
+					out_pointermap[src_color] = colors[k];
+					break;
+				}
+			}
+			++merge_list_item;
+		}
+		Q_ASSERT(merge_list_item == merge_list.end());
+		
+		while (true)
+		{
+			// Evaluate bounds and conflicting order of colors
+			int max_conflicts = 0;
+			MapColorSetMergeList::iterator selected_item = merge_list.begin();
+			for (merge_list_item = merge_list.begin(); merge_list_item != merge_list.end(); ++merge_list_item)
+			{
+				std::size_t& lower_bound(merge_list_item->lower_bound);
+				lower_bound = merge_list_item->dest_color ? merge_list_item->dest_index : 0;
+				MapColorSetMergeList::iterator it = merge_list.begin();
+				for (; it != merge_list_item; ++it)
+				{
+					if (it->dest_color)
 					{
-						found_above_index = k;
-						break;
+						if (it->dest_index > lower_bound)
+						{
+							lower_bound = it->dest_index;
+						}
+						if (merge_list_item->dest_color && merge_list_item->dest_index < it->dest_index)
+						{
+							++merge_list_item->lower_errors;
+						}
+					}
+				}
+				
+				std::size_t& upper_bound(merge_list_item->upper_bound);
+				upper_bound = merge_list_item->dest_color ? merge_list_item->dest_index : colors.size();
+				for (++it; it != merge_list.end(); ++it)
+				{
+					if (it->dest_color)
+					{
+						if (it->dest_index < upper_bound)
+						{
+							upper_bound = it->dest_index;
+						}
+						if (merge_list_item->dest_color && merge_list_item->dest_index > it->dest_index)
+						{
+							++merge_list_item->upper_errors;
+						}
+					}
+				}
+				if (merge_list_item->filter)
+				{
+					if (merge_list_item->lower_errors == 0 && merge_list_item->upper_errors > max_conflicts)
+					{
+						selected_item = merge_list_item;
+						max_conflicts = merge_list_item->upper_errors;
+					}
+					else if (merge_list_item->upper_errors == 0 && merge_list_item->lower_errors > max_conflicts)
+					{
+						selected_item = merge_list_item;
+						max_conflicts = merge_list_item->lower_errors;
 					}
 				}
 			}
 			
-			int insertion_index;
-			if (found_above_index >= 0)
-			{
-				// Add it below the same color under which it was before
-				insertion_index = found_above_index + 1;
-			}
-			else
-			{
-				// Add it at the beginning
-				insertion_index = start_insertion_index;
-				++start_insertion_index;
-			}
+			if (max_conflicts == 0)
+				break; // No conflicts.
 			
-			MapColor* new_color = new MapColor(*other_color);
+			// Solve selected conflict item
+			MapColor* new_color = new MapColor(*selected_item->dest_color);
+			selected_item->dest_color = new_color;
+			out_pointermap[selected_item->src_color] = new_color;
+			std::size_t insertion_index = (selected_item->lower_errors == 0) ? selected_item->upper_bound : (selected_item->lower_bound+1);
+			
 			if (map)
 				map->addColor(new_color, insertion_index);
 			else
 				colors.insert(colors.begin() + insertion_index, new_color);
-			
 			priorities_changed = true;
 			
-			if (out_indexmap)
+			for (merge_list_item = merge_list.begin(); merge_list_item != merge_list.end(); ++merge_list_item)
 			{
-				QHash<int, int>::iterator it = out_indexmap->begin();
-				while (it != out_indexmap->end())
-				{
-					if (it.value() >= insertion_index)
-						++it.value();
-					++it;
-				}
-				out_indexmap->insert(i, insertion_index);
+				merge_list_item->lower_errors = 0;
+				merge_list_item->upper_errors = 0;
+				if (merge_list_item->dest_color && merge_list_item->dest_index >= insertion_index)
+					++merge_list_item->dest_index;
 			}
-			if (out_pointermap)
-				out_pointermap->insert(other_color, new_color);
+			selected_item->dest_index = insertion_index;
+		}
+		
+		// Some missing colors may be spot color compositions which can be 
+		// resolved to new colors only after all colors have been created.
+		// That is why we create all missing colors first.
+		for (MapColorSetMergeList::reverse_iterator it = merge_list.rbegin(); it != merge_list.rend(); ++it)
+		{
+			if (it->filter && !it->dest_color)
+			{
+				it->dest_color = new MapColor(*it->src_color);
+				out_pointermap[it->src_color] = it->dest_color;
+			}
+			else
+			{
+				// Existing colors don't need to be touched again.
+				it->dest_color = NULL;
+			}
+		}
+		
+		// Now process all new colors for spot color resolution and insertion
+		for (MapColorSetMergeList::reverse_iterator it = merge_list.rbegin(); it != merge_list.rend(); ++it)
+		{
+			MapColor* new_color = it->dest_color;
+			if (new_color)
+			{
+				if (new_color->getSpotColorMethod() == MapColor::CustomColor)
+				{
+					SpotColorComponents components = new_color->getComponents();
+					for (SpotColorComponents::iterator it = components.begin(), end = components.end(); it != end; ++it)
+					{
+						Q_ASSERT(out_pointermap.contains(it->spot_color));
+						it->spot_color = const_cast< MapColor* >(out_pointermap[it->spot_color]);
+					}
+					new_color->setSpotColorComposition(components);
+				}
+				
+				std::size_t insertion_index = it->upper_bound;
+				if (map)
+					map->addColor(new_color, insertion_index);
+				else
+					colors.insert(colors.begin() + insertion_index, new_color);
+				priorities_changed = true;
+			}
+		}
+		
+		if (map && priorities_changed)
+		{
+			map->updateAllObjects();
 		}
 	}
 	
-	if (map && priorities_changed)
-		map->updateAllObjects();
+	return out_pointermap;
 }
+
 
 // ### Map ###
 
 bool Map::static_initialized = false;
-MapColor Map::covering_white;
-MapColor Map::covering_red;
-MapColor Map::undefined_symbol_color;
+MapColor Map::covering_white(MapColor::CoveringWhite);
+MapColor Map::covering_red(MapColor::CoveringRed);
+MapColor Map::undefined_symbol_color(MapColor::Undefined);
 LineSymbol* Map::covering_white_line;
 LineSymbol* Map::covering_red_line;
 LineSymbol* Map::undefined_line;
 PointSymbol* Map::undefined_point;
 CombinedSymbol* Map::covering_combined_line;
 
-Map::Map() : renderables(new MapRenderables(this)), selection_renderables(new MapRenderables(this))
+Map::Map()
+ : renderables(new MapRenderables(this)),
+   selection_renderables(new MapRenderables(this)),
+   printer_config(NULL)
 {
 	if (!static_initialized)
 		initStatic();
@@ -245,17 +373,17 @@ Map::~Map()
 	delete georeferencing;
 }
 
-void Map::setScaleDenominator(int value)
+void Map::setScaleDenominator(unsigned int value)
 {
 	georeferencing->setScaleDenominator(value);
 }
 
-int Map::getScaleDenominator() const
+unsigned int Map::getScaleDenominator() const
 {
 	return georeferencing->getScaleDenominator();
 }
 
-void Map::changeScale(int new_scale_denominator, bool scale_symbols, bool scale_objects, bool scale_georeferencing, bool scale_templates)
+void Map::changeScale(unsigned int new_scale_denominator, const MapCoord& scaling_center, bool scale_symbols, bool scale_objects, bool scale_georeferencing, bool scale_templates)
 {
 	if (new_scale_denominator == getScaleDenominator())
 		return;
@@ -267,10 +395,10 @@ void Map::changeScale(int new_scale_denominator, bool scale_symbols, bool scale_
 	if (scale_objects)
 	{
 		object_undo_manager.clear(false);
-		scaleAllObjects(factor);
+		scaleAllObjects(factor, scaling_center);
 	}
 	if (scale_georeferencing)
-		georeferencing->setMapRefPoint(factor * georeferencing->getMapRefPoint());
+		georeferencing->setMapRefPoint(scaling_center + factor * (georeferencing->getMapRefPoint() - scaling_center));
 	if (scale_templates)
 	{
 		for (int i = 0; i < getNumTemplates(); ++i)
@@ -279,7 +407,7 @@ void Map::changeScale(int new_scale_denominator, bool scale_symbols, bool scale_
 			if (temp->isTemplateGeoreferenced())
 				continue;
 			setTemplateAreaDirty(i);
-			temp->scaleFromOrigin(factor);
+			temp->scale(factor, scaling_center);
 			setTemplateAreaDirty(i);
 		}
 		for (int i = 0; i < getNumClosedTemplates(); ++i)
@@ -287,26 +415,27 @@ void Map::changeScale(int new_scale_denominator, bool scale_symbols, bool scale_
 			Template* temp = getClosedTemplate(i);
 			if (temp->isTemplateGeoreferenced())
 				continue;
-			temp->scaleFromOrigin(factor);
+			temp->scale(factor, scaling_center);
 		}
 	}
 	
 	setScaleDenominator(new_scale_denominator);
 	setOtherDirty(true);
+	updateAllMapWidgets();
 }
-void Map::rotateMap(double rotation, bool adjust_georeferencing, bool adjust_declination, bool adjust_templates)
+void Map::rotateMap(double rotation, const MapCoord& center, bool adjust_georeferencing, bool adjust_declination, bool adjust_templates)
 {
 	if (fmod(rotation, 360) == 0)
 		return;
 	
 	object_undo_manager.clear(false);
-	rotateAllObjects(rotation);
+	rotateAllObjects(rotation, center);
 	
 	if (adjust_georeferencing)
 	{
-		MapCoordF reference_point = MapCoordF(georeferencing->getMapRefPoint());
+		MapCoordF reference_point = MapCoordF(georeferencing->getMapRefPoint() - center);
 		reference_point.rotate(-rotation);
-		georeferencing->setMapRefPoint(reference_point.toMapCoord());
+		georeferencing->setMapRefPoint(center + reference_point.toMapCoord());
 	}
 	if (adjust_declination)
 	{
@@ -321,7 +450,7 @@ void Map::rotateMap(double rotation, bool adjust_georeferencing, bool adjust_dec
 			if (temp->isTemplateGeoreferenced())
 				continue;
 			setTemplateAreaDirty(i);
-			temp->rotateAroundOrigin(rotation);
+			temp->rotate(rotation, center);
 			setTemplateAreaDirty(i);
 		}
 		for (int i = 0; i < getNumClosedTemplates(); ++i)
@@ -329,24 +458,25 @@ void Map::rotateMap(double rotation, bool adjust_georeferencing, bool adjust_dec
 			Template* temp = getClosedTemplate(i);
 			if (temp->isTemplateGeoreferenced())
 				continue;
-			temp->rotateAroundOrigin(rotation);
+			temp->rotate(rotation, center);
 		}
 	}
 	
 	setOtherDirty(true);
+	updateAllMapWidgets();
 }
 
 bool Map::saveTo(const QString& path, MapEditorController* map_editor)
 {
 	assert(map_editor && "Preserving the widget&view information without retrieving it from a MapEditorController is not implemented yet!");
 	
-	const Format *format = FileFormats.findFormatForFilename(path);
+	const FileFormat *format = FileFormats.findFormatForFilename(path);
 	if (!format) format = FileFormats.findFormat(FileFormats.defaultFormat());
 	
 	if (!format || !format->supportsExport())
 	{
 		if (format)
-			QMessageBox::warning(NULL, tr("Error"), tr("Cannot export the map as\n\"%1\"\nbecause saving as %2 (.%3) is not supported.").arg(path).arg(format->description()).arg(format->fileExtension()));
+			QMessageBox::warning(NULL, tr("Error"), tr("Cannot export the map as\n\"%1\"\nbecause saving as %2 (.%3) is not supported.").arg(path).arg(format->description()).arg(format->fileExtensions().join(", ")));
 		else
 			QMessageBox::warning(NULL, tr("Error"), tr("Cannot export the map as\n\"%1\"\nbecause the format is unknown.").arg(path));
 		return false;
@@ -473,7 +603,7 @@ bool Map::loadFrom(const QString& path, MapEditorController* map_editor, bool lo
 
 	bool import_complete = false;
 	QString error_msg = tr("Invalid file type.");
-	Q_FOREACH(const Format *format, FileFormats.formats())
+	Q_FOREACH(const FileFormat *format, FileFormats.formats())
 	{
 		// If the format supports import, and thinks it can understand the file header, then proceed.
 		if (format->supportsImport() && format->understands(buffer, total_read))
@@ -539,6 +669,8 @@ bool Map::loadFrom(const QString& path, MapEditorController* map_editor, bool lo
 
 	// Update all objects without trying to remove their renderables first, this gives a significant speedup when loading large files
 	updateAllObjects(); // TODO: is the comment above still applicable?
+	
+	setHasUnsavedChanges(false);
 
 	return true;
 }
@@ -547,7 +679,7 @@ void Map::importMap(Map* other, ImportMode mode, QWidget* dialog_parent, std::ve
 					bool merge_duplicate_symbols, QHash<Symbol*, Symbol*>* out_symbol_map)
 {
 	// Check if there is something to import
-	if (other->getNumColors() == 0)
+	if (other->getNumColors() == 0 && other->getNumSymbols() == 0 && other->getNumObjects() == 0)
 	{
 		QMessageBox::critical(dialog_parent, tr("Error"), tr("Nothing to import."));
 		return;
@@ -561,7 +693,7 @@ void Map::importMap(Map* other, ImportMode mode, QWidget* dialog_parent, std::ve
 										   .arg(QLocale().toString(other->getScaleDenominator()))
 										   .arg(QLocale().toString(getScaleDenominator())), QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
 		if (answer == QMessageBox::Yes)
-			other->changeScale(getScaleDenominator(), true, true, true, true);
+			other->changeScale(getScaleDenominator(), MapCoord(0, 0), true, true, true, true);
 	}
 	
 	// TODO: As a special case if both maps are georeferenced, the location of the imported objects could be corrected
@@ -596,73 +728,72 @@ void Map::importMap(Map* other, ImportMode mode, QWidget* dialog_parent, std::ve
 	}
 	
 	// Import colors
-	QHash<MapColor*, MapColor*> color_map;
-	color_set->importSet(other->color_set, this, &color_filter, NULL, &color_map);
+	MapColorMap color_map(color_set->importSet(*other->color_set, &color_filter, this));
 	
 	if (mode == ColorImport)
 		return;
 	
+	QHash<Symbol*, Symbol*> symbol_map;
 	if (other->getNumSymbols() > 0)
 	{
 		// Import symbols
-		QHash<Symbol*, Symbol*> symbol_map;
 		importSymbols(other, color_map, symbol_insert_pos, merge_duplicate_symbols, &symbol_filter, NULL, &symbol_map);
 		if (out_symbol_map != NULL)
 			*out_symbol_map = symbol_map;
-		
-		if (mode == MinimalSymbolImport)
-			return;
-		
-		if (other->getNumObjects() > 0)
+	}
+	
+	if (mode == MinimalSymbolImport)
+		return;
+	
+	if (other->getNumObjects() > 0)
+	{
+		// Import parts like this:
+		//  - if the other map has only one part, import it into the current part
+		//  - else check if there is already a part with an equal name for every part to import and import into this part if found, else create a new part
+		for (int part = 0; part < other->getNumParts(); ++part)
 		{
-			// Import parts like this:
-			//  - if the other map has only one part, import it into the current part
-			//  - else check if there is already a part with an equal name for every part to import and import into this part if found, else create a new part
-			for (int part = 0; part < other->getNumParts(); ++part)
+			MapPart* part_to_import = other->getPart(part);
+			MapPart* dest_part = NULL;
+			if (other->getNumParts() == 1)
+				dest_part = getCurrentPart();
+			else
 			{
-				MapPart* part_to_import = other->getPart(part);
-				MapPart* dest_part = NULL;
-				if (other->getNumParts() == 1)
-					dest_part = getCurrentPart();
-				else
+				for (int check_part = 0; check_part < getNumParts(); ++check_part)
 				{
-					for (int check_part = 0; check_part < getNumParts(); ++check_part)
+					if (getPart(check_part)->getName().compare(other->getPart(part)->getName(), Qt::CaseInsensitive) == 0)
 					{
-						if (getPart(check_part)->getName().compare(other->getPart(part)->getName(), Qt::CaseInsensitive) == 0)
-						{
-							dest_part = getPart(check_part);
-							break;
-						}
-					}
-					if (dest_part == NULL)
-					{
-						// Import as new part
-						dest_part = new MapPart(part_to_import->getName(), this);
-						addPart(dest_part, 0);
+						dest_part = getPart(check_part);
+						break;
 					}
 				}
-				
-				// Temporarily switch the current part for importing so the undo step gets created for the right part
-				MapPart* temp_current_part = getCurrentPart();
-				current_part_index = findPartIndex(dest_part);
-				
-				bool select_and_center_objects = dest_part == temp_current_part;
-				dest_part->importPart(part_to_import, symbol_map, select_and_center_objects);
-				if (select_and_center_objects)
-					ensureVisibilityOfSelectedObjects();
-				
-				current_part_index = findPartIndex(temp_current_part);
+				if (dest_part == NULL)
+				{
+					// Import as new part
+					dest_part = new MapPart(part_to_import->getName(), this);
+					addPart(dest_part, 0);
+				}
 			}
+			
+			// Temporarily switch the current part for importing so the undo step gets created for the right part
+			MapPart* temp_current_part = getCurrentPart();
+			current_part_index = findPartIndex(dest_part);
+			
+			bool select_and_center_objects = dest_part == temp_current_part;
+			dest_part->importPart(part_to_import, symbol_map, select_and_center_objects);
+			if (select_and_center_objects)
+				ensureVisibilityOfSelectedObjects();
+			
+			current_part_index = findPartIndex(temp_current_part);
 		}
 	}
 }
 
-bool Map::exportToNative(QIODevice* stream)
+bool Map::exportToIODevice(QIODevice* stream)
 {
 	stream->open(QIODevice::WriteOnly);
 	Exporter* exporter = NULL;
 	try {
-		const Format* native_format = FileFormats.findFormat("native");
+		const FileFormat* native_format = FileFormats.findFormat("XML");
 		exporter = native_format->createExporter(stream, this, NULL);
 		exporter->doExport();
 		stream->close();
@@ -678,11 +809,11 @@ bool Map::exportToNative(QIODevice* stream)
 	return true;
 }
 
-bool Map::importFromNative(QIODevice* stream)
+bool Map::importFromIODevice(QIODevice* stream)
 {
 	Importer* importer = NULL;
 	try {
-		const Format* native_format = FileFormats.findFormat("native");
+		const FileFormat* native_format = FileFormats.findFormat("XML");
 		importer = native_format->createImporter(stream, this, NULL);
 		importer->doImport(false);
 		importer->finishImport();
@@ -732,7 +863,8 @@ void Map::clear()
 	
 	map_notes = "";
 	
-	print_params_set = false;
+	printer_config.reset();
+	
 	image_template_use_meters_per_pixel = true;
 	image_template_meters_per_pixel = 0;
 	image_template_dpi = 0;
@@ -746,19 +878,35 @@ void Map::clear()
 	unsaved_changes = false;
 }
 
-void Map::draw(QPainter* painter, QRectF bounding_box, bool force_min_size, float scaling, bool show_helper_symbols, float opacity)
+void Map::draw(QPainter* painter, QRectF bounding_box, bool force_min_size, float scaling, bool on_screen, bool show_helper_symbols, float opacity)
 {
 	// Update the renderables of all objects marked as dirty
 	updateObjects();
 	
 	// The actual drawing
-	renderables->draw(painter, bounding_box, force_min_size, scaling, show_helper_symbols, opacity);
+	renderables->draw(painter, bounding_box, force_min_size, scaling, on_screen, show_helper_symbols, opacity);
 }
+
+void Map::drawOverprintingSimulation(QPainter* painter, QRectF bounding_box, bool force_min_size, float scaling, bool on_screen, bool show_helper_symbols, float opacity)
+{
+	// Update the renderables of all objects marked as dirty
+	updateObjects();
+	
+	// The actual drawing
+	renderables->drawOverprintingSimulation(painter, bounding_box, force_min_size, scaling, on_screen, show_helper_symbols, opacity);
+}
+
+void Map::drawColorSeparation(QPainter* painter, MapColor* spot_color, QRectF bounding_box, bool force_min_size, float scaling, bool on_screen, bool show_helper_symbols, float opacity)
+{
+	// The actual drawing
+	renderables->drawColorSeparation(painter, spot_color, bounding_box, force_min_size, scaling, on_screen, show_helper_symbols, opacity);
+}
+
 void Map::drawGrid(QPainter* painter, QRectF bounding_box)
 {
 	grid->draw(painter, bounding_box, this);
 }
-void Map::drawTemplates(QPainter* painter, QRectF bounding_box, int first_template, int last_template, MapView* view)
+void Map::drawTemplates(QPainter* painter, QRectF bounding_box, int first_template, int last_template, MapView* view, bool on_screen)
 {
 	for (int i = first_template; i <= last_template; ++i)
 	{
@@ -768,7 +916,7 @@ void Map::drawTemplates(QPainter* painter, QRectF bounding_box, int first_templa
 		float scale = (view ? view->getZoom() : 1) * std::max(temp->getTemplateScaleX(), temp->getTemplateScaleY());
 		
 		painter->save();
-		temp->drawTemplate(painter, bounding_box, scale, view ? view->getTemplateVisibility(temp)->opacity : 1);
+		temp->drawTemplate(painter, bounding_box, scale, on_screen, view ? view->getTemplateVisibility(temp)->opacity : 1);
 		painter->restore();
 	}
 }
@@ -835,7 +983,10 @@ void Map::deleteSelectedObjects()
 		undo_step->addObject(index, *it);
 	}
 	for (Map::ObjectSelection::const_iterator it = selectedObjectsBegin(); it != it_end; ++it)
+	{
 		deleteObject(*it, true);
+		setObjectsDirty();
+	}
 	clearObjectSelection(true);
 	objectUndoManager().addNewUndoStep(undo_step);
 }
@@ -868,7 +1019,7 @@ void Map::drawSelection(QPainter* painter, bool force_min_size, MapWidget* widge
 	
 	if (!replacement_renderables)
 		replacement_renderables = selection_renderables.data();
-	replacement_renderables->draw(painter, view->calculateViewedRect(widget->viewportToView(widget->rect())), force_min_size, view->calculateFinalZoomFactor(), true, selection_opacity_factor, !draw_normal);
+	replacement_renderables->draw(painter, view->calculateViewedRect(widget->viewportToView(widget->rect())), force_min_size, view->calculateFinalZoomFactor(), true, true, selection_opacity_factor, !draw_normal);
 	
 	painter->restore();
 }
@@ -980,7 +1131,7 @@ void Map::ensureVisibilityOfSelectedObjects()
 	QRectF rect;
 	includeSelectionRect(rect);
 	for (int i = 0; i < (int)widgets.size(); ++i)
-		widgets[i]->ensureVisibilityOfRect(rect);
+		widgets[i]->ensureVisibilityOfRect(rect, true, true);
 }
 
 /*void Map::addMapView(MapView* view)
@@ -1030,8 +1181,34 @@ void Map::updateDrawing(QRectF map_coords_rect, int pixel_border)
 
 void Map::setColor(MapColor* color, int pos)
 {
+	MapColor* old_color = color_set->colors[pos];
+	
 	color_set->colors[pos] = color;
-	color->priority = pos;
+	color->setPriority(pos);
+	
+	if (color->getSpotColorMethod() == MapColor::SpotColor)
+	{
+		// Update dependent colors
+		Q_FOREACH(MapColor* map_color, color_set->colors)
+		{
+			if (map_color->getSpotColorMethod() != MapColor::CustomColor)
+				continue;
+			
+			Q_FOREACH(SpotColorComponent component, map_color->getComponents())
+			{
+				if (component.spot_color == old_color)
+				{
+					component.spot_color = color;
+					// Assuming each spot color is rarely used more than once per composition
+					if (map_color->getCmykColorMethod() == MapColor::SpotColor)
+						map_color->setCmykFromSpotColors();
+					if (map_color->getRgbColorMethod() == MapColor::SpotColor)
+						map_color->setRgbFromSpotColors();
+					emit colorChanged(map_color->getPriority(), map_color);
+				}
+			}
+		}
+	}
 	
 	// Regenerate all symbols' icons
 	int size = (int)symbols.size();
@@ -1048,15 +1225,7 @@ void Map::setColor(MapColor* color, int pos)
 }
 MapColor* Map::addColor(int pos)
 {
-	MapColor* new_color = new MapColor();
-	new_color->name = tr("New color");
-	new_color->priority = pos;
-	new_color->c = 0;
-	new_color->m = 0;
-	new_color->y = 0;
-	new_color->k = 1;
-	new_color->opacity = 1;
-	new_color->updateFromCMYK();
+	MapColor* new_color = new MapColor(tr("New color"), pos);
 	
 	color_set->colors.insert(color_set->colors.begin() + pos, new_color);
 	adjustColorPriorities(pos + 1, color_set->colors.size() - 1);
@@ -1072,13 +1241,38 @@ void Map::addColor(MapColor* color, int pos)
 	checkIfFirstColorAdded();
 	setColorsDirty();
 	emit(colorAdded(pos, color));
-	color->priority = pos;
+	color->setPriority(pos);
 }
 void Map::deleteColor(int pos)
 {
 	MapColor* color = color_set->colors[pos];
 	color_set->colors.erase(color_set->colors.begin() + pos);
 	adjustColorPriorities(pos, color_set->colors.size() - 1);
+	
+	if (color->getSpotColorMethod() == MapColor::SpotColor)
+	{
+		// Update dependent colors
+		Q_FOREACH(MapColor* map_color, color_set->colors)
+		{
+			if (map_color->getSpotColorMethod() != MapColor::CustomColor)
+				continue;
+			
+			SpotColorComponents out_components = map_color->getComponents();
+			SpotColorComponents::iterator com_it = out_components.begin();
+			while(com_it != out_components.end())
+			{
+				if (com_it->spot_color == color)
+				{
+					com_it = out_components.erase(com_it);
+					// Assuming each spot color is rarely used more than once per composition
+					map_color->setSpotColorComposition(out_components);
+					emit colorChanged(map_color->getPriority(), map_color);
+				}
+				else
+					com_it++;
+			}
+		}
+	}
 	
 	if (getNumColors() == 0)
 	{
@@ -1102,7 +1296,7 @@ void Map::deleteColor(int pos)
 	
 	delete color;
 }
-int Map::findColorIndex(MapColor* color) const
+int Map::findColorIndex(const MapColor* color) const
 {
 	int size = (int)color_set->colors.size();
 	for (int i = 0; i < size; ++i)
@@ -1124,7 +1318,8 @@ void Map::useColorsFrom(Map* map)
 	color_set = map->color_set;
 	color_set->addReference();
 }
-bool Map::isColorUsedByASymbol(MapColor* color)
+
+bool Map::isColorUsedByASymbol(const MapColor* color) const
 {
 	int size = (int)symbols.size();
 	for (int i = 0; i < size; ++i)
@@ -1139,7 +1334,7 @@ void Map::adjustColorPriorities(int first, int last)
 {
 	// TODO: delete or update RenderStates with these colors
 	for (int i = first; i <= last; ++i)
-		color_set->colors[i]->priority = i;
+		color_set->colors[i]->setPriority(i);
 }
 
 void Map::determineColorsInUse(const std::vector< bool >& by_which_symbols, std::vector< bool >& out)
@@ -1164,7 +1359,7 @@ void Map::determineColorsInUse(const std::vector< bool >& by_which_symbols, std:
 	}
 }
 
-void Map::importSymbols(Map* other, const QHash<MapColor*, MapColor*>& color_map, int insert_pos, bool merge_duplicates, std::vector< bool >* filter,
+void Map::importSymbols(Map* other, const MapColorMap& color_map, int insert_pos, bool merge_duplicates, std::vector< bool >* filter,
 						QHash< int, int >* out_indexmap, QHash< Symbol*, Symbol* >* out_pointermap)
 {
 	// We need a pointer map (and keep track of added symbols) to adjust the references of combined symbols
@@ -1257,21 +1452,6 @@ void Map::initStatic()
 {
 	static_initialized = true;
 	
-	// Covering colors and symbols
-	covering_white.opacity = 1000;	// HACK: (almost) always opaque, even if multiplied by opacity factors
-	covering_white.r = 1;
-	covering_white.g = 1;
-	covering_white.b = 1;
-	covering_white.updateFromRGB();
-	covering_white.priority = MapColor::CoveringWhite;
-	
-	covering_red.opacity = 1000;
-	covering_red.r = 1;
-	covering_red.g = 0;
-	covering_red.b = 0;
-	covering_red.updateFromRGB();
-	covering_red.priority = MapColor::CoveringRed;
-	
 	covering_white_line = new LineSymbol();
 	covering_white_line->setColor(&covering_white);
 	covering_white_line->setLineWidth(3);
@@ -1286,13 +1466,6 @@ void Map::initStatic()
 	covering_combined_line->setPart(1, covering_red_line, false);
 	
 	// Undefined symbols
-	undefined_symbol_color.opacity = 1;
-	undefined_symbol_color.r = 0.5f;
-	undefined_symbol_color.g = 0.5f;
-	undefined_symbol_color.b = 0.5f;
-	undefined_symbol_color.updateFromRGB();
-	undefined_symbol_color.priority = MapColor::Undefined;
-	
 	undefined_line = new LineSymbol();
 	undefined_line->setColor(&undefined_symbol_color);
 	undefined_line->setLineWidth(1);
@@ -1554,7 +1727,7 @@ void Map::setTemplateAreaDirty(int i)
 	
 	templates[i]->setTemplateAreaDirty();
 }
-int Map::findTemplateIndex(Template* temp)
+int Map::findTemplateIndex(const Template* temp) const
 {
 	int size = (int)templates.size();
 	for (int i = 0; i < size; ++i)
@@ -1683,7 +1856,7 @@ void Map::setObjectsDirty()
 	objects_dirty = true;
 }
 
-QRectF Map::calculateExtent(bool include_helper_symbols, bool include_templates, MapView* view)
+QRectF Map::calculateExtent(bool include_helper_symbols, bool include_templates, const MapView* view) const
 {
 	QRectF rect;
 	
@@ -1700,6 +1873,8 @@ QRectF Map::calculateExtent(bool include_helper_symbols, bool include_templates,
 		{
 			if (view && !view->isTemplateVisible(templates[i]))
 				continue;
+            if (templates[i]->getTemplateState() != Template::Loaded)
+              continue;
 			
 			QRectF template_bbox = templates[i]->calculateTemplateBoundingBox();
 			rectIncludeSafe(rect, template_bbox);
@@ -1731,13 +1906,13 @@ int Map::countObjectsInRect(QRectF map_coord_rect, bool include_hidden_objects)
 	return count;
 }
 
-void Map::scaleAllObjects(double factor)
+void Map::scaleAllObjects(double factor, const MapCoord& scaling_center)
 {
-	operationOnAllObjects(ObjectOp::Scale(factor));
+	operationOnAllObjects(ObjectOp::Scale(factor, scaling_center));
 }
-void Map::rotateAllObjects(double rotation)
+void Map::rotateAllObjects(double rotation, const MapCoord& center)
 {
-	operationOnAllObjects(ObjectOp::Rotate(rotation));
+	operationOnAllObjects(ObjectOp::Rotate(rotation, center));
 }
 void Map::updateAllObjects()
 {
@@ -1767,43 +1942,37 @@ bool Map::doObjectsExistWithSymbol(Symbol* symbol)
 void Map::setGeoreferencing(const Georeferencing& georeferencing)
 {
 	*this->georeferencing = georeferencing;
+	setOtherDirty(true);
 }
 
-void Map::setPrintParameters(int orientation, int format, float dpi, bool show_templates, bool show_grid, bool center, float left, float top, float width, float height, bool different_scale_enabled, int different_scale)
+const MapPrinterConfig& Map::printerConfig()
 {
-	if ((print_orientation != orientation) || (print_format != format) || (print_dpi != dpi) || (print_show_templates != show_templates) ||
-		(print_center != center) || (print_area_left != left) || (print_area_top != top) || (print_area_width != width) || (print_area_height != height))
-		setHasUnsavedChanges();
-
-	print_orientation = orientation;
-	print_format = format;
-	print_dpi = dpi;
-	print_show_templates = show_templates;
-	print_show_grid = show_grid;
-	print_center = center;
-	print_area_left = left;
-	print_area_top = top;
-	print_area_width = width;
-	print_area_height = height;
-	print_different_scale_enabled = different_scale_enabled;
-	print_different_scale = different_scale;
+	if (printer_config.isNull())
+		printer_config.reset(new MapPrinterConfig(*this));
 	
-	print_params_set = true;
+	return *printer_config;
 }
-void Map::getPrintParameters(int& orientation, int& format, float& dpi, bool& show_templates, bool& show_grid, bool& center, float& left, float& top, float& width, float& height, bool& different_scale_enabled, int& different_scale)
+
+MapPrinterConfig Map::printerConfig() const
 {
-	orientation = print_orientation;
-	format = print_format;
-	dpi = print_dpi;
-	show_templates = print_show_templates;
-	show_grid = print_show_grid;
-	center = print_center;
-	left = print_area_left;
-	top = print_area_top;
-	width = print_area_width;
-	height = print_area_height;
-	different_scale_enabled = print_different_scale_enabled;
-	different_scale = print_different_scale;
+	if (printer_config.isNull())
+		return MapPrinterConfig(*this);
+	
+	return *printer_config;
+}
+
+void Map::setPrinterConfig(const MapPrinterConfig& config)
+{
+	if (printer_config.isNull())
+	{
+		printer_config.reset(new MapPrinterConfig(config));
+		setOtherDirty(true);
+	}
+	else if (*printer_config != config)
+	{
+		*printer_config = config;
+		setOtherDirty(true);
+	}
 }
 
 void Map::setImageTemplateDefaults(bool use_meters_per_pixel, double meters_per_pixel, double dpi, double scale)
@@ -1893,6 +2062,7 @@ MapView::MapView(Map* map) : map(map)
 	map_visibility->visible = true;
 	all_templates_hidden = false;
 	grid_visible = false;
+	overprinting_simulation_enabled = false;
 	update();
 	//map->addMapView(this);
 }
@@ -1920,7 +2090,7 @@ void MapView::save(QIODevice* file)
 	
 	int num_template_visibilities = template_visibilities.size();
 	file->write((const char*)&num_template_visibilities, sizeof(int));
-	QHash<Template*, TemplateVisibility*>::const_iterator it = template_visibilities.constBegin();
+	QHash<const Template*, TemplateVisibility*>::const_iterator it = template_visibilities.constBegin();
 	while (it != template_visibilities.constEnd())
 	{
 		int pos = map->findTemplateIndex(it.key());
@@ -1988,6 +2158,8 @@ void MapView::save(QXmlStreamWriter& xml)
 	xml.writeAttribute("drag_offset_y", QString::number(drag_offset.y()));
 	if (grid_visible)
 		xml.writeAttribute("grid", "true");
+	if (overprinting_simulation_enabled)
+		xml.writeAttribute("overprinting_simulation_enabled", "true");
 	
 	xml.writeEmptyElement("map");
 	if (!map_visibility->visible)
@@ -1999,7 +2171,7 @@ void MapView::save(QXmlStreamWriter& xml)
 	xml.writeAttribute("count", QString::number(num_template_visibilities));
 	if (all_templates_hidden)
 		xml.writeAttribute("hidden", "true");
-	QHash<Template*, TemplateVisibility*>::const_iterator it = template_visibilities.constBegin();
+	QHash<const Template*, TemplateVisibility*>::const_iterator it = template_visibilities.constBegin();
 	for ( ; it != template_visibilities.constEnd(); ++it)
 	{
 		xml.writeEmptyElement("ref");
@@ -2031,6 +2203,7 @@ void MapView::load(QXmlStreamReader& xml)
 		drag_offset.setX(attributes.value("drag_offset_x").toString().toInt());
 		drag_offset.setY(attributes.value("drag_offset_y").toString().toInt());
 		grid_visible = (attributes.value("grid") == "true");
+		overprinting_simulation_enabled = (attributes.value("overprinting_simulation_enabled") == "true");
 		update();
 	}
 	
@@ -2315,11 +2488,11 @@ TemplateVisibility *MapView::getMapVisibility()
 	return map_visibility;
 }
 
-bool MapView::isTemplateVisible(Template* temp)
+bool MapView::isTemplateVisible(const Template* temp) const
 {
 	if (template_visibilities.contains(temp))
 	{
-		TemplateVisibility* vis = template_visibilities.value(temp);
+		const TemplateVisibility* vis = template_visibilities.value(temp);
 		return vis->visible && vis->opacity > 0;
 	}
 	else

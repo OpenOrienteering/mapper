@@ -1,18 +1,18 @@
 /*
- *    Copyright 2012 Thomas Schöps
- *    
+ *    Copyright 2012, 2013 Thomas Schöps
+ *
  *    This file is part of OpenOrienteering.
- * 
+ *
  *    OpenOrienteering is free software: you can redistribute it and/or modify
  *    it under the terms of the GNU General Public License as published by
  *    the Free Software Foundation, either version 3 of the License, or
  *    (at your option) any later version.
- * 
+ *
  *    OpenOrienteering is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
  *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *    GNU General Public License for more details.
- * 
+ *
  *    You should have received a copy of the GNU General Public License
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -20,6 +20,7 @@
 
 #include "matrix.h"
 
+#include <QDebug>
 #include <QIODevice>
 #include <QXmlStreamWriter>
 
@@ -60,8 +61,8 @@ void Matrix::load(QXmlStreamReader& xml)
 {
 	Q_ASSERT(xml.name() == "matrix");
 	
-	int new_n = xml.attributes().value("n").toString().toInt();
-	int new_m = xml.attributes().value("m").toString().toInt();
+	int new_n = qMax(0, xml.attributes().value("n").toString().toInt());
+	int new_m = qMax(0, xml.attributes().value("m").toString().toInt());
 	setSize(new_n, new_m);
 	int count = n*m;
 	int i = 0;
@@ -73,5 +74,11 @@ void Matrix::load(QXmlStreamReader& xml)
 			i++;
 		}
 		xml.skipCurrentElement();
+	}
+	
+	if (i < count)
+	{
+		qDebug() << "Too few elements for a" << new_n << "x" << new_m
+		         << "matrix at line" << xml.lineNumber();
 	}
 }

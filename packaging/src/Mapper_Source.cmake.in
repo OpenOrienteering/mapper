@@ -1,0 +1,41 @@
+#
+#    Copyright 2012 Kai Pastor
+#
+#    This file is part of OpenOrienteering.
+#
+#    OpenOrienteering is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    OpenOrienteering is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
+
+# At first, check that the working directory is clean.
+message(STATUS "Checking git working directory")
+execute_process(
+  COMMAND "@GIT_EXECUTABLE@" status
+  WORKING_DIRECTORY "@PROJECT_SOURCE_DIR@"
+  OUTPUT_VARIABLE GIT_STATUS_OUTPUT
+)
+message(${GIT_STATUS_OUTPUT})
+if(NOT GIT_STATUS_OUTPUT MATCHES "working directory clean")
+	message(FATAL_ERROR "Source package must be created from a clean git working directory.")
+endif()
+message(STATUS "Checking git working directory - clean")
+
+# Working directory is clean, now let git build the archive
+message(STATUS "Creating @Mapper_Source_FILE_NAME@.@Mapper_Source_FORMAT@")
+execute_process(
+  COMMAND "@GIT_EXECUTABLE@" archive
+    --format "@Mapper_Source_FORMAT@"
+    --prefix "@Mapper_Source_FILE_NAME@/"
+    --output "@PROJECT_BINARY_DIR@/@Mapper_Source_FILE_NAME@.@Mapper_Source_FORMAT@"
+    HEAD
+  WORKING_DIRECTORY "@PROJECT_SOURCE_DIR@"
+)

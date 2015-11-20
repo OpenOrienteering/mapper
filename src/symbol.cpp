@@ -1,18 +1,18 @@
 /*
- *    Copyright 2012 Thomas Schöps
- *    
+ *    Copyright 2012, 2013 Thomas Schöps
+ *
  *    This file is part of OpenOrienteering.
- * 
+ *
  *    OpenOrienteering is free software: you can redistribute it and/or modify
  *    it under the terms of the GNU General Public License as published by
  *    the Free Software Foundation, either version 3 of the License, or
  *    (at your option) any later version.
- * 
+ *
  *    OpenOrienteering is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
  *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *    GNU General Public License for more details.
- * 
+ *
  *    You should have received a copy of the GNU General Public License
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -29,19 +29,20 @@
 #include <QXmlStreamWriter>
 #include <qmath.h>
 
-#include "util.h"
+#include "core/map_color.h"
+#include "file_import_export.h"
 #include "map.h"
-#include "map_color.h"
 #include "object.h"
 #include "object_text.h"
+#include "renderable_implementation.h"
+#include "symbol_area.h"
+#include "symbol_combined.h"
 #include "symbol_line.h"
 #include "symbol_point.h"
-#include "symbol_area.h"
-#include "symbol_text.h"
-#include "symbol_combined.h"
 #include "symbol_properties_widget.h"
 #include "symbol_setting_dialog.h"
-#include "renderable_implementation.h"
+#include "symbol_text.h"
+#include "util.h"
 
 Symbol::Symbol(Type type) : type(type), name(""), description(""), is_helper_symbol(false), is_hidden(false), is_protected(false), icon(NULL)
 {
@@ -141,14 +142,30 @@ bool Symbol::isTypeCompatibleTo(Object* object)
 	return false;
 }
 
-bool Symbol::numberEquals(Symbol* other)
+bool Symbol::numberEquals(Symbol* other, bool ignore_trailing_zeros)
 {
-	for (int i = 0; i < number_components; ++i)
+	if (ignore_trailing_zeros)
 	{
-		if (number[i] != other->number[i])
-			return false;
-		if (number[i] == -1)
-			return true;
+		for (int i = 0; i < number_components; ++i)
+		{
+			if (number[i] == -1 && other->number[i] == -1)
+				return true;
+			if ((number[i] == 0 || number[i] == -1) &&
+				(other->number[i] == 0 || other->number[i] == -1))
+				continue;
+			if (number[i] != other->number[i])
+				return false;
+		}
+	}
+	else
+	{
+		for (int i = 0; i < number_components; ++i)
+		{
+			if (number[i] != other->number[i])
+				return false;
+			if (number[i] == -1)
+				return true;
+		}
 	}
 	return true;
 }
@@ -203,14 +220,14 @@ void Symbol::save(QXmlStreamWriter& xml, const Map& map) const
 	xml.writeEndElement(/*symbol*/);
 }
 
-Symbol* Symbol::load(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol_dict) throw (FormatException)
+Symbol* Symbol::load(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol_dict) throw (FileFormatException)
 {
 	Q_ASSERT(xml.name() == "symbol");
 	
 	int symbol_type = xml.attributes().value("type").toString().toInt();
 	Symbol* symbol = Symbol::getSymbolForType(static_cast<Symbol::Type>(symbol_type));
 	if (!symbol)
-		throw FormatException(QObject::tr("Error while loading a symbol of type %1 at line %2 column %3.").arg(symbol_type).arg(xml.lineNumber()).arg(xml.columnNumber()));
+		throw FileFormatException(ImportExport::tr("Error while loading a symbol of type %1 at line %2 column %3.").arg(symbol_type).arg(xml.lineNumber()).arg(xml.columnNumber()));
 	
 	QXmlStreamAttributes attributes = xml.attributes();
 	QString code = attributes.value("code").toString();
@@ -218,7 +235,7 @@ Symbol* Symbol::load(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol_d
 	{
 		QString id = attributes.value("id").toString();
 		if (symbol_dict.contains(id)) 
-			throw FormatException(QObject::tr("Symbol ID '%1' not unique at line %2 column %3.").arg(id).arg(xml.lineNumber()).arg(xml.columnNumber()));
+			throw FileFormatException(ImportExport::tr("Symbol ID '%1' not unique at line %2 column %3.").arg(id).arg(xml.lineNumber()).arg(xml.columnNumber()));
 		
 		symbol_dict[id] = symbol;
 		
@@ -256,13 +273,16 @@ Symbol* Symbol::load(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol_d
 		if (xml.name() == "description")
 			symbol->description = xml.readElementText();
 		else
-			symbol->loadImpl(xml, map, symbol_dict);
+		{
+			if (!symbol->loadImpl(xml, map, symbol_dict))
+				xml.skipCurrentElement();
+		}
 	}
 	
 	if (xml.error())
 	{
 		delete symbol;
-		throw FormatException(QObject::tr("Error while loading a symbol."));
+		throw FileFormatException(ImportExport::tr("Error while loading a symbol."));
 	}
 	
 	return symbol;
@@ -272,10 +292,12 @@ QImage* Symbol::getIcon(Map* map, bool update)
 {
 	if (icon && !update)
 		return icon;
-	delete icon;
 	
-	icon = createIcon(map, icon_size, true, 1);
-	return icon;
+	// Delete old icon after creating the new as it may be accessed inside createIcon().
+	QImage* new_icon = createIcon(map, icon_size, true, 1);
+	delete icon;
+	icon = new_icon;
+	return new_icon;
 }
 
 QImage* Symbol::createIcon(Map* map, int side_length, bool antialiasing, int bottom_right_border)
@@ -337,6 +359,7 @@ QImage* Symbol::createIcon(Map* map, int side_length, bool antialiasing, int bot
 	else if (type == Line || type == Combined)
 	{
 		Symbol* symbol_to_use = this;
+		bool show_dash_symbol = false;
 		if (type == Line)
 		{
 			// If there are breaks in the line, scale them down so they fit into the icon exactly
@@ -357,11 +380,21 @@ QImage* Symbol::createIcon(Map* map, int side_length, bool antialiasing, int bot
 				icon_symbol = icon_line;
 				symbol_to_use = icon_symbol;
 			}
+			else if (line->getDashSymbol() != NULL)
+			{
+				show_dash_symbol = !line->getDashSymbol()->isEmpty();
+			}
 		}
 		
 		PathObject* path = new PathObject(symbol_to_use);
 		path->addCoordinate(0, MapCoord(-max_icon_mm_half, 0));
 		path->addCoordinate(1, MapCoord(max_icon_mm_half, 0));
+		if (show_dash_symbol)
+		{
+			MapCoord dash_coord(0, 0);
+			dash_coord.setDashPoint(true);
+			path->addCoordinate(1, dash_coord);
+		}
 		object = path;
 	}
 	else if (type == Text)
@@ -416,7 +449,7 @@ QImage* Symbol::createIcon(Map* map, int side_length, bool antialiasing, int bot
 	
 	bool was_hidden = is_hidden;
 	is_hidden = false; // ensure that an icon is created for hidden symbols.
-	icon_map.draw(&painter, QRectF(-10000, -10000, 20000, 20000), false, view.calculateFinalZoomFactor(), true);
+	icon_map.draw(&painter, QRectF(-10000, -10000, 20000, 20000), false, view.calculateFinalZoomFactor(), false, true);
 	is_hidden = was_hidden;
 	
 	delete icon_symbol;
@@ -492,14 +525,14 @@ bool Symbol::loadSymbol(Symbol*& symbol, QIODevice* stream, int version, Map* ma
 void Symbol::createBaselineRenderables(Object* object, Symbol* symbol, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output, bool hatch_areas)
 {
 	Symbol::Type type = symbol->getType();
-	MapColor* dominant_color = symbol->getDominantColorGuess();
+	const MapColor* dominant_color = symbol->getDominantColorGuess();
 	if (dominant_color == NULL)
 		return;
 	
 	if (type == Symbol::Point)
 	{
 		PointSymbol* point = Map::getUndefinedPoint();
-		MapColor* temp_color = point->getInnerColor();
+		const MapColor* temp_color = point->getInnerColor();
 		point->setInnerColor(dominant_color);
 		
 		point->createRenderables(object, flags, coords, output);
@@ -597,16 +630,6 @@ int Symbol::getCompatibleTypes(Symbol::Type type)
 	
 	assert(false);
 	return type;
-}
-
-bool Symbol::colorEquals(MapColor* color, MapColor* other)
-{
-	if ((color == NULL && other != NULL) ||
-		(color != NULL && other == NULL))
-		return false;
-	if (color && !color->equals(*other, false))
-		return false;
-	return true;
 }
 
 void Symbol::duplicateImplCommon(const Symbol* other)

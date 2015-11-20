@@ -1,18 +1,18 @@
 /*
- *    Copyright 2012 Thomas Schöps
- *    
+ *    Copyright 2012, 2013 Thomas Schöps, Kai Pastor
+ *
  *    This file is part of OpenOrienteering.
- * 
+ *
  *    OpenOrienteering is free software: you can redistribute it and/or modify
  *    it under the terms of the GNU General Public License as published by
  *    the Free Software Foundation, either version 3 of the License, or
  *    (at your option) any later version.
- * 
+ *
  *    OpenOrienteering is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
  *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *    GNU General Public License for more details.
- * 
+ *
  *    You should have received a copy of the GNU General Public License
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -20,79 +20,77 @@
 
 #include "color_dock_widget.h"
 
-#include <cassert>
-
-#if QT_VERSION < 0x050000
-#include <QtGui>
-#else
-#include <QtWidgets>
-#endif
-
+#include "core/map_color.h"
 #include "map.h"
-#include "map_color.h"
+#include "util.h"
+#include "util_gui.h"
+#include "gui/color_dialog.h"
+#include "gui/main_window.h"
 
-ColorWidget::ColorWidget(Map* map, MainWindow* window, QWidget* parent): EditorDockWidgetChild(parent), map(map), window(window)
+ColorWidget::ColorWidget(Map* map, MainWindow* window, QWidget* parent)
+: QWidget(parent), 
+  map(map), 
+  window(window)
 {
 	react_to_changes = true;
 	
 	// Color table
-	color_table = new QTableWidget(map->getNumColors(), 10);
-	color_table->setWhatsThis("<a href=\"symbols.html#colors\">See more</a>");
+	color_table = new QTableWidget(map->getNumColors(), 6);
+	color_table->setWhatsThis("<a href=\"color_dock_widget.html\">See more</a>");
 	color_table->setEditTriggers(QAbstractItemView::AllEditTriggers);
-	color_table->setHorizontalHeaderLabels(QStringList() << "" << tr("Name") << tr("C") << tr("M") << tr("Y") << tr("K") << tr("Opacity") << tr("R") << tr("G") << tr("B"));
 	color_table->verticalHeader()->setVisible(false);
+	color_table->setHorizontalHeaderLabels(QStringList() <<
+	  "" << tr("Name") << tr("Spot color") << tr("CMYK") << tr("RGB") << tr("K.o.") << tr("Opacity") );
 	
-	QHeaderView* header_view = color_table->horizontalHeader();
-	header_view->setResizeMode(0, QHeaderView::Fixed);
-	header_view->resizeSection(0, 40);
-	header_view->setResizeMode(1, QHeaderView::Stretch);
-	for (int i = 2; i < 10; ++i)
-		header_view->setResizeMode(i, QHeaderView::ResizeToContents);
-	header_view->setClickable(false);
+	// Buttons
+	QAbstractButton* new_button = newToolButton(QIcon(":/images/plus.png"), tr("New"));
+	delete_button = newToolButton(QIcon(":/images/minus.png"), tr("Delete"));
+	duplicate_button = newToolButton(QIcon(":/images/copy.png"), tr("Duplicate"));
+	move_up_button = newToolButton(QIcon(":/images/arrow-up.png"), tr("Move Up"));
+	move_down_button = newToolButton(QIcon(":/images/arrow-down.png"), tr("Move Down"));
+ 	QAbstractButton* help_button = newToolButton(QIcon(":/images/help.png"), tr("Help"));
+	
+	QBoxLayout* buttons_group_layout = new QHBoxLayout();
+	buttons_group_layout->setMargin(0);
+	buttons_group_layout->addWidget(new_button);
+	buttons_group_layout->addWidget(move_up_button);
+	buttons_group_layout->addWidget(move_down_button);
+	buttons_group_layout->addWidget(duplicate_button);
+	buttons_group_layout->addWidget(delete_button);
+	buttons_group_layout->addWidget(help_button);
+	
+	// Create main layout
+	QBoxLayout* layout = new QVBoxLayout();
+	layout->setMargin(0);
+	layout->addWidget(color_table, 1);
+	layout->addLayout(buttons_group_layout);
+	layout->addWidget(new QLabel(tr("Double-click a color value to open a dialog.")));
+	layout->addSpacing(2);
+	setLayout(layout);
 	
 	for (int i = 0; i < map->getNumColors(); ++i)
 		addRow(i);
 	
-	// Buttons
-	buttons_group = new QWidget();
-	
-	QPushButton* new_button = new QPushButton(QIcon(":/images/plus.png"), tr("New"));
-	new_button->setWhatsThis("<a href=\"symbols.html#colors\">See more</a>");
-	delete_button = new QPushButton(QIcon(":/images/minus.png"), tr("Delete"));
-	delete_button->setWhatsThis("<a href=\"symbols.html#colors\">See more</a>");
-	duplicate_button = new QPushButton(QIcon(":/images/copy.png"), tr("Duplicate"));
-	duplicate_button->setWhatsThis("<a href=\"symbols.html#colors\">See more</a>");
-	move_up_button = new QPushButton(QIcon(":/images/arrow-up.png"), tr("Move Up"));
-	move_up_button->setWhatsThis("<a href=\"symbols.html#colors\">See more</a>");
-	move_down_button = new QPushButton(QIcon(":/images/arrow-down.png"), tr("Move Down"));
-	move_down_button->setWhatsThis("<a href=\"symbols.html#colors\">See more</a>");
-	QPushButton* help_button = new QPushButton(QIcon(":/images/help.png"), tr("Help"));
-
-	QGridLayout* buttons_group_layout = new QGridLayout();
-	buttons_group_layout->setMargin(0);
-	buttons_group_layout->addWidget(new_button, 0, 0);
-	buttons_group_layout->addWidget(delete_button, 0, 1);
-	buttons_group_layout->addWidget(duplicate_button, 1, 0, 1, 2);
-	buttons_group_layout->setRowStretch(2, 1);
-	buttons_group_layout->addWidget(move_up_button, 3, 1);
-	buttons_group_layout->addWidget(move_down_button, 3, 0);
-	buttons_group_layout->setRowStretch(4, 1);
-	buttons_group_layout->addWidget(help_button, 5, 0, 1, 2);
-	buttons_group->setLayout(buttons_group_layout);
+	QHeaderView* header_view = color_table->horizontalHeader();
+#if QT_VERSION < 0x050000
+	header_view->setResizeMode(QHeaderView::Interactive);
+	header_view->resizeSections(QHeaderView::ResizeToContents);
+	header_view->setResizeMode(0, QHeaderView::Fixed); // Color
+	header_view->resizeSection(0, 32);
+	header_view->setResizeMode(1, QHeaderView::Stretch); // Name
+	header_view->setResizeMode(5, QHeaderView::Fixed); // Knockout
+	header_view->resizeSection(5, 32);
+#else
+	header_view->setSectionResizeMode(QHeaderView::Interactive);
+	header_view->resizeSections(QHeaderView::ResizeToContents);
+	header_view->setSectionResizeMode(0, QHeaderView::Fixed); // Color
+	header_view->resizeSection(0, 32);
+	header_view->setSectionResizeMode(1, QHeaderView::Stretch); // Name
+	header_view->setSectionResizeMode(5, QHeaderView::Fixed); // Knockout
+	header_view->resizeSection(5, 32);
+#endif
 	
 	currentCellChange(color_table->currentRow(), 0, 0, 0);	// enable / disable move color buttons
-	
-	// Load settings
-	QSettings settings;
-	settings.beginGroup("ColorWidget");
-	QSize preferred_size = settings.value("size", QSize(200, 500)).toSize();
-	settings.endGroup();
-	
-	// Create main layout
-	wide_layout = false;
-	layout = NULL;
-	QResizeEvent event(preferred_size, preferred_size);
-	resizeEvent(&event);
 	
 	// Connections
 	connect(color_table, SIGNAL(cellChanged(int,int)), this, SLOT(cellChange(int,int)));
@@ -107,57 +105,27 @@ ColorWidget::ColorWidget(Map* map, MainWindow* window, QWidget* parent): EditorD
 	connect(help_button, SIGNAL(clicked(bool)), this, SLOT(showHelp()));
 	
 	connect(map, SIGNAL(colorAdded(int,MapColor*)), this, SLOT(colorAdded(int,MapColor*)));
-	connect(map, SIGNAL(colorDeleted(int,MapColor*)), this, SLOT(colorDeleted(int,MapColor*)));
+	connect(map, SIGNAL(colorChanged(int,MapColor*)), this, SLOT(colorChanged(int, MapColor*)));
+	connect(map, SIGNAL(colorDeleted(int,const MapColor*)), this, SLOT(colorDeleted(int,const MapColor*)));
 }
 
 ColorWidget::~ColorWidget()
 {
-	// Save settings
-	QSettings settings;
-	settings.beginGroup("ColorWidget");
-	settings.setValue("size", size());
-	settings.endGroup();
 }
 
-QSize ColorWidget::sizeHint() const
+QAbstractButton* ColorWidget::newToolButton(const QIcon& icon, const QString& text, QAbstractButton* prototype)
 {
-    return QSize(450, 300);
-}
-
-void ColorWidget::resizeEvent(QResizeEvent* event)
-{
-	// NOTE: The commented parts change the layout to horizontal if the widget is wider than high, but this leads to "layout jumping" (bad usability)
-	int width = event->size().width();
-	int height = event->size().height();
-	
-	bool change = (layout == NULL);
-	//if ((width >= height && !wide_layout) || (width < height && wide_layout))
-	//	change = true;
-	
-	if (change)
+	if (prototype == NULL)
 	{
-		if (layout)
-		{
-			for (int i = layout->count(); i >= 0; --i)
-				layout->removeItem(layout->itemAt(i));
-			delete layout;
-		}
-		
-		//if (width >= height)
-		//	layout = new QHBoxLayout();
-		//else if (width < height)
-			layout = new QVBoxLayout();
-		
-		layout->setMargin(0);
-		layout->addWidget(color_table, 1);
-		layout->addWidget(buttons_group);
-		setLayout(layout);
-		updateGeometry();
-		
-		wide_layout = width > height;
+		QToolButton* button = new QToolButton();
+		button->setAutoRaise(true);
+		button->setToolButtonStyle(Qt::ToolButtonFollowStyle);
+		prototype = button;
 	}
-	
-    event->accept();
+	prototype->setIcon(icon);
+	prototype->setText(text);
+	prototype->setWhatsThis("<a href=\"color_dock_widget.html\">See more</a>");
+	return prototype;
 }
 
 void ColorWidget::newColor()
@@ -173,7 +141,7 @@ void ColorWidget::newColor()
 void ColorWidget::deleteColor()
 {
 	int row = color_table->currentRow();
-	assert(row >= 0);
+	Q_ASSERT(row >= 0);
 	
 	// Show a warning if the color is used
 	if (map->isColorUsedByASymbol(map->getColor(row)))
@@ -191,10 +159,10 @@ void ColorWidget::deleteColor()
 void ColorWidget::duplicateColor()
 {
 	int row = color_table->currentRow();
-	assert(row >= 0);
+	Q_ASSERT(row >= 0);
 	
 	MapColor* new_color = new MapColor(*map->getColor(row));
-	new_color->name = new_color->name + tr(" (Duplicate)");
+	new_color->setName(new_color->getName() + tr(" (Duplicate)"));
 	map->addColor(new_color, row);
 	
 	map->updateAllObjects();
@@ -203,7 +171,7 @@ void ColorWidget::duplicateColor()
 void ColorWidget::moveColorUp()
 {
 	int row = color_table->currentRow();
-	assert(row >= 1);
+	Q_ASSERT(row >= 1);
 	
 	MapColor* above_color = map->getColor(row - 1);
 	MapColor* cur_color = map->getColor(row);
@@ -221,7 +189,7 @@ void ColorWidget::moveColorUp()
 void ColorWidget::moveColorDown()
 {
 	int row = color_table->currentRow();
-	assert(row < color_table->rowCount() - 1);
+	Q_ASSERT(row < color_table->rowCount() - 1);
 	
 	MapColor* below_color = map->getColor(row + 1);
 	MapColor* cur_color = map->getColor(row);
@@ -238,68 +206,54 @@ void ColorWidget::moveColorDown()
 
 void ColorWidget::showHelp()
 {
-	window->showHelp("symbols.html", "colors");
+	Util::showHelp(window, "color_dock_widget.html", "");
 }
 
 void ColorWidget::cellChange(int row, int column)
 {
 	if (!react_to_changes)
 		return;
+	
 	react_to_changes = false;
 	
 	MapColor* color = map->getColor(row);
 	QString text = color_table->item(row, column)->text().trimmed();
 	
 	if (column == 1)
-		color->name = text;
-	else if (column >= 2 && column <= 9)
+	{
+		color->setName(text);
+		react_to_changes = true;
+	}
+	else if (column == 6) // Opacity
 	{
 		bool ok = true;
 		float fvalue;
 		
 		if (text.endsWith('%'))
-		{
 			text.chop(1);
-			fvalue = text.toFloat(&ok) / 100.0f;
-		}
-		else
-			fvalue = text.toFloat(&ok) / 255.0f;
-		if (fvalue < 0 || fvalue > 1)
+		
+		fvalue = text.toFloat(&ok) / 100.0f;
+		
+		if (fvalue < 0.0f || fvalue > 1.0f)
 			ok = false;
 		
-		if (!ok)
+		if (ok)
 		{
-			QMessageBox::warning(window, tr("Error"), tr("Please enter a valid number from 0 to 255, or specify a percentage from 0 to 100!"));
-		
-			if (column == 2)		color_table->item(row, column)->setText(QString::number(color->c * 100) + "%");
-			else if (column == 3)	color_table->item(row, column)->setText(QString::number(color->m * 100) + "%");
-			else if (column == 4)	color_table->item(row, column)->setText(QString::number(color->y * 100) + "%");
-			else if (column == 5)	color_table->item(row, column)->setText(QString::number(color->k * 100) + "%");
-			else if (column == 6)	color_table->item(row, column)->setText(QString::number(color->opacity * 100) + "%");
-			else if (column == 7)	color_table->item(row, column)->setText(QString::number(color->r * 100) + "%");
-			else if (column == 8)	color_table->item(row, column)->setText(QString::number(color->g * 100) + "%");
-			else if (column == 9)	color_table->item(row, column)->setText(QString::number(color->b * 100) + "%");
+			color->setOpacity(fvalue);
+			updateRow(row);
 		}
 		else
 		{
-			if (column == 2)		color->c = fvalue;
-			else if (column == 3)	color->m = fvalue;
-			else if (column == 4)	color->y = fvalue;
-			else if (column == 5)	color->k = fvalue;
-			else if (column == 6)	color->opacity = fvalue;
-			else if (column == 7)	color->r = fvalue;
-			else if (column == 8)	color->g = fvalue;
-			else if (column == 9)	color->b = fvalue;
-			
-			if (column <= 5)
-				color->updateFromCMYK();
-			else if (column >= 7)
-				color->updateFromRGB();
-			updateRow(row);
+			QMessageBox::warning(window, tr("Error"), tr("Please enter a percentage from 0% to 100%!"));
+			color_table->item(row, column)->setText(QString::number(color->getOpacity() * 100) + "%");
 		}
+		react_to_changes = true;
 	}
-	
-	react_to_changes = true;
+	else 
+	{
+		react_to_changes = true;
+		return;
+	}
 	
 	map->setColor(color, row); // trigger colorChanged signal
 	map->setColorsDirty();
@@ -319,27 +273,16 @@ void ColorWidget::currentCellChange(int current_row, int current_column, int pre
 
 void ColorWidget::cellDoubleClick(int row, int column)
 {
-	if (column == 0)
+	MapColor* color = map->getColor(row);
+	ColorDialog dialog(*map, *color, this);
+	dialog.setWindowModality(Qt::WindowModal);
+	int result = dialog.exec();
+	if (result == QDialog::Accepted)
 	{
-		MapColor* color = map->getColor(row);
-		
-		QColor newColor = QColorDialog::getColor(color->color, window);
-		if (newColor.isValid())
-		{
-			color->color = newColor;
-			qreal r, g, b;
-			color->color.getRgbF(&r, &g, &b);
-			color->r = r;
-			color->g = g;
-			color->b = b;
-			color->updateFromRGB();
-			
-			updateRow(row);
-			
-			map->setColor(color, row); // trigger colorChanged signal
-			map->setColorsDirty();
-			map->updateAllObjects();
-		}
+		*color = dialog.getColor();
+		map->setColor(color, row); // trigger colorChanged signal
+		map->setColorsDirty();
+		map->updateAllObjects();
 	}
 }
 
@@ -350,7 +293,12 @@ void ColorWidget::colorAdded(int index, MapColor* color)
 	color_table->setCurrentCell(index, 1);
 }
 
-void ColorWidget::colorDeleted(int index, MapColor* color)
+void ColorWidget::colorChanged(int index, MapColor* color)
+{
+	updateRow(index);
+}
+
+void ColorWidget::colorDeleted(int index, const MapColor* color)
 {
 	color_table->removeRow(index);
 	currentCellChange(color_table->currentRow(), color_table->currentColumn(), -1, -1);
@@ -360,12 +308,7 @@ void ColorWidget::addRow(int row)
 {
 	react_to_changes = false;
 	
-	QTableWidgetItem* item = new QTableWidgetItem();
-	item->setFlags(Qt::ItemIsEnabled);
-	item->setToolTip(tr("Double click to pick a color"));
-	color_table->setItem(row, 0, item);
-	
-	for (int i = 1; i <= 9; ++i)
+	for (int i = 0; i < 6; ++i)
 		color_table->setItem(row, i, new QTableWidgetItem());
 	
 	react_to_changes = true;
@@ -379,19 +322,60 @@ void ColorWidget::updateRow(int row)
 	
 	MapColor* color = map->getColor(row);
 	
-	color_table->item(row, 0)->setBackgroundColor(color->color);
+	// Color preview
+	QTableWidgetItem* item = color_table->item(row, 0);
+	item->setFlags(Qt::ItemIsEnabled);
+	item->setBackgroundColor(*color);
 	
-	color_table->item(row, 1)->setText(color->name);
+	// Name
+	item = color_table->item(row, 1);
+	item->setText(color->getName());
+	item->setFlags(Qt::ItemIsEditable | Qt::ItemIsEnabled);
 	
-	color_table->item(row, 2)->setText(QString::number(color->c * 100) + "%");
-	color_table->item(row, 3)->setText(QString::number(color->m * 100) + "%");
-	color_table->item(row, 4)->setText(QString::number(color->y * 100) + "%");
-	color_table->item(row, 5)->setText(QString::number(color->k * 100) + "%");
+	// Spot color
+	item = color_table->item(row, 2);
+	item->setText(color->getSpotColorName());
+	item->setFlags(Qt::ItemIsEnabled);
+	item->setToolTip(tr("Double click to define the color"));
 	
-	color_table->item(row, 6)->setText(QString::number(color->opacity * 100) + "%");
+	// CMYK
+	item = color_table->item(row, 3);
+	item->setFlags(Qt::ItemIsEnabled);
+	item->setToolTip(tr("Double click to define the color"));
+	const MapColorCmyk& cmyk = color->getCmyk();
+	item->setText(QString("%1/%2/%3/%4").arg(100*cmyk.c,0,'g',3).arg(100*cmyk.m,0,'g',3).arg(100*cmyk.y,0,'g',3).arg(100*cmyk.k,0,'g',3));
+	switch (color->getCmykColorMethod())
+	{
+		case MapColor::SpotColor:
+		case MapColor::RgbColor:
+			item->setForeground(Qt::gray);
+			break;
+		default:
+			item->setForeground(Qt::black);
+	}
 	
-	color_table->item(row, 7)->setText(QString::number(color->r * 255));
-	color_table->item(row, 8)->setText(QString::number(color->g * 255));
-	color_table->item(row, 9)->setText(QString::number(color->b * 255));
+	// RGB
+	item = color_table->item(row, 4);
+	item->setFlags(Qt::ItemIsEnabled);
+	item->setText(QColor(color->getRgb()).name());
+	item->setToolTip(item->text());
+	switch (color->getRgbColorMethod())
+	{
+		case MapColor::SpotColor:
+		case MapColor::CmykColor:
+			item->setForeground(Qt::gray);
+			break;
+		default:
+			item->setForeground(Qt::black);
+	}
+	
+	// Knockout
+	item = color_table->item(row, 5);
+	item->setFlags(0);
+	item->setCheckState(color->getKnockout() ? Qt::Checked : Qt::Unchecked);
+	item->setText("");
+	
+// 	color_table->item(row, 6)->setText(QString::number(color->getOpacity() * 100) + "%");
+	
 	react_to_changes = true;
 }

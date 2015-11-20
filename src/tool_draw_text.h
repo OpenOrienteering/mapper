@@ -1,5 +1,5 @@
 /*
- *    Copyright 2012 Thomas Schöps
+ *    Copyright 2012, 2013 Thomas Schöps
  *
  *    This file is part of OpenOrienteering.
  *
@@ -37,7 +37,9 @@ class MapRenderables;
 class Symbol;
 class SymbolWidget;
 
-/// Tool to draw text objects
+/**
+ * A tool to draw text objects.
+ */
 class DrawTextTool : public MapEditorTool
 {
 Q_OBJECT
@@ -45,18 +47,18 @@ public:
 	DrawTextTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget);
 	virtual ~DrawTextTool();
 	
-    virtual void init();
-    virtual QCursor* getCursor() {return cursor;}
-    
-    virtual bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
+	virtual void init();
+	virtual QCursor* getCursor() {return cursor;}
+	
+	virtual bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
 	virtual bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
-    virtual bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
+	virtual bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
 	void leaveEvent(QEvent* event);
 	
-    virtual bool keyPressEvent(QKeyEvent* event);
-    virtual bool keyReleaseEvent(QKeyEvent* event);
+	virtual bool keyPressEvent(QKeyEvent* event);
+	virtual bool keyReleaseEvent(QKeyEvent* event);
 	
-    virtual void draw(QPainter* painter, MapWidget* widget);
+	virtual void draw(QPainter* painter, MapWidget* widget);
 	
 	static QCursor* cursor;
 	
@@ -95,11 +97,11 @@ class TextObjectAlignmentDockWidget : public QDockWidget
 Q_OBJECT
 public:
 	TextObjectAlignmentDockWidget(TextObject* object, int horz_default, int vert_default, TextObjectEditorHelper* text_editor, QWidget* parent);
-    virtual QSize sizeHint() const {return QSize(10, 10);}
-    
-    virtual bool event(QEvent* event);
-    virtual void keyPressEvent(QKeyEvent* event);
-    virtual void keyReleaseEvent(QKeyEvent* event);
+	virtual QSize sizeHint() const {return QSize(10, 10);}
+	
+	virtual bool event(QEvent* event);
+	virtual void keyPressEvent(QKeyEvent* event);
+	virtual void keyReleaseEvent(QKeyEvent* event);
 	
 signals:
 	void alignmentChanged(int horz, int vert);

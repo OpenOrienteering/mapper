@@ -1,5 +1,5 @@
 /*
- *    Copyright 2012 Thomas Schöps
+ *    Copyright 2012, 2013 Thomas Schöps
  *
  *    This file is part of OpenOrienteering.
  *
@@ -35,7 +35,6 @@ QStringList TemplateMap::locked_maps;
 TemplateMap::TemplateMap(const QString& path, Map* map) : Template(path, map), template_map(NULL)
 {
 }
-
 TemplateMap::~TemplateMap()
 {
 	if (template_state == Loaded)
@@ -70,12 +69,13 @@ bool TemplateMap::loadTemplateFileImpl(bool configuring)
 	return true;
 }
 
-bool TemplateMap::postLoadConfiguration(QWidget* dialog_parent)
+bool TemplateMap::postLoadConfiguration(QWidget* dialog_parent, bool& out_center_in_view)
 {
 	// TODO: recursive template loading dialog
 	
 	// TODO: it would be possible to load maps as georeferenced if both maps are georeferenced
 	is_georeferenced = false;
+	out_center_in_view = false;
 	
 	return true;
 }
@@ -86,7 +86,7 @@ void TemplateMap::unloadTemplateFileImpl()
 	template_map = NULL;
 }
 
-void TemplateMap::drawTemplate(QPainter* painter, QRectF& clip_rect, double scale, float opacity)
+void TemplateMap::drawTemplate(QPainter* painter, QRectF& clip_rect, double scale, bool on_screen, float opacity)
 {
 	if (!is_georeferenced)
 		applyTemplateTransform(painter);
@@ -107,7 +107,8 @@ void TemplateMap::drawTemplate(QPainter* painter, QRectF& clip_rect, double scal
 		// TODO!
 	}
 	
-	template_map->draw(painter, transformed_clip_rect, false, scale, false, opacity);
+	// TODO: introduce template-specific options, adjustable by the user, to allow changing some of these parameters
+	template_map->draw(painter, transformed_clip_rect, false, scale, on_screen, false, opacity);
 }
 
 QRectF TemplateMap::getTemplateExtent()

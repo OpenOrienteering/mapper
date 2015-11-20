@@ -1,18 +1,18 @@
 /*
- *    Copyright 2012 Thomas Schöps
- *    
+ *    Copyright 2012, 2013 Thomas Schöps
+ *
  *    This file is part of OpenOrienteering.
- * 
+ *
  *    OpenOrienteering is free software: you can redistribute it and/or modify
  *    it under the terms of the GNU General Public License as published by
  *    the Free Software Foundation, either version 3 of the License, or
  *    (at your option) any later version.
- * 
+ *
  *    OpenOrienteering is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
  *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *    GNU General Public License for more details.
- * 
+ *
  *    You should have received a copy of the GNU General Public License
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -30,17 +30,18 @@
 #include <QIODevice>
 #include <QXmlStreamWriter>
 
+#include "core/map_color.h"
 #include "map.h"
+#include "object.h"
+#include "renderable_implementation.h"
+#include "symbol_line.h"
+#include "symbol_point.h"
+#include "symbol_point_editor.h"
+#include "symbol_properties_widget.h"
+#include "symbol_setting_dialog.h"
+#include "gui/widgets/color_dropdown.h"
 #include "util_gui.h"
 #include "util.h"
-#include "map_color.h"
-#include "symbol_point.h"
-#include "symbol_line.h"
-#include "object.h"
-#include "symbol_setting_dialog.h"
-#include "symbol_properties_widget.h"
-#include "symbol_point_editor.h"
-#include "renderable_implementation.h"
 
 // ### FillPattern ###
 
@@ -153,7 +154,7 @@ void AreaSymbol::FillPattern::save(QXmlStreamWriter& xml, const Map& map) const
 
 void AreaSymbol::FillPattern::load(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol_dict)
 {
-	Q_ASSERT(xml.name() == "pattern");
+	Q_ASSERT (xml.name() == "pattern");
 	
 	QXmlStreamAttributes attributes = xml.attributes();
 	type = static_cast<Type>(attributes.value("type").toString().toInt());
@@ -210,7 +211,7 @@ bool AreaSymbol::FillPattern::equals(AreaSymbol::FillPattern& other, Qt::CaseSen
 	}
 	else if (type == LinePattern)
 	{
-		if (!colorEquals(line_color, other.line_color))
+		if (!MapColor::equal(line_color, other.line_color))
 			return false;
 		if (line_width != other.line_width)
 			return false;
@@ -465,7 +466,7 @@ AreaSymbol::~AreaSymbol()
 	}
 }
 
-Symbol* AreaSymbol::duplicate(const QHash<MapColor*, MapColor*>* color_map) const
+Symbol* AreaSymbol::duplicate(const MapColorMap* color_map) const
 {
 	AreaSymbol* new_area = new AreaSymbol();
 	new_area->duplicateImplCommon(this);
@@ -511,7 +512,7 @@ void AreaSymbol::createRenderablesNormal(Object* object, const MapCoordVector& f
 		patterns[i].createRenderables(color_fill->getExtent(), path->getPatternRotation(), path->getPatternOrigin(), output);
 	output.setClipPath(old_clip_path);
 }
-void AreaSymbol::colorDeleted(MapColor* color)
+void AreaSymbol::colorDeleted(const MapColor* color)
 {
 	bool change = false;
 	if (color == this->color)
@@ -534,7 +535,7 @@ void AreaSymbol::colorDeleted(MapColor* color)
 	if (change)
 		resetIcon();
 }
-bool AreaSymbol::containsColor(MapColor* color)
+bool AreaSymbol::containsColor(const MapColor* color) const
 {
 	if (color == this->color)
 		return true;
@@ -550,7 +551,7 @@ bool AreaSymbol::containsColor(MapColor* color)
 	return false;
 }
 
-MapColor* AreaSymbol::getDominantColorGuess()
+const MapColor* AreaSymbol::getDominantColorGuess() const
 {
 	if (color)
 		return color;
@@ -560,7 +561,7 @@ MapColor* AreaSymbol::getDominantColorGuess()
 	{
 		if (patterns[i].type == FillPattern::PointPattern && patterns[i].point)
 		{
-			MapColor* dominant_color = patterns[i].point->getDominantColorGuess();
+			const MapColor* dominant_color = patterns[i].point->getDominantColorGuess();
 			if (dominant_color) return dominant_color;
 		}
 		else if (patterns[i].type == FillPattern::LinePattern && patterns[i].line_color)
@@ -636,7 +637,8 @@ void AreaSymbol::saveImpl(QXmlStreamWriter& xml, const Map& map) const
 
 bool AreaSymbol::loadImpl(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol_dict)
 {
-	Q_ASSERT(xml.name() == "area_symbol");
+	if (xml.name() != "area_symbol")
+		return false;
 	
 	QXmlStreamAttributes attributes = xml.attributes();
 	int temp = attributes.value("inner_color").toString().toInt();
@@ -647,17 +649,22 @@ bool AreaSymbol::loadImpl(QXmlStreamReader& xml, Map& map, SymbolDictionary& sym
 	patterns.reserve(num_patterns % 5); // 5 is not the limit
 	while (xml.readNextStartElement())
 	{
-		patterns.push_back(FillPattern());
-		patterns.back().load(xml, map, symbol_dict);
+		if (xml.name() == "pattern")
+		{
+			patterns.push_back(FillPattern());
+			patterns.back().load(xml, map, symbol_dict);
+		}
+		else
+			xml.skipCurrentElement();
 	}
 	
-	return !xml.error();
+	return true;
 }
 
 bool AreaSymbol::equalsImpl(Symbol* other, Qt::CaseSensitivity case_sensitivity)
 {
 	AreaSymbol* area = static_cast<AreaSymbol*>(other);
-	if (!colorEquals(color, area->color))
+	if (!MapColor::equal(color, area->color))
 		return false;
 	if (minimum_area != area->minimum_area)
 		return false;

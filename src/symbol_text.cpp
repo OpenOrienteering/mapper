@@ -1,18 +1,18 @@
 /*
- *    Copyright 2012 Thomas Schöps
- *    
+ *    Copyright 2012, 2013 Thomas Schöps
+ *
  *    This file is part of OpenOrienteering.
- * 
+ *
  *    OpenOrienteering is free software: you can redistribute it and/or modify
  *    it under the terms of the GNU General Public License as published by
  *    the Free Software Foundation, either version 3 of the License, or
  *    (at your option) any later version.
- * 
+ *
  *    OpenOrienteering is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
  *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *    GNU General Public License for more details.
- * 
+ *
  *    You should have received a copy of the GNU General Public License
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -27,14 +27,15 @@
 #endif
 #include <QIODevice>
 
+#include "core/map_color.h"
 #include "map.h"
-#include "map_color.h"
 #include "object_text.h"
 #include "renderable_implementation.h"
 #include "symbol_area.h"
 #include "symbol_setting_dialog.h"
 #include "util.h"
 #include "util_gui.h"
+#include "gui/widgets/color_dropdown.h"
 
 const float TextSymbol::internal_point_size = 256;
 
@@ -67,7 +68,7 @@ TextSymbol::~TextSymbol()
 {
 }
 
-Symbol* TextSymbol::duplicate(const QHash<MapColor*, MapColor*>* color_map) const
+Symbol* TextSymbol::duplicate(const MapColorMap* color_map) const
 {
 	TextSymbol* new_text = new TextSymbol();
 	new_text->duplicateImplCommon(this);
@@ -175,7 +176,7 @@ void TextSymbol::createLineBelowRenderables(Object* object, ObjectRenderables& o
 	output.insertRenderable(new AreaRenderable(&area_symbol, line_coords, line_flags, NULL));
 }
 
-void TextSymbol::colorDeleted(MapColor* color)
+void TextSymbol::colorDeleted(const MapColor* color)
 {
 	if (color == this->color)
 	{
@@ -189,7 +190,7 @@ void TextSymbol::colorDeleted(MapColor* color)
 	}
 }
 
-bool TextSymbol::containsColor(MapColor* color)
+bool TextSymbol::containsColor(const MapColor* color) const
 {
 	if (color == this->color)
 		return true;
@@ -198,7 +199,7 @@ bool TextSymbol::containsColor(MapColor* color)
 	return false;
 }
 
-MapColor* TextSymbol::getDominantColorGuess()
+const MapColor* TextSymbol::getDominantColorGuess() const
 {
 	if (color)
 		return color;
@@ -379,7 +380,8 @@ void TextSymbol::saveImpl(QXmlStreamWriter& xml, const Map& map) const
 
 bool TextSymbol::loadImpl(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol_dict)
 {
-	Q_ASSERT(xml.name() == "text_symbol");
+	if (xml.name() != "text_symbol")
+		return false;
 	
 	icon_text = xml.attributes().value("icon_text").toString();
 	framing = false;
@@ -445,14 +447,14 @@ bool TextSymbol::loadImpl(QXmlStreamReader& xml, Map& map, SymbolDictionary& sym
 	}
 	
 	updateQFont();
-	return !xml.error();
+	return true;
 }
 
 bool TextSymbol::equalsImpl(Symbol* other, Qt::CaseSensitivity case_sensitivity)
 {
 	TextSymbol* text = static_cast<TextSymbol*>(other);
 	
-	if (!colorEquals(color, text->color))
+	if (!MapColor::equal(color, text->color))
 		return false;
 	if (font_family.compare(text->font_family, Qt::CaseInsensitive) != 0)
 		return false;
@@ -469,7 +471,7 @@ bool TextSymbol::equalsImpl(Symbol* other, Qt::CaseSensitivity case_sensitivity)
 		return false;
 	if (framing)
 	{
-		if (!colorEquals(framing_color, text->framing_color))
+		if (!MapColor::equal(framing_color, text->framing_color))
 			return false;
 		if (framing_mode != text->framing_mode ||
 			(framing_mode == LineFraming && framing_line_half_width != text->framing_line_half_width) ||
@@ -478,7 +480,7 @@ bool TextSymbol::equalsImpl(Symbol* other, Qt::CaseSensitivity case_sensitivity)
 	}
 	if (line_below)
 	{
-		if (!colorEquals(line_below_color, text->line_below_color))
+		if (!MapColor::equal(line_below_color, text->line_below_color))
 			return false;
 		if (line_below_width != text->line_below_width ||
 			line_below_distance != text->line_below_distance)
@@ -500,7 +502,7 @@ bool TextSymbol::equalsImpl(Symbol* other, Qt::CaseSensitivity case_sensitivity)
 QString TextSymbol::getIconText() const
 {
 	if (icon_text.isEmpty())
-		return QObject::tr("A", "First capital letter of the local alphabet");
+		return TextSymbolSettings::tr("A", "First capital letter of the local alphabet");
 	return icon_text;
 }
 

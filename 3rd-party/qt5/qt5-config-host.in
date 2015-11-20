@@ -1,0 +1,79 @@
+#!/bin/sh -e
+#
+#    Copyright 2012, 2013 Kai Pastor
+#    
+#    This file is part of OpenOrienteering.
+# 
+#    OpenOrienteering is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+# 
+#    OpenOrienteering is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+# 
+#    You should have received a copy of the GNU General Public License
+#    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
+
+# sh wrapping:
+# Especially MSYS needs -l so that it reads /etc/profile and sets up a proper
+# environment. But /etc/profile will cd to the home directory. The wrapper needs
+# to cd back to the BINARY_DIR. [2]
+# In addition, configure must be called from its proper /[DRIVER_LETTER]/...
+# path in MSYS, while CMAKE provides a [DRIVE_LETTER]:/... path. [1]
+
+# [1] Get rid of DOS-style paths in MSYS
+cd "@SOURCE_DIR@"
+SOURCE_DIR=$(pwd)
+
+# [2] Go to build directory
+cd "@QT5_EXTRA_HOST_DIR@"
+
+# [3] Configure, but for host system of cross compilation
+QT5_CONFIG_EXTRA_OPTS=
+if [ "@CMAKE_HOST_APPLE@" != "" ]
+then
+	QT5_CONFIG_EXTRA_OPTS="-no-framework"
+elif [ "@CMAKE_HOST_UNIX@" != "" ]
+then
+	QT5_CONFIG_EXTRA_OPTS="-rpath"
+else
+	QT5_CONFIG_EXTRA_OPTS="-no-rpath"
+fi
+
+"$SOURCE_DIR/configure" \
+  -opensource \
+  -confirm-license \
+  $QT5_CONFIG_EXTRA_OPTS \
+  -prefix "@QT5_HOST_DIR@" \
+  -release \
+  -shared \
+  -gui \
+  -widgets \
+  -qt-sql-sqlite \
+  -no-sql-db2 \
+  -no-sql-ibase \
+  -no-sql-mysql \
+  -no-sql-oci \
+  -no-sql-odbc \
+  -no-sql-psql \
+  -no-sql-sqlite2 \
+  -no-sql-tds \
+  -qt-zlib \
+  -qt-libpng \
+  -qt-libjpeg \
+  -no-openssl \
+  -qt-pcre \
+  -no-directfb \
+  -no-linuxfb \
+  -make libs \
+  -make tools \
+  -nomake examples \
+  -nomake tests \
+  -no-glib \
+  -no-gstreamer \
+  -no-audio-backend \
+  -no-dbus \
+  -no-feature-dbus

@@ -1,59 +1,186 @@
  /* 
-Stylesheet for OOMapper
-Revised by Peter Hoban  April 1, 2012
+  Stylesheet for OOMapper
+  Revised by Peter Hoban  April 1st, 2012
+  Revised by Thomas Schoeps February 26th, 2013
+  
+  ATTENTION: as Qt's help browser seems to be especially stupid,
+  it is not possible to mention any element more than once here!
  */
 
-body {
+html, body, div, span, object, iframe,
+h5, h6, blockquote, pre,
+abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp,
+small, strong, sub, sup, var, i, dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
   font-family: helvetica, sans-serif;
-  background: #FFFF99;  /* A light yellow color similar to the parchment .jpg */
-  color: blue    /* Default text color */
 }
 
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+
+blockquote, q { quotes: none; }
+blockquote:before, blockquote:after,
+q:before, q:after { content: ''; content: none; }
+ins { background-color: #ff9; color: #000; text-decoration: none; }
+mark { background-color: #ff9; color: #000; font-style: italic; font-weight: bold; }
+del { text-decoration: line-through; }
+abbr[title], dfn[title] { border-bottom: 1px dotted; cursor: help; }
+table { border-collapse: collapse; border-spacing: 0; }
+hr { display: block; height: 1px; border: 0; border-top: 1px solid #ccc; margin: 1em 0; padding: 0; }
+input, select { vertical-align: middle; }
+
+body { font:13px/1.231 sans-serif; *font-size:small; } 
+select, input, textarea, button { font:99% sans-serif; }
+pre, code, kbd, samp { font-family: monospace, sans-serif; }
+
+html { overflow-y: scroll; }
+a:hover, a:active { outline: none; }
+ul, ol { margin-left: 2em; }
+ol { list-style-type: decimal; }
+nav ul, nav li { margin: 0; list-style:none; list-style-image: none; }
+small { font-size: 85%; }
+strong, th { font-weight: bold; }
+td { vertical-align: top; }
+
+sub, sup { font-size: 75%; line-height: 0; position: relative; }
+sup { top: -0.5em; }
+sub { bottom: -0.25em; }
+
+pre { white-space: pre; white-space: pre-wrap; word-wrap: break-word; padding: 15px; }
+textarea { overflow: auto; }
+.ie6 legend, .ie7 legend { margin-left: -7px; } 
+input[type="radio"] { vertical-align: center; }
+input[type="checkbox"] { vertical-align: bottom; }
+.ie7 input[type="checkbox"] { vertical-align: baseline; }
+.ie6 input { vertical-align: text-bottom; }
+/*label, */input[type="button"], input[type="submit"], input[type="image"], button { cursor: pointer; }
+button, input, select, textarea { margin: 0; }
+input:valid, textarea:valid   {  }
+input:invalid, textarea:invalid { border-radius: 1px; -moz-box-shadow: 0px 0px 5px red; -webkit-box-shadow: 0px 0px 5px red; box-shadow: 0px 0px 5px red; }
+.no-boxshadow input:invalid, .no-boxshadow textarea:invalid { background-color: #f0dddd; }
+
+::-moz-selection{ background: #4c3eff; color:#fff; text-shadow: none; }
+::selection { background:#4c3eff; color:#fff; text-shadow: none; }
+a:link { -webkit-tap-highlight-color: #4c3eff; }
+
+button {  width: auto; overflow: visible; }
+.ie7 img { -ms-interpolation-mode: bicubic; }
+
+body, select, input, textarea {  color: #222; }
+
+a, a:active, a:visited { color: #4c3eff; text-decoration: underline }
+a:hover { color: #036; }
+
+
 h1 {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  vertical-align: baseline;
+  font-family: helvetica, sans-serif;
+  
+  font-size: 22pt;
   color: #b0a0a0;
   background: transparent;
   font-weight: bold;
-  font-family: serif;
   text-align: left;
   position:relative;
-  top:-11px;  
+  top:-11px;
+  display: inline;
 }
 
-h2, h3 {
-  color: #000099;
+h3 {
+  margin: 0 0 1em 3mm;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  vertical-align: baseline;
+  font-family: helvetica, sans-serif;
+  
+  font-size: 2em;
   background: transparent;
   font-weight: bold;
-  margin-left: 3mm;
 }
 
-/* set the appearance of labels */
-h4, .label {
-  font-size: 12pt;     /* small and bold */
-  font-weight: 700;
+h4 {
+  font-size: 1.5em;
+  font-weight: bold;
   font-style: italic;
   text-align: left;
-  margin-left: 3mm;    /* set the label outstanding left */
-  margin-bottom: 0em; 
-  margin-top: 0em; 
+  margin-left: 3mm;
+  margin-bottom: 1em;
+  margin-top: 0em;
+}
+
+.label {
+  font-size: 1.5em;
+  font-weight: bold;
+  font-style: italic;
+  text-align: left;
+  margin-left: 3mm;
+  margin-bottom: 1em;
+  margin-top: 0em;
 }
 
 .indent {
-position:relative;
-left:150px;
+  position: relative;
+  left: 150px;
 }
 
 /* set the appearance of the text */
-p, li  {
+p {
+  padding: 0;
+  border: 0;
+  font: inherit;
+  vertical-align: baseline;
+  font-family: helvetica, sans-serif;
+  
   font-size: 10pt;
   text-align: left;
+  margin-top: 1em;
+  margin-bottom: 1em;
   margin-left: 10mm;    /* leaves the label outstanding */
   margin-right: 3mm;
-  margin-top: 0em; 
 }
 
-/* set the position of Headers in table*/
-td  {
-vertical-align:top;
+b {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+  font-family: helvetica, sans-serif;
+  
+  font-weight: bold;
+}
+
+li {
+  margin: 0 3mm 0 10mm;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  vertical-align: baseline;
+  font-family: helvetica, sans-serif;
+  
+  font-size: 10pt;
+  text-align: left;
+}
+
+ul {
+  margin-bottom: 1em;
 }
 
 /* set the position of top line back key*/
@@ -75,27 +202,3 @@ img {
 .smalltext {
   font-size: 8pt;
 }
-
-/* set the appearance of a text box */
-.box {
-width: 300px;
-border: 3px; 
-border-color: #CCC;
-border-width: 2 2px;
-border-style: solid;
-color: #222222;
-float: left; 
-padding: 1em;
-margin: 0em 1.5em 0em 0em;
-}
-
-/* Set a header inside the box */
-.box h4  {
-color: #102222;
-font-size: 11px;
-line-height: 1.3em;
-margin: 0em;
-padding: 0em;
-background-color: #AAAAAA; 
-}
-

@@ -34,6 +34,7 @@
   <file>images/group.png</file>
   <file>images/help.png</file>
   <file>images/magnifying-glass-12.png</file>
+  <file>images/mapper.png</file>
   <file>images/minus.png</file>
   <file>images/move.png</file>
   <file>images/new.png</file>
@@ -61,15 +62,20 @@
   <file>images/tool-boolean-union.png</file>
   <file>images/tool-boolean-xor.png</file>
   <file>images/tool-connect-paths.png</file>
+  <file>images/tool-convert-to-curves.png</file>
   <file>images/tool-cut.png</file>
   <file>images/tool-cut-hole.png</file>
+  <file>images/tool-cutout-physical.png</file>
+  <file>images/tool-cutout-physical-inner.png</file>
   <file>images/tool-duplicate.png</file>
   <file>images/tool-edit.png</file>
+  <file>images/tool-edit-line.png</file>
   <file>images/tool-fill-border.png</file>
   <file>images/tool-measure.png</file>
   <file>images/tool-rotate.png</file>
   <file>images/tool-rotate-pattern.png</file>
   <file>images/tool-scale.png</file>
+  <file>images/tool-simplify-path.png</file>
   <file>images/tool-switch-dashes.png</file>
   <file>images/tool-switch-symbol.png</file>
   <file>images/undo.png</file>
@@ -77,14 +83,17 @@
   <file>images/view-zoom-in.png</file>
   <file>images/view-zoom-out.png</file>
   <file>images/window-new.png</file>
+  <file>images/mapper-icon/Mapper-128.png</file>
 
-  <file>etc/tipoftheday.txt</file>
+  <file alias="help/tip-of-the-day/tips.txt">help/tip-of-the-day/tips_en.txt</file>
   
+  <!-- Files which are used by the About dialog. -->
+  <file>COPYING</file>
   <file>3rd-party/clipper/License.txt</file>
   <file>3rd-party/proj/COPYING</file>
  </qresource>
  
  <qresource lang="de">
-  <file alias="etc/tipoftheday.txt">etc/tipoftheday_de.txt</file>
+  <file alias="help/tip-of-the-day/tips.txt">help/tip-of-the-day/tips_de.txt</file>
  </qresource>
 </RCC>

@@ -1,18 +1,18 @@
 /*
- *    Copyright 2012 Thomas Schöps
- *    
+ *    Copyright 2012, 2013 Thomas Schöps
+ *
  *    This file is part of OpenOrienteering.
- * 
+ *
  *    OpenOrienteering is free software: you can redistribute it and/or modify
  *    it under the terms of the GNU General Public License as published by
  *    the Free Software Foundation, either version 3 of the License, or
  *    (at your option) any later version.
- * 
+ *
  *    OpenOrienteering is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
  *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *    GNU General Public License for more details.
- * 
+ *
  *    You should have received a copy of the GNU General Public License
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -42,7 +42,6 @@ TemplateImage::TemplateImage(const QString& path, Map* map) : Template(path, map
 	connect(&georef, SIGNAL(projectionChanged()), this, SLOT(updateGeoreferencing()));
 	connect(&georef, SIGNAL(transformationChanged()), this, SLOT(updateGeoreferencing()));
 }
-
 TemplateImage::~TemplateImage()
 {
 	if (template_state == Loaded)
@@ -84,19 +83,13 @@ void TemplateImage::saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml)
 
 bool TemplateImage::loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml)
 {
-	if (is_georeferenced)
+	if (is_georeferenced && xml.name() == "crs_spec")
 	{
-		while (xml.readNextStartElement())
-		{
-			if (xml.name() == "crs_spec")
-			{
-// TODO: check specification language
-				temp_crs_spec = xml.readElementText();
-			}
-			else
-				xml.skipCurrentElement(); // unsupported
-		}
+		// TODO: check specification language
+		temp_crs_spec = xml.readElementText();
 	}
+	else
+		xml.skipCurrentElement(); // unsupported
 	
 	return true;
 }
@@ -133,7 +126,7 @@ bool TemplateImage::loadTemplateFileImpl(bool configuring)
 	
 	return true;
 }
-bool TemplateImage::postLoadConfiguration(QWidget* dialog_parent)
+bool TemplateImage::postLoadConfiguration(QWidget* dialog_parent, bool& out_center_in_view)
 {
 	if (getTemplateFilename().endsWith(".gif", Qt::CaseInsensitive))
 		QMessageBox::warning(dialog_parent, tr("Warning"), tr("Loading a GIF image template.\nSaving GIF files is not supported. This means that drawings on this template won't be saved!\nIf you do not intend to draw on this template however, that is no problem."));
@@ -145,10 +138,28 @@ bool TemplateImage::postLoadConfiguration(QWidget* dialog_parent)
 		if (open_dialog.exec() == QDialog::Rejected)
 			return false;
 		
-		if (open_dialog.isGeorefRadioChecked() && map->getGeoreferencing().isLocal())
+		if (open_dialog.isGeorefRadioChecked() && !map->getGeoreferencing().isValid())
 		{
-			// Make sure that map is georeferenced
-			GeoreferencingDialog dialog(dialog_parent, map);
+			// Make sure that the map is georeferenced;
+			// use the center coordinates of the image as initial reference point.
+			calculateGeoreferencing();
+			QPointF template_coords_center = georef->toProjectedCoords(MapCoordF(0.5 * (image->width() - 1), 0.5 * (image->height() - 1)));
+			bool template_coords_probably_geographic =
+				template_coords_center.x() >= -90 && template_coords_center.x() <= 90 &&
+				template_coords_center.y() >= -90 && template_coords_center.y() <= 90;
+			
+			Georeferencing initial_georef(map->getGeoreferencing());
+			if (template_coords_probably_geographic)
+				initial_georef.setGeographicRefPoint(LatLon(template_coords_center.y(), template_coords_center.x(), true));
+			else
+				initial_georef.setProjectedRefPoint(template_coords_center);
+			initial_georef.setState(Georeferencing::ScaleOnly);
+			
+			GeoreferencingDialog dialog(dialog_parent, map, &initial_georef, false);
+			if (template_coords_probably_geographic)
+				dialog.setKeepGeographicRefCoords();
+			else
+				dialog.setKeepProjectedRefCoords();
 			if (dialog.exec() == QDialog::Rejected)
 				continue;
 		}
@@ -156,7 +167,7 @@ bool TemplateImage::postLoadConfiguration(QWidget* dialog_parent)
 		if (open_dialog.isGeorefRadioChecked() && available_georef == Georeferencing_WorldFile)
 		{
 			// Let user select the coordinate reference system, as this is not specified in world files
-			SelectCRSDialog dialog(map, dialog_parent, true, true, tr("Select the coordinate reference system of the coordinates in the world file"));
+			SelectCRSDialog dialog(map, dialog_parent, true, false, true, tr("Select the coordinate reference system of the coordinates in the world file"));
 			if (dialog.exec() == QDialog::Rejected)
 				continue;
 			temp_crs_spec = dialog.getCRSSpec();
@@ -188,7 +199,7 @@ void TemplateImage::unloadTemplateFileImpl()
 	image = NULL;
 }
 
-void TemplateImage::drawTemplate(QPainter* painter, QRectF& clip_rect, double scale, float opacity)
+void TemplateImage::drawTemplate(QPainter* painter, QRectF& clip_rect, double scale, bool on_screen, float opacity)
 {
 	applyTemplateTransform(painter);
 	
@@ -302,7 +313,8 @@ void TemplateImage::calculateGeoreferencing()
 		// TODO: GeoTiff
 	}
 	
-	updatePosFromGeoreferencing();
+	if (map->getGeoreferencing().isValid())
+		updatePosFromGeoreferencing();
 }
 
 void TemplateImage::updatePosFromGeoreferencing()

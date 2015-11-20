@@ -1,5 +1,5 @@
 /*
- *    Copyright 2012 Thomas Schöps
+ *    Copyright 2012, 2013 Thomas Schöps
  *
  *    This file is part of OpenOrienteering.
  *
@@ -130,7 +130,9 @@ void MapGrid::draw(QPainter* painter, QRectF bounding_box, Map* map)
 	double final_rotation;
 	calculateFinalParameters(final_horz_spacing, final_vert_spacing, final_horz_offset, final_vert_offset, final_rotation, map);
 	
-	painter->setPen(color);
+	QPen pen(color);
+	pen.setCosmetic(true);
+	painter->setPen(pen);
 	painter->setBrush(Qt::NoBrush);
 	painter->setOpacity(qAlpha(color) / 255.0);
 	
@@ -232,7 +234,7 @@ ConfigureGridDialog::ConfigureGridDialog(QWidget* parent, Map* map, MapView* mai
 	QLabel* vert_offset_label = new QLabel(tr("Vertical offset:"));
 	vert_offset_edit = Util::SpinBox::create(1, -std::numeric_limits<double>::max(), std::numeric_limits<double>::max());
 
-	QDialogButtonBox* button_box = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal);
+	QDialogButtonBox* button_box = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel | QDialogButtonBox::Help, Qt::Horizontal);
 	
 	
 	MapGrid& grid = map->getGrid();
@@ -292,6 +294,7 @@ ConfigureGridDialog::ConfigureGridDialog(QWidget* parent, Map* map, MapView* mai
 	connect(grid_north_radio, SIGNAL(clicked(bool)), this, SLOT(updateStates()));
 	connect(true_north_radio, SIGNAL(clicked(bool)), this, SLOT(updateStates()));
 	connect(unit_combo, SIGNAL(currentIndexChanged(int)), this, SLOT(updateStates()));
+	connect(button_box, SIGNAL(helpRequested()), this, SLOT(showHelp()));
 	
 	connect(button_box, SIGNAL(accepted()), this, SLOT(okClicked()));
 	connect(button_box, SIGNAL(rejected()), this, SLOT(reject()));
@@ -375,4 +378,9 @@ void ConfigureGridDialog::updateStates()
 	horz_offset_edit->setSuffix(unit_suffix);
 	vert_offset_edit->setEnabled(show_grid_check->isChecked() && display_mode != MapGrid::VerticalLines);
 	vert_offset_edit->setSuffix(unit_suffix);
+}
+
+void ConfigureGridDialog::showHelp()
+{
+	Util::showHelp(this, "grid.html");
 }

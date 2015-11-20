@@ -1,18 +1,18 @@
 /*
- *    Copyright 2012 Thomas Schöps
- *    
+ *    Copyright 2012, 2013 Thomas Schöps
+ *
  *    This file is part of OpenOrienteering.
- * 
+ *
  *    OpenOrienteering is free software: you can redistribute it and/or modify
  *    it under the terms of the GNU General Public License as published by
  *    the Free Software Foundation, either version 3 of the License, or
  *    (at your option) any later version.
- * 
+ *
  *    OpenOrienteering is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
  *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *    GNU General Public License for more details.
- * 
+ *
  *    You should have received a copy of the GNU General Public License
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -29,7 +29,6 @@
 #endif
 
 #include "map_editor.h"
-#include "map_color.h"
 #include "map_widget.h"
 #include "object.h"
 #include "symbol_point.h"
@@ -37,6 +36,8 @@
 #include "symbol_area.h"
 #include "util.h"
 #include "util_gui.h"
+#include "gui/modifier_key.h"
+#include "gui/widgets/color_dropdown.h"
 
 PointSymbolEditorWidget::PointSymbolEditorWidget(MapEditorController* controller, PointSymbol* symbol, float offset_y, bool permanent_preview, QWidget* parent)
  : QWidget(parent), symbol(symbol), object_origin_coord(0.0f, offset_y), offset_y(offset_y), controller(controller), permanent_preview(permanent_preview)
@@ -70,6 +71,8 @@ PointSymbolEditorWidget::PointSymbolEditorWidget(MapEditorController* controller
 	add_element_button_menu->addAction(tr("Line"), this, SLOT(addLineClicked()));
 	add_element_button_menu->addAction(tr("Area"), this, SLOT(addAreaClicked()));
 	add_element_button->setMenu(add_element_button_menu);
+	
+	center_all_elements_button = new QPushButton(tr("Center all elements"));
 	
 	QLabel* current_element_label = Util::Headline::create(tr("Current element"));
 	
@@ -172,10 +175,17 @@ PointSymbolEditorWidget::PointSymbolEditorWidget(MapEditorController* controller
 	coords_table->verticalHeader()->setVisible(false);
 	
 	QHeaderView* header_view = coords_table->horizontalHeader();
+#if QT_VERSION < 0x050000
 	header_view->setResizeMode(0, QHeaderView::Interactive);
 	header_view->setResizeMode(1, QHeaderView::Interactive);
 	header_view->setResizeMode(2, QHeaderView::ResizeToContents);
 	header_view->setClickable(false);
+#else
+	header_view->setSectionResizeMode(0, QHeaderView::Interactive);
+	header_view->setSectionResizeMode(1, QHeaderView::Interactive);
+	header_view->setSectionResizeMode(2, QHeaderView::ResizeToContents);
+	header_view->setSectionsClickable(false);
+#endif
 	
 	add_coord_button = new QPushButton(QIcon(":/images/plus.png"), "");
 	delete_coord_button = new QPushButton(QIcon(":/images/minus.png"), "");
@@ -185,12 +195,13 @@ PointSymbolEditorWidget::PointSymbolEditorWidget(MapEditorController* controller
 	QBoxLayout* left_layout = new QVBoxLayout();
 	
 	left_layout->addWidget(elements_label);
-	left_layout->addWidget(element_list);
-	QHBoxLayout* element_buttons_layout = new QHBoxLayout();
-	element_buttons_layout->addStretch(1);
-	element_buttons_layout->addWidget(add_element_button);
-	element_buttons_layout->addWidget(delete_element_button);
-	element_buttons_layout->addStretch(1);
+	left_layout->addWidget(element_list, 1);
+	QGridLayout* element_buttons_layout = new QGridLayout();
+	element_buttons_layout->setColumnStretch(0, 1);
+	element_buttons_layout->addWidget(add_element_button, 1, 2);
+	element_buttons_layout->addWidget(delete_element_button, 1, 3);
+	element_buttons_layout->addWidget(center_all_elements_button, 2, 1, 1, 4);
+	element_buttons_layout->setColumnStretch(5, 1);
 	left_layout->addLayout(element_buttons_layout);
 	
 	QBoxLayout* right_layout = new QVBoxLayout();
@@ -225,6 +236,7 @@ PointSymbolEditorWidget::PointSymbolEditorWidget(MapEditorController* controller
 	
 	connect(element_list, SIGNAL(currentRowChanged(int)), this, SLOT(changeElement(int)));
 	connect(delete_element_button, SIGNAL(clicked(bool)), this, SLOT(deleteCurrentElement()));
+	connect(center_all_elements_button, SIGNAL(clicked(bool)), this, SLOT(centerAllElements()));
 	
 	connect(point_inner_radius_edit, SIGNAL(valueChanged(double)), this, SLOT(pointInnerRadiusChanged(double)));
 	connect(point_inner_color_edit, SIGNAL(currentIndexChanged(int)), this, SLOT(pointInnerColorChanged()));
@@ -375,6 +387,7 @@ void PointSymbolEditorWidget::orientedToNorthClicked(bool checked)
 void PointSymbolEditorWidget::changeElement(int row)
 {
 	delete_element_button->setEnabled(row > 0);	// must not remove first row
+	center_all_elements_button->setEnabled(symbol->getNumElements() > 0);
 	
 	if (row >= 0)
 	{
@@ -497,6 +510,70 @@ void PointSymbolEditorWidget::deleteCurrentElement()
 	symbol->deleteElement(pos);
 	delete element_list->item(row);
 	midpoint_object->update(true);
+	emit symbolEdited();
+}
+
+void PointSymbolEditorWidget::centerAllElements()
+{
+	bool has_coordinates = false;
+	qint64 min_x, min_y, max_x, max_y;
+	
+	for (int i = 0; i < symbol->getNumElements(); ++i)
+	{
+		Object* object = symbol->getElementObject(i);
+		for (size_t c = 0; c < object->getRawCoordinateVector().size(); ++c)
+		{
+			MapCoord coord = object->getRawCoordinateVector().at(c);
+			if (has_coordinates)
+			{
+				min_x = std::min(min_x, coord.rawX());
+				min_y = std::min(min_y, coord.rawY());
+				max_x = std::max(max_x, coord.rawX());
+				max_y = std::max(max_y, coord.rawY());
+			}
+			else
+			{
+				min_x = coord.rawX();
+				min_y = coord.rawY();
+				max_x = coord.rawX();
+				max_y = coord.rawY();
+				has_coordinates = true;
+			}
+		}
+	}
+	
+	if (has_coordinates)
+	{
+		qint64 center_x = (min_x + max_x) / 2;
+		qint64 center_y = (min_y + max_y) / 2;
+		
+		for (int i = 0; i < symbol->getNumElements(); ++i)
+		{
+			Object* object = symbol->getElementObject(i);
+			if (object->getType() == Object::Point)
+			{
+				PointObject* point = object->asPoint();
+				point->setPosition(point->getCoord().rawX() - center_x, point->getCoord().rawY() - center_y);
+			}
+			else if (object->getType() == Object::Path)
+			{
+				PathObject* path = object->asPath();
+				for (int c = 0; c < path->getCoordinateCount(); ++c)
+				{
+					MapCoord& coord = path->getCoordinate(c);
+					coord.setRawX(coord.rawX() - center_x);
+					coord.setRawY(coord.rawY() - center_y);
+				}
+			}
+			else
+				Q_ASSERT(false);
+			
+			object->update(true);
+		}
+	}
+	
+	if (element_list->currentRow() > 0)
+		updateCoordsTable();
 	emit symbolEdited();
 }
 
@@ -681,12 +758,14 @@ void PointSymbolEditorWidget::deleteCoordClicked()
 	PathObject* path = reinterpret_cast<PathObject*>(object);
 	
 	int row = coords_table->currentRow();
-	assert(row >= 0);
+	if (row < 0)
+		return;
 	
 	path->deleteCoordinate(row, false);
 	
 	updateCoordsTable();	// NOTE: incremental updates (to the curve start boxes) would be possible but mean some implementation effort
 	center_coords_button->setEnabled(path->getCoordinateCount() > 0);
+	updateDeleteCoordButton();
 	midpoint_object->update(true);
 	emit symbolEdited();
 }
@@ -886,7 +965,7 @@ PointSymbolEditorTool::PointSymbolEditorTool(MapEditorController* editor, PointS
 
 void PointSymbolEditorTool::init()
 {
-	setStatusBarText(tr("<b>Click</b> to add a coordinate, <b>Ctrl+Click</b> to change the selected coordinate"));
+	setStatusBarText(tr("<b>Click</b>: Add a coordinate. <b>%1+Click</b>: Change the selected coordinate. ").arg(ModifierKey::control()));
 }
 
 bool PointSymbolEditorTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* map_widget)

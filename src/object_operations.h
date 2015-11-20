@@ -1,5 +1,5 @@
 /*
- *    Copyright 2012 Thomas Schoeps
+ *    Copyright 2012, 2013 Thomas Schoeps
  *
  *    This file is part of OpenOrienteering.
  *
@@ -76,28 +76,30 @@ namespace ObjectOp
 	
 	struct Scale
 	{
-		inline Scale(double factor) : factor(factor) {}
+		inline Scale(double factor, const MapCoord& scaling_center) : factor(factor), center(scaling_center) {}
 		inline bool operator()(Object* object, MapPart* part, int object_index) const
 		{
-			object->scale(factor);
+			object->scale(center, factor);
 			object->update(true, true);
 			return true;
 		}
 	private:
 		double factor;
+		MapCoordF center;
 	};
 	
 	struct Rotate
 	{
-		inline Rotate(double angle) : angle(angle) {}
+		inline Rotate(double angle, const MapCoord& center) : angle(angle), center(center) {}
 		inline bool operator()(Object* object, MapPart* part, int object_index) const
 		{
-			object->rotateAround(MapCoordF(0, 0), angle);
+			object->rotateAround(center, angle);
 			object->update(true, true);
 			return true;
 		}
 	private:
 		double angle;
+		MapCoordF center;
 	};
 	
 	struct Update

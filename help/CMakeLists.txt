@@ -16,7 +16,27 @@
 #    You should have received a copy of the GNU General Public License
 #    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
 
-if(NOT Mapper_USE_QT5)
+message(STATUS "Configuring ${PROJECT_NAME} help")
+
+if(Mapper_USE_QT5)
+	find_package(Qt5Help REQUIRED)
+	qt5_find_host_program(QT_QCOLLECTIONGENERATOR_EXECUTABLE NAMES qcollectiongenerator)
+	find_program(QT_QTASSISTANT_EXECUTABLE NAMES assistant${CMAKE_EXECUTABLE_SUFFIX} Assistant${CMAKE_EXECUTABLE_SUFFIX}
+	  DOC "The path of the Qt Assistant executable"
+	  HINTS ${QT5_DIR}
+	  PATH_SUFFIXES bin
+	  NO_DEFAULT_PATH)
+else()
+	find_package(Qt4 QUIET REQUIRED)
+	find_program(QT_QCOLLECTIONGENERATOR_EXECUTABLE NAMES qcollectiongenerator)
+	find_program(QT_QTASSISTANT_EXECUTABLE NAMES assistant${CMAKE_EXECUTABLE_SUFFIX}
+	  DOC "The path of the Qt Assistant executable"
+	  HINTS ${QT_BINARY_DIR}
+	  NO_CMAKE_FIND_ROOT_PATH
+	  NO_DEFAULT_PATH)
+endif()
+mark_as_advanced(QT_QCOLLECTIONGENERATOR_EXECUTABLE)
+mark_as_advanced(QT_QTASSISTANT_EXECUTABLE)
 
 if(QT_QCOLLECTIONGENERATOR_EXECUTABLE MATCHES NOTFOUND)
 	message(FATAL_ERROR "qcollectiongenerator executable not found.")
@@ -54,4 +74,4 @@ install(
         "${CMAKE_CURRENT_BINARY_DIR}/${Mapper_COMPRESSED_HELP}" 
   DESTINATION "${MAPPER_DATA_DESTINATION}/help")
 
-endif()
+message(STATUS "Configuring ${PROJECT_NAME} help - done")

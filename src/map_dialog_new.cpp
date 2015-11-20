@@ -1,18 +1,18 @@
 /*
- *    Copyright 2012 Thomas Schöps
- *    
+ *    Copyright 2012, 2013 Thomas Schöps
+ *
  *    This file is part of OpenOrienteering.
- * 
+ *
  *    OpenOrienteering is free software: you can redistribute it and/or modify
  *    it under the terms of the GNU General Public License as published by
  *    the Free Software Foundation, either version 3 of the License, or
  *    (at your option) any later version.
- * 
+ *
  *    OpenOrienteering is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
  *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *    GNU General Public License for more details.
- * 
+ *
  *    You should have received a copy of the GNU General Public License
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -32,6 +32,8 @@
 #include <QCoreApplication>
 
 #include "file_format.h"
+#include "file_format_registry.h"
+#include "mapper_resource.h"
 
 NewMapDialog::NewMapDialog(QWidget* parent) : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint)
 {
@@ -96,7 +98,7 @@ NewMapDialog::NewMapDialog(QWidget* parent) : QDialog(parent, Qt::WindowSystemMe
 	updateSymbolSetList();
 }
 
-int NewMapDialog::getSelectedScale() const
+unsigned int NewMapDialog::getSelectedScale() const
 {
 	return scale_combo->currentText().toInt();
 }
@@ -182,7 +184,8 @@ void NewMapDialog::updateSymbolSetList()
 	load_from_file->setIcon(QIcon(":/images/open.png"));
 	symbol_set_list->addItem(load_from_file);
 	
-	symbol_set_list->setCurrentRow(0);
+	// Select second row, which usually is the first (and only) symbol set
+	symbol_set_list->setCurrentRow(1);
 }
 
 void NewMapDialog::symbolSetDoubleClicked(QListWidgetItem* item)
@@ -210,19 +213,19 @@ void NewMapDialog::showFileDialog()
 	
 	// Build the list of supported file filters based on the file format registry
 	QString filters, extensions;
-	Q_FOREACH(const Format *format, FileFormats.formats())
+	Q_FOREACH(const FileFormat *format, FileFormats.formats())
 	{
 		if (format->supportsImport())
 		{
 			if (filters.isEmpty())
 			{
 				filters    = format->filter();
-				extensions = "*." % format->fileExtension();
+				extensions = "*." % format->fileExtensions().join(" *.");
 			}
 			else
 			{
 				filters    = filters    % ";;"  % format->filter();
-				extensions = extensions % " *." % format->fileExtension();
+				extensions = extensions % " *." % format->fileExtensions().join(" *.");
 			}
 		}
 	}
@@ -244,48 +247,15 @@ void NewMapDialog::loadSymbolSetMap()
 {
 	QString app_dir = QCoreApplication::applicationDirPath();
 	
-	// FIXME: How to translate directory name "my symbol sets"?
-	// possible Windows solution: desktop.ini
-	
-	// symbol sets from HOME/my symbol sets
-	QDir symbol_set_dir(QDir::homePath() % QDir::toNativeSeparators("/my symbol sets"));
-	if (symbol_set_dir.exists())
+	QStringList locations = MapperResource::getLocations(MapperResource::SYMBOLSET);
+	Q_FOREACH(QString symbol_set_dir, locations)
 		loadSymbolSetDir(symbol_set_dir);
-	
-	// symbol sets from APPDIR/symbol sets
-	symbol_set_dir = QDir(app_dir % QDir::toNativeSeparators("/symbol sets"));
-	if (symbol_set_dir.exists())
-		loadSymbolSetDir(symbol_set_dir);
-	
-	// symbol sets from APPDIR/my symbol sets (deprecated)
-	symbol_set_dir = QDir(app_dir % QDir::toNativeSeparators("/my symbol sets"));
-	if (symbol_set_dir.exists())
-		loadSymbolSetDir(symbol_set_dir);
-	
-	// symbol sets from WORKINGDIR/my symbol sets (deprecated)
-	QDir working_symbol_set_dir = QDir("my symbol sets");
-	if (working_symbol_set_dir.canonicalPath() != symbol_set_dir.canonicalPath() && working_symbol_set_dir.exists())
-		loadSymbolSetDir(working_symbol_set_dir);
-	
-#ifndef WIN32
-	// symbol sets from /usr/share et al. if executable is in /usr/bin
-	symbol_set_dir.cd(app_dir % "/../share/openorienteering-mapper/symbol sets");
-	if (symbol_set_dir.exists())
-		loadSymbolSetDir(symbol_set_dir);
-#endif
-
-#ifdef Q_WS_MAC
-	// symbol sets from Mapper.app/Contents/Resources/symbol sets
-	symbol_set_dir = QDir(app_dir % "/../Resources/symbol sets");
-	if (symbol_set_dir.exists())
-		loadSymbolSetDir(symbol_set_dir);
-#endif
 }
 
 void NewMapDialog::loadSymbolSetDir(const QDir& symbol_set_dir)
 {
 	QStringList subdirs = symbol_set_dir.entryList(QDir::Dirs | QDir::Hidden | QDir::NoSymLinks | QDir::NoDotAndDotDot, QDir::NoSort);
-	foreach (const QString dir_name, subdirs)
+	Q_FOREACH(const QString dir_name, subdirs)
 	{
 		//int scale = dir_name.toInt();
 		//if (scale == 0)
@@ -301,8 +271,13 @@ void NewMapDialog::loadSymbolSetDir(const QDir& symbol_set_dir)
 		}
 		
 		QStringList symbol_set_filters;
-		symbol_set_filters << "*.omap";
+		Q_FOREACH(const FileFormat *format, FileFormats.formats())
+		{
+			if (format->supportsImport())
+				symbol_set_filters << QStringList(format->fileExtensions()).replaceInStrings(QRegExp("^"), "*.");
+		}
 		subdir.setNameFilters(symbol_set_filters);
+		
 		QFileInfoList symbol_set_files = subdir.entryInfoList(QDir::Files | QDir::Hidden | QDir::NoSymLinks | QDir::NoDotAndDotDot, QDir::Name);
 		symbol_set_map.insert(std::make_pair(dir_name, symbol_set_files));
 	}

@@ -1,18 +1,18 @@
 /*
- *    Copyright 2012 Thomas Schöps
- *    
+ *    Copyright 2012, 2013 Thomas Schöps
+ *
  *    This file is part of OpenOrienteering.
- * 
+ *
  *    OpenOrienteering is free software: you can redistribute it and/or modify
  *    it under the terms of the GNU General Public License as published by
  *    the Free Software Foundation, either version 3 of the License, or
  *    (at your option) any later version.
- * 
+ *
  *    OpenOrienteering is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
  *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *    GNU General Public License for more details.
- * 
+ *
  *    You should have received a copy of the GNU General Public License
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -28,10 +28,10 @@
 #include <QIODevice>
 #include <QXmlStreamWriter>
 
+#include "core/map_color.h"
 #include "map.h"
 #include "symbol_setting_dialog.h"
 #include "symbol_properties_widget.h"
-#include "map_color.h"
 
 CombinedSymbol::CombinedSymbol() : Symbol(Symbol::Combined)
 {
@@ -50,7 +50,7 @@ CombinedSymbol::~CombinedSymbol()
 	}
 }
 
-Symbol* CombinedSymbol::duplicate(const QHash<MapColor*, MapColor*>* color_map) const
+Symbol* CombinedSymbol::duplicate(const MapColorMap* color_map) const
 {
 	CombinedSymbol* new_symbol = new CombinedSymbol();
 	new_symbol->duplicateImplCommon(this);
@@ -73,7 +73,7 @@ void CombinedSymbol::createRenderables(Object* object, const MapCoordVector& fla
 	}
 }
 
-void CombinedSymbol::colorDeleted(MapColor* color)
+void CombinedSymbol::colorDeleted(const MapColor* color)
 {
 	if (containsColor(color))
 		resetIcon();
@@ -84,7 +84,7 @@ void CombinedSymbol::colorDeleted(MapColor* color)
 	}
 }
 
-bool CombinedSymbol::containsColor(MapColor* color)
+bool CombinedSymbol::containsColor(const MapColor* color) const
 {
 	for (int i = 0, size = (int)parts.size(); i < size; ++i)
 	{
@@ -96,16 +96,16 @@ bool CombinedSymbol::containsColor(MapColor* color)
 	return false;
 }
 
-MapColor* CombinedSymbol::getDominantColorGuess()
+const MapColor* CombinedSymbol::getDominantColorGuess() const
 {
 	// Speculative heuristic. Prefers areas and non-white colors.
-	MapColor* dominant_color = NULL;
+	const MapColor* dominant_color = NULL;
 	for (int i = 0, size = (int)parts.size(); i < size; ++i)
 	{
 		if (parts[i] && parts[i]->getContainedTypes() & Symbol::Area)
 		{
 			dominant_color = parts[i]->getDominantColorGuess();
-			if (dominant_color->r != 1 || dominant_color->g != 1 || dominant_color->b != 1)
+			if (! dominant_color->isWhite())
 				return dominant_color;
 		}
 	}
@@ -118,7 +118,7 @@ MapColor* CombinedSymbol::getDominantColorGuess()
 		if (parts[i] && !(parts[i]->getContainedTypes() & Symbol::Area))
 		{
 			dominant_color = parts[i]->getDominantColorGuess();
-			if (dominant_color->r != 1 || dominant_color->g != 1 || dominant_color->b != 1)
+			if (dominant_color->isWhite())
 				return dominant_color;
 		}
 	}
@@ -268,7 +268,8 @@ void CombinedSymbol::saveImpl(QXmlStreamWriter& xml, const Map& map) const
 
 bool CombinedSymbol::loadImpl(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol_dict)
 {
-	Q_ASSERT(xml.name() == "combined_symbol");
+	if (xml.name() != "combined_symbol")
+		return false;
 	
 	int num_parts = xml.attributes().value("parts").toString().toInt();
 	temp_part_indices.reserve(num_parts % 10); // 10 is not the limit
@@ -300,7 +301,7 @@ bool CombinedSymbol::loadImpl(QXmlStreamReader& xml, Map& map, SymbolDictionary&
 			xml.skipCurrentElement(); // unknown
 	}
 	
-	return !xml.error();
+	return true;
 }
 
 bool CombinedSymbol::equalsImpl(Symbol* other, Qt::CaseSensitivity case_sensitivity)
@@ -338,6 +339,14 @@ bool CombinedSymbol::loadFinished(Map* map)
 	}
 	temp_part_indices.clear();
 	return true;
+}
+
+float CombinedSymbol::calculateLargestLineExtent(Map* map)
+{
+	float result = 0;
+	for (size_t i = 0, end = parts.size(); i < end; ++i)
+		result = qMax(result, parts[i]->calculateLargestLineExtent(map));
+	return result;
 }
 
 void CombinedSymbol::setPart(int i, Symbol* symbol, bool is_private)

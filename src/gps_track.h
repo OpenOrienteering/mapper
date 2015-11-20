@@ -1,18 +1,18 @@
 /*
- *    Copyright 2012 Thomas Schöps
- *    
+ *    Copyright 2012, 2013 Thomas Schöps
+ *
  *    This file is part of OpenOrienteering.
- * 
+ *
  *    OpenOrienteering is free software: you can redistribute it and/or modify
  *    it under the terms of the GNU General Public License as published by
  *    the Free Software Foundation, either version 3 of the License, or
  *    (at your option) any later version.
- * 
+ *
  *    OpenOrienteering is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
  *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *    GNU General Public License for more details.
- * 
+ *
  *    You should have received a copy of the GNU General Public License
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -26,7 +26,10 @@
 
 #include "georeferencing.h"
 
+QT_BEGIN_NAMESPACE
+class QFile;
 class QXmlStreamWriter;
+QT_END_NAMESPACE
 
 class MapEditorController;
 
@@ -35,6 +38,7 @@ struct TrackPoint
 {
 	LatLon gps_coord;
 	MapCoordF map_coord;
+	bool is_curve_start;
 	
 	QDateTime datetime;		// QDateTime() if invalid
 	float elevation;		// -9999 if invalid
@@ -45,15 +49,19 @@ struct TrackPoint
 	void save(QXmlStreamWriter* stream) const;
 };
 
-/// Stores a set of tracks and / or waypoints, e.g. taken from a GPS device
+/// Stores a set of tracks and / or waypoints, e.g. taken from a GPS device.
+/// Can optionally store a track coordinate reference system in track_georef;
+/// if no track CRS is given, assumes that coordinates are geographic WGS84 coordinates
 class Track
 {
 public:
 	/// Constructs an empty track
 	Track();
-	Track(const Georeferencing& Georeferencing);
+	Track(const Georeferencing& map_georef);
 	/// Duplicates a track
 	Track(const Track& other);
+	
+	~Track();
 	
 	/// Deletes all data of the track, except the projection parameters
 	void clear();
@@ -70,7 +78,11 @@ public:
 	
 	void appendWaypoint(TrackPoint& point, const QString& name);	// also converts the point's gps coords to map coords
 	
-	void changeGeoreferencing(const Georeferencing& new_georef);
+	void changeMapGeoreferencing(const Georeferencing& new_georef);
+	
+	/// Sets the track coordinate reference system.
+	/// The Track object takes ownership of the Georeferencing object.
+	void setTrackCRS(Georeferencing* track_crs);
 	
 	// Getters
 	int getNumSegments() const;
@@ -81,10 +93,20 @@ public:
 	const TrackPoint& getWaypoint(int number) const;
 	const QString& getWaypointName(int number) const;
 	
+	bool hasTrackCRS() const {return track_crs != NULL;}
+	Georeferencing* getTrackCRS() const {return track_crs;}
+	
 	/// Averages all track coordinates
 	LatLon calcAveragePosition() const;
 	
 private:
+	bool loadFromGPX(QFile* file, bool project_points, QWidget* dialog_parent);
+	bool loadFromDXF(QFile* file, bool project_points, QWidget* dialog_parent);
+	bool loadFromOSM(QFile* file, bool project_points, QWidget* dialog_parent);
+	
+	void projectPoints();
+	
+	
 	std::vector<TrackPoint> waypoints;
 	std::vector<QString> waypoint_names;
 	
@@ -94,7 +116,8 @@ private:
 	
 	bool current_segment_finished;
 	
-	Georeferencing georef;
+	Georeferencing* track_crs;
+	Georeferencing map_georef;
 };
 
 #endif

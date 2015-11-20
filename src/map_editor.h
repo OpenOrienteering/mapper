@@ -1,18 +1,18 @@
 /*
- *    Copyright 2012 Thomas Schöps
- *    
+ *    Copyright 2012, 2013 Thomas Schöps
+ *
  *    This file is part of OpenOrienteering.
- * 
+ *
  *    OpenOrienteering is free software: you can redistribute it and/or modify
  *    it under the terms of the GNU General Public License as published by
  *    the Free Software Foundation, either version 3 of the License, or
  *    (at your option) any later version.
- * 
+ *
  *    OpenOrienteering is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
  *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *    GNU General Public License for more details.
- * 
+ *
  *    You should have received a copy of the GNU General Public License
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -28,12 +28,13 @@
 #include <QScopedPointer>
 #include <QClipboard>
 
-#include "main_window.h"
+#include "gui/main_window_controller.h"
 #include "map.h"
 
 QT_BEGIN_NAMESPACE
-class QLabel;
 class QFrame;
+class QLabel;
+class QToolBar;
 QT_END_NAMESPACE
 
 class Template;
@@ -64,18 +65,18 @@ public:
 	
 	MapEditorController(OperatingMode mode, Map* map = NULL);
 	~MapEditorController();
-
+	
 	void setTool(MapEditorTool* new_tool);
 	void setEditTool();
 	void setOverrideTool(MapEditorTool* new_override_tool);
 	inline MapEditorTool* getTool() const {return current_tool;}
 	MapEditorTool* getDefaultDrawToolForSymbol(Symbol* symbol);
 	
-	/// If this is set to true (usually by the current tool), undo/redo is deactivated
+	/// If this is set to true (usually by the current tool), undo/redo and saving the map is deactivated
 	void setEditingInProgress(bool value);
 	
-	/// Returns true if the widget was shown, false if it was hidden. Set new_widget to true if the widget is new and shown for the first time
-	bool toggleFloatingDockWidget(QDockWidget* dock_widget, bool new_widget);
+	/// Adds a a floating dock widget to the main window. Adjusts some geometric properties.
+	void addFloatingDockWidget(QDockWidget* dock_widget);
 	
 	void setEditorActivity(MapEditorActivity* new_activity);
 	inline MapEditorActivity* getEditorActivity() const {return editor_activity;}
@@ -89,27 +90,31 @@ public:
 	void addTemplatePositionDockWidget(Template* temp);
 	void removeTemplatePositionDockWidget(Template* temp); // should be called by the dock widget if it is closed or the template deleted; deletes the dock widget
 	
-    virtual bool save(const QString& path);
+	virtual bool save(const QString& path);
 	virtual bool load(const QString& path);
 	
-    virtual void attach(MainWindow* window);
-    virtual void detach();
+	virtual void attach(MainWindow* window);
+	virtual void detach();
 	
-    virtual void keyPressEvent(QKeyEvent* event);
-    virtual void keyReleaseEvent(QKeyEvent* event);
+	virtual void keyPressEvent(QKeyEvent* event);
+	virtual void keyReleaseEvent(QKeyEvent* event);
 	
 public slots:
-	void printClicked();
+	/** Makes the print/export dock widget visible, and configures it for 
+	 *  the given task (which is of type PrintWidget::TaskFlags). */
+	void printClicked(int task);
 	
 	void undo();
 	void redo();
 	void cut();
 	void copy();
 	void paste();
+	void clearUndoRedoHistory();
 	
 	void showGrid();
 	void configureGrid();
 	
+	void pan();
 	void zoomIn();
 	void zoomOut();
 	void setCustomZoomFactorClicked();
@@ -117,6 +122,7 @@ public slots:
 	void hatchAreas(bool checked);
 	void baselineView(bool checked);
 	void hideAllTemplates(bool checked);
+	void overprintingSimulation(bool checked);
 	
 	void coordsDisplayChanged();
 	
@@ -147,6 +153,7 @@ public slots:
 	void showWholeMap();
 	
 	void editToolClicked();
+	void editLineToolClicked();
 	void drawPointClicked();
 	void drawPathClicked();
 	void drawCircleClicked();
@@ -156,7 +163,7 @@ public slots:
 	void duplicateClicked();
 	void switchSymbolClicked();
 	void fillBorderClicked();
-	void selectObjectsClicked();	// Selects all objects with the selected symbol(s)
+	void selectObjectsClicked(bool select_exclusively);	// Selects all objects with the selected symbol(s)
 	void switchDashesClicked();
 	void connectPathsClicked();
 	void cutClicked();
@@ -171,16 +178,30 @@ public slots:
 	void booleanIntersectionClicked();
 	void booleanDifferenceClicked();
 	void booleanXOrClicked();
+	void convertToCurvesClicked();
+	void simplifyPathClicked();
+	void cutoutPhysicalClicked();
+	void cutawayPhysicalClicked();
 	
 	void paintOnTemplateClicked(bool checked);
 	void paintOnTemplateSelectClicked();
 	
 	void templateAdded(int pos, Template* temp);
 	void templateDeleted(int pos, Template* temp);
-
+	
 	void importGeoFile(const QString& filename);
 	bool importMapFile(const QString& filename);
 	void importClicked();
+	
+	/** 
+	 * Save the current toolbar and dock widget positions
+	 */
+	void saveWindowState();
+	
+	/**
+	 * Restore previously saved toolbar and dock widget positions
+	 */
+	void restoreWindowState();
 	
 signals:
 	void templatePositionDockWidgetClosed(Template* temp);
@@ -198,9 +219,9 @@ private:
 	QAction* newAction(const char* id, const QString& tr_text, QObject* receiver, const char* slot, const char* icon = NULL, const QString& tr_tip = QString::null, const QString& whatsThisLink = QString::null);
 	QAction* newCheckAction(const char* id, const QString& tr_text, QObject* receiver, const char* slot, const char* icon = NULL, const QString& tr_tip = QString::null, const QString& whatsThisLink = QString::null);
 	QAction* newToolAction(const char* id, const QString& tr_text, QObject* receiver, const char* slot, const char* icon = NULL, const QString& tr_tip = QString::null, const QString& whatsThisLink = QString::null);
-    QAction* findAction(const char* id);
-    void assignKeyboardShortcuts();
-    void createMenuAndToolbars();
+	QAction* findAction(const char* id);
+	void assignKeyboardShortcuts();
+	void createMenuAndToolbars();
 	void createPieMenu(PieMenu* menu);
 	
 	void paintOnTemplate(Template* temp);
@@ -219,11 +240,10 @@ private:
 	MapEditorActivity* editor_activity;
 	
 	bool editing_in_progress;
-
-    // Action handling
-    QHash<const char *, QAction *> actionsById;
 	
-	QAction* print_act;
+	// Action handling
+	QHash<const char *, QAction *> actionsById;
+	
 	EditorDockWidget* print_dock_widget;
 	PrintWidget* print_widget;
 	
@@ -232,11 +252,14 @@ private:
 	QAction* cut_act;
 	QAction* copy_act;
 	QAction* paste_act;
+	QAction* clear_undo_redo_history_act;
 	
+	QAction* pan_act;
 	QAction* show_grid_act;
 	QAction* hatch_areas_view_act;
 	QAction* baseline_view_act;
 	QAction* hide_all_templates_act;
+	QAction* overprinting_simulation_act;
 	
 	QAction* map_coordinates_act;
 	QAction* projected_coordinates_act;
@@ -255,6 +278,7 @@ private:
 	QAction* reopen_template_act;
 	
 	QAction* edit_tool_act;
+	QAction* edit_line_tool_act;
 	QAction* draw_point_act;
 	QAction* draw_path_act;
 	QAction* draw_circle_act;
@@ -280,6 +304,10 @@ private:
 	QAction* boolean_intersection_act;
 	QAction* boolean_difference_act;
 	QAction* boolean_xor_act;
+	QAction* convert_to_curves_act;
+	QAction* simplify_path_act;
+	QAction* cutout_physical_act;
+	QAction* cutaway_physical_act;
 	
 	QAction* paint_on_template_act;
 	Template* last_painted_on_template;
@@ -296,30 +324,20 @@ private:
 	QScopedPointer<ReopenTemplateDialog> reopen_template_dialog;
 	
 	QHash<Template*, TemplatePositionDockWidget*> template_position_widgets;
+	
+	bool being_destructed;
 };
 
-class EditorDockWidgetChild : public QWidget
-{
-Q_OBJECT
-public:
-	inline EditorDockWidgetChild(QWidget* parent) : QWidget(parent) {}
-	virtual void closed() {}
-};
 /// Custom QDockWidget which unchecks the associated menu action when closed and delivers a notification to its child
 class EditorDockWidget : public QDockWidget
 {
 Q_OBJECT
 public:
 	EditorDockWidget(const QString title, QAction* action, MapEditorController* editor, QWidget* parent = NULL);
-	void setChild(EditorDockWidgetChild* child);
-	inline EditorDockWidgetChild* getChild() const {return child;}
-    virtual bool event(QEvent* event);
-    virtual void closeEvent(QCloseEvent* event);
-signals:
-	void closed();
+	virtual bool event(QEvent* event);
+	virtual void closeEvent(QCloseEvent* event);
 private:
 	QAction* action;
-	EditorDockWidgetChild* child;
 	MapEditorController* editor;
 };
 

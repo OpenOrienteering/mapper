@@ -1,18 +1,18 @@
 /*
- *    Copyright 2012 Thomas Schöps
- *    
+ *    Copyright 2012, 2013 Thomas Schöps
+ *
  *    This file is part of OpenOrienteering.
- * 
+ *
  *    OpenOrienteering is free software: you can redistribute it and/or modify
  *    it under the terms of the GNU General Public License as published by
  *    the Free Software Foundation, either version 3 of the License, or
  *    (at your option) any later version.
- * 
+ *
  *    OpenOrienteering is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
  *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *    GNU General Public License for more details.
- * 
+ *
  *    You should have received a copy of the GNU General Public License
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -34,7 +34,7 @@
 #include "symbol_line.h"
 #include "symbol_area.h"
 #include "symbol_text.h"
-#include "main_window.h"
+#include "gui/main_window.h"
 #include "map_editor.h"
 #include "map_widget.h"
 #include "template.h"
@@ -43,6 +43,7 @@
 #include "symbol_point_editor.h"
 #include "symbol_combined.h"
 #include "symbol_properties_widget.h"
+#include "util.h"
 
 SymbolSettingDialog::SymbolSettingDialog(Symbol* source_symbol, Map* source_map, QWidget* parent)
 : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint), 
@@ -93,7 +94,7 @@ SymbolSettingDialog::SymbolSettingDialog(Symbol* source_symbol, Map* source_map,
 	QVBoxLayout* preview_layout = NULL;
 	if (symbol->getType() == Symbol::Point)
 	{
-		QLabel* template_label = new QLabel(tr("<b>Template</b>: "));
+		QLabel* template_label = new QLabel(tr("<b>Template:</b> "));
 		template_file_label = new QLabel(tr("(none)"));
 		QPushButton* load_template_button = new QPushButton(tr("Open..."));
 		
@@ -441,13 +442,13 @@ void SymbolSettingDialog::createPreviewMap()
 
 void SymbolSettingDialog::showHelp()
 {
-	QString fragment = "general";
+	QString fragment = "editor";
 	if (properties_widget->currentIndex() > 0)
 	{
 		fragment = "symbol-type-";
 		fragment.append(QString::number(symbol->getType()));
 	}
-	preview_controller->getWindow()->showHelp("symbol_editor.html", fragment);
+	Util::showHelp(preview_controller->getWindow(), "symbol_dock_widget.html", fragment);
 }
 
 void SymbolSettingDialog::reset()

@@ -24,3 +24,44 @@ macro(QT4_ADD_RESOURCES)
 	qt5_add_resources(${ARGV})
 endmacro()
 
+macro(QT4_ADD_TRANSLATION)
+	qt5_add_translation(${ARGV})
+endmacro()
+
+if(CMAKE_CROSSCOMPILING)
+# Cross-compilation: Qt 5.0.0's cmake modules point to the target tools,
+# but we need the hosts tools.
+	macro(QT5_FIND_HOST_PROGRAM VAR)
+		# Get rid of non-cached Qt5 configuration variable
+		unset(${VAR})
+		if(HOST_${VAR}_FOUND AND NOT ${VAR})
+			unset(HOST_${VAR}_FOUND CACHE)
+		endif()
+		if (NOT HOST_${VAR}_FOUND)
+			# Search QT5_HOST_DIR first
+			unset(${VAR} CACHE)
+			find_program(${ARGV}
+			  HINTS ${QT5_HOST_DIR}
+			  PATH_SUFFIXES bin host/bin
+			  NO_DEFAULT_PATH
+			)
+			if(${VAR} MATCHES NOTFOUND)
+				message("${VAR}: not found in ${QT5_HOST_DIR}")
+			else()
+				set(HOST_${VAR}_FOUND TRUE CACHE INTERNAL "Found program in QT5_HOST_DIR")
+			endif()
+		endif()
+		if (NOT HOST_${VAR}_FOUND)
+			# This will search QT5_DIR since it is in CMAKE_PREFIX_PATH
+			find_program(${ARGV})
+			if(NOT ${VAR} MATCHES NOTFOUND)
+				message("${VAR}: using alternative ${${VAR}}")
+			endif()
+		endif()
+	endmacro()
+else()
+	macro(QT5_FIND_HOST_PROGRAM VAR)
+		# This will search QT5_DIR since it is in CMAKE_PREFIX_PATH
+		find_program(${ARGV})
+	endmacro()
+endif()

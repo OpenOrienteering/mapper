@@ -1,0 +1,59 @@
+#!/bin/sh -e
+#
+#    Copyright 2012, 2013 Kai Pastor
+#    
+#    This file is part of OpenOrienteering.
+# 
+#    OpenOrienteering is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+# 
+#    OpenOrienteering is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+# 
+#    You should have received a copy of the GNU General Public License
+#    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
+
+cd "@SOURCE_DIR@"
+
+# [1] Normal patching
+for I in "@PROJECT_SOURCE_DIR@"/qt5-[1-9]*.patch
+do
+	test -f "$I" && patch -p1 < "$I"
+done
+
+# [2] Customize build by removing and disabling subdirs.
+for I in \
+  qtactiveqt \
+  qtdeclarative \
+  qtdoc \
+  qtgraphicaleffects \
+  qtjsbackend \
+  qtmultimedia \
+  qtquick1 \
+  qtscript \
+  qtwebkit-examples-and-demos \
+  qtwebkit \
+  qtxmlpatterns
+do
+       if [ -d "./$I" ]
+       then
+               rm -R "./$I"
+       fi
+done
+
+# [3] MinGW on Windows issue
+if [ ! -f qtbase/.gitignore ]
+then
+	touch qtbase/.gitignore
+fi
+
+# [4] Placeholder Makefile for initial "make confclean"
+if [ ! -f "@BINARY_DIR@/qtbase/Makefile" ]
+then
+	mkdir -p "@BINARY_DIR@/qtbase"
+	echo "confclean:" > "@BINARY_DIR@/qtbase/Makefile"
+fi

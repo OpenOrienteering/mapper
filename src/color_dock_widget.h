@@ -1,18 +1,18 @@
 /*
- *    Copyright 2012 Thomas Schöps
- *    
+ *    Copyright 2012, 2013 Thomas Schöps, Kai Pastor
+ *
  *    This file is part of OpenOrienteering.
- * 
+ *
  *    OpenOrienteering is free software: you can redistribute it and/or modify
  *    it under the terms of the GNU General Public License as published by
  *    the Free Software Foundation, either version 3 of the License, or
  *    (at your option) any later version.
- * 
+ *
  *    OpenOrienteering is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
  *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *    GNU General Public License for more details.
- * 
+ *
  *    You should have received a copy of the GNU General Public License
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -21,26 +21,26 @@
 #ifndef _OPENORIENTEERING_COLOR_DOCK_WIDGET_H_
 #define _OPENORIENTEERING_COLOR_DOCK_WIDGET_H_
 
-#include "map_editor.h"
+#include <qglobal.h>
+#if QT_VERSION < 0x050000
+#include <QtGui>
+#else
+#include <QtWidgets>
+#endif
 
-class QBoxLayout;
-class QPushButton;
-class QTableWidget;
-class QWidget;
-
+class ColorDropDown;
+class MainWindow;
 class Map;
+class MapColor;
+class PaletteColor;
 
-class ColorWidget : public EditorDockWidgetChild
+class ColorWidget : public QWidget
 {
 Q_OBJECT
+
 public:
 	ColorWidget(Map* map, MainWindow* window, QWidget* parent = NULL);
-    virtual ~ColorWidget();
-	
-    virtual QSize sizeHint() const;
-	
-protected:
-    virtual void resizeEvent(QResizeEvent* event);
+	virtual ~ColorWidget();
 	
 protected slots:
 	void newColor();
@@ -55,24 +55,24 @@ protected slots:
 	void cellDoubleClick(int row, int column);
 	
 	void colorAdded(int index, MapColor* color);
-	void colorDeleted(int index, MapColor* color);
+	void colorChanged(int index, MapColor* color);
+	void colorDeleted(int index, const MapColor* color);
+	
+protected:
+	QAbstractButton* newToolButton(const QIcon& icon, const QString& text, QAbstractButton* prototype = NULL);
 	
 private:
 	void addRow(int row);
 	void updateRow(int row);
 	
-	bool wide_layout;
-	QBoxLayout* layout;
-	
 	// Color list
 	QTableWidget* color_table;
 	
 	// Buttons
-	QWidget* buttons_group;
-	QPushButton* delete_button;
-	QPushButton* duplicate_button;
-	QPushButton* move_up_button;
-	QPushButton* move_down_button;
+	QAbstractButton* delete_button;
+	QAbstractButton* duplicate_button;
+	QAbstractButton* move_up_button;
+	QAbstractButton* move_down_button;
 	
 	Map* map;
 	MainWindow* window;

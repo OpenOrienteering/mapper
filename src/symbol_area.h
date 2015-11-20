@@ -1,18 +1,18 @@
 /*
- *    Copyright 2012 Thomas Schöps
- *    
+ *    Copyright 2012, 2013 Thomas Schöps
+ *
  *    This file is part of OpenOrienteering.
- * 
+ *
  *    OpenOrienteering is free software: you can redistribute it and/or modify
  *    it under the terms of the GNU General Public License as published by
  *    the Free Software Foundation, either version 3 of the License, or
  *    (at your option) any later version.
- * 
+ *
  *    OpenOrienteering is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
  *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *    GNU General Public License for more details.
- * 
+ *
  *    You should have received a copy of the GNU General Public License
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -68,7 +68,7 @@ public:
 		int line_offset;
 		int offset_along_line;	// only if type == PointPattern
 		
-		MapColor* line_color;	// only if type == LinePattern
+		const MapColor* line_color;	// only if type == LinePattern
 		int line_width;			// line width if type == LinePattern
 		
 		int point_distance;		// point distance if type == PointPattern
@@ -89,18 +89,18 @@ public:
 	
 	AreaSymbol();
 	virtual ~AreaSymbol();
-	virtual Symbol* duplicate(const QHash<MapColor*, MapColor*>* color_map = NULL) const;
+	virtual Symbol* duplicate(const MapColorMap* color_map = NULL) const;
 	
 	virtual void createRenderables(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output);
 	void createRenderablesNormal(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output);
-	virtual void colorDeleted(MapColor* color);
-	virtual bool containsColor(MapColor* color);
-    virtual MapColor* getDominantColorGuess();
+	virtual void colorDeleted(const MapColor* color);
+	virtual bool containsColor(const MapColor* color) const;
+	virtual const MapColor* getDominantColorGuess() const;
 	virtual void scale(double factor);
 	
 	// Getters / Setters
-	inline MapColor* getColor() const {return color;}
-	inline void setColor(MapColor* color) {this->color = color;}
+	inline const MapColor* getColor() const {return color;}
+	inline void setColor(const MapColor* color) {this->color = color;}
 	inline int getMinimumArea() const {return minimum_area; }
 	inline int getNumFillPatterns() const {return (int)patterns.size();}
 	inline void setNumFillPatterns(int count) {patterns.resize(count);}
@@ -116,7 +116,7 @@ protected:
 	virtual bool loadImpl(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol_dict);
 	virtual bool equalsImpl(Symbol* other, Qt::CaseSensitivity case_sensitivity);
 	
-	MapColor* color;
+	const MapColor* color;
 	int minimum_area;	// in mm^2 // FIXME: unit (factor) wrong
 	std::vector<FillPattern> patterns;
 };

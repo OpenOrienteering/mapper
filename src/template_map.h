@@ -1,5 +1,5 @@
 /*
- *    Copyright 2012 Thomas Schöps
+ *    Copyright 2012, 2013 Thomas Schöps
  *
  *    This file is part of OpenOrienteering.
  *
@@ -31,14 +31,14 @@ class TemplateMap : public Template
 Q_OBJECT
 public:
 	TemplateMap(const QString& path, Map* map);
-	virtual ~TemplateMap();
+    virtual ~TemplateMap();
 	virtual const QString getTemplateType() {return "TemplateMap";}
 	
 	virtual bool loadTemplateFileImpl(bool configuring);
-	virtual bool postLoadConfiguration(QWidget* dialog_parent);
+	virtual bool postLoadConfiguration(QWidget* dialog_parent, bool& out_center_in_view);
 	virtual void unloadTemplateFileImpl();
 	
-	virtual void drawTemplate(QPainter* painter, QRectF& clip_rect, double scale, float opacity);
+    virtual void drawTemplate(QPainter* painter, QRectF& clip_rect, double scale, bool on_screen, float opacity);
 	virtual QRectF getTemplateExtent();
 
 protected:

@@ -1,18 +1,18 @@
 /*
- *    Copyright 2012 Thomas Schöps
- *    
+ *    Copyright 2012, 2013 Thomas Schöps
+ *
  *    This file is part of OpenOrienteering.
- * 
+ *
  *    OpenOrienteering is free software: you can redistribute it and/or modify
  *    it under the terms of the GNU General Public License as published by
  *    the Free Software Foundation, either version 3 of the License, or
  *    (at your option) any later version.
- * 
+ *
  *    OpenOrienteering is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
  *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *    GNU General Public License for more details.
- * 
+ *
  *    You should have received a copy of the GNU General Public License
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -27,15 +27,15 @@
 #endif
 #include <QXmlStreamAttributes>
 
+#include "core/map_color.h"
 #include "map.h"
-#include "util.h"
-#include "util_gui.h"
-#include "map_color.h"
+#include "object.h"
 #include "symbol_setting_dialog.h"
 #include "symbol_properties_widget.h"
 #include "symbol_point_editor.h"
-#include "object.h"
 #include "renderable_implementation.h"
+#include "util.h"
+#include "util_gui.h"
 
 PointSymbol::PointSymbol() : Symbol(Symbol::Point)
 {
@@ -54,7 +54,7 @@ PointSymbol::~PointSymbol()
 		delete symbols[i];
 	}
 }
-Symbol* PointSymbol::duplicate(const QHash<MapColor*, MapColor*>* color_map) const
+Symbol* PointSymbol::duplicate(const MapColorMap* color_map) const
 {
 	PointSymbol* new_point = new PointSymbol();
 	new_point->duplicateImplCommon(this);
@@ -99,6 +99,10 @@ void PointSymbol::createRenderablesScaled(Object* object, const MapCoordVector& 
 	int size = (int)objects.size();
 	for (int i = 0; i < size; ++i)
 	{
+		// Point symbol elements should not be entered into the map,
+		// otherwise map settings like area hatching affect them
+		assert(objects[i]->getMap() == NULL);
+		
 		const MapCoordVector& object_flags = objects[i]->getRawCoordinateVector();
 		int coords_size = (int)object_flags.size();
 		MapCoordVectorF transformed_coords;
@@ -183,7 +187,7 @@ bool PointSymbol::isSymmetrical() const
 	return true;
 }
 
-void PointSymbol::colorDeleted(MapColor* color)
+void PointSymbol::colorDeleted(const MapColor* color)
 {
 	bool change = false;
 	
@@ -208,7 +212,7 @@ void PointSymbol::colorDeleted(MapColor* color)
 	if (change)
 		resetIcon();
 }
-bool PointSymbol::containsColor(MapColor* color)
+bool PointSymbol::containsColor(const MapColor* color) const
 {
 	if (color == inner_color)
 		return true;
@@ -225,7 +229,7 @@ bool PointSymbol::containsColor(MapColor* color)
 	return false;
 }
 
-MapColor* PointSymbol::getDominantColorGuess()
+const MapColor* PointSymbol::getDominantColorGuess() const
 {
 	bool have_inner_color = inner_color && inner_radius > 0;
 	bool have_outer_color = outer_color && outer_width > 0;
@@ -233,9 +237,9 @@ MapColor* PointSymbol::getDominantColorGuess()
 		return have_inner_color ? inner_color : outer_color;
 	else if (have_inner_color && have_outer_color)
 	{
-		if (inner_color->r == 1 && inner_color->g == 1 && inner_color->b == 1)
+		if (inner_color->isWhite())
 			return outer_color;
-		else if (outer_color->r == 1 && outer_color->g == 1 && outer_color->b == 1)
+		else if (outer_color->isWhite())
 			return inner_color;
 		else
 			return (qPow(inner_radius, 2) * M_PI > qPow(inner_radius + outer_width, 2) * M_PI - qPow(inner_radius, 2) * M_PI) ? inner_color : outer_color;
@@ -259,7 +263,7 @@ void PointSymbol::scale(double factor)
 	for (int i = 0; i < size; ++i)
 	{
 		symbols[i]->scale(factor);
-		objects[i]->scale(factor);
+		objects[i]->scale(MapCoordF(0, 0), factor);
 	}
 	
 	resetIcon();
@@ -322,7 +326,7 @@ bool PointSymbol::loadImpl(QIODevice* file, int version, Map* map)
 		objects[i] = Object::getObjectForType(static_cast<Object::Type>(save_type), symbols[i]);
 		if (!objects[i])
 			return false;
-		objects[i]->load(file, version, NULL); // FIXME: check that map = NULL is allowed
+		objects[i]->load(file, version, NULL);
 	}
 	
 	return true;
@@ -351,7 +355,8 @@ void PointSymbol::saveImpl(QXmlStreamWriter& xml, const Map& map) const
 
 bool PointSymbol::loadImpl(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol_dict)
 {
-	Q_ASSERT(xml.name() == "point_symbol");
+	if (xml.name() != "point_symbol")
+		return false;
 	
 	QXmlStreamAttributes attributes(xml.attributes());
 	rotatable = (attributes.value("rotatable") == "true");
@@ -374,7 +379,7 @@ bool PointSymbol::loadImpl(QXmlStreamReader& xml, Map& map, SymbolDictionary& sy
 				if (xml.name() == "symbol")
 					symbols.push_back(Symbol::load(xml, map, symbol_dict));
 				else if (xml.name() == "object")
-					objects.push_back(Object::load(xml, map, symbol_dict, symbols.back()));
+					objects.push_back(Object::load(xml, NULL, symbol_dict, symbols.back()));
 				else
 					xml.skipCurrentElement(); // unknown element
 			}
@@ -382,7 +387,7 @@ bool PointSymbol::loadImpl(QXmlStreamReader& xml, Map& map, SymbolDictionary& sy
 		else
 			xml.skipCurrentElement(); // unknown element
 	}
-	return !xml.error();
+	return true;
 }
 
 bool PointSymbol::equalsImpl(Symbol* other, Qt::CaseSensitivity case_sensitivity)
@@ -391,11 +396,11 @@ bool PointSymbol::equalsImpl(Symbol* other, Qt::CaseSensitivity case_sensitivity
 	
 	if (rotatable != point->rotatable)
 		return false;
-	if (!colorEquals(inner_color, point->inner_color))
+	if (!MapColor::equal(inner_color, point->inner_color))
 		return false;
 	if (inner_color && inner_radius != point->inner_radius)
 		return false;
-	if (!colorEquals(outer_color, point->outer_color))
+	if (!MapColor::equal(outer_color, point->outer_color))
 		return false;
 	if (outer_color && outer_width != point->outer_width)
 		return false;

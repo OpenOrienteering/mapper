@@ -1,18 +1,18 @@
 /*
- *    Copyright 2012 Thomas Schöps
- *    
+ *    Copyright 2012, 2013 Thomas Schöps
+ *
  *    This file is part of OpenOrienteering.
- * 
+ *
  *    OpenOrienteering is free software: you can redistribute it and/or modify
  *    it under the terms of the GNU General Public License as published by
  *    the Free Software Foundation, either version 3 of the License, or
  *    (at your option) any later version.
- * 
+ *
  *    OpenOrienteering is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
  *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *    GNU General Public License for more details.
- * 
+ *
  *    You should have received a copy of the GNU General Public License
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -22,7 +22,7 @@
 
 #include <QMouseEvent>
 
-#include "map_editor.h"
+#include "map.h"
 #include "template.h"
 
 QCursor* TemplateMoveTool::cursor = NULL;
@@ -39,7 +39,7 @@ void TemplateMoveTool::init()
 {
 	setStatusBarText(tr("<b>Drag</b> to move the current template"));
 	
-	connect(editor->getMap(), SIGNAL(templateDeleted(int,Template*)), this, SLOT(templateDeleted(int,Template*)));
+	connect(map(), SIGNAL(templateDeleted(int,Template*)), this, SLOT(templateDeleted(int,Template*)));
 }
 
 bool TemplateMoveTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
@@ -72,7 +72,7 @@ bool TemplateMoveTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord
 void TemplateMoveTool::templateDeleted(int index, Template* temp)
 {
 	if (templ == temp)
-		editor->setTool(NULL);
+		deactivate();
 }
 
 void TemplateMoveTool::updateDragging(MapCoordF mouse_pos_map)
@@ -99,6 +99,6 @@ void TemplateMoveTool::updateDragging(MapCoordF mouse_pos_map)
 			point->src_coords.moveInt(dx, dy);
 	}
 	
-	editor->getMap()->setTemplatesDirty();
-	editor->getMap()->emitTemplateChanged(templ);
+	map()->setTemplatesDirty();
+	map()->emitTemplateChanged(templ);
 }

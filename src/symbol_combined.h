@@ -1,18 +1,18 @@
 /*
- *    Copyright 2012 Thomas Schöps
- *    
+ *    Copyright 2012, 2013 Thomas Schöps
+ *
  *    This file is part of OpenOrienteering.
- * 
+ *
  *    OpenOrienteering is free software: you can redistribute it and/or modify
  *    it under the terms of the GNU General Public License as published by
  *    the Free Software Foundation, either version 3 of the License, or
  *    (at your option) any later version.
- * 
+ *
  *    OpenOrienteering is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
  *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *    GNU General Public License for more details.
- * 
+ *
  *    You should have received a copy of the GNU General Public License
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -46,18 +46,20 @@ friend class OCAD8FileImport;
 public:
 	CombinedSymbol();
 	virtual ~CombinedSymbol();
-	virtual Symbol* duplicate(const QHash<MapColor*, MapColor*>* color_map = NULL) const;
+	virtual Symbol* duplicate(const MapColorMap* color_map = NULL) const;
 	
 	virtual void createRenderables(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output);
-	virtual void colorDeleted(MapColor* color);
-	virtual bool containsColor(MapColor* color);
-    virtual MapColor* getDominantColorGuess();
+	virtual void colorDeleted(const MapColor* color);
+	virtual bool containsColor(const MapColor* color) const;
+	const MapColor* getDominantColorGuess() const;
 	virtual bool symbolChanged(Symbol* old_symbol, Symbol* new_symbol);
 	virtual bool containsSymbol(const Symbol* symbol) const;
 	virtual void scale(double factor);
 	virtual Type getContainedTypes() const;
 	
 	virtual bool loadFinished(Map* map);
+	
+    virtual float calculateLargestLineExtent(Map* map);
 	
 	// Getters / Setter
 	inline int getNumParts() const {return (int)parts.size();}

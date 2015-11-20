@@ -1,18 +1,18 @@
 /*
- *    Copyright 2012 Thomas Schöps
- *    
+ *    Copyright 2012, 2013 Thomas Schöps
+ *
  *    This file is part of OpenOrienteering.
- * 
+ *
  *    OpenOrienteering is free software: you can redistribute it and/or modify
  *    it under the terms of the GNU General Public License as published by
  *    the Free Software Foundation, either version 3 of the License, or
  *    (at your option) any later version.
- * 
+ *
  *    OpenOrienteering is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
  *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *    GNU General Public License for more details.
- * 
+ *
  *    You should have received a copy of the GNU General Public License
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -25,11 +25,13 @@
 #include <QMouseEvent>
 #include <QPainter>
 
-#include "map_editor.h"
+#include "map.h"
 #include "map_widget.h"
 #include "object.h"
 #include "renderable.h"
+#include "tool_helpers.h"
 #include "util.h"
+#include "gui/modifier_key.h"
 
 RotateTool::RotateTool(MapEditorController* editor, QAction* tool_button)
  : MapEditorToolBase(QCursor(QPixmap(":/images/cursor-rotate.png"), 1, 1), Other, editor, tool_button),
@@ -40,14 +42,18 @@ RotateTool::RotateTool(MapEditorController* editor, QAction* tool_button)
 	rotating = false;
 }
 
+RotateTool::~RotateTool()
+{
+	// Nothing, not inlined
+}
+
 void RotateTool::initImpl()
 {
 	// Set initial rotation center to the bounding box center of the selected objects
-	Map* map = editor->getMap();
-	if (map->getNumSelectedObjects() > 0)
+	if (map()->getNumSelectedObjects() > 0)
 	{
 		QRectF rect;
-		map->includeSelectionRect(rect);
+		map()->includeSelectionRect(rect);
 		rotation_center = MapCoordF(rect.center());
 		rotation_center_set = true;
 	}
@@ -84,8 +90,8 @@ void RotateTool::dragMove()
 		double rotation = (constrained_pos_map - rotation_center).getAngle();
 		double delta_rotation = rotation - old_rotation;
 		
-		Map::ObjectSelection::const_iterator it_end = editor->getMap()->selectedObjectsEnd();
-		for (Map::ObjectSelection::const_iterator it = editor->getMap()->selectedObjectsBegin(); it != it_end; ++it)
+		Map::ObjectSelection::const_iterator it_end = map()->selectedObjectsEnd();
+		for (Map::ObjectSelection::const_iterator it = map()->selectedObjectsBegin(); it != it_end; ++it)
 			(*it)->rotateAround(rotation_center, -1.0 * delta_rotation);
 		updatePreviewObjects();
 		
@@ -104,9 +110,9 @@ void RotateTool::dragFinish()
 	}
 }
 
-void RotateTool::draw(QPainter* painter, MapWidget* widget)
+void RotateTool::drawImpl(QPainter* painter, MapWidget* widget)
 {
-	MapEditorToolBase::draw(painter, widget);
+	drawSelectionOrPreviewObjects(painter, widget);
 	
 	if (rotation_center_set)
 	{
@@ -123,7 +129,7 @@ void RotateTool::draw(QPainter* painter, MapWidget* widget)
 		angle_helper->draw(painter, widget);
 }
 
-bool RotateTool::keyPressEvent(QKeyEvent* event)
+bool RotateTool::keyPress(QKeyEvent* event)
 {
 	if (event->key() == Qt::Key_Control)
 	{
@@ -133,7 +139,7 @@ bool RotateTool::keyPressEvent(QKeyEvent* event)
 	}
     return false;
 }
-bool RotateTool::keyReleaseEvent(QKeyEvent* event)
+bool RotateTool::keyRelease(QKeyEvent* event)
 {
 	if (event->key() == Qt::Key_Control && angle_helper->isActive())
 	{
@@ -158,8 +164,8 @@ int RotateTool::updateDirtyRectImpl(QRectF& rect)
 
 void RotateTool::objectSelectionChangedImpl()
 {
-	if (editor->getMap()->getNumSelectedObjects() == 0)
-		editor->setEditTool();
+	if (map()->getNumSelectedObjects() == 0)
+		deactivate();
 	else
 		updateDirtyRect();
 }
@@ -168,17 +174,23 @@ void RotateTool::updateStatusText()
 {
 	if (rotating)
 	{
+		static const double pi_x_2 = M_PI * 2.0;
+		static const double to_deg = 180.0 / M_PI;
 		double delta_rotation = old_rotation - original_rotation;
 		if (delta_rotation < -M_PI)
-			delta_rotation = delta_rotation + 2*M_PI;
+			delta_rotation = delta_rotation + pi_x_2;
 		else if (delta_rotation > M_PI)
-			delta_rotation = delta_rotation - 2*M_PI;
-		setStatusBarText(trUtf8("<b>Rotation:</b> %1°  %2")
-			.arg(-delta_rotation * 180 / M_PI, 0, 'f', 1)
-			.arg(angle_helper->isActive() ? "" : tr("(<u>Ctrl</u> for fixed angles)")));
+			delta_rotation = delta_rotation - pi_x_2;
+		setStatusBarText( trUtf8("<b>Rotation:</b> %1° ").arg(QLocale().toString(-delta_rotation * to_deg, 'f', 1)) + "| " +
+		                  tr("<b>%1</b>: Fixed angles. ").arg(ModifierKey::control()) );
 	}
 	else if (!rotation_center_set)
-		setStatusBarText(tr("<b>Click</b> to set the rotation center"));
+	{
+		setStatusBarText( tr("<b>Click</b>: Set the center of rotation. ") );
+	}
 	else
-		setStatusBarText(tr("<b>Click</b> to set the rotation center, <b>drag</b> to rotate the selected object(s)"));
+	{
+		setStatusBarText( tr("<b>Click</b>: Set the center of rotation. ") +
+		                  tr("<b>Drag</b>: Rotate the selected objects. ") );
+	}
 }

@@ -1,18 +1,18 @@
 /*
- *    Copyright 2012 Thomas Schöps
- *    
+ *    Copyright 2012, 2013 Thomas Schöps
+ *
  *    This file is part of OpenOrienteering.
- * 
+ *
  *    OpenOrienteering is free software: you can redistribute it and/or modify
  *    it under the terms of the GNU General Public License as published by
  *    the Free Software Foundation, either version 3 of the License, or
  *    (at your option) any later version.
- * 
+ *
  *    OpenOrienteering is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
  *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *    GNU General Public License for more details.
- * 
+ *
  *    You should have received a copy of the GNU General Public License
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -28,20 +28,28 @@
 #include <QtWidgets>
 #endif
 
-#include "tool_helpers.h"
-#include "map_editor.h"
-#include "map_widget.h"
+#include "map.h"
 #include "map_undo.h"
-#include "renderable.h"
-#include "symbol_dock_widget.h"
-#include "symbol.h"
-#include "util.h"
+#include "map_widget.h"
 #include "object_text.h"
+#include "renderable.h"
+#include "symbol.h"
+#include "symbol_dock_widget.h"
 #include "symbol_text.h"
+#include "tool_helpers.h"
+#include "util.h"
+
+#if defined(__MINGW32__) and defined(DrawText)
+// MinGW(64) winuser.h issue
+#undef DrawText
+#endif
 
 QCursor* DrawTextTool::cursor = NULL;
 
-DrawTextTool::DrawTextTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget) : MapEditorTool(editor, Other, tool_button), renderables(new MapRenderables(editor->getMap())), symbol_widget(symbol_widget)
+DrawTextTool::DrawTextTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget)
+ : MapEditorTool(editor, DrawText, tool_button),
+   renderables(new MapRenderables(map())),
+   symbol_widget(symbol_widget)
 {
 	dragging = false;
 	preview_text = NULL;
@@ -49,16 +57,18 @@ DrawTextTool::DrawTextTool(MapEditorController* editor, QAction* tool_button, Sy
 	
 	selectedSymbolsChanged();
 	connect(symbol_widget, SIGNAL(selectedSymbolsChanged()), this, SLOT(selectedSymbolsChanged()));
-	connect(editor->getMap(), SIGNAL(symbolChanged(int,Symbol*,Symbol*)), this, SLOT(symbolChanged(int,Symbol*,Symbol*)));
-	connect(editor->getMap(), SIGNAL(symbolDeleted(int,Symbol*)), this, SLOT(symbolDeleted(int,Symbol*)));
+	connect(map(), SIGNAL(symbolChanged(int,Symbol*,Symbol*)), this, SLOT(symbolChanged(int,Symbol*,Symbol*)));
+	connect(map(), SIGNAL(symbolDeleted(int,Symbol*)), this, SLOT(symbolDeleted(int,Symbol*)));
 	
 	if (!cursor)
 		cursor = new QCursor(QPixmap(":/images/cursor-draw-text.png"), 11, 11);
 }
+
 void DrawTextTool::init()
 {
 	updateStatusText();
 }
+
 DrawTextTool::~DrawTextTool()
 {
 	if (text_editor)
@@ -83,6 +93,7 @@ bool DrawTextTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapW
 	}
 	return false;
 }
+
 bool DrawTextTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
 	if (text_editor)
@@ -109,6 +120,7 @@ bool DrawTextTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWi
 	}
 	return true;
 }
+
 bool DrawTextTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
 	if (text_editor)
@@ -149,10 +161,11 @@ bool DrawTextTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, Ma
 	
 	return true;
 }
+
 void DrawTextTool::leaveEvent(QEvent* event)
 {
 	if (!text_editor)
-		editor->getMap()->clearDrawingBoundingBox();
+		map()->clearDrawingBoundingBox();
 }
 
 bool DrawTextTool::keyPressEvent(QKeyEvent* event)
@@ -164,12 +177,13 @@ bool DrawTextTool::keyPressEvent(QKeyEvent* event)
 	}
 	else if (event->key() == Qt::Key_Tab)
 	{
-		editor->setEditTool();
+		deactivate();
 		return true;
 	}
 	
 	return false;
 }
+
 bool DrawTextTool::keyReleaseEvent(QKeyEvent* event)
 {
 	if (text_editor)
@@ -222,9 +236,10 @@ void DrawTextTool::selectedSymbolsChanged()
 			finishEditing();
 		
 		if (symbol && symbol->isHidden())
-			editor->setEditTool();
+			deactivate();
 		else
-			editor->setTool(editor->getDefaultDrawToolForSymbol(symbol));
+			switchToDefaultDrawTool(symbol);
+		
 		return;
 	}
 	
@@ -237,17 +252,20 @@ void DrawTextTool::selectedSymbolsChanged()
 	else
 		deletePreviewObject();
 }
+
 void DrawTextTool::symbolChanged(int pos, Symbol* new_symbol, Symbol* old_symbol)
 {
 	if (old_symbol == drawing_symbol)
 		selectedSymbolsChanged();
 }
+
 void DrawTextTool::symbolDeleted(int pos, Symbol* old_symbol)
 {
 	if (old_symbol == drawing_symbol)
 	{
-		preview_text->setText("");
-		editor->setEditTool();
+		if (preview_text)
+			preview_text->setText("");
+		deactivate();
 	}
 }
 
@@ -274,14 +292,16 @@ void DrawTextTool::updateDirtyRect()
 	}
 	
 	if (rect.isValid())
-		editor->getMap()->setDrawingBoundingBox(rect, 1, true);
+		map()->setDrawingBoundingBox(rect, 1, true);
 	else
-		editor->getMap()->clearDrawingBoundingBox();
+		map()->clearDrawingBoundingBox();
 }
+
 void DrawTextTool::updateStatusText()
 {
-	setStatusBarText(tr("<b>Click</b> to write text with a single anchor, <b>Drag</b> to create a text box"));
+	setStatusBarText(tr("<b>Click</b>: Create a text object with a single anchor. <b>Drag</b>: Create a text box. "));
 }
+
 void DrawTextTool::updatePreviewObject()
 {
 	renderables->removeRenderablesOfObject(preview_text, false);
@@ -289,6 +309,7 @@ void DrawTextTool::updatePreviewObject()
 	renderables->insertRenderablesOfObject(preview_text);
 	updateDirtyRect();
 }
+
 void DrawTextTool::deletePreviewObject()
 {
 	if (preview_text)
@@ -298,6 +319,7 @@ void DrawTextTool::deletePreviewObject()
 		preview_text = NULL;
 	}
 }
+
 void DrawTextTool::setPreviewLetter()
 {
 	if (!preview_text)
@@ -309,25 +331,27 @@ void DrawTextTool::setPreviewLetter()
 	preview_text->setAnchorPosition(cur_pos_map);
 	updatePreviewObject();
 }
+
 void DrawTextTool::finishEditing()
 {
 	delete text_editor;
 	text_editor = NULL;
 	
 	renderables->removeRenderablesOfObject(preview_text, false);
-	editor->getMap()->clearDrawingBoundingBox();
+	map()->clearDrawingBoundingBox();
 	
 	if (preview_text->getText().isEmpty())
 		preview_text->setText(tr("A"));
 	else
 	{
-		int index = editor->getMap()->addObject(preview_text);
-		editor->getMap()->clearObjectSelection(false);
-		editor->getMap()->addObjectToSelection(preview_text, true);
+		int index = map()->addObject(preview_text);
+		map()->clearObjectSelection(false);
+		map()->addObjectToSelection(preview_text, true);
+		map()->setObjectsDirty();
 		
-		DeleteObjectsUndoStep* undo_step = new DeleteObjectsUndoStep(editor->getMap());
+		DeleteObjectsUndoStep* undo_step = new DeleteObjectsUndoStep(map());
 		undo_step->addObject(index);
-		editor->getMap()->objectUndoManager().addNewUndoStep(undo_step);
+		map()->objectUndoManager().addNewUndoStep(undo_step);
 		
 		preview_text = NULL;
 	}
@@ -392,6 +416,7 @@ TextObjectAlignmentDockWidget::TextObjectAlignmentDockWidget(TextObject* object,
 		connect(vert_buttons[i], SIGNAL(clicked()), vert_mapper, SLOT(map()));
 	}
 }
+
 bool TextObjectAlignmentDockWidget::event(QEvent* event)
 {
 	if (event->type() == QEvent::ShortcutOverride)
@@ -399,6 +424,7 @@ bool TextObjectAlignmentDockWidget::event(QEvent* event)
 	
 	return QDockWidget::event(event);
 }
+
 void TextObjectAlignmentDockWidget::keyPressEvent(QKeyEvent* event)
 {
 	if (text_editor->keyPressEvent(event))
@@ -406,6 +432,7 @@ void TextObjectAlignmentDockWidget::keyPressEvent(QKeyEvent* event)
 	else
 		QWidget::keyPressEvent(event);
 }
+
 void TextObjectAlignmentDockWidget::keyReleaseEvent(QKeyEvent* event)
 {
 	if (text_editor->keyReleaseEvent(event))
@@ -413,6 +440,7 @@ void TextObjectAlignmentDockWidget::keyReleaseEvent(QKeyEvent* event)
 	else
 		QWidget::keyReleaseEvent(event);
 }
+
 void TextObjectAlignmentDockWidget::addHorzButton(int index, const QString& icon_path, int horz_default)
 {
 	const TextObject::HorizontalAlignment horz_array[] = {TextObject::AlignLeft, TextObject::AlignHCenter, TextObject::AlignRight};
@@ -428,6 +456,7 @@ void TextObjectAlignmentDockWidget::addHorzButton(int index, const QString& icon
 		horz_index = index;
 	}	
 }
+
 void TextObjectAlignmentDockWidget::addVertButton(int index, const QString& icon_path, int vert_default)
 {
 	const TextObject::VerticalAlignment vert_array[] = {TextObject::AlignTop, TextObject::AlignVCenter, TextObject::AlignBaseline, TextObject::AlignBottom};
@@ -451,6 +480,7 @@ void TextObjectAlignmentDockWidget::horzClicked(int index)
 	horz_index = index;
 	emitAlignmentChanged();
 }
+
 void TextObjectAlignmentDockWidget::vertClicked(int index)
 {
 	for (int i = 0; i < 4; ++i)

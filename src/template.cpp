@@ -1,5 +1,5 @@
 /*
- *    Copyright 2012 Thomas Schöps
+ *    Copyright 2012, 2013 Thomas Schöps
  *
  *    This file is part of OpenOrienteering.
  *
@@ -45,6 +45,7 @@ TemplateTransform::TemplateTransform()
 	template_scale_y = 1;
 	template_rotation = 0;
 }
+
 
 void TemplateTransform::save(QIODevice* file)
 {
@@ -284,64 +285,64 @@ Template* Template::loadTemplateConfiguration(QXmlStreamReader& xml, Map& map, b
 		temp->template_file = attributes.value("name").toString();
 	temp->is_georeferenced = (attributes.value("georef") == "true");
 	if (!temp->is_georeferenced)
-	{
 		temp->template_group = attributes.value("group").toString().toInt();
 		
-		while (xml.readNextStartElement())
+	while (xml.readNextStartElement())
+	{
+		if (!temp->is_georeferenced && xml.name() == "transformations")
 		{
-			if (xml.name() == "transformations")
-			{
-				temp->adjusted = (xml.attributes().value("adjusted") == "true");
-				temp->adjustment_dirty = (xml.attributes().value("adjustment_dirty") == "true");
-				int num_passpoints = xml.attributes().value("passpoints").toString().toInt();
+			temp->adjusted = (xml.attributes().value("adjusted") == "true");
+			temp->adjustment_dirty = (xml.attributes().value("adjustment_dirty") == "true");
+			int num_passpoints = xml.attributes().value("passpoints").toString().toInt();
 Q_ASSERT(temp->passpoints.size() == 0);
-				temp->passpoints.reserve(qMin(num_passpoints, 10)); // 10 is not a limit
-				
-				while (xml.readNextStartElement())
+			temp->passpoints.reserve(qMin(num_passpoints, 10)); // 10 is not a limit
+			
+			while (xml.readNextStartElement())
+			{
+				QStringRef role = xml.attributes().value("role");
+				if (xml.name() == "transformation")
 				{
-					QStringRef role = xml.attributes().value("role");
-					if (xml.name() == "transformation")
-					{
-						if (role == "active")
-							temp->transform.load(xml);
-						else if (xml.attributes().value("role") == "other")
-							temp->other_transform.load(xml);
-						else
-							xml.skipCurrentElement(); // unsupported
-					}
-					else if (xml.name() == "passpoint")
-					{
-						temp->passpoints.push_back(PassPoint::load(xml));
-					}
-					else if (xml.name() == "matrix")
-					{
-						if (role == "map_to_template")
-							temp->map_to_template.load(xml);
-						else if (role == "template_to_map")
-							temp->template_to_map.load(xml);
-						else if (role == "template_to_map_other")
-							temp->template_to_map_other.load(xml);
-						else
-							xml.skipCurrentElement(); // unsupported
-					}
+					if (role == "active")
+						temp->transform.load(xml);
+					else if (xml.attributes().value("role") == "other")
+						temp->other_transform.load(xml);
 					else
+					{
+						qDebug() << xml.qualifiedName();
 						xml.skipCurrentElement(); // unsupported
+					}
+				}
+				else if (xml.name() == "passpoint")
+				{
+					temp->passpoints.push_back(PassPoint::load(xml));
+				}
+				else if (xml.name() == "matrix")
+				{
+					if (role == "map_to_template")
+						temp->map_to_template.load(xml);
+					else if (role == "template_to_map")
+						temp->template_to_map.load(xml);
+					else if (role == "template_to_map_other")
+						temp->template_to_map_other.load(xml);
+					else
+					{
+						qDebug() << xml.qualifiedName();
+						xml.skipCurrentElement(); // unsupported
+					}
+				}
+				else
+				{
+					qDebug() << xml.qualifiedName();
+					xml.skipCurrentElement(); // unsupported
 				}
 			}
-			else
-				xml.skipCurrentElement(); // unsupported
+		}
+		else if (!temp->loadTypeSpecificTemplateConfiguration(xml))
+		{
+			delete temp;
+			return NULL;
 		}
 	}
-	
-	if (!temp->loadTypeSpecificTemplateConfiguration(xml))
-	{
-		delete temp;
-		return NULL;
-	}
-	
-	// Read until end of element
-	while (!xml.isEndElement())
-		xml.readNext();
 	
 	return temp;
 }
@@ -387,14 +388,28 @@ bool Template::execSwitchTemplateFileDialog(QWidget* dialog_parent)
 	}
 }
 
-bool Template::configureAndLoad(QWidget* dialog_parent)
+bool Template::configureAndLoad(QWidget* dialog_parent, MapView* view)
 {
+	bool center_in_view = true;
+	
 	if (!preLoadConfiguration(dialog_parent))
 		return false;
 	if (!loadTemplateFile(true))
 		return false;
-	if (!postLoadConfiguration(dialog_parent))
+	if (!postLoadConfiguration(dialog_parent, center_in_view))
+	{
+		unloadTemplateFile();
 		return false;
+	}
+	
+	// If the template is not georeferenced, position it at the viewport midpoint
+	if (!isTemplateGeoreferenced() && center_in_view)
+	{
+		QPointF center = calculateTemplateBoundingBox().center();
+		setTemplateX(view->getPositionX() - qRound64(1000 * center.x()));
+		setTemplateY(view->getPositionY() - qRound64(1000 * center.y()));
+	}
+	
 	return true;
 }
 
@@ -489,16 +504,16 @@ QRectF Template::getTemplateExtent()
 	return infinteRectF();
 }
 
-void Template::scaleFromOrigin(double factor)
+void Template::scale(double factor, const MapCoord& center)
 {
 	assert(!is_georeferenced);
-	setTemplateX(qRound64(factor * getTemplateX()));
-	setTemplateY(qRound64(factor * getTemplateY()));
+	setTemplateX(qRound64(center.rawX() + factor * (getTemplateX() - center.rawX()) ));
+	setTemplateY(qRound64(center.rawY() + factor * (getTemplateY() - center.rawY()) ));
 	setTemplateScaleX(factor * getTemplateScaleX());
 	setTemplateScaleY(factor * getTemplateScaleY());
 }
 
-void Template::rotateAroundOrigin(double rotation)
+void Template::rotate(double rotation, const MapCoord& center)
 {
 	assert(!is_georeferenced);
 	
@@ -506,9 +521,12 @@ void Template::rotateAroundOrigin(double rotation)
 	
 	double sinr = sin(rotation);
 	double cosr = cos(rotation);
-	qint64 temp_x = qRound64(1000.0 * (cosr * (getTemplateX()/1000.0) + sinr * (getTemplateY()/1000.0)));
-	setTemplateY(qRound64(1000.0 * (-sinr * (getTemplateX()/1000.0) + cosr * (getTemplateY()/1000.0))));
-	setTemplateX(temp_x);
+	qint64 offset_x = getTemplateX() - center.rawX();
+	qint64 offset_y = getTemplateY() - center.rawY();
+	qint64 temp_x = qRound64(1000.0 * (cosr * (offset_x/1000.0) + sinr * (offset_y/1000.0)));
+	qint64 temp_y = qRound64(1000.0 * (-sinr * (offset_x/1000.0) + cosr * (offset_y/1000.0)));
+	setTemplateX(center.rawX() + temp_x);
+	setTemplateY(center.rawY() + temp_y);
 }
 
 void Template::setTemplateAreaDirty()
@@ -635,13 +653,19 @@ Template* Template::templateForFile(const QString& path, Map* map)
 		path.endsWith(".jpeg", Qt::CaseInsensitive) || path.endsWith(".tif", Qt::CaseInsensitive) ||
 		path.endsWith(".tiff", Qt::CaseInsensitive))
 		return new TemplateImage(path, map);
-	else if (path.endsWith(".ocd", Qt::CaseInsensitive) || path.endsWith(".omap", Qt::CaseInsensitive))
+	else if (path.endsWith(".ocd", Qt::CaseInsensitive) || path.endsWith(".omap", Qt::CaseInsensitive) || path.endsWith(".xmap", Qt::CaseInsensitive))
 		return new TemplateMap(path, map);
 	else if (path.endsWith(".gpx", Qt::CaseInsensitive) || path.endsWith(".dxf", Qt::CaseInsensitive) ||
 			 path.endsWith(".osm", Qt::CaseInsensitive))
 		return new TemplateTrack(path, map);
 	else
 		return NULL;
+}
+
+bool Template::loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml)
+{
+	xml.skipCurrentElement();
+	return true;
 }
 
 void Template::updateTransformationMatrices()

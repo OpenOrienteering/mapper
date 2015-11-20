@@ -1,18 +1,18 @@
 /*
- *    Copyright 2012 Thomas Schöps
- *    
+ *    Copyright 2012, 2013 Thomas Schöps
+ *
  *    This file is part of OpenOrienteering.
- * 
+ *
  *    OpenOrienteering is free software: you can redistribute it and/or modify
  *    it under the terms of the GNU General Public License as published by
  *    the Free Software Foundation, either version 3 of the License, or
  *    (at your option) any later version.
- * 
+ *
  *    OpenOrienteering is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
  *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *    GNU General Public License for more details.
- * 
+ *
  *    You should have received a copy of the GNU General Public License
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -54,6 +54,9 @@ typedef std::vector<Renderable*> RenderableVector;
 class Symbol;
 typedef QHash<QString, Symbol*> SymbolDictionary;
 
+// From core/map_color.h
+typedef QHash<const MapColor*, const MapColor*> MapColorMap;
+
 
 /// Base class for map symbols.
 /// Provides among other things a symbol number consisting of multiple parts, e.g. "2.4.12". Parts which are not set are assigned the value -1.
@@ -74,10 +77,12 @@ public:
 		AllSymbols = Point | Line | Area | Text | Combined
 	};
 	
+// 	typedef QHash<const MapColor*, const MapColor*> MapColorMap;
+	
 	/// Constructs an empty symbol
 	Symbol(Type type);
 	virtual ~Symbol();
-	virtual Symbol* duplicate(const QHash<MapColor*, MapColor*>* color_map = NULL) const = 0;
+	virtual Symbol* duplicate(const MapColorMap* color_map = NULL) const = 0;
 	bool equals(Symbol* other, Qt::CaseSensitivity case_sensitivity = Qt::CaseSensitive, bool compare_state = false);
 	
 	/// Returns the type of the symbol
@@ -102,13 +107,13 @@ public:
 	bool isTypeCompatibleTo(Object* object);
 	
 	/// Returns if the symbol numbers are identical.
-	bool numberEquals(Symbol* other);
+	bool numberEquals(Symbol* other, bool ignore_trailing_zeros);
 	
 	/// Saving and loading
 	void save(QIODevice* file, Map* map);
 	bool load(QIODevice* file, int version, Map* map);
 	void save(QXmlStreamWriter& xml, const Map& map) const;
-	static Symbol* load(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol_dict) throw (FormatException);
+	static Symbol* load(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol_dict) throw (FileFormatException);
 	
 	/// Called after loading of the map is finished. Can do tasks that need to reference other symbols or map objects.
 	virtual bool loadFinished(Map* map) {return true;}
@@ -118,13 +123,13 @@ public:
 	virtual void createRenderables(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output) = 0;
 	
 	/// Called by the map in which the symbol is to notify it of a color being deleted (pointer becomes invalid, indices change)
-	virtual void colorDeleted(MapColor* color) = 0;
+	virtual void colorDeleted(const MapColor* color) = 0;
 	
 	/// Must return if the given color is used by this symbol
-	virtual bool containsColor(MapColor* color) = 0;
+	virtual bool containsColor(const MapColor* color) const = 0;
 	
 	/// Returns the dominant color of this symbol, or a guess for this color in case it is impossible to determine it uniquely
-	virtual MapColor* getDominantColorGuess() = 0;
+	virtual const MapColor* getDominantColorGuess() const = 0;
 	
 	/// Called by the map in which the symbol is to notify it of a symbol being changed (pointer becomes invalid).
 	/// If new_symbol == NULL, the symbol is being deleted.
@@ -145,8 +150,13 @@ public:
 	/// Returns an image pointer which you must delete yourself when no longer needed.
 	QImage* createIcon(Map* map, int side_length, bool antialiasing, int bottom_right_border = 0);
 	
-	// Clear the symbol's icon. It will be recreated when it is needed.
+	/// Clear the symbol's icon. It will be recreated when it is needed.
 	void resetIcon() { delete icon; icon = NULL; }
+	
+	/// Returns the largest extent (half width) of all line symbols
+	/// which may be included in this symbol.
+	/// TODO: may fit into a subclass "PathSymbol"?
+	virtual float calculateLargestLineExtent(Map* map) {return 0;}
 	
 	// Getters / Setters
 	inline const QString& getName() const {return name;}
@@ -188,9 +198,6 @@ public:
 	/// Returns a bitmask of all types which can be applied to the same objects as the given type
 	static int getCompatibleTypes(Type type);
 	
-	// TODO: Refactor: move to MapColor
-	static bool colorEquals(MapColor* color, MapColor* other);
-	
 	static const int number_components = 3;
 	static const int icon_size = 32;
 	
@@ -201,7 +208,8 @@ protected:
 	virtual bool loadImpl(QIODevice* file, int version, Map* map) = 0;
 	/// Must be overridden to save type-specific symbol properties. The map pointer can be used to get persistent indices to any pointers on map data
 	virtual void saveImpl(QXmlStreamWriter& xml, const Map& map) const = 0;
-	/// Must be overridden to load type-specific symbol properties. See saveImpl()
+	/// Must be overridden to load type-specific symbol properties. See saveImpl().
+	/// Return false if the current xml tag does not belong to the symbol and should be skipped, true if the element has been read completely.
 	virtual bool loadImpl(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol_dict) = 0;
 	/// Must be overridden to compare symbol-specific attributes.
 	virtual bool equalsImpl(Symbol* other, Qt::CaseSensitivity case_sensitivity) = 0;

@@ -1,18 +1,18 @@
 /*
- *    Copyright 2012 Thomas Schöps
- *    
+ *    Copyright 2012, 2013 Thomas Schöps
+ *
  *    This file is part of OpenOrienteering.
- * 
+ *
  *    OpenOrienteering is free software: you can redistribute it and/or modify
  *    it under the terms of the GNU General Public License as published by
  *    the Free Software Foundation, either version 3 of the License, or
  *    (at your option) any later version.
- * 
+ *
  *    OpenOrienteering is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
  *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *    GNU General Public License for more details.
- * 
+ *
  *    You should have received a copy of the GNU General Public License
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -21,13 +21,14 @@
 
 #include <qmath.h>
 
+#include "core/map_color.h"
 #include "map.h"
-#include "map_color.h"
 #include "object.h"
 #include "object_text.h"
-#include "symbol_point.h"
-#include "symbol_line.h"
+#include "settings.h"
 #include "symbol_area.h"
+#include "symbol_line.h"
+#include "symbol_point.h"
 #include "symbol_text.h"
 #include "util.h"
 
@@ -35,7 +36,7 @@
 
 DotRenderable::DotRenderable(PointSymbol* symbol, MapCoordF coord) : Renderable()
 {
-	color_priority = symbol->getInnerColor()->priority;
+	color_priority = symbol->getInnerColor()->getPriority();
 	double x = coord.getX();
 	double y = coord.getY();
 	double radius = (0.001 * symbol->getInnerRadius());
@@ -47,11 +48,11 @@ DotRenderable::DotRenderable(const DotRenderable& other) : Renderable(other)
 void DotRenderable::getRenderStates(RenderStates& out) const
 {
 	out.color_priority = color_priority;
-	assert(out.color_priority < 3000);
+	Q_ASSERT(out.color_priority < 3000);
 	out.mode = RenderStates::BrushOnly;
 	out.pen_width = 0;
 }
-void DotRenderable::render(QPainter& painter, bool force_min_size, float scaling) const
+void DotRenderable::render(QPainter& painter, QRectF& bounding_box, bool force_min_size, float scaling, bool on_screen) const
 {
 	if (force_min_size && extent.width() * scaling < 1.5f)
 		painter.drawEllipse(extent.center(), 0.5f * (1/scaling), 0.5f * (1/scaling));
@@ -63,7 +64,7 @@ void DotRenderable::render(QPainter& painter, bool force_min_size, float scaling
 
 CircleRenderable::CircleRenderable(PointSymbol* symbol, MapCoordF coord) : Renderable()
 {
-	color_priority = symbol->getOuterColor()->priority;
+	color_priority = symbol->getOuterColor()->getPriority();
 	double x = coord.getX();
 	double y = coord.getY();
 	line_width = 0.001f * symbol->getOuterWidth();
@@ -79,11 +80,11 @@ CircleRenderable::CircleRenderable(const CircleRenderable& other): Renderable(ot
 void CircleRenderable::getRenderStates(RenderStates& out) const
 {
 	out.color_priority = color_priority;
-	assert(out.color_priority < 3000);
+	Q_ASSERT(out.color_priority < 3000);
 	out.mode = RenderStates::PenOnly;
 	out.pen_width = line_width;
 }
-void CircleRenderable::render(QPainter& painter, bool force_min_size, float scaling) const
+void CircleRenderable::render(QPainter& painter, QRectF& bounding_box, bool force_min_size, float scaling, bool on_screen) const
 {
 	if (force_min_size && rect.width() * scaling < 1.5f)
 		painter.drawEllipse(rect.center(), 0.5f * (1/scaling), 0.5f * (1/scaling));
@@ -95,9 +96,14 @@ void CircleRenderable::render(QPainter& painter, bool force_min_size, float scal
 
 LineRenderable::LineRenderable(LineSymbol* symbol, const MapCoordVectorF& transformed_coords, const MapCoordVector& coords, const PathCoordVector& path_coords, bool closed) : Renderable()
 {
-	assert(transformed_coords.size() == coords.size());
-	color_priority = symbol->getColor()->priority;
+	Q_ASSERT(transformed_coords.size() == coords.size());
+	color_priority = symbol->getColor()->getPriority();
 	line_width = 0.001f * symbol->getLineWidth();
+	if (color_priority < 0)
+	{
+		// Helper line
+		line_width = 0;
+	}
 	float half_line_width = 0.5f * line_width;
 	
 	switch (symbol->getCapStyle())
@@ -115,7 +121,7 @@ LineRenderable::LineRenderable(LineSymbol* symbol, const MapCoordVectorF& transf
 	}
 	
 	int size = (int)coords.size();
-	assert(size >= 2);
+	Q_ASSERT(size >= 2);
 	
 	bool has_curve = false;
 	bool hole = false;
@@ -129,7 +135,7 @@ LineRenderable::LineRenderable(LineSymbol* symbol, const MapCoordVectorF& transf
 	{
 		if (hole)
 		{
-			assert(!coords[i].isHolePoint() && "Two hole points in a row!");
+			Q_ASSERT(!coords[i].isHolePoint() && "Two hole points in a row!");
 			if (first_subpath.isEmpty() && closed)
 			{
 				first_subpath = path;
@@ -143,7 +149,7 @@ LineRenderable::LineRenderable(LineSymbol* symbol, const MapCoordVectorF& transf
 		
 		if (coords[i-1].isCurveStart())
 		{
-            assert(i < size - 2);
+			Q_ASSERT(i < size - 2);
 			has_curve = true;
 			path.cubicTo(transformed_coords[i].toQPointF(), transformed_coords[i+1].toQPointF(), transformed_coords[i+2].toQPointF());
 			i += 2;
@@ -198,7 +204,10 @@ LineRenderable::LineRenderable(LineSymbol* symbol, const MapCoordVectorF& transf
 		rectInclude(extent, QPointF(used_path_coords->at(i).pos.getX() - half_line_width * right.getX(), used_path_coords->at(i).pos.getY() - half_line_width * right.getY()));
 	}
 	
-	assert(extent.right() < 999999);	// assert if bogus values are returned
+	// Reset line width to correct value (for helper lines)
+	line_width = 0.001f * symbol->getLineWidth();
+	
+	Q_ASSERT(extent.right() < 999999);	// assert if bogus values are returned
 }
 void LineRenderable::extentIncludeCap(int i, float half_line_width, bool end_cap, LineSymbol* symbol, const MapCoordVectorF& transformed_coords, const MapCoordVector& coords, bool closed)
 {
@@ -251,7 +260,7 @@ void LineRenderable::getRenderStates(RenderStates& out) const
 	out.mode = RenderStates::PenOnly;
 	out.pen_width = line_width;
 }
-void LineRenderable::render(QPainter& painter, bool force_min_size, float scaling) const
+void LineRenderable::render(QPainter& painter, QRectF& bounding_box, bool force_min_size, float scaling, bool on_screen) const
 {
 	QPen pen(painter.pen());
 	pen.setCapStyle(cap_style);
@@ -259,7 +268,132 @@ void LineRenderable::render(QPainter& painter, bool force_min_size, float scalin
 	if (join_style == Qt::MiterJoin)
 		pen.setMiterLimit(LineSymbol::miterLimit());
 	painter.setPen(pen);
-	painter.drawPath(path);
+	
+	if (bounding_box.contains(path.controlPointRect()))
+		painter.drawPath(path);
+	else if (path.elementCount() > 0)
+	{
+		// Manually clip the path with bounding_box, this seems to be faster.
+		// The code splits up the painter path into new paths which intersect
+		// the view rect and renders these only.
+		// NOTE: this does not work correctly with miter joins, but this
+		//       should be a minor issue.
+		QPainterPath::Element prev_element = path.elementAt(0);
+		bool path_closed =
+			(path.elementAt(0).x == path.elementAt(path.elementCount()-1).x) &&
+			(path.elementAt(0).y == path.elementAt(path.elementCount()-1).y);
+		QRectF element_bbox;
+		QPainterPath part_path;
+		QPainterPath first_path;
+		bool path_started = false;
+		bool current_part_is_first = bounding_box.intersects(QRectF(
+			path.elementAt(0).x - 0.5f * line_width,
+			path.elementAt(0).y - 0.5f * line_width,
+			line_width,
+			line_width
+		));
+		bool first_element_in_view = false;
+		bool part_finished = false;
+		for (int i = 1; i < path.elementCount(); ++i)
+		{
+			QPainterPath::Element element = path.elementAt(i);
+			if (element.isLineTo())
+			{
+				qreal min_x, min_y, max_x, max_y;
+				if (prev_element.x < element.x)
+				{
+					min_x = prev_element.x;
+					max_x = element.x;
+				}
+				else
+				{
+					min_x = element.x;
+					max_x = prev_element.x;
+				}
+				if (prev_element.y < element.y)
+				{
+					min_y = prev_element.y;
+					max_y = element.y;
+				}
+				else
+				{
+					min_y = element.y;
+					max_y = prev_element.y;
+				}
+				element_bbox = QRectF(min_x - 0.5f * line_width, min_y - 0.5f * line_width,
+									  qMax(max_x - min_x + line_width, (qreal)1e-6f),
+									  qMax(max_y - min_y + line_width, (qreal)1e-6f));
+				if (element_bbox.intersects(bounding_box))
+				{
+					if (!path_started)
+					{
+						part_path = QPainterPath();
+						part_path.moveTo(prev_element.x, prev_element.y);
+						path_started = true;
+					}
+					part_path.lineTo(element.x, element.y);
+				}
+				else if (path_started)
+					part_finished = true;
+				else
+					current_part_is_first = false;
+			}
+			else if (element.isCurveTo())
+			{
+				Q_ASSERT(i < path.elementCount() - 2);
+				QPainterPath::Element next_element = path.elementAt(i + 1);
+				QPainterPath::Element end_element = path.elementAt(i + 2);
+				
+				qreal min_x = qMin(prev_element.x, qMin(element.x, qMin(next_element.x, end_element.x)));
+				qreal min_y = qMin(prev_element.y, qMin(element.y, qMin(next_element.y, end_element.y)));
+				qreal max_x = qMax(prev_element.x, qMax(element.x, qMax(next_element.x, end_element.x)));
+				qreal max_y = qMax(prev_element.y, qMax(element.y, qMax(next_element.y, end_element.y)));
+				
+				element_bbox = QRectF(min_x - 0.5f * line_width, min_y - 0.5f * line_width,
+									  max_x - min_x + line_width, max_y - min_y + line_width);
+				if (element_bbox.intersects(bounding_box))
+				{
+					if (!path_started)
+					{
+						part_path = QPainterPath();
+						part_path.moveTo(prev_element.x, prev_element.y);
+						path_started = true;
+					}
+					part_path.cubicTo(element.x, element.y, next_element.x, next_element.y, end_element.x, end_element.y);
+				}
+				else if (path_started)
+					part_finished = true;
+				else
+					current_part_is_first = false;
+			}
+			else if (element.isMoveTo() && path_started)
+			{
+				part_path.moveTo(element.x, element.y);
+			}
+			
+			if (part_finished)
+			{
+				if (current_part_is_first && path_closed)
+				{
+					current_part_is_first = false;
+					first_element_in_view = true;
+					first_path = part_path;
+				}
+				else
+					painter.drawPath(part_path);
+				path_started = false;
+				part_finished = false;
+			}
+			
+			prev_element = element;
+		}
+		if (path_started)
+		{
+			if (path_closed && first_element_in_view)
+				part_path.connectPath(first_path);
+			painter.drawPath(part_path);
+		}
+	}
 	
 	// DEBUG: show all control points
 	/*QPen debugPen(QColor(Qt::red));
@@ -276,8 +410,8 @@ void LineRenderable::render(QPainter& painter, bool force_min_size, float scalin
 
 AreaRenderable::AreaRenderable(AreaSymbol* symbol, const MapCoordVectorF& transformed_coords, const MapCoordVector& coords, const PathCoordVector* path_coords) : Renderable()
 {
-	assert(transformed_coords.size() >= 3 && transformed_coords.size() == coords.size());
-	color_priority = symbol->getColor() ? symbol->getColor()->priority : MapColor::Reserved;
+	Q_ASSERT(transformed_coords.size() >= 3 && transformed_coords.size() == coords.size());
+	color_priority = symbol->getColor() ? symbol->getColor()->getPriority() : MapColor::Reserved;
 	
 	// Special case: first coord
 	path.moveTo(transformed_coords[0].toQPointF());
@@ -298,7 +432,7 @@ AreaRenderable::AreaRenderable(AreaSymbol* symbol, const MapCoordVectorF& transf
 		
 		if (coords[i-1].isCurveStart())
 		{
-			assert(i < size - 2);
+			Q_ASSERT(i < size - 2);
 			path.cubicTo(transformed_coords[i].toQPointF(), transformed_coords[i+1].toQPointF(), transformed_coords[i+2].toQPointF());
 			i += 2;
 		}
@@ -325,7 +459,7 @@ AreaRenderable::AreaRenderable(AreaSymbol* symbol, const MapCoordVectorF& transf
 	}
 	else
 		extent = path.controlPointRect();
-	assert(extent.right() < 999999);	// assert if bogus values are returned
+	Q_ASSERT(extent.right() < 999999);	// assert if bogus values are returned
 }
 AreaRenderable::AreaRenderable(const AreaRenderable& other) : Renderable(other)
 {
@@ -337,7 +471,7 @@ void AreaRenderable::getRenderStates(RenderStates& out) const
 	out.mode = RenderStates::BrushOnly;
 	out.pen_width = 0;
 }
-void AreaRenderable::render(QPainter& painter, bool force_min_size, float scaling) const
+void AreaRenderable::render(QPainter& painter, QRectF& bounding_box, bool force_min_size, float scaling, bool on_screen) const
 {
 	painter.drawPath(path);
 	
@@ -358,11 +492,11 @@ void AreaRenderable::render(QPainter& painter, bool force_min_size, float scalin
 
 // ### TextRenderable ###
 
-TextRenderable::TextRenderable(TextSymbol* symbol, TextObject* text_object, MapColor* color, double anchor_x, double anchor_y, bool framing_line)
+TextRenderable::TextRenderable(TextSymbol* symbol, TextObject* text_object, const MapColor* color, double anchor_x, double anchor_y, bool framing_line)
 {
 	const QFont& font(symbol->getQFont());
 	const QFontMetricsF& metrics(symbol->getFontMetrics());
-	color_priority = color->priority;
+	color_priority = color->getPriority();
 	this->anchor_x = anchor_x;
 	this->anchor_y = anchor_y;
 	this->rotation = text_object->getRotation();
@@ -434,7 +568,7 @@ TextRenderable::TextRenderable(TextSymbol* symbol, TextObject* text_object, MapC
 	}
 	extent = QRectF(extent.left() + anchor_x, extent.top() + anchor_y, extent.width(), extent.height());
 	
-	assert(extent.right() < 999999);	// assert if bogus values are returned
+	Q_ASSERT(extent.right() < 999999);	// assert if bogus values are returned
 }
 
 TextRenderable::TextRenderable(const TextRenderable& other) : Renderable(other)
@@ -463,8 +597,13 @@ void TextRenderable::getRenderStates(RenderStates& out) const
 	}
 }
 
-void TextRenderable::render(QPainter& painter, bool force_min_size, float scaling) const
+void TextRenderable::render(QPainter& painter, QRectF& bounding_box, bool force_min_size, float scaling, bool on_screen) const
 {
+	bool used_antialiasing_before = painter.renderHints() & QPainter::Antialiasing;
+	bool disable_antialiasing = on_screen && !(Settings::getInstance().getSettingCached(Settings::MapDisplay_TextAntialiasing).toBool());
+	if (disable_antialiasing)
+		painter.setRenderHint(QPainter::Antialiasing, false);
+	
 	if (framing_line)
 	{
 		QPen pen(painter.pen());
@@ -472,18 +611,15 @@ void TextRenderable::render(QPainter& painter, bool force_min_size, float scalin
 		painter.setPen(pen);
 	}
 	
-	// NOTE: mini-optimization to prevent the save-restore for un-rotated texts which could be used when the scale-hack is no longer necessary
-	/*if (rotation == 0)
-		painter.drawPath(path);
-	else
-	{*/
-		painter.save();
-		painter.translate(anchor_x, anchor_y);
-		if (rotation != 0)
-			painter.rotate(-rotation * 180 / M_PI);
-		painter.scale(scale_factor, scale_factor);
-		painter.drawPath(path);
-		painter.restore();
-	//}
+	painter.save();
+	painter.translate(anchor_x, anchor_y);
+	if (rotation != 0)
+		painter.rotate(-rotation * 180 / M_PI);
+	painter.scale(scale_factor, scale_factor);
+	painter.drawPath(path);
+	painter.restore();
+	
+	if (disable_antialiasing)
+		painter.setRenderHint(QPainter::Antialiasing, used_antialiasing_before);
 }
 

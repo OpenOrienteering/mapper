@@ -1,18 +1,18 @@
 /*
- *    Copyright 2012 Thomas Schöps
- *    
+ *    Copyright 2012, 2013 Thomas Schöps
+ *
  *    This file is part of OpenOrienteering.
- * 
+ *
  *    OpenOrienteering is free software: you can redistribute it and/or modify
  *    it under the terms of the GNU General Public License as published by
  *    the Free Software Foundation, either version 3 of the License, or
  *    (at your option) any later version.
- * 
+ *
  *    OpenOrienteering is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
  *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *    GNU General Public License for more details.
- * 
+ *
  *    You should have received a copy of the GNU General Public License
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -25,7 +25,8 @@
 
 #include <QScopedPointer>
 
-#include "tool_helpers.h"
+class ConstrainAngleToolHelper;
+class SnappingToolHelper;
 
 /// Tool to draw rectangles
 class DrawRectangleTool : public DrawLineAndAreaTool
@@ -33,6 +34,7 @@ class DrawRectangleTool : public DrawLineAndAreaTool
 Q_OBJECT
 public:
 	DrawRectangleTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget);
+    virtual ~DrawRectangleTool();
 	
 	virtual void init();
 	virtual QCursor* getCursor() {return cursor;}
@@ -53,16 +55,18 @@ protected slots:
 	void updateDirtyRect();
 	
 protected:
-	void finishRectangleDrawing();
 	virtual void finishDrawing();
 	virtual void abortDrawing();
 	void undoLastPoint();
+	void pickDirection(MapCoordF coord, MapWidget* widget);
+	bool drawingParallelTo(double angle);
 	
+	void updateHover(bool mouse_down);
+	void updateCloseVector();
+	void deleteClosePoint();
 	void updateRectangle();
-	void updatePreview();
 	void updateStatusText();
 	
-	QPoint mouse_press_pos;
 	QPoint click_pos;
 	MapCoordF click_pos_map;
 	QPoint cur_pos;
@@ -70,15 +74,25 @@ protected:
 	MapCoordF constrained_pos_map;
 	bool dragging;
 	bool draw_dash_points;
+	bool shift_pressed;
+	bool ctrl_pressed;
+	bool picked_direction;
+	bool snapped_to_line;
+	MapCoord snapped_to_line_a;
+	MapCoord snapped_to_line_b;
 	
-	bool second_point_set;
-	bool third_point_set;
+	/// List of angles for first, second, etc. edge.
+	/// Includes the currently edited angle.
+	/// The index of currently edited point in preview_path is angles.size().
+	std::vector< double > angles;
+	/// Vector in forward drawing direction
 	MapCoordF forward_vector;
+	/// Direction from current drawing perpendicular to the start point
 	MapCoordF close_vector;
-	bool new_corner_needed;
-	bool delete_start_point;
 	
 	QScopedPointer<ConstrainAngleToolHelper> angle_helper;
+	QScopedPointer<SnappingToolHelper> snap_helper;
+	MapWidget* cur_map_widget;
 };
 
 #endif

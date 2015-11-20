@@ -1,0 +1,36 @@
+#
+#    Copyright 2012 Kai Pastor
+#    
+#    This file is part of OpenOrienteering.
+# 
+#    OpenOrienteering is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+# 
+#    OpenOrienteering is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+# 
+#    You should have received a copy of the GNU General Public License
+#    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
+
+# @TESTNAME@-RUN.cmake is generated from TESTNAME-RUN.cmake.in
+
+# Run the test executable
+execute_process(
+  COMMAND @CMAKE_CURRENT_BINARY_DIR@/@TESTNAME@ 
+  RESULT_VARIABLE TEST_RESULT
+)
+
+if(TEST_RESULT EQUAL 0)
+	# Test succesful, update stamp file
+	execute_process(
+	  COMMAND ${CMAKE_COMMAND} -E touch @TESTNAME@-RUN.stamp 
+	  WORKING_DIRECTORY @CMAKE_CURRENT_BINARY_DIR@
+	)
+else()
+	# Test failed, terminate this script with an error
+	message(FATAL_ERROR "Test @testname@ failed: ${TEST_RESULT}")
+endif()

@@ -1,18 +1,18 @@
 /*
- *    Copyright 2012 Thomas Schöps
- *    
+ *    Copyright 2012, 2013 Thomas Schöps
+ *
  *    This file is part of OpenOrienteering.
- * 
+ *
  *    OpenOrienteering is free software: you can redistribute it and/or modify
  *    it under the terms of the GNU General Public License as published by
  *    the Free Software Foundation, either version 3 of the License, or
  *    (at your option) any later version.
- * 
+ *
  *    OpenOrienteering is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
  *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *    GNU General Public License for more details.
- * 
+ *
  *    You should have received a copy of the GNU General Public License
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -80,18 +80,41 @@ public:
 	void setDragOffset(QPoint offset);
 	void completeDragging(QPoint offset, qint64 dx, qint64 dy);
 	
-	void ensureVisibilityOfRect(const QRectF& map_rect);	// does nothing if the rect is completely in view
-	void adjustViewToRect(const QRectF& map_rect);			// sets the view so the rect is centered and zooomed to fill the widget
+	/**
+	 * Adjusts the viewport so the given rect is inside the view.
+	 * @param show_completely If true, the method ensures that 100% of the rect
+	 *    is visible. If false, a weaker definition of "visible" is used:
+	 *    then a certain area of the rect must be visible.
+	 * @param zoom_in_steps If true, zoom is done in the usual power-of-two
+	 *    steps only. If false, the zoom level is chosen to fit the rect.
+	 */
+	void ensureVisibilityOfRect(const QRectF& map_rect, bool show_completely, bool zoom_in_steps);
 	
-	/// Mark a rectangular region of a template cache as dirty. This rect is united with possible previous dirty rects of that cache.
+	/**
+	 * Sets the view so the rect is centered and zooomed to fill the widget.
+	 * @param zoom_in_steps If true, zoom is done in the usual power-of-two
+	 *    steps only. If false, the zoom level is chosen to fit the rect.
+	 */
+	void adjustViewToRect(const QRectF& map_rect, bool zoom_in_steps);
+	
+	/**
+	 * Mark a rectangular region of a template cache as dirty.
+	 * This rect is united with possible previous dirty rects of that cache.
+	 */
 	void markTemplateCacheDirty(QRectF view_rect, int pixel_border, bool front_cache);
 	
-	/// Mark a rectangular region of the map cache as dirty. This rect is united with possible previous dirty rects of that cache.
+	/**
+	 * Mark a rectangular region of the map cache as dirty.
+	 * This rect is united with possible previous dirty rects of that cache.
+	 */
 	void markObjectAreaDirty(QRectF map_rect);
 	
-	/// Set the given rect as bounding box for the current drawing.
-	/// NOTE: Unlike with markTemplateCacheDirty(), multiple calls to these methods do not result in uniting all given rects, instead only the last rect is used!
-	/// Pass QRect() to disable the current drawing.
+	/**
+	 * Set the given rect as bounding box for the current drawing.
+	 * NOTE: Unlike with markTemplateCacheDirty(), multiple calls to these methods do not
+	 * result in uniting all given rects, instead only the last rect is used!
+	 * Pass QRect() to disable the current drawing.
+	 */
 	void setDrawingBoundingBox(QRectF map_rect, int pixel_border, bool do_update);
 	void clearDrawingBoundingBox();
 	
@@ -106,10 +129,11 @@ public:
 	void setZoomLabel(QLabel* zoom_label);
 	void setCursorposLabel(QLabel* cursorpos_label);
 	void setCoordsDisplay(CoordsType type);
+	inline CoordsType getCoordsDisplay() const {return coords_type;}
 	
 	inline PieMenu& getPieMenu() {return pie_menu;}
 	
-    virtual QSize sizeHint() const;
+	virtual QSize sizeHint() const;
 	
 public slots:
 	void keyPressed(QKeyEvent* event);
@@ -125,10 +149,10 @@ protected:
 	virtual void mouseReleaseEvent(QMouseEvent* event);
 	virtual void mouseDoubleClickEvent(QMouseEvent* event);
 	virtual void wheelEvent(QWheelEvent* event);
-    virtual void leaveEvent(QEvent* event);
+	virtual void leaveEvent(QEvent* event);
 	
 	// Key input (see also slots)
-    virtual void focusOutEvent(QFocusEvent* event);
+	virtual void focusOutEvent(QFocusEvent* event);
 	
 private:
 	bool containsVisibleTemplate(int first_template, int last_template);

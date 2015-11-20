@@ -1,18 +1,18 @@
 /*
- *    Copyright 2012 Thomas Schöps
- *    
+ *    Copyright 2012, 2013 Thomas Schöps
+ *
  *    This file is part of OpenOrienteering.
- * 
+ *
  *    OpenOrienteering is free software: you can redistribute it and/or modify
  *    it under the terms of the GNU General Public License as published by
  *    the Free Software Foundation, either version 3 of the License, or
  *    (at your option) any later version.
- * 
+ *
  *    OpenOrienteering is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
  *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *    GNU General Public License for more details.
- * 
+ *
  *    You should have received a copy of the GNU General Public License
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -182,7 +182,7 @@ void ObjectContainingUndoStep::loadImpl(QXmlStreamReader& xml, SymbolDictionary&
 		while (xml.readNextStartElement())
 		{
 			if (xml.name() == "object")
-				objects.push_back(Object::load(xml, *map, symbol_dict));
+				objects.push_back(Object::load(xml, map, symbol_dict));
 			else
 				xml.skipCurrentElement(); // unknown
 		}
@@ -290,6 +290,26 @@ UndoStep* AddObjectsUndoStep::undo()
 	objects.clear();
 	return undo_step;
 }
+
+void AddObjectsUndoStep::removeContainedObjects(bool emit_selection_changed)
+{
+	MapPart* part = map->getPart(this->part);
+	int size = (int)objects.size();
+	bool object_deselected = false;
+	for (int i = 0; i < size; ++i)
+	{
+		if (map->isObjectSelected(objects[i]))
+		{
+			map->removeObjectFromSelection(objects[i], false);
+			object_deselected = true;
+		}
+		part->deleteObject(objects[i], true);
+		map->setObjectsDirty();
+	}
+	if (object_deselected && emit_selection_changed)
+		map->emitSelectionChanged();
+}
+
 bool AddObjectsUndoStep::sortOrder(const std::pair< int, int >& a, const std::pair< int, int >& b)
 {
 	return a.second < b.second;
@@ -317,7 +337,8 @@ UndoStep* SwitchSymbolUndoStep::undo()
 	{
 		Object* object = part->getObject(affected_objects[i]);
 		undo_step->addObject(affected_objects[i], object->getSymbol());
-		assert(object->setSymbol(target_symbols[i], false));
+		bool ok = object->setSymbol(target_symbols[i], false);
+		assert(ok);
 	}
 	
 	return undo_step;

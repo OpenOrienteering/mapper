@@ -1,18 +1,18 @@
 /*
- *    Copyright 2012 Thomas Schöps
- *    
+ *    Copyright 2012, 2013 Thomas Schöps
+ *
  *    This file is part of OpenOrienteering.
- * 
+ *
  *    OpenOrienteering is free software: you can redistribute it and/or modify
  *    it under the terms of the GNU General Public License as published by
  *    the Free Software Foundation, either version 3 of the License, or
  *    (at your option) any later version.
- * 
+ *
  *    OpenOrienteering is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
  *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *    GNU General Public License for more details.
- * 
+ *
  *    You should have received a copy of the GNU General Public License
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -23,29 +23,33 @@
 
 #include <QScopedPointer>
 
-#include "tool.h"
-#include "tool_helpers.h"
+#include "tool_base.h"
 
-/// Tool to rotate patterns of area objects or rotatable point objects
+class ConstrainAngleToolHelper;
+
+/**
+ * A tool to rotate patterns of area objects or rotatable point objects.
+ */
 class RotatePatternTool : public MapEditorToolBase
 {
 Q_OBJECT
 public:
 	RotatePatternTool(MapEditorController* editor, QAction* tool_button);
+	virtual ~RotatePatternTool();
 	
-    virtual void draw(QPainter* painter, MapWidget* widget);
+	virtual void draw(QPainter* painter, MapWidget* widget);
 	
-    virtual bool keyPressEvent(QKeyEvent* event);
-    virtual bool keyReleaseEvent(QKeyEvent* event);
+	virtual bool keyPressEvent(QKeyEvent* event);
+	virtual bool keyReleaseEvent(QKeyEvent* event);
 	
 protected:
-    virtual int updateDirtyRectImpl(QRectF& rect);
+	virtual int updateDirtyRectImpl(QRectF& rect);
 	virtual void updateStatusText();
-    virtual void objectSelectionChangedImpl();
+	virtual void objectSelectionChangedImpl();
 	
-    virtual void dragStart();
-    virtual void dragMove();
-    virtual void dragFinish();
+	virtual void dragStart();
+	virtual void dragMove();
+	virtual void dragFinish();
 	
 	QScopedPointer<ConstrainAngleToolHelper> angle_helper;
 	QPointF constrained_pos;

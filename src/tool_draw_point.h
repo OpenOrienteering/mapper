@@ -1,18 +1,18 @@
 /*
- *    Copyright 2012 Thomas Schöps
- *    
+ *    Copyright 2012, 2013 Thomas Schöps
+ *
  *    This file is part of OpenOrienteering.
- * 
+ *
  *    OpenOrienteering is free software: you can redistribute it and/or modify
  *    it under the terms of the GNU General Public License as published by
  *    the Free Software Foundation, either version 3 of the License, or
  *    (at your option) any later version.
- * 
+ *
  *    OpenOrienteering is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
  *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *    GNU General Public License for more details.
- * 
+ *
  *    You should have received a copy of the GNU General Public License
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -24,7 +24,6 @@
 #include <QScopedPointer>
 
 #include "tool.h"
-#include "tool_helpers.h"
 
 class MapWidget;
 class PointObject;
@@ -32,13 +31,15 @@ class Symbol;
 class SymbolWidget;
 class ConstrainAngleToolHelper;
 
-/// Tool to draw point objects
+/**
+ * A tool to draw point objects.
+ */
 class DrawPointTool : public MapEditorTool
 {
 Q_OBJECT
 public:
 	DrawPointTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget);
-    virtual ~DrawPointTool();
+	virtual ~DrawPointTool();
 	
 	virtual void init();
 	virtual QCursor* getCursor() {return cursor;}
@@ -48,7 +49,7 @@ public:
 	virtual bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
 	virtual void leaveEvent(QEvent* event);
 	virtual bool keyPressEvent(QKeyEvent* event);
-    virtual bool keyReleaseEvent(QKeyEvent* event);
+	virtual bool keyReleaseEvent(QKeyEvent* event);
 	
 	virtual void draw(QPainter* painter, MapWidget* widget);
 	

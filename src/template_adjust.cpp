@@ -1,18 +1,18 @@
 /*
- *    Copyright 2012 Thomas Schöps
- *    
+ *    Copyright 2012, 2013 Thomas Schöps
+ *
  *    This file is part of OpenOrienteering.
- * 
+ *
  *    OpenOrienteering is free software: you can redistribute it and/or modify
  *    it under the terms of the GNU General Public License as published by
  *    the Free Software Foundation, either version 3 of the License, or
  *    (at your option) any later version.
- * 
+ *
  *    OpenOrienteering is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
  *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *    GNU General Public License for more details.
- * 
+ *
  *    You should have received a copy of the GNU General Public License
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -26,11 +26,13 @@
 #include <QtWidgets>
 #endif
 
+#include "gui/main_window.h"
+#include "map_editor.h"
+#include "map_widget.h"
 #include "template.h"
 #include "transformation.h"
 #include "util.h"
-#include "map_editor.h"
-#include "map_widget.h"
+#include "gui/modifier_key.h"
 
 float TemplateAdjustActivity::cross_radius = 4;
 
@@ -194,21 +196,29 @@ TemplateAdjustWidget::TemplateAdjustWidget(Template* temp, MapEditorController* 
 	table->verticalHeader()->setVisible(false);
 	
 	QHeaderView* header_view = table->horizontalHeader();
+#if QT_VERSION < 0x050000
 	for (int i = 0; i < 5; ++i)
 		header_view->setResizeMode(i, QHeaderView::ResizeToContents);
 	header_view->setClickable(false);
+#else
+	for (int i = 0; i < 5; ++i)
+		header_view->setSectionResizeMode(i, QHeaderView::ResizeToContents);
+	header_view->setSectionsClickable(false);
+#endif
 	
 	for (int i = 0; i < temp->getNumPassPoints(); ++i)
 		addRow(i);
 	
 	apply_check = new QCheckBox(tr("Apply pass points"));
 	apply_check->setChecked(temp->isAdjustmentApplied());
+	QPushButton* help_button = new QPushButton(QIcon(":/images/help.png"), tr("Help"));
 	clear_and_apply_button = new QPushButton(tr("Apply && clear all"));
 	clear_and_revert_button = new QPushButton(tr("Clear all"));
 	
 	QHBoxLayout* buttons_layout = new QHBoxLayout();
-	buttons_layout->addWidget(clear_and_revert_button);
+	buttons_layout->addWidget(help_button);
 	buttons_layout->addStretch(1);
+	buttons_layout->addWidget(clear_and_revert_button);
 	buttons_layout->addWidget(clear_and_apply_button);
 
 	
@@ -228,6 +238,7 @@ TemplateAdjustWidget::TemplateAdjustWidget(Template* temp, MapEditorController* 
 	connect(delete_act, SIGNAL(triggered(bool)), this, SLOT(deleteClicked(bool)));
 	
 	connect(apply_check, SIGNAL(clicked(bool)), this, SLOT(applyClicked(bool)));
+	connect(help_button, SIGNAL(clicked(bool)), this, SLOT(showHelp()));
 	connect(clear_and_apply_button, SIGNAL(clicked(bool)), this, SLOT(clearAndApplyClicked(bool)));
 	connect(clear_and_revert_button, SIGNAL(clicked(bool)), this, SLOT(clearAndRevertClicked(bool)));
 	
@@ -297,8 +308,14 @@ void TemplateAdjustWidget::deletePassPoint(int number)
 }
 void TemplateAdjustWidget::stopTemplateAdjust()
 {
-	if (new_act->isChecked() || move_act->isChecked() || delete_act->isChecked())
+	// If one of these is checked, the corresponding tool should be set. The last condition is just to be sure.
+	if ((new_act->isChecked() || move_act->isChecked() || delete_act->isChecked()) && controller->getTool())
+	{
+		// Set the tool's button to NULL, so on later deletion the tool does not
+		// try to unset the button, which has already been deleted at that time
+		controller->getTool()->setAction(NULL);
 		controller->setTool(NULL);
+	}
 }
 
 void TemplateAdjustWidget::updateActions()
@@ -378,6 +395,7 @@ void TemplateAdjustWidget::clearAndApplyClicked(bool checked)
 	
 	clearPassPoints();
 }
+
 void TemplateAdjustWidget::clearAndRevertClicked(bool checked)
 {
 	if (temp->isAdjustmentApplied())
@@ -385,6 +403,12 @@ void TemplateAdjustWidget::clearAndRevertClicked(bool checked)
 	
 	clearPassPoints();
 }
+
+void TemplateAdjustWidget::showHelp()
+{
+	Util::showHelp(controller->getWindow(), "template_adjust.html");
+}
+
 void TemplateAdjustWidget::clearPassPoints()
 {
 	temp->clearPassPoints();
@@ -539,7 +563,7 @@ TemplateAdjustAddTool::TemplateAdjustAddTool(MapEditorController* editor, QActio
 void TemplateAdjustAddTool::init()
 {
 	// NOTE: this is called by other methods to set this text again. Change that behavior if adding stuff here
-	setStatusBarText(tr("<b>Click</b> to set the template position of the pass point"));
+	setStatusBarText(tr("<b>Click</b>: Set the template position of the pass point. "));
 }
 
 bool TemplateAdjustAddTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
@@ -554,7 +578,8 @@ bool TemplateAdjustAddTool::mousePressEvent(QMouseEvent* event, MapCoordF map_co
 		first_point_set = true;
 		setDirtyRect(map_coord);
 		
-		setStatusBarText(tr("<b>Click</b> to set the map position of the pass point, <b>Esc</b> to abort"));
+		setStatusBarText(tr("<b>Click</b>: Set the map position of the pass point. ") +
+		                 MapEditorTool::tr("<b>%1</b>: Abort. ").arg(ModifierKey::escape()) );
 	}
 	else
 	{
@@ -635,7 +660,7 @@ TemplateAdjustMoveTool::TemplateAdjustMoveTool(MapEditorController* editor, QAct
 }
 void TemplateAdjustMoveTool::init()
 {
-	setStatusBarText(tr("<b>Drag</b> to move pass points"));
+	setStatusBarText(tr("<b>Drag</b>: Move pass points. "));
 }
 
 bool TemplateAdjustMoveTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
@@ -751,9 +776,10 @@ TemplateAdjustDeleteTool::TemplateAdjustDeleteTool(MapEditorController* editor, 
 	if (!cursor)
 		cursor = new QCursor(QPixmap(":/images/cursor-delete.png"), 1, 1);
 }
+
 void TemplateAdjustDeleteTool::init()
 {
-	setStatusBarText(tr("<b>Click</b> to delete pass points"));
+	setStatusBarText(tr("<b>Click</b>: Delete pass points. "));
 }
 
 bool TemplateAdjustDeleteTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)

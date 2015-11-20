@@ -1,5 +1,5 @@
 /*
- *    Copyright 2012 Thomas Schöps, Pete Curtis
+ *    Copyright 2012, 2013 Thomas Schöps, Pete Curtis
  *
  *    This file is part of OpenOrienteering.
  *
@@ -17,40 +17,113 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "file_format_native.h"
+
 #include <QFile>
 
-#include "file_format_native.h"
+#include "core/map_color.h"
+#include "core/map_printer.h"
+#include "file_import_export.h"
 #include "georeferencing.h"
 #include "gps_coordinates.h"
 #include "map.h"
-#include "map_color.h"
 #include "map_grid.h"
 #include "symbol.h"
 #include "template.h"
 #include "util.h"
 
+
+// ### NativeFileImport declaration ###
+
+/** An Importer for the native file format. This class delegates to the load() and loadImpl() methods of the
+ *  model objects, but long-term this can be refactored out of the model into this class.
+ * 
+ *  \deprecated
+ */
+class NativeFileImport : public Importer
+{
+public:
+	/** Creates a new native file importer.
+	 */
+	NativeFileImport(QIODevice* stream, Map *map, MapView *view);
+
+	/** Destroys this importer.
+	 */
+	~NativeFileImport();
+
+protected:
+	/** Imports a native file.
+	 */
+	void import(bool load_symbols_only) throw (FileFormatException);
+};
+
+
+#ifdef MAPPER_ENABLE_NATIVE_EXPORTER
+
+// ### NativeFileExport declaration ###
+
+/** An Exporter for the native file format. This class delegates to the save() and saveImpl() methods of the
+ *  model objects, but long-term this can be refactored out of the model into this class.
+ * 
+ *  \deprecated
+ */
+class NativeFileExport : public Exporter
+{
+public:
+	/** Creates a new native file exporter.
+	 */
+	NativeFileExport(QIODevice* stream, Map *map, MapView *view);
+
+	/** Destroys this importer.
+	 */
+	~NativeFileExport();
+
+	/** Exports a native file.
+	 */
+	void doExport() throw (FileFormatException);
+};
+
+#endif
+
+
+// ### NativeFileFormat ###
+
 const int NativeFileFormat::least_supported_file_format_version = 0;
-const int NativeFileFormat::current_file_format_version = 29;
+const int NativeFileFormat::current_file_format_version = 30;
 const char NativeFileFormat::magic_bytes[4] = {0x4F, 0x4D, 0x41, 0x50};	// "OMAP"
+
+NativeFileFormat::NativeFileFormat()
+ : FileFormat(FileFormat::MapFile, "native (deprecated)", ImportExport::tr("OpenOrienteering Mapper").append(" pre-0.5"), "omap", 
+#ifdef MAPPER_ENABLE_NATIVE_EXPORTER
+              FileFormat::ExportSupported | FileFormat::ExportLossy |
+#endif
+              FileFormat::ImportSupported)
+{
+	// Nothing
+}
 
 bool NativeFileFormat::understands(const unsigned char *buffer, size_t sz) const
 {
-    // The first four bytes of the file must be 'OMAP'.
-    if (sz >= 4 && memcmp(buffer, magic_bytes, 4) == 0) return true;
-    return false;
+	// The first four bytes of the file must be 'OMAP'.
+	return (sz >= 4 && memcmp(buffer, magic_bytes, 4) == 0);
 }
 
-Importer *NativeFileFormat::createImporter(QIODevice* stream, Map* map, MapView* view) const throw (FormatException)
+Importer *NativeFileFormat::createImporter(QIODevice* stream, Map* map, MapView* view) const throw (FileFormatException)
 {
 	return new NativeFileImport(stream, map, view);
 }
 
-Exporter *NativeFileFormat::createExporter(QIODevice* stream, Map* map, MapView* view) const throw (FormatException)
+#ifdef MAPPER_ENABLE_NATIVE_EXPORTER
+
+Exporter *NativeFileFormat::createExporter(QIODevice* stream, Map* map, MapView* view) const throw (FileFormatException)
 {
     return new NativeFileExport(stream, map, view);
 }
 
+#endif
 
+
+// ### NativeFileImport ###
 
 NativeFileImport::NativeFileImport(QIODevice* stream, Map *map, MapView *view) : Importer(stream, map, view)
 {
@@ -60,7 +133,7 @@ NativeFileImport::~NativeFileImport()
 {
 }
 
-void NativeFileImport::import(bool load_symbols_only) throw (FormatException)
+void NativeFileImport::import(bool load_symbols_only) throw (FileFormatException)
 {
     char buffer[4];
     stream->read(buffer, 4); // read the magic
@@ -69,15 +142,15 @@ void NativeFileImport::import(bool load_symbols_only) throw (FormatException)
     stream->read((char*)&version, sizeof(int));
     if (version < 0)
     {
-        addWarning(QObject::tr("Invalid file format version."));
+        addWarning(Importer::tr("Invalid file format version."));
     }
     else if (version < NativeFileFormat::least_supported_file_format_version)
     {
-        throw FormatException(QObject::tr("Unsupported file format version. Please use an older program version to load and update the file."));
+        throw FileFormatException(Importer::tr("Unsupported old file format version. Please use an older program version to load and update the file."));
     }
     else if (version > NativeFileFormat::current_file_format_version)
     {
-        throw FormatException(QObject::tr("File format version too high. Please update to a newer program version to load this file."));
+        throw FileFormatException(Importer::tr("Unsupported new file format version. Some map features will not be loaded or saved by this version of the program. Consider updating."));
     }
 
     if (version <= 16)
@@ -126,13 +199,15 @@ void NativeFileImport::import(bool load_symbols_only) throw (FormatException)
 		if (geographic_crs_spec != Georeferencing::geographic_crs_spec)
 		{
 			addWarning(
-			  QObject::tr("The geographic coordinate reference system of the map was \"%1\". This CRS is not supported. Using \"%2\".").
+			  Importer::tr("The geographic coordinate reference system of the map was \"%1\". This CRS is not supported. Using \"%2\".").
 			  arg(geographic_crs_spec).
 			  arg(Georeferencing::geographic_crs_spec)
 			);
 		}
 		if (version <= 17)
 			georef.initDeclination();
+		// Correctly set georeferencing state
+		georef.setProjectedCRS(georef.projected_crs_id, georef.projected_crs_spec);
 		*map->georeferencing = georef;
 	}
 	
@@ -149,32 +224,46 @@ void NativeFileImport::import(bool load_symbols_only) throw (FormatException)
 		map->area_hatching_enabled = false;
 		map->baseline_view_enabled = false;
 	}
-
-    if (version >= 6)
-    {
-        stream->read((char*)&map->print_params_set, sizeof(bool));
-        if (map->print_params_set)
-        {
-            stream->read((char*)&map->print_orientation, sizeof(int));
-            stream->read((char*)&map->print_format, sizeof(int));
-            stream->read((char*)&map->print_dpi, sizeof(float));
-            stream->read((char*)&map->print_show_templates, sizeof(bool));
+	
+	if (version >= 6)
+	{
+		bool print_params_set;
+		stream->read((char*)&print_params_set, sizeof(bool));
+		if (print_params_set)
+		{
+			MapPrinterConfig printer_config(*map);
+			stream->read((char*)&printer_config.page_format.orientation, sizeof(int));
+			stream->read((char*)&printer_config.page_format.paper_size, sizeof(int));
+			
+			float resolution;
+			stream->read((char*)&resolution, sizeof(float));
+			printer_config.options.resolution = qRound(resolution);
+			stream->read((char*)&printer_config.options.show_templates, sizeof(bool));
 			if (version >= 24)
-				stream->read((char*)&map->print_show_grid, sizeof(bool));
+				stream->read((char*)&printer_config.options.show_grid, sizeof(bool));
 			else
-				map->print_show_grid = false;
-            stream->read((char*)&map->print_center, sizeof(bool));
-            stream->read((char*)&map->print_area_left, sizeof(float));
-            stream->read((char*)&map->print_area_top, sizeof(float));
-            stream->read((char*)&map->print_area_width, sizeof(float));
-            stream->read((char*)&map->print_area_height, sizeof(float));
+				printer_config.options.show_grid = false;
+			
+			stream->read((char*)&printer_config.center_print_area, sizeof(bool));
+			
+			float print_area_left, print_area_top, print_area_width, print_area_height;
+			stream->read((char*)&print_area_left, sizeof(float));
+			stream->read((char*)&print_area_top, sizeof(float));
+			stream->read((char*)&print_area_width, sizeof(float));
+			stream->read((char*)&print_area_height, sizeof(float));
+			printer_config.print_area = QRectF(print_area_left, print_area_top, print_area_width, print_area_height);
+			
 			if (version >= 26)
 			{
-				stream->read((char*)&map->print_different_scale_enabled, sizeof(bool));
-				stream->read((char*)&map->print_different_scale, sizeof(int));
+				bool print_different_scale_enabled;
+				stream->read((char*)&print_different_scale_enabled, sizeof(bool));
+				stream->read((char*)&printer_config.options.scale, sizeof(int));
+				if (!print_different_scale_enabled)
+					printer_config.options.scale = map->getScaleDenominator();
 			}
-        }
-    }
+			map->setPrinterConfig(printer_config);
+		}
+	}
 	
     if (version >= 16)
 	{
@@ -191,17 +280,23 @@ void NativeFileImport::import(bool load_symbols_only) throw (FormatException)
 
     for (int i = 0; i < num_colors; ++i)
     {
-        MapColor* color = new MapColor();
+        int priority;
+        stream->read((char*)&priority, sizeof(int));
+        MapColor* color = new MapColor(priority);
 
-        stream->read((char*)&color->priority, sizeof(int));
-        stream->read((char*)&color->c, sizeof(float));
-        stream->read((char*)&color->m, sizeof(float));
-        stream->read((char*)&color->y, sizeof(float));
-        stream->read((char*)&color->k, sizeof(float));
-        stream->read((char*)&color->opacity, sizeof(float));
-        color->updateFromCMYK();
+        MapColorCmyk cmyk;
+        stream->read((char*)&cmyk.c, sizeof(float));
+        stream->read((char*)&cmyk.m, sizeof(float));
+        stream->read((char*)&cmyk.y, sizeof(float));
+        stream->read((char*)&cmyk.k, sizeof(float));
+        color->setCmyk(cmyk);
+        float opacity;
+        stream->read((char*)&opacity, sizeof(float));
+        color->setOpacity(opacity);
 
-        loadString(stream, color->name);
+        QString name;
+        loadString(stream, name);
+        color->setName(name);
 
         map->color_set->colors[i] = color;
     }
@@ -219,12 +314,12 @@ void NativeFileImport::import(bool load_symbols_only) throw (FormatException)
         Symbol* symbol = Symbol::getSymbolForType(static_cast<Symbol::Type>(symbol_type));
         if (!symbol)
         {
-            throw FormatException(QObject::tr("Error while loading a symbol with type %2.").arg(symbol_type));
+            throw FileFormatException(Importer::tr("Error while loading a symbol with type %2.").arg(symbol_type));
         }
 
         if (!symbol->load(stream, version, map))
         {
-            throw FormatException(QObject::tr("Error while loading a symbol."));
+            throw FileFormatException(Importer::tr("Error while loading a symbol."));
         }
         map->symbols[i] = symbol;
     }
@@ -287,7 +382,7 @@ void NativeFileImport::import(bool load_symbols_only) throw (FormatException)
 		{
 			if (!map->object_undo_manager.load(stream, version))
 			{
-				throw FormatException(QObject::tr("Error while loading undo steps."));
+				throw FileFormatException(Importer::tr("Error while loading undo steps."));
 			}
 		}
 
@@ -297,7 +392,7 @@ void NativeFileImport::import(bool load_symbols_only) throw (FormatException)
 		int num_parts;
 		if (stream->read((char*)&num_parts, sizeof(int)) < (int)sizeof(int))
 		{
-			throw FormatException(QObject::tr("Error while reading map part count."));
+			throw FileFormatException(Importer::tr("Error while reading map part count."));
 		}
 		delete map->parts[0];
 		map->parts.resize(num_parts);
@@ -307,7 +402,7 @@ void NativeFileImport::import(bool load_symbols_only) throw (FormatException)
 			MapPart* part = new MapPart("", map);
 			if (!part->load(stream, version, map))
 			{
-				throw FormatException(QObject::tr("Error while loading map part %2.").arg(i+1));
+				throw FileFormatException(Importer::tr("Error while loading map part %2.").arg(i+1));
 			}
 			map->parts[i] = part;
 		}
@@ -315,8 +410,9 @@ void NativeFileImport::import(bool load_symbols_only) throw (FormatException)
 }
 
 
+#ifdef MAPPER_ENABLE_NATIVE_EXPORTER
 
-
+// ### NativeFileImport ###
 
 NativeFileExport::NativeFileExport(QIODevice* stream, Map *map, MapView *view) : Exporter(stream, map, view)
 {
@@ -326,7 +422,7 @@ NativeFileExport::~NativeFileExport()
 {
 }
 
-void NativeFileExport::doExport() throw (FormatException)
+void NativeFileExport::doExport() throw (FileFormatException)
 {
     // Basic stuff
     stream->write(NativeFileFormat::magic_bytes, 4);
@@ -361,22 +457,25 @@ void NativeFileExport::doExport() throw (FormatException)
 	stream->write((const char*)&map->area_hatching_enabled, sizeof(bool));
 	stream->write((const char*)&map->baseline_view_enabled, sizeof(bool));
 
-	stream->write((const char*)&map->print_params_set, sizeof(bool));
-	if (map->print_params_set)
-	{
-		stream->write((const char*)&map->print_orientation, sizeof(int));
-		stream->write((const char*)&map->print_format, sizeof(int));
-		stream->write((const char*)&map->print_dpi, sizeof(float));
-		stream->write((const char*)&map->print_show_templates, sizeof(bool));
-		stream->write((const char*)&map->print_show_grid, sizeof(bool));
-		stream->write((const char*)&map->print_center, sizeof(bool));
-		stream->write((const char*)&map->print_area_left, sizeof(float));
-		stream->write((const char*)&map->print_area_top, sizeof(float));
-		stream->write((const char*)&map->print_area_width, sizeof(float));
-		stream->write((const char*)&map->print_area_height, sizeof(float));
-		stream->write((const char*)&map->print_different_scale_enabled, sizeof(bool));
-		stream->write((const char*)&map->print_different_scale, sizeof(int));
-	}
+	bool print_params_set = false;
+	stream->write((const char*)&print_params_set, sizeof(bool));
+// Native file format is obsolete and optional, print parameters no longer saved.
+// 	stream->write((const char*)&map->print_params_set, sizeof(bool));
+// 	if (map->print_params_set)
+// 	{
+// 		stream->write((const char*)&map->print_orientation, sizeof(int));
+// 		stream->write((const char*)&map->print_format, sizeof(int));
+// 		stream->write((const char*)&map->print_dpi, sizeof(float));
+// 		stream->write((const char*)&map->print_show_templates, sizeof(bool));
+// 		stream->write((const char*)&map->print_show_grid, sizeof(bool));
+// 		stream->write((const char*)&map->print_center, sizeof(bool));
+// 		stream->write((const char*)&map->print_area_left, sizeof(float));
+// 		stream->write((const char*)&map->print_area_top, sizeof(float));
+// 		stream->write((const char*)&map->print_area_width, sizeof(float));
+// 		stream->write((const char*)&map->print_area_height, sizeof(float));
+// 		stream->write((const char*)&map->print_different_scale_enabled, sizeof(bool));
+// 		stream->write((const char*)&map->print_different_scale, sizeof(int));
+// 	}
 
 	stream->write((const char*)&map->image_template_use_meters_per_pixel, sizeof(bool));
 	stream->write((const char*)&map->image_template_meters_per_pixel, sizeof(double));
@@ -390,15 +489,19 @@ void NativeFileExport::doExport() throw (FormatException)
 	for (int i = 0; i < num_colors; ++i)
 	{
 		MapColor* color = map->color_set->colors[i];
+		
+		int priority = color->getPriority();
+		stream->write((const char*)&priority, sizeof(int));
+		
+		const MapColorCmyk& cmyk = color->getCmyk();
+		stream->write((const char*)&cmyk.c, sizeof(float));
+		stream->write((const char*)&cmyk.m, sizeof(float));
+		stream->write((const char*)&cmyk.y, sizeof(float));
+		stream->write((const char*)&cmyk.k, sizeof(float));
+		float opacity = color->getOpacity();
+		stream->write((const char*)&opacity, sizeof(float));
 
-		stream->write((const char*)&color->priority, sizeof(int));
-		stream->write((const char*)&color->c, sizeof(float));
-		stream->write((const char*)&color->m, sizeof(float));
-		stream->write((const char*)&color->y, sizeof(float));
-		stream->write((const char*)&color->k, sizeof(float));
-		stream->write((const char*)&color->opacity, sizeof(float));
-
-		saveString(stream, color->name);
+		saveString(stream, color->getName());
 	}
 
     // Write symbols
@@ -476,3 +579,5 @@ void NativeFileExport::doExport() throw (FormatException)
         part->save(stream, map);
     }
 }
+
+#endif

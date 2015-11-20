@@ -1,18 +1,18 @@
 /*
- *    Copyright 2012 Thomas Schöps
- *    
+ *    Copyright 2012, 2013 Thomas Schöps
+ *
  *    This file is part of OpenOrienteering.
- * 
+ *
  *    OpenOrienteering is free software: you can redistribute it and/or modify
  *    it under the terms of the GNU General Public License as published by
  *    the Free Software Foundation, either version 3 of the License, or
  *    (at your option) any later version.
- * 
+ *
  *    OpenOrienteering is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
  *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *    GNU General Public License for more details.
- * 
+ *
  *    You should have received a copy of the GNU General Public License
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -243,47 +243,51 @@ void PathCoord::splitBezierCurve(MapCoordF c0, MapCoordF c1, MapCoordF c2, MapCo
 	o3 = MapCoordF(c12.getX() + (o4.getX() - c12.getX()) * p, c12.getY() + (o4.getY() - c12.getY()) * p);
 	o2 = MapCoordF(o1.getX() + (o3.getX() - o1.getX()) * p, o1.getY() + (o3.getY() - o1.getY()) * p);
 }
+
 MapCoordF PathCoord::calculateRightVector(const MapCoordVector& flags, const MapCoordVectorF& coords, bool path_closed, int i, float* scaling)
 {
-	bool ok;
+	bool ok_in, ok_out;
 	
-	if ((i == 0 && !path_closed)) // || (i > 0 && flags[i-1].isHolePoint()))
+	if (!path_closed)
 	{
-		if (scaling)
-			*scaling = 1;
-		MapCoordF right = calculateTangent(coords, i, false, ok);
-		right.perpRight();
-		right.normalize();
-		return right;
-	}
-	else if ((i == (int)coords.size() - 1 && !path_closed)) // || flags[i].isHolePoint())
-	{
-		if (scaling)
-			*scaling = 1;
-		MapCoordF right = calculateTangent(coords, i, true, ok);
-		right.perpRight();
-		right.normalize();
-		return right;
+		if (i == 0)
+		{
+			if (scaling)
+				*scaling = 1;
+			MapCoordF right = calculateOutgoingTangent(coords, path_closed, i, ok_out);
+			right.perpRight();
+			right.normalize();
+			return right;
+		}
+		else if (i == (int)coords.size() - 1)
+		{
+			if (scaling)
+				*scaling = 1;
+			MapCoordF right = calculateIncomingTangent(coords, path_closed, i, ok_in);
+			right.perpRight();
+			right.normalize();
+			return right;
+		}
 	}
 	
-	MapCoordF to_coord = calculateTangent(coords, i, true, ok);
-	if (!ok)
+	MapCoordF to_coord = calculateIncomingTangent(coords, path_closed, i, ok_in);
+	MapCoordF to_next = calculateOutgoingTangent(coords, path_closed, i, ok_out);
+	if (!ok_in)
 	{
-		if (path_closed)
-			to_coord = calculateTangent(coords, (int)coords.size() - 1, true, ok);
-		else
-			to_coord = calculateTangent(coords, i, false, ok);
+		to_next.normalize();
+		to_coord = to_next;
 	}
-	to_coord.normalize();
-	MapCoordF to_next = calculateTangent(coords, i, false, ok);
-	if (!ok)
+	else if (!ok_out)
 	{
-		if (path_closed)
-			to_next = calculateTangent(coords, 0, false, ok);
-		else
-			to_next = calculateTangent(coords, i, true, ok);
+		to_coord.normalize();
+		to_next = to_coord;
 	}
-	to_next.normalize();
+	else
+	{
+		to_coord.normalize();
+		to_next.normalize();
+	}
+	
 	MapCoordF right = MapCoordF(-to_coord.getY() - to_next.getY(), to_next.getX() + to_coord.getX());
 	right.normalize();
 	if (scaling)
@@ -291,6 +295,7 @@ MapCoordF PathCoord::calculateRightVector(const MapCoordVector& flags, const Map
 	
 	return right;
 }
+
 MapCoordF PathCoord::calculateTangent(const MapCoordVector& coords, int i, bool backward, bool& ok)
 {
 	// TODO: this is a copy of the code below, adjusted for MapCoord (without F) and handling of closed paths
@@ -306,7 +311,7 @@ MapCoordF PathCoord::calculateTangent(const MapCoordVector& coords, int i, bool 
 			if (coords[k].isClosePoint())
 				break;
 			tangent = MapCoordF(coords[i].xd() - coords[k].xd(), coords[i].yd() - coords[k].yd());
-			if (tangent.lengthSquared() > 0.01f*0.01f)
+			if (tangent.lengthSquared() > 0.001)
 				return tangent;
 		}
 		
@@ -321,7 +326,7 @@ MapCoordF PathCoord::calculateTangent(const MapCoordVector& coords, int i, bool 
 			for (; k > i; --k)
 			{
 				tangent = MapCoordF(coords[i].xd() - coords[k].xd(), coords[i].yd() - coords[k].yd());
-				if (tangent.lengthSquared() > 0.01f*0.01f)
+				if (tangent.lengthSquared() > 0.001)
 					return tangent;
 			}
 		}
@@ -336,7 +341,7 @@ MapCoordF PathCoord::calculateTangent(const MapCoordVector& coords, int i, bool 
 		for (; k < size; ++k)
 		{
 			tangent = MapCoordF(coords[k].xd() - coords[i].xd(), coords[k].yd() - coords[i].yd());
-			if (tangent.lengthSquared() > 0.01f*0.01f)
+			if (tangent.lengthSquared() > 0.001)
 				return tangent;
 			if (coords[k].isClosePoint())
 				break;
@@ -354,7 +359,7 @@ MapCoordF PathCoord::calculateTangent(const MapCoordVector& coords, int i, bool 
 			for (; k < i; ++k)
 			{
 				tangent = MapCoordF(coords[k].xd() - coords[i].xd(), coords[k].yd() - coords[i].yd());
-				if (tangent.lengthSquared() > 0.01f*0.01f)
+				if (tangent.lengthSquared() > 0.001)
 					return tangent;
 			}
 		}
@@ -363,38 +368,69 @@ MapCoordF PathCoord::calculateTangent(const MapCoordVector& coords, int i, bool 
 	}
 	return tangent;
 }
+
 MapCoordF PathCoord::calculateTangent(const MapCoordVectorF& coords, int i, bool backward, bool& ok)
 {
-	// TODO: use this for tangent calculation in LineSymbol or for objects in general
+	// TODO: use the subfunctions for tangent calculation in LineSymbol or for objects in general
 	
 	ok = true;
-	MapCoordF tangent;
 	if (backward)
+		return calculateIncomingTangent(coords, false, i, ok); // TODO: correctly set path_closed parameter
+	else
+		return calculateOutgoingTangent(coords, false, i, ok); // TODO: correctly set path_closed parameter
+}
+
+MapCoordF PathCoord::calculateIncomingTangent(const MapCoordVectorF& coords, bool path_closed, int i, bool& ok)
+{
+	ok = true;
+	MapCoordF tangent;
+	//assert(i >= 1);
+	for (int k = i-1; k >= 0; --k)
 	{
-		//assert(i >= 1);
-		int k = i-1;
-		for (; k >= 0; --k)
+		tangent = MapCoordF(coords[i].getX() - coords[k].getX(), coords[i].getY() - coords[k].getY());
+		if (tangent.lengthSquared() > 0.001)
+			return tangent;
+	}
+	
+	if (path_closed)
+	{
+		// Continue from end
+		for (int k = coords.size()-1; k > i; --k)
 		{
 			tangent = MapCoordF(coords[i].getX() - coords[k].getX(), coords[i].getY() - coords[k].getY());
-			if (tangent.lengthSquared() > 0.01f*0.01f)
+			if (tangent.lengthSquared() > 0.001)
 				return tangent;
 		}
-		
-		ok = false;
 	}
-	else
+	
+	ok = false;
+	return tangent;
+}
+
+MapCoordF PathCoord::calculateOutgoingTangent(const MapCoordVectorF& coords, bool path_closed, int i, bool& ok)
+{
+	ok = true;
+	MapCoordF tangent;
+	int size = (int)coords.size();
+	//assert(i < size - 1);
+	for (int k = i+1; k < size; ++k)
 	{
-		int size = (int)coords.size();
-		//assert(i < size - 1);
-		int k = i+1;
-		for (; k < size; ++k)
+		tangent = MapCoordF(coords[k].getX() - coords[i].getX(), coords[k].getY() - coords[i].getY());
+		if (tangent.lengthSquared() > 0.001)
+			return tangent;
+	}
+	
+	if (path_closed)
+	{
+		// Continue from start
+		for (int k = 0; k < i; ++k)
 		{
 			tangent = MapCoordF(coords[k].getX() - coords[i].getX(), coords[k].getY() - coords[i].getY());
-			if (tangent.lengthSquared() > 0.01f*0.01f)
+			if (tangent.lengthSquared() > 0.001)
 				return tangent;
 		}
-		
-		ok = false;
 	}
+	
+	ok = false;
 	return tangent;
 }

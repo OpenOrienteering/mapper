@@ -1,18 +1,18 @@
 /*
- *    Copyright 2012 Jan Dalheimer
- *    
+ *    Copyright 2012, 2013 Jan Dalheimer
+ *
  *    This file is part of OpenOrienteering.
- * 
+ *
  *    OpenOrienteering is free software: you can redistribute it and/or modify
  *    it under the terms of the GNU General Public License as published by
  *    the Free Software Foundation, either version 3 of the License, or
  *    (at your option) any later version.
- * 
+ *
  *    OpenOrienteering is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
  *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *    GNU General Public License for more details.
- * 
+ *
  *    You should have received a copy of the GNU General Public License
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -92,6 +92,10 @@ QString DXFParser::parse(){
 				parsePolyline(device, &paths);
 				currentSection = POLYLINE;
 			}
+			else if(line1 == "0" && line2 == "LWPOLYLINE")
+				parseLwPolyline(device, &paths);
+			else if(line1 == "0" && line2 == "SPLINE")
+				parseSpline(device, &paths);
 			else if(line1 == "0" && line2 == "CIRCLE")
 				parseCircle(device, &paths);
 			else if(line1 == "0" && line2 == "POINT")
@@ -202,6 +206,86 @@ void DXFParser::parsePolyline(QIODevice *d, QList<path_t> *p){
 			vertexMain.thickness = line2.toInt();
 	}while(true);
 	Q_UNUSED(p)
+}
+
+void DXFParser::parseLwPolyline(QIODevice *d, QList<path_t> *p){
+	QString line1;
+	QString line2;
+
+	path_t path;
+	INIT_PATH(path);
+	path.type = LINE;
+	QList<coordinate_t> coordinates;
+	coordinate_t coord;
+	bool haveX = false;
+	bool haveY = false;
+
+	do{
+		if(d->peek(3).trimmed() == "0")
+			break;
+		getLines(line1, line2, d);
+		PARSE_COMMON(path);
+		if(line1 == "39")
+			path.thickness = line2.toInt();
+		else if(line1 == "10"){
+			coord.x = line2.toDouble();
+			haveX = true;
+		}
+		else if(line1 == "20"){
+			coord.y = line2.toDouble();
+			haveY = true;
+		}
+		if(haveX && haveY){
+			coordinates.append(coord);
+			haveX = false;
+			haveY = false;
+		}
+	}while(1);
+	path.coords = coordinates;
+	p->append(path);
+}
+
+void DXFParser::parseSpline(QIODevice* d, QList<path_t>* p)
+{
+	QString line1;
+	QString line2;
+	
+	path_t path;
+	INIT_PATH(path);
+	path.type = SPLINE;
+	QList<coordinate_t> coordinates;
+	coordinate_t coord;
+	bool haveX = false;
+	bool haveY = false;
+	
+	// TODO: very basic implementation assuming cubic bezier splines.
+	do{
+		if(d->peek(3).trimmed() == "0")
+			break;
+		getLines(line1, line2, d);
+		PARSE_COMMON(path);
+		if (line1 == "71"){
+			if (line2 != "3"){
+				qWarning("DXFParser: non-cubic splines are not supported!");
+				return;
+			}
+		}
+		else if(line1 == "10"){
+			coord.x = line2.toDouble();
+			haveX = true;
+		}
+		else if(line1 == "20"){
+			coord.y = line2.toDouble();
+			haveY = true;
+		}
+		if(haveX && haveY){
+			coordinates.append(coord);
+			haveX = false;
+			haveY = false;
+		}
+	}while(1);
+	path.coords = coordinates;
+	p->append(path);
 }
 
 void DXFParser::parseCircle(QIODevice *d, QList<path_t> *p){

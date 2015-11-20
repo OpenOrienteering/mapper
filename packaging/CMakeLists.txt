@@ -1,5 +1,5 @@
 #
-#    Copyright 2012 Kai Pastor
+#    Copyright 2012, 2013 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -16,8 +16,22 @@
 #    You should have received a copy of the GNU General Public License
 #    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  
-if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
+message(STATUS "Configuring ${PROJECT_NAME} packaging")
 
+if(APPLE AND Mapper_USE_QT5)
+	# Set some Qt4 variables to reasonable values for Qt5, too.
+	find_package(Qt5Core REQUIRED QUIET)
+	if(NOT QT_LIBRARY_DIR)
+		get_target_property(_qt5core_lib Qt5::Core IMPORTED_LOCATION_RELEASE)
+		get_filename_component(QT_LIBRARY_DIR ${_qt5core_lib} PATH)
+	endif()
+	if(NOT QT_BINARY_DIR)
+		get_target_property(_qt5moc_bin Qt5::moc IMPORTED_LOCATION)
+		get_filename_component(QT_BINARY_DIR ${_qt5moc_bin} PATH)
+	endif()
+endif()
+
+if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 	# cf. http://www.cmake.org/cmake/help/cmake-2-8-docs.html#module:CPack
 	# cf. http://www.cmake.org/Wiki/CMake:CPackPackageGenerators
 	set(CPACK_PACKAGE_NAME "OpenOrienteering Mapper")
@@ -45,9 +59,10 @@ if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 	  "${PROJECT_BINARY_DIR}"
 	  "/docs/"
 	  "/[.]git/"
-	  "/3rd-party/clipper/"
+	  "/3rd-party/clipper/download/"
 	  "/3rd-party/proj/download/"
 	  "/3rd-party/qt4/download/"
+	  "/3rd-party/qt5/download/"
 	  ${CPACK_SOURCE_IGNORE_FILES})
 	
 	set(MAPPER_MACOS_SUBDIR "")
@@ -91,16 +106,16 @@ if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 		set(MAPPER_MACOS_SUBDIR "/Mapper.app/Contents/MacOS")
 		set(CPACK_GENERATOR_DEFAULT "DragNDrop")
 		set(CPACK_PACKAGE_EXECUTABLES "Mapper" "OpenOrienteering Mapper ${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}")
-		set(CPACK_PACKAGE_ICON "${CMAKE_CURRENT_SOURCE_DIR}/macosx/Mapper.icns")
+		set(CPACK_PACKAGE_ICON "${PROJECT_SOURCE_DIR}/images/mapper-icon/Mapper.icns")
 		set_target_properties(Mapper PROPERTIES
 		  MACOSX_BUNDLE_INFO_STRING          "${CPACK_PACKAGE_DESCRIPTION_SUMMARY}"
 		  MACOSX_BUNDLE_ICON_FILE            "Mapper.icns"
-		  MACOSX_BUNDLE_GUI_IDENTIFIER       "net.sourceforge.oorienteering.Mapper"
+		  MACOSX_BUNDLE_GUI_IDENTIFIER       "org.openorienteering.Mapper"
 		  MACOSX_BUNDLE_LONG_VERSION_STRING  "Mapper ${Mapper_VERSION_DISPLAY} for Mac OS X"
 		  MACOSX_BUNDLE_BUNDLE_NAME          "Mapper" # less than 16 characters long
 		  MACOSX_BUNDLE_SHORT_VERSION_STRING "${Mapper_VERSION_MAJOR}.${Mapper_VERSION_MINOR}.${Mapper_VERSION_PATCH}"
 		  MACOSX_BUNDLE_BUNDLE_VERSION       "${Mapper_VERSION_MAJOR}.${Mapper_VERSION_MINOR}.${Mapper_VERSION_PATCH}"
-		  MACOSX_BUNDLE_COPYRIGHT            "(C) 2012 OpenOrienteering developers"
+		  MACOSX_BUNDLE_COPYRIGHT            "(C) 2012, 2013 OpenOrienteering developers"
 
 		)
 		install(FILES "${CPACK_PACKAGE_ICON}"
@@ -129,7 +144,9 @@ if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 		set(CPACK_DEBIAN_PACKAGE_HOMEPAGE 
 		  "http://oorienteering.sourceforge.net/?cat=3")
 		set(CPACK_DEBIAN_PACKAGE_SHLIBDEPS "ON")
-		set(CPACK_DEBIAN_PACKAGE_RECOMMENDS "qt4-dev-tools")
+		if(NOT Mapper_USE_QT5)
+			set(CPACK_DEBIAN_PACKAGE_RECOMMENDS "qt4-dev-tools")
+		endif()
 		
 		unset(FAKEROOT_EXECUTABLE CACHE)
 		find_program(FAKEROOT_EXECUTABLE fakeroot)
@@ -140,19 +157,22 @@ if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 		endif(NOT FAKEROOT_EXECUTABLE)
 		mark_as_advanced(FAKEROOT_EXECUTABLE)
 		
-		# workaround for https://bugs.launchpad.net/ubuntu/+source/cmake/+bug/972419
-		if (CPACK_LSB_RELEASE STREQUAL "precise")
-			install(CODE "MESSAGE(WARNING 
-			  \"Ubuntu 12.04 (${CPACK_LSB_RELEASE}) has a broken DEB package generator \"
-			  \"(cf. https://bugs.launchpad.net/ubuntu/+source/cmake/+bug/972419).\n\"
-			  \"Run 'make package_repair' if the DEB package installation fails with \"
-			  \"the message 'corrupted filesystem tarfile'.\")")
- 		endif (CPACK_LSB_RELEASE STREQUAL "precise")
-		add_custom_target(package_repair
-		  COMMENT "Rebuilding DEB package"
-		  COMMAND dpkg-deb -R "${CPACK_PACKAGE_FILE_NAME}.deb" "${CPACK_PACKAGE_FILE_NAME}"
-		  COMMAND /usr/bin/fakeroot dpkg-deb -b "${CPACK_PACKAGE_FILE_NAME}"
-		  COMMAND rm -R "${CPACK_PACKAGE_FILE_NAME}")
+		message(WARNING 
+		  "The CPackDeb generator for creating deb packages has some issues. Run\n"
+		  "   make deb\n"
+		  "instead of running make package directly." )
+		add_custom_target(deb
+		  COMMENT "Building a DEB package"
+		  COMMAND sh -c 'if [ -d \"${CPACK_PACKAGE_FILE_NAME}\" ]; then rm -R \"${CPACK_PACKAGE_FILE_NAME}\" ";" fi'
+		  COMMAND sh -c 'mkdir \"${CPACK_PACKAGE_FILE_NAME}\" && chmod 0755 \"${CPACK_PACKAGE_FILE_NAME}\"'
+		  COMMAND sh -c '
+		    umask 022 && 
+		    "\$(MAKE)" package &&
+		    dpkg-deb -R \"${CPACK_PACKAGE_FILE_NAME}.deb\" \"${CPACK_PACKAGE_FILE_NAME}\" &&
+		    ldconfig -n \"${CPACK_PACKAGE_FILE_NAME}${MAPPER_LIBRARY_DESTINATION}/lib\" &&
+		    fakeroot dpkg-deb -b \"${CPACK_PACKAGE_FILE_NAME}\"'
+		  COMMAND rm -R "./${CPACK_PACKAGE_FILE_NAME}"
+		  WORKING_DIRECTORY "${PROJECT_BINARY_DIR}")
 	
 	endif()
 
@@ -163,172 +183,231 @@ if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 	mark_as_advanced(CPACK_GENERATOR CPACK_SOURCE_GENERATOR)
 
 	include(CPack)
-	
+else()
+	message(STATUS "CPack not found, target 'package' will not be available")
 endif(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 
 
-if(Mapper_PACKAGE_ASSISTANT)
-	message(STATUS "Checking for Qt Assistant")
-	find_program(QT_QTASSISTANT_EXECUTABLE assistant${CMAKE_EXECUTABLE_SUFFIX}
-	  DOC "The path of the Qt Assistant executable"
-	  HINTS ${QT_BINARY_DIR}
-	  NO_CMAKE_FIND_ROOT_PATH
-	  NO_DEFAULT_PATH)
-	if(NOT QT_QTASSISTANT_EXECUTABLE)
-		message(FATAL "Checking for Qt Assistant - not found")
-	endif()
-	message(STATUS "Checking for Qt Assistant - found: ${QT_QTASSISTANT_EXECUTABLE}")
+if(WIN32)
+	set(CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS_SKIP TRUE)
+endif()
+include(InstallRequiredSystemLibraries)
+
+
+# Cleanup obsolete cache items
+unset(MAPPER_LIBS CACHE)
+unset(MAPPER_QT_PLUGINS CACHE)
+unset(MAPPER_QT_TRANSLATIONS CACHE)
+
+unset(MAPPER_LIB_HINTS)
+unset(MAPPER_LIBS)
+
+if(TOOLCHAIN_SHARED_LIBS)
+	list(APPEND MAPPER_LIBS ${TOOLCHAIN_SHARED_LIBS})
+elseif(MINGW)
+	list(APPEND MAPPER_LIBS libgcc_s_dw2-1 mingwm10)
+	list(APPEND MAPPER_LIBS libgcc_s_sjlj-1 libwinpthread-1 libstdc++-6)
+endif()
+
+if(Mapper_PACKAGE_PROJ)
 	install(
-	  PROGRAMS ${QT_QTASSISTANT_EXECUTABLE}
-	  DESTINATION "${MAPPER_RUNTIME_DESTINATION}${MAPPER_MACOS_SUBDIR}")
+	  DIRECTORY "${PROJ_BINARY_DIR}/../share/proj"
+	  DESTINATION "${MAPPER_DATA_DESTINATION}")
 	if(WIN32)
-		install(
-		  FILES "${PROJECT_SOURCE_DIR}/3rd-party/qt4/qt.conf"
-		  DESTINATION "${MAPPER_RUNTIME_DESTINATION}")
+		set(PROJ_LIB_SUFFIX -0)
+	else()
+		set(PROJ_LIB_SUFFIX "")
 	endif()
-	mark_as_advanced(QT_QTASSISTANT_EXECUTABLE)
+	list(APPEND MAPPER_LIBS      proj${PROJ_LIB_SUFFIX})
+	list(APPEND MAPPER_LIB_HINTS ${PROJ_BINARY_DIR})
+endif()
+
+unset(MAPPER_QT_PLUGINS)
+unset(MAPPER_QT_TRANSLATIONS)
+if(Mapper_PACKAGE_QT)
+	set(QT_LIB_SUFFIX "")
+	list(APPEND MAPPER_LIB_HINTS ${QT_BINARY_DIR})
+	if(NOT Mapper_USE_QT5)
+		if(WIN32)
+			set(QT_LIB_SUFFIX 4)
+			install(
+			  FILES "${PROJECT_SOURCE_DIR}/3rd-party/qt4/qt.conf"
+			  DESTINATION "${MAPPER_RUNTIME_DESTINATION}")
+		endif(WIN32)
+		list(APPEND MAPPER_LIBS
+		  QtCore${QT_LIB_SUFFIX} QtGui${QT_LIB_SUFFIX}
+		  QtNetwork${QT_LIB_SUFFIX} QtXml${QT_LIB_SUFFIX}
+		)
+		set(MAPPER_QT_PLUGINS
+		  imageformats/qgif${QT_LIB_SUFFIX} imageformats/jpeg${QT_LIB_SUFFIX}
+		  imageformats/qmng${QT_LIB_SUFFIX} imageformats/qsvg${QT_LIB_SUFFIX}
+		  imageformats/qtga${QT_LIB_SUFFIX} imageformats/qtiff${QT_LIB_SUFFIX}
+		)
+		list(APPEND MAPPER_QT_TRANSLATIONS qt)
+	else()
+		if(WIN32)
+			install(
+			  FILES "${PROJECT_BINARY_DIR}/3rd-party/qt5/qt.conf"
+			  DESTINATION "${MAPPER_RUNTIME_DESTINATION}")
+		endif()
+		list(APPEND MAPPER_LIBS 
+		  Qt5Core Qt5Gui Qt5Widgets Qt5Svg
+		  Qt5PrintSupport Qt5Network Qt5Xml)
+		set(MAPPER_QT_PLUGINS
+		  accessible/qtaccessiblewidgets
+		  iconengines/qsvgicon
+		  imageformats/qgif imageformats/qico imageformats/qjpeg imageformats/qmng
+		  imageformats/qsvg imageformats/qtga imageformats/qtiff imageformats/qwbmp
+		  platforms/qminimal platforms/qwindows platforms/qcocoa platforms/qxcb
+		  printsupport/windowsprintersupport printsupport/cocoaprintersupport printsupport/cupsprintersupport
+		  CACHE INTERNAL "The plugins which need to be deployed"
+		)
+		# Cf. Qt5's qt_de.ts for dependencies - qt_de.ts would not load without them.
+		list(APPEND MAPPER_QT_TRANSLATIONS qt qtbase qtscript qtquick1 qtmultimedia qtxmlpatterns)
+	endif()
+endif()
+
+unset(FIXUP_ASSISTANT)
+if(Mapper_PACKAGE_ASSISTANT)
+	if(NOT QT_QTASSISTANT_EXECUTABLE)
+		message(FATAL_ERROR "QT_QTASSISTANT_EXECUTABLE: not found, "
+		  "but required by option Mapper_PACKAGE_ASSISTANT="
+		  ${Mapper_PACKAGE_ASSISTANT})
+	endif()
+	message(STATUS "Qt Assistant - found")
+	if(WIN32 OR APPLE)
+		install(
+		  PROGRAMS ${QT_QTASSISTANT_EXECUTABLE}
+		  DESTINATION "${MAPPER_RUNTIME_DESTINATION}${MAPPER_MACOS_SUBDIR}")
+	else()
+		install(
+		  PROGRAMS ${QT_QTASSISTANT_EXECUTABLE}
+		  DESTINATION "${MAPPER_LIBRARY_DESTINATION}/bin")
+		install(
+		  FILES "${PROJECT_BINARY_DIR}/3rd-party/qt5/qt.conf"
+		  DESTINATION "${MAPPER_LIBRARY_DESTINATION}/bin")
+	endif()
+	if(NOT Mapper_USE_QT5)
+		list(APPEND MAPPER_LIBS 
+		  QtHelp${QT_LIB_SUFFIX} QtCLucene${QT_LIB_SUFFIX}
+		  QtSql${QT_LIB_SUFFIX} QtWebKit${QT_LIB_SUFFIX}
+		)
+		list(APPEND MAPPER_QT_PLUGINS
+		  sqldrivers/qsqlite${QT_LIB_SUFFIX}
+		)
+	elseif(NOT APPLE)
+		list(APPEND MAPPER_LIBS 
+		  Qt5Help Qt5CLucene Qt5Sql
+		)
+	endif()
+	if(APPLE)
+		set(FIXUP_ASSISTANT "Mapper.app/Contents/MacOS/Assistant")
+	endif()
+	list(APPEND MAPPER_QT_TRANSLATIONS qt_help assistant)
 endif(Mapper_PACKAGE_ASSISTANT)
 
-
-if(Mapper_PACKAGE_LIBRARIES)
-	if(WIN32)
-		set(CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS_SKIP TRUE)
-	endif()
-	include(InstallRequiredSystemLibraries)
-
-	if(PROJ_BINARY_DIR)
-		install(
-		  DIRECTORY "${PROJ_BINARY_DIR}/../share/proj"
-		  DESTINATION "${MAPPER_DATA_DESTINATION}")
-	endif(PROJ_BINARY_DIR)
-
-	set(PROJ_LIB_SUFFIX "")
-	set(QT_LIB_SUFFIX "")
-	if (WIN32)
-		set(PROJ_LIB_SUFFIX -0)
-		set(QT_LIB_SUFFIX 4)
-	endif(WIN32)
-
-	set(MAPPER_LIBS proj${PROJ_LIB_SUFFIX} QtCore${QT_LIB_SUFFIX} QtGui${QT_LIB_SUFFIX} QtNetwork${QT_LIB_SUFFIX} QtXml${QT_LIB_SUFFIX}
-	  CACHE INTERNAL "The dynamic libraries which need to be deployed")
-	set(MAPPER_PLUGINS_IMAGEFORMATS qgif${QT_LIB_SUFFIX} qjpeg${QT_LIB_SUFFIX} qmng${QT_LIB_SUFFIX} qsvg${QT_LIB_SUFFIX} qtga${QT_LIB_SUFFIX} qtiff${QT_LIB_SUFFIX}
-	  CACHE INTERNAL "The image format plugins which need to be deployed")
-	set(MAPPER_PLUGINS_SQLDRIVERS ""
-	  CACHE INTERNAL "The sql driver plugins which need to be deployed")
-
-	if(Mapper_PACKAGE_ASSISTANT)
-		list(APPEND MAPPER_LIBS QtHelp${QT_LIB_SUFFIX} QtCLucene${QT_LIB_SUFFIX} QtSql${QT_LIB_SUFFIX} QtWebKit${QT_LIB_SUFFIX})
-		list(APPEND MAPPER_PLUGINS_SQLDRIVERS qsqlite${QT_LIB_SUFFIX})
-	endif(Mapper_PACKAGE_ASSISTANT)
-
-	if(TOOLCHAIN_SHARED_LIBS)
-		list(APPEND MAPPER_LIBS ${TOOLCHAIN_SHARED_LIBS})
-	elseif(MINGW)
-		list(APPEND MAPPER_LIBS libgcc_s_dw2-1 mingwm10)
-	endif()
-endif()
-
-if(Mapper_PACKAGE_LIBRARIES)
-	foreach(_mapper_lib ${MAPPER_LIBS})
-		unset(_mapper_lib_path CACHE)
-		find_library(_mapper_lib_path ${_mapper_lib}
-		  HINTS ${PROJ_BINARY_DIR} ${QT_BINARY_DIR}
-		  PATH_SUFFIXES ${TOOLCHAIN_PATH_SUFFIXES}
-		  NO_CMAKE_FIND_ROOT_PATH)
-		get_filename_component(_mapper_lib_ext "${_mapper_lib_path}" EXT)
-		if(_mapper_lib_ext STREQUAL ".dll")
-			message("   ${_mapper_lib} DLL - found")
-			list(APPEND CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS "${_mapper_lib_path}")
-		else()
-			message("   ${_mapper_lib} DLL - not found")
+# Install all libs
+foreach(_mapper_lib ${MAPPER_LIBS})
+	set(_mapper_lib_id "MAPPER_${_mapper_lib}_LIB")
+	find_library(${_mapper_lib_id} ${_mapper_lib}
+	  HINTS ${MAPPER_LIB_HINTS}
+	  PATH_SUFFIXES "../bin" ${TOOLCHAIN_PATH_SUFFIXES}
+	  NO_CMAKE_FIND_ROOT_PATH)
+	get_filename_component(_mapper_lib_ext "${${_mapper_lib_id}}" EXT)
+	if(_mapper_lib_ext STREQUAL ${CMAKE_SHARED_LIBRARY_SUFFIX})
+		message("   ${_mapper_lib} shared library - found")
+		list(APPEND CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS "${${_mapper_lib_id}}")
+		if(IS_SYMLINK "${${_mapper_lib_id}}")
+			get_filename_component(_mapper_lib_real "${${_mapper_lib_id}}" REALPATH)
+			list(APPEND CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS "${_mapper_lib_real}")
 		endif()
-	endforeach(_mapper_lib)
-	unset(_mapper_lib_path CACHE)
+	else()
+		message("   ${_mapper_lib} shared library - not found")
+	endif()
+endforeach(_mapper_lib)
+if(WIN32)
 	install(
 	  FILES ${CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS} 
-	  DESTINATION "${MAPPER_RUNTIME_DESTINATION}")
-	
-	unset(_bundle_plugins)
-
-	unset(MAPPER_QT_IMAGEFORMATS CACHE)
-	foreach(_qt_imageformat ${MAPPER_PLUGINS_IMAGEFORMATS})
-		unset(_qt_imageformat_path CACHE)
-		find_library(_qt_imageformat_path ${_qt_imageformat}
-		  HINTS ${QT_PLUGINS_DIR} NO_CMAKE_FIND_ROOT_PATH
-		  PATH_SUFFIXES imageformats)
-		if(_qt_imageformat_path)
-			message("   ${_qt_imageformat} DLL (plugin) - found")
-			list(APPEND MAPPER_QT_IMAGEFORMATS "${_qt_imageformat_path}")
-			list(APPEND _bundle_plugins "${_qt_imageformat_path}")
-		else()
-			message("   ${_qt_imageformat} DLL (plugin) - not found")
-		endif(_qt_imageformat_path)
-	endforeach(_qt_imageformat)
-	unset(_qt_imageformat_path CACHE)
-if(WIN32)
+	  DESTINATION "${MAPPER_LIBRARY_DESTINATION}")
+elseif(UNIX AND NOT APPLE) # Libs on OSX will be handled by fixup_bundle.
 	install(
-	  FILES ${MAPPER_QT_IMAGEFORMATS} 
-	  DESTINATION "${MAPPER_RUNTIME_DESTINATION}/plugins/imageformats")
-endif(WIN32)
-
-	unset(MAPPER_QT_SQLDRIVERS CACHE)
-	foreach(_qt_sqldriver ${MAPPER_PLUGINS_SQLDRIVERS})
-		unset(_qt_sqldriver_path CACHE)
-		find_library(_qt_sqldriver_path ${_qt_sqldriver}
-		  HINTS ${QT_PLUGINS_DIR} NO_CMAKE_FIND_ROOT_PATH
-		  PATH_SUFFIXES sqldrivers)
-		if(_qt_sqldriver_path)
-			message("   ${_qt_sqldriver} DLL (plugin) - found")
-			list(APPEND MAPPER_QT_SQLDRIVERS "${_qt_sqldriver_path}")
-			list(APPEND _bundle_plugins "${_qt_sqldriver_path}")
-		else()
-			message("   ${_qt_sqldriver} DLL (plugin) - not found")
-		endif(_qt_sqldriver_path)
-	endforeach(_qt_sqldriver)
-	unset(_qt_sqldriver_path CACHE)
-if(WIN32)
-	install(
-	  FILES ${MAPPER_QT_SQLDRIVERS} 
-	  DESTINATION "${MAPPER_RUNTIME_DESTINATION}/plugins/sqldrivers")
-endif(WIN32)
+	  FILES ${CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS} 
+	  DESTINATION "${MAPPER_LIBRARY_DESTINATION}/lib")
 endif()
 
-if(Mapper_PACKAGE_LIBRARIES AND APPLE)
-	# use updated DeployQt4.cmake from CMake git repository
-	include(${PROJECT_SOURCE_DIR}/cmake/DeployQt4.cmake)
-	install_qt4_executable(Mapper.app 
-	  "${MAPPER_PLUGINS_IMAGEFORMATS};${MAPPER_PLUGINS_SQLDRIVERS}"
-	  "Mapper.app/Contents/MacOS/assistant")
-endif()
-
-
-if(Mapper_PACKAGE_TRANSLATIONS)
-	message(STATUS "Checking for Qt translations")
-	unset(MAPPER_QT_TRANSLATIONS CACHE)
-	foreach(_mapper_trans ${Mapper_TRANS})
-		get_filename_component(_qt_translation ${_mapper_trans} NAME_WE)
-		unset(_found_translations)
-		string(REPLACE OpenOrienteering_ "" _mapper_lang ${_qt_translation})
-		string(REPLACE OpenOrienteering qt _qt_translation ${_qt_translation})
-		set(_qt_translation_path "${QT_TRANSLATIONS_DIR}/${_qt_translation}.qm")
-		if(EXISTS "${_qt_translation_path}")
-			list(APPEND MAPPER_QT_TRANSLATIONS "${_qt_translation_path}")
-			list(APPEND _found_translations ${_qt_translation})
+# Install all plugins
+unset(MAPPER_QT_PLUGINS_FOUND)
+foreach(_qt_plugin ${MAPPER_QT_PLUGINS})
+	get_filename_component(_qt_plugin_name "${_qt_plugin}" NAME)
+	get_filename_component(_qt_plugin_dir "${_qt_plugin}" PATH)
+	set(_qt_plugin_id "QT_${_qt_plugin_dir}-${_qt_plugin_name}_PLUGIN")
+	find_library(${_qt_plugin_id} ${_qt_plugin_name}
+	  HINTS ${QT_PLUGINS_DIR}
+	  PATH_SUFFIXES ${_qt_plugin_dir} plugins/${_qt_plugin_dir}
+	  NO_CMAKE_FIND_ROOT_PATH)
+	if(NOT ${${_qt_plugin_id}} MATCHES NOTFOUND)
+		message("   ${_qt_plugin} plugin library - found")
+		list(APPEND MAPPER_QT_PLUGINS_FOUND "${${_qt_plugin_id}}")
+		if(NOT APPLE)
+			install(
+			  FILES "${${_qt_plugin_id}}" 
+			  DESTINATION "${MAPPER_LIBRARY_DESTINATION}/plugins/${_qt_plugin_dir}")
 		endif()
-		if(Mapper_PACKAGE_ASSISTANT)
-			string(REPLACE qt qt_help _qt_translation ${_qt_translation})
+	else()
+		message("   ${_qt_plugin} plugin library - not found")
+	endif()
+endforeach(_qt_plugin)
+
+if(APPLE)
+	# This works for Qt5, too (at least given our Qt5Quirks).
+	if(CMAKE_VERSION VERSION_LESS "2.8.9")
+		# Use updated DeployQt4.cmake from CMake git repository
+		include(${PROJECT_SOURCE_DIR}/cmake/DeployQt4.cmake)
+	else()
+		include(DeployQt4)
+	endif()
+	install_qt4_executable(Mapper.app 
+	  "${MAPPER_QT_PLUGINS_FOUND}"
+	  ${FIXUP_ASSISTANT})
+elseif(UNIX)
+	find_program(LDCONFIG_COMMAND NAMES ldconfig)
+	if(${LDCONFIG_COMMAND} MATCHES NOTFOUND)
+		message(FATAL_ERROR "Could not find ldconfig command.")
+	endif()
+	# Add required symlinks.
+	install(CODE "execute_process(COMMAND \"${LDCONFIG_COMMAND}\" -n \"\$ENV{DESTDIR}${MAPPER_LIBRARY_DESTINATION}/lib\")")
+	# Create DEBIAN directory to make dpkg-shlibdeps happy.
+	install(CODE "file(MAKE_DIRECTORY \"\$ENV{DESTDIR}/DEBIAN\")") 
+endif()
+
+# Install Qt translations
+set(Mapper_PACKAGE_QT_ALL_TRANSLATIONS TRUE)
+if(Mapper_PACKAGE_QT AND Mapper_PACKAGE_QT_ALL_TRANSLATIONS)
+	# Simply install Qt translations for all languages
+	foreach(_qt_component ${MAPPER_QT_TRANSLATIONS})
+		install(
+		  DIRECTORY "${QT_TRANSLATIONS_DIR}/"
+		  DESTINATION "${MAPPER_DATA_DESTINATION}/translations"
+		  FILES_MATCHING PATTERN "${_qt_component}_*.qm")
+	endforeach()
+elseif(Mapper_PACKAGE_QT AND NOT Mapper_PACKAGE_QT_ALL_TRANSLATIONS)
+	# Install Qt translations only for existing Mapper translations
+	message(STATUS "Checking for Qt translations")
+	unset(_install_translations)
+	foreach(_mapper_trans ${Mapper_TRANS})
+		unset(_found_translations)
+		
+		get_filename_component(_qt_translation ${_mapper_trans} NAME_WE)
+		string(REPLACE OpenOrienteering_ "" _mapper_lang ${_qt_translation})
+		
+		foreach(_qt_component ${MAPPER_QT_TRANSLATIONS})
+			set(_qt_translation "${_qt_component}_${_mapper_lang}")
 			set(_qt_translation_path "${QT_TRANSLATIONS_DIR}/${_qt_translation}.qm")
 			if(EXISTS "${_qt_translation_path}")
-				list(APPEND MAPPER_QT_TRANSLATIONS "${_qt_translation_path}")
 				list(APPEND _found_translations ${_qt_translation})
+				list(APPEND _install_translations "${_qt_translation_path}")
 			endif()
-			string(REPLACE qt_help assistant _qt_translation ${_qt_translation})
-			set(_qt_translation_path "${QT_TRANSLATIONS_DIR}/${_qt_translation}.qm")
-			if(EXISTS "${_qt_translation_path}")
-				list(APPEND MAPPER_QT_TRANSLATIONS "${_qt_translation_path}")
-				list(APPEND _found_translations ${_qt_translation})
-			endif()
-		endif(Mapper_PACKAGE_ASSISTANT)
+		endforeach()
 		if (_found_translations)
 			message(STATUS "Checking for Qt translations - ${_mapper_lang} found: ${_found_translations}")
 		else()
@@ -336,30 +415,49 @@ if(Mapper_PACKAGE_TRANSLATIONS)
 		endif()
 	endforeach(_mapper_trans)
 	install(
-	  FILES ${MAPPER_QT_TRANSLATIONS} 
+	  FILES ${_install_translations} 
 	  DESTINATION "${MAPPER_DATA_DESTINATION}/translations")
-endif(Mapper_PACKAGE_TRANSLATIONS)
+endif()
 
 
-if(UNIX AND NOT APPLE AND NOT CYGWIN)
+if(UNIX AND NOT APPLE)
 	install(
 	  FILES "debian/Mapper.desktop"
 	  DESTINATION "share/applications")
-	install(
-	  FILES "debian/Mapper.xpm"
-	  DESTINATION "share/pixmaps")
-endif(UNIX AND NOT APPLE AND NOT CYGWIN)
+	# Cf. http://standards.freedesktop.org/icon-theme-spec/icon-theme-spec-latest.html#directory_layout
+	foreach(_size 16 24 32 48 96 128 256 512)
+		install(
+		  FILES "${PROJECT_SOURCE_DIR}/images/mapper-icon/Mapper-${_size}.png"
+		  DESTINATION "share/icons/hicolor/${_size}x${_size}/apps"
+		  RENAME Mapper.png
+		)
+	endforeach()
+endif()
 
+message(STATUS "Configuring ${PROJECT_NAME} packaging - done")
 
-# Custom source package target Mapper_Source
-
-set(Mapper_Source_FORMAT tgz CACHE STRING
-  "The archive format for source packages (see `git archive -l` for valid options)")
-
-find_program(GIT_EXECUTABLE git)
-if(GIT_EXECUTABLE)
-	configure_file(Mapper_Source.cmake.in Mapper_Source.cmake @ONLY)
-	add_custom_target(Mapper_Source
-	  COMMAND ${CMAKE_COMMAND} -P "${CMAKE_CURRENT_BINARY_DIR}/Mapper_Source.cmake"
+if(Mapper_USE_QT5 AND Mapper_BUILD_QT AND Mapper_PACKAGE_LINGUIST)
+	include(ExternalProject)
+	set(CMAKE_TOOLCHAIN_ARG "")
+	if(CMAKE_TOOLCHAIN_FILE)
+		set(CMAKE_TOOLCHAIN_ARG "-DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}")
+	endif()
+	ExternalProject_Add("Linguist package"
+	  DEPENDS Qt5
+	  SOURCE_DIR ${PROJECT_SOURCE_DIR}/packaging/linguist
+	  UPDATE_COMMAND ${CMAKE_COMMAND} -E remove <BINARY_DIR>/CMakeCache.txt
+	  CMAKE_ARGS
+	    ${CMAKE_TOOLCHAIN_ARG}
+	    -DCMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}
+	    -DQT5_DIR=${QT5_DIR}
+		-DQT_TRANSLATIONS_DIR=${QT_TRANSLATIONS_DIR}
+		-DQT_CONF=${PROJECT_BINARY_DIR}/3rd-party/qt5/qt.conf
+	  BUILD_COMMAND ${CMAKE_COMMAND} --build <BINARY_DIR> --target package
+	  INSTALL_COMMAND ""
+	)
+	ExternalProject_Get_Property("Linguist package" BINARY_DIR)
+	# Copy the linguist package to the build tree root during install/packaging
+	install(CODE
+	  "execute_process(COMMAND \${CMAKE_COMMAND} --build \"${BINARY_DIR}\" --target \"package-install\" -- \"DESTDIR=${PROJECT_BINARY_DIR}\")"
 	)
 endif()

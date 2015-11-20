@@ -1,18 +1,18 @@
 /*
- *    Copyright 2012 Thomas Schöps
- *    
+ *    Copyright 2012, 2013 Thomas Schöps
+ *
  *    This file is part of OpenOrienteering.
- * 
+ *
  *    OpenOrienteering is free software: you can redistribute it and/or modify
  *    it under the terms of the GNU General Public License as published by
  *    the Free Software Foundation, either version 3 of the License, or
  *    (at your option) any later version.
- * 
+ *
  *    OpenOrienteering is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
  *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *    GNU General Public License for more details.
- * 
+ *
  *    You should have received a copy of the GNU General Public License
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -26,10 +26,12 @@
 #include <QtWidgets>
 #endif
 
-#include "template.h"
-#include "map_editor.h"
 #include "map_widget.h"
+#include "template.h"
 #include "util.h"
+
+
+// ### PaintOnTemplateTool ###
 
 QCursor* PaintOnTemplateTool::cursor = NULL;
 int PaintOnTemplateTool::erase_width = 4;
@@ -40,20 +42,22 @@ PaintOnTemplateTool::PaintOnTemplateTool(MapEditorController* editor, QAction* t
 	dragging = false;
 	
 	this->temp = temp;
-	connect(editor->getMap(), SIGNAL(templateDeleted(int,Template*)), this, SLOT(templateDeleted(int,Template*)));
+	connect(map(), SIGNAL(templateDeleted(int,Template*)), this, SLOT(templateDeleted(int,Template*)));
 	
 	if (!cursor)
 		cursor = new QCursor(QPixmap(":/images/cursor-paint-on-template.png"), 1, 1);
 }
+
 PaintOnTemplateTool::~PaintOnTemplateTool()
 {
 	delete dock_widget;
 }
+
 void PaintOnTemplateTool::init()
 {
-	setStatusBarText(tr("<b>Left mouse click and drag</b> to paint, <b>Right mouse click and drag</b> to erase"));
+	setStatusBarText(tr("<b>Click and drag</b>: Paint. <b>Right click and drag</b>: Erase. "));
 	
-	dock_widget = new QDockWidget(tr("Color selection"), editor->getWindow());
+	dock_widget = new QDockWidget(tr("Color selection"), window());
 	dock_widget->setFeatures(dock_widget->features() & ~QDockWidget::DockWidgetClosable);
 	widget = new PaintOnTemplatePaletteWidget(false);
 	dock_widget->setWidget(widget);
@@ -61,15 +65,17 @@ void PaintOnTemplateTool::init()
 	// Show dock in floating state
 	dock_widget->setFloating(true);
 	dock_widget->show();
-	dock_widget->setGeometry(editor->getWindow()->geometry().left() + 40, editor->getWindow()->geometry().top() + 100, dock_widget->width(), dock_widget->height());
+	dock_widget->setGeometry(window()->geometry().left() + 40, window()->geometry().top() + 100, dock_widget->width(), dock_widget->height());
 	
 	connect(widget, SIGNAL(colorSelected(QColor)), this, SLOT(colorSelected(QColor)));
 }
+
 void PaintOnTemplateTool::templateDeleted(int pos, Template* temp)
 {
 	if (temp == this->temp)
-		editor->setTool(NULL);
+		deactivate();
 }
+
 void PaintOnTemplateTool::colorSelected(QColor color)
 {
 	paint_color = color;
@@ -88,6 +94,7 @@ bool PaintOnTemplateTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coor
 	else
 		return false;
 }
+
 bool PaintOnTemplateTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
 	if (dragging)
@@ -97,13 +104,14 @@ bool PaintOnTemplateTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord
 		coords.push_back(map_coord);
 		rectInclude(map_bbox, map_coord.toQPointF());
 		
-		editor->getMap()->setDrawingBoundingBox(map_bbox, widget->getMapView()->lengthToPixel((erasing ? (erase_width/2) : 1) * 1000 * scale * 1));
+		map()->setDrawingBoundingBox(map_bbox, widget->getMapView()->lengthToPixel((erasing ? (erase_width/2) : 1) * 1000 * scale * 1));
 		
 		return true;
 	}
 	else
 		return false;
 }
+
 bool PaintOnTemplateTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
 	if (dragging)
@@ -114,7 +122,7 @@ bool PaintOnTemplateTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_co
 		temp->drawOntoTemplate(&coords[0], coords.size(), erasing ? QColor(255, 255, 255, 0) : paint_color, erasing ? erase_width : 0, map_bbox);
 		
 		coords.clear();
-		editor->getMap()->clearDrawingBoundingBox();
+		map()->clearDrawingBoundingBox();
 		
 		dragging = false;
 		return true;
@@ -146,6 +154,7 @@ PaintOnTemplatePaletteWidget::PaintOnTemplatePaletteWidget(bool close_on_selecti
 	setAttribute(Qt::WA_OpaquePaintEvent);
 	setAutoFillBackground(false);
 }
+
 void PaintOnTemplatePaletteWidget::paintEvent(QPaintEvent* event)
 {
 	QPainter painter;
@@ -162,6 +171,7 @@ void PaintOnTemplatePaletteWidget::paintEvent(QPaintEvent* event)
 	
 	painter.end();
 }
+
 void PaintOnTemplatePaletteWidget::mousePressEvent(QMouseEvent* event)
 {
     int x = (int)(event->x() / (width() / (float)getNumFieldsX()));
@@ -177,10 +187,12 @@ int PaintOnTemplatePaletteWidget::getNumFieldsX()
 {
 	return 4;
 }
+
 int PaintOnTemplatePaletteWidget::getNumFieldsY()
 {
 	return 2;
 }
+
 QColor PaintOnTemplatePaletteWidget::getFieldColor(int x, int y)
 {
 	static QColor rows[2][4] = {{qRgb(255, 0, 0), qRgb(0, 255, 0), qRgb(0, 0, 255), qRgb(0, 0, 0)}, {qRgb(255, 255, 0), qRgb(219, 0, 216), qRgb(219, 180, 126), qRgb(255, 255, 255)}};
@@ -228,6 +240,7 @@ PaintOnTemplateSelectDialog::PaintOnTemplateSelectDialog(Map* map, QWidget* pare
 	template_list->setCurrentRow(0);
 	draw_button->setEnabled(selection != NULL);
 }
+
 void PaintOnTemplateSelectDialog::currentTemplateChanged(QListWidgetItem* current, QListWidgetItem* previous)
 {
 	draw_button->setEnabled(current != NULL);

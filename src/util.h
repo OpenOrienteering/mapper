@@ -1,18 +1,18 @@
 /*
- *    Copyright 2012 Thomas Schöps
- *    
+ *    Copyright 2012, 2013 Thomas Schöps
+ *
  *    This file is part of OpenOrienteering.
- * 
+ *
  *    OpenOrienteering is free software: you can redistribute it and/or modify
  *    it under the terms of the GNU General Public License as published by
  *    the Free Software Foundation, either version 3 of the License, or
  *    (at your option) any later version.
- * 
+ *
  *    OpenOrienteering is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
  *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *    GNU General Public License for more details.
- * 
+ *
  *    You should have received a copy of the GNU General Public License
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -33,6 +33,8 @@ QT_END_NAMESPACE
 
 #define BEZIER_KAPPA 0.5522847498
 #define LOG2 0.30102999566398119521373889472449
+// BEZIER_HANDLE_DISTANCE = BEZIER_KAPPA / sqrt(2)
+#define BEZIER_HANDLE_DISTANCE 0.390524291729
 
 /// Double validator for line edit widgets
 class DoubleValidator : public QDoubleValidator
@@ -52,6 +54,12 @@ inline QRectF infinteRectF()
 	return QRectF(-10e10, -10e10, 20e10, 20e10);
 }
 
+/// Like fmod(x, y), but works correctly for negative x
+inline double fmod_pos(double x, double y)
+{
+	return x - y * floor(x / y);
+}
+
 /// Enlarges the rect to include the given point
 void rectInclude(QRectF& rect, MapCoordF point); // does not work if rect is invalid
 void rectInclude(QRectF& rect, QPointF point); // does not work if rect is invalid
@@ -63,15 +71,32 @@ void rectIncludeSafe(QRectF& rect, const QRectF& other_rect); // checks if rect 
 /// Checks for line - rect intersection
 bool lineIntersectsRect(const QRectF& rect, const QPointF& p1, const QPointF& p2);
 
+/// Sets ok to false in case of an error (if the line is actually a point, or if the test point is not on the line).
+/// x0, y0: line start
+/// dx, dy: vector from line start to line end
+/// x, y: suspected point on the line to calculate the parameter for so x0 + parameter * dx = x (and the same for y).
+double parameterOfPointOnLine(double x0, double y0, double dx, double dy, double x, double y, bool& ok);
+
+/// Checks if the point is on the segment defined by the given start and end coordinates.
+bool isPointOnSegment(const MapCoordF& seg_start, const MapCoordF& seg_end, const MapCoordF& point);
+
 /// Helper functions to save a string to a file and load it again
 void saveString(QIODevice* file, const QString& str);
 void loadString(QIODevice* file, QString& str);
 
-#endif
-
 // TODO: Refactor: put remaining stuff into this namespace, too
 namespace Util
 {
+	/**
+	 *  Show the manual in Qt assistant.
+	 *  @param filename the name of the help html file
+	 *  @param fragment the fragment in the specified file to jump to
+	 */
+	void showHelp(QWidget* dialog_parent, QString filename = "index.html", QString fragment = "");
+	
+	/// Converts the given help file name to a string which can be used to access it inside QtHelp.
+	QString makeHelpUrl(QString filename, QString fragment);
+	
 	/// See Util::gridOperation(). This function handles only parallel lines.
 	template<typename T> void hatchingOperation(QRectF extent, double spacing, double offset, double rotation, T& processor)
 	{
@@ -192,3 +217,5 @@ namespace Util
 		hatchingOperation(extent, vert_spacing, vert_offset, rotation + M_PI / 2, processor);
 	}
 }
+
+#endif
