@@ -41,13 +41,12 @@ class Map;
 class MapView;
 class MapWidget;
 
-/// Transformation parameters for non-georeferenced templates
+/** Transformation parameters for non-georeferenced templates */
 class TemplateTransform
 {
 public:
 	TemplateTransform();
 	
-	void save(QIODevice* file);
 	void load(QIODevice* file);
 	
 	void save(QXmlStreamWriter& xml, const QString role);
@@ -63,7 +62,7 @@ public:
 	double template_rotation;
 };
 
-/// Base class for templates
+/** Abstract base class for templates. */
 class Template : public QObject
 {
 Q_OBJECT
@@ -96,7 +95,6 @@ public:
 	
 	/// Saves template parameters such as filename, transformation, adjustment, etc. and
 	/// type-specific parameters (e.g. filtering mode for images)
-	void saveTemplateConfiguration(QIODevice* stream);
 	void saveTemplateConfiguration(QXmlStreamWriter& xml, bool open);
 	
 	/// Loads template parameters, see saveTemplateConfiguration(), and returns true if successful
@@ -141,7 +139,7 @@ public:
 	/// If the implementation returns false, loading the template is aborted.
 	/// NOTE: derived classes should set is_georeferenced either here or
 	/// in postLoadConfiguration(). By default templates are loaded as non-georeferenced.
-	virtual bool preLoadConfiguration(QWidget* dialog_parent) {return true;}
+	virtual bool preLoadConfiguration(QWidget* dialog_parent);
 	
 	/// Loads the template file. Can be called if the template state is Invalid or Unloaded.
 	/// Must not be called if the template file is already loaded.
@@ -155,7 +153,7 @@ public:
 	/// If the implementation returns false, loading the template is aborted.
 	/// By setting out_center_in_view, the implementation can decide if the template should
 	/// be centered in the active view if it is a non-georeferenced template (on by default).
-	virtual bool postLoadConfiguration(QWidget* dialog_parent, bool& out_center_in_view) {return true;}
+	virtual bool postLoadConfiguration(QWidget* dialog_parent, bool& out_center_in_view);
 	
 	/// Unloads the template file. Can be called if the template state is Loaded.
 	/// Must not be called if the template file is already unloaded, or invalid.
@@ -188,10 +186,16 @@ public:
 	/// Must return if freehand drawing onto the template is possible
 	virtual bool canBeDrawnOnto() {return false;}
 	
-	/// Draws onto the template. coords is an array of points with which the drawn line is
-	/// defined and must contain at least 2 points.
+	/// Draws onto the template. coords is an array of points with which the
+	/// drawn line is defined and must contain at least 2 points.
 	/// map_bbox can be an invalid rect, then the method will calculate it itself.
+	/// This only works for templates for which canBeDrawnOnto() returns true.
 	void drawOntoTemplate(MapCoordF* coords, int num_coords, QColor color, float width, QRectF map_bbox);
+	
+	/// Triggers an undo or redo action for template freehand drawing.
+	/// The type of action is determined by the parameter.
+	/// This only works for templates for which canBeDrawnOnto() returns true.
+	virtual void drawOntoTemplateUndo(bool redo);
 	
 	
 	// Transformation related methods for non-georeferenced templates only
@@ -333,14 +337,11 @@ protected:
 	/// This includes the content of the template file if it is loaded.
 	virtual Template* duplicateImpl() = 0;
 	
-	/// Derived classes must save type specific template parameters here
-	virtual void saveTypeSpecificTemplateConfiguration(QIODevice* stream) {}
-	
 	/// Derived classes must load type specific template parameters here and return true if successful
-	virtual bool loadTypeSpecificTemplateConfiguration(QIODevice* stream, int version) {return true;}
+	virtual bool loadTypeSpecificTemplateConfiguration(QIODevice* stream, int version);
 	
 	/// Derived classes must save type specific template parameters here
-	virtual void saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml) {}
+	virtual void saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml);
 	
 	/// Derived classes must load type specific template parameters here and return false
 	/// if a critical error ocurrs and loading must be aborted.
@@ -358,7 +359,7 @@ protected:
 	
 	
 	/// Must be implemented to draw the polyline given by the points onto the template if canBeDrawnOnto() returns true
-	virtual void drawOntoTemplateImpl(MapCoordF* coords, int num_coords, QColor color, float width) {}
+	virtual void drawOntoTemplateImpl(MapCoordF* coords, int num_coords, QColor color, float width);
 	
 	
 	/// Must be called after direct changes to transform or other_transform

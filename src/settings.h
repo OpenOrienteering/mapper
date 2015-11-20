@@ -1,5 +1,6 @@
 /*
- *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2012 Thomas Schöps
+ *    Copyright 2013, 2014 Thomas Schöps, Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -38,23 +39,28 @@ public:
 	{
 		MapDisplay_Antialiasing = 0,
 		MapDisplay_TextAntialiasing,
-		MapEditor_ClickTolerance,
-		MapEditor_SnapDistance,
+		MapEditor_ClickToleranceMM,
+		MapEditor_SnapDistanceMM,
 		MapEditor_FixedAngleStepping,
 		MapEditor_ChangeSymbolWhenSelecting,
 		MapEditor_ZoomOutAwayFromCursor,
 		MapEditor_DrawLastPointOnRightClick,
 		EditTool_DeleteBezierPointAction,
 		EditTool_DeleteBezierPointActionAlternative,
-		RectangleTool_HelperCrossRadius,
+		RectangleTool_HelperCrossRadiusMM,
 		RectangleTool_PreviewLineWidth,
 		Templates_KeepSettingsOfClosed,
+		SymbolWidget_IconSizeMM,
+		ActionGridBar_ButtonSizeMM,
+		General_AutoSaveInterval,
 		General_Language,
+		General_PixelsPerInch,
 		General_RecentFilesList,
 		General_TranslationFile,
 		General_OpenMRUFile,
 		General_Local8BitEncoding,
 		General_NewOcd8Implementation,
+		General_StartDragDistance,
 		HomeScreen_TipsVisible,
 		HomeScreen_CurrentTip,
 		END_OF_SETTINGSENUM /* Don't add items below this line. */
@@ -99,6 +105,14 @@ public:
 		return instance;
 	}
 	
+	// Methods related to specific settings
+	
+	int getSymbolWidgetIconSizePx();
+	float getMapEditorClickTolerancePx();
+	float getMapEditorSnapDistancePx();
+	float getRectangleToolHelperCrossRadiusPx();
+	int getStartDragDistancePx();
+	
 signals:
 	void settingsChanged();
 	
@@ -107,8 +121,9 @@ private:
 	void registerSetting(SettingsEnum id, const QString& path, const QVariant& default_value);
 	
 	/** Migrates a value from an old key to a new key.
-	 *  Uses the given or a newly constructed QSettings object. */
-	void migrateValue(const QString& old_key, SettingsEnum new_setting, QSettings& settings) const;
+	 *  Uses the given or a newly constructed QSettings object.
+	 *  Returns true if the value was migrated. */
+	bool migrateValue(const QString& old_key, SettingsEnum new_setting, QSettings& settings) const;
 	
 	QHash<SettingsEnum, QVariant> settings_cache;
 	QHash<SettingsEnum, QString> setting_paths;

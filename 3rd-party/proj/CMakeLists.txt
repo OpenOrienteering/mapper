@@ -1,5 +1,5 @@
 #
-#    Copyright 2012 Kai Pastor
+#    Copyright 2012, 2013 Kai Pastor
 #
 #    This file is part of OpenOrienteering.
 #
@@ -19,7 +19,7 @@
 
 project(Proj)
 
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 2.8.3)
 
 if(${CMAKE_CURRENT_BINARY_DIR} MATCHES " ")
 	# Note: autotools don't allow whitespace and some other special characters.
@@ -28,19 +28,41 @@ endif()
 
 # Configuration options
 
-if(NOT PROJ_VERSION)
-	set(PROJ_VERSION 4.8.0 CACHE STRING
-	  "Version number of the PROJ.4 library, minumum recommended value: 4.8.0"
-	  FORCE)
-endif(NOT PROJ_VERSION)
+set(PROJ_VERSION_DEFAULT 4.8.0)
+set(PROJ_VERSION ${PROJ_VERSION_DEFAULT} CACHE STRING
+  "Version number of the Proj library, recommended value: ${PROJ_VERSION_DEFAULT}")
 mark_as_advanced(PROJ_VERSION)
 
+message(STATUS "Configuring Proj library ${PROJ_VERSION}")
+
+if (NOT ${PROJ_VERSION} STREQUAL ${PROJ_VERSION_DEFAULT})
+	message(WARNING
+	  "The Proj library version is different from the current recommended version "
+	  "(${PROJ_VERSION} vs. ${PROJ_VERSION_DEFAULT}).")
+endif()
+
+set(PROJ_MD5SUMS
+  4.8.0:d815838c92a29179298c126effbb1537
+  4.9.0b1:5c0fd7deed207b9f97030730ce036ec7
+  4.9.0b2:d43fd87b991831faaf7e6fb5570b86aa
+)
+foreach(line ${PROJ_MD5SUMS})
+	if(${line} MATCHES "^${PROJ_VERSION}:")
+		string(REPLACE "${PROJ_VERSION}:" "" PROJ_MD5 ${line})
+		break()
+	endif()
+endforeach()
 if(NOT PROJ_MD5)
-	set(PROJ_MD5 d815838c92a29179298c126effbb1537 CACHE STRING
-	  "MD5 checksum of the PROJ.4 library TGZ archive"
-	  FORCE)
-endif(NOT PROJ_MD5)
-mark_as_advanced(PROJ_MD5)
+	message(FATAL_ERROR
+	  "Unknown MD5 sum for Proj library ${PROJ_VERSION}. "
+	  "Edit ${PROJECT_SOURCE_DIR}/CMakeLists.txt, "
+	  "or specify the correct PROJ_MD5 value at the command line.")
+endif()
+
+set(PROJ_LICENSE_FILE "${PROJECT_SOURCE_DIR}/COPYING")
+if(EXISTS "${PROJ_LICENSE_FILE}.${PROJ_VERSION}")
+	set(PROJ_LICENSE_FILE "${PROJ_LICENSE_FILE}.${PROJ_VERSION}")
+endif()
 
 find_program(SH_PROGRAM sh
   PATHS
@@ -60,20 +82,17 @@ else()
 	set(PROJ_MAKE_COMMAND "${SH_PROGRAM}" -l -e ${CMAKE_CURRENT_BINARY_DIR}/proj-make)
 endif()
 
-# Build definition
-
-if(CMAKE_VERSION VERSION_GREATER 2.8.1)
-	set(_ep_proj_options URL_MD5 ${PROJ_MD5} TIMEOUT 30)
-else()
-	set(_ep_proj_options)
-endif()
+# External project definition
 
 include(ExternalProject)
 ExternalProject_Add(
   Proj
   DOWNLOAD_DIR ${PROJECT_SOURCE_DIR}/download
   URL "http://download.osgeo.org/proj/proj-${PROJ_VERSION}.tar.gz"
-  ${_ep_proj_options}
+  URL_MD5 ${PROJ_MD5}
+  # Check that the license hasn't changed.
+  UPDATE_COMMAND ${CMAKE_COMMAND} -E compare_files <SOURCE_DIR>/COPYING "${PROJ_LICENSE_FILE}"
+  PATCH_COMMAND "${SH_PROGRAM}" -l -e ${CMAKE_CURRENT_BINARY_DIR}/proj-patch
   CONFIGURE_COMMAND "${SH_PROGRAM}" -l -e ${CMAKE_CURRENT_BINARY_DIR}/proj-config
   BUILD_COMMAND ${PROJ_MAKE_COMMAND}
   INSTALL_COMMAND ${PROJ_MAKE_COMMAND} install
@@ -84,11 +103,18 @@ ExternalProject_Get_Property(Proj BINARY_DIR)
 ExternalProject_Get_Property(Proj INSTALL_DIR)
 
 if(CMAKE_CROSSCOMPILING AND GNU_SYSTEM_NAME)
-	set(_proj_cfg_cross "--build=$(sh ${SOURCE_DIR}/config.guess) --host=${GNU_SYSTEM_NAME} --target=${GNU_SYSTEM_NAME}")
+	set(_proj_cfg_cross "--build=$(sh ${SOURCE_DIR}/config.guess) --host=${GNU_SYSTEM_NAME}")
+	get_directory_property(_include_dirs INCLUDE_DIRECTORIES)
+	unset(_cpp_flags)
+	foreach(_dir ${_include_dirs})
+		set(_cpp_flags "${_cpp_flags} -I${_dir}")
+	endforeach()
+	set(_proj_cfg_cross "${_proj_cfg_cross} CPPFLAGS=\"${_cpp_flags}\"")
 else(CMAKE_CROSSCOMPILING AND GNU_SYSTEM_NAME)
 	unset(_proj_cfg_cross)
 endif(CMAKE_CROSSCOMPILING AND GNU_SYSTEM_NAME)
 
+configure_file(proj-patch.in ${CMAKE_CURRENT_BINARY_DIR}/proj-patch)
 configure_file(proj-config.in ${CMAKE_CURRENT_BINARY_DIR}/proj-config)
 configure_file(proj-make.in ${CMAKE_CURRENT_BINARY_DIR}/proj-make)
 configure_file(proj-postinstall.in ${CMAKE_CURRENT_BINARY_DIR}/proj-postinstall)
@@ -120,4 +146,7 @@ endif()
 
 # Don't let Xcode re-root the install
 set_target_properties(Proj PROPERTIES XCODE_ATTRIBUTE_INSTALL_ROOT "")
+
+
+message(STATUS "Configuring Proj library ${PROJ_VERSION} - done")
 

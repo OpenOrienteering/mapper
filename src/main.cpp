@@ -18,7 +18,6 @@
  */
 
 
-#include "../3rd-party/qtsingleapplication/src/qtsingleapplication.h"
 #include <QDebug>
 #include <QLibraryInfo>
 #include <QLocale>
@@ -29,22 +28,25 @@
 
 #include <mapper_config.h>
 
+#if defined(QT_NETWORK_LIB)
+#define MAPPER_USE_QTSINGLEAPPLICATION 1
+#include <QtSingleApplication>
+#else
+#define MAPPER_USE_QTSINGLEAPPLICATION 0
+#include <QApplication>
+#endif
+
 #include "global.h"
 #include "gui/home_screen_controller.h"
 #include "gui/main_window.h"
 #include "gui/widgets/mapper_proxystyle.h"
 #include "settings.h"
 #include "util_translation.h"
+#include "util/recording_translator.h"
 
 int main(int argc, char** argv)
 {
-
-#if QT_VERSION < 0x050000
-	// Set the default graphics system to raster. This can be overwritten by the command line option "-graphicssystem".
-	// This must be called before the QApplication constructor is called!
-	QApplication::setGraphicsSystem("raster");
-#endif
-	
+#if MAPPER_USE_QTSINGLEAPPLICATION
 	// Create single-instance application.
 	// Use "oo-mapper" instead of the executable as identifier, in case we launch from different paths.
 	QtSingleApplication qapp("oo-mapper", argc, argv);
@@ -53,12 +55,16 @@ int main(int argc, char** argv)
 		qapp.sendMessage((argc > 1) ? argv[1] : "");
 		return 0;
 	}
+#else
+	QApplication qapp(argc, argv);
+#endif
 	
 	// Load resources
 #ifdef MAPPER_USE_QT_CONF_QRC
 	Q_INIT_RESOURCE(qt);
 #endif
 	Q_INIT_RESOURCE(resources);
+	Q_INIT_RESOURCE(licensing);
 	
 	// QSettings on OS X benefits from using an internet domain here.
 	QCoreApplication::setOrganizationName("OpenOrienteering.org");
@@ -79,9 +85,17 @@ int main(int argc, char** argv)
 	QString translation_file = settings.getSetting(Settings::General_TranslationFile).toString();
 	TranslationUtil translation(lang, translation_file);
 	QLocale::setDefault(translation.getLocale());
+#if defined(Mapper_DEBUG_TRANSLATIONS)
+	if (!translation.getAppTranslator().isEmpty())
+	{
+		// Debug translation only if there is a Mapper translation, i.e. not for English.
+		qapp.installTranslator(new RecordingTranslator());
+	}
+#endif
 	qapp.installTranslator(&translation.getQtTranslator());
 	qapp.installTranslator(&translation.getAppTranslator());
 	
+	// Initialize static things like the file format registry.
 	doStaticInitializations();
 	
 	// Create first main window
@@ -90,14 +104,12 @@ int main(int argc, char** argv)
 	first_window.setController(new HomeScreenController());
 	
 	QProxyStyle* style = new MapperProxyStyle();
-#if QT_VERSION >= 0x050000
 	if (QGuiApplication::platformName() == QLatin1String("xcb"))
 	{
 		// Use the modern 'fusion' style instead of the 
 		// default "windows" style on X11.
 		style->setBaseStyle(QStyleFactory::create("fusion"));
 	}
-#endif
 	QApplication::setStyle(style);
 	QApplication::setPalette(QApplication::style()->standardPalette());
 	
@@ -126,9 +138,11 @@ int main(int argc, char** argv)
 			first_window.openPathLater(files[0]);
 	}
 	
+#if MAPPER_USE_QTSINGLEAPPLICATION
 	// If we need to respond to a second app launch, do so, but also accept a file open request.
 	qapp.setActivationWindow(&first_window);
 	QObject::connect(&qapp, SIGNAL(messageReceived(const QString&)), &first_window, SLOT(openPath(const QString &)));
+#endif
 	
 	// Let application run
 	first_window.show();

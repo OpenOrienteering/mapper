@@ -21,17 +21,26 @@
 #ifndef _OPENORIENTEERING_TOOL_CUT_HOLE_H_
 #define _OPENORIENTEERING_TOOL_CUT_HOLE_H_
 
-#include "object.h"
 #include "tool.h"
 
+class PathObject;
 class DrawLineAndAreaTool;
 
-/// Tool to cut holes into area objects
+/** Tool to cut holes into area objects */
 class CutHoleTool : public MapEditorTool
 {
 Q_OBJECT
 public:
-	CutHoleTool(MapEditorController* editor, QAction* tool_button, PathObject::PartType hole_type);
+	/** Enum of different hole types. The CutHoleTool can be used with each of
+	 *  the corresponding drawing tools. */
+	enum HoleType
+	{
+		Path = 0,
+		Circle = 1,
+		Rect = 2
+	};
+	
+	CutHoleTool(MapEditorController* editor, QAction* tool_button, CutHoleTool::HoleType hole_type);
 	virtual ~CutHoleTool();
 	
 	virtual void init();
@@ -62,7 +71,7 @@ protected:
 	void updateDirtyRect(const QRectF* path_rect = NULL);
 	void updateDragging(MapCoordF cursor_pos_map, MapWidget* widget);
 	
-	PathObject::PartType hole_type;
+	CutHoleTool::HoleType hole_type;
 	DrawLineAndAreaTool* path_tool;
 	MapWidget* edit_widget;
 };

@@ -26,7 +26,7 @@
 
 
 /**
- * Tests the Georeferencing class.
+ * @test Tests the Georeferencing class.
  */
 class GeoreferencingTest: public QObject
 {

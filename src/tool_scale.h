@@ -31,7 +31,7 @@ class Renderable;
 class MapRenderables;
 typedef std::vector<Renderable*> RenderableVector;
 
-/// Tool to scale objects
+/** Tool to scale objects. */
 class ScaleTool : public MapEditorTool
 {
 Q_OBJECT
@@ -55,6 +55,8 @@ protected slots:
 protected:
 	void updateStatusText();
 	void updatePreviewObjects();
+	
+	/** Updates the preview object to the cursor pos (while dragging). */
 	void updateDragging(const MapCoordF cursor_pos_map);
 	
 	static QCursor* cursor;

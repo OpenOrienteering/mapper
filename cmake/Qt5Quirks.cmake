@@ -16,18 +16,6 @@
 #    You should have received a copy of the GNU General Public License
 #    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  
-macro(QT4_WRAP_CPP)
-	qt5_wrap_cpp(${ARGV})
-endmacro()
-
-macro(QT4_ADD_RESOURCES)
-	qt5_add_resources(${ARGV})
-endmacro()
-
-macro(QT4_ADD_TRANSLATION)
-	qt5_add_translation(${ARGV})
-endmacro()
-
 if(CMAKE_CROSSCOMPILING)
 # Cross-compilation: Qt 5.0.0's cmake modules point to the target tools,
 # but we need the hosts tools.

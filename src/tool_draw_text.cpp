@@ -22,17 +22,14 @@
 
 #include <QApplication>
 #include <QClipboard>
-#if QT_VERSION < 0x050000
-#include <QtGui>
-#else
 #include <QtWidgets>
-#endif
 
 #include "map.h"
 #include "map_undo.h"
 #include "map_widget.h"
 #include "object_text.h"
 #include "renderable.h"
+#include "settings.h"
 #include "symbol.h"
 #include "symbol_dock_widget.h"
 #include "symbol_text.h"
@@ -109,7 +106,7 @@ bool DrawTextTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWi
 	}
 	else // if (mouse_down)
 	{
-		if (!dragging && (event->pos() - click_pos).manhattanLength() >= QApplication::startDragDistance())
+		if (!dragging && (event->pos() - click_pos).manhattanLength() >= Settings::getInstance().getStartDragDistancePx())
 		{
 			// Start dragging
 			dragging = true;
@@ -164,6 +161,8 @@ bool DrawTextTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, Ma
 
 void DrawTextTool::leaveEvent(QEvent* event)
 {
+	Q_UNUSED(event);
+	
 	if (!text_editor)
 		map()->clearDrawingBoundingBox();
 }
@@ -255,12 +254,17 @@ void DrawTextTool::selectedSymbolsChanged()
 
 void DrawTextTool::symbolChanged(int pos, Symbol* new_symbol, Symbol* old_symbol)
 {
+	Q_UNUSED(pos);
+	Q_UNUSED(new_symbol);
+	
 	if (old_symbol == drawing_symbol)
 		selectedSymbolsChanged();
 }
 
 void DrawTextTool::symbolDeleted(int pos, Symbol* old_symbol)
 {
+	Q_UNUSED(pos);
+	
 	if (old_symbol == drawing_symbol)
 	{
 		if (preview_text)
@@ -271,6 +275,7 @@ void DrawTextTool::symbolDeleted(int pos, Symbol* old_symbol)
 
 void DrawTextTool::selectionChanged(bool text_change)
 {
+	Q_UNUSED(text_change);	
 	updatePreviewObject();
 }
 

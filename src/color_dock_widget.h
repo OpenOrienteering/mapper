@@ -21,12 +21,7 @@
 #ifndef _OPENORIENTEERING_COLOR_DOCK_WIDGET_H_
 #define _OPENORIENTEERING_COLOR_DOCK_WIDGET_H_
 
-#include <qglobal.h>
-#if QT_VERSION < 0x050000
-#include <QtGui>
-#else
 #include <QtWidgets>
-#endif
 
 class ColorDropDown;
 class MainWindow;
@@ -34,12 +29,19 @@ class Map;
 class MapColor;
 class PaletteColor;
 
+/** 
+ * A widget showing the list of map colors and some edit buttons at the bottom.
+ * Enables to define new colors and edit or delete existing colors.
+ * This widget is used inside a dock widget.
+ */
 class ColorWidget : public QWidget
 {
 Q_OBJECT
-
 public:
+  /** Creates a new ColorWidget for a given map and MainWindow. */
 	ColorWidget(Map* map, MainWindow* window, QWidget* parent = NULL);
+  
+  /** Destroys the ColorWidget. */
 	virtual ~ColorWidget();
 	
 protected slots:

@@ -134,7 +134,7 @@ bool operator!=(const MapColorRgb& lhs, const MapColorRgb& rhs);
 struct SpotColorComponent
 {
 	/** A map color which is a spot color. */
-	MapColor* spot_color;
+	const MapColor* spot_color;
 	
 	/** The factor describes the halftoning (screen).
 	 *  It is a value in the range [0.0; 1.0]. */
@@ -144,7 +144,7 @@ struct SpotColorComponent
 	SpotColorComponent();
 	
 	/** Constructs a component for the given spot color and halftoning. */
-	SpotColorComponent(MapColor* spot_color, float factor);
+	SpotColorComponent(const MapColor* spot_color, float factor);
 	
 	/** Returns true iff the spot color is defined. */
 	bool isValid() const;
@@ -180,6 +180,7 @@ public:
 	{
 		CoveringRed   = -1005,
 		CoveringWhite = -1000,  // used for tool helper line colors	
+		Registration  = -900,   // used for registration marks: all printed colors
 		Undefined     = -500,
 		Reserved      = -1      // used to mark renderables which should not be inserted into the map
 	};
@@ -418,8 +419,54 @@ bool operator==(const MapColor& lhs, const MapColor& rhs);
 bool operator!=(const MapColor& lhs, const MapColor& rhs);
 
 
-/** MapColorMap provides a mapping from one map color to another. */
-typedef QHash<const MapColor*, const MapColor*> MapColorMap;
+/**
+ * MapColorMap provides a mapping from one map color to another.
+ * 
+ * In addition to explicitly user-defined key-value pairs of colors, it will
+ * (in const contexts) map colors with reserved priorities to themselves,
+ * assuming that there is only a single static instance of these colors.
+ */
+class MapColorMap
+{
+public:
+	/** Constructs a new MapColorMap. */
+	MapColorMap();
+	
+	/** Returns the size, i.e. the number of user-defined key-value pairs. */
+	int size() const;
+	
+	/** Clears the user-defined key-value pairs. */
+	void clear();
+	
+	/** Returns true if there is a user-defined value for the key color */
+	bool contains(const MapColor* key) const;
+	
+	/** Returns the mapped value for the key color.
+	 * 
+	 * Returns the user-defined value for the key color if it is defined.
+	 * Otherwise, if the key color's priority is from the RESERVED domain,
+	 * returns key. Otherwise returns NULL.
+	 */
+	const MapColor* value(const MapColor* key) const;
+	
+	/** Returns the mapped value for the key color. Same as value().
+	 * 
+	 * Returns the user-defined value for the key color if it is defined.
+	 * Otherwise, if the key color's priority is from the RESERVED domain,
+	 * returns key. Otherwise returns NULL.
+	 */
+	const MapColor* operator[](const MapColor* key) const;
+	
+	/** Returns a reference to pointer to the mapped value for the key color.
+	 *  If a user-defined mapped value does not exist yet, a default-
+	 *  constructed mapped value is created first.
+	 */
+	const MapColor* & operator[](const MapColor* key);
+	
+private:
+	/** The low-level mapping. */
+	QHash<const MapColor*, const MapColor*> mapping;
+};
 
 
 // ### MapColorCmyk inline code ###
@@ -583,7 +630,7 @@ SpotColorComponent::SpotColorComponent()
 }
 
 inline
-SpotColorComponent::SpotColorComponent(MapColor* spot_color, float factor)
+SpotColorComponent::SpotColorComponent(const MapColor* spot_color, float factor)
  : spot_color(spot_color),
    factor(factor)
 {
@@ -717,5 +764,63 @@ bool operator!=(const MapColor& lhs, const MapColor& rhs)
 {
 	return !lhs.equals(rhs, true);
 }
+
+
+// ### MapColorMap inline code ###
+
+inline
+MapColorMap::MapColorMap()
+ : mapping()
+{
+	// Nothing.
+}
+
+inline
+int MapColorMap::size() const
+{
+	return mapping.size();
+}
+
+inline
+void MapColorMap::clear()
+{
+	mapping.clear();
+}
+
+inline
+bool MapColorMap::contains(const MapColor* key) const
+{
+	return mapping.contains(key);
+}
+
+inline
+const MapColor* MapColorMap::value(const MapColor* key) const
+{
+	if (mapping.contains(key))
+	{
+		return mapping.value(key);
+	}
+	else if (key != NULL && key->getPriority() <= MapColor::Reserved)
+	{
+		return key;
+	}
+	else
+	{
+		return NULL;
+	}
+}
+
+inline
+const MapColor* MapColorMap::operator[](const MapColor* key) const
+{
+	return value(key);
+}
+
+inline
+const MapColor* & MapColorMap::operator[](const MapColor* key)
+{
+	return mapping[key];
+}
+
 
 #endif

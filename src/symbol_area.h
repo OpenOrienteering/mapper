@@ -47,43 +47,95 @@ class SymbolPropertiesWidget;
 class SymbolSettingDialog;
 class MapEditorController;
 
+/**
+ * Symbol for PathObjects where the enclosed area is filled with a solid color
+ * and / or with one or more patterns.
+ */
 class AreaSymbol : public Symbol
 {
 friend class AreaSymbolSettings;
 friend class PointSymbolEditorWidget;
 friend class OCAD8FileImport;
 public:
+	/** Describes a fill pattern. */
 	struct FillPattern
 	{
+		/** Types of fill patterns. */
 		enum Type
 		{
+			/** Parallel lines pattern */
 			LinePattern = 1,
+			/** Point grid pattern */
 			PointPattern = 2
 		};
 		
+		/** Type of the pattern */
 		Type type;
-		float angle;			// 0 to 2*M_PI
+		/** Rotation angle in radians */
+		float angle;
+		/** True if the pattern is rotatable per-object. */
 		bool rotatable;
-		int line_spacing;		// as usual, in 0.001mm
+		/** Distance between parallel lines, as usual in 0.001mm */
+		int line_spacing;
+		/** Offset of the first line from the origin */
 		int line_offset;
-		int offset_along_line;	// only if type == PointPattern
 		
-		const MapColor* line_color;	// only if type == LinePattern
-		int line_width;			// line width if type == LinePattern
+		// For type == LinePattern only:
 		
-		int point_distance;		// point distance if type == PointPattern
-		PointSymbol* point;		// contained point symbol if type == PointPattern
+		/** Line color */
+		const MapColor* line_color;
+		/** Line width */
+		int line_width;
 		
-		QString name;			// a display name (transient)
+		// For type == PointPattern only:
 		
+		/** Offset of first point along parallel lines */
+		int offset_along_line;
+		/** Point distance along parallel lines */
+		int point_distance;
+		/** Contained point symbol */
+		PointSymbol* point;
+		
+		/** Display name (transient) */
+		QString name;
+		
+		
+		/** Creates a default fill pattern */
 		FillPattern();
-		void save(QIODevice* file, Map* map);
+		/** Loads the pattern in the old "native" format */
 		bool load(QIODevice* file, int version, Map* map);
+		/** Saves the pattern in xml format */
 		void save(QXmlStreamWriter& file, const Map& map) const;
-		void load(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol_dict);
+		/** Loads the pattern in xml format */
+		void load(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict);
+		/**
+		 * Checks if the pattern settings are equal to the other.
+		 * TODO: should the transient name really be compared?!
+		 */
 		bool equals(FillPattern& other, Qt::CaseSensitivity case_sensitivity);
-		void createRenderables(QRectF extent, float delta_rotation, const MapCoord& pattern_origin, ObjectRenderables& output);
-		void createLine(MapCoordVectorF& coords, float delta_offset, LineSymbol* line, PathObject* path, PointObject* point_object, ObjectRenderables& output);
+		/**
+		 * Creates renderables for this pattern in the area given by extent.
+		 * @param extent Rectangular area to create renderables for.
+		 * @param delta_rotation Rotation offest which is added to the pattern angle.
+		 * @param pattern_origin Origin point for line / point placement.
+		 * @param output Created renderables will be inserted here.
+		 */
+		void createRenderables(
+			QRectF extent,
+			float delta_rotation,
+			const MapCoord& pattern_origin,
+			ObjectRenderables& output
+		);
+		/** Creates one line of renderables, called by createRenderables(). */
+		void createLine(
+			MapCoordVectorF& coords,
+			float delta_offset,
+			LineSymbol* line,
+			PathObject* path,
+			PointObject* point_object,
+			ObjectRenderables& output
+		);
+		/** Spatially scales the pattern settings by the given factor. */
 		void scale(double factor);
 	};
 	
@@ -110,10 +162,9 @@ public:
 	virtual SymbolPropertiesWidget* createPropertiesWidget(SymbolSettingDialog* dialog);
 	
 protected:
-	virtual void saveImpl(QIODevice* file, Map* map);
 	virtual bool loadImpl(QIODevice* file, int version, Map* map);
 	virtual void saveImpl(QXmlStreamWriter& xml, const Map& map) const;
-	virtual bool loadImpl(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol_dict);
+	virtual bool loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict);
 	virtual bool equalsImpl(Symbol* other, Qt::CaseSensitivity case_sensitivity);
 	
 	const MapColor* color;

@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2014 Thomas Schöps, Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -20,10 +21,59 @@
 
 #include "main_window_controller.h"
 
+#include <QKeyEvent>
+
 #include "../map_editor.h"
 #include "../file_format.h"
 #include "../file_format_registry.h"
 
+
+MainWindowController::~MainWindowController()
+{
+	// nothing
+}
+
+bool MainWindowController::save(const QString& path)
+{
+	Q_UNUSED(path);
+	return false;
+}
+
+bool MainWindowController::exportTo(const QString& path, const FileFormat* format)
+{
+	Q_UNUSED(path);
+	Q_UNUSED(format);
+	return false;
+}
+
+bool MainWindowController::load(const QString& path, QWidget* dialog_parent)
+{
+	Q_UNUSED(path);
+	Q_UNUSED(dialog_parent);
+	return false;
+}
+
+void MainWindowController::detach()
+{
+	// nothing
+}
+
+bool MainWindowController::isEditingInProgress() const
+{
+	return false;
+}
+
+bool MainWindowController::keyPressEventFilter(QKeyEvent* event)
+{
+	Q_UNUSED(event);
+	return false;
+}
+
+bool MainWindowController::keyReleaseEventFilter(QKeyEvent* event)
+{
+	Q_UNUSED(event);
+	return false;
+}
 
 MainWindowController* MainWindowController::controllerForFile(const QString& filename)
 {

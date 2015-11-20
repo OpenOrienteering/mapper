@@ -63,6 +63,8 @@ DrawLineAndAreaTool::~DrawLineAndAreaTool()
 
 void DrawLineAndAreaTool::leaveEvent(QEvent* event)
 {
+	Q_UNUSED(event);
+	
 	if (!draw_in_progress)
 		map()->clearDrawingBoundingBox();
 }
@@ -90,12 +92,17 @@ void DrawLineAndAreaTool::selectedSymbolsChanged()
 
 void DrawLineAndAreaTool::symbolChanged(int pos, Symbol* new_symbol, Symbol* old_symbol)
 {
+	Q_UNUSED(pos);
+	Q_UNUSED(new_symbol);
+	
 	if (old_symbol == last_used_symbol)
 		selectedSymbolsChanged();
 }
 
 void DrawLineAndAreaTool::symbolDeleted(int pos, Symbol* old_symbol)
 {
+	Q_UNUSED(pos);
+	
 	if (old_symbol == last_used_symbol)
 		deactivate();
 }

@@ -26,10 +26,6 @@
 #define APP_NAME qApp->translate("Global", QT_TRANSLATE_NOOP("Global", "OpenOrienteering Mapper"))
 #endif
 
-#if !defined(APP_VERSION)
-#define APP_VERSION "qmake 0.x.99"
-#endif
-
 #if !defined(Q_OS_WIN) && !defined(Q_OS_MAC)
 #define CPACK_DEBIAN_PACKAGE_NAME "openorienteering-mapper"
 #define MAPPER_DEBIAN_PACKAGE_NAME CPACK_DEBIAN_PACKAGE_NAME

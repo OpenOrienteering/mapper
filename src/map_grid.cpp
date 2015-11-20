@@ -23,15 +23,12 @@
 #include <cassert>
 #include <limits>
 
-#if QT_VERSION < 0x050000
-#include <QtGui>
-#else
-#include <QtWidgets>
-#endif
 #include <qmath.h>
+#include <QtWidgets>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
+#include "core/map_view.h"
 #include "georeferencing.h"
 #include "map.h"
 #include "util.h"
@@ -55,25 +52,9 @@ MapGrid::MapGrid()
 	vert_offset = 0;
 }
 
-void MapGrid::save(QIODevice* file)
-{
-	file->write((const char*)&snapping_enabled, sizeof(bool));
-	file->write((const char*)&color, sizeof(QRgb));
-	int temp = (int)display;
-	file->write((const char*)&temp, sizeof(int));
-	temp = (int)alignment;
-	file->write((const char*)&temp, sizeof(int));
-	file->write((const char*)&additional_rotation, sizeof(double));
-	temp = (int)unit;
-	file->write((const char*)&temp, sizeof(int));
-	file->write((const char*)&horz_spacing, sizeof(double));
-	file->write((const char*)&vert_spacing, sizeof(double));
-	file->write((const char*)&horz_offset, sizeof(double));
-	file->write((const char*)&vert_offset, sizeof(double));
-}
-
 void MapGrid::load(QIODevice* file, int version)
 {
+	Q_UNUSED(version);
 	file->read((char*)&snapping_enabled, sizeof(bool));
 	file->read((char*)&color, sizeof(QRgb));
 	int temp;

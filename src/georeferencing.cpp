@@ -72,7 +72,8 @@ Georeferencing::Georeferencing()
 }
 
 Georeferencing::Georeferencing(const Georeferencing& other)
-: state(other.state),
+: QObject(),
+  state(other.state),
   scale_denominator(other.scale_denominator),
   declination(other.declination),
   grivation(other.grivation),
@@ -190,7 +191,7 @@ void Georeferencing::load(QXmlStreamReader& xml, bool load_scale_only) throw (Fi
 						xml.attributes().value("language") != "PROJ.4" )
 						throw FileFormatException(tr("Unknown CRS specification language: %1").arg(xml.attributes().value("language").toString()));
 					QString geographic_crs_spec = xml.readElementText();
-					if (geographic_crs_spec != geographic_crs_spec)
+					if (Georeferencing::geographic_crs_spec != geographic_crs_spec)
 						throw FileFormatException(tr("Unsupported geographic CRS specification: %1").arg(geographic_crs_spec));
 				}
 				else if (xml.name() == "ref_point")

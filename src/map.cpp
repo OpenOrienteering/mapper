@@ -1,5 +1,6 @@
 /*
- *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2012 Thomas Schöps
+ *    Copyright 2013, 2014 Thomas Schöps, Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -34,6 +35,7 @@
 
 #include "core/map_color.h"
 #include "core/map_printer.h"
+#include "core/map_view.h"
 #include "map_editor.h"
 #include "map_grid.h"
 #include "map_part.h"
@@ -358,6 +360,7 @@ bool Map::static_initialized = false;
 MapColor Map::covering_white(MapColor::CoveringWhite);
 MapColor Map::covering_red(MapColor::CoveringRed);
 MapColor Map::undefined_symbol_color(MapColor::Undefined);
+MapColor Map::registration_color(MapColor::Registration);
 LineSymbol* Map::covering_white_line;
 LineSymbol* Map::covering_red_line;
 LineSymbol* Map::undefined_line;
@@ -511,15 +514,38 @@ bool Map::saveTo(const QString& path, MapEditorController* map_editor)
 {
 	assert(map_editor && "Preserving the widget&view information without retrieving it from a MapEditorController is not implemented yet!");
 	
-	const FileFormat *format = FileFormats.findFormatForFilename(path);
-	if (!format) format = FileFormats.findFormat(FileFormats.defaultFormat());
+	exportTo(path, map_editor);
 	
-	if (!format || !format->supportsExport())
+	colors_dirty = false;
+	symbols_dirty = false;
+	templates_dirty = false;
+	objects_dirty = false;
+	other_dirty = false;
+	unsaved_changes = false;
+	
+	objectUndoManager().notifyOfSave();
+	
+	return true;
+}
+
+bool Map::exportTo(const QString& path, MapEditorController* map_editor, const FileFormat* format)
+{
+	assert(map_editor && "Preserving the widget&view information without retrieving it from a MapEditorController is not implemented yet!");
+	
+	if (!format)
+		format = FileFormats.findFormatForFilename(path);
+
+	if (!format)
+		format = FileFormats.findFormat(FileFormats.defaultFormat());
+	
+	if (!format)
 	{
-		if (format)
-			QMessageBox::warning(NULL, tr("Error"), tr("Cannot export the map as\n\"%1\"\nbecause saving as %2 (.%3) is not supported.").arg(path).arg(format->description()).arg(format->fileExtensions().join(", ")));
-		else
-			QMessageBox::warning(NULL, tr("Error"), tr("Cannot export the map as\n\"%1\"\nbecause the format is unknown.").arg(path));
+		QMessageBox::warning(NULL, tr("Error"), tr("Cannot export the map as\n\"%1\"\nbecause the format is unknown.").arg(path));
+		return false;
+	}
+	else if (!format->supportsExport())
+	{
+		QMessageBox::warning(NULL, tr("Error"), tr("Cannot export the map as\n\"%1\"\nbecause saving as %2 (.%3) is not supported.").arg(path).arg(format->description()).arg(format->fileExtensions().join(", ")));
 		return false;
 	}
 	
@@ -568,15 +594,10 @@ bool Map::saveTo(const QString& path, MapEditorController* map_editor)
 			temp->setTemplateRelativePath(map_dir.relativeFilePath(temp->getTemplatePath()));
 	}
 	
-	Exporter* exporter = NULL;
-	try {
-		// Create an exporter instance for this file and map.
-		exporter = format->createExporter(&file, this, map_editor->main_view);
-		
-		// Run the first pass.
+	try
+	{
+		QScopedPointer<Exporter> exporter(format->createExporter(&file, this, map_editor->main_view));
 		exporter->doExport();
-		
-		file.close();
 		
 		// Display any warnings.
 		if (!exporter->warnings().empty())
@@ -594,33 +615,27 @@ bool Map::saveTo(const QString& path, MapEditorController* map_editor)
 	}
 	catch (std::exception &e)
 	{
+		file.close();
+		
 		QMessageBox::warning(NULL, tr("Error"), tr("Internal error while saving:\n%1").arg(e.what()));
 		if (temp_path.isEmpty())
 			QFile::remove(path);
 		else
 			QFile::remove(temp_path);
+		
 		return false;
 	}
-	if (exporter) delete exporter;
 	
+	file.close();
 	if (!temp_path.isEmpty())
 	{
 		QFile::remove(path);
 		QFile::rename(temp_path, path);
 	}
 	
-	
-	colors_dirty = false;
-	symbols_dirty = false;
-	templates_dirty = false;
-	objects_dirty = false;
-	other_dirty = false;
-	unsaved_changes = false;
-	
-	objectUndoManager().notifyOfSave();
-	
 	return true;
 }
+
 bool Map::loadFrom(const QString& path, QWidget* dialog_parent, MapEditorController* map_editor, bool load_symbols_only, bool show_error_messages)
 {
 	MapView *view = new MapView(this);
@@ -942,19 +957,22 @@ void Map::draw(QPainter* painter, QRectF bounding_box, bool force_min_size, floa
 	renderables->draw(painter, bounding_box, force_min_size, scaling, on_screen, show_helper_symbols, opacity);
 }
 
-void Map::drawOverprintingSimulation(QPainter* painter, QRectF bounding_box, bool force_min_size, float scaling, bool on_screen, bool show_helper_symbols, float opacity)
+void Map::drawOverprintingSimulation(QPainter* painter, QRectF bounding_box, bool force_min_size, float scaling, bool on_screen, bool show_helper_symbols)
 {
 	// Update the renderables of all objects marked as dirty
 	updateObjects();
 	
 	// The actual drawing
-	renderables->drawOverprintingSimulation(painter, bounding_box, force_min_size, scaling, on_screen, show_helper_symbols, opacity);
+	renderables->drawOverprintingSimulation(painter, bounding_box, force_min_size, scaling, on_screen, show_helper_symbols);
 }
 
-void Map::drawColorSeparation(QPainter* painter, MapColor* spot_color, QRectF bounding_box, bool force_min_size, float scaling, bool on_screen, bool show_helper_symbols, float opacity)
+void Map::drawColorSeparation(QPainter* painter, QRectF bounding_box, bool force_min_size, float scaling, bool on_screen, bool show_helper_symbols, const MapColor* spot_color, bool use_color)
 {
+	// Update the renderables of all objects marked as dirty
+	updateObjects();
+	
 	// The actual drawing
-	renderables->drawColorSeparation(painter, spot_color, bounding_box, force_min_size, scaling, on_screen, show_helper_symbols, opacity);
+	renderables->drawColorSeparation(painter, bounding_box, force_min_size, scaling, on_screen, show_helper_symbols, spot_color, use_color);
 }
 
 void Map::drawGrid(QPainter* painter, QRectF bounding_box, bool on_screen)
@@ -1029,22 +1047,32 @@ void Map::getSelectionToSymbolCompatibility(Symbol* symbol, bool& out_compatible
 
 void Map::deleteSelectedObjects()
 {
-	AddObjectsUndoStep* undo_step = new AddObjectsUndoStep(this);
-	MapPart* part = getCurrentPart();
+	Map::ObjectSelection::const_iterator obj = selectedObjectsBegin();
+	Map::ObjectSelection::const_iterator end = selectedObjectsEnd();
+	if (obj != end)
+	{
+		// FIXME: this is not ready for multiple map parts.
+		AddObjectsUndoStep* undo_step = new AddObjectsUndoStep(this);
+		MapPart* part = getCurrentPart();
 	
-	Map::ObjectSelection::const_iterator it_end = selectedObjectsEnd();
-	for (Map::ObjectSelection::const_iterator it = selectedObjectsBegin(); it != it_end; ++it)
-	{
-		int index = part->findObjectIndex(*it);
-		undo_step->addObject(index, *it);
-	}
-	for (Map::ObjectSelection::const_iterator it = selectedObjectsBegin(); it != it_end; ++it)
-	{
-		deleteObject(*it, true);
+		for (; obj != end; ++obj)
+		{
+			int index = part->findObjectIndex(*obj);
+			if (index >= 0)
+			{
+				undo_step->addObject(index, *obj);
+				part->deleteObject(index, true);
+			}
+			else
+			{
+				qDebug() << this << "::deleteSelectedObjects(): Object" << *obj << "not found in current map part.";
+			}
+		}
+		
 		setObjectsDirty();
+		clearObjectSelection(true);
+		objectUndoManager().addNewUndoStep(undo_step);
 	}
-	clearObjectSelection(true);
-	objectUndoManager().addNewUndoStep(undo_step);
 }
 
 void Map::includeSelectionRect(QRectF& rect)
@@ -1343,6 +1371,10 @@ int Map::findColorIndex(const MapColor* color) const
 	{
 		if (color_set->colors[i] == color)
 			return i;
+	}
+	if (color && color->getPriority() == MapColor::Registration)
+	{
+		return MapColor::Registration;
 	}
 	return -1;
 }
@@ -1867,7 +1899,33 @@ void Map::addPart(MapPart* part, int pos)
 	parts.insert(parts.begin() + pos, part);
 	if (current_part_index >= pos)
 		++current_part_index;
+	
+	emit currentMapPartChanged(current_part_index);
+	
 	setOtherDirty(true);
+	for(unsigned int i = 0; i < widgets.size(); i++)
+		widgets[i]->updateEverything();
+}
+
+void Map::removePart(int index)
+{
+	MapPart* part = parts[index];
+	
+	// FIXME: This loop should move to MapPart.
+	while(part->getNumObjects())
+		part->deleteObject(0, false);
+	delete part;
+	
+	parts.erase(parts.begin() + index);
+	
+	if(current_part_index == index) {
+		current_part_index = 0;
+		emit currentMapPartChanged(current_part_index);
+	}
+	
+	setOtherDirty(true);
+	for(unsigned int i = 0; i < widgets.size(); i++)
+		widgets[i]->updateEverything();
 }
 
 int Map::findPartIndex(MapPart* part) const
@@ -1880,6 +1938,49 @@ int Map::findPartIndex(MapPart* part) const
 	}
 	assert(false);
 	return -1;
+}
+
+void Map::setCurrentPart(int index)
+{
+	Q_ASSERT(index >= 0 && index < (int)parts.size());
+	if (index == current_part_index)
+		return;
+	
+	clearObjectSelection(true);
+	
+	current_part_index = index;
+	emit currentMapPartChanged(index);
+}
+
+void Map::reassignObjectsToMapPart(QSet<Object*>::const_iterator begin, QSet<Object*>::const_iterator end, int destination)
+{
+	for (QSet<Object*>::const_iterator it = begin; it != end; it++) {
+		Object* object = *it;
+		deleteObject(object, true);
+		addObject(object, destination);
+	}
+	
+	setOtherDirty();
+}
+
+void Map::mergeParts(int source, int destination)
+{
+	// FIXME: Retain object selection
+	clearObjectSelection(false);
+	
+	MapPart* source_part = parts[source];
+	
+	while (source_part->getNumObjects()) {
+		int obj_index = source_part->getNumObjects() - 1;
+		Object* obj = source_part->getObject(obj_index);
+		source_part->deleteObject(obj_index, true);
+		addObject(obj, destination);
+		addObjectToSelection(obj, false);
+	}
+	
+	removePart(source);
+	
+	emit objectSelectionChanged();
 }
 
 int Map::getNumObjects()
@@ -2064,11 +2165,8 @@ void Map::setHasUnsavedChanges(bool has_unsaved_changes)
 	}
 	else
 	{
-		if (!unsaved_changes)
-		{
-			emit(gotUnsavedChanges());
-			unsaved_changes = true;
-		}
+		emit gotUnsavedChanges(); // always needed to trigger autosave
+		unsaved_changes = true;
 	}
 }
 void Map::setOtherDirty(bool value)
@@ -2099,491 +2197,6 @@ void Map::checkIfFirstTemplateAdded()
 	if (getNumTemplates() == 1)
 	{
 		// This is the first template - the help text in the map widget(s) should be updated
-		updateAllMapWidgets();
-	}
-}
-
-// ### MapView ###
-
-const double screen_pixel_per_mm = 4.999838577;	// TODO: make configurable (by specifying screen diameter in inch + resolution, or dpi)
-// Calculation: pixel_height / ( sqrt((c^2)/(aspect^2 + 1)) * 2.54 )
-
-const double MapView::zoom_in_limit = 512;
-const double MapView::zoom_out_limit = 1 / 16.0;
-
-MapView::MapView(Map* map) : map(map)
-{
-	zoom = 1;
-	rotation = 0;
-	position_x = 0;
-	position_y = 0;
-	view_x = 0;
-	view_y = 0;
-	map_visibility = new TemplateVisibility();
-	map_visibility->visible = true;
-	all_templates_hidden = false;
-	grid_visible = false;
-	overprinting_simulation_enabled = false;
-	update();
-	//map->addMapView(this);
-}
-MapView::~MapView()
-{
-	//map->removeMapView(this);
-	
-	foreach (TemplateVisibility* vis, template_visibilities)
-		delete vis;
-	delete map_visibility;
-}
-
-void MapView::save(QIODevice* file)
-{
-	file->write((const char*)&zoom, sizeof(double));
-	file->write((const char*)&rotation, sizeof(double));
-	file->write((const char*)&position_x, sizeof(qint64));
-	file->write((const char*)&position_y, sizeof(qint64));
-	file->write((const char*)&view_x, sizeof(int));
-	file->write((const char*)&view_y, sizeof(int));
-	file->write((const char*)&drag_offset, sizeof(QPoint));
-	
-	file->write((const char*)&map_visibility->visible, sizeof(bool));
-	file->write((const char*)&map_visibility->opacity, sizeof(float));
-	
-	int num_template_visibilities = template_visibilities.size();
-	file->write((const char*)&num_template_visibilities, sizeof(int));
-	QHash<const Template*, TemplateVisibility*>::const_iterator it = template_visibilities.constBegin();
-	while (it != template_visibilities.constEnd())
-	{
-		int pos = map->findTemplateIndex(it.key());
-		file->write((const char*)&pos, sizeof(int));
-		
-		file->write((const char*)&it.value()->visible, sizeof(bool));
-		file->write((const char*)&it.value()->opacity, sizeof(float));
-		
-		++it;
-	}
-	
-	file->write((const char*)&all_templates_hidden, sizeof(bool));
-	
-	file->write((const char*)&grid_visible, sizeof(bool));
-}
-
-void MapView::load(QIODevice* file, int version)
-{
-	file->read((char*)&zoom, sizeof(double));
-	file->read((char*)&rotation, sizeof(double));
-	file->read((char*)&position_x, sizeof(qint64));
-	file->read((char*)&position_y, sizeof(qint64));
-	file->read((char*)&view_x, sizeof(int));
-	file->read((char*)&view_y, sizeof(int));
-	file->read((char*)&drag_offset, sizeof(QPoint));
-	update();
-	
-	if (version >= 26)
-	{
-		file->read((char*)&map_visibility->visible, sizeof(bool));
-		file->read((char*)&map_visibility->opacity, sizeof(float));
-	}
-	
-	int num_template_visibilities;
-	file->read((char*)&num_template_visibilities, sizeof(int));
-	
-	for (int i = 0; i < num_template_visibilities; ++i)
-	{
-		int pos;
-		file->read((char*)&pos, sizeof(int));
-		
-		TemplateVisibility* vis = getTemplateVisibility(map->getTemplate(pos));
-		file->read((char*)&vis->visible, sizeof(bool));
-		file->read((char*)&vis->opacity, sizeof(float));
-	}
-	
-	if (version >= 29)
-		file->read((char*)&all_templates_hidden, sizeof(bool));
-	
-	if (version >= 24)
-		file->read((char*)&grid_visible, sizeof(bool));
-}
-
-void MapView::save(QXmlStreamWriter& xml, const QString& element_name, bool skip_templates)
-{
-	xml.writeStartElement(element_name);
-	
-	xml.writeAttribute("zoom", QString::number(zoom));
-	xml.writeAttribute("rotation", QString::number(rotation));
-	xml.writeAttribute("position_x", QString::number(position_x));
-	xml.writeAttribute("position_y", QString::number(position_y));
-	xml.writeAttribute("view_x", QString::number(view_x));
-	xml.writeAttribute("view_y", QString::number(view_y));
-	xml.writeAttribute("drag_offset_x", QString::number(drag_offset.x()));
-	xml.writeAttribute("drag_offset_y", QString::number(drag_offset.y()));
-	if (grid_visible)
-		xml.writeAttribute("grid", "true");
-	if (overprinting_simulation_enabled)
-		xml.writeAttribute("overprinting_simulation_enabled", "true");
-	
-	xml.writeEmptyElement("map");
-	if (!map_visibility->visible)
-		xml.writeAttribute("visible", "false");
-	xml.writeAttribute("opacity", QString::number(map_visibility->opacity));
-	
-	xml.writeStartElement("templates");
-	if (all_templates_hidden)
-		xml.writeAttribute("hidden", "true");
-	if (!skip_templates)
-	{
-		int num_template_visibilities = template_visibilities.size();
-		xml.writeAttribute("count", QString::number(num_template_visibilities));
-		
-		QHash<const Template*, TemplateVisibility*>::const_iterator it = template_visibilities.constBegin();
-		for ( ; it != template_visibilities.constEnd(); ++it)
-		{
-			xml.writeEmptyElement("ref");
-			int pos = map->findTemplateIndex(it.key());
-			xml.writeAttribute("template", QString::number(pos));
-			xml.writeAttribute("visible", (*it)->visible ? "true" : "false");
-			xml.writeAttribute("opacity", QString::number((*it)->opacity));
-		}
-	}
-	xml.writeEndElement(/*templates*/);
-	
-	xml.writeEndElement(/*map_view*/); 
-}
-
-void MapView::load(QXmlStreamReader& xml)
-{
-	{	// Limit scope of variable "attributes" to this block
-		QXmlStreamAttributes attributes = xml.attributes();
-		zoom = attributes.value("zoom").toString().toDouble();
-		if (zoom < 0.001)
-			zoom = 1.0;
-		rotation = attributes.value("rotation").toString().toDouble();
-		position_x = attributes.value("position_x").toString().toLongLong();
-		position_y = attributes.value("position_y").toString().toLongLong();
-		view_x = attributes.value("view_x").toString().toInt();
-		view_y = attributes.value("view_y").toString().toInt();
-		drag_offset.setX(attributes.value("drag_offset_x").toString().toInt());
-		drag_offset.setY(attributes.value("drag_offset_y").toString().toInt());
-		grid_visible = (attributes.value("grid") == "true");
-		overprinting_simulation_enabled = (attributes.value("overprinting_simulation_enabled") == "true");
-		update();
-	}
-	
-	while (xml.readNextStartElement())
-	{
-		if (xml.name() == "map")
-		{
-			map_visibility->visible = !(xml.attributes().value("visible") == "false");
-			map_visibility->opacity = xml.attributes().value("opacity").toString().toFloat();
-			xml.skipCurrentElement();
-		}
-		else if (xml.name() == "templates")
-		{
-			int num_template_visibilities = xml.attributes().value("count").toString().toInt();
-			template_visibilities.reserve(qMin(num_template_visibilities, 20)); // 20 is not a limit
-			all_templates_hidden = (xml.attributes().value("hidden") == "true");
-			
-			while (xml.readNextStartElement())
-			{
-				if (xml.name() == "ref")
-				{
-					int pos = xml.attributes().value("template").toString().toInt();
-					if (pos >= 0 && pos < map->getNumTemplates())
-					{
-						TemplateVisibility* vis = getTemplateVisibility(map->getTemplate(pos));
-						vis->visible = !(xml.attributes().value("visible") == "false");
-						vis->opacity = xml.attributes().value("opacity").toString().toFloat();
-					}
-					else
-						qDebug() << QString("Invalid template visibility reference %1 at %2:%3").
-						            arg(pos).arg(xml.lineNumber()).arg(xml.columnNumber());
-				}
-				xml.skipCurrentElement();
-			}
-		}
-		else
-			xml.skipCurrentElement(); // unsupported
-	}
-}
-
-void MapView::addMapWidget(MapWidget* widget)
-{
-	widgets.push_back(widget);
-	
-	map->addMapWidget(widget);
-}
-void MapView::removeMapWidget(MapWidget* widget)
-{
-	for (int i = 0; i < (int)widgets.size(); ++i)
-	{
-		if (widgets[i] == widget)
-		{
-			widgets.erase(widgets.begin() + i);
-			return;
-		}
-	}
-	assert(false);
-	
-	map->removeMapWidget(widget);
-}
-void MapView::updateAllMapWidgets()
-{
-	for (int i = 0; i < (int)widgets.size(); ++i)
-		widgets[i]->updateEverything();
-}
-
-double MapView::lengthToPixel(qint64 length)
-{
-	return zoom * screen_pixel_per_mm * (length / 1000.0);
-}
-qint64 MapView::pixelToLength(double pixel)
-{
-	return qRound64(1000 * pixel / (zoom * screen_pixel_per_mm));
-}
-
-QRectF MapView::calculateViewedRect(QRectF view_rect)
-{
-	QPointF min = view_rect.topLeft();
-	QPointF max = view_rect.bottomRight();
-	MapCoordF top_left = viewToMapF(min.x(), min.y());
-	MapCoordF top_right = viewToMapF(max.x(), min.y());
-	MapCoordF bottom_right = viewToMapF(max.x(), max.y());
-	MapCoordF bottom_left = viewToMapF(min.x(), max.y());
-	
-	QRectF result = QRectF(top_left.getX(), top_left.getY(), 0, 0);
-	rectInclude(result, QPointF(top_right.getX(), top_right.getY()));
-	rectInclude(result, QPointF(bottom_right.getX(), bottom_right.getY()));
-	rectInclude(result, QPointF(bottom_left.getX(), bottom_left.getY()));
-	
-	return QRectF(result.left() - 0.001, result.top() - 0.001, result.width() + 0.002, result.height() + 0.002);
-}
-QRectF MapView::calculateViewBoundingBox(QRectF map_rect)
-{
-	QPointF min = map_rect.topLeft();
-	MapCoord map_min = MapCoord(min.x(), min.y());
-	QPointF max = map_rect.bottomRight();
-	MapCoord map_max = MapCoord(max.x(), max.y());
-	
-	QPointF top_left;
-	mapToView(map_min, top_left.rx(), top_left.ry());
-	QPointF bottom_right;
-	mapToView(map_max, bottom_right.rx(), bottom_right.ry());
-	
-	MapCoord map_top_right = MapCoord(max.x(), min.y());
-	QPointF top_right;
-	mapToView(map_top_right, top_right.rx(), top_right.ry());
-	
-	MapCoord map_bottom_left = MapCoord(min.x(), max.y());
-	QPointF bottom_left;
-	mapToView(map_bottom_left, bottom_left.rx(), bottom_left.ry());
-	
-	QRectF result = QRectF(top_left.x(), top_left.y(), 0, 0);
-	rectInclude(result, QPointF(top_right.x(), top_right.y()));
-	rectInclude(result, QPointF(bottom_right.x(), bottom_right.y()));
-	rectInclude(result, QPointF(bottom_left.x(), bottom_left.y()));
-	
-	return QRectF(result.left() - 1, result.top() - 1, result.width() + 2, result.height() + 2);
-}
-
-void MapView::applyTransform(QPainter* painter)
-{
-	QTransform world_transform;
-	// NOTE: transposing the matrix here ...
-	world_transform.setMatrix(map_to_view.get(0, 0), map_to_view.get(1, 0), map_to_view.get(2, 0),
-							  map_to_view.get(0, 1), map_to_view.get(1, 1), map_to_view.get(2, 1),
-							  map_to_view.get(0, 2), map_to_view.get(1, 2), map_to_view.get(2, 2));
-	painter->setWorldTransform(world_transform, true);
-}
-
-void MapView::setDragOffset(QPoint offset)
-{
-	drag_offset = offset;
-	for (int i = 0; i < (int)widgets.size(); ++i)
-		widgets[i]->setDragOffset(drag_offset);
-}
-void MapView::completeDragging(QPoint offset)
-{
-	drag_offset = QPoint(0, 0);
-	qint64 move_x = -pixelToLength(offset.x());
-	qint64 move_y = -pixelToLength(offset.y());
-	
-	position_x += move_x;
-	position_y += move_y;
-	update();
-	
-	for (int i = 0; i < (int)widgets.size(); ++i)
-		widgets[i]->completeDragging(offset, move_x, move_y);
-}
-
-bool MapView::zoomSteps(float num_steps, bool preserve_cursor_pos, QPointF cursor_pos_view)
-{
-	num_steps = 0.5f * num_steps;
-	
-	if (num_steps > 0)
-	{
-		// Zooming in - adjust camera position so the cursor stays at the same position on the map
-		if (getZoom() >= zoom_in_limit)
-			return false;
-		
-		bool set_to_limit = false;
-		double zoom_to = pow(2, (log10(getZoom()) / LOG2) + num_steps);
-		double zoom_factor = zoom_to / getZoom();
-		if (getZoom() * zoom_factor > zoom_in_limit)
-		{
-			zoom_factor = zoom_in_limit / getZoom();
-			set_to_limit = true;
-		}
-		
-		MapCoordF mouse_pos_map(0, 0);
-		MapCoordF mouse_pos_to_view_center(0, 0);
-		if (preserve_cursor_pos)
-		{
-			mouse_pos_map = viewToMapF(cursor_pos_view);
-			mouse_pos_to_view_center = MapCoordF(getPositionX()/1000.0 - mouse_pos_map.getX(), getPositionY()/1000.0 - mouse_pos_map.getY());
-			mouse_pos_to_view_center = MapCoordF(mouse_pos_to_view_center.getX() * 1 / zoom_factor, mouse_pos_to_view_center.getY() * 1 / zoom_factor);
-		}
-		
-		setZoom(set_to_limit ? zoom_in_limit : (getZoom() * zoom_factor));
-		if (preserve_cursor_pos)
-		{
-			setPositionX(qRound64(1000 * (mouse_pos_map.getX() + mouse_pos_to_view_center.getX())));
-			setPositionY(qRound64(1000 * (mouse_pos_map.getY() + mouse_pos_to_view_center.getY())));
-		}
-	}
-	else
-	{
-		// Zooming out
-		if (getZoom() <= zoom_out_limit)
-			return false;
-		
-		bool set_to_limit = false;
-		double zoom_to = pow(2, (log10(getZoom()) / LOG2) + num_steps);
-		double zoom_factor = zoom_to / getZoom();
-		if (getZoom() * zoom_factor < zoom_out_limit)
-		{
-			zoom_factor = zoom_out_limit / getZoom();
-			set_to_limit = true;
-		}
-		
-		MapCoordF mouse_pos_map(0, 0);
-		MapCoordF mouse_pos_to_view_center(0, 0);
-		if (preserve_cursor_pos)
-		{
-			mouse_pos_map = viewToMapF(cursor_pos_view);
-			mouse_pos_to_view_center = MapCoordF(getPositionX()/1000.0 - mouse_pos_map.getX(), getPositionY()/1000.0 - mouse_pos_map.getY());
-			mouse_pos_to_view_center = MapCoordF(mouse_pos_to_view_center.getX() * 1 / zoom_factor, mouse_pos_to_view_center.getY() * 1 / zoom_factor);
-		}
-		
-		setZoom(set_to_limit ? zoom_out_limit : (getZoom() * zoom_factor));
-		
-		if (preserve_cursor_pos)
-		{
-			setPositionX(qRound64(1000 * (mouse_pos_map.getX() + mouse_pos_to_view_center.getX())));
-			setPositionY(qRound64(1000 * (mouse_pos_map.getY() + mouse_pos_to_view_center.getY())));
-		}
-		else
-		{
-			mouse_pos_map = viewToMapF(cursor_pos_view);
-			for (int i = 0; i < (int)widgets.size(); ++i)
-				widgets[i]->updateCursorposLabel(mouse_pos_map);
-		}
-	}
-	return true;
-}
-
-void MapView::setZoom(float value)
-{
-	float zoom_factor = value / zoom;
-	for (int i = 0; i < (int)widgets.size(); ++i)
-		widgets[i]->zoom(zoom_factor);
-	
-	zoom = value;
-	update();
-	
-	for (int i = 0; i < (int)widgets.size(); ++i)
-		widgets[i]->updateZoomLabel();
-}
-void MapView::setPositionX(qint64 value)
-{
-	qint64 offset = value - position_x;
-	for (int i = 0; i < (int)widgets.size(); ++i)
-		widgets[i]->moveView(offset, 0);
-	
-	position_x = value;
-	update();
-}
-void MapView::setPositionY(qint64 value)
-{
-	qint64 offset = value - position_y;
-	for (int i = 0; i < (int)widgets.size(); ++i)
-		widgets[i]->moveView(0, offset);
-	
-	position_y = value;
-	update();
-}
-
-void MapView::update()
-{
-	double cosr = cos(rotation);
-	double sinr = sin(rotation);
-	
-	double final_zoom = lengthToPixel(1000);
-	
-	// Create map_to_view
-	map_to_view.setSize(3, 3);
-	map_to_view.set(0, 0, final_zoom * cosr);
-	map_to_view.set(0, 1, final_zoom * (-sinr));
-	map_to_view.set(1, 0, final_zoom * sinr);
-	map_to_view.set(1, 1, final_zoom * cosr);
-	map_to_view.set(0, 2, -final_zoom*(position_x/1000.0)*cosr + final_zoom*(position_y/1000.0)*sinr - view_x);
-	map_to_view.set(1, 2, -final_zoom*(position_x/1000.0)*sinr - final_zoom*(position_y/1000.0)*cosr - view_y);
-	map_to_view.set(2, 0, 0);
-	map_to_view.set(2, 1, 0);
-	map_to_view.set(2, 2, 1);
-	
-	// Create view_to_map
-	map_to_view.invert(view_to_map);
-}
-
-TemplateVisibility *MapView::getMapVisibility()
-{
-	return map_visibility;
-}
-
-bool MapView::isTemplateVisible(const Template* temp) const
-{
-	if (template_visibilities.contains(temp))
-	{
-		const TemplateVisibility* vis = template_visibilities.value(temp);
-		return vis->visible && vis->opacity > 0;
-	}
-	else
-		return false;
-}
-
-TemplateVisibility* MapView::getTemplateVisibility(Template* temp)
-{
-	if (!template_visibilities.contains(temp))
-	{
-		TemplateVisibility* vis = new TemplateVisibility();
-		template_visibilities.insert(temp, vis);
-		return vis;
-	}
-	else
-		return template_visibilities.value(temp);
-}
-
-void MapView::deleteTemplateVisibility(Template* temp)
-{
-	delete template_visibilities.value(temp);
-	template_visibilities.remove(temp);
-}
-
-void MapView::setHideAllTemplates(bool value)
-{
-	if (all_templates_hidden != value)
-	{
-		all_templates_hidden = value;
 		updateAllMapWidgets();
 	}
 }

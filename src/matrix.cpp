@@ -24,13 +24,6 @@
 #include <QIODevice>
 #include <QXmlStreamWriter>
 
-void Matrix::save(QIODevice* file)
-{
-	file->write((const char*)&n, sizeof(int));
-	file->write((const char*)&m, sizeof(int));
-	file->write((const char*)d, n*m * sizeof(double));
-}
-
 void Matrix::load(QIODevice* file)
 {
 	int new_n, new_m;

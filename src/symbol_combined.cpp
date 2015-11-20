@@ -20,11 +20,7 @@
 
 #include "symbol_combined.h"
 
-#if QT_VERSION < 0x050000
-#include <QtGui>
-#else
 #include <QtWidgets>
-#endif
 #include <QIODevice>
 #include <QXmlStreamWriter>
 
@@ -190,28 +186,6 @@ Symbol::Type CombinedSymbol::getContainedTypes() const
 	return (Type)type;
 }
 
-void CombinedSymbol::saveImpl(QIODevice* file, Map* map)
-{
-	int size = (int)parts.size();
-	file->write((const char*)&size, sizeof(int));
-	
-	for (int i = 0; i < size; ++i)
-	{
-		bool is_private = private_parts[i];
-		file->write((const char*)&is_private, sizeof(bool));
-		
-		if (is_private)
-		{
-			Symbol::saveSymbol(parts[i], file, map);
-		}
-		else
-		{
-			int temp = (parts[i] == NULL) ? -1 : map->findSymbolIndex(parts[i]);
-			file->write((const char*)&temp, sizeof(int));
-		}
-	}
-}
-
 bool CombinedSymbol::loadImpl(QIODevice* file, int version, Map* map)
 {
 	int size;
@@ -266,7 +240,7 @@ void CombinedSymbol::saveImpl(QXmlStreamWriter& xml, const Map& map) const
 	xml.writeEndElement(/*combined_symbol*/);
 }
 
-bool CombinedSymbol::loadImpl(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol_dict)
+bool CombinedSymbol::loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict)
 {
 	if (xml.name() != "combined_symbol")
 		return false;

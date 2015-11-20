@@ -20,19 +20,16 @@
 
 #include "symbol_line.h"
 
-#if QT_VERSION < 0x050000
-#include <QtGui>
-#else
 #include <QtWidgets>
-#endif
 #include <QIODevice>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
+#include <qbezier_p.h>
+
 #include "core/map_color.h"
 #include "map.h"
 #include "object.h"
-#include "qbezier_p.h"
 #include "renderable_implementation.h"
 #include "symbol_area.h"
 #include "symbol_point.h"
@@ -55,19 +52,9 @@ void LineSymbolBorder::reset()
 	break_length = 1 * 1000;
 }
 
-void LineSymbolBorder::save(QIODevice* file, Map* map)
-{
-	int temp = map->findColorIndex(color);
-	file->write((const char*)&temp, sizeof(int));
-	file->write((const char*)&width, sizeof(int));
-	file->write((const char*)&shift, sizeof(int));
-	file->write((const char*)&dashed, sizeof(bool));
-	file->write((const char*)&dash_length, sizeof(int));
-	file->write((const char*)&break_length, sizeof(int));
-}
-
 bool LineSymbolBorder::load(QIODevice* file, int version, Map* map)
 {
+	Q_UNUSED(version);
 	int temp;
 	file->read((char*)&temp, sizeof(int));
 	color = (temp >= 0) ? map->getColor(temp) : NULL;
@@ -92,13 +79,13 @@ void LineSymbolBorder::save(QXmlStreamWriter& xml, const Map& map) const
 	xml.writeEndElement(/*border*/);
 }
 
-bool LineSymbolBorder::load(QXmlStreamReader& xml, Map& map)
+bool LineSymbolBorder::load(QXmlStreamReader& xml, const Map& map)
 {
 	Q_ASSERT(xml.name() == "border");
 	
 	QXmlStreamAttributes attributes = xml.attributes();
 	int temp = attributes.value("color").toString().toInt();
-	color = (temp >= 0) ? map.getColor(temp) : NULL;
+	color = map.getColor(temp);
 	width = attributes.value("width").toString().toInt();
 	shift = attributes.value("shift").toString().toInt();
 	dashed = (attributes.value("dashed") == "true");
@@ -443,7 +430,7 @@ void LineSymbol::shiftCoordinates(const MapCoordVector& flags, const MapCoordVec
 {
 	const float curve_threshold = 0.03f;	// TODO: decrease for export/print?
 	const int MAX_OFFSET = 16;
-	QBezierCopy offsetCurves[MAX_OFFSET];
+	QBezier offsetCurves[MAX_OFFSET];
 	
 	double miter_limit = 2.0 * miterLimit(); // needed more than once
 	if (miter_limit <= 0.0)
@@ -678,7 +665,7 @@ void LineSymbol::shiftCoordinates(const MapCoordVector& flags, const MapCoordVec
 			// TODO: it may be necessary to remove some of the generated curves in the case an outer point is moved inwards
 			if (main_shift > 0.0)
 			{
-				QBezierCopy bezier = QBezierCopy::fromPoints(coords[(i+3) % size].toQPointF(), coords[i+2].toQPointF(), coords[i+1].toQPointF(), coords_i.toQPointF());
+				QBezier bezier = QBezier::fromPoints(coords[(i+3) % size].toQPointF(), coords[i+2].toQPointF(), coords[i+1].toQPointF(), coords_i.toQPointF());
 				int count = bezier.shifted(offsetCurves, MAX_OFFSET, qAbs(shift), curve_threshold);
 				for (int j = count - 1; j >= 0; --j)
 				{
@@ -699,7 +686,7 @@ void LineSymbol::shiftCoordinates(const MapCoordVector& flags, const MapCoordVec
 			}
 			else
 			{
-				QBezierCopy bezier = QBezierCopy::fromPoints(coords[i].toQPointF(), coords[i+1].toQPointF(), coords[i+2].toQPointF(), coords[(i+3) % size].toQPointF());
+				QBezier bezier = QBezier::fromPoints(coords[i].toQPointF(), coords[i+1].toQPointF(), coords[i+2].toQPointF(), coords[(i+3) % size].toQPointF());
 				int count = bezier.shifted(offsetCurves, MAX_OFFSET, qAbs(shift), curve_threshold);
 				for (int j = 0; j < count; ++j)
 				{
@@ -728,6 +715,8 @@ void LineSymbol::processContinuousLine(Object* object, bool path_closed, const M
 									   float start, float end, bool has_start, bool has_end, int& cur_line_coord,
 									   MapCoordVector& processed_flags, MapCoordVectorF& processed_coords, bool include_first_point, bool set_mid_symbols, ObjectRenderables& output)
 {
+	Q_UNUSED(path_closed);
+	
 	float pointed_cap_length_f = (cap_style == PointedCap) ? (0.001f * pointed_cap_length) : 0;
 	float line_length = end - start;
 	
@@ -767,6 +756,8 @@ void LineSymbol::processContinuousLine(Object* object, bool path_closed, const M
 void LineSymbol::createPointedLineCap(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, const PathCoordVector& line_coords,
 									  float start, float end, int& cur_line_coord, bool is_end, ObjectRenderables& output)
 {
+	Q_UNUSED(object);
+	
 	AreaSymbol area_symbol;
 	area_symbol.setColor(color);
 	
@@ -1083,6 +1074,8 @@ void LineSymbol::processDashedLine(Object* object, bool path_closed, const MapCo
 
 void LineSymbol::createDashSymbolRenderables(Object* object, bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output)
 {
+	Q_UNUSED(object);
+	
 	PointObject point_object(dash_symbol);
 	MapCoordVectorF point_coord;
 	point_coord.push_back(MapCoordF(0, 0));
@@ -1109,6 +1102,8 @@ void LineSymbol::createDashSymbolRenderables(Object* object, bool path_closed, c
 
 void LineSymbol::createDottedRenderables(Object* object, bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output)
 {
+	Q_UNUSED(object);
+	
 	Q_ASSERT(mid_symbol != NULL);
 	PointObject point_object(mid_symbol);
 	bool point_object_rotatable = point_object.getSymbol()->asPoint()->isRotatable();
@@ -1652,6 +1647,7 @@ void LineSymbol::cleanupPointSymbols()
 
 float LineSymbol::calculateLargestLineExtent(Map* map)
 {
+	Q_UNUSED(map);
 	float line_extent_f = 0.001f * 0.5f * asLine()->getLineWidth();
 	float result = line_extent_f;
 	if (asLine()->hasBorder())
@@ -1683,56 +1679,6 @@ void LineSymbol::replaceSymbol(PointSymbol*& old_symbol, PointSymbol* replace_wi
 	delete old_symbol;
 	old_symbol = replace_with;
 	replace_with->setName(name);
-}
-
-void LineSymbol::saveImpl(QIODevice* file, Map* map)
-{
-	file->write((const char*)&line_width, sizeof(int));
-	int temp = map->findColorIndex(color);
-	file->write((const char*)&temp, sizeof(int));
-	file->write((const char*)&minimum_length, sizeof(int));
-	temp = (int)cap_style;
-	file->write((const char*)&temp, sizeof(int));
-	temp = (int)join_style;
-	file->write((const char*)&temp, sizeof(int));
-	file->write((const char*)&pointed_cap_length, sizeof(int));
-	bool have_symbol = start_symbol != NULL;
-	file->write((const char*)&have_symbol, sizeof(bool));
-	if (have_symbol)
-		start_symbol->save(file, map);
-	have_symbol = mid_symbol != NULL;
-	file->write((const char*)&have_symbol, sizeof(bool));
-	if (have_symbol)
-		mid_symbol->save(file, map);
-	have_symbol = end_symbol != NULL;
-	file->write((const char*)&have_symbol, sizeof(bool));
-	if (have_symbol)
-		end_symbol->save(file, map);
-	have_symbol = dash_symbol != NULL;
-	file->write((const char*)&have_symbol, sizeof(bool));
-	if (have_symbol)
-		dash_symbol->save(file, map);
-	file->write((const char*)&dashed, sizeof(bool));
-	file->write((const char*)&segment_length, sizeof(int));
-	file->write((const char*)&end_length, sizeof(int));
-	file->write((const char*)&show_at_least_one_symbol, sizeof(bool));
-	file->write((const char*)&minimum_mid_symbol_count, sizeof(int));
-	file->write((const char*)&minimum_mid_symbol_count_when_closed, sizeof(int));
-	file->write((const char*)&dash_length, sizeof(int));
-	file->write((const char*)&break_length, sizeof(int));
-	file->write((const char*)&dashes_in_group, sizeof(int));
-	file->write((const char*)&in_group_break_length, sizeof(int));
-	file->write((const char*)&half_outer_dashes, sizeof(bool));
-	file->write((const char*)&mid_symbols_per_spot, sizeof(int));
-	file->write((const char*)&mid_symbol_distance, sizeof(int));
-	file->write((const char*)&have_border_lines, sizeof(bool));
-	
-	bool are_borders_different = areBordersDifferent();
-	file->write((const char*)&are_borders_different, sizeof(bool));
-	
-	border.save(file, map);
-	if (are_borders_different)
-		right_border.save(file, map);
 }
 
 bool LineSymbol::loadImpl(QIODevice* file, int version, Map* map)
@@ -1893,14 +1839,14 @@ void LineSymbol::saveImpl(QXmlStreamWriter& xml, const Map& map) const
 	xml.writeEndElement(/*line_symbol*/);
 }
 
-bool LineSymbol::loadImpl(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol_dict)
+bool LineSymbol::loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict)
 {
 	if (xml.name() != "line_symbol")
 		return false;
 	
 	QXmlStreamAttributes attributes = xml.attributes();
 	int temp = attributes.value("color").toString().toInt();
-	color = (temp >= 0) ? map.getColor(temp) : NULL;
+	color = map.getColor(temp);
 	line_width = attributes.value("line_width").toString().toInt();
 	minimum_length = attributes.value("minimum_length").toString().toInt();
 	join_style = static_cast<LineSymbol::JoinStyle>(attributes.value("join_style").toString().toInt());
@@ -1968,7 +1914,7 @@ bool LineSymbol::loadImpl(QXmlStreamReader& xml, Map& map, SymbolDictionary& sym
 	return true;
 }
 
-PointSymbol* LineSymbol::loadPointSymbol(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol_dict)
+PointSymbol* LineSymbol::loadPointSymbol(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict)
 {
 	while (xml.readNextStartElement())
 	{
@@ -1986,6 +1932,8 @@ PointSymbol* LineSymbol::loadPointSymbol(QXmlStreamReader& xml, Map& map, Symbol
 
 bool LineSymbol::equalsImpl(Symbol* other, Qt::CaseSensitivity case_sensitivity)
 {
+	Q_UNUSED(case_sensitivity);
+	
 	LineSymbol* line = static_cast<LineSymbol*>(other);
 	if (line_width != line->line_width)
 		return false;

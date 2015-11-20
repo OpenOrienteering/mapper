@@ -22,6 +22,7 @@
 
 #include <exception>
 
+#include <QFlags>
 #include <QStringList>
 
 class QIODevice;
@@ -142,7 +143,7 @@ public:
 	
 	/** Returns the type of file.
 	 */
-	const FileType fileType() const;
+	FileType fileType() const;
 	
 	/** Returns the internal ID of the file format.
 	 */
@@ -245,7 +246,7 @@ Q_DECLARE_OPERATORS_FOR_FLAGS(FileFormat::FileTypes)
 Q_DECLARE_OPERATORS_FOR_FLAGS(FileFormat::FormatFeatures)
 
 inline
-const FileFormat::FileType FileFormat::fileType() const
+FileFormat::FileType FileFormat::fileType() const
 {
 	return file_type;
 }

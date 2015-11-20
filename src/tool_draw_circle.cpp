@@ -20,21 +20,21 @@
 
 #include "tool_draw_circle.h"
 
-#if QT_VERSION < 0x050000
-#include <QtGui>
-#else
 #include <QtWidgets>
-#endif
 
 #include "map.h"
 #include "object.h"
+#include "settings.h"
 #include "util.h"
 #include "gui/modifier_key.h"
+#include "gui/widgets/key_button_bar.h"
+#include "map_editor.h"
 
 QCursor* DrawCircleTool::cursor = NULL;
 
 DrawCircleTool::DrawCircleTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget)
- : DrawLineAndAreaTool(editor, DrawCircle, tool_button, symbol_widget)
+ : DrawLineAndAreaTool(editor, DrawCircle, tool_button, symbol_widget),
+   key_button_bar(NULL)
 {
 	dragging = false;
 	first_point_set = false;
@@ -44,13 +44,29 @@ DrawCircleTool::DrawCircleTool(MapEditorController* editor, QAction* tool_button
 		cursor = new QCursor(QPixmap(":/images/cursor-draw-circle.png"), 11, 11);
 }
 
+DrawCircleTool::~DrawCircleTool()
+{
+	if (key_button_bar)
+		editor->deletePopupWidget(key_button_bar);
+}
+
 void DrawCircleTool::init()
 {
 	updateStatusText();
+	
+	if (editor->isInMobileMode())
+	{
+		// Create key replacement bar
+		key_button_bar = new KeyButtonBar(this, editor->getMainWidget());
+		key_button_bar->addModifierKey(Qt::Key_Control, Qt::ControlModifier, tr("From center", "Draw circle starting from center"));
+		editor->showPopupWidget(key_button_bar, "");
+	}
 }
 
 bool DrawCircleTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
+	Q_UNUSED(widget);
+	
 	if ((event->button() == Qt::LeftButton) || (draw_in_progress && drawMouseButtonClicked(event)))
 	{
 		cur_pos = event->pos();
@@ -63,6 +79,7 @@ bool DrawCircleTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, Ma
 			opposite_pos_map = map_coord;
 			dragging = false;
 			first_point_set = true;
+			start_from_center = (event->modifiers() | (key_button_bar ? key_button_bar->activeModifiers() : 0)) & Qt::ControlModifier;
 			
 			if (!draw_in_progress)
 				startDrawing();
@@ -90,6 +107,8 @@ bool DrawCircleTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, Ma
 
 bool DrawCircleTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
+	Q_UNUSED(widget);
+	
 	bool mouse_down = drawMouseButtonHeld(event);
 	
 	if (!mouse_down)
@@ -113,7 +132,7 @@ bool DrawCircleTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, Map
 		if (!draw_in_progress)
 			return false;
 		
-		if ((event->pos() - click_pos).manhattanLength() >= QApplication::startDragDistance())
+		if ((event->pos() - click_pos).manhattanLength() >= Settings::getInstance().getStartDragDistancePx())
 		{
 			if (!dragging)
 			{
@@ -136,6 +155,8 @@ bool DrawCircleTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, Map
 
 bool DrawCircleTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
+	Q_UNUSED(widget);
+	
 	if (!drawMouseButtonClicked(event))
 	{
 		if (event->button() == Qt::RightButton)
@@ -199,12 +220,18 @@ void DrawCircleTool::abortDrawing()
 
 void DrawCircleTool::updateCircle()
 {
-	float radius = 0.5f * circle_start_pos_map.lengthTo(opposite_pos_map);
+	MapCoordF first_pos_map;
+	if (start_from_center)
+		first_pos_map = circle_start_pos_map + (circle_start_pos_map - opposite_pos_map);
+	else
+		first_pos_map = circle_start_pos_map;
+	
+	float radius = 0.5f * first_pos_map.lengthTo(opposite_pos_map);
 	float kappa = BEZIER_KAPPA;
 	float m_kappa = 1 - BEZIER_KAPPA;
 	
-	MapCoordF across = opposite_pos_map - circle_start_pos_map;
-	across.setLength(radius);
+	MapCoordF across = opposite_pos_map - first_pos_map;
+	across.toLength(radius);
 	MapCoordF right = across;
 	right.perpRight();
 	
@@ -215,25 +242,25 @@ void DrawCircleTool::updateCircle()
 			right_radius = 0;
 		else
 		{
-			MapCoordF to_cursor = cur_pos_map - circle_start_pos_map;
+			MapCoordF to_cursor = cur_pos_map - first_pos_map;
 			right_radius = to_cursor.dot(right) / right.length();
 		}
 	}
-	right.setLength(right_radius);
+	right.toLength(right_radius);
 	
 	preview_path->clearCoordinates();
-	preview_path->addCoordinate(circle_start_pos_map.toCurveStartMapCoord());
-	preview_path->addCoordinate((circle_start_pos_map + kappa * right).toMapCoord());
-	preview_path->addCoordinate((circle_start_pos_map + right + m_kappa * across).toMapCoord());
-	preview_path->addCoordinate((circle_start_pos_map + right + across).toCurveStartMapCoord());
-	preview_path->addCoordinate((circle_start_pos_map + right + (1 + kappa) * across).toMapCoord());
-	preview_path->addCoordinate((circle_start_pos_map + kappa * right + 2 * across).toMapCoord());
-	preview_path->addCoordinate((circle_start_pos_map + 2 * across).toCurveStartMapCoord());
-	preview_path->addCoordinate((circle_start_pos_map - kappa * right + 2 * across).toMapCoord());
-	preview_path->addCoordinate((circle_start_pos_map - right + (1 + kappa) * across).toMapCoord());
-	preview_path->addCoordinate((circle_start_pos_map - right + across).toCurveStartMapCoord());
-	preview_path->addCoordinate((circle_start_pos_map - right + m_kappa * across).toMapCoord());
-	preview_path->addCoordinate((circle_start_pos_map - kappa * right).toMapCoord());
+	preview_path->addCoordinate(first_pos_map.toCurveStartMapCoord());
+	preview_path->addCoordinate((first_pos_map + kappa * right).toMapCoord());
+	preview_path->addCoordinate((first_pos_map + right + m_kappa * across).toMapCoord());
+	preview_path->addCoordinate((first_pos_map + right + across).toCurveStartMapCoord());
+	preview_path->addCoordinate((first_pos_map + right + (1 + kappa) * across).toMapCoord());
+	preview_path->addCoordinate((first_pos_map + kappa * right + 2 * across).toMapCoord());
+	preview_path->addCoordinate((first_pos_map + 2 * across).toCurveStartMapCoord());
+	preview_path->addCoordinate((first_pos_map - kappa * right + 2 * across).toMapCoord());
+	preview_path->addCoordinate((first_pos_map - right + (1 + kappa) * across).toMapCoord());
+	preview_path->addCoordinate((first_pos_map - right + across).toCurveStartMapCoord());
+	preview_path->addCoordinate((first_pos_map - right + m_kappa * across).toMapCoord());
+	preview_path->addCoordinate((first_pos_map - kappa * right).toMapCoord());
 	preview_path->getPart(0).setClosed(true, false);
 	
 	updatePreviewPath();
@@ -258,15 +285,19 @@ void DrawCircleTool::setDirtyRect()
 
 void DrawCircleTool::updateStatusText()
 {
+	QString text;
 	if (!first_point_set || (!second_point_set && dragging))
 	{
-		setStatusBarText( tr("<b>Click</b>: Start a circle or ellipse. ") + 
-		                  tr("<b>Drag</b>: Draw a circle. ") );
+		text = tr("<b>Click</b>: Start a circle or ellipse. ") + 
+		       tr("<b>Drag</b>: Draw a circle. ") +
+			   "| " +
+			   tr("Hold %1 to start drawing from the center.").arg(ModifierKey::control());
 	}
 	else
 	{
-		setStatusBarText( tr("<b>Click</b>: Finish the circle. ") +
-		                  tr("<b>Drag</b>: Draw an ellipse. ") +
-		                  MapEditorTool::tr("<b>%1</b>: Abort. ").arg(ModifierKey::escape()) );
+		text = tr("<b>Click</b>: Finish the circle. ") +
+		       tr("<b>Drag</b>: Draw an ellipse. ") +
+		       MapEditorTool::tr("<b>%1</b>: Abort. ").arg(ModifierKey::escape());
 	}
+	setStatusBarText(text);
 }

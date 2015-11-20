@@ -20,14 +20,13 @@
 
 #include "georeferencing_dialog.h"
 
-#if QT_VERSION < 0x050000
-#include <QtGui>
-#else
 #include <QtWidgets>
-#endif
+#include <QXmlStreamReader>
+
+#if defined(QT_NETWORK_LIB)
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
-#include <QXmlStreamReader>
+#endif
 
 #include "georeferencing.h"
 #include "gui/main_window.h"
@@ -135,7 +134,11 @@ void GeoreferencingDialog::init(const Georeferencing* initial)
 	declination_button = new QPushButton("");
 	QHBoxLayout* declination_layout = new QHBoxLayout();
 	declination_layout->addWidget(declination_edit, 1);
+#if defined(QT_NETWORK_LIB)
 	declination_layout->addWidget(declination_button, 0);
+#else
+	connect(this, SIGNAL(destroyed()), declination_button, SLOT(deleteLater()));
+#endif
 	
 	grivation_label = new QLabel();
 	
@@ -264,6 +267,7 @@ void GeoreferencingDialog::setValuesFrom(Georeferencing* values)
 
 void GeoreferencingDialog::requestDeclination(bool no_confirm)
 {
+#if defined(QT_NETWORK_LIB)
 	if (georef->isLocal() || georef->getState() == Georeferencing::ScaleOnly)
 		return;
 	
@@ -289,11 +293,7 @@ void GeoreferencingDialog::requestDeclination(bool no_confirm)
 	QNetworkAccessManager *network = new QNetworkAccessManager(this);
 	connect(network, SIGNAL(finished(QNetworkReply*)), this, SLOT(declinationReplyFinished(QNetworkReply*)));
 	
-#if QT_VERSION < 0x050000
-	QUrl& query = service_url;
-#else
 	QUrlQuery query;
-#endif
 	QDate today = QDate::currentDate();
 	query.addQueryItem("lat1", QString::number(latlon.getLatitudeInDegrees()));
 	query.addQueryItem("lon1", QString::number(latlon.getLongitudeInDegrees()));
@@ -301,10 +301,11 @@ void GeoreferencingDialog::requestDeclination(bool no_confirm)
 	query.addQueryItem("startMonth", QString::number(today.month()));
 	query.addQueryItem("startDay", QString::number(today.day()));
 	query.addQueryItem("resultFormat", "xml");
-#if QT_VERSION >= 0x050000
 	service_url.setQuery(query);
-#endif
 	network->get(QNetworkRequest(service_url));
+#else
+	Q_UNUSED(no_confirm)
+#endif
 }
 
 void GeoreferencingDialog::setMapRefPoint(MapCoord coords)
@@ -524,12 +525,14 @@ void GeoreferencingDialog::selectMapRefPoint()
 
 void GeoreferencingDialog::mapRefChanged(double value)
 {
+	Q_UNUSED(value);
 	MapCoord coord(map_x_edit->value(), -1 * map_y_edit->value());
 	setMapRefPoint(coord);
 }
 
 void GeoreferencingDialog::eastingNorthingChanged(double value)
 {
+	Q_UNUSED(value);
 	QPointF easting_northing(easting_edit->value(), northing_edit->value());
 	georef->setProjectedRefPoint(easting_northing);
 	setLatLonValuesFrom(georef.data());
@@ -553,6 +556,7 @@ void GeoreferencingDialog::latLonChanged(bool update_zone)
 
 void GeoreferencingDialog::latLonChanged(double value)
 {
+	Q_UNUSED(value);
 	latLonChanged(true);
 }
 
@@ -565,6 +569,7 @@ void GeoreferencingDialog::declinationChanged(double value)
 
 void GeoreferencingDialog::declinationReplyFinished(QNetworkReply* reply)
 {
+#if defined(QT_NETWORK_LIB)
 	declination_query_in_progress = false;
 	updateDeclinationButton();
 	
@@ -619,6 +624,9 @@ void GeoreferencingDialog::declinationReplyFinished(QNetworkReply* reply)
 		QMessageBox::Close );
 	if (result == QMessageBox::Retry)
 		requestDeclination(true);
+#else
+	Q_UNUSED(reply)
+#endif
 }
 
 void GeoreferencingDialog::updateZone()
@@ -705,6 +713,7 @@ void GeoreferencingTool::init()
 
 bool GeoreferencingTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
+	Q_UNUSED(widget);
 	if (event->button() == Qt::LeftButton)
 	{
 		dialog->setMapRefPoint(map_coord.toMapCoord());
@@ -827,6 +836,7 @@ void ProjectedCRSSelector::setParam(int i, const QString& value)
 
 void ProjectedCRSSelector::crsDropdownChanged(int index)
 {
+	Q_UNUSED(index);
 	if (layout)
 	{
 		for (int i = 2 * layout->rowCount() - 1; i >= 2; --i)
@@ -858,7 +868,7 @@ void ProjectedCRSSelector::crsDropdownChanged(int index)
 	emit crsEdited(true);
 }
 
-void ProjectedCRSSelector::crsParamEdited(QString dont_use)
+void ProjectedCRSSelector::crsParamEdited(QString)
 {
 	emit crsEdited(false);
 }
@@ -961,7 +971,7 @@ QString SelectCRSDialog::getCRSSpec() const
 	return crs_spec_edit->text();
 }
 
-void SelectCRSDialog::crsSpecEdited(QString text)
+void SelectCRSDialog::crsSpecEdited(QString)
 {
 	spec_radio->setChecked(true);
 	

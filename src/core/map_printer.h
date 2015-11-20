@@ -25,7 +25,12 @@
 
 #include <QHash>
 #include <QObject>
+#include <QRectF>
+#include <QSizeF>
+
+#ifdef QT_PRINTSUPPORT_LIB
 #include <QPrinterInfo>
+#endif
 
 QT_BEGIN_NAMESPACE
 class QImage;
@@ -40,6 +45,9 @@ class MapView;
 class MapPrinterPageFormat
 {
 public:
+	/** Copy of QPrinter::Orientation because QPrinter is not available for Android */
+	enum Orientation { Portrait, Landscape };
+	
 	/** Constructs a new page format.
 	 * 
 	 *  It is initialized a custom page format with a page rectangle of the
@@ -47,11 +55,11 @@ public:
 	 *  The page overlap values are initialized to 5 (mm). */
 	MapPrinterPageFormat(QSizeF page_rect_size = QSizeF(100.0, 100.0), qreal margin = 5.0);
 	
-	/** The nominal paper size. */
-	QPrinter::PaperSize paper_size;
+	/** The nominal paper size (of type QPrinter::PaperSize) */
+	int paper_size;
 	
 	/** The orientation of the paper. */
-	QPrinter::Orientation orientation;
+	Orientation orientation;
 	
 	/** The total dimensions of the page in mm. */
 	QSizeF paper_dimensions;
@@ -84,6 +92,9 @@ public:
 	/** The nominal resolution to be used. */
 	unsigned int resolution;
 	
+	/** Controls if spot color separations are to be printed. */
+	bool print_spot_color_separations;
+	
 	/** Controls if templates get printed. */
 	bool show_templates;
 	
@@ -108,7 +119,7 @@ public:
 	MapPrinterConfig(const Map& map, QXmlStreamReader& xml);
 	
 	/** Saves the map print parameters to an XML stream. */
-	void save(QXmlStreamWriter& xml, const QString& element_name) const;
+	void save(QXmlStreamWriter& xml, const QLatin1String& element_name) const;
 	
 	/** The name of the printer. */
 	QString printer_name;
@@ -132,6 +143,8 @@ public:
 };
 
 
+
+#ifdef QT_PRINTSUPPORT_LIB
 
 /** MapPrinter provides an interface to print a map (to a printer or file).
  * It may render a page on any QPaintDevice, such as an QImage. */
@@ -200,10 +213,13 @@ public:
 	 *  When the actual paint device is a QImage, pass it as page_buffer.
 	 *  This helps to determine the exact dimensions and to avoid the allocation
 	 *  of another buffer.
-	 *  Otherwise, drawPage() may allocate a buffer with this map printer's 
+	 *  Otherwise, drawPage() may allocate a buffer with this map printer's
 	 *  resolution and size. Parameter units_per_inch has no influence on this
 	 *  buffer but refers to the logical coordinates of device_painter. */
 	void drawPage(QPainter* device_painter, float units_per_inch, const QRectF& page_extent, bool white_background, QImage* page_buffer = NULL) const;
+	
+	/** Draws the separations as distinct pages to the printer. */
+	void drawSeparationPages(QPrinter* printer, QPainter* device_painter, float dpi, const QRectF& page_extent) const;
 	
 	/** Returns the current configuration. */
 	const MapPrinterConfig& config() const;
@@ -216,14 +232,14 @@ public slots:
 	/** Sets the map area which is to be printed. */
 	void setPrintArea(const QRectF& area);
 	
-	/** Sets the paper size to be used. */
-	void setPaperSize(const QPrinter::PaperSize size);
+	/** Sets the QPrinter::PaperSize to be used. */
+	void setPaperSize(const int size);
 	
 	/** Sets a custom paper size with the given dimensions. */
 	void setCustomPaperSize(const QSizeF dimensions);
 	
 	/** Sets the page orientation. */
-	void setPageOrientation(const QPrinter::Orientation orientation);
+	void setPageOrientation(const MapPrinterPageFormat::Orientation orientation);
 	
 	/** Sets the overlapping of the pages at the margins. */
 	void setOverlap(qreal h_overlap, qreal v_overlap);
@@ -234,6 +250,11 @@ public slots:
 	
 	/** Sets the denominator of the map scale for printing. */
 	void setScale(const unsigned int value);
+	
+	/** Enables or disables the printing of spot color separations.
+	 *  Note that templates, grid, and overprinting simulation will be ignored
+	 *  in spot color mode. */
+	void setPrintSpotColorSeparations(bool enabled);
 	
 	/** Controls whether to print templates. 
 	 *  If a MapView is given when enabling template printing, 
@@ -250,8 +271,12 @@ public slots:
 	void saveConfig() const;
 	
 	/** Prints the map to the given printer. 
-	 *  Multiple pages may be generated. */
+	 *  This will first update this object's properties from the printer's properties. */
 	void printMap(QPrinter* printer);
+	
+	/** Cancels a running printMap(), if possible.
+	 *  This can only be used during handlers of the printMapProgress() signal. */
+	void cancelPrintMap();
 	
 signals:
 	/** Indicates a new target printer. */
@@ -265,6 +290,15 @@ signals:
 	
 	/** Indicates a change in the rendering options. */
 	void optionsChanged(const MapPrinterOptions& options) const;
+	
+	/** Emitted during printMap() to indicate progress. You can expect this
+	 *  signal to be emitted at the start of the print process (value = 1),
+	 *  after each page printed, and at the end of the process (value = 100).
+	 * 
+	 *  @param value Reflects the progress in the range from 1 (just started)
+	 *               to 100 (finished).
+	 *  @param status A verbal representation of what printMap() is doing. */
+	void printProgress(int value, QString status) const;
 	
 protected:
 	/** Updates the paper dimensions from paper format and orientation. */
@@ -280,7 +314,10 @@ protected:
 	qreal scale_adjustment;
 	std::vector<qreal> h_page_pos;
 	std::vector<qreal> v_page_pos;
+	bool cancel_print_map;
 };
+
+#endif
 
 
 
@@ -356,6 +393,8 @@ bool operator==(const MapPrinterConfig& lhs, const MapPrinterConfig& rhs)
 
 // ### MapPrinter inline code ###
 
+#ifdef QT_PRINTSUPPORT_LIB
+
 inline
 const MapPrinterConfig& MapPrinter::config() const
 {
@@ -415,5 +454,7 @@ const std::vector< qreal >& MapPrinter::verticalPagePositions() const
 {
 	return v_page_pos;
 }
+
+#endif
 
 #endif

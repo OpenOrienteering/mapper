@@ -21,12 +21,9 @@
 #ifndef _OPENORIENTEERING_COLOR_DIALOG_H_
 #define _OPENORIENTEERING_COLOR_DIALOG_H_
 
-#include <qglobal.h>
-#if QT_VERSION < 0x050000
-#include <QtGui>
-#else
 #include <QtWidgets>
-#endif
+
+#include <vector>
 
 #include "../core/map_color.h"
 
@@ -120,10 +117,15 @@ protected:
 	QAbstractButton* reset_button;
 	
 	static const int icon_size = 32;
-	static const int composition_size = 3;  // TODO: move limit from GUI to core
 	
-	ColorDropDown* component_colors[composition_size];
-	QDoubleSpinBox* component_halftone[composition_size];
+	std::vector< ColorDropDown* > component_colors;
+	std::vector< QDoubleSpinBox* > component_halftone;
+	int components_row0;
+	int components_col0;
+	QGridLayout* prof_color_layout;
+	int stretch_row0;
+	int stretch_col0;
+	QWidget* stretch;
 };
 
 #endif

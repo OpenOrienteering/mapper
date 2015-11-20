@@ -28,7 +28,8 @@
 class ConstrainAngleToolHelper;
 
 /**
- * A tool to rotate patterns of area objects or rotatable point objects.
+ * Tool to rotate patterns of area objects or
+ * set the direction of rotatable point objects.
  */
 class RotatePatternTool : public MapEditorToolBase
 {

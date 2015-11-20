@@ -63,3 +63,16 @@ void ocad_color_to_rgbf(const OCADColor *c, float *arr) {
 	arr[1] = ocad_color_scale_rgbf(200 - c->magenta - c->black);
 	arr[2] = ocad_color_scale_rgbf(200 - c->yellow - c->black);
 }
+
+int ocad_separation_count(OCADFile *pfile) {
+	if (!pfile->header) return -1;
+	if (pfile->header->nsep > 32) return -pfile->header->nsep;
+	return pfile->header->nsep;
+}
+
+OCADColorSeparation *ocad_separation_at(OCADFile *pfile, int index) {
+	if (!pfile->header) return NULL;
+	if (index < 0 || index >= pfile->header->nsep || index >= 32) return NULL;
+	return (OCADColorSeparation*)(pfile->colors + 256) + index;
+}
+

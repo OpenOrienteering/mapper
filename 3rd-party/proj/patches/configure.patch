@@ -1,0 +1,29 @@
+diff -up Proj/configure.orig Proj/configure
+--- Proj/configure.orig	2014-01-06 21:25:10.902368744 +0100
++++ Proj/configure	2014-01-06 21:01:53.000000000 +0100
+@@ -10228,6 +10228,25 @@ linux*oldld* | linux*aout* | linux*coff*
+   dynamic_linker=no
+   ;;
+ 
++# From libtool commit 8eeeb00daef8c4f720c9b79a0cdb89225d9909b6
++linux*android*)
++  version_type=none # Android doesn't support versioned libraries.
++  need_lib_prefix=no
++  need_version=no
++  library_names_spec='$libname$release$shared_ext'
++  soname_spec='$libname$release$shared_ext'
++  finish_cmds=
++  shlibpath_var=LD_LIBRARY_PATH
++  shlibpath_overrides_runpath=yes
++
++  # This implies no fast_install, which is unacceptable.
++  # Some rework will be needed to allow for fast_install
++  # before this can be enabled.
++  hardcode_into_libs=yes
++
++  dynamic_linker='Android linker'
++  ;;
++
+ # This must be Linux ELF.
+ linux* | k*bsd*-gnu | kopensolaris*-gnu)
+   version_type=linux

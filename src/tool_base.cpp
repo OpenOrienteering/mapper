@@ -26,6 +26,7 @@
 #include <QTimer>
 
 #include "gui/main_window.h"
+#include "gui/widgets/key_button_bar.h"
 #include "map.h"
 #include "map_editor.h"
 #include "map_undo.h"
@@ -40,12 +41,13 @@
 MapEditorToolBase::MapEditorToolBase(const QCursor cursor, MapEditorTool::Type type, MapEditorController* editor, QAction* tool_button)
 : MapEditorTool(editor, type, tool_button),
   dragging(false),
-  start_drag_distance(QApplication::startDragDistance()),
+  start_drag_distance(Settings::getInstance().getStartDragDistancePx()),
   angle_helper(new ConstrainAngleToolHelper()),
   snap_helper(new SnappingToolHelper(map())),
   snap_exclude_object(NULL),
   cur_map_widget(editor->getMainWidget()),
   editing(false),
+  key_button_bar(NULL),
   cursor(cursor),
   preview_update_triggered(false),
   renderables(new MapRenderables(map())),
@@ -57,6 +59,8 @@ MapEditorToolBase::MapEditorToolBase(const QCursor cursor, MapEditorTool::Type t
 MapEditorToolBase::~MapEditorToolBase()
 {
 	deleteOldSelectionRenderables(*old_renderables, false);
+	if (key_button_bar)
+		editor->deletePopupWidget(key_button_bar);
 }
 
 void MapEditorToolBase::init()
@@ -70,7 +74,7 @@ void MapEditorToolBase::init()
 
 bool MapEditorToolBase::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
-	active_modifiers = event->modifiers();
+	active_modifiers = Qt::KeyboardModifiers(event->modifiers() | (key_button_bar ? key_button_bar->activeModifiers() : 0));
 	if (event->button() != Qt::LeftButton)
 	{
 		if (event->button() == Qt::RightButton)
@@ -88,13 +92,16 @@ bool MapEditorToolBase::mousePressEvent(QMouseEvent* event, MapCoordF map_coord,
 	cur_pos = click_pos;
 	cur_pos_map = click_pos_map;
 	calcConstrainedPositions(widget);
+#ifdef ANDROID
+	mouseMove();
+#endif
 	clickPress();
 	return true;
 }
 
 bool MapEditorToolBase::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
-	active_modifiers = event->modifiers();
+	active_modifiers = Qt::KeyboardModifiers(event->modifiers() | (key_button_bar ? key_button_bar->activeModifiers() : 0));
 	cur_pos = event->pos();
 	cur_pos_map = map_coord;
 	calcConstrainedPositions(widget);
@@ -118,7 +125,7 @@ bool MapEditorToolBase::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, 
 
 bool MapEditorToolBase::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
-	active_modifiers = event->modifiers();
+	active_modifiers = Qt::KeyboardModifiers(event->modifiers() | (key_button_bar ? key_button_bar->activeModifiers() : 0));
 	cur_pos = event->pos();
 	cur_pos_map = map_coord;
 	calcConstrainedPositions(widget);
@@ -135,19 +142,24 @@ bool MapEditorToolBase::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coor
 	
 	if (dragging)
 	{
-		dragging = false;
 		dragMove();
+		dragging = false;
 		dragFinish();
 	}
 	else
+	{
+#ifdef ANDROID
+		mouseMove();
+#endif
 		clickRelease();
+	}
 	
 	return true;
 }
 
 bool MapEditorToolBase::keyPressEvent(QKeyEvent* event)
 {
-	active_modifiers = event->modifiers();
+	active_modifiers = Qt::KeyboardModifiers(event->modifiers() | (key_button_bar ? key_button_bar->activeModifiers() : 0));
 #if defined(Q_OS_MAC)
 	// FIXME: On Mac, QKeyEvent::modifiers() seems to return the keyboard 
 	// modifier flags that existed immediately before the event occurred.
@@ -177,7 +189,7 @@ bool MapEditorToolBase::keyPressEvent(QKeyEvent* event)
 
 bool MapEditorToolBase::keyReleaseEvent(QKeyEvent* event)
 {
-	active_modifiers = event->modifiers();
+	active_modifiers = Qt::KeyboardModifiers(event->modifiers() | (key_button_bar ? key_button_bar->activeModifiers() : 0));
 #if defined(Q_OS_MAC)
 	// FIXME: On Mac, QKeyEvent::modifiers() seems to return the keyboard 
 	// modifier flags that existed immediately before the event occurred.
@@ -248,11 +260,59 @@ void MapEditorToolBase::drawImpl(QPainter* painter, MapWidget* widget)
 	drawSelectionOrPreviewObjects(painter, widget);
 }
 
+void MapEditorToolBase::clickPress()
+{
+	// nothing
+}
+
+void MapEditorToolBase::clickRelease()
+{
+	// nothing
+}
+
+void MapEditorToolBase::mouseMove()
+{
+	// nothing
+}
+
+void MapEditorToolBase::dragStart() 
+{
+	// nothing
+}
+
+void MapEditorToolBase::dragMove()
+{
+	// nothing
+}
+
+void MapEditorToolBase::dragFinish()
+{
+	// nothing
+}
+
+bool MapEditorToolBase::keyPress(QKeyEvent* event)
+{
+	Q_UNUSED(event);
+	return false;
+}
+
+bool MapEditorToolBase::keyRelease(QKeyEvent* event)
+{
+	Q_UNUSED(event);
+	return false;
+}
+
 void MapEditorToolBase::updatePreviewObjectsSlot()
 {
 	preview_update_triggered = false;
 	if (editing)
 		updatePreviewObjects();
+}
+
+int MapEditorToolBase::updateDirtyRectImpl(QRectF& rect)
+{
+	Q_UNUSED(rect);
+	return -1;
 }
 
 void MapEditorToolBase::updatePreviewObjects()
@@ -322,6 +382,8 @@ void MapEditorToolBase::activateAngleHelperWhileEditing(bool enable)
 
 void MapEditorToolBase::activateSnapHelperWhileEditing(bool enable)
 {
+	Q_UNUSED(enable);
+	
 	snap_helper->setFilter(SnappingToolHelper::AllTypes);
 	calcConstrainedPositions(cur_map_widget);
 	if (dragging)

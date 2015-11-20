@@ -23,11 +23,7 @@
 #include <algorithm>
 #include <limits>
 
-#if QT_VERSION < 0x050000
-#include <QtGui>
-#else
 #include <QtWidgets>
-#endif
 
 #include "map.h"
 #include "map_undo.h"
@@ -42,7 +38,10 @@
 #include "symbol.h"
 #include "tool_helpers.h"
 #include "util.h"
+#include "map_editor.h"
+#include "gui/main_window.h"
 #include "gui/modifier_key.h"
+#include "gui/widgets/key_button_bar.h"
 
 
 int EditLineTool::max_objects_for_handle_display = 10;
@@ -124,19 +123,28 @@ void EditLineTool::clickPress()
 		updateHoverLine(cur_pos_map);
 		no_more_effect_on_click = true;
 	}
+	
+	click_timer.restart();
 }
 
 void EditLineTool::clickRelease()
 {
+	// Maximum time in milliseconds a click may take to cause
+	// a selection change if hovering over a handle / frame.
+	// If the click takes longer, it is assumed that the user
+	// wanted to move the objects instead and no selection change is done.
+	const int selection_click_time_threshold = 150;
+	
 	if (no_more_effect_on_click)
 	{
 		no_more_effect_on_click = false;
 		return;
 	}
-	if (hover_line >= -1)
+	if (hover_line >= -1
+		&& click_timer.elapsed() >= selection_click_time_threshold)
 		return;
 	
-	int click_tolerance = Settings::getInstance().getSettingCached(Settings::MapEditor_ClickTolerance).toInt();
+	float click_tolerance = Settings::getInstance().getMapEditorClickTolerancePx();
 	object_selector->selectAt(cur_pos_map, cur_map_widget->getMapView()->pixelToLength(click_tolerance), active_modifiers & Qt::ShiftModifier);
 	updateHoverLine(cur_pos_map);
 }
@@ -306,6 +314,15 @@ bool EditLineTool::keyRelease(QKeyEvent* event)
 void EditLineTool::initImpl()
 {
 	objectSelectionChangedImpl();
+	
+	if (editor->isInMobileMode())
+	{
+		// Create key replacement bar
+		key_button_bar = new KeyButtonBar(this, editor->getMainWidget());
+		key_button_bar->addModifierKey(Qt::Key_Shift, Qt::ShiftModifier, tr("Snap", "Snap to existing objects"));
+		key_button_bar->addModifierKey(Qt::Key_Control, Qt::ControlModifier, tr("Toggle curve", "Toggle between curved and flat segment"));
+		editor->showPopupWidget(key_button_bar, "");
+	}
 }
 
 void EditLineTool::objectSelectionChangedImpl()
@@ -323,7 +340,7 @@ int EditLineTool::updateDirtyRectImpl(QRectF& rect)
 	map()->includeSelectionRect(selection_extent);
 	
 	rectInclude(rect, selection_extent);
-	int pixel_border = show_object_points ? 6 : 1;
+	int pixel_border = show_object_points ? (resolution_scale_factor * 6) : 1;
 	
 	// Control points
 	if (show_object_points)
@@ -428,7 +445,7 @@ void EditLineTool::updateStatusText()
 
 void EditLineTool::updateHoverLine(MapCoordF cursor_pos)
 {
-	int click_tolerance = Settings::getInstance().getSettingCached(Settings::MapEditor_ClickTolerance).toInt();
+	float click_tolerance = Settings::getInstance().getMapEditorClickTolerancePx();
 	float click_tolerance_sq = qPow(0.001f * cur_map_widget->getMapView()->pixelToLength(click_tolerance), 2);
 	float best_distance_sq = std::numeric_limits<float>::max();
 	PathObject* new_hover_object = NULL;
@@ -502,7 +519,7 @@ void EditLineTool::updateHoverLine(MapCoordF cursor_pos)
 			highlight_renderables->insertRenderablesOfObject(highlight_object);
 		}
 		
-		start_drag_distance = (hover_line >= -1) ? 0 : QApplication::startDragDistance();
+		start_drag_distance = (hover_line >= -1) ? 0 : Settings::getInstance().getStartDragDistancePx();
 		updateDirtyRect();
 	}
 }

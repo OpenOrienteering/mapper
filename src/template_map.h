@@ -25,7 +25,7 @@
 
 #include <QStringList>
 
-/// An orienteering map used as template
+/** Template displaying a map file. */
 class TemplateMap : public Template
 {
 Q_OBJECT

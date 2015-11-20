@@ -18,6 +18,8 @@
  */
 
 
+#ifdef QT_PRINTSUPPORT_LIB
+
 #include "print_widget.h"
 
 #include <limits>
@@ -27,6 +29,7 @@
 #include <QPrintPreviewDialog>
 
 #include "main_window.h"
+#include "print_progress_dialog.h"
 #include "../core/map_printer.h"
 #include "../map.h"
 #include "../map_editor.h"
@@ -37,8 +40,6 @@
 #include "../util/scoped_signals_blocker.h"
 #include "print_tool.h"
 
-
-const QString trPaperSize(QPrinter::PaperSize size);
 
 
 PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, MapEditorController* editor, QWidget* parent)
@@ -121,6 +122,18 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 	
 	layout->addRow(Util::Headline::create(tr("Options")));
 	
+	QWidget* mode_widget = new QWidget();
+	QBoxLayout* mode_layout = new QHBoxLayout();
+	mode_widget->setLayout(mode_layout);
+	mode_layout->setMargin(0);
+	normal_mode_check = new QRadioButton(tr("Normal output"));
+	mode_layout->addWidget(normal_mode_check);
+	separation_mode_check = new QRadioButton(tr("Color separations"));
+	mode_layout->addWidget(separation_mode_check);
+	mode_layout->addStretch(1);
+	normal_mode_check->setChecked(true);
+	layout->addRow(mode_widget);
+	
 	dpi_combo = new QComboBox();
 	dpi_combo->setEditable(true);
 	dpi_combo->setValidator(new QRegExpValidator(QRegExp("^[1-9]\\d{1,4} dpi$|^[1-9]\\d{1,4}$"), dpi_combo));
@@ -181,6 +194,7 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 	connect(dpi_combo->lineEdit(), SIGNAL(editingFinished()), this, SLOT(resolutionEdited()));
 	connect(different_scale_check, SIGNAL(clicked(bool)), this, SLOT(differentScaleClicked(bool)));
 	connect(different_scale_edit, SIGNAL(valueChanged(int)), this, SLOT(differentScaleEdited(int)));
+	connect(separation_mode_check, SIGNAL(toggled(bool)), this, SLOT(separationModeChanged()));
 	connect(show_templates_check, SIGNAL(clicked(bool)), this, SLOT(showTemplatesClicked(bool)));
 	connect(show_grid_check, SIGNAL(clicked(bool)), this, SLOT(showGridClicked(bool)));
 	connect(overprinting_check, SIGNAL(clicked(bool)), this, SLOT(overprintingClicked(bool)));
@@ -202,8 +216,8 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 	        this, SLOT(setPageFormat(const MapPrinterPageFormat&)));
 	
 	connect(map_printer, SIGNAL(optionsChanged(const MapPrinterOptions&)), this, SLOT(setOptions(const MapPrinterOptions&)));
-	setOverprintingCheckEnabled(map->hasSpotColors());
-	connect(map, SIGNAL(spotColorPresenceChanged(bool)), this, SLOT(setOverprintingCheckEnabled(bool)));
+	spotColorPresenceChanged(map->hasSpotColors());
+	connect(map, SIGNAL(spotColorPresenceChanged(bool)), this, SLOT(spotColorPresenceChanged(bool)));
 	
 	setPrintArea(map_printer->getPrintArea());
 	connect(map_printer, SIGNAL(printAreaChanged(QRectF)), this, SLOT(setPrintArea(QRectF)));
@@ -370,11 +384,7 @@ void PrintWidget::updateTargets()
 		if (task == PRINT_TASK)
 		{
 			// Exporters
-#if QT_VERSION < 0x050000
-			target_combo->addItem(tr("Export to PDF or PS"), QVariant((int)PdfExporter));
-#else
 			target_combo->addItem(tr("Save to PDF"), QVariant((int)PdfExporter));
-#endif
 			target_combo->insertSeparator(target_combo->count());
 			target_combo->setCurrentIndex(0);
 			
@@ -546,7 +556,7 @@ void PrintWidget::pageOrientationChanged(int id) const
 {
 	if (id == QPrinter::Portrait || id == QPrinter::Landscape)
 	{
-		map_printer->setPageOrientation((QPrinter::Orientation) id);
+		map_printer->setPageOrientation((id == QPrinter::Portrait) ? MapPrinterPageFormat::Portrait : MapPrinterPageFormat::Landscape);
 	}
 }
 
@@ -685,16 +695,35 @@ void PrintWidget::setOptions(const MapPrinterOptions& options)
 	ScopedMultiSignalsBlocker block;
 	block << dpi_combo->lineEdit() << show_templates_check 
 	      << show_grid_check << overprinting_check
+	      << normal_mode_check << separation_mode_check
 	      << different_scale_check << different_scale_edit;
 	
-	main_view->setHideAllTemplates(!options.show_templates);
-	show_templates_check->setChecked(options.show_templates);
-	show_templates_check->setEnabled(true);
-	main_view->setGridVisible(options.show_grid);
-	show_grid_check->setChecked(options.show_grid);
-	show_grid_check->setEnabled(true);
-	main_view->setOverprintingSimulationEnabled(options.simulate_overprinting);
-	overprinting_check->setChecked(options.simulate_overprinting);
+	if (options.print_spot_color_separations)
+	{
+		separation_mode_check->setChecked(true);
+		main_view->setHideAllTemplates(true);
+		show_templates_check->setChecked(false);
+		show_templates_check->setEnabled(false);
+		main_view->setGridVisible(false);
+		show_grid_check->setChecked(false);
+		show_grid_check->setEnabled(false);
+		main_view->setOverprintingSimulationEnabled(true);
+		overprinting_check->setChecked(false);
+		overprinting_check->setEnabled(false);
+	}
+	else
+	{
+		normal_mode_check->setChecked(true);
+		main_view->setHideAllTemplates(!options.show_templates);
+		show_templates_check->setChecked(options.show_templates);
+		show_templates_check->setEnabled(true);
+		main_view->setGridVisible(options.show_grid);
+		show_grid_check->setChecked(options.show_grid);
+		show_grid_check->setEnabled(true);
+		main_view->setOverprintingSimulationEnabled(options.simulate_overprinting);
+		overprinting_check->setChecked(options.simulate_overprinting);
+		overprinting_check->setEnabled(true);
+	}
 	
 	static QString dpi_template("%1 " + tr("dpi"));
 	dpi_combo->setEditText(dpi_template.arg(options.resolution));
@@ -790,6 +819,29 @@ void PrintWidget::differentScaleEdited(int value)
 }
 
 // slot
+void PrintWidget::spotColorPresenceChanged(bool has_spot_colors)
+{
+	if (has_spot_colors)
+	{
+		separation_mode_check->setEnabled(true);
+		overprinting_check->setEnabled(true);
+	}
+	else
+	{
+		normal_mode_check->setChecked(true);
+		separation_mode_check->setEnabled(false);
+		overprinting_check->setChecked(false);
+		overprinting_check->setEnabled(false);
+	}
+}
+
+// slot
+void PrintWidget::separationModeChanged()
+{
+	map_printer->setPrintSpotColorSeparations(separation_mode_check->isChecked());
+}
+
+// slot
 void PrintWidget::showTemplatesClicked(bool checked)
 {
 	map_printer->setPrintTemplates(checked, main_view);
@@ -820,8 +872,17 @@ void PrintWidget::overprintingClicked(bool checked)
 // slot
 void PrintWidget::previewClicked()
 {
+#if defined(Q_OS_ANDROID)
+	// Qt for Android has no QPrintPreviewDialog
+	QMessageBox::warning(this, tr("Error"), tr("Not supported on Android."));
+#else
 	if (checkForEmptyMap())
 		return;
+	
+	PrintProgressDialog progress(main_window);
+	progress.setWindowTitle(tr("Print Preview Progress"));
+	progress.attach(map_printer);
+	progress.show();
 	
 	QPrinter* printer = map_printer->makePrinter();
 	printer->setCreator(main_window->appName());
@@ -832,12 +893,13 @@ void PrintWidget::previewClicked()
 	// https://bugreports.qt-project.org/browse/QTBUG-10206 :
 	//   Mac QPrintPreviewDialog is missing Close icon
 	QPrintPreviewDialog preview(printer, this, 
-	  Qt::Window | Qt::CustomizeWindowHint | Qt::WindowSystemMenuHint );
+		Qt::Window | Qt::CustomizeWindowHint | Qt::WindowSystemMenuHint );
 #endif
 	connect(&preview, SIGNAL(paintRequested(QPrinter*)), map_printer, SLOT(printMap(QPrinter*)));
 	preview.exec();
 	
 	delete printer;
+#endif
 }
 
 // slot
@@ -874,6 +936,12 @@ void PrintWidget::printClicked()
 			return;
 	}
 	
+	PrintProgressDialog progress(main_window);
+	progress.setWindowTitle(tr("Printing Progress"));
+	progress.setWindowModality(Qt::WindowModal);
+	progress.attach(map_printer);
+	progress.show();
+	
 	if (map_printer->getTarget() == MapPrinter::imageTarget())
 	{
 		if (!path.endsWith(".bmp", Qt::CaseInsensitive) && !path.endsWith(".png", Qt::CaseInsensitive) && !path.endsWith(".jpg", Qt::CaseInsensitive) &&
@@ -897,7 +965,7 @@ void PrintWidget::printClicked()
 			return;
 		}
 		
-		main_window->statusBar()->showMessage(tr("Exported successfully to %1").arg(path), 4000);
+		main_window->showStatusBarMessage(tr("Exported successfully to %1").arg(path), 4000);
 		emit finished(0);
 		return;
 	}
@@ -908,28 +976,39 @@ void PrintWidget::printClicked()
 	printer->setDocName(QFileInfo(main_window->getCurrentFilePath()).baseName());
 	if (map_printer->getTarget() == MapPrinter::pdfTarget())
 	{
-#if QT_VERSION < 0x050000		
-		if (path.endsWith(".ps", Qt::CaseInsensitive))
-			printer->setOutputFormat(QPrinter::PostScriptFormat);
-		else
-#endif
-		{
-			printer->setOutputFormat(QPrinter::PdfFormat);
-			if (!path.endsWith(".pdf", Qt::CaseInsensitive))
-				path.append(".pdf");
-		}
+		printer->setOutputFormat(QPrinter::PdfFormat);
+		if (!path.endsWith(".pdf", Qt::CaseInsensitive))
+			path.append(".pdf");
 		printer->setOutputFileName(path);
 	}
 	
 	// Print the map
 	map_printer->printMap(printer);
-	delete printer;
 	
-	if (map_printer->isPrinter())
-		main_window->statusBar()->showMessage(tr("Successfully created print job"), 4000);
+	if (progress.wasCanceled())
+	{
+		if (printer->abort() || !map_printer->isPrinter())
+		{
+			main_window->showStatusBarMessage(tr("Canceled."), 4000);
+		}
+		else
+		{
+			QMessageBox::warning(
+			  main_window, tr("Printing"),
+			  tr("The print job could not be stopped."),
+			  QMessageBox::Ok, QMessageBox::Ok );
+		}
+	}
+	else if (map_printer->isPrinter())
+	{
+		main_window->showStatusBarMessage(tr("Successfully created print job"), 4000);
+	}
 	else
-		main_window->statusBar()->showMessage(tr("Exported successfully to %1").arg(path), 4000);
+	{
+		main_window->showStatusBarMessage(tr("Exported successfully to %1").arg(path), 4000);
+	}
 	
+	delete printer;
 	emit finished(0);
 }
 
@@ -974,6 +1053,11 @@ QList<QPrinter::PaperSize> PrintWidget::defaultPaperSizes() const
 
 QString PrintWidget::toString(QPrinter::PaperSize size)
 {
+#if defined(Q_OS_ANDROID)
+	// Qt for Android has no QPrintDialog
+	Q_UNUSED(size);
+	return tr("Unknown", "Paper size");
+#else
 	const QHash< int, const char*>& paper_size_names = MapPrinter::paperSizeNames();
 	if (paper_size_names.contains(size))
 		// These translations are not used in QPrintDialog, 
@@ -981,6 +1065,7 @@ QString PrintWidget::toString(QPrinter::PaperSize size)
 		return QPrintDialog::tr(paper_size_names[size]);
 	else
 		return tr("Unknown", "Paper size");
+#endif
 }
 
 bool PrintWidget::checkForEmptyMap()
@@ -992,3 +1077,5 @@ bool PrintWidget::checkForEmptyMap()
 	}
 	return false;
 }
+
+#endif

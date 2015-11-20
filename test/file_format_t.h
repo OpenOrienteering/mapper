@@ -27,8 +27,8 @@
 
 
 /**
- * Tests that maps contain the same information before and after saving them
- * and loading them again.
+ * @test Tests that maps contain the same information before and after saving
+ *       them and loading them again.
  */
 class FileFormatTest : public QObject
 {

@@ -124,6 +124,7 @@ Object* TextObject::duplicate()
 {
 	TextObject* new_text = new TextObject(symbol);
 	new_text->coords = coords;
+	new_text->object_tags = object_tags;
 	
 	new_text->text = text;
 	new_text->h_align = h_align;
@@ -243,7 +244,7 @@ int TextObject::calcTextPositionAt(MapCoordF coord, bool find_line_only)
 // FIXME actually this is two functions, selected by parameter find_line_only; make two functions or return TextObjectLineInfo reference
 int TextObject::calcTextPositionAt(QPointF point, bool find_line_only)
 {
-	int click_tolerance = Settings::getInstance().getSettingCached(Settings::MapEditor_ClickTolerance).toInt();
+	float click_tolerance = Settings::getInstance().getMapEditorClickTolerancePx();
 	
 	for (int line = 0; line < getNumLines(); ++line)
 	{

@@ -36,17 +36,9 @@ MapUndoStep::MapUndoStep(Map* map, Type type): UndoStep(type)
 	part = map->getCurrentPartIndex();
 }
 
-void MapUndoStep::save(QIODevice* file)
-{
-	file->write((char*)&part, sizeof(int));
-	int size = affected_objects.size();
-	file->write((char*)&size, sizeof(int));
-	for (int i = 0; i < size; ++i)
-		file->write((char*)&affected_objects[i], sizeof(int));
-}
-
 bool MapUndoStep::load(QIODevice* file, int version)
 {
+	Q_UNUSED(version);
 	file->read((char*)&part, sizeof(int));
 	int size;
 	file->read((char*)&size, sizeof(int));
@@ -125,20 +117,6 @@ void ObjectContainingUndoStep::addObject(Object* existing, Object* object)
 	addObject(index, object);
 }
 
-void ObjectContainingUndoStep::save(QIODevice* file)
-{
-	MapUndoStep::save(file);
-	
-	int size = (int)objects.size();
-	for (int i = 0; i < size; ++i)
-	{
-		int save_type = static_cast<int>(objects[i]->getType());
-		file->write((const char*)&save_type, sizeof(int));
-		
-		objects[i]->setMap(map);	// IMPORTANT: only if the object's map pointer is set it will save its symbol index correctly
-		objects[i]->save(file);
-	}
-}
 bool ObjectContainingUndoStep::load(QIODevice* file, int version)
 {
 	if (!MapUndoStep::load(file, version))
@@ -193,6 +171,7 @@ void ObjectContainingUndoStep::loadImpl(QXmlStreamReader& xml, SymbolDictionary&
 
 void ObjectContainingUndoStep::symbolChanged(int pos, Symbol* new_symbol, Symbol* old_symbol)
 {
+	Q_UNUSED(pos);
 	int size = (int)objects.size();
 	for (int i = 0; i < size; ++i)
 	{
@@ -202,6 +181,7 @@ void ObjectContainingUndoStep::symbolChanged(int pos, Symbol* new_symbol, Symbol
 }
 void ObjectContainingUndoStep::symbolDeleted(int pos, Symbol* old_symbol)
 {
+	Q_UNUSED(pos);
 	int size = (int)objects.size();
 	for (int i = 0; i < size; ++i)
 	{
@@ -343,17 +323,7 @@ UndoStep* SwitchSymbolUndoStep::undo()
 	
 	return undo_step;
 }
-void SwitchSymbolUndoStep::save(QIODevice* file)
-{
-	MapUndoStep::save(file);
-	
-	int size = (int)target_symbols.size();
-	for (int i = 0; i < size; ++i)
-	{
-		int index = map->findSymbolIndex(target_symbols[i]);
-		file->write((char*)&index, sizeof(int));
-	}
-}
+
 bool SwitchSymbolUndoStep::load(QIODevice* file, int version)
 {
 	if (!MapUndoStep::load(file, version))
@@ -409,6 +379,7 @@ void SwitchSymbolUndoStep::loadImpl(QXmlStreamReader& xml, SymbolDictionary& sym
 
 void SwitchSymbolUndoStep::symbolChanged(int pos, Symbol* new_symbol, Symbol* old_symbol)
 {
+	Q_UNUSED(pos);
 	int size = (int)target_symbols.size();
 	for (int i = 0; i < size; ++i)
 	{
@@ -418,6 +389,7 @@ void SwitchSymbolUndoStep::symbolChanged(int pos, Symbol* new_symbol, Symbol* ol
 }
 void SwitchSymbolUndoStep::symbolDeleted(int pos, Symbol* old_symbol)
 {
+	Q_UNUSED(pos);
 	int size = (int)target_symbols.size();
 	for (int i = 0; i < size; ++i)
 	{

@@ -1,5 +1,5 @@
 #
-#    Copyright 2012 Thomas Schöps, Kai Pastor
+#    Copyright 2012, 2013, 2014 Thomas Schöps, Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -25,17 +25,18 @@ execute_process(
   COMMAND "${CMAKE_COMMAND}" -E copy_if_different mapper_config.h.tmp mapper_config.h
   WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
 )
-include_directories("${CMAKE_CURRENT_BINARY_DIR}")
+include_directories(
+  "${CMAKE_CURRENT_BINARY_DIR}"
+  "../3rd-party/qbezier/src"
+)
 
 set(Mapper_Common_SRCS
  global.cpp
  util.cpp
- util_pie_menu.cpp
  util_task_dialog.cpp
  util_translation.cpp
  mapper_resource.cpp
  undo.cpp
- qbezier.cpp
  matrix.cpp
  transformation.cpp
 
@@ -44,6 +45,7 @@ set(Mapper_Common_SRCS
  map.cpp
  map_part.cpp
  map_widget.cpp
+ touch_cursor.cpp
  map_editor.cpp
  map_editor_activity.cpp
  map_undo.cpp
@@ -75,7 +77,7 @@ set(Mapper_Common_SRCS
 
  template.cpp
  template_image.cpp
- template_gps.cpp
+ template_track.cpp
  template_map.cpp
  template_dialog_reopen.cpp
  template_dock_widget.cpp
@@ -91,11 +93,14 @@ set(Mapper_Common_SRCS
  tool_edit.cpp
  tool_edit_point.cpp
  tool_edit_line.cpp
+ tool_distribute_points.cpp
  tool_draw_line_and_area.cpp
  tool_draw_point.cpp
+ tool_draw_point_gps.cpp
  tool_draw_path.cpp
  tool_draw_circle.cpp
  tool_draw_rectangle.cpp
+ tool_draw_freehand.cpp
  tool_draw_text.cpp
  tool_cut.cpp
  tool_cut_hole.cpp
@@ -104,10 +109,17 @@ set(Mapper_Common_SRCS
  tool_rotate_pattern.cpp
  tool_scale.cpp
  tool_boolean.cpp
+ tool_fill.cpp
 
  gps_coordinates.cpp
  gps_track.cpp
+ gps_display.cpp
+ gps_temporary_markers.cpp
+ gps_track_recorder.cpp
  dxfparser.cpp
+ 
+ compass.cpp
+ compass_display.cpp
 
  file_format.cpp
  file_format_registry.cpp
@@ -116,8 +128,13 @@ set(Mapper_Common_SRCS
  file_format_ocad8.cpp
  file_format_xml.cpp
  
+ core/auto_save.cpp
  core/map_color.cpp
  core/map_printer.cpp
+ core/map_view.cpp
+ 
+ fileformats/ocd_file_format.cpp
+ fileformats/ocd_types.cpp
  
  fileformats/ocd_file_format.cpp
  fileformats/ocd_types.cpp
@@ -128,27 +145,39 @@ set(Mapper_Common_SRCS
  gui/main_window.cpp
  gui/main_window_controller.cpp
  gui/modifier_key.cpp
+ gui/print_progress_dialog.cpp
  gui/print_tool.cpp
  gui/print_widget.cpp
  gui/settings_dialog.cpp
  
+ gui/widgets/action_grid_bar.cpp
  gui/widgets/color_dropdown.cpp
  gui/widgets/home_screen_widget.cpp
+ gui/widgets/key_button_bar.cpp
  gui/widgets/mapper_proxystyle.cpp
  gui/widgets/measure_widget.cpp
+ gui/widgets/pie_menu.cpp
  gui/widgets/segmented_button_layout.cpp
+ gui/widgets/tags_widget.cpp
  
  util/item_delegates.cpp
  util/overriding_shortcut.cpp
+ util/recording_translator.cpp
+ util/xml_stream_util.cpp
 )
 
 set(Mapper_Common_MOC_INPUT
  color_dock_widget.h
+ compass.h
+ compass_display.h
  file_format_ocad8_p.h
  file_format_xml_p.h
  file_import_export.h
  georeferencing.h
  georeferencing_dialog.h
+ gps_display.h
+ gps_temporary_markers.h
+ gps_track_recorder.h
  map.h
  map_dialog_new.h
  map_dialog_scale.h
@@ -174,7 +203,7 @@ set(Mapper_Common_MOC_INPUT
  template_adjust.h
  template_dialog_reopen.h
  template_dock_widget.h
- template_gps.h
+ template_track.h
  template_image.h
  template_map.h
  template_position_dock_widget.h
@@ -185,24 +214,28 @@ set(Mapper_Common_MOC_INPUT
  tool_cut.h
  tool_cut_hole.h
  tool_cutout.h
+ tool_distribute_points.h
  tool_draw_circle.h
+ tool_draw_freehand.h
  tool_draw_line_and_area.h
  tool_draw_path.h
  tool_draw_point.h
+ tool_draw_point_gps.h
  tool_draw_rectangle.h
  tool_draw_text.h
  tool_edit.h
  tool_edit_point.h
  tool_edit_line.h
+ tool_fill.h
  tool_helpers.h
  tool_pan.h
  tool_rotate.h
  tool_rotate_pattern.h
  tool_scale.h
  undo.h
- util_pie_menu.h
  util_task_dialog.h
  
+ core/auto_save_p.h
  core/map_printer.h
  
  fileformats/ocd_file_format_p.h
@@ -212,22 +245,41 @@ set(Mapper_Common_MOC_INPUT
  gui/home_screen_controller.h
  gui/main_window.h
  gui/main_window_controller.h
+ gui/print_progress_dialog.h
  gui/print_tool.h
  gui/print_widget.h
  gui/settings_dialog.h
  gui/settings_dialog_p.h
  
+ gui/widgets/action_grid_bar.h
  gui/widgets/color_dropdown.h
  gui/widgets/home_screen_widget.h
+ gui/widgets/key_button_bar.h
  gui/widgets/mapper_proxystyle.h
  gui/widgets/measure_widget.h
+ gui/widgets/pie_menu.h
  gui/widgets/segmented_button_layout.h
+ gui/widgets/tags_widget.h
  
  util/item_delegates.h
  util/overriding_shortcut.h
+ util/recording_translator.h
 )
 
-qt4_wrap_cpp(Mapper_Common_MOC ${Mapper_Common_MOC_INPUT})
+set(Mapper_EXTRA_HEADERS
+  core/auto_save_p.h
+  core/image_transparency_fixup.h
+  fileformats/ocd_file_format_p.h
+  fileformats/ocd_types_v8.h
+  fileformats/ocd_types_v9.h
+  fileformats/ocd_types_v10.h
+  fileformats/ocd_types_v11.h
+  gui/settings_dialog_p.h
+  util/scoped_signals_blocker.h
+  file_format_ocad8_p.h
+)
+
+qt5_wrap_cpp(Mapper_Common_MOC ${Mapper_Common_MOC_INPUT})
 
 # Resources (from project root)
 
@@ -235,7 +287,14 @@ if(MAPPER_USE_QT_CONF_QRC)
 	set(Mapper_RESOURCES ${Mapper_RESOURCES} ${PROJECT_BINARY_DIR}/3rd-party/qt5/qt.conf.qrc)
 endif()
 set(Mapper_RESOURCES ${Mapper_RESOURCES} ${PROJECT_SOURCE_DIR}/resources.qrc)
-qt4_add_resources(Mapper_RESOURCES_RCC ${Mapper_RESOURCES} OPTIONS -no-compress)
+qt5_add_resources(Mapper_RESOURCES_RCC ${Mapper_RESOURCES} OPTIONS -no-compress)
+
+
+# Mapper_Extra_Header: dummy target to indicate extra headers to IDEs
+
+add_custom_target(Mapper_Extras
+  SOURCES ${Mapper_EXTRA_HEADERS}
+)
 
 # Mapper common: static library of full runtime 
 # (To be used by Mapper executable and by system tests.)
@@ -247,9 +306,14 @@ add_library(Mapper_Common STATIC
 )
 add_dependencies(Mapper_Common
   Mapper_prerequisites
+  Mapper_Extras
+)
+target_link_libraries(Mapper_Common
+  libocad
+  QBezier
 )
 
-qt4_translations_sources(
+qt5_translations_sources(
   SOURCES ${Mapper_Common_SRCS} ${Mapper_COMMON_MOC_INPUT}
 )
 
@@ -273,10 +337,16 @@ add_executable(Mapper
   MACOSX_BUNDLE
   ${Mapper_SRCS}
 )
+
+get_property(_definitions DIRECTORY PROPERTY COMPILE_DEFINITIONS)
+if(_definitions MATCHES "QT_NETWORK_LIB")
+	include_directories("../3rd-party/qtsingleapplication/src")
+	target_link_libraries(Mapper QtSingleApplication)
+endif()
+
 target_link_libraries(Mapper
   Mapper_Common
-  libocad
-  QtSingleApplication
+  docs-licensing
   ${PROJ_LIBRARY}
   ${QT_LIBRARIES}
   ${CLIPPER_LIBRARY}
@@ -291,9 +361,10 @@ if(Mapper_BUILD_QT)
 	write_qt_conf()
 endif()
 
-# Mapper.pro file
 
-set(MAPPER_PRO_GENERATOR "Generated in src/CMakeLists.txt from src/qmake/oo-mapper.pro.in")
-string(REPLACE ";" " \\\n  src/" MAPPER_PRO_HEADERS "src/${Mapper_Common_MOC_INPUT}")
-string(REPLACE ";" " \\\n  src/" MAPPER_PRO_SOURCES "src/${Mapper_Common_SRCS}")
-configure_file(qmake/oo-mapper.pro.in ${PROJECT_SOURCE_DIR}/oo-mapper.pro @ONLY)
+# qmake configuration
+
+set(MAPPER_PRO_GENERATOR "Generated in CMakeLists.txt from src.pro.in")
+string(REPLACE ";" " \\\n  " MAPPER_PRO_HEADERS "${Mapper_Common_MOC_INPUT}")
+string(REPLACE ";" " \\\n  " MAPPER_PRO_SOURCES "${Mapper_Common_SRCS}")
+configure_file(${PROJECT_SOURCE_DIR}/src/src.pro.in ${PROJECT_SOURCE_DIR}/src/src.pro @ONLY)

@@ -1,21 +1,21 @@
 /*
- *    Copyright 2012, 2013 Pete Curtis
- *
- *    This file is part of OpenOrienteering.
- *
- *    OpenOrienteering is free software: you can redistribute it and/or modify
- *    it under the terms of the GNU General Public License as published by
- *    the Free Software Foundation, either version 3 of the License, or
- *    (at your option) any later version.
- *
- *    OpenOrienteering is distributed in the hope that it will be useful,
- *    but WITHOUT ANY WARRANTY; without even the implied warranty of
- *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *    GNU General Public License for more details.
- *
- *    You should have received a copy of the GNU General Public License
- *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
- */
+*    Copyright 2012, 2013 Pete Curtis
+*
+*    This file is part of OpenOrienteering.
+*
+*    OpenOrienteering is free software: you can redistribute it and/or modify
+*    it under the terms of the GNU General Public License as published by
+*    the Free Software Foundation, either version 3 of the License, or
+*    (at your option) any later version.
+*
+*    OpenOrienteering is distributed in the hope that it will be useful,
+*    but WITHOUT ANY WARRANTY; without even the implied warranty of
+*    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*    GNU General Public License for more details.
+*
+*    You should have received a copy of the GNU General Public License
+*    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
+*/
 
 #ifndef _OPENORIENTEERING_FILE_FORMAT_OCAD_P_H
 #define _OPENORIENTEERING_FILE_FORMAT_OCAD_P_H
@@ -47,8 +47,7 @@ class PointSymbol;
 class Template;
 class TextSymbol;
 
-// ### OCAD8FileImport declaration ###
-
+/** Importer for OCD version 8 files. */
 class OCAD8FileImport : public Importer
 {
 	friend class OcdFileImport;
@@ -73,27 +72,26 @@ protected:
 	
 public:
 	OCAD8FileImport(QIODevice* stream, Map *map, MapView *view);
-	virtual ~OCAD8FileImport();
-	
+	~OCAD8FileImport();
+
 	void setStringEncodings(const char *narrow, const char *wide = "UTF-16LE");
-	
+
 	static const float ocad_pt_in_mm;
-	
+
 protected:
 	void import(bool load_symbols_only) throw (FileFormatException);
 	
 	// Symbol import
-	
 	Symbol *importPointSymbol(const OCADPointSymbol *ocad_symbol);
 	Symbol *importLineSymbol(const OCADLineSymbol *ocad_symbol);
 	Symbol *importAreaSymbol(const OCADAreaSymbol *ocad_symbol);
 	Symbol *importTextSymbol(const OCADTextSymbol *ocad_symbol);
 	RectangleInfo *importRectSymbol(const OCADRectSymbol *ocad_symbol);
-	
+
 	// Object import
 	Object *importObject(const OCADObject *ocad_object, MapPart* part);
 	bool importRectangleObject(const OCADObject* ocad_object, MapPart* part, const RectangleInfo& rect);
-	
+
 	// String import
 	virtual void importString(OCADStringEntry *entry);
 	
@@ -101,15 +99,15 @@ protected:
 	OCADBackground importBackground(const QByteArray& data);
 	/// @deprecated Replaced by Template *importTemplate(OCADCString* string).
 	Template *importRasterTemplate(const OCADBackground &background);
-	
+
 	// Some helper functions that are used in multiple places
 	PointSymbol *importPattern(s16 npts, OCADPoint *pts);
 	void fillCommonSymbolFields(Symbol *symbol, const OCADSymbol *ocad_symbol);
 	void setPathHolePoint(Object *object, int i);
 	void fillPathCoords(Object* object, bool is_area, u16 npts, const OCADPoint* pts);
 	bool fillTextPathCoords(TextObject* object, TextSymbol* symbol, u16 npts, OCADPoint* pts);
-	
-	
+
+
 	// Unit conversion functions
 	QString convertPascalString(const char *p);
 	QString convertCString(const char *p, size_t n, bool ignore_first_newline);
@@ -117,26 +115,24 @@ protected:
 	float convertRotation(int angle);
 	void convertPoint(MapCoord &c, int ocad_x, int ocad_y);
 	qint64 convertSize(int ocad_size);
-	MapColor *convertColor(int color);
+	const MapColor *convertColor(int color);
 	double convertTemplateScale(double ocad_scale);
 	
 	static bool isRasterImageFile(const QString &filename);
-	
-protected:
-	QByteArray buffer;
-	
+
+private:
 	/// Handle to the open OCAD file
 	OCADFile *file;
-	
+
 	/// Character encoding to use for 1-byte (narrow) strings
 	QTextCodec *encoding_1byte;
-	
+
 	/// Character encoding to use for 2-byte (wide) strings
 	QTextCodec *encoding_2byte;
-	
+
 	/// maps OCAD color number to oo-mapper color object
-	QHash<int, MapColor *> color_index;
-	
+	QHash<int, const MapColor *> color_index;
+
 	/// maps OCAD symbol number to oo-mapper symbol object
 	QHash<int, Symbol *> symbol_index;
 	
@@ -145,13 +141,13 @@ protected:
 	
 	/// maps OCAD symbol number to rectangle information struct
 	QHash<int, RectangleInfo> rectangle_info;
-	
+
 	/// Offset between OCAD map origin and Mapper map origin (in Mapper coordinates)
 	qint64 offset_x, offset_y;
 };
 
-// ### OCAD8FileExport declaration ###
 
+/** Exporter for OCD version 8 files. */
 class OCAD8FileExport : public Exporter
 {
 Q_OBJECT
@@ -197,6 +193,9 @@ protected:
 	double convertTemplateScale(double mapper_scale);
 	
 private:
+	/** Indicates that the map uses the special registration color. */
+	bool uses_registration_color;
+	
 	/// Handle to the open OCAD file
 	OCADFile *file;
 	

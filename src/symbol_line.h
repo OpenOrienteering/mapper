@@ -42,6 +42,7 @@ class SymbolSettingDialog;
 class PointSymbolEditorWidget;
 class PointSymbol;
 
+/** Settings for a line symbol's border. */
 struct LineSymbolBorder
 {
 	const MapColor* color;
@@ -52,10 +53,9 @@ struct LineSymbolBorder
 	int break_length;
 	
 	void reset();
-	void save(QIODevice* file, Map* map);
 	bool load(QIODevice* file, int version, Map* map);
 	void save(QXmlStreamWriter& xml, const Map& map) const;
-	bool load(QXmlStreamReader& xml, Map& map);
+	bool load(QXmlStreamReader& xml, const Map& map);
 	bool equals(const LineSymbolBorder* other) const;
 	void assign(const LineSymbolBorder& other, const MapColorMap* color_map);
 	
@@ -65,6 +65,7 @@ struct LineSymbolBorder
 };
 
 
+/** Symbol for PathObjects which displays a line along the path. */
 class LineSymbol : public Symbol
 {
 friend class LineSymbolSettings;
@@ -86,7 +87,7 @@ public:
 		RoundJoin = 2
 	};
 	
-	/// Constructs an empty line symbol
+	/** Constructs an empty line symbol. */
 	LineSymbol();
 	virtual ~LineSymbol();
 	virtual Symbol* duplicate(const MapColorMap* color_map) const;
@@ -98,19 +99,36 @@ public:
 	virtual const MapColor* getDominantColorGuess() const;
 	virtual void scale(double factor);
 	
-	/// Creates empty point symbols for contained NULL symbols with the given names
-    void ensurePointSymbols(const QString& start_name, const QString& mid_name, const QString& end_name, const QString& dash_name);
-	/// Deletes unused point symbols and sets them to NULL
+	/**
+	 * Creates empty point symbols for contained NULL symbols
+	 * with the given names. Useful to prevent having to deal with NULL
+	 * pointers. Use cleanupPointSymbols() later.
+	 */
+    void ensurePointSymbols(
+		const QString& start_name,
+		const QString& mid_name,
+		const QString& end_name,
+		const QString& dash_name
+	);
+	
+	/**
+	 * Deletes unused point symbols and sets them to NULL again.
+	 * See ensurePointSymbols().
+	 */
 	void cleanupPointSymbols();
 	
-	/// Returns the largest extent (half width) of the components of this line.
+	/**
+	 * Returns the largest extent (half width) of the components of this line.
+	 */
 	virtual float calculateLargestLineExtent(Map* map);
 	
-	/// Returns the limit for miter joins in units of the line width.
-	/// See the Qt docs for QPainter::setMiterJoin().
-	/// TODO: Should that better be a line property?
-// FIXME: shall be 0 for border lines.
-	static const float miterLimit() {return 1;}
+	/**
+	 * Returns the limit for miter joins in units of the line width.
+	 * See the Qt docs for QPainter::setMiterJoin().
+	 * TODO: Should that better be a line property?
+	 * FIXME: shall be 0 for border lines.
+	 */
+	static float miterLimit() {return 1;}
 	
 	// Getters / Setters
 	inline int getLineWidth() const {return line_width;}
@@ -179,11 +197,10 @@ public:
 	virtual SymbolPropertiesWidget* createPropertiesWidget(SymbolSettingDialog* dialog);
 	
 protected:
-	virtual void saveImpl(QIODevice* file, Map* map);
 	virtual bool loadImpl(QIODevice* file, int version, Map* map);
 	virtual void saveImpl(QXmlStreamWriter& xml, const Map& map) const;
-	virtual bool loadImpl(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol_dict);
-	PointSymbol* loadPointSymbol(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol_dict);
+	virtual bool loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict);
+	PointSymbol* loadPointSymbol(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict);
 	virtual bool equalsImpl(Symbol* other, Qt::CaseSensitivity case_sensitivity);
 	
 	void createBorderLines(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, bool path_closed, ObjectRenderables& output);

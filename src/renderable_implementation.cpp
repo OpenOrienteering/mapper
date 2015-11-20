@@ -54,6 +54,9 @@ void DotRenderable::getRenderStates(RenderStates& out) const
 }
 void DotRenderable::render(QPainter& painter, QRectF& bounding_box, bool force_min_size, float scaling, bool on_screen) const
 {
+	Q_UNUSED(bounding_box);
+	Q_UNUSED(on_screen);
+	
 	if (force_min_size && extent.width() * scaling < 1.5f)
 		painter.drawEllipse(extent.center(), 0.5f * (1/scaling), 0.5f * (1/scaling));
 	else
@@ -86,6 +89,9 @@ void CircleRenderable::getRenderStates(RenderStates& out) const
 }
 void CircleRenderable::render(QPainter& painter, QRectF& bounding_box, bool force_min_size, float scaling, bool on_screen) const
 {
+	Q_UNUSED(bounding_box);
+	Q_UNUSED(on_screen);
+	
 	if (force_min_size && rect.width() * scaling < 1.5f)
 		painter.drawEllipse(rect.center(), 0.5f * (1/scaling), 0.5f * (1/scaling));
 	else
@@ -262,6 +268,10 @@ void LineRenderable::getRenderStates(RenderStates& out) const
 }
 void LineRenderable::render(QPainter& painter, QRectF& bounding_box, bool force_min_size, float scaling, bool on_screen) const
 {
+	Q_UNUSED(force_min_size);
+	Q_UNUSED(scaling);
+	Q_UNUSED(on_screen);
+	
 	QPen pen(painter.pen());
 	pen.setCapStyle(cap_style);
 	pen.setJoinStyle(join_style);
@@ -473,6 +483,11 @@ void AreaRenderable::getRenderStates(RenderStates& out) const
 }
 void AreaRenderable::render(QPainter& painter, QRectF& bounding_box, bool force_min_size, float scaling, bool on_screen) const
 {
+	Q_UNUSED(bounding_box);
+	Q_UNUSED(force_min_size);
+	Q_UNUSED(scaling);
+	Q_UNUSED(on_screen);
+	
 	painter.drawPath(path);
 	
 	// DEBUG: show all control points
@@ -599,6 +614,10 @@ void TextRenderable::getRenderStates(RenderStates& out) const
 
 void TextRenderable::render(QPainter& painter, QRectF& bounding_box, bool force_min_size, float scaling, bool on_screen) const
 {
+	Q_UNUSED(bounding_box);
+	Q_UNUSED(force_min_size);
+	Q_UNUSED(scaling);
+	
 	bool used_antialiasing_before = painter.renderHints() & QPainter::Antialiasing;
 	bool disable_antialiasing = on_screen && !(Settings::getInstance().getSettingCached(Settings::MapDisplay_TextAntialiasing).toBool());
 	if (disable_antialiasing)

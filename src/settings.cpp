@@ -1,5 +1,6 @@
 /*
- *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2012 Thomas Schöps
+ *    Copyright 2013, 2014 Thomas Schöps, Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -20,18 +21,41 @@
 
 #include "settings.h"
 
+#include <QApplication>
 #include <QLocale>
 #include <QVariant>
+#include <QScreen>
 #include <QSettings>
 #include <QStringList>
+#include <QDebug>
+
+#include "util.h"
 
 Settings::Settings()
  : QObject()
 {
-	registerSetting(MapDisplay_Antialiasing, "MapDisplay/antialiasing", true);
+	const float touch_button_minimum_size_default = 11;
+	float symbol_widget_icon_size_mm_default;
+	float map_editor_click_tolerance_default;
+	float map_editor_snap_distance_default;
+	int start_drag_distance_default;
+	
+	// Platform-specific settings defaults
+	#if defined(ANDROID)
+		symbol_widget_icon_size_mm_default = touch_button_minimum_size_default;
+		map_editor_click_tolerance_default = 4.0f;
+		map_editor_snap_distance_default = 15.0f;
+		start_drag_distance_default = Util::mmToPixelLogical(3.0f);
+	#else
+		symbol_widget_icon_size_mm_default = 8;
+		map_editor_click_tolerance_default = 3.0f;
+		map_editor_snap_distance_default = 10.0f;
+		start_drag_distance_default = QApplication::startDragDistance();
+	#endif
+	
 	registerSetting(MapDisplay_TextAntialiasing, "MapDisplay/text_antialiasing", false);
-	registerSetting(MapEditor_ClickTolerance, "MapEditor/click_tolerance", 5);
-	registerSetting(MapEditor_SnapDistance, "MapEditor/snap_distance", 20);
+	registerSetting(MapEditor_ClickToleranceMM, "MapEditor/click_tolerance_mm", map_editor_click_tolerance_default);
+	registerSetting(MapEditor_SnapDistanceMM, "MapEditor/snap_distance_mm", map_editor_snap_distance_default);
 	registerSetting(MapEditor_FixedAngleStepping, "MapEditor/fixed_angle_stepping", 15);
 	registerSetting(MapEditor_ChangeSymbolWhenSelecting, "MapEditor/change_symbol_when_selecting", true);
 	registerSetting(MapEditor_ZoomOutAwayFromCursor, "MapEditor/zoom_out_away_from_cursor", true);
@@ -40,23 +64,32 @@ Settings::Settings()
 	registerSetting(EditTool_DeleteBezierPointAction, "EditTool/delete_bezier_point_action", (int)DeleteBezierPoint_RetainExistingShape);
 	registerSetting(EditTool_DeleteBezierPointActionAlternative, "EditTool/delete_bezier_point_action_alternative", (int)DeleteBezierPoint_ResetHandles);
 	
-	registerSetting(RectangleTool_HelperCrossRadius, "RectangleTool/helper_cross_radius", 300);
+	registerSetting(RectangleTool_HelperCrossRadiusMM, "RectangleTool/helper_cross_radius_mm", 100.0f);
 	registerSetting(RectangleTool_PreviewLineWidth, "RectangleTool/preview_line_with", true);
 	
 	registerSetting(Templates_KeepSettingsOfClosed, "Templates/keep_settings_of_closed_templates", true);
 	
+	registerSetting(ActionGridBar_ButtonSizeMM, "ActionGridBar/button_size_mm", touch_button_minimum_size_default);
+	registerSetting(SymbolWidget_IconSizeMM, "SymbolWidget/icon_size_mm", symbol_widget_icon_size_mm_default);
+	
+	registerSetting(General_AutoSaveInterval, "autosave", 15); // unit: minutes
 	registerSetting(General_Language, "language", QVariant((int)QLocale::system().language()));
+	registerSetting(General_PixelsPerInch, "pixelsPerInch", QApplication::primaryScreen()->physicalDotsPerInch());
 	registerSetting(General_TranslationFile, "translationFile", QVariant(QString::null));
 	registerSetting(General_RecentFilesList, "recentFileList", QVariant(QStringList()));
 	registerSetting(General_OpenMRUFile, "openMRUFile", false);
 	registerSetting(General_Local8BitEncoding, "local_8bit_encoding", "Windows-1252");
 	registerSetting(General_NewOcd8Implementation, "new_ocd8_implementation", false);
+	registerSetting(General_StartDragDistance, "startDragDistance", start_drag_distance_default);
 	
 	registerSetting(HomeScreen_TipsVisible, "HomeScreen/tipsVisible", true);
 	registerSetting(HomeScreen_CurrentTip, "HomeScreen/currentTip", -1);
 	
+	// Set antialiasing default depending on screen pixels per inch
+	registerSetting(MapDisplay_Antialiasing, "MapDisplay/antialiasing", Util::isAntialiasingRequired(this));
+	
 	// Migrate old settings
-	static QVariant current_version("0.5");
+	static QVariant current_version("0.5.9");
 	QSettings settings;
 	if (settings.value("version") != current_version)
 	{
@@ -69,6 +102,12 @@ Settings::Settings()
 				settings.setValue(key, old_settings.value(key));
 		}
 		migrateValue("General/language", General_Language, settings);
+		if (migrateValue("MapEditor/click_tolerance", MapEditor_ClickToleranceMM, settings))
+			settings.setValue(getSettingPath(MapEditor_ClickToleranceMM), Util::pixelToMMLogical(settings.value(getSettingPath(MapEditor_ClickToleranceMM)).toFloat()));
+		if (migrateValue("MapEditor/snap_distance", MapEditor_SnapDistanceMM, settings))
+			settings.setValue(getSettingPath(MapEditor_SnapDistanceMM), Util::pixelToMMLogical(settings.value(getSettingPath(MapEditor_SnapDistanceMM)).toFloat()));
+		if (migrateValue("RectangleTool/helper_cross_radius", RectangleTool_HelperCrossRadiusMM, settings))
+			settings.setValue(getSettingPath(RectangleTool_HelperCrossRadiusMM), Util::pixelToMMLogical(settings.value(getSettingPath(RectangleTool_HelperCrossRadiusMM)).toFloat()));
 		settings.setValue("version", current_version);
 	}
 }
@@ -79,8 +118,9 @@ void Settings::registerSetting(Settings::SettingsEnum id, const QString& path, c
 	setting_defaults[id] = default_value;
 }
 
-void Settings::migrateValue(const QString& old_key, SettingsEnum new_setting, QSettings& settings) const
+bool Settings::migrateValue(const QString& old_key, SettingsEnum new_setting, QSettings& settings) const
 {
+	bool value_migrated = false;
 	if (settings.contains(old_key))
 	{
 		const QString new_key = getSettingPath(new_setting);
@@ -90,9 +130,11 @@ void Settings::migrateValue(const QString& old_key, SettingsEnum new_setting, QS
 		if (!settings.contains(new_key))
 		{
 			settings.setValue(new_key, settings.value(old_key));
+			value_migrated = true;
 		}
 		settings.remove(old_key);
 	}
+	return value_migrated;
 }
 
 QVariant Settings::getSetting(Settings::SettingsEnum setting) const
@@ -157,4 +199,29 @@ void Settings::applySettings()
 	// Invalidate cache as settings could be changed
 	settings_cache.clear();
 	emit settingsChanged();
+}
+
+int Settings::getSymbolWidgetIconSizePx()
+{
+	return qRound(Util::mmToPixelLogical(getSettingCached(Settings::SymbolWidget_IconSizeMM).toFloat()));
+}
+
+float Settings::getMapEditorClickTolerancePx()
+{
+	return Util::mmToPixelLogical(getSettingCached(Settings::MapEditor_ClickToleranceMM).toFloat());
+}
+
+float Settings::getMapEditorSnapDistancePx()
+{
+	return Util::mmToPixelLogical(getSettingCached(Settings::MapEditor_SnapDistanceMM).toFloat());
+}
+
+float Settings::getRectangleToolHelperCrossRadiusPx()
+{
+	return Util::mmToPixelLogical(getSettingCached(Settings::RectangleTool_HelperCrossRadiusMM).toFloat());
+}
+
+int Settings::getStartDragDistancePx()
+{
+	return getSettingCached(Settings::General_StartDragDistance).toInt();
 }

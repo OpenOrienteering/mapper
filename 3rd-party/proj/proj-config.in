@@ -36,6 +36,7 @@ export PATH=$(echo "$PATH" | sed -e 's/\(^\|:\)\([/]mingw[/]bin\):\(.*\)/\1\3:\2
 
 "$SOURCE_DIR/configure" \
   --without-mutex \
+  --without-jni \
   --prefix "@INSTALL_DIR@" \
   @_proj_cfg_cross@ \
   CC=@CMAKE_C_COMPILER@ \

@@ -1,5 +1,5 @@
 /*
- *    Copyright 2012, 2013 Pete Curtis, Kai Pastor
+ *    Copyright 2012, 2013, 2014 Pete Curtis, Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -22,13 +22,17 @@
 
 #include <QDebug>
 #include <QFile>
-#include <QPrinter>
 #include <QStringBuilder>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
+#ifdef QT_PRINTSUPPORT_LIB
+#  include <QPrinter>
+#endif
+
 #include "core/map_color.h"
 #include "core/map_printer.h"
+#include "core/map_view.h"
 #include "file_import_export.h"
 #include "georeferencing.h"
 #include "map.h"
@@ -41,11 +45,17 @@
 #include "symbol_point.h"
 #include "symbol_text.h"
 #include "template.h"
+#include "util/xml_stream_util.h"
 
 // ### XMLFileFormat definition ###
 
 const int XMLFileFormat::minimum_version = 2;
-const int XMLFileFormat::current_version = 4;
+#if defined(Q_OS_ANDROID)
+#warning "XMLFileFormat::current_version is set to 5 for Android"
+const int XMLFileFormat::current_version = 5;
+#else
+const int XMLFileFormat::current_version = 6;
+#endif
 const QString XMLFileFormat::magic_string = "<?xml ";
 const QString XMLFileFormat::mapper_namespace = "http://oorienteering.sourceforge.net/mapper/xml/v2";
 
@@ -53,7 +63,7 @@ XMLFileFormat::XMLFileFormat()
  : FileFormat(MapFile, "XML", ImportExport::tr("OpenOrienteering Mapper"), "omap", 
               ImportSupported | ExportSupported) 
 {
-	addExtension("xmap"); // Legacy, TODO: Remove .xmap in release 1.0.
+	addExtension("xmap");
 }
 
 bool XMLFileFormat::understands(const unsigned char *buffer, size_t sz) const
@@ -72,6 +82,72 @@ Importer *XMLFileFormat::createImporter(QIODevice* stream, Map *map, MapView *vi
 Exporter *XMLFileFormat::createExporter(QIODevice* stream, Map *map, MapView *view) const throw (FileFormatException)
 {
 	return new XMLFileExporter(stream, map, view);
+}
+
+
+
+// ### A namespace which collects various string constants of type QLatin1String. ###
+
+namespace literal
+{
+	static const QLatin1String map("map");
+	static const QLatin1String version("version");
+	static const QLatin1String notes("notes");
+	
+	static const QLatin1String count("count");
+	static const QLatin1String current("current");
+	
+	static const QLatin1String georeferencing("georeferencing");
+	
+	static const QLatin1String colors("colors");
+	static const QLatin1String color("color");
+	static const QLatin1String priority("priority");
+	static const QLatin1String name("name");
+	static const QLatin1String method("method");
+	static const QLatin1String spotcolor("spotcolor");
+	static const QLatin1String cmyk("cmyk");
+	static const QLatin1String rgb("rgb");
+	static const QLatin1String custom("custom");
+	static const QLatin1String spotcolors("spotcolors");
+	static const QLatin1String knockout("knockout");
+	static const QLatin1String namedcolor("namedcolor");
+	static const QLatin1String component("component");
+	static const QLatin1String factor("factor");
+	static const QLatin1String c("c");
+	static const QLatin1String m("m");
+	static const QLatin1String y("y");
+	static const QLatin1String k("k");
+	static const QLatin1String r("r");
+	static const QLatin1String g("g");
+	static const QLatin1String b("b");
+	static const QLatin1String opacity("opacity");
+	
+	static const QLatin1String symbols("symbols");
+	static const QLatin1String symbol("symbol");
+	
+	static const QLatin1String parts("parts");
+	static const QLatin1String part("part");
+	
+	static const QLatin1String templates("templates");
+	static const QLatin1String template_string("template");
+	static const QLatin1String first_front_template("first_front_template");
+	
+	static const QLatin1String defaults("defaults");
+	static const QLatin1String use_meters_per_pixel("use_meters_per_pixel");
+	static const QLatin1String meters_per_pixel("meters_per_pixel");
+	static const QLatin1String dpi("dpi");
+	static const QLatin1String scale("scale");
+	
+	static const QLatin1String view("view");
+	static const QLatin1String area_hatching_enabled("area_hatching_enabled");
+	static const QLatin1String baseline_view_enabled("baseline_view_enabled");
+	static const QLatin1String grid("grid");
+	static const QLatin1String map_view("map_view");
+	
+	static const QLatin1String print("print");
+	
+	static const QLatin1String undo("undo");
+	static const QLatin1String redo("redo");
 }
 
 
@@ -95,22 +171,24 @@ void XMLFileExporter::doExport() throw (FileFormatException)
 	
 	xml.writeDefaultNamespace(XMLFileFormat::mapper_namespace);
 	xml.writeStartDocument();
-	xml.writeStartElement("map");
-	xml.writeAttribute("version", QString::number(XMLFileFormat::current_version));
 	
-	xml.writeTextElement("notes", map->getMapNotes());
+	{
+		XmlElementWriter map_element(xml, literal::map);
+		map_element.writeAttribute(literal::version, XMLFileFormat::current_version);
+		
+		xml.writeTextElement(literal::notes, map->getMapNotes());
+		
+		exportGeoreferencing();
+		exportColors();
+		exportSymbols();
+		exportMapParts();
+		exportTemplates();
+		exportView();
+		exportPrint();
+		exportUndo();
+		exportRedo();
+	}
 	
-	exportGeoreferencing();
-	exportColors();
-	exportSymbols();
-	exportMapParts();
-	exportTemplates();
-	exportView();
-	exportPrint();
-	exportUndo();
-	exportRedo();
-	
-	xml.writeEndElement(/*document*/);
 	xml.writeEndDocument();
 }
 
@@ -121,147 +199,139 @@ void XMLFileExporter::exportGeoreferencing()
 
 void XMLFileExporter::exportColors()
 {
-	xml.writeStartElement("colors");
-	int num_colors = (int)map->color_set->colors.size();
-	xml.writeAttribute("count", QString::number(num_colors));
-	for (int i = 0; i < num_colors; ++i)
+	XmlElementWriter all_colors_element(xml, literal::colors);
+	std::size_t num_colors = map->color_set->colors.size();
+	all_colors_element.writeAttribute(literal::count, num_colors);
+	for (std::size_t i = 0; i < num_colors; ++i)
 	{
 		MapColor* color = map->color_set->colors[i];
 		const MapColorCmyk &cmyk = color->getCmyk();
-		xml.writeStartElement("color");
-		xml.writeAttribute("priority", QString::number(color->getPriority()));
-		xml.writeAttribute("name", color->getName());
-		xml.writeAttribute("c", QString::number(cmyk.c, 'f', 3));
-		xml.writeAttribute("m", QString::number(cmyk.m, 'f', 3));
-		xml.writeAttribute("y", QString::number(cmyk.y, 'f', 3));
-		xml.writeAttribute("k", QString::number(cmyk.k, 'f', 3));
-		xml.writeAttribute("opacity", QString::number(color->getOpacity(), 'f', 3));
+		XmlElementWriter color_element(xml, literal::color);
+		color_element.writeAttribute(literal::priority, color->getPriority());
+		color_element.writeAttribute(literal::name, color->getName());
+		color_element.writeAttribute(literal::c, cmyk.c, 3);
+		color_element.writeAttribute(literal::m, cmyk.m, 3);
+		color_element.writeAttribute(literal::y, cmyk.y, 3);
+		color_element.writeAttribute(literal::k, cmyk.k, 3);
+		color_element.writeAttribute(literal::opacity, color->getOpacity(), 3);
 		
 		if (color->getSpotColorMethod() != MapColor::UndefinedMethod)
 		{
-			xml.writeStartElement("spotcolors");
-			if (color->getKnockout())
-				xml.writeAttribute("knockout", "true");
+			XmlElementWriter spotcolors_element(xml, literal::spotcolors);
+			spotcolors_element.writeAttribute(literal::knockout, color->getKnockout());
 			SpotColorComponent component;
 			switch(color->getSpotColorMethod())
 			{
 				case MapColor::SpotColor:
-					xml.writeTextElement("namedcolor", color->getSpotColorName());
+					xml.writeTextElement(literal::namedcolor, color->getSpotColorName());
 					break;
 				case MapColor::CustomColor:
 					Q_FOREACH(component, color->getComponents())
 					{
-						xml.writeStartElement("component");
-						xml.writeAttribute("factor", QString::number(component.factor));
-						xml.writeAttribute("spotcolor", QString::number(component.spot_color->getPriority()));
-						xml.writeEndElement(/*component*/);
+						XmlElementWriter component_element(xml, literal::component);
+						component_element.writeAttribute(literal::factor, component.factor);
+						component_element.writeAttribute(literal::spotcolor, component.spot_color->getPriority());
 					}
 				default:
 					; // nothing
 			}
-			xml.writeEndElement(/*spotcolors*/);
 		}
 		
-		xml.writeStartElement("cmyk");
-		switch(color->getCmykColorMethod())
 		{
-			case MapColor::SpotColor:
-				xml.writeAttribute("method", "spotcolor");
-				break;
-			case MapColor::RgbColor:
-				xml.writeAttribute("method", "rgb");
-				break;
-			default:
-				xml.writeAttribute("method", "custom");
+			XmlElementWriter cmyk_element(xml, literal::cmyk);
+			switch(color->getCmykColorMethod())
+			{
+				case MapColor::SpotColor:
+					cmyk_element.writeAttribute(literal::method, literal::spotcolor);
+					break;
+				case MapColor::RgbColor:
+					cmyk_element.writeAttribute(literal::method, literal::rgb);
+					break;
+				default:
+					cmyk_element.writeAttribute(literal::method, literal::custom);
+			}
 		}
-		xml.writeEndElement(/*cmyk*/);
 		
-		xml.writeStartElement("rgb");
-		switch(color->getCmykColorMethod())
 		{
-			case MapColor::SpotColor:
-				xml.writeAttribute("method", "spotcolor");
-				break;
-			case MapColor::CmykColor:
-				xml.writeAttribute("method", "cmyk");
-				break;
-			default:
-				xml.writeAttribute("method", "custom");
+			XmlElementWriter rgb_element(xml, literal::rgb);
+			switch(color->getCmykColorMethod())
+			{
+				case MapColor::SpotColor:
+					rgb_element.writeAttribute(literal::method, literal::spotcolor);
+					break;
+				case MapColor::CmykColor:
+					rgb_element.writeAttribute(literal::method, literal::cmyk);
+					break;
+				default:
+					rgb_element.writeAttribute(literal::method, literal::custom);
+			}
+			const MapColorRgb &rgb = color->getRgb();
+			rgb_element.writeAttribute(literal::r, rgb.r, 3);
+			rgb_element.writeAttribute(literal::g, rgb.g, 3);
+			rgb_element.writeAttribute(literal::b, rgb.b, 3);
 		}
-		const MapColorRgb &rgb = color->getRgb();
-		xml.writeAttribute("r", QString::number(rgb.r, 'f', 3));
-		xml.writeAttribute("g", QString::number(rgb.g, 'f', 3));
-		xml.writeAttribute("b", QString::number(rgb.b, 'f', 3));
-		xml.writeEndElement(/*rgb*/);
-		
-		xml.writeEndElement(/*color*/);
 	}
-	xml.writeEndElement(/*colors*/); 
 }
 
 void XMLFileExporter::exportSymbols()
 {
-	xml.writeStartElement("symbols");
+	XmlElementWriter symbols_element(xml, literal::symbols);
 	int num_symbols = map->getNumSymbols();
-	xml.writeAttribute("count", QString::number(num_symbols));
+	symbols_element.writeAttribute(literal::count, num_symbols);
 	for (int i = 0; i < num_symbols; ++i)
 	{
 		map->getSymbol(i)->save(xml, *map);
 	}
-	xml.writeEndElement(/*symbols*/); 
 }
 
 void XMLFileExporter::exportMapParts()
 {
-	xml.writeStartElement("parts");
+	XmlElementWriter parts_element(xml, literal::parts);
+	
 	int num_parts = map->getNumParts();
-	xml.writeAttribute("count", QString::number(num_parts));
-	xml.writeAttribute("current", QString::number(map->current_part_index));
+	parts_element.writeAttribute(literal::count, num_parts);
+	parts_element.writeAttribute(literal::current, map->current_part_index);
 	for (int i = 0; i < num_parts; ++i)
 		map->getPart(i)->save(xml, *map);
-	xml.writeEndElement(/*parts*/); 
 }
 
 void XMLFileExporter::exportTemplates()
 {
-	xml.writeStartElement("templates");
+	XmlElementWriter templates_element(xml, literal::templates);
 	
 	int num_templates = map->getNumTemplates() + map->getNumClosedTemplates();
-	xml.writeAttribute("count", QString::number(num_templates));
-	xml.writeAttribute("first_front_template", QString::number(map->first_front_template));
+	templates_element.writeAttribute(literal::count, num_templates);
+	templates_element.writeAttribute(literal::first_front_template, map->first_front_template);
 	for (int i = 0; i < map->getNumTemplates(); ++i)
 		map->getTemplate(i)->saveTemplateConfiguration(xml, true);
 	for (int i = 0; i < map->getNumClosedTemplates(); ++i)
 		map->getClosedTemplate(i)->saveTemplateConfiguration(xml, false);
 	
-	xml.writeEmptyElement("defaults");
-	xml.writeAttribute("use_meters_per_pixel", map->image_template_use_meters_per_pixel ? "true" : "false");
-	xml.writeAttribute("meters_per_pixel", QString::number(map->image_template_meters_per_pixel));
-	xml.writeAttribute("dpi", QString::number(map->image_template_dpi));
-	xml.writeAttribute("scale", QString::number(map->image_template_scale));
-	
-	xml.writeEndElement(/*templates*/); 
+	{
+		XmlElementWriter defaults_element(xml, literal::defaults);
+		defaults_element.writeAttribute(literal::use_meters_per_pixel, map->image_template_use_meters_per_pixel);
+		defaults_element.writeAttribute(literal::meters_per_pixel, map->image_template_meters_per_pixel);
+		defaults_element.writeAttribute(literal::dpi, map->image_template_dpi);
+		defaults_element.writeAttribute(literal::scale, map->image_template_scale);
+	}
 }
 
 void XMLFileExporter::exportView()
 {
-	xml.writeStartElement("view");
-	if (map->area_hatching_enabled)
-		xml.writeAttribute("area_hatching_enabled", "true");
-	if (map->baseline_view_enabled)
-		xml.writeAttribute("baseline_view_enabled", "true");
+	XmlElementWriter view_element(xml, literal::view);
+	
+	view_element.writeAttribute(literal::area_hatching_enabled, map->area_hatching_enabled);
+	view_element.writeAttribute(literal::baseline_view_enabled, map->baseline_view_enabled);
 	
 	map->getGrid().save(xml);
 	
 	if (view)
-		view->save(xml, QLatin1String("map_view"));
-	
-	xml.writeEndElement(/*view*/);
+		view->save(xml, literal::map_view);
 }
 
 void XMLFileExporter::exportPrint()
 {
-	map->printerConfig().save(xml, "print");
+	map->printerConfig().save(xml, literal::print);
 }
 
 void XMLFileExporter::exportUndo()
@@ -296,55 +366,45 @@ void XMLFileImporter::addWarningUnsupportedElement()
 
 void XMLFileImporter::import(bool load_symbols_only) throw (FileFormatException)
 {
-	/*while (!xml.atEnd())
+	if (!xml.readNextStartElement() || xml.name() != literal::map)
 	{
-		if (xml.readNextStartElement())
-			qDebug() << xml.qualifiedName();
-		else
-			qDebug() << "FALSE";
-	}*/
-	
-	if (xml.readNextStartElement())
-	{
-		if (xml.name() != "map")
-			xml.raiseError(Importer::tr("Unsupported file format."));
-		else
-		{
-			int version = xml.attributes().value("version").toString().toInt();
-			if (version < 1)
-				xml.raiseError(Importer::tr("Invalid file format version."));
-			else if (version < XMLFileFormat::minimum_version)
-				xml.raiseError(Importer::tr("Unsupported old file format version. Please use an older program version to load and update the file."));
-			else if (version > XMLFileFormat::current_version)
-				addWarning(Importer::tr("Unsupported new file format version. Some map features will not be loaded or saved by this version of the program."));
-		}
+		xml.raiseError(Importer::tr("Unsupported file format."));
 	}
+	
+	XmlElementReader map_element(xml);
+	const int version = map_element.attribute<int>(literal::version);
+	if (version < 1)
+		xml.raiseError(Importer::tr("Invalid file format version."));
+	else if (version < XMLFileFormat::minimum_version)
+		xml.raiseError(Importer::tr("Unsupported old file format version. Please use an older program version to load and update the file."));
+	else if (version > XMLFileFormat::current_version)
+		addWarning(Importer::tr("Unsupported new file format version. Some map features will not be loaded or saved by this version of the program."));
 	
 	while (xml.readNextStartElement())
 	{
 		const QStringRef name(xml.name());
 		
-		if (name == "colors")
+		if (name == literal::colors)
 			importColors();
-		else if (name == "symbols")
+		else if (name == literal::symbols)
 			importSymbols();
-		else if (name == "georeferencing")
+		else if (name == literal::georeferencing)
 			importGeoreferencing(load_symbols_only);
 		else if (load_symbols_only)
 			xml.skipCurrentElement();
-		else if (name == "notes")
+		else if (name == literal::notes)
 			map->setMapNotes(xml.readElementText());
-		else if (name == "parts")
+		else if (name == literal::parts)
 			importMapParts();
-		else if (name == "templates")
+		else if (name == literal::templates)
 			importTemplates();
-		else if (name == "view")
+		else if (name == literal::view)
 			importView();
-		else if (name == "print")
+		else if (name == literal::print)
 			importPrint();
-		else if (name == "undo")
+		else if (name == literal::undo)
 			importUndo();
-		else if (name == "redo")
+		else if (name == literal::redo)
 			importRedo();
 		else
 		{
@@ -359,7 +419,8 @@ void XMLFileImporter::import(bool load_symbols_only) throw (FileFormatException)
 
 void XMLFileImporter::importGeoreferencing(bool load_symbols_only)
 {
-	Q_ASSERT(xml.name() == "georeferencing");
+	Q_ASSERT(xml.name() == literal::georeferencing);
+	
 	Georeferencing georef;
 	georef.load(xml, load_symbols_only);
 	map->setGeoreferencing(georef);
@@ -382,25 +443,29 @@ typedef std::vector<XMLFileImporterColorBacklogItem> XMLFileImporterColorBacklog
 
 void XMLFileImporter::importColors()
 {
-	int num_colors = xml.attributes().value("count").toString().toInt();
+	XmlElementReader all_colors_element(xml);
+	int num_colors = all_colors_element.attribute<int>(literal::count);
+	
 	Map::ColorVector& colors(map->color_set->colors);
 	colors.reserve(qMin(num_colors, 100)); // 100 is not a limit
 	XMLFileImporterColorBacklog backlog;
 	backlog.reserve(colors.size());
 	while (xml.readNextStartElement())
 	{
-		if (xml.name() == "color")
+		if (xml.name() == literal::color)
 		{
-			QXmlStreamAttributes attributes = xml.attributes();
-			MapColor* color = new MapColor(attributes.value("name").toString(), attributes.value("priority").toString().toInt());
-			if (attributes.hasAttribute("opacity"))
-				color->setOpacity(attributes.value("opacity").toString().toFloat());
+			XmlElementReader color_element(xml);
+			MapColor* color = new MapColor(
+			  color_element.attribute<QString>(literal::name),
+			  color_element.attribute<int>(literal::priority) );
+			if (color_element.hasAttribute(literal::opacity))
+				color->setOpacity(color_element.attribute<float>(literal::opacity));
 			
 			MapColorCmyk cmyk;
-			cmyk.c = attributes.value("c").toString().toFloat();
-			cmyk.m = attributes.value("m").toString().toFloat();
-			cmyk.y = attributes.value("y").toString().toFloat();
-			cmyk.k = attributes.value("k").toString().toFloat();
+			cmyk.c = color_element.attribute<float>(literal::c);
+			cmyk.m = color_element.attribute<float>(literal::m);
+			cmyk.y = color_element.attribute<float>(literal::y);
+			cmyk.k = color_element.attribute<float>(literal::k);
 			color->setCmyk(cmyk);
 			
 			SpotColorComponents components;
@@ -408,44 +473,45 @@ void XMLFileImporter::importColors()
 			QString rgb_method;
 			MapColorRgb rgb;
 			
-			while(xml.readNextStartElement())
+			while (xml.readNextStartElement())
 			{
-				attributes = xml.attributes();
-				if (xml.name() == "spotcolors")
+				if (xml.name() == literal::spotcolors)
 				{
-					color->setKnockout(attributes.value("knockout").toString() == "true");
+					XmlElementReader spotcolors_element(xml);
+					color->setKnockout(spotcolors_element.attribute<bool>(literal::knockout));
+					
 					while(xml.readNextStartElement())
 					{
-						if (xml.name() == "namedcolor")
+						if (xml.name() == literal::namedcolor)
 						{
 							color->setSpotColorName(xml.readElementText());
 						}
-						else if (xml.name() == "component")
+						else if (xml.name() == literal::component)
 						{
+							XmlElementReader component_element(xml);
 							SpotColorComponent component;
-							component.factor = xml.attributes().value("factor").toString().toFloat();
+							component.factor = component_element.attribute<float>(literal::factor);
 							// We can't know if the spot color is already loaded. Create a temporary proxy.
-							component.spot_color = new MapColor(xml.attributes().value("spotcolor").toString().toInt());
+							component.spot_color = new MapColor(component_element.attribute<int>(literal::spotcolor));
 							components.push_back(component);
-							xml.skipCurrentElement();
 						}
 						else
 							xml.skipCurrentElement(); // unsupported
 					}
 				}
-				else if (xml.name() == "cmyk")
+				else if (xml.name() == literal::cmyk)
 				{
-					cmyk_method = attributes.value("method").toString();
-					xml.skipCurrentElement();
+					XmlElementReader cmyk_element(xml);
+					cmyk_method = cmyk_element.attribute<QString>(literal::method);
 				}
-				else if (xml.name() == "rgb")
+				else if (xml.name() == literal::rgb)
 				{
-					rgb_method = attributes.value("method").toString();
-					rgb.r = attributes.value("r").toString().toFloat();
-					rgb.g = attributes.value("g").toString().toFloat();
-					rgb.b = attributes.value("b").toString().toFloat();
+					XmlElementReader rgb_element(xml);
+					rgb_method = rgb_element.attribute<QString>(literal::method);
+					rgb.r = rgb_element.attribute<float>(literal::r);
+					rgb.g = rgb_element.attribute<float>(literal::g);
+					rgb.b = rgb_element.attribute<float>(literal::b);
 					color->setRgbFromSpotColors();
-					xml.skipCurrentElement();
 				}
 				else
 					xml.skipCurrentElement(); // unsupported
@@ -456,14 +522,14 @@ void XMLFileImporter::importColors()
 				backlog.push_back(XMLFileImporterColorBacklogItem(color));
 				XMLFileImporterColorBacklogItem& item = backlog.back();
 				item.components = components;
-				item.cmyk_from_spot = (cmyk_method == "spotcolor");
-				item.rgb_from_spot = (rgb_method == "spotcolor");
+				item.cmyk_from_spot = (cmyk_method == literal::spotcolor);
+				item.rgb_from_spot = (rgb_method == literal::spotcolor);
 			}
 			
-			if (cmyk_method == "rgb")
+			if (cmyk_method == literal::rgb)
 				color->setCmykFromRgb();
 			
-			if (rgb_method == "cmyk")
+			if (rgb_method == literal::cmyk)
 				color->setRgbFromCmyk();
 			
 			colors.push_back(color);
@@ -517,7 +583,8 @@ void XMLFileImporter::importColors()
 
 void XMLFileImporter::importSymbols()
 {
-	int num_symbols = xml.attributes().value("count").toString().toInt();
+	XmlElementReader symbols_element(xml);
+	int num_symbols = symbols_element.attribute<int>(literal::count);
 	map->symbols.reserve(qMin(num_symbols, 1000)); // 1000 is not a limit
 	
 	symbol_dict[QString::number(map->findSymbolIndex(map->getUndefinedPoint()))] = map->getUndefinedPoint();
@@ -525,7 +592,7 @@ void XMLFileImporter::importSymbols()
 	
 	while (xml.readNextStartElement())
 	{
-		if (xml.name() == "symbol")
+		if (xml.name() == literal::symbol)
 		{
 			map->symbols.push_back(Symbol::load(xml, *map, symbol_dict));
 		}
@@ -545,14 +612,15 @@ void XMLFileImporter::importSymbols()
 
 void XMLFileImporter::importMapParts()
 {
-	int num_parts = xml.attributes().value("count").toString().toInt();
-	int current_part_index = xml.attributes().value("current").toString().toInt();
+	XmlElementReader mapparts_element(xml);
+	int num_parts = mapparts_element.attribute<int>(literal::parts);
+	int current_part_index = mapparts_element.attribute<int>(literal::current);
 	map->parts.clear();
 	map->parts.reserve(qMin(num_parts, 20)); // 20 is not a limit
 	
 	while (xml.readNextStartElement())
 	{
-		if (xml.name() == "part")
+		if (xml.name() == literal::part)
 		{
 			map->parts.push_back(MapPart::load(xml, *map, symbol_dict));
 		}
@@ -571,21 +639,24 @@ void XMLFileImporter::importMapParts()
 		  arg(num_parts).
 		  arg(map->getNumParts())
 		);
+	
+	emit map->currentMapPartChanged(map->current_part_index);
 }
 
 void XMLFileImporter::importTemplates()
 {
-	Q_ASSERT(xml.name() == "templates");
+	Q_ASSERT(xml.name() == literal::templates);
 	
-	int first_front_template = xml.attributes().value("first_front_template").toString().toInt();
+	XmlElementReader templates_element(xml);
+	int first_front_template = templates_element.attribute<int>(literal::first_front_template);
 	
-	int num_templates = xml.attributes().value("count").toString().toInt();
+	int num_templates = templates_element.attribute<int>(literal::count);
 	map->templates.reserve(qMin(num_templates, 20)); // 20 is not a limit
-	map->closed_templates.reserve(num_templates % 20);
+	map->closed_templates.reserve(qMin(num_templates, 20)); // 20 is not a limit
 	
 	while (xml.readNextStartElement())
 	{
-		if (xml.name() == "template")
+		if (xml.name() == literal::template_string)
 		{
 			bool opened = true;
 			Template* temp = Template::loadTemplateConfiguration(xml, *map, opened);
@@ -594,14 +665,13 @@ void XMLFileImporter::importTemplates()
 			else
 				map->closed_templates.push_back(temp);
 		}
-		else if (xml.name() == "defaults")
+		else if (xml.name() == literal::defaults)
 		{
-			QXmlStreamAttributes attributes = xml.attributes();
-			map->image_template_use_meters_per_pixel = (attributes.value("use_meters_per_pixel") == "true");
-			map->image_template_meters_per_pixel = attributes.value("meters_per_pixel").toString().toDouble();
-			map->image_template_dpi = attributes.value("dpi").toString().toDouble();
-			map->image_template_scale = attributes.value("scale").toString().toDouble();
-			xml.skipCurrentElement();
+			XmlElementReader defaults_element(xml);
+			map->image_template_use_meters_per_pixel = defaults_element.attribute<bool>(literal::use_meters_per_pixel);
+			map->image_template_meters_per_pixel = defaults_element.attribute<double>(literal::meters_per_pixel);
+			map->image_template_dpi = defaults_element.attribute<double>(literal::dpi);
+			map->image_template_scale = defaults_element.attribute<double>(literal::scale);
 		}
 		else
 		{
@@ -615,16 +685,17 @@ void XMLFileImporter::importTemplates()
 
 void XMLFileImporter::importView()
 {
-	Q_ASSERT(xml.name() == "view");
+	Q_ASSERT(xml.name() == literal::view);
 	
-	map->area_hatching_enabled = (xml.attributes().value("area_hatching_enabled") == "true");
-	map->baseline_view_enabled = (xml.attributes().value("baseline_view_enabled") == "true");
+	XmlElementReader view_element(xml);
+	map->area_hatching_enabled = view_element.attribute<bool>(literal::area_hatching_enabled);
+	map->baseline_view_enabled = view_element.attribute<bool>(literal::baseline_view_enabled);
 	
 	while (xml.readNextStartElement())
 	{
-		if (xml.name() == "grid")
+		if (xml.name() == literal::grid)
 			map->getGrid().load(xml);
-		else if (xml.name() == "map_view")
+		else if (xml.name() == literal::map_view)
 			view->load(xml);
 		else
 			xml.skipCurrentElement(); // unsupported
@@ -633,7 +704,7 @@ void XMLFileImporter::importView()
 
 void XMLFileImporter::importPrint()
 {
-	Q_ASSERT(xml.name() == "print");
+	Q_ASSERT(xml.name() == literal::print);
 	
 	map->setPrinterConfig(MapPrinterConfig(*map, xml));
 }

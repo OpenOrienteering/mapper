@@ -110,16 +110,6 @@ ColorWidget::ColorWidget(Map* map, MainWindow* window, QWidget* parent)
 		addRow(i);
 	
 	QHeaderView* header_view = color_table->horizontalHeader();
-#if QT_VERSION < 0x050000
-	header_view->setResizeMode(QHeaderView::Interactive);
-	header_view->resizeSections(QHeaderView::ResizeToContents);
-	header_view->setResizeMode(0, QHeaderView::Fixed); // Color
-	header_view->resizeSection(0, 32);
-	header_view->setResizeMode(1, QHeaderView::Stretch); // Name
-	header_view->setResizeMode(5, QHeaderView::Fixed); // Knockout
-	header_view->resizeSection(5, 32);
-	header_view->setClickable(false);
-#else
 	header_view->setSectionResizeMode(QHeaderView::Interactive);
 	header_view->resizeSections(QHeaderView::ResizeToContents);
 	header_view->setSectionResizeMode(0, QHeaderView::Fixed); // Color
@@ -129,7 +119,6 @@ ColorWidget::ColorWidget(Map* map, MainWindow* window, QWidget* parent)
 	header_view->setSectionResizeMode(5, QHeaderView::Fixed); // Knockout
 	header_view->resizeSection(5, 32);
 	header_view->setSectionsClickable(false);
-#endif
 	
 	currentCellChange(color_table->currentRow(), 0, 0, 0);	// enable / disable move color buttons
 	
@@ -327,6 +316,9 @@ void ColorWidget::cellChange(int row, int column)
 
 void ColorWidget::currentCellChange(int current_row, int current_column, int previous_row, int previous_column)
 {
+	Q_UNUSED(current_column);
+	Q_UNUSED(previous_row);
+	Q_UNUSED(previous_column);
 	if (!react_to_changes)
 		return;
 	
@@ -340,6 +332,7 @@ void ColorWidget::currentCellChange(int current_row, int current_column, int pre
 
 void ColorWidget::colorAdded(int index, MapColor* color)
 {
+	Q_UNUSED(color);
 	color_table->insertRow(index);
 	addRow(index);
 	if (index < color_table->rowCount() - 1)
@@ -351,11 +344,13 @@ void ColorWidget::colorAdded(int index, MapColor* color)
 
 void ColorWidget::colorChanged(int index, MapColor* color)
 {
+	Q_UNUSED(color);
 	updateRow(index);
 }
 
 void ColorWidget::colorDeleted(int index, const MapColor* color)
 {
+	Q_UNUSED(color);
 	color_table->removeRow(index);
 	currentCellChange(color_table->currentRow(), color_table->currentColumn(), -1, -1);
 }
@@ -388,7 +383,7 @@ void ColorWidget::updateRow(int row)
 {
 	react_to_changes = false;
 	
-	MapColor* color = map->getColor(row);
+	const MapColor* color = map->getColor(row);
 	
 	// Color preview
 	QTableWidgetItem* item = color_table->item(row, 0);

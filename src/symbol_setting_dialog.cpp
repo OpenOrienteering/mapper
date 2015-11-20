@@ -20,11 +20,7 @@
 
 #include "symbol_setting_dialog.h"
 
-#if QT_VERSION < 0x050000
-#include <QtGui>
-#else
 #include <QtWidgets>
-#endif
 
 #include "map.h"
 #include "object.h"
@@ -465,7 +461,7 @@ void SymbolSettingDialog::reset()
 
 void SymbolSettingDialog::setSymbolModified(bool modified)
 {
-	if (symbol_modified != modified);
+	if (symbol_modified != modified)
 	{
 		symbol_modified = modified;
 		updateSymbolLabel();

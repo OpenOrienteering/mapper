@@ -14,8 +14,6 @@ The general build process prerequisites are:
 
 See below for platform-specific details and build instructions.
 
-Qmake / Qt Creator based builds are not supported at the moment.
-
 
 == Qt Library ==
 
@@ -160,6 +158,41 @@ and proceed with
 
    make
    make package
+
+
+== Cross-Compiling on Linux for Android ==
+
+In addition to the general build process prerequisites, you need:
+ * the Android SDK
+ * the Android NDK
+ * Qt 5.2 for Android which includes Qt Creator
+
+When downloading packages for specific Android API levels,
+keep in mind that Qt5 requires at least API Level 9 to work, and apps
+built for the armeabi-v7a ABI require at least an emulator image of API
+level 14 to work with the emulator.
+
+The build of OpenOrienteering Mapper for Android is controlled by qmake and the
+oo-mapper.pro file. The easist way to do the build is using Qt Creator where you
+can define different "kits" representing different types of target devices. 
+Qt Creator takes care of switching between debug and release configurations.
+For setting up the kits, see the Qt Creator documentation:
+
+   http://qt-project.org/doc/qtcreator/creator-targets.html
+
+Mapper's dependencies, such as the PROJ.4 library, are build by cmake, based on
+the exisiting CMakeList.txt files and Qt Creator's kit settings.
+
+For development, you may use the Android Qt kits which come with Qt Creator.
+For official releases, you need to build the Qt libraries from the sources.
+This can be done by loading 3rd-party/qt5/qt5.pro in Qt Creator, and building
+it using a kit for Android. The resulting Qt kit can be added to Qt Creator
+as another Qt version via  Tools > Options... > Build & Run > Qt Versions.
+Qt Creator will automatically create a kit for this, and then you can use this
+kit to build official OpenOrienteering releases.
+For general Qt5 for Android build instructions, see:
+
+   http://qt-project.org/wiki/Qt5ForAndroidBuilding
 
 
 == Binary Package Distribution ==

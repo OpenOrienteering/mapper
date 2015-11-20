@@ -20,11 +20,7 @@
 
 #include "symbol_properties_widget.h"
 
-#if QT_VERSION < 0x050000
-#include <QtGui>
-#else
 #include <QtWidgets>
-#endif
 
 #include "symbol_setting_dialog.h"
 
@@ -137,6 +133,7 @@ int SymbolPropertiesWidget::indexOfPropertiesGroup(const QString& name) const
 
 void SymbolPropertiesWidget::numberChanged(QString text)
 {
+	Q_UNUSED(text);
 	bool is_valid = true;
 	int i = 0;
 	while (i < Symbol::number_components)

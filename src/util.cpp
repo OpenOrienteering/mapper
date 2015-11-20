@@ -27,8 +27,10 @@
 #include <QMessageBox>
 #include <QProcess>
 #include <QSettings>
+#include <QScreen>
 
 #include "mapper_resource.h"
+#include "settings.h"
 #include <mapper_config.h>
 
 DoubleValidator::DoubleValidator(double bottom, double top, QObject* parent, int decimals) : QDoubleValidator(bottom, top, decimals, parent)
@@ -104,6 +106,27 @@ void rectIncludeSafe(QRectF& rect, const QRectF& other_rect)
 	{
 		if (rect.isValid())
 			rectInclude(rect, other_rect);
+		else 
+			rect = other_rect;
+	}
+}
+
+void rectIncludeSafe(QRect& rect, const QRect& other_rect)
+{
+	if (other_rect.isValid())
+	{
+		if (rect.isValid())
+		{
+			if (other_rect.left() < rect.left())
+				rect.setLeft(other_rect.left());
+			if (other_rect.right() > rect.right())
+				rect.setRight(other_rect.right());
+			
+			if (other_rect.top() < rect.top())
+				rect.setTop(other_rect.top());
+			if (other_rect.bottom() > rect.bottom())
+				rect.setBottom(other_rect.bottom());
+		}
 		else 
 			rect = other_rect;
 	}
@@ -186,13 +209,6 @@ bool isPointOnSegment(const MapCoordF& seg_start, const MapCoordF& seg_end, cons
 	return ok && param >= 0 && param <= 1;
 }
 
-void saveString(QIODevice* file, const QString& str)
-{
-	int length = str.length();
-	
-	file->write((const char*)&length, sizeof(int));
-	file->write((const char*)str.constData(), length * sizeof(QChar));
-}
 void loadString(QIODevice* file, QString& str)
 {
 	int length;
@@ -220,8 +236,9 @@ void showHelp(QWidget* dialog_parent, QString filename, QString fragment)
 	}
 	else
 	{
-		QString assistant_path = MapperResource::locate(MapperResource::ASSISTANT);
-		if (assistant_path.isEmpty())
+		const QString help_collection_path(MapperResource::locate(MapperResource::MANUAL, QLatin1String("Mapper ")+APP_VERSION+".qhc"));
+		const QString compiled_help_path(MapperResource::locate(MapperResource::MANUAL, QLatin1String("Mapper ")+APP_VERSION+".qch"));
+		if (help_collection_path.isEmpty() || compiled_help_path.isEmpty())
 		{
 			QMessageBox::warning(dialog_parent, QFile::tr("Error"), QFile::tr("Failed to locate the help browser (\"Qt Assistant\")."));
 			return;
@@ -243,7 +260,6 @@ void showHelp(QWidget* dialog_parent, QString filename, QString fragment)
 			 << makeHelpUrl(filename, fragment)
 			 << QLatin1String("-enableRemoteControl");
 		
-#if QT_VERSION >= 0x050000
 		if ( QGuiApplication::platformName() == QLatin1String("xcb") ||
 			 QGuiApplication::platformName().isEmpty() )
 		{
@@ -251,7 +267,6 @@ void showHelp(QWidget* dialog_parent, QString filename, QString fragment)
 			// style on X11.
 			args << QLatin1String("-style") << QLatin1String("fusion");
 		}
-#endif
 		 
 		assistant_process.start(assistant_path, args);
 		
@@ -276,5 +291,35 @@ QString makeHelpUrl(QString filename, QString fragment)
 {
 	return QLatin1String("qthelp://") + MAPPER_HELP_NAMESPACE + "/oohelpdoc/help/html_en/" + filename + (fragment.isEmpty() ? "" : ("#" + fragment));
 }
-	
+
+float mmToPixelPhysical(float millimeters)
+{
+	float ppi = Settings::getInstance().getSettingCached(Settings::General_PixelsPerInch).toFloat();
+	return millimeters * ppi / 25.4f;
+}
+
+float pixelToMMPhysical(float pixels)
+{
+	float ppi = Settings::getInstance().getSettingCached(Settings::General_PixelsPerInch).toFloat();
+	return pixels * 25.4f / ppi;
+}
+
+float mmToPixelLogical(float millimeters)
+{
+	float ppi = QApplication::primaryScreen()->logicalDotsPerInch();
+	return millimeters * ppi / 25.4f;
+}
+
+float pixelToMMLogical(float pixels)
+{
+	float ppi = QApplication::primaryScreen()->logicalDotsPerInch();
+	return pixels * 25.4f / ppi;
+}
+
+bool isAntialiasingRequired(Settings* settings)
+{
+	float ppi = settings ? settings->getSettingCached(Settings::General_PixelsPerInch).toFloat() : Settings::getInstance().getSettingCached(Settings::General_PixelsPerInch).toFloat();
+	return ppi < 200;
+}
+
 }

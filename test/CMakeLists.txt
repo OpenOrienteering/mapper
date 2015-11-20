@@ -20,13 +20,8 @@
 # Prerequisite
 add_subdirectory(data)
 
-
-if(Mapper_USE_QT5)
-	find_package(Qt5Test QUIET REQUIRED)
-	set(QT_QTTEST_LIBRARY ${Qt5Test_LIBRARIES})
-else()
-	find_package(Qt4 4.6 QUIET COMPONENTS QtTest)
-endif()
+find_package(Qt5Test QUIET REQUIRED)
+set(QT_QTTEST_LIBRARY ${Qt5Test_LIBRARIES})
 
 
 # This macro defines a unit test from a list of source file names 
@@ -42,12 +37,16 @@ endif()
 macro(add_unit_test testname)
 	unset(TEST_${testname}_SRCS)
 	unset(TEST_${testname}_HDRS)
-	foreach(arg ${testname} ${ARGN})
+	foreach(arg ${ARGN})
 		list(APPEND TEST_${testname}_SRCS ${arg}.cpp)
 		list(APPEND TEST_${testname}_HDRS ${arg}.h)
+		if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${arg}_p.h)
+			list(APPEND TEST_${testname}_HDRS ${arg}_p.h)
+		endif()
 	endforeach(arg)
-	qt4_wrap_cpp(TEST_${testname}_MOC ${TEST_${testname}_HDRS})
-	add_executable(${testname} ${TEST_${testname}_SRCS} ${TEST_${testname}_MOC})
+	qt5_wrap_cpp(TEST_${testname}_MOC ${testname}.h)
+	qt5_wrap_cpp(TEST_${testname}_XTRA_MOC ${TEST_${testname}_HDRS} OPTIONS -nw)
+	add_executable(${testname} ${testname}.cpp ${TEST_${testname}_SRCS} ${TEST_${testname}_MOC} ${TEST_${testname}_XTRA_MOC})
 	target_link_libraries(${testname} ${QT_QTTEST_LIBRARY} libocad ${PROJ_LIBRARY} ${QT_LIBRARIES})
 	add_test(${testname} ${CMAKE_COMMAND} -P ${testname}-RUN.cmake)
 	list(APPEND Mapper_UNIT_TESTS ${testname})
@@ -69,12 +68,16 @@ unset(Mapper_UNIT_TESTS)
 macro(add_system_test testname)
 	unset(TEST_${testname}_SRCS)
 	unset(TEST_${testname}_HDRS)
-	foreach(arg ${testname} ${ARGN})
+	foreach(arg ${ARGN})
 		list(APPEND TEST_${testname}_SRCS ${arg}.cpp)
 		list(APPEND TEST_${testname}_HDRS ${arg}.h)
+		if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${arg}_p.h)
+			list(APPEND TEST_${testname}_HDRS ${arg}_p.h)
+		endif()
 	endforeach(arg)
-	qt4_wrap_cpp(TEST_${testname}_MOC ${TEST_${testname}_HDRS})
-	add_executable(${testname} ${TEST_${testname}_SRCS} ${TEST_${testname}_MOC})
+	qt5_wrap_cpp(TEST_${testname}_MOC ${testname}.h)
+	qt5_wrap_cpp(TEST_${testname}_XTRA_MOC ${TEST_${testname}_HDRS} OPTIONS -nw)
+	add_executable(${testname} ${testname}.cpp ${TEST_${testname}_SRCS} ${TEST_${testname}_MOC} ${TEST_${testname}_XTRA_MOC})
 	target_link_libraries(${testname} ${QT_QTTEST_LIBRARY} Mapper_Common libocad ${PROJ_LIBRARY} ${QT_LIBRARIES} ${CLIPPER_LIBRARY})
 	add_test(${testname} ${CMAKE_COMMAND} -P ${testname}-RUN.cmake)
 	list(APPEND Mapper_SYSTEM_TESTS ${testname})
@@ -90,11 +93,16 @@ include_directories("${CMAKE_CURRENT_BINARY_DIR}")
 
 
 # Unit tests
+add_unit_test(auto_save_t ../src/core/auto_save ../src/settings ../src/util ../src/mapper_resource)
 add_unit_test(georeferencing_t ../src/georeferencing ../src/mapper_resource ../src/file_format)
 add_unit_test(map_color_t ../src/core/map_color)
 add_unit_test(qpainter_t)
 
+# Benchmarks
+add_unit_test(coord_xml_t)
+
 # System tests
+add_system_test(map_t)
 add_system_test(file_format_t)
 add_dependencies(file_format_t Mapper_test_data)
 add_system_test(duplicate_equals_t)

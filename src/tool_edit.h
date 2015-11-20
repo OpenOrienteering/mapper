@@ -57,8 +57,10 @@ public:
 	 */
 	bool selectBox(MapCoordF corner1, MapCoordF corner2, bool toggle);
 	
-private:
+	// TODO: move to other place? util.h/cpp or object.h/cpp
 	static bool sortObjects(const std::pair<int, Object*>& a, const std::pair<int, Object*>& b);
+	
+private:
 	bool selectionInfosEqual(const SelectionInfoVector& a, const SelectionInfoVector& b);
 	
 	// Information about the last click
@@ -117,20 +119,20 @@ private:
 	QHash< PathObject*, QSet< int > > points;
 	QHash< TextObject*, int > text_handles;
 	
-	// Constraints calculated from the basic information
+	/** Constraints calculated from the basic information */
 	struct OppositeHandleConstraint
 	{
-		/// Object to which the constraint applies
+		/** Object to which the constraint applies */
 		PathObject* object;
-		/// Index of moved handle
+		/** Index of moved handle */
 		int moved_handle_index;
-		/// Index of opposite handle
+		/** Index of opposite handle */
 		int opposite_handle_index;
-		/// Index of center point in the middle of the handles
+		/** Index of center point in the middle of the handles */
 		int curve_anchor_index;
-		/// Distance of opposite handle to center point
+		/** Distance of opposite handle to center point */
 		double opposite_handle_dist;
-		/// Original position of the opposite handle
+		/** Original position of the opposite handle */
 		MapCoord opposite_handle_original_position;
 	};
 	std::vector< OppositeHandleConstraint > handle_constraints;
@@ -152,9 +154,6 @@ public:
 	
 	/** Draws a selection box. */
 	static void drawSelectionBox(QPainter* painter, MapWidget* widget, const MapCoordF& corner1, const MapCoordF& corner2);
-	
-protected slots:
-	void selectedSymbolsChanged();
 	
 protected:
 	/** Deletes all selected objects and updates the status text. */

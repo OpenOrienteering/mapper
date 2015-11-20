@@ -39,28 +39,46 @@ class Symbol;
 class SymbolToolTip;
 class SymbolWidget;
 
+/** Internal class used in SymbolWidget. Displays the symbol list. */
 class SymbolRenderWidget : public QWidget
 {
 Q_OBJECT
 public:
-	SymbolRenderWidget(Map* map, QScrollBar* scroll_bar, SymbolWidget* parent);
+	SymbolRenderWidget(Map* map, bool mobile_mode, QScrollBar* scroll_bar, SymbolWidget* parent);
+	
+	SymbolToolTip* getSymbolToolTip() const;
 	
 	SymbolToolTip* getSymbolToolTip() const;
 	
 	inline bool scrollBarNeeded(int width, int height);
 	void setScrollBar(QScrollBar* new_scroll_bar);
 	
+	/** Returns the number of selected symbols. */
 	int getNumSelectedSymbols() const;
+	
+	/**
+	 * If exactly one symbol is selected, returns this symbol,
+	 * otherwise returns NULL.
+	 */
 	Symbol* getSingleSelectedSymbol() const;
+	
+	/** Checks if the symbol is selected. */
 	bool isSymbolSelected(Symbol* symbol) const;
 	
-	/// Returns the single "current" symbol (the symbol which was clicked last). Can be -1 if no symbol selected
+	/**
+	 * Returns the single "current" symbol (the symbol which was clicked last).
+	 * Can be -1 if no symbol selected.
+	 */
 	inline int currentSymbolIndex() const {return current_symbol_index;}
 	
-	/// Selects the symbol with the given number. Deselects other symbols, if there was a different selection before.
+	/**
+	 * Selects the symbol with the given number. Deselects other symbols,
+	 * if there was a different selection before.
+	 */
 	void selectSingleSymbol(int i);
 	
 public slots:
+	/** Repaints the icon with the given index. */
 	void updateIcon(int i);
 	
 	/** Updates the range of the scroll bar, if there is one. */
@@ -101,6 +119,8 @@ protected:
 	QPoint last_click_pos;
 	int last_drop_pos;
 	int last_drop_row;
+	int last_click_scroll_value;
+	bool dragging;
 	
 	QScrollBar* scroll_bar;
 	SymbolWidget* symbol_widget;
@@ -118,8 +138,8 @@ protected:
 	QAction* select_objects_action;
 	QAction* select_objects_additionally_action;
 	
+	bool mobile_mode;
 	SymbolToolTip* tooltip;
-	
 	Map* map;
 	
 	bool isSymbolSelected(int i) const;
@@ -142,6 +162,7 @@ protected:
 	virtual void resizeEvent(QResizeEvent* event);
 	virtual void mouseMoveEvent(QMouseEvent* event);
 	virtual void mousePressEvent(QMouseEvent* event);
+	virtual void mouseReleaseEvent(QMouseEvent* event);
 	virtual void mouseDoubleClickEvent(QMouseEvent* event);
 	virtual void leaveEvent(QEvent* event);
 	virtual void wheelEvent(QWheelEvent* event);
@@ -151,20 +172,31 @@ protected:
 	virtual void dropEvent(QDropEvent* event);
 };
 
-/// Combines SymbolRenderWidget and a scroll bar to a symbol widget
+/**
+ * Combines SymbolRenderWidget and a scroll bar to a symbol widget,
+ * showing all symbols in a map and letting the user select symbols.
+ * Normally used inside a dock widget.
+ */
 class SymbolWidget : public QWidget
 {
 Q_OBJECT
 public:
-	SymbolWidget(Map* map, QWidget* parent = NULL);
+	SymbolWidget(Map* map, bool mobile_mode, QWidget* parent = NULL);
 	virtual ~SymbolWidget();
 	
-	/// Returns the selected symbol IF EXACTLY ONE symbol is selected, otherwise returns NULL
+	/**
+	 * If exactly one symbol is selected, returns this symbol,
+	 * otherwise returns NULL.
+	 */
 	Symbol* getSingleSelectedSymbol() const;
+	
+	/** Returns the number of selected symbols. */
 	int getNumSelectedSymbols() const;
+	
+	/** Checks if the symbol is selected. */
 	bool isSymbolSelected(Symbol* symbol) const;
 	
-	// Programmatic select of a symbol
+	/** Selects the symbol exclusively, deselecting all other symbols. */
 	void selectSingleSymbol(Symbol *symbol);
 	
 	virtual QSize sizeHint() const;

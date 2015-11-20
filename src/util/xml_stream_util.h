@@ -20,179 +20,568 @@
 #ifndef _OPENORIENTEERING_XML_STREAM_UTIL_H_
 #define _OPENORIENTEERING_XML_STREAM_UTIL_H_
 
-#include <QDebug>
+#include <vector>
+
 #include <QRectF>
+#include <QString>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
+#include "../file_import_export.h"
 
-class ScopedXmlWriterElement
+
+// Originally defined in map_coord.h, but we want to avoid the depedency.
+class MapCoord;
+typedef std::vector<MapCoord> MapCoordVector;
+
+
+/**
+ * The XmlElementWriter helps to construct a single element in an XML document.
+ * 
+ * It starts a new element on a QXmlStreamWriter when it is constructed,
+ * and it writes the end tag when it is destructed. After construction, but
+ * before (child) elements are created on the QXmlStreamWriter, it offers
+ * convenient functions for writing named attributes of common types.
+ * 
+ * Typical use:
+ * 
+ * \code
+   {
+       // Construction, begins with start tag
+       XmlElementWriter coord(xml_writer, QLatin1String("coord"));
+       coord.writeAttribute(QLatin1String("x"), 34);
+       coord.writeAttribute(QLatin1String("y"), 3.4);
+       
+       // Don't use coord once you wrote other data to the stream
+       writeChildElements(xml_writer);
+       
+   }   // coord goes out of scope here, destructor called, end tag written
+ * \endcode
+ */
+class XmlElementWriter
 {
 public:
-	ScopedXmlWriterElement(QXmlStreamWriter& xml, const QString& element_name);
-	~ScopedXmlWriterElement();
-	void writeAttribute(const QString& qualifiedName, const char* value);
-	void writeAttribute(const QString& qualifiedName, const QString& value);
-	void writeAttribute(const QString& qualifiedName, const qreal value, int precision = 6);
-	void writeAttribute(const QString& qualifiedName, const int value);
-	void writeAttribute(const QString& qualifiedName, const unsigned int value);
-	void writeAttribute(const QString& qualifiedName, bool value);
-	void write(const QRectF& area, int precision = 6);
-	void write(const QSizeF& size, int precision = 6);
+	/**
+	 * Begins a new element with the given name on the XML writer.
+	 */
+	XmlElementWriter(QXmlStreamWriter& xml, const QLatin1String& element_name);
+	
+	/**
+	 * Writes the end tag of the element.
+	 */
+	~XmlElementWriter();
+	
+	/**
+	 * Writes an attribute with the given name and value.
+	 */
+	void writeAttribute(const QLatin1String& qualifiedName, const char* value);
+	
+	/**
+	 * Writes an attribute with the given name and value.
+	 */
+	void writeAttribute(const QLatin1String& qualifiedName, const QString& value);
+	
+	/**
+	 * Writes an attribute with the given name and value.
+	 * This methods uses Qt's default QString::number(double) implementation.
+	 */
+	void writeAttribute(const QLatin1String& qualifiedName, const double value);
+	
+	/**
+	 * Writes an attribute with the given name and value.
+	 * The precision represents the number of digits after the decimal point.
+	 */
+	void writeAttribute(const QLatin1String& qualifiedName, const double value, int precision);
+	
+	/**
+	 * Writes an attribute with the given name and value.
+	 * This methods uses Qt's default QString::number(float) implementation.
+	 */
+	void writeAttribute(const QLatin1String& qualifiedName, const float value);
+	
+	/**
+	 * Writes an attribute with the given name and value.
+	 * The precision represents the number of digits after the decimal point.
+	 */
+	void writeAttribute(const QLatin1String& qualifiedName, const float value, int precision);
+	
+	/**
+	 * Writes an attribute with the given name and value.
+	 */
+	void writeAttribute(const QLatin1String& qualifiedName, const qint64 value);
+	
+	/**
+	 * Writes an attribute with the given name and value.
+	 */
+	void writeAttribute(const QLatin1String& qualifiedName, const int value);
+	
+	/**
+	 * Writes an attribute with the given name and value.
+	 */
+	void writeAttribute(const QLatin1String& qualifiedName, const unsigned int value);
+	
+	/**
+	 * Writes an attribute with the given name and value.
+	 */
+	void writeAttribute(const QLatin1String& qualifiedName, const long unsigned int value);
+	
+	/**
+	 * Writes an attribute with the given name and value.
+	 */
+	void writeAttribute(const QLatin1String& qualifiedName, bool value);
+	
+	/**
+	 * Writes attributes named left, top, width and height,
+	 * representing the given area.
+	 * This methods uses Qt's default QString::number(qreal) implementation.
+	 */
+	void write(const QRectF& area);
+	
+	/**
+	 * Writes attributes named left, top, width and height,
+	 * representing the given area.
+	 */
+	void write(const QRectF& area, int precision);
+	
+	/**
+	 * Writes attributes named width and height, representing the given size.
+	 * This methods uses Qt's default QString::number(qreal) implementation.
+	 */
+	void write(const QSizeF& size);
+	
+	/**
+	 * Writes attributes named width and height, representing the given size.
+	 */
+	void write(const QSizeF& size, int precision);
+	
+	/**
+	 * Writes the coordinates vector as a simple text format.
+	 * This is much more efficient than saving each coordinate as rich XML.
+	 */
+	void write(const MapCoordVector& coords);
 	
 private:
 	QXmlStreamWriter& xml;
 };
 
 
-class ScopedXmlReaderElement
+/**
+ * The XmlElementReader helps to read a single element in an XML document.
+ * 
+ * It assumes to be on a QXmlStreamReader::StartElement when constructed,
+ * and it reads until the end of the current element, skipping any child nodes,
+ * when it is destructed. After construction, it offers convenient functions
+ * for reading named attributes of common types.
+ * 
+ * Typical use:
+ * 
+ * \code
+   while (xml_reader.readNextStartElement())
+   {
+       // Construction, begins with start tag
+       XmlElementReader coord(xml_reader);
+       int x = coord.attribute<int>(QLatin1String("x"));
+       double y = coord.attribute<double>(QLatin1String("y"));
+       FlagEnum flags = coord.attribute<FlagEnum>(QLatin1String("flags"));
+       
+       readChildData(xml_reader);
+       
+   }   // coord goes out of scope here, destructor called, reads until end of element
+ * \endcode
+ */
+class XmlElementReader
 {
 public:
-	ScopedXmlReaderElement(QXmlStreamReader& xml);
-	~ScopedXmlReaderElement();
-	void readAttribute(const QString& qualifiedName, QString& value);
-	void readAttribute(const QString& qualifiedName, float& value);
-	void readAttribute(const QString& qualifiedName, int& value);
-	void readAttribute(const QString& qualifiedName, unsigned int& value);
-	void readAttribute(const QString& qualifiedName, bool& value);
+	/**
+	 * Constructs a new element reader on the given XML reader.
+	 * 
+	 * It assumes to be on a QXmlStreamReader::StartElement.
+	 */
+	XmlElementReader(QXmlStreamReader& xml);
+	
+	/**
+	 * Destructor.
+	 * 
+	 * Reads until the end of the current element, skipping any child nodes.
+	 */
+	~XmlElementReader();
+	
+	/**
+	 * Tests whether the element has an attribute with the given name.
+	 */
+	bool hasAttribute(const QLatin1String&  qualifiedName) const;
+	
+	/**
+	 * Tests whether the element has an attribute with the given name.
+	 */
+	bool hasAttribute(const QString& qualifiedName) const;
+	
+	/**
+	 * Returns the value of an attribute of type T.
+	 * 
+	 * Apart from a number of specializations for common types,
+	 * it has a general implementation which read the attribute as int
+	 * and does static_cast to the actual type. This is useful for enumerations,
+	 * but might also be a cause of buildtime or runtime errors.
+	 */
+	template< typename T >
+	T attribute(const QLatin1String& qualifiedName) const;
+	
+	/**
+	 * Reads attributes named left, top, width, height into the given area object.
+	 * Counterpart for XmlElementWriter::write(const QRectF&, int).
+	 */
 	void read(QRectF& area);
+	
+	/**
+	 * Reads attributes named width and height into the given size object.
+	 * Counterpart for XmlElementWriter::write(const QSizeF&, int).
+	 */
 	void read(QSizeF& size);
+	
+	/**
+	 * Reads the coordinates vector from a simple text format.
+	 * This is much more efficient than loading each coordinate from rich XML.
+	 */
+	void read(MapCoordVector& coords) throw (FileFormatException);
 	
 private:
 	QXmlStreamReader& xml;
+	const QXmlStreamAttributes attributes; // implicitly shared QVector
 };
 
 
+/**
+ * @namespace literal
+ * @brief Namespace for \c QLatin1String constants
+ * 
+ * It's current main use is in connection with XMLFileFormat.
+ * XMLFileFormat is built on \c QXmlStreamReader/\c QXmlStreamWriter which
+ * expect \c QLatin1String arguments in many places.
+ * In addition, a \c QLatin1String can be compared to a \c QStringRef without
+ * implicit conversion.
+ * 
+ * The namespace \c literal cannot be used directly in header files because it
+ * would easily lead to name conflicts in including files.
+ * However, custom namespaces in header files can be aliased to \c literal
+ * locally in method definitions:
+ * 
+ * \code
+ * void someFuntion()
+ * {
+ *     namespace literal = XmlStreamLiteral;
+ *     writeAttribute(literal::left, 37.0);
+ * }
+ * \endcode
+ * 
+ * @sa MapCoordLiteral, XmlStreamLiteral
+ */
+
+
+/**
+ * @brief Local namespace for \c QLatin1String constants
+ * 
+ * This namespace collects various \c QLatin1String constants in xml_stream_util.h.
+ * The namespace \link literal \endlink cannot be used directly in the
+ * xml_stream_util.h header because it would easily lead to name conflicts
+ * in including files. However, XmlStreamLiteral can be aliased to \c literal
+ * locally in method definitions:
+ * 
+ * \code
+ * void someFuntion()
+ * {
+ *     namespace literal = XmlStreamLiteral;
+ *     writeAttribute(literal::left, 37.0);
+ * }
+ * \endcode
+ * 
+ * @sa literal
+ */
+namespace XmlStreamLiteral
+{
+	static const QLatin1String string_true("true");
+	
+	static const QLatin1String left("left");
+	static const QLatin1String top("top");
+	static const QLatin1String width("width");
+	static const QLatin1String height("height");
+	
+	static const QLatin1String count("count");
+}
+
+
+
+//### XmlElementWriter inline implemenentation ###
+
 inline
-ScopedXmlWriterElement::ScopedXmlWriterElement(QXmlStreamWriter& xml, const QString& element_name)
+XmlElementWriter::XmlElementWriter(QXmlStreamWriter& xml, const QLatin1String& element_name)
  : xml(xml)
 {
 	xml.writeStartElement(element_name);
 }
 
 inline
-ScopedXmlWriterElement::~ScopedXmlWriterElement()
+XmlElementWriter::~XmlElementWriter()
 {
 	xml.writeEndElement();
 }
 
 inline
-void ScopedXmlWriterElement::writeAttribute(const QString& qualifiedName, const char* value)
+void XmlElementWriter::writeAttribute(const QLatin1String& qualifiedName, const char* value)
 {
 	xml.writeAttribute(qualifiedName, QString(value));
 }
 
 inline
-void ScopedXmlWriterElement::writeAttribute(const QString& qualifiedName, const QString& value)
+void XmlElementWriter::writeAttribute(const QLatin1String& qualifiedName, const QString& value)
 {
 	xml.writeAttribute(qualifiedName, value);
 }
 
 inline
-void ScopedXmlWriterElement::writeAttribute(const QString& qualifiedName, const qreal value, int precision)
+void XmlElementWriter::writeAttribute(const QLatin1String& qualifiedName, const double value)
+{
+	xml.writeAttribute(qualifiedName, QString::number(value));
+}
+
+inline
+void XmlElementWriter::writeAttribute(const QLatin1String& qualifiedName, const double value, int precision)
 {
 	xml.writeAttribute(qualifiedName, QString::number(value, 'f', precision));
 }
 
 inline
-void ScopedXmlWriterElement::writeAttribute(const QString& qualifiedName, const int value)
+void XmlElementWriter::writeAttribute(const QLatin1String& qualifiedName, const float value)
 {
 	xml.writeAttribute(qualifiedName, QString::number(value));
 }
 
 inline
-void ScopedXmlWriterElement::writeAttribute(const QString& qualifiedName, const unsigned int value)
+void XmlElementWriter::writeAttribute(const QLatin1String& qualifiedName, const float value, int precision)
+{
+	xml.writeAttribute(qualifiedName, QString::number(value, 'f', precision));
+}
+
+inline
+void XmlElementWriter::writeAttribute(const QLatin1String& qualifiedName, const qint64 value)
 {
 	xml.writeAttribute(qualifiedName, QString::number(value));
 }
 
 inline
-void ScopedXmlWriterElement::writeAttribute(const QString& qualifiedName, bool value)
+void XmlElementWriter::writeAttribute(const QLatin1String& qualifiedName, const int value)
 {
+	xml.writeAttribute(qualifiedName, QString::number(value));
+}
+
+inline
+void XmlElementWriter::writeAttribute(const QLatin1String& qualifiedName, const unsigned int value)
+{
+	xml.writeAttribute(qualifiedName, QString::number(value));
+}
+
+inline
+void XmlElementWriter::writeAttribute(const QLatin1String& qualifiedName, const long unsigned int value)
+{
+	xml.writeAttribute(qualifiedName, QString::number(value));
+}
+
+inline
+void XmlElementWriter::writeAttribute(const QLatin1String& qualifiedName, bool value)
+{
+	namespace literal = XmlStreamLiteral;
+	
 	if (value)
-		xml.writeAttribute(qualifiedName, "true");
+		xml.writeAttribute(qualifiedName, literal::string_true);
 }
 
 inline
-void ScopedXmlWriterElement::write(const QRectF& area, int precision)
+void XmlElementWriter::write(const QRectF& area)
 {
-	writeAttribute( "left",   area.left(),   precision );
-	writeAttribute( "top",    area.top(),    precision );
-	writeAttribute( "width",  area.width(),  precision );
-	writeAttribute( "height", area.height(), precision );
+	namespace literal = XmlStreamLiteral;
+	
+	writeAttribute( literal::left,   area.left());
+	writeAttribute( literal::top,    area.top());
+	writeAttribute( literal::width,  area.width());
+	writeAttribute( literal::height, area.height());
 }
 
 inline
-void ScopedXmlWriterElement::write(const QSizeF& size, int precision)
+void XmlElementWriter::write(const QRectF& area, int precision)
 {
-	writeAttribute( "width",  size.width(),  precision );
-	writeAttribute( "height", size.height(), precision );
+	namespace literal = XmlStreamLiteral;
+	
+	writeAttribute( literal::left,   area.left(),   precision );
+	writeAttribute( literal::top,    area.top(),    precision );
+	writeAttribute( literal::width,  area.width(),  precision );
+	writeAttribute( literal::height, area.height(), precision );
+}
+
+inline
+void XmlElementWriter::write(const QSizeF& size)
+{
+	namespace literal = XmlStreamLiteral;
+	
+	writeAttribute( literal::width,  size.width());
+	writeAttribute( literal::height, size.height());
+}
+
+inline
+void XmlElementWriter::write(const QSizeF& size, int precision)
+{
+	namespace literal = XmlStreamLiteral;
+	
+	writeAttribute( literal::width,  size.width(),  precision );
+	writeAttribute( literal::height, size.height(), precision );
 }
 
 
+//### XmlElementReader inline implemenentation ###
+
 inline
-ScopedXmlReaderElement::ScopedXmlReaderElement(QXmlStreamReader& xml)
- : xml(xml)
+XmlElementReader::XmlElementReader(QXmlStreamReader& xml)
+ : xml(xml),
+   attributes(xml.attributes())
 {
 }
 
 inline
-ScopedXmlReaderElement::~ScopedXmlReaderElement()
+XmlElementReader::~XmlElementReader()
 {
 	if (!xml.isEndElement())
 		xml.skipCurrentElement();
 }
 
 inline
-void ScopedXmlReaderElement::readAttribute(const QString& qualifiedName, QString& value)
+bool XmlElementReader::hasAttribute(const QLatin1String& qualifiedName) const
 {
-	if (xml.attributes().hasAttribute(qualifiedName))
-		value = xml.attributes().value(qualifiedName).toString();
+	return attributes.hasAttribute(qualifiedName);
 }
 
 inline
-void ScopedXmlReaderElement::readAttribute(const QString& qualifiedName, float& value)
+bool XmlElementReader::hasAttribute(const QString& qualifiedName) const
 {
-	if (xml.attributes().hasAttribute(qualifiedName))
-		value = xml.attributes().value(qualifiedName).toString().toFloat();
+	return attributes.hasAttribute(qualifiedName);
+}
+
+template< >
+inline
+QString XmlElementReader::attribute(const QLatin1String& qualifiedName) const
+{
+	return attributes.value(qualifiedName).toString();
+}
+
+template< >
+inline
+qint64 XmlElementReader::attribute(const QLatin1String& qualifiedName) const
+{
+	qint64 value = 0;
+	const QStringRef ref = attributes.value(qualifiedName);
+	if (ref.size())
+		value = QString::fromRawData(ref.data(), ref.size()).toLongLong();
+	return value;
+}
+
+template< >
+inline
+int XmlElementReader::attribute(const QLatin1String& qualifiedName) const
+{
+	int value = 0;
+	const QStringRef ref = attributes.value(qualifiedName);
+	if (ref.size())
+		value = QString::fromRawData(ref.data(), ref.size()).toInt();
+	return value;
+}
+
+template< >
+inline
+unsigned int XmlElementReader::attribute(const QLatin1String& qualifiedName) const
+{
+	unsigned int value = 0;
+	const QStringRef ref = attributes.value(qualifiedName);
+	if (ref.size())
+		value = QString::fromRawData(ref.data(), ref.size()).toUInt();
+	return value;
+}
+
+template< >
+inline
+long unsigned int XmlElementReader::attribute(const QLatin1String& qualifiedName) const
+{
+	unsigned int value = 0;
+	const QStringRef ref = attributes.value(qualifiedName);
+	if (ref.size())
+		value = QString::fromRawData(ref.data(), ref.size()).toULong();
+	return value;
+}
+
+template< >
+inline
+double XmlElementReader::attribute(const QLatin1String& qualifiedName) const
+{
+	double value = 0;
+	const QStringRef ref = attributes.value(qualifiedName);
+	if (ref.size())
+		value = QString::fromRawData(ref.data(), ref.size()).toDouble();
+	return value;
+}
+
+template< >
+inline
+float XmlElementReader::attribute(const QLatin1String& qualifiedName) const
+{
+	float value = 0;
+	const QStringRef ref = attributes.value(qualifiedName);
+	if (ref.size())
+		value = QString::fromRawData(ref.data(), ref.size()).toFloat();
+	return value;
+}
+
+template< >
+inline
+bool XmlElementReader::attribute(const QLatin1String& qualifiedName) const
+{
+	namespace literal = XmlStreamLiteral;
+	
+	bool value = (attributes.value(qualifiedName) == literal::string_true);
+	return value;
+}
+
+template< typename T >
+inline
+T XmlElementReader::attribute(const QLatin1String& qualifiedName) const
+{
+	T value = static_cast<T>(0);
+	const QStringRef ref = attributes.value(qualifiedName);
+	if (ref.size())
+		value = static_cast<T>(QString::fromRawData(ref.data(), ref.size()).toInt());
+	return value;
 }
 
 inline
-void ScopedXmlReaderElement::readAttribute(const QString& qualifiedName, int& value)
+void XmlElementReader::read(QRectF& area)
 {
-	if (xml.attributes().hasAttribute(qualifiedName))
-		value = xml.attributes().value(qualifiedName).toString().toInt();
+	namespace literal = XmlStreamLiteral;
+	
+	QStringRef ref = attributes.value(literal::left);
+	area.setLeft(QString::fromRawData(ref.data(), ref.size()).toDouble());
+	ref = attributes.value(literal::top);
+	area.setTop(QString::fromRawData(ref.data(), ref.size()).toDouble());
+	ref = attributes.value(literal::width);
+	area.setWidth(QString::fromRawData(ref.data(), ref.size()).toDouble());
+	ref = attributes.value(literal::height);
+	area.setHeight(QString::fromRawData(ref.data(), ref.size()).toDouble());
 }
 
 inline
-void ScopedXmlReaderElement::readAttribute(const QString& qualifiedName, unsigned int& value)
+void XmlElementReader::read(QSizeF& size)
 {
-	if (xml.attributes().hasAttribute(qualifiedName))
-		value = xml.attributes().value(qualifiedName).toString().toUInt();
-}
-
-inline
-void ScopedXmlReaderElement::readAttribute(const QString& qualifiedName, bool& value)
-{
-		value = xml.attributes().value(qualifiedName) == "true";
-}
-
-inline
-void ScopedXmlReaderElement::read(QRectF& area)
-{
-	QXmlStreamAttributes attributes = xml.attributes();
-	area.setLeft(attributes.value("left").toString().toDouble());
-	area.setTop(attributes.value("top").toString().toDouble());
-	area.setWidth(attributes.value("width").toString().toDouble());
-	area.setHeight(attributes.value("height").toString().toDouble());
-}
-
-inline
-void ScopedXmlReaderElement::read(QSizeF& size)
-{
-	QXmlStreamAttributes attributes = xml.attributes();
-	size.setWidth(attributes.value("width").toString().toDouble());
-	size.setHeight(attributes.value("height").toString().toDouble());
+	namespace literal = XmlStreamLiteral;
+	
+	QStringRef ref = attributes.value(literal::width);
+	size.setWidth(QString::fromRawData(ref.data(), ref.size()).toDouble());
+	ref = attributes.value(literal::height);
+	size.setHeight(QString::fromRawData(ref.data(), ref.size()).toDouble());
 }
 
 

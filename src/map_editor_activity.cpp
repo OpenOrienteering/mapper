@@ -20,4 +20,21 @@
 
 #include "map_editor_activity.h"
 
-// This class is header-only for now.
+
+MapEditorActivity::~MapEditorActivity()
+{
+	// nothing
+}
+
+void MapEditorActivity::init()
+{
+	// nothing
+}
+
+void MapEditorActivity::draw(QPainter* painter, MapWidget* widget)
+{
+	Q_UNUSED(painter);
+	Q_UNUSED(widget);
+	// nothing
+}
+

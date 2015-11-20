@@ -22,11 +22,7 @@
 
 #include <limits>
 
-#if QT_VERSION < 0x050000
-#include <QtGui>
-#else
 #include <QtWidgets>
-#endif
 
 #include "util.h"
 #include "object.h"
@@ -35,13 +31,16 @@
 #include "tool_helpers.h"
 #include "symbol_dock_widget.h"
 #include "gui/modifier_key.h"
+#include "gui/widgets/key_button_bar.h"
+#include "map_editor.h"
 
 QCursor* DrawRectangleTool::cursor = NULL;
 
 DrawRectangleTool::DrawRectangleTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget)
  : DrawLineAndAreaTool(editor, DrawRectangle, tool_button, symbol_widget),
    angle_helper(new ConstrainAngleToolHelper()),
-   snap_helper(new SnappingToolHelper(map()))
+   snap_helper(new SnappingToolHelper(map())),
+   key_button_bar(NULL)
 {
 	cur_map_widget = mapWidget();
 	draw_dash_points = true;
@@ -64,17 +63,34 @@ DrawRectangleTool::DrawRectangleTool(MapEditorController* editor, QAction* tool_
 
 DrawRectangleTool::~DrawRectangleTool()
 {
+	if (key_button_bar)
+		editor->deletePopupWidget(key_button_bar);
 }
 
 void DrawRectangleTool::init()
 {
 	updateStatusText();
+	
+	if (editor->isInMobileMode())
+	{
+		// Create key replacement bar
+		key_button_bar = new KeyButtonBar(this, editor->getMainWidget());
+		key_button_bar->addPressKey(Qt::Key_Return, tr("Finish"));
+		key_button_bar->addModifierKey(Qt::Key_Shift, Qt::ShiftModifier, tr("Snap", "Snap to existing objects"));
+		key_button_bar->addModifierKey(Qt::Key_Control, Qt::ControlModifier, tr("Line snap", "Using constrained angles"));
+		key_button_bar->addPressKey(Qt::Key_Space, tr("Dash", "Drawing dash points"));
+		key_button_bar->addPressKey(Qt::Key_Backspace, tr("Undo"));
+		key_button_bar->addPressKey(Qt::Key_Escape, tr("Abort"));
+		editor->showPopupWidget(key_button_bar, "");
+	}
 }
 
 bool DrawRectangleTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
-	ctrl_pressed = event->modifiers() & Qt::ControlModifier;
-	shift_pressed = event->modifiers() & Qt::ShiftModifier;
+	// Adjust flags to have possibly more recent state
+	int modifiers = (event->modifiers() | (key_button_bar ? key_button_bar->activeModifiers() : 0));
+	ctrl_pressed = modifiers & Qt::ControlModifier;
+	shift_pressed = modifiers & Qt::ShiftModifier;
 	cur_map_widget = widget;
 	if (event->button() == Qt::LeftButton || (draw_in_progress && drawMouseButtonClicked(event)))
 	{
@@ -154,6 +170,8 @@ bool DrawRectangleTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord,
 
 bool DrawRectangleTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
+	Q_UNUSED(widget);
+	
 	cur_pos = event->pos();
 	cur_pos_map = map_coord;
 	constrained_pos_map = cur_pos_map;
@@ -181,12 +199,13 @@ void DrawRectangleTool::updateHover(bool mouse_down)
 	else
 	{
 		hidePreviewPoints();
-		if (mouse_down && !dragging && (cur_pos - click_pos).manhattanLength() >= QApplication::startDragDistance())
+		if (mouse_down && !dragging && (cur_pos - click_pos).manhattanLength() >= Settings::getInstance().getStartDragDistancePx())
 		{
 			// Start dragging
 			dragging = true;
 		}
-		updateRectangle();
+		if (!mouse_down || dragging)
+			updateRectangle();
 	}
 }
 
@@ -235,6 +254,9 @@ bool DrawRectangleTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coor
 
 bool DrawRectangleTool::mouseDoubleClickEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
+	Q_UNUSED(map_coord);
+	Q_UNUSED(widget);
+	
 	if (event->button() != Qt::LeftButton)
 		return false;
 	
@@ -261,7 +283,17 @@ bool DrawRectangleTool::mouseDoubleClickEvent(QMouseEvent* event, MapCoordF map_
 
 bool DrawRectangleTool::keyPressEvent(QKeyEvent* event)
 {
-	if (event->key() == Qt::Key_Escape)
+	if (event->key() == Qt::Key_Return)
+	{
+		if (draw_in_progress)
+		{
+			constrained_pos_map = MapCoordF(preview_path->getCoordinate(angles.size() - 1));
+			undoLastPoint();
+			if (draw_in_progress)
+				finishDrawing();
+		}
+	}
+	else if (event->key() == Qt::Key_Escape)
 	{
 		if (draw_in_progress)
 			abortDrawing();
@@ -363,7 +395,7 @@ void DrawRectangleTool::draw(QPainter* painter, MapWidget* widget)
 		if (widget->getMapView()->lengthToPixel(preview_point_radius) < preview_radius_min_pixels)
 			use_preview_radius = false;
 		
-		int helper_cross_radius = Settings::getInstance().getSettingCached(Settings::RectangleTool_HelperCrossRadius).toInt();
+		float helper_cross_radius = Settings::getInstance().getRectangleToolHelperCrossRadiusPx();
 		painter->setRenderHint(QPainter::Antialiasing);
 		
 		MapCoordF perp_vector = forward_vector;
@@ -619,7 +651,7 @@ void DrawRectangleTool::updateDirtyRect()
 			angle_helper->includeDirtyRect(rect);
 		if (rect.isValid())
 		{
-			int helper_cross_radius = Settings::getInstance().getSettingCached(Settings::RectangleTool_HelperCrossRadius).toInt();
+			float helper_cross_radius = Settings::getInstance().getRectangleToolHelperCrossRadiusPx();
 			int pixel_border = 0;
 			if (draw_in_progress)
 				pixel_border = helper_cross_radius;	// helper_cross_radius as border is less than ideal but the only way to always ensure visibility of the helper cross at the moment

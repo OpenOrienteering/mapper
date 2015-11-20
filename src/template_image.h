@@ -32,7 +32,10 @@ QT_END_NAMESPACE
 
 class Georeferencing;
 
-/// A raster image used as template
+/**
+ * Template showing a raster image.
+ * Can be georeferenced or non-georeferenced.
+ */
 class TemplateImage : public Template
 {
 Q_OBJECT
@@ -49,7 +52,6 @@ public:
 	virtual const QString getTemplateType() {return "TemplateImage";}
 
 	virtual bool saveTemplateFile();
-	virtual void saveTypeSpecificTemplateConfiguration(QIODevice* stream);
 	virtual bool loadTypeSpecificTemplateConfiguration(QIODevice* stream, int version);
 	virtual void saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml);
 	virtual bool loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml);
@@ -62,20 +64,26 @@ public:
 	virtual QRectF getTemplateExtent();
 	virtual bool canBeDrawnOnto() {return true;}
 
-	/// Calculates the image's center of gravity in template coordinates by iterating over all pixels, leaving out the pixels with background_color.
+	/**
+	 * Calculates the image's center of gravity in template coordinates by
+	 * iterating over all pixels, leaving out the pixels with background_color.
+	 */
 	QPointF calcCenterOfGravity(QRgb background_color);
 	
-	/// Returns the internal QImage
+	/** Returns the internal QImage. */
 	inline QImage* getQImage() const {return image;}
 	
-	/// Returns which georeferencing method (if any) is available.
-	/// (This does not mean that the image is in georeferenced mode)
+	/**
+	 * Returns which georeferencing method (if any) is available.
+	 * (This does not mean that the image is in georeferenced mode)
+	 */
 	inline GeoreferencingType getAvailableGeoreferencing() const {return available_georef;}
 	
 public slots:
 	void updateGeoreferencing();
 	
 protected:
+	/** Holds a pixel-to-world transform loaded from a world file. */
 	struct WorldFile
 	{
 		bool loaded;
@@ -92,12 +100,31 @@ protected:
 		bool tryToLoadForImage(const QString image_path);
 	};
 	
+	/** Information about an undo step for the paint-on-template functionality. */
+	struct DrawOnImageUndoStep
+	{
+		/** Copy of previous image part */
+		QImage image;
+		
+		/** X position of image part origin */
+		int x;
+		
+		/** Y position of image part origin */
+		int y;
+	};
+	
 	virtual Template* duplicateImpl();
 	virtual void drawOntoTemplateImpl(MapCoordF* coords, int num_coords, QColor color, float width);
+	virtual void drawOntoTemplateUndo(bool redo);
+	void addUndoStep(const DrawOnImageUndoStep& new_step);
 	void calculateGeoreferencing();
 	void updatePosFromGeoreferencing();
 
 	QImage* image;
+	
+	std::vector< DrawOnImageUndoStep > undo_steps;
+	/// Current index in undo_steps, where 0 means before the first item.
+	int undo_index;
 	
 	GeoreferencingType available_georef;
 	QScopedPointer<Georeferencing> georef;
@@ -105,7 +132,10 @@ protected:
 	QString temp_crs_spec;
 };
 
-/// Initial setting dialog when opening a raster image as template, asking for the scale
+/**
+ * Initial setting dialog when opening a raster image as template,
+ * asking for how to position the image.
+ */
 class TemplateImageOpenDialog : public QDialog
 {
 Q_OBJECT

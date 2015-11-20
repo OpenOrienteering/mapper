@@ -106,8 +106,9 @@ struct _OCADFileHeader {
 	dword res4;
 	dword res5;
 	dword res6;
+	// Begin of "symbol header"
 	word ncolors;
-	word res7;
+	word nsep;
 	u8 res8[20];
 }
 , OCADFileHeader)
@@ -636,8 +637,10 @@ const char *ocad_str(char *buf, const str *ostr);
  *  the zero byte. Subsequent calls to this function can be made to build up a list of zero-
  *  terminated strings. This is useful, for example, in printf statements.
  *
+ *  \code{.c}
  *  char tmp[512], *ptmp = &tmp;
  *  printf("%s %s", ocad_str2(&ptmp, str1), ocad_str2(&ptmp, str2));
+ *  \endcode
  *
  *  Both OCAD strings will be appended to the buffer and separate pointers will be passed to
  *  printf. Note that the buffer size must be at least 256 times the number of strings to be
@@ -801,6 +804,21 @@ OCADColor *ocad_color_at(OCADFile *pfile, int index);
  *  is not found, NULL is returned. 
  */
 OCADColor *ocad_color(OCADFile *pfile, u8 number);
+
+
+/** Returns the number of spot colors defined in the separations table.
+ *  Returns -1 if the file isn't valid, or returns the negative value if the
+ *  number in the file exceeds 32.
+ */
+int ocad_separation_count(OCADFile *pfile);
+
+
+/** Returns a pointer to a particular spot color definition in the separations
+ *  table. If index is less than zero, greater than the maximum color index or
+ *  greater than 32, then NULL is returned. The index corresponds to the index
+ *  in the spot color table at OCADColor::spot.
+ */
+OCADColorSeparation *ocad_separation_at(OCADFile *pfile, int index);
 
 
 /** Converts an OCADColor to an RGB triplet in the provided array of ints. The RGB values range from

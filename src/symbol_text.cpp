@@ -20,11 +20,7 @@
 
 #include "symbol_text.h"
 
-#if QT_VERSION < 0x050000
-#include <QtGui>
-#else
 #include <QtWidgets>
-#endif
 #include <QIODevice>
 
 #include "core/map_color.h"
@@ -100,6 +96,8 @@ Symbol* TextSymbol::duplicate(const MapColorMap* color_map) const
 
 void TextSymbol::createRenderables(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output)
 {
+	Q_UNUSED(flags);
+	
 	TextObject* text_object = reinterpret_cast<TextObject*>(object);
 	
 	double anchor_x = coords[0].getX();
@@ -228,9 +226,7 @@ void TextSymbol::updateQFont()
 	qfont.setUnderline(underline);
 	qfont.setPixelSize(internal_point_size);
 	qfont.setFamily(font_family);
-	#if (QT_VERSION >= 0x040800)
 	qfont.setHintingPreference(QFont::PreferNoHinting);
-	#endif
 	qfont.setKerning(kerning);
 	metrics = QFontMetricsF(qfont);
 	qfont.setLetterSpacing(QFont::AbsoluteSpacing, metrics.width(" ") * character_spacing);
@@ -239,38 +235,6 @@ void TextSymbol::updateQFont()
 
 	metrics = QFontMetricsF(qfont);
 	tab_interval = 8.0 * metrics.averageCharWidth();
-}
-
-void TextSymbol::saveImpl(QIODevice* file, Map* map)
-{
-	int temp = map->findColorIndex(color);
-	file->write((const char*)&temp, sizeof(int));
-	saveString(file, font_family);
-	file->write((const char*)&font_size, sizeof(int));
-	file->write((const char*)&bold, sizeof(bool));
-	file->write((const char*)&italic, sizeof(bool));
-	file->write((const char*)&underline, sizeof(bool));
-	file->write((const char*)&line_spacing, sizeof(float));
-	file->write((const char*)&paragraph_spacing, sizeof(double));
-	file->write((const char*)&character_spacing, sizeof(double));
-	file->write((const char*)&kerning, sizeof(bool));
-	saveString(file, icon_text);
-	file->write((const char*)&framing, sizeof(bool));
-	temp = map->findColorIndex(framing_color);
-	file->write((const char*)&temp, sizeof(int));
-	file->write((const char*)&framing_mode, sizeof(int));
-	file->write((const char*)&framing_line_half_width, sizeof(int));
-	file->write((const char*)&framing_shadow_x_offset, sizeof(int));
-	file->write((const char*)&framing_shadow_y_offset, sizeof(int));
-	file->write((const char*)&line_below, sizeof(bool));
-	temp = map->findColorIndex(line_below_color);
-	file->write((const char*)&temp, sizeof(int));
-	file->write((const char*)&line_below_width, sizeof(int));
-	file->write((const char*)&line_below_distance, sizeof(int));
-	int num_custom_tabs = getNumCustomTabs();
-	file->write((const char*)&num_custom_tabs, sizeof(int));
-	for (int i = 0; i < num_custom_tabs; ++i)
-		file->write((const char*)&custom_tabs[i], sizeof(int));
 }
 
 bool TextSymbol::loadImpl(QIODevice* file, int version, Map* map)
@@ -296,7 +260,7 @@ bool TextSymbol::loadImpl(QIODevice* file, int version, Map* map)
 	{
 		file->read((char*)&framing, sizeof(bool));
 		file->read((char*)&temp, sizeof(int));
-		framing_color = (temp >= 0) ? map->getColor(temp) : NULL;
+		framing_color = map->getColor(temp);
 		file->read((char*)&framing_mode, sizeof(int));
 		file->read((char*)&framing_line_half_width, sizeof(int));
 		file->read((char*)&framing_shadow_x_offset, sizeof(int));
@@ -378,8 +342,10 @@ void TextSymbol::saveImpl(QXmlStreamWriter& xml, const Map& map) const
 	xml.writeEndElement(/*text_symbol*/);
 }
 
-bool TextSymbol::loadImpl(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol_dict)
+bool TextSymbol::loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict)
 {
+	Q_UNUSED(symbol_dict);
+	
 	if (xml.name() != "text_symbol")
 		return false;
 	
@@ -403,7 +369,7 @@ bool TextSymbol::loadImpl(QXmlStreamReader& xml, Map& map, SymbolDictionary& sym
 		else if (xml.name() == "text")
 		{
 			int temp = attributes.value("color").toString().toInt();
-			color = (temp >= 0) ? map.getColor(temp) : NULL;
+			color = map.getColor(temp);
 			line_spacing = attributes.value("line_spacing").toString().toFloat();
 			paragraph_spacing = attributes.value("paragraph_spacing").toString().toInt();
 			character_spacing = attributes.value("character_spacing").toString().toFloat();
@@ -414,7 +380,7 @@ bool TextSymbol::loadImpl(QXmlStreamReader& xml, Map& map, SymbolDictionary& sym
 		{
 			framing = true;
 			int temp = attributes.value("color").toString().toInt();
-			framing_color = (temp >= 0) ? map.getColor(temp) : NULL;
+			framing_color = map.getColor(temp);
 			framing_mode = attributes.value("mode").toString().toInt();
 			framing_line_half_width = attributes.value("line_half_width").toString().toInt();
 			framing_shadow_x_offset = attributes.value("shadow_x_offset").toString().toInt();
@@ -425,7 +391,7 @@ bool TextSymbol::loadImpl(QXmlStreamReader& xml, Map& map, SymbolDictionary& sym
 		{
 			line_below = true;
 			int temp = attributes.value("color").toString().toInt();
-			line_below_color = (temp >= 0) ? map.getColor(temp) : NULL;
+			line_below_color = map.getColor(temp);
 			line_below_width = attributes.value("width").toString().toInt();
 			line_below_distance = attributes.value("distance").toString().toInt();
 			xml.skipCurrentElement();
@@ -452,6 +418,8 @@ bool TextSymbol::loadImpl(QXmlStreamReader& xml, Map& map, SymbolDictionary& sym
 
 bool TextSymbol::equalsImpl(Symbol* other, Qt::CaseSensitivity case_sensitivity)
 {
+	Q_UNUSED(case_sensitivity);
+	
 	TextSymbol* text = static_cast<TextSymbol*>(other);
 	
 	if (!MapColor::equal(color, text->color))
@@ -747,6 +715,8 @@ void TextSymbolSettings::sizeChanged(double value)
 
 void TextSymbolSettings::sizeUnitChanged(int index)
 {
+	Q_UNUSED(index);
+	
 	if (!react_to_changes)
 		return;
 	
@@ -789,6 +759,8 @@ void TextSymbolSettings::colorChanged()
 
 void TextSymbolSettings::checkToggled(bool checked)
 {
+	Q_UNUSED(checked);
+	
 	if (!react_to_changes)
 		return;
 	
@@ -802,6 +774,8 @@ void TextSymbolSettings::checkToggled(bool checked)
 
 void TextSymbolSettings::spacingChanged(double value)
 {
+	Q_UNUSED(value);
+	
 	if (!react_to_changes)
 		return;
 	

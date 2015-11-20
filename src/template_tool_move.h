@@ -25,6 +25,7 @@
 
 class Template;
 
+/** Tool to move a template by hand. */
 class TemplateMoveTool : public MapEditorTool
 {
 Q_OBJECT

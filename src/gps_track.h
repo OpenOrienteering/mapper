@@ -21,8 +21,11 @@
 #ifndef _OPENORIENTEERING_GPS_TRACK_H_
 #define _OPENORIENTEERING_GPS_TRACK_H_
 
-#include <QString>
+#include <vector>
+
 #include <QDate>
+#include <QHash>
+#include <QString>
 
 #include "georeferencing.h"
 
@@ -33,7 +36,10 @@ QT_END_NAMESPACE
 
 class MapEditorController;
 
-/// A point in a track or a waypoint, which stores position on ellipsoid and map and more attributes (e.g. number of satellites)
+/**
+ * A point in a track or a waypoint, which stores position on ellipsoid and
+ * map and more attributes (e.g. number of satellites)
+ */
 struct TrackPoint
 {
 	LatLon gps_coord;
@@ -45,13 +51,16 @@ struct TrackPoint
 	int num_satellites;		// -1 if invalid
 	float hDOP;				// -1 if invalid
 	
-	TrackPoint(LatLon coord = LatLon(), QDateTime datetime = QDateTime(), float elevation = -9999, int num_satellites = -1, float hDOP = -1);
+	TrackPoint(LatLon coord = LatLon(), QDateTime datetime = QDateTime(),
+			   float elevation = -9999, int num_satellites = -1, float hDOP = -1);
 	void save(QXmlStreamWriter* stream) const;
 };
 
-/// Stores a set of tracks and / or waypoints, e.g. taken from a GPS device.
-/// Can optionally store a track coordinate reference system in track_georef;
-/// if no track CRS is given, assumes that coordinates are geographic WGS84 coordinates
+/**
+ * Stores a set of tracks and / or waypoints, e.g. taken from a GPS device.
+ * Can optionally store a track coordinate reference system in track_georef;
+ * if no track CRS is given, assumes that coordinates are geographic WGS84 coordinates
+ */
 class Track
 {
 public:
@@ -73,11 +82,20 @@ public:
 	bool saveTo(const QString& path) const;
 	
 	// Modifiers
-	void appendTrackPoint(TrackPoint& point);	// also converts the point's gps coords to map coords
+	
+	/** Appends the point and also converts the point's gps coords to map coords */
+	void appendTrackPoint(TrackPoint& point);
+	
+	/**
+	 * Marks the current track segment as finished, so the next added point
+	 * will define the start of a new track segment.
+	 */
 	void finishCurrentSegment();
 	
-	void appendWaypoint(TrackPoint& point, const QString& name);	// also converts the point's gps coords to map coords
+	/** Appends the waypoint and also converts the point's gps coords to map coords */
+	void appendWaypoint(TrackPoint& point, const QString& name);
 	
+	/** Updates the map positions of all points based on the new georeferencing. */
 	void changeMapGeoreferencing(const Georeferencing& new_georef);
 	
 	/// Sets the track coordinate reference system.
@@ -88,6 +106,7 @@ public:
 	int getNumSegments() const;
 	int getSegmentPointCount(int segment_number) const;
 	const TrackPoint& getSegmentPoint(int segment_number, int point_number) const;
+	const QString& getSegmentName(int segment_number) const;
 	
 	int getNumWaypoints() const;
 	const TrackPoint& getWaypoint(int number) const;
@@ -99,6 +118,16 @@ public:
 	/// Averages all track coordinates
 	LatLon calcAveragePosition() const;
 	
+	/** A collection of key:value tags. Cf. Object::Tags. */
+	typedef QHash<QString, QString> Tags;
+	
+	/** A mapping of an element name to a tags collection. */
+	typedef QHash<QString, Tags> ElementTags;
+	
+	/** Returns the mapping of element names to tag collections. */
+	const ElementTags& tags() const;
+
+	/** Assigns a copy of another Track's data to this object. */
 	Track& operator=(const Track& rhs);
 	
 private:
@@ -109,17 +138,31 @@ private:
 	void projectPoints();
 	
 	
+	/** A mapping of element id to tags. */
+	ElementTags element_tags; 
+	
 	std::vector<TrackPoint> waypoints;
 	std::vector<QString> waypoint_names;
 	
 	std::vector<TrackPoint> segment_points;
 	// The indices of the first points of every track segment in this track
 	std::vector<int> segment_starts;
+	std::vector<QString> segment_names;
 	
 	bool current_segment_finished;
 	
 	Georeferencing* track_crs;
 	Georeferencing map_georef;
 };
+
+
+// ### Track inline code ###
+
+inline
+const Track::ElementTags& Track::tags() const
+{
+	return element_tags;
+}
+
 
 #endif

@@ -18,17 +18,13 @@
  */
 
 
+#ifdef QT_PRINTSUPPORT_LIB
+
 #ifndef _OPENORIENTEERING_PRINT_WIDGET_H_
 #define _OPENORIENTEERING_PRINT_WIDGET_H_
 
-#include <QWidget>
 #include <QPrinterInfo>
-
-#if QT_VERSION < 0x050000
-#include <QtGui>
-#else
 #include <QtWidgets>
-#endif
 
 class Map;
 class MapEditorController;
@@ -163,6 +159,16 @@ protected slots:
 	/** This slot reacts to changes in the alternative scale widget. */
 	void differentScaleEdited(int value);
 	
+	/** This slot reacts to changes in the presence of spot colors in the map.
+	 *  The following features are enabled only when spot colors are present:
+	 *  - spot color separations
+	 *  - overprinting simulation
+	 */
+	void spotColorPresenceChanged(bool has_spot_colors);
+	
+	/** This slot reacts to changes in the normal/separation mode radio buttons. */
+	void separationModeChanged();
+	
 	/** This slot reacts to changes of the "Show template" option. */
 	void showTemplatesClicked(bool checked);
 	
@@ -246,6 +252,9 @@ private:
 	QDoubleSpinBox* height_edit;
 	QDoubleSpinBox* overlap_edit;
 	
+	QRadioButton* normal_mode_check;
+	QRadioButton* separation_mode_check;
+	
 	QPushButton* preview_button;
 	QPushButton* print_button;
 	QPushButton* export_button;
@@ -265,5 +274,7 @@ private:
 };
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(PrintWidget::TaskFlags)
+
+#endif
 
 #endif

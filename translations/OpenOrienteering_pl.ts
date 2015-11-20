@@ -578,6 +578,38 @@
     </message>
 </context>
 <context>
+    <name>DistributePointsSettingsDialog</name>
+    <message>
+        <source>Distribute points evenly along path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of points per path:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Also place objects at line end points</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rotation settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Align points with direction of line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message utf8="true">
+        <source>°</source>
+        <comment>degrees</comment>
+        <translation type="unfinished">°</translation>
+    </message>
+    <message>
+        <source>Additional rotation angle (counter-clockwise):</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>DrawCircleTool</name>
     <message>
         <source>&lt;b&gt;Click&lt;/b&gt;: Start a circle or ellipse. </source>
@@ -2508,6 +2540,18 @@ do odczytu.</translation>
         <source>Select a point symbol to be able to use this tool.</source>
         <translation>Wybierz symbol punkowy aby użyć tego narzędzia.</translation>
     </message>
+    <message>
+        <source>Distribute points along path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Places evenly spaced point objects along an existing path object</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select at least one path object and a single point symbol to activate this tool.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MapEditorTool</name>
@@ -2526,6 +2570,29 @@ do odczytu.</translation>
     <message>
         <source>&lt;b&gt;%1&lt;/b&gt;: Abort. </source>
         <translation>&lt;b&gt;%1&lt;/b&gt;: Przerwij. </translation>
+    </message>
+</context>
+<context>
+    <name>MapPrinter</name>
+    <message>
+        <source>Processing separations of page %1...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Processing page %1...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Canceled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Finished</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2795,6 +2862,10 @@ zoom using the mouse wheel, if available.</source>
         <source>Unable to export fill pattern shift for an area object</source>
         <translation>Nie można eksportować przerwy wypełnienia dla obiektu powierzchniowego</translation>
     </message>
+    <message>
+        <source>Registration black is exported as a regular color.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>OCAD8FileImport</name>
@@ -2890,6 +2961,22 @@ zoom using the mouse wheel, if available.</source>
         <source>In dashed line symbol %1, the end gap cannot be imported correctly.</source>
         <translation>W kreskowanym symbolu liniowym %1, końcowa przerwa nie może być zaimportowana poprawnie.</translation>
     </message>
+    <message numerus="yes">
+        <source>%n color separation(s) were skipped, reason: Import disabled.</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Could not load the spot color definitions, error: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Color &quot;Registration black&quot; is imported as a special color.</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message>
         <source>Line symbol %1: suppressing dash symbol at line ends.</source>
         <translation type="unfinished"></translation>
@@ -2899,6 +2986,10 @@ zoom using the mouse wheel, if available.</source>
     <name>OcdFileImport</name>
     <message>
         <source>In line symbol %1 &apos;%2&apos;: %3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>In text symbol %1 &apos;%2&apos;: %3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2950,28 +3041,36 @@ zoom using the mouse wheel, if available.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>During import of text symbol %1: ignoring justified alignment</source>
-        <translation type="unfinished">Podczas importowania symbolu tekstowego %1: zignorowano wyjustrowanie</translation>
+        <source>Justified alignment is not supported.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>During import of text symbol %1: ignoring custom weight (%2)</source>
-        <translation type="unfinished">Podczas importowania symbolu tekstowego %1: zignorowano własną szerokość (%2)</translation>
+        <source>Vertical alignment &apos;%1&apos; is not supported.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>During import of text symbol %1: custom character spacing is set, its implementation does not match OCAD&apos;s behavior yet</source>
-        <translation type="unfinished">Podczas importowania symbolu tekstowego %1: własne odstępy pomiędzy literami są określone, implementacja nie pasuje do zachowania OCADa</translation>
+        <source>Ignoring custom weight (%1).</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>During import of text symbol %1: ignoring custom word spacing (%2%)</source>
-        <translation type="unfinished">Podczas importowania symbolu tekstowego %1: zignorowano własne odstępy pomiędzy słowami (%2%)</translation>
+        <source>Custom character spacing may be incorrect.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>During import of text symbol %1: ignoring custom indents (%2/%3)</source>
-        <translation type="unfinished">Podczas importowania symbolu tekstowego %1: zignorowano własne tirety (%2/%3)</translation>
+        <source>Ignoring custom word spacing (%1 %).</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>During import of text symbol %1: ignoring text framing (mode %2)</source>
-        <translation type="unfinished">Podczas importowania symbolu tekstowego %1: zignorowano ramy tekstu (tryb %2)</translation>
+        <source>Ignoring custom indents (%1/%2).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ignoring text framing (mode %1).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Line text symbols are not yet supported. Marking the symbol as hidden.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Unable to load object</source>
@@ -3183,7 +3282,27 @@ zoom using the mouse wheel, if available.</source>
     <name>PrintTool</name>
     <message>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the print area or its borders. </source>
-        <translation>&lt;b&gt;Przeciągnij&lt;/b&gt;: Przesuń obszar wydruku bądź jego granice. </translation>
+        <translation type="obsolete">&lt;b&gt;Przeciągnij&lt;/b&gt;: Przesuń obszar wydruku bądź jego granice. </translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Drag&lt;/b&gt;: Move the map, the print area or the area&apos;s borders. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Drag&lt;/b&gt;: Move the print area. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Drag&lt;/b&gt;: Move the map. </source>
+        <translation type="unfinished">&lt;b&gt;Przeciągnij&lt;/b&gt;: Przesuń mapę. </translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Drag&lt;/b&gt;: Move the print area&apos;s border. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Drag&lt;/b&gt;: Move the print area&apos;s borders. </source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3349,6 +3468,18 @@ zoom using the mouse wheel, if available.</source>
         <translation>Wysokość:</translation>
     </message>
     <message>
+        <source>Normal output</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Color separations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Print Preview Progress</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>PNG</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3366,6 +3497,22 @@ zoom using the mouse wheel, if available.</source>
     </message>
     <message>
         <source>PDF</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Printing Progress</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Canceled.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Printing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The print job could not be stopped.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3391,6 +3538,11 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <source>The file is not an DXF file.</source>
         <comment>DXFParser</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Registration black (all printed colors)</source>
+        <comment>MapColor</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3939,7 +4091,7 @@ zoom using the mouse wheel, if available.</source>
     </message>
     <message>
         <source>Scale symbol %1</source>
-        <translation>Skaluj symbol %1</translation>
+        <translation type="obsolete">Skaluj symbol %1</translation>
     </message>
     <message>
         <source>Select all objects with this symbol</source>
@@ -3984,6 +4136,10 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <source>F1</source>
         <comment>Shortcut for displaying the symbol&apos;s description</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Scale symbol(s)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4037,6 +4193,37 @@ przeskoczenia leniwego psa
     <message>
         <source>No description!</source>
         <translation>Brak opisu!</translation>
+    </message>
+</context>
+<context>
+    <name>TagsDialog</name>
+    <message>
+        <source>Add</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished">Zamknij</translation>
+    </message>
+    <message>
+        <source>Key</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>key</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>key %0</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4362,6 +4549,11 @@ Maksymalna obsługiwana wersja to %2.</translation>
         <translation type="unfinished">Wystąpił błąd podczas wszytywania pliku DXF %2:
 
 %2 {1:?}</translation>
+    </message>
+    <message>
+        <source>%1:
+Not an OSM file.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -27,7 +27,9 @@
 
 
 /**
- * Tests PathObject. Still very incomplete (TODO).
+ * @test Tests PathObject. Still very incomplete
+ *
+ * @todo Extent this test.
  */
 class PathObjectTest : public QObject
 {

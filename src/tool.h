@@ -41,17 +41,22 @@ class TextObject;
 typedef std::vector<Renderable*> RenderableVector;
 
 /** 
- * MapEditorTool represents a tool which works usually by using the mouse.
+ * Represents a tool which works usually by using the mouse.
  * The given button is unchecked when the tool is destroyed.
- * NOTE 1: do not change any settings (e.g. status bar text) in the constructor, as another tool still might be
- *         active at that point in time! Instead, use the init() method.
- * NOTE 2: this class provides a general but cumbersome interface. If you want to write a simple tool and can live
- *         with some limitations, consider using MapEditorToolBase instead.
+ * 
+ * NOTE 1: Do not change any settings (e.g. status bar text) in the constructor,
+ * as another tool still might be active at that point in time!
+ * Instead, use the init() method.
+ * 
+ * NOTE 2: This class provides a general but cumbersome interface. If you want
+ * to write a simple tool and can live with some limitations, consider using
+ * MapEditorToolBase instead.
  */
 class MapEditorTool : public QObject
 {
 Q_OBJECT
 public:
+	/** Type enum for identification of tools */
 	enum Type
 	{
 		Other = 0,
@@ -61,7 +66,9 @@ public:
 		DrawPath = 4,
 		DrawCircle = 5,
 		DrawRectangle = 6,
-		DrawText = 7
+		DrawFreehand = 8,
+		DrawText = 7,
+		Pan = 9
 	};
 	
 	/// The numbers correspond to the columns in point-handles.png
@@ -83,11 +90,24 @@ public:
 		DisabledHandleState = 3
 	};
 	
+	/**
+	 * Constructs a new MapEditorTool.
+	 * @param editor The MapEditorController in which the tool is used.
+	 * @param type The type of the tool (it is safe to use Other if it is not
+	 *     necessary to query for this type somewhere).
+	 * @param tool_button Optional button which will be unchecked on destruction
+	 *     of this tool.
+	 */
 	MapEditorTool(MapEditorController* editor, Type type, QAction* tool_button = NULL);
+	
+	/** Destructs the MapEditorTool. */
 	virtual ~MapEditorTool();
 	
-	/// This is called when the tool is activated and should be used to change any settings, e.g. the status bar text
-	virtual void init() {}
+	/**
+	 * This is called when the tool is activated and should be used to
+	 * change any settings, e.g. the status bar text.
+	 */
+	virtual void init();
 	
 	/** Makes this tool inactive in the editor. 
 	 *  This will also schedule this tool's deletion. */
@@ -99,26 +119,34 @@ public:
 	
 	void setEditingInProgress(bool state);
 	
-	/// Must return the cursor which should be used for the tool in the editor windows. TODO: How to change the cursor for all map widgets while active?
+	/**
+	 * Must return the cursor which should be used for the tool in the editor windows.
+	 * TODO: How to change the cursor for all map widgets while active?
+	 */
 	virtual QCursor* getCursor() = 0;
 	
-	/// All dynamic drawings must be drawn here using the given painter. Drawing is only possible in the area specified by calling map->setDrawingBoundingBox().
-	virtual void draw(QPainter* painter, MapWidget* widget) {};
+	/**
+	 * All dynamic drawings must be drawn here using the given painter.
+	 * Drawing is only possible in the area specified by calling map->setDrawingBoundingBox().
+	 */
+	virtual void draw(QPainter* painter, MapWidget* widget);
 	
 	// Mouse input
-	virtual bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) {return false;}
-	virtual bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) {return false;}
-	virtual bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) {return false;}
-	virtual bool mouseDoubleClickEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) {return false;}
-	virtual void leaveEvent(QEvent* event) {}
+	virtual bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
+	virtual bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
+	virtual bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
+	virtual bool mouseDoubleClickEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
+	virtual void leaveEvent(QEvent* event);
 	
 	// Key input
-	virtual bool keyPressEvent(QKeyEvent* event) {return false;}
-	virtual bool keyReleaseEvent(QKeyEvent* event) {return false;}
-	virtual void focusOutEvent(QFocusEvent* event) {}
+	virtual bool keyPressEvent(QKeyEvent* event);
+	virtual bool keyReleaseEvent(QKeyEvent* event);
+	virtual void focusOutEvent(QFocusEvent* event);
 	
 	inline Type getType() const {return type;}
 	inline QAction* getAction() const {return tool_button;}
+	/** Returns whether the touch helper cursor should be used for this tool if it is enabled. */
+	inline bool usesTouchCursor() const {return uses_touch_cursor;}
 	inline void setAction(QAction* new_tool_button) {tool_button = new_tool_button;}
 	
 	/** Returns the map being edited. */
@@ -180,8 +208,9 @@ public:
 	/// Color for selected elements
 	static const QRgb selection_color;
 	
-	/// The global point handle image
-	static QImage* point_handles;
+	/// The global point handle image (in different resolutions)
+	static const int num_point_handle_resolutions = 3;
+	static QImage* point_handles[num_point_handle_resolutions];
 	
 protected:
 	/// Can be called by subclasses to display help text in the status bar
@@ -207,6 +236,9 @@ protected:
 	
 	QAction* tool_button;
 	Type type;
+	bool uses_touch_cursor;
+	static int resolution_index;
+	static int resolution_scale_factor;
 	MapEditorController* editor;
 };
 

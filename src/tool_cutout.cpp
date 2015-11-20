@@ -144,7 +144,7 @@ void CutoutTool::objectSelectionChangedImpl()
 
 void CutoutTool::clickRelease()
 {
-	int click_tolerance = Settings::getInstance().getSettingCached(Settings::MapEditor_ClickTolerance).toInt();
+	float click_tolerance = Settings::getInstance().getMapEditorClickTolerancePx();
 	object_selector->selectAt(cur_pos_map, cur_map_widget->getMapView()->pixelToLength(click_tolerance), active_modifiers & Qt::ShiftModifier);
 	updateStatusText();
 }
@@ -177,6 +177,9 @@ struct PhysicalCutoutOperation
 	
 	inline bool operator()(Object* object, MapPart* part, int object_index)
 	{
+		Q_UNUSED(part);
+		Q_UNUSED(object_index);
+		
 		// If there is a selection, only clip selected objects
 		if (map->getNumSelectedObjects() > 0 && !map->isObjectSelected(object))
 			return true;

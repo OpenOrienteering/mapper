@@ -25,20 +25,26 @@
 #include "object.h"
 #include "map.h"
 
-// Object conditions and processors, see methods Map::operationOnAllObjects() and MapPart::operationOnAllObjects()
+/**
+ * Object conditions and processors,
+ * see methods Map::operationOnAllObjects() and MapPart::operationOnAllObjects()
+ */
 namespace ObjectOp
 {
 	// Conditions
 	
+	/** Returns true for all objects. */
 	struct NoCondition
 	{
 		inline NoCondition() {}
 		inline bool operator()(Object* object) const
 		{
+			Q_UNUSED(object);
 			return true;
 		}
 	};
 	
+	/** Returns true for objects with the given symbol. */
 	struct HasSymbol
 	{
 		inline HasSymbol(Symbol* symbol) : symbol(symbol) {}
@@ -50,6 +56,7 @@ namespace ObjectOp
 		Symbol* symbol;
 	};
 	
+	/** Returns true for objects with the given symbol type. */
 	struct HasSymbolType
 	{
 		inline HasSymbolType(Symbol::Type type) : type(type) {}
@@ -61,6 +68,7 @@ namespace ObjectOp
 		Symbol::Type type;
 	};
 	
+	/** Returns true for objects where the symbol type contains the given type. */
 	struct ContainsSymbolType
 	{
 		inline ContainsSymbolType(Symbol::Type type) : type(type) {}
@@ -72,13 +80,17 @@ namespace ObjectOp
 		Symbol::Type type;
 	};
 	
+	
 	// Operations
 	
+	/** Scales objects by the given factor. */
 	struct Scale
 	{
 		inline Scale(double factor, const MapCoord& scaling_center) : factor(factor), center(scaling_center) {}
 		inline bool operator()(Object* object, MapPart* part, int object_index) const
 		{
+			Q_UNUSED(part);
+			Q_UNUSED(object_index);
 			object->scale(center, factor);
 			object->update(true, true);
 			return true;
@@ -88,11 +100,14 @@ namespace ObjectOp
 		MapCoordF center;
 	};
 	
+	/** Rotates objects by the given angle (in radians). */
 	struct Rotate
 	{
 		inline Rotate(double angle, const MapCoord& center) : angle(angle), center(center) {}
 		inline bool operator()(Object* object, MapPart* part, int object_index) const
 		{
+			Q_UNUSED(part);
+			Q_UNUSED(object_index);
 			object->rotateAround(center, angle);
 			object->update(true, true);
 			return true;
@@ -102,11 +117,14 @@ namespace ObjectOp
 		MapCoordF center;
 	};
 	
+	/** Calls update() on the objects. */
 	struct Update
 	{
 		inline Update(bool force = true) : force(force) {}
 		inline bool operator()(Object* object, MapPart* part, int object_index) const
 		{
+			Q_UNUSED(part);
+			Q_UNUSED(object_index);
 			object->update(force, true);
 			return true;
 		}
@@ -114,7 +132,10 @@ namespace ObjectOp
 		bool force;
 	};
 	
-	// NOTE: Make sure to apply this to correctly fitting objects only!
+	/**
+	 * Changes the objects' symbols.
+	 * NOTE: Make sure to apply this to correctly fitting objects only!
+	 */
 	struct ChangeSymbol
 	{
 		inline ChangeSymbol(Symbol* new_symbol) : new_symbol(new_symbol) {}
@@ -130,22 +151,31 @@ namespace ObjectOp
 		Symbol* new_symbol;
 	};
 	
+	/** Delete objects. */
 	struct Delete
 	{
 		inline Delete() {}
 		inline bool operator()(Object* object, MapPart* part, int object_index) const
 		{
+			Q_UNUSED(object);
 			part->deleteObject(object_index, false);
 			return true;
 		}
 	};
 	
-	// Can be used to check for the existence of certain types of objects by checking if this operation would be applied to any object under a given condition
+	/**
+	 * Can be used to check for the existence of certain types of objects
+	 * by checking if this operation would be applied to any object
+	 * under a given condition.
+	 */
 	struct NoOp
 	{
 		inline NoOp() {}
 		inline bool operator()(Object* object, MapPart* part, int object_index) const
 		{
+			Q_UNUSED(object);
+			Q_UNUSED(part);
+			Q_UNUSED(object_index);
 			// Abort
 			return false;
 		}

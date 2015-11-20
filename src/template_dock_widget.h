@@ -21,12 +21,7 @@
 #ifndef _OPENORIENTEERING_TEMPLATE_DOCK_WIDGET_H_
 #define _OPENORIENTEERING_TEMPLATE_DOCK_WIDGET_H_
 
-#include <qglobal.h>
-#if QT_VERSION < 0x050000
-#include <QtGui>
-#else
 #include <QtWidgets>
-#endif
 
 class Map;
 class MapEditorController;
@@ -34,6 +29,11 @@ class MapView;
 class Template;
 class PercentageDelegate;
 
+/**
+ * Widget showing the list of templates, including the map layer.
+ * Allows to load templates, set their view properties and reoder them,
+ * and do various other actions like adjusting template positions.
+ */
 class TemplateWidget : public QWidget
 {
 Q_OBJECT

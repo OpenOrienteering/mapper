@@ -103,7 +103,7 @@ bool CutTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget*
 	
 	if (mouse_down)
 	{
-		if (!dragging && (event->pos() - click_pos).manhattanLength() >= QApplication::startDragDistance())
+		if (!dragging && (event->pos() - click_pos).manhattanLength() >= Settings::getInstance().getStartDragDistancePx())
 		{
 			// Start dragging
 			dragging = true;
@@ -351,6 +351,8 @@ void CutTool::updateDirtyRect(const QRectF* path_rect)
 
 void CutTool::updateDragging(MapCoordF cursor_pos_map, MapWidget* widget)
 {
+	Q_UNUSED(widget);
+	
 	if (dragging_on_line)
 	{
 		PathObject* path = reinterpret_cast<PathObject*>(edit_object);
@@ -426,7 +428,7 @@ void CutTool::updateHoverPoint(QPointF cursor_pos_screen, MapWidget* widget)
 
 bool CutTool::findEditPoint(PathCoord& out_edit_point, PathObject*& out_edit_object, MapCoordF cursor_pos_map, int with_type, int without_type, MapWidget* widget)
 {
-	int click_tolerance = Settings::getInstance().getSettingCached(Settings::MapEditor_ClickTolerance).toInt();
+	float click_tolerance = Settings::getInstance().getMapEditorClickTolerancePx();
 	Map* map = this->map();
 	
 	out_edit_object = NULL;
@@ -539,7 +541,7 @@ void CutTool::pathAborted()
 
 void CutTool::pathFinished(PathObject* split_path)
 {
-	int click_tolerance = Settings::getInstance().getSettingCached(Settings::MapEditor_ClickTolerance).toInt();
+	float click_tolerance = Settings::getInstance().getMapEditorClickTolerancePx();
 	Map* map = this->map();
 	
 	// Get path endpoint and check if it is on the area boundary
@@ -595,6 +597,7 @@ void CutTool::pathFinished(PathObject* split_path)
 	}
 	
 	bool ok;
+	Q_UNUSED(ok); // "ok" is only used in Q_ASSERT.
 	PathObject* parts[2];
 	if (edited_path->getPart(drag_part_index).isClosed())
 	{

@@ -1,6 +1,6 @@
 #!/bin/sh -e
 #
-#    Copyright 2012, 2013 Kai Pastor
+#    Copyright 2012, 2013, 2014 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -19,34 +19,136 @@
 
 cd "@SOURCE_DIR@"
 
-# [1] Normal patching
-for I in "@PROJECT_SOURCE_DIR@"/qt5-[1-9]*.patch
-do
-	test -f "$I" && patch -p1 < "$I"
-done
+PRETTY_DATE=$(date --rfc-3339=date)
+OO_LOG=OpenOrienteering/CHANGES.txt
 
-# [2] Customize build by removing and disabling subdirs.
+mkdir -p OpenOrienteering
+cat > ${OO_LOG} << END_OPENORIENTEERING_README
+This Qt source code distribution contains modifications by OpenOrienteering.
+
+$PRETTY_DATE:
+- Removed a number of directories.
+- Replaced a number of files by empty or no-op placeholders.
+- Applied the following patches:
+END_OPENORIENTEERING_README
+
+# [1] Customize build by removing and disabling subdirs.
 for I in \
+  gnuwin32 \
+  qt*/doc \
+  qt*/examples \
+  qt*/src/doc/* \
+  qt*/src/*/doc/* \
+  qt*/tests \
   qtactiveqt \
-  qtdeclarative \
-  qtdoc \
+  qtbase/doc/src \
+  qtbase/include/QtANGLE \
+  qtbase/include/QtNetwork/[Qq][Ss]sl* \
+  qtbase/include/QtNetwork/*/QtNetwork/private/[Qq][Ss]sl* \
+  qtbase/lib/fonts \
+  qtbase/src/3rdparty/angle \
+  qtbase/src/3rdparty/des \
+  qtbase/src/angle \
+  qtbase/src/network/ssl/* \
+  qtbase/src/sql/drivers/db2 \
+  qtbase/src/sql/drivers/ibase \
+  qtbase/src/sql/drivers/mysql \
+  qtbase/src/sql/drivers/oci \
+  qtbase/src/sql/drivers/odbc \
+  qtbase/src/sql/drivers/psql \
+  qtbase/src/sql/drivers/sqlite2 \
+  qtbase/src/sql/drivers/tds \
+  qtdoc/demos \
+  qtdoc/doc/images \
+  qtdoc/doc/snippets \
+  qtdoc/doc/src/* \
   qtgraphicaleffects \
+  qtimageformats/src/3rdparty/libmng* \
+  qtimageformats/src/3rdparty/patches/libmng* \
+  qtimageformats/src/plugins/imageformats/mng/* \
+  qtimageformats/src/plugins/imageformats/tga/* \
+  qtimageformats/src/plugins/imageformats/wbmp/* \
   qtjsbackend \
   qtmultimedia \
   qtquick1 \
   qtquickcontrols \
   qtscript \
-  qtsensors \
   qtserialport \
+  qtsvg \
+  qttools/src/designer/components/* \
+  qttools/src/designer/designer/* \
+  qttools/src/designer/plugins/* \
+  qttools/src/designer/src/lib/extensions/* \
   qtwebkit \
   qtwebkit-examples \
   qtwebkit-examples-and-demos \
   qtxmlpatterns
 do
-       if [ -d "./$I" ]
-       then
-               rm -R "./$I"
-       fi
+    if [ -d "./$I" ]
+    then
+        case "$I" in
+        qtbase/doc)
+            ;; # Retain qtbase/doc/global
+        qtdoc/doc|qtdoc/doc/src/legal)
+            ;; # Retain qtdoc/doc/src/legal
+        *)
+            rm -R "./$I" ;;
+        esac
+    elif [ -f "./$I" ]
+    then
+        case "$I" in
+        */include/*)
+            echo "// $PRETTY_DATE: Replaced with empty placeholder file" > "./$I" ;;
+        *.pro)
+            echo "#  $PRETTY_DATE: Replaced with no-op placeholder file" > "./$I"
+            echo "TEMPLATE = subdirs" >> "./$I" ;;
+        *.pri|*.pro|*.qdocconf)
+            echo "#  $PRETTY_DATE: Replaced with empty placeholder file" > "./$I" ;;
+        *)
+            rm "./$I" ;;
+        esac
+    fi
+done
+
+# [2] Normal patching
+mkdir -p OpenOrienteering/patches
+for I in \
+  "@PROJECT_SOURCE_DIR@"/patches/qt-@QT5_MAJOR_MINOR@-[1-9]*.patch \
+  "@PROJECT_SOURCE_DIR@"/patches/qt-@QT5_MAJOR_MINOR_REVISION@-[1-9]*.patch
+do
+    PATCH=$(basename "$I")
+    if [ ! -f "OpenOrienteering/patches/$PATCH" -a -f "$I" ]
+    then
+        # Apply normally
+        patch -p1 < "$I"
+        cp "$I" "OpenOrienteering/patches/$PATCH"
+        echo "  $PATCH " >> ${OO_LOG}
+    elif diff -q "$I" "OpenOrienteering/patches/$PATCH"
+    then
+        # Reapply for verification
+        patch --silent --reverse -p1 < "$I"
+        patch -p1 < "$I"
+        echo "  $PATCH " >> ${OO_LOG}
+    else
+        echo "A different patch named $PATCH was already applied."
+        exit 1
+    fi
+done
+
+for I in OpenOrienteering/patches/*
+do
+    PATCH=$(basename "$I")
+    if [ ! -f "$I" ]
+    then
+        echo "Unknown element $I"
+        exit 1
+    elif grep -q "  $PATCH " ${OO_LOG}
+    then
+        true
+    else
+        echo "Unknown patch $I"
+        exit 1
+    fi
 done
 
 # [3] MinGW on Windows issue
@@ -55,7 +157,10 @@ then
 	touch qtbase/.gitignore
 fi
 
-# [4] Placeholder Makefile for initial "make confclean"
+# [4] Create an archive of the remaining source code
+( cd .. && tar czf qt-everywhere-opensource-src-@QT5_MAJOR_MINOR_REVISION@-openorienteering-$PRETTY_DATE.tar.gz Qt5 )
+
+# [5] Placeholder Makefile for initial "make confclean"
 if [ ! -f "@BINARY_DIR@/qtbase/Makefile" ]
 then
 	mkdir -p "@BINARY_DIR@/qtbase"

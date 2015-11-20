@@ -20,11 +20,7 @@
 
 #include "item_delegates.h"
 
-#if QT_VERSION < 0x050000
-#include <QtGui>
-#else
 #include <QtWidgets>
-#endif
 
 #include "../util_gui.h"
 
@@ -96,6 +92,9 @@ SpinBoxDelegate::SpinBoxDelegate(int min, int max, const QString& unit, int step
 
 QWidget* SpinBoxDelegate::createEditor(QWidget* parent, const QStyleOptionViewItem& option, const QModelIndex& index) const
 {
+	Q_UNUSED(option);
+	Q_UNUSED(index);
+	
 	QSpinBox* spinbox = Util::SpinBox::create(min, max, unit, step);
 	spinbox->setParent(parent);
 	
@@ -133,6 +132,7 @@ void SpinBoxDelegate::setModelData(QAbstractItemModel* model, const QModelIndex&
 
 void SpinBoxDelegate::updateEditorGeometry(QWidget* editor, const QStyleOptionViewItem& option, const QModelIndex& index) const
 {
+	Q_UNUSED(index);
 	editor->setGeometry(option.rect);
 }
 
@@ -162,6 +162,9 @@ QString PercentageDelegate::displayText(const QVariant& value, const QLocale& lo
 
 QWidget* PercentageDelegate::createEditor(QWidget* parent, const QStyleOptionViewItem& option, const QModelIndex& index) const
 {
+	Q_UNUSED(option);
+	Q_UNUSED(index);
+	
 	QSpinBox* spinbox = Util::SpinBox::create(0, 100, unit, step);
 	spinbox->setParent(parent);
 	
@@ -191,5 +194,6 @@ void PercentageDelegate::setModelData(QWidget* editor, QAbstractItemModel* model
 
 void PercentageDelegate::updateEditorGeometry(QWidget* editor, const QStyleOptionViewItem& option, const QModelIndex& index) const
 {
+	Q_UNUSED(index);
 	editor->setGeometry(option.rect);
 }

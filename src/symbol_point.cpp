@@ -20,11 +20,7 @@
 
 #include "symbol_point.h"
 
-#if QT_VERSION < 0x050000
-#include <QtGui>
-#else
 #include <QtWidgets>
-#endif
 #include <QXmlStreamAttributes>
 
 #include "core/map_color.h"
@@ -83,8 +79,11 @@ void PointSymbol::createRenderables(Object* object, const MapCoordVector& flags,
 {
 	createRenderablesScaled(object, flags, coords, output, 1.0f);
 }
+
 void PointSymbol::createRenderablesScaled(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output, float coord_scale)
 {
+	Q_UNUSED(flags);
+	
 	if (inner_color && inner_radius > 0)
 		output.insertRenderable(new DotRenderable(this, coords[0]));
 	if (outer_color && outer_width > 0)
@@ -269,32 +268,6 @@ void PointSymbol::scale(double factor)
 	resetIcon();
 }
 
-void PointSymbol::saveImpl(QIODevice* file, Map* map)
-{
-	file->write((const char*)&rotatable, sizeof(bool));
-	
-	file->write((const char*)&inner_radius, sizeof(int));
-	int temp = map->findColorIndex(inner_color);
-	file->write((const char*)&temp, sizeof(int));
-	
-	file->write((const char*)&outer_width, sizeof(int));
-	temp = map->findColorIndex(outer_color);
-	file->write((const char*)&temp, sizeof(int));
-	
-	int num_elements = (int)objects.size();
-	file->write((const char*)&num_elements, sizeof(int));
-	for (int i = 0; i < num_elements; ++i)
-	{
-		int save_type = static_cast<int>(symbols[i]->getType());
-		file->write((const char*)&save_type, sizeof(int));
-		symbols[i]->save(file, map);
-		
-		save_type = static_cast<int>(objects[i]->getType());
-		file->write((const char*)&save_type, sizeof(int));
-		objects[i]->save(file);
-	}
-}
-
 bool PointSymbol::loadImpl(QIODevice* file, int version, Map* map)
 {
 	file->read((char*)&rotatable, sizeof(bool));
@@ -353,7 +326,7 @@ void PointSymbol::saveImpl(QXmlStreamWriter& xml, const Map& map) const
 	xml.writeEndElement(/*point_symbol*/);
 }
 
-bool PointSymbol::loadImpl(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol_dict)
+bool PointSymbol::loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict)
 {
 	if (xml.name() != "point_symbol")
 		return false;
@@ -462,5 +435,6 @@ void PointSymbolSettings::reset(Symbol* symbol)
 
 void PointSymbolSettings::tabChanged(int index)
 {
+	Q_UNUSED(index);
 	symbol_editor->setEditorActive( currentWidget()==point_tab );
 }

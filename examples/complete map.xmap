@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map xmlns="http://oorienteering.sourceforge.net/mapper/xml/v2" version="4">
+<map xmlns="http://oorienteering.sourceforge.net/mapper/xml/v2" version="5">
     <notes></notes>
     <georeferencing scale="4000" declination="0" grivation="0">
         <ref_point x="0" y="0"/>
@@ -75804,11 +75804,11 @@ Well; Small erosion gully
         </map_view>
     </view>
     <print scale="4000" resolution="300">
-        <page_format paper_size="A4" orientation="portrait" h_overlap="5.00" v_overlap="5.00">
-            <dimensions width="209.888667" height="297.010667"/>
-            <page_rect left="0.000000" top="0.000000" width="209.888667" height="297.010667"/>
+        <page_format paper_size="Custom" orientation="portrait" h_overlap="5.00" v_overlap="5.00">
+            <dimensions width="110.000000" height="110.000000"/>
+            <page_rect left="5.000000" top="5.000000" width="100.000000" height="100.000000"/>
         </page_format>
-        <print_area left="-107.846625" top="-149.688333" width="209.888667" height="297.010667" center_area="true" single_page="true"/>
+        <print_area left="-105.490367" top="-145.341367" width="209.909833" height="297.031833" center_area="true"/>
     </print>
     <undo count="0"/>
     <redo count="0"/>

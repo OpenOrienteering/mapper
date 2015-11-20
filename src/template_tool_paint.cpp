@@ -20,15 +20,12 @@
 
 #include "template_tool_paint.h"
 
-#if QT_VERSION < 0x050000
-#include <QtGui>
-#else
 #include <QtWidgets>
-#endif
 
 #include "map_widget.h"
 #include "template.h"
 #include "util.h"
+#include "map_editor.h"
 
 
 // ### PaintOnTemplateTool ###
@@ -50,28 +47,24 @@ PaintOnTemplateTool::PaintOnTemplateTool(MapEditorController* editor, QAction* t
 
 PaintOnTemplateTool::~PaintOnTemplateTool()
 {
-	delete dock_widget;
+	editor->deletePopupWidget(widget);
 }
 
 void PaintOnTemplateTool::init()
 {
 	setStatusBarText(tr("<b>Click and drag</b>: Paint. <b>Right click and drag</b>: Erase. "));
 	
-	dock_widget = new QDockWidget(tr("Color selection"), window());
-	dock_widget->setFeatures(dock_widget->features() & ~QDockWidget::DockWidgetClosable);
 	widget = new PaintOnTemplatePaletteWidget(false);
-	dock_widget->setWidget(widget);
-	
-	// Show dock in floating state
-	dock_widget->setFloating(true);
-	dock_widget->show();
-	dock_widget->setGeometry(window()->geometry().left() + 40, window()->geometry().top() + 100, dock_widget->width(), dock_widget->height());
-	
+	editor->showPopupWidget(widget, tr("Color selection"));
 	connect(widget, SIGNAL(colorSelected(QColor)), this, SLOT(colorSelected(QColor)));
+	connect(widget, SIGNAL(undoSelected()), this, SLOT(undoSelected()));
+	connect(widget, SIGNAL(redoSelected()), this, SLOT(redoSelected()));
+	colorSelected(widget->getSelectedColor());
 }
 
 void PaintOnTemplateTool::templateDeleted(int pos, Template* temp)
 {
+	Q_UNUSED(pos);
 	if (temp == this->temp)
 		deactivate();
 }
@@ -81,8 +74,20 @@ void PaintOnTemplateTool::colorSelected(QColor color)
 	paint_color = color;
 }
 
+void PaintOnTemplateTool::undoSelected()
+{
+	temp->drawOntoTemplateUndo(false);
+}
+
+void PaintOnTemplateTool::redoSelected()
+{
+	temp->drawOntoTemplateUndo(true);
+}
+
 bool PaintOnTemplateTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
+	Q_UNUSED(widget);
+	
 	if (event->button() == Qt::LeftButton || event->button() == Qt::RightButton)
 	{
 		coords.push_back(map_coord);
@@ -97,6 +102,8 @@ bool PaintOnTemplateTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coor
 
 bool PaintOnTemplateTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
+	Q_UNUSED(event);
+	
 	if (dragging)
 	{
 		float scale = qMin(temp->getTemplateScaleX(), temp->getTemplateScaleY());
@@ -114,6 +121,9 @@ bool PaintOnTemplateTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord
 
 bool PaintOnTemplateTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
+	Q_UNUSED(event);
+	Q_UNUSED(widget);
+	
 	if (dragging)
 	{
 		coords.push_back(map_coord);
@@ -153,6 +163,33 @@ PaintOnTemplatePaletteWidget::PaintOnTemplatePaletteWidget(bool close_on_selecti
 	setAttribute(Qt::WA_DeleteOnClose);
 	setAttribute(Qt::WA_OpaquePaintEvent);
 	setAutoFillBackground(false);
+
+	QSettings settings;
+	settings.beginGroup("PaintOnTemplatePaletteWidget");
+	selected_color = qMax(0, qMin(getNumFieldsX()*getNumFieldsY() - 1, settings.value("selectedColor").toInt()));
+	settings.endGroup();
+	
+	pressed_buttons = 0;
+}
+
+PaintOnTemplatePaletteWidget::~PaintOnTemplatePaletteWidget()
+{
+	QSettings settings;
+	settings.beginGroup("PaintOnTemplatePaletteWidget");
+	settings.setValue("selectedColor", selected_color);
+	settings.endGroup();
+}
+
+QColor PaintOnTemplatePaletteWidget::getSelectedColor()
+{
+	return getFieldColor(selected_color % getNumFieldsX(), selected_color / getNumFieldsX());
+}
+
+QSize PaintOnTemplatePaletteWidget::sizeHint() const
+{
+	const float mmPerButton = 13;
+	return QSize(getNumFieldsX() * Util::mmToPixelLogical(mmPerButton),
+				 getNumFieldsY() * Util::mmToPixelLogical(mmPerButton));
 }
 
 void PaintOnTemplatePaletteWidget::paintEvent(QPaintEvent* event)
@@ -164,45 +201,117 @@ void PaintOnTemplatePaletteWidget::paintEvent(QPaintEvent* event)
 	int max_x = getNumFieldsX();
 	int max_y = getNumFieldsY();
 	for (int x = 0; x < max_x; ++x)
-		for (int y = 0; y < getNumFieldsY(); ++y)
-			painter.fillRect(QRect(width() * x / max_x, height() * y / max_y,
-								   width() * (x+1) / max_x - (width() * x / max_x), height() * (y+1) / max_y - (height() * y / max_y)),
-								   getFieldColor(x, y));
+	{
+		for (int y = 0; y < max_y; ++y)
+		{
+			int field_x = width() * x / max_x;
+			int field_y = height() * y / max_y;
+			int field_width = width() * (x+1) / max_x - (width() * x / max_x);
+			int field_height = height() * (y+1) / max_y - (height() * y / max_y);
+			QRect field_rect = QRect(field_x, field_y, field_width, field_height);
+
+			if (isUndoField(x, y))
+				drawIcon(&painter, ":/images/undo.png", field_rect);
+			else if (isRedoField(x, y))
+				drawIcon(&painter, ":/images/redo.png", field_rect);
+			else if (selected_color == x + getNumFieldsX()*y)
+			{
+				int line_width = qMax(1, qRound(Util::mmToPixelLogical(0.2f)));
+				painter.fillRect(field_rect, Qt::black);
+				painter.fillRect(field_rect.adjusted(line_width, line_width, -1 * line_width, -field_rect.height() / 2), Qt::white);
+				painter.fillRect(field_rect.adjusted(2 * line_width, 2 * line_width, -2 * line_width, -2 * line_width), getFieldColor(x, y));
+			}
+			else
+				painter.fillRect(field_rect, getFieldColor(x, y));
+		}
+	}
 	
 	painter.end();
 }
 
 void PaintOnTemplatePaletteWidget::mousePressEvent(QMouseEvent* event)
 {
+	if (event->button() != Qt::LeftButton)
+		return;
+	
+	// Workaround for multiple press bug on Android
+	if ((event->button() & ~pressed_buttons) == 0)
+		return;
+	pressed_buttons |= event->button();
+	
     int x = (int)(event->x() / (width() / (float)getNumFieldsX()));
 	int y = (int)(event->y() / (height() / (float)getNumFieldsY()));
 	
-	emit colorSelected(getFieldColor(x, y));
+	if (isUndoField(x, y))
+	{
+		emit undoSelected();
+	}
+	else if (isRedoField(x, y))
+	{
+		emit redoSelected();
+	}
+	else if (selected_color != x + getNumFieldsX()*y)
+	{
+		selected_color = x + getNumFieldsX()*y;
+		update();
+		emit colorSelected(getFieldColor(x, y));
+	}
 	
 	if (close_on_selection)
 		close();
 }
 
-int PaintOnTemplatePaletteWidget::getNumFieldsX()
+void PaintOnTemplatePaletteWidget::mouseReleaseEvent(QMouseEvent* event)
 {
-	return 4;
+	// Workaround for multiple press bug on Android part 2, see above in mousePressEvent()
+	if ((event->button() & pressed_buttons) == 0)
+		return;
+	pressed_buttons &= ~event->button();
 }
 
-int PaintOnTemplatePaletteWidget::getNumFieldsY()
+int PaintOnTemplatePaletteWidget::getNumFieldsX() const
+{
+	return 5;
+}
+
+int PaintOnTemplatePaletteWidget::getNumFieldsY() const
 {
 	return 2;
 }
 
-QColor PaintOnTemplatePaletteWidget::getFieldColor(int x, int y)
+QColor PaintOnTemplatePaletteWidget::getFieldColor(int x, int y) const
 {
 	static QColor rows[2][4] = {{qRgb(255, 0, 0), qRgb(0, 255, 0), qRgb(0, 0, 255), qRgb(0, 0, 0)}, {qRgb(255, 255, 0), qRgb(219, 0, 216), qRgb(219, 180, 126), qRgb(255, 255, 255)}};
 	return rows[y][x];
+}
+
+bool PaintOnTemplatePaletteWidget::isUndoField(int x, int y) const
+{
+	return x == 4 && y == 0;
+}
+
+bool PaintOnTemplatePaletteWidget::isRedoField(int x, int y) const
+{
+	return x == 4 && y == 1;
+}
+
+void PaintOnTemplatePaletteWidget::drawIcon(QPainter* painter, const QString& resource_path, const QRect& field_rect)
+{
+	painter->fillRect(field_rect, Qt::white);
+	QIcon icon(resource_path);
+	painter->setRenderHint(QPainter::Antialiasing);
+	painter->drawPixmap(field_rect, icon.pixmap(field_rect.size()));
+	painter->setRenderHint(QPainter::Antialiasing, false);
 }
 
 // ### PaintOnTemplateSelectDialog ###
 
 PaintOnTemplateSelectDialog::PaintOnTemplateSelectDialog(Map* map, QWidget* parent) : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint)
 {
+#if defined(ANDROID)
+	setWindowState((windowState() & ~(Qt::WindowMinimized | Qt::WindowFullScreen))
+                   | Qt::WindowMaximized);
+#endif
 	setWindowTitle(tr("Select template to draw onto"));
 	
 	QListWidget* template_list = new QListWidget();
@@ -243,6 +352,8 @@ PaintOnTemplateSelectDialog::PaintOnTemplateSelectDialog(Map* map, QWidget* pare
 
 void PaintOnTemplateSelectDialog::currentTemplateChanged(QListWidgetItem* current, QListWidgetItem* previous)
 {
+	Q_UNUSED(previous);
+	
 	draw_button->setEnabled(current != NULL);
 	if (current)
 		selection = reinterpret_cast<Template*>(current->data(Qt::UserRole).value<void*>());

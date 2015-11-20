@@ -18,8 +18,9 @@
  
 message(STATUS "Configuring ${PROJECT_NAME} packaging")
 
-if(APPLE AND Mapper_USE_QT5)
+if(APPLE)
 	# Set some Qt4 variables to reasonable values for Qt5, too.
+	# (needed for DeployQt5.cmake)
 	find_package(Qt5Core REQUIRED QUIET)
 	if(NOT QT_LIBRARY_DIR)
 		get_target_property(_qt5core_lib Qt5::Core IMPORTED_LOCATION_RELEASE)
@@ -61,7 +62,6 @@ if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 	  "/[.]git/"
 	  "/3rd-party/clipper/download/"
 	  "/3rd-party/proj/download/"
-	  "/3rd-party/qt4/download/"
 	  "/3rd-party/qt5/download/"
 	  ${CPACK_SOURCE_IGNORE_FILES})
 	
@@ -144,9 +144,6 @@ if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 		set(CPACK_DEBIAN_PACKAGE_HOMEPAGE 
 		  "http://oorienteering.sourceforge.net/?cat=3")
 		set(CPACK_DEBIAN_PACKAGE_SHLIBDEPS "ON")
-		if(NOT Mapper_USE_QT5)
-			set(CPACK_DEBIAN_PACKAGE_RECOMMENDS "qt4-dev-tools")
-		endif()
 		
 		unset(FAKEROOT_EXECUTABLE CACHE)
 		find_program(FAKEROOT_EXECUTABLE fakeroot)
@@ -227,44 +224,25 @@ unset(MAPPER_QT_TRANSLATIONS)
 if(Mapper_PACKAGE_QT)
 	set(QT_LIB_SUFFIX "")
 	list(APPEND MAPPER_LIB_HINTS ${QT_BINARY_DIR})
-	if(NOT Mapper_USE_QT5)
-		if(WIN32)
-			set(QT_LIB_SUFFIX 4)
-			install(
-			  FILES "${PROJECT_SOURCE_DIR}/3rd-party/qt4/qt.conf"
-			  DESTINATION "${MAPPER_RUNTIME_DESTINATION}")
-		endif(WIN32)
-		list(APPEND MAPPER_LIBS
-		  QtCore${QT_LIB_SUFFIX} QtGui${QT_LIB_SUFFIX}
-		  QtNetwork${QT_LIB_SUFFIX} QtXml${QT_LIB_SUFFIX}
-		)
-		set(MAPPER_QT_PLUGINS
-		  imageformats/qgif${QT_LIB_SUFFIX} imageformats/jpeg${QT_LIB_SUFFIX}
-		  imageformats/qmng${QT_LIB_SUFFIX} imageformats/qsvg${QT_LIB_SUFFIX}
-		  imageformats/qtga${QT_LIB_SUFFIX} imageformats/qtiff${QT_LIB_SUFFIX}
-		)
-		list(APPEND MAPPER_QT_TRANSLATIONS qt)
-	else()
-		if(WIN32)
-			install(
-			  FILES "${PROJECT_BINARY_DIR}/3rd-party/qt5/qt.conf"
-			  DESTINATION "${MAPPER_RUNTIME_DESTINATION}")
-		endif()
-		list(APPEND MAPPER_LIBS 
-		  Qt5Core Qt5Gui Qt5Widgets Qt5Svg
-		  Qt5PrintSupport Qt5Network Qt5Xml)
-		set(MAPPER_QT_PLUGINS
-		  accessible/qtaccessiblewidgets
-		  iconengines/qsvgicon
-		  imageformats/qgif imageformats/qico imageformats/qjpeg imageformats/qmng
-		  imageformats/qsvg imageformats/qtga imageformats/qtiff imageformats/qwbmp
-		  platforms/qminimal platforms/qwindows platforms/qcocoa platforms/qxcb
-		  printsupport/windowsprintersupport printsupport/cocoaprintersupport printsupport/cupsprintersupport
-		  CACHE INTERNAL "The plugins which need to be deployed"
-		)
-		# Cf. Qt5's qt_de.ts for dependencies - qt_de.ts would not load without them.
-		list(APPEND MAPPER_QT_TRANSLATIONS qt qtbase qtscript qtquick1 qtmultimedia qtxmlpatterns)
+	if(WIN32)
+		install(
+		  FILES "${PROJECT_BINARY_DIR}/3rd-party/qt5/qt.conf"
+		  DESTINATION "${MAPPER_RUNTIME_DESTINATION}")
 	endif()
+	list(APPEND MAPPER_LIBS 
+	  Qt5Core Qt5Gui Qt5Widgets Qt5Svg
+	  Qt5PrintSupport Qt5Network Qt5Xml)
+	set(MAPPER_QT_PLUGINS
+	  accessible/qtaccessiblewidgets
+	  iconengines/qsvgicon
+	  imageformats/qgif imageformats/qico imageformats/qjpeg imageformats/qmng
+	  imageformats/qsvg imageformats/qtga imageformats/qtiff imageformats/qwbmp
+	  platforms/qminimal platforms/qwindows platforms/qcocoa platforms/qxcb
+	  printsupport/windowsprintersupport printsupport/cocoaprintersupport printsupport/cupsprintersupport
+	  CACHE INTERNAL "The plugins which need to be deployed"
+	)
+	# Cf. Qt5's qt_de.ts for dependencies - qt_de.ts would not load without them.
+	list(APPEND MAPPER_QT_TRANSLATIONS qt qtbase qtscript qtquick1 qtmultimedia qtxmlpatterns)
 endif()
 
 unset(FIXUP_ASSISTANT)
@@ -287,15 +265,7 @@ if(Mapper_PACKAGE_ASSISTANT)
 		  FILES "${PROJECT_BINARY_DIR}/3rd-party/qt5/qt.conf"
 		  DESTINATION "${MAPPER_LIBRARY_DESTINATION}/bin")
 	endif()
-	if(NOT Mapper_USE_QT5)
-		list(APPEND MAPPER_LIBS 
-		  QtHelp${QT_LIB_SUFFIX} QtCLucene${QT_LIB_SUFFIX}
-		  QtSql${QT_LIB_SUFFIX} QtWebKit${QT_LIB_SUFFIX}
-		)
-		list(APPEND MAPPER_QT_PLUGINS
-		  sqldrivers/qsqlite${QT_LIB_SUFFIX}
-		)
-	elseif(NOT APPLE)
+	if(NOT APPLE)
 		list(APPEND MAPPER_LIBS 
 		  Qt5Help Qt5CLucene Qt5Sql
 		)
@@ -359,14 +329,8 @@ foreach(_qt_plugin ${MAPPER_QT_PLUGINS})
 endforeach(_qt_plugin)
 
 if(APPLE)
-	# This works for Qt5, too (at least given our Qt5Quirks).
-	if(CMAKE_VERSION VERSION_LESS "2.8.9")
-		# Use updated DeployQt4.cmake from CMake git repository
-		include(${PROJECT_SOURCE_DIR}/cmake/DeployQt4.cmake)
-	else()
-		include(DeployQt4)
-	endif()
-	install_qt4_executable(Mapper.app 
+	include(${PROJECT_SOURCE_DIR}/cmake/DeployQt5.cmake)
+	install_qt5_executable(Mapper.app
 	  "${MAPPER_QT_PLUGINS_FOUND}"
 	  ${FIXUP_ASSISTANT})
 elseif(UNIX)
@@ -436,7 +400,7 @@ endif()
 
 message(STATUS "Configuring ${PROJECT_NAME} packaging - done")
 
-if(Mapper_USE_QT5 AND Mapper_BUILD_QT AND Mapper_PACKAGE_LINGUIST)
+if(Mapper_BUILD_QT AND Mapper_PACKAGE_LINGUIST)
 	include(ExternalProject)
 	set(CMAKE_TOOLCHAIN_ARG "")
 	if(CMAKE_TOOLCHAIN_FILE)

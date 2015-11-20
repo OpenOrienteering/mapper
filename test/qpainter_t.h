@@ -27,7 +27,7 @@
 
 
 /**
- * Tests QPainter properties we rely on.
+ * @test Tests QPainter properties we rely on.
  */
 class QPainterTest : public QObject
 {

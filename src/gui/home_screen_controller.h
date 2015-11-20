@@ -23,7 +23,7 @@
 
 #include "main_window_controller.h"
 
-class HomeScreenWidget;
+class AbstractHomeScreenWidget;
 
 /**
  * The controller of the OpenOrienteering Mapper home screen.
@@ -70,7 +70,7 @@ public slots:
 	
 protected:
 	/** The widget owned and controlled by this HomeScreenController. */
-	HomeScreenWidget* widget;
+	AbstractHomeScreenWidget* widget;
 	
 	/** The index of the tip-of-the-day currently displayed. */
 	int current_tip;

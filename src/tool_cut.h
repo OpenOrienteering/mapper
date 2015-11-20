@@ -30,7 +30,7 @@ class PathCoord;
 class PathObject;
 class MapRenderables;
 
-/// Tool to cut objects into smaller pieces
+/** Tool to cut objects (lines or areas) into smaller pieces */
 class CutTool : public MapEditorTool
 {
 Q_OBJECT

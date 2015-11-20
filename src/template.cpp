@@ -20,19 +20,16 @@
 
 #include "template.h"
 
-#if QT_VERSION < 0x050000
-#include <QtGui>
-#else
 #include <QtWidgets>
-#endif
 #include <QFileInfo>
 #include <QPixmap>
 #include <QPainter>
 
+#include "core/map_view.h"
 #include "util.h"
 #include "map.h"
 #include "template_image.h"
-#include "template_gps.h"
+#include "template_track.h"
 #include "template_map.h"
 
 // ### TemplateTransform ###
@@ -46,16 +43,6 @@ TemplateTransform::TemplateTransform()
 	template_rotation = 0;
 }
 
-
-void TemplateTransform::save(QIODevice* file)
-{
-	file->write((const char*)&template_x, sizeof(qint64));
-	file->write((const char*)&template_y, sizeof(qint64));
-	
-	file->write((const char*)&template_scale_x, sizeof(qint64));
-	file->write((const char*)&template_scale_y, sizeof(qint64));
-	file->write((const char*)&template_rotation, sizeof(qint64));
-}
 
 void TemplateTransform::load(QIODevice* file)
 {
@@ -98,6 +85,8 @@ void TemplateTransform::load(QXmlStreamReader& xml)
 Template::Template(const QString& path, Map* map) : map(map)
 {
 	template_path = path;
+	if (! QFileInfo(path).canonicalFilePath().isEmpty())
+		template_path = QFileInfo(path).canonicalFilePath();
 	template_file = QFileInfo(path).fileName();
 	template_relative_path = "";
 	template_state = Unloaded;
@@ -145,35 +134,6 @@ Template* Template::duplicate()
 	copy->template_group = template_group;
 	
 	return copy;
-}
-
-void Template::saveTemplateConfiguration(QIODevice* stream)
-{
-	saveString(stream, template_file);
-	
-	stream->write((const char*)&is_georeferenced, sizeof(bool));
-	
-	if (!is_georeferenced)
-	{
-		transform.save(stream);
-		other_transform.save(stream);
-		
-		stream->write((const char*)&adjusted, sizeof(bool));
-		stream->write((const char*)&adjustment_dirty, sizeof(bool));
-		
-		int num_passpoints = (int)passpoints.size();
-		stream->write((const char*)&num_passpoints, sizeof(int));
-		for (int i = 0; i < num_passpoints; ++i)
-			passpoints[i].save(stream);
-		
-		map_to_template.save(stream);
-		template_to_map.save(stream);
-		template_to_map_other.save(stream);
-		
-		stream->write((const char*)&template_group, sizeof(int));
-	}
-	
-	saveTypeSpecificTemplateConfiguration(stream);
 }
 
 bool Template::loadTemplateConfiguration(QIODevice* stream, int version)
@@ -356,6 +316,8 @@ void Template::switchTemplateFile(const QString& new_path)
 	}
 	
 	template_path = new_path;
+	if (! QFileInfo(new_path).canonicalFilePath().isEmpty())
+		template_path = QFileInfo(new_path).canonicalFilePath();
 	template_file = QFileInfo(new_path).fileName();
 	template_relative_path = "";
 	
@@ -461,6 +423,12 @@ bool Template::tryToFindAndReloadTemplateFile(QString map_directory, bool* out_l
 	return false;
 }
 
+bool Template::preLoadConfiguration(QWidget* dialog_parent)
+{
+	Q_UNUSED(dialog_parent);
+	return true;
+}
+
 bool Template::loadTemplateFile(bool configuring)
 {
 	assert(template_state != Loaded);
@@ -476,6 +444,13 @@ bool Template::loadTemplateFile(bool configuring)
 		emit templateStateChanged();
 	}
 	return result;
+}
+
+bool Template::postLoadConfiguration(QWidget* dialog_parent, bool& out_center_in_view)
+{
+	Q_UNUSED(dialog_parent);
+	Q_UNUSED(out_center_in_view);
+	return true;
 }
 
 void Template::unloadTemplateFile()
@@ -568,6 +543,12 @@ void Template::drawOntoTemplate(MapCoordF* coords, int num_coords, QColor color,
 	setHasUnsavedChanges(true);
 }
 
+void Template::drawOntoTemplateUndo(bool redo)
+{
+	Q_UNUSED(redo);
+	// nothing
+}
+
 void Template::addPassPoint(const PassPoint& point, int pos)
 {
 	assert(!is_georeferenced);
@@ -629,6 +610,8 @@ void Template::setOtherTransform(const TemplateTransform& transform)
 void Template::setTemplatePath(const QString& value)
 {
 	template_path = value;
+	if (! QFileInfo(value).canonicalFilePath().isEmpty())
+		template_path = QFileInfo(value).canonicalFilePath();
 	template_file = QFileInfo(value).fileName();
 }
 
@@ -662,10 +645,32 @@ Template* Template::templateForFile(const QString& path, Map* map)
 		return NULL;
 }
 
+bool Template::loadTypeSpecificTemplateConfiguration(QIODevice* stream, int version)
+{
+	Q_UNUSED(stream);
+	Q_UNUSED(version);
+	return true;
+}
+
+void Template::saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml)
+{
+	Q_UNUSED(xml);
+	// nothing
+}
+
 bool Template::loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml)
 {
 	xml.skipCurrentElement();
 	return true;
+}
+
+void Template::drawOntoTemplateImpl(MapCoordF* coords, int num_coords, QColor color, float width)
+{
+	Q_UNUSED(coords);
+	Q_UNUSED(num_coords);
+	Q_UNUSED(color);
+	Q_UNUSED(width);
+	// nothing
 }
 
 void Template::updateTransformationMatrices()

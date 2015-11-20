@@ -82,6 +82,8 @@ void TextObjectEditorHelper::setFocus()
 
 bool TextObjectEditorHelper::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
+	Q_UNUSED(widget);
+	
 	if (event->button() != Qt::LeftButton)
 		return false;
 	
@@ -128,6 +130,8 @@ bool TextObjectEditorHelper::mouseMoveEvent(QMouseEvent* event, MapCoordF map_co
 }
 bool TextObjectEditorHelper::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
+	Q_UNUSED(widget);
+	
 	if (event->button() != Qt::LeftButton)
 		return false;
 	
@@ -332,12 +336,15 @@ bool TextObjectEditorHelper::keyPressEvent(QKeyEvent* event)
 
 bool TextObjectEditorHelper::keyReleaseEvent(QKeyEvent* event)
 {
+	Q_UNUSED(event);
 	// Nothing ... yet?
 	return false;
 }
 
 void TextObjectEditorHelper::draw(QPainter* painter, MapWidget* widget)
 {
+	Q_UNUSED(widget);
+	
 	// Draw selection overlay
 	painter->setPen(Qt::NoPen);
 	painter->setBrush(QBrush(qRgb(0, 0, 255)));
@@ -581,7 +588,7 @@ void ConstrainAngleToolHelper::setActive(bool active, const MapCoordF& center)
 {
 	if (active)
 	{
-		if (!this-active || (this->center != center))
+		if (!this->active || (this->center != center))
 			emit displayChanged();
 		this->center = center;
 	}
@@ -601,7 +608,7 @@ void ConstrainAngleToolHelper::setActive(bool active)
 {
 	if (active)
 	{
-		if (!this-active)
+		if (!this->active)
 			emit displayChanged();
 	}
 	else
@@ -682,9 +689,10 @@ SnappingToolHelper::SnapObjects SnappingToolHelper::getFilter() const
 	return filter;
 }
 
-MapCoord SnappingToolHelper::snapToObject(MapCoordF position, MapWidget* widget, SnappingToolHelperSnapInfo* info, Object* exclude_object)
+MapCoord SnappingToolHelper::snapToObject(MapCoordF position, MapWidget* widget, SnappingToolHelperSnapInfo* info, Object* exclude_object, float snap_distance)
 {
-	const float snap_distance = 0.001f * widget->getMapView()->pixelToLength(Settings::getInstance().getSettingCached(Settings::MapEditor_SnapDistance).toInt());
+	if (snap_distance < 0)
+		snap_distance = 0.001f * widget->getMapView()->pixelToLength(Settings::getInstance().getMapEditorSnapDistancePx());
 	float closest_distance_sq = snap_distance * snap_distance;
 	MapCoord result_position = position.toMapCoord();
 	SnappingToolHelperSnapInfo result_info;
@@ -710,7 +718,7 @@ MapCoord SnappingToolHelper::snapToObject(MapCoordF position, MapWidget* widget,
 				continue;
 			
 			float distance_sq;
-			if (object->getType() == Object::Point)
+			if (object->getType() == Object::Point && filter & ObjectCorners)
 			{
 				PointObject* point = object->asPoint();
 				distance_sq = point->getCoordF().lengthToSquared(position);

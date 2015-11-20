@@ -22,11 +22,7 @@
 
 #include <cassert>
 
-#if QT_VERSION < 0x050000
-#include <QtGui>
-#else
 #include <QtWidgets>
-#endif
 
 #include "map_editor.h"
 #include "map_widget.h"
@@ -175,17 +171,10 @@ PointSymbolEditorWidget::PointSymbolEditorWidget(MapEditorController* controller
 	coords_table->verticalHeader()->setVisible(false);
 	
 	QHeaderView* header_view = coords_table->horizontalHeader();
-#if QT_VERSION < 0x050000
-	header_view->setResizeMode(0, QHeaderView::Interactive);
-	header_view->setResizeMode(1, QHeaderView::Interactive);
-	header_view->setResizeMode(2, QHeaderView::ResizeToContents);
-	header_view->setClickable(false);
-#else
 	header_view->setSectionResizeMode(0, QHeaderView::Interactive);
 	header_view->setSectionResizeMode(1, QHeaderView::Interactive);
 	header_view->setSectionResizeMode(2, QHeaderView::ResizeToContents);
 	header_view->setSectionsClickable(false);
-#endif
 	
 	add_coord_button = new QPushButton(QIcon(":/images/plus.png"), "");
 	delete_coord_button = new QPushButton(QIcon(":/images/minus.png"), "");
@@ -970,6 +959,7 @@ void PointSymbolEditorTool::init()
 
 bool PointSymbolEditorTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* map_widget)
 {
+	Q_UNUSED(map_widget);
 	if (event->button() == Qt::LeftButton)
 	{
 		if (event->modifiers() & Qt::CTRL)

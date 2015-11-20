@@ -28,6 +28,8 @@
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
+#include <qbezier_p.h>
+
 #include "util.h"
 #include "file_import_export.h"
 #include "symbol.h"
@@ -37,8 +39,32 @@
 #include "map.h"
 #include "object_text.h"
 #include "renderable.h"
-#include "qbezier_p.h"
 #include "settings.h"
+#include "util/xml_stream_util.h"
+
+
+// ### A namespace which collects various string constants of type QLatin1String. ###
+
+namespace literal
+{
+	static const QLatin1String object("object");
+	static const QLatin1String symbol("symbol");
+	static const QLatin1String type("type");
+	static const QLatin1String text("text");
+	static const QLatin1String count("count");
+	static const QLatin1String coords("coords");
+	static const QLatin1String h_align("h_align");
+	static const QLatin1String v_align("v_align");
+	static const QLatin1String pattern("pattern");
+	static const QLatin1String rotation("rotation");
+	static const QLatin1String tags("tags");
+	static const QLatin1String key("key");
+	static const QLatin1String tag("tag");
+}
+
+
+
+// ### Object implementation ###
 
 Object::Object(Object::Type type, Symbol* symbol)
 : type(type),
@@ -74,6 +100,9 @@ bool Object::equals(Object* other, bool compare_symbol)
 		if (coords[i] != other->coords[i])
 			return false;
 	}
+	
+	if (object_tags != other->object_tags)
+		return false;
 	
 	if (type == Point)
 	{
@@ -142,6 +171,7 @@ Object& Object::operator=(const Object& other)
 	assert(type == other.type);
 	symbol = other.symbol;
 	coords = other.coords;
+	object_tags = other.object_tags;
 	return *this;
 }
 
@@ -179,49 +209,6 @@ const TextObject* Object::asText() const
 {
 	assert(type == Text);
 	return static_cast<const TextObject*>(this);
-}
-
-void Object::save(QIODevice* file)
-{
-	int symbol_index = -1;
-	if (map)
-		symbol_index = map->findSymbolIndex(symbol);
-	file->write((const char*)&symbol_index, sizeof(int));
-	
-	int num_coords = (int)coords.size();
-	file->write((const char*)&num_coords, sizeof(int));
-	file->write((const char*)&coords[0], num_coords * sizeof(MapCoord));
-	
-	// Central handling of sub-types here to avoid virtual methods
-	if (type == Point)
-	{
-		PointObject* point = reinterpret_cast<PointObject*>(this);
-		PointSymbol* point_symbol = reinterpret_cast<PointSymbol*>(point->getSymbol());
-		if (point_symbol->isRotatable())
-		{
-			float rotation = point->getRotation();
-			file->write((const char*)&rotation, sizeof(float));
-		}
-	}
-	else if (type == Path)
-	{
-		PathObject* path = reinterpret_cast<PathObject*>(this);
-		float rotation = path->getPatternRotation();
-		file->write((const char*)&rotation, sizeof(float));
-		MapCoord origin = path->getPatternOrigin();
-		file->write((const char*)&origin, sizeof(MapCoord));
-	}
-	else if (type == Text)
-	{
-		TextObject* text = reinterpret_cast<TextObject*>(this);
-		float rotation = text->getRotation();
-		file->write((const char*)&rotation, sizeof(float));
-		int temp = (int)text->getHorizontalAlignment();
-		file->write((const char*)&temp, sizeof(int));
-		temp = (int)text->getVerticalAlignment();
-		file->write((const char*)&temp, sizeof(int));
-		saveString(file, text->getText());
-	}
 }
 
 void Object::load(QIODevice* file, int version, Map* map)
@@ -303,61 +290,70 @@ void Object::load(QIODevice* file, int version, Map* map)
 
 void Object::save(QXmlStreamWriter& xml) const
 {
-	xml.writeStartElement("object");
-	xml.writeAttribute("type", QString::number(type));
+	XmlElementWriter object_element(xml, literal::object);
+	object_element.writeAttribute(literal::type, type);
 	int symbol_index = -1;
 	if (map)
 		symbol_index = map->findSymbolIndex(symbol);
 	if (symbol_index != -1)
-		xml.writeAttribute("symbol", QString::number(symbol_index));
+		object_element.writeAttribute(literal::symbol, symbol_index);
 	
 	if (type == Point)
 	{
 		const PointObject* point = reinterpret_cast<const PointObject*>(this);
 		const PointSymbol* point_symbol = reinterpret_cast<const PointSymbol*>(point->getSymbol());
 		if (point_symbol->isRotatable())
-			xml.writeAttribute("rotation", QString::number(point->getRotation()));
+			object_element.writeAttribute(literal::rotation, point->getRotation());
 	}
 	else if (type == Text)
 	{
 		const TextObject* text = reinterpret_cast<const TextObject*>(this);
-		xml.writeAttribute("rotation", QString::number(text->getRotation()));
-		xml.writeAttribute("h_align", QString::number(text->getHorizontalAlignment()));
-		xml.writeAttribute("v_align", QString::number(text->getVerticalAlignment()));
+		object_element.writeAttribute(literal::rotation, text->getRotation());
+		object_element.writeAttribute(literal::h_align, text->getHorizontalAlignment());
+		object_element.writeAttribute(literal::v_align, text->getVerticalAlignment());
 	}
 	
-	xml.writeStartElement("coords");
-	int num_coords = (int)coords.size();
-	xml.writeAttribute("count", QString::number(num_coords));
-	for (int i = 0; i < num_coords; i++)
-		coords[i].save(xml);
-	xml.writeEndElement(/*coords*/);
+	const int num_tags = object_tags.size();
+	if (num_tags > 0)
+	{
+		XmlElementWriter tags_element(xml, literal::tags);
+		tags_element.writeAttribute(literal::count, num_tags);
+		for (Tags::const_iterator tag = object_tags.constBegin(), end = object_tags.constEnd(); tag != end; ++tag)
+		{
+			XmlElementWriter tag_element(xml, literal::tag);
+			tag_element.writeAttribute(literal::key, tag.key());
+			xml.writeCharacters(tag.value());
+		}
+	}
+	
+	{
+		// Scope of coords XML element
+		XmlElementWriter coords_element(xml, literal::coords);
+		coords_element.write(coords);
+	}
 	
 	if (type == Path)
 	{
 		const PathObject* path = reinterpret_cast<const PathObject*>(this);
-		xml.writeStartElement("pattern");
-		xml.writeAttribute("rotation", QString::number(path->getPatternRotation()));
+		XmlElementWriter pattern_element(xml, literal::pattern);
+		pattern_element.writeAttribute(literal::rotation, path->getPatternRotation());
 		path->getPatternOrigin().save(xml);
-		xml.writeEndElement(/*pattern*/);
 	}
 	else if (type == Text)
 	{
 		const TextObject* text = reinterpret_cast<const TextObject*>(this);
-		xml.writeTextElement("text", text->getText());
+		xml.writeTextElement(literal::text, text->getText());
 	}
-	
-	xml.writeEndElement(/*object*/);
 }
 
 Object* Object::load(QXmlStreamReader& xml, Map* map, const SymbolDictionary& symbol_dict, Symbol* symbol) throw (FileFormatException)
 {
-	Q_ASSERT(xml.name() == "object");
+	Q_ASSERT(xml.name() == literal::object);
 	
-	QXmlStreamAttributes attributes(xml.attributes());
+	XmlElementReader object_element(xml);
 	
-	int object_type = attributes.value("type").toString().toInt();
-	Object* object = Object::getObjectForType(static_cast<Object::Type>(object_type));
+	Object::Type object_type = object_element.attribute<Object::Type>(literal::type);
+	Object* object = Object::getObjectForType(object_type);
 	if (!object)
 		throw FileFormatException(ImportExport::tr("Error while loading an object of type %1.").arg(object_type));
 	
@@ -367,7 +363,7 @@ Object* Object::load(QXmlStreamReader& xml, Map* map, const SymbolDictionary& sy
 		object->symbol = symbol;
 	else
 	{
-		QString symbol_id = attributes.value("symbol").toString();
+		QString symbol_id =  object_element.attribute<QString>(literal::symbol);
 		object->symbol = symbol_dict[symbol_id]; // FIXME: cannot work for forward references
 		// NOTE: object->symbol may be NULL.
 	}
@@ -377,49 +373,71 @@ Object* Object::load(QXmlStreamReader& xml, Map* map, const SymbolDictionary& sy
 		PointObject* point = reinterpret_cast<PointObject*>(object);
 		PointSymbol* point_symbol = reinterpret_cast<PointSymbol*>(point->getSymbol());
 		if (point_symbol && point_symbol->isRotatable())
-			point->setRotation(attributes.value("rotation").toString().toFloat());
+			point->setRotation(object_element.attribute<float>(literal::rotation));
 		else if (!point_symbol)
 			throw FileFormatException(ImportExport::tr("Point object with undefined or wrong symbol at %1:%2.").arg(xml.lineNumber()).arg(xml.columnNumber()));
 	}
 	else if (object_type == Text)
 	{
 		TextObject* text = reinterpret_cast<TextObject*>(object);
-		text->setRotation(attributes.value("rotation").toString().toFloat());
-		text->setHorizontalAlignment(static_cast<TextObject::HorizontalAlignment>(attributes.value("h_align").toString().toInt()));
-		text->setVerticalAlignment(static_cast<TextObject::VerticalAlignment>(attributes.value("v_align").toString().toInt()));
+		text->setRotation(object_element.attribute<float>(literal::rotation));
+		text->setHorizontalAlignment(object_element.attribute<TextObject::HorizontalAlignment>(literal::h_align));
+		text->setVerticalAlignment(object_element.attribute<TextObject::VerticalAlignment>(literal::v_align));
 	}
 	
 	while (xml.readNextStartElement())
 	{
-		if (xml.name() == "coords")
+		if (xml.name() == literal::coords)
 		{
-			int num_coords = xml.attributes().value("count").toString().toInt();
-			object->coords.clear();
-			object->coords.reserve(qMin(num_coords, 20)); // 20 is not a limit
-			for (int i = 0; xml.readNextStartElement(); i++)
+			XmlElementReader coords_element(xml);
+			try {
+				coords_element.read(object->coords);
+			}
+			catch (FileFormatException e)
 			{
-				if (xml.name() == "coord")
-					object->coords.push_back(MapCoord::load(xml));
-				else
-					xml.skipCurrentElement();
+				throw FileFormatException(ImportExport::tr("Error while loading an object of type %1 at %2:%3: %4").
+				  arg(object_type).arg(xml.lineNumber()).arg(xml.columnNumber()).arg(e.message()));
 			}
 		}
-		else if (xml.name() == "pattern" && object_type == Path)
+		else if (xml.name() == literal::pattern && object_type == Path)
 		{
+			XmlElementReader element(xml);
+			
 			PathObject* path = reinterpret_cast<PathObject*>(object);
-			path->setPatternRotation(xml.attributes().value("rotation").toString().toFloat());
+			path->setPatternRotation(element.attribute<float>(literal::rotation));
 			while (xml.readNextStartElement())
 			{
-				if (xml.name() == "coord")
+				if (xml.name() == MapCoordLiteral::coord)
 					path->setPatternOrigin(MapCoord::load(xml));
 				else
 					xml.skipCurrentElement(); // unknown
 			}
 		}
-		else if (xml.name() == "text" && object_type == Text)
+		else if (xml.name() == literal::text && object_type == Text)
 		{
 			TextObject* text = reinterpret_cast<TextObject*>(object);
 			text->setText(xml.readElementText());
+		}
+		else if (xml.name() == literal::tags)
+		{
+			object->object_tags.clear();
+			while (xml.readNextStartElement())
+			{
+				if (xml.name() == literal::tag)
+				{
+					const QString key(xml.attributes().value(literal::key).toString());
+					object->object_tags.insert(key, xml.readElementText());
+				}
+				else if (xml.name() == literal::tags)
+				{
+					// Fix for broken Object::save in pre-0.6.0 master branch
+					// TODO Remove after Mapper 0.6.x releases
+					const QString key(xml.attributes().value(literal::key).toString());
+					object->object_tags.insert(key, xml.readElementText());
+				}
+				else
+					xml.skipCurrentElement();
+			}
 		}
 		else
 			xml.skipCurrentElement(); // unknown
@@ -434,13 +452,13 @@ Object* Object::load(QXmlStreamReader& xml, Map* map, const SymbolDictionary& sy
 		switch (object_type)
 		{
 			case Point:
-				object->symbol = map->getUndefinedPoint();
+				object->symbol = Map::getUndefinedPoint();
 				break;
 			case Path:
-				object->symbol = map->getUndefinedLine();
+				object->symbol = Map::getUndefinedLine();
 				break;
 			case Text:
-				object->symbol = (object->coords.size() > 1) ? static_cast<Symbol*>(map->getUndefinedLine()) : static_cast<Symbol*>(map->getUndefinedPoint());
+				object->symbol = (object->coords.size() > 1) ? static_cast<Symbol*>(Map::getUndefinedLine()) : static_cast<Symbol*>(Map::getUndefinedPoint());
 				break;
 			default:
 				throw FileFormatException(
@@ -720,6 +738,45 @@ Object* Object::getObjectForType(Object::Type type, Symbol* symbol)
 	}
 }
 
+void Object::setTags(const Object::Tags& tags)
+{
+	if (object_tags != tags)
+	{
+		object_tags = tags;
+		if (map)
+		{
+			map->setObjectsDirty();
+			if (map->isObjectSelected(this))
+				map->emitSelectionEdited();
+		}
+	}
+}
+
+void Object::setTag(const QString& key, const QString& value)
+{
+	if (!object_tags.contains(key) || object_tags.value("key") != value)
+	{
+		object_tags.insert(key, value);
+		if (map)
+		{
+			map->setObjectsDirty();
+			if (map->isObjectSelected(this))
+				map->emitSelectionEdited();
+		}
+	}
+}
+
+void Object::removeTag(const QString& key)
+{
+	if (object_tags.contains(key))
+	{
+		object_tags.remove(key);
+		if (map)
+			map->setObjectsDirty();
+	}
+}
+
+
 // ### PathObject::PathPart ###
 
 void PathObject::PathPart::setClosed(bool closed, bool may_use_existing_close_point)
@@ -821,6 +878,7 @@ Object* PathObject::duplicate()
 	new_path->pattern_rotation = pattern_rotation;
 	new_path->pattern_origin = pattern_origin;
 	new_path->coords = coords;
+	new_path->object_tags = object_tags;
 	new_path->parts = parts;
 	int parts_size = parts.size();
 	for (int i = 0; i < parts_size; ++i)
@@ -1169,43 +1227,64 @@ bool PathObject::connectIfClose(PathObject* other, double connect_threshold_sq)
 	return did_connect_path;
 }
 
-void PathObject::connectPathParts(int part_index, PathObject* other, int other_part_index, bool prepend)
+void PathObject::connectPathParts(int part_index, PathObject* other, int other_part_index, bool prepend, bool merge_ends)
 {
+	assert(part_index < (int)parts.size());
 	PathPart& part = parts[part_index];
 	PathPart& other_part = other->parts[other_part_index];
 	assert(!part.isClosed() && !other_part.isClosed());
 	
 	int other_part_size = other_part.getNumCoords();
-	coords.resize(coords.size() + other_part_size - 1);
+	int appended_part_size = other_part_size - (merge_ends ? 1 : 0);
+	coords.resize(coords.size() + appended_part_size);
 	
 	if (prepend)
 	{
-		for (int i = (int)coords.size() - 1; i >= part.start_index + (other_part_size - 1); --i)
-			coords[i] = coords[i - (other_part_size - 1)];
+		for (int i = (int)coords.size() - 1; i >= part.start_index + appended_part_size; --i)
+			coords[i] = coords[i - appended_part_size];
 		
-		MapCoord& join_coord = coords[part.start_index + other_part_size - 1];
-		join_coord.setRawX((join_coord.rawX() + other->coords[other_part.end_index].rawX()) / 2);
-		join_coord.setRawY((join_coord.rawY() + other->coords[other_part.end_index].rawY()) / 2);
+		MapCoord& join_coord = coords[part.start_index + appended_part_size];
+		if (merge_ends)
+		{
+			join_coord.setRawX((join_coord.rawX() + other->coords[other_part.end_index].rawX()) / 2);
+			join_coord.setRawY((join_coord.rawY() + other->coords[other_part.end_index].rawY()) / 2);
+		}
 		join_coord.setHolePoint(false);
 		join_coord.setClosePoint(false);
 		
-		for (int i = part.start_index; i < part.start_index + other_part_size - 1; ++i)
+		for (int i = part.start_index; i < part.start_index + appended_part_size; ++i)
 			coords[i] = other->coords[i - part.start_index + other_part.start_index];
+		
+		if (!merge_ends)
+		{
+			MapCoord& second_join_coord = coords[part.start_index + appended_part_size - 1];
+			second_join_coord.setHolePoint(false);
+			second_join_coord.setClosePoint(false);
+		}
 	}
 	else
 	{
-		MapCoord coord = other->coords[other_part.start_index];	// take flags from first coord of path to append
-		coord.setRawX((coords[part.end_index].rawX() + coord.rawX()) / 2);
-		coord.setRawY((coords[part.end_index].rawY() + coord.rawY()) / 2);
-		coords[part.end_index] = coord;
+		if (merge_ends)
+		{
+			MapCoord coord = other->coords[other_part.start_index];	// take flags from first coord of path to append
+			coord.setRawX((coords[part.end_index].rawX() + coord.rawX()) / 2);
+			coord.setRawY((coords[part.end_index].rawY() + coord.rawY()) / 2);
+			coords[part.end_index] = coord;
+		}
+		else
+		{
+			coords[part.end_index].setHolePoint(false);
+			coords[part.end_index].setClosePoint(false);
+		}
 		
-		for (int i = (int)coords.size() - 1; i > part.end_index + (other_part_size - 1); --i)
-			coords[i] = coords[i - (other_part_size - 1)];
-		for (int i = part.end_index + 1; i <= part.end_index + (other_part_size - 1); ++i)
-			coords[i] = other->coords[i - part.end_index + other_part.start_index];
+		for (int i = (int)coords.size() - 1; i > part.end_index + appended_part_size; --i)
+			coords[i] = coords[i - appended_part_size];
+		for (int i = part.end_index + 1; i <= part.end_index + appended_part_size; ++i)
+			coords[i] = other->coords[i - part.end_index + other_part.start_index - (merge_ends ? 0 : 1)];
 	}
 	
-	partSizeChanged(part_index, other_part_size - 1);
+	partSizeChanged(part_index, appended_part_size);
+	assert(!parts[part_index].isClosed());
 }
 
 void PathObject::splitAt(const PathCoord& split_pos, Object*& out1, Object*& out2)
@@ -1550,9 +1629,9 @@ bool PathObject::advanceCoordinateRangeTo(const MapCoordVector& flags, const Map
 void PathObject::calcBezierPointDeletionRetainingShapeFactors(MapCoord p0, MapCoord p1, MapCoord p2, MapCoord q0, MapCoord q1, MapCoord q2, MapCoord q3, double& out_pfactor, double& out_qfactor)
 {
 	// Heuristic for the split parameter sp (zero to one)
-	QBezierCopy p_curve = QBezierCopy::fromPoints(p0.toQPointF(), p1.toQPointF(), p2.toQPointF(), q0.toQPointF());
+	QBezier p_curve = QBezier::fromPoints(p0.toQPointF(), p1.toQPointF(), p2.toQPointF(), q0.toQPointF());
 	double p_length = p_curve.length(PathCoord::bezier_error);
-	QBezierCopy q_curve = QBezierCopy::fromPoints(q0.toQPointF(), q1.toQPointF(), q2.toQPointF(), q3.toQPointF());
+	QBezier q_curve = QBezier::fromPoints(q0.toQPointF(), q1.toQPointF(), q2.toQPointF(), q3.toQPointF());
 	double q_length = q_curve.length(PathCoord::bezier_error);
 	double sp = p_length / qMax(1e-08, p_length + q_length);
 	
@@ -1888,7 +1967,7 @@ void PathObject::calcBezierPointDeletionRetainingShapeFactors(MapCoord p0, MapCo
 float PathObject::calcBezierPointDeletionRetainingShapeCost(MapCoord p0, MapCoordF p1, MapCoordF p2, MapCoord p3, PathObject* reference)
 {
 	const int num_test_points = 20;
-	QBezierCopy curve = QBezierCopy::fromPoints(p0.toQPointF(), p1.toQPointF(), p2.toQPointF(), p3.toQPointF());
+	QBezier curve = QBezier::fromPoints(p0.toQPointF(), p1.toQPointF(), p2.toQPointF(), p3.toQPointF());
 	
 	float cost = 0;
 	for (int i = 0; i < num_test_points; ++i)
@@ -3125,6 +3204,7 @@ Object* PointObject::duplicate()
 	PointObject* new_point = new PointObject(symbol);
 	new_point->coords = coords;
 	new_point->rotation = rotation;
+	new_point->object_tags = object_tags;
 	return new_point;
 }
 

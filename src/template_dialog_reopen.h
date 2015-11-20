@@ -31,6 +31,11 @@ QT_END_NAMESPACE
 class Map;
 class MapView;
 
+/**
+ * Dialog showing a list of closed templates for which the settings are still
+ * stored. Enables to reopen those templates by dragging them into the
+ * list of open templates shown next to them.
+ */
 class ReopenTemplateDialog : public QDialog
 {
 Q_OBJECT

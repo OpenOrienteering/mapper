@@ -44,10 +44,16 @@ void HomeScreenController::attach(MainWindow* window)
 {
 	this->window = window;
 	
-	widget = new HomeScreenWidget(this);
+#if defined(Q_OS_ANDROID)
+	widget = new HomeScreenWidgetMobile(this);
+#else
+	widget = new HomeScreenWidgetDesktop(this);
+#endif
 	window->setCentralWidget(widget);
 	window->setStatusBarText("");
+#if ! defined(Q_OS_ANDROID)
 	window->statusBar()->hide();
+#endif
 	
 	connect(&Settings::getInstance(), SIGNAL(settingsChanged()), this, SLOT(readSettings()));
 	
@@ -56,7 +62,9 @@ void HomeScreenController::attach(MainWindow* window)
 
 void HomeScreenController::detach()
 {
+#if ! defined(Q_OS_ANDROID)
 	window->statusBar()->show();
+#endif
 	window->setCentralWidget(NULL);
 	widget->deleteLater();
 	

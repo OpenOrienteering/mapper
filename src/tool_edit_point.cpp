@@ -22,11 +22,7 @@
 
 #include <limits>
 
-#if QT_VERSION < 0x050000
-#include <QtGui>
-#else
 #include <QtWidgets>
-#endif
 
 #include "util.h"
 #include "symbol.h"
@@ -42,7 +38,10 @@
 #include "symbol_text.h"
 #include "renderable.h"
 #include "settings.h"
+#include "map_editor.h"
+#include "gui/main_window.h"
 #include "gui/modifier_key.h"
+#include "gui/widgets/key_button_bar.h"
 
 
 int EditPointTool::max_objects_for_handle_display = 10;
@@ -152,7 +151,7 @@ void EditPointTool::clickPress()
 		PathCoord path_coord;
 		path->calcClosestPointOnPath(cur_pos_map, distance_sq, path_coord);
 		
-		int click_tolerance = Settings::getInstance().getSettingCached(Settings::MapEditor_ClickTolerance).toInt();
+		float click_tolerance = Settings::getInstance().getMapEditorClickTolerancePx();
 		float click_tolerance_map_sq = cur_map_widget->getMapView()->pixelToLength(click_tolerance);
 		click_tolerance_map_sq = click_tolerance_map_sq * click_tolerance_map_sq;
 		
@@ -266,19 +265,28 @@ void EditPointTool::clickPress()
 		
 		updatePreviewObjects();
 	}
+	
+	click_timer.restart();
 }
 
 void EditPointTool::clickRelease()
 {
+	// Maximum time in milliseconds a click may take to cause
+	// a selection change if hovering over a handle / frame.
+	// If the click takes longer, it is assumed that the user
+	// wanted to move the objects instead and no selection change is done.
+	const int selection_click_time_threshold = 150;
+	
 	if (no_more_effect_on_click)
 	{
 		no_more_effect_on_click = false;
 		return;
 	}
-	if (hover_point >= -1)
+	if (hover_point >= -1
+		&& click_timer.elapsed() >= selection_click_time_threshold)
 		return;
 	
-	int click_tolerance = Settings::getInstance().getSettingCached(Settings::MapEditor_ClickTolerance).toInt();
+	float click_tolerance = Settings::getInstance().getMapEditorClickTolerancePx();
 	object_selector->selectAt(cur_pos_map, cur_map_widget->getMapView()->pixelToLength(click_tolerance), active_modifiers & Qt::ShiftModifier);
 	updateHoverPoint(cur_pos_map);
 }
@@ -349,6 +357,8 @@ void EditPointTool::dragFinish()
 
 void EditPointTool::focusOutEvent(QFocusEvent* event)
 {
+	Q_UNUSED(event);
+	
 	// Deactivate modifiers - not always correct, but should be
 	// wrong only in unusual cases and better than leaving the modifiers on forever
 	space_pressed = false;
@@ -437,10 +447,31 @@ bool EditPointTool::keyRelease(QKeyEvent* event)
 void EditPointTool::initImpl()
 {
 	objectSelectionChanged();
+	
+	if (editor->isInMobileMode())
+	{
+		// Create key replacement bar
+		key_button_bar = new KeyButtonBar(this, editor->getMainWidget());
+		key_button_bar->addModifierKey(Qt::Key_Shift, Qt::ShiftModifier, tr("Snap", "Snap to existing objects"));
+		key_button_bar->addModifierKey(Qt::Key_Control, Qt::ControlModifier, tr("Point / Angle", "Modify points or use constrained angles"));
+		key_button_bar->addModifierKey(Qt::Key_Space, 0, tr("Toggle dash", "Toggle dash points"));
+		editor->showPopupWidget(key_button_bar, "");
+	}
 }
 
 void EditPointTool::objectSelectionChangedImpl()
 {
+	if (text_editor)
+	{
+		// This case can be reproduced by using "select all objects of symbol" for any symbol while editing a text.
+		// Revert selection to text object in order to be able to finish editing. Not optimal, but better than crashing.
+		map()->clearObjectSelection(false);
+		map()->addObjectToSelection(text_editor->getObject(), false);
+		finishEditing();
+		map()->emitSelectionChanged();
+		return;
+	}
+	
 	updateHoverPoint(cur_pos_map);
 	updateDirtyRect();
 	updateStatusText();
@@ -454,7 +485,7 @@ int EditPointTool::updateDirtyRectImpl(QRectF& rect)
 	map()->includeSelectionRect(selection_extent);
 	
 	rectInclude(rect, selection_extent);
-	int pixel_border = show_object_points ? 6 : 1;
+	int pixel_border = show_object_points ? (resolution_scale_factor * 6) : 1;
 	
 	// Control points
 	if (show_object_points)
@@ -513,6 +544,7 @@ void EditPointTool::drawImpl(QPainter* painter, MapWidget* widget)
 
 void EditPointTool::textSelectionChanged(bool text_change)
 {
+	Q_UNUSED(text_change);
 	updatePreviewObjects();
 }
 
@@ -660,7 +692,7 @@ void EditPointTool::updateHoverPoint(MapCoordF cursor_pos)
 		updateDirtyRect();
 		hover_object = new_hover_object;
 		hover_point = new_hover_point;
-		start_drag_distance = (hover_point >= -1) ? 0 : QApplication::startDragDistance();
+		start_drag_distance = (hover_point >= -1) ? 0 : Settings::getInstance().getStartDragDistancePx();
 	}
 }
 

@@ -1,5 +1,5 @@
 /*
- *    Copyright 2012, 2013 Pete Curtis, Kai Pastor
+ *    Copyright 2012, 2013, 2014 Pete Curtis, Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -22,41 +22,42 @@
 
 #include "file_format.h"
 
-/** Interface for dealing with XML files of maps.
+/** @brief Interface for dealing with XML files of maps.
  */
 class XMLFileFormat : public FileFormat
 {
 public:
-	/** Creates a new file format of type XML.
+	/** @brief Creates a new file format of type XML.
 	 */
 	XMLFileFormat();
 	
-	/** Returns true if the file starts with the character sequence "<?xml".
-	 *  FIXME: Needs to deal with different encodings. Provide test cases.
+	/** @brief Returns true if the file starts with the character sequence "<?xml".
+	 * 
+	 *  @todo Needs to deal with different encodings. Provide test cases.
 	 */
 	bool understands(const unsigned char *buffer, size_t sz) const;
 	
-	/** Creates an importer for XML files.
+	/** @brief Creates an importer for XML files.
 	 */
 	Importer *createImporter(QIODevice* stream, Map *map, MapView *view) const throw (FileFormatException);
 	
-	/** Creates an exporter for XML files.
+	/** @brief Creates an exporter for XML files.
 	 */
 	Exporter *createExporter(QIODevice* stream, Map *map, MapView *view) const throw (FileFormatException);
 	
-	/** The minimum XML file format version supported by this implementation.
+	/** @brief The minimum XML file format version supported by this implementation.
 	 */
 	static const int minimum_version;
 	
-	/** The XML file format version created by this implementation.
+	/** @brief The XML file format version created by this implementation.
 	 */
 	static const int current_version;
 	
-	/** The characteristic magic string at the beginning of the file
+	/** @brief The characteristic magic string at the beginning of the file
 	 */
 	static const QString magic_string;
 	
-	/** The XML namespace of the Mapper XML file format
+	/** @brief The XML namespace of the Mapper XML file format
 	 */
 	static const QString mapper_namespace;
 };

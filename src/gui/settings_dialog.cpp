@@ -20,11 +20,7 @@
 #include "settings_dialog.h"
 #include "settings_dialog_p.h"
 
-#if QT_VERSION < 0x050000
-#include <QtGui>
-#else
 #include <QtWidgets>
-#endif
 
 #include "../settings.h"
 #include "../util.h"
@@ -129,12 +125,12 @@ EditorPage::EditorPage(QWidget* parent) : SettingsPage(parent)
 	layout->addWidget(text_antialiasing, row++, 0, 1, 2);
 	
 	QLabel* tolerance_label = new QLabel(tr("Click tolerance:"));
-	QSpinBox* tolerance = Util::SpinBox::create(0, 50, tr("px"));
+	QSpinBox* tolerance = Util::SpinBox::create(0, 50, tr("mm", "millimeters"));
 	layout->addWidget(tolerance_label, row, 0);
 	layout->addWidget(tolerance, row++, 1);
 	
 	QLabel* snap_distance_label = new QLabel(tr("Snap distance (%1):").arg(ModifierKey::shift()));
-	QSpinBox* snap_distance = Util::SpinBox::create(0, 100, tr("px"));
+	QSpinBox* snap_distance = Util::SpinBox::create(0, 100, tr("mm", "millimeters"));
 	layout->addWidget(snap_distance_label, row, 0);
 	layout->addWidget(snap_distance, row++, 1);
 	
@@ -177,7 +173,7 @@ EditorPage::EditorPage(QWidget* parent) : SettingsPage(parent)
 	layout->addWidget(new QLabel("<b>" % tr("Rectangle tool:") % "</b>"), row++, 0, 1, 2);
 	
 	QLabel* rectangle_helper_cross_radius_label = new QLabel(tr("Radius of helper cross:"));
-	QSpinBox* rectangle_helper_cross_radius = Util::SpinBox::create(0, 999999, tr("px"));
+	QSpinBox* rectangle_helper_cross_radius = Util::SpinBox::create(0, 999999, tr("mm", "millimeters"));
 	layout->addWidget(rectangle_helper_cross_radius_label, row, 0);
 	layout->addWidget(rectangle_helper_cross_radius, row++, 1);
 	
@@ -187,8 +183,8 @@ EditorPage::EditorPage(QWidget* parent) : SettingsPage(parent)
 	
 	antialiasing->setChecked(Settings::getInstance().getSetting(Settings::MapDisplay_Antialiasing).toBool());
 	text_antialiasing->setChecked(Settings::getInstance().getSetting(Settings::MapDisplay_TextAntialiasing).toBool());
-	tolerance->setValue(Settings::getInstance().getSetting(Settings::MapEditor_ClickTolerance).toInt());
-	snap_distance->setValue(Settings::getInstance().getSetting(Settings::MapEditor_SnapDistance).toInt());
+	tolerance->setValue(Settings::getInstance().getSetting(Settings::MapEditor_ClickToleranceMM).toInt());
+	snap_distance->setValue(Settings::getInstance().getSetting(Settings::MapEditor_SnapDistanceMM).toInt());
 	fixed_angle_stepping->setValue(Settings::getInstance().getSetting(Settings::MapEditor_FixedAngleStepping).toInt());
 	select_symbol_of_objects->setChecked(Settings::getInstance().getSetting(Settings::MapEditor_ChangeSymbolWhenSelecting).toBool());
 	zoom_out_away_from_cursor->setChecked(Settings::getInstance().getSetting(Settings::MapEditor_ZoomOutAwayFromCursor).toBool());
@@ -198,7 +194,7 @@ EditorPage::EditorPage(QWidget* parent) : SettingsPage(parent)
 	edit_tool_delete_bezier_point_action->setCurrentIndex(edit_tool_delete_bezier_point_action->findData(Settings::getInstance().getSetting(Settings::EditTool_DeleteBezierPointAction).toInt()));
 	edit_tool_delete_bezier_point_action_alternative->setCurrentIndex(edit_tool_delete_bezier_point_action_alternative->findData(Settings::getInstance().getSetting(Settings::EditTool_DeleteBezierPointActionAlternative).toInt()));
 	
-	rectangle_helper_cross_radius->setValue(Settings::getInstance().getSetting(Settings::RectangleTool_HelperCrossRadius).toInt());
+	rectangle_helper_cross_radius->setValue(Settings::getInstance().getSetting(Settings::RectangleTool_HelperCrossRadiusMM).toInt());
 	rectangle_preview_line_width->setChecked(Settings::getInstance().getSetting(Settings::RectangleTool_PreviewLineWidth).toBool());
 	
 	layout->setRowStretch(row, 1);
@@ -240,12 +236,12 @@ void EditorPage::textAntialiasingClicked(bool checked)
 
 void EditorPage::toleranceChanged(int value)
 {
-	changes.insert(Settings::getInstance().getSettingPath(Settings::MapEditor_ClickTolerance), QVariant(value));
+	changes.insert(Settings::getInstance().getSettingPath(Settings::MapEditor_ClickToleranceMM), QVariant(value));
 }
 
 void EditorPage::snapDistanceChanged(int value)
 {
-	changes.insert(Settings::getInstance().getSettingPath(Settings::MapEditor_SnapDistance), QVariant(value));
+	changes.insert(Settings::getInstance().getSettingPath(Settings::MapEditor_SnapDistanceMM), QVariant(value));
 }
 
 void EditorPage::fixedAngleSteppingChanged(int value)
@@ -285,7 +281,7 @@ void EditorPage::editToolDeleteBezierPointActionAlternativeChanged(int index)
 
 void EditorPage::rectangleHelperCrossRadiusChanged(int value)
 {
-	changes.insert(Settings::getInstance().getSettingPath(Settings::RectangleTool_HelperCrossRadius), QVariant(value));
+	changes.insert(Settings::getInstance().getSettingPath(Settings::RectangleTool_HelperCrossRadiusMM), QVariant(value));
 }
 
 void EditorPage::rectanglePreviewLineWidthChanged(bool checked)
@@ -342,17 +338,59 @@ GeneralPage::GeneralPage(QWidget* parent) : SettingsPage(parent)
 	layout->addItem(Util::SpacerItem::create(this), row, 1);
 	
 	row++;
+	layout->addWidget(Util::Headline::create(tr("Screen")), row, 1, 1, 2);
+	
+	row++;
+	QLabel* ppi_label = new QLabel(tr("Pixels per inch:"));
+	layout->addWidget(ppi_label, row, 1);
+	
+	ppi_edit = Util::SpinBox::create(2, 0.01, 9999);
+	ppi_edit->setValue(Settings::getInstance().getSetting(Settings::General_PixelsPerInch).toFloat());
+	layout->addWidget(ppi_edit, row, 2);
+	
+	QAbstractButton* ppi_calculate_button = new QToolButton();
+	ppi_calculate_button->setIcon(QIcon(":/images/settings.png"));
+	layout->addWidget(ppi_calculate_button, row, 3);
+	
+	row++;
+	layout->addItem(Util::SpacerItem::create(this), row, 1);
+	
+	row++;
 	layout->addWidget(Util::Headline::create(tr("Program start")), row, 1, 1, 2);
 	
 	row++;
-	QCheckBox* open_mru_check = new QCheckBox(HomeScreenWidget::tr("Open most recently used file"));
+	QCheckBox* open_mru_check = new QCheckBox(AbstractHomeScreenWidget::tr("Open most recently used file"));
 	open_mru_check->setChecked(Settings::getInstance().getSetting(Settings::General_OpenMRUFile).toBool());
 	layout->addWidget(open_mru_check, row, 1, 1, 2);
 	
 	row++;
-	QCheckBox* tips_visible_check = new QCheckBox(HomeScreenWidget::tr("Show tip of the day"));
+	QCheckBox* tips_visible_check = new QCheckBox(AbstractHomeScreenWidget::tr("Show tip of the day"));
 	tips_visible_check->setChecked(Settings::getInstance().getSetting(Settings::HomeScreen_TipsVisible).toBool());
 	layout->addWidget(tips_visible_check, row, 1, 1, 2);
+	
+	row++;
+	layout->addItem(Util::SpacerItem::create(this), row, 1);
+	
+	row++;
+	layout->addWidget(Util::Headline::create(tr("Saving files")), row, 1, 1, 2);
+	
+	// Possible point: limit size of undo/redo journal
+	
+	int auto_save_interval = Settings::getInstance().getSetting(Settings::General_AutoSaveInterval).toInt();
+	
+	row++;
+	QCheckBox* auto_save_check = new QCheckBox(tr("Save information for automatic recovery"));
+	auto_save_check->setChecked(auto_save_interval > 0);
+	layout->addWidget(auto_save_check, row, 1, 1, 2);
+	
+	row++;
+	auto_save_interval_label = new QLabel(tr("Recovery information saving interval:"));
+	layout->addWidget(auto_save_interval_label, row, 1);
+	
+	auto_save_interval_edit = Util::SpinBox::create(1, 120, tr("min", "unit minutes"), 1);
+	auto_save_interval_edit->setValue(qAbs(auto_save_interval));
+	auto_save_interval_edit->setEnabled(auto_save_interval > 0);
+	layout->addWidget(auto_save_interval_edit, row, 2);
 	
 	row++;
 	layout->addItem(Util::SpacerItem::create(this), row, 1);
@@ -400,10 +438,14 @@ GeneralPage::GeneralPage(QWidget* parent) : SettingsPage(parent)
 	
 	connect(language_box, SIGNAL(currentIndexChanged(int)), this, SLOT(languageChanged(int)));
 	connect(language_file_button, SIGNAL(clicked(bool)), this, SLOT(openTranslationFileDialog()));
+	connect(ppi_edit, SIGNAL(valueChanged(double)), this, SLOT(ppiChanged(double)));
+	connect(ppi_calculate_button, SIGNAL(clicked(bool)), this, SLOT(openPPICalculationDialog()));
 	connect(open_mru_check, SIGNAL(clicked(bool)), this, SLOT(openMRUFileClicked(bool)));
 	connect(tips_visible_check, SIGNAL(clicked(bool)), this, SLOT(tipsVisibleClicked(bool)));
 	connect(encoding_box, SIGNAL(currentTextChanged(QString)), this, SLOT(encodingChanged(QString)));
 	connect(ocd_importer_check, SIGNAL(clicked(bool)), this, SLOT(ocdImporterClicked(bool)));
+	connect(auto_save_check, SIGNAL(clicked(bool)), this, SLOT(autoSaveChanged(bool)));
+	connect(auto_save_interval_edit, SIGNAL(valueChanged(int)), this, SLOT(autoSaveIntervalChanged(int)));
 }
 
 void GeneralPage::apply()
@@ -483,11 +525,7 @@ void GeneralPage::updateLanguageBox()
 	if (!locale_name.isEmpty())
 	{
 		QLocale file_locale(locale_name);
-#if (QT_VERSION >= QT_VERSION_CHECK(4, 8, 0))
 		QString language_name = file_locale.nativeLanguageName();
-#else
-		QString language_name = QLocale::languageToString(file_locale.language());
-#endif
 		if (!language_map.contains(language_name))
 			language_map.insert(language_name, file_locale.language());
 	}
@@ -576,4 +614,75 @@ void GeneralPage::openTranslationFileDialog()
 		}
 	}
 	updateLanguageBox();
+}
+
+void GeneralPage::autoSaveChanged(bool state)
+{
+	auto_save_interval_label->setEnabled(state);
+	auto_save_interval_edit->setEnabled(state);
+	
+	int interval = auto_save_interval_edit->value();
+	if (!state)
+		interval = -interval;
+	changes.insert(Settings::getInstance().getSettingPath(Settings::General_AutoSaveInterval), interval);
+}
+
+void GeneralPage::autoSaveIntervalChanged(int value)
+{
+	changes.insert(Settings::getInstance().getSettingPath(Settings::General_AutoSaveInterval), value);
+}
+
+void GeneralPage::ppiChanged(double ppi)
+{
+	changes.insert(Settings::getInstance().getSettingPath(Settings::General_PixelsPerInch), QVariant(ppi));
+}
+
+void GeneralPage::openPPICalculationDialog()
+{
+	int primary_screen_width = QApplication::primaryScreen()->size().width();
+	int primary_screen_height = QApplication::primaryScreen()->size().height();
+	float screen_diagonal_pixels = qSqrt(primary_screen_width*primary_screen_width + primary_screen_height*primary_screen_height);
+	
+	float old_ppi = ppi_edit->value();
+	float old_screen_diagonal_inches = screen_diagonal_pixels / old_ppi;
+	
+	QDialog* dialog = new QDialog(window(), Qt::WindowSystemMenuHint | Qt::WindowTitleHint);
+	
+	QGridLayout* layout = new QGridLayout();
+	
+	int row = 0;
+	QLabel* resolution_label = new QLabel(tr("Primary screen resolution in pixels:"));
+	layout->addWidget(resolution_label, row, 0);
+	
+	
+	QLabel* resolution_display = new QLabel(QString("%1 x %2").arg(primary_screen_width).arg(primary_screen_height));
+	layout->addWidget(resolution_display, row, 1);
+	
+	row++;
+	QLabel* size_label = new QLabel(tr("Primary screen size in inches (diagonal):"));
+	layout->addWidget(size_label, row, 0);
+	
+	QDoubleSpinBox* size_edit = Util::SpinBox::create(2, 0.01, 9999);
+	size_edit->setValue(old_screen_diagonal_inches);
+	layout->addWidget(size_edit, row, 1);
+	
+	row++;
+	layout->addItem(Util::SpacerItem::create(this), row, 1);
+	
+	row++;
+	QDialogButtonBox* button_box = new QDialogButtonBox(QDialogButtonBox::Cancel | QDialogButtonBox::Ok);
+	layout->addWidget(button_box, row, 0, 1, 2);
+	
+	dialog->setLayout(layout);
+	connect(button_box, SIGNAL(accepted()), dialog, SLOT(accept()));
+	connect(button_box, SIGNAL(rejected()), dialog, SLOT(reject()));
+	dialog->exec();
+	
+	if (dialog->result() == QDialog::Accepted)
+	{
+		float screen_diagonal_inches = size_edit->value();
+		float new_ppi = screen_diagonal_pixels / screen_diagonal_inches;
+		ppi_edit->setValue(new_ppi);
+		ppiChanged(new_ppi);
+	}
 }

@@ -31,6 +31,7 @@ class MapEditorController;
 class Template;
 class TemplateWidget;
 
+/** Dock widget allowing to enter template positioning properties numerically. */
 class TemplatePositionDockWidget : public QDockWidget
 {
 Q_OBJECT

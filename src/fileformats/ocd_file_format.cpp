@@ -34,6 +34,7 @@
 #include "ocd_types_v10.h"
 #include "ocd_types_v11.h"
 #include "../core/map_color.h"
+#include "../core/map_view.h"
 #include "../georeferencing.h"
 #include "../file_format_ocad8.h"
 #include "../file_format_ocad8_p.h"
@@ -173,6 +174,13 @@ template< class F >
 void OcdFileImport::importImplementation(bool load_symbols_only) throw (FileFormatException)
 {
 	OcdFile< F > file(buffer);
+#if 0
+	for (typename OcdFile< F >::StringIndex::iterator it = file.strings().begin(); it != file.strings().end(); ++it)
+	{
+		qDebug() << it->type << convertOcdString< typename F::Encoding >(file[it]);
+	}
+#endif
+	
 	importGeoreferencing< F >(file);
 	importColors< F >(file);
 	importSymbols< F >(file);
@@ -615,6 +623,7 @@ void OcdFileImport::importExtras< class Ocd::FormatV8 >(const OcdFile< Ocd::Form
 template< class F >
 void OcdFileImport::importExtras(const OcdFile< F >& file) throw (FileFormatException)
 {
+	Q_UNUSED(file);
 	; // TODO
 }
 
@@ -656,7 +665,7 @@ void OcdFileImport::importView(const QString& param_string)
 	const QChar* unicode = param_string.unicode();
 	
 	bool zoom_ok = false;
-	double zoom, offset_x=0.0, offset_y=0.0;
+	double zoom=1.0, offset_x=0.0, offset_y=0.0;
 	
 	int i = param_string.indexOf('\t', 0);
 	; // skip first word for this entry type

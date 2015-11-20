@@ -41,9 +41,13 @@ QT_END_NAMESPACE
 class ColorDropDown;
 class SymbolSettingDialog;
 
-/// Symbol for text
-/// NOTE: Uses a hack to disable hinting for fonts: Uses a big internal font size where hinting is neglegible and scales it down for output
-/// TODO: A better solution would be to use FreeType directly
+/** Symbol for text, can be applied to TextObjects.
+ * 
+ * NOTE: Uses a hack to disable hinting for fonts:
+ * Uses a big internal font size, internal_point_size, where hinting is
+ * neglegible and scales it down for output.
+ * TODO: A maybe better solution would be to use FreeType directly.
+ */
 class TextSymbol : public Symbol
 {
 friend class TextSymbolSettings;
@@ -51,13 +55,26 @@ friend class DetermineFontSizeDialog;
 friend class PointSymbolEditorWidget;
 friend class OCAD8FileImport;
 public:
+	/** Modes for text framing */
 	enum FramingMode
 	{
+		/** Only the text itself is displayed. */
 		NoFraming = 0,
+		
+		/**
+		 * The text path is drawn with a QPainter with active QPen in addition
+		 * to the normal fill, resulting in a line around the letters.
+		 */
 		LineFraming = 1,
+		
+		/**
+		 * The text is drawn a second time with a slight offset to the main
+		 * text, creating a shadow effect.
+		 */
 		ShadowFraming = 2
 	};
 	
+	/** Creates an empty text symbol. */
 	TextSymbol();
 	virtual ~TextSymbol();
 	virtual Symbol* duplicate(const MapColorMap* color_map = NULL) const;
@@ -69,7 +86,10 @@ public:
 	virtual const MapColor* getDominantColorGuess() const;
 	virtual void scale(double factor);
 	
+	/** Updates the internal QFont from the font settings. */
 	void updateQFont();
+	
+	/** Calculates the factor to convert from the real font size to the internal font size */
 	inline double calculateInternalScaling() const {return internal_point_size / (0.001 * font_size);}
 	
 	// Getters
@@ -107,10 +127,9 @@ public:
 	virtual SymbolPropertiesWidget* createPropertiesWidget(SymbolSettingDialog* dialog);
 	
 protected:
-	virtual void saveImpl(QIODevice* file, Map* map);
 	virtual bool loadImpl(QIODevice* file, int version, Map* map);
 	virtual void saveImpl(QXmlStreamWriter& xml, const Map& map) const;
-	virtual bool loadImpl(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol_dict);
+	virtual bool loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict);
 	virtual bool equalsImpl(Symbol* other, Qt::CaseSensitivity case_sensitivity);
 	
 	QFont qfont;
@@ -231,6 +250,10 @@ private:
 	bool react_to_changes;
 };
 
+/**
+ * Dialog to calculate the font size at which a certain letter
+ * has a certain real size.
+ */
 class DetermineFontSizeDialog : public QDialog
 {
 Q_OBJECT

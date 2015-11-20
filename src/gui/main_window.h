@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2014 Thomas Schöps, Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -23,11 +24,13 @@
 
 #include <QMainWindow>
 
+#include "../core/auto_save.h"
 #include "../file_format.h"
 
 QT_BEGIN_NAMESPACE
 class QLabel;
 class QStackedWidget;
+class QTimer;
 QT_END_NAMESPACE
 
 class MainWindowController;
@@ -35,8 +38,9 @@ class MainWindowController;
 /** The MainWindow class provides the generic application window. 
  *  It always has an active controller (class MainWindowController) 
  *  which provides the specific window content and behaviours.
+ *  The controller can be exchanged while the window is visible.
  */
-class MainWindow : public QMainWindow
+class MainWindow : public QMainWindow, public AutoSave
 {
 Q_OBJECT
 public:
@@ -66,6 +70,12 @@ public:
 	 */
 	inline const QString& getCurrentFilePath() const {return current_path;}
 	
+	/** @brief Registers the given path as most recently used file.
+	 *  The path is added at (or moved to) the top of the list of most recently
+	 *  used files, and the directory is saved as most recently used directory.
+	 */
+	static void setMostRecentlyUsedFile(const QString& path);
+	
 	/** Sets the opened-file state to value. */
 	void setHasOpenedFile(bool value);
 	
@@ -80,9 +90,12 @@ public:
 	inline bool hasUnsavedChanges() const {return has_unsaved_changes;}
 	
 	
-	/** Sets the text in the status bar.
-	 */ 
+	/** Sets the text in the status bar. */ 
 	void setStatusBarText(const QString& text);
+	/** Shows a temporary message in the status bar. */
+	void showStatusBarMessage(const QString& text, int timeout = 0);
+	/** Clears temporary messages set in the status bar with showStatusBarMessage(). */
+	void clearStatusBarMessage();
 	
 	
 	/** Enable or disable shortcuts.
@@ -100,6 +113,12 @@ public:
 	
 	/** Returns an QAction which serves as extension point in the file menu. */
 	inline QAction* getFileMenuExtensionAct() const {return settings_act;}
+	
+	/** Returns the save action. */
+	inline QAction* getSaveAct() const {return save_act;}
+	
+	/** Returns the close action. */
+	inline QAction* getCloseAct() const {return close_act;}
 	
 	
 	/**
@@ -180,6 +199,10 @@ public slots:
 	 */
 	bool save();
 	
+	/** Save the current content to the current path.
+	 */
+	virtual AutoSave::AutoSaveResult autoSave();
+	
 	/** Close the file currently opened.
 	 *  This will close the window unless this is the last window.
 	 */
@@ -213,15 +236,16 @@ public slots:
 	 */
 	void gotUnsavedChanges();
 	
-signals:
-	void keyPressed(QKeyEvent* event);
-	void keyReleased(QKeyEvent* event);
-	
 protected slots:
 	/**
 	 * Open the files which have been registered by openPathLater().
 	 */
 	void openPathBacklog();
+	
+	/**
+	 * Listens to configuration changes.
+	 */
+	void settingsChanged();
 	
 protected:
 	/** Notify main window of the current path where the content is saved.
@@ -231,10 +255,19 @@ protected:
 	 */
 	void setCurrentFile(const QString& path);
 	
+	/** @brief Removes the auto-save file if it exists. */
+	void removeAutoSaveFile();
+	
+	/** @brief Returns the auto-save file path for the current path. */
+	QString autoSaveFileName() const;
+	
+	/** @brief Returns the auto-save file path for the given path. */
+	static QString autoSaveFileName(const QString &path);
+	
 	virtual bool event(QEvent* event);
 	virtual void closeEvent(QCloseEvent *event);
-    virtual void keyPressEvent(QKeyEvent* event);
-    virtual void keyReleaseEvent(QKeyEvent* event);
+	virtual void keyPressEvent(QKeyEvent* event);
+	virtual void keyReleaseEvent(QKeyEvent* event);
 	
 private:
 	enum {
@@ -268,6 +301,7 @@ private:
 	
 	/// The active controller
 	MainWindowController* controller;
+	bool create_menu;
 	bool show_menu;
 	bool disable_shortcuts;
 	

@@ -29,26 +29,66 @@ QT_END_NAMESPACE
 
 class MapWidget;
 
-/// Represents a type of editing activity, e.g. georeferencing. Only one activity can be active at a time.
-/// This is for example used to close the georeferencing window when selecting an edit tool.
+/**
+ * Represents a type of editing activity, e.g. template position adjustment.
+ * Only one activity can be active at a time.
+ * 
+ * This is for example used to close the template adjustment window when
+ * selecting an edit tool.
+ * It can also be used to paint activity-specific graphics onto the map.
+ */
 class MapEditorActivity : public QObject
 {
 Q_OBJECT
 public:
-	virtual ~MapEditorActivity() {}
+	virtual ~MapEditorActivity();
 	
-	/// All initializations apart from setting variables like the activity object should be done here instead of in the constructor,
-	/// as now the old activity was properly destroyed (including reseting the activity drawing).
-	virtual void init() {}
+	/**
+	 * All initializations apart from setting variables like the activity object
+	 * should be done here instead of in the constructor, as at the time init()
+	 * is called, the old activity was properly destroyed
+	 * (including reseting the activity drawing).
+	 */
+	virtual void init();
 	
-	void setActivityObject(void* address) {activity_object = address;}
-	inline void* getActivityObject() const {return activity_object;}
+	/**
+	 * Sets the "activity object", which is a void pointer which can be
+	 * used for various purposes (such as identifying the activity).
+	 */
+	void setActivityObject(void* address);
 	
-	/// All dynamic drawings must be drawn here using the given painter. Drawing is only possible in the area specified by calling map->setActivityBoundingBox().
-	virtual void draw(QPainter* painter, MapWidget* widget) {};
+	/**
+	 * Returns the "activity object".
+	 * @see setActivityObject()
+	 */
+	inline void* getActivityObject() const;
+	
+	/**
+	 * All dynamic drawings must be drawn here using the given painter.
+	 * Drawing is only possible in the area specified
+	 * by calling map->setActivityBoundingBox().
+	 */
+	virtual void draw(QPainter* painter, MapWidget* widget);
 	
 protected:
 	void* activity_object;
 };
+
+
+
+//### MapEditorActivity inline code ###
+
+inline
+void MapEditorActivity::setActivityObject(void* address)
+{
+	activity_object = address;
+}
+
+inline
+void* MapEditorActivity::getActivityObject() const
+{
+	return activity_object;
+}
+
 
 #endif

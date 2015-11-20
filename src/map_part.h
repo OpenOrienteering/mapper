@@ -68,41 +68,103 @@ struct ObjectOperationResult
 	};
 };
 
+/**
+ * Represents one part of a map, containing a list of objects.
+ * 
+ * Dividing maps in parts is e.g. useful to have multiple mappers work on a map:
+ * every mapper can do the work in his/her part without getting into conflict
+ * with other parts. For display, the objects from all parts are merged.
+ * 
+ * Another application is in course setting, where it is useful to have
+ * a map part for event-specific map objects and parts for course-specific
+ * map objects. Then a course can be printed by merging the event-specific part
+ * with the part for the course.
+ * 
+ * Currently, only one map part can be used per map.
+ */
 class MapPart
 {
 friend class OCAD8FileImport;
 public:
+	/** Creates a new map part with the given name for a map. */
 	MapPart(const QString& name, Map* map);
+	
+	/** Destroys the map part. */
 	~MapPart();
 	
-	void save(QIODevice* file, Map* map);
+	/** Loads the map part in the old "native" format from the given file. */
 	bool load(QIODevice* file, int version, Map* map);
+	/** Saves the map part in xml format to the given stream. */
 	void save(QXmlStreamWriter& xml, const Map& map) const;
+	/**
+	 * Loads the map part in xml format from the given stream,
+	 * using a dictionary to map symbol ids to symbol pointers.
+	 */
 	static MapPart* load(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol_dict);
 	
+	/** Returns the part's name. */
 	inline const QString& getName() const {return name;}
+	/** Sets the part's name. */
 	inline void setName(const QString new_name) {name = new_name;}
 	
+	/** Returns the number of objects in the part. */
 	inline int getNumObjects() const {return (int)objects.size();}
+	/** Returns the i-th object from the part. */
 	inline Object* getObject(int i) {return objects[i];}
+	/** Returns the i-th object from the part. */
 	inline const Object* getObject(int i) const {return objects[i];}
-	int findObjectIndex(Object* object);					// asserts that the object is contained in the part
+	/**
+	 * Loops over all objects in the part and looks for the given pointer.
+	 * Returns the index of the object. The object must be contained in this part,
+	 * otherwise an assert is triggered!
+	 */
+	int findObjectIndex(Object* object);
+	/**
+	 * Replaces the object at the given index with another.
+	 * If delete_old is set, calls "delete old_object".
+	 */
 	void setObject(Object* object, int pos, bool delete_old);
+	/** Adds the object as new object at the given index. */
 	void addObject(Object* object, int pos);
+	/**
+	 * Deleted the object from the given index.
+	 * If remove_only is set, does not call "delete object".
+	 * 
+	 * TODO: make a separate method "removeObject()", this is misleading!
+	 */
 	void deleteObject(int pos, bool remove_only);
-	bool deleteObject(Object* object, bool remove_only);	// returns if the object was found
+	/**
+	 * Deleted the object from the given index.
+	 * If remove_only is set, does not call "delete object".
+	 * Returns if the object was found in this part.
+	 * 
+	 * TODO: make a separate method "removeObject()", this is misleading!
+	 */
+	bool deleteObject(Object* object, bool remove_only);
 	
-	/// Imports the contents of the other part (which can be from another map) into this part.
-	/// Uses symbol_map to replace all symbols contained there. No replacement is done for symbols which are not in the map.
-	void importPart(MapPart* other, QHash<Symbol*, Symbol*>& symbol_map, bool select_new_objects);
+	/**
+	 * Imports the contents of the other part (which can be from another map)
+	 * into this part. Uses symbol_map to replace all symbols contained there.
+	 * No replacement is done for symbols which are not in the map.
+	 */
+	void importPart(MapPart* other, QHash<Symbol*, Symbol*>& symbol_map,
+		bool select_new_objects);
 	
-	void findObjectsAt(MapCoordF coord, float tolerance, bool treat_areas_as_paths, bool extended_selection, bool include_hidden_objects, bool include_protected_objects, SelectionInfoVector& out);
-	void findObjectsAtBox(MapCoordF corner1, MapCoordF corner2, bool include_hidden_objects, bool include_protected_objects, std::vector<Object*>& out);
+	/** See Map::findObjectsAt(). */
+	void findObjectsAt(MapCoordF coord, float tolerance, bool treat_areas_as_paths,
+		bool extended_selection, bool include_hidden_objects,
+		bool include_protected_objects, SelectionInfoVector& out);
+	/** See Map::findObjectsAtBox(). */
+	void findObjectsAtBox(MapCoordF corner1, MapCoordF corner2,
+		bool include_hidden_objects, bool include_protected_objects,
+		std::vector<Object*>& out);
+	/** See Map::countObjectsInRect(). */
 	int countObjectsInRect(QRectF map_coord_rect, bool include_hidden_objects);
 	
+	/** Calculates and returns the bounding box of all objects in this map part. */
 	QRectF calculateExtent(bool include_helper_symbols);
 	
-	/// See Map::operationOnAllObjects()
+	/** See Map::operationOnAllObjects() */
 	template<typename Processor, typename Condition> ObjectOperationResult::Enum operationOnAllObjects(const Processor& processor, const Condition& condition)
 	{
 		int result = ObjectOperationResult::NoResult;
@@ -121,7 +183,7 @@ public:
 		}
 		return (ObjectOperationResult::Enum)result;
 	}
-	/// See Map::operationOnAllObjects()
+	/** See Map::operationOnAllObjects() */
 	template<typename Processor> ObjectOperationResult::Enum operationOnAllObjects(const Processor& processor)
 	{
 		int size = (int)objects.size();
@@ -136,6 +198,7 @@ public:
 		}
 		return (ObjectOperationResult::Enum)result;
 	}
+	/** See Map::operationOnAllObjects() */
 	template<typename Processor> ObjectOperationResult::Enum operationOnAllObjects(Processor& processor)
 	{
 		int size = (int)objects.size();
@@ -150,12 +213,19 @@ public:
 		}
 		return (ObjectOperationResult::Enum)result;
 	}
+	/** See Map::scaleAllObjects() */
 	void scaleAllObjects(double factor, const MapCoord& scaling_center);
+	/** See Map::rotateAllObjects() */
 	void rotateAllObjects(double rotation, const MapCoord& center);
+	/** See Map::updateAllObjects() */
 	void updateAllObjects();
+	/** See Map::updateAllObjectsWithSymbol() */
 	void updateAllObjectsWithSymbol(Symbol* symbol);
+	/** See Map::changeSymbolForAllObjects() */
 	void changeSymbolForAllObjects(Symbol* old_symbol, Symbol* new_symbol);
-	bool deleteAllObjectsWithSymbol(Symbol* symbol);		// returns if there was an object that was deleted
+	/** See Map::deleteAllObjectsWithSymbol() */
+	bool deleteAllObjectsWithSymbol(Symbol* symbol);
+	/** See Map::doObjectsExistWithSymbol() */
 	bool doObjectsExistWithSymbol(Symbol* symbol);
 	
 private:

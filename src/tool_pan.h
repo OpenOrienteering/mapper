@@ -24,7 +24,7 @@
 #include "tool_base.h"
 
 /** 
- * A tool to pan the map.
+ * Tool to pan the map.
  */
 class PanTool : public MapEditorToolBase
 {

@@ -29,6 +29,7 @@
 #include "map_widget.h"
 #include "object.h"
 #include "renderable.h"
+#include "settings.h"
 #include "util.h"
 
 QCursor* ScaleTool::cursor = NULL;
@@ -70,6 +71,9 @@ ScaleTool::~ScaleTool()
 
 bool ScaleTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
+	Q_UNUSED(map_coord);
+	Q_UNUSED(widget);
+	
 	if (!(event->buttons() & Qt::LeftButton))
 		return false;
 	
@@ -79,13 +83,15 @@ bool ScaleTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidg
 
 bool ScaleTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
+	Q_UNUSED(widget);
+	
 	if (!(event->buttons() & Qt::LeftButton))
 		return false;
 	
 	if (scaling)
 		updateDragging(map_coord);
 	else if ( !scaling && scaling_center_set &&
-	          (event->pos() - click_pos).manhattanLength() >= QApplication::startDragDistance() )
+			  (event->pos() - click_pos).manhattanLength() >= Settings::getInstance().getStartDragDistancePx() )
 	{
 		// Start scaling
 		scaling = true;
@@ -97,6 +103,8 @@ bool ScaleTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidge
 
 bool ScaleTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
+	Q_UNUSED(widget);
+	
 	if (event->button() != Qt::LeftButton)
 		return false;
 	

@@ -32,6 +32,8 @@
 
 
 
+#ifdef QT_PRINTSUPPORT_LIB
+
 namespace QTest
 {
 	template<>
@@ -39,7 +41,7 @@ namespace QTest
 	{
 		QByteArray ba = "MapPrinterPageFormat(";
 		ba += MapPrinter::paperSizeNames()[page_format.paper_size];
-		ba += (page_format.orientation == QPrinter::Landscape) ? ", Landscape, " : ", Portrait, ";
+		ba += (page_format.orientation == MapPrinterPageFormat::Landscape) ? ", Landscape, " : ", Portrait, ";
 		ba += QByteArray::number(page_format.paper_dimensions.width()) + "x";
 		ba += QByteArray::number(page_format.paper_dimensions.height()) + ", ";
 		ba += QByteArray::number(page_format.page_rect.left()) + ",";
@@ -66,6 +68,8 @@ namespace QTest
 		return qstrdup(ba.data());
 	}
 }
+
+#endif
 
 
 

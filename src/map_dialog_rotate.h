@@ -31,15 +31,23 @@ QT_END_NAMESPACE
 
 class Map;
 
+/**
+ * Dialog for rotating the whole map around a point.
+ */
 class RotateMapDialog : public QDialog
 {
 Q_OBJECT
 public:
+	/** Creates a new RotateMapDialog. */
 	RotateMapDialog(QWidget* parent, Map* map);
 	
+	/** Sets the rotation angle in degrees in the corresponding widget. */
 	void setRotationDegrees(float rotation);
+	/** Enables the setting to rotate around the georeferencing reference point. */
 	void setRotateAroundGeorefRefPoint();
+	/** Checks or unchecks the setting to adjust the georeferencing declination. */
 	void setAdjustDeclination(bool adjust);
+	/** Sets the visibility of the setting to adjust the georeferencing declination. */
 	void showAdjustDeclination(bool show);
 	
 private slots:

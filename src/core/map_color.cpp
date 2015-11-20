@@ -20,6 +20,7 @@
 
 #include "map_color.h"
 
+#include <QApplication>
 #include <QDebug>
 
 #include "../map.h"
@@ -66,8 +67,13 @@ MapColor::MapColor(int priority)
 			break;
 		case Undefined:
 			setCmyk(QColor(Qt::darkGray));
-			opacity = 1.0f;
 			break;
+		case Registration:
+			Q_ASSERT(isBlack());
+			name = QApplication::tr("Registration black (all printed colors)", "MapColor");
+			break;
+		default:
+			; // no change
 	}	
 }
 

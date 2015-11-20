@@ -1,5 +1,5 @@
 #
-#    Copyright 2012 Thomas Schöps, Kai Pastor
+#    Copyright 2012, 2013, 2014 Thomas Schöps, Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -16,7 +16,7 @@
 #    You should have received a copy of the GNU General Public License
 #    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  
-cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
+cmake_minimum_required(VERSION 2.8.3 FATAL_ERROR)
 
 # Project declaration
 
@@ -26,7 +26,7 @@ project(Mapper)
 # We use 99 to mark development builds.
 SET(Mapper_VERSION_MAJOR 0)
 SET(Mapper_VERSION_MINOR 5)
-SET(Mapper_VERSION_PATCH 3)
+SET(Mapper_VERSION_PATCH 90)
 
 if(${CMAKE_CURRENT_BINARY_DIR} STREQUAL ${PROJECT_SOURCE_DIR})
 	message(FATAL_ERROR "You must not use the source directory as build directory.")
@@ -47,6 +47,8 @@ endif()
 
 option(Mapper_TRANSLATIONS_EMBEDDED "Embed all translations in the program executable")
 
+option(Mapper_DEBUG_TRANSLATIONS "Debug missing translations" OFF)
+
 if(WIN32 OR APPLE)
 	set(Mapper_BUILD_PROJ_DEFAULT ON)
 	set(Mapper_BUILD_QT_DEFAULT ON)
@@ -60,8 +62,6 @@ endif()
 option(Mapper_BUILD_PROJ "Build the Proj library from source" ${Mapper_BUILD_PROJ_DEFAULT})
 
 option(Mapper_BUILD_QT   "Build the Qt library from source" ${Mapper_BUILD_QT_DEFAULT})
-
-option(Mapper_USE_QT5    "Use Qt library version 5" ${Mapper_BUILD_QT})
 
 if(NOT CMAKE_BUILD_TYPE MATCHES Release|MinSizeRel)
 	set(Mapper_DEVELOPMENT_BUILD_DEFAULT ON)
@@ -136,7 +136,7 @@ else()
 	find_package(Proj REQUIRED)
 endif()
 
-if(Mapper_BUILD_QT AND Mapper_USE_QT5)
+if(Mapper_BUILD_QT)
 	add_subdirectory(3rd-party/qt5)
 	add_dependencies(Mapper_prerequisites Qt5)
 	list(INSERT CMAKE_PREFIX_PATH 0 "${QT5_DIR}")
@@ -145,61 +145,56 @@ if(Mapper_BUILD_QT AND Mapper_USE_QT5)
 		set(Mapper_prerequisites_FOUND FALSE)
 		message(STATUS "Qt5 library will be built from source")
 	endif()
-elseif(Mapper_BUILD_QT)
-	add_subdirectory(3rd-party/qt4)
-	add_dependencies(Mapper_prerequisites Qt4)
-	if(NOT QT_QMAKE_EXECUTABLE MATCHES NOTFOUND)
-		find_package(Qt4 4.6 COMPONENTS QtCore QtGui QtNetwork QtXml)
-	endif()
-	if(NOT QT4_FOUND)
-		set(Mapper_prerequisites_FOUND FALSE)
-		message(STATUS "Qt4 library will be built from source")
-	endif()
-elseif(Mapper_USE_QT5)
+else()
 	# may require -DCMAKE_PREFIX_PATH=/path-to-qt5-dir
 	find_package(Qt5Core REQUIRED)
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${Qt5Core_EXECUTABLE_COMPILE_FLAGS}")
-else()
-	find_package(Qt4 4.6 REQUIRED QtCore QtGui QtNetwork QtXml)
 endif()
 
 if(Mapper_prerequisites_FOUND)
 
-if(Mapper_USE_QT5)
-	include(Qt5Quirks)
-	foreach(qt5_module Qt5Core Qt5Gui Qt5Widgets Qt5Xml Qt5Network Qt5PrintSupport)
+include(Qt5Quirks)
+if(WIN32)
+	# FIXME Get rid of all dependencies on private headers!
+	find_package(Qt5PrintSupport REQUIRED COMPONENTS Private)
+endif()
+foreach(qt5_module Qt5Core Qt5Gui Qt5Widgets Qt5Xml Qt5Network Qt5PrintSupport)
+	find_package(${qt5_module} REQUIRED)
+	add_definitions(${${qt5_module}_DEFINITIONS})
+	list(APPEND QT_INCLUDES ${${qt5_module}_INCLUDE_DIRS})
+	list(APPEND QT_LIBRARIES ${${qt5_module}_LIBRARIES})
+endforeach()
+if(Mapper_DEVELOPMENT_BUILD)
+	foreach(qt5_module Qt5Test)
 		find_package(${qt5_module} REQUIRED)
 		add_definitions(${${qt5_module}_DEFINITIONS})
 		list(APPEND QT_INCLUDES ${${qt5_module}_INCLUDE_DIRS})
 		list(APPEND QT_LIBRARIES ${${qt5_module}_LIBRARIES})
 	endforeach()
-	if(Mapper_DEVELOPMENT_BUILD)
-		foreach(qt5_module Qt5Test)
-			find_package(${qt5_module} REQUIRED)
-			add_definitions(${${qt5_module}_DEFINITIONS})
-			list(APPEND QT_INCLUDES ${${qt5_module}_INCLUDE_DIRS})
-			list(APPEND QT_LIBRARIES ${${qt5_module}_LIBRARIES})
+endif()
+# FIXME Get rid of all dependencies on private headers!
+foreach(qt5_module Qt5PrintSupport)
+	find_package(${qt5_module} REQUIRED)
+	if("${${qt5_module}_PRIVATE_INCLUDE_DIRS}" STREQUAL "")
+		# While "find_package(Qt5Xyz REQUIRED COMPONENTS Private)" is supposed to set
+		# Qt5Xyz_PRIVATE_INCLUDE_DIRS, it doesn't seem to take place in Qt 5.2.0
+		foreach(base_dir ${${qt5_module}_INCLUDE_DIRS})
+			string(REPLACE Qt5 Qt qt_module ${qt5_module})
+			if("${base_dir}" MATCHES "include/${qt_module}\$")
+				list(APPEND ${qt5_module}_PRIVATE_INCLUDE_DIRS "${base_dir}/${QT5_VERSION}/${qt_module}")
+			endif()
 		endforeach()
 	endif()
-	foreach(qt5_module Qt5PrintSupport)
-		find_package(${qt5_module} REQUIRED)
-		list(APPEND QT_INCLUDES ${${qt5_module}_PRIVATE_INCLUDE_DIRS})
-	endforeach()
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${Qt5Core_EXECUTABLE_COMPILE_FLAGS}")
-else()
-	include(${QT_USE_FILE})
-	Quirks_Qt4_definitions()
-	Quirks_Qt4_lib_dependencies()
-endif()
+	list(APPEND QT_INCLUDES ${${qt5_module}_PRIVATE_INCLUDE_DIRS})
+endforeach()
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${Qt5Core_EXECUTABLE_COMPILE_FLAGS}")
 
 if(CMAKE_CROSSCOMPILING)
 	message(STATUS "Crosscompiling, host: ${CMAKE_HOST_SYSTEM_NAME}, target: ${CMAKE_SYSTEM_NAME}")
 
-	if(Mapper_USE_QT5)
-		qt5_find_host_program(Qt5Core_MOC_EXECUTABLE NAMES moc)
-		qt5_find_host_program(Qt5Core_RCC_EXECUTABLE NAMES rcc)
-	endif()
-elseif(UNIX AND NOT APPLE AND Mapper_USE_QT5 AND Mapper_BUILD_QT AND QT5_VERSION STREQUAL "5.0.2")
+	qt5_find_host_program(Qt5Core_MOC_EXECUTABLE NAMES moc)
+	qt5_find_host_program(Qt5Core_RCC_EXECUTABLE NAMES rcc)
+elseif(UNIX AND NOT APPLE AND Mapper_BUILD_QT AND QT5_VERSION STREQUAL "5.0.2")
 	get_target_property(QT5_INSTALL_DIR Qt5 INSTALL_DIR)
 	foreach(qt5_target Qt5::moc Qt5::rcc ${QT_LIBRARIES})
 		foreach(imported_location 
@@ -256,10 +251,12 @@ endif()
 
 # Subdirectories
 
+add_subdirectory("docs/licensing")
 add_subdirectory("examples")
 add_subdirectory("symbol sets")
 add_subdirectory("help")
 add_subdirectory("translations")
+add_subdirectory("3rd-party/qbezier")
 add_subdirectory("3rd-party/qtsingleapplication")
 add_subdirectory("src/libocad")
 add_subdirectory("src")
@@ -278,7 +275,6 @@ else()
 	  COMMENT "Not a development build, skipping all tests")
 	add_dependencies(TEST_WARNING Mapper)
 endif()
-add_subdirectory("docs/api")
 
 install(FILES COPYING 
   DESTINATION "${MAPPER_ABOUT_DESTINATION}"
@@ -310,4 +306,5 @@ else() # NOT Mapper_prerequisites_FOUND AND NOT MAPPER_SUPERBUILD
 
 endif()
 
+add_subdirectory("docs/api")
 add_subdirectory("packaging/src")

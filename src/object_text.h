@@ -97,8 +97,8 @@ struct TextObjectLineInfo
 	 : start_index(start_index), end_index(end_index), paragraph_end(paragraph_end), line_x(line_x), line_y(line_y), width(width), ascent(ascent), descent(descent), part_infos(part_infos) {}
 	
 	/** Get the horizontal position of a particular character in a line.
-	 *  @param index the index of the character in the original string
-	 *  @return      the character's horizontal position in text coordinates
+	 *  @param pos the index of the character in the original string
+	 *  @return    the character's horizontal position in text coordinates
 	 */
 	double getX(int pos) const;
 	
@@ -110,11 +110,16 @@ struct TextObjectLineInfo
 };
 
 /** A text object.
+ * 
  *  A text object is an instance of a text symbol. 
  *  Its position may be specified by a single coordinate (the anchor point) 
  *  or by two coordinates (word wrap box: 
  *  first coordinate specifies the coordinate of the midpoint,
  *  second coordinates specifies the width and height).
+ * 
+ * TODO: the way of defining word wrap boxes is inconvenient, as the second
+ * coordinate does not specify a real coordinate in this case, but is misused
+ * as extent. Change this?
  */
 class TextObject : public Object
 {

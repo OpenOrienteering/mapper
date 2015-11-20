@@ -27,6 +27,7 @@
 #include "map.h"
 #include "map_undo.h"
 #include "map_widget.h"
+#include "object.h"
 #include "symbol.h"
 #include "symbol_combined.h"
 #include "tool_draw_circle.h"
@@ -37,7 +38,8 @@
 
 QCursor* CutHoleTool::cursor = NULL;
 
-CutHoleTool::CutHoleTool(MapEditorController* editor, QAction* tool_button, PathObject::PartType hole_type) : MapEditorTool(editor, Other, tool_button), hole_type(hole_type)
+CutHoleTool::CutHoleTool(MapEditorController* editor, QAction* tool_button, CutHoleTool::HoleType hole_type)
+ : MapEditorTool(editor, Other, tool_button), hole_type(hole_type)
 {
 	path_tool = NULL;
 	
@@ -67,18 +69,19 @@ bool CutHoleTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWi
 	// Start a new hole
 	edit_widget = widget;
 	
-	if (hole_type == PathObject::Path)
+	if (hole_type == CutHoleTool::Path)
 		path_tool = new DrawPathTool(editor, NULL, NULL, true);
-	else if (hole_type == PathObject::Circle)
+	else if (hole_type == CutHoleTool::Circle)
 		path_tool = new DrawCircleTool(editor, NULL, NULL);
-	else if (hole_type == PathObject::Rect)
+	else if (hole_type == CutHoleTool::Rect)
 		path_tool = new DrawRectangleTool(editor, NULL, NULL);
 	else
 		assert(false);
 	connect(path_tool, SIGNAL(dirtyRectChanged(QRectF)), this, SLOT(pathDirtyRectChanged(QRectF)));
 	connect(path_tool, SIGNAL(pathAborted()), this, SLOT(pathAborted()));
 	connect(path_tool, SIGNAL(pathFinished(PathObject*)), this, SLOT(pathFinished(PathObject*)));
-		
+	
+	path_tool->init();
 	path_tool->mousePressEvent(event, map_coord, widget);
 	
 	return true;
@@ -213,7 +216,7 @@ void CutHoleTool::updateStatusText()
 {
 	if (!path_tool)
 	{
-		// FIXME: The path_tool would have better instrution, but is not initialized yet.
+		// FIXME: The path_tool would have better instruction, but is not initialized yet.
 		setStatusBarText(tr("<b>Click or drag</b>: Start drawing the hole. "));
 	}
 }

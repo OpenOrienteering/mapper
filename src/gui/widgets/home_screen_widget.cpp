@@ -1,5 +1,5 @@
 /*
- *    Copyright 2012, 2013 Thomas Schöps, Kai Pastor
+ *    Copyright 2012, 2013, 2014 Thomas Schöps, Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -20,22 +20,73 @@
 
 #include "home_screen_widget.h"
 
-#if QT_VERSION < 0x050000
-#include <QtGui>
-#else
 #include <QtWidgets>
-#endif
 
 #include "../home_screen_controller.h"
 #include "../main_window.h"
+#include "../../file_format_registry.h"
+#include "../../mapper_resource.h"
 
 
-HomeScreenWidget::HomeScreenWidget(HomeScreenController* controller, QWidget* parent)
+//### AbstractHomeScreenWidget ###
+
+AbstractHomeScreenWidget::AbstractHomeScreenWidget(HomeScreenController* controller, QWidget* parent)
 : QWidget(parent),
   controller(controller)
 {
 	Q_ASSERT(controller->getWindow() != NULL);
+}
+
+AbstractHomeScreenWidget::~AbstractHomeScreenWidget()
+{
+	// nothing
+}
+
+void AbstractHomeScreenWidget::paintEvent(QPaintEvent* event)
+{
+	Q_UNUSED(event);
 	
+	// Background
+	QPainter p(this);
+	p.setPen(Qt::NoPen);
+	p.setBrush(Qt::gray);
+	p.drawRect(rect());
+}
+
+QLabel* AbstractHomeScreenWidget::makeHeadline(const QString& text, QWidget* parent) const
+{
+	QLabel* title_label = new QLabel(text, parent);
+	QFont title_font = title_label->font();
+	title_font.setPointSize(2 * title_font.pointSize());
+	title_font.setBold(true);
+	title_label->setFont(title_font);
+	title_label->setAlignment(Qt::AlignLeft | Qt::AlignTop);
+	return title_label;
+}
+
+QAbstractButton* AbstractHomeScreenWidget::makeButton(const QString& text, QWidget* parent) const
+{
+	QAbstractButton* button = new QCommandLinkButton(text, parent);
+	QFont button_font = button->font();
+	button_font.setPointSize((int)(1.5 * button_font.pointSize()));
+	button->setFont(button_font);
+	return button;
+}
+
+QAbstractButton* AbstractHomeScreenWidget::makeButton(const QString& text, const QIcon& icon, QWidget* parent) const
+{
+	QAbstractButton* button = makeButton(text, parent);
+	button->setIcon(icon);
+	return button;
+}
+
+
+
+//### HomeScreenWidgetDesktop ###
+
+HomeScreenWidgetDesktop::HomeScreenWidgetDesktop(HomeScreenController* controller, QWidget* parent)
+: AbstractHomeScreenWidget(controller, parent)
+{
 	QLabel* title_label = new QLabel(QString("<img src=\":/images/title.png\"/>"));
 	title_label->setAlignment(Qt::AlignCenter);
 	QWidget* menu_widget = makeMenuWidget(controller, parent);
@@ -55,21 +106,12 @@ HomeScreenWidget::HomeScreenWidget(HomeScreenController* controller, QWidget* pa
 	setAutoFillBackground(false);
 }
 
-HomeScreenWidget::~HomeScreenWidget()
+HomeScreenWidgetDesktop::~HomeScreenWidgetDesktop()
 {
 	// nothing
 }
 
-void HomeScreenWidget::paintEvent(QPaintEvent* event)
-{
-	// Background
-	QPainter p(this);
-	p.setPen(Qt::NoPen);
-	p.setBrush(Qt::gray);
-	p.drawRect(rect());
-}
-
-QWidget* HomeScreenWidget::makeMenuWidget(HomeScreenController* controller, QWidget* parent)
+QWidget* HomeScreenWidgetDesktop::makeMenuWidget(HomeScreenController* controller, QWidget* parent)
 {
 	MainWindow* window = controller->getWindow();
 	
@@ -106,13 +148,13 @@ QWidget* HomeScreenWidget::makeMenuWidget(HomeScreenController* controller, QWid
 	connect(button_help, SIGNAL(clicked(bool)), window, SLOT(showHelp()));
 	connect(button_exit, SIGNAL(clicked(bool)), qApp, SLOT(closeAllWindows()));
 	
-	QWidget* menu_widget = new QWidget();
+	QWidget* menu_widget = new QWidget(parent);
 	menu_widget->setLayout(menu_layout);
 	menu_widget->setAutoFillBackground(true);
 	return menu_widget;
 }
 
-QWidget* HomeScreenWidget::makeRecentFilesWidget(HomeScreenController* controller, QWidget* parent)
+QWidget* HomeScreenWidgetDesktop::makeRecentFilesWidget(HomeScreenController* controller, QWidget* parent)
 {
 	QGridLayout* recent_files_layout = new QGridLayout();
 	
@@ -145,13 +187,13 @@ QWidget* HomeScreenWidget::makeRecentFilesWidget(HomeScreenController* controlle
 	connect(open_mru_file_check, SIGNAL(clicked(bool)), controller, SLOT(setOpenMRUFile(bool)));
 	connect(clear_list_button, SIGNAL(clicked(bool)), controller, SLOT(clearRecentFiles()));
 	
-	QWidget* recent_files_widget = new QWidget();
+	QWidget* recent_files_widget = new QWidget(parent);
 	recent_files_widget->setLayout(recent_files_layout);
 	recent_files_widget->setAutoFillBackground(true);
 	return recent_files_widget;
 }
 
-QWidget* HomeScreenWidget::makeTipsWidget(HomeScreenController* controller, QWidget* parent)
+QWidget* HomeScreenWidgetDesktop::makeTipsWidget(HomeScreenController* controller, QWidget* parent)
 {
 	QGridLayout* tips_layout = new QGridLayout();
 	QWidget* tips_headline = makeHeadline(tr("Tip of the day"));
@@ -183,40 +225,13 @@ QWidget* HomeScreenWidget::makeTipsWidget(HomeScreenController* controller, QWid
 	connect(prev_button, SIGNAL(clicked(bool)), controller, SLOT(goToPreviousTip()));
 	connect(next_button, SIGNAL(clicked(bool)), controller, SLOT(goToNextTip()));
 	
-	QWidget* tips_widget = new QWidget();
+	QWidget* tips_widget = new QWidget(parent);
 	tips_widget->setLayout(tips_layout);
 	tips_widget->setAutoFillBackground(true);
 	return tips_widget;
 }
 
-QLabel* HomeScreenWidget::makeHeadline(const QString& text, QWidget* parent) const
-{
-	QLabel* title_label = new QLabel(text, parent);
-	QFont title_font = title_label->font();
-	title_font.setPointSize(2 * title_font.pointSize());
-	title_font.setBold(true);
-	title_label->setFont(title_font);
-	title_label->setAlignment(Qt::AlignLeft | Qt::AlignTop);
-	return title_label;
-}
-
-QAbstractButton* HomeScreenWidget::makeButton(const QString& text, QWidget* parent) const
-{
-	QAbstractButton* button = new QCommandLinkButton(text, parent);
-	QFont button_font = button->font();
-	button_font.setPointSize((int)(1.5 * button_font.pointSize()));
-	button->setFont(button_font);
-	return button;
-}
-
-QAbstractButton* HomeScreenWidget::makeButton(const QString& text, const QIcon& icon, QWidget* parent) const
-{
-	QAbstractButton* button = makeButton(text, parent);
-	button->setIcon(icon);
-	return button;
-}
-
-void HomeScreenWidget::setRecentFiles(const QStringList& files)
+void HomeScreenWidgetDesktop::setRecentFiles(const QStringList& files)
 {
 	recent_files_list->clear();
 	Q_FOREACH(QString file, files)
@@ -228,23 +243,23 @@ void HomeScreenWidget::setRecentFiles(const QStringList& files)
 	}
 }
 
-void HomeScreenWidget::recentFileClicked(QListWidgetItem* item)
+void HomeScreenWidgetDesktop::recentFileClicked(QListWidgetItem* item)
 {
 	QString path = item->data(Qt::UserRole).toString();
 	controller->getWindow()->openPath(path);
 }
 
-void HomeScreenWidget::setOpenMRUFileChecked(bool state)
+void HomeScreenWidgetDesktop::setOpenMRUFileChecked(bool state)
 {
 	open_mru_file_check->setChecked(state);
 }
 
-void HomeScreenWidget::setTipOfTheDay(const QString& text)
+void HomeScreenWidgetDesktop::setTipOfTheDay(const QString& text)
 {
 	tips_label->setText(text);
 }
 
-void HomeScreenWidget::setTipsVisible(bool state)
+void HomeScreenWidgetDesktop::setTipsVisible(bool state)
 {
 	QGridLayout* layout = qobject_cast<QGridLayout*>(this->layout());
 	Q_FOREACH(QWidget* widget, tips_children)
@@ -255,4 +270,177 @@ void HomeScreenWidget::setTipsVisible(bool state)
 		layout->setRowStretch(2, state ? 3 : 0);
 	
 	tips_check->setChecked(state);
+}
+
+
+
+//### HomeScreenWidgetMobile ###
+
+HomeScreenWidgetMobile::HomeScreenWidgetMobile(HomeScreenController* controller, QWidget* parent)
+: AbstractHomeScreenWidget(controller, parent)
+{
+	title_pixmap = QPixmap::fromImage(QImage(":/images/title.png"));
+	
+	title_label = new QLabel();
+	title_label->setPixmap(title_pixmap);
+	title_label->setAlignment(Qt::AlignCenter);
+	adjustTitlePixmapSize();
+	
+	QWidget* file_list_widget = makeFileListWidget(controller, parent);
+	
+	examples_button = new QPushButton(tr("Examples"));
+	connect(examples_button, SIGNAL(clicked(bool)), this, SLOT(showExamples()));
+	QPushButton* about_button = new QPushButton(tr("About Mapper"));
+	connect(about_button, SIGNAL(clicked(bool)), controller->getWindow(), SLOT(showAbout()));
+	QPushButton* about_qt_button = new QPushButton(tr("About Qt"));
+	connect(about_qt_button, SIGNAL(clicked(bool)), qApp, SLOT(aboutQt()));
+	QHBoxLayout* buttons_layout = new QHBoxLayout();
+	buttons_layout->setContentsMargins(0, 0, 0, 0);
+	buttons_layout->addWidget(examples_button);
+	buttons_layout->addStretch(1);
+	buttons_layout->addWidget(about_button);
+	buttons_layout->addWidget(about_qt_button);
+	
+	QGridLayout* layout = new QGridLayout();
+	layout->setSpacing(2 * layout->spacing());
+	layout->addWidget(title_label, 0, 0);
+ 	layout->addWidget(file_list_widget, 1, 0);
+	layout->addLayout(buttons_layout, 2, 0);
+	setLayout(layout);
+	
+	setAutoFillBackground(false);
+}
+
+HomeScreenWidgetMobile::~HomeScreenWidgetMobile()
+{
+	// nothing
+}
+
+void HomeScreenWidgetMobile::resizeEvent(QResizeEvent* event)
+{
+	Q_UNUSED(event);
+	adjustTitlePixmapSize();
+}
+
+void HomeScreenWidgetMobile::adjustTitlePixmapSize()
+{
+	QSize label_size = title_label->size();
+	QSize padding = label_size - title_pixmap.size();
+	if (!padding.isValid())
+	{
+		title_label->setPixmap(title_pixmap.scaled(label_size, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+	}
+}
+
+void HomeScreenWidgetMobile::setRecentFiles(const QStringList& files)
+{
+	Q_UNUSED(files);
+	// nothing
+}
+
+void HomeScreenWidgetMobile::setOpenMRUFileChecked(bool state)
+{
+	Q_UNUSED(state);
+	// nothing
+}
+
+void HomeScreenWidgetMobile::setTipOfTheDay(const QString& text)
+{
+	Q_UNUSED(text);
+	// nothing
+}
+
+void HomeScreenWidgetMobile::setTipsVisible(bool state)
+{
+	Q_UNUSED(state);
+	// nothing
+}
+
+// slot
+void HomeScreenWidgetMobile::showExamples()
+{
+	int old_size = file_list->count();
+	
+	QStringList paths = MapperResource::getLocations(MapperResource::EXAMPLE);
+	while (!paths.isEmpty())
+	{
+		addFilesToFileList(file_list, paths.takeFirst());
+	}
+	
+	if (file_list->count() > old_size)
+	{
+		file_list_stack->setCurrentIndex(0);
+		file_list->setCurrentRow(old_size, QItemSelectionModel::ClearAndSelect);
+		examples_button->setEnabled(false);
+	}
+}
+
+void HomeScreenWidgetMobile::fileClicked(QListWidgetItem* item)
+{
+	QString path = item->data(Qt::UserRole).toString();
+	controller->getWindow()->openPath(path);
+}
+
+QWidget* HomeScreenWidgetMobile::makeFileListWidget(HomeScreenController* controller, QWidget* parent)
+{
+	Q_UNUSED(controller);
+	Q_UNUSED(parent);
+	
+	QGridLayout* file_list_layout = new QGridLayout();
+	
+	QLabel* file_list_headline = makeHeadline(tr("File list"));
+	file_list_layout->addWidget(file_list_headline, 0, 0, 1, 2);
+	
+	file_list_stack = new QStackedLayout();
+	file_list_layout->addLayout(file_list_stack, 1, 0, 1, 2);
+	file_list_layout->setRowStretch(1, 1);
+	
+	file_list = new QListWidget();
+	QFont list_font = file_list->font();
+	list_font.setPointSize((int)list_font.pointSize()*1.5);
+	file_list->setFont(list_font);
+	file_list->setSpacing(list_font.pointSize()/2);
+	file_list->setCursor(Qt::PointingHandCursor);
+	file_list->setStyleSheet(" \
+	  QListWidget::item:hover { \
+	    color: palette(highlighted-text); \
+	    background: palette(highlight); \
+	  } ");
+	file_list_stack->addWidget(file_list);
+	
+	// Look for map files at device-specific locations
+//#ifdef Q_OS_ANDROID
+	addFilesToFileList(file_list, "/OOMapper");
+	addFilesToFileList(file_list, "/sdcard/OOMapper");
+	file_list->sortItems();
+	if (file_list->count() == 0)
+	{
+		QLabel* message_label = new QLabel(tr("No map files found!<br/><br/>Copy a map file to /OOMapper or /sdcard/OOMapper to list it here."));
+		message_label->setWordWrap(true);
+		file_list_stack->addWidget(message_label);
+		file_list_stack->setCurrentWidget(message_label);
+	}
+//#endif
+	
+	connect(file_list, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(fileClicked(QListWidgetItem*)));
+	
+	QWidget* file_list_widget = new QWidget();
+	file_list_widget->setLayout(file_list_layout);
+	file_list_widget->setAutoFillBackground(true);
+	return file_list_widget;
+}
+
+void HomeScreenWidgetMobile::addFilesToFileList(QListWidget* file_list, const QString& path)
+{
+	QDirIterator it(path, QDir::Files | QDir::NoDotAndDotDot, QDirIterator::Subdirectories);
+	while (it.hasNext()) {
+		it.next();
+		if (FileFormats.findFormatForFilename(it.filePath()) == NULL)
+			continue;
+		
+		QListWidgetItem* new_item = new QListWidgetItem(it.fileInfo().fileName());
+		new_item->setData(Qt::UserRole, it.filePath());
+		new_item->setToolTip(it.filePath());
+		file_list->addItem(new_item);
+	}
 }

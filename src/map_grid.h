@@ -42,20 +42,30 @@ class Map;
 class MapView;
 
 
+/**
+ * Class for displaying a grid on a map.
+ * Each map has an instance of this class which can be retrieved with map->getGrid().
+ * The grid's visibility is defined per-view in the MapView.
+ */
 class MapGrid
 {
 public:
+	/** Options for aligning the grid with different north directions. */
 	enum Alignment
 	{
 		MagneticNorth = 0,
 		GridNorth = 1,
 		TrueNorth = 2
 	};
+	
+	/** Different units for specifying the grid interval. */
 	enum Unit
 	{
 		MillimetersOnMap = 0,
 		MetersInTerrain = 1
 	};
+	
+	/** Different display modes for map grids. */
 	enum DisplayMode
 	{
 		AllLines = 0,
@@ -63,23 +73,41 @@ public:
 		VerticalLines = 2
 	};
 	
+	/** Creates a new map grid with default settings. */
 	MapGrid();
 	
-	void save(QIODevice* file);
+	/** Loads the grid in the old "native" format from the given file. */
 	void load(QIODevice* file, int version);
 	
+	/** Saves the grid in xml format to the given stream. */
 	void save(QXmlStreamWriter& xml);
+	/** Loads the grid in xml format from the given stream. */
 	void load(QXmlStreamReader& xml);
 	
+	/**
+	 * Draws the map grid.
+	 * 
+	 * @param painter The QPainter used for drawing.
+	 * @param bounding_box Bounding box of the area to draw the grid for, in
+	 *     map coordinates.
+	 * @param map Map to draw the grid for.
+	 * @param on_screen If true, uses a cosmetic pen (one pixel wide),
+	 *                  otherwise uses a 0.1 mm wide pen.
+	 */
 	void draw(QPainter* painter, QRectF bounding_box, Map* map, bool on_screen);
 	
-	/// Calculates the "final" parameters with the following properties:
-	/// - spacings and offsets are in millimeters on the map
-	/// - rotation is relative to the vector (1, 0) and counterclockwise
-	void calculateFinalParameters(double& final_horz_spacing, double& final_vert_spacing,
-								   double& final_horz_offset, double& final_vert_offset, double& final_rotation, Map* map);
+	/**
+	 * Calculates the "final" parameters with the following properties:
+	 * - spacings and offsets are in millimeters on the map
+	 * - rotation is relative to the vector (1, 0) and counterclockwise
+	 */
+	void calculateFinalParameters(
+		double& final_horz_spacing, double& final_vert_spacing,
+		double& final_horz_offset, double& final_vert_offset,
+		double& final_rotation, Map* map
+	);
 	
-	/// Returns the grid point which is closest to the given position
+	/** Returns the grid point which is closest to the given position. */
 	MapCoordF getClosestPointOnGrid(MapCoordF position, Map* map);
 	
 	// Getters / Setters

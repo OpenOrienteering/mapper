@@ -18,17 +18,11 @@
  
 message(STATUS "Configuring ${PROJECT_NAME} translations")
 
-if(Mapper_USE_QT5)
-	find_package(Qt5LinguistTools REQUIRED)
-	qt5_find_host_program(QT_LUPDATE_EXECUTABLE NAMES lupdate)
-	qt5_find_host_program(QT_LRELEASE_EXECUTABLE NAMES lrelease)
-	# Qt5_LRELEASE_EXECUTABLE is used by the Qt5 macros
-	set(Qt5_LRELEASE_EXECUTABLE ${QT_LRELEASE_EXECUTABLE})
-else()
-	find_package(Qt4 QUIET REQUIRED)
-	find_program(QT_LUPDATE_EXECUTABLE lupdate)
-	find_program(QT_LRELEASE_EXECUTABLE lrelease)
-endif()
+find_package(Qt5LinguistTools REQUIRED)
+qt5_find_host_program(QT_LUPDATE_EXECUTABLE NAMES lupdate)
+qt5_find_host_program(QT_LRELEASE_EXECUTABLE NAMES lrelease)
+# Qt5_LRELEASE_EXECUTABLE is used by the Qt5 macros
+set(Qt5_LRELEASE_EXECUTABLE ${QT_LRELEASE_EXECUTABLE})
 mark_as_advanced(QT_LUPDATE_EXECUTABLE QT_LRELEASE_EXECUTABLE)
 
 if(QT_LUPDATE_EXECUTABLE MATCHES NOTFOUND)
@@ -48,6 +42,7 @@ set(Mapper_QT_TRANS
 )
 
 set(Mapper_TRANS
+ OpenOrienteering_cs.ts
  OpenOrienteering_de.ts
  OpenOrienteering_es.ts
  OpenOrienteering_fr.ts
@@ -59,7 +54,7 @@ set(Mapper_TRANS
  OpenOrienteering_uk.ts
  CACHE INTERNAL "Translation files"
 )
-qt4_add_translation(Mapper_QM ${Mapper_TRANS} ${Mapper_QT_TRANS})
+qt5_add_translation(Mapper_QM ${Mapper_TRANS} ${Mapper_QT_TRANS})
 
 set(Mapper_TRANS_TEMPLATE
  OpenOrienteering_template.ts
@@ -83,7 +78,7 @@ if(Mapper_TRANSLATIONS_EMBEDDED)
 	file(APPEND "${Mapper_TRANS_QRC}.tmp"
 	  " </qresource>\n</RCC>\n")
 	execute_process(COMMAND "${CMAKE_COMMAND}" -E copy_if_different "${Mapper_TRANS_QRC}.tmp" "${Mapper_TRANS_QRC}")
-	qt4_add_resources(Mapper_TRANSLATIONS_RCC "${Mapper_TRANS_QRC}" OPTIONS -no-compress)
+	qt5_add_resources(Mapper_TRANSLATIONS_RCC "${Mapper_TRANS_QRC}" OPTIONS -no-compress)
 
 	# A library is a top-level target, the generated source file isn't.
 	add_library(Mapper_translations STATIC ${Mapper_TRANSLATIONS_RCC})
@@ -136,9 +131,9 @@ file(WRITE "${${PROJECT_NAME}_TRANSLATIONS_LISTFILE}")
 #
 # Synopsis:
 #
-# QT4_TRANSLATIONS_SOURCES(SOURCES a.cpp b.cpp)
+# QT5_TRANSLATIONS_SOURCES(SOURCES a.cpp b.cpp)
 #
-macro(QT4_TRANSLATIONS_SOURCES)
+macro(QT5_TRANSLATIONS_SOURCES)
 	set(_DO_SOURCES FALSE)
 	foreach(_arg ${Mapper_TRANS} ${Mapper_TRANS_TEMPLATE} ${ARGN})
 		if("${_arg}" STREQUAL "SOURCES")

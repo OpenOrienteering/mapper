@@ -30,6 +30,7 @@
 #include <qmath.h>
 
 #include "core/map_color.h"
+#include "core/map_view.h"
 #include "file_import_export.h"
 #include "map.h"
 #include "object.h"
@@ -43,6 +44,7 @@
 #include "symbol_setting_dialog.h"
 #include "symbol_text.h"
 #include "util.h"
+#include "settings.h"
 
 Symbol::Symbol(Type type) : type(type), name(""), description(""), is_helper_symbol(false), is_hidden(false), is_protected(false), icon(NULL)
 {
@@ -170,19 +172,6 @@ bool Symbol::numberEquals(Symbol* other, bool ignore_trailing_zeros)
 	return true;
 }
 
-void Symbol::save(QIODevice* file, Map* map)
-{
-	saveString(file, name);
-	for (int i = 0; i < number_components; ++i)
-		file->write((const char*)&number[i], sizeof(int));
-	saveString(file, description);
-	file->write((const char*)&is_helper_symbol, sizeof(bool));
-	file->write((const char*)&is_hidden, sizeof(bool));
-	file->write((const char*)&is_protected, sizeof(bool));
-	
-	saveImpl(file, map);
-}
-
 bool Symbol::load(QIODevice* file, int version, Map* map)
 {
 	loadString(file, name);
@@ -220,7 +209,7 @@ void Symbol::save(QXmlStreamWriter& xml, const Map& map) const
 	xml.writeEndElement(/*symbol*/);
 }
 
-Symbol* Symbol::load(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol_dict) throw (FileFormatException)
+Symbol* Symbol::load(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict) throw (FileFormatException)
 {
 	Q_ASSERT(xml.name() == "symbol");
 	
@@ -288,19 +277,38 @@ Symbol* Symbol::load(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol_d
 	return symbol;
 }
 
+bool Symbol::loadFinished(Map* map)
+{
+	Q_UNUSED(map);
+	return true;
+}
+
+bool Symbol::symbolChanged(Symbol* old_symbol, Symbol* new_symbol)
+{
+	Q_UNUSED(old_symbol);
+	Q_UNUSED(new_symbol);
+	return false;
+}
+
+bool Symbol::containsSymbol(const Symbol* symbol) const
+{
+	Q_UNUSED(symbol);
+	return false;
+}
+
 QImage* Symbol::getIcon(Map* map, bool update)
 {
 	if (icon && !update)
 		return icon;
 	
 	// Delete old icon after creating the new as it may be accessed inside createIcon().
-	QImage* new_icon = createIcon(map, icon_size, true, 1);
+	QImage* new_icon = createIcon(map, Settings::getInstance().getSymbolWidgetIconSizePx(), true, 1);
 	delete icon;
 	icon = new_icon;
 	return new_icon;
 }
 
-QImage* Symbol::createIcon(Map* map, int side_length, bool antialiasing, int bottom_right_border)
+QImage* Symbol::createIcon(Map* map, int side_length, bool antialiasing, int bottom_right_border, float best_zoom)
 {
 	QImage* image;
 	Type contained_types = getContainedTypes();
@@ -312,7 +320,6 @@ QImage* Symbol::createIcon(Map* map, int side_length, bool antialiasing, int bot
 	MapView view(&icon_map);
 	
 	// If the icon is bigger than the rectangle with this zoom factor, it is zoomed out to fit into the rectangle
-	const float best_zoom = 2;
 	view.setZoom(best_zoom);
 	int white_border_pixels = 0;
 	if (contained_types & Line || contained_types & Area || type == Combined)
@@ -430,7 +437,7 @@ QImage* Symbol::createIcon(Map* map, int side_length, bool antialiasing, int bot
 	else if (contained_types & Line && !(contained_types & Area))
 	{
 		// Center horizontally on extent
-		real_icon_mm_half = qMax(object->getExtent().width() / 2.0, object->getExtent().bottom());
+		real_icon_mm_half = qMax((qreal)(object->getExtent().width() / 2.0), object->getExtent().bottom());
 		real_icon_mm_half = qMax(real_icon_mm_half, -object->getExtent().top());
 		view.setPositionX(qRound64(1000 * object->getExtent().center().x()));
 	}
@@ -456,6 +463,12 @@ QImage* Symbol::createIcon(Map* map, int side_length, bool antialiasing, int bot
 	painter.end();
 	
 	return image;
+}
+
+float Symbol::calculateLargestLineExtent(Map* map)
+{
+	Q_UNUSED(map);
+	return 0.0f;
 }
 
 QString Symbol::getPlainTextName() const
@@ -501,13 +514,6 @@ Symbol* Symbol::getSymbolForType(Symbol::Type type)
 		assert(false);
 		return NULL;
 	}
-}
-
-void Symbol::saveSymbol(Symbol* symbol, QIODevice* stream, Map* map)
-{
-	int save_type = static_cast<int>(symbol->getType());
-	stream->write((const char*)&save_type, sizeof(int));
-	symbol->save(stream, map);
 }
 
 bool Symbol::loadSymbol(Symbol*& symbol, QIODevice* stream, int version, Map* map)
@@ -729,6 +735,7 @@ SymbolDropDownDelegate::SymbolDropDownDelegate(int symbol_type_filter, QObject* 
 
 QWidget* SymbolDropDownDelegate::createEditor(QWidget* parent, const QStyleOptionViewItem& option, const QModelIndex& index) const
 {
+	Q_UNUSED(option);
 	QVariantList list = index.data(Qt::UserRole).toList();
 	SymbolDropDown* widget
 		= new SymbolDropDown(static_cast<Map*>(list.at(0).value<void*>()), symbol_type_filter,
@@ -767,6 +774,7 @@ void SymbolDropDownDelegate::setModelData(QWidget* editor, QAbstractItemModel* m
 
 void SymbolDropDownDelegate::updateEditorGeometry(QWidget* editor, const QStyleOptionViewItem& option, const QModelIndex& index) const
 {
+	Q_UNUSED(index);
 	editor->setGeometry(option.rect);
 }
 
