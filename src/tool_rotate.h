@@ -32,7 +32,7 @@ class RotateTool : public MapEditorToolBase
 {
 Q_OBJECT
 public:
-	RotateTool(MapEditorController* editor, QAction* tool_button);
+	RotateTool(MapEditorController* editor, QAction* tool_action);
 	virtual ~RotateTool();
 	
 	virtual void drawImpl(QPainter* painter, MapWidget* widget);

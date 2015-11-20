@@ -191,6 +191,9 @@ protected:
 	template< class E >
 	void setupPointSymbolPattern(PointSymbol* symbol, std::size_t data_size, const E* elements);
 	
+	template< class E >
+	int circleRadius(const E* element) const;
+	
 	// Object import
 	
 	template< class O >

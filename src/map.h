@@ -32,7 +32,6 @@
 #include <QExplicitlySharedDataPointer>
 
 #include "global.h"
-#include "undo.h"
 #include "map_coord.h"
 #include "map_part.h"
 
@@ -45,6 +44,7 @@ QT_END_NAMESPACE
 
 class Map;
 class MapColor;
+class MapColorMap;
 class MapWidget;
 class MapView;
 class MapEditorController;
@@ -57,6 +57,9 @@ class Object;
 class Renderable;
 class MapRenderables;
 class Template;
+class TextSymbol;
+class UndoManager;
+class UndoStep;
 class OCAD8FileImport;
 class Georeferencing;
 class MapGrid;
@@ -395,7 +398,7 @@ public:
 	
 	/**
 	 * Marks the colors as "dirty", i.e. as having unsaved changes.
-	 * Emits gotUnsavedChanges() if the map did not have unsaved changed before.
+	 * Emits hasUnsavedChanges(true) if the map did not have unsaved changed before.
 	 */
 	void setColorsDirty();
 	
@@ -475,7 +478,7 @@ public:
 	
 	/**
 	 * Marks the symbols as "dirty", i.e. as having unsaved changes.
-	 * Emits gotUnsavedChanges() if the map did not have unsaved changed before.
+	 * Emits hasUnsavedChanges(true) if the map did not have unsaved changed before.
 	 */
 	void setSymbolsDirty();
 	
@@ -569,7 +572,7 @@ public:
 	
 	/**
 	 * Marks the template settings as "dirty", i.e. as having unsaved changes.
-	 * Emits gotUnsavedChanges() if the map did not have unsaved changed before.
+	 * Emits hasUnsavedChanges(true) if the map did not have unsaved changed before.
 	 */
 	void setTemplatesDirty();
 	
@@ -616,45 +619,107 @@ public:
 							  MapView* view, const QString& map_path = QString());
 	
 	
-	// Map parts & Undo
+	// Undo & Redo
 	
-	/** Returns the UndoManager instance for this map. */
-	inline UndoManager& objectUndoManager() {return object_undo_manager;}
+	/**
+	 * Returns the UndoManager instance for this map.
+	 */
+	UndoManager& undoManager();
 	
-	/** Returns the number of map parts in this map. */
-	inline int getNumParts() const {return (int)parts.size();}
+	/**
+	 * Pushes a new undo step to the map's undoManager.
+	 */
+	void push(UndoStep* step);
 	
-	/** Returns the i-th map part. */
-	inline MapPart* getPart(int i) const {return parts[i];}
 	
-	/** Adds the new part at the given index. */
-	void addPart(MapPart* part, int pos);
+	// Map parts
+	
+	/**
+	 * Returns the number of map parts in this map.
+	 */
+	int getNumParts() const;
+	
+	/**
+	 * Returns the i-th map part.
+	 */
+	MapPart* getPart(std::size_t i) const;
+	
+	/** 
+	 * Adds the new part at the given index.
+	 */
+	void addPart(MapPart* part, std::size_t index);
 
-	/** Removes the map part at position */
-	void removePart(int index);
+	/**
+	 * Removes the map part at position.
+	 */
+	void removePart(std::size_t index);
 	
 	/**
 	 * Loops over all map parts, looking for the given part pointer.
 	 * Returns the part's index in the list. The part must be contained in the
 	 * map, otherwise an assert will be triggered!
 	 */
-	int findPartIndex(MapPart* part) const;
+	int findPartIndex(const MapPart* part) const;
 	
-	/** Returns the current map part, i.e. the part where edit operations happen. */
-	inline MapPart* getCurrentPart() const {return (current_part_index < 0) ? NULL : parts[current_part_index];}
+	/**
+	 * Returns the current map part, i.e. the part where edit operations happen.
+	 */
+	MapPart* getCurrentPart() const;
 	
-	/** Changes the current map part. */
-	inline void setCurrentPart(MapPart* part) {setCurrentPart(findPartIndex(part));}
-	void setCurrentPart(int index);
-
-	/** Returns the index of the current map part, see also getCurrentPart(). */
-	inline int getCurrentPartIndex() const {return current_part_index;}
-
-	/** Moves all specified objects to the specified map part */
-	void reassignObjectsToMapPart(QSet<Object*>::const_iterator begin, QSet<Object*>::const_iterator end, int destination);
+	/**
+	 * Changes the current map part.
+	 * 
+	 * This is a convenience method which looks up the part's index and then
+	 * calls setCurrentPartIndex.
+	 */
+	void setCurrentPart(MapPart* part);
 	
-	/** Merges the source layer with the destination layer, and deletes the source layer */
-	void mergeParts(int source, int destination);
+	/**
+	 * Returns the index of the current map part.
+	 * 
+	 * @see getCurrentPart().
+	 */
+	std::size_t getCurrentPartIndex() const;
+	
+	/**
+	 * Changes the current map part.
+	 */
+	void setCurrentPartIndex(std::size_t index);
+	
+	/**
+	 * Moves all specified objects from the source to the destination map part.
+	 * 
+	 * The objects will be continuously located at the end to the objects in the target part.
+	 * Source object which were selected will be removed from the object selection.
+	 * 
+	 * @return The index of the first object which has been reassigned.
+	 */
+	std::size_t reassignObjectsToMapPart(QSet<Object*>::const_iterator begin, QSet<Object*>::const_iterator end, std::size_t source, std::size_t destination);
+	
+	/**
+	 * Moves all specified objects from the source to the target map part.
+	 * 
+	 * The objects will be continuously located at the end to the objects in the target part.
+	 * Source object which were selected will be removed from the object selection.
+	 * 
+	 * @return The index of the first object which has been reassigned.
+	 */
+	std::size_t reassignObjectsToMapPart(std::vector<int>::const_iterator begin, std::vector<int>::const_iterator end, std::size_t source, std::size_t destination);
+	
+	/**
+	 * Merges the source part with the destination part.
+	 * 
+	 * Removes the source part unless it is identical with the destination part.
+	 * 
+	 * The objects will be continuously located at the end to the objects in the target part.
+	 * Does not change the object selection.
+	 * 
+	 * Makes the destination part the current part when the source part is the current part.
+	 * 
+	 * @return The index of the first object which has been reassigned.
+	 */
+	std::size_t mergeParts(std::size_t source, std::size_t destination);
+	
 	
 	// Objects
 	
@@ -679,7 +744,7 @@ public:
 	
 	/**
 	 * Marks the objects as "dirty", i.e. as having unsaved changes.
-	 * Emits gotUnsavedChanges() if the map did not have unsaved changed before.
+	 * Emits hasUnsavedChanges(true) if the map did not have unsaved changed before.
 	 */
 	void setObjectsDirty();
 	
@@ -742,38 +807,51 @@ public:
 	int countObjectsInRect(QRectF map_coord_rect, bool include_hidden_objects);
 	
 	/**
-	 * Goes through all objects and for each object where condition(object)
-	 * returns true, applies processor(object, map_part, object_index).
-	 * If processor() returns false, aborts the operation and includes
-	 * ObjectOperationResult::Aborted in the return value.
-	 * If the operation is performed on any object (i.e. the condition returns
-	 * true at least once), includes ObjectOperationResult::Success in the return value.
+	 * Applies a condition on all objects (until the first match is found).
+	 * 
+	 * @return True if there is an object matching the condition, false otherwise.
 	 */
-	template<typename Processor, typename Condition> ObjectOperationResult::Enum operationOnAllObjects(const Processor& processor, const Condition& condition)
+	template<typename Condition>
+	bool existsObject(const Condition& condition)
 	{
-		int result = ObjectOperationResult::NoResult;
-		int size = parts.size();
-		for (int i = 0; i < size; ++i)
+		for (PartVector::iterator part = parts.begin(), end = parts.end(); part != end; ++part)
 		{
-			result |= parts[i]->operationOnAllObjects<Processor, Condition>(processor, condition);
-			if (result & ObjectOperationResult::Abort)
-				return (ObjectOperationResult::Enum)result;
+			if ((*part)->existsObject<Condition>(condition))
+				return true;
 		}
-		return (ObjectOperationResult::Enum)result;
+		return false;
 	}
 	
-	/** Version of operationOnAllObjects() without condition. */
-	template<typename Processor> ObjectOperationResult::Enum operationOnAllObjects(const Processor& processor)
+	/**
+	 * Applies an operation on all objects which match a particular condition.
+	 * 
+	 * @return False if the operation fails for any matching object, true otherwise.
+	 */
+	template<typename Operation, typename Condition>
+	bool applyOnMatchingObjects(const Operation& operation, const Condition& condition)
 	{
-		int result = ObjectOperationResult::NoResult;
-		int size = parts.size();
-		for (int i = 0; i < size; ++i)
+		bool result = true;
+		for (PartVector::iterator part = parts.begin(), end = parts.end(); part != end; ++part)
 		{
-			result |= parts[i]->operationOnAllObjects<Processor>(processor);
-			if (result & ObjectOperationResult::Abort)
-				return (ObjectOperationResult::Enum)result;
+			result &= (*part)->applyOnMatchingObjects<Operation, Condition>(operation, condition);
 		}
-		return (ObjectOperationResult::Enum)result;
+		return result;
+	}
+	
+	/**
+	 * Applies an operation on all objects.
+	 * 
+	 * @return False if the operation fails for any object, true otherwise.
+	 */
+	template<typename Operation>
+	bool applyOnAllObjects(const Operation& operation)
+	{
+		bool result = true;
+		for (PartVector::iterator part = parts.begin(), end = parts.end(); part != end; ++part)
+		{
+			result &= (*part)->applyOnAllObjects<Operation>(operation);
+		}
+		return result;
 	}
 	
 	/** Scales all objects by the given factor. */
@@ -792,8 +870,9 @@ public:
 	void changeSymbolForAllObjects(Symbol* old_symbol, Symbol* new_symbol);
 	
 	/**
-	 * Deleted all objects with the given symbol.
-	 * Returns true if there was an object that was deleted.
+	 * Deletes all objects with the given symbol.
+	 * 
+	 * @return True if at least one object was deleted, false otherwise
 	 */
 	bool deleteAllObjectsWithSymbol(Symbol* symbol);
 	
@@ -802,7 +881,7 @@ public:
 	 * WARNING: Even if no objects exist directly, the symbol could still be
 	 *          required by another (combined) symbol used by an object!
 	 */
-	bool doObjectsExistWithSymbol(Symbol* symbol);
+	bool existsObjectWithSymbol(Symbol* symbol);
 	
 	/**
 	 * Removes the renderables of the given object from display (does not
@@ -1031,7 +1110,7 @@ public:
 	inline bool hasUnsavedChanged() const {return unsaved_changes;}
 	
 	/** Do not use this in usual cases, see hasUnsavedChanged(). */
-	void setHasUnsavedChanges(bool has_unsaved_changes = true);
+	void setHasUnsavedChanges(bool has_unsaved_changes);
 	
 	/** Returns if there are unsaved changes to the colors. */
 	inline bool areColorsDirty() const {return colors_dirty;}
@@ -1046,12 +1125,12 @@ public:
 	
 	/**
 	 * Marks somthing unspecific in the map as "dirty", i.e. as having unsaved changes.
-	 * Emits gotUnsavedChanges() if the map did not have unsaved changed before.
+	 * Emits hasUnsavedChanges(true) if the map did not have unsaved changed before.
 	 * 
 	 * Use setColorsDirty(), setSymbolsDirty(), setTemplatesDirty() or
 	 * setObjectsDirty() if you know more specificly what has changed.
 	 */
-	void setOtherDirty(bool value = true);
+	void setOtherDirty();
 	
 	// Static
 	
@@ -1077,13 +1156,14 @@ public:
 	static LineSymbol* getUndefinedLine() {return undefined_line;}
 	/** Returns the special gray "undefined" point symbol. */
 	static PointSymbol* getUndefinedPoint() {return undefined_point;}
+	/** Returns the special gray "undefined" text symbol. */
+	static TextSymbol* getUndefinedText() {return undefined_text;}
 	
 signals:
 	/**
-	 * Emitted when a change is made which causes the map to contain
-	 * unsaved changes, when it had not unsaved changes before.
+	 * Emitted when a the map enters or leaves the state which is saved on map.
 	 */
-	void gotUnsavedChanges();
+	void hasUnsavedChanges(bool is_clean);
 	
 	/** Emitted when a color is added to the map, gives the color's index and pointer. */
 	void colorAdded(int pos, MapColor* color);
@@ -1126,15 +1206,40 @@ signals:
 	void selectedObjectEdited();
 
 	/**
-	 * Emitted when the map part currently used for drawing changes
+	 * Emitted when the map part currently used for drawing changes.
+	 * 
+	 * @see currentMapPartIndexChanged()
 	 */
-	void currentMapPartChanged(int index);
+	void currentMapPartChanged(const MapPart* part);
+	
+	/**
+	 * Emitted when the index of map part currently used for drawing changes.
+	 * 
+	 * This signal may be emitted even when the current MapPart object does not
+	 * change. This happens when the index changes due to addition or removal
+	 * of map parts.
+	 */
+	void currentMapPartIndexChanged(std::size_t index);
+	
+	/**
+	 * Emitted when a part is added to the map.
+	 */
+	void mapPartAdded(std::size_t index, const MapPart* part);
+	
+	/**
+	 * Emitted when a part's properties are changed.
+	 */
+	void mapPartChanged(std::size_t index, const MapPart* part);
+	
+	/**
+	 * Emitted when a part is removed from the map.
+	 */
+	void mapPartDeleted(std::size_t index, const MapPart* part);
 	
 protected slots:
 	void checkSpotColorPresence();
 	
-protected slots:
-	void checkSpotColorPresence();
+	void undoCleanChanged(bool is_clean);
 	
 private:
 	typedef std::vector<MapColor*> ColorVector;
@@ -1198,8 +1303,8 @@ private:
 	PartVector parts;
 	ObjectSelection object_selection;
 	Object* first_selected_object;
-	UndoManager object_undo_manager;
-	int current_part_index;
+	QScopedPointer<UndoManager> undo_manager;
+	std::size_t current_part_index;
 	WidgetVector widgets;
 	ViewVector views;
 	QScopedPointer<MapRenderables> renderables;
@@ -1239,6 +1344,7 @@ private:
 	static LineSymbol* covering_red_line;
 	static LineSymbol* undefined_line;
 	static PointSymbol* undefined_point;
+	static TextSymbol* undefined_text;
 	static CombinedSymbol* covering_combined_line;
 };
 
@@ -1301,5 +1407,40 @@ const MapColor* Map::getColor(int i) const
 	}
 }
 
+inline
+UndoManager& Map::undoManager()
+{
+	return *(undo_manager.data());
+}
+
+inline
+int Map::getNumParts() const
+{
+	return parts.size();
+}
+
+inline
+MapPart* Map::getPart(std::size_t i) const
+{
+	return parts[i];
+}
+
+inline
+MapPart* Map::getCurrentPart() const
+{
+	return parts[current_part_index];
+}
+
+inline
+void Map::setCurrentPart(MapPart* part)
+{
+	setCurrentPartIndex(findPartIndex(part));
+}
+
+inline
+std::size_t Map::getCurrentPartIndex() const
+{
+	return current_part_index;
+}
 
 #endif

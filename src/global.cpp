@@ -22,13 +22,13 @@
 
 #include <mapper_config.h>
 
+#include "core/crs_template.h"
+#include "core/georeferencing.h"
 #include "file_format_registry.h"
 #include "file_format_native.h"
 #include "file_format_ocad8.h"
 #include "file_format_xml.h"
 #include "fileformats/ocd_file_format.h"
-#include "georeferencing.h"
-#include "tool.h"
 
 void registerProjectionTemplates()
 {
@@ -58,8 +58,8 @@ void registerProjectionTemplates()
 		"Gauss-Krueger, datum: Potsdam",
 		Georeferencing::tr("Gauss-Krueger, datum: Potsdam", "Gauss-Krueger coordinate reference system"),
 		Georeferencing::tr("Gauss-Krueger coordinates"),
-		"+proj=tmerc +lat_0=0 +lon_0=%1 +k=1.000000 +x_0=3500000 +y_0=0 +ellps=bessel +datum=potsdam +units=m +no_defs");
-	temp->addParam(new CRSTemplate::IntRangeParam(Georeferencing::tr("Zone number (1 to 119)", "Zone number for Gauss-Krueger coordinates"), 1, 119, 3));
+		"+proj=tmerc +lat_0=0 +lon_0=%1 +k=1.000000 +x_0=%2 +y_0=0 +ellps=bessel +datum=potsdam +units=m +no_defs");
+	temp->addParam((new CRSTemplate::IntRangeParam(Georeferencing::tr("Zone number (1 to 119)", "Zone number for Gauss-Krueger coordinates"), 1, 119))->clearOutputs()->addDerivedOutput(3, 0)->addDerivedOutput(1000000, 500000));
 	CRSTemplate::registerCRSTemplate(temp);
 }
 
@@ -70,9 +70,6 @@ void doStaticInitializations()
 	FileFormats.registerFormat(new OcdFileFormat());
 // 	FileFormats.registerFormat(new OCAD8FileFormat());
 	FileFormats.registerFormat(new NativeFileFormat()); // TODO: Remove before release 1.0
-	
-	// Load resources
-	MapEditorTool::loadPointHandles();
 	
 	// Register projection templates
 	registerProjectionTemplates();

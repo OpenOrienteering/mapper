@@ -52,6 +52,7 @@ public:
 		Templates_KeepSettingsOfClosed,
 		SymbolWidget_IconSizeMM,
 		ActionGridBar_ButtonSizeMM,
+		General_RetainCompatiblity,
 		General_AutoSaveInterval,
 		General_Language,
 		General_PixelsPerInch,

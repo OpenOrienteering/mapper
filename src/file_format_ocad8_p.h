@@ -25,10 +25,8 @@
 #include <set>
 
 #include <QRgb>
-#include <QtEndian>
 
 #include "libocad/libocad.h"
-#include "fileformats/ocd_types.h"
 
 #include "map_coord.h"
 
@@ -52,7 +50,7 @@ class OCAD8FileImport : public Importer
 {
 	friend class OcdFileImport;
 Q_OBJECT
-protected:
+private:
 	/// Information about an OCAD rectangle symbol
 	struct RectangleInfo
 	{

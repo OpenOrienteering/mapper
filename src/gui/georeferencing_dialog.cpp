@@ -1,5 +1,6 @@
 /*
- *    Copyright 2012, 2013 Thomas Schöps, Kai Pastor
+ *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2012, 2013, 2014 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -28,13 +29,14 @@
 #include <QNetworkReply>
 #endif
 
-#include "georeferencing.h"
-#include "gui/main_window.h"
-#include "map.h"
-#include "map_editor.h"
-#include "map_dialog_rotate.h"
-#include "util_gui.h"
-#include "util.h"
+#include "../core/crs_template.h"
+#include "../core/georeferencing.h"
+#include "main_window.h"
+#include "../map.h"
+#include "../map_editor.h"
+#include "../map_dialog_rotate.h"
+#include "../util_gui.h"
+#include "../util.h"
 
 GeoreferencingDialog::GeoreferencingDialog(MapEditorController* controller, const Georeferencing* initial, bool allow_no_georeferencing)
 : QDialog(controller->getWindow(), Qt::WindowSystemMenuHint | Qt::WindowTitleHint),
@@ -130,7 +132,7 @@ void GeoreferencingDialog::init(const Georeferencing* initial)
 	
 	QLabel* map_north_label = Util::Headline::create(tr("Map north"));
 	
-	declination_edit = Util::SpinBox::create(1, -180.0, +180.0, trUtf8("°"));
+	declination_edit = Util::SpinBox::create(Georeferencing::declinationPrecision(), -180.0, +180.0, trUtf8("°"));
 	declination_button = new QPushButton("");
 	QHBoxLayout* declination_layout = new QHBoxLayout();
 	declination_layout->addWidget(declination_edit, 1);
@@ -280,7 +282,7 @@ void GeoreferencingDialog::requestDeclination(bool no_confirm)
 	{
 		int result = QMessageBox::question(this, tr("Online declination lookup"),
 		  trUtf8("The magnetic declination for the reference point %1° %2° will now be retrieved from <a href=\"%3\">%3</a>. Do you want to continue?").
-		    arg(latlon.getLatitudeInDegrees()).arg(latlon.getLongitudeInDegrees()).arg(user_url),
+		    arg(latlon.latitude()).arg(latlon.longitude()).arg(user_url),
 		  QMessageBox::Yes | QMessageBox::No,
 		  QMessageBox::Yes );
 		if (result != QMessageBox::Yes)
@@ -295,8 +297,8 @@ void GeoreferencingDialog::requestDeclination(bool no_confirm)
 	
 	QUrlQuery query;
 	QDate today = QDate::currentDate();
-	query.addQueryItem("lat1", QString::number(latlon.getLatitudeInDegrees()));
-	query.addQueryItem("lon1", QString::number(latlon.getLongitudeInDegrees()));
+	query.addQueryItem("lat1", QString::number(latlon.latitude()));
+	query.addQueryItem("lon1", QString::number(latlon.longitude()));
 	query.addQueryItem("startYear", QString::number(today.year()));
 	query.addQueryItem("startMonth", QString::number(today.month()));
 	query.addQueryItem("startDay", QString::number(today.day()));
@@ -409,8 +411,8 @@ void GeoreferencingDialog::updateWidgets()
 	lon_edit->setEnabled(geographic_coords_enabled);
 	
 	link_label->setEnabled(geographic_coords_enabled);
-	double latitude = georef->getGeographicRefPoint().getLatitudeInDegrees();
-	double longitude = georef->getGeographicRefPoint().getLongitudeInDegrees();
+	double latitude = georef->getGeographicRefPoint().latitude();
+	double longitude = georef->getGeographicRefPoint().longitude();
 	QString osm_link = 
 	  QString("http://www.openstreetmap.org/?lat=%1&lon=%2&zoom=18&layers=M").
 	  arg(latitude).arg(longitude);
@@ -543,8 +545,8 @@ void GeoreferencingDialog::eastingNorthingChanged(double value)
 
 void GeoreferencingDialog::latLonChanged(bool update_zone)
 {
-	double latitude = lat_edit->value() * M_PI / 180;
-	double longitude = lon_edit->value() * M_PI / 180;
+	double latitude = lat_edit->value();
+	double longitude = lon_edit->value();
 	georef->setGeographicRefPoint(LatLon(latitude, longitude));
 	setEastingNorthingValuesFrom(georef.data());
 	
@@ -595,7 +597,7 @@ void GeoreferencingDialog::declinationReplyFinished(QNetworkReply* reply)
 						if (ok)
 						{
 							// success
-							declination_edit->setValue(declination);
+							declination_edit->setValue(Georeferencing::roundDeclination(declination));
 							return;
 						}
 						else 
@@ -636,17 +638,17 @@ void GeoreferencingDialog::updateZone()
 		return;
 	
 	const LatLon ref_point(georef->getGeographicRefPoint());
-	double lat = Georeferencing::radToDeg(ref_point.latitude);
+	const double lat = ref_point.latitude();
 	if (abs(lat) < 84.0)
 	{
-		double lon = Georeferencing::radToDeg(ref_point.longitude);
+		const double lon = ref_point.longitude();
 		int zone_no = int(floor(lon) + 180) / 6 % 60 + 1;
 		if (zone_no == 31 && lon >= 3.0 && lat >= 56.0 && lat < 64.0)
 			zone_no = 32; // South Norway
 		else if (lat >= 72.0 && lon >= 3.0 && lon <= 39.0)
 			zone_no = 2 * (int(floor(lon) + 3.0) / 12) + 31; // Svalbard
 		QString zone = QString::number(zone_no);
-		zone.append((ref_point.latitude >= 0.0) ? " N" : " S");
+		zone.append((lat >= 0.0) ? " N" : " S");
 		if (zone != crs_edit->getParam(0))
 		{
 			crs_edit->setParam(0, zone);
@@ -657,7 +659,7 @@ void GeoreferencingDialog::updateZone()
 
 void GeoreferencingDialog::updateNorth()
 {
-	grivation_label->setText(trUtf8("%1 °", "degree value").arg(QLocale().toString(georef->getGrivation(), 'f', 1)));
+	grivation_label->setText(trUtf8("%1 °", "degree value").arg(QLocale().toString(georef->getGrivation(), 'f', 2)));
 }
 
 void GeoreferencingDialog::setMapRefValuesFrom(Georeferencing* values)
@@ -684,8 +686,8 @@ void GeoreferencingDialog::setLatLonValuesFrom(Georeferencing* values)
 {
 	lat_edit->blockSignals(true);
 	lon_edit->blockSignals(true);
-	lat_edit->setValue(values->getGeographicRefPoint().getLatitudeInDegrees());
-	lon_edit->setValue(values->getGeographicRefPoint().getLongitudeInDegrees());
+	lat_edit->setValue(values->getGeographicRefPoint().latitude());
+	lon_edit->setValue(values->getGeographicRefPoint().longitude());
 	lat_edit->blockSignals(false);
 	lon_edit->blockSignals(false);
 }
@@ -709,6 +711,8 @@ GeoreferencingTool::~GeoreferencingTool()
 void GeoreferencingTool::init()
 {
 	setStatusBarText(tr("<b>Click</b>: Set the reference point. Another button to cancel."));
+	
+	MapEditorTool::init();
 }
 
 bool GeoreferencingTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
@@ -772,7 +776,9 @@ QString ProjectedCRSSelector::getSelectedCRSSpec()
 	for (int param = 0; param < temp->getNumParams(); ++param)
 	{
 		QWidget* edit_widget = layout->itemAt(1 + param, QFormLayout::FieldRole)->widget();
-		spec = spec.arg(temp->getParam(param).getSpecValue(edit_widget));
+		std::vector<QString> spec_value_list = temp->getParam(param).getSpecValue(edit_widget);
+		for (std::size_t i = 0; i < spec_value_list.size(); ++ i)
+			spec = spec.arg(spec_value_list[i]);
 	}
 	
 	return spec;

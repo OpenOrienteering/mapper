@@ -23,13 +23,13 @@
 #include <QtWidgets>
 
 #include "map.h"
+#include "map_editor.h"
+#include "object_undo.h"
 #include "map_widget.h"
-#include "map_undo.h"
 #include "object.h"
 #include "renderable.h"
 #include "settings.h"
 #include "symbol.h"
-#include "symbol_dock_widget.h"
 #include "symbol_point.h"
 #include "tool_helpers.h"
 #include "util.h"
@@ -37,11 +37,10 @@
 #include "gui/widgets/key_button_bar.h"
 #include "map_editor.h"
 
-DrawPointTool::DrawPointTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget)
- : MapEditorToolBase(QCursor(QPixmap(":/images/cursor-draw-point.png"), 11, 11), DrawPoint, editor, tool_button),
-   renderables(new MapRenderables(map())),
-   symbol_widget(symbol_widget),
-   key_button_bar(NULL)
+DrawPointTool::DrawPointTool(MapEditorController* editor, QAction* tool_button)
+: MapEditorToolBase(QCursor(QPixmap(":/images/cursor-draw-point.png"), 11, 11), DrawPoint, editor, tool_button)
+, renderables(new MapRenderables(map()))
+, key_button_bar(NULL)
 {
 	rotating = false;
 	preview_object = NULL;
@@ -50,7 +49,7 @@ DrawPointTool::DrawPointTool(MapEditorController* editor, QAction* tool_button, 
 	angle_helper->setActive(false);
 	snap_helper->setFilter(SnappingToolHelper::NoSnapping);
 	
-	connect(symbol_widget, SIGNAL(selectedSymbolsChanged()), this, SLOT(selectedSymbolsChanged()));
+	connect(editor, SIGNAL(activeSymbolChanged(Symbol*)), this, SLOT(activeSymbolChanged(Symbol*)));
 	connect(map(), SIGNAL(symbolDeleted(int,Symbol*)), this, SLOT(symbolDeleted(int,Symbol*)));
 }
 
@@ -86,7 +85,7 @@ void DrawPointTool::leaveEvent(QEvent* event)
 
 void DrawPointTool::mouseMove()
 {
-	PointSymbol* point = reinterpret_cast<PointSymbol*>(symbol_widget->getSingleSelectedSymbol());
+	PointSymbol* point = reinterpret_cast<PointSymbol*>(editor->activeSymbol());
 	
 	if (!dragging)
 	{
@@ -132,7 +131,7 @@ void DrawPointTool::clickRelease()
 	
 	DeleteObjectsUndoStep* undo_step = new DeleteObjectsUndoStep(map());
 	undo_step->addObject(index);
-	map()->objectUndoManager().addNewUndoStep(undo_step);
+	map()->push(undo_step);
 	
 	setEditingInProgress(false);
 	updateStatusText();
@@ -303,18 +302,17 @@ void DrawPointTool::objectSelectionChangedImpl()
 	// NOP
 }
 
-void DrawPointTool::selectedSymbolsChanged()
+void DrawPointTool::activeSymbolChanged(Symbol* symbol)
 {
-	Symbol* single_selected_symbol = symbol_widget->getSingleSelectedSymbol();
-	if (single_selected_symbol == NULL || single_selected_symbol->getType() != Symbol::Point || single_selected_symbol->isHidden())
+	if (symbol == NULL || symbol->getType() != Symbol::Point || symbol->isHidden())
 	{
-		if (single_selected_symbol && single_selected_symbol->isHidden())
+		if (symbol && symbol->isHidden())
 			deactivate();
 		else
-			switchToDefaultDrawTool(single_selected_symbol);
+			switchToDefaultDrawTool(symbol);
 	}
 	else
-		last_used_symbol = single_selected_symbol;
+		last_used_symbol = symbol;
 }
 
 void DrawPointTool::symbolDeleted(int pos, Symbol* old_symbol)

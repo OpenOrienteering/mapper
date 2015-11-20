@@ -195,6 +195,15 @@ public:
 	inline double getBoxHeight() const {assert(!hasSingleAnchor()); return coords[1].yd();}
 	
 	
+	/**
+	 * @brief Returns the positions of the control points.
+	 * 
+	 * The returned vector may have one or four members, depending on the type
+	 * of object.
+	 */
+	std::vector<QPointF> controlPoints() const;
+	
+	
 	/** Sets the text of the object.
 	 */
 	void setText(const QString& text);

@@ -35,6 +35,7 @@
 
 class GPSTrackRecorder;
 QT_BEGIN_NAMESPACE
+class QComboBox;
 class QFrame;
 class QLabel;
 class QToolBar;
@@ -123,6 +124,18 @@ public:
 	
 	/** Returns the default drawing tool for a given symbol. */
 	MapEditorTool* getDefaultDrawToolForSymbol(Symbol* symbol);
+	
+	
+	/**
+	 * @brief Returns the active symbol, or NULL.
+	 * 
+	 * The active symbol is the single symbol which is to be used by drawing
+	 * tools and actions.
+	 * 
+	 * It there is no active symbol, this function returns NULL.
+	 */
+	Symbol* activeSymbol() const;
+	
 	
 	/**
 	 * If this is set to true (usually by the current tool),
@@ -365,6 +378,8 @@ public slots:
 	void fillBorderClicked();
 	/** Selects all objects with the selected symbol(s) */
 	void selectObjectsClicked(bool select_exclusively);
+	/** Deselects all objects with the selected symbol(s) */
+	void deselectObjectsClicked();
 	/**
 	 * Reverses the selected object(s) direcction(s),
 	 * thus switching dash directions for lines.
@@ -455,14 +470,14 @@ public slots:
 	void addMapPart();
 	/** Removes the current map part */
 	void removeMapPart();
-	/** Sets the current map part */
-	void changeMapPart(int part);
-	/** Selects the given part in the selector box */
-	void selectMapPart(int part);
+	/** Renames the current map part */
+	void renameMapPart();
 	/** Moves all selected objects to a different map part */
-	void reassignObjectsToMapPart(int part);
+	void reassignObjectsToMapPart(int target);
 	/** Merges the current map part with another one */
-	void mergeMapPart();
+	void mergeCurrentMapPartTo(int target);
+	/** Merges all map parts into the current one. */
+	void mergeAllMapParts();
 	
 	/** Updates action enabled states after a template has been added */
 	void templateAdded(int pos, Template* temp);
@@ -487,11 +502,27 @@ public slots:
 	void restoreWindowState();
 	
 signals:
+	/**
+	 * @brief Indicates a change of the active symbol.
+	 * @param symbol The new active symbol, or NULL.
+	 */
+	void activeSymbolChanged(Symbol* symbol);
+	
 	void templatePositionDockWidgetClosed(Template* temp);
 	
 protected slots:
 	void projectionChanged();
 	void georeferencingDialogFinished();
+	
+	/**
+	 * Sets the map's current part.
+	 */
+	void changeMapPart(int index);
+	
+	/**
+	 * Updates all UI components related to map parts.
+	 */
+	void updateMapPartsUI();
 	
 private:
 	void setMap(Map* map, bool create_new_map_view);
@@ -499,8 +530,7 @@ private:
 	/// Updates enabled state of all widgets
 	void updateWidgets();
 	
-	void createSymbolWidget(QWidget* parent);
-	void connectMapToSymbolWidget();
+	void createSymbolWidget(QWidget* parent = NULL);
 	
 	QAction* newAction(const char* id, const QString& tr_text, QObject* receiver, const char* slot, const char* icon = NULL, const QString& tr_tip = QString::null, const QString& whatsThisLink = QString::null);
 	QAction* newCheckAction(const char* id, const QString& tr_text, QObject* receiver, const char* slot, const char* icon = NULL, const QString& tr_tip = QString::null, const QString& whatsThisLink = QString::null);
@@ -526,6 +556,8 @@ private:
 	MapEditorTool* current_tool;
 	MapEditorTool* override_tool;
 	MapEditorActivity* editor_activity;
+	
+	Symbol* active_symbol;
 	
 	bool editing_in_progress;
 	
@@ -645,8 +677,10 @@ private:
 	QMenu* toggle_template_menu;
 	
 	QAction* mappart_add_act;
+	QAction* mappart_rename_act;
 	QAction* mappart_remove_act;
 	QAction* mappart_merge_act;
+	QMenu* mappart_merge_menu;
 	QMenu* mappart_move_menu;
 	
 	QAction* import_act;
@@ -674,6 +708,7 @@ private:
 	
 	QHash<Template*, TemplatePositionDockWidget*> template_position_widgets;
 
+	QSignalMapper* mappart_merge_mapper;
 	QSignalMapper* mappart_move_mapper;
 	
 	bool being_destructed;
@@ -711,5 +746,15 @@ signals:
 private slots:
 	void triggeredImpl(bool checked);
 };
+
+
+
+//### MapEditorController inline code ###
+
+inline
+Symbol* MapEditorController::activeSymbol() const
+{
+	return active_symbol;
+}
 
 #endif

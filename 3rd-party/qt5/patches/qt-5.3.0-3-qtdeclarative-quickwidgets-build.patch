@@ -1,0 +1,23 @@
+2014-04-08 Kai Pastor (OpenOrienteering)
+- Don't build quickwidgets when quick is not built
+- cf. QTBUG-38202
+
+diff -up Qt5/qtdeclarative/src/src.pro.orig Qt5/qtdeclarative/src/src.pro
+--- Qt5/qtdeclarative/src/src.pro.orig	2014-04-08 21:30:11.103515806 +0200
++++ Qt5/qtdeclarative/src/src.pro	2014-04-08 21:31:06.999189216 +0200
+@@ -8,6 +8,8 @@ qtHaveModule(gui):contains(QT_CONFIG, op
+         quick \
+         qmltest \
+         particles
++
++    qtHaveModule(widgets):SUBDIRS += quickwidgets
+ }
+ 
+ SUBDIRS += \
+@@ -15,6 +17,4 @@ SUBDIRS += \
+     imports \
+     qmldevtools
+ 
+-qtHaveModule(widgets):SUBDIRS += quickwidgets
+-
+ qmldevtools.CONFIG = host_build

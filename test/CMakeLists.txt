@@ -1,5 +1,5 @@
 #
-#    Copyright 2012 Kai Pastor
+#    Copyright 2012, 2013, 2014 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -22,6 +22,9 @@ add_subdirectory(data)
 
 find_package(Qt5Test QUIET REQUIRED)
 set(QT_QTTEST_LIBRARY ${Qt5Test_LIBRARIES})
+
+
+include_directories(${CLIPPER_INCLUDE_DIRS})
 
 
 # This macro defines a unit test from a list of source file names 
@@ -78,7 +81,7 @@ macro(add_system_test testname)
 	qt5_wrap_cpp(TEST_${testname}_MOC ${testname}.h)
 	qt5_wrap_cpp(TEST_${testname}_XTRA_MOC ${TEST_${testname}_HDRS} OPTIONS -nw)
 	add_executable(${testname} ${testname}.cpp ${TEST_${testname}_SRCS} ${TEST_${testname}_MOC} ${TEST_${testname}_XTRA_MOC})
-	target_link_libraries(${testname} ${QT_QTTEST_LIBRARY} Mapper_Common libocad ${PROJ_LIBRARY} ${QT_LIBRARIES} ${CLIPPER_LIBRARY})
+	target_link_libraries(${testname} ${QT_QTTEST_LIBRARY} Mapper_Common libocad ${PROJ_LIBRARY} ${QT_LIBRARIES} ${CLIPPER_LIBRARIES})
 	add_test(${testname} ${CMAKE_COMMAND} -P ${testname}-RUN.cmake)
 	list(APPEND Mapper_SYSTEM_TESTS ${testname})
 	set(TESTNAME ${testname}) # required for configure_file
@@ -94,7 +97,7 @@ include_directories("${CMAKE_CURRENT_BINARY_DIR}")
 
 # Unit tests
 add_unit_test(auto_save_t ../src/core/auto_save ../src/settings ../src/util ../src/mapper_resource)
-add_unit_test(georeferencing_t ../src/georeferencing ../src/mapper_resource ../src/file_format)
+add_unit_test(georeferencing_t ../src/core/georeferencing ../src/core/latlon ../src/core/crs_template ../src/mapper_resource ../src/file_format)
 add_unit_test(map_color_t ../src/core/map_color)
 add_unit_test(qpainter_t)
 
@@ -109,6 +112,7 @@ add_system_test(duplicate_equals_t)
 add_dependencies(duplicate_equals_t Mapper_test_data)
 add_system_test(tools_t)
 add_system_test(path_object_t)
+add_system_test(undo_manager_t)
 
 
 # Collect the AUTORUN_TESTS
@@ -130,10 +134,11 @@ configure_file(AUTORUN_TESTS.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/AUTORUN_TESTS.
 #
 add_custom_target(AUTORUN_TESTS
   ALL
-  DEPENDS Mapper_prerequisites ${Mapper_AUTORUN_TESTS}
+  DEPENDS ${Mapper_AUTORUN_TESTS}
   COMMAND ${CMAKE_COMMAND} -P AUTORUN_TESTS.cmake
   WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
 )
+add_dependencies(AUTORUN_TESTS Mapper_prerequisites)
 
 
 # This top-level target always runs CTest (i.e. all tests) but
@@ -143,9 +148,10 @@ add_custom_target(AUTORUN_TESTS
 #   c) show up in KDevelop's project view.
 #
 add_custom_target(Mapper_Test
-  DEPENDS Mapper_prerequisites ${Mapper_UNIT_TESTS} ${Mapper_SYSTEM_TESTS}
+  DEPENDS ${Mapper_UNIT_TESTS} ${Mapper_SYSTEM_TESTS}
   COMMAND ${CMAKE_CTEST_COMMAND} --output-on-failure
 )
+add_dependencies(Mapper_Test Mapper_prerequisites)
 
 
 if(Mapper_BUILD_QT)

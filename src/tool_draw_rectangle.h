@@ -36,7 +36,7 @@ class DrawRectangleTool : public DrawLineAndAreaTool
 {
 Q_OBJECT
 public:
-	DrawRectangleTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget);
+	DrawRectangleTool(MapEditorController* editor, QAction* tool_action, bool is_helper_tool);
     virtual ~DrawRectangleTool();
 	
 	virtual void init();

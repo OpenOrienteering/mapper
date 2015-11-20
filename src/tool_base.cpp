@@ -1,5 +1,6 @@
 /*
- *    Copyright 2012 Thomas Schöps
+ *    Copyright 2012, 2013, 2014 Thomas Schöps
+ *    Copyright 2013, 2014 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -29,7 +30,7 @@
 #include "gui/widgets/key_button_bar.h"
 #include "map.h"
 #include "map_editor.h"
-#include "map_undo.h"
+#include "object_undo.h"
 #include "map_widget.h"
 #include "object.h"
 #include "object_text.h"
@@ -43,10 +44,9 @@ MapEditorToolBase::MapEditorToolBase(const QCursor cursor, MapEditorTool::Type t
   dragging(false),
   start_drag_distance(Settings::getInstance().getStartDragDistancePx()),
   angle_helper(new ConstrainAngleToolHelper()),
-  snap_helper(new SnappingToolHelper(map())),
+  snap_helper(new SnappingToolHelper(this)),
   snap_exclude_object(NULL),
   cur_map_widget(editor->getMainWidget()),
-  editing(false),
   key_button_bar(NULL),
   cursor(cursor),
   preview_update_triggered(false),
@@ -70,6 +70,8 @@ void MapEditorToolBase::init()
 	initImpl();
 	updateDirtyRect();
 	updateStatusText();
+	
+	MapEditorTool::init();
 }
 
 bool MapEditorToolBase::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
@@ -80,7 +82,7 @@ bool MapEditorToolBase::mousePressEvent(QMouseEvent* event, MapCoordF map_coord,
 		if (event->button() == Qt::RightButton)
 		{
 			// Do not show the ring menu when editing
-			return editing;
+			return editingInProgress();
 		}
 		else
 			return false;
@@ -134,7 +136,7 @@ bool MapEditorToolBase::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coor
 		if (event->button() == Qt::RightButton)
 		{
 			// Do not show the ring menu when editing
-			return editing;
+			return editingInProgress();
 		}
 		else
 			return false;
@@ -305,7 +307,7 @@ bool MapEditorToolBase::keyRelease(QKeyEvent* event)
 void MapEditorToolBase::updatePreviewObjectsSlot()
 {
 	preview_update_triggered = false;
-	if (editing)
+	if (editingInProgress())
 		updatePreviewObjects();
 }
 
@@ -317,7 +319,7 @@ int MapEditorToolBase::updateDirtyRectImpl(QRectF& rect)
 
 void MapEditorToolBase::updatePreviewObjects()
 {
-	if (!editing)
+	if (!editingInProgress())
 	{
 		qWarning("MapEditorToolBase::updatePreviewObjects() called but editing == false");
 		return;
@@ -328,7 +330,7 @@ void MapEditorToolBase::updatePreviewObjects()
 
 void MapEditorToolBase::updatePreviewObjectsAsynchronously()
 {
-	if (!editing)
+	if (!editingInProgress())
 	{
 		qWarning("MapEditorToolBase::updatePreviewObjectsAsynchronously() called but editing == false");
 		return;
@@ -348,26 +350,35 @@ void MapEditorToolBase::drawSelectionOrPreviewObjects(QPainter* painter, MapWidg
 
 void MapEditorToolBase::startEditing()
 {
-	assert(!editing);
-	editing = true;
+	Q_ASSERT(!editingInProgress());
+	
+	setEditingInProgress(true);
 	startEditingSelection(*old_renderables, &undo_duplicates);
 }
 
 void MapEditorToolBase::abortEditing()
 {
-	assert(editing);
-	editing = false;
+	Q_ASSERT(editingInProgress());
+	
 	resetEditedObjects(&undo_duplicates);
 	finishEditingSelection(*renderables, *old_renderables, false, &undo_duplicates);
+	setEditingInProgress(false);
+}
+
+// virtual
+void MapEditorToolBase::finishEditing()
+{
+	finishEditing(false, true);
 }
 
 void MapEditorToolBase::finishEditing(bool delete_objects, bool create_undo_step)
 {
-	assert(editing);
-	editing = false;
+	Q_ASSERT(editingInProgress());
+	
 	finishEditingSelection(*renderables, *old_renderables, create_undo_step, &undo_duplicates, delete_objects);
 	map()->setObjectsDirty();
 	map()->emitSelectionEdited();
+	MapEditorTool::finishEditing();
 }
 
 void MapEditorToolBase::activateAngleHelperWhileEditing(bool enable)

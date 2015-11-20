@@ -33,28 +33,29 @@
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
+#include "core/georeferencing.h"
 #include "core/map_color.h"
 #include "core/map_printer.h"
 #include "core/map_view.h"
+#include "file_format_ocad8.h"
+#include "file_format_registry.h"
+#include "file_import_export.h"
 #include "map_editor.h"
 #include "map_grid.h"
 #include "map_part.h"
+#include "object_undo.h"
 #include "map_widget.h"
-#include "map_undo.h"
-#include "util.h"
-#include "template.h"
-#include "gps_coordinates.h"
 #include "object.h"
 #include "object_operations.h"
 #include "renderable.h"
 #include "symbol.h"
-#include "symbol_point.h"
-#include "symbol_line.h"
 #include "symbol_combined.h"
-#include "file_format_ocad8.h"
-#include "file_format_registry.h"
-#include "file_import_export.h"
-#include "georeferencing.h"
+#include "symbol_line.h"
+#include "symbol_point.h"
+#include "symbol_text.h"
+#include "template.h"
+#include "undo_manager.h"
+#include "util.h"
 
 // ### MapColorSet ###
 
@@ -365,10 +366,12 @@ LineSymbol* Map::covering_white_line;
 LineSymbol* Map::covering_red_line;
 LineSymbol* Map::undefined_line;
 PointSymbol* Map::undefined_point;
+TextSymbol* Map::undefined_text;
 CombinedSymbol* Map::covering_combined_line;
 
 Map::Map()
  : has_spot_colors(false),
+   undo_manager(new UndoManager(this)),
    renderables(new MapRenderables(this)),
    selection_renderables(new MapRenderables(this)),
    printer_config(NULL)
@@ -377,7 +380,6 @@ Map::Map()
 		initStatic();
 	
 	color_set = NULL;
-	object_undo_manager.setOwner(this);
 	georeferencing = new Georeferencing();
 	grid = new MapGrid();
 	area_hatching_enabled = false;
@@ -388,7 +390,9 @@ Map::Map()
 	connect(this, SIGNAL(colorAdded(int,MapColor*)), SLOT(checkSpotColorPresence()));
 	connect(this, SIGNAL(colorChanged(int,MapColor*)), SLOT(checkSpotColorPresence()));
 	connect(this, SIGNAL(colorDeleted(int,const MapColor*)), SLOT(checkSpotColorPresence()));
+	connect(undo_manager.data(), SIGNAL(cleanChanged(bool)), this, SLOT(undoCleanChanged(bool)));
 }
+
 Map::~Map()
 {
 	int size = symbols.size();
@@ -438,7 +442,7 @@ void Map::changeScale(unsigned int new_scale_denominator, const MapCoord& scalin
 		scaleAllSymbols(factor);
 	if (scale_objects)
 	{
-		object_undo_manager.clear(false);
+		undo_manager->clear();
 		scaleAllObjects(factor, scaling_center);
 	}
 	if (scale_georeferencing)
@@ -464,7 +468,7 @@ void Map::changeScale(unsigned int new_scale_denominator, const MapCoord& scalin
 	}
 	
 	setScaleDenominator(new_scale_denominator);
-	setOtherDirty(true);
+	setOtherDirty();
 	updateAllMapWidgets();
 }
 void Map::rotateMap(double rotation, const MapCoord& center, bool adjust_georeferencing, bool adjust_declination, bool adjust_templates)
@@ -472,7 +476,7 @@ void Map::rotateMap(double rotation, const MapCoord& center, bool adjust_georefe
 	if (fmod(rotation, 2 * M_PI) == 0)
 		return;
 	
-	object_undo_manager.clear(false);
+	undo_manager->clear();
 	rotateAllObjects(rotation, center);
 	
 	if (adjust_georeferencing)
@@ -506,7 +510,7 @@ void Map::rotateMap(double rotation, const MapCoord& center, bool adjust_georefe
 		}
 	}
 	
-	setOtherDirty(true);
+	setOtherDirty();
 	updateAllMapWidgets();
 }
 
@@ -514,18 +518,20 @@ bool Map::saveTo(const QString& path, MapEditorController* map_editor)
 {
 	assert(map_editor && "Preserving the widget&view information without retrieving it from a MapEditorController is not implemented yet!");
 	
-	exportTo(path, map_editor);
+	bool success = exportTo(path, map_editor);
 	
-	colors_dirty = false;
-	symbols_dirty = false;
-	templates_dirty = false;
-	objects_dirty = false;
-	other_dirty = false;
-	unsaved_changes = false;
-	
-	objectUndoManager().notifyOfSave();
-	
-	return true;
+	if (success)
+	{
+		colors_dirty = false;
+		symbols_dirty = false;
+		templates_dirty = false;
+		objects_dirty = false;
+		other_dirty = false;
+		unsaved_changes = false;
+		
+		undoManager().setClean();
+	}
+	return success;
 }
 
 bool Map::exportTo(const QString& path, MapEditorController* map_editor, const FileFormat* format)
@@ -617,7 +623,7 @@ bool Map::exportTo(const QString& path, MapEditorController* map_editor, const F
 	{
 		file.close();
 		
-		QMessageBox::warning(NULL, tr("Error"), tr("Internal error while saving:\n%1").arg(e.what()));
+		QMessageBox::warning(NULL, tr("Error"), tr("Internal error while saving:\n%1").arg(QString::fromLocal8Bit(e.what())));
 		if (temp_path.isEmpty())
 			QFile::remove(path);
 		else
@@ -722,7 +728,10 @@ bool Map::loadFrom(const QString& path, QWidget* dialog_parent, MapEditorControl
 	}
 	
 	if (map_editor)
+	{
+		view->setDragOffset(QPoint(0, 0), false);
 		map_editor->main_view = view;
+	}
 	else
 		delete view;	// TODO: HACK. Better not create the view at all in this case!
 
@@ -929,7 +938,8 @@ void Map::clear()
 	first_selected_object = NULL;
 	
 	widgets.clear();
-	object_undo_manager.clear(true);
+	undo_manager->clear();
+	undo_manager->setClean();
 	
 	map_notes = "";
 	
@@ -1071,7 +1081,7 @@ void Map::deleteSelectedObjects()
 		
 		setObjectsDirty();
 		clearObjectSelection(true);
-		objectUndoManager().addNewUndoStep(undo_step);
+		push(undo_step);
 	}
 }
 
@@ -1380,8 +1390,8 @@ int Map::findColorIndex(const MapColor* color) const
 }
 void Map::setColorsDirty()
 {
-	setHasUnsavedChanges();
 	colors_dirty = true;
+	setHasUnsavedChanges(true);
 }
 
 void Map::useColorsFrom(Map* map)
@@ -1563,11 +1573,15 @@ void Map::initStatic()
 	undefined_line->setColor(&undefined_symbol_color);
 	undefined_line->setLineWidth(1);
 	undefined_line->setIsHelperSymbol(true);
-
+	
 	undefined_point = new PointSymbol();
 	undefined_point->setInnerRadius(100);
 	undefined_point->setInnerColor(&undefined_symbol_color);
 	undefined_point->setIsHelperSymbol(true);
+	
+	undefined_text = new TextSymbol();
+	undefined_text->setColor(&undefined_symbol_color);
+	undefined_text->setIsHelperSymbol(true);
 }
 
 void Map::addSymbol(Symbol* symbol, int pos)
@@ -1643,7 +1657,7 @@ void Map::setSymbol(Symbol* symbol, int pos)
 void Map::deleteSymbol(int pos)
 {
 	if (deleteAllObjectsWithSymbol(symbols[pos]))
-		object_undo_manager.clear(false);
+		undo_manager->clear();
 	
 	int size = (int)symbols.size();
 	for (int i = 0; i < size; ++i)
@@ -1685,6 +1699,8 @@ int Map::findSymbolIndex(const Symbol* symbol) const
 		return -2;
 	else if (symbol == undefined_line)
 		return -3;
+	else if (symbol == undefined_text)
+		return -4;
 	
 	// maybe element of point symbol
 	return -1;
@@ -1692,8 +1708,8 @@ int Map::findSymbolIndex(const Symbol* symbol) const
 
 void Map::setSymbolsDirty()
 {
-	setHasUnsavedChanges();
 	symbols_dirty = true;
+	setHasUnsavedChanges(true);
 }
 
 void Map::scaleAllSymbols(double factor)
@@ -1833,9 +1849,10 @@ int Map::findTemplateIndex(const Template* temp) const
 }
 void Map::setTemplatesDirty()
 {
-	setHasUnsavedChanges();
 	templates_dirty = true;
+	setHasUnsavedChanges(true);
 }
+
 void Map::emitTemplateChanged(Template* temp)
 {
 	emit(templateChanged(findTemplateIndex(temp), temp));
@@ -1894,94 +1911,195 @@ bool Map::reloadClosedTemplate(int i, int target_pos, QWidget* dialog_parent, Ma
 	return false;
 }
 
-void Map::addPart(MapPart* part, int pos)
+void Map::push(UndoStep *step)
 {
-	parts.insert(parts.begin() + pos, part);
-	if (current_part_index >= pos)
-		++current_part_index;
+	undo_manager->push(step);
+}
+
+
+void Map::addPart(MapPart* part, std::size_t index)
+{
+	Q_ASSERT(index <= parts.size());
 	
-	emit currentMapPartChanged(current_part_index);
+	parts.insert(parts.begin() + index, part);
+	if (current_part_index >= index)
+		setCurrentPartIndex(current_part_index + 1);
 	
-	setOtherDirty(true);
+	emit mapPartAdded(index, part);
+	
+	setOtherDirty();
 	for(unsigned int i = 0; i < widgets.size(); i++)
 		widgets[i]->updateEverything();
 }
 
-void Map::removePart(int index)
+void Map::removePart(std::size_t index)
 {
+	Q_ASSERT(index < parts.size());
+	Q_ASSERT(parts.size() > 1);
+	
+	if (current_part_index == index)
+		// First switch to another part when removing the current part
+		setCurrentPartIndex((index == parts.size() - 1) ? (parts.size() - 2) : (index + 1));
+	
 	MapPart* part = parts[index];
 	
 	// FIXME: This loop should move to MapPart.
 	while(part->getNumObjects())
 		part->deleteObject(0, false);
-	delete part;
 	
 	parts.erase(parts.begin() + index);
+	if (current_part_index >= index)
+		setCurrentPartIndex((index == parts.size()) ? (parts.size() - 1) : index);
 	
-	if(current_part_index == index) {
-		current_part_index = 0;
-		emit currentMapPartChanged(current_part_index);
-	}
+	emit mapPartDeleted(index, part);
 	
-	setOtherDirty(true);
+	delete part;
+	
+	setOtherDirty();
 	for(unsigned int i = 0; i < widgets.size(); i++)
 		widgets[i]->updateEverything();
 }
 
-int Map::findPartIndex(MapPart* part) const
+int Map::findPartIndex(const MapPart* part) const
 {
-	int size = (int)parts.size();
-	for (int i = 0; i < size; ++i)
+	std::size_t const size = parts.size();
+	for (std::size_t i = 0; i < size; ++i)
 	{
 		if (parts[i] == part)
 			return i;
 	}
-	assert(false);
+	Q_ASSERT(false);
 	return -1;
 }
 
-void Map::setCurrentPart(int index)
+void Map::setCurrentPartIndex(std::size_t index)
 {
-	Q_ASSERT(index >= 0 && index < (int)parts.size());
-	if (index == current_part_index)
-		return;
+	Q_ASSERT(index < parts.size());
 	
-	clearObjectSelection(true);
+	MapPart* const old_part = parts[current_part_index];
+	if (index != current_part_index)
+	{
+		current_part_index = index;
+		emit currentMapPartIndexChanged(index);
+	}
 	
-	current_part_index = index;
-	emit currentMapPartChanged(index);
+	MapPart* const new_part = parts[current_part_index];
+	if (new_part != old_part)
+	{
+		clearObjectSelection(true);
+		emit currentMapPartChanged(new_part);
+	}
 }
 
-void Map::reassignObjectsToMapPart(QSet<Object*>::const_iterator begin, QSet<Object*>::const_iterator end, int destination)
+std::size_t Map::reassignObjectsToMapPart(QSet<Object*>::const_iterator begin, QSet<Object*>::const_iterator end, std::size_t source, std::size_t destination)
 {
-	for (QSet<Object*>::const_iterator it = begin; it != end; it++) {
-		Object* object = *it;
-		deleteObject(object, true);
-		addObject(object, destination);
+	Q_ASSERT(source < parts.size());
+	Q_ASSERT(destination < parts.size());
+	
+	std::size_t count = 0;
+	MapPart* const source_part = parts[source];
+	MapPart* const target_part = parts[destination];
+	for (QSet<Object*>::const_iterator it = begin; it != end; ++it)
+	{
+		Object* const object = *it;
+		source_part->deleteObject(object, true);
+
+		int index = target_part->getNumObjects();
+		target_part->addObject(object, index);
+		
+		++count;
 	}
 	
 	setOtherDirty();
+	
+	std::size_t const target_end   = target_part->getNumObjects();
+	std::size_t const target_begin = target_end - count;
+	
+	if (current_part_index == source)
+	{
+		int const selection_size = getNumSelectedObjects();
+		
+		// When modifying the selection we must not use the original iterators
+		// because they may be operating on the selection and then become invalid!
+		for (std::size_t i = target_begin; i != target_end; ++i)
+		{
+			Object* const object = target_part->getObject(i);
+			if (isObjectSelected(object))
+				removeObjectFromSelection(object, false);
+		}
+		
+		if (selection_size != getNumSelectedObjects())
+			emit objectSelectionChanged();
+	}	
+		
+	return target_begin;
 }
 
-void Map::mergeParts(int source, int destination)
+std::size_t Map::reassignObjectsToMapPart(std::vector<int>::const_iterator begin, std::vector<int>::const_iterator end, std::size_t source, std::size_t destination)
 {
-	// FIXME: Retain object selection
-	clearObjectSelection(false);
+	Q_ASSERT(source < parts.size());
+	Q_ASSERT(destination < parts.size());
 	
-	MapPart* source_part = parts[source];
+	bool selection_changed = false;
 	
-	while (source_part->getNumObjects()) {
-		int obj_index = source_part->getNumObjects() - 1;
-		Object* obj = source_part->getObject(obj_index);
-		source_part->deleteObject(obj_index, true);
-		addObject(obj, destination);
-		addObjectToSelection(obj, false);
+	std::size_t count = 0;
+	MapPart* const source_part = parts[source];
+	MapPart* const target_part = parts[destination];
+	for (std::vector<int>::const_iterator it = begin; it != end; ++it)
+	{
+		Object* const object = source_part->getObject(*it);
+		
+		if (current_part_index == source && isObjectSelected(object))
+		{
+			removeObjectFromSelection(object, false);
+			selection_changed = true;
+		}
+		
+		source_part->deleteObject(object, true);
+		
+		int index = target_part->getNumObjects();
+		target_part->addObject(object, index);
+		
+		++count;
 	}
 	
-	removePart(source);
+	setOtherDirty();
 	
-	emit objectSelectionChanged();
+	if (selection_changed)
+		emit objectSelectionChanged();
+	
+	return target_part->getNumObjects() - count;
 }
+
+std::size_t Map::mergeParts(std::size_t source, std::size_t destination)
+{
+	Q_ASSERT(source < parts.size());
+	Q_ASSERT(destination < parts.size());
+	
+	std::size_t count = 0;
+	MapPart* const source_part = parts[source];
+	MapPart* const target_part = parts[destination];
+	// Preserve order (but not efficient)
+	for (std::size_t i = source_part->getNumObjects(); i > 0 ; --i)
+	{
+		Object* object = source_part->getObject(0);
+		source_part->deleteObject(0, true);
+		
+		int index = target_part->getNumObjects();
+		target_part->addObject(object, index);
+		
+		++count;
+	}
+	
+	if (current_part_index == source)
+		setCurrentPartIndex(destination);
+	
+	if (destination != source)
+		removePart(source);
+	
+	return target_part->getNumObjects() - count;
+}
+
 
 int Map::getNumObjects()
 {
@@ -2014,8 +2132,8 @@ void Map::deleteObject(Object* object, bool remove_only)
 }
 void Map::setObjectsDirty()
 {
-	setHasUnsavedChanges();
 	objects_dirty = true;
+	setHasUnsavedChanges(true);
 }
 
 QRectF Map::calculateExtent(bool include_helper_symbols, bool include_templates, const MapView* view) const
@@ -2070,41 +2188,46 @@ int Map::countObjectsInRect(QRectF map_coord_rect, bool include_hidden_objects)
 
 void Map::scaleAllObjects(double factor, const MapCoord& scaling_center)
 {
-	operationOnAllObjects(ObjectOp::Scale(factor, scaling_center));
+	applyOnAllObjects(ObjectOp::Scale(factor, scaling_center));
 }
 void Map::rotateAllObjects(double rotation, const MapCoord& center)
 {
-	operationOnAllObjects(ObjectOp::Rotate(rotation, center));
+	applyOnAllObjects(ObjectOp::Rotate(rotation, center));
 }
 void Map::updateAllObjects()
 {
-	operationOnAllObjects(ObjectOp::Update(true));
+	applyOnAllObjects(ObjectOp::Update(true));
 }
 void Map::updateAllObjectsWithSymbol(Symbol* symbol)
 {
-	operationOnAllObjects(ObjectOp::Update(true), ObjectOp::HasSymbol(symbol));
+	applyOnMatchingObjects(ObjectOp::Update(true), ObjectOp::HasSymbol(symbol));
 }
 void Map::changeSymbolForAllObjects(Symbol* old_symbol, Symbol* new_symbol)
 {
-	operationOnAllObjects(ObjectOp::ChangeSymbol(new_symbol), ObjectOp::HasSymbol(old_symbol));
+	applyOnMatchingObjects(ObjectOp::ChangeSymbol(new_symbol), ObjectOp::HasSymbol(old_symbol));
 }
 bool Map::deleteAllObjectsWithSymbol(Symbol* symbol)
 {
-	// Remove objects from selection
-	removeSymbolFromSelection(symbol, true);
+	bool exists = existsObject(ObjectOp::HasSymbol(symbol));
+	if (exists)
+	{
+		// Remove objects from selection
+		removeSymbolFromSelection(symbol, true);
 	
-	// Delete objects from map
-	return operationOnAllObjects(ObjectOp::Delete(), ObjectOp::HasSymbol(symbol)) & ObjectOperationResult::Success;
+		// Delete objects from map
+		applyOnMatchingObjects(ObjectOp::Delete(), ObjectOp::HasSymbol(symbol));
+	}
+	return exists;
 }
-bool Map::doObjectsExistWithSymbol(Symbol* symbol)
+bool Map::existsObjectWithSymbol(Symbol* symbol)
 {
-	return operationOnAllObjects(ObjectOp::NoOp(), ObjectOp::HasSymbol(symbol)) & ObjectOperationResult::Success;
+	return existsObject(ObjectOp::HasSymbol(symbol));
 }
 
 void Map::setGeoreferencing(const Georeferencing& georeferencing)
 {
 	*this->georeferencing = georeferencing;
-	setOtherDirty(true);
+	setOtherDirty();
 }
 
 const MapPrinterConfig& Map::printerConfig()
@@ -2128,12 +2251,12 @@ void Map::setPrinterConfig(const MapPrinterConfig& config)
 	if (printer_config.isNull())
 	{
 		printer_config.reset(new MapPrinterConfig(config));
-		setOtherDirty(true);
+		setOtherDirty();
 	}
 	else if (*printer_config != config)
 	{
 		*printer_config = config;
-		setOtherDirty(true);
+		setOtherDirty();
 	}
 }
 
@@ -2161,19 +2284,36 @@ void Map::setHasUnsavedChanges(bool has_unsaved_changes)
 		templates_dirty = false;
 		objects_dirty = false;
 		other_dirty = false;
-		unsaved_changes = false;
+		if (unsaved_changes)
+		{
+			unsaved_changes = false;
+			emit hasUnsavedChanges(unsaved_changes);
+		}
 	}
-	else
+	else if (!unsaved_changes)
 	{
-		emit gotUnsavedChanges(); // always needed to trigger autosave
 		unsaved_changes = true;
+		emit hasUnsavedChanges(unsaved_changes);
 	}
 }
-void Map::setOtherDirty(bool value)
+
+void Map::setOtherDirty()
 {
-	if (!other_dirty && value)
-		setHasUnsavedChanges();
-	other_dirty = value;
+	other_dirty = true;
+	setHasUnsavedChanges(true);
+}
+
+// slot
+void Map::undoCleanChanged(bool is_clean)
+{
+	if (is_clean && unsaved_changes && !(colors_dirty || symbols_dirty || templates_dirty || other_dirty))
+	{
+		setHasUnsavedChanges(false);
+	}
+	else if (!is_clean && !unsaved_changes)
+	{
+		setHasUnsavedChanges(true);
+	}
 }
 
 void Map::checkIfFirstColorAdded()

@@ -30,32 +30,32 @@
 #  include <QPrinter>
 #endif
 
+#include "core/georeferencing.h"
 #include "core/map_color.h"
 #include "core/map_printer.h"
 #include "core/map_view.h"
 #include "file_import_export.h"
-#include "georeferencing.h"
 #include "map.h"
 #include "map_grid.h"
 #include "object.h"
 #include "object_text.h"
+#include "settings.h"
 #include "symbol_area.h"
 #include "symbol_combined.h"
 #include "symbol_line.h"
 #include "symbol_point.h"
 #include "symbol_text.h"
 #include "template.h"
+#include "undo_manager.h"
 #include "util/xml_stream_util.h"
 
 // ### XMLFileFormat definition ###
 
 const int XMLFileFormat::minimum_version = 2;
-#if defined(Q_OS_ANDROID)
-#warning "XMLFileFormat::current_version is set to 5 for Android"
-const int XMLFileFormat::current_version = 5;
-#else
 const int XMLFileFormat::current_version = 6;
-#endif
+
+int XMLFileFormat::active_version = 5; // updated by XMLFileExporter::doExport()
+
 const QString XMLFileFormat::magic_string = "<?xml ";
 const QString XMLFileFormat::mapper_namespace = "http://oorienteering.sourceforge.net/mapper/xml/v2";
 
@@ -93,6 +93,9 @@ namespace literal
 	static const QLatin1String map("map");
 	static const QLatin1String version("version");
 	static const QLatin1String notes("notes");
+	
+	static const QLatin1String barrier("barrier");
+	static const QLatin1String required("required");
 	
 	static const QLatin1String count("count");
 	static const QLatin1String current("current");
@@ -169,24 +172,53 @@ void XMLFileExporter::doExport() throw (FileFormatException)
 	if (option("autoFormatting").toBool() == true)
 		xml.setAutoFormatting(true);
 	
+	int current_version = XMLFileFormat::current_version;
+	bool retain_compatibility = Settings::getInstance().getSetting(Settings::General_RetainCompatiblity).toBool();
+	XMLFileFormat::active_version = retain_compatibility ? current_version-1 : current_version;
+	
+	if (XMLFileFormat::active_version < 6 && map->getNumParts() != 1)
+	{
+		throw FileFormatException(tr("Older versions of Mapper do not support multiple map parts. To save the map in compatibility mode, you must first merge all map parts."));
+	}
+	
 	xml.writeDefaultNamespace(XMLFileFormat::mapper_namespace);
 	xml.writeStartDocument();
 	
 	{
 		XmlElementWriter map_element(xml, literal::map);
-		map_element.writeAttribute(literal::version, XMLFileFormat::current_version);
+		map_element.writeAttribute(literal::version, XMLFileFormat::active_version);
 		
 		xml.writeTextElement(literal::notes, map->getMapNotes());
 		
 		exportGeoreferencing();
 		exportColors();
+
+		XmlElementWriter* barrier = NULL;
+		if (XMLFileFormat::active_version >= 6)
+		{
+			// Prevent Mapper versions < 0.6.0 from crashing
+			// when compatibilty mode is NOT activated
+			// Incompatible feature: dense coordinates
+			barrier = new XmlElementWriter(xml, literal::barrier);
+			barrier->writeAttribute(literal::version, 6);
+			barrier->writeAttribute(literal::required, "0.6.0");
+		}
 		exportSymbols();
 		exportMapParts();
 		exportTemplates();
 		exportView();
 		exportPrint();
+		delete barrier;
+
+		// Prevent Mapper versions < 0.6.0 from crashing
+		// when compatibilty mode IS activated
+		// Incompatible feature: new undo step types
+		barrier = new XmlElementWriter(xml, literal::barrier);
+		barrier->writeAttribute(literal::version, 6);
+		barrier->writeAttribute(literal::required, "0.6.0");
 		exportUndo();
 		exportRedo();
+		delete barrier;
 	}
 	
 	xml.writeEndDocument();
@@ -292,7 +324,7 @@ void XMLFileExporter::exportMapParts()
 	parts_element.writeAttribute(literal::count, num_parts);
 	parts_element.writeAttribute(literal::current, map->current_part_index);
 	for (int i = 0; i < num_parts; ++i)
-		map->getPart(i)->save(xml, *map);
+		map->getPart(i)->save(xml);
 }
 
 void XMLFileExporter::exportTemplates()
@@ -336,12 +368,12 @@ void XMLFileExporter::exportPrint()
 
 void XMLFileExporter::exportUndo()
 {
-	map->object_undo_manager.saveUndo(xml);
+	map->undoManager().saveUndo(xml);
 }
 
 void XMLFileExporter::exportRedo()
 {
-	map->object_undo_manager.saveRedo(xml);
+	map->undoManager().saveRedo(xml);
 }
 
 
@@ -380,6 +412,11 @@ void XMLFileImporter::import(bool load_symbols_only) throw (FileFormatException)
 	else if (version > XMLFileFormat::current_version)
 		addWarning(Importer::tr("Unsupported new file format version. Some map features will not be loaded or saved by this version of the program."));
 	
+	importElements(load_symbols_only);
+}
+
+void XMLFileImporter::importElements(bool load_symbols_only) throw (FileFormatException)
+{
 	while (xml.readNextStartElement())
 	{
 		const QStringRef name(xml.name());
@@ -390,8 +427,27 @@ void XMLFileImporter::import(bool load_symbols_only) throw (FileFormatException)
 			importSymbols();
 		else if (name == literal::georeferencing)
 			importGeoreferencing(load_symbols_only);
+		else if (name == literal::barrier)
+		{
+			XmlElementReader barrier(xml);
+			if (barrier.attribute<int>(literal::version) > XMLFileFormat::current_version)
+			{
+				QString required_version = barrier.attribute<QString>(literal::required);
+				if (required_version.isEmpty())
+					required_version = tr("unknown");
+				addWarning(tr("Parts of this file cannot be read by this version of Mapper. Minimum required version: %1").arg(required_version));
+				xml.skipCurrentElement();
+			}
+			else
+			{
+				importElements(load_symbols_only);
+			}
+		}
 		else if (load_symbols_only)
 			xml.skipCurrentElement();
+		/******************************************************
+		* The remainder is skipped when loading a symbol set! *
+		******************************************************/
 		else if (name == literal::notes)
 			map->setMapNotes(xml.readElementText());
 		else if (name == literal::parts)
@@ -640,7 +696,8 @@ void XMLFileImporter::importMapParts()
 		  arg(map->getNumParts())
 		);
 	
-	emit map->currentMapPartChanged(map->current_part_index);
+	emit map->currentMapPartIndexChanged(map->current_part_index);
+	emit map->currentMapPartChanged(map->getPart(map->current_part_index));
 }
 
 void XMLFileImporter::importTemplates()
@@ -711,10 +768,10 @@ void XMLFileImporter::importPrint()
 
 void XMLFileImporter::importUndo()
 {
-	map->object_undo_manager.loadUndo(xml, symbol_dict);
+	map->undoManager().loadUndo(xml, symbol_dict);
 }
 
 void XMLFileImporter::importRedo()
 {
-	map->object_undo_manager.loadRedo(xml, symbol_dict);
+	map->undoManager().loadRedo(xml, symbol_dict);
 }

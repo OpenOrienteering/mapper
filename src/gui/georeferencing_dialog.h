@@ -26,8 +26,7 @@
 #include <QString>
 #include <QScopedPointer>
 
-#include "gps_coordinates.h"
-#include "tool.h"
+#include "../tool.h"
 
 QT_BEGIN_NAMESPACE
 class QComboBox;
@@ -285,7 +284,7 @@ public:
 	/** 
 	 * Constructs a new tool for the given dialog and controller.
 	 */
-	GeoreferencingTool(GeoreferencingDialog* dialog, MapEditorController* controller, QAction* action = NULL);
+	GeoreferencingTool(GeoreferencingDialog* dialog, MapEditorController* controller, QAction* toolAction = NULL);
 	
 	/**
 	 * Notifies the dialog that the tool is deleted.

@@ -21,16 +21,16 @@
 
 #include <QFile>
 
+#include "core/georeferencing.h"
 #include "core/map_color.h"
 #include "core/map_printer.h"
 #include "core/map_view.h"
 #include "file_import_export.h"
-#include "georeferencing.h"
-#include "gps_coordinates.h"
 #include "map.h"
 #include "map_grid.h"
 #include "symbol.h"
 #include "template.h"
+#include "undo_manager.h"
 #include "util.h"
 
 
@@ -56,6 +56,24 @@ protected:
 	/** Imports a native file.
 	 */
 	void import(bool load_symbols_only) throw (FileFormatException);
+};
+
+
+// ### GPSProjectionParameters ###
+/** 
+ * Legacy parameters for an ellipsoid and an orthographic projection of
+ * ellipsoid coordinates to 2D map (template) coordinates.
+ */
+struct GPSProjectionParameters
+{
+	double a;					// ellipsoidal semi-major axis
+	double b;					// ellipsoidal semi-minor axis
+	double e_sq;				// eccentricity of the ellipsoid (squared)
+	double center_latitude;		// latitude which gives map coordinate zero
+	double center_longitude;	// longitude which gives map coordinate zero
+	double sin_center_latitude;	// sine of center_latitude
+	double cos_center_latitude;	// cosine of center_latitude
+	double v0;					// prime vertical radius of curvature at latitude of origin center_latitude
 };
 
 
@@ -130,7 +148,7 @@ void NativeFileImport::import(bool load_symbols_only) throw (FileFormatException
 		stream->read((char*)&gps_projection_parameters, sizeof(GPSProjectionParameters));
 		if (gps_projection_params_set)
 		{
-			LatLon ref_point(gps_projection_parameters.center_latitude, gps_projection_parameters.center_longitude);
+			LatLon ref_point = LatLon::fromRadiant(gps_projection_parameters.center_latitude, gps_projection_parameters.center_longitude);
 			georef.setGeographicRefPoint(ref_point);
 		}
 		*map->georeferencing = georef;
@@ -155,7 +173,7 @@ void NativeFileImport::import(bool load_symbols_only) throw (FileFormatException
 		loadString(stream, georef.projected_crs_spec);
 		stream->read((char*)&y, sizeof(double));
 		stream->read((char*)&x, sizeof(double));
-		georef.geographic_ref_point = LatLon(y, x); 
+		georef.geographic_ref_point = LatLon::fromRadiant(y, x); 
 		QString geographic_crs_id, geographic_crs_spec;
 		loadString(stream, geographic_crs_id);   // reserved for geographic crs id
 		loadString(stream, geographic_crs_spec); // reserved for full geographic crs specification
@@ -343,7 +361,7 @@ void NativeFileImport::import(bool load_symbols_only) throw (FileFormatException
 		// Load undo steps
 		if (version >= 7)
 		{
-			if (!map->object_undo_manager.load(stream, version))
+			if (!map->undoManager().load(stream, version))
 			{
 				throw FileFormatException(Importer::tr("Error while loading undo steps."));
 			}
@@ -371,5 +389,6 @@ void NativeFileImport::import(bool load_symbols_only) throw (FileFormatException
 		}
 	}
 	
-	emit map->currentMapPartChanged(map->current_part_index);
+	emit map->currentMapPartIndexChanged(map->current_part_index);
+	emit map->currentMapPartChanged(map->getPart(map->current_part_index));
 }

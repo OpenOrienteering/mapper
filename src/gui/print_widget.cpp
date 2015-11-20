@@ -854,16 +854,6 @@ void PrintWidget::showGridClicked(bool checked)
 }
 
 // slot
-void PrintWidget::setOverprintingCheckEnabled(bool enabled)
-{
-	if (!enabled)
-	{
-		overprinting_check->setChecked(false);
-	}
-	overprinting_check->setEnabled(enabled);
-}
-
-// slot
 void PrintWidget::overprintingClicked(bool checked)
 {
 	map_printer->setSimulateOverprinting(checked);

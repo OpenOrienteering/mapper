@@ -294,8 +294,49 @@ public:
 	 * the same objects as the given type.
 	 */
 	static int getCompatibleTypes(Type type);
+
 	
+	/**
+	 * @brief Compares two symbols by number.
+	 * @return True if the number of s1 is less than the number of s2.
+	 */
+	static bool compareByNumber(Symbol* s1, Symbol* s2);
 	
+	/**
+	 * @brief Compares two symbols by the dominant colors' priorities.
+	 * @return True if s1's dominant color's priority is lower than s2's dominant color's priority.
+	 */
+	static bool compareByColorPriority(Symbol* s1, Symbol* s2);
+	
+	/**
+	 * @brief Functor for comparing symbols by dominant colors.
+	 * 
+	 * Other than compareByColorPriority(), this comparison uses the lowest
+	 * priority which exists for a particular color in the map. All map colors
+	 * are preprocessed in the constructor. Thus the functor becomes invalid as
+	 * soon as colors are changed.
+	 */
+	struct compareByColor
+	{
+		/**
+		 * @brief Constructs the functor.
+		 * @param map The map which defines all colors.
+		 */
+		compareByColor(Map* map);
+		
+		/**
+		 * @brief Operator which compares two symbols by dominant colors.
+		 * @return True if s1's dominant color exists with lower prority then s2's dominant color.
+		 */
+		bool operator() (Symbol* s1, Symbol* s2);
+		
+	private:
+		/**
+		 * @brief Maps color code to priority.
+		 */
+		QHash<QRgb, int> color_map;
+	};
+
 	/**
 	 * Number of components of symbol numbers.
 	 */

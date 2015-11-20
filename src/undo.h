@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2014 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -21,206 +22,342 @@
 #ifndef _OPENORIENTEERING_UNDO_H_
 #define _OPENORIENTEERING_UNDO_H_
 
-#include <QObject>
-
-#include <cassert>
-#include <deque>
+#include <set>
 #include <vector>
 
-#include "symbol.h"
+#include <QXmlStreamReader>
+#include <QXmlStreamWriter>
 
-QT_BEGIN_NAMESPACE
-class QIODevice;
-class QXmlStreamReader;
-class QXmlStreamWriter;
-QT_END_NAMESPACE
+#include "symbol.h" // provides SymbolDictionary typedef
 
 class Map;
-class MapColor;
-class Object;
 
 /**
- * Abstract base class for undo steps.
+ * Abstract base class for map editing undo steps.
  * 
- * Stores information which is necessary for executing an undo step.
+ * UndoStep stores information which is necessary for executing an undo step.
  * While executing the step, creates a new UndoStep for the corresponding
  * redo step.
+ * 
+ * @see UndoManager
  */
-class UndoStep : public QObject
+class UndoStep
 {
-Q_OBJECT
 public:
-	/** Types of undo steps for identification. */
+	/**
+	 * Types of undo steps for identification.
+	 * 
+	 * This is used by the file formats - do not change
+	 * existing values.
+	 */
 	enum Type
 	{
-		ReplaceObjectsUndoStepType = 0,
-		DeleteObjectsUndoStepType = 1,
-		AddObjectsUndoStepType = 2,
-		SwitchSymbolUndoStepType = 3,
-		SwitchDashesUndoStepType = 4,
-		CombinedUndoStepType = 5
+		ReplaceObjectsUndoStepType =   0,
+		DeleteObjectsUndoStepType  =   1,
+		AddObjectsUndoStepType     =   2,
+		SwitchSymbolUndoStepType   =   3,
+		SwitchDashesUndoStepType   =   4,
+		CombinedUndoStepType       =   5,
+		ValidNoOpUndoStepType      =   6,
+		ObjectTagsUndoStepType     =   7,
+		MapPartUndoStepType        =   8,
+		SwitchPartUndoStepType     =   9,
+		InvalidUndoStepType        = 999
 	};
 	
-	/** Constructs an undo step having the given type. */
-	UndoStep(Type type);
-	virtual ~UndoStep() {}
+	/**
+	 * A set of integers refering to parts.
+	 */
+	typedef std::set<int> PartSet;
 	
-	/** Must undo the action and return a new UndoStep
-	 *  which can redo the action again. */
-	virtual UndoStep* undo() = 0;
-	
-	/** Must load the undo step from the file in the old "native" format. */
-	virtual bool load(QIODevice* file, int version) = 0;
-	
-	/** Must save the undo step to the stream in xml format. */
-	void save(QXmlStreamWriter& xml);
-	/** Must load the undo step from the stream in xml format. */
-	static UndoStep* load(QXmlStreamReader& xml, void* owner, SymbolDictionary& symbol_dict);
 	
 	/**
-	 * Returns if the step can still be undone. This must be true after
-	 * generating the step (otherwise it would not make sense to generate it)
-	 * but can change to false if an object the step depends on,
+	 * A set of pointers to objects.
+	 */
+	typedef std::set<Object*> ObjectSet;
+	
+	
+	/**
+	 * Constructs an undo step of the given type.
+	 */
+	static UndoStep* getUndoStepForType(Type type, Map* map);
+	
+	
+	/**
+	 * Constructs an undo step having the given type.
+	 */
+	UndoStep(Type type, Map* map);
+	
+	/**
+	 * Destructor.
+	 */
+	virtual ~UndoStep();
+	
+	
+	/**
+	 * Returns the type of the undo step.
+	 */
+	Type getType() const;
+	
+	
+	/**
+	 * Returns true if the step can still be undone.
+	 * 
+	 * Initially (after generating the step) this must return true.
+	 * (However, this is different for InvalidUndoStep.)
+	 * 
+	 * Derived classes may return false to indicate that the step is no longer valid.
+	 * This may happen after an object the step depends on,
 	 * which is not tracked by the undo system, is deleted.
 	 * 
 	 * Example: changing a map object's symbol to a different one,
 	 * then deleting the first symbol. Then changing the symbol cannot be undone
 	 * as the old symbol does not exist anymore.
 	 */
-	virtual bool isValid() const {return valid;}
+	virtual bool isValid() const;
 	
-	/** Returns the undo step's type. */
-	inline Type getType() const {return type;}
 	
 	/**
-	 * Constructs an undo step of the given type.
-	 * The owner pointer can be used to pass in additional information,
-	 * usually the Map in which the step will be.
+	 * Undoes the action and returns a new UndoStep.
+	 * 
+	 * The returned UndoStep can redo the action again.
 	 */
-	static UndoStep* getUndoStepForType(Type type, void* owner);
+	virtual UndoStep* undo() = 0;
 	
-protected:
+	
+	/**
+	 * Adds the list of the step's modified parts to the container provided by out.
+	 * 
+	 * The default implementation does nothing and returns false.
+	 * 
+	 * @return True if there are parts (and objects!) modified by this undo step, false otherwise.
+	 */
+	virtual bool getModifiedParts(PartSet& out) const;
+	
+	/**
+	 * Adds the list of the step's modified objects to the container provided by out.
+	 * 
+	 * Only objects which belong to the given part are dealt with.
+	 * 
+	 * The default implementation does nothing.
+	 */
+	virtual void getModifiedObjects(int part_index, ObjectSet& out) const;
+	
+	
+	/**
+	 * Loads the undo step from the file in the old "native" format.
+	 * @deprecated Old file format.
+	 */
+	virtual bool load(QIODevice* file, int version) = 0;
+	
+	
+	/**
+	 * Loads the undo step from the stream in xml format.
+	 */
+	static UndoStep* load(QXmlStreamReader& xml, Map* map, SymbolDictionary& symbol_dict);
+	
+	/**
+	 * Saves the undo step to the stream in xml format.
+	 * 
+	 * This method is not to be overwritten.
+	 * 
+	 * @see saveImpl()
+	 */
+	void save(QXmlStreamWriter& xml);
+	
+protected:	
+	/**
+	 * Saves undo properties to the the xml stream.
+	 * 
+	 * Implementations in derived classes shall first call the parent class'
+	 * implementation, and then start a new element for additional properties.
+	 */
 	virtual void saveImpl(QXmlStreamWriter& xml) const;
-	virtual void loadImpl(QXmlStreamReader& xml, SymbolDictionary& symbol_dict);
 	
-	bool valid;
-	Type type;
+	/**
+	 * Loads undo properties from the the xml stream.
+	 * 
+	 * Implementations in derived classes shall first check the element's name
+	 * for one of their own elements, and otherwise call the parent class'
+	 * implementation.
+	 */
+	virtual void loadImpl(QXmlStreamReader& xml, SymbolDictionary& symbol_dict);
+
+protected:
+	/**
+	 * The type of the undo step.
+	 */
+	Type const type;
+	
+	/**
+	 * The map this undo step belongs.
+	 */
+	Map* const map;
 };
 
+
+
 /**
- * Undo step which internally consists of one or more other UndoSteps (sub steps),
- * which it executes in order.
+ * @brief An undo step which is actually a sequence of sub UndoSteps.
+ * 
+ * A CombinedUndoStep bundles a sequence of one or more UndoSteps,
+ * which it executes in reverse order.
  */
 class CombinedUndoStep : public UndoStep
 {
-Q_OBJECT
 public:
-	CombinedUndoStep(void* owner);
+	/**
+	 * Constructs a composite undo step for the given map.
+	 */
+	CombinedUndoStep(Map* map);
+	
+	/**
+	 * Destructor.
+	 */
 	virtual ~CombinedUndoStep();
 	
-	/** Returns the number of sub steps. */
-	inline int getNumSubSteps() const {return (int)steps.size();}
 	
-	/** Adds the sub step. */
-	inline void addSubStep(UndoStep* step) {steps.push_back(step);}
-	
-	/** Returns the i-th sub step. */
-	inline UndoStep* getSubStep(int i) {return steps[i];}
-	
-	virtual UndoStep* undo();
-	virtual bool load(QIODevice* file, int version);
-	
+	/**
+	 * Returns true if all sub step can still be undone.
+	 */
 	virtual bool isValid() const;
 	
+	/**
+	 * Undoes all sub steps in-order and returns a corresponding UndoStep.
+	 */
+	virtual UndoStep* undo();
+	
+	
+	/**
+	 * Adds the modified parts of all sub steps to the given set.
+	 */
+	virtual bool getModifiedParts(PartSet& out) const;
+	
+	/**
+	 * Adds the modified objects of all sub steps to the given set.
+	 */
+	virtual void getModifiedObjects(int part_index, ObjectSet& out) const;
+	
+	
+	/** 
+	 * Returns the number of sub steps.
+	 */
+	int getNumSubSteps() const;
+	
+	/** 
+	 * Adds a sub step.
+	 */
+	void push(UndoStep* step);
+	
+	/** 
+	 * Returns the i-th sub step.
+	 */
+	UndoStep* getSubStep(int i);
+	
+	/**
+	 * @copybrief UndoStep::load()
+	 * @deprecated Old file format.
+	 */
+	virtual bool load(QIODevice* file, int version);
+	
 protected:
+	/**
+	 * @copybrief UndoStep::saveImpl()
+	 */
 	virtual void saveImpl(QXmlStreamWriter& xml) const;
+	
+	/**
+	 * @copybrief UndoStep::loadImpl()
+	 */
 	virtual void loadImpl(QXmlStreamReader& xml, SymbolDictionary& symbol_dict);
 	
-	std::vector<UndoStep*> steps;
-	void* owner;
+private:
+	typedef std::vector<UndoStep*> StepList;
+	
+	StepList steps;
 };
 
-/** Keeps an undo and redo step list, thus storing a complete undo history. */
-class UndoManager : public QObject
+
+
+/**
+ * An undo step which does nothing. 
+ * 
+ * Its validness depends on the argument given  to the constructor.
+ * It always returns a valid NoOpUndoStep from undo().
+ * 
+ * This class is used to catch unknown types of undo step when loading files
+ * from newer version of Mapper. Another use is unit-testing the UndoManager.
+ */
+class NoOpUndoStep : public UndoStep
 {
-Q_OBJECT
 public:
-	/** Constructor.
+	/**
+	 * Constructs an undo step for the given map, and determines its validness.
+	 */
+	NoOpUndoStep(Map* map, bool valid);
+	
+	/**
+	 * Destructor.
+	 */
+	virtual ~NoOpUndoStep();
+	
+	
+	/**
+	 * Returns the validness as given to the constructor.
+	 */
+	virtual bool isValid() const;
+	
+	
+	/**
+	 * Returns a valid NoOpUndoStep.
 	 * 
-	 *  The owner pointer is a way to pass the map pointer to the steps
-	 *  without making this class dependent on Map. */
-	UndoManager(void* owner = NULL);
-	inline void setOwner(void* owner) {this->owner = owner;}
-	~UndoManager();
+	 * Prints a warning if this undo step is not valid.
+	 */
+	virtual UndoStep* undo();
 	
-	/** Loads the UndoManager from the file in the old "native" format. */
-	bool load(QIODevice* file, int version);
 	
-	/** Saves the undo steps to the file in xml format. */
-	void saveUndo(QXmlStreamWriter& xml);
-	/** Loads the undo steps from the file in xml format. */
-	bool loadUndo(QXmlStreamReader& xml, SymbolDictionary& symbol_dict);
-	/** Saves the redo steps to the file in xml format. */
-	void saveRedo(QXmlStreamWriter& xml);
-	/** Loads the redo steps from the file in xml format. */
-	bool loadRedo(QXmlStreamReader& xml, SymbolDictionary& symbol_dict);
-	
-	/** Call this to add a new step resulting from an edit action. */
-	void addNewUndoStep(UndoStep* step);
-	
-	/** Deletes all undo and redo steps. Can be necessary if changes are made
-	 *  to objects which are not tracked by the undo system but related to it. */
-	void clear(bool current_state_is_saved);
-	
-	/** Executes the most recently added undo step.
-	 *  @param dialog_parent Optional QWidget parent for any dialogs
-	 *      shown by the method.
-	 *  @param done If set, will return whether an undo step actually has been
-	 *      executed, or if not because of a problem.
+	/**
+	 * Prints a warning and returns false.
 	 * 
-	 *  undo() and redo() return true if, as the result of the action,
-	 *  the file is in the state where it was saved the last time */
-	bool undo(QWidget* dialog_parent = NULL, bool* done = NULL);
-	
-	/** Executes the most recently added redo step.
-	 *  See undo() for a description of the parameters. */
-	bool redo(QWidget* dialog_parent = NULL, bool* done = NULL);
-	
-	/** Call this when the currently edited file is saved. */
-	void notifyOfSave();
-	
-	inline int getNumUndoSteps() const {return (int)undo_steps.size();}
-	inline UndoStep* getLastUndoStep() const {assert(getNumUndoSteps() > 0); return undo_steps[undo_steps.size() - 1];}
-	inline int getNumRedoSteps() const {return (int)redo_steps.size();}
-	inline UndoStep* getLastRedoStep() const {assert(getNumRedoSteps() > 0); return redo_steps[redo_steps.size() - 1];}
-	
-	/** The maximum number of undo steps stored in an UndoManager.
-	 *  If more steps are added, the first steps will be deleted again.
-	 * 
-	 *  TODO: Make configurable (maybe by used memory instead of step count) */
-	static const int max_undo_steps = 128;
-	
-signals:
-	/** Emitted when the number of undo (or redo) steps changes
-	 *  from 0 to positive or vice versa */
-	void undoStepAvailabilityChanged();
+	 * @deprecated Old file format.
+	 * This must not be called because the step is neither used nor usable
+	 * for the old format.
+	 */
+	virtual bool load(QIODevice* file, int version);
 	
 private:
-	void addUndoStep(UndoStep* step);
-	void addRedoStep(UndoStep* step);
-	bool clearUndoSteps();	// returns if at least one step was deleted
-	bool clearRedoSteps();	// returns if at least one step was deleted
-	void validateSteps(std::deque<UndoStep*>& steps);
-	bool loadSteps(std::deque< UndoStep* >& steps, QIODevice* file, int version);
-	void saveSteps(std::deque< UndoStep* >& steps, QXmlStreamWriter& xml);
-	bool loadSteps(std::deque< UndoStep* >& steps, QXmlStreamReader& xml, SymbolDictionary& symbol_dict);
-	
-	int saved_step_index;				// 0 would be the current state, negative indices stand for the undo steps, positive indices for the redo steps
-	int loaded_step_index;				// indexing like for saved_step_index
-	std::deque<UndoStep*> undo_steps;	// the last item is the first step to undo
-	std::deque<UndoStep*> redo_steps;	// the last item is the first step to redo
-	
-	void* owner;
+	bool const valid;
 };
+
+
+
+// ### UndoStep inline code ###
+
+inline
+UndoStep::Type UndoStep::getType() const
+{
+	return type;
+}
+
+
+// ### CombinedUndoStep inline code ###
+
+inline
+int CombinedUndoStep::getNumSubSteps() const
+{
+	return (int)steps.size();
+}
+
+inline
+void CombinedUndoStep::push(UndoStep* step)
+{
+	steps.push_back(step);
+}
+
+inline
+UndoStep* CombinedUndoStep::getSubStep(int i)
+{
+	return steps[i];
+}
 
 #endif

@@ -25,8 +25,8 @@
 #include <QPinchGesture>
 #include <QTouchEvent>
 
+#include "core/georeferencing.h"
 #include "core/map_color.h"
-#include "georeferencing.h"
 #include "map.h"
 #include "map_editor_activity.h"
 #include "settings.h"
@@ -657,8 +657,8 @@ void MapWidget::updateCursorposLabel(const MapCoordF pos)
 			const LatLon lat_lon(georef.toGeographicCoords(pos, &ok));
 			cursorpos_label->setText(
 			  QString::fromUtf8("%1° %2°").
-			  arg(locale().toString(georef.radToDeg(lat_lon.latitude), 'f', 6)).
-			  arg(locale().toString(georef.radToDeg(lat_lon.longitude), 'f', 6))
+			  arg(locale().toString(lat_lon.latitude(), 'f', 6)).
+			  arg(locale().toString(lat_lon.longitude(), 'f', 6))
 			); 
 		}
 		else if (coords_type == GEOGRAPHIC_COORDS_DMS)
@@ -666,8 +666,8 @@ void MapWidget::updateCursorposLabel(const MapCoordF pos)
 			const LatLon lat_lon(georef.toGeographicCoords(pos, &ok));
 			cursorpos_label->setText(
 			  QString::fromUtf8("%1 %2").
-			  arg(georef.radToDMS(lat_lon.latitude)).
-			  arg(georef.radToDMS(lat_lon.longitude))
+			  arg(georef.degToDMS(lat_lon.latitude())).
+			  arg(georef.degToDMS(lat_lon.longitude()))
 			); 
 		}
 		else
@@ -1018,6 +1018,11 @@ void MapWidget::_mousePressEvent(QMouseEvent* event)
 		startPanning(event->pos());
 		event->accept();
 	}
+	else if (event->button() == Qt::RightButton)
+	{
+		if (!context_menu->isEmpty())
+			context_menu->popup(event->globalPos());
+	}
 }
 
 void MapWidget::mouseMoveEvent(QMouseEvent* event)
@@ -1199,6 +1204,14 @@ void MapWidget::focusOutEvent(QFocusEvent* event)
 
 void MapWidget::contextMenuEvent(QContextMenuEvent* event)
 {
+	if (event->reason() == QContextMenuEvent::Mouse)
+	{
+		// HACK: Ignore context menu events caused by the mouse, because right click
+		// events need to be sent to the current tool first.
+		event->ignore();
+		return;
+	}
+	
 	if (!context_menu->isEmpty())
 		context_menu->popup(event->globalPos());
 	

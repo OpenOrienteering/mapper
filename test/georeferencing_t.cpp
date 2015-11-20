@@ -1,5 +1,5 @@
 /*
- *    Copyright 2012, 2013 Kai Pastor
+ *    Copyright 2012, 2013, 2014 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -21,10 +21,14 @@
 
 #include <proj_api.h>
 
+#include "../src/file_format_xml.h"
 
-double GeoreferencingTest::radFromDeg(double d, double m, double s)
+
+int XMLFileFormat::active_version = 6;
+
+double GeoreferencingTest::degFromDMS(double d, double m, double s)
 {
-	return (d + m/60.0 + s/3600.0)/180.0*M_PI;
+	return d + m/60.0 + s/3600.0;
 }
 
 
@@ -70,22 +74,22 @@ void GeoreferencingTest::testProjection_data()
 	
 	// Selected from http://www.lvermgeo.rlp.de/index.php?id=5809
 	// Record name                               CRS spec      Easting      Northing     Latitude (radian)           Longitude (radian)
-	QTest::newRow("LVermGeo RLP Koblenz UTM") << utm32_spec <<  398125.0 << 5579523.0 << radFromDeg(50, 21, 32.2) << radFromDeg( 7, 34, 4.0);
-	QTest::newRow("LVermGeo RLP Koblenz GK3") << gk3_spec   << 3398159.0 << 5581315.0 << radFromDeg(50, 21, 32.2) << radFromDeg( 7, 34, 4.0);
-	QTest::newRow("LVermGeo RLP Pruem UTM")   << utm32_spec <<  316464.0 << 5565150.0 << radFromDeg(50, 12, 36.1) << radFromDeg( 6, 25, 39.6);
-	QTest::newRow("LVermGeo RLP Pruem GK2")   << gk2_spec   << 2530573.0 << 5563858.0 << radFromDeg(50, 12, 36.1) << radFromDeg( 6, 25, 39.6);
-	QTest::newRow("LVermGeo RLP Landau UTM")  << utm32_spec <<  436705.0 << 5450182.0 << radFromDeg(49, 12,  4.2) << radFromDeg( 8,  7, 52.0);
-	QTest::newRow("LVermGeo RLP Landau GK3")  << gk3_spec   << 3436755.0 << 5451923.0 << radFromDeg(49, 12,  4.2) << radFromDeg( 8,  7, 52.0);
+	QTest::newRow("LVermGeo RLP Koblenz UTM") << utm32_spec <<  398125.0 << 5579523.0 << degFromDMS(50, 21, 32.2) << degFromDMS( 7, 34, 4.0);
+	QTest::newRow("LVermGeo RLP Koblenz GK3") << gk3_spec   << 3398159.0 << 5581315.0 << degFromDMS(50, 21, 32.2) << degFromDMS( 7, 34, 4.0);
+	QTest::newRow("LVermGeo RLP Pruem UTM")   << utm32_spec <<  316464.0 << 5565150.0 << degFromDMS(50, 12, 36.1) << degFromDMS( 6, 25, 39.6);
+	QTest::newRow("LVermGeo RLP Pruem GK2")   << gk2_spec   << 2530573.0 << 5563858.0 << degFromDMS(50, 12, 36.1) << degFromDMS( 6, 25, 39.6);
+	QTest::newRow("LVermGeo RLP Landau UTM")  << utm32_spec <<  436705.0 << 5450182.0 << degFromDMS(49, 12,  4.2) << degFromDMS( 8,  7, 52.0);
+	QTest::newRow("LVermGeo RLP Landau GK3")  << gk3_spec   << 3436755.0 << 5451923.0 << degFromDMS(49, 12,  4.2) << degFromDMS( 8,  7, 52.0);
 }
 
 void GeoreferencingTest::testProjection()
 {
 #if PJ_VERSION >= 480
 	const double max_dist_error = 2.2; // meter
-	const double max_angl_error = 0.00002/*deg*/ / 180.0 * M_PI; // radian
+	const double max_angl_error = 0.00002; // degrees
 #else
 	const double max_dist_error = 5.5; // meter
-	const double max_angl_error = 0.00005/*deg*/ / 180.0 * M_PI; // radian
+	const double max_angl_error = 0.00007; // degrees
 #endif
 	
 	QFETCH(QString, proj);
@@ -111,10 +115,10 @@ void GeoreferencingTest::testProjection()
 	proj_coord = QPointF(easting, northing);
 	lat_lon = georef.toGeographicCoords(proj_coord, &ok);
 	QVERIFY(ok);
-	if (fabs(lat_lon.latitude - latitude) > max_angl_error)
-		QCOMPARE(QString::number(lat_lon.getLatitudeInDegrees(), 'f'), QString::number(latitude*180.0/M_PI, 'f'));
-	if (fabs(lat_lon.longitude - longitude) > (max_angl_error / cos(latitude)))
-		QCOMPARE(QString::number(lat_lon.getLongitudeInDegrees(), 'f'), QString::number(longitude*180.0/M_PI, 'f'));
+	if (fabs(lat_lon.latitude() - latitude) > max_angl_error)
+		QCOMPARE(QString::number(lat_lon.latitude(), 'f'), QString::number(latitude, 'f'));
+	if (fabs(lat_lon.longitude() - longitude) > (max_angl_error / cos(latitude)))
+		QCOMPARE(QString::number(lat_lon.longitude(), 'f'), QString::number(longitude, 'f'));
 }
 
 

@@ -24,10 +24,10 @@
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
+#include "core/georeferencing.h"
+#include "gui/georeferencing_dialog.h"
 #include "map.h"
 #include "util.h"
-#include "georeferencing.h"
-#include "georeferencing_dialog.h"
 
 TemplateImage::TemplateImage(const QString& path, Map* map) : Template(path, map)
 {
@@ -145,7 +145,7 @@ bool TemplateImage::postLoadConfiguration(QWidget* dialog_parent, bool& out_cent
 			
 			Georeferencing initial_georef(map->getGeoreferencing());
 			if (template_coords_probably_geographic)
-				initial_georef.setGeographicRefPoint(LatLon(template_coords_center.y(), template_coords_center.x(), true));
+				initial_georef.setGeographicRefPoint(LatLon(template_coords_center.y(), template_coords_center.x()));
 			else
 				initial_georef.setProjectedRefPoint(template_coords_center);
 			initial_georef.setState(Georeferencing::ScaleOnly);

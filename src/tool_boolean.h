@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2014 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -25,6 +26,7 @@
 
 #include <QHash>
 
+#undef CLIPPER_VERSION
 #include <clipper.hpp>
 #include "object.h"
 
@@ -33,127 +35,198 @@ class PathObject;
 class PathCoord;
 
 /**
- * Wraps some helper functions for boolean operations using the Clipper library
- * ( http://www.angusj.com/delphi/clipper.php ) which are presented as separate
- * tools in the UI.
+ * Wraps some helper functions for boolean operations.
  * 
- * As Clipper does not support bezier curves, the areas are clipped as polygonal
- * approximations and it is tried to rebuild the curves afterwards.
+ * The implementation of the boolean operation tools is based on the Clipper
+ * library (aka libpolyclipping) (http://www.angusj.com/delphi/clipper.php).
+ * 
+ * Because Clipper does not support bezier curves, areas are clipped as
+ * polygonal approximations, and after clipping we try to rebuild the curves.
+ * 
+ * @todo This class should get unit tests.
  */
 class BooleanTool
 {
 public:
+	/**
+	 * A list of PathObject elements.
+	 */
 	typedef std::vector< PathObject* > PathObjects;
 	
+	/**
+	 * Types of boolean operation.
+	 */
 	enum Operation
 	{
-		Union = 0,
+		Union,
 		Intersection,
 		Difference,
 		XOr,
 		MergeHoles
 	};
 	
-	/** Constructs a boolean tool for the given map. */
-	BooleanTool(Map* map);
-	
-	/** Executes the boolean tool on the selected objects in the map. */
-	bool execute(Operation op);
+	/**
+	 * Constructs a tool for the given operation and map.
+	 * 
+	 * map must be NULL.
+	 */
+	BooleanTool(Operation op, Map* map);
 	
 	/**
-	 * Executes the given operation on in_objects, returning the result in out_objects.
-	 * subject is the main affected object and must be contained in in_objects.
-	 * The symbol of the returned objects will be result_objects_symbol.
+	 * Executes the operation on the selected objects in the map.
+	 * 
+	 * The first selected object is treated special and must be a path.
 	 */
-	bool executeForObjects(Operation op, PathObject* subject,
-		Symbol* result_objects_symbol, PathObjects& in_objects,
-		PathObjects& out_objects);
+	bool execute();
 	
 	/**
-	 * Takes a line as subject.
-	 * Only the Intersection and Difference operations are implemented for now.
+	 * Executes the operation on particular objects.
+	 * 
+	 * @param subject               The primary affected object.
+	 * @param result_objects_symbol Determines the symbol of the returned objects.
+	 * @param in_objects            All objects to operate on. Must contain subject.
+	 * @param out_objects           The resulting collection of objects.
 	 */
-	void executeForLine(Operation op, PathObject* area, PathObject* line,
-		PathObjects& out_objects);
+	bool executeForObjects(
+	        PathObject* subject,
+	        Symbol* result_objects_symbol,
+	        PathObjects& in_objects,
+	        PathObjects& out_objects );
+	
+	/**
+	 * Executes the Intersection and Difference operation on the given line object.
+	 * 
+	 * @param area                  The primary object, here defining a boundary.
+	 * @param line                  The line object to operate on.
+	 * @param out_objects           The resulting collection of objects.
+	 */
+	void executeForLine(
+	        PathObject* area,
+	        PathObject* line,
+	        PathObjects& out_objects );
 	
 private:
-	typedef QHash< Symbol*, PathObjects > ObjectGroups;
 	typedef std::pair< PathObject::PathPart*, const PathCoord* > PathCoordInfo;
 	
-	/** Converts a PolyTree to a list of PathObjects. */
-	void polyTreeToPathObjects(const ClipperLib::PolyTree& tree,
-		PathObjects& out_objects, Symbol* result_objects_symbol,
-		QHash< qint64, PathCoordInfo >& polymap);
-
-	/** Converts a PolyNode representing an outer polygon (not a hole) to an object,
-	 *  and recursively calls this method again for all outer children. */
-	void outerPolyNodeToPathObjects(const ClipperLib::PolyNode& node,
-		PathObjects& out_objects, Symbol* result_objects_symbol,
-		QHash< qint64, PathCoordInfo >& polymap);
+	typedef QHash< ClipperLib::IntPoint, PathCoordInfo > PolyMap;
 	
 	/**
-	 * Reconstructs the given clipper polygon, filling the object pointer
-	 * with coordinates.
+	 * Converts a ClipperLib::PolyTree to PathObjects.
+	 * 
+	 * @see BooleanTool::outerPolyNodeToPathObjects()
+	 */
+	void polyTreeToPathObjects(
+	        const ClipperLib::PolyTree& tree,
+	        PathObjects& out_objects,
+	        Symbol* result_objects_symbol,
+	        PolyMap& polymap );
+
+	/**
+	 * Converts a ClipperLib::PolyNode to PathObjects.
+	 * 
+	 * The given ClipperLib::PolyNode must represent an outer polygon, not a hole.
+	 * 
+	 * This method operates recursively on all outer children.
+	 */
+	void outerPolyNodeToPathObjects(
+	        const ClipperLib::PolyNode& node,
+	        PathObjects& out_objects,
+	        Symbol* result_objects_symbol,
+	        PolyMap& polymap );
+	
+	/**
+	 * Constructs ClipperLib::Paths from a PathObject.
+	 */
+	static void PathObjectToPolygons(
+	        PathObject* object,
+	        ClipperLib::Paths& polygons,
+	        PolyMap& polymap );
+	
+	/**
+	 * Reconstructs a PathObject from a polygon given as ClipperLib::Path.
 	 * 
 	 * Curves are reconstructed with the help of the polymap, mapping locations
 	 * to path coords of the original objects.
 	 */
-	void polygonToPathPart(const ClipperLib::Polygon& polygon,
-		QHash< qint64, PathCoordInfo >& polymap, PathObject* object);
+	static void polygonToPathPart(const ClipperLib::Path& polygon,
+	        const PolyMap& polymap,
+	        PathObject* object );
 	
 	/**
 	 * Tries to reconstruct a straight or curved segment with given start and
 	 * end indices from the polygon.
 	 * The first coordinate of the segment is assumed to be already added.
 	 */
-	void rebuildSegment(int start_index, int end_index, bool have_sequence,
-		bool sequence_increasing, const ClipperLib::Polygon& polygon,
-		QHash< qint64, PathCoordInfo >& polymap, PathObject* object);
+	static void rebuildSegment(
+	        int start_index,
+	        int end_index,
+	        bool have_sequence,
+	        bool sequence_increasing,
+	        const ClipperLib::Path& polygon,
+	        const PolyMap& polymap,
+	        PathObject* object );
 	
-	/** Approximates a curved segment from the result polygon alone. */
-	void rebuildSegmentFromPolygonOnly(const ClipperLib::IntPoint& start_point,
-		const ClipperLib::IntPoint& second_point,
-		const ClipperLib::IntPoint& second_last_point,
-		const ClipperLib::IntPoint& end_point, PathObject* object);
+	/**
+	 * Approximates a curved segment from the result polygon alone.
+	 */
+	static void rebuildSegmentFromPathOnly(
+	        const ClipperLib::IntPoint& start_point,
+	        const ClipperLib::IntPoint& second_point,
+	        const ClipperLib::IntPoint& second_last_point,
+	        const ClipperLib::IntPoint& end_point,
+	        PathObject* object );
 	
-	/** Special case of rebuildSegment() for straight or very short lines. */
-	void rebuildTwoIndexSegment(int start_index, int end_index,
-		bool have_sequence, bool sequence_increasing,
-		const ClipperLib::Polygon& polygon,
-		QHash< qint64, PathCoordInfo >& polymap,
-		PathObject* object);
+	/**
+	 * Special case of rebuildSegment() for straight or very short lines.
+	 */
+	static void rebuildTwoIndexSegment(
+	        int start_index,
+	        int end_index,
+	        bool sequence_increasing,
+	        const ClipperLib::Path& polygon,
+	        const PolyMap& polymap,
+	        PathObject* object );
 	
 	/**
 	 * Reconstructs one polygon coordinate and adds it to the object.
+	 * 
 	 * Uses the polymap to check whether the coorinate should be a dash point.
 	 */
-	void rebuildCoordinate(int index, const ClipperLib::Polygon& polygon,
-		QHash< qint64, PathCoordInfo >& polymap, PathObject* object,
-		bool start_new_part = false);
-	
-	/** Removes flags from the coordinate to be able to use it in the reconstruction. */
-	MapCoord convertOriginalCoordinate(MapCoord in);
+	static void rebuildCoordinate(
+	        int index,
+	        const ClipperLib::Path& polygon,
+	        const PolyMap& polymap,
+	        PathObject* object,
+	        bool start_new_part = false );
 	
 	/**
-	 * Compares the points between the given indices from the polygon to the original at coord_index.
+	 * Compares a PathObject segment to a ClipperLib::Path polygon segment.
+	 * 
 	 * Returns true if the segments match. In this case, the out_... parameters are set.
+	 * 
+	 * @param original      The original PathObject.
+	 * @param coord_index   The index of the segment start at the original.
+	 * @param polygon       The ClipperLib::Path polygon.
+	 * @param start_index   The start of the segement at the polygon.
+	 * @param end_index     The end of the segment at the polygon.
+	 * @param out_coords_increasing If the segments match, will be set to
+	 *                      either true if a matching segment's point at coord_index corresponds to the point at start_index,
+	 *                      or false otherwise.
+	 * @param out_is_curve  If the segments match, will be set to
+	 *                      either true if the original segment is a curve,
+	 *                      or false otherwise.
 	 */
-	bool check_segment_match(int coord_index, PathObject* original,
-		const ClipperLib::Polygon& polygon, int start_index, int end_index,
-		bool& out_coords_increasing, bool& out_is_curve);
+	static bool checkSegmentMatch(
+	        PathObject* original,
+	        int coord_index,
+	        const ClipperLib::Path& polygon,
+	        int start_index,
+	        int end_index,
+	        bool& out_coords_increasing,
+	        bool& out_is_curve );
 	
-	/**
-	 * Stores a Clipper IntPoint in a qint64. These are used as keys in a hash map.
-	 * Assumes that the coordinates are in 32 bit range.
-	 */
-	inline qint64 intPointToQInt64(const ClipperLib::IntPoint& point)
-	{
-		return (point.X & 0xffffffff) | (point.Y << 32);
-	}
-	
-	/** Objects to process, sorted by symbol */
-	ObjectGroups object_groups;
-	Map* map;
+	const Operation op;
+	Map* const map;
 };
 
 #endif

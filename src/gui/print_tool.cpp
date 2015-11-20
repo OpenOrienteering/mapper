@@ -22,7 +22,6 @@
 
 #include "print_tool.h"
 
-#include <QApplication>
 #include <QMouseEvent>
 #include <QPainter>
 
@@ -51,6 +50,8 @@ void PrintTool::init()
 {
 	setStatusBarText(tr("<b>Drag</b>: Move the map, the print area or the area's borders. "));
 	updatePrintArea();
+	
+	MapEditorTool::init();
 }
 
 QCursor* PrintTool::getCursor()

@@ -39,7 +39,7 @@ class PaintOnTemplateTool : public MapEditorTool
 {
 Q_OBJECT
 public:
-	PaintOnTemplateTool(MapEditorController* editor, QAction* tool_button, Template* temp);
+	PaintOnTemplateTool(MapEditorController* editor, QAction* tool_action, Template* temp);
 	virtual ~PaintOnTemplateTool();
 	
 	virtual void init();

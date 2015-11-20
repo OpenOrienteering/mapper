@@ -175,10 +175,6 @@ protected slots:
 	/** This slot reacts to changes of the "Show grid" option. */
 	void showGridClicked(bool checked);
 	
-	/** This sets the enabled state of the overprinting simulation option.
-	 *  When the options gets disabled, it will also become unchecked. */
-	void setOverprintingCheckEnabled(bool enabled);
-	
 	/** This slot reacts to changes of the "Simulate overprinting" option. */
 	void overprintingClicked(bool checked);
 	

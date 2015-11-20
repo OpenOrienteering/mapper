@@ -31,7 +31,7 @@ class DrawCircleTool : public DrawLineAndAreaTool
 {
 Q_OBJECT
 public:
-	DrawCircleTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget);
+	DrawCircleTool(MapEditorController* editor, QAction* tool_action, bool is_helper_tool);
 	virtual ~DrawCircleTool();
 	
 	virtual void init();

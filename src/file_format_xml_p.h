@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Pete Curtis, Kai Pastor
+ *    Copyright 2014 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -63,6 +64,8 @@ public:
 
 protected:
 	virtual void import(bool load_symbols_only) throw (FileFormatException);
+	
+	void importElements(bool load_symbols_only) throw (FileFormatException);
 	
 	void addWarningUnsupportedElement();
 	void importGeoreferencing(bool load_symbols_only);

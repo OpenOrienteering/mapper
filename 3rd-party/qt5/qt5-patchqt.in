@@ -19,7 +19,7 @@
 
 cd "@SOURCE_DIR@"
 
-PRETTY_DATE=$(date --rfc-3339=date)
+PRETTY_DATE=$(date +%Y-%m-%d)
 OO_LOG=OpenOrienteering/CHANGES.txt
 
 mkdir -p OpenOrienteering
@@ -58,10 +58,12 @@ for I in \
   qtbase/src/sql/drivers/psql \
   qtbase/src/sql/drivers/sqlite2 \
   qtbase/src/sql/drivers/tds \
+  qtconnectivity \
   qtdoc/demos \
   qtdoc/doc/images \
   qtdoc/doc/snippets \
   qtdoc/doc/src/* \
+  qtenginio \
   qtgraphicaleffects \
   qtimageformats/src/3rdparty/libmng* \
   qtimageformats/src/3rdparty/patches/libmng* \
@@ -69,6 +71,7 @@ for I in \
   qtimageformats/src/plugins/imageformats/tga/* \
   qtimageformats/src/plugins/imageformats/wbmp/* \
   qtjsbackend \
+  qtlocation/src/positioning/doc/snippets/* \
   qtmultimedia \
   qtquick1 \
   qtquickcontrols \
@@ -82,6 +85,7 @@ for I in \
   qtwebkit \
   qtwebkit-examples \
   qtwebkit-examples-and-demos \
+  qtwebsockets \
   qtxmlpatterns
 do
     if [ -d "./$I" ]
@@ -91,6 +95,8 @@ do
             ;; # Retain qtbase/doc/global
         qtdoc/doc|qtdoc/doc/src/legal)
             ;; # Retain qtdoc/doc/src/legal
+		qt*/src/*/doc/snippets)
+            ;; # Retain snippets, may have snippets.pro
         *)
             rm -R "./$I" ;;
         esac
@@ -117,7 +123,14 @@ for I in \
   "@PROJECT_SOURCE_DIR@"/patches/qt-@QT5_MAJOR_MINOR_REVISION@-[1-9]*.patch
 do
     PATCH=$(basename "$I")
-    if [ ! -f "OpenOrienteering/patches/$PATCH" -a -f "$I" ]
+	if [ ! -e "$I" ]
+	then
+		true # no patch
+	elif [ ! -f "$I" ]
+	then
+		echo "Unknown element $I"
+	    exit 1
+    elif [ ! -f "OpenOrienteering/patches/$PATCH" ]
     then
         # Apply normally
         patch -p1 < "$I"
@@ -138,7 +151,10 @@ done
 for I in OpenOrienteering/patches/*
 do
     PATCH=$(basename "$I")
-    if [ ! -f "$I" ]
+	if [ ! -e "$I" ]
+	then
+		true # no patch
+	elif [ ! -f "$I" ]
     then
         echo "Unknown element $I"
         exit 1
@@ -159,10 +175,3 @@ fi
 
 # [4] Create an archive of the remaining source code
 ( cd .. && tar czf qt-everywhere-opensource-src-@QT5_MAJOR_MINOR_REVISION@-openorienteering-$PRETTY_DATE.tar.gz Qt5 )
-
-# [5] Placeholder Makefile for initial "make confclean"
-if [ ! -f "@BINARY_DIR@/qtbase/Makefile" ]
-then
-	mkdir -p "@BINARY_DIR@/qtbase"
-	echo "confclean:" > "@BINARY_DIR@/qtbase/Makefile"
-fi

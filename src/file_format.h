@@ -40,7 +40,7 @@ public:
 	/** Creates a new exception with the given message
 	 *  \param message a text describing the exceptional event that has occured.
 	 */
-	FileFormatException(const QString& message = QString()) throw();
+	FileFormatException(const QString& message = QString());
 	
 	/** Copy-constructor (C++ FAQ 17.17).
 	 */
@@ -52,14 +52,15 @@ public:
 	
 	/** Returns the message as a QString. 
 	 */
-	inline const QString& message() const throw();
+	const QString& message() const throw();
 	
 	/** Returns the message as a C string.
 	 */
 	virtual const char* what() const throw();
 	
 private:
-	QString msg;
+	QString const msg;
+	QByteArray const msg_c;
 };
 
 
@@ -219,8 +220,9 @@ private:
 // ### FileFormatException inline and header code ###
 
 inline
-FileFormatException::FileFormatException(const QString& message) throw()
+FileFormatException::FileFormatException(const QString& message)
  : msg(message)
+ , msg_c(message.toLocal8Bit())
 {
 	// Nothing
 }
@@ -228,6 +230,7 @@ FileFormatException::FileFormatException(const QString& message) throw()
 inline
 FileFormatException::FileFormatException(const FileFormatException& other) throw()
  : msg(other.msg)
+ , msg_c(other.msg_c)
 {
 	// Nothing
 }

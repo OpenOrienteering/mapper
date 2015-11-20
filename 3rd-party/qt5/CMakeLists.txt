@@ -25,10 +25,22 @@ include(ExternalProject)
 
 # Configuration options
 
-set(QT5_VERSION_DEFAULT 5.2.1-openorienteering-2014-03-30)
+set(QT5_VERSION_DEFAULT 5.3.1-openorienteering-2014-07-26)
 set(QT5_VERSION ${QT5_VERSION_DEFAULT} CACHE STRING
   "Version number of the Qt5 library, recommended value: ${QT5_VERSION_DEFAULT}")
 mark_as_advanced(QT5_VERSION)
+
+
+if(NOT MAPPER_LIBRARY_DESTINATION AND CMAKE_BUILD_TYPE MATCHES "Debug")
+	# stand-alone debug build of Qt5
+	set(QT5_DEBUG_DEFAULT On)
+else()
+	set(QT5_DEBUG_DEFAULT Off)
+endif()
+set(QT5_DEBUG ${QT5_DEBUG_DEFAULT} CACHE BOOL
+  "Enable debug build of Qt"
+)
+mark_as_advanced(QT5_DEBUG)
 
 message(STATUS "Configuring Qt ${QT5_VERSION}")
  
@@ -42,7 +54,9 @@ set(QT5_MD5SUMS
   # Schema: VERSION:MD5[:DOWNLOAD_URL]
   5.2.0:228b6384dfd7272de00fd8b2c144fecd
   5.2.1:a78408c887c04c34ce615da690e0b4c8
-  5.2.1-openorienteering-2014-03-30:40741bc1ffdaa623fda1d03876252f45:http://sourceforge.net/projects/oorienteering/files/Mapper/Source/3rd-party/qt-5.2.1-openorienteering-2014-03-30.tar.gz
+  5.3.0:5e6fc156e9542a2ad2abcb54a8b48069
+  5.3.1:a355749e4f200a6392ecad151d1d0cdc
+  5.3.1-openorienteering-2014-07-26:8c94ddae47ccbf7b4335e61c40272bc8:http://sourceforge.net/projects/oorienteering/files/Mapper/Source/3rd-party/qt-everywhere-opensource-src-5.3.1-openorienteering-2014-07-26.tar.gz
 )
 foreach(line ${QT5_MD5SUMS})
 	if(${line} MATCHES "^${QT5_VERSION}:")
@@ -59,6 +73,8 @@ endif()
 
 string(REGEX MATCH "5.." QT5_MAJOR_MINOR ${QT5_VERSION})
 string(REGEX MATCH "5...." QT5_MAJOR_MINOR_REVISION ${QT5_VERSION})
+set(QT5_MAJOR_MINOR_REVISION ${QT5_MAJOR_MINOR_REVISION} CACHE STRING
+  "The Qt version number without additional release markers" FORCE) # Export
 if(QT5_MD5 MATCHES :)
 	message(WARNING "Not using an official release of Qt.")
 	string(REGEX REPLACE "^[0-9a-fA-F]*:" "" QT5_URL "${QT5_MD5}")
@@ -96,6 +112,10 @@ else()
 	set(QT5_CONFIG_SCRIPT qt5-config)
 	set(QT5_CONFIG_COMMAND "${SH_PROGRAM}" -l -e ${CMAKE_CURRENT_BINARY_DIR}/${QT5_CONFIG_SCRIPT})
 	set(QT5_SOURCE_CONFIG )
+	if(MINGW AND CMAKE_CROSSCOMPILING AND NOT QT5_PLATFORM)
+		string(REGEX REPLACE gcc\$ "" QT5_CROSS_COMPILE ${CMAKE_C_COMPILER})
+		set(QT5_PLATFORM "-xplatform win32-g++ -device-option CROSS_COMPILE='${QT5_CROSS_COMPILE}'")
+	endif()
 endif()
 
 # Build definition
@@ -112,7 +132,7 @@ add_custom_command(OUTPUT ${QT5_CONFIG_SCRIPT}
   DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/${QT5_CONFIG_SCRIPT}.new
 )
 
-if(UNIX AND NOT APPLE AND NOT "${QT5_PLATFORM}" MATCHES "android")
+if(UNIX AND NOT APPLE AND MAPPER_LIBRARY_DESTINATION)
 	set(QT5_INSTALL_ROOT "INSTALL_ROOT=<INSTALL_DIR>")
 endif()
 ExternalProject_Add(Qt5
@@ -165,35 +185,63 @@ endif()
 
 # Build script configuration
 
-if("${MAPPER_LIBRARY_DESTINATION}" STREQUAL .)
-	set(QT5_BINARY_DESTINATION "/binary")
-elseif(NOT ${MAPPER_LIBRARY_DESTINATION} MATCHES "^/")
-	set(QT5_BINARY_DESTINATION "/binary/${MAPPER_LIBRARY_DESTINATION}")
+# Debug or release build
+if (QT5_DEBUG)
+	set(QT5_CONFIG_EXTRA_OPTS "-debug -qml-debug ${QT5_CONFIG_EXTRA_OPTS}")
 else()
-	set(QT5_BINARY_DESTINATION "${MAPPER_LIBRARY_DESTINATION}")
+	set(QT5_CONFIG_EXTRA_OPTS "-release -no-qml-debug ${QT5_CONFIG_EXTRA_OPTS}")
 endif()
-set(QT5_PLUGINS_DESTINATION "${QT5_BINARY_DESTINATION}/plugins")
-if("${MAPPER_DATA_DESTINATION}" STREQUAL .)
-	set(QT5_DATA_DESTINATION "/data")
-elseif(NOT ${MAPPER_DATA_DESTINATION} MATCHES "^/")
-	set(QT5_DATA_DESTINATION "/data/${MAPPER_DATA_DESTINATION}")
+
+# Paths
+if(NOT MAPPER_LIBRARY_DESTINATION)
+	# stand-alone build of Qt5
+	set(QT5_BINARY_DESTINATION  "")
+	set(QT5_PLUGINS_DESTINATION "/plugins")
+elseif(MAPPER_LIBRARY_DESTINATION MATCHES "^/")
+	# absolute path
+	set(QT5_BINARY_DESTINATION  "${MAPPER_LIBRARY_DESTINATION}")
+	set(QT5_PLUGINS_DESTINATION "${MAPPER_LIBRARY_DESTINATION}/plugins")
+elseif(MAPPER_LIBRARY_DESTINATION STREQUAL ".")
+	# .
+	set(QT5_BINARY_DESTINATION  "/binary")
+	set(QT5_PLUGINS_DESTINATION "/binary/plugins")
 else()
+	# relative path other than .
+	set(QT5_BINARY_DESTINATION  "/binary/${MAPPER_LIBRARY_DESTINATION}")
+	set(QT5_PLUGINS_DESTINATION "/binary/${MAPPER_LIBRARY_DESTINATION}/plugins")
+endif()
+if(NOT MAPPER_DATA_DESTINATION)
+	# stand-alone build of Qt5
+	set(QT5_DATA_DESTINATION "")
+elseif(MAPPER_DATA_DESTINATION MATCHES "^/")
+	# absolute path
 	set(QT5_DATA_DESTINATION "${MAPPER_DATA_DESTINATION}")
+elseif(MAPPER_DATA_DESTINATION STREQUAL .)
+	# .
+	set(QT5_DATA_DESTINATION "/data")
+else()
+	# relative path other than .
+	set(QT5_DATA_DESTINATION "/data/${MAPPER_DATA_DESTINATION}")
 endif()
+
 # Cached only for export, not for reuse
 set(QT5_DIR "${INSTALL_DIR}${QT5_BINARY_DESTINATION}" CACHE INTERNAL
   "The Qt5 target platform directory." FORCE)
-set(QT_TRANSLATIONS_DIR "${INSTALL_DIR}/${QT5_DATA_DESTINATION}/translations" CACHE INTERNAL
+set(QT_TRANSLATIONS_DIR "${INSTALL_DIR}${QT5_DATA_DESTINATION}/translations" CACHE INTERNAL
   "The Qt5 translation directory." FORCE)
+
+if(NOT QT5_INSTALL_ROOT)
+	set(QT5_BINARY_DESTINATION "${INSTALL_DIR}${QT5_BINARY_DESTINATION}")
+	set(QT5_PLUGINS_DESTINATION "${INSTALL_DIR}${QT5_PLUGINS_DESTINATION}")
+	set(QT5_DATA_DESTINATION "${INSTALL_DIR}${QT5_DATA_DESTINATION}")
+endif()
+
+# Extra configuration options
 if(QT5_INSTALL_ROOT AND NOT "${QT5_PLATFORM}" MATCHES "android")
 	set(QT5_CONFIG_EXTRA_OPTS "-R '${QT5_BINARY_DESTINATION}/lib' ${QT5_CONFIG_EXTRA_OPTS}")
 	if(Mapper_DEVELOPMENT_BUILD)
 		set(QT5_CONFIG_EXTRA_OPTS "-R '${INSTALL_DIR}${QT5_BINARY_DESTINATION}/lib' ${QT5_CONFIG_EXTRA_OPTS}")
 	endif()
-else()
-	set(QT5_BINARY_DESTINATION "${INSTALL_DIR}${QT5_BINARY_DESTINATION}")
-	set(QT5_PLUGINS_DESTINATION "${INSTALL_DIR}${QT5_PLUGINS_DESTINATION}")
-	set(QT5_DATA_DESTINATION "${INSTALL_DIR}${QT5_DATA_DESTINATION}")
 endif()
 if(APPLE)
 	set(QT5_CONFIG_EXTRA_OPTS "${QT5_CONFIG_EXTRA_OPTS} -no-framework")
@@ -202,12 +250,14 @@ if(UNIX AND NOT APPLE AND NOT "${QT5_PLATFORM}" MATCHES "android")
 	set(QT5_CONFIG_ENVIRONMENT "LDFLAGS=-Wl,--enable-new-dtags")
 	set(QT5_CONFIG_EXTRA_OPTS "${QT5_CONFIG_EXTRA_OPTS} -qt-xcb")
 endif()
-if (CMAKE_CROSSCOMPILING)
-	set(QT5_HOST_DIR "${INSTALL_DIR}/local" CACHE INTERNAL
-	  "The Qt5 host platform directory." FORCE)
+if(${QT5_VERSION} MATCHES "5.[0-2]")
+	set(QT5_CONFIG_EXTRA_OPTS "${QT5_CONFIG_EXTRA_OPTS} -no-javascript-jit")
+endif()
+if("${QT5_PLATFORM}" MATCHES "android")
+	# cf. https://bugreports.qt-project.org/browse/QTBUG-38452
+	set(QT5_CONFIG_EXTRA_OPTS "${QT5_CONFIG_EXTRA_OPTS} -nomake tools")
 else()
-	set(QT5_HOST_DIR ${QT5_DIR} CACHE INTERNAL
-	  "The Qt5 host platform directory." FORCE)
+	set(QT5_CONFIG_EXTRA_OPTS "${QT5_CONFIG_EXTRA_OPTS} -make tools")
 endif()
 
 configure_file(qt5-patchqt.in qt5-patchqt.new @ONLY)
@@ -216,31 +266,7 @@ configure_file(qt5-make.in qt5-make @ONLY)
 configure_file(qt.conf.in qt.conf @ONLY)
 configure_file(qt.conf.qrc.in qt.conf.qrc @ONLY)
 
-# cf. https://bugreports.qt-project.org/browse/QTBUG-32641 :
-# Qt 5.1.0 Release SVG module won't build on Linux when using qt-zlib
-if(UNIX AND NOT APPLE AND ${QT5_VERSION} MATCHES "5.1.[0-1]")
-	execute_process(
-	  COMMAND sed -i -e /-qt-zlib/d ${QT5_CONFIG_SCRIPT}.new
-	  WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}" )
-endif()
-
-if(NOT ${QT5_VERSION} MATCHES "5.[0-1]")
-	execute_process(
-	  COMMAND sed -i -e /-no-gstreamer/d ${QT5_CONFIG_SCRIPT}.new
-	  WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}" )
-endif()
-
 if(UNIX AND QT5_INSTALL_ROOT AND NOT "${QT5_PLATFORM}" MATCHES "android")
-	# Wrappers which set LD_LIBRARY_PATH.
-	configure_file(qt5-wrapper.in qcollectiongenerator @ONLY)
-	configure_file(qt5-wrapper.in lupdate @ONLY)
-	execute_process(
-	  COMMAND chmod +x qcollectiongenerator lupdate
-	  WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}" )
-	set(QT_QCOLLECTIONGENERATOR_EXECUTABLE "${CMAKE_CURRENT_BINARY_DIR}/qcollectiongenerator"
-	  CACHE PATH "The qcollectiongenerator wrapper.")
-	set(QT_LUPDATE_EXECUTABLE "${CMAKE_CURRENT_BINARY_DIR}/lupdate"
-	  CACHE PATH "The lupdate wrapper.")
 	file(WRITE "${INSTALL_DIR}${QT5_BINARY_DESTINATION}/bin/qt.conf"
 	  "[Paths]\n"
 	  "Plugins=${INSTALL_DIR}${QT5_PLUGINS_DESTINATION}\n"
@@ -260,22 +286,28 @@ function(WRITE_QT_CONF)
 endfunction()
 
 # Cross-compiling requires an extra host build in order to get 
-# qcollectiongenerator (required) and lupdate (optional)
+# qcollectiongenerator.
+# In addition, Linux may have trouble with loading the correct platform plugin
+# version when building a newer Qt version than installed.
 
-if(CMAKE_CROSSCOMPILING AND NOT "${QT5_PLATFORM}" MATCHES "android")
-	set(QT5_EXTRA_HOST_DIR "${BINARY_DIR}/../${PROJECT_NAME}-build-host")
-	if(NOT EXISTS "${QT5_EXTRA_HOST_DIR}/qtbase/Makefile")
-		# Required for initial confclean-host
-		file(MAKE_DIRECTORY "${QT5_EXTRA_HOST_DIR}/qtbase")
-		file(WRITE "${QT5_EXTRA_HOST_DIR}/qtbase/Makefile" "confclean:")
-	endif()
+if((UNIX AND NOT APPLE) OR (CMAKE_CROSSCOMPILING AND NOT "${QT5_PLATFORM}" MATCHES "android"))
+	set(QT5_EXTRA_HOST_DIR "${BINARY_DIR}/../Qt5-build-host")
+	
 	configure_file(qt5-config-host.in qt5-config-host.new @ONLY)
+	if(NOT ${QT5_VERSION} MATCHES "5.[0-2]")
+		execute_process(
+		  COMMAND sed -i -e /-no-javascript-jit/d qt5-config-host.new
+		  WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}" )
+	endif()
+	
 	add_custom_command(OUTPUT qt5-config-host
 	  COMMAND ${CMAKE_COMMAND} -E copy_if_different qt5-config-host.new qt5-config-host
 	  DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/qt5-config-host.new
 	)
 	ExternalProject_Add_Step(Qt5 confclean-host
-	  COMMAND ${QT5_MAKE_COMMAND} -C "${QT5_EXTRA_HOST_DIR}/qtbase" confclean
+	  COMMAND ${CMAKE_COMMAND} -E make_directory "${QT5_EXTRA_HOST_DIR}"
+	  COMMAND ${CMAKE_COMMAND} -E remove_directory "${QT5_EXTRA_HOST_DIR}"
+	  COMMAND ${CMAKE_COMMAND} -E make_directory "${QT5_EXTRA_HOST_DIR}"
 	  DEPENDEES patch
 	  DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/qt5-config-host
 	)
@@ -285,14 +317,25 @@ if(CMAKE_CROSSCOMPILING AND NOT "${QT5_PLATFORM}" MATCHES "android")
 	  WORKING_DIRECTORY "${QT5_EXTRA_HOST_DIR}"
 	)
 	ExternalProject_Add_Step(Qt5 build-host
-	  COMMAND ${QT5_MAKE_COMMAND} -C "${QT5_EXTRA_HOST_DIR}"
+	  COMMAND ${QT5_MAKE_COMMAND} -C "${QT5_EXTRA_HOST_DIR}" module-qtdeclarative
+	  COMMAND ${QT5_MAKE_COMMAND} -C "${QT5_EXTRA_HOST_DIR}" module-qttools-qmake_all
+	  COMMAND ${QT5_MAKE_COMMAND} -C "${QT5_EXTRA_HOST_DIR}/qttools/src/assistant" sub-qcollectiongenerator
 	  DEPENDEES configure-host
 	)
 	ExternalProject_Add_Step(Qt5 install-host
-	  COMMAND ${QT5_MAKE_COMMAND} -C "${QT5_EXTRA_HOST_DIR}" install
+	  # not needed: COMMAND ${QT5_MAKE_COMMAND} -C "${QT5_EXTRA_HOST_DIR}/qttools/src/assistant" sub-qcollectiongenerator-install_subtargets
 	  DEPENDEES build-host
 	  DEPENDERS install
 	)
+	
+	if(NOT TARGET Qt5::qcollectiongenerator)
+		add_executable(Qt5::qcollectiongenerator IMPORTED GLOBAL)
+		set(imported_location ${QT5_EXTRA_HOST_DIR}/qttools/bin/qcollectiongenerator)
+		set_target_properties(Qt5::qcollectiongenerator PROPERTIES
+			IMPORTED_LOCATION ${imported_location}
+		)
+		add_dependencies(Qt5::qcollectiongenerator Qt5)
+	endif()
 elseif(CMAKE_CROSSCOMPILING AND "${QT5_PLATFORM}" MATCHES "android")
 	execute_process(
 	  COMMAND sed -i -e "/-plugindir /d;/-datadir /d" ${QT5_CONFIG_SCRIPT}.new
@@ -303,4 +346,3 @@ endif()
 set_target_properties(Qt5 PROPERTIES XCODE_ATTRIBUTE_INSTALL_ROOT "")
 
 message(STATUS "Configuring Qt ${QT5_VERSION} - done")
- 

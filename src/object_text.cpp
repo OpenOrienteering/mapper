@@ -183,6 +183,30 @@ void TextObject::setBox(qint64 mid_x, qint64 mid_y, double width, double height)
 	setOutputDirty();
 }
 
+std::vector<QPointF> TextObject::controlPoints() const
+{
+	const QPointF anchor = getAnchorCoordF().toQPointF();
+	std::vector<QPointF> handles(4, anchor);
+	
+	if (hasSingleAnchor())
+	{
+		handles.resize(1);
+	}
+	else
+	{
+		QTransform transform;
+		transform.rotate(-180.0 * getRotation() / M_PI);
+		
+		handles[0] += transform.map(QPointF(+getBoxWidth() / 2, -getBoxHeight() / 2));
+		handles[1] += transform.map(QPointF(+getBoxWidth() / 2, +getBoxHeight() / 2));
+		handles[2] += transform.map(QPointF(-getBoxWidth() / 2, +getBoxHeight() / 2));
+		handles[3] += transform.map(QPointF(-getBoxWidth() / 2, -getBoxHeight() / 2));
+	}
+	
+	return handles;
+}
+
+
 QTransform TextObject::calcTextToMapTransform() const
 {
 	TextSymbol* text_symbol = reinterpret_cast<TextSymbol*>(symbol);

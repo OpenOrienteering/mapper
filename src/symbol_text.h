@@ -94,6 +94,7 @@ public:
 	
 	// Getters
 	inline const MapColor* getColor() const {return color;}
+	inline void setColor(const MapColor* color) {this->color = color;}
 	inline const QString& getFontFamily() const {return font_family;}
 	inline double getFontSize() const {return 0.001 * font_size;}
 	inline bool isBold() const {return bold;}

@@ -38,13 +38,13 @@ class DrawPointTool : public MapEditorToolBase
 {
 Q_OBJECT
 public:
-	DrawPointTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget);
+	DrawPointTool(MapEditorController* editor, QAction* tool_action);
 	virtual ~DrawPointTool();
 	
 	virtual void leaveEvent(QEvent* event);
 	
 protected slots:
-	void selectedSymbolsChanged();
+	void activeSymbolChanged(Symbol* symbol);
 	void symbolDeleted(int pos, Symbol* old_symbol);
 	
 protected:
@@ -73,7 +73,6 @@ protected:
 	Symbol* last_used_symbol;
 	PointObject* preview_object;
 	QScopedPointer<MapRenderables> renderables;
-	SymbolWidget* symbol_widget;
 	KeyButtonBar* key_button_bar;
 };
 

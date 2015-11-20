@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2012, 2014 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -142,6 +143,8 @@ SymbolSettingDialog::SymbolSettingDialog(Symbol* source_symbol, Map* source_map,
 		right = new QWidget();
 		right->setLayout(preview_layout);
 	}
+	else
+		right->setMinimumWidth(300);
 	
 	QSplitter* splitter = new QSplitter();
 	splitter->addWidget(left);
@@ -461,13 +464,10 @@ void SymbolSettingDialog::reset()
 
 void SymbolSettingDialog::setSymbolModified(bool modified)
 {
-	if (symbol_modified != modified)
-	{
-		symbol_modified = modified;
-		updateSymbolLabel();
-		updatePreview();
-		updateButtons();
-	}
+	symbol_modified = modified;
+	updateSymbolLabel();
+	updatePreview();
+	updateButtons();
 }
 
 void SymbolSettingDialog::updateSymbolLabel()

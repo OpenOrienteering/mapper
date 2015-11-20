@@ -1,5 +1,5 @@
 /*
- *    Copyright 2012, 2013 Kai Pastor
+ *    Copyright 2012, 2013, 2014 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -22,7 +22,7 @@
 
 #include <QtTest/QtTest>
 
-#include "../src/georeferencing.h"
+#include "../src/core/georeferencing.h"
 
 
 /**
@@ -62,7 +62,7 @@ private:
 	/**
 	 * Returns the radian value of a value given in degree or degree/minutes/seconds.
 	 */
-	double radFromDeg(double d, double m=0.0, double s=0.0);
+	double degFromDMS(double d, double m=0.0, double s=0.0);
 	
 	Georeferencing georef;
 	

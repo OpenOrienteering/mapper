@@ -29,6 +29,7 @@
 #include "gui/main_window.h"
 #include "map.h"
 #include "object.h"
+#include "undo_manager.h"
 #include "util.h"
 
 ReplaceSymbolSetDialog::ReplaceSymbolSetDialog(QWidget* parent, Map* map, Map* symbol_map)
@@ -181,7 +182,7 @@ void ReplaceSymbolSetDialog::apply()
 	}
 	
 	// Change symbols for all objects
-	map->operationOnAllObjects(ReplaceSymbolSetOperation(&mapping, &import_symbol_map));
+	map->applyOnAllObjects(ReplaceSymbolSetOperation(&mapping, &import_symbol_map));
 	
 	// Delete unused old symbols
 	if (delete_unused_symbols_check->isChecked())
@@ -221,7 +222,7 @@ void ReplaceSymbolSetDialog::apply()
 	map->updateAllObjects();
 	map->setObjectsDirty();
 	map->setSymbolsDirty();
-	map->objectUndoManager().clear(false);
+	map->undoManager().clear();
 	accept();
 }
 

@@ -1,5 +1,5 @@
 #
-#    Copyright 2012 Thomas Schöps, Kai Pastor
+#    Copyright 2012, 2013, 2014 Thomas Schöps, Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -30,5 +30,6 @@ qt5_wrap_cpp(QSINGLEAPP_MOC ${QSINGLEAPP_MOC_INPUT})
 add_library(QtSingleApplication STATIC ${QSINGLEAPP_SRCS} ${QSINGLEAPP_MOC})
 
 # For super-builds (e.g. cross-compilation), wait for the Qt build.
-add_dependencies(QtSingleApplication Mapper_prerequisites)
-
+if(TARGET Qt5)
+	add_dependencies(QtSingleApplication Qt5)
+endif()

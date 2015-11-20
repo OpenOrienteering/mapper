@@ -23,12 +23,13 @@
 #include "../src/core/map_printer.h"
 #include "../src/file_format_registry.h"
 #include "../src/file_import_export.h"
-#include "../src/georeferencing.h"
+#include "../src/core/georeferencing.h"
 #include "../src/global.h"
 #include "../src/map_grid.h"
 #include "../src/mapper_resource.h"
 #include "../src/object.h"
 #include "../src/template.h"
+#include "../src/undo_manager.h"
 
 
 
@@ -209,8 +210,8 @@ bool FileFormatTest::compareMaps(Map* a, Map* b, QString& error)
 		a_geo.getProjectedCRSId() != b_geo.getProjectedCRSId() ||
 		a_geo.getProjectedCRSName() != b_geo.getProjectedCRSName() ||
 		a_geo.getProjectedCRSSpec() != b_geo.getProjectedCRSSpec() ||
-		a_geo.getGeographicRefPoint().getLatitudeInDegrees() != b_geo.getGeographicRefPoint().getLatitudeInDegrees() ||
-		a_geo.getGeographicRefPoint().getLongitudeInDegrees() != b_geo.getGeographicRefPoint().getLongitudeInDegrees())
+		a_geo.getGeographicRefPoint().latitude() != b_geo.getGeographicRefPoint().latitude() ||
+		a_geo.getGeographicRefPoint().longitude() != b_geo.getGeographicRefPoint().longitude())
 	{
 		error = "The georeferencing differs.";
 		return false;
@@ -332,10 +333,22 @@ bool FileFormatTest::compareMaps(Map* a, Map* b, QString& error)
 	
 	// Undo steps
 	// TODO: Currently only the number of steps is compared here.
-	if (a->objectUndoManager().getNumUndoSteps() != b->objectUndoManager().getNumUndoSteps() ||
-		a->objectUndoManager().getNumRedoSteps() != b->objectUndoManager().getNumRedoSteps())
+	if (a->undoManager().undoStepCount() != b->undoManager().undoStepCount() ||
+		a->undoManager().redoStepCount() != b->undoManager().redoStepCount())
 	{
 		error = "The number of undo / redo steps differs.";
+		return false;
+	}
+	if (a->undoManager().canUndo() &&
+	    a->undoManager().nextUndoStep()->getType() != b->undoManager().nextUndoStep()->getType())
+	{
+		error = "The type of the first undo step is different.";
+		return false;
+	}
+	if (a->undoManager().canRedo() &&
+	    a->undoManager().nextRedoStep()->getType() != b->undoManager().nextRedoStep()->getType())
+	{
+		error = "The type of the first redo step is different.";
 		return false;
 	}
 	

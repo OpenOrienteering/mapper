@@ -29,6 +29,7 @@
 
 #include "map_coord.h"
 #include "path_coord.h"
+#include "tool.h"
 
 QT_BEGIN_NAMESPACE
 class QMouseEvent;
@@ -246,7 +247,7 @@ public:
 	 * Constructs a snapping tool helper. By default it is disabled
 	 * (filter set to NoSnapping).
 	 */
-	SnappingToolHelper(Map* map, SnapObjects filter = NoSnapping);
+	SnappingToolHelper(MapEditorTool* tool, SnapObjects filter = NoSnapping);
 	
 	/** Constrain the objects to snap onto. */
 	void setFilter(SnapObjects filter);
@@ -295,6 +296,8 @@ private:
 	MapCoord snap_mark;
 	
 	Map* map;
+	
+	PointHandles point_handles;
 };
 
 /** Information returned from a snap process from SnappingToolHelper. */

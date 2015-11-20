@@ -1,5 +1,6 @@
 /*
  *    Copyright 2013 Thomas Schöps
+ *    Copyright 2014 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -29,7 +30,7 @@
 #include "symbol_combined.h"
 #include "tool_edit.h"
 #include "util.h"
-#include "map_undo.h"
+#include "object_undo.h"
 #include "tool_boolean.h"
 #include "map_editor.h"
 #include "gui/modifier_key.h"
@@ -44,7 +45,12 @@ CutoutTool::CutoutTool(MapEditorController* editor, QAction* tool_button, bool c
 
 CutoutTool::~CutoutTool()
 {
-	if (editing)
+
+}
+
+void CutoutTool::finishEditing()
+{
+	if (editingInProgress())
 	{
 		if (cutout_object_index >= 0)
 			map()->getCurrentPart()->addObject(cutout_object, cutout_object_index);
@@ -80,7 +86,7 @@ void CutoutTool::drawImpl(QPainter* painter, MapWidget* widget)
 
 	// Box selection
 	if (dragging)
-		EditTool::drawSelectionBox(painter, widget, click_pos_map, cur_pos_map);
+		drawSelectionBox(painter, widget, click_pos_map, cur_pos_map);
 }
 
 bool CutoutTool::keyPress(QKeyEvent* event)
@@ -88,7 +94,7 @@ bool CutoutTool::keyPress(QKeyEvent* event)
 	if (event->key() == Qt::Key_Return)
 	{
 		// Insert cutout object again at its original index to keep the objects order
-		// (necessary no to break undo / redo)
+		// (necessary for not breaking undo / redo)
 		map()->getCurrentPart()->addObject(cutout_object, cutout_object_index);
 		cutout_object_index = -1;
 		
@@ -207,12 +213,12 @@ struct PhysicalCutoutOperation
 			if (object->getSymbol()->getContainedTypes() & Symbol::Area)
 			{
 				// Use the Clipper library to clip the area
-				BooleanTool boolean_tool(map);
+				BooleanTool boolean_tool(cut_away ? BooleanTool::Difference : BooleanTool::Intersection, map);
 				BooleanTool::PathObjects in_objects;
 				in_objects.push_back(cutout_object);
 				in_objects.push_back(object->asPath());
 				BooleanTool::PathObjects out_objects;
-				if (!boolean_tool.executeForObjects(cut_away ? BooleanTool::Difference : BooleanTool::Intersection, object->asPath(), object->getSymbol(), in_objects, out_objects))
+				if (!boolean_tool.executeForObjects(object->asPath(), object->getSymbol(), in_objects, out_objects))
 					return true;
 				
 				add_step->addObject(object, object);
@@ -221,9 +227,9 @@ struct PhysicalCutoutOperation
 			else
 			{
 				// Use some custom code to clip the line
-				BooleanTool boolean_tool(map);
+				BooleanTool boolean_tool(cut_away ? BooleanTool::Difference : BooleanTool::Intersection, map);
 				BooleanTool::PathObjects out_objects;
-				boolean_tool.executeForLine(cut_away ? BooleanTool::Difference : BooleanTool::Intersection, cutout_object, object->asPath(), out_objects);
+				boolean_tool.executeForLine(cutout_object, object->asPath(), out_objects);
 				
 				add_step->addObject(object, object);
 				new_objects.insert(new_objects.end(), out_objects.begin(), out_objects.end());
@@ -274,9 +280,9 @@ struct PhysicalCutoutOperation
 			}
 			else
 			{
-				CombinedUndoStep* combined_step = new CombinedUndoStep((void*)map);
-				combined_step->addSubStep(delete_step);
-				combined_step->addSubStep(add_step);
+				CombinedUndoStep* combined_step = new CombinedUndoStep(map);
+				combined_step->push(add_step);
+				combined_step->push(delete_step);
 				return combined_step;
 			}
 		}
@@ -294,12 +300,12 @@ private:
 void CutoutTool::apply(Map* map, PathObject* cutout_object, bool cut_away)
 {
 	PhysicalCutoutOperation operation(map, cutout_object, cut_away);
-	map->getCurrentPart()->operationOnAllObjects(operation);
+	map->getCurrentPart()->applyOnAllObjects(operation);
 	UndoStep* undo_step = operation.finish();
 	if (undo_step)
 	{
 		map->setObjectsDirty();
-		map->objectUndoManager().addNewUndoStep(undo_step);
+		map->push(undo_step);
 		map->emitSelectionEdited();
 	}
 }

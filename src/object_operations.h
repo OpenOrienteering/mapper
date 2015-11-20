@@ -27,7 +27,7 @@
 
 /**
  * Object conditions and processors,
- * see methods Map::operationOnAllObjects() and MapPart::operationOnAllObjects()
+ * see methods Map::applyOnAllObjects() and MapPart::applyOnAllObjects()
  */
 namespace ObjectOp
 {

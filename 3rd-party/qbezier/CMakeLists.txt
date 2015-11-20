@@ -15,16 +15,24 @@
 # 
 #    You should have received a copy of the GNU General Public License
 #    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
- 
+
+# qbezier_p.h and the private headers it depends on may be missing
+# in some installations of Qt.
+# 
+# The implementation of the functions declared in qbezier_p.h are available in
+# the QtGui library.
+# 
+# The headers need to be reviewed when switching to newer versions of Qt.
+# (Last review: Qt 5.3.0 beta.)
+
+
 set(QBEZIER_SRCS
-  src/qbezier.cpp
+  src/private/qbezier_p.h     # from qtbase/src/gui/painting/
+  src/private/qdatabuffer_p.h # from qtbase/src/gui/painting/
+  src/private/qmath_p.h       # from qtbase/src/gui/painting/
+  src/private/qnumeric_p.h    # from qtbase/src/corelib/global/
 )
 
-# Use bundled private headers as fallback
-include_directories(AFTER src)
-
-add_library(QBezier STATIC ${QBEZIER_SRCS})
-
-# For super-builds, wait for the Qt build.
-add_dependencies(QBezier Mapper_prerequisites)
-
+add_custom_target(QBezier
+  SOURCES   ${QBEZIER_SRCS}
+)

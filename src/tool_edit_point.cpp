@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2013, 2014 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -30,8 +31,7 @@
 #include "object_text.h"
 #include "map.h"
 #include "map_widget.h"
-#include "map_undo.h"
-#include "symbol_dock_widget.h"
+#include "object_undo.h"
 #include "tool_draw_text.h"
 #include "tool_helpers.h"
 #include "symbol_line.h"
@@ -43,11 +43,13 @@
 #include "gui/modifier_key.h"
 #include "gui/widgets/key_button_bar.h"
 
+class SymbolWidget;
+
 
 int EditPointTool::max_objects_for_handle_display = 10;
 
-EditPointTool::EditPointTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget)
-: EditTool(editor, EditPoint, symbol_widget, tool_button)
+EditPointTool::EditPointTool(MapEditorController* editor, QAction* tool_button)
+: EditTool(editor, EditPoint, tool_button)
 {
 	hover_point = -2;
 	hover_object = NULL;
@@ -317,7 +319,7 @@ void EditPointTool::dragMove()
 {
 	if (no_more_effect_on_click)
 		return;
-	if (editing)
+	if (editingInProgress())
 	{
 		if (snapped_to_pos && handle_offset != MapCoordF(0, 0))
 		{
@@ -342,7 +344,7 @@ void EditPointTool::dragFinish()
 	if (no_more_effect_on_click)
 		no_more_effect_on_click = false;
 	
-	if (editing)
+	if (editingInProgress())
 	{
 		finishEditing();
 		angle_helper->setActive(false);
@@ -385,10 +387,10 @@ bool EditPointTool::keyPress(QKeyEvent* event)
 		map()->clearObjectSelection(true);
 	else if (event->key() == Qt::Key_Control)
 	{
-		if (editing)
+		if (editingInProgress())
 			activateAngleHelperWhileEditing();
 	}
-	else if (event->key() == Qt::Key_Shift && editing)
+	else if (event->key() == Qt::Key_Shift && editingInProgress())
 	{
 		if (hover_object != NULL &&
 			hover_point >= 0 &&
@@ -419,7 +421,7 @@ bool EditPointTool::keyRelease(QKeyEvent* event)
 	if (event->key() == Qt::Key_Control)
 	{
 		angle_helper->setActive(false);
-		if (editing)
+		if (editingInProgress())
 		{
 			calcConstrainedPositions(cur_map_widget);
 			dragMove();
@@ -428,7 +430,7 @@ bool EditPointTool::keyRelease(QKeyEvent* event)
 	else if (event->key() == Qt::Key_Shift)
 	{
 		snap_helper->setFilter(SnappingToolHelper::NoSnapping);
-		if (editing)
+		if (editingInProgress())
 		{
 			calcConstrainedPositions(cur_map_widget);
 			dragMove();
@@ -485,13 +487,13 @@ int EditPointTool::updateDirtyRectImpl(QRectF& rect)
 	map()->includeSelectionRect(selection_extent);
 	
 	rectInclude(rect, selection_extent);
-	int pixel_border = show_object_points ? (resolution_scale_factor * 6) : 1;
+	int pixel_border = show_object_points ? (scaleFactor() * 6) : 1;
 	
 	// Control points
 	if (show_object_points)
 	{
 		for (Map::ObjectSelection::const_iterator it = map()->selectedObjectsBegin(), end = map()->selectedObjectsEnd(); it != end; ++it)
-			includeControlPointRect(rect, *it);
+			(*it)->includeControlPointsRect(rect);
 	}
 	
 	// Text selection
@@ -517,13 +519,22 @@ void EditPointTool::drawImpl(QPainter* painter, MapWidget* widget)
 		
 		if (!text_editor)
 		{
-			if (selection_extent.isValid())
+			Object* object = *map()->selectedObjectsBegin();
+			if (num_selected_objects == 1 &&
+			    object->getType() == Object::Text &&
+			    !object->asText()->hasSingleAnchor())
+			{
+				drawBoundingPath(painter, widget, object->asText()->controlPoints(), hoveringOverFrame() ? active_color : selection_color);
+			}
+			else if (selection_extent.isValid())
+			{
 				drawBoundingBox(painter, widget, selection_extent, hoveringOverFrame() ? active_color : selection_color);
+			}
 			
 			if (num_selected_objects <= max_objects_for_handle_display)
 			{
 				for (Map::ObjectSelection::const_iterator it = map()->selectedObjectsBegin(), end = map()->selectedObjectsEnd(); it != end; ++it)
-					drawPointHandles((hover_object == *it) ? hover_point : -2, painter, *it, widget, true, MapEditorTool::NormalHandleState);
+					pointHandles().draw(painter, widget, *it, (hover_object == *it) ? hover_point : -2, true, PointHandles::NormalHandleState);
 			}
 		}
 	}
@@ -587,7 +598,11 @@ void EditPointTool::updatePreviewObjects()
 void EditPointTool::updateStatusText()
 {
 	QString text;
-	if (editing)
+	if (text_editor)
+	{
+		text = tr("<b>%1</b>: Finish editing. ").arg(ModifierKey::escape());
+	}
+	else if (editingInProgress())
 	{
 		MapCoordF drag_vector = constrained_pos_map - click_pos_map;
 		text = EditTool::tr("<b>Coordinate offset:</b> %1, %2 mm  <b>Distance:</b> %3 m ").
@@ -664,13 +679,37 @@ void EditPointTool::updateHoverPoint(MapCoordF cursor_pos)
 			}
 		}
 	}
-	if (new_hover_point < 0 &&
-		map()->getNumSelectedObjects() > 0 &&
-		selection_extent.isValid())
+	
+	if (new_hover_point < 0 && map()->getNumSelectedObjects() > 0)
 	{
-		QRectF selection_extent_viewport = cur_map_widget->mapToViewport(selection_extent);
-		new_hover_point = pointOverRectangle(cur_map_widget->mapToViewport(cursor_pos), selection_extent_viewport) ? -1 : -2;
-		handle_offset = closestPointOnRect(cursor_pos, selection_extent) - cursor_pos;
+		const Object* object = *map()->selectedObjectsBegin();
+		if (object->getType() == Object::Text &&
+		    !object->asText()->hasSingleAnchor() &&
+		    map()->getNumSelectedObjects() == 1)
+		{
+			const TextObject* text_object = object->asText();
+			const QPointF anchor = text_object->getAnchorCoordF().toQPointF();
+			const QRectF normal_box( anchor.x()-text_object->getBoxWidth()/2,
+			                         anchor.y()-text_object->getBoxHeight()/2,
+			                         text_object->getBoxWidth(),
+			                         text_object->getBoxHeight() );
+			const QRectF normal_box_viewport = cur_map_widget->mapToViewport(normal_box);
+			
+			QTransform normalization;
+			normalization.translate(+anchor.x(), +anchor.y());
+			normalization.rotateRadians(text_object->getRotation());
+			normalization.translate(-anchor.x(), -anchor.y());
+			
+			MapCoordF normalized_cursor_pos = MapCoordF(normalization.map(cursor_pos.toQPointF()));
+			new_hover_point = pointOverRectangle(cur_map_widget->mapToViewport(normalized_cursor_pos), normal_box_viewport) ? -1 : -2;
+			handle_offset = closestPointOnRect(normalized_cursor_pos, normal_box) - normalized_cursor_pos;
+		}
+		else if (selection_extent.isValid())
+		{
+			QRectF selection_extent_viewport = cur_map_widget->mapToViewport(selection_extent);
+			new_hover_point = pointOverRectangle(cur_map_widget->mapToViewport(cursor_pos), selection_extent_viewport) ? -1 : -2;
+			handle_offset = closestPointOnRect(cursor_pos, selection_extent) - cursor_pos;
+		}
 	}
 	
 	// TODO: this is a HACK to make it possible to create new points with Ctrl

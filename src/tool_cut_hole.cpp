@@ -25,11 +25,12 @@
 #include <QMessageBox>
 
 #include "map.h"
-#include "map_undo.h"
+#include "object_undo.h"
 #include "map_widget.h"
 #include "object.h"
 #include "symbol.h"
 #include "symbol_combined.h"
+#include "tool_boolean.h"
 #include "tool_draw_circle.h"
 #include "tool_draw_path.h"
 #include "tool_draw_rectangle.h"
@@ -51,7 +52,9 @@ void CutHoleTool::init()
 {
 	connect(map(), SIGNAL(objectSelectionChanged()), this, SLOT(objectSelectionChanged()));
 	updateDirtyRect();
-    updateStatusText();
+	updateStatusText();
+	
+	MapEditorTool::init();
 }
 
 CutHoleTool::~CutHoleTool()
@@ -63,20 +66,27 @@ bool CutHoleTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWi
 {
 	if (path_tool)
 		return path_tool->mousePressEvent(event, map_coord, widget);
+	
 	if (!(event->buttons() & Qt::LeftButton))
 		return false;
 	
 	// Start a new hole
 	edit_widget = widget;
 	
-	if (hole_type == CutHoleTool::Path)
-		path_tool = new DrawPathTool(editor, NULL, NULL, true);
-	else if (hole_type == CutHoleTool::Circle)
-		path_tool = new DrawCircleTool(editor, NULL, NULL);
-	else if (hole_type == CutHoleTool::Rect)
-		path_tool = new DrawRectangleTool(editor, NULL, NULL);
-	else
-		assert(false);
+	switch (hole_type)
+	{
+	case CutHoleTool::Path:
+		path_tool = new DrawPathTool(editor, NULL, true, true);
+		break;
+	case CutHoleTool::Circle:
+		path_tool = new DrawCircleTool(editor, NULL, true);
+		break;
+	case CutHoleTool::Rect:
+		path_tool = new DrawRectangleTool(editor, NULL, true);
+		break;
+	/* no default; watch compiler warnings for unhandled cases! */
+	}
+	
 	connect(path_tool, SIGNAL(dirtyRectChanged(QRectF)), this, SLOT(pathDirtyRectChanged(QRectF)));
 	connect(path_tool, SIGNAL(pathAborted()), this, SLOT(pathAborted()));
 	connect(path_tool, SIGNAL(pathFinished(PathObject*)), this, SLOT(pathFinished(PathObject*)));
@@ -191,21 +201,28 @@ void CutHoleTool::pathFinished(PathObject* hole_path)
 	Object* undo_duplicate = edited_object->duplicate();
 	
 	// Close the hole path
-	assert(hole_path->getNumParts() == 1);
+	Q_ASSERT(hole_path->getNumParts() == 1);
 	hole_path->getPart(0).setClosed(true, true);
 	
-	// If the edited path does not end with a hole point, change that
 	PathObject* edited_path = reinterpret_cast<PathObject*>(edited_object);
-	(edited_path->getCoordinate(edited_path->getCoordinateCount() - 1)).setHolePoint(true);
+	BooleanTool::PathObjects in_objects, out_objects;
+	in_objects.push_back(hole_path);
+	BooleanTool(BooleanTool::Difference, map()).executeForObjects(edited_path, edited_object->getSymbol(), in_objects, out_objects);
 	
-	// Append the coordinates to the area
-	edited_path->appendPath(hole_path);
+	edited_path->clearCoordinates();
+	edited_path->appendPath(out_objects.front());
 	edited_path->update(true);
 	updateDirtyRect();
 	
+	while (!out_objects.empty())
+	{
+		delete out_objects.back();
+		out_objects.pop_back();
+	}
+	
 	ReplaceObjectsUndoStep* undo_step = new ReplaceObjectsUndoStep(map());
 	undo_step->addObject(edited_object, undo_duplicate);
-	map()->objectUndoManager().addNewUndoStep(undo_step);
+	map()->push(undo_step);
 	map()->setObjectsDirty();
 	map()->emitSelectionEdited();
 	

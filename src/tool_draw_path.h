@@ -38,7 +38,7 @@ class DrawPathTool : public DrawLineAndAreaTool
 {
 Q_OBJECT
 public:
-	DrawPathTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget, bool allow_closing_paths);
+	DrawPathTool(MapEditorController* editor, QAction* tool_action, bool is_helper_tool, bool allow_closing_paths);
 	virtual ~DrawPathTool();
 	
 	virtual void init();
@@ -58,7 +58,7 @@ public:
 	
 protected slots:
 	void updateDirtyRect();
-	virtual void selectedSymbolsChanged();
+	virtual void setDrawingSymbol(Symbol* symbol);
 	
 	/** This slot listens to changes in the map's object selection. */
 	virtual void objectSelectionChanged();
