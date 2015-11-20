@@ -10,9 +10,12 @@ bin/*.exe
 bin/*.dll
 bin/plugins
 bin/translations
-build/
+build*/
 help/*.qhc
 help/*.qch
 3rd-party/clipper
-3rd-party/proj/*
-!3rd-party/proj/COPYING
+3rd-party/proj/*.tar.gz
+3rd-party/proj/*.zip
+3rd-party/qt4/*.tar.gz
+3rd-party/qt4/*.zip
+resources/resources.rc

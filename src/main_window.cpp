@@ -139,7 +139,10 @@ void MainWindow::createFileMenu()
 	connect(save_act, SIGNAL(triggered()), this, SLOT(save()));
 	
 	save_as_act = new QAction(tr("Save &as..."), this);
-	save_as_act->setShortcuts(QKeySequence::SaveAs);
+	if (QKeySequence::keyBindings(QKeySequence::SaveAs).empty())
+		save_as_act->setShortcut(tr("Ctrl+Shift+S"));
+	else
+		save_as_act->setShortcuts(QKeySequence::SaveAs);
 	save_as_act->setWhatsThis("<a href=\"file_menu.html\">See more</a>");
 	connect(save_as_act, SIGNAL(triggered()), this, SLOT(showSaveAsDialog()));
 	
@@ -147,7 +150,7 @@ void MainWindow::createFileMenu()
 	connect(settings_act, SIGNAL(triggered()), this, SLOT(showSettings()));
 	
 	close_act = new QAction(tr("Close"), this);
-	close_act->setShortcut(tr("Ctrl+W"));
+	close_act->setShortcut(QKeySequence::Close);
 	close_act->setStatusTip(tr("Close this file"));
 	close_act->setWhatsThis("<a href=\"file_menu.html\">See more</a>");
 	connect(close_act, SIGNAL(triggered()), this, SLOT(closeFile()));
@@ -665,17 +668,22 @@ void MainWindow::showAbout()
 	}
 	proj_about.append(tr("See <a href=\"%1\">%1</a> for more information.").arg("http://trac.osgeo.org/proj/"));	
 	
-	QLabel* about_label = new QLabel(QString("<a href=\"http://openorienteering.org\"><img src=\":/images/open-orienteering.png\"/></a><br/><br/>"
-									 "OpenOrienteering Mapper %1<br/>"
-									 "Copyright (C) 2012  Thomas Sch&ouml;ps<br/>"
-									 "This program comes with ABSOLUTELY NO WARRANTY;<br/>"
-									 "This is free software, and you are welcome to redistribute it<br/>"
-									 "under certain conditions; see the file COPYING for details.<br/><br/>").arg(APP_VERSION)
-									 
-									 % tr("Developers in alphabetical order:<br/>"
-									 "Peter Curtis<br/>Kai Pastor<br/>Russell Porter<br/>Thomas Sch&ouml;ps (project leader)<br/><br/>"
-									 "For contributions, thanks to:<br/>Jon Cundill<br/>Jan Dalheimer<br/>Eugeniy Fedirets<br/>Peter Hoban<br/>Henrik Johansson<br/>Tojo Masaya<br/>Aivars Zogla<br/><br/>"
-									 "Additional information:"));
+	QLabel* about_label = new QLabel(
+		QString(
+		     "<a href=\"http://openorienteering.org\"><img src=\":/images/open-orienteering.png\"/></a><br/><br/>"
+		     "OpenOrienteering Mapper %1<br/>"
+		     "Copyright (C) 2012  Thomas Sch&ouml;ps<br/>"
+		     "This program comes with ABSOLUTELY NO WARRANTY;<br/>"
+		     "This is free software, and you are welcome to redistribute it<br/>"
+		     "under certain conditions; see the file COPYING for details.<br/><br/>").
+		   arg(APP_VERSION)
+		
+		% tr("Developers in alphabetical order:<br/>%1<br/>"
+		     "For contributions, thanks to:<br/>%2<br/>"
+		     "Additional information:").
+		  arg(QString("Peter Curtis<br/>Kai Pastor<br/>Russell Porter<br/>Thomas Sch&ouml;ps %1<br/>").arg(tr("(project leader)"))).
+		  arg("Jon Cundill<br/>Jan Dalheimer<br/>Eugeniy Fedirets<br/>Peter Hoban<br/>Henrik Johansson<br/>Tojo Masaya<br/>Christopher Schive<br/>Aivars Zogla<br/>")
+		 );
 	QTextEdit* additional_text = new QTextEdit( 
 	  clipper_about % "<br/><br/>" %
 	  QString("_").repeated(80) % "<br/><br/>" %
@@ -749,7 +757,7 @@ void MainWindow::showHelp(QString filename, QString fragment)
 		process->start(QLatin1String("assistant"), args);
 		if (!process->waitForStarted())
 		{
-			QMessageBox::warning(this, tr("Error"), tr("Failed to start the help browser."));
+			QMessageBox::warning(this, tr("Error"), tr("Failed to find the help browser (\"Qt Assistant\"). For Windows, it is available as a separate download. After extracting this archive, copy its contents into the directory containing the Mapper executable, so the Mapper and assistant executables are in the same directory, and try again."));
 			return;
 		}
 	}

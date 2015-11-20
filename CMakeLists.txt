@@ -16,13 +16,18 @@
 #    You should have received a copy of the GNU General Public License
 #    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
+
+# Project declaration
 
 project(Mapper)
 
 SET(Mapper_VERSION_MAJOR 0)
 SET(Mapper_VERSION_MINOR 3)
-SET(Mapper_VERSION_PATCH 0)
+SET(Mapper_VERSION_PATCH 1)
+SET(Mapper_VERSION_DISPLAY "${CMAKE_BUILD_TYPE} ${Mapper_VERSION_MAJOR}.${Mapper_VERSION_MINOR}.${Mapper_VERSION_PATCH}")
+
+# Build configuration options
 
 if(NOT CMAKE_BUILD_TYPE)
 	SET(CMAKE_BUILD_TYPE RelWithDebInfo CACHE STRING
@@ -30,17 +35,95 @@ if(NOT CMAKE_BUILD_TYPE)
 	  FORCE)
 endif(NOT CMAKE_BUILD_TYPE)
 
-SET(Mapper_VERSION_DISPLAY "${CMAKE_BUILD_TYPE} ${Mapper_VERSION_MAJOR}.${Mapper_VERSION_MINOR}.${Mapper_VERSION_PATCH}")
+if(NOT Mapper_XML_FORMAT)
+	set(Mapper_XML_FORMAT OFF CACHE BOOL
+	  "Enable the unmaintained export-only XML format, options are: OFF, ON."
+	  FORCE)
+endif(NOT Mapper_XML_FORMAT)
+if(Mapper_XML_FORMAT)
+	add_definitions(-DWITH_MAPPER_XML_FORMAT)
+endif()
 
-configure_file(src/global.h.in ${CMAKE_CURRENT_SOURCE_DIR}/src/global.h)
+if(NOT Mapper_TRANSLATIONS_EMBEDDED)
+	if(APPLE)
+		# For MacOS, the translations will go into the "bundle" by default
+		set(Mapper_TRANSLATIONS_EMBEDDED_DEFAULT ON)
+	else(APPLE)
+		set(Mapper_TRANSLATIONS_EMBEDDED_DEFAULT OFF)
+	endif(APPLE)
+	set(Mapper_TRANSLATIONS_EMBEDDED ${Mapper_TRANSLATIONS_EMBEDDED_DEFAULT} CACHE BOOL
+	  "Embed all translations in the program executable, options are: OFF, ON."
+	  FORCE)
+endif(NOT Mapper_TRANSLATIONS_EMBEDDED)
 
-find_package(Qt4 4.6 REQUIRED QtCore QtGui QtNetwork QtXml)
+option(Mapper_BUILD_PROJ "Build the Proj library from source")
+
+option(Mapper_BUILD_QT   "Build the Qt library from source")
+
+# Build definitons
+
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+include(CMake28Quirks)
+
+add_custom_target(Mapper_prerequisites)
+set(Mapper_prerequisites_FOUND TRUE)
+
+if(Mapper_BUILD_PROJ)
+	add_subdirectory(3rd-party/proj)
+	add_dependencies(Mapper_prerequisites Proj)
+	if(NOT PROJ_FOUND)
+		set(Mapper_prerequisites_FOUND FALSE)
+		message("Proj library will be built from source")
+	endif()
+else()
+	find_package(Proj REQUIRED)
+endif()
+
+if(Mapper_BUILD_QT)
+	add_subdirectory(3rd-party/qt4)
+	add_dependencies(Mapper_prerequisites Qt4)
+	if(NOT QT_QMAKE_EXECUTABLE MATCHES NOTFOUND)
+		find_package(Qt4 4.6 COMPONENTS QtCore QtGui QtNetwork QtXml)
+	endif()
+	if(NOT QT4_FOUND)
+		set(Mapper_prerequisites_FOUND FALSE)
+		message("Qt4 library will be built from source")
+	endif()
+else()
+	find_package(Qt4 4.6 REQUIRED QtCore QtGui QtNetwork QtXml)
+endif()
+
+if(Mapper_prerequisites_FOUND)
+
 include(${QT_USE_FILE})
+Quirks_Qt4_definitions()
+Quirks_Qt4_lib_dependencies()
+
+if(CMAKE_CROSSCOMPILING)
+	message("-- Crosscompiling, host: ${CMAKE_HOST_SYSTEM_NAME}, target: ${CMAKE_SYSTEM_NAME}")
+
+	# use host system Qt4 tools when cross-compiling
+	find_program(QT_LUPDATE_EXECUTABLE lupdate)
+	find_program(QT_LRELEASE_EXECUTABLE lrelease)
+	find_program(QT_QCOLLECTIONGENERATOR_EXECUTABLE qcollectiongenerator)
+endif()
+
+if(QT_LUPDATE_EXECUTABLE MATCHES NOTFOUND)
+	message(WARNING "lupdate executable not found. "
+	  "You will not be able to update the translations from the source code.")
+endif()
+
+if(QT_LRELEASE_EXECUTABLE MATCHES NOTFOUND)
+	message(FATAL_ERROR "lrelease executable not found.")
+endif()
+
+if(QT_QCOLLECTIONGENERATOR_EXECUTABLE MATCHES NOTFOUND)
+	message(FATAL_ERROR "qcollectiongenerator executable not found.")
+endif()
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
 
 include(3rd-party/clipper.cmake)
-include(3rd-party/proj.cmake)
 
 if (CMAKE_COMPILER_IS_GNUCXX)
 	set(CMAKE_CXX_FLAGS "-Wno-long-long -Wno-deprecated -Wall -pedantic")
@@ -56,20 +139,9 @@ else (CMAKE_COMPILER_IS_GNUCXX)
 	set(CMAKE_CXX_FLAGS_DEBUG "-DDEBUG")
 endif (CMAKE_COMPILER_IS_GNUCXX)
 
-set(OPT_INCLUDES "/opt/local/include")
-set(OPT_LIBRARIES "/opt/local/lib")
+include_directories(${QT_INCLUDES} ${CMAKE_CURRENT_BINARY_DIR} ${PROJ_INCLUDE_DIR})
 
-include_directories(${QT_INCLUDES} ${CMAKE_CURRENT_BINARY_DIR} ${PROJ_INCLUDES} ${OPT_INCLUDES})
-link_directories(${PROJ_LIBRARIES} ${OPT_LIBRARIES})
-
-if(NOT Mapper_XML_FORMAT)
-	set(Mapper_XML_FORMAT OFF CACHE BOOL
-	  "Enable the export-only XML format, options are: OFF, ON."
-	  FORCE)
-endif(NOT Mapper_XML_FORMAT)
-if(Mapper_XML_FORMAT)
-	add_definitions(-DWITH_MAPPER_XML_FORMAT)
-endif()
+configure_file(src/global.h.in ${CMAKE_CURRENT_SOURCE_DIR}/src/global.h)
 
 set(Mapper_SRCS
  libocad/types.c
@@ -219,61 +291,51 @@ set(Mapper_MOC_INPUT
 
 qt4_wrap_cpp(Mapper_MOC ${Mapper_MOC_INPUT})
 
-set_directory_properties(translations
-  CLEAN_NO_CUSTOM 1
-)
 set(Mapper_TRANS
  translations/OpenOrienteering_de.ts
  translations/OpenOrienteering_ja.ts
+ translations/OpenOrienteering_lv.ts
+ translations/OpenOrienteering_nb.ts
  translations/OpenOrienteering_sv.ts
  translations/OpenOrienteering_uk.ts
 )
 set_source_files_properties(${Mapper_TRANS}
   PROPERTIES OUTPUT_LOCATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/translations
 )
-# 2012-07-04 Kai Pastor:
-# qt4_create_translation uses lupdate in a way that reports 
-# "circular inclusion" and runs virtually forever
-# cf. https://bugreports.qt-project.org/browse/QTBUG-6587
-# Planned workaround: reimplement qt4_create_translation to use the @lst
-# option instead of the -pro option
-# Apart from this, automatic running lupdate is likely to cause git merge 
-# issues for developers.
-#qt4_create_translation(Mapper_QM ${Mapper_TRANS} ${Mapper_SRCS})
 qt4_add_translation(Mapper_QM ${Mapper_TRANS})
-add_custom_target(Mapper_translations
-  DEPENDS ${Mapper_QM}
-)
 
 set(Mapper_TRANS_TEMPLATE
  translations/OpenOrienteering_template.ts
 )
-qt4_create_translation(Mapper_QM_TEMPLATE src/undo.cpp ${Mapper_TRANS_TEMPLATE})
-add_custom_target(Mapper_translations_template
-#   ALL
-  DEPENDS ${Mapper_TRANS_TEMPLATE}
+include(Qt4_translations)
+qt4_translations_sources(
+  ${Mapper_TRANS} ${Mapper_TRANS_TEMPLATE}
+  SOURCES ${Mapper_SRCS}
 )
 
-set(Mapper_RESOURCES resources.qrc)
-if(APPLE)
-	# For MacOS, the translations will go into the "bundle"
+if(Mapper_TRANSLATIONS_EMBEDDED)
 	set(Mapper_TRANS_QRC "${CMAKE_CURRENT_BINARY_DIR}/translations.qrc")
 	file(WRITE "${Mapper_TRANS_QRC}"
-	     "<!DOCTYPE RCC><RCC version=\"1.0\">\n <qresource>\n")
-	foreach(qm_file ${Mapper_QM})
-		get_filename_component(qm_file_name "${qm_file}" NAME)
+	  "<!DOCTYPE RCC><RCC version=\"1.0\">\n <qresource>\n")
+	foreach(_qm_file ${Mapper_QM})
+		get_filename_component(_qm_filename "${_qm_file}" NAME)
 		file(APPEND "${Mapper_TRANS_QRC}"
-		     "  <file alias=\"translations/${qm_file_name}\">${qm_file}</file>\n")
-	endforeach(qm_file ${MAPPER_TRANS})
+		  "  <file alias=\"translations/${_qm_filename}\">${_qm_file}</file>\n")
+	endforeach(_qm_file)
 	file(APPEND "${Mapper_TRANS_QRC}"
-	     " </qresource>\n</RCC>\n")
-	list(APPEND Mapper_RESOURCES resources.qrc "${Mapper_TRANS_QRC}")
-endif(APPLE)
+	  " </qresource>\n</RCC>\n")
+	qt4_add_resources(Mapper_TRANSLATIONS_RCC "${Mapper_TRANS_QRC}" OPTIONS -no-compress)
+endif(Mapper_TRANSLATIONS_EMBEDDED)
+
+# A target which builds all translations.
+add_custom_target(Mapper_translations DEPENDS ${Mapper_QM} ${Mapper_TRANSLATIONS_RCC})
+
+set(Mapper_RESOURCES ${Mapper_RESOURCES} resources.qrc)
 qt4_add_resources(Mapper_RESOURCES_RCC ${Mapper_RESOURCES} OPTIONS -no-compress)
 
 set(Mapper_HELP_DIR ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/help)
 set(Mapper_HELP_COLLECTION ${Mapper_HELP_DIR}/oomaphelpcollection.qhc)
-file(GLOB Mapper_HELP_CONTENTS 
+file(GLOB Mapper_HELP_FILES 
   ${CMAKE_CURRENT_SOURCE_DIR}/images
   ${CMAKE_CURRENT_SOURCE_DIR}/help/html_en 
   ${CMAKE_CURRENT_SOURCE_DIR}/help/html_en/images
@@ -292,11 +354,13 @@ add_custom_target(Mapper_help
 
 if(MINGW)
 	# resource compilation for MinGW
-	set(CMAKE_WINDRES windres)
-	add_custom_command( OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/resources.o
-			COMMAND ${CMAKE_WINDRES} -I${CMAKE_SOURCE_DIR} -i${CMAKE_SOURCE_DIR}/resources/resources.rc
-			-o ${CMAKE_CURRENT_BINARY_DIR}/resources.o )
-	set(Mapper_SRCS ${Mapper_SRCS} ${CMAKE_CURRENT_BINARY_DIR}/resources.o)
+	enable_language(RC)
+	if(NOT CMAKE_RC_COMPILER)
+		set(CMAKE_RC_COMPILER windres)
+	endif()
+	Quirks_CMake_RC_Compiler()
+	configure_file(resources/resources.rc.in ${CMAKE_CURRENT_SOURCE_DIR}/resources/resources.rc)
+	list(APPEND Mapper_SRCS resources/resources.rc)
 endif(MINGW)
 
 add_executable(Mapper
@@ -307,6 +371,7 @@ add_executable(Mapper
 	${Mapper_QM}
 	${Mapper_HELP_COLLECTION}
 	${Mapper_RESOURCES_RCC}
+	${Mapper_TRANSLATIONS_RCC}
 )
 
 target_link_libraries(Mapper
@@ -314,4 +379,18 @@ target_link_libraries(Mapper
  ${PROJ_LIBRARY}
 )
 
+add_dependencies(Mapper Mapper_prerequisites)
+
+# FIXME: Packaging for MacOSX needs review on a MacOSX machine
+if(NOT APPLE)
 include(CPackaging.cmake)
+endif()
+
+else(Mapper_prerequisites_FOUND)
+
+add_custom_target(Mapper_superbuild ALL "${CMAKE_COMMAND}" .
+  COMMAND "${CMAKE_BUILD_TOOL}"
+)
+add_dependencies(Mapper_superbuild Mapper_prerequisites)
+
+endif(Mapper_prerequisites_FOUND)

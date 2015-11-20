@@ -398,13 +398,14 @@ void AreaSymbol::createRenderables(Object* object, const MapCoordVector& flags, 
 		AreaRenderable* color_fill = new AreaRenderable(this, coords, flags, &path->getPathCoordinateVector());
 		output.insertRenderable(color_fill);
 
+		QPainterPath* old_clip_path = output.getClipPath();
 		output.setClipPath(color_fill->getPainterPath());
 		int size = (int)patterns.size();
 		for (int i = 0; i < size; ++i)
 		{
  			patterns[i].createRenderables(color_fill->getExtent(), output);
 		}
-		output.setClipPath(NULL);
+		output.setClipPath(old_clip_path);
 	}
 }
 void AreaSymbol::colorDeleted(MapColor* color)

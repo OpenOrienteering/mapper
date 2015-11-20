@@ -1474,7 +1474,7 @@ void PathObject::deleteCoordinate(int pos, bool adjust_other_coords)
 			else
 			{
 				shiftedCoord(pos, -1, part).setCurveStart(true);
-				if (part.isClosed() && pos == 0)
+				if (part.isClosed() && pos == part.start_index)
 				{
 					// Zero is at the wrong position - can't start on a bezier curve handle! Switch the handles over to the end of the path
 					coords[part.end_index] = coords[part.start_index];
@@ -1524,7 +1524,9 @@ void PathObject::recalculateParts()
 	int coords_size = coords.size();
 	for (int i = 0; i < coords_size - 1; ++i)
 	{
-		if (coords[i].isHolePoint())
+		if (coords[i].isCurveStart())
+			i += 2;
+		else if (coords[i].isHolePoint())
 		{
 			PathPart part;
 			part.start_index = start;

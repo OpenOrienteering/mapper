@@ -363,6 +363,9 @@ signals:
 	void templateDeleted(int pos, Template* old_temp);
 	
 	void objectSelectionChanged();
+	
+	/// This signal is emitted when at least one of the selected objects is edited in any way.
+	/// For example, this includes the case where a symbol of one of the selected objects is edited, too.
 	void selectedObjectEdited();
 	
 private:

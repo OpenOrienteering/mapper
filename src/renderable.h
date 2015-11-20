@@ -153,6 +153,7 @@ public:
 	void takeRenderables();
 	
 	void setClipPath(QPainterPath* path);
+	inline QPainterPath* getClipPath() const {return clip_path;}
 	
 	const QRectF& getExtent() const { return extent; }
 	

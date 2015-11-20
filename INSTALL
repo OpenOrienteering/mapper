@@ -2,24 +2,30 @@
 
 See below for build instructions for your platform.
 
-The program is known to work with Qt 4.6, 4.7 and 4.8 and not to compile with Qt 4.4 or earlier.
-Information about other versions is not available, feel free to give feedback about them.
+The program is known to work with Qt 4.6, 4.7 and 4.8 and not to compile with 
+Qt 4.4 or earlier.
 
-The .pro file does not include the translations yet, so qmake / qt creator is not fully supported.
+The supported build process requires CMake 2.8. CMake is available from
+http://www.cmake.org/
+
+Qmake / Qt Creator based builds are not fully supported. The provided 
+oo-mapper.pro file does not include the translations yet, and it may be 
+outdated.
 
 
 == Clipper Library ==
 
 The program uses parts of the clipper code library from 
 http://www.angusj.com/delphi/clipper.php which is released under the terms of
-the Boost Software License, Version 1.0.
+the Boost Software License, Version 1.0. The program is known to work with
+release 4.8.4 which is revision 251 in the clipper SVN repository.
 
-The required files are downloaded to 3rd-party/clipper if missing during build configuration. 
-To use a particular revision of the library, remove the 3rd-party/clipper 
-directory and adjust the CLIPPER_REVISION variable in 3rd-party/clipper.cmake 
-before next build.
+The required files are downloaded to 3rd-party/clipper if missing during cmake
+build configuration. To use another revision of the library, remove the 
+3rd-party/clipper directory and adjust the CLIPPER_REVISION variable in 
+3rd-party/clipper.cmake before next build.
 
-If you use qmake / qt creator (instead of cmake), or cmake with Windows and
+If you use qmake / Qt Creator instead of cmake, or cmake with Windows and
 get an error about clipper.cpp/hpp not being found in the CMake configure step,
 then you need to download Clipper manually.
 
@@ -35,53 +41,76 @@ Place them in the 3rd-party directory so you get:
 == PROJ.4 Cartographic Projections Library ==
 
 The program uses the PROJ.4 Cartographic Projections Library. The program is
-known to work with release 4.8.0. See the platform specific notes.
+known to work with the releases 4.7.0 (as contained in Ubuntu 10.04 and 12.04)
+and 4.8.0 (from upstream). See the platform specific notes.
 
 
 == Compiling on Windows ==
 
 * Requirements:
-- A C++ compiler (preferably MinGW, Visual C++ may also work).
 - CMake
 - Qt
+- A C++ compiler (preferably MinGW, Visual C++ may also work).
 - MSYS 1.0 (for automatic PROJ.4 build)
+
+* CMake 
+Install a supported version of CMake from http://www.cmake.org/.
+
+* MSYS
+MSYS is used to build the PROJ.4 library.  MSYS is available from
+http://www.mingw.org/wiki/MSYS. Please read and follow the installation
+instruction from this website. Recommended installation location is C:\MinGW.
+You don't need to install MinGW in this step if you install the Qt SDK.
 
 * PROJ.4 library
 If you have MinGW/MSYS installed in C:/MinGW/msys/1.0, the PROJ.4 library will
-be automatically downloaded and built during OpenOrienteering build. If you
-have MSYS in another path or if you want change the PROJ.4 version, you need to
-modify 3rd-party/proj.cmake.
+be automatically downloaded and built during cmake build. If you have MSYS in
+another path or if you want change the PROJ.4 version, you need to modify
+3rd-party/proj.cmake.
 
-* Qt
-The easiest way to get Qt is to intall the Qt SDK. Make sure to select the Qt Assistant for installation,
-as this program is used to display the help files.
-If you do not have a C++ compiler yet, you can also install MinGW with the QtSDK installer. Note that you
-may have to add the mingw / mingw32 bin directories to your PATH environment variable manually if you choose to do this.
-If you get an error saying that qcollectiongenerator cannot be found later in the build process, you also have to add
-the directory containing this program to the PATH.
+* Qt and MinGW
+The easiest way to get Qt is to intall the Qt SDK. Make sure to select the
+Qt Assistant for installation. This program is used to display the help files.
+The Qt SDK 1.2.1 will allow you to install MinGW gcc compiler.
 
-* Building OpenOrienteering Mapper:
-When all requirements are installed, run cmake and point it to the directory in which
-CMakeLists.txt (and the file you are reading now) are in.
+* Building OpenOrienteering Mapper
+You have to run the build from a command prompt which has the mingw bin
+directory (if MinGW is used), the Qt bin directory and the CMake director in
+its PATH. For the Qt SDK with MinGW, it is sufficient to use a shortcut
+provided in the start menu under
+ [All] Programs > Qt SDK > Desktop > QT 4.8.1 for Desktop (MinGW).
 
-Then click "Configure" (if you use the CMake GUI). If it aborts, saying that QMake cannot be found,
-enter its path in the red line for the "QT_QMAKE_EXECUTABLE" key,
-for example "C:/QtSDK/Desktop/Qt/4.8.0/mingw/bin/qmake.exe". Click "Configure" again and it should run through.
-If "Generate" is not enabled yet, click "Configure" a third time and then finally "Generate".
+Create a build directory, change to that directory and call cmake-gui (or
+cmake) passing the path to the source code directory as parameter.
 
-Now the build files should be generated in the directory you specified earlier. If you use MinGW,
-execute "mingw32-make" from a command prompt in this directory now to build the project.
+In cmake-gui, click "Configure". If it aborts, saying that qmake cannot be
+found, enter its path in the red line for the "QT_QMAKE_EXECUTABLE" key, e.g.
+"C:/QtSDK/Desktop/Qt/4.8.0/mingw/bin/qmake.exe". Click "Configure" again. It
+should run through. If "Generate" is not enabled yet, click "Configure" a third
+time and then finally "Generate".
 
-If you use Visual C++ 2010 instead, a *.sln file is generated in the build directory which should be opened as the next step.
-Five projects should be visible in the Solution Explorer which is by default on the left side. Right click the
-"Mapper" project and choose "Set as StartUp project". Right click it again and choose "Properties".
-Change "Configuration" to "All configurations" on the top left.
-In Debugging, change "Working directory" to the bin subdirectory: "$(ProjectDir)..\bin" (without the ").
-If you want to run the Debug version, set the configuration to Debug, go to C/C++ -> Code Generation and
-set "Runtime Library" to "Multi-threaded Debug DLL". If you forget to do that, everything will seem to run well, but you will
-encounter strange crashes for example on QList destructors. You may also want to disable optimizations for the debug version.
-Please also note that the OpenOrienteering developers usually work with gcc, so it is likely that the
-current version from git does not compile with Visual C++ without adjustments.
+Now the build configuration is generated in the working directory, and the
+project is ready for compilation.
+
+If you use MinGW, call "mingw32-make" from the command prompt in this directory
+now to build the project.
+
+If you use Visual C++ 2010, a *.sln file is generated in the build directory
+which should be opened as the next step. Five projects should be visible in the
+Solution Explorer which is by default on the left side. Right click the "Mapper"
+project and choose "Set as StartUp project". Right click it again and choose
+"Properties". Change "Configuration" to "All configurations" on the top left.
+In Debugging, change "Working directory" to the bin subdirectory:
+"$(ProjectDir)..\bin" (without the "). If you want to run the Debug version,
+set the configuration to Debug, go to C/C++ -> Code Generation and set "Runtime
+Library" to "Multi-threaded Debug DLL". If you forget to do that, everything
+will seem to run well, but you will encounter strange crashes for example on
+QList destructors. You may also want to disable optimizations for the debug
+version.
+
+Please also note that the OpenOrienteering developers usually work with gcc, so
+it is likely that the current version from git does not compile with Visual C++
+without adjustments.
 
 * Building binary ZIP packages with MinGW
 
@@ -97,8 +126,8 @@ package call
 * Requirements:
 - A C++ compiler (g++)
 - CMake
-- Qt
-- PROJ.4 library
+- Qt library (and development packages)
+- PROJ.4 library (and development package)
 
 * PROJ.4 library
 Make sure that the PROJ.4 library is installed. For a Ubuntu or
@@ -116,11 +145,7 @@ the directory containing this program to the search path for executables.
 
 * Running:
 cd ../bin       (if still in the build directory)
-./Mapper -graphicssystem raster
-
-The option "-graphicssystem raster" is a Qt option which usually leads to better performance on Linux,
-in case it is not the default yet anyway (like on Windows). In addition, using the native graphics system
-can lead to artifacts.
+./Mapper
 
 * Building binary DEB packages:
 To create the DEB package for your particular distribution, make sure that 
@@ -142,3 +167,66 @@ sudo dpkg -i PACKAGENAME.deb
 
 You may later remove the package with:
 sudo dpkg -r openorienteering-mapper
+
+
+
+== Cross-Compiling on Linux or MacOS X for Windows with MXE ==
+
+It is possible to cross-compile from Linux or MacOS X (host system) for Windows
+(target system). 
+
+The easiest way is to use MXE (M cross environment, http://mxe.cc), which is
+based on gcc/MinGW. Follow the instruction on that webpage to install the
+requirements and download MXE. Now call:
+  make gcc proj qt
+
+This will download and build the cross compiler and the required libraries.
+Especially the Qt build might take a while (a few hours, depending on the machine).
+Add a JOBS=x parameter to use all cores on a x-1 core nachine. (Do not
+use -j unless you know what it means with MXE).
+
+After this, you can configure you a new build directory by
+  cmake PATH_TO_MAPPER_SRC -DCMAKE_TOOLCHAIN_FILE=PATH_TO_MXE/usr/i686-pc-mingw32/share/cmake/mxe-conf.cmake
+
+The toolchain file passes special parameters to cmake.
+
+Finally call make as usual.
+
+Note that such builds need the the hostsystems Qt development tools (lrelease
+and qcollectiongenerator) to process the translations and the help files.
+
+At the moment, MXE builds only static libraries, and the Qt package does not
+build the Qt Assistant. With some tweaking, it is possible to resolve these
+issues, but this is not covered here.
+
+
+
+== Cross-Compiling on Linux for Windows in General ==
+
+Some linux distributions may offer cross compiler packages based on MinGW or
+MinGW-w64 (for Ubuntu: g++-mingw-w64 et al.). Unlike MXE, these tools do not
+offer packages or scripts to setup the required libraries. The Mapper build
+system can do the neccessary steps.
+
+For MinGW-w64 i686 (32 bit) builds, call
+
+cmake -DCMAKE_TOOLCHAIN_FILE=(path to source)cmake/toolchain/i686-w64-mingw32 \
+  -DMapper_BUILD_PROJ=1 -DMapper_BUILD_QT=1
+
+This will add targets and rules to the build system which download, patch,
+configure and build the proj and Qt libraries with all neccessary components.
+Note that initially there will be no build rules for Mapper and its components
+(and no rules for packaging) because the final configuration can only be done
+when the required libraries are ready. A single call to
+
+make
+
+will trigger a "superbuild" which will re-run cmake and make when the required
+libraries are completed. Note that such a build requires much space (~2 GB,
+mostly for Qt) and time (hours! - consider make -j X).
+Of course you can call
+
+make package
+
+as soon as another cmake run could find the required libraries.
+

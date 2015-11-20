@@ -19,10 +19,6 @@
 
 #include "file_format_ocad8.h"
 
-#ifdef __MINGW32__
-extern void *mempcpy (void *dest, const void *src, size_t n);
-#endif
-
 #include <QDebug>
 #include <QDateTime>
 #include <qmath.h>
@@ -294,14 +290,15 @@ Symbol *OCAD8FileImport::importPointSymbol(const OCADPointSymbol *ocad_symbol)
 
 Symbol *OCAD8FileImport::importLineSymbol(const OCADLineSymbol *ocad_symbol)
 {
+	LineSymbol* line_for_borders = NULL;
+	
 	// Import a main line?
 	LineSymbol *main_line = NULL;
 	if (ocad_symbol->dmode == 0 || ocad_symbol->width > 0)
 	{
 		main_line = new LineSymbol();
+		line_for_borders = main_line;
 		fillCommonSymbolFields(main_line, (OCADSymbol *)ocad_symbol);
-
-		main_line->minimum_length = 0; // OCAD 8 does not store min length
 
 		// Basic line options
 		main_line->line_width = convertSize(ocad_symbol->width);
@@ -395,10 +392,12 @@ Symbol *OCAD8FileImport::importLineSymbol(const OCADLineSymbol *ocad_symbol)
 	}
 	
 	// Import a 'double' line?
+	bool has_border_line = ocad_symbol->lwidth > 0 || ocad_symbol->rwidth > 0;
 	LineSymbol *double_line = NULL;
-	if (ocad_symbol->dmode != 0)
+	if (ocad_symbol->dmode != 0 && (ocad_symbol->dflags & 1 || (has_border_line && !line_for_borders)))
 	{
 		double_line = new LineSymbol();
+		line_for_borders = double_line;
 		fillCommonSymbolFields(double_line, (OCADSymbol *)ocad_symbol);
 		
 		double_line->line_width = convertSize(ocad_symbol->dwidth);
@@ -412,46 +411,56 @@ Symbol *OCAD8FileImport::importLineSymbol(const OCADLineSymbol *ocad_symbol)
 		
 		double_line->segment_length = convertSize(ocad_symbol->len);
 		double_line->end_length = convertSize(ocad_symbol->elen);
+	}
+	
+	// Border lines
+	if (has_border_line)
+	{
+		assert(line_for_borders);
+		line_for_borders->have_border_lines = true;
 		
-		// Border lines
-		if (ocad_symbol->lwidth > 0 || ocad_symbol->rwidth > 0)
+		// Border color and width - currently we don't support different values on left and right side,
+		// although that seems easy enough to implement in the future. Import with a warning.
+		s16 border_color = ocad_symbol->lcolor;
+		if (border_color != ocad_symbol->rcolor)
 		{
-			double_line->have_border_lines = true;
+			addWarning(QObject::tr("In symbol %1, left and right borders are different colors (%2 and %3). Using %4.")
+			.arg(0.1 * ocad_symbol->number).arg(ocad_symbol->lcolor).arg(ocad_symbol->rcolor).arg(border_color));
+		}
+		line_for_borders->border_color = convertColor(border_color);
+		
+		s16 border_width = ocad_symbol->lwidth;
+		if (border_width != ocad_symbol->rwidth)
+		{
+			addWarning(QObject::tr("In symbol %1, left and right borders are different width (%2 and %3). Using %4.")
+			.arg(0.1 * ocad_symbol->number).arg(ocad_symbol->lwidth).arg(ocad_symbol->rwidth).arg(border_width));
+		}
+		line_for_borders->border_width = convertSize(border_width);
+		line_for_borders->border_shift = convertSize(border_width) / 2 + (convertSize(ocad_symbol->dwidth) - line_for_borders->line_width) / 2;
+		
+		// And finally, the border may be dashed
+		if (ocad_symbol->dgap > 0 && ocad_symbol->dmode > 1)
+		{
+			line_for_borders->dashed_border = true;
+			line_for_borders->border_dash_length = convertSize(ocad_symbol->dlen);
+			line_for_borders->border_break_length = convertSize(ocad_symbol->dgap);
 			
-			// Border color and width - currently we don't support different values on left and right side,
-			// although that seems easy enough to implement in the future. Import with a warning.
-			s16 border_color = ocad_symbol->lcolor;
-			if (border_color != ocad_symbol->rcolor)
-			{
-				addWarning(QObject::tr("In symbol %1, left and right borders are different colors (%2 and %3). Using %4.")
-				.arg(0.1 * ocad_symbol->number).arg(ocad_symbol->lcolor).arg(ocad_symbol->rcolor).arg(border_color));
-			}
-			double_line->border_color = convertColor(border_color);
-			
-			s16 border_width = ocad_symbol->lwidth;
-			if (border_width != ocad_symbol->rwidth)
-			{
-				addWarning(QObject::tr("In symbol %1, left and right borders are different width (%2 and %3). Using %4.")
-				.arg(0.1 * ocad_symbol->number).arg(ocad_symbol->lwidth).arg(ocad_symbol->rwidth).arg(border_width));
-			}
-			double_line->border_width = convertSize(border_width);
-			double_line->border_shift = double_line->border_width / 2;
-			
-			// And finally, the border may be dashed
-			if (ocad_symbol->dgap > 0 && ocad_symbol->dmode > 1)
-			{
-				double_line->dashed_border = true;
-				double_line->border_dash_length = convertSize(ocad_symbol->dlen);
-				double_line->border_break_length = convertSize(ocad_symbol->dgap);
-				
-				if (ocad_symbol->dmode == 2)
-					addWarning(QObject::tr("In line symbol %1, ignoring that only the left border line should be dashed").arg(0.1 * ocad_symbol->number));
-			}
+			if (ocad_symbol->dmode == 2)
+				addWarning(QObject::tr("In line symbol %1, ignoring that only the left border line should be dashed").arg(0.1 * ocad_symbol->number));
 		}
 	}
-    
+	
     // Create point symbols along line; middle ("normal") dash, corners, start, and end.
     LineSymbol* symbol_line = main_line ? main_line : double_line;	// Find the line to attach the symbols to
+    if (symbol_line == NULL)
+	{
+		main_line = new LineSymbol();
+		symbol_line = main_line;
+		fillCommonSymbolFields(main_line, (OCADSymbol *)ocad_symbol);
+		
+		main_line->segment_length = convertSize(ocad_symbol->len);
+		main_line->end_length = convertSize(ocad_symbol->elen);
+	}
     OCADPoint * symbolptr = (OCADPoint *)ocad_symbol->pts;
 	symbol_line->mid_symbol = importPattern( ocad_symbol->smnpts, symbolptr);
 	symbol_line->mid_symbols_per_spot = ocad_symbol->snum;
@@ -1074,6 +1083,20 @@ Template *OCAD8FileImport::importRasterTemplate(const OCADBackground &background
     return NULL;
 }
 
+void OCAD8FileImport::setPathHolePoint(Object *object, int i)
+{
+	// Look for curve start points before the current point and apply hole point only if no such point is there.
+	// This prevents hole points in the middle of a curve caused by incorrect map objects.
+	if (i >= 1 && object->coords[i].isCurveStart())
+		; //object->coords[i-1].setHolePoint(true);
+	else if (i >= 2 && object->coords[i-1].isCurveStart())
+		; //object->coords[i-2].setHolePoint(true);
+	else if (i >= 3 && object->coords[i-2].isCurveStart())
+		; //object->coords[i-3].setHolePoint(true);
+	else
+		object->coords[i].setHolePoint(true);
+}
+
 /** Translates the OCAD path given in the last two arguments into an Object.
  */
 void OCAD8FileImport::fillPathCoords(Object *object, bool is_area, s16 npts, OCADPoint *pts)
@@ -1088,15 +1111,12 @@ void OCAD8FileImport::fillPathCoords(Object *object, bool is_area, s16 npts, OCA
         // We can support CurveStart, HolePoint, DashPoint.
         // CurveStart needs to be applied to the main point though, not the control point, and
 		// hole points need to bet set as the last point of a part of an area object instead of the first point of the next part
-        if (buf[2] & PX_CTL1 && i > 0) object->coords[i-1].setCurveStart(true);
-		if ((buf[2] & (PY_DASH << 8)) || (buf[2] & (PY_CORNER << 8))) coord.setDashPoint(true);
-        if (buf[2] & (PY_HOLE << 8))
-		{
-			if (is_area)
-				object->coords[i-1].setHolePoint(true);
-			else
-				coord.setHolePoint(true);
-		}
+		if (buf[2] & PX_CTL1 && i > 0)
+			object->coords[i-1].setCurveStart(true);
+		if ((buf[2] & (PY_DASH << 8)) || (buf[2] & (PY_CORNER << 8)))
+			coord.setDashPoint(true);
+		if (buf[2] & (PY_HOLE << 8))
+			setPathHolePoint(object, is_area ? (i - 1) : i);
     }
     
     // For path objects, create closed parts where the position of the last point is equal to that of the first point
@@ -2264,7 +2284,7 @@ void OCAD8FileExport::convertPascalString(const QString& text, char* buffer, int
 	QByteArray data = encoding_1byte->fromUnicode(text);
 	int min_size = qMin(text.length(), max_size);
 	*((unsigned char *)buffer) = min_size;
-	mempcpy(buffer + 1, data.data(), min_size);
+	memcpy(buffer + 1, data.data(), min_size);
 }
 
 void OCAD8FileExport::convertCString(const QString& text, unsigned char* buffer, int buffer_size)
@@ -2274,7 +2294,7 @@ void OCAD8FileExport::convertCString(const QString& text, unsigned char* buffer,
 	
 	QByteArray data = encoding_1byte->fromUnicode(text);
 	int min_size = qMin(buffer_size - 1, data.length());
-	mempcpy(buffer, data.data(), min_size);
+	memcpy(buffer, data.data(), min_size);
 	buffer[min_size] = 0;
 }
 
@@ -2293,13 +2313,19 @@ int OCAD8FileExport::convertWideCString(const QString& text, unsigned char* buff
 	if (2 * (exported_text.length() + 1) > buffer_size)
 		addStringTruncationWarning(exported_text, buffer_size - 1);
 	
+#if QT_VERSION >= 0x040700
 	// Do not add a byte order mark by using QTextCodec::IgnoreHeader
 	QTextEncoder* encoder = encoding_2byte->makeEncoder(QTextCodec::IgnoreHeader);
+#else
+	QTextEncoder* encoder = encoding_2byte->makeEncoder();
+	// Create but ignore the initial byte order mark
+	encoder->fromUnicode("");
+#endif
 	QByteArray data = encoder->fromUnicode(exported_text);
 	delete encoder;
 	
 	int min_size = qMin(buffer_size - 2, data.length());
-	mempcpy(buffer, data.data(), min_size);
+	memcpy(buffer, data.data(), min_size);
 	buffer[min_size] = 0;
 	buffer[min_size + 1] = 0;
 	return min_size + 2;

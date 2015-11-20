@@ -18,7 +18,12 @@
  
 set(PROJ_LIBRARY "proj")
 
-if(WIN32)
+if(NOT CMAKE_CURRENT_LIST_DIR)
+	# CMAKE_CURRENT_LIST_DIR is not available before cmake 2.8.3
+	get_filename_component(CMAKE_CURRENT_LIST_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH)
+endif()
+
+if(WIN32 AND NOT CMAKE_CROSSCOMPILING)
 	if(NOT PROJ_VERSION)
 		set(PROJ_VERSION 4.8.0 CACHE STRING
 		"Version number of the PROJ.4 library, minumum recommended value: 4.8.0"
@@ -49,7 +54,10 @@ if(WIN32)
 	  "${PROJ_DIR}/bin/libproj-0.dll"
 	  "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/libproj-0.dll"
 	)
-	add_dependencies(${PROJ_LIBRARY} COPY_PROJ_DLL)
+	# add_dependencies requires CMake >= 2.8.4,
+	# cf. http://public.kitware.com/Bug/view.php?id=10395
+	#add_dependencies(${PROJ_LIBRARY} COPY_PROJ_DLL)
+	set_property(TARGET ${PROJ_LIBRARY} PROPERTY DEPENDS COPY_PROJ_DLL)
 
 	SET(PROJ_MSYS_BASH "C:/MinGW/msys/1.0/bin/bash.exe")
 	if(EXISTS "${PROJ_MSYS_BASH}")
@@ -67,4 +75,6 @@ if(WIN32)
 		)
 		add_dependencies(COPY_PROJ_DLL proj_external )
 	endif(EXISTS "${PROJ_MSYS_BASH}")
-endif(WIN32)
+
+	list(APPEND CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS "${PROJ_DIR}/bin/libproj-0.dll")
+endif()

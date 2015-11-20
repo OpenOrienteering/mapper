@@ -48,10 +48,13 @@ public:
 	
     virtual void draw(QPainter* painter, MapWidget* widget);
 	
+protected slots:
+	void updateDirtyRect();
+	void objectSelectionChanged();
+	
 protected:
 	void updateStatusText();
 	void updatePreviewObjects();
-	void updateDirtyRect();
 	void updateDragging(const MapCoordF cursor_pos_map);
 	
 	static QCursor* cursor;

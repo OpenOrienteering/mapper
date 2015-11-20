@@ -56,6 +56,8 @@ void RotateTool::init()
 		rotation_center_set = true;
 	}
 	
+	connect(editor->getMap(), SIGNAL(objectSelectionChanged()), this, SLOT(objectSelectionChanged()));
+	connect(editor->getMap(), SIGNAL(selectedObjectEdited()), this, SLOT(updateDirtyRect()));
 	updateDirtyRect();
 	updateStatusText();
 }
@@ -147,6 +149,14 @@ void RotateTool::updateDirtyRect()
 		editor->getMap()->setDrawingBoundingBox(rect, 0, true);
 	else
 		editor->getMap()->clearDrawingBoundingBox();
+}
+
+void RotateTool::objectSelectionChanged()
+{
+	if (editor->getMap()->getNumSelectedObjects() == 0)
+		editor->setEditTool();
+	else
+		updateDirtyRect();
 }
 
 void RotateTool::updateDragging(const MapCoordF cursor_pos_map)
