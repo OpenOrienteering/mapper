@@ -6,7 +6,7 @@ The general build process prerequisites are:
  * A supported platform: 
    - Windows 7. Windows XP or newer may work. 64-bit builds not tested.
    - Mac OS X 10.7 (Lion). Mac OS X 10.6 or newer may work.
-   - Linux. Ubuntu 12.04 is known to work.
+   - Linux. Ubuntu 14.04 is known to work.
  * The OpenOrienteering Mapper source code.
  * CMake 2.8. The recommended version is 2.8.9 or newer.
    CMake is available from http://www.cmake.org/.
@@ -19,9 +19,9 @@ See below for platform-specific details and build instructions.
 
 This program uses the Qt library from http://qt-project.org which is released
 under the terms of the GNU General Public License, Version 3. 
-The program is known to work with Qt 4.8 and 5.0 and not to compile with 
-Qt 4.4 or earlier. Qt 5.0.2 is the recommended version. By default build
-settings, Qt 5.0.2 will be downloaded and built as part of the build process.
+The program is known to work with 5.2 and not to compile with 
+Qt 4.8 or earlier. Qt 5.3.2 is the recommended version. By default build
+settings, Qt 5.3.2 will be downloaded and built as part of the build process.
 You can change the cmake option Mapper_BUILD_QT to adjust this.
 
 
@@ -31,8 +31,8 @@ The program uses the clipper code library from
 http://www.angusj.com/delphi/clipper.php /
 http://sourceforge.net/projects/polyclipping/
 which is released under the terms of the Boost Software License, Version 1.0.
-The program is known to work with release 5.1.4 and not compile with releases
-5.0.3 or earlier. By default build settings, clipper 5.1.4 will be downloaded
+The program is known to work with release 6.1.3a and not compile with releases
+5.x.x or earlier. By default build settings, clipper 6.1.3a will be downloaded
 and built as part of the build process. 
 
 
@@ -41,9 +41,9 @@ and built as part of the build process.
 The program uses the PROJ.4 Cartographic Projections Library from
 http://trac.osgeo.org/proj/ which is released under permissive license terms.
 The program is known to work with the releases 4.7.0 (as contained in Ubuntu
-10.04 and 12.04) and 4.8.0. By default Windows and Mac OS X build settings,
-proj 4.8.0 will be downloaded and built as part of the build process. On Linux,
-default settings will use the installed proj library.
+10.04 and 12.04) and 4.8.0. By default build settings, proj 4.8.0 will be
+downloaded and built as part of the build process. On Linux, default settings
+will use the installed proj library.
 
 
 == Getting the Source ==
@@ -64,6 +64,9 @@ Otherwise you may get some strange errors when building Qt.
 
 
 == Compiling on Windows ==
+
+*This configuration has not been tested for a while. At least a more recent
+gcc is recommended.*
 
 The supported compiler is MinGW-builds gcc 4.7.2 (32-bit), as used in a Qt 5
 reference configuration, from
@@ -100,11 +103,12 @@ and generate ZIP and optionally NSIS packages by
 == Compiling on Linux ==
 
 The standard g++ compiler from a recent distribution should work. The Ubuntu
-12.04 g++ is known to work. Make sure that the PROJ.4 library is installed.
+14.04 g++ is known to work. Make sure that the PROJ.4 library is installed.
 For a Ubuntu or Debian system, install libproj0 and libproj-dev.
 To create a DEB package, fakeroot must be installed.
-For using the Qt libraries provided by the repositories, lsb-release,
-libqt4-dev and qt4-dev-tools also need to be installed.
+For using the Qt libraries provided by the repositories, the following packages
+need to be installed:
+qt5-default (>= 5), qttools5-dev, qttools5-dev-tools, libqt5sql5-sqlite
 
 Open a terminal, and create a build directory, e.g. as subdirectory build in
 the source directory, and change to that directory. From the build directory,

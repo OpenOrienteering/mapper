@@ -308,7 +308,7 @@ void SymbolRenderWidget::adjustLayout()
 	// Allow symbol widget to be that much wider than the viewport
 	int overflow = icon_size / 3;
 	icons_per_row = qMax(1, (width() + overflow) / icon_size);
-	num_rows = (map->getNumSymbols() + icons_per_row -1) / icons_per_row;
+	num_rows = qMax(1, (map->getNumSymbols() + icons_per_row -1) / icons_per_row);
 	setFixedHeight(num_rows * icon_size);
 	
 	hidden_symbol_decoration.reset(new HiddenSymbolDecorator(icon_size));

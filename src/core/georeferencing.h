@@ -36,6 +36,19 @@ typedef void* projPJ;
 
 class FileFormatException;
 
+
+
+#if defined(Q_OS_ANDROID)
+
+/**
+ * Registers a file finder function needed by Proj.4 on Android.
+ */
+extern "C" void registerProjFileHelper();
+
+#endif
+
+
+
 /**
  * A Georeferencing defines a mapping between "map coordinates" (as measured on
  * paper) and coordinates in the real world. It provides functions for 
@@ -212,6 +225,26 @@ public:
 	double getGrivation() const;
 	
 	/**
+	 * Returns the deviation of the grivation from the one given in pre-0.6 files.
+	 * 
+	 * Only valid immediately after loading a georeferencing from a file.
+	 * Returns 0.0 in any other context.
+	 * 
+	 * Files from Mapper versions before 0.6 may have used any number of decimal
+	 * places for grivation. Since version 0.6, grivation is rounded to the
+	 * number of decimal places defined by declinationPrecision(). When this
+	 * rounding takes place (i.e. only when opening a file which has not been
+	 * saved by 0.6 or later), the difference between the original value and the
+	 * rounded value is temporarily provided by this function. This value can be
+	 * used to for correcting dependent data. Any changes to declination or
+	 * grivation will invalidate this value.
+	 * 
+	 * @see getGrivation()
+	 * @see declinationPrecision()
+	 */
+	double getGrivationError() const;
+	
+	/**
 	 * Sets the grivation (in degrees).
 	 * 
 	 * Grivation is the angle between magnetic north and grid north. 
@@ -247,7 +280,7 @@ public:
 	 * This may trigger changes of the geographic coordinates of the reference
 	 * point, the convergence, the grivation and the transformations.
 	 */
-	void setProjectedRefPoint(QPointF point);
+	void setProjectedRefPoint(QPointF point, bool update_grivation = true);
 	
 	
 	/**
@@ -264,12 +297,7 @@ public:
 	/**
 	 * Returns the array of projected crs parameter values.
 	 */
-	std::vector< QString > getProjectedCRSParameters() const;
-	
-	/**
-	 * Sets the array of projected crs parameter values.
-	 */
-	void setProjectedCRSParameters(std::vector< QString > values);
+	const std::vector<QString>& getProjectedCRSParameters() const;
 	
 	/** 
 	 * Returns the specification of the coordinate reference system (CRS) of the
@@ -278,15 +306,20 @@ public:
 	 */
 	QString getProjectedCRSSpec() const { return projected_crs_spec; }
 	
-	/** Sets the coordinate reference system (CRS) of the projected coordinates.
+	/**
+	 * Sets the coordinate reference system (CRS) of the projected coordinates.
 	 * 
-	 * This may trigger changes of the projected coordinates of the reference
-	 * point, the convergence, the grivation and the transformations.
+	 * This will not touch any of the reference points, the declination, the
+	 * grivation. It is up to the user to decide how to reestablish a valid
+	 * configuration of geographic reference point, projected reference point,
+	 * declination and grivation.
 	 * 
+	 * @param id  an identifier
 	 * @param spec the PROJ.4 specification of the CRS
-	 * @return true if the specification is valid, false otherwise 
+	 * @param params parameter values (ignore for empty spec)
+	 * @return true if the specification is valid or empty, false otherwise
 	 */
-	bool setProjectedCRS(const QString& id, const QString& spec);
+	bool setProjectedCRS(const QString& id, const QString& spec = "", std::vector< QString > params = std::vector< QString >());
 	
 	/**
 	 * Calculates the meridian convergence at the reference point.
@@ -309,7 +342,7 @@ public:
 	 * This may trigger changes of the projected coordinates of the reference
 	 * point, the convergence, the grivation and the transformations.
 	 */
-	void setGeographicRefPoint(LatLon lat_lon);
+	void setGeographicRefPoint(LatLon lat_lon, bool update_grivation = true);
 	
 	
 	/** 
@@ -400,12 +433,8 @@ public:
 	 * The new value is calculated from the declination and the convergence.
 	 * For a local georeferencing, the convergence is zero, and grivation
 	 * is set to the same value as declination.
-	 * 
-	 * If the grivation changes, it is neccessary to call updateTransformation().
-	 * 
-	 * @return true if grivation changed, false otherwise.
 	 */
-	bool updateGrivation();
+	void updateGrivation();
 	
 	/**
 	 * Initializes the declination.
@@ -413,9 +442,6 @@ public:
 	 * The new value is calculated from the grivation and the convergence.
 	 * For a local georeferencing, the convergence is zero, and declination
 	 * is set to the same value as grivation.
-	 * 
-	 * This method intended for import of Version 17 OMAP files. It tries to
-	 * initialize the internal projection first if it is not yet defined.
 	 */
 	void initDeclination();
 	
@@ -428,6 +454,11 @@ public:
 	
 signals:
 	/**
+	 * Indicates a change of the state property.
+	 */
+	void stateChanged();
+	
+	/**
 	 * Indicates a change to the transformation rules between map coordinates
 	 * and projected coordinates.
 	 */
@@ -435,18 +466,28 @@ signals:
 	
 	/**
 	 * Indicates a change to the projection rules between geographic coordinates
-	 * and projected coordinates. This signal is also emitted when the 
-	 * georeferencing becomes local.
+	 * and projected coordinates.
 	 */
 	void projectionChanged();
 	
+	/**
+	 * Indicates a change of the declination.
+	 * 
+	 * The declination has no direct influence on projection or transformation.
+	 * That's why there is an independent signal.
+	 */
+	void declinationChanged();
+	
 	
 private:
+	void setDeclinationAndGrivation(double declination, double grivation);
+	
 	State state;
 	
 	unsigned int scale_denominator;
 	double declination;
 	double grivation;
+	double grivation_error;
 	MapCoord map_ref_point;
 	
 	QPointF projected_ref_point;
@@ -530,6 +571,12 @@ double Georeferencing::getGrivation() const
 }
 
 inline
+double Georeferencing::getGrivationError() const
+{
+	return grivation_error;
+}
+
+inline
 MapCoord Georeferencing::getMapRefPoint() const
 {
 	return map_ref_point;
@@ -548,15 +595,9 @@ QString Georeferencing::getProjectedCRSId() const
 }
 
 inline
-std::vector<QString> Georeferencing::getProjectedCRSParameters() const
+const std::vector<QString>& Georeferencing::getProjectedCRSParameters() const
 {
 	return projected_crs_parameters;
-}
-
-inline
-void Georeferencing::setProjectedCRSParameters(std::vector<QString> values)
-{
-	projected_crs_parameters = values;
 }
 
 inline

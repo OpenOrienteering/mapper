@@ -28,6 +28,7 @@
 #include <mapper_config.h>
 
 #include "about_dialog.h"
+#include "autosave_dialog.h"
 #include "../file_format_registry.h"
 #include "../file_import_export.h"
 #include "home_screen_controller.h"
@@ -63,6 +64,8 @@ static const char *application_menu_strings[] = {
 int MainWindow::num_open_files = 0;
 
 MainWindow::MainWindow(bool as_main_window)
+: QMainWindow()
+, has_autosave_conflict(false)
 {
 	controller = NULL;
 	has_unsaved_changes = false;
@@ -75,7 +78,7 @@ MainWindow::MainWindow(bool as_main_window)
 	show_menu = create_menu;
 #endif
 	disable_shortcuts = false;
-	setCurrentFile("");
+	setCurrentPath(QString());
 	maximized_before_fullscreen = false;
 	general_toolbar = NULL;
 	file_menu = NULL;
@@ -95,7 +98,12 @@ MainWindow::MainWindow(bool as_main_window)
 	if (as_main_window)
 		loadWindowSettings();
 	
+#if defined(Q_OS_ANDROID)
+	// Needed to catch Qt::Key_Back, cf. MainWindow::eventFilter()
+	qApp->installEventFilter(this);
+#else
 	installEventFilter(this);
+#endif
 	
 	connect(&Settings::getInstance(), SIGNAL(settingsChanged()), this, SLOT(settingsChanged()));
 }
@@ -140,7 +148,7 @@ void MainWindow::setCentralWidget(QWidget* widget)
 	}
 }
 
-void MainWindow::setController(MainWindowController* new_controller)
+void MainWindow::setController(MainWindowController* new_controller, const QString& path)
 {
 	if (controller)
 	{
@@ -157,7 +165,7 @@ void MainWindow::setController(MainWindowController* new_controller)
 	has_opened_file = false;
 	has_unsaved_changes = false;
 	disable_shortcuts = false;
-	setCurrentFile("");
+	setCurrentPath(path);
 	
 	if (create_menu)
 		createFileMenu();
@@ -303,13 +311,13 @@ void MainWindow::createHelpMenu()
 	}
 }
 
-void MainWindow::setCurrentFile(const QString& path)
+void MainWindow::setCurrentPath(const QString& path)
 {
-	current_path = QFileInfo(path).canonicalFilePath();
-	updateWindowTitle();
-	
-	if (!current_path.isEmpty())
-		setMostRecentlyUsedFile(current_path);
+	if (current_path != path)
+	{
+		current_path = QFileInfo(path).canonicalFilePath();
+		updateWindowTitle();
+	}
 }
 
 void MainWindow::setMostRecentlyUsedFile(const QString& path)
@@ -356,7 +364,7 @@ void MainWindow::setHasOpenedFile(bool value)
 void MainWindow::setHasUnsavedChanges(bool value)
 {
 	has_unsaved_changes = value;
-	setAutoSaveNeeded(value);
+	setAutosaveNeeded(has_unsaved_changes && !has_autosave_conflict);
 	updateWindowTitle();
 }
 
@@ -388,15 +396,22 @@ void MainWindow::clearStatusBarMessage()
 #endif
 }
 
-void MainWindow::closeFile()
+bool MainWindow::closeFile()
 {
-	if (num_open_files > 1)
-		close();
-	else if (showSaveOnCloseDialog())
+	bool closed = !has_opened_file || showSaveOnCloseDialog();
+	if (closed)
 	{
-		num_open_files--;
-		setController(new HomeScreenController());
+		if (has_opened_file)
+		{
+			num_open_files--;
+			has_opened_file = false;
+		}
+		if (num_open_files > 0)
+			close();
+		else
+			setController(new HomeScreenController());
 	}
+	return closed;
 }
 
 bool MainWindow::event(QEvent* event)
@@ -409,17 +424,25 @@ bool MainWindow::event(QEvent* event)
 
 void MainWindow::closeEvent(QCloseEvent* event)
 {
-	if (showSaveOnCloseDialog())
+	if (!has_opened_file)
+	{
+		saveWindowSettings();
+		event->accept();
+	}
+	else if (showSaveOnCloseDialog())
 	{
 		if (has_opened_file)
 		{
-			saveWindowSettings();
 			num_open_files--;
+			has_opened_file = false;
 		}
+		saveWindowSettings();
 		event->accept();
 	}
 	else
+	{
 		event->ignore();
+	}
 }
 
 void MainWindow::keyPressEvent(QKeyEvent* event)
@@ -429,14 +452,6 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
 		// Event filtered, stop handling
 		return;
 	}
-	
-#if defined(Q_OS_ANDROID)
-	if (event->key() == Qt::Key_Back)
-	{
-		// Event is handled, do not pass to parent.
-		return;
-	}
-#endif
 	
 	QMainWindow::keyPressEvent(event);
 }
@@ -449,34 +464,12 @@ void MainWindow::keyReleaseEvent(QKeyEvent* event)
 		return;
 	}
 	
-#if defined(Q_OS_ANDROID)
-	if (event->key() == Qt::Key_Back)
-	{
-		if (controller && controller->isEditingInProgress())
-		{
-			// Do nothing while editing is in progress
-		}
-		else if (close_act->isEnabled())
-		{
-			// Close the document when possible
-		    close_act->trigger();
-		}
-		else
-		{
-			// Otherwise close this whindow
-			this->close();
-		}
-		// Event is handled, do not pass to parent.
-		return;
-	}
-#endif
-	
 	QMainWindow::keyReleaseEvent(event);
 }
 
 bool MainWindow::showSaveOnCloseDialog()
 {
-	if (has_opened_file && has_unsaved_changes)
+	if (has_opened_file && (has_unsaved_changes || has_autosave_conflict))
 	{
 		// Show the window in case it is minimized
 		setWindowState( (windowState() & ~Qt::WindowMinimized) | Qt::WindowActive);
@@ -484,26 +477,48 @@ bool MainWindow::showSaveOnCloseDialog()
 		activateWindow();
 		
 		QMessageBox::StandardButton ret;
-		ret = QMessageBox::warning(this, APP_NAME,
-								   tr("The file has been modified.\n"
-		                           "Do you want to save your changes?"),
-								   QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
+		if (!has_unsaved_changes && actual_path != autosavePath(currentPath()))
+		{
+			ret = QMessageBox::warning(this, APP_NAME,
+			                           tr("Do you want to remove the autosaved version?"),
+			                           QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
+		}
+		else
+		{
+			ret = QMessageBox::warning(this, APP_NAME,
+			                           tr("The file has been modified.\n"
+			                              "Do you want to save your changes?"),
+			                           QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
+		}
 		
-		if (ret == QMessageBox::Save)
+		switch (ret)
 		{
-			bool success = save();
-			if (success)
-				removeAutoSaveFile();
-			return success;
-		}
-		else if (ret == QMessageBox::Discard)
-		{
-			removeAutoSaveFile();
-			return true;
-		}
-		else //  ret == QMessageBox::Cancel
-		{
+		case QMessageBox::Cancel:
 			return false;
+			
+		case QMessageBox::Discard:
+			if (has_autosave_conflict)
+				setHasAutosaveConflict(false);
+			else
+				removeAutosaveFile();
+			break;
+			
+		case QMessageBox::Save:
+			if (!save())
+				return false;
+			// fall through
+			
+		case QMessageBox::Yes:
+			removeAutosaveFile();
+			// fall through
+			
+		case QMessageBox::No:
+			setHasAutosaveConflict(false);
+			break;
+			
+		default:
+			Q_ASSERT(false && "Unsupported return value from message box");
+			break;
 		}
 		
 	}
@@ -554,7 +569,7 @@ MainWindow* MainWindow::findMainWindow(const QString& file_name)
 	foreach (QWidget *widget, qApp->topLevelWidgets())
 	{
 		MainWindow* other = qobject_cast<MainWindow*>(widget);
-		if (other && other->getCurrentFilePath() == canonical_file_path)
+		if (other && other->currentPath() == canonical_file_path)
 			return other;
 	}
 	
@@ -570,7 +585,7 @@ void MainWindow::updateWindowTitle()
 	
 	if (has_opened_file)
 	{
-		const QString current_file_path = getCurrentFilePath();
+		const QString current_file_path = currentPath();
 		if (current_file_path.isEmpty())
 			window_title += tr("Unsaved file") + " - ";
 		else
@@ -673,18 +688,24 @@ bool MainWindow::openPath(const QString &path)
 		return false;
 	}
 	
-	QString actual_path = path;
-	QString auto_save_path = autoSaveFileName(path);
-	if (QFileInfo(auto_save_path).exists())
+	QString new_actual_path = path;
+	QString autosave_path = Autosave::autosavePath(path);
+	bool new_autosave_conflict = QFileInfo(autosave_path).exists();
+	if (new_autosave_conflict)
 	{
-		int result = QMessageBox::warning(this, tr("File recovery"), 
-		  tr("There is an automatically saved version of <br /><tt>%1</tt><br /><br />Load this version?").arg(path),
-		  QMessageBox::Yes | QMessageBox::No);
-		if (result == QMessageBox::Yes)
-			actual_path = auto_save_path;
+#if defined(Q_OS_ANDROID)
+		// Assuming small screen, showing dialog before opening the file
+		AutosaveDialog* autosave_dialog = new AutosaveDialog(path, autosave_path, autosave_path, this);
+		int result = autosave_dialog->exec();
+		actual_path = (result == QDialog::Accepted) ? autosave_dialog->selectedPath() : QString();
+		delete autosave_dialog;
+#else
+		// Assuming large screen, dialog will be shown while the autosaved file is open
+		new_actual_path = autosave_path;
+#endif
 	}
 	
-	if (!new_controller->load(actual_path, this))
+	if (new_actual_path.isEmpty() || !new_controller->load(new_actual_path, this))
 	{
 		delete new_controller;
 		settings.remove(reopen_blocker);
@@ -696,16 +717,67 @@ bool MainWindow::openPath(const QString &path)
 		open_window = new MainWindow(true);
 	else
 		open_window = this;
-	open_window->setController(new_controller);
-	open_window->setCurrentFile(path);		// must be after setController()
-	open_window->setHasUnsavedChanges(actual_path != path);
+	open_window->setController(new_controller, path);
+	open_window->actual_path = new_actual_path;
+	open_window->setHasAutosaveConflict(new_autosave_conflict);
+	open_window->setHasUnsavedChanges(/*actual_path != path*/false);
 	
 	open_window->show();
 	open_window->raise();
-	open_window->activateWindow();
 	num_open_files++;
 	settings.remove(reopen_blocker);
+	setMostRecentlyUsedFile(path);
+	
+#if !defined(Q_OS_ANDROID)
+	// Assuming large screen. Android handled above.
+	if (new_autosave_conflict)
+	{
+		QDialog* autosave_dialog = new AutosaveDialog(path, autosave_path, new_actual_path, open_window, Qt::WindowTitleHint | Qt::CustomizeWindowHint);
+		autosave_dialog->move(open_window->rect().right() - autosave_dialog->width(), open_window->rect().top());
+		autosave_dialog->show();
+		autosave_dialog->raise();
+		
+		connect(autosave_dialog, SIGNAL(pathSelected(QString)), open_window, SLOT(switchActualPath(QString)));
+		connect(open_window, SIGNAL(actualPathChanged(QString)), autosave_dialog, SLOT(setSelectedPath(QString)));
+		connect(open_window, SIGNAL(autosaveConflictResolved()), autosave_dialog, SLOT(autosaveConflictResolved()));
+	}
+#endif
+	
+	open_window->activateWindow();
+	
 	return true;
+}
+
+void MainWindow::switchActualPath(const QString& path)
+{
+	if (path == actual_path)
+	{
+		return;
+	}
+	
+	int ret = QMessageBox::Ok;
+	if (has_unsaved_changes)
+	{
+		ret = QMessageBox::warning(this, APP_NAME,
+		                           tr("The file has been modified.\n"
+		                              "Do you want to discard your changes?"),
+		                           QMessageBox::Discard | QMessageBox::Cancel);
+	}
+	
+	if (ret != QMessageBox::Cancel)
+	{
+		const QString& current_path = currentPath();
+		MainWindowController* const new_controller = MainWindowController::controllerForFile(current_path);
+		if (new_controller && new_controller->load(path, this))
+		{
+			setController(new_controller, current_path);
+			actual_path = path;
+			setHasUnsavedChanges(false);
+		}
+	}
+	
+	emit actualPathChanged(actual_path);
+	activateWindow();
 }
 
 void MainWindow::openPathLater(const QString& path)
@@ -752,61 +824,62 @@ void MainWindow::updateRecentFileActions()
 	open_recent_menu_inserted = num_recent_files > 0;
 }
 
-QString MainWindow::autoSaveFileName(const QString &path)
+void MainWindow::setHasAutosaveConflict(bool value)
 {
-	return path % ".autosave";
-}
-
-QString MainWindow::autoSaveFileName() const
-{
-	return autoSaveFileName(getCurrentFilePath());
-}
-
-void MainWindow::removeAutoSaveFile()
-{
-	QString path = getCurrentFilePath();
-	if (!path.isEmpty())
+	if (has_autosave_conflict != value)
 	{
-		QFile auto_save_file(autoSaveFileName());
-		if (auto_save_file.exists())
+		has_autosave_conflict = value;
+		setAutosaveNeeded(has_unsaved_changes && !has_autosave_conflict);
+		if (!has_autosave_conflict)
+			emit autosaveConflictResolved();
+	}
+}
+
+void MainWindow::removeAutosaveFile() const
+{
+	QString path = currentPath();
+	if (!path.isEmpty() && !has_autosave_conflict)
+	{
+		QFile autosave_file(autosavePath(currentPath()));
+		if (autosave_file.exists())
 		{
-			auto_save_file.remove();
+			autosave_file.remove();
 		}
 	}
 }
 
-AutoSave::AutoSaveResult MainWindow::autoSave()
+Autosave::AutosaveResult MainWindow::autosave()
 {
-	QString path = getCurrentFilePath();
+	QString path = currentPath();
 	if (path.isEmpty() || !controller)
 	{
-		return AutoSave::PermanentFailure;
+		return Autosave::PermanentFailure;
 	}
 	else if (controller->isEditingInProgress())
 	{
-		return AutoSave::TemporaryFailure;
+		return Autosave::TemporaryFailure;
 	}
 	else
 	{
-		showStatusBarMessage(tr("Auto-saving..."), 0);
-		if (controller->exportTo(autoSaveFileName(path)))
+		showStatusBarMessage(tr("Autosaving..."), 0);
+		if (controller->exportTo(autosavePath(currentPath())))
 		{
 			// Success
 			clearStatusBarMessage();
-			return AutoSave::Success;
+			return Autosave::Success;
 		}
 		else
 		{
 			// Failure
-			showStatusBarMessage(tr("Auto-saving failed!"), 6000);
-			return AutoSave::PermanentFailure;
+			showStatusBarMessage(tr("Autosaving failed!"), 6000);
+			return Autosave::PermanentFailure;
 		}
 	}
 }
 
 bool MainWindow::save()
 {
-	return savePath(getCurrentFilePath());
+	return savePath(currentPath());
 }
 
 bool MainWindow::savePath(const QString &path)
@@ -829,9 +902,19 @@ bool MainWindow::savePath(const QString &path)
 	if (!controller->save(path))
 		return false;
 	
-	removeAutoSaveFile();
-	setCurrentFile(path);
+	setMostRecentlyUsedFile(path);
+	
+	removeAutosaveFile();
+	setHasAutosaveConflict(false);
+	
+	if (path != current_path)
+	{
+		setCurrentPath(path);
+		removeAutosaveFile();
+	}
+	
 	setHasUnsavedChanges(false);
+	
 	return true;
 }
 
@@ -880,7 +963,7 @@ bool MainWindow::showSaveAsDialog()
 		return false;
 	
 	// Try current directory first
-	QFileInfo current(getCurrentFilePath());
+	QFileInfo current(currentPath());
 	QString save_directory = current.canonicalPath();
 	if (save_directory.isEmpty())
 	{
@@ -1009,17 +1092,46 @@ void MainWindow::linkClicked(const QString &link)
 		QDesktopServices::openUrl(link);
 }
 
-bool MainWindow::eventFilter(QObject *object, QEvent *event){
+bool MainWindow::eventFilter(QObject *object, QEvent *event)
+{
 	Q_UNUSED(object)
-	if(event->type() == QEvent::WhatsThisClicked){
-		QWhatsThisClickedEvent* e = static_cast<QWhatsThisClickedEvent*>(event);
-		QStringList parts = e->href().split("#");
-		if(parts.size() == 0)
-			Util::showHelp(this);
-		else if(parts.size() == 1)
-			Util::showHelp(this, parts.at(0));
-		else if(parts.size() == 2)
-			Util::showHelp(this, parts.at(0), parts.at(1));
+	
+	switch(event->type())
+	{
+	case QEvent::WhatsThisClicked:
+		{
+			QWhatsThisClickedEvent* e = static_cast<QWhatsThisClickedEvent*>(event);
+			QStringList parts = e->href().split("#");
+			if(parts.size() == 0)
+				Util::showHelp(this);
+			else if(parts.size() == 1)
+				Util::showHelp(this, parts.at(0));
+			else if(parts.size() == 2)
+				Util::showHelp(this, parts.at(0), parts.at(1));
+		};
+		break;
+#if defined(Q_OS_ANDROID)
+	case QEvent::KeyRelease:
+		if (static_cast<QKeyEvent*>(event)->key() == Qt::Key_Back && hasOpenedFile())
+		{
+			/* Don't let Qt close the application in
+			 * QGuiApplicationPrivate::processKeyEvent() while a file is opened.
+			 * 
+			 * This must be the application-wide event filter in order to
+			 * catch Qt::Key_Back from popup menus (such as template list,
+			 * overflow actions).
+			 * 
+			 * Any widgets that want to handle Qt::Key_Back need to watch
+			 * for QEvent::KeyPress.
+			 */
+			event->accept();
+			return true;
+		}
+		break;
+#endif
+	default:
+		; // nothing
 	}
+	
 	return false;
 }

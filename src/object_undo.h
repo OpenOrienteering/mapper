@@ -251,6 +251,9 @@ public:
 	virtual ~ReplaceObjectsUndoStep();
 	
 	virtual UndoStep* undo();
+	
+private:
+	bool undone;
 };
 
 /**
@@ -300,6 +303,9 @@ public:
 	
 protected:
 	static bool sortOrder(const std::pair<int, int>& a, const std::pair<int, int>& b);
+	
+private:
+	bool undone;
 };
 
 

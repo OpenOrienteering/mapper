@@ -23,6 +23,8 @@
 
 #include "template.h"
 
+#include <QImage>
+
 QT_BEGIN_NAMESPACE
 class QCheckBox;
 class QRadioButton;
@@ -50,6 +52,7 @@ public:
 	TemplateImage(const QString& path, Map* map);
     virtual ~TemplateImage();
 	virtual const QString getTemplateType() {return "TemplateImage";}
+	virtual bool isRasterGraphics() const {return true;}
 
 	virtual bool saveTemplateFile();
 	virtual bool loadTypeSpecificTemplateConfiguration(QIODevice* stream, int version);
@@ -71,7 +74,7 @@ public:
 	QPointF calcCenterOfGravity(QRgb background_color);
 	
 	/** Returns the internal QImage. */
-	inline QImage* getQImage() const {return image;}
+	inline const QImage& getImage() const {return image;}
 	
 	/**
 	 * Returns which georeferencing method (if any) is available.
@@ -120,7 +123,7 @@ protected:
 	void calculateGeoreferencing();
 	void updatePosFromGeoreferencing();
 
-	QImage* image;
+	QImage image;
 	
 	std::vector< DrawOnImageUndoStep > undo_steps;
 	/// Current index in undo_steps, where 0 means before the first item.
@@ -140,7 +143,7 @@ class TemplateImageOpenDialog : public QDialog
 {
 Q_OBJECT
 public:
-	TemplateImageOpenDialog(TemplateImage* image, QWidget* parent);
+	TemplateImageOpenDialog(TemplateImage* templ, QWidget* parent);
 	
 	double getMpp() const;
 	bool isGeorefRadioChecked() const;
@@ -159,7 +162,7 @@ private:
 	QLineEdit* scale_edit;
 	QPushButton* open_button;
 	
-	TemplateImage* image;
+	TemplateImage* templ;
 };
 
 #endif

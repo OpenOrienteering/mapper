@@ -25,7 +25,6 @@
 #include <QCoreApplication>
 #include <QDir>
 #include <QFile>
-#include <qabstractitemmodel.h>
 
 /**
  * Private MapperResource utilities
@@ -57,33 +56,12 @@ QStringList MapperResource::getLocations(MapperResource::RESOURCE_TYPE resource_
 	
 	switch (resource_type)
 	{
-		case ABOUT:
-#if defined(MAPPER_DEVELOPMENT_BUILD)
-			addIfExists(locations, MAPPER_DEVELOPMENT_RES_DIR);
-#endif
-#if defined(Q_OS_WIN)
-			resource_path = "/doc";
-#elif defined(Q_OS_MAC)
-			resource_path = "";
-#elif defined(MAPPER_PACKAGE_NAME)
-			resource_path = QString("/../doc/") + MAPPER_PACKAGE_NAME;
-#endif
-			break;
-			
-			
 		case ASSISTANT:
 			return MapperResource::getProgramLocations(resource_type);
 			
 		case EXAMPLE:
-#if defined(Q_OS_ANDROID)
-			// Qt 5.2.0: The "assets:/" file system seems to skip the first file.
-			//           That's why we use Qt's resource system at the moment.
-			locations << ":/examples";
-			return locations;
-#else
 			resource_path = "/examples";
 			break;
-#endif
 			
 		case MANUAL:
 			// TODO: Support localized manual
@@ -122,7 +100,7 @@ QStringList MapperResource::getLocations(MapperResource::RESOURCE_TYPE resource_
 			return locations;
 	}
 	
-#if defined(MAPPER_DEVELOPMENT_BUILD)
+#if defined(MAPPER_DEVELOPMENT_BUILD) && defined(MAPPER_DEVELOPMENT_RES_DIR)
 	// Use the directory where Mapper is built during development, 
 	// even for the unit tests located in other directories.
 	QString build_dir(MAPPER_DEVELOPMENT_RES_DIR + resource_path);
@@ -142,6 +120,8 @@ QStringList MapperResource::getLocations(MapperResource::RESOURCE_TYPE resource_
 	// Windows: load resources from the application directory
 	QString win_dir(app_dir.absolutePath() + resource_path);
 	addIfExists(locations, win_dir);
+#else
+	Q_UNUSED(app_dir);
 #endif
 	
 	// General default path: Qt resource system

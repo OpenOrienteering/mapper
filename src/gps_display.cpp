@@ -1,5 +1,6 @@
 /*
  *    Copyright 2013 Thomas Schöps
+ *    Copyright 2014 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -20,7 +21,11 @@
 #include "gps_display.h"
 
 #if defined(QT_POSITIONING_LIB)
-	#include <QtPositioning/QGeoPositionInfoSource>
+#  include <QtPositioning/QGeoPositionInfoSource>
+#endif
+#if defined(Q_OS_ANDROID)
+#  include <jni.h>
+#  include <QtAndroidExtras/QAndroidJniObject>
 #endif
 #include <QPainter>
 #include <QDebug>
@@ -31,17 +36,14 @@
 #include "map_widget.h"
 #include "util.h"
 #include "compass.h"
-#if defined(ANDROID)
-	#include "android/gps_source_android.h"
-#endif
-
 
 GPSDisplay::GPSDisplay(MapWidget* widget, const Georeferencing& georeferencing)
  : QObject()
+ , visible(false)
+ , source(NULL)
+ , widget(widget)
  , georeferencing(georeferencing)
 {
-	this->widget = widget;
-	
 	gps_updated = false;
 	tracking_lost = false;
 	has_valid_position = false;
@@ -50,11 +52,7 @@ GPSDisplay::GPSDisplay(MapWidget* widget, const Georeferencing& georeferencing)
 	heading_indicator_enabled = false;
 	
 #if defined(QT_POSITIONING_LIB)
-	#if defined(ANDROID)
-		source = new AndroidGPSPositionSource(this);
-	#else
-		source = QGeoPositionInfoSource::createDefaultSource(this);
-	#endif
+	source = QGeoPositionInfoSource::createDefaultSource(this);
 	if (!source)
 	{
 		qDebug() << "Cannot create QGeoPositionInfoSource!";
@@ -66,13 +64,12 @@ GPSDisplay::GPSDisplay(MapWidget* widget, const Georeferencing& georeferencing)
 	connect(source, SIGNAL(positionUpdated(const QGeoPositionInfo&)), this, SLOT(positionUpdated(const QGeoPositionInfo&)), Qt::QueuedConnection);
 	connect(source, SIGNAL(error(QGeoPositionInfoSource::Error)), this, SLOT(error(QGeoPositionInfoSource::Error)));
 	connect(source, SIGNAL(updateTimeout()), this, SLOT(updateTimeout()));
-#else
-	source = NULL;
-	
+#elif defined(MAPPER_DEVELOPMENT_BUILD)
 	// DEBUG
 	QTimer* debug_timer = new QTimer(this);
 	connect(debug_timer, SIGNAL(timeout()), this, SLOT(debugPositionUpdate()));
 	debug_timer->start(500);
+	visible = true;
 #endif
 
 	widget->setGPSDisplay(this);
@@ -84,28 +81,61 @@ GPSDisplay::~GPSDisplay()
 	widget->setGPSDisplay(NULL);
 }
 
+bool GPSDisplay::checkGPSEnabled()
+{
+#if defined(Q_OS_ANDROID)
+	static bool translation_initialized = false;
+	if (!translation_initialized)
+	{
+		QAndroidJniObject gps_disabled_string = QAndroidJniObject::fromString(tr("GPS is disabled in the device settings. Open settings now?"));
+		QAndroidJniObject yes_string = QAndroidJniObject::fromString(tr("Yes"));
+		QAndroidJniObject no_string  = QAndroidJniObject::fromString(tr("No"));
+		QAndroidJniObject::callStaticMethod<void>(
+			"org/openorienteering/mapper/MapperActivity",
+			"setTranslatableStrings",
+			"(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V",
+			yes_string.object<jstring>(),
+			no_string.object<jstring>(),
+			gps_disabled_string.object<jstring>());
+		translation_initialized = true;
+	}
+	
+	QAndroidJniObject::callStaticMethod<void>("org/openorienteering/mapper/MapperActivity",
+                                       "checkGPSEnabled",
+                                       "()V");
+#endif
+	return true;
+}
+
 void GPSDisplay::startUpdates()
 {
 #if defined(QT_POSITIONING_LIB)
-	source->startUpdates();
+	if (source)
+	{
+		checkGPSEnabled();
+		source->startUpdates();
+	}
 #endif
 }
 
 void GPSDisplay::stopUpdates()
 {
 #if defined(QT_POSITIONING_LIB)
-	source->stopUpdates();
-	has_valid_position = false;
+	if (source)
+	{
+		source->stopUpdates();
+		has_valid_position = false;
+	}
 #endif
 }
 
 void GPSDisplay::setVisible(bool visible)
 {
-	if (this->visible == visible)
-		return;
-	this->visible = visible;
-	
-	updateMapWidget();
+	if (this->visible != visible)
+	{
+		this->visible = visible;
+		updateMapWidget();
+	}
 }
 
 void GPSDisplay::enableDistanceRings(bool enable)

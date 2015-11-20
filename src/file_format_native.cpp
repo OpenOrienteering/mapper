@@ -23,11 +23,11 @@
 
 #include "core/georeferencing.h"
 #include "core/map_color.h"
+#include "core/map_grid.h"
 #include "core/map_printer.h"
 #include "core/map_view.h"
 #include "file_import_export.h"
 #include "map.h"
-#include "map_grid.h"
 #include "symbol.h"
 #include "template.h"
 #include "undo_manager.h"
@@ -159,9 +159,16 @@ void NativeFileImport::import(bool load_symbols_only) throw (FileFormatException
 		
 		Georeferencing georef;
 		stream->read((char*)&georef.scale_denominator, sizeof(int));
+		double value;
 		if (version >= 18)
-			stream->read((char*)&georef.declination, sizeof(double));
-		stream->read((char*)&georef.grivation, sizeof(double));
+		{
+			stream->read((char*)&value, sizeof(double));
+			georef.declination = Georeferencing::roundDeclination(value);
+		}
+		stream->read((char*)&value, sizeof(double));
+		georef.grivation = Georeferencing::roundDeclination(value);
+		georef.grivation_error = value - georef.grivation;
+		
 		double x,y;
 		stream->read((char*)&x, sizeof(double));
 		stream->read((char*)&y, sizeof(double));
@@ -193,7 +200,7 @@ void NativeFileImport::import(bool load_symbols_only) throw (FileFormatException
 	}
 	
 	if (version >= 24)
-		map->getGrid().load(stream, version);
+		map->setGrid(MapGrid().load(stream, version));
 	
 	if (version >= 25)
 	{

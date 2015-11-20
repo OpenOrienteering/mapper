@@ -78,7 +78,7 @@ Settings::Settings()
 	registerSetting(SymbolWidget_IconSizeMM, "SymbolWidget/icon_size_mm", symbol_widget_icon_size_mm_default);
 	
 	registerSetting(General_RetainCompatiblity, "retainCompatiblity", true);
-	registerSetting(General_AutoSaveInterval, "autosave", 15); // unit: minutes
+	registerSetting(General_AutosaveInterval, "autosave", 15); // unit: minutes
 	registerSetting(General_Language, "language", QVariant((int)QLocale::system().language()));
 	registerSetting(General_PixelsPerInch, "pixelsPerInch", ppi);
 	registerSetting(General_TranslationFile, "translationFile", QVariant(QString::null));

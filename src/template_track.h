@@ -42,6 +42,7 @@ public:
 	TemplateTrack(const QString& path, Map* map);
     virtual ~TemplateTrack();
 	virtual const QString getTemplateType() {return "TemplateTrack";}
+	virtual bool isRasterGraphics() const {return false;}
 	
 	virtual bool saveTemplateFile();
 	
@@ -56,10 +57,10 @@ public:
 	
 	
 	/// Draws all tracks.
-	void drawTracks(QPainter* painter);
+	void drawTracks(QPainter* painter, bool on_screen);
 	
-	/// Draws all waypoints. Needs the transformation from map coords to paint device coords.
-	void drawWaypoints(QPainter* painter, QTransform map_to_device);
+	/// Draws all waypoints.
+	void drawWaypoints(QPainter* painter);
 	
 	/// Import the track as map object(s), returns true if something has been imported.
 	/// TODO: should this be moved to the Track class?

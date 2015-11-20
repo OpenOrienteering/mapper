@@ -17,47 +17,47 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _OPENORIENTEERING_AUTO_SAVE_P_H
-#define _OPENORIENTEERING_AUTO_SAVE_P_H
+#ifndef _OPENORIENTEERING_AUTOSAVE_P_H
+#define _OPENORIENTEERING_AUTOSAVE_P_H
 
 #include <QObject>
 #include <QTimer>
 
-#include "auto_save.h"
+#include "autosave.h"
 
 /**
- * @brief AutoSavePrivate is a helper class of AutoSave.
+ * @brief AutosavePrivate is a helper class of Autosave.
  * 
- * AutoSavePrivate implements most of AutoSave's behaviour.
- * AutoSave is meant to be used through inheritance.
+ * AutosavePrivate implements most of Autosave's behaviour.
+ * Autosave is meant to be used through inheritance.
  * Due to the implemenation of QObject and moc, only the first inherited class
- * may be derived from QObject. That is why AutoSave itself is not derived from
+ * may be derived from QObject. That is why Autosave itself is not derived from
  * QObject, but rather uses this helper class.
  */
-class AutoSavePrivate : public QObject
+class AutosavePrivate : public QObject
 {
 Q_OBJECT
 public:	
-	AutoSavePrivate(AutoSave& document);
+	AutosavePrivate(Autosave& document);
 	
-	virtual ~AutoSavePrivate();
+	virtual ~AutosavePrivate();
 	
-	bool autoSaveNeeded();
+	bool autosaveNeeded();
 	
-	void setAutoSaveNeeded(bool);
+	void setAutosaveNeeded(bool);
 	
 public slots:
-	void autoSave();
+	void autosave();
 	
 	void settingsChanged();
 	
 private:
-	Q_DISABLE_COPY(AutoSavePrivate)
+	Q_DISABLE_COPY(AutosavePrivate)
 	
-	AutoSave& document;
-	QTimer* auto_save_timer;
-	bool auto_save_needed;
-	int  auto_save_interval;
+	Autosave& document;
+	QTimer* autosave_timer;
+	bool autosave_needed;
+	int  autosave_interval;
 };
 
 #endif

@@ -48,7 +48,20 @@ public:
 	/// Creates a GPS display for the given map widget and georeferencing.
 	GPSDisplay(MapWidget* widget, const Georeferencing& georeferencing);
 	/// Destructor, removes the GPS display from the map widget.
-	~GPSDisplay();
+	virtual ~GPSDisplay();
+	
+	/**
+	 * @brief Checks if GPS is enabled and may guide the user to the device settings.
+	 * 
+	 * Checks if GPS is enabled in the device settings. If this is not the case,
+	 * it asks the user whether he wishes to open the device's location settings
+	 * dialog.
+	 * 
+	 * Returns true if GPS is enabled. Must return true also if the settings
+	 * dialog remains open when returning from this function (i.e. the final
+	 * result is not known. May return false if GPS remains disabled.
+	 */
+	bool checkGPSEnabled();
 	
 	/// Starts regular position updates. This will issue redraws of the map widget.
 	void startUpdates();

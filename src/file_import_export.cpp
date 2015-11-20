@@ -130,7 +130,14 @@ void Importer::doImport(bool load_symbols_only, const QString& map_path) throw (
 			have_lost_template = true;
 	}
 	if (have_lost_template)
-		addWarning(Importer::tr("At least one template file could not be found. Click the red template name(s) in the Templates -> Template setup window to locate the template file name(s)."));
+	{
+#if defined(Q_OS_ANDROID)
+		addWarning(tr("At least one template file could not be found."));
+#else
+		addWarning(tr("At least one template file could not be found.") + " " +
+		           tr("Click the red template name(s) in the Templates -> Template setup window to locate the template file name(s)."));
+#endif
+	}
 }
 
 void Importer::finishImport() throw (FileFormatException)

@@ -67,7 +67,7 @@ bool DrawCircleTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, Ma
 {
 	Q_UNUSED(widget);
 	
-	if ((event->button() == Qt::LeftButton) || (editingInProgress() && drawMouseButtonClicked(event)))
+	if (isDrawingButton(event->button()))
 	{
 		cur_pos = event->pos();
 		cur_pos_map = map_coord;
@@ -109,7 +109,7 @@ bool DrawCircleTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, Map
 {
 	Q_UNUSED(widget);
 	
-	bool mouse_down = drawMouseButtonHeld(event);
+	bool mouse_down = containsDrawingButtons(event->buttons());
 	
 	if (!mouse_down)
 	{
@@ -157,7 +157,7 @@ bool DrawCircleTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, 
 {
 	Q_UNUSED(widget);
 	
-	if (!drawMouseButtonClicked(event))
+	if (!isDrawingButton(event->button()))
 	{
 		if (event->button() == Qt::RightButton)
 			abortDrawing();

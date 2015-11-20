@@ -30,7 +30,7 @@
 
 #include "gui/main_window.h"
 #include "map_editor.h"
-#include "map_grid.h"
+#include "core/map_grid.h"
 #include "map_widget.h"
 #include "object_text.h"
 #include "settings.h"

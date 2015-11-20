@@ -53,7 +53,6 @@ set(Mapper_Common_SRCS
  map_dialog_new.cpp
  map_dialog_scale.cpp
  map_dialog_rotate.cpp
- map_grid.cpp
 
  color_dock_widget.cpp
 
@@ -125,11 +124,12 @@ set(Mapper_Common_SRCS
  file_format_ocad8.cpp
  file_format_xml.cpp
  
- core/auto_save.cpp
+ core/autosave.cpp
  core/crs_template.cpp
  core/georeferencing.cpp
  core/latlon.cpp
  core/map_color.cpp
+ core/map_grid.cpp
  core/map_printer.cpp
  core/map_view.cpp
  
@@ -137,11 +137,13 @@ set(Mapper_Common_SRCS
  fileformats/ocd_types.cpp
  
  gui/about_dialog.cpp
+ gui/autosave_dialog.cpp
  gui/color_dialog.cpp
  gui/georeferencing_dialog.cpp
  gui/home_screen_controller.cpp
  gui/main_window.cpp
  gui/main_window_controller.cpp
+ gui/configure_grid_dialog.cpp
  gui/modifier_key.cpp
  gui/point_handles.cpp
  gui/print_progress_dialog.cpp
@@ -184,7 +186,6 @@ set(Mapper_Common_MOC_INPUT
  map_dialog_rotate.h
  map_editor.h
  map_editor_activity.h
- map_grid.h
  object_undo.h
  map_widget.h
  settings.h
@@ -234,14 +235,16 @@ set(Mapper_Common_MOC_INPUT
  undo_manager.h
  util_task_dialog.h
  
- core/auto_save_p.h
+ core/autosave_p.h
  core/georeferencing.h
  core/map_printer.h
  
  fileformats/ocd_file_format_p.h
  
  gui/about_dialog.h
+ gui/autosave_dialog.h
  gui/color_dialog.h
+ gui/configure_grid_dialog.h
  gui/georeferencing_dialog.h
  gui/home_screen_controller.h
  gui/main_window.h
@@ -271,10 +274,11 @@ set(Mapper_Common_MOC_INPUT
 )
 
 set(Mapper_EXTRA_HEADERS
-  core/auto_save_p.h
+  core/autosave_p.h
   core/crs_template.h
   core/image_transparency_fixup.h
   core/latlon.h
+  core/map_grid.h
   fileformats/ocd_file_format_p.h
   fileformats/ocd_types_v8.h
   fileformats/ocd_types_v9.h

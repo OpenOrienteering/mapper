@@ -276,6 +276,27 @@ namespace Util
 			return create(P::decimals(), P::min(), P::max(), unit, P::step());
 		}
 	}
+	
+	namespace TristateCheckbox
+	{
+		inline
+		void setDisabledAndChecked(QCheckBox* checkbox, bool checked)
+		{
+			Q_ASSERT(checkbox);
+			checkbox->setEnabled(false);
+			checkbox->setTristate(true);
+			checkbox->setCheckState(checked ? Qt::PartiallyChecked : Qt::Unchecked);
+		}
+		
+		inline
+		void setEnabledAndChecked(QCheckBox* checkbox, bool checked)
+		{
+			Q_ASSERT(checkbox);
+			checkbox->setEnabled(true);
+			checkbox->setChecked(checked);
+			checkbox->setTristate(false);
+		}
+	}
 }
 
 #endif

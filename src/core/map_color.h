@@ -281,6 +281,8 @@ public:
 	
 	/**
 	 * Sets the value of knockout flag for spot color printing.
+	 * 
+	 * The color must have a spot color definition, or no change will be done.
 	 */
 	void setKnockout(bool flag);
 	

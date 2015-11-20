@@ -117,9 +117,9 @@ private slots:
 	
 	void ocdImporterClicked(bool state);
 	
-	void autoSaveChanged(bool state);
+	void autosaveChanged(bool state);
 	
-	void autoSaveIntervalChanged(int value);
+	void autosaveIntervalChanged(int value);
 	
 	void retainCompatibilityChanged(bool state);
 	
@@ -136,8 +136,8 @@ private:
 	
 	QComboBox* encoding_box;
 	
-	QLabel*       auto_save_interval_label;
-	QSpinBox*     auto_save_interval_edit;
+	QLabel*       autosave_interval_label;
+	QSpinBox*     autosave_interval_edit;
 };
 
 #endif

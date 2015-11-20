@@ -578,6 +578,13 @@ bool XmlElementReader::attribute(const QLatin1String& qualifiedName) const
 	return value;
 }
 
+template<  >
+inline
+QStringRef XmlElementReader::attribute(const QLatin1String& qualifiedName) const
+{
+	return attributes.value(qualifiedName);
+}
+
 template< typename T >
 inline
 T XmlElementReader::attribute(const QLatin1String& qualifiedName) const

@@ -46,14 +46,6 @@ public class MapperActivity extends org.qtproject.qt5.android.bindings.QtActivit
 {
 	private static MapperActivity instance;
 	
-	private LocationManager locationManager;
-	private LocationListener locationListener;
-	private Location lastLocation = null;
-	
-	private boolean haveGPSFix = false;
-	private boolean gpsUpdatesEnabled;
-	private int gpsUpdateInterval;
-	private long lastLocationMillis;
 	private String yes_string;
 	private String no_string;
 	private String gps_disabled_string;
@@ -64,95 +56,19 @@ public class MapperActivity extends org.qtproject.qt5.android.bindings.QtActivit
 		super.onCreate(savedInstanceState);
 
 		instance = this;
-		gpsUpdatesEnabled = false;
-
-		locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-		locationManager.addGpsStatusListener(new GpsStatus.Listener() {
-			public void onGpsStatusChanged(int event) {
-				switch (event) {
-				case GpsStatus.GPS_EVENT_SATELLITE_STATUS:
-					if (lastLocation != null)
-					{
-						boolean haveGPSFixNow = (SystemClock.elapsedRealtime() - lastLocationMillis) < 5000;
-						
-						if (haveGPSFix && !haveGPSFixNow)
-							updateTimeout();
-						haveGPSFix = haveGPSFixNow;
-					}
-					break;
-				
-				case GpsStatus.GPS_EVENT_FIRST_FIX:
-					haveGPSFix = true;
-					break;
-				}
-			}
-		});
-		locationListener = new LocationListener() {
-			public void onLocationChanged(Location location) {
-				if (location == null)
-					return;
-				
-				haveGPSFix = true;
-				lastLocationMillis = SystemClock.elapsedRealtime();
-				positionUpdated((float)location.getLatitude(), (float)location.getLongitude(), (float)location.getAltitude(), location.getAccuracy());
-				lastLocation = location;
-			}
-
-			public void onStatusChanged(String provider, int status, Bundle extras)
-			{
-				if (provider != LocationManager.GPS_PROVIDER)
-					return;
-				
-				switch (status) {
-				case LocationProvider.OUT_OF_SERVICE:
-					error();
-					break;
-				case LocationProvider.TEMPORARILY_UNAVAILABLE:
-					updateTimeout();
-					break;
-				case LocationProvider.AVAILABLE:
-					// do nothing
-					break;
-				}
-			}
-
-			public void onProviderEnabled(String provider)
-			{
-				// nothing yet
-			}
-
-			public void onProviderDisabled(String provider)
-			{
-				if (provider == LocationManager.GPS_PROVIDER)
-					error();
-			}
-		};
 	}
 	
-	@Override
-	public void onPause()
-	{
-		super.onPause();
-		if (gpsUpdatesEnabled)
-			instance.locationManager.removeUpdates(locationListener);
-	}
-	
-	@Override
-	public void onResume()
-	{
-		super.onResume();
-		if (gpsUpdatesEnabled)
-			instance.locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, gpsUpdateInterval, 0, locationListener, Looper.getMainLooper());
-	}
+	// Static methods to be called from C++
 	
 	/** Checks if GPS is enabled in the Android settings and if not, prompts the user to enable it.
 	 *  The dialog box works asynchronously, so the method cannot return the result. */
-	void checkIfGPSEnabled()
+	static void checkGPSEnabled()
 	{
-		boolean enabled = instance.locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+		LocationManager locationManager = (LocationManager) instance.getSystemService(LOCATION_SERVICE);
+		boolean enabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
 		if (!enabled)
 		{
-			runOnUiThread(new Runnable() {
+			instance.runOnUiThread(new Runnable() {
 				public void run() {
 					DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
 						@Override
@@ -160,7 +76,7 @@ public class MapperActivity extends org.qtproject.qt5.android.bindings.QtActivit
 							switch (which){
 							case DialogInterface.BUTTON_POSITIVE:
 								Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-								startActivity(intent);
+								instance.startActivity(intent);
 								break;
 
 							case DialogInterface.BUTTON_NEGATIVE:
@@ -171,17 +87,14 @@ public class MapperActivity extends org.qtproject.qt5.android.bindings.QtActivit
 					};
 
 					AlertDialog.Builder builder = new AlertDialog.Builder(instance);
-					builder.setMessage(gps_disabled_string)
-						.setPositiveButton(yes_string, dialogClickListener)
-						.setNegativeButton(no_string, dialogClickListener)
+					builder.setMessage(instance.gps_disabled_string)
+						.setPositiveButton(instance.yes_string, dialogClickListener)
+						.setNegativeButton(instance.no_string, dialogClickListener)
 						.show();
 				}
 			});
 		}
 	}
-	
-	
-	// Static methods to be called from C++
 	
 	public static void setTranslatableStrings(String yes_string, String no_string, String gps_disabled_string)
 	{
@@ -197,21 +110,6 @@ public class MapperActivity extends org.qtproject.qt5.android.bindings.QtActivit
 				Toast.makeText(instance, message, Toast.LENGTH_SHORT).show();
 			}
 		});
-	}
-	
-	public static void startGPSUpdates(int updateInterval)
-	{
-		instance.checkIfGPSEnabled();
-
-		instance.locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, updateInterval, 0, instance.locationListener, Looper.getMainLooper());
-		instance.gpsUpdateInterval = updateInterval;
-		instance.gpsUpdatesEnabled = true;
-	}
-	
-	public static void stopGPSUpdates()
-	{
-		instance.locationManager.removeUpdates(instance.locationListener);
-		instance.gpsUpdatesEnabled = false;
 	}
 	
 	/** Locks the current display orientation.
@@ -285,10 +183,4 @@ public class MapperActivity extends org.qtproject.qt5.android.bindings.QtActivit
 	{
 		return instance.getWindowManager().getDefaultDisplay().getRotation();
 	}
-	
-	// Native C++ method declarations
-	
-	private static native void positionUpdated(float latitude, float longitude, float altitude, float horizontal_stddev);
-	private static native void error();
-	private static native void updateTimeout();
 }

@@ -25,7 +25,7 @@
 #include "../src/file_format.h"
 #include "../src/global.h"
 #include "../src/map_editor.h"
-#include "../src/map_grid.h"
+#include "../src/core/map_grid.h"
 #include "../src/map_widget.h"
 #include "../src/mapper_resource.h"
 #include "../src/object.h"

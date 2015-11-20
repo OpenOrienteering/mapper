@@ -42,6 +42,8 @@ TemplateTrack::TemplateTrack(const QString& path, Map* map)
 	const Georeferencing& georef = map->getGeoreferencing();
 	connect(&georef, SIGNAL(projectionChanged()), this, SLOT(updateGeoreferencing()));
 	connect(&georef, SIGNAL(transformationChanged()), this, SLOT(updateGeoreferencing()));
+	connect(&georef, SIGNAL(stateChanged()), this, SLOT(updateGeoreferencing()));
+	connect(&georef, SIGNAL(declinationChanged()), this, SLOT(updateGeoreferencing()));
 }
 
 TemplateTrack::~TemplateTrack()
@@ -209,33 +211,30 @@ void TemplateTrack::drawTemplate(QPainter* painter, QRectF& clip_rect, double sc
 {
 	Q_UNUSED(clip_rect);
 	Q_UNUSED(scale);
-	Q_UNUSED(on_screen);
 	
 	painter->save();
 	painter->setOpacity(opacity);
-	
-	drawTracks(painter);
-	
-	// Get map-to-paintdevice transformation from painter
-	QTransform map_to_device = painter->worldTransform();
-	
-	drawWaypoints(painter, map_to_device);
-	
+	drawTracks(painter, on_screen);
+	drawWaypoints(painter);
 	painter->restore();
 }
 
-void TemplateTrack::drawTracks(QPainter* painter)
+void TemplateTrack::drawTracks(QPainter* painter, bool on_screen)
 {
 	painter->save();
 	if (!is_georeferenced)
 		applyTemplateTransform(painter);
 	
 	// Tracks
-	// TODO: could speed that up by storing the template coords of the GPS points in a separate vector or caching the painter paths
 	QPen pen(qRgb(212, 0, 244));
-	pen.setCosmetic(true);
+	if (on_screen)
+		pen.setCosmetic(true);
+	else
+		pen.setWidthF(0.1); // = 0.1 mm at 100%
 	painter->setPen(pen);
 	painter->setBrush(Qt::NoBrush);
+	
+	// TODO: could speed that up by storing the template coords of the GPS points in a separate vector or caching the painter paths
 	for (int i = 0; i < track.getNumSegments(); ++i)
 	{
 		QPainterPath path;
@@ -249,8 +248,8 @@ void TemplateTrack::drawTracks(QPainter* painter)
 				if (track.getSegmentPoint(i, k - 1).is_curve_start && k < track.getSegmentPointCount(i) - 2)
 				{
 					path.cubicTo(point.map_coord.toQPointF(),
-						track.getSegmentPoint(i, k + 1).map_coord.toQPointF(),
-						track.getSegmentPoint(i, k + 2).map_coord.toQPointF());
+					             track.getSegmentPoint(i, k + 1).map_coord.toQPointF(),
+					             track.getSegmentPoint(i, k + 2).map_coord.toQPointF());
 					k += 2;
 				}
 				else
@@ -265,18 +264,18 @@ void TemplateTrack::drawTracks(QPainter* painter)
 	painter->restore();
 }
 
-void TemplateTrack::drawWaypoints(QPainter* painter, QTransform map_to_device)
+void TemplateTrack::drawWaypoints(QPainter* painter)
 {
 	painter->save();
-	painter->resetMatrix();
 	painter->setRenderHint(QPainter::Antialiasing);
 	
 	painter->setPen(Qt::NoPen);
 	painter->setBrush(QBrush(qRgb(255, 0, 0)));
 	
 	QFont font = painter->font();
-	font.setPointSizeF(8);
+	font.setPixelSize(2); // 2 mm at 100%
 	painter->setFont(font);
+	int height = painter->fontMetrics().height();
 	
 	int size = track.getNumWaypoints();
 	for (int i = 0; i < size; ++i)
@@ -284,21 +283,18 @@ void TemplateTrack::drawWaypoints(QPainter* painter, QTransform map_to_device)
 		const TrackPoint& point = track.getWaypoint(i);
 		const QString& point_name = track.getWaypointName(i);
 		
-		MapCoordF viewport_coord = point.map_coord;
-		if (!is_georeferenced)
-			viewport_coord = templateToMap(viewport_coord);
-		QPointF viewport_point = map_to_device.map(viewport_coord.toQPointF());
-		
-		float radius = 0.25f / 25.4f * painter->device()->physicalDpiX();
-		painter->drawEllipse(viewport_point, radius, radius);
+		double const radius = 0.25;
+		painter->drawEllipse(point.map_coord.toQPointF(), radius, radius);
 		if (!point_name.isEmpty())
 		{
 			painter->setPen(qRgb(255, 0, 0));
 			int width = painter->fontMetrics().width(point_name);
-			painter->drawText(QRect(viewport_point.x() - 0.5f*width,
-									viewport_point.y() - 2 - painter->fontMetrics().height(),
-									width, painter->fontMetrics().height()),
-							   Qt::AlignCenter, point_name);
+			painter->drawText(QRect(point.map_coord.getX() - 0.5*width,
+			                        point.map_coord.getY() - height,
+			                        width,
+			                        height),
+			                  Qt::AlignCenter,
+			                  point_name);
 			painter->setPen(Qt::NoPen);
 		}
 	}
@@ -495,9 +491,9 @@ void TemplateTrack::calculateLocalGeoreferencing()
 	
 	Georeferencing georef;
 	georef.setScaleDenominator(map->getScaleDenominator());
-	georef.setGeographicRefPoint(proj_center);
 	georef.setProjectedCRS("", QString("+proj=ortho +datum=WGS84 +lat_0=%1 +lon_0=%2")
 		.arg(proj_center.latitude()).arg(proj_center.longitude()));
+	georef.setGeographicRefPoint(proj_center);
 	track.changeMapGeoreferencing(georef);
 }
 

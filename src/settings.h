@@ -53,7 +53,7 @@ public:
 		SymbolWidget_IconSizeMM,
 		ActionGridBar_ButtonSizeMM,
 		General_RetainCompatiblity,
-		General_AutoSaveInterval,
+		General_AutosaveInterval,
 		General_Language,
 		General_PixelsPerInch,
 		General_RecentFilesList,

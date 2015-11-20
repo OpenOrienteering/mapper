@@ -197,3 +197,56 @@ void PercentageDelegate::updateEditorGeometry(QWidget* editor, const QStyleOptio
 	Q_UNUSED(index);
 	editor->setGeometry(option.rect);
 }
+
+
+
+// ### TextDocItemDelegate ###
+
+TextDocItemDelegate::TextDocItemDelegate(QObject* parent, const Provider* provider)
+: QStyledItemDelegate(parent)
+, provider(provider)
+{
+	Q_ASSERT(provider);
+}
+
+TextDocItemDelegate::~TextDocItemDelegate()
+{
+	; // nothing
+}
+
+void TextDocItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const
+{
+	const QTextDocument* const text_doc = provider->textDoc(index);
+	if (!text_doc)
+		return QStyledItemDelegate::paint(painter, option, index);
+	
+	QStyleOptionViewItem options = option;
+	initStyleOption(&options, index);
+	
+	QAbstractTextDocumentLayout::PaintContext context;
+	if (options.state.testFlag(QStyle::State_Selected))
+		context.palette.setColor(QPalette::Text, options.palette.color(QPalette::Active, QPalette::HighlightedText));
+	else
+		context.palette.setColor(QPalette::Text, options.palette.color(QPalette::Active, QPalette::Text));
+	
+	painter->save();
+	
+	const QStyle* const style = options.widget ? options.widget->style() : QApplication::style();
+	style->drawControl(QStyle::CE_ItemViewItem, &options, painter);
+	
+	QRect rect = style->subElementRect(QStyle::SE_ItemViewItemText, &options);
+	painter->translate(rect.topLeft());
+	rect.moveTopLeft(QPoint());
+	text_doc->documentLayout()->draw(painter, context);
+	
+	painter->restore();
+}
+
+QSize TextDocItemDelegate::sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const
+{
+	const QTextDocument* const text_doc = provider->textDoc(index);
+	if (!text_doc)
+		return QStyledItemDelegate::sizeHint(option, index);
+	
+	return QSize(text_doc->idealWidth(), text_doc->size().height());
+}

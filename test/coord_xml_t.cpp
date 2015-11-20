@@ -343,13 +343,13 @@ void CoordXmlTest::readXml()
 		xml.setAutoFormatting(false);
 		xml.writeStartDocument();
 		xml.writeStartElement("root");
-		xml.writeStartElement("coords");
-		xml.writeCharacters(""); // flush coords start element
+		xml.writeCharacters(" "); // flush root start element
 		
 		buffer.open(QBuffer::ReadWrite);
 		xml.setDevice(&buffer);
+		xml.writeStartElement("coords");
 		writeXml_implementation(coords, xml);
-		xml.writeCharacters(" "); // flush coords start element
+		xml.writeEndElement(/* coords */);
 		
 		xml.setDevice(NULL);
 		
@@ -361,18 +361,30 @@ void CoordXmlTest::readXml()
 	buffer.open(QBuffer::ReadOnly);
 	QXmlStreamReader xml;
 	xml.addData(header.buffer());
-	Q_ASSERT(xml.readNextStartElement() && xml.name() == "root");
-	Q_ASSERT(xml.readNextStartElement() && xml.name() == "coords");
+	xml.readNextStartElement();
+	QCOMPARE(xml.name().toString(), QString("root"));
 	
+	bool failed = false;
 	QBENCHMARK
 	{
 		// benchmark iteration overhead
 		coords.clear();
 		xml.addData(buffer.data());
 		
+		xml.readNextStartElement();
+		if (xml.name() != "coords")
+		{
+			failed = true;
+			break;
+		}
+		
 		while(xml.readNextStartElement())
 		{
-			Q_ASSERT(xml.name() == literal::coord);
+			if (xml.name() != literal::coord)
+			{
+				failed = true;
+				break;
+			}
 			
 			XmlElementReader element(xml);
 			qint64 x = element.attribute<qint64>(literal::x);
@@ -388,7 +400,8 @@ void CoordXmlTest::readXml()
 			coords.push_back(coord);
 		}
 	}
-		
+	
+	QVERIFY(!failed);
 	QCOMPARE((int)coords.size(), num_coords);
 	QVERIFY(compare_all(coords, proto_coord));
 	
@@ -437,24 +450,40 @@ void CoordXmlTest::readHumanReadableStream()
 	buffer.open(QBuffer::ReadOnly);
 	QXmlStreamReader xml;
 	xml.addData(header.buffer());
-	Q_ASSERT(xml.readNextStartElement() && xml.name() == "root");
+	xml.readNextStartElement();
+	QCOMPARE(xml.name().toString(), QString("root"));
 	
+	bool failed = false;
 	QBENCHMARK
 	{
 		// benchmark iteration overhead
 		coords.clear();
 		xml.addData(buffer.data());
-		Q_ASSERT(xml.readNextStartElement() && xml.name() == "coords");
+		
+		xml.readNextStartElement();
+		if (xml.name() != "coords")
+		{
+			failed = true;
+			break;
+		}
 		
 		for( xml.readNext();
 		     xml.tokenType() != QXmlStreamReader::EndElement;
 		     xml.readNext() )
 		{
-			if (xml.error()) qDebug() << xml.errorString();
-			Q_ASSERT(!xml.error());
+			if (xml.error())
+			{
+				qDebug() << xml.errorString();
+				failed = true;
+				break;
+			}
 			
 			const QXmlStreamReader::TokenType token = xml.tokenType();
-			Q_ASSERT(token != QXmlStreamReader::EndDocument);
+			if (token == QXmlStreamReader::EndDocument)
+			{
+				failed = true;
+				break;
+			}
 			
 			if (token == QXmlStreamReader::Characters && !xml.isWhitespace())
 			{
@@ -478,13 +507,18 @@ void CoordXmlTest::readHumanReadableStream()
 					coord.setFlags(flags);
 					coords.push_back(coord);
 				}
-				Q_ASSERT (stream.status() != QTextStream::ReadCorruptData);
+				if (stream.status() == QTextStream::ReadCorruptData)
+				{
+					failed = true;
+					break;
+				}
 			}
 			// otherwise: ignore element
 		}
 		
 	}
 	
+	QVERIFY(!failed);
 	QCOMPARE((int)coords.size(), num_coords);
 	QVERIFY(compare_all(coords, proto_coord));
 	
@@ -531,24 +565,40 @@ void CoordXmlTest::readCompressed()
 	buffer.open(QBuffer::ReadOnly);
 	QXmlStreamReader xml;
 	xml.addData(header.buffer());
-	Q_ASSERT(xml.readNextStartElement() && xml.name() == "root");
 	
+	xml.readNextStartElement();
+	QCOMPARE(xml.name().toString(), QString("root"));
+	
+	bool failed = false;
 	QBENCHMARK
 	{
 		// benchmark iteration overhead
 		coords.clear();
 		xml.addData(buffer.data());
-		Q_ASSERT(xml.readNextStartElement() && xml.name() == "coords");
+		xml.readNextStartElement();
+		if (xml.name() != "coords")
+		{
+			failed = true;
+			break;
+		}
 		
 		for( xml.readNext();
 		     xml.tokenType() != QXmlStreamReader::EndElement;
 		     xml.readNext() )
 		{
-			if (xml.error()) qDebug() << xml.errorString();
-			Q_ASSERT(!xml.error());
+			if (xml.error())
+			{
+				qDebug() << xml.errorString();
+				failed = true;
+				break;
+			}
 			
 			const QXmlStreamReader::TokenType token = xml.tokenType();
-			Q_ASSERT(token != QXmlStreamReader::EndDocument);
+			if (token == QXmlStreamReader::EndDocument)
+			{
+				failed = true;
+				break;
+			}
 			
 			if (token == QXmlStreamReader::Characters && !xml.isWhitespace())
 			{
@@ -657,6 +707,7 @@ void CoordXmlTest::readCompressed()
 		}
 	}
 	
+	QVERIFY(!failed);
 	QCOMPARE((int)coords.size(), num_coords);
 	QVERIFY(compare_all(coords, proto_coord));
 	

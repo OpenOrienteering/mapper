@@ -282,13 +282,16 @@ void ObjectCreatingUndoStep::symbolDeleted(int pos, Symbol* old_symbol)
 
 ReplaceObjectsUndoStep::ReplaceObjectsUndoStep(Map* map)
 : ObjectCreatingUndoStep(ReplaceObjectsUndoStepType, map)
+, undone(false)
 {
 	; // nothing else
 }
 
 ReplaceObjectsUndoStep::~ReplaceObjectsUndoStep()
 {
-	; // nothing
+	// Save the objects from being deleted in ~ObjectCreatingUndoStep()
+	if (undone)
+		objects.clear();
 }
 
 UndoStep* ReplaceObjectsUndoStep::undo()
@@ -306,7 +309,7 @@ UndoStep* ReplaceObjectsUndoStep::undo()
 		part->setObject(objects[i], modified_objects[i], false);
 	}
 	
-	objects.clear();
+	undone = true;
 	return undo_step;
 }
 
@@ -361,14 +364,17 @@ void DeleteObjectsUndoStep::getModifiedObjects(int, ObjectSet&) const
 // ### AddObjectsUndoStep ###
 
 AddObjectsUndoStep::AddObjectsUndoStep(Map* map)
-    : ObjectCreatingUndoStep(AddObjectsUndoStepType, map)
+: ObjectCreatingUndoStep(AddObjectsUndoStepType, map)
+, undone(false)
 {
 	; // nothing else
 }
 
 AddObjectsUndoStep::~AddObjectsUndoStep()
 {
-	; // nothing
+	// Save the objects from being deleted in ~ObjectCreatingUndoStep()
+	if (undone)
+		objects.clear();
 }
 
 UndoStep* AddObjectsUndoStep::undo()
@@ -393,7 +399,7 @@ UndoStep* AddObjectsUndoStep::undo()
 		part->addObject(objects[order[i].first], order[i].second);
 	}
 	
-	objects.clear();
+	undone = true;
 	return undo_step;
 }
 

@@ -584,9 +584,9 @@ void Object::rotate(double angle)
 		coords_size = 1;	// don't touch box width / height for box texts
 	for (int c = 0; c < coords_size; ++c)
 	{
-		MapCoord& coord = coords[c];
-		coord.setX(cos_angle * coord.xd() + sin_angle * coord.yd());
-		coord.setY(cos_angle * coord.yd() - sin_angle * coord.xd());
+		MapCoord coord = coords[c];
+		coords[c].setX(cos_angle * coord.xd() + sin_angle * coord.yd());
+		coords[c].setY(cos_angle * coord.yd() - sin_angle * coord.xd());
 	}
 	
 	if (type == Point)

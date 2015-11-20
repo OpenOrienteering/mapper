@@ -32,6 +32,7 @@
 #endif
 
 #include "core/georeferencing.h"
+#include "gui/configure_grid_dialog.h"
 #include "gui/georeferencing_dialog.h"
 #include "gui/widgets/action_grid_bar.h"
 #include "gui/widgets/symbol_widget.h"
@@ -43,7 +44,6 @@
 #include "map_dialog_rotate.h"
 #include "map_dialog_scale.h"
 #include "map_editor_activity.h"
-#include "map_grid.h"
 #include "map_part_undo.h"
 #include "object_undo.h"
 #include "map_widget.h"
@@ -295,6 +295,10 @@ void MapEditorController::setEditingInProgress(bool value)
 		
 		Q_ASSERT(symbol_widget);
 		symbol_widget->setEnabled(!value);
+		
+		updateObjectDependentActions();
+		updateSymbolDependentActions();
+		updateSymbolAndObjectDependentActions();
 	}
 }
 
@@ -1261,6 +1265,17 @@ void MapEditorController::restoreWindowState()
 
 bool MapEditorController::keyPressEventFilter(QKeyEvent* event)
 {
+#if defined(Q_OS_ANDROID)
+	if (event->key() == Qt::Key_Back)
+	{
+		if (symbol_widget && symbol_widget->isVisible())
+		{
+			mobileSymbolSelectorFinished();
+			return true;
+		}
+	}
+#endif
+	
 	return map_widget->keyPressEventFilter(event);
 }
 
@@ -1449,18 +1464,18 @@ void MapEditorController::spotColorPresenceChanged(bool has_spot_colors)
 void MapEditorController::showGrid()
 {
 	main_view->setGridVisible(show_grid_act->isChecked());
-	map->updateAllMapWidgets();
+	main_view->updateAllMapWidgets();
 }
 
 void MapEditorController::configureGrid()
 {
-	ConfigureGridDialog dialog(window, map, main_view);
+	ConfigureGridDialog dialog(window, map->getGrid(), show_grid_act->isChecked());
 	dialog.setWindowModality(Qt::WindowModal);
 	if (dialog.exec() == QDialog::Accepted)
 	{
-		show_grid_act->setChecked(main_view->isGridVisible());
-		map->updateAllMapWidgets();
-		map->setOtherDirty();
+		map->setGrid(dialog.grid());
+		if (dialog.gridVisible() != show_grid_act->isChecked())
+			show_grid_act->trigger();
 	}
 }
 
@@ -1690,7 +1705,7 @@ void MapEditorController::reopenTemplateClicked()
 {
 	hideAllTemplates(false);
 	
-	QString map_directory = window->getCurrentFilePath();
+	QString map_directory = window->currentPath();
 	if (!map_directory.isEmpty())
 		map_directory = QFileInfo(map_directory).canonicalPath();
 	ReopenTemplateDialog* dialog = new ReopenTemplateDialog(window, map, main_view, map_directory); 
@@ -1751,10 +1766,7 @@ void MapEditorController::georeferencingDialogFinished()
 
 void MapEditorController::selectedSymbolsChanged()
 {
-	Symbol::Type type = Symbol::NoSymbol;
 	Symbol* symbol = symbol_widget->getSingleSelectedSymbol();
-	if (symbol)
-		type = symbol->getType();
 	
 	if (mobile_mode)
 	{
@@ -1803,6 +1815,24 @@ void MapEditorController::selectedSymbolsChanged()
 	// the symbol's visibility may constitute a change.
 	emit activeSymbolChanged(active_symbol);
 	
+	updateSymbolDependentActions();
+	updateSymbolAndObjectDependentActions();
+}
+
+void MapEditorController::objectSelectionChanged()
+{
+	if (mode != MapEditor)
+		return;
+	
+	updateObjectDependentActions();
+	updateSymbolAndObjectDependentActions();
+}
+
+void MapEditorController::updateSymbolDependentActions()
+{
+	const Symbol* symbol = activeSymbol();
+	const Symbol::Type type = (symbol && !editing_in_progress) ? symbol->getType() : Symbol::NoSymbol;
+	
 	updateDrawPointGPSAvailability();
 	draw_point_act->setEnabled(type == Symbol::Point && !symbol->isHidden());
 	draw_point_act->setStatusTip(tr("Place point objects on the map.") + (draw_point_act->isEnabled() ? "" : (" " + tr("Select a point symbol to be able to use this tool."))));
@@ -1818,18 +1848,13 @@ void MapEditorController::selectedSymbolsChanged()
 	draw_fill_act->setStatusTip(tr("Fill bounded areas.") + (draw_fill_act->isEnabled() ? "" : (" " + tr("Select a line, area or combined symbol to be able to use this tool."))));
 	draw_text_act->setEnabled(type == Symbol::Text && !symbol->isHidden());
 	draw_text_act->setStatusTip(tr("Write text on the map.") + (draw_text_act->isEnabled() ? "" : (" " + tr("Select a text symbol to be able to use this tool."))));
-	
-	selectedSymbolsOrObjectsChanged();
 }
 
-void MapEditorController::objectSelectionChanged()
+void MapEditorController::updateObjectDependentActions()
 {
-	if (mode != MapEditor)
-		return;
-	
 	bool have_multiple_parts     = map->getNumParts() > 1;
-	bool have_selection          = map->getNumSelectedObjects() > 0;
-	bool single_object_selected  = map->getNumSelectedObjects() == 1;
+	bool have_selection          = map->getNumSelectedObjects() > 0 && !editing_in_progress;
+	bool single_object_selected  = map->getNumSelectedObjects() == 1 && !editing_in_progress;
 	bool have_line               = false;
 	bool have_area               = false;
 	bool have_area_with_holes    = false;
@@ -1842,67 +1867,70 @@ void MapEditorController::objectSelectionChanged()
 	Symbol* first_selected_symbol= have_selection ? map->getFirstSelectedObject()->getSymbol() : NULL;
 	std::vector< bool > symbols_in_selection(map->getNumSymbols(), false);
 	
-	Map::ObjectSelection::const_iterator it_end = map->selectedObjectsEnd();
-	for (Map::ObjectSelection::const_iterator it = map->selectedObjectsBegin(); it != it_end; ++it)
+	if (!editing_in_progress)
 	{
-		Symbol* symbol = (*it)->getSymbol();
-		int symbol_index = map->findSymbolIndex(symbol);
-		if (symbol_index >= 0 && symbol_index < (int)symbols_in_selection.size())
-			symbols_in_selection[symbol_index] = true;
-		
-		if (uniform_symbol_selected)
+		Map::ObjectSelection::const_iterator it_end = map->selectedObjectsEnd();
+		for (Map::ObjectSelection::const_iterator it = map->selectedObjectsBegin(); it != it_end; ++it)
 		{
-			if (!uniform_symbol)
-			{
-				uniform_symbol = symbol;
-			}
-			else if (uniform_symbol != symbol)
-			{
-				uniform_symbol = NULL;
-				uniform_symbol_selected = false;
-			}
-		}
-		
-		if (symbol->getType() == Symbol::Point)
-		{
-			have_rotatable_point |= symbol->asPoint()->isRotatable();
-		}
-		else if (Symbol::areTypesCompatible(symbol->getType(), Symbol::Area))
-		{
-			++num_selected_paths;
+			Symbol* symbol = (*it)->getSymbol();
+			int symbol_index = map->findSymbolIndex(symbol);
+			if (symbol_index >= 0 && symbol_index < (int)symbols_in_selection.size())
+				symbols_in_selection[symbol_index] = true;
 			
-			if (symbol->getType() == Symbol::Area)
+			if (uniform_symbol_selected)
 			{
-				have_rotatable_pattern |= symbol->asArea()->hasRotatableFillPattern();
+				if (!uniform_symbol)
+				{
+					uniform_symbol = symbol;
+				}
+				else if (uniform_symbol != symbol)
+				{
+					uniform_symbol = NULL;
+					uniform_symbol_selected = false;
+				}
 			}
 			
-			int const contained_types = symbol->getContainedTypes();
-			
-			if (contained_types & Symbol::Line)
+			if (symbol->getType() == Symbol::Point)
 			{
-				have_line = true;
+				have_rotatable_point |= symbol->asPoint()->isRotatable();
 			}
-			
-			if (contained_types & Symbol::Area)
+			else if (Symbol::areTypesCompatible(symbol->getType(), Symbol::Area))
 			{
-				have_area = true;
-				have_area_with_holes |= (*it)->asPath()->getNumParts() > 1;
-			}
-		}
-	}
-	
-	if (have_area && !have_rotatable_pattern)
-	{
-		map->determineSymbolUseClosure(symbols_in_selection);
-		for (size_t i = 0, end = symbols_in_selection.size(); i < end; ++i)
-		{
-			if (symbols_in_selection[i])
-			{
-				Symbol* symbol = map->getSymbol(i);
+				++num_selected_paths;
+				
 				if (symbol->getType() == Symbol::Area)
 				{
-					have_rotatable_pattern = symbol->asArea()->hasRotatableFillPattern();
-					break;
+					have_rotatable_pattern |= symbol->asArea()->hasRotatableFillPattern();
+				}
+				
+				int const contained_types = symbol->getContainedTypes();
+				
+				if (contained_types & Symbol::Line)
+				{
+					have_line = true;
+				}
+				
+				if (contained_types & Symbol::Area)
+				{
+					have_area = true;
+					have_area_with_holes |= (*it)->asPath()->getNumParts() > 1;
+				}
+			}
+		}
+		
+		if (have_area && !have_rotatable_pattern)
+		{
+			map->determineSymbolUseClosure(symbols_in_selection);
+			for (size_t i = 0, end = symbols_in_selection.size(); i < end; ++i)
+			{
+				if (symbols_in_selection[i])
+				{
+					Symbol* symbol = map->getSymbol(i);
+					if (symbol->getType() == Symbol::Area)
+					{
+						have_rotatable_pattern = symbol->asArea()->hasRotatableFillPattern();
+						break;
+					}
 				}
 			}
 		}
@@ -1978,28 +2006,28 @@ void MapEditorController::objectSelectionChanged()
 	// Automatic symbol selection of selected objects
 	if (symbol_widget && uniform_symbol_selected && Settings::getInstance().getSettingCached(Settings::MapEditor_ChangeSymbolWhenSelecting).toBool())
 		symbol_widget->selectSingleSymbol(uniform_symbol);
-
-	selectedSymbolsOrObjectsChanged();
 }
 
-void MapEditorController::selectedSymbolsOrObjectsChanged()
+void MapEditorController::updateSymbolAndObjectDependentActions()
 {
-	//Symbol::Type single_symbol_type = Symbol::NoSymbol;
-	Symbol* single_symbol = symbol_widget ? symbol_widget->getSingleSelectedSymbol() : NULL;
+	const Symbol* single_symbol = activeSymbol();
 	bool path_object_among_selection = false;
-	Map::ObjectSelection::const_iterator it_end = map->selectedObjectsEnd();
-	for (Map::ObjectSelection::const_iterator it = map->selectedObjectsBegin(); it != it_end; ++it)
+	bool single_symbol_compatible = false;
+	bool single_symbol_different  = false;
+	if (!editing_in_progress)
 	{
-		if ((*it)->getType() == Object::Path)
+		Map::ObjectSelection::const_iterator it_end = map->selectedObjectsEnd();
+		for (Map::ObjectSelection::const_iterator it = map->selectedObjectsBegin(); it != it_end; ++it)
 		{
-			path_object_among_selection = true;
-			break;
+			if ((*it)->getType() == Object::Path)
+			{
+				path_object_among_selection = true;
+				break;
+			}
 		}
+		
+		map->getSelectionToSymbolCompatibility(single_symbol, single_symbol_compatible, single_symbol_different);
 	}
-	
-	bool single_symbol_compatible;
-	bool single_symbol_different;
-	map->getSelectionToSymbolCompatibility(single_symbol, single_symbol_compatible, single_symbol_different);
 	
 	switch_symbol_act->setEnabled(single_symbol_compatible && single_symbol_different);
 	switch_symbol_act->setStatusTip(tr("Switches the symbol of the selected object(s) to the selected symbol.") + (switch_symbol_act->isEnabled() ? "" : (" " + tr("Select at least one object and a fitting, different symbol to activate this tool."))));
@@ -2142,7 +2170,7 @@ void MapEditorController::switchSymbolClicked()
 	std::vector<Object*> old_objects;
 	std::vector<Object*> new_objects;
 	MapPart* part = map->getCurrentPart();
-	Symbol* symbol = symbol_widget->getSingleSelectedSymbol();
+	Symbol* symbol = activeSymbol();
 	
 	bool close_paths = false, split_up = false;
 	Symbol::Type contained_types = symbol->getContainedTypes();
@@ -2152,14 +2180,18 @@ void MapEditorController::switchSymbolClicked()
 		split_up = true;
 	
 	if (close_paths)
+	{
 		replace_step = new ReplaceObjectsUndoStep(map);
+	}
 	else if (split_up)
 	{
 		add_step = new AddObjectsUndoStep(map);
 		delete_step = new DeleteObjectsUndoStep(map);
 	}
 	else
+	{
 		switch_step = new SwitchSymbolUndoStep(map);
+	}
 	
 	Map::ObjectSelection::const_iterator it_end = map->selectedObjectsEnd();
 	for (Map::ObjectSelection::const_iterator it = map->selectedObjectsBegin(); it != it_end; ++it)
@@ -2167,22 +2199,31 @@ void MapEditorController::switchSymbolClicked()
 		Object* object = *it;
 		
 		if (close_paths)
+		{
 			replace_step->addObject(part->findObjectIndex(object), object->duplicate());
+		}
 		else if (split_up)
 		{
 			add_step->addObject(part->findObjectIndex(object), object);
 			old_objects.push_back(object);
 		}
 		else
-			switch_step->addObject(part->findObjectIndex(object), (object)->getSymbol());
+		{
+			switch_step->addObject(part->findObjectIndex(object), object->getSymbol());
+		}
 		
 		if (!split_up)
+		{
 			object->setSymbol(symbol, true);
+		}
+		
 		if (object->getType() == Object::Path)
 		{
 			PathObject* path_object = object->asPath();
 			if (close_paths)
+			{
 				path_object->closeAllParts();
+			}
 			else if (split_up)
 			{
 				for (int path_part = 0; path_part < path_object->getNumParts(); ++path_part)
@@ -2191,8 +2232,15 @@ void MapEditorController::switchSymbolClicked()
 					new_object->setSymbol(symbol, true);
 					new_objects.push_back(new_object);
 				}
+				
+				Q_ASSERT(!new_objects.empty());
+				if (!new_objects.empty())
+				{
+					new_objects.front()->setTags(path_object->tags());
+				}
 			}
 		}
+		
 		object->update(true);
 	}
 	
@@ -2238,7 +2286,7 @@ void MapEditorController::switchSymbolClicked()
 
 void MapEditorController::fillBorderClicked()
 {
-	Symbol* symbol = symbol_widget->getSingleSelectedSymbol();
+	Symbol* symbol = activeSymbol();
 	std::vector<Object*> new_objects;
 	new_objects.reserve(map->getNumSelectedObjects());
 	
@@ -2302,7 +2350,7 @@ void MapEditorController::selectObjectsClicked(bool select_exclusively)
 
 	bool object_selected = false;	
 	MapPart* part = map->getCurrentPart();
-	for (int i = 0, size = map->getNumObjects(); i < size; ++i)
+	for (int i = 0, size = part->getNumObjects(); i < size; ++i)
 	{
 		Object* object = part->getObject(i);
 		if (symbol_widget->isSymbolSelected(object->getSymbol()) && !(!select_exclusively && map->isObjectSelected(object)))
@@ -2329,7 +2377,7 @@ void MapEditorController::deselectObjectsClicked()
 	bool selection_changed = false;
 	
 	MapPart* part = map->getCurrentPart();
-	for (int i = 0, size = map->getNumObjects(); i < size; ++i)
+	for (int i = 0, size = part->getNumObjects(); i < size; ++i)
 	{
 		Object* object = part->getObject(i);
 		if (symbol_widget->isSymbolSelected(object->getSymbol()) && map->isObjectSelected(object))
@@ -2650,7 +2698,7 @@ void MapEditorController::measureClicked(bool checked)
 
 void MapEditorController::booleanUnionClicked()
 {
-	if (!BooleanTool(BooleanTool::Union, map).execute())
+	if (!BooleanTool(BooleanTool::Union, map).executePerSymbol())
 		QMessageBox::warning(window, tr("Error"), tr("Unification failed."));
 }
 
@@ -2757,8 +2805,8 @@ void MapEditorController::cutawayPhysicalClicked()
 
 void MapEditorController::distributePointsClicked()
 {
-	Q_ASSERT(symbol_widget && symbol_widget->getSingleSelectedSymbol()->getType() == Symbol::Point);
-	PointSymbol* point = symbol_widget->getSingleSelectedSymbol()->asPoint();
+	Q_ASSERT(activeSymbol()->getType() == Symbol::Point);
+	PointSymbol* point = activeSymbol()->asPoint();
 	
 	DistributePointsTool::Settings settings;
 	if (!DistributePointsTool::showSettingsDialog(window, point, settings))
@@ -2860,13 +2908,13 @@ void MapEditorController::enableGPSDisplay(bool enable)
 		
 		// Create gps_track_recorder if we can determine a template track filename
 		const float gps_track_draw_update_interval = 10 * 1000; // in milliseconds
-		if (! window->getCurrentFilePath().isEmpty())
+		if (! window->currentPath().isEmpty())
 		{
 			// Find or create a template for the track with a specific name
 			QString gpx_file_path =
-				QFileInfo(window->getCurrentFilePath()).absoluteDir().canonicalPath()
+				QFileInfo(window->currentPath()).absoluteDir().canonicalPath()
 				+ '/'
-				+ QFileInfo(window->getCurrentFilePath()).completeBaseName()
+				+ QFileInfo(window->currentPath()).completeBaseName()
 				+ " - GPS-"
 				+ QDate::currentDate().toString(Qt::ISODate)
 				+ ".gpx";
@@ -2883,6 +2931,7 @@ void MapEditorController::enableGPSDisplay(bool enable)
 						// at this point; simply create a new file.
 						TemplateTrack* track = static_cast<TemplateTrack*>(map->getTemplate(i));
 						track->configureForGPSTrack();
+						track->setHasUnsavedChanges(true);
 					}
 					break;
 				}
@@ -2930,15 +2979,8 @@ void MapEditorController::enableGPSDistanceRings(bool enable)
 
 void MapEditorController::updateDrawPointGPSAvailability()
 {
-	if (! symbol_widget)
-		draw_point_gps_act->setEnabled(false);
-	else if (! symbol_widget->getSingleSelectedSymbol())
-		draw_point_gps_act->setEnabled(false);
-	else
-	{
-		Symbol* symbol = symbol_widget->getSingleSelectedSymbol();
-		draw_point_gps_act->setEnabled(gps_display->isVisible() && symbol->getType() == Symbol::Point && !symbol->isHidden());
-	}
+	const Symbol* symbol = activeSymbol();
+	draw_point_gps_act->setEnabled(symbol && gps_display->isVisible() && symbol->getType() == Symbol::Point && !symbol->isHidden());
 }
 
 void MapEditorController::drawPointGPSClicked()
@@ -3089,7 +3131,6 @@ void MapEditorController::mobileSymbolSelectorClicked()
 {
 	// NOTE: this does not handle window resizes, however it is assumed that in
 	// mobile mode there is no window, instead the application is running fullscreen.
-#warning Test in mobile mode
 	symbol_widget->setGeometry(window->rect());
 	symbol_widget->raise();
 	symbol_widget->show();
@@ -3098,7 +3139,6 @@ void MapEditorController::mobileSymbolSelectorClicked()
 
 void MapEditorController::mobileSymbolSelectorFinished()
 {
-#warning Test in mobile mode
 	disconnect(symbol_widget, SIGNAL(selectedSymbolsChanged()), this, SLOT(mobileSymbolSelectorFinished()));
 	symbol_widget->hide();
 }
