@@ -1,5 +1,5 @@
 #
-#    Copyright 2012 Kai Pastor
+#    Copyright 2012, 2013, 2014 Kai Pastor
 #
 #    This file is part of OpenOrienteering.
 #
@@ -17,14 +17,19 @@
 #    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
 
 # Synopsis:
-#   cmake [ -DPREFIX=my/prefix ] [ -DSKIP_CHECK=1 ] [ -DOUTPUT_DIR=/usr/src ] -P Mapper_Source.cmake
+#   cmake [ -DPREFIX=my/prefix ] [ -DARCHIVE_NAME=prefix-src ]
+#         [ -DOUTPUT_DIR=/usr/src ] [ -DSKIP_CHECK=1 ] -P Mapper_Source.cmake
 
 if (NOT PREFIX)
-	set(PREFIX @Mapper_Source_FILE_NAME@)
+	set(PREFIX "@Mapper_Source_PREFIX@")
+endif ()
+
+if (NOT ARCHIVE_NAME)
+	set(ARCHIVE_NAME "@Mapper_Source_FILE_NAME@")
 endif ()
 
 if (NOT OUTPUT_DIR)
-	set(OUTPUT_DIR ${CMAKE_CURRENT_SOURCE_DIR})
+	set(OUTPUT_DIR "@PROJECT_BINARY_DIR@")
 endif ()
 if (NOT OUTPUT_DIR)
 	set(OUTPUT_DIR .)
@@ -53,7 +58,7 @@ execute_process(
   COMMAND "@GIT_EXECUTABLE@" archive
     --format "@Mapper_Source_FORMAT@"
     --prefix "${PREFIX}/"
-    --output "${OUTPUT_DIR}/${PREFIX}.@Mapper_Source_FORMAT@"
+    --output "${OUTPUT_DIR}/${ARCHIVE_NAME}.@Mapper_Source_FORMAT@"
     HEAD
   WORKING_DIRECTORY "@PROJECT_SOURCE_DIR@"
 )
