@@ -20,7 +20,11 @@
 
 #include "symbol_text.h"
 
+#if QT_VERSION < 0x050000
 #include <QtGui>
+#else
+#include <QtWidgets>
+#endif
 #include <QIODevice>
 
 #include "map.h"
@@ -79,13 +83,13 @@ Symbol* TextSymbol::duplicate(const QHash<MapColor*, MapColor*>* color_map) cons
 	new_text->kerning = kerning;
 	new_text->icon_text = icon_text;
 	new_text->framing = framing;
-	new_text->framing_color = framing_color;
+	new_text->framing_color = color_map ? color_map->value(framing_color) : framing_color;
 	new_text->framing_mode = framing_mode;
 	new_text->framing_line_half_width = framing_line_half_width;
 	new_text->framing_shadow_x_offset = framing_shadow_x_offset;
 	new_text->framing_shadow_y_offset = framing_shadow_y_offset;
 	new_text->line_below = line_below;
-	new_text->line_below_color = line_below_color;
+	new_text->line_below_color = color_map ? color_map->value(line_below_color) : line_below_color;
 	new_text->line_below_width = line_below_width;
 	new_text->line_below_distance = line_below_distance;
 	new_text->custom_tabs = custom_tabs;
@@ -192,6 +196,15 @@ bool TextSymbol::containsColor(MapColor* color)
 	if (color == this->framing_color)
 		return true;
 	return false;
+}
+
+MapColor* TextSymbol::getDominantColorGuess()
+{
+	if (color)
+		return color;
+	if (framing_color)
+		return framing_color;
+	return NULL;
 }
 
 void TextSymbol::scale(double factor)
@@ -304,6 +317,135 @@ bool TextSymbol::loadImpl(QIODevice* file, int version, Map* map)
 	
 	updateQFont();
 	return true;
+}
+
+void TextSymbol::saveImpl(QXmlStreamWriter& xml, const Map& map) const
+{
+	xml.writeStartElement("text_symbol");
+	xml.writeAttribute("icon_text", icon_text);
+	
+	xml.writeStartElement("font");
+	xml.writeAttribute("family", font_family);
+	xml.writeAttribute("size", QString::number(font_size));
+	if (bold)
+		xml.writeAttribute("bold", "true");
+	if (italic)
+		xml.writeAttribute("italic", "true");
+	if (underline)
+		xml.writeAttribute("underline", "true");
+	xml.writeEndElement(/*font*/);
+	
+	xml.writeStartElement("text");
+	xml.writeAttribute("color", QString::number(map.findColorIndex(color)));
+	xml.writeAttribute("line_spacing", QString::number(line_spacing));
+	xml.writeAttribute("paragraph_spacing", QString::number(paragraph_spacing));
+	xml.writeAttribute("character_spacing", QString::number(character_spacing));
+	if (kerning)
+		xml.writeAttribute("kerning", "true");
+	xml.writeEndElement(/*text*/);
+	
+	if (framing)
+	{
+		xml.writeStartElement("framing");
+		xml.writeAttribute("color", QString::number(map.findColorIndex(framing_color)));
+		xml.writeAttribute("mode", QString::number(framing_mode));
+		xml.writeAttribute("line_half_width", QString::number(framing_line_half_width));
+		xml.writeAttribute("shadow_x_offset", QString::number(framing_shadow_x_offset));
+		xml.writeAttribute("shadow_y_offset", QString::number(framing_shadow_y_offset));
+		xml.writeEndElement(/*framing*/);
+	}
+	
+	if (line_below)
+	{
+		xml.writeStartElement("line_below");
+		xml.writeAttribute("color", QString::number(map.findColorIndex(line_below_color)));
+		xml.writeAttribute("width", QString::number(line_below_width));
+		xml.writeAttribute("distance", QString::number(line_below_distance));
+		xml.writeEndElement(/*line_below*/);
+	}
+	
+	int num_custom_tabs = getNumCustomTabs();
+	if (num_custom_tabs > 0)
+	{
+		xml.writeStartElement("tabs");
+		xml.writeAttribute("count", QString::number(num_custom_tabs));
+		for (int i = 0; i < num_custom_tabs; ++i)
+			xml.writeTextElement("tab", QString::number(custom_tabs[i]));
+		xml.writeEndElement(/*tabs*/);
+	}
+	
+	xml.writeEndElement(/*text_symbol*/);
+}
+
+bool TextSymbol::loadImpl(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol_dict)
+{
+	Q_ASSERT(xml.name() == "text_symbol");
+	
+	icon_text = xml.attributes().value("icon_text").toString();
+	framing = false;
+	line_below = false;
+	custom_tabs.clear();
+	
+	while (xml.readNextStartElement())
+	{
+		QXmlStreamAttributes attributes(xml.attributes());
+		if (xml.name() == "font")
+		{
+			font_family = xml.attributes().value("family").toString();
+			font_size = attributes.value("size").toString().toInt();
+			bold = (attributes.value("bold") == "true");
+			italic = (attributes.value("italic") == "true");
+			underline = (attributes.value("underline") == "true");
+			xml.skipCurrentElement();
+		}
+		else if (xml.name() == "text")
+		{
+			int temp = attributes.value("color").toString().toInt();
+			color = (temp >= 0) ? map.getColor(temp) : NULL;
+			line_spacing = attributes.value("line_spacing").toString().toFloat();
+			paragraph_spacing = attributes.value("paragraph_spacing").toString().toInt();
+			character_spacing = attributes.value("character_spacing").toString().toFloat();
+			kerning = (attributes.value("kerning") == "true");
+			xml.skipCurrentElement();
+		}
+		else if (xml.name() == "framing")
+		{
+			framing = true;
+			int temp = attributes.value("color").toString().toInt();
+			framing_color = (temp >= 0) ? map.getColor(temp) : NULL;
+			framing_mode = attributes.value("mode").toString().toInt();
+			framing_line_half_width = attributes.value("line_half_width").toString().toInt();
+			framing_shadow_x_offset = attributes.value("shadow_x_offset").toString().toInt();
+			framing_shadow_y_offset = attributes.value("shadow_y_offset").toString().toInt();
+			xml.skipCurrentElement();
+		}
+		else if (xml.name() == "line_below")
+		{
+			line_below = true;
+			int temp = attributes.value("color").toString().toInt();
+			line_below_color = (temp >= 0) ? map.getColor(temp) : NULL;
+			line_below_width = attributes.value("width").toString().toInt();
+			line_below_distance = attributes.value("distance").toString().toInt();
+			xml.skipCurrentElement();
+		}
+		else if (xml.name() == "tabs")
+		{
+			int num_custom_tabs = attributes.value("count").toString().toInt();
+			custom_tabs.reserve(num_custom_tabs % 20); // 20 is not the limit
+			while (xml.readNextStartElement())
+			{
+				if (xml.name() == "tab")
+					custom_tabs.push_back(xml.readElementText().toInt());
+				else
+					xml.skipCurrentElement();
+			}
+		}
+		else
+			xml.skipCurrentElement(); // unknown
+	}
+	
+	updateQFont();
+	return !xml.error();
 }
 
 bool TextSymbol::equalsImpl(Symbol* other, Qt::CaseSensitivity case_sensitivity)

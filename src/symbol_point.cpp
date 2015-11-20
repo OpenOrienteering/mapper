@@ -20,7 +20,12 @@
 
 #include "symbol_point.h"
 
+#if QT_VERSION < 0x050000
 #include <QtGui>
+#else
+#include <QtWidgets>
+#endif
+#include <QXmlStreamAttributes>
 
 #include "map.h"
 #include "util.h"
@@ -86,7 +91,7 @@ void PointSymbol::createRenderablesScaled(Object* object, const MapCoordVector& 
 		output.insertRenderable(new CircleRenderable(this, coords[0]));
 	
 	PointObject* point = reinterpret_cast<PointObject*>(object);
-	float rotation = -point->getRotation();
+	float rotation = rotatable ? (-point->getRotation()) : 0;
 	double offset_x = coords[0].getX();
 	double offset_y = coords[0].getY();
 	
@@ -220,6 +225,31 @@ bool PointSymbol::containsColor(MapColor* color)
 	return false;
 }
 
+MapColor* PointSymbol::getDominantColorGuess()
+{
+	bool have_inner_color = inner_color && inner_radius > 0;
+	bool have_outer_color = outer_color && outer_width > 0;
+	if (have_inner_color != have_outer_color)
+		return have_inner_color ? inner_color : outer_color;
+	else if (have_inner_color && have_outer_color)
+	{
+		if (inner_color->r == 1 && inner_color->g == 1 && inner_color->b == 1)
+			return outer_color;
+		else if (outer_color->r == 1 && outer_color->g == 1 && outer_color->b == 1)
+			return inner_color;
+		else
+			return (qPow(inner_radius, 2) * M_PI > qPow(inner_radius + outer_width, 2) * M_PI - qPow(inner_radius, 2) * M_PI) ? inner_color : outer_color;
+	}
+	else
+	{
+		// Hope that the first element's color is representative
+		if (symbols.size() > 0)
+			return symbols[0]->getDominantColorGuess();
+		else
+			return NULL;
+	}
+}
+
 void PointSymbol::scale(double factor)
 {
 	inner_radius = qRound(inner_radius * factor);
@@ -260,6 +290,7 @@ void PointSymbol::saveImpl(QIODevice* file, Map* map)
 		objects[i]->save(file);
 	}
 }
+
 bool PointSymbol::loadImpl(QIODevice* file, int version, Map* map)
 {
 	file->read((char*)&rotatable, sizeof(bool));
@@ -291,10 +322,67 @@ bool PointSymbol::loadImpl(QIODevice* file, int version, Map* map)
 		objects[i] = Object::getObjectForType(static_cast<Object::Type>(save_type), symbols[i]);
 		if (!objects[i])
 			return false;
-		objects[i]->load(file, version, NULL);
+		objects[i]->load(file, version, NULL); // FIXME: check that map = NULL is allowed
 	}
 	
 	return true;
+}
+
+void PointSymbol::saveImpl(QXmlStreamWriter& xml, const Map& map) const
+{
+	xml.writeStartElement("point_symbol");
+	if (rotatable)
+		xml.writeAttribute("rotatable", "true");
+	xml.writeAttribute("inner_radius", QString::number(inner_radius));
+	xml.writeAttribute("inner_color", QString::number(map.findColorIndex(inner_color)));
+	xml.writeAttribute("outer_width", QString::number(outer_width));
+	xml.writeAttribute("outer_color", QString::number(map.findColorIndex(outer_color)));
+	int num_elements = (int)objects.size();
+	xml.writeAttribute("elements", QString::number(num_elements));
+	for (int i = 0; i < num_elements; ++i)
+	{
+		xml.writeStartElement("element");
+		symbols[i]->save(xml, map);
+		objects[i]->save(xml);
+		xml.writeEndElement(/*element*/);
+	}
+	xml.writeEndElement(/*point_symbol*/);
+}
+
+bool PointSymbol::loadImpl(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol_dict)
+{
+	Q_ASSERT(xml.name() == "point_symbol");
+	
+	QXmlStreamAttributes attributes(xml.attributes());
+	rotatable = (attributes.value("rotatable") == "true");
+	inner_radius = attributes.value("inner_radius").toString().toInt();
+	int temp = attributes.value("inner_color").toString().toInt();
+	inner_color = (temp >= 0) ? map.getColor(temp) : NULL;
+	outer_width = attributes.value("outer_width").toString().toInt();
+	temp = attributes.value("outer_color").toString().toInt();
+	outer_color = (temp >= 0) ? map.getColor(temp) : NULL;
+	int num_elements = attributes.value("elements").toString().toInt();
+	
+	symbols.reserve(qMin(num_elements, 10)); // 10 is not a limit
+	objects.reserve(qMin(num_elements, 10)); // 10 is not a limit
+	for (int i = 0; xml.readNextStartElement(); ++i)
+	{
+		if (xml.name() == "element")
+		{
+			while (xml.readNextStartElement())
+			{
+				if (xml.name() == "symbol")
+					symbols.push_back(Symbol::load(xml, map, symbol_dict));
+				else if (xml.name() == "object")
+					objects.push_back(Object::load(xml, map, symbol_dict, symbols.back()));
+				else
+					xml.skipCurrentElement(); // unknown element
+			}
+		}
+		else
+			xml.skipCurrentElement(); // unknown element
+	}
+	return !xml.error();
 }
 
 bool PointSymbol::equalsImpl(Symbol* other, Qt::CaseSensitivity case_sensitivity)
@@ -339,16 +427,10 @@ PointSymbolSettings::PointSymbolSettings(PointSymbol* symbol, SymbolSettingDialo
 : SymbolPropertiesWidget(symbol, dialog), 
   symbol(symbol)
 {
-	oriented_to_north = new QCheckBox(tr("Always oriented to north (not rotatable)"));
-	oriented_to_north->setChecked(!symbol->rotatable);
-	connect(oriented_to_north, SIGNAL(clicked(bool)), this, SLOT(orientedToNorthClicked(bool)));
-	
 	symbol_editor = new PointSymbolEditorWidget(dialog->getPreviewController(), symbol, 0, true);
 	connect(symbol_editor, SIGNAL(symbolEdited()), this, SIGNAL(propertiesModified()) );
 	
 	layout = new QVBoxLayout();
-	layout->addWidget(oriented_to_north);
-	layout->addSpacerItem(Util::SpacerItem::create(this));
 	layout->addWidget(symbol_editor);
 	
 	point_tab = new QWidget();
@@ -365,22 +447,12 @@ void PointSymbolSettings::reset(Symbol* symbol)
 	SymbolPropertiesWidget::reset(symbol);
 	this->symbol = reinterpret_cast<PointSymbol*>(symbol);
 	
-	oriented_to_north->blockSignals(true);
-	oriented_to_north->setChecked(!this->symbol->rotatable);
-	oriented_to_north->blockSignals(false);
-	
 	layout->removeWidget(symbol_editor);
 	delete(symbol_editor);
 	
 	symbol_editor = new PointSymbolEditorWidget(dialog->getPreviewController(), this->symbol, 0, true);
 	connect(symbol_editor, SIGNAL(symbolEdited()), this, SIGNAL(propertiesModified()) );
 	layout->addWidget(symbol_editor);
-}
-
-void PointSymbolSettings::orientedToNorthClicked(bool checked)
-{
-	symbol->rotatable = !checked;
-	emit propertiesModified();
 }
 
 void PointSymbolSettings::tabChanged(int index)

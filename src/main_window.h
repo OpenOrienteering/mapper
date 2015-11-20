@@ -21,11 +21,23 @@
 #ifndef _OPENORIENTEERING_MAIN_WINDOW_H_
 #define _OPENORIENTEERING_MAIN_WINDOW_H_
 
-#include <QtGui/QMainWindow>
+#include <QMainWindow>
 
 QT_BEGIN_NAMESPACE
 class QLabel;
 QT_END_NAMESPACE
+
+/// File type enumeration. Currently the program is only used for mapping,
+/// so "Map" is the only element. "Course" or "Event" are possible additions.
+struct FileType
+{
+	enum Enum
+	{
+		Map = 1,
+		
+		All = Map
+	};
+};
 
 class MainWindow;
 
@@ -133,10 +145,23 @@ public:
 	inline QMenu* getFileMenu() const {return file_menu;}
 	inline QAction* getFileMenuExtensionAct() const {return settings_act;}
 	
+	/**
+	 * Get a general toolbar with standard file actions (new, open, save).
+	 * 
+	 * The MainWindowController is responsible to add it to the main window.
+	 * It will be destroyed (and recreated) when the controller changes.
+	 */
+	inline QToolBar* getGeneralToolBar() const { return general_toolbar; }
+	
 	/** Save the content of the main window.
 	 *  @param path the path where to save.
 	 */ 
 	bool savePath(const QString &path);
+	
+	/** Shows the open file dialog for the given file type(s) and returns the chosen file
+	 *  or an empty string if the dialog is aborted.
+	 */
+	static QString getOpenFileName(QWidget* parent, const QString& title, FileType::Enum types);
 	
 public slots:
 	/** Show a wizard for creating new maps.
@@ -263,6 +288,7 @@ private:
 	bool show_menu;
 	bool disable_shortcuts;
 	
+	QToolBar* general_toolbar;
 	QMenu* file_menu;
 	QAction* save_act;
 	QAction* save_as_act;

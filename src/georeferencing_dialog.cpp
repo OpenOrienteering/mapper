@@ -22,7 +22,11 @@
 
 #include <limits>
 
+#if QT_VERSION < 0x050000
 #include <QtGui>
+#else
+#include <QtWidgets>
+#endif
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QXmlStreamReader>
@@ -190,7 +194,7 @@ void GeoreferencingDialog::updateGeneral()
 {
 	scale_edit->setText( QString("1:") % QString::number(georef->getScaleDenominator()) );
 	const MapCoord& coords(georef->getMapRefPoint());
-	ref_point_edit->setText(tr("%1 %2 (mm)").arg(locale().toString(coords.xd())).arg(locale().toString(coords.yd())));
+	ref_point_edit->setText(tr("%1 %2 (mm)").arg(locale().toString(coords.xd())).arg(locale().toString(-coords.yd())));
 }
 
 void GeoreferencingDialog::updateCRS()
@@ -551,6 +555,7 @@ void GeoreferencingDialog::reset()
 void GeoreferencingDialog::accept()
 {
 	map->setGeoreferencing(*georef);
+	map->setOtherDirty(true);
 	QDialog::accept();
 }
 
@@ -586,3 +591,274 @@ bool GeoreferencingTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coo
 }
 
 QCursor* GeoreferencingTool::cursor = NULL;
+
+
+
+// ### CRSTemplate ###
+
+std::vector<CRSTemplate*> CRSTemplate::crs_templates;
+
+CRSTemplate::Param::Param(const QString& desc)
+ : desc(desc)
+{
+}
+
+CRSTemplate::ZoneParam::ZoneParam(const QString& desc)
+ : Param(desc)
+{
+}
+QWidget* CRSTemplate::ZoneParam::createEditWidget(QObject* edit_receiver) const
+{
+	QLineEdit* widget = new QLineEdit();
+	QObject::connect(widget, SIGNAL(textEdited(QString)), edit_receiver, SLOT(crsParamEdited(QString)));
+	return widget;
+}
+QString CRSTemplate::ZoneParam::getValue(QWidget* edit_widget) const
+{
+	QLineEdit* text_edit = static_cast<QLineEdit*>(edit_widget);
+	QString zone = text_edit->text();
+	zone.replace(" N", "");
+	zone.replace(" S", " +south");
+	return zone;
+}
+
+CRSTemplate::IntRangeParam::IntRangeParam(const QString& desc, int min_value, int max_value, int apply_factor)
+: Param(desc), min_value(min_value), max_value(max_value), apply_factor(apply_factor)
+{
+}
+QWidget* CRSTemplate::IntRangeParam::createEditWidget(QObject* edit_receiver) const
+{
+	QSpinBox* widget = Util::SpinBox::create(min_value, max_value);
+	QObject::connect(widget, SIGNAL(valueChanged(QString)), edit_receiver, SLOT(crsParamEdited(QString)));
+	return widget;
+}
+QString CRSTemplate::IntRangeParam::getValue(QWidget* edit_widget) const
+{
+	QSpinBox* spin_box = static_cast<QSpinBox*>(edit_widget);
+	return QString::number(apply_factor * spin_box->value());
+}
+
+CRSTemplate::CRSTemplate(const QString& id, const QString& spec_template)
+ : id(id), spec_template(spec_template)
+{
+}
+
+CRSTemplate::~CRSTemplate()
+{
+	for (int i = 0; i < (int)params.size(); ++i)
+		delete params[i];
+}
+
+void CRSTemplate::addParam(Param* param)
+{
+	params.push_back(param);
+}
+
+int CRSTemplate::getNumCRSTemplates()
+{
+	return (int)crs_templates.size();
+}
+
+CRSTemplate& CRSTemplate::getCRSTemplate(int index)
+{
+	return *crs_templates[index];
+}
+
+void CRSTemplate::registerCRSTemplate(CRSTemplate* temp)
+{
+	crs_templates.push_back(temp);
+}
+
+
+
+// ### ProjectedCRSSelector ###
+
+ProjectedCRSSelector::ProjectedCRSSelector(QWidget* parent) : QWidget(parent)
+{
+	crs_dropdown = new QComboBox();
+	for (int i = 0; i < CRSTemplate::getNumCRSTemplates(); ++i)
+	{
+		CRSTemplate& temp = CRSTemplate::getCRSTemplate(i);
+		crs_dropdown->addItem(temp.getId(), qVariantFromValue<void*>(&temp));
+	}
+	
+	connect(crs_dropdown, SIGNAL(currentIndexChanged(int)), this, SLOT(crsDropdownChanged(int)));
+	
+	layout = NULL;
+	crsDropdownChanged(crs_dropdown->currentIndex());
+}
+
+QString ProjectedCRSSelector::getSelectedCRSSpec()
+{
+	CRSTemplate* temp = static_cast<CRSTemplate*>(crs_dropdown->itemData(crs_dropdown->currentIndex()).value<void*>());
+	QString spec = temp->getSpecTemplate();
+	
+	for (int param = 0; param < temp->getNumParams(); ++param)
+	{
+		QWidget* edit_widget = layout->itemAt(1 + param, QFormLayout::FieldRole)->widget();
+		spec = spec.arg(temp->getParam(param).getValue(edit_widget));
+	}
+	
+	return spec;
+}
+
+void ProjectedCRSSelector::crsDropdownChanged(int index)
+{
+	if (layout && layout->rowCount() > 1)
+	{
+		for (int i = 2 * layout->rowCount() - 1; i >= 2; --i)
+			delete layout->takeAt(i)->widget();
+		layout->takeAt(1);
+		delete layout->takeAt(0)->widget();
+		delete layout;
+		layout = NULL;
+	}
+	
+	layout = new QFormLayout();
+	layout->addRow(tr("&Coordinate reference system:"), crs_dropdown);
+	
+	CRSTemplate* temp = static_cast<CRSTemplate*>(crs_dropdown->itemData(crs_dropdown->currentIndex()).value<void*>());
+	for (int param = 0; param < temp->getNumParams(); ++param)
+	{
+		layout->addRow(temp->getParam(param).desc + ":", temp->getParam(param).createEditWidget(this));
+	}
+	
+	setLayout(layout);
+	
+	emit crsEdited();
+}
+
+void ProjectedCRSSelector::crsParamEdited(QString dont_use)
+{
+	emit crsEdited();
+}
+
+
+
+// ### SelectCRSDialog ###
+
+SelectCRSDialog::SelectCRSDialog(Map* map, QWidget* parent, bool show_take_from_map,
+								 bool show_geographic, const QString& desc_text)
+ : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint), map(map)
+{
+	setWindowModality(Qt::WindowModal);
+	setWindowTitle(tr("Select coordinate reference system"));
+	
+	QLabel* desc_label = NULL;
+	if (!desc_text.isEmpty())
+		desc_label = new QLabel(desc_text);
+	
+	map_radio = show_take_from_map ? (new QRadioButton(tr("Same as map's"))) : NULL;
+	if (map_radio)
+		map_radio->setChecked(true);
+	
+	geographic_radio = show_geographic ? (new QRadioButton(tr("Geographic coordinates (WGS84)"))) : NULL;
+	
+	projected_radio = new QRadioButton(tr("From list"));
+	if (!map_radio)
+		projected_radio->setChecked(true);
+	crs_edit = new ProjectedCRSSelector();
+	
+	spec_radio = new QRadioButton(tr("From specification"));
+	
+	crs_spec_edit = new QLineEdit();
+	status_label = new QLabel();
+	
+	button_box = new QDialogButtonBox(QDialogButtonBox::Cancel | QDialogButtonBox::Ok);
+	
+	if (map->getGeoreferencing().isLocal())
+	{
+		if (map_radio)
+			map_radio->setText(map_radio->text() + " " + tr("(local)"));
+		if (geographic_radio)
+			geographic_radio->setEnabled(false);
+		projected_radio->setEnabled(false);
+		spec_radio->setEnabled(false);
+		crs_spec_edit->setEnabled(false);
+	}
+	
+	QHBoxLayout* crs_layout = new QHBoxLayout();
+	crs_layout->addSpacing(16);
+	crs_layout->addWidget(crs_edit);
+	
+	crs_spec_layout = new QFormLayout();
+	crs_spec_layout->addRow(tr("CRS Specification:"), crs_spec_edit);
+	crs_spec_layout->addRow(tr("Status:"), status_label);
+	
+	QVBoxLayout* layout = new QVBoxLayout();
+	if (desc_label)
+	{
+		layout->addWidget(desc_label);
+		layout->addSpacing(16);
+	}
+	if (map_radio)
+		layout->addWidget(map_radio);
+	if (geographic_radio)
+		layout->addWidget(geographic_radio);
+	layout->addWidget(projected_radio);
+	layout->addLayout(crs_layout);
+	layout->addWidget(spec_radio);
+	layout->addSpacing(16);
+	layout->addLayout(crs_spec_layout);
+	layout->addSpacing(16);
+	layout->addWidget(button_box);
+	setLayout(layout);
+	
+	if (map_radio)
+		connect(map_radio, SIGNAL(clicked()), this, SLOT(updateWidgets()));
+	if (geographic_radio)
+		connect(geographic_radio, SIGNAL(clicked()), this, SLOT(updateWidgets()));
+	connect(projected_radio, SIGNAL(clicked()), this, SLOT(updateWidgets()));
+	connect(spec_radio, SIGNAL(clicked()), this, SLOT(updateWidgets()));
+	connect(crs_edit, SIGNAL(crsEdited()), this, SLOT(updateWidgets()));
+	connect(crs_spec_edit, SIGNAL(textEdited(QString)), this, SLOT(crsSpecEdited(QString)));
+	connect(button_box, SIGNAL(accepted()), this, SLOT(accept()));
+	connect(button_box, SIGNAL(rejected()), this, SLOT(reject()));
+	
+	updateWidgets();
+}
+
+QString SelectCRSDialog::getCRSSpec() const
+{
+	return crs_spec_edit->text();
+}
+
+void SelectCRSDialog::crsSpecEdited(QString text)
+{
+	spec_radio->setChecked(true);
+	
+	updateWidgets();
+}
+
+void SelectCRSDialog::updateWidgets()
+{
+	if (map_radio && map_radio->isChecked())
+		crs_spec_edit->setText(map->getGeoreferencing().isLocal() ? "" : map->getGeoreferencing().getProjectedCRSSpec());
+	else if (geographic_radio && geographic_radio->isChecked())
+		crs_spec_edit->setText("+proj=latlong +datum=WGS84");
+	else if (projected_radio->isChecked())
+		crs_spec_edit->setText(crs_edit->getSelectedCRSSpec());
+	
+	crs_edit->setEnabled(projected_radio->isChecked());
+	crs_spec_layout->itemAt(0, QFormLayout::LabelRole)->widget()->setVisible(spec_radio->isChecked());
+	crs_spec_edit->setVisible(spec_radio->isChecked());
+	
+	// Update status field and enable/disable ok button
+	bool valid;
+	QString error_text;
+	if (crs_spec_edit->text().isEmpty())
+		valid = true;
+	else
+	{
+		Georeferencing georef;
+		valid = georef.setProjectedCRS("", crs_spec_edit->text());
+		if (!valid)
+			error_text = georef.getErrorText();
+	}
+	
+	button_box->button(QDialogButtonBox::Ok)->setEnabled(valid);
+	if (error_text.length() == 0)
+		status_label->setText(tr("valid"));
+	else
+		status_label->setText(QString("<b>") % error_text % "</b>");
+}

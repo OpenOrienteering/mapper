@@ -22,8 +22,10 @@
 #include <QDebug>
 #include <QDateTime>
 #include <qmath.h>
+#include <QDir>
 #include <QImageReader>
 
+#include "map.h"
 #include "map_color.h"
 #include "object.h"
 #include "symbol.h"
@@ -40,19 +42,23 @@
 #define currentMSecsSinceEpoch() currentDateTime().toTime_t() * 1000
 #endif
 
-bool OCAD8FileFormat::understands(const unsigned char *buffer, size_t sz) const
+OCAD8FileFormat::OCAD8FileFormat() : Format("OCAD78", QObject::tr("OCAD Versions 7, 8"), "ocd", true, true, true)
+{
+}
+
+bool OCAD8FileFormat::understands(const unsigned char* buffer, size_t sz) const
 {
     // The first two bytes of the file must be AD 0C.
     if (sz >= 2 && buffer[0] == 0xAD && buffer[1] == 0x0C) return true;
     return false;
 }
 
-Importer *OCAD8FileFormat::createImporter(QIODevice* stream, const QString &path, Map *map, MapView *view) const throw (FormatException)
+Importer* OCAD8FileFormat::createImporter(QIODevice* stream, Map *map, MapView *view) const throw (FormatException)
 {
-	return new OCAD8FileImport(stream, path, map, view);
+	return new OCAD8FileImport(stream, map, view);
 }
 
-Exporter* OCAD8FileFormat::createExporter(QIODevice* stream, const QString& path, Map* map, MapView* view) const throw (FormatException)
+Exporter* OCAD8FileFormat::createExporter(QIODevice* stream, Map* map, MapView* view) const throw (FormatException)
 {
     return new OCAD8FileExport(stream, map, view);
 }
@@ -69,7 +75,7 @@ bool OCAD8FileFormat::isRasterImageFile(const QString &filename)
 
 
 
-OCAD8FileImport::OCAD8FileImport(QIODevice* stream, const QString &path, Map* map, MapView* view) : Importer(stream, map, view), path(path), file(NULL)
+OCAD8FileImport::OCAD8FileImport(QIODevice* stream, Map* map, MapView* view) : Importer(stream, map, view), file(NULL)
 {
     ocad_init();
     encoding_1byte = QTextCodec::codecForName("Windows-1252");
@@ -82,14 +88,17 @@ OCAD8FileImport::~OCAD8FileImport()
     ocad_shutdown();
 }
 
-void OCAD8FileImport::doImport(bool load_symbols_only) throw (FormatException)
+void OCAD8FileImport::import(bool load_symbols_only) throw (FormatException)
 {
-	stream->close();	// TODO: use stream instead of libocad's direct file access
     //qint64 start = QDateTime::currentMSecsSinceEpoch();
-
-	QByteArray filename = path.toLocal8Bit().constData();
-    int err = ocad_file_open(&file, filename);
-    //qDebug() << "open ocad file" << err;
+	
+	u32 size = stream->bytesAvailable();
+	u8* buffer = (u8*)malloc(size);
+	if (!buffer)
+		throw FormatException(QObject::tr("Could not allocate buffer."));
+	if (stream->read((char*)buffer, size) != size)
+		throw FormatException(QObject::tr("Could not read file."));
+	int err = ocad_file_open_memory(&file, buffer, size);
     if (err != 0) throw FormatException(QObject::tr("Could not open file: libocad returned %1").arg(err));
 	
 	if (file->header->major <= 5 || file->header->major >= 9)
@@ -166,25 +175,12 @@ void OCAD8FileImport::doImport(bool load_symbols_only) throw (FormatException)
 					}
 					continue;
                 }
-                
+				
 
-                if (symbol)
-                {
-                    map->symbols.push_back(symbol);
-                    symbol_index[ocad_symbol->number] = symbol;
-					
-					// For combined symbols, also add their parts
-					// FIXME: implement private parts for combined symbols instead
-					if (symbol->getType() == Symbol::Combined)
-					{
-						CombinedSymbol* combined_symbol = reinterpret_cast<CombinedSymbol*>(symbol);
-						for (int i = 0; i < combined_symbol->getNumParts(); ++i)
-						{
-							Symbol* part = combined_symbol->getPart(i);
-							part->setNumberComponent(2, i+1);
-							map->symbols.push_back(part);
-						}
-					}
+				if (symbol)
+				{
+					map->symbols.push_back(symbol);
+					symbol_index[ocad_symbol->number] = symbol;
                 }
                 else
                 {
@@ -200,8 +196,8 @@ void OCAD8FileImport::doImport(bool load_symbols_only) throw (FormatException)
 	{
 		// Load objects
 
-		// Place all objects into a single OCAD import layer
-		MapLayer* layer = new MapLayer(QObject::tr("OCAD import layer"), map);
+		// Place all objects into a single OCAD import part
+		MapPart* part = new MapPart(QObject::tr("OCAD import layer"), map);
 		for (OCADObjectIndex *idx = ocad_objidx_first(file); idx != NULL; idx = ocad_objidx_next(file, idx))
 		{
 			for (int i = 0; i < 256; i++)
@@ -210,16 +206,16 @@ void OCAD8FileImport::doImport(bool load_symbols_only) throw (FormatException)
 				OCADObject *ocad_obj = ocad_object(file, entry);
 				if (ocad_obj != NULL)
 				{
-					Object *object = importObject(ocad_obj, layer);
+					Object *object = importObject(ocad_obj, part);
 					if (object != NULL) {
-						layer->objects.push_back(object);
+						part->objects.push_back(object);
 					}
 				}
 			}
 		}
-		delete map->layers[0];
-		map->layers[0] = layer;
-		map->current_layer_index = 0;
+		delete map->parts[0];
+		map->parts[0] = part;
+		map->current_part_index = 0;
 
 		// Load templates
 		map->templates.clear();
@@ -293,7 +289,7 @@ Symbol *OCAD8FileImport::importLineSymbol(const OCADLineSymbol *ocad_symbol)
 	LineSymbol* line_for_borders = NULL;
 	
 	// Import a main line?
-	LineSymbol *main_line = NULL;
+	LineSymbol* main_line = NULL;
 	if (ocad_symbol->dmode == 0 || ocad_symbol->width > 0)
 	{
 		main_line = new LineSymbol();
@@ -391,6 +387,37 @@ Symbol *OCAD8FileImport::importLineSymbol(const OCADLineSymbol *ocad_symbol)
 		}
 	}
 	
+	// Import a 'framing' line?
+	LineSymbol* framing_line = NULL;
+	if (ocad_symbol->fwidth > 0)
+	{
+		framing_line = new LineSymbol();
+		if (!line_for_borders)
+			line_for_borders = framing_line;
+		fillCommonSymbolFields(framing_line, (OCADSymbol *)ocad_symbol);
+		
+		// Basic line options
+		framing_line->line_width = convertSize(ocad_symbol->fwidth);
+		framing_line->color = convertColor(ocad_symbol->fcolor);
+		
+		// Cap and join styles
+		if (ocad_symbol->fstyle == 0)
+		{
+			framing_line->cap_style = LineSymbol::FlatCap;
+			framing_line->join_style = LineSymbol::BevelJoin;
+		}
+		else if (ocad_symbol->fstyle == 1)
+		{
+			framing_line->cap_style = LineSymbol::RoundCap;
+			framing_line->join_style = LineSymbol::RoundJoin;
+		}
+		else if (ocad_symbol->fstyle == 4)
+		{
+			framing_line->cap_style = LineSymbol::FlatCap;
+			framing_line->join_style = LineSymbol::MiterJoin;
+		}
+	}
+	
 	// Import a 'double' line?
 	bool has_border_line = ocad_symbol->lwidth > 0 || ocad_symbol->rwidth > 0;
 	LineSymbol *double_line = NULL;
@@ -418,35 +445,32 @@ Symbol *OCAD8FileImport::importLineSymbol(const OCADLineSymbol *ocad_symbol)
 	{
 		assert(line_for_borders);
 		line_for_borders->have_border_lines = true;
+		LineSymbolBorder& border = line_for_borders->getBorder();
+		LineSymbolBorder& right_border = line_for_borders->getRightBorder();
 		
-		// Border color and width - currently we don't support different values on left and right side,
-		// although that seems easy enough to implement in the future. Import with a warning.
-		s16 border_color = ocad_symbol->lcolor;
-		if (border_color != ocad_symbol->rcolor)
-		{
-			addWarning(QObject::tr("In symbol %1, left and right borders are different colors (%2 and %3). Using %4.")
-			.arg(0.1 * ocad_symbol->number).arg(ocad_symbol->lcolor).arg(ocad_symbol->rcolor).arg(border_color));
-		}
-		line_for_borders->border_color = convertColor(border_color);
+		// Border color and width
+		border.color = convertColor(ocad_symbol->lcolor);
+		border.width = convertSize(ocad_symbol->lwidth);
+		border.shift = convertSize(ocad_symbol->lwidth) / 2 + (convertSize(ocad_symbol->dwidth) - line_for_borders->line_width) / 2;
 		
-		s16 border_width = ocad_symbol->lwidth;
-		if (border_width != ocad_symbol->rwidth)
-		{
-			addWarning(QObject::tr("In symbol %1, left and right borders are different width (%2 and %3). Using %4.")
-			.arg(0.1 * ocad_symbol->number).arg(ocad_symbol->lwidth).arg(ocad_symbol->rwidth).arg(border_width));
-		}
-		line_for_borders->border_width = convertSize(border_width);
-		line_for_borders->border_shift = convertSize(border_width) / 2 + (convertSize(ocad_symbol->dwidth) - line_for_borders->line_width) / 2;
+		right_border.color = convertColor(ocad_symbol->rcolor);
+		right_border.width = convertSize(ocad_symbol->rwidth);
+		right_border.shift = convertSize(ocad_symbol->rwidth) / 2 + (convertSize(ocad_symbol->dwidth) - line_for_borders->line_width) / 2;
 		
-		// And finally, the border may be dashed
+		// The borders may be dashed
 		if (ocad_symbol->dgap > 0 && ocad_symbol->dmode > 1)
 		{
-			line_for_borders->dashed_border = true;
-			line_for_borders->border_dash_length = convertSize(ocad_symbol->dlen);
-			line_for_borders->border_break_length = convertSize(ocad_symbol->dgap);
+			border.dashed = true;
+			border.dash_length = convertSize(ocad_symbol->dlen);
+			border.break_length = convertSize(ocad_symbol->dgap);
 			
-			if (ocad_symbol->dmode == 2)
-				addWarning(QObject::tr("In line symbol %1, ignoring that only the left border line should be dashed").arg(0.1 * ocad_symbol->number));
+			// If ocad_symbol->dmode == 2, only the left border should be dashed
+			if (ocad_symbol->dmode > 2)
+			{
+				right_border.dashed = border.dashed;
+				right_border.dash_length = border.dash_length;
+				right_border.break_length = border.break_length;
+			}
 		}
 	}
 	
@@ -490,33 +514,41 @@ Symbol *OCAD8FileImport::importLineSymbol(const OCADLineSymbol *ocad_symbol)
     // FIXME: not really sure how this translates... need test cases
     symbol_line->minimum_mid_symbol_count = 0; //1 + ocad_symbol->smin;
 	symbol_line->minimum_mid_symbol_count_when_closed = 0; //1 + ocad_symbol->smin;
-	symbol_line->show_at_least_one_symbol = false; // NOTE: this works in a different way than OCAD's 'at least X symbols' setting
+	symbol_line->show_at_least_one_symbol = false; // NOTE: this works in a different way than OCAD's 'at least X symbols' setting (per-segment instead of per-object)
 
     // TODO: taper fields (tmode and tlast)
-
-    if (ocad_symbol->fwidth > 0)
-    {
-        addWarning(QObject::tr("In symbol %1, ignoring framing line.").arg(0.1 * ocad_symbol->number));
-    }
-    
-    if (main_line == NULL)
+	
+    if (main_line == NULL && framing_line == NULL)
 		return double_line;
-	else if (double_line == NULL)
+	else if (double_line == NULL && framing_line == NULL)
 		return main_line;
+	else if (main_line == NULL && double_line == NULL)
+		return framing_line;
 	else
 	{
 		CombinedSymbol* full_line = new CombinedSymbol();
 		fillCommonSymbolFields(full_line, (OCADSymbol *)ocad_symbol);
-		full_line->setNumParts(2);
-		full_line->setPart(0, main_line);
-		full_line->setPart(1, double_line);
-		
-		// Don't let parts be affected by possible settings for the combined symbol
-		main_line->setHidden(false);
-		main_line->setProtected(false);
-		double_line->setHidden(false);
-		double_line->setProtected(false);
-		
+		full_line->setNumParts(3);
+		int part = 0;
+		if (main_line)
+		{
+			full_line->setPart(part++, main_line, true);
+			main_line->setHidden(false);
+			main_line->setProtected(false);
+		}
+		if (double_line)
+		{
+			full_line->setPart(part++, double_line, true);
+			double_line->setHidden(false);
+			double_line->setProtected(false);
+		}
+		if (framing_line)
+		{
+			full_line->setPart(part++, framing_line, true);
+			framing_line->setHidden(false);
+			framing_line->setProtected(false);
+		}
+		full_line->setNumParts(part);
 		return full_line;
 	}
 }
@@ -806,7 +838,7 @@ void OCAD8FileImport::fillCommonSymbolFields(Symbol *symbol, const OCADSymbol *o
 		symbol->setHidden(true);
 }
 
-Object *OCAD8FileImport::importObject(const OCADObject* ocad_object, MapLayer* layer)
+Object *OCAD8FileImport::importObject(const OCADObject* ocad_object, MapPart* part)
 {
 	Symbol* symbol;
     if (!symbol_index.contains(ocad_object->symbol))
@@ -825,7 +857,7 @@ Object *OCAD8FileImport::importObject(const OCADObject* ocad_object, MapLayer* l
 		}
 		else
 		{
-			if (!importRectangleObject(ocad_object, layer, rectangle_info[ocad_object->symbol]))
+			if (!importRectangleObject(ocad_object, part, rectangle_info[ocad_object->symbol]))
 				addWarning(QObject::tr("Unable to import rectangle object"));
 			return NULL;
 		}
@@ -884,6 +916,8 @@ Object *OCAD8FileImport::importObject(const OCADObject* ocad_object, MapLayer* l
     }
     else if (symbol->getType() == Symbol::Line || symbol->getType() == Symbol::Area || symbol->getType() == Symbol::Combined) {
 		PathObject *p = new PathObject(symbol);
+		
+		p->setPatternRotation(convertRotation(ocad_object->angle));
 
 		// Normal path
 		fillPathCoords(p, symbol->getType() == Symbol::Area, ocad_object->npts, (OCADPoint *)ocad_object->pts);
@@ -901,7 +935,7 @@ Object *OCAD8FileImport::importObject(const OCADObject* ocad_object, MapLayer* l
     return object;
 }
 
-bool OCAD8FileImport::importRectangleObject(const OCADObject* ocad_object, MapLayer* layer, const OCAD8FileImport::RectangleInfo& rect)
+bool OCAD8FileImport::importRectangleObject(const OCADObject* ocad_object, MapPart* part, const OCAD8FileImport::RectangleInfo& rect)
 {
 	if (ocad_object->npts != 4)
 		return false;
@@ -962,7 +996,7 @@ bool OCAD8FileImport::importRectangleObject(const OCADObject* ocad_object, MapLa
 	}
 	PathObject *border_path = new PathObject(rect.border_line, coords, map);
 	border_path->getPart(0).setClosed(true, false);
-	layer->objects.push_back(border_path);
+	part->objects.push_back(border_path);
 	
 	if (rect.has_grid && rect.cell_width > 0 && rect.cell_height > 0)
 	{
@@ -983,7 +1017,7 @@ bool OCAD8FileImport::importRectangleObject(const OCADObject* ocad_object, MapLa
 			coords[1] = (bottom_left_f + x * cell_width * right).toMapCoord();
 			
 			PathObject *path = new PathObject(rect.inner_line, coords, map);
-			layer->objects.push_back(path);
+			part->objects.push_back(path);
 		}
 		for (int y = 1; y < num_cells_y; ++y)
 		{
@@ -991,7 +1025,7 @@ bool OCAD8FileImport::importRectangleObject(const OCADObject* ocad_object, MapLa
 			coords[1] = (top_right_f + y * cell_height * down).toMapCoord();
 			
 			PathObject *path = new PathObject(rect.inner_line, coords, map);
-			layer->objects.push_back(path);
+			part->objects.push_back(path);
 		}
 		
 		// Create grid text
@@ -1023,7 +1057,7 @@ bool OCAD8FileImport::importRectangleObject(const OCADObject* ocad_object, MapLa
 					double position_x = (x + 0.07f) * cell_width;
 					double position_y = (y + 0.04f) * cell_height + rect.text->getFontMetrics().ascent() / rect.text->calculateInternalScaling() - rect.text->getFontSize();
 					object->setAnchorPosition(top_left_f + position_x * right + position_y * down);
-					layer->objects.push_back(object);
+					part->objects.push_back(object);
 					
 					//pts[0].Y -= rectinfo.gridText.FontAscent - rectinfo.gridText.FontEmHeight;
 				}
@@ -1062,18 +1096,19 @@ void OCAD8FileImport::importString(OCADStringEntry *entry)
 Template *OCAD8FileImport::importRasterTemplate(const OCADBackground &background)
 {
     QString filename(background.filename); // FIXME: use platform char encoding?
+	filename = QDir::cleanPath(filename.replace('\\', '/'));
 	if (OCAD8FileFormat::isRasterImageFile(filename))
     {
-        TemplateImage *templ = new TemplateImage(filename, map);
+        TemplateImage* templ = new TemplateImage(filename, map);
         MapCoord c;
         convertPoint(c, background.trnx, background.trny);
         templ->setTemplateX(c.rawX());
         templ->setTemplateY(c.rawY());
-        // This seems to be measured in degrees. Plus there's wacky values like -359.7.
         templ->setTemplateRotation(M_PI / 180 * background.angle);
         templ->setTemplateScaleX(convertTemplateScale(background.sclx));
         templ->setTemplateScaleY(convertTemplateScale(background.scly));
         // FIXME: import template view parameters: background.dimming and background.transparent
+		// TODO: import template visibility
         return templ;
     }
     else
@@ -1166,7 +1201,6 @@ bool OCAD8FileImport::fillTextPathCoords(TextObject *object, TextSymbol *symbol,
 		
 		MapCoordF adjust_vector = MapCoordF(top_adjust * sin(object->getRotation()), top_adjust * cos(object->getRotation()));
 		top_left = MapCoord(top_left.xd() + adjust_vector.getX(), top_left.yd() + adjust_vector.getY());
-		bottom_left = MapCoord(bottom_left.xd() + adjust_vector.getX(), bottom_left.yd() + adjust_vector.getY());
 		top_right = MapCoord(top_right.xd() + adjust_vector.getX(), top_right.yd() + adjust_vector.getY());
 		
 		object->setBox((bottom_left.rawX() + top_right.rawX()) / 2, (bottom_left.rawY() + top_right.rawY()) / 2,
@@ -1286,8 +1320,7 @@ MapColor *OCAD8FileImport::convertColor(int color) {
 
 double OCAD8FileImport::convertTemplateScale(double ocad_scale)
 {
-	double mpd = ocad_scale * 0.00001;			// meters(on map) per pixel
-	return mpd * map->getScaleDenominator();	// meters(in reality) per pixel
+	return ocad_scale * 0.01;	// millimeters(on map) per pixel
 }
 
 
@@ -1370,13 +1403,13 @@ void OCAD8FileExport::doExport() throw (FormatException)
 		
 		s16 index = -1;
 		if (symbol->getType() == Symbol::Point)
-			index = exportPointSymbol(static_cast<PointSymbol*>(symbol));
+			index = exportPointSymbol(symbol->asPoint());
 		else if (symbol->getType() == Symbol::Line)
-			index = exportLineSymbol(static_cast<LineSymbol*>(symbol));
+			index = exportLineSymbol(symbol->asLine());
 		else if (symbol->getType() == Symbol::Area)
-			index = exportAreaSymbol(static_cast<AreaSymbol*>(symbol));
+			index = exportAreaSymbol(symbol->asArea());
 		else if (symbol->getType() == Symbol::Text)
-			index = exportTextSymbol(static_cast<TextSymbol*>(symbol));
+			index = exportTextSymbol(symbol->asText());
 		else if (symbol->getType() == Symbol::Combined)
 			; // This is done as a second pass to ensure that all dependencies are added to the symbol_index
 		else
@@ -1390,22 +1423,22 @@ void OCAD8FileExport::doExport() throw (FormatException)
 		}
 	}
 	
+	// Separate pass for combined symbols
 	for (int i = 0; i < map->getNumSymbols(); ++i)
 	{
 		Symbol* symbol = map->getSymbol(i);
-		
 		if (symbol->getType() == Symbol::Combined)
 			symbol_index.insert(symbol, exportCombinedSymbol(static_cast<CombinedSymbol*>(symbol)));
 	}
 	
 	// Objects
 	OCADObject* ocad_object = ocad_object_alloc(NULL);
-	for (int l = 0; l < map->getNumLayers(); ++l)
+	for (int l = 0; l < map->getNumParts(); ++l)
 	{
-		for (int o = 0; o < map->getLayer(l)->getNumObjects(); ++o)
+		for (int o = 0; o < map->getPart(l)->getNumObjects(); ++o)
 		{
 			memset(ocad_object, 0, sizeof(OCADObject) - sizeof(OCADPoint) + 8 * (ocad_object->npts + ocad_object->ntext));
-			Object* object = map->getLayer(l)->getObject(o);
+			Object* object = map->getPart(l)->getObject(o);
 			object->update();
 			
 			// Fill some common entries of object struct
@@ -1419,6 +1452,13 @@ void OCAD8FileExport::doExport() throw (FormatException)
 			{
 				PointObject* point = static_cast<PointObject*>(object);
 				ocad_object->angle = convertRotation(point->getRotation());
+			}
+			else if (object->getType() == Object::Path)
+			{
+				PathObject* path = static_cast<PathObject*>(object);
+				ocad_object->angle = convertRotation(path->getPatternRotation());
+				if (path->getPatternOrigin() != MapCoord(0, 0))
+					addWarning(QObject::tr("Unable to export fill pattern shift for an area object"));
 			}
 			else if (object->getType() == Object::Text)
 			{
@@ -1749,7 +1789,7 @@ s16 OCAD8FileExport::exportLineSymbol(LineSymbol* line)
 	ocad_symbol->type = OCAD_LINE_SYMBOL;
 	s16 extent = convertSize(0.5f * line->getLineWidth());
 	if (line->hasBorder())
-		extent = qMax(extent, (s16)convertSize(0.5f * line->getLineWidth() + line->getBorderShift() + 0.5f * line->getBorderLineWidth()));
+		extent = qMax(extent, (s16)convertSize(0.5f * line->getLineWidth() + line->getBorder().shift + 0.5f * line->getBorder().width));
 	extent = qMax(extent, getPointSymbolExtent(line->getStartSymbol()));
 	extent = qMax(extent, getPointSymbolExtent(line->getEndSymbol()));
 	extent = qMax(extent, getPointSymbolExtent(line->getMidSymbol()));
@@ -1834,28 +1874,38 @@ s16 OCAD8FileExport::exportLineSymbol(LineSymbol* line)
 	ocad_symbol->smin = line->getShowAtLeastOneSymbol() ? 0 : -1;
 	
 	// Double line
-	if (line->hasBorder() && line->getBorderColor() != NULL)
+	if (line->hasBorder() && (line->getBorder().isVisible() || line->getRightBorder().isVisible()))
 	{
-		ocad_symbol->dwidth = convertSize(line->getLineWidth() - line->getBorderLineWidth() + 2 * line->getBorderShift());
-		ocad_symbol->dmode = line->isBorderDashed() ? 3 : 1;
-		/*if (!line->isDashed())
-		{
-			// Use the "fill" option instead of the main line so the import works better
-			ocad_symbol->dcolor = ocad_symbol->color;
-			ocad_symbol->width = 0;
-		}*/
+		ocad_symbol->dwidth = convertSize(line->getLineWidth() - line->getBorder().width + 2 * line->getBorder().shift);
+		if (line->getBorder().dashed && !line->getRightBorder().dashed)
+			ocad_symbol->dmode = 2;
+		else
+			ocad_symbol->dmode = line->getBorder().dashed ? 3 : 1;
 		// ocad_symbol->dflags
 		
-		ocad_symbol->lwidth = convertSize(line->getBorderLineWidth());
-		ocad_symbol->rwidth = ocad_symbol->lwidth;
+		ocad_symbol->lwidth = convertSize(line->getBorder().width);
+		ocad_symbol->rwidth = convertSize(line->getRightBorder().width);
 		
-		ocad_symbol->lcolor = convertColor(line->getBorderColor());
-		ocad_symbol->rcolor = ocad_symbol->lcolor;
+		ocad_symbol->lcolor = convertColor(line->getBorder().color);
+		ocad_symbol->rcolor = convertColor(line->getRightBorder().color);
 		
-		if (line->isBorderDashed())
+		if (line->getBorder().dashed)
 		{
-			ocad_symbol->dlen = convertSize(line->getBorderDashLength());
-			ocad_symbol->dgap = convertSize(line->getBorderBreakLength());
+			ocad_symbol->dlen = convertSize(line->getBorder().dash_length);
+			ocad_symbol->dgap = convertSize(line->getBorder().break_length);
+		}
+		else if (line->getRightBorder().dashed)
+		{
+			ocad_symbol->dlen = convertSize(line->getRightBorder().dash_length);
+			ocad_symbol->dgap = convertSize(line->getRightBorder().break_length);
+		}
+		
+		if (((line->getBorder().dashed && line->getRightBorder().dashed) &&
+				(line->getBorder().dash_length != line->getRightBorder().dash_length ||
+				line->getBorder().break_length != line->getRightBorder().break_length)) ||
+			(!line->getBorder().dashed && line->getRightBorder().dashed))
+		{
+			addWarning(QObject::tr("In line symbol \"%1\", cannot export the borders correctly.").arg(line->getPlainTextName()));
 		}
 	}
 	
@@ -2054,6 +2104,7 @@ void OCAD8FileExport::setTextSymbolFormatting(OCADTextSymbol* ocad_symbol, TextO
 
 std::set< s16 > OCAD8FileExport::exportCombinedSymbol(CombinedSymbol* combination)
 {
+	// Insert public parts
 	std::vector<bool> map_bitfield;
 	map_bitfield.assign(map->getNumSymbols(), false);
 	map_bitfield[map->findSymbolIndex(combination)] = true;
@@ -2068,6 +2119,24 @@ std::set< s16 > OCAD8FileExport::exportCombinedSymbol(CombinedSymbol* combinatio
 			              symbol_index[map->getSymbol(i)].end());
 		}
 	}
+	
+	// Insert private parts
+	for (int i = 0; i < combination->getNumParts(); ++i)
+	{
+		if (combination->isPartPrivate(i))
+		{
+			Symbol* part = combination->getPart(i);
+			int index;
+			if (part->getType() == Symbol::Line)
+				index = exportLineSymbol(part->asLine());
+			else if (part->getType() == Symbol::Area)
+				index = exportAreaSymbol(part->asArea());
+			else
+				assert(false);
+			result.insert(index);
+		}
+	}
+	
 	return result;
 }
 
@@ -2166,10 +2235,10 @@ s16 OCAD8FileExport::exportTextCoordinates(TextObject* object, OCADPoint** buffe
 		double internal_scaling = text_symbol->calculateInternalScaling();
 		TextObjectLineInfo* line0 = object->getLineInfo(0);
 		
-		double new_top = line0->line_y - line0->ascent;
+		double new_top = (object->getVerticalAlignment() == TextObject::AlignTop) ? (-object->getBoxHeight() / 2) : ((line0->line_y - line0->ascent) / internal_scaling);
 		// Account for extra internal leading
-		double top_adjust = -text_symbol->getFontSize() * internal_scaling + (metrics.ascent() + metrics.descent() + 0.5);
-		new_top = (new_top - top_adjust) / internal_scaling;
+		double top_adjust = -text_symbol->getFontSize() + (metrics.ascent() + metrics.descent() + 0.5) / internal_scaling;
+		new_top = new_top - top_adjust;
 		
 		QTransform transform;
 		transform.rotate(-object->getRotation() * 180 / M_PI);
@@ -2339,8 +2408,8 @@ int OCAD8FileExport::convertRotation(float angle)
 OCADPoint OCAD8FileExport::convertPoint(qint64 x, qint64 y)
 {
 	OCADPoint result;
-	result.x = (s32)(x / 10) << 8;
-	result.y = (s32)(y / -10) << 8;
+	result.x = (s32)qRound(x / 10.0) << 8;
+	result.y = (s32)qRound(y / -10.0) << 8;
 	return result;
 }
 OCADPoint OCAD8FileExport::convertPoint(const MapCoord& coord)
@@ -2361,8 +2430,7 @@ s16 OCAD8FileExport::convertColor(MapColor* color)
 
 double OCAD8FileExport::convertTemplateScale(double mapper_scale)
 {
-	double mpd = mapper_scale / map->getScaleDenominator();	// meters(on map) per pixel
-	return mpd * 1 / 0.00001;
+	return mapper_scale * (1 / 0.01);
 }
 
 void OCAD8FileExport::addStringTruncationWarning(const QString& text, int truncation_pos)

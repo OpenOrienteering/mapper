@@ -20,10 +20,16 @@
 
 #include "template_adjust.h"
 
+#if QT_VERSION < 0x050000
 #include <QtGui>
+#else
+#include <QtWidgets>
+#endif
 
 #include "template.h"
+#include "transformation.h"
 #include "util.h"
+#include "map_editor.h"
 #include "map_widget.h"
 
 float TemplateAdjustActivity::cross_radius = 4;
@@ -61,9 +67,9 @@ void TemplateAdjustActivity::draw(QPainter* painter, MapWidget* widget)
     
 	for (int i = 0; i < temp->getNumPassPoints(); ++i)
 	{
-		Template::PassPoint* point = temp->getPassPoint(i);
-		QPointF start = widget->mapToViewport(adjusted ? point->calculated_coords_map : point->src_coords_map);
-		QPointF end = widget->mapToViewport(point->dest_coords_map);
+		PassPoint* point = temp->getPassPoint(i);
+		QPointF start = widget->mapToViewport(adjusted ? point->calculated_coords : point->src_coords);
+		QPointF end = widget->mapToViewport(point->dest_coords);
 		
 		drawCross(painter, start.toPoint(), QColor(Qt::red));
 		painter->drawLine(start, end);
@@ -87,9 +93,9 @@ int TemplateAdjustActivity::findHoverPoint(Template* temp, QPoint mouse_pos, Map
 	
 	for (int i = 0; i < temp->getNumPassPoints(); ++i)
 	{
-		Template::PassPoint* point = temp->getPassPoint(i);
+		PassPoint* point = temp->getPassPoint(i);
 		
-		QPointF display_pos_src = adjusted ? widget->mapToViewport(point->calculated_coords_map) : widget->mapToViewport(point->src_coords_map);
+		QPointF display_pos_src = adjusted ? widget->mapToViewport(point->calculated_coords) : widget->mapToViewport(point->src_coords);
 		float distance_sq = (display_pos_src.x() - mouse_pos.x())*(display_pos_src.x() - mouse_pos.x()) + (display_pos_src.y() - mouse_pos.y())*(display_pos_src.y() - mouse_pos.y());
 		if (distance_sq < hover_distance_sq && distance_sq < minimum_distance_sq)
 		{
@@ -98,7 +104,7 @@ int TemplateAdjustActivity::findHoverPoint(Template* temp, QPoint mouse_pos, Map
 			point_src = true;
 		}
 		
-		QPointF display_pos_dest = widget->mapToViewport(point->dest_coords_map);
+		QPointF display_pos_dest = widget->mapToViewport(point->dest_coords);
 		distance_sq = (display_pos_dest.x() - mouse_pos.x())*(display_pos_dest.x() - mouse_pos.x()) + (display_pos_dest.y() - mouse_pos.y())*(display_pos_dest.y() - mouse_pos.y());
 		if (distance_sq < hover_distance_sq && distance_sq <= minimum_distance_sq)	// NOTE: using <= here so dest positions have priority above other positions when at the same position
 		{
@@ -111,95 +117,18 @@ int TemplateAdjustActivity::findHoverPoint(Template* temp, QPoint mouse_pos, Map
 	return point_number;
 }
 
-bool TemplateAdjustActivity::calculateTemplateAdjust(Template* temp, Template::TemplateTransform& out, QWidget* dialog_parent)
+bool TemplateAdjustActivity::calculateTemplateAdjust(Template* temp, TemplateTransform& out, QWidget* dialog_parent)
 {
-	int num_pass_points = temp->getNumPassPoints();
-	if (temp->isAdjustmentApplied())	// get original transformation
+	// Get original transformation
+	if (temp->isAdjustmentApplied())
 		temp->getOtherTransform(out);
 	else
 		temp->getTransform(out);
 	
-	if (num_pass_points == 1)
+	if (!temp->getPassPointList().estimateSimilarityTransformation(&out))
 	{
-		Template::PassPoint* point = temp->getPassPoint(0);
-		MapCoordF offset = MapCoordF(point->dest_coords_map.getX() - point->src_coords_map.getX(), point->dest_coords_map.getY() - point->src_coords_map.getY());
-		
-		out.template_x += qRound64(1000 * offset.getX());
-		out.template_y += qRound64(1000 * offset.getY());
-		point->calculated_coords_map = point->dest_coords_map;
-		point->error = 0;
-	}
-	else if (num_pass_points >= 2)
-	{
-		// Create linear equation system and solve using the pseuo inverse
-		Matrix mat(2*num_pass_points, 4);
-		Matrix values(2*num_pass_points, 1);
-		for (int i = 0; i < num_pass_points; ++i)
-		{
-			Template::PassPoint* point = temp->getPassPoint(i);
-			mat.set(2*i, 0, point->src_coords_map.getX());
-			mat.set(2*i, 1, point->src_coords_map.getY());
-			mat.set(2*i, 2, 1);
-			mat.set(2*i, 3, 0);
-			mat.set(2*i+1, 0, point->src_coords_map.getY());
-			mat.set(2*i+1, 1, -point->src_coords_map.getX());
-			mat.set(2*i+1, 2, 0);
-			mat.set(2*i+1, 3, 1);
-			
-			values.set(2*i, 0, point->dest_coords_map.getX());
-			values.set(2*i+1, 0, point->dest_coords_map.getY());
-		}
-		
-		Matrix transposed;
-		mat.transpose(transposed);
-		
-		Matrix mat_temp, mat_temp2, pseudo_inverse;
-		transposed.multiply(mat, mat_temp);
-		if (!mat_temp.invert(mat_temp2))
-		{
-			QMessageBox::warning(dialog_parent, tr("Error"), tr("Failed to calculate adjustment!"));
-			return false;
-		}
-		mat_temp2.multiply(transposed, pseudo_inverse);
-		
-		// Calculate transformation parameters
-		Matrix output;
-		pseudo_inverse.multiply(values, output);
-		
-		double move_x = output.get(2, 0);
-		double move_y = output.get(3, 0);
-		double rotation = qAtan2((-1) * output.get(1, 0), output.get(0, 0));
-		double scale = output.get(0, 0) / qCos(rotation);
-		
-		// Calculate transformation matrix
-		double cosr = cos(rotation);
-		double sinr = sin(rotation);
-		
-		Matrix trans_change(3, 3);
-		trans_change.set(0, 0, scale * cosr);
-		trans_change.set(0, 1, scale * (-sinr));
-		trans_change.set(1, 0, scale * sinr);
-		trans_change.set(1, 1, scale * cosr);
-		trans_change.set(0, 2, move_x);
-		trans_change.set(1, 2, move_y);
-		
-		// Transform the original transformation parameters to get the new transformation
-		out.template_scale_x *= scale;
-		out.template_scale_y *= scale;
-		out.template_rotation -= rotation;
-		qint64 temp_x = qRound64(1000.0 * (trans_change.get(0, 0) * (out.template_x/1000.0) + trans_change.get(0, 1) * (out.template_y/1000.0) + trans_change.get(0, 2)));
-		out.template_y = qRound64(1000.0 * (trans_change.get(1, 0) * (out.template_x/1000.0) + trans_change.get(1, 1) * (out.template_y/1000.0) + trans_change.get(1, 2)));
-		out.template_x = temp_x;
-		
-		// Transform the pass points and calculate error
-		for (int i = 0; i < num_pass_points; ++i)
-		{
-			Template::PassPoint* point = temp->getPassPoint(i);
-			
-			point->calculated_coords_map = MapCoordF(trans_change.get(0, 0) * point->src_coords_map.getX() + trans_change.get(0, 1) * point->src_coords_map.getY() + trans_change.get(0, 2),
-													 trans_change.get(1, 0) * point->src_coords_map.getX() + trans_change.get(1, 1) * point->src_coords_map.getY() + trans_change.get(1, 2));
-			point->error = point->calculated_coords_map.lengthTo(point->dest_coords_map);
-		}
+		QMessageBox::warning(dialog_parent, tr("Error"), tr("Failed to calculate adjustment!"));
+		return false;
 	}
 	
 	return true;
@@ -312,19 +241,18 @@ TemplateAdjustWidget::~TemplateAdjustWidget()
 void TemplateAdjustWidget::addPassPoint(MapCoordF src, MapCoordF dest)
 {
 	bool adjusted = temp->isAdjustmentApplied();
-	Template::PassPoint new_point;
+	PassPoint new_point;
 	
 	if (adjusted)
 	{
-		new_point.src_coords_template = temp->mapToTemplate(src);
-		new_point.src_coords_map = temp->templateToMapOther(new_point.src_coords_template);
+		MapCoordF src_coords_template = temp->mapToTemplate(src);
+		new_point.src_coords = temp->templateToMapOther(src_coords_template);
 	}
 	else
 	{
-		new_point.src_coords_map = src;
-		new_point.src_coords_template = temp->mapToTemplate(new_point.src_coords_map);
+		new_point.src_coords = src;
 	}
-	new_point.dest_coords_map = dest;
+	new_point.dest_coords = dest;
 	new_point.error = -1;
 	
 	int row = temp->getNumPassPoints();
@@ -335,7 +263,7 @@ void TemplateAdjustWidget::addPassPoint(MapCoordF src, MapCoordF dest)
 	temp->setAdjustmentDirty(true);
 	if (adjusted)
 	{
-		Template::TemplateTransform transformation;
+		TemplateTransform transformation;
 		if (TemplateAdjustActivity::calculateTemplateAdjust(temp, transformation, this))
 		{
 			updatePointErrors();
@@ -356,7 +284,7 @@ void TemplateAdjustWidget::deletePassPoint(int number)
 	temp->setAdjustmentDirty(true);
 	if (temp->isAdjustmentApplied())
 	{
-		Template::TemplateTransform transformation;
+		TemplateTransform transformation;
 		if (TemplateAdjustActivity::calculateTemplateAdjust(temp, transformation, this))
 		{
 			updatePointErrors();
@@ -424,7 +352,7 @@ void TemplateAdjustWidget::applyClicked(bool checked)
 	{
 		if (temp->isAdjustmentDirty())
 		{
-			Template::TemplateTransform transformation;
+			TemplateTransform transformation;
 			if (!TemplateAdjustActivity::calculateTemplateAdjust(temp, transformation, this))
 			{
 				apply_check->setChecked(false);
@@ -492,7 +420,7 @@ void TemplateAdjustWidget::updatePointErrors()
 	
 	for (int row = 0; row < temp->getNumPassPoints(); ++row)
 	{
-		Template::PassPoint& point = *temp->getPassPoint(row);
+		PassPoint& point = *temp->getPassPoint(row);
 		table->item(row, 4)->setText((point.error > 0) ? QString::number(point.error) : "?");
 	}
 	
@@ -508,11 +436,17 @@ void TemplateAdjustWidget::updateRow(int row)
 {
 	react_to_changes = false;
 	
-	Template::PassPoint& point = *temp->getPassPoint(row);
-	table->item(row, 0)->setText(QString::number(point.src_coords_template.getX()));
-	table->item(row, 1)->setText(QString::number(point.src_coords_template.getY()));
-	table->item(row, 2)->setText(QString::number(point.dest_coords_map.getX()));
-	table->item(row, 3)->setText(QString::number(point.dest_coords_map.getY()));
+	PassPoint& point = *temp->getPassPoint(row);
+	MapCoordF src_coords_template;
+	if (temp->isAdjustmentApplied())
+		src_coords_template = temp->mapToTemplateOther(point.src_coords);
+	else
+		src_coords_template = temp->mapToTemplate(point.src_coords);
+	
+	table->item(row, 0)->setText(QString::number(src_coords_template.getX()));
+	table->item(row, 1)->setText(QString::number(src_coords_template.getY()));
+	table->item(row, 2)->setText(QString::number(point.dest_coords.getX()));
+	table->item(row, 3)->setText(QString::number(point.dest_coords.getY()));
 	table->item(row, 4)->setText((point.error > 0) ? QString::number(point.error) : "?");
 	
 	react_to_changes = true;
@@ -526,12 +460,12 @@ void TemplateAdjustWidget::updateDirtyRect(bool redraw)
 		temp->getMap()->clearActivityBoundingBox();
 	else
 	{
-		QRectF rect = QRectF(adjusted ? temp->getPassPoint(0)->calculated_coords_map.toQPointF() : temp->getPassPoint(0)->src_coords_map.toQPointF(), QSizeF(0, 0));
-		rectInclude(rect, temp->getPassPoint(0)->dest_coords_map.toQPointF());
+		QRectF rect = QRectF(adjusted ? temp->getPassPoint(0)->calculated_coords.toQPointF() : temp->getPassPoint(0)->src_coords.toQPointF(), QSizeF(0, 0));
+		rectInclude(rect, temp->getPassPoint(0)->dest_coords.toQPointF());
 		for (int i = 1; i < temp->getNumPassPoints(); ++i)
 		{
-			rectInclude(rect, adjusted ? temp->getPassPoint(i)->calculated_coords_map.toQPointF() : temp->getPassPoint(i)->src_coords_map.toQPointF());
-			rectInclude(rect, temp->getPassPoint(i)->dest_coords_map.toQPointF());
+			rectInclude(rect, adjusted ? temp->getPassPoint(i)->calculated_coords.toQPointF() : temp->getPassPoint(i)->src_coords.toQPointF());
+			rectInclude(rect, temp->getPassPoint(i)->dest_coords.toQPointF());
 		}
 		temp->getMap()->setActivityBoundingBox(rect, TemplateAdjustActivity::cross_radius, redraw);
 	}
@@ -550,8 +484,8 @@ void TemplateAdjustEditTool::draw(QPainter* painter, MapWidget* widget)
 	
 	if (active_point >= 0)
 	{
-		Template::PassPoint* point = this->widget->getTemplate()->getPassPoint(active_point);
-		MapCoordF position = active_point_is_src ? (adjusted ? point->calculated_coords_map : point->src_coords_map) : point->dest_coords_map;
+		PassPoint* point = this->widget->getTemplate()->getPassPoint(active_point);
+		MapCoordF position = active_point_is_src ? (adjusted ? point->calculated_coords : point->src_coords) : point->dest_coords;
 		QPoint viewport_pos = widget->mapToViewport(position).toPoint();
 		
 		painter->setPen(active_point_is_src ? Qt::red : Qt::green);
@@ -575,16 +509,16 @@ void TemplateAdjustEditTool::findHoverPoint(QPoint mouse_pos, MapWidget* map_wid
 		
 		if (active_point >= 0)
 		{
-			Template::PassPoint* point = this->widget->getTemplate()->getPassPoint(active_point);
+			PassPoint* point = this->widget->getTemplate()->getPassPoint(active_point);
 			if (active_point_is_src)
 			{
 				if (adjusted)
-					editor->getMap()->setDrawingBoundingBox(QRectF(point->calculated_coords_map.getX(), point->calculated_coords_map.getY(), 0, 0), TemplateAdjustActivity::cross_radius);
+					editor->getMap()->setDrawingBoundingBox(QRectF(point->calculated_coords.getX(), point->calculated_coords.getY(), 0, 0), TemplateAdjustActivity::cross_radius);
 				else
-					editor->getMap()->setDrawingBoundingBox(QRectF(point->src_coords_map.getX(), point->src_coords_map.getY(), 0, 0), TemplateAdjustActivity::cross_radius);
+					editor->getMap()->setDrawingBoundingBox(QRectF(point->src_coords.getX(), point->src_coords.getY(), 0, 0), TemplateAdjustActivity::cross_radius);
 			}
 			else
-				editor->getMap()->setDrawingBoundingBox(QRectF(point->dest_coords_map.getX(), point->dest_coords_map.getY(), 0, 0), TemplateAdjustActivity::cross_radius);
+				editor->getMap()->setDrawingBoundingBox(QRectF(point->dest_coords.getX(), point->dest_coords.getY(), 0, 0), TemplateAdjustActivity::cross_radius);
 		}
 		else
 			editor->getMap()->clearDrawingBoundingBox();
@@ -714,17 +648,17 @@ bool TemplateAdjustMoveTool::mousePressEvent(QMouseEvent* event, MapCoordF map_c
 	active_point = TemplateAdjustActivity::findHoverPoint(this->widget->getTemplate(), event->pos(), widget, active_point_is_src);
 	if (active_point >= 0)
 	{
-		Template::PassPoint* point = this->widget->getTemplate()->getPassPoint(active_point);
+		PassPoint* point = this->widget->getTemplate()->getPassPoint(active_point);
 		MapCoordF* point_coords;
 		if (active_point_is_src)
 		{
 			if (adjusted)
-				point_coords = &point->calculated_coords_map;
+				point_coords = &point->calculated_coords;
 			else
-				point_coords = &point->src_coords_map;
+				point_coords = &point->src_coords;
 		}
 		else
-			point_coords = &point->dest_coords_map;
+			point_coords = &point->dest_coords;
 		
 		dragging = true;
 		dragging_offset = MapCoordF(point_coords->getX() - map_coord.getX(), point_coords->getY() - map_coord.getY());
@@ -753,7 +687,7 @@ bool TemplateAdjustMoveTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map
 		
 		if (temp->isAdjustmentApplied())
 		{
-			Template::TemplateTransform transformation;
+			TemplateTransform transformation;
 			if (TemplateAdjustActivity::calculateTemplateAdjust(temp, transformation, this->widget))
 			{
 				this->widget->updatePointErrors();
@@ -773,19 +707,19 @@ void TemplateAdjustMoveTool::setActivePointPosition(MapCoordF map_coord)
 {
 	bool adjusted = this->widget->getTemplate()->isAdjustmentApplied();
 	
-	Template::PassPoint* point = this->widget->getTemplate()->getPassPoint(active_point);
+	PassPoint* point = this->widget->getTemplate()->getPassPoint(active_point);
 	MapCoordF* changed_coords;
 	if (active_point_is_src)
 	{
 		if (adjusted)
-			changed_coords = &point->calculated_coords_map;
+			changed_coords = &point->calculated_coords;
 		else
-			changed_coords = &point->src_coords_map;
+			changed_coords = &point->src_coords;
 	}
 	else
-		changed_coords = &point->dest_coords_map;
-	QRectF changed_rect = QRectF(adjusted ? point->calculated_coords_map.toQPointF() : point->src_coords_map.toQPointF(), QSizeF(0, 0));
-	rectInclude(changed_rect, point->dest_coords_map.toQPointF());
+		changed_coords = &point->dest_coords;
+	QRectF changed_rect = QRectF(adjusted ? point->calculated_coords.toQPointF() : point->src_coords.toQPointF(), QSizeF(0, 0));
+	rectInclude(changed_rect, point->dest_coords.toQPointF());
 	rectInclude(changed_rect, map_coord.toQPointF());
 	
 	*changed_coords = MapCoordF(map_coord.getX() + dragging_offset.getX(), map_coord.getY() + dragging_offset.getY());
@@ -793,11 +727,9 @@ void TemplateAdjustMoveTool::setActivePointPosition(MapCoordF map_coord)
 	{
 		if (adjusted)
 		{
-			point->src_coords_template = this->widget->getTemplate()->mapToTemplate(point->calculated_coords_map);
-			point->src_coords_map = this->widget->getTemplate()->templateToMapOther(point->src_coords_template);
+			MapCoordF src_coords_template = this->widget->getTemplate()->mapToTemplate(point->calculated_coords);
+			point->src_coords = this->widget->getTemplate()->templateToMapOther(src_coords_template);
 		}
-		else
-			point->src_coords_template = this->widget->getTemplate()->mapToTemplate(point->src_coords_map);
 	}
 	point->error = -1;
 	
@@ -834,9 +766,9 @@ bool TemplateAdjustDeleteTool::mousePressEvent(QMouseEvent* event, MapCoordF map
 	active_point = TemplateAdjustActivity::findHoverPoint(this->widget->getTemplate(), event->pos(), widget, active_point_is_src);
 	if (active_point >= 0)
 	{
-		Template::PassPoint* point = this->widget->getTemplate()->getPassPoint(active_point);
-		QRectF changed_rect = QRectF(adjusted ? point->calculated_coords_map.toQPointF() : point->src_coords_map.toQPointF(), QSizeF(0, 0));
-		rectInclude(changed_rect, point->dest_coords_map.toQPointF());
+		PassPoint* point = this->widget->getTemplate()->getPassPoint(active_point);
+		QRectF changed_rect = QRectF(adjusted ? point->calculated_coords.toQPointF() : point->src_coords.toQPointF(), QSizeF(0, 0));
+		rectInclude(changed_rect, point->dest_coords.toQPointF());
 		
 		this->widget->deletePassPoint(active_point);
 		findHoverPoint(event->pos(), widget);

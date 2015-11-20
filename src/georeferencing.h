@@ -26,11 +26,15 @@
 #include <QTransform>
 
 #include "map_coord.h"
+#include "file_format.h"
 
 class QDebug;
+class QXmlStreamReader;
+class QXmlStreamWriter;
+
+typedef void* projPJ;
 
 class GPSProjectionParameters;
-typedef void* projPJ;
 
 /**
  * LatLon specifies geographic coordinates by latitude and longitude.
@@ -146,6 +150,8 @@ Q_OBJECT
 
 friend class NativeFileExport;
 friend class NativeFileImport;
+friend class XMLFileExporter;
+friend class XMLFileImporter;
 friend QDebug operator<<(QDebug dbg, const Georeferencing& georef);
 
 public:
@@ -163,6 +169,17 @@ public:
 	 * Cleans up memory allocated by the georeferencing 
 	 */
 	~Georeferencing();
+	
+	
+	/** 
+	 * Saves the georeferencing to an XML stream.
+	 */
+	void save(QXmlStreamWriter& xml) const;
+	
+	/**
+	 * Creates a georeferencing from an XML stream.
+	 */
+	void load(QXmlStreamReader& xml) throw (FormatException);
 	
 	
 	/**
@@ -204,7 +221,7 @@ public:
 	inline double getDeclination() const { return declination; }
 	
 	/**
-	 * Sets the magnetic declination.
+	 * Sets the magnetic declination (in degrees).
 	 * 
 	 * Magnetic declination is the angle between magnetic north and true north.
 	 * In the context of OpenOrienteering Mapper, it is the angle between the 
@@ -224,7 +241,7 @@ public:
 	inline double getGrivation() const { return grivation; }
 	
 	/**
-	 * Sets the grivation.
+	 * Sets the grivation (in degrees).
 	 * 
 	 * Grivation is the angle between magnetic north and grid north. 
 	 * In the context of OpenOrienteering Mapper, it is the angle between the y
@@ -357,6 +374,13 @@ public:
 	
 	
 	/**
+	 * Transforms map coordinates from the other georeferencing to
+	 * map coordinates of this georeferencing, if possible. 
+	 */
+	MapCoordF toMapCoordF(Georeferencing* other, const MapCoordF& map_coords, bool* ok = NULL) const;
+	
+	
+	/**
 	 * Returns the current error text.
 	 */
 	QString getErrorText() const;
@@ -403,6 +427,12 @@ public:
 	 * initialize the internal projection first if it is not yet defined.
 	 */
 	void initDeclination();
+	
+	/**
+	 * Sets the transformation matrix from map coordinates to projected
+	 * coordinates directly. 
+	 */
+	void setTransformationDirectly(const QTransform& transform);
 	
 	
 signals:

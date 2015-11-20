@@ -24,6 +24,7 @@
 #include "symbol.h"
 #include "symbol_properties_widget.h"
 
+QT_BEGIN_NAMESPACE
 class QCheckBox;
 class QDoubleSpinBox;
 class QLabel;
@@ -31,6 +32,9 @@ class QListWidget;
 class QPushButton;
 class QSpinBox;
 class QToolButton;
+class QXmlStreamReader;
+class QXmlStreamWriter;
+QT_END_NAMESPACE
 
 class ColorDropDown;
 class SymbolSettingDialog;
@@ -75,9 +79,11 @@ public:
 		FillPattern();
 		void save(QIODevice* file, Map* map);
 		bool load(QIODevice* file, int version, Map* map);
+		void save(QXmlStreamWriter& file, const Map& map) const;
+		void load(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol_dict);
 		bool equals(FillPattern& other, Qt::CaseSensitivity case_sensitivity);
-		void createRenderables(QRectF extent, ObjectRenderables& output);
-		void createLine(MapCoordVectorF& coords, LineSymbol* line, PathObject* path, PointObject* point_object, ObjectRenderables& output);
+		void createRenderables(QRectF extent, float delta_rotation, const MapCoord& pattern_origin, ObjectRenderables& output);
+		void createLine(MapCoordVectorF& coords, float delta_offset, LineSymbol* line, PathObject* path, PointObject* point_object, ObjectRenderables& output);
 		void scale(double factor);
 	};
 	
@@ -86,8 +92,10 @@ public:
 	virtual Symbol* duplicate(const QHash<MapColor*, MapColor*>* color_map = NULL) const;
 	
 	virtual void createRenderables(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output);
+	void createRenderablesNormal(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output);
 	virtual void colorDeleted(MapColor* color);
 	virtual bool containsColor(MapColor* color);
+    virtual MapColor* getDominantColorGuess();
 	virtual void scale(double factor);
 	
 	// Getters / Setters
@@ -95,13 +103,17 @@ public:
 	inline void setColor(MapColor* color) {this->color = color;}
 	inline int getMinimumArea() const {return minimum_area; }
 	inline int getNumFillPatterns() const {return (int)patterns.size();}
+	inline void setNumFillPatterns(int count) {patterns.resize(count);}
 	inline FillPattern& getFillPattern(int i) {return patterns[i];}
 	inline const FillPattern& getFillPattern(int i) const {return patterns[i];}
+	bool hasRotatableFillPattern() const;
 	virtual SymbolPropertiesWidget* createPropertiesWidget(SymbolSettingDialog* dialog);
 	
 protected:
 	virtual void saveImpl(QIODevice* file, Map* map);
 	virtual bool loadImpl(QIODevice* file, int version, Map* map);
+	virtual void saveImpl(QXmlStreamWriter& xml, const Map& map) const;
+	virtual bool loadImpl(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol_dict);
 	virtual bool equalsImpl(Symbol* other, Qt::CaseSensitivity case_sensitivity);
 	
 	MapColor* color;

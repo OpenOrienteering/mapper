@@ -1,18 +1,18 @@
 /*
  *    Copyright 2012 Thomas Schöps
- *    
+ *
  *    This file is part of OpenOrienteering.
- * 
+ *
  *    OpenOrienteering is free software: you can redistribute it and/or modify
  *    it under the terms of the GNU General Public License as published by
  *    the Free Software Foundation, either version 3 of the License, or
  *    (at your option) any later version.
- * 
+ *
  *    OpenOrienteering is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
  *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *    GNU General Public License for more details.
- * 
+ *
  *    You should have received a copy of the GNU General Public License
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -22,16 +22,22 @@
 
 #include <algorithm>
 
+#if QT_VERSION < 0x050000
 #include <QtGui>
+#else
+#include <QtWidgets>
+#endif
 
 #include "util.h"
 #include "symbol.h"
 #include "object.h"
 #include "object_text.h"
+#include "map_editor.h"
 #include "map_widget.h"
 #include "map_undo.h"
 #include "symbol_dock_widget.h"
 #include "tool_draw_text.h"
+#include "tool_helpers.h"
 #include "symbol_text.h"
 #include "renderable.h"
 #include "settings.h"
@@ -42,18 +48,22 @@ QCursor* EditTool::cursor = NULL;
 #ifdef Q_WS_MAC
 const Qt::KeyboardModifiers EditTool::selection_modifier = Qt::ControlModifier;
 const Qt::KeyboardModifiers EditTool::control_point_modifier = Qt::ShiftModifier;
+const Qt::Key EditTool::selection_key = Qt::Key_Control;
 const Qt::Key EditTool::control_point_key = Qt::Key_Shift;
 #else
 const Qt::KeyboardModifiers EditTool::selection_modifier = Qt::ShiftModifier;
 const Qt::KeyboardModifiers EditTool::control_point_modifier = Qt::ControlModifier;
+const Qt::Key EditTool::selection_key = Qt::Key_Shift;
 const Qt::Key EditTool::control_point_key = Qt::Key_Control;
 #endif
 
 EditTool::EditTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget)
 : MapEditorTool(editor, Edit, tool_button),
+  angle_helper(new ConstrainAngleToolHelper()),
   old_renderables(new MapRenderables(editor->getMap())),
   renderables(new MapRenderables(editor->getMap())),
-  symbol_widget(symbol_widget)
+  symbol_widget(symbol_widget),
+  cur_map_widget(editor->getMainWidget())
 {
 	preview_update_triggered = false;
 	dragging = false;
@@ -61,11 +71,13 @@ EditTool::EditTool(MapEditorController* editor, QAction* tool_button, SymbolWidg
 	text_editor = NULL;
 	
 	control_pressed = false;
+	shift_pressed = false;
 	space_pressed = false;
+	
+	angle_helper->setActive(false);
 
 	if (!cursor)
 		cursor = new QCursor(QPixmap(":/images/cursor-hollow.png"), 1, 1);
-	loadPointHandles();
 }
 void EditTool::init()
 {
@@ -84,15 +96,25 @@ EditTool::~EditTool()
 bool EditTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
 	if (!(event->button() == Qt::LeftButton))
+	{
+		if (event->button() == Qt::RightButton)
+		{
+			dragging = false;
+			box_selection = false;
+		}
 		return false;
+	}
 	
+	cur_map_widget = widget;
 	dragging = false;
 	box_selection = false;
 	no_more_effect_on_click = false;
 	click_pos = event->pos();
 	click_pos_map = map_coord;
 	cur_pos = event->pos();
+	constrained_pos = cur_pos;
 	cur_pos_map = map_coord;
+	constrained_pos_map = cur_pos_map;
 	
 	updateHoverPoint(widget->mapToViewport(map_coord), widget);
 	
@@ -104,6 +126,7 @@ bool EditTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidge
 	if (hover_point >= 0)
 	{
 		opposite_curve_handle_index = -1;
+		curve_anchor_index = -1;
 		
 		if (single_object_selected && single_selected_object->getType() == Object::Path)
 		{
@@ -112,60 +135,89 @@ bool EditTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidge
 			PathObject::PathPart& hover_point_part = path->getPart(hover_point_part_index);
 			
 			// Check if clicked on a bezier curve handle
-			int hover_point_plus_1 = path->shiftedCoordIndex(hover_point, 1, hover_point_part);
 			int hover_point_minus_1 = path->shiftedCoordIndex(hover_point, -1, hover_point_part);
 			int hover_point_minus_2 = path->shiftedCoordIndex(hover_point, -2, hover_point_part);
-			int hover_point_minus_4 = path->shiftedCoordIndex(hover_point, -4, hover_point_part);
-			if (hover_point_minus_1 >= 0 && path->getCoordinate(hover_point_minus_1).isCurveStart() &&
-				hover_point_minus_4 >= 0 && path->getCoordinate(hover_point_minus_4).isCurveStart())
+			if (hover_point_minus_1 >= 0 && path->getCoordinate(hover_point_minus_1).isCurveStart())
 			{
-				opposite_curve_handle_index = hover_point_minus_2;
+				int hover_point_minus_4 = path->shiftedCoordIndex(hover_point, -4, hover_point_part);
+				if (hover_point_minus_4 >= 0 && path->getCoordinate(hover_point_minus_4).isCurveStart())
+					opposite_curve_handle_index = hover_point_minus_2;
 				curve_anchor_index = hover_point_minus_1;
 			}
-			else if (hover_point_minus_2 >= 0 && path->getCoordinate(hover_point_minus_2).isCurveStart() &&
-				     hover_point_plus_1 >= 0 && path->getCoordinate(hover_point_plus_1).isCurveStart())
+			else if (hover_point_minus_2 >= 0 && path->getCoordinate(hover_point_minus_2).isCurveStart())
 			{
-				opposite_curve_handle_index = path->shiftedCoordIndex(hover_point, 2, hover_point_part);
+				int hover_point_plus_1 = path->shiftedCoordIndex(hover_point, 1, hover_point_part);
+				if (hover_point_plus_1 >= 0 && path->getCoordinate(hover_point_plus_1).isCurveStart())
+					opposite_curve_handle_index = path->shiftedCoordIndex(hover_point, 2, hover_point_part);
 				curve_anchor_index = hover_point_plus_1;
 			}
-		
+			
 			if (opposite_curve_handle_index >= 0)
-				opposite_curve_handle_dist = path->getCoordinate(opposite_curve_handle_index).lengthTo(path->getCoordinate(curve_anchor_index));
-			else if (event->modifiers() & Qt::ControlModifier)
 			{
-				// Clicked on a regular path point while holding Ctrl -> delete the point
-				if (hover_point_part.calcNumRegularPoints() <= 2 || (!(path->getSymbol()->getContainedTypes() & Symbol::Line) && hover_point_part.getNumCoords() <= 3))
+				MapCoord& opposite_curve_handle = path->getCoordinate(opposite_curve_handle_index);
+				opposite_curve_handle_dist = opposite_curve_handle.lengthTo(path->getCoordinate(curve_anchor_index));
+				opposite_curve_handle_original_position = path->getCoordinate(opposite_curve_handle_index);
+			}
+			else if (curve_anchor_index == -1)
+			{
+				// Clicked on a regular point
+				if (event->modifiers() & Qt::ControlModifier)
 				{
-					// Delete the part and maybe object
-					if (path->getNumParts() == 1)
-						deleteSelectedObjects();
+					// Ctrl held -> delete the point
+					if (hover_point_part.calcNumRegularPoints() <= 2 || (!(path->getSymbol()->getContainedTypes() & Symbol::Line) && hover_point_part.getNumCoords() <= 3))
+					{
+						// Delete the part and maybe object
+						if (path->getNumParts() == 1)
+							deleteSelectedObjects();
+						else
+						{
+							ReplaceObjectsUndoStep* undo_step = new ReplaceObjectsUndoStep(editor->getMap());
+							Object* undo_duplicate = path->duplicate();
+							undo_duplicate->setMap(editor->getMap());
+							undo_step->addObject(path, undo_duplicate);
+							editor->getMap()->objectUndoManager().addNewUndoStep(undo_step);
+							
+							path->deletePart(hover_point_part_index);
+							path->update(true);
+							updateHoverPoint(widget->mapToViewport(map_coord), widget);
+							updateDirtyRect();
+						}
+						no_more_effect_on_click = true;
+						return true;
+					}
 					else
 					{
-						ReplaceObjectsUndoStep* undo_step = new ReplaceObjectsUndoStep(editor->getMap());
+						ReplaceObjectsUndoStep* undo_step = new ReplaceObjectsUndoStep(editor->getMap());	// TODO: use optimized undo step
 						Object* undo_duplicate = path->duplicate();
 						undo_duplicate->setMap(editor->getMap());
 						undo_step->addObject(path, undo_duplicate);
 						editor->getMap()->objectUndoManager().addNewUndoStep(undo_step);
 						
-						path->deletePart(hover_point_part_index);
+						int delete_bezier_spline_point_setting;
+						if (event->modifiers() & Qt::ShiftModifier)
+							delete_bezier_spline_point_setting = Settings::EditTool_DeleteBezierPointActionAlternative;
+						else
+							delete_bezier_spline_point_setting = Settings::EditTool_DeleteBezierPointAction;
+						path->deleteCoordinate(hover_point, true, Settings::getInstance().getSettingCached((Settings::SettingsEnum)delete_bezier_spline_point_setting).toInt());
 						path->update(true);
 						updateHoverPoint(widget->mapToViewport(map_coord), widget);
 						updateDirtyRect();
+						no_more_effect_on_click = true;
+						return true;
 					}
-					no_more_effect_on_click = true;
-					return true;
 				}
-				else
+				else if (space_pressed)
 				{
+					// Space held -> switch point between dash / normal point
 					ReplaceObjectsUndoStep* undo_step = new ReplaceObjectsUndoStep(editor->getMap());	// TODO: use optimized undo step
 					Object* undo_duplicate = path->duplicate();
 					undo_duplicate->setMap(editor->getMap());
 					undo_step->addObject(path, undo_duplicate);
 					editor->getMap()->objectUndoManager().addNewUndoStep(undo_step);
 					
-					path->deleteCoordinate(hover_point, true);
+					MapCoord& hover_coord = path->getCoordinate(hover_point);
+					hover_coord.setDashPoint(!hover_coord.isDashPoint());
 					path->update(true);
-					updateHoverPoint(widget->mapToViewport(map_coord), widget);
 					updateDirtyRect();
 					no_more_effect_on_click = true;
 					return true;
@@ -200,7 +252,7 @@ bool EditTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidge
 			int pos = text_object->calcTextPositionAt(map_coord, false);
 			text_editor->setSelection(pos, pos);
 			
-			updatePreviewObjects();
+			updatePreviewObjects(true);
 		}
 	}
 	
@@ -229,7 +281,8 @@ bool EditTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidge
 				path->setCoordinate(hover_point, point);
 			}
 			opposite_curve_handle_index = -1;
-			updatePreviewObjects();
+			updatePreviewObjects(true);
+			updateAngleHelper(click_pos_map);
 		}
 	}
 	
@@ -259,11 +312,23 @@ bool EditTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget
 		if (text_editor && hover_point == -2)
 			return text_editor->mouseMoveEvent(event, map_coord, widget);
 		
-		if (!dragging && (event->pos() - click_pos).manhattanLength() >= QApplication::startDragDistance())
+		if (!dragging && ((hover_point >= -1) || (event->pos() - click_pos).manhattanLength() >= QApplication::startDragDistance()))
 		{
 			// Start dragging
 			if (hover_point >= -1)
+			{
+				// Treat this position as click position
+				/*click_pos = event->pos();
+				click_pos_map = map_coord;
+				cur_pos = click_pos;
+				cur_pos_map = click_pos_map;
+				constrained_pos = cur_pos;
+				constrained_pos_map = cur_pos_map;*/
+				
 				startEditing();
+				updatePreviewObjects(true);
+				updateAngleHelper(click_pos_map);
+			}
 			else if (hover_point == -2)
 				box_selection = true;
 			
@@ -274,7 +339,7 @@ bool EditTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget
 		{
 			if (hover_point >= -1)
 			{
-				updateDragging(event->pos(), widget);
+				updateDragging(map_coord);
 				if (!preview_update_triggered)
 				{
 					// Handle screen update asynchronously
@@ -294,6 +359,13 @@ bool EditTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget
 	// NOTE: This must be after the rest of the processing
 	cur_pos = event->pos();
 	cur_pos_map = map_coord;
+	if (!box_selection)
+		angle_helper->getConstrainedCursorPositions(cur_pos_map, constrained_pos_map, constrained_pos, widget);
+	else
+	{
+		constrained_pos_map = cur_pos_map;
+		constrained_pos = cur_pos;
+	}
 	if (dragging && !box_selection)
 		updateStatusText();
 	
@@ -325,7 +397,7 @@ bool EditTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWid
 		// Dragging finished
 		if (hover_point >= -1)
 		{
-			updateDragging(event->pos(), widget);
+			updateDragging(map_coord);
 			finishEditing();
 		}
 		else if (box_selection)
@@ -371,13 +443,16 @@ bool EditTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWid
 		
 		// Clicked - get objects below cursor
 		SelectionInfoVector objects;
-		map->findObjectsAt(map_coord, 0.001f *widget->getMapView()->pixelToLength(click_tolerance), false, false, false, objects);
+		map->findObjectsAt(map_coord, 0.001f * widget->getMapView()->pixelToLength(click_tolerance), false, false, false, false, objects);
 		if (objects.empty())
-			map->findObjectsAt(map_coord, 0.001f * widget->getMapView()->pixelToLength(1.5f * click_tolerance), true, false, false, objects);
+			map->findObjectsAt(map_coord, 0.001f * widget->getMapView()->pixelToLength(1.5f * click_tolerance), false, true, false, false, objects);
 		
 		// Selection logic, trying to select the most relevant object(s)
 		if (!(event->modifiers() & selection_modifier) || map->getNumSelectedObjects() == 0)
 		{
+			if (hover_point >= -1)
+				return true;	// Clicked a handle or the bounding rect, do nothing
+			
 			if (objects.empty())
 			{
 				// Clicked on empty space, deselect everything
@@ -487,10 +562,31 @@ bool EditTool::keyPressEvent(QKeyEvent* event)
 			editor->setTool(draw_tool);
 	}
 	else if (event->key() == Qt::Key_Space)
+	{
 		space_pressed = true;
+		updateStatusText();
+	}
 	else if (event->key() == control_point_key)
 	{
 		control_pressed = true;
+
+		angle_helper->setActive(true);
+		if (dragging)
+		{
+			updateDragging(cur_pos_map);
+			updatePreviewObjects();
+		}
+		
+		updateStatusText();
+	}
+	else if (event->key() == selection_key)
+	{
+		shift_pressed = true;
+		if (dragging)
+		{
+			updateDragging(cur_pos_map);
+			updatePreviewObjects();
+		}
 		updateStatusText();
 	}
 	else
@@ -504,10 +600,31 @@ bool EditTool::keyReleaseEvent(QKeyEvent* event)
 		return text_editor->keyReleaseEvent(event);
 	
 	if (event->key() == Qt::Key_Space)
+	{
 		space_pressed = false;
+		updateStatusText();
+	}
 	else if (event->key() == control_point_key)
 	{
 		control_pressed = false;
+		
+		angle_helper->setActive(false);
+		if (dragging)
+		{
+			updateDragging(cur_pos_map);
+			updatePreviewObjects();
+		}
+		
+		updateStatusText();
+	}
+	else if (event->key() == selection_key)
+	{
+		shift_pressed = false;
+		if (dragging)
+		{
+			updateDragging(cur_pos_map);
+			updatePreviewObjects();
+		}
 		updateStatusText();
 	}
 	
@@ -517,6 +634,8 @@ void EditTool::focusOutEvent(QFocusEvent* event)
 {
 	// Deactivate all modifiers - not always correct, but should be wrong only in very unusual cases and better than leaving the modifiers on forever
 	control_pressed = false;
+	angle_helper->setActive(false);
+	shift_pressed = false;
 	space_pressed = false;
 	updateStatusText();
 }
@@ -547,6 +666,10 @@ void EditTool::draw(QPainter* painter, MapWidget* widget)
 		}
 	}
 	
+	// Angle helper
+	if (dragging && hover_point >= -1)
+		angle_helper->draw(painter, widget);
+	
 	// Text editor
 	if (text_editor)
 	{
@@ -563,7 +686,7 @@ void EditTool::draw(QPainter* painter, MapWidget* widget)
 		painter->setBrush(Qt::NoBrush);
 		
 		QPoint point1 = widget->mapToViewport(click_pos_map).toPoint();
-		QPoint point2 = widget->mapToViewport(cur_pos_map).toPoint();
+		QPoint point2 = widget->mapToViewport(constrained_pos_map).toPoint();
 		QPoint top_left = QPoint(qMin(point1.x(), point2.x()), qMin(point1.y(), point2.y()));
 		QPoint bottom_right = QPoint(qMax(point1.x(), point2.x()), qMax(point1.y(), point2.y()));
 		
@@ -577,7 +700,7 @@ void EditTool::objectSelectionChanged()
 {
 	updateStatusText();
 	updateDirtyRect();
-	if (calculateBoxTextHandles(box_text_handles))
+	if (calculateSelectedBoxTextHandles(box_text_handles, editor->getMap()))
 		updateDirtyRect();
 }
 void EditTool::selectedSymbolsChanged()
@@ -591,16 +714,19 @@ void EditTool::selectedSymbolsChanged()
 }
 void EditTool::textSelectionChanged(bool text_change)
 {
-	updatePreviewObjects();
+	updatePreviewObjects(true);
 }
 
 void EditTool::updateStatusText()
 {
 	if (dragging && !box_selection)
 	{
-		MapCoordF drag_vector = cur_pos_map - click_pos_map;
-		setStatusBarText(tr("<b>Coordinate offset [mm]:</b> %1, %2  <b>Distance [m]:</b> %3")
-						  .arg(drag_vector.getX(), 0, 'f', 1).arg(-drag_vector.getY(), 0, 'f', 1).arg(0.001 * editor->getMap()->getScaleDenominator() * drag_vector.length(), 0, 'f', 1));
+		MapCoordF drag_vector = constrained_pos_map - click_pos_map;
+		setStatusBarText(tr("<b>Coordinate offset [mm]:</b> %1, %2  <b>Distance [m]:</b> %3  %4")
+						  .arg(drag_vector.getX(), 0, 'f', 1)
+						  .arg(-drag_vector.getY(), 0, 'f', 1)
+						  .arg(0.001 * editor->getMap()->getScaleDenominator() * drag_vector.length(), 0, 'f', 1)
+						  .arg(angle_helper->isActive() ? "" : tr("(<u>Ctrl</u> for fixed angles)")));
 		return;
 	}
 	
@@ -616,19 +742,24 @@ void EditTool::updateStatusText()
 			{
 				if (control_pressed)
 					str = tr("<b>Ctrl+Click</b> on point to delete it, on path to add a new point, with <b>Space</b> to make it a dash point");
+				else if (space_pressed)
+					str = tr("<b>Space+Click</b> on point to switch between dash and normal point");
 				else
-					str += tr("; Try <u>Ctrl</u>");
+					str += tr("; Try <u>Ctrl</u>, <u>Space</u>");
 			}
 		}
 	}
 	setStatusBarText(str);
 }
 
-void EditTool::updatePreviewObjects()
+void EditTool::updatePreviewObjects(bool force)
 {
 	preview_update_triggered = false;
-	updateSelectionEditPreview(*renderables);
-	updateDirtyRect();
+	if (force || !renderables->isEmpty())
+	{
+		updateSelectionEditPreview(*renderables);
+		updateDirtyRect();
+	}
 }
 void EditTool::updateDirtyRect()
 {
@@ -637,12 +768,20 @@ void EditTool::updateDirtyRect()
 	
 	QRectF rect = selection_extent;
 	bool single_object_selected = editor->getMap()->getNumSelectedObjects() == 1;
+	int pixel_border = single_object_selected ? 6 : 1;
 	
 	// For selected paths, include the control points
 	if (single_object_selected)
 	{
 		Object* object = *editor->getMap()->selectedObjectsBegin();
 		includeControlPointRect(rect, object, box_text_handles);
+	}
+	
+	// Angle helper
+	if (dragging && hover_point >= -1)
+	{
+		angle_helper->includeDirtyRect(rect);
+		pixel_border = qMax(pixel_border, angle_helper->getDisplayRadius());
 	}
 	
 	// Text selection
@@ -653,11 +792,11 @@ void EditTool::updateDirtyRect()
 	if (dragging && box_selection)
 	{
 		rectIncludeSafe(rect, click_pos_map.toQPointF());
-		rectIncludeSafe(rect, cur_pos_map.toQPointF());
+		rectIncludeSafe(rect, constrained_pos_map.toQPointF());
 	}
 	
 	if (rect.isValid())
-		editor->getMap()->setDrawingBoundingBox(rect, single_object_selected ? 6 : 1, true);
+		editor->getMap()->setDrawingBoundingBox(rect, pixel_border, true);
 	else
 		editor->getMap()->clearDrawingBoundingBox();
 }
@@ -673,15 +812,20 @@ void EditTool::updateHoverPoint(QPointF point, MapWidget* widget)
 		hover_point = new_hover_point;
 	}
 }
-void EditTool::updateDragging(QPoint cursor_pos, MapWidget* widget)
+void EditTool::updateDragging(const MapCoordF& cursor_pos_map)
 {
+	if (box_selection)
+		return;
+	
 	Map* map = editor->getMap();
 	
-	qint64 prev_drag_x = widget->getMapView()->pixelToLength(cur_pos.x() - click_pos.x());
-	qint64 prev_drag_y = widget->getMapView()->pixelToLength(cur_pos.y() - click_pos.y());
+	qint64 prev_drag_x = qRound64(1000 * (constrained_pos_map.getX() - click_pos_map.getX()));
+	qint64 prev_drag_y = qRound64(1000 * (constrained_pos_map.getY() - click_pos_map.getY()));
 	
-	qint64 delta_x = widget->getMapView()->pixelToLength(cursor_pos.x() - click_pos.x()) - prev_drag_x;
-	qint64 delta_y = widget->getMapView()->pixelToLength(cursor_pos.y() - click_pos.y()) - prev_drag_y;
+	angle_helper->getConstrainedCursorPositions(cursor_pos_map, constrained_pos_map, constrained_pos, cur_map_widget);
+	
+	qint64 delta_x = qRound64(1000 * (constrained_pos_map.getX() - click_pos_map.getX())) - prev_drag_x;
+	qint64 delta_y = qRound64(1000 * (constrained_pos_map.getY() - click_pos_map.getY())) - prev_drag_y;
 	
 	Object::Type first_selected_object_type = (*map->selectedObjectsBegin())->getType();
 	if (hover_point >= 0 && first_selected_object_type == Object::Text && (reinterpret_cast<TextObject*>(*map->selectedObjectsBegin())->hasSingleAnchor() == false))
@@ -746,18 +890,23 @@ void EditTool::updateDragging(QPoint cursor_pos, MapWidget* widget)
 		// Move opposite curve handles
 		if (opposite_curve_handle_index >= 0)
 		{
-			MapCoord anchor_point = path->getCoordinate(curve_anchor_index);
-			MapCoordF to_hover_point = MapCoordF(coord.xd() - anchor_point.xd(), coord.yd() - anchor_point.yd());
-			to_hover_point.normalize();
-			
-			MapCoord control = path->getCoordinate(opposite_curve_handle_index);
-			control.setX(anchor_point.xd() - opposite_curve_handle_dist * to_hover_point.getX());
-			control.setY(anchor_point.yd() - opposite_curve_handle_dist * to_hover_point.getY());
-			path->setCoordinate(opposite_curve_handle_index, control);
+			if (shift_pressed)
+				path->setCoordinate(opposite_curve_handle_index, opposite_curve_handle_original_position);
+			else
+			{
+				MapCoord anchor_point = path->getCoordinate(curve_anchor_index);
+				MapCoordF to_hover_point = MapCoordF(coord.xd() - anchor_point.xd(), coord.yd() - anchor_point.yd());
+				to_hover_point.normalize();
+				
+				MapCoord control = path->getCoordinate(opposite_curve_handle_index);
+				control.setX(anchor_point.xd() - opposite_curve_handle_dist * to_hover_point.getX());
+				control.setY(anchor_point.yd() - opposite_curve_handle_dist * to_hover_point.getY());
+				path->setCoordinate(opposite_curve_handle_index, control);
+			}
 		}
 	}
 	
-	if (calculateBoxTextHandles(box_text_handles))
+	if (calculateSelectedBoxTextHandles(box_text_handles, map))
 		updateDirtyRect();
 }
 
@@ -818,6 +967,64 @@ void EditTool::finishEditing()
 	if (delete_objects)
 		deleteSelectedObjects();
 }
+
+void EditTool::updateAngleHelper(const MapCoordF& cursor_pos)
+{
+	Map* map = editor->getMap();
+	
+	angle_helper->setCenter(cursor_pos);
+	angle_helper->clearAngles();
+	
+	Object::Type first_selected_object_type = (*map->selectedObjectsBegin())->getType();
+	if (hoveringOverFrame() || (map->getNumSelectedObjects() == 1 &&
+		(first_selected_object_type == Object::Point || first_selected_object_type == Object::Text)))
+	{
+		angle_helper->addDefaultAnglesDeg(0);
+	}
+	else
+	{
+		assert(map->getNumSelectedObjects() == 1);
+		Object* object = *map->selectedObjectsBegin();
+		assert(object->getType() == Object::Path);
+		PathObject* path = reinterpret_cast<PathObject*>(object);
+		assert(hover_point >= 0 && hover_point < path->getCoordinateCount());
+		
+		bool forward_ok = false;
+		MapCoordF forward_tangent = PathCoord::calculateTangent(path->getRawCoordinateVector(), hover_point, false, forward_ok);
+		bool backward_ok = false;
+		MapCoordF backward_tangent = PathCoord::calculateTangent(path->getRawCoordinateVector(), hover_point, true, backward_ok);
+		
+		if (forward_ok)
+		{
+			angle_helper->addAngle(-forward_tangent.getAngle());
+			angle_helper->addAngle(-forward_tangent.getAngle() + M_PI);
+			if (!backward_ok)
+			{
+				angle_helper->addAngle(-forward_tangent.getAngle() + M_PI/2);
+				angle_helper->addAngle(-forward_tangent.getAngle() + 3*M_PI/2);
+			}
+		}
+		if (backward_ok)
+		{
+			angle_helper->addAngle(-backward_tangent.getAngle());
+			angle_helper->addAngle(-backward_tangent.getAngle() + M_PI);
+			if (!forward_ok)
+			{
+				angle_helper->addAngle(-backward_tangent.getAngle() + M_PI/2);
+				angle_helper->addAngle(-backward_tangent.getAngle() + 3*M_PI/2);
+			}
+		}
+		if (forward_ok && backward_ok)
+		{
+			double angle = (-backward_tangent.getAngle() - forward_tangent.getAngle()) / 2;
+			angle_helper->addAngle(angle);
+			angle_helper->addAngle(angle + M_PI/2);
+			angle_helper->addAngle(angle + M_PI);
+			angle_helper->addAngle(angle + 3*M_PI/2);
+		}
+	}
+}
+
 void EditTool::deleteSelectedObjects()
 {
 	editor->getMap()->deleteSelectedObjects();

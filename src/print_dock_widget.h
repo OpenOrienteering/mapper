@@ -25,6 +25,7 @@
 #include <QPrinterInfo>
 
 #include "map_editor.h"
+#include "tool.h"
 
 QT_BEGIN_NAMESPACE
 class QPushButton;
@@ -55,8 +56,17 @@ public:
 	float getPrintAreaTop();
 	void setPrintAreaTop(float value);
 	
-	QRectF getPrintArea();
-    QRectF getPaperArea();
+	/// Returns the printing margins returned by Qt. Only valid if a printer is selected.
+	void getMargins(float& top, float& left, float& bottom, float& right);
+	
+	/// Returns the area of the printed part on the map after applying the scaling from the "print/export in different scale" option
+	QRectF getEffectivePrintArea();
+	
+	/// Returns the scaling factor resulting from the "print/export in different scale" option
+	float calcScaleFactor();
+	
+	/// Returns true if an exporter is active (instead of a printer)
+	bool exporterSelected();
 	
 protected slots:
 	void printMap(QPrinter* printer);
@@ -67,11 +77,14 @@ protected slots:
 	void pageOrientationChanged();
 	void pageFormatChanged();
 	void showTemplatesClicked();
+	void showGridClicked();
 	void printAreaPositionChanged();
 	void printAreaSizeChanged();
 	void updatePrintAreaSize();
 	void centerPrintArea();
 	void centerPrintAreaClicked();
+	void differentScaleClicked(bool checked);
+	void differentScaleEdited(QString text);
 	void previewClicked();
 	void printClicked();
 	
@@ -88,6 +101,7 @@ private:
 	
 	float print_width;
 	float print_height;
+	float margin_top, margin_left, margin_bottom, margin_right;
 	
 	bool have_prev_paper_size;
 	int prev_paper_size;
@@ -100,11 +114,14 @@ private:
 	QLabel* copies_label;
 	QLineEdit* copies_edit;
 	QCheckBox* show_templates_check;
+	QCheckBox* show_grid_check;
 	QLineEdit* left_edit;
 	QLineEdit* top_edit;
 	QLineEdit* width_edit;
 	QLineEdit* height_edit;
 	QPushButton* center_button;
+	QCheckBox* different_scale_check;
+	QLineEdit* different_scale_edit;
 	QPushButton* preview_button;
 	QPushButton* print_button;
 	

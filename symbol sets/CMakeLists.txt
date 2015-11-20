@@ -34,7 +34,7 @@ foreach(_symbol_set ${Mapper_SYMBOL_SETS})
 	set(_copy_name ${_dir}/COPY_OF_${_name})
 	add_custom_command(OUTPUT ${_copy_name}
 	  COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/${_symbol_set} ${CMAKE_CURRENT_BINARY_DIR}/${_copy_name}
-	  DEPENDS ${_symbol_set}
+	  DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/${_symbol_set}
 	  VERBATIM)
 	list(APPEND _symbol_sets "${CMAKE_CURRENT_BINARY_DIR}/${_copy_name}")
 endforeach()

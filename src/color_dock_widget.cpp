@@ -22,7 +22,11 @@
 
 #include <cassert>
 
+#if QT_VERSION < 0x050000
 #include <QtGui>
+#else
+#include <QtWidgets>
+#endif
 
 #include "map.h"
 #include "map_color.h"
@@ -103,6 +107,7 @@ ColorWidget::ColorWidget(Map* map, MainWindow* window, QWidget* parent): EditorD
 	connect(help_button, SIGNAL(clicked(bool)), this, SLOT(showHelp()));
 	
 	connect(map, SIGNAL(colorAdded(int,MapColor*)), this, SLOT(colorAdded(int,MapColor*)));
+	connect(map, SIGNAL(colorDeleted(int,MapColor*)), this, SLOT(colorDeleted(int,MapColor*)));
 }
 
 ColorWidget::~ColorWidget()
@@ -162,7 +167,7 @@ void ColorWidget::newColor()
 		row = color_table->rowCount();
 	map->addColor(row);
 	
-	map->forceUpdateOfAllObjects();
+	map->updateAllObjects();
 }
 
 void ColorWidget::deleteColor()
@@ -178,11 +183,9 @@ void ColorWidget::deleteColor()
 	}
 	
 	map->deleteColor(row);
-	color_table->removeRow(row);
-	currentCellChange(color_table->currentRow(), color_table->currentColumn(), -1, -1);
 	
 	map->setColorsDirty();
-	map->forceUpdateOfAllObjects();
+	map->updateAllObjects();
 }
 
 void ColorWidget::duplicateColor()
@@ -194,7 +197,7 @@ void ColorWidget::duplicateColor()
 	new_color->name = new_color->name + tr(" (Duplicate)");
 	map->addColor(new_color, row);
 	
-	map->forceUpdateOfAllObjects();
+	map->updateAllObjects();
 }
 
 void ColorWidget::moveColorUp()
@@ -212,7 +215,7 @@ void ColorWidget::moveColorUp()
 	color_table->setCurrentCell(row - 1, color_table->currentColumn());
 	
 	map->setColorsDirty();
-	map->forceUpdateOfAllObjects();
+	map->updateAllObjects();
 }
 
 void ColorWidget::moveColorDown()
@@ -230,7 +233,7 @@ void ColorWidget::moveColorDown()
 	color_table->setCurrentCell(row + 1, color_table->currentColumn());
 	
 	map->setColorsDirty();
-	map->forceUpdateOfAllObjects();
+	map->updateAllObjects();
 }
 
 void ColorWidget::showHelp()
@@ -300,7 +303,7 @@ void ColorWidget::cellChange(int row, int column)
 	
 	map->setColor(color, row); // trigger colorChanged signal
 	map->setColorsDirty();
-	map->forceUpdateOfAllObjects();
+	map->updateAllObjects();
 }
 
 void ColorWidget::currentCellChange(int current_row, int current_column, int previous_row, int previous_column)
@@ -335,7 +338,7 @@ void ColorWidget::cellDoubleClick(int row, int column)
 			
 			map->setColor(color, row); // trigger colorChanged signal
 			map->setColorsDirty();
-			map->forceUpdateOfAllObjects();
+			map->updateAllObjects();
 		}
 	}
 }
@@ -345,6 +348,12 @@ void ColorWidget::colorAdded(int index, MapColor* color)
 	color_table->insertRow(index);
 	addRow(index);
 	color_table->setCurrentCell(index, 1);
+}
+
+void ColorWidget::colorDeleted(int index, MapColor* color)
+{
+	color_table->removeRow(index);
+	currentCellChange(color_table->currentRow(), color_table->currentColumn(), -1, -1);
 }
 
 void ColorWidget::addRow(int row)

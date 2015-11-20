@@ -81,9 +81,36 @@ public:
 private slots:
 	void antialiasingClicked(bool checked);
 	void toleranceChanged(int value);
+	void snapDistanceChanged(int value);
+	void fixedAngleSteppingChanged(int value);
 	void selectSymbolOfObjectsClicked(bool checked);
 	void zoomOutAwayFromCursorClicked(bool checked);
+	void drawLastPointOnRightClickClicked(bool checked);
+	
+	void editToolDeleteBezierPointActionChanged(int index);
+	void editToolDeleteBezierPointActionAlternativeChanged(int index);
+	
+	void rectangleHelperCrossRadiusChanged(int value);
+	void rectanglePreviewLineWidthChanged(bool checked);
+	
+	void keepSettingsOfClosedTemplatesClicked(bool checked);
+	
+private:
+	QComboBox* edit_tool_delete_bezier_point_action;
+	QComboBox* edit_tool_delete_bezier_point_action_alternative;
 };
+
+/*class PrintingPage : public SettingsPage
+{
+Q_OBJECT
+public:
+	PrintingPage(QWidget* parent = 0);
+	
+	virtual QString title() { return tr("Printing"); }
+	
+private slots:
+	
+};*/
 
 class GeneralPage : public SettingsPage
 {

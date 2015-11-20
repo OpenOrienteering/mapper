@@ -20,10 +20,13 @@
 #ifndef IMPORT_EXPORT_H
 #define IMPORT_EXPORT_H
 
+#include <vector>
+
 #include <QHash>
 #include <QVariant>
 
-#include "map.h"
+class Map;
+class MapView;
 
 // Forward declarations
 class Importer;
@@ -34,10 +37,10 @@ class Exporter;
 class FormatException : public std::exception
 {
 public:
-    FormatException(const QString &message = QString()) : m(message) {}
+    FormatException(const QString& message = QString()) : m(message) {}
     ~FormatException() throw () {}
 
-    inline const QString &message() const { return m; }
+    inline const QString& message() const { return m; }
     virtual const char *what() const throw() { return m.toLocal8Bit().constData(); }
 
 private:
@@ -57,12 +60,12 @@ private:
  *      MyCustomFileFormat : Format("custom", QObject::tr("Custom file"), "custom", true, true) {
  *      }
  *
- *      Importer *createImporter(const QString &path, Map *map, MapView *view) const throw (FormatException) {
- *          return new CustomImporter(path, map, view);
+ *      Importer *createImporter(QIODevice* stream, Map *map, MapView *view) const throw (FormatException) {
+ *          return new CustomImporter(stream, map, view);
  *      }
  *
- *      Exporter *createExporter(const QString &path, Map *map, MapView *view) const throw (FormatException) {
- *          return new CustomExporter(path, map, view);
+ *      Exporter *createExporter(QIODevice* stream, Map *map, MapView *view) const throw (FormatException) {
+ *          return new CustomExporter(stream, map, view);
  *      }
  *  }
  *  \endcode
@@ -72,25 +75,25 @@ class Format
 public:
     /** Creates a new file format with the given parameters. Don't use a leading dot on the file extension.
      */
-    Format(const QString &id, const QString &description, const QString &file_extension, bool supportsImport = true, bool supportsExport = true, bool export_lossy = true);
+    Format(const QString& id, const QString& description, const QString& file_extension, bool supportsImport = true, bool supportsExport = true, bool export_lossy = true);
 
     virtual ~Format() {}
 
     /** Returns the internal ID of the file format.
      */
-    const QString &id() const { return format_id; }
+    const QString& id() const { return format_id; }
 
     /** Returns a short human-readable description of the file format.
      */
-    const QString &description() const { return format_description; }
+    const QString& description() const { return format_description; }
 
     /** Returns the file extension used by this file format.
      */
-    const QString &fileExtension() const { return file_extension; }
+    const QString& fileExtension() const { return file_extension; }
 
     /** Returns the filter that represents this format in file dialogs.
      */
-    const QString &filter() const { return format_filter; }
+    const QString& filter() const { return format_filter; }
 
     /** Returns true if this file format supports importing a map from its associated file type.
      */
@@ -108,14 +111,13 @@ public:
      */
     virtual bool understands(const unsigned char *buffer, size_t sz) const;
 
-    /** Creates an Importer that will read the file at the given path into the given map and view.
+    /** Creates an Importer that will read the file from the given stream into the given map and view.
      *  The caller can then call doImport() in the returned object to start the import process. The caller
      *  is responsible for deleting the Importer when it's finished.
      *
      *  If the Importer could not be created, then this method should throw a FormatException.
-	 *  TODO: get rid of path parameter (currently required for libocad)
      */
-	virtual Importer *createImporter(QIODevice* stream, const QString &path, Map *map, MapView *view) const throw (FormatException);
+	virtual Importer *createImporter(QIODevice* stream, Map *map, MapView *view) const throw (FormatException);
 
     /** Returns true if an exporter for this file format is potentially lossy, i.e., if the exported
      *  file cannot fully represent all aspects of the internal OO map objects. This flag is used by
@@ -123,14 +125,13 @@ public:
      */
     inline bool isExportLossy() const { return export_lossy; }
 
-    /** Creates an Exporter that will save the given map and view into a file at the given path.
+    /** Creates an Exporter that will save the given map and view into the given stream.
      *  The caller can then call doExport() in the returned object to start the export process. The caller
      *  is responsible for deleting the Exporter when it's finished.
      *
      *  If the Exporter could not be created, then this method should throw a FormatException.
-	 * *  TODO: get rid of path parameter (currently required for libocad)
      */
-	virtual Exporter *createExporter(QIODevice* stream, const QString &path, Map *map, MapView *view) const throw (FormatException);
+	virtual Exporter *createExporter(QIODevice* stream, Map *map, MapView *view) const throw (FormatException);
 
 private:
     QString format_id;
@@ -163,22 +164,22 @@ public:
     /** Finds a file format with the given internal ID, or returns NULL if no format
      *  is found.
      */
-    const Format *findFormat(const QString &id) const;
+    const Format *findFormat(const QString& id) const;
 
     /** Finds a file format which implements the given filter, or returns NULL if no 
 	 * format is found.
      */
-    const Format *findFormatByFilter(const QString &filter) const;
+    const Format *findFormatByFilter(const QString& filter) const;
 
     /** Finds a file format whose file extension matches the fie extension of the given
      *  path, or returns NULL if no matching format is found.
      */
-    const Format *findFormatForFilename(const QString &filename) const;
+    const Format *findFormatForFilename(const QString& filename) const;
 
     /** Returns the ID of default file format for this registry. This will automatically
      *  be set to the first registered format.
      */
-    const QString &defaultFormat() const { return default_format_id; }
+    const QString& defaultFormat() const { return default_format_id; }
 
     /** Registers a new file format. The registry takes ownership of the provided Format.
      */
@@ -206,7 +207,7 @@ extern FormatRegistry FileFormats;
 class ImportExport
 {
 public:
-    /** Creates a new importer or exporter with the given file path, map, and view.
+    /** Creates a new importer or exporter with the given input stream, map, and view.
      */
 	ImportExport(QIODevice* stream, Map *map, MapView *view) : stream(stream), map(map), view(view) {}
 
@@ -220,19 +221,19 @@ public:
 
     /** Sets an option in this importer or exporter.
      */
-    inline void setOption(const QString &name, QVariant value) { options[name] = value; }
+    inline void setOption(const QString& name, QVariant value) { options[name] = value; }
 
     /** Retrieves the value of an options in this importer or exporter. If the option does not have
      *  a value - either a default value assigned in the constructor, or a custom value assigned
      *  through setOption() - then a FormatException will be thrown.
      */
-    QVariant option(const QString &name) const throw (FormatException);
+    QVariant option(const QString& name) const throw (FormatException);
 
 protected:
     /** Adds an import/export warning to the current list of warnings. The provided message
      *  should be translated.
      */
-    inline void addWarning(const QString &str) { warn.push_back(str); }
+    inline void addWarning(const QString& str) { warn.push_back(str); }
 
 protected:
     /// The input / output stream
@@ -277,7 +278,7 @@ class ImportAction
 class Importer : public ImportExport
 {
 public:
-    /** Creates a new Importer with the given file path, map, and view.
+    /** Creates a new Importer with the given output stream, map, and view.
      */
 	Importer(QIODevice* stream, Map *map, MapView *view) : ImportExport(stream, map, view) {}
 
@@ -298,7 +299,7 @@ public:
      *  generally an Importer should not succeed unless the map is populated sufficiently
      *  to be useful.
      */
-	virtual void doImport(bool load_symbols_only) throw (FormatException) = 0;
+	void doImport(bool load_symbols_only, const QString& map_path = QString()) throw (FormatException);
 
     /** Once all action items are satisfied, this method should be called to complete the
      *  import process. This class defines a default implementation, that does nothing.
@@ -306,6 +307,10 @@ public:
     virtual void finishImport() throw (FormatException) {}
 
 protected:
+	/** Implementation of doImport().
+	 */
+	virtual void import(bool load_symbols_only) throw (FormatException) = 0;
+	
     /** Adds an action item to the current list.
      */
     inline void addAction(const ImportAction &action) { act.push_back(action); }
@@ -327,7 +332,7 @@ private:
 class Exporter : public ImportExport
 {
 public:
-    /** Creates a new Importer with the given file path, map, and view.
+    /** Creates a new Importer with the given i/o stream, map, and view.
      */
 	Exporter(QIODevice* stream, Map *map, MapView *view) : ImportExport(stream, map, view) {}
 

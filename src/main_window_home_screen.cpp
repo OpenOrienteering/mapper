@@ -20,7 +20,11 @@
 
 #include "main_window_home_screen.h"
 
+#if QT_VERSION < 0x050000
 #include <QtGui>
+#else
+#include <QtWidgets>
+#endif
 
 #include <mapper_config.h> // TODO: Replace APP_NAME by runtime function to remove this dependency
 

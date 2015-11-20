@@ -20,7 +20,11 @@
 
 #include "template_position_dock_widget.h"
 
+#if QT_VERSION < 0x050000
 #include <QtGui>
+#else
+#include <QtWidgets>
+#endif
 #include <qmath.h>
 
 #include "template_dock_widget.h"
@@ -118,15 +122,15 @@ void TemplatePositionDockWidget::valueChanged()
 	// Transform relevant parts of pass points into template coords
 	for (int i = 0; i < temp->getNumPassPoints(); ++i)
 	{
-		Template::PassPoint* point = temp->getPassPoint(i);
+		PassPoint* point = temp->getPassPoint(i);
 		
 		if (temp->isAdjustmentApplied())
 		{
-			point->dest_coords_map = temp->mapToTemplate(point->dest_coords_map);
-			point->calculated_coords_map = temp->mapToTemplate(point->calculated_coords_map);
+			point->dest_coords = temp->mapToTemplate(point->dest_coords);
+			point->calculated_coords = temp->mapToTemplate(point->calculated_coords);
 		}
 		else
-			point->src_coords_map = temp->mapToTemplate(point->src_coords_map);
+			point->src_coords = temp->mapToTemplate(point->src_coords);
 	}
 	
 	// Change transformation
@@ -145,15 +149,15 @@ void TemplatePositionDockWidget::valueChanged()
 	// Transform relevant parts of pass points back to map coords
 	for (int i = 0; i < temp->getNumPassPoints(); ++i)
 	{
-		Template::PassPoint* point = temp->getPassPoint(i);
+		PassPoint* point = temp->getPassPoint(i);
 		
 		if (temp->isAdjustmentApplied())
 		{
-			point->dest_coords_map = temp->templateToMap(point->dest_coords_map);
-			point->calculated_coords_map = temp->templateToMap(point->calculated_coords_map);
+			point->dest_coords = temp->templateToMap(point->dest_coords);
+			point->calculated_coords = temp->templateToMap(point->calculated_coords);
 		}
 		else
-			point->src_coords_map = temp->templateToMap(point->src_coords_map);
+			point->src_coords = temp->templateToMap(point->src_coords);
 	}
 	
 	// Mark new template area as dirty

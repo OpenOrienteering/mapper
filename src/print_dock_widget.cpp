@@ -20,7 +20,14 @@
 
 #include "print_dock_widget.h"
 
+#include <limits>
+
+#if QT_VERSION < 0x050000
 #include <QtGui>
+#else
+#include <QtWidgets>
+#endif
+#include <QPrintPreviewDialog>
 
 #include <mapper_config.h> // TODO: Replace APP_NAME by runtime function to remove this dependency
 
@@ -28,6 +35,7 @@
 #include "map.h"
 #include "main_window.h"
 #include "map_widget.h"
+#include "settings.h"
 
 PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, MapEditorController* editor, QWidget* parent) : EditorDockWidgetChild(parent), map(map), main_window(main_window), main_view(main_view), editor(editor)
 {
@@ -37,10 +45,11 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 	bool params_set = map->arePrintParametersSet();
 	int orientation;
 	float dpi, left, top, width, height;
-	bool show_templates, center;
+	bool show_templates, show_grid, center, different_scale_enabled;
+	int different_scale;
 	if (params_set)
 	{
-		map->getPrintParameters(orientation, prev_paper_size, dpi, show_templates, center, left, top, width, height);
+		map->getPrintParameters(orientation, prev_paper_size, dpi, show_templates, show_grid, center, left, top, width, height, different_scale_enabled, different_scale);
 		have_prev_paper_size = true;
 	}
 	else
@@ -60,7 +69,11 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 	device_combo = new QComboBox();
 
     device_combo->setMaximumWidth(200);
+#if QT_VERSION < 0x050000
 	device_combo->addItem(tr("Export to PDF or PS"), QVariant((int)PdfExporter));
+#else
+	device_combo->addItem(tr("Export to PDF"), QVariant((int)PdfExporter));
+#endif
 	device_combo->addItem(tr("Export to image"), QVariant((int)ImageExporter));
 	device_combo->insertSeparator(device_combo->count());
 	device_combo->setCurrentIndex(0);
@@ -76,6 +89,10 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 	show_templates_check = new QCheckBox(tr("Show templates"));	// this must be created before its value is used to determine the default setting of page_orientation_combo
 	if (params_set)
 		show_templates_check->setChecked(show_templates);
+	
+	show_grid_check = new QCheckBox(tr("Show grid"));
+	if (params_set)
+		show_grid_check->setChecked(show_grid);
 	
 	QLabel* page_orientation_label = new QLabel(tr("Page orientation:"));
 	page_orientation_combo = new QComboBox();
@@ -118,45 +135,74 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 	center_button = new QPushButton(tr("Center area on map"));
 	center_button->setCheckable(true);
 	center_button->setChecked(params_set ? center : true);
+	
+	different_scale_check = new QCheckBox("");
+	different_scale_check->setChecked(params_set ? different_scale_enabled : false);
+	different_scale_edit = new QLineEdit(params_set ? QString::number(different_scale) : "", this);
+	different_scale_edit->setEnabled(different_scale_check->isChecked());
+	different_scale_edit->setValidator(new QIntValidator(1, std::numeric_limits<int>::max(), different_scale_edit));
+	
 	preview_button = new QPushButton(tr("Preview..."));
 	print_button = new QPushButton("");
 	
+	int row = 0;
 	QGridLayout* layout = new QGridLayout();
-	layout->addWidget(device_label, 0, 0);
-	layout->addWidget(device_combo, 0, 1);
-	layout->addWidget(page_orientation_label, 1, 0);
-	layout->addWidget(page_orientation_combo, 1, 1);
-	layout->addWidget(page_format_label, 2, 0);
-	layout->addWidget(page_format_combo, 2, 1);
-	layout->addWidget(dpi_label, 3, 0);
-	layout->addWidget(dpi_edit, 3, 1);
-	layout->addWidget(copies_label, 4, 0);
-	layout->addWidget(copies_edit, 4, 1);
-	layout->addWidget(show_templates_check, 5, 0, 1, 2);
-	layout->addWidget(print_area_label, 6, 0, 1, 2);
-	layout->addWidget(left_label, 7, 0);
-	layout->addWidget(left_edit, 7, 1);
-	layout->addWidget(top_label, 8, 0);
-	layout->addWidget(top_edit, 8, 1);
-	layout->addWidget(width_label, 9, 0);
-	layout->addWidget(width_edit, 9, 1);
-	layout->addWidget(height_label, 10, 0);
-	layout->addWidget(height_edit, 10, 1);
-	layout->addWidget(center_button, 11, 0, 1, 2);
-	layout->setRowStretch(12, 1);
-	layout->addWidget(preview_button, 13, 0);
-	layout->addWidget(print_button, 13, 1);
+	layout->addWidget(device_label, row, 0);
+	layout->addWidget(device_combo, row, 1);
+	++row;
+	layout->addWidget(page_orientation_label, row, 0);
+	layout->addWidget(page_orientation_combo, row, 1);
+	++row;
+	layout->addWidget(page_format_label, row, 0);
+	layout->addWidget(page_format_combo, row, 1);
+	++row;
+	layout->addWidget(dpi_label, row, 0);
+	layout->addWidget(dpi_edit, row, 1);
+	++row;
+	layout->addWidget(copies_label, row, 0);
+	layout->addWidget(copies_edit, row, 1);
+	++row;
+	layout->addWidget(show_templates_check, row, 0, 1, 2);
+	++row;
+	layout->addWidget(show_grid_check, row, 0, 1, 2);
+	++row;
+	layout->addWidget(print_area_label, row, 0, 1, 2);
+	++row;
+	layout->addWidget(left_label, row, 0);
+	layout->addWidget(left_edit, row, 1);
+	++row;
+	layout->addWidget(top_label, row, 0);
+	layout->addWidget(top_edit, row, 1);
+	++row;
+	layout->addWidget(width_label, row, 0);
+	layout->addWidget(width_edit, row, 1);
+	++row;
+	layout->addWidget(height_label, row, 0);
+	layout->addWidget(height_edit, row, 1);
+	++row;
+	layout->addWidget(center_button, row, 0, 1, 2);
+	++row;
+	layout->addWidget(different_scale_check, row, 0);
+	layout->addWidget(different_scale_edit, row, 1);
+	++row;
+	layout->setRowStretch(row, 1);
+	++row;
+	layout->addWidget(preview_button, row, 0);
+	layout->addWidget(print_button, row, 1);
 	setLayout(layout);
 	
 	connect(device_combo, SIGNAL(currentIndexChanged(int)), this, SLOT(currentDeviceChanged()));
 	connect(page_orientation_combo, SIGNAL(currentIndexChanged(int)), this, SLOT(pageOrientationChanged()));
 	connect(page_format_combo, SIGNAL(currentIndexChanged(int)), this, SLOT(pageFormatChanged()));
 	connect(show_templates_check, SIGNAL(clicked()), this, SLOT(showTemplatesClicked()));
+	connect(show_grid_check, SIGNAL(clicked()), this, SLOT(showGridClicked()));
 	connect(top_edit, SIGNAL(textEdited(QString)), this, SLOT(printAreaPositionChanged()));
 	connect(left_edit, SIGNAL(textEdited(QString)), this, SLOT(printAreaPositionChanged()));
 	connect(width_edit, SIGNAL(textEdited(QString)), this, SLOT(printAreaSizeChanged()));
 	connect(height_edit, SIGNAL(textEdited(QString)), this, SLOT(printAreaSizeChanged()));
 	connect(center_button, SIGNAL(clicked(bool)), this, SLOT(centerPrintAreaClicked()));
+	connect(different_scale_check, SIGNAL(clicked(bool)), this, SLOT(differentScaleClicked(bool)));
+	connect(different_scale_edit, SIGNAL(textEdited(QString)), this, SLOT(differentScaleEdited(QString)));
 	connect(preview_button, SIGNAL(clicked(bool)), this, SLOT(previewClicked()));
 	connect(print_button, SIGNAL(clicked(bool)), this, SLOT(printClicked()));
 	
@@ -185,7 +231,9 @@ void PrintWidget::closed()
 {
 	map->setPrintParameters(page_orientation_combo->itemData(page_orientation_combo->currentIndex()).toInt(),
 							page_format_combo->itemData(page_format_combo->currentIndex()).toInt(),
-							dpi_edit->text().toFloat(), show_templates_check->isChecked(), center_button->isChecked(), getPrintAreaLeft(), getPrintAreaTop(), print_width, print_height);
+							dpi_edit->text().toFloat(), show_templates_check->isChecked(), show_grid_check->isChecked(),
+							center_button->isChecked(), getPrintAreaLeft(), getPrintAreaTop(), print_width, print_height,
+							different_scale_check->isChecked(), qMax(1, different_scale_edit->text().toInt()));
 	editor->setOverrideTool(NULL);
 	print_tool = NULL;
 }
@@ -209,14 +257,42 @@ void PrintWidget::setPrintAreaTop(float value)
 	center_button->setChecked(false);
 }
 
-QRectF PrintWidget::getPrintArea()
+void PrintWidget::getMargins(float& top, float& left, float& bottom, float& right)
 {
-	return QRectF(getPrintAreaLeft(), getPrintAreaTop(), print_width, print_height);
+	top = margin_top;
+	left = margin_left;
+	bottom = margin_bottom;
+	right = margin_right;
 }
 
-QRectF PrintWidget::getPaperArea()
+QRectF PrintWidget::getEffectivePrintArea()
 {
-    return QRectF(0, 0, 8.5*25.4, 11*25.4);
+	float scale_factor = calcScaleFactor();
+	return QRectF(getPrintAreaLeft() + (print_width / 2) * (1 - 1 / scale_factor),
+				  getPrintAreaTop() + (print_height / 2) * (1 - 1 / scale_factor),
+				  print_width / scale_factor,
+				  print_height / scale_factor);
+}
+
+float PrintWidget::calcScaleFactor()
+{
+	if (different_scale_check->isChecked())
+	{
+		bool ok = false;
+		int draw_scale_denominator = different_scale_edit->text().toInt(&ok);
+		if (ok)
+			return (map->getScaleDenominator() / (float)draw_scale_denominator);
+		else
+			return 1;
+	}
+	else
+		return 1;
+}
+
+bool PrintWidget::exporterSelected()
+{
+	int index = device_combo->itemData(device_combo->currentIndex()).toInt();
+	return index < 0;
 }
 
 void PrintWidget::printMap(QPrinter* printer)
@@ -230,8 +306,7 @@ void PrintWidget::printMap(QPrinter* printer)
 }
 void PrintWidget::setPrinterSettings(QPrinter* printer)
 {
-	int index = device_combo->itemData(device_combo->currentIndex()).toInt();
-	bool exporter = index < 0;
+	bool exporter = exporterSelected();
 	
 	printer->setDocName(QFileInfo(main_window->getCurrentFilePath()).fileName());
 	printer->setFullPage(true);
@@ -257,27 +332,96 @@ void PrintWidget::drawMap(QPaintDevice* paint_device, float dpi, const QRectF& p
 {
 	QRectF map_extent = map->calculateExtent(false, show_templates_check->isChecked(), main_view);
 	
-	QPainter painter;
-	painter.begin(paint_device);
-	painter.setRenderHint(QPainter::Antialiasing);
-	painter.setRenderHint(QPainter::SmoothPixmapTransform);
+	QPainter device_painter;
+	device_painter.begin(paint_device);
+	device_painter.setRenderHint(QPainter::Antialiasing);
+	device_painter.setRenderHint(QPainter::SmoothPixmapTransform);
+	
+	// If there is anything transparent to draw, use a temporary image which is drawn on the device printer as last step
+	// because painting transparently seems to be unsupported when printing
+	// TODO: This does convert all colors to RGB. Are colors printed as CMYK otherwise?
+	bool have_transparency = main_view->getMapVisibility()->visible && main_view->getMapVisibility()->opacity < 1;
+	for (int i = 0; i < map->getNumTemplates() && !have_transparency; ++i)
+	{
+		TemplateVisibility* visibility = main_view->getTemplateVisibility(map->getTemplate(i));
+		have_transparency = visibility->visible && visibility->opacity < 1;
+	}
+	
+	QPainter* painter = &device_painter;
+	QImage print_buffer;
+	QPainter print_buffer_painter;
+	if (have_transparency)
+	{
+		print_buffer = QImage(paint_device->width(), paint_device->height(), QImage::Format_RGB32);
+		print_buffer_painter.begin(&print_buffer);
+		painter = &print_buffer_painter;
+		white_background = true;
+	}
 	
 	if (white_background)
-		painter.fillRect(QRect(0, 0, paint_device->width(), paint_device->height()), Qt::white);
+		painter->fillRect(QRect(0, 0, paint_device->width(), paint_device->height()), Qt::white);
 	
 	// Need to convert mm to dots
-	float scale = 1/25.4f * dpi;
-	
-	painter.scale(scale, scale);
-	painter.translate(-getPrintAreaLeft(), -getPrintAreaTop());
+	float scale_factor = calcScaleFactor();
+	float scale = (1/25.4f * dpi) * scale_factor;
+	painter->scale(scale, scale);
+	QRectF print_area = getEffectivePrintArea();
+	painter->translate(-print_area.left(), -print_area.top());
 	
 	if (show_templates_check->isChecked())
-		map->drawTemplates(&painter, map_extent, 0, map->getFirstFrontTemplate() - 1, false, QRect(0, 0, paint_device->width(), paint_device->height()), NULL, main_view);
-	map->draw(&painter, map_extent, false, scale, false);
+		map->drawTemplates(painter, map_extent, 0, map->getFirstFrontTemplate() - 1, main_view);
+	if (main_view->getMapVisibility()->visible)
+	{
+		if (main_view->getMapVisibility()->opacity == 1)
+			map->draw(painter, map_extent, false, scale, false);
+		else
+		{
+			// Draw map into a temporary buffer first which is printed with the map's opacity later.
+			// This prevents artifacts with overlapping objects.
+			QImage map_buffer(paint_device->width(), paint_device->height(), QImage::Format_ARGB32_Premultiplied);
+			QPainter buffer_painter;
+			buffer_painter.begin(&map_buffer);
+			
+			// Clear buffer
+			QPainter::CompositionMode mode = buffer_painter.compositionMode();
+			buffer_painter.setCompositionMode(QPainter::CompositionMode_Clear);
+			buffer_painter.fillRect(map_buffer.rect(), Qt::transparent);
+			buffer_painter.setCompositionMode(mode);
+			
+			// Draw map with full opacity
+			buffer_painter.setTransform(painter->transform());
+			map->draw(&buffer_painter, map_extent, false, scale, false);
+			
+			buffer_painter.end();
+			
+			// Print buffer with map opacity
+			painter->save();
+			painter->resetTransform();
+			painter->setOpacity(main_view->getMapVisibility()->opacity);
+			painter->setRenderHint(QPainter::SmoothPixmapTransform, false);
+			painter->drawImage(0, 0, map_buffer);
+			painter->restore();
+		}
+	}
+	if (show_grid_check->isChecked())
+		map->drawGrid(painter, print_area);
 	if (show_templates_check->isChecked())
-		map->drawTemplates(&painter, map_extent, map->getFirstFrontTemplate(), map->getNumTemplates() - 1, false, QRect(0, 0, paint_device->width(), paint_device->height()), NULL, main_view);
+		map->drawTemplates(painter, map_extent, map->getFirstFrontTemplate(), map->getNumTemplates() - 1, main_view);
 	
-	painter.end();
+	// If a temporary buffer has been used, paint it on the device printer
+	if (print_buffer_painter.isActive())
+	{
+		print_buffer_painter.end();
+		painter = &device_painter;
+		
+		device_painter.save();
+		device_painter.resetTransform();
+		device_painter.setRenderHint(QPainter::SmoothPixmapTransform, false);
+		device_painter.drawImage(0, 0, print_buffer);
+		device_painter.restore();
+	}
+	
+	painter->end();
 }
 
 void PrintWidget::currentDeviceChanged()
@@ -291,12 +435,18 @@ void PrintWidget::currentDeviceChanged()
 	bool exporter = index < 0;
 	bool image_exporter = index == (int)ImageExporter;
 	
+	// First hide everything, then show selected widgets again. This prevents the widget from resizing.
+	dpi_label->hide();
+	dpi_edit->hide();
+	copies_label->hide();
+	copies_edit->hide();
 	dpi_label->setVisible(image_exporter);
 	dpi_edit->setVisible(image_exporter);
 	copies_label->setVisible(!exporter);
 	copies_edit->setVisible(!exporter);
 	
 	preview_button->setEnabled(!exporter);
+	different_scale_check->setText(exporter ? tr("Export in different scale 1 :") : tr("Print in different scale 1 :"));
 	print_button->setText(exporter ? tr("Export") : tr("Print"));
 	
 	
@@ -306,7 +456,6 @@ void PrintWidget::currentDeviceChanged()
 	page_format_combo->clear();
 	
 	QList<QPrinter::PaperSize> size_list;
-	// NOTE: Using QPrinterInfo::supportedPaperSizes() leads to a crash for me on Windows as soon as the returned QList is destroyed on Qt 4.8. Maybe a QT bug? Disabling it for now.
 	if (!exporter)
 		size_list = printers[index].supportedPaperSizes();
 	
@@ -382,6 +531,8 @@ void PrintWidget::currentDeviceChanged()
 		page_format_combo->setCurrentIndex(0);
 	
 	updatePrintAreaSize();
+	if (print_tool)
+		print_tool->updatePrintArea();
 	react_to_changes = true;
 }
 void PrintWidget::pageOrientationChanged()
@@ -406,6 +557,10 @@ void PrintWidget::showTemplatesClicked()
 {
 	if (center_button->isChecked())
 		centerPrintArea();
+}
+void PrintWidget::showGridClicked()
+{
+	// nothing yet
 }
 void PrintWidget::printAreaPositionChanged()
 {
@@ -471,12 +626,33 @@ void PrintWidget::updatePrintAreaSize()
 		printer.setPaperSize(size);
 		printer.setOrientation((QPrinter::Orientation)page_orientation_combo->itemData(page_orientation_combo->currentIndex()).toInt());
 		
+		QRectF paper_rect = printer.paperRect(QPrinter::Millimeter);
+		QRectF page_rect = printer.pageRect(QPrinter::Millimeter);
+		
 		print_width = printer.paperRect(QPrinter::Millimeter).width();
 		width_edit->setText(QString::number(print_width));
 		print_height = printer.paperRect(QPrinter::Millimeter).height();
 		height_edit->setText(QString::number(print_height));
+		
+		margin_top = page_rect.top() - paper_rect.top();
+		margin_left = page_rect.left() - paper_rect.left();
+		margin_right = paper_rect.right() - page_rect.right();
+		margin_bottom = paper_rect.bottom() - page_rect.bottom();
 	}
 }
+
+void PrintWidget::differentScaleClicked(bool checked)
+{
+	different_scale_edit->setEnabled(checked);
+	if (print_tool)
+		print_tool->updatePrintArea();
+}
+void PrintWidget::differentScaleEdited(QString text)
+{
+	if (print_tool)
+		print_tool->updatePrintArea();
+}
+
 void PrintWidget::previewClicked()
 {
 	if (checkForEmptyMap())
@@ -497,6 +673,12 @@ void PrintWidget::printClicked()
 {
 	if (checkForEmptyMap())
 		return;
+	
+	if (map->isAreaHatchingEnabled() || map->isBaselineViewEnabled())
+	{
+		if (QMessageBox::question(this, tr("Warning"), tr("A non-standard view mode is activated. Are you sure to print / export the map like this?"), QMessageBox::Ok | QMessageBox::Cancel) == QMessageBox::Cancel)
+			return;
+	}
 	
 	int index = device_combo->itemData(device_combo->currentIndex()).toInt();
 	
@@ -534,10 +716,12 @@ void PrintWidget::printClicked()
 	if (index == (int)PdfExporter)
 	{
 		printer = new QPrinter(QPrinter::HighResolution);
-		
+
+#if QT_VERSION < 0x050000		
 		if (path.endsWith(".ps", Qt::CaseInsensitive))
 			printer->setOutputFormat(QPrinter::PostScriptFormat);
 		else
+#endif
 		{
 			printer->setOutputFormat(QPrinter::PdfFormat);
 			if (!path.endsWith(".pdf", Qt::CaseInsensitive))
@@ -605,9 +789,11 @@ void PrintWidget::addPaperSize(QPrinter::PaperSize size)
 }
 bool PrintWidget::checkForEmptyMap()
 {
-	if (map->getNumObjects() == 0 && (!show_templates_check->isChecked() || map->getNumTemplates() == 0))
+	if ((map->getNumObjects() == 0 || main_view->getMapVisibility()->visible == false || main_view->getMapVisibility()->opacity == 0) &&
+		(!show_templates_check->isChecked() || map->getNumTemplates() == 0) &&
+		!show_grid_check->isChecked())
 	{
-		QMessageBox::warning(this, tr("Error"), tr("The map is empty, there is nothing to print!"));
+		QMessageBox::warning(this, tr("Error"), tr("The print area is empty, so there is nothing to print!"));
 		return true;
 	}
 	return false;
@@ -660,54 +846,69 @@ bool PrintTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWi
 
 void PrintTool::draw(QPainter* painter, MapWidget* widget)
 {
-    /*
-    QRect inner_rect = widget->mapToViewport(this->widget->getPrintArea()).toRect();
-    QRect outer_rect = widget->mapToViewport(this->widget->getPaperArea()).toRect();
-    QRect view_rect = QRect(0, 0, widget->width(), widget->height());
-    painter->setPen(Qt::NoPen);
-    painter->setBrush(QColor(0, 0, 0, 160));
-    drawBetweenRects(painter, view_rect, outer_rect);
-    painter->setBrush(QColor(0, 0, 0, 64));
-    drawBetweenRects(painter, outer_rect, inner_rect);
-    painter->setBrush(QColor(255, 255, 0, 128));
-    painter->drawRect(QRect(outer_rect.topLeft(), outer_rect.bottomRight() - QPoint(1, 1)));
-    painter->setBrush(QColor(0, 255, 0, 128));
-    painter->drawRect(QRect(inner_rect.topLeft(), inner_rect.bottomRight() - QPoint(1, 1)));
-    */
+	QRectF effective_print_area = this->widget->getEffectivePrintArea();
+	QRect outer_rect = widget->mapToViewport(effective_print_area).toRect();
+	QRect view_rect = QRect(0, 0, widget->width(), widget->height());
+	
+	painter->setPen(Qt::NoPen);
+	painter->setBrush(QColor(0, 0, 0, 160));
+	drawBetweenRects(painter, view_rect, outer_rect);
+	
+	if (!this->widget->exporterSelected())
+	{
+		float margin_top, margin_left, margin_bottom, margin_right;
+		this->widget->getMargins(margin_top, margin_left, margin_bottom, margin_right);
+		if (margin_top > 0 || margin_left > 0 || margin_bottom > 0 || margin_right > 0)
+		{
+			QRect inner_rect = widget->mapToViewport(effective_print_area.adjusted(margin_left, margin_top, -margin_right, -margin_bottom)).toRect();
+			
+			painter->setBrush(QColor(0, 0, 0, 64));
+			if (effective_print_area.width() < margin_left + margin_right || effective_print_area.height() < margin_top + margin_bottom)
+				painter->drawRect(outer_rect);
+			else
+				drawBetweenRects(painter, outer_rect, inner_rect);
+		}
+	}
+	
+	/*painter->setBrush(QColor(255, 255, 0, 128));
+	painter->drawRect(QRect(outer_rect.topLeft(), outer_rect.bottomRight() - QPoint(1, 1)));
+	painter->setBrush(QColor(0, 255, 0, 128));
+	painter->drawRect(QRect(inner_rect.topLeft(), inner_rect.bottomRight() - QPoint(1, 1)));*/
+	
+	/*QRect rect = widget->mapToViewport(this->widget->getEffectivePrintArea()).toRect();
 
-    QRect rect = widget->mapToViewport(this->widget->getPrintArea()).toRect();
-
-    painter->setPen(active_color);
-    painter->drawRect(QRect(rect.topLeft(), rect.bottomRight() - QPoint(1, 1)));
-    painter->setPen(qRgb(255, 255, 255));
-    painter->drawRect(QRect(rect.topLeft() + QPoint(1, 1), rect.bottomRight() - QPoint(2, 2)));
+	painter->setPen(active_color);
+	painter->drawRect(QRect(rect.topLeft(), rect.bottomRight() - QPoint(1, 1)));
+	painter->setPen(qRgb(255, 255, 255));
+	painter->drawRect(QRect(rect.topLeft() + QPoint(1, 1), rect.bottomRight() - QPoint(2, 2)));*/
 }
 
 void PrintTool::drawBetweenRects(QPainter* painter, const QRect &outer, const QRect &inner) const {
-    if (outer.isEmpty())
-        return;
-    QRect clipped_inner = outer.intersected(inner);
-    qDebug() << "Draw between "<<outer<<" and "<<inner<<" clipped="<<clipped_inner;
-    if (clipped_inner.isEmpty())
-    {
-        painter->drawRect(outer);
-    }
-    else
-    {
-        if (outer.left() < clipped_inner.left())
-            painter->drawRect(QRect(outer.left(), outer.top(), clipped_inner.left() - outer.left(), outer.height()));
-        if (outer.right() > clipped_inner.right())
-            painter->drawRect(QRect(clipped_inner.right(), outer.top(), outer.right() - clipped_inner.right(), outer.height()));
-        if (outer.top() < clipped_inner.top())
-            painter->drawRect(QRect(clipped_inner.left(), outer.top(), clipped_inner.width(), clipped_inner.top() - outer.top()));
-        if (outer.bottom() > clipped_inner.bottom())
-            painter->drawRect(QRect(clipped_inner.left(), clipped_inner.bottom(), clipped_inner.width(), outer.bottom() - clipped_inner.bottom()));
-    }
+	if (outer.isEmpty())
+		return;
+	QRect clipped_inner = outer.intersected(inner);
+	if (clipped_inner.isEmpty())
+	{
+		painter->drawRect(outer);
+	}
+	else
+	{
+		if (outer.left() < clipped_inner.left())
+			painter->drawRect(QRect(outer.left(), outer.top(), clipped_inner.left() - outer.left(), outer.height()));
+		if (outer.right() > clipped_inner.right())
+			painter->drawRect(QRect(clipped_inner.left() + clipped_inner.width(), outer.top(), outer.right() - clipped_inner.right(), outer.height()));
+		if (outer.top() < clipped_inner.top())
+			painter->drawRect(QRect(clipped_inner.left(), outer.top(), clipped_inner.width(), clipped_inner.top() - outer.top()));
+		if (outer.bottom() > clipped_inner.bottom())
+			painter->drawRect(QRect(clipped_inner.left(), clipped_inner.bottom(), clipped_inner.width(), outer.top() + outer.height() - clipped_inner.bottom()));
+	}
 }
 
 void PrintTool::updatePrintArea()
 {
-    editor->getMap()->setDrawingBoundingBox(widget->getPrintArea(), 1);
+	editor->getMap()->setDrawingBoundingBox(QRectF(-1000000, -1000000, 2000000, 2000000), 0);
+	
+	//editor->getMap()->setDrawingBoundingBox(widget->getEffectivePrintArea(), 1);
 }
 void PrintTool::updateDragging(MapCoordF mouse_pos_map)
 {

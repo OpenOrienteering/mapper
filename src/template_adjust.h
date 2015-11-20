@@ -22,8 +22,10 @@
 #define _OPENORIENTEERING_TEMPLATE_ADJUST_H_
 
 #include <QWidget>
+#include <QDockWidget>
 
-#include "map_editor.h"
+#include "tool.h"
+#include "map_editor_activity.h"
 #include "template.h"
 
 QT_BEGIN_NAMESPACE
@@ -52,7 +54,7 @@ public:
 	
 	static void drawCross(QPainter* painter, QPoint midpoint, QColor color);
 	static int findHoverPoint(Template* temp, QPoint mouse_pos, MapWidget* widget, bool& point_src);
-	static bool calculateTemplateAdjust(Template* temp, Template::TemplateTransform& out, QWidget* dialog_parent);
+	static bool calculateTemplateAdjust(Template* temp, TemplateTransform& out, QWidget* dialog_parent);
 	
 	static float cross_radius;
 	

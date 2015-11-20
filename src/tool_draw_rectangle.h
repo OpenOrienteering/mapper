@@ -23,6 +23,10 @@
 
 #include "tool_draw_line_and_area.h"
 
+#include <QScopedPointer>
+
+#include "tool_helpers.h"
+
 /// Tool to draw rectangles
 class DrawRectangleTool : public DrawLineAndAreaTool
 {
@@ -39,20 +43,23 @@ public:
 	virtual bool mouseDoubleClickEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
 	
 	virtual bool keyPressEvent(QKeyEvent* event);
+    virtual bool keyReleaseEvent(QKeyEvent* event);
 	
 	virtual void draw(QPainter* painter, MapWidget* widget);
 	
 	static QCursor* cursor;
-	static const int helper_cross_radius = 250;
+	
+protected slots:
+	void updateDirtyRect();
 	
 protected:
+	void finishRectangleDrawing();
 	virtual void finishDrawing();
 	virtual void abortDrawing();
 	void undoLastPoint();
 	
 	void updateRectangle();
 	void updatePreview();
-	void setDirtyRect();
 	void updateStatusText();
 	
 	QPoint mouse_press_pos;
@@ -60,6 +67,7 @@ protected:
 	MapCoordF click_pos_map;
 	QPoint cur_pos;
 	MapCoordF cur_pos_map;
+	MapCoordF constrained_pos_map;
 	bool dragging;
 	bool draw_dash_points;
 	
@@ -69,6 +77,8 @@ protected:
 	MapCoordF close_vector;
 	bool new_corner_needed;
 	bool delete_start_point;
+	
+	QScopedPointer<ConstrainAngleToolHelper> angle_helper;
 };
 
 #endif

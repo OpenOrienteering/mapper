@@ -21,7 +21,7 @@
 #ifndef _OPENORIENTEERING_TOOL_SCALE_H_
 #define _OPENORIENTEERING_TOOL_SCALE_H_
 
-#include "map_editor.h"
+#include "tool.h"
 
 #include <vector>
 

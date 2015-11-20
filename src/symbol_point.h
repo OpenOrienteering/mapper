@@ -24,9 +24,11 @@
 #include "symbol.h"
 #include "symbol_properties_widget.h"
 
+QT_BEGIN_NAMESPACE
 class QCheckBox;
 class QVBoxLayout;
 class QWidget;
+QT_END_NAMESPACE
 
 class Map;
 struct MapColor;
@@ -51,6 +53,7 @@ public:
 	void createRenderablesScaled(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output, float coord_scale);
 	virtual void colorDeleted(MapColor* color);
 	virtual bool containsColor(MapColor* color);
+    virtual MapColor* getDominantColorGuess();
 	virtual void scale(double factor);
 	
 	// Contained objects and symbols (elements)
@@ -86,6 +89,8 @@ public:
 protected:
 	virtual void saveImpl(QIODevice* file, Map* map);
 	virtual bool loadImpl(QIODevice* file, int version, Map* map);
+	virtual void saveImpl(QXmlStreamWriter& xml, const Map& map) const;
+	virtual bool loadImpl(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol_dict);
 	virtual bool equalsImpl(Symbol* other, Qt::CaseSensitivity case_sensitivity);
 	
 	std::vector<Object*> objects;
@@ -109,12 +114,10 @@ public:
 	virtual void reset(Symbol* symbol);
 	
 public slots:
-	void orientedToNorthClicked(bool checked);
 	void tabChanged(int index);
 	
 private:
 	PointSymbol* symbol;
-	QCheckBox* oriented_to_north;
 	PointSymbolEditorWidget* symbol_editor;
 	QVBoxLayout* layout;
 	QWidget* point_tab;

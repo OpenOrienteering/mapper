@@ -30,6 +30,7 @@
 #include "symbol_line.h"
 #include "symbol_combined.h"
 #include "object.h"
+#include "map_editor.h"
 #include "map_widget.h"
 #include "map_undo.h"
 
@@ -97,24 +98,28 @@ void DrawLineAndAreaTool::symbolDeleted(int pos, Symbol* old_symbol)
 void DrawLineAndAreaTool::createPreviewPoints()
 {
 	deletePreviewObjects();
+	preview_point_radius = 0;
 	addPreviewPointSymbols(last_used_symbol);
 	
 	// Create objects for the new symbols
 	int size = (int)preview_point_symbols.size();
-	preview_points.resize(size);
-	for (int i = 0; i < size; ++i)
-		preview_points[i] = new PointObject(preview_point_symbols[i]);
+	for (int p = 0; p < 2; ++p)
+	{
+		preview_points[p].resize(size);
+		for (int i = 0; i < size; ++i)
+			preview_points[p][i] = new PointObject(preview_point_symbols[i]);
+	}
 }
-void DrawLineAndAreaTool::setPreviewPointsPosition(MapCoordF map_coord)
+void DrawLineAndAreaTool::setPreviewPointsPosition(MapCoordF map_coord, int index)
 {
-	int size = (int)preview_points.size();
+	int size = (int)preview_points[index].size();
 	for (int i = 0; i < size; ++i)
 	{
 		if (preview_points_shown)
-			renderables->removeRenderablesOfObject(preview_points[i], false);
-		preview_points[i]->setPosition(map_coord);
-		preview_points[i]->update(true);
-		renderables->insertRenderablesOfObject(preview_points[i]);
+			renderables->removeRenderablesOfObject(preview_points[index][i], false);
+		preview_points[index][i]->setPosition(map_coord);
+		preview_points[index][i]->update(true);
+		renderables->insertRenderablesOfObject(preview_points[index][i]);
 	}
 	preview_points_shown = true;
 }
@@ -123,9 +128,12 @@ void DrawLineAndAreaTool::hidePreviewPoints()
 	if (!preview_points_shown)
 		return;
 	
-	int size = (int)preview_points.size();
-	for (int i = 0; i < size; ++i)
-		renderables->removeRenderablesOfObject(preview_points[i], false);
+	for (int p = 0; p < 2; ++p)
+	{
+		int size = (int)preview_points[p].size();
+		for (int i = 0; i < size; ++i)
+			renderables->removeRenderablesOfObject(preview_points[p][i], false);
+	}
 	
 	preview_points_shown = false;
 }
@@ -137,9 +145,12 @@ void DrawLineAndAreaTool::includePreviewRects(QRectF& rect)
 	
 	if (preview_points_shown)
 	{
-		int size = (int)preview_points.size();
-		for (int i = 0; i < size; ++i)
-			rectIncludeSafe(rect, preview_points[i]->getExtent());
+		for (int p = 0; p < 2; ++p)
+		{
+			int size = (int)preview_points[p].size();
+			for (int i = 0; i < size; ++i)
+				rectIncludeSafe(rect, preview_points[p][i]->getExtent());
+		}
 	}
 }
 void DrawLineAndAreaTool::drawPreviewObjects(QPainter* painter, MapWidget* widget)
@@ -163,10 +174,10 @@ void DrawLineAndAreaTool::startDrawing()
 	if (!path_combination)
 		path_combination = new CombinedSymbol();
 	path_combination->setNumParts(is_helper_tool ? 2 : 3);
-	path_combination->setPart(0, Map::getCoveringWhiteLine());
-	path_combination->setPart(1, Map::getCoveringRedLine());
+	path_combination->setPart(0, Map::getCoveringWhiteLine(), false);
+	path_combination->setPart(1, Map::getCoveringRedLine(), false);
 	if (drawing_symbol)
-		path_combination->setPart(2, drawing_symbol);
+		path_combination->setPart(2, drawing_symbol, false);
 	preview_path = new PathObject(path_combination);
 	
 	draw_in_progress = true;
@@ -194,7 +205,7 @@ void DrawLineAndAreaTool::abortDrawing()
 	emit(pathAborted());
 }
 
-void DrawLineAndAreaTool::finishDrawing()
+void DrawLineAndAreaTool::finishDrawing(PathObject* append_to_object)
 {
 	if (preview_path)
 		renderables->removeRenderablesOfObject(preview_path, false);
@@ -202,13 +213,35 @@ void DrawLineAndAreaTool::finishDrawing()
 	if (preview_path && !is_helper_tool)
 	{
 		preview_path->setSymbol(drawing_symbol, true);
-		int index = editor->getMap()->addObject(preview_path);
-		editor->getMap()->clearObjectSelection(false);
-		editor->getMap()->addObjectToSelection(preview_path, true);
+
+		bool can_be_appended = false;
+		if (append_to_object)
+			can_be_appended = append_to_object->canBeConnected(preview_path, 0.01*0.01);
 		
-		DeleteObjectsUndoStep* undo_step = new DeleteObjectsUndoStep(editor->getMap());
-		undo_step->addObject(index);
-		editor->getMap()->objectUndoManager().addNewUndoStep(undo_step);
+		if (can_be_appended)
+		{
+			Object* undo_duplicate = append_to_object->duplicate();
+			append_to_object->connectIfClose(preview_path, 0.01*0.01);
+			delete preview_path;
+			
+			editor->getMap()->clearObjectSelection(false);
+			editor->getMap()->addObjectToSelection(append_to_object, true);
+			
+			MapPart* cur_part = editor->getMap()->getCurrentPart();
+			ReplaceObjectsUndoStep* undo_step = new ReplaceObjectsUndoStep(editor->getMap());
+			undo_step->addObject(cur_part->findObjectIndex(append_to_object), undo_duplicate);
+			editor->getMap()->objectUndoManager().addNewUndoStep(undo_step);
+		}
+		else
+		{
+			int index = editor->getMap()->addObject(preview_path);
+			editor->getMap()->clearObjectSelection(false);
+			editor->getMap()->addObjectToSelection(preview_path, true);
+			
+			DeleteObjectsUndoStep* undo_step = new DeleteObjectsUndoStep(editor->getMap());
+			undo_step->addObject(index);
+			editor->getMap()->objectUndoManager().addNewUndoStep(undo_step);
+		}
 	}
 	editor->getMap()->clearDrawingBoundingBox();
 	
@@ -234,15 +267,18 @@ void DrawLineAndAreaTool::finishDrawing()
 
 void DrawLineAndAreaTool::deletePreviewObjects()
 {
-	int size = (int)preview_points.size();
-	for (int i = 0; i < size; ++i)
+	for (int p = 0; p < 2; ++p)
 	{
-		renderables->removeRenderablesOfObject(preview_points[i], false);
-		delete preview_points[i];
+		int size = (int)preview_points[p].size();
+		for (int i = 0; i < size; ++i)
+		{
+			renderables->removeRenderablesOfObject(preview_points[p][i], false);
+			delete preview_points[p][i];
+		}
+		preview_points[p].clear();
 	}
-	preview_points.clear();
 	
-	size = (int)preview_point_symbols.size();
+	int size = (int)preview_point_symbols.size();
 	for (int i = 0; i < size; ++i)
 	{
 		if (!preview_point_symbols_external[i])
@@ -266,7 +302,7 @@ void DrawLineAndAreaTool::addPreviewPointSymbols(Symbol* symbol)
 		LineSymbol* line = reinterpret_cast<LineSymbol*>(symbol);
 		
 		bool has_main_line = line->getLineWidth() > 0 && line->getColor() != NULL;
-		bool has_border_line = line->hasBorder() && line->getBorderLineWidth() > 0 && line->getBorderColor() != NULL;
+		bool has_border_line = line->hasBorder() && (line->getBorder().isVisible() || line->getRightBorder().isVisible());
 		if (has_main_line || has_border_line)
 		{
 			if (has_main_line)
@@ -276,21 +312,24 @@ void DrawLineAndAreaTool::addPreviewPointSymbols(Symbol* symbol)
 				preview->setInnerColor(line->getColor());
 				preview_point_symbols.push_back(preview);
 				preview_point_symbols_external.push_back(false);
+				if (preview->getInnerColor() != NULL)
+					preview_point_radius = qMax(preview_point_radius, preview->getInnerRadius());
 			}
 			if (has_border_line)
 			{
-				PointSymbol* preview = new PointSymbol();
-				preview->setInnerRadius(line->getLineWidth() / 2 - line->getBorderLineWidth() / 2 + line->getBorderShift());
-				preview->setOuterWidth(line->getBorderLineWidth());
-				preview->setOuterColor(line->getBorderColor());
-				preview_point_symbols.push_back(preview);
-				preview_point_symbols_external.push_back(false);
+				addPreviewPointSymbolsForBorder(line, &line->getBorder());
+				if (line->areBordersDifferent())
+					addPreviewPointSymbolsForBorder(line, &line->getRightBorder());
 			}
 		}
 		else if (line->getMidSymbol() && !line->getMidSymbol()->isEmpty())
 		{
 			preview_point_symbols.push_back(line->getMidSymbol());
 			preview_point_symbols_external.push_back(true);
+			if (line->getMidSymbol()->getOuterColor() != NULL)
+				preview_point_radius = qMax(preview_point_radius, line->getMidSymbol()->getInnerRadius() + line->getMidSymbol()->getOuterWidth());
+			else if (line->getMidSymbol()->getInnerColor() != NULL)
+				preview_point_radius = qMax(preview_point_radius, line->getMidSymbol()->getInnerRadius());
 		}
 	}
 	else if (symbol->getType() == Symbol::Combined)
@@ -304,4 +343,18 @@ void DrawLineAndAreaTool::addPreviewPointSymbols(Symbol* symbol)
 				addPreviewPointSymbols(combined->getPart(i));
 		}
 	}
+}
+
+void DrawLineAndAreaTool::addPreviewPointSymbolsForBorder(LineSymbol* line, LineSymbolBorder* border)
+{
+	if (!border->isVisible())
+		return;
+	PointSymbol* preview = new PointSymbol();
+	preview->setInnerRadius(line->getLineWidth() / 2 - border->width / 2 + border->shift);
+	preview->setOuterWidth(border->width);
+	preview->setOuterColor(border->color);
+	preview_point_symbols.push_back(preview);
+	preview_point_symbols_external.push_back(false);
+	if (preview->getOuterColor() != NULL)
+		preview_point_radius = qMax(preview_point_radius, preview->getInnerRadius() + preview->getOuterWidth());
 }

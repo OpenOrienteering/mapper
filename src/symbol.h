@@ -24,23 +24,36 @@
 #include <vector>
 
 #include <QComboBox>
+#include <QItemDelegate>
 
 #include "map_coord.h"
 #include "path_coord.h"
+#include "file_format.h"
 
 QT_BEGIN_NAMESPACE
 class QIODevice;
+class QXmlStreamReader;
+class QXmlStreamWriter;
 QT_END_NAMESPACE
 
 class Map;
 class MapColor;
 class Object;
+class CombinedSymbol;
+class TextSymbol;
+class AreaSymbol;
+class LineSymbol;
+class PointSymbol;
 class SymbolPropertiesWidget;
 class SymbolSettingDialog;
 class Renderable;
 class MapRenderables;
 class ObjectRenderables;
 typedef std::vector<Renderable*> RenderableVector;
+
+class Symbol;
+typedef QHash<QString, Symbol*> SymbolDictionary;
+
 
 /// Base class for map symbols.
 /// Provides among other things a symbol number consisting of multiple parts, e.g. "2.4.12". Parts which are not set are assigned the value -1.
@@ -68,17 +81,35 @@ public:
 	bool equals(Symbol* other, Qt::CaseSensitivity case_sensitivity = Qt::CaseSensitive, bool compare_state = false);
 	
 	/// Returns the type of the symbol
-    inline Type getType() const {return type;}
+	inline Type getType() const {return type;}
+	// Convenience casts with type checking
+	const PointSymbol* asPoint() const;
+	PointSymbol* asPoint();
+	const LineSymbol* asLine() const;
+	LineSymbol* asLine();
+	const AreaSymbol* asArea() const;
+	AreaSymbol* asArea();
+	const TextSymbol* asText() const;
+	TextSymbol* asText();
+	const CombinedSymbol* asCombined() const;
+	CombinedSymbol* asCombined();
 	
 	/// Returns the or-ed together bitmask of all symbol types this symbol contains
 	virtual Type getContainedTypes() const {return getType();}
 	
 	/// Can the symbol be applied to the given object?
+	/// TODO: refactor: use static areTypesCompatible() instead with the type of the object's symbol
 	bool isTypeCompatibleTo(Object* object);
+	
+	/// Returns if the symbol numbers are identical.
+	bool numberEquals(Symbol* other);
 	
 	/// Saving and loading
 	void save(QIODevice* file, Map* map);
 	bool load(QIODevice* file, int version, Map* map);
+	void save(QXmlStreamWriter& xml, const Map& map) const;
+	static Symbol* load(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol_dict) throw (FormatException);
+	
 	/// Called after loading of the map is finished. Can do tasks that need to reference other symbols or map objects.
 	virtual bool loadFinished(Map* map) {return true;}
 	
@@ -91,6 +122,9 @@ public:
 	
 	/// Must return if the given color is used by this symbol
 	virtual bool containsColor(MapColor* color) = 0;
+	
+	/// Returns the dominant color of this symbol, or a guess for this color in case it is impossible to determine it uniquely
+	virtual MapColor* getDominantColorGuess() = 0;
 	
 	/// Called by the map in which the symbol is to notify it of a symbol being changed (pointer becomes invalid).
 	/// If new_symbol == NULL, the symbol is being deleted.
@@ -138,7 +172,24 @@ public:
 	virtual SymbolPropertiesWidget* createPropertiesWidget(SymbolSettingDialog* dialog);
 	
 	// Static
+	
+	/// Returns a newly created symbol of the given type
 	static Symbol* getSymbolForType(Type type);
+	/// Static save function; saves the symbol and its type number
+	static void saveSymbol(Symbol* symobl, QIODevice* stream, Map* map);
+	/// Static read function; reads the type number, creates a symbol of this type and loads it. Returns true if successful.
+	static bool loadSymbol(Symbol*& symbol, QIODevice* stream, int version, Map* map);
+	/// Creates "baseline" renderables for an object - symbol combination. These only show the coordinate paths with minimum line width, and optionally a hatching pattern for areas.
+	static void createBaselineRenderables(Object* object, Symbol* symbol, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output, bool hatch_areas);
+	
+	/// Returns if the symbol types can be applied to the same object types
+	static bool areTypesCompatible(Type a, Type b);
+	
+	/// Returns a bitmask of all types which can be applied to the same objects as the given type
+	static int getCompatibleTypes(Type type);
+	
+	// TODO: Refactor: move to MapColor
+	static bool colorEquals(MapColor* color, MapColor* other);
 	
 	static const int number_components = 3;
 	static const int icon_size = 32;
@@ -148,9 +199,12 @@ protected:
 	virtual void saveImpl(QIODevice* file, Map* map) = 0;
 	/// Must be overridden to load type-specific symbol properties. See saveImpl()
 	virtual bool loadImpl(QIODevice* file, int version, Map* map) = 0;
+	/// Must be overridden to save type-specific symbol properties. The map pointer can be used to get persistent indices to any pointers on map data
+	virtual void saveImpl(QXmlStreamWriter& xml, const Map& map) const = 0;
+	/// Must be overridden to load type-specific symbol properties. See saveImpl()
+	virtual bool loadImpl(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol_dict) = 0;
 	/// Must be overridden to compare symbol-specific attributes.
 	virtual bool equalsImpl(Symbol* other, Qt::CaseSensitivity case_sensitivity) = 0;
-	static bool colorEquals(MapColor* color, MapColor* other);
 	
 	/// Duplicates properties which are common for all symbols from other to this object
 	void duplicateImplCommon(const Symbol* other);
@@ -178,9 +232,38 @@ public:
 	/// Sets the selection to the given symbol
 	void setSymbol(Symbol* symbol);
 	
+	/// Adds a custom text item below the topmost "- none -" which can be identified by the given id.
+	void addCustomItem(const QString& text, int id);
+	
+	/// Returns the id of the current item if it is a custom item, or -1 otherwise
+	int customID() const;
+	
+	/// Sets the selection to the custom item with the given id
+	void setCustomItem(int id);
+	
 protected slots:
 	// TODO: react to changes in the map (not important as long as that cannot happen as long as a SymbolDropDown is shown, which is the case currently)
 	
+private:
+	int num_custom_items;
+};
+
+class SymbolDropDownDelegate : public QItemDelegate
+{
+Q_OBJECT
+public:
+	SymbolDropDownDelegate(int symbol_type_filter, QObject* parent = 0);
+	
+	virtual QWidget* createEditor(QWidget* parent, const QStyleOptionViewItem& option, const QModelIndex& index) const;
+	virtual void setEditorData(QWidget* editor, const QModelIndex& index) const;
+	virtual void setModelData(QWidget* editor, QAbstractItemModel* model, const QModelIndex& index) const;
+	virtual void updateEditorGeometry(QWidget* editor, const QStyleOptionViewItem& option, const QModelIndex& index) const;
+	
+private slots:
+	void emitCommitData();
+	
+private:
+	int symbol_type_filter;
 };
 
 #endif

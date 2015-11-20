@@ -1,0 +1,162 @@
+/*
+ *    Copyright 2012 Thomas Schöps
+ *
+ *    This file is part of OpenOrienteering.
+ *
+ *    OpenOrienteering is free software: you can redistribute it and/or modify
+ *    it under the terms of the GNU General Public License as published by
+ *    the Free Software Foundation, either version 3 of the License, or
+ *    (at your option) any later version.
+ *
+ *    OpenOrienteering is distributed in the hope that it will be useful,
+ *    but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *    GNU General Public License for more details.
+ *
+ *    You should have received a copy of the GNU General Public License
+ *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+
+#include "template_dialog_reopen.h"
+
+#if QT_VERSION < 0x050000
+#include <QtGui>
+#else
+#include <QtWidgets>
+#endif
+#include <qmath.h>
+
+#include "map.h"
+#include "template.h"
+
+ReopenTemplateDialog::ReopenTemplateDialog(QWidget* parent, Map* map, MapView* view, const QString& map_directory)
+ : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint), map(map), view(view), map_directory(map_directory)
+{
+	setWindowTitle(tr("Reopen template"));
+	
+	QLabel* description = new QLabel(tr("Drag items from the left list to the desired spot in the right list to reload them."));
+	
+	QLabel* closed_template_list_label = new QLabel("<b>" + tr("Closed templates:") + "</b>");
+	closed_template_list = new QListWidget();
+	updateClosedTemplateList();
+	clear_button = new QPushButton(tr("Clear list"));
+	clear_button->setEnabled(map->getNumClosedTemplates() > 0);
+	
+	QLabel* open_template_list_label = new QLabel("<b>" + tr("Active templates:") + "</b>");
+	open_template_list = new OpenTemplateList(this);
+	for (int i = map->getNumTemplates() - 1; i >= 0; --i)
+	{
+		Template* temp = map->getTemplate(i);
+		QListWidgetItem* item = new QListWidgetItem(temp->getTemplateFilename());
+		item->setToolTip(temp->getTemplatePath());
+		open_template_list->addItem(item);
+	}
+	QListWidgetItem* item = new QListWidgetItem(tr("- Map -"));
+	item->setData(Qt::UserRole, true);
+	open_template_list->insertItem(map->getNumTemplates() - map->getFirstFrontTemplate(), item);
+	
+	closed_template_list->setSelectionMode(QAbstractItemView::SingleSelection);
+	closed_template_list->setDragDropMode(QAbstractItemView::DragOnly);
+	closed_template_list->setDefaultDropAction(Qt::MoveAction);
+	open_template_list->setDragDropMode(QAbstractItemView::DropOnly);
+	open_template_list->setDropIndicatorShown(true);
+	open_template_list->setDragDropOverwriteMode(false);
+	
+	QDialogButtonBox* button_box = new QDialogButtonBox(QDialogButtonBox::Close);
+	
+	int row = 0;
+	QGridLayout* layout = new QGridLayout();
+	layout->addWidget(description, row++, 0, 1, 2);
+	layout->setRowMinimumHeight(row++, 16);
+	layout->addWidget(closed_template_list_label, row, 0);
+	layout->addWidget(open_template_list_label, row++, 1);
+	layout->addWidget(closed_template_list, row, 0);
+	layout->addWidget(open_template_list, row++, 1);
+	layout->addWidget(clear_button, row++, 0);
+	layout->addWidget(button_box, row++, 0, 1, 2);
+	setLayout(layout);
+	
+	connect(clear_button, SIGNAL(clicked()), this, SLOT(clearClicked()));
+	connect(button_box, SIGNAL(clicked(QAbstractButton*)), this, SLOT(doAccept(QAbstractButton*)));
+}
+
+void ReopenTemplateDialog::updateClosedTemplateList()
+{
+	closed_template_list->clear();
+	for (int i = map->getNumClosedTemplates() - 1; i >= 0; --i)
+	{
+		Template* temp = map->getClosedTemplate(i);
+		QListWidgetItem* item = new QListWidgetItem(temp->getTemplateFilename());
+		item->setToolTip(temp->getTemplatePath());
+		item->setData(Qt::UserRole, i);
+		closed_template_list->addItem(item);
+	}
+}
+
+void ReopenTemplateDialog::clearClicked()
+{
+	closed_template_list->clear();
+	map->clearClosedTemplates();
+	clear_button->setEnabled(false);
+}
+
+void ReopenTemplateDialog::doAccept(QAbstractButton* button)
+{
+	accept();
+}
+
+ReopenTemplateDialog::OpenTemplateList::OpenTemplateList(ReopenTemplateDialog* dialog)
+ : QListWidget(), dialog(dialog)
+{
+}
+
+void ReopenTemplateDialog::OpenTemplateList::dropEvent(QDropEvent* event)
+{
+    QListWidget::dropEvent(event);
+	
+	// Pretty backward way of finding the drop source and destination:
+	// Loop over the resulting list and find the item with integer UserData.
+	// NOTE: if you know a better way of doing this, I would like to hear it!
+	int src_pos = -1;
+	int target_pos = 0;
+	int item_index = -1;
+	bool in_front = false;
+	for (int i = count() - 1; i >= 0; --i)
+	{
+		QListWidgetItem* cur_item = item(i);
+		if (cur_item->data(Qt::UserRole).type() == QVariant::Int)
+		{
+			src_pos = cur_item->data(Qt::UserRole).toInt();
+			item_index = i;
+			break;
+		}
+		if (cur_item->data(Qt::UserRole).type() != QVariant::Bool)
+			++target_pos;
+		else
+			in_front = true;
+	}
+	assert(target_pos <= dialog->map->getNumTemplates());
+	
+	if (!in_front)
+		dialog->map->setFirstFrontTemplate(dialog->map->getFirstFrontTemplate() + 1);
+	if (!dialog->map->reloadClosedTemplate(src_pos, target_pos, dialog, dialog->view, dialog->map_directory))
+	{
+		// Revert action
+		if (!in_front)
+			dialog->map->setFirstFrontTemplate(dialog->map->getFirstFrontTemplate() - 1);
+		delete item(item_index);
+	}
+	else
+	{
+		// Template filename may change if file has moved
+		item(item_index)->setText(dialog->map->getTemplate(target_pos)->getTemplateFilename());
+		// Prepare for next drop
+		item(item_index)->setData(Qt::UserRole, QVariant());
+		
+		dialog->clear_button->setEnabled(dialog->map->getNumClosedTemplates() > 0);
+	}
+	
+	// Always re-fill this list to update the list indices in the item data
+	dialog->updateClosedTemplateList();
+}

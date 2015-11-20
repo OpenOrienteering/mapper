@@ -21,7 +21,10 @@
 #ifndef _OPENORIENTEERING_DRAW_PATH_H_
 #define _OPENORIENTEERING_DRAW_PATH_H_
 
+#include <QScopedPointer>
+
 #include "tool_draw_line_and_area.h"
+#include "tool_helpers.h"
 
 /// Tool to draw path objects
 class DrawPathTool : public DrawLineAndAreaTool
@@ -39,19 +42,32 @@ public:
     virtual bool mouseDoubleClickEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
 	
     virtual bool keyPressEvent(QKeyEvent* event);
+    virtual bool keyReleaseEvent(QKeyEvent* event);
 	
     virtual void draw(QPainter* painter, MapWidget* widget);
 	
 	static QCursor* cursor;
 	
+protected slots:
+	void updateDirtyRect();
+	
 protected:
+	void updateHover();
+	void updateDrawHover();
 	void createPreviewCurve(MapCoord position, float direction);
 	void closeDrawing();
 	virtual void finishDrawing();
 	virtual void abortDrawing();
 	void undoLastPoint();
+	void updateAngleHelper();
+	void updateSnapHelper();
 	
-	void setDirtyRect(MapCoordF mouse_pos);
+	void startAppending(SnappingToolHelper::SnapInfo& snap_info);
+	
+	void startFollowing(SnappingToolHelper::SnapInfo& snap_info, const MapCoord& snap_coord);
+	void updateFollowing();
+	void finishFollowing();
+	
 	float calculateRotation(QPoint mouse_pos, MapCoordF mouse_pos_map);
 	void updateStatusText();
 	
@@ -70,6 +86,22 @@ protected:
 	
 	bool space_pressed;
 	bool allow_closing_paths;
+	
+	QScopedPointer<ConstrainAngleToolHelper> angle_helper;
+	bool left_mouse_down;
+	MapCoordF constrained_pos_map;
+	
+	SnappingToolHelper snap_helper;
+	bool shift_pressed;
+	MapWidget* cur_map_widget;
+	
+	bool appending;
+	PathObject* append_to_object;
+	
+	bool following;
+	FollowPathToolHelper follow_helper;
+	PathObject* follow_object;
+	int follow_start_index;
 };
 
 #endif

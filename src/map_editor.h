@@ -31,7 +31,10 @@
 #include "main_window.h"
 #include "map.h"
 
+QT_BEGIN_NAMESPACE
 class QLabel;
+class QFrame;
+QT_END_NAMESPACE
 
 class Template;
 class MapView;
@@ -44,6 +47,8 @@ class SymbolWidget;
 class PrintWidget;
 class TemplatePositionDockWidget;
 class GeoreferencingDialog;
+class ReopenTemplateDialog;
+class PieMenu;
 typedef std::vector<Renderable*> RenderableVector;
 
 class MapEditorController : public MainWindowController
@@ -102,9 +107,16 @@ public slots:
 	void copy();
 	void paste();
 	
+	void showGrid();
+	void configureGrid();
+	
 	void zoomIn();
 	void zoomOut();
 	void setCustomZoomFactorClicked();
+	
+	void hatchAreas(bool checked);
+	void baselineView(bool checked);
+	void hideAllTemplates(bool checked);
 	
 	void coordsDisplayChanged();
 	
@@ -115,10 +127,13 @@ public slots:
 	void scaleAllSymbolsClicked();
 	
 	void scaleMapClicked();
+	void rotateMapClicked();
 	void mapNotesClicked();
 	
 	void showTemplateWindow(bool show);
 	void openTemplateClicked();
+	void reopenTemplateClicked();
+	void closedTemplateAvailabilityChanged();
 	
 	void editGeoreferencing();
 	
@@ -149,6 +164,7 @@ public slots:
 	void cutHoleCircleClicked();
 	void cutHoleRectangleClicked();
 	void rotateClicked();
+	void rotatePatternClicked();
 	void scaleClicked();
 	void measureClicked(bool checked);
 	void booleanUnionClicked();
@@ -176,12 +192,16 @@ protected slots:
 private:
 	void setMap(Map* map, bool create_new_map_view);
 	
+	/// Updates enabled state of all widgets
+	void updateWidgets();
+	
 	QAction* newAction(const char* id, const QString& tr_text, QObject* receiver, const char* slot, const char* icon = NULL, const QString& tr_tip = QString::null, const QString& whatsThisLink = QString::null);
 	QAction* newCheckAction(const char* id, const QString& tr_text, QObject* receiver, const char* slot, const char* icon = NULL, const QString& tr_tip = QString::null, const QString& whatsThisLink = QString::null);
 	QAction* newToolAction(const char* id, const QString& tr_text, QObject* receiver, const char* slot, const char* icon = NULL, const QString& tr_tip = QString::null, const QString& whatsThisLink = QString::null);
     QAction* findAction(const char* id);
     void assignKeyboardShortcuts();
     void createMenuAndToolbars();
+	void createPieMenu(PieMenu* menu);
 	
 	void paintOnTemplate(Template* temp);
 	void updatePaintOnTemplateAction();
@@ -213,6 +233,11 @@ private:
 	QAction* copy_act;
 	QAction* paste_act;
 	
+	QAction* show_grid_act;
+	QAction* hatch_areas_view_act;
+	QAction* baseline_view_act;
+	QAction* hide_all_templates_act;
+	
 	QAction* map_coordinates_act;
 	QAction* projected_coordinates_act;
 	QAction* geographic_coordinates_act;
@@ -227,6 +252,7 @@ private:
 	
 	QAction* template_window_act;
 	EditorDockWidget* template_dock_widget;
+	QAction* reopen_template_act;
 	
 	QAction* edit_tool_act;
 	QAction* draw_point_act;
@@ -246,6 +272,7 @@ private:
 	QAction* cut_hole_circle_act;
 	QAction* cut_hole_rectangle_act;
 	QAction* rotate_act;
+	QAction* rotate_pattern_act;
 	QAction* scale_act;
 	QAction* measure_act;
 	EditorDockWidget* measure_dock_widget;
@@ -257,7 +284,7 @@ private:
 	QAction* paint_on_template_act;
 	Template* last_painted_on_template;
 	
-	QLabel* statusbar_zoom_label;
+	QFrame* statusbar_zoom_frame;
 	QLabel* statusbar_cursorpos_label;
 	
 	QToolBar* toolbar_view;
@@ -266,6 +293,7 @@ private:
 	QToolBar* toolbar_advanced_editing;
 	
 	QScopedPointer<GeoreferencingDialog> georeferencing_dialog;
+	QScopedPointer<ReopenTemplateDialog> reopen_template_dialog;
 	
 	QHash<Template*, TemplatePositionDockWidget*> template_position_widgets;
 };
@@ -292,110 +320,6 @@ signals:
 private:
 	QAction* action;
 	EditorDockWidgetChild* child;
-	MapEditorController* editor;
-};
-
-/// Represents a type of editing activity, e.g. georeferencing. Only one activity can be active at a time.
-/// This is for example used to close the georeferencing window when selecting an edit tool.
-class MapEditorActivity : public QObject
-{
-Q_OBJECT
-public:
-	virtual ~MapEditorActivity() {}
-	
-	/// All initializations apart from setting variables like the activity object should be done here instead of in the constructor,
-	/// as now the old activity was properly destroyed (including reseting the activity drawing).
-	virtual void init() {}
-	
-	void setActivityObject(void* address) {activity_object = address;}
-	inline void* getActivityObject() const {return activity_object;}
-	
-	/// All dynamic drawings must be drawn here using the given painter. Drawing is only possible in the area specified by calling map->setActivityBoundingBox().
-	virtual void draw(QPainter* painter, MapWidget* widget) {};
-	
-protected:
-	void* activity_object;
-};
-
-/// Represents a tool which works usually by using the mouse.
-/// The given button is unchecked when the tool is destroyed.
-/// NOTE: do not change any settings (e.g. status bar text) in the constructor, as another tool still might be
-/// active at that point in time! Instead, use the init() method.
-class MapEditorTool : public QObject
-{
-public:
-	enum Type
-	{
-		Other = 0,
-		Edit = 1
-	};
-	
-	MapEditorTool(MapEditorController* editor, Type type, QAction* tool_button = NULL);
-	virtual ~MapEditorTool();
-	
-	/// This is called when the tool is activated and should be used to change any settings, e.g. the status bar text
-	virtual void init() {}
-	/// Must return the cursor which should be used for the tool in the editor windows. TODO: How to change the cursor for all map widgets while active?
-	virtual QCursor* getCursor() = 0;
-	
-	/// All dynamic drawings must be drawn here using the given painter. Drawing is only possible in the area specified by calling map->setDrawingBoundingBox().
-	virtual void draw(QPainter* painter, MapWidget* widget) {};
-	
-	// Mouse input
-	virtual bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) {return false;}
-	virtual bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) {return false;}
-	virtual bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) {return false;}
-	virtual bool mouseDoubleClickEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) {return false;}
-	virtual void leaveEvent(QEvent* event) {}
-	
-	// Key input
-	virtual bool keyPressEvent(QKeyEvent* event) {return false;}
-	virtual bool keyReleaseEvent(QKeyEvent* event) {return false;}
-	virtual void focusOutEvent(QFocusEvent* event) {}
-	
-	inline Type getType() const {return type;}
-	inline QAction* getAction() const {return tool_button;}
-	
-	static void loadPointHandles();
-	
-	static const QRgb inactive_color;
-	static const QRgb active_color;
-	static const QRgb selection_color;
-	static QImage* point_handles;
-	
-protected:
-	/// The numbers correspond to the position in point-handles.png
-	enum PointHandleType
-	{
-		StartHandle = 0,
-		EndHandle = 1,
-		NormalHandle = 2,
-		CurveHandle = 3,
-		DashHandle = 4
-	};
-	
-	/// Can be called by subclasses to display help text in the status bar
-	void setStatusBarText(const QString& text);
-	
-	// Helper methods for editing the selected objects with preview
-	void startEditingSelection(MapRenderables& old_renderables, std::vector<Object*>* undo_duplicates = NULL);
-	void resetEditedObjects(std::vector<Object*>* undo_duplicates);
-	void finishEditingSelection(MapRenderables& renderables, MapRenderables& old_renderables, bool create_undo_step, std::vector<Object*>* undo_duplicates = NULL, bool delete_objects = false);
-	void updateSelectionEditPreview(MapRenderables& renderables);
-	void deleteOldSelectionRenderables(MapRenderables& old_renderables, bool set_area_dirty);
-	
-	// Helper methods for object handles
-	void includeControlPointRect(QRectF& rect, Object* object, QPointF* box_text_handles);
-	void drawPointHandles(int hover_point, QPainter* painter, Object* object, MapWidget* widget);
-	void drawPointHandle(QPainter* painter, QPointF point, PointHandleType type, bool active);
-	void drawCurveHandleLine(QPainter* painter, QPointF point, QPointF curve_handle, bool active);
-	bool calculateBoxTextHandles(QPointF* out);
-	
-	int findHoverPoint(QPointF cursor, Object* object, bool include_curve_handles, QPointF* box_text_handles, QRectF* selection_extent, MapWidget* widget);
-	inline float distanceSquared(const QPointF& a, const QPointF& b) {float dx = b.x() - a.x(); float dy = b.y() - a.y(); return dx*dx + dy*dy;}
-	
-	QAction* tool_button;
-	Type type;
 	MapEditorController* editor;
 };
 

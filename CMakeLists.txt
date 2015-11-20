@@ -25,8 +25,8 @@ project(Mapper)
 # All version components must be integers.
 # We use 99 to mark development builds.
 SET(Mapper_VERSION_MAJOR 0)
-SET(Mapper_VERSION_MINOR 3)
-SET(Mapper_VERSION_PATCH 2)
+SET(Mapper_VERSION_MINOR 4)
+SET(Mapper_VERSION_PATCH 0)
 SET(Mapper_VERSION_DISPLAY "${CMAKE_BUILD_TYPE} ${Mapper_VERSION_MAJOR}.${Mapper_VERSION_MINOR}.${Mapper_VERSION_PATCH}")
 
 # Build configuration options
@@ -37,13 +37,15 @@ if(NOT CMAKE_BUILD_TYPE)
 	  FORCE)
 endif(NOT CMAKE_BUILD_TYPE)
 
-option(Mapper_XML_FORMAT "Enable the unmaintained export-only XML format, options are: OFF, ON.")
+option(Mapper_XML_FORMAT "Enable the OpenOrienteering Mapper XML format" ON)
 
 option(Mapper_TRANSLATIONS_EMBEDDED "Embed all translations in the program executable")
 
 option(Mapper_BUILD_PROJ "Build the Proj library from source")
 
 option(Mapper_BUILD_QT   "Build the Qt library from source")
+
+option(Mapper_USE_QT5    "Use Qt library version 5")
 
 option(Mapper_BUILD_PACKAGE "Create a target for building packages" ON)
 
@@ -52,10 +54,10 @@ if(WIN32 OR APPLE)
 else()
 	set(Mapper_PACKAGE_ALL_DEFAULT OFF)
 endif()
-option(Mapper_PACKAGE_ASSISTANT "Shall the Qt Assistant be included in the package" ${Mapper_PACKAGE_ALL_DEFAULT})
-option(Mapper_PACKAGE_LIBRARIES "Shall all libraries be included in the package" ${Mapper_PACKAGE_ALL_DEFAULT})
-option(Mapper_PACKAGE_TRANSLATIONS "Shall the Qt translations be included in the package" ${Mapper_PACKAGE_LIBRARIES})
-mark_as_advanced(Mapper_BUILD_PACKAGE Mapper_PACKAGE_ASSISTANT Mapper_PACKAGE_LIBRARIES Mapper_PACKAGE_TRANSLATIONS)
+option(Mapper_PACKAGE_LIBRARIES    "Include all libraries in the packages"   ${Mapper_PACKAGE_ALL_DEFAULT})
+option(Mapper_PACKAGE_TRANSLATIONS "Include Qt translations in the packages" ${Mapper_PACKAGE_ALL_DEFAULT})
+option(Mapper_PACKAGE_ASSISTANT    "Include Qt Assistant in the packages"    ${Mapper_PACKAGE_ALL_DEFAULT})
+mark_as_advanced(Mapper_BUILD_PACKAGE Mapper_PACKAGE_LIBRARIES Mapper_PACKAGE_TRANSLATIONS Mapper_PACKAGE_ASSISTANT)
 
 
 # Installation configuration
@@ -93,13 +95,15 @@ if(Mapper_BUILD_PROJ)
 	add_dependencies(Mapper_prerequisites Proj)
 	if(NOT PROJ_FOUND)
 		set(Mapper_prerequisites_FOUND FALSE)
-		message(STATUS "Proj library will be built from source")
+		message("Proj library will be built from source")
 	endif()
 else()
 	find_package(Proj REQUIRED)
 endif()
 
-if(Mapper_BUILD_QT)
+if(Mapper_BUILD_QT AND Mapper_USE_QT5)
+	message(FATAL "Building Qt5 not supported yet.")
+elseif(Mapper_BUILD_QT)
 	add_subdirectory(3rd-party/qt4)
 	add_dependencies(Mapper_prerequisites Qt4)
 	if(NOT QT_QMAKE_EXECUTABLE MATCHES NOTFOUND)
@@ -107,20 +111,34 @@ if(Mapper_BUILD_QT)
 	endif()
 	if(NOT QT4_FOUND)
 		set(Mapper_prerequisites_FOUND FALSE)
-		message(STATUS "Qt4 library will be built from source")
+		message("Qt4 library will be built from source")
 	endif()
+elseif(Mapper_USE_QT5)
+	# may require -DCMAKE_PREFIX_PATH=/path-to-qt5-dir
+	find_package(Qt5Core REQUIRED)
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${Qt5Core_EXECUTABLE_COMPILE_FLAGS}")
 else()
 	find_package(Qt4 4.6 REQUIRED QtCore QtGui QtNetwork QtXml)
 endif()
 
 if(Mapper_prerequisites_FOUND)
 
-include(${QT_USE_FILE})
-Quirks_Qt4_definitions()
-Quirks_Qt4_lib_dependencies()
+if(Mapper_USE_QT5)
+	include(Qt5Quirks)
+	foreach(qt5_module Qt5Core Qt5Widgets Qt5Xml Qt5Network Qt5PrintSupport)
+		find_package(${qt5_module} REQUIRED)
+		add_definitions(${${qt5_module}_DEFINITIONS})
+		list(APPEND QT_INCLUDES ${${qt5_module}_INCLUDE_DIRS})
+		list(APPEND QT_LIBRARIES ${${qt5_module}_LIBRARIES})
+	endforeach()
+else()
+	include(${QT_USE_FILE})
+	Quirks_Qt4_definitions()
+	Quirks_Qt4_lib_dependencies()
+endif()
 
 if(CMAKE_CROSSCOMPILING)
-	message(STATUS "Crosscompiling, host: ${CMAKE_HOST_SYSTEM_NAME}, target: ${CMAKE_SYSTEM_NAME}")
+	message("-- Crosscompiling, host: ${CMAKE_HOST_SYSTEM_NAME}, target: ${CMAKE_SYSTEM_NAME}")
 
 	# use host system Qt4 tools when cross-compiling
 	find_program(QT_LUPDATE_EXECUTABLE lupdate)
@@ -129,7 +147,7 @@ if(CMAKE_CROSSCOMPILING)
 endif()
 
 if (CMAKE_COMPILER_IS_GNUCXX)
-	set(CMAKE_CXX_FLAGS "-Wno-long-long -Wno-deprecated -Wall -pedantic")
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-long-long -Wno-deprecated -Wall -pedantic")
 	set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-O2 -g")
 	set(CMAKE_CXX_FLAGS_RELEASE "-g0 -O2 -s")
 	set(CMAKE_CXX_FLAGS_DEBUG "-g3 -O0 -DDEBUG")
@@ -146,6 +164,7 @@ include_directories(${QT_INCLUDES} ${CMAKE_CURRENT_BINARY_DIR} ${PROJ_INCLUDE_DI
 
 # Subdirectories
 
+add_subdirectory("test data")
 add_subdirectory("symbol sets")
 add_subdirectory("help")
 add_subdirectory("translations")

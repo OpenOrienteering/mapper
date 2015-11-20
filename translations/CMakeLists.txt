@@ -16,6 +16,8 @@
 #    You should have received a copy of the GNU General Public License
 #    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  
+if(NOT Mapper_USE_QT5)
+
 if(NOT ${QT4_FOUND})
 	find_package(Qt4 QUIET REQUIRED)
 endif()
@@ -32,6 +34,7 @@ endif()
 
 set(Mapper_TRANS
  OpenOrienteering_de.ts
+ OpenOrienteering_fr.ts
  OpenOrienteering_ja.ts
  OpenOrienteering_lv.ts
  OpenOrienteering_nb.ts
@@ -53,16 +56,16 @@ set(Mapper_TRANS_DIR
 
 if(Mapper_TRANSLATIONS_EMBEDDED)
 	set(Mapper_TRANS_QRC "${CMAKE_CURRENT_BINARY_DIR}/translations.qrc")
-	file(WRITE "${Mapper_TRANS_QRC}.in"
+	file(WRITE "${Mapper_TRANS_QRC}.tmp"
 	  "<!DOCTYPE RCC><RCC version=\"1.0\">\n <qresource>\n")
 	foreach(_qm_file ${Mapper_QM})
 		get_filename_component(_qm_filename "${_qm_file}" NAME)
-		file(APPEND "${Mapper_TRANS_QRC}.in"
+		file(APPEND "${Mapper_TRANS_QRC}.tmp"
 		  "  <file alias=\"translations/${_qm_filename}\">${_qm_file}</file>\n")
 	endforeach(_qm_file)
-	file(APPEND "${Mapper_TRANS_QRC}.in"
+	file(APPEND "${Mapper_TRANS_QRC}.tmp"
 	  " </qresource>\n</RCC>\n")
-	execute_process(COMMAND "${CMAKE_COMMAND}" -E copy_if_different "${Mapper_TRANS_QRC}.in" "${Mapper_TRANS_QRC}")
+	execute_process(COMMAND "${CMAKE_COMMAND}" -E copy_if_different "${Mapper_TRANS_QRC}.tmp" "${Mapper_TRANS_QRC}")
 	qt4_add_resources(Mapper_TRANSLATIONS_RCC "${Mapper_TRANS_QRC}" OPTIONS -no-compress)
 
 	# A library is a top-level target, the generated source file isn't.
@@ -83,6 +86,9 @@ else()
 	  DESTINATION "${MAPPER_DATA_DESTINATION}/translations")
 
 endif(Mapper_TRANSLATIONS_EMBEDDED)
+
+# For super-builds (e.g. cross-compilation), wait for the Qt build.
+add_dependencies(Mapper_translations Mapper_prerequisites)
 
 
 # A target which updates all translations.
@@ -122,3 +128,10 @@ macro(QT4_TRANSLATIONS_SOURCES)
 	endforeach()
 endmacro()
 
+else()
+
+macro(QT4_TRANSLATIONS_SOURCES)
+	# TODO for Qt5
+endmacro()
+
+endif(NOT Mapper_USE_QT5)

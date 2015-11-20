@@ -68,6 +68,7 @@ protected slots:
 	void selectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
 	void currentCellChange(int current_row, int current_column, int previous_row, int previous_column);
 	void cellDoubleClick(int row, int column);
+	void updateDeleteButtonText();
 	
 	void moveByHandClicked(bool checked);
 	void adjustClicked(bool checked);
@@ -76,12 +77,14 @@ protected slots:
 	void positionClicked(bool checked);
 	void moreActionClicked(QAction* action);
 	
+	void templateAdded(int pos, Template* temp);
 	void templatePositionDockWidgetClosed(Template* temp);
 	
 private:
 	void addRow(int row);
 	void updateRow(int row);
 	int posFromRow(int row);
+	int rowFromPos(int pos);
 	Template* getCurrentTemplate();
 	
 	void changeTemplateFile(int row);
@@ -96,12 +99,13 @@ private:
 	QPushButton* move_down_button;
 	
 	QGroupBox* active_buttons_group;
+	QPushButton* georef_button;
 	QAction* move_by_hand_action;
 	QToolButton* move_by_hand_button;
 	QPushButton* adjust_button;
 	//QPushButton* group_button;
 	QPushButton* position_button;
-	QToolButton* more_button;
+	//QToolButton* more_button;
 	
 	bool wide_layout;
 	QBoxLayout* layout;

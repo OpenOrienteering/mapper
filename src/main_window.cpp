@@ -20,9 +20,13 @@
 
 #include "main_window.h"
 
-#include <assert.h>
+#include <cassert>
 
+#if QT_VERSION < 0x050000
 #include <QtGui>
+#else
+#include <QtWidgets>
+#endif
 
 #include <proj_api.h>
 
@@ -56,10 +60,11 @@ MainWindow::MainWindow(bool as_main_window)
 	controller = NULL;
 	has_unsaved_changes = false;
 	has_opened_file = false;
-	this->show_menu = as_main_window;
+	show_menu = as_main_window;
 	disable_shortcuts = false;
 	setCurrentFile("");
 	maximized_before_fullscreen = false;
+	general_toolbar = NULL;
 	
 	setWindowIcon(QIcon(":/images/control.png"));
 	setAttribute(Qt::WA_DeleteOnClose);
@@ -70,8 +75,8 @@ MainWindow::MainWindow(bool as_main_window)
 	
 	if (as_main_window)
 		loadWindowSettings();
-
-	this->installEventFilter(this);
+	
+	installEventFilter(this);
 }
 MainWindow::~MainWindow()
 {
@@ -79,6 +84,7 @@ MainWindow::~MainWindow()
 	{
 		controller->detach();
 		delete controller;
+		delete general_toolbar;
 	}
 	num_windows--;
 }
@@ -93,6 +99,8 @@ void MainWindow::setController(MainWindowController* new_controller)
 		
 		// Just to make sure ...
 		menuBar()->clear();
+		delete general_toolbar;
+		general_toolbar = NULL;
 	}
 	
 	has_opened_file = false;
@@ -173,6 +181,11 @@ void MainWindow::createFileMenu()
 	file_menu->addSeparator();
 	file_menu->addAction(close_act);
 	file_menu->addAction(exit_act);
+	
+	general_toolbar = new QToolBar(tr("General"));
+	general_toolbar->addAction(new_act);
+	general_toolbar->addAction(open_act);
+	general_toolbar->addAction(save_act);
 	
 	save_act->setEnabled(false);
 	save_as_act->setEnabled(false);
@@ -428,36 +441,7 @@ void MainWindow::showNewMapWizard()
 }
 void MainWindow::showOpenDialog()
 {
-	// Get the saved directory to start in, defaulting to the user's home directory.
-	QSettings settings;
-	QString open_directory = settings.value("openFileDirectory", QDir::homePath()).toString();
-
-	// Build the list of supported file filters based on the file format registry
-	QString filters, extensions;
-	Q_FOREACH(const Format *format, FileFormats.formats())
-	{
-		if (format->supportsImport())
-		{
-			if (filters.isEmpty())
-			{
-				filters    = format->filter();
-				extensions = "*." % format->fileExtension();
-			}
-			else
-			{
-				filters    = filters    % ";;"  % format->filter();
-				extensions = extensions % " *." % format->fileExtension();
-			}
-		}
-	}
-	filters = 
-	  tr("All maps")  % " (" % extensions % ");;" %
-	  filters         % ";;" %
-	  tr("All files") % " (*.*)";
-
-	QString path = QFileDialog::getOpenFileName(this, tr("Open file"), open_directory, filters);
-	QFileInfo info(path);
-	path = info.canonicalFilePath();
+	QString path = getOpenFileName(this, tr("Open file"), FileType::All);
 	
 	if (path.isEmpty())
 		return;
@@ -556,13 +540,52 @@ bool MainWindow::savePath(const QString &path)
 		if (result != QMessageBox::Yes)
 			return showSaveAsDialog();
 	}
-  
+
 	if (!controller->save(path))
 		return false;
 
 	setCurrentFile(path);
 	setHasUnsavedChanges(false);
 	return true;
+}
+
+QString MainWindow::getOpenFileName(QWidget* parent, const QString& title, FileType::Enum types)
+{
+	// Get the saved directory to start in, defaulting to the user's home directory.
+	QSettings settings;
+	QString open_directory = settings.value("openFileDirectory", QDir::homePath()).toString();
+
+	// Build the list of supported file filters based on the file format registry
+	QString filters, extensions;
+	
+	if (types & FileType::Map)
+	{
+		Q_FOREACH(const Format *format, FileFormats.formats())
+		{
+			if (format->supportsImport())
+			{
+				if (filters.isEmpty())
+				{
+					filters    = format->filter();
+					extensions = "*." % format->fileExtension();
+				}
+				else
+				{
+					filters    = filters    % ";;"  % format->filter();
+					extensions = extensions % " *." % format->fileExtension();
+				}
+			}
+		}
+		filters = 
+			tr("All maps")  % " (" % extensions % ");;" %
+			filters         % ";;";
+	}
+	
+	filters += tr("All files") % " (*.*)";
+
+	QString path = QFileDialog::getOpenFileName(parent, title, open_directory, filters);
+	QFileInfo info(path);
+	return info.canonicalFilePath();
 }
 
 bool MainWindow::showSaveAsDialog()
@@ -683,7 +706,7 @@ void MainWindow::showAbout()
 		     "For contributions, thanks to:<br/>%2<br/>"
 		     "Additional information:").
 		  arg(QString("Peter Curtis<br/>Kai Pastor<br/>Russell Porter<br/>Thomas Sch&ouml;ps %1<br/>").arg(tr("(project leader)"))).
-		  arg("Jon Cundill<br/>Jan Dalheimer<br/>Eugeniy Fedirets<br/>Peter Hoban<br/>Henrik Johansson<br/>Oskar Karlin<br/>Tojo Masaya<br/>Christopher Schive<br/>Aivars Zogla<br/>")
+		  arg("Jon Cundill<br/>Jan Dalheimer<br/>Eugeniy Fedirets<br/>Peter Hoban<br/>Henrik Johansson<br/>Oskar Karlin<br/>Tojo Masaya<br/>Vincent Poinsignon<br/>Christopher Schive<br/>Aivars Zogla<br/>")
 		 );
 	QTextEdit* additional_text = new QTextEdit( 
 	  clipper_about % "<br/><br/>" %
@@ -763,10 +786,41 @@ void MainWindow::showHelp(QString filename, QString fragment)
 #else
 		process->start(QLatin1String("assistant"), args);
 #endif
+		// FIXME: Calling waitForStarted() from the main thread might cause the user interface to freeze.
 		if (!process->waitForStarted())
 		{
-			QMessageBox::warning(this, tr("Error"), tr("Failed to launch the help browser (\"Qt Assistant\"):\n\n%1").arg(QString(process->readAllStandardError())));
-			return;
+			QMessageBox msg_box;
+			msg_box.setIcon(QMessageBox::Warning);
+			msg_box.setWindowTitle(tr("Error"));
+			
+			QString assistant_install_cmd;
+#ifdef MAPPER_DEBIAN_PACKAGE_NAME
+			QDir usr_bin("/usr/bin");
+			if (!usr_bin.exists("assistant") && usr_bin.exists("software-center"))
+				assistant_install_cmd = "/usr/bin/software-center qt4-dev-tools";
+#endif
+			if (!assistant_install_cmd.isEmpty())
+			{
+				msg_box.setText(tr("The help browser (\"Qt Assistant\") is not installed.") + "\n" +
+				                tr("Do you want to install it now?"));
+				msg_box.setStandardButtons(QMessageBox::Cancel);
+				msg_box.addButton(tr("Install..."), QMessageBox::ActionRole);
+			}
+			else
+			{
+				msg_box.setText(tr("Failed to launch the help browser (\"Qt Assistant\")."));
+				msg_box.setStandardButtons(QMessageBox::Ok);
+				QString details = process->readAllStandardError();
+				if (! details.isEmpty())
+					msg_box.setDetailedText(details);
+			}
+			
+			int result = msg_box.exec();
+			if ( result != QMessageBox::Ok && result != QMessageBox::Cancel &&
+			     !assistant_install_cmd.isEmpty() )
+			{
+				QProcess::startDetached(assistant_install_cmd);
+			}
 		}
 	}
 	else

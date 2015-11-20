@@ -24,6 +24,7 @@
 #include <QWidget>
 
 #include "map.h"
+#include "util_pie_menu.h"
 
 class QLabel;
 
@@ -74,6 +75,7 @@ public:
 	/// View changes
 	void zoom(float factor);	// factor is the ratio of new_zoom / old_zoom
 	void moveView(qint64 x, qint64 y);
+	void panView(qint64 x, qint64 y);
 	
 	void setDragOffset(QPoint offset);
 	void completeDragging(QPoint offset, qint64 dx, qint64 dy);
@@ -98,11 +100,14 @@ public:
 	
 	void updateDrawing(QRectF map_rect, int pixel_border);
 	void updateEverything();	// invalidates all caches and redraws the whole widget
+	void updateEverythingInRect(const QRect& dirty_rect);
 	
 	// Set the labels where the map widget will display the respective piece of information
 	void setZoomLabel(QLabel* zoom_label);
 	void setCursorposLabel(QLabel* cursorpos_label);
 	void setCoordsDisplay(CoordsType type);
+	
+	inline PieMenu& getPieMenu() {return pie_menu;}
 	
     virtual QSize sizeHint() const;
 	
@@ -127,8 +132,12 @@ protected:
 	
 private:
 	bool containsVisibleTemplate(int first_template, int last_template);
+	inline bool isAboveTemplateVisible() {return containsVisibleTemplate(view->getMap()->getFirstFrontTemplate(), view->getMap()->getNumTemplates() - 1);}
+	inline bool isBelowTemplateVisible() {return containsVisibleTemplate(0, view->getMap()->getFirstFrontTemplate() - 1);}
 	void updateTemplateCache(QImage*& cache, QRect& dirty_rect, int first_template, int last_template, bool use_background);
 	void updateMapCache(bool use_background);
+	void updateAllDirtyCaches();
+	void shiftCache(int sx, int sy, QImage*& cache);
 	
 	QRect calculateViewportBoundingBox(QRectF map_rect, int pixel_border);
 	void setDynamicBoundingBox(QRectF map_rect, int pixel_border, QRect& dirty_rect_old, QRectF& dirty_rect_new, int& dirty_rect_new_border, bool do_update);
@@ -185,6 +194,9 @@ private:
 	QRect activity_dirty_rect_old;
 	QRectF activity_dirty_rect_new;
 	int activity_dirty_rect_new_border;
+	
+	// Right-click menu
+	PieMenu pie_menu;
 };
 
 #endif

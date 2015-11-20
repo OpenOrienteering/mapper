@@ -27,6 +27,7 @@
 #include "../libocad/libocad.h"
 
 #include "file_format.h"
+#include "map_part.h"
 #include "symbol_combined.h"
 #include "template.h"
 
@@ -41,11 +42,11 @@ class AreaSymbol;
 class OCAD8FileFormat : public Format
 {
 public:
-	OCAD8FileFormat() : Format("OCAD78", QObject::tr("OCAD Versions 7, 8"), "ocd", true, true, true) {}
+	OCAD8FileFormat();
 
 	bool understands(const unsigned char *buffer, size_t sz) const;
-	virtual Importer* createImporter(QIODevice* stream, const QString &path, Map *map, MapView *view) const throw (FormatException);
-	virtual Exporter* createExporter(QIODevice* stream, const QString& path, Map* map, MapView* view) const throw (FormatException);
+	virtual Importer* createImporter(QIODevice* stream, Map *map, MapView *view) const throw (FormatException);
+	virtual Exporter* createExporter(QIODevice* stream, Map* map, MapView* view) const throw (FormatException);
 	
 	static bool isRasterImageFile(const QString &filename);
 };
@@ -72,16 +73,16 @@ private:
 	};
 	
 public:
-	OCAD8FileImport(QIODevice* stream, const QString &path, Map *map, MapView *view);
+	OCAD8FileImport(QIODevice* stream, Map *map, MapView *view);
     ~OCAD8FileImport();
-
-	void doImport(bool load_symbols_only) throw (FormatException);
 
     void setStringEncodings(const char *narrow, const char *wide = "UTF-16LE");
 
     static const float ocad_pt_in_mm;
 
 protected:
+	void import(bool load_symbols_only) throw (FormatException);
+	
     // Symbol import
     Symbol *importPointSymbol(const OCADPointSymbol *ocad_symbol);
     Symbol *importLineSymbol(const OCADLineSymbol *ocad_symbol);
@@ -90,8 +91,8 @@ protected:
     RectangleInfo *importRectSymbol(const OCADRectSymbol *ocad_symbol);
 
     // Object import
-    Object *importObject(const OCADObject *ocad_object, MapLayer* layer);
-	bool importRectangleObject(const OCADObject* ocad_object, MapLayer* layer, const RectangleInfo& rect);
+    Object *importObject(const OCADObject *ocad_object, MapPart* part);
+	bool importRectangleObject(const OCADObject* ocad_object, MapPart* part, const RectangleInfo& rect);
 
     // String import
     void importString(OCADStringEntry *entry);
@@ -116,9 +117,6 @@ protected:
 	double convertTemplateScale(double ocad_scale);
 
 private:
-	/// File path
-	QString path;
-	
     /// Handle to the open OCAD file
     OCADFile *file;
 

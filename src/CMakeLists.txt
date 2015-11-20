@@ -25,14 +25,17 @@ execute_process(
 )
 include_directories("${CMAKE_CURRENT_BINARY_DIR}")
 
-set(Mapper_SRCS
+set(Mapper_Common_SRCS
  ../3rd-party/clipper/cpp/clipper.cpp
 
- main.cpp
+ global.cpp
  util.cpp
+ util_pie_menu.cpp
+ util_task_dialog.cpp
  undo.cpp
  qbezier.cpp
  matrix.cpp
+ transformation.cpp
 
  main_window.cpp
  main_window_home_screen.cpp
@@ -41,11 +44,15 @@ set(Mapper_SRCS
  settings_dialog.cpp
 
  map.cpp
+ map_part.cpp
  map_widget.cpp
  map_editor.cpp
+ map_editor_activity.cpp
  map_undo.cpp
  map_dialog_new.cpp
  map_dialog_scale.cpp
+ map_dialog_rotate.cpp
+ map_grid.cpp
  georeferencing.cpp
  georeferencing_dialog.cpp
 
@@ -54,6 +61,7 @@ set(Mapper_SRCS
 
  symbol.cpp
  symbol_dock_widget.cpp
+ symbol_dialog_replace.cpp
  symbol_setting_dialog.cpp
  symbol_properties_widget.cpp
  symbol_point_editor.cpp
@@ -72,12 +80,15 @@ set(Mapper_SRCS
  template_image.cpp
  template_gps.cpp
  template_map.cpp
+ template_dialog_reopen.cpp
  template_dock_widget.cpp
  template_position_dock_widget.cpp
  template_adjust.cpp
  template_tool_move.cpp
  template_tool_paint.cpp
 
+ tool.cpp
+ tool_helpers.cpp
  tool_edit.cpp
  tool_draw_line_and_area.cpp
  tool_draw_point.cpp
@@ -88,6 +99,7 @@ set(Mapper_SRCS
  tool_cut.cpp
  tool_cut_hole.cpp
  tool_rotate.cpp
+ tool_rotate_pattern.cpp
  tool_scale.cpp
  tool_measure.cpp
  tool_boolean.cpp
@@ -101,7 +113,7 @@ set(Mapper_SRCS
  file_format_ocad8.cpp
 )
 
-set(Mapper_MOC_INPUT
+set(Mapper_Common_MOC_INPUT
  color_dock_widget.h
  georeferencing.h
  georeferencing_dialog.h
@@ -111,7 +123,10 @@ set(Mapper_MOC_INPUT
  map_color.h
  map_dialog_new.h
  map_dialog_scale.h
+ map_dialog_rotate.h
  map_editor.h
+ map_editor_activity.h
+ map_grid.h
  map_undo.h
  map_widget.h
  print_dock_widget.h
@@ -120,6 +135,7 @@ set(Mapper_MOC_INPUT
  symbol.h
  symbol_area.h
  symbol_combined.h
+ symbol_dialog_replace.h
  symbol_dock_widget.h
  symbol_line.h
  symbol_point.h
@@ -129,6 +145,7 @@ set(Mapper_MOC_INPUT
  symbol_text.h
  template.h
  template_adjust.h
+ template_dialog_reopen.h
  template_dock_widget.h
  template_gps.h
  template_image.h
@@ -136,6 +153,7 @@ set(Mapper_MOC_INPUT
  template_position_dock_widget.h
  template_tool_move.h
  template_tool_paint.h
+ tool.h
  tool_cut.h
  tool_cut_hole.h
  tool_draw_circle.h
@@ -145,23 +163,54 @@ set(Mapper_MOC_INPUT
  tool_draw_rectangle.h
  tool_draw_text.h
  tool_edit.h
+ tool_helpers.h
  tool_measure.h
  tool_rotate.h
+ tool_rotate_pattern.h
  tool_scale.h
  undo.h
+ util_pie_menu.h
+ util_task_dialog.h
 )
 
 if(Mapper_XML_FORMAT)
-	list(APPEND Mapper_SRCS file_format_xml.cpp)
+	list(APPEND Mapper_Common_SRCS file_format_xml.cpp)
 endif(Mapper_XML_FORMAT)
 
-qt4_wrap_cpp(Mapper_MOC ${Mapper_MOC_INPUT})
+qt4_wrap_cpp(Mapper_Common_MOC ${Mapper_Common_MOC_INPUT})
 
 # Resources (from project root)
 
 set(Mapper_RESOURCES ${Mapper_RESOURCES} ${PROJECT_SOURCE_DIR}/resources.qrc)
 qt4_add_resources(Mapper_RESOURCES_RCC ${Mapper_RESOURCES} OPTIONS -no-compress)
 
+# Mapper common
+
+add_library(Mapper_Common STATIC
+	${Mapper_Common_SRCS}
+	${Mapper_Common_MOC}
+	${Mapper_RESOURCES_RCC}
+)
+target_link_libraries(Mapper_Common
+ ${Mapper_LIBRARIES}
+ ${QT_LIBRARIES}
+ ${PROJ_LIBRARY}
+)
+add_dependencies(Mapper_Common
+  Mapper_prerequisites
+)
+
+qt4_translations_sources(
+  SOURCES ${Mapper_Common_SRCS}
+)
+
+
+# Mapper executable
+
+set(Mapper_SRCS
+ main.cpp
+)
+ 
 if(MINGW)
 	enable_language(RC)
 	Quirks_CMake_RC_Compiler()
@@ -170,30 +219,45 @@ if(MINGW)
 	list(APPEND Mapper_SRCS ${CMAKE_CURRENT_BINARY_DIR}/resources.rc)
 endif(MINGW)
 
-# Mapper executable
-
 add_executable(Mapper
 	WIN32
 	MACOSX_BUNDLE
 	${Mapper_SRCS}
-	${Mapper_MOC}
-	${Mapper_RESOURCES_RCC}
 )
 target_link_libraries(Mapper
- ${Mapper_LIBRARIES}
- ${QT_LIBRARIES}
- ${PROJ_LIBRARY}
-)
-add_dependencies(Mapper
-  Mapper_prerequisites
-  Mapper_config_h
+ Mapper_Common
 )
 
 install(TARGETS Mapper
   RUNTIME DESTINATION "${MAPPER_RUNTIME_DESTINATION}"
   BUNDLE DESTINATION "${MAPPER_RUNTIME_DESTINATION}"
 )
-qt4_translations_sources(
-  SOURCES ${Mapper_SRCS}
+
+
+# Test executable
+
+if(Mapper_USE_QT5)
+	find_package(Qt5Test REQUIRED)
+	set(QT_QTTEST_LIBRARY ${Qt5Test_LIBRARIES})
+endif()
+
+set(Mapper_Test_SRCS
+ test.cpp
 )
 
+set(Mapper_Test_MOC_INPUT
+ test.h
+)
+
+qt4_wrap_cpp(Mapper_Test_MOC ${Mapper_Test_MOC_INPUT})
+
+add_executable(Mapper_Test
+	WIN32
+	${Mapper_Test_SRCS}
+	${Mapper_Test_MOC}
+)
+add_test(NAME Mapper_Test_General COMMAND $<TARGET_FILE:Mapper_Test>)
+target_link_libraries(Mapper_Test
+ Mapper_Common
+ ${QT_QTTEST_LIBRARY}
+)

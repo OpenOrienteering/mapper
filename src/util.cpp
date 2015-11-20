@@ -35,6 +35,17 @@ QValidator::State DoubleValidator::validate(QString& input, int& pos) const
 	return QDoubleValidator::validate(input, pos);
 }
 
+void blockSignalsRecursively(QObject* obj, bool block)
+{
+	if (!obj)
+		return;
+	obj->blockSignals(block);
+	
+	const QObjectList& list = obj->children();
+	for (QObjectList::const_iterator it = list.begin(), end = list.end(); it != end; ++it)
+		blockSignalsRecursively(*it, block);
+}
+
 void rectInclude(QRectF& rect, MapCoordF point)
 {
 	if (point.getX() < rect.left())

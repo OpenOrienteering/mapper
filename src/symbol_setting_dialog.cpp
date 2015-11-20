@@ -20,7 +20,11 @@
 
 #include "symbol_setting_dialog.h"
 
+#if QT_VERSION < 0x050000
 #include <QtGui>
+#else
+#include <QtWidgets>
+#endif
 
 #include "map.h"
 #include "object.h"
@@ -173,10 +177,10 @@ Symbol* SymbolSettingDialog::getNewSymbol() const
 void SymbolSettingDialog::updatePreview()
 {
 	symbol_icon_label->setPixmap(QPixmap::fromImage(*symbol->getIcon(source_map, true)));
-	for (int l = 0; l < preview_map->getNumLayers(); ++l)
-		for (int i = 0; i < preview_map->getLayer(l)->getNumObjects(); ++i)
+	for (int l = 0; l < preview_map->getNumParts(); ++l)
+		for (int i = 0; i < preview_map->getPart(l)->getNumObjects(); ++i)
 		{
-			preview_map->getLayer(l)->getObject(i)->update(true);
+			preview_map->getPart(l)->getObject(i)->update(true);
 		}
 }
 
@@ -210,13 +214,12 @@ void SymbolSettingDialog::centerTemplateBBox()
 	assert(preview_map->getNumTemplates() == 1);
 	Template* temp = preview_map->getTemplate(0);
 	
-	QRectF extent = temp->getExtent();
-	QPointF center = extent.center();
-	MapCoordF map_center_current = temp->templateToMap(center);
+	QRectF bbox = temp->calculateTemplateBoundingBox();
+	QPointF center = bbox.center();
 	
 	preview_map->setTemplateAreaDirty(0);
-	temp->setTemplateX(temp->getTemplateX() - qRound64(1000 * map_center_current.getX()));
-	temp->setTemplateY(temp->getTemplateY() - qRound64(1000 * map_center_current.getY()));
+	temp->setTemplateX(temp->getTemplateX() - qRound64(1000 * center.x()));
+	temp->setTemplateY(temp->getTemplateY() - qRound64(1000 * center.y()));
 	preview_map->setTemplateAreaDirty(0);
 }
 

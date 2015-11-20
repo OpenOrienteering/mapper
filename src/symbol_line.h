@@ -25,17 +25,45 @@
 #include "path_coord.h"
 #include "symbol_properties_widget.h"
 
+QT_BEGIN_NAMESPACE
 class QCheckBox;
 class QDoubleSpinBox;
 class QLabel;
 class QLineEdit;
 class QScrollArea;
 class QSpinBox;
+class QGridLayout;
+class QXmlStreamReader;
+class QXmlStreamWriter;
+QT_END_NAMESPACE
 
 class ColorDropDown;
 class SymbolSettingDialog;
 class PointSymbolEditorWidget;
 class PointSymbol;
+
+struct LineSymbolBorder
+{
+	MapColor* color;
+	int width;
+	int shift;
+	bool dashed;
+	int dash_length;
+	int break_length;
+	
+	void reset();
+	void save(QIODevice* file, Map* map);
+	bool load(QIODevice* file, int version, Map* map);
+	void save(QXmlStreamWriter& xml, const Map& map) const;
+	bool load(QXmlStreamReader& xml, Map& map);
+	bool equals(const LineSymbolBorder* other) const;
+	void assign(const LineSymbolBorder& other, const QHash<MapColor*, MapColor*>* color_map);
+	
+	bool isVisible() const;
+	void createSymbol(LineSymbol& out);
+	void scale(double factor);
+};
+
 
 class LineSymbol : public Symbol
 {
@@ -58,7 +86,7 @@ public:
 		RoundJoin = 2
 	};
 	
-	/// Constructs an empty point symbol
+	/// Constructs an empty line symbol
 	LineSymbol();
 	virtual ~LineSymbol();
 	virtual Symbol* duplicate(const QHash<MapColor*, MapColor*>* color_map = NULL) const;
@@ -67,6 +95,7 @@ public:
 	void createRenderables(Object* object, bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, PathCoordVector* path_coords, ObjectRenderables& output);
 	virtual void colorDeleted(MapColor* color);
     virtual bool containsColor(MapColor* color);
+    virtual MapColor* getDominantColorGuess();
     virtual void scale(double factor);
 	
 	/// Creates empty point symbols for contained NULL symbols with the given names
@@ -133,27 +162,24 @@ public:
 	
 	inline bool hasBorder() const {return have_border_lines;}
 	inline void setHasBorder(bool value) {have_border_lines = value;}
-	inline int getBorderLineWidth() const {return border_width;}
-	inline void setBorderLineWidth(int value) {border_width = value;}
-	inline MapColor* getBorderColor() const {return border_color;}
-	inline void setBorderColor(MapColor* value) {border_color = value;}
-	inline int getBorderShift() const {return border_shift;}
-	inline void setBorderShift(int value) {border_shift = value;}
-	inline bool isBorderDashed() const {return dashed_border;}
-	inline void setBorderDashed(bool enable) {dashed_border = enable;}
-	inline int getBorderDashLength() const {return border_dash_length;}
-	inline void setBorderDashLength(int value) {border_dash_length = value;}
-	inline int getBorderBreakLength() const {return border_break_length;}
-	inline void setBorderBreakLength(int value) {border_break_length = value;}
+	inline bool areBordersDifferent() const {return !border.equals(&right_border);}
+	
+	inline LineSymbolBorder& getBorder() {return border;}
+	inline const LineSymbolBorder& getBorder() const {return border;}
+	inline LineSymbolBorder& getRightBorder() {return right_border;}
+	inline const LineSymbolBorder& getRightBorder() const {return right_border;}
 	
 	virtual SymbolPropertiesWidget* createPropertiesWidget(SymbolSettingDialog* dialog);
 	
 protected:
 	virtual void saveImpl(QIODevice* file, Map* map);
 	virtual bool loadImpl(QIODevice* file, int version, Map* map);
+	virtual void saveImpl(QXmlStreamWriter& xml, const Map& map) const;
+	virtual bool loadImpl(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol_dict);
 	virtual bool equalsImpl(Symbol* other, Qt::CaseSensitivity case_sensitivity);
 	
 	void createBorderLines(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, bool path_closed, ObjectRenderables& output);
+	void createBorderLine(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, bool path_closed, ObjectRenderables& output, LineSymbolBorder& border, float shift);
 	void shiftCoordinates(const MapCoordVector& flags, const MapCoordVectorF& coords, bool path_closed, float shift, MapCoordVector& out_flags, MapCoordVectorF& out_coords);
 	void processContinuousLine(Object* object, bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, const PathCoordVector& line_coords,
 							   float start, float end, bool has_start, bool has_end, int& cur_line_coord,
@@ -206,12 +232,8 @@ protected:
 	
 	// Border lines
 	bool have_border_lines;
-	MapColor* border_color;
-	int border_width;
-	int border_shift;
-	bool dashed_border;
-	int border_dash_length;
-	int border_break_length;
+	LineSymbolBorder border;
+	LineSymbolBorder right_border;
 };
 
 
@@ -232,6 +254,31 @@ public:
 	void updateContents();
 	
 protected:
+	struct BorderWidgets
+	{
+		QList<QWidget *> widget_list;
+		QDoubleSpinBox* width_edit;
+		ColorDropDown* color_edit;
+		QDoubleSpinBox* shift_edit;
+		QCheckBox* dashed_check;
+		
+		QList<QWidget *> dash_widget_list;
+		QDoubleSpinBox* dash_length_edit;
+		QDoubleSpinBox* break_length_edit;
+	};
+	
+	/**
+	 * Creates the widgets for one border.
+	 */
+	void createBorderWidgets(LineSymbolBorder& border, Map* map, int& row, int col, QGridLayout* layout, BorderWidgets& widgets);
+	
+	/**
+	 * Updates the border settings from the values in the widgets.
+	 */
+	void updateBorder(LineSymbolBorder& border, BorderWidgets& widgets);
+	
+	void updateBorderContents(LineSymbolBorder& border, BorderWidgets& widgets);
+	
 	/** 
 	 * Ensures that a particular widget is visible in the scoll area. 
 	 */
@@ -268,11 +315,8 @@ protected slots:
 	void midSymbolsPerDashChanged(int value);
 	void midSymbolDistanceChanged(double value);
 	void borderCheckClicked(bool checked);
-	void borderWidthEdited(double value);
-	void borderColorChanged();
-	void borderShiftChanged(double value);
-	void borderDashedClicked(bool checked);
-	void borderDashesChanged();
+	void differentBordersClicked(bool checked);
+	void borderChanged();
 	
 private slots:
 	/** Ensure that a predetermined widget is visible in the scoll area.
@@ -322,14 +366,10 @@ private:
 	// enabled if line_width > 0
 	QList<QWidget *> border_widget_list;
 	QCheckBox* border_check;
-	QDoubleSpinBox* border_width_edit;
-	ColorDropDown* border_color_edit;
-	QDoubleSpinBox* border_shift_edit;
-	QCheckBox* border_dashed_check;
-	
-	QList<QWidget *> border_dash_widget_list;
-	QDoubleSpinBox* border_dash_length_edit;
-	QDoubleSpinBox* border_break_length_edit;
+	QCheckBox* different_borders_check;
+	QList<QWidget *> different_borders_widget_list;
+	BorderWidgets border_widgets;
+	BorderWidgets right_border_widgets;
 	
 	QScrollArea* scroll_area;
 	QWidget* widget_to_ensure_visible;

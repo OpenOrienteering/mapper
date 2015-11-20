@@ -33,9 +33,14 @@
 #include "undo.h"
 #include "matrix.h"
 #include "map_coord.h"
+#include "map_part.h"
 
+QT_BEGIN_NAMESPACE
 class QIODevice;
 class QPainter;
+class QXmlStreamReader;
+class QXmlStreamWriter;
+QT_END_NAMESPACE
 
 class Map;
 struct MapColor;
@@ -52,52 +57,7 @@ class MapRenderables;
 class Template;
 class OCAD8FileImport;
 class Georeferencing;
-
-typedef std::vector< std::pair< int, Object* > > SelectionInfoVector;
-
-class MapLayer
-{
-friend class OCAD8FileImport;
-public:
-	MapLayer(const QString& name, Map* map);
-	~MapLayer();
-	
-	void save(QIODevice* file, Map* map);
-	bool load(QIODevice* file, int version, Map* map);
-	
-	inline const QString& getName() const {return name;}
-	inline void setName(const QString new_name) {name = new_name;}
-	
-	inline int getNumObjects() const {return (int)objects.size();}
-	inline Object* getObject(int i) {return objects[i];}
-    inline const Object* getObject(int i) const {return objects[i];}
-	int findObjectIndex(Object* object);					// asserts that the object is contained in the layer
-	void setObject(Object* object, int pos, bool delete_old);
-	void addObject(Object* object, int pos);
-	void deleteObject(int pos, bool remove_only);
-	bool deleteObject(Object* object, bool remove_only);	// returns if the object was found
-	
-	/// Imports the contents of the other layer (which can be from another map) into this layer.
-	/// Uses symbol_map to replace all symbols contained there. No replacement is done for symbols which are not in the map.
-	void importLayer(MapLayer* other, QHash<Symbol*, Symbol*>& symbol_map, bool select_new_objects);
-	
-	void findObjectsAt(MapCoordF coord, float tolerance, bool extended_selection, bool include_hidden_objects, bool include_protected_objects, SelectionInfoVector& out);
-	void findObjectsAtBox(MapCoordF corner1, MapCoordF corner2, bool include_hidden_objects, bool include_protected_objects, std::vector<Object*>& out);
-	
-	QRectF calculateExtent(bool include_helper_symbols);
-	void scaleAllObjects(double factor);
-	void updateAllObjects(bool remove_old_renderables = true);
-	void updateAllObjectsWithSymbol(Symbol* symbol);
-	void changeSymbolForAllObjects(Symbol* old_symbol, Symbol* new_symbol);
-	bool deleteAllObjectsWithSymbol(Symbol* symbol);		// returns if there was an object that was deleted
-	bool doObjectsExistWithSymbol(Symbol* symbol);
-	void forceUpdateOfAllObjects(Symbol* with_symbol = NULL);
-	
-private:
-	QString name;
-	std::vector<Object*> objects;	// TODO: this could / should be a spatial representation optimized for quick access
-	Map* map;
-};
+class MapGrid;
 
 /// Central class for an OpenOrienteering map
 class Map : public QObject
@@ -108,6 +68,8 @@ friend class OCAD8FileImport;
 friend class XMLFileImport;
 friend class NativeFileImport;
 friend class NativeFileExport;
+friend class XMLFileImporter;
+friend class XMLFileExporter;
 public:
 	typedef QSet<Object*> ObjectSelection;
 	
@@ -134,7 +96,7 @@ public:
 	/// Attempts to save the map to the given file. If a MapEditorController is given, the widget positions and MapViews stored in the map file are also updated.
     bool saveTo(const QString& path, MapEditorController* map_editor = NULL);
 	/// Attempts to load the map from the specified path. Returns true on success.
-	bool loadFrom(const QString& path, MapEditorController* map_editor = NULL, bool load_symbols_only = false);
+	bool loadFrom(const QString& path, MapEditorController* map_editor = NULL, bool load_symbols_only = false, bool show_error_messages = true);
 	/// Imports the other map into this map with the following strategy:
 	///  - if the other map contains objects, import all objects with the minimum amount of colors and symbols needed to display them
 	///  - if the other map does not contain objects, import all symbols with the minimum amount of colors needed to display them
@@ -147,14 +109,17 @@ public:
 	/// Loads the map directly from the given IO device, where the data must be in native map format. Returns true if successful
 	bool importFromNative(QIODevice* stream);
 	
-	/// Deletes all map data and resets the map to its initial state containing one default layer
+	/// Deletes all map data and resets the map to its initial state containing one default part
 	void clear();
 	
 	/// Draws the part of the map which is visible in the given bounding box in map coordinates
 	void draw(QPainter* painter, QRectF bounding_box, bool force_min_size, float scaling, bool show_helper_symbols, float opacity = 1.0);
-	/// Draws the templates first_template until last_template which are visible in the given bouding box. view determines template visibility and can be NULL to show all templates.
-	/// draw_untransformed_parts is only possible with a MapWidget (because of MapWidget::mapToViewport()). Otherwise, set it to NULL.
-	void drawTemplates(QPainter* painter, QRectF bounding_box, int first_template, int last_template, bool draw_untransformed_parts, const QRect& untransformed_dirty_rect, MapWidget* widget, MapView* view);
+	/// Draws the map grid
+	void drawGrid(QPainter* painter, QRectF bounding_box);
+	/// Draws the templates first_template until last_template which are visible in the given bouding box.
+	/// view determines template visibility and can be NULL to show all templates.
+	/// The initial transform of the given QPainter must be the map-to-paintdevice transformation.
+	void drawTemplates(QPainter* painter, QRectF bounding_box, int first_template, int last_template, MapView* view);
 	/// Updates the renderables and extent of all objects which have been changed. This is automatically called by draw(), you normally do not need it
 	void updateObjects();
 	/// Calculates the extent of all map objects (and possibly templates). If templates should be included, a view can be given to take the template visibilities from.
@@ -188,16 +153,21 @@ public:
 	// Colors
 	
 	inline int getNumColors() const {return (int)color_set->colors.size();}
-	inline MapColor* getColor(int i) {return color_set->colors[i];}
+	inline MapColor* getColor(int i) const {return color_set->colors[i];}
 	void setColor(MapColor* color, int pos);
 	MapColor* addColor(int pos);
 	void addColor(MapColor* color, int pos);
 	void deleteColor(int pos);
-	int findColorIndex(MapColor* color);	// returns -1 if not found
+	int findColorIndex(MapColor* color) const;	// returns -1 if not found
 	void setColorsDirty();
 	
 	void useColorsFrom(Map* map);
 	bool isColorUsedByASymbol(MapColor* color);
+	
+	/// Returns a vector of the same size as the color list, where each element is set to true if
+	/// the color is used by at least one symbol.
+	/// WARNING (FIXME): returns an empty list if the map does not contain symbols
+	void determineColorsInUse(const std::vector< bool >& by_which_symbols, std::vector< bool >& out);
 	
 	// Symbols
 	
@@ -206,9 +176,14 @@ public:
 	void setSymbol(Symbol* symbol, int pos);
 	void addSymbol(Symbol* symbol, int pos);
 	void moveSymbol(int from, int to);
-    void sortSymbols(bool (*cmp)(Symbol *, Symbol *));
+	template<typename T> void sortSymbols(T compare)
+	{
+		std::stable_sort(symbols.begin(), symbols.end(), compare);
+		// TODO: emit(symbolChanged(pos, symbol)); ? s/b same choice as for moveSymbol()
+		setSymbolsDirty();
+	}
 	void deleteSymbol(int pos);
-	int findSymbolIndex(Symbol* symbol);
+	int findSymbolIndex(const Symbol* symbol) const;
 	void setSymbolsDirty();
 	
 	void scaleAllSymbols(double factor);
@@ -220,6 +195,7 @@ public:
 	/// Adds to the given symbol bitfield all other symbols which are needed to display the symbols indicated by the bitfield.
 	void determineSymbolUseClosure(std::vector< bool >& symbol_bitfield);
 	
+	
 	// Templates
 	
 	inline int getNumTemplates() const {return templates.size();}
@@ -227,47 +203,107 @@ public:
 	inline void setFirstFrontTemplate(int pos) {first_front_template = pos;}
 	inline int getFirstFrontTemplate() const {return first_front_template;}
 	void setTemplate(Template* temp, int pos);
-	void addTemplate(Template* temp, int pos);									// NOTE: adjust first_front_template manually!
-	void deleteTemplate(int pos);												// NOTE: adjust first_front_template manually!
+	/// Adds the template at the given position.
+	/// If a view is given, the template is made visible in this view (by default, templates are hidden).
+	/// NOTE: adjust first_front_template manually!
+	void addTemplate(Template* temp, int pos, MapView* view = NULL);
+	/// Removes the template with the given position from the template list,
+	/// but does not delete it.
+	/// NOTE: adjust first_front_template manually!
+	void removeTemplate(int pos);
+	/// Removes the template with the given position from the template list and deletes it.
+	/// NOTE: adjust first_front_template manually!
+	void deleteTemplate(int pos);
 	void setTemplateAreaDirty(Template* temp, QRectF area, int pixel_border);	// marks the respective regions in the template caches as dirty; area is given in map coords (mm). Does nothing if the template is not visible in a widget! So make sure to call this and showing/hiding a template in the correct order!
 	void setTemplateAreaDirty(int i);											// this does nothing for i == -1
 	int findTemplateIndex(Template* temp);
 	void setTemplatesDirty();
 	void emitTemplateChanged(Template* temp);
 	
-	// Layers & Undo
+	// Closed (unloaded) templates for which only the settings are stored
+	inline int getNumClosedTemplates() {return (int)closed_templates.size();}
+	inline Template* getClosedTemplate(int i) {return closed_templates[i];}
+	void clearClosedTemplates();
+	
+	/// Removes the template with the given index from the normal template list,
+	/// unloads the template file and adds the template to the closed template list
+	/// NOTE: adjust first_front_template manually!
+	void closeTemplate(int i);
+	
+	/// Removes the template with the given index from the closed template list,
+	/// load the template file and adds the template to the normal template list again.
+	/// The template is made visible in the given view.
+	/// NOTE: adjust first_front_template manually before calling this method!
+	bool reloadClosedTemplate(int i, int target_pos, QWidget* dialog_parent, MapView* view, const QString& map_path = QString());
+	
+	
+	// Parts & Undo
 	
 	inline UndoManager& objectUndoManager() {return object_undo_manager;}
 	
-	inline int getNumLayers() const {return (int)layers.size();}
-	inline MapLayer* getLayer(int i) const {return layers[i];}
-	void addLayer(MapLayer* layer, int pos);
-	int findLayerIndex(MapLayer* layer) const;
+	inline int getNumParts() const {return (int)parts.size();}
+	inline MapPart* getPart(int i) const {return parts[i];}
+	void addPart(MapPart* part, int pos);
+	int findPartIndex(MapPart* part) const;
 	
-	// TODO: Layer management
+	// TODO: Part management
 	
-	inline MapLayer* getCurrentLayer() const {return (current_layer_index < 0) ? NULL : layers[current_layer_index];}
-	inline void setCurrentLayer(MapLayer* layer) {current_layer_index = findLayerIndex(layer);}
-	inline int getCurrentLayerIndex() const {return current_layer_index;}
+	inline MapPart* getCurrentPart() const {return (current_part_index < 0) ? NULL : parts[current_part_index];}
+	inline void setCurrentPart(MapPart* part) {current_part_index = findPartIndex(part);}
+	inline int getCurrentPartIndex() const {return current_part_index;}
+	
 	
 	// Objects
 	
 	int getNumObjects();
-	int addObject(Object* object, int layer_index = -1);						// returns the index of the added object in the layer
+	int addObject(Object* object, int part_index = -1);						// returns the index of the added object in the part
 	void deleteObject(Object* object, bool remove_only);						// remove_only will remove the object from the map, but not call "delete object"; be sure to call removeObjectFromSelection() if necessary
 	void setObjectsDirty();
 	
 	void setObjectAreaDirty(QRectF map_coords_rect);
-	void findObjectsAt(MapCoordF coord, float tolerance, bool extended_selection, bool include_hidden_objects, bool include_protected_objects, SelectionInfoVector& out);
+	void findObjectsAt(MapCoordF coord, float tolerance, bool treat_areas_as_paths, bool extended_selection, bool include_hidden_objects, bool include_protected_objects, SelectionInfoVector& out);
 	void findObjectsAtBox(MapCoordF corner1, MapCoordF corner2, bool include_hidden_objects, bool include_protected_objects, std::vector<Object*>& out);
+	int countObjectsInRect(QRectF map_coord_rect, bool include_hidden_objects);
 	
+	/// Goes through all objects and for each object where condition(object) returns true, applies processor(object, map_part, object_index).
+	/// If processor() returns false, aborts the operation and includes ObjectOperationResult::Aborted in the return value.
+	/// If the operation is performed on any object (i.e. the condition returns true at least once), includes ObjectOperationResult::Success in the return value.
+	template<typename Processor, typename Condition> ObjectOperationResult::Enum operationOnAllObjects(const Processor& processor, const Condition& condition)
+	{
+		int result = ObjectOperationResult::NoResult;
+		int size = parts.size();
+		for (int i = 0; i < size; ++i)
+		{
+			result |= parts[i]->operationOnAllObjects<Processor, Condition>(processor, condition);
+			if (result & ObjectOperationResult::Abort)
+				return (ObjectOperationResult::Enum)result;
+		}
+		return (ObjectOperationResult::Enum)result;
+	}
+	/// Version of operationOnAllObjects() without condition.
+	template<typename Processor> ObjectOperationResult::Enum operationOnAllObjects(const Processor& processor)
+	{
+		int result = ObjectOperationResult::NoResult;
+		int size = parts.size();
+		for (int i = 0; i < size; ++i)
+		{
+			result |= parts[i]->operationOnAllObjects<Processor>(processor);
+			if (result & ObjectOperationResult::Abort)
+				return (ObjectOperationResult::Enum)result;
+		}
+		return (ObjectOperationResult::Enum)result;
+	}
 	void scaleAllObjects(double factor);
-	void updateAllObjects(bool remove_old_renderables = true);
+	void rotateAllObjects(double rotation);
+	void updateAllObjects();
 	void updateAllObjectsWithSymbol(Symbol* symbol);
 	void changeSymbolForAllObjects(Symbol* old_symbol, Symbol* new_symbol);
 	bool deleteAllObjectsWithSymbol(Symbol* symbol);							// returns if there was an object that was deleted
+	
+	/// Returns if at least one object with the given symbol exists in the map.
+	/// WARNING: Even if no objects exist directly, the symbol could still be required
+	///          by another (combined) symbol used by an object
 	bool doObjectsExistWithSymbol(Symbol* symbol);
-	void forceUpdateOfAllObjects(Symbol* with_symbol = NULL);					// if with_symbol == NULL, all objects are affected
 	
 	void removeRenderablesOfObject(Object* object, bool mark_area_as_dirty);	// NOTE: does not delete the renderables, just removes them from display
 	void insertRenderablesOfObject(Object* object);
@@ -310,7 +346,8 @@ public:
 	
 	void setScaleDenominator(int value);
 	int getScaleDenominator() const;
-	void changeScale(int new_scale_denominator, bool scale_symbols, bool scale_objects);
+	void changeScale(int new_scale_denominator, bool scale_symbols, bool scale_objects, bool scale_georeferencing, bool scale_templates);
+	void rotateMap(double rotation, bool adjust_georeferencing, bool adjust_declination, bool adjust_templates);
 	
 	inline const QString& getMapNotes() const {return map_notes;}
 	inline void setMapNotes(const QString& text) {map_notes = text;}
@@ -318,15 +355,28 @@ public:
 	void setGeoreferencing(const Georeferencing& georeferencing);
 	inline const Georeferencing& getGeoreferencing() const {return *georeferencing;}
 	
+	inline MapGrid& getGrid() {return *grid;}
+	
+	// TODO: These two options should really be view options, but the current architecture makes it impossible to have different renderables of the same objects in different views,
+	inline bool isAreaHatchingEnabled() const {return area_hatching_enabled;}
+	inline void setAreaHatchingEnabled(bool enabled) {area_hatching_enabled = enabled;}
+	inline bool isBaselineViewEnabled() const {return baseline_view_enabled;}
+	inline void setBaselineViewEnabled(bool enabled) {baseline_view_enabled = enabled;}
+	
 	inline bool arePrintParametersSet() const {return print_params_set;}
-	void setPrintParameters(int orientation, int format, float dpi, bool show_templates, bool center, float left, float top, float width, float height);
-	void getPrintParameters(int& orientation, int& format, float& dpi, bool& show_templates, bool& center, float& left, float& top, float& width, float& height);
+	void setPrintParameters(int orientation, int format, float dpi, bool show_templates, bool show_grid, bool center, float left, float top, float width, float height, bool different_scale_enabled, int different_scale);
+	void getPrintParameters(int& orientation, int& format, float& dpi, bool& show_templates, bool& show_grid, bool& center, float& left, float& top, float& width, float& height, bool& different_scale_enabled, int& different_scale);
 	
 	void setImageTemplateDefaults(bool use_meters_per_pixel, double meters_per_pixel, double dpi, double scale);
 	void getImageTemplateDefaults(bool& use_meters_per_pixel, double& meters_per_pixel, double& dpi, double& scale);
 	
-	void setHasUnsavedChanges(bool has_unsaved_changes = true);
+	/// Returns whether there are unsaved changes in the map.
+	/// To toggle this state, never use setHasUnsavedChanges() directly unless you know what you are doing,
+	/// instead use setOtherDirty() or set one of the more specific 'dirty' flags.
+	/// This is because a call to setHasUnsavedChanges() alone followed by a map change and an undo would result in no changed flag.
 	inline bool hasUnsavedChanged() const {return unsaved_changes;}
+	/// Do not use this in usual cases, see hasUnsavedChanged().
+	void setHasUnsavedChanges(bool has_unsaved_changes = true);
 	
 	inline bool areColorsDirty() const {return colors_dirty;}
 	inline bool areSymbolsDirty() const {return symbols_dirty;}
@@ -362,6 +412,9 @@ signals:
 	void templateChanged(int pos, Template* temp);
 	void templateDeleted(int pos, Template* old_temp);
 	
+	/// Emitted when the number of closed templates changes between zero and one.
+	void closedTemplateAvailabilityChanged();
+	
 	void objectSelectionChanged();
 	
 	/// This signal is emitted when at least one of the selected objects is edited in any way.
@@ -372,7 +425,7 @@ private:
 	typedef std::vector<MapColor*> ColorVector;
 	typedef std::vector<Symbol*> SymbolVector;
 	typedef std::vector<Template*> TemplateVector;
-	typedef std::vector<MapLayer*> LayerVector;
+	typedef std::vector<MapPart*> PartVector;
 	typedef std::vector<MapWidget*> WidgetVector;
 	typedef std::vector<MapView*> ViewVector;
 	
@@ -385,8 +438,11 @@ private:
 		void addReference();
 		void dereference();
 		
-		/// Imports the other set into this set, only importing the colors for which filter[color_index] == true and
-		/// returning the map from color indices in other to imported indices. Imported colors are placed above the existing colors.
+		/// Imports the other set into this set, only importing the colors for
+		/// which filter[color_index] == true and returning the map
+		/// from color indices in other to imported indices.
+		/// Imported colors are placed below the color they were below before,
+		/// if this color exists in both sets, otherwise above the existing colors.
 		/// If a map is given, the color is properly inserted into the map.
 		void importSet(MapColorSet* other, Map* map = NULL, std::vector<bool>* filter = NULL, QHash<int, int>* out_indexmap = NULL,
 					   QHash<MapColor*, MapColor*>* out_pointermap = NULL);
@@ -400,7 +456,7 @@ private:
 	void checkIfFirstTemplateAdded();
 	
 	void adjustColorPriorities(int first, int last);
-	void determineColorsInUse(const std::vector< bool >& by_which_symbols, std::vector< bool >& out);
+	
 	/// Imports the other symbol set into this set, only importing the symbols for which filter[color_index] == true and
 	/// returning the map from symbol indices in other to imported indices. Imported symbols are placed after the existing symbols.
 	void importSymbols(Map* other, const QHash<MapColor*, MapColor*>& color_map, int insert_pos = -1, bool merge_duplicates = true, std::vector<bool>* filter = NULL,
@@ -415,12 +471,13 @@ private:
 	MapColorSet* color_set;
 	SymbolVector symbols;
 	TemplateVector templates;
+	TemplateVector closed_templates;
 	int first_front_template;		// index of the first template in templates which should be drawn in front of the map
-	LayerVector layers;
+	PartVector parts;
 	ObjectSelection object_selection;
 	Object* first_selected_object;
 	UndoManager object_undo_manager;
-	int current_layer_index;
+	int current_part_index;
 	WidgetVector widgets;
 	ViewVector views;
 	QScopedPointer<MapRenderables> renderables;
@@ -430,16 +487,24 @@ private:
 	
 	Georeferencing* georeferencing;
 	
+	MapGrid* grid;
+	
+	bool area_hatching_enabled;
+	bool baseline_view_enabled;
+	
 	bool print_params_set;			// have the parameters been set (are they valid)?
 	int print_orientation;			// QPrinter::Orientation
 	int print_format;				// QPrinter::PaperSize
 	float print_dpi;
 	bool print_show_templates;
+	bool print_show_grid;
 	bool print_center;
 	float print_area_left;
 	float print_area_top;
 	float print_area_width;
 	float print_area_height;
+	bool print_different_scale_enabled;
+	int print_different_scale;
 	
 	bool image_template_use_meters_per_pixel;
 	double image_template_meters_per_pixel;
@@ -479,7 +544,7 @@ struct TemplateVisibility
 	}
 };
 
-/// Stores view position, zoom, rotation and template visibilities to define a view onto a map
+/// Stores view position, zoom, rotation and grid / template visibilities to define a view onto a map
 class MapView
 {
 public:
@@ -488,7 +553,10 @@ public:
 	~MapView();
 	
 	void save(QIODevice* file);
-	void load(QIODevice* file);
+	void load(QIODevice* file, int version);
+	
+	void save(QXmlStreamWriter& xml);
+	void load(QXmlStreamReader& xml);
 	
 	/// Must be called to notify the map view of new widgets displaying it. Useful to notify the widgets which need to be redrawn
 	void addMapWidget(MapWidget* widget);
@@ -574,9 +642,23 @@ public:
     TemplateVisibility* getMapVisibility();
 
 	// Template visibilities
-	bool isTemplateVisible(Template* temp);						// checks if the template is visible without creating a template visibility object if none exists
-	TemplateVisibility* getTemplateVisibility(Template* temp);	// returns the template visibility object, creates one if not there yet with the default settings (invisible)
-	void deleteTemplateVisibility(Template* temp);				// call this when a template is deleted to destroy the template visibility object
+	
+	/// Checks if the template is visible without creating a template visibility object if none exists
+	bool isTemplateVisible(Template* temp);
+	
+	/// Returns the template visibility object, creates one if not there yet with the default settings (invisible)
+	TemplateVisibility* getTemplateVisibility(Template* temp);
+	
+	/// Call this when a template is deleted to destroy the template visibility object
+	void deleteTemplateVisibility(Template* temp);
+	
+	/// Enables or disables hiding all templates in this view
+	void setHideAllTemplates(bool value);
+	inline bool areAllTemplatesHidden() const {return all_templates_hidden;}
+	
+	// Grid visibility
+	inline bool isGridVisible() const {return grid_visible;}
+	inline void setGridVisible(bool visible) {grid_visible = visible;}
 	
 	// Static
 	static const double zoom_in_limit;
@@ -600,8 +682,11 @@ private:
 	Matrix view_to_map;
 	Matrix map_to_view;
 	
-    TemplateVisibility *map_visibility;
+    TemplateVisibility* map_visibility;
 	QHash<Template*, TemplateVisibility*> template_visibilities;
+	bool all_templates_hidden;
+	
+	bool grid_visible;
 	
 	WidgetVector widgets;
 };

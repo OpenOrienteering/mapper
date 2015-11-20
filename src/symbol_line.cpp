@@ -22,9 +22,16 @@
 
 #include <cassert>
 
+#if QT_VERSION < 0x050000
 #include <QtGui>
+#else
+#include <QtWidgets>
+#endif
 #include <QIODevice>
+#include <QXmlStreamReader>
+#include <QXmlStreamWriter>
 
+#include "map.h"
 #include "object.h"
 #include "map_color.h"
 #include "util.h"
@@ -35,6 +42,131 @@
 #include "renderable_implementation.h"
 #include "qbezier_p.h"
 #include "util_gui.h"
+
+// ### LineSymbolBorder ###
+
+void LineSymbolBorder::reset()
+{
+	color = NULL;
+	width = 0;
+	shift = 0;
+	dashed = false;
+	dash_length = 2 * 1000;
+	break_length = 1 * 1000;
+}
+
+void LineSymbolBorder::save(QIODevice* file, Map* map)
+{
+	int temp = map->findColorIndex(color);
+	file->write((const char*)&temp, sizeof(int));
+	file->write((const char*)&width, sizeof(int));
+	file->write((const char*)&shift, sizeof(int));
+	file->write((const char*)&dashed, sizeof(bool));
+	file->write((const char*)&dash_length, sizeof(int));
+	file->write((const char*)&break_length, sizeof(int));
+}
+
+bool LineSymbolBorder::load(QIODevice* file, int version, Map* map)
+{
+	int temp;
+	file->read((char*)&temp, sizeof(int));
+	color = (temp >= 0) ? map->getColor(temp) : NULL;
+	file->read((char*)&width, sizeof(int));
+	file->read((char*)&shift, sizeof(int));
+	file->read((char*)&dashed, sizeof(bool));
+	file->read((char*)&dash_length, sizeof(int));
+	file->read((char*)&break_length, sizeof(int));
+	return true;
+}
+
+void LineSymbolBorder::save(QXmlStreamWriter& xml, const Map& map) const
+{
+	xml.writeStartElement("border");
+	xml.writeAttribute("color", QString::number(map.findColorIndex(color)));
+	xml.writeAttribute("width", QString::number(width));
+	xml.writeAttribute("shift", QString::number(shift));
+	if (dashed)
+		xml.writeAttribute("dashed", "true");
+	xml.writeAttribute("dash_length", QString::number(dash_length));
+	xml.writeAttribute("break_length", QString::number(break_length));
+	xml.writeEndElement(/*border*/);
+}
+
+bool LineSymbolBorder::load(QXmlStreamReader& xml, Map& map)
+{
+	Q_ASSERT(xml.name() == "border");
+	
+	QXmlStreamAttributes attributes = xml.attributes();
+	int temp = attributes.value("color").toString().toInt();
+	color = (temp >= 0) ? map.getColor(temp) : NULL;
+	width = attributes.value("width").toString().toInt();
+	shift = attributes.value("shift").toString().toInt();
+	dashed = (attributes.value("dashed") == "true");
+	dash_length = attributes.value("dash_length").toString().toInt();
+	break_length = attributes.value("break_length").toString().toInt();
+	xml.skipCurrentElement();
+	return !xml.error();
+}
+
+bool LineSymbolBorder::equals(const LineSymbolBorder* other) const
+{
+	if (!Symbol::colorEquals(color, other->color))
+		return false;
+	
+	if (width != other->width)
+		return false;
+	if (shift != other->shift)
+		return false;
+	if (dashed != other->dashed)
+		return false;
+	if (dashed)
+	{
+		if (dash_length != other->dash_length)
+			return false;
+		if (break_length != other->break_length)
+			return false;
+	}
+	return true;
+}
+
+void LineSymbolBorder::assign(const LineSymbolBorder& other, const QHash<MapColor*, MapColor*>* color_map)
+{
+	color = color_map ? color_map->value(other.color) : other.color;
+	width = other.width;
+	shift = other.shift;
+	dashed = other.dashed;
+	dash_length = other.dash_length;
+	break_length = other.break_length;
+}
+
+bool LineSymbolBorder::isVisible() const
+{
+	return width > 0 && color != NULL && !(dash_length == 0 && dashed);
+}
+
+void LineSymbolBorder::createSymbol(LineSymbol& out)
+{
+	out.setLineWidth(0.001 * width);
+	out.setColor(color);
+	
+	if (dashed)
+	{
+		out.setDashed(true);
+		out.setDashLength(dash_length);
+		out.setBreakLength(break_length);
+	}
+}
+
+void LineSymbolBorder::scale(double factor)
+{
+	width = qRound(factor * width);
+	shift = qRound(factor * shift);
+	dash_length = qRound(factor * dash_length);
+	break_length = qRound(factor * break_length);
+}
+
+
+// ### LineSymbol ###
 
 LineSymbol::LineSymbol() : Symbol(Symbol::Line)
 {
@@ -68,12 +200,8 @@ LineSymbol::LineSymbol() : Symbol(Symbol::Line)
 	
 	// Border lines
 	have_border_lines = false;
-	border_color = NULL;
-	border_width = 0;
-	border_shift = 0;
-	dashed_border = false;
-	border_dash_length = 2 * 1000;
-	border_break_length = 1 * 1000;
+	border.reset();
+	right_border.reset();
 }
 LineSymbol::~LineSymbol()
 {
@@ -111,12 +239,8 @@ Symbol* LineSymbol::duplicate(const QHash<MapColor*, MapColor*>* color_map) cons
 	new_line->mid_symbols_per_spot = mid_symbols_per_spot;
 	new_line->mid_symbol_distance = mid_symbol_distance;
 	new_line->have_border_lines = have_border_lines;
-	new_line->border_color = color_map ? color_map->value(border_color) : border_color;
-	new_line->border_width = border_width;
-	new_line->border_shift = border_shift;
-	new_line->dashed_border = dashed_border;
-	new_line->border_dash_length = border_dash_length;
-	new_line->border_break_length = border_break_length;
+	new_line->border.assign(border, color_map);
+	new_line->right_border.assign(right_border, color_map);
 	new_line->cleanupPointSymbols();
 	return new_line;
 }
@@ -168,7 +292,8 @@ void LineSymbol::createRenderables(Object* object, bool path_closed, const MapCo
 		{
 			// NOTE: misuse of the point symbol
 			PointObject point_object(start_symbol);
-			point_object.setRotation(atan2(-tangent.getY(), tangent.getX()));
+			if (point_object.getSymbol()->asPoint()->isRotatable())
+				point_object.setRotation(atan2(-tangent.getY(), tangent.getX()));
 			start_symbol->createRenderables(&point_object, point_object.getRawCoordinateVector(), coords, output);
 		}
 	}
@@ -181,7 +306,8 @@ void LineSymbol::createRenderables(Object* object, bool path_closed, const MapCo
 		if (ok)
 		{
 			PointObject point_object(end_symbol);
-			point_object.setRotation(atan2(-tangent.getY(), tangent.getX()));
+			if (point_object.getSymbol()->asPoint()->isRotatable())
+				point_object.setRotation(atan2(-tangent.getY(), tangent.getX()));
 			MapCoordVectorF end_coord;
 			end_coord.push_back(coords[last]);
 			end_symbol->createRenderables(&point_object, point_object.getRawCoordinateVector(), end_coord, output);
@@ -195,15 +321,15 @@ void LineSymbol::createRenderables(Object* object, bool path_closed, const MapCo
 	// The line itself
 	MapCoordVector processed_flags;
 	MapCoordVectorF processed_coords;
-	bool create_border = have_border_lines && border_width > 0 && border_color != NULL && !(border_dash_length == 0 && dashed_border);
+	bool create_border = have_border_lines && (border.isVisible() || right_border.isVisible());
 	if (!dashed)
 	{
 		// Base line?
 		if (line_width > 0)
 		{
-			if (color && (cap_style != PointedCap || pointed_cap_length == 0) && !have_border_lines)
+			if (color && (cap_style != PointedCap || pointed_cap_length == 0) && !create_border)
 				output.insertRenderable(new LineRenderable(this, coords, flags, *path_coords, path_closed));
-			else if (have_border_lines || (cap_style == PointedCap && pointed_cap_length > 0))
+			else if (create_border || (cap_style == PointedCap && pointed_cap_length > 0))
 			{
 				int part_start = 0;
 				int part_end = 0;
@@ -248,36 +374,65 @@ void LineSymbol::createRenderables(Object* object, bool path_closed, const MapCo
 
 void LineSymbol::createBorderLines(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, bool path_closed, ObjectRenderables& output)
 {
-	LineSymbol border_symbol;
-	border_symbol.line_width = border_width;
-	border_symbol.color = border_color;
+	float shift = 0.001f * 0.5f * line_width + 0.001f * border.shift;
 	
+	if (!areBordersDifferent())
+	{
+		MapCoordVector border_flags;
+		MapCoordVectorF border_coords;
+		LineSymbol border_symbol;
+		border.createSymbol(border_symbol);
+		
+		if (border.dashed && border.dash_length > 0 && border.break_length > 0)
+		{
+			MapCoordVector dashed_flags;
+			MapCoordVectorF dashed_coords;
+			
+			border_symbol.processDashedLine(object, path_closed, flags, coords, dashed_flags, dashed_coords, output);
+			border_symbol.dashed = false;	// important, otherwise more dashes might be added by createRenderables()!
+			
+			shiftCoordinates(dashed_flags, dashed_coords, path_closed, shift, border_flags, border_coords);
+			border_symbol.createRenderables(object, path_closed, border_flags, border_coords, NULL, output);
+			shiftCoordinates(dashed_flags, dashed_coords, path_closed, -shift, border_flags, border_coords);
+			border_symbol.createRenderables(object, path_closed, border_flags, border_coords, NULL, output);
+		}
+		else
+		{
+			shiftCoordinates(flags, coords, path_closed, shift, border_flags, border_coords);
+			border_symbol.createRenderables(object, path_closed, border_flags, border_coords, NULL, output);
+			shiftCoordinates(flags, coords, path_closed, -shift, border_flags, border_coords);
+			border_symbol.createRenderables(object, path_closed, border_flags, border_coords, NULL, output);
+		}
+	}
+	else
+	{
+		createBorderLine(object, flags, coords, path_closed, output, border, -shift);
+		float shift = 0.001f * 0.5f * line_width + 0.001f * right_border.shift;
+		createBorderLine(object, flags, coords, path_closed, output, right_border, shift);
+	}
+}
+
+void LineSymbol::createBorderLine(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, bool path_closed, ObjectRenderables& output, LineSymbolBorder& border, float shift)
+{
 	MapCoordVector border_flags;
 	MapCoordVectorF border_coords;
+	LineSymbol border_symbol;
+	border.createSymbol(border_symbol);
 	
-	float shift = 0.001f * 0.5f * line_width + 0.001f * border_shift;
-	
-	if (dashed_border)
+	if (border.dashed && border.dash_length > 0 && border.break_length > 0)
 	{
 		MapCoordVector dashed_flags;
 		MapCoordVectorF dashed_coords;
 		
-		border_symbol.dashed = true;
-		border_symbol.dash_length = border_dash_length;
-		border_symbol.break_length = border_break_length;
 		border_symbol.processDashedLine(object, path_closed, flags, coords, dashed_flags, dashed_coords, output);
 		border_symbol.dashed = false;	// important, otherwise more dashes might be added by createRenderables()!
 		
 		shiftCoordinates(dashed_flags, dashed_coords, path_closed, shift, border_flags, border_coords);
 		border_symbol.createRenderables(object, path_closed, border_flags, border_coords, NULL, output);
-		shiftCoordinates(dashed_flags, dashed_coords, path_closed, -shift, border_flags, border_coords);
-		border_symbol.createRenderables(object, path_closed, border_flags, border_coords, NULL, output);
 	}
 	else
 	{
 		shiftCoordinates(flags, coords, path_closed, shift, border_flags, border_coords);
-		border_symbol.createRenderables(object, path_closed, border_flags, border_coords, NULL, output);
-		shiftCoordinates(flags, coords, path_closed, -shift, border_flags, border_coords);
 		border_symbol.createRenderables(object, path_closed, border_flags, border_coords, NULL, output);
 	}
 }
@@ -688,7 +843,8 @@ void LineSymbol::processDashedLine(Object* object, bool path_closed, const MapCo
 		{
 			// Place a mid symbol on the dash point
 			MapCoordF right = PathCoord::calculateRightVector(flags, coords, path_closed, part_end, NULL);
-			point_object.setRotation(atan2(right.getX(), right.getY()));
+			if (point_object.getSymbol()->asPoint()->isRotatable())
+				point_object.setRotation(atan2(right.getX(), right.getY()));
 			point_coord[0] = coords[part_end];
 			mid_symbol->createRenderables(&point_object, point_object.getRawCoordinateVector(), point_coord, output);
 		}
@@ -716,7 +872,8 @@ void LineSymbol::createDashSymbolRenderables(Object* object, bool path_closed, c
 		float scaling;
 		MapCoordF right = PathCoord::calculateRightVector(flags, coords, path_closed, i, &scaling);
 		
-		point_object.setRotation(atan2(right.getX(), right.getY()));
+		if (point_object.getSymbol()->asPoint()->isRotatable())
+			point_object.setRotation(atan2(right.getX(), right.getY()));
 		point_coord[0] = coords[i];
 		dash_symbol->createRenderablesScaled(&point_object, point_object.getRawCoordinateVector(), point_coord, output, scaling);
 	}
@@ -745,7 +902,8 @@ void LineSymbol::createDottedRenderables(Object* object, bool path_closed, const
 			{
 				// Insert point at start coordinate
 				right_vector = PathCoord::calculateRightVector(flags, coords, path_closed, part_start, NULL);
-				point_object.setRotation(atan2(right_vector.getX(), right_vector.getY()));
+				if (point_object.getSymbol()->asPoint()->isRotatable())
+					point_object.setRotation(atan2(right_vector.getX(), right_vector.getY()));
 				point_coord[0] = coords[part_start];
 				mid_symbol->createRenderables(&point_object, point_object.getRawCoordinateVector(), point_coord, output);
 			}
@@ -772,13 +930,15 @@ void LineSymbol::createDottedRenderables(Object* object, bool path_closed, const
 				{
 					// Insert point at start coordinate
 					right_vector = PathCoord::calculateRightVector(flags, coords, path_closed, part_start, NULL);
-					point_object.setRotation(atan2(right_vector.getX(), right_vector.getY()));
+					if (point_object.getSymbol()->asPoint()->isRotatable())
+						point_object.setRotation(atan2(right_vector.getX(), right_vector.getY()));
 					point_coord[0] = coords[part_start];
 					mid_symbol->createRenderables(&point_object, point_object.getRawCoordinateVector(), point_coord, output);
 					
 					// Insert point at end coordinate
 					right_vector = PathCoord::calculateRightVector(flags, coords, path_closed, part_end, NULL);
-					point_object.setRotation(atan2(right_vector.getX(), right_vector.getY()));
+					if (point_object.getSymbol()->asPoint()->isRotatable())
+						point_object.setRotation(atan2(right_vector.getX(), right_vector.getY()));
 					point_coord[0] = coords[part_end];
 					mid_symbol->createRenderables(&point_object, point_object.getRawCoordinateVector(), point_coord, output);
 				}
@@ -803,7 +963,8 @@ void LineSymbol::createDottedRenderables(Object* object, bool path_closed, const
 						{
 							double position = adapted_end_length + s * mid_symbol_distance_f + i * (adapted_segment_length + mid_symbols_length);
 							PathCoord::calculatePositionAt(flags, coords, line_coords, position, line_coord_search_start, &point_coord[0], &right_vector);
-							point_object.setRotation(atan2(right_vector.getX(), right_vector.getY()));
+							if (point_object.getSymbol()->asPoint()->isRotatable())
+								point_object.setRotation(atan2(right_vector.getX(), right_vector.getY()));
 							mid_symbol->createRenderables(&point_object, point_object.getRawCoordinateVector(), point_coord, output);
 						}
 					}
@@ -833,7 +994,8 @@ void LineSymbol::createDottedRenderables(Object* object, bool path_closed, const
 								break;
 							
 							PathCoord::calculatePositionAt(flags, coords, line_coords, s * mid_symbol_distance_f + i * adapted_segment_length, line_coord_search_start, &point_coord[0], &right_vector);
-							point_object.setRotation(atan2(right_vector.getX(), right_vector.getY()));
+							if (point_object.getSymbol()->asPoint()->isRotatable())
+								point_object.setRotation(atan2(right_vector.getX(), right_vector.getY()));
 							mid_symbol->createRenderables(&point_object, point_object.getRawCoordinateVector(), point_coord, output);
 						}
 					}
@@ -845,7 +1007,8 @@ void LineSymbol::createDottedRenderables(Object* object, bool path_closed, const
 		{
 			// Insert point at end coordinate
 			right_vector = PathCoord::calculateRightVector(flags, coords, path_closed, part_end, NULL);
-			point_object.setRotation(atan2(right_vector.getX(), right_vector.getY()));
+			if (point_object.getSymbol()->asPoint()->isRotatable())
+				point_object.setRotation(atan2(right_vector.getX(), right_vector.getY()));
 			point_coord[0] = coords[part_end];
 			mid_symbol->createRenderables(&point_object, point_object.getRawCoordinateVector(), point_coord, output);
 		}
@@ -929,7 +1092,8 @@ void LineSymbol::calculateCoordinatesForRange(const MapCoordVector& flags, const
 		{
 			PathCoord::calculatePositionAt(flags, coords, line_coords, mid_position, cur_line_coord, &point_coord[0], &right_vector);
 			
-			point_object.setRotation(atan2(right_vector.getX(), right_vector.getY()));
+			if (point_object.getSymbol()->asPoint()->isRotatable())
+				point_object.setRotation(atan2(right_vector.getX(), right_vector.getY()));
 			mid_symbol->createRenderables(&point_object, point_object.getRawCoordinateVector(), point_coord, output);
 			
 			mid_position += 0.001f * mid_symbol_distance;
@@ -1072,9 +1236,14 @@ void LineSymbol::colorDeleted(MapColor* color)
 		this->color = NULL;
 		have_changes = true;
 	}
-	if (color == border_color)
+	if (color == border.color)
 	{
-		this->border_color = NULL;
+		this->border.color = NULL;
+		have_changes = true;
+	}
+	if (color == right_border.color)
+	{
+		this->right_border.color = NULL;
 		have_changes = true;
 	}
 	if (have_changes)
@@ -1083,7 +1252,7 @@ void LineSymbol::colorDeleted(MapColor* color)
 
 bool LineSymbol::containsColor(MapColor* color)
 {
-	if (color == this->color || color == border_color)
+	if (color == this->color || color == border.color || color == right_border.color)
 		return true;
 	if (mid_symbol && mid_symbol->containsColor(color))
 		return true;
@@ -1094,6 +1263,66 @@ bool LineSymbol::containsColor(MapColor* color)
     if (dash_symbol && dash_symbol->containsColor(color))
 		return true;
     return false;
+}
+
+MapColor* LineSymbol::getDominantColorGuess()
+{
+	bool has_main_line = line_width > 0 && color;
+	bool has_border = hasBorder() && border.width > 0 && border.color;
+	bool has_right_border = hasBorder() && right_border.width > 0 && right_border.color;
+	
+	// Use the color of the thickest line
+	if (has_main_line)
+	{
+		if (has_border)
+		{
+			if (has_right_border)
+			{
+				if (line_width > 2 * border.width)
+					return (line_width > 2 * right_border.width) ? color : right_border.color;
+				else
+					return (border.width > right_border.width) ? border.color : right_border.color;
+			}
+			else
+				return (line_width > 2 * border.width) ? color : border.color;
+		}
+		else
+		{
+			if (has_right_border)
+				return (line_width > 2 * right_border.width) ? color : right_border.color;
+			else
+				return color;
+		}
+	}
+	else
+	{
+		if (has_border)
+		{
+			if (has_right_border)
+				return (border.width > right_border.width) ? border.color : right_border.color;
+			else
+				return border.color;
+		}
+		else
+		{
+			if (has_right_border)
+				return right_border.color;
+		}
+	}
+	
+	MapColor* dominant_color = mid_symbol ? mid_symbol->getDominantColorGuess() : NULL;
+	if (dominant_color) return dominant_color;
+	
+	dominant_color = start_symbol ? start_symbol->getDominantColorGuess() : NULL;
+	if (dominant_color) return dominant_color;
+	
+	dominant_color = end_symbol ? end_symbol->getDominantColorGuess() : NULL;
+	if (dominant_color) return dominant_color;
+	
+	dominant_color = dash_symbol ? dash_symbol->getDominantColorGuess() : NULL;
+	if (dominant_color) return dominant_color;
+	
+	return NULL;
 }
 
 void LineSymbol::scale(double factor)
@@ -1122,10 +1351,8 @@ void LineSymbol::scale(double factor)
 	in_group_break_length = qRound(factor * in_group_break_length);
 	mid_symbol_distance = qRound(factor * mid_symbol_distance);
 
-	border_width = qRound(factor * border_width);
-	border_shift = qRound(factor * border_shift);
-	border_dash_length = qRound(factor * border_dash_length);
-	border_break_length = qRound(factor * border_break_length);
+	border.scale(factor);
+	right_border.scale(factor);
 	
 	resetIcon();
 }
@@ -1246,13 +1473,13 @@ void LineSymbol::saveImpl(QIODevice* file, Map* map)
 	file->write((const char*)&mid_symbols_per_spot, sizeof(int));
 	file->write((const char*)&mid_symbol_distance, sizeof(int));
 	file->write((const char*)&have_border_lines, sizeof(bool));
-	temp = map->findColorIndex(border_color);
-	file->write((const char*)&temp, sizeof(int));
-	file->write((const char*)&border_width, sizeof(int));
-	file->write((const char*)&border_shift, sizeof(int));
-	file->write((const char*)&dashed_border, sizeof(bool));
-	file->write((const char*)&border_dash_length, sizeof(int));
-	file->write((const char*)&border_break_length, sizeof(int));
+	
+	bool are_borders_different = areBordersDifferent();
+	file->write((const char*)&are_borders_different, sizeof(bool));
+	
+	border.save(file, map);
+	if (are_borders_different)
+		right_border.save(file, map);
 }
 
 bool LineSymbol::loadImpl(QIODevice* file, int version, Map* map)
@@ -1316,14 +1543,173 @@ bool LineSymbol::loadImpl(QIODevice* file, int version, Map* map)
 	file->read((char*)&mid_symbols_per_spot, sizeof(int));
 	file->read((char*)&mid_symbol_distance, sizeof(int));
 	file->read((char*)&have_border_lines, sizeof(bool));
-	file->read((char*)&temp, sizeof(int));
-	border_color = (temp >= 0) ? map->getColor(temp) : NULL;
-	file->read((char*)&border_width, sizeof(int));
-	file->read((char*)&border_shift, sizeof(int));
-	file->read((char*)&dashed_border, sizeof(bool));
-	file->read((char*)&border_dash_length, sizeof(int));
-	file->read((char*)&border_break_length, sizeof(int));
+	
+	if (version <= 22)
+	{
+		if (!border.load(file, version, map))
+			return false;
+		right_border.assign(border, NULL);
+	}
+	else
+	{
+		bool are_borders_different;
+		file->read((char*)&are_borders_different, sizeof(bool));
+		
+		if (!border.load(file, version, map))
+			return false;
+		if (are_borders_different)
+		{
+			if (!right_border.load(file, version, map))
+				return false;
+		}
+		else
+			right_border.assign(border, NULL);
+	}
 	return true;
+}
+
+void LineSymbol::saveImpl(QXmlStreamWriter& xml, const Map& map) const
+{
+	xml.writeStartElement("line_symbol");
+	xml.writeAttribute("color", QString::number(map.findColorIndex(color)));
+	xml.writeAttribute("line_width", QString::number(line_width));
+	xml.writeAttribute("minimum_length", QString::number(minimum_length));
+	xml.writeAttribute("join_style", QString::number(join_style));
+	xml.writeAttribute("cap_style", QString::number(cap_style));
+	xml.writeAttribute("pointed_cap_length", QString::number(pointed_cap_length));
+	
+	if (dashed)
+		xml.writeAttribute("dashed", "true");
+	xml.writeAttribute("segment_length", QString::number(segment_length));
+	xml.writeAttribute("end_length", QString::number(end_length));
+	if (show_at_least_one_symbol)
+		xml.writeAttribute("show_at_least_one_symbol", "true");
+	xml.writeAttribute("minimum_mid_symbol_count", QString::number(minimum_mid_symbol_count));
+	xml.writeAttribute("minimum_mid_symbol_count_when_closed", QString::number(minimum_mid_symbol_count_when_closed));
+	xml.writeAttribute("dash_length", QString::number(dash_length));
+	xml.writeAttribute("break_length", QString::number(break_length));
+	xml.writeAttribute("dashes_in_group", QString::number(dashes_in_group));
+	xml.writeAttribute("in_group_break_length", QString::number(in_group_break_length));
+	if (half_outer_dashes)
+		xml.writeAttribute("half_outer_dashes", "true");
+	xml.writeAttribute("mid_symbols_per_spot", QString::number(mid_symbols_per_spot));
+	xml.writeAttribute("mid_symbol_distance", QString::number(mid_symbol_distance));
+	
+	if (start_symbol != NULL)
+	{
+		xml.writeStartElement("start_symbol");
+		start_symbol->save(xml, map);
+		xml.writeEndElement();
+	}
+	
+	if (mid_symbol != NULL)
+	{
+		xml.writeStartElement("mid_symbol");
+		mid_symbol->save(xml, map);
+		xml.writeEndElement();
+	}
+	
+	if (end_symbol != NULL)
+	{
+		xml.writeStartElement("end_symbol");
+		end_symbol->save(xml, map);
+		xml.writeEndElement();
+	}
+	
+	if (dash_symbol != NULL)
+	{
+		xml.writeStartElement("dash_symbol");
+		dash_symbol->save(xml, map);
+		xml.writeEndElement();
+	}
+	
+	if (have_border_lines)
+	{
+		xml.writeStartElement("borders");
+		bool are_borders_different = areBordersDifferent();
+		if (are_borders_different)
+			xml.writeAttribute("borders_different", "true");
+		border.save(xml, map);
+		if (are_borders_different)
+			right_border.save(xml, map);
+		xml.writeEndElement(/*borders*/);
+	}
+	
+	xml.writeEndElement(/*line_symbol*/);
+}
+
+bool LineSymbol::loadImpl(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol_dict)
+{
+	Q_ASSERT(xml.name() == "line_symbol");
+	
+	QXmlStreamAttributes attributes = xml.attributes();
+	int temp = attributes.value("color").toString().toInt();
+	color = (temp >= 0) ? map.getColor(temp) : NULL;
+	line_width = attributes.value("line_width").toString().toInt();
+	minimum_length = attributes.value("minimum_length").toString().toInt();
+	join_style = static_cast<LineSymbol::JoinStyle>(attributes.value("join_style").toString().toInt());
+	cap_style = static_cast<LineSymbol::CapStyle>(attributes.value("cap_style").toString().toInt());
+	pointed_cap_length = attributes.value("pointed_cap_length").toString().toInt();
+	
+	dashed = (attributes.value("dashed") == "true");
+	segment_length = attributes.value("segment_length").toString().toInt();
+	end_length = attributes.value("end_length").toString().toInt();
+	show_at_least_one_symbol = (attributes.value("show_at_least_one_symbol") == "true");
+	minimum_mid_symbol_count = attributes.value("minimum_mid_symbol_count").toString().toInt();
+	minimum_mid_symbol_count_when_closed = attributes.value("minimum_mid_symbol_count_when_closed").toString().toInt();
+	dash_length = attributes.value("dash_length").toString().toInt();
+	break_length = attributes.value("break_length").toString().toInt();
+	dashes_in_group = attributes.value("dashes_in_group").toString().toInt();
+	in_group_break_length = attributes.value("in_group_break_length").toString().toInt();
+	half_outer_dashes = (attributes.value("half_outer_dashes") == "true");
+	mid_symbols_per_spot = attributes.value("mid_symbols_per_spot").toString().toInt();
+	mid_symbol_distance = attributes.value("mid_symbol_distance").toString().toInt();
+	
+	have_border_lines = false;
+	while (xml.readNextStartElement())
+	{
+		if (xml.name() == "start_symbol")
+		{
+			xml.readNextStartElement();
+			start_symbol = static_cast<PointSymbol*>(Symbol::load(xml, map, symbol_dict));
+			xml.skipCurrentElement();
+		}
+		else if (xml.name() == "mid_symbol")
+		{
+			xml.readNextStartElement();
+			mid_symbol = static_cast<PointSymbol*>(Symbol::load(xml, map, symbol_dict));
+			xml.skipCurrentElement();
+		}
+		else if (xml.name() == "end_symbol")
+		{
+			xml.readNextStartElement();
+			end_symbol = static_cast<PointSymbol*>(Symbol::load(xml, map, symbol_dict));
+			xml.skipCurrentElement();
+		}
+		else if (xml.name() == "dash_symbol")
+		{
+			xml.readNextStartElement();
+			dash_symbol = static_cast<PointSymbol*>(Symbol::load(xml, map, symbol_dict));
+			xml.skipCurrentElement();
+		}
+		else if (xml.name() == "borders")
+		{
+//			bool are_borders_different = (xml.attributes().value("borders_different") == "true");
+			have_border_lines = true;
+			xml.readNextStartElement();
+			border.load(xml, map);
+			if (xml.readNextStartElement())
+			{
+				right_border.load(xml, map);
+				xml.skipCurrentElement();
+			}
+			else
+				right_border.assign(border, NULL);
+		}
+		else
+			xml.skipCurrentElement(); // unknown
+	}
+	return !xml.error();
 }
 
 bool LineSymbol::equalsImpl(Symbol* other, Qt::CaseSensitivity case_sensitivity)
@@ -1402,22 +1788,8 @@ bool LineSymbol::equalsImpl(Symbol* other, Qt::CaseSensitivity case_sensitivity)
 		return false;
 	if (have_border_lines)
 	{
-		if (!colorEquals(border_color, line->border_color))
+		if (!border.equals(&line->border) || !right_border.equals(&line->right_border))
 			return false;
-		
-		if (border_width != line->border_width)
-			return false;
-		if (border_shift != line->border_shift)
-			return false;
-		if (dashed_border != line->dashed_border)
-			return false;
-		if (dashed_border)
-		{
-			if (border_dash_length != line->border_dash_length)
-				return false;
-			if (border_break_length != line->border_break_length)
-				return false;
-		}
 	}
 	
 	return true;
@@ -1619,56 +1991,28 @@ LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, SymbolSettingDialog* 
 	row++; col = 0;
 	layout->addWidget(new QWidget(), row, col, 1, -1);
 	row++; col = 0;
-	layout->addWidget(new QLabel(QString("<b>%1</b>").arg(tr("Border"))), row, col++, 1, -1);
+	layout->addWidget(new QLabel(QString("<b>%1</b>").arg(tr("Borders"))), row, col++, 1, -1);
 	row++; col = 0;
 	layout->addWidget(border_check, row, col, 1, -1);
 	
-	QLabel* border_width_label = new QLabel(tr("Border width:"));
-	border_width_edit = Util::SpinBox::create(2, 0.0f, 999999.9f, tr("mm"));
-	
-	QLabel* border_color_label = new QLabel(tr("Border color:"));
-	border_color_edit = new ColorDropDown(map, symbol->border_color);
-	
-	QLabel* border_shift_label = new QLabel(tr("Border shift:"));
-	border_shift_edit = Util::SpinBox::create(2, 0.0f, 999999.9f, tr("mm"));
-	
-	border_dashed_check = new QCheckBox(tr("Border is dashed"));
-	border_dashed_check->setChecked(symbol->dashed_border);
-	
-	border_widget_list
-	  << border_width_label << border_width_edit
-	  << border_color_label << border_color_edit
-	  << border_shift_label << border_shift_edit
-	  << border_dashed_check;
-	
+	different_borders_check = new QCheckBox(tr("Different borders on left and right sides"));
+	different_borders_check->setChecked(symbol->areBordersDifferent());
 	row++; col = 0;
-	layout->addWidget(border_width_label, row, col++);
-	layout->addWidget(border_width_edit, row, col, 1, -1);
-	row++; col = 0;
-	layout->addWidget(border_color_label, row, col++);
-	layout->addWidget(border_color_edit, row, col, 1, -1);
-	row++; col = 0;
-	layout->addWidget(border_shift_label, row, col++);
-	layout->addWidget(border_shift_edit, row, col, 1, -1);
-	row++; col = 0;
-	layout->addWidget(border_dashed_check, row, col, 1, -1);
+	layout->addWidget(different_borders_check, row, col, 1, -1);
 	
-	QLabel* border_dash_length_label = new QLabel(tr("Border dash length:"));
-	border_dash_length_edit = Util::SpinBox::create(2, 0.0f, 999999.9f, tr("mm"));
-	
-	QLabel* border_break_length_label = new QLabel(tr("Border break length:"));
-	border_break_length_edit = Util::SpinBox::create(2, 0.0f, 999999.9f, tr("mm"));
-	
-	border_dash_widget_list
-	  << border_dash_length_label << border_dash_length_edit
-	  << border_break_length_label << border_break_length_edit;
-	
+	QLabel* left_border_label = new QLabel(QString("<b>%1</b>").arg(tr("Left border:")));
 	row++; col = 0;
-	layout->addWidget(border_dash_length_label, row, col++);
-	layout->addWidget(border_dash_length_edit, row, col, 1, -1);
+	layout->addWidget(left_border_label, row, col++, 1, -1);
+	createBorderWidgets(symbol->getBorder(), map, row, col, layout, border_widgets);
+	
+	QLabel* right_border_label = new QLabel(QString("<b>%1</b>").arg(tr("Right border:")));
 	row++; col = 0;
-	layout->addWidget(border_break_length_label, row, col++);
-	layout->addWidget(border_break_length_edit, row, col, 1, -1);
+	layout->addWidget(right_border_label, row, col++, 1, -1);
+	createBorderWidgets(symbol->getRightBorder(), map, row, col, layout, right_border_widgets);
+	
+	border_widget_list << different_borders_check << border_widgets.widget_list;
+	different_borders_widget_list << left_border_label << right_border_label << right_border_widgets.widget_list;
+	
 	
 	row++;
 	layout->setRowStretch(row, 1);
@@ -1718,12 +2062,7 @@ LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, SymbolSettingDialog* 
 	connect(mid_symbol_per_spot_edit, SIGNAL(valueChanged(int)), this, SLOT(midSymbolsPerDashChanged(int)));
 	connect(mid_symbol_distance_edit, SIGNAL(valueChanged(double)), this, SLOT(midSymbolDistanceChanged(double)));
 	connect(border_check, SIGNAL(clicked(bool)), this, SLOT(borderCheckClicked(bool)));
-	connect(border_width_edit, SIGNAL(valueChanged(double)), this, SLOT(borderWidthEdited(double)));
-	connect(border_color_edit, SIGNAL(currentIndexChanged(int)), this, SLOT(borderColorChanged()));
-	connect(border_shift_edit, SIGNAL(valueChanged(double)), this, SLOT(borderShiftChanged(double)));
-	connect(border_dashed_check, SIGNAL(clicked(bool)), this, SLOT(borderDashedClicked(bool)));
-	connect(border_dash_length_edit, SIGNAL(valueChanged(double)), this, SLOT(borderDashesChanged()));
-	connect(border_break_length_edit, SIGNAL(valueChanged(double)), this, SLOT(borderDashesChanged()));
+	connect(different_borders_check, SIGNAL(clicked(bool)), this, SLOT(differentBordersClicked(bool)));
 }
 
 LineSymbolSettings::~LineSymbolSettings()
@@ -1865,41 +2204,129 @@ void LineSymbolSettings::borderCheckClicked(bool checked)
 	emit propertiesModified();
 	updateStates();
 	if (checked)
-		ensureWidgetVisible(border_break_length_edit);
+	{
+		if (symbol->areBordersDifferent())
+			ensureWidgetVisible(right_border_widgets.break_length_edit);
+		else
+			ensureWidgetVisible(border_widgets.break_length_edit);
+	}
 }
 
-void LineSymbolSettings::borderWidthEdited(double value)
+void LineSymbolSettings::differentBordersClicked(bool checked)
 {
-	symbol->border_width = qRound(1000.0 * value);
-	emit propertiesModified();
-}
-
-void LineSymbolSettings::borderColorChanged()
-{
-	symbol->border_color = border_color_edit->color();
-	emit propertiesModified();
-}
-
-void LineSymbolSettings::borderShiftChanged(double value)
-{
-	symbol->border_shift = qRound(1000.0 * value);
-	emit propertiesModified();
-}
-
-void LineSymbolSettings::borderDashedClicked(bool checked)
-{
-	symbol->dashed_border = checked;
-	emit propertiesModified();
-	updateStates();
 	if (checked)
-		ensureWidgetVisible(border_break_length_edit);
+	{
+		updateStates();
+		blockSignalsRecursively(this, true);
+		updateBorderContents(symbol->getRightBorder(), right_border_widgets);
+		blockSignalsRecursively(this, false);
+		ensureWidgetVisible(right_border_widgets.break_length_edit);
+	}
+	else
+	{
+		symbol->getRightBorder().assign(symbol->getBorder(), NULL);
+		emit propertiesModified();
+		updateStates();
+	}
 }
 
-void LineSymbolSettings::borderDashesChanged()
+void LineSymbolSettings::borderChanged()
 {
-	symbol->border_dash_length = qRound(1000.0 * border_dash_length_edit->value());
-	symbol->border_break_length = qRound(1000.0 * border_break_length_edit->value());
+	updateBorder(symbol->getBorder(), border_widgets);
+	if (different_borders_check->isChecked())
+		updateBorder(symbol->getRightBorder(), right_border_widgets);
+	else
+		symbol->getRightBorder().assign(symbol->getBorder(), NULL);
+	
 	emit propertiesModified();
+}
+
+void LineSymbolSettings::createBorderWidgets(LineSymbolBorder& border, Map* map, int& row, int col, QGridLayout* layout, BorderWidgets& widgets)
+{
+	QLabel* width_label = new QLabel(tr("Border width:"));
+	widgets.width_edit = Util::SpinBox::create(2, 0.0f, 999999.9f, tr("mm"));
+	
+	QLabel* color_label = new QLabel(tr("Border color:"));
+	widgets.color_edit = new ColorDropDown(map, border.color);
+	
+	QLabel* shift_label = new QLabel(tr("Border shift:"));
+	widgets.shift_edit = Util::SpinBox::create(2, 0.0f, 999999.9f, tr("mm"));
+	
+	widgets.dashed_check = new QCheckBox(tr("Border is dashed"));
+	widgets.dashed_check->setChecked(border.dashed);
+	
+	widgets.widget_list
+		<< width_label << widgets.width_edit
+		<< color_label << widgets.color_edit
+		<< shift_label << widgets.shift_edit
+		<< widgets.dashed_check;
+	
+	row++; col = 0;
+	layout->addWidget(width_label, row, col++);
+	layout->addWidget(widgets.width_edit, row, col, 1, -1);
+	row++; col = 0;
+	layout->addWidget(color_label, row, col++);
+	layout->addWidget(widgets.color_edit, row, col, 1, -1);
+	row++; col = 0;
+	layout->addWidget(shift_label, row, col++);
+	layout->addWidget(widgets.shift_edit, row, col, 1, -1);
+	row++; col = 0;
+	layout->addWidget(widgets.dashed_check, row, col, 1, -1);
+	
+	QLabel* dash_length_label = new QLabel(tr("Border dash length:"));
+	widgets.dash_length_edit = Util::SpinBox::create(2, 0.0f, 999999.9f, tr("mm"));
+	
+	QLabel* break_length_label = new QLabel(tr("Border break length:"));
+	widgets.break_length_edit = Util::SpinBox::create(2, 0.0f, 999999.9f, tr("mm"));
+	
+	widgets.dash_widget_list
+		<< dash_length_label << widgets.dash_length_edit
+		<< break_length_label << widgets.break_length_edit;
+	
+	row++; col = 0;
+	layout->addWidget(dash_length_label, row, col++);
+	layout->addWidget(widgets.dash_length_edit, row, col, 1, -1);
+	row++; col = 0;
+	layout->addWidget(break_length_label, row, col++);
+	layout->addWidget(widgets.break_length_edit, row, col, 1, -1);
+	
+	
+	connect(widgets.width_edit, SIGNAL(valueChanged(double)), this, SLOT(borderChanged()));
+	connect(widgets.color_edit, SIGNAL(currentIndexChanged(int)), this, SLOT(borderChanged()));
+	connect(widgets.shift_edit, SIGNAL(valueChanged(double)), this, SLOT(borderChanged()));
+	connect(widgets.dashed_check, SIGNAL(clicked(bool)), this, SLOT(borderChanged()));
+	connect(widgets.dash_length_edit, SIGNAL(valueChanged(double)), this, SLOT(borderChanged()));
+	connect(widgets.break_length_edit, SIGNAL(valueChanged(double)), this, SLOT(borderChanged()));
+}
+
+void LineSymbolSettings::updateBorder(LineSymbolBorder& border, LineSymbolSettings::BorderWidgets& widgets)
+{
+	bool ensure_last_widget_visible = false;
+	border.width = qRound(1000.0 * widgets.width_edit->value());
+	border.color = widgets.color_edit->color();
+	border.shift = qRound(1000.0 * widgets.shift_edit->value());
+	if (widgets.dashed_check->isChecked() && !border.dashed)
+		ensure_last_widget_visible = true;
+	border.dashed = widgets.dashed_check->isChecked();
+	border.dash_length = qRound(1000.0 * widgets.dash_length_edit->value());
+	border.break_length = qRound(1000.0 * widgets.break_length_edit->value());
+	
+	updateStates();
+	if (ensure_last_widget_visible)
+		ensureWidgetVisible(widgets.break_length_edit);
+}
+
+void LineSymbolSettings::updateBorderContents(LineSymbolBorder& border, LineSymbolSettings::BorderWidgets& widgets)
+{
+	assert(this->signalsBlocked());
+	
+	widgets.width_edit->setValue(0.001 * border.width);
+	widgets.color_edit->setColor(border.color);
+	widgets.shift_edit->setValue(0.001 * border.shift);
+	widgets.dashed_check->setChecked(border.dashed);
+	
+	widgets.dash_length_edit->setValue(0.001 * border.dash_length);
+	widgets.break_length_edit->setValue(0.001 * border.break_length);
 }
 
 void LineSymbolSettings::ensureWidgetVisible(QWidget* widget)
@@ -1972,16 +2399,27 @@ void LineSymbolSettings::updateStates()
 		border_widget->setVisible(border_active);
 		border_widget->setEnabled(border_active);
 	}
-	Q_FOREACH(QWidget* border_dash_widget, border_dash_widget_list)
+	Q_FOREACH(QWidget* border_dash_widget, border_widgets.dash_widget_list)
 	{
 		border_dash_widget->setVisible(border_active);
-		border_dash_widget->setEnabled(border_active && symbol->dashed_border);
+		border_dash_widget->setEnabled(border_active && symbol->getBorder().dashed);
+	}
+	const bool different_borders = border_active && different_borders_check->isChecked();
+	Q_FOREACH(QWidget* different_border_widget, different_borders_widget_list)
+	{
+		different_border_widget->setVisible(different_borders);
+		different_border_widget->setEnabled(different_borders);
+	}
+	Q_FOREACH(QWidget* border_dash_widget, right_border_widgets.dash_widget_list)
+	{
+		border_dash_widget->setVisible(different_borders);
+		border_dash_widget->setEnabled(different_borders && symbol->getRightBorder().dashed);
 	}
 }
 
 void LineSymbolSettings::updateContents()
 {
-	blockSignals(true);
+	blockSignalsRecursively(this, true);
 	width_edit->setValue(0.001 * symbol->getLineWidth());
 	color_edit->setColor(symbol->getColor());
 	
@@ -1991,6 +2429,7 @@ void LineSymbolSettings::updateContents()
 	line_join_combo->setCurrentIndex(line_join_combo->findData(symbol->join_style));
 	dashed_check->setChecked(symbol->dashed);
 	border_check->setChecked(symbol->have_border_lines);
+	different_borders_check->setChecked(symbol->areBordersDifferent());
 	
 	dash_length_edit->setValue(0.001 * symbol->dash_length);
 	break_length_edit->setValue(0.001 * symbol->break_length);
@@ -2007,15 +2446,10 @@ void LineSymbolSettings::updateContents()
 	minimum_mid_symbol_count_edit->setValue(symbol->minimum_mid_symbol_count);
 	minimum_mid_symbol_count_when_closed_edit->setValue(symbol->minimum_mid_symbol_count_when_closed);
 	
-	border_width_edit->setValue(0.001f * symbol->border_width);
-	border_color_edit->setColor(symbol->border_color);
-	border_shift_edit->setValue(0.001f * symbol->border_shift);
-	border_dashed_check->setChecked(symbol->dashed_border);
+	updateBorderContents(symbol->getBorder(), border_widgets);
+	updateBorderContents(symbol->getRightBorder(), right_border_widgets);
 	
-	border_dash_length_edit->setValue(0.001 * symbol->border_dash_length);
-	border_break_length_edit->setValue(0.001 * symbol->border_break_length);
-	
-	blockSignals(false);
+	blockSignalsRecursively(this, false);
 /*	
 	PointSymbolEditorWidget* point_symbol_editor = 0;
 	MapEditorController* controller = dialog->getPreviewController();

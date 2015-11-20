@@ -29,9 +29,6 @@
 #include "main_window.h"
 #include "main_window_home_screen.h"
 #include "settings.h"
-#include "file_format_native.h"
-#include "file_format_ocad8.h"
-#include "file_format_xml.h"
 
 int main(int argc, char** argv)
 {
@@ -47,6 +44,9 @@ int main(int argc, char** argv)
 		qapp.sendMessage((argc > 1) ? argv[1] : "");
 		return 0;
 	}
+	
+	// Load resources
+	Q_INIT_RESOURCE(resources);
 	
 	// Set settings defaults
 	QCoreApplication::setOrganizationName("Thomas Schoeps");
@@ -92,12 +92,7 @@ int main(int argc, char** argv)
 		translation_ok = translator.load(translation_name, QCoreApplication::applicationDirPath() + "/translations");
 	qapp.installTranslator(&translator);
 	
-	// Register the supported file formats
-	FileFormats.registerFormat(new NativeFileFormat());
-#ifdef Mapper_XML_FORMAT
-	FileFormats.registerFormat(new XMLFileFormat());
-#endif
-	FileFormats.registerFormat(new OCAD8FileFormat());
+	doStaticInitializations();
 	
 	// Create first main window
 	MainWindow* first_window = new MainWindow(true);
@@ -105,7 +100,10 @@ int main(int argc, char** argv)
 	
 	// Treat all program parameters as files to be opened
 	for (int i = 1; i < argc; i++)
-		first_window->openPath(argv[i]);
+	{
+		if (argv[i][0] != '-')
+			first_window->openPath(argv[i]);
+	}
 	
 	// If we need to respond to a second app launch, do so, but also accept a file open request.
 	qapp.setActivationWindow(first_window);

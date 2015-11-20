@@ -23,7 +23,7 @@
 
 #include <QScopedPointer>
 
-#include "map_editor.h"
+#include "tool.h"
 
 class DrawPathTool;
 class PathCoord;

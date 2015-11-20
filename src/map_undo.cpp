@@ -33,20 +33,21 @@
 MapUndoStep::MapUndoStep(Map* map, Type type): UndoStep(type)
 {
 	this->map = map;
-	layer = map->getCurrentLayerIndex();
+	part = map->getCurrentPartIndex();
 }
 
 void MapUndoStep::save(QIODevice* file)
 {
-	file->write((char*)&layer, sizeof(int));
+	file->write((char*)&part, sizeof(int));
 	int size = affected_objects.size();
 	file->write((char*)&size, sizeof(int));
 	for (int i = 0; i < size; ++i)
 		file->write((char*)&affected_objects[i], sizeof(int));
 }
+
 bool MapUndoStep::load(QIODevice* file, int version)
 {
-	file->read((char*)&layer, sizeof(int));
+	file->read((char*)&part, sizeof(int));
 	int size;
 	file->read((char*)&size, sizeof(int));
 	affected_objects.resize(size);
@@ -55,11 +56,46 @@ bool MapUndoStep::load(QIODevice* file, int version)
 	return true;
 }
 
+void MapUndoStep::saveImpl(QXmlStreamWriter& xml) const
+{
+	UndoStep::saveImpl(xml);
+	
+	xml.writeStartElement("affected_objects");
+	xml.writeAttribute("part", QString::number(part));
+	int size = affected_objects.size();
+	xml.writeAttribute("count", QString::number(size));
+	for (int i = 0; i < size; ++i)
+	{
+		xml.writeEmptyElement("ref");
+		xml.writeAttribute("object", QString::number(affected_objects[i]));
+	}
+	xml.writeEndElement(/*affected_objects*/);
+}
+
+void MapUndoStep::loadImpl(QXmlStreamReader& xml, SymbolDictionary& symbol_dict)
+{
+	if (xml.name() == "affected_objects")
+	{
+		part = xml.attributes().value("part").toString().toInt();
+		int size = xml.attributes().value("count").toString().toInt();
+		affected_objects.reserve(size);
+		while (xml.readNextStartElement())
+		{
+			if (xml.name() == "ref")
+				affected_objects.push_back(xml.attributes().value("object").toString().toInt());
+			
+			xml.skipCurrentElement(); // unknown
+		}
+	}
+	else
+		UndoStep::loadImpl(xml, symbol_dict);
+}
+
 void MapUndoStep::getAffectedOutcome(std::vector< Object* >& out) const
 {
 	out.resize(affected_objects.size());
 	for (int i = 0; i < (int)affected_objects.size(); ++i)
-		out[i] = map->getLayer(layer)->getObject(affected_objects[i]);
+		out[i] = map->getPart(part)->getObject(affected_objects[i]);
 }
 
 // ### ObjectContainingUndoStep ###
@@ -84,7 +120,7 @@ void ObjectContainingUndoStep::addObject(int existing_index, Object* object)
 }
 void ObjectContainingUndoStep::addObject(Object* existing, Object* object)
 {
-	int index = map->getCurrentLayer()->findObjectIndex(existing);
+	int index = map->getCurrentPart()->findObjectIndex(existing);
 	assert(index >= 0);
 	addObject(index, object);
 }
@@ -122,6 +158,39 @@ bool ObjectContainingUndoStep::load(QIODevice* file, int version)
 	return true;
 }
 
+void ObjectContainingUndoStep::saveImpl(QXmlStreamWriter& xml) const
+{
+	MapUndoStep::saveImpl(xml);
+	
+	xml.writeStartElement("contained_objects");
+	int size = (int)objects.size();
+	xml.writeAttribute("count", QString::number(size));
+	for (int i = 0; i < size; ++i)
+	{
+		objects[i]->setMap(map);	// IMPORTANT: only if the object's map pointer is set it will save its symbol index correctly
+		objects[i]->save(xml);
+	}
+	xml.writeEndElement(/*contained_objects*/);
+}
+
+void ObjectContainingUndoStep::loadImpl(QXmlStreamReader& xml, SymbolDictionary& symbol_dict)
+{
+	if (xml.name() == "contained_objects")
+	{
+		int size = xml.attributes().value("count").toString().toInt();
+		objects.reserve(qMin(size, 1000)); // 1000 is not a limit
+		while (xml.readNextStartElement())
+		{
+			if (xml.name() == "object")
+				objects.push_back(Object::load(xml, *map, symbol_dict));
+			else
+				xml.skipCurrentElement(); // unknown
+		}
+	}
+	else
+		MapUndoStep::loadImpl(xml, symbol_dict);
+}
+
 void ObjectContainingUndoStep::symbolChanged(int pos, Symbol* new_symbol, Symbol* old_symbol)
 {
 	int size = (int)objects.size();
@@ -153,12 +222,12 @@ UndoStep* ReplaceObjectsUndoStep::undo()
 {
 	ReplaceObjectsUndoStep* undo_step = new ReplaceObjectsUndoStep(map);
 	
-	MapLayer* layer = map->getLayer(this->layer);
+	MapPart* part = map->getPart(this->part);
 	int size = (int)objects.size();
 	for (int i = 0; i < size; ++i)
 	{
-		undo_step->addObject(affected_objects[i], layer->getObject(affected_objects[i]));
-		layer->setObject(objects[i], affected_objects[i], false);
+		undo_step->addObject(affected_objects[i], part->getObject(affected_objects[i]));
+		part->setObject(objects[i], affected_objects[i], false);
 	}
 	
 	objects.clear();
@@ -183,12 +252,12 @@ UndoStep* DeleteObjectsUndoStep::undo()
 	// Make sure to delete the objects in the right order so the other objects' indices stay valid
 	std::sort(affected_objects.begin(), affected_objects.end(), std::greater<int>());
 	
-	MapLayer* layer = map->getLayer(this->layer);
+	MapPart* part = map->getPart(this->part);
 	int size = (int)affected_objects.size();
 	for (int i = 0; i < size; ++i)
 	{
-		undo_step->addObject(affected_objects[i], layer->getObject(affected_objects[i]));
-		layer->deleteObject(affected_objects[i], true);
+		undo_step->addObject(affected_objects[i], part->getObject(affected_objects[i]));
+		part->deleteObject(affected_objects[i], true);
 	}
 	
 	return undo_step;
@@ -210,12 +279,12 @@ UndoStep* AddObjectsUndoStep::undo()
 		order[i] = std::pair<int, int>(i, affected_objects[i]);
 	std::sort(order.begin(), order.end(), sortOrder);
 	
-	MapLayer* layer = map->getLayer(this->layer);
+	MapPart* part = map->getPart(this->part);
 	int size = (int)objects.size();
 	for (int i = 0; i < size; ++i)
 	{
 		undo_step->addObject(affected_objects[order[i].first]);
-		layer->addObject(objects[order[i].first], order[i].second);
+		part->addObject(objects[order[i].first], order[i].second);
 	}
 	
 	objects.clear();
@@ -242,11 +311,11 @@ UndoStep* SwitchSymbolUndoStep::undo()
 {
 	SwitchSymbolUndoStep* undo_step = new SwitchSymbolUndoStep(map);
 	
-	MapLayer* layer = map->getLayer(this->layer);
+	MapPart* part = map->getPart(this->part);
 	int size = (int)affected_objects.size();
 	for (int i = 0; i < size; ++i)
 	{
-		Object* object = layer->getObject(affected_objects[i]);
+		Object* object = part->getObject(affected_objects[i]);
 		undo_step->addObject(affected_objects[i], object->getSymbol());
 		assert(object->setSymbol(target_symbols[i], false));
 	}
@@ -255,7 +324,7 @@ UndoStep* SwitchSymbolUndoStep::undo()
 }
 void SwitchSymbolUndoStep::save(QIODevice* file)
 {
-    MapUndoStep::save(file);
+	MapUndoStep::save(file);
 	
 	int size = (int)target_symbols.size();
 	for (int i = 0; i < size; ++i)
@@ -266,7 +335,7 @@ void SwitchSymbolUndoStep::save(QIODevice* file)
 }
 bool SwitchSymbolUndoStep::load(QIODevice* file, int version)
 {
-    if (!MapUndoStep::load(file, version))
+	if (!MapUndoStep::load(file, version))
 		return false;
 	
 	int size = (int)affected_objects.size();
@@ -278,6 +347,43 @@ bool SwitchSymbolUndoStep::load(QIODevice* file, int version)
 		target_symbols[i] = map->getSymbol(index);
 	}
 	return true;
+}
+
+void SwitchSymbolUndoStep::saveImpl(QXmlStreamWriter& xml) const
+{
+	MapUndoStep::saveImpl(xml);
+	
+	xml.writeStartElement("switch_symbol");
+	int size = (int)target_symbols.size();
+	xml.writeAttribute("count", QString::number(size));
+	for (int i = 0; i < size; ++i)
+	{
+		int index = map->findSymbolIndex(target_symbols[i]);
+		xml.writeEmptyElement("ref");
+		xml.writeAttribute("symbol", QString::number(index));
+	}
+	xml.writeEndElement(/*switch_symbol*/);
+}
+
+void SwitchSymbolUndoStep::loadImpl(QXmlStreamReader& xml, SymbolDictionary& symbol_dict)
+{
+	if (xml.name() == "switch_symbol")
+	{
+		int size = xml.attributes().value("count").toString().toInt();
+		target_symbols.reserve(qMin(size, 1000)); // 1000 is not a limit
+		while (xml.readNextStartElement())
+		{
+			if (xml.name() == "ref")
+			{
+				QString key = xml.attributes().value("symbol").toString();
+				target_symbols.push_back(symbol_dict[key]);
+			}
+			
+			xml.skipCurrentElement(); // unknown
+		}
+	}
+	else
+		MapUndoStep::loadImpl(xml, symbol_dict);
 }
 
 void SwitchSymbolUndoStep::symbolChanged(int pos, Symbol* new_symbol, Symbol* old_symbol)
@@ -315,11 +421,11 @@ UndoStep* SwitchDashesUndoStep::undo()
 {
 	SwitchDashesUndoStep* undo_step = new SwitchDashesUndoStep(map);
 	
-	MapLayer* layer = map->getLayer(this->layer);
+	MapPart* part = map->getPart(this->part);
 	int size = (int)affected_objects.size();
 	for (int i = 0; i < size; ++i)
 	{
-		PathObject* object = reinterpret_cast<PathObject*>(layer->getObject(affected_objects[i]));
+		PathObject* object = reinterpret_cast<PathObject*>(part->getObject(affected_objects[i]));
 		object->reverse();
 		object->update(true);
 		

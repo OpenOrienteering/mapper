@@ -30,8 +30,8 @@ class QXmlStreamWriter;
 
 class MapEditorController;
 
-/// A point in a GPS track or a GPS waypoint, which stores position on ellipsoid and map and more attributes (e.g. number of satellites)
-struct GPSPoint
+/// A point in a track or a waypoint, which stores position on ellipsoid and map and more attributes (e.g. number of satellites)
+struct TrackPoint
 {
 	LatLon gps_coord;
 	MapCoordF map_coord;
@@ -41,50 +41,56 @@ struct GPSPoint
 	int num_satellites;		// -1 if invalid
 	float hDOP;				// -1 if invalid
 	
-	GPSPoint(LatLon coord = LatLon(), QDateTime datetime = QDateTime(), float elevation = -9999, int num_satellites = -1, float hDOP = -1);
+	TrackPoint(LatLon coord = LatLon(), QDateTime datetime = QDateTime(), float elevation = -9999, int num_satellites = -1, float hDOP = -1);
 	void save(QXmlStreamWriter* stream) const;
 };
 
-class GPSTrack
+/// Stores a set of tracks and / or waypoints, e.g. taken from a GPS device
+class Track
 {
 public:
-	/// Constructs an empty GPS track
-	GPSTrack();
-	GPSTrack(const Georeferencing& Georeferencing);
+	/// Constructs an empty track
+	Track();
+	Track(const Georeferencing& Georeferencing);
 	/// Duplicates a track
-	GPSTrack(const GPSTrack& other);
+	Track(const Track& other);
 	
 	/// Deletes all data of the track, except the projection parameters
 	void clear();
 	
-	/// Attempts to load the track from the given file. If you choose not to project_point, you have to call changeProjectionParams() afterwards.
+	/// Attempts to load the track from the given file.
+	/// If you choose not to project_point, you have to call changeProjectionParams() afterwards.
 	bool loadFrom(const QString& path, bool project_points, QWidget* dialog_parent = NULL);
 	/// Attempts to save the track to the given file
 	bool saveTo(const QString& path) const;
 	
 	// Modifiers
-	void appendTrackPoint(GPSPoint& point);	// also converts the point's gps coords to map coords
+	void appendTrackPoint(TrackPoint& point);	// also converts the point's gps coords to map coords
 	void finishCurrentSegment();
 	
-	void appendWaypoint(GPSPoint& point, const QString& name);	// also converts the point's gps coords to map coords
+	void appendWaypoint(TrackPoint& point, const QString& name);	// also converts the point's gps coords to map coords
 	
 	void changeGeoreferencing(const Georeferencing& new_georef);
 	
 	// Getters
 	int getNumSegments() const;
 	int getSegmentPointCount(int segment_number) const;
-	const GPSPoint& getSegmentPoint(int segment_number, int point_number) const;
+	const TrackPoint& getSegmentPoint(int segment_number, int point_number) const;
 	
 	int getNumWaypoints() const;
-	const GPSPoint& getWaypoint(int number) const;
+	const TrackPoint& getWaypoint(int number) const;
 	const QString& getWaypointName(int number) const;
 	
+	/// Averages all track coordinates
+	LatLon calcAveragePosition() const;
+	
 private:
-	std::vector<GPSPoint> waypoints;
+	std::vector<TrackPoint> waypoints;
 	std::vector<QString> waypoint_names;
 	
-	std::vector<GPSPoint> segment_points;
-	std::vector<int> segment_starts;	// the indices of the first points of every track segment in this track
+	std::vector<TrackPoint> segment_points;
+	// The indices of the first points of every track segment in this track
+	std::vector<int> segment_starts;
 	
 	bool current_segment_finished;
 	

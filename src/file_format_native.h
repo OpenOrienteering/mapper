@@ -38,11 +38,11 @@ public:
 
 	/** Creates an importer for this file type.
 	 */
-	Importer *createImporter(QIODevice* stream, const QString &path, Map *map, MapView *view) const throw (FormatException);
+	Importer *createImporter(QIODevice* stream, Map *map, MapView *view) const throw (FormatException);
 
 	/** Creates an exporter for this file type.
 	 */
-	Exporter *createExporter(QIODevice* stream, const QString &path, Map *map, MapView *view) const throw (FormatException);
+	Exporter *createExporter(QIODevice* stream, Map *map, MapView *view) const throw (FormatException);
 
 	/** Constant describing the earliest OMAP version supported by this file format.
 	 */
@@ -72,9 +72,10 @@ public:
 	 */
 	~NativeFileImport();
 
+protected:
 	/** Imports a native file.
 	 */
-	void doImport(bool load_symbols_only) throw (FormatException);
+	void import(bool load_symbols_only) throw (FormatException);
 };
 
 

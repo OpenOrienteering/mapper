@@ -82,6 +82,8 @@ protected slots:
 	void selectUnused();
 	void invertSelection();
     void sortByNumber();
+	void sortByColor();
+	void sortByColorPriority();
 
 	void setScroll(int new_scroll);
 	
@@ -125,6 +127,25 @@ protected:
 	bool getDropPosition(QPoint pos, int& row, int& pos_in_row);
 	QRect getDragIndicatorRect(int row, int pos_in_row);
 	void updateScrollRange();
+	
+	template<typename T> void sort(T compare)
+	{
+		// save selection
+		std::set<Symbol *> sel;
+		for (std::set<int>::const_iterator it = selected_symbols.begin(); it != selected_symbols.end(); ++it) {
+			sel.insert(map->getSymbol(*it));
+		}
+		
+		map->sortSymbols(compare);
+		
+		//restore selection
+		selected_symbols.clear();
+		for (int i = 0; i < map->getNumSymbols(); i++) {
+			if (sel.find(map->getSymbol(i)) != sel.end()) selected_symbols.insert(i);
+		}
+		
+		update();
+	}
 	
 	virtual void paintEvent(QPaintEvent* event);
     virtual void resizeEvent(QResizeEvent* event);

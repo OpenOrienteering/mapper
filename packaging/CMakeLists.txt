@@ -88,10 +88,10 @@ if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 		endif(MAKENSIS_EXECUTABLE)
 
 	elseif(APPLE)
+		set(MAPPER_MACOS_SUBDIR "/Mapper.app/Contents/MacOS")
 		set(CPACK_GENERATOR_DEFAULT "DragNDrop")
 		set(CPACK_PACKAGE_EXECUTABLES "Mapper" "OpenOrienteering Mapper ${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}")
 		set(CPACK_PACKAGE_ICON "${CMAKE_CURRENT_SOURCE_DIR}/macosx/Mapper.icns")
-		set(MAPPER_MACOS_SUBDIR "/Mapper.app/Contents/MacOS")
 		set_target_properties(Mapper PROPERTIES
 		  MACOSX_BUNDLE_INFO_STRING          "${CPACK_PACKAGE_DESCRIPTION_SUMMARY}"
 		  MACOSX_BUNDLE_ICON_FILE            "Mapper.icns"
@@ -181,9 +181,9 @@ if(Mapper_PACKAGE_ASSISTANT)
 	install(
 	  PROGRAMS ${QT_QTASSISTANT_EXECUTABLE}
 	  DESTINATION "${MAPPER_RUNTIME_DESTINATION}${MAPPER_MACOS_SUBDIR}")
-	if(NOT APPLE)
+	if(WIN32)
 		install(
-		  FILES "../3rd-party/qt4/qt.conf"
+		  FILES "${PROJECT_SOURCE_DIR}/3rd-party/qt4/qt.conf"
 		  DESTINATION "${MAPPER_RUNTIME_DESTINATION}")
 	endif()
 	mark_as_advanced(QT_QTASSISTANT_EXECUTABLE)

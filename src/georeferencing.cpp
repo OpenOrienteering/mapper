@@ -22,10 +22,14 @@
 
 #include <cassert>
 
+#include <qmath.h>
+#include <QDebug>
 #include <QCoreApplication>
 #include <QDir>
 #include <QLocale>
-#include <QDebug>
+#include <QXmlStreamAttributes>
+#include <QXmlStreamReader>
+#include <QXmlStreamWriter>
 
 #include <proj_api.h>
 
@@ -119,6 +123,117 @@ Georeferencing& Georeferencing::operator=(const Georeferencing& other)
 	
 	return *this;
 }
+
+void Georeferencing::load(QXmlStreamReader& xml) throw (FormatException)
+{
+	Q_ASSERT(xml.name() == "georeferencing");
+	
+	QXmlStreamAttributes attributes(xml.attributes());
+	scale_denominator   = attributes.value("scale").toString().toInt();
+	if (scale_denominator <= 0)
+		throw FormatException(QObject::tr("Map scale specification invalid or missing."));
+	
+	if (attributes.hasAttribute("declination"))
+		declination = xml.attributes().value("declination").toString().toDouble();
+	if (attributes.hasAttribute("grivation"))
+		grivation = xml.attributes().value("grivation").toString().toDouble();
+	
+	while (xml.readNextStartElement())
+	{
+		if (xml.name() == "ref_point")
+		{
+			map_ref_point.setX(xml.attributes().value("x").toString().toDouble());
+			map_ref_point.setY(xml.attributes().value("y").toString().toDouble());
+			xml.skipCurrentElement();
+		}
+		else if (xml.name() == "projected_crs")
+		{
+			projected_crs_id = xml.attributes().value("id").toString();
+			while (xml.readNextStartElement())
+			{
+				if (xml.name() == "spec")
+				{
+					if (xml.attributes().value("language") != "PROJ.4")
+						throw FormatException(QObject::tr("Unknown CRS specification language: %1").arg(xml.attributes().value("language").toString()));
+					projected_crs_spec = xml.readElementText();
+				}
+				else if (xml.name() == "ref_point")
+				{
+					projected_ref_point.setX(xml.attributes().value("x").toString().toDouble());
+					projected_ref_point.setY(xml.attributes().value("y").toString().toDouble());
+					xml.skipCurrentElement();
+				}
+				else
+					xml.skipCurrentElement(); // unknown
+			}
+		}
+		else if (xml.name() == "geographic_crs")
+		{
+			while (xml.readNextStartElement())
+			{
+				if (xml.name() == "spec")
+				{
+					if (xml.attributes().hasAttribute("language") &&
+						xml.attributes().value("language") != "PROJ.4" )
+						throw FormatException(QObject::tr("Unknown CRS specification language: %1").arg(xml.attributes().value("language").toString()));
+					QString geographic_crs_spec = xml.readElementText();
+					if (geographic_crs_spec != geographic_crs_spec)
+						throw FormatException(QObject::tr("Unsupported geographic CRS specification: %1").arg(geographic_crs_spec));
+				}
+				else if (xml.name() == "ref_point")
+				{
+					geographic_ref_point.latitude  = xml.attributes().value("lat").toString().toDouble();
+					geographic_ref_point.longitude = xml.attributes().value("lon").toString().toDouble();
+					xml.skipCurrentElement();
+				}
+				else
+					xml.skipCurrentElement(); // unknown
+			}
+		}
+		else
+			xml.skipCurrentElement(); // unknown
+	}
+	
+	updateTransformation();
+	projected_crs = pj_init_plus(projected_crs_spec.toAscii());
+	emit projectionChanged();
+}
+
+void Georeferencing::save(QXmlStreamWriter& xml) const
+{
+	xml.writeStartElement("georeferencing");
+	xml.writeAttribute("scale", QString::number(scale_denominator));
+	xml.writeAttribute("declination", QString::number(declination));
+	xml.writeAttribute("grivation", QString::number(grivation));
+	
+	xml.writeEmptyElement("ref_point");
+	xml.writeAttribute("x", QString::number(map_ref_point.xd()));
+	xml.writeAttribute("y", QString::number(map_ref_point.yd()));
+	
+	xml.writeStartElement("projected_crs");
+	xml.writeAttribute("id", projected_crs_id);
+	xml.writeStartElement("spec");
+	xml.writeAttribute("language", "PROJ.4");
+	xml.writeCharacters(projected_crs_spec);
+	xml.writeEndElement(/*spec*/);
+	xml.writeEmptyElement("ref_point");
+	xml.writeAttribute("x", QString::number(projected_ref_point.x(), 'f', 6));
+	xml.writeAttribute("y", QString::number(projected_ref_point.y(), 'f', 6));
+	xml.writeEndElement(/*projected_crs*/);
+	
+	xml.writeStartElement("geographic_crs");
+	xml.writeAttribute("id", "Geographic coordinates"); // reserved
+	xml.writeStartElement("spec");
+	xml.writeAttribute("language", "PROJ.4");
+	xml.writeCharacters(geographic_crs_spec);
+	xml.writeEndElement(/*spec*/);
+	xml.writeEmptyElement("ref_point");
+	xml.writeAttribute("lat", QString::number(geographic_ref_point.latitude, 'f', 10));
+	xml.writeAttribute("lon", QString::number(geographic_ref_point.longitude, 'f', 10));
+	xml.writeEndElement(/*geographic_crs*/);
+	xml.writeEndElement(); // georeferencing
+}
+
 
 void Georeferencing::setScaleDenominator(int value)
 {
@@ -225,6 +340,16 @@ void Georeferencing::initDeclination()
 	declination = grivation + getConvergence();
 }
 
+void Georeferencing::setTransformationDirectly(const QTransform& transform)
+{
+	if (transform != to_projected)
+	{
+		to_projected = transform;
+		from_projected = to_projected.inverted();
+		emit transformationChanged();
+	}
+}
+
 bool Georeferencing::setProjectedCRS(const QString& id, const QString& spec)
 {
 	if (projected_crs != NULL)
@@ -303,6 +428,52 @@ MapCoordF Georeferencing::toMapCoordF(const LatLon& lat_lon, bool* ok) const
 	return toMapCoordF(toProjectedCoords(lat_lon, ok));
 }
 
+MapCoordF Georeferencing::toMapCoordF(Georeferencing* other, const MapCoordF& map_coords, bool* ok) const
+{
+	if (isLocal() != other->isLocal())
+	{
+		if (ok)
+			*ok = false;
+		return map_coords;
+	}
+	else if (isLocal())
+	{
+		if (ok)
+			*ok = true;
+		return toMapCoordF(other->toProjectedCoords(map_coords));
+	}
+	else
+	{
+		if (ok != NULL)
+			*ok = false;
+		
+		QPointF projected_coords = other->toProjectedCoords(map_coords);
+		double easting = projected_coords.x(), northing = projected_coords.y();
+		if (other->projected_crs_spec.contains("+proj=latlong"))
+		{
+			easting = easting * M_PI / 180.0;
+			northing = northing * M_PI / 180.0;
+		}
+		if (projected_crs && other->projected_crs) {
+			// Direct transformation:
+			//int ret = pj_transform(other->projected_crs, projected_crs, 1, 1, &easting, &northing, NULL);
+			// Use geographic coordinates as intermediate step as direct transformation seems to give wrong results:
+			int ret = pj_transform(other->projected_crs, geographic_crs, 1, 1, &easting, &northing, NULL);
+			ret |= pj_transform(geographic_crs, projected_crs, 1, 1, &easting, &northing, NULL);
+			
+			if (ret != 0)
+			{
+				if (ok != NULL) 
+					*ok = false;
+				return MapCoordF(easting, northing);
+			}
+			if (ok != NULL)
+				*ok = true;
+		}
+		return toMapCoordF(QPointF(easting, northing));
+	}
+}
+
 QString Georeferencing::getErrorText() const
 {
 	int err_no = *pj_get_errno_ref();
@@ -333,7 +504,7 @@ QDebug operator<<(QDebug dbg, const Georeferencing &georef)
 	  << " " << georef.grivation
 	  << "deg, " << georef.projected_crs_id
 	  << " (" << georef.projected_crs_spec
-	  << ") " << georef.projected_ref_point.x() << "," << georef.projected_ref_point.y();
+	  << ") " << QString::number(georef.projected_ref_point.x(), 'f', 8) << "," << QString::number(georef.projected_ref_point.y(), 'f', 8);
 	if (georef.isLocal())
 		dbg.nospace() << ", local)";
 	else

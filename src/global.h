@@ -27,4 +27,7 @@
 	#pragma warning(disable: 4290)	// "C++ exception specification ignored"
 #endif
 
+/// This is called at startup in main() and by the test cases to do the global initializations
+void doStaticInitializations();
+
 #endif

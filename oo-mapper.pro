@@ -34,11 +34,15 @@ HEADERS += src/color_dock_widget.h \
            src/map_coord.h \
            src/map_dialog_new.h \
            src/map_dialog_scale.h \
+           src/map_dialog_rotate.h \
+           src/map_grid.h \
            src/map_editor.h \
+           src/map_editor_activity.h \
            src/map_undo.h \
            src/map_widget.h \
            src/matrix.h \
            src/object.h \
+           src/object_operations.h \
            src/object_text.h \
            src/path_coord.h \
            src/print_dock_widget.h \
@@ -50,6 +54,7 @@ HEADERS += src/color_dock_widget.h \
            src/symbol.h \
            src/symbol_area.h \
            src/symbol_combined.h \
+           src/symbol_dialog_replace.h \
            src/symbol_dock_widget.h \
            src/symbol_line.h \
            src/symbol_point.h \
@@ -59,6 +64,7 @@ HEADERS += src/color_dock_widget.h \
            src/symbol_text.h \
            src/template.h \
            src/template_adjust.h \
+           src/template_dialog_reopen.h \
            src/template_dock_widget.h \
            src/template_gps.h \
            src/template_image.h \
@@ -66,6 +72,7 @@ HEADERS += src/color_dock_widget.h \
            src/template_position_dock_widget.h \
            src/template_tool_move.h \
            src/template_tool_paint.h \
+           src/tool.h \
            src/tool_boolean.h \
            src/tool_cut.h \
            src/tool_cut_hole.h \
@@ -76,12 +83,17 @@ HEADERS += src/color_dock_widget.h \
            src/tool_draw_rectangle.h \
            src/tool_draw_text.h \
            src/tool_edit.h \
+           src/tool_helpers.h \
            src/tool_measure.h \
            src/tool_rotate.h \
+           src/tool_rotate_pattern.h \
            src/tool_scale.h \
+           src/transformation.h \
            src/undo.h \
            src/util.h \
            src/util_gui.h \
+           src/util_pie_menu.h \
+           src/util_task_dialog.h \
            qtsingleapplication/qtlocalpeer.h \
            qtsingleapplication/qtsingleapplication.h \
            libocad/libocad.h \
@@ -96,6 +108,7 @@ SOURCES += src/color_dock_widget.cpp \
            src/file_format_xml.cpp \
            src/georeferencing.cpp \
            src/georeferencing_dialog.cpp \
+           src/global.cpp \
            src/gps_coordinates.cpp \
            src/gps_track.cpp \
            src/main.cpp \
@@ -105,7 +118,10 @@ SOURCES += src/color_dock_widget.cpp \
            src/map_color.cpp \
            src/map_dialog_new.cpp \
            src/map_dialog_scale.cpp \
+           src/map_dialog_rotate.cpp \
            src/map_editor.cpp \
+           src/map_editor_activity.cpp \
+           src/map_grid.cpp \
            src/map_undo.cpp \
            src/map_widget.cpp \
            src/matrix.cpp \
@@ -121,6 +137,7 @@ SOURCES += src/color_dock_widget.cpp \
            src/symbol.cpp \
            src/symbol_area.cpp \
            src/symbol_combined.cpp \
+           src/symbol_dialog_replace.cpp \
            src/symbol_dock_widget.cpp \
            src/symbol_line.cpp \
            src/symbol_point.cpp \
@@ -130,6 +147,7 @@ SOURCES += src/color_dock_widget.cpp \
            src/symbol_text.cpp \
            src/template.cpp \
            src/template_adjust.cpp \
+           src/template_dialog_reopen.cpp \
            src/template_dock_widget.cpp \
            src/template_gps.cpp \
            src/template_image.cpp \
@@ -137,6 +155,7 @@ SOURCES += src/color_dock_widget.cpp \
            src/template_position_dock_widget.cpp \
            src/template_tool_move.cpp \
            src/template_tool_paint.cpp \
+           src/tool.cpp \
            src/tool_boolean.cpp \
            src/tool_cut.cpp \
            src/tool_cut_hole.cpp \
@@ -147,11 +166,16 @@ SOURCES += src/color_dock_widget.cpp \
            src/tool_draw_rectangle.cpp \
            src/tool_draw_text.cpp \
            src/tool_edit.cpp \
+           src/tool_helpers.cpp \
            src/tool_measure.cpp \
            src/tool_rotate.cpp \
+           src/tool_rotate_pattern.cpp \
            src/tool_scale.cpp \
+           src/transformation.cpp \
            src/undo.cpp \
            src/util.cpp \
+           src/util_pie_menu.cpp \
+           src/util_task_dialog.cpp \
            qtsingleapplication/qtlocalpeer.cpp \
            qtsingleapplication/qtsingleapplication.cpp \
            libocad/types.c \

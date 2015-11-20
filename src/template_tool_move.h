@@ -21,7 +21,9 @@
 #ifndef _OPENORIENTEERING_TEMPLATE_TOOL_MOVE_H_
 #define _OPENORIENTEERING_TEMPLATE_TOOL_MOVE_H_
 
-#include "map_editor.h"
+#include "tool.h"
+
+class Template;
 
 class TemplateMoveTool : public MapEditorTool
 {

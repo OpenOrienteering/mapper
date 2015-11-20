@@ -26,14 +26,22 @@
 
 #include <QRectF>
 
+#include "file_format.h"
 #include "map_coord.h"
 #include "path_coord.h"
 #include "renderable.h"
+#include "symbol.h"
 
+QT_BEGIN_NAMESPACE
 class QIODevice;
+class QXmlStreamReader;
+class QXmlStreamWriter;
+QT_END_NAMESPACE
 
-class Symbol;
 class Map;
+class PointObject;
+class PathObject;
+class TextObject;
 
 /// Base class which combines coordinates and a symbol to form an object (in a map or point symbol).
 class Object
@@ -57,9 +65,15 @@ public:
 	
 	/// Returns the object type determined by the subclass
     inline Type getType() const {return type;}
+    // Convenience casts with type checking
+    PointObject* asPoint();
+	PathObject* asPath();
+	TextObject* asText();
 	
 	void save(QIODevice* file);
 	void load(QIODevice* file, int version, Map* map);
+	void save(QXmlStreamWriter& xml) const;
+	static Object* load(QXmlStreamReader& xml, Map& map, const SymbolDictionary& symbol_dict, Symbol* symbol = 0) throw (FormatException);
 	
 	/// Checks if the output_dirty flag is set and if yes, regenerates output and extent; returns true if output was previously dirty.
 	/// Use force == true to force a redraw
@@ -71,13 +85,13 @@ public:
 	/// Scales all coordinates, with the origin as scaling center
 	void scale(double factor);
 	
-	/// Rotates the whole object
+	/// Rotates the whole object. The angle must be given in radians.
 	void rotateAround(MapCoordF center, double angle);
 	
 	/// Checks if the given coord, with the given tolerance, is on this object; with extended_selection, the coord is on point objects always if it is whithin their extent,
 	/// otherwise it has to be close to their midpoint. Returns a Symbol::Type which specifies on which symbol type the coord is
 	/// (important for combined symbols which can have areas and lines).
-	int isPointOnObject(MapCoordF coord, float tolerance, bool extended_selection);
+	int isPointOnObject(MapCoordF coord, float tolerance, bool treat_areas_as_paths, bool extended_selection);
 	
 	/// Checks if a path point (excluding curve control points) is included in the given box
 	bool intersectsBox(QRectF box);
@@ -161,16 +175,19 @@ public:
 	PathObject(Symbol* symbol = NULL);
 	PathObject(Symbol* symbol, const MapCoordVector& coords, Map* map = 0);
     virtual Object* duplicate();
-	PathObject* duplicateFirstPart();
+	PathObject* duplicatePart(int part_index);
 	
 	// Coordinate access methods
-	inline int getCoordinateCount() const {return (int)coords.size();}
 	
+	inline int getCoordinateCount() const {return (int)coords.size();}
 	inline MapCoord& getCoordinate(int pos) {return coords[pos];}
 	void setCoordinate(int pos, MapCoord c);
 	void addCoordinate(int pos, MapCoord c);
 	void addCoordinate(MapCoord c, bool start_new_part = false);
-	void deleteCoordinate(int pos, bool adjust_other_coords);	// adjust_other_coords does not work if deleting bezier curve handles!
+	/// NOTE: adjust_other_coords does not work if deleting bezier curve handles!
+	///       delete_bezier_point_action must be an enum value from Settings::DeleteBezierPointAction if
+	///          deleting points from bezier splines with adjust_other_coords == true.
+	void deleteCoordinate(int pos, bool adjust_other_coords, int delete_bezier_point_action = -1);
 	void clearCoordinates();
 	
 	MapCoord& shiftedCoord(int base_index, int offset, PathPart& part);
@@ -187,11 +204,21 @@ public:
 	inline const PathCoordVector& getPathCoordinateVector() const {return path_coords;}
 	inline void clearPathCoordinates() {path_coords.clear();}
 	
+	// Pattern methods
+	
+	inline float getPatternRotation() const {return pattern_rotation;}
+	inline void setPatternRotation(float rotation) {pattern_rotation = rotation; output_dirty = true;}
+	inline MapCoord getPatternOrigin() const {return pattern_origin;}
+	inline void setPatternOrigin(const MapCoord& origin) {pattern_origin = origin; output_dirty = true;}
+	
 	// Operations
 	
 	/// Calculates the closest point on the path to the given coordinate, returns the squared distance of these points and PathCoord information for the point on the path.
 	/// This does not have to be an existing path coordinate. This method is usually called to find the position on the path the user clicked on.
-	void calcClosestPointOnPath(MapCoordF coord, float& out_distance_sq, PathCoord& out_path_coord);
+	/// part_index can be set to a valid part index to constrain searching to this specific path part.
+	void calcClosestPointOnPath(MapCoordF coord, float& out_distance_sq, PathCoord& out_path_coord, int part_index = -1);
+	/// Calculates the closest control point coordinate to the given coordiante, returns the squared distance of these points and the index of the control point.
+	void calcClosestCoordinate(MapCoordF coord, float& out_distance_sq, int& out_index);
 	/// Splits the segment beginning at the coordinate with the given index with the given bezier curve parameter or split ratio. Returns the index of the added point.
 	int subdivide(int index, float param);
 	/// Returns if connectIfClose() would do something with the given parameters
@@ -211,7 +238,7 @@ public:
 	/// Like reverse(), but only for the given part
 	void reversePart(int part_index);
 	/// See Object::isPointOnObject()
-	int isPointOnPath(MapCoordF coord, float tolerance);
+	int isPointOnPath(MapCoordF coord, float tolerance, bool treat_areas_as_paths);
 	
 	/// Called by Object::update()
 	void updatePathCoords(MapCoordVectorF& float_coords);
@@ -220,10 +247,17 @@ public:
 	
 protected:
 	void connectPathParts(int part_index, PathObject* other, int other_part_index, bool prepend);
-	void advanceCoordinateRangeTo(const MapCoordVector& flags, const MapCoordVectorF& coords, const PathCoordVector& path_coords, int& cur_path_coord, int& current_index, float cur_length,
+	bool advanceCoordinateRangeTo(const MapCoordVector& flags, const MapCoordVectorF& coords, const PathCoordVector& path_coords, int& cur_path_coord, int& current_index, float cur_length,
 								  bool enforce_wrap, int start_bezier_index, MapCoordVector& out_flags, MapCoordVectorF& out_coords, const MapCoordF& o3, const MapCoordF& o4);
+	void calcBezierPointDeletionRetainingShapeFactors(MapCoord p0, MapCoord p1, MapCoord p2, MapCoord q0, MapCoord q1, MapCoord q2, MapCoord q3, double& out_pfactor, double& out_qfactor);
+	void calcBezierPointDeletionRetainingShapeOptimization(MapCoord p0, MapCoord p1, MapCoord p2, MapCoord q0, MapCoord q1, MapCoord q2, MapCoord q3, double& out_pfactor, double& out_qfactor);
+	float calcBezierPointDeletionRetainingShapeCost(MapCoord p0, MapCoordF p1, MapCoordF p2, MapCoord p3, PathObject* reference);
+	
 	/// Sets coord as the point which closes a subpath (the normal path or a hole in it).
 	void setClosingPoint(int index, MapCoord coord);
+	
+	float pattern_rotation;
+	MapCoord pattern_origin;
 	
 	std::vector<PathPart> parts;
 	PathCoordVector path_coords;	// only valid after calling update()
@@ -240,6 +274,7 @@ public:
 	void setPosition(MapCoordF coord);
 	void getPosition(qint64& x, qint64& y) const;
 	MapCoordF getCoordF() const;
+	MapCoord getCoord() const;
 	
 	void setRotation(float new_rotation);
 	inline float getRotation() const {return rotation;}

@@ -20,7 +20,7 @@
 
 #include "map_color.h"
 
-#include <assert.h>
+#include <cassert>
 
 #include "map.h"
 
@@ -50,8 +50,9 @@ bool MapColor::equals(const MapColor& other, bool compare_priority) const
 {
 	return (name.compare(other.name, Qt::CaseInsensitive) == 0) &&
 		   (!compare_priority || (priority == other.priority)) && 
-		   (c == other.c) && (m == other.m) && (y == other.y) && (k == other.k) &&
-		   (opacity == other.opacity);
+		   (qAbs(c - other.c) < 1e-06) && (qAbs(m - other.m) < 1e-06) &&
+		   (qAbs(y - other.y) < 1e-06) && (qAbs(k - other.k) < 1e-06) &&
+		   (qAbs(opacity - other.opacity) < 1e-06);
 }
 
 

@@ -22,13 +22,15 @@
 #include "file_format_native.h"
 #include "georeferencing.h"
 #include "gps_coordinates.h"
+#include "map.h"
 #include "map_color.h"
+#include "map_grid.h"
 #include "symbol.h"
 #include "template.h"
 #include "util.h"
 
 const int NativeFileFormat::least_supported_file_format_version = 0;
-const int NativeFileFormat::current_file_format_version = 20;
+const int NativeFileFormat::current_file_format_version = 29;
 const char NativeFileFormat::magic_bytes[4] = {0x4F, 0x4D, 0x41, 0x50};	// "OMAP"
 
 bool NativeFileFormat::understands(const unsigned char *buffer, size_t sz) const
@@ -38,12 +40,12 @@ bool NativeFileFormat::understands(const unsigned char *buffer, size_t sz) const
     return false;
 }
 
-Importer *NativeFileFormat::createImporter(QIODevice* stream, const QString& path, Map* map, MapView* view) const throw (FormatException)
+Importer *NativeFileFormat::createImporter(QIODevice* stream, Map* map, MapView* view) const throw (FormatException)
 {
 	return new NativeFileImport(stream, map, view);
 }
 
-Exporter *NativeFileFormat::createExporter(QIODevice* stream, const QString& path, Map* map, MapView* view) const throw (FormatException)
+Exporter *NativeFileFormat::createExporter(QIODevice* stream, Map* map, MapView* view) const throw (FormatException)
 {
     return new NativeFileExport(stream, map, view);
 }
@@ -58,7 +60,7 @@ NativeFileImport::~NativeFileImport()
 {
 }
 
-void NativeFileImport::doImport(bool load_symbols_only) throw (FormatException)
+void NativeFileImport::import(bool load_symbols_only) throw (FormatException)
 {
     char buffer[4];
     stream->read(buffer, 4); // read the magic
@@ -71,11 +73,11 @@ void NativeFileImport::doImport(bool load_symbols_only) throw (FormatException)
     }
     else if (version < NativeFileFormat::least_supported_file_format_version)
     {
-        throw FormatException(QObject::tr("Unsupported file format version. Please use an older program version to load and update the stream->"));
+        throw FormatException(QObject::tr("Unsupported file format version. Please use an older program version to load and update the file."));
     }
     else if (version > NativeFileFormat::current_file_format_version)
     {
-        throw FormatException(QObject::tr("File format version too high. Please update to a newer program version to load this stream->"));
+        throw FormatException(QObject::tr("File format version too high. Please update to a newer program version to load this file."));
     }
 
     if (version <= 16)
@@ -133,6 +135,20 @@ void NativeFileImport::doImport(bool load_symbols_only) throw (FormatException)
 			georef.initDeclination();
 		*map->georeferencing = georef;
 	}
+	
+	if (version >= 24)
+		map->getGrid().load(stream, version);
+	
+	if (version >= 25)
+	{
+		stream->read((char*)&map->area_hatching_enabled, sizeof(bool));
+		stream->read((char*)&map->baseline_view_enabled, sizeof(bool));
+	}
+	else
+	{
+		map->area_hatching_enabled = false;
+		map->baseline_view_enabled = false;
+	}
 
     if (version >= 6)
     {
@@ -143,11 +159,20 @@ void NativeFileImport::doImport(bool load_symbols_only) throw (FormatException)
             stream->read((char*)&map->print_format, sizeof(int));
             stream->read((char*)&map->print_dpi, sizeof(float));
             stream->read((char*)&map->print_show_templates, sizeof(bool));
+			if (version >= 24)
+				stream->read((char*)&map->print_show_grid, sizeof(bool));
+			else
+				map->print_show_grid = false;
             stream->read((char*)&map->print_center, sizeof(bool));
             stream->read((char*)&map->print_area_left, sizeof(float));
             stream->read((char*)&map->print_area_top, sizeof(float));
             stream->read((char*)&map->print_area_width, sizeof(float));
             stream->read((char*)&map->print_area_height, sizeof(float));
+			if (version >= 26)
+			{
+				stream->read((char*)&map->print_different_scale_enabled, sizeof(bool));
+				stream->read((char*)&map->print_different_scale, sizeof(int));
+			}
         }
     }
 	
@@ -217,16 +242,41 @@ void NativeFileImport::doImport(bool load_symbols_only) throw (FormatException)
 		{
 			QString path;
 			loadString(stream, path);
-
 			Template* temp = Template::templateForFile(path, map);
-			temp->loadTemplateParameters(stream);
+			if (version >= 27)
+			{
+				loadString(stream, path);
+				temp->setTemplateRelativePath(path);
+			}
+			
+			temp->loadTemplateConfiguration(stream, version);
 
 			map->templates[i] = temp;
+		}
+		
+		if (version >= 28)
+		{
+			int num_closed_templates;
+			stream->read((char*)&num_closed_templates, sizeof(int));
+			map->closed_templates.resize(num_closed_templates);
+			
+			for (int i = 0; i < num_closed_templates; ++i)
+			{
+				QString path;
+				loadString(stream, path);
+				Template* temp = Template::templateForFile(path, map);
+				loadString(stream, path);
+				temp->setTemplateRelativePath(path);
+				
+				temp->loadTemplateConfiguration(stream, version);
+				
+				map->closed_templates[i] = temp;
+			}
 		}
 
 		// Restore widgets and views
 		if (view)
-			view->load(stream);
+			view->load(stream, version);
 		else
 		{
 			// TODO
@@ -241,25 +291,25 @@ void NativeFileImport::doImport(bool load_symbols_only) throw (FormatException)
 			}
 		}
 
-		// Load layers
-		stream->read((char*)&map->current_layer_index, sizeof(int));
+		// Load parts
+		stream->read((char*)&map->current_part_index, sizeof(int));
 
-		int num_layers;
-		if (stream->read((char*)&num_layers, sizeof(int)) < (int)sizeof(int))
+		int num_parts;
+		if (stream->read((char*)&num_parts, sizeof(int)) < (int)sizeof(int))
 		{
-			throw FormatException(QObject::tr("Error while reading layer count."));
+			throw FormatException(QObject::tr("Error while reading map part count."));
 		}
-		delete map->layers[0];
-		map->layers.resize(num_layers);
+		delete map->parts[0];
+		map->parts.resize(num_parts);
 
-		for (int i = 0; i < num_layers; ++i)
+		for (int i = 0; i < num_parts; ++i)
 		{
-			MapLayer* layer = new MapLayer("", map);
-			if (!layer->load(stream, version, map))
+			MapPart* part = new MapPart("", map);
+			if (!part->load(stream, version, map))
 			{
-				throw FormatException(QObject::tr("Error while loading layer %2.").arg(i+1));
+				throw FormatException(QObject::tr("Error while loading map part %2.").arg(i+1));
 			}
-			map->layers[i] = layer;
+			map->parts[i] = part;
 		}
 	}
 }
@@ -306,42 +356,50 @@ void NativeFileExport::doExport() throw (FormatException)
 	saveString(stream, QString("Geographic coordinates")); // reserved for geographic crs parameter or specification id
 	saveString(stream, georef.geographic_crs_spec);
 	
-    stream->write((const char*)&map->print_params_set, sizeof(bool));
-    if (map->print_params_set)
-    {
-        stream->write((const char*)&map->print_orientation, sizeof(int));
-        stream->write((const char*)&map->print_format, sizeof(int));
-        stream->write((const char*)&map->print_dpi, sizeof(float));
-        stream->write((const char*)&map->print_show_templates, sizeof(bool));
-        stream->write((const char*)&map->print_center, sizeof(bool));
-        stream->write((const char*)&map->print_area_left, sizeof(float));
-        stream->write((const char*)&map->print_area_top, sizeof(float));
-        stream->write((const char*)&map->print_area_width, sizeof(float));
-        stream->write((const char*)&map->print_area_height, sizeof(float));
-    }
-    
-    stream->write((const char*)&map->image_template_use_meters_per_pixel, sizeof(bool));
+	map->getGrid().save(stream);
+
+	stream->write((const char*)&map->area_hatching_enabled, sizeof(bool));
+	stream->write((const char*)&map->baseline_view_enabled, sizeof(bool));
+
+	stream->write((const char*)&map->print_params_set, sizeof(bool));
+	if (map->print_params_set)
+	{
+		stream->write((const char*)&map->print_orientation, sizeof(int));
+		stream->write((const char*)&map->print_format, sizeof(int));
+		stream->write((const char*)&map->print_dpi, sizeof(float));
+		stream->write((const char*)&map->print_show_templates, sizeof(bool));
+		stream->write((const char*)&map->print_show_grid, sizeof(bool));
+		stream->write((const char*)&map->print_center, sizeof(bool));
+		stream->write((const char*)&map->print_area_left, sizeof(float));
+		stream->write((const char*)&map->print_area_top, sizeof(float));
+		stream->write((const char*)&map->print_area_width, sizeof(float));
+		stream->write((const char*)&map->print_area_height, sizeof(float));
+		stream->write((const char*)&map->print_different_scale_enabled, sizeof(bool));
+		stream->write((const char*)&map->print_different_scale, sizeof(int));
+	}
+
+	stream->write((const char*)&map->image_template_use_meters_per_pixel, sizeof(bool));
 	stream->write((const char*)&map->image_template_meters_per_pixel, sizeof(double));
 	stream->write((const char*)&map->image_template_dpi, sizeof(double));
 	stream->write((const char*)&map->image_template_scale, sizeof(double));
 
-    // Write colors
-    int num_colors = (int)map->color_set->colors.size();
-    stream->write((const char*)&num_colors, sizeof(int));
+	// Write colors
+	int num_colors = (int)map->color_set->colors.size();
+	stream->write((const char*)&num_colors, sizeof(int));
 
-    for (int i = 0; i < num_colors; ++i)
-    {
-        MapColor* color = map->color_set->colors[i];
+	for (int i = 0; i < num_colors; ++i)
+	{
+		MapColor* color = map->color_set->colors[i];
 
-        stream->write((const char*)&color->priority, sizeof(int));
-        stream->write((const char*)&color->c, sizeof(float));
-        stream->write((const char*)&color->m, sizeof(float));
-        stream->write((const char*)&color->y, sizeof(float));
-        stream->write((const char*)&color->k, sizeof(float));
-        stream->write((const char*)&color->opacity, sizeof(float));
+		stream->write((const char*)&color->priority, sizeof(int));
+		stream->write((const char*)&color->c, sizeof(float));
+		stream->write((const char*)&color->m, sizeof(float));
+		stream->write((const char*)&color->y, sizeof(float));
+		stream->write((const char*)&color->k, sizeof(float));
+		stream->write((const char*)&color->opacity, sizeof(float));
 
-        saveString(stream, color->name);
-    }
+		saveString(stream, color->name);
+	}
 
     // Write symbols
     int num_symbols = map->getNumSymbols();
@@ -364,20 +422,35 @@ void NativeFileExport::doExport() throw (FormatException)
 
     for (int i = 0; i < num_templates; ++i)
     {
-        Template* temp = map->getTemplate(i);
+		Template* temp = map->getTemplate(i);
 
-        saveString(stream, temp->getTemplatePath());
+		saveString(stream, temp->getTemplatePath());
+		saveString(stream, temp->getTemplateRelativePath());
 
-        temp->saveTemplateParameters(stream);	// save transformation etc.
-        if (temp->hasUnsavedChanges())
-        {
-            // Save the template itself (e.g. image, gpx file, etc.)
-            temp->saveTemplateFile();
-            temp->setHasUnsavedChanges(false);
-        }
-    }
+		temp->saveTemplateConfiguration(stream);	// save transformation etc.
+		if (temp->hasUnsavedChanges())
+		{
+			// Save the template itself (e.g. image, gpx file, etc.)
+			temp->saveTemplateFile();
+			temp->setHasUnsavedChanges(false);
+		}
+	}
 
-    // Write widgets and views; replaces MapEditorController::saveWidgetsAndViews()
+	// Write closed template settings
+	int num_closed_templates = map->getNumClosedTemplates();
+	stream->write((const char*)&num_closed_templates, sizeof(int));
+	
+	for (int i = 0; i < num_closed_templates; ++i)
+	{
+		Template* temp = map->getClosedTemplate(i);
+		
+		saveString(stream, temp->getTemplatePath());
+		saveString(stream, temp->getTemplateRelativePath());
+		
+		temp->saveTemplateConfiguration(stream);	// save transformation etc.
+	}
+
+	// Write widgets and views; replaces MapEditorController::saveWidgetsAndViews()
     if (view)
     {
         // which only does this anyway
@@ -391,17 +464,15 @@ void NativeFileExport::doExport() throw (FormatException)
     // Write undo steps
     map->object_undo_manager.save(stream);
 
-    // Write layers
-    stream->write((const char*)&map->current_layer_index, sizeof(int));
+    // Write parts
+    stream->write((const char*)&map->current_part_index, sizeof(int));
 
-    int num_layers = map->getNumLayers();
-    stream->write((const char*)&num_layers, sizeof(int));
+    int num_parts = map->getNumParts();
+    stream->write((const char*)&num_parts, sizeof(int));
 
-    for (int i = 0; i < num_layers; ++i)
+    for (int i = 0; i < num_parts; ++i)
     {
-        MapLayer* layer = map->getLayer(i);
-        layer->save(stream, map);
+        MapPart* part = map->getPart(i);
+        part->save(stream, map);
     }
-
-    stream->close();
 }

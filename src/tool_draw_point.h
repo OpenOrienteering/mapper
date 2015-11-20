@@ -21,11 +21,16 @@
 #ifndef _OPENORIENTEERING_DRAW_POINT_H_
 #define _OPENORIENTEERING_DRAW_POINT_H_
 
-#include "map_editor.h"
-
 #include <QScopedPointer>
 
+#include "tool.h"
+#include "tool_helpers.h"
+
+class MapWidget;
 class PointObject;
+class Symbol;
+class SymbolWidget;
+class ConstrainAngleToolHelper;
 
 /// Tool to draw point objects
 class DrawPointTool : public MapEditorTool
@@ -35,37 +40,44 @@ public:
 	DrawPointTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget);
     virtual ~DrawPointTool();
 	
-    virtual void init();
-    virtual QCursor* getCursor() {return cursor;}
-    
-    virtual bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
-	virtual bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
-    virtual bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
-    virtual void leaveEvent(QEvent* event);
-    virtual bool keyPressEvent(QKeyEvent* event);
+	virtual void init();
+	virtual QCursor* getCursor() {return cursor;}
 	
-    virtual void draw(QPainter* painter, MapWidget* widget);
+	virtual bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
+	virtual bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
+	virtual bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
+	virtual void leaveEvent(QEvent* event);
+	virtual bool keyPressEvent(QKeyEvent* event);
+    virtual bool keyReleaseEvent(QKeyEvent* event);
+	
+	virtual void draw(QPainter* painter, MapWidget* widget);
 	
 	static QCursor* cursor;
 	
 protected slots:
 	void selectedSymbolsChanged();
 	void symbolDeleted(int pos, Symbol* old_symbol);
+	void updateDirtyRect();
 	
 protected:
-	void setDirtyRect(MapCoordF mouse_pos);
-	float calculateRotation(QPoint mouse_pos, MapCoordF mouse_pos_map);
+	float calculateRotation(QPointF mouse_pos, MapCoordF mouse_pos_map);
+	void updateDragging();
+	void updateStatusText();
 	
 	QPoint click_pos;
 	MapCoordF click_pos_map;
-	QPoint cur_pos;
+	QPointF cur_pos;
 	MapCoordF cur_pos_map;
+	QPointF constrained_pos;
+	MapCoordF constrained_pos_map;
 	bool dragging;
+	QScopedPointer<ConstrainAngleToolHelper> angle_helper;
 	
 	Symbol* last_used_symbol;
 	PointObject* preview_object;
 	QScopedPointer<MapRenderables> renderables;
 	SymbolWidget* symbol_widget;
+	MapWidget* cur_map_widget;
 };
 
 #endif

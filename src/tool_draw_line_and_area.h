@@ -21,7 +21,7 @@
 #ifndef _OPENORIENTEERING_DRAW_LINE_AND_AREA_H_
 #define _OPENORIENTEERING_DRAW_LINE_AND_AREA_H_
 
-#include "map_editor.h"
+#include "tool.h"
 
 #include <QScopedPointer>
 
@@ -30,6 +30,10 @@ class PointObject;
 class PathObject;
 class MapRenderables;
 class Symbol;
+class PointSymbol;
+class SymbolWidget;
+class LineSymbol;
+struct LineSymbolBorder;
 
 /// Base class for drawing tools for line and area symbols.
 /// Provides some common functionality like for example displaying the preview objects.
@@ -55,13 +59,14 @@ protected slots:
 protected:
 	void createPreviewPoints();
 	void addPreviewPointSymbols(Symbol* symbol);
-	void setPreviewPointsPosition(MapCoordF map_coord);
+	void addPreviewPointSymbolsForBorder(LineSymbol* line, LineSymbolBorder* border);
+	void setPreviewPointsPosition(MapCoordF map_coord, int points_index = 0);
 	void hidePreviewPoints();
 	
 	void startDrawing();
 	void updatePreviewPath();
 	virtual void abortDrawing();
-	virtual void finishDrawing();
+	virtual void finishDrawing(PathObject* append_to_object = NULL);
 	void deletePreviewObjects();
 	
 	void includePreviewRects(QRectF& rect);
@@ -70,7 +75,8 @@ protected:
 	
 	std::vector<PointSymbol*> preview_point_symbols;
 	std::vector<bool> preview_point_symbols_external;
-	std::vector<PointObject*> preview_points;
+	std::vector<PointObject*> preview_points[2];
+	int preview_point_radius;
 	bool preview_points_shown;
 	
 	CombinedSymbol* path_combination;

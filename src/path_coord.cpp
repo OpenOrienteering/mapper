@@ -20,11 +20,12 @@
 
 #include "path_coord.h"
 
-#include "assert.h"
+#include <cassert>
 
 #include "symbol_line.h"
 
-const float PathCoord::bezier_error = 0.0005f;
+const float PathCoord::bezier_error = 0.005f;
+const float PathCoord::bezier_segment_maxlen = 1.0f;
 
 void PathCoord::calculatePathCoords(const MapCoordVector& flags, const MapCoordVectorF& coords, PathCoordVector* path_coords)
 {
@@ -59,9 +60,9 @@ bool PathCoord::getNextPathPart(const MapCoordVector& flags, const MapCoordVecto
 		if (flags[i-1].isCurveStart())
 		{
 			if (i == size - 2)
-				curveToPathCoord(coords[i-1], coords[i], coords[i+1], coords[0], i-1, bezier_error, path_coords);
+				curveToPathCoord(coords[i-1], coords[i], coords[i+1], coords[0], i-1, bezier_error, bezier_segment_maxlen, path_coords);
 			else
-				curveToPathCoord(coords[i-1], coords[i], coords[i+1], coords[i+2], i-1, bezier_error, path_coords);
+				curveToPathCoord(coords[i-1], coords[i], coords[i+1], coords[i+2], i-1, bezier_error, bezier_segment_maxlen, path_coords);
 			i += 2;
 		}
 		else
@@ -87,23 +88,23 @@ bool PathCoord::getNextPathPart(const MapCoordVector& flags, const MapCoordVecto
 PathCoord PathCoord::findPathCoordForCoorinate(const PathCoordVector* path_coords, int index)
 {
 	int path_coords_size = path_coords->size();
-	for (int i = 0; i < path_coords_size; ++i)
+	for (int i = path_coords_size - 1; i >= 0; --i)
 	{
 		if (path_coords->at(i).param == 0 && index == path_coords->at(i).index)
 			return path_coords->at(i);
-		else if (path_coords->at(i).param == 1 && (i == path_coords_size - 1 || (i < path_coords_size - 1 && index == path_coords->at(i+1).index)))
+		else if (path_coords->at(i).param == 1 && index > path_coords->at(i).index)
 			return path_coords->at(i);
 	}
 	assert(false);
 	return path_coords->at(0);
 }
-void PathCoord::curveToPathCoordRec(MapCoordF c0, MapCoordF c1, MapCoordF c2, MapCoordF c3, int coord_index, float max_error, PathCoordVector* path_coords, float p0, float p1)
+void PathCoord::curveToPathCoordRec(MapCoordF c0, MapCoordF c1, MapCoordF c2, MapCoordF c3, int coord_index, float max_error, float max_segment_len, PathCoordVector* path_coords, float p0, float p1)
 {
 	float outer_len = c0.lengthTo(c1) + c1.lengthTo(c2) + c2.lengthTo(c3);
 	float inner_len = c0.lengthTo(c3);
 	float p_half = 0.5f * (p0 + p1);
 	
-	if (outer_len - inner_len <= max_error)
+	if (outer_len - inner_len <= max_error && inner_len <= max_segment_len)
 	{
 		PathCoord coord;
 		PathCoord& prev = path_coords->at(path_coords->size() - 1);
@@ -126,14 +127,14 @@ void PathCoord::curveToPathCoordRec(MapCoordF c0, MapCoordF c1, MapCoordF c2, Ma
 		MapCoordF c123((c12.getX() + c23.getX()) * 0.5f, (c12.getY() + c23.getY()) * 0.5f);
 		MapCoordF c0123((c012.getX() + c123.getX()) * 0.5f, (c012.getY() + c123.getY()) * 0.5f);
 		
-		curveToPathCoordRec(c0, c01, c012, c0123, coord_index, max_error, path_coords, p0, p_half);
-		curveToPathCoordRec(c0123, c123, c23, c3, coord_index, max_error, path_coords, p_half, p1);
+		curveToPathCoordRec(c0, c01, c012, c0123, coord_index, max_error, max_segment_len, path_coords, p0, p_half);
+		curveToPathCoordRec(c0123, c123, c23, c3, coord_index, max_error, max_segment_len, path_coords, p_half, p1);
 	}
 }
-void PathCoord::curveToPathCoord(MapCoordF c0, MapCoordF c1, MapCoordF c2, MapCoordF c3, int coord_index, float max_error, PathCoordVector* path_coords)
+void PathCoord::curveToPathCoord(MapCoordF c0, MapCoordF c1, MapCoordF c2, MapCoordF c3, int coord_index, float max_error, float max_segment_len, PathCoordVector* path_coords)
 {
 	// Add curve coordinates
-	curveToPathCoordRec(c0, c1, c2, c3, coord_index, max_error, path_coords, 0, 1);
+	curveToPathCoordRec(c0, c1, c2, c3, coord_index, max_error, max_segment_len, path_coords, 0, 1);
 	
 	// Add end point
 	PathCoord end;
@@ -205,7 +206,7 @@ void PathCoord::calculatePositionAt(const MapCoordVector& flags, const MapCoordV
 		return;
 	}
 	
-	assert(length < path_coords[path_coords.size() - 1].clen + 0.01f);
+	//assert(length < path_coords[path_coords.size() - 1].clen + 0.01f); perhaps same problem as the commented assert above?
 	*out_pos = path_coords[path_coords.size() - 1].pos;
 	if (out_right_vector)
 	{
@@ -290,6 +291,78 @@ MapCoordF PathCoord::calculateRightVector(const MapCoordVector& flags, const Map
 	
 	return right;
 }
+MapCoordF PathCoord::calculateTangent(const MapCoordVector& coords, int i, bool backward, bool& ok)
+{
+	// TODO: this is a copy of the code below, adjusted for MapCoord (without F) and handling of closed paths
+	
+	ok = true;
+	MapCoordF tangent;
+	if (backward)
+	{
+		//assert(i >= 1);
+		int k = i-1;
+		for (; k >= 0; --k)
+		{
+			if (coords[k].isClosePoint())
+				break;
+			tangent = MapCoordF(coords[i].xd() - coords[k].xd(), coords[i].yd() - coords[k].yd());
+			if (tangent.lengthSquared() > 0.01f*0.01f)
+				return tangent;
+		}
+		
+		++k;
+		int size = (int)coords.size();
+		while (k < size && !coords[k].isClosePoint())
+			++k;
+		if (k < size)
+		{
+			// This is a closed part, wrap around
+			--k;
+			for (; k > i; --k)
+			{
+				tangent = MapCoordF(coords[i].xd() - coords[k].xd(), coords[i].yd() - coords[k].yd());
+				if (tangent.lengthSquared() > 0.01f*0.01f)
+					return tangent;
+			}
+		}
+		
+		ok = false;
+	}
+	else
+	{
+		int size = (int)coords.size();
+		//assert(i < size - 1);
+		int k = i+1;
+		for (; k < size; ++k)
+		{
+			tangent = MapCoordF(coords[k].xd() - coords[i].xd(), coords[k].yd() - coords[i].yd());
+			if (tangent.lengthSquared() > 0.01f*0.01f)
+				return tangent;
+			if (coords[k].isClosePoint())
+				break;
+		}
+		
+		if (k >= size)
+			--k;
+		if (coords[k].isClosePoint())
+		{
+			--k;
+			// This is a closed part, wrap around
+			while (k >= 0 && !coords[k].isClosePoint())
+				--k;
+			k += 2;
+			for (; k < i; ++k)
+			{
+				tangent = MapCoordF(coords[k].xd() - coords[i].xd(), coords[k].yd() - coords[i].yd());
+				if (tangent.lengthSquared() > 0.01f*0.01f)
+					return tangent;
+			}
+		}
+		
+		ok = false;
+	}
+	return tangent;
+}
 MapCoordF PathCoord::calculateTangent(const MapCoordVectorF& coords, int i, bool backward, bool& ok)
 {
 	// TODO: use this for tangent calculation in LineSymbol or for objects in general
@@ -299,7 +372,8 @@ MapCoordF PathCoord::calculateTangent(const MapCoordVectorF& coords, int i, bool
 	if (backward)
 	{
 		//assert(i >= 1);
-		for (int k = i-1; k >= 0; --k)
+		int k = i-1;
+		for (; k >= 0; --k)
 		{
 			tangent = MapCoordF(coords[i].getX() - coords[k].getX(), coords[i].getY() - coords[k].getY());
 			if (tangent.lengthSquared() > 0.01f*0.01f)
@@ -312,7 +386,8 @@ MapCoordF PathCoord::calculateTangent(const MapCoordVectorF& coords, int i, bool
 	{
 		int size = (int)coords.size();
 		//assert(i < size - 1);
-		for (int k = i+1; k < size; ++k)
+		int k = i+1;
+		for (; k < size; ++k)
 		{
 			tangent = MapCoordF(coords[k].getX() - coords[i].getX(), coords[k].getY() - coords[i].getY());
 			if (tangent.lengthSquared() > 0.01f*0.01f)

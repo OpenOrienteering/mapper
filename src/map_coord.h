@@ -21,11 +21,14 @@
 #ifndef _OPENORIENTEERING_MAP_COORD_H_
 #define _OPENORIENTEERING_MAP_COORD_H_
 
+#include <cassert>
+#include <cmath>
 #include <vector>
-#include <math.h>
-#include <assert.h>
 
 #include <QPointF>
+#include <QString>
+#include <QXmlStreamReader>
+#include <QXmlStreamWriter>
 
 /// Coordinates of a point in a map.
 /// Saved as 64bit integers, where in addition some flags about the type of the point can be stored in the lowest 4 bits.
@@ -40,6 +43,12 @@ public:
 	{
 		this->x = qRound64(x * 1000) << 4;
 		this->y = qRound64(y * 1000) << 4;
+	}
+	
+	inline explicit MapCoord(QPointF point)
+	{
+		this->x = qRound64(point.x() * 1000) << 4;
+		this->y = qRound64(point.y() * 1000) << 4;
 	}
 	
 	inline void setX(double x) {this->x = (qRound64(x * 1000) << 4) | (this->x & 15);}
@@ -188,6 +197,28 @@ public:
 	{
 		return QPointF(xd(), yd());
 	}
+	
+	void save(QXmlStreamWriter& xml) const
+	{
+		xml.writeStartElement("coord");
+		xml.writeAttribute("x", QString::number(rawX()));
+		xml.writeAttribute("y", QString::number(rawY()));
+		int flags = getFlags();
+		if (flags != 0)
+			xml.writeAttribute("flags", QString::number(flags));
+		xml.writeEndElement(/*coord*/);
+	}
+	
+	static MapCoord load(QXmlStreamReader& xml)
+	{
+		Q_ASSERT(xml.name() == "coord");
+		MapCoord coord;
+		coord.setRawX(xml.attributes().value("x").toString().toLongLong());
+		coord.setRawY(xml.attributes().value("y").toString().toLongLong());
+		coord.setFlags(xml.attributes().value("flags").toString().toInt());
+		xml.skipCurrentElement();
+		return coord;
+	}
 
 private:
 	qint64 x;
@@ -274,12 +305,13 @@ public:
 	
 	/// Rotates the vector. Positive values for angle (in radians) result in a counter-clockwise rotation
 	/// in a coordinate system where the x-axis is right and the y-axis is up.
-	inline void rotate(double angle)
+	inline MapCoordF& rotate(double angle)
 	{
 		double new_angle = getAngle() + angle;
 		double len = length();
 		x = cos(new_angle) * len;
 		y = sin(new_angle) * len;
+		return *this;
 	}
 	
 	/// Replaces this vector with a perpendicular vector pointing to the right
@@ -400,5 +432,13 @@ private:
 
 typedef std::vector<MapCoord> MapCoordVector;
 typedef std::vector<MapCoordF> MapCoordVectorF;
+
+inline void mapCoordVectorToF(const MapCoordVector& coords, MapCoordVectorF& out_coordsF)
+{
+	int size = coords.size();
+	out_coordsF.resize(size);
+	for (int i = 0; i < size; ++i)
+		out_coordsF[i] = MapCoordF(coords[i]);
+}
 
 #endif

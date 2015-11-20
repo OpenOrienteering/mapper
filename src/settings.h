@@ -37,9 +37,24 @@ public:
 	{
 		MapDisplay_Antialiasing = 0,
 		MapEditor_ClickTolerance,
+		MapEditor_SnapDistance,
+		MapEditor_FixedAngleStepping,
 		MapEditor_ChangeSymbolWhenSelecting,
 		MapEditor_ZoomOutAwayFromCursor,
+		MapEditor_DrawLastPointOnRightClick,
+		EditTool_DeleteBezierPointAction,
+		EditTool_DeleteBezierPointActionAlternative,
+		RectangleTool_HelperCrossRadius,
+		RectangleTool_PreviewLineWidth,
+		Templates_KeepSettingsOfClosed,
 		General_Language
+	};
+	
+	enum DeleteBezierPointAction
+	{
+		DeleteBezierPoint_RetainExistingShape = 0,
+		DeleteBezierPoint_ResetHandles,
+		DeleteBezierPoint_KeepHandles
 	};
 	
 	/// Retrieve a setting from QSettings without caching

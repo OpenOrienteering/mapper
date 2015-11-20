@@ -24,6 +24,7 @@
 #include <QMouseEvent>
 #include <QMessageBox>
 
+#include "map_editor.h"
 #include "map_widget.h"
 #include "util.h"
 #include "symbol.h"
