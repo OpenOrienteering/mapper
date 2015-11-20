@@ -49,6 +49,8 @@ Settings::Settings()
 	registerSetting(General_TranslationFile, "translationFile", QVariant(QString::null));
 	registerSetting(General_RecentFilesList, "recentFileList", QVariant(QStringList()));
 	registerSetting(General_OpenMRUFile, "openMRUFile", false);
+	registerSetting(General_Local8BitEncoding, "local_8bit_encoding", "Windows-1252");
+	registerSetting(General_NewOcd8Implementation, "new_ocd8_implementation", false);
 	
 	registerSetting(HomeScreen_TipsVisible, "HomeScreen/tipsVisible", true);
 	registerSetting(HomeScreen_CurrentTip, "HomeScreen/currentTip", -1);

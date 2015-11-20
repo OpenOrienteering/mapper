@@ -21,23 +21,18 @@
 #ifndef _OPENORIENTEERING_TEMPLATE_DOCK_WIDGET_H_
 #define _OPENORIENTEERING_TEMPLATE_DOCK_WIDGET_H_
 
-#include <QWidget>
-
-#include <QItemSelection>
-
-QT_BEGIN_NAMESPACE
-class QGridLayout;
-class QPushButton;
-class QTableWidget;
-class QBoxLayout;
-class QToolButton;
-class QGroupBox;
-QT_END_NAMESPACE
+#include <qglobal.h>
+#if QT_VERSION < 0x050000
+#include <QtGui>
+#else
+#include <QtWidgets>
+#endif
 
 class Map;
-class Template;
-class MapView;
 class MapEditorController;
+class MapView;
+class Template;
+class PercentageDelegate;
 
 class TemplateWidget : public QWidget
 {
@@ -48,10 +43,26 @@ public:
 	
 	void addTemplateAt(Template* new_template, int pos);
 	
-	static Template* showOpenTemplateDialog(QWidget* dialog_parent, MapView* main_view);
+	static Template* showOpenTemplateDialog(QWidget* dialog_parent, MapEditorController* controller);
+	
+public slots:
+	/**
+	 * Sets or clears the all-templates-hidden state.
+	 * When all templates are hidden, operations on templates are disabled.
+	 */
+	void setAllTemplatesHidden(bool value);
 	
 protected:
-	virtual void resizeEvent(QResizeEvent* event);
+	/**
+	 * When key events for Qt::Key_Space are sent to the template_table,
+	 * this will toggle the visibility of the current template.
+	 */
+	virtual bool eventFilter(QObject* watched, QEvent* event);
+	
+	/**
+	 * Returns a new QToolButton with a unified appearance.
+	 */
+	QToolButton* newToolButton(const QIcon& icon, const QString& text);
 	
 protected slots:
 	void newTemplate(QAction* action);
@@ -63,7 +74,7 @@ protected slots:
 	void showHelp();
 	
 	void cellChange(int row, int column);
-	void selectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
+	void updateButtons();
 	void currentCellChange(int current_row, int current_column, int previous_row, int previous_column);
 	void cellDoubleClick(int row, int column);
 	void updateDeleteButtonText();
@@ -73,10 +84,13 @@ protected slots:
 	void adjustWindowClosed();
 	//void groupClicked();
 	void positionClicked(bool checked);
+	void importClicked();
 	void moreActionClicked(QAction* action);
 	
 	void templateAdded(int pos, Template* temp);
 	void templatePositionDockWidgetClosed(Template* temp);
+	
+	void changeTemplateFile();
 	
 private:
 	void addRow(int row);
@@ -85,28 +99,29 @@ private:
 	int rowFromPos(int pos);
 	Template* getCurrentTemplate();
 	
-	void changeTemplateFile(int row);
+	PercentageDelegate* percentage_delegate;
 	
+	QCheckBox* all_hidden_check;
 	QTableWidget* template_table;
+	QBoxLayout* all_templates_layout;
+	
+	QAction* duplicate_action;
+	QAction* move_by_hand_action;
+	QAction* position_action;
+	QAction* import_action;
 	
 	// Buttons
 	QWidget* list_buttons_group;
-	QPushButton* delete_button;
-	QPushButton* duplicate_button;
-	QPushButton* move_up_button;
-	QPushButton* move_down_button;
-	
-	QGroupBox* active_buttons_group;
-	QPushButton* georef_button;
-	QAction* move_by_hand_action;
+	QToolButton* delete_button;
+	QToolButton* move_up_button;
+	QToolButton* move_down_button;
+	QToolButton* georef_button;
 	QToolButton* move_by_hand_button;
-	QPushButton* adjust_button;
-	//QPushButton* group_button;
-	QPushButton* position_button;
-	//QToolButton* more_button;
+	QToolButton* adjust_button;
+	QToolButton* edit_button;
 	
-	bool wide_layout;
-	QBoxLayout* layout;
+	//QToolButton* group_button;
+	//QToolButton* more_button;
 	
 	Map* map;
 	MapView* main_view;

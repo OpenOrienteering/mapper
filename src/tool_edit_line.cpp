@@ -117,6 +117,8 @@ void EditLineTool::clickPress()
 		}
 		
 		hover_object->update(true);
+		map()->emitSelectionEdited();
+		
 		// Make sure that the highlight object is recreated
 		deleteHighlightObject();
 		updateHoverLine(cur_pos_map);

@@ -106,7 +106,7 @@ endif(Mapper_TRANSLATIONS_EMBEDDED)
 
 if(APPLE)
 	# Localized resources just to enable localized native dialogs.
-	foreach(_mapper_trans ${Mapper_TRANS})
+	foreach(_mapper_trans en ${Mapper_TRANS})
 		get_filename_component(_mapper_lang ${_mapper_trans} NAME_WE)
 		string(REPLACE OpenOrienteering_ "" LANGUAGE_CODE ${_mapper_lang})
 		configure_file(locversion.plist.in ${LANGUAGE_CODE}.lproj/locversion.plist @ONLY)

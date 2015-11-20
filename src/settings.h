@@ -53,6 +53,8 @@ public:
 		General_RecentFilesList,
 		General_TranslationFile,
 		General_OpenMRUFile,
+		General_Local8BitEncoding,
+		General_NewOcd8Implementation,
 		HomeScreen_TipsVisible,
 		HomeScreen_CurrentTip,
 		END_OF_SETTINGSENUM /* Don't add items below this line. */

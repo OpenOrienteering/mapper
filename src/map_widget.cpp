@@ -1000,7 +1000,7 @@ void MapWidget::updateMapCache(bool use_background)
 		map->draw(&painter, map_view_rect, !use_antialiasing, view->calculateFinalZoomFactor(), true, true);
 	
 	if (view->isGridVisible())
-		map->drawGrid(&painter, map_view_rect);
+		map->drawGrid(&painter, map_view_rect, true);
 	
 	// Finish drawing
 	painter.end();

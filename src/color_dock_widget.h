@@ -48,18 +48,18 @@ protected slots:
 	void duplicateColor();
 	void moveColorUp();
 	void moveColorDown();
+	void editCurrentColor();
 	void showHelp();
 	
 	void cellChange(int row, int column);
 	void currentCellChange(int current_row, int current_column, int previous_row, int previous_column);
-	void cellDoubleClick(int row, int column);
 	
 	void colorAdded(int index, MapColor* color);
 	void colorChanged(int index, MapColor* color);
 	void colorDeleted(int index, const MapColor* color);
 	
 protected:
-	QAbstractButton* newToolButton(const QIcon& icon, const QString& text, QAbstractButton* prototype = NULL);
+	QToolButton* newToolButton(const QIcon& icon, const QString& text);
 	
 private:
 	void addRow(int row);
@@ -68,11 +68,13 @@ private:
 	// Color list
 	QTableWidget* color_table;
 	
+	QAction* duplicate_action;
+	
 	// Buttons
-	QAbstractButton* delete_button;
-	QAbstractButton* duplicate_button;
-	QAbstractButton* move_up_button;
-	QAbstractButton* move_down_button;
+	QToolButton* delete_button;
+	QToolButton* move_up_button;
+	QToolButton* move_down_button;
+	QToolButton* edit_button;
 	
 	Map* map;
 	MainWindow* window;

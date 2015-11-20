@@ -27,6 +27,12 @@
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
+#define ENABLE_WIN_PRINTING_QUIRK 1
+
+#if defined(Q_OS_WIN) && ENABLE_WIN_PRINTING_QUIRK
+#include <private/qprintengine_win_p.h>
+#endif
+
 #include "../util.h"
 #include "../map.h"
 #include "../settings.h"
@@ -271,13 +277,19 @@ void MapPrinter::setTarget(const QPrinterInfo* new_target)
 			target_copy = *new_target;
 			target = &target_copy;
 		}
-		emit targetChanged(target);
 		
 		if (old_target == imageTarget() || new_target == imageTarget())
 		{
 			// No page margins. Will emit pageFormatChanged( ).
 			setCustomPaperSize(page_format.page_rect.size());
 		}
+		else if (page_format.paper_size != QPrinter::Custom)
+		{
+			updatePaperDimensions();
+			emit pageFormatChanged(page_format);
+		}
+		
+		emit targetChanged(target);
 	}
 }
 
@@ -437,7 +449,8 @@ void MapPrinter::updatePaperDimensions()
 	page_format.page_rect = printer->paperRect(QPrinter::Millimeter);
 	page_format.paper_dimensions = page_format.page_rect.size();
 	
-	if (target != imageTarget() && page_format.paper_size != QPrinter::Custom)
+	if ( target != imageTarget() && target != pdfTarget() &&
+		 page_format.paper_size != QPrinter::Custom )
 	{
 		qreal left, top, right, bottom;
 		printer->getPageMargins(&left, &top, &right, &bottom, QPrinter::Millimeter);
@@ -571,9 +584,12 @@ void MapPrinter::takePrinterSettings(const QPrinter* printer)
 	f.page_rect   = printer->paperRect(QPrinter::Millimeter); // temporary
 	f.paper_dimensions = f.page_rect.size();
 	
-	qreal left, top, right, bottom;
-	printer->getPageMargins(&left, &top, &right, &bottom, QPrinter::Millimeter);
-	f.page_rect.adjust(left, top, -right, -bottom);
+	if (target != pdfTarget() && target != imageTarget())
+	{
+		qreal left, top, right, bottom;
+		printer->getPageMargins(&left, &top, &right, &bottom, QPrinter::Millimeter);
+		f.page_rect.adjust(left, top, -right, -bottom);
+	}
 	
 	if (f != page_format)
 	{
@@ -588,7 +604,7 @@ void MapPrinter::takePrinterSettings(const QPrinter* printer)
 	setResolution(printer->resolution());
 }
 
-void MapPrinter::drawPage(QPainter* device_painter, float dpi, const QRectF& page_extent, bool white_background, QImage* page_buffer) const
+void MapPrinter::drawPage(QPainter* device_painter, float units_per_inch, const QRectF& page_extent, bool white_background, QImage* page_buffer) const
 {
 	device_painter->save();
 	
@@ -614,13 +630,20 @@ void MapPrinter::drawPage(QPainter* device_painter, float dpi, const QRectF& pag
 		}
 	}
 	
-	// Dots per mm
-	qreal scale = dpi / 25.4;
+	// Logical units per mm
+	qreal units_per_mm = units_per_inch / 25.4;
+	// Image pixels per mm
+	qreal pixel_per_mm = options.resolution / 25.4;
+	// Scaling from pixels to logical units
+	qreal pixel2units = units_per_inch / options.resolution;
+	// The current painter's resolution
+	qreal scale = units_per_mm;
 	
 	QPainter* painter = device_painter;
 	QImage scoped_buffer;
 	if (have_transparency && !page_buffer)
 	{
+		scale = pixel_per_mm;
 		int w = qCeil(page_format.paper_dimensions.width() * scale);
 		int h = qCeil(page_format.paper_dimensions.height() * scale);
 #if defined (Q_OS_MAC)
@@ -704,7 +727,7 @@ void MapPrinter::drawPage(QPainter* device_painter, float dpi, const QRectF& pag
 	}
 	
 	if (options.show_grid)
-		map.drawGrid(painter, print_area); // Maybe replace by page_region_used?
+		map.drawGrid(painter, print_area, false); // Maybe replace by page_region_used?
 	
 	if (options.show_templates)
 		map.drawTemplates(painter, page_region_used, map.getFirstFrontTemplate(), map.getNumTemplates() - 1, view, false);
@@ -730,6 +753,7 @@ void MapPrinter::drawPage(QPainter* device_painter, float dpi, const QRectF& pag
 		}
 #endif
 		
+		device_painter->scale(pixel2units, pixel2units);
 		device_painter->setRenderHint(QPainter::SmoothPixmapTransform, false);
 		device_painter->drawImage(0, 0, *page_buffer);
 	}
@@ -742,10 +766,61 @@ void MapPrinter::printMap(QPrinter* printer)
 {
 	// Printer settings may have been changed by preview or application.
 	// We need to use them for printing.
+	printer->setFullPage(true);
 	takePrinterSettings(printer);
 	
 	QSizeF extent_size = page_format.page_rect.size() / scale_adjustment;
 	QPainter p(printer);
+	
+	float resolution = (float)options.resolution;
+	
+#if defined(Q_OS_WIN) && ENABLE_WIN_PRINTING_QUIRK
+	if (printer->paintEngine()->type() == QPaintEngine::Windows)
+	{
+		/* QWin32PrintEngine will (have to) do rounding when passing coordinates
+		 * to GDI, using the device's reported logical resolution.
+		 * We establish an MM_ISOTROPIC transformation from a higher resolution
+		 * to avoid the loss of precision due to this rounding.
+		 */
+		
+		QWin32PrintEngine* engine = static_cast<QWin32PrintEngine*>(printer->printEngine());
+		HDC dc = engine->getDC();
+		
+		// The high resolution in units per millimeter
+		const int hires_ppmm = 1000;
+		
+		// The paper dimensions in high resolution units
+		const int hires_width  = qRound(page_format.page_rect.width() * hires_ppmm);
+		const int hires_height = qRound(page_format.page_rect.height() * hires_ppmm);
+		
+		// The physical paper dimensions in device units
+		const int phys_width   = GetDeviceCaps(dc, PHYSICALWIDTH);
+		const int phys_height  = GetDeviceCaps(dc, PHYSICALHEIGHT);
+		
+		// The physical printing offset in device units
+		const int phys_off_x   = GetDeviceCaps(dc, PHYSICALOFFSETX);
+		const int phys_off_y   = GetDeviceCaps(dc, PHYSICALOFFSETY);
+		// (Needed to work around an unexpected offset, maybe related to QTBUG-5363)
+		
+		if (phys_width > 0)
+		{
+			// Establish the transformation
+			SetMapMode (dc, MM_ISOTROPIC);
+			SetWindowExtEx(dc, hires_width, hires_height, NULL);
+			SetViewportExtEx(dc, phys_width, phys_height, NULL);
+			SetViewportOrgEx(dc, -phys_off_x, -phys_off_y, NULL);
+			resolution *= ((double)hires_width / phys_width);
+		}
+	}
+	else if (printer->paintEngine()->type() == QPaintEngine::Picture)
+	{
+		// Preview: work around for offset, maybe related to QTBUG-5363
+		p.translate(
+		    -page_format.page_rect.left()*resolution / 25.4,
+		    -page_format.page_rect.top()*resolution / 25.4   );
+	}
+#endif
+	
 	bool need_new_page = false;
 	Q_FOREACH(qreal vpos, v_page_pos)
 	{
@@ -757,7 +832,7 @@ void MapPrinter::printMap(QPrinter* printer)
 					printer->newPage();
 				
 				QRectF page_extent = QRectF(QPointF(hpos, vpos), extent_size);
-				drawPage(&p, (float)options.resolution, page_extent, false);
+				drawPage(&p, resolution, page_extent, false);
 				need_new_page = true;
 			}
 		}

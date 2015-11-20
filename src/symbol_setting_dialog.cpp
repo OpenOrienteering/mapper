@@ -187,7 +187,7 @@ void SymbolSettingDialog::updatePreview()
 
 void SymbolSettingDialog::loadTemplateClicked()
 {
-	Template* temp = TemplateWidget::showOpenTemplateDialog(this, preview_map_view);
+	Template* temp = TemplateWidget::showOpenTemplateDialog(this, preview_controller);
 	if (!temp)
 		return;
 	

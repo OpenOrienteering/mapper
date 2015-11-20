@@ -78,6 +78,7 @@ HEADERS += \
   src/util_pie_menu.h \
   src/util_task_dialog.h \
   src/core/map_printer.h \
+  src/fileformats/ocd_file_format_p.h \
   src/gui/about_dialog.h \
   src/gui/color_dialog.h \
   src/gui/home_screen_controller.h \
@@ -89,7 +90,11 @@ HEADERS += \
   src/gui/settings_dialog_p.h \
   src/gui/widgets/color_dropdown.h \
   src/gui/widgets/home_screen_widget.h \
+  src/gui/widgets/mapper_proxystyle.h \
   src/gui/widgets/measure_widget.h \
+  src/gui/widgets/segmented_button_layout.h \
+  src/util/item_delegates.h \
+  src/util/overriding_shortcut.h \
   3rd-party/qtsingleapplication/src/qtlocalpeer.h \
   3rd-party/qtsingleapplication/src/qtsingleapplication.h \
   libocad/libocad.h \
@@ -179,6 +184,8 @@ SOURCES += \
   src/file_format_xml.cpp \
   src/core/map_color.cpp \
   src/core/map_printer.cpp \
+  src/fileformats/ocd_file_format.cpp \
+  src/fileformats/ocd_types.cpp \
   src/gui/about_dialog.cpp \
   src/gui/color_dialog.cpp \
   src/gui/home_screen_controller.cpp \
@@ -190,7 +197,11 @@ SOURCES += \
   src/gui/settings_dialog.cpp \
   src/gui/widgets/color_dropdown.cpp \
   src/gui/widgets/home_screen_widget.cpp \
+  src/gui/widgets/mapper_proxystyle.cpp \
   src/gui/widgets/measure_widget.cpp \
+  src/gui/widgets/segmented_button_layout.cpp \
+  src/util/item_delegates.cpp \
+  src/util/overriding_shortcut.cpp \
   src/main.cpp \
   3rd-party/qtsingleapplication/src/qtlocalpeer.cpp \
   3rd-party/qtsingleapplication/src/qtsingleapplication.cpp \

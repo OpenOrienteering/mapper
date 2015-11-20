@@ -128,7 +128,7 @@ public:
 	/// This will not update the renderables of modified objects.
 	void drawColorSeparation(QPainter* painter, MapColor* spot_color, QRectF bounding_box, bool force_min_size, float scaling, bool on_screen, bool show_helper_symbols, float opacity = 1.0);
 	/// Draws the map grid
-	void drawGrid(QPainter* painter, QRectF bounding_box);
+	void drawGrid(QPainter* painter, QRectF bounding_box, bool on_screen);
 	/// Draws the templates first_template until last_template which are visible in the given bouding box.
 	/// view determines template visibility and can be NULL to show all templates.
 	/// The initial transform of the given QPainter must be the map-to-paintdevice transformation.

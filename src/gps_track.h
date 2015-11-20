@@ -99,6 +99,8 @@ public:
 	/// Averages all track coordinates
 	LatLon calcAveragePosition() const;
 	
+	Track& operator=(const Track& rhs);
+	
 private:
 	bool loadFromGPX(QFile* file, bool project_points, QWidget* dialog_parent);
 	bool loadFromDXF(QFile* file, bool project_points, QWidget* dialog_parent);

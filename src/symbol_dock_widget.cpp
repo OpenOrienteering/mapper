@@ -41,6 +41,7 @@
 #include "symbol_point.h"
 #include "symbol_setting_dialog.h"
 #include "symbol_text.h"
+#include "util/overriding_shortcut.h"
 
 
 // STL comparison function for sorting symbols by number
@@ -109,6 +110,13 @@ SymbolRenderWidget::SymbolRenderWidget(Map* map, QScrollBar* scroll_bar, SymbolW
 	setMouseTracking(true);
 	setFocusPolicy(Qt::ClickFocus);
 	setAcceptDrops(true);
+	
+	QShortcut* description_shortcut = new OverridingShortcut(
+	  QKeySequence(tr("F1", "Shortcut for displaying the symbol's description")),
+	  window()
+	);
+	tooltip = new SymbolToolTip(this, description_shortcut);
+	// TODO: Use a placeholder in the literal and pass the actual shortcut's string representation.
 	setStatusTip(tr("For symbols with description, press F1 while the tooltip is visible to show it"));
 	
 	context_menu = new QMenu(this);
@@ -156,6 +164,12 @@ SymbolRenderWidget::SymbolRenderWidget(Map* map, QScrollBar* scroll_bar, SymbolW
 	context_menu->addMenu(sort_menu);
 
 	connect(map, SIGNAL(colorDeleted(int,const MapColor*)), this, SLOT(update()));
+	connect(map, SIGNAL(symbolAdded(int,Symbol*)), symbol_widget, SLOT(adjustContents()));
+}
+
+SymbolToolTip* SymbolRenderWidget::getSymbolToolTip() const
+{
+	return tooltip;
 }
 
 bool SymbolRenderWidget::scrollBarNeeded(int width, int height)
@@ -258,11 +272,16 @@ void SymbolRenderWidget::mouseMove(int x, int y)
 		if (hover_symbol_index >= 0)
 		{
 			Symbol* symbol = map->getSymbol(hover_symbol_index);
-			if (SymbolToolTip::getCurrentTipSymbol() != symbol)
-				SymbolToolTip::showTip(QRect(mapToGlobal(getIconRect(hover_symbol_index).topLeft()), QSize(Symbol::icon_size, Symbol::icon_size)), symbol, this);
+			if (tooltip->getSymbol() != symbol)
+			{
+				const QRect icon_rect(mapToGlobal(getIconRect(hover_symbol_index).topLeft()), QSize(Symbol::icon_size, Symbol::icon_size));
+				tooltip->scheduleShow(symbol, icon_rect);
+			}
 		}
 		else
-			SymbolToolTip::hideTip();
+		{
+			tooltip->reset();
+		}
 	}
 }
 int SymbolRenderWidget::getSymbolIndexAt(int x, int y)
@@ -463,7 +482,7 @@ void SymbolRenderWidget::mouseMoveEvent(QMouseEvent* event)
 		if ((event->pos() - last_click_pos).manhattanLength() < QApplication::startDragDistance())
 			return;
 		
-		SymbolToolTip::hideTip();
+		tooltip->hide();
 		
 		QDrag* drag = new QDrag(this);
 		QMimeData* mime_data = new QMimeData();
@@ -561,7 +580,7 @@ void SymbolRenderWidget::leaveEvent(QEvent* event)
 	updateIcon(hover_symbol_index);
 	hover_symbol_index = -1;
 	
-	SymbolToolTip::hideTip();
+	tooltip->reset();
 }
 void SymbolRenderWidget::wheelEvent(QWheelEvent* event)
 {
@@ -1031,6 +1050,8 @@ void SymbolWidget::adjustContents()
 		scroll_bar->show();
 		render_widget->setScrollBar(scroll_bar);
 	}
+	
+	render_widget->updateScrollRange();
 }
 
 void SymbolWidget::resizeEvent(QResizeEvent* event)
@@ -1038,11 +1059,7 @@ void SymbolWidget::resizeEvent(QResizeEvent* event)
 	adjustContents();
 	event->accept();
 }
-void SymbolWidget::keyPressed(QKeyEvent* event)
-{
-	if (event->key() == Qt::Key_F1 && SymbolToolTip::getTip() != NULL)
-		SymbolToolTip::getTip()->showDescription();
-}
+
 void SymbolWidget::symbolChanged(int pos, Symbol* new_symbol, Symbol* old_symbol)
 {
 	render_widget->updateIcon(pos);
@@ -1053,67 +1070,88 @@ void SymbolWidget::symbolDeleted(int pos, Symbol* old_symbol)
 	render_widget->update();
 }
 
+
+
 // ### SymbolToolTip ###
 
-SymbolToolTip* SymbolToolTip::tooltip = NULL;
-QTimer* SymbolToolTip::tooltip_timer = NULL;
-
-SymbolToolTip::SymbolToolTip(Symbol* symbol, QRect icon_rect, QWidget* parent) : QWidget(parent), symbol(symbol), icon_rect(icon_rect)
+SymbolToolTip::SymbolToolTip(QWidget* parent, QShortcut* shortcut)
+ : QWidget(parent),
+   shortcut(shortcut),
+   symbol(NULL),
+   description_shown(false)
 {
 	setWindowFlags(Qt::ToolTip | Qt::FramelessWindowHint);
 	setAttribute(Qt::WA_OpaquePaintEvent);
 	
 	QPalette text_palette;
-	text_palette.setColor(QPalette::WindowText, qRgb(0, 0, 0));
+	text_palette.setColor(QPalette::Window, text_palette.color(QPalette::Base));
+	text_palette.setColor(QPalette::WindowText, text_palette.color(QPalette::Text));
+	setPalette(text_palette);
 	
-	QLabel* upper_label = new QLabel(symbol->getNumberAsString() + " <b>" + symbol->getName() + "</b>");
-	upper_label->setPalette(text_palette);
-	help_shown = false;
+	name_label = new QLabel();
+	description_label = new QLabel();
+	description_label->setWordWrap(true);
+	description_label->hide();
 	
-	QString help_text = "";
-	if (symbol->getDescription().isEmpty())
-		help_text += tr("No description!");
-	else
-	{
-		QString html_description = symbol->getDescription();
-		html_description.replace("\n", "<br>");
-		html_description.remove('\r');
-		help_text += html_description;
-	}
-	
-	help_label = new QLabel(help_text);
-	help_label->setPalette(text_palette);
-	//help_label->setMaximumWidth(500);
-	help_label->setWordWrap(true);
-	help_label->hide();
-
 	QVBoxLayout* layout = new QVBoxLayout();
-	layout->setContentsMargins(4, 4, 4, 4);	// NOTE: Tried to getContentsMargins() and set to half of that, but this returned zero
-	layout->addWidget(upper_label);
-	layout->addWidget(help_label);
+	QStyleOption style_option;
+	layout->setContentsMargins(
+	  style()->pixelMetric(QStyle::PM_LayoutLeftMargin, &style_option) / 2,
+	  style()->pixelMetric(QStyle::PM_LayoutTopMargin, &style_option) / 2,
+	  style()->pixelMetric(QStyle::PM_LayoutRightMargin, &style_option) / 2,
+	  style()->pixelMetric(QStyle::PM_LayoutBottomMargin, &style_option) / 2
+	);
+	layout->addWidget(name_label);
+	layout->addWidget(description_label);
 	setLayout(layout);
+	
+	tooltip_timer.setSingleShot(true);
+	connect(&tooltip_timer, SIGNAL(timeout()), this, SLOT(show()));
+	
+	if (shortcut)
+	{
+		shortcut->setEnabled(false);
+		connect(shortcut, SIGNAL(activated()), this, SLOT(showDescription()));
+	}
 }
+
 void SymbolToolTip::showDescription()
 {
-	if (help_shown)
-		return;
+	if (symbol && !description_shown && isVisible())
+	{
+		description_label->show();
+		adjustSize();
+		adjustPosition();
+		description_shown = true;
+	}
 	
-	help_label->show();
-	adjustSize();
-	setPosition();
-	help_shown = true;
+	if (shortcut)
+		shortcut->setEnabled(false);
+}
+
+void SymbolToolTip::reset()
+{
+	symbol = NULL;
+	tooltip_timer.stop();
+	hide();
+	description_label->hide();
+	description_shown = false;
+	
+	if (shortcut)
+		shortcut->setEnabled(false);
 }
 
 void SymbolToolTip::enterEvent(QEvent* event)
 {
-    hideTip();
+    hide();
 }
+
 void SymbolToolTip::paintEvent(QPaintEvent* event)
 {
 	QPainter painter(this);
 	
-	painter.setPen(Qt::gray);
-	painter.setBrush(Qt::white);
+	painter.setBrush(palette().color(QPalette::Window));
+	painter.setPen(palette().color(QPalette::WindowText));
 	
 	QRect rect(0, 0, width() - 1, height() - 1);
 	painter.drawRect(rect);
@@ -1121,7 +1159,7 @@ void SymbolToolTip::paintEvent(QPaintEvent* event)
 	painter.end();
 }
 
-void SymbolToolTip::setPosition()
+void SymbolToolTip::adjustPosition()
 {
 	QSize size = this->size();
 	QRect desktop = QApplication::desktop()->screenGeometry(QCursor::pos());
@@ -1150,45 +1188,57 @@ void SymbolToolTip::setPosition()
 	move(QPoint(x, y));
 }
 
-void SymbolToolTip::showTip(QRect rect, Symbol* symbol, QWidget* parent)
+void SymbolToolTip::scheduleShow(const Symbol* symbol, QRect icon_rect)
 {
-	const int delay = 150;
+	this->icon_rect = icon_rect;
+	this->symbol = symbol;
 	
-	hideTip();
+	name_label->setText(symbol->getNumberAsString() + " <b>" + symbol->getName() + "</b>");
 	
-	tooltip = new SymbolToolTip(symbol, rect, parent);
-	tooltip->adjustSize();
-	tooltip->setPosition();
-	
-	if (!tooltip_timer)
+	QString help_text(symbol->getDescription());
+	if (help_text.isEmpty())
 	{
-		tooltip_timer = new QTimer();
-		tooltip_timer->setSingleShot(true);
+		help_text = tr("No description!");
 	}
-	
-	tooltip_timer->disconnect();
-	connect(tooltip_timer, SIGNAL(timeout()), tooltip, SLOT(show()));
-	tooltip_timer->start(delay);
-}
-void SymbolToolTip::hideTip()
-{
-	if (tooltip)
+	else
 	{
-		tooltip->hide();
-		tooltip->deleteLater();
-		tooltip = NULL;
+		help_text.replace("\n", "<br>");
+		help_text.remove('\r');
 	}
+	description_label->setText(help_text);
+	description_label->hide();
+	description_shown = false;
+	shortcut->setEnabled(isVisible());
+	
+	adjustSize();
+	adjustPosition();
+	
+	static const int delay = 150;
+	tooltip_timer.start(delay);
 }
-SymbolToolTip* SymbolToolTip::getTip()
+
+void SymbolToolTip::showEvent(QShowEvent* event)
 {
-	return tooltip;
+	if (shortcut && !description_shown && !event->spontaneous())
+		shortcut->setEnabled(true);
+	
+	QWidget::showEvent(event);
 }
-Symbol* SymbolToolTip::getCurrentTipSymbol()
+
+void SymbolToolTip::hideEvent(QHideEvent* event)
 {
-	if (!tooltip)
-		return NULL;
-	return tooltip->symbol;
+	if (!event->spontaneous())
+		reset();
+	
+	QWidget::hideEvent(event);
 }
+
+const Symbol* SymbolToolTip::getSymbol() const
+{
+	return symbol;
+}
+
+
 
 template<typename T>
 void SymbolRenderWidget::sort(T compare)

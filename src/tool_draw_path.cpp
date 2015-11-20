@@ -27,6 +27,7 @@
 #endif
 
 #include "map.h"
+#include "map_undo.h"
 #include "map_widget.h"
 #include "object.h"
 #include "renderable.h"
@@ -42,6 +43,7 @@ QCursor* DrawPathTool::cursor = NULL;
 
 DrawPathTool::DrawPathTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget, bool allow_closing_paths)
  : DrawLineAndAreaTool(editor, DrawPath, tool_button, symbol_widget), allow_closing_paths(allow_closing_paths),
+   finished_path_is_selected(false),
    cur_map_widget(mapWidget()),
    angle_helper(new ConstrainAngleToolHelper()),
    snap_helper(new SnappingToolHelper(map())),
@@ -64,6 +66,8 @@ DrawPathTool::DrawPathTool(MapEditorController* editor, QAction* tool_button, Sy
 	
 	if (!cursor)
 		cursor = new QCursor(QPixmap(":/images/cursor-draw-path.png"), 11, 11);
+	
+	connect(map(), SIGNAL(objectSelectionChanged()), this, SLOT(objectSelectionChanged()));
 }
 
 DrawPathTool::~DrawPathTool()
@@ -407,6 +411,11 @@ bool DrawPathTool::keyPressEvent(QKeyEvent* event)
 		else
 			key_handled = false;
 	}
+	else if (event->key() == Qt::Key_Backspace && finished_path_is_selected)
+	{
+		key_handled = removeLastPointFromSelectedPath();
+	}
+	
 	if (event->key() == Qt::Key_Tab)
 		deactivate();
 	else if (event->key() == Qt::Key_Space)
@@ -643,6 +652,67 @@ void DrawPathTool::undoLastPoint()
 	updateDirtyRect();
 }
 
+bool DrawPathTool::removeLastPointFromSelectedPath()
+{
+	if (draw_in_progress || map()->getNumSelectedObjects() != 1)
+	{
+		return false;
+	}
+	
+	Object* object = map()->getFirstSelectedObject();
+	if (object->getType() != Object::Path)
+	{
+		return false;
+	}
+	
+	PathObject* path = object->asPath();
+	if (path->getNumParts() != 1)
+	{
+		return false;
+	}
+	
+	int points_on_path = 0;
+	int num_coords = path->getCoordinateCount();
+	for (int i = 0; i < num_coords && points_on_path < 3; ++i)
+	{
+		++points_on_path;
+		if (path->getCoordinate(i).isCurveStart())
+		{
+			i += 2; // Skip the control points.
+		}
+	}
+	
+	if (points_on_path < 3)
+	{
+		// Too few points after deleting the last: delete the whole object.
+		map()->deleteSelectedObjects();
+		return true;
+	}
+	
+	ReplaceObjectsUndoStep* undo_step = new ReplaceObjectsUndoStep(map());
+	Object* undo_duplicate = object->duplicate();
+	undo_duplicate->setMap(map());
+	undo_step->addObject(object, undo_duplicate);
+	map()->objectUndoManager().addNewUndoStep(undo_step);
+	updateDirtyRect();
+	
+	path->getPart(0).setClosed(false);
+	path->deleteCoordinate(num_coords - 1, false);
+	
+	MapCoord& potential_curve_start = path->getCoordinate(qMax(0, num_coords - 4));
+	if (num_coords >= 4 && potential_curve_start.isCurveStart())
+	{
+		path->deleteCoordinate(num_coords - 2, false);
+		path->deleteCoordinate(num_coords - 3, false);
+		potential_curve_start.setCurveStart(false);
+	}
+		
+	path->update(true);
+	map()->setObjectsDirty();
+	map()->emitSelectionEdited();
+	return true;
+}
+
 void DrawPathTool::closeDrawing()
 {
 	if (preview_path->getCoordinateCount() <= 1)
@@ -694,6 +764,8 @@ void DrawPathTool::finishDrawing()
 	hidePreviewPoints();
 	
 	DrawLineAndAreaTool::finishDrawing(appending ? append_to_object : NULL);
+	
+	finished_path_is_selected = true;
 }
 
 void DrawPathTool::abortDrawing()
@@ -751,6 +823,11 @@ void DrawPathTool::selectedSymbolsChanged()
 	DrawLineAndAreaTool::selectedSymbolsChanged();
 	
 	updateDashPointDrawing();
+}
+
+void DrawPathTool::objectSelectionChanged()
+{
+	finished_path_is_selected = false;
 }
 
 void DrawPathTool::updateAngleHelper()

@@ -55,9 +55,11 @@ protected slots:
 	
 	void showHelp();
 	
+	void mapColorNameChanged();
+	
 	void spotColorTypeChanged(int id);
 	
-	void nameChanged();
+	void spotColorNameChanged();
 	
 	void spotColorCompositionChanged();
 	
@@ -89,7 +91,7 @@ protected:
 	bool react_to_changes;
 	
 	QLabel* color_preview_label;
-	QLabel* mc_name_label;
+	QLineEdit* mc_name_edit;
 	
 	QRadioButton* full_tone_option;
 	QRadioButton* composition_option;

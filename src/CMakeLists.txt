@@ -119,6 +119,9 @@ set(Mapper_Common_SRCS
  core/map_color.cpp
  core/map_printer.cpp
  
+ fileformats/ocd_file_format.cpp
+ fileformats/ocd_types.cpp
+ 
  gui/about_dialog.cpp
  gui/color_dialog.cpp
  gui/home_screen_controller.cpp
@@ -131,7 +134,12 @@ set(Mapper_Common_SRCS
  
  gui/widgets/color_dropdown.cpp
  gui/widgets/home_screen_widget.cpp
+ gui/widgets/mapper_proxystyle.cpp
  gui/widgets/measure_widget.cpp
+ gui/widgets/segmented_button_layout.cpp
+ 
+ util/item_delegates.cpp
+ util/overriding_shortcut.cpp
 )
 
 set(Mapper_Common_MOC_INPUT
@@ -197,6 +205,8 @@ set(Mapper_Common_MOC_INPUT
  
  core/map_printer.h
  
+ fileformats/ocd_file_format_p.h
+ 
  gui/about_dialog.h
  gui/color_dialog.h
  gui/home_screen_controller.h
@@ -209,7 +219,12 @@ set(Mapper_Common_MOC_INPUT
  
  gui/widgets/color_dropdown.h
  gui/widgets/home_screen_widget.h
+ gui/widgets/mapper_proxystyle.h
  gui/widgets/measure_widget.h
+ gui/widgets/segmented_button_layout.h
+ 
+ util/item_delegates.h
+ util/overriding_shortcut.h
 )
 
 qt4_wrap_cpp(Mapper_Common_MOC ${Mapper_Common_MOC_INPUT})

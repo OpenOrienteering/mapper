@@ -90,6 +90,12 @@ public:
 	void addTemplatePositionDockWidget(Template* temp);
 	void removeTemplatePositionDockWidget(Template* temp); // should be called by the dock widget if it is closed or the template deleted; deletes the dock widget
 	
+	/**
+	 * Returns the action identified by id if it exists, or NULL.
+	 * This allows the reuse of the controller's actions in dock widgets etc.
+	 */
+	QAction* getAction(const char* id);
+	
 	virtual bool save(const QString& path);
 	virtual bool load(const QString& path);
 	
@@ -250,7 +256,7 @@ private:
 	bool editing_in_progress;
 	
 	// Action handling
-	QHash<const char *, QAction *> actionsById;
+	QHash<QString, QAction *> actionsById;
 	
 	EditorDockWidget* print_dock_widget;
 	PrintWidget* print_widget;

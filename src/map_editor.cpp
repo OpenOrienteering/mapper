@@ -365,7 +365,8 @@ void MapEditorController::attach(MainWindow* window)
 
 QAction* MapEditorController::newAction(const char* id, const QString &tr_text, QObject* receiver, const char* slot, const char* icon, const QString& tr_tip, const QString& whatsThisLink)
 {
-	QAction* action = new QAction(icon ? QIcon(QString(":/images/%1").arg(icon)) : QIcon(), tr_text, this);
+	Q_ASSERT(window); // Qt documentation recommends that actions are created as children of the window they are used in.
+	QAction* action = new QAction(icon ? QIcon(QString(":/images/%1").arg(icon)) : QIcon(), tr_text, window);
 	if (!tr_tip.isEmpty()) action->setStatusTip(tr_tip);
 	if (!whatsThisLink.isEmpty()) action->setWhatsThis("<a href=\"" + whatsThisLink + "\">See more</a>");
 	if (receiver) QObject::connect(action, SIGNAL(triggered()), receiver, slot);
@@ -375,7 +376,8 @@ QAction* MapEditorController::newAction(const char* id, const QString &tr_text, 
 
 QAction* MapEditorController::newCheckAction(const char* id, const QString &tr_text, QObject* receiver, const char* slot, const char* icon, const QString& tr_tip, const QString& whatsThisLink)
 {
-	QAction* action = new QAction(icon ? QIcon(QString(":/images/%1").arg(icon)) : QIcon(), tr_text, this);
+	Q_ASSERT(window); // Qt documentation recommends that actions are created as children of the window they are used in.
+	QAction* action = new QAction(icon ? QIcon(QString(":/images/%1").arg(icon)) : QIcon(), tr_text, window);
 	action->setCheckable(true);
 	if (!tr_tip.isEmpty()) action->setStatusTip(tr_tip);
 	if (!whatsThisLink.isEmpty()) action->setWhatsThis("<a href=\"" + whatsThisLink + "\">See more</a>");
@@ -386,7 +388,8 @@ QAction* MapEditorController::newCheckAction(const char* id, const QString &tr_t
 
 QAction* MapEditorController::newToolAction(const char* id, const QString &tr_text, QObject* receiver, const char* slot, const char* icon, const QString& tr_tip, const QString& whatsThisLink)
 {
-	QAction* action = new MapEditorToolAction(icon ? QIcon(QString(":/images/%1").arg(icon)) : QIcon(), tr_text, this);
+	Q_ASSERT(window); // Qt documentation recommends that actions are created as children of the window they are used in.
+	QAction* action = new MapEditorToolAction(icon ? QIcon(QString(":/images/%1").arg(icon)) : QIcon(), tr_text, window);
 	if (!tr_tip.isEmpty()) action->setStatusTip(tr_tip);
 	if (!whatsThisLink.isEmpty()) action->setWhatsThis("<a href=\"" + whatsThisLink + "\">See more</a>");
 	if (receiver) QObject::connect(action, SIGNAL(activated()), receiver, slot);
@@ -398,6 +401,11 @@ QAction* MapEditorController::findAction(const char* id)
 {
 	if (!actionsById.contains(id)) return actionsById[""];
 	else return actionsById[id];
+}
+
+QAction* MapEditorController::getAction(const char* id)
+{
+	return actionsById.contains(id) ? actionsById[id] : NULL;
 }
 
 void MapEditorController::assignKeyboardShortcuts()
@@ -1111,6 +1119,7 @@ void MapEditorController::baselineView(bool checked)
 
 void MapEditorController::hideAllTemplates(bool checked)
 {
+	hide_all_templates_act->setChecked(checked);
 	main_view->setHideAllTemplates(checked);
 }
 
@@ -1168,7 +1177,6 @@ void MapEditorController::showSymbolWindow(bool show)
 	{
 		symbol_dock_widget = new EditorDockWidget(tr("Symbols"), symbol_window_act, this, window);
 		symbol_widget = new SymbolWidget(map, symbol_dock_widget);
-		connect(window, SIGNAL(keyPressed(QKeyEvent*)), symbol_widget, SLOT(keyPressed(QKeyEvent*)));
 		connect(map, SIGNAL(symbolAdded(int,Symbol*)), symbol_widget, SLOT(symbolChanged(int,Symbol*)));
 		connect(map, SIGNAL(symbolChanged(int,Symbol*,Symbol*)), symbol_widget, SLOT(symbolChanged(int,Symbol*,Symbol*)));	// NOTE: adjust setMap() if changing this!
 		connect(map, SIGNAL(symbolDeleted(int,Symbol*)), symbol_widget, SLOT(symbolDeleted(int,Symbol*)));	// NOTE: adjust setMap() if changing this!
@@ -1278,13 +1286,16 @@ void MapEditorController::showTemplateWindow(bool show)
 {
 	if (!template_dock_widget)
 	{
+		TemplateWidget* template_widget = new TemplateWidget(map, main_view, this, template_dock_widget);
+		connect(hide_all_templates_act, SIGNAL(toggled(bool)), template_widget, SLOT(setAllTemplatesHidden(bool)));
 		template_dock_widget = new EditorDockWidget(tr("Templates"), template_window_act, this, window);
-		template_dock_widget->setWidget(new TemplateWidget(map, main_view, this, template_dock_widget));
+		template_dock_widget->setWidget(template_widget);
 		template_dock_widget->setObjectName("Templates dock widget");
 		if (!window->restoreDockWidget(template_dock_widget))
 			window->addDockWidget(Qt::RightDockWidgetArea, template_dock_widget, Qt::Vertical);
 	}
 	
+	template_window_act->setChecked(show);
 	template_dock_widget->setVisible(show);
 	if (show)
 		QTimer::singleShot(0, template_dock_widget, SLOT(raise()));
@@ -1292,19 +1303,22 @@ void MapEditorController::showTemplateWindow(bool show)
 
 void MapEditorController::openTemplateClicked()
 {
-	Template* new_template = TemplateWidget::showOpenTemplateDialog(window, main_view);
+	Template* new_template = TemplateWidget::showOpenTemplateDialog(window, this);
 	if (!new_template)
 		return;
 	
-	template_window_act->setChecked(true);
+	hideAllTemplates(false);
 	showTemplateWindow(true);
 	
+	// FIXME: this should be done through the core map, not throug the UI
 	TemplateWidget* template_widget = reinterpret_cast<TemplateWidget*>(template_dock_widget->widget());
 	template_widget->addTemplateAt(new_template, -1);
 }
 
 void MapEditorController::reopenTemplateClicked()
 {
+	hideAllTemplates(false);
+	
 	QString map_directory = window->getCurrentFilePath();
 	if (!map_directory.isEmpty())
 		map_directory = QFileInfo(map_directory).canonicalPath();

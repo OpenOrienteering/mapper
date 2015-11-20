@@ -355,6 +355,39 @@ GeneralPage::GeneralPage(QWidget* parent) : SettingsPage(parent)
 	layout->addWidget(tips_visible_check, row, 1, 1, 2);
 	
 	row++;
+	layout->addItem(Util::SpacerItem::create(this), row, 1);
+	
+	row++;
+	layout->addWidget(Util::Headline::create(tr("File import and export")), row, 1, 1, 2);
+	
+	row++;
+	QLabel* encoding_label = new QLabel(tr("8-bit encoding:"));
+	layout->addWidget(encoding_label, row, 1);
+	
+	encoding_box = new QComboBox();
+	encoding_box->addItem("System");
+	encoding_box->addItem("Windows-1250");
+	encoding_box->addItem("Windows-1252");
+	encoding_box->addItem("ISO-8859-1");
+	encoding_box->addItem("ISO-8859-15");
+	encoding_box->setEditable(true);
+	QStringList availableCodecs;
+	Q_FOREACH(QByteArray item, QTextCodec::availableCodecs())
+	{
+		availableCodecs.append(QString(item));
+	}
+	QCompleter* completer = new QCompleter(availableCodecs, this);
+	completer->setCaseSensitivity(Qt::CaseInsensitive);
+	encoding_box->setCompleter(completer);
+	encoding_box->setCurrentText(Settings::getInstance().getSetting(Settings::General_Local8BitEncoding).toString());
+	layout->addWidget(encoding_box, row, 2);
+	
+	row++;
+	QCheckBox* ocd_importer_check = new QCheckBox(tr("Use the new OCD importer also for version 8 files"));
+	ocd_importer_check->setChecked(Settings::getInstance().getSetting(Settings::General_NewOcd8Implementation).toBool());
+	layout->addWidget(ocd_importer_check, row, 1, 1, 2);
+	
+	row++;
 	layout->setRowStretch(row, 1);
 	
 #if defined(Q_OS_MAC)
@@ -369,6 +402,8 @@ GeneralPage::GeneralPage(QWidget* parent) : SettingsPage(parent)
 	connect(language_file_button, SIGNAL(clicked(bool)), this, SLOT(openTranslationFileDialog()));
 	connect(open_mru_check, SIGNAL(clicked(bool)), this, SLOT(openMRUFileClicked(bool)));
 	connect(tips_visible_check, SIGNAL(clicked(bool)), this, SLOT(tipsVisibleClicked(bool)));
+	connect(encoding_box, SIGNAL(currentTextChanged(QString)), this, SLOT(encodingChanged(QString)));
+	connect(ocd_importer_check, SIGNAL(clicked(bool)), this, SLOT(ocdImporterClicked(bool)));
 }
 
 void GeneralPage::apply()
@@ -404,6 +439,14 @@ void GeneralPage::apply()
 			}
 			qApp->removeTranslator(&translation.getAppTranslator());
 			qApp->removeTranslator(&translation.getQtTranslator());
+
+#if defined(Q_OS_MAC)
+			// The native [file] dialogs will use the first element of the
+			// AppleLanguages array in the application's .plist file -
+			// and this file is also the one used by QSettings.
+			const QString mapper_language(translation.getLocale().name().left(2));
+			changes["AppleLanguages"] = ( QStringList() << mapper_language );
+#endif
 		}
 	}
 	SettingsPage::apply();
@@ -476,6 +519,33 @@ void GeneralPage::openMRUFileClicked(bool state)
 void GeneralPage::tipsVisibleClicked(bool state)
 {
 	changes.insert(Settings::getInstance().getSettingPath(Settings::HomeScreen_TipsVisible), state);
+}
+
+void GeneralPage::encodingChanged(const QString& name)
+{
+	QByteArray old_name = Settings::getInstance().getSetting(Settings::General_Local8BitEncoding).toByteArray();
+	QTextCodec* codec = QTextCodec::codecForName(name.toLatin1());
+	if (!codec)
+	{
+		codec = QTextCodec::codecForName(old_name);
+	}
+	if (!codec)
+	{
+		codec = QTextCodec::codecForLocale();
+	}
+	
+	if (codec && codec->name() != old_name)
+	{
+		changes.insert(Settings::getInstance().getSettingPath(Settings::General_Local8BitEncoding), codec->name());
+		ScopedSignalsBlocker block(encoding_box);
+		encoding_box->setCurrentText(codec->name());
+	}
+}
+
+// slot
+void GeneralPage::ocdImporterClicked(bool state)
+{
+	changes.insert(Settings::getInstance().getSettingPath(Settings::General_NewOcd8Implementation), state);
 }
 
 void GeneralPage::openTranslationFileDialog()

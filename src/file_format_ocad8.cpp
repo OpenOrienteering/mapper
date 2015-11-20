@@ -24,15 +24,18 @@
 #include <QDateTime>
 #include <QDebug>
 #include <QDir>
+#include <QFileInfo>
 #include <QImageReader>
 #include <QTextCodec>
 
 #include "core/map_color.h"
 #include "file_import_export.h"
+#include "georeferencing.h"
 #include "map.h"
 #include "map_part.h"
 #include "object.h"
 #include "object_text.h"
+#include "settings.h"
 #include "symbol.h"
 #include "symbol_area.h"
 #include "symbol_combined.h"
@@ -41,6 +44,7 @@
 #include "symbol_text.h"
 #include "template.h"
 #include "template_image.h"
+#include "template_map.h"
 #include "util.h"
 
 #if (QT_VERSION < QT_VERSION_CHECK(4, 7, 0))
@@ -51,7 +55,7 @@
 
 OCAD8FileFormat::OCAD8FileFormat()
  : FileFormat(MapFile, "OCAD78", ImportExport::tr("OCAD Versions 7, 8"), "ocd", 
-              ImportSupported | ExportSupported | ExportLossy)
+              /*ImportSupported |*/ ExportSupported | ExportLossy)
 {
 	// Nothing
 }
@@ -79,7 +83,7 @@ Exporter* OCAD8FileFormat::createExporter(QIODevice* stream, Map* map, MapView* 
 OCAD8FileImport::OCAD8FileImport(QIODevice* stream, Map* map, MapView* view) : Importer(stream, map, view), file(NULL)
 {
     ocad_init();
-    encoding_1byte = QTextCodec::codecForName("Windows-1252");
+    encoding_1byte = QTextCodec::codecForName(Settings::getInstance().getSetting(Settings::General_Local8BitEncoding).toByteArray());
     encoding_2byte = QTextCodec::codecForName("UTF-16LE");
     offset_x = offset_y = 0;
 }
@@ -118,11 +122,17 @@ void OCAD8FileImport::import(bool load_symbols_only) throw (FileFormatException)
     //         << ((file->header->ftype == 2) ? "normal" : "other");
     //qDebug() << "map scale is" << file->setup->scale;
 
-    map->setScaleDenominator(file->setup->scale);
-
+	// Scale and georeferencing parameters
+	Georeferencing georef;
+	georef.setScaleDenominator(file->setup->scale);
+	georef.setProjectedRefPoint(QPointF(file->setup->offsetx, file->setup->offsety));
+	if (qAbs(file->setup->angle) >= 0.01) /* degrees */
+	{
+		georef.setGrivation(file->setup->angle);
+	}
+	map->setGeoreferencing(georef);
+	
 	map->setMapNotes(convertCString((const char*)file->buffer + file->header->infopos, file->header->infosize, false));
-
-    // TODO: GPS projection parameters
 
     // TODO: print parameters
 
@@ -1090,32 +1100,121 @@ bool OCAD8FileImport::importRectangleObject(const OCADObject* ocad_object, MapPa
 
 void OCAD8FileImport::importString(OCADStringEntry *entry)
 {
-    OCADCString *ocad_str = ocad_string(file, entry);
-    if (entry->type == 8)
-    {
+	OCADCString *ocad_str = ocad_string(file, entry);
+	if (entry->type == 8)
+	{
 		// Template
-		// TODO: also parse map templates
-        OCADBackground background;
-		if (ocad_to_background(&background, ocad_str) == 0)
-        {
-            Template* templ = importRasterTemplate(background);
-			if (templ)
-			{
-				map->templates.push_back(templ);
-				view->getTemplateVisibility(templ)->visible = true;
-			}
-        }
-        else
-			addWarning(tr("Unable to import template: %1").arg(ocad_str->str));
-    }
-    // FIXME: parse more types of strings, maybe the print parameters?
-    
-    return;
+		importTemplate(ocad_str);
+	}
+	
+	// TODO: parse more types of strings, maybe the print parameters?
+}
+
+Template *OCAD8FileImport::importTemplate(OCADCString* ocad_str)
+{
+	Template* templ = NULL;
+	QByteArray data(ocad_str->str); // copies the data.
+	QString filename = encoding_1byte->toUnicode(data.left(data.indexOf('\t', 0)));
+	QString clean_path = QDir::cleanPath(QString(filename).replace('\\', '/'));
+	QString extension = QFileInfo(clean_path).suffix();
+	if (extension.compare("ocd", Qt::CaseInsensitive) == 0)
+	{
+		templ = new TemplateMap(clean_path, map);
+	}
+	else if (QImageReader::supportedImageFormats().contains(extension.toLatin1()))
+	{
+		templ = new TemplateImage(clean_path, map);
+	}
+	else
+	{
+		addWarning(tr("Unable to import template: background \"%1\" doesn't seem to be a raster image").arg(filename));
+		return NULL;
+	}
+	
+	OCADBackground background = importBackground(data);
+	MapCoord c;
+	convertPoint(c, background.trnx, background.trny);
+	templ->setTemplateX(c.rawX());
+	templ->setTemplateY(c.rawY());
+	templ->setTemplateRotation(M_PI / 180 * background.angle);
+	templ->setTemplateScaleX(convertTemplateScale(background.sclx));
+	templ->setTemplateScaleY(convertTemplateScale(background.scly));
+	
+	map->templates.push_back(templ);
+	TemplateVisibility* visibility = view->getTemplateVisibility(templ);
+	visibility->opacity = qMax(0.0, qMin(1.0, 0.01 * (100 - background.dimming)));
+	visibility->visible = background.s;
+	
+	return templ;
+}
+
+// A more flexible reimplementation of libocad's ocad_to_background().
+OCADBackground OCAD8FileImport::importBackground(const QByteArray& data)
+{
+	unsigned int num_angles = 0;
+	OCADBackground background;
+	background.filename = data.data(); // tab-terminated, not 0-terminated!
+	background.trnx = 0;
+	background.trny = 0;
+	background.angle = 0.0;
+	background.sclx = 100.0;
+	background.scly = 100.0;
+	background.dimming = 0;
+	background.s = 1;
+	
+	int i = data.indexOf('\t', 0);
+	while (i >= 0)
+	{
+		double value;
+		bool ok;
+		int next_i = data.indexOf('\t', i+1);
+		int len = (next_i > 0 ? next_i : data.length()) - i - 2;
+		switch (data[i+1])
+		{
+			case 'x':
+				background.trnx = qRound(data.mid(i + 2, len).toDouble());
+				break;
+			case 'y':
+				background.trny = qRound(data.mid(i + 2, len).toDouble());
+				break;
+			case 'a':
+			case 'b':
+				// TODO: use the distinct angles correctly, not just the average
+				background.angle += data.mid(i + 2, len).toDouble(&ok);
+				if (ok)
+					++num_angles;
+				break;
+			case 'u':
+				value = data.mid(i + 2, len).toDouble(&ok);
+				if (ok && qAbs(value) >= 0.0001)
+					background.sclx = value;
+				break;
+			case 'v':
+				value = data.mid(i + 2, len).toDouble(&ok);
+				if (ok && qAbs(value) >= 0.0001)
+					background.scly = value;
+				break;
+			case 'd':
+				background.dimming = data.mid(i + 2, len).toInt();
+				break;
+			case 's':
+				background.s = data.mid(i + 2, len).toInt();
+				break;
+			default:
+				; // nothing
+		}
+		i = next_i;
+	}
+	
+	if (num_angles)
+		background.angle = background.angle / num_angles;
+	
+	return background;
 }
 
 Template *OCAD8FileImport::importRasterTemplate(const OCADBackground &background)
 {
-    QString filename(background.filename); // FIXME: use platform char encoding?
+	QString filename(encoding_1byte->toUnicode(background.filename));
 	filename = QDir::cleanPath(filename.replace('\\', '/'));
 	if (isRasterImageFile(filename))
     {
@@ -1400,9 +1499,14 @@ void OCAD8FileExport::doExport() throw (FileFormatException)
 	}
 	else
 		setup->zoom = 1;
-	setup->scale = map->getScaleDenominator();
 	
-	// TODO: GPS projection parameters
+	// Scale and georeferencing parameters
+	const Georeferencing& georef = map->getGeoreferencing();
+	setup->scale = georef.getScaleDenominator();
+	const QPointF offset(georef.getProjectedRefPoint());
+	setup->offsetx = offset.x();
+	setup->offsety = offset.y();
+	setup->angle = georef.getGrivation();
 	
 	// TODO: print parameters
 	
@@ -1600,7 +1704,9 @@ void OCAD8FileExport::doExport() throw (FileFormatException)
 	{
 		Template* temp = map->getTemplate(i);
 		
-		if (temp->getTemplateType() == "TemplateImage")
+		QString template_path = temp->getTemplatePath();
+		if ( temp->getTemplateType() == "TemplateImage" ||
+		     QFileInfo(template_path).suffix().compare("ocd", Qt::CaseInsensitive) == 0 )
 		{
 			// FIXME: export template view parameters
 			
@@ -1615,13 +1721,12 @@ void OCAD8FileExport::doExport() throw (FileFormatException)
 			int y = pos.y >> 8;
 			double u = convertTemplateScale(temp->getTemplateScaleX());
 			double v = convertTemplateScale(temp->getTemplateScaleY());
-            
-            QString template_path = temp->getTemplatePath();
-            template_path.replace('/', '\\');
+			
+			template_path.replace('/', '\\');
 			
 			QString string;
 			string.sprintf("%s\ts%d\tx%d\ty%d\ta%f\tu%f\tv%f\td%d\tp%d\tt%d\to%d",
-				template_path.toLatin1().data(), s, x, y, a, u, v, d, p, t, o
+				encoding_1byte->fromUnicode(template_path).data(), s, x, y, a, u, v, d, p, t, o
 			);
 			
 			OCADStringEntry* entry = ocad_string_entry_new(file, string.length() + 1);
@@ -1723,10 +1828,11 @@ s16 OCAD8FileExport::exportPattern(PointSymbol* point, OCADPoint** buffer)
 	if (!point)
 		return 0;
 	
-	s16 num_coords = 0;
+	s16 num_coords = exportSubPattern(origin_point_object, point, buffer);
 	for (int i = 0; i < point->getNumElements(); ++i)
+	{
 		num_coords += exportSubPattern(point->getElementObject(i), point->getElementSymbol(i), buffer);
-	num_coords += exportSubPattern(origin_point_object, point, buffer);
+	}
 	return num_coords;
 }
 

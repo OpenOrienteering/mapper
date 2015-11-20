@@ -57,31 +57,12 @@ static const char *application_menu_strings[] = {
   QT_TRANSLATE_NOOP("MAC_APPLICATION_MENU", "Quit %1"),
   QT_TRANSLATE_NOOP("MAC_APPLICATION_MENU", "About %1")
 };
-
-/** A proxy style which modifies the size of the toolbar icons. */ 
-class MapperProxyStyle : public QProxyStyle
-{
-public:
-	virtual int pixelMetric(PixelMetric metric, const QStyleOption* option = 0, const QWidget* widget = 0) const
-	{
-		if (metric == QStyle::PM_ToolBarIconSize)
-		{
-			static int s = (QProxyStyle::pixelMetric(QStyle::PM_SmallIconSize) + QProxyStyle::pixelMetric(QStyle::PM_ToolBarIconSize)) / 2;
-			return s;
-		}
-		return QProxyStyle::pixelMetric(metric, option, widget);
-	}
-};
 #endif
 
 int MainWindow::num_open_files = 0;
 
 MainWindow::MainWindow(bool as_main_window)
 {
-#if (defined Q_OS_MAC)
-	static bool proxy_style_installed = ( qApp->setStyle(new MapperProxyStyle), true );
-#endif
-	
 	controller = NULL;
 	has_unsaved_changes = false;
 	has_opened_file = false;
@@ -258,13 +239,7 @@ void MainWindow::createHelpMenu()
 	// Help menu
 	QAction* manualAct = new QAction(QIcon(":/images/help.png"), tr("Open &Manual"), this);
 	manualAct->setStatusTip(tr("Show the help file for this application"));
-	// This conflicts with pressing F1 while hovering over the symbol pane
-	// to view the symbol description.
-	// Maybe use "What's this" shortcut for symbol description?
-#if defined(Q_OS_MAC)
-	// But Mac OS X uses Cmd-? for HelpContents.
 	manualAct->setShortcut(QKeySequence::HelpContents);
-#endif
 	connect(manualAct, SIGNAL(triggered()), this, SLOT(showHelp()));
 	
 	QAction* aboutAct = new QAction(tr("&About %1").arg(APP_NAME), this);
@@ -782,7 +757,9 @@ bool MainWindow::showSaveAsDialog()
 	if (!has_extension)
 		path.append(".").append(format->primaryExtension());
 	// Ensure that the file name matches the format.
-	Q_ASSERT(FileFormats.findFormatForFilename(path) == format);
+	Q_ASSERT(format->fileExtensions().contains(QFileInfo(path).suffix()));
+	// Fails when using different formats for import and export:
+	//	Q_ASSERT(FileFormats.findFormatForFilename(path) == format);
 	
 	return savePath(path);
 }

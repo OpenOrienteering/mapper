@@ -25,8 +25,10 @@
 #include <set>
 
 #include <QRgb>
+#include <QtEndian>
 
 #include "libocad/libocad.h"
+#include "fileformats/ocd_types.h"
 
 #include "map_coord.h"
 
@@ -49,8 +51,9 @@ class TextSymbol;
 
 class OCAD8FileImport : public Importer
 {
+	friend class OcdFileImport;
 Q_OBJECT
-private:
+protected:
 	/// Information about an OCAD rectangle symbol
 	struct RectangleInfo
 	{
@@ -70,76 +73,82 @@ private:
 	
 public:
 	OCAD8FileImport(QIODevice* stream, Map *map, MapView *view);
-    ~OCAD8FileImport();
-
-    void setStringEncodings(const char *narrow, const char *wide = "UTF-16LE");
-
-    static const float ocad_pt_in_mm;
-
+	virtual ~OCAD8FileImport();
+	
+	void setStringEncodings(const char *narrow, const char *wide = "UTF-16LE");
+	
+	static const float ocad_pt_in_mm;
+	
 protected:
 	void import(bool load_symbols_only) throw (FileFormatException);
 	
-    // Symbol import
-    Symbol *importPointSymbol(const OCADPointSymbol *ocad_symbol);
-    Symbol *importLineSymbol(const OCADLineSymbol *ocad_symbol);
-    Symbol *importAreaSymbol(const OCADAreaSymbol *ocad_symbol);
-    Symbol *importTextSymbol(const OCADTextSymbol *ocad_symbol);
-    RectangleInfo *importRectSymbol(const OCADRectSymbol *ocad_symbol);
-
-    // Object import
-    Object *importObject(const OCADObject *ocad_object, MapPart* part);
+	// Symbol import
+	
+	Symbol *importPointSymbol(const OCADPointSymbol *ocad_symbol);
+	Symbol *importLineSymbol(const OCADLineSymbol *ocad_symbol);
+	Symbol *importAreaSymbol(const OCADAreaSymbol *ocad_symbol);
+	Symbol *importTextSymbol(const OCADTextSymbol *ocad_symbol);
+	RectangleInfo *importRectSymbol(const OCADRectSymbol *ocad_symbol);
+	
+	// Object import
+	Object *importObject(const OCADObject *ocad_object, MapPart* part);
 	bool importRectangleObject(const OCADObject* ocad_object, MapPart* part, const RectangleInfo& rect);
-
-    // String import
-    void importString(OCADStringEntry *entry);
-    Template *importRasterTemplate(const OCADBackground &background);
-
-    // Some helper functions that are used in multiple places
-    PointSymbol *importPattern(s16 npts, OCADPoint *pts);
-    void fillCommonSymbolFields(Symbol *symbol, const OCADSymbol *ocad_symbol);
+	
+	// String import
+	virtual void importString(OCADStringEntry *entry);
+	
+	Template *importTemplate(OCADCString* ocad_str);
+	OCADBackground importBackground(const QByteArray& data);
+	/// @deprecated Replaced by Template *importTemplate(OCADCString* string).
+	Template *importRasterTemplate(const OCADBackground &background);
+	
+	// Some helper functions that are used in multiple places
+	PointSymbol *importPattern(s16 npts, OCADPoint *pts);
+	void fillCommonSymbolFields(Symbol *symbol, const OCADSymbol *ocad_symbol);
 	void setPathHolePoint(Object *object, int i);
 	void fillPathCoords(Object* object, bool is_area, u16 npts, const OCADPoint* pts);
 	bool fillTextPathCoords(TextObject* object, TextSymbol* symbol, u16 npts, OCADPoint* pts);
-
-
-    // Unit conversion functions
-    QString convertPascalString(const char *p);
+	
+	
+	// Unit conversion functions
+	QString convertPascalString(const char *p);
 	QString convertCString(const char *p, size_t n, bool ignore_first_newline);
 	QString convertWideCString(const char *p, size_t n, bool ignore_first_newline);
-    float convertRotation(int angle);
-    void convertPoint(MapCoord &c, int ocad_x, int ocad_y);
-    qint64 convertSize(int ocad_size);
-    MapColor *convertColor(int color);
+	float convertRotation(int angle);
+	void convertPoint(MapCoord &c, int ocad_x, int ocad_y);
+	qint64 convertSize(int ocad_size);
+	MapColor *convertColor(int color);
 	double convertTemplateScale(double ocad_scale);
 	
 	static bool isRasterImageFile(const QString &filename);
-
-private:
-    /// Handle to the open OCAD file
-    OCADFile *file;
-
-    /// Character encoding to use for 1-byte (narrow) strings
-    QTextCodec *encoding_1byte;
-
-    /// Character encoding to use for 2-byte (wide) strings
-    QTextCodec *encoding_2byte;
-
-    /// maps OCAD color number to oo-mapper color object
-    QHash<int, MapColor *> color_index;
-
-    /// maps OCAD symbol number to oo-mapper symbol object
-    QHash<int, Symbol *> symbol_index;
+	
+protected:
+	QByteArray buffer;
+	
+	/// Handle to the open OCAD file
+	OCADFile *file;
+	
+	/// Character encoding to use for 1-byte (narrow) strings
+	QTextCodec *encoding_1byte;
+	
+	/// Character encoding to use for 2-byte (wide) strings
+	QTextCodec *encoding_2byte;
+	
+	/// maps OCAD color number to oo-mapper color object
+	QHash<int, MapColor *> color_index;
+	
+	/// maps OCAD symbol number to oo-mapper symbol object
+	QHash<int, Symbol *> symbol_index;
 	
 	/// maps OO Mapper text symbol pointer to OCAD text symbol horizontal alignment (stored in objects instead of symbols in OO Mapper)
 	QHash<Symbol*, int> text_halign_map;
 	
 	/// maps OCAD symbol number to rectangle information struct
 	QHash<int, RectangleInfo> rectangle_info;
-
-    /// Offset between OCAD map origin and Mapper map origin (in Mapper coordinates)
-    qint64 offset_x, offset_y;
+	
+	/// Offset between OCAD map origin and Mapper map origin (in Mapper coordinates)
+	qint64 offset_x, offset_y;
 };
-
 
 // ### OCAD8FileExport declaration ###
 

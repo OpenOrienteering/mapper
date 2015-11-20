@@ -87,8 +87,14 @@ public:
 	/// Scales all coordinates, with the given scaling center
 	void scale(MapCoordF center, double factor);
 	
-	/// Rotates the whole object. The angle must be given in radians.
+	/// Scales all coordinates
+	void scale(double factor_x, double factor_y);
+	
+	/// Rotates the whole object around the given center. The angle must be given in radians.
 	void rotateAround(MapCoordF center, double angle);
+	
+	/// Rotates the whole object. The angle must be given in radians.
+	void rotate(double angle);
 	
 	/// Checks if the given coord, with the given tolerance, is on this object; with extended_selection, the coord is on point objects always if it is whithin their extent,
 	/// otherwise it has to be close to their midpoint. Returns a Symbol::Type which specifies on which symbol type the coord is

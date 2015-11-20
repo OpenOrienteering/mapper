@@ -26,6 +26,7 @@
 #include "file_format_native.h"
 #include "file_format_ocad8.h"
 #include "file_format_xml.h"
+#include "fileformats/ocd_file_format.h"
 #include "georeferencing.h"
 #include "tool.h"
 
@@ -66,7 +67,8 @@ void doStaticInitializations()
 {
 	// Register the supported file formats
 	FileFormats.registerFormat(new XMLFileFormat());
-	FileFormats.registerFormat(new OCAD8FileFormat());
+	FileFormats.registerFormat(new OcdFileFormat());
+// 	FileFormats.registerFormat(new OCAD8FileFormat());
 	FileFormats.registerFormat(new NativeFileFormat()); // TODO: Remove before release 1.0
 	
 	// Load resources

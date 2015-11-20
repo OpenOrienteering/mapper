@@ -233,7 +233,12 @@ void MapRenderables::draw(QPainter* painter, QRectF bounding_box, bool force_min
 	
 	painter->save();
 	const_reverse_iterator end_of_colors = rend();
-	for (const_reverse_iterator color = rbegin(); color != end_of_colors; ++color)
+	const_reverse_iterator color = rbegin();
+	while (color != end_of_colors && color->first >= map->getNumColors())
+	{
+		++color;
+	}
+	for (; color != end_of_colors; ++color)
 	{
 		if ( require_spot_color &&
 		     (color->first < 0 || map->getColor(color->first)->getSpotColorMethod() == MapColor::UndefinedMethod) )
@@ -318,16 +323,15 @@ void MapRenderables::draw(QPainter* painter, QRectF bounding_box, bool force_min
 						else
 							painter->setClipPath(initial_clip, Qt::NoClip);
 					}
-#if defined(Q_OS_WIN) || defined(Q_OS_MAC)
-					// Workaround for Qt::IntersectClip problem with Windows and Mac printers
-					// Cf. [tickets:#196]
+					// Workaround for Qt::IntersectClip problem
+					// with Windows and Mac printers (cf. [tickets:#196]), and 
+					// with Linux PDF export (cf. [tickets:#225]).
 					else if (!on_screen && new_states.clip_path)
 					{
 						painter->setClipPath(initial_clip.intersected(*new_states.clip_path), Qt::ReplaceClip);
 						if (painter->clipPath().isEmpty())
 							continue; // outside of initial clip
 					}
-#endif
 					else
 					{
 						painter->setClipPath(initial_clip, Qt::ReplaceClip);
@@ -464,7 +468,12 @@ void MapRenderables::drawColorSeparation(QPainter* painter, MapColor* separation
 	painter->save();
 	
 	const_reverse_iterator end_of_colors = rend();
-	for (const_reverse_iterator color = rbegin(); color != end_of_colors; ++color)
+	const_reverse_iterator color = rbegin();
+	while (color != end_of_colors && color->first >= map->getNumColors())
+	{
+		++color;
+	}
+	for (; color != end_of_colors; ++color)
 	{
 		ObjectRenderablesMap::const_iterator end_of_objects = color->second.end();
 		for (ObjectRenderablesMap::const_iterator object = color->second.begin(); object != end_of_objects; ++object)
@@ -592,16 +601,15 @@ void MapRenderables::drawColorSeparation(QPainter* painter, MapColor* separation
 						else
 							painter->setClipPath(initial_clip, Qt::NoClip);
 					}
-#if defined(Q_OS_WIN) || defined(Q_OS_MAC)
-					// Workaround for Qt::IntersectClip problem with Windows and Mac printers
-					// Cf. [tickets:#196]
+					// Workaround for Qt::IntersectClip problem
+					// with Windows and Mac printers (cf. [tickets:#196]), and 
+					// with Linux PDF export (cf. [tickets:#225]).
 					else if (!on_screen && new_states.clip_path)
 					{
 						painter->setClipPath(initial_clip.intersected(*new_states.clip_path), Qt::ReplaceClip);
 						if (painter->clipPath().isEmpty())
 							continue; // outside of initial clip
 					}
-#endif
 					else
 					{
 						painter->setClipPath(initial_clip, Qt::ReplaceClip);

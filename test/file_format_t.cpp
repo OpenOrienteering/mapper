@@ -71,6 +71,10 @@ namespace QTest
 
 void FileFormatTest::initTestCase()
 {
+	// Needed to load current developer preferences, if possible
+	QCoreApplication::setOrganizationName("OpenOrienteering.org");
+	QCoreApplication::setApplicationName("Mapper");
+	
 	doStaticInitializations();
 	
 	map_filenames 
