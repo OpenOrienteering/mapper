@@ -527,11 +527,12 @@ Symbol *OCAD8FileImport::importLineSymbol(const OCADLineSymbol *ocad_symbol)
 	symbol_line->show_at_least_one_symbol = false; // NOTE: this works in a different way than OCAD's 'at least X symbols' setting (per-segment instead of per-object)
 	
 	// Suppress dash symbol at line ends if both start symbol and end symbol exist,
-	// but don't create a warning unless a dash symbol is actually defined.
+	// but don't create a warning unless a dash symbol is actually defined
+	// and the line symbol is not Mapper's 799 Simple orienteering course.
 	if (symbol_line->start_symbol != NULL && symbol_line->end_symbol != NULL)
 	{
 		symbol_line->setSuppressDashSymbolAtLineEnds(true);
-		if (symbol_line->dash_symbol)
+		if (symbol_line->dash_symbol && symbol_line->number[0] != 799)
 			addWarning(tr("Line symbol %1: suppressing dash symbol at line ends.").arg(QString::number(0.1 * ocad_symbol->number) + " " + symbol_line->getName()));
 	}
 	

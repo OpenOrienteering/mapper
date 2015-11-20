@@ -49,6 +49,7 @@ DrawRectangleTool::DrawRectangleTool(MapEditorController* editor, QAction* tool_
 	ctrl_pressed = false;
 	picked_direction = false;
 	snapped_to_line = false;
+	no_more_effect_on_click = false;
 	
 	angle_helper->addDefaultAnglesDeg(0);
 	angle_helper->setActive(false);
@@ -197,6 +198,12 @@ bool DrawRectangleTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coor
 		cur_pos_map = MapCoordF(snap_helper->snapToObject(cur_pos_map, widget));
 	constrained_pos_map = cur_pos_map;
 	
+	if (no_more_effect_on_click)
+	{
+		no_more_effect_on_click = false;
+		return true;
+	}
+	
 	if (ctrl_pressed && event->button() == Qt::LeftButton && !draw_in_progress)
 	{
 		pickDirection(cur_pos_map, widget);
@@ -232,7 +239,23 @@ bool DrawRectangleTool::mouseDoubleClickEvent(QMouseEvent* event, MapCoordF map_
 		return false;
 	
 	if (draw_in_progress)
-		finishDrawing();
+	{
+		// Finish drawing by double click.
+		// As the double click is also reported as two single clicks first
+		// (in total: press - release - press - double - release),
+		// need to undo two steps in general.
+		if (angles.size() <= 1)
+			abortDrawing();
+		else
+		{
+			if (angles.size() > 2 && !ctrl_pressed)
+				undoLastPoint();
+			cur_pos_map = MapCoordF(preview_path->getCoordinate(angles.size() - 1));
+			undoLastPoint();
+			finishDrawing();
+		}
+		no_more_effect_on_click = true;
+	}
 	return true;
 }
 
@@ -375,6 +398,7 @@ void DrawRectangleTool::draw(QPainter* painter, MapWidget* widget)
 
 void DrawRectangleTool::finishDrawing()
 {
+	snapped_to_line = false;
 	if (angles.size() == 1 && preview_path &&
 		!(preview_path->getSymbol()->getContainedTypes() & Symbol::Line))
 	{
@@ -400,6 +424,7 @@ void DrawRectangleTool::finishDrawing()
 
 void DrawRectangleTool::abortDrawing()
 {
+	snapped_to_line = false;
 	angle_helper->setActive(false);
 	angles.clear();
 	draw_in_progress = false;

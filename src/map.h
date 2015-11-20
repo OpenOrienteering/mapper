@@ -188,6 +188,9 @@ public:
 	/// WARNING (FIXME): returns an empty list if the map does not contain symbols
 	void determineColorsInUse(const std::vector< bool >& by_which_symbols, std::vector< bool >& out);
 	
+	/** Returns true if the map contains spot colors. */
+	bool hasSpotColors() const;
+	
 	// Symbols
 	
 	inline int getNumSymbols() const {return (int)symbols.size();}
@@ -428,6 +431,7 @@ signals:
 	void colorAdded(int pos, MapColor* color);
 	void colorChanged(int pos, MapColor* color);
 	void colorDeleted(int pos, const MapColor* old_color);
+	void spotColorPresenceChanged(bool has_spot_colors) const;
 	
 	void symbolAdded(int pos, Symbol* symbol);
 	void symbolChanged(int pos, Symbol* new_symbol, Symbol* old_symbol);
@@ -441,11 +445,17 @@ signals:
 	/// Emitted when the number of closed templates changes between zero and one.
 	void closedTemplateAvailabilityChanged();
 	
+	/** Emitted when the set of selected objects changes. Also emitted when the
+	 *  symbol of a selected object changes (which is similar to selecting another
+	 *  object). */
 	void objectSelectionChanged();
 	
 	/// This signal is emitted when at least one of the selected objects is edited in any way.
 	/// For example, this includes the case where a symbol of one of the selected objects is edited, too.
 	void selectedObjectEdited();
+	
+protected slots:
+	void checkSpotColorPresence();
 	
 private:
 	typedef std::vector<MapColor*> ColorVector;
@@ -501,6 +511,7 @@ private:
 	static void initStatic();
 	
 	MapColorSet* color_set;
+	bool has_spot_colors;
 	SymbolVector symbols;
 	TemplateVector templates;
 	TemplateVector closed_templates;
@@ -575,7 +586,14 @@ public:
 	void save(QIODevice* file);
 	void load(QIODevice* file, int version);
 	
-	void save(QXmlStreamWriter& xml);
+	/** Saves the map view state to an XML stream.
+	 *  @param xml The XML output stream.
+	 *  @param element_name The name of the element which will be written. 
+	 *  @param skip_templates If true, visibility details of individual templates are not saved.
+	 */
+	void save(QXmlStreamWriter& xml, const QString& element_name, bool skip_templates = false);
+	
+	/** Loads the map view state from the current element of an xml stream. */
 	void load(QXmlStreamReader& xml);
 	
 	/// Must be called to notify the map view of new widgets displaying it. Useful to notify the widgets which need to be redrawn
@@ -715,5 +733,6 @@ private:
 	
 	WidgetVector widgets;
 };
+
 
 #endif

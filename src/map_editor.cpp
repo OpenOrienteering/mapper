@@ -79,6 +79,7 @@
 // ### MapEditorController ###
 
 MapEditorController::MapEditorController(OperatingMode mode, Map* map)
+ : overprinting_simulation_act(NULL)
 {
 	this->mode = mode;
 	this->map = NULL;
@@ -559,25 +560,17 @@ void MapEditorController::createMenuAndToolbars()
 	statusbar_cursorpos_label->addAction(geographic_coordinates_act);
 	statusbar_cursorpos_label->addAction(geographic_coordinates_dms_act);
 	
-	QMenu* coordinates_menu = new QMenu(tr("Display coordinates as..."));
-	coordinates_menu->addAction(map_coordinates_act);
-	coordinates_menu->addAction(projected_coordinates_act);
-	coordinates_menu->addAction(geographic_coordinates_act);
-	coordinates_menu->addAction(geographic_coordinates_dms_act);
-	
 	// Refactored so we can do custom key bindings in the future
 	assignKeyboardShortcuts();
-	
-	// Export menu
-	QMenu* export_menu = new QMenu(tr("&Export as..."));
-	export_menu->addAction(export_image_act);
-	export_menu->addAction(export_pdf_act);
 	
 	// Extend file menu
 	QMenu* file_menu = window->getFileMenu();
 	file_menu->insertAction(window->getFileMenuExtensionAct(), print_act);
 	file_menu->insertSeparator(window->getFileMenuExtensionAct());
 	file_menu->insertAction(print_act, import_act);
+	QMenu* export_menu = new QMenu(tr("&Export as..."), file_menu);
+	export_menu->addAction(export_image_act);
+	export_menu->addAction(export_pdf_act);
 	file_menu->insertMenu(print_act, export_menu);
 	file_menu->insertSeparator(print_act);
 		
@@ -608,6 +601,11 @@ void MapEditorController::createMenuAndToolbars()
 	view_menu->addAction(overprinting_simulation_act);
 	view_menu->addAction(hide_all_templates_act);
 	view_menu->addSeparator();
+	QMenu* coordinates_menu = new QMenu(tr("Display coordinates as..."), view_menu);
+	coordinates_menu->addAction(map_coordinates_act);
+	coordinates_menu->addAction(projected_coordinates_act);
+	coordinates_menu->addAction(geographic_coordinates_act);
+	coordinates_menu->addAction(geographic_coordinates_dms_act);
 	view_menu->addMenu(coordinates_menu);
 	view_menu->addSeparator();
 	view_menu->addAction(fullscreen_act);
@@ -636,7 +634,7 @@ void MapEditorController::createMenuAndToolbars()
 	tools_menu->addAction(boolean_difference_act);
 	tools_menu->addAction(boolean_xor_act);
 	tools_menu->addAction(cut_tool_act);
-	cut_hole_menu = new QMenu(tr("Cut hole"));
+	cut_hole_menu = new QMenu(tr("Cut hole"), tools_menu);
 	cut_hole_menu->setIcon(QIcon(":/images/tool-cut-hole.png"));
 	cut_hole_menu->addAction(cut_hole_act);
 	cut_hole_menu->addAction(cut_hole_circle_act);
@@ -840,6 +838,7 @@ void MapEditorController::printClicked(int task)
 		print_dock_widget->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea);
 		print_widget = new PrintWidget(map, window, main_view, this, print_dock_widget);
 		connect(print_dock_widget, SIGNAL(visibilityChanged(bool)), print_widget, SLOT(setActive(bool)));
+		connect(print_widget, SIGNAL(closeClicked()), print_dock_widget, SLOT(close()));
 		connect(print_widget, SIGNAL(finished(int)), print_dock_widget, SLOT(close()));
 		connect(print_widget, SIGNAL(taskChanged(QString)), print_dock_widget, SLOT(setWindowTitle(QString)));
 		print_dock_widget->setWidget(print_widget);
@@ -1041,6 +1040,22 @@ void MapEditorController::clearUndoRedoHistory()
 	map->setOtherDirty();
 }
 
+void MapEditorController::spotColorPresenceChanged(bool has_spot_colors)
+{
+	if (overprinting_simulation_act != NULL)
+	{
+		if (has_spot_colors)
+		{
+			overprinting_simulation_act->setEnabled(true);
+		}
+		else
+		{
+			overprinting_simulation_act->setChecked(false);
+			overprinting_simulation_act->setEnabled(false);
+		}
+	}
+}
+
 void MapEditorController::showGrid()
 {
 	main_view->setGridVisible(show_grid_act->isChecked());
@@ -1101,6 +1116,10 @@ void MapEditorController::hideAllTemplates(bool checked)
 
 void MapEditorController::overprintingSimulation(bool checked)
 {
+	if (checked && !map->hasSpotColors())
+	{
+		checked = false;
+	}
 	main_view->setOverprintingSimulationEnabled(checked);
 	map->updateAllMapWidgets();
 }
@@ -1150,7 +1169,9 @@ void MapEditorController::showSymbolWindow(bool show)
 		symbol_dock_widget = new EditorDockWidget(tr("Symbols"), symbol_window_act, this, window);
 		symbol_widget = new SymbolWidget(map, symbol_dock_widget);
 		connect(window, SIGNAL(keyPressed(QKeyEvent*)), symbol_widget, SLOT(keyPressed(QKeyEvent*)));
+		connect(map, SIGNAL(symbolAdded(int,Symbol*)), symbol_widget, SLOT(symbolChanged(int,Symbol*)));
 		connect(map, SIGNAL(symbolChanged(int,Symbol*,Symbol*)), symbol_widget, SLOT(symbolChanged(int,Symbol*,Symbol*)));	// NOTE: adjust setMap() if changing this!
+		connect(map, SIGNAL(symbolDeleted(int,Symbol*)), symbol_widget, SLOT(symbolDeleted(int,Symbol*)));	// NOTE: adjust setMap() if changing this!
 		connect(map, SIGNAL(symbolIconChanged(int)), symbol_widget->getRenderWidget(), SLOT(updateIcon(int)));
 		symbol_dock_widget->setWidget(symbol_widget);
 		symbol_dock_widget->setObjectName("Symbol dock widget");
@@ -1507,7 +1528,7 @@ void MapEditorController::updatePasteAvailability()
 
 void MapEditorController::showWholeMap()
 {
-	QRectF map_extent = map->calculateExtent(true, true, main_view);
+	QRectF map_extent = map->calculateExtent(true, !main_view->areAllTemplatesHidden(), main_view);
 	map_widget->adjustViewToRect(map_extent, false);
 }
 
@@ -1675,6 +1696,8 @@ void MapEditorController::switchSymbolClicked()
 	else
 		map->objectUndoManager().addNewUndoStep(switch_step);
 	map->emitSelectionEdited();
+	// Also emit selectionChanged, as symbols of selected objects changed
+	map->emitSelectionChanged();
 }
 
 void MapEditorController::fillBorderClicked()
@@ -2264,25 +2287,35 @@ void MapEditorController::setMap(Map* map, bool create_new_map_view)
 {
 	if (this->map)
 	{
-		map->disconnect(this);
+		this->map->disconnect(this);
 		if (symbol_widget)
-			map->disconnect(symbol_widget);
+		{
+			this->map->disconnect(symbol_widget);
+		}
 	}
 	
 	this->map = map;
 	if (create_new_map_view)
+	{
 		main_view = new MapView(map);
+	}
 	
 	connect(&map->objectUndoManager(), SIGNAL(undoStepAvailabilityChanged()), this, SLOT(undoStepAvailabilityChanged()));
 	connect(map, SIGNAL(objectSelectionChanged()), this, SLOT(objectSelectionChanged()));
 	connect(map, SIGNAL(templateAdded(int,Template*)), this, SLOT(templateAdded(int,Template*)));
 	connect(map, SIGNAL(templateDeleted(int,Template*)), this, SLOT(templateDeleted(int,Template*)));
 	connect(map, SIGNAL(closedTemplateAvailabilityChanged()), this, SLOT(closedTemplateAvailabilityChanged()));
+	connect(map, SIGNAL(spotColorPresenceChanged(bool)), this, SLOT(spotColorPresenceChanged(bool)));
 	if (symbol_widget)
+	{
+		connect(map, SIGNAL(symbolAdded(int,Symbol*)), symbol_widget, SLOT(symbolChanged(int,Symbol*)));
 		connect(map, SIGNAL(symbolChanged(int,Symbol*,Symbol*)), symbol_widget, SLOT(symbolChanged(int,Symbol*,Symbol*)));
+	}
 	
 	if (window)
+	{
 		updateWidgets();
+	}
 }
 
 void MapEditorController::updateWidgets()
@@ -2302,6 +2335,7 @@ void MapEditorController::updateWidgets()
 			hatch_areas_view_act->setChecked(map->isAreaHatchingEnabled());
 			baseline_view_act->setChecked(map->isBaselineViewEnabled());
 			closedTemplateAvailabilityChanged();
+			spotColorPresenceChanged(map->hasSpotColors());
 		}
 	}
 }
@@ -2387,13 +2421,31 @@ bool MapEditorController::importMapFile(const QString& filename)
 	return true;
 }
 
+// slot
+void MapEditorController::setViewOptionsEnabled(bool enabled)
+{
+	pan_act->setEnabled(enabled);
+	show_grid_act->setEnabled(enabled);
+// 	hatch_areas_view_act->setEnabled(enabled);
+// 	baseline_view_act->setEnabled(enabled);
+	overprinting_simulation_act->setEnabled(enabled);
+	hide_all_templates_act->setEnabled(enabled);
+}
+
 
 // ### EditorDockWidget ###
 
 EditorDockWidget::EditorDockWidget(const QString title, QAction* action, MapEditorController* editor, QWidget* parent): QDockWidget(title, parent), action(action), editor(editor)
 {
 	if (editor)
+	{
 		connect(this, SIGNAL(dockLocationChanged(Qt::DockWidgetArea)), editor, SLOT(saveWindowState()));
+	}
+	
+	if (action)
+	{
+		connect(this, SIGNAL(visibilityChanged(bool)), action, SLOT(setChecked(bool)));
+	}
 }
 
 bool EditorDockWidget::event(QEvent* event)
@@ -2403,12 +2455,6 @@ bool EditorDockWidget::event(QEvent* event)
 	return QDockWidget::event(event);
 }
 
-void EditorDockWidget::closeEvent(QCloseEvent* event)
-{
-	if (action)
-		action->setChecked(false);
-	QDockWidget::closeEvent(event);
-}
 
 
 // ### MapEditorToolAction ###

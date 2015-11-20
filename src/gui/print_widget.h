@@ -88,11 +88,12 @@ public slots:
 	/** 
 	 * Sets the active state of the print widget.
 	 * 
-	 * When the widget becomes active, it activates a tool on the map editor
-	 * which allows to move the print area. When the widget becomes inactive,
-	 * the tool is removed.
+	 * When the widget becomes active, it saves the map view state and 
+	 * activates a tool on the map editor which allows to move the print area.
+	 * When the widget becomes inactive, the tool is removed, and the map view
+	 * state is restored.
 	 */
-	void setActive(bool state);
+	void setActive(bool active);
 	
 	/** Sets the widget's (print/export) target. */
 	void setTarget(const QPrinterInfo* target);
@@ -121,6 +122,11 @@ signals:
 	 * (cf. QDialog::finished(int result) ).
 	 */
 	void finished(int result);
+	
+	/**
+	 * This signal is emitted when the dialog's close button is clicked.
+	 */
+	void closeClicked();
 	
 protected slots:
 	/** This slot reacts to changes of the target combobox. */
@@ -167,6 +173,10 @@ protected slots:
 	
 	/** This slot reacts to changes of the "Show grid" option. */
 	void showGridClicked(bool checked);
+	
+	/** This sets the enabled state of the overprinting simulation option.
+	 *  When the options gets disabled, it will also become unchecked. */
+	void setOverprintingCheckEnabled(bool enabled);
 	
 	/** This slot reacts to changes of the "Simulate overprinting" option. */
 	void overprintingClicked(bool checked);
@@ -254,6 +264,8 @@ private:
 	MapView* main_view;
 	MapEditorController* editor;
 	PrintTool* print_tool;
+	QString saved_view_state;
+	bool active;
 };
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(PrintWidget::TaskFlags)

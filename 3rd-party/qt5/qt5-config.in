@@ -24,15 +24,9 @@
 # In addition, configure must be called from its proper /[DRIVER_LETTER]/...
 # path in MSYS, while CMAKE provides a [DRIVE_LETTER]:/... path. [1]
 
-# [1] Get rid of DOS-style paths in MSYS
-cd "@SOURCE_DIR@"
-SOURCE_DIR=$(pwd)
-
-# [2] Go to build directory
-cd "@BINARY_DIR@"
-
-# [3] Configure
-"$SOURCE_DIR/configure" \
+# Configure
+@QT5_CONFIG_ENVIRONMENT@ \
+"@SOURCE_DIR@/configure" \
   -opensource \
   -confirm-license \
   @QT5_PLATFORM@ \

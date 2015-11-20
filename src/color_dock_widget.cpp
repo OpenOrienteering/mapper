@@ -86,6 +86,7 @@ ColorWidget::ColorWidget(Map* map, MainWindow* window, QWidget* parent)
 	header_view->setSectionResizeMode(0, QHeaderView::Fixed); // Color
 	header_view->resizeSection(0, 32);
 	header_view->setSectionResizeMode(1, QHeaderView::Stretch); // Name
+	header_view->setSectionResizeMode(1, QHeaderView::Interactive); // Spot colors
 	header_view->setSectionResizeMode(5, QHeaderView::Fixed); // Knockout
 	header_view->resizeSection(5, 32);
 #endif

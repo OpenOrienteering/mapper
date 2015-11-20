@@ -329,7 +329,8 @@ PointSymbol* Map::undefined_point;
 CombinedSymbol* Map::covering_combined_line;
 
 Map::Map()
- : renderables(new MapRenderables(this)),
+ : has_spot_colors(false),
+   renderables(new MapRenderables(this)),
    selection_renderables(new MapRenderables(this)),
    printer_config(NULL)
 {
@@ -344,6 +345,10 @@ Map::Map()
 	baseline_view_enabled = false;
 	
 	clear();
+	
+	connect(this, SIGNAL(colorAdded(int,MapColor*)), SLOT(checkSpotColorPresence()));
+	connect(this, SIGNAL(colorChanged(int,MapColor*)), SLOT(checkSpotColorPresence()));
+	connect(this, SIGNAL(colorDeleted(int,const MapColor*)), SLOT(checkSpotColorPresence()));
 }
 Map::~Map()
 {
@@ -425,7 +430,7 @@ void Map::changeScale(unsigned int new_scale_denominator, const MapCoord& scalin
 }
 void Map::rotateMap(double rotation, const MapCoord& center, bool adjust_georeferencing, bool adjust_declination, bool adjust_templates)
 {
-	if (fmod(rotation, 360) == 0)
+	if (fmod(rotation, 2 * M_PI) == 0)
 		return;
 	
 	object_undo_manager.clear(false);
@@ -1134,23 +1139,6 @@ void Map::ensureVisibilityOfSelectedObjects()
 		widgets[i]->ensureVisibilityOfRect(rect, true, true);
 }
 
-/*void Map::addMapView(MapView* view)
-{
-	views.push_back(view);
-}
-void Map::removeMapView(MapView* view)
-{
-	for (int i = 0; i < (int)views.size(); ++i)
-	{
-		if (views[i] == view)
-		{
-			views.erase(views.begin() + i);
-			return;
-		}
-	}
-	assert(false);
-}*/
-
 void Map::setDrawingBoundingBox(QRectF map_coords_rect, int pixel_border, bool do_update)
 {
 	for (int i = 0; i < (int)widgets.size(); ++i)
@@ -1246,9 +1234,6 @@ void Map::addColor(MapColor* color, int pos)
 void Map::deleteColor(int pos)
 {
 	MapColor* color = color_set->colors[pos];
-	color_set->colors.erase(color_set->colors.begin() + pos);
-	adjustColorPriorities(pos, color_set->colors.size() - 1);
-	
 	if (color->getSpotColorMethod() == MapColor::SpotColor)
 	{
 		// Update dependent colors
@@ -1274,6 +1259,9 @@ void Map::deleteColor(int pos)
 		}
 	}
 	
+	color_set->colors.erase(color_set->colors.begin() + pos);
+	adjustColorPriorities(pos, color_set->colors.size() - 1);
+	
 	if (getNumColors() == 0)
 	{
 		// That was the last color - the help text in the map widget(s) should be updated
@@ -1296,6 +1284,7 @@ void Map::deleteColor(int pos)
 	
 	delete color;
 }
+
 int Map::findColorIndex(const MapColor* color) const
 {
 	int size = (int)color_set->colors.size();
@@ -1345,6 +1334,7 @@ void Map::determineColorsInUse(const std::vector< bool >& by_which_symbols, std:
 		return;
 	}
 	
+	Q_ASSERT((int)by_which_symbols.size() == getNumSymbols());
 	out.assign(getNumColors(), false);
 	for (int c = 0; c < getNumColors(); ++c)
 	{
@@ -1357,6 +1347,26 @@ void Map::determineColorsInUse(const std::vector< bool >& by_which_symbols, std:
 			}
 		}
 	}
+}
+
+void Map::checkSpotColorPresence()
+{
+	const bool has_spot_colors = hasSpotColors();
+	if (this->has_spot_colors != has_spot_colors)
+	{
+		this->has_spot_colors = has_spot_colors;
+		emit spotColorPresenceChanged(has_spot_colors);
+	}
+}
+
+bool Map::hasSpotColors() const
+{
+	for (ColorVector::const_iterator c = color_set->colors.begin(), end = color_set->colors.end(); c != end; ++c)
+	{
+		if ((*c)->getSpotColorMethod() == MapColor::SpotColor)
+			return true;
+	}
+	return false;
 }
 
 void Map::importSymbols(Map* other, const MapColorMap& color_map, int insert_pos, bool merge_duplicates, std::vector< bool >* filter,
@@ -2144,9 +2154,9 @@ void MapView::load(QIODevice* file, int version)
 		file->read((char*)&grid_visible, sizeof(bool));
 }
 
-void MapView::save(QXmlStreamWriter& xml)
+void MapView::save(QXmlStreamWriter& xml, const QString& element_name, bool skip_templates)
 {
-	xml.writeStartElement("map_view");
+	xml.writeStartElement(element_name);
 	
 	xml.writeAttribute("zoom", QString::number(zoom));
 	xml.writeAttribute("rotation", QString::number(rotation));
@@ -2167,18 +2177,22 @@ void MapView::save(QXmlStreamWriter& xml)
 	xml.writeAttribute("opacity", QString::number(map_visibility->opacity));
 	
 	xml.writeStartElement("templates");
-	int num_template_visibilities = template_visibilities.size();
-	xml.writeAttribute("count", QString::number(num_template_visibilities));
 	if (all_templates_hidden)
 		xml.writeAttribute("hidden", "true");
-	QHash<const Template*, TemplateVisibility*>::const_iterator it = template_visibilities.constBegin();
-	for ( ; it != template_visibilities.constEnd(); ++it)
+	if (!skip_templates)
 	{
-		xml.writeEmptyElement("ref");
-		int pos = map->findTemplateIndex(it.key());
-		xml.writeAttribute("template", QString::number(pos));
-		xml.writeAttribute("visible", (*it)->visible ? "true" : "false");
-		xml.writeAttribute("opacity", QString::number((*it)->opacity));
+		int num_template_visibilities = template_visibilities.size();
+		xml.writeAttribute("count", QString::number(num_template_visibilities));
+		
+		QHash<const Template*, TemplateVisibility*>::const_iterator it = template_visibilities.constBegin();
+		for ( ; it != template_visibilities.constEnd(); ++it)
+		{
+			xml.writeEmptyElement("ref");
+			int pos = map->findTemplateIndex(it.key());
+			xml.writeAttribute("template", QString::number(pos));
+			xml.writeAttribute("visible", (*it)->visible ? "true" : "false");
+			xml.writeAttribute("opacity", QString::number((*it)->opacity));
+		}
 	}
 	xml.writeEndElement(/*templates*/);
 	
@@ -2187,10 +2201,7 @@ void MapView::save(QXmlStreamWriter& xml)
 
 void MapView::load(QXmlStreamReader& xml)
 {
-	Q_ASSERT(xml.name() == "map_view");
-	
-	{
-		// keep variable "attributes" local to this block
+	{	// Limit scope of variable "attributes" to this block
 		QXmlStreamAttributes attributes = xml.attributes();
 		zoom = attributes.value("zoom").toString().toDouble();
 		if (zoom < 0.001)

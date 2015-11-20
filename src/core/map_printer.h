@@ -241,7 +241,7 @@ public slots:
 	void setPrintGrid(const bool visible);
 	
 	/** Controls whether to print in overprinting simulation mode. */
-	void setSimulateOverprinting(const bool enabled);
+	void setSimulateOverprinting(bool enabled);
 	
 	/** Saves the print parameter (to the map). */
 	void saveConfig() const;

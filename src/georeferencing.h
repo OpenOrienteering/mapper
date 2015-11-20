@@ -84,6 +84,24 @@ public:
 	 */
 	inline double getLongitudeInDegrees() const { return longitude * 180.0 / M_PI; }
 	
+	/**
+	 * Returns true if this object has exactly the same latitude and longitude
+	 * like another. FP precision issues are not taken into account.
+	 */
+	bool operator==(const LatLon& rhs) const
+	{
+		return (this->latitude == rhs.latitude) && (this->longitude == rhs.longitude);
+	}
+	
+	/**
+	 * Returns true if this object has not exactly the same latitude and longitude
+	 * like another. FP precision issues are not taken into account.
+	 */
+	bool operator!=(const LatLon& rhs) const
+	{
+		return (this->latitude != rhs.latitude) || (this->longitude != rhs.longitude);
+	}
+	
 private:
 	/**
 	 * @deprecated GPSProjectionParameters is no longer used.

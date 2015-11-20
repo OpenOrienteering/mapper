@@ -150,6 +150,10 @@ public slots:
 	void clipboardChanged(QClipboard::Mode mode);
 	void updatePasteAvailability();
 	
+	/** This slot cause the map editor to check the presence of spot colors,
+	 *  and to disable overprinting simulation if there are no spot colors. */
+	void spotColorPresenceChanged(bool has_spot_colors);
+	
 	void showWholeMap();
 	
 	void editToolClicked();
@@ -192,6 +196,10 @@ public slots:
 	void importGeoFile(const QString& filename);
 	bool importMapFile(const QString& filename);
 	void importClicked();
+	
+	/** Sets the enabled state of actions which change how the map is rendered,
+	 *  such as with grid, with templates, with overprinting simulation. */
+	void setViewOptionsEnabled(bool enabled = true);
 	
 	/** 
 	 * Save the current toolbar and dock widget positions
@@ -335,7 +343,7 @@ Q_OBJECT
 public:
 	EditorDockWidget(const QString title, QAction* action, MapEditorController* editor, QWidget* parent = NULL);
 	virtual bool event(QEvent* event);
-	virtual void closeEvent(QCloseEvent* event);
+	
 private:
 	QAction* action;
 	MapEditorController* editor;

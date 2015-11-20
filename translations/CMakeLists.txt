@@ -44,10 +44,12 @@ endif()
 # Qt translations which are not yet available from upstream
 set(Mapper_QT_TRANS
   qt_lv.ts
+  qt_nb.ts
 )
 
 set(Mapper_TRANS
  OpenOrienteering_de.ts
+ OpenOrienteering_es.ts
  OpenOrienteering_fr.ts
  OpenOrienteering_ja.ts
  OpenOrienteering_lv.ts

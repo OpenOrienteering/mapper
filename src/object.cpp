@@ -1313,6 +1313,7 @@ void PathObject::changePathBounds(int part_index, double start_len, double end_l
 		out_coords.push_back(out_coordsF[out_coordsF.size() - 1].toMapCoord());
 	}
 	
+	bool wrapped_around = false;
 	int current_index = path_coords[cur_path_coord].index;
 	if (start_len == path_coords[cur_path_coord].clen && path_coords[cur_path_coord].param == 1)
 	{
@@ -1323,7 +1324,10 @@ void PathObject::changePathBounds(int part_index, double start_len, double end_l
 			else
 				++current_index;
 			if (current_index >= part.end_index)
-				current_index = 0;
+			{
+				current_index = part.start_index;
+				wrapped_around = true;
+			}
 			out_coords[out_coords.size() - 1].setFlags(p_coords->at(current_index).getFlags());
 			out_coords[out_coords.size() - 1].setHolePoint(false);
 			out_coords[out_coords.size() - 1].setClosePoint(false);
@@ -1340,7 +1344,7 @@ void PathObject::changePathBounds(int part_index, double start_len, double end_l
 	}
 	
 	// End position
-	bool enforce_wrap = (end_len <= path_coords[cur_path_coord].clen && end_len <= start_len);
+	bool enforce_wrap = (end_len <= path_coords[cur_path_coord].clen && end_len <= start_len) && !wrapped_around;
 	bool advanced_current_index = advanceCoordinateRangeTo(*p_coords, coordsF, path_coords, cur_path_coord, current_index, end_len, enforce_wrap, start_bezier_index, out_coords, out_coordsF, o3, o4);
 	if (current_index < part.end_index)
 	{

@@ -909,36 +909,32 @@ bool FollowPathToolHelper::updateFollowing(PathCoord& end_coord, PathObject*& re
 	
 	// Update end_clen
 	float new_end_clen = end_coord.clen;
-	float path_length = path->getPathCoordinateVector().at(path->getPart(part_index).path_coord_end_index).clen;
-	bool delta_forward; 
 	if (path->getPart(part_index).isClosed())
 	{
-		delta_forward = fmod(new_end_clen - end_clen + path_length, path_length) >= 0 &&
-		fmod(new_end_clen - end_clen + path_length, path_length) < 0.5f * path_length;
+		// Positive length to add to end_clen to get to new_end_clen with wrapping
+		float path_length = path->getPart(part_index).getLength();
+		double forward_diff = fmod_pos(new_end_clen - end_clen, path_length);
+		float delta_forward = forward_diff >= 0 && forward_diff < 0.5f * path_length;
+		
+		if (delta_forward && !drag_forward &&
+			fmod_pos(end_clen - start_clen, path_length) > 0.5f * path_length &&
+			fmod_pos(new_end_clen - start_clen, path_length) <= 0.5f * path_length)
+			drag_forward = true;
+		else if (!delta_forward && drag_forward &&
+			fmod_pos(end_clen - start_clen, path_length) <= 0.5f * path_length &&
+			fmod_pos(new_end_clen - start_clen, path_length) > 0.5f * path_length)
+			drag_forward = false;
 	}
 	else
-		delta_forward = new_end_clen >= end_clen;
+		drag_forward = new_end_clen >= start_clen;
 	
-	if (delta_forward && !drag_forward &&
-		fmod(end_clen - start_clen + path_length, path_length) > 0.5f * path_length &&
-		fmod(new_end_clen - start_clen + path_length, path_length) <= 0.5f * path_length)
-		drag_forward = true;
-	else if (!delta_forward && drag_forward &&
-		fmod(end_clen - start_clen + path_length, path_length) <= 0.5f * path_length &&
-		fmod(new_end_clen - start_clen + path_length, path_length) > 0.5f * path_length)
-		drag_forward = false;
 	end_clen = new_end_clen;
 	
 	if (end_clen == start_clen)
 		return false;
 	
 	// Create output path
-	result = path->duplicate()->asPath();
-	for (int i = result->getNumParts() - 1; i > part_index; --i)
-		result->deletePart(i);
-	for (int i = part_index - 1; i >= 0; --i)
-		result->deletePart(i);
-	
+	result = path->duplicatePart(part_index)->asPath();
 	if (drag_forward)
 		result->changePathBounds(0, start_clen, end_clen);
 	else

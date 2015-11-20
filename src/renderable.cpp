@@ -30,6 +30,41 @@
 #include "symbol.h"
 #include "util.h"
 
+/* 
+ * The macro MAPPER_OVERPRINTING_CORRECTION allows to select different
+ * implementations of spot color overprinting simulation correction towards
+ * the appearance of colors in normal (non-spot color) output.
+ * 
+ *         -1:  Mapper 0.5.0 correction.
+ *              Results in undesired brightening when overprinting halftones.
+ * 
+ *          0:  No correction. Plain multiply spot color composition.
+ *              Results in undesired green from 100% blue on 100% yellow.
+ * 
+ *          1:  Weak correction. Blends the normal output over the 
+ *              overprinting simulation with an alpha of 0.125.
+ * 
+ *          2:  Middle correction. Blends the normal output over the 
+ *              overprinting simulation with an alpha of 0.25.
+ * 
+ *          3:  Strong correction. Blends the normal output over the 
+ *              overprinting simulation with an alpha of 0.5.
+ * 
+ * Options 3 and 2 seem to give the best results. Output from option 3 is quite
+ * similar to option -1 (Mapper 0.5.0), but without the undesired brightening.
+ * 
+ * Options 1..3 work only as long as the color set and the symbol set are
+ * defined in a way that the raw overprinting simulation output and the normal
+ * output do not differ significantly.
+ */
+#ifndef MAPPER_OVERPRINTING_CORRECTION
+	
+	// Default: [new] middle correction
+	#define MAPPER_OVERPRINTING_CORRECTION 2
+	
+#endif
+
+
 // define DEBUG_OPENORIENTEERING_RENDERABLE to find leaking Renderables
 
 #ifdef DEBUG_OPENORIENTEERING_RENDERABLE
@@ -186,7 +221,7 @@ MapRenderables::MapRenderables(Map* map) : map(map)
 {
 }
 
-void MapRenderables::draw(QPainter* painter, QRectF bounding_box, bool force_min_size, float scaling, bool on_screen, bool show_helper_symbols, float opacity_factor, bool highlighted) const
+void MapRenderables::draw(QPainter* painter, QRectF bounding_box, bool force_min_size, float scaling, bool on_screen, bool show_helper_symbols, float opacity_factor, bool highlighted, bool require_spot_color) const
 {
 	// TODO: improve performance by using some spatial acceleration structure?
 	
@@ -200,6 +235,12 @@ void MapRenderables::draw(QPainter* painter, QRectF bounding_box, bool force_min
 	const_reverse_iterator end_of_colors = rend();
 	for (const_reverse_iterator color = rbegin(); color != end_of_colors; ++color)
 	{
+		if ( require_spot_color &&
+		     (color->first < 0 || map->getColor(color->first)->getSpotColorMethod() == MapColor::UndefinedMethod) )
+		{
+			continue;
+		}
+		
 		ObjectRenderablesMap::const_iterator end_of_objects = color->second.end();
 		for (ObjectRenderablesMap::const_iterator object = color->second.begin(); object != end_of_objects; ++object)
 		{
@@ -277,6 +318,16 @@ void MapRenderables::draw(QPainter* painter, QRectF bounding_box, bool force_min
 						else
 							painter->setClipPath(initial_clip, Qt::NoClip);
 					}
+#if defined(Q_OS_WIN) || defined(Q_OS_MAC)
+					// Workaround for Qt::IntersectClip problem with Windows and Mac printers
+					// Cf. [tickets:#196]
+					else if (!on_screen && new_states.clip_path)
+					{
+						painter->setClipPath(initial_clip.intersected(*new_states.clip_path), Qt::ReplaceClip);
+						if (painter->clipPath().isEmpty())
+							continue; // outside of initial clip
+					}
+#endif
 					else
 					{
 						painter->setClipPath(initial_clip, Qt::ReplaceClip);
@@ -341,6 +392,7 @@ void MapRenderables::drawOverprintingSimulation(QPainter* painter, QRectF boundi
 			painter->drawImage(0, 0, separation);
 			image_fixup();
 			
+#if MAPPER_OVERPRINTING_CORRECTION == -1
 			// Add some opacity to the multiplication, but not for black,
 			// since halftones (i.e. grey) might unduly lighten the composition.
 			if (static_cast<QRgb>(**map_color) != 0xff000000)
@@ -358,11 +410,39 @@ void MapRenderables::drawOverprintingSimulation(QPainter* painter, QRectF boundi
 				painter->setCompositionMode(QPainter::CompositionMode_SourceOver);
 				painter->drawImage(0, 0, copy);
 			}
+#endif
 		}
 	}
 	
-	painter->setWorldTransform(t, false);
 	painter->setCompositionMode(QPainter::CompositionMode_SourceOver);
+	
+#if MAPPER_OVERPRINTING_CORRECTION > 0
+	separation.fill((Qt::GlobalColor)Qt::transparent);
+	QPainter p(&separation);
+	p.setRenderHints(hints);
+	p.setWorldTransform(t, false);
+	draw(&p, bounding_box, force_min_size, scaling, on_screen, show_helper_symbols, 1.0f, false, true);
+	p.end();
+	QRgb* dest = (QRgb*)separation.bits();
+	const QRgb* dest_end = dest + separation.byteCount() / sizeof(QRgb);
+	for (QRgb* px = dest; px < dest_end; ++px)
+	{
+		/* Each pixel is a premultipled RGBA, so the alpha value is adjusted
+		 * by applying the same factor to all 4 channels (bytes).
+		 * Implemented by bitwise operators for efficiency.
+		 */
+#if MAPPER_OVERPRINTING_CORRECTION == 1
+		*px = (*px >> 3) & 0x1f1f1f1f;
+#elif MAPPER_OVERPRINTING_CORRECTION == 2
+		*px = (*px >> 2) & 0x3f3f3f3f;
+#else /* MAPPER_OVERPRINTING_CORRECTION == 3 or stronger */
+		*px = (*px >> 1) & 0x7f7f7f7f;
+#endif
+	}
+	painter->drawImage(0, 0, separation);
+#endif
+	
+	painter->setWorldTransform(t, false);
 	drawColorSeparation(painter, Map::getCoveringWhite(), bounding_box, force_min_size, scaling, on_screen, true);
 	drawColorSeparation(painter, Map::getCoveringRed(), bounding_box, force_min_size, scaling, on_screen, true);
 	
@@ -512,6 +592,16 @@ void MapRenderables::drawColorSeparation(QPainter* painter, MapColor* separation
 						else
 							painter->setClipPath(initial_clip, Qt::NoClip);
 					}
+#if defined(Q_OS_WIN) || defined(Q_OS_MAC)
+					// Workaround for Qt::IntersectClip problem with Windows and Mac printers
+					// Cf. [tickets:#196]
+					else if (!on_screen && new_states.clip_path)
+					{
+						painter->setClipPath(initial_clip.intersected(*new_states.clip_path), Qt::ReplaceClip);
+						if (painter->clipPath().isEmpty())
+							continue; // outside of initial clip
+					}
+#endif
 					else
 					{
 						painter->setClipPath(initial_clip, Qt::ReplaceClip);

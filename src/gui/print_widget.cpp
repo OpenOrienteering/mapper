@@ -53,7 +53,8 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
   main_window(main_window), 
   main_view(main_view), 
   editor(editor),
-  print_tool(NULL)
+  print_tool(NULL),
+  active(false)
 {
 	layout = new QFormLayout();
 	
@@ -146,12 +147,13 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 	preview_button = new QPushButton(tr("Preview..."));
 	button_box->addButton(preview_button, QDialogButtonBox::ActionRole);
 	print_button = new QPushButton(tr("Print"));
-	button_box->addButton(print_button, QDialogButtonBox::AcceptRole);
+	button_box->addButton(print_button, QDialogButtonBox::ActionRole);
 	// Use a distinct export button.
 	// Changing the text at runtime causes distortions on Mac OS X.
 	export_button = new QPushButton(tr("Export..."));
 	export_button->hide();
-	button_box->addButton(export_button, QDialogButtonBox::AcceptRole);
+	button_box->addButton(export_button, QDialogButtonBox::ActionRole);
+	QPushButton* close_button = button_box->addButton(QDialogButtonBox::Close);
 	layout->addRow(button_box);
 	
 	setLayout(layout);
@@ -178,6 +180,7 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 	connect(preview_button, SIGNAL(clicked(bool)), this, SLOT(previewClicked()));
 	connect(print_button, SIGNAL(clicked(bool)), this, SLOT(printClicked()));
 	connect(export_button, SIGNAL(clicked(bool)), this, SLOT(printClicked()));
+	connect(close_button, SIGNAL(clicked(bool)), this, SIGNAL(closeClicked()));
 	
 	policy = map->printerConfig().single_page_print_area ? SinglePage : CustomArea;
 	policy_combo->setCurrentIndex(policy_combo->findData(policy));
@@ -190,8 +193,9 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 	connect(map_printer, SIGNAL(pageFormatChanged(const MapPrinterPageFormat&)),
 	        this, SLOT(setPageFormat(const MapPrinterPageFormat&)));
 	
-	setOptions(map_printer->getOptions());
 	connect(map_printer, SIGNAL(optionsChanged(const MapPrinterOptions&)), this, SLOT(setOptions(const MapPrinterOptions&)));
+	setOverprintingCheckEnabled(map->hasSpotColors());
+	connect(map, SIGNAL(spotColorPresenceChanged(bool)), this, SLOT(setOverprintingCheckEnabled(bool)));
 	
 	setPrintArea(map_printer->getPrintArea());
 	connect(map_printer, SIGNAL(printAreaChanged(QRectF)), this, SLOT(setPrintArea(QRectF)));
@@ -283,24 +287,62 @@ void PrintWidget::savePrinterConfig() const
 }
 
 // slot
-void PrintWidget::setActive(bool state)
+void PrintWidget::setActive(bool active)
 {
-	if (state)
+	if (this->active != active)
 	{
-		// Printers may have been added or removed.
-		updateTargets();
+		this->active = active;
 		
-		// The map may have been modified.
-		applyPrintAreaPolicy();
-		
-		if (!print_tool)
-			print_tool = new PrintTool(editor, map_printer);
-		editor->setOverrideTool(print_tool);
-	}
-	else
-	{
-		editor->setOverrideTool(NULL);
-		print_tool = NULL;
+		if (active)
+		{
+			// Save the current state of the map view.
+			saved_view_state.clear();
+			QXmlStreamWriter writer(&saved_view_state);
+			main_view->save(writer, QLatin1String("saved_view"), true);
+			
+			editor->setViewOptionsEnabled(false);
+			
+			// Printers may have been added or removed.
+			updateTargets();
+			
+			// Update the map view from the current options
+			setOptions(map_printer->getOptions());
+			
+			// Set reasonable zoom.
+			bool zoom_to_map = true;
+			if (zoom_to_map)
+			{
+				// Ensure the visibility of the whole map.
+				QRectF map_extent = map->calculateExtent(true, !main_view->areAllTemplatesHidden(), main_view);
+				editor->getMainWidget()->ensureVisibilityOfRect(map_extent, true, false);
+			}
+			else
+			{
+				// Ensure the visibility of the print area.
+				QRectF print_area(map_printer->getPrintArea());
+				editor->getMainWidget()->ensureVisibilityOfRect(print_area, true, false);
+			}
+			
+			// Activate PrintTool.
+			if (!print_tool)
+			{
+				print_tool = new PrintTool(editor, map_printer);
+			}
+			editor->setOverrideTool(print_tool);
+		}
+		else
+		{
+			editor->setOverrideTool(NULL);
+			print_tool = NULL;
+			
+			// Restore view
+			QXmlStreamReader reader(saved_view_state);
+			reader.readNextStartElement();
+			main_view->load(reader);
+			main_view->updateAllMapWidgets();
+			
+			editor->setViewOptionsEnabled(true);
+		}
 	}
 }
 
@@ -638,11 +680,18 @@ void PrintWidget::setOptions(const MapPrinterOptions& options)
 	      << show_grid_check << overprinting_check
 	      << different_scale_check << different_scale_edit;
 	
+	main_view->setHideAllTemplates(!options.show_templates);
+	show_templates_check->setChecked(options.show_templates);
+	show_templates_check->setEnabled(true);
+	main_view->setGridVisible(options.show_grid);
+	show_grid_check->setChecked(options.show_grid);
+	show_grid_check->setEnabled(true);
+	main_view->setOverprintingSimulationEnabled(options.simulate_overprinting);
+	overprinting_check->setChecked(options.simulate_overprinting);
+	
 	static QString dpi_template("%1 " + tr("dpi"));
 	dpi_combo->setEditText(dpi_template.arg(options.resolution));
-	show_templates_check->setChecked(options.show_templates);
-	show_grid_check->setChecked(options.show_grid);
-	overprinting_check->setChecked(options.simulate_overprinting);
+	
 	if (different_scale_edit->value() != (int)options.scale)
 	{
 		different_scale_edit->setValue(options.scale);
@@ -657,6 +706,7 @@ void PrintWidget::setOptions(const MapPrinterOptions& options)
 	{
 		applyCenterPolicy();
 	}
+	main_view->updateAllMapWidgets();
 }
 
 void PrintWidget::updateResolutions(const QPrinterInfo* target) const
@@ -733,6 +783,16 @@ void PrintWidget::showTemplatesClicked(bool checked)
 void PrintWidget::showGridClicked(bool checked)
 {
 	map_printer->setPrintGrid(checked);
+}
+
+// slot
+void PrintWidget::setOverprintingCheckEnabled(bool enabled)
+{
+	if (!enabled)
+	{
+		overprinting_check->setChecked(false);
+	}
+	overprinting_check->setEnabled(enabled);
 }
 
 // slot

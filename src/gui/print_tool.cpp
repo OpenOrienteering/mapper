@@ -20,6 +20,7 @@
 
 #include "print_tool.h"
 
+#include <QApplication>
 #include <QMouseEvent>
 #include <QPainter>
 
@@ -58,16 +59,20 @@ QCursor* PrintTool::getCursor()
 
 bool PrintTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
-	if (region == Unknown)
-		mouseMoved(map_coord, widget);
-	
-	if (event->button() == Qt::LeftButton && region != Outside)
+	if (event->button() == Qt::LeftButton)
 	{
+		mouseMoved(map_coord, widget);
 		dragging = true;
+		click_pos = event->pos();
 		click_pos_map = map_coord;
-		if (region == Inside)
+		if (region == Inside || region == Outside)
 			widget->setCursor(Qt::ClosedHandCursor);
 		return true;
+	}
+	
+	if (event->button() == Qt::RightButton)
+	{
+		return true; // disable context menu
 	}
 	
 	return false;
@@ -75,9 +80,16 @@ bool PrintTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidg
 
 bool PrintTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
-	if ((event->buttons() & Qt::LeftButton) && dragging)
+	if (dragging && event->buttons() & Qt::LeftButton)
 	{
-		updateDragging(map_coord);
+		if (region == Outside)
+		{
+			mapWidget()->getMapView()->setDragOffset(event->pos() - click_pos);
+		}
+		else
+		{
+			updateDragging(map_coord);
+		}
 		return true;
 	}
 	
@@ -87,10 +99,18 @@ bool PrintTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidge
 
 bool PrintTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
-	if (event->button() == Qt::LeftButton && dragging)
+	if (dragging && event->button() == Qt::LeftButton)
 	{
-		updateDragging(map_coord);
+		if (region == Outside)
+		{
+			mapWidget()->getMapView()->completeDragging(event->pos() - click_pos);
+		}
+		else
+		{
+			updateDragging(map_coord);
+		}
 		dragging = false;
+		region = Unknown; // forces mouseMoved() to update cursor and status
 		mouseMoved(map_coord, widget);
 		return true;
 	}
@@ -100,10 +120,12 @@ bool PrintTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWi
 
 void PrintTool::draw(QPainter* painter, MapWidget* widget)
 {
+	painter->save();
+	
 	QRect view_area = QRect(0, 0, widget->width(), widget->height());
 	QRect print_area = widget->mapToViewport(map_printer->getPrintArea()).toRect();
-	QSizeF page_size = widget->mapToViewport(map_printer->getPageFormat().page_rect).size();
 	qreal scale_adjustment = map_printer->getScaleAdjustment();
+	QSizeF page_size = widget->mapToViewport(map_printer->getPageFormat().page_rect).size() / scale_adjustment;
 	
 	// Strongly darken the region outside the print area
 	painter->setBrush(QColor(0, 0, 0, 160));
@@ -113,30 +135,115 @@ void PrintTool::draw(QPainter* painter, MapWidget* widget)
 	outside_path.addRect(view_area.intersected(print_area));
 	painter->drawPath(outside_path);
 	
+	Q_ASSERT(!map_printer->horizontalPagePositions().empty());
+	Q_ASSERT(!map_printer->verticalPagePositions().empty());
+	QPointF outer_top_left = widget->mapToViewport( QPointF(
+	  map_printer->horizontalPagePositions().front(),
+	  map_printer->verticalPagePositions().front() ) );
+	QPointF outer_bottom_right = widget->mapToViewport( QPointF(
+	  map_printer->horizontalPagePositions().back(),
+	  map_printer->verticalPagePositions().back() ) );
+	outer_bottom_right += QPointF(page_size.width(), page_size.height());
+	QRectF outer_rect(outer_top_left, outer_bottom_right);
+	
 	// Draw red lines for page breaks
 	QColor top_left_margin_color(255, 0, 0, 160);
 	QColor bottom_right_margin_color(255, 128, 128, 160);
 	painter->setBrush(Qt::NoBrush);
+#if 0
 	Q_FOREACH(qreal hpos, map_printer->horizontalPagePositions())
 	{
 		qreal x_pos = widget->mapToViewport(MapCoordF(hpos, 0)).x();
 		painter->setPen(top_left_margin_color);
-		painter->drawLine(x_pos, 0, x_pos, widget->height());
+		painter->drawLine(x_pos, outer_rect.top(), x_pos, outer_rect.bottom());
 		
-		x_pos += page_size.width() / scale_adjustment;
+		x_pos += page_size.width();
 		painter->setPen(bottom_right_margin_color);
-		painter->drawLine(x_pos, 0, x_pos, widget->height());
+		painter->drawLine(x_pos, outer_rect.top(), x_pos, outer_rect.bottom());
 	}
 	Q_FOREACH(qreal vpos, map_printer->verticalPagePositions())
 	{
 		qreal y_pos = widget->mapToViewport(MapCoordF(0, vpos)).y();
 		painter->setPen(top_left_margin_color);
-		painter->drawLine(0, y_pos, widget->width(), y_pos);
+		painter->drawLine(outer_rect.left(), y_pos, outer_rect.right(), y_pos);
 		
-		y_pos += page_size.height() / scale_adjustment;
+		y_pos += page_size.height();
 		painter->setPen(bottom_right_margin_color);
-		painter->drawLine(0, y_pos, widget->width(), y_pos);
+		painter->drawLine(outer_rect.left(), y_pos, outer_rect.right(), y_pos);
 	}
+#else
+	// The relative length of the page dimensions to be actual drawn.
+	QSizeF drawing_size(page_size * scale_adjustment);
+	if (map_printer->horizontalPagePositions().size() > 1)
+	{
+		drawing_size.setWidth(drawing_size.width() * 0.9 * (
+		  map_printer->horizontalPagePositions()[1] - 
+		  map_printer->horizontalPagePositions()[0] ) / 
+		  map_printer->getPageFormat().page_rect.width() );
+	}
+	if (map_printer->verticalPagePositions().size() > 1)
+	{
+		drawing_size.setHeight(drawing_size.height() * 0.9 * (
+		  map_printer->verticalPagePositions()[1] - 
+		  map_printer->verticalPagePositions()[0] ) /
+		  map_printer->getPageFormat().page_rect.height() );
+	}
+	
+	Q_FOREACH(qreal hpos, map_printer->horizontalPagePositions())
+	{
+		Q_FOREACH(qreal vpos, map_printer->verticalPagePositions())
+		{
+			QPointF pos = widget->mapToViewport(MapCoordF(hpos, vpos));
+			painter->setPen(top_left_margin_color);
+			// Left vertical line
+			painter->drawLine(pos.x(), pos.y(), pos.x(), pos.y()+drawing_size.height());
+			// Top horizontal line
+			painter->drawLine(pos.x(), pos.y(), pos.x()+drawing_size.width(), pos.y());
+			
+			pos += QPointF(page_size.width(), page_size.height());
+			painter->setPen(bottom_right_margin_color);
+			// Right vertical line
+			painter->drawLine(pos.x(), pos.y()-drawing_size.height(), pos.x(), pos.y());
+			// Bottom horizontal line
+			painter->drawLine(pos.x()-drawing_size.width(), pos.y(), pos.x(), pos.y());
+		}
+	}
+	
+	painter->setPen(top_left_margin_color);
+	painter->drawLine(outer_rect.left(), outer_rect.top(), outer_rect.left(), outer_rect.bottom());
+	painter->drawLine(outer_rect.left(), outer_rect.top(), outer_rect.right(), outer_rect.top());
+	painter->setPen(bottom_right_margin_color);
+	painter->drawLine(outer_rect.right(), outer_rect.top(), outer_rect.right(), outer_rect.bottom());
+	painter->drawLine(outer_rect.left(), outer_rect.bottom(), outer_rect.right(), outer_rect.bottom());
+#endif
+	
+	QRectF print_area_f(print_area);
+	QPen marker(Qt::red);
+	marker.setWidth(4);
+	painter->setPen(marker);
+	painter->setOpacity(0.5);
+	if (region == Inside)
+	{
+		painter->drawRect(print_area_f);
+	}
+	if (region & LeftBorder)
+	{
+		painter->drawLine(print_area_f.topLeft(), print_area_f.bottomLeft());
+	}
+	if (region & TopBorder)
+	{
+		painter->drawLine(print_area_f.topLeft(), print_area_f.topRight());
+	}
+	if (region & RightBorder)
+	{
+		painter->drawLine(print_area_f.topRight(), print_area_f.bottomRight());
+	}
+	if (region & BottomBorder)
+	{
+		painter->drawLine(print_area_f.bottomLeft(), print_area_f.bottomRight());
+	}
+	
+	painter->restore();
 }
 
 void PrintTool::updatePrintArea()
@@ -180,6 +287,7 @@ void PrintTool::updateDragging(MapCoordF mouse_pos_map)
 			area.setBottomLeft(area.bottomLeft() + delta);
 			break;
 		case Outside:
+			Q_ASSERT(false); // Handled outside.
 		case Unknown:
 			; // Nothing
 	}
@@ -195,62 +303,76 @@ void PrintTool::mouseMoved(MapCoordF mouse_pos_map, MapWidget* widget)
 {
 	Q_ASSERT(!dragging); // No change while dragging!
 	
-	static const qreal margin_width = 10.0;
-	static const qreal outer_margin = 3.0;
+	static const qreal margin_width = 16.0;
+	static const qreal outer_margin = 8.0;
 	
 	QRectF print_area = widget->mapToViewport(map_printer->getPrintArea());
 	print_area.adjust(-outer_margin, -outer_margin, outer_margin, outer_margin);
 	QPointF mouse_pos = widget->mapToViewport(mouse_pos_map);
-	if (!print_area.contains(mouse_pos))
+	
+	int new_region = Outside;
+	if (print_area.contains(mouse_pos))
 	{
-		region = Outside;
-	}
-	else
-	{
-		region = Inside;
+		new_region = Inside;
 		
 		if (mouse_pos.rx() < print_area.left() + margin_width)
 		{
-			region = (InteractionRegion)(region | LeftBorder);
+			new_region |= LeftBorder;
 		}
 		else if (mouse_pos.rx() > print_area.right() - margin_width)
 		{
-			region = (InteractionRegion)(region | RightBorder);
+			new_region |=  RightBorder;
 		}
 		
 		if (mouse_pos.ry() < print_area.top() + margin_width)
 		{
-			region = (InteractionRegion)(region | TopBorder);
+			new_region |= TopBorder;
 		}
 		else if (mouse_pos.ry() > print_area.bottom() - margin_width)
 		{
-			region = (InteractionRegion)(region | BottomBorder);
+			new_region |= BottomBorder;
 		}
 	}
 	
-	switch (region)
+	if (new_region != region)
 	{
-		case Inside:
-			widget->setCursor(Qt::OpenHandCursor);
-			break;
-		case LeftBorder:
-		case RightBorder:
-			widget->setCursor(Qt::SizeHorCursor);
-			break;
-		case TopBorder:
-		case BottomBorder:
-			widget->setCursor(Qt::SizeVerCursor);
-			break;
-		case TopLeftCorner:
-		case BottomRightCorner:
-			widget->setCursor(Qt::SizeFDiagCursor);
-			break;
-		case TopRightCorner:
-		case BottomLeftCorner:
-			widget->setCursor(Qt::SizeBDiagCursor);
-			break;
-		case Outside:
-		case Unknown:
-			widget->setCursor(Qt::ArrowCursor);
+		region = (InteractionRegion)new_region;
+		
+		switch (region)
+		{
+			case Inside:
+				setStatusBarText(tr("<b>Drag</b>: Move the print area or its borders. "));
+				widget->setCursor(Qt::OpenHandCursor);
+				break;
+			case Outside:
+				setStatusBarText(QApplication::translate("PanTool", "<b>Drag</b>: Move the map. "));
+				widget->setCursor(Qt::ArrowCursor);
+				break;
+			case LeftBorder:
+			case RightBorder:
+				setStatusBarText(tr("<b>Drag</b>: Move the print area or its borders. "));
+				widget->setCursor(Qt::SizeHorCursor);
+				break;
+			case TopBorder:
+			case BottomBorder:
+				setStatusBarText(tr("<b>Drag</b>: Move the print area or its borders. "));
+				widget->setCursor(Qt::SizeVerCursor);
+				break;
+			case TopLeftCorner:
+			case BottomRightCorner:
+				setStatusBarText(tr("<b>Drag</b>: Move the print area or its borders. "));
+				widget->setCursor(Qt::SizeFDiagCursor);
+				break;
+			case TopRightCorner:
+			case BottomLeftCorner:
+				setStatusBarText(tr("<b>Drag</b>: Move the print area or its borders. "));
+				widget->setCursor(Qt::SizeBDiagCursor);
+				break;
+			case Unknown:
+				setStatusBarText(tr("<b>Drag</b>: Move the print area or its borders. "));
+				widget->setCursor(Qt::ArrowCursor);
+		}
+		
+		updatePrintArea();
 	}
 }

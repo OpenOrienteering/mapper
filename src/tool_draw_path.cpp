@@ -80,6 +80,7 @@ void DrawPathTool::init()
 bool DrawPathTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
 	cur_map_widget = widget;
+	created_point_at_last_mouse_press = false;
 	
 	if (draw_in_progress &&
 		((event->button() == Qt::RightButton) &&
@@ -185,6 +186,7 @@ bool DrawPathTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapW
 		{
 			preview_path->setCoordinate(preview_path->getCoordinateCount() - 1, coord);
 			updateAngleHelper();
+			created_point_at_last_mouse_press = true;
 		}
 		else
 		{
@@ -194,6 +196,7 @@ bool DrawPathTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapW
 				updatePreviewPath();
 				if (!start_appending)
 					updateAngleHelper();
+				created_point_at_last_mouse_press = true;
 			}
 		}
 		
@@ -377,8 +380,12 @@ bool DrawPathTool::mouseDoubleClickEvent(QMouseEvent* event, MapCoordF map_coord
 	if (event->button() != Qt::LeftButton)
 		return false;
 	
-    if (draw_in_progress)
+	if (draw_in_progress)
+	{
+		if (created_point_at_last_mouse_press)
+			undoLastPoint();
 		finishDrawing();
+	}
 	return true;
 }
 
@@ -905,6 +912,12 @@ void DrawPathTool::updateDashPointDrawing()
 		draw_dash_points = (symbol->asLine()->getDashSymbol() != NULL);
 		
 		updateStatusText();
+	}
+	else if (symbol &&
+		(symbol->getType() == Symbol::Area ||
+		 symbol->getType() == Symbol::Combined))
+	{
+		draw_dash_points = false;
 	}
 }
 
