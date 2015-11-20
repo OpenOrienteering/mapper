@@ -37,7 +37,7 @@ android {
 	qt5.platform = -xplatform android-g++ \
 	               -android-ndk-platform android-9 \
 	               -android-arch "$$ANDROID_TARGET_ARCH" \
-	               -android-toolchain-version 4.8
+	               -android-toolchain-version 4.9
 }
 
 qt5.debug =

@@ -314,6 +314,7 @@ if((UNIX AND NOT APPLE) OR (CMAKE_CROSSCOMPILING AND NOT "${QT5_PLATFORM}" MATCH
 	)
 	ExternalProject_Add_Step(Qt5 build-host
 	  COMMAND ${QT5_MAKE_COMMAND} -C "${QT5_EXTRA_HOST_DIR}" module-qtbase
+	  COMMAND ${QT5_MAKE_COMMAND} -C "${QT5_EXTRA_HOST_DIR}" module-qtdeclarative
 	  COMMAND ${QT5_MAKE_COMMAND} -C "${QT5_EXTRA_HOST_DIR}" module-qttools-qmake_all
 	  COMMAND ${QT5_MAKE_COMMAND} -C "${QT5_EXTRA_HOST_DIR}/qttools/src/assistant" sub-qcollectiongenerator
 	  COMMAND ${QT5_MAKE_COMMAND} -C "${QT5_EXTRA_HOST_DIR}/qttools/src/linguist" sub-lrelease
