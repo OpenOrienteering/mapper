@@ -159,7 +159,7 @@ public:
 	 *          scales differ (by rescaling to fit this map's scale)!
 	 */
 	void importMap(Map* other, ImportMode mode, QWidget* dialog_parent = NULL, std::vector<bool>* filter = NULL, int symbol_insert_pos = -1,
-				   bool merge_duplicate_symbols = true, QHash<Symbol*, Symbol*>* out_symbol_map = NULL);
+				   bool merge_duplicate_symbols = true, QHash<const Symbol*, Symbol*>* out_symbol_map = NULL);
 	
 	/**
 	 * Serializes the map directly into the given IO device in a known format.
@@ -352,17 +352,26 @@ public:
 	inline int getNumColors() const {return (int)color_set->colors.size();}
 	
 	/** Returns a pointer to the MapColor identified by the non-negative priority i.
-	 *  Returns NULL if the color is not defined, or if it is a special color (i.e i<0).
-	 *  Note: you can get a pointer to a _const_ special color from a
-	 *  non-const map by const_casting the map:
 	 * 
-	 *    const MapColor* registration = const_cast<const Map&>(map).getColor(i);
+	 *  Returns NULL if the color is not defined, or if it is a special color (i.e i<0),
+	 *  i.e. only actual map colors are returned.
 	 */
-	MapColor* getColor(int i);
+	MapColor* getMapColor(int i);
+	
+	/** Returns a pointer to the MapColor identified by the non-negative priority i.
+	 * 
+	 *  Returns NULL if the color is not defined, or if it is a special color (i.e i<0),
+	 *  i.e. only actual map colors are returned.
+	 */
+	const MapColor* getMapColor(int i) const;
 	
 	/** Returns a pointer to the const MapColor identified by the priority i.
-	 *  Parameter i may also be negative (for special reserved colors).
-	 *  Returns NULL if the color is not defined. */
+	 * 
+	 *  Parameter i may also be negative for specifying special reserved colors.
+	 *  This is different from getMapColor();
+	 * 
+	 *  Returns NULL if the color is not defined.
+	 */
 	const MapColor* getColor(int i) const;
 	
 	/**
@@ -424,7 +433,7 @@ public:
 	 * @param out Output parameter: a vector of the same size as the color list,
 	 *     where each element is set to true if the color is used by at least one symbol.
 	 */
-	void determineColorsInUse(const std::vector< bool >& by_which_symbols, std::vector< bool >& out);
+	void determineColorsInUse(const std::vector< bool >& by_which_symbols, std::vector< bool >& out) const;
 	
 	/** Returns true if the map contains spot colors. */
 	bool hasSpotColors() const;
@@ -435,7 +444,10 @@ public:
 	inline int getNumSymbols() const {return (int)symbols.size();}
 	
 	/** Returns a pointer to the i-th symbol. */
-	Symbol* getSymbol(int i) const;
+	const Symbol* getSymbol(int i) const;
+	
+	/** Returns a pointer to the i-th symbol. */
+	Symbol* getSymbol(int i);
 	
 	/**
 	 * Replaces the symbol at the given index with another symbol.
@@ -511,6 +523,9 @@ public:
 	
 	/** Returns the i-th template. */
 	inline Template* getTemplate(int i) {return templates[i];}
+	
+	/** Returns the i-th template. */
+	inline const Template* getTemplate(int i) const {return templates[i];}
 	
 	/** Sets the template index which is the first (lowest) to be drawn in front of the map. */
 	inline void setFirstFrontTemplate(int pos) {first_front_template = pos;}
@@ -626,6 +641,11 @@ public:
 	 * Returns the UndoManager instance for this map.
 	 */
 	UndoManager& undoManager();
+	
+	/**
+	 * Returns the UndoManager instance for this map.
+	 */
+	const UndoManager& undoManager() const;
 	
 	/**
 	 * Pushes a new undo step to the map's undoManager.
@@ -865,35 +885,35 @@ public:
 	void updateAllObjects();
 	
 	/** Forces an update of all objects with the given symbol. */
-	void updateAllObjectsWithSymbol(Symbol* symbol);
+	void updateAllObjectsWithSymbol(const Symbol* symbol);
 	
 	/** For all symbols with old_symbol, replaces the symbol by new_symbol. */
-	void changeSymbolForAllObjects(Symbol* old_symbol, Symbol* new_symbol);
+	void changeSymbolForAllObjects(const Symbol* old_symbol, const Symbol* new_symbol);
 	
 	/**
 	 * Deletes all objects with the given symbol.
 	 * 
 	 * @return True if at least one object was deleted, false otherwise
 	 */
-	bool deleteAllObjectsWithSymbol(Symbol* symbol);
+	bool deleteAllObjectsWithSymbol(const Symbol* symbol);
 	
 	/**
 	 * Returns if at least one object with the given symbol exists in the map.
 	 * WARNING: Even if no objects exist directly, the symbol could still be
 	 *          required by another (combined) symbol used by an object!
 	 */
-	bool existsObjectWithSymbol(Symbol* symbol);
+	bool existsObjectWithSymbol(const Symbol* symbol);
 	
 	/**
 	 * Removes the renderables of the given object from display (does not
 	 * delete them!).
 	 */
-	void removeRenderablesOfObject(Object* object, bool mark_area_as_dirty);
+	void removeRenderablesOfObject(const Object* object, bool mark_area_as_dirty);
 	
 	/**
 	 * Inserts the renderables of the given object, so they will be displayed.
 	 */
-	void insertRenderablesOfObject(Object* object);
+	void insertRenderablesOfObject(const Object* object);
 	
 	// Object selection
 	
@@ -971,10 +991,10 @@ public:
 	 * @param symbol The symbol of the objects to remove.
 	 * @param emit_selection_changed See addObjectToSelection().
 	 */
-	bool removeSymbolFromSelection(Symbol* symbol, bool emit_selection_changed);
+	bool removeSymbolFromSelection(const Symbol* symbol, bool emit_selection_changed);
 	
 	/** Returns true if the given object is selected. */
-	bool isObjectSelected(Object* object);
+	bool isObjectSelected(const Object* object) const;
 	
 	/**
 	 * Toggles the selection of the given object.
@@ -1175,29 +1195,29 @@ signals:
 	void hasUnsavedChanges(bool is_clean);
 	
 	/** Emitted when a color is added to the map, gives the color's index and pointer. */
-	void colorAdded(int pos, MapColor* color);
+	void colorAdded(int pos, const MapColor* color);
 	/** Emitted when a map color is changed, gives the color's index and pointer. */
-	void colorChanged(int pos, MapColor* color);
+	void colorChanged(int pos, const MapColor* color);
 	/** Emitted when a map color is deleted, gives the color's index and pointer. */
 	void colorDeleted(int pos, const MapColor* old_color);
 	/** Emitted when the presence of spot colors in the map changes. */
 	void spotColorPresenceChanged(bool has_spot_colors) const;
 	
 	/** Emitted when a symbol is added to the map, gives the symbol's index and pointer. */
-	void symbolAdded(int pos, Symbol* symbol);
+	void symbolAdded(int pos, const Symbol* symbol);
 	/** Emitted when a symbol in the map is changed. */
-	void symbolChanged(int pos, Symbol* new_symbol, Symbol* old_symbol);
+	void symbolChanged(int pos, const Symbol* new_symbol, const Symbol* old_symbol);
 	/** Emitted when the icon of the symbol with the given index changes. */
 	void symbolIconChanged(int pos);
 	/** Emitted when a symbol in the map is deleted. */
-	void symbolDeleted(int pos, Symbol* old_symbol);
+	void symbolDeleted(int pos, const Symbol* old_symbol);
 	
 	/** Emitted when a template is added to the map, gives the template's index and pointer. */
-	void templateAdded(int pos, Template* temp);
+	void templateAdded(int pos, const Template* temp);
 	/** Emitted when a template in the map is changed, gives the template's index and pointer. */
-	void templateChanged(int pos, Template* temp);
+	void templateChanged(int pos, const Template* temp);
 	/** Emitted when a template in the map is deleted, gives the template's index and pointer. */
-	void templateDeleted(int pos, Template* old_temp);
+	void templateDeleted(int pos, const Template* old_temp);
 	
 	/** Emitted when the number of closed templates changes between zero and one. */
 	void closedTemplateAvailabilityChanged();
@@ -1294,11 +1314,11 @@ private:
 	/// Imports the other symbol set into this set, only importing the symbols for which filter[color_index] == true and
 	/// returning the map from symbol indices in other to imported indices. Imported symbols are placed after the existing symbols.
 	void importSymbols(Map* other, const MapColorMap& color_map, int insert_pos = -1, bool merge_duplicates = true, std::vector<bool>* filter = NULL,
-					   QHash<int, int>* out_indexmap = NULL, QHash<Symbol*, Symbol*>* out_pointermap = NULL);
+					   QHash<int, int>* out_indexmap = NULL, QHash<const Symbol*, Symbol*>* out_pointermap = NULL);
 	
-	void addSelectionRenderables(Object* object);
-	void updateSelectionRenderables(Object* object);
-	void removeSelectionRenderables(Object* object);
+	void addSelectionRenderables(const Object* object);
+	void updateSelectionRenderables(const Object* object);
+	void removeSelectionRenderables(const Object* object);
 	
 	static void initStatic();
 	
@@ -1355,6 +1375,8 @@ private:
 	static CombinedSymbol* covering_combined_line;
 };
 
+Q_DECLARE_METATYPE(const Map*)
+
 
 // ### Map inline code ###
 
@@ -1383,7 +1405,13 @@ const MapColor* Map::getRegistrationColor()
 }
 
 inline
-MapColor* Map::getColor(int i)
+MapColor* Map::getMapColor(int i)
+{
+	return const_cast<MapColor*>(static_cast<const Map*>(this)->getMapColor(i));
+}
+
+inline
+const MapColor* Map::getMapColor(int i) const
 {
 	if (0 <= i && i < (int)color_set->colors.size())
 	{
@@ -1416,6 +1444,12 @@ const MapColor* Map::getColor(int i) const
 
 inline
 UndoManager& Map::undoManager()
+{
+	return const_cast<UndoManager&>(static_cast<const Map*>(this)->undoManager());
+}
+
+inline
+const UndoManager& Map::undoManager() const
 {
 	return *(undo_manager.data());
 }

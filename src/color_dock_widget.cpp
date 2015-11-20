@@ -134,9 +134,9 @@ ColorWidget::ColorWidget(Map* map, MainWindow* window, QWidget* parent)
 	connect(edit_button, SIGNAL(clicked(bool)), this, SLOT(editCurrentColor()));
 	connect(help_button, SIGNAL(clicked(bool)), this, SLOT(showHelp()));
 	
-	connect(map, SIGNAL(colorAdded(int,MapColor*)), this, SLOT(colorAdded(int,MapColor*)));
-	connect(map, SIGNAL(colorChanged(int,MapColor*)), this, SLOT(colorChanged(int, MapColor*)));
-	connect(map, SIGNAL(colorDeleted(int,const MapColor*)), this, SLOT(colorDeleted(int,const MapColor*)));
+	connect(map, SIGNAL(colorAdded(int, const MapColor*)), this, SLOT(colorAdded(int, const MapColor*)));
+	connect(map, SIGNAL(colorChanged(int, const MapColor*)), this, SLOT(colorChanged(int, const MapColor*)));
+	connect(map, SIGNAL(colorDeleted(int, const MapColor*)), this, SLOT(colorDeleted(int, const MapColor*)));
 }
 
 ColorWidget::~ColorWidget()
@@ -206,8 +206,8 @@ void ColorWidget::moveColorUp()
 	Q_ASSERT(row >= 1);
 	if (row < 1) return; // In release mode
 	
-	MapColor* above_color = map->getColor(row - 1);
-	MapColor* cur_color = map->getColor(row);
+	MapColor* above_color = map->getMapColor(row - 1);
+	MapColor* cur_color = map->getMapColor(row);
 	map->setColor(cur_color, row - 1);
 	map->setColor(above_color, row);
 	updateRow(row - 1);
@@ -225,8 +225,8 @@ void ColorWidget::moveColorDown()
 	Q_ASSERT(row < color_table->rowCount() - 1);
 	if (row >= color_table->rowCount() - 1) return; // In release mode
 	
-	MapColor* below_color = map->getColor(row + 1);
-	MapColor* cur_color = map->getColor(row);
+	MapColor* below_color = map->getMapColor(row + 1);
+	MapColor* cur_color = map->getMapColor(row);
 	map->setColor(cur_color, row + 1);
 	map->setColor(below_color, row);
 	updateRow(row + 1);
@@ -244,7 +244,7 @@ void ColorWidget::editCurrentColor()
 	int row = color_table->currentRow();
 	if (row >= 0)
 	{
-		MapColor* color = map->getColor(row);
+		MapColor* color = map->getMapColor(row);
 		ColorDialog dialog(*map, *color, this);
 		dialog.setWindowModality(Qt::WindowModal);
 		int result = dialog.exec();
@@ -258,7 +258,7 @@ void ColorWidget::editCurrentColor()
 	}
 }
 
-void ColorWidget::showHelp()
+void ColorWidget::showHelp() const
 {
 	Util::showHelp(window, "color_dock_widget.html", "");
 }
@@ -270,7 +270,7 @@ void ColorWidget::cellChange(int row, int column)
 	
 	react_to_changes = false;
 	
-	MapColor* color = map->getColor(row);
+	MapColor* color = map->getMapColor(row);
 	QString text = color_table->item(row, column)->text().trimmed();
 	
 	if (column == 1)
@@ -330,7 +330,7 @@ void ColorWidget::currentCellChange(int current_row, int current_column, int pre
 	edit_button->setEnabled(valid_row);
 }
 
-void ColorWidget::colorAdded(int index, MapColor* color)
+void ColorWidget::colorAdded(int index, const MapColor* color)
 {
 	Q_UNUSED(color);
 	color_table->insertRow(index);
@@ -342,7 +342,7 @@ void ColorWidget::colorAdded(int index, MapColor* color)
 	color_table->setCurrentCell(index, 1);
 }
 
-void ColorWidget::colorChanged(int index, MapColor* color)
+void ColorWidget::colorChanged(int index, const MapColor* color)
 {
 	Q_UNUSED(color);
 	updateRow(index);

@@ -129,6 +129,11 @@ public:
 	/**
 	 * Writes an attribute with the given name and value.
 	 */
+	void writeAttribute(const QLatin1String& qualifiedName, const quint64 value);
+	
+	/**
+	 * Writes an attribute with the given name and value.
+	 */
 	void writeAttribute(const QLatin1String& qualifiedName, bool value);
 	
 	/**
@@ -400,6 +405,12 @@ void XmlElementWriter::writeAttribute(const QLatin1String& qualifiedName, const 
 
 inline
 void XmlElementWriter::writeAttribute(const QLatin1String& qualifiedName, const long unsigned int value)
+{
+	xml.writeAttribute(qualifiedName, QString::number(value));
+}
+
+inline
+void XmlElementWriter::writeAttribute(const QLatin1String& qualifiedName, const quint64 value)
 {
 	xml.writeAttribute(qualifiedName, QString::number(value));
 }

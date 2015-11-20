@@ -17,17 +17,21 @@
 #    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  
 cmake_minimum_required(VERSION 2.8.8 FATAL_ERROR)
+cmake_policy(SET CMP0020 OLD)
+
 include(FeatureSummary)
 
 # Project declaration
 
 project(Mapper)
 
+set(Mapper_COPYRIGHT "(C) 2012-2014 OpenOrienteering developers")
+
 # All version components must be integers.
 # We use 99 to mark development builds.
 SET(Mapper_VERSION_MAJOR 0)
 SET(Mapper_VERSION_MINOR 5)
-SET(Mapper_VERSION_PATCH 95)
+SET(Mapper_VERSION_PATCH 96)
 
 if(${CMAKE_CURRENT_BINARY_DIR} STREQUAL ${PROJECT_SOURCE_DIR})
 	message(FATAL_ERROR "You must not use the source directory as build directory.")

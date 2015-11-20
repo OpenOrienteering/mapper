@@ -54,7 +54,7 @@ public:
 	static QCursor* cursor;
 	
 public slots:
-	void templateDeleted(int pos, Template* temp);
+	void templateDeleted(int pos, const Template* temp);
 	void colorSelected(QColor color);
 	void undoSelected();
 	void redoSelected();

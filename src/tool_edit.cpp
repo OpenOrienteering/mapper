@@ -281,7 +281,7 @@ void ObjectMover::move(qint64 dx, qint64 dy, bool move_opposite_handles)
 	for (QHash< TextObject*, int >::const_iterator it = text_handles.constBegin(), end = text_handles.constEnd(); it != end; ++it)
 	{
 		TextObject* text_object = it.key();
-		TextSymbol* text_symbol = text_object->getSymbol()->asText();
+		const TextSymbol* text_symbol = text_object->getSymbol()->asText();
 		
 		QTransform transform;
 		transform.rotate(text_object->getRotation() * 180 / M_PI);
@@ -348,7 +348,7 @@ void ObjectMover::calculateConstraints()
 		{
 			int index = *pit;
 			bool could_be_handle = true;
-			PathObject::PathPart& part = path->findPartForIndex(index);
+			const PathObject::PathPart& part = path->findPartForIndex(index);
 			
 			// If a curve starts here, add first handle
 			if (path->getCoordinate(index).isCurveStart())

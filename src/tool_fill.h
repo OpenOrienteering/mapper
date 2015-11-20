@@ -38,7 +38,7 @@ public:
 	virtual ~FillTool();
 	
 protected slots:
-	void setDrawingSymbol(Symbol* symbol);
+	void setDrawingSymbol(const Symbol* symbol);
 	
 protected:
 	/**
@@ -95,7 +95,7 @@ protected:
 	 */
 	bool fillBoundary(const QImage& image, const std::vector< QPoint >& boundary, QTransform image_to_map);
 	
-	Symbol* drawing_symbol;
+	const Symbol* drawing_symbol;
 };
 
 #endif

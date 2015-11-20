@@ -34,7 +34,7 @@
 
 // ### DotRenderable ###
 
-DotRenderable::DotRenderable(PointSymbol* symbol, MapCoordF coord) : Renderable()
+DotRenderable::DotRenderable(const PointSymbol* symbol, MapCoordF coord) : Renderable()
 {
 	color_priority = symbol->getInnerColor()->getPriority();
 	double x = coord.getX();
@@ -65,7 +65,7 @@ void DotRenderable::render(QPainter& painter, QRectF& bounding_box, bool force_m
 
 // ### CircleRenderable ###
 
-CircleRenderable::CircleRenderable(PointSymbol* symbol, MapCoordF coord) : Renderable()
+CircleRenderable::CircleRenderable(const PointSymbol* symbol, MapCoordF coord) : Renderable()
 {
 	color_priority = symbol->getOuterColor()->getPriority();
 	double x = coord.getX();
@@ -100,7 +100,7 @@ void CircleRenderable::render(QPainter& painter, QRectF& bounding_box, bool forc
 
 // ### LineRenderable ###
 
-LineRenderable::LineRenderable(LineSymbol* symbol, const MapCoordVectorF& transformed_coords, const MapCoordVector& coords, const PathCoordVector& path_coords, bool closed) : Renderable()
+LineRenderable::LineRenderable(const LineSymbol* symbol, const MapCoordVectorF& transformed_coords, const MapCoordVector& coords, const PathCoordVector& path_coords, bool closed) : Renderable()
 {
 	Q_ASSERT(transformed_coords.size() == coords.size());
 	color_priority = symbol->getColor()->getPriority();
@@ -215,7 +215,7 @@ LineRenderable::LineRenderable(LineSymbol* symbol, const MapCoordVectorF& transf
 	
 	Q_ASSERT(extent.right() < 999999);	// assert if bogus values are returned
 }
-void LineRenderable::extentIncludeCap(int i, float half_line_width, bool end_cap, LineSymbol* symbol, const MapCoordVectorF& transformed_coords, const MapCoordVector& coords, bool closed)
+void LineRenderable::extentIncludeCap(int i, float half_line_width, bool end_cap, const LineSymbol* symbol, const MapCoordVectorF& transformed_coords, const MapCoordVector& coords, bool closed)
 {
 	if (symbol->getCapStyle() == LineSymbol::RoundCap)
 	{
@@ -238,7 +238,7 @@ void LineRenderable::extentIncludeCap(int i, float half_line_width, bool end_cap
 		rectInclude(extent, QPointF(transformed_coords[i].getX() + half_line_width * (right.getX() + sign*back.getX()), transformed_coords[i].getY() + half_line_width * (right.getY() + sign*back.getY())));
 	}
 }
-void LineRenderable::extentIncludeJoin(int i, float half_line_width, LineSymbol* symbol, const MapCoordVectorF& transformed_coords, const MapCoordVector& coords, bool closed)
+void LineRenderable::extentIncludeJoin(int i, float half_line_width, const LineSymbol* symbol, const MapCoordVectorF& transformed_coords, const MapCoordVector& coords, bool closed)
 {
 	if (symbol->getJoinStyle() == LineSymbol::RoundJoin)
 	{
@@ -418,7 +418,7 @@ void LineRenderable::render(QPainter& painter, QRectF& bounding_box, bool force_
 
 // ### AreaRenderable ###
 
-AreaRenderable::AreaRenderable(AreaSymbol* symbol, const MapCoordVectorF& transformed_coords, const MapCoordVector& coords, const PathCoordVector* path_coords) : Renderable()
+AreaRenderable::AreaRenderable(const AreaSymbol* symbol, const MapCoordVectorF& transformed_coords, const MapCoordVector& coords, const PathCoordVector* path_coords) : Renderable()
 {
 	Q_ASSERT(transformed_coords.size() >= 3 && transformed_coords.size() == coords.size());
 	color_priority = symbol->getColor() ? symbol->getColor()->getPriority() : MapColor::Reserved;
@@ -507,7 +507,7 @@ void AreaRenderable::render(QPainter& painter, QRectF& bounding_box, bool force_
 
 // ### TextRenderable ###
 
-TextRenderable::TextRenderable(TextSymbol* symbol, TextObject* text_object, const MapColor* color, double anchor_x, double anchor_y, bool framing_line)
+TextRenderable::TextRenderable(const TextSymbol* symbol, const TextObject* text_object, const MapColor* color, double anchor_x, double anchor_y, bool framing_line)
 {
 	const QFont& font(symbol->getQFont());
 	const QFontMetricsF& metrics(symbol->getFontMetrics());

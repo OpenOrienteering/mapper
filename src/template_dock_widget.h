@@ -87,7 +87,7 @@ protected slots:
 	void importClicked();
 	void moreActionClicked(QAction* action);
 	
-	void templateAdded(int pos, Template* temp);
+	void templateAdded(int pos, const Template* temp);
 	void templatePositionDockWidgetClosed(Template* temp);
 	
 	void changeTemplateFile();

@@ -1,16 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map xmlns="http://oorienteering.sourceforge.net/mapper/xml/v2" version="5">
     <notes></notes>
-    <georeferencing scale="5000" declination="0" grivation="0">
+    <georeferencing scale="5000" declination="0.00" grivation="0.00">
         <ref_point x="0" y="0"/>
         <projected_crs id="Local coordinates">
             <spec language="PROJ.4"></spec>
             <ref_point x="0.000000" y="0.000000"/>
         </projected_crs>
-        <geographic_crs id="Geographic coordinates">
-            <spec language="PROJ.4">+proj=latlong +datum=WGS84</spec>
-            <ref_point lat="0.0000000000" lon="0.0000000000"/>
-        </geographic_crs>
     </georeferencing>
     <colors count="36">
         <color priority="0" name="Purple" c="0.200" m="1.000" y="0.000" k="0.000" opacity="1.000">
@@ -959,25 +955,25 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</description>
                 </mid_symbol>
             </line_symbol>
         </symbol>
-        <symbol type="4" id="52" code="309.0.1" name="Impassable marsh, fill">
-            <description>This symbol should not be used on its own.</description>
-            <area_symbol inner_color="-1" min_area="0" patterns="1">
-                <pattern type="1" angle="0" line_spacing="500" line_offset="0" offset_along_line="0" color="19" line_width="250"/>
-            </area_symbol>
-        </symbol>
-        <symbol type="2" id="53" code="309.0.2" name="Impassable marsh, border line">
-            <description>This symbol should not be used on its own.</description>
-            <line_symbol color="2" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
-        </symbol>
-        <symbol type="16" id="54" code="309" name="Impassable marsh &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;">
+        <symbol type="16" id="52" code="309" name="Impassable marsh &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;">
             <description>A marsh which is impassable or which may constitute a danger to the competitor.  The feature cannot or shall not be crossed.
 
 &lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an impassable marsh!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</description>
             <combined_symbol parts="2">
-                <part symbol="52"/>
                 <part symbol="53"/>
+                <part symbol="54"/>
             </combined_symbol>
+        </symbol>
+        <symbol type="4" id="53" code="309.0.1" name="Impassable marsh, fill">
+            <description>This symbol should not be used on its own.</description>
+            <area_symbol inner_color="-1" min_area="0" patterns="1">
+                <pattern type="1" angle="0" line_spacing="500" line_offset="0" offset_along_line="0" color="19" line_width="250"/>
+            </area_symbol>
+        </symbol>
+        <symbol type="2" id="54" code="309.0.2" name="Impassable marsh, border line">
+            <description>This symbol should not be used on its own.</description>
+            <line_symbol color="2" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="4" id="55" code="310" name="Marsh">
             <description>A crossable marsh, usually with a distinct edge. The symbol shall be combined with vegetation symbols to show runnability and openness. 
@@ -1256,37 +1252,25 @@ Minimum width: 0.25 mm.</description>
         <symbol type="2" id="74" code="410.1" name="Vegetation, very difficult to run, minimum width (hedge)">
             <line_symbol color="12" line_width="250" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
-        <symbol type="4" id="75" code="421" name="Impassable vegetation &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;">
-            <description>An area of dense vegetation (trees or undergrowth) which is impassable or which shall not be crossed, due to forbidden access or because it may constitute a danger to the competitor.
- 
-Minimum width: 0.4 mm.
-
-&lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross impassable vegetation!
-Competitors violating this rule will be disqualified.&lt;/span&gt;</description>
-            <area_symbol inner_color="26" min_area="500" patterns="0"/>
-        </symbol>
-        <symbol type="2" id="76" code="421.1" name="Impassable vegetation, minimum width (hedge)">
-            <line_symbol color="9" line_width="400" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
-        </symbol>
-        <symbol type="4" id="77" code="411.1" name="Forest (406) runnable in one direction">
+        <symbol type="4" id="75" code="411.1" name="Forest (406) runnable in one direction">
             <description>When an area of forest provides good running in one direction but less good in others, white stripes are left in the screen symbol (406) to show the direction with good runnability.</description>
             <area_symbol inner_color="30" min_area="1000" patterns="1">
                 <pattern type="1" angle="1.5708" rotatable="true" line_spacing="1500" line_offset="0" offset_along_line="0" color="25" line_width="400"/>
             </area_symbol>
         </symbol>
-        <symbol type="4" id="78" code="411.2" name="Forest (408) runnable in one direction">
+        <symbol type="4" id="76" code="411.2" name="Forest (408) runnable in one direction">
             <description>When an area of forest provides good running in one direction but less good in others, white stripes are left in the screen symbol (408) to show the direction with good runnability.</description>
             <area_symbol inner_color="29" min_area="1000" patterns="1">
                 <pattern type="1" angle="1.5708" rotatable="true" line_spacing="1500" line_offset="0" offset_along_line="0" color="25" line_width="400"/>
             </area_symbol>
         </symbol>
-        <symbol type="4" id="79" code="411.3" name="Forest (410) runnable in one direction">
+        <symbol type="4" id="77" code="411.3" name="Forest (410) runnable in one direction">
             <description>When an area of forest provides good running in one direction but less good in others, white stripes are left in the screen symbol (410) to show the direction with good runnability.</description>
             <area_symbol inner_color="27" min_area="1000" patterns="1">
                 <pattern type="1" angle="1.5708" rotatable="true" line_spacing="1500" line_offset="0" offset_along_line="0" color="25" line_width="400"/>
             </area_symbol>
         </symbol>
-        <symbol type="4" id="80" code="412" name="Orchard">
+        <symbol type="4" id="78" code="412" name="Orchard">
             <description>Land planted with fruit trees or bushes. The dot lines may be orientated to represent the direction of planting.</description>
             <area_symbol inner_color="32" min_area="500" patterns="1">
                 <pattern type="2" angle="0" rotatable="true" line_spacing="800" line_offset="0" offset_along_line="0" point_distance="800">
@@ -1296,7 +1280,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</description>
                 </pattern>
             </area_symbol>
         </symbol>
-        <symbol type="4" id="81" code="413" name="Orchard, one direction (e.g. Vineyard)">
+        <symbol type="4" id="79" code="413" name="Orchard, one direction (e.g. Vineyard)">
             <description>Land planted with fruit trees or bushes, with a distinct direction of planting which reduces the runnability. The green lines shall be orientated to show the direction of planting.</description>
             <area_symbol inner_color="32" min_area="500" patterns="2">
                 <pattern type="2" angle="1.5708" rotatable="true" line_spacing="1700" line_offset="0" offset_along_line="0" point_distance="1900">
@@ -1341,11 +1325,11 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</description>
                 </pattern>
             </area_symbol>
         </symbol>
-        <symbol type="2" id="82" code="414" name="Distinct cultivation boundary">
+        <symbol type="2" id="80" code="414" name="Distinct cultivation boundary">
             <description>The boundary of symbol cultivated land (seasonally out of bounds) (415) when not shown with other symbols (fence, wall, path, etc.) is represented with a black line. A permanent boundary between different types of cultivated land is also represented with this symbol.</description>
             <line_symbol color="2" line_width="70" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
-        <symbol type="4" id="83" code="415" name="Cultivated land (seasonally out of bounds)">
+        <symbol type="4" id="81" code="415" name="Cultivated land (seasonally out of bounds)">
             <description>Cultivated land which is seasonally out-of-bounds due to growing crops may be shown with a black dot screen.</description>
             <area_symbol inner_color="32" min_area="500" patterns="1">
                 <pattern type="2" angle="0" line_spacing="800" line_offset="0" offset_along_line="0" point_distance="800">
@@ -1355,7 +1339,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</description>
                 </pattern>
             </area_symbol>
         </symbol>
-        <symbol type="2" id="84" code="416" name="Distinct vegetation boundary">
+        <symbol type="2" id="82" code="416" name="Distinct vegetation boundary">
             <description>A distinct forest edge or very distinct vegetation boundary within the forest. For indistinct boundaries, the area edges are shown only by the change in colour and/or dot screen.</description>
             <line_symbol color="2" line_width="0" minimum_length="220" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="600" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="2" minimum_mid_symbol_count_when_closed="5" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                 <mid_symbol>
@@ -1365,15 +1349,15 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</description>
                 </mid_symbol>
             </line_symbol>
         </symbol>
-        <symbol type="1" id="85" code="418" name="Prominent large tree">
+        <symbol type="1" id="83" code="418" name="Prominent large tree">
             <description>A prominent single tree.</description>
             <point_symbol inner_radius="350" inner_color="-1" outer_width="250" outer_color="12" elements="0"/>
         </symbol>
-        <symbol type="1" id="86" code="419" name="Prominent bush or small tree">
+        <symbol type="1" id="84" code="419" name="Prominent bush or small tree">
             <description>A bush or a tree with a trunk less than 0.5 m diameter.</description>
             <point_symbol inner_radius="375" inner_color="12" outer_width="0" outer_color="-1" elements="0"/>
         </symbol>
-        <symbol type="1" id="87" code="420" name="Prominent vegetation feature">
+        <symbol type="1" id="85" code="420" name="Prominent vegetation feature">
             <description>A vegetation feature which is significant or prominent. The definition of the symbol shall always be given in the map legend. The symbol is orientated to north.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                 <element>
@@ -1405,6 +1389,18 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</description>
                     </object>
                 </element>
             </point_symbol>
+        </symbol>
+        <symbol type="4" id="86" code="421" name="Impassable vegetation &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;">
+            <description>An area of dense vegetation (trees or undergrowth) which is impassable or which shall not be crossed, due to forbidden access or because it may constitute a danger to the competitor.
+ 
+Minimum width: 0.4 mm.
+
+&lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross impassable vegetation!
+Competitors violating this rule will be disqualified.&lt;/span&gt;</description>
+            <area_symbol inner_color="26" min_area="500" patterns="0"/>
+        </symbol>
+        <symbol type="2" id="87" code="421.1" name="Impassable vegetation, minimum width (hedge)">
+            <line_symbol color="9" line_width="400" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="2" id="88" code="506.1.1" name="Unpaved footpath or track, urban, minimum width">
             <description>An unpaved footpath or rough vehicle track is a way for passing mainly by foot, without a smooth, hard surface. The density of the brown fill-in shall be the same as the density chosen for the symbol (529).
@@ -1836,15 +1832,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</description>
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="4" id="110" code="526.1.1" name="Building helper 1">
-            <description>Do not use this symbol on its own!</description>
-            <area_symbol inner_color="5" min_area="250" patterns="0"/>
-        </symbol>
-        <symbol type="2" id="111" code="526.1.2" name="Building helper 2">
-            <description>Do not use this symbol on its own!</description>
-            <line_symbol color="2" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
-        </symbol>
-        <symbol type="16" id="112" code="526.1" name="Building &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to pass through or over)&lt;/span&gt;">
+        <symbol type="16" id="110" code="526.1" name="Building &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to pass through or over)&lt;/span&gt;">
             <description>A building is a relatively permanent construction having a roof. Buildings within symbol area with forbidden access (527.1) may just be represented in a simplified manner.Areas totally contained within a building shall be mapped as being a part of the building. 
 
 The minimum gap between buildings and between buildings and other impassable features shall be 0.40 mm. The black screen percentage should be chosen according to the terrain. A dark screen gives a better contrast to passable areas, such as streets, stairways and canopies, while a light screen makes contours and course overprint more clearly visible (which can be important in very densely built up urban terrain and in steep urban terrain). The black screen shall be the same for the whole map. 
@@ -1852,11 +1840,40 @@ The minimum gap between buildings and between buildings and other impassable fea
 &lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to pass through or over a building! 
 Competitors violating this rule will be disqualified.&lt;/span&gt;</description>
             <combined_symbol parts="2">
-                <part symbol="110"/>
                 <part symbol="111"/>
+                <part symbol="112"/>
             </combined_symbol>
         </symbol>
-        <symbol type="1" id="113" code="526.1.1" name="Building, minimum size &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to pass through or over)&lt;/span&gt;">
+        <symbol type="4" id="111" code="526.1.1" name="Building helper 1">
+            <description>Do not use this symbol on its own!</description>
+            <area_symbol inner_color="5" min_area="250" patterns="0"/>
+        </symbol>
+        <symbol type="2" id="112" code="526.1.2" name="Building helper 2">
+            <description>Do not use this symbol on its own!</description>
+            <line_symbol color="2" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
+                <start_symbol>
+                    <symbol type="1" code="" name="Start symbol">
+                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
+                    </symbol>
+                </start_symbol>
+                <mid_symbol>
+                    <symbol type="1" code="" name="Mid symbol">
+                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
+                    </symbol>
+                </mid_symbol>
+                <end_symbol>
+                    <symbol type="1" code="" name="End symbol">
+                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
+                    </symbol>
+                </end_symbol>
+                <dash_symbol>
+                    <symbol type="1" code="" name="Dash symbol">
+                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
+                    </symbol>
+                </dash_symbol>
+            </line_symbol>
+        </symbol>
+        <symbol type="1" id="113" code="526.1.3" name="Building, minimum size &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to pass through or over)&lt;/span&gt;">
             <description>A building is a relatively permanent construction having a roof. Buildings within symbol area with forbidden access (527.1) may just be represented in a simplified manner.Areas totally contained within a building shall be mapped as being a part of the building. 
 
 The minimum gap between buildings and between buildings and other impassable features shall be 0.40 mm. The black screen percentage should be chosen according to the terrain. A dark screen gives a better contrast to passable areas, such as streets, stairways and canopies, while a light screen makes contours and course overprint more clearly visible (which can be important in very densely built up urban terrain and in steep urban terrain). The black screen shall be the same for the whole map. 
@@ -1899,22 +1916,22 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</description>
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="4" id="114" code="526.0.2" name="Canopy helper 1">
-            <description>Do not use this symbol on its own!</description>
-            <area_symbol inner_color="8" min_area="250" patterns="0"/>
-        </symbol>
-        <symbol type="2" id="115" code="526.2.2" name="Canopy helper 2">
-            <description>Do not use this symbol on its own!</description>
-            <line_symbol color="2" line_width="70" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
-        </symbol>
-        <symbol type="16" id="116" code="526.2" name="Canopy">
+        <symbol type="16" id="114" code="526.2" name="Canopy">
             <description>A canopy is a building construction (with a roof), normally supported by pillars, poles or walls, such as passages, gangways, courts, bus stops, gas stations or garages. 
 
 Small passable parts of buildings which can not easily be crossed by competitors, shall not be represented on the map and shall be closed during the competition.</description>
             <combined_symbol parts="2">
-                <part symbol="114"/>
                 <part symbol="115"/>
+                <part symbol="116"/>
             </combined_symbol>
+        </symbol>
+        <symbol type="4" id="115" code="526.2.1" name="Canopy helper 1">
+            <description>Do not use this symbol on its own!</description>
+            <area_symbol inner_color="8" min_area="250" patterns="0"/>
+        </symbol>
+        <symbol type="2" id="116" code="526.2.2" name="Canopy helper 2">
+            <description>Do not use this symbol on its own!</description>
+            <line_symbol color="2" line_width="70" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="1" id="117" code="526.3" name="Pillar">
             <description>A pillar is an upright shaft or structure of stone, brick or other material, relatively slender in proportion to its height and any shape in section, used as a building support. Pillars smaller than 2 m × 2 m are generally not represented.
@@ -2655,9 +2672,30 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</description>
             <description>A solid line indicates that the boundary is marked continuously (tapes, etc.) on the ground.</description>
             <line_symbol color="0" line_width="250" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
-        <symbol type="2" id="163" code="709.1" name="Out-of-bounds area, dashed boundary">
+        <symbol type="2" id="163" code="709.2" name="Out-of-bounds area, dashed boundary">
             <description>A dashed line indicates intermittent marking on the ground.</description>
-            <line_symbol color="0" line_width="250" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="3000" break_length="500" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+            <line_symbol color="0" line_width="250" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="3000" break_length="500" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
+                <start_symbol>
+                    <symbol type="1" code="" name="Start symbol">
+                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
+                    </symbol>
+                </start_symbol>
+                <mid_symbol>
+                    <symbol type="1" code="" name="Mid symbol">
+                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
+                    </symbol>
+                </mid_symbol>
+                <end_symbol>
+                    <symbol type="1" code="" name="End symbol">
+                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
+                    </symbol>
+                </end_symbol>
+                <dash_symbol>
+                    <symbol type="1" code="" name="Dash symbol">
+                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
+                    </symbol>
+                </dash_symbol>
+            </line_symbol>
         </symbol>
         <symbol type="1" id="164" code="712" name="First aid post">
             <description>The location of a first aid post.</description>
@@ -6939,7 +6977,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                         <coord x="0" y="0"/>
                     </pattern>
                 </object>
-                <object type="1" symbol="78">
+                <object type="1" symbol="76">
                     <coords count="5">
                         <coord x="14086" y="-10724"/>
                         <coord x="16820" y="-11561"/>
@@ -7069,7 +7107,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                         <coord x="0" y="0"/>
                     </pattern>
                 </object>
-                <object type="1" symbol="84">
+                <object type="1" symbol="82">
                     <coords count="7">
                         <coord x="22428" y="-3815" flags="1"/>
                         <coord x="22100" y="-4868"/>
@@ -7255,7 +7293,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                         <coord x="0" y="0"/>
                     </pattern>
                 </object>
-                <object type="1" symbol="76">
+                <object type="1" symbol="87">
                     <coords count="2">
                         <coord x="11904" y="515"/>
                         <coord x="15163" y="553"/>
@@ -7273,7 +7311,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                         <coord x="0" y="0"/>
                     </pattern>
                 </object>
-                <object type="1" symbol="112">
+                <object type="1" symbol="110">
                     <coords count="5">
                         <coord x="22501" y="-1105" flags="32"/>
                         <coord x="28176" y="-1105" flags="32"/>
@@ -7319,18 +7357,20 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     </templates>
     <view>
         <grid color="#646464" display="0" alignment="0" additional_rotation="0" unit="1" h_spacing="500" v_spacing="500" h_offset="0" v_offset="0" snapping_enabled="true"/>
-        <map_view zoom="5.83746" rotation="0" position_x="20009" position_y="-5946" view_x="0" view_y="0" drag_offset_x="0" drag_offset_y="0" overprinting_simulation_enabled="true">
+        <map_view zoom="4" rotation="0" position_x="20009" position_y="-5946" view_x="0" view_y="0" drag_offset_x="0" drag_offset_y="0" overprinting_simulation_enabled="true">
             <map opacity="1"/>
             <templates count="0"/>
         </map_view>
     </view>
-    <print scale="5000" resolution="600" simulate_overprinting="true">
+    <print scale="5000" resolution="600" simulate_overprinting="true" mode="vector">
         <page_format paper_size="A4" orientation="portrait" h_overlap="5.00" v_overlap="5.00">
             <dimensions width="209.889" height="297.053"/>
             <page_rect left="0.000" top="0.000" width="209.889" height="297.053"/>
         </page_format>
         <print_area left="-85.150" top="-153.681" width="209.889" height="297.053" center_area="true" single_page="true"/>
     </print>
-    <undo count="0"/>
-    <redo count="0"/>
+    <barrier version="6" required="0.6.0">
+        <undo/>
+        <redo/>
+    </barrier>
 </map>

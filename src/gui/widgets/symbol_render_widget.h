@@ -69,7 +69,7 @@ public:
 	/**
 	 * @brief Checks if the symbol is selected.
 	 */
-	bool isSymbolSelected(Symbol* symbol) const;
+	bool isSymbolSelected(const Symbol* symbol) const;
 	
 	/**
 	 * @brief Checks if the symbol with given index is selected.
@@ -81,14 +81,21 @@ public:
 	 * 
 	 * Otherwise returns NULL.
 	 */
-	Symbol* singleSelectedSymbol() const;
+	const Symbol* singleSelectedSymbol() const;
+	
+	/**
+	 * @brief If exactly one symbol is selected, returns this symbol.
+	 * 
+	 * Otherwise returns NULL.
+	 */
+	Symbol* singleSelectedSymbol();
 	
 	/**
 	 * @brief Selects the given symbol exclusively.
 	 * 
 	 * Deselects other symbols, if there was a different selection before.
 	 */
-	void selectSingleSymbol(Symbol *symbol);
+	void selectSingleSymbol(const Symbol* symbol);
 	
 	/**
 	 * @brief Selects the given symbol exclusively.
@@ -157,7 +164,14 @@ protected slots:
 	 * 
 	 * @see Map::symbolChanged()
 	 */
-	void symbolChanged(int pos, Symbol* new_symbol, Symbol* old_symbol);
+	void symbolChanged(int pos, const Symbol* new_symbol, const Symbol* old_symbol);
+	
+	/**
+	 * @brief Updates the widget and the current selection.
+	 * 
+	 * @see Map::symbolDeleted()
+	 */
+	void symbolDeleted(int pos, const Symbol* old_symbol);
 	
 	void newPointSymbol();
 	void newLineSymbol();
@@ -181,28 +195,6 @@ protected slots:
 	void sortByNumber();
 	void sortByColor();
 	void sortByColorPriority();
-	
-	/**
-	 * @brief Locks the current symbol selection against external changes.
-	 * 
-	 * A currently used tool could catch the selectedSymbolsChanged() and
-	 * finish its editing for that reason. It would than insert a new object to
-	 * the map and so trigger another change of selection. This not desired,
-	 * and lockSelection(), being the first slot listening on
-	 * selectedSymbolsChanged(), will block external changes to the selection.
-	 * 
-	 * It does take care of unlocking too, by scheduling a call to
-	 * unlockSelection() for the next time control returns to the event loop.
-	 */
-	void lockSelection();
-	
-	/**
-	 * @brief Unlocks the current symbol selection.
-	 * 
-	 * It should be rarely needed to call this actively because lockSelection
-	 * already schedules a call to this function.
-	 */
-	void unlockSelection();
 	
 protected:
 	virtual void resizeEvent(QResizeEvent* event);
@@ -291,6 +283,18 @@ protected:
 	 * @brief Marks the icons of the selected symbols for repainting.
 	 */
 	void updateSelectedIcons();
+	
+	/**
+	 * @brief Emits selectedSymbolsChanged() while temporarily locking the symbol selection against changes.
+	 * 
+	 * An active tool could catch the selectedSymbolsChanged() signal and
+	 * finish its editing for that reason. It would than insert a new object to
+	 * the map and so trigger another change of selection. Emitting
+	 * selectedSymbolsChanged() via this method supresses behavior by setting
+	 * the selection_locked flag before emitting the actual signal and resetting
+	 * the flag on return.
+	 */
+	void emitGuarded_selectedSymbolsChanged();
 	
 	/**
 	 * @brief Receives context menu events and opens the context menu.

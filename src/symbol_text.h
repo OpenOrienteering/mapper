@@ -79,8 +79,8 @@ public:
 	virtual ~TextSymbol();
 	virtual Symbol* duplicate(const MapColorMap* color_map = NULL) const;
 	
-	virtual void createRenderables(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output);
-	void createLineBelowRenderables(Object* object, ObjectRenderables& output);
+	virtual void createRenderables(const Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output) const;
+	void createLineBelowRenderables(const Object* object, ObjectRenderables& output) const;
 	virtual void colorDeleted(const MapColor* color);
 	virtual bool containsColor(const MapColor* color) const;
 	virtual const MapColor* getDominantColorGuess() const;
@@ -131,7 +131,7 @@ protected:
 	virtual bool loadImpl(QIODevice* file, int version, Map* map);
 	virtual void saveImpl(QXmlStreamWriter& xml, const Map& map) const;
 	virtual bool loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict);
-	virtual bool equalsImpl(Symbol* other, Qt::CaseSensitivity case_sensitivity);
+	virtual bool equalsImpl(const Symbol* other, Qt::CaseSensitivity case_sensitivity) const;
 	
 	QFont qfont;
 	QFontMetricsF metrics;
@@ -143,10 +143,12 @@ protected:
 	bool italic;
 	bool underline;
 	float line_spacing;			// as factor of original line spacing
+	// (BEGIN) DON'T CHANGE THE ORDER OF THESE FIELDS BEFORE SOLVING [tickets:#428]
 	int paragraph_spacing;		// in mm
 	float character_spacing;	// as a factor of the space character width
 	bool kerning;
 	QString icon_text;			// text to be drawn in the symbol's icon
+	//  (END)  DON'T CHANGE THE ORDER OF THESE FIELDS BEFORE SOLVING [tickets:#428]
 	
 	bool framing;
 	const MapColor* framing_color;

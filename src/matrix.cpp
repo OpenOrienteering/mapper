@@ -34,7 +34,7 @@ void Matrix::load(QIODevice* file)
 	file->read((char*)d, n*m * sizeof(double));
 }
 
-void Matrix::save(QXmlStreamWriter& xml, const QString role)
+void Matrix::save(QXmlStreamWriter& xml, const QString role) const
 {
 	xml.writeStartElement("matrix");
 	xml.writeAttribute("role", role);

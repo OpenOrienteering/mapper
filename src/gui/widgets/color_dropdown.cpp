@@ -20,14 +20,9 @@
 
 #include "color_dropdown.h"
 
-#include <QDebug>
-
 #include "../../map.h"
 #include "../../core/map_color.h"
 
-
-// Allow explicit use of MapColor pointers in QVariant
-Q_DECLARE_METATYPE(const MapColor*)
 
 ColorDropDown::ColorDropDown(const Map* map, const MapColor* initial_color, bool spot_colors_only, QWidget* parent)
 : QComboBox(parent)
@@ -68,9 +63,9 @@ ColorDropDown::ColorDropDown(const Map* map, const MapColor* initial_color, bool
 	if (!spot_colors_only)
 	{
 		// FIXME: these methods will not work when the box contains only spot colors
-		connect(map, SIGNAL(colorAdded(int,MapColor*)), this, SLOT(colorAdded(int,MapColor*)));
-		connect(map, SIGNAL(colorChanged(int,MapColor*)), this, SLOT(colorChanged(int,MapColor*)));
-		connect(map, SIGNAL(colorDeleted(int,const MapColor*)), this, SLOT(colorDeleted(int,const MapColor*)));
+		connect(map, SIGNAL(colorAdded(int, const MapColor*)), this, SLOT(colorAdded(int, const MapColor*)));
+		connect(map, SIGNAL(colorChanged(int, const MapColor*)), this, SLOT(colorChanged(int, const MapColor*)));
+		connect(map, SIGNAL(colorDeleted(int, const MapColor*)), this, SLOT(colorDeleted(int, const MapColor*)));
 	}
 }
 
@@ -84,16 +79,16 @@ void ColorDropDown::setColor(const MapColor* color)
 	setCurrentIndex(findData(QVariant::fromValue(color)));
 }
 
-void ColorDropDown::colorAdded(int pos, MapColor* color)
+void ColorDropDown::colorAdded(int pos, const MapColor* color)
 {
 	int icon_size = style()->pixelMetric(QStyle::PM_SmallIconSize);
 	QPixmap pixmap(icon_size, icon_size);
 	pixmap.fill(*color);
-	insertItem(pos + 1, color->getName(), QVariant::fromValue(const_cast<const MapColor*>(color)));
+	insertItem(pos + 1, color->getName(), QVariant::fromValue(color));
 	setItemData(pos + 1, pixmap, Qt::DecorationRole);
 }
 
-void ColorDropDown::colorChanged(int pos, MapColor* color)
+void ColorDropDown::colorChanged(int pos, const MapColor* color)
 {
 	int icon_size = style()->pixelMetric(QStyle::PM_SmallIconSize);
 	QPixmap pixmap(icon_size, icon_size);

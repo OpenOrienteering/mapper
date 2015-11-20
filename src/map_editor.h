@@ -123,7 +123,7 @@ public:
 	inline MapEditorTool* getTool() const {return current_tool;}
 	
 	/** Returns the default drawing tool for a given symbol. */
-	MapEditorTool* getDefaultDrawToolForSymbol(Symbol* symbol);
+	MapEditorTool* getDefaultDrawToolForSymbol(const Symbol* symbol);
 	
 	
 	/**
@@ -474,9 +474,9 @@ public slots:
 	void mergeAllMapParts();
 	
 	/** Updates action enabled states after a template has been added */
-	void templateAdded(int pos, Template* temp);
+	void templateAdded(int pos, const Template* temp);
 	/** Updates action enabled states after a template has been deleted */
-	void templateDeleted(int pos, Template* temp);
+	void templateDeleted(int pos, const Template* temp);
 	
 	/** Imports a track file (GPX, DXF, OSM, ...) into the map */
 	void importGeoFile(const QString& filename);
@@ -500,7 +500,7 @@ signals:
 	 * @brief Indicates a change of the active symbol.
 	 * @param symbol The new active symbol, or NULL.
 	 */
-	void activeSymbolChanged(Symbol* symbol);
+	void activeSymbolChanged(const Symbol* symbol);
 	
 	void templatePositionDockWidgetClosed(Template* temp);
 

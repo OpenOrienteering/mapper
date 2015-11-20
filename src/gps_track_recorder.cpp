@@ -41,7 +41,7 @@ GPSTrackRecorder::GPSTrackRecorder(GPSDisplay* gps_display, TemplateTrack* targe
 	
 	connect(gps_display, SIGNAL(latLonUpdated(double,double,double,float)), this, SLOT(newPosition(double,double,double,float)));
 	connect(gps_display, SIGNAL(positionUpdatesInterrupted()), this, SLOT(positionUpdatesInterrupted()));
-	connect(target_template->getMap(), SIGNAL(templateDeleted(int,Template*)), this, SLOT(templateDeleted(int,Template*)));
+	connect(target_template->getMap(), SIGNAL(templateDeleted(int, const Template*)), this, SLOT(templateDeleted(int, const Template*)));
 	
 	if (draw_update_interval_milliseconds > 0)
 	{
@@ -71,7 +71,7 @@ void GPSTrackRecorder::positionUpdatesInterrupted()
 	track_changed_since_last_update = true;
 }
 
-void GPSTrackRecorder::templateDeleted(int pos, Template* old_temp)
+void GPSTrackRecorder::templateDeleted(int pos, const Template* old_temp)
 {
 	Q_UNUSED(pos);
 	if (!is_active)

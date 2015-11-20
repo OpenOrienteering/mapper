@@ -200,7 +200,7 @@ bool MapPart::deleteObject(Object* object, bool remove_only)
 	return false;
 }
 
-void MapPart::importPart(MapPart* other, QHash<Symbol*, Symbol*>& symbol_map, bool select_new_objects)
+void MapPart::importPart(MapPart* other, QHash<const Symbol*, Symbol*>& symbol_map, bool select_new_objects)
 {
 	if (other->getNumObjects() == 0)
 		return;

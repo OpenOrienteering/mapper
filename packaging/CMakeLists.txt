@@ -35,7 +35,7 @@ endif()
 if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 	# cf. http://www.cmake.org/cmake/help/cmake-2-8-docs.html#module:CPack
 	# cf. http://www.cmake.org/Wiki/CMake:CPackPackageGenerators
-	set(CPACK_PACKAGE_NAME "OpenOrienteering Mapper")
+	set(CPACK_PACKAGE_NAME "OpenOrienteering ${CMAKE_PROJECT_NAME}")
 	set(CPACK_PACKAGE_VENDOR "OpenOrienteering")
 	set(CPACK_PACKAGE_VERSION_MAJOR ${Mapper_VERSION_MAJOR})
 	set(CPACK_PACKAGE_VERSION_MINOR ${Mapper_VERSION_MINOR})
@@ -85,37 +85,33 @@ if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 		# Packaging as ZIP archive
 		set(CPACK_GENERATOR_DEFAULT "ZIP")
 		#set(CPACK_INCLUDE_TOPLEVEL_DIRECTORY 0)
-		set(CPACK_PACKAGE_INSTALL_DIRECTORY "OpenOrienteering Mapper ${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}")
-		set(CPACK_PACKAGE_EXECUTABLES "Mapper" "OpenOrienteering Mapper ${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}")
+		set(CPACK_PACKAGE_INSTALL_DIRECTORY "${CPACK_PACKAGE_NAME} ${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}")
+		set(CPACK_PACKAGE_EXECUTABLES "Mapper" "${CPACK_PACKAGE_NAME} ${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}")
 
 		find_program(MAKENSIS_EXECUTABLE "makensis")
 		if(MAKENSIS_EXECUTABLE)
 			list(APPEND CPACK_GENERATOR_DEFAULT "NSIS")
 			# The title displayed at the top of the installer
-			set(CPACK_NSIS_PACKAGE_NAME "OpenOrienteering")
+			set(CPACK_NSIS_PACKAGE_NAME "${CPACK_PACKAGE_NAME}")
 			# The display name string that appears in the Windows Add/Remove Program control panel
-			set(CPACK_NSIS_DISPLAY_NAME "OpenOrienteering Mapper ${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}")
+			set(CPACK_NSIS_DISPLAY_NAME "${CPACK_PACKAGE_NAME} ${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}")
 			# NSIS start menu links will point to executables in this directory
 			set(CPACK_NSIS_EXECUTABLES_DIRECTORY ".")
 			# A path to the executable that contains the uninstaller icon.
 			set(CPACK_NSIS_INSTALLED_ICON_NAME Mapper.exe)
 			# URL to a web site providing more information about your application.
 			set(CPACK_NSIS_URL_INFO_ABOUT "http://oorienteering.sourceforge.net/?cat=3")
+			# Extra NSIS include
+			configure_file(windows/custom.nsi.in windows/custom.nsi @ONLY)
+			set(CPACK_NSIS_DEFINES "!include \\\"${CMAKE_CURRENT_BINARY_DIR}\\\\windows\\\\custom.nsi\\\"")
 			# Extra NSIS commands that will be added to the install/uninstall sections.
-			set(_nsis_extra_inst 
-			  ReadEnvStr $1 ComSpec\n
-			  ExecWait '\\\"$1\\\" /C assoc .omap=OpenOrienteering Map' $0\n
-			  ExecWait '\\\"$1\\\" /C assoc .xmap=OpenOrienteering Map' $0\n
-			  ExecWait '\\\"$1\\\" /C ftype OpenOrienteering Map=\\\"$INSTDIR\\\\Mapper.exe\\\" \\\"%1\\\"' $0)
-			string(REPLACE ";" " " _nsis_extra_inst "${_nsis_extra_inst}")
-			set(CPACK_NSIS_EXTRA_INSTALL_COMMANDS ${_nsis_extra_inst})
-			set(_nsis_extra_uninst 
-			  ReadEnvStr $1 ComSpec\n
-			  ExecWait '\\\"$1\\\" /C ftype OpenOrienteering Map= ' $0\n
-			  ExecWait '\\\"$1\\\" /C assoc .xmap=' $0\n
-			  ExecWait '\\\"$1\\\" /C assoc .omap=' $0)
-			string(REPLACE ";" " " _nsis_extra_uninst "${_nsis_extra_uninst}")
-			set(CPACK_NSIS_EXTRA_UNINSTALL_COMMANDS ${_nsis_extra_uninst})
+			set(CPACK_NSIS_EXTRA_INSTALL_COMMANDS   "Call installAssociations")
+			set(CPACK_NSIS_EXTRA_UNINSTALL_COMMANDS "Call un.installAssociations")
+			# 64 bit build
+			if(CMAKE_SIZEOF_VOID_P EQUAL 8)
+				set(CPACK_NSIS_INSTALL_ROOT "$PROGRAMFILES64")
+				set(CPACK_NSIS_DISPLAY_NAME "${CPACK_NSIS_DISPLAY_NAME} x64")
+			endif()
 		endif(MAKENSIS_EXECUTABLE)
 
 	elseif(APPLE)
@@ -126,13 +122,12 @@ if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 		set_target_properties(Mapper PROPERTIES
 		  MACOSX_BUNDLE_INFO_STRING          "${CPACK_PACKAGE_DESCRIPTION_SUMMARY}"
 		  MACOSX_BUNDLE_ICON_FILE            "Mapper.icns"
-		  MACOSX_BUNDLE_GUI_IDENTIFIER       "org.openorienteering.Mapper"
-		  MACOSX_BUNDLE_LONG_VERSION_STRING  "Mapper ${Mapper_VERSION_DISPLAY} for Mac OS X"
-		  MACOSX_BUNDLE_BUNDLE_NAME          "Mapper" # less than 16 characters long
+		  MACOSX_BUNDLE_GUI_IDENTIFIER       "org.openorienteering.${CMAKE_PROJECT_NAME}"
+		  MACOSX_BUNDLE_LONG_VERSION_STRING  "${CMAKE_PROJECT_NAME} ${Mapper_VERSION_DISPLAY} for OS X"
+		  MACOSX_BUNDLE_BUNDLE_NAME          "${CMAKE_PROJECT_NAME}" # less than 16 characters long
 		  MACOSX_BUNDLE_SHORT_VERSION_STRING "${Mapper_VERSION_MAJOR}.${Mapper_VERSION_MINOR}.${Mapper_VERSION_PATCH}"
 		  MACOSX_BUNDLE_BUNDLE_VERSION       "${Mapper_VERSION_MAJOR}.${Mapper_VERSION_MINOR}.${Mapper_VERSION_PATCH}"
-		  MACOSX_BUNDLE_COPYRIGHT            "(C) 2012, 2013 OpenOrienteering developers"
-
+		  MACOSX_BUNDLE_COPYRIGHT            "${Mapper_COPYRIGHT}"
 		)
 		install(FILES "${CPACK_PACKAGE_ICON}"
 		  DESTINATION "${MAPPER_DATA_DESTINATION}")
@@ -221,6 +216,7 @@ if(TOOLCHAIN_SHARED_LIBS)
 elseif(MINGW)
 	list(APPEND MAPPER_LIBS libgcc_s_dw2-1 mingwm10)
 	list(APPEND MAPPER_LIBS libgcc_s_sjlj-1 libwinpthread-1 libstdc++-6)
+	list(APPEND MAPPER_LIBS libgcc_s_seh-1)
 endif()
 
 if(Mapper_PACKAGE_PROJ)

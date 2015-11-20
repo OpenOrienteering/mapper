@@ -51,21 +51,21 @@ public:
 	
 	TemplateImage(const QString& path, Map* map);
     virtual ~TemplateImage();
-	virtual const QString getTemplateType() {return "TemplateImage";}
+	virtual QString getTemplateType() const {return "TemplateImage";}
 	virtual bool isRasterGraphics() const {return true;}
 
-	virtual bool saveTemplateFile();
+	virtual bool saveTemplateFile() const;
 	virtual bool loadTypeSpecificTemplateConfiguration(QIODevice* stream, int version);
-	virtual void saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml);
+	virtual void saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml) const;
 	virtual bool loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml);
 
 	virtual bool loadTemplateFileImpl(bool configuring);
 	virtual bool postLoadConfiguration(QWidget* dialog_parent, bool& out_center_in_view);
 	virtual void unloadTemplateFileImpl();
 	
-    virtual void drawTemplate(QPainter* painter, QRectF& clip_rect, double scale, bool on_screen, float opacity);
-	virtual QRectF getTemplateExtent();
-	virtual bool canBeDrawnOnto() {return true;}
+    virtual void drawTemplate(QPainter* painter, QRectF& clip_rect, double scale, bool on_screen, float opacity) const;
+	virtual QRectF getTemplateExtent() const;
+	virtual bool canBeDrawnOnto() const {return true;}
 
 	/**
 	 * Calculates the image's center of gravity in template coordinates by
@@ -116,7 +116,7 @@ protected:
 		int y;
 	};
 	
-	virtual Template* duplicateImpl();
+	virtual Template* duplicateImpl() const;
 	virtual void drawOntoTemplateImpl(MapCoordF* coords, int num_coords, QColor color, float width);
 	virtual void drawOntoTemplateUndo(bool redo);
 	void addUndoStep(const DrawOnImageUndoStep& new_step);

@@ -62,8 +62,8 @@ public:
 	static float cross_radius;
 	
 public slots:
-	void templateChanged(int index, Template* temp);
-	void templateDeleted(int index, Template* temp);
+	void templateChanged(int index, const Template* temp);
+	void templateDeleted(int index, const Template* temp);
 	
 private:
 	TemplateAdjustDockWidget* dock;

@@ -76,7 +76,7 @@ MeasureWidget::MeasureWidget(Map* map, QWidget* parent)
 	
 	connect(map, SIGNAL(objectSelectionChanged()), this, SLOT(objectSelectionChanged()));
 	connect(map, SIGNAL(selectedObjectEdited()), this, SLOT(objectSelectionChanged()));
-	connect(map, SIGNAL(symbolChanged(int,Symbol*,Symbol*)), this, SLOT(objectSelectionChanged()));
+	connect(map, SIGNAL(symbolChanged(int, const Symbol*, const Symbol*)), this, SLOT(objectSelectionChanged()));
 	objectSelectionChanged();
 }
 

@@ -44,8 +44,8 @@ public:
 	virtual void closeEvent(QCloseEvent* event);
 	
 public slots:
-	void templateChanged(int index, Template* temp);
-	void templateDeleted(int index, Template* temp);
+	void templateChanged(int index, const Template* temp);
+	void templateDeleted(int index, const Template* temp);
 	void valueChanged();
 	
 private:

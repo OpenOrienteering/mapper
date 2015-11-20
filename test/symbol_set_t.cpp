@@ -33,6 +33,7 @@ void SymbolSetTool::initTestCase()
 	doStaticInitializations();
 	
 	symbol_set_dir.cd(QFileInfo(__FILE__).dir().absoluteFilePath(QString("../symbol sets")));
+	examples_dir.cd(QFileInfo(__FILE__).dir().absoluteFilePath(QString("../examples")));
 	
 	Settings::getInstance().setSetting(Settings::General_RetainCompatiblity, QVariant(false));
 }
@@ -78,6 +79,18 @@ void SymbolSetTool::processSymbolSet()
 	Map map;
 	map.loadFrom(source_path, NULL, NULL, false, false);
 	
+	const int num_symbols = map.getNumSymbols();
+	QStringList previous_numbers;
+	for (int i = 0; i < num_symbols; ++i)
+	{
+		const Symbol* symbol = map.getSymbol(i);
+		QString number = symbol->getNumberAsString();
+		QString number_and_name = number % " " % symbol->getPlainTextName();
+		QVERIFY2(!symbol->getName().isEmpty(), qPrintable(number_and_name));
+		QVERIFY2(!previous_numbers.contains(number), qPrintable(number_and_name));
+		previous_numbers.append(number);
+	}
+	
 	if (source_scale != target_scale)
 	{
 		map.setScaleDenominator(target_scale);
@@ -89,8 +102,7 @@ void SymbolSetTool::processSymbolSet()
 			
 			int symbols_changed = 0;
 			int north_lines_changed = 0;
-			const int size = map.getNumSymbols();
-			for (int i = 0; i < size; ++i)
+			for (int i = 0; i < num_symbols; ++i)
 			{
 				Symbol* symbol = map.getSymbol(i);
 				const int code = symbol->getNumberComponent(0);
@@ -124,8 +136,7 @@ void SymbolSetTool::processSymbolSet()
 		if (name == "ISSOM")
 		{
 			int north_lines_changed = 0;
-			const int size = map.getNumSymbols();
-			for (int i = 0; i < size; ++i)
+			for (int i = 0; i < num_symbols; ++i)
 			{
 				Symbol* symbol = map.getSymbol(i);
 				const int code = symbol->getNumberComponent(0);
@@ -155,271 +166,35 @@ void SymbolSetTool::processSymbolSet()
 	target_file.open(QFile::WriteOnly);
 	XMLFileExporter exporter(&target_file, &map, NULL);
 	exporter.doExport();
-	
-#if 0
-	// Find the file format and verify that it exists
-	const FileFormat* format = FileFormats.findFormat(format_id);
-	QVERIFY(format);
-	
-	// Load the test map
-	Map* original = new Map();
-	original->loadFrom(map_filename, NULL, NULL, false, false);
-	QVERIFY(!original->hasUnsavedChanged());
-	
-	// Fix precision of grid rotation
-	MapGrid grid = original->getGrid();
-	grid.setAdditionalRotation(Georeferencing::roundDeclination(grid.getAdditionalRotation()));
-	original->setGrid(grid);
-	
-	// If the export is lossy, do one export / import cycle first to get rid of all information which cannot be exported into this format
-	if (format->isExportLossy())
-	{
-		Map* new_map = saveAndLoadMap(original, format);
-		if (!new_map)
-			QFAIL("Exception while importing / exporting.");
-		delete original;
-		original = new_map;
-	}
-	
-	// The test: save and load the map and compare the resulting maps
-	Map* new_map = saveAndLoadMap(original, format);
-	if (!new_map)
-		QFAIL("Exception while importing / exporting.");
-	
-	QString error = "";
-	bool equal = compareMaps(original, new_map, error);
-	if (!equal)
-		QFAIL(QString("Loaded map does not equal saved map, error: %1").arg(error).toLocal8Bit());
-	
-	comparePrinterConfig(new_map->printerConfig(), original->printerConfig());
-	
-	delete new_map;
-	delete original;
-#endif
 }
 
-#if 0
-Map* SymbolSetTool::saveAndLoadMap(Map* input, const FileFormat* format)
+void SymbolSetTool::processExamples_data()
 {
-	try {
-		QBuffer buffer;
-		buffer.open(QIODevice::ReadWrite);
-		
-		Exporter* exporter = format->createExporter(&buffer, input, NULL);
-		if (!exporter)
-			return NULL;
-		exporter->doExport();
-		delete exporter;
-		
-		buffer.seek(0);
-		
-		Map* out = new Map;
-		Importer* importer = format->createImporter(&buffer, out, NULL);
-		if (!importer)
-			return NULL;
-		importer->doImport(false);
-		importer->finishImport();
-		delete importer;
-		
-		buffer.close();
-		
-		return out;
-	}
-	catch (std::exception& e)
-	{
-		return NULL;
-	}
+	QTest::addColumn<QString>("name");
+
+	QTest::newRow("complete map")  << "complete map";
+	QTest::newRow("forest sample") << "forest sample";
+	QTest::newRow("overprinting")  << "overprinting";
+	QTest::newRow("sprint sample") << "sprint sample";
 }
 
-bool SymbolSetTool::compareMaps(Map* a, Map* b, QString& error)
+void SymbolSetTool::processExamples()
 {
-	// TODO: This does not compare everything - yet ...
+	QFETCH(QString, name);
 	
-	// Miscellaneous
+	QString source_filename = QString("src/%1.xmap").arg(name);
+	QVERIFY(examples_dir.exists(source_filename));
 	
-	if (a->getScaleDenominator() != b->getScaleDenominator())
-	{
-		error = "The map scales differ.";
-		return false;
-	}
-	if (a->getMapNotes().compare(b->getMapNotes()) != 0)
-	{
-		error = "The map notes differ.";
-		return false;
-	}
+	QString source_path = examples_dir.absoluteFilePath(source_filename);
 	
-	const Georeferencing& a_geo = a->getGeoreferencing();
-	const Georeferencing& b_geo = b->getGeoreferencing();
-	if (a_geo.getProjectedCRSId() == "Local coordinates")
-		// Fix for old native OMAP test file
-		const_cast<Georeferencing&>(a_geo).setProjectedCRS("Local", a_geo.getProjectedCRSSpec());
+	Map map;
+	map.loadFrom(source_path, NULL, NULL, false, false);
 	
-	if (a_geo.isLocal() != b_geo.isLocal() ||
-		a_geo.getScaleDenominator() != b_geo.getScaleDenominator() ||
-		a_geo.getDeclination() != b_geo.getDeclination() ||
-		a_geo.getGrivation() != b_geo.getGrivation() ||
-		a_geo.getMapRefPoint() != b_geo.getMapRefPoint() ||
-		a_geo.getProjectedRefPoint() != b_geo.getProjectedRefPoint() ||
-		a_geo.getProjectedCRSId() != b_geo.getProjectedCRSId() ||
-		a_geo.getProjectedCRSName() != b_geo.getProjectedCRSName() ||
-		a_geo.getProjectedCRSSpec() != b_geo.getProjectedCRSSpec() ||
-		a_geo.getGeographicRefPoint().latitude() != b_geo.getGeographicRefPoint().latitude() ||
-		a_geo.getGeographicRefPoint().longitude() != b_geo.getGeographicRefPoint().longitude())
-	{
-		error = "The georeferencing differs.";
-		return false;
-	}
-	
-	const MapGrid& a_grid = a->getGrid();
-	const MapGrid& b_grid = b->getGrid();
-	
-	if (a_grid != b_grid || !(a_grid == b_grid))
-	{
-		error = "The map grid differs.";
-		return false;
-	}
-	
-	if (a->isAreaHatchingEnabled() != b->isAreaHatchingEnabled() ||
-		a->isBaselineViewEnabled() != b->isBaselineViewEnabled())
-	{
-		error = "The view mode differs.";
-		return false;
-	}
-	
-	// Colors
-	if (a->getNumColors() != b->getNumColors())
-	{
-		error = "The number of colors differs.";
-		return false;
-	}
-	for (int i = 0; i < a->getNumColors(); ++i)
-	{
-		if (!a->getColor(i)->equals(*b->getColor(i), true))
-		{
-			error = QString("Color #%1 (%2) differs.").arg(i).arg(a->getColor(i)->getName());
-			return false;
-		}
-	}
-	
-	// Symbols
-	if (a->getNumSymbols() != b->getNumSymbols())
-	{
-		error = "The number of symbols differs.";
-		return false;
-	}
-	for (int i = 0; i < a->getNumSymbols(); ++i)
-	{
-		Symbol* a_symbol = a->getSymbol(i);
-		if (!a_symbol->equals(b->getSymbol(i), Qt::CaseSensitive, true))
-		{
-			error = QString("Symbol #%1 (%2) differs.").arg(i).arg(a_symbol->getName());
-			return false;
-		}
-	}
-	
-	// Parts and objects
-	// TODO: Only a single part is compared here! Add comparison for parts ...
-	if (a->getNumParts() != b->getNumParts())
-	{
-		error = "The number of parts differs.";
-		return false;
-	}
-	if (a->getCurrentPartIndex() != b->getCurrentPartIndex())
-	{
-		error = "The current part differs.";
-		return false;
-	}
-	for (int part = 0; part < a->getNumParts(); ++part)
-	{
-		MapPart* a_part = a->getPart(part);
-		MapPart* b_part = b->getPart(part);
-		if (a_part->getName().compare(b_part->getName(), Qt::CaseSensitive) != 0)
-		{
-			error = QString("The names of part #%1 differ (%2 <-> %3).").arg(part).arg(a_part->getName()).arg(b_part->getName());
-			return false;
-		}
-		if (a_part->getNumObjects() != b_part->getNumObjects())
-		{
-			error = "The number of objects differs.";
-			return false;
-		}
-		for (int i = 0; i < a_part->getNumObjects(); ++i)
-		{
-			if (!a_part->getObject(i)->equals(b_part->getObject(i), true))
-			{
-				error = QString("Object #%1 (with symbol %2) in part #%3 differs.").arg(i).arg(a_part->getObject(i)->getSymbol()->getName()).arg(part);
-				return false;
-			}
-		}
-	}
-	
-	// Object selection
-	if (a->getNumSelectedObjects() != b->getNumSelectedObjects())
-	{
-		error = "The number of selected objects differs.";
-		return false;
-	}
-	if ((a->getFirstSelectedObject() == NULL && b->getFirstSelectedObject() != NULL) || (a->getFirstSelectedObject() != NULL && b->getFirstSelectedObject() == NULL) ||
-		(a->getFirstSelectedObject() != NULL && b->getFirstSelectedObject() != NULL &&
-		 a->getCurrentPart()->findObjectIndex(a->getFirstSelectedObject()) != b->getCurrentPart()->findObjectIndex(b->getFirstSelectedObject())))
-	{
-		error = "The first selected object differs.";
-		return false;
-	}
-	for (QSet< Object* >::const_iterator it = a->selectedObjectsBegin(), end = a->selectedObjectsEnd(); it != end; ++it)
-	{
-		if (!b->isObjectSelected(b->getCurrentPart()->getObject(a->getCurrentPart()->findObjectIndex(*it))))
-		{
-			error = "The selected objects differ.";
-			return false;
-		}
-	}
-	
-	// Undo steps
-	// TODO: Currently only the number of steps is compared here.
-	if (a->undoManager().undoStepCount() != b->undoManager().undoStepCount() ||
-		a->undoManager().redoStepCount() != b->undoManager().redoStepCount())
-	{
-		error = "The number of undo / redo steps differs.";
-		return false;
-	}
-	if (a->undoManager().canUndo() &&
-	    a->undoManager().nextUndoStep()->getType() != b->undoManager().nextUndoStep()->getType())
-	{
-		error = "The type of the first undo step is different.";
-		return false;
-	}
-	if (a->undoManager().canRedo() &&
-	    a->undoManager().nextRedoStep()->getType() != b->undoManager().nextRedoStep()->getType())
-	{
-		error = "The type of the first redo step is different.";
-		return false;
-	}
-	
-	// Templates
-	if (a->getNumTemplates() != b->getNumTemplates())
-	{
-		error = "The number of templates differs.";
-		return false;
-	}
-	if (a->getFirstFrontTemplate() != b->getFirstFrontTemplate())
-	{
-		error = "The division into front / back templates differs.";
-		return false;
-	}
-	for (int i = 0; i < a->getNumTemplates(); ++i)
-	{
-		// TODO: only template filenames are compared
-		if (a->getTemplate(i)->getTemplateFilename().compare(b->getTemplate(i)->getTemplateFilename()) != 0)
-		{
-			error = QString("Template filename #%1 differs.").arg(i);
-			return false;
-		}
-	}
-	
-	return true;
+	QString target_filename = QString("%1.omap").arg(name);
+	QFile target_file(examples_dir.absoluteFilePath(target_filename));
+	target_file.open(QFile::WriteOnly);
+	XMLFileExporter exporter(&target_file, &map, NULL);
+	exporter.doExport();
 }
-
-#endif
 
 QTEST_MAIN(SymbolSetTool)

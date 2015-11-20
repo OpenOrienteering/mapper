@@ -198,9 +198,27 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 	overprinting_check = new QCheckBox(tr("Simulate overprinting"));
 	layout->addRow(overprinting_check);
 	
-	layout->addItem(Util::SpacerItem::create(this));
+	scrolling_content = new QWidget();
+	scrolling_content->setLayout(layout);
 	
-	QDialogButtonBox* button_box = new QDialogButtonBox();
+	QBoxLayout* outer_layout = new QVBoxLayout();
+	outer_layout->setContentsMargins(QMargins());
+	
+	scroll_area = new QScrollArea();
+	scroll_area->setWidget(scrolling_content);
+	scroll_area->setWidgetResizable(true);
+	scroll_area->setMinimumWidth((scrolling_content->sizeHint() + scroll_area->verticalScrollBar()->sizeHint()).width());
+	scroll_area->setSizeAdjustPolicy(QAbstractScrollArea::AdjustToContentsOnFirstShow);
+	outer_layout->addWidget(scroll_area);
+	
+	button_box = new QDialogButtonBox();
+	QStyleOption style_option(QStyleOption::Version, QStyleOption::SO_DockWidget);
+	button_box->layout()->setContentsMargins(
+	    style()->pixelMetric(QStyle::PM_LayoutLeftMargin, &style_option),
+	    style()->pixelMetric(QStyle::PM_LayoutTopMargin, &style_option),
+	    style()->pixelMetric(QStyle::PM_LayoutRightMargin, &style_option),
+	    style()->pixelMetric(QStyle::PM_LayoutBottomMargin, &style_option)
+	);
 	preview_button = new QPushButton(tr("Preview..."));
 	button_box->addButton(preview_button, QDialogButtonBox::ActionRole);
 	print_button = new QPushButton(tr("Print"));
@@ -211,9 +229,9 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 	export_button->hide();
 	button_box->addButton(export_button, QDialogButtonBox::ActionRole);
 	QPushButton* close_button = button_box->addButton(QDialogButtonBox::Close);
-	layout->addRow(button_box);
+	outer_layout->addWidget(button_box);
 	
-	setLayout(layout);
+	setLayout(outer_layout);
 	
 	connect(target_combo, SIGNAL(currentIndexChanged(int)), this, SLOT(targetChanged(int)));
 	connect(paper_size_combo, SIGNAL(currentIndexChanged(int)), this, SLOT(paperSizeChanged(int)));
@@ -240,11 +258,11 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 	connect(export_button, SIGNAL(clicked(bool)), this, SLOT(printClicked()));
 	connect(close_button, SIGNAL(clicked(bool)), this, SIGNAL(closeClicked()));
 	
-	policy = map->printerConfig().single_page_print_area ? SinglePage : CustomArea;
+	policy = map_printer->config().single_page_print_area ? SinglePage : CustomArea;
 	policy_combo->setCurrentIndex(policy_combo->findData(policy));
 	connect(policy_combo, SIGNAL(currentIndexChanged(int)), this, SLOT(printAreaPolicyChanged(int)));
 	
-	center_check->setChecked(map->printerConfig().center_print_area);
+	center_check->setChecked(map_printer->config().center_print_area);
 	connect(center_check, SIGNAL(clicked(bool)), this, SLOT(applyCenterPolicy()));
 	
 	setPageFormat(map_printer->getPageFormat());
@@ -270,7 +288,12 @@ PrintWidget::~PrintWidget()
 
 QSize PrintWidget::sizeHint() const
 {
-	return QSize(200, 300);
+	QSize size = QWidget::sizeHint();
+	size.setHeight(scrolling_content->sizeHint().height() +
+	               2 * scroll_area->frameWidth() +
+	               button_box->sizeHint().height() +
+	               layout->horizontalSpacing() );
+	return size;
 }
 
 // slot
@@ -413,7 +436,7 @@ void PrintWidget::updateTargets()
 	int saved_target_index = -1;
 	int default_printer_index = -1;
 	{
-		ScopedSignalsBlocker block(target_combo);
+		const QSignalBlocker block(target_combo);
 		target_combo->clear();
 		
 		if (task == PRINT_TASK)
@@ -531,7 +554,7 @@ void PrintWidget::updatePaperSizes(const QPrinterInfo* target) const
 	bool have_custom_size = false;
 	
 	{
-		ScopedSignalsBlocker block(paper_size_combo);
+		const QSignalBlocker block(paper_size_combo);
 		
 		paper_size_combo->clear();
 		QList<QPrinter::PaperSize> size_list;
@@ -828,7 +851,7 @@ void PrintWidget::updateResolutions(const QPrinterInfo* target) const
 	
 	QString dpi_text = dpi_combo->currentText();
 	{
-		ScopedSignalsBlocker block(dpi_combo);
+		const QSignalBlocker block(dpi_combo);
 		dpi_combo->clear();
 		dpi_combo->addItems(resolutions);
 	}

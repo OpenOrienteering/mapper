@@ -32,6 +32,7 @@
 #include "undo_manager.h"
 #include "util.h"
 
+
 ReplaceSymbolSetDialog::ReplaceSymbolSetDialog(QWidget* parent, Map* map, Map* symbol_map)
  : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint), map(map), symbol_map(symbol_map)
 {
@@ -115,7 +116,7 @@ void ReplaceSymbolSetDialog::showHelp()
 
 struct ReplaceSymbolSetOperation
 {
-	inline ReplaceSymbolSetOperation(QHash<Symbol*, Symbol*>* mapping, QHash<Symbol*, Symbol*>* import_symbol_map)
+	inline ReplaceSymbolSetOperation(QHash<const Symbol*, const Symbol*>* mapping, QHash<const Symbol*, Symbol*>* import_symbol_map)
 	 : mapping(mapping), import_symbol_map(import_symbol_map)
 	{
 	}
@@ -125,23 +126,23 @@ struct ReplaceSymbolSetOperation
 		Q_UNUSED(object_index);
 		if (mapping->contains(object->getSymbol()))
 		{
-			Symbol* target_symbol = import_symbol_map->value(mapping->value(object->getSymbol()));
+			const Symbol* target_symbol = import_symbol_map->value(mapping->value(object->getSymbol()));
 			object->setSymbol(target_symbol, true);
 		}
 		return true;
 	}
 private:
-	QHash<Symbol*, Symbol*>* mapping;
-	QHash<Symbol*, Symbol*>* import_symbol_map;
+	QHash<const Symbol*, const Symbol*>* mapping;
+	QHash<const Symbol*, Symbol*>* import_symbol_map;
 };
 
 void ReplaceSymbolSetDialog::apply()
 {
-	QHash<Symbol*, Symbol*> import_symbol_map;
+	QHash<const Symbol*, Symbol*> import_symbol_map;
 	
 	updateMappingFromTable();
 	
-	QSet<Symbol*> old_symbols;
+	QSet<const Symbol*> old_symbols;
 	if (delete_unused_symbols_check->isChecked())
 	{
 		for (int i = 0; i < map->getNumSymbols(); ++i)
@@ -157,7 +158,7 @@ void ReplaceSymbolSetDialog::apply()
 		symbol_filter->resize(symbol_map->getNumSymbols(), false);
 		for (int i = 0; i < symbol_map->getNumSymbols(); ++i)
 		{
-			for (QHash<Symbol*, Symbol*>::iterator it = mapping.begin(), end = mapping.end(); it != end; ++it)
+			for (QHash<const Symbol*, const Symbol*>::iterator it = mapping.begin(), end = mapping.end(); it != end; ++it)
 			{
 				if (it.value() == symbol_map->getSymbol(i))
 				{
@@ -173,7 +174,7 @@ void ReplaceSymbolSetDialog::apply()
 	// Take over hidden / protected states from old symbol set?
 	if (preserve_symbol_states_check->isChecked())
 	{
-		for (QHash<Symbol*, Symbol*>::iterator it = mapping.begin(), end = mapping.end(); it != end; ++it)
+		for (QHash<const Symbol*, const Symbol*>::iterator it = mapping.begin(), end = mapping.end(); it != end; ++it)
 		{
 			Symbol* target_symbol = import_symbol_map.value(it.value());
 			target_symbol->setHidden(it.key()->isHidden());
@@ -275,19 +276,20 @@ void ReplaceSymbolSetDialog::updateMappingTable()
 		QTableWidgetItem* original_item = new QTableWidgetItem(original_symbol->getNumberAsString() + " " + original_symbol->getPlainTextName());
 		original_item->setFlags(Qt::ItemIsEnabled); // make item non-editable
 		QVariantList original_item_data =
-			QVariantList() << qVariantFromValue<void*>(map) << qVariantFromValue<void*>(original_symbol);
+			QVariantList() << qVariantFromValue<const Map*>(map) << qVariantFromValue<const Symbol*>(original_symbol);
 		original_item->setData(Qt::UserRole, QVariant(original_item_data));
 		original_item->setData(Qt::DecorationRole, *original_symbol->getIcon(map));
 		mapping_table->setItem(row, 0, original_item);
 		
-		Symbol* replacement_symbol = mapping.contains(original_symbol) ? mapping.value(original_symbol) : NULL;
+		// Note on const: this is not a const method.
+		const Symbol* replacement_symbol = mapping.contains(original_symbol) ? mapping.value(original_symbol) : NULL;
 		QTableWidgetItem* replacement_item;
 		if (replacement_symbol)
 			replacement_item = new QTableWidgetItem(replacement_symbol->getNumberAsString() + " " + replacement_symbol->getPlainTextName());
 		else
 			replacement_item = new QTableWidgetItem(tr("- None -"));
 		QVariantList replacement_item_data =
-			QVariantList() << qVariantFromValue<void*>(symbol_map) << qVariantFromValue<void*>(replacement_symbol);
+			QVariantList() << qVariantFromValue<const Map*>(symbol_map) << qVariantFromValue<const Symbol*>(replacement_symbol);
 		replacement_item->setData(Qt::UserRole, QVariant(replacement_item_data));
 		if (replacement_symbol)
 			replacement_item->setData(Qt::DecorationRole, *replacement_symbol->getIcon(symbol_map));
@@ -304,7 +306,7 @@ void ReplaceSymbolSetDialog::updateMappingFromTable()
 	
 	for (int row = 0; row < map->getNumSymbols(); ++row)
 	{
-		Symbol* replacement_symbol = static_cast<Symbol*>(mapping_table->item(row, 1)->data(Qt::UserRole).toList().at(1).value<void*>());
+		const Symbol* replacement_symbol = mapping_table->item(row, 1)->data(Qt::UserRole).toList().at(1).value<const Symbol*>();
 		if (!replacement_symbol)
 			continue;
 		

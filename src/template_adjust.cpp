@@ -35,8 +35,8 @@ float TemplateAdjustActivity::cross_radius = 4;
 TemplateAdjustActivity::TemplateAdjustActivity(Template* temp, MapEditorController* controller) : controller(controller)
 {
 	setActivityObject(temp);
-	connect(controller->getMap(), SIGNAL(templateChanged(int,Template*)), this, SLOT(templateChanged(int,Template*)));
-	connect(controller->getMap(), SIGNAL(templateDeleted(int,Template*)), this, SLOT(templateDeleted(int,Template*)));
+	connect(controller->getMap(), SIGNAL(templateChanged(int, const Template*)), this, SLOT(templateChanged(int, const Template*)));
+	connect(controller->getMap(), SIGNAL(templateDeleted(int, const Template*)), this, SLOT(templateDeleted(int, const Template*)));
 }
 TemplateAdjustActivity::~TemplateAdjustActivity()
 {
@@ -132,7 +132,7 @@ bool TemplateAdjustActivity::calculateTemplateAdjust(Template* temp, TemplateTra
 	return true;
 }
 
-void TemplateAdjustActivity::templateChanged(int index, Template* temp)
+void TemplateAdjustActivity::templateChanged(int index, const Template* temp)
 {
 	Q_UNUSED(index);
 	if ((Template*)activity_object == temp)
@@ -141,7 +141,7 @@ void TemplateAdjustActivity::templateChanged(int index, Template* temp)
 		widget->updateAllRows();
 	}
 }
-void TemplateAdjustActivity::templateDeleted(int index, Template* temp)
+void TemplateAdjustActivity::templateDeleted(int index, const Template* temp)
 {
 	Q_UNUSED(index);
 	if ((Template*)activity_object == temp)

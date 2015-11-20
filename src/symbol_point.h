@@ -59,8 +59,8 @@ public:
 	virtual ~PointSymbol();
 	virtual Symbol* duplicate(const MapColorMap* color_map = NULL) const;
 	
-	virtual void createRenderables(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output);
-	void createRenderablesScaled(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output, float coord_scale);
+	virtual void createRenderables(const Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output) const;
+	void createRenderablesScaled(const Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output, float coord_scale) const;
 	virtual void colorDeleted(const MapColor* color);
 	virtual bool containsColor(const MapColor* color) const;
 	const MapColor* getDominantColorGuess() const;
@@ -114,7 +114,7 @@ protected:
 	virtual bool loadImpl(QIODevice* file, int version, Map* map);
 	virtual void saveImpl(QXmlStreamWriter& xml, const Map& map) const;
 	virtual bool loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict);
-	virtual bool equalsImpl(Symbol* other, Qt::CaseSensitivity case_sensitivity);
+	virtual bool equalsImpl(const Symbol* other, Qt::CaseSensitivity case_sensitivity) const;
 	
 	std::vector<Object*> objects;
 	std::vector<Symbol*> symbols;

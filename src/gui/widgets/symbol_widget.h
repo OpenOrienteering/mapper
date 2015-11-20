@@ -59,7 +59,14 @@ public:
 	 * 
 	 * Otherwise returns NULL.
 	 */
-	Symbol* getSingleSelectedSymbol() const;
+	const Symbol* getSingleSelectedSymbol() const;
+	
+	/**
+	 * @brief If exactly one symbol is selected, returns this symbol.
+	 * 
+	 * Otherwise returns NULL.
+	 */
+	Symbol* getSingleSelectedSymbol();
 	
 	/**
 	 * @brief Returns the number of selected symbols.
@@ -69,12 +76,12 @@ public:
 	/**
 	 * @brief Checks if the symbol is selected.
 	 */
-	bool isSymbolSelected(Symbol* symbol) const;
+	bool isSymbolSelected(const Symbol* symbol) const;
 	
 	/**
 	 * @brief Selects the symbol exclusively, deselecting all other symbols.
 	 */
-	void selectSingleSymbol(Symbol* symbol);
+	void selectSingleSymbol(const Symbol* symbol);
 	
 signals:
 	/**

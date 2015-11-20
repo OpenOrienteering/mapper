@@ -112,7 +112,7 @@ public:
 		 * Checks if the pattern settings are equal to the other.
 		 * TODO: should the transient name really be compared?!
 		 */
-		bool equals(FillPattern& other, Qt::CaseSensitivity case_sensitivity);
+		bool equals(const FillPattern& other, Qt::CaseSensitivity case_sensitivity) const;
 		/**
 		 * Creates renderables for this pattern in the area given by extent.
 		 * @param extent Rectangular area to create renderables for.
@@ -125,7 +125,7 @@ public:
 			float delta_rotation,
 			const MapCoord& pattern_origin,
 			ObjectRenderables& output
-		);
+		) const;
 		/** Creates one line of renderables, called by createRenderables(). */
 		void createLine(
 			MapCoordVectorF& coords,
@@ -134,7 +134,7 @@ public:
 			PathObject* path,
 			PointObject* point_object,
 			ObjectRenderables& output
-		);
+		) const;
 		/** Spatially scales the pattern settings by the given factor. */
 		void scale(double factor);
 	};
@@ -143,8 +143,8 @@ public:
 	virtual ~AreaSymbol();
 	virtual Symbol* duplicate(const MapColorMap* color_map = NULL) const;
 	
-	virtual void createRenderables(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output);
-	void createRenderablesNormal(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output);
+	virtual void createRenderables(const Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output) const;
+	void createRenderablesNormal(const Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output) const;
 	virtual void colorDeleted(const MapColor* color);
 	virtual bool containsColor(const MapColor* color) const;
 	virtual const MapColor* getDominantColorGuess() const;
@@ -165,7 +165,7 @@ protected:
 	virtual bool loadImpl(QIODevice* file, int version, Map* map);
 	virtual void saveImpl(QXmlStreamWriter& xml, const Map& map) const;
 	virtual bool loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict);
-	virtual bool equalsImpl(Symbol* other, Qt::CaseSensitivity case_sensitivity);
+	virtual bool equalsImpl(const Symbol* other, Qt::CaseSensitivity case_sensitivity) const;
 	
 	const MapColor* color;
 	int minimum_area;	// in mm^2 // FIXME: unit (factor) wrong

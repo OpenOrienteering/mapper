@@ -92,7 +92,7 @@ public:
 	 * @param case_sensitivity Comparison mode for strings, e.g. symbol names.
 	 * @param compare_state If true, also compares symbol state (protected / hidden).
 	 */
-	bool equals(Symbol* other, Qt::CaseSensitivity case_sensitivity = Qt::CaseSensitive, bool compare_state = false);
+	bool equals(const Symbol* other, Qt::CaseSensitivity case_sensitivity = Qt::CaseSensitive, bool compare_state = false) const;
 	
 	
 	/** Returns the type of the symbol */
@@ -132,7 +132,7 @@ public:
 	bool isTypeCompatibleTo(const Object* object) const;
 	
 	/** Returns if the symbol numbers are identical. */
-	bool numberEquals(Symbol* other, bool ignore_trailing_zeros);
+	bool numberEquals(const Symbol* other, bool ignore_trailing_zeros);
 	
 	
 	// Saving and loading
@@ -170,7 +170,7 @@ public:
 	 * instead of the object's coordinates, as those can be an updated,
 	 * transformed version of the object's coords!
 	 */
-	virtual void createRenderables(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output) = 0;
+	virtual void createRenderables(const Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output) const = 0;
 	
 	/**
 	 * Called by the map in which the symbol is to notify it of a color being
@@ -193,7 +193,7 @@ public:
 	 * If new_symbol == NULL, the symbol is being deleted.
 	 * Must return true if this symbol contained the deleted symbol.
 	 */
-	virtual bool symbolChanged(Symbol* old_symbol, Symbol* new_symbol);
+	virtual bool symbolChanged(const Symbol* old_symbol, const Symbol* new_symbol);
 	
 	/**
 	 * Must return if the given symbol is referenced by this symbol.
@@ -208,13 +208,13 @@ public:
 	 * Returns the symbol's icon, creates it if it was not created yet.
 	 * update == true forces an update of the icon.
 	 */
-	QImage* getIcon(Map* map, bool update = false);
+	QImage* getIcon(const Map* map, bool update = false) const;
 	
 	/**
 	 * Creates a new image with the given side length and draws the smybol icon onto it.
 	 * Returns an image pointer which you must delete yourself when no longer needed.
 	 */
-	QImage* createIcon(Map* map, int side_length, bool antialiasing, int bottom_right_border = 0, float best_zoom = 2);
+	QImage* createIcon(const Map* map, int side_length, bool antialiasing, int bottom_right_border = 0, float best_zoom = 2) const;
 	
 	/** Clear the symbol's icon. It will be recreated when it is needed. */
 	void resetIcon() { delete icon; icon = NULL; }
@@ -224,7 +224,7 @@ public:
 	 * which may be included in this symbol.
 	 * TODO: may fit into a subclass "PathSymbol"?
 	 */
-	virtual float calculateLargestLineExtent(Map* map);
+	virtual float calculateLargestLineExtent(Map* map) const;
 	
 	
 	// Getters / Setters
@@ -282,7 +282,7 @@ public:
 	 * These only show the coordinate paths with minimum line width,
 	 * and optionally a hatching pattern for areas.
 	 */
-	static void createBaselineRenderables(Object* object, Symbol* symbol, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output, bool hatch_areas);
+	static void createBaselineRenderables(const Object* object, const Symbol* symbol, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output, bool hatch_areas);
 	
 	/**
 	 * Returns if the symbol types can be applied to the same object types
@@ -300,13 +300,13 @@ public:
 	 * @brief Compares two symbols by number.
 	 * @return True if the number of s1 is less than the number of s2.
 	 */
-	static bool compareByNumber(Symbol* s1, Symbol* s2);
+	static bool compareByNumber(const Symbol* s1, const Symbol* s2);
 	
 	/**
 	 * @brief Compares two symbols by the dominant colors' priorities.
 	 * @return True if s1's dominant color's priority is lower than s2's dominant color's priority.
 	 */
-	static bool compareByColorPriority(Symbol* s1, Symbol* s2);
+	static bool compareByColorPriority(const Symbol* s1, const Symbol* s2);
 	
 	/**
 	 * @brief Functor for comparing symbols by dominant colors.
@@ -328,7 +328,7 @@ public:
 		 * @brief Operator which compares two symbols by dominant colors.
 		 * @return True if s1's dominant color exists with lower prority then s2's dominant color.
 		 */
-		bool operator() (Symbol* s1, Symbol* s2);
+		bool operator() (const Symbol* s1, const Symbol* s2);
 		
 	private:
 		/**
@@ -364,7 +364,7 @@ protected:
 	/**
 	 * Must be overridden to compare symbol-specific attributes.
 	 */
-	virtual bool equalsImpl(Symbol* other, Qt::CaseSensitivity case_sensitivity) = 0;
+	virtual bool equalsImpl(const Symbol* other, Qt::CaseSensitivity case_sensitivity) const = 0;
 	
 	/**
 	 * Duplicates properties which are common for all
@@ -384,12 +384,14 @@ protected:
 	/** Helper symbol flag, see isHelperSymbol() */
 	bool is_helper_symbol;
 	/** Hidden flag, see isHidden() */
-	bool is_hidden;
+	mutable bool is_hidden;
 	/** Protected flag, see isProtected() */
 	bool is_protected;
 	/** Pointer to symbol icon, if generated */
-	QImage* icon;
+	mutable QImage* icon;
 };
+
+Q_DECLARE_METATYPE(const Symbol*)
 
 /** Drop down combobox for selecting a symbol. */
 class SymbolDropDown : public QComboBox
@@ -404,13 +406,13 @@ public:
 	 * @param excluded_symbol Symbol to exclude from the list or NULL.
 	 * @param parent QWidget parent.
 	 */
-	SymbolDropDown(Map* map, int filter, Symbol* initial_symbol = NULL, const Symbol* excluded_symbol = NULL, QWidget* parent = NULL);
+	SymbolDropDown(const Map* map, int filter, const Symbol* initial_symbol = NULL, const Symbol* excluded_symbol = NULL, QWidget* parent = NULL);
 	
 	/** Returns the selected symbol or NULL if no symbol selected */
-	Symbol* symbol() const;
+	const Symbol* symbol() const;
 	
 	/** Sets the selection to the given symbol  */
-	void setSymbol(Symbol* symbol);
+	void setSymbol(const Symbol* symbol);
 	
 	/** Adds a custom text item below the topmost "- none -" which
 	 *  can be identified by the given id. */

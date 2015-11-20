@@ -132,7 +132,7 @@ public:
 	 * Returns the length from this coord to the other
 	 * in millimeters on the map.
 	 */
-	inline double lengthTo(const MapCoord& other)
+	inline double lengthTo(const MapCoord& other) const
 	{
 		return sqrt(lengthSquaredTo(other));
 	}
@@ -140,7 +140,7 @@ public:
 	 * Returns the squared length from this coord to the other
 	 * in millimeters on the map. Faster than lengthTo().
 	 */
-	inline double lengthSquaredTo(const MapCoord& other)
+	inline double lengthSquaredTo(const MapCoord& other) const
 	{
 		double dx = xd() - other.xd();
 		double dy = yd() - other.yd();
@@ -150,7 +150,7 @@ public:
 	/**
 	 * Returns if this coord's position is equal to that of the other one.
 	 */
-	inline bool isPositionEqualTo(const MapCoord& other)
+	inline bool isPositionEqualTo(const MapCoord& other) const
 	{
 		return ((x >> 4) == (other.x >> 4)) && ((y >> 4) == (other.y >> 4));
 	}

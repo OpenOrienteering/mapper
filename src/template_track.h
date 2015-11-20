@@ -41,26 +41,26 @@ Q_OBJECT
 public:
 	TemplateTrack(const QString& path, Map* map);
     virtual ~TemplateTrack();
-	virtual const QString getTemplateType() {return "TemplateTrack";}
+	virtual QString getTemplateType() const {return "TemplateTrack";}
 	virtual bool isRasterGraphics() const {return false;}
 	
-	virtual bool saveTemplateFile();
+	virtual bool saveTemplateFile() const;
 	
 	virtual bool loadTemplateFileImpl(bool configuring);
 	virtual bool postLoadConfiguration(QWidget* dialog_parent, bool& out_center_in_view);
 	virtual void unloadTemplateFileImpl();
 	
-    virtual void drawTemplate(QPainter* painter, QRectF& clip_rect, double scale, bool on_screen, float opacity);
-	virtual QRectF getTemplateExtent();
+    virtual void drawTemplate(QPainter* painter, QRectF& clip_rect, double scale, bool on_screen, float opacity) const;
+	virtual QRectF getTemplateExtent() const;
     virtual QRectF calculateTemplateBoundingBox();
     virtual int getTemplateBoundingBoxPixelBorder();
 	
 	
 	/// Draws all tracks.
-	void drawTracks(QPainter* painter, bool on_screen);
+	void drawTracks(QPainter* painter, bool on_screen) const;
 	
 	/// Draws all waypoints.
-	void drawWaypoints(QPainter* painter);
+	void drawWaypoints(QPainter* painter) const;
 	
 	/// Import the track as map object(s), returns true if something has been imported.
 	/// TODO: should this be moved to the Track class?
@@ -77,9 +77,9 @@ public slots:
 	void updateGeoreferencing();
 	
 protected:
-	virtual Template* duplicateImpl();
+	virtual Template* duplicateImpl() const;
     virtual bool loadTypeSpecificTemplateConfiguration(QIODevice* stream, int version);
-    virtual void saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml);
+    virtual void saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml) const;
     virtual bool loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml);
 	
 	/// Projects the track in non-georeferenced mode

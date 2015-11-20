@@ -23,12 +23,14 @@
 #include <QtTest/QtTest>
 
 /**
- * @test Creates compressed and scaled symbol sets from original symbol sets.
+ * @test Creates compressed files and scales symbol sets.
  * 
  * This tool overwrites the .omap symbol set files in the symbol set directory.
  * This is not only a test uncovering changes in the standard file format but
  * also helps to maintain the released compact symbol sets from a minimum set
  * of verbose source symbol sets.
+ * 
+ * This tool also creates compressed example files out of orignal .xmap files.
  */
 class SymbolSetTool : public QObject
 {
@@ -39,9 +41,12 @@ private slots:
 	void symbolSetDirExists();
 	void processSymbolSet_data();
 	void processSymbolSet();
+	void processExamples_data();
+	void processExamples();
 	
 private:
 	QDir symbol_set_dir;
+	QDir examples_dir;
 };
 
 #endif // _OPENORIENTEERING_SYMBOL_SET_T_H
