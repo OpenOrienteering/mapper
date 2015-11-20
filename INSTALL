@@ -57,16 +57,14 @@ and 4.8.0 (from upstream). See the platform specific notes.
 Install a supported version of CMake from http://www.cmake.org/.
 
 * MSYS
-MSYS is used to build the PROJ.4 library.  MSYS is available from
+MSYS is needed to build the PROJ.4 library. MSYS is available from
 http://www.mingw.org/wiki/MSYS. Please read and follow the installation
 instruction from this website. Recommended installation location is C:\MinGW.
 You don't need to install MinGW in this step if you install the Qt SDK.
 
 * PROJ.4 library
-If you have MinGW/MSYS installed in C:/MinGW/msys/1.0, the PROJ.4 library will
-be automatically downloaded and built during cmake build. If you have MSYS in
-another path or if you want change the PROJ.4 version, you need to modify
-3rd-party/proj.cmake.
+In cmake-gui (see below), set "Mapper_BUILD_PROJ" to 1 to have the PROJ.4
+library be downloaded and built as part of the build process. 
 
 * Qt and MinGW
 The easiest way to get Qt is to intall the Qt SDK. Make sure to select the
@@ -93,15 +91,16 @@ Now the build configuration is generated in the working directory, and the
 project is ready for compilation.
 
 If you use MinGW, call "mingw32-make" from the command prompt in this directory
-now to build the project.
+now to build the project. The Mapper.exe will be generated in the build
+directory.
 
+(This paragraphed needs to be reviewed:)
 If you use Visual C++ 2010, a *.sln file is generated in the build directory
 which should be opened as the next step. Five projects should be visible in the
 Solution Explorer which is by default on the left side. Right click the "Mapper"
 project and choose "Set as StartUp project". Right click it again and choose
 "Properties". Change "Configuration" to "All configurations" on the top left.
-In Debugging, change "Working directory" to the bin subdirectory:
-"$(ProjectDir)..\bin" (without the "). If you want to run the Debug version,
+If you want to run the Debug version,
 set the configuration to Debug, go to C/C++ -> Code Generation and set "Runtime
 Library" to "Multi-threaded Debug DLL". If you forget to do that, everything
 will seem to run well, but you will encounter strange crashes for example on
@@ -112,11 +111,11 @@ Please also note that the OpenOrienteering developers usually work with gcc, so
 it is likely that the current version from git does not compile with Visual C++
 without adjustments.
 
-* Building binary ZIP packages with MinGW
+* Building binary packages (ZIP, NSIS) with MinGW
 
 Start the build process from a fresh build directory. To prepare a release 
 package call 
-  cmake -DCMAKE_BUILD_TYPE=Release -G "MinGW Makefiles" ..
+  cmake .. -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE=Release -DMapper_BUILD_PROJ=1
   mingw32-make package
 
 
@@ -170,37 +169,6 @@ sudo dpkg -r openorienteering-mapper
 
 
 
-== Cross-Compiling on Linux or MacOS X for Windows with MXE ==
-
-It is possible to cross-compile from Linux or MacOS X (host system) for Windows
-(target system). 
-
-The easiest way is to use MXE (M cross environment, http://mxe.cc), which is
-based on gcc/MinGW. Follow the instruction on that webpage to install the
-requirements and download MXE. Now call:
-  make gcc proj qt
-
-This will download and build the cross compiler and the required libraries.
-Especially the Qt build might take a while (a few hours, depending on the machine).
-Add a JOBS=x parameter to use all cores on a x-1 core nachine. (Do not
-use -j unless you know what it means with MXE).
-
-After this, you can configure you a new build directory by
-  cmake PATH_TO_MAPPER_SRC -DCMAKE_TOOLCHAIN_FILE=PATH_TO_MXE/usr/i686-pc-mingw32/share/cmake/mxe-conf.cmake
-
-The toolchain file passes special parameters to cmake.
-
-Finally call make as usual.
-
-Note that such builds need the the hostsystems Qt development tools (lrelease
-and qcollectiongenerator) to process the translations and the help files.
-
-At the moment, MXE builds only static libraries, and the Qt package does not
-build the Qt Assistant. With some tweaking, it is possible to resolve these
-issues, but this is not covered here.
-
-
-
 == Cross-Compiling on Linux for Windows in General ==
 
 Some linux distributions may offer cross compiler packages based on MinGW or
@@ -210,8 +178,8 @@ system can do the neccessary steps.
 
 For MinGW-w64 i686 (32 bit) builds, call
 
-cmake -DCMAKE_TOOLCHAIN_FILE=(path to source)cmake/toolchain/i686-w64-mingw32 \
-  -DMapper_BUILD_PROJ=1 -DMapper_BUILD_QT=1
+cmake PATH_TO_MAPPER_SRC -DCMAKE_TOOLCHAIN_FILE=(path to source)cmake/toolchain/i686-w64-mingw32 \
+  -DMapper_BUILD_PROJ=1 -DMapper_BUILD_QT=1 [OTHER OPTIONS]
 
 This will add targets and rules to the build system which download, patch,
 configure and build the proj and Qt libraries with all neccessary components.
@@ -228,5 +196,89 @@ Of course you can call
 
 make package
 
-as soon as another cmake run could find the required libraries.
+as soon as another cmake run could find the required libraries. If you have NSIS
+installed, it will generate an NSIS installer in addition to the binary ZIP
+packages.
+
+
+
+== Compiling on Mac OS X ==
+
+=== Build Prerequisites ===
+
+You will need to know how to use the command line ("Terminal").
+
+You will need the following software:
+
+* 64-bit Apple Mac OS X 10.6 or later 
+* Xcode (from Apple)
+* Xcode command line tools (cf. http://stackoverflow.com/a/6767528)
+* Git from http://git-scm.com/download/mac 
+* CMake 2.8.x from http://www.cmake.org/cmake/resources/software.html
+* Qt SDK 4.8.x from http://qt-project.org/downloads
+
+
+=== PROJ.4 library ===
+
+In cmake (or cmake-gui), set "Mapper_BUILD_PROJ" to 1 to have the PROJ.4
+library be downloaded and built as part of the build process. 
+
+
+=== Building Packages ===
+
+The "DragNDrop" CPack generator is configured. It can be used after make has run
+once successfully:
+
+    make
+    make package
+
+
+
+== Building Distributable Packages ==
+
+Distributing binary code under open source licenses creates certain legal
+obligations, such as the distribution of the source code. This is how to do this
+correctly for Mapper on Systems without distributor-supplied Qt and PROJ.4, such
+as Mac OS X and Windows.
+
+Official release packages need to be build from an official source code archive.
+This is to make sure that every user can indeed get all required files for the
+release.
+
+Official release packages will include the Qt libraries and the Qt assistant
+executable. Official release shall build the Qt components from the Qt source
+code in the particular version which we distribute along with our source. The
+Mapper_BUILD_QT option to cmake will take care of this. At the moment, you will
+still need the following programs from a binary Qt SDK: lrelease and 
+qcollectiongenerator.
+
+Similar to Qt, use Mapper_BUILD_PROJ to build the PROJ.4 library from source.
+
+The build shall start from a fresh build directory. The build shall be in
+release mode.
+
+   tar xvzf openorienteering-mapper_X.Y.Z-src.tgz
+   cd openorienteering-mapper_X.Y.Z
+   mkdir build
+   cd build
+   cmake .. -DCMAKE_BUILD_TYPE=Release \
+            -DMapper_BUILD_QT=1 \
+            -DMapper_BUILD_PROJ=1 \
+            -DQT_LRELEASE_EXECUTABLE=/path/to/binary/lrelease \
+            -DQT_QCOLLECTIONGENERATOR_EXECUTABLE=/path/to/binary/qcollectiongenerator
+   make
+   make package
+
+On Linux systems, Qt libraries, Qt Assistant and PROJ.4 library are usually
+available as packages from the distributor. Replace the cmake call above with:
+
+   cmake .. -DCMAKE_BUILD_TYPE=Release
+
+
+
+== Making a source package ==
+
+Start from a clean git working directory. Run
+
+make Mapper_Source
 

@@ -69,12 +69,13 @@ endif()
 include(ExternalProject)
 ExternalProject_Add(
   Proj
-  DOWNLOAD_DIR ${PROJECT_SOURCE_DIR}
+  DOWNLOAD_DIR ${PROJECT_SOURCE_DIR}/download
   URL "http://download.osgeo.org/proj/proj-${PROJ_VERSION}.tar.gz"
   ${_ep_proj_options}
   CONFIGURE_COMMAND "${SH_PROGRAM}" -l -e ${CMAKE_CURRENT_BINARY_DIR}/proj-config
   BUILD_COMMAND ${PROJ_MAKE_COMMAND}
   INSTALL_COMMAND ${PROJ_MAKE_COMMAND} install
+               && "${SH_PROGRAM}" -l -e ${CMAKE_CURRENT_BINARY_DIR}/proj-postinstall
 )
 ExternalProject_Get_Property(Proj SOURCE_DIR)
 ExternalProject_Get_Property(Proj BINARY_DIR)
@@ -88,6 +89,7 @@ endif(CMAKE_CROSSCOMPILING AND GNU_SYSTEM_NAME)
 
 configure_file(proj-config.in ${CMAKE_CURRENT_BINARY_DIR}/proj-config)
 configure_file(proj-make.in ${CMAKE_CURRENT_BINARY_DIR}/proj-make)
+configure_file(proj-postinstall.in ${CMAKE_CURRENT_BINARY_DIR}/proj-postinstall)
 
 # Exported configuration
 

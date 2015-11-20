@@ -56,6 +56,18 @@ Georeferencing::Georeferencing()
 		geographic_crs = pj_init_plus(geographic_crs_spec.toAscii());
 	}	
 #endif
+#ifdef Q_WS_MAC
+	if (0 != *pj_get_errno_ref())
+	{
+		if (geographic_crs != NULL)
+			pj_free(geographic_crs);
+		QByteArray pj_searchpath =
+		  QDir::toNativeSeparators(QCoreApplication::applicationDirPath() + "../Resources/proj").toAscii();
+		const char * pj_searchpath_list = pj_searchpath.constData();
+		pj_set_searchpath(1, &pj_searchpath_list);
+		geographic_crs = pj_init_plus(geographic_crs_spec.toAscii());
+	}
+#endif
 	assert(geographic_crs != NULL);
 }
 

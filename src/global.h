@@ -17,16 +17,14 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-// Do not edit global.h! Edit global.h.in instead.
-
-#define APP_NAME qApp->translate("Global", QT_TRANSLATE_NOOP("Global", "OpenOrienteering Mapper"))
-#define APP_VERSION "@Mapper_VERSION_DISPLAY@"
-
-#cmakedefine Mapper_XML_FORMAT
+#ifndef _OPENORIENTEERING_GLOBAL_H_
+#define _OPENORIENTEERING_GLOBAL_H_
 
 #define QT_USE_FAST_CONCATENATION
 #define QT_USE_FAST_OPERATOR_PLUS
 
 #ifdef _MSC_VER
 	#pragma warning(disable: 4290)	// "C++ exception specification ignored"
+#endif
+
 #endif

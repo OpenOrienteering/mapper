@@ -26,8 +26,9 @@
 
 #include <proj_api.h>
 
+#include <mapper_config.h> // TODO: Replace APP_NAME by runtime function to remove this dependency
+
 #include "main_window_home_screen.h"
-#include "global.h"
 #include "map.h"
 #include "map_dialog_new.h"
 #include "map_editor.h"
@@ -682,7 +683,7 @@ void MainWindow::showAbout()
 		     "For contributions, thanks to:<br/>%2<br/>"
 		     "Additional information:").
 		  arg(QString("Peter Curtis<br/>Kai Pastor<br/>Russell Porter<br/>Thomas Sch&ouml;ps %1<br/>").arg(tr("(project leader)"))).
-		  arg("Jon Cundill<br/>Jan Dalheimer<br/>Eugeniy Fedirets<br/>Peter Hoban<br/>Henrik Johansson<br/>Tojo Masaya<br/>Christopher Schive<br/>Aivars Zogla<br/>")
+		  arg("Jon Cundill<br/>Jan Dalheimer<br/>Eugeniy Fedirets<br/>Peter Hoban<br/>Henrik Johansson<br/>Oskar Karlin<br/>Tojo Masaya<br/>Christopher Schive<br/>Aivars Zogla<br/>")
 		 );
 	QTextEdit* additional_text = new QTextEdit( 
 	  clipper_about % "<br/><br/>" %
@@ -734,6 +735,9 @@ void MainWindow::showHelp(QString filename, QString fragment)
 #ifdef MAPPER_DEBIAN_PACKAGE_NAME
 			<< QDir(QString("/usr/share/") % MAPPER_DEBIAN_PACKAGE_NAME % "/help")
 #endif
+#ifdef Q_WS_MAC
+			<< QDir(app_dir.absoluteFilePath("../Resources/help"))
+#endif
 			<< QDir(":/help");
 		
 		QDir help_dir;
@@ -754,10 +758,14 @@ void MainWindow::showHelp(QString filename, QString fragment)
 			 << makeHelpUrl(filename, fragment)
 			 << QLatin1String("-enableRemoteControl");
 		
+#ifdef Q_WS_MAC
+		process->start(app_dir.absoluteFilePath("assistant"), args);
+#else
 		process->start(QLatin1String("assistant"), args);
+#endif
 		if (!process->waitForStarted())
 		{
-			QMessageBox::warning(this, tr("Error"), tr("Failed to find the help browser (\"Qt Assistant\"). For Windows, it is available as a separate download. After extracting this archive, copy its contents into the directory containing the Mapper executable, so the Mapper and assistant executables are in the same directory, and try again."));
+			QMessageBox::warning(this, tr("Error"), tr("Failed to launch the help browser (\"Qt Assistant\"):\n\n%1").arg(QString(process->readAllStandardError())));
 			return;
 		}
 	}

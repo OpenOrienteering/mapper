@@ -59,7 +59,7 @@ mark_as_advanced(SH_PROGRAM)
 # Build definition
 
 if(CMAKE_VERSION VERSION_GREATER 2.8.1)
-	set(_ep_qt4_options URL_MD5 ${QT4_MD5} TIMEOUT 30)
+	set(_ep_qt4_options URL_MD5 ${QT4_MD5})
 else()
 	set(_ep_qt4_options)
 endif()
@@ -67,7 +67,7 @@ endif()
 include(ExternalProject)
 ExternalProject_Add(
   Qt4
-  DOWNLOAD_DIR ${PROJECT_SOURCE_DIR}
+  DOWNLOAD_DIR ${PROJECT_SOURCE_DIR}/download
   URL "http://releases.qt-project.org/qt4/source/qt-everywhere-opensource-src-${QT4_VERSION}.tar.gz"
   ${_ep_qt4_options}
   UPDATE_COMMAND "${SH_PROGRAM}" -l -e ${CMAKE_CURRENT_BINARY_DIR}/qt4-syncqt

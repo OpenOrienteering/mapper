@@ -481,8 +481,8 @@ void PathObject::PathPart::connectEnds()
 	if (isClosed())
 		return;
 	
-	path->coords[start_index].setRawX(qRound64((path->coords[end_index].rawX() + path->coords[start_index].rawX()) / 2));
-	path->coords[start_index].setRawY(qRound64((path->coords[end_index].rawY() + path->coords[start_index].rawY()) / 2));
+	path->coords[start_index].setRawX(qRound64((path->coords[end_index].rawX() + path->coords[start_index].rawX()) / 2.0));
+	path->coords[start_index].setRawY(qRound64((path->coords[end_index].rawY() + path->coords[start_index].rawY()) / 2.0));
 	path->setClosingPoint(end_index, path->coords[start_index]);
 	path->setOutputDirty();
 }

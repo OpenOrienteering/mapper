@@ -2252,6 +2252,12 @@ bool MapView::zoomSteps(float num_steps, bool preserve_cursor_pos, QPointF curso
 			setPositionX(qRound64(1000 * (mouse_pos_map.getX() + mouse_pos_to_view_center.getX())));
 			setPositionY(qRound64(1000 * (mouse_pos_map.getY() + mouse_pos_to_view_center.getY())));
 		}
+		else
+		{
+			mouse_pos_map = viewToMapF(cursor_pos_view);
+			for (int i = 0; i < (int)widgets.size(); ++i)
+				widgets[i]->updateCursorposLabel(mouse_pos_map);
+		}
 	}
 	return true;
 }

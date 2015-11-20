@@ -23,6 +23,9 @@
 #include <QLocale>
 #include <QTranslator>
 
+#include <mapper_config.h>
+
+#include "global.h"
 #include "main_window.h"
 #include "main_window_home_screen.h"
 #include "settings.h"
@@ -72,16 +75,26 @@ int main(int argc, char** argv)
 	// Load application translation
 	QTranslator translator;
 	QString translation_name = "OpenOrienteering_" + locale_name;
-	if (! translator.load(translation_name, QCoreApplication::applicationDirPath() + "/translations"))
-#ifdef MAPPER_DEBIAN_PACKAGE_NAME
-	  if (! translator.load(translation_name, QString("/usr/share/") + MAPPER_DEBIAN_PACKAGE_NAME + "/translations"))
+	bool translation_ok = false;
+#ifdef Mapper_TRANSLATIONS_EMBEDDED
+	Q_INIT_RESOURCE(translations);
+	translation_ok = translator.load(translation_name, QString(":/translations"));
 #endif
-		translator.load(translation_name, QString(":/translations"));
+#ifdef MAPPER_DEBIAN_PACKAGE_NAME
+	if (!translation_ok)
+		translation_ok = translator.load(translation_name, QCoreApplication::applicationDirPath() + "/../share/" + MAPPER_DEBIAN_PACKAGE_NAME + "/translations");
+#endif
+#ifdef Q_WS_MAC
+	if (!translation_ok)
+		translation_ok = translator.load(translation_name, QCoreApplication::applicationDirPath() + "/../Resources/translations");
+#endif
+	if (!translation_ok)
+		translation_ok = translator.load(translation_name, QCoreApplication::applicationDirPath() + "/translations");
 	qapp.installTranslator(&translator);
 	
 	// Register the supported file formats
 	FileFormats.registerFormat(new NativeFileFormat());
-#ifdef WITH_MAPPER_XML_FORMAT
+#ifdef Mapper_XML_FORMAT
 	FileFormats.registerFormat(new XMLFileFormat());
 #endif
 	FileFormats.registerFormat(new OCAD8FileFormat());
