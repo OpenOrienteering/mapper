@@ -232,36 +232,45 @@ void TextSymbol::createLineBelowRenderables(const Object* object, ObjectRenderab
 	}
 }
 
-void TextSymbol::colorDeleted(const MapColor* color)
+void TextSymbol::colorDeleted(const MapColor* c)
 {
-	if (color == this->color)
+	auto changes = 0;
+	if (c == color)
 	{
-		this->color = NULL;
-		resetIcon();
+		color = nullptr;
+		++changes;
 	}
-	if (color == this->framing_color)
+	if (c == framing_color)
 	{
-		this->framing_color = NULL;
+		framing_color = nullptr;
+		++changes;
+	}
+	if (c == line_below_color)
+	{
+		line_below_color = nullptr;
+		++changes;
+	}
+	if (changes)
+	{
 		resetIcon();
 	}
 }
 
-bool TextSymbol::containsColor(const MapColor* color) const
+bool TextSymbol::containsColor(const MapColor* c) const
 {
-	if (color == this->color)
-		return true;
-	if (color == this->framing_color)
-		return true;
-	return false;
+	return c == color
+	       || c == framing_color
+	       || c == line_below_color;
 }
 
 const MapColor* TextSymbol::guessDominantColor() const
 {
-	if (color)
-		return color;
-	if (framing_color)
-		return framing_color;
-	return NULL;
+	auto c = color;
+	if (!c)
+		c = framing_color;
+	if (!c)
+		c = line_below_color;
+	return c;
 }
 
 void TextSymbol::scale(double factor)
