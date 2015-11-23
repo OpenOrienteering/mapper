@@ -315,6 +315,40 @@ android {
   # Android package template customization
   ANDROID_PACKAGE_SOURCE_DIR = $$PWD/../android
 
+  EXPECTED_VERSION = $$Mapper_VERSION_MAJOR\.$$Mapper_VERSION_MINOR\.$$Mapper_VERSION_PATCH
+  !system(grep "$$EXPECTED_VERSION" "$$ANDROID_PACKAGE_SOURCE_DIR/AndroidManifest.xml") {
+      error(The version name in AndroidManifest.xml does not match the version in oo-mapper-version.pri.)
+  }
+
+  # Minimized Qt deployment depedencies.
+  # Order matters here. Rename the variable, observe the app start, and watch
+  # for "Added shared lib" to see the default order of basic Qt libraries and
+  # plugins. Other plugins must be added by handed, e.g. image formats.
+  # This comes together with explicit specification in AndroidManifest.xml
+  ANDROID_DEPLOYMENT_DEPENDENCIES = \
+    lib/libQt5Core.so \
+    jar/QtAndroid-bundled.jar \
+    jar/QtAndroidAccessibility-bundled.jar \
+    lib/libQt5Gui.so \
+    plugins/platforms/android/libqtforandroid.so \
+    plugins/imageformats/libqgif.so \
+    plugins/imageformats/libqicns.so \
+    plugins/imageformats/libqico.so \
+    plugins/imageformats/libqjp2.so \
+    plugins/imageformats/libqjpeg.so \
+    plugins/imageformats/libqtiff.so \
+    plugins/imageformats/libqwebp.so \
+    lib/libQt5Widgets.so \
+    lib/libQt5Xml.so \
+    lib/libQt5Sensors.so \
+    lib/libQt5Positioning.so \
+    lib/libQt5AndroidExtras.so \
+    jar/QtSensors-bundled.jar \
+    plugins/sensors/libqtsensors_android.so \
+    jar/QtPositioning-bundled.jar \
+    plugins/position/libqtposition_android.so \
+    # END
+
   # Do not use qtsingleapplication
   LIBS -= -lqtsingleapplication
   
