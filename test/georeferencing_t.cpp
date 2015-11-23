@@ -1,5 +1,5 @@
 /*
- *    Copyright 2012, 2013, 2014 Kai Pastor
+ *    Copyright 2012-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -21,10 +21,25 @@
 
 #include <proj_api.h>
 
+#include "../src/core/crs_template.h"
 #include "../src/file_format_xml.h"
 
 
 int XMLFileFormat::active_version = 6;
+
+
+// Mockup
+namespace CRSTemplates
+{
+
+CRSTemplateRegistry::TemplateList defaultList()
+{
+	return CRSTemplateRegistry::TemplateList();
+}
+
+} // namespace CRSTemplates
+
+
 
 double GeoreferencingTest::degFromDMS(double d, double m, double s)
 {
@@ -44,7 +59,7 @@ void GeoreferencingTest::initTestCase()
 void GeoreferencingTest::testEmptyProjectedCRS()
 {
 	Georeferencing new_georef;
-	QVERIFY(new_georef.getState() == Georeferencing::ScaleOnly);
+	QVERIFY(new_georef.getState() == Georeferencing::Local);
 }
 
 
@@ -53,7 +68,8 @@ void GeoreferencingTest::testCRS_data()
 	QTest::addColumn<QString>("id");
 	QTest::addColumn<QString>("spec");
 	
-	QTest::newRow("UTM") << "UTM" << utm32_spec;
+	QTest::newRow("EPSG:4326") << "EPSG:4326" << QString("+init=epsg:4326");
+	QTest::newRow("UTM")       << "UTM"       << utm32_spec;
 }
 
 void GeoreferencingTest::testCRS()
@@ -122,4 +138,4 @@ void GeoreferencingTest::testProjection()
 }
 
 
-QTEST_MAIN(GeoreferencingTest)
+QTEST_GUILESS_MAIN(GeoreferencingTest)

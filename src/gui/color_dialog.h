@@ -1,5 +1,5 @@
 /*
- *    Copyright 2012, 2013 Kai Pastor
+ *    Copyright 2012, 2013, 2014 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -21,11 +21,20 @@
 #ifndef _OPENORIENTEERING_COLOR_DIALOG_H_
 #define _OPENORIENTEERING_COLOR_DIALOG_H_
 
-#include <QtWidgets>
-
 #include <vector>
 
+#include <QDialog>
+
 #include "../core/map_color.h"
+
+class QAbstractButton;
+class QCheckBox;
+class QDoubleSpinBox;
+class QGridLayout;
+class QLabel;
+class QLineEdit;
+class QRadioButton;
+class QTabWidget;
 
 class ColorDropDown;
 class Map;

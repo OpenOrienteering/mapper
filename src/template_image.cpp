@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2012-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -20,12 +21,22 @@
 
 #include "template_image.h"
 
-#include <QtWidgets>
+#include <QDebug>
+#include <QFile>
+#include <QHBoxLayout>
+#include <QImageReader>
+#include <QLabel>
+#include <QLineEdit>
+#include <QMessageBox>
+#include <QPainter>
+#include <QPushButton>
+#include <QRadioButton>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
 #include "core/georeferencing.h"
 #include "gui/georeferencing_dialog.h"
+#include "gui/select_crs_dialog.h"
 #include "map.h"
 #include "util.h"
 
@@ -166,7 +177,7 @@ bool TemplateImage::postLoadConfiguration(QWidget* dialog_parent, bool& out_cent
 				initial_georef.setGeographicRefPoint(LatLon(template_coords_center.y(), template_coords_center.x()));
 			else
 				initial_georef.setProjectedRefPoint(template_coords_center);
-			initial_georef.setState(Georeferencing::ScaleOnly);
+			initial_georef.setState(Georeferencing::Local);
 			
 			GeoreferencingDialog dialog(dialog_parent, map, &initial_georef, false);
 			if (template_coords_probably_geographic)
@@ -180,10 +191,14 @@ bool TemplateImage::postLoadConfiguration(QWidget* dialog_parent, bool& out_cent
 		if (open_dialog.isGeorefRadioChecked() && available_georef == Georeferencing_WorldFile)
 		{
 			// Let user select the coordinate reference system, as this is not specified in world files
-			SelectCRSDialog dialog(map, dialog_parent, true, false, true, tr("Select the coordinate reference system of the coordinates in the world file"));
+			SelectCRSDialog dialog(
+			            map->getGeoreferencing(),
+			            dialog_parent,
+			            SelectCRSDialog::TakeFromMap | SelectCRSDialog::Geographic,
+			            tr("Select the coordinate reference system of the coordinates in the world file") );
 			if (dialog.exec() == QDialog::Rejected)
 				continue;
-			temp_crs_spec = dialog.getCRSSpec();
+			temp_crs_spec = dialog.currentCRSSpec();
 		}
 		
 		break;
@@ -301,7 +316,7 @@ void TemplateImage::drawOntoTemplateImpl(MapCoordF* coords, int num_coords, QCol
 		width *= width_factor;
 		num_coords = 5;
 		points = new QPointF[5];
-		points[0] = mapToTemplateQPoint(coords[0]) + QPointF(image.width() * 0.5f, image.height() * 0.5f);
+		points[0] = mapToTemplate(coords[0]) + QPointF(image.width() * 0.5f, image.height() * 0.5f);
 		points[1] = points[0] + QPointF(ring_radius, 0);
 		points[2] = points[0] + QPointF(0, ring_radius);
 		points[3] = points[0] + QPointF(-ring_radius, 0);
@@ -318,7 +333,7 @@ void TemplateImage::drawOntoTemplateImpl(MapCoordF* coords, int num_coords, QCol
 		QRectF bbox;
 		for (int i = 0; i < num_coords; ++i)
 		{
-			points[i] = mapToTemplateQPoint(coords[i]) + QPointF(image.width() * 0.5f, image.height() * 0.5f);
+			points[i] = mapToTemplate(coords[i]) + QPointF(image.width() * 0.5f, image.height() * 0.5f);
 			rectIncludeSafe(bbox, points[i]);
 		}
 		radius_bbox = QRect(
@@ -389,10 +404,10 @@ void TemplateImage::drawOntoTemplateUndo(bool redo)
 	qreal template_left = step.x - 0.5 * image.width();
 	qreal template_top = step.y - 0.5 * image.height();
 	QRectF map_bbox;
-	rectIncludeSafe(map_bbox, templateToMap(QPointF(template_left, template_top)).toQPointF());
-	rectIncludeSafe(map_bbox, templateToMap(QPointF(template_left + step.image.width(), template_top)).toQPointF());
-	rectIncludeSafe(map_bbox, templateToMap(QPointF(template_left, template_top + step.image.height())).toQPointF());
-	rectIncludeSafe(map_bbox, templateToMap(QPointF(template_left + step.image.width(), template_top + step.image.height())).toQPointF());
+	rectIncludeSafe(map_bbox, templateToMap(QPointF(template_left, template_top)));
+	rectIncludeSafe(map_bbox, templateToMap(QPointF(template_left + step.image.width(), template_top)));
+	rectIncludeSafe(map_bbox, templateToMap(QPointF(template_left, template_top + step.image.height())));
+	rectIncludeSafe(map_bbox, templateToMap(QPointF(template_left + step.image.width(), template_top + step.image.height())));
 	map->setTemplateAreaDirty(this, map_bbox, 0);
 	
 	setHasUnsavedChanges(true);
@@ -530,7 +545,7 @@ bool TemplateImage::WorldFile::load(const QString& path)
 	return true;
 }
 
-bool TemplateImage::WorldFile::tryToLoadForImage(const QString image_path)
+bool TemplateImage::WorldFile::tryToLoadForImage(const QString& image_path)
 {
 	int last_dot_index = image_path.lastIndexOf('.');
 	if (last_dot_index < 0)

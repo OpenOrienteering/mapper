@@ -1,5 +1,5 @@
 /*
- *    Copyright 2012, 2013 Kai Pastor
+ *    Copyright 2012, 2013, 2014 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -19,6 +19,14 @@
 
 
 #include "color_dialog.h"
+
+#include <QButtonGroup>
+#include <QDialogButtonBox>
+#include <QGridLayout>
+#include <QLineEdit>
+#include <QPushButton>
+#include <QRadioButton>
+#include <QSettings>
 
 #include "../core/map_color.h"
 #include "../map.h"
@@ -73,6 +81,7 @@ ColorDialog::ColorDialog(const Map& map, const MapColor& source_color, QWidget* 
 	{
 		++row;
 		component_colors[i] = new ColorDropDown(&map, &color, true);
+		component_colors[i]->removeColor(&source_color);
 		prof_color_layout->addWidget(component_colors[i], row, col);
 		component_halftone[i] = Util::SpinBox::create(1, 0.0, 100.0, tr("%"), 10.0);
 		prof_color_layout->addWidget(component_halftone[i], row, col+1);
@@ -296,6 +305,7 @@ void ColorDialog::updateWidgets()
 	}
 	else
 	{
+		composition_option->setChecked(true);
 		sc_name_edit->setEnabled(false);
 		cmyk_spot_color_option->setEnabled(false);
 		if (cmyk_spot_color_option->isChecked())
@@ -333,6 +343,7 @@ void ColorDialog::updateWidgets()
 	for (int i = num_editors; i <= num_components; ++i)
 	{
 		component_colors[i] = new ColorDropDown(&map, &color, true);
+		component_colors[i]->removeColor(&source_color);
 		prof_color_layout->addWidget(component_colors[i], components_row0+i, components_col0);
 		connect(component_colors[i], SIGNAL(currentIndexChanged(int)), this, SLOT(spotColorCompositionChanged()));
 		component_halftone[i] = Util::SpinBox::create(1, 0.0, 100.0, tr("%"), 10.0);
@@ -482,7 +493,10 @@ void ColorDialog::spotColorTypeChanged(int id)
 			color.setSpotColorName(name);
 			break;
 		case MapColor::CustomColor:
-			color.setSpotColorComposition(SpotColorComponents());
+			if (source_color.getSpotColorMethod() == MapColor::CustomColor)
+				color.setSpotColorComposition(source_color.getComponents());
+			else
+				color.setSpotColorComposition({});
 			break;
 		default:
 			; // nothing

@@ -19,8 +19,11 @@
 
 #include "map_part_undo.h"
 
+#include <vector>
+
 #include "map.h"
 #include "map_part.h"
+#include "util/xml_stream_util.h"
 
 namespace literal
 {

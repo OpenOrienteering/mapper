@@ -21,7 +21,12 @@
 #ifndef _OPENORIENTEERING_TEMPLATE_DOCK_WIDGET_H_
 #define _OPENORIENTEERING_TEMPLATE_DOCK_WIDGET_H_
 
-#include <QtWidgets>
+#include <QWidget>
+
+class QBoxLayout;
+class QCheckBox;
+class QTableWidget;
+class QToolButton;
 
 class Map;
 class MapEditorController;

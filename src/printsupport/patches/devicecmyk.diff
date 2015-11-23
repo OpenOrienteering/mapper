@@ -1,0 +1,66 @@
+--- a/advanced_pdf.cpp	2015-10-14 09:13:34.830472339 +0200
++++ b/advanced_pdf.cpp	2015-10-14 09:15:26.295025059 +0200
+@@ -22,6 +22,7 @@
+  *   - Adjustment of include statements
+  *   - Removal of Q_XXX_EXPORT
+  * - Change of the PDF Producer property
++ * - Use of DeviceCMYK color space in PDF output
+  */
+ /****************************************************************************
+ **
+@@ -1321,12 +1322,13 @@
+ 
+     QColor rgba = b.color();
+     if (d->grayscale) {
+-        qreal gray = qGray(rgba.rgba())/255.;
+-        *d->currentPage << gray << gray << gray;
++        qreal gray = (255-qGray(rgba.rgba()))/255.0;
++        *d->currentPage << 0.0 << 0.0 << 0.0 << gray;
+     } else {
+-        *d->currentPage << rgba.redF()
+-                        << rgba.greenF()
+-                        << rgba.blueF();
++        *d->currentPage << rgba.cyanF()
++                        << rgba.magentaF()
++                        << rgba.yellowF()
++                        << rgba.blackF();
+     }
+     *d->currentPage << "SCN\n";
+ 
+@@ -1385,12 +1387,13 @@
+     if (specifyColor) {
+         QColor rgba = d->brush.color();
+         if (d->grayscale) {
+-            qreal gray = qGray(rgba.rgba())/255.;
+-            *d->currentPage << gray << gray << gray;
++            qreal gray = (255-qGray(rgba.rgba()))/255.0;
++            *d->currentPage << 0.0 << 0.0 << 0.0 << gray;
+         } else {
+-            *d->currentPage << rgba.redF()
+-                            << rgba.greenF()
+-                            << rgba.blueF();
++            *d->currentPage << rgba.cyanF()
++                            << rgba.magentaF()
++                            << rgba.yellowF()
++                            << rgba.blackF();
+         }
+     }
+     if (patternObject)
+@@ -1637,7 +1640,7 @@
+ 
+     // color space for pattern
+     patternColorSpace = addXrefEntry(-1);
+-    xprintf("[/Pattern /DeviceRGB]\n"
++    xprintf("[/Pattern /DeviceCMYK]\n"
+             "endobj\n");
+ }
+ 
+@@ -1837,7 +1840,7 @@
+     xprintf("<<\n"
+             "/ColorSpace <<\n"
+             "/PCSp %d 0 R\n"
+-            "/CSp /DeviceRGB\n"
++            "/CSp /DeviceCMYK\n"
+             "/CSpg /DeviceGray\n"
+             ">>\n"
+             "/ExtGState <<\n"

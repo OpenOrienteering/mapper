@@ -20,8 +20,11 @@
 
 #include "map_dialog_rotate.h"
 
-#include <QtWidgets>
 #include <qmath.h>
+#include <QDialogButtonBox>
+#include <QFormLayout>
+#include <QLabel>
+#include <QRadioButton>
 
 #include "core/georeferencing.h"
 #include "map.h"

@@ -1,5 +1,7 @@
 /*
- *    Copyright 2012, 2013, 2014 Pete Curtis, Kai Pastor
+ *    Copyright 2012 Pete Curtis
+ *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2012-2015  Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -22,6 +24,7 @@
 
 #include <QDebug>
 #include <QFile>
+#include <QScopedValueRollback>
 #include <QStringBuilder>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
@@ -57,7 +60,7 @@ const int XMLFileFormat::current_version = 6;
 int XMLFileFormat::active_version = 5; // updated by XMLFileExporter::doExport()
 
 const QString XMLFileFormat::magic_string = "<?xml ";
-const QString XMLFileFormat::mapper_namespace = "http://oorienteering.sourceforge.net/mapper/xml/v2";
+const QString XMLFileFormat::mapper_namespace = "http://openorienteering.org/apps/mapper/xml/v2";
 
 XMLFileFormat::XMLFileFormat()
  : FileFormat(MapFile, "XML", ImportExport::tr("OpenOrienteering Mapper"), "omap", 
@@ -74,12 +77,12 @@ bool XMLFileFormat::understands(const unsigned char *buffer, size_t sz) const
 	return false;
 }
 
-Importer *XMLFileFormat::createImporter(QIODevice* stream, Map *map, MapView *view) const throw (FileFormatException)
+Importer *XMLFileFormat::createImporter(QIODevice* stream, Map *map, MapView *view) const
 {
 	return new XMLFileImporter(stream, map, view);
 }
 
-Exporter *XMLFileFormat::createExporter(QIODevice* stream, Map *map, MapView *view) const throw (FileFormatException)
+Exporter *XMLFileFormat::createExporter(QIODevice* stream, Map *map, MapView *view) const
 {
 	return new XMLFileExporter(stream, map, view);
 }
@@ -162,12 +165,12 @@ XMLFileExporter::XMLFileExporter(QIODevice* stream, Map *map, MapView *view)
   xml(stream)
 {
 	// Determine auto-formatting default from filename, if possible.
-	const QFile* file = qobject_cast< const QFile* >(stream);
+	auto file = qobject_cast<const QFileDevice*>(stream);
 	bool auto_formatting = (file && file->fileName().contains(".xmap"));
 	setOption("autoFormatting", auto_formatting);
 }
 
-void XMLFileExporter::doExport() throw (FileFormatException)
+void XMLFileExporter::doExport()
 {
 	if (option("autoFormatting").toBool() == true)
 		xml.setAutoFormatting(true);
@@ -258,7 +261,7 @@ void XMLFileExporter::exportColors()
 					xml.writeTextElement(literal::namedcolor, color->getSpotColorName());
 					break;
 				case MapColor::CustomColor:
-					Q_FOREACH(component, color->getComponents())
+					for (auto&& component : color->getComponents())
 					{
 						XmlElementWriter component_element(xml, literal::component);
 						component_element.writeAttribute(literal::factor, component.factor);
@@ -352,8 +355,8 @@ void XMLFileExporter::exportView()
 {
 	XmlElementWriter view_element(xml, literal::view);
 	
-	view_element.writeAttribute(literal::area_hatching_enabled, map->area_hatching_enabled);
-	view_element.writeAttribute(literal::baseline_view_enabled, map->baseline_view_enabled);
+	view_element.writeAttribute(literal::area_hatching_enabled, bool(map->renderable_options & Symbol::RenderAreasHatched));
+	view_element.writeAttribute(literal::baseline_view_enabled, bool(map->renderable_options & Symbol::RenderBaselines));
 	
 	map->getGrid().save(xml);
 	
@@ -363,7 +366,8 @@ void XMLFileExporter::exportView()
 
 void XMLFileExporter::exportPrint()
 {
-	map->printerConfig().save(xml, literal::print);
+	if (map->hasPrinterConfig())
+		map->printerConfig().save(xml, literal::print);
 }
 
 void XMLFileExporter::exportUndo()
@@ -396,7 +400,7 @@ void XMLFileImporter::addWarningUnsupportedElement()
 	);
 }
 
-void XMLFileImporter::import(bool load_symbols_only) throw (FileFormatException)
+void XMLFileImporter::import(bool load_symbols_only)
 {
 	if (!xml.readNextStartElement() || xml.name() != literal::map)
 	{
@@ -412,10 +416,44 @@ void XMLFileImporter::import(bool load_symbols_only) throw (FileFormatException)
 	else if (version > XMLFileFormat::current_version)
 		addWarning(Importer::tr("Unsupported new file format version. Some map features will not be loaded or saved by this version of the program."));
 	
+	QScopedValueRollback<MapCoord::BoundsOffset> rollback { MapCoord::boundsOffset() };
+	MapCoord::boundsOffset().reset(true);
+	georef_offset_adjusted = false;
 	importElements(load_symbols_only);
+	
+	auto offset = MapCoord::boundsOffset();
+	if (!load_symbols_only && !offset.isZero())
+	{
+		addWarning(tr("Some coordinates were out of bounds for printing. Map content was adjusted."));
+		
+		MapCoordF offset_f { offset.x / 1000.0, offset.y / 1000.0 };
+		
+		// Apply the offset
+		auto printer_config = map->printerConfig();
+		auto& print_area = printer_config.print_area;
+		print_area.translate( -offset_f );
+		
+		// Verify the adjusted print area, and readjust if necessary
+		if (print_area.top() <= -1000000.0 || print_area.bottom() > 1000000.0)
+			print_area.moveTop(-print_area.width() / 2);
+		if (print_area.left() <= -1000000.0 || print_area.right() > 1000000.0)
+			print_area.moveLeft(-print_area.width() / 2);
+		
+		map->setPrinterConfig(printer_config);
+		
+		if (!georef_offset_adjusted)
+		{
+			// We need to adjust the georeferencing.
+			auto georef = map->getGeoreferencing();
+			auto ref_point = MapCoordF { georef.getMapRefPoint() };
+			auto new_projected = georef.toProjectedCoords(ref_point + offset_f);
+			georef.setProjectedRefPoint(new_projected, false);
+			map->setGeoreferencing(georef);
+		}
+	}
 }
 
-void XMLFileImporter::importElements(bool load_symbols_only) throw (FileFormatException)
+void XMLFileImporter::importElements(bool load_symbols_only)
 {
 	while (xml.readNextStartElement())
 	{
@@ -470,17 +508,23 @@ void XMLFileImporter::importElements(bool load_symbols_only) throw (FileFormatEx
 	}
 	
 	if (xml.error())
-		throw FileFormatException(xml.errorString());
+		throw FileFormatException(
+		        tr("Error at line %1 column %2: %3")
+		        .arg(xml.lineNumber())
+		        .arg(xml.columnNumber())
+		        .arg(xml.errorString()) );
 }
 
 void XMLFileImporter::importGeoreferencing(bool load_symbols_only)
 {
 	Q_ASSERT(xml.name() == literal::georeferencing);
 	
+	bool check_for_offset = MapCoord::boundsOffset().check_for_offset;
+	
 	Georeferencing georef;
 	georef.load(xml, load_symbols_only);
 	map->setGeoreferencing(georef);
-	if (!georef.isValid() && georef.getState() != Georeferencing::ScaleOnly)
+	if (!georef.isValid())
 	{
 		QString error_text = georef.getErrorText();
 		if (error_text.isEmpty())
@@ -489,6 +533,13 @@ void XMLFileImporter::importGeoreferencing(bool load_symbols_only)
 		           arg(georef.getProjectedCRSSpec()).
 		           arg(error_text));
 	}
+	
+	if (MapCoord::boundsOffset().isZero())
+		// Georeferencing was not adjusted on import.
+		MapCoord::boundsOffset().reset(check_for_offset);
+	else if (check_for_offset)
+		// Georeferencing was adjusted on import, before other coordinates.
+		georef_offset_adjusted = true;
 }
 
 /** Helper for delayed actions */
@@ -622,11 +673,11 @@ void XMLFileImporter::importColors()
 	
 	// All spot colors are loaded at this point.
 	// Now deal with depending color compositions from the backlog.
-	Q_FOREACH(XMLFileImporterColorBacklogItem item, backlog)
+	for (auto&& item : backlog)
 	{
 		// Process the list of spot color components.
 		SpotColorComponents out_components;
-		Q_FOREACH(SpotColorComponent in_component, item.components)
+		for (auto&& in_component : item.components)
 		{
 			const MapColor* out_color = map->getColor(in_component.spot_color->getPriority());
 			if (out_color == NULL || out_color->getSpotColorMethod() != MapColor::SpotColor)
@@ -662,6 +713,9 @@ void XMLFileImporter::importColors()
 
 void XMLFileImporter::importSymbols()
 {
+	QScopedValueRollback<MapCoord::BoundsOffset> offset { MapCoord::boundsOffset() };
+	MapCoord::boundsOffset().reset(false);
+	
 	XmlElementReader symbols_element(xml);
 	int num_symbols = symbols_element.attribute<int>(literal::count);
 	map->symbols.reserve(qMin(num_symbols, 1000)); // 1000 is not a limit
@@ -768,17 +822,26 @@ void XMLFileImporter::importView()
 	Q_ASSERT(xml.name() == literal::view);
 	
 	XmlElementReader view_element(xml);
-	map->area_hatching_enabled = view_element.attribute<bool>(literal::area_hatching_enabled);
-	map->baseline_view_enabled = view_element.attribute<bool>(literal::baseline_view_enabled);
+	if (view_element.attribute<bool>(literal::area_hatching_enabled))
+		map->renderable_options |= Symbol::RenderAreasHatched;
+	if (view_element.attribute<bool>(literal::baseline_view_enabled))
+		map->renderable_options |= Symbol::RenderBaselines;
 	
 	while (xml.readNextStartElement())
 	{
 		if (xml.name() == literal::grid)
+		{
 			map->setGrid(MapGrid().load(xml));
+		}
 		else if (xml.name() == literal::map_view)
-			view->load(xml);
+		{
+			if (view)
+				view->load(xml);
+		}
 		else
+		{
 			xml.skipCurrentElement(); // unsupported
+		}
 	}
 }
 
@@ -786,15 +849,41 @@ void XMLFileImporter::importPrint()
 {
 	Q_ASSERT(xml.name() == literal::print);
 	
-	map->setPrinterConfig(MapPrinterConfig(*map, xml));
+	try
+	{
+		map->setPrinterConfig(MapPrinterConfig(*map, xml));
+	}
+	catch (FileFormatException& e)
+	{
+		addWarning(ImportExport::tr("Error while loading the printing configuration at %1:%2: %3")
+		           .arg(xml.lineNumber()).arg(xml.columnNumber()).arg(e.message()));
+	}
 }
 
 void XMLFileImporter::importUndo()
 {
-	map->undoManager().loadUndo(xml, symbol_dict);
+	try
+	{
+		map->undoManager().loadUndo(xml, symbol_dict);
+	}
+	catch (FileFormatException& e)
+	{
+		addWarning(ImportExport::tr("Error while loading the undo/redo steps at %1:%2: %3")
+		           .arg(xml.lineNumber()).arg(xml.columnNumber()).arg(e.message()));
+		map->undoManager().clear();
+	}
 }
 
 void XMLFileImporter::importRedo()
 {
-	map->undoManager().loadRedo(xml, symbol_dict);
+	try
+	{
+		map->undoManager().loadRedo(xml, symbol_dict);
+	}
+	catch (FileFormatException& e)
+	{
+		addWarning(ImportExport::tr("Error while loading the undo/redo steps at %1:%2: %3")
+		           .arg(xml.lineNumber()).arg(xml.columnNumber()).arg(e.message()));
+		map->undoManager().clear();
+	}
 }

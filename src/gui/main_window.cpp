@@ -1,6 +1,6 @@
 /*
- *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2014 Thomas Schöps, Kai Pastor
+ *    Copyright 2012, 2013, 2014 Thomas Schöps
+ *    Copyright 2012-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -21,9 +21,22 @@
 
 #include "main_window.h"
 
-#include <QtWidgets>
+#include <QApplication>
+#include <QCloseEvent>
+#include <QDesktopServices>
+#include <QDesktopWidget>
+#include <QDir>
+#include <QFileDialog>
+#include <QLabel>
+#include <QMessageBox>
+#include <QMenuBar>
 #include <QProxyStyle>
 #include <QSettings>
+#include <QStackedWidget>
+#include <QStatusBar>
+#include <QStringBuilder>
+#include <QToolBar>
+#include <QWhatsThis>
 
 #include <mapper_config.h>
 
@@ -39,44 +52,45 @@
 #include "../file_format.h"
 #include "../settings.h"
 #include "settings_dialog.h"
+#include "text_browser_dialog.h"
 #include "../util.h"
 
-#if defined(ANDROID)
+#if defined(Q_OS_ANDROID)
 #include <QtAndroidExtras/QAndroidJniObject>
 #endif
 
 
-#if (defined Q_OS_MAC)
-// Cf. qtbase/src/plugins/platforms/cocoa/qcocoamenuloader.mm.
-// These translations should come with Qt, but are missing
-// for some language (at least for de in Qt 5.0.1).
-static const char *application_menu_strings[] = {
-  QT_TRANSLATE_NOOP("MAC_APPLICATION_MENU", "Services"),
-  QT_TRANSLATE_NOOP("MAC_APPLICATION_MENU", "Hide %1"),
-  QT_TRANSLATE_NOOP("MAC_APPLICATION_MENU", "Hide Others"),
-  QT_TRANSLATE_NOOP("MAC_APPLICATION_MENU", "Show All"),
-  QT_TRANSLATE_NOOP("MAC_APPLICATION_MENU", "Preferences..."),
-  QT_TRANSLATE_NOOP("MAC_APPLICATION_MENU", "Quit %1"),
-  QT_TRANSLATE_NOOP("MAC_APPLICATION_MENU", "About %1")
-};
-#endif
 
 int MainWindow::num_open_files = 0;
 
 MainWindow::MainWindow(bool as_main_window)
 : QMainWindow()
 , has_autosave_conflict(false)
+, homescreen_disabled(false)
 {
+#if (defined Q_OS_MAC)
+	// Cf. qtbase/src/plugins/platforms/cocoa/qcocoamenuloader.mm.
+	// These translations should come with Qt, but were missing
+	// for some languages (at least for de in Qt 5.0.1).
+	static const char *application_menu_strings[] = {
+	  QT_TRANSLATE_NOOP("MAC_APPLICATION_MENU", "Services"),
+	  QT_TRANSLATE_NOOP("MAC_APPLICATION_MENU", "Hide %1"),
+	  QT_TRANSLATE_NOOP("MAC_APPLICATION_MENU", "Hide Others"),
+	  QT_TRANSLATE_NOOP("MAC_APPLICATION_MENU", "Show All"),
+	  QT_TRANSLATE_NOOP("MAC_APPLICATION_MENU", "Preferences..."),
+	  QT_TRANSLATE_NOOP("MAC_APPLICATION_MENU", "Quit %1"),
+	  QT_TRANSLATE_NOOP("MAC_APPLICATION_MENU", "About %1")
+	};
+	Q_UNUSED(application_menu_strings)
+#endif
+
 	controller = NULL;
 	has_unsaved_changes = false;
 	has_opened_file = false;
-#if defined(ANDROID)
+
 	create_menu = as_main_window;
-	show_menu = false;
-#else
-	create_menu = as_main_window;
-	show_menu = create_menu;
-#endif
+	show_menu = create_menu && !mobileMode();
+	
 	disable_shortcuts = false;
 	setCurrentPath(QString());
 	maximized_before_fullscreen = false;
@@ -87,10 +101,10 @@ MainWindow::MainWindow(bool as_main_window)
 	setAttribute(Qt::WA_DeleteOnClose);
 	
 	status_label = new QLabel();
-#if ! defined(ANDROID)
 	statusBar()->addWidget(status_label, 1);
 	statusBar()->setSizeGripEnabled(as_main_window);
-#endif
+	if (mobileMode())
+		statusBar()->hide();
 	
 	central_widget = new QStackedWidget(this);
 	QMainWindow::setCentralWidget(central_widget);
@@ -129,6 +143,20 @@ const QString& MainWindow::appName() const
 	return app_name;
 }
 
+bool MainWindow::mobileMode() const
+{
+#ifdef Q_OS_ANDROID
+	static bool mobile_mode = qEnvironmentVariableIsSet("MAPPER_MOBILE_GUI")
+	                          ? (qgetenv("MAPPER_MOBILE_GUI") != "0")
+	                          : 1;
+#else
+	static bool mobile_mode = qEnvironmentVariableIsSet("MAPPER_MOBILE_GUI")
+	                          ? (qgetenv("MAPPER_MOBILE_GUI") != "0")
+	                          : 0;
+#endif
+	return mobile_mode;
+}
+
 void MainWindow::setCentralWidget(QWidget* widget)
 {
 	if (widget != NULL)
@@ -146,6 +174,11 @@ void MainWindow::setCentralWidget(QWidget* widget)
 		central_widget->removeWidget(w);
 		w->deleteLater();
 	}
+}
+
+void MainWindow::setHomeScreenDisabled(bool disabled)
+{
+	homescreen_disabled = disabled;
 }
 
 void MainWindow::setController(MainWindowController* new_controller, const QString& path)
@@ -376,7 +409,7 @@ void MainWindow::setStatusBarText(const QString& text)
 
 void MainWindow::showStatusBarMessage(const QString& text, int timeout)
 {
-#if defined(ANDROID)
+#if defined(Q_OS_ANDROID)
 	Q_UNUSED(timeout);
 	QAndroidJniObject java_string = QAndroidJniObject::fromString(text);
 	QAndroidJniObject::callStaticMethod<void>(
@@ -391,7 +424,7 @@ void MainWindow::showStatusBarMessage(const QString& text, int timeout)
 
 void MainWindow::clearStatusBarMessage()
 {
-#if ! defined(ANDROID)
+#if !defined(Q_OS_ANDROID)
 	statusBar()->clearMessage();
 #endif
 }
@@ -406,7 +439,7 @@ bool MainWindow::closeFile()
 			num_open_files--;
 			has_opened_file = false;
 		}
-		if (num_open_files > 0)
+		if (homescreen_disabled || num_open_files > 0)
 			close();
 		else
 			setController(new HomeScreenController());
@@ -567,7 +600,7 @@ MainWindow* MainWindow::findMainWindow(const QString& file_name)
 	if (canonical_file_path.isEmpty())
 		return NULL;
 	
-	foreach (QWidget *widget, qApp->topLevelWidgets())
+	for (auto widget : qApp->topLevelWidgets())
 	{
 		MainWindow* other = qobject_cast<MainWindow*>(widget);
 		if (other && other->currentPath() == canonical_file_path)
@@ -651,8 +684,10 @@ void MainWindow::showOpenDialog()
 
 bool MainWindow::openPath(const QString &path)
 {
+#ifndef Q_OS_ANDROID
 	// Empty path does nothing. This also helps with the single instance application code.
-	if (path.isEmpty()) return true;
+	if (path.isEmpty())
+		return true;
 	
 	MainWindow* const existing = findMainWindow(path);
 	if (existing)
@@ -662,6 +697,7 @@ bool MainWindow::openPath(const QString &path)
 		existing->activateWindow();
 		return true;
 	}
+#endif
 	
 	// Check a blocker that prevents immediate re-opening of crashing files.
 	// Needed for stopping auto-loading a crashing file on startup.
@@ -698,7 +734,7 @@ bool MainWindow::openPath(const QString &path)
 		// Assuming small screen, showing dialog before opening the file
 		AutosaveDialog* autosave_dialog = new AutosaveDialog(path, autosave_path, autosave_path, this);
 		int result = autosave_dialog->exec();
-		actual_path = (result == QDialog::Accepted) ? autosave_dialog->selectedPath() : QString();
+		new_actual_path = (result == QDialog::Accepted) ? autosave_dialog->selectedPath() : QString();
 		delete autosave_dialog;
 #else
 		// Assuming large screen, dialog will be shown while the autosaved file is open
@@ -713,17 +749,18 @@ bool MainWindow::openPath(const QString &path)
 		return false;
 	}
 	
-	MainWindow* open_window;
+	MainWindow* open_window = this;
+#if !defined(Q_OS_ANDROID)
 	if (has_opened_file)
 		open_window = new MainWindow(true);
-	else
-		open_window = this;
+#endif
+	
 	open_window->setController(new_controller, path);
 	open_window->actual_path = new_actual_path;
 	open_window->setHasAutosaveConflict(new_autosave_conflict);
-	open_window->setHasUnsavedChanges(/*actual_path != path*/false);
+	open_window->setHasUnsavedChanges(false);
 	
-	open_window->show();
+	open_window->setVisible(true); // Respect the window flags set by new_controller.
 	open_window->raise();
 	num_open_files++;
 	settings.remove(reopen_blocker);
@@ -789,7 +826,7 @@ void MainWindow::openPathLater(const QString& path)
 
 void MainWindow::openPathBacklog()
 {
-	Q_FOREACH(QString path, path_backlog)
+	for (auto&& path : path_backlog)
 		openPath(path);
 	path_backlog.clear();
 }
@@ -927,7 +964,7 @@ QString MainWindow::getOpenFileName(QWidget* parent, const QString& title, FileF
 	
 	if (types.testFlag(FileFormat::MapFile))
 	{
-		Q_FOREACH(const FileFormat *format, FileFormats.formats())
+		for (auto format : FileFormats.formats())
 		{
 			if (format->supportsImport())
 			{
@@ -972,7 +1009,7 @@ bool MainWindow::showSaveAsDialog()
 	
 	// Build the list of supported file filters based on the file format registry
 	QString filters;
-	Q_FOREACH(const FileFormat *format, FileFormats.formats())
+	for (auto format : FileFormats.formats())
 	{
 		if (format->supportsExport())
 		{
@@ -1018,7 +1055,7 @@ bool MainWindow::showSaveAsDialog()
 	QStringList selected_extensions(format->fileExtensions());
 	selected_extensions.replaceInStrings(QRegExp("^"), ".");
 	bool has_extension = false;
-	Q_FOREACH(QString selected_extension, selected_extensions)
+	for (auto selected_extension : selected_extensions)
 	{
 		if (path.endsWith(selected_extension, Qt::CaseInsensitive))
 		{
@@ -1069,7 +1106,14 @@ void MainWindow::showAbout()
 
 void MainWindow::showHelp()
 {
+#ifdef Q_OS_ANDROID
+	const QString manual_path = MapperResource::locate(MapperResource::MANUAL, "index.html");
+	const QUrl help_url = QUrl::fromLocalFile(manual_path);
+	TextBrowserDialog help_dialog(help_url, this);
+	help_dialog.exec();
+#else
 	Util::showHelp(this);
+#endif
 }
 
 void MainWindow::linkClicked(const QString &link)
@@ -1082,9 +1126,8 @@ void MainWindow::linkClicked(const QString &link)
 		showAbout();
 	else if (link.startsWith("examples:", Qt::CaseInsensitive))
 	{
-		const QString example(link.mid(9));
-		QString example_path = MapperResource::locate(MapperResource::EXAMPLE, example);
-		openPathLater(example_path);
+		auto example = link.midRef(9);
+		openPathLater(MapperResource::locate(MapperResource::EXAMPLE) % '/' % example);
 	}
 	else
 		QDesktopServices::openUrl(link);

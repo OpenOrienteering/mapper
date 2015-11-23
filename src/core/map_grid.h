@@ -25,7 +25,9 @@
 #include <QColor>
 
 QT_BEGIN_NAMESPACE
+class QIODevice;
 class QPainter;
+class QRectF;
 class QXmlStreamReader;
 class QXmlStreamWriter;
 QT_END_NAMESPACE

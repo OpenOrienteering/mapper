@@ -21,7 +21,7 @@
 #ifndef _OPENORIENTEERING_TOUCH_CURSOR_H_
 #define _OPENORIENTEERING_TOUCH_CURSOR_H_
 
-#include "map_coord.h"
+#include "core/map_coord.h"
 
 QT_BEGIN_NAMESPACE
 class QMouseEvent;

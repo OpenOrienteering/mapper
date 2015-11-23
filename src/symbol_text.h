@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2012-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -29,17 +30,19 @@
 #include "symbol_properties_widget.h"
 
 QT_BEGIN_NAMESPACE
-class QRadioButton;
 class QCheckBox;
+class QComboBox;
 class QDoubleSpinBox;
 class QFontComboBox;
 class QLineEdit;
 class QListWidget;
 class QPushButton;
+class QRadioButton;
 QT_END_NAMESPACE
 
 class ColorDropDown;
 class SymbolSettingDialog;
+class TextObject;
 
 /** Symbol for text, can be applied to TextObjects.
  * 
@@ -77,14 +80,25 @@ public:
 	/** Creates an empty text symbol. */
 	TextSymbol();
 	virtual ~TextSymbol();
-	virtual Symbol* duplicate(const MapColorMap* color_map = NULL) const;
+	Symbol* duplicate(const MapColorMap* color_map = NULL) const override;
 	
-	virtual void createRenderables(const Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output) const;
+	void createRenderables(
+	        const Object *object,
+	        const VirtualCoordVector &coords,
+	        ObjectRenderables &output,
+	        Symbol::RenderableOptions options) const override;
+	
+	using Symbol::createBaselineRenderables;
+	void createBaselineRenderables(
+	        const TextObject* text_object,
+	        const VirtualCoordVector &coords,
+	        ObjectRenderables &output) const;
+	
 	void createLineBelowRenderables(const Object* object, ObjectRenderables& output) const;
-	virtual void colorDeleted(const MapColor* color);
-	virtual bool containsColor(const MapColor* color) const;
-	virtual const MapColor* getDominantColorGuess() const;
-	virtual void scale(double factor);
+	void colorDeleted(const MapColor* color) override;
+	bool containsColor(const MapColor* color) const override;
+	const MapColor* guessDominantColor() const override;
+	void scale(double factor) override;
 	
 	/** Updates the internal QFont from the font settings. */
 	void updateQFont();
@@ -122,16 +136,17 @@ public:
 	
 	double getNextTab(double pos) const;
 	
-	static const float pt_in_mm;	// 1 pt in mm
 	static const float internal_point_size;
 	
-	virtual SymbolPropertiesWidget* createPropertiesWidget(SymbolSettingDialog* dialog);
+	SymbolPropertiesWidget* createPropertiesWidget(SymbolSettingDialog* dialog) override;
 	
 protected:
-	virtual bool loadImpl(QIODevice* file, int version, Map* map);
-	virtual void saveImpl(QXmlStreamWriter& xml, const Map& map) const;
-	virtual bool loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict);
-	virtual bool equalsImpl(const Symbol* other, Qt::CaseSensitivity case_sensitivity) const;
+#ifndef NO_NATIVE_FILE_FORMAT
+	bool loadImpl(QIODevice* file, int version, Map* map) override;
+#endif
+	void saveImpl(QXmlStreamWriter& xml, const Map& map) const override;
+	bool loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict) override;
+	bool equalsImpl(const Symbol* other, Qt::CaseSensitivity case_sensitivity) const override;
 	
 	QFont qfont;
 	QFontMetricsF metrics;

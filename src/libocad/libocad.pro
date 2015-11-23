@@ -19,8 +19,23 @@
 TEMPLATE = lib
 TARGET   = ocd
 CONFIG  += staticlib
+CONFIG  -= debug_and_release
 
-QMAKE_CFLAGS += -std=c99 -Wno-sign-compare -Wno-type-limits -Wno-unused-parameter -Wno-format -Wno-pointer-to-int-cast -Wno-int-to-pointer-cast
+android {
+	# Avoid staticlib install by undocumented behaviour of qmake
+	INSTALLS     = target
+	target.extra = @test -d .
+}
+
+QMAKE_CFLAGS += -std=c99
+QMAKE_CFLAGS_WARN_ON += \
+  -Wno-sign-compare \
+  -Wno-type-limits \
+  -Wno-unused-parameter \
+  -Wno-format \
+  -Wno-pointer-to-int-cast \
+  -Wno-int-to-pointer-cast \
+  -Wno-tautological-compare
 
 HEADERS = \
   libocad.h \

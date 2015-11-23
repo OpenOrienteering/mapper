@@ -21,6 +21,8 @@
 #ifndef _OPENORIENTEERING_DRAW_CIRCLE_H_
 #define _OPENORIENTEERING_DRAW_CIRCLE_H_
 
+#include <QPointer>
+
 #include "tool_draw_line_and_area.h"
 
 class KeyButtonBar;
@@ -35,7 +37,7 @@ public:
 	virtual ~DrawCircleTool();
 	
 	virtual void init();
-	virtual QCursor* getCursor() {return cursor;}
+	virtual const QCursor& getCursor() const;
 	
 	virtual bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
 	virtual bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
@@ -44,8 +46,6 @@ public:
 	virtual bool keyPressEvent(QKeyEvent* event);
 	
 	virtual void draw(QPainter* painter, MapWidget* widget);
-	
-	static QCursor* cursor;
 	
 protected:
 	virtual void finishDrawing();
@@ -64,7 +64,7 @@ protected:
 	bool start_from_center;
 	bool first_point_set;
 	bool second_point_set;
-	KeyButtonBar* key_button_bar;
+	QPointer<KeyButtonBar> key_button_bar;
 };
 
 #endif

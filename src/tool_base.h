@@ -24,9 +24,10 @@
 
 #include <vector>
 
-#include <QHash>
-#include <QScopedPointer>
 #include <QAction>
+#include <QHash>
+#include <QPointer>
+#include <QScopedPointer>
 
 #include "tool.h"
 
@@ -44,23 +45,23 @@ class MapEditorToolBase : public MapEditorTool
 {
 Q_OBJECT
 public:
-	MapEditorToolBase(const QCursor cursor, MapEditorTool::Type tool_type, MapEditorController* editor, QAction* tool_action);
+	MapEditorToolBase(const QCursor& cursor, MapEditorTool::Type tool_type, MapEditorController* editor, QAction* tool_action);
 	virtual ~MapEditorToolBase();
 	
-	virtual void init();
-	virtual QCursor* getCursor() {return &cursor;}
+	void init() override;
+	const QCursor& getCursor() const override;
 	
-	virtual bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
-	virtual bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
-	virtual bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
+	bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
+	bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
+	bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
 	
-	virtual bool keyPressEvent(QKeyEvent* event);
-	virtual bool keyReleaseEvent(QKeyEvent* event);
+	bool keyPressEvent(QKeyEvent* event) override;
+	bool keyReleaseEvent(QKeyEvent* event) override;
 	
 	/// Draws the preview renderables. Should be overridden to draw custom elements.
-	virtual void draw(QPainter* painter, MapWidget* widget);
+	void draw(QPainter* painter, MapWidget* widget) override;
 	
-	virtual void finishEditing();
+	void finishEditing() override;
 	
 protected slots:
 	void updateDirtyRect();
@@ -98,6 +99,15 @@ protected:
 	/// Called when the mouse is moved without the left mouse button being pressed
 	virtual void mouseMove();
 	
+	virtual void gestureStarted() override;
+	
+	void startDragging();
+	void updateDragging();
+	void finishDragging();
+	void cancelDragging();
+	/// Is the left mouse button pressed and has a drag move been started (by moving the mouse a minimum amount of pixels)?
+	bool isDragging() const;
+	
 	/// Called when a drag operation is started. This happens when dragging the mouse some pixels
 	/// away from the mouse press position. The distance is determined by start_drag_distance.
 	/// dragMove() is called immediately after this call to account for the already moved distance.
@@ -107,6 +117,8 @@ protected:
 	/// Called when a drag operation is finished. There is no need to update the edit operation with the
 	/// current cursor coordinates in this call as it is ensured that dragMove() is called before.
 	virtual void dragFinish();
+	
+	virtual void dragCanceled();
 	
 	/// Called when a key is pressed down. Return true if the key was processed by the tool.
 	virtual bool keyPress(QKeyEvent* event);
@@ -158,8 +170,6 @@ protected:
 	MapCoordF constrained_pos_map;
 	/// This is set to true when constrained_pos(_map) is a snapped position
 	bool snapped_to_pos;
-	/// Is the left mouse button pressed and has a drag move been started (by moving the mouse a minimum amount of pixels)?
-	bool dragging;
 	/// The amount of pixels the mouse has to be moved to start dragging. Defaults to Settings::getInstance().getStartDragDistancePx().
 	int start_drag_distance;
 	
@@ -183,15 +193,22 @@ protected:
 	/// Must be set by derived classes if a key button bar is used.
 	/// MapEditorToolBase will take care of including its modifiers into
 	/// active_modifiers and destruct it when the tool is destructed.
-	KeyButtonBar* key_button_bar;
+	QPointer<KeyButtonBar> key_button_bar;
 	
 private:
 	// Miscellaneous internals
 	QCursor cursor;
 	bool preview_update_triggered;
-	std::vector<Object*> undo_duplicates;
+	bool dragging;
+	bool dragging_canceled;
 	QScopedPointer<MapRenderables> renderables;
 	QScopedPointer<MapRenderables> old_renderables;
 };
+
+inline
+bool MapEditorToolBase::isDragging() const
+{
+	return dragging;
+}
 
 #endif

@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2012-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -20,7 +21,7 @@
 
 #include "symbol_point.h"
 
-#include <QtWidgets>
+#include <QVBoxLayout>
 #include <QXmlStreamAttributes>
 
 #include "core/map_color.h"
@@ -75,63 +76,78 @@ Symbol* PointSymbol::duplicate(const MapColorMap* color_map) const
 	return new_point;
 }
 
-void PointSymbol::createRenderables(const Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output) const
+void PointSymbol::createRenderables(
+        const Object* object,
+        const VirtualCoordVector& coords,
+        ObjectRenderables& output,
+        RenderableOptions options ) const
 {
-	createRenderablesScaled(object, flags, coords, output, 1.0f);
+	auto point = object->asPoint();
+	auto rotation = isRotatable() ? -point->getRotation() : 0.0f;
+	
+	if (options.testFlag(Symbol::RenderBaselines))
+	{
+		const MapColor* dominant_color = guessDominantColor();
+		if (dominant_color)
+		{
+			PointSymbol* point = Map::getUndefinedPoint();
+			const MapColor* temp_color = point->getInnerColor();
+			point->setInnerColor(dominant_color);
+			
+			point->createRenderablesScaled(coords[0], rotation, output, 1.0f);
+			
+			point->setInnerColor(temp_color);
+		}
+	}
+	else
+	{
+		createRenderablesScaled(coords[0], rotation, output, 1.0f);
+	}
 }
 
-void PointSymbol::createRenderablesScaled(const Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output, float coord_scale) const
+void PointSymbol::createRenderablesScaled(MapCoordF coord, float rotation, ObjectRenderables& output, float coord_scale) const
 {
-	Q_UNUSED(flags);
-	
 	if (inner_color && inner_radius > 0)
-		output.insertRenderable(new DotRenderable(this, coords[0]));
+		output.insertRenderable(new DotRenderable(this, coord));
 	if (outer_color && outer_width > 0)
-		output.insertRenderable(new CircleRenderable(this, coords[0]));
+		output.insertRenderable(new CircleRenderable(this, coord));
 	
-	const PointObject* point = reinterpret_cast<const PointObject*>(object);
-	float rotation = rotatable ? (-point->getRotation()) : 0;
-	double offset_x = coords[0].getX();
-	double offset_y = coords[0].getY();
-	
-	// Add elements which possibly need to be moved and rotated
-	int size = (int)objects.size();
-	for (int i = 0; i < size; ++i)
+	if (!objects.empty())
 	{
-		// Point symbol elements should not be entered into the map,
-		// otherwise map settings like area hatching affect them
-		assert(objects[i]->getMap() == NULL);
-		
-		const MapCoordVector& object_flags = objects[i]->getRawCoordinateVector();
-		int coords_size = (int)object_flags.size();
-		MapCoordVectorF transformed_coords;
-		transformed_coords.resize(coords_size);
-		
-		if (rotation == 0)
+		auto offset_x = coord.x();
+		auto offset_y = coord.y();
+		auto cosr = 1.0;
+		auto sinr = 0.0;
+		if (rotation != 0.0)
 		{
-			for (int c = 0; c < coords_size; ++c)
-			{
-				transformed_coords[c] = MapCoordF(coord_scale * object_flags[c].xd() + offset_x,
-												   coord_scale * object_flags[c].yd() + offset_y);
-			}
+			cosr = cos(rotation);
+			sinr = sin(rotation);
 		}
-		else
+		
+		// Add elements which possibly need to be moved and rotated
+		auto size = objects.size();
+		for (auto i = 0u; i < size; ++i)
 		{
-			float cosr = cos(rotation);
-			float sinr = sin(rotation);
+			// Point symbol elements should not be entered into the map,
+			// otherwise map settings like area hatching affect them
+			Q_ASSERT(!objects[i]->getMap());
 			
-			for (int c = 0; c < coords_size; ++c)
+			const MapCoordVector& object_coords = objects[i]->getRawCoordinateVector();
+			
+			MapCoordVectorF transformed_coords;
+			transformed_coords.reserve(object_coords.size());
+			for (auto& coord : object_coords)
 			{
-				float ox = coord_scale * object_flags[c].xd();
-				float oy = coord_scale * object_flags[c].yd();
-				transformed_coords[c] = MapCoordF(ox * cosr - oy * sinr + offset_x,
-												   oy * cosr + ox * sinr + offset_y);
+				auto ox = coord_scale * coord.x();
+				auto oy = coord_scale * coord.y();
+				transformed_coords.emplace_back(ox * cosr - oy * sinr + offset_x,
+				                                oy * cosr + ox * sinr + offset_y);
 			}
+			
+			// TODO: if this point is rotated, it has to pass it on to its children to make it work that rotatable point objects can be children.
+			// But currently only basic, rotationally symmetric points can be children, so it does not matter for now.
+			symbols[i]->createRenderables(objects[i], VirtualCoordVector(object_coords, transformed_coords), output, Symbol::RenderNormal);
 		}
-		
-		// TODO: if this point is rotated, it has to pass it on to its children to make it work that rotatable point objects can be children.
-		// But currently only basic, rotationally symmetric points can be children, so it does not matter for now.
-		symbols[i]->createRenderables(objects[i], object_flags, transformed_coords, output);
 	}
 }
 
@@ -228,7 +244,7 @@ bool PointSymbol::containsColor(const MapColor* color) const
 	return false;
 }
 
-const MapColor* PointSymbol::getDominantColorGuess() const
+const MapColor* PointSymbol::guessDominantColor() const
 {
 	bool have_inner_color = inner_color && inner_radius > 0;
 	bool have_outer_color = outer_color && outer_width > 0;
@@ -247,7 +263,7 @@ const MapColor* PointSymbol::getDominantColorGuess() const
 	{
 		// Hope that the first element's color is representative
 		if (symbols.size() > 0)
-			return symbols[0]->getDominantColorGuess();
+			return symbols[0]->guessDominantColor();
 		else
 			return NULL;
 	}
@@ -267,6 +283,8 @@ void PointSymbol::scale(double factor)
 	
 	resetIcon();
 }
+
+#ifndef NO_NATIVE_FILE_FORMAT
 
 bool PointSymbol::loadImpl(QIODevice* file, int version, Map* map)
 {
@@ -304,6 +322,8 @@ bool PointSymbol::loadImpl(QIODevice* file, int version, Map* map)
 	
 	return true;
 }
+
+#endif
 
 void PointSymbol::saveImpl(QXmlStreamWriter& xml, const Map& map) const
 {
@@ -420,7 +440,7 @@ PointSymbolSettings::PointSymbolSettings(PointSymbol* symbol, SymbolSettingDialo
 
 void PointSymbolSettings::reset(Symbol* symbol)
 {
-	assert(symbol->getType() == Symbol::Point);
+	Q_ASSERT(symbol->getType() == Symbol::Point);
 	
 	SymbolPropertiesWidget::reset(symbol);
 	this->symbol = reinterpret_cast<PointSymbol*>(symbol);

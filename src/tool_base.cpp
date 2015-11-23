@@ -39,9 +39,8 @@
 #include "util.h"
 
 
-MapEditorToolBase::MapEditorToolBase(const QCursor cursor, MapEditorTool::Type type, MapEditorController* editor, QAction* tool_button)
+MapEditorToolBase::MapEditorToolBase(const QCursor& cursor, MapEditorTool::Type type, MapEditorController* editor, QAction* tool_button)
 : MapEditorTool(editor, type, tool_button),
-  dragging(false),
   start_drag_distance(Settings::getInstance().getStartDragDistancePx()),
   angle_helper(new ConstrainAngleToolHelper()),
   snap_helper(new SnappingToolHelper(this)),
@@ -50,6 +49,8 @@ MapEditorToolBase::MapEditorToolBase(const QCursor cursor, MapEditorTool::Type t
   key_button_bar(NULL),
   cursor(cursor),
   preview_update_triggered(false),
+  dragging(false),
+  dragging_canceled(false),
   renderables(new MapRenderables(map())),
   old_renderables(new MapRenderables(map()))
 {
@@ -74,29 +75,37 @@ void MapEditorToolBase::init()
 	MapEditorTool::init();
 }
 
+const QCursor& MapEditorToolBase::getCursor() const
+{
+	return cursor;
+}
+
 bool MapEditorToolBase::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
 	active_modifiers = Qt::KeyboardModifiers(event->modifiers() | (key_button_bar ? key_button_bar->activeModifiers() : 0));
-	if (event->button() != Qt::LeftButton)
+	if (event->button() == Qt::LeftButton)
 	{
-		if (event->button() == Qt::RightButton)
-		{
-			// Do not show the ring menu when editing
-			return editingInProgress();
-		}
-		else
-			return false;
+		cur_map_widget = widget;
+		
+		click_pos = event->pos();
+		click_pos_map = map_coord;
+		
+		cur_pos = click_pos;
+		cur_pos_map = click_pos_map;
+		calcConstrainedPositions(widget);
+		
+		clickPress();
+		return true;
 	}
-	cur_map_widget = widget;
-	
-	click_pos = event->pos();
-	click_pos_map = map_coord;
-	cur_pos = click_pos;
-	cur_pos_map = click_pos_map;
-	calcConstrainedPositions(widget);
-	mouseMove();
-	clickPress();
-	return true;
+	else if (event->button() == Qt::RightButton)
+	{
+		// Do not show the ring menu when editing
+		return editingInProgress();
+	}
+	else
+	{
+		return false;
+	}
 }
 
 bool MapEditorToolBase::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
@@ -105,22 +114,30 @@ bool MapEditorToolBase::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, 
 	cur_pos = event->pos();
 	cur_pos_map = map_coord;
 	calcConstrainedPositions(widget);
-	if (!(event->buttons() & Qt::LeftButton))
+	
+	if (event->buttons().testFlag(Qt::LeftButton))
+	{
+		if (dragging)
+		{
+			updateDragging();
+		}
+		else if (dragging_canceled)
+		{
+			click_pos = cur_pos;
+			click_pos_map = cur_pos_map;
+			dragging_canceled = false;
+		}
+		else if ((event->pos() - click_pos).manhattanLength() >= start_drag_distance)
+		{
+			startDragging();
+		}
+		return true;
+	}
+	else
 	{
 		mouseMove();
 		return false;
 	}
-	
-	if (dragging)
-		dragMove();
-	else if ((event->pos() - click_pos).manhattanLength() >= start_drag_distance)
-	{
-		dragging = true;
-		dragStart();
-		dragMove();
-	}
-	
-	return true;
 }
 
 bool MapEditorToolBase::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
@@ -129,30 +146,28 @@ bool MapEditorToolBase::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coor
 	cur_pos = event->pos();
 	cur_pos_map = map_coord;
 	calcConstrainedPositions(widget);
-	if (event->button() != Qt::LeftButton)
+	
+	if (event->button() == Qt::LeftButton)
 	{
-		if (event->button() == Qt::RightButton)
+		if (dragging)
 		{
-			// Do not show the ring menu when editing
-			return editingInProgress();
+			finishDragging();
 		}
 		else
-			return false;
+		{
+			clickRelease();
+		}
+		return true;
 	}
-	
-	if (dragging)
+	else if (event->button() == Qt::RightButton)
 	{
-		dragMove();
-		dragging = false;
-		dragFinish();
+		// Do not show the ring menu when editing
+		return editingInProgress();
 	}
 	else
 	{
-		mouseMove();
-		clickRelease();
+		return false;
 	}
-	
-	return true;
 }
 
 bool MapEditorToolBase::keyPressEvent(QKeyEvent* event)
@@ -273,6 +288,43 @@ void MapEditorToolBase::mouseMove()
 	// nothing
 }
 
+void MapEditorToolBase::gestureStarted()
+{
+	if (dragging)
+		cancelDragging();
+}
+
+void MapEditorToolBase::startDragging() 
+{
+	Q_ASSERT(!dragging);
+	dragging = true;
+	dragging_canceled = false;
+	dragStart();
+	dragMove();
+}
+
+void MapEditorToolBase::updateDragging()
+{
+	Q_ASSERT(dragging);
+	dragMove();
+}
+
+void MapEditorToolBase::finishDragging()
+{
+	Q_ASSERT(dragging);
+	dragMove();
+	dragging = false;
+	dragFinish();
+}
+
+void MapEditorToolBase::cancelDragging()
+{
+	Q_ASSERT(dragging);
+	dragging = false;
+	dragging_canceled = true;
+	dragCanceled();
+}
+
 void MapEditorToolBase::dragStart() 
 {
 	// nothing
@@ -284,6 +336,11 @@ void MapEditorToolBase::dragMove()
 }
 
 void MapEditorToolBase::dragFinish()
+{
+	// nothing
+}
+
+void MapEditorToolBase::dragCanceled()
 {
 	// nothing
 }
@@ -341,7 +398,7 @@ void MapEditorToolBase::updatePreviewObjectsAsynchronously()
 
 void MapEditorToolBase::drawSelectionOrPreviewObjects(QPainter* painter, MapWidget* widget, bool draw_opaque)
 {
-	map()->drawSelection(painter, true, widget, renderables->isEmpty() ? NULL : renderables.data(), draw_opaque);
+	map()->drawSelection(painter, true, widget, renderables->empty() ? NULL : renderables.data(), draw_opaque);
 }
 
 void MapEditorToolBase::startEditing()
@@ -349,15 +406,15 @@ void MapEditorToolBase::startEditing()
 	Q_ASSERT(!editingInProgress());
 	
 	setEditingInProgress(true);
-	startEditingSelection(*old_renderables, &undo_duplicates);
+	startEditingSelection(*old_renderables);
 }
 
 void MapEditorToolBase::abortEditing()
 {
 	Q_ASSERT(editingInProgress());
 	
-	resetEditedObjects(&undo_duplicates);
-	finishEditingSelection(*renderables, *old_renderables, false, &undo_duplicates);
+	resetEditedObjects();
+	finishEditingSelection(*renderables, *old_renderables, false);
 	setEditingInProgress(false);
 }
 
@@ -371,7 +428,7 @@ void MapEditorToolBase::finishEditing(bool delete_objects, bool create_undo_step
 {
 	Q_ASSERT(editingInProgress());
 	
-	finishEditingSelection(*renderables, *old_renderables, create_undo_step, &undo_duplicates, delete_objects);
+	finishEditingSelection(*renderables, *old_renderables, create_undo_step, delete_objects);
 	map()->setObjectsDirty();
 	map()->emitSelectionEdited();
 	MapEditorTool::finishEditing();

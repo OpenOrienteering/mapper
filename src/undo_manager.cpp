@@ -21,6 +21,8 @@
 
 #include "undo_manager.h"
 
+#include <vector>
+
 #include <QMessageBox>
 #include <QWidget>
 
@@ -194,7 +196,7 @@ void UndoManager::updateMapState(const UndoStep *step) const
 		map->addObjectToSelection(*object, i == size);
 	}
 	
-	map->ensureVisibilityOfSelectedObjects();
+	map->ensureVisibilityOfSelectedObjects(Map::PartialVisibility);
 }
 
 
@@ -320,6 +322,8 @@ void UndoManager::emitChangedSignals(const UndoManager::State& old_state)
 		emit canRedoChanged(can_redo);
 }
 
+#ifndef NO_NATIVE_FILE_FORMAT
+
 bool UndoManager::load(QIODevice* file, int version)
 {
 	clear();
@@ -364,6 +368,7 @@ bool UndoManager::loadSteps(StepList& steps, QIODevice* file, int version)
 	return success;
 }
 
+#endif
 
 void UndoManager::saveUndo(QXmlStreamWriter& xml)
 {

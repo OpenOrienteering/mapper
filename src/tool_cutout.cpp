@@ -1,6 +1,6 @@
 /*
  *    Copyright 2013 Thomas Schöps
- *    Copyright 2014 Kai Pastor
+ *    Copyright 2013-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -85,7 +85,7 @@ void CutoutTool::drawImpl(QPainter* painter, MapWidget* widget)
 	drawSelectionOrPreviewObjects(painter, widget, true);
 
 	// Box selection
-	if (dragging)
+	if (isDragging())
 		drawSelectionBox(painter, widget, click_pos_map, cur_pos_map);
 }
 
@@ -117,10 +117,10 @@ int CutoutTool::updateDirtyRectImpl(QRectF& rect)
 	map()->includeSelectionRect(rect);
 	
 	// Box selection
-	if (dragging)
+	if (isDragging())
 	{
-		rectIncludeSafe(rect, click_pos_map.toQPointF());
-		rectIncludeSafe(rect, cur_pos_map.toQPointF());
+		rectIncludeSafe(rect, click_pos_map);
+		rectIncludeSafe(rect, cur_pos_map);
 	}
 	
 	return 0;
@@ -150,8 +150,7 @@ void CutoutTool::objectSelectionChangedImpl()
 
 void CutoutTool::clickRelease()
 {
-	float click_tolerance = Settings::getInstance().getMapEditorClickTolerancePx();
-	object_selector->selectAt(cur_pos_map, cur_map_widget->getMapView()->pixelToLength(click_tolerance), active_modifiers & Qt::ShiftModifier);
+	object_selector->selectAt(cur_pos_map, cur_map_widget->getMapView()->pixelToLength(clickTolerance()), active_modifiers & Qt::ShiftModifier);
 	updateStatusText();
 }
 
@@ -218,7 +217,7 @@ struct PhysicalCutoutOperation
 				in_objects.push_back(cutout_object);
 				in_objects.push_back(object->asPath());
 				BooleanTool::PathObjects out_objects;
-				if (!boolean_tool.executeForObjects(object->asPath(), object->getSymbol(), in_objects, out_objects))
+				if (!boolean_tool.executeForObjects(object->asPath(), in_objects, out_objects))
 					return true;
 				
 				add_step->addObject(object, object);

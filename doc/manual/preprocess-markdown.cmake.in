@@ -1,0 +1,90 @@
+#
+#    Copyright 2014, 2015 Kai Pastor
+#    
+#    This file is part of OpenOrienteering.
+# 
+#    OpenOrienteering is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+# 
+#    OpenOrienteering is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+# 
+#    You should have received a copy of the GNU General Public License
+#    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
+
+execute_process(COMMAND "date" "+%Y-%m-%d %H:%M:%S"
+  OUTPUT_VARIABLE date
+  OUTPUT_STRIP_TRAILING_WHITESPACE
+)
+
+if(NOT EXISTS "docs")
+	file(MAKE_DIRECTORY "docs")
+endif()
+
+if(NOT EXISTS "preprocess-markdown.stamp")
+	file(WRITE "preprocess-markdown.stamp")
+endif()
+
+file(GLOB input_files RELATIVE "@CMAKE_CURRENT_SOURCE_DIR@/docs" "@CMAKE_CURRENT_SOURCE_DIR@/docs/*.md")
+foreach(file ${input_files})
+	file(READ "@CMAKE_CURRENT_SOURCE_DIR@/docs/${file}" output)
+	if(NOT output MATCHES "^[^\n\r]*\r?\n==")
+		string(REGEX REPLACE "[.]md$" ""  pagename        "${file}")
+		string(REPLACE       "_"     " " pagename_spaces "${pagename}")
+		string(REGEX REPLACE "[-_ ]" "_" pagename_safe   "${pagename}")
+		set(output "${pagename_spaces} {#${pagename_safe}}\n======\n\n${output}")
+		string(REGEX REPLACE "^[^{]*({#.*}.*)<title *>(OpenOrienteering Mapper Help - )?(.*)</title>" "\\3  \\1" output "${output}")
+		string(REGEX REPLACE " *{#.*$" "" title "${output}")
+		string(REGEX REPLACE "^(${title} *{#.*}.*)<h3>${title} *</h3>" "\\1" output "${output}")
+	elseif(NOT output MATCHES "^[^\n\r{]*{#[^\n\r]*\r?\n")
+		string(REGEX REPLACE "[.]md$" ""  pagename        "${file}")
+		string(REGEX REPLACE "[_ ]" "_" pagename_safe   "${pagename}")
+		string(REGEX REPLACE "^(.[^\n\r]*)(.*)" "\\1 {#${pagename_safe}}\\2" output "${output}")
+	endif()
+	string(REGEX REPLACE "</?(!DOCTYPE|html|head|title|link|meta|body)[^>]*>" "" output "${output}")
+	string(REGEX REPLACE "<hr */?>\r?\n?" "\n---\n" output "${output}")
+	string(REGEX REPLACE "src=\"../../images/" "src=\"" output "${output}")
+	string(REGEX REPLACE "\n?<img [^>]*src=\"([^\"]*)\"[^>]*>[\n ]?" "\n![](\\1)\n" output "${output}")
+	string(REGEX REPLACE "\\[\\[img +(src=)?([^] ]+) *]]" "![](\\2)" output "${output}")
+	string(REGEX REPLACE "\\[\\[img +(src=)?([^] ]+) +alt=\"([^\"]+)\" *]]" "![\\3](\\2)" output "${output}")
+	string(REGEX REPLACE "\\[\\[img +(src=)?([^] ]+) +alt=([^]]*) *]]" "![\\3](\\2)" output "${output}")
+	string(REGEX REPLACE "href=\"attachment/" "href=\"" output "${output}")
+	string(MD5 output_md5 "${output}")
+	set(file_md5)
+	if(EXISTS "docs/${file}")
+		file(MD5 "docs/${file}" file_md5)
+	endif()
+	if(NOT "${output_md5}" STREQUAL "${file_md5}")
+		message(STATUS "Updating ${file}")
+		file(WRITE "docs/${file}" "${output}")
+		if(EXISTS "preprocess-markdown.stamp")
+			file(READ "preprocess-markdown.stamp" markdown_log)
+			string(REGEX REPLACE "([.+[\(\)^$*?|]|])" "\\\\\\1" file_esc "${file}")
+			string(REGEX REPLACE "(^|\n)[^\n]*: ${file_esc}\r?\n" "\\1" markdown_log "${markdown_log}")
+		else()
+			set(markdown_log "")
+		endif()
+		file(WRITE  "preprocess-markdown.stamp" "${markdown_log}")
+		file(APPEND "preprocess-markdown.stamp" "${date}: ${file}\n")
+	endif()
+endforeach()
+
+file(GLOB output_files RELATIVE "@CMAKE_CURRENT_BINARY_DIR@/docs" "@CMAKE_CURRENT_BINARY_DIR@/docs/*.md")
+foreach(file ${output_files})
+	if(NOT EXISTS "@CMAKE_CURRENT_SOURCE_DIR@/docs/${file}")
+		message(STATUS "Removing ${file}")
+		file(REMOVE "docs/${file}")
+		if(EXISTS "preprocess-markdown.stamp")
+			file(READ "preprocess-markdown.stamp" markdown_log)
+			string(REGEX REPLACE "([.+[\(\)^$*?|]|])" "\\\\\\1" file_esc "${file}")
+			string(REGEX REPLACE "(^|\n)[^\n]*: ${file_esc}\r?\n" "\\1" markdown_log "${markdown_log}")
+		else()
+			set(markdown_log "")
+		endif()
+		file(WRITE "preprocess-markdown.stamp" "${markdown_log}")
+	endif()
+endforeach()

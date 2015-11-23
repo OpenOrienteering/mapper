@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2012-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -21,38 +22,33 @@
 #ifndef _OPENORIENTEERING_RENDERABLE_IMPLENTATION_H_
 #define _OPENORIENTEERING_RENDERABLE_IMPLENTATION_H_
 
-#include <vector>
-
 #include <QPainter>
 
-#include <map>
-
+#include "object.h"
 #include "renderable.h"
-#include "map_coord.h"
-#include "path_coord.h"
 
 class QPainterPath;
 
+class AreaSymbol;
+class LineSymbol;
 class Map;
 class MapColor;
+class MapCoordF;
 class Object;
-class Symbol;
+class PathCoordVector;
 class PointSymbol;
-class LineSymbol;
-class AreaSymbol;
-class TextSymbol;
+class Symbol;
 class TextObject;
 struct TextObjectLineInfo;
+class TextSymbol;
 
 /** Renderable for displaying a filled dot. */
 class DotRenderable : public Renderable
 {
 public:
 	DotRenderable(const PointSymbol* symbol, MapCoordF coord);
-	DotRenderable(const DotRenderable& other);
-	virtual void render(QPainter& painter, QRectF& bounding_box, bool force_min_size, float scaling, bool on_screen) const;
-	virtual void getRenderStates(RenderStates& out) const;
-	//virtual Renderable* duplicate() {return new DotRenderable(*this);}
+	virtual void render(QPainter& painter, const RenderConfig& config) const override;
+	virtual PainterConfig getPainterConfig(const QPainterPath* clip_path = nullptr) const override;
 };
 
 /** Renderable for displaying a circle. */
@@ -60,32 +56,30 @@ class CircleRenderable : public Renderable
 {
 public:
 	CircleRenderable(const PointSymbol* symbol, MapCoordF coord);
-	CircleRenderable(const CircleRenderable& other);
-	virtual void render(QPainter& painter, QRectF& bounding_box, bool force_min_size, float scaling, bool on_screen) const;
-	virtual void getRenderStates(RenderStates& out) const;
-	//virtual Renderable* duplicate() {return new CircleRenderable(*this);}
+	virtual void render(QPainter& painter, const RenderConfig& config) const override;
+	virtual PainterConfig getPainterConfig(const QPainterPath* clip_path = nullptr) const override;
 	
 protected:
+	const float line_width;
 	QRectF rect;
-	float line_width;
 };
 
 /** Renderable for displaying a line. */
 class LineRenderable : public Renderable
 {
 public:
-	LineRenderable(const LineSymbol* symbol, const MapCoordVectorF& transformed_coords, const MapCoordVector& coords, const PathCoordVector& path_coords, bool closed);
-	LineRenderable(const LineRenderable& other);
-	virtual void render(QPainter& painter, QRectF& bounding_box, bool force_min_size, float scaling, bool on_screen) const;
-	virtual void getRenderStates(RenderStates& out) const;
-	//virtual Renderable* duplicate() {return new LineRenderable(*this);}
+	LineRenderable(const LineSymbol* symbol, const VirtualPath& virtual_path, bool closed);
+	LineRenderable(const LineSymbol* symbol, QPointF first, QPointF second);
+	virtual void render(QPainter& painter, const RenderConfig& config) const override;
+	virtual PainterConfig getPainterConfig(const QPainterPath* clip_path = nullptr) const override;
 	
 protected:
-	void extentIncludeCap(int i, float half_line_width, bool end_cap, const LineSymbol* symbol, const MapCoordVectorF& transformed_coords, const MapCoordVector& coords, bool closed);
-	void extentIncludeJoin(int i, float half_line_width, const LineSymbol* symbol, const MapCoordVectorF& transformed_coords, const MapCoordVector& coords, bool closed);
+	void extentIncludeCap(quint32 i, float half_line_width, bool end_cap, const LineSymbol* symbol, const VirtualPath& path);
 	
+	void extentIncludeJoin(quint32 i, float half_line_width, const LineSymbol* symbol, const VirtualPath& path);
+	
+	const float line_width;
 	QPainterPath path;
-	float line_width;
 	Qt::PenCapStyle cap_style;
 	Qt::PenJoinStyle join_style;
 };
@@ -94,15 +88,16 @@ protected:
 class AreaRenderable : public Renderable
 {
 public:
-	AreaRenderable(const AreaSymbol* symbol, const MapCoordVectorF& transformed_coords, const MapCoordVector& coords, const PathCoordVector* path_coords);
-	AreaRenderable(const AreaRenderable& other);
-	virtual void render(QPainter& painter, QRectF& bounding_box, bool force_min_size, float scaling, bool on_screen) const;
-	virtual void getRenderStates(RenderStates& out) const;
-	//virtual Renderable* duplicate() {return new AreaRenderable(*this);}
+	AreaRenderable(const AreaSymbol* symbol, const PathPartVector& path_parts);
+	AreaRenderable(const AreaSymbol* symbol, const VirtualPath& path);
+	virtual void render(QPainter& painter, const RenderConfig& config) const override;
+	virtual PainterConfig getPainterConfig(const QPainterPath* clip_path = nullptr) const override;
 	
-	inline QPainterPath* getPainterPath() {return &path;}
+	inline const QPainterPath* painterPath() const;
 	
 protected:
+	void addSubpath(const VirtualPath& virtual_path);
+	
 	QPainterPath path;
 };
 
@@ -111,10 +106,8 @@ class TextRenderable : public Renderable
 {
 public:
 	TextRenderable(const TextSymbol* symbol, const TextObject* text_object, const MapColor* color, double anchor_x, double anchor_y, bool framing_line = false);
-	TextRenderable(const TextRenderable& other);
-	virtual void render(QPainter& painter, QRectF& bounding_box, bool force_min_size, float scaling, bool on_screen) const;
-	virtual void getRenderStates(RenderStates& out) const;
-	//virtual Renderable* duplicate() {return new TextRenderable(*this);}
+	virtual void render(QPainter& painter, const RenderConfig& config) const override;
+	virtual PainterConfig getPainterConfig(const QPainterPath* clip_path = nullptr) const override;
 	
 protected:
 	QPainterPath path;
@@ -125,5 +118,16 @@ protected:
 	bool framing_line;
 	float framing_line_width;
 };
+
+
+
+// ### AreaRenderable inline code ###
+
+const QPainterPath* AreaRenderable::painterPath() const
+{
+	return &path;
+}
+
+
 
 #endif

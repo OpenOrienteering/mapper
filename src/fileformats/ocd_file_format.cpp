@@ -1,5 +1,5 @@
 /*
- *    Copyright 2013 Kai Pastor
+ *    Copyright 2013-2015 Kai Pastor
  *
  *    Some parts taken from file_format_oc*d8{.h,_p.h,cpp} which are
  *    Copyright 2012 Pete Curtis
@@ -69,12 +69,12 @@ bool OcdFileFormat::understands(const unsigned char* buffer, size_t sz) const
 	return (sz >= 2 && *reinterpret_cast<const quint16*>(buffer) == 0x0cad);
 }
 
-Importer* OcdFileFormat::createImporter(QIODevice* stream, Map *map, MapView *view) const throw (FileFormatException)
+Importer* OcdFileFormat::createImporter(QIODevice* stream, Map *map, MapView *view) const
 {
 	return new OcdFileImport(stream, map, view);
 }
 
-Exporter* OcdFileFormat::createExporter(QIODevice* stream, Map* map, MapView* view) const throw (FileFormatException)
+Exporter* OcdFileFormat::createExporter(QIODevice* stream, Map* map, MapView* view) const
 {
 	return new OCAD8FileExport(stream, map, view);
 }
@@ -83,17 +83,19 @@ Exporter* OcdFileFormat::createExporter(QIODevice* stream, Map* map, MapView* vi
 // ### OcdFileImport ###
 
 OcdFileImport::OcdFileImport(QIODevice* stream, Map* map, MapView* view)
- : Importer(stream, map, view),
-   delegate(NULL)
+ : Importer(stream, map, view)
+ , delegate(nullptr)
 {
     custom_8bit_encoding = QTextCodec::codecForName("Windows-1252");
 }
 
 OcdFileImport::~OcdFileImport()
 {
+	// nothing
 }
 
-void OcdFileImport::setCustom8BitEncoding(const char *encoding) {
+void OcdFileImport::setCustom8BitEncoding(const char* encoding)
+{
     custom_8bit_encoding = QTextCodec::codecForName(encoding);
 }
 
@@ -151,7 +153,7 @@ qint64 OcdFileImport::convertLength< quint32 >(quint32 ocd_length) const
 #endif // !NDEBUG
 
 template< >
-void OcdFileImport::importImplementation< Ocd::FormatLegacyImporter >(bool load_symbols_only) throw (FileFormatException)
+void OcdFileImport::importImplementation< Ocd::FormatLegacyImporter >(bool load_symbols_only)
 {
 	QBuffer new_stream(&buffer);
 	new_stream.open(QIODevice::ReadOnly);
@@ -159,25 +161,25 @@ void OcdFileImport::importImplementation< Ocd::FormatLegacyImporter >(bool load_
 	
 	delegate->import(load_symbols_only);
 	
-	for (std::vector< QString >::const_iterator w = delegate->warnings().begin(); w != delegate->warnings().end(); ++w)
+	for (auto&& w : delegate->warnings())
 	{
-		addWarning(*w);
+		addWarning(w);
 	}
 	
-	for (std::vector< ImportAction >::const_iterator a = delegate->actions().begin(); a != delegate->actions().end(); ++a)
+	for (auto&& a : delegate->actions())
 	{
-		addAction(*a);
+		addAction(a);
 	}
 }
 
 template< class F >
-void OcdFileImport::importImplementation(bool load_symbols_only) throw (FileFormatException)
+void OcdFileImport::importImplementation(bool load_symbols_only)
 {
 	OcdFile< F > file(buffer);
 #if 0
-	for (typename OcdFile< F >::StringIndex::iterator it = file.strings().begin(); it != file.strings().end(); ++it)
+	for (auto&& string : file.strings())
 	{
-		qDebug() << it->type << convertOcdString< typename F::Encoding >(file[it]);
+		qDebug() << string.type << convertOcdString< typename F::Encoding >(file[string]);
 	}
 #endif
 	
@@ -197,7 +199,7 @@ void OcdFileImport::importImplementation(bool load_symbols_only) throw (FileForm
 }
 
 template< >
-void OcdFileImport::importGeoreferencing< Ocd::FormatV8 >(const OcdFile< Ocd::FormatV8 >& file) throw (FileFormatException)
+void OcdFileImport::importGeoreferencing< Ocd::FormatV8 >(const OcdFile< Ocd::FormatV8 >& file)
 {
 	const Ocd::FileHeaderV8* header = file.header();
 	const Ocd::SetupV8* setup = reinterpret_cast< const Ocd::SetupV8* >(file.byteArray().data() + header->setup_pos);
@@ -213,13 +215,13 @@ void OcdFileImport::importGeoreferencing< Ocd::FormatV8 >(const OcdFile< Ocd::Fo
 }
 
 template< class F >
-void OcdFileImport::importGeoreferencing(const OcdFile< F >& file) throw (FileFormatException)
+void OcdFileImport::importGeoreferencing(const OcdFile< F >& file)
 {
-	for (typename OcdFile< F >::StringIndex::iterator it = file.strings().begin(); it != file.strings().end(); ++it)
+	for (auto&& string : file.strings())
 	{
-		if (it->type == 1039)
+		if (string.type == 1039)
 		{
-			importGeoreferencing(convertOcdString< typename F::Encoding >(file[it]));
+			importGeoreferencing(convertOcdString< typename F::Encoding >(file[string]));
 			break;
 		}
 	}
@@ -283,7 +285,7 @@ void OcdFileImport::importGeoreferencing(const QString& param_string)
 }
 
 template< >
-void OcdFileImport::importColors< class Ocd::FormatV8 >(const OcdFile< Ocd::FormatV8 >& file) throw (FileFormatException)
+void OcdFileImport::importColors< struct Ocd::FormatV8 >(const OcdFile< Ocd::FormatV8 >& file)
 {
 	const Ocd::SymbolHeaderV8 & symbol_header = file.header()->symbol_header;
 	int num_colors = symbol_header.num_colors;
@@ -312,13 +314,13 @@ void OcdFileImport::importColors< class Ocd::FormatV8 >(const OcdFile< Ocd::Form
 }
 
 template< class F >
-void OcdFileImport::importColors(const OcdFile< F >& file) throw (FileFormatException)
+void OcdFileImport::importColors(const OcdFile< F >& file)
 {
-	for (typename OcdFile< F >::StringIndex::iterator it = file.strings().begin(); it != file.strings().end(); ++it)
+	for (auto&& string : file.strings())
 	{
-		if (it->type == 9)
+		if (string.type == 9)
 		{
-			importColor(convertOcdString< typename F::Encoding >(file[it]));
+			importColor(convertOcdString< typename F::Encoding >(file[string]));
 		}
 	}
 	addWarning(tr("Spot color information was ignored."));
@@ -390,7 +392,7 @@ MapColor* OcdFileImport::importColor(const QString& param_string)
 	}
 	
 	if (!number_ok)
-		return NULL;
+		return nullptr;
 		
 	int color_pos = map->getNumColors();
 	MapColor* color = new MapColor(name, color_pos);
@@ -404,14 +406,14 @@ MapColor* OcdFileImport::importColor(const QString& param_string)
 }
 
 template< class F >
-void OcdFileImport::importSymbols(const OcdFile< F >& file) throw (FileFormatException)
+void OcdFileImport::importSymbols(const OcdFile< F >& file)
 {
 	for (typename OcdFile< F >::SymbolIndex::iterator it = file.symbols().begin(); it != file.symbols().end(); ++it)
 	{
 		// When extra symbols are created, we want to insert the main symbol
 		// before them, i.e. at pos.
 		int pos = map->getNumSymbols();
-		Symbol* symbol = NULL;
+		Symbol* symbol = nullptr;
 		
 		// Don't use switch, because F::SymbolType may have duplicate values.
 		if (it->type == F::TypePoint)
@@ -454,57 +456,53 @@ void OcdFileImport::importSymbols(const OcdFile< F >& file) throw (FileFormatExc
 }
 
 template< >
-void OcdFileImport::importObjects< class Ocd::FormatV8 >(const OcdFile< Ocd::FormatV8 >& file) throw (FileFormatException)
+void OcdFileImport::importObjects< struct Ocd::FormatV8 >(const OcdFile< Ocd::FormatV8 >& file)
 {
 	MapPart* part = map->getCurrentPart();
 	Q_ASSERT(part);
 	
-	for (typename OcdFile< Ocd::FormatV8 >::ObjectIndex::iterator it = file.objects().begin(); it != file.objects().end(); ++it)
+	for (auto&& object_entry : file.objects())
 	{
-		if (!it->symbol)
+		if (object_entry.symbol)
 		{
-			continue;
-		}
-		
-		Object* object = importObject(file[it], part);
-		if (object != NULL)
-		{
-			part->addObject(object, part->getNumObjects());
+			auto object = importObject(file[object_entry], part);
+			if (object)
+			{
+				part->addObject(object, part->getNumObjects());
+			}
 		}
 	}
 }
 
 template< class F >
-void OcdFileImport::importObjects(const OcdFile< F >& file) throw (FileFormatException)
+void OcdFileImport::importObjects(const OcdFile< F >& file)
 {
 	MapPart* part = map->getCurrentPart();
 	Q_ASSERT(part);
 	
-	for (typename OcdFile< F >::ObjectIndex::iterator it = file.objects().begin(); it != file.objects().end(); ++it)
+	for (auto&& object_entry : file.objects())
 	{
-		if ( !it->symbol ||
-		     it->status == OcdFile< F >::ObjectIndex::EntryType::StatusDeleted ||
-		     it->status == OcdFile< F >::ObjectIndex::EntryType::StatusDeletedForUndo )
+		if ( object_entry.symbol
+		     && object_entry.status != OcdFile< F >::ObjectIndex::EntryType::StatusDeleted
+		     && object_entry.status != OcdFile< F >::ObjectIndex::EntryType::StatusDeletedForUndo )
 		{
-			continue;
-		}
-		
-		Object* object = importObject(file[it], part);
-		if (object != NULL)
-		{
-			part->addObject(object, part->getNumObjects());
+			auto object = importObject(file[object_entry], part);
+			if (object)
+			{
+				part->addObject(object, part->getNumObjects());
+			}
 		}
 	}
 }
 
 template< class F >
-void OcdFileImport::importTemplates(const OcdFile< F >& file) throw (FileFormatException)
+void OcdFileImport::importTemplates(const OcdFile< F >& file)
 {
-	for (typename OcdFile< F >::StringIndex::iterator it = file.strings().begin(); it != file.strings().end(); ++it)
+	for (auto&& string : file.strings())
 	{
-		if (it->type == 8)
+		if (string.type == 8)
 		{
-			importTemplate(convertOcdString< typename F::Encoding >(file[it]), F::version());
+			importTemplate(convertOcdString< typename F::Encoding >(file[string]), F::version());
 		}
 	}
 }
@@ -518,7 +516,7 @@ Template* OcdFileImport::importTemplate(const QString& param_string, const int o
 	const QString clean_path = QDir::cleanPath(QString(filename).replace('\\', '/'));
 	const QString extension = QFileInfo(clean_path).suffix().toLower();
 	
-	Template* templ = NULL;
+	Template* templ = nullptr;
 	if (extension.compare("ocd") == 0)
 	{
 		templ = new TemplateMap(clean_path, map);
@@ -530,7 +528,7 @@ Template* OcdFileImport::importTemplate(const QString& param_string, const int o
 	else
 	{
 		addWarning(tr("Unable to import template: \"%1\" is not a supported template type.").arg(filename));
-		return NULL;
+		return nullptr;
 	}
 	
 	// 8 or 9 or 10 ? Only tested with 8 and 11
@@ -614,45 +612,61 @@ Template* OcdFileImport::importTemplate(const QString& param_string, const int o
 }
 
 template< >
-void OcdFileImport::importExtras< class Ocd::FormatV8 >(const OcdFile< Ocd::FormatV8 >& file) throw (FileFormatException)
+void OcdFileImport::importExtras< struct Ocd::FormatV8 >(const OcdFile< Ocd::FormatV8 >& file)
 {
 	const Ocd::FileHeaderV8* header = file.header();
 	map->setMapNotes(convertOcdString< Ocd::FormatV8::Encoding >(file.byteArray().data() + header->info_pos, header->info_size));
 }
 
 template< class F >
-void OcdFileImport::importExtras(const OcdFile< F >& file) throw (FileFormatException)
+void OcdFileImport::importExtras(const OcdFile< F >& file)
 {
-	Q_UNUSED(file);
-	; // TODO
+	QString notes;
+	
+	for (auto&& string : file.strings())
+	{
+		switch (string.type)
+		{
+		case 11:
+			// OCD 9, 10
+			notes.append(convertOcdString< typename F::Encoding >(file[string]));
+			notes.append("\n");
+			break;
+		case 1061:
+			// OCD 11
+			notes.append(convertOcdString< typename F::Encoding >(file[string]));
+			break;
+		default:
+			; // nothing
+		}
+	}
+	
+	map->setMapNotes(notes);
 }
 
 template< >
-void OcdFileImport::importView< class Ocd::FormatV8 >(const OcdFile< Ocd::FormatV8 >& file) throw (FileFormatException)
+void OcdFileImport::importView< struct Ocd::FormatV8 >(const OcdFile< Ocd::FormatV8 >& file)
 {
-	Q_ASSERT(view);
-	
-	const Ocd::FileHeaderV8* header = file.header();
-	const Ocd::SetupV8* setup = reinterpret_cast< const Ocd::SetupV8* >(file.byteArray().data() + header->setup_pos);
-	
-	if (setup->zoom >= MapView::zoom_out_limit && setup->zoom <= MapView::zoom_in_limit)
-		view->setZoom(setup->zoom);
-	
-	const MapCoord center = convertOcdPoint(setup->center);
-	view->setPositionX(center.rawX());
-	view->setPositionY(center.rawY());
+	if (view)
+	{
+		const Ocd::FileHeaderV8* header = file.header();
+		const Ocd::SetupV8* setup = reinterpret_cast< const Ocd::SetupV8* >(file.byteArray().data() + header->setup_pos);
+		
+		if (setup->zoom >= MapView::zoom_out_limit && setup->zoom <= MapView::zoom_in_limit)
+			view->setZoom(setup->zoom);
+		
+		view->setCenter(convertOcdPoint(setup->center));
+	}
 }
 
 template< class F >
-void OcdFileImport::importView(const OcdFile< F >& file) throw (FileFormatException)
+void OcdFileImport::importView(const OcdFile< F >& file)
 {
-	Q_ASSERT(view);
-	
-	for (typename OcdFile< F >::StringIndex::iterator it = file.strings().begin(); it != file.strings().end(); ++it)
+	for (auto&& string : file.strings())
 	{
-		if (it->type == 1030)
+		if (string.type == 1030)
 		{
-			importView(convertOcdString< typename F::Encoding >(file[it]));
+			importView(convertOcdString< typename F::Encoding >(file[string]));
 			break;
 		}
 	}
@@ -660,8 +674,6 @@ void OcdFileImport::importView(const OcdFile< F >& file) throw (FileFormatExcept
 
 void OcdFileImport::importView(const QString& param_string)
 {
-	Q_ASSERT(view);
-	
 	const QChar* unicode = param_string.unicode();
 	
 	bool zoom_ok = false;
@@ -700,12 +712,13 @@ void OcdFileImport::importView(const QString& param_string)
 		i = next_i;
 	}
 	
-	view->setPositionX(qRound(offset_x * 1000));
-	view->setPositionY(-qRound(offset_y * 1000));
-	if ( zoom_ok &&
-	     zoom >= MapView::zoom_out_limit && zoom <= MapView::zoom_in_limit )
+	if (view)
 	{
-		view->setZoom(zoom);
+		view->setCenter(MapCoord(offset_x, -offset_y));
+		if (zoom_ok)
+		{
+			view->setZoom(zoom);
+		}
 	}
 }
 
@@ -739,10 +752,10 @@ PointSymbol* OcdFileImport::importPointSymbol(const S& ocd_symbol)
 template< class S >
 Symbol* OcdFileImport::importLineSymbol(const S& ocd_symbol)
 {
-	OcdImportedLineSymbol* line_for_borders = NULL;
+	OcdImportedLineSymbol* line_for_borders = nullptr;
 	
 	// Import a main line?
-	OcdImportedLineSymbol* main_line = NULL;
+	OcdImportedLineSymbol* main_line = nullptr;
 	if (ocd_symbol.double_mode == 0 || ocd_symbol.line_width > 0)
 	{
 		main_line = new OcdImportedLineSymbol();
@@ -887,7 +900,7 @@ Symbol* OcdFileImport::importLineSymbol(const S& ocd_symbol)
 	}
 	
 	// Import a 'framing' line?
-	OcdImportedLineSymbol* framing_line = NULL;
+	OcdImportedLineSymbol* framing_line = nullptr;
 	if (ocd_symbol.framing_width > 0)
 	{
 		framing_line = new OcdImportedLineSymbol();
@@ -922,9 +935,11 @@ Symbol* OcdFileImport::importLineSymbol(const S& ocd_symbol)
 	}
 	
 	// Import a 'double' line?
-	bool has_border_line = ocd_symbol.double_left_width > 0 || ocd_symbol.double_right_width > 0;
-	OcdImportedLineSymbol *double_line = NULL;
-	if ( ocd_symbol.double_mode != 0 &&
+	bool has_border_line =
+	        (ocd_symbol.double_mode != 0) &&
+	        (ocd_symbol.double_left_width > 0 || ocd_symbol.double_right_width > 0);
+	OcdImportedLineSymbol *double_line = nullptr;
+	if ( has_border_line &&
 		(ocd_symbol.double_flags & S::DoubleFillColorOn || (has_border_line && !line_for_borders)))
 	{
 		double_line = new OcdImportedLineSymbol();
@@ -935,7 +950,7 @@ Symbol* OcdFileImport::importLineSymbol(const S& ocd_symbol)
 		if (ocd_symbol.double_flags & S::DoubleFillColorOn)
 			double_line->color = convertColor(ocd_symbol.double_color);
 		else
-			double_line->color = NULL;
+			double_line->color = nullptr;
 		
 		double_line->cap_style = LineSymbol::FlatCap;
 		double_line->join_style = LineSymbol::MiterJoin;
@@ -980,7 +995,7 @@ Symbol* OcdFileImport::importLineSymbol(const S& ocd_symbol)
 	
 	// Create point symbols along line; middle ("normal") dash, corners, start, and end.
 	OcdImportedLineSymbol* symbol_line = main_line ? main_line : double_line;	// Find the line to attach the symbols to
-	if (symbol_line == NULL)
+	if (symbol_line == nullptr)
 	{
 		main_line = new OcdImportedLineSymbol();
 		symbol_line = main_line;
@@ -1032,7 +1047,7 @@ Symbol* OcdFileImport::importLineSymbol(const S& ocd_symbol)
 	// Suppress dash symbol at line ends if both start symbol and end symbol exist,
 	// but don't create a warning unless a dash symbol is actually defined
 	// and the line symbol is not Mapper's 799 Simple orienteering course.
-	if (symbol_line->start_symbol != NULL && symbol_line->end_symbol != NULL)
+	if (symbol_line->start_symbol != nullptr && symbol_line->end_symbol != nullptr)
 	{
 		symbol_line->setSuppressDashSymbolAtLineEnds(true);
 		if (symbol_line->dash_symbol && symbol_line->number[0] != 799)
@@ -1043,11 +1058,11 @@ Symbol* OcdFileImport::importLineSymbol(const S& ocd_symbol)
 	
 	// TODO: taper fields (tmode and tlast)
 	
-	if (main_line == NULL && framing_line == NULL)
+	if (main_line == nullptr && framing_line == nullptr)
 		return double_line;
-	else if (double_line == NULL && framing_line == NULL)
+	else if (double_line == nullptr && framing_line == nullptr)
 		return main_line;
-	else if (main_line == NULL && double_line == NULL)
+	else if (main_line == nullptr && double_line == nullptr)
 		return framing_line;
 	else
 	{
@@ -1074,6 +1089,7 @@ Symbol* OcdFileImport::importLineSymbol(const S& ocd_symbol)
 			framing_line->setProtected(false);
 		}
 		full_line->setNumParts(part);
+		addSymbolWarning(symbol_line, tr("This symbol cannot be saved as a proper OCD symbol again."));
 		return full_line;
 	}
 }
@@ -1086,7 +1102,7 @@ AreaSymbol* OcdFileImport::importAreaSymbol(const S& ocd_symbol, int ocd_version
 	
 	// Basic area symbol fields: minimum_area, color
 	symbol->minimum_area = 0;
-	symbol->color = ocd_symbol.fill_on ? convertColor(ocd_symbol.fill_color) : NULL;
+	symbol->color = ocd_symbol.fill_on ? convertColor(ocd_symbol.fill_color) : nullptr;
 	
 	symbol->patterns.clear();
 	symbol->patterns.reserve(4);
@@ -1391,7 +1407,7 @@ int OcdFileImport::circleRadius(const E* element) const
 template< class E >
 void OcdFileImport::setupPointSymbolPattern(PointSymbol* symbol, std::size_t data_size, const E* elements)
 {
-	Q_ASSERT(symbol != NULL);
+	Q_ASSERT(symbol != nullptr);
 	
 	symbol->setRotatable(true);
 	bool base_symbol_used = false;
@@ -1409,7 +1425,7 @@ void OcdFileImport::setupPointSymbolPattern(PointSymbol* symbol, std::size_t dat
 					PointSymbol* working_symbol = can_use_base_symbol ? symbol : new PointSymbol();
 					working_symbol->setInnerColor(convertColor(element->color));
 					working_symbol->setInnerRadius(convertLength(element->diameter) / 2);
-					working_symbol->setOuterColor(NULL);
+					working_symbol->setOuterColor(nullptr);
 					working_symbol->setOuterWidth(0);
 					if (can_use_base_symbol)
 					{
@@ -1422,7 +1438,7 @@ void OcdFileImport::setupPointSymbolPattern(PointSymbol* symbol, std::size_t dat
 						if (element->num_coords)
 						{
 							const MapCoord coord = convertOcdPoint(coords[0]);
-							element_object->setPosition(coord.rawX(), coord.rawY());
+							element_object->setPosition(coord.nativeX(), coord.nativeY());
 						}
 						symbol->addElement(symbol->getNumElements(), element_object, working_symbol);
 					}
@@ -1435,7 +1451,7 @@ void OcdFileImport::setupPointSymbolPattern(PointSymbol* symbol, std::size_t dat
 				{
 					bool can_use_base_symbol = (!base_symbol_used && (!element->num_coords || (!coords[0].x && !coords[0].y)));
 					PointSymbol* working_symbol = can_use_base_symbol ? symbol : new PointSymbol();
-					working_symbol->setInnerColor(NULL);
+					working_symbol->setInnerColor(nullptr);
 					working_symbol->setInnerRadius(convertLength(element_radius));
 					working_symbol->setOuterColor(convertColor(element->color));
 					working_symbol->setOuterWidth(convertLength(element->line_width));
@@ -1450,7 +1466,7 @@ void OcdFileImport::setupPointSymbolPattern(PointSymbol* symbol, std::size_t dat
 						if (element->num_coords)
 						{
 							const MapCoord coord = convertOcdPoint(coords[0]);
-							element_object->setPosition(coord.rawX(), coord.rawY());
+							element_object->setPosition(coord.nativeX(), coord.nativeY());
 						}
 						symbol->addElement(symbol->getNumElements(), element_object, working_symbol);
 					}
@@ -1488,7 +1504,7 @@ void OcdFileImport::setupPointSymbolPattern(PointSymbol* symbol, std::size_t dat
 template< class O >
 Object* OcdFileImport::importObject(const O& ocd_object, MapPart* part)
 {
-	Symbol* symbol = NULL;
+	Symbol* symbol = nullptr;
 	if (ocd_object.symbol >= 0)
 	{
 		symbol = symbol_index[ocd_object.symbol];
@@ -1512,7 +1528,7 @@ Object* OcdFileImport::importObject(const O& ocd_object, MapPart* part)
 		default:
 			addWarning(tr("Unable to load object"));
 			qDebug() << "Undefined object type" << ocd_object.type << " for object of symbol" << ocd_object.symbol;
-			return NULL;
+			return nullptr;
 		}
 	}
 		
@@ -1545,7 +1561,7 @@ Object* OcdFileImport::importObject(const O& ocd_object, MapPart* part)
 		}
 		
 		const MapCoord pos = convertOcdPoint(ocd_object.coords[0]);
-		p->setPosition(pos.rawX(), pos.rawY());
+		p->setPosition(pos.nativeX(), pos.nativeY());
 		
 		p->setMap(map);
 		return p;
@@ -1564,7 +1580,7 @@ Object* OcdFileImport::importObject(const O& ocd_object, MapPart* part)
 			addWarning(tr("Not importing text symbol, couldn't figure out path' (npts=%1): %2")
 			           .arg(ocd_object.num_items).arg(t->getText()));
 			delete t;
-			return NULL;
+			return nullptr;
 		}
 		t->setMap(map);
 		return t;
@@ -1581,12 +1597,12 @@ Object* OcdFileImport::importObject(const O& ocd_object, MapPart* part)
 		return p;
 	}
 	
-	return NULL;
+	return nullptr;
 }
 
 template< >
 inline
-QString OcdFileImport::getObjectText< class Ocd::ObjectV8 >(const Ocd::ObjectV8& ocd_object) const
+QString OcdFileImport::getObjectText< struct Ocd::ObjectV8 >(const Ocd::ObjectV8& ocd_object) const
 {
 	QString object_text;
 	if (ocd_object.unicode)
@@ -1622,7 +1638,7 @@ Object* OcdFileImport::importRectangleObject(const O& ocd_object, MapPart* part,
 	{
 		qDebug() << "importRectangleObject called with num_items =" << ocd_object.num_items << "for object of symbol" << ocd_object.symbol;
 		if (ocd_object.num_items != 5)  // 5 coords are handled like 4 coords now
-			return NULL;
+			return nullptr;
 	}
 	
 	// Convert corner points
@@ -1635,9 +1651,9 @@ Object* OcdFileImport::importRectangleObject(const O& ocd_object, MapPart* part,
 	MapCoordF top_right_f = MapCoordF(top_right);
 	MapCoordF bottom_left_f = MapCoordF(bottom_left);
 	MapCoordF bottom_right_f = MapCoordF(bottom_right);
-	MapCoordF right = MapCoordF(top_right.xd() - top_left.xd(), top_right.yd() - top_left.yd());
-	double angle = right.getAngle();
-	MapCoordF down = MapCoordF(bottom_left.xd() - top_left.xd(), bottom_left.yd() - top_left.yd());
+	MapCoordF right = MapCoordF(top_right.x() - top_left.x(), top_right.y() - top_left.y());
+	double angle = right.angle();
+	MapCoordF down = MapCoordF(bottom_left.x() - top_left.x(), bottom_left.y() - top_left.y());
 	right.normalize();
 	down.normalize();
 	
@@ -1645,39 +1661,39 @@ Object* OcdFileImport::importRectangleObject(const O& ocd_object, MapPart* part,
 	MapCoordVector coords;
 	if (rect.corner_radius == 0)
 	{
-		coords.push_back(top_left);
-		coords.push_back(top_right);
-		coords.push_back(bottom_right);
-		coords.push_back(bottom_left);
+		coords.emplace_back(top_left);
+		coords.emplace_back(top_right);
+		coords.emplace_back(bottom_right);
+		coords.emplace_back(bottom_left);
 	}
 	else
 	{
 		double handle_radius = (1 - BEZIER_KAPPA) * rect.corner_radius;
-		coords.push_back((top_right_f - right * rect.corner_radius).toCurveStartMapCoord());
-		coords.push_back((top_right_f - right * handle_radius).toMapCoord());
-		coords.push_back((top_right_f + down * handle_radius).toMapCoord());
-		coords.push_back((top_right_f + down * rect.corner_radius).toMapCoord());
-		coords.push_back((bottom_right_f - down * rect.corner_radius).toCurveStartMapCoord());
-		coords.push_back((bottom_right_f - down * handle_radius).toMapCoord());
-		coords.push_back((bottom_right_f - right * handle_radius).toMapCoord());
-		coords.push_back((bottom_right_f - right * rect.corner_radius).toMapCoord());
-		coords.push_back((bottom_left_f + right * rect.corner_radius).toCurveStartMapCoord());
-		coords.push_back((bottom_left_f + right * handle_radius).toMapCoord());
-		coords.push_back((bottom_left_f - down * handle_radius).toMapCoord());
-		coords.push_back((bottom_left_f - down * rect.corner_radius).toMapCoord());
-		coords.push_back((top_left_f + down * rect.corner_radius).toCurveStartMapCoord());
-		coords.push_back((top_left_f + down * handle_radius).toMapCoord());
-		coords.push_back((top_left_f + right * handle_radius).toMapCoord());
-		coords.push_back((top_left_f + right * rect.corner_radius).toMapCoord());
+		coords.emplace_back(top_right_f - right * rect.corner_radius, MapCoord::CurveStart);
+		coords.emplace_back(top_right_f - right * handle_radius);
+		coords.emplace_back(top_right_f + down * handle_radius);
+		coords.emplace_back(top_right_f + down * rect.corner_radius);
+		coords.emplace_back(bottom_right_f - down * rect.corner_radius, MapCoord::CurveStart);
+		coords.emplace_back(bottom_right_f - down * handle_radius);
+		coords.emplace_back(bottom_right_f - right * handle_radius);
+		coords.emplace_back(bottom_right_f - right * rect.corner_radius);
+		coords.emplace_back(bottom_left_f + right * rect.corner_radius, MapCoord::CurveStart);
+		coords.emplace_back(bottom_left_f + right * handle_radius);
+		coords.emplace_back(bottom_left_f - down * handle_radius);
+		coords.emplace_back(bottom_left_f - down * rect.corner_radius);
+		coords.emplace_back(top_left_f + down * rect.corner_radius, MapCoord::CurveStart);
+		coords.emplace_back(top_left_f + down * handle_radius);
+		coords.emplace_back(top_left_f + right * handle_radius);
+		coords.emplace_back(top_left_f + right * rect.corner_radius);
 	}
 	PathObject *border_path = new PathObject(rect.border_line, coords, map);
-	border_path->getPart(0).setClosed(true, false);
+	border_path->parts().front().setClosed(true, false);
 	
 	if (rect.has_grid && rect.cell_width > 0 && rect.cell_height > 0)
 	{
 		// Calculate grid sizes
-		double width = top_left.lengthTo(top_right);
-		double height = top_left.lengthTo(bottom_left);
+		double width = top_left.distanceTo(top_right);
+		double height = top_left.distanceTo(bottom_left);
 		int num_cells_x = qMax(1, qRound(width / rect.cell_width));
 		int num_cells_y = qMax(1, qRound(height / rect.cell_height));
 		
@@ -1688,16 +1704,16 @@ Object* OcdFileImport::importRectangleObject(const O& ocd_object, MapPart* part,
 		coords.resize(2);
 		for (int x = 1; x < num_cells_x; ++x)
 		{
-			coords[0] = (top_left_f + x * cell_width * right).toMapCoord();
-			coords[1] = (bottom_left_f + x * cell_width * right).toMapCoord();
+			coords[0] = MapCoord(top_left_f + x * cell_width * right);
+			coords[1] = MapCoord(bottom_left_f + x * cell_width * right);
 			
 			PathObject *path = new PathObject(rect.inner_line, coords, map);
 			part->addObject(path, part->getNumObjects());
 		}
 		for (int y = 1; y < num_cells_y; ++y)
 		{
-			coords[0] = (top_left_f + y * cell_height * down).toMapCoord();
-			coords[1] = (top_right_f + y * cell_height * down).toMapCoord();
+			coords[0] = MapCoord(top_left_f + y * cell_height * down);
+			coords[1] = MapCoord(top_right_f + y * cell_height * down);
 			
 			PathObject *path = new PathObject(rect.inner_line, coords, map);
 			part->addObject(path, part->getNumObjects());
@@ -1826,11 +1842,11 @@ bool OcdFileImport::fillTextPathCoords(TextObject *object, TextSymbol *symbol, q
 		double top_adjust = -symbol->getFontSize() + (metrics.ascent() + metrics.descent() + 0.5) / symbol->calculateInternalScaling();
 		
 		MapCoordF adjust_vector = MapCoordF(top_adjust * sin(object->getRotation()), top_adjust * cos(object->getRotation()));
-		top_left = MapCoord(top_left.xd() + adjust_vector.getX(), top_left.yd() + adjust_vector.getY());
-		top_right = MapCoord(top_right.xd() + adjust_vector.getX(), top_right.yd() + adjust_vector.getY());
+		top_left = MapCoord(top_left.x() + adjust_vector.x(), top_left.y() + adjust_vector.y());
+		top_right = MapCoord(top_right.x() + adjust_vector.x(), top_right.y() + adjust_vector.y());
 		
-		object->setBox((bottom_left.rawX() + top_right.rawX()) / 2, (bottom_left.rawY() + top_right.rawY()) / 2,
-					   top_left.lengthTo(top_right), top_left.lengthTo(bottom_left));
+		object->setBox((bottom_left.nativeX() + top_right.nativeX()) / 2, (bottom_left.nativeY() + top_right.nativeY()) / 2,
+					   top_left.distanceTo(top_right), top_left.distanceTo(bottom_left));
 		object->setVerticalAlignment(TextObject::AlignTop);
 	}
 	else
@@ -1841,14 +1857,14 @@ bool OcdFileImport::fillTextPathCoords(TextObject *object, TextSymbol *symbol, q
 		
 		// anchor point
 		MapCoord coord = convertOcdPoint(ocd_points[0]);
-		object->setAnchorPosition(coord.rawX(), coord.rawY());
+		object->setAnchorPosition(coord.nativeX(), coord.nativeY());
 		object->setVerticalAlignment(text_valign_map.value(symbol));
 	}
 	
 	return true;
 }
 
-void OcdFileImport::import(bool load_symbols_only) throw (FileFormatException)
+void OcdFileImport::import(bool load_symbols_only)
 {
 	Q_ASSERT(buffer.isEmpty());
 	
@@ -1869,29 +1885,26 @@ void OcdFileImport::import(bool load_symbols_only) throw (FileFormatException)
 	{
 		case 6:
 		case 7:
+			// We keep the following existing translation just in case
+			// we add support for version 6/7 to the new importer.
+			/* addWarning( */
+				(void)tr("Untested file importer for format: OCD %1").arg(version)
+			/* ) */;
 			importImplementation< Ocd::FormatLegacyImporter >(load_symbols_only);
 			break;
 		case 8:
 			if (Settings::getInstance().getSetting(Settings::General_NewOcd8Implementation).toBool())
-			{
-				addWarning(tr("Untested file importer for format: OCD %1").arg(version));
 				importImplementation< Ocd::FormatV8 >(load_symbols_only);
-			}
 			else
-			{
 				importImplementation< Ocd::FormatLegacyImporter >(load_symbols_only);
-			}
 			break;
 		case 9:
-			addWarning(tr("Untested file importer for format: OCD %1").arg(version));
 			importImplementation< Ocd::FormatV9 >(load_symbols_only);
 			break;
 		case 10:
-			addWarning(tr("Untested file importer for format: OCD %1").arg(version));
 			importImplementation< Ocd::FormatV10 >(load_symbols_only);
 			break;
 		case 11:
-			addWarning(tr("Untested file importer for format: OCD %1").arg(version));
 			importImplementation< Ocd::FormatV11 >(load_symbols_only);
 			break;
 		default:
@@ -1902,7 +1915,7 @@ void OcdFileImport::import(bool load_symbols_only) throw (FileFormatException)
 	}
 }
 
-void OcdFileImport::finishImport() throw (FileFormatException)
+void OcdFileImport::finishImport()
 {
 	if (delegate)
 	{
@@ -1913,14 +1926,7 @@ void OcdFileImport::finishImport() throw (FileFormatException)
 		delegate->finishImport();
 		
 		// Propagate new warnings and actions from the delegate to this importer.
-		for (std::vector< QString >::const_iterator w = delegate->warnings().begin()+warnings_size; w != delegate->warnings().end(); ++w)
-		{
-			addWarning(*w);
-		}
-		
-		for (std::vector< ImportAction >::const_iterator a = delegate->actions().begin()+actions_size; a != delegate->actions().end(); ++a)
-		{
-			addAction(*a);
-		}
+		std::for_each(begin(delegate->warnings()) + warnings_size, end(delegate->warnings()), [this](const QString& w) { addWarning(w); });
+		std::for_each(begin(delegate->actions()) + actions_size, end(delegate->actions()), [this](const ImportAction& a) { addAction(a); });
 	}
 }

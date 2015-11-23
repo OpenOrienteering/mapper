@@ -1,6 +1,6 @@
 /*
- *    Copyright 2012 Thomas Schöps
- *    Copyright 2013, 2014 Thomas Schöps, Kai Pastor
+ *    Copyright 2012-2014 Thomas Schöps
+ *    Copyright 2013-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -22,12 +22,11 @@
 #include "settings.h"
 
 #include <QApplication>
+#include <QDebug>
 #include <QLocale>
-#include <QVariant>
 #include <QScreen>
 #include <QSettings>
 #include <QStringList>
-#include <QDebug>
 
 #include "util.h"
 
@@ -85,14 +84,14 @@ Settings::Settings()
 	registerSetting(General_RecentFilesList, "recentFileList", QVariant(QStringList()));
 	registerSetting(General_OpenMRUFile, "openMRUFile", false);
 	registerSetting(General_Local8BitEncoding, "local_8bit_encoding", "Windows-1252");
-	registerSetting(General_NewOcd8Implementation, "new_ocd8_implementation", true);
+	registerSetting(General_NewOcd8Implementation, "new_ocd8_implementation_v0.6", true);
 	registerSetting(General_StartDragDistance, "startDragDistance", start_drag_distance_default);
 	
 	registerSetting(HomeScreen_TipsVisible, "HomeScreen/tipsVisible", true);
 	registerSetting(HomeScreen_CurrentTip, "HomeScreen/currentTip", -1);
 	
 	// Set antialiasing default depending on screen pixels per inch
-	registerSetting(MapDisplay_Antialiasing, "MapDisplay/antialiasing", Util::isAntialiasingRequired(this));
+	registerSetting(MapDisplay_Antialiasing, "MapDisplay/antialiasing", Util::isAntialiasingRequired(getSetting(General_PixelsPerInch).toReal()));
 	
 	// Migrate old settings
 	static QVariant current_version("0.5.9");
@@ -106,7 +105,14 @@ Settings::Settings()
 			settings.setValue(getSettingPath(MapEditor_SnapDistanceMM), Util::pixelToMMLogical(settings.value(getSettingPath(MapEditor_SnapDistanceMM)).toFloat()));
 		if (migrateValue("RectangleTool/helper_cross_radius", RectangleTool_HelperCrossRadiusMM, settings))
 			settings.setValue(getSettingPath(RectangleTool_HelperCrossRadiusMM), Util::pixelToMMLogical(settings.value(getSettingPath(RectangleTool_HelperCrossRadiusMM)).toFloat()));
+		
 		settings.setValue("version", current_version);
+		
+		if (!current_version.toString().startsWith("0."))
+		{
+			// Future cleanup
+			settings.remove("new_ocd8_implementation");
+		}
 	}
 }
 

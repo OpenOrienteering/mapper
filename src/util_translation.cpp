@@ -61,7 +61,7 @@ TranslationUtil::TranslationUtil(QLocale::Language lang, QString translation_fil
 
 bool TranslationUtil::load(QTranslator& translator, QString translation_name)
 {
-	Q_FOREACH(QString translation_dir, search_path)
+	for (auto&& translation_dir : search_path)
 	{
 		if (translator.load(translation_name, translation_dir))
 			return true;
@@ -81,15 +81,19 @@ LanguageCollection TranslationUtil::getAvailableLanguages()
 	QStringList name_filter;
 	name_filter << (base_name + "*.qm");
 	
-	Q_FOREACH(QString translation_dir, search_path)
+	for (auto&& translation_dir : search_path)
 	{
 		QDir dir(translation_dir);
-		Q_FOREACH (QString name, dir.entryList(name_filter, QDir::Files))
+		for (auto name : dir.entryList(name_filter, QDir::Files))
 		{
 			name.remove(0, base_name.length());
 			name.remove(name.length()-3, 3);
-			QString language_name = QLocale(name).nativeLanguageName();
-			language_map.insert(language_name, QLocale(name).language());
+			
+			if (name != "en")
+			{
+				QString language_name = QLocale(name).nativeLanguageName();
+				language_map.insert(language_name, QLocale(name).language());
+			}
 		}
 	}
 	

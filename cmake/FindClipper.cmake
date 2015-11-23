@@ -1,5 +1,5 @@
 #
-#    Copyright 2014 Kai Pastor
+#    Copyright 2014, 2015 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -16,36 +16,29 @@
 #    You should have received a copy of the GNU General Public License
 #    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
 
-#  Cf. http://www.cmake.org/Wiki/CMake:How_To_Find_Libraries
-#
-#  CLIPPER_FOUND        - System has libpolyclipping (aka Clipper)
-#  CLIPPER_INCLUDE_DIRS - The Clipper include directories
-#  CLIPPER_LIBRARIES    - The libraries needed to use Clipper
-#  CLIPPER_DEFINITIONS  - Compiler switches required for using Clipper
+# If the system's pkgconfig finds libpolyclipping (aka Clipper),  creates a
+# target polyclipping (library, imported), and sets CLIPPER_FOUND to true.
 
 find_package(PkgConfig)
-pkg_check_modules(PC_CLIPPER QUIET polyclipping)
+pkg_check_modules(POLYCLIPPING QUIET polyclipping)
 
-set(CLIPPER_DEFINITIONS ${PC_CLIPPER_CFLAGS_OTHER})
-
-find_path(CLIPPER_INCLUDE_DIR
-  clipper.hpp
-  HINTS ${PC_CLIPPER_INCLUDEDIR} ${PC_CLIPPER_INCLUDE_DIRS}
-)
-
-find_library(CLIPPER_LIBRARY
+find_library(POLYCLIPPING_LIBRARY_LOCATION
   NAMES polyclipping
-  HINTS ${PC_CLIPPER_LIBDIR} ${PC_CLIPPER_LIBRARY_DIRS}
+  PATHS ${POLYCLIPPING_LIBDIR}
+  NO_DEFAULT_PATH
 )
-
-set(CLIPPER_INCLUDE_DIRS ${CLIPPER_INCLUDE_DIR})
-set(CLIPPER_LIBRARIES ${CLIPPER_LIBRARY})
 
 include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(Clipper
-  DEFAULT_MSG
-  CLIPPER_LIBRARY
-  CLIPPER_INCLUDE_DIR
+  REQUIRED_VARS POLYCLIPPING_LIBRARY_LOCATION POLYCLIPPING_LIBDIR POLYCLIPPING_INCLUDE_DIRS
+  VERSION_VAR   POLYCLIPPING_VERSION
 )
 
-mark_as_advanced(CLIPPER_INCLUDE_DIR CLIPPER_LIBRARY)
+add_library(polyclipping IMPORTED UNKNOWN)
+set_target_properties(polyclipping PROPERTIES
+  IMPORTED_LOCATION             "${POLYCLIPPING_LIBRARY_LOCATION}"
+  INTERFACE_COMPILE_DEFINITIONS "${POLYCLIPPING_CFLAGS_OTHER}"
+  # We can't rely on POLYCLIPPING_INCLUDE_DIRS:
+  # Clipper-6.1.3a shipped with broken CFlags.
+  INTERFACE_INCLUDE_DIRECTORIES "${POLYCLIPPING_INCLUDEDIR}"
+)

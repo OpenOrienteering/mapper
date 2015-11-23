@@ -19,6 +19,15 @@
 TEMPLATE = lib
 TARGET   = qtsingleapplication
 CONFIG  += staticlib
+CONFIG  += c++11
+CONFIG  -= debug_and_release
+
+android {
+	# Avoid staticlib install by undocumented behaviour of qmake
+	INSTALLS     = target
+	target.extra = @test -d .
+}
+
 QT      += core widgets network
 
 HEADERS = \

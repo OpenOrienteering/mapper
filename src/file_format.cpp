@@ -23,13 +23,13 @@
 // ### FileFormatException ###
 
 // virtual
-FileFormatException::~FileFormatException() throw()
+FileFormatException::~FileFormatException() noexcept
 {
 	// Nothing, not inlined
 }
 
 // virtual
-const char* FileFormatException::what() const throw()
+const char* FileFormatException::what() const noexcept
 {
 	return msg_c.constData();
 }
@@ -69,7 +69,7 @@ bool FileFormat::understands(const unsigned char *buffer, size_t sz) const
 	return false;
 }
 
-Importer *FileFormat::createImporter(QIODevice* stream, Map *map, MapView *view) const throw (FileFormatException)
+Importer *FileFormat::createImporter(QIODevice* stream, Map *map, MapView *view) const
 {
 	Q_UNUSED(stream);
 	Q_UNUSED(map);
@@ -77,7 +77,7 @@ Importer *FileFormat::createImporter(QIODevice* stream, Map *map, MapView *view)
 	throw FileFormatException(QString("Format (%1) does not support import").arg(description()));
 }
 
-Exporter *FileFormat::createExporter(QIODevice* stream, Map *map, MapView *view) const throw (FileFormatException)
+Exporter *FileFormat::createExporter(QIODevice* stream, Map *map, MapView *view) const
 {
 	Q_UNUSED(stream);
 	Q_UNUSED(map);

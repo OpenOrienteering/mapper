@@ -20,7 +20,12 @@
 
 #include "symbol_properties_widget.h"
 
-#include <QtWidgets>
+#include <QCheckBox>
+#include <QGridLayout>
+#include <QIntValidator>
+#include <QLabel>
+#include <QLineEdit>
+#include <QTextEdit>
 
 #include "symbol_setting_dialog.h"
 

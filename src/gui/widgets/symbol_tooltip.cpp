@@ -20,7 +20,16 @@
 
 #include "symbol_tooltip.h"
 
-#include <QtWidgets>
+#include <QApplication>
+#include <QDesktopWidget>
+#include <QHideEvent>
+#include <QLabel>
+#include <QPainter>
+#include <QPalette>
+#include <QShortcut>
+#include <QShowEvent>
+#include <QStyleOption>
+#include <QVBoxLayout>
 
 #include "../../symbol.h"
 

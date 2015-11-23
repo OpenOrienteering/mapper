@@ -60,6 +60,11 @@ signals:
 	 *  Preferably use connectToAzimuthChanges() to connect to this signal. */
 	void azimuthChanged(float azimuth);
 	
+protected:
+	void connectNotify(const QMetaMethod& signal) override;
+	
+	void disconnectNotify(const QMetaMethod& signal) override;
+	
 private:
 	Compass();
 	

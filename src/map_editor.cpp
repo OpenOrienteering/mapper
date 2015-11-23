@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012, 2013, 2014 Kai Pastor
+ *    Copyright 2012-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -20,12 +20,37 @@
 
 
 #include "map_editor.h"
+#include "map_editor_p.h"
 
 #include <limits>
 
-#include <QtWidgets>
-#include <QSignalMapper>
 #include <qmath.h>
+#include <QApplication>
+#include <QBuffer>
+#include <QComboBox>
+#include <QDir>
+#include <QEvent>
+#include <QFileDialog>
+#include <QFileInfo>
+#include <QHBoxLayout>
+#include <QInputDialog>
+#include <QKeyEvent>
+#include <QLabel>
+#include <QMenu>
+#include <QMenuBar>
+#include <QMessageBox>
+#include <QMimeData>
+#include <QPainter>
+#include <QPushButton>
+#include <QSettings>
+#include <QSignalMapper>
+#include <QSizeGrip>
+#include <QStatusBar>
+#include <QStringBuilder>
+#include <QTextEdit>
+#include <QToolBar>
+#include <QToolButton>
+#include <QVBoxLayout>
 
 #ifdef Q_OS_ANDROID
 #include <QtAndroidExtras/QAndroidJniObject>
@@ -35,10 +60,10 @@
 #include "gui/configure_grid_dialog.h"
 #include "gui/georeferencing_dialog.h"
 #include "gui/widgets/action_grid_bar.h"
+#include "gui/widgets/compass_display.h"
 #include "gui/widgets/symbol_widget.h"
 #include "color_dock_widget.h"
 #include "compass.h"
-#include "compass_display.h"
 #include "file_format_registry.h"
 #include "map.h"
 #include "map_dialog_rotate.h"
@@ -106,13 +131,7 @@ MapEditorController::MapEditorController(OperatingMode mode, Map* map)
 , mappart_move_mapper(new QSignalMapper(this))
 {
 	this->mode = mode;
-	
-	// TODO: Allow to change this in the settings
-#if defined(Q_OS_ANDROID) || defined(FORCE_MOBILE_GUI)
-	mobile_mode = true;
-#else
-	mobile_mode = false;
-#endif
+	mobile_mode = false; // Updated in attach()
 	
 	this->map = NULL;
 	main_view = NULL;
@@ -157,8 +176,6 @@ MapEditorController::MapEditorController(OperatingMode mode, Map* map)
 	compass_display = NULL;
 	gps_marker_display = NULL;
 	
-	being_destructed = false;
-	
 	actionsById[""] = new QAction(this); // dummy action
 	
 	connect(mappart_merge_mapper, SIGNAL(mapped(int)), this, SLOT(mergeCurrentMapPartTo(int)));
@@ -167,7 +184,6 @@ MapEditorController::MapEditorController(OperatingMode mode, Map* map)
 
 MapEditorController::~MapEditorController()
 {
-	being_destructed = true;
 	paste_act = NULL;
 	delete current_tool;
 	delete override_tool;
@@ -276,7 +292,7 @@ MapEditorTool* MapEditorController::getDefaultDrawToolForSymbol(const Symbol* sy
 	else if (symbol->getType() == Symbol::Text)
 		return new DrawTextTool(this, draw_text_act);
 	else
-		assert(false);
+		Q_ASSERT(false);
 	return NULL;
 }
 
@@ -346,7 +362,7 @@ void MapEditorController::setEditorActivity(MapEditorActivity* new_activity)
 
 void MapEditorController::addTemplatePositionDockWidget(Template* temp)
 {
-	assert(!existsTemplatePositionDockWidget(temp));
+	Q_ASSERT(!existsTemplatePositionDockWidget(temp));
 	TemplatePositionDockWidget* dock_widget = new TemplatePositionDockWidget(temp, this, window);
 	addFloatingDockWidget(dock_widget);
 	template_position_widgets.insert(temp, dock_widget);
@@ -358,13 +374,16 @@ void MapEditorController::removeTemplatePositionDockWidget(Template* temp)
 	
 	delete getTemplatePositionDockWidget(temp);
 	int num_deleted = template_position_widgets.remove(temp);
-	assert(num_deleted == 1);
+	Q_ASSERT(num_deleted == 1);
+	Q_UNUSED(num_deleted);
 }
 
 void MapEditorController::showPopupWidget(QWidget* child_widget, const QString& title)
 {
 	if (mobile_mode)
 	{
+		// FIXME: This is used for KeyButtonBar only
+		//        and not related to mobile_mode!
 		QSize size = child_widget->sizeHint();
 		QRect map_widget_rect = map_widget->rect();
 		
@@ -394,12 +413,13 @@ void MapEditorController::deletePopupWidget(QWidget* child_widget)
 {
 	if (mobile_mode)
 	{
-		if (being_destructed)
-			return;
-			delete child_widget;
+		delete child_widget;
 	}
 	else
+	{
+		// Delete the dock widget
 		delete child_widget->parentWidget();
+	}
 }
 
 bool MapEditorController::save(const QString& path)
@@ -411,7 +431,7 @@ bool MapEditorController::save(const QString& path)
 			QMessageBox::warning(window, tr("Editing in progress"), tr("The map is currently being edited. Please finish the edit operation before saving."));
 			return false;
 		}
-		bool success = map->saveTo(path, this);
+		bool success = map->saveTo(path, main_view);
 		if (success)
 			window->showStatusBarMessage(tr("Map saved"), 1000);
 		return success;
@@ -424,7 +444,7 @@ bool MapEditorController::exportTo(const QString& path, const FileFormat* format
 {
 	if (map && !editing_in_progress)
 	{
-		return map->exportTo(path, this, format);
+		return map->exportTo(path, main_view, format);
 	}
 	
 	return false;
@@ -437,28 +457,34 @@ bool MapEditorController::load(const QString& path, QWidget* dialog_parent)
 	
 	if (!map)
 		map = new Map();
+	if (!main_view)
+		main_view = new MapView(map);
 	
-	bool result = map->loadFrom(path, dialog_parent, this);
-	if (result)
+	bool success = map->loadFrom(path, dialog_parent, main_view);
+	if (success)
+	{
 		setMap(map, false);
+	}
 	else
 	{
 		delete map;
 		map = NULL;
+		delete main_view;
 		main_view = NULL;
 	}
 	
-	return result;
+	return success;
 }
 
 void MapEditorController::attach(MainWindow* window)
 {
-	being_destructed = false;
+	mobile_mode = window->mobileMode();
 	print_dock_widget = NULL;
 	measure_dock_widget = NULL;
 	color_dock_widget = NULL;
 	symbol_dock_widget = NULL;
 	template_dock_widget = NULL;
+	QLabel* statusbar_zoom_label = NULL;
 	
 	this->window = window;
 	if (mode == MapEditor)
@@ -470,9 +496,11 @@ void MapEditorController::attach(MainWindow* window)
                                        "lockOrientation",
                                        "()V");
 #endif
-	
-	QLabel* statusbar_zoom_label = NULL;
-	if (!mobile_mode)
+	if (mobile_mode)
+	{
+		window->setWindowState(window->windowState() | Qt::WindowFullScreen);
+	}
+	else
 	{
 		// Add zoom / cursor position field to status bar
 		QLabel* statusbar_zoom_icon = new QLabel();
@@ -515,19 +543,19 @@ void MapEditorController::attach(MainWindow* window)
 	map_widget = new MapWidget(mode == MapEditor, mode == SymbolEditor);
 	map_widget->setMapView(main_view);
 	
-	if (mode == MapEditor)
-	{
-		gps_display = new GPSDisplay(map_widget, map->getGeoreferencing());
-		compass_display = new CompassDisplay(map_widget);
-		gps_marker_display = new GPSTemporaryMarkers(map_widget, gps_display);
-	}
-	
 	// Create menu and toolbar together, so actions can be inserted into one or both
 	if (mode == MapEditor)
 	{
+		gps_display = new GPSDisplay(map_widget, map->getGeoreferencing());
+		gps_marker_display = new GPSTemporaryMarkers(map_widget, gps_display);
+		
 		createActions();
 		if (mobile_mode)
+		{
 			createMobileGUI();
+			compass_display = new CompassDisplay(map_widget->parentWidget());
+			compass_display->setVisible(false);
+		}
 		else
 		{
 			map_widget->setZoomLabel(statusbar_zoom_label);
@@ -1015,6 +1043,7 @@ void MapEditorController::createMenuAndToolbars()
 		mappart_selector_box = new QComboBox(toolbar_mapparts);
 		mappart_selector_box->setToolTip(tr("Map parts"));
 	}
+	mappart_selector_box->setSizeAdjustPolicy(QComboBox::AdjustToContents);
 	connect(mappart_selector_box, SIGNAL(currentIndexChanged(int)), this, SLOT(changeMapPart(int)));
 	toolbar_mapparts->addWidget(mappart_selector_box);
 	
@@ -1221,12 +1250,12 @@ void MapEditorController::createMobileGUI()
 	
 	bottom_action_bar->setToUseOverflowActionFrom(top_action_bar);
 	
+	top_action_bar->setParent(map_widget);
 	
 	QWidget* container_widget = new QWidget();
 	QVBoxLayout* layout = new QVBoxLayout();
 	layout->setMargin(0);
 	layout->setSpacing(0);
-	layout->addWidget(top_action_bar);
 	layout->addWidget(map_widget, 1);
 	layout->addWidget(bottom_action_bar);
 	container_widget->setLayout(layout);
@@ -1235,9 +1264,11 @@ void MapEditorController::createMobileGUI()
 
 void MapEditorController::detach()
 {
-	if (!mobile_mode)
-		saveWindowState();
-	being_destructed = true;
+	// Terminate all editing
+	setTool(nullptr);
+	setOverrideTool(nullptr);
+	
+	saveWindowState();
 	
 	// Avoid a crash triggered by pressing Ctrl-W during loading.
 	if (NULL != symbol_dock_widget)
@@ -1267,24 +1298,30 @@ void MapEditorController::detach()
                                        "()V");
 #endif
 	
+	if (mobile_mode)
+		window->setWindowState(window->windowState() & ~Qt::WindowFullScreen);
 }
 
 void MapEditorController::saveWindowState()
 {
-	if (mode == SymbolEditor || being_destructed)
-		return;
-	QSettings settings;
-	settings.beginGroup(metaObject()->className());
-	settings.setValue("state", window->saveState());
+	if (!mobile_mode && mode != SymbolEditor)
+	{
+		QSettings settings;
+		settings.beginGroup(metaObject()->className());
+		settings.setValue("state", window->saveState());
+	}
 }
 
 void MapEditorController::restoreWindowState()
 {
-	QSettings settings;
-	settings.beginGroup(metaObject()->className());
-	window->restoreState(settings.value("state").toByteArray());
-	if (toolbar_mapparts && mappart_selector_box)
-		toolbar_mapparts->setVisible(mappart_selector_box->count() > 1);
+	if (!mobile_mode)
+	{
+		QSettings settings;
+		settings.beginGroup(metaObject()->className());
+		window->restoreState(settings.value("state").toByteArray());
+		if (toolbar_mapparts && mappart_selector_box)
+			toolbar_mapparts->setVisible(mappart_selector_box->count() > 1);
+	}
 }
 
 bool MapEditorController::keyPressEventFilter(QKeyEvent* event)
@@ -1447,12 +1484,11 @@ void MapEditorController::paste()
 	// Move objects in paste_map so their bounding box center is at this map's viewport center.
 	// This makes the pasted objects appear at the center of the viewport.
 	QRectF paste_extent = paste_map->calculateExtent(true, false, NULL);
-	qint64 dx = main_view->getPositionX() - paste_extent.center().x() * 1000;
-	qint64 dy = main_view->getPositionY() - paste_extent.center().y() * 1000;
+	auto offset = main_view->center() - paste_extent.center();
 	
 	MapPart* part = paste_map->getCurrentPart();
 	for (int i = 0; i < part->getNumObjects(); ++i)
-		part->getObject(i)->move(dx, dy);
+		part->getObject(i)->move(offset);
 	
 	// Import pasted map. Do not blindly import all colors.
 	map->importMap(paste_map, Map::MinimalObjectImport, window);
@@ -1487,7 +1523,6 @@ void MapEditorController::spotColorPresenceChanged(bool has_spot_colors)
 void MapEditorController::showGrid()
 {
 	main_view->setGridVisible(show_grid_act->isChecked());
-	main_view->updateAllMapWidgets();
 }
 
 void MapEditorController::configureGrid()
@@ -1528,7 +1563,7 @@ void MapEditorController::hatchAreas(bool checked)
 {
 	map->setAreaHatchingEnabled(checked);
 	// Update all areas
-	map->applyOnMatchingObjects(ObjectOp::Update(), ObjectOp::ContainsSymbolType(Symbol::Area));
+	map->applyOnMatchingObjects(ObjectOp::ForceUpdate(), ObjectOp::ContainsSymbolType(Symbol::Area));
 }
 
 void MapEditorController::baselineView(bool checked)
@@ -1550,7 +1585,6 @@ void MapEditorController::overprintingSimulation(bool checked)
 		checked = false;
 	}
 	main_view->setOverprintingSimulationEnabled(checked);
-	map->updateAllMapWidgets();
 }
 
 void MapEditorController::coordsDisplayChanged()
@@ -1569,17 +1603,9 @@ void MapEditorController::projectionChanged()
 {
 	const Georeferencing& geo(map->getGeoreferencing());
 	
-	bool enable_projected = geo.getState() != Georeferencing::ScaleOnly;
-	projected_coordinates_act->setEnabled(enable_projected);
 	projected_coordinates_act->setText(geo.getProjectedCRSName());
-	if (!enable_projected &&
-		map_widget->getCoordsDisplay() == MapWidget::PROJECTED_COORDS)
-	{
-		map_widget->setCoordsDisplay(MapWidget::MAP_COORDS);
-		map_coordinates_act->setChecked(true);
-	}
 	
-	bool enable_geographic = geo.getState() != Georeferencing::ScaleOnly && !geo.isLocal();
+	bool enable_geographic = !geo.isLocal();
 	geographic_coordinates_act->setEnabled(enable_geographic);
 	geographic_coordinates_dms_act->setEnabled(enable_geographic);
 	if (!enable_geographic &&
@@ -1811,10 +1837,9 @@ void MapEditorController::selectedSymbolsChanged()
 		}
 		else //if (symbol_widget->getNumSelectedSymbols() == 1)
 		{
-			QImage* image = symbol->createIcon(map, qMin(icon_size.width(), icon_size.height()), Util::isAntialiasingRequired(), 0, 4.0f);
+			QImage image = symbol->createIcon(map, qMin(icon_size.width(), icon_size.height()), Util::isAntialiasingRequired(), 0, 4.0f);
 			QPainter painter(&pixmap);
-			painter.drawImage(pixmap.rect(), *image);
-			delete image;
+			painter.drawImage(pixmap.rect(), image);
 		}
 		mobile_symbol_selector_action->setIcon(QIcon(pixmap));
 	}
@@ -1961,7 +1986,7 @@ void MapEditorController::updateObjectDependentActions()
 				if (contained_types & Symbol::Area)
 				{
 					have_area = true;
-					have_area_with_holes |= (*it)->asPath()->getNumParts() > 1;
+					have_area_with_holes |= (*it)->asPath()->parts().size() > 1;
 				}
 			}
 		}
@@ -2045,7 +2070,7 @@ void MapEditorController::updateObjectDependentActions()
 	boolean_merge_holes_act->setStatusTip(tr("Merge area holes together, or merge holes with the object boundary to cut out this part.") + (boolean_merge_holes_act->isEnabled() ? "" : (" " + tr("Select one area object with holes to activate this tool."))));
 	
 	// cutout_enabled
-	bool const cutout_enabled = single_object_selected && (have_area || have_line) && !have_area_with_holes && (*(map->selectedObjectsBegin()))->asPath()->getPart(0).isClosed();
+	bool const cutout_enabled = single_object_selected && (have_area || have_line) && !have_area_with_holes && (*(map->selectedObjectsBegin()))->asPath()->parts().front().isClosed();
 	cutout_physical_act->setEnabled(cutout_enabled);
 	cutout_physical_act->setStatusTip(tr("Create a cutout of some objects or the whole map.") + (cutout_physical_act->isEnabled() ? "" : (" " + tr("Select a closed path object as cutout shape to activate this tool."))));
 	cutaway_physical_act->setEnabled(cutout_enabled);
@@ -2120,7 +2145,7 @@ void MapEditorController::templateAvailabilityChanged()
 void MapEditorController::showWholeMap()
 {
 	QRectF map_extent = map->calculateExtent(true, !main_view->areAllTemplatesHidden(), main_view);
-	map_widget->adjustViewToRect(map_extent, false);
+	map_widget->adjustViewToRect(map_extent, MapWidget::ContinuousZoom);
 }
 
 void MapEditorController::editToolClicked()
@@ -2270,9 +2295,9 @@ void MapEditorController::switchSymbolClicked()
 			}
 			else if (split_up)
 			{
-				for (int path_part = 0; path_part < path_object->getNumParts(); ++path_part)
+				for (const auto& part : path_object->parts())
 				{
-					PathObject* new_object = path_object->duplicatePart(path_part);
+					PathObject* new_object = new PathObject { part };
 					new_object->setSymbol(symbol, true);
 					new_objects.push_back(new_object);
 				}
@@ -2285,7 +2310,7 @@ void MapEditorController::switchSymbolClicked()
 			}
 		}
 		
-		object->update(true);
+		object->update();
 	}
 	
 	if (split_up)	
@@ -2351,9 +2376,9 @@ void MapEditorController::fillBorderClicked()
 		if (split_up && object->getType() == Object::Path)
 		{
 			PathObject* path_object = object->asPath();
-			for (int path_part = 0; path_part < path_object->getNumParts(); ++path_part)
+			for (const auto& part : path_object->parts())
 			{
-				PathObject* new_object = path_object->duplicatePart(path_part);
+				PathObject* new_object = new PathObject { part };
 				new_object->setSymbol(symbol, true);
 				map->addObject(new_object);
 				new_objects.push_back(new_object);
@@ -2452,7 +2477,7 @@ void MapEditorController::switchDashesClicked()
 		{
 			PathObject* path = reinterpret_cast<PathObject*>(*it);
 			path->reverse();
-			(*it)->update(true);
+			(*it)->update();
 			
 			undo_step->addObject(part->findObjectIndex(*it));
 		}
@@ -2463,7 +2488,8 @@ void MapEditorController::switchDashesClicked()
 	map->emitSelectionEdited();
 }
 
-float connectPaths_FindClosestEnd(const std::vector<Object*>& objects, PathObject* a, int a_index, int path_part_a, bool path_part_a_begin, PathObject** out_b, int* out_b_index, int* out_path_part_b, bool* out_path_part_b_begin)
+/// \todo Review use of container API
+float connectPaths_FindClosestEnd(const std::vector<Object*>& objects, PathObject* a, int a_index, PathPartVector::size_type path_part_a, bool path_part_a_begin, PathObject** out_b, int* out_b_index, int* out_path_part_b, bool* out_path_part_b_begin)
 {
 	float best_dist_sq = std::numeric_limits<float>::max();
 	for (int i = a_index; i < (int)objects.size(); ++i)
@@ -2472,10 +2498,10 @@ float connectPaths_FindClosestEnd(const std::vector<Object*>& objects, PathObjec
 		if (b->getSymbol() != a->getSymbol())
 			continue;
 		
-		int num_parts = b->getNumParts();
-		for (int path_part_b = (a == b) ? path_part_a : 0; path_part_b < num_parts; ++path_part_b)
+		auto num_parts = b->parts().size();
+		for (PathPartVector::size_type path_part_b = (a == b) ? path_part_a : 0; path_part_b < num_parts; ++path_part_b)
 		{
-			PathObject::PathPart& part = b->getPart(path_part_b);
+			PathPart& part = b->parts()[path_part_b];
 			if (!part.isClosed())
 			{
 				for (int begin = 0; begin < 2; ++begin)
@@ -2484,9 +2510,9 @@ float connectPaths_FindClosestEnd(const std::vector<Object*>& objects, PathObjec
 					if (a == b && path_part_a == path_part_b && path_part_a_begin == path_part_b_begin)
 						continue;
 					
-					MapCoord& coord_a = a->getCoordinate(path_part_a_begin ? a->getPart(path_part_a).start_index : a->getPart(path_part_a).end_index);
-					MapCoord& coord_b = b->getCoordinate(path_part_b_begin ? b->getPart(path_part_b).start_index : b->getPart(path_part_b).end_index);
-					float distance_sq = coord_a.lengthSquaredTo(coord_b);
+					MapCoord& coord_a = a->getCoordinate(path_part_a_begin ? a->parts()[path_part_a].first_index : (a->parts()[path_part_a].last_index));
+					MapCoord& coord_b = b->getCoordinate(path_part_b_begin ? b->parts()[path_part_b].first_index : (b->parts()[path_part_b].last_index));
+					float distance_sq = coord_a.distanceSquaredTo(coord_b);
 					if (distance_sq < best_dist_sq)
 					{
 						best_dist_sq = distance_sq;
@@ -2518,7 +2544,7 @@ void MapEditorController::connectPathsClicked()
 	{
 		if ((*it)->getSymbol()->getContainedTypes() & Symbol::Line && (*it)->getType() == Object::Path)
 		{
-			(*it)->update(false);
+			(*it)->update();
 			objects.push_back(*it);
 			undo_objects.push_back(NULL);
 		}
@@ -2535,8 +2561,8 @@ void MapEditorController::connectPathsClicked()
 		PathObject* best_object_b = NULL;
 		int best_object_a_index = 0;
 		int best_object_b_index = 0;
-		int best_part_a = 0;
-		int best_part_b = 0;
+		auto best_part_a = PathPartVector::size_type { 0 };
+		auto best_part_b = PathPartVector::size_type { 0 };
 		bool best_part_a_begin = false;
 		bool best_part_b_begin = false;
 		float best_dist_sq = std::numeric_limits<float>::max();
@@ -2547,14 +2573,14 @@ void MapEditorController::connectPathsClicked()
 			
 			// Choose connection threshold as maximum of 0.35mm, 1.5 * largest line extent, and 6 pixels
 			// TODO: instead of 6 pixels, use a physical size as soon as screen dpi is in the settings
-			float close_distance_sq = qMax(0.35f, 1.5f * a->getSymbol()->calculateLargestLineExtent(map));
-			close_distance_sq = qMax(close_distance_sq, 0.001f * main_view->pixelToLength(6));
+			auto close_distance_sq = qMax(0.35, 1.5 * a->getSymbol()->calculateLargestLineExtent(map));
+			close_distance_sq = qMax(close_distance_sq, 0.001 * main_view->pixelToLength(6));
 			close_distance_sq = qPow(close_distance_sq, 2);
 			
-			int num_parts = a->getNumParts();
-			for (int path_part_a = 0; path_part_a < num_parts; ++path_part_a)
+			auto num_parts = a->parts().size();
+			for (PathPartVector::size_type path_part_a = 0; path_part_a < num_parts; ++path_part_a)
 			{
-				PathObject::PathPart& part = a->getPart(path_part_a);
+				PathPart& part = a->parts()[path_part_a];
 				if (!part.isClosed())
 				{
 					PathObject* b;
@@ -2597,26 +2623,26 @@ void MapEditorController::connectPathsClicked()
 		// Connect the best parts
 		if (best_part_a_begin && best_part_b_begin)
 		{
-			best_object_b->reversePart(best_part_b);
+			best_object_b->parts()[best_part_b].reverse();
 			best_object_a->connectPathParts(best_part_a, best_object_b, best_part_b, true);
 		}
 		else if (best_part_a_begin && !best_part_b_begin)
 		{
 			if (best_object_a == best_object_b && best_part_a == best_part_b)
-				best_object_a->getPart(best_part_a).connectEnds();
+				best_object_a->parts()[best_part_a].connectEnds();
 			else
 				best_object_a->connectPathParts(best_part_a, best_object_b, best_part_b, true);
 		}
 		else if (!best_part_a_begin && best_part_b_begin)
 		{
 			if (best_object_a == best_object_b && best_part_a == best_part_b)
-				best_object_a->getPart(best_part_a).connectEnds();
+				best_object_a->parts()[best_part_a].connectEnds();
 			else
 				best_object_a->connectPathParts(best_part_a, best_object_b, best_part_b, false);
 		}
 		else //if (!best_part_a_begin && !best_part_b_begin)
 		{
-			best_object_b->reversePart(best_part_b);
+			best_object_b->parts()[best_part_b].reverse();
 			best_object_a->connectPathParts(best_part_a, best_object_b, best_part_b, false);
 		}
 		
@@ -2624,10 +2650,10 @@ void MapEditorController::connectPathsClicked()
 		{
 			// Copy all remaining parts of object b over to a
 			best_object_a->getCoordinate(best_object_a->getCoordinateCount() - 1).setHolePoint(true);
-			for (int i = 0; i < best_object_b->getNumParts(); ++i)
+			for (auto i = PathPartVector::size_type { 0 }; i < best_object_b->parts().size(); ++i)
 			{
 				if (i != best_part_b)
-					best_object_a->appendPathPart(best_object_b, i);
+					best_object_a->appendPathPart(best_object_b->parts()[i]);
 			}
 			
 			// Create an add step for b
@@ -2657,7 +2683,7 @@ void MapEditorController::connectPathsClicked()
 		if (undo_objects[i])
 		{
 			// The object was changed, update the new version
-			objects[i]->update(true);
+			objects[i]->forceUpdate(); /// @todo get rid of force if possible
 			
 			// Add the old version to the undo step
 			if (!replace_step)
@@ -2789,10 +2815,10 @@ void MapEditorController::convertToCurvesClicked()
 		{
 			undo_step->addObject(part->findObjectIndex(path), undo_duplicate);
 			// TODO: make threshold configurable?
-			const float threshold = 0.08f;
+			const auto threshold = 0.08;
 			path->simplify(NULL, threshold);
 		}
-		path->update(true);
+		path->update();
 	}
 	
 	if (undo_step->isEmpty())
@@ -2808,7 +2834,7 @@ void MapEditorController::convertToCurvesClicked()
 void MapEditorController::simplifyPathClicked()
 {
 	// TODO: make threshold configurable!
-	const float threshold = 0.1f;
+	const auto threshold = 0.1;
 	
 	ReplaceObjectsUndoStep* undo_step = new ReplaceObjectsUndoStep(map);
 	MapPart* part = map->getCurrentPart();
@@ -2823,7 +2849,7 @@ void MapEditorController::simplifyPathClicked()
 		PathObject* undo_duplicate = NULL;
 		if (path->simplify(&undo_duplicate, threshold))
 			undo_step->addObject(part->findObjectIndex(path), undo_duplicate);
-		path->update(true);
+		path->update();
 	}
 	
 	if (undo_step->isEmpty())
@@ -2863,7 +2889,7 @@ void MapEditorController::distributePointsClicked()
 		if ((*it)->getType() != Object::Path)
 			continue;
 		
-		DistributePointsTool::execute((*it)->asPath(), point, settings, &created_objects);
+		DistributePointsTool::execute((*it)->asPath(), point, settings, created_objects);
 	}
 	if (created_objects.empty())
 		return;
@@ -3068,7 +3094,25 @@ void MapEditorController::gpsTemporaryClearClicked()
 
 void MapEditorController::enableCompassDisplay(bool enable)
 {
-	compass_display->enable(enable);
+	if (!compass_display || !show_top_bar_button || !top_action_bar)
+	{
+		Q_ASSERT(!"Prerequisites must be initialized");
+	}
+	else if (enable)
+	{
+		auto size = compass_display->sizeHint();
+		if (top_action_bar->isVisible())
+			compass_display->setGeometry(0, top_action_bar->size().height(), size.width(), size.height());
+		else
+			compass_display->setGeometry(show_top_bar_button->size().width(), 0, size.width(), size.height());
+		connect(&Compass::getInstance(), &Compass::azimuthChanged, compass_display, &CompassDisplay::setAzimuth);
+		compass_display->show();
+	}
+	else
+	{
+		disconnect(&Compass::getInstance(), &Compass::azimuthChanged, compass_display, &CompassDisplay::setAzimuth);
+		compass_display->hide();
+	}
 }
 
 void MapEditorController::alignMapWithNorth(bool enable)
@@ -3093,7 +3137,6 @@ void MapEditorController::alignMapWithNorth(bool enable)
 		Compass::getInstance().stopUsage();
 		
 		main_view->setRotation(0);
-		main_view->updateAllMapWidgets();
 	}
 }
 
@@ -3107,7 +3150,6 @@ void MapEditorController::alignMapWithNorthUpdate()
 	
 	// Set map rotation
 	main_view->setRotation(-1 * M_PI / 180.0f * Compass::getInstance().getCurrentAzimuth());
-	main_view->updateAllMapWidgets();
 }
 
 void MapEditorController::toggleTemplateClicked()
@@ -3169,12 +3211,17 @@ void MapEditorController::hideTopActionBar()
 	top_action_bar->hide();
 	show_top_bar_button->show();
 	show_top_bar_button->raise();
+	
+	compass_display->move(show_top_bar_button->size().width(), 0);
 }
 
 void MapEditorController::showTopActionBar()
 {
 	show_top_bar_button->hide();
 	top_action_bar->show();
+	top_action_bar->raise();
+	
+	compass_display->move(0, top_action_bar->size().height());
 }
 
 void MapEditorController::mobileSymbolSelectorClicked()
@@ -3279,17 +3326,40 @@ void MapEditorController::addMapPart()
 
 void MapEditorController::removeMapPart()
 {
+	auto part = map->getCurrentPart();
+	
 	QMessageBox::StandardButton button =
 	        QMessageBox::question(
 	            window,
                 tr("Remove current part"),
-                tr("Do you want to remove map part \"%1\" and all its objects? This cannot be undone.").arg(map->getCurrentPart()->getName()),
+                tr("Do you want to remove map part \"%1\" and all its objects?").arg(part->getName()),
                 QMessageBox::Yes | QMessageBox::No );
 	
 	if (button == QMessageBox::Yes)
 	{
-		std::size_t index = map->getCurrentPartIndex();
-		map->push(new MapPartUndoStep(map, MapPartUndoStep::AddMapPart, index));
+		auto index = map->getCurrentPartIndex();
+		UndoStep* undo_step = new MapPartUndoStep(map, MapPartUndoStep::AddMapPart, index);
+		
+		auto i = part->getNumObjects();
+		if (i > 0)
+		{
+			auto add_step = new AddObjectsUndoStep(map);
+			do
+			{
+				--i;
+				auto object = part->getObject(i);
+				add_step->addObject(i, object);
+				part->deleteObject(object, true);
+			}
+			while (i > 0);
+			
+			auto combined_step = new CombinedUndoStep(map);
+			combined_step->push(add_step);
+			combined_step->push(undo_step);
+			undo_step = combined_step;
+		}
+		
+		map->push(undo_step);
 		map->removePart(index);
 	}
 }
@@ -3322,8 +3392,8 @@ void MapEditorController::changeMapPart(int index)
 
 void MapEditorController::reassignObjectsToMapPart(int target)
 {
-	std::size_t current = map->getCurrentPartIndex();
-	std::size_t begin   = map->reassignObjectsToMapPart(map->selectedObjectsBegin(), map->selectedObjectsEnd(), current, target);
+	auto current = map->getCurrentPartIndex();
+	auto begin   = map->reassignObjectsToMapPart(map->selectedObjectsBegin(), map->selectedObjectsEnd(), current, target);
 	
 	SwitchPartUndoStep* undo = new SwitchPartUndoStep(map, target, current);
 	for (std::size_t i = begin, end = map->getPart(target)->getNumObjects(); i < end; ++i)
@@ -3346,10 +3416,10 @@ void MapEditorController::mergeCurrentMapPartTo(int target)
 	{
 		// Beware that the source part is removed, and
 		// the target part's index might change during merge.
-		std::size_t source = map->getCurrentPartIndex();
+		auto source = map->getCurrentPartIndex();
 		UndoStep* add_part_step = new MapPartUndoStep(map, MapPartUndoStep::AddMapPart, source);
 		
-		std::size_t begin  = map->mergeParts(source, target);
+		auto begin  = map->mergeParts(source, target);
 		
 		SwitchPartUndoStep* switch_part_undo = new SwitchPartUndoStep(map, target, source);
 		for (std::size_t i = begin, end = target_part->getNumObjects(); i < end; ++i)
@@ -3381,10 +3451,10 @@ void MapEditorController::mergeAllMapParts()
 		map->setCurrentPartIndex(0);
 		MapPart* target_part = map->getPart(0);
 		
-		for (std::size_t i = map->getNumParts() - 1; i > 0; --i)
+		for (auto i = map->getNumParts() - 1; i > 0; --i)
 		{
 			UndoStep* add_part_step = new MapPartUndoStep(map, MapPartUndoStep::AddMapPart, i);
-			std::size_t begin = map->mergeParts(i, 0);
+			auto begin = map->mergeParts(i, 0);
 			SwitchPartUndoStep* switch_part_undo = new SwitchPartUndoStep(map, 0, i);
 			for (std::size_t j = begin, end = target_part->getNumObjects(); j < end; ++j)
 				switch_part_undo->addObject(j);
@@ -3541,7 +3611,7 @@ void MapEditorController::importClicked()
 	
 	QStringList map_names;
 	QStringList map_extensions;
-	Q_FOREACH(const FileFormat* format, FileFormats.formats())
+	for (auto format : FileFormats.formats())
 	{
 		if (!format->supportsImport())
 			continue;
@@ -3575,7 +3645,7 @@ void MapEditorController::importClicked()
 	else
 	{
 		bool is_map_format = false;
-		Q_FOREACH(const QString& ext, map_extensions)
+		for (auto&& ext : map_extensions)
 		{
 			if (filename.endsWith("." + ext, Qt::CaseInsensitive))
 			{
@@ -3629,17 +3699,24 @@ void MapEditorController::setViewOptionsEnabled(bool enabled)
 
 // ### EditorDockWidget ###
 
-EditorDockWidget::EditorDockWidget(const QString title, QAction* action, MapEditorController* editor, QWidget* parent): QDockWidget(title, parent), action(action), editor(editor)
+EditorDockWidget::EditorDockWidget(const QString& title, QAction* action, MapEditorController* editor, QWidget* parent)
+: QDockWidget(title, parent)
+, action(action)
+, editor(editor)
 {
 	if (editor)
 	{
-		connect(this, SIGNAL(dockLocationChanged(Qt::DockWidgetArea)), editor, SLOT(saveWindowState()));
+		connect(this, &EditorDockWidget::dockLocationChanged, editor, &MapEditorController::saveWindowState);
 	}
 	
 	if (action)
 	{
-		connect(this, SIGNAL(visibilityChanged(bool)), action, SLOT(setChecked(bool)));
+		connect(this, &EditorDockWidget::visibilityChanged, action, &QAction::setChecked);
 	}
+	
+#ifdef Q_OS_ANDROID
+	size_grip = new QSizeGrip(this);
+#endif
 }
 
 bool EditorDockWidget::event(QEvent* event)
@@ -3647,6 +3724,20 @@ bool EditorDockWidget::event(QEvent* event)
 	if (event->type() == QEvent::ShortcutOverride && editor->getWindow()->areShortcutsDisabled())
 		event->accept();
 	return QDockWidget::event(event);
+}
+
+void EditorDockWidget::resizeEvent(QResizeEvent* event)
+{
+#ifdef Q_OS_ANDROID
+	QRect rect(QPoint(0,0), size_grip->sizeHint());
+	rect.moveBottomRight(geometry().bottomRight() - geometry().topLeft());
+	int fw = style()->pixelMetric(QStyle::PM_DockWidgetFrameWidth, 0, this);
+	rect.translate(-fw, -fw);
+	size_grip->setGeometry(rect);
+	size_grip->raise();
+#endif
+	
+	QDockWidget::resizeEvent(event);
 }
 
 

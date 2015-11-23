@@ -21,9 +21,13 @@
 #ifndef _OPENORIENTEERING_AUTOSAVE_DIALOG_H_
 #define _OPENORIENTEERING_AUTOSAVE_DIALOG_H_
 
-#include <QtWidgets>
+#include <QDialog>
+#include <QTextDocument>
 
 #include "../util/item_delegates.h"
+
+class QBoxLayout;
+class QListWidget;
 
 class MainWindow;
 

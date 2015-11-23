@@ -20,6 +20,13 @@
 
 #include "tags_widget.h"
 
+#include <QHeaderView>
+#include <QLabel>
+#include <QMessageBox>
+#include <QTableWidget>
+#include <QToolButton>
+#include <QVBoxLayout>
+
 #include "../main_window.h"
 #include "../../map.h"
 #include "../../map_editor.h"
@@ -129,7 +136,7 @@ void TagsWidget::objectTagsChanged()
 	react_to_changes = false;
 	
 	int row = 0;
-	Object* object = map->getFirstSelectedObject();
+	const Object* object = map->getFirstSelectedObject();
 	if (object)
 	{
 		const Object::Tags& tags = object->tags();

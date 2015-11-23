@@ -1,6 +1,6 @@
 /*
- *    Copyright 2013, 2013, 2014 Thomas Schöps
- *    Copyright 2014 Kai Pastor
+ *    Copyright 2013, 2014 Thomas Schöps
+ *    Copyright 2014, 2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -21,186 +21,85 @@
 
 #include "crs_template.h"
 
-#include <vector>
-
-#include <QLineEdit>
-#include <QSpinBox>
-
-#include "../util_gui.h"
 
 
-std::vector<CRSTemplate*> CRSTemplate::crs_templates;
+// From crs_template_implementation.h/.cpp
+namespace CRSTemplates
+{
+	CRSTemplateRegistry::TemplateList defaultList();
+}
 
 
-// ### CRSTemplate::Param ###
 
-CRSTemplate::Param::Param(const QString& desc)
- : desc(desc)
+// ### CRSTemplateParameter ###
+
+CRSTemplateParameter::CRSTemplateParameter(const QString& key, const QString& description)
+ : param_id(key)
+ , param_name(description)
 {
 	// nothing
 }
 
-CRSTemplate::Param::~Param()
+CRSTemplateParameter::~CRSTemplateParameter()
 {
 	// nothing, not inlined
 }
 
-
-
-// ### CRSTemplate::UTMZoneParam ###
-
-CRSTemplate::UTMZoneParam::UTMZoneParam(const QString& desc)
- : Param(desc)
+std::vector<QString> CRSTemplateParameter::specValues(const QString& edit_value) const
 {
-	// nothing
-}
-
-QWidget* CRSTemplate::UTMZoneParam::createEditWidget(QObject* edit_receiver) const
-{
-	static const QRegExp zone_regexp("(?:[1-5][0-9]?|60?)(?: [NS])?");
-	static QStringList zone_list;
-	if (zone_list.isEmpty())
-	{
-		for (int i = 1; i <= 60; ++i)
-		{
-			zone_list << QString("%1 N").arg(i) << QString("%1 S").arg(i);
-		}
-	}
-	
-	QLineEdit* widget = new QLineEdit();
-	widget->setValidator(new QRegExpValidator(zone_regexp, widget));
-	QCompleter* completer = new QCompleter(zone_list, widget);
-	completer->setMaxVisibleItems(2);
-	widget->setCompleter(completer);
-	QObject::connect(widget, SIGNAL(textEdited(QString)), edit_receiver, SLOT(crsParamEdited(QString)));
-	return widget;
-}
-
-std::vector<QString> CRSTemplate::UTMZoneParam::getSpecValue(QWidget* edit_widget) const
-{
-	QString zone = getValue(edit_widget);
-	zone.replace(" N", "");
-	zone.replace(" S", " +south");
-	
-	std::vector<QString> out;
-	out.push_back(zone);
-	return out;
-}
-
-QString CRSTemplate::UTMZoneParam::getValue(QWidget* edit_widget) const
-{
-	QLineEdit* text_edit = static_cast<QLineEdit*>(edit_widget);
-	return text_edit->text();
-}
-
-void CRSTemplate::UTMZoneParam::setValue(QWidget* edit_widget, const QString& value)
-{
-	QLineEdit* text_edit = static_cast<QLineEdit*>(edit_widget);
-	text_edit->setText(value);
-}
-
-
-
-// ### CRSTemplate::IntRangeParam ###
-
-CRSTemplate::IntRangeParam::IntRangeParam(const QString& desc, int min_value, int max_value)
-: Param(desc)
-, min_value(min_value)
-, max_value(max_value)
-{
-	outputs.push_back(std::make_pair(1, 0));
-}
-
-QWidget* CRSTemplate::IntRangeParam::createEditWidget(QObject* edit_receiver) const
-{
-	QSpinBox* widget = Util::SpinBox::create(min_value, max_value);
-	QObject::connect(widget, SIGNAL(valueChanged(QString)), edit_receiver, SLOT(crsParamEdited(QString)));
-	return widget;
-}
-
-std::vector<QString> CRSTemplate::IntRangeParam::getSpecValue(QWidget* edit_widget) const
-{
-	QSpinBox* spin_box = static_cast<QSpinBox*>(edit_widget);
-	int chosen_value = spin_box->value();
-	
-	std::vector<QString> out;
-	for (std::size_t i = 0; i < outputs.size(); ++ i)
-	{
-		std::pair<int, int> factor_and_bias = outputs[i];
-		out.push_back(QString::number(factor_and_bias.first * chosen_value + factor_and_bias.second));
-	}
-	return out;
-}
-
-QString CRSTemplate::IntRangeParam::getValue(QWidget* edit_widget) const
-{
-	QSpinBox* spin_box = static_cast<QSpinBox*>(edit_widget);
-	return QString::number(spin_box->value());
-}
-
-void CRSTemplate::IntRangeParam::setValue(QWidget* edit_widget, const QString& value)
-{
-	QSpinBox* spin_box = static_cast<QSpinBox*>(edit_widget);
-	spin_box->setValue(value.toInt());
-}
-
-CRSTemplate::IntRangeParam* CRSTemplate::IntRangeParam::clearOutputs()
-{
-	outputs.clear();
-	return this;
-}
-
-CRSTemplate::IntRangeParam* CRSTemplate::IntRangeParam::addDerivedOutput(int factor, int bias)
-{
-	outputs.push_back(std::make_pair(factor, bias));
-	return this;
+	return { edit_value };
 }
 
 
 
 // ### CRSTemplate ###
 
-CRSTemplate::CRSTemplate(const QString& id, const QString& name, const QString& coordinates_name, const QString& spec_template)
-: id(id)
-, name(name)
-, coordinates_name(coordinates_name)
-, spec_template(spec_template)
+CRSTemplate::CRSTemplate(
+        const QString& id,
+        const QString& name,
+        const QString& coordinates_name,
+        const QString& spec_template,
+        ParameterList&& parameters)
+ : template_id(id)
+ , template_name(name)
+ , coordinates_name(coordinates_name)
+ , spec_template(spec_template)
+ , params(std::move(parameters))
 {
 	// nothing
 }
 
 CRSTemplate::~CRSTemplate()
 {
-	for (std::size_t i = 0; i < params.size(); ++i)
-		delete params[i];
+	for (auto&& param : params)
+		delete param;
 }
 
-void CRSTemplate::addParam(Param* param)
+
+
+// ### CRSTemplateRegistry ###
+
+CRSTemplateRegistry::CRSTemplateRegistry()
 {
-	params.push_back(param);
+	static auto shared_list = CRSTemplates::defaultList();
+	this->templates = &shared_list;
 }
 
-std::size_t CRSTemplate::getNumCRSTemplates()
+const CRSTemplate* CRSTemplateRegistry::find(const QString& id) const
 {
-	return crs_templates.size();
-}
-
-CRSTemplate& CRSTemplate::getCRSTemplate(std::size_t index)
-{
-	return *crs_templates[index];
-}
-
-CRSTemplate* CRSTemplate::getCRSTemplate(const QString& id)
-{
-	for (std::size_t i = 0, end = crs_templates.size(); i < end; ++i)
+	const CRSTemplate* ret = nullptr;
+	for (auto&& temp : *templates)
 	{
-		if (crs_templates[i]->getId() == id)
-			return crs_templates[i];
+		if (temp->id() == id) {
+			ret = temp.get();
+			break;
+		}
+			
 	}
-	return NULL;
+	return ret;
 }
 
-void CRSTemplate::registerCRSTemplate(CRSTemplate* temp)
+void CRSTemplateRegistry::add(std::unique_ptr<const CRSTemplate> temp)
 {
-	crs_templates.push_back(temp);
+	templates->push_back(std::move(temp));
 }

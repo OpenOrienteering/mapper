@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2012-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -20,9 +21,10 @@
 
 #include "template_map.h"
 
-#include <QtWidgets>
+#include <QPainter>
 
 #include "map_widget.h"
+#include "renderable.h"
 #include "settings.h"
 #include "util.h"
 
@@ -31,6 +33,7 @@ QStringList TemplateMap::locked_maps;
 TemplateMap::TemplateMap(const QString& path, Map* map) : Template(path, map), template_map(NULL)
 {
 }
+
 TemplateMap::~TemplateMap()
 {
 	if (template_state == Loaded)
@@ -95,18 +98,22 @@ void TemplateMap::drawTemplate(QPainter* painter, QRectF& clip_rect, double scal
 	QRectF transformed_clip_rect;
 	if (!is_georeferenced)
 	{
-		rectIncludeSafe(transformed_clip_rect, mapToTemplateQPoint(MapCoordF(clip_rect.topLeft())));
-		rectIncludeSafe(transformed_clip_rect, mapToTemplateQPoint(MapCoordF(clip_rect.topRight())));
-		rectIncludeSafe(transformed_clip_rect, mapToTemplateQPoint(MapCoordF(clip_rect.bottomLeft())));
-		rectIncludeSafe(transformed_clip_rect, mapToTemplateQPoint(MapCoordF(clip_rect.bottomRight())));
+		rectIncludeSafe(transformed_clip_rect, mapToTemplate(MapCoordF(clip_rect.topLeft())));
+		rectIncludeSafe(transformed_clip_rect, mapToTemplate(MapCoordF(clip_rect.topRight())));
+		rectIncludeSafe(transformed_clip_rect, mapToTemplate(MapCoordF(clip_rect.bottomLeft())));
+		rectIncludeSafe(transformed_clip_rect, mapToTemplate(MapCoordF(clip_rect.bottomRight())));
 	}
 	else
 	{
 		// TODO!
 	}
 	
+	RenderConfig::Options options;
+	if (on_screen)
+		options |= RenderConfig::Screen;
+	RenderConfig config = { *template_map, transformed_clip_rect, scale, options, opacity };
 	// TODO: introduce template-specific options, adjustable by the user, to allow changing some of these parameters
-	template_map->draw(painter, transformed_clip_rect, false, scale, on_screen, false, opacity);
+	template_map->draw(painter, config);
 }
 
 QRectF TemplateMap::getTemplateExtent() const

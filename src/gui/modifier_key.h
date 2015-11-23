@@ -1,5 +1,5 @@
 /*
- *    Copyright 2013 Kai Pastor
+ *    Copyright 2013, 2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -43,7 +43,7 @@
  * 
  * Synopsis:
  * 
- *     QString text = tr("%1+Click to add a point.").arg(ModifierKey::ctrl());
+ *     QString text = tr("%1+Click to add a point.").arg(ModifierKey::control());
  *     QString more = tr("%1+Click to select a point.").arg(ModifierKey(Qt::ALT + Qt::ShiftModifier));
  * 
  *     // BUT:
@@ -51,43 +51,48 @@
  */
 class ModifierKey
 {
+protected:
+	/** Constructs a new ModifierKey for the given key. */
+	explicit ModifierKey(int key);
+	
 public:
 	/** Constructs a new ModifierKey for the given combination of KeyboardModifiers. */
 	explicit ModifierKey(Qt::KeyboardModifiers keys);
 	
-	/** Constructs a new ModifierKey for the given combination of KeyboardModifiers. */
-	explicit ModifierKey(int keys);
+	/** Constructs a new ModifierKey for the given key. */
+	explicit ModifierKey(Qt::Key key);
 	
 	/** Returns a string representation for user interface purposes.
-	  * Will be used for implicit type casts. */
-	operator const QString&() const;
+	 * 
+	 * This operator is intented to be used for implicit type casts. */
+	operator QString() const;
 	
 	/** Returns a shared Alt modifier key. */
-	static const ModifierKey alt();
+	static const ModifierKey& alt();
 	
 	/** Returns a shared Control modifier key. */
-	static const ModifierKey control();
+	static const ModifierKey& control();
 	
 	/** Returns a shared Control+Shift modifier key. */
-	static const ModifierKey controlShift();
+	static const ModifierKey& controlShift();
 	
 	/** Returns a shared Meta modifier key. */
-	static const ModifierKey meta();
+	static const ModifierKey& meta();
 	
 	/** Returns a shared Shift modifier key. */
-	static const ModifierKey shift();
+	static const ModifierKey& shift();
 	
 	/** Returns a shared Space key. */
-	static const ModifierKey space();
+	static const ModifierKey& space();
 	
 	/** Returns a shared Return key. */
-	static const ModifierKey return_key();
+	static const ModifierKey& return_key();
 	
 	/** Returns a shared Backspace key. */
-	static const ModifierKey backspace();
+	static const ModifierKey& backspace();
 	
 	/** Returns a shared Escape modifier key. */
-	static const ModifierKey escape();
+	static const ModifierKey& escape();
 	
 private:
 	/** The native text (localized, adapted to the system). */
@@ -96,30 +101,10 @@ private:
 
 
 
-// Implementation
+// Inline implementation
 
 inline
-ModifierKey::ModifierKey(Qt::KeyboardModifiers keys)
-{
-	native_text = QKeySequence((int)keys).toString(QKeySequence::NativeText);
-	if (native_text.endsWith('+'))
-	{
-		native_text.chop(1);
-	}
-}
-
-inline
-ModifierKey::ModifierKey(int keys)
-{
-	native_text = QKeySequence(keys).toString(QKeySequence::NativeText);
-	if (native_text.endsWith('+'))
-	{
-		native_text.chop(1);
-	}
-}
-
-inline
-ModifierKey::operator const QString&() const
+ModifierKey::operator QString() const
 {
 	return native_text;
 }

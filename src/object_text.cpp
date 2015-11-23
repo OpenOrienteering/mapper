@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2012, 2014, 2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -66,6 +67,8 @@ int TextObjectPartInfo::getIndex(double pos_x) const
 	return right;
 }
 
+
+
 // ### TextObjectLineInfo ###
 
 double TextObjectLineInfo::getX(int index) const
@@ -110,82 +113,78 @@ int TextObjectLineInfo::getIndex(double pos_x) const
 
 // ### TextObject ###
 
-TextObject::TextObject(const Symbol* symbol): Object(Object::Text, symbol)
+TextObject::TextObject(const Symbol* symbol)
+ : Object(Object::Text, symbol)
+ , h_align(AlignHCenter)
+ , v_align(AlignVCenter)
+ , rotation(0.0f)
 {
-	assert(!symbol || (symbol->getType() == Symbol::Text));
+	Q_ASSERT(!symbol || (symbol->getType() == Symbol::Text));
+	coords.reserve(2);
 	coords.push_back(MapCoord(0, 0));
-	text = "";
-	h_align = AlignHCenter;
-	v_align = AlignVCenter;
-	rotation = 0;
+}
+
+TextObject::TextObject(const TextObject& proto)
+ : Object(proto)
+ , text(proto.text)
+ , h_align(proto.h_align)
+ , v_align(proto.v_align)
+ , rotation(proto.rotation)
+ , line_infos(proto.line_infos)
+{
+	// nothing
 }
 
 Object* TextObject::duplicate() const
 {
-	TextObject* new_text = new TextObject(symbol);
-	new_text->coords = coords;
-	new_text->object_tags = object_tags;
-	
-	new_text->text = text;
-	new_text->h_align = h_align;
-	new_text->v_align = v_align;
-	new_text->rotation = rotation;
-	new_text->line_infos = line_infos;
-	return new_text;
+	return new TextObject(*this);
 }
 
 Object& TextObject::operator=(const Object& other)
 {
-	return Object::operator=(other);
-	const TextObject* text_other = (&other)->asText();
-	setText(text_other->getText());
-	setHorizontalAlignment(text_other->getHorizontalAlignment());
-	setVerticalAlignment(text_other->getVerticalAlignment());
-	setRotation(text_other->getRotation());
+	Object::operator=(other);
+	const TextObject& other_text = *other.asText();
+	text = other_text.text;
+	h_align = other_text.h_align;
+	v_align = other_text.v_align;
+	rotation = other_text.rotation;
+	line_infos = other_text.line_infos;
 	return *this;
 }
 
-void TextObject::setAnchorPosition(qint64 x, qint64 y)
+void TextObject::setAnchorPosition(qint32 x, qint32 y)
 {
 	coords.resize(1);
-	coords[0].setRawX(x);
-	coords[0].setRawY(y);
+	coords[0].setNativeX(x);
+	coords[0].setNativeY(y);
 	setOutputDirty();
 }
 
 void TextObject::setAnchorPosition(MapCoordF coord)
 {
 	coords.resize(1);
-	coords[0].setX(coord.getX());
-	coords[0].setY(coord.getY());
+	coords[0].setX(coord.x());
+	coords[0].setY(coord.y());
 	setOutputDirty();
 }
-
-/*
-void TextObject::getAnchorPosition(qint64& x, qint64& y) const
-{
-	x = coords[0].rawX();
-	y = coords[0].rawY();
-}
-*/
 
 MapCoordF TextObject::getAnchorCoordF() const
 {
 	return MapCoordF(coords[0]);
 }
 
-void TextObject::setBox(qint64 mid_x, qint64 mid_y, double width, double height)
+void TextObject::setBox(qint32 mid_x, qint32 mid_y, double width, double height)
 {
 	coords.resize(2);
-	coords[0].setRawX(mid_x);
-	coords[0].setRawY(mid_y);
+	coords[0].setNativeX(mid_x);
+	coords[0].setNativeY(mid_y);
 	coords[1] = MapCoord(width, height);
 	setOutputDirty();
 }
 
 std::vector<QPointF> TextObject::controlPoints() const
 {
-	const QPointF anchor = getAnchorCoordF().toQPointF();
+	auto anchor = getAnchorCoordF();
 	std::vector<QPointF> handles(4, anchor);
 	
 	if (hasSingleAnchor())
@@ -213,7 +212,7 @@ QTransform TextObject::calcTextToMapTransform() const
 	
 	QTransform transform;
 	double scaling = 1.0f / text_symbol->calculateInternalScaling();
-	transform.translate(coords[0].xd(), coords[0].yd());
+	transform.translate(coords[0].x(), coords[0].y());
 	if (rotation != 0)
 		transform.rotate(-rotation * 180 / M_PI);
 	transform.scale(scaling, scaling);
@@ -230,7 +229,7 @@ QTransform TextObject::calcMapToTextTransform() const
 	transform.scale(1.0f / scaling, 1.0f / scaling);
 	if (rotation != 0)
 		transform.rotate(rotation * 180 / M_PI);
-	transform.translate(-coords[0].xd(), -coords[0].yd());
+	transform.translate(-coords[0].x(), -coords[0].y());
 	
 	return transform;
 }
@@ -260,9 +259,14 @@ void TextObject::setRotation(float new_rotation)
 	setOutputDirty();
 }
 
+bool TextObject::intersectsBox(QRectF box) const
+{
+	return getExtent().intersects(box);
+}
+
 int TextObject::calcTextPositionAt(MapCoordF coord, bool find_line_only) const
 {
-	return calcTextPositionAt(calcMapToTextTransform().map(coord.toQPointF()), find_line_only);
+	return calcTextPositionAt(calcMapToTextTransform().map(coord), find_line_only);
 }
 
 // FIXME actually this is two functions, selected by parameter find_line_only; make two functions or return TextObjectLineInfo reference
@@ -417,7 +421,7 @@ void TextObject::prepareLineInfos() const
 				break;
 			
 			// Add the current part
-			part_infos.push_back(TextObjectPartInfo(part, part_start, part_end, part_x, metrics.width(part), metrics));
+			part_infos.push_back( { part, part_start, part_end, part_x, metrics.width(part), metrics } );
 			
 			// Advance to next part position
 			part_start = part_end + 1;
@@ -440,7 +444,7 @@ void TextObject::prepareLineInfos() const
 			++next_line_start;
 		}*/
 		
-		line_infos.push_back(TextObjectLineInfo(line_start, line_end, paragraph_end, line_x, line_y, line_width, metrics.ascent(), metrics.descent(), part_infos));
+		line_infos.push_back( { line_start, line_end, paragraph_end, line_x, line_y, line_width, metrics.ascent(), metrics.descent(), part_infos } );
 		
 		// Advance to next line
 		line_y += line_spacing;

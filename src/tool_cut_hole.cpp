@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2013-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -37,15 +38,11 @@
 #include "util.h"
 #include "gui/modifier_key.h"
 
-QCursor* CutHoleTool::cursor = NULL;
 
 CutHoleTool::CutHoleTool(MapEditorController* editor, QAction* tool_button, CutHoleTool::HoleType hole_type)
  : MapEditorTool(editor, Other, tool_button), hole_type(hole_type)
 {
 	path_tool = NULL;
-	
-	if (!cursor)
-		cursor = new QCursor(QPixmap(":/images/cursor-cut.png"), 11, 11);
 }
 
 void CutHoleTool::init()
@@ -55,6 +52,12 @@ void CutHoleTool::init()
 	updateStatusText();
 	
 	MapEditorTool::init();
+}
+
+const QCursor& CutHoleTool::getCursor() const
+{
+	static auto const cursor = QCursor(QPixmap(":/images/cursor-cut.png"), 11, 11);
+	return cursor;
 }
 
 CutHoleTool::~CutHoleTool()
@@ -201,17 +204,18 @@ void CutHoleTool::pathFinished(PathObject* hole_path)
 	Object* undo_duplicate = edited_object->duplicate();
 	
 	// Close the hole path
-	Q_ASSERT(hole_path->getNumParts() == 1);
-	hole_path->getPart(0).setClosed(true, true);
+	Q_ASSERT(hole_path->parts().size() == 1);
+	hole_path->parts().front().setClosed(true, true);
 	
-	PathObject* edited_path = reinterpret_cast<PathObject*>(edited_object);
 	BooleanTool::PathObjects in_objects, out_objects;
 	in_objects.push_back(hole_path);
-	BooleanTool(BooleanTool::Difference, map()).executeForObjects(edited_path, edited_object->getSymbol(), in_objects, out_objects);
+	
+	PathObject* edited_path = reinterpret_cast<PathObject*>(edited_object);
+	BooleanTool(BooleanTool::Difference, map()).executeForObjects(edited_path, in_objects, out_objects);
 	
 	edited_path->clearCoordinates();
 	edited_path->appendPath(out_objects.front());
-	edited_path->update(true);
+	edited_path->update();
 	updateDirtyRect();
 	
 	while (!out_objects.empty())

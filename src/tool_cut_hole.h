@@ -44,7 +44,7 @@ public:
 	virtual ~CutHoleTool();
 	
 	virtual void init();
-	virtual QCursor* getCursor() {return cursor;}
+	virtual const QCursor& getCursor() const;
 	
 	virtual bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
 	virtual bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
@@ -57,8 +57,6 @@ public:
 	virtual void focusOutEvent(QFocusEvent* event);
 	
 	virtual void draw(QPainter* painter, MapWidget* widget);
-	
-	static QCursor* cursor;
 	
 public slots:
 	void objectSelectionChanged();

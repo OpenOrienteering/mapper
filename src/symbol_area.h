@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2012-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -113,6 +114,7 @@ public:
 		 * TODO: should the transient name really be compared?!
 		 */
 		bool equals(const FillPattern& other, Qt::CaseSensitivity case_sensitivity) const;
+		
 		/**
 		 * Creates renderables for this pattern in the area given by extent.
 		 * @param extent Rectangular area to create renderables for.
@@ -126,12 +128,12 @@ public:
 			const MapCoord& pattern_origin,
 			ObjectRenderables& output
 		) const;
+		
 		/** Creates one line of renderables, called by createRenderables(). */
 		void createLine(
-			MapCoordVectorF& coords,
+			MapCoordF first, MapCoordF second,
 			float delta_offset,
 			LineSymbol* line,
-			PathObject* path,
 			PointObject* point_object,
 			ObjectRenderables& output
 		) const;
@@ -141,14 +143,39 @@ public:
 	
 	AreaSymbol();
 	virtual ~AreaSymbol();
-	virtual Symbol* duplicate(const MapColorMap* color_map = NULL) const;
+	Symbol* duplicate(const MapColorMap* color_map = NULL) const override;
 	
-	virtual void createRenderables(const Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output) const;
-	void createRenderablesNormal(const Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output) const;
-	virtual void colorDeleted(const MapColor* color);
-	virtual bool containsColor(const MapColor* color) const;
-	virtual const MapColor* getDominantColorGuess() const;
-	virtual void scale(double factor);
+	void createRenderables(
+	        const Object *object,
+	        const VirtualCoordVector &coords,
+	        ObjectRenderables &output,
+	        Symbol::RenderableOptions options) const override;
+	
+	void createRenderables(
+	        const PathObject* object,
+	        const PathPartVector& path_parts,
+	        ObjectRenderables &output,
+	        Symbol::RenderableOptions options) const override;
+	
+	void createRenderablesNormal(
+	        const PathObject* object,
+	        const PathPartVector& path_parts,
+	        ObjectRenderables& output) const;
+	
+	/**
+	 * Creates area hatching renderables for a path object.
+	 */
+	void createHatchingRenderables(
+	        const PathObject *object,
+	        const PathPartVector& path_parts,
+	        ObjectRenderables &output,
+	        const MapColor* color) const;
+	
+	
+	void colorDeleted(const MapColor* color) override;
+	bool containsColor(const MapColor* color) const override;
+	const MapColor* guessDominantColor() const override;
+	void scale(double factor) override;
 	
 	// Getters / Setters
 	inline const MapColor* getColor() const {return color;}
@@ -159,13 +186,15 @@ public:
 	inline FillPattern& getFillPattern(int i) {return patterns[i];}
 	inline const FillPattern& getFillPattern(int i) const {return patterns[i];}
 	bool hasRotatableFillPattern() const;
-	virtual SymbolPropertiesWidget* createPropertiesWidget(SymbolSettingDialog* dialog);
+	SymbolPropertiesWidget* createPropertiesWidget(SymbolSettingDialog* dialog) override;
 	
 protected:
-	virtual bool loadImpl(QIODevice* file, int version, Map* map);
-	virtual void saveImpl(QXmlStreamWriter& xml, const Map& map) const;
-	virtual bool loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict);
-	virtual bool equalsImpl(const Symbol* other, Qt::CaseSensitivity case_sensitivity) const;
+#ifndef NO_NATIVE_FILE_FORMAT
+	bool loadImpl(QIODevice* file, int version, Map* map) override;
+#endif
+	void saveImpl(QXmlStreamWriter& xml, const Map& map) const override;
+	bool loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict) override;
+	bool equalsImpl(const Symbol* other, Qt::CaseSensitivity case_sensitivity) const override;
 	
 	const MapColor* color;
 	int minimum_area;	// in mm^2 // FIXME: unit (factor) wrong

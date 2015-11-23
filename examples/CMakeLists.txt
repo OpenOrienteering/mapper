@@ -1,5 +1,5 @@
 #
-#    Copyright 2012, 2013 Thomas Schöps, Kai Pastor
+#    Copyright 2013-2015 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -32,3 +32,7 @@ foreach(_example ${Mapper_EXAMPLES})
 	configure_file(${_example} ${_example} COPYONLY)
 endforeach()
 
+if(Mapper_DEVELOPMENT_BUILD)
+	configure_file(overprinting.omap autosave-test.omap COPYONLY)
+	configure_file(sprint\ sample.omap autosave-test.omap.autosave COPYONLY)
+endif()

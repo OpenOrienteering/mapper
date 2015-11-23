@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map xmlns="http://oorienteering.sourceforge.net/mapper/xml/v2" version="5">
+<map xmlns="http://openorienteering.org/apps/mapper/xml/v2" version="5">
     <notes></notes>
     <georeferencing scale="5000" declination="0.00" grivation="-1.96">
         <ref_point x="0" y="0"/>
         <projected_crs id="UTM">
-            <spec language="PROJ.4">+proj=utm +zone=32</spec>
+            <spec language="PROJ.4">+proj=utm +zone=32 +datum=WGS84</spec>
             <ref_point x="696275.095283" y="5327486.424997"/>
         </projected_crs>
         <geographic_crs id="Geographic coordinates">

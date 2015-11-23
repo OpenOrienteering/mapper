@@ -1,5 +1,7 @@
 /*
- *    Copyright 2012, 2013 Thomas Schöps, Pete Curtis
+ *    Copyright 2012 Pete Curtis
+ *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2012-2015  Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -20,6 +22,7 @@
 #include "file_format_native.h"
 
 #include <QFile>
+#include <QScopedValueRollback>
 
 #include "core/georeferencing.h"
 #include "core/map_color.h"
@@ -55,7 +58,7 @@ public:
 protected:
 	/** Imports a native file.
 	 */
-	void import(bool load_symbols_only) throw (FileFormatException);
+	void import(bool load_symbols_only);
 };
 
 
@@ -97,7 +100,7 @@ bool NativeFileFormat::understands(const unsigned char *buffer, size_t sz) const
 	return (sz >= 4 && memcmp(buffer, magic_bytes, 4) == 0);
 }
 
-Importer *NativeFileFormat::createImporter(QIODevice* stream, Map* map, MapView* view) const throw (FileFormatException)
+Importer *NativeFileFormat::createImporter(QIODevice* stream, Map* map, MapView* view) const
 {
 	return new NativeFileImport(stream, map, view);
 }
@@ -114,8 +117,14 @@ NativeFileImport::~NativeFileImport()
 {
 }
 
-void NativeFileImport::import(bool load_symbols_only) throw (FileFormatException)
+void NativeFileImport::import(bool load_symbols_only)
 {
+    addWarning(Importer::tr("This file uses an obsolete format. "
+                            "Support for this format is to be removed from this program soon. "
+                            "To be able to open the file in the future, save it again."));
+
+    MapCoord::boundsOffset().reset(true);
+
     char buffer[4];
     stream->read(buffer, 4); // read the magic
 
@@ -202,15 +211,16 @@ void NativeFileImport::import(bool load_symbols_only) throw (FileFormatException
 	if (version >= 24)
 		map->setGrid(MapGrid().load(stream, version));
 	
+	map->renderable_options = Symbol::RenderNormal;
 	if (version >= 25)
 	{
-		stream->read((char*)&map->area_hatching_enabled, sizeof(bool));
-		stream->read((char*)&map->baseline_view_enabled, sizeof(bool));
-	}
-	else
-	{
-		map->area_hatching_enabled = false;
-		map->baseline_view_enabled = false;
+		bool area_hatching_enabled, baseline_view_enabled;
+		stream->read((char*)&area_hatching_enabled, sizeof(bool));
+		stream->read((char*)&baseline_view_enabled, sizeof(bool));
+		if (area_hatching_enabled)
+			map->renderable_options |= Symbol::RenderAreasHatched;
+		if (baseline_view_enabled)
+			map->renderable_options |= Symbol::RenderBaselines;
 	}
 	
 	if (version >= 6)
@@ -296,6 +306,9 @@ void NativeFileImport::import(bool load_symbols_only) throw (FileFormatException
 
     for (int i = 0; i < num_symbols; ++i)
     {
+        QScopedValueRollback<MapCoord::BoundsOffset> offset { MapCoord::boundsOffset() };
+        MapCoord::boundsOffset().reset(false);
+
         int symbol_type;
         stream->read((char*)&symbol_type, sizeof(int));
 
@@ -359,10 +372,13 @@ void NativeFileImport::import(bool load_symbols_only) throw (FileFormatException
 
 		// Restore widgets and views
 		if (view)
+		{
 			view->load(stream, version);
+		}
 		else
 		{
-			// TODO
+			MapView tmp(map);
+			tmp.load(stream, version);
 		}
 
 		// Load undo steps

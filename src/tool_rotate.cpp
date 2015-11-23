@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2012-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -74,7 +75,7 @@ void RotateTool::dragStart()
 	{
 		// Start rotating
 		rotating = true;
-		old_rotation = (cur_pos_map - rotation_center).getAngle();
+		old_rotation = (cur_pos_map - rotation_center).angle();
 		original_rotation = old_rotation;
 		angle_helper->clearAngles();
 		angle_helper->addDefaultAnglesDeg(-original_rotation * 180 / M_PI);
@@ -87,7 +88,7 @@ void RotateTool::dragMove()
 	{
 		angle_helper->getConstrainedCursorPositions(cur_pos_map, constrained_pos_map, constrained_pos, cur_map_widget);
 		
-		double rotation = (constrained_pos_map - rotation_center).getAngle();
+		double rotation = (constrained_pos_map - rotation_center).angle();
 		double delta_rotation = rotation - old_rotation;
 		
 		Map::ObjectSelection::const_iterator it_end = map()->selectedObjectsEnd();
@@ -134,7 +135,7 @@ bool RotateTool::keyPress(QKeyEvent* event)
 	if (event->key() == Qt::Key_Control)
 	{
 		angle_helper->setActive(true, rotation_center);
-		if (dragging)
+		if (isDragging())
 			dragMove();
 	}
     return false;
@@ -144,7 +145,7 @@ bool RotateTool::keyRelease(QKeyEvent* event)
 	if (event->key() == Qt::Key_Control && angle_helper->isActive())
 	{
 		angle_helper->setActive(false);
-		if (dragging)
+		if (isDragging())
 			dragMove();
 		return true;
 	}
@@ -155,7 +156,7 @@ int RotateTool::updateDirtyRectImpl(QRectF& rect)
 {
 	if (rotation_center_set)
 	{
-		rectIncludeSafe(rect, rotation_center.toQPointF());
+		rectIncludeSafe(rect, rotation_center);
 		return qMax(angle_helper->getDisplayRadius(), 5);
 	}
 	else

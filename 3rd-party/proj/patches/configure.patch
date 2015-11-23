@@ -1,7 +1,7 @@
 diff -up Proj/configure.orig Proj/configure
---- Proj/configure.orig	2014-01-06 21:25:10.902368744 +0100
-+++ Proj/configure	2014-01-06 21:01:53.000000000 +0100
-@@ -10228,6 +10228,25 @@ linux*oldld* | linux*aout* | linux*coff*
+--- Proj/configure.orig	2015-11-17 09:19:22.915735180 +0100
++++ Proj/configure	2015-11-17 09:25:42.834099078 +0100
+@@ -11317,6 +11317,25 @@ linux*oldld* | linux*aout* | linux*coff*
    dynamic_linker=no
    ;;
  
@@ -24,6 +24,6 @@ diff -up Proj/configure.orig Proj/configure
 +  dynamic_linker='Android linker'
 +  ;;
 +
- # This must be Linux ELF.
- linux* | k*bsd*-gnu | kopensolaris*-gnu)
-   version_type=linux
+ # This must be glibc/ELF.
+ linux* | k*bsd*-gnu | kopensolaris*-gnu | gnu*)
+   version_type=linux # correct to gnu/linux during the next big refactor

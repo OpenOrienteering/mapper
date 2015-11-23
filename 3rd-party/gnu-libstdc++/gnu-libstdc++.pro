@@ -1,5 +1,5 @@
 #
-#    Copyright 2014 Kai Pastor
+#    Copyright 2014, 2015 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -22,9 +22,8 @@ TEMPLATE = aux
 
 # Files to be listed in Qt Creator project tree
 OTHER_FILES = \
-    build-tools-r9c.patch \
     build.sh \
-    init-r9c.sh \
+    init.sh \
     INSTALL.txt.in \
     README.txt
 
@@ -38,6 +37,7 @@ isEmpty(ANDROID_NDK_ROOT) {
 RELEASE_FILE = "$$ANDROID_NDK_ROOT/RELEASE.TXT"
 RELEASE_FULL = $$cat("$$RELEASE_FILE", true)
 RELEASE = $$split(RELEASE_FULL, " ")
+RELEASE = $$split(RELEASE, "-")
 RELEASE = $$first(RELEASE)
 
 isEmpty(RELEASE) {
@@ -47,7 +47,7 @@ isEmpty(RELEASE) {
 }
 
 # Verify that init and build script exist for this release
-init.script = $$PWD/init-$${RELEASE}.sh
+init.script = $$PWD/init.sh
 exists($$init.script) {
 	message("Android NDK Release: $$RELEASE_FULL")
 } else {
@@ -64,14 +64,16 @@ GNU_LIBSTDCPP_DIR      = gnu-libstdc++-android-ndk-$$RELEASE-src
 init.target   = $$GNU_LIBSTDCPP_DIR/build.sh
 init.depends  = \
     $$ANDROID_NDK_ROOT/RELEASE.TXT \
-    $$PWD/build-tools-$${RELEASE}.patch \
     $$PWD/build.sh \
     $$PWD/INSTALL.txt.in \
     $$init.script
+exists($$PWD/build-tools-$${RELEASE}.patch): init.depends += $$PWD/build-tools-$${RELEASE}.patch
 init.commands = @ \
     mkdir -p "$$GNU_LIBSTDCPP_DIR" && \
     echo "$$RELEASE" > "$$GNU_LIBSTDCPP_DIR/NDK-Release.txt" && \
-    cp "$$PWD/build-tools-$${RELEASE}.patch" "$$GNU_LIBSTDCPP_DIR/build-tools.patch" && \
+    if [ -f "$$PWD/build-tools-$${RELEASE}.patch" ]; then \
+      cp "$$PWD/build-tools-$${RELEASE}.patch" "$$GNU_LIBSTDCPP_DIR/build-tools.patch"; \
+    fi && \
     cp "$$PWD/INSTALL.txt.in" "$$GNU_LIBSTDCPP_DIR/INSTALL.txt" && \
     ( test ! -f "$$init.target" || \
       rm "$$init.target" ) && \
@@ -89,4 +91,4 @@ build.commands = @ \
 
 QMAKE_EXTRA_TARGETS += build init
 PRE_TARGETDEPS      += $$build.target
-QMAKE_CLEAN         += $$init.target $$build.target
+QMAKE_CLEAN         += $$init.target $$build.target $$GNU_LIBSTDCPP_DIR/build/tools/toolchain-patches/gcc/*

@@ -1,5 +1,5 @@
 /*
- *    Copyright 2013 Kai Pastor
+ *    Copyright 2013-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -19,12 +19,22 @@
 
 #include "coord_xml_t.h"
 
+#include <algorithm>
+
+#include "../src/file_format_xml.h"
+#include "../src/util/xml_stream_util.h"
+
+namespace literal
+{
+	static const QLatin1String x("x");
+	static const QLatin1String y("y");
+	static const QLatin1String flags("flags");
+}
+
 
 void CoordXmlTest::initTestCase()
 {
-	proto_coord = MapCoord::fromRaw(12345, -6789);
-	proto_coord.setFlags(3);
-	
+	proto_coord = MapCoord::fromNative(12345, -6789, 3);
 	buffer.buffer().reserve(5000000);
 }
 
@@ -46,16 +56,12 @@ void CoordXmlTest::writeXml_data()
 
 void CoordXmlTest::writeXml_implementation(MapCoordVector& coords, QXmlStreamWriter& xml)
 {
-	namespace literal = MapCoordLiteral;
-	
-	for (MapCoordVector::iterator coord = coords.begin(), end = coords.end();
-	     coord != end;
-	     ++coord)
+	for (const auto& coord : coords)
 	{
-		xml.writeStartElement(literal::coord);
-		xml.writeAttribute(literal::x, QString::number(coord->rawX()));
-		xml.writeAttribute(literal::y, QString::number(coord->rawY()));
-		xml.writeAttribute(literal::flags, QString::number(coord->getFlags()));
+		xml.writeStartElement(XmlStreamLiteral::coord);
+		xml.writeAttribute(literal::x, QString::number(coord.nativeX()));
+		xml.writeAttribute(literal::y, QString::number(coord.nativeY()));
+		xml.writeAttribute(literal::flags, QString::number(coord.flags()));
 		xml.writeEndElement();
 	}
 }
@@ -89,13 +95,11 @@ void CoordXmlTest::writeHumanReadableStream_implementation(MapCoordVector& coord
 	QString data;
 	data.reserve(coords.size() * 14);
 	QTextStream stream(&data);
-	for (MapCoordVector::iterator coord = coords.begin(), end = coords.end();
-	     coord != end;
-	     ++coord)
+	for (const auto& coord : coords)
 	{
-		stream << coord->rawX() << ' '
-		       << coord->rawY() << ' '
-		       << coord->getFlags() << ';';
+		stream << coord.nativeX() << ' '
+		       << coord.nativeY() << ' '
+		       << coord.flags() << ';';
 	}
 	stream.flush();
 	xml.writeCharacters(data);
@@ -103,7 +107,7 @@ void CoordXmlTest::writeHumanReadableStream_implementation(MapCoordVector& coord
 
 void CoordXmlTest::writeHumanReadableStream()
 {
-	namespace literal = MapCoordLiteral;
+	namespace literal = XmlStreamLiteral;
 	
 	buffer.open(QBuffer::ReadWrite);
 	QXmlStreamWriter xml(&buffer);
@@ -137,16 +141,14 @@ void CoordXmlTest::writeHumanReadableString_implementation(MapCoordVector& coord
 	const std::size_t buf_size = 32;
 	char buffer[buf_size];
 	
-	for (MapCoordVector::iterator coord = coords.begin(), end = coords.end();
-	     coord != end;
-	     ++coord)
+	for (const auto& coord : coords)
 	{
 		int j = buf_size - 1;
 		
 		buffer[j] = ';';
 		--j;
 		
-		qint64 tmp = coord->getFlags();
+		qint32 tmp = coord.flags();
 		char sign = 0;
 		if (tmp != 0)
 		{
@@ -173,7 +175,7 @@ void CoordXmlTest::writeHumanReadableString_implementation(MapCoordVector& coord
 			--j;
 		}
 		
-		tmp = coord->rawY();
+		tmp = coord.nativeY();
 		if (tmp < 0)
 		{
 			sign = '-';
@@ -195,7 +197,7 @@ void CoordXmlTest::writeHumanReadableString_implementation(MapCoordVector& coord
 		buffer[j] = ' ';
 		--j;
 		
-		tmp = coord->rawX();
+		tmp = coord.nativeX();
 		sign = 0;
 		if (tmp < 0)
 		{
@@ -224,7 +226,7 @@ void CoordXmlTest::writeHumanReadableString_implementation(MapCoordVector& coord
 
 void CoordXmlTest::writeHumanReadableString()
 {
-	namespace literal = MapCoordLiteral;
+	namespace literal = XmlStreamLiteral;
 	
 	buffer.open(QBuffer::ReadWrite);
 	QXmlStreamWriter xml(&buffer);
@@ -253,16 +255,14 @@ void CoordXmlTest::writeCompressed_implementation(MapCoordVector& coords, QXmlSt
 	QString data;
 	data.reserve(coords.size() * 14);
 	QTextStream stream(&data);
-	for (MapCoordVector::iterator coord = coords.begin(), end = coords.end();
-	     coord != end;
-	     ++coord)
+	for (const auto& coord : coords)
 	{
 		static const std::size_t buf_size = 3*sizeof(qint64);
 		static char encoded[65] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 		                          "abcdefghijklmnopqrstuvwxyz"
 		                          "0123456789=/";
 		QByteArray buffer((int)buf_size, 0);
-		qint64 tmp = coord->internalX();
+		auto tmp = coord.xp;
 		char sign = '+';
 		if (tmp < 0)
 		{
@@ -279,7 +279,23 @@ void CoordXmlTest::writeCompressed_implementation(MapCoordVector& coords, QXmlSt
 		buffer[j] = sign;
 		++j;
 		
-		tmp = coord->internalY();
+		tmp = coord.yp;
+		sign = '+';
+		if (tmp < 0)
+		{
+			sign = '-';
+			tmp = -tmp; // TODO catch -MAX
+		}
+		while (tmp != 0)
+		{
+			buffer[j] = encoded[tmp & 63];
+			tmp = tmp >> 6;
+			++j;
+		}
+		buffer[j] = sign;
+		++j;
+		
+		tmp = coord.fp;
 		sign = '+';
 		if (tmp < 0)
 		{
@@ -303,7 +319,7 @@ void CoordXmlTest::writeCompressed_implementation(MapCoordVector& coords, QXmlSt
 
 void CoordXmlTest::writeCompressed()
 {
-	namespace literal = MapCoordLiteral;
+	namespace literal = XmlStreamLiteral;
 	
 	buffer.open(QBuffer::ReadWrite);
 	QXmlStreamWriter xml(&buffer);
@@ -322,6 +338,33 @@ void CoordXmlTest::writeCompressed()
 }
 
 
+void CoordXmlTest::writeFastImplementation_data()
+{
+	common_data();
+}
+
+void CoordXmlTest::writeFastImplementation()
+{
+	buffer.open(QBuffer::ReadWrite);
+	QXmlStreamWriter xml(&buffer);
+	xml.setAutoFormatting(false);
+	xml.writeStartDocument();
+	
+	XMLFileFormat::active_version = 6; // Activate fast text format.
+	XmlElementWriter element(xml, QLatin1String("root"));
+	
+	QFETCH(int, num_coords);
+	MapCoordVector coords(num_coords, proto_coord);
+	QBENCHMARK
+	{
+		element.write(coords);
+	}
+	
+	xml.writeEndDocument();
+	buffer.close();
+}
+
+
 void CoordXmlTest::readXml_data()
 {
 	common_data();
@@ -329,8 +372,6 @@ void CoordXmlTest::readXml_data()
 
 void CoordXmlTest::readXml()
 {
-	namespace literal = MapCoordLiteral;
-	
 	QFETCH(int, num_coords);
 	MapCoordVector coords(num_coords, proto_coord);
 	
@@ -380,24 +421,17 @@ void CoordXmlTest::readXml()
 		
 		while(xml.readNextStartElement())
 		{
-			if (xml.name() != literal::coord)
+			if (xml.name() != XmlStreamLiteral::coord)
 			{
 				failed = true;
 				break;
 			}
 			
 			XmlElementReader element(xml);
-			qint64 x = element.attribute<qint64>(literal::x);
-			qint64 y = element.attribute<qint64>(literal::y);
-			MapCoord coord = MapCoord::fromRaw(x, y);
-			
-			int flags = element.attribute<int>(literal::flags);
-			if (flags)
-			{
-				coord.setFlags(flags);
-			}
-			
-			coords.push_back(coord);
+			auto x = element.attribute<qint32>(literal::x);
+			auto y = element.attribute<qint32>(literal::y);
+			auto flags = element.attribute<int>(literal::flags);
+			coords.push_back(MapCoord::fromNative(x, y, flags));
 		}
 	}
 	
@@ -417,7 +451,7 @@ void CoordXmlTest::readHumanReadableStream_data()
 
 void CoordXmlTest::readHumanReadableStream()
 {
-	namespace literal = MapCoordLiteral;
+	namespace literal = XmlStreamLiteral;
 	
 	QFETCH(int, num_coords);
 	MapCoordVector coords(num_coords, proto_coord);
@@ -491,21 +525,17 @@ void CoordXmlTest::readHumanReadableStream()
 				QString data = QString::fromRawData(text.constData(), text.length());
 				QTextStream stream(&data, QIODevice::ReadOnly);
 				stream.setIntegerBase(10);
-				MapCoord coord;
 				while (!stream.atEnd())
 				{
-					qint64 x, y;
+					qint32 x, y;
 					int flags = 0;
 					char separator;
 					stream >> x >> y >> separator;
-					coord.setRawX(x);
-					coord.setRawY(y);
 					if (separator != ';')
 					{
 						stream >> flags >> separator;
 					}
-					coord.setFlags(flags);
-					coords.push_back(coord);
+					coords.push_back(MapCoord::fromNative(x, y, flags));
 				}
 				if (stream.status() == QTextStream::ReadCorruptData)
 				{
@@ -531,10 +561,9 @@ void CoordXmlTest::readCompressed_data()
 	common_data();
 }
 
+
 void CoordXmlTest::readCompressed()
 {
-	namespace literal = MapCoordLiteral;
-	
 	QFETCH(int, num_coords);
 	MapCoordVector coords(num_coords, proto_coord);
 	
@@ -610,7 +639,7 @@ void CoordXmlTest::readCompressed()
 				{
 					coords.resize(coords.size() + 1);
 					quint8 c;
-					qint64 x = 0;
+					decltype(MapCoord::xp) x = 0;
 					int i = 0;
 					
 					const int len = data.length();
@@ -656,7 +685,7 @@ void CoordXmlTest::readCompressed()
 						i += 6;
 					}
 					
-					qint64 y = 0;
+					decltype(MapCoord::yp) y = 0;
 					i = 0;
 					while (pos < len)
 					{
@@ -699,8 +728,54 @@ void CoordXmlTest::readCompressed()
 						y = y | (c << i );
 						i += 6;
 					}
-					coords.back().x = x;
-					coords.back().y = y;
+					
+					int f = 0;
+					i = 0;
+					while (pos < len)
+					{
+						c = data[pos];
+						pos++;
+						
+						if (c >= 'A' && c <= 'Z')
+						{
+						c =  c - 'A';
+						}
+						else if (c >= 'a' && c <= 'z')
+						{
+							c = (c - 'a') + 26;
+						}
+						else if (c >= '0' && c <= '9')
+						{
+							c = (c - '0') + 52;
+						}
+						else if (c == '/')
+						{
+							c = 63;
+						}
+						else if (c == '=')
+						{
+							c = 62;
+						}
+						else if (c == '+')
+						{
+							break;
+						}
+						else if (c == '-')
+						{
+							f = -f;
+							break;
+						}
+						else
+						{
+							c = 0;
+						}
+						f = f | (c << i );
+						i += 6;
+					}
+					
+					coords.back().xp = x;
+					coords.back().yp = y;
+					coords.back().fp = decltype(MapCoord::fp)(f);
 				}
 			}
 			// otherwise: ignore element
@@ -716,17 +791,82 @@ void CoordXmlTest::readCompressed()
 }
 
 
-bool CoordXmlTest::compare_all(MapCoordVector& coords, MapCoord& expected) const
+void CoordXmlTest::readFastImplementation_data()
 {
-	for (MapCoordVector::iterator coord = coords.begin(), end = coords.end();
-	     coord != end;
-	     ++coord)
+	common_data();
+}
+
+void CoordXmlTest::readFastImplementation()
+{
+	QFETCH(int, num_coords);
+	MapCoordVector coords(num_coords, proto_coord);
+	
+	buffer.buffer().truncate(0);
+	QBuffer header;
 	{
-		if (*coord != expected)
-			return false;
+		QXmlStreamWriter xml(&header);
+		
+		header.open(QBuffer::ReadWrite);
+		xml.setAutoFormatting(false);
+		xml.setAutoFormatting(false);
+		xml.writeStartDocument();
+		
+		XMLFileFormat::active_version = 6; // Activate fast text format.
+		
+		xml.writeStartElement("root");
+		xml.writeCharacters(""); // flush root start element
+		
+		buffer.open(QBuffer::ReadWrite);
+		xml.setDevice(&buffer);
+		{
+			XmlElementWriter element(xml, QLatin1String("coords"));
+			element.write(coords);
+		}
+		
+		xml.setDevice(NULL);
+		
+		buffer.close();
+		header.close();
 	}
-	return true;
+	
+	header.open(QBuffer::ReadOnly);
+	buffer.open(QBuffer::ReadOnly);
+	QXmlStreamReader xml;
+	xml.addData(header.buffer());
+	xml.readNextStartElement();
+	QCOMPARE(xml.name().toString(), QString("root"));
+	
+	bool failed = false;
+	QBENCHMARK
+	{
+		// benchmark iteration overhead
+		coords.clear();
+		xml.addData(buffer.data());
+		
+		xml.readNextStartElement();
+		if (xml.name() != "coords")
+		{
+			failed = true;
+			break;
+		}
+		
+		XmlElementReader element(xml);
+		element.read(coords);
+	}
+		
+	QVERIFY(!failed);
+	QCOMPARE((int)coords.size(), num_coords);
+	QVERIFY(compare_all(coords, proto_coord));
+	
+	header.close();
+	buffer.close();
 }
 
 
-QTEST_MAIN(CoordXmlTest)
+bool CoordXmlTest::compare_all(MapCoordVector& coords, MapCoord& expected) const
+{
+	return std::all_of(begin(coords), end(coords), [expected](const MapCoord& coord){ return coord == expected; });
+}
+
+
+QTEST_GUILESS_MAIN(CoordXmlTest)

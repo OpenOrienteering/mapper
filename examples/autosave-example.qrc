@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/examples">
+        <file alias="autosave-test.omap.autosave">sprint sample.omap</file>
+        <file alias="autosave-test.omap">overprinting.omap</file>
+    </qresource>
+</RCC>

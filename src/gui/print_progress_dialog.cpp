@@ -1,5 +1,5 @@
 /*
- *    Copyright 2013 Kai Pastor
+ *    Copyright 2013-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -23,33 +23,51 @@
 #include "print_progress_dialog.h"
 
 #include <QApplication>
+#include <QMessageBox>
+#include <QPrintPreviewDialog>
 
 #include "../core/map_printer.h"
 
 
-PrintProgressDialog::PrintProgressDialog(QWidget* parent, Qt::WindowFlags f)
+PrintProgressDialog::PrintProgressDialog(MapPrinter* map_printer, QWidget* parent, Qt::WindowFlags f)
  : QProgressDialog(parent, f)
+ , map_printer(map_printer)
 {
+	setWindowModality(Qt::ApplicationModal); // Required for OSX, cf. QTBUG-40112
 	setRange(0, 100);
 	setMinimumDuration(0);
 	setValue(0);
+	
+	Q_ASSERT(map_printer);
+	connect(map_printer, &MapPrinter::printProgress, this, &PrintProgressDialog::setProgress);
+	connect(this, &PrintProgressDialog::canceled, map_printer, &MapPrinter::cancelPrintMap);
 }
 
-void PrintProgressDialog::attach(MapPrinter* printer)
+PrintProgressDialog::~PrintProgressDialog()
 {
-	connect(printer, SIGNAL(printProgress(int, QString)), this, SLOT(setProgress(int,QString)));
-	connect(this, SIGNAL(canceled()), printer, SLOT(cancelPrintMap()));
+	// nothing, not inlined
+}
+
+void PrintProgressDialog::paintRequested(QPrinter* printer)
+{
+	if (!map_printer->printMap(printer))
+	{
+		QMessageBox::warning(
+		  parentWidget(), tr("Printing", "PrintWidget"),
+		  tr("An error occured during processing.", "PrintWidget"),
+		  QMessageBox::Ok, QMessageBox::Ok );
+	}
 }
 
 void PrintProgressDialog::setProgress(int value, QString status)
 {
-	if (isHidden())
-	{
-		show();
-		QApplication::processEvents(QEventLoop::ExcludeUserInputEvents);
-	}
 	setLabelText(status);
 	setValue(value);
+	if (!isVisible() && value < maximum())
+	{
+		show();
+	}
+	
 	QApplication::processEvents(); // Drawing and Cancel events
 }
 

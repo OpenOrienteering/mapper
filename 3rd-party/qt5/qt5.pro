@@ -17,6 +17,8 @@
 #    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
 
 TEMPLATE = aux
+CONFIG  -= debug_and_release
+QT       =
 
 OTHER_FILES = \
     CMakeLists.txt \
@@ -35,15 +37,12 @@ android {
 	qt5.platform = -xplatform android-g++ \
 	               -android-ndk-platform android-9 \
 	               -android-arch "$$ANDROID_TARGET_ARCH" \
-	               -android-toolchain-version 4.8 \
-	               -skip qttranslations \
-	               -no-warnings-are-errors
+	               -android-toolchain-version 4.9
 }
 
-CONFIG(debug) {
+qt5.debug =
+CONFIG(debug, release|debug) {
 	qt5.debug = -DQT5_DEBUG:BOOL=ON
-} else {
-	qt5.debug =
 }
 
 qt5.cmake    = \

@@ -18,13 +18,19 @@
  */
 
 
-#include <QDebug>
 #include <QLibraryInfo>
 #include <QLocale>
 #include <QSettings>
-#include <QTranslator>
+#include <QStyle>
 #include <QStyleFactory>
-#include <qstyle.h>
+#include <QTranslator>
+
+#ifdef Q_OS_ANDROID
+#include <QtAndroid>
+#include <QAndroidJniObject>
+#include <QLabel>
+#include <QUrl>
+#endif
 
 #include <mapper_config.h>
 
@@ -46,6 +52,11 @@
 
 int main(int argc, char** argv)
 {
+#ifdef Q_OS_ANDROID
+	// Android native style is activated later.
+	qputenv("QT_USE_ANDROID_NATIVE_STYLE", "0");
+#endif
+	
 #if MAPPER_USE_QTSINGLEAPPLICATION
 	// Create single-instance application.
 	// Use "oo-mapper" instead of the executable as identifier, in case we launch from different paths.
@@ -98,30 +109,60 @@ int main(int argc, char** argv)
 	// Initialize static things like the file format registry.
 	doStaticInitializations();
 	
+	QStyle* base_style = nullptr;
+#if defined(Q_OS_ANDROID)
+	base_style = QStyleFactory::create("android");
+#elif !defined(Q_OS_WIN) && !defined(Q_OS_OSX)
+	if (QGuiApplication::platformName() == QLatin1String("xcb"))
+	{
+		// Use the modern 'fusion' style instead of the 
+		// default "windows" style on X11.
+		base_style = QStyleFactory::create("fusion");
+	}
+#endif
+	QApplication::setStyle(new MapperProxyStyle(base_style));
+#if !defined(Q_OS_OSX)
+	QApplication::setPalette(QApplication::style()->standardPalette());
+#endif
+	
 	// Create first main window
 	MainWindow first_window(true);
 	first_window.setAttribute(Qt::WA_DeleteOnClose, false);
 	first_window.setController(new HomeScreenController());
 	
-	QProxyStyle* style = new MapperProxyStyle();
-	if (QGuiApplication::platformName() == QLatin1String("xcb"))
+	bool no_files_given = true;
+#ifdef Q_OS_ANDROID
+	QAndroidJniObject activity = QtAndroid::androidActivity();
+	QAndroidJniObject intent = activity.callObjectMethod("getIntent", "()Landroid/content/Intent;");
+	const QString action = intent.callObjectMethod<jstring>("getAction").toString();
+	static const QString action_edit =
+	  QAndroidJniObject::getStaticObjectField<jstring>("android/content/Intent", "ACTION_EDIT").toString();
+	static const QString action_view =
+	  QAndroidJniObject::getStaticObjectField<jstring>("android/content/Intent", "ACTION_VIEW").toString();
+	if (action == action_edit || action == action_view)
 	{
-		// Use the modern 'fusion' style instead of the 
-		// default "windows" style on X11.
-		style->setBaseStyle(QStyleFactory::create("fusion"));
+		const QString data_string = intent.callObjectMethod<jstring>("getDataString").toString();
+		const QString local_file  = QUrl(data_string).toLocalFile();
+		first_window.setHomeScreenDisabled(true);
+		first_window.setCentralWidget(new QLabel(MainWindow::tr("Loading %1...").arg(local_file)));
+		first_window.setVisible(true);
+		first_window.raise();
+		// Empircal tested: We need to process the loop twice.
+		QApplication::processEvents(QEventLoop::ExcludeUserInputEvents);
+		QApplication::processEvents(QEventLoop::ExcludeUserInputEvents);
+		if (!first_window.openPath(local_file))
+			return -1;
+		return qapp.exec();
 	}
-	QApplication::setStyle(style);
-	QApplication::setPalette(QApplication::style()->standardPalette());
-	
+#else
 	// Open given files later, i.e. after the initial home screen has been
 	// displayed. In this way, error messages for missing files will show on 
 	// top of a regular main window (home screen or other file).
 	
 	// Treat all program parameters as files to be opened
-	bool no_files_given = true;
 	QStringList args(qapp.arguments());
 	args.removeFirst(); // the program name
-	Q_FOREACH(QString arg, args)
+	for (auto&& arg : args)
 	{
 		if (arg[0] != '-')
 		{
@@ -129,6 +170,7 @@ int main(int argc, char** argv)
 			no_files_given = false;
 		}
 	}
+#endif
 	
 	// Optionally open most recently used file on startup
 	if (no_files_given && settings.getSettingCached(Settings::General_OpenMRUFile).toBool())
@@ -145,7 +187,7 @@ int main(int argc, char** argv)
 #endif
 	
 	// Let application run
-	first_window.show();
+	first_window.setVisible(true);
 	first_window.raise();
 	return qapp.exec();
 }

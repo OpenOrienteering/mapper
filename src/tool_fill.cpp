@@ -1,6 +1,6 @@
 /*
  *    Copyright 2013 Thomas Schöps
- *    Copyright 2014 Kai Pastor
+ *    Copyright 2014, 2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -109,7 +109,7 @@ int FillTool::fill(const QRectF& extent)
 	QImage image = rasterizeMap(extent, transform);
 	
 	// Calculate click position in image and check if it is inside the map area and free
-	QPoint clicked_pixel = transform.map(cur_map_widget->viewportToMapF(click_pos).toQPointF()).toPoint();
+	QPoint clicked_pixel = transform.map(cur_map_widget->viewportToMapF(click_pos)).toPoint();
 	if (!image.rect().contains(clicked_pixel, true))
 		return 0;
 	if (qAlpha(image.pixel(clicked_pixel)) > 0)
@@ -189,14 +189,14 @@ QImage FillTool::rasterizeMap(const QRectF& extent, QTransform& out_transform)
 	// - specific zoom factor (resolution)
 	// - no antialiasing
 	// - encode object ids in object colors
-	// - draw centerlines in addition to normal rendering
+	// - draw baselines in advance to normal rendering
+	//   This makes it possible to fill areas bounded by e.g. dashed paths.
 	
 	const float zoom_level = 4;
 	
 	// Create map view centered on the extent
 	MapView* view = new MapView(map());
-	view->setPositionX(extent.center().x() * 1000);
-	view->setPositionY(extent.center().y() * 1000);
+	view->setCenter(MapCoord{ extent.center() });
 	view->setZoom(zoom_level);
 	
 	// Allocate the image
@@ -214,18 +214,38 @@ QImage FillTool::rasterizeMap(const QRectF& extent, QTransform& out_transform)
 	painter.setCompositionMode(mode);
 	
 	// Draw map
-	painter.translate(image_size.width() / 2.0, image_size.height() / 2.0);
-	view->applyTransform(&painter);
-	drawObjectIDs(map(), &painter, extent, view->calculateFinalZoomFactor());
+	RenderConfig::Options options = RenderConfig::DisableAntialiasing | RenderConfig::ForceMinSize;
+	RenderConfig config = { *map(), extent, view->calculateFinalZoomFactor(), options, 1.0 };
 	
-	// Temporarily enable baseline view and draw map again.
-	// This makes it possible to fill areas bounded by e.g. dashed paths.
+	painter.translate(image_size.width() / 2.0, image_size.height() / 2.0);
+	painter.setWorldTransform(view->worldTransform(), true);
+	
+	auto original_area_hatching = map()->isAreaHatchingEnabled();
+	if (original_area_hatching)
+	{
+		map()->setAreaHatchingEnabled(false);
+	}
+	
 	if (!map()->isBaselineViewEnabled())
 	{
+		// Temporarily enable baseline view and draw map once.
 		map()->setBaselineViewEnabled(true);
 		map()->updateAllObjects();
-		drawObjectIDs(map(), &painter, extent, view->calculateFinalZoomFactor());
+		drawObjectIDs(map(), &painter, config);
 		map()->setBaselineViewEnabled(false);
+		map()->updateAllObjects();
+	}
+	else if (original_area_hatching)
+	{
+		map()->updateAllObjects();
+	}
+	
+	// Draw the map in original mode (but without area hatching)
+	drawObjectIDs(map(), &painter, config);
+	
+	if (original_area_hatching)
+	{
+		map()->setAreaHatchingEnabled(original_area_hatching);
 		map()->updateAllObjects();
 	}
 	
@@ -235,7 +255,7 @@ QImage FillTool::rasterizeMap(const QRectF& extent, QTransform& out_transform)
 	return image;
 }
 
-void FillTool::drawObjectIDs(Map* map, QPainter* painter, QRectF bounding_box, float scaling)
+void FillTool::drawObjectIDs(Map* map, QPainter* painter, const RenderConfig &config)
 {
 	MapPart* part = map->getCurrentPart();
 	for (int o = 0, num_objects = part->getNumObjects(); o < num_objects; ++o)
@@ -250,9 +270,7 @@ void FillTool::drawObjectIDs(Map* map, QPainter* painter, QRectF bounding_box, f
 		object->renderables().draw(
 			qRgb(o % 256, (o / 256) % 256, (o / (256 * 256)) % 256),
 			painter,
-			bounding_box,
-			true,
-			scaling
+			config
 		);
 	}
 }
@@ -262,8 +280,8 @@ int FillTool::traceBoundary(QImage image, QPoint start_pixel, QPoint test_pixel,
 	out_boundary.clear();
 	out_boundary.reserve(4096);
 	out_boundary.push_back(test_pixel);
-	assert(qAlpha(image.pixel(start_pixel)) == 0);
-	assert(qAlpha(image.pixel(test_pixel)) > 0);
+	Q_ASSERT(qAlpha(image.pixel(start_pixel)) == 0);
+	Q_ASSERT(qAlpha(image.pixel(test_pixel)) > 0);
 	
 	// Uncomment this and below references to debugImage to generate path visualizations
 // 	QImage debugImage = image.copy();
@@ -302,7 +320,11 @@ int FillTool::traceBoundary(QImage image, QPoint start_pixel, QPoint test_pixel,
 		
 		QPoint cur_free_pixel = cur_pixel + fwd_vector;
 		if (cur_pixel == test_pixel && cur_free_pixel == start_pixel)
+		{
+			// Close the path.
+			out_boundary.push_back(cur_pixel);
 			break;
+		}
 		
 // 		debugImage.setPixel(cur_pixel, qRgb(0, 0, 255));
 		
@@ -334,7 +356,7 @@ bool FillTool::fillBoundary(const QImage& image, const std::vector< QPoint >& bo
 	// does not work properly like this (would need fixing of path->simplify() and dilatation of path)
 // 	PathObject* path = new PathObject(last_used_symbol);
 // 	for (size_t b = 0, end = boundary.size(); b < end; ++b)
-// 		path->addCoordinate(MapCoordF(image_to_map.map(QPointF(boundary[b]))).toMapCoord());
+// 		path->addCoordinate(MapCoord(image_to_map.map(QPointF(boundary[b]))));
 // 	path->closeAllParts();
 // 	
 // 	path->convertToCurves();
@@ -367,7 +389,7 @@ bool FillTool::fillBoundary(const QImage& image, const std::vector< QPoint >& bo
 			|| sections.back().object != path
 			|| sections.back().part != part
 			|| (sections.back().end_clen - sections.back().start_clen) * (path_coord.clen - sections.back().end_clen) < 0
-			|| qAbs(path_coord.clen - sections.back().end_clen) > 5 * (map_pos.lengthTo(MapCoordF(image_to_map.map(QPointF(boundary[b - 1])))));
+			|| qAbs(path_coord.clen - sections.back().end_clen) > 5 * (map_pos.distanceTo(MapCoordF(image_to_map.map(QPointF(boundary[b - 1])))));
 		
 		if (start_new_section)
 		{
@@ -426,18 +448,22 @@ bool FillTool::fillBoundary(const QImage& image, const std::vector< QPoint >& bo
 	
 	// Create fill object
 	PathObject* path = new PathObject(drawing_symbol);
-	for (size_t s = 0, end = sections.size(); s < end; ++s)
+	for (auto& section : sections)
 	{
-		PathSection& section = sections[s];
-		if (section.start_clen > section.object->getPart(0).getLength()
-			|| section.end_clen > section.object->getPart(0).getLength())
+		const auto& part = section.object->parts().front();
+		if (section.start_clen > part.length() || section.end_clen > part.length())
 			continue;
 		
-		PathObject* part_copy = section.object->duplicatePart(section.part);
-		bool reverse = section.end_clen < section.start_clen;
-		part_copy->changePathBounds(0, reverse ? section.end_clen : section.start_clen, reverse ? section.start_clen : section.end_clen);
-		if (reverse)
+		PathObject* part_copy = new PathObject { section.object->parts()[section.part] };
+		if (section.end_clen < section.start_clen)
+		{
+			part_copy->changePathBounds(0, section.end_clen, section.start_clen);
 			part_copy->reverse();
+		}
+		else
+		{
+			part_copy->changePathBounds(0, section.start_clen, section.end_clen);
+		}
 		
 		if (path->getCoordinateCount() == 0)
 			path->appendPath(part_copy);
@@ -446,13 +472,16 @@ bool FillTool::fillBoundary(const QImage& image, const std::vector< QPoint >& bo
 		
 		delete part_copy;
 	}
+	
 	if (path->getCoordinateCount() < 2)
 	{
 		delete path;
 		return false;
 	}
+	
 	path->closeAllParts();
-	const float simplify_epsilon = 1e-2f;
+	
+	const auto simplify_epsilon = 1e-2;
 	path->simplify(NULL, simplify_epsilon);
 	
 	int index = map()->addObject(path);

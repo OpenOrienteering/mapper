@@ -1,6 +1,6 @@
 /*
- *    Copyright 2012 Thomas Schöps
- *    Copyright 2013, 2014 Thomas Schöps, Kai Pastor
+ *    Copyright 2012-2014 Thomas Schöps
+ *    Copyright 2013-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -23,22 +23,25 @@
 #define _OPENORIENTEERING_MAP_H_
 
 #include <vector>
+#include <set>
 
-#include <QString>
-#include <QRect>
 #include <QHash>
-#include <QSet>
+#include <QObject>
+#include <QRect>
 #include <QScopedPointer>
-#include <QExplicitlySharedDataPointer>
+#include <QSharedData>
+#include <QString>
 
 #include "global.h"
-#include "map_coord.h"
+#include "core/map_coord.h"
 #include "core/map_grid.h"
+#include "file_format.h"
 #include "map_part.h"
 
 QT_BEGIN_NAMESPACE
 class QIODevice;
 class QPainter;
+class QWidget;
 class QXmlStreamReader;
 class QXmlStreamWriter;
 QT_END_NAMESPACE
@@ -48,14 +51,13 @@ class MapColor;
 class MapColorMap;
 class MapWidget;
 class MapView;
-class MapEditorController;
 class MapPrinterConfig;
 class Symbol;
 class CombinedSymbol;
 class LineSymbol;
 class PointSymbol;
 class Object;
-class Renderable;
+class RenderConfig;
 class MapRenderables;
 class Template;
 class TextSymbol;
@@ -69,6 +71,7 @@ class MapGrid;
 class Map : public QObject
 {
 Q_OBJECT
+friend class MapTest;
 friend class MapRenderables;
 friend class OCAD8FileImport;
 friend class XMLFileImport;
@@ -77,8 +80,8 @@ friend class NativeFileExport;
 friend class XMLFileImporter;
 friend class XMLFileExporter;
 public:
-	/** A set of selected objects represented by a QSet of object pointers. */
-	typedef QSet<Object*> ObjectSelection;
+	/** A set of selected objects represented by a std::set of object pointers. */
+	typedef std::set<Object*> ObjectSelection;
 	
 	/** Different strategies for importing things from another map into this map. */
 	enum ImportMode
@@ -106,45 +109,77 @@ public:
 		CompleteImport
 	};
 	
+	
+	/** Options for zooming to visibility of selection. */
+	enum SelectionVisibility
+	{
+		FullVisibility,
+		PartialVisibility,
+		IgnoreVisibilty
+	};	
+	
+	
 	/** Creates a new, empty map. */
 	Map();
 	
 	/** Destroys the map. */
 	~Map();
 	
-	/**
-	 * Attempts to save the map to the given file.
-	 * If a MapEditorController is given, the widget positions and MapViews
-	 * stored in the map file are also updated.
-	 */
-	bool saveTo(const QString& path, MapEditorController* map_editor = NULL);
 	
 	/**
-	 * Attempts to save the map to the given file.
-	 * If a MapEditorController is given, the widget positions and MapViews
-	 * stored in the map file are also updated.
+	 * Deletes all map data.
+	 */
+	void clear();
+	
+	/**
+	 * Initializes an empty map.
+	 * 
+	 * A map is empty when it is newly constructed or after clear().
+	 */
+	void init();
+	
+	/**
+	 * Deletes all map data, and reinitializes the empty map.
+	 */
+	void reset();
+	
+	
+	/**
+	 * Saves the map to the given file.
+	 * 
+	 * If a MapView is given, is state will be saved.
+	 */
+	bool saveTo(const QString& path,
+	            MapView *view);
+	
+	/**
+	 * Exports the map to the given file and format.
+	 * 
+	 * If a MapView is given, is state will be saved.
 	 * If a FileFormat is given, it will be used, otherwise the file format
 	 * is determined from the filename.
+	 * 
 	 * If the map was modified, it will still be considered modified after
-	 * successfully saving a copy.
+	 * successful export.
 	 */
-	bool exportTo(const QString& path, MapEditorController* map_editor = NULL, const FileFormat* format = NULL);
+	bool exportTo(const QString& path,
+	              MapView* view = nullptr,
+	              const FileFormat* format = nullptr);
 	
 	/**
 	 * Attempts to load the map from the specified path. Returns true on success.
 	 * 
 	 * @param path The file path to load the map from.
 	 * @param dialog_parent The parent widget for all dialogs.
-	 *     This should never be NULL in a QWidgets application.
-	 * @param map_editor If not NULL, restores that map editor controller.
-	 *     Restores widget positions and MapViews.
+	 *     This should never be nullptr in a QWidgets application.
+	 * @param view If not nullptr, restores this map view.
 	 * @param load_symbols_only Loads only symbols from the chosen file.
 	 *     Useful to load symbol sets.
 	 * @param show_error_messages Whether to show import errors and warnings.
 	 */
 	bool loadFrom(const QString& path,
 	              QWidget* dialog_parent,
-	              MapEditorController* map_editor = NULL,
+	              MapView* view = nullptr,
 	              bool load_symbols_only = false, bool show_error_messages = true);
 	
 	/**
@@ -158,8 +193,8 @@ public:
 	 * WARNING: this method potentially changes the 'other' map if the
 	 *          scales differ (by rescaling to fit this map's scale)!
 	 */
-	void importMap(Map* other, ImportMode mode, QWidget* dialog_parent = NULL, std::vector<bool>* filter = NULL, int symbol_insert_pos = -1,
-				   bool merge_duplicate_symbols = true, QHash<const Symbol*, Symbol*>* out_symbol_map = NULL);
+	void importMap(Map* other, ImportMode mode, QWidget* dialog_parent = nullptr, std::vector<bool>* filter = nullptr, int symbol_insert_pos = -1,
+				   bool merge_duplicate_symbols = true, QHash<const Symbol*, Symbol*>* out_symbol_map = nullptr);
 	
 	/**
 	 * Serializes the map directly into the given IO device in a known format.
@@ -175,43 +210,23 @@ public:
 	 */
 	bool importFromIODevice(QIODevice* stream);
 	
-	/**
-	 * Deletes all map data and resets the map to its initial state
-	 * containing one default map part.
-	 */
-	void clear();
 	
 	/**
 	 * Draws the part of the map which is visible in the bounding box.
 	 * 
 	 * @param painter The QPainter used for drawing.
-	 * @param bounding_box Bounding box of area to draw, given in map coordinates.
-	 * @param force_min_size Forces a minimum size of 1 pixel for objects. Makes
-	 *     maps look better at small zoom levels without antialiasing.
-	 * @param scaling The used scaling factor. Used to calculate the final object
-	 *     sizes when force_min_size is set.
-	 * @param on_screen Set to true if drawing the map on screen. Potentially
-	 *     enables optimizations which result in slightly lower
-	 *     display quality (e.g. disable antialiasing for texts).
-	 * @param show_helper_symbols Set this if symbols with the "helper symbol"
-	 *     flag should be shown.
-	 * @param opacity Opacity to draw the map with.
+	 * @param config  The rendering configuration
 	 */
-	void draw(QPainter* painter, QRectF bounding_box,
-		bool force_min_size, float scaling, bool on_screen,
-		bool show_helper_symbols, float opacity = 1.0);
+	void draw(QPainter* painter, const RenderConfig& config);
 	
 	/**
 	 * Draws a spot color overprinting simulation for the part of the map
 	 * which is visible in the given bounding box.
 	 * 
-	 * See draw() for an explanation of the parameters.
-	 * 
 	 * @param painter Must be a QPainter on a QImage of Format_ARGB32_Premultiplied.
+	 * @param config  The rendering configuration
 	 */
-	void drawOverprintingSimulation(QPainter* painter, QRectF bounding_box,
-		bool force_min_size, float scaling, bool on_screen,
-		bool show_helper_symbols);
+	void drawOverprintingSimulation(QPainter* painter, const RenderConfig& config);
 	
 	/**
 	 * Draws the separation for a particular spot color for the part of the
@@ -221,14 +236,12 @@ public:
 	 * full tone of the spot color. The parameter use_color can be used to
 	 * draw in the actual spot color instead.
 	 *
-	 * See draw() for an explanation of the remaining parameters.
-	 * 
+	 * @param painter The QPainter used for drawing.
+	 * @param config  The rendering configuration
 	 * @param spot_color The spot color to draw the separation for.
 	 * @param use_color  If true, forces the separation to be drawn in its actual color.
 	 */
-	void drawColorSeparation(QPainter* painter, QRectF bounding_box,
-		bool force_min_size, float scaling, bool on_screen,
-		bool show_helper_symbols,
+	void drawColorSeparation(QPainter* painter, const RenderConfig& config,
 		const MapColor* spot_color, bool use_color = false);
 	
 	/**
@@ -245,7 +258,7 @@ public:
 	 * Draws the templates with indices first_template until last_template which
 	 * are visible in the given bouding box.
 	 * 
-	 * view determines template visibility and can be NULL to show all templates.
+	 * view determines template visibility and can be nullptr to show all templates.
 	 * The initial transform of the given QPainter must be the map-to-paintdevice transformation.
      * If on_screen is set to true, some optimizations will be applied, leading to a possibly lower display quality.
 	 * 
@@ -259,7 +272,8 @@ public:
 	 *     decrease drawing quality. Should be enabled when drawing on-screen.
 	 */
 	void drawTemplates(QPainter* painter, QRectF bounding_box, int first_template,
-					   int last_template, MapView* view, bool on_screen);
+					   int last_template, const MapView* view, bool on_screen) const;
+	
 	
 	/**
 	 * Updates the renderables and extent of all objects which have changed.
@@ -270,10 +284,11 @@ public:
 	/** 
 	 * Calculates the extent of all map elements. 
 	 * 
-	 * If templates shall be included, view may either be NULL to include all 
+	 * If templates shall be included, view may either be nullptr to include all 
 	 * templates, or specify a MapView to take the template visibilities from.
 	 */
-	QRectF calculateExtent(bool include_helper_symbols = false, bool include_templates = false, const MapView* view = NULL) const;
+	QRectF calculateExtent(bool include_helper_symbols = false, bool include_templates = false, const MapView* view = nullptr) const;
+	
 	
 	/**
 	 * Must be called to notify the map of new widgets displaying it.
@@ -297,7 +312,7 @@ public:
 	 * Makes sure that the selected object(s) are visible in all map widgets
 	 * by moving the views in the widgets to the selected objects.
 	 */
-	void ensureVisibilityOfSelectedObjects();
+	void ensureVisibilityOfSelectedObjects(SelectionVisibility visibility);
 	
 	
 	// Current drawing
@@ -325,6 +340,7 @@ public:
 	 */
 	void clearDrawingBoundingBox();
 	
+	
 	/**
 	 * This is the analogon to setDrawingBoundingBox() for activities.
 	 * See setDrawingBoundingBox().
@@ -337,6 +353,7 @@ public:
 	 */
 	void clearActivityBoundingBox();
 	
+	
 	/**
 	 * Updates all dynamic drawings at the given positions,
 	 * i.e. tool & activity drawings.
@@ -348,45 +365,39 @@ public:
 	
 	// Colors
 	
-	/** Returns the number of map colors defined in this map. */
-	inline int getNumColors() const {return (int)color_set->colors.size();}
+	/** Returns the number of map colors defined in this map.*/
+	int getNumColors() const;
 	
 	/** Returns a pointer to the MapColor identified by the non-negative priority i.
 	 * 
-	 *  Returns NULL if the color is not defined, or if it is a special color (i.e i<0),
-	 *  i.e. only actual map colors are returned.
-	 */
-	MapColor* getMapColor(int i);
-	
-	/** Returns a pointer to the MapColor identified by the non-negative priority i.
-	 * 
-	 *  Returns NULL if the color is not defined, or if it is a special color (i.e i<0),
+	 *  Returns nullptr if the color is not defined, or if it is a special color (i.e i<0),
 	 *  i.e. only actual map colors are returned.
 	 */
 	const MapColor* getMapColor(int i) const;
+	
+	/** Returns a pointer to the MapColor identified by the non-negative priority i.
+	 * 
+	 *  Returns nullptr if the color is not defined, or if it is a special color (i.e i<0),
+	 *  i.e. only actual map colors are returned.
+	 */
+	MapColor* getMapColor(int i);
 	
 	/** Returns a pointer to the const MapColor identified by the priority i.
 	 * 
 	 *  Parameter i may also be negative for specifying special reserved colors.
 	 *  This is different from getMapColor();
 	 * 
-	 *  Returns NULL if the color is not defined.
+	 *  Returns nullptr if the color is not defined.
 	 */
 	const MapColor* getColor(int i) const;
 	
 	/**
 	 * Replaces the color at index pos with the given color, updates dependent
 	 * colors and symbol icons.
-	 * Emits colorChanged().
+	 * 
+	 * Emits colorChanged(). Does not delete the replaced color.
 	 */
 	void setColor(MapColor* color, int pos);
-	
-	/**
-	 * Adds and returns a pointer to a new color at the given index.
-	 * Emits colorAdded().
-	 * TODO: obsolete, remove and use the other overload.
-	 */
-	MapColor* addColor(int pos);
 	
 	/**
 	 * Adds the given color as a new color at the given index.
@@ -438,10 +449,11 @@ public:
 	/** Returns true if the map contains spot colors. */
 	bool hasSpotColors() const;
 	
+	
 	// Symbols
 	
 	/** Returns the number of symbols in this map. */
-	inline int getNumSymbols() const {return (int)symbols.size();}
+	int getNumSymbols() const;
 	
 	/** Returns a pointer to the i-th symbol. */
 	const Symbol* getSymbol(int i) const;
@@ -469,12 +481,7 @@ public:
 	/**
 	 * Sorts the symbol list using the given comparator.
 	 */
-	template<typename T> void sortSymbols(T compare)
-	{
-		std::stable_sort(symbols.begin(), symbols.end(), compare);
-		// TODO: emit(symbolChanged(pos, symbol)); ? s/b same choice as for moveSymbol()
-		setSymbolsDirty();
-	}
+	template<typename T> void sortSymbols(T compare);
 	
 	/**
 	 * Deletes the symbol at the given index.
@@ -494,6 +501,11 @@ public:
 	 * Emits hasUnsavedChanges(true) if the map did not have unsaved changed before.
 	 */
 	void setSymbolsDirty();
+	
+	/**
+	 * Updates the icons of all symbols with the given color.
+	 */
+	void updateSymbolIcons(const MapColor* color);
 	
 	/**
 	 * Scales all symbols by the given factor.
@@ -519,19 +531,19 @@ public:
 	// Templates
 	
 	/** Returns the number of templates in this map. */
-	inline int getNumTemplates() const {return templates.size();}
+	int getNumTemplates() const;
 	
 	/** Returns the i-th template. */
-	inline Template* getTemplate(int i) {return templates[i];}
+	const Template* getTemplate(int i) const;
 	
 	/** Returns the i-th template. */
-	inline const Template* getTemplate(int i) const {return templates[i];}
+	Template* getTemplate(int i);
 	
 	/** Sets the template index which is the first (lowest) to be drawn in front of the map. */
-	inline void setFirstFrontTemplate(int pos) {first_front_template = pos;}
+	void setFirstFrontTemplate(int pos);
 	
 	/** Returns the template index which is the first (lowest) to be drawn in front of the map. */
-	inline int getFirstFrontTemplate() const {return first_front_template;}
+	int getFirstFrontTemplate() const;
 	
 	/**
 	 * Replaces the template at the given index with another.
@@ -545,7 +557,7 @@ public:
 	 * (by default, templates are hidden).
 	 * NOTE: if required, adjust first_front_template manually with setFirstFrontTemplate()!
 	 */
-	void addTemplate(Template* temp, int pos, MapView* view = NULL);
+	void addTemplate(Template* temp, int pos, MapView* view = nullptr);
 	
 	/**
 	 * Removes the template with the given index from the template list,
@@ -600,10 +612,13 @@ public:
 	 * Returns the number of manually closed templates
 	 * for which the settings are still stored.
 	 */
-	inline int getNumClosedTemplates() {return (int)closed_templates.size();}
+	int getNumClosedTemplates() const;
 	
 	/** Returns the i-th closed template. */
-	inline Template* getClosedTemplate(int i) {return closed_templates[i];}
+	const Template* getClosedTemplate(int i) const;
+	
+	/** Returns the i-th closed template. */
+	Template* getClosedTemplate(int i);
 	
 	/** Empties the list of closed templates. */
 	void clearClosedTemplates();
@@ -715,7 +730,7 @@ public:
 	 * 
 	 * @return The index of the first object which has been reassigned.
 	 */
-	std::size_t reassignObjectsToMapPart(QSet<Object*>::const_iterator begin, QSet<Object*>::const_iterator end, std::size_t source, std::size_t destination);
+	std::size_t reassignObjectsToMapPart(std::set<Object*>::const_iterator begin, std::set<Object*>::const_iterator end, std::size_t source, std::size_t destination);
 	
 	/**
 	 * Moves all specified objects from the source to the target map part.
@@ -776,7 +791,7 @@ public:
 	void setObjectAreaDirty(QRectF map_coords_rect);
 	
 	/**
-	 * Finds and returns all objects at the given position.
+	 * Finds and returns all objects at the given position in the current part.
 	 * 
 	 * @param coord Coordinate where to query objects.
 	 * @param tolerance Allowed distance from the query coordinate to the objects.
@@ -801,11 +816,19 @@ public:
 	 */
 	void findObjectsAt(MapCoordF coord, float tolerance, bool treat_areas_as_paths,
 		bool extended_selection, bool include_hidden_objects,
-		bool include_protected_objects, SelectionInfoVector& out);
+		bool include_protected_objects, SelectionInfoVector& out) const;
 	
 	/**
-	 * Finds and returns all objects at the given box, i.e. objects that
-	 * intersect the box.
+	 * Finds and returns all objects at the given position in all parts.
+	 * 
+	 * @see Map::findObjectsAt
+	 */
+	void findAllObjectsAt(MapCoordF coord, float tolerance, bool treat_areas_as_paths,
+		bool extended_selection, bool include_hidden_objects,
+		bool include_protected_objects, SelectionInfoVector& out) const;
+	
+	/**
+	 * Finds and returns all objects intersecting the given box in the current part.
 	 * 
 	 * @param corner1 First corner of the query box.
 	 * @param corner2 Second corner of the query box.
@@ -815,10 +838,11 @@ public:
 	 */
 	void findObjectsAtBox(MapCoordF corner1, MapCoordF corner2,
 		bool include_hidden_objects, bool include_protected_objects,
-		std::vector<Object*>& out);
+		std::vector<Object*>& out) const;
 	
 	/**
 	 * Counts the objects whose bounding boxes intersect the given rect.
+	 * 
 	 * This may be inaccurate because the true object shapes usually differ
 	 * from the bounding boxes.
 	 * 
@@ -833,15 +857,7 @@ public:
 	 * @return True if there is an object matching the condition, false otherwise.
 	 */
 	template<typename Condition>
-	bool existsObject(const Condition& condition)
-	{
-		for (PartVector::iterator part = parts.begin(), end = parts.end(); part != end; ++part)
-		{
-			if ((*part)->existsObject<Condition>(condition))
-				return true;
-		}
-		return false;
-	}
+	bool existsObject(const Condition& condition) const;
 	
 	/**
 	 * Applies an operation on all objects which match a particular condition.
@@ -849,15 +865,7 @@ public:
 	 * @return False if the operation fails for any matching object, true otherwise.
 	 */
 	template<typename Operation, typename Condition>
-	bool applyOnMatchingObjects(const Operation& operation, const Condition& condition)
-	{
-		bool result = true;
-		for (PartVector::iterator part = parts.begin(), end = parts.end(); part != end; ++part)
-		{
-			result &= (*part)->applyOnMatchingObjects<Operation, Condition>(operation, condition);
-		}
-		return result;
-	}
+	bool applyOnMatchingObjects(const Operation& operation, const Condition& condition);
 	
 	/**
 	 * Applies an operation on all objects.
@@ -865,15 +873,7 @@ public:
 	 * @return False if the operation fails for any object, true otherwise.
 	 */
 	template<typename Operation>
-	bool applyOnAllObjects(const Operation& operation)
-	{
-		bool result = true;
-		for (PartVector::iterator part = parts.begin(), end = parts.end(); part != end; ++part)
-		{
-			result &= (*part)->applyOnAllObjects<Operation>(operation);
-		}
-		return result;
-	}
+	bool applyOnAllObjects(const Operation& operation);
 	
 	/** Scales all objects by the given factor. */
 	void scaleAllObjects(double factor, const MapCoord& scaling_center);
@@ -902,7 +902,8 @@ public:
 	 * WARNING: Even if no objects exist directly, the symbol could still be
 	 *          required by another (combined) symbol used by an object!
 	 */
-	bool existsObjectWithSymbol(const Symbol* symbol);
+	bool existsObjectWithSymbol(const Symbol* symbol) const;
+	
 	
 	/**
 	 * Removes the renderables of the given object from display (does not
@@ -915,7 +916,10 @@ public:
 	 */
 	void insertRenderablesOfObject(const Object* object);
 	
+	
 	// Object selection
+	
+	const ObjectSelection& selectedObjects() const;
 	
 	/** Returns the number of selected objects. */
 	int getNumSelectedObjects() const;
@@ -928,13 +932,19 @@ public:
 	
 	/**
 	 * Returns the object in the selection which was selected first by the user.
+	 * 
 	 * If she later deselects it while other objects are still selected or if
 	 * the selection is done as box selection, this "first" selected object is
 	 * just a more or less random object from the selection.
 	 */
-	inline Object* getFirstSelectedObject() const {return first_selected_object;}
+	const Object* getFirstSelectedObject() const;
 	
 	/**
+	 * Returns the object in the selection which was selected first by the user.
+	 */
+	Object* getFirstSelectedObject();
+	
+ 	/**
 	 * Checks the selected objects for compatibility with the given symbol.
 	 * @param symbol the symbol to check compatibility for
 	 * @param out_compatible returns if all selected objects are compatible
@@ -952,7 +962,7 @@ public:
 	/**
 	 * Enlarges the given rect to cover all selected objects.
 	 */
-	void includeSelectionRect(QRectF& rect);
+	void includeSelectionRect(QRectF& rect) const;
 	
 	/**
 	 * Draws the selected objects.
@@ -967,7 +977,7 @@ public:
 	 *     otherwise draws transparent highlights.
 	 */
 	void drawSelection(QPainter* painter, bool force_min_size, MapWidget* widget,
-		MapRenderables* replacement_renderables = NULL, bool draw_normal = false);
+		MapRenderables* replacement_renderables = nullptr, bool draw_normal = false);
 	
 	/**
 	 * Adds the given object to the selection.
@@ -1022,6 +1032,7 @@ public:
 	 */
 	void emitSelectionEdited();
 	
+	
 	// Other settings
 	
 	/** Sets the map's scale denominator. */
@@ -1044,6 +1055,7 @@ public:
 		const MapCoord& scaling_center, bool scale_symbols, bool scale_objects,
 		bool scale_georeferencing, bool scale_templates);
 	
+	
 	/**
 	 * Rotate the map around a point.
 	 * 
@@ -1057,14 +1069,19 @@ public:
 		bool adjust_georeferencing, bool adjust_declination,
 		bool adjust_templates);
 	
+	
 	/** Returns the map notes string. */
-	inline const QString& getMapNotes() const {return map_notes;}
+	const QString& getMapNotes() const;
 	
 	/**
 	 * Sets the map notes string.
 	 * NOTE: Set the map to dirty manually!
 	 */
-	inline void setMapNotes(const QString& text) {map_notes = text;}
+	void setMapNotes(const QString& text);
+	
+	
+	/** Returns the map's georeferencing object. */
+	const Georeferencing& getGeoreferencing() const;
 	
 	/**
 	 * Assigns georeferencing settings for the map from the given object and
@@ -1072,8 +1089,11 @@ public:
 	 */
 	void setGeoreferencing(const Georeferencing& georeferencing);
 	
-	/** Returns the map's georeferencing object. */
-	inline const Georeferencing& getGeoreferencing() const {return *georeferencing;}
+	
+	/**
+	 * Returns the map's grid settings.
+	 */
+	const MapGrid& getGrid() const;
 	
 	/**
 	 * Sets the map's grid settings from the given object and
@@ -1081,10 +1101,6 @@ public:
 	 */
 	void setGrid(const MapGrid& grid);
 	
-	/**
-	 * Returns the map's grid settings.
-	 */
-	const MapGrid& getGrid() const;
 	
 	/**
 	 * TODO: These two options should really be view options, but are not due
@@ -1094,27 +1110,47 @@ public:
 	 */
 	
 	/** Returns if area hatching is enabled. */
-	inline bool isAreaHatchingEnabled() const {return area_hatching_enabled;}
+	bool isAreaHatchingEnabled() const;
 	
 	/** Sets if area hatching is enabled. */
-	inline void setAreaHatchingEnabled(bool enabled) {area_hatching_enabled = enabled;}
+	void setAreaHatchingEnabled(bool enabled);
+	
 	
 	/** Returns if the baseline view is enabled. */
-	inline bool isBaselineViewEnabled() const {return baseline_view_enabled;}
+	bool isBaselineViewEnabled() const;
 	
 	/** Sets if the baseline view is enabled. */
-	inline void setBaselineViewEnabled(bool enabled) {baseline_view_enabled = enabled;}
+	void setBaselineViewEnabled(bool enabled);
 	
 	
-	/** Returns a copy of the current print configuration. */
-	MapPrinterConfig printerConfig() const;
+	/** Returns the rendering options as an int representing Symbol::RenderableOptions. */
+	int renderableOptions() const;
 	
-	/** Returns a const reference to the current print configuration. */
+	
+	/** Returns true if the map has a print configuration. */
+	bool hasPrinterConfig();
+	
+	/** Returns a const reference to the current print configuration.
+	 * 
+	 * If the map does not have a print configuration, a default configuration
+	 * is created first.
+	 */
 	const MapPrinterConfig& printerConfig();
 	
-	/** Sets the current print configuration. */
+	/** Returns a copy of the current print configuration.
+	 *
+	 * If the map does not have a print configuration, the function will return
+	 * a default configuration for this map.
+	 */
+	MapPrinterConfig printerConfig() const;
+	
+	/** Sets the print configuration. */
 	void setPrinterConfig(const MapPrinterConfig& config);
 	
+	
+	/** Returns the default parameters for loading of image tempaltes. */
+	void getImageTemplateDefaults(bool& use_meters_per_pixel, double& meters_per_pixel,
+		double& dpi, double& scale);
 	
 	/**
 	 * Sets default parameters for loading of image templates.
@@ -1123,9 +1159,6 @@ public:
 	void setImageTemplateDefaults(bool use_meters_per_pixel, double meters_per_pixel,
 		double dpi, double scale);
 	
-	/** Returns the default parameters for loading of image tempaltes. */
-	void getImageTemplateDefaults(bool& use_meters_per_pixel, double& meters_per_pixel,
-		double& dpi, double& scale);
 	
 	/**
 	 * Returns whether there are unsaved changes in the map.
@@ -1136,21 +1169,25 @@ public:
 	 * setHasUnsavedChanges() alone followed by a map change and an undo would
 	 * result in no changed flag.
 	 */
-	inline bool hasUnsavedChanged() const {return unsaved_changes;}
+	bool hasUnsavedChanged() const;
 	
 	/** Do not use this in usual cases, see hasUnsavedChanged(). */
 	void setHasUnsavedChanges(bool has_unsaved_changes);
 	
 	/** Returns if there are unsaved changes to the colors. */
-	inline bool areColorsDirty() const {return colors_dirty;}
+	bool areColorsDirty() const;
+	
 	/** Returns if there are unsaved changes to the symbols. */
-	inline bool areSymbolsDirty() const {return symbols_dirty;}
+	bool areSymbolsDirty() const;
+	
 	/** Returns if there are unsaved changes to the templates. */
-	inline bool areTemplatesDirty() const {return templates_dirty;}
+	bool areTemplatesDirty() const;
+	
 	/** Returns if there are unsaved changes to the objects. */
-	inline bool areObjectsDirty() const {return objects_dirty;}
+	bool areObjectsDirty() const;
+	
 	/** Returns if there are unsaved changes to anything else than the above. */
-	inline bool isOtherDirty() const {return other_dirty;}
+	bool isOtherDirty() const;
 	
 	/**
 	 * Marks somthing unspecific in the map as "dirty", i.e. as having unsaved changes.
@@ -1161,13 +1198,14 @@ public:
 	 */
 	void setOtherDirty();
 	
-	// Static
 	
-	/** Returns the special covering white color. */
-	static const MapColor* getCoveringWhite();
+	// Static
 	
 	/** Returns the special covering red color. */
 	static const MapColor* getCoveringRed();
+	
+	/** Returns the special covering white color. */
+	static const MapColor* getCoveringWhite();
 	
 	/** Returns the special covering gray color for "undefined" objects. */
 	static const MapColor* getUndefinedColor();
@@ -1176,17 +1214,23 @@ public:
 	static const MapColor* getRegistrationColor();
 	
 	/** Returns the special covering white line symbol. */
-	static LineSymbol* getCoveringWhiteLine() {return covering_white_line;}
+	static LineSymbol* getCoveringWhiteLine();
+	
 	/** Returns the special covering red line symbol. */
-	static LineSymbol* getCoveringRedLine() {return covering_red_line;}
+	static LineSymbol* getCoveringRedLine();
+	
 	/** Returns the special covering combined symbol (white + red). */
-	static CombinedSymbol* getCoveringCombinedLine() {return covering_combined_line;}
+	static CombinedSymbol* getCoveringCombinedLine();
+	
 	/** Returns the special gray "undefined" line symbol. */
-	static LineSymbol* getUndefinedLine() {return undefined_line;}
+	static LineSymbol* getUndefinedLine();
+	
 	/** Returns the special gray "undefined" point symbol. */
-	static PointSymbol* getUndefinedPoint() {return undefined_point;}
+	static PointSymbol* getUndefinedPoint();
+	
 	/** Returns the special gray "undefined" text symbol. */
-	static TextSymbol* getUndefinedText() {return undefined_text;}
+	static TextSymbol* getUndefinedText();
+	
 	
 signals:
 	/**
@@ -1194,33 +1238,45 @@ signals:
 	 */
 	void hasUnsavedChanges(bool is_clean);
 	
+	
 	/** Emitted when a color is added to the map, gives the color's index and pointer. */
 	void colorAdded(int pos, const MapColor* color);
+	
 	/** Emitted when a map color is changed, gives the color's index and pointer. */
 	void colorChanged(int pos, const MapColor* color);
+	
 	/** Emitted when a map color is deleted, gives the color's index and pointer. */
 	void colorDeleted(int pos, const MapColor* old_color);
+	
 	/** Emitted when the presence of spot colors in the map changes. */
 	void spotColorPresenceChanged(bool has_spot_colors) const;
 	
+	
 	/** Emitted when a symbol is added to the map, gives the symbol's index and pointer. */
 	void symbolAdded(int pos, const Symbol* symbol);
+	
 	/** Emitted when a symbol in the map is changed. */
 	void symbolChanged(int pos, const Symbol* new_symbol, const Symbol* old_symbol);
+	
 	/** Emitted when the icon of the symbol with the given index changes. */
 	void symbolIconChanged(int pos);
+	
 	/** Emitted when a symbol in the map is deleted. */
 	void symbolDeleted(int pos, const Symbol* old_symbol);
 	
+	
 	/** Emitted when a template is added to the map, gives the template's index and pointer. */
 	void templateAdded(int pos, const Template* temp);
+	
 	/** Emitted when a template in the map is changed, gives the template's index and pointer. */
 	void templateChanged(int pos, const Template* temp);
+	
 	/** Emitted when a template in the map is deleted, gives the template's index and pointer. */
 	void templateDeleted(int pos, const Template* old_temp);
 	
 	/** Emitted when the number of closed templates changes between zero and one. */
 	void closedTemplateAvailabilityChanged();
+	
 	
 	/** Emitted when the set of selected objects changes. Also emitted when the
 	 *  symbol of a selected object changes (which is similar to selecting another
@@ -1234,6 +1290,7 @@ signals:
 	 */
 	void selectedObjectEdited();
 
+	
 	/**
 	 * Emitted when the map part currently used for drawing changes.
 	 * 
@@ -1277,14 +1334,20 @@ private:
 	typedef std::vector<MapPart*> PartVector;
 	typedef std::vector<MapWidget*> WidgetVector;
 	
-	class MapColorSet : public QObject
+	class MapColorSet : public QSharedData
 	{
 	public:
 		ColorVector colors;
 		
-		MapColorSet(QObject *parent = 0);
-		void addReference();
-		void dereference();
+		MapColorSet();
+		
+		MapColorSet(const MapColorSet& ) = delete;
+		
+		~MapColorSet();
+		
+		void insert(int pos, MapColor* color);
+		
+		void erase(int pos);
 		
 		/** Merges another MapColorSet into this set, trying to maintain
 		 *  the relative order of colors.
@@ -1298,23 +1361,20 @@ private:
 		 *          to color pointers in this set.
 		 */
 		MapColorMap importSet(const MapColorSet& other, 
-		                      std::vector<bool>* filter = NULL,
-		                      Map* map = NULL);
+		                      std::vector<bool>* filter = nullptr,
+		                      Map* map = nullptr);
 		
 	private:
-		int ref_count;
+		/**
+		 * Adjust the priorities of the colors in the range [first,last).
+		 */
+		void adjustColorPriorities(int first, int last);
 	};
-	
-	void checkIfFirstColorAdded();
-	void checkIfFirstSymbolAdded();
-	void checkIfFirstTemplateAdded();
-	
-	void adjustColorPriorities(int first, int last);
 	
 	/// Imports the other symbol set into this set, only importing the symbols for which filter[color_index] == true and
 	/// returning the map from symbol indices in other to imported indices. Imported symbols are placed after the existing symbols.
-	void importSymbols(Map* other, const MapColorMap& color_map, int insert_pos = -1, bool merge_duplicates = true, std::vector<bool>* filter = NULL,
-					   QHash<int, int>* out_indexmap = NULL, QHash<const Symbol*, Symbol*>* out_pointermap = NULL);
+	void importSymbols(Map* other, const MapColorMap& color_map, int insert_pos = -1, bool merge_duplicates = true, std::vector<bool>* filter = nullptr,
+					   QHash<int, int>* out_indexmap = nullptr, QHash<const Symbol*, Symbol*>* out_pointermap = nullptr);
 	
 	void addSelectionRenderables(const Object* object);
 	void updateSelectionRenderables(const Object* object);
@@ -1322,7 +1382,7 @@ private:
 	
 	static void initStatic();
 	
-	MapColorSet* color_set;
+	QExplicitlySharedDataPointer<MapColorSet> color_set;
 	bool has_spot_colors;
 	SymbolVector symbols;
 	TemplateVector templates;
@@ -1339,12 +1399,11 @@ private:
 	
 	QString map_notes;
 	
-	Georeferencing* georeferencing;
+	QScopedPointer<Georeferencing> georeferencing;
 	
 	MapGrid grid;
 	
-	bool area_hatching_enabled;
-	bool baseline_view_enabled;
+	int renderable_options;
 	
 	QScopedPointer<MapPrinterConfig> printer_config;
 	
@@ -1381,27 +1440,9 @@ Q_DECLARE_METATYPE(const Map*)
 // ### Map inline code ###
 
 inline
-const MapColor* Map::getCoveringRed()
+int Map::getNumColors() const
 {
-	return &covering_red;
-}
-
-inline
-const MapColor* Map::getCoveringWhite()
-{
-	return &covering_white;
-}
-
-inline
-const MapColor* Map::getUndefinedColor()
-{
-	return &undefined_symbol_color;
-}
-
-inline
-const MapColor* Map::getRegistrationColor()
-{
-	return &registration_color;
+	return (int)color_set->colors.size();
 }
 
 inline
@@ -1417,7 +1458,7 @@ const MapColor* Map::getMapColor(int i) const
 	{
 		return color_set->colors[i];
 	}
-	return NULL;
+	return nullptr;
 }
 
 inline
@@ -1438,8 +1479,70 @@ const MapColor* Map::getColor(int i) const
 		case -500:
 			return getUndefinedColor();
 		default:
-			return NULL;
+			return nullptr;
 	}
+}
+
+inline
+int Map::getNumSymbols() const
+{
+	return (int)symbols.size();
+}
+
+template<typename T> 
+void Map::sortSymbols(T compare)
+{
+	std::stable_sort(symbols.begin(), symbols.end(), compare);
+	// TODO: emit(symbolChanged(pos, symbol)); ? s/b same choice as for moveSymbol()
+	setSymbolsDirty();
+}
+
+inline
+int Map::getNumTemplates() const
+{
+	return templates.size();
+}
+
+inline
+const Template*Map::getTemplate(int i) const
+{
+	return templates[i];
+}
+
+inline
+Template*Map::getTemplate(int i)
+{
+	return templates[i];
+}
+
+inline
+void Map::setFirstFrontTemplate(int pos)
+{
+	first_front_template = pos;
+}
+
+inline
+int Map::getFirstFrontTemplate() const
+{
+	return first_front_template;
+}
+
+inline
+int Map::getNumClosedTemplates() const
+{
+	return (int)closed_templates.size();
+}
+
+inline
+const Template* Map::getClosedTemplate(int i) const
+{
+	return closed_templates[i];
+}
+
+inline
+Template* Map::getClosedTemplate(int i)
+{
+	return closed_templates[i];
 }
 
 inline
@@ -1485,6 +1588,12 @@ std::size_t Map::getCurrentPartIndex() const
 }
 
 inline
+const Map::ObjectSelection& Map::selectedObjects() const
+{
+	return object_selection;
+}
+
+inline
 int Map::getNumSelectedObjects() const
 {
 	return (int)object_selection.size();
@@ -1493,19 +1602,178 @@ int Map::getNumSelectedObjects() const
 inline
 Map::ObjectSelection::const_iterator Map::selectedObjectsBegin() const
 {
-	return object_selection.constBegin();
+	return object_selection.cbegin();
 }
 
 inline
 Map::ObjectSelection::const_iterator Map::selectedObjectsEnd() const
 {
-	return object_selection.constEnd();
+	return object_selection.cend();
+}
+
+template<typename Condition>
+bool Map::existsObject(const Condition& condition) const
+{
+	for (const MapPart* part : parts)
+		if (part->existsObject<Condition>(condition))
+			return true;
+	return false;
+}
+
+template<typename Operation, typename Condition>
+bool Map::applyOnMatchingObjects(const Operation& operation, const Condition& condition)
+{
+	bool result = true;
+	for (MapPart* part : parts)
+		result &= part->applyOnMatchingObjects(operation, condition);
+	return result;
+}
+
+template<typename Operation>
+bool Map::applyOnAllObjects(const Operation& operation)
+{
+	bool result = true;
+	for (MapPart* part : parts)
+		result &= part->applyOnAllObjects(operation);
+	return result;
+}
+
+inline
+const Object* Map::getFirstSelectedObject() const
+{
+	return first_selected_object;
+}
+
+inline
+Object* Map::getFirstSelectedObject()
+{
+	return first_selected_object;
+}
+
+inline
+const QString& Map::getMapNotes() const
+{
+	return map_notes;
+}
+
+inline
+const Georeferencing& Map::getGeoreferencing() const
+{
+	return *georeferencing;
 }
 
 inline
 const MapGrid& Map::getGrid() const
 {
 	return grid;
+}
+
+inline
+int Map::renderableOptions() const
+{
+	return renderable_options;
+}
+
+inline
+bool Map::hasPrinterConfig()
+{
+	return !printer_config.isNull();
+}
+
+inline
+bool Map::hasUnsavedChanged() const
+{
+	return unsaved_changes;
+}
+
+inline
+bool Map::areColorsDirty() const
+{
+	return colors_dirty;
+}
+
+inline
+bool Map::areSymbolsDirty() const
+{
+	return symbols_dirty;
+}
+
+inline
+bool Map::areTemplatesDirty() const
+{
+	return templates_dirty;
+}
+
+inline
+bool Map::areObjectsDirty() const
+{
+	return objects_dirty;
+}
+
+inline
+bool Map::isOtherDirty() const
+{
+	return other_dirty;
+}
+
+inline
+const MapColor* Map::getCoveringRed()
+{
+	return &covering_red;
+}
+
+inline
+const MapColor* Map::getCoveringWhite()
+{
+	return &covering_white;
+}
+
+inline
+const MapColor* Map::getUndefinedColor()
+{
+	return &undefined_symbol_color;
+}
+
+inline
+const MapColor* Map::getRegistrationColor()
+{
+	return &registration_color;
+}
+
+inline
+LineSymbol*Map::getCoveringWhiteLine()
+{
+	return covering_white_line;
+}
+
+inline
+LineSymbol*Map::getCoveringRedLine()
+{
+	return covering_red_line;
+}
+
+inline
+CombinedSymbol*Map::getCoveringCombinedLine()
+{
+	return covering_combined_line;
+}
+
+inline
+LineSymbol*Map::getUndefinedLine()
+{
+	return undefined_line;
+}
+
+inline
+PointSymbol*Map::getUndefinedPoint()
+{
+	return undefined_point;
+}
+
+inline
+TextSymbol*Map::getUndefinedText()
+{
+	return undefined_text;
 }
 
 #endif

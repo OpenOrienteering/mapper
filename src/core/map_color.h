@@ -25,8 +25,9 @@
 
 #include <qmath.h>
 #include <QColor>
-#include <QString>
 #include <QHash>
+#include <QMetaType>
+#include <QString>
 
 class Map;
 class MapColor;
@@ -178,11 +179,11 @@ public:
 	 */
 	enum SpecialPriorities
 	{
-		CoveringRed   = -1005,
-		CoveringWhite = -1000,  // used for tool helper line colors	
-		Registration  = -900,   // used for registration marks: all printed colors
-		Undefined     = -500,
-		Reserved      = -1      // used to mark renderables which should not be inserted into the map
+		CoveringRed   = -1005,  ///< Foreground color for tool helper lines
+		CoveringWhite = -1000,  ///< Background color for tool helper lines
+		Registration  = -900,   ///< Registration Black: all printed colors
+		Undefined     = -500,   ///< Color for objects with undefined symbol
+		Reserved      = -1      ///< Never drawn
 	};
 	
 	/** 
@@ -212,14 +213,14 @@ public:
 	MapColor* duplicate() const;
 	
 	
-	/** Returns a QColor represenation (reference) of the CMYK values.
+	/** Returns a QColor representation (reference) of the map color.
 	 * 
-	 * The returned const QColor& can be passed to QtGui operations. 
-	 * MapColor maintains an own QColor instance for efficienc
+	 * This color is based on the CMYK color unless the CMYK color method is
+	 * RGB: In that case, the returned value is based on the RGB color.
 	 */
 	operator const QColor&() const;
 	
-	/** Converts the current CMYK values to a QRgb. */
+	/** Converts the current RGB values to a QRgb. */
 	operator QRgb() const;
 	
 	
@@ -278,6 +279,14 @@ public:
 	 * Returns an empty list if the spot color method is not CustomColor.
 	 */
 	const SpotColorComponents& getComponents() const;
+	
+	/**
+	 * Removes a component color.
+	 * 
+	 * Returns true if components were removed.
+	 * Returns false if the color was not part of the composition before.
+	 */
+	bool removeSpotColorComponent(const MapColor* color);
 	
 	/**
 	 * Sets the value of knockout flag for spot color printing.
@@ -383,6 +392,21 @@ public:
 	bool componentsEqual(const MapColor& other, bool compare_priority) const;
 	
 protected:
+	/**
+	 * Determines the composition name from the components.
+	 * 
+	 * Does nothing it the spot color method is not CustomColor.
+	 */
+	void updateCompositionName();
+	
+	/**
+	 * Updates all calculated color values.
+	 * 
+	 * If the spot color method is different from CustomColor, resets CMYK and
+	 * RGB methods from SpotColor tp CustomColor.
+	 */
+	void updateCalculatedColors();
+	
 	/** 
 	 * Returns a CMYK color determined from the cmyk color of the spot color
 	 * components.
@@ -805,7 +829,7 @@ const MapColor* MapColorMap::value(const MapColor* key) const
 	{
 		return mapping.value(key);
 	}
-	else if (key != NULL && key->getPriority() <= MapColor::Reserved)
+	else if (key != NULL && key->getPriority() < 0)
 	{
 		return key;
 	}

@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2014 Kai Pastor
+ *    Copyright 2013-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -41,7 +41,7 @@ DrawLineAndAreaTool::DrawLineAndAreaTool(MapEditorController* editor, Type type,
 , drawing_symbol(NULL)
 , preview_point_radius(0)
 , preview_points_shown(false)
-, path_combination(new CombinedSymbol())
+, path_combination(Map::getCoveringCombinedLine()->duplicate()->asCombined())
 , preview_path(NULL)
 , renderables(new MapRenderables(map()))
 {
@@ -124,7 +124,7 @@ void DrawLineAndAreaTool::setPreviewPointsPosition(MapCoordF map_coord, int inde
 		if (preview_points_shown)
 			renderables->removeRenderablesOfObject(preview_points[index][i], false);
 		preview_points[index][i]->setPosition(map_coord);
-		preview_points[index][i]->update(true);
+		preview_points[index][i]->update();
 		renderables->insertRenderablesOfObject(preview_points[index][i]);
 	}
 	preview_points_shown = true;
@@ -165,12 +165,14 @@ void DrawLineAndAreaTool::drawPreviewObjects(QPainter* painter, MapWidget* widge
 {
 	if (preview_path || preview_points_shown)
 	{
+		const MapView* map_view = widget->getMapView();
 		painter->save();
-		painter->translate(widget->width() / 2.0 + widget->getMapView()->getDragOffset().x(),
-						   widget->height() / 2.0 + widget->getMapView()->getDragOffset().y());
-		widget->getMapView()->applyTransform(painter);
+		painter->translate(widget->width() / 2.0 + map_view->panOffset().x(),
+						   widget->height() / 2.0 + map_view->panOffset().y());
+		painter->setWorldTransform(map_view->worldTransform(), true);
 		
-		renderables->draw(painter, widget->getMapView()->calculateViewedRect(widget->viewportToView(widget->rect())), true, widget->getMapView()->calculateFinalZoomFactor(), true, true, 0.5f);
+		RenderConfig config = { *map(), map_view->calculateViewedRect(widget->viewportToView(widget->rect())), map_view->calculateFinalZoomFactor(), RenderConfig::Tool, 0.5 };
+		renderables->draw(painter, config);
 		
 		painter->restore();
 	}
@@ -178,11 +180,16 @@ void DrawLineAndAreaTool::drawPreviewObjects(QPainter* painter, MapWidget* widge
 
 void DrawLineAndAreaTool::startDrawing()
 {
-	path_combination->setNumParts(is_helper_tool ? 2 : 3);
-	path_combination->setPart(0, Map::getCoveringWhiteLine(), false);
-	path_combination->setPart(1, Map::getCoveringRedLine(), false);
+	auto num_symbol_parts = Map::getCoveringCombinedLine()->getNumParts();
 	if (drawing_symbol)
-		path_combination->setPart(2, drawing_symbol, false);
+	{
+		path_combination->setNumParts(num_symbol_parts + 1);
+		path_combination->setPart(num_symbol_parts, drawing_symbol, false);
+	}
+	else
+	{
+		path_combination->setNumParts(num_symbol_parts);
+	}
 	
 	preview_path = new PathObject(path_combination.data());
 	
@@ -192,7 +199,7 @@ void DrawLineAndAreaTool::startDrawing()
 void DrawLineAndAreaTool::updatePreviewPath()
 {
 	renderables->removeRenderablesOfObject(preview_path, false);
-	preview_path->update(true);
+	preview_path->update();
 	renderables->insertRenderablesOfObject(preview_path);
 }
 

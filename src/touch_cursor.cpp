@@ -1,5 +1,6 @@
 /*
  *    Copyright 2013 Thomas Schöps
+ *    Copyright 2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -187,7 +188,7 @@ bool TouchCursor::touchedControl(QPoint pos, TouchCursor::ControlID* out_id)
 
 void TouchCursor::updateMapWidget(bool delayed)
 {
-	QRectF fake_rect = QRectF(cursor_coord.getX(), cursor_coord.getY(), 0.0001f, 0.0001f);
+	QRectF fake_rect = QRectF(cursor_coord.x(), cursor_coord.y(), 0.0001f, 0.0001f);
 	float pixel_border = qMax(touchPosOffsetPx() + controlRingRadiusPx(), standardCursorRadiusPx()) + controlRingStrokeRadiusPx() + 1;
 	
 	if (delayed)

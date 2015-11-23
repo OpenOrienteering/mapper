@@ -20,6 +20,8 @@
 #ifndef NATIVE_FILE_FORMAT_H
 #define NATIVE_FILE_FORMAT_H
 
+#ifndef NO_NATIVE_FILE_FORMAT
+
 #include "file_format.h"
 
 /** Provides a description of the old native file format. 
@@ -41,12 +43,12 @@ public:
 	
 	/** Creates an importer for this file type.
 	 */
-	Importer *createImporter(QIODevice* stream, Map *map, MapView *view) const throw (FileFormatException);
+	Importer *createImporter(QIODevice* stream, Map *map, MapView *view) const;
 	
 #ifdef MAPPER_ENABLE_NATIVE_EXPORTER
 	/** Creates an exporter for this file type.
 	 */
-	Exporter *createExporter(QIODevice* stream, Map *map, MapView *view) const throw (FileFormatException);
+	Exporter *createExporter(QIODevice* stream, Map *map, MapView *view) const;
 #endif
 	
 	/** Constant describing the earliest OMAP version supported by this file format.
@@ -61,5 +63,7 @@ public:
 	 */
 	static const char magic_bytes[4];
 };
+
+#endif // NO_NATIVE_FILE_FORMAT
 
 #endif // NATIVE_FILE_FORMAT_H

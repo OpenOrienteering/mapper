@@ -273,4 +273,4 @@ void MapColorTest::spotColorTest()
 }
 
 
-QTEST_MAIN(MapColorTest)
+QTEST_GUILESS_MAIN(MapColorTest)

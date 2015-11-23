@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2013, 2014 Kai Pastor
+ *    Copyright 2013-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -36,6 +36,8 @@ class TextObjectEditorHelper;
 
 /**
  * Standard tool to edit all types of objects.
+ * 
+ * \todo See tool_edit_line.cpp for a number of todos.
  */
 class EditPointTool : public EditTool
 {
@@ -44,48 +46,62 @@ public:
 	EditPointTool(MapEditorController* editor, QAction* tool_action);
 	virtual ~EditPointTool();
 	
-	/** Returns true if new points shall be added as dash points by default.
-	 *  This depends only on the symbol of the selected element. */
+	/**
+	 * Returns true if new points shall be added as dash points by default.
+	 * 
+	 * This depends only on the symbol of the selected element.
+	 * 
+	 * \todo Test/fix for combined symbols.
+	 */
 	bool addDashPointDefault() const;
 	
-	virtual bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
-	virtual bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
-	virtual bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
+	bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
+	bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
+	bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
 	
-	virtual void mouseMove();
-	virtual void clickPress();
-	virtual void clickRelease();
+	void mouseMove() override;
+	void clickPress() override;
+	void clickRelease() override;
 	
-	virtual void dragStart();
-	virtual void dragMove();
-	virtual void dragFinish();
+	void dragStart() override;
+	void dragMove() override;
+	void dragFinish() override;
 	
-	virtual void focusOutEvent(QFocusEvent* event);
+	void focusOutEvent(QFocusEvent* event) override;
 	
 	/**
 	 * Contains special treatment for text objects.
 	 */
-	void finishEditing();
+	void finishEditing() override;
 	
 public slots:
 	void textSelectionChanged(bool text_change);
 	
 protected:
-	virtual bool keyPress(QKeyEvent* event);
-	virtual bool keyRelease(QKeyEvent* event);
+	bool keyPress(QKeyEvent* event) override;
+	bool keyRelease(QKeyEvent* event) override;
 	
-	virtual void initImpl();
-	virtual void objectSelectionChangedImpl();
-	virtual int updateDirtyRectImpl(QRectF& rect);
-	virtual void drawImpl(QPainter* painter, MapWidget* widget);
+	void initImpl() override;
+	void objectSelectionChangedImpl() override;
+	int updateDirtyRectImpl(QRectF& rect) override;
+	void drawImpl(QPainter* painter, MapWidget* widget) override;
 	
 	/** In addition to the base class implementation, updates the status text. */
-	virtual void updatePreviewObjects();
+	void updatePreviewObjects() override;
 	
-	void updateStatusText();
+	void updateStatusText() override;
 	
-	/** Updates hover_point and hover_object. */
-	void updateHoverPoint(MapCoordF cursor_pos);
+	/** 
+	 * Updates hover_state, hover_object and hover_point.
+	 */
+	void updateHoverState(MapCoordF cursor_pos);
+	
+	/**
+	 * Sets up the angle tool helper for the object currently hovered over.
+	 * 
+	 * The object must be of type Object::Path.
+	 */
+	void setupAngleHelperFromHoverObject();
 	
 	/** Does additional editing setup required after calling startEditing(). */
 	void startEditingSetup();
@@ -94,10 +110,12 @@ protected:
 	 * Checks if a single text object is the only selected object and the
 	 * cursor hovers over it.
 	 */
-	bool hoveringOverSingleText();
+	bool hoveringOverSingleText() const;
 	
-	/** Checks if the cursor hovers over the selection frame. */
-	inline bool hoveringOverFrame() const {return hover_point == -1;}
+	/**
+	 * Checks if the cursor hovers over the selection frame.
+	 */
+	bool hoveringOverFrame() const;
 	
 	
 	/** Measures the time a click takes to decide whether to do selection. */
@@ -106,18 +124,22 @@ protected:
 	/** Bounding box of the selection */
 	QRectF selection_extent;
 	
-	/**
-	 * Path point index of the hover point if non-negative;
-	 * if hovering over the extent rect: -1
-	 * if hovering over nothing: -2
-	 */
-	int hover_point;
 	
 	/**
-	 * Object for hover_point, or the closest object if no hover point,
-	 * or NULL.
+	 * Provides general information on what is hovered over.
+	 */
+	HoverState hover_state;
+	
+	/**
+	 * Object which is hovered over (if any).
 	 */
 	Object* hover_object;
+	
+	/**
+	 * Index of the object's coordinate which is hovered over.
+	 */
+	MapCoordVector::size_type hover_point;
+	
 	
 	/** Is a box selection in progress? */
 	bool box_selection;
@@ -146,12 +168,16 @@ protected:
 	int old_horz_alignment;
 	/** See old_text */
 	int old_vert_alignment;
-	
-	/**
-	 * Maximum number of objects in the selection for which point handles
-	 * will still be displayed (and can be edited).
-	 */
-	static int max_objects_for_handle_display;
 };
+
+
+
+// ### EditPointTool inline code ###
+
+inline
+bool EditPointTool::hoveringOverFrame() const
+{
+	return hover_state == OverFrame;
+}
 
 #endif

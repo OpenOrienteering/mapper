@@ -4,31 +4,40 @@
 
 TEMPLATE = app
 TARGET   = Mapper
+CONFIG  += c++11
+CONFIG  -= debug_and_release
 
+include(../oo-mapper-version.pri)
 include($$OUT_PWD/../prerequisites.pri)
-LIBS *= -lproj -lpolyclipping -lqtsingleapplication -locd
+LIBS *= -lpolyclipping -lqtsingleapplication -locd
+win32: LIBS *= -lproj-9
+else:  LIBS *= -lproj
 
 DEPENDPATH  += qmake
 INCLUDEPATH += qmake
 
 QT += core gui widgets printsupport network xml
+android: QT += core-private gui-private
+win32:   QT += core-private gui-private printsupport-private
 
 # Defines. Use fancy quotation marks to be able to define strings with spaces.
-CONFIG(debug, debug|release) {
-	DEFINES += \"APP_VERSION='\\"Debug @Mapper_VERSION_MAJOR@.@Mapper_VERSION_MINOR@.@Mapper_VERSION_PATCH@\\"'\" \
+CONFIG(debug, release|debug) {
+	DEFINES += APP_VERSION=\"'\\"Debug $${Mapper_VERSION_MAJOR}.$${Mapper_VERSION_MINOR}.$${Mapper_VERSION_PATCH}\\"'\" \
 	           MAPPER_DEVELOPMENT_BUILD \
-	           \"MAPPER_DEVELOPMENT_RES_DIR='\\"../\\"'\"
-	
-	unix:QMAKE_POST_LINK += $$quote($(COPY_DIR) \"$$PWD/../symbol sets\" \"$$OUT_PWD/../symbol sets\")
+	           MAPPER_DEVELOPMENT_RES_DIR=\"'\\"$$clean_path($$OUT_PWD/..)\\"'\"
+	osx:  DEFINES += QT_QTASSISTANT_EXECUTABLE=\"'\\"$$replace(QMAKE_QMAKE, qmake, Assistant.app/Contents/MacOS/Assistant)\\"'\"
+	else: DEFINES += QT_QTASSISTANT_EXECUTABLE=\"'\\"$$replace(QMAKE_QMAKE, qmake, assistant)\\"'\"
 }
 else {
-	DEFINES += \"APP_VERSION='\\"@Mapper_VERSION_MAJOR@.@Mapper_VERSION_MINOR@.@Mapper_VERSION_PATCH@\\"'\"
+	DEFINES += APP_VERSION=\"'\\"$${Mapper_VERSION_MAJOR}.$${Mapper_VERSION_MINOR}.$${Mapper_VERSION_PATCH}\\"'\" \
+	           QT_NO_DEBUG QT_NO_DEBUG_OUTPUT
 }
 DEFINES += \"CLIPPER_VERSION='\\"@CLIPPER_VERSION@\\"'\"
-DEFINES += \"MAPPER_HELP_NAMESPACE='\\"@Mapper_HELP_NAMESPACE@\\"'\"
+DEFINES += \"MAPPER_HELP_NAMESPACE='\\"openorienteering.mapper-$${Mapper_VERSION_MAJOR}.$${Mapper_VERSION_MINOR}.$${Mapper_VERSION_PATCH}.help\\"'\"
 
 # Input
 HEADERS += \
+  qmake\mapper_config.h \
   @MAPPER_PRO_HEADERS@
 
 SOURCES += \
@@ -38,9 +47,51 @@ SOURCES += \
 RESOURCES += \
   ../resources.qrc
 
+CONFIG(debug, release|debug) {
+  RESOURCES += ../examples/autosave-example.qrc
+}
+
+OTHER_FILES += \
+  CMakeLists.txt \
+  src.pro.in
+
 android {
   # Android package template customization
   ANDROID_PACKAGE_SOURCE_DIR = $$PWD/../android
+
+  EXPECTED_VERSION = $$Mapper_VERSION_MAJOR\.$$Mapper_VERSION_MINOR\.$$Mapper_VERSION_PATCH
+  !system(grep "$$EXPECTED_VERSION" "$$ANDROID_PACKAGE_SOURCE_DIR/AndroidManifest.xml") {
+      error(The version name in AndroidManifest.xml does not match the version in oo-mapper-version.pri.)
+  }
+
+  # Minimized Qt deployment depedencies.
+  # Order matters here. Rename the variable, observe the app start, and watch
+  # for "Added shared lib" to see the default order of basic Qt libraries and
+  # plugins. Other plugins must be added by handed, e.g. image formats.
+  # This comes together with explicit specification in AndroidManifest.xml
+  ANDROID_DEPLOYMENT_DEPENDENCIES = \
+    lib/libQt5Core.so \
+    jar/QtAndroid-bundled.jar \
+    jar/QtAndroidAccessibility-bundled.jar \
+    lib/libQt5Gui.so \
+    plugins/platforms/android/libqtforandroid.so \
+    plugins/imageformats/libqgif.so \
+    plugins/imageformats/libqicns.so \
+    plugins/imageformats/libqico.so \
+    plugins/imageformats/libqjp2.so \
+    plugins/imageformats/libqjpeg.so \
+    plugins/imageformats/libqtiff.so \
+    plugins/imageformats/libqwebp.so \
+    lib/libQt5Widgets.so \
+    lib/libQt5Xml.so \
+    lib/libQt5Sensors.so \
+    lib/libQt5Positioning.so \
+    lib/libQt5AndroidExtras.so \
+    jar/QtSensors-bundled.jar \
+    plugins/sensors/libqtsensors_android.so \
+    jar/QtPositioning-bundled.jar \
+    plugins/position/libqtposition_android.so \
+    # END
 
   # Do not use qtsingleapplication
   LIBS -= -lqtsingleapplication
@@ -56,4 +107,9 @@ android {
   
   # Add examples as resource
   RESOURCES += ../examples/examples.qrc
+  
+  # Remove legacy code
+  DEFINES += NO_NATIVE_FILE_FORMAT
+  HEADERS -= file_format_native.h
+  SOURCES -= file_format_native.cpp
 }

@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2012-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -24,7 +25,6 @@
 #include <QDialog>
 #include <QRectF>
 
-#include "map_coord.h"
 #include "matrix.h"
 #include "transformation.h"
 
@@ -53,8 +53,8 @@ public:
  	void load(QXmlStreamReader& xml);
 	
 	/// Position in 1/1000 mm
-	qint64 template_x;
-	qint64 template_y;
+	qint32 template_x;
+	qint32 template_y;
 	/// Scaling relative to "1 painter unit == 1 mm on map"
 	double template_scale_x;
 	double template_scale_y;
@@ -179,7 +179,7 @@ public:
     virtual void drawTemplate(QPainter* painter, QRectF& clip_rect, double scale, bool on_screen, float opacity) const = 0;
 	
 	/// Calculates the template's bounding box in map coordinates.
-	virtual QRectF calculateTemplateBoundingBox();
+	virtual QRectF calculateTemplateBoundingBox() const;
 	
 	/// Returns the extent of the template out of the bounding box,
 	/// which is defined in map coordinates, in pixels. This is useful for elements which
@@ -235,38 +235,28 @@ public:
 	
 	inline MapCoordF mapToTemplate(MapCoordF coords) const
 	{
-		return MapCoordF(map_to_template.get(0, 0) * coords.getX() + map_to_template.get(0, 1) * coords.getY() + map_to_template.get(0, 2),
-							map_to_template.get(1, 0) * coords.getX() + map_to_template.get(1, 1) * coords.getY() + map_to_template.get(1, 2));
+		return MapCoordF(map_to_template.get(0, 0) * coords.x() + map_to_template.get(0, 1) * coords.y() + map_to_template.get(0, 2),
+		                 map_to_template.get(1, 0) * coords.x() + map_to_template.get(1, 1) * coords.y() + map_to_template.get(1, 2));
 	}
 	inline MapCoordF mapToTemplateOther(MapCoordF coords) const	// normally not needed - this uses the other transformation parameters
 	{
-		assert(!is_georeferenced);
+		Q_ASSERT(!is_georeferenced);
 		// SLOW - cache this matrix if needed often
 		Matrix map_to_template_other;
 		template_to_map_other.invert(map_to_template_other);
-		return MapCoordF(map_to_template_other.get(0, 0) * coords.getX() + map_to_template_other.get(0, 1) * coords.getY() + map_to_template_other.get(0, 2),
-						 map_to_template_other.get(1, 0) * coords.getX() + map_to_template_other.get(1, 1) * coords.getY() + map_to_template_other.get(1, 2));
-	}
-	inline QPointF mapToTemplateQPoint(MapCoordF coords) const
-	{
-		return QPointF(map_to_template.get(0, 0) * coords.getX() + map_to_template.get(0, 1) * coords.getY() + map_to_template.get(0, 2),
-						map_to_template.get(1, 0) * coords.getX() + map_to_template.get(1, 1) * coords.getY() + map_to_template.get(1, 2));
-	}
-	inline MapCoordF templateToMap(MapCoordF coords) const
-	{
-		return MapCoordF(template_to_map.get(0, 0) * coords.getX() + template_to_map.get(0, 1) * coords.getY() + template_to_map.get(0, 2),
-							template_to_map.get(1, 0) * coords.getX() + template_to_map.get(1, 1) * coords.getY() + template_to_map.get(1, 2));
+		return MapCoordF(map_to_template_other.get(0, 0) * coords.x() + map_to_template_other.get(0, 1) * coords.y() + map_to_template_other.get(0, 2),
+		                 map_to_template_other.get(1, 0) * coords.x() + map_to_template_other.get(1, 1) * coords.y() + map_to_template_other.get(1, 2));
 	}
 	inline MapCoordF templateToMap(QPointF coords) const
 	{
 		return MapCoordF(template_to_map.get(0, 0) * coords.x() + template_to_map.get(0, 1) * coords.y() + template_to_map.get(0, 2),
-							template_to_map.get(1, 0) * coords.x() + template_to_map.get(1, 1) * coords.y() + template_to_map.get(1, 2));
+		                 template_to_map.get(1, 0) * coords.x() + template_to_map.get(1, 1) * coords.y() + template_to_map.get(1, 2));
 	}
-	inline MapCoordF templateToMapOther(MapCoordF coords) const	// normally not needed - this uses the other transformation parameters
+	inline MapCoordF templateToMapOther(QPointF coords) const	// normally not needed - this uses the other transformation parameters
 	{
-		assert(!is_georeferenced);
-		return MapCoordF(template_to_map_other.get(0, 0) * coords.getX() + template_to_map_other.get(0, 1) * coords.getY() + template_to_map_other.get(0, 2),
-						 template_to_map_other.get(1, 0) * coords.getX() + template_to_map_other.get(1, 1) * coords.getY() + template_to_map_other.get(1, 2));
+		Q_ASSERT(!is_georeferenced);
+		return MapCoordF(template_to_map_other.get(0, 0) * coords.x() + template_to_map_other.get(0, 1) * coords.y() + template_to_map_other.get(0, 2),
+		                 template_to_map_other.get(1, 0) * coords.x() + template_to_map_other.get(1, 1) * coords.y() + template_to_map_other.get(1, 2));
 	}
 	
 	
@@ -315,6 +305,9 @@ public:
 	inline void setTemplateGeoreferenced(bool value) {is_georeferenced = value;}
 	
 	// Transformation of non-georeferenced templates
+	
+	MapCoord templatePosition() const;
+	void setTemplatePosition(MapCoord coord);
 	
 	inline qint64 getTemplateX() const {return transform.template_x;}
 	inline void setTemplateX(qint64 x) {transform.template_x = x; updateTransformationMatrices();}
@@ -436,5 +429,13 @@ protected:
 	Matrix template_to_map;
 	Matrix template_to_map_other;
 };
+
+
+
+// ### Template inline code ###
+
+
+
+
 
 #endif

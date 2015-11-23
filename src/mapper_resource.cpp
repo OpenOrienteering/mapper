@@ -1,5 +1,5 @@
 /*
- *    Copyright 2012, 2013, 2014 Kai Pastor
+ *    Copyright 2012-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -25,6 +25,9 @@
 #include <QCoreApplication>
 #include <QDir>
 #include <QFile>
+#include <QStringList>
+
+
 
 /**
  * Private MapperResource utilities
@@ -53,6 +56,7 @@ QStringList MapperResource::getLocations(MapperResource::RESOURCE_TYPE resource_
 {
 	QStringList locations;
 	QString resource_path;
+	QDir app_dir(QCoreApplication::applicationDirPath());
 	
 	switch (resource_type)
 	{
@@ -65,11 +69,11 @@ QStringList MapperResource::getLocations(MapperResource::RESOURCE_TYPE resource_
 			
 		case MANUAL:
 			// TODO: Support localized manual
-			resource_path = "/help";
+			resource_path = "/doc/manual";
 			break;
 			
 		case PROJ_DATA:
-#if defined(Mapper_BUILD_PROJ)
+#if defined(Mapper_BUILD_PROJ) || defined(Q_OS_WIN)
 			resource_path = "/proj";
 			break;
 #else
@@ -85,6 +89,7 @@ QStringList MapperResource::getLocations(MapperResource::RESOURCE_TYPE resource_
 			break;
 			
 		case TEST_DATA:
+			addIfExists(locations, app_dir.absoluteFilePath("data"));
 			resource_path = "/test/data";
 			break;
 	
@@ -107,12 +112,13 @@ QStringList MapperResource::getLocations(MapperResource::RESOURCE_TYPE resource_
 	addIfExists(locations, build_dir);
 #endif
 	
-	QDir app_dir(QCoreApplication::applicationDirPath());
 #if defined(MAPPER_PACKAGE_NAME)
 	// Linux: program in xxx/bin, resources in xxx/bin/../share/PACKAGE_NAME
 	QString linux_dir(app_dir.absoluteFilePath(QString("../share/") + MAPPER_PACKAGE_NAME + resource_path));
 	addIfExists(locations, linux_dir);
-#elif defined(Q_OS_MAC)
+#endif
+	
+#if defined(Q_OS_MAC)
 	// Mac OS X: load resources from the Resources directory of the bundle
 	QString osx_dir(app_dir.absoluteFilePath("../Resources" + resource_path));
 	addIfExists(locations, osx_dir);
@@ -120,8 +126,10 @@ QStringList MapperResource::getLocations(MapperResource::RESOURCE_TYPE resource_
 	// Windows: load resources from the application directory
 	QString win_dir(app_dir.absolutePath() + resource_path);
 	addIfExists(locations, win_dir);
-#else
-	Q_UNUSED(app_dir);
+#elif defined(Q_OS_ANDROID)
+	// Android: load resources from the application directory
+	QString assets_dir(QStringLiteral("assets:") + resource_path);
+	addIfExists(locations, assets_dir);
 #endif
 	
 	// General default path: Qt resource system
@@ -172,7 +180,7 @@ QStringList MapperResource::getProgramLocations(MapperResource::RESOURCE_TYPE re
 }
 
 
-QString MapperResource::locate(MapperResource::RESOURCE_TYPE resource_type, const QString name)
+QString MapperResource::locate(MapperResource::RESOURCE_TYPE resource_type, const QString& name)
 {
 	QStringList locations = getLocations(resource_type);
 	if (locations.isEmpty())

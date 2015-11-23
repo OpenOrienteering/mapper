@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2013-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -25,14 +26,9 @@
 #include "map.h"
 #include "template.h"
 
-QCursor* TemplateMoveTool::cursor = NULL;
-
 TemplateMoveTool::TemplateMoveTool(Template* templ, MapEditorController* editor, QAction* action) : MapEditorTool(editor, Other, action), templ(templ)
 {
 	dragging = false;
-	
-	if (!cursor)
-		cursor = new QCursor(Qt::SizeAllCursor);
 }
 
 void TemplateMoveTool::init()
@@ -42,6 +38,12 @@ void TemplateMoveTool::init()
 	connect(map(), SIGNAL(templateDeleted(int, const Template*)), this, SLOT(templateDeleted(int, const Template*)));
 	
 	MapEditorTool::init();
+}
+
+const QCursor& TemplateMoveTool::getCursor() const
+{
+	static auto const cursor = QCursor(Qt::SizeAllCursor);
+	return cursor;
 }
 
 bool TemplateMoveTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
@@ -86,26 +88,27 @@ void TemplateMoveTool::templateDeleted(int index, const Template* temp)
 
 void TemplateMoveTool::updateDragging(MapCoordF mouse_pos_map)
 {
-	qint64 dx = qRound64(1000 * (mouse_pos_map.getX() - click_pos_map.getX()));
-	qint64 dy = qRound64(1000 * (mouse_pos_map.getY() - click_pos_map.getY()));
+	auto move = MapCoord { mouse_pos_map - click_pos_map };
 	click_pos_map = mouse_pos_map;
 	
 	templ->setTemplateAreaDirty();
-	templ->setTemplateX(templ->getTemplateX() + dx);
-	templ->setTemplateY(templ->getTemplateY() + dy);
+	templ->setTemplatePosition(templ->templatePosition() + move);
 	templ->setTemplateAreaDirty();
 	
 	for (int i = 0; i < templ->getNumPassPoints(); ++i)
 	{
 		PassPoint* point = templ->getPassPoint(i);
+		auto move_f = MapCoordF { move };
 		
 		if (templ->isAdjustmentApplied())
 		{
-			point->dest_coords.moveInt(dx, dy);
-			point->calculated_coords.moveInt(dx, dy);
+			point->dest_coords += move_f;
+			point->calculated_coords += move_f;
 		}
 		else
-			point->src_coords.moveInt(dx, dy);
+		{
+			point->src_coords += move_f;
+		}
 	}
 	
 	map()->setTemplatesDirty();

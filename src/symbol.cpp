@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2012-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -46,14 +47,19 @@
 #include "util.h"
 #include "settings.h"
 
-Symbol::Symbol(Type type) : type(type), name(""), description(""), is_helper_symbol(false), is_hidden(false), is_protected(false), icon(NULL)
+Symbol::Symbol(Type type)
+ : type(type)
+ , is_helper_symbol(false)
+ , is_hidden(false)
+ , is_protected(false)
 {
 	for (int i = 0; i < number_components; ++i)
 		number[i] = -1;
 }
+
 Symbol::~Symbol()
 {
-	delete icon;
+	; // nothing
 }
 
 bool Symbol::equals(const Symbol* other, Qt::CaseSensitivity case_sensitivity, bool compare_state) const
@@ -83,52 +89,52 @@ bool Symbol::equals(const Symbol* other, Qt::CaseSensitivity case_sensitivity, b
 
 const PointSymbol* Symbol::asPoint() const
 {
-	assert(type == Point);
+	Q_ASSERT(type == Point);
 	return static_cast<const PointSymbol*>(this);
 }
 PointSymbol* Symbol::asPoint()
 {
-	assert(type == Point);
+	Q_ASSERT(type == Point);
 	return static_cast<PointSymbol*>(this);
 }
 const LineSymbol* Symbol::asLine() const
 {
-	assert(type == Line);
+	Q_ASSERT(type == Line);
 	return static_cast<const LineSymbol*>(this);
 }
 LineSymbol* Symbol::asLine()
 {
-	assert(type == Line);
+	Q_ASSERT(type == Line);
 	return static_cast<LineSymbol*>(this);
 }
 const AreaSymbol* Symbol::asArea() const
 {
-	assert(type == Area);
+	Q_ASSERT(type == Area);
 	return static_cast<const AreaSymbol*>(this);
 }
 AreaSymbol* Symbol::asArea()
 {
-	assert(type == Area);
+	Q_ASSERT(type == Area);
 	return static_cast<AreaSymbol*>(this);
 }
 const TextSymbol* Symbol::asText() const
 {
-	assert(type == Text);
+	Q_ASSERT(type == Text);
 	return static_cast<const TextSymbol*>(this);
 }
 TextSymbol* Symbol::asText()
 {
-	assert(type == Text);
+	Q_ASSERT(type == Text);
 	return static_cast<TextSymbol*>(this);
 }
 const CombinedSymbol* Symbol::asCombined() const
 {
-	assert(type == Combined);
+	Q_ASSERT(type == Combined);
 	return static_cast<const CombinedSymbol*>(this);
 }
 CombinedSymbol* Symbol::asCombined()
 {
-	assert(type == Combined);
+	Q_ASSERT(type == Combined);
 	return static_cast<CombinedSymbol*>(this);
 }
 
@@ -172,6 +178,8 @@ bool Symbol::numberEquals(const Symbol* other, bool ignore_trailing_zeros)
 	return true;
 }
 
+#ifndef NO_NATIVE_FILE_FORMAT
+
 bool Symbol::load(QIODevice* file, int version, Map* map)
 {
 	loadString(file, name);
@@ -186,6 +194,8 @@ bool Symbol::load(QIODevice* file, int version, Map* map)
 	
 	return loadImpl(file, version, map);
 }
+
+#endif
 
 void Symbol::save(QXmlStreamWriter& xml, const Map& map) const
 {
@@ -209,7 +219,7 @@ void Symbol::save(QXmlStreamWriter& xml, const Map& map) const
 	xml.writeEndElement(/*symbol*/);
 }
 
-Symbol* Symbol::load(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict) throw (FileFormatException)
+Symbol* Symbol::load(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict)
 {
 	Q_ASSERT(xml.name() == "symbol");
 	
@@ -271,7 +281,12 @@ Symbol* Symbol::load(QXmlStreamReader& xml, const Map& map, SymbolDictionary& sy
 	if (xml.error())
 	{
 		delete symbol;
-		throw FileFormatException(ImportExport::tr("Error while loading a symbol."));
+		throw FileFormatException(
+		            ImportExport::tr("Error while loading a symbol of type %1 at line %2 column %3: %4")
+		            .arg(symbol_type)
+		            .arg(xml.lineNumber())
+		            .arg(xml.columnNumber())
+		            .arg(xml.errorString()) );
 	}
 	
 	return symbol;
@@ -281,6 +296,33 @@ bool Symbol::loadFinished(Map* map)
 {
 	Q_UNUSED(map);
 	return true;
+}
+
+void Symbol::createRenderables(const PathObject*, const PathPartVector&, ObjectRenderables&, Symbol::RenderableOptions) const
+{
+	qWarning("Missing implementation of Symbol::createRenderables(const PathObject*, const PathPartVector&, ObjectRenderables&)");
+}
+
+void Symbol::createBaselineRenderables(
+        const PathObject*,
+        const PathPartVector& path_parts,
+        ObjectRenderables& output,
+        const MapColor* color) const
+{
+	Q_ASSERT((getContainedTypes() & ~(Symbol::Line | Symbol::Area | Symbol::Combined)) == 0);
+	
+	if (color)
+	{
+		// Insert line renderable
+		LineSymbol line_symbol;
+		line_symbol.setColor(color);
+		line_symbol.setLineWidth(0);
+		for (const auto& part : path_parts)
+		{
+			auto line_renderable = new LineRenderable(&line_symbol, part, false);
+			output.insertRenderable(line_renderable);
+		}
+	}
 }
 
 bool Symbol::symbolChanged(const Symbol* old_symbol, const Symbol* new_symbol)
@@ -296,21 +338,16 @@ bool Symbol::containsSymbol(const Symbol* symbol) const
 	return false;
 }
 
-QImage* Symbol::getIcon(const Map* map, bool update) const
+QImage Symbol::getIcon(const Map* map, bool update) const
 {
-	if (icon && !update)
-		return icon;
+	if (update || icon.isNull())
+		icon = createIcon(map, Settings::getInstance().getSymbolWidgetIconSizePx(), true, 1);
 	
-	// Delete old icon after creating the new as it may be accessed inside createIcon().
-	QImage* new_icon = createIcon(map, Settings::getInstance().getSymbolWidgetIconSizePx(), true, 1);
-	delete icon;
-	icon = new_icon;
-	return new_icon;
+	return icon;
 }
 
-QImage* Symbol::createIcon(const Map* map, int side_length, bool antialiasing, int bottom_right_border, float best_zoom) const
+QImage Symbol::createIcon(const Map* map, int side_length, bool antialiasing, int bottom_right_border, float best_zoom) const
 {
-	QImage* image;
 	Type contained_types = getContainedTypes();
 	
 	// Create icon map and view
@@ -328,21 +365,21 @@ QImage* Symbol::createIcon(const Map* map, int side_length, bool antialiasing, i
 	else if (contained_types & Point || contained_types & Text)
 		white_border_pixels = 2;
 	else
-		assert(false);
+		Q_ASSERT(false);
 	const float max_icon_mm = 0.001f * view.pixelToLength(side_length - bottom_right_border - white_border_pixels);
 	const float max_icon_mm_half = 0.5f * max_icon_mm;
 	
 	// Create image
-	image = new QImage(side_length, side_length, QImage::Format_ARGB32_Premultiplied);
+	QImage image(side_length, side_length, QImage::Format_ARGB32_Premultiplied);
 	QPainter painter;
-	painter.begin(image);
+	painter.begin(&image);
 	if (antialiasing)
 		painter.setRenderHint(QPainter::Antialiasing);
 	
 	// Make background transparent
 	QPainter::CompositionMode mode = painter.compositionMode();
 	painter.setCompositionMode(QPainter::CompositionMode_Clear);
-	painter.fillRect(image->rect(), Qt::transparent);
+	painter.fillRect(image.rect(), Qt::transparent);
 	painter.setCompositionMode(mode);
 	
 	// Create geometry
@@ -361,7 +398,7 @@ QImage* Symbol::createIcon(const Map* map, int side_length, bool antialiasing, i
 		path->addCoordinate(1, MapCoord(max_icon_mm_half, -max_icon_mm_half));
 		path->addCoordinate(2, MapCoord(max_icon_mm_half, max_icon_mm_half));
 		path->addCoordinate(3, MapCoord(-max_icon_mm_half, max_icon_mm_half));
-		path->getPart(0).setClosed(true, true);
+		path->parts().front().setClosed(true, true);
 		object = path;
 	}
 	else if (type == Line || type == Combined)
@@ -395,8 +432,8 @@ QImage* Symbol::createIcon(const Map* map, int side_length, bool antialiasing, i
 		}
 		
 		PathObject* path = new PathObject(symbol_to_use);
-		path->addCoordinate(0, MapCoord(-max_icon_mm_half, 0));
-		path->addCoordinate(1, MapCoord(max_icon_mm_half, 0));
+		path->addCoordinate(0, MapCoord(-max_icon_mm_half, 0.0));
+		path->addCoordinate(1, MapCoord(max_icon_mm_half, 0.0));
 		if (show_dash_symbol)
 		{
 			MapCoord dash_coord(0, 0);
@@ -419,11 +456,11 @@ QImage* Symbol::createIcon(const Map* map, int side_length, bool antialiasing, i
 		PathObject* path = new PathObject(this);
 		for (int i = 0; i < 5; ++i)
 			path->addCoordinate(i, MapCoord(sin(2*M_PI * i/5.0) * max_icon_mm_half, -cos(2*M_PI * i/5.0) * max_icon_mm_half));
-		path->getPart(0).setClosed(true, false);
+		path->parts().front().setClosed(true, false);
 		object = path;
 	}*/
 	else
-		assert(false);
+		Q_ASSERT(false);
 	
 	icon_map.addObject(object);
 	
@@ -432,15 +469,16 @@ QImage* Symbol::createIcon(const Map* map, int side_length, bool antialiasing, i
 	{
 		// Center on the object's extent center
 		real_icon_mm_half = qMax(object->getExtent().width() / 2.0, object->getExtent().height() / 2.0);
-		view.setPositionX(qRound64(1000 * object->getExtent().center().x()));
-		view.setPositionY(qRound64(1000 * object->getExtent().center().y()));
+		view.setCenter(MapCoord{ object->getExtent().center() });
 	}
 	else if (contained_types & Line && !(contained_types & Area))
 	{
 		// Center horizontally on extent
 		real_icon_mm_half = qMax((qreal)(object->getExtent().width() / 2.0), object->getExtent().bottom());
 		real_icon_mm_half = qMax(real_icon_mm_half, -object->getExtent().top());
-		view.setPositionX(qRound64(1000 * object->getExtent().center().x()));
+		auto pos = MapCoord{ object->getExtent().center() };
+		pos.setY(0);
+		view.setCenter(pos);
 	}
 	else
 	{
@@ -453,11 +491,12 @@ QImage* Symbol::createIcon(const Map* map, int side_length, bool antialiasing, i
 		view.setZoom(best_zoom * (max_icon_mm_half / real_icon_mm_half));
 	
 	painter.translate(0.5f * (side_length - bottom_right_border), 0.5f * (side_length - bottom_right_border));
-	view.applyTransform(&painter);
+	painter.setWorldTransform(view.worldTransform(), true);
 	
+	RenderConfig config = { *map, QRectF(-10000, -10000, 20000, 20000), view.calculateFinalZoomFactor(), RenderConfig::HelperSymbols, 1.0 };
 	bool was_hidden = is_hidden;
 	is_hidden = false; // ensure that an icon is created for hidden symbols.
-	icon_map.draw(&painter, QRectF(-10000, -10000, 20000, 20000), false, view.calculateFinalZoomFactor(), false, true);
+	icon_map.draw(&painter, config);
 	is_hidden = was_hidden;
 	
 	delete icon_symbol;
@@ -512,10 +551,12 @@ Symbol* Symbol::getSymbolForType(Symbol::Type type)
 		return new CombinedSymbol();
 	else
 	{
-		assert(false);
+		Q_ASSERT(false);
 		return NULL;
 	}
 }
+
+#ifndef NO_NATIVE_FILE_FORMAT
 
 bool Symbol::loadSymbol(Symbol*& symbol, QIODevice* stream, int version, Map* map)
 {
@@ -529,97 +570,7 @@ bool Symbol::loadSymbol(Symbol*& symbol, QIODevice* stream, int version, Map* ma
 	return true;
 }
 
-void Symbol::createBaselineRenderables(const Object* object, const Symbol* symbol, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output, bool hatch_areas)
-{
-	Symbol::Type type = symbol->getType();
-	const MapColor* dominant_color = symbol->getDominantColorGuess();
-	if (dominant_color == NULL)
-		return;
-	
-	if (type == Symbol::Point)
-	{
-		PointSymbol* point = Map::getUndefinedPoint();
-		const MapColor* temp_color = point->getInnerColor();
-		point->setInnerColor(dominant_color);
-		
-		point->createRenderables(object, flags, coords, output);
-		
-		point->setInnerColor(temp_color);
-	}
-	else if (type == Text)
-	{
-		// Insert text boundary
-		const TextObject* text_object = object->asText();
-		if (text_object->getNumLines() == 0)
-			return;
-		
-		LineSymbol line_symbol;
-		line_symbol.setColor(dominant_color);
-		line_symbol.setLineWidth(0);
-		
-		const TextObjectLineInfo* line = text_object->getLineInfo(0);
-		QRectF text_bbox(line->line_x, line->line_y - line->ascent, line->width, line->ascent + line->descent);
-		for (int i = 1; i < text_object->getNumLines(); ++i)
-		{
-			const TextObjectLineInfo* line = text_object->getLineInfo(i);
-			rectInclude(text_bbox, QRectF(line->line_x, line->line_y - line->ascent, line->width, line->ascent + line->descent));
-		}
-		
-		QTransform text_to_map = text_object->calcTextToMapTransform();
-		PathObject path;
-		path.addCoordinate(MapCoord(text_to_map.map(text_bbox.topLeft())));
-		path.addCoordinate(MapCoord(text_to_map.map(text_bbox.topRight())));
-		path.addCoordinate(MapCoord(text_to_map.map(text_bbox.bottomRight())));
-		path.addCoordinate(MapCoord(text_to_map.map(text_bbox.bottomLeft())));
-		path.getPart(0).setClosed(true, true);
-		
-		MapCoordVectorF coordsF;
-		mapCoordVectorToF(path.getRawCoordinateVector(), coordsF);
-		
-		PathCoordVector empty_path_coords;
-		LineRenderable* line_renderable = new LineRenderable(&line_symbol, coordsF, path.getRawCoordinateVector(), empty_path_coords, false);
-		output.insertRenderable(line_renderable);
-	}
-	else
-	{
-		// Line or area or combination
-		assert((symbol->getContainedTypes() & ~(Symbol::Line | Symbol::Area | Symbol::Combined)) == 0);
-		const PathObject* path = object->asPath();
-		
-		if (hatch_areas && (symbol->getContainedTypes() & Symbol::Area))
-		{
-			// Insert hatched area renderable
-			AreaSymbol area_symbol;
-			
-			area_symbol.setNumFillPatterns(1);
-			AreaSymbol::FillPattern& pattern = area_symbol.getFillPattern(0);
-			pattern.type = AreaSymbol::FillPattern::LinePattern;
-			pattern.angle = 45 * M_PI / 180.0f;
-			pattern.line_spacing = 1000;
-			pattern.line_offset = 0;
-			pattern.line_color = dominant_color;
-			pattern.line_width = 70;
-			
-			area_symbol.createRenderablesNormal(path, flags, coords, output);
-			
-			// Insert boundary line renderable
-			LineSymbol line_symbol;
-			line_symbol.setColor(dominant_color);
-			line_symbol.setLineWidth(0);
-			LineRenderable* line_renderable = new LineRenderable(&line_symbol, coords, flags, path->getPathCoordinateVector(), false);
-			output.insertRenderable(line_renderable);
-		}
-		else
-		{
-			// Insert line renderable
-			LineSymbol line_symbol;
-			line_symbol.setColor(dominant_color);
-			line_symbol.setLineWidth(0);
-			LineRenderable* line_renderable = new LineRenderable(&line_symbol, coords, flags, path->getPathCoordinateVector(), false);
-			output.insertRenderable(line_renderable);
-		}
-	}
-}
+#endif
 
 bool Symbol::areTypesCompatible(Symbol::Type a, Symbol::Type b)
 {
@@ -635,7 +586,7 @@ int Symbol::getCompatibleTypes(Symbol::Type type)
 	else if (type == Text)
 		return Text;
 	
-	assert(false);
+	Q_ASSERT(false);
 	return type;
 }
 
@@ -648,10 +599,7 @@ void Symbol::duplicateImplCommon(const Symbol* other)
 	description = other->description;
 	is_helper_symbol = other->is_helper_symbol;
 	is_hidden = other->is_hidden;
-	if (other->icon)
-		icon = new QImage(*other->icon);
-	else
-		icon = NULL;
+	icon = other->icon;
 }
 
 SymbolPropertiesWidget* Symbol::createPropertiesWidget(SymbolSettingDialog* dialog)
@@ -674,8 +622,8 @@ bool Symbol::compareByNumber(const Symbol* s1, const Symbol* s2)
 
 bool Symbol::compareByColorPriority(const Symbol* s1, const Symbol* s2)
 {
-	const MapColor* c1 = s1->getDominantColorGuess();
-	const MapColor* c2 = s2->getDominantColorGuess();
+	const MapColor* c1 = s1->guessDominantColor();
+	const MapColor* c2 = s2->guessDominantColor();
 	
 	if (c1 && c2)
 		return c1->comparePriority(*c2);
@@ -704,8 +652,8 @@ Symbol::compareByColor::compareByColor(Map* map)
 
 bool Symbol::compareByColor::operator() (const Symbol* s1, const Symbol* s2)
 {
-	const MapColor* c1 = s1->getDominantColorGuess();
-	const MapColor* c2 = s2->getDominantColorGuess();
+	const MapColor* c1 = s1->guessDominantColor();
+	const MapColor* c2 = s2->guessDominantColor();
 	
 	if (c1 && c2)
 		return color_map.value(QRgb(*c1)) < color_map.value(QRgb(*c2));
@@ -715,130 +663,4 @@ bool Symbol::compareByColor::operator() (const Symbol* s1, const Symbol* s2)
 		return false;
 	
 	return false; // s1 == s2
-}
-
-
-
-// ### SymbolDropDown ###
-
-// allow explicit use of Symbol pointers in QVariant
-Q_DECLARE_METATYPE(Symbol*)
-
-SymbolDropDown::SymbolDropDown(const Map* map, int filter, const Symbol* initial_symbol, const Symbol* excluded_symbol, QWidget* parent)
- : QComboBox(parent)
-{
-	num_custom_items = 0;
-	addItem(tr("- none -"), QVariant::fromValue<Symbol*>(NULL));
-	
-	int size = map->getNumSymbols();
-	for (int i = 0; i < size; ++i)
-	{
-		const Symbol* symbol = map->getSymbol(i);
-		if (!(symbol->getType() & filter))
-			continue;
-		if (symbol == excluded_symbol)
-			continue;
-		if (symbol->getType() == Symbol::Combined)	// TODO: if point objects start to be able to contain objects of other ordinary symbols, add a check for these here, too, to prevent circular references
-		{
-			const CombinedSymbol* combined_symbol = reinterpret_cast<const CombinedSymbol*>(symbol);
-			if (combined_symbol->containsSymbol(excluded_symbol))
-				continue;
-		}
-		
-		QString symbol_name = symbol->getNumberAsString() % " " % symbol->getPlainTextName();
-		addItem(QPixmap::fromImage(*symbol->getIcon(map)), symbol_name, QVariant::fromValue<const Symbol*>(symbol));
-	}
-	setSymbol(initial_symbol);
-}
-
-const Symbol* SymbolDropDown::symbol() const
-{
-	QVariant data = itemData(currentIndex());
-	if (data.canConvert<const Symbol*>())
-		return data.value<const Symbol*>();
-	else
-		return NULL;
-}
-
-void SymbolDropDown::setSymbol(const Symbol* symbol)
-{
-	setCurrentIndex(findData(QVariant::fromValue<const Symbol*>(symbol)));
-}
-
-void SymbolDropDown::addCustomItem(const QString& text, int id)
-{
-	insertItem(1 + num_custom_items, text, QVariant(id));
-	++num_custom_items;
-}
-
-int SymbolDropDown::customID() const
-{
-	QVariant data = itemData(currentIndex());
-	if (data.canConvert<int>())
-		return data.value<int>();
-	else
-		return -1;
-}
-
-void SymbolDropDown::setCustomItem(int id)
-{
-	setCurrentIndex(findData(QVariant(id)));
-}
-
-
-// ### SymbolDropDownDelegate ###
-
-SymbolDropDownDelegate::SymbolDropDownDelegate(int symbol_type_filter, QObject* parent)
- : QItemDelegate(parent), symbol_type_filter(symbol_type_filter)
-{
-}
-
-QWidget* SymbolDropDownDelegate::createEditor(QWidget* parent, const QStyleOptionViewItem& option, const QModelIndex& index) const
-{
-	Q_UNUSED(option);
-	QVariantList list = index.data(Qt::UserRole).toList();
-	SymbolDropDown* widget
-		= new SymbolDropDown(list.at(0).value<const Map*>(), symbol_type_filter,
-							 list.at(1).value<const Symbol*>(), NULL, parent);
-	
-	connect(widget, SIGNAL(currentIndexChanged(int)), this, SLOT(emitCommitData()));
-	return widget;
-}
-
-void SymbolDropDownDelegate::setEditorData(QWidget* editor, const QModelIndex& index) const
-{
-	SymbolDropDown* widget = static_cast<SymbolDropDown*>(editor);
-	const Symbol* symbol = index.data(Qt::UserRole).toList().at(1).value<const Symbol*>();
-	widget->setSymbol(symbol);
-}
-
-void SymbolDropDownDelegate::setModelData(QWidget* editor, QAbstractItemModel* model, const QModelIndex& index) const
-{
-	SymbolDropDown* widget = static_cast<SymbolDropDown*>(editor);
-	const Symbol* symbol = widget->symbol();
-	QVariantList list = index.data(Qt::UserRole).toList();
-	list[1] = qVariantFromValue<const Symbol*>(symbol);
-	model->setData(index, list, Qt::UserRole);
-	
-	if (symbol)
-	{
-		model->setData(index, symbol->getNumberAsString() + " " + symbol->getPlainTextName(), Qt::EditRole);
-		model->setData(index, *symbol->getIcon(list[0].value<const Map*>()), Qt::DecorationRole);
-	}
-	else
-	{
-		model->setData(index, tr("- None -"), Qt::EditRole);
-		model->setData(index, QVariant(), Qt::DecorationRole);
-	}
-}
-
-void SymbolDropDownDelegate::updateEditorGeometry(QWidget* editor, const QStyleOptionViewItem& option, const QModelIndex& index) const
-{
-	Q_UNUSED(index);
-	editor->setGeometry(option.rect);
-}
-
-void SymbolDropDownDelegate::emitCommitData()
-{
-	emit commitData(qobject_cast<QWidget*>(sender()));
 }

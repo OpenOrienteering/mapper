@@ -20,8 +20,9 @@
 #include "compass.h"
 
 #include <qmath.h>
-#include <QTime>
+#include <QMetaMethod>
 #include <QMutex>
+#include <QTime>
 
 
 namespace SensorHelpers
@@ -542,7 +543,7 @@ float Compass::getCurrentAzimuth()
 {
 #ifdef QT_SENSORS_LIB
 	return p->getLatestAzimuth();
-#elif QT_VERSION >= 0x050200
+#elif MAPPER_DEVELOPMENT_BUILD
 	// DEBUG: rotate around ...
 	QTime now = QTime::currentTime();
 	return 360 * (now.msecsSinceStartOfDay() % (10 * 1000)) / (float)(10 * 1000);
@@ -568,6 +569,18 @@ void Compass::disconnectFromAzimuthChanges(const QObject* receiver)
 #else
 	Q_UNUSED(receiver);
 #endif
+}
+
+void Compass::connectNotify(const QMetaMethod& signal)
+{
+	if (signal == QMetaMethod::fromSignal(&Compass::azimuthChanged))
+	    startUsage();
+}
+
+void Compass::disconnectNotify(const QMetaMethod& signal)
+{
+	if (signal == QMetaMethod::fromSignal(&Compass::azimuthChanged))
+	    stopUsage();
 }
 
 void Compass::emitAzimuthChanged(float value)

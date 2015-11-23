@@ -92,7 +92,7 @@ namespace ObjectOp
 			Q_UNUSED(part);
 			Q_UNUSED(object_index);
 			object->scale(center, factor);
-			object->update(true, true);
+			object->update();
 			return true;
 		}
 	private:
@@ -109,7 +109,7 @@ namespace ObjectOp
 			Q_UNUSED(part);
 			Q_UNUSED(object_index);
 			object->rotateAround(center, angle);
-			object->update(true, true);
+			object->update();
 			return true;
 		}
 	private:
@@ -120,16 +120,26 @@ namespace ObjectOp
 	/** Calls update() on the objects. */
 	struct Update
 	{
-		inline Update(bool force = true) : force(force) {}
 		inline bool operator()(Object* object, MapPart* part, int object_index) const
 		{
 			Q_UNUSED(part);
 			Q_UNUSED(object_index);
-			object->update(force, true);
+			object->update();
 			return true;
 		}
-	private:
-		bool force;
+	};
+	
+	/** Calls update() on the objects. */
+	struct ForceUpdate
+	{
+		inline bool operator()(Object* object, MapPart* part, int object_index) const
+		{
+			Q_UNUSED(part);
+			Q_UNUSED(object_index);
+			object->setOutputDirty();
+			object->update();
+			return true;
+		}
 	};
 	
 	/**
@@ -144,7 +154,7 @@ namespace ObjectOp
 			if (!object->setSymbol(new_symbol, false))
 				part->deleteObject(object_index, false);
 			else
-				object->update(true, true);
+				object->update();
 			return true;
 		}
 	private:

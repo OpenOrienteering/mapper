@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2013-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -20,17 +21,23 @@
 
 #include "template.h"
 
-#include <QtWidgets>
+#include <QCoreApplication>
+#include <QDebug>
+#include <QFileDialog>
 #include <QFileInfo>
-#include <QPixmap>
+#include <QMessageBox>
 #include <QPainter>
+#include <QPixmap>
+#include <QXmlStreamReader>
+#include <QXmlStreamWriter>
 
 #include "core/map_view.h"
-#include "util.h"
 #include "map.h"
 #include "template_image.h"
-#include "template_track.h"
 #include "template_map.h"
+#include "template_track.h"
+#include "util.h"
+#include "util/xml_stream_util.h"
 
 // ### TemplateTransform ###
 
@@ -44,15 +51,24 @@ TemplateTransform::TemplateTransform()
 }
 
 
+#ifndef NO_NATIVE_FILE_FORMAT
+
 void TemplateTransform::load(QIODevice* file)
 {
-	file->read((char*)&template_x, sizeof(qint64));
-	file->read((char*)&template_y, sizeof(qint64));
+	qint64 tmp;
+	file->read((char*)&tmp, sizeof(qint64));
+	template_x = tmp;
+	file->read((char*)&tmp, sizeof(qint64));
+	template_y = tmp;
 	
+	static_assert(sizeof(qint64) == sizeof(double),
+	              "Legacy file format relies on sizeof(qint64) == sizeof(double)");
 	file->read((char*)&template_scale_x, sizeof(qint64));
 	file->read((char*)&template_scale_y, sizeof(qint64));
 	file->read((char*)&template_rotation, sizeof(qint64));
 }
+
+#endif
 
 void TemplateTransform::save(QXmlStreamWriter& xml, const QString role) const
 {
@@ -70,12 +86,15 @@ void TemplateTransform::load(QXmlStreamReader& xml)
 {
 	Q_ASSERT(xml.name() == "transformation");
 	
-	template_x = xml.attributes().value("x").toString().toLongLong();
-	template_y = xml.attributes().value("y").toString().toLongLong();
-	template_scale_x = xml.attributes().value("scale_x").toString().toDouble();
-	template_scale_y = xml.attributes().value("scale_y").toString().toDouble();
-	template_rotation = xml.attributes().value("rotation").toString().toDouble();
-	xml.skipCurrentElement();
+	XmlElementReader element { xml };
+	auto x64 = element.attribute<qint64>(QLatin1String("x"));
+	auto y64 = element.attribute<qint64>(QLatin1String("y"));
+	auto coord = MapCoord::fromNative64withOffset(x64, y64);
+	template_x = coord.nativeX();
+	template_y = coord.nativeY();
+	template_scale_x = element.attribute<double>(QLatin1String("scale_x"));
+	template_scale_y = element.attribute<double>(QLatin1String("scale_y"));
+	template_rotation = element.attribute<double>(QLatin1String("rotation"));
 }
 
 
@@ -104,7 +123,7 @@ Template::Template(const QString& path, Map* map) : map(map)
 }
 Template::~Template()
 {
-	assert(template_state != Loaded);
+	Q_ASSERT(template_state != Loaded);
 }
 
 Template* Template::duplicate() const
@@ -145,6 +164,8 @@ void Template::setErrorString(const QString &text)
 {
 	error_string = text;
 }
+
+#ifndef NO_NATIVE_FILE_FORMAT
 
 bool Template::loadTemplateConfiguration(QIODevice* stream, int version)
 {
@@ -194,6 +215,8 @@ bool Template::loadTemplateConfiguration(QIODevice* stream, int version)
 	}
 	return true;
 }
+
+#endif
 
 void Template::saveTemplateConfiguration(QXmlStreamWriter& xml, bool open)
 {
@@ -314,11 +337,25 @@ Q_ASSERT(temp->passpoints.size() == 0);
 		}
 	}
 	
-	// Fix template alignment problems caused by grivation rounding since version 0.6
-	const double correction = map.getGeoreferencing().getGrivationError();
-	if (!temp->is_georeferenced && qAbs(correction) != 0.0 && temp->getTemplateType() == "TemplateTrack" )
+	if (!temp->is_georeferenced)
 	{
-		temp->setTemplateRotation(temp->getTemplateRotation() + Georeferencing::degToRad(correction));
+		// Fix template adjustment after moving objects during import (cf. #513)
+		const auto offset = MapCoord::boundsOffset();
+		if (!offset.isZero())
+		{
+			temp->template_to_map.set(0, 2, temp->template_to_map_other.get(0, 2) - offset.x / 1000.0);
+			temp->template_to_map.set(1, 2, temp->template_to_map_other.get(1, 2) - offset.y / 1000.0);
+			temp->template_to_map.invert(temp->map_to_template);
+			temp->template_to_map_other.set(0, 2, temp->template_to_map_other.get(0, 2) - offset.x / 1000.0);
+			temp->template_to_map_other.set(1, 2, temp->template_to_map_other.get(1, 2) - offset.y / 1000.0);
+		}
+		
+		// Fix template alignment problems caused by grivation rounding since version 0.6
+		const double correction = map.getGeoreferencing().getGrivationError();
+		if (qAbs(correction) != 0.0 && temp->getTemplateType() == "TemplateTrack")
+		{
+			temp->setTemplateRotation(temp->getTemplateRotation() + Georeferencing::degToRad(correction));
+		}
 	}
 	
 	return temp;
@@ -393,9 +430,8 @@ bool Template::configureAndLoad(QWidget* dialog_parent, MapView* view)
 	// If the template is not georeferenced, position it at the viewport midpoint
 	if (!isTemplateGeoreferenced() && center_in_view)
 	{
-		QPointF center = calculateTemplateBoundingBox().center();
-		setTemplateX(view->getPositionX() - qRound64(1000 * center.x()));
-		setTemplateY(view->getPositionY() - qRound64(1000 * center.y()));
+		auto offset = MapCoord { calculateTemplateBoundingBox().center() };
+		setTemplatePosition(view->center() - offset);
 	}
 	
 	return true;
@@ -449,10 +485,10 @@ bool Template::preLoadConfiguration(QWidget* dialog_parent)
 
 bool Template::loadTemplateFile(bool configuring)
 {
-	assert(template_state != Loaded);
+	Q_ASSERT(template_state != Loaded);
 	
 	const State old_state = template_state;
-	bool result = QFileInfo::exists(template_path);
+	bool result = QFileInfo(template_path).exists();
 	if (!result)
 	{
 		template_state = Invalid;
@@ -495,7 +531,7 @@ bool Template::postLoadConfiguration(QWidget* dialog_parent, bool& out_center_in
 
 void Template::unloadTemplateFile()
 {
-	assert(template_state == Loaded);
+	Q_ASSERT(template_state == Loaded);
 	if (hasUnsavedChanges())
 	{
 		// The changes are lost
@@ -515,33 +551,27 @@ void Template::applyTemplateTransform(QPainter* painter) const
 
 QRectF Template::getTemplateExtent() const
 {
-	assert(!is_georeferenced);
-	return infinteRectF();
+	Q_ASSERT(!is_georeferenced);
+	return infiniteRectF();
 }
 
 void Template::scale(double factor, const MapCoord& center)
 {
-	assert(!is_georeferenced);
-	setTemplateX(qRound64(center.rawX() + factor * (getTemplateX() - center.rawX()) ));
-	setTemplateY(qRound64(center.rawY() + factor * (getTemplateY() - center.rawY()) ));
+	Q_ASSERT(!is_georeferenced);
+	setTemplatePosition(center + factor * (templatePosition() - center));
 	setTemplateScaleX(factor * getTemplateScaleX());
 	setTemplateScaleY(factor * getTemplateScaleY());
 }
 
 void Template::rotate(double rotation, const MapCoord& center)
 {
-	assert(!is_georeferenced);
+	Q_ASSERT(!is_georeferenced);
 	
 	setTemplateRotation(getTemplateRotation() + rotation);
 	
-	double sinr = sin(rotation);
-	double cosr = cos(rotation);
-	qint64 offset_x = getTemplateX() - center.rawX();
-	qint64 offset_y = getTemplateY() - center.rawY();
-	qint64 temp_x = qRound64(1000.0 * (cosr * (offset_x/1000.0) + sinr * (offset_y/1000.0)));
-	qint64 temp_y = qRound64(1000.0 * (-sinr * (offset_x/1000.0) + cosr * (offset_y/1000.0)));
-	setTemplateX(center.rawX() + temp_x);
-	setTemplateY(center.rawY() + temp_y);
+	MapCoordF offset = MapCoordF { templatePosition() - center };
+	offset.rotate(rotation);
+	setTemplatePosition(MapCoord { offset });
 }
 
 void Template::setTemplateAreaDirty()
@@ -550,28 +580,28 @@ void Template::setTemplateAreaDirty()
 	map->setTemplateAreaDirty(this, template_area, getTemplateBoundingBoxPixelBorder());	// TODO: Would be better to do this with the corner points, instead of the bounding box
 }
 
-QRectF Template::calculateTemplateBoundingBox()
+QRectF Template::calculateTemplateBoundingBox() const
 {
 	// Create bounding box by calculating the positions of all corners of the transformed extent rect
 	QRectF extent = getTemplateExtent();
 	QRectF bbox;
-	rectIncludeSafe(bbox, templateToMap(extent.topLeft()).toQPointF());
-	rectInclude(bbox, templateToMap(extent.topRight()).toQPointF());
-	rectInclude(bbox, templateToMap(extent.bottomRight()).toQPointF());
-	rectInclude(bbox, templateToMap(extent.bottomLeft()).toQPointF());
+	rectIncludeSafe(bbox, templateToMap(extent.topLeft()));
+	rectInclude(bbox, templateToMap(extent.topRight()));
+	rectInclude(bbox, templateToMap(extent.bottomRight()));
+	rectInclude(bbox, templateToMap(extent.bottomLeft()));
 	return bbox;
 }
 
 void Template::drawOntoTemplate(MapCoordF* coords, int num_coords, QColor color, float width, QRectF map_bbox)
 {
-	assert(canBeDrawnOnto());
-	assert(num_coords > 1);
+	Q_ASSERT(canBeDrawnOnto());
+	Q_ASSERT(num_coords > 1);
 	
 	if (!map_bbox.isValid())
 	{
-		map_bbox = QRectF(coords[0].getX(), coords[0].getY(), 0, 0);
+		map_bbox = QRectF(coords[0].x(), coords[0].y(), 0, 0);
 		for (int i = 1; i < num_coords; ++i)
-			rectInclude(map_bbox, coords[i].toQPointF());
+			rectInclude(map_bbox, coords[i]);
 	}
 	float radius = qMin(getTemplateScaleX(), getTemplateScaleY()) * qMax((width+1) / 2, 1.0f);
 	QRectF radius_bbox = QRectF(map_bbox.left() - radius, map_bbox.top() - radius,
@@ -591,7 +621,7 @@ void Template::drawOntoTemplateUndo(bool redo)
 
 void Template::addPassPoint(const PassPoint& point, int pos)
 {
-	assert(!is_georeferenced);
+	Q_ASSERT(!is_georeferenced);
 	passpoints.insert(passpoints.begin() + pos, point);
 }
 void Template::deletePassPoint(int pos)
@@ -607,7 +637,7 @@ void Template::clearPassPoints()
 
 void Template::switchTransforms()
 {
-	assert(!is_georeferenced);
+	Q_ASSERT(!is_georeferenced);
 	setTemplateAreaDirty();
 	
 	TemplateTransform temp = transform;
@@ -622,12 +652,12 @@ void Template::switchTransforms()
 }
 void Template::getTransform(TemplateTransform& out) const
 {
-	assert(!is_georeferenced);
+	Q_ASSERT(!is_georeferenced);
 	out = transform;
 }
 void Template::setTransform(const TemplateTransform& transform)
 {
-	assert(!is_georeferenced);
+	Q_ASSERT(!is_georeferenced);
 	setTemplateAreaDirty();
 	
 	this->transform = transform;
@@ -638,12 +668,12 @@ void Template::setTransform(const TemplateTransform& transform)
 }
 void Template::getOtherTransform(TemplateTransform& out) const
 {
-	assert(!is_georeferenced);
+	Q_ASSERT(!is_georeferenced);
 	out = other_transform;
 }
 void Template::setOtherTransform(const TemplateTransform& transform)
 {
-	assert(!is_georeferenced);
+	Q_ASSERT(!is_georeferenced);
 	other_transform = transform;
 }
 
@@ -711,6 +741,19 @@ void Template::drawOntoTemplateImpl(MapCoordF* coords, int num_coords, QColor co
 	Q_UNUSED(color);
 	Q_UNUSED(width);
 	// nothing
+}
+
+MapCoord Template::templatePosition() const
+{
+	return MapCoord::fromNative(transform.template_x, transform.template_y);
+}
+
+
+void Template::setTemplatePosition(MapCoord coord)
+{
+	transform.template_x = coord.nativeX();
+	transform.template_y = coord.nativeY();
+	updateTransformationMatrices();
 }
 
 void Template::updateTransformationMatrices()

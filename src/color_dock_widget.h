@@ -1,5 +1,6 @@
 /*
- *    Copyright 2012, 2013 Thomas Schöps, Kai Pastor
+ *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2012, 2013, 2014 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -21,7 +22,11 @@
 #ifndef _OPENORIENTEERING_COLOR_DOCK_WIDGET_H_
 #define _OPENORIENTEERING_COLOR_DOCK_WIDGET_H_
 
-#include <QtWidgets>
+#include <QWidget>
+
+class QAction;
+class QTableWidget;
+class QToolButton;
 
 class ColorDropDown;
 class MainWindow;

@@ -1,6 +1,6 @@
 /*
- *    Copyright 2012 Thomas Schöps
- *    Copyright 2013, 2014 Thomas Schöps, Kai Pastor
+ *    Copyright 2012, 2013, 2014 Thomas Schöps
+ *    Copyright 2013, 2014 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -24,42 +24,43 @@
 
 #include <vector>
 
-#include <QAction>
-#include <QDockWidget>
+#include <QClipboard>
 #include <QScopedPointer>
 #include <QTimer>
-#include <QClipboard>
 
 #include "gui/main_window_controller.h"
 #include "map.h"
 
-class GPSTrackRecorder;
 QT_BEGIN_NAMESPACE
 class QComboBox;
+class QDockWidget;
 class QFrame;
 class QLabel;
-class QToolBar;
+class QMenu;
 class QSignalMapper;
+class QSizeGrip;
+class QToolBar;
 class QToolButton;
 QT_END_NAMESPACE
 
-class Template;
-class MapView;
+class ActionGridBar;
+class CompassDisplay;
+class EditorDockWidget;
+class GeoreferencingDialog;
 class Map;
+class MapView;
 class MapWidget;
 class MapEditorActivity;
 class MapEditorTool;
-class EditorDockWidget;
-class SymbolWidget;
-class PrintWidget;
-class TemplatePositionDockWidget;
-class GeoreferencingDialog;
-class ReopenTemplateDialog;
 class GPSDisplay;
-class CompassDisplay;
 class GPSTemporaryMarkers;
-class ActionGridBar;
-typedef std::vector<Renderable*> RenderableVector;
+class GPSTrackRecorder;
+class PrintWidget;
+class ReopenTemplateDialog;
+class SymbolWidget;
+class Template;
+class TemplatePositionDockWidget;
+
 
 /**
  * MainWindowController for editing a map.
@@ -733,41 +734,6 @@ private:
 
 	QSignalMapper* mappart_merge_mapper;
 	QSignalMapper* mappart_move_mapper;
-	
-	bool being_destructed;
-};
-
-/**
- * Custom QDockWidget which unchecks the associated menu action when closed
- * and delivers a notification to its child
- */
-class EditorDockWidget : public QDockWidget
-{
-Q_OBJECT
-public:
-	EditorDockWidget(const QString title, QAction* action,
-					 MapEditorController* editor, QWidget* parent = NULL);
-	virtual bool event(QEvent* event);
-	
-private:
-	QAction* action;
-	MapEditorController* editor;
-};
-
-/**
- * Helper class which disallows deselecting the checkable action by the user
- */
-class MapEditorToolAction : public QAction
-{
-Q_OBJECT
-public:
-	MapEditorToolAction(const QIcon& icon, const QString& text, QObject* parent);
-	
-signals:
-	void activated();
-	
-private slots:
-	void triggeredImpl(bool checked);
 };
 
 

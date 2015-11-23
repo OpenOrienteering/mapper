@@ -177,12 +177,10 @@ public:
 	
 	virtual void init();
 	virtual bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* map_widget);
-	virtual QCursor* getCursor() { return cursor; }; // FIXME: const candidate
+	virtual const QCursor& getCursor() const;
 	
 private:
 	PointSymbolEditorWidget* const symbol_editor;
-	
-	static QCursor* cursor;
 };
 
 

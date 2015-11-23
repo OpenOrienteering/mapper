@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2012-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -34,83 +35,67 @@
 
 // ### DotRenderable ###
 
-DotRenderable::DotRenderable(const PointSymbol* symbol, MapCoordF coord) : Renderable()
+DotRenderable::DotRenderable(const PointSymbol* symbol, MapCoordF coord)
+ : Renderable(symbol->getInnerColor())
 {
-	color_priority = symbol->getInnerColor()->getPriority();
-	double x = coord.getX();
-	double y = coord.getY();
+	double x = coord.x();
+	double y = coord.y();
 	double radius = (0.001 * symbol->getInnerRadius());
 	extent = QRectF(x - radius, y - radius, 2 * radius, 2 * radius);
 }
-DotRenderable::DotRenderable(const DotRenderable& other) : Renderable(other)
+
+PainterConfig DotRenderable::getPainterConfig(const QPainterPath* clip_path) const
 {
+	return { color_priority, PainterConfig::BrushOnly, 0, clip_path };
 }
-void DotRenderable::getRenderStates(RenderStates& out) const
+
+void DotRenderable::render(QPainter &painter, const RenderConfig &config) const
 {
-	out.color_priority = color_priority;
-	Q_ASSERT(out.color_priority < 3000);
-	out.mode = RenderStates::BrushOnly;
-	out.pen_width = 0;
-}
-void DotRenderable::render(QPainter& painter, QRectF& bounding_box, bool force_min_size, float scaling, bool on_screen) const
-{
-	Q_UNUSED(bounding_box);
-	Q_UNUSED(on_screen);
-	
-	if (force_min_size && extent.width() * scaling < 1.5f)
-		painter.drawEllipse(extent.center(), 0.5f * (1/scaling), 0.5f * (1/scaling));
+	if (config.options.testFlag(RenderConfig::ForceMinSize) && extent.width() * config.scaling < 1.5f)
+		painter.drawEllipse(extent.center(), 0.5f / config.scaling, 0.5f * config.scaling);
 	else
 		painter.drawEllipse(extent);
 }
 
+
+
 // ### CircleRenderable ###
 
-CircleRenderable::CircleRenderable(const PointSymbol* symbol, MapCoordF coord) : Renderable()
+CircleRenderable::CircleRenderable(const PointSymbol* symbol, MapCoordF coord)
+ : Renderable(symbol->getOuterColor())
+ , line_width(0.001f * symbol->getOuterWidth())
 {
-	color_priority = symbol->getOuterColor()->getPriority();
-	double x = coord.getX();
-	double y = coord.getY();
-	line_width = 0.001f * symbol->getOuterWidth();
+	double x = coord.x();
+	double y = coord.y();
 	double radius = (0.001 * symbol->getInnerRadius()) + 0.5f * line_width;
 	rect = QRectF(x - radius, y - radius, 2 * radius, 2 * radius);
 	extent = QRectF(rect.x() - 0.5*line_width, rect.y() - 0.5*line_width, rect.width() + line_width, rect.height() + line_width);
 }
-CircleRenderable::CircleRenderable(const CircleRenderable& other): Renderable(other)
+
+PainterConfig CircleRenderable::getPainterConfig(const QPainterPath* clip_path) const
 {
-	rect = other.rect;
-	line_width = other.line_width;
+	return { color_priority, PainterConfig::PenOnly, line_width, clip_path };
 }
-void CircleRenderable::getRenderStates(RenderStates& out) const
+
+void CircleRenderable::render(QPainter &painter, const RenderConfig &config) const
 {
-	out.color_priority = color_priority;
-	Q_ASSERT(out.color_priority < 3000);
-	out.mode = RenderStates::PenOnly;
-	out.pen_width = line_width;
-}
-void CircleRenderable::render(QPainter& painter, QRectF& bounding_box, bool force_min_size, float scaling, bool on_screen) const
-{
-	Q_UNUSED(bounding_box);
-	Q_UNUSED(on_screen);
-	
-	if (force_min_size && rect.width() * scaling < 1.5f)
-		painter.drawEllipse(rect.center(), 0.5f * (1/scaling), 0.5f * (1/scaling));
+	if (config.options.testFlag(RenderConfig::ForceMinSize) && rect.width() * config.scaling < 1.5f)
+		painter.drawEllipse(rect.center(), 0.5f / config.scaling, 0.5f / config.scaling);
 	else
 		painter.drawEllipse(rect);
 }
 
+
+
 // ### LineRenderable ###
 
-LineRenderable::LineRenderable(const LineSymbol* symbol, const MapCoordVectorF& transformed_coords, const MapCoordVector& coords, const PathCoordVector& path_coords, bool closed) : Renderable()
+LineRenderable::LineRenderable(const LineSymbol* symbol, const VirtualPath& virtual_path, bool closed)
+ : Renderable(symbol->getColor())
+ , line_width(0.001f * symbol->getLineWidth())
 {
-	Q_ASSERT(transformed_coords.size() == coords.size());
-	color_priority = symbol->getColor()->getPriority();
-	line_width = 0.001f * symbol->getLineWidth();
-	if (color_priority < 0)
-	{
-		// Helper line
-		line_width = 0;
-	}
-	float half_line_width = 0.5f * line_width;
+	Q_ASSERT(virtual_path.size() >= 2);
+	
+	float half_line_width = (color_priority < 0) ? 0.0f : 0.5f * line_width;
 	
 	switch (symbol->getCapStyle())
 	{
@@ -126,50 +111,75 @@ LineRenderable::LineRenderable(const LineSymbol* symbol, const MapCoordVectorF& 
 		case LineSymbol::RoundJoin:		join_style = Qt::RoundJoin;	break;
 	}
 	
-	int size = (int)coords.size();
-	Q_ASSERT(size >= 2);
+	auto& flags  = virtual_path.coords.flags;
+	auto& coords = virtual_path.coords;
 	
 	bool has_curve = false;
 	bool hole = false;
+	bool gap = false;
 	QPainterPath first_subpath;
 	
-	path.moveTo(transformed_coords[0].toQPointF());
-	extent = QRectF(transformed_coords[0].getX(), transformed_coords[0].getY(), 0.0001f, 0.0001f);
-	extentIncludeCap(0, half_line_width, false, symbol, transformed_coords, coords, closed);
+	auto i = virtual_path.first_index;
+	path.moveTo(coords[i]);
+	extent = QRectF(coords[i].x(), coords[i].y(), 0.0001f, 0.0001f);
+	extentIncludeCap(i, half_line_width, false, symbol, virtual_path);
 	
-	for (int i = 1; i < size; ++i)
+	for (++i; i <= virtual_path.last_index; ++i)
 	{
+		if (gap)
+		{
+			if (flags[i].isHolePoint())
+			{
+				gap = false;
+				hole = true;
+			}
+			else if (flags[i].isGapPoint())
+			{
+				gap = false;
+				if (first_subpath.isEmpty() && closed)
+				{
+					first_subpath = path;
+					path = QPainterPath();
+				}
+				path.moveTo(coords[i]);
+				extentIncludeCap(i, half_line_width, false, symbol, virtual_path);
+			}
+			continue;
+		}
+		
 		if (hole)
 		{
-			Q_ASSERT(!coords[i].isHolePoint() && "Two hole points in a row!");
+			Q_ASSERT(!flags[i].isHolePoint() && "Two hole points in a row!");
 			if (first_subpath.isEmpty() && closed)
 			{
 				first_subpath = path;
 				path = QPainterPath();
 			}
-			path.moveTo(transformed_coords[i].toQPointF());
-			extentIncludeCap(i, half_line_width, false, symbol, transformed_coords, coords, closed);
+			path.moveTo(coords[i]);
+			extentIncludeCap(i, half_line_width, false, symbol, virtual_path);
 			hole = false;
 			continue;
 		}
 		
-		if (coords[i-1].isCurveStart())
+		if (flags[i-1].isCurveStart())
 		{
-			Q_ASSERT(i < size - 2);
+			Q_ASSERT(i < virtual_path.last_index-1);
 			has_curve = true;
-			path.cubicTo(transformed_coords[i].toQPointF(), transformed_coords[i+1].toQPointF(), transformed_coords[i+2].toQPointF());
+			path.cubicTo(coords[i], coords[i+1], coords[i+2]);
 			i += 2;
 		}
 		else
-			path.lineTo(transformed_coords[i].toQPointF());
+			path.lineTo(coords[i]);
 		
-		if (coords[i].isHolePoint())
+		if (flags[i].isHolePoint())
 			hole = true;
+		else if (flags[i].isGapPoint())
+			gap = true;
 		
-		if ((i < size - 1 && !hole) || (i == size - 1 && closed))
-			extentIncludeJoin(i, half_line_width, symbol, transformed_coords, coords, closed);
+		if ((i < virtual_path.last_index && !hole && !gap) || (i == virtual_path.last_index && closed))
+			extentIncludeJoin(i, half_line_width, symbol, virtual_path);
 		else
-			extentIncludeCap(i, half_line_width, true, symbol, transformed_coords, coords, closed);
+			extentIncludeCap(i, half_line_width, true, symbol, virtual_path);
 	}
 	
 	if (closed)
@@ -181,97 +191,107 @@ LineRenderable::LineRenderable(const LineSymbol* symbol, const MapCoordVectorF& 
 	}
 	
 	// If we do not have the path coords, but there was a curve, calculate path coords.
-	const PathCoordVector* used_path_coords = &path_coords;
-	PathCoordVector local_path_coords;
-	if (has_curve && path_coords.empty())
+	if (has_curve)
 	{
-		// TODO: This happens for point symbols with curved lines in them.
-		// Maybe precalculate the path coords in such cases (but ONLY for curved lines, for performance and memory)?
-		// -> Need to check when to update the path coords, and where to adjust for the translation & rotation ...
-		PathCoord::calculatePathCoords(coords, transformed_coords, &local_path_coords);
-		used_path_coords = &local_path_coords;
+		//  This happens for point symbols with curved lines in them.
+		const auto& path_coords = virtual_path.path_coords;
+		Q_ASSERT(path_coords.front().param == 0.0);
+		Q_ASSERT(path_coords.back().param == 0.0);
+		for (auto i = path_coords.size()-1; i > 0; --i)
+		{
+			if (path_coords[i].param != 0.0)
+			{
+				const auto& pos = path_coords[i].pos;
+				auto to_coord   = pos - path_coords[i-1].pos;
+				auto to_next    = path_coords[i+1].pos - pos;
+				to_coord.normalize();
+				to_next.normalize();
+				auto right = (to_coord + to_next).perpRight();
+				right.setLength(half_line_width);
+				
+				rectInclude(extent, pos + right);
+				rectInclude(extent, pos - right);
+			}
+		}
 	}
-	
-	// Extend extent with bezier curve points from the path coords
-	int path_coords_size = used_path_coords->size();
-	for (int i = 1; i < path_coords_size - 1; ++i)
-	{
-		if (used_path_coords->at(i).param == 1)
-			continue;
-		
-		MapCoordF to_coord = MapCoordF(used_path_coords->at(i).pos.getX() - used_path_coords->at(i-1).pos.getX(), used_path_coords->at(i).pos.getY() - used_path_coords->at(i-1).pos.getY());
-		MapCoordF to_next = MapCoordF(used_path_coords->at(i+1).pos.getX() - used_path_coords->at(i).pos.getX(), used_path_coords->at(i+1).pos.getY() - used_path_coords->at(i).pos.getY());
-		to_coord.normalize();
-		to_next.normalize();
-		MapCoordF right = MapCoordF(-to_coord.getY() - to_next.getY(), to_next.getX() + to_coord.getX());
-		right.normalize();
-		
-		rectInclude(extent, QPointF(used_path_coords->at(i).pos.getX() + half_line_width * right.getX(), used_path_coords->at(i).pos.getY() + half_line_width * right.getY()));
-		rectInclude(extent, QPointF(used_path_coords->at(i).pos.getX() - half_line_width * right.getX(), used_path_coords->at(i).pos.getY() - half_line_width * right.getY()));
-	}
-	
-	// Reset line width to correct value (for helper lines)
-	line_width = 0.001f * symbol->getLineWidth();
-	
 	Q_ASSERT(extent.right() < 999999);	// assert if bogus values are returned
 }
-void LineRenderable::extentIncludeCap(int i, float half_line_width, bool end_cap, const LineSymbol* symbol, const MapCoordVectorF& transformed_coords, const MapCoordVector& coords, bool closed)
+
+LineRenderable::LineRenderable(const LineSymbol* symbol, QPointF first, QPointF second)
+ : Renderable(symbol->getColor())
+ , line_width(0.001f * symbol->getLineWidth())
+ , cap_style(Qt::FlatCap)
+ , join_style(Qt::MiterJoin)
 {
+	qreal half_line_width = (color_priority < 0) ? 0.0f : 0.5f * line_width;
+	
+	auto right = MapCoordF(second - first).perpRight();
+	right.normalize();
+	right *= half_line_width;
+	
+	extent.setTopLeft(first + right);
+	rectInclude(extent, first - right);
+	rectInclude(extent, second - right);
+	rectInclude(extent, second + right);
+	
+	path.moveTo(first);
+	path.lineTo(second);
+}
+
+void LineRenderable::extentIncludeCap(quint32 i, float half_line_width, bool end_cap, const LineSymbol* symbol, const VirtualPath& path)
+{
+	auto coords = path.coords;
 	if (symbol->getCapStyle() == LineSymbol::RoundCap)
 	{
-		rectInclude(extent, QPointF(transformed_coords[i].getX() - half_line_width, transformed_coords[i].getY() - half_line_width));
-		rectInclude(extent, QPointF(transformed_coords[i].getX() + half_line_width, transformed_coords[i].getY() + half_line_width));
+		rectInclude(extent, QPointF(coords[i].x() - half_line_width, coords[i].y() - half_line_width));
+		rectInclude(extent, QPointF(coords[i].x() + half_line_width, coords[i].y() + half_line_width));
 		return;
 	}
 	
-	MapCoordF right = PathCoord::calculateRightVector(coords, transformed_coords, closed, i, NULL);
-	rectInclude(extent, QPointF(transformed_coords[i].getX() + half_line_width * right.getX(), transformed_coords[i].getY() + half_line_width * right.getY()));
-	rectInclude(extent, QPointF(transformed_coords[i].getX() - half_line_width * right.getX(), transformed_coords[i].getY() - half_line_width * right.getY()));
+	auto right = path.calculateTangent(i).perpRight();
+	right.normalize();
+	rectInclude(extent, coords[i] + half_line_width * right);
+	rectInclude(extent, coords[i] - half_line_width * right);
 	
 	if (symbol->getCapStyle() == LineSymbol::SquareCap)
 	{
-		MapCoordF back = right;
-		back.perpRight();
+		auto back = right.perpRight();
 		
 		float sign = end_cap ? -1 : 1;
-		rectInclude(extent, QPointF(transformed_coords[i].getX() + half_line_width * (-right.getX() + sign*back.getX()), transformed_coords[i].getY() + half_line_width * (-right.getY() + sign*back.getY())));
-		rectInclude(extent, QPointF(transformed_coords[i].getX() + half_line_width * (right.getX() + sign*back.getX()), transformed_coords[i].getY() + half_line_width * (right.getY() + sign*back.getY())));
+		rectInclude(extent, coords[i] + half_line_width * (sign*back - right));
+		rectInclude(extent, coords[i] + half_line_width * (sign*back + right));
 	}
 }
-void LineRenderable::extentIncludeJoin(int i, float half_line_width, const LineSymbol* symbol, const MapCoordVectorF& transformed_coords, const MapCoordVector& coords, bool closed)
+
+void LineRenderable::extentIncludeJoin(quint32 i, float half_line_width, const LineSymbol* symbol, const VirtualPath& path)
 {
+	auto coords = path.coords;
 	if (symbol->getJoinStyle() == LineSymbol::RoundJoin)
 	{
-		rectInclude(extent, QPointF(transformed_coords[i].getX() - half_line_width, transformed_coords[i].getY() - half_line_width));
-		rectInclude(extent, QPointF(transformed_coords[i].getX() + half_line_width, transformed_coords[i].getY() + half_line_width));
+		rectInclude(extent, QPointF(coords[i].x() - half_line_width, coords[i].y() - half_line_width));
+		rectInclude(extent, QPointF(coords[i].x() + half_line_width, coords[i].y() + half_line_width));
 		return;
 	}
 	
-	float scaling = 1;
-	MapCoordF right = PathCoord::calculateRightVector(coords, transformed_coords, closed, i, (symbol->getJoinStyle() == LineSymbol::MiterJoin) ? &scaling : NULL);
-	float factor = scaling * half_line_width;
-	rectInclude(extent, QPointF(transformed_coords[i].getX() + factor * right.getX(), transformed_coords[i].getY() + factor * right.getY()));
-	rectInclude(extent, QPointF(transformed_coords[i].getX() - factor * right.getX(), transformed_coords[i].getY() - factor * right.getY()));
+	auto offset_length = half_line_width;
+	auto params = path.calculateTangentScaling(i);
+	auto& offset = params.first;
+	if (symbol->getJoinStyle() == LineSymbol::MiterJoin)
+	{
+		offset_length *= qMin(params.second, 2.0 * LineSymbol::miterLimit());
+	}
+	offset.setLength(offset_length);
+	rectInclude(extent, coords[i] + offset);
+	rectInclude(extent, coords[i] - offset);
 }
-LineRenderable::LineRenderable(const LineRenderable& other) : Renderable(other)
+
+PainterConfig LineRenderable::getPainterConfig(const QPainterPath* clip_path) const
 {
-	path = other.path;
-	line_width = other.line_width;
-	cap_style = other.cap_style;
-	join_style = other.join_style;
+	return { color_priority, PainterConfig::PenOnly, line_width, clip_path };
 }
-void LineRenderable::getRenderStates(RenderStates& out) const
+
+void LineRenderable::render(QPainter &painter, const RenderConfig &config) const
 {
-	out.color_priority = color_priority;
-	out.mode = RenderStates::PenOnly;
-	out.pen_width = line_width;
-}
-void LineRenderable::render(QPainter& painter, QRectF& bounding_box, bool force_min_size, float scaling, bool on_screen) const
-{
-	Q_UNUSED(force_min_size);
-	Q_UNUSED(scaling);
-	Q_UNUSED(on_screen);
-	
 	QPen pen(painter.pen());
 	pen.setCapStyle(cap_style);
 	pen.setJoinStyle(join_style);
@@ -279,34 +299,35 @@ void LineRenderable::render(QPainter& painter, QRectF& bounding_box, bool force_
 		pen.setMiterLimit(LineSymbol::miterLimit());
 	painter.setPen(pen);
 	
-	if (bounding_box.contains(path.controlPointRect()))
+	// One-time adjustment for line width
+	QRectF bounding_box = config.bounding_box.adjusted(-line_width, -line_width, line_width, line_width);
+	const int count = path.elementCount();
+	if (count <= 2 || bounding_box.contains(path.controlPointRect()))
+	{
+		// path fully contained
 		painter.drawPath(path);
-	else if (path.elementCount() > 0)
+	}
+	else
 	{
 		// Manually clip the path with bounding_box, this seems to be faster.
 		// The code splits up the painter path into new paths which intersect
 		// the view rect and renders these only.
 		// NOTE: this does not work correctly with miter joins, but this
 		//       should be a minor issue.
-		QPainterPath::Element prev_element = path.elementAt(0);
-		bool path_closed =
-			(path.elementAt(0).x == path.elementAt(path.elementCount()-1).x) &&
-			(path.elementAt(0).y == path.elementAt(path.elementCount()-1).y);
-		QRectF element_bbox;
+		QPainterPath::Element element = path.elementAt(0);
+		QPainterPath::Element last_element = path.elementAt(count-1);
+		bool path_closed = (element.x == last_element.x) && (element.y == last_element.y);
+		
 		QPainterPath part_path;
 		QPainterPath first_path;
 		bool path_started = false;
-		bool current_part_is_first = bounding_box.intersects(QRectF(
-			path.elementAt(0).x - 0.5f * line_width,
-			path.elementAt(0).y - 0.5f * line_width,
-			line_width,
-			line_width
-		));
-		bool first_element_in_view = false;
 		bool part_finished = false;
-		for (int i = 1; i < path.elementCount(); ++i)
+		bool current_part_is_first = bounding_box.contains(element);
+		
+		QPainterPath::Element prev_element = element;
+		for (int i = 1; i < count; ++i)
 		{
-			QPainterPath::Element element = path.elementAt(i);
+			element = path.elementAt(i);
 			if (element.isLineTo())
 			{
 				qreal min_x, min_y, max_x, max_y;
@@ -330,10 +351,10 @@ void LineRenderable::render(QPainter& painter, QRectF& bounding_box, bool force_
 					min_y = element.y;
 					max_y = prev_element.y;
 				}
-				element_bbox = QRectF(min_x - 0.5f * line_width, min_y - 0.5f * line_width,
-									  qMax(max_x - min_x + line_width, (qreal)1e-6f),
-									  qMax(max_y - min_y + line_width, (qreal)1e-6f));
-				if (element_bbox.intersects(bounding_box))
+				if ( min_x <= bounding_box.right()  &&
+				     max_x >= bounding_box.left()   &&
+				     min_y <= bounding_box.bottom() &&
+				     max_y >= bounding_box.top() )
 				{
 					if (!path_started)
 					{
@@ -344,13 +365,17 @@ void LineRenderable::render(QPainter& painter, QRectF& bounding_box, bool force_
 					part_path.lineTo(element.x, element.y);
 				}
 				else if (path_started)
+				{
 					part_finished = true;
+				}
 				else
+				{
 					current_part_is_first = false;
+				}
 			}
 			else if (element.isCurveTo())
 			{
-				Q_ASSERT(i < path.elementCount() - 2);
+				Q_ASSERT(i < count - 2);
 				QPainterPath::Element next_element = path.elementAt(i + 1);
 				QPainterPath::Element end_element = path.elementAt(i + 2);
 				
@@ -359,9 +384,10 @@ void LineRenderable::render(QPainter& painter, QRectF& bounding_box, bool force_
 				qreal max_x = qMax(prev_element.x, qMax(element.x, qMax(next_element.x, end_element.x)));
 				qreal max_y = qMax(prev_element.y, qMax(element.y, qMax(next_element.y, end_element.y)));
 				
-				element_bbox = QRectF(min_x - 0.5f * line_width, min_y - 0.5f * line_width,
-									  max_x - min_x + line_width, max_y - min_y + line_width);
-				if (element_bbox.intersects(bounding_box))
+				if ( min_x <= bounding_box.right()  &&
+				     max_x >= bounding_box.left()   &&
+				     min_y <= bounding_box.bottom() &&
+				     max_y >= bounding_box.top() )
 				{
 					if (!path_started)
 					{
@@ -372,9 +398,13 @@ void LineRenderable::render(QPainter& painter, QRectF& bounding_box, bool force_
 					part_path.cubicTo(element.x, element.y, next_element.x, next_element.y, end_element.x, end_element.y);
 				}
 				else if (path_started)
+				{
 					part_finished = true;
+				}
 				else
+				{
 					current_part_is_first = false;
+				}
 			}
 			else if (element.isMoveTo() && path_started)
 			{
@@ -386,21 +416,25 @@ void LineRenderable::render(QPainter& painter, QRectF& bounding_box, bool force_
 				if (current_part_is_first && path_closed)
 				{
 					current_part_is_first = false;
-					first_element_in_view = true;
 					first_path = part_path;
 				}
 				else
+				{
 					painter.drawPath(part_path);
+				}
+				
 				path_started = false;
 				part_finished = false;
 			}
 			
 			prev_element = element;
 		}
+		
 		if (path_started)
 		{
-			if (path_closed && first_element_in_view)
+			if (path_closed && !first_path.isEmpty())
 				part_path.connectPath(first_path);
+			
 			painter.drawPath(part_path);
 		}
 	}
@@ -418,76 +452,66 @@ void LineRenderable::render(QPainter& painter, QRectF& bounding_box, bool force_
 
 // ### AreaRenderable ###
 
-AreaRenderable::AreaRenderable(const AreaSymbol* symbol, const MapCoordVectorF& transformed_coords, const MapCoordVector& coords, const PathCoordVector* path_coords) : Renderable()
+AreaRenderable::AreaRenderable(const AreaSymbol* symbol, const PathPartVector& path_parts)
+ : Renderable(symbol->getColor())
 {
-	Q_ASSERT(transformed_coords.size() >= 3 && transformed_coords.size() == coords.size());
-	color_priority = symbol->getColor() ? symbol->getColor()->getPriority() : MapColor::Reserved;
-	
-	// Special case: first coord
-	path.moveTo(transformed_coords[0].toQPointF());
-	
-	// Coords 1 to size - 1
-	bool have_hole = false;
-	int size = (int)coords.size();
-	for (int i = 1; i < size; ++i)
+	if (!path_parts.empty())
 	{
-		if (have_hole)
+		auto part = begin(path_parts);
+		if (part->size() > 2)
 		{
-			path.closeSubpath();
-			path.moveTo(transformed_coords[i].toQPointF());
+			extent = part->path_coords.calculateExtent();
+			addSubpath(*part);
 			
-			have_hole = false;
-			continue;
+			auto last = end(path_parts);
+			for (++part; part != last; ++part)
+			{
+				rectInclude(extent, part->path_coords.calculateExtent());
+				addSubpath(*part);
+			}
 		}
-		
-		if (coords[i-1].isCurveStart())
+	}
+	Q_ASSERT(extent.right() < 999999);	// assert if bogus values are returned
+}
+
+AreaRenderable::AreaRenderable(const AreaSymbol* symbol, const VirtualPath& virtual_path)
+ : Renderable(symbol->getColor())
+{
+	extent = virtual_path.path_coords.calculateExtent();
+	addSubpath(virtual_path);
+}
+
+void AreaRenderable::addSubpath(const VirtualPath& virtual_path)
+{
+	auto& flags  = virtual_path.coords.flags;
+	auto& coords = virtual_path.coords;
+	Q_ASSERT(!flags.data().empty());
+	
+	auto i = virtual_path.first_index;
+	path.moveTo(coords[i]);
+	for (++i; i <= virtual_path.last_index; ++i)
+	{
+		if (flags[i-1].isCurveStart())
 		{
-			Q_ASSERT(i < size - 2);
-			path.cubicTo(transformed_coords[i].toQPointF(), transformed_coords[i+1].toQPointF(), transformed_coords[i+2].toQPointF());
+			Q_ASSERT(i+2 < coords.size());
+			path.cubicTo(coords[i], coords[i+1], coords[i+2]);
 			i += 2;
 		}
 		else
-			path.lineTo(transformed_coords[i].toQPointF());
-		
-		if (coords[i].isHolePoint())
-			have_hole = true;
+		{
+			path.lineTo(coords[i]);
+		}
 	}
-	
-	// Close path
 	path.closeSubpath();
-	
-	//if (disable_holes)
-	//	path.setFillRule(Qt::WindingFill);
-	
-	// Get extent
-	if (path_coords && path_coords->size() > 0)
-	{
-		int path_coords_size = path_coords->size();
-		extent = QRectF(path_coords->at(0).pos.getX(), path_coords->at(0).pos.getY(), 0.0001f, 0.0001f);
-		for (int i = 1; i < path_coords_size; ++i)
-			rectInclude(extent, path_coords->at(i).pos.toQPointF());
-	}
-	else
-		extent = path.controlPointRect();
-	Q_ASSERT(extent.right() < 999999);	// assert if bogus values are returned
 }
-AreaRenderable::AreaRenderable(const AreaRenderable& other) : Renderable(other)
+
+PainterConfig AreaRenderable::getPainterConfig(const QPainterPath* clip_path) const
 {
-	path = other.path;
+	return { color_priority, PainterConfig::BrushOnly, 0, clip_path };
 }
-void AreaRenderable::getRenderStates(RenderStates& out) const
+
+void AreaRenderable::render(QPainter &painter, const RenderConfig &) const
 {
-	out.color_priority = color_priority;
-	out.mode = RenderStates::BrushOnly;
-	out.pen_width = 0;
-}
-void AreaRenderable::render(QPainter& painter, QRectF& bounding_box, bool force_min_size, float scaling, bool on_screen) const
-{
-	Q_UNUSED(bounding_box);
-	Q_UNUSED(force_min_size);
-	Q_UNUSED(scaling);
-	Q_UNUSED(on_screen);
-	
 	painter.drawPath(path);
 	
 	// DEBUG: show all control points
@@ -508,10 +532,10 @@ void AreaRenderable::render(QPainter& painter, QRectF& bounding_box, bool force_
 // ### TextRenderable ###
 
 TextRenderable::TextRenderable(const TextSymbol* symbol, const TextObject* text_object, const MapColor* color, double anchor_x, double anchor_y, bool framing_line)
+ : Renderable(color)
 {
 	const QFont& font(symbol->getQFont());
 	const QFontMetricsF& metrics(symbol->getFontMetrics());
-	color_priority = color->getPriority();
 	this->anchor_x = anchor_x;
 	this->anchor_y = anchor_y;
 	this->rotation = text_object->getRotation();
@@ -572,8 +596,8 @@ TextRenderable::TextRenderable(const TextSymbol* symbol, const TextObject* text_
 		
 		for (int i = 0; i < 4; ++i)
 		{
-			float x = extent_corners[i].x() * rcos - extent_corners[i].y() * rsin;
-			float y = extent_corners[i].y() * rcos + extent_corners[i].x() * rsin;
+			auto x = extent_corners[i].x() * rcos - extent_corners[i].y() * rsin;
+			auto y = extent_corners[i].y() * rcos + extent_corners[i].x() * rsin;
 			
 			if (i == 0)
 				extent = QRectF(x, y, 0, 0);
@@ -586,42 +610,22 @@ TextRenderable::TextRenderable(const TextSymbol* symbol, const TextObject* text_
 	Q_ASSERT(extent.right() < 999999);	// assert if bogus values are returned
 }
 
-TextRenderable::TextRenderable(const TextRenderable& other) : Renderable(other)
+PainterConfig TextRenderable::getPainterConfig(const QPainterPath* clip_path) const
 {
-	path = other.path;
-	anchor_x = other.anchor_x;
-	anchor_y = other.anchor_y;
-	rotation = other.rotation;
-	scale_factor = other.scale_factor;
-	framing_line = other.framing_line;
-	framing_line_width = other.framing_line_width;
+	return framing_line ? PainterConfig{ color_priority, PainterConfig::PenOnly, framing_line_width, clip_path }
+	                    : PainterConfig{ color_priority, PainterConfig::BrushOnly, 0, clip_path };
 }
 
-void TextRenderable::getRenderStates(RenderStates& out) const
+void TextRenderable::render(QPainter &painter, const RenderConfig &config) const
 {
-	out.color_priority = color_priority;
-	if (framing_line)
-	{
-		out.mode = RenderStates::PenOnly;
-		out.pen_width = framing_line_width;
-	}
-	else
-	{
-		out.mode = RenderStates::BrushOnly;
-		out.pen_width = 0;
-	}
-}
-
-void TextRenderable::render(QPainter& painter, QRectF& bounding_box, bool force_min_size, float scaling, bool on_screen) const
-{
-	Q_UNUSED(bounding_box);
-	Q_UNUSED(force_min_size);
-	Q_UNUSED(scaling);
+	painter.save();
 	
-	bool used_antialiasing_before = painter.renderHints() & QPainter::Antialiasing;
-	bool disable_antialiasing = on_screen && !(Settings::getInstance().getSettingCached(Settings::MapDisplay_TextAntialiasing).toBool());
+	bool disable_antialiasing = config.options.testFlag(RenderConfig::Screen) && !(Settings::getInstance().getSettingCached(Settings::MapDisplay_TextAntialiasing).toBool());
 	if (disable_antialiasing)
+	{
 		painter.setRenderHint(QPainter::Antialiasing, false);
+		painter.setRenderHint(QPainter::TextAntialiasing, false);
+	}
 	
 	if (framing_line)
 	{
@@ -631,15 +635,11 @@ void TextRenderable::render(QPainter& painter, QRectF& bounding_box, bool force_
 		painter.setPen(pen);
 	}
 	
-	painter.save();
 	painter.translate(anchor_x, anchor_y);
 	if (rotation != 0)
 		painter.rotate(-rotation * 180 / M_PI);
 	painter.scale(scale_factor, scale_factor);
 	painter.drawPath(path);
-	painter.restore();
 	
-	if (disable_antialiasing)
-		painter.setRenderHint(QPainter::Antialiasing, used_antialiasing_before);
+	painter.restore();
 }
-

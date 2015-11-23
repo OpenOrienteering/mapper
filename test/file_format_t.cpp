@@ -1,5 +1,6 @@
 /*
- *    Copyright 2012, 2013 Thomas Schöps, Kai Pastor
+ *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2012-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -19,15 +20,17 @@
 
 #include "file_format_t.h"
 
-#include "../src/core/map_color.h"
-#include "../src/core/map_printer.h"
-#include "../src/file_format_registry.h"
-#include "../src/file_import_export.h"
 #include "../src/core/georeferencing.h"
-#include "../src/global.h"
+#include "../src/core/map_color.h"
 #include "../src/core/map_grid.h"
+#include "../src/core/map_printer.h"
+#include "../src/file_import_export.h"
+#include "../src/file_format_ocad8.h"
+#include "../src/file_format_registry.h"
+#include "../src/global.h"
 #include "../src/mapper_resource.h"
 #include "../src/object.h"
+#include "../src/settings.h"
 #include "../src/template.h"
 #include "../src/undo_manager.h"
 
@@ -40,23 +43,24 @@ namespace QTest
 	template<>
 	char* toString(const MapPrinterPageFormat& page_format)
 	{
-		QByteArray ba = "MapPrinterPageFormat(";
+		QByteArray ba = "";
 		ba += MapPrinter::paperSizeNames()[page_format.paper_size];
-		ba += (page_format.orientation == MapPrinterPageFormat::Landscape) ? ", Landscape, " : ", Portrait, ";
-		ba += QByteArray::number(page_format.paper_dimensions.width()) + "x";
-		ba += QByteArray::number(page_format.paper_dimensions.height()) + ", ";
-		ba += QByteArray::number(page_format.page_rect.left()) + ",";
-		ba += QByteArray::number(page_format.page_rect.top()) + "+";
-		ba += QByteArray::number(page_format.page_rect.width()) + "x";
-		ba += QByteArray::number(page_format.page_rect.height());
-		ba += ")";
+		ba += (page_format.orientation == MapPrinterPageFormat::Landscape) ? " landscape (" : " portrait (";
+		ba += QByteArray::number(page_format.paper_dimensions.width(), 'f', 2) + "x";
+		ba += QByteArray::number(page_format.paper_dimensions.height(), 'f', 2) + "), ";
+		ba += QByteArray::number(page_format.page_rect.left(), 'f', 2) + ",";
+		ba += QByteArray::number(page_format.page_rect.top(), 'f', 2) + "+";
+		ba += QByteArray::number(page_format.page_rect.width(), 'f', 2) + "x";
+		ba += QByteArray::number(page_format.page_rect.height(), 'f', 2) + ", overlap ";
+		ba += QByteArray::number(page_format.h_overlap, 'f', 2) + ",";
+		ba += QByteArray::number(page_format.v_overlap, 'f', 2);
 		return qstrdup(ba.data());
 	}
 	
 	template<>
 	char* toString(const MapPrinterOptions& options)
 	{
-		QByteArray ba = "MapPrinterOptions(";
+		QByteArray ba = "";
 		ba += "1:" + QByteArray::number(options.scale) + ", ";
 		ba += QByteArray::number(options.resolution) + " dpi, ";
 		if (options.show_templates)
@@ -65,7 +69,6 @@ namespace QTest
 			ba += ", grid";
 		if (options.simulate_overprinting)
 			ba += ", overprinting";
-		ba += ")";
 		return qstrdup(ba.data());
 	}
 }
@@ -76,23 +79,78 @@ namespace QTest
 
 void FileFormatTest::initTestCase()
 {
-	// Needed to load current developer preferences, if possible
 	QCoreApplication::setOrganizationName("OpenOrienteering.org");
-	QCoreApplication::setApplicationName("Mapper");
+	QCoreApplication::setApplicationName("FileFormatTest");
+	Settings::getInstance().setSetting(Settings::General_NewOcd8Implementation, true);
 	
 	doStaticInitializations();
+	if (!FileFormats.findFormat("OCAD78"))
+		FileFormats.registerFormat(new OCAD8FileFormat());
 	
-	map_filenames 
-	  << "COPY_OF_test_map.omap"
-	  << "COPY_OF_spotcolor_overprint.xmap";
-	  
-	for (int i = 0; i < map_filenames.size(); ++i)
+	map_filenames
+	  << "COPY_OF_issue-513-coords-outside-printable.xmap"
+	  << "COPY_OF_issue-513-coords-outside-qint32.omap"
+	  << "COPY_OF_spotcolor_overprint.xmap"
+	  << "COPY_OF_test_map.omap";
+	
+	for (auto&& filename : map_filenames)
 	{
-		QString filename = MapperResource::locate(MapperResource::TEST_DATA, map_filenames[i]);
-		QVERIFY2(!filename.isEmpty(), QString("Unable to locate %1").arg(map_filenames[i]).toLocal8Bit());
-		map_filenames[i] = filename;
+		QString path = MapperResource::locate(MapperResource::TEST_DATA, filename);
+		QVERIFY2(!path.isEmpty(), QString("Unable to locate %1").arg(filename).toLocal8Bit());
+		filename = path;
 	}
 }
+
+
+void FileFormatTest::mapCoordtoString()
+{
+	QCOMPARE(MapCoord().toString(), QString("0 0;"));
+	
+	// Verify toString for native coordinates at the numeric limits.
+	auto native_x = MapCoord().nativeX();
+	using bounds = std::numeric_limits<decltype(native_x)>;
+	static_assert(sizeof(decltype(native_x)) == sizeof(qint32), "This test assumes qint32 native coordinates");
+	QCOMPARE(MapCoord::fromNative(bounds::max(), bounds::max(), 8).toString(), QString("2147483647 2147483647 8;"));
+	QCOMPARE(MapCoord::fromNative(bounds::min(), bounds::min(), 1).toString(), QString("-2147483648 -2147483648 1;"));
+}
+
+
+void FileFormatTest::issue_513_high_coordinates_data()
+{
+	QTest::addColumn<QString>("filename");
+	
+	for (const auto& filename : map_filenames)
+	{
+		if (filename.contains(QString("issue-513")))
+			QTest::newRow(QFileInfo(filename).fileName().toLocal8Bit()) << filename;
+	}
+}
+
+void FileFormatTest::issue_513_high_coordinates()
+{
+	QFETCH(QString, filename);
+	
+	// Load the test map
+	Map map {};
+	QVERIFY(map.loadFrom(filename, nullptr, nullptr, false, false));
+	
+	for (int i = 0; i < map.getNumParts(); ++i)
+	{
+		auto part = map.getPart(i);
+		auto extent = part->calculateExtent(true);
+		QVERIFY2(extent.top()    <  1000000.0, "extent.top() outside printable range");
+		QVERIFY2(extent.left()   > -1000000.0, "extent.left() outside printable range");
+		QVERIFY2(extent.bottom() > -1000000.0, "extent.bottom() outside printable range");
+		QVERIFY2(extent.right()  <  1000000.0, "extent.right() outside printable range");
+	}
+	
+	auto print_area = map.printerConfig().print_area;
+	QVERIFY2(print_area.top()    <  1000000.0, "extent.top() outside printable range");
+	QVERIFY2(print_area.left()   > -1000000.0, "extent.left() outside printable range");
+	QVERIFY2(print_area.bottom() > -1000000.0, "extent.bottom() outside printable range");
+	QVERIFY2(print_area.right()  <  1000000.0, "extent.right() outside printable range");
+}
+
 
 void FileFormatTest::saveAndLoad_data()
 {
@@ -100,12 +158,15 @@ void FileFormatTest::saveAndLoad_data()
 	QTest::addColumn<QString>("format_id");
 	QTest::addColumn<QString>("map_filename");
 	
-	Q_FOREACH(const FileFormat* format, FileFormats.formats())
+	for (auto format : FileFormats.formats())
 	{
 		if (format->supportsExport() && format->supportsImport())
 		{
-			Q_FOREACH(QString filename, map_filenames)
-				QTest::newRow(format->id().toLocal8Bit()) << format->id() << filename;
+			for (const auto& filename : map_filenames)
+			{
+				auto id = QString { QFileInfo(filename).fileName() % " <> " % format->id() };
+				QTest::newRow(id.toLocal8Bit()) << format->id() << filename;
+			}
 		}
 	}
 }
@@ -128,6 +189,12 @@ void FileFormatTest::saveAndLoad()
 	MapGrid grid = original->getGrid();
 	grid.setAdditionalRotation(Georeferencing::roundDeclination(grid.getAdditionalRotation()));
 	original->setGrid(grid);
+	
+	// Manipulate some data
+	auto printer_config = original->printerConfig();
+	printer_config.page_format.h_overlap += 2.0;
+	printer_config.page_format.v_overlap += 4.0;
+	original->setPrinterConfig(printer_config);
 	
 	// If the export is lossy, do one export / import cycle first to get rid of all information which cannot be exported into this format
 	if (format->isExportLossy())
@@ -206,10 +273,6 @@ bool FileFormatTest::compareMaps(const Map* a, const Map* b, QString& error)
 	
 	const Georeferencing& a_geo = a->getGeoreferencing();
 	const Georeferencing& b_geo = b->getGeoreferencing();
-	if (a_geo.getProjectedCRSId() == "Local coordinates")
-		// Fix for old native OMAP test file
-		const_cast<Georeferencing&>(a_geo).setProjectedCRS("Local", a_geo.getProjectedCRSSpec());
-	
 	if (a_geo.isLocal() != b_geo.isLocal() ||
 		a_geo.getScaleDenominator() != b_geo.getScaleDenominator() ||
 		a_geo.getDeclination() != b_geo.getDeclination() ||
@@ -219,8 +282,8 @@ bool FileFormatTest::compareMaps(const Map* a, const Map* b, QString& error)
 		a_geo.getProjectedCRSId() != b_geo.getProjectedCRSId() ||
 		a_geo.getProjectedCRSName() != b_geo.getProjectedCRSName() ||
 		a_geo.getProjectedCRSSpec() != b_geo.getProjectedCRSSpec() ||
-		a_geo.getGeographicRefPoint().latitude() != b_geo.getGeographicRefPoint().latitude() ||
-		a_geo.getGeographicRefPoint().longitude() != b_geo.getGeographicRefPoint().longitude())
+		qAbs(a_geo.getGeographicRefPoint().latitude() - b_geo.getGeographicRefPoint().latitude()) > 0.5e-8 ||
+		qAbs(a_geo.getGeographicRefPoint().longitude() - b_geo.getGeographicRefPoint().longitude())  > 0.5e-8)
 	{
 		error = "The georeferencing differs.";
 		return false;
@@ -322,7 +385,7 @@ bool FileFormatTest::compareMaps(const Map* a, const Map* b, QString& error)
 		error = "The first selected object differs.";
 		return false;
 	}
-	for (QSet< Object* >::const_iterator it = a->selectedObjectsBegin(), end = a->selectedObjectsEnd(); it != end; ++it)
+	for (Map::ObjectSelection::const_iterator it = a->selectedObjectsBegin(), end = a->selectedObjectsEnd(); it != end; ++it)
 	{
 		if (!b->isObjectSelected(b->getCurrentPart()->getObject(a->getCurrentPart()->findObjectIndex(*it))))
 		{
@@ -388,6 +451,15 @@ void FileFormatTest::comparePrinterConfig(const MapPrinterConfig& copy, const Ma
 	QCOMPARE(copy.printer_name, orig.printer_name);
 	QCOMPARE(copy.single_page_print_area, orig.single_page_print_area);
 }
+
+
+/*
+ * We select a non-standard QPA because we don't need a real GUI window.
+ * 
+ * Normally, the "offscreen" plugin would be the correct one.
+ * However, it bails out with a QFontDatabase error (cf. QTBUG-33674)
+ */
+auto qpa_selected = qputenv("QT_QPA_PLATFORM", "minimal");
 
 
 QTEST_MAIN(FileFormatTest)

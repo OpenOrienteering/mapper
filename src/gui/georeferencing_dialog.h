@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012, 2013, 2014 Kai Pastor
+ *    Copyright 2012-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -42,13 +42,12 @@ class QSpinBox;
 class QNetworkReply;
 QT_END_NAMESPACE
 
+class CRSSelector;
 class Georeferencing;
-class Map;
-class MapCoord;
-class MapEditorController;
 class GeoreferencingTool;
-class ProjectedCRSSelector;
-class CRSTemplate;
+class Map;
+class MapEditorController;
+
 
 /**
  * A GeoreferencingDialog allows the user to adjust the georeferencing properties
@@ -65,7 +64,7 @@ public:
 	 * allow_no_georeferencing determines if the okay button can
 	 * be clicked while "- none -" is selected.
 	 */
-	GeoreferencingDialog(MapEditorController* controller, const Georeferencing* initial = NULL, bool allow_no_georeferencing = true);
+	GeoreferencingDialog(MapEditorController* controller, const Georeferencing* initial = nullptr, bool allow_no_georeferencing = true);
 	
 	/**
 	 * Constructs a new georeferencing dialog for the given map. The optional 
@@ -75,27 +74,37 @@ public:
 	 * The parameter allow_no_georeferencing determines if the okay button can
 	 * be clicked while "- none -" is selected.
 	 */
-	GeoreferencingDialog(QWidget* parent, Map* map, const Georeferencing* initial = NULL, bool allow_no_georeferencing = true);
+	GeoreferencingDialog(QWidget* parent, Map* map, const Georeferencing* initial = nullptr, bool allow_no_georeferencing = true);
 	
+protected:
+	/**
+	 * Constructs a new georeferencing dialog.
+	 * 
+	 * The map parameter must not be nullptr, and it must not be a different
+	 * map than the one handled by controller.
+	 * 
+	 * @param parent                  A parent widget.
+	 * @param controller              A controller which operates on the map.
+	 * @param map                     The map.
+	 * @param initial                 An override of the map's georeferencing
+	 * @param allow_no_georeferencing Determines if the okay button can be
+	 *                                be clicked while "- none -" is selected.
+	 */
+	GeoreferencingDialog(
+	        QWidget* parent,
+	        MapEditorController* controller,
+	        Map* map,
+	        const Georeferencing* initial,
+	        bool allow_no_georeferencing
+	);
+	
+public:
 	/**
 	 * Releases resources.
 	 */
 	virtual ~GeoreferencingDialog();
 	
-	/**
-	 * Shows the dialog as a modal dialog, blocking until it is hidden.
-	 * 
-	 * If the GeoreferencingTool (for selecting the reference point) is active
-	 * it will be destroyed before showing the dialog.
-	 * 
-	 * Note that this function will also return when the dialog is temporary 
-	 * hidden for activating the GeoreferencingTool. The GeoreferencingTool
-	 * takes care of reactivating exec().
-	 */
-	int exec();
 	
-	
-public slots:
 	/**
 	 * Updates the dialog from georeferencing state changes.
 	 */
@@ -160,9 +169,9 @@ public slots:
 	 * and closes the dialog. The dialog's result is set to QDialog::Accepted,
 	 * and the active exec() function will return.
 	 */
-	void accept();
+	void accept() override;
 	
-protected slots:
+protected:
 	/**
 	 * Updates enabled / disabled states of all widgets.
 	 */
@@ -172,6 +181,7 @@ protected slots:
 	 * Updates enabled / disabled state and text of the declination query button.
 	 */
 	void updateDeclinationButton();
+	
 	
 	/** 
 	 * Notifies the dialog of a change in the CRS configuration.
@@ -214,27 +224,17 @@ protected slots:
 	 */
 	void declinationReplyFinished(QNetworkReply* reply);
 	
-protected:
 	/**
-	 * Dialog initialization common to all constructors.
+	 * Updates the grivation field from the underlying Georeferencing.
 	 */
-	void init(const Georeferencing* initial);
-	
-	// Helper methods for handling value changes
-	
-	/// Updates the zone field in the dialog from the underlying Georeferencing if
-	/// UTM is used as coordinate reference system.
-	bool updateZone(const Georeferencing& georef);
-	
-	/// Updates the grivation field from the underlying Georeferencing.
 	void updateGrivation();
 	
 private:
 	/* Internal state */
 	MapEditorController* const controller;
 	Map* const map;
-	QScopedPointer<Georeferencing> georef;
 	const Georeferencing* initial_georef;
+	QScopedPointer<Georeferencing> georef; // A working copy of the current or given initial Georeferencing
 	bool allow_no_georeferencing;
 	bool tool_active;
 	bool declination_query_in_progress;
@@ -242,11 +242,9 @@ private:
 	double original_declination;
 	
 	/* GUI elements */
-	ProjectedCRSSelector* crs_edit;
-	QLabel* crs_spec_label;
-	QLineEdit* crs_spec_edit;
+	CRSSelector* crs_selector;
 	QLabel* status_label;
-	QLabel* status_display_label;
+	QLabel* status_field;
 	
 	QDoubleSpinBox* map_x_edit;
 	QDoubleSpinBox* map_y_edit;
@@ -287,7 +285,11 @@ public:
 	/** 
 	 * Constructs a new tool for the given dialog and controller.
 	 */
-	GeoreferencingTool(GeoreferencingDialog* dialog, MapEditorController* controller, QAction* toolAction = NULL);
+	GeoreferencingTool(
+	        GeoreferencingDialog* dialog,
+	        MapEditorController* controller,
+	        QAction* toolAction = nullptr
+	);
 	
 	/**
 	 * Notifies the dialog that the tool is deleted.
@@ -297,133 +299,28 @@ public:
 	/**
 	 * Activates the tool.
 	 */
-	void init();
+	void init() override;
 	
 	/** 
-	 * Reacts to the user activity by sending the reference point
-	 * coordinates to the dialog and reactivating the dialog.
+	 * Consumes left and right clicks. They are handled in mouseReleaseEvent.
 	 */
-	bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
+	bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
+	
+	/** 
+	 * Reacts to the user activity by sending the reference point coordinates
+	 * to the dialog (on left click) and reactivating the dialog.
+	 */
+	bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
 	
 	/**
 	 * Returns the mouse cursor that will be shown when the tool is active.
 	 */
-	QCursor* getCursor() { return cursor; }
+	const QCursor& getCursor() const override;
 	
 private:
 	GeoreferencingDialog* const dialog;
-	
-	static QCursor* cursor;
 };
 
 
-
-/// Combobox for projected coordinate reference system (CRS) selection,
-/// with edit widgets below to specify the free parameters, if necessary.
-class ProjectedCRSSelector : public QWidget
-{
-Q_OBJECT
-public:
-	ProjectedCRSSelector(QWidget* parent = NULL);
-	
-	/// Adds a custom text item at the top which can be identified by the given id.
-	void addCustomItem(const QString& text, int id);
-	
-	
-	/// Returns the selected CRS template,
-	/// or NULL if a custom item is selected
-	CRSTemplate* getSelectedCRSTemplate();
-	
-	/// Returns the selected CRS specification string,
-	/// or an empty string if a custom item is selected
-	QString getSelectedCRSSpec();
-	
-	/// Returns the id of the selected custom item,
-	/// or -1 in case a normal item is selected
-	int getSelectedCustomItemId();
-	
-
-	/// Selects the given item
-	void selectItem(CRSTemplate* temp);
-	
-	/// Selects the given item
-	void selectCustomItem(int id);
-	
-	
-	/// Returns the number of parameters shown currently
-	int getNumParams();
-	
-	/// Returns the i-th parameters' value (for storage,
-	/// not for pasting into the crs specification!)
-	QString getParam(int i);
-	
-	/// Sets the i-th parameters' value.
-	/// Does not emit crsEdited().
-	void setParam(int i, const QString& value);
-	
-signals:
-	/// Called when the user edit the CRS.
-	/// system_changed is true if the whole system was switched,
-	/// if only a parameter was changed it is false.
-	void crsEdited(bool system_changed);
-	
-private slots:
-	void crsDropdownChanged(int index);
-	void crsParamEdited(QString dont_use);
-	
-private:
-	QComboBox* crs_dropdown;
-	int num_custom_items;
-	
-	QLineEdit* param_edit;
-	QSpinBox* param_int_spinbox;
-	
-	QFormLayout* layout;
-};
-
-
-
-/** Dialog to select a coordinate reference system (CRS) */
-class SelectCRSDialog : public QDialog
-{
-Q_OBJECT
-public:
-	/**
-	 * Creates a SelectCRSDialog.
-	 * 
-	 * @param map The map to create the dialog for.
-	 * @param parent The parent widget.
-	 * @param show_take_from_map Toggle whether to show the "Take the map's CRS" option.
-	 * @param show_local Toggle whether to show the "Local" option.
-	 * @param show_geographic Toggle whether to show the "Geographic (WGS84)" option.
-	 * @param desc_text Optional description text for the dialog. Should explain
-	 *                  for what the selected CRS will be used for.
-	 */
-	SelectCRSDialog(Map* map, QWidget* parent, bool show_take_from_map,
-					bool show_local, bool show_geographic, const QString& desc_text = QString());
-	
-	/** Returns the chosen CRS spec after the dialog has completed. */
-	QString getCRSSpec() const;
-	
-private slots:
-	void crsSpecEdited(QString text);
-	void updateWidgets();
-	
-private:
-	/* Internal state */
-	Map* const map;
-	
-	/* GUI elements */
-	QRadioButton* map_radio;
-	QRadioButton* local_radio;
-	QRadioButton* geographic_radio;
-	QRadioButton* projected_radio;
-	QRadioButton* spec_radio;
-	ProjectedCRSSelector* crs_edit;
-	QFormLayout* crs_spec_layout;
-	QLineEdit* crs_spec_edit;
-	QLabel* status_label;
-	QDialogButtonBox* button_box;
-};
 
 #endif

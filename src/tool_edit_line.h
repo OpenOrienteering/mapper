@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2013-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -34,7 +35,7 @@ class Symbol;
 
 
 /**
- * Tool to edit lines of PathObjects.
+ * A tool to edit lines of PathObjects.
  */
 class EditLineTool : public EditTool
 {
@@ -43,57 +44,66 @@ public:
 	EditLineTool(MapEditorController* editor, QAction* tool_action);
 	virtual ~EditLineTool();
 	
-	virtual void mouseMove();
-	virtual void clickPress();
-	virtual void clickRelease();
+	void mouseMove() override;
+	void clickPress() override;
+	void clickRelease() override;
 	
-	virtual void dragStart();
-	virtual void dragMove();
-	virtual void dragFinish();
+	void dragStart() override;
+	void dragMove() override;
+	void dragFinish() override;
 	
 protected:
-	virtual bool keyPress(QKeyEvent* event);
-	virtual bool keyRelease(QKeyEvent* event);
+	bool keyPress(QKeyEvent* event) override;
+	bool keyRelease(QKeyEvent* event) override;
 	
-	virtual void initImpl();
-	virtual void objectSelectionChangedImpl();
-	virtual int updateDirtyRectImpl(QRectF& rect);
-	virtual void drawImpl(QPainter* painter, MapWidget* widget);
+	void initImpl() override;
+	void objectSelectionChangedImpl() override;
+	int updateDirtyRectImpl(QRectF& rect) override;
+	void drawImpl(QPainter* painter, MapWidget* widget) override;
 	
 	/** In addition to the base class implementation, updates the status text. */
-	virtual void updatePreviewObjects();
+	void updatePreviewObjects() override;
 	
 	/** Deletes the highlight object if it exists and correctly removes its renderables. */
 	void deleteHighlightObject();
 	
-	void updateStatusText();
+	void updateStatusText() override;
 	
 	/** Recalculates hover_line. */
-	void updateHoverLine(MapCoordF cursor_pos);
+	void updateHoverState(MapCoordF cursor_pos);
 	
 	void toggleAngleHelper();
 	
-	inline bool hoveringOverFrame() const {return hover_line == -1;}
+	bool hoveringOverFrame() const;
 	
-	
+private:
 	/** Measures the time a click takes to decide whether to do selection. */
 	QElapsedTimer click_timer;
 	
 	/** Bounding box of the selection */
 	QRectF selection_extent;
 	
-	/**
-	 * Path point index of the hover line's starting point if non-negative;
-	 * if hovering over the extent rect: -1
-	 * if hovering over nothing: -2
-	 */
-	int hover_line;
 	
-	/** Object for hover_line, or NULL in case of no hover line. */
+	/**
+	 * Provides general information on what is hovered over.
+	 */
+	HoverState hover_state;
+	
+	/**
+	 * Object which is hovered over (if any).
+	 */
 	PathObject* hover_object;
 	
-	/** Object made of the extracted hover line */
+	/**
+	 * Coordinate identifying the hover_object's line which is hovered over.
+	 */
+	MapCoordVector::size_type hover_line;
+	
+	/**
+	 * An object created for the current hover_line.
+	 */
 	PathObject* highlight_object;
+	
 	
 	/** Is a box selection in progress? */
 	bool box_selection;
@@ -108,8 +118,16 @@ protected:
 	
 	QScopedPointer<ObjectMover> object_mover;
 	QScopedPointer<MapRenderables> highlight_renderables;
-	
-	static int max_objects_for_handle_display;
 };
+
+
+
+// ### EditLineTool inline code ###
+
+inline
+bool EditLineTool::hoveringOverFrame() const
+{
+	return hover_state == OverFrame;
+}
 
 #endif

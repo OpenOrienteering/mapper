@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2013-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -22,7 +23,7 @@
 #include <limits>
 
 #include <qmath.h>
-#include <QtWidgets>
+#include <QPainter>
 
 #include "map.h"
 #include "map_widget.h"
@@ -181,8 +182,9 @@ bool ObjectSelector::selectionInfosEqual(const SelectionInfoVector& a, const Sel
 // ### ObjectMover ###
 
 ObjectMover::ObjectMover(Map* map, const MapCoordF& start_pos)
-: map(map), start_position(start_pos), prev_drag_x(0), prev_drag_y(0), constraints_calculated(true)
+ : start_position(start_pos), prev_drag_x(0), prev_drag_y(0), constraints_calculated(true)
 {
+	Q_UNUSED(map);
 }
 
 void ObjectMover::setStartPos(const MapCoordF& start_pos)
@@ -195,17 +197,21 @@ void ObjectMover::addObject(Object* object)
 	objects.insert(object);
 }
 
-void ObjectMover::addPoint(PathObject* object, int point_index)
+void ObjectMover::addPoint(PathObject* object, MapCoordVector::size_type point_index)
 {
-	QSet< int >* index_set = insertPointObject(object);
+	Q_ASSERT(point_index < object->getCoordinateCount());
+	
+	auto index_set = insertPointObject(object);
 	index_set->insert(point_index);
 
 	constraints_calculated = false;
 }
 
-void ObjectMover::addLine(PathObject* object, int start_point_index)
+void ObjectMover::addLine(PathObject* object, MapCoordVector::size_type start_point_index)
 {
-	QSet< int >* index_set = insertPointObject(object);
+	Q_ASSERT(start_point_index < object->getCoordinateCount());
+	
+	auto index_set = insertPointObject(object);
 	index_set->insert(start_point_index);
 	index_set->insert(start_point_index + 1);
 	if (object->getCoordinate(start_point_index).isCurveStart())
@@ -222,10 +228,10 @@ void ObjectMover::addTextHandle(TextObject* text, int handle)
 	text_handles.insert(text, handle);
 }
 
-void ObjectMover::move(const MapCoordF& cursor_pos, bool move_opposite_handles, qint64* out_dx, qint64* out_dy)
+void ObjectMover::move(const MapCoordF& cursor_pos, bool move_opposite_handles, qint32* out_dx, qint32* out_dy)
 {
-	qint64 delta_x = qRound64(1000 * (cursor_pos.getX() - start_position.getX())) - prev_drag_x;
-	qint64 delta_y = qRound64(1000 * (cursor_pos.getY() - start_position.getY())) - prev_drag_y;
+	auto delta_x = qRound(1000 * (cursor_pos.x() - start_position.x())) - prev_drag_x;
+	auto delta_y = qRound(1000 * (cursor_pos.y() - start_position.y())) - prev_drag_y;
 	if (out_dx)
 		*out_dx = delta_x;
 	if (out_dy)
@@ -237,33 +243,34 @@ void ObjectMover::move(const MapCoordF& cursor_pos, bool move_opposite_handles, 
 	prev_drag_y += delta_y;
 }
 
-void ObjectMover::move(qint64 dx, qint64 dy, bool move_opposite_handles)
+void ObjectMover::move(qint32 dx, qint32 dy, bool move_opposite_handles)
 {
 	calculateConstraints();
 	
 	// Move objects
-	for (QSet< Object* >::iterator it = objects.begin(), end = objects.end(); it != end; ++it)
-		(*it)->move(dx, dy);
+	for (auto object : objects)
+		object->move(dx, dy);
 	
 	// Move points
-	for (QHash< PathObject*, QSet< int > >::const_iterator it = points.constBegin(), end = points.constEnd(); it != end; ++it)
+	for (auto it = points.constBegin(), end = points.constEnd(); it != end; ++it)
 	{
 		PathObject* path = it.key();
-		for (QSet< int >::const_iterator pit = it.value().constBegin(), pit_end = it.value().constEnd(); pit != pit_end; ++pit)
+		for (auto pit = it.value().constBegin(), pit_end = it.value().constEnd(); pit != pit_end; ++pit)
 		{
 			MapCoord coord = path->getCoordinate(*pit);
-			coord.setRawX(coord.rawX() + dx);
-			coord.setRawY(coord.rawY() + dy);
+			coord.setNativeX(coord.nativeX() + dx);
+			coord.setNativeY(coord.nativeY() + dy);
 			path->setCoordinate(*pit, coord);
 		}
 	}
 	
 	// Apply handle constraints
-	for (size_t i = 0, end = handle_constraints.size(); i < end; ++i)
+	for (auto& constraint : handle_constraints)
 	{
-		OppositeHandleConstraint& constraint = handle_constraints[i];
 		if (!move_opposite_handles)
+		{
 			constraint.object->setCoordinate(constraint.opposite_handle_index, constraint.opposite_handle_original_position);
+		}
 		else
 		{
 			MapCoord anchor_point = constraint.object->getCoordinate(constraint.curve_anchor_index);
@@ -271,14 +278,14 @@ void ObjectMover::move(qint64 dx, qint64 dy, bool move_opposite_handles)
 			to_hover_point.normalize();
 			
 			MapCoord control = constraint.object->getCoordinate(constraint.opposite_handle_index);
-			control.setX(anchor_point.xd() - constraint.opposite_handle_dist * to_hover_point.getX());
-			control.setY(anchor_point.yd() - constraint.opposite_handle_dist * to_hover_point.getY());
+			control.setX(anchor_point.x() - constraint.opposite_handle_dist * to_hover_point.x());
+			control.setY(anchor_point.y() - constraint.opposite_handle_dist * to_hover_point.y());
 			constraint.object->setCoordinate(constraint.opposite_handle_index, control);
 		}
 	}
 	
 	// Move box text object handles
-	for (QHash< TextObject*, int >::const_iterator it = text_handles.constBegin(), end = text_handles.constEnd(); it != end; ++it)
+	for (auto it = text_handles.constBegin(), end = text_handles.constEnd(); it != end; ++it)
 	{
 		TextObject* text_object = it.key();
 		const TextSymbol* text_symbol = text_object->getSymbol()->asText();
@@ -294,15 +301,16 @@ void ObjectMover::move(qint64 dx, qint64 dy, bool move_opposite_handles)
 		double new_box_width = qMax(text_symbol->getFontSize() / 2, text_object->getBoxWidth() + 0.001 * x_sign * delta_point.x());
 		double new_box_height = qMax(text_symbol->getFontSize() / 2, text_object->getBoxHeight() + 0.001 * y_sign * delta_point.y());
 		
+		auto anchor = MapCoord { text_object->getAnchorCoordF() };
 		text_object->move(dx / 2, dy / 2);
-		text_object->setBox(text_object->getAnchorCoordF().getIntX(), text_object->getAnchorCoordF().getIntY(), new_box_width, new_box_height);
+		text_object->setBox(anchor.nativeX(), anchor.nativeY(), new_box_width, new_box_height);
 	}
 }
 
-QSet< int >* ObjectMover::insertPointObject(PathObject* object)
+ObjectMover::CoordIndexSet* ObjectMover::insertPointObject(PathObject* object)
 {
 	if (!points.contains(object))
-		return &points.insert(object, QSet< int >()).value();
+		return &points.insert(object, CoordIndexSet()).value();
 	else
 		return &points[object];
 }
@@ -311,112 +319,122 @@ void ObjectMover::calculateConstraints()
 {
 	if (constraints_calculated)
 		return;
+	
 	handle_constraints.clear();
 	
 	// Remove all objects in the object list from the point list
-	for (QSet< Object* >::iterator it = objects.begin(), end = objects.end(); it != end; ++it)
+	for (auto object : objects)
 	{
-		if ((*it)->getType() == Object::Path)
-			points.remove((*it)->asPath());
-		else if ((*it)->getType() == Object::Text)
-			text_handles.remove((*it)->asText());
+		switch (object->getType())
+		{
+		case Object::Path:
+			points.remove(object->asPath());
+			break;
+			
+		case Object::Text:
+			text_handles.remove(object->asText());
+			break;
+			
+		default:
+			; // nothing
+		}
 	}
 	
 	// Points
-	for (QHash< PathObject*, QSet< int > >::iterator it = points.begin(), end = points.end(); it != end; ++it)
+	for (QHash< PathObject*, CoordIndexSet>::iterator it = points.begin(), end = points.end(); it != end; ++it)
 	{
 		PathObject* path = it.key();
-		QSet< int >& point_set = it.value();
+		auto& point_set = it.value();
 		
 		// If end points of closed paths are contained in the move set,
 		// change them to the corresponding start points
 		// (as these trigger moving the end points automatically and are better to handle:
 		//  they are set as curve start points if a curve starts there, in contrast to the end points)
-		for (int i = 0; i < path->getNumParts(); ++i)
+		for (const auto& part : path->parts())
 		{
-			PathObject::PathPart& part = path->getPart(i);
-			if (part.isClosed() && point_set.contains(part.end_index))
+			if (part.isClosed() && point_set.contains(part.last_index))
 			{
-				point_set.remove(part.end_index);
-				point_set.insert(part.start_index);
+				point_set.remove(part.last_index);
+				point_set.insert(part.first_index);
 			}
 		}
 		
-		// Expand set of moved points: if curve points are moved, their handles must be moved too.
-		// Also find opposite handle constraints.
-		for (QSet< int >::iterator pit = point_set.begin(), pit_end = point_set.end(); pit != pit_end; ++pit)
+		// Expand set of moved points:
+		// If curve points are moved, their handles must be moved, too.
+		std::vector<MapCoordVector::size_type> handles;
+		for (auto index : point_set)
 		{
-			int index = *pit;
-			bool could_be_handle = true;
-			const PathObject::PathPart& part = path->findPartForIndex(index);
-			
-			// If a curve starts here, add first handle
-			if (path->getCoordinate(index).isCurveStart())
+			if (path->isCurveHandle(index))
 			{
-				assert(index < path->getCoordinateCount() - 1);
-				point_set.insert(index + 1);
-				could_be_handle = false;
+				handles.push_back(index);
 			}
-			
-			// If a curve ends here, add last handle
-			int index_minus_3 = path->shiftedCoordIndex(index, -3, part);
-			if (index_minus_3 >= 0 &&
-				path->getCoordinate(index_minus_3).isCurveStart())
+			else
 			{
-				point_set.insert(path->shiftedCoordIndex(index, -1, part));
-				could_be_handle = false;
-			}
-			
-			// If this is a handle and the opposite handle is not moved, add constraint
-			if (!could_be_handle)
-				continue;
-			
-			int index_minus_2 = path->shiftedCoordIndex(index, -2, part);
-			if (index_minus_2 >= 0 &&
-				path->getCoordinate(index_minus_2).isCurveStart())
-			{
-				int index_plus_2 = path->shiftedCoordIndex(index, 2, part);
-				if (index_plus_2 < 0)
-					continue; // error
-				if (!point_set.contains(index_plus_2))
+				// If a curve starts here, add first handle
+				if (path->getCoordinate(index).isCurveStart())
 				{
-					int index_plus_1 = path->shiftedCoordIndex(index, 1, part);
-					if (index_plus_1 < 0)
-						continue; // error
-					
-					if (path->getCoordinate(index_plus_1).isCurveStart())
-					{
-						OppositeHandleConstraint constraint;
-						constraint.object = path;
-						constraint.moved_handle_index = index;
-						constraint.curve_anchor_index = index_plus_1;
-						constraint.opposite_handle_index = index_plus_2;
-						constraint.opposite_handle_original_position = path->getCoordinate(constraint.opposite_handle_index);
-						constraint.opposite_handle_dist = constraint.opposite_handle_original_position.lengthTo(path->getCoordinate(constraint.curve_anchor_index));
-						handle_constraints.push_back(constraint);
-						continue;
-					}
+					Q_ASSERT(index + 1 < path->getCoordinateCount());
+					handles.push_back(index + 1);
+				}
+				
+				// If a curve ends here, add last handle
+				auto& part = *path->findPartForIndex(index);
+				if (index != part.first_index &&
+				    path->getCoordinate(part.prevCoordIndex(index)).isCurveStart())
+				{
+					handles.push_back(index - 1);
 				}
 			}
+		}
+		
+		// Add the handles to the list of points.
+		// Determine opposite handle constraints.
+		for (auto index : handles)
+		{
+			Q_ASSERT(path->isCurveHandle(index));
+			auto& part = *path->findPartForIndex(index);
+			auto end_index = part.last_index;
 			
-			int index_minus_1 = path->shiftedCoordIndex(index, -1, part);
-			if (index_minus_1 >= 0 &&
-				!point_set.contains(index_minus_2) &&
-				path->getCoordinate(index_minus_1).isCurveStart())
+			point_set.insert(index);
+			
+			if (index == part.prevCoordIndex(index) + 1)
 			{
-				int index_minus_4 = path->shiftedCoordIndex(index, -4, part);
-				if (index_minus_4 >= 0 &&
-					path->getCoordinate(index_minus_4).isCurveStart())
+				// First handle of a curve
+				auto curve_anchor_index = index - 1;
+				if (part.isClosed() && curve_anchor_index == part.first_index)
+					curve_anchor_index = end_index;
+				
+				if (curve_anchor_index != part.first_index &&
+				    path->getCoordinate(part.prevCoordIndex(curve_anchor_index)).isCurveStart())
 				{
 					OppositeHandleConstraint constraint;
 					constraint.object = path;
 					constraint.moved_handle_index = index;
-					constraint.curve_anchor_index = index_minus_1;
-					constraint.opposite_handle_index = index_minus_2;
+					constraint.curve_anchor_index = index - 1;
+					constraint.opposite_handle_index = curve_anchor_index - 1;
 					constraint.opposite_handle_original_position = path->getCoordinate(constraint.opposite_handle_index);
-					constraint.opposite_handle_dist = constraint.opposite_handle_original_position.lengthTo(path->getCoordinate(constraint.curve_anchor_index));
+					constraint.opposite_handle_dist = constraint.opposite_handle_original_position.distanceTo(path->getCoordinate(constraint.curve_anchor_index));
 					handle_constraints.push_back(constraint);
-					continue;
+				}
+			}
+			else
+			{
+				// Second handle of a curve
+				auto curve_anchor_index = index + 1;
+				if (part.isClosed() && curve_anchor_index == end_index)
+					curve_anchor_index = part.first_index;
+				
+				if (curve_anchor_index != end_index &&
+				    path->getCoordinate(curve_anchor_index).isCurveStart())
+				{
+					OppositeHandleConstraint constraint;
+					constraint.object = path;
+					constraint.moved_handle_index = index;
+					constraint.curve_anchor_index = curve_anchor_index;
+					constraint.opposite_handle_index = curve_anchor_index + 1;
+					constraint.opposite_handle_original_position = path->getCoordinate(constraint.opposite_handle_index);
+					constraint.opposite_handle_dist = constraint.opposite_handle_original_position.distanceTo(path->getCoordinate(constraint.curve_anchor_index));
+					handle_constraints.push_back(constraint);
 				}
 			}
 		}
@@ -429,27 +447,14 @@ void ObjectMover::calculateConstraints()
 // ### EditTool ###
 
 #ifdef Q_OS_MAC
-// Mac convention for deleting selected objects is the backspace key
-// 
-// FIXME: This causes translation issues, and cannot be confirmed:
-// - In Finder, moving an object to trash is Cmd+Backspace.
-// - Other programs are reported to use [forward] delete.
-// - Some programs are reported to support multiple keys, e.g. Delete and Backspace.
-// - A major source of irritation is the absence of a delete key on some Macbooks.
-//   On these keyboards, delete is entered as Fn+Backspace.
-// - Some programs use another key for delete, e.g. "x".
-//   (Note that Cmd-x (aka Cut) will have a similar effect.)
-// TODO: either use a function for testing whether a key means "delete object",
-//   or switch to a QAction based implementation since QAction supports alternative
-//   QKeySequences.
 const Qt::Key EditTool::delete_object_key = Qt::Key_Backspace;
 #else
 const Qt::Key EditTool::delete_object_key = Qt::Key_Delete;
 #endif
 
 EditTool::EditTool(MapEditorController* editor, MapEditorTool::Type type, QAction* tool_button)
-: MapEditorToolBase(QCursor(QPixmap(":/images/cursor-hollow.png"), 1, 1), type, editor, tool_button)
-, object_selector(new ObjectSelector(map()))
+ : MapEditorToolBase { QCursor(QPixmap(":/images/cursor-hollow.png"), 1, 1), type, editor, tool_button }
+ , object_selector { new ObjectSelector(map()) }
 {
 	; // nothing
 }
@@ -476,9 +481,10 @@ void EditTool::createReplaceUndoStep(Object* object)
 	map()->setObjectsDirty();
 }
 
-bool EditTool::pointOverRectangle(QPointF point, const QRectF& rect)
+bool EditTool::pointOverRectangle(QPointF point, const QRectF& rect) const
 {
-	float click_tolerance = Settings::getInstance().getMapEditorClickTolerancePx();
+	cur_map_widget->getMapView();
+	float click_tolerance = clickTolerance();
 	if (point.x() < rect.left() - click_tolerance) return false;
 	if (point.y() < rect.top() - click_tolerance) return false;
 	if (point.x() > rect.right() + click_tolerance) return false;
@@ -493,22 +499,22 @@ bool EditTool::pointOverRectangle(QPointF point, const QRectF& rect)
 MapCoordF EditTool::closestPointOnRect(MapCoordF point, const QRectF& rect)
 {
 	MapCoordF result = point;
-	if (result.getX() < rect.left()) result.setX(rect.left());
-	if (result.getY() < rect.top()) result.setY(rect.top());
-	if (result.getX() > rect.right()) result.setX(rect.right());
-	if (result.getY() > rect.bottom()) result.setY(rect.bottom());
+	if (result.x() < rect.left()) result.setX(rect.left());
+	if (result.y() < rect.top()) result.setY(rect.top());
+	if (result.x() > rect.right()) result.setX(rect.right());
+	if (result.y() > rect.bottom()) result.setY(rect.bottom());
 	if (rect.height() > 0 && rect.width() > 0)
 	{
-		if ((result.getX() - rect.left()) / rect.width() > (result.getY() - rect.top()) / rect.height())
+		if ((result.x() - rect.left()) / rect.width() > (result.y() - rect.top()) / rect.height())
 		{
-			if ((result.getX() - rect.left()) / rect.width() > (rect.bottom() - result.getY()) / rect.height())
+			if ((result.x() - rect.left()) / rect.width() > (rect.bottom() - result.y()) / rect.height())
 				result.setX(rect.right());
 			else
 				result.setY(rect.top());
 		}
 		else
 		{
-			if ((result.getX() - rect.left()) / rect.width() > (rect.bottom() - result.getY()) / rect.height())
+			if ((result.x() - rect.left()) / rect.width() > (rect.bottom() - result.y()) / rect.height())
 				result.setY(rect.bottom());
 			else
 				result.setX(rect.left());
@@ -519,7 +525,7 @@ MapCoordF EditTool::closestPointOnRect(MapCoordF point, const QRectF& rect)
 
 void EditTool::setupAngleHelperFromSelectedObjects()
 {
-	const int max_num_primary_directions = 5;
+	const std::size_t max_num_primary_directions = 5;
 	const float angle_window = (2 * M_PI) * 2 / 360.0f;
 	// Amount of all path length which has to be covered by an angle
 	// to be classified as "primary angle"
@@ -528,30 +534,31 @@ void EditTool::setupAngleHelperFromSelectedObjects()
 	angle_helper->clearAngles();
 	
 	std::set< float > primary_directions;
-	for (Map::ObjectSelection::const_iterator it = map()->selectedObjectsBegin(), end = map()->selectedObjectsEnd(); it != end; ++it)
+	for (const auto object : map()->selectedObjects())
 	{
-		Object* object = *it;
 		if (object->getType() == Object::Point)
+		{
 			primary_directions.insert(fmod_pos(object->asPoint()->getRotation(), M_PI / 2));
+		}
 		else if (object->getType() == Object::Text)
+		{
 			primary_directions.insert(fmod_pos(object->asText()->getRotation(), M_PI / 2));
+		}
 		else if (object->getType() == Object::Path)
 		{
-			PathObject* path = object->asPath();
+			auto path = object->asPath();
 			// Maps angles to the path distance covered by them
 			QMap< float, float > path_directions;
 			
 			// Collect segment directions, only looking at the first part
-			PathObject::PathPart& part = path->getPart(0);
-			float path_length = path->getPathCoordinateVector()[part.path_coord_end_index].clen;
-			for (int c = part.start_index; c < part.end_index; ++c)
+			auto& part = path->parts().front();
+			float path_length = part.path_coords.back().clen;
+			for (auto c = part.first_index; c < part.last_index; c = part.nextCoordIndex(c))
 			{
-				if (path->getCoordinate(c).isCurveStart())
-					c += 2;
-				else
+				if (!path->getCoordinate(c).isCurveStart())
 				{
 					MapCoordF segment = MapCoordF(path->getCoordinate(c + 1) - path->getCoordinate(c));
-					float angle = fmod_pos(-1 * segment.getAngle(), M_PI / 2);
+					float angle = fmod_pos(-1 * segment.angle(), M_PI / 2);
 					float length = segment.length();
 					
 					QMap< float, float >::iterator angle_it = path_directions.find(angle);
@@ -616,11 +623,11 @@ void EditTool::setupAngleHelperFromSelectedObjects()
 			}
 		}
 		
-		if ((int)primary_directions.size() > max_num_primary_directions)
+		if (primary_directions.size() > max_num_primary_directions)
 			break;
 	}
 	
-	if ((int)primary_directions.size() > max_num_primary_directions ||
+	if (primary_directions.size() > max_num_primary_directions ||
 		primary_directions.size() == 0)
 	{
 		angle_helper->addDefaultAnglesDeg(0);
@@ -631,8 +638,8 @@ void EditTool::setupAngleHelperFromSelectedObjects()
 		angle_helper->addAngles(0, M_PI / 2);
 		
 		// Add object angles
-		for (std::set< float >::const_iterator it = primary_directions.begin(), end = primary_directions.end(); it != end; ++it)
-			angle_helper->addAngles(*it, M_PI / 2);
+		for (auto angle : primary_directions)
+			angle_helper->addAngles(angle, M_PI / 2);
 	}
 }
 

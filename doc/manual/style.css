@@ -1,0 +1,27 @@
+/**
+ * Beware that Qt Assistant (QTextBrowser) supports only a limited set of 
+ * HTML/CSS: http://qt-project.org/doc/qt-5/richtext-html-subset.html
+ */
+
+#projectlogo 
+{
+	float:right;
+}
+ 
+#titlearea
+{
+	margin-bottom: 2px;
+}
+    
+.title
+{
+	margin-top: 4px;
+	margin-bottom: 4px;
+	font-size: xx-large;
+	font-weight: bold;
+}
+
+a.el
+{
+	font-weight: bold;
+}

@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2012-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -20,14 +21,26 @@
 
 #include "symbol_text.h"
 
-#include <QtWidgets>
+#include <QComboBox>
+#include <QDialogButtonBox>
+#include <QFontComboBox>
+#include <QFormLayout>
+#include <QHBoxLayout>
 #include <QIODevice>
+#include <QInputDialog>
+#include <QLineEdit>
+#include <QListWidget>
+#include <QPushButton>
+#include <QRadioButton>
+#include <QXmlStreamReader>
+#include <QXmlStreamWriter>
 
 #include "core/map_color.h"
 #include "map.h"
 #include "object_text.h"
 #include "renderable_implementation.h"
 #include "symbol_area.h"
+#include "symbol_line.h"
 #include "symbol_setting_dialog.h"
 #include "util.h"
 #include "util_gui.h"
@@ -94,116 +107,170 @@ Symbol* TextSymbol::duplicate(const MapColorMap* color_map) const
 	return new_text;
 }
 
-void TextSymbol::createRenderables(const Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output) const
+void TextSymbol::createRenderables(
+        const Object *object,
+        const VirtualCoordVector &coords,
+        ObjectRenderables &output,
+        Symbol::RenderableOptions options) const
 {
-	Q_UNUSED(flags);
+	Q_ASSERT(object);
 	
-	const TextObject* text_object = reinterpret_cast<const TextObject*>(object);
-	
-	double anchor_x = coords[0].getX();
-	double anchor_y = coords[0].getY();
-	
+	const TextObject* text_object = static_cast<const TextObject*>(object);
 	text_object->prepareLineInfos();
-	if (color)
-		output.insertRenderable(new TextRenderable(this, text_object, color, anchor_x, anchor_y));
-	if (line_below && line_below_color && line_below_width > 0)
-		createLineBelowRenderables(object, output);
 	
-	if (framing && framing_color != NULL)
+	if (options.testFlag(Symbol::RenderBaselines))
 	{
-		if (framing_mode == LineFraming && framing_line_half_width > 0)
+		createBaselineRenderables(text_object, coords, output);
+	}
+	else
+	{
+		auto anchor = coords[0];
+		double anchor_x = anchor.x();
+		double anchor_y = anchor.y();
+		
+		if (color)
+			output.insertRenderable(new TextRenderable(this, text_object, color, anchor_x, anchor_y));
+		
+		if (line_below && line_below_color && line_below_width > 0)
+			createLineBelowRenderables(object, output);
+		
+		if (framing && framing_color)
 		{
-			output.insertRenderable(new TextRenderable(this, text_object, framing_color, anchor_x, anchor_y, true));
+			if (framing_mode == LineFraming && framing_line_half_width > 0)
+			{
+				output.insertRenderable(new TextRenderable(this, text_object, framing_color, anchor_x, anchor_y, true));
+			}
+			else if (framing_mode == ShadowFraming)
+			{
+				output.insertRenderable(new TextRenderable(this, text_object, framing_color, anchor_x + 0.001 * framing_shadow_x_offset, anchor_y + 0.001 * framing_shadow_y_offset));
+			}
 		}
-		else if (framing_mode == ShadowFraming)
+	}
+}
+
+void TextSymbol::createBaselineRenderables(
+        const TextObject* text_object,
+        const VirtualCoordVector& coords,
+        ObjectRenderables& output) const
+{
+	const MapColor* dominant_color = guessDominantColor();
+	if (dominant_color && text_object->getNumLines() > 0)
+	{
+		// Insert text boundary
+		LineSymbol line_symbol;
+		line_symbol.setColor(dominant_color);
+		line_symbol.setLineWidth(0);
+		
+		const TextObjectLineInfo* line = text_object->getLineInfo(0);
+		QRectF text_bbox(line->line_x, line->line_y - line->ascent, line->width, line->ascent + line->descent);
+		for (int i = 1; i < text_object->getNumLines(); ++i)
 		{
-			output.insertRenderable(new TextRenderable(this, text_object, framing_color, anchor_x + 0.001 * framing_shadow_x_offset, anchor_y + 0.001 * framing_shadow_y_offset));
+			const TextObjectLineInfo* line = text_object->getLineInfo(i);
+			rectInclude(text_bbox, QRectF(line->line_x, line->line_y - line->ascent, line->width, line->ascent + line->descent));
 		}
+		
+		Q_UNUSED(coords); // coords should be used for calcTextToMapTransform()
+		QTransform text_to_map = text_object->calcTextToMapTransform();
+		PathObject path;
+		path.addCoordinate(MapCoord(text_to_map.map(text_bbox.topLeft())));
+		path.addCoordinate(MapCoord(text_to_map.map(text_bbox.topRight())));
+		path.addCoordinate(MapCoord(text_to_map.map(text_bbox.bottomRight())));
+		path.addCoordinate(MapCoord(text_to_map.map(text_bbox.bottomLeft())));
+		path.parts().front().setClosed(true, true);
+		path.updatePathCoords();
+		
+		LineRenderable* line_renderable = new LineRenderable(&line_symbol, path.parts().front(), false);
+		output.insertRenderable(line_renderable);
 	}
 }
 
 void TextSymbol::createLineBelowRenderables(const Object* object, ObjectRenderables& output) const
 {
 	const TextObject* text_object = reinterpret_cast<const TextObject*>(object);
-	double scale_factor = calculateInternalScaling();
-	AreaSymbol area_symbol;
-	area_symbol.setColor(line_below_color);
-	MapCoordVectorF line_coords;
-	line_coords.reserve(text_object->getNumLines() * 4);
-	
-	QTransform transform = text_object->calcTextToMapTransform();
-	
-	for (int i = 0; i < text_object->getNumLines(); ++i)
+	if (text_object->getNumLines())
 	{
-		const TextObjectLineInfo* line_info = text_object->getLineInfo(i);
-		if (!line_info->paragraph_end)
-			continue;
+		double scale_factor = calculateInternalScaling();
+		AreaSymbol area_symbol;
+		area_symbol.setColor(line_below_color);
 		
-		double line_below_x0;
-		double line_below_x1;
-		if (text_object->hasSingleAnchor())
+		MapCoordVector  line_flags(4);
+		MapCoordVectorF line_coords(4);
+		VirtualPath line_path = { line_flags, line_coords };
+		line_flags.back().setHolePoint(true);
+		
+		QTransform transform = text_object->calcTextToMapTransform();
+		
+		for (int i = 0; i < text_object->getNumLines(); ++i)
 		{
-			line_below_x0 = line_info->line_x;
-			line_below_x1 = line_below_x0 + line_info->width;
+			const TextObjectLineInfo* line_info = text_object->getLineInfo(i);
+			if (!line_info->paragraph_end)
+				continue;
+			
+			double line_below_x0;
+			double line_below_x1;
+			if (text_object->hasSingleAnchor())
+			{
+				line_below_x0 = line_info->line_x;
+				line_below_x1 = line_below_x0 + line_info->width;
+			}
+			else
+			{
+				double box_width = text_object->getBoxWidth() * scale_factor;
+				line_below_x0 = -0.5 * box_width;
+				line_below_x1 = line_below_x0 + box_width;
+			}
+			double line_below_y0 = line_info->line_y + getLineBelowDistance() * scale_factor;
+			double line_below_y1 = line_below_y0 + getLineBelowWidth() * scale_factor;
+			line_coords[0] = MapCoordF(transform.map(QPointF(line_below_x0, line_below_y0)));
+			line_coords[1] = MapCoordF(transform.map(QPointF(line_below_x1, line_below_y0)));
+			line_coords[2] = MapCoordF(transform.map(QPointF(line_below_x1, line_below_y1)));
+			line_coords[3] = MapCoordF(transform.map(QPointF(line_below_x0, line_below_y1)));
+			
+			line_path.path_coords.update(0);
+			output.insertRenderable(new AreaRenderable(&area_symbol, line_path));
 		}
-		else
-		{
-			double box_width = text_object->getBoxWidth() * scale_factor;
-			line_below_x0 = -0.5 * box_width;
-			line_below_x1 = line_below_x0 + box_width;
-		}
-		double line_below_y0 = line_info->line_y + getLineBelowDistance() * scale_factor;
-		double line_below_y1 = line_below_y0 + getLineBelowWidth() * scale_factor;
-		line_coords.push_back(MapCoordF(transform.map(MapCoordF(line_below_x0, line_below_y0).toQPointF())));
-		line_coords.push_back(MapCoordF(transform.map(MapCoordF(line_below_x1,  line_below_y0).toQPointF())));
-		line_coords.push_back(MapCoordF(transform.map(MapCoordF(line_below_x1,  line_below_y1).toQPointF())));
-		line_coords.push_back(MapCoordF(transform.map(MapCoordF(line_below_x0, line_below_y1).toQPointF())));
 	}
-	
-	if (line_coords.empty())
-		return;
-	
-	MapCoord no_flags;
-	MapCoord hole_flag;
-	hole_flag.setHolePoint(true);
-	MapCoordVector line_flags;
-	line_flags.resize(line_coords.size());
-	for (int i = 0; i < (int)line_coords.size(); ++i)
-		line_flags[i] = ((i % 4 == 3) ? hole_flag : no_flags);
-	
-	output.insertRenderable(new AreaRenderable(&area_symbol, line_coords, line_flags, NULL));
 }
 
-void TextSymbol::colorDeleted(const MapColor* color)
+void TextSymbol::colorDeleted(const MapColor* c)
 {
-	if (color == this->color)
+	auto changes = 0;
+	if (c == color)
 	{
-		this->color = NULL;
+		color = nullptr;
+		++changes;
+	}
+	if (c == framing_color)
+	{
+		framing_color = nullptr;
+		++changes;
+	}
+	if (c == line_below_color)
+	{
+		line_below_color = nullptr;
+		++changes;
+	}
+	if (changes)
+	{
 		resetIcon();
 	}
-	if (color == this->framing_color)
-	{
-		this->framing_color = NULL;
-		resetIcon();
-	}
 }
 
-bool TextSymbol::containsColor(const MapColor* color) const
+bool TextSymbol::containsColor(const MapColor* c) const
 {
-	if (color == this->color)
-		return true;
-	if (color == this->framing_color)
-		return true;
-	return false;
+	return c == color
+	       || c == framing_color
+	       || c == line_below_color;
 }
 
-const MapColor* TextSymbol::getDominantColorGuess() const
+const MapColor* TextSymbol::guessDominantColor() const
 {
-	if (color)
-		return color;
-	if (framing_color)
-		return framing_color;
-	return NULL;
+	auto c = color;
+	if (!c)
+		c = framing_color;
+	if (!c)
+		c = line_below_color;
+	return c;
 }
 
 void TextSymbol::scale(double factor)
@@ -236,6 +303,8 @@ void TextSymbol::updateQFont()
 	metrics = QFontMetricsF(qfont);
 	tab_interval = 8.0 * metrics.averageCharWidth();
 }
+
+#ifndef NO_NATIVE_FILE_FORMAT
 
 bool TextSymbol::loadImpl(QIODevice* file, int version, Map* map)
 {
@@ -283,6 +352,8 @@ bool TextSymbol::loadImpl(QIODevice* file, int version, Map* map)
 	updateQFont();
 	return true;
 }
+
+#endif
 
 void TextSymbol::saveImpl(QXmlStreamWriter& xml, const Map& map) const
 {
@@ -495,7 +566,7 @@ double TextSymbol::getNextTab(double pos) const
 	}
 	
 	double next_tab = (floor(pos / tab_interval) + 1.0) * tab_interval;
-	assert(next_tab > pos);
+	Q_ASSERT(next_tab > pos);
  	return next_tab;
 }
 
@@ -1007,7 +1078,7 @@ void TextSymbolSettings::updateCompatibilityContents()
 
 void TextSymbolSettings::reset(Symbol* symbol)
 {
-	assert(symbol->getType() == Symbol::Text);
+	Q_ASSERT(symbol->getType() == Symbol::Text);
 	
 	SymbolPropertiesWidget::reset(symbol);
 	this->symbol = reinterpret_cast<TextSymbol*>(symbol);

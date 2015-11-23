@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2013, 2014 Kai Pastor
+ *    Copyright 2013-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -21,9 +21,13 @@
 
 #include "tool_draw_text.h"
 
-#include <QApplication>
-#include <QClipboard>
-#include <QtWidgets>
+#include <QHBoxLayout>
+#include <QKeyEvent>
+#include <QMouseEvent>
+#include <QPainter>
+#include <QPushButton>
+#include <QSignalMapper>
+#include <QVBoxLayout>
 
 #include "map.h"
 #include "map_editor.h"
@@ -43,7 +47,6 @@
 #undef DrawText
 #endif
 
-QCursor* DrawTextTool::cursor = NULL;
 
 DrawTextTool::DrawTextTool(MapEditorController* editor, QAction* tool_button)
 : MapEditorTool(editor, DrawText, tool_button)
@@ -54,9 +57,6 @@ DrawTextTool::DrawTextTool(MapEditorController* editor, QAction* tool_button)
 , renderables(new MapRenderables(map()))
 {
 	connect(editor, SIGNAL(activeSymbolChanged(const Symbol*)), this, SLOT(setDrawingSymbol(const Symbol*)));
-	
-	if (!cursor)
-		cursor = new QCursor(QPixmap(":/images/cursor-draw-text.png"), 11, 11);
 }
 
 void DrawTextTool::init()
@@ -64,6 +64,12 @@ void DrawTextTool::init()
 	updateStatusText();
 	
 	MapEditorTool::init();
+}
+
+const QCursor& DrawTextTool::getCursor() const
+{
+	static auto const cursor = QCursor(QPixmap(":/images/cursor-draw-text.png"), 11, 11);
+	return cursor;
 }
 
 DrawTextTool::~DrawTextTool()
@@ -139,10 +145,10 @@ bool DrawTextTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, Ma
 	if (dragging)
 	{
 		// Create box text
-		double width = qAbs(cur_pos_map.getX() - click_pos_map.getX());
-		double height = qAbs(cur_pos_map.getY() - click_pos_map.getY());
-		MapCoordF midpoint = MapCoordF(0.5f * (cur_pos_map.getX() + click_pos_map.getX()), 0.5f * (cur_pos_map.getY() + click_pos_map.getY()));
-		preview_text->setBox(midpoint.getIntX(), midpoint.getIntY(), width, height);
+		double width = qAbs(cur_pos_map.x() - click_pos_map.x());
+		double height = qAbs(cur_pos_map.y() - click_pos_map.y());
+		auto midpoint = MapCoord { 0.5 * (cur_pos_map + click_pos_map) };
+		preview_text->setBox(midpoint.nativeX(), midpoint.nativeY(), width, height);
 		
 		dragging = false;
 		updateDirtyRect();
@@ -211,8 +217,9 @@ void DrawTextTool::draw(QPainter* painter, MapWidget* widget)
 		painter->save();
 		widget->applyMapTransform(painter);
 		
-		float alpha = text_editor ? 1.0f : 0.5f;
-		renderables->draw(painter, widget->getMapView()->calculateViewedRect(widget->viewportToView(widget->rect())), true, widget->getMapView()->calculateFinalZoomFactor(), true, true, alpha);
+		float opacity = text_editor ? 1.0f : 0.5f;
+		RenderConfig config = { *map(), widget->getMapView()->calculateViewedRect(widget->viewportToView(widget->rect())), widget->getMapView()->calculateFinalZoomFactor(), RenderConfig::Tool, opacity };
+		renderables->draw(painter, config);
 		
 		if (text_editor)
 			text_editor->draw(painter, widget);
@@ -265,7 +272,8 @@ void DrawTextTool::setDrawingSymbol(const Symbol* symbol)
 
 void DrawTextTool::selectionChanged(bool text_change)
 {
-	Q_UNUSED(text_change);	
+	Q_UNUSED(text_change);
+	preview_text->setOutputDirty(); // TODO: Check if neccessary here.
 	updatePreviewText();
 }
 
@@ -282,8 +290,8 @@ void DrawTextTool::updateDirtyRect()
 	
 	if (dragging)
 	{
-		rectIncludeSafe(rect, click_pos_map.toQPointF());
-		rectIncludeSafe(rect, cur_pos_map.toQPointF());
+		rectIncludeSafe(rect, click_pos_map);
+		rectIncludeSafe(rect, cur_pos_map);
 	}
 	
 	if (rect.isValid())
@@ -303,7 +311,7 @@ void DrawTextTool::updateStatusText()
 void DrawTextTool::updatePreviewText()
 {
 	renderables->removeRenderablesOfObject(preview_text, false);
-	preview_text->update(true);
+	preview_text->update();
 	renderables->insertRenderablesOfObject(preview_text);
 	updateDirtyRect();
 }

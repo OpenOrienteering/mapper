@@ -1,5 +1,6 @@
 /*
- *    Copyright 2012, 2013 Thomas Schöps, Kai Pastor
+ *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2012-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -27,106 +28,201 @@
 #include <QSharedData>
 #include <QExplicitlySharedDataPointer>
 
+#include "core/map_color.h"
+
 class QColor;
 class QPainter;
 class QPainterPath;
 
 class Map;
-class MapColor;
 class Object;
-class RenderStates;
+class PainterConfig;
 
 /**
- * Graphical map item with a simple shape and a single color.
+ * This class contains rendering configuration values.
  * 
- * This is the abstract base class.
+ * A reference to an object of this class replaces what used to be part of the
+ * parameter list of various draw()/render() methods. With that old approach,
+ * each new rendering configuration option required changes in many signatures
+ * and function calls. In addition, the boolean options were not verbose at all.
+ * 
+ * Objects are meant to be initialized by initializer lists (C++11).
+ */
+class RenderConfig
+{
+public:
+	/**
+	 * Flags indicating particular rendering configuration options.
+	 */
+	enum Option
+	{
+		Screen              = 1<<0, ///< Indicates that the drawing is for the screen.
+		                            ///  Can turn on optimizations which result in slightly
+		                            ///  lower display quality (e.g. disable antialiasing
+		                            ///  for texts) for the benefit of speed.
+		DisableAntialiasing = 1<<1, ///< Forces disabling of Antialiasing.
+		ForceMinSize        = 1<<2, ///< Forces a minimum size of app. 1 pixel for objects. 
+		                            ///  Makes maps look better at small zoom levels without antialiasing.
+		HelperSymbols       = 1<<3, ///< Activates display of symbols with the "helper symbol" flag.
+		Highlighted         = 1<<4, ///< Makes the color appear highlighted.
+		RequireSpotColor    = 1<<5, ///< Skips colors which do not have a spot color definition.
+		Tool                = Screen | ForceMinSize | HelperSymbols, ///< The recommended flags for tools.
+		NoOptions           = 0     ///< No option activated.
+	};
+	
+	/**
+	 * \class RenderConfig::Options
+	 * 
+	 * A combination of flags for rendering configuration options.
+	 * 
+	 * \see QFlags::testFlag(), RenderConfig::Option
+	 */
+	Q_DECLARE_FLAGS(Options, Option)
+	
+	const Map& map;       ///< The map.
+	
+	QRectF  bounding_box; ///< The bounding box of the area to be drawn.
+	                      ///  Given in map coordinates.
+	
+	qreal   scaling;      ///< The scaling.
+	                      ///  Used to calculate the final object sizes when
+                          ///  ForceMinSize is set.
+    
+	Options options;      ///< The rendering options.
+	
+	qreal   opacity;      ///< The opacity.
+	
+	/**
+	 * A convenience method for testing flags in the options value.
+	 * 
+	 * \see QFlags::testFlag()
+	 */
+	bool testFlag(const Option flag) const;
+};
+
+
+
+/**
+ * A Renderable is a graphical item with a simple shape and a single color.
+ * 
+ * This is the abstract base class. Inheriting classes must implement the
+ * abstract methods, and they must set the extent during construction.
  */
 class Renderable
 {
+protected:
+	/** The constructor for new renderables. */
+	explicit Renderable(const MapColor* color);
+	
+	/** The copy constructor is default but protected. */
+	explicit Renderable(const Renderable&) = default;
+	
+	/** The assignment operator is default but protected. */
+	Renderable& operator=(const Renderable&) = default;
+	
 public:
-	Renderable();
-	Renderable(const Renderable& other);
+	/**
+	 * The destructor.
+	 */
 	virtual ~Renderable();
 	
-	/** Returns the extent (bounding box). */
-	inline const QRectF& getExtent() const {return extent;}
+	/**
+	 * Returns the extent (bounding box).
+	 */
+	const QRectF& getExtent() const;
 	
 	/**
-	 * Renders the renderable with the given painter.
-	 * See Map::draw() for a description of the parameters.
+	 * Tests whether the renderable's extent intersects the given rect.
 	 */
-	virtual void render(QPainter& painter, QRectF& bounding_box, bool force_min_size, float scaling, bool on_screen) const = 0;
+	bool intersects(const QRectF& rect) const;
 	
 	/**
-	 * Creates the render state information which must be set
-	 * when rendering this renderable 
+	 * Returns the painter configuration information.
+	 * 
+	 * This configuration must be set when rendering this renderable.
 	 */
-	virtual void getRenderStates(RenderStates& out) const = 0;
+	virtual PainterConfig getPainterConfig(const QPainterPath* clip_path = nullptr) const = 0;
+	
+	/**
+	 * Renders the renderable with the given painter and rendering configuration.
+	 */
+	virtual void render(QPainter& painter, const RenderConfig& config) const = 0;
 	
 protected:
+	/** The color priority is a major attribute and cannot be modified. */
+	const int color_priority;
+	
+	/** The extent must be set by inheriting classes. */
 	QRectF extent;
-	int color_priority;
 };
 
+
+
 /** 
- * RenderStates contains state information about the painter 
- * which must be set when rendering a Renderable. 
+ * PainterConfig contains painter configuration information.
  * 
- * Used to group renderables by common render attributes.
+ * When painting a renderable item, the QPainter shall be configured according
+ * to this information.
+ * 
+ * A PainterConfig is an immutable values, constructed with initializer lists.
  */
-class RenderStates
+class PainterConfig
 {
 public:
-	enum RenderMode
+	enum PainterMode
 	{
-		Reserved = -1,
-		BrushOnly = 0,
-		PenOnly = 1
+		BrushOnly = 0,  ///< Render using the brush only.
+		PenOnly   = 1,  ///< Render using the pen only.
+		Reserved  = -1	///< Not used.
 	};
 	
-	int color_priority;
-	RenderMode mode;
-	float pen_width;
-	const QPainterPath* clip_path;
+	const int color_priority;       ///< The color priority which determines rendering order
+	const PainterMode mode;         ///< The mode of painting
+	const qreal pen_width;          ///< The width of the pen
+	const QPainterPath* clip_path;  ///< A clip_path which may be shared by several Renderables
 	
-	RenderStates(const Renderable* r, const QPainterPath* path = NULL) : clip_path(path) { r->getRenderStates(*this); };
+	/**
+	 * Activates the configuration on the given painter.
+	 * 
+	 * If this method returns false, the corresponding renderables shall not be drawn.
+	 * 
+	 * @param painter      The painter to be configured.
+	 * @param current_clip A pointer which will be set to the address of the current clip,
+	 *                     in order to avoid switching the clip area unneccessarily.
+	 * @param config       The rendering configurations.
+	 * @param color        The QColor to be used for the pen or brush.
+	 * @param initial_clip The clip which was set initially for this painter.
+	 * @return True if the configuration was activated, false if the corresponding renderables shall not be drawn.
+	 */
+	bool activate(QPainter* painter, const QPainterPath*& current_clip, const RenderConfig& config, const QColor& color, const QPainterPath& initial_clip) const;
 	
-	inline bool operator!= (const RenderStates& other) const
-	{
-		return (color_priority != other.color_priority) ||
-		       (mode != other.mode) ||
-			   (mode == PenOnly && pen_width != other.pen_width) ||
-			   (clip_path != other.clip_path);
-	}
-	
-	inline bool operator< (const RenderStates& other) const
-	{
-		if (color_priority != other.color_priority)
-			return color_priority > other.color_priority;
-		else
-		{
-			// Same priority, decide by clip path
-			if (clip_path != other.clip_path)
-				return clip_path > other.clip_path;
-			else
-			{
-				// Same clip path, decide by mode
-				if ((int)mode != (int)other.mode)
-					return (int)mode > (int)other.mode;
-				else
-				{
-					// Same mode, decide by pen width
-					return pen_width < other.pen_width;
-				}
-			}
-		}
-	}
+	friend bool operator==(const PainterConfig& lhs, const PainterConfig& rhs);
+	friend bool operator<(const PainterConfig& lhs, const PainterConfig& rhs);
 };
+
+/**
+ * Returns true if the configurations are equal.
+ */
+bool operator==(const PainterConfig& lhs, const PainterConfig& rhs);
+
+/**
+ * Returns true if the configurations are not equal.
+ */
+bool operator!=(const PainterConfig& lhs, const PainterConfig& rhs);
+
+/**
+ * Defines an order over values which are not equal.
+ */
+bool operator<(const PainterConfig& lhs, const PainterConfig& rhs);
+
+
 
 /**
  * A low-level container for renderables.
  */
 typedef std::vector<Renderable*> RenderableVector;
+
+
 
 /**
  * A shared high-level container for renderables
@@ -135,14 +231,16 @@ typedef std::vector<Renderable*> RenderableVector;
  * This shared container can be used in different collections. When the last
  * reference to this container is dropped, it will delete the renderables.
  */
-class SharedRenderables : public QSharedData, public std::map< RenderStates, RenderableVector >
+class SharedRenderables : public QSharedData, public std::map< PainterConfig, RenderableVector >
 {
 public:
 	typedef QExplicitlySharedDataPointer<SharedRenderables> Pointer;
 	~SharedRenderables();
 	void deleteRenderables();
-	void compact(); // release memory which is occupied by unused RenderStates, FIXME: maybe call this regularly...
+	void compact(); // release memory which is occupied by unused PainterConfig, FIXME: maybe call this regularly...
 };
+
+
 
 /**
  * A high-level container for all renderables of a single object, 
@@ -152,15 +250,11 @@ class ObjectRenderables : protected std::map<int, SharedRenderables::Pointer>
 {
 friend class MapRenderables;
 public:
-	ObjectRenderables(Object* object, QRectF& extent);
+	ObjectRenderables(Object& object);
 	~ObjectRenderables();
 	
-	inline void insertRenderable(Renderable* r)
-	{
-		RenderStates state(r, clip_path);
-		insertRenderable(r, state);
-	}
-	void insertRenderable(Renderable* r, RenderStates& state);
+	inline void insertRenderable(Renderable* r);
+	void insertRenderable(Renderable* r, PainterConfig state);
 	
 	void clear();
 	void deleteRenderables();
@@ -170,20 +264,19 @@ public:
 	 * Draws all renderables in this container directly with the given color.
 	 * May e.g. be used to encode object ids as colors.
 	 */
-	void draw(const QColor& color,
-		QPainter* painter, QRectF bounding_box,
-		bool force_min_size, float scaling) const;
+	void draw(const QColor& color, QPainter* painter, const RenderConfig& config) const;
 	
-	void setClipPath(QPainterPath* path);
-	inline QPainterPath* getClipPath() const {return clip_path;}
+	void setClipPath(const QPainterPath* path);
+	const QPainterPath* getClipPath() const;
 	
-	const QRectF& getExtent() const { return extent; }
+	const QRectF& getExtent() const;
 	
 private:
-	Object* const object;
 	QRectF& extent;
-	QPainterPath* clip_path; // no memory management here!
+	const QPainterPath* clip_path; // no memory management here!
 };
+
+
 
 /**
  * A low-level container for renderables of multiple objects
@@ -193,6 +286,8 @@ private:
  * of each single object.
  */
 typedef std::map<const Object*, SharedRenderables::Pointer> ObjectRenderablesMap;
+
+
 
 /** 
  * A high-level container for renderables of multiple objects
@@ -207,25 +302,19 @@ public:
 	
 	/**
 	 * Draws the renderables normally (one opaque over the other).
-	 * See Map::draw() for an explanation of the remaining parameters.
 	 * 
-	 * @param highlighted Use a highlighted variation of the renderables' colors.
-	 * @param require_spot_color Draw only colors which have a spot color definition.
+	 * @param painter The QPainter used for drawing.
+	 * @param config  The rendering configuration
 	 */
-	void draw(QPainter* painter, QRectF bounding_box,
-		bool force_min_size, float scaling, bool on_screen,
-		bool show_helper_symbols, float opacity_factor = 1.0f,
-		bool highlighted = false, bool require_spot_color = false) const;
+	void draw(QPainter* painter, const RenderConfig& config) const;
 	
 	/**
 	 * Draws the renderables in a spot color overprinting simulation.
-	 * See Map::draw() for an explanation of the remaining parameters.
 	 * 
 	 * @param painter Must be a QPainter on a QImage of Format_ARGB32_Premultiplied.
+	 * @param config  The rendering configuration
 	 */
-	void drawOverprintingSimulation(QPainter* painter, QRectF bounding_box,
-		bool force_min_size, float scaling, bool on_screen,
-		bool show_helper_symbols) const;
+	void drawOverprintingSimulation(QPainter* painter, const RenderConfig& config) const;
 	
 	/**
 	 * Draws only the renderables which belong to a particular spot color.
@@ -234,28 +323,133 @@ public:
 	 * full tone of the spot color. The parameter use_color can be used to
 	 * draw in the actual spot color instead.
 	 * 
-	 * See Map::draw() for an explanation of the remaining parameters.
-	 * 
+	 * @param painter The QPainter used for drawing.
+	 * @param config  The rendering configuration
 	 * @param separation The spot color to draw the separation for.
 	 * @param use_color  If true, forces the separation to be drawn in its actual color.
 	 */
-	void drawColorSeparation(QPainter* painter, QRectF bounding_box,
-		bool force_min_size, float scaling, bool on_screen,
-		bool show_helper_symbols,
+	void drawColorSeparation(QPainter* painter, const RenderConfig& config,
 		const MapColor* separation, bool use_color = false) const;
 	
-	
 	void insertRenderablesOfObject(const Object* object);
-	/** NOTE: does not delete the renderables, just removes them from display */
+	
+	/* NOTE: does not delete the renderables, just removes them from display */
 	void removeRenderablesOfObject(const Object* object, bool mark_area_as_dirty);
 	
-	void clear(bool set_area_dirty = false);
-	inline bool isEmpty() const {return empty();}
+	void clear(bool mark_area_as_dirty = false);
 	
-	static QColor getHighlightedColor(const QColor& original);
+	inline bool empty() const;
 	
 private:
 	Map* const map;
 };
+
+
+
+// ### RenderConfig ###
+
+Q_DECLARE_OPERATORS_FOR_FLAGS(RenderConfig::Options)
+
+inline
+bool RenderConfig::testFlag(const RenderConfig::Option flag) const
+{
+	return options.testFlag(flag);
+}
+
+
+
+// ### Renderable ###
+
+inline
+Renderable::Renderable(const MapColor* color)
+ : color_priority(color ? color->getPriority() : MapColor::Reserved)
+{
+	; // nothing
+}
+
+inline
+const QRectF&Renderable::getExtent() const
+{
+	return extent;
+}
+
+inline
+bool Renderable::intersects(const QRectF& rect) const
+{
+	return extent.intersects(rect);
+}
+
+
+
+// ### PainterConfig ###
+
+inline
+bool operator==(const PainterConfig& lhs, const PainterConfig& rhs)
+{
+	return (lhs.color_priority == rhs.color_priority) &&
+	       (lhs.mode == rhs.mode) &&
+	       (lhs.pen_width == rhs.pen_width || lhs.mode == PainterConfig::BrushOnly) &&
+	       (lhs.clip_path != rhs.clip_path);
+}
+
+inline
+bool operator!=(const PainterConfig& lhs, const PainterConfig& rhs)
+{
+	return !(lhs == rhs);
+}
+
+inline
+bool operator<(const PainterConfig& lhs, const PainterConfig& rhs)
+{
+	// First, decide by priority
+	if (lhs.color_priority != rhs.color_priority)
+		return lhs.color_priority > rhs.color_priority;
+	
+	// Same priority, decide by clip path
+	else if (lhs.clip_path != rhs.clip_path)
+		return lhs.clip_path > rhs.clip_path;
+	
+	// Same clip path, decide by mode
+	else if ((int)lhs.mode != (int)rhs.mode)
+		return (int)lhs.mode > (int)rhs.mode;
+	
+	// Same mode, decide by pen width
+	else
+		return lhs.pen_width < rhs.pen_width;
+}
+
+
+
+// ### ObjectRenderables ###
+
+inline
+void ObjectRenderables::insertRenderable(Renderable* r)
+{
+	insertRenderable(r, r->getPainterConfig(clip_path));
+}
+
+inline
+const QPainterPath* ObjectRenderables::getClipPath() const
+{
+	return clip_path;
+}
+
+inline
+const QRectF &ObjectRenderables::getExtent() const
+{
+	return extent;
+}
+
+
+
+// ### MapRenderables ###
+
+inline
+bool MapRenderables::empty() const
+{
+	return std::map<int, ObjectRenderablesMap>::empty();
+}
+
+
 
 #endif

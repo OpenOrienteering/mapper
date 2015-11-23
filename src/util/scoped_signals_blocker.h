@@ -1,5 +1,5 @@
 /*
- *    Copyright 2012, 2013, 2014 Kai Pastor
+ *    Copyright 2012-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -22,9 +22,9 @@
 #define _UTIL_SCOPED_SIGNALS_BLOCKER_H_
 
 #include <utility>
-#include <vector>
 
 #include <QObject>
+#include <QVarLengthArray>
 
 /**
  * @brief A safe and scoped wrapper around QObject::blockSignals().
@@ -84,6 +84,11 @@ typedef ScopedSignalsBlocker QSignalBlocker;
  * Synopsis:
  * 
  *     {
+ *         ScopedMultiSignalsBlocker block(my_widget, my_other_widget);
+ *         my_widget->setSomeProperty("Hello World");
+ *     }
+ * 
+ *     {
  *         ScopedMultiSignalsBlocker block;
  *         block << my_widget << my_other_widget;
  *         my_widget->setSomeProperty("Hello World");
@@ -92,29 +97,63 @@ typedef ScopedSignalsBlocker QSignalBlocker;
 class ScopedMultiSignalsBlocker
 {
 private:
-	typedef std::pair<QObject*,bool> item_type;
-	
+	struct item_type
+	{
+		QObject* object;
+		bool old_state;
+	};
+
 public:
-	inline ScopedMultiSignalsBlocker()
-	{ }
+	ScopedMultiSignalsBlocker() = default;
 	
-	inline ScopedMultiSignalsBlocker& operator<<(QObject* obj)
-	{
-		objects.push_back(std::make_pair(obj, obj && obj->blockSignals(true)));
-		Q_ASSERT(!obj || obj->signalsBlocked());
-		return *this;
-	}
+	template <typename ... QObjectPointers>
+	ScopedMultiSignalsBlocker(QObjectPointers ... objects);
+		          
+	~ScopedMultiSignalsBlocker();
 	
-	inline ~ScopedMultiSignalsBlocker()
-	{
-		for (std::vector<item_type>::iterator item = objects.begin(); item != objects.end(); ++item)
-			if (item->first)
-				item->first->blockSignals(item->second);
-	}
+	void add(QObject* object);
+	
+	ScopedMultiSignalsBlocker& operator<<(QObject* object);
 	
 private:
-	Q_DISABLE_COPY(ScopedMultiSignalsBlocker)
-	std::vector<item_type> objects;
+	ScopedMultiSignalsBlocker(const ScopedMultiSignalsBlocker&) = delete;
+	ScopedMultiSignalsBlocker& operator=(const ScopedMultiSignalsBlocker&) = delete;
+	
+	template <typename  ... QObjectPointers>
+	void add(QObject* object, QObjectPointers ... others);
+	
+	void add() const noexcept;
+	
+	QVarLengthArray<item_type, 10> items;
 };
+
+
+// ### ScopedMultiSignalsBlocker inline code ###
+
+template <typename  ... QObjectPointers>
+ScopedMultiSignalsBlocker::ScopedMultiSignalsBlocker(QObjectPointers ... objects)
+{
+	add(objects ...);
+}
+
+template <typename  ... QObjectPointers>
+void ScopedMultiSignalsBlocker::add(QObject* object, QObjectPointers ... others)
+{
+	add(object);
+	add(others ...);
+}
+
+inline
+ScopedMultiSignalsBlocker& ScopedMultiSignalsBlocker::operator<<(QObject* object)
+{
+	add(object);
+	return *this;
+}
+
+inline
+void ScopedMultiSignalsBlocker::add() const noexcept
+{
+	// nothing
+}
 
 #endif

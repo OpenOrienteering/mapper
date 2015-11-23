@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Jan Dalheimer
+ *    Copyright 2013, 2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -21,7 +22,6 @@
 #define _OPENORIENTEERING_SETTINGS_DIALOG_H_
 
 #include <QDialog>
-#include <QVector>
 
 QT_BEGIN_NAMESPACE
 class QTabWidget;
@@ -38,7 +38,7 @@ class SettingsDialog : public QDialog
 Q_OBJECT
 public:
 	/** Constructs a new settings dialog. */
-	SettingsDialog(QWidget* parent = 0);
+	explicit SettingsDialog(QWidget* parent = nullptr);
 	
 	/** Destroys the settings dialog. */
 	virtual ~SettingsDialog();

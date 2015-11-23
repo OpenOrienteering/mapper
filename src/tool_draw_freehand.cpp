@@ -1,5 +1,6 @@
 /*
  *    Copyright 2014 Thomas Schöps
+ *    Copyright 2014, 2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -20,7 +21,8 @@
 
 #include "tool_draw_freehand.h"
 
-#include <QtWidgets>
+#include <QKeyEvent>
+#include <QMouseEvent>
 
 #include "map.h"
 #include "object.h"
@@ -29,15 +31,11 @@
 #include "gui/widgets/key_button_bar.h"
 #include "map_editor.h"
 
-QCursor* DrawFreehandTool::cursor = NULL;
 
 DrawFreehandTool::DrawFreehandTool(MapEditorController* editor, QAction* tool_button, bool is_helper_tool)
 : DrawLineAndAreaTool(editor, DrawFreehand, tool_button, is_helper_tool)
 {
 	dragging = false;
-	
-	if (!cursor)
-		cursor = new QCursor(QPixmap(":/images/cursor-draw-path.png"), 11, 11);
 }
 
 DrawFreehandTool::~DrawFreehandTool()
@@ -49,6 +47,12 @@ void DrawFreehandTool::init()
 	updateStatusText();
 	
 	MapEditorTool::init();
+}
+
+const QCursor& DrawFreehandTool::getCursor() const
+{
+	static auto const cursor = QCursor(QPixmap(":/images/cursor-draw-path.png"), 11, 11);
+	return cursor;
 }
 
 bool DrawFreehandTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
@@ -184,31 +188,29 @@ void DrawFreehandTool::checkLineSegment(int a, int b, std::vector< bool >& point
 	{
 		const MapCoord& coord = preview_path->getRawCoordinateVector()[i];
 		
-		MapCoordF to_coord = MapCoordF(coord.xd() - start_coord.xd(), coord.yd() - start_coord.yd());
-		MapCoordF to_next = MapCoordF(end_coord.xd() - start_coord.xd(), end_coord.yd() - start_coord.yd());
+		MapCoordF to_coord = MapCoordF(coord.x() - start_coord.x(), coord.y() - start_coord.y());
+		MapCoordF to_next = MapCoordF(end_coord.x() - start_coord.x(), end_coord.y() - start_coord.y());
 		MapCoordF tangent = to_next;
 		tangent.normalize();
 		
 		float distance_sq;
 		
-		float dist_along_line = to_coord.dot(tangent);
+		float dist_along_line = MapCoordF::dotProduct(to_coord, tangent);
 		if (dist_along_line <= 0)
 		{
 			distance_sq = to_coord.lengthSquared();
 		}
 		else
 		{
-			float line_length = MapCoordF(end_coord).lengthTo(MapCoordF(start_coord));
+			float line_length = MapCoordF(end_coord).distanceTo(MapCoordF(start_coord));
 			if (dist_along_line >= line_length)
 			{
-				distance_sq = MapCoordF(coord).lengthToSquared(MapCoordF(end_coord));
+				distance_sq = MapCoordF(coord).distanceSquaredTo(MapCoordF(end_coord));
 			}
 			else
 			{
-				MapCoordF right = tangent;
-				right.perpRight();
-			
-				distance_sq = qAbs(right.dot(to_coord));
+				auto right = tangent.perpRight();
+				distance_sq = qAbs(MapCoordF::dotProduct(right, to_coord));
 				distance_sq = distance_sq*distance_sq;
 			}
 		}
@@ -238,13 +240,13 @@ void DrawFreehandTool::updatePath()
 	if (!dragging)
 	{
 		preview_path->clearCoordinates();
-		preview_path->addCoordinate(cur_pos_map.toMapCoord());
+		preview_path->addCoordinate(MapCoord(cur_pos_map));
 	}
 	else
 	{
-		if (last_pos_map.lengthToSquared(cur_pos_map) < length_threshold_sq)
+		if (last_pos_map.distanceSquaredTo(cur_pos_map) < length_threshold_sq)
 			return;
-		preview_path->addCoordinate(cur_pos_map.toMapCoord());
+		preview_path->addCoordinate(MapCoord(cur_pos_map));
 	}
 	last_pos_map = cur_pos_map;
 	

@@ -21,11 +21,12 @@
 #ifndef _OPENORIENTEERING_DXFPARSER_H_
 #define _OPENORIENTEERING_DXFPARSER_H_
 
-#include <QString>
-#include <QList>
 #include <QColor>
 #include <QFont>
+#include <QIODevice>
+#include <QList>
 #include <QRectF>
+#include <QString>
 
 struct DXFCoordinate
 {

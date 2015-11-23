@@ -1,5 +1,6 @@
 /*
  *    Copyright 2013 Thomas Schöps
+ *    Copyright 2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -45,6 +46,88 @@ void PathObjectTest::initTestCase()
 	Map map;
 }
 
+void PathObjectTest::mapCoordTest()
+{
+	auto vector = MapCoordF { 2.0, 0.0 };
+	QCOMPARE(vector.x(), 2.0);
+	QCOMPARE(vector.y(), 0.0);
+	QCOMPARE(vector.length(), 2.0);
+	QCOMPARE(vector.angle(), 0.0);
+	
+	vector = vector.perpRight();
+	QCOMPARE(vector.x(), 0.0);
+	QCOMPARE(vector.y(), 2.0); // This looks like left, but our y axis is mirrored.
+	QCOMPARE(vector.length(), 2.0);
+	QCOMPARE(vector.angle(), M_PI/2); // Remember, our y axis is mirrored.
+}
+
+void PathObjectTest::virtualPathTest()
+{
+	// Test open path
+	auto coords = MapCoordVector { { 0.0, 0.0 }, { 2.0, 0.0 }, { 2.0, 1.0 }, { 2.0, -1.0 } };
+	auto path = VirtualPath { coords };
+	
+	auto tangent_scaling = path.calculateTangentScaling(0);
+	auto& scaling = tangent_scaling.second;
+	auto right = tangent_scaling.first.perpRight();
+	right.normalize();
+	QCOMPARE(right.length(), 1.0);
+	QCOMPARE(right.x(), 0.0);
+	QCOMPARE(right.y(), 1.0); // This looks like left, but our y axis is mirrored.
+	QCOMPARE(right.angle(), M_PI/2);
+	QCOMPARE(scaling, 1.0);
+	
+	tangent_scaling = path.calculateTangentScaling(1);
+	right = tangent_scaling.first.perpRight();
+	right.normalize();
+	QCOMPARE(right.x(), -sqrt(2.0)/2);
+	QCOMPARE(right.y(), sqrt(2.0)/2);
+	QCOMPARE(right.angle(), 3*M_PI/4);
+	QCOMPARE(scaling, sqrt(2.0));
+	
+	tangent_scaling = path.calculateTangentScaling(2);
+	right = tangent_scaling.first.perpRight();
+	right.normalize();
+	QCOMPARE(right.length(), 1.0);
+	QCOMPARE(right.x(), 0.0);
+	QCOMPARE(right.y(), 1.0);
+	QCOMPARE(right.angle(), M_PI/2);
+	QVERIFY(qIsInf(scaling));
+	
+	tangent_scaling = path.calculateTangentScaling(3);
+	right = tangent_scaling.first.perpRight();
+	right.normalize();
+	QCOMPARE(right.length(), 1.0);
+	QCOMPARE(right.x(), 1.0);
+	QCOMPARE(right.y(), 0.0);
+	QCOMPARE(right.angle(), 0.0);
+	QCOMPARE(scaling, 1.0);
+	
+	// Test close point
+	coords.emplace_back( 0.0, -1.0 );
+	coords.emplace_back( 0.0, 0.0 );
+	coords.back().setClosePoint(true);
+	path.last_index += 2;
+	
+	tangent_scaling = path.calculateTangentScaling(0);
+	right = tangent_scaling.first.perpRight();
+	right.normalize();
+	QCOMPARE(right.length(), 1.0);
+	QCOMPARE(right.x(), -sqrt(2.0)/2);
+	QCOMPARE(right.y(), sqrt(2.0)/2);
+	QCOMPARE(right.angle(), 3*M_PI/4);
+	QCOMPARE(scaling, sqrt(2.0));
+	
+	tangent_scaling = path.calculateTangentScaling(coords.size()-1);
+	right = tangent_scaling.first.perpRight();
+	right.normalize();
+	QCOMPARE(right.length(), 1.0);
+	QCOMPARE(right.x(), -sqrt(2.0)/2);
+	QCOMPARE(right.y(), sqrt(2.0)/2);
+	QCOMPARE(right.angle(), 3*M_PI/4);
+	QCOMPARE(scaling, sqrt(2.0));
+}
+
 void PathObjectTest::calcIntersectionsTest()
 {
 	QFETCH(void*, v_path1);
@@ -56,23 +139,23 @@ void PathObjectTest::calcIntersectionsTest()
 	
 	PathObject::Intersections actual_intersections;
 	path1->calcAllIntersectionsWith(path2, actual_intersections);
-	actual_intersections.clean();
+	actual_intersections.normalize();
 	
 	if (actual_intersections.size() != predicted_intersections->size())
 	{
 		for (size_t i = 0; i < predicted_intersections->size(); ++i)
 		{
 			qDebug() << "# Predicted " << i;
-			qDebug() << "  X: " << predicted_intersections->at(i).coord.getX();
-			qDebug() << "  Y: " << predicted_intersections->at(i).coord.getY();
+			qDebug() << "  X: " << predicted_intersections->at(i).coord.x();
+			qDebug() << "  Y: " << predicted_intersections->at(i).coord.y();
 			qDebug() << "  len: " << predicted_intersections->at(i).length;
 			qDebug() << "  other_len: " << predicted_intersections->at(i).other_length;
 		}
 		for (size_t i = 0; i < actual_intersections.size(); ++i)
 		{
 			qDebug() << "# Actual " << i;
-			qDebug() << "  X: " << actual_intersections.at(i).coord.getX();
-			qDebug() << "  Y: " << actual_intersections.at(i).coord.getY();
+			qDebug() << "  X: " << actual_intersections.at(i).coord.x();
+			qDebug() << "  Y: " << actual_intersections.at(i).coord.y();
 			qDebug() << "  len: " << actual_intersections.at(i).length;
 			qDebug() << "  other_len: " << actual_intersections.at(i).other_length;
 		}
@@ -80,8 +163,8 @@ void PathObjectTest::calcIntersectionsTest()
 	QCOMPARE(actual_intersections.size(), predicted_intersections->size());
 	for (size_t i = 0; i < qMin(actual_intersections.size(), predicted_intersections->size()); ++i)
 	{
-		QCOMPARE(actual_intersections[i].coord.getX(), predicted_intersections->at(i).coord.getX());
-		QCOMPARE(actual_intersections[i].coord.getY(), predicted_intersections->at(i).coord.getY());
+		QCOMPARE(actual_intersections[i].coord.x(), predicted_intersections->at(i).coord.x());
+		QCOMPARE(actual_intersections[i].coord.y(), predicted_intersections->at(i).coord.y());
 		QCOMPARE(actual_intersections[i].part_index, predicted_intersections->at(i).part_index);
 		QCOMPARE(actual_intersections[i].length, predicted_intersections->at(i).length);
 		QCOMPARE(actual_intersections[i].other_part_index, predicted_intersections->at(i).other_part_index);
@@ -198,7 +281,7 @@ void PathObjectTest::calcIntersectionsTest_data()
 	duplicate1->addCoordinate(MapCoord(30, 30));
 	duplicate1->addCoordinate(MapCoord(50, 50));
 	duplicate1->addCoordinate(MapCoord(50, 70));
-	duplicate1->update(); // for duplicate1->getPart(0).getLength();
+	duplicate1->update(); // for duplicate1->parts().front().getLength();
 	
 	PathObject::Intersections* intersections_duplicate = new PathObject::Intersections();
 	intersection.coord = MapCoordF(10, 30);
@@ -206,8 +289,8 @@ void PathObjectTest::calcIntersectionsTest_data()
 	intersection.other_length = 0;
 	intersections_duplicate->push_back(intersection);
 	intersection.coord = MapCoordF(50, 70);
-	intersection.length = duplicate1->getPart(0).getLength();
-	intersection.other_length = duplicate1->getPart(0).getLength();
+	intersection.length = duplicate1->parts().front().length();
+	intersection.other_length = duplicate1->parts().front().length();
 	intersections_duplicate->push_back(intersection);
 	
 	QTest::newRow("Start/end intersections for duplicate") << (void*)duplicate1 << (void*)duplicate1 << (void*)intersections_duplicate;
@@ -220,10 +303,10 @@ void PathObjectTest::calcIntersectionsTest_data()
 	PathObject::Intersections* intersections_duplicate_reversed = new PathObject::Intersections();
 	intersection.coord = MapCoordF(10, 30);
 	intersection.length = 0;
-	intersection.other_length = duplicate1->getPart(0).getLength();
+	intersection.other_length = duplicate1->parts().front().length();
 	intersections_duplicate_reversed->push_back(intersection);
 	intersection.coord = MapCoordF(50, 70);
-	intersection.length = duplicate1->getPart(0).getLength();
+	intersection.length = duplicate1->parts().front().length();
 	intersection.other_length = 0;
 	intersections_duplicate_reversed->push_back(intersection);
 	
@@ -232,7 +315,7 @@ void PathObjectTest::calcIntersectionsTest_data()
 	
 	// Duplicate of closed object intersection
 	PathObject* duplicate1_closed = duplicate1->duplicate()->asPath();
-	duplicate1_closed->getPart(0).setClosed(true);
+	duplicate1_closed->parts().front().setClosed(true);
 	
 	PathObject::Intersections* no_intersections = new PathObject::Intersections();
 	
@@ -245,7 +328,7 @@ void PathObjectTest::calcIntersectionsTest_data()
 	ps1->addCoordinate(MapCoord(30, 10));
 	ps1->addCoordinate(MapCoord(30, 30));
 	ps1->addCoordinate(MapCoord(10, 30));
-	ps1->getPart(0).setClosed(true);
+	ps1->parts().front().setClosed(true);
 	
 	DummyPathObject* ps2 = new DummyPathObject();
 	ps2->addCoordinate(MapCoord(10, 10));
@@ -274,7 +357,7 @@ void PathObjectTest::calcIntersectionsTest_data()
 	pe1->addCoordinate(MapCoord(30, 10));
 	pe1->addCoordinate(MapCoord(30, 30));
 	pe1->addCoordinate(MapCoord(10, 30));
-	pe1->getPart(0).setClosed(true);
+	pe1->parts().front().setClosed(true);
 	
 	DummyPathObject* pe2 = new DummyPathObject();
 	pe2->addCoordinate(MapCoord(10, 30));
@@ -333,4 +416,4 @@ void PathObjectTest::calcIntersectionsTest_data()
 	QTest::newRow("b inside a") << (void*)aib2 << (void*)aib1 << (void*)intersections_bia;
 }
 
-QTEST_MAIN(PathObjectTest)
+QTEST_GUILESS_MAIN(PathObjectTest)

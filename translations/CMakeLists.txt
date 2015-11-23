@@ -29,6 +29,7 @@ set(Mapper_QT_TRANS
 set(Mapper_TRANS
  OpenOrienteering_cs.ts
  OpenOrienteering_de.ts
+ OpenOrienteering_en.ts
  OpenOrienteering_es.ts
  OpenOrienteering_fi.ts
  OpenOrienteering_fr.ts
@@ -131,8 +132,12 @@ macro(QT5_TRANSLATIONS_SOURCES)
 			file(APPEND "${${PROJECT_NAME}_TRANSLATIONS_LISTFILE}" "${_abs_path}\n")
 		else()
 			get_filename_component(_ts_filename ${_arg} NAME_WE)
+			set(LUPDATE_OPTIONS -locations absolute)
+			if("${_ts_filename}" STREQUAL "OpenOrienteering_en")
+				list(APPEND LUPDATE_OPTIONS -pluralonly)
+			endif()
 			add_custom_target(${PROJECT_NAME}_${_ts_filename}_update
-			  COMMAND ${Qt5_LUPDATE_EXECUTABLE} -locations absolute @${${PROJECT_NAME}_TRANSLATIONS_LISTFILE} -ts ${Mapper_TRANS_DIR}/${_arg}
+			  COMMAND ${Qt5_LUPDATE_EXECUTABLE} ${LUPDATE_OPTIONS} @${${PROJECT_NAME}_TRANSLATIONS_LISTFILE} -ts ${Mapper_TRANS_DIR}/${_arg}
 			  DEPENDS ${${PROJECT_NAME}_TRANSLATIONS_LISTFILE}
 			  VERBATIM)
 			add_dependencies(${PROJECT_NAME}_translations_update ${PROJECT_NAME}_${_ts_filename}_update)

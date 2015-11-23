@@ -1,4 +1,4 @@
 .gitignore           export-ignore
 .gitattributes       export-ignore
-*.omap               binary
+*.omap               binary diff=xmllint
 *.ocd                binary

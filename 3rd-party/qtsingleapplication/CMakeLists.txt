@@ -1,5 +1,5 @@
 #
-#    Copyright 2012, 2013, 2014 Thomas Schöps, Kai Pastor
+#    Copyright 2012-2015 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -16,6 +16,9 @@
 #    You should have received a copy of the GNU General Public License
 #    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  
+find_package(Qt5Widgets REQUIRED)
+find_package(Qt5Network REQUIRED)
+
 set(QSINGLEAPP_SRCS
   src/qtlocalpeer.cpp
   src/qtsingleapplication.cpp
@@ -27,9 +30,17 @@ set(QSINGLEAPP_MOC_INPUT
   src/qtsinglecoreapplication.h
 )
 qt5_wrap_cpp(QSINGLEAPP_MOC ${QSINGLEAPP_MOC_INPUT})
-add_library(QtSingleApplication STATIC ${QSINGLEAPP_SRCS} ${QSINGLEAPP_MOC})
 
-# For super-builds (e.g. cross-compilation), wait for the Qt build.
-if(TARGET Qt5)
-	add_dependencies(QtSingleApplication Qt5)
-endif()
+add_library(QtSingleApplication STATIC
+  ${QSINGLEAPP_SRCS}
+  ${QSINGLEAPP_MOC}
+)
+
+target_include_directories(QtSingleApplication
+  INTERFACE "${CMAKE_CURRENT_SOURCE_DIR}/src"
+)
+
+target_link_libraries(QtSingleApplication
+  PUBLIC Qt5::Widgets
+  PUBLIC Qt5::Network
+)

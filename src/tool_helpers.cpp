@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2013-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -525,7 +526,7 @@ double ConstrainAngleToolHelper::getConstrainedCursorPos(const QPoint& in_pos, Q
 double ConstrainAngleToolHelper::getConstrainedCursorPosMap(const MapCoordF& in_pos, MapCoordF& out_pos)
 {
 	MapCoordF to_cursor = in_pos - center;
-	double in_angle = -1 * to_cursor.getAngle();
+	double in_angle = -1 * to_cursor.angle();
 	if (!active)
 	{
 		out_pos = in_pos;
@@ -572,7 +573,7 @@ double ConstrainAngleToolHelper::getConstrainedCursorPosMap(const MapCoordF& in_
 	}
 	
 	MapCoordF unit_direction = MapCoordF(cos(active_angle), -sin(active_angle));
-	to_cursor = unit_direction.dot(to_cursor) * unit_direction;
+	to_cursor = MapCoordF::dotProduct(unit_direction, to_cursor) * unit_direction;
 	out_pos = center + to_cursor;
 	
 	return active_angle;
@@ -655,7 +656,7 @@ void ConstrainAngleToolHelper::draw(QPainter* painter, MapWidget* widget)
 void ConstrainAngleToolHelper::includeDirtyRect(QRectF& rect)
 {
 	if (!active) return;
-	rectIncludeSafe(rect, center.toQPointF());
+	rectIncludeSafe(rect, center);
 }
 
 void ConstrainAngleToolHelper::settingsChanged()
@@ -695,7 +696,7 @@ MapCoord SnappingToolHelper::snapToObject(MapCoordF position, MapWidget* widget,
 	if (snap_distance < 0)
 		snap_distance = 0.001f * widget->getMapView()->pixelToLength(Settings::getInstance().getMapEditorSnapDistancePx());
 	float closest_distance_sq = snap_distance * snap_distance;
-	MapCoord result_position = position.toMapCoord();
+	auto result_position = MapCoord { position };
 	SnappingToolHelperSnapInfo result_info;
 	result_info.type = NoSnapping;
 	result_info.object = NULL;
@@ -709,7 +710,7 @@ MapCoord SnappingToolHelper::snapToObject(MapCoordF position, MapWidget* widget,
 	{
 		// Find map objects at the given position
 		SelectionInfoVector objects;
-		map->findObjectsAt(position, snap_distance, true, false, false, true, objects);
+		map->findAllObjectsAt(position, snap_distance, true, false, false, true, objects);
 		
 		// Find closest snap spot from map objects
 		for (SelectionInfoVector::const_iterator it = objects.begin(), end = objects.end(); it != end; ++it)
@@ -722,7 +723,7 @@ MapCoord SnappingToolHelper::snapToObject(MapCoordF position, MapWidget* widget,
 			if (object->getType() == Object::Point && filter & ObjectCorners)
 			{
 				PointObject* point = object->asPoint();
-				distance_sq = point->getCoordF().lengthToSquared(position);
+				distance_sq = point->getCoordF().distanceSquaredTo(position);
 				if (distance_sq < closest_distance_sq)
 				{
 					closest_distance_sq = distance_sq;
@@ -742,15 +743,12 @@ MapCoord SnappingToolHelper::snapToObject(MapCoordF position, MapWidget* widget,
 					if (distance_sq < closest_distance_sq)
 					{
 						closest_distance_sq = distance_sq;
-						result_position = path_coord.pos.toMapCoord();
+						result_position = MapCoord(path_coord.pos);
 						result_info.object = object;
-						if (path_coord.param == 0 || path_coord.param == 1)
+						if (path_coord.param == 0.0)
 						{
 							result_info.type = ObjectCorners;
-							if (path_coord.param == 1)
-								result_info.coord_index = path_coord.index + (path->getRawCoordinateVector().at(path_coord.index).isCurveStart() ? 3 : 1);
-							else
-								result_info.coord_index = path_coord.index;
+							result_info.coord_index = path_coord.index;
 						}
 						else
 						{
@@ -762,7 +760,7 @@ MapCoord SnappingToolHelper::snapToObject(MapCoordF position, MapWidget* widget,
 				}
 				else
 				{
-					int index;
+					MapCoordVector::size_type index;
 					path->calcClosestCoordinate(position, distance_sq, index);
 					if (distance_sq < closest_distance_sq)
 					{
@@ -787,11 +785,11 @@ MapCoord SnappingToolHelper::snapToObject(MapCoordF position, MapWidget* widget,
 		map->getGrid().isSnappingEnabled() && map->getGrid().getDisplayMode() == MapGrid::AllLines)
 	{
 		MapCoordF closest_grid_point = map->getGrid().getClosestPointOnGrid(position, map);
-		float distance_sq = closest_grid_point.lengthToSquared(position);
+		float distance_sq = closest_grid_point.distanceSquaredTo(position);
 		if (distance_sq < closest_distance_sq)
 		{
 			closest_distance_sq = distance_sq;
-			result_position = closest_grid_point.toMapCoord();
+			result_position = MapCoord(closest_grid_point);
 			result_info.type = GridCorners;
 			result_info.object = NULL;
 			result_info.coord_index = -1;
@@ -827,47 +825,47 @@ bool SnappingToolHelper::snapToDirection(MapCoordF position, MapWidget* widget, 
 	filter = (SnapObjects)(filter | filter_grid);
 	
 	// Get direction from result
-	if (info.type == NoSnapping)
-		return false;
-	else if (info.type == ObjectCorners)
+	switch (info.type)
 	{
+	case ObjectCorners:
 		if (info.object->getType() == Object::Point)
 		{
-			PointObject* point = info.object->asPoint();
+			const PointObject* point = info.object->asPoint();
 			angle_tool->clearAngles();
 			angle_tool->addAngles(point->getRotation() - M_PI/2, M_PI/2);
+			return true;
 		}
 		else if (info.object->getType() == Object::Path)
 		{
-			PathObject* path = info.object->asPath();
+			const PathObject* path = info.object->asPath();
 			angle_tool->clearAngles();
 			bool ok;
 			// Forward tangent
-			MapCoordF tangent = PathCoord::calculateTangent(path->getRawCoordinateVector(), info.coord_index, false, ok);
+			MapCoordF tangent = path->findPartForIndex(info.coord_index)->calculateTangent(info.coord_index, false, ok);
 			if (ok)
-				angle_tool->addAngles(-tangent.getAngle(), M_PI/2);
+				angle_tool->addAngles(-tangent.angle(), M_PI/2);
 			// Backward tangent
-			tangent = PathCoord::calculateTangent(path->getRawCoordinateVector(), info.coord_index, true, ok);
+			tangent = path->findPartForIndex(info.coord_index)->calculateTangent(info.coord_index, true, ok);
 			if (ok)
-				angle_tool->addAngles(-tangent.getAngle(), M_PI/2);
+				angle_tool->addAngles(-tangent.angle(), M_PI/2);
+			return true;
 		}
-		else
-			return false;
-	}
-	else if (info.type == ObjectPaths)
-	{
-		PathObject* path = info.object->asPath();
-		angle_tool->clearAngles();
-		MapCoordF pos, right_vector;
-		MapCoordVectorF mapCoordVectorF;
-		mapCoordVectorToF(path->getRawCoordinateVector(), mapCoordVectorF);
-		PathCoord::calculatePositionAt(path->getRawCoordinateVector(), mapCoordVectorF, path->getPathCoordinateVector(),
-			info.path_coord.clen, info.path_coord.index, &pos, &right_vector);
-		angle_tool->addAngles(-right_vector.getAngle(), M_PI/2);
-	}
-	else
 		return false;
-	return true;
+		
+	case ObjectPaths:
+		{
+			const PathObject* path = info.object->asPath();
+			angle_tool->clearAngles();
+			auto part   = path->findPartForIndex(info.path_coord.index);
+			auto split  = SplitPathCoord::at(part->path_coords, info.path_coord.clen);
+			auto right = split.tangentVector().perpRight();
+			angle_tool->addAngles(-right.angle(), M_PI/2);
+		}
+		return true;
+		
+	default:
+		return false;
+	}
 }
 
 void SnappingToolHelper::draw(QPainter* painter, MapWidget* widget)
@@ -883,73 +881,88 @@ void SnappingToolHelper::draw(QPainter* painter, MapWidget* widget)
 void SnappingToolHelper::includeDirtyRect(QRectF& rect)
 {
 	if (snapped_type != NoSnapping)
-		rectIncludeSafe(rect, snap_mark.toQPointF());
+		rectIncludeSafe(rect, QPointF(snap_mark));
 }
 
 
 // ### FollowPathToolHelper ###
 
 FollowPathToolHelper::FollowPathToolHelper()
+: path{nullptr}
 {
-	path = NULL;
+	// nothing else
 }
 
-void FollowPathToolHelper::startFollowingFromCoord(PathObject* path, int coord_index)
+void FollowPathToolHelper::startFollowingFromCoord(const PathObject* path, MapCoordVector::size_type coord_index)
 {
-	path->update(false);
-	PathCoord path_coord = PathCoord::findPathCoordForCoorinate(&path->getPathCoordinateVector(), coord_index);
-	startFollowingFromPathCoord(path, path_coord);
+	path->update();
+	PathCoord coord = path->findPathCoordForIndex(coord_index);
+	startFollowingFromPathCoord(path, coord);
 }
-void FollowPathToolHelper::startFollowingFromPathCoord(PathObject* path, PathCoord& coord)
+
+void FollowPathToolHelper::startFollowingFromPathCoord(const PathObject* path, const PathCoord& coord)
 {
-	path->update(false);
+	path->update();
 	this->path = path;
 	
 	start_clen = coord.clen;
-	end_clen = start_clen;
+	end_clen   = start_clen;
 	part_index = path->findPartIndexForIndex(coord.index);
 	drag_forward = true;
 }
 
-bool FollowPathToolHelper::updateFollowing(PathCoord& end_coord, PathObject*& result)
+std::unique_ptr<PathObject> FollowPathToolHelper::updateFollowing(const PathCoord& end_coord)
 {
-	if (path->findPartIndexForIndex(end_coord.index) != part_index)
-		return false;	// dragging on a different part
+	std::unique_ptr<PathObject> result;
 	
-	// Update end_clen
-	float new_end_clen = end_coord.clen;
-	if (path->getPart(part_index).isClosed())
+	if (path && path->findPartIndexForIndex(end_coord.index) == part_index)
 	{
-		// Positive length to add to end_clen to get to new_end_clen with wrapping
-		float path_length = path->getPart(part_index).getLength();
-		double forward_diff = fmod_pos(new_end_clen - end_clen, path_length);
-		float delta_forward = forward_diff >= 0 && forward_diff < 0.5f * path_length;
+		// Update end_clen
+		auto new_end_clen = end_coord.clen;
+		const auto& part = path->parts()[part_index];
+		if (part.isClosed())
+		{
+			// Positive length to add to end_clen to get to new_end_clen with wrapping
+			auto path_length = part.length();
+			auto forward_diff = fmod_pos(new_end_clen - end_clen, path_length);
+			auto delta_forward = forward_diff >= 0 && forward_diff < 0.5f * path_length;
+			
+			if (delta_forward
+			    && !drag_forward
+			    && fmod_pos(end_clen - start_clen, path_length) > 0.5f * path_length
+			    && fmod_pos(new_end_clen - start_clen, path_length) <= 0.5f * path_length )
+			{
+				drag_forward = true;
+			}
+			else if (!delta_forward
+			         && drag_forward
+			         && fmod_pos(end_clen - start_clen, path_length) <= 0.5f * path_length
+			         && fmod_pos(new_end_clen - start_clen, path_length) > 0.5f * path_length)
+			{
+				drag_forward = false;
+			}
+		}
+		else
+		{
+			drag_forward = new_end_clen >= start_clen;
+		}
 		
-		if (delta_forward && !drag_forward &&
-			fmod_pos(end_clen - start_clen, path_length) > 0.5f * path_length &&
-			fmod_pos(new_end_clen - start_clen, path_length) <= 0.5f * path_length)
-			drag_forward = true;
-		else if (!delta_forward && drag_forward &&
-			fmod_pos(end_clen - start_clen, path_length) <= 0.5f * path_length &&
-			fmod_pos(new_end_clen - start_clen, path_length) > 0.5f * path_length)
-			drag_forward = false;
+		end_clen = new_end_clen;
+		if (end_clen != start_clen)
+		{
+			// Create output path
+			result.reset(new PathObject { part });
+			if (drag_forward)
+			{
+				result->changePathBounds(0, start_clen, end_clen);
+			}
+			else
+			{
+				result->changePathBounds(0, end_clen, start_clen);
+				result->reverse();
+			}
+		}
 	}
-	else
-		drag_forward = new_end_clen >= start_clen;
 	
-	end_clen = new_end_clen;
-	
-	if (end_clen == start_clen)
-		return false;
-	
-	// Create output path
-	result = path->duplicatePart(part_index)->asPath();
-	if (drag_forward)
-		result->changePathBounds(0, start_clen, end_clen);
-	else
-	{
-		result->changePathBounds(0, end_clen, start_clen);
-		result->reverse();
-	}
-	return true;
+	return result;
 }

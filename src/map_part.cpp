@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012, 2013, 2014 Kai Pastor
+ *    Copyright 2012-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -27,6 +27,7 @@
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
+#include "file_format.h"
 #include "map.h"
 #include "object.h"
 #include "object_operations.h"
@@ -56,13 +57,12 @@ MapPart::MapPart(const QString& name, Map* map)
 
 MapPart::~MapPart()
 {
-	int size = (int)objects.size();
-	for (int i = 0; i < size; ++i)
-		delete objects[i];
+	for (Object* object : objects)
+		delete object;
 }
 
 
-void MapPart::setName(const QString new_name)
+void MapPart::setName(const QString& new_name)
 {
 	name = new_name;
 	if (map)
@@ -70,26 +70,29 @@ void MapPart::setName(const QString new_name)
 }
 
 
+#ifndef NO_NATIVE_FILE_FORMAT
+
 bool MapPart::load(QIODevice* file, int version, Map* map)
 {
 	loadString(file, name);
 	
 	int size;
 	file->read((char*)&size, sizeof(int));
-	objects.resize(size);
+	objects.resize(size, nullptr);
 	
-	for (int i = 0; i < size; ++i)
+	for (Object*& object : objects)
 	{
 		int save_type;
 		file->read((char*)&save_type, sizeof(int));
-		objects[i] = Object::getObjectForType(static_cast<Object::Type>(save_type), NULL);
-		if (!objects[i])
+		object = Object::getObjectForType(static_cast<Object::Type>(save_type), nullptr);
+		if (!object)
 			return false;
-		objects[i]->load(file, version, map);
+		object->load(file, version, map);
 	}
 	return true;
 }
 
+#endif
 
 void MapPart::save(QXmlStreamWriter& xml) const
 {
@@ -99,9 +102,9 @@ void MapPart::save(QXmlStreamWriter& xml) const
 		XmlElementWriter objects_element(xml, literal::objects);
 		std::size_t size = objects.size();
 		objects_element.writeAttribute(literal::count, size);
-		for (ObjectList::const_iterator o = objects.begin(), end = objects.end(); o != end; ++o)
+		for (const Object* object : objects)
 		{
-			(*o)->save(xml);
+			object->save(xml);
 		}
 	}
 }
@@ -157,9 +160,8 @@ void MapPart::setObject(Object* object, int pos, bool delete_old)
 		delete objects[pos];
 	
 	objects[pos] = object;
-	bool delete_old_renderables = object->getMap() == map;
 	object->setMap(map);
-	object->update(true, delete_old_renderables);
+	object->update();
 	map->setObjectsDirty(); // TODO: remove from here, dirty state handling should be separate
 }
 
@@ -167,9 +169,9 @@ void MapPart::addObject(Object* object, int pos)
 {
 	objects.insert(objects.begin() + pos, object);
 	object->setMap(map);
-	object->update(true, true);
+	object->update();
 	
-	if (map->getNumObjects() == 1)
+	if (objects.size() == 1 && map->getNumObjects() == 1)
 		map->updateAllMapWidgets();
 }
 
@@ -177,12 +179,12 @@ void MapPart::deleteObject(int pos, bool remove_only)
 {
 	map->removeRenderablesOfObject(objects[pos], true);
 	if (remove_only)
-		objects[pos]->setMap(NULL);
+		objects[pos]->setMap(nullptr);
 	else
 		delete objects[pos];
 	objects.erase(objects.begin() + pos);
 	
-	if (map->getNumObjects() == 0)
+	if (objects.empty() && map->getNumObjects() == 0)
 		map->updateAllMapWidgets();
 }
 
@@ -211,15 +213,15 @@ void MapPart::importPart(MapPart* other, QHash<const Symbol*, Symbol*>& symbol_m
 		map->clearObjectSelection(false);
 	
 	objects.reserve(objects.size() + other->objects.size());
-	for (size_t i = 0, end = other->objects.size(); i < end; ++i)
+	for (const Object* object: other->objects)
 	{
-		Object* new_object = other->objects[i]->duplicate();
+		Object* new_object = object->duplicate();
 		if (symbol_map.contains(new_object->getSymbol()))
 			new_object->setSymbol(symbol_map.value(new_object->getSymbol()), true);
 		
 		objects.push_back(new_object);
 		new_object->setMap(map);
-		new_object->update(true, true);
+		new_object->update();
 		
 		undo_step->addObject((int)objects.size() - 1);
 		if (select_new_objects)
@@ -238,58 +240,65 @@ void MapPart::importPart(MapPart* other, QHash<const Symbol*, Symbol*>& symbol_m
 		map->updateAllMapWidgets();
 }
 
-void MapPart::findObjectsAt(MapCoordF coord, float tolerance, bool treat_areas_as_paths, bool extended_selection, bool include_hidden_objects, bool include_protected_objects, SelectionInfoVector& out)
+void MapPart::findObjectsAt(
+        MapCoordF coord,
+        float tolerance,
+        bool treat_areas_as_paths,
+        bool extended_selection,
+        bool include_hidden_objects,
+        bool include_protected_objects,
+        SelectionInfoVector& out ) const
 {
-	int size = objects.size();
-	for (int i = 0; i < size; ++i)
+	for (Object* object : objects)
 	{
-		if (!include_hidden_objects && objects[i]->getSymbol()->isHidden())
+		if (!include_hidden_objects && object->getSymbol()->isHidden())
 			continue;
-		if (!include_protected_objects && objects[i]->getSymbol()->isProtected())
+		if (!include_protected_objects && object->getSymbol()->isProtected())
 			continue;
 		
-		objects[i]->update();
-		int selected_type = objects[i]->isPointOnObject(coord, tolerance, treat_areas_as_paths, extended_selection);
+		object->update();
+		int selected_type = object->isPointOnObject(coord, tolerance, treat_areas_as_paths, extended_selection);
 		if (selected_type != (int)Symbol::NoSymbol)
-			out.push_back(std::pair<int, Object*>(selected_type, objects[i]));
+			out.emplace_back(selected_type, object);
 	}
 }
 
-void MapPart::findObjectsAtBox(MapCoordF corner1, MapCoordF corner2, bool include_hidden_objects, bool include_protected_objects, std::vector< Object* >& out)
+void MapPart::findObjectsAtBox(
+        MapCoordF corner1,
+        MapCoordF corner2,
+        bool include_hidden_objects,
+        bool include_protected_objects,
+        std::vector< Object* >& out ) const
 {
-	QRectF rect = QRectF(QPointF(qMin(corner1.getX(), corner2.getX()), qMin(corner1.getY(), corner2.getY())),
-						 QPointF(qMax(corner1.getX(), corner2.getX()), qMax(corner1.getY(), corner2.getY())));
-	
-	int size = objects.size();
-	for (int i = 0; i < size; ++i)
+	auto rect = QRectF(corner1, corner2).normalized();
+	for (Object* object : objects)
 	{
-		if (!include_hidden_objects && objects[i]->getSymbol()->isHidden())
+		if (!include_hidden_objects && object->getSymbol()->isHidden())
 			continue;
-		if (!include_protected_objects && objects[i]->getSymbol()->isProtected())
+		if (!include_protected_objects && object->getSymbol()->isProtected())
 			continue;
 		
-		objects[i]->update();
-		if (rect.intersects(objects[i]->getExtent()) && objects[i]->intersectsBox(rect))
-			out.push_back(objects[i]);
+		object->update();
+		if (rect.intersects(object->getExtent()) && object->intersectsBox(rect))
+			out.push_back(object);
 	}
 }
 
-int MapPart::countObjectsInRect(QRectF map_coord_rect, bool include_hidden_objects)
+int MapPart::countObjectsInRect(QRectF map_coord_rect, bool include_hidden_objects) const
 {
 	int count = 0;
-	int size = objects.size();
-	for (int i = 0; i < size; ++i)
+	for (const Object* object : objects)
 	{
-		if (objects[i]->getSymbol()->isHidden() && !include_hidden_objects)
+		if (object->getSymbol()->isHidden() && !include_hidden_objects)
 			continue;
-		objects[i]->update();
-		if (objects[i]->getExtent().intersects(map_coord_rect))
+		object->update();
+		if (object->getExtent().intersects(map_coord_rect))
 			++count;
 	}
 	return count;
 }
 
-QRectF MapPart::calculateExtent(bool include_helper_symbols)
+QRectF MapPart::calculateExtent(bool include_helper_symbols) const
 {
 	QRectF rect;
 	

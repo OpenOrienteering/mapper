@@ -19,6 +19,14 @@
 
 #include "autosave_dialog.h"
 
+#include <QCloseEvent>
+#include <QDateTime>
+#include <QDialogButtonBox>
+#include <QFileInfo>
+#include <QLabel>
+#include <QListWidget>
+#include <QVBoxLayout>
+
 #include "main_window.h"
 
 AutosaveDialog::AutosaveDialog(QString path, QString autosave_path, QString actual_path, MainWindow* parent, Qt::WindowFlags f)
@@ -28,7 +36,7 @@ AutosaveDialog::AutosaveDialog(QString path, QString autosave_path, QString actu
 , autosave_path(autosave_path)
 , resolved(false)
 {
-	const QString text_template = QString("<b>%1</b><br/>%2<br>%3");
+	const QString text_template = QString("<b>%1</b><br/>%2<br/>%3");
 	
 	QFileInfo autosaved_file_info(autosave_path);
 	autosaved_text.setHtml(text_template.
@@ -68,6 +76,11 @@ AutosaveDialog::AutosaveDialog(QString path, QString autosave_path, QString actu
 	setSelectedPath(actual_path);
 	
 	connect(list_widget, SIGNAL(currentRowChanged(int)), this, SLOT(currentRowChanged(int)), Qt::QueuedConnection);
+	
+#if defined(Q_OS_ANDROID)
+	setWindowState((windowState() & ~(Qt::WindowMinimized | Qt::WindowFullScreen))
+	               | Qt::WindowMaximized);
+#endif
 }
 
 AutosaveDialog::~AutosaveDialog()

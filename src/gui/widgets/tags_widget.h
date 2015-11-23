@@ -21,7 +21,10 @@
 #ifndef OPENORIENTEERING_TAGS_WIDGET_H
 #define OPENORIENTEERING_TAGS_WIDGET_H
 
-#include <QtWidgets>
+#include <QWidget>
+
+class QTableWidget;
+class QToolButton;
 
 class Map;
 class MapEditorController;

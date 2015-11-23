@@ -1,0 +1,53 @@
+#
+#    Copyright 2014 Kai Pastor
+#    
+#    This file is part of OpenOrienteering.
+# 
+#    OpenOrienteering is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+# 
+#    OpenOrienteering is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+# 
+#    You should have received a copy of the GNU General Public License
+#    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
+
+PROJECT_NAME           = "@PROJECT_NAME@"
+PROJECT_NUMBER         = "@Mapper_VERSION_MAJOR@.@Mapper_VERSION_MINOR@.@Mapper_VERSION_PATCH@"
+PROJECT_BRIEF          = "API documentation"
+PROJECT_LOGO           = "@CMAKE_CURRENT_SOURCE_DIR@/../openorienteering.png"
+
+QUIET                  = YES
+
+INPUT                  = "@PROJECT_SOURCE_DIR@/src"
+INPUT                 += "@PROJECT_SOURCE_DIR@/android/src"
+INPUT                 += "@PROJECT_SOURCE_DIR@/test"
+INPUT                 += "@PROJECT_SOURCE_DIR@/doc/api/extra"
+RECURSIVE              = YES
+STRIP_FROM_PATH        = "@PROJECT_SOURCE_DIR@"
+FILE_VERSION_FILTER    = "@CMAKE_CURRENT_BINARY_DIR@/versionfilter.sh"
+SOURCE_BROWSER         = NO
+VERBATIM_HEADERS       = NO
+
+INCLUDE_PATH          += "@PROJECT_SOURCE_DIR@/src/printsupport/qt-5.5.1"
+PREDEFINED             = QT_PRINTSUPPORT_LIB QT_SENSORS_LIB QT_LOCATION_LIB
+PREDEFINED            += Qt5Core_VERSION=5.5 Qt5PrintSupport_VERSION=5.5
+JAVADOC_AUTOBRIEF      = YES
+QT_AUTOBRIEF           = YES
+BUILTIN_STL_SUPPORT    = YES
+EXTRACT_ALL            = YES
+HAVE_DOT               = YES
+GENERATE_TAGFILE       = oomapper.tags
+TAGFILES              += qtcore.tags=http://doc.qt.io/qt-5/
+TAGFILES              += qtgui.tags=http://doc.qt.io/qt-5/
+TAGFILES              += qtwidgets.tags=http://doc.qt.io/qt-5/
+TAGFILES              += qtxml.tags=http://doc.qt.io/qt-5/
+TAGFILES              += qtnetwork.tags=http://doc.qt.io/qt-5/
+TAGFILES              += qtprintsupport.tags=http://doc.qt.io/qt-5/
+
+GENERATE_LATEX         = NO
+HTML_TIMESTAMP         = NO

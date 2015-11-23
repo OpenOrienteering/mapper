@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2013-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -21,9 +22,17 @@
 #include "template_track.h"
 
 #include <qmath.h>
-#include <QtWidgets>
+#include <QComboBox>
+#include <QCommandLinkButton>
+#include <QFormLayout>
+#include <QMessageBox>
+#include <QPainter>
+#include <QRadioButton>
+#include <QXmlStreamReader>
+#include <QXmlStreamWriter>
 
 #include "gui/georeferencing_dialog.h"
+#include "gui/select_crs_dialog.h"
 #include "map_widget.h"
 #include "object_undo.h"
 #include "object.h"
@@ -117,15 +126,20 @@ bool TemplateTrack::postLoadConfiguration(QWidget* dialog_parent, bool& out_cent
 	// If no track CRS is given by the template file, ask the user
 	if (!track.hasTrackCRS())
 	{
-		if (map->getGeoreferencing().getState() == Georeferencing::ScaleOnly ||
-			map->getGeoreferencing().isLocal())
+		if (map->getGeoreferencing().isLocal())
+		{
 			track_crs_spec = "";
+		}
 		else
 		{
-			SelectCRSDialog dialog(map, dialog_parent, true, true, true, tr("Select the coordinate reference system of the track coordinates"));
+			SelectCRSDialog dialog(
+			            map->getGeoreferencing(),
+			            dialog_parent,
+			            SelectCRSDialog::TakeFromMap | SelectCRSDialog::Local | SelectCRSDialog::Geographic,
+			            tr("Select the coordinate reference system of the track coordinates") );
 			if (dialog.exec() == QDialog::Rejected)
 				return false;
-			track_crs_spec = dialog.getCRSSpec();
+			track_crs_spec = dialog.currentCRSSpec();
 		}
 		
 		Georeferencing* track_crs = new Georeferencing();
@@ -188,6 +202,7 @@ bool TemplateTrack::postLoadConfiguration(QWidget* dialog_parent, bool& out_cent
 		
 		// Show the parameter dialog
 		GeoreferencingDialog dialog(dialog_parent, map, &georef);
+		dialog.setKeepGeographicRefCoords();
 		if (dialog.exec() == QDialog::Rejected || map->getGeoreferencing().isLocal())
 			return false;
 	}
@@ -247,16 +262,16 @@ void TemplateTrack::drawTracks(QPainter* painter, bool on_screen) const
 			{
 				if (track.getSegmentPoint(i, k - 1).is_curve_start && k < track.getSegmentPointCount(i) - 2)
 				{
-					path.cubicTo(point.map_coord.toQPointF(),
-					             track.getSegmentPoint(i, k + 1).map_coord.toQPointF(),
-					             track.getSegmentPoint(i, k + 2).map_coord.toQPointF());
+					path.cubicTo(point.map_coord,
+					             track.getSegmentPoint(i, k + 1).map_coord,
+					             track.getSegmentPoint(i, k + 2).map_coord);
 					k += 2;
 				}
 				else
-					path.lineTo(point.map_coord.getX(), point.map_coord.getY());
+					path.lineTo(point.map_coord.x(), point.map_coord.y());
 			}
 			else
-				path.moveTo(point.map_coord.getX(), point.map_coord.getY());
+				path.moveTo(point.map_coord.x(), point.map_coord.y());
 		}
 		painter->drawPath(path);
 	}
@@ -284,13 +299,13 @@ void TemplateTrack::drawWaypoints(QPainter* painter) const
 		const QString& point_name = track.getWaypointName(i);
 		
 		double const radius = 0.25;
-		painter->drawEllipse(point.map_coord.toQPointF(), radius, radius);
+		painter->drawEllipse(point.map_coord, radius, radius);
 		if (!point_name.isEmpty())
 		{
 			painter->setPen(qRgb(255, 0, 0));
 			int width = painter->fontMetrics().width(point_name);
-			painter->drawText(QRect(point.map_coord.getX() - 0.5*width,
-			                        point.map_coord.getY() - height,
+			painter->drawText(QRect(point.map_coord.x() - 0.5*width,
+			                        point.map_coord.y() - height,
 			                        width,
 			                        height),
 			                  Qt::AlignCenter,
@@ -305,10 +320,10 @@ void TemplateTrack::drawWaypoints(QPainter* painter) const
 QRectF TemplateTrack::getTemplateExtent() const
 {
 	// Infinite because the extent of the waypoint texts is unknown
-	return infinteRectF();
+	return infiniteRectF();
 }
 
-QRectF TemplateTrack::calculateTemplateBoundingBox()
+QRectF TemplateTrack::calculateTemplateBoundingBox() const
 {
 	QRectF bbox;
 	
@@ -317,7 +332,7 @@ QRectF TemplateTrack::calculateTemplateBoundingBox()
 	{
 		const TrackPoint& track_point = track.getWaypoint(i);
 		MapCoordF point = track_point.map_coord;
-		rectIncludeSafe(bbox, is_georeferenced ? point.toQPointF() : templateToMap(point).toQPointF());
+		rectIncludeSafe(bbox, is_georeferenced ? point : templateToMap(point));
 	}
 	for (int i = 0; i < track.getNumSegments(); ++i)
 	{
@@ -326,7 +341,7 @@ QRectF TemplateTrack::calculateTemplateBoundingBox()
 		{
 			const TrackPoint& track_point = track.getSegmentPoint(i, k);
 			MapCoordF point = track_point.map_coord;
-			rectIncludeSafe(bbox, is_georeferenced ? point.toQPointF() : templateToMap(point).toQPointF());
+			rectIncludeSafe(bbox, is_georeferenced ? point : templateToMap(point));
 		}
 	}
 	
@@ -397,7 +412,7 @@ bool TemplateTrack::import(QWidget* dialog_parent)
 		{
 			PathObject* path = importPathStart();
 			for (int i = 0; i < track.getNumWaypoints(); i++)
-				path->addCoordinate(templateToMap(track.getWaypoint(i).map_coord).toMapCoord());
+				path->addCoordinate(MapCoord(templateToMap(track.getWaypoint(i).map_coord)));
 			importPathEnd(path);
 			path->setTag("name", "");
 			result.push_back(path);
@@ -428,7 +443,7 @@ bool TemplateTrack::import(QWidget* dialog_parent)
 		for (int j = 0; j < segment_size; j++)
 		{
 			const TrackPoint& track_point = track.getSegmentPoint(i, j);
-			MapCoord coord = templateToMap(track_point.map_coord).toMapCoord();
+			auto coord = MapCoord { templateToMap(track_point.map_coord) };
 			if (track_point.is_curve_start && j < segment_size - 3)
 				coord.setCurveStart(true);
 			path->addCoordinate(coord);

@@ -21,7 +21,10 @@
 #include "template_dialog_reopen.h"
 
 #include <qmath.h>
-#include <QtWidgets>
+#include <QDialogButtonBox>
+#include <QGridLayout>
+#include <QLabel>
+#include <QPushButton>
 
 #include "map.h"
 #include "template.h"
@@ -133,7 +136,7 @@ void ReopenTemplateDialog::OpenTemplateList::dropEvent(QDropEvent* event)
 		else
 			in_front = true;
 	}
-	assert(target_pos <= dialog->map->getNumTemplates());
+	Q_ASSERT(target_pos <= dialog->map->getNumTemplates());
 	
 	if (!in_front)
 		dialog->map->setFirstFrontTemplate(dialog->map->getFirstFrontTemplate() + 1);

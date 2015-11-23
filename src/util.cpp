@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2013-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -29,6 +30,7 @@
 #include <QSettings>
 #include <QScreen>
 
+#include "core/map_coord.h"
 #include "mapper_resource.h"
 #include "settings.h"
 #include <mapper_config.h>
@@ -57,18 +59,6 @@ void blockSignalsRecursively(QObject* obj, bool block)
 		blockSignalsRecursively(*it, block);
 }
 
-void rectInclude(QRectF& rect, MapCoordF point)
-{
-	if (point.getX() < rect.left())
-		rect.setLeft(point.getX());
-	else if (point.getX() > rect.right())
-		rect.setRight(point.getX());
-	
-	if (point.getY() < rect.top())
-		rect.setTop(point.getY());
-	else if (point.getY() > rect.bottom())
-		rect.setBottom(point.getY());
-}
 void rectInclude(QRectF& rect, QPointF point)
 {
 	if (point.x() < rect.left())
@@ -81,6 +71,7 @@ void rectInclude(QRectF& rect, QPointF point)
 	else if (point.y() > rect.bottom())
 		rect.setBottom(point.y());
 }
+
 void rectIncludeSafe(QRectF& rect, QPointF point)
 {
 	if (rect.isValid())
@@ -88,6 +79,7 @@ void rectIncludeSafe(QRectF& rect, QPointF point)
 	else
 		rect = QRectF(point.x(), point.y(), 0.0001, 0.0001);
 }
+
 void rectInclude(QRectF& rect, const QRectF& other_rect)
 {
 	if (other_rect.left() < rect.left())
@@ -203,9 +195,9 @@ double parameterOfPointOnLine(double x0, double y0, double dx, double dy, double
 bool isPointOnSegment(const MapCoordF& seg_start, const MapCoordF& seg_end, const MapCoordF& point)
 {
 	bool ok;
-	double param = parameterOfPointOnLine(seg_start.getX(), seg_start.getY(),
-										  seg_end.getX() - seg_start.getX(), seg_end.getY() - seg_start.getY(),
-										  point.getX(), point.getY(), ok);
+	double param = parameterOfPointOnLine(seg_start.x(), seg_start.y(),
+	                                      seg_end.x() - seg_start.x(), seg_end.y() - seg_start.y(),
+	                                      point.x(), point.y(), ok);
 	return ok && param >= 0 && param <= 1;
 }
 
@@ -236,8 +228,8 @@ void showHelp(QWidget* dialog_parent, QString filename, QString fragment)
 	}
 	else
 	{
-		const QString help_collection_path(MapperResource::locate(MapperResource::MANUAL, QLatin1String("Mapper ")+APP_VERSION+".qhc"));
-		const QString compiled_help_path(MapperResource::locate(MapperResource::MANUAL, QLatin1String("Mapper ")+APP_VERSION+".qch"));
+		const QString help_collection_path(MapperResource::locate(MapperResource::MANUAL, QLatin1String("Mapper ")+APP_VERSION+" Manual.qhc"));
+		const QString compiled_help_path(MapperResource::locate(MapperResource::MANUAL, QLatin1String("Mapper ")+APP_VERSION+" Manual.qch"));
 		if (help_collection_path.isEmpty() || compiled_help_path.isEmpty())
 		{
 			QMessageBox::warning(dialog_parent, QApplication::translate("Util", "Error"), QApplication::translate("Util", "Failed to locate the help files."));
@@ -266,7 +258,13 @@ void showHelp(QWidget* dialog_parent, QString filename, QString fragment)
 			// style on X11.
 			args << QLatin1String("-style") << QLatin1String("fusion");
 		}
-		 
+		
+#if defined(Q_OS_LINUX) && !defined(Q_OS_ANDROID)
+		auto env = QProcessEnvironment::systemEnvironment();
+		env.insert(QLatin1String("QT_SELECT"), QLatin1String("qt5")); // #541
+		assistant_process.setProcessEnvironment(env);
+#endif
+		
 		assistant_process.start(assistant_path, args);
 		
 		// FIXME: Calling waitForStarted() from the main thread might cause the user interface to freeze.
@@ -288,37 +286,36 @@ void showHelp(QWidget* dialog_parent, QString filename, QString fragment)
 
 QString makeHelpUrl(QString filename, QString fragment)
 {
-	return QLatin1String("qthelp://") + MAPPER_HELP_NAMESPACE + "/oohelpdoc/help/html_en/" + filename + (fragment.isEmpty() ? "" : ("#" + fragment));
+	return QLatin1String("qthelp://") + MAPPER_HELP_NAMESPACE + "/manual/" + filename + (fragment.isEmpty() ? "" : ("#" + fragment));
 }
 
-float mmToPixelPhysical(float millimeters)
+qreal mmToPixelPhysical(qreal millimeters)
 {
-	float ppi = Settings::getInstance().getSettingCached(Settings::General_PixelsPerInch).toFloat();
+	auto ppi = Settings::getInstance().getSettingCached(Settings::General_PixelsPerInch).toReal();
+	return millimeters * ppi / 25.4;
+}
+
+qreal pixelToMMPhysical(qreal pixels)
+{
+	auto ppi = Settings::getInstance().getSettingCached(Settings::General_PixelsPerInch).toReal();
+	return pixels * 25.4 / ppi;
+}
+
+qreal mmToPixelLogical(qreal millimeters)
+{
+	auto ppi = QApplication::primaryScreen()->logicalDotsPerInch();
 	return millimeters * ppi / 25.4f;
 }
 
-float pixelToMMPhysical(float pixels)
+qreal pixelToMMLogical(qreal pixels)
 {
-	float ppi = Settings::getInstance().getSettingCached(Settings::General_PixelsPerInch).toFloat();
+	auto ppi = QApplication::primaryScreen()->logicalDotsPerInch();
 	return pixels * 25.4f / ppi;
 }
 
-float mmToPixelLogical(float millimeters)
+bool isAntialiasingRequired()
 {
-	float ppi = QApplication::primaryScreen()->logicalDotsPerInch();
-	return millimeters * ppi / 25.4f;
-}
-
-float pixelToMMLogical(float pixels)
-{
-	float ppi = QApplication::primaryScreen()->logicalDotsPerInch();
-	return pixels * 25.4f / ppi;
-}
-
-bool isAntialiasingRequired(Settings* settings)
-{
-	float ppi = settings ? settings->getSettingCached(Settings::General_PixelsPerInch).toFloat() : Settings::getInstance().getSettingCached(Settings::General_PixelsPerInch).toFloat();
-	return ppi < 200;
+	return isAntialiasingRequired(Settings::getInstance().getSettingCached(Settings::General_PixelsPerInch).toReal());
 }
 
 }

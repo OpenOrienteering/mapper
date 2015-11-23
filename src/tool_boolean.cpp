@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2014 Kai Pastor
+ *    Copyright 2014, 2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -22,6 +22,7 @@
 #include "tool_boolean.h"
 
 #include <algorithm>
+#include <memory>
 
 #include <QDebug>
 
@@ -60,9 +61,7 @@ uint qHash(const IntPoint& point, uint seed)
  */
 static MapCoord resetCoordinate(MapCoord in)
 {
-	in.setHolePoint(false);
-	in.setClosePoint(false);
-	in.setCurveStart(false);
+	in.setFlags(0);
 	return in;
 }
 
@@ -71,7 +70,7 @@ static MapCoord resetCoordinate(MapCoord in)
  */
 bool operator==(const MapCoord& lhs, const ClipperLib::IntPoint& rhs)
 {
-	return lhs.rawX() == rhs.X && lhs.rawY() == rhs.Y;
+	return lhs.nativeX() == rhs.X && lhs.nativeY() == rhs.Y;
 }
 
 /**
@@ -106,14 +105,12 @@ bool BooleanTool::execute()
 	// Filter selected objects into in_objects
 	PathObjects in_objects;
 	in_objects.reserve(map->getNumSelectedObjects());
-	Map::ObjectSelection::const_iterator it_end = map->selectedObjectsEnd();
-	for (Map::ObjectSelection::const_iterator it = map->selectedObjectsBegin(); it != it_end; ++it)
+	for (Object* object : map->selectedObjects())
 	{
-		Object* const object = *it;
 		if (object->getType() == Object::Path)
 		{
 			PathObject* const path = object->asPath();
-			if (op != MergeHoles || (object->getSymbol()->getContainedTypes() & Symbol::Area && path->getNumParts() > 1 ))
+			if (op != MergeHoles || (object->getSymbol()->getContainedTypes() & Symbol::Area && path->parts().size() > 1 ))
 			{
 				in_objects.push_back(path);
 			}
@@ -123,7 +120,7 @@ bool BooleanTool::execute()
 	// Perform the core operation
 	QScopedPointer<CombinedUndoStep> undo_step(new CombinedUndoStep(map));
 	PathObjects out_objects;
-	if (!executeForObjects(primary_object->asPath(), primary_object->getSymbol(), in_objects, out_objects, *undo_step))
+	if (!executeForObjects(primary_object->asPath(), in_objects, out_objects, *undo_step))
 	{
 		Q_ASSERT(out_objects.size() == 0);
 		return false; // in release build
@@ -142,13 +139,10 @@ bool BooleanTool::executePerSymbol()
 	backlog.reserve(map->getNumSelectedObjects());
 	
 	// Filter area objects into initial backlog
-	for (Map::ObjectSelection::const_iterator it = map->selectedObjectsBegin(),
-	                                         end = map->selectedObjectsEnd();
-	     it != end;
-	     ++it)
+	for (Object* object : map->selectedObjects())
 	{
-		if ((*it)->getSymbol()->getContainedTypes() & Symbol::Area)
-			backlog.push_back((*it)->asPath());
+		if (object->getSymbol()->getContainedTypes() & Symbol::Area)
+			backlog.push_back(object->asPath());
 	}
 	
 	QScopedPointer<CombinedUndoStep> undo_step(new CombinedUndoStep(map));
@@ -165,15 +159,11 @@ bool BooleanTool::executePerSymbol()
 		// Filter objects by symbol into in_objects or new_backlog, respectively
 		new_backlog.clear();
 		in_objects.clear();
-		for (PathObjects::const_iterator it = backlog.begin(),
-		                               end = backlog.end();
-		     it != end;
-		     ++it)
+		for (PathObject* object : backlog)
 		{
-			PathObject* const object = *it;
 			if (object->getSymbol() == symbol)
 			{
-				if (op != MergeHoles || (object->getSymbol()->getContainedTypes() & Symbol::Area && object->getNumParts() > 1 ))
+				if (op != MergeHoles || (object->getSymbol()->getContainedTypes() & Symbol::Area && object->parts().size() > 1 ))
 				{
 					in_objects.push_back(object);
 				}
@@ -191,7 +181,7 @@ bool BooleanTool::executePerSymbol()
 		
 		// Perform the core operation
 		out_objects.clear();
-		executeForObjects(primary_object, primary_object->getSymbol(), in_objects, out_objects, *undo_step);
+		executeForObjects(primary_object, in_objects, out_objects, *undo_step);
 	}
 	
 	bool const have_changes = undo_step->getNumSubSteps() > 0;
@@ -205,9 +195,9 @@ bool BooleanTool::executePerSymbol()
 	return have_changes;
 }
 
-bool BooleanTool::executeForObjects(PathObject* subject, const Symbol* result_objects_symbol, PathObjects& in_objects, PathObjects& out_objects, CombinedUndoStep& undo_step)
+bool BooleanTool::executeForObjects(PathObject* subject, PathObjects& in_objects, PathObjects& out_objects, CombinedUndoStep& undo_step)
 {
-	if (!executeForObjects(subject, result_objects_symbol, in_objects, out_objects))
+	if (!executeForObjects(subject, in_objects, out_objects))
 	{
 		Q_ASSERT(out_objects.size() == 0);
 		return false; // in release build
@@ -215,18 +205,16 @@ bool BooleanTool::executeForObjects(PathObject* subject, const Symbol* result_ob
 	
 	// Add original objects to undo step, and remove them from map.
 	QScopedPointer<AddObjectsUndoStep> add_step(new AddObjectsUndoStep(map));
-	for (PathObjects::iterator it = in_objects.begin(), end = in_objects.end(); it != end; ++it)
+	for (PathObject* object : in_objects)
 	{
-		PathObject* object = *it;
 		if (op != Difference || object == subject)
 		{
 			add_step->addObject(object, object);
 		}
 	}
 	// Keep as separate loop to get the correct index in the previous loop
-	for (PathObjects::iterator it = in_objects.begin(), end = in_objects.end(); it != end; ++it)
+	for (PathObject* object : in_objects)
 	{
-		PathObject* object = *it;
 		if (op != Difference || object == subject)
 		{
 			map->removeObjectFromSelection(object, false);
@@ -238,16 +226,14 @@ bool BooleanTool::executeForObjects(PathObject* subject, const Symbol* result_ob
 	// Add resulting objects to map, and create delete step for them
 	QScopedPointer<DeleteObjectsUndoStep> delete_step(new DeleteObjectsUndoStep(map));
 	MapPart* part = map->getCurrentPart();
-	for (PathObjects::iterator it = out_objects.begin(), end = out_objects.end(); it != end; ++it)
+	for (PathObject* object : out_objects)
 	{
-		PathObject* object = *it;
 		map->addObject(object);
 		map->addObjectToSelection(object, false);
 	}
 	// Keep as separate loop to get the correct index in the previous loop
-	for (PathObjects::iterator it = out_objects.begin(), end = out_objects.end(); it != end; ++it)
+	for (PathObject* object : out_objects)
 	{
-		PathObject* object = *it;
 		delete_step->addObject(part->findObjectIndex(object));
 	}
 	
@@ -256,24 +242,22 @@ bool BooleanTool::executeForObjects(PathObject* subject, const Symbol* result_ob
 	return true;
 }
 
-bool BooleanTool::executeForObjects(PathObject* subject, const Symbol* result_objects_symbol, PathObjects& in_objects, PathObjects& out_objects)
+bool BooleanTool::executeForObjects(PathObject* subject, PathObjects& in_objects, PathObjects& out_objects)
 {
-	
 	// Convert the objects to Clipper polygons and
 	// create a hash map, mapping point positions to the PathCoords.
 	// These paths are to be regarded as closed.
 	PolyMap polymap;
 	
 	ClipperLib::Paths subject_polygons;
-	PathObjectToPolygons(subject, subject_polygons, polymap);
+	pathObjectToPolygons(subject, subject_polygons, polymap);
 	
 	ClipperLib::Paths clip_polygons;
-	for (PathObjects::iterator it = in_objects.begin(), end = in_objects.end(); it != end; ++it)
+	for (PathObject* object : in_objects)
 	{
-		PathObject* object = *it;
 		if (object != subject)
 		{
-			PathObjectToPolygons(object, clip_polygons, polymap);
+			pathObjectToPolygons(object, clip_polygons, polymap);
 		}
 	}
 	
@@ -306,111 +290,114 @@ bool BooleanTool::executeForObjects(PathObject* subject, const Symbol* result_ob
 	if (success)
 	{
 		// Try to convert the solution polygons to objects again
-		polyTreeToPathObjects(solution, out_objects, result_objects_symbol, polymap);
+		polyTreeToPathObjects(solution, out_objects, subject, polymap);
 	}
 	
 	return success;
 }
 
-void BooleanTool::polyTreeToPathObjects(const ClipperLib::PolyTree& tree, PathObjects& out_objects, const Symbol* result_objects_symbol, PolyMap& polymap)
+void BooleanTool::polyTreeToPathObjects(const ClipperLib::PolyTree& tree, PathObjects& out_objects, const PathObject* proto, const PolyMap& polymap)
 {
 	for (int i = 0, count = tree.ChildCount(); i < count; ++i)
-		outerPolyNodeToPathObjects(*tree.Childs[i], out_objects, result_objects_symbol, polymap);
+		outerPolyNodeToPathObjects(*tree.Childs[i], out_objects, proto, polymap);
 }
 
-void BooleanTool::outerPolyNodeToPathObjects(const ClipperLib::PolyNode& node, PathObjects& out_objects, const Symbol* result_objects_symbol, PolyMap& polymap)
+void BooleanTool::outerPolyNodeToPathObjects(const ClipperLib::PolyNode& node, PathObjects& out_objects, const PathObject* proto, const PolyMap& polymap)
 {
-	PathObject* object = new PathObject();
-	object->setSymbol(result_objects_symbol, true);
+	auto object = std::unique_ptr<PathObject>{ new PathObject{ *proto } };
+	object->clearCoordinates();
 	
-	polygonToPathPart(node.Contour, polymap, object);
-	for (int i = 0, i_count = node.ChildCount(); i < i_count; ++i)
+	try
 	{
-		polygonToPathPart(node.Childs[i]->Contour, polymap, object);
+		polygonToPathPart(node.Contour, polymap, object.get());
+		for (int i = 0, i_count = node.ChildCount(); i < i_count; ++i)
+		{
+			polygonToPathPart(node.Childs[i]->Contour, polymap, object.get());
+			
+			// Add outer polygons contained by (nested within) holes ...
+			for (int j = 0, j_count = node.Childs[i]->ChildCount(); j < j_count; ++j)
+				outerPolyNodeToPathObjects(*node.Childs[i]->Childs[j], out_objects, proto, polymap);
+		}
 		
-		// Add outer polygons contained by (nested within) holes ...
-		for (int j = 0, j_count = node.Childs[i]->ChildCount(); j < j_count; ++j)
-			outerPolyNodeToPathObjects(*node.Childs[i]->Childs[j], out_objects, result_objects_symbol, polymap);
+		out_objects.push_back(object.release());
 	}
-	
-	out_objects.push_back(object);
+	catch (std::range_error)
+	{
+		// Do nothing
+	}
 }
 
 
 
-void BooleanTool::executeForLine(PathObject* area, PathObject* line, BooleanTool::PathObjects& out_objects)
+void BooleanTool::executeForLine(const PathObject* area, const PathObject* line, BooleanTool::PathObjects& out_objects)
 {
 	if (op != BooleanTool::Intersection && op != BooleanTool::Difference)
 	{
-		Q_ASSERT(false && "Only intersection and difference are supported.");
+		Q_ASSERT_X(false, "BooleanTool::executeForLine", "Only intersection and difference are supported.");
 		return; // no-op in release build
 	}
-	if (line->getNumParts() != 1)
+	if (line->parts().size() != 1)
 	{
-		Q_ASSERT(false && "Only single-part lines are supported.");
+		Q_ASSERT_X(false, "BooleanTool::executeForLine", "Only single-part lines are supported.");
 		return; // no-op in release build
 	}
 	
 	// Calculate all intersection points of line with the area path
 	PathObject::Intersections intersections;
 	line->calcAllIntersectionsWith(area, intersections);
-	intersections.clean();
-	
-	// For every segment, check whether it is inside or outside of the area.
-	// Keep only segments inside the area.
-	int line_coord_search_start = 0;
-	MapCoordVectorF mapCoordVectorF;
-	mapCoordVectorToF(line->getRawCoordinateVector(), mapCoordVectorF);
-	MapCoordF middle_pos;
+	intersections.normalize();
 	
 	PathObject* first_segment = NULL;
 	PathObject* last_segment = NULL;
 	
+	const auto& part        = line->parts().front();
+	const auto& path_coords = part.path_coords;
+	
 	// Only one segment?
 	if (intersections.empty())
 	{
-		double middle_length = line->getPart(0).getLength();
-		PathCoord::calculatePositionAt(line->getRawCoordinateVector(), mapCoordVectorF, line->getPathCoordinateVector(), middle_length, line_coord_search_start, &middle_pos, NULL);
-		if (area->isPointInsideArea(middle_pos) == (op == BooleanTool::Intersection))
-			out_objects.push_back(line->duplicate()->asPath());
+		auto middle_length = part.length();
+		auto middle = SplitPathCoord::at(path_coords, middle_length);
+		if (area->isPointInsideArea(middle.pos) == (op == BooleanTool::Intersection))
+			out_objects.push_back(new PathObject(*line));
 		return;
 	}
 	
 	// First segment
-	double middle_length = intersections[0].length / 2;
-	PathCoord::calculatePositionAt(line->getRawCoordinateVector(), mapCoordVectorF, line->getPathCoordinateVector(), middle_length, line_coord_search_start, &middle_pos, NULL);
-	if (area->isPointInsideArea(middle_pos) == (op == BooleanTool::Intersection))
+	auto middle_length = intersections[0].length / 2;
+	auto middle = SplitPathCoord::at(path_coords, middle_length);
+	if (area->isPointInsideArea(middle.pos) == (op == BooleanTool::Intersection))
 	{
-		PathObject* part = line->duplicate()->asPath();
-		part->changePathBounds(0, 0, intersections[0].length);
-		first_segment = part;
+		PathObject* segment = new PathObject(*line);
+		segment->changePathBounds(0, 0.0, intersections[0].length);
+		first_segment = segment;
 	}
 	
 	// Middle segments
 	for (std::size_t i = 0; i < intersections.size() - 1; ++i)
 	{
 		middle_length = (intersections[i].length + intersections[i+1].length) / 2;
-		PathCoord::calculatePositionAt(line->getRawCoordinateVector(), mapCoordVectorF, line->getPathCoordinateVector(), middle_length, line_coord_search_start, &middle_pos, NULL);
-		if (area->isPointInsideArea(middle_pos) == (op == BooleanTool::Intersection))
+		auto middle = SplitPathCoord::at(path_coords, middle_length);
+		if (area->isPointInsideArea(middle.pos) == (op == BooleanTool::Intersection))
 		{
-			PathObject* part = line->duplicate()->asPath();
-			part->changePathBounds(0, intersections[i].length, intersections[i+1].length);
-			out_objects.push_back(part);
+			PathObject* segment = new PathObject(*line);
+			segment->changePathBounds(0, intersections[i].length, intersections[i+1].length);
+			out_objects.push_back(segment);
 		}
 	}
 	
 	// Last segment
-	middle_length = (line->getPart(0).getLength() + intersections[intersections.size() - 1].length) / 2;
-	PathCoord::calculatePositionAt(line->getRawCoordinateVector(), mapCoordVectorF, line->getPathCoordinateVector(), middle_length, line_coord_search_start, &middle_pos, NULL);
-	if (area->isPointInsideArea(middle_pos) == (op == BooleanTool::Intersection))
+	middle_length = (part.length() + intersections.back().length) / 2;
+	middle = SplitPathCoord::at(path_coords, middle_length);
+	if (area->isPointInsideArea(middle.pos) == (op == BooleanTool::Intersection))
 	{
-		PathObject* part = line->duplicate()->asPath();
-		part->changePathBounds(0, intersections[intersections.size() - 1].length, line->getPart(0).getLength());
-		last_segment = part;
+		PathObject* segment = new PathObject(*line);
+		segment->changePathBounds(0, intersections.back().length, part.length());
+		last_segment = segment;
 	}
 	
 	// If the line was closed at the beginning, merge the first and last segments if they were kept both.
-	if (line->getPart(0).isClosed() && first_segment && last_segment)
+	if (part.isClosed() && first_segment && last_segment)
 	{
 		last_segment->connectPathParts(0, first_segment, 0, false);
 		delete first_segment;
@@ -425,161 +412,190 @@ void BooleanTool::executeForLine(PathObject* area, PathObject* line, BooleanTool
 	}
 }
 
-void BooleanTool::PathObjectToPolygons(PathObject* object, ClipperLib::Paths& polygons, PolyMap& polymap)
+void BooleanTool::pathObjectToPolygons(
+        const PathObject* object,
+        ClipperLib::Paths& polygons,
+        PolyMap& polymap)
 {
 	object->update();
 	
-	int part_count = object->getNumParts();
-	std::size_t polygon_index = polygons.size();
-	polygons.resize(polygon_index + part_count);
+	polygons.reserve(polygons.size() + object->parts().size());
 	
-	const PathCoordVector& path_coords = object->getPathCoordinateVector();
-	for (int part_number = 0; part_number < part_count; ++part_number, ++polygon_index)
+	for (const auto& part : object->parts())
 	{
-		PathObject::PathPart& part = object->getPart(part_number);
+		const PathCoordVector& path_coords = part.path_coords;
+		auto path_coords_end = path_coords.size();
+		if (part.isClosed())
+			--path_coords_end;
 		
-		ClipperLib::Path& polygon = polygons[polygon_index];
-		for (int i = part.path_coord_start_index + (part.isClosed() ? 1 : 0); i <= part.path_coord_end_index; ++i)
+		ClipperLib::Path polygon;
+		for (auto i = 0u; i < path_coords_end; ++i)
 		{
-			polygon.push_back(ClipperLib::IntPoint(path_coords[i].pos.getIntX(), path_coords[i].pos.getIntY()));
+			auto point = MapCoord { path_coords[i].pos };
+			polygon.push_back(ClipperLib::IntPoint(point.nativeX(), point.nativeY()));
 			polymap.insertMulti(polygon.back(), std::make_pair(&part, &path_coords[i]));
 		}
 		
 		bool orientation = Orientation(polygon);
-		if ((part_number == 0 && !orientation) || (part_number > 0 && orientation))
+		if ( (&part == &object->parts().front()) != orientation )
 		{
 			std::reverse(polygon.begin(), polygon.end());
 		}
+		
+		// Push_back shall move the polygon.
+		static_assert(std::is_nothrow_move_constructible<ClipperLib::Path>::value, "ClipperLib::Path must be nothrow move constructible");
+		polygons.push_back(polygon);
 	}
 }
 
 void BooleanTool::polygonToPathPart(const ClipperLib::Path& polygon, const PolyMap& polymap, PathObject* object)
 {
-	if (polygon.size() < 3)
+	auto num_points = polygon.size();
+	if (num_points < 3)
 		return;
 	
-	// Check if we can find either an unknown intersection point or a path coord with parameter 0 or 1.
-	// This gives a starting point to search for curves to rebuild (because we cannot start in the middle of a curve)
-	// Number of points in the polygon
-	int num_points = (int)polygon.size();
 	// Index of first used point in polygon
-	int part_start_index = 0;
+	auto part_start_index = 0u;
+	auto cur_info = PathCoordInfo{ nullptr, nullptr };
 	
+	// Check if we can find either an unknown intersection point
+	// or a path coord with parameter 0.
+	// This gives a starting point to search for curves to rebuild
+	// (because we cannot start in the middle of a curve)
 	for (; part_start_index < num_points; ++part_start_index)
 	{
-		if (!polymap.contains(polygon.at(part_start_index)))
+		auto current_point = polygon.at(part_start_index);
+		if (!polymap.contains(current_point))
 			break;
 		
-		const PathCoord* path_coord = polymap.value(polygon.at(part_start_index)).second;
-		if (path_coord->param <= 0 || path_coord->param >= 1)
+		if (polymap.value(current_point).second->param == 0.0)
+		{
+			cur_info = polymap.value(current_point);
 			break;
+		}
 	}
 	
 	if (part_start_index == num_points)
 	{
 		// Did not find a valid starting point. Return the part as a polygon.
-		for (int i = 0; i < num_points; ++i)
+		for (auto i = 0u; i < num_points; ++i)
 			object->addCoordinate(MapCoord(0.001 * polygon.at(i).X, 0.001 * polygon.at(i).Y), (i == 0));
-		object->getPart(object->getNumParts() - 1).setClosed(true, true);
+		object->parts().back().setClosed(true, true);
 		return;
 	}
 	
 	// Add the first point to the object
 	rebuildCoordinate(part_start_index, polygon, polymap, object, true);
 	
-	// Advance along the boundary and, for every sequence of path coord pointers with the same path and index, rebuild the curve
-	PathCoordInfo cur_info;
-	if (polymap.contains(polygon.at(part_start_index)))
-		cur_info = polymap.value(polygon.at(part_start_index));
-	else
-	{
-		cur_info.first = NULL;
-		cur_info.second = NULL;
-	}
+	
 	// Index of first segment point in polygon
-	int segment_start_index = part_start_index;
+	auto segment_start_index = part_start_index;
 	bool have_sequence = false;
 	bool sequence_increasing = false;
 	bool stop_before = false;
 	
-	int i = part_start_index + 1;
-	while (true)
+	// Advance along the boundary and rebuild the curve for every sequence
+	// of path coord pointers with the same path and index.
+	auto i = part_start_index;
+	do
 	{
+		++i;
 		if (i >= num_points)
 			i = 0;
 		
-		PathCoordInfo new_info;
-		if (polymap.contains(polygon.at(i)))
-			new_info = polymap.value(polygon.at(i));
-		else
-		{
-			new_info.first = NULL;
-			new_info.second = NULL;
-		}
+		PathCoordInfo new_info{ nullptr, nullptr };
+		auto new_point = polygon.at(i);
+		if (polymap.contains(new_point))
+			new_info = polymap.value(new_point);
 		
-		/*qDebug() << new_info.first << " " << i;
-		if (new_info.second)
+		if (cur_info.first && cur_info.first == new_info.first)
 		{
-			qDebug() << "  " << new_info.second->index << " " << new_info.second->param << " " << new_info.second->pos.getX() << " " << new_info.second->pos.getY();
-			qDebug() << "  " << polygon.at(i).X << " " << polygon.at(i).Y;
-		}*/
-		
-		if (cur_info.first == new_info.first && cur_info.first)
-		{
-			int cur_coord_index = cur_info.second->index;
+			// Same original part
+			auto cur_coord_index = cur_info.second->index;
 			MapCoord& cur_coord = cur_info.first->path->getCoordinate(cur_coord_index);
-			int new_coord_index = new_info.second->index;
+			
+			auto new_coord_index = new_info.second->index;
 			MapCoord& new_coord = new_info.first->path->getCoordinate(new_coord_index);
+			
+			auto cur_coord_index_adjusted = cur_coord_index;
+			if (cur_coord_index_adjusted == new_info.first->first_index)
+				cur_coord_index_adjusted = new_info.first->last_index;
+			
+			auto new_coord_index_adjusted = new_coord_index;
+			if (new_coord_index_adjusted == new_info.first->first_index)
+				new_coord_index_adjusted = new_info.first->last_index;
+			
 			if (cur_coord_index == new_coord_index)
 			{
-				if (have_sequence && sequence_increasing != (new_info.second->param > cur_info.second->param))
-					stop_before = true;
-				else
+				// Somewhere on a curve
+				bool param_increasing = new_info.second->param > cur_info.second->param;
+				if (!have_sequence)
 				{
 					have_sequence = true;
-					sequence_increasing = new_info.second->param > cur_info.second->param;
+					sequence_increasing = param_increasing;
+				}
+				else if (have_sequence && sequence_increasing != param_increasing)
+				{
+					stop_before = true;
 				}
 			}
-			else if (((cur_coord.isCurveStart() && new_coord_index == cur_coord_index + 3) ||
-					 (!cur_coord.isCurveStart() && new_coord_index == cur_coord_index + 1) ||
-					 new_coord_index == 0) && cur_info.second->param >= 1)
+			else if (new_info.second->param == 0.0 &&
+			         ( (cur_coord.isCurveStart() && new_coord_index_adjusted == cur_coord_index + 3) ||
+					   (!cur_coord.isCurveStart() && new_coord_index_adjusted == cur_coord_index + 1) ) )
 			{
-				if (have_sequence && sequence_increasing != true)
-					stop_before = true;
-				else
+				// Original curve is from cur_coord_index to new_coord_index_adjusted.
+				if (!have_sequence)
 				{
 					have_sequence = true;
 					sequence_increasing = true;
 				}
-			}
-			else if (((new_coord.isCurveStart() && new_coord_index == cur_coord_index - 3) ||
-					 (!new_coord.isCurveStart() && new_coord_index == cur_coord_index - 1) ||
-					 cur_coord_index == 0) && new_info.second->param >= 1)
-			{
-				if (have_sequence && sequence_increasing != false)
-					stop_before = true;
 				else
+				{
+					stop_before = !sequence_increasing;
+				}
+			}
+			else if (cur_info.second->param == 0.0 &&
+			         ( (new_coord.isCurveStart() && new_coord_index + 3 == cur_coord_index_adjusted) ||
+					   (!new_coord.isCurveStart() && new_coord_index + 1 == cur_coord_index_adjusted) ) )
+			{
+				// Original curve is from new_coord_index to cur_coord_index_adjusted.
+				if (!have_sequence)
 				{
 					have_sequence = true;
 					sequence_increasing = false;
 				}
+				else
+				{
+					stop_before = sequence_increasing;
+				}
 			}
 			else if ((segment_start_index + 1) % num_points != i)
+			{
+				// Not immediately after segment_start_index
 				stop_before = true;
+			}
 		}
 		
-		if ((i == part_start_index) || stop_before || (new_info.second && (new_info.second->param >= 1 || new_info.second->param <= 0)) ||
-			(cur_info.first && (cur_info.first != new_info.first || cur_info.second->index != new_info.second->index) && (segment_start_index + 1) % num_points != i) ||
-			(!new_info.first))
+		if (i == part_start_index ||
+		    stop_before ||
+		    (new_info.second && new_info.second->param == 0.0) ||
+			(cur_info.first && (cur_info.first != new_info.first || cur_info.second->index != new_info.second->index) && i != (segment_start_index + 1) % num_points) ||
+			!new_info.first)
 		{
 			if (stop_before)
 			{
-				--i;
-				if (i < 0)
+				if (i == 0)
 					i = num_points - 1;
+				else
+					--i;
 			}
 			
-			rebuildSegment(segment_start_index, i, have_sequence, sequence_increasing, polygon, polymap, object);
+			if (have_sequence)
+				// A sequence of at least two points belonging to the same curve
+				rebuildSegment(segment_start_index, i, sequence_increasing, polygon, polymap, object);
+			else
+				// A single straight edge
+				rebuildCoordinate(i, polygon, polymap, object);
 			
 			if (stop_before)
 			{
@@ -594,26 +610,22 @@ void BooleanTool::polygonToPathPart(const ClipperLib::Path& polygon, const PolyM
 			have_sequence = false;
 		}
 		
-		if (i == part_start_index)
-			break;
-		++i;
 		cur_info = new_info;
 	}
+	while  (i != part_start_index);
 	
-	object->getPart(object->getNumParts() - 1).connectEnds();
+	object->parts().back().connectEnds();
 }
 
-void BooleanTool::rebuildSegment(int start_index, int end_index, bool have_sequence, bool sequence_increasing, const ClipperLib::Path& polygon, const PolyMap& polymap, PathObject* object)
+void BooleanTool::rebuildSegment(
+        ClipperLib::Path::size_type start_index,
+        ClipperLib::Path::size_type end_index,
+        bool sequence_increasing,
+        const ClipperLib::Path& polygon,
+        const PolyMap& polymap,
+        PathObject* object)
 {
-	int num_points = (int)polygon.size();
-	
-	// Do we have a sequence of at least two points belonging to the same curve?
-	if (!have_sequence)
-	{
-		// No, add a straight line segment only
-		rebuildCoordinate(end_index, polygon, polymap, object);
-		return;
-	}
+	auto num_points = polygon.size();
 	
 	object->getCoordinate(object->getCoordinateCount() - 1).setCurveStart(true);
 	
@@ -625,43 +637,35 @@ void BooleanTool::rebuildSegment(int start_index, int end_index, bool have_seque
 	}
 
 	// Get polygon point coordinates
-	const ClipperLib::IntPoint& start_point = polygon.at(start_index);
-	PathCoordInfo start_info;
-	start_info.first = NULL;
+	const auto& start_point       = polygon.at(start_index);
+	const auto& second_point      = polygon.at((start_index + 1) % num_points);
+	const auto& second_last_point = polygon.at((end_index - 1) % num_points);
+	const auto& end_point         = polygon.at(end_index);
 	
-	const ClipperLib::IntPoint& second_point = polygon.at((start_index + 1) % num_points);
-	PathCoordInfo second_info;
-	
-	const ClipperLib::IntPoint& end_point = polygon.at(end_index);
-	PathCoordInfo end_info;
-	end_info.first = NULL;
-	
-	int second_last_index = end_index - 1;
-	if (second_last_index < 0)
-		second_last_index = num_points - 1;
-	const ClipperLib::IntPoint& second_last_point = polygon.at(second_last_index);
-	PathCoordInfo second_last_info;
-	
-	// Try to find a consistent set of path coord infos for the middle coordinates
+	// Try to find the middle coordinates in the same part
 	bool found = false;
-	PolyMap::const_iterator second_it = polymap.find(second_point);
-	PolyMap::const_iterator second_last_it = polymap.find(second_last_point);
-	while (second_it != polymap.end())
+	PathCoordInfo second_info{ nullptr, nullptr };
+	PathCoordInfo second_last_info{ nullptr, nullptr };
+	for (auto second_it = polymap.find(second_point); second_it != polymap.end(); ++second_it)
 	{
-		while (second_last_it != polymap.end() && second_last_it.key() == second_last_point)
+		for (auto second_last_it = polymap.find(second_last_point);
+		     second_last_it != polymap.end() && second_last_it.key() == second_last_point;
+		     ++second_last_it)
 		{
-			if (second_it->first == second_last_it->first)
+			if (second_it->first == second_last_it->first &&
+			    second_it->second->index == second_last_it->second->index)
 			{
+				// Same part
 				found = true;
+				second_info = *second_it;
+				second_last_info = *second_last_it;
 				break;
 			}
-			++second_last_it;
 		}
 		if (found)
 			break;
-		++second_it;
-		second_last_it = polymap.find(second_last_point);
 	}
+	
 	if (!found)
 	{
 		// Need unambiguous path part information to find the original object with high probability
@@ -670,176 +674,223 @@ void BooleanTool::rebuildSegment(int start_index, int end_index, bool have_seque
 		return;
 	}
 	
-	second_info = *second_it;
-	second_last_info = *second_last_it;
+	const PathPart* original_path = second_info.first;
 	
-	// Also try to find consistent outer coordinates
-	PathObject::PathPart* original_path = second_info.first;
-	PathObject* original = original_path->path;
-	int original_index = second_info.second->index;
-	
-	PolyMap::const_iterator start_it = polymap.find(start_point);
-	while (start_it != polymap.end() && start_it.key() == start_point)
+	// Try to find the outer coordinates in the same part
+	PathCoordInfo start_info{ nullptr, nullptr };
+	for (auto start_it = polymap.find(start_point);
+	     start_it != polymap.end() && start_it.key() == start_point;
+	     ++start_it)
 	{
 		if (start_it->first == original_path)
+		{
+			start_info = *start_it;
 			break;
-		++start_it;
+		}
 	}
-	if (start_it != polymap.end())
-		start_info = *start_it;
+	Q_ASSERT(!start_info.first || start_info.first == second_info.first);
 	
-	PolyMap::const_iterator end_it = polymap.find(end_point);
-	while (end_it != polymap.end() && end_it.key() == end_point)
+	PathCoordInfo end_info{ nullptr, nullptr };
+	for (auto end_it = polymap.find(end_point);
+	     end_it != polymap.end() && end_it.key() == end_point;
+	     ++end_it)
 	{
 		if (end_it->first == original_path)
+		{
+			end_info = *end_it;
 			break;
-		++end_it;
+		}
 	}
-	if (end_it != polymap.end())
-		end_info = *end_it;
+	Q_ASSERT(!end_info.first || end_info.first == second_info.first);
+	
+	const PathObject* original = original_path->path;
+	auto edge_start = second_info.second->index;
+	if (edge_start == second_info.first->last_index)
+		edge_start = second_info.first->first_index;
 	
 	// Find out start tangent
-	float start_param;
+	auto start_param = 0.0;
 	MapCoord start_coord = MapCoord(0.001 * start_point.X, 0.001 * start_point.Y);
 	MapCoord start_tangent;
-	MapCoord original_end_tangent;
+	MapCoord end_tangent;
+	MapCoord end_coord;
 	
 	double start_error_sq, end_error_sq;
 	// Maximum difference in mm from reconstructed start and end coords to the
 	// intersection points returned by Clipper
 	const double error_bound = 0.4;
 	
-	if (start_info.first && start_info.first == second_info.first &&
-		((!sequence_increasing && start_info.second->param == 1) || (sequence_increasing && start_info.second->param == 0)) &&
-		((start_info.second->index == second_info.second->index) ||
-			(sequence_increasing && start_info.second->param >= 1))) //&& start_info.second->index + 1 == second_info.second->index
+	if (sequence_increasing)
 	{
-		// Take coordinates directly
-		start_param = sequence_increasing ? 0 : 1;
-		start_tangent = sequence_increasing ? original->getCoordinate(original_index + 1) : original->getCoordinate(original_index + 2);
-		original_end_tangent = sequence_increasing ? original->getCoordinate(original_index + 2) : original->getCoordinate(original_index + 1);
-		
-		const MapCoord& assumed_start = sequence_increasing ? original->getCoordinate(original_index + 0) : original->getCoordinate(original_index + 3);
-		start_error_sq = start_coord.lengthSquaredTo(assumed_start);
-		if (start_error_sq > error_bound)
-			qDebug() << "BooleanTool::rebuildSegment: start error too high in direct case: " << sqrt(start_error_sq);
-	}
-	else
-	{
-		// Approximate coords
-		start_param = second_info.second->param;
-		int dx = second_point.X - start_point.X;
-		int dy = second_point.Y - start_point.Y;
-		float point_dist = 0.001 * sqrt(dx*dx + dy*dy);
-		
-		if (sequence_increasing)
+		if ( second_info.second->param == 0.0 ||
+		     ( start_info.first &&
+		       start_info.second->param == 0.0 &&
+		       ( start_info.second->index == edge_start ||
+		         (start_info.second->index == start_info.first->last_index && start_info.first->first_index == edge_start) ) ) )
 		{
-			const PathCoord* prev_coord = (second_info.second->param <= 0) ? second_info.second : (second_info.second - 1);
-			float prev_param = (prev_coord->param == 1) ? 0 : prev_coord->param;
-			start_param -= (second_info.second->param - prev_param) * point_dist / qMax(1e-7f, (second_info.second->clen - prev_coord->clen));
-			if (start_param < 0)
-				start_param = 0;
+			// Take coordinates directly
+			start_tangent = original->getCoordinate(edge_start + 1);
+			end_tangent = original->getCoordinate(edge_start + 2);
 			
-			MapCoordF o0, o1, o2, o3, o4;
-			PathCoord::splitBezierCurve(MapCoordF(original->getCoordinate(original_index + 0)), MapCoordF(original->getCoordinate(original_index + 1)),
-										MapCoordF(original->getCoordinate(original_index + 2)), MapCoordF(original->getCoordinate(original_index + 3)),
-										start_param,
-										o0, o1, o2, o3, o4);
-			start_tangent = o3.toMapCoord();
-			original_end_tangent = o4.toMapCoord();
-			start_error_sq = start_coord.lengthSquaredTo(o2.toMapCoord());
+			start_error_sq = start_coord.distanceSquaredTo(original->getCoordinate(edge_start + 0));
 			if (start_error_sq > error_bound)
-				qDebug() << "BooleanTool::rebuildSegment: start error too high in increasing general case: " << sqrt(start_error_sq);
+				qDebug() << "BooleanTool::rebuildSegment: start error too high in increasing direct case: " << sqrt(start_error_sq);
 		}
 		else
 		{
-			const PathCoord* next_coord = (second_info.second->param >= 1) ? second_info.second : (second_info.second + 1);
-			float next_param = next_coord->param;
-			start_param += (next_param - second_info.second->param) * point_dist / qMax(1e-7f, (next_coord->clen - second_info.second->clen));
-			if (start_param > 1)
-				start_param = 1;
+			// Approximate coords
+			const PathCoord* prev_coord = second_info.second - 1;
 			
-			MapCoordF o0, o1, o2, o3, o4;
-			PathCoord::splitBezierCurve(MapCoordF(original->getCoordinate(original_index + 3)), MapCoordF(original->getCoordinate(original_index + 2)),
-										MapCoordF(original->getCoordinate(original_index + 1)), MapCoordF(original->getCoordinate(original_index + 0)),
-										1 - start_param,
-							o0, o1, o2, o3, o4);
-			start_tangent = o3.toMapCoord();
-			original_end_tangent = o4.toMapCoord();
-			start_error_sq = start_coord.lengthSquaredTo(o2.toMapCoord());
+			auto dx = second_point.X - start_point.X;
+			auto dy = second_point.Y - start_point.Y;
+			auto point_dist = 0.001 * sqrt(dx*dx + dy*dy);
+			
+			auto delta_start_param = (second_info.second->param - prev_coord->param) * point_dist / qMax(1e-7f, (second_info.second->clen - prev_coord->clen));
+			start_param = qBound(0.0, second_info.second->param - delta_start_param, 1.0);
+			
+			MapCoordF unused, o2, o3, o4;
+			PathCoord::splitBezierCurve(MapCoordF(original->getCoordinate(edge_start + 0)), MapCoordF(original->getCoordinate(edge_start + 1)),
+			                            MapCoordF(original->getCoordinate(edge_start + 2)), MapCoordF(original->getCoordinate(edge_start + 3)),
+			                            start_param,
+			                            unused, unused, o2, o3, o4);
+			start_tangent = MapCoord(o3);
+			end_tangent = MapCoord(o4);
+			
+			start_error_sq = start_coord.distanceSquaredTo(MapCoord(o2));
 			if (start_error_sq > error_bound)
-				qDebug() << "BooleanTool::rebuildSegment: start error too high in decreasing general case: " << sqrt(start_error_sq);
+				qDebug() << "BooleanTool::rebuildSegment: start error too high in increasing general case: " << sqrt(start_error_sq);
 		}
-	}
-	
-	// Find better end point approximation and its tangent
-	MapCoord end_tangent;
-	MapCoord end_coord;
-	
-	if (end_info.first && end_info.first == second_last_info.first &&
-		((!sequence_increasing && end_info.second->param == 0) || (sequence_increasing && end_info.second->param == 1)) &&
-		((end_info.second->index == second_last_info.second->index) ||
-		(!sequence_increasing && end_info.second->param >= 1))) //&& end_info.second->index + 1 == second_last_info.second->index
-	{
-		// Take coordinates directly
-		end_coord = sequence_increasing ? original->getCoordinate(original_index + 3) : original->getCoordinate(original_index + 0);
-		end_tangent = original_end_tangent;
 		
-		qint64 test_x = end_point.X - end_coord.rawX();
-		qint64 test_y = end_point.Y - end_coord.rawY();
-		end_error_sq = 0.001 * sqrt(test_x*test_x + test_y*test_y);
-		if (end_error_sq > error_bound)
-			qDebug() << "BooleanTool::rebuildSegment: end error too high in direct case: " << sqrt(end_error_sq);
-	}
-	else
-	{
-		// Approximate coords
-		float end_param = second_last_info.second->param;
-		int dx = end_point.X - second_last_point.X;
-		int dy = end_point.Y - second_last_point.Y;
-		float point_dist = 0.001 * sqrt(dx*dx + dy*dy);
-		if (sequence_increasing)
+		// Find better end point approximation and its tangent
+		if ( second_last_info.second->param == 0.0 ||
+		     (end_info.first &&
+		      end_info.second->param == 0.0 &&
+		      ( end_info.second->index == edge_start+3 ||
+		        (end_info.second->index == end_info.first->first_index && end_info.first->last_index == edge_start+3) ) ) )
 		{
-			const PathCoord* next_coord = (second_last_info.second->param >= 1) ? second_last_info.second : (second_last_info.second + 1);
-			float next_param = next_coord->param;
-			end_param += (next_param - second_last_info.second->param) * point_dist / qMax(1e-7f, (next_coord->clen - second_last_info.second->clen));
-			if (end_param > 1)
-				end_param = 1;
+			// Take coordinates directly
+			end_coord = original->getCoordinate(edge_start + 3);
 			
-			MapCoordF o0, o1, o2, o3, o4;
+			auto test_x = end_point.X - end_coord.nativeX();
+			auto test_y = end_point.Y - end_coord.nativeY();
+			end_error_sq = 0.001 * sqrt(test_x*test_x + test_y*test_y);
+			if (end_error_sq > error_bound)
+				qDebug() << "BooleanTool::rebuildSegment: end error too high in increasing direct case: " << sqrt(end_error_sq);
+		}
+		else
+		{
+			// Approximate coords
+			const PathCoord* next_coord = second_last_info.second + 1;
+			auto next_coord_param = next_coord->param;
+			if (next_coord_param == 0.0)
+				next_coord_param = 1.0;
+			
+			auto dx = end_point.X - second_last_point.X;
+			auto dy = end_point.Y - second_last_point.Y;
+			auto point_dist = 0.001 * sqrt(dx*dx + dy*dy);
+			
+			auto delta_end_param = (next_coord_param - second_last_info.second->param) * point_dist / qMax(1e-7f, (next_coord->clen - second_last_info.second->clen));
+			auto end_param = (second_last_info.second->param + delta_end_param - start_param) / (1.0 - start_param);
+			
+			MapCoordF o0, o1, o2, unused;
 			PathCoord::splitBezierCurve(MapCoordF(start_coord), MapCoordF(start_tangent),
-										MapCoordF(original_end_tangent), MapCoordF(original->getCoordinate(original_index + 3)),
-										(end_param - start_param) / (1 - start_param),
-										o0, o1, o2, o3, o4);
-			start_tangent = o0.toMapCoord();
-			end_tangent = o1.toMapCoord();
-			end_coord = o2.toMapCoord();
+			                            MapCoordF(end_tangent), MapCoordF(original->getCoordinate(edge_start + 3)),
+			                            end_param,
+			                            o0, o1, o2, unused, unused);
+			start_tangent = MapCoord(o0);
+			end_tangent = MapCoord(o1);
+			end_coord = MapCoord(o2);
 			
-			qint64 test_x = end_point.X - end_coord.rawX();
-			qint64 test_y = end_point.Y - end_coord.rawY();
+			auto test_x = end_point.X - end_coord.nativeX();
+			auto test_y = end_point.Y - end_coord.nativeY();
 			end_error_sq = 0.001 * sqrt(test_x*test_x + test_y*test_y);
 			if (end_error_sq > error_bound)
 				qDebug() << "BooleanTool::rebuildSegment: end error too high in increasing general case: " << sqrt(end_error_sq);
 		}
+	}
+	else // if (!sequence_increasing)
+	{
+		if ( second_info.second->param == 0.0 ||
+		     ( start_info.first &&
+		       start_info.second->param == 0.0 &&
+		       ( start_info.second->index == edge_start+3 ||
+			     (start_info.second->index == start_info.first->first_index && start_info.first->last_index == edge_start+3) ) ) )
+		{
+			// Take coordinates directly
+			start_tangent = original->getCoordinate(edge_start + 2);
+			end_tangent = original->getCoordinate(edge_start + 1);
+			
+			start_error_sq = start_coord.distanceSquaredTo(original->getCoordinate(edge_start + 3));
+			if (start_error_sq > error_bound)
+				qDebug() << "BooleanTool::rebuildSegment: start error too high in decreasing direct case: " << sqrt(start_error_sq);
+		}
 		else
 		{
-			const PathCoord* prev_coord = (second_last_info.second->param <= 0) ? second_last_info.second : (second_last_info.second - 1);
-			float prev_param = (prev_coord->param == 1) ? 0 : prev_coord->param;
-			end_param -= (second_last_info.second->param - prev_param) * point_dist / qMax(1e-7f, (second_last_info.second->clen - prev_coord->clen));
-			if (end_param < 0)
-				end_param = 0;
+			// Approximate coords
+			const PathCoord* next_coord = second_info.second + 1;
+			auto next_coord_param = next_coord->param;
+			if (next_coord_param == 0.0)
+				next_coord_param = 1.0;
 			
-			MapCoordF o0, o1, o2, o3, o4;
+			auto dx = second_point.X - start_point.X;
+			auto dy = second_point.Y - start_point.Y;
+			auto point_dist = 0.001 * sqrt(dx*dx + dy*dy);
+			
+			auto delta_start_param = (next_coord_param - second_info.second->param) * point_dist / qMax(1e-7f, (next_coord->clen - second_info.second->clen));
+			start_param = qBound(0.0, 1.0 - second_info.second->param + delta_start_param, 1.0);
+			
+			MapCoordF unused, o2, o3, o4;
+			PathCoord::splitBezierCurve(MapCoordF(original->getCoordinate(edge_start + 3)), MapCoordF(original->getCoordinate(edge_start + 2)),
+			                            MapCoordF(original->getCoordinate(edge_start + 1)), MapCoordF(original->getCoordinate(edge_start + 0)),
+			                            start_param,
+			                            unused, unused, o2, o3, o4);
+			start_tangent = MapCoord(o3);
+			end_tangent = MapCoord(o4);
+			
+			start_error_sq = start_coord.distanceSquaredTo(MapCoord(o2));
+			if (start_error_sq > error_bound)
+				qDebug() << "BooleanTool::rebuildSegment: start error too high in decreasing general case: " << sqrt(start_error_sq);
+		}
+		
+		// Find better end point approximation and its tangent
+		if ( second_last_info.second->param == 0.0 ||
+		     ( end_info.first &&
+		       end_info.second->param == 0.0 &&
+		       ( end_info.second->index == edge_start ||
+		         (end_info.second->index == end_info.first->last_index && end_info.first->first_index == edge_start) ) ) )
+		{
+			// Take coordinates directly
+			end_coord = original->getCoordinate(edge_start + 0);
+			
+			auto test_x = end_point.X - end_coord.nativeX();
+			auto test_y = end_point.Y - end_coord.nativeY();
+			end_error_sq = 0.001 * sqrt(test_x*test_x + test_y*test_y);
+			if (end_error_sq > error_bound)
+				qDebug() << "BooleanTool::rebuildSegment: end error too high in decreasing direct case: " << sqrt(end_error_sq);
+		}
+		else
+		{
+			// Approximate coords
+			const PathCoord* prev_coord = second_last_info.second - 1;
+			
+			auto dx = end_point.X - second_last_point.X;
+			auto dy = end_point.Y - second_last_point.Y;
+			auto point_dist = 0.001 * sqrt(dx*dx + dy*dy);
+			
+			auto delta_end_param = (second_last_info.second->param - prev_coord->param) * point_dist / qMax(1e-7f, (second_last_info.second->clen - prev_coord->clen));
+			auto end_param = (1.0 - second_last_info.second->param + delta_end_param) / (1 - start_param);
+			
+			MapCoordF o0, o1, o2, unused;
 			PathCoord::splitBezierCurve(MapCoordF(start_coord), MapCoordF(start_tangent),
-											MapCoordF(original_end_tangent), MapCoordF(original->getCoordinate(original_index + 0)),
-											1 - (end_param / start_param),
-											o0, o1, o2, o3, o4);
-			start_tangent = o0.toMapCoord();
-			end_tangent = o1.toMapCoord();
-			end_coord = o2.toMapCoord();
+			                            MapCoordF(end_tangent), MapCoordF(original->getCoordinate(edge_start + 0)),
+			                            end_param,
+			                            o0, o1, o2, unused, unused);
+			start_tangent = MapCoord(o0);
+			end_tangent = MapCoord(o1);
+			end_coord = MapCoord(o2);
 			
-			qint64 test_x = end_point.X - end_coord.rawX();
-			qint64 test_y = end_point.Y - end_coord.rawY();
+			auto test_x = end_point.X - end_coord.nativeX();
+			auto test_y = end_point.Y - end_coord.nativeY();
 			end_error_sq = 0.001 * sqrt(test_x*test_x + test_y*test_y);
 			if (end_error_sq > error_bound)
 				qDebug() << "BooleanTool::rebuildSegment: end error too high in decreasing general case: " << sqrt(end_error_sq);
@@ -860,30 +911,38 @@ void BooleanTool::rebuildSegment(int start_index, int end_index, bool have_seque
 	}
 }
 
-void BooleanTool::rebuildSegmentFromPathOnly(const ClipperLib::IntPoint& start_point, const ClipperLib::IntPoint& second_point, const ClipperLib::IntPoint& second_last_point, const ClipperLib::IntPoint& end_point, PathObject* object)
+void BooleanTool::rebuildSegmentFromPathOnly(
+        const ClipperLib::IntPoint& start_point,
+        const ClipperLib::IntPoint& second_point,
+        const ClipperLib::IntPoint& second_last_point,
+        const ClipperLib::IntPoint& end_point,
+        PathObject* object)
 {
-	MapCoord start_point_c = MapCoord::fromRaw(start_point.X, start_point.Y);
-	MapCoord second_point_c = MapCoord::fromRaw(second_point.X, second_point.Y);
-	MapCoord second_last_point_c = MapCoord::fromRaw(second_last_point.X, second_last_point.Y);
-	MapCoord end_point_c = MapCoord::fromRaw(end_point.X, end_point.Y);
+	MapCoord start_point_c = MapCoord::fromNative64(start_point.X, start_point.Y);
+	MapCoord second_point_c = MapCoord::fromNative64(second_point.X, second_point.Y);
+	MapCoord second_last_point_c = MapCoord::fromNative64(second_last_point.X, second_last_point.Y);
+	MapCoord end_point_c = MapCoord::fromNative64(end_point.X, end_point.Y);
 	
 	MapCoordF polygon_start_tangent = MapCoordF(second_point_c - start_point_c);
 	polygon_start_tangent.normalize();
 	MapCoordF polygon_end_tangent = MapCoordF(second_last_point_c - end_point_c);
 	polygon_end_tangent.normalize();
 	
-	double tangent_length = BEZIER_HANDLE_DISTANCE * start_point_c.lengthTo(end_point_c);
-	object->addCoordinate((MapCoordF(start_point_c) + tangent_length * polygon_start_tangent).toMapCoord());
-	object->addCoordinate((MapCoordF(end_point_c) + tangent_length * polygon_end_tangent).toMapCoord());
+	double tangent_length = BEZIER_HANDLE_DISTANCE * start_point_c.distanceTo(end_point_c);
+	object->addCoordinate(MapCoord(MapCoordF(start_point_c) + tangent_length * polygon_start_tangent));
+	object->addCoordinate(MapCoord((MapCoordF(end_point_c) + tangent_length * polygon_end_tangent)));
 	object->addCoordinate(end_point_c);
 }
 
-void BooleanTool::rebuildTwoIndexSegment(int start_index, int end_index, bool sequence_increasing, const ClipperLib::Path& polygon, const PolyMap& polymap, PathObject* object)
+void BooleanTool::rebuildTwoIndexSegment(
+        ClipperLib::Path::size_type start_index,
+        ClipperLib::Path::size_type end_index,
+        bool sequence_increasing,
+        const ClipperLib::Path& polygon,
+        const PolyMap& polymap,
+        PathObject* object)
 {
-	// sequence_increasing is only used in Q_ASSERT.
-#ifndef NDEBUG
-	Q_UNUSED(sequence_increasing);
-#endif
+	Q_UNUSED(sequence_increasing); // only used in Q_ASSERT.
 	
 	PathCoordInfo start_info = polymap.value(polygon.at(start_index));
 	PathCoordInfo end_info = polymap.value(polygon.at(end_index));
@@ -923,6 +982,7 @@ void BooleanTool::rebuildTwoIndexSegment(int start_index, int end_index, bool se
 	
 	if (!is_curve)
 		object->getCoordinate(object->getCoordinateCount() - 1).setCurveStart(false);
+	
 	if (coords_increasing)
 	{
 		object->addCoordinate(resetCoordinate(original->getCoordinate(coord_index + 1)));
@@ -943,7 +1003,12 @@ void BooleanTool::rebuildTwoIndexSegment(int start_index, int end_index, bool se
 	}
 }
 
-void BooleanTool::rebuildCoordinate(int index, const ClipperLib::Path& polygon, const PolyMap& polymap, PathObject* object, bool start_new_part)
+void BooleanTool::rebuildCoordinate(
+        ClipperLib::Path::size_type index,
+        const ClipperLib::Path& polygon,
+        const PolyMap& polymap,
+        PathObject* object,
+        bool start_new_part)
 {
 	MapCoord coord(0.001 * polygon.at(index).X, 0.001 * polygon.at(index).Y);
 	if (polymap.contains(polygon.at(index)))
@@ -958,18 +1023,20 @@ void BooleanTool::rebuildCoordinate(int index, const ClipperLib::Path& polygon, 
 }
 
 bool BooleanTool::checkSegmentMatch(
-        PathObject* original,
+        const PathObject* original,
         int coord_index,
         const ClipperLib::Path& polygon,
-        int start_index,
-        int end_index,
+        ClipperLib::Path::size_type start_index,
+        ClipperLib::Path::size_type end_index,
         bool& out_coords_increasing,
         bool& out_is_curve )
 {
 	
-	MapCoord& first = original->getCoordinate(coord_index);
+	const MapCoord& first = original->getCoordinate(coord_index);
 	out_is_curve = first.isCurveStart();
-	MapCoord& other = original->getCoordinate(coord_index + (out_is_curve ? 3 : 1));
+	
+	auto other_index = (coord_index + (out_is_curve ? 3 : 1)) % original->getCoordinateCount();
+	const MapCoord& other = original->getCoordinate(other_index);
 	
 	bool found = true;
 	if (first == polygon.at(start_index) && other == polygon.at(end_index))

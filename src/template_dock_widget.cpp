@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2012-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -19,6 +20,19 @@
 
 
 #include "template_dock_widget.h"
+
+#include <QApplication>
+#include <QCheckBox>
+#include <QFileDialog>
+#include <QHeaderView>
+#include <QInputDialog>
+#include <QKeyEvent>
+#include <QLabel>
+#include <QMenu>
+#include <QMessageBox>
+#include <QSettings>
+#include <QTableWidget>
+#include <QToolButton>
 
 #include "core/georeferencing.h"
 #include "gui/main_window.h"
@@ -53,7 +67,7 @@ struct ApplyTemplateTransform
 		object->rotate(transform.template_rotation);
 		object->scale(transform.template_scale_x, transform.template_scale_y);
 		object->move(transform.template_x, transform.template_y);
-		object->update(true, true);
+		object->update();
 		return true;
 	}
 private:
@@ -346,9 +360,9 @@ Template* TemplateWidget::showOpenTemplateDialog(QWidget* dialog_parent, MapEdit
 	if (!new_temp->isTemplateGeoreferenced() && center_in_view)
 	{
 		MapView* main_view = controller->getMainWidget()->getMapView();
-		QPointF center = new_temp->calculateTemplateBoundingBox().center();
-		new_temp->setTemplateX(main_view->getPositionX() - qRound64(1000 * center.x()));
-		new_temp->setTemplateY(main_view->getPositionY() - qRound64(1000 * center.y()));
+		auto view_pos = main_view->center();
+		auto offset = MapCoord { new_temp->calculateTemplateBoundingBox().center() };
+		new_temp->setTemplatePosition(view_pos - offset);
 	}
 	
 	return new_temp.take();

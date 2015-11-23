@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2014, 2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -20,54 +21,78 @@
 
 #include "map_view.h"
 
-#include <QDebug>
-#include <QPainter>
 #include <QRectF>
 
 #include "../map.h"
 #include "../map_widget.h"
 #include "../util.h"
+#include "../util/xml_stream_util.h"
 
+
+namespace literal
+{
+	static const QLatin1String zoom("zoom");
+	static const QLatin1String rotation("rotation");
+	static const QLatin1String position_x("position_x");
+	static const QLatin1String position_y("position_y");
+	static const QLatin1String grid("grid");
+	static const QLatin1String overprinting_simulation_enabled("overprinting_simulation_enabled");
+	static const QLatin1String map("map");
+	static const QLatin1String opacity("opacity");
+	static const QLatin1String visible("visible");
+	static const QLatin1String templates("templates");
+	static const QLatin1String hidden("hidden");
+	static const QLatin1String ref("ref");
+	static const QLatin1String template_string("template");
+}
 
 const double MapView::zoom_in_limit = 512;
 const double MapView::zoom_out_limit = 1 / 16.0;
 
 
-MapView::MapView(Map* map) : map(map)
+MapView::MapView(Map* map)
+ : map{ map }
+ , zoom{ 1.0 }
+ , rotation{ 0.0 }
+ , map_visibility{ new TemplateVisibility { 1.0f, true } }
+ , all_templates_hidden{ false }
+ , grid_visible{ false }
+ , overprinting_simulation_enabled{ false }
 {
-	zoom = 1;
-	rotation = 0;
-	position_x = 0;
-	position_y = 0;
-	view_x = 0;
-	view_y = 0;
-	map_visibility = new TemplateVisibility();
-	map_visibility->visible = true;
-	all_templates_hidden = false;
-	grid_visible = false;
-	overprinting_simulation_enabled = false;
-	update();
-	//map->addMapView(this);
+	updateTransform(NoChange);
 }
+
 MapView::~MapView()
 {
-	//map->removeMapView(this);
-	
-	foreach (TemplateVisibility* vis, template_visibilities)
+	for (auto vis : template_visibilities)
 		delete vis;
 	delete map_visibility;
 }
 
+#ifndef NO_NATIVE_FILE_FORMAT
+
 void MapView::load(QIODevice* file, int version)
 {
+	qint64 center_x, center_y;
+	int unused;
 	file->read((char*)&zoom, sizeof(double));
 	file->read((char*)&rotation, sizeof(double));
-	file->read((char*)&position_x, sizeof(qint64));
-	file->read((char*)&position_y, sizeof(qint64));
-	file->read((char*)&view_x, sizeof(int));
-	file->read((char*)&view_y, sizeof(int));
-	file->read((char*)&drag_offset, sizeof(QPoint));
-	update();
+	file->read((char*)&center_x, sizeof(qint64));
+	file->read((char*)&center_y, sizeof(qint64));
+	file->read((char*)&unused /*view_x*/, sizeof(int));
+	file->read((char*)&unused /*view_y*/, sizeof(int));
+	file->read((char*)&pan_offset, sizeof(QPoint));
+	
+	try
+	{
+		center_pos = MapCoord::fromNative64withOffset(center_x, center_y);
+	}
+	catch (std::range_error)
+	{
+		// leave center_pos unchanged
+	}
+	
+	updateTransform(CenterChange | ZoomChange | RotationChange);
 	
 	if (version >= 26)
 	{
@@ -95,100 +120,100 @@ void MapView::load(QIODevice* file, int version)
 		file->read((char*)&grid_visible, sizeof(bool));
 }
 
-void MapView::save(QXmlStreamWriter& xml, const QString& element_name, bool skip_templates)
+#endif
+
+void MapView::save(QXmlStreamWriter& xml, const QLatin1String& element_name, bool skip_templates)
 {
-	xml.writeStartElement(element_name);
+	XmlElementWriter mapview_element(xml, element_name);
+	mapview_element.writeAttribute(literal::zoom, zoom);
+	mapview_element.writeAttribute(literal::rotation, rotation);
+	mapview_element.writeAttribute(literal::position_x, center_pos.nativeX());
+	mapview_element.writeAttribute(literal::position_y, center_pos.nativeY());
+	mapview_element.writeAttribute(literal::grid, grid_visible);
+	mapview_element.writeAttribute(literal::overprinting_simulation_enabled, overprinting_simulation_enabled);
 	
-	xml.writeAttribute("zoom", QString::number(zoom));
-	xml.writeAttribute("rotation", QString::number(rotation));
-	xml.writeAttribute("position_x", QString::number(position_x));
-	xml.writeAttribute("position_y", QString::number(position_y));
-	xml.writeAttribute("view_x", QString::number(view_x));
-	xml.writeAttribute("view_y", QString::number(view_y));
-	xml.writeAttribute("drag_offset_x", QString::number(drag_offset.x()));
-	xml.writeAttribute("drag_offset_y", QString::number(drag_offset.y()));
-	if (grid_visible)
-		xml.writeAttribute("grid", "true");
-	if (overprinting_simulation_enabled)
-		xml.writeAttribute("overprinting_simulation_enabled", "true");
-	
-	xml.writeEmptyElement("map");
-	if (!map_visibility->visible)
-		xml.writeAttribute("visible", "false");
-	xml.writeAttribute("opacity", QString::number(map_visibility->opacity));
-	
-	xml.writeStartElement("templates");
-	if (all_templates_hidden)
-		xml.writeAttribute("hidden", "true");
-	if (!skip_templates)
 	{
-		int num_template_visibilities = template_visibilities.size();
-		xml.writeAttribute("count", QString::number(num_template_visibilities));
-		
-		QHash<const Template*, TemplateVisibility*>::const_iterator it = template_visibilities.constBegin();
-		for ( ; it != template_visibilities.constEnd(); ++it)
+		XmlElementWriter map_element(xml, literal::map);
+		map_element.writeAttribute(literal::opacity, map_visibility->opacity);
+		map_element.writeAttribute(literal::visible, map_visibility->visible);
+	}
+	
+	{
+		if (!skip_templates)
 		{
-			xml.writeEmptyElement("ref");
-			int pos = map->findTemplateIndex(it.key());
-			xml.writeAttribute("template", QString::number(pos));
-			xml.writeAttribute("visible", (*it)->visible ? "true" : "false");
-			xml.writeAttribute("opacity", QString::number((*it)->opacity));
+			XmlElementWriter templates_element(xml, literal::templates);
+			templates_element.writeAttribute(literal::hidden, all_templates_hidden);
+			templates_element.writeAttribute(XmlStreamLiteral::count, template_visibilities.size());
+			
+			QHash<const Template*, TemplateVisibility*>::const_iterator it = template_visibilities.constBegin();
+			for ( ; it != template_visibilities.constEnd(); ++it)
+			{
+				XmlElementWriter ref_element(xml, literal::ref);
+				ref_element.writeAttribute(literal::template_string, map->findTemplateIndex(it.key()));
+				ref_element.writeAttribute(literal::visible, (*it)->visible);
+				ref_element.writeAttribute(literal::opacity, (*it)->opacity);
+			}
 		}
 	}
-	xml.writeEndElement(/*templates*/);
-	
-	xml.writeEndElement(/*map_view*/); 
 }
 
 void MapView::load(QXmlStreamReader& xml)
 {
-	{	// Limit scope of variable "attributes" to this block
-		QXmlStreamAttributes attributes = xml.attributes();
-		zoom = attributes.value("zoom").toString().toDouble();
-		if (zoom < 0.001)
-			zoom = 1.0;
-		rotation = attributes.value("rotation").toString().toDouble();
-		position_x = attributes.value("position_x").toString().toLongLong();
-		position_y = attributes.value("position_y").toString().toLongLong();
-		view_x = attributes.value("view_x").toString().toInt();
-		view_y = attributes.value("view_y").toString().toInt();
-		drag_offset.setX(attributes.value("drag_offset_x").toString().toInt());
-		drag_offset.setY(attributes.value("drag_offset_y").toString().toInt());
-		grid_visible = (attributes.value("grid") == "true");
-		overprinting_simulation_enabled = (attributes.value("overprinting_simulation_enabled") == "true");
-		update();
+	XmlElementReader mapview_element(xml);
+	zoom = mapview_element.attribute<double>(literal::zoom);
+	if (zoom < 0.001)
+		zoom = 1.0;
+	rotation = mapview_element.attribute<double>(literal::rotation);
+	
+	auto center_x = mapview_element.attribute<qint64>(literal::position_x);
+	auto center_y = mapview_element.attribute<qint64>(literal::position_y);
+	try
+	{
+		center_pos = MapCoord::fromNative64withOffset(center_x, center_y);
 	}
+	catch (std::range_error)
+	{
+		// leave center_pos unchanged
+	}
+	
+	grid_visible = mapview_element.attribute<bool>(literal::grid);
+	overprinting_simulation_enabled = mapview_element.attribute<bool>(literal::overprinting_simulation_enabled);
+	updateTransform(CenterChange | ZoomChange | RotationChange);
 	
 	while (xml.readNextStartElement())
 	{
-		if (xml.name() == "map")
+		if (xml.name() == literal::map)
 		{
-			map_visibility->visible = !(xml.attributes().value("visible") == "false");
-			map_visibility->opacity = xml.attributes().value("opacity").toString().toFloat();
-			xml.skipCurrentElement();
+			XmlElementReader map_element(xml);
+			map_visibility->opacity = map_element.attribute<float>(literal::opacity);
+			if (map_element.hasAttribute(literal::visible))
+				map_visibility->visible = map_element.attribute<bool>(literal::visible);
+			else
+				map_visibility->visible = true;
 		}
-		else if (xml.name() == "templates")
+		else if (xml.name() == literal::templates)
 		{
-			int num_template_visibilities = xml.attributes().value("count").toString().toInt();
-			template_visibilities.reserve(qMin(num_template_visibilities, 20)); // 20 is not a limit
-			all_templates_hidden = (xml.attributes().value("hidden") == "true");
+			XmlElementReader templates_element(xml);
+			int num_template_visibilities = templates_element.attribute<int>(XmlStreamLiteral::count);
+			if (num_template_visibilities > 0)
+				template_visibilities.reserve(qMin(num_template_visibilities, 20)); // 20 is not a limit
+			all_templates_hidden = templates_element.attribute<bool>(literal::hidden);
 			
 			while (xml.readNextStartElement())
 			{
-				if (xml.name() == "ref")
+				if (xml.name() == literal::ref)
 				{
-					int pos = xml.attributes().value("template").toString().toInt();
+					XmlElementReader ref_element(xml);
+					int pos = ref_element.attribute<int>(literal::template_string);
 					if (pos >= 0 && pos < map->getNumTemplates())
 					{
 						TemplateVisibility* vis = getTemplateVisibility(map->getTemplate(pos));
-						vis->visible = !(xml.attributes().value("visible") == "false");
-						vis->opacity = xml.attributes().value("opacity").toString().toFloat();
+						vis->visible = ref_element.attribute<bool>(literal::visible);
+						vis->opacity = ref_element.attribute<float>(literal::opacity);
 					}
-					else
-						qDebug() << QString("Invalid template visibility reference %1 at %2:%3").
-						            arg(pos).arg(xml.lineNumber()).arg(xml.columnNumber());
 				}
-				xml.skipCurrentElement();
+				else
+					xml.skipCurrentElement();
 			}
 		}
 		else
@@ -199,263 +224,194 @@ void MapView::load(QXmlStreamReader& xml)
 void MapView::addMapWidget(MapWidget* widget)
 {
 	widgets.push_back(widget);
-	
 	map->addMapWidget(widget);
 }
+
 void MapView::removeMapWidget(MapWidget* widget)
 {
-	for (int i = 0; i < (int)widgets.size(); ++i)
-	{
-		if (widgets[i] == widget)
-		{
-			widgets.erase(widgets.begin() + i);
-			return;
-		}
-	}
-	assert(false);
-	
+	widgets.erase(std::remove(widgets.begin(), widgets.end(), widget), widgets.end());
 	map->removeMapWidget(widget);
 }
+
 void MapView::updateAllMapWidgets()
 {
-	for (int i = 0; i < (int)widgets.size(); ++i)
-		widgets[i]->updateEverything();
+	for (auto widget : widgets)
+		widget->updateEverything();
 }
 
-double MapView::lengthToPixel(qint64 length)
+MapCoord MapView::viewToMap(double x, double y) const
 {
-	return Util::mmToPixelPhysical(zoom * (length / 1000.0));
-}
-qint64 MapView::pixelToLength(double pixel)
-{
-	return qRound64(1000 * Util::pixelToMMPhysical(pixel / zoom));
+	return MapCoord(view_to_map.m11() * x + view_to_map.m12() * y + view_to_map.m13(),
+	                view_to_map.m21() * x + view_to_map.m22() * y + view_to_map.m23());
 }
 
-QRectF MapView::calculateViewedRect(QRectF view_rect)
+MapCoordF MapView::viewToMapF(double x, double y) const
 {
-	QPointF min = view_rect.topLeft();
-	QPointF max = view_rect.bottomRight();
-	MapCoordF top_left = viewToMapF(min.x(), min.y());
-	MapCoordF top_right = viewToMapF(max.x(), min.y());
-	MapCoordF bottom_right = viewToMapF(max.x(), max.y());
-	MapCoordF bottom_left = viewToMapF(min.x(), max.y());
-	
-	QRectF result = QRectF(top_left.getX(), top_left.getY(), 0, 0);
-	rectInclude(result, QPointF(top_right.getX(), top_right.getY()));
-	rectInclude(result, QPointF(bottom_right.getX(), bottom_right.getY()));
-	rectInclude(result, QPointF(bottom_left.getX(), bottom_left.getY()));
-	
-	return QRectF(result.left() - 0.001, result.top() - 0.001, result.width() + 0.002, result.height() + 0.002);
-}
-QRectF MapView::calculateViewBoundingBox(QRectF map_rect)
-{
-	QPointF min = map_rect.topLeft();
-	MapCoord map_min = MapCoord(min.x(), min.y());
-	QPointF max = map_rect.bottomRight();
-	MapCoord map_max = MapCoord(max.x(), max.y());
-	
-	QPointF top_left;
-	mapToView(map_min, top_left.rx(), top_left.ry());
-	QPointF bottom_right;
-	mapToView(map_max, bottom_right.rx(), bottom_right.ry());
-	
-	MapCoord map_top_right = MapCoord(max.x(), min.y());
-	QPointF top_right;
-	mapToView(map_top_right, top_right.rx(), top_right.ry());
-	
-	MapCoord map_bottom_left = MapCoord(min.x(), max.y());
-	QPointF bottom_left;
-	mapToView(map_bottom_left, bottom_left.rx(), bottom_left.ry());
-	
-	QRectF result = QRectF(top_left.x(), top_left.y(), 0, 0);
-	rectInclude(result, QPointF(top_right.x(), top_right.y()));
-	rectInclude(result, QPointF(bottom_right.x(), bottom_right.y()));
-	rectInclude(result, QPointF(bottom_left.x(), bottom_left.y()));
-	
-	return QRectF(result.left() - 1, result.top() - 1, result.width() + 2, result.height() + 2);
+	return MapCoordF(view_to_map.m11() * x + view_to_map.m12() * y + view_to_map.m13(),
+	                 view_to_map.m21() * x + view_to_map.m22() * y + view_to_map.m23());
 }
 
-void MapView::applyTransform(QPainter* painter)
+QPointF MapView::mapToView(MapCoord coords) const
 {
-	QTransform world_transform;
-	// NOTE: transposing the matrix here ...
-	world_transform.setMatrix(map_to_view.get(0, 0), map_to_view.get(1, 0), map_to_view.get(2, 0),
-							  map_to_view.get(0, 1), map_to_view.get(1, 1), map_to_view.get(2, 1),
-							  map_to_view.get(0, 2), map_to_view.get(1, 2), map_to_view.get(2, 2));
-	painter->setWorldTransform(world_transform, true);
+	return QPointF(map_to_view.m11() * coords.x() + map_to_view.m12() * coords.y() + map_to_view.m13(),
+	               map_to_view.m21() * coords.x() + map_to_view.m22() * coords.y() + map_to_view.m23());
 }
 
-void MapView::setDragOffset(QPoint offset, bool do_update)
+QPointF MapView::mapToView(MapCoordF coords) const
 {
-	drag_offset = offset;
-	for (int i = 0; i < (int)widgets.size(); ++i)
-		widgets[i]->setDragOffset(drag_offset, do_update);
+	return QPointF(map_to_view.m11() * coords.x() + map_to_view.m12() * coords.y() + map_to_view.m13(),
+	               map_to_view.m21() * coords.x() + map_to_view.m22() * coords.y() + map_to_view.m23());
 }
 
-void MapView::completeDragging(QPoint offset, bool do_update)
+qreal MapView::lengthToPixel(qreal length) const
 {
-	MapCoordF rotated_offset(offset.x(), offset.y());
-	rotated_offset.rotate(-1 * rotation);
-	
-	drag_offset = QPoint(0, 0);
-	qint64 move_x = -pixelToLength(rotated_offset.getX());
-	qint64 move_y = -pixelToLength(rotated_offset.getY());
-	
-	position_x += move_x;
-	position_y += move_y;
-	update();
-	
-	for (int i = 0; i < (int)widgets.size(); ++i)
-		widgets[i]->completeDragging(move_x, move_y, do_update);
+	return Util::mmToPixelPhysical(zoom * length / 1000.0);
 }
 
-bool MapView::zoomSteps(float num_steps, bool preserve_cursor_pos, QPointF cursor_pos_view)
+qreal MapView::pixelToLength(qreal pixel) const
 {
-	num_steps = 0.5f * num_steps;
+	return Util::pixelToMMPhysical(pixel / zoom) * 1000.0;
+}
+
+QRectF MapView::calculateViewedRect(QRectF rect) const
+{
+	auto top_left     = viewToMapF(rect.topLeft());
+	auto top_right    = viewToMapF(rect.topRight());
+	auto bottom_right = viewToMapF(rect.bottomRight());
+	auto bottom_left  = viewToMapF(rect.bottomLeft());
 	
-	if (num_steps > 0)
+	rect = QRectF{ top_left, bottom_right }.normalized();
+	rectInclude(rect, top_right);
+	rectInclude(rect, bottom_left);
+	rect.adjust(-0.001, -0.001, +0.001, +0.001);
+	return rect;
+}
+
+QRectF MapView::calculateViewBoundingBox(QRectF rect) const
+{
+	auto top_left     = mapToView(static_cast<MapCoordF>(rect.topLeft()));
+	auto top_right    = mapToView(static_cast<MapCoordF>(rect.topRight()));
+	auto bottom_right = mapToView(static_cast<MapCoordF>(rect.bottomRight()));
+	auto bottom_left  = mapToView(static_cast<MapCoordF>(rect.bottomLeft()));
+	
+	rect = QRectF{ top_left, bottom_right }.normalized();
+	rectInclude(rect, top_right);
+	rectInclude(rect, bottom_left);
+	rect.adjust(-1.0, -1.0, +1.0, +1.0);
+	return rect;
+}
+
+void MapView::setPanOffset(QPoint offset)
+{
+	if (offset != pan_offset)
 	{
-		// Zooming in - adjust camera position so the cursor stays at the same position on the map
-		if (getZoom() >= zoom_in_limit)
-			return false;
-		
-		bool set_to_limit = false;
-		double zoom_to = pow(2, (log10(getZoom()) / LOG2) + num_steps);
-		double zoom_factor = zoom_to / getZoom();
-		if (getZoom() * zoom_factor > zoom_in_limit)
-		{
-			zoom_factor = zoom_in_limit / getZoom();
-			set_to_limit = true;
-		}
-		
-		MapCoordF mouse_pos_map(0, 0);
-		MapCoordF mouse_pos_to_view_center(0, 0);
-		if (preserve_cursor_pos)
-		{
-			mouse_pos_map = viewToMapF(cursor_pos_view);
-			mouse_pos_to_view_center = MapCoordF(getPositionX()/1000.0 - mouse_pos_map.getX(), getPositionY()/1000.0 - mouse_pos_map.getY());
-			mouse_pos_to_view_center = MapCoordF(mouse_pos_to_view_center.getX() * 1 / zoom_factor, mouse_pos_to_view_center.getY() * 1 / zoom_factor);
-		}
-		
-		setZoom(set_to_limit ? zoom_in_limit : (getZoom() * zoom_factor));
-		if (preserve_cursor_pos)
-		{
-			setPositionX(qRound64(1000 * (mouse_pos_map.getX() + mouse_pos_to_view_center.getX())));
-			setPositionY(qRound64(1000 * (mouse_pos_map.getY() + mouse_pos_to_view_center.getY())));
-		}
+		pan_offset = offset;
+		for (auto widget : widgets)
+			widget->setPanOffset(pan_offset);
+	}
+}
+
+void MapView::finishPanning(QPoint offset)
+{
+	setPanOffset({0,0});
+	try
+	{
+		auto rotated_offset = MapCoord::fromNative64(qRound64(-pixelToLength(offset.x())),
+													 qRound64(-pixelToLength(offset.y())) );
+		auto rotated_offset_f = MapCoordF{ rotated_offset };
+		rotated_offset_f.rotate(-rotation);
+		auto move = MapCoord{ rotated_offset_f };
+		setCenter(center() + move);
+	}
+	catch (std::range_error)
+	{
+		// Do nothing
+	}
+}
+
+void MapView::zoomSteps(float num_steps, bool preserve_cursor_pos, QPointF cursor_pos_view)
+{
+	auto zoom_to = getZoom() * pow(sqrt(2.0), num_steps);
+	
+	if (preserve_cursor_pos)
+	{
+		setZoom(zoom_to, cursor_pos_view);
 	}
 	else
 	{
-		// Zooming out
-		if (getZoom() <= zoom_out_limit)
-			return false;
+		setZoom(zoom_to);
 		
-		bool set_to_limit = false;
-		double zoom_to = pow(2, (log10(getZoom()) / LOG2) + num_steps);
-		double zoom_factor = zoom_to / getZoom();
-		if (getZoom() * zoom_factor < zoom_out_limit)
-		{
-			zoom_factor = zoom_out_limit / getZoom();
-			set_to_limit = true;
-		}
-		
-		MapCoordF mouse_pos_map(0, 0);
-		MapCoordF mouse_pos_to_view_center(0, 0);
-		if (preserve_cursor_pos)
-		{
-			mouse_pos_map = viewToMapF(cursor_pos_view);
-			mouse_pos_to_view_center = MapCoordF(getPositionX()/1000.0 - mouse_pos_map.getX(), getPositionY()/1000.0 - mouse_pos_map.getY());
-			mouse_pos_to_view_center = MapCoordF(mouse_pos_to_view_center.getX() * 1 / zoom_factor, mouse_pos_to_view_center.getY() * 1 / zoom_factor);
-		}
-		
-		setZoom(set_to_limit ? zoom_out_limit : (getZoom() * zoom_factor));
-		
-		if (preserve_cursor_pos)
-		{
-			setPositionX(qRound64(1000 * (mouse_pos_map.getX() + mouse_pos_to_view_center.getX())));
-			setPositionY(qRound64(1000 * (mouse_pos_map.getY() + mouse_pos_to_view_center.getY())));
-		}
-		else
-		{
-			mouse_pos_map = viewToMapF(cursor_pos_view);
-			for (int i = 0; i < (int)widgets.size(); ++i)
-				widgets[i]->updateCursorposLabel(mouse_pos_map);
-		}
+		auto mouse_pos_map = viewToMapF(cursor_pos_view);
+		for (auto widget : widgets)
+			widget->updateCursorposLabel(mouse_pos_map);
 	}
-	return true;
-}
-
-void MapView::setZoom(float value)
-{
-	float zoom_factor = value / zoom;
-	for (int i = 0; i < (int)widgets.size(); ++i)
-		widgets[i]->zoom(zoom_factor);
-	
-	zoom = value;
-	update();
-	
-	for (int i = 0; i < (int)widgets.size(); ++i)
-		widgets[i]->updateZoomLabel();
 }
 
 void MapView::setZoom(double value, QPointF center)
 {
-	value = qBound(zoom_out_limit, value, zoom_in_limit);
-	double zoom_factor = value / getZoom();
-	
-	MapCoordF zoom_center_map = viewToMapF(center);
-	MapCoordF view_center_map = MapCoordF(getPositionX()/1000.0 - zoom_center_map.getX(), getPositionY()/1000.0 - zoom_center_map.getY());
-	view_center_map = MapCoordF(view_center_map.getX() / zoom_factor, view_center_map.getY() / zoom_factor);
+	auto pos = this->center();
+	auto zoom_pos = viewToMap(center);
+	auto old_zoom = getZoom();
 	
 	setZoom(value);
 	
-	setPositionX(qRound64(1000 * (zoom_center_map.getX() + view_center_map.getX())));
-	setPositionY(qRound64(1000 * (zoom_center_map.getY() + view_center_map.getY())));
+	if (!qFuzzyCompare(old_zoom, getZoom()))
+	{
+		auto zoom_factor = getZoom() / old_zoom ;
+		setCenter(zoom_pos + (pos - zoom_pos) / zoom_factor);
+	}
 }
 
-void MapView::setPositionX(qint64 value)
+void MapView::setZoom(double value)
 {
-	qint64 offset = value - position_x;
-	for (int i = 0; i < (int)widgets.size(); ++i)
-		widgets[i]->moveView(offset, 0);
-	
-	position_x = value;
-	update();
-}
-void MapView::setPositionY(qint64 value)
-{
-	qint64 offset = value - position_y;
-	for (int i = 0; i < (int)widgets.size(); ++i)
-		widgets[i]->moveView(0, offset);
-	
-	position_y = value;
-	update();
+	zoom = qBound(zoom_out_limit, value, zoom_in_limit);
+	updateTransform(ZoomChange);
 }
 
-void MapView::update()
+void MapView::setRotation(float value)
 {
-	double cosr = cos(rotation);
-	double sinr = sin(rotation);
-	
-	double final_zoom = lengthToPixel(1000);
+	rotation = value;
+	updateTransform(RotationChange);
+}
+
+void MapView::setCenter(MapCoord pos)
+{
+	center_pos = pos;
+	updateTransform(CenterChange);
+}
+
+void MapView::updateTransform(ChangeFlags change)
+{
+	double final_zoom = calculateFinalZoomFactor();
+	double final_zoom_cosr = final_zoom * cos(rotation);
+	double final_zoom_sinr = final_zoom * sin(rotation);
+	auto center_x = center_pos.x();
+	auto center_y = center_pos.y();
 	
 	// Create map_to_view
-	map_to_view.setSize(3, 3);
-	map_to_view.set(0, 0, final_zoom * cosr);
-	map_to_view.set(0, 1, final_zoom * (-sinr));
-	map_to_view.set(1, 0, final_zoom * sinr);
-	map_to_view.set(1, 1, final_zoom * cosr);
-	map_to_view.set(0, 2, -final_zoom*(position_x/1000.0)*cosr + final_zoom*(position_y/1000.0)*sinr - view_x);
-	map_to_view.set(1, 2, -final_zoom*(position_x/1000.0)*sinr - final_zoom*(position_y/1000.0)*cosr - view_y);
-	map_to_view.set(2, 0, 0);
-	map_to_view.set(2, 1, 0);
-	map_to_view.set(2, 2, 1);
+	map_to_view.setMatrix(final_zoom_cosr, -final_zoom_sinr, -final_zoom_cosr * center_x + final_zoom_sinr * center_y,
+	                      final_zoom_sinr,  final_zoom_cosr, -final_zoom_sinr * center_x - final_zoom_cosr * center_y,
+	                      0, 0, 1);
+	view_to_map     = map_to_view.inverted();
+	world_transform = map_to_view.transposed();
 	
-	// Create view_to_map
-	map_to_view.invert(view_to_map);
+	for (auto widget : widgets)
+		widget->viewChanged(change);
 }
 
-TemplateVisibility *MapView::getMapVisibility()
+const TemplateVisibility* MapView::effectiveMapVisibility() const
+{
+	static TemplateVisibility opaque    { 1.0f, true };
+	static TemplateVisibility invisible { 0.0f, false };
+	if (all_templates_hidden)
+		return &opaque;
+	else if (map_visibility->opacity < 0.005f)
+		return &invisible;
+	else
+		return map_visibility;
+}
+
+TemplateVisibility* MapView::getMapVisibility()
 {
 	return map_visibility;
 }
@@ -471,19 +427,27 @@ bool MapView::isTemplateVisible(const Template* temp) const
 		return false;
 }
 
-TemplateVisibility* MapView::getTemplateVisibility(Template* temp)
+const TemplateVisibility* MapView::getTemplateVisibility(const Template* temp) const
 {
 	if (!template_visibilities.contains(temp))
 	{
-		TemplateVisibility* vis = new TemplateVisibility();
-		template_visibilities.insert(temp, vis);
-		return vis;
+		static const TemplateVisibility dummy { 1.0f, false };
+		return &dummy;
 	}
-	else
-		return template_visibilities.value(temp);
+	return template_visibilities.value(temp);
 }
 
-void MapView::deleteTemplateVisibility(Template* temp)
+TemplateVisibility* MapView::getTemplateVisibility(const Template* temp)
+{
+	if (!template_visibilities.contains(temp))
+	{
+		template_visibilities.insert(temp, new TemplateVisibility { 1.0, true });
+	}
+	
+	return const_cast<TemplateVisibility*>(static_cast<const MapView*>(this)->getTemplateVisibility(temp));
+}
+
+void MapView::deleteTemplateVisibility(const Template* temp)
 {
 	delete template_visibilities.value(temp);
 	template_visibilities.remove(temp);
@@ -498,3 +462,20 @@ void MapView::setHideAllTemplates(bool value)
 	}
 }
 
+void MapView::setGridVisible(bool visible)
+{
+	if (grid_visible != visible)
+	{
+		grid_visible = visible;
+		updateAllMapWidgets();
+	}
+}
+
+void MapView::setOverprintingSimulationEnabled(bool enabled)
+{
+	if (overprinting_simulation_enabled != enabled)
+	{
+		overprinting_simulation_enabled = enabled;
+		updateAllMapWidgets();
+	}
+}

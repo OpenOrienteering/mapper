@@ -1,5 +1,6 @@
 /*
- *    Copyright 2012, 2013 Thomas Schöps, Kai Pastor
+ *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2012-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -19,7 +20,6 @@
 
 #include "renderable.h"
 
-#include <QDebug>
 #include <QPainter>
 #include <qmath.h>
 
@@ -29,6 +29,10 @@
 #include "object.h"
 #include "symbol.h"
 #include "util.h"
+
+#if defined(Q_OS_ANDROID) && defined(QT_PRINTSUPPORT_LIB)
+static_assert(false, "This file needs to be modified for correct printing on Android");
+#endif
 
 /* 
  * The macro MAPPER_OVERPRINTING_CORRECTION allows to select different
@@ -65,48 +69,17 @@
 #endif
 
 
-// define DEBUG_OPENORIENTEERING_RENDERABLE to find leaking Renderables
 
-#ifdef DEBUG_OPENORIENTEERING_RENDERABLE
-
-#include <QDebug>
-
-qint64 renderable_instance_count = 0;
-
-void debugRenderableCount(qint64 counter)
-{
-	if (counter % 1000 == 0)
-		qDebug() << "Renderable:" << counter << "instances";
-}
-
-#endif
-
-
-Renderable::Renderable()
-{
-#ifdef DEBUG_OPENORIENTEERING_RENDERABLE
-	debugRenderableCount(++renderable_instance_count);
-#endif
-}
-
-Renderable::Renderable(const Renderable& other)
-{
-	extent = other.extent;
-	color_priority = other.color_priority;
-#ifdef DEBUG_OPENORIENTEERING_RENDERABLE
-	debugRenderableCount(++renderable_instance_count);
-#endif
-}
+// ### Renderable ###
 
 Renderable::~Renderable()
 {
-#ifdef DEBUG_OPENORIENTEERING_RENDERABLE
-	debugRenderableCount(--renderable_instance_count);
-#endif
+	; // nothing, not inlined
 }
 
 
-// ### RenderableContainerVector ###
+
+// ### SharedRenderables ###
 
 SharedRenderables::~SharedRenderables()
 {
@@ -117,9 +90,9 @@ void SharedRenderables::deleteRenderables()
 {
 	for (iterator renderables = begin(); renderables != end(); )
 	{
-		for (RenderableVector::const_iterator renderable = renderables->second.begin(); renderable != renderables->second.end(); ++renderable)
+		for (Renderable* renderable : renderables->second)
 		{
-			delete *renderable;
+			delete renderable;
 		}
 		renderables->second.clear();
 		if (renderables->first.clip_path != NULL)
@@ -151,79 +124,40 @@ void SharedRenderables::compact()
 
 // ### ObjectRenderables ###
 
-ObjectRenderables::ObjectRenderables(Object* object, QRectF& extent)
-: object(object),
-  extent(extent),
+ObjectRenderables::ObjectRenderables(Object& object)
+: extent(object.extent),
   clip_path(NULL)
 {
+	;
 }
 
 ObjectRenderables::~ObjectRenderables()
 {
+	;
 }
 
-void ObjectRenderables::draw(const QColor& color, QPainter* painter, QRectF bounding_box, bool force_min_size, float scaling) const
+void ObjectRenderables::draw(const QColor& color, QPainter* painter, const RenderConfig& config) const
 {
 	QPainterPath initial_clip = painter->clipPath();
-	bool no_initial_clip = initial_clip.isEmpty();
-	const QPainterPath* current_clip = NULL;
+	const QPainterPath* current_clip = nullptr;
 	
 	painter->save();
 	
-	for (const_iterator object_it = begin(); object_it != end(); ++object_it)
+	for (const auto& color_renderables : *this)
 	{
-		SharedRenderables::const_iterator it_end = object_it->second->end();
-		for (SharedRenderables::const_iterator it = object_it->second->begin(); it != it_end; ++it)
+		for (const auto& config_renderables : *color_renderables.second)
 		{
-			const RenderStates& new_states = it->first;
-			float pen_width = new_states.pen_width;
+			// Render the renderables
+			const PainterConfig& state = config_renderables.first;
+			if (!state.activate(painter, current_clip, config, color, initial_clip))
+				continue;
 			
-			if (new_states.mode == RenderStates::PenOnly)
+			for (Renderable* renderable : config_renderables.second)
 			{
-				bool pen_too_small = (force_min_size && pen_width * scaling <= 1.0f);
-				painter->setPen(QPen(color, pen_too_small ? 0 : pen_width));
-				
-				painter->setBrush(QBrush(Qt::NoBrush));
-			}
-			else if (new_states.mode == RenderStates::BrushOnly)
-			{
-				QBrush brush(color);
-				
-				painter->setPen(QPen(Qt::NoPen));
-				painter->setBrush(brush);
-			}
-			
-			if (current_clip != new_states.clip_path)
-			{
-				if (no_initial_clip)
+				if (renderable->intersects(config.bounding_box))
 				{
-					if (new_states.clip_path)
-						painter->setClipPath(*new_states.clip_path, Qt::ReplaceClip);
-					else
-						painter->setClipPath(initial_clip, Qt::NoClip);
+					renderable->render(*painter, config);
 				}
-				else
-				{
-					painter->setClipPath(initial_clip, Qt::ReplaceClip);
-					if (new_states.clip_path)
-						painter->setClipPath(*new_states.clip_path, Qt::IntersectClip);
-				}
-				current_clip = new_states.clip_path;
-			}
-				
-			RenderableVector::const_iterator r_end = it->second.end();
-			for (RenderableVector::const_iterator renderable = it->second.begin(); renderable != r_end; ++renderable)
-			{
-				// Bounds check
-				const QRectF& extent = (*renderable)->getExtent();
-				// NOTE: !bounding_box.intersects(extent) should be logical equivalent to the following
-				if (extent.right() < bounding_box.x())	continue;
-				if (extent.bottom() < bounding_box.y())	continue;
-				if (extent.x() > bounding_box.right())	continue;
-				if (extent.y() > bounding_box.bottom())	continue;
-				
-				// Render the renderable
-				(*renderable)->render(*painter, bounding_box, force_min_size, scaling, true);
 			}
 		}
 	}
@@ -231,12 +165,12 @@ void ObjectRenderables::draw(const QColor& color, QPainter* painter, QRectF boun
 	painter->restore();
 }
 
-void ObjectRenderables::setClipPath(QPainterPath* path)
+void ObjectRenderables::setClipPath(const QPainterPath* path)
 {
 	clip_path = path;
 }
 
-void ObjectRenderables::insertRenderable(Renderable* r, RenderStates& state)
+void ObjectRenderables::insertRenderable(Renderable* r, PainterConfig state)
 {
 	SharedRenderables::Pointer& container(operator[](state.color_priority));
 	if (!container)
@@ -253,9 +187,9 @@ void ObjectRenderables::insertRenderable(Renderable* r, RenderStates& state)
 
 void ObjectRenderables::clear()
 {
-	for (const_iterator color = begin(); color != end(); ++color)
+	for (auto& renderables : *this)
 	{
-		color->second->clear();
+		renderables.second->clear();
 	}
 }
 
@@ -286,18 +220,21 @@ void ObjectRenderables::deleteRenderables()
 
 // ### MapRenderables ###
 
-MapRenderables::MapRenderables(Map* map) : map(map)
+MapRenderables::MapRenderables(Map* map)
+ : map(map)
 {
+	; // nothing
 }
 
-void MapRenderables::draw(QPainter* painter, QRectF bounding_box, bool force_min_size, float scaling, bool on_screen, bool show_helper_symbols, float opacity_factor, bool highlighted, bool require_spot_color) const
+void MapRenderables::draw(QPainter *painter, const RenderConfig &config) const
 {
 	// TODO: improve performance by using some spatial acceleration structure?
 	
-	Map::ColorVector& colors = map->color_set->colors;
+#ifdef Q_OS_ANDROID
+	const qreal min_dimension = 1.0/config.scaling;
+#endif
 	
 	QPainterPath initial_clip = painter->clipPath();
-	bool no_initial_clip = initial_clip.isEmpty();
 	const QPainterPath* current_clip = NULL;
 	
 	painter->save();
@@ -309,7 +246,7 @@ void MapRenderables::draw(QPainter* painter, QRectF bounding_box, bool force_min
 	}
 	for (; color != end_of_colors; ++color)
 	{
-		if ( require_spot_color &&
+		if ( config.testFlag(RenderConfig::RequireSpotColor) &&
 		     (color->first < 0 || map->getColor(color->first)->getSpotColorMethod() == MapColor::UndefinedMethod) )
 		{
 			continue;
@@ -320,125 +257,54 @@ void MapRenderables::draw(QPainter* painter, QRectF bounding_box, bool force_min
 		{
 			// Settings check
 			const Symbol* symbol = object->first->getSymbol();
-			if (!show_helper_symbols && symbol->isHelperSymbol())
+			if (!config.testFlag(RenderConfig::HelperSymbols) && symbol->isHelperSymbol())
 				continue;
 			if (symbol->isHidden())
 				continue;
 			
-			if (!object->first->getExtent().intersects(bounding_box))
+			if (!object->first->getExtent().intersects(config.bounding_box))
 				continue;
 			
 			SharedRenderables::const_iterator it_end = object->second->end();
 			for (SharedRenderables::const_iterator it = object->second->begin(); it != it_end; ++it)
 			{
-				const RenderStates& new_states = it->first;
-				const MapColor* color;
-				float pen_width = new_states.pen_width;
+				// Render the renderables
+				const PainterConfig& state = it->first;
+				const MapColor* map_color = map->getColor(state.color_priority);
+				if (!map_color)
+				{
+					Q_ASSERT(state.color_priority == MapColor::Reserved);
+					continue; // in release build
+				}
+				QColor color = *map_color;
+				if (state.color_priority >= 0 && map_color->getOpacity() < 1.0)
+					color.setAlphaF(map_color->getOpacity());
+				if (!state.activate(painter, current_clip, config, color, initial_clip))
+				    continue;
 				
-				if (new_states.color_priority > MapColor::Reserved)
+				for (Renderable* renderable : it->second)
 				{
-					color = colors[new_states.color_priority];
-				}
-				else if (new_states.color_priority == MapColor::Registration)
-				{
-					color = Map::getRegistrationColor();
-				}
-				else
-				{
-					if (new_states.color_priority == MapColor::CoveringWhite)
-						color = Map::getCoveringWhite();
-					else if (new_states.color_priority == MapColor::CoveringRed)
-						color = Map::getCoveringRed();
-					else if (new_states.color_priority == MapColor::Undefined)
-						color = Map::getUndefinedColor();
-					else if (new_states.color_priority == MapColor::Reserved)
+#ifdef Q_OS_ANDROID
+					const QRectF& extent = renderable->getExtent();
+					if (extent.width() < min_dimension && extent.height() < min_dimension)
 						continue;
-					else
+#endif
+					if (renderable->intersects(config.bounding_box))
 					{
-						Q_ASSERT(!"Invalid special color!");
-						continue; // in release build
+						renderable->render(*painter, config);
 					}
-					
-					// this is not undone here anywhere as it should apply to 
-					// all special symbols and these are always painted last
-					painter->setRenderHint(QPainter::Antialiasing, true);
-					pen_width = new_states.pen_width / scaling;
 				}
 				
-				if (new_states.mode == RenderStates::PenOnly)
-				{
-					bool pen_too_small = (force_min_size && pen_width * scaling <= 1.0f);
-					painter->setPen(QPen(highlighted ? getHighlightedColor(*color) : *color, pen_too_small ? 0 : pen_width));
-					
-					painter->setBrush(QBrush(Qt::NoBrush));
-				}
-				else if (new_states.mode == RenderStates::BrushOnly)
-				{
-					QBrush brush(highlighted ? getHighlightedColor(*color) : *color);
-					
-					painter->setPen(QPen(Qt::NoPen));
-					painter->setBrush(brush);
-				}
-				/*else if (new_states.mode == RenderStates::PenAndHatch)	// NOTE: does not work well with printing
-				{
-					bool pen_too_small = (force_min_size && pen_width * scaling <= 1.0f);
-					painter->setPen(QPen(highlighted ? getHighlightedColor(color->color) : color->color, pen_too_small ? 0 : pen_width));
-					QBrush brush(highlighted ? getHighlightedColor(color->color) : color->color);
-					brush.setStyle(Qt::BDiagPattern);
-					brush.setTransform(QTransform().scale(1 / scaling, 1 / scaling));
-					painter->setBrush(brush);
-				}*/
-				
-				painter->setOpacity(qMin(1.0f, opacity_factor * color->getOpacity()));
-				
-				if (current_clip != new_states.clip_path)
-				{
-					if (no_initial_clip)
-					{
-						if (new_states.clip_path)
-							painter->setClipPath(*new_states.clip_path, Qt::ReplaceClip);
-						else
-							painter->setClipPath(initial_clip, Qt::NoClip);
-					}
-					// Workaround for Qt::IntersectClip problem
-					// with Windows and Mac printers (cf. [tickets:#196]), and 
-					// with Linux PDF export (cf. [tickets:#225]).
-					else if (!on_screen && new_states.clip_path)
-					{
-						painter->setClipPath(initial_clip.intersected(*new_states.clip_path), Qt::ReplaceClip);
-						if (painter->clipPath().isEmpty())
-							continue; // outside of initial clip
-					}
-					else
-					{
-						painter->setClipPath(initial_clip, Qt::ReplaceClip);
-						if (new_states.clip_path)
-							painter->setClipPath(*new_states.clip_path, Qt::IntersectClip);
-					}
-					current_clip = new_states.clip_path;
-				}
-					
-				RenderableVector::const_iterator r_end = it->second.end();
-				for (RenderableVector::const_iterator renderable = it->second.begin(); renderable != r_end; ++renderable)
-				{
-					// Bounds check
-					const QRectF& extent = (*renderable)->getExtent();
-					// NOTE: !bounding_box.intersects(extent) should be logical equivalent to the following
-					if (extent.right() < bounding_box.x())	continue;
-					if (extent.bottom() < bounding_box.y())	continue;
-					if (extent.x() > bounding_box.right())	continue;
-					if (extent.y() > bounding_box.bottom())	continue;
-					
-					// Render the renderable
-					(*renderable)->render(*painter, bounding_box, force_min_size, scaling, on_screen);
-				}
-			}
-		}
-	}
+			} // each common render attributes
+			
+		} // each object
+		
+	} // each map color
+	
 	painter->restore();
 }
 
-void MapRenderables::drawOverprintingSimulation(QPainter* painter, QRectF bounding_box, bool force_min_size, float scaling, bool on_screen, bool show_helper_symbols) const
+void MapRenderables::drawOverprintingSimulation(QPainter* painter, const RenderConfig& config) const
 {
 	// NOTE: painter must be a QPainter on a QImage of Format_ARGB32_Premultiplied.
 	QImage* image = static_cast<QImage*>(painter->device());
@@ -465,7 +331,7 @@ void MapRenderables::drawOverprintingSimulation(QPainter* painter, QRectF boundi
 			QPainter p(&separation);
 			p.setRenderHints(hints);
 			p.setWorldTransform(t, false);
-			drawColorSeparation(&p, bounding_box, force_min_size, scaling, on_screen, show_helper_symbols, *map_color, true);
+			drawColorSeparation(&p, config, *map_color, true);
 			p.end();
 			
 			// Add this separation to the composition with multiplication.
@@ -502,7 +368,9 @@ void MapRenderables::drawOverprintingSimulation(QPainter* painter, QRectF boundi
 	QPainter p(&separation);
 	p.setRenderHints(hints);
 	p.setWorldTransform(t, false);
-	draw(&p, bounding_box, force_min_size, scaling, on_screen, show_helper_symbols, 1.0f, false, true);
+	RenderConfig config_copy = config;
+	config_copy.options |= RenderConfig::RequireSpotColor;
+	draw(&p, config_copy);
 	p.end();
 	QRgb* dest = (QRgb*)separation.bits();
 	const QRgb* dest_end = dest + separation.byteCount() / sizeof(QRgb);
@@ -523,22 +391,21 @@ void MapRenderables::drawOverprintingSimulation(QPainter* painter, QRectF boundi
 	painter->drawImage(0, 0, separation);
 #endif
 	
-	if (on_screen)
+	if (config.testFlag(RenderConfig::Screen))
 	{
 		static MapColor reserved_color(MapColor::Reserved);
-		drawColorSeparation(painter, bounding_box, force_min_size, scaling, on_screen, show_helper_symbols, &reserved_color, true);
+		drawColorSeparation(painter, config, &reserved_color, true);
 	}
 	
 	painter->restore();
 }
 
-void MapRenderables::drawColorSeparation(QPainter* painter, QRectF bounding_box, bool force_min_size, float scaling, bool on_screen, bool show_helper_symbols, const MapColor* separation, bool use_color) const
+void MapRenderables::drawColorSeparation(QPainter* painter, const RenderConfig& config, const MapColor* separation, bool use_color) const
 {
 	painter->save();
 	
 	const QPainterPath initial_clip(painter->clipPath());
-	bool no_initial_clip = initial_clip.isEmpty();
-	const QPainterPath* current_clip = NULL;
+	const QPainterPath* current_clip = nullptr;
 	
 	// As soon as the spot color is actually used for drawing (i.e. drawing_started = true),
 	// we need to take care of knockouts.
@@ -651,98 +518,52 @@ void MapRenderables::drawColorSeparation(QPainter* painter, QRectF bounding_box,
 		{
 			// Check whether the symbol and object is to be drawn at all.
 			const Symbol* symbol = object->first->getSymbol();
-			if (!show_helper_symbols && symbol->isHelperSymbol())
+			if (!config.testFlag(RenderConfig::HelperSymbols) && symbol->isHelperSymbol())
 				continue;
 			if (symbol->isHidden())
 				continue;
 			
-			if (!object->first->getExtent().intersects(bounding_box))
+			if (!object->first->getExtent().intersects(config.bounding_box))
 				continue;
 			
 			// For each pair of common rendering attributes and collection of renderables...
 			SharedRenderables::const_iterator it_end = object->second->end();
 			for (SharedRenderables::const_iterator it = object->second->begin(); it != it_end; ++it)
 			{
-				const RenderStates& new_states = it->first;
-				
-				float pen_width = new_states.pen_width;
-				if (separation->getPriority() == MapColor::Reserved)
-				{
-					pen_width = new_states.pen_width / scaling;
-				}
+				const PainterConfig& state = it->first;
 				
 				QColor color = *drawing_color.spot_color;
-				if (drawing_color.factor < 0.0005f)
+				bool drawing = (drawing_color.factor >= 0.0005f);
+				if (!drawing)
 				{
+					if (!drawing_started)
+						continue;
 					color = Qt::white;
 				}
 				else if (use_color)
 				{
 					qreal c, m, y, k;
 					color.getCmykF(&c, &m, &y, &k);
-					color.setCmykF(c*drawing_color.factor, m*drawing_color.factor, y*drawing_color.factor, k*drawing_color.factor,1.0f);
+					color.setCmykF(c*drawing_color.factor, m*drawing_color.factor, y*drawing_color.factor, k*drawing_color.factor, 1.0f);
 				}
 				else
 				{
 					color.setCmykF(0.0f, 0.0f, 0.0f, drawing_color.factor, 1.0f);
 				}
 				
-				if (new_states.mode == RenderStates::PenOnly)
-				{
-					bool pen_too_small = (force_min_size && pen_width * scaling <= 1.0f);
-					painter->setPen(QPen(color, pen_too_small ? 0 : pen_width));
-					painter->setBrush(QBrush(Qt::NoBrush));
-				}
-				else if (new_states.mode == RenderStates::BrushOnly)
-				{
-					painter->setPen(QPen(Qt::NoPen));
-					painter->setBrush(QBrush(color));
-				}
-				
-				if (current_clip != new_states.clip_path)
-				{
-					if (no_initial_clip)
-					{
-						if (new_states.clip_path)
-							painter->setClipPath(*new_states.clip_path, Qt::ReplaceClip);
-						else
-							painter->setClipPath(initial_clip, Qt::NoClip);
-					}
-					// Workaround for Qt::IntersectClip problem
-					// with Windows and Mac printers (cf. [tickets:#196]), and 
-					// with Linux PDF export (cf. [tickets:#225]).
-					else if (!on_screen && new_states.clip_path)
-					{
-						painter->setClipPath(initial_clip.intersected(*new_states.clip_path), Qt::ReplaceClip);
-						if (painter->clipPath().isEmpty())
-							continue; // outside of initial clip
-					}
-					else
-					{
-						painter->setClipPath(initial_clip, Qt::ReplaceClip);
-						if (new_states.clip_path)
-							painter->setClipPath(*new_states.clip_path, Qt::IntersectClip);
-					}
-					current_clip = new_states.clip_path;
-				}
-				
-				bool drawing = (drawing_color.factor > 0.0005f);
+				if (!state.activate(painter, current_clip, config, color, initial_clip))
+					continue;
 				
 				// For each renderable that uses the current painter configuration...
-				RenderableVector::const_iterator r_end = it->second.end();
-				for (RenderableVector::const_iterator renderable = it->second.begin(); renderable != r_end; ++renderable)
+				// Render the renderable
+				for (Renderable* renderable : it->second)
 				{
-					// Bounds check
-					const QRectF& extent = (*renderable)->getExtent();
-					if (extent.right() < bounding_box.left()) continue;
-					if (extent.bottom() < bounding_box.top()) continue;
-					if (extent.left() > bounding_box.right()) continue;
-					if (extent.top() > bounding_box.bottom()) continue;
-					
-					// Render the renderable
-					drawing_started |= drawing;
-					(*renderable)->render(*painter, bounding_box, force_min_size, scaling, on_screen);
-				} // each renderable
+					if (renderable->intersects(config.bounding_box))
+					{
+						renderable->render(*painter, config);
+						drawing_started |= drawing;
+					}
+				}
 				
 			} // each common render attributes
 			
@@ -794,9 +615,9 @@ void MapRenderables::removeRenderablesOfObject(const Object* object, bool mark_a
 	}
 }
 
-void MapRenderables::clear(bool set_area_dirty)
+void MapRenderables::clear(bool mark_area_as_dirty)
 {
-	if (set_area_dirty)
+	if (mark_area_as_dirty)
 	{
 		const_iterator end_of_colors = end();
 		for (const_iterator color = begin(); color != end_of_colors; ++color)
@@ -817,18 +638,98 @@ void MapRenderables::clear(bool set_area_dirty)
 	std::map<int, ObjectRenderablesMap>::clear();
 }
 
-QColor MapRenderables::getHighlightedColor(const QColor& original)
+// ### PainterConfig ###
+
+namespace {
+	inline
+	QColor highlightedColor(const QColor& original)
+	{
+		const int highlight_alpha = 255;
+		
+		if (original.value() > 127)
+		{
+			const float factor = 0.35f;
+			return QColor(factor * original.red(), factor * original.green(), factor * original.blue(), highlight_alpha);
+		}
+		else
+		{
+			const float factor = 0.15f;
+			return QColor(255 - factor * (255 - original.red()), 255 - factor * (255 - original.green()), 255 - factor * (255 - original.blue()), highlight_alpha);
+		}
+	}
+}
+
+bool PainterConfig::activate(QPainter* painter, const QPainterPath*& current_clip, const RenderConfig& config, const QColor& color, const QPainterPath& initial_clip) const
 {
-	const int highlight_alpha = 255;
+	if (current_clip != clip_path)
+	{
+		if (initial_clip.isEmpty())
+		{
+			if (clip_path)
+				painter->setClipPath(*clip_path, Qt::ReplaceClip);
+			else
+				painter->setClipPath(initial_clip, Qt::NoClip);
+		}
+		else if (clip_path)
+		{
+			/* This used to be a workaround for a Qt::IntersectClip problem
+			 * with Windows and Mac printers (cf. [tickets:#196]), and 
+			 * with Linux PDF export (cf. [tickets:#225]).
+			 * But it seems to be faster in general.
+			 */
+			QPainterPath merged = initial_clip.intersected(*clip_path);
+			if (merged.isEmpty())
+				return false; // outside of initial clip
+			painter->setClipPath(merged, Qt::ReplaceClip);
+		}
+		else
+		{
+			painter->setClipPath(initial_clip, Qt::ReplaceClip);
+		}
+		current_clip = clip_path;
+	}
 	
-	if (original.value() > 127)
+	qreal actual_pen_width = pen_width;
+	
+	if (color_priority < 0 && color_priority != MapColor::Registration)
 	{
-		const float factor = 0.35f;
-		return QColor(factor * original.red(), factor * original.green(), factor * original.blue(), highlight_alpha);
+		if (color_priority == MapColor::Reserved)
+			return false;
+		
+		if (!config.testFlag(RenderConfig::DisableAntialiasing))
+		{
+			// this is not undone here anywhere as it should apply to 
+			// all special symbols and these are always painted last
+			painter->setRenderHint(QPainter::Antialiasing, true);
+		}
+		
+		actual_pen_width /= config.scaling;
 	}
-	else
+	else if (config.testFlag(RenderConfig::DisableAntialiasing))
 	{
-		const float factor = 0.15f;
-		return QColor(255 - factor * (255 - original.red()), 255 - factor * (255 - original.green()), 255 - factor * (255 - original.blue()), highlight_alpha);
+		painter->setRenderHint(QPainter::Antialiasing, false);
+		painter->setRenderHint(QPainter::TextAntialiasing, false);
 	}
+	
+	QBrush brush(config.testFlag(RenderConfig::Highlighted) ? highlightedColor(color) : color);
+	if (mode == PainterConfig::PenOnly)
+	{
+#ifdef Q_OS_ANDROID
+		if (pen_width * config.scaling < 0.1)
+			return false;
+#endif
+		if (config.testFlag(RenderConfig::ForceMinSize) && pen_width * config.scaling <= 1.0)
+			actual_pen_width = 0.0; // Forces cosmetic pen
+		painter->setPen(QPen(brush, actual_pen_width));
+		painter->setBrush(QBrush(Qt::NoBrush));
+	}
+	else if (mode == PainterConfig::BrushOnly)
+	{
+		painter->setPen(QPen(Qt::NoPen));
+		painter->setBrush(brush);
+	}
+	
+	painter->setOpacity(config.opacity);
+	
+	return true;
 }

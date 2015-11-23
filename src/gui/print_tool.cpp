@@ -1,5 +1,6 @@
 /*
- *    Copyright 2012, 2013 Thomas Schöps, Kai Pastor
+ *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2012-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -54,10 +55,10 @@ void PrintTool::init()
 	MapEditorTool::init();
 }
 
-QCursor* PrintTool::getCursor()
+const QCursor& PrintTool::getCursor() const
 {
-	static QCursor cursor(Qt::ArrowCursor);
-	return &cursor;
+	static auto const cursor = QCursor(Qt::ArrowCursor);
+	return cursor;
 }
 
 bool PrintTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
@@ -87,7 +88,7 @@ bool PrintTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidge
 	{
 		if (region == Outside)
 		{
-			mapWidget()->getMapView()->setDragOffset(event->pos() - click_pos);
+			mapWidget()->getMapView()->setPanOffset(event->pos() - click_pos);
 		}
 		else
 		{
@@ -106,7 +107,7 @@ bool PrintTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWi
 	{
 		if (region == Outside)
 		{
-			mapWidget()->getMapView()->completeDragging(event->pos() - click_pos);
+			mapWidget()->getMapView()->finishPanning(event->pos() - click_pos);
 		}
 		else
 		{
@@ -153,28 +154,7 @@ void PrintTool::draw(QPainter* painter, MapWidget* widget)
 	QColor top_left_margin_color(255, 0, 0, 160);
 	QColor bottom_right_margin_color(255, 128, 128, 160);
 	painter->setBrush(Qt::NoBrush);
-#if 0
-	Q_FOREACH(qreal hpos, map_printer->horizontalPagePositions())
-	{
-		qreal x_pos = widget->mapToViewport(MapCoordF(hpos, 0)).x();
-		painter->setPen(top_left_margin_color);
-		painter->drawLine(x_pos, outer_rect.top(), x_pos, outer_rect.bottom());
-		
-		x_pos += page_size.width();
-		painter->setPen(bottom_right_margin_color);
-		painter->drawLine(x_pos, outer_rect.top(), x_pos, outer_rect.bottom());
-	}
-	Q_FOREACH(qreal vpos, map_printer->verticalPagePositions())
-	{
-		qreal y_pos = widget->mapToViewport(MapCoordF(0, vpos)).y();
-		painter->setPen(top_left_margin_color);
-		painter->drawLine(outer_rect.left(), y_pos, outer_rect.right(), y_pos);
-		
-		y_pos += page_size.height();
-		painter->setPen(bottom_right_margin_color);
-		painter->drawLine(outer_rect.left(), y_pos, outer_rect.right(), y_pos);
-	}
-#else
+
 	// The relative length of the page dimensions to be actual drawn.
 	QSizeF drawing_size(page_size * scale_adjustment);
 	if (map_printer->horizontalPagePositions().size() > 1)
@@ -192,18 +172,21 @@ void PrintTool::draw(QPainter* painter, MapWidget* widget)
 		  map_printer->getPageFormat().page_rect.height() );
 	}
 	
-	std::vector<qreal>::const_iterator hpos = map_printer->horizontalPagePositions().begin();
-	std::vector<qreal>::const_iterator hend = map_printer->horizontalPagePositions().end();
-	for (int h = 0; hpos != hend; ++hpos, ++h)
+	int h = 0;
+	for (auto hpos : map_printer->horizontalPagePositions())
 	{
-		std::vector<qreal>::const_iterator vpos = map_printer->verticalPagePositions().begin();
-		std::vector<qreal>::const_iterator vend = map_printer->verticalPagePositions().end();
-		for (int v = 0; vpos != vend; ++vpos, ++v)
+		++h;
+		if (h > 100) // Don't visualize too many pages.
+			break;
+		
+		int v = 0;
+		for (auto vpos : map_printer->verticalPagePositions())
 		{
+			++v;
 			if (h+v > 100) // Don't visualize too many pages.
-				continue;
+				break;
 			
-			QPointF pos = widget->mapToViewport(MapCoordF(*hpos, *vpos));
+			QPointF pos = widget->mapToViewport(MapCoordF(hpos, vpos));
 			painter->setPen(top_left_margin_color);
 			// Left vertical line
 			painter->drawLine(pos.x(), pos.y(), pos.x(), pos.y()+drawing_size.height());
@@ -225,7 +208,6 @@ void PrintTool::draw(QPainter* painter, MapWidget* widget)
 	painter->setPen(bottom_right_margin_color);
 	painter->drawLine(outer_rect.right(), outer_rect.top(), outer_rect.right(), outer_rect.bottom());
 	painter->drawLine(outer_rect.left(), outer_rect.bottom(), outer_rect.right(), outer_rect.bottom());
-#endif
 	
 	QRectF print_area_f(print_area);
 	QPen marker(Qt::red);
@@ -265,7 +247,7 @@ void PrintTool::updatePrintArea()
 
 void PrintTool::updateDragging(MapCoordF mouse_pos_map)
 {
-	QPointF delta = (mouse_pos_map - click_pos_map).toQPointF();
+	QPointF delta = QPointF(mouse_pos_map - click_pos_map);
 	QRectF area = map_printer->getPrintArea();
 	switch (region)
 	{

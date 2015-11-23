@@ -21,6 +21,7 @@
 #ifndef _OPENORIENTEERING_DRAW_POINT_GPS_H_
 #define _OPENORIENTEERING_DRAW_POINT_GPS_H_
 
+#include <QPointer>
 #include <QScopedPointer>
 
 #include "tool_base.h"
@@ -68,7 +69,7 @@ protected:
 	const Symbol* last_used_symbol;
 	PointObject* preview_object;
 	QScopedPointer<MapRenderables> renderables;
-	QLabel* help_label;
+	QPointer<QLabel> help_label;
 };
 
 #endif

@@ -1,5 +1,5 @@
 /*
- *    Copyright 2013 Kai Pastor
+ *    Copyright 2013,2014 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -21,16 +21,18 @@
 
 #include "../src/map.h"
 #include "../src/core/map_color.h"
+#include "../src/core/map_view.h"
 
-MapTest::MapTest(QObject* parent): QObject(parent)
+namespace
 {
-	// nothing
+	static QDir examples_dir;
 }
 
 void MapTest::initTestCase()
 {
 	Q_INIT_RESOURCE(resources);
 	doStaticInitializations();
+	examples_dir.cd(QFileInfo(__FILE__).dir().absoluteFilePath(QString("../examples")));
 	// Static map initializations
 	Map map;
 }
@@ -51,21 +53,91 @@ void MapTest::specialColorsTest()
 	
 	Map map;               // non-const
 	const Map& cmap(map);  // const
-	QCOMPARE(map.getColor(MapColor::CoveringWhite), (MapColor*)NULL);
+	QCOMPARE(map.getMapColor(MapColor::CoveringWhite), (MapColor*)NULL);
+	QCOMPARE(cmap.getMapColor(MapColor::CoveringWhite), (MapColor*)NULL);
+	QCOMPARE(map.getColor(MapColor::CoveringWhite), Map::getCoveringWhite());
 	QCOMPARE(cmap.getColor(MapColor::CoveringWhite), Map::getCoveringWhite());
-	QCOMPARE(map.getColor(MapColor::CoveringRed), (MapColor*)NULL);
+	QCOMPARE(map.getMapColor(MapColor::CoveringRed), (MapColor*)NULL);
+	QCOMPARE(cmap.getMapColor(MapColor::CoveringRed), (MapColor*)NULL);
+	QCOMPARE(map.getColor(MapColor::CoveringRed), Map::getCoveringRed());
 	QCOMPARE(cmap.getColor(MapColor::CoveringRed), Map::getCoveringRed());
-	QCOMPARE(map.getColor(MapColor::Undefined), (MapColor*)NULL);
+	QCOMPARE(map.getMapColor(MapColor::Undefined), (MapColor*)NULL);
+	QCOMPARE(cmap.getMapColor(MapColor::Undefined), (MapColor*)NULL);
+	QCOMPARE(map.getColor(MapColor::Undefined), Map::getUndefinedColor());
 	QCOMPARE(cmap.getColor(MapColor::Undefined), Map::getUndefinedColor());
-	QCOMPARE(map.getColor(MapColor::Registration), (MapColor*)NULL);
+	QCOMPARE(map.getMapColor(MapColor::Registration), (MapColor*)NULL);
+	QCOMPARE(cmap.getMapColor(MapColor::Registration), (MapColor*)NULL);
+	QCOMPARE(map.getColor(MapColor::Registration), Map::getRegistrationColor());
 	QCOMPARE(cmap.getColor(MapColor::Registration), Map::getRegistrationColor());
 	
+	QCOMPARE(map.getMapColor(MapColor::Reserved), (MapColor*)NULL);
+	QCOMPARE(cmap.getMapColor(MapColor::Reserved), (MapColor*)NULL);
 	QCOMPARE(map.getColor(MapColor::Reserved), (MapColor*)NULL);
 	QCOMPARE(cmap.getColor(MapColor::Reserved), (MapColor*)NULL);
 	
+	QCOMPARE(map.getMapColor(map.getNumColors()), (MapColor*)NULL);
+	QCOMPARE(cmap.getMapColor(cmap.getNumColors()), (MapColor*)NULL);
 	QCOMPARE(map.getColor(map.getNumColors()), (MapColor*)NULL);
 	QCOMPARE(cmap.getColor(cmap.getNumColors()), (MapColor*)NULL);
 }
+
+void MapTest::importTest_data()
+{
+	QTest::addColumn<QString>("first_file");
+	QTest::addColumn<QString>("imported_file");
+
+	QTest::newRow("complete map, sprint sample")  << "complete map.omap" << "sprint sample.omap";
+	QTest::newRow("complete map, overprinting")   << "complete map.omap" << "overprinting.omap";
+	QTest::newRow("overprinting, forest sample")  << "overprinting.omap" << "forest sample.omap";
+}
+
+void MapTest::importTest()
+{
+	QFETCH(QString, first_file);
+	QFETCH(QString, imported_file);
+	
+	QString first_path = examples_dir.absoluteFilePath(first_file);
+	Map map;
+	MapView view(&map);
+	QVERIFY(map.loadFrom(first_path, nullptr, &view, false, false));
+	
+	auto original_size = map.getNumObjects();
+	auto original_num_colors = map.getNumColors();
+#if IMPORT_MAP_DOES_NOT_USE_GUI
+	Map empty_map;
+	map.importMap(&empty_map, Map::CompleteImport);
+	QCOMPARE(map.getNumObjects(), original_size);
+	QCOMPARE(map.getNumColors(), original_num_colors);
+#else
+	map.color_set->importSet(*map.color_set, {});
+	QCOMPARE(map.getNumColors(), original_num_colors);
+#endif
+	
+	map.importMap(&map, Map::ColorImport);
+	QCOMPARE(map.getNumObjects(), original_size);
+	QCOMPARE(map.getNumColors(), original_num_colors);
+	
+	map.importMap(&map, Map::CompleteImport);
+	QCOMPARE(map.getNumObjects(), 2*original_size);
+	QCOMPARE(map.getNumColors(), original_num_colors);
+	
+	QString imported_path = examples_dir.absoluteFilePath(imported_file);
+	Map imported_map;
+	QVERIFY(imported_map.loadFrom(imported_path, nullptr, nullptr, false, false));
+	
+	original_size = map.getNumObjects();
+	imported_map.changeScale(map.getScaleDenominator(), {}, true, true, true, true);
+	map.importMap(&imported_map, Map::CompleteImport);
+	QCOMPARE(map.getNumObjects(), original_size + imported_map.getNumObjects());
+}
+
+/*
+ * We select a non-standard QPA because we don't need a real GUI window.
+ * 
+ * Normally, the "offscreen" plugin would be the correct one.
+ * However, it bails out with a QFontDatabase error (cf. QTBUG-33674)
+ */
+auto qpa_selected = qputenv("QT_QPA_PLATFORM", "minimal");
 
 
 QTEST_MAIN(MapTest)

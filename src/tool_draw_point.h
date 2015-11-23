@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -21,7 +22,7 @@
 #ifndef _OPENORIENTEERING_DRAW_POINT_H_
 #define _OPENORIENTEERING_DRAW_POINT_H_
 
-#include <QScopedPointer>
+#include <memory>
 
 #include "tool_base.h"
 
@@ -39,41 +40,50 @@ class DrawPointTool : public MapEditorToolBase
 Q_OBJECT
 public:
 	DrawPointTool(MapEditorController* editor, QAction* tool_action);
-	virtual ~DrawPointTool();
-	
-	virtual void leaveEvent(QEvent* event);
-	
-protected slots:
-	void activeSymbolChanged(const Symbol* symbol);
-	void symbolDeleted(int pos, const Symbol* old_symbol);
+	~DrawPointTool() override;
 	
 protected:
+	void initImpl() override;
+	
 	/**
-	 * Checks if the user dragged the mouse away a certain minimum distance from
-	 * the click point and if yes, returns the drag angle, otherwise returns 0.
+	 * Tells the tool that the editor's active symbol changed.
 	 */
-	float calculateRotation(QPointF mouse_pos, MapCoordF mouse_pos_map);
+	void activeSymbolChanged(const Symbol* symbol);
+	
+	/**
+	 * Tells the tool that a symbol was deleted from the map.
+	 */
+	void symbolDeleted(int pos, const Symbol* symbol);
+	
+	void updatePreviewObject(MapCoordF pos);
+	
+	void createObject();
+	
+	/**
+	 * Calculates the object's rotation for the given mouse position.
+	 * 
+	 * Return 0 if the user didn't dragged the mouse away the minimum distance
+	 * from the click point.
+	 */
+	double calculateRotation(QPointF mouse_pos, MapCoordF mouse_pos_map) const;
 
-	virtual void initImpl();
-	virtual int updateDirtyRectImpl(QRectF& rect);
-	virtual void drawImpl(QPainter* painter, MapWidget* widget);
-	virtual void updateStatusText();
-	virtual void objectSelectionChangedImpl();
+	void leaveEvent(QEvent* event) override;
+	void mouseMove() override;
+	void clickPress() override;
+	void clickRelease() override;
+	void dragStart() override;
+	void dragMove() override;
+	void dragFinish() override;
+	bool keyPress(QKeyEvent* event) override;
+	bool keyRelease(QKeyEvent* event) override;
 	
-	virtual void clickPress();
-	virtual void clickRelease();
-	virtual void mouseMove();
-	virtual void dragStart();
-	virtual void dragMove();
-	virtual void dragFinish();
-	virtual bool keyPress(QKeyEvent* event);
-	virtual bool keyRelease(QKeyEvent* event);
+	void drawImpl(QPainter* painter, MapWidget* widget) override;
+	int updateDirtyRectImpl(QRectF& rect) override;
+	void updateStatusText() override;
+	void objectSelectionChangedImpl() override;
 	
-	bool rotating;
-	const Symbol* last_used_symbol;
-	PointObject* preview_object;
-	QScopedPointer<MapRenderables> renderables;
-	KeyButtonBar* key_button_bar;
+	std::unique_ptr<PointObject> preview_object;
+	std::unique_ptr<MapRenderables> renderables;
 };
 
 #endif

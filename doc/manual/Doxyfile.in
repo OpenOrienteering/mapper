@@ -1,0 +1,49 @@
+#
+#    Copyright 2014, 2015 Kai Pastor
+#    
+#    This file is part of OpenOrienteering.
+# 
+#    OpenOrienteering is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+# 
+#    OpenOrienteering is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+# 
+#    You should have received a copy of the GNU General Public License
+#    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
+
+PROJECT_NAME           = "Mapper"
+PROJECT_NUMBER         = "@Mapper_VERSION_DISPLAY@"
+PROJECT_BRIEF          = "User Manual"
+PROJECT_LOGO           = "@CMAKE_CURRENT_SOURCE_DIR@/../openorienteering.png"
+
+QUIET                  = YES
+
+INPUT                  = "@CMAKE_CURRENT_BINARY_DIR@/docs"
+STRIP_FROM_PATH        = "@CMAKE_CURRENT_BINARY_DIR@/docs"
+IMAGE_PATH             = "@CMAKE_CURRENT_SOURCE_DIR@/docs/images"
+IMAGE_PATH            += "@CMAKE_CURRENT_SOURCE_DIR@/../../images"
+ENABLE_PREPROCESSING   = NO
+USE_MATHJAX            = NO
+
+GENERATE_HTML          = YES
+DISABLE_INDEX          = YES
+GENERATE_TREEVIEW      = NO
+HTML_TIMESTAMP         = NO
+SEARCHENGINE           = NO
+HTML_HEADER            = "@CMAKE_CURRENT_SOURCE_DIR@/header.html"
+HTML_FOOTER            = "@CMAKE_CURRENT_SOURCE_DIR@/footer.html"
+HTML_STYLESHEET        = "@CMAKE_CURRENT_SOURCE_DIR@/style.css"
+HTML_EXTRA_FILES       = "@CMAKE_CURRENT_SOURCE_DIR@/docs/attachment/scribble_1024.png"
+HTML_EXTRA_FILES      += "@CMAKE_CURRENT_SOURCE_DIR@/docs/attachment/scribble_2048.png"
+
+GENERATE_QHP           = YES
+QCH_FILE               = "../Mapper ${Mapper_VERSION_DISPLAY}.qch"
+QHP_NAMESPACE          = "@Mapper_HELP_NAMESPACE@"
+QHP_VIRTUAL_FOLDER     = manual
+
+GENERATE_LATEX         = NO

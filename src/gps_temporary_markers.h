@@ -23,11 +23,12 @@
 
 #include <QObject>
 
-#include "map_coord.h"
+#include "core/map_coord.h"
 
 QT_BEGIN_NAMESPACE
 class QPainter;
 QT_END_NAMESPACE
+
 class MapWidget;
 class GPSDisplay;
 

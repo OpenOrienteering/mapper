@@ -1,5 +1,5 @@
 #
-#    Copyright 2013, 2014 Kai Pastor
+#    Copyright 2013-2015 Kai Pastor
 #
 #    This file is part of OpenOrienteering.
 #
@@ -103,25 +103,17 @@ ExternalProject_Add(
 ExternalProject_Get_Property(Clipper SOURCE_DIR)
 
 
-# Exported configuration
-
-set(CLIPPER_INCLUDE_DIR ${SOURCE_DIR}/cpp CACHE PATH
-  "The directory where to find clipper.hpp"
-  FORCE
-)
-mark_as_advanced(CLIPPER_INCLUDE_DIR)
-
-set(CLIPPER_LIBRARY polyclipping CACHE STRING
-  "The Clipper C++ library."
-  FORCE
-)
-mark_as_advanced(CLIPPER_LIBRARY)
-
-
 # The actual library build
+
+if(CMAKE_COMPILER_IS_GNUCXX)
+	string(REPLACE "-Wpedantic" "" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
+endif()
 
 set(CLIPPER_SOURCES "${CMAKE_CURRENT_BINARY_DIR}/clipper.cpp")
 set_source_files_properties(${CLIPPER_SOURCES} PROPERTIES GENERATED TRUE)
-include_directories(${CLIPPER_INCLUDE_DIR})
-add_library(${CLIPPER_LIBRARY} STATIC ${CLIPPER_SOURCES})
-add_dependencies(${CLIPPER_LIBRARY} Clipper)
+
+add_library(polyclipping STATIC ${CLIPPER_SOURCES})
+
+target_include_directories(polyclipping  PUBLIC ${SOURCE_DIR}/cpp)
+
+add_dependencies(polyclipping Clipper)

@@ -71,7 +71,7 @@ public slots:
 protected:
 	struct SymbolSetKeyCompare
 	{
-		bool operator() (const QString& a, const QString& b)
+		bool operator() (const QString& a, const QString& b) const
 		{
 			bool ok1, ok2;
 			int a_int = a.toInt(&ok1);

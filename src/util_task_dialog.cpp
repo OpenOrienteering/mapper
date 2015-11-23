@@ -19,8 +19,11 @@
 
 #include "util_task_dialog.h"
 
-#include <QtWidgets>
+#include <QCommandLinkButton>
+#include <QLabel>
+#include <QDialogButtonBox>
 #include <QVBoxLayout>
+#include <QSignalMapper>
 
 
 TaskDialog::TaskDialog(QWidget* parent, const QString& title, const QString& text, QDialogButtonBox::StandardButtons buttons)

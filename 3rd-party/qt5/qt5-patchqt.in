@@ -1,6 +1,6 @@
 #!/bin/sh -e
 #
-#    Copyright 2012, 2013, 2014 Kai Pastor
+#    Copyright 2012-2015 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -40,6 +40,7 @@ for I in \
   qt*/src/doc/* \
   qt*/src/*/doc/* \
   qt*/tests \
+  qt3d \
   qtactiveqt \
   qtbase/doc/src \
   qtbase/include/QtANGLE \
@@ -58,11 +59,9 @@ for I in \
   qtbase/src/sql/drivers/psql \
   qtbase/src/sql/drivers/sqlite2 \
   qtbase/src/sql/drivers/tds \
+  qtcanvas3d \
   qtconnectivity \
-  qtdoc/demos \
-  qtdoc/doc/images \
-  qtdoc/doc/snippets \
-  qtdoc/doc/src/* \
+  qtdoc \
   qtenginio \
   qtgraphicaleffects \
   qtimageformats/src/3rdparty/libmng* \
@@ -72,6 +71,7 @@ for I in \
   qtimageformats/src/plugins/imageformats/wbmp/* \
   qtjsbackend \
   qtlocation/src/positioning/doc/snippets/* \
+  qtmacextras \
   qtmultimedia \
   qtquick1 \
   qtquickcontrols \
@@ -89,6 +89,8 @@ for I in \
   qtwebkit-examples \
   qtwebkit-examples-and-demos \
   qtwebsockets \
+  qtwinextras \
+  qtx11extras \
   qtxmlpatterns
 do
     if [ -d "./$I" ]
@@ -122,8 +124,8 @@ done
 # [2] Normal patching
 mkdir -p OpenOrienteering/patches
 for I in \
-  "@PROJECT_SOURCE_DIR@"/patches/qt-@QT5_MAJOR_MINOR@-[1-9]*.patch \
-  "@PROJECT_SOURCE_DIR@"/patches/qt-@QT5_MAJOR_MINOR_REVISION@-[1-9]*.patch
+  "@PROJECT_SOURCE_DIR@/patches/@QT5_MAJOR_MINOR@"/*.patch \
+  "@PROJECT_SOURCE_DIR@/patches/@QT5_MAJOR_MINOR_REVISION@"/*.patch
 do
     PATCH=$(basename "$I")
 	if [ ! -e "$I" ]
@@ -131,22 +133,37 @@ do
 		true # no patch
 	elif [ ! -f "$I" ]
 	then
-		echo "Unknown element $I"
+		echo "Unknown element $I" >&2
 	    exit 1
     elif [ ! -f "OpenOrienteering/patches/$PATCH" ]
     then
         # Apply normally
-        patch -p1 < "$I"
+		MODULE=$(echo "$PATCH" | sed -e "s/-.*//")
+		if [ ! -d "$MODULE" ]
+		then
+			echo "No such Qt module: $MODULE" >&2
+			exit 1
+		fi
+		echo "-- $PATCH (New)"
+        ( cd "$MODULE" && patch -p1 < "$I" )
         cp "$I" "OpenOrienteering/patches/$PATCH"
         echo "  $PATCH " >> ${OO_LOG}
     elif diff -q "$I" "OpenOrienteering/patches/$PATCH"
     then
         # Reapply for verification
-        patch --silent --reverse -p1 < "$I"
-        patch -p1 < "$I"
+		MODULE=$(echo "$PATCH" | sed -e "s/-.*//")
+		if [ ! -d "$MODULE" ]
+		then
+			echo "No such Qt module: $MODULE" >&2
+			exit 1
+		fi
+		echo "-- $PATCH (Re-applied for verification)"
+		( cd "$MODULE" &&
+          patch --silent --reverse -p1 < "$I" &&
+          patch -p1 < "$I" )
         echo "  $PATCH " >> ${OO_LOG}
     else
-        echo "A different patch named $PATCH was already applied."
+        echo "A different patch named $PATCH was already applied." >&2
         exit 1
     fi
 done
@@ -159,13 +176,13 @@ do
 		true # no patch
 	elif [ ! -f "$I" ]
     then
-        echo "Unknown element $I"
+        echo "Unknown element $I" >&2
         exit 1
     elif grep -q "  $PATCH " ${OO_LOG}
     then
         true
     else
-        echo "Unknown patch $I"
+        echo "Unknown patch $I" >&2
         exit 1
     fi
 done

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<QHelpCollectionProject version="1.0">
+	<assistant>
+		<applicationIcon>@CMAKE_CURRENT_SOURCE_DIR@/../../images/mapper-help.png</applicationIcon>
+		<title>OpenOrienteering Mapper Help</title>
+		<homePage>qthelp://@Mapper_HELP_NAMESPACE@/manual/index.html</homePage>
+	</assistant>
+	<docFiles>
+		<generate>
+			<file>
+				<input>html/index.qhp</input>
+				<output>@Mapper_COMPRESSED_HELP@</output>
+			</file>
+		</generate>
+		<register>
+			<file>@Mapper_COMPRESSED_HELP@</file>
+		</register>
+	</docFiles>
+</QHelpCollectionProject>

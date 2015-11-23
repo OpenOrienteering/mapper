@@ -49,7 +49,7 @@ public:
 	virtual void init();
 	
 	/** Always returns the tool's default cursor. */
-	virtual QCursor* getCursor();
+	virtual const QCursor& getCursor() const;
 	
 	/** Starts a dragging interaction. */
 	virtual bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);

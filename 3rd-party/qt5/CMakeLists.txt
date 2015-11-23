@@ -25,7 +25,7 @@ include(ExternalProject)
 
 # Configuration options
 
-set(QT5_VERSION_DEFAULT 5.3.2-openorienteering-2014-10-12)
+set(QT5_VERSION_DEFAULT 5.5.1-openorienteering-2015-11-20)
 set(QT5_VERSION ${QT5_VERSION_DEFAULT} CACHE STRING
   "Version number of the Qt5 library, recommended value: ${QT5_VERSION_DEFAULT}")
 mark_as_advanced(QT5_VERSION)
@@ -56,11 +56,9 @@ message(STATUS "Configuring Qt ${QT5_VERSION}")
  
 set(QT5_MD5SUMS
   # Schema: VERSION:MD5[:DOWNLOAD_URL]
-  5.2.1:a78408c887c04c34ce615da690e0b4c8
-  5.3.1:a355749e4f200a6392ecad151d1d0cdc
-  5.3.2:febb001129927a70174467ecb508a682
-  5.3.2-openorienteering-2014-10-12:96f2029f208ac68b7c5543b496f22892
-  5.4.0-beta:a9b848f0a4f34273b248177637490b32:http://download.qt-project.org/development_releases/qt/5.4/5.4.0-beta/single/qt-everywhere-opensource-src-5.4.0-beta.tar.gz
+  5.4.2:fa1c4d819b401b267eb246a543a63ea5
+  5.5.1:59f0216819152b77536cf660b015d784
+  5.5.1-openorienteering-2015-11-20:3799677d2835ad57e8fe4493c2e5c2de
 )
 foreach(line ${QT5_MD5SUMS})
 	if(${line} MATCHES "^${QT5_VERSION}:")
@@ -69,7 +67,7 @@ foreach(line ${QT5_MD5SUMS})
 	endif()
 endforeach()
 if(NOT QT5_MD5)
-	message(FATAL_ERROR
+	message(WARNING
 	  "Unknown MD5 sum for Qt5 library ${QT5_VERSION}. "
 	  "Edit ${PROJECT_SOURCE_DIR}/CMakeLists.txt, "
 	  "or specify the correct QT5_MD5 value at the command line.")
@@ -80,8 +78,7 @@ if(QT5_MD5 MATCHES ":")
 	string(REGEX REPLACE "^[0-9a-fA-F]*:" "" QT5_URL "${QT5_MD5}")
 	string(REGEX REPLACE ":.*"      "" QT5_MD5 "${QT5_MD5}")
 elseif(QT5_VERSION MATCHES "-openorienteering-")
-	message(STATUS "Using a Qt tarball from OpenOrienteering")
-	set(QT5_URL "https://sourceforge.net/projects/oorienteering/files/Mapper/Source/3rd-party/qt-everywhere-opensource-src-${QT5_VERSION}.tar.gz")
+	set(QT5_URL "https://github.com/OpenOrienteering/sources/releases/download/3rd-party/qt-everywhere-opensource-src-${QT5_VERSION}.tar.gz")
 else()
 	set(QT5_URL "http://download.qt-project.org/archive/qt/${QT5_MAJOR_MINOR}/${QT5_VERSION}/single/qt-everywhere-opensource-src-${QT5_VERSION}.tar.gz")
 endif()
@@ -246,21 +243,21 @@ if(QT5_INSTALL_ROOT AND NOT "${QT5_PLATFORM}" MATCHES "android")
 		set(QT5_CONFIG_EXTRA_OPTS "-R '${INSTALL_DIR}${QT5_BINARY_DESTINATION}/lib' ${QT5_CONFIG_EXTRA_OPTS}")
 	endif()
 endif()
+# Cf. http://code.qt.io/cgit/qtsdk/qtsdk.git/tree/packaging-tools/releases/release-55?h=v5.5.1-packaging
 if(APPLE)
-	set(QT5_CONFIG_EXTRA_OPTS "${QT5_CONFIG_EXTRA_OPTS} -no-framework")
+	set(QT5_CONFIG_EXTRA_OPTS "${QT5_CONFIG_EXTRA_OPTS} -no-framework -no-securetransport")
 endif()
 if(UNIX AND NOT APPLE AND NOT "${QT5_PLATFORM}" MATCHES "android")
 	set(QT5_CONFIG_ENVIRONMENT "LDFLAGS=-Wl,--enable-new-dtags")
 	set(QT5_CONFIG_EXTRA_OPTS "${QT5_CONFIG_EXTRA_OPTS} -qt-xcb")
 endif()
-if(${QT5_VERSION} MATCHES "5.[0-2]")
-	set(QT5_CONFIG_EXTRA_OPTS "${QT5_CONFIG_EXTRA_OPTS} -no-javascript-jit")
-endif()
 if("${QT5_PLATFORM}" MATCHES "android")
-	# cf. https://bugreports.qt-project.org/browse/QTBUG-38452
-	set(QT5_CONFIG_EXTRA_OPTS "${QT5_CONFIG_EXTRA_OPTS} -nomake tools")
-else()
-	set(QT5_CONFIG_EXTRA_OPTS "${QT5_CONFIG_EXTRA_OPTS} -make tools")
+	set(QT5_CONFIG_EXTRA_OPTS
+	  "${QT5_CONFIG_EXTRA_OPTS} -opengl es2 -sysconfdir /etc/xdg -no-icu -no-sql-sqlite -no-warnings-are-errors")
+endif()
+if(MINGW)
+	set(QT5_CONFIG_EXTRA_OPTS
+	  "${QT5_CONFIG_EXTRA_OPTS} -qt-zlib -qt-libpng -qt-libjpeg -qt-sql-sqlite -qt-pcre")
 endif()
 
 configure_file(qt5-patchqt.in qt5-patchqt.new @ONLY)
@@ -289,19 +286,14 @@ function(WRITE_QT_CONF)
 endfunction()
 
 # Cross-compiling requires an extra host build in order to get 
-# qcollectiongenerator.
+# qcollectiongenerator, qdoc and lrelease.
 # In addition, Linux may have trouble with loading the correct platform plugin
 # version when building a newer Qt version than installed.
 
 if((UNIX AND NOT APPLE) OR (CMAKE_CROSSCOMPILING AND NOT "${QT5_PLATFORM}" MATCHES "android"))
-	set(QT5_EXTRA_HOST_DIR "${BINARY_DIR}/../Qt5-build-host")
+	set(QT5_EXTRA_HOST_DIR "${BINARY_DIR}-host")
 	
 	configure_file(qt5-config-host.in qt5-config-host.new @ONLY)
-	if(NOT ${QT5_VERSION} MATCHES "5.[0-2]")
-		execute_process(
-		  COMMAND sed -i -e /-no-javascript-jit/d qt5-config-host.new
-		  WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}" )
-	endif()
 	
 	add_custom_command(OUTPUT qt5-config-host
 	  COMMAND ${CMAKE_COMMAND} -E copy_if_different qt5-config-host.new qt5-config-host
@@ -320,15 +312,12 @@ if((UNIX AND NOT APPLE) OR (CMAKE_CROSSCOMPILING AND NOT "${QT5_PLATFORM}" MATCH
 	  WORKING_DIRECTORY "${QT5_EXTRA_HOST_DIR}"
 	)
 	ExternalProject_Add_Step(Qt5 build-host
+	  COMMAND ${QT5_MAKE_COMMAND} -C "${QT5_EXTRA_HOST_DIR}" module-qtbase
 	  COMMAND ${QT5_MAKE_COMMAND} -C "${QT5_EXTRA_HOST_DIR}" module-qtdeclarative
 	  COMMAND ${QT5_MAKE_COMMAND} -C "${QT5_EXTRA_HOST_DIR}" module-qttools-qmake_all
 	  COMMAND ${QT5_MAKE_COMMAND} -C "${QT5_EXTRA_HOST_DIR}/qttools/src/assistant" sub-qcollectiongenerator
+	  COMMAND ${QT5_MAKE_COMMAND} -C "${QT5_EXTRA_HOST_DIR}/qttools/src/linguist" sub-lrelease
 	  DEPENDEES configure-host
-	)
-	ExternalProject_Add_Step(Qt5 install-host
-	  # not needed: COMMAND ${QT5_MAKE_COMMAND} -C "${QT5_EXTRA_HOST_DIR}/qttools/src/assistant" sub-qcollectiongenerator-install_subtargets
-	  DEPENDEES build-host
-	  DEPENDERS install
 	)
 	
 	if(NOT TARGET Qt5::qcollectiongenerator)
@@ -339,6 +328,22 @@ if((UNIX AND NOT APPLE) OR (CMAKE_CROSSCOMPILING AND NOT "${QT5_PLATFORM}" MATCH
 		)
 		add_dependencies(Qt5::qcollectiongenerator Qt5)
 	endif()
+	if(NOT TARGET Qt5::qdoc)
+		add_executable(Qt5::qdoc IMPORTED GLOBAL)
+		set(imported_location ${QT5_EXTRA_HOST_DIR}/qtbase/bin/qdoc)
+		set_target_properties(Qt5::qdoc PROPERTIES
+			IMPORTED_LOCATION ${imported_location}
+		)
+		add_dependencies(Qt5::qdoc Qt5)
+	endif()
+	if(NOT TARGET Qt5::lrelease)
+		add_executable(Qt5::lrelease IMPORTED GLOBAL)
+		set(imported_location ${QT5_EXTRA_HOST_DIR}/qttools/bin/lrelease)
+		set_target_properties(Qt5::lrelease PROPERTIES
+			IMPORTED_LOCATION ${imported_location}
+		)
+		add_dependencies(Qt5::lrelease Qt5)
+	endif()
 elseif(CMAKE_CROSSCOMPILING AND "${QT5_PLATFORM}" MATCHES "android")
 	execute_process(
 	  COMMAND sed -i -e "/-plugindir /d;/-datadir /d" ${QT5_CONFIG_SCRIPT}.new
@@ -347,5 +352,3 @@ endif()
 
 # Don't let Xcode re-root the install
 set_target_properties(Qt5 PROPERTIES XCODE_ATTRIBUTE_INSTALL_ROOT "")
-
-message(STATUS "Configuring Qt ${QT5_VERSION} - done")

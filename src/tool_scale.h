@@ -23,13 +23,9 @@
 
 #include "tool.h"
 
-#include <vector>
-
 #include <QScopedPointer>
 
-class Renderable;
 class MapRenderables;
-typedef std::vector<Renderable*> RenderableVector;
 
 /** Tool to scale objects. */
 class ScaleTool : public MapEditorTool
@@ -40,7 +36,7 @@ public:
 	virtual ~ScaleTool();
 	
     virtual void init();
-    virtual QCursor* getCursor() {return cursor;}
+    virtual const QCursor& getCursor() const;
 	
     virtual bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
 	virtual bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
@@ -59,8 +55,6 @@ protected:
 	/** Updates the preview object to the cursor pos (while dragging). */
 	void updateDragging(const MapCoordF cursor_pos_map);
 	
-	static QCursor* cursor;
-	
 	// Mouse handling
 	QPoint click_pos;
 	
@@ -70,7 +64,6 @@ protected:
 	double original_scale;
 	double scaling_factor;
 	
-	std::vector<Object*> undo_duplicates;
 	QScopedPointer<MapRenderables> old_renderables;
 	QScopedPointer<MapRenderables> renderables;
 };

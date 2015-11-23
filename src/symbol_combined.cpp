@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2012-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -20,12 +21,23 @@
 
 #include "symbol_combined.h"
 
-#include <QtWidgets>
+#include <QDebug>
+#include <QDialogButtonBox>
+#include <QFormLayout>
 #include <QIODevice>
+#include <QListWidget>
+#include <QMenu>
+#include <QMessageBox>
+#include <QLabel>
+#include <QPushButton>
+#include <QSignalMapper>
+#include <QSpinBox>
 #include <QXmlStreamWriter>
 
 #include "core/map_color.h"
+#include "gui/widgets/symbol_dropdown.h"
 #include "map.h"
+#include "object.h"
 #include "symbol_setting_dialog.h"
 #include "symbol_properties_widget.h"
 
@@ -60,12 +72,27 @@ Symbol* CombinedSymbol::duplicate(const MapColorMap* color_map) const
 	return new_symbol;
 }
 
-void CombinedSymbol::createRenderables(const Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output) const
+void CombinedSymbol::createRenderables(
+        const Object *object,
+        const VirtualCoordVector &coords,
+        ObjectRenderables &output,
+        Symbol::RenderableOptions options) const        
 {
-	for (int i = 0, size = (int)parts.size(); i < size; ++i)
+	auto path = static_cast<const PathObject*>(object);
+	PathPartVector path_parts = PathPart::calculatePathParts(coords);
+	createRenderables(path, path_parts, output, options);
+}
+
+void CombinedSymbol::createRenderables(
+        const PathObject* object,
+        const PathPartVector& path_parts,
+        ObjectRenderables &output,
+        Symbol::RenderableOptions options) const
+{
+	for (auto subsymbol : parts)
 	{
-		if (parts[i])
-			parts[i]->createRenderables(object, flags, coords, output);
+		if (subsymbol)
+			subsymbol->createRenderables(object, path_parts, output, options);
 	}
 }
 
@@ -93,7 +120,7 @@ bool CombinedSymbol::containsColor(const MapColor* color) const
 	return false;
 }
 
-const MapColor* CombinedSymbol::getDominantColorGuess() const
+const MapColor* CombinedSymbol::guessDominantColor() const
 {
 	// Speculative heuristic. Prefers areas and non-white colors.
 	const MapColor* dominant_color = NULL;
@@ -101,7 +128,7 @@ const MapColor* CombinedSymbol::getDominantColorGuess() const
 	{
 		if (parts[i] && parts[i]->getContainedTypes() & Symbol::Area)
 		{
-			dominant_color = parts[i]->getDominantColorGuess();
+			dominant_color = parts[i]->guessDominantColor();
 			if (! dominant_color->isWhite())
 				return dominant_color;
 		}
@@ -114,7 +141,7 @@ const MapColor* CombinedSymbol::getDominantColorGuess() const
 	{
 		if (parts[i] && !(parts[i]->getContainedTypes() & Symbol::Area))
 		{
-			dominant_color = parts[i]->getDominantColorGuess();
+			dominant_color = parts[i]->guessDominantColor();
 			if (dominant_color->isWhite())
 				return dominant_color;
 		}
@@ -136,8 +163,7 @@ bool CombinedSymbol::symbolChanged(const Symbol* old_symbol, const Symbol* new_s
 	}
 	
 	// always invalidate the icon, since the parts might have changed.
-	delete icon; 
-	icon = NULL;
+	resetIcon();
 	
 	return have_symbol;
 }
@@ -188,6 +214,8 @@ Symbol::Type CombinedSymbol::getContainedTypes() const
 	return (Type)type;
 }
 
+#ifndef NO_NATIVE_FILE_FORMAT
+
 bool CombinedSymbol::loadImpl(QIODevice* file, int version, Map* map)
 {
 	int size;
@@ -218,6 +246,8 @@ bool CombinedSymbol::loadImpl(QIODevice* file, int version, Map* map)
 	}
 	return true;
 }
+
+#endif
 
 void CombinedSymbol::saveImpl(QXmlStreamWriter& xml, const Map& map) const
 {
@@ -492,7 +522,7 @@ void CombinedSymbolSettings::editClicked(int index)
 
 void CombinedSymbolSettings::reset(Symbol* symbol)
 {
-	assert(symbol->getType() == Symbol::Combined);
+	Q_ASSERT(symbol->getType() == Symbol::Combined);
 	
 	SymbolPropertiesWidget::reset(symbol);
 	

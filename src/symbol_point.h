@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2012-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -34,6 +35,7 @@ class Map;
 class MapColor;
 class MapEditorController;
 class SymbolSettingDialog;
+class PointObject;
 class PointSymbolEditorWidget;
 class ColorDropDown;
 
@@ -57,14 +59,20 @@ public:
 	/** Constructs an empty point symbol. */
 	PointSymbol();
 	virtual ~PointSymbol();
-	virtual Symbol* duplicate(const MapColorMap* color_map = NULL) const;
+	Symbol* duplicate(const MapColorMap* color_map = NULL) const override;
 	
-	virtual void createRenderables(const Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output) const;
-	void createRenderablesScaled(const Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output, float coord_scale) const;
-	virtual void colorDeleted(const MapColor* color);
-	virtual bool containsColor(const MapColor* color) const;
-	const MapColor* getDominantColorGuess() const;
-	virtual void scale(double factor);
+	void createRenderables(
+	        const Object *object,
+	        const VirtualCoordVector &coords,
+	        ObjectRenderables &output,
+	        RenderableOptions options ) const override;
+	
+	void createRenderablesScaled(MapCoordF coord, float rotation, ObjectRenderables& output, float coord_scale = 1.0f) const;
+	
+	void colorDeleted(const MapColor* color) override;
+	bool containsColor(const MapColor* color) const override;
+	const MapColor* guessDominantColor() const override;
+	void scale(double factor) override;
 	
 	// Contained objects and symbols (elements)
 	
@@ -107,14 +115,16 @@ public:
 	inline const MapColor* getOuterColor() const {return outer_color;}
 	inline void setOuterColor(const MapColor* color) {outer_color = color;}
 	
-	virtual SymbolPropertiesWidget* createPropertiesWidget(SymbolSettingDialog* dialog);
+	SymbolPropertiesWidget* createPropertiesWidget(SymbolSettingDialog* dialog) override;
 	
 	
 protected:
-	virtual bool loadImpl(QIODevice* file, int version, Map* map);
-	virtual void saveImpl(QXmlStreamWriter& xml, const Map& map) const;
-	virtual bool loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict);
-	virtual bool equalsImpl(const Symbol* other, Qt::CaseSensitivity case_sensitivity) const;
+#ifndef NO_NATIVE_FILE_FORMAT
+	bool loadImpl(QIODevice* file, int version, Map* map) override;
+#endif
+	void saveImpl(QXmlStreamWriter& xml, const Map& map) const override;
+	bool loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict) override;
+	bool equalsImpl(const Symbol* other, Qt::CaseSensitivity case_sensitivity) const override;
 	
 	std::vector<Object*> objects;
 	std::vector<Symbol*> symbols;

@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -21,6 +22,7 @@
 #ifndef _OPENORIENTEERING_DRAW_PATH_H_
 #define _OPENORIENTEERING_DRAW_PATH_H_
 
+#include <QPointer>
 #include <QScopedPointer>
 
 #include "tool_draw_line_and_area.h"
@@ -41,30 +43,28 @@ public:
 	DrawPathTool(MapEditorController* editor, QAction* tool_action, bool is_helper_tool, bool allow_closing_paths);
 	virtual ~DrawPathTool();
 	
-	virtual void init();
-	virtual QCursor* getCursor() {return cursor;}
+	void init() override;
+	const QCursor& getCursor() const override;
 	
-	virtual bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
-	virtual bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
-	virtual bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
-	virtual bool mouseDoubleClickEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
+	bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
+	bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
+	bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
+	bool mouseDoubleClickEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
 	
-	virtual bool keyPressEvent(QKeyEvent* event);
-	virtual bool keyReleaseEvent(QKeyEvent* event);
+	bool keyPressEvent(QKeyEvent* event) override;
+	bool keyReleaseEvent(QKeyEvent* event) override;
 	
-	virtual void draw(QPainter* painter, MapWidget* widget);
-	
-	static QCursor* cursor;
+	void draw(QPainter* painter, MapWidget* widget) override;
 	
 protected slots:
 	void updateDirtyRect();
-	virtual void setDrawingSymbol(Symbol* symbol);
+	void setDrawingSymbol(const Symbol* symbol) override;
 	
 	/** This slot listens to changes in the map's object selection. */
 	virtual void objectSelectionChanged();
 	
 protected:
-    virtual void updatePreviewPath();
+	void updatePreviewPath() override;
 	/** Should be called when moving the cursor without the draw button being held */
 	void updateHover();
 	/** Called by updateHover() if the user is currently drawing */
@@ -73,8 +73,8 @@ protected:
 	void createPreviewCurve(MapCoord position, float direction);
 	/** Closes the preview path */
 	void closeDrawing();
-	virtual void finishDrawing();
-	virtual void abortDrawing();
+	void finishDrawing() override;
+	void abortDrawing() override;
 	void undoLastPoint();
 	/** When not drawing but when the current selection is a single path,
 	 *  removes the last point from that path, or deletes the whole path if
@@ -147,9 +147,9 @@ protected:
 	bool following;
 	QScopedPointer<FollowPathToolHelper> follow_helper;
 	PathObject* follow_object;
-	int follow_start_index;
+	MapCoordVector::size_type follow_start_index;
 	
-	KeyButtonBar* key_button_bar;
+	QPointer<KeyButtonBar> key_button_bar;
 };
 
 #endif

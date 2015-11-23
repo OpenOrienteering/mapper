@@ -1,6 +1,6 @@
 /*
- *    Copyright 2012 Thomas Schöps
- *    Copyright 2013, 2014 Thomas Schöps, Kai Pastor
+ *    Copyright 2012-2014 Thomas Schöps
+ *    Copyright 2013-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -21,12 +21,19 @@
 
 #include "map_widget.h"
 
-#include <QtWidgets>
+#include <cmath>
+
+#include <QApplication>
+#include <QLabel>
+#include <QPainter>
 #include <QPinchGesture>
+#include <QTimer>
 #include <QTouchEvent>
 
 #include "core/georeferencing.h"
 #include "core/map_color.h"
+#include "gui/widgets/action_grid_bar.h"
+#include "gui/widgets/key_button_bar.h"
 #include "map.h"
 #include "map_editor_activity.h"
 #include "settings.h"
@@ -37,45 +44,34 @@
 #include "touch_cursor.h"
 #include "util.h"
 #include "gps_display.h"
-#include "compass_display.h"
 #include "gps_temporary_markers.h"
 #include "gui/widgets/pie_menu.h"
 
 
 MapWidget::MapWidget(bool show_help, bool force_antialiasing, QWidget* parent)
- : QWidget(parent),
-   show_help(show_help),
-   force_antialiasing(force_antialiasing),
-   touch_cursor(NULL),
-   gps_display(NULL),
-   compass_display(NULL),
-   marker_display(NULL)
+ : QWidget(parent)
+ , view(nullptr)
+ , tool(nullptr)
+ , activity(nullptr)
+ , coords_type(MAP_COORDS)
+ , zoom_label(nullptr)
+ , cursorpos_label(nullptr)
+ , objecttag_label(nullptr)
+ , show_help(show_help)
+ , force_antialiasing(force_antialiasing)
+ , dragging(false)
+ , pinching(false)
+ , pinching_factor(1.0)
+ , below_template_cache_dirty_rect(rect())
+ , above_template_cache_dirty_rect(rect())
+ , map_cache_dirty_rect(rect())
+ , drawing_dirty_rect_border(0)
+ , activity_dirty_rect_border(0)
+ , last_mouse_release_time(QTime::currentTime())
+ , current_pressed_buttons(0)
+ , gps_display(nullptr)
+ , marker_display(nullptr)
 {
-	view = NULL;
-	tool = NULL;
-	dragging = false;
-	drag_offset = QPoint(0, 0);
-	below_template_cache = NULL;
-	above_template_cache = NULL;
-	map_cache = NULL;
-	drawing_dirty_rect_old = QRect();
-	drawing_dirty_rect_new = QRectF();
-	drawing_dirty_rect_new_border = -1;
-	activity_dirty_rect_old = QRect();
-	activity_dirty_rect_new = QRectF();
-	activity_dirty_rect_new_border = -1;
-	zoom_label = NULL;
-	cursorpos_label = NULL;
-	objecttag_label = NULL;
-	coords_type = MAP_COORDS;
-	last_cursor_pos = MapCoordF(0, 0);
-	current_pressed_buttons = 0;
-	last_mouse_release_time = QTime::currentTime();
-	
-	below_template_cache_dirty_rect = rect();
-	above_template_cache_dirty_rect = rect();
-	map_cache_dirty_rect = rect();
-	
 	context_menu = new PieMenu(this);
 // 	context_menu->setMinimumActionCount(8);
 // 	context_menu->setIconSize(24);
@@ -93,12 +89,6 @@ MapWidget::~MapWidget()
 {
 	if (view)
 		view->removeMapWidget(this);
-	
-	delete below_template_cache;
-	delete above_template_cache;
-	delete map_cache;
-	
-	delete touch_cursor;
 }
 
 void MapWidget::setMapView(MapView* view)
@@ -113,7 +103,7 @@ void MapWidget::setMapView(MapView* view)
 		if (view)
 			view->addMapWidget(this);
 		
-		connect(view->getMap(), SIGNAL(objectSelectionChanged()), this, SLOT(updateObjectTagLabel()));
+		connect(view->getMap(), &Map::objectSelectionChanged, this, static_cast<void (MapWidget::*)()>(&MapWidget::updateObjectTagLabel));
 		
 		update();
 	}
@@ -128,7 +118,7 @@ void MapWidget::setTool(MapEditorTool* tool)
 	this->tool = tool;
 	
 	if (tool)
-		setCursor(*tool->getCursor());
+		setCursor(tool->getCursor());
 	else
 		unsetCursor();
 	if (redrawTouchCursor)
@@ -155,67 +145,75 @@ void MapWidget::setGesturesEnabled(bool enabled)
 }
 
 
-void MapWidget::applyMapTransform(QPainter* painter)
+void MapWidget::applyMapTransform(QPainter* painter) const
 {
-	painter->translate(width() / 2.0 + getMapView()->getDragOffset().x(),
-					   height() / 2.0 + getMapView()->getDragOffset().y());
-	getMapView()->applyTransform(painter);
+	painter->translate(width() / 2.0 + getMapView()->panOffset().x(),
+					   height() / 2.0 + getMapView()->panOffset().y());
+	painter->setWorldTransform(getMapView()->worldTransform(), true);
 }
 
-QRectF MapWidget::viewportToView(const QRect& input)
+QRectF MapWidget::viewportToView(const QRect& input) const
 {
-	return QRectF(input.left() - 0.5*width() - drag_offset.x(), input.top() - 0.5*height() - drag_offset.y(), input.width(), input.height());
-}
-QPointF MapWidget::viewportToView(QPoint input)
-{
-	return QPointF(input.x() - 0.5*width() - drag_offset.x(), input.y() - 0.5*height() - drag_offset.y());
-}
-QPointF MapWidget::viewportToView(QPointF input)
-{
-	return QPointF(input.x() - 0.5*width() - drag_offset.x(), input.y() - 0.5*height() - drag_offset.y());
-}
-QRectF MapWidget::viewToViewport(const QRectF& input)
-{
-	return QRectF(input.left() + 0.5*width() + drag_offset.x(), input.top() + 0.5*height() + drag_offset.y(), input.width(), input.height());
-}
-QRectF MapWidget::viewToViewport(const QRect& input)
-{
-	return QRectF(input.left() + 0.5*width() + drag_offset.x(), input.top() + 0.5*height() + drag_offset.y(), input.width(), input.height());
-}
-QPointF MapWidget::viewToViewport(QPoint input)
-{
-	return QPointF(input.x() + 0.5*width() + drag_offset.x(), input.y() + 0.5*height() + drag_offset.y());
-}
-QPointF MapWidget::viewToViewport(QPointF input)
-{
-	return QPointF(input.x() + 0.5*width() + drag_offset.x(), input.y() + 0.5*height() + drag_offset.y());
+	return QRectF(input.left() - 0.5*width() - pan_offset.x(), input.top() - 0.5*height() - pan_offset.y(), input.width(), input.height());
 }
 
-MapCoord MapWidget::viewportToMap(QPoint input)
+QPointF MapWidget::viewportToView(QPoint input) const
+{
+	return QPointF(input.x() - 0.5*width() - pan_offset.x(), input.y() - 0.5*height() - pan_offset.y());
+}
+
+QPointF MapWidget::viewportToView(QPointF input) const
+{
+	return QPointF(input.x() - 0.5*width() - pan_offset.x(), input.y() - 0.5*height() - pan_offset.y());
+}
+
+QRectF MapWidget::viewToViewport(const QRectF& input) const
+{
+	return QRectF(input.left() + 0.5*width() + pan_offset.x(), input.top() + 0.5*height() + pan_offset.y(), input.width(), input.height());
+}
+
+QRectF MapWidget::viewToViewport(const QRect& input) const
+{
+	return QRectF(input.left() + 0.5*width() + pan_offset.x(), input.top() + 0.5*height() + pan_offset.y(), input.width(), input.height());
+}
+
+QPointF MapWidget::viewToViewport(QPoint input) const
+{
+	return QPointF(input.x() + 0.5*width() + pan_offset.x(), input.y() + 0.5*height() + pan_offset.y());
+}
+
+QPointF MapWidget::viewToViewport(QPointF input) const
+{
+	return QPointF(input.x() + 0.5*width() + pan_offset.x(), input.y() + 0.5*height() + pan_offset.y());
+}
+
+
+MapCoord MapWidget::viewportToMap(QPoint input) const
 {
 	return view->viewToMap(viewportToView(input));
 }
-MapCoordF MapWidget::viewportToMapF(QPoint input)
+
+MapCoordF MapWidget::viewportToMapF(QPoint input) const
 {
 	return view->viewToMapF(viewportToView(input));
 }
-MapCoordF MapWidget::viewportToMapF(QPointF input)
+
+MapCoordF MapWidget::viewportToMapF(QPointF input) const
 {
 	return view->viewToMapF(viewportToView(input));
 }
-QPointF MapWidget::mapToViewport(MapCoord input)
+
+QPointF MapWidget::mapToViewport(MapCoord input) const
 {
 	return viewToViewport(view->mapToView(input));
 }
-QPointF MapWidget::mapToViewport(MapCoordF input)
+
+QPointF MapWidget::mapToViewport(MapCoordF input) const
 {
 	return viewToViewport(view->mapToView(input));
 }
-QPointF MapWidget::mapToViewport(QPointF input)
-{
-	return viewToViewport(view->mapToView(MapCoordF(input.x(), input.y())));
-}
-QRectF MapWidget::mapToViewport(const QRectF& input)
+
+QRectF MapWidget::mapToViewport(const QRectF& input) const
 {
 	QRectF result;
 	rectIncludeSafe(result, mapToViewport(input.topLeft()));
@@ -228,179 +226,139 @@ QRectF MapWidget::mapToViewport(const QRectF& input)
 	return result;
 }
 
-void MapWidget::zoom(float factor)
+void MapWidget::viewChanged(MapView::ChangeFlags changes)
 {
-	Q_UNUSED(factor);
-	
-	// No need to update dirty rects, because everything is redrawn ...
-	/*zoomDirtyRect(above_template_cache_dirty_rect);
-	zoomDirtyRect(below_template_cache_dirty_rect);
-	zoomDirtyRect(drawing_dirty_rect_old);
-	zoomDirtyRect(activity_dirty_rect_old);*/
-	
+	setDrawingBoundingBox(drawing_dirty_rect_map, drawing_dirty_rect_border, true);
+	setActivityBoundingBox(activity_dirty_rect_map, activity_dirty_rect_border, true);
 	updateEverything();
+	if (changes.testFlag(MapView::ZoomChange))
+		updateZoomLabel();
 }
 
-void MapWidget::updateEverythingInRect(const QRect& dirty_rect)
+void MapWidget::setPanOffset(QPoint offset)
 {
-	below_template_cache_dirty_rect = dirty_rect;
-	above_template_cache_dirty_rect = dirty_rect;
-	map_cache_dirty_rect = dirty_rect;
-	updateAllDirtyCaches();
-	update(dirty_rect);
+	pan_offset = offset;
+	update();
 }
 
-void MapWidget::moveView(qint64 x, qint64 y)
+void MapWidget::startDragging(QPoint cursor_pos)
 {
-	Q_UNUSED(x);
-	Q_UNUSED(y);
-	// View moved externally
-	updateEverything();
+	Q_ASSERT(!dragging);
+	Q_ASSERT(!pinching);
+	dragging = true;
+	drag_start_pos = cursor_pos;
+	normal_cursor  = cursor();
+	setCursor(Qt::ClosedHandCursor);
 }
 
-void MapWidget::panView(qint64 x, qint64 y)
+void MapWidget::updateDragging(QPoint cursor_pos)
 {
-	moveDirtyRect(above_template_cache_dirty_rect, -x, -y);
-	moveDirtyRect(below_template_cache_dirty_rect, -x, -y);
-	moveDirtyRect(drawing_dirty_rect_old, -x, -y);
-	moveDirtyRect(activity_dirty_rect_old, -x, -y);
-	
-	MapCoordF screen_offset(x, y);
-	screen_offset.rotate(view->getRotation());
-	
-	float px = view->lengthToPixel(screen_offset.getX());
-	int ix = qRound(px);
-	float py = view->lengthToPixel(screen_offset.getY());
-	int iy = qRound(py);
-	float int_deviation = qMax(qAbs(px - ix), qAbs(py - iy));
-	
-	ix = -ix;
-	iy = -iy;
-	
-	// Only do a partial redraw in very specific circumstances where only very few objects are visible because a complete redraw is often faster
-	bool partial_redraw = int_deviation < 0.01 && qAbs(px) < width() / 3.0f && qAbs(py) < height() / 3.0f;
-	if (partial_redraw)
+	Q_ASSERT(dragging);
+	view->setPanOffset(cursor_pos - drag_start_pos);
+}
+
+void MapWidget::finishDragging(QPoint cursor_pos)
+{
+	Q_ASSERT(dragging);
+	dragging = false;
+	view->finishPanning(cursor_pos - drag_start_pos);
+	setCursor(normal_cursor);
+}
+
+void MapWidget::cancelDragging()
+{
+	dragging = false;
+	view->setPanOffset(QPoint());
+	setCursor(normal_cursor);
+}
+
+qreal MapWidget::startPinching(QPoint center)
+{
+	Q_ASSERT(!dragging);
+	Q_ASSERT(!pinching);
+	pinching = true;
+	drag_start_pos  = center;
+	pinching_center = center;
+	pinching_factor = 1.0;
+	return pinching_factor;
+}
+
+void MapWidget::updatePinching(QPoint center, qreal factor)
+{
+	Q_ASSERT(pinching);
+	pinching_center = center;
+	pinching_factor = factor;
+	update();
+}
+
+void MapWidget::finishPinching(QPoint center, qreal factor)
+{
+	pinching = false;
+	view->finishPanning(center - drag_start_pos);
+	view->setZoom(factor * view->getZoom(), viewportToView(center));
+}
+
+void MapWidget::cancelPinching()
+{
+	pinching = false;
+	pinching_factor = 1.0;
+	update();
+}
+
+void MapWidget::moveMap(int steps_x, int steps_y)
+{
+	if (steps_x != 0 || steps_y != 0)
 	{
-		const int visible_objects_threshold = 200;
-		int max_visible_objects = 0;
-		if (ix > 0)
-			max_visible_objects += view->getMap()->countObjectsInRect(view->calculateViewedRect(viewportToView(QRect(0, iy, ix, height() - iy))), false);
-		else if (ix < 0)
-			max_visible_objects += view->getMap()->countObjectsInRect(view->calculateViewedRect(viewportToView(QRect(width() + ix, iy, -ix, height() - iy))), false);
-		
-		if (max_visible_objects < visible_objects_threshold)
+		try
 		{
-			if (iy > 0)
-				max_visible_objects += view->getMap()->countObjectsInRect(view->calculateViewedRect(viewportToView(QRect(0, 0, width(), iy))), false);
-			else if (iy < 0)
-				max_visible_objects += view->getMap()->countObjectsInRect(view->calculateViewedRect(viewportToView(QRect(0, height() + iy, width(), -iy))), false);
-			
-			if (max_visible_objects >= visible_objects_threshold)
-				partial_redraw = false;
+			constexpr auto move_factor = 0.25;
+			auto offset = MapCoord::fromNative64( qRound64(view->pixelToLength(width() * steps_x * move_factor)),
+			                                      qRound64(view->pixelToLength(height() * steps_y * move_factor)) );
+			view->setCenter(view->center() + offset);
 		}
-		else
-			partial_redraw = false;
-	}
-	
-	if (partial_redraw)
-	{
-		// Update only the parts of the caches which have changed
-		shiftCache(ix, iy, below_template_cache);
-		shiftCache(ix, iy, above_template_cache);
-		shiftCache(ix, iy, map_cache);
-		
-		if (ix > 0)
-			updateEverythingInRect(QRect(0, iy, ix, height() - iy));
-		else if (ix < 0)
-			updateEverythingInRect(QRect(width() + ix, iy, -ix, height() - iy));
-		
-		if (iy > 0)
-			updateEverythingInRect(QRect(0, 0, width(), iy));
-		else if (iy < 0)
-			updateEverythingInRect(QRect(0, height() + iy, width(), -iy));
-	}
-	else
-	{
-		// Update the whole caches
-		below_template_cache_dirty_rect = rect();
-		above_template_cache_dirty_rect = rect();
-		map_cache_dirty_rect = rect();
-		
-		if (ix > 0)
-			update(QRect(0, iy, ix, height() - iy));
-		else if (ix < 0)
-			update(QRect(width() + ix, iy, -ix, height() - iy));
-		
-		if (iy > 0)
-			update(QRect(0, 0, width(), iy));
-		else if (iy < 0)
-			update(QRect(0, height() + iy, width(), -iy));
+		catch (std::range_error)
+		{
+			// Do nothing
+		}
 	}
 }
 
-void MapWidget::setDragOffset(QPoint offset, bool do_update)
-{
-	drag_offset = offset;
-	if (do_update)
-		update();
-}
-
-QPoint MapWidget::getDragOffset() const
-{
-	return drag_offset;
-}
-
-void MapWidget::completeDragging(qint64 dx, qint64 dy, bool do_update)
-{
-	drag_offset = QPoint(0, 0);
-	if (do_update)
-		panView(dx, dy);
-}
-
-void MapWidget::ensureVisibilityOfRect(const QRectF& map_rect, bool show_completely, bool zoom_in_steps)
+void MapWidget::ensureVisibilityOfRect(const QRectF& map_rect, ZoomOption zoom_option)
 {
 	// Amount in pixels that is scrolled "too much" if the rect is not completely visible
 	// TODO: change to absolute size using dpi value
 	const int pixel_border = 70;
-	QRectF viewport_rect = mapToViewport(map_rect);
+	auto viewport_rect = mapToViewport(map_rect).toAlignedRect();
 	
 	// TODO: this method assumes that the viewport is not rotated.
 	
-	if (!show_completely)
-	{
-		// Check if enough of the rect is visible
-		QRectF intersected_rect = QRectF(rect()).intersected(viewport_rect);
-		
-		float min_visible_area = 120 * 100;
-		float visible_area = intersected_rect.width() * intersected_rect.height();
-		if (visible_area >= min_visible_area)
-			return;
-	}
-	
-	if (rect().contains(viewport_rect.topLeft().toPoint()) && rect().contains(viewport_rect.bottomRight().toPoint()))
+	if (rect().contains(viewport_rect.topLeft()) && rect().contains(viewport_rect.bottomRight()))
 		return;
 	
+	auto offset = MapCoordF{ 0, 0 };
+	
 	if (viewport_rect.left() < 0)
-		view->setPositionX(view->getPositionX() + view->pixelToLength(viewport_rect.left() - pixel_border));
+		offset.rx() = view->pixelToLength(viewport_rect.left() - pixel_border) / 1000.0;
 	else if (viewport_rect.right() > width())
-		view->setPositionX(view->getPositionX() + view->pixelToLength(viewport_rect.right() - width() + pixel_border));
+		offset.rx() = view->pixelToLength(viewport_rect.right() - width() + pixel_border) / 1000.0;
 	
 	if (viewport_rect.top() < 0)
-		view->setPositionY(view->getPositionY() + view->pixelToLength(viewport_rect.top() - pixel_border));
+		offset.ry() = view->pixelToLength(viewport_rect.top() - pixel_border) / 1000.0;
 	else if (viewport_rect.bottom() > height())
-		view->setPositionY(view->getPositionY() + view->pixelToLength(viewport_rect.bottom() - height() + pixel_border));
+		offset.ry() = view->pixelToLength(viewport_rect.bottom() - height() + pixel_border) / 1000.0;
+	
+	if (!qIsNull(offset.lengthSquared()))
+		view->setCenter(view->center() + offset);
 	
 	// If the rect is still not completely in view, we have to zoom out
-	viewport_rect = mapToViewport(map_rect);
-	if (!(rect().contains(viewport_rect.topLeft().toPoint()) && rect().contains(viewport_rect.bottomRight().toPoint())))
-		adjustViewToRect(map_rect, zoom_in_steps);
+	viewport_rect = mapToViewport(map_rect).toAlignedRect();
+	if (!(rect().contains(viewport_rect.topLeft()) && rect().contains(viewport_rect.bottomRight())))
+		adjustViewToRect(map_rect, zoom_option);
 }
 
-void MapWidget::adjustViewToRect(const QRectF& map_rect, bool zoom_in_steps)
+void MapWidget::adjustViewToRect(const QRectF& map_rect, ZoomOption zoom_option)
 {
-	const double log2 = log(2);
-	view->setPositionX(qRound64(1000 * (map_rect.left() + map_rect.width() / 2)));
-	view->setPositionY(qRound64(1000 * (map_rect.top() + map_rect.height() / 2)));
+	view->setCenter(MapCoord{ map_rect.center() });
 	
 	if (map_rect.isValid())
 	{
@@ -409,57 +367,27 @@ void MapWidget::adjustViewToRect(const QRectF& map_rect, bool zoom_in_steps)
 		const float initial_zoom = view->getZoom();
 		for (int i = 0; i < 10; ++i)
 		{
-			float zoom_factor = qMin(height() / (view->lengthToPixel(1000 * map_rect.height()) + 2*pixel_border),
-			                         width() / (view->lengthToPixel(1000 * map_rect.width()) + 2*pixel_border));
+			float zoom_factor = qMin(height() / (view->lengthToPixel(1000.0 * map_rect.height()) + 2*pixel_border),
+			                         width() / (view->lengthToPixel(1000.0 * map_rect.width()) + 2*pixel_border));
 			float zoom = view->getZoom() * zoom_factor;
-			if (zoom_in_steps)
+			if (zoom_option == DiscreteZoom)
 			{
-				zoom = log(zoom) / log2;
-				zoom = (zoom - log(initial_zoom) / log2) * 2.0;
-				zoom = floor(zoom);
-				zoom = (zoom * 0.5) + log(initial_zoom) / log2;
-				zoom = pow(2, zoom);
+				zoom = pow(2, 0.5 * floor(2.0 * (std::log2(zoom) - std::log2(initial_zoom))) + std::log2(initial_zoom));
 			}
 			view->setZoom(zoom);
 		}
 	}
 }
 
-void MapWidget::zoomDirtyRect(QRectF& dirty_rect, qreal zoom_factor)
-{
-	if (!dirty_rect.isValid())
-		return;
-	
-	dirty_rect = QRectF(dirty_rect.topLeft() * zoom_factor, dirty_rect.bottomRight() * zoom_factor);
-}
-
-void MapWidget::zoomDirtyRect(QRect& dirty_rect, qreal zoom_factor)
-{
-	if (!dirty_rect.isValid())
-		return;
-	
-	dirty_rect = QRect(dirty_rect.topLeft() * zoom_factor, dirty_rect.bottomRight() * zoom_factor);
-}
-
-void MapWidget::moveDirtyRect(QRectF& dirty_rect, qreal x, qreal y)
-{
-	if (!dirty_rect.isValid())
-		return;
-	
-	dirty_rect.adjust(x, y, x, y);
-}
-
 void MapWidget::moveDirtyRect(QRect& dirty_rect, qreal x, qreal y)
 {
-	if (!dirty_rect.isValid())
-		return;
-	
-	dirty_rect.adjust(x, y, x, y);
+	if (dirty_rect.isValid())
+		dirty_rect = dirty_rect.translated(x, y).intersected(rect());
 }
 
 void MapWidget::markTemplateCacheDirty(QRectF view_rect, int pixel_border, bool front_cache)
 {
-	QRect* cache_dirty_rect = front_cache ? &above_template_cache_dirty_rect : &below_template_cache_dirty_rect;
+	QRect& cache_dirty_rect = front_cache ? above_template_cache_dirty_rect : below_template_cache_dirty_rect;
 	QRectF viewport_rect = viewToViewport(view_rect);
 	QRect integer_rect = QRect(viewport_rect.left() - (1+pixel_border), viewport_rect.top() - (1+pixel_border),
 							   viewport_rect.width() + 2*(1+pixel_border), viewport_rect.height() + 2*(1+pixel_border));
@@ -467,56 +395,88 @@ void MapWidget::markTemplateCacheDirty(QRectF view_rect, int pixel_border, bool 
 	if (!integer_rect.intersects(rect()))
 		return;
 	
-	if (cache_dirty_rect->isValid())
-		*cache_dirty_rect = cache_dirty_rect->united(integer_rect);
+	if (cache_dirty_rect.isValid())
+		cache_dirty_rect = cache_dirty_rect.united(integer_rect);
 	else
-		*cache_dirty_rect = integer_rect;
+		cache_dirty_rect = integer_rect;
 	
 	update(integer_rect);
 }
 
 void MapWidget::markObjectAreaDirty(QRectF map_rect)
 {
-	const int pixel_border = 0;
-	QRect viewport_rect = calculateViewportBoundingBox(map_rect, pixel_border);
-	
-	if (!viewport_rect.intersects(rect()))
-		return;
-	
-	if (map_cache_dirty_rect.isValid())
-		map_cache_dirty_rect = map_cache_dirty_rect.united(viewport_rect);
-	else
-		map_cache_dirty_rect = viewport_rect;
-	
-	update(viewport_rect);
+	updateMapRect(map_rect, 0, map_cache_dirty_rect);
 }
 
 void MapWidget::setDrawingBoundingBox(QRectF map_rect, int pixel_border, bool do_update)
 {
-	setDynamicBoundingBox(map_rect, pixel_border, drawing_dirty_rect_old, drawing_dirty_rect_new, drawing_dirty_rect_new_border, do_update);
+	Q_UNUSED(do_update);
+	clearDrawingBoundingBox();
+	if (map_rect.isValid())
+	{
+		drawing_dirty_rect_map = map_rect;
+		drawing_dirty_rect_border = pixel_border;
+		updateMapRect(drawing_dirty_rect_map, drawing_dirty_rect_border, drawing_dirty_rect);
+	}
 }
 
 void MapWidget::clearDrawingBoundingBox()
 {
-	clearDynamicBoundingBox(drawing_dirty_rect_old, drawing_dirty_rect_new, drawing_dirty_rect_new_border);
+	drawing_dirty_rect_map.setWidth(0);
+	if (drawing_dirty_rect.isValid())
+	{
+		update(drawing_dirty_rect);
+		drawing_dirty_rect.setWidth(0);
+	}
 }
 
 void MapWidget::setActivityBoundingBox(QRectF map_rect, int pixel_border, bool do_update)
 {
-	setDynamicBoundingBox(map_rect, pixel_border, activity_dirty_rect_old, activity_dirty_rect_new, activity_dirty_rect_new_border, do_update);
+	Q_UNUSED(do_update);
+	clearActivityBoundingBox();
+	if (map_rect.isValid())
+	{
+		activity_dirty_rect_map = map_rect;
+		activity_dirty_rect_border = pixel_border;
+		updateMapRect(activity_dirty_rect_map, activity_dirty_rect_border, activity_dirty_rect);
+	}
 }
 
 void MapWidget::clearActivityBoundingBox()
 {
-	clearDynamicBoundingBox(activity_dirty_rect_old, activity_dirty_rect_new, activity_dirty_rect_new_border);
+	activity_dirty_rect_map.setWidth(0);
+	if (activity_dirty_rect.isValid())
+	{
+		update(activity_dirty_rect);
+		activity_dirty_rect.setWidth(0);
+	}
 }
 
-void MapWidget::updateDrawing(QRectF map_rect, int pixel_border)
+void MapWidget::updateDrawing(const QRectF& map_rect, int pixel_border)
 {
 	QRect viewport_rect = calculateViewportBoundingBox(map_rect, pixel_border);
 	
 	if (viewport_rect.intersects(rect()))
 		update(viewport_rect);
+}
+
+void MapWidget::updateMapRect(const QRectF& map_rect, int pixel_border, QRect& dirty_rect)
+{
+	QRect viewport_rect = calculateViewportBoundingBox(map_rect, pixel_border);
+	updateViewportRect(viewport_rect, dirty_rect);
+}
+
+void MapWidget::updateViewportRect(QRect viewport_rect, QRect& dirty_rect)
+{
+	if (viewport_rect.intersects(rect()))
+	{
+		if (dirty_rect.isValid())
+			dirty_rect = dirty_rect.united(viewport_rect);
+		else
+			dirty_rect = viewport_rect;
+		
+		update(viewport_rect);
+	}
 }
 
 void MapWidget::updateDrawingLater(QRectF map_rect, int pixel_border)
@@ -538,60 +498,31 @@ void MapWidget::updateDrawingLater(QRectF map_rect, int pixel_border)
 
 void MapWidget::updateDrawingLaterSlot()
 {
-	update(cached_update_rect);
+	updateEverythingInRect(cached_update_rect);
 	cached_update_rect = QRect();
 }
 
 void MapWidget::updateEverything()
 {
-	below_template_cache_dirty_rect = rect();
-	above_template_cache_dirty_rect = rect();
 	map_cache_dirty_rect = rect();
-	update();
+	below_template_cache_dirty_rect = map_cache_dirty_rect;
+	above_template_cache_dirty_rect = map_cache_dirty_rect;
+	update(map_cache_dirty_rect);
 }
 
-void MapWidget::setDynamicBoundingBox(QRectF map_rect, int pixel_border, QRect& dirty_rect_old, QRectF& dirty_rect_new, int& dirty_rect_new_border, bool do_update)
+void MapWidget::updateEverythingInRect(const QRect& dirty_rect)
 {
-	dirty_rect_new = map_rect;
-	dirty_rect_new_border = pixel_border;
-	
-	if (!do_update)
-		return;
-	
-	QRect viewport_rect = calculateViewportBoundingBox(map_rect, pixel_border);
-	
-	if (!viewport_rect.intersects(rect()))
-	{
-		if (dirty_rect_old.isValid() && dirty_rect_old.intersects(rect()))
-			update(dirty_rect_old);
-		return;
-	}
-	
-	if (dirty_rect_old.isValid())
-		update(dirty_rect_old.united(viewport_rect));
-	else
-		update(viewport_rect);
-}
-
-void MapWidget::clearDynamicBoundingBox(QRect& dirty_rect_old, QRectF& dirty_rect_new, int& dirty_rect_new_border)
-{
-	if (!dirty_rect_new.isValid() && dirty_rect_new_border < 0)
-		return;
-	
-	dirty_rect_new = QRectF();
-	dirty_rect_new_border = -1;
-	
-	if (dirty_rect_old.isValid() && dirty_rect_old.intersects(rect()))
-		update(dirty_rect_old);
+	rectIncludeSafe(map_cache_dirty_rect, dirty_rect);
+	rectIncludeSafe(below_template_cache_dirty_rect, dirty_rect);
+	rectIncludeSafe(above_template_cache_dirty_rect, dirty_rect);
+	update(dirty_rect);
 }
 
 QRect MapWidget::calculateViewportBoundingBox(QRectF map_rect, int pixel_border)
 {
 	QRectF view_rect = view->calculateViewBoundingBox(map_rect);
-	QRectF viewport_rect = viewToViewport(view_rect);
-	QRect integer_rect = QRect(viewport_rect.left() - (1+pixel_border), viewport_rect.top() - (1+pixel_border),
-							   viewport_rect.width() + 2*(1+pixel_border), viewport_rect.height() + 2*(1+pixel_border));
-	return integer_rect;
+	view_rect.adjust(-pixel_border, -pixel_border, +pixel_border, +pixel_border);
+	return viewToViewport(view_rect).toAlignedRect();
 }
 
 void MapWidget::setZoomLabel(QLabel* zoom_label)
@@ -612,10 +543,8 @@ void MapWidget::setObjectTagLabel(QLabel *objecttag_label)
 
 void MapWidget::updateZoomLabel()
 {
-	if (!zoom_label)
-		return;
-	
-	zoom_label->setText(tr("%1x", "Zoom factor").arg(view->getZoom(), 0, 'g', 3));
+	if (zoom_label)
+		zoom_label->setText(tr("%1x", "Zoom factor").arg(view->getZoom(), 0, 'g', 3));
 }
 
 void MapWidget::setCoordsDisplay(CoordsType type)
@@ -633,9 +562,9 @@ void MapWidget::updateCursorposLabel(const MapCoordF pos)
 	
 	if (coords_type == MAP_COORDS)
 	{
-		cursorpos_label->setText( QString("%1 %2 (%3)").
-		  arg(locale().toString(pos.getX(), 'f', 2)).
-		  arg(locale().toString(-pos.getY(), 'f', 2)).
+		cursorpos_label->setText( QStringLiteral("%1 %2 (%3)").
+		  arg(locale().toString(pos.x(), 'f', 2)).
+		  arg(locale().toString(-pos.y(), 'f', 2)).
 		  arg(tr("mm", "millimeters")));
 	}
 	else
@@ -646,7 +575,7 @@ void MapWidget::updateCursorposLabel(const MapCoordF pos)
 		{
 			const QPointF projected_point(georef.toProjectedCoords(pos));
 			cursorpos_label->setText(
-			  QString("%1 %2 (%3)").
+			  QStringLiteral("%1 %2 (%3)").
 			  arg(QString::number(projected_point.x(), 'f', 0)).
 			  arg(QString::number(projected_point.y(), 'f', 0)).
 			  arg(tr("m", "meters"))
@@ -692,8 +621,9 @@ void MapWidget::updateObjectTagLabel(const MapCoordF pos)
 		{
 			std::sort(objects.begin(), objects.end(), ObjectSelector::sortObjects);
 			Object* object = objects.front().second;
-			if (object->tags().contains("name"))
-				text = object->tags()["name"];
+			static const QString key_name { QStringLiteral("name") };
+			if (object->tags().contains(key_name))
+				text = object->tags()[key_name];
 		}
 		objecttag_label->setText(text);
 	}
@@ -717,11 +647,6 @@ void MapWidget::setGPSDisplay(GPSDisplay* gps_display)
 	this->gps_display = gps_display;
 }
 
-void MapWidget::setCompassDisplay(CompassDisplay* compass_display)
-{
-	this->compass_display = compass_display;
-}
-
 void MapWidget::setTemporaryMarkerDisplay(GPSTemporaryMarkers* marker_display)
 {
 	this->marker_display = marker_display;
@@ -737,47 +662,21 @@ QSize MapWidget::sizeHint() const
     return QSize(640, 480);
 }
 
-void MapWidget::startPanning(QPoint cursor_pos)
-{
-	if (dragging)
-		return;
-	dragging = true;
-	drag_start_pos = cursor_pos;
-	normal_cursor = cursor();
-	setCursor(Qt::ClosedHandCursor);
-}
-
-void MapWidget::finishPanning(QPoint cursor_pos)
-{
-	if (!dragging)
-		return;
-	dragging = false;
-	view->completeDragging(cursor_pos - drag_start_pos);
-	setCursor(normal_cursor);
-}
-
-void MapWidget::moveMap(int steps_x, int steps_y)
-{
-	const float move_factor = 1 / 4.0f;
-	
-	if (steps_x != 0)
-	{
-		float pixels_x = width() * steps_x * move_factor;
-		view->setPositionX(view->getPositionX() + view->pixelToLength(pixels_x));
-	}
-	if (steps_y != 0)
-	{
-		float pixels_y = height() * steps_y * move_factor;
-		view->setPositionY(view->getPositionY() + view->pixelToLength(pixels_y));
-	}
-}
-
-void MapWidget::showHelpMessage(QPainter* painter, const QString& text)
+void MapWidget::showHelpMessage(QPainter* painter, const QString& text) const
 {
 	painter->fillRect(rect(), QColor(Qt::gray));
 	
 	QFont font = painter->font();
-	font.setPointSize(2 * font.pointSize());
+	int pixel_size = font.pixelSize();
+	if (pixel_size > 0)
+	{
+		font.setPixelSize(pixel_size * 2);
+	}
+	else
+	{
+		pixel_size = font.pointSize();
+		font.setPointSize(pixel_size * 2);
+	}
 	font.setBold(true);
 	painter->setFont(font);
 	painter->drawText(QRect(0, 0, width(), height()), Qt::AlignCenter, text);
@@ -807,37 +706,37 @@ bool MapWidget::event(QEvent* event)
 
 void MapWidget::gestureEvent(QGestureEvent* event)
 {
+	if (tool && tool->gestureEvent(event, this))
+	{
+		event->accept();
+		return;
+	}
+	
 	if (QGesture* gesture = event->gesture(Qt::PinchGesture))
 	{
-		//pinchTriggered(static_cast<QPinchGesture *>(pinch));
 		QPinchGesture* pinch = static_cast<QPinchGesture *>(gesture);
-		float zoom = pinch->totalScaleFactor();
-		float change = zoom/view->getZoom();
-		bool change_zoom = (change <= 0.9f || change >= 1.1f);
+		QPoint center = pinch->centerPoint().toPoint();
+		qreal factor = pinch->totalScaleFactor();
 		switch (pinch->state())
 		{
 		case Qt::GestureStarted:
 			if (dragging)
-				finishPanning(drag_start_pos + view->getDragOffset());
-			pinch->setStartCenterPoint(pinch->centerPoint());
-			pinch->setTotalScaleFactor(view->getZoom());
+				cancelDragging();
+			if (pinching)
+				cancelPinching();
+			if (tool)
+				tool->gestureStarted();
+			factor = startPinching(center);
+			pinch->setTotalScaleFactor(factor);
 			break;
 		case Qt::GestureUpdated:
-			view->setDragOffset((pinch->centerPoint() - pinch->startCenterPoint()).toPoint(), !change_zoom);
-			if (change_zoom) {
-				view->setZoom(pinch->totalScaleFactor(), viewportToView(pinch->centerPoint()));
-				view->updateAllMapWidgets();
-			}
+			updatePinching(center, factor);
 			break;
 		case Qt::GestureFinished:
-			view->completeDragging((pinch->centerPoint() - pinch->startCenterPoint()).toPoint(), !change_zoom);
-			if (change_zoom) {
-				view->setZoom(pinch->totalScaleFactor(), viewportToView(pinch->centerPoint()));
-				view->updateAllMapWidgets();
-			}
+			finishPinching(center, factor);
 			break;
 		case Qt::GestureCanceled:
-			view->completeDragging(QPoint(0,0), true);
+			cancelPinching();
 			break;
 		default:
 			Q_ASSERT(false && "Unknown gesture state");
@@ -853,94 +752,91 @@ void MapWidget::gestureEvent(QGestureEvent* event)
 void MapWidget::paintEvent(QPaintEvent* event)
 {
 	// Draw on the widget
-	QPainter painter;
-	painter.begin(this);
-	painter.setClipRect(event->rect());
+	QPainter painter(this);
+	QRect exposed = event->rect();
 	
-	// Background color
-	if (drag_offset.x() > 0)
-		painter.fillRect(QRect(0, drag_offset.y(), drag_offset.x(), height() - drag_offset.y()), QColor(Qt::gray));
-	else if (drag_offset.x() < 0)
-		painter.fillRect(QRect(width() + drag_offset.x(), drag_offset.y(), -drag_offset.x(), height() - drag_offset.y()), QColor(Qt::gray));
-	
-	if (drag_offset.y() > 0)
-		painter.fillRect(QRect(0, 0, width(), drag_offset.y()), QColor(Qt::gray));
-	else if (drag_offset.y() < 0)
-		painter.fillRect(QRect(0, height() + drag_offset.y(), width(), -drag_offset.y()), QColor(Qt::gray));
-	
-	// No colors defined? Provide a litte help message ...
-	bool no_contents = view->getMap()->getNumObjects() == 0 && view->getMap()->getNumTemplates() == 0 && !view->isGridVisible();
-	if (show_help && view && no_contents)
+	if (!view)
 	{
+		painter.fillRect(exposed, QColor(Qt::gray));
+		return;
+	}
+	
+	// No colors, symbols, or objects? Provide a litte help message ...
+	bool no_contents = view->getMap()->getNumObjects() == 0 && view->getMap()->getNumTemplates() == 0 && !view->isGridVisible();
+	
+	QTransform transform = painter.worldTransform();
+	
+	// Update all dirty caches
+	// TODO: It would be an idea to do these updates in a background thread and use the old caches in the meantime
+	updateAllDirtyCaches();
+	
+	QRect target = exposed;
+	if (pinching)
+	{
+		// Just draw the scaled map and templates
+		painter.fillRect(exposed, QColor(Qt::gray));
+		painter.translate(pinching_center.x(), pinching_center.y());
+		painter.scale(pinching_factor, pinching_factor);
+		painter.translate(-drag_start_pos.x(), -drag_start_pos.y());
+	}
+	else if (pan_offset != QPoint())
+	{
+		// Background color
+		if (pan_offset.x() > 0)
+			painter.fillRect(QRect(0, pan_offset.y(), pan_offset.x(), height() - pan_offset.y()), QColor(Qt::gray));
+		else if (pan_offset.x() < 0)
+			painter.fillRect(QRect(width() + pan_offset.x(), pan_offset.y(), -pan_offset.x(), height() - pan_offset.y()), QColor(Qt::gray));
+		
+		if (pan_offset.y() > 0)
+			painter.fillRect(QRect(0, 0, width(), pan_offset.y()), QColor(Qt::gray));
+		else if (pan_offset.y() < 0)
+			painter.fillRect(QRect(0, height() + pan_offset.y(), width(), -pan_offset.y()), QColor(Qt::gray));
+		
+		target.translate(pan_offset);
+	}
+	
+	if (!view->areAllTemplatesHidden() && isBelowTemplateVisible() && !below_template_cache.isNull() && view->getMap()->getFirstFrontTemplate() > 0)
+	{
+		painter.drawImage(target, below_template_cache, exposed);
+	}
+	else if (show_help && no_contents)
+	{
+		painter.save();
+		painter.setTransform(transform);
 		if (view->getMap()->getNumColors() == 0)
 			showHelpMessage(&painter, tr("Empty map!\n\nStart by defining some colors:\nSelect Symbols -> Color window to\nopen the color dialog and\ndefine the colors there."));
 		else if (view->getMap()->getNumSymbols() == 0)
 			showHelpMessage(&painter, tr("No symbols!\n\nNow define some symbols:\nRight-click in the symbol bar\nand select \"New symbol\"\nto create one."));
 		else
 			showHelpMessage(&painter, tr("Ready to draw!\n\nStart drawing or load a base map.\nTo load a base map, click\nTemplates -> Open template...") + "\n\n" + tr("Hint: Hold the middle mouse button to drag the map,\nzoom using the mouse wheel, if available."));
+		painter.restore();
 	}
-	else if (view)
+	else
 	{
-		// Update all dirty caches
-		// TODO: It would be an idea to do these updates in a background thread and use the old caches in the meantime
-		updateAllDirtyCaches();
-		
-		// TODO: Make sure that some cache (below_cache or map_cache) contains the background (white?) or it is drawn here
-		
-		// Draw caches
-		if (!view->areAllTemplatesHidden() && isBelowTemplateVisible() && below_template_cache && view->getMap()->getFirstFrontTemplate() > 0)
-			painter.drawImage(drag_offset, *below_template_cache, rect());
-		else
-			painter.fillRect(QRect(drag_offset.x(), drag_offset.y(), width(), height()), Qt::white);	// TODO: It's not as easy as that, see above.
-		
-		if (map_cache && view->getMapVisibility()->visible)
-		{
-			float map_opacity = view->getMapVisibility()->opacity;
-			if (map_opacity < 1.0)
-			{
-				painter.save();
-				painter.setOpacity(map_opacity);
-				painter.drawImage(drag_offset, *map_cache, rect());
-				painter.restore();
-			}
-			else
-			{
-				painter.drawImage(drag_offset, *map_cache, rect());
-			}
-		}
-		
-		if (!view->areAllTemplatesHidden() && isAboveTemplateVisible() && above_template_cache && view->getMap()->getNumTemplates() - view->getMap()->getFirstFrontTemplate() > 0)
-			painter.drawImage(drag_offset, *above_template_cache, rect());
+		painter.fillRect(target, Qt::white);
 	}
+	
+	const auto map_visibility = view->effectiveMapVisibility();
+	if (!map_cache.isNull() && map_visibility->visible)
+	{
+		qreal saved_opacity = painter.opacity();
+		painter.setOpacity(map_visibility->opacity);
+		painter.drawImage(target, map_cache, exposed);
+		painter.setOpacity(saved_opacity);
+	}
+	
+	if (!view->areAllTemplatesHidden() && isAboveTemplateVisible() && !above_template_cache.isNull() && view->getMap()->getNumTemplates() - view->getMap()->getFirstFrontTemplate() > 0)
+		painter.drawImage(target, above_template_cache, exposed);
+	
+	//painter.setClipRect(exposed);
 	
 	// Show current drawings
-	if (activity_dirty_rect_new.isValid() || activity_dirty_rect_new_border >= 0)
-	{
-		QRect viewport_dirty_rect = calculateViewportBoundingBox(activity_dirty_rect_new, activity_dirty_rect_new_border);
-		
-		if (viewport_dirty_rect.intersects(event->rect()))
-		{
-			painter.setClipRect(viewport_dirty_rect.intersected(event->rect()));
-			activity->draw(&painter, this);
-		}
-		
-		activity_dirty_rect_old = viewport_dirty_rect;
-	}
+	if (activity_dirty_rect.isValid())
+		activity->draw(&painter, this);
 	
-	if (drawing_dirty_rect_new.isValid() || drawing_dirty_rect_new_border >= 0)
-	{
-		QRect viewport_dirty_rect = calculateViewportBoundingBox(drawing_dirty_rect_new, drawing_dirty_rect_new_border);
-		
-		if (viewport_dirty_rect.intersects(event->rect()))
-		{
-			painter.setClipRect(viewport_dirty_rect.intersected(event->rect()));
-			tool->draw(&painter, this);
-		}
-		
-		drawing_dirty_rect_old = viewport_dirty_rect;
-	}
+	if (drawing_dirty_rect.isValid())
+		tool->draw(&painter, this);
 	
-	painter.setClipRect(event->rect());
 	
 	// Draw temporary GPS marker display
 	if (marker_display)
@@ -954,34 +850,43 @@ void MapWidget::paintEvent(QPaintEvent* event)
 	if (touch_cursor && tool && tool->usesTouchCursor())
 		touch_cursor->paint(&painter);
 	
-	// Draw compass display
-	if (compass_display)
-		compass_display->paint(&painter);
 	
-	painter.end();
+	painter.setWorldTransform(transform, false);
 }
 
 void MapWidget::resizeEvent(QResizeEvent* event)
 {
-	if (below_template_cache && below_template_cache->size() != event->size())
+	map_cache_dirty_rect = rect();
+	below_template_cache_dirty_rect = map_cache_dirty_rect;
+	above_template_cache_dirty_rect = map_cache_dirty_rect;
+	
+	if (map_cache.width() < map_cache_dirty_rect.width() ||
+	    map_cache.height() < map_cache_dirty_rect.height())
 	{
-		delete below_template_cache;
-		below_template_cache = NULL;
-		below_template_cache_dirty_rect = rect();
-	}
-	if (above_template_cache && above_template_cache->size() != event->size())
-	{
-		delete above_template_cache;
-		above_template_cache = NULL;
-		above_template_cache_dirty_rect = rect();
+		map_cache = QImage();
+		below_template_cache = QImage();
+		above_template_cache = QImage();
 	}
 	
-	if (map_cache && map_cache->size() != event->size())
+	for (QObject* const child : children())
 	{
-		delete map_cache;
-		map_cache = NULL;
-		map_cache_dirty_rect = rect();
+		if (QWidget* child_widget = qobject_cast<ActionGridBar*>(child))
+		{
+			child_widget->resize(event->size().width(), child_widget->sizeHint().height());
+		}
+		else if (QWidget* child_widget = qobject_cast<KeyButtonBar*>(child))
+		{
+			QSize size = child_widget->sizeHint();
+			QRect map_widget_rect = rect();
+			child_widget->setGeometry(
+				qMax(0, qRound(map_widget_rect.center().x() - 0.5f * size.width())),
+				qMax(0, map_widget_rect.bottom() - size.height()),
+				qMin(size.width(), map_widget_rect.width()),
+				qMin(size.height(), map_widget_rect.height()) );
+		}
 	}
+	
+	QWidget::resizeEvent(event);
 }
 
 void MapWidget::mousePressEvent(QMouseEvent* event)
@@ -1001,7 +906,7 @@ void MapWidget::mousePressEvent(QMouseEvent* event)
 
 void MapWidget::_mousePressEvent(QMouseEvent* event)
 {
-	if (dragging)
+	if (dragging || pinching)
 	{
 		event->accept();
 		return;
@@ -1015,7 +920,7 @@ void MapWidget::_mousePressEvent(QMouseEvent* event)
 	
 	if (event->button() == Qt::MiddleButton)
 	{
-		startPanning(event->pos());
+		startDragging(event->pos());
 		event->accept();
 	}
 	else if (event->button() == Qt::RightButton)
@@ -1037,9 +942,14 @@ void MapWidget::mouseMoveEvent(QMouseEvent* event)
 
 void MapWidget::_mouseMoveEvent(QMouseEvent* event)
 {
-	if (dragging)
+	if (pinching)
 	{
-		view->setDragOffset(event->pos() - drag_start_pos);
+		event->accept();
+		return;
+	}
+	else if (dragging)
+	{
+		updateDragging(event->pos());
 		return;
 	}
 	else
@@ -1071,7 +981,7 @@ void MapWidget::_mouseReleaseEvent(QMouseEvent* event)
 {
 	if (dragging)
 	{
-		finishPanning(event->pos());
+		finishDragging(event->pos());
 		event->accept();
 		return;
 	}
@@ -1149,7 +1059,7 @@ bool MapWidget::keyPressEventFilter(QKeyEvent* event)
 	switch (event->key())
 	{
 	case Qt::Key_F6:
-		startPanning(mapFromGlobal(QCursor::pos()));
+		startDragging(mapFromGlobal(QCursor::pos()));
 		return true;
 		
 	case Qt::Key_Up:
@@ -1186,12 +1096,13 @@ bool MapWidget::keyReleaseEventFilter(QKeyEvent* event)
 void MapWidget::enableTouchCursor(bool enabled)
 {
 	if (enabled && !touch_cursor)
-		touch_cursor = new TouchCursor(this);
+	{
+		touch_cursor.reset(new TouchCursor(this));
+	}
 	else if (!enabled && touch_cursor)
 	{
 		touch_cursor->updateMapWidget(false);
-		delete touch_cursor;
-		touch_cursor = NULL;
+		touch_cursor.reset(nullptr);
 	}
 }
 
@@ -1218,7 +1129,7 @@ void MapWidget::contextMenuEvent(QContextMenuEvent* event)
 	event->accept();
 }
 
-bool MapWidget::containsVisibleTemplate(int first_template, int last_template)
+bool MapWidget::containsVisibleTemplate(int first_template, int last_template) const
 {
 	if (first_template > last_template)
 		return false;	// no template visible
@@ -1233,23 +1144,36 @@ bool MapWidget::containsVisibleTemplate(int first_template, int last_template)
 	return false;
 }
 
-void MapWidget::updateTemplateCache(QImage*& cache, QRect& dirty_rect, int first_template, int last_template, bool use_background)
+inline
+bool MapWidget::isAboveTemplateVisible() const
+{
+	return containsVisibleTemplate(view->getMap()->getFirstFrontTemplate(), view->getMap()->getNumTemplates() - 1);
+}
+
+inline
+bool MapWidget::isBelowTemplateVisible() const
+{
+	return containsVisibleTemplate(0, view->getMap()->getFirstFrontTemplate() - 1);
+}
+
+void MapWidget::updateTemplateCache(QImage& cache, QRect& dirty_rect, int first_template, int last_template, bool use_background)
 {
 	Q_ASSERT(containsVisibleTemplate(first_template, last_template));
 	
-	if (!cache)
+	if (cache.isNull())
 	{
 		// Lazy allocation of cache image
-		cache = new QImage(size(), QImage::Format_ARGB32_Premultiplied);
+		cache = QImage(size(), QImage::Format_ARGB32_Premultiplied);
 		dirty_rect = rect();
 	}
-	
-	// Make sure not to use a bigger draw rect than necessary
-	dirty_rect = dirty_rect.intersected(rect());
-	
+	else
+	{
+		// Make sure not to use a bigger draw rect than necessary
+		dirty_rect = dirty_rect.intersected(rect());
+	}
+		
 	// Start drawing
-	QPainter painter;
-	painter.begin(cache);
+	QPainter painter(&cache);
 	painter.setClipRect(dirty_rect);
 	
 	// Fill with background color (TODO: make configurable)
@@ -1264,41 +1188,41 @@ void MapWidget::updateTemplateCache(QImage*& cache, QRect& dirty_rect, int first
 	}
 	
 	// Draw templates
-	painter.save();
 	painter.translate(width() / 2.0, height() / 2.0);
-	view->applyTransform(&painter);
+	painter.setWorldTransform(view->worldTransform(), true);
 	
 	Map* map = view->getMap();
 	QRectF map_view_rect = view->calculateViewedRect(viewportToView(dirty_rect));
 	
 	map->drawTemplates(&painter, map_view_rect, first_template, last_template, view, true);
 	
-	painter.restore();
-	painter.end();
-	
 	dirty_rect.setWidth(-1); // => !dirty_rect.isValid()
 }
 
 void MapWidget::updateMapCache(bool use_background)
 {
-	if (!map_cache)
+	if (map_cache.isNull())
 	{
 		// Lazy allocation of cache image
-		map_cache = new QImage(size(), QImage::Format_ARGB32_Premultiplied);
+		map_cache = QImage(size(), QImage::Format_ARGB32_Premultiplied);
 		map_cache_dirty_rect = rect();
 	}
-	
-	// Make sure not to use a bigger draw rect than necessary
-	map_cache_dirty_rect = map_cache_dirty_rect.intersected(rect());
+	else
+	{
+		// Make sure not to use a bigger draw rect than necessary
+		map_cache_dirty_rect = map_cache_dirty_rect.intersected(rect());
+	}
 	
 	// Start drawing
 	QPainter painter;
-	painter.begin(map_cache);
+	painter.begin(&map_cache);
 	painter.setClipRect(map_cache_dirty_rect);
 	
 	// Fill with background color (TODO: make configurable)
 	if (use_background)
+	{
 		painter.fillRect(map_cache_dirty_rect, Qt::white);
+	}
 	else
 	{
 		QPainter::CompositionMode mode = painter.compositionMode();
@@ -1307,19 +1231,26 @@ void MapWidget::updateMapCache(bool use_background)
 		painter.setCompositionMode(mode);
 	}
 	
+	RenderConfig::Options options(RenderConfig::Screen | RenderConfig::HelperSymbols);
 	bool use_antialiasing = force_antialiasing || Settings::getInstance().getSettingCached(Settings::MapDisplay_Antialiasing).toBool();
 	if (use_antialiasing)
 		painter.setRenderHint(QPainter::Antialiasing);
+	else
+		options |= RenderConfig::DisableAntialiasing | RenderConfig::ForceMinSize;
 		
 	Map* map = view->getMap();
 	QRectF map_view_rect = view->calculateViewedRect(viewportToView(map_cache_dirty_rect));
 
+	RenderConfig config = { *map, map_view_rect, view->calculateFinalZoomFactor(), options, 1.0 };
+	
 	painter.translate(width() / 2.0, height() / 2.0);
-	view->applyTransform(&painter);
+	painter.setWorldTransform(view->worldTransform(), true);
+#ifndef Q_OS_ANDROID
 	if (view->isOverprintingSimulationEnabled())
-		map->drawOverprintingSimulation(&painter, map_view_rect, !use_antialiasing, view->calculateFinalZoomFactor(), true, true);
+		map->drawOverprintingSimulation(&painter, config);
 	else
-		map->draw(&painter, map_view_rect, !use_antialiasing, view->calculateFinalZoomFactor(), true, true);
+#endif
+		map->draw(&painter, config);
 	
 	if (view->isGridVisible())
 		map->drawGrid(&painter, map_view_rect, true);
@@ -1332,24 +1263,36 @@ void MapWidget::updateMapCache(bool use_background)
 
 void MapWidget::updateAllDirtyCaches()
 {
-	if (isBelowTemplateVisible() && below_template_cache_dirty_rect.isValid())
-		updateTemplateCache(below_template_cache, below_template_cache_dirty_rect, 0, view->getMap()->getFirstFrontTemplate() - 1, true);
-	if (isAboveTemplateVisible() && above_template_cache_dirty_rect.isValid())
-		updateTemplateCache(above_template_cache, above_template_cache_dirty_rect, view->getMap()->getFirstFrontTemplate(), view->getMap()->getNumTemplates() - 1, false);
-	
 	if (map_cache_dirty_rect.isValid())
 		updateMapCache(false);
+	
+	if (!view->areAllTemplatesHidden())
+	{
+		if (below_template_cache_dirty_rect.isValid() && isBelowTemplateVisible())
+			updateTemplateCache(below_template_cache, below_template_cache_dirty_rect, 0, view->getMap()->getFirstFrontTemplate() - 1, true);
+		
+		if (above_template_cache_dirty_rect.isValid() && isAboveTemplateVisible())
+			updateTemplateCache(above_template_cache, above_template_cache_dirty_rect, view->getMap()->getFirstFrontTemplate(), view->getMap()->getNumTemplates() - 1, false);
+	}
 }
 
-void MapWidget::shiftCache(int sx, int sy, QImage*& cache)
+void MapWidget::shiftCache(int sx, int sy, QImage& cache)
 {
-	if (!cache) return;
-	QImage* new_cache = new QImage(cache->size(), cache->format());
-	QPainter painter;
-	painter.begin(new_cache);
-	painter.setCompositionMode(QPainter::CompositionMode_Source);
-	painter.drawImage(sx, sy, *cache);
-	painter.end();
-	delete cache;
-	cache = new_cache;
+	if (!cache.isNull())
+	{
+		QImage new_cache(cache.size(), cache.format());
+		QPainter painter(&new_cache);
+		painter.setCompositionMode(QPainter::CompositionMode_Source);
+		painter.drawImage(sx, sy, cache);
+		painter.end();
+		cache = new_cache;
+	}
+}
+
+void MapWidget::shiftCache(int sx, int sy, QPixmap& cache)
+{
+	if (!cache.isNull())
+	{
+		cache.scroll(sx, sy, cache.rect());
+	}
 }

@@ -26,6 +26,7 @@
 
 class MapView;
 class PathObject;
+class RenderConfig;
 
 /** 
  * Tool to fill bounded areas with PathObjects.
@@ -76,7 +77,7 @@ protected:
 	/**
 	 * Helper method for rasterizeMap().
 	 */
-	void drawObjectIDs(Map* map, QPainter* painter, QRectF bounding_box, float scaling);
+	void drawObjectIDs(Map* map, QPainter* painter, const RenderConfig& config);
 	
 	/**
 	 * Traces the boundary around an "island" in the given image, starting from the

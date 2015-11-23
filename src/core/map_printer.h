@@ -1,5 +1,6 @@
 /*
- *    Copyright 2012, 2013 Thomas Schöps, Kai Pastor
+ *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2012-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -21,6 +22,7 @@
 #ifndef _OPENORIENTEERING_MAP_PRINTER_H_
 #define _OPENORIENTEERING_MAP_PRINTER_H_
 
+#include <memory>
 #include <vector>
 
 #include <QHash>
@@ -103,6 +105,16 @@ public:
 		Raster,        ///< Print in raster graphics mode
 		Separations    ///< Print spot color separations (b/w vector)
 	};
+	
+	/** Color modes.
+	 * 
+	 * At the moment, only PDF supports a different mode than the default.
+	 */
+	enum ColorMode
+	{
+		DefaultColorMode,  ///< Use the target engine's default color mode.
+		DeviceCmyk         ///< Use device-dependent CMYK for vector data.
+	};
 
 	/** Constructs new printer options.
 	 * 
@@ -122,6 +134,9 @@ public:
 	 *  Note that other printing options may be available only in particular modes.
 	 */
 	MapPrinterMode mode;
+	
+	/** The color mode. */
+	ColorMode color_mode;
 	
 	/** Controls if templates get printed.
 	 * 
@@ -200,7 +215,7 @@ public:
 	static const QHash< int, const char* >& paperSizeNames();
 	
 	/** Constructs a new MapPrinter for the given map and (optional) view. */
-	MapPrinter(Map& map, MapView* view, QObject* parent = NULL);
+	MapPrinter(Map& map, const MapView* view, QObject* parent = nullptr);
 	
 	/** Destructor. */
 	virtual ~MapPrinter();
@@ -240,20 +255,31 @@ public:
 	const std::vector< qreal >& verticalPagePositions() const;
 	
 	/** Creates a printer configured according to the current settings. */
-	QPrinter* makePrinter() const;
+	std::unique_ptr<QPrinter> makePrinter() const;
 	
 	/** Takes the settings from the given printer, 
 	 *  and generates signals for changing properties. */
 	void takePrinterSettings(const QPrinter* printer);
 	
+	/** Prints the map to the given printer.
+	 * 
+	 *  This will first update this object's properties from the printer's properties.
+	 *
+	 *  @return true on success, false on error. */
+	bool printMap(QPrinter* printer);
+	
 	/** Draws a single page to the painter.
+	 * 
+	 *  In case of an error, the painter will be inactive when returning from
+	 *  this function.
+	 * 
 	 *  When the actual paint device is a QImage, pass it as page_buffer.
 	 *  This helps to determine the exact dimensions and to avoid the allocation
 	 *  of another buffer.
 	 *  Otherwise, drawPage() may allocate a buffer with this map printer's
 	 *  resolution and size. Parameter units_per_inch has no influence on this
 	 *  buffer but refers to the logical coordinates of device_painter. */
-	void drawPage(QPainter* device_painter, float units_per_inch, const QRectF& page_extent, bool white_background, QImage* page_buffer = NULL) const;
+	void drawPage(QPainter* device_painter, float units_per_inch, const QRectF& page_extent, bool white_background, QImage* page_buffer = nullptr) const;
 	
 	/** Draws the separations as distinct pages to the printer. */
 	void drawSeparationPages(QPrinter* printer, QPainter* device_painter, float dpi, const QRectF& page_extent) const;
@@ -263,7 +289,7 @@ public:
 	
 public slots:
 	/** Sets the target QPrinterInfo.
-	 *  Ownership is not taken over! Target may even be NULL. */
+	 *  Ownership is not taken over! Target may even be nullptr. */
 	void setTarget(const QPrinterInfo* new_target);
 	
 	/** Sets the map area which is to be printed. */
@@ -281,8 +307,11 @@ public slots:
 	/** Sets the overlapping of the pages at the margins. */
 	void setOverlap(qreal h_overlap, qreal v_overlap);
 	
-	/** Sets the desired printing resolution in dpi. 
-	 *  The actual resolution will	be set by the printer. */
+	/** Sets the desired printing resolution in dpi.
+	 *  The actual resolution will	be set by the printer.
+	 * 
+	 * Does nothing if dpi is 0.
+	 */
 	void setResolution(const unsigned int dpi);
 	
 	/** Sets the denominator of the map scale for printing. */
@@ -294,7 +323,7 @@ public slots:
 	/** Controls whether to print templates. 
 	 *  If a MapView is given when enabling template printing, 
 	 *  it will determine the visibility of map and templates. */
-	void setPrintTemplates(const bool visible, MapView* view = NULL);
+	void setPrintTemplates(const bool visible, const MapView* view = nullptr);
 	
 	/** Controls whether to print the map grid. */
 	void setPrintGrid(const bool visible);
@@ -302,12 +331,11 @@ public slots:
 	/** Controls whether to print in overprinting simulation mode. */
 	void setSimulateOverprinting(bool enabled);
 	
+	/** Controls the color mode. */
+	void setColorMode(MapPrinterOptions::ColorMode color_mode);
+	
 	/** Saves the print parameter (to the map). */
 	void saveConfig() const;
-	
-	/** Prints the map to the given printer. 
-	 *  This will first update this object's properties from the printer's properties. */
-	void printMap(QPrinter* printer);
 	
 	/** Cancels a running printMap(), if possible.
 	 *  This can only be used during handlers of the printMapProgress() signal. */
@@ -352,7 +380,7 @@ protected:
 	void updatePageBreaks();
 	
 	Map& map;
-	MapView* view;
+	const MapView* view;
 	const QPrinterInfo* target;
 	QPrinterInfo target_copy;
 	qreal scale_adjustment;
@@ -377,46 +405,47 @@ bool operator!=(const MapPrinterPageFormat& lhs, const MapPrinterPageFormat& rhs
 
 //### MapPrinterOptions inline code ###
 
-/** Returns true iff the MapPrinterOptions values are not equal. */
-inline
-bool operator!=(const MapPrinterOptions& lhs, const MapPrinterOptions& rhs)
-{
-	return
-	  lhs.resolution            != rhs.resolution            ||
-	  lhs.scale                 != rhs.scale                 ||
-	  lhs.show_templates        != rhs.show_templates        ||
-	  lhs.show_grid             != rhs.show_grid             ||
-	  lhs.simulate_overprinting != rhs.simulate_overprinting;
-}
-
 /** Returns true iff the MapPrinterOptions values are equal. */
 inline
 bool operator==(const MapPrinterOptions& lhs, const MapPrinterOptions& rhs)
 {
-	return !(lhs != rhs);
+	return     lhs.mode                  == rhs.mode
+	        && lhs.color_mode            == rhs.color_mode
+	        && lhs.resolution            == rhs.resolution
+	        && lhs.scale                 == rhs.scale
+	        && lhs.show_templates        == rhs.show_templates
+	        && lhs.show_grid             == rhs.show_grid
+	        && lhs.simulate_overprinting == rhs.simulate_overprinting;
+}
+
+/** Returns true iff the MapPrinterOptions values are not equal. */
+inline
+bool operator!=(const MapPrinterOptions& lhs, const MapPrinterOptions& rhs)
+{
+	return !(lhs == rhs);
 }
 
 
 
 // ### MapPrinterConfig ###
 
-/** Returns true iff the MapPrinterConfig values are not equal. */
-inline
-bool operator!=(const MapPrinterConfig& lhs, const MapPrinterConfig& rhs)
-{
-	return
-	  lhs.printer_name           != rhs.printer_name            ||
-	  lhs.page_format            != rhs.page_format             ||
-	  lhs.options                != rhs.options                 ||
-	  lhs.center_print_area      != rhs.center_print_area       ||
-	  lhs.single_page_print_area != rhs.single_page_print_area;
-}
-
 /** Returns true iff the MapPrinterConfig values are equal. */
 inline
 bool operator==(const MapPrinterConfig& lhs, const MapPrinterConfig& rhs)
 {
-	return !(lhs != rhs);
+	return     lhs.printer_name           == rhs.printer_name
+	        && lhs.print_area             == rhs.print_area
+	        && lhs.page_format            == rhs.page_format
+	        && lhs.options                == rhs.options
+	        && lhs.center_print_area      == rhs.center_print_area
+	        && lhs.single_page_print_area == rhs.single_page_print_area;
+}
+
+/** Returns true iff the MapPrinterConfig values are not equal. */
+inline
+bool operator!=(const MapPrinterConfig& lhs, const MapPrinterConfig& rhs)
+{
+	return !(lhs == rhs);
 }
 
 

@@ -1,6 +1,6 @@
 #!/bin/sh -e
 #
-#    Copyright 2014 Kai Pastor
+#    Copyright 2014, 2015 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -19,10 +19,7 @@
 
 cd "@SOURCE_DIR@"
 
-if [ "@PROJ_VERSION@" = "4.8.0" ]
+if [ "@PROJ_VERSION@" = "4.9.2" ]
 then
-	patch -p2 < "@PROJECT_SOURCE_DIR@/patches/pj_init.c.patch"
 	patch -p1 < "@PROJECT_SOURCE_DIR@/patches/configure.patch"
-	cp "@PROJECT_SOURCE_DIR@/patches/config.guess" .
-	cp "@PROJECT_SOURCE_DIR@/patches/config.sub" .
 fi

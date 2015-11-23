@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2012, 2014, 2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -21,7 +22,7 @@
 #ifndef UTIL_H
 #define UTIL_H
 
-#include "map_coord.h"
+#include <type_traits>
 
 #include <qmath.h>
 #include <QDoubleValidator>
@@ -30,14 +31,14 @@
 QT_BEGIN_NAMESPACE
 class QIODevice;
 QT_END_NAMESPACE
+
+class MapCoord;
+class MapCoordF;
 class Settings;
 
 /** Value to calculate the optimum handle distance of 4 cubic bezier curves
  *  used to approximate a circle. */
 #define BEZIER_KAPPA 0.5522847498
-
-/** Logarithm of 2. */
-#define LOG2 0.30102999566398119521373889472449
 
 /** When drawing a cubic bezier curve, the distance between start and end point
  *  is multiplied by this value to get the handle distance from start respectively
@@ -45,6 +46,33 @@ class Settings;
  * 
  *  Calculated as BEZIER_HANDLE_DISTANCE = BEZIER_KAPPA / sqrt(2) */
 #define BEZIER_HANDLE_DISTANCE 0.390524291729
+
+
+
+namespace std
+{
+	/**
+	 * Fallback for missing std::log2 in some distributions of gcc.
+	 * 
+	 * This template will be selected if std::log2 is not found. The function
+	 * std::log2 is part of C++11, but the following distributions of gcc are
+	 * known lack this function:
+	 * 
+	 * - GCC 4.8 in Android NDK R10d
+	 * 
+	 * The argument must be a floating point value in order to avoid ambiguity
+	 * when the regular std::log2 is present.
+	 */
+	template< class T >
+	constexpr double log2(T value)
+	{
+		static_assert(std::is_floating_point<T>::value,
+					  "The argument to std::log2 must be called a floating point value");
+		return log(value)/M_LN2;
+	}
+}
+
+
 
 /** Double validator for line edit widgets,
  *  ensures that only valid doubles can be entered. */
@@ -60,7 +88,7 @@ public:
 void blockSignalsRecursively(QObject* obj, bool block);
 
 /** Returns a practically "infinitely" big QRectF. */
-inline QRectF infinteRectF()
+inline QRectF infiniteRectF()
 {
 	return QRectF(-10e10, -10e10, 20e10, 20e10);
 }
@@ -70,10 +98,6 @@ inline double fmod_pos(double x, double y)
 {
 	return x - y * floor(x / y);
 }
-
-/** Enlarges the rect to include the given point.
- *  WARNING, does not work if rect is an invalid rect before! */
-void rectInclude(QRectF& rect, MapCoordF point);
 
 /** Enlarges the rect to include the given point.
  *  WARNING, does not work if rect is an invalid rect before! */
@@ -126,7 +150,7 @@ namespace Util
 	 * @param filename the name of the help html file
 	 * @param fragment the fragment in the specified file to jump to
 	 */
-	void showHelp(QWidget* dialog_parent, QString filename = "index.html", QString fragment = "");
+	void showHelp(QWidget* dialog_parent, QString filename = QStringLiteral("index.html"), QString fragment = QString());
 	
 	/** Converts the given help file name to a string
 	 *  which can be used to access it inside QtHelp. */
@@ -139,7 +163,7 @@ namespace Util
 		rotation = fmod(1.0 * rotation, M_PI);
 		if (rotation < 0)
 			rotation = M_PI + rotation;
-		assert(rotation >= 0 && rotation <= M_PI);
+		Q_ASSERT(rotation >= 0 && rotation <= M_PI);
 		
 		if (qAbs(rotation - M_PI/2) < 0.0001)
 		{
@@ -271,10 +295,10 @@ namespace Util
 	 * Mapper's settings. This should be used to calculate sizes of map elements.
 	 * @sa mmToPixelLogical()
 	 */
-	float mmToPixelPhysical(float millimeters);
+	qreal mmToPixelPhysical(qreal millimeters);
 	
 	/** Inverse of mmToPixelPhysical(). */
-	float pixelToMMPhysical(float pixels);
+	qreal pixelToMMPhysical(qreal pixels);
 	
 	/**
 	 * Converts millimeters to pixels using the "logical" dpi setting of
@@ -282,13 +306,23 @@ namespace Util
 	 * elements.
 	 * @sa mmToPixelPhysical()
 	 */
-	float mmToPixelLogical(float millimeters);
+	qreal mmToPixelLogical(qreal millimeters);
 	
 	/** Inverse of mmToPixelLogical(). */
-	float pixelToMMLogical(float pixels);
+	qreal pixelToMMLogical(qreal pixels);
 	
 	/** Returns true for low-dpi screens, false for high-dpi screens. */
-	bool isAntialiasingRequired(Settings* settings = NULL);
+	bool isAntialiasingRequired();
+	
+	/** Returns true for low-dpi screens, false for high-dpi screens. */
+	constexpr bool isAntialiasingRequired(qreal ppi);
+	
+	
+	
+	constexpr bool isAntialiasingRequired(qreal ppi)
+	{
+		return ppi < 200;
+	}
 }
 
 #endif

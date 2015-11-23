@@ -48,7 +48,7 @@ public:
 	virtual ~DrawTextTool();
 	
 	virtual void init();
-	virtual QCursor* getCursor() {return cursor;}
+	virtual const QCursor& getCursor() const;
 	
 	virtual bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
 	virtual bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
@@ -61,8 +61,6 @@ public:
 	virtual void draw(QPainter* painter, MapWidget* widget);
 	
 	virtual void finishEditing();
-	
-	static QCursor* cursor;
 	
 protected slots:
 	void setDrawingSymbol(const Symbol* symbol);

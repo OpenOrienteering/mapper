@@ -28,6 +28,7 @@
 #include "map.h"
 #include "object.h"
 #include "symbol.h"
+#include "util/xml_stream_util.h"
 
 namespace literal
 {
@@ -92,6 +93,8 @@ void ObjectModifyingUndoStep::getModifiedObjects(int part_index, ObjectSet& out)
 	}
 }
 
+#ifndef NO_NATIVE_FILE_FORMAT
+
 bool ObjectModifyingUndoStep::load(QIODevice* file, int version)
 {
 	Q_UNUSED(version);
@@ -103,6 +106,8 @@ bool ObjectModifyingUndoStep::load(QIODevice* file, int version)
 		file->read((char*)&modified_objects[i], sizeof(int));
 	return true;
 }
+
+#endif
 
 void ObjectModifyingUndoStep::saveImpl(QXmlStreamWriter& xml) const
 {
@@ -193,6 +198,8 @@ void ObjectCreatingUndoStep::addObject(Object* existing, Object* object)
 	addObject(index, object);
 }
 
+#ifndef NO_NATIVE_FILE_FORMAT
+
 bool ObjectCreatingUndoStep::load(QIODevice* file, int version)
 {
 	if (!ObjectModifyingUndoStep::load(file, version))
@@ -212,6 +219,7 @@ bool ObjectCreatingUndoStep::load(QIODevice* file, int version)
 	return true;
 }
 
+#endif
 void ObjectCreatingUndoStep::getModifiedObjects(int part_index, ObjectSet& out) const
 {
 	if (part_index == getPartIndex())
@@ -468,12 +476,16 @@ UndoStep* SwitchPartUndoStep::undo()
 	return undo;
 }
 
+#ifndef NO_NATIVE_FILE_FORMAT
+
 // virtual
 bool SwitchPartUndoStep::load(QIODevice *, int)
 {
 	Q_ASSERT(false); // Not used in legacy file format
 	return false;
 }
+
+#endif
 
 // virtual
 void SwitchPartUndoStep::saveImpl(QXmlStreamWriter &xml) const
@@ -537,11 +549,14 @@ UndoStep* SwitchSymbolUndoStep::undo()
 		Object* object = part->getObject(modified_objects[i]);
 		undo_step->addObject(modified_objects[i], object->getSymbol());
 		bool ok = object->setSymbol(target_symbols[i], false);
-		assert(ok);
+		Q_ASSERT(ok);
+		Q_UNUSED(ok);
 	}
 	
 	return undo_step;
 }
+
+#ifndef NO_NATIVE_FILE_FORMAT
 
 bool SwitchSymbolUndoStep::load(QIODevice* file, int version)
 {
@@ -558,6 +573,8 @@ bool SwitchSymbolUndoStep::load(QIODevice* file, int version)
 	}
 	return true;
 }
+
+#endif
 
 void SwitchSymbolUndoStep::saveImpl(QXmlStreamWriter& xml) const
 {
@@ -647,7 +664,7 @@ UndoStep* SwitchDashesUndoStep::undo()
 	{
 		PathObject* object = reinterpret_cast<PathObject*>(part->getObject(*it));
 		object->reverse();
-		object->update(true);
+		object->update();
 		
 		undo_step->addObject(*it);
 	}

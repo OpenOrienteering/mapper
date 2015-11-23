@@ -1,5 +1,6 @@
 /*
  *    Copyright 2014 Thomas Schöps
+ *    Copyright 2014, 2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -20,7 +21,9 @@
 
 #include "tool_draw_point_gps.h"
 
-#include <QtWidgets>
+#include <QKeyEvent>
+#include <QLabel>
+#include <QPainter>
 
 #include "map.h"
 #include "map_editor.h"
@@ -88,8 +91,8 @@ void DrawPointGPSTool::newGPSPosition(MapCoordF coord, float accuracy)
 		// This is the first received position.
 		preview_object = new PointObject(point);
 
-		x_sum = weight * coord.getX();
-		y_sum = weight * coord.getY();
+		x_sum = weight * coord.x();
+		y_sum = weight * coord.y();
 		weights_sum = weight;
 	}
 	else
@@ -98,19 +101,19 @@ void DrawPointGPSTool::newGPSPosition(MapCoordF coord, float accuracy)
 		if (preview_object->getSymbol() != point)
 		{
 			bool success = preview_object->setSymbol(point, true);
-			assert(success);
+			Q_ASSERT(success);
+			Q_UNUSED(success);
 		}
 		
-		x_sum += weight * coord.getX();
-		y_sum += weight * coord.getY();
+		x_sum += weight * coord.x();
+		y_sum += weight * coord.y();
 		weights_sum += weight;
 	}
 	
 	MapCoordF avg_position(x_sum / weights_sum, y_sum / weights_sum);
 	preview_object->setPosition(avg_position);
-	if (point->isRotatable())
-		preview_object->setRotation(0);
-	preview_object->update(true);
+	preview_object->setRotation(0);
+	preview_object->update();
 	renderables->insertRenderablesOfObject(preview_object);
 	updateDirtyRect();
 }
@@ -150,12 +153,14 @@ void DrawPointGPSTool::drawImpl(QPainter* painter, MapWidget* widget)
 {
 	if (preview_object)
 	{
+		const MapView* map_view = widget->getMapView();
 		painter->save();
-		painter->translate(widget->width() / 2.0 + widget->getMapView()->getDragOffset().x(),
-						   widget->height() / 2.0 + widget->getMapView()->getDragOffset().y());
-		widget->getMapView()->applyTransform(painter);
+		painter->translate(widget->width() / 2.0 + map_view->panOffset().x(),
+						   widget->height() / 2.0 + map_view->panOffset().y());
+		painter->setWorldTransform(map_view->worldTransform(), true);
 		
-		renderables->draw(painter, widget->getMapView()->calculateViewedRect(widget->viewportToView(widget->rect())), true, widget->getMapView()->calculateFinalZoomFactor(), true, true, 0.5f);
+		RenderConfig config = { *map(), map_view->calculateViewedRect(widget->viewportToView(widget->rect())), map_view->calculateFinalZoomFactor(), RenderConfig::Tool, 0.5 };
+		renderables->draw(painter, config);
 		
 		painter->restore();
 	}

@@ -24,7 +24,15 @@
 #include <limits>
 
 #include <qmath.h>
-#include <QtWidgets>
+#include <QCheckBox>
+#include <QColorDialog>
+#include <QComboBox>
+#include <QDebug>
+#include <QDialogButtonBox>
+#include <QFormLayout>
+#include <QGroupBox>
+#include <QPushButton>
+#include <QRadioButton>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 

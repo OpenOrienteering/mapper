@@ -39,11 +39,11 @@ public:
 	
 	/** @brief Creates an importer for XML files.
 	 */
-	Importer *createImporter(QIODevice* stream, Map *map, MapView *view) const throw (FileFormatException);
+	Importer *createImporter(QIODevice* stream, Map *map, MapView *view) const;
 	
 	/** @brief Creates an exporter for XML files.
 	 */
-	Exporter *createExporter(QIODevice* stream, Map *map, MapView *view) const throw (FileFormatException);
+	Exporter *createExporter(QIODevice* stream, Map *map, MapView *view) const;
 	
 	/** @brief The minimum XML file format version supported by this implementation.
 	 */

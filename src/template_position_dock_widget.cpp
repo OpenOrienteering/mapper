@@ -21,7 +21,11 @@
 #include "template_position_dock_widget.h"
 
 #include <qmath.h>
-#include <QtWidgets>
+#include <QDoubleValidator>
+#include <QEvent>
+#include <QGridLayout>
+#include <QLabel>
+#include <QLineEdit>
 
 #include "gui/main_window.h"
 #include "map_editor.h"

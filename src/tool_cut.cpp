@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2012-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -26,28 +27,40 @@
 #include <QPainter>
 
 #include "map.h"
-#include "object_undo.h"
 #include "map_widget.h"
 #include "object.h"
+#include "object_undo.h"
 #include "renderable.h"
 #include "settings.h"
 #include "symbol.h"
 #include "symbol_combined.h"
+#include "tool_boolean.h"
 #include "tool_draw_path.h"
 #include "util.h"
 
-QCursor* CutTool::cursor = NULL;
 
-CutTool::CutTool(MapEditorController* editor, QAction* tool_button) : MapEditorTool(editor, Other, tool_button), renderables(new MapRenderables(map()))
+namespace
 {
-	dragging = false;
-	hover_object = NULL;
-	hover_point = -2;
-	preview_path = NULL;
-	path_tool = NULL;
-	
-	if (!cursor)
-		cursor = new QCursor(QPixmap(":/images/cursor-cut.png"), 11, 11);
+	/**
+	 * Maximum number of objects in the selection for which point handles
+	 * will still be displayed (and can be edited).
+	 */
+	static unsigned int max_objects_for_handle_display = 10;
+}
+
+
+
+CutTool::CutTool(MapEditorController* editor, QAction* tool_action)
+ : MapEditorTool { editor, Other, tool_action }
+ , dragging { false }
+ , hover_state { HoverFlag::OverNothing }
+ , hover_object { nullptr }
+ , hover_point { 0 }
+ , path_tool { nullptr }
+ , preview_path { nullptr }
+ , renderables { new MapRenderables(map()) }
+{
+	// nothing
 }
 
 void CutTool::init()
@@ -57,6 +70,12 @@ void CutTool::init()
 	updateStatusText();
 	
 	MapEditorTool::init();
+}
+
+const QCursor& CutTool::getCursor() const
+{
+	static auto const cursor = QCursor(QPixmap(":/images/cursor-cut.png"), 11, 11);
+	return cursor;
 }
 
 CutTool::~CutTool()
@@ -69,10 +88,11 @@ bool CutTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget
 {
 	if (path_tool)
 		return path_tool->mousePressEvent(event, map_coord, widget);
+	
 	if (!(event->buttons() & Qt::LeftButton))
 		return false;
 	
-	updateHoverPoint(widget->mapToViewport(map_coord), widget);
+	updateHoverState(widget->mapToViewport(map_coord), widget);
 	
 	dragging = false;
 	click_pos = event->pos();
@@ -101,7 +121,7 @@ bool CutTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget*
 	
 	bool mouse_down = event->buttons() & Qt::LeftButton;
 	if (!mouse_down || dragging)
-		updateHoverPoint(widget->mapToViewport(map_coord), widget);
+		updateHoverState(widget->mapToViewport(map_coord), widget);
 	
 	if (mouse_down)
 	{
@@ -123,7 +143,9 @@ bool CutTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget*
 			}
 		}
 		else if (dragging)
+		{
 			updateDragging(map_coord, widget);
+		}
 		return true;
 	}
 	return false;
@@ -136,7 +158,6 @@ bool CutTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidg
 	
 	if (event->button() != Qt::LeftButton)
 		return false;
-	Map* map = this->map();
 	
 	if (dragging)
 	{
@@ -144,134 +165,23 @@ bool CutTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidg
 		
 		if (dragging_on_line)
 		{
-			if (drag_start_len != drag_end_len)
-			{
-				MapPart* part = map->getCurrentPart();
-				PathObject* split_object = reinterpret_cast<PathObject*>(edit_object);
-				
-				if (split_object->getPart(drag_part_index).isClosed())
-				{
-					Object* undo_duplicate = split_object->duplicate();
-					
-					if (!drag_forward)
-						split_object->changePathBounds(drag_part_index, drag_start_len, drag_end_len);
-					else
-						split_object->changePathBounds(drag_part_index, drag_end_len, drag_start_len);
-					
-					ReplaceObjectsUndoStep* replace_step = new ReplaceObjectsUndoStep(map);
-					replace_step->addObject(part->findObjectIndex(split_object), undo_duplicate);
-					map->push(replace_step);
-					split_object->update(); // Make sure that the map display is updated
-				}
-				else
-				{
-					AddObjectsUndoStep* add_step = new AddObjectsUndoStep(map);
-					add_step->addObject(part->findObjectIndex(split_object), split_object);
-					map->removeObjectFromSelection(split_object, false);
-					map->deleteObject(split_object, true);
-					
-					float min_cut_pos = qMin(drag_start_len, drag_end_len);
-					float max_cut_pos = qMax(drag_start_len, drag_end_len);
-					float path_len = split_object->getPathCoordinateVector().at(split_object->getPathCoordinateVector().size() - 1).clen;
-					if (min_cut_pos <= 0 && max_cut_pos >= path_len)
-						map->push(add_step);
-					else
-					{
-						DeleteObjectsUndoStep* delete_step = new DeleteObjectsUndoStep(map);
-						
-						if (min_cut_pos > 0)
-						{
-							PathObject* part1 = reinterpret_cast<PathObject*>(split_object->duplicate());
-							part1->changePathBounds(drag_part_index, 0, min_cut_pos);
-							map->addObject(part1);
-							delete_step->addObject(part->findObjectIndex(part1));
-							map->addObjectToSelection(part1, !(max_cut_pos < path_len));
-						}
-						if (max_cut_pos < path_len)
-						{
-							PathObject* part2 = reinterpret_cast<PathObject*>(split_object->duplicate());
-							part2->changePathBounds(drag_part_index, max_cut_pos, path_len);
-							map->addObject(part2);
-							delete_step->addObject(part->findObjectIndex(part2));
-							map->addObjectToSelection(part2, true);
-						}
-						
-						CombinedUndoStep* undo_step = new CombinedUndoStep(map);
-						undo_step->push(add_step);
-						undo_step->push(delete_step);
-						map->push(undo_step);
-					}
-				}
-				
-				map->setObjectsDirty();
-				map->emitSelectionEdited();
-			}
-			
-			deletePreviewPath();
-			updateDirtyRect();
+			Q_ASSERT(edit_object->getType() == Object::Path);
+			splitLine(edit_object, drag_part_index, drag_start_len, drag_end_len);
 		}
+		
+		deletePreviewPath();
+		dragging = false;
 	}
 	else
 	{
 		PathCoord split_pos;
-		PathObject* split_object;
-		
 		if (findEditPoint(split_pos, edit_object, map_coord, (int)Symbol::Line, 0, widget))
 		{
-			if (edit_object->getType() != Object::Path)
-				assert(!"TODO: make this work for non-path objects");
-			split_object = reinterpret_cast<PathObject*>(edit_object);
-			
-			MapPart* part = map->getCurrentPart();
-			AddObjectsUndoStep* add_step = new AddObjectsUndoStep(map);
-			
-			Object* out1 = NULL;
-			Object* out2 = NULL;
-			split_object->splitAt(split_pos, out1, out2);
-			
-			add_step->addObject(part->findObjectIndex(split_object), split_object);
-			map->deleteObject(split_object, true);
-			map->setObjectsDirty();
-			map->removeObjectFromSelection(split_object, false);
-			if (!out1 && !out2)
-			{
-				map->push(add_step);
-				map->emitSelectionChanged();
-				map->emitSelectionEdited();
-				return true;
-			}
-			
-			if (out1)
-			{
-				map->addObject(out1);
-				map->addObjectToSelection(out1, !out2);
-			}
-			if (out2)
-			{
-				map->addObject(out2);
-				map->addObjectToSelection(out2, true);
-			}
-			DeleteObjectsUndoStep* delete_step = new DeleteObjectsUndoStep(map);
-			if (out1)
-				delete_step->addObject(part->findObjectIndex(out1));
-			if (out2)
-				delete_step->addObject(part->findObjectIndex(out2));
-			
-			CombinedUndoStep* undo_step = new CombinedUndoStep(map);
-			if (add_step)
-				undo_step->push(add_step);
-			if (out1 || out2)
-				undo_step->push(delete_step);
-			else
-				delete delete_step;
-			map->push(undo_step);
-			
-			updateDirtyRect();
-			map->emitSelectionEdited();
+			Q_ASSERT(edit_object->getType() == Object::Path);
+			splitLine(edit_object, split_pos);
 		}
 	}
 	
-	dragging = false;
 	setEditingInProgress(false);
 	return true;
 }
@@ -280,6 +190,7 @@ bool CutTool::mouseDoubleClickEvent(QMouseEvent* event, MapCoordF map_coord, Map
 {
 	if (path_tool)
 		return path_tool->mouseDoubleClickEvent(event, map_coord, widget);
+	
 	return false;
 }
 
@@ -293,6 +204,7 @@ bool CutTool::keyPressEvent(QKeyEvent* event)
 {
 	if (path_tool)
 		return path_tool->keyPressEvent(event);
+	
 	return false;
 }
 
@@ -300,6 +212,7 @@ bool CutTool::keyReleaseEvent(QKeyEvent* event)
 {
 	if (path_tool)
 		return path_tool->keyReleaseEvent(event);
+	
 	return false;
 }
 
@@ -312,19 +225,24 @@ void CutTool::focusOutEvent(QFocusEvent* event)
 void CutTool::draw(QPainter* painter, MapWidget* widget)
 {
 	Map* map = this->map();
-	map->drawSelection(painter, true, widget, NULL);
-	Map::ObjectSelection::const_iterator it_end = map->selectedObjectsEnd();
-	for (Map::ObjectSelection::const_iterator it = map->selectedObjectsBegin(); it != it_end; ++it)
-		pointHandles().draw(painter, widget, *it, (hover_object == *it) ? hover_point : -2);
+	map->drawSelection(painter, true, widget, nullptr);
+	for (const auto object: map->selectedObjects())
+	{
+		auto hover_point = MapCoordVector::size_type
+		                   { (hover_object == object) ? this->hover_point : std::numeric_limits<MapCoordVector::size_type>::max() };
+		pointHandles().draw(painter, widget, object, hover_point);
+	}
 	
 	if (preview_path)
 	{
+		const MapView* map_view = widget->getMapView();
 		painter->save();
-		painter->translate(widget->width() / 2.0 + widget->getMapView()->getDragOffset().x(),
-						   widget->height() / 2.0 + widget->getMapView()->getDragOffset().y());
-		widget->getMapView()->applyTransform(painter);
+		painter->translate(widget->width() / 2.0 + map_view->panOffset().x(),
+						   widget->height() / 2.0 + map_view->panOffset().y());
+		painter->setWorldTransform(map_view->worldTransform(), true);
 		
-		renderables->draw(painter, widget->getMapView()->calculateViewedRect(widget->viewportToView(widget->rect())), true, widget->getMapView()->calculateFinalZoomFactor(), true, true, 0.5f);
+		RenderConfig config = { *map, map_view->calculateViewedRect(widget->viewportToView(widget->rect())), map_view->calculateFinalZoomFactor(), RenderConfig::Tool, 0.5 };
+		renderables->draw(painter, config);
 		
 		painter->restore();
 	}
@@ -333,17 +251,17 @@ void CutTool::draw(QPainter* painter, MapWidget* widget)
 		path_tool->draw(painter, widget);
 }
 
-void CutTool::updateDirtyRect(const QRectF* path_rect)
+void CutTool::updateDirtyRect(const QRectF* path_rect) const
 {
 	Map* map = this->map();
 	QRectF rect;
 	if (path_rect)
 		rect = *path_rect;
+	
 	map->includeSelectionRect(rect);
 	
-	Map::ObjectSelection::const_iterator it_end = map->selectedObjectsEnd();
-	for (Map::ObjectSelection::const_iterator it = map->selectedObjectsBegin(); it != it_end; ++it)
-		(*it)->includeControlPointsRect(rect);
+	for (auto object : map->selectedObjects())
+		object->includeControlPointsRect(rect);
 	
 	if (rect.isValid())
 		map->setDrawingBoundingBox(rect, 6, true);
@@ -357,16 +275,16 @@ void CutTool::updateDragging(MapCoordF cursor_pos_map, MapWidget* widget)
 	
 	if (dragging_on_line)
 	{
-		PathObject* path = reinterpret_cast<PathObject*>(edit_object);
 		PathCoord path_coord;
-		
-		if (hover_point < 0)
+		if (hover_state != EditTool::OverObjectNode)
 		{
 			float distance_sq;
-			path->calcClosestPointOnPath(cursor_pos_map, distance_sq, path_coord);
+			edit_object->calcClosestPointOnPath(cursor_pos_map, distance_sq, path_coord);
 		}
 		else
-			path_coord = PathCoord::findPathCoordForCoorinate(&path->getPathCoordinateVector(), hover_point);
+		{
+			path_coord = edit_object->findPathCoordForIndex(hover_point);
+		}
 		
 		if (edit_object->findPartIndexForIndex(path_coord.index) != drag_part_index)
 			return;	// dragging on a different part
@@ -374,124 +292,145 @@ void CutTool::updateDragging(MapCoordF cursor_pos_map, MapWidget* widget)
 		//float click_tolerance_map = 0.001 * widget->getMapView()->pixelToLength(click_tolerance);
 		//if (distance_sq <= click_tolerance_map*click_tolerance_map)
 		{
-			float new_drag_end_len = path_coord.clen;
-			float path_length = path->getPathCoordinateVector().at(path->getPart(drag_part_index).path_coord_end_index).clen;
+			auto new_drag_end_len = path_coord.clen;
+			const PathPart& drag_part = edit_object->parts()[drag_part_index];
+			auto path_length = drag_part.path_coords.back().clen;
 			bool delta_forward; 
-			if (path->getPart(drag_part_index).isClosed())
+			if (drag_part.isClosed())
 			{
-				delta_forward = fmod(new_drag_end_len - drag_end_len + path_length, path_length) >= 0 &&
-								 fmod(new_drag_end_len - drag_end_len + path_length, path_length) < 0.5f * path_length;
+				auto value = fmod(new_drag_end_len - drag_end_len + path_length, path_length);
+				delta_forward = value >= 0 && value < 0.5 * path_length;
 			}
 			else
+			{
 				delta_forward = new_drag_end_len >= drag_end_len;
+			}
 			
 			if (delta_forward && !drag_forward &&
 				fmod(drag_end_len - drag_start_len + path_length, path_length) > 0.5f * path_length &&
 				fmod(new_drag_end_len - drag_start_len + path_length, path_length) <= 0.5f * path_length)
+			{
 				drag_forward = true;
+			}
 			else if (!delta_forward && drag_forward &&
 				fmod(drag_end_len - drag_start_len + path_length, path_length) <= 0.5f * path_length &&
 				fmod(new_drag_end_len - drag_start_len + path_length, path_length) > 0.5f * path_length)
+			{
 				drag_forward = false;
-			drag_end_len = new_drag_end_len;
+			}
 			
+			drag_end_len = new_drag_end_len;
 			if (drag_end_len != drag_start_len)
 				updatePreviewObjects();
 		}
 	}
 }
 
-void CutTool::updateHoverPoint(QPointF cursor_pos_screen, MapWidget* widget)
+void CutTool::updateHoverState(QPointF cursor_pos_screen, MapWidget* widget)
 {
-	Map* map = this->map();
-	bool has_hover_point = false;
-	Map::ObjectSelection::const_iterator it_end = map->selectedObjectsEnd();
-	for (Map::ObjectSelection::const_iterator it = map->selectedObjectsBegin(); it != it_end; ++it)
+	HoverState new_hover_state = HoverFlag::OverNothing;
+	const Object* new_hover_object = nullptr;
+	MapCoordVector::size_type new_hover_point = 0;
+	
+	if (map()->selectedObjects().size() <= max_objects_for_handle_display)
 	{
-		int new_hover_point = findHoverPoint(cursor_pos_screen, *it, false, NULL, widget);
-		if (new_hover_point > -2)
+		auto best_distance_sq = std::numeric_limits<double>::max();
+		for (const auto object : map()->selectedObjects())
 		{
-			has_hover_point = true;
-			if (new_hover_point != hover_point || *it != hover_object)
+			MapCoordF handle_pos;
+			auto hover_point = findHoverPoint(cursor_pos_screen, widget, object, false, &handle_pos);
+			if (hover_point == std::numeric_limits<MapCoordVector::size_type>::max())
+				continue;
+			
+			auto distance_sq = widget->viewportToMapF(cursor_pos_screen).distanceSquaredTo(handle_pos);
+			if (distance_sq < best_distance_sq)
 			{
-				updateDirtyRect();
-				hover_point = new_hover_point;
-				hover_object = *it;
+				new_hover_state  = HoverFlag::OverObjectNode;
+				new_hover_object = object;
+				new_hover_point  = hover_point;
+				best_distance_sq = distance_sq;
 			}
 		}
-	}
-	if (!has_hover_point && hover_point > -2)
+	}	
+	
+	if (new_hover_state  != hover_state  ||
+	    new_hover_object != hover_object ||
+	    new_hover_point  != hover_point)
 	{
+		hover_state  = new_hover_state;
+		// We have got a Map*, so we may get a Object*.
+		hover_object = const_cast<Object*>(new_hover_object);
+		hover_point  = new_hover_point;
 		updateDirtyRect();
-		hover_point = -2;
-		hover_object = NULL;
 	}
 }
 
 bool CutTool::findEditPoint(PathCoord& out_edit_point, PathObject*& out_edit_object, MapCoordF cursor_pos_map, int with_type, int without_type, MapWidget* widget)
 {
-	float click_tolerance = Settings::getInstance().getMapEditorClickTolerancePx();
 	Map* map = this->map();
 	
-	out_edit_object = NULL;
-	if (hover_point >= 0 && hover_object->getSymbol()->getContainedTypes() & with_type && !(hover_object->getSymbol()->getContainedTypes() & without_type))
+	out_edit_object = nullptr;
+	if (hover_state == HoverFlag::OverObjectNode &&
+	    hover_object->getSymbol()->getContainedTypes() & with_type &&
+	    !(hover_object->getSymbol()->getContainedTypes() & without_type))
 	{
 		// Hovering over a point of a line
 		if (hover_object->getType() != Object::Path)
 		{
-			assert(!"TODO: make this work for non-path objects");
+			Q_ASSERT(!"TODO: make this work for non-path objects");
+			return false;
 		}
-		PathObject* path = reinterpret_cast<PathObject*>(hover_object);
-		out_edit_point = PathCoord::findPathCoordForCoorinate(&path->getPathCoordinateVector(), hover_point);
-		out_edit_object = path;
+		
+		out_edit_object = reinterpret_cast<PathObject*>(hover_object);
+		out_edit_point  = out_edit_object->findPathCoordForIndex(hover_point);
 	}
 	else
 	{
 		// Check if a line segment was clicked
-		float smallest_distance_sq = 999999;
-		Map::ObjectSelection::const_iterator it_end = map->selectedObjectsEnd();
-		for (Map::ObjectSelection::const_iterator it = map->selectedObjectsBegin(); it != it_end; ++it)
+		float min_distance_sq = 999999;
+		for (const auto object : map->selectedObjects())
 		{
-			if (!((*it)->getSymbol()->getContainedTypes() & with_type && !((*it)->getSymbol()->getContainedTypes() & without_type)))
-				continue;
-			if ((*it)->getType() != Object::Path)
+			if (!(object->getSymbol()->getContainedTypes() & with_type) ||
+			    object->getSymbol()->getContainedTypes() & without_type)
 			{
-				assert(!"TODO: make this work for non-path objects");
+				continue;
 			}
 			
-			PathObject* path = reinterpret_cast<PathObject*>(*it);
+			if (object->getType() != Object::Path)
+			{
+				Q_ASSERT(!"TODO: make this work for non-path objects");
+				continue;
+			}
+			
+			PathObject* path = reinterpret_cast<PathObject*>(object);
 			float distance_sq;
 			PathCoord path_coord;
 			path->calcClosestPointOnPath(cursor_pos_map, distance_sq, path_coord);
 			
-			float click_tolerance_map = 0.001f * widget->getMapView()->pixelToLength(click_tolerance);
-			if (distance_sq < smallest_distance_sq && distance_sq <= click_tolerance_map*click_tolerance_map)
+			float click_tolerance_map = 0.001f * widget->getMapView()->pixelToLength(clickTolerance());
+			if (distance_sq < min_distance_sq && distance_sq <= click_tolerance_map*click_tolerance_map)
 			{
-				smallest_distance_sq = distance_sq;
-				out_edit_point = path_coord;
+				min_distance_sq = distance_sq;
 				out_edit_object = path;
+				out_edit_point  = path_coord;
 			}
 		}
 	}
-	return out_edit_object != NULL;
+	return out_edit_object != nullptr;
 }
 
 void CutTool::updatePreviewObjects()
 {
 	deletePreviewPath();
 	
-	preview_path = reinterpret_cast<PathObject*>(edit_object->duplicate());
+	preview_path = new PathObject { edit_object->parts()[drag_part_index] };
 	preview_path->setSymbol(Map::getCoveringCombinedLine(), false);
-	for (int i = preview_path->getNumParts() - 1; i > drag_part_index; --i)
-		preview_path->deletePart(i);
-	for (int i = drag_part_index - 1; i >= 0; --i)
-		preview_path->deletePart(i);
 	if (drag_forward)
 		preview_path->changePathBounds(0, drag_start_len, drag_end_len);
 	else
 		preview_path->changePathBounds(0, drag_end_len, drag_start_len);
 	
-	preview_path->update(true);
+	preview_path->update();
 	renderables->insertRenderablesOfObject(preview_path);
 	
 	updateDirtyRect();
@@ -503,7 +442,7 @@ void CutTool::deletePreviewPath()
 	{
 		renderables->removeRenderablesOfObject(preview_path, false);
 		delete preview_path;
-		preview_path = NULL;
+		preview_path = nullptr;
 	}
 }
 
@@ -536,14 +475,13 @@ void CutTool::pathDirtyRectChanged(const QRectF& rect)
 void CutTool::pathAborted()
 {
 	delete path_tool;
-	path_tool = NULL;
+	path_tool = nullptr;
 	cutting_area = false;
 	updateDirtyRect();
 }
 
 void CutTool::pathFinished(PathObject* split_path)
 {
-	float click_tolerance = Settings::getInstance().getMapEditorClickTolerancePx();
 	Map* map = this->map();
 	
 	// Get path endpoint and check if it is on the area boundary
@@ -555,7 +493,7 @@ void CutTool::pathFinished(PathObject* split_path)
 	float distance_sq;
 	edited_path->calcClosestPointOnPath(MapCoordF(path_end), distance_sq, end_path_coord);
 	
-	float click_tolerance_map = 0.001 * edit_widget->getMapView()->pixelToLength(click_tolerance);
+	float click_tolerance_map = 0.001 * edit_widget->getMapView()->pixelToLength(clickTolerance());
 	if (distance_sq > click_tolerance_map*click_tolerance_map)
 	{
 		QMessageBox::warning(window(), tr("Error"), tr("The split line must end on the area boundary!"));
@@ -575,9 +513,9 @@ void CutTool::pathFinished(PathObject* split_path)
 		return;
 	}
 	
-	assert(split_path->getNumParts() == 1);
-	split_path->getPart(0).setClosed(false);
-	split_path->setCoordinate(split_path->getCoordinateCount() - 1, end_path_coord.pos.toMapCoord());
+	Q_ASSERT(split_path->parts().size() == 1);
+	split_path->parts().front().setClosed(false);
+	split_path->setCoordinate(split_path->getCoordinateCount() - 1, MapCoord(end_path_coord.pos));
 	
 	// Do the splitting
 	const double split_threshold = 0.01;
@@ -591,92 +529,94 @@ void CutTool::pathFinished(PathObject* split_path)
 	
 	DeleteObjectsUndoStep* delete_step = new DeleteObjectsUndoStep(map);
 	
-	PathObject* holes = NULL; // if the edited path contains holes, they are saved in this temporary object
-	if (edited_path->getNumParts() > 1)
+	PathObject* holes = nullptr; // if the edited path contains holes, they are saved in this temporary object
+	if (edited_path->parts().size() > 1)
 	{
 		holes = edited_path->duplicate()->asPath();
 		holes->deletePart(0);
 	}
 	
-	bool ok;
-	Q_UNUSED(ok); // "ok" is only used in Q_ASSERT.
-	PathObject* parts[2];
-	if (edited_path->getPart(drag_part_index).isClosed())
+	bool ok; Q_UNUSED(ok); // "ok" is only used in Q_ASSERT.
+	PathObject* out_paths[2] = { new PathObject { edited_path->parts().front() }, nullptr };
+	const PathPart& drag_part = edited_path->parts()[drag_part_index];
+	if (drag_part.isClosed())
 	{
-		parts[0] = edited_path->duplicatePart(0);
-		parts[0]->changePathBounds(drag_part_index, drag_start_len, end_path_coord.clen);
-		ok = parts[0]->connectIfClose(split_path, split_threshold);
+		out_paths[1] = new PathObject { *out_paths[0] };
+		
+		out_paths[0]->changePathBounds(drag_part_index, drag_start_len, end_path_coord.clen);
+		ok = out_paths[0]->connectIfClose(split_path, split_threshold);
 		Q_ASSERT(ok);
 
-		parts[1] = edited_path->duplicatePart(0);
-		parts[1]->changePathBounds(drag_part_index, end_path_coord.clen, drag_start_len);
-		ok = parts[1]->connectIfClose(split_path, split_threshold);
+		out_paths[1]->changePathBounds(drag_part_index, end_path_coord.clen, drag_start_len);
+		ok = out_paths[1]->connectIfClose(split_path, split_threshold);
 		Q_ASSERT(ok);
 	}
 	else
 	{
 		float min_cut_pos = qMin(drag_start_len, end_path_coord.clen);
 		float max_cut_pos = qMax(drag_start_len, end_path_coord.clen);
-		float path_len = edited_path->getPathCoordinateVector().at(edited_path->getPart(drag_part_index).path_coord_end_index).clen;
+		float path_len = drag_part.path_coords.back().clen;
 		if (min_cut_pos <= 0 && max_cut_pos >= path_len)
 		{
-			parts[0] = edited_path->duplicatePart(0);
-			ok = parts[0]->connectIfClose(split_path, split_threshold);
+			ok = out_paths[0]->connectIfClose(split_path, split_threshold);
 			Q_ASSERT(ok);
 			
-			parts[1] = reinterpret_cast<PathObject*>(split_path->duplicate());
-			parts[1]->setSymbol(edited_path->getSymbol(), false);
+			out_paths[1] = new PathObject { *split_path };
+			out_paths[1]->setSymbol(edited_path->getSymbol(), false);
 		}
 		else if (min_cut_pos <= 0 || max_cut_pos >= path_len)
 		{
 			float cut_pos = (min_cut_pos <= 0) ? max_cut_pos : min_cut_pos;
+			out_paths[1] = new PathObject { *out_paths[0] };
 			
-			parts[0] = edited_path->duplicatePart(0);
-			parts[0]->changePathBounds(drag_part_index, 0, cut_pos);
-			ok = parts[0]->connectIfClose(split_path, split_threshold);
+			out_paths[0]->changePathBounds(drag_part_index, 0, cut_pos);
+			ok = out_paths[0]->connectIfClose(split_path, split_threshold);
 			Q_ASSERT(ok);
 			
-			parts[1] = edited_path->duplicatePart(0);
-			parts[1]->changePathBounds(drag_part_index, cut_pos, path_len);
-			ok = parts[1]->connectIfClose(split_path, split_threshold);
+			out_paths[1]->changePathBounds(drag_part_index, cut_pos, path_len);
+			ok = out_paths[1]->connectIfClose(split_path, split_threshold);
 			Q_ASSERT(ok);
 		}
 		else
 		{
-			parts[0] = edited_path->duplicatePart(0);
-			parts[0]->changePathBounds(drag_part_index, min_cut_pos, max_cut_pos);
-			ok = parts[0]->connectIfClose(split_path, split_threshold);
+			out_paths[1] = new PathObject { *out_paths[0] };
+			PathObject* temp_path = new PathObject { *out_paths[0] };
+			
+			out_paths[0]->changePathBounds(drag_part_index, min_cut_pos, max_cut_pos);
+			ok = out_paths[0]->connectIfClose(split_path, split_threshold);
 			Q_ASSERT(ok);
 			
-			parts[1] = edited_path->duplicatePart(0);
-			parts[1]->changePathBounds(drag_part_index, 0, min_cut_pos);
-			ok = parts[1]->connectIfClose(split_path, split_threshold);
+			out_paths[1]->changePathBounds(drag_part_index, 0, min_cut_pos);
+			ok = out_paths[1]->connectIfClose(split_path, split_threshold);
 			Q_ASSERT(ok);
-			PathObject* temp_path = edited_path->duplicatePart(0);
+			
 			temp_path->changePathBounds(drag_part_index, max_cut_pos, path_len);
-			ok = parts[1]->connectIfClose(temp_path, split_threshold);
+			ok = out_paths[1]->connectIfClose(temp_path, split_threshold);
 			Q_ASSERT(ok);
+			
 			delete temp_path;
 		}
 	}
 	
-	// If the object had holes, check into which parts they go
-	if (holes)
+	for (auto&& object : out_paths)
 	{
-		int num_holes = holes->getNumParts();
-		for (int i = 0; i < num_holes; ++i)
+		if (holes)
 		{
-			int part_index = (parts[0]->isPointOnPath(MapCoordF(holes->getCoordinate(holes->getPart(i).start_index)), 0, false, false) != Symbol::NoSymbol) ? 0 : 1;
-			parts[part_index]->getCoordinate(parts[part_index]->getCoordinateCount() - 1).setHolePoint(true);
-			parts[part_index]->appendPathPart(holes, i);
+			BooleanTool hole_tool = { BooleanTool::Intersection, map };
+			BooleanTool::PathObjects out_objects;
+			for (auto&& hole : holes->parts())
+			{
+				out_objects.clear();
+				PathObject hole_object(hole);
+				hole_tool.executeForLine(object, &hole_object, out_objects);
+				for (auto&& new_hole : out_objects)
+					object->appendPathPart(new_hole->parts().front());
+			}
 		}
-	}
-	
-	for (int i = 0; i < 2; ++i)
-	{
-		map->addObject(parts[i]);
-		delete_step->addObject(part->findObjectIndex(parts[i]));
-		map->addObjectToSelection(parts[i], false);
+		
+		map->addObject(object);
+		delete_step->addObject(part->findObjectIndex(object));
+		map->addObjectToSelection(object, false);
 	}
 	
 	CombinedUndoStep* undo_step = new CombinedUndoStep(map);
@@ -686,6 +626,48 @@ void CutTool::pathFinished(PathObject* split_path)
 	map->setObjectsDirty();
 	
 	pathAborted();
+}
+
+void CutTool::splitLine(PathObject* object, std::size_t part_index, qreal begin, qreal end) const
+{
+	if (!drag_forward)
+		qSwap(begin, end);
+	
+	auto split_objects = object->asPath()->removeFromLine(part_index, begin, end);
+	replaceObject(object, split_objects);
+}
+
+void CutTool::splitLine(PathObject* object, const PathCoord& split_pos) const
+{
+	auto split_objects = object->splitLineAt(split_pos);
+	if (!split_objects.empty())
+		replaceObject(object, split_objects);
+}
+
+void CutTool::replaceObject(PathObject* object, const std::vector<PathObject*>& replacement) const
+{
+	Map* map = this->map();
+	MapPart* map_part = map->getCurrentPart();
+	
+	AddObjectsUndoStep* add_step = new AddObjectsUndoStep(map);
+	add_step->addObject(map_part->findObjectIndex(object), object);
+	map->removeObjectFromSelection(object, false);
+	map->deleteObject(object, true);
+	
+	DeleteObjectsUndoStep* delete_step = new DeleteObjectsUndoStep(map);
+	for (Object* new_object : replacement)
+	{
+		map->addObject(new_object);
+		map->addObjectToSelection(new_object, false);
+		delete_step->addObject(map_part->findObjectIndex(new_object));
+	}
+	
+	CombinedUndoStep* undo_step = new CombinedUndoStep(map);
+	undo_step->push(add_step);
+	undo_step->push(delete_step);
+	map->push(undo_step);
+	
+	map->emitSelectionChanged();
 }
 
 void CutTool::updateStatusText()
@@ -705,7 +687,7 @@ void CutTool::startCuttingArea(const PathCoord& coord, MapWidget* widget)
 	drag_start_len = coord.clen;
 	edit_widget = widget;
 	
-	path_tool = new DrawPathTool(editor, NULL, true, false);
+	path_tool = new DrawPathTool(editor, nullptr, true, false);
 	connect(path_tool, SIGNAL(dirtyRectChanged(QRectF)), this, SLOT(pathDirtyRectChanged(QRectF)));
 	connect(path_tool, SIGNAL(pathAborted()), this, SLOT(pathAborted()));
 	connect(path_tool, SIGNAL(pathFinished(PathObject*)), this, SLOT(pathFinished(PathObject*)));

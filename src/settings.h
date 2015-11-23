@@ -22,10 +22,12 @@
 #ifndef _OPENORIENTEERING_SETTINGS_H_
 #define _OPENORIENTEERING_SETTINGS_H_
 
-#include <QObject>
 #include <QHash>
-#include <QSettings>
+#include <QObject>
 #include <QVariant>
+
+class QSettings;
+
 
 /** Singleton which handles the global application settings.
  *  If you need to do any action when the application settings are changed, connect to the settingsChanged() signal.

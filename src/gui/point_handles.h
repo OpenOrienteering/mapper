@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2014 Kai Pastor
+ *    Copyright 2014, 2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -22,8 +22,9 @@
 #define _OPENORIENTEERING_POINT_HANDLES_H
 
 #include <QImage>
-#include <QPainter>
 #include <QPointF>
+
+#include "../core/map_coord.h"
 
 class MapWidget;
 class Object;
@@ -81,7 +82,7 @@ public:
 	 * 
 	 * The control point image matches the current scale factor.
 	 */
-	const QImage& image() const;
+	const QImage image() const;
 	
 	/**
 	 * @brief Returns the color in which point handles with the given state will be displayed.
@@ -103,7 +104,13 @@ public:
 	 * @param draw_curve_handles If false, curve handles for path objects are not drawn.
 	 * @param base_state The state in which all points except hover_point should be drawn.
 	 */
-	void draw(QPainter* painter, MapWidget* widget, Object* object, int hover_point = -1, bool draw_curve_handles = true, PointHandleState base_state = NormalHandleState) const;
+	void draw(QPainter* painter,
+	        const MapWidget* widget,
+	        const Object* object,
+	        MapCoordVector::size_type hover_point = std::numeric_limits<MapCoordVector::size_type>::max(),
+	        bool draw_curve_handles = true,
+	        PointHandleState base_state = NormalHandleState
+	) const;
 	
 	/**
 	 * @brief Draws a point handle line.
@@ -137,7 +144,7 @@ int PointHandles::scaleFactor() const
 }
 
 inline
-const QImage& PointHandles::image() const
+const QImage PointHandles::image() const
 {
 	return handle_image;
 }

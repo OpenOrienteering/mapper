@@ -1,5 +1,6 @@
 /*
- *    Copyright 2012, 2013 Thomas Schöps, Kai Pastor
+ *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -26,6 +27,7 @@
 
 ColorDropDown::ColorDropDown(const Map* map, const MapColor* initial_color, bool spot_colors_only, QWidget* parent)
 : QComboBox(parent)
+, spot_colors_only(spot_colors_only)
 {
 	addItem(tr("- none -"), QVariant::fromValue<const MapColor*>(NULL));
 	
@@ -60,13 +62,14 @@ ColorDropDown::ColorDropDown(const Map* map, const MapColor* initial_color, bool
 	}
 	setCurrentIndex(initial_index);
 
-	if (!spot_colors_only)
-	{
-		// FIXME: these methods will not work when the box contains only spot colors
-		connect(map, SIGNAL(colorAdded(int, const MapColor*)), this, SLOT(colorAdded(int, const MapColor*)));
-		connect(map, SIGNAL(colorChanged(int, const MapColor*)), this, SLOT(colorChanged(int, const MapColor*)));
-		connect(map, SIGNAL(colorDeleted(int, const MapColor*)), this, SLOT(colorDeleted(int, const MapColor*)));
-	}
+	connect(map, &Map::colorAdded, this, &ColorDropDown::onColorAdded);
+	connect(map, &Map::colorChanged, this, &ColorDropDown::onColorChanged);
+	connect(map, &Map::colorDeleted, this, &ColorDropDown::onColorDeleted);
+}
+
+ColorDropDown::~ColorDropDown()
+{
+	// Nothing, not inlined.
 }
 
 const MapColor* ColorDropDown::color() const
@@ -79,29 +82,80 @@ void ColorDropDown::setColor(const MapColor* color)
 	setCurrentIndex(findData(QVariant::fromValue(color)));
 }
 
-void ColorDropDown::colorAdded(int pos, const MapColor* color)
+void ColorDropDown::addColor(const MapColor* color)
 {
-	int icon_size = style()->pixelMetric(QStyle::PM_SmallIconSize);
-	QPixmap pixmap(icon_size, icon_size);
-	pixmap.fill(*color);
-	insertItem(pos + 1, color->getName(), QVariant::fromValue(color));
-	setItemData(pos + 1, pixmap, Qt::DecorationRole);
+	if (!spot_colors_only || color->getSpotColorMethod() == MapColor::SpotColor)
+	{
+		int pos = 0;
+		for (; pos < count(); ++pos)
+		{
+			const MapColor* c = itemData(pos).value<const MapColor*>();
+			if (c && c->getPriority() > color->getPriority())
+				break;
+		}
+		int icon_size = style()->pixelMetric(QStyle::PM_SmallIconSize);
+		QPixmap pixmap(icon_size, icon_size);
+		pixmap.fill(*color);
+		insertItem(pos, color->getName(), QVariant::fromValue(color));
+		setItemData(pos, pixmap, Qt::DecorationRole);
+	}
 }
 
-void ColorDropDown::colorChanged(int pos, const MapColor* color)
+void ColorDropDown::updateColor(const MapColor* color)
 {
-	int icon_size = style()->pixelMetric(QStyle::PM_SmallIconSize);
-	QPixmap pixmap(icon_size, icon_size);
-	pixmap.fill(*color);
-	setItemText(pos + 1, color->getName());
-	setItemData(pos + 1, pixmap, Qt::DecorationRole);
+	if (!spot_colors_only || color->getSpotColorMethod() == MapColor::SpotColor)
+	{
+		int pos = 0;
+		for (; pos < count(); ++pos)
+		{
+			if (itemData(pos).value<const MapColor*>() == color)
+				break;
+		}
+		
+		if (pos < count())
+		{
+			int icon_size = style()->pixelMetric(QStyle::PM_SmallIconSize);
+			QPixmap pixmap(icon_size, icon_size);
+			pixmap.fill(*color);
+			setItemText(pos, color->getName());
+			setItemData(pos, pixmap, Qt::DecorationRole);
+		}
+		else
+		{
+			addColor(color);
+		}
+	}
+	else
+	{
+		removeColor(color);
+	}
 }
 
-void ColorDropDown::colorDeleted(int pos, const MapColor* color)
+void ColorDropDown::removeColor(const MapColor* color)
 {
-	Q_UNUSED(color);
-	
-	if (currentIndex() == pos + 1)
-		setCurrentIndex(0);
-	removeItem(pos + 1);
+	for (int pos = 0; pos < count(); ++pos)
+	{
+		if (itemData(pos).value<const MapColor*>() == color)
+		{
+			if (currentIndex() == pos)
+				setCurrentIndex(0);
+			removeItem(pos);
+			break;
+		}
+	}
+}
+
+void ColorDropDown::onColorAdded(int, const MapColor* color)
+{
+	addColor(color);
+}
+
+void ColorDropDown::onColorChanged(int, const MapColor* color)
+{
+	updateColor(color);
+}
+
+void ColorDropDown::onColorDeleted(int, const MapColor* color)
+{
+	removeColor(color);
 }

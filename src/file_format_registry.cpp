@@ -42,7 +42,7 @@ void FileFormatRegistry::registerFormat(FileFormat *format)
 
 const FileFormat *FileFormatRegistry::findFormat(const QString& id) const
 {
-	Q_FOREACH(const FileFormat *format, fmts)
+	for (auto format : fmts)
 	{
 		if (format->id() == id) return format;
 	}
@@ -51,7 +51,7 @@ const FileFormat *FileFormatRegistry::findFormat(const QString& id) const
 
 const FileFormat *FileFormatRegistry::findFormatByFilter(const QString& filter) const
 {
-	Q_FOREACH(const FileFormat *format, fmts)
+	for (auto format : fmts)
 	{
 		if (format->filter() == filter) return format;
 	}
@@ -61,7 +61,7 @@ const FileFormat *FileFormatRegistry::findFormatByFilter(const QString& filter) 
 const FileFormat *FileFormatRegistry::findFormatForFilename(const QString& filename) const
 {
 	QString file_extension = QFileInfo(filename).suffix();
-	Q_FOREACH(const FileFormat *format, fmts)
+	for (auto format : fmts)
 	{
 		if (format->fileExtensions().contains(file_extension)) return format;
 	}

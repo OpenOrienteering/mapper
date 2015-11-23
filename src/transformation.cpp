@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2012-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -21,12 +22,17 @@
 #include "transformation.h"
 
 #include <qmath.h>
+#include <QScopedValueRollback>
+#include <QXmlStreamWriter>
 
-#include "map_coord.h"
+#include "core/map_coord.h"
+#include "file_format.h"
 #include "matrix.h"
 #include "template.h"
 
 // ### PassPoint ###
+
+#ifndef NO_NATIVE_FILE_FORMAT
 
 void PassPoint::load(QIODevice* file, int version)
 {
@@ -41,21 +47,23 @@ void PassPoint::load(QIODevice* file, int version)
 	file->read((char*)&error, sizeof(double));
 }
 
+#endif
+
 void PassPoint::save(QXmlStreamWriter& xml) const
 {
 	xml.writeStartElement("passpoint");
 	xml.writeAttribute("error", QString::number(error));
 	
 	xml.writeStartElement("source");
-	src_coords.toMapCoord().save(xml);
+	MapCoord(src_coords).save(xml);
 	xml.writeEndElement();
 	
 	xml.writeStartElement("destination");
-	dest_coords.toMapCoord().save(xml);
+	MapCoord(dest_coords).save(xml);
 	xml.writeEndElement();
 	
 	xml.writeStartElement("calculated");
-	calculated_coords.toMapCoord().save(xml);
+	MapCoord(calculated_coords).save(xml);
 	xml.writeEndElement();
 	
 	xml.writeEndElement(/*passpoint*/);
@@ -70,19 +78,25 @@ PassPoint PassPoint::load(QXmlStreamReader& xml)
 	while (xml.readNextStartElement())
 	{
 		QStringRef name = xml.name();
-		MapCoord coord;
 		while (xml.readNextStartElement())
 		{
 			if (xml.name() == "coord")
 			{
-				if (name == "source")
-					p.src_coords = MapCoordF(MapCoord::load(xml));
-				else if (name == "destination")
-					p.dest_coords = MapCoordF(MapCoord::load(xml));
-				else if (name == "calculated")
-					p.calculated_coords = MapCoordF(MapCoord::load(xml));
-				else
-					xml.skipCurrentElement(); // unsupported
+				try
+				{
+					if (name == "source")
+						p.src_coords = MapCoordF(MapCoord::load(xml));
+					else if (name == "destination")
+						p.dest_coords = MapCoordF(MapCoord::load(xml));
+					else if (name == "calculated")
+						p.calculated_coords = MapCoordF(MapCoord::load(xml));
+					else
+						xml.skipCurrentElement(); // unsupported
+				}
+				catch (std::range_error& e)
+				{
+					throw FileFormatException(MapCoord::tr(e.what()));
+				}
 			}
 			else
 				xml.skipCurrentElement(); // unsupported
@@ -103,8 +117,8 @@ bool PassPointList::estimateSimilarityTransformation(TemplateTransform* transfor
 		PassPoint* point = &at(0);
 		MapCoordF offset = point->dest_coords - point->src_coords;
 		
-		transform->template_x += qRound64(1000 * offset.getX());
-		transform->template_y += qRound64(1000 * offset.getY());
+		transform->template_x += qRound64(1000 * offset.x());
+		transform->template_y += qRound64(1000 * offset.y());
 		point->calculated_coords = point->dest_coords;
 		point->error = 0;
 	}
@@ -146,17 +160,17 @@ bool PassPointList::estimateSimilarityTransformation(TemplateTransform* transfor
 		for (int i = 0; i < num_pass_points; ++i)
 		{
 			PassPoint* point = &at(i);
-			mat.set(2*i, 0, point->src_coords.getX());
-			mat.set(2*i, 1, point->src_coords.getY());
+			mat.set(2*i, 0, point->src_coords.x());
+			mat.set(2*i, 1, point->src_coords.y());
 			mat.set(2*i, 2, 1);
 			mat.set(2*i, 3, 0);
-			mat.set(2*i+1, 0, point->src_coords.getY());
-			mat.set(2*i+1, 1, -point->src_coords.getX());
+			mat.set(2*i+1, 0, point->src_coords.y());
+			mat.set(2*i+1, 1, -point->src_coords.x());
 			mat.set(2*i+1, 2, 0);
 			mat.set(2*i+1, 3, 1);
 			
-			values.set(2*i, 0, point->dest_coords.getX());
-			values.set(2*i+1, 0, point->dest_coords.getY());
+			values.set(2*i, 0, point->dest_coords.x());
+			values.set(2*i+1, 0, point->dest_coords.y());
 		}
 		
 		Matrix transposed;
@@ -202,9 +216,9 @@ bool PassPointList::estimateSimilarityTransformation(TemplateTransform* transfor
 		{
 			PassPoint* point = &at(i);
 			
-			point->calculated_coords = MapCoordF(trans_change.get(0, 0) * point->src_coords.getX() + trans_change.get(0, 1) * point->src_coords.getY() + trans_change.get(0, 2),
-												 trans_change.get(1, 0) * point->src_coords.getX() + trans_change.get(1, 1) * point->src_coords.getY() + trans_change.get(1, 2));
-			point->error = point->calculated_coords.lengthTo(point->dest_coords);
+			point->calculated_coords = MapCoordF(trans_change.get(0, 0) * point->src_coords.x() + trans_change.get(0, 1) * point->src_coords.y() + trans_change.get(0, 2),
+												 trans_change.get(1, 0) * point->src_coords.x() + trans_change.get(1, 1) * point->src_coords.y() + trans_change.get(1, 2));
+			point->error = point->calculated_coords.distanceTo(point->dest_coords);
 		}
 	}
 	
@@ -214,7 +228,7 @@ bool PassPointList::estimateSimilarityTransformation(TemplateTransform* transfor
 bool PassPointList::estimateNonIsometricSimilarityTransform(QTransform* out)
 {
 	int num_pass_points = (int)size();
-	assert(num_pass_points >= 3);
+	Q_ASSERT(num_pass_points >= 3);
 	
 	// Create linear equation system and solve using the pseuo inverse
 	
@@ -234,8 +248,8 @@ bool PassPointList::estimateNonIsometricSimilarityTransform(QTransform* out)
 	for (int i = 0; i < num_pass_points; ++i)
 	{
 		PassPoint* point = &at(i);
-		mat.set(2*i, 0, point->src_coords.getX());
-		mat.set(2*i, 1, point->src_coords.getY());
+		mat.set(2*i, 0, point->src_coords.x());
+		mat.set(2*i, 1, point->src_coords.y());
 		mat.set(2*i, 2, 1);
 		mat.set(2*i, 3, 0);
 		mat.set(2*i, 4, 0);
@@ -243,12 +257,12 @@ bool PassPointList::estimateNonIsometricSimilarityTransform(QTransform* out)
 		mat.set(2*i+1, 0, 0);
 		mat.set(2*i+1, 1, 0);
 		mat.set(2*i+1, 2, 0);
-		mat.set(2*i+1, 3, point->src_coords.getX());
-		mat.set(2*i+1, 4, point->src_coords.getY());
+		mat.set(2*i+1, 3, point->src_coords.x());
+		mat.set(2*i+1, 4, point->src_coords.y());
 		mat.set(2*i+1, 5, 1);
 		
-		values.set(2*i, 0, point->dest_coords.getX());
-		values.set(2*i+1, 0, point->dest_coords.getY());
+		values.set(2*i, 0, point->dest_coords.x());
+		values.set(2*i+1, 0, point->dest_coords.y());
 	}
 	
 	Matrix transposed;

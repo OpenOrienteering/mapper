@@ -1,6 +1,6 @@
 /*
- *    Copyright 2012 Pete Curtis
- *    Copyright 2013, 2014 Pete Curtis, Kai Pastor
+ *    Copyright 2012, 2013 Pete Curtis
+ *    Copyright 2013-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -31,6 +31,7 @@
 
 #include "core/georeferencing.h"
 #include "core/map_color.h"
+#include "core/map_coord.h"
 #include "core/map_view.h"
 #include "file_format_xml.h"
 #include "file_import_export.h"
@@ -54,7 +55,7 @@
 
 OCAD8FileFormat::OCAD8FileFormat()
  : FileFormat(MapFile, "OCAD78", ImportExport::tr("OCAD Versions 7, 8"), "ocd", 
-              /*ImportSupported |*/ ExportSupported | ExportLossy)
+              ImportSupported | ExportSupported | ExportLossy)
 {
 	// Nothing
 }
@@ -66,12 +67,12 @@ bool OCAD8FileFormat::understands(const unsigned char* buffer, size_t sz) const
     return false;
 }
 
-Importer* OCAD8FileFormat::createImporter(QIODevice* stream, Map *map, MapView *view) const throw (FileFormatException)
+Importer* OCAD8FileFormat::createImporter(QIODevice* stream, Map *map, MapView *view) const
 {
 	return new OCAD8FileImport(stream, map, view);
 }
 
-Exporter* OCAD8FileFormat::createExporter(QIODevice* stream, Map* map, MapView* view) const throw (FileFormatException)
+Exporter* OCAD8FileFormat::createExporter(QIODevice* stream, Map* map, MapView* view) const
 {
     return new OCAD8FileExport(stream, map, view);
 }
@@ -82,7 +83,9 @@ Exporter* OCAD8FileFormat::createExporter(QIODevice* stream, Map* map, MapView* 
 OCAD8FileImport::OCAD8FileImport(QIODevice* stream, Map* map, MapView* view) : Importer(stream, map, view), file(NULL)
 {
     ocad_init();
-    encoding_1byte = QTextCodec::codecForName(Settings::getInstance().getSetting(Settings::General_Local8BitEncoding).toByteArray());
+    const QByteArray enc_name = Settings::getInstance().getSetting(Settings::General_Local8BitEncoding).toByteArray();
+    encoding_1byte = (enc_name == "System") ? QTextCodec::codecForLocale()
+                                            : QTextCodec::codecForName(enc_name);
     encoding_2byte = QTextCodec::codecForName("UTF-16LE");
     offset_x = offset_y = 0;
 }
@@ -101,7 +104,7 @@ bool OCAD8FileImport::isRasterImageFile(const QString &filename)
 	return QImageReader::supportedImageFormats().contains(extension.toLatin1());
 }
 
-void OCAD8FileImport::import(bool load_symbols_only) throw (FileFormatException)
+void OCAD8FileImport::import(bool load_symbols_only)
 {
     //qint64 start = QDateTime::currentMSecsSinceEpoch();
 	
@@ -324,8 +327,7 @@ void OCAD8FileImport::import(bool load_symbols_only) throw (FileFormatException)
 			ocad_point(buf, &file->setup->center);
 			MapCoord center_pos;
 			convertPoint(center_pos, buf[0], buf[1]);
-			view->setPositionX(center_pos.rawX());
-			view->setPositionY(center_pos.rawY());
+			view->setCenter(center_pos);
 		}
 		
 		// TODO: read template visibilities
@@ -530,7 +532,7 @@ Symbol *OCAD8FileImport::importLineSymbol(const OCADLineSymbol *ocad_symbol)
 	// Border lines
 	if (has_border_line)
 	{
-		assert(line_for_borders);
+		Q_ASSERT(line_for_borders);
 		line_for_borders->have_border_lines = true;
 		LineSymbolBorder& border = line_for_borders->getBorder();
 		LineSymbolBorder& right_border = line_for_borders->getRightBorder();
@@ -685,7 +687,7 @@ Symbol *OCAD8FileImport::importAreaSymbol(const OCADAreaSymbol *ocad_symbol)
         // OCAD 8 has a "staggered" pattern mode, where successive rows are shifted width/2 relative
         // to each other. We need to simulate this in Mapper with two overlapping patterns, each with
         // twice the height. The second is then offset by width/2, height/2.
-        qint64 spacing = convertSize(ocad_symbol->pheight);
+        auto spacing = convertSize(ocad_symbol->pheight);
         if (ocad_symbol->pmode == 2) spacing *= 2;
         int n = symbol->patterns.size(); symbol->patterns.resize(n + 1); pat = &(symbol->patterns[n]);
         pat->type = AreaSymbol::FillPattern::PointPattern;
@@ -958,7 +960,6 @@ Object *OCAD8FileImport::importObject(const OCADObject* ocad_object, MapPart* pa
     else
 		symbol = symbol_index[ocad_object->symbol];
 
-    Object *object = NULL;
     if (symbol->getType() == Symbol::Point)
     {
         PointObject *p = new PointObject();
@@ -1019,13 +1020,7 @@ Object *OCAD8FileImport::importObject(const OCADObject* ocad_object, MapPart* pa
 		return p;
     }
 
-    if (object == NULL) return NULL;
-
-    // Set some common fields
-    object->map = map;
-    object->output_dirty = true;
-
-    return object;
+    return NULL;
 }
 
 bool OCAD8FileImport::importRectangleObject(const OCADObject* ocad_object, MapPart* part, const OCAD8FileImport::RectangleInfo& rect)
@@ -1034,6 +1029,10 @@ bool OCAD8FileImport::importRectangleObject(const OCADObject* ocad_object, MapPa
 		return false;
 	
 	// Convert corner points
+#ifdef Q_CC_CLANG
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warray-bounds"
+#endif
 	s32 buf[3];
 	ocad_point(buf, &(ocad_object->pts[3]));
 	MapCoord top_left;
@@ -1047,14 +1046,17 @@ bool OCAD8FileImport::importRectangleObject(const OCADObject* ocad_object, MapPa
 	ocad_point(buf, &(ocad_object->pts[1]));
 	MapCoord bottom_right;
 	convertPoint(bottom_right, buf[0], buf[1]);
+#ifdef Q_CC_CLANG
+#pragma clang diagnostic pop
+#endif
 	
 	MapCoordF top_left_f = MapCoordF(top_left);
 	MapCoordF top_right_f = MapCoordF(top_right);
 	MapCoordF bottom_left_f = MapCoordF(bottom_left);
 	MapCoordF bottom_right_f = MapCoordF(bottom_right);
-	MapCoordF right = MapCoordF(top_right.xd() - top_left.xd(), top_right.yd() - top_left.yd());
-	double angle = right.getAngle();
-	MapCoordF down = MapCoordF(bottom_left.xd() - top_left.xd(), bottom_left.yd() - top_left.yd());
+	MapCoordF right = MapCoordF(top_right.x() - top_left.x(), top_right.y() - top_left.y());
+	double angle = right.angle();
+	MapCoordF down = MapCoordF(bottom_left.x() - top_left.x(), bottom_left.y() - top_left.y());
 	right.normalize();
 	down.normalize();
 	
@@ -1062,40 +1064,40 @@ bool OCAD8FileImport::importRectangleObject(const OCADObject* ocad_object, MapPa
 	MapCoordVector coords;
 	if (rect.corner_radius == 0)
 	{
-		coords.push_back(top_left);
-		coords.push_back(top_right);
-		coords.push_back(bottom_right);
-		coords.push_back(bottom_left);
+		coords.emplace_back(top_left);
+		coords.emplace_back(top_right);
+		coords.emplace_back(bottom_right);
+		coords.emplace_back(bottom_left);
 	}
 	else
 	{
 		double handle_radius = (1 - BEZIER_KAPPA) * rect.corner_radius;
-		coords.push_back((top_right_f - right * rect.corner_radius).toCurveStartMapCoord());
-		coords.push_back((top_right_f - right * handle_radius).toMapCoord());
-		coords.push_back((top_right_f + down * handle_radius).toMapCoord());
-		coords.push_back((top_right_f + down * rect.corner_radius).toMapCoord());
-		coords.push_back((bottom_right_f - down * rect.corner_radius).toCurveStartMapCoord());
-		coords.push_back((bottom_right_f - down * handle_radius).toMapCoord());
-		coords.push_back((bottom_right_f - right * handle_radius).toMapCoord());
-		coords.push_back((bottom_right_f - right * rect.corner_radius).toMapCoord());
-		coords.push_back((bottom_left_f + right * rect.corner_radius).toCurveStartMapCoord());
-		coords.push_back((bottom_left_f + right * handle_radius).toMapCoord());
-		coords.push_back((bottom_left_f - down * handle_radius).toMapCoord());
-		coords.push_back((bottom_left_f - down * rect.corner_radius).toMapCoord());
-		coords.push_back((top_left_f + down * rect.corner_radius).toCurveStartMapCoord());
-		coords.push_back((top_left_f + down * handle_radius).toMapCoord());
-		coords.push_back((top_left_f + right * handle_radius).toMapCoord());
-		coords.push_back((top_left_f + right * rect.corner_radius).toMapCoord());
+		coords.emplace_back(top_right_f - right * rect.corner_radius, MapCoord::CurveStart);
+		coords.emplace_back(top_right_f - right * handle_radius);
+		coords.emplace_back(top_right_f + down * handle_radius);
+		coords.emplace_back(top_right_f + down * rect.corner_radius);
+		coords.emplace_back(bottom_right_f - down * rect.corner_radius, MapCoord::CurveStart);
+		coords.emplace_back(bottom_right_f - down * handle_radius);
+		coords.emplace_back(bottom_right_f - right * handle_radius);
+		coords.emplace_back(bottom_right_f - right * rect.corner_radius);
+		coords.emplace_back(bottom_left_f + right * rect.corner_radius, MapCoord::CurveStart);
+		coords.emplace_back(bottom_left_f + right * handle_radius);
+		coords.emplace_back(bottom_left_f - down * handle_radius);
+		coords.emplace_back(bottom_left_f - down * rect.corner_radius);
+		coords.emplace_back(top_left_f + down * rect.corner_radius, MapCoord::CurveStart);
+		coords.emplace_back(top_left_f + down * handle_radius);
+		coords.emplace_back(top_left_f + right * handle_radius);
+		coords.emplace_back(top_left_f + right * rect.corner_radius);
 	}
 	PathObject *border_path = new PathObject(rect.border_line, coords, map);
-	border_path->getPart(0).setClosed(true, false);
+	border_path->parts().front().setClosed(true, false);
 	part->objects.push_back(border_path);
 	
 	if (rect.has_grid && rect.cell_width > 0 && rect.cell_height > 0)
 	{
 		// Calculate grid sizes
-		double width = top_left.lengthTo(top_right);
-		double height = top_left.lengthTo(bottom_left);
+		double width = top_left.distanceTo(top_right);
+		double height = top_left.distanceTo(bottom_left);
 		int num_cells_x = qMax(1, qRound(width / rect.cell_width));
 		int num_cells_y = qMax(1, qRound(height / rect.cell_height));
 		
@@ -1106,16 +1108,16 @@ bool OCAD8FileImport::importRectangleObject(const OCADObject* ocad_object, MapPa
 		coords.resize(2);
 		for (int x = 1; x < num_cells_x; ++x)
 		{
-			coords[0] = (top_left_f + x * cell_width * right).toMapCoord();
-			coords[1] = (bottom_left_f + x * cell_width * right).toMapCoord();
+			coords[0] = MapCoord(top_left_f + x * cell_width * right);
+			coords[1] = MapCoord(bottom_left_f + x * cell_width * right);
 			
 			PathObject *path = new PathObject(rect.inner_line, coords, map);
 			part->objects.push_back(path);
 		}
 		for (int y = 1; y < num_cells_y; ++y)
 		{
-			coords[0] = (top_left_f + y * cell_height * down).toMapCoord();
-			coords[1] = (top_right_f + y * cell_height * down).toMapCoord();
+			coords[0] = MapCoord(top_left_f + y * cell_height * down);
+			coords[1] = MapCoord(top_right_f + y * cell_height * down);
 			
 			PathObject *path = new PathObject(rect.inner_line, coords, map);
 			part->objects.push_back(path);
@@ -1197,8 +1199,7 @@ Template *OCAD8FileImport::importTemplate(OCADCString* ocad_str)
 	OCADBackground background = importBackground(data);
 	MapCoord c;
 	convertPoint(c, background.trnx, background.trny);
-	templ->setTemplateX(c.rawX());
-	templ->setTemplateY(c.rawY());
+	templ->setTemplatePosition(c);
 	templ->setTemplateRotation(M_PI / 180 * background.angle);
 	templ->setTemplateScaleX(convertTemplateScale(background.sclx));
 	templ->setTemplateScaleY(convertTemplateScale(background.scly));
@@ -1288,8 +1289,8 @@ Template *OCAD8FileImport::importRasterTemplate(const OCADBackground &background
         TemplateImage* templ = new TemplateImage(filename, map);
         MapCoord c;
         convertPoint(c, background.trnx, background.trny);
-        templ->setTemplateX(c.rawX());
-        templ->setTemplateY(c.rawY());
+        templ->setTemplateX(c.nativeX());
+        templ->setTemplateY(c.nativeY());
         templ->setTemplateRotation(M_PI / 180 * background.angle);
         templ->setTemplateScaleX(convertTemplateScale(background.sclx));
         templ->setTemplateScaleY(convertTemplateScale(background.scly));
@@ -1392,11 +1393,11 @@ bool OCAD8FileImport::fillTextPathCoords(TextObject *object, TextSymbol *symbol,
 		double top_adjust = -symbol->getFontSize() + (metrics.ascent() + metrics.descent() + 0.5) / symbol->calculateInternalScaling();
 		
 		MapCoordF adjust_vector = MapCoordF(top_adjust * sin(object->getRotation()), top_adjust * cos(object->getRotation()));
-		top_left = MapCoord(top_left.xd() + adjust_vector.getX(), top_left.yd() + adjust_vector.getY());
-		top_right = MapCoord(top_right.xd() + adjust_vector.getX(), top_right.yd() + adjust_vector.getY());
+		top_left = MapCoord(top_left.x() + adjust_vector.x(), top_left.y() + adjust_vector.y());
+		top_right = MapCoord(top_right.x() + adjust_vector.x(), top_right.y() + adjust_vector.y());
 		
-		object->setBox((bottom_left.rawX() + top_right.rawX()) / 2, (bottom_left.rawY() + top_right.rawY()) / 2,
-					   top_left.lengthTo(top_right), top_left.lengthTo(bottom_left));
+		object->setBox((bottom_left.nativeX() + top_right.nativeX()) / 2, (bottom_left.nativeY() + top_right.nativeY()) / 2,
+					   top_left.distanceTo(top_right), top_left.distanceTo(bottom_left));
 
 		object->setVerticalAlignment(TextObject::AlignTop);
 	}
@@ -1411,7 +1412,7 @@ bool OCAD8FileImport::fillTextPathCoords(TextObject *object, TextSymbol *symbol,
 		
 		MapCoord coord;
 		convertPoint(coord, buf[0], buf[1]);
-		object->setAnchorPosition(coord.rawX(), coord.rawY());
+		object->setAnchorPosition(coord.nativeX(), coord.nativeY());
 		
 		object->setVerticalAlignment(TextObject::AlignBaseline);
 	}
@@ -1489,15 +1490,15 @@ void OCAD8FileImport::convertPoint(MapCoord &coord, int ocad_x, int ocad_y)
 {
     // OCAD uses hundredths of a millimeter.
     // oo-mapper uses 1/1000 mm
-    coord.setRawX(offset_x + (qint64)ocad_x * 10);
+    coord.setNativeX(offset_x + (qint32)ocad_x * 10);
     // Y-axis is flipped.
-    coord.setRawY(offset_y + (qint64)ocad_y * (-10));
+    coord.setNativeY(offset_y + (qint32)ocad_y * (-10));
 }
 
-qint64 OCAD8FileImport::convertSize(int ocad_size) {
+qint32 OCAD8FileImport::convertSize(int ocad_size) {
     // OCAD uses hundredths of a millimeter.
     // oo-mapper uses 1/1000 mm
-    return ((qint64)ocad_size) * 10;
+    return ((qint32)ocad_size) * 10;
 }
 
 const MapColor *OCAD8FileImport::convertColor(int color) {
@@ -1535,7 +1536,7 @@ OCAD8FileExport::~OCAD8FileExport()
 	delete origin_point_object;
 }
 
-void OCAD8FileExport::doExport() throw (FileFormatException)
+void OCAD8FileExport::doExport()
 {
 	uses_registration_color = map->isColorUsedByASymbol(map->getRegistrationColor());
 	if (map->getNumColors() > (uses_registration_color ? 255 : 256))
@@ -1565,7 +1566,7 @@ void OCAD8FileExport::doExport() throw (FileFormatException)
 	OCADSetup* setup = file->setup;
 	if (view)
 	{
-		setup->center = convertPoint(view->getPositionX(), view->getPositionY());
+		setup->center = convertPoint(view->center());
 		setup->zoom = view->getZoom();
 	}
 	else
@@ -1635,7 +1636,7 @@ void OCAD8FileExport::doExport() throw (FileFormatException)
 		else if (symbol->getType() == Symbol::Combined)
 			; // This is done as a second pass to ensure that all dependencies are added to the symbol_index
 		else
-			assert(false);
+			Q_ASSERT(false);
 		
 		if (index >= 0)
 		{
@@ -1784,8 +1785,8 @@ void OCAD8FileExport::doExport() throw (FileFormatException)
 				OCADObjectEntry* entry;
 				ocad_object_add(file, ocad_object, &entry);
 				// This is done internally by libocad (in a slightly more imprecise way using the extent specified in the symbol)
-				//entry->rect.min = convertPoint(MapCoordF(object->getExtent().topLeft()).toMapCoord());
-				//entry->rect.max = convertPoint(MapCoordF(object->getExtent().bottomRight()).toMapCoord());
+				//entry->rect.min = convertPoint(MapCoord(object->getExtent().topLeft()));
+				//entry->rect.max = convertPoint(MapCoord(object->getExtent().bottomRight()));
 				entry->npts = ocad_object->npts + ocad_object->ntext;
 				//entry->symbol = index_to_use;
 			}
@@ -1875,19 +1876,18 @@ void OCAD8FileExport::exportCommonSymbolFields(const Symbol* symbol, OCADSymbol*
 	
 	// Icon: 22x22 with 4 bit color code, origin at bottom left, some padding
 	const int icon_size = 22;
-	QImage* image = symbol->createIcon(map, icon_size, false, 0);
+	QImage image = symbol->createIcon(map, icon_size, false, 0);
 	u8* ocad_icon = (u8*)ocad_symbol->icon;
 	for (int y = icon_size - 1; y >= 0; --y)
 	{
 		for (int x = 0; x < icon_size; x += 2)
 		{
-			int first = getOcadColor(image->pixel(x, y));
-			int second = getOcadColor(image->pixel(x + 1, y));
+			int first = getOcadColor(image.pixel(x, y));
+			int second = getOcadColor(image.pixel(x + 1, y));
 			*(ocad_icon++) = (first << 4) + (second);
 		}
 		ocad_icon++;
 	}
-	delete image;
 }
 
 int OCAD8FileExport::getPatternSize(const PointSymbol* point)
@@ -1984,7 +1984,7 @@ s16 OCAD8FileExport::exportSubPattern(const Object* object, const Symbol* symbol
 		num_coords += 2 + element->npts;
 	}
 	else
-		assert(false);
+		Q_ASSERT(false);
 	return num_coords;
 }
 
@@ -2004,7 +2004,7 @@ s16 OCAD8FileExport::exportPointSymbol(const PointSymbol* point)
 	
 	OCADPoint* pattern_buffer = ocad_symbol->pts;
 	exportPattern(point, &pattern_buffer);
-	assert((u8*)ocad_symbol + data_size == (u8*)pattern_buffer);
+	Q_ASSERT((u8*)ocad_symbol + data_size == (u8*)pattern_buffer);
 	return ocad_symbol->number;
 }
 
@@ -2160,7 +2160,7 @@ s16 OCAD8FileExport::exportLineSymbol(const LineSymbol* line)
 	// End symbol
 	ocad_symbol->senpts = exportPattern(line->getEndSymbol(), &pattern_buffer);
 	
-	assert((u8*)ocad_symbol + data_size == (u8*)pattern_buffer);
+	Q_ASSERT((u8*)ocad_symbol + data_size == (u8*)pattern_buffer);
 	return ocad_symbol->number;
 }
 
@@ -2260,7 +2260,7 @@ s16 OCAD8FileExport::exportAreaSymbol(const AreaSymbol* area)
 	{
 		OCADPoint* pattern_buffer = ocad_symbol->pts;
 		ocad_symbol->npts = exportPattern(point_pattern, &pattern_buffer);
-		assert((u8*)ocad_symbol + data_size == (u8*)pattern_buffer);
+		Q_ASSERT((u8*)ocad_symbol + data_size == (u8*)pattern_buffer);
 	}
 	return ocad_symbol->number;
 }
@@ -2318,7 +2318,7 @@ s16 OCAD8FileExport::exportTextSymbol(const TextSymbol* text)
 			ocad_symbol->fdpts = convertSize(text->getFramingLineHalfWidth());
 		}
 		else
-			assert(false);
+			Q_ASSERT(false);
 	}
 	
 	return ocad_symbol->number;
@@ -2364,7 +2364,7 @@ std::set< s16 > OCAD8FileExport::exportCombinedSymbol(const CombinedSymbol* comb
 			else if (part->getType() == Symbol::Area)
 				index = exportAreaSymbol(part->asArea());
 			else
-				assert(false);
+				Q_ASSERT(false);
 			result.insert(index);
 		}
 	}
@@ -2382,8 +2382,8 @@ u16 OCAD8FileExport::exportCoordinates(const MapCoordVector& coords, OCADPoint**
 	{
 		const MapCoord& point = coords[i];
 		OCADPoint p;
-		p.x = (point.rawX() / 10) << 8;
-		p.y = (point.rawY() / -10) << 8;
+		p.x = (point.nativeX() / 10) << 8;
+		p.y = (point.nativeY() / -10) << 8;
 		
 		if (point.isDashPoint())
 		{
@@ -2433,11 +2433,11 @@ u16 OCAD8FileExport::exportTextCoordinates(TextObject* object, OCADPoint** buffe
 		// 3 - top right
 		// 4 - top left
 		
-		QPointF anchor = object->getAnchorCoordF().toQPointF();
+		QPointF anchor = QPointF(object->getAnchorCoordF());
 		QPointF anchor_text = map_to_text.map(anchor);
 		
 		TextObjectLineInfo* line0 = object->getLineInfo(0);
-		**buffer = convertPoint(MapCoordF(text_to_map.map(QPointF(anchor_text.x(), line0->line_y))).toMapCoord());
+		**buffer = convertPoint(MapCoord(text_to_map.map(QPointF(anchor_text.x(), line0->line_y))));
 		++(*buffer);
 		
 		QRectF bounding_box_text;
@@ -2448,13 +2448,13 @@ u16 OCAD8FileExport::exportTextCoordinates(TextObject* object, OCADPoint** buffe
 			rectIncludeSafe(bounding_box_text, QPointF(info->line_x + info->width, info->line_y + info->descent));
 		}
 		
-		**buffer = convertPoint(MapCoordF(text_to_map.map(bounding_box_text.bottomLeft())).toMapCoord());
+		**buffer = convertPoint(MapCoord(text_to_map.map(bounding_box_text.bottomLeft())));
 		++(*buffer);
-		**buffer = convertPoint(MapCoordF(text_to_map.map(bounding_box_text.bottomRight())).toMapCoord());
+		**buffer = convertPoint(MapCoord(text_to_map.map(bounding_box_text.bottomRight())));
 		++(*buffer);
-		**buffer = convertPoint(MapCoordF(text_to_map.map(bounding_box_text.topRight())).toMapCoord());
+		**buffer = convertPoint(MapCoord(text_to_map.map(bounding_box_text.topRight())));
 		++(*buffer);
-		**buffer = convertPoint(MapCoordF(text_to_map.map(bounding_box_text.topLeft())).toMapCoord());
+		**buffer = convertPoint(MapCoord(text_to_map.map(bounding_box_text.topLeft())));
 		++(*buffer);
 		
 		return 5;
@@ -2474,13 +2474,13 @@ u16 OCAD8FileExport::exportTextCoordinates(TextObject* object, OCADPoint** buffe
 		
 		QTransform transform;
 		transform.rotate(-object->getRotation() * 180 / M_PI);
-		**buffer = convertPoint((MapCoordF(transform.map(QPointF(-object->getBoxWidth() / 2, object->getBoxHeight() / 2))) + object->getAnchorCoordF()).toMapCoord());
+		**buffer = convertPoint(MapCoord(transform.map(QPointF(-object->getBoxWidth() / 2, object->getBoxHeight() / 2)) + object->getAnchorCoordF()));
 		++(*buffer);
-		**buffer = convertPoint((MapCoordF(transform.map(QPointF(object->getBoxWidth() / 2, object->getBoxHeight() / 2))) + object->getAnchorCoordF()).toMapCoord());
+		**buffer = convertPoint(MapCoord(transform.map(QPointF(object->getBoxWidth() / 2, object->getBoxHeight() / 2)) + object->getAnchorCoordF()));
 		++(*buffer);
-		**buffer = convertPoint((MapCoordF(transform.map(QPointF(object->getBoxWidth() / 2, new_top))) + object->getAnchorCoordF()).toMapCoord());
+		**buffer = convertPoint(MapCoord(transform.map(QPointF(object->getBoxWidth() / 2, new_top)) + object->getAnchorCoordF()));
 		++(*buffer);
-		**buffer = convertPoint((MapCoordF(transform.map(QPointF(-object->getBoxWidth() / 2, new_top))) + object->getAnchorCoordF()).toMapCoord());
+		**buffer = convertPoint(MapCoord(transform.map(QPointF(-object->getBoxWidth() / 2, new_top)) + object->getAnchorCoordF()));
 		++(*buffer);
 		
 		return 4;
@@ -2558,7 +2558,7 @@ s16 OCAD8FileExport::getPointSymbolExtent(const PointSymbol* symbol)
 	{
 		QScopedPointer<Object> object(symbol->getElementObject(i)->duplicate());
 		object->setSymbol(symbol->getElementSymbol(i), true);
-		object->update(true, false);
+		object->update();
 		rectIncludeSafe(extent, object->getExtent());
 		object->clearRenderables();
 	}
@@ -2572,7 +2572,7 @@ s16 OCAD8FileExport::getPointSymbolExtent(const PointSymbol* symbol)
 
 void OCAD8FileExport::convertPascalString(const QString& text, char* buffer, int buffer_size)
 {
-	assert(buffer_size <= 256);		// not possible to store a bigger length in the first byte
+	Q_ASSERT(buffer_size <= 256);		// not possible to store a bigger length in the first byte
 	int max_size = buffer_size - 1;
 	
 	if (text.length() > max_size)
@@ -2627,7 +2627,7 @@ int OCAD8FileExport::convertRotation(float angle)
 	return qRound(10 * (angle * 180 / M_PI));
 }
 
-OCADPoint OCAD8FileExport::convertPoint(qint64 x, qint64 y)
+OCADPoint OCAD8FileExport::convertPoint(qint32 x, qint32 y)
 {
 	OCADPoint result;
 	result.x = (s32)qRound(x / 10.0) << 8;
@@ -2636,10 +2636,10 @@ OCADPoint OCAD8FileExport::convertPoint(qint64 x, qint64 y)
 }
 OCADPoint OCAD8FileExport::convertPoint(const MapCoord& coord)
 {
-	return convertPoint(coord.rawX(), coord.rawY());
+	return convertPoint(coord.nativeX(), coord.nativeY());
 }
 
-s32 OCAD8FileExport::convertSize(qint64 size)
+s32 OCAD8FileExport::convertSize(qint32 size)
 {
 	return (s32)(size / 10);
 }

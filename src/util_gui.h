@@ -1,5 +1,5 @@
 /*
- *    Copyright 2012, 2013 Kai Pastor
+ *    Copyright 2012, 2013, 2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -23,11 +23,15 @@
 
 #include <cmath>
 
-#if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
-#include <QtGui>
-#else
-#include <QtWidgets>
-#endif
+#include <QCheckBox>
+#include <QCoreApplication>
+#include <QDebug>
+#include <QLabel>
+#include <QDoubleSpinBox>
+#include <QSpacerItem>
+#include <QSpinBox>
+#include <QStringBuilder>
+#include <QStyle>
 
 class MapCoordF;
 
@@ -59,16 +63,16 @@ namespace Util
 		typedef double basetype;
 		
 		/** The minimum input value. */
-		inline static double min() throw()   { return -99999999.99; }
+		inline static double min() noexcept   { return -99999999.99; }
 		
 		/** The maximum input value. */
-		inline static double max() throw()   { return +99999999.99; }
+		inline static double max() noexcept   { return +99999999.99; }
 		
 		/** The spinbox step width. */
-		inline static double step() throw()  { return 1.0; }
+		inline static double step() noexcept  { return 1.0; }
 		
 		/** The number of decimals. */
-		inline static int decimals() throw() { return 2; }
+		inline static int decimals() noexcept { return 2; }
 		
 		/** The unit of measurement, translated in context UnitOfMeasurement. */
 		inline static QString unit()
@@ -94,16 +98,16 @@ namespace Util
 		typedef double basetype;
 		
 		/** The minimum input value. */
-		inline static double min() throw()   { return -99999999.99; }
+		inline static double min() noexcept   { return -99999999.99; }
 		
 		/** The maximum input value. */
-		inline static double max() throw()   { return +99999999.99; }
+		inline static double max() noexcept   { return +99999999.99; }
 		
 		/** The spinbox step width. */
-		inline static double step() throw()  { return 1.0; }
+		inline static double step() noexcept  { return 1.0; }
 		
 		/** The number of decimals. */
-		inline static int decimals() throw() { return 2; }
+		inline static int decimals() noexcept { return 2; }
 		
 		/** The unit of measurement, translated in context UnitOfMeasurement. */
 		inline static QString unit()
@@ -121,7 +125,7 @@ namespace Util
 		 */ 
 		inline QLabel* create(const QString& text)
 		{
-			return new QLabel(QString("<b>") % text % "</b>");
+			return new QLabel(QStringLiteral("<b>") % text % QStringLiteral("</b>"));
 		}
 		
 		/** 
@@ -131,7 +135,7 @@ namespace Util
 		 */ 
 		inline QLabel* create(const char* text)
 		{
-			return new QLabel(QString("<b>") % text % "</b>");
+			return new QLabel(QStringLiteral("<b>") % QString::fromUtf8(text) % QStringLiteral("</b>"));
 		}
 	}
 	
@@ -174,14 +178,15 @@ namespace Util
 		 * the unit of measurement (optional),
 		 * the step width of the spinbox buttons (optional).
 		 */
-		inline QSpinBox* create(int min, int max, const QString &unit = "", int step = 0)
+		inline QSpinBox* create(int min, int max, const QString &unit = QString(), int step = 0)
 		{
 			QSpinBox* box = new QSpinBox();
 			box->setRange(min, max);
-			if (unit.startsWith(' '))
+			static const QLatin1Char space { ' ' };
+			if (unit.startsWith(space))
 				box->setSuffix(unit);
 			else if (unit.length() > 0)
-				box->setSuffix(QString(' ') % unit);
+				box->setSuffix(space % unit);
 			if (step > 0)
 				box->setSingleStep(step);
 #ifndef NDEBUG
@@ -208,15 +213,16 @@ namespace Util
 		 * the step width of the spinbox buttons (optional; dependent on 
 		 * the number of decimals if not specified).
 		 */
-		inline QDoubleSpinBox* create(int decimals, double min, double max, const QString &unit = "", double step = 0.0)
+		inline QDoubleSpinBox* create(int decimals, double min, double max, const QString &unit = QString(), double step = 0.0)
 		{
 			QDoubleSpinBox* box = new QDoubleSpinBox();
 			box->setDecimals(decimals);
 			box->setRange(min, max);
-			if (unit.startsWith(' '))
+			static const QLatin1Char space { ' ' };
+			if (unit.startsWith(space))
 				box->setSuffix(unit);
 			else if (unit.length() > 0)
-				box->setSuffix(QString(' ') % unit);
+				box->setSuffix(space % unit);
 			if (step > 0.0)
 				box->setSingleStep(step);
 			else

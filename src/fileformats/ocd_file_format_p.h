@@ -1,5 +1,5 @@
 /*
- *    Copyright 2013, 2014 Kai Pastor
+ *    Copyright 2013-2015 Kai Pastor
  *
  *    Some parts taken from file_format_oc*d8{.h,_p.h,cpp} which are
  *    Copyright 2012 Pete Curtis
@@ -23,7 +23,10 @@
 #ifndef _OPENORIENTEERING_OCD_FILE_FORMAT_P_
 #define _OPENORIENTEERING_OCD_FILE_FORMAT_P_
 
+#include <QLocale>
 #include <QTextCodec>
+
+#include <cmath>
 
 #include "ocd_types.h"
 #include "../file_import_export.h"
@@ -128,40 +131,40 @@ public:
 	
 	void addSymbolWarning(TextSymbol* symbol, const QString& warning);
 	
-	virtual void finishImport() throw (FileFormatException);
+	virtual void finishImport();
 	
 protected:
-	virtual void import(bool load_symbols_only) throw (FileFormatException);
+	virtual void import(bool load_symbols_only);
 	
 	template< class F >
-	void importImplementation(bool load_symbols_only) throw (FileFormatException);
+	void importImplementation(bool load_symbols_only);
 	
 	template< class F >
-	void importGeoreferencing(const OcdFile< F >& file) throw (FileFormatException);
+	void importGeoreferencing(const OcdFile< F >& file);
 	
 	void importGeoreferencing(const QString& param_string);
 	
 	template< class F >
-	void importColors(const OcdFile< F >& file) throw (FileFormatException);
+	void importColors(const OcdFile< F >& file);
 	
 	MapColor* importColor(const QString& param_string);
 	
 	template< class F >
-	void importSymbols(const OcdFile< F >& file) throw (FileFormatException);
+	void importSymbols(const OcdFile< F >& file);
 	
 	template< class F >
-	void importObjects(const OcdFile< F >& file) throw (FileFormatException);
+	void importObjects(const OcdFile< F >& file);
 	
 	template< class F >
-	void importTemplates(const OcdFile< F >& file) throw (FileFormatException);
+	void importTemplates(const OcdFile< F >& file);
 	
 	Template* importTemplate(const QString& param_string, const int ocd_version);
 	
 	template< class F >
-	void importExtras(const OcdFile< F >& file) throw (FileFormatException);
+	void importExtras(const OcdFile< F >& file);
 	
 	template< class F >
-	void importView(const OcdFile< F >& file) throw (FileFormatException);
+	void importView(const OcdFile< F >& file);
 	
 	void importView(const QString& param_string);
 	
@@ -292,17 +295,7 @@ QString OcdFileImport::convertOcdString(const QChar* src) const
 inline
 MapCoord OcdFileImport::convertOcdPoint(const Ocd::OcdPoint32& ocd_point) const
 {
-	// Behavior of operator>>() on negative integers is implementation defined.
-	// Define SHIFT_OPERATOR_IS_BINARY if the compiler does not implement
-	// operator>>() as arithmetic shift (maintaining the sign).
-#if defined(SHIFT_OPERATOR_IS_BINARY)
-	const qint64 x = (ocd_point.x > 0) ? (ocd_point.x >> 8) : (-1 - ((-1-ocd_point.x) >> 8));
-	const qint64 y = (ocd_point.y > 0) ? (ocd_point.y >> 8) : (-1 - ((-1-ocd_point.y) >> 8));
-	return MapCoord::fromRaw(x * 10, y * -10);
-#else // shift operator is arithmetic
-	Q_ASSERT( (-3 >> 1) == -2 );
-	return MapCoord::fromRaw(qint64(ocd_point.x >> 8) * 10, qint64(ocd_point.y >> 8) * -10);
-#endif
+	return MapCoord::fromNative((ocd_point.x >> 8) * 10, (ocd_point.y >> 8) * -10);
 }
 
 inline

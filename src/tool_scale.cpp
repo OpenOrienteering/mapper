@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2013-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -32,7 +33,6 @@
 #include "settings.h"
 #include "util.h"
 
-QCursor* ScaleTool::cursor = NULL;
 
 ScaleTool::ScaleTool(MapEditorController* editor, QAction* tool_button)
 : MapEditorTool(editor, Other, tool_button),
@@ -42,9 +42,6 @@ ScaleTool::ScaleTool(MapEditorController* editor, QAction* tool_button)
 	scaling_center_set = false;
 	scaling = false;
 	scaling_factor = 1;
-	
-	if (!cursor)
-		cursor = new QCursor(QPixmap(":/images/cursor-scale.png"), 1, 1);
 }
 
 void ScaleTool::init()
@@ -64,6 +61,12 @@ void ScaleTool::init()
 	updateStatusText();
 	
 	MapEditorTool::init();
+}
+
+const QCursor& ScaleTool::getCursor() const
+{
+	static auto const cursor = QCursor(QPixmap(":/images/cursor-scale.png"), 1, 1);
+	return cursor;
 }
 
 ScaleTool::~ScaleTool()
@@ -98,7 +101,7 @@ bool ScaleTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidge
 		// Start scaling
 		scaling = true;
 		original_scale = (map_coord - scaling_center).length();
-		startEditingSelection(*old_renderables, &undo_duplicates);
+		startEditingSelection(*old_renderables);
 	}
 	return true;
 }
@@ -119,7 +122,7 @@ bool ScaleTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWi
 	{
 		scaling = false;
 		updateDragging(map_coord);
-		finishEditingSelection(*renderables, *old_renderables, true, &undo_duplicates);
+		finishEditingSelection(*renderables, *old_renderables, true);
 		map()->setObjectsDirty();
 		map()->emitSelectionEdited();
 	}
@@ -131,7 +134,7 @@ bool ScaleTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWi
 
 void ScaleTool::draw(QPainter* painter, MapWidget* widget)
 {
-	map()->drawSelection(painter, true, widget, renderables->isEmpty() ? NULL : renderables.data());
+	map()->drawSelection(painter, true, widget, renderables->empty() ? NULL : renderables.data());
 	
 	if (scaling_center_set)
 	{
@@ -152,7 +155,7 @@ void ScaleTool::updateDirtyRect()
 	
 	if (scaling_center_set)
 	{
-		rectIncludeSafe(rect, scaling_center.toQPointF());
+		rectIncludeSafe(rect, scaling_center);
 		map()->setDrawingBoundingBox(rect, 5, true);
 	}
 	else if (rect.isValid())
@@ -176,7 +179,7 @@ void ScaleTool::updateDragging(const MapCoordF cursor_pos_map)
 		double scaling = (cursor_pos_map - scaling_center).length();
 		scaling_factor = scaling / qMax(1e-7, original_scale);
 		
-		resetEditedObjects(&undo_duplicates);
+		resetEditedObjects();
 		Map::ObjectSelection::const_iterator it_end = map()->selectedObjectsEnd();
 		for (Map::ObjectSelection::const_iterator it = map()->selectedObjectsBegin(); it != it_end; ++it)
 			(*it)->scale(scaling_center, scaling_factor);

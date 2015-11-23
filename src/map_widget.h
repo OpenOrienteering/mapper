@@ -1,6 +1,6 @@
 /*
- *    Copyright 2012 Thomas Schöps
- *    Copyright 2013, 2014 Thomas Schöps, Kai Pastor
+ *    Copyright 2012-2014 Thomas Schöps
+ *    Copyright 2013-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -22,8 +22,12 @@
 #ifndef _OPENORIENTEERING_MAP_WIDGET_H_
 #define _OPENORIENTEERING_MAP_WIDGET_H_
 
-#include <QWidget>
+#include <type_traits>
+
+#include <QImage>
+#include <QPixmap>
 #include <QTime>
+#include <QWidget>
 
 #include "core/map_view.h"
 #include "map.h"
@@ -75,6 +79,13 @@ public:
 		GEOGRAPHIC_COORDS_DMS
 	};
 	
+	/** Describes how a zoom level can be determined. */
+	enum ZoomOption
+	{
+		ContinuousZoom, ///< Allow any zoom value in the valid range.
+		DiscreteZoom,   ///< Adjust the zoom to the closes valid step.
+	};
+	
 	/**
 	 * Constructs a new MapWidget.
 	 * 
@@ -85,7 +96,7 @@ public:
 	 *     Useful for the symbol editor.
 	 * @param parent Optional QWidget parent.
 	 */
-	MapWidget(bool show_help, bool force_antialiasing, QWidget* parent = NULL);
+	MapWidget(bool show_help, bool force_antialiasing, QWidget* parent = nullptr);
 	
 	/** Destructs the MapWidget. */
 	~MapWidget();
@@ -94,7 +105,7 @@ public:
 	void setMapView(MapView* view);
 	
 	/** Returns the map view used for display. */
-	inline MapView* getMapView() const {return view;}
+	MapView* getMapView() const;
 	
 	
 	/** Sets the tool to use in this widget. Does not take ownership of the tool. */
@@ -127,97 +138,65 @@ public:
 	 * map objects with map coordinates and have them correctly displayed in
 	 * the widget with the settings of the used MapView.
 	 */
-	void applyMapTransform(QPainter* painter);
+	void applyMapTransform(QPainter* painter) const;
 	
 	// Coordinate transformations
 	
 	/** Maps viewport (GUI) coordinates to view coordinates (see MapView). */
-	QRectF viewportToView(const QRect& input);
+	QRectF viewportToView(const QRect& input) const;
 	/** Maps viewport (GUI) coordinates to view coordinates (see MapView). */
-	QPointF viewportToView(QPoint input);
+	QPointF viewportToView(QPoint input) const;
 	/** Maps viewport (GUI) coordinates to view coordinates (see MapView). */
-	QPointF viewportToView(QPointF input);
+	QPointF viewportToView(QPointF input) const;
 	/** Maps view coordinates (see MapView) to viewport (GUI) coordinates. */
-	QRectF viewToViewport(const QRectF& input);
+	QRectF viewToViewport(const QRectF& input) const;
 	/** Maps view coordinates (see MapView) to viewport (GUI) coordinates. */
-	QRectF viewToViewport(const QRect& input);
+	QRectF viewToViewport(const QRect& input) const;
 	/** Maps view coordinates (see MapView) to viewport (GUI) coordinates. */
-	QPointF viewToViewport(QPoint input);
+	QPointF viewToViewport(QPoint input) const;
 	/** Maps view coordinates (see MapView) to viewport (GUI) coordinates. */
-	QPointF viewToViewport(QPointF input);
+	QPointF viewToViewport(QPointF input) const;
 	
 	/** Maps viewport (GUI) coordinates to map coordinates. */
-	MapCoord viewportToMap(QPoint input);
+	MapCoord viewportToMap(QPoint input) const;
 	/** Maps viewport (GUI) coordinates to map coordinates. */
-	MapCoordF viewportToMapF(QPoint input);
+	MapCoordF viewportToMapF(QPoint input) const;
 	/** Maps viewport (GUI) coordinates to map coordinates. */
-	MapCoordF viewportToMapF(QPointF input);
+	MapCoordF viewportToMapF(QPointF input) const;
 	/** Maps map coordinates to viewport (GUI) coordinates. */
-	QPointF mapToViewport(MapCoord input);
+	QPointF mapToViewport(MapCoord input) const;
 	/** Maps map coordinates to viewport (GUI) coordinates. */
-	QPointF mapToViewport(MapCoordF input);
+	QPointF mapToViewport(MapCoordF input) const;
 	/** Maps map coordinates to viewport (GUI) coordinates. */
-	QPointF mapToViewport(QPointF input);
+	QPointF mapToViewport(QPointF input) const;
 	/** Maps map coordinates to viewport (GUI) coordinates. */
-	QRectF mapToViewport(const QRectF& input);
+	QRectF mapToViewport(const QRectF& input) const;
 	
-	// View changes
 	
-	/**
-	 * Notifies the MapWidget of the view having zoomed,
-	 * making it repaint its widget area.
-	 * 
-	 * @param factor The ratio new_zoom / old_zoom
+	/** Notifies the MapWidget of the view having zoomed, moved or rotated. */
+	void viewChanged(MapView::ChangeFlags changes);
+	
+	
+	/** 
+	 * Returns the current offset (in pixel) during a map pan operation.
 	 */
-	void zoom(float factor);
+	QPoint panOffset() const;
 	
-	/**
-	 * Notifies the MapWidget of the view having moved.
-	 * Internally, just redraws the complete widget area.
-	 * 
-	 * @param x X offset of the view change in native map coordinates
-	 * @param y Y offset of the view change in native map coordinates
+	/** 
+	 * Sets the current offset (in pixel) during a map pan operation.
 	 */
-	void moveView(qint64 x, qint64 y);
+	void setPanOffset(QPoint offset);
 	
-	/**
-	 * Notifies the MapWidget of the user having finished panning the map.
-	 * Internally, decides whether to do a complete or partial redraw.
-	 * @param x X offset of the total view change in native map coordinates
-	 * @param y Y offset of the total view change in native map coordinates
-	 */
-	void panView(qint64 x, qint64 y);
-	
-	/** Sets the current drag offset during a map pan operation. */
-	void setDragOffset(QPoint offset, bool do_update = true);
-	
-	/** Returns the current drag offset during a map pan operation. */
-	QPoint getDragOffset() const;
-	
-	/**
-	 * Completes a map panning operation. Calls panView() internally and
-	 * resets the current drag offset.
-	 * @param dx X offset of the total view change in native map coordinates
-	 * @param dy Y offset of the total view change in native map coordinates
-	 */
-	void completeDragging(qint64 dx, qint64 dy, bool do_update = true);
 	
 	/**
 	 * Adjusts the viewport so the given rect is inside the view.
-	 * @param show_completely If true, the method ensures that 100% of the rect
-	 *     is visible. If false, a weaker definition of "visible" is used:
-	 *     then a certain area of the rect must be visible.
-	 * @param zoom_in_steps If true, zoom is done in the usual power-of-two
-	 *     steps only. If false, the zoom level is chosen to fit the rect.
 	 */
-	void ensureVisibilityOfRect(const QRectF& map_rect, bool show_completely, bool zoom_in_steps);
+	void ensureVisibilityOfRect(const QRectF& map_rect, ZoomOption zoom_option);
 	
 	/**
 	 * Sets the view so the rect is centered and zooomed to fill the widget.
-	 * @param zoom_in_steps If true, zoom is done in the usual power-of-two
-	 *     steps only. If false, the zoom level is chosen to fit the rect.
 	 */
-	void adjustViewToRect(const QRectF& map_rect, bool zoom_in_steps);
+	void adjustViewToRect(const QRectF& map_rect, ZoomOption zoom_option);
 	
 	/**
 	 * Mark a rectangular region of a template cache as "dirty", i.e. redraw needed.
@@ -267,7 +246,15 @@ public:
 	 * @param pixel_border Additional affected extent around the map rect in
 	 *     pixels. Allows to specify zoom-independent extents.
 	 */
-	void updateDrawing(QRectF map_rect, int pixel_border);
+	void updateDrawing(const QRectF& map_rect, int pixel_border);
+	/**
+	 * Triggers a redraw of the MapWidget at the given area.
+	 */
+	void updateMapRect(const QRectF& map_rect, int pixel_border, QRect& cache_dirty_rect);
+	/**
+	 * Triggers a redraw of the MapWidget at the given area.
+	 */
+	void updateViewportRect(QRect viewport_rect, QRect& cache_dirty_rect);
 	/**
 	 * Variant of updateDrawing() which waits for some milliseconds before
 	 * calling update() in order to avoid excessive redraws.
@@ -297,7 +284,7 @@ public:
 	 */
 	void setCoordsDisplay(CoordsType type);
 	/** Returns the coordinate display type set by setCoordsDisplay(). */
-	inline CoordsType getCoordsDisplay() const {return coords_type;}
+	inline CoordsType getCoordsDisplay() const;
 	
 	/** Returns the time in milliseconds since the last user interaction
 	 *  (mouse press or drag) with the widget. */
@@ -305,8 +292,6 @@ public:
 	
 	/** Sets the GPS display to use. This is called internally by the GPSDisplay constructor. */
 	void setGPSDisplay(GPSDisplay* gps_display);
-	/** Sets the compass display to use. This is called internally by the CompassDisplay constructor. */
-	void setCompassDisplay(CompassDisplay* compass_display);
 	/** Sets the GPS temporary markers display to use. This is called internally by the GPSTemporaryMarkers constructor. */
 	void setTemporaryMarkerDisplay(GPSTemporaryMarkers* marker_display);
 	
@@ -364,11 +349,11 @@ protected:
 private:
 	/** Checks if there is a visible template in the range
 	 *  from first_template to last_template. */
-	bool containsVisibleTemplate(int first_template, int last_template);
+	bool containsVisibleTemplate(int first_template, int last_template) const;
 	/** Checks if there is any visible template above the map. */
-	inline bool isAboveTemplateVisible() {return containsVisibleTemplate(view->getMap()->getFirstFrontTemplate(), view->getMap()->getNumTemplates() - 1);}
+	bool isAboveTemplateVisible() const;
 	/** Checks if there is any visible template below the map. */
-	inline bool isBelowTemplateVisible() {return containsVisibleTemplate(0, view->getMap()->getFirstFrontTemplate() - 1);}
+	bool isBelowTemplateVisible() const;
 	/**
 	 * Redraws the template cache.
 	 * @param cache Reference to pointer to the cache.
@@ -378,7 +363,7 @@ private:
 	 * @param use_background If set to true, fills the cache with white before
 	 *     drawing the templates, else makes it transparent.
 	 */
-	void updateTemplateCache(QImage*& cache, QRect& dirty_rect, int first_template, int last_template, bool use_background);
+	void updateTemplateCache(QImage& cache, QRect& dirty_rect, int first_template, int last_template, bool use_background);
 	/**
 	 * Redraws the map cache in the map cache dirty rect.
 	 * @param use_background If set to true, fills the cache with white before
@@ -388,7 +373,8 @@ private:
 	/** Redraws all dirty caches. */
 	void updateAllDirtyCaches();
 	/** Shifts the content in the cache by the given amount of pixels. */
-	void shiftCache(int sx, int sy, QImage*& cache);
+	void shiftCache(int sx, int sy, QImage& cache);
+	void shiftCache(int sx, int sy, QPixmap& cache);
 	
 	/**
 	 * Calculates the bounding box of the given map coordinates rect and
@@ -400,24 +386,33 @@ private:
 	/** Internal method for removing the dirty state of a cache. */
 	void clearDynamicBoundingBox(QRect& dirty_rect_old, QRectF& dirty_rect_new, int& dirty_rect_new_border);
 	
-	/** Changes the dirty rect's coordinates as a zoom operation would do. */
-	void zoomDirtyRect(QRect& dirty_rect, qreal zoom_factor);
-	/** Changes the dirty rect's coordinates as a zoom operation would do. */
-	void zoomDirtyRect(QRectF& dirty_rect, qreal zoom_factor);
 	/** Moves the dirty rect by the given amount of pixels. */
 	void moveDirtyRect(QRect& dirty_rect, qreal x, qreal y);
-	/** Moves the dirty rect by the given amount of pixels. */
-	void moveDirtyRect(QRectF& dirty_rect, qreal x, qreal y);
 	
-	/** Starts panning the map, given the current cursor position on the widget. */
-	void startPanning(QPoint cursor_pos);
-	/** Ends panning the map, given the current cursor position on the widget. */
-	void finishPanning(QPoint cursor_pos);
+	/** Starts a dragging interaction at the given cursor position. */
+	void startDragging(QPoint cursor_pos);
+	/** Submits a new cursor position during a dragging interaction. */
+	void updateDragging(QPoint cursor_pos);
+	/** Ends a dragging interaction at the given cursor position. */
+	void finishDragging(QPoint cursor_pos);
+	/** Cancels a dragging interaction. */
+	void cancelDragging();
+	
+	/** Starts a pinching interaction at the given cursor position.
+	 *  Returns the initial zoom factor. */
+	qreal startPinching(QPoint center);
+	/** Updates a pinching interaction at the given cursor position. */
+	void updatePinching(QPoint center, qreal factor);
+	/** Ends a pinching interaction at the given cursor position. */
+	void finishPinching(QPoint center, qreal factor);
+	/** Cancels a pinching interaction. */
+	void cancelPinching();
+	
 	/** Moves the map a given number of big "steps" in x and/or y direction. */
 	void moveMap(int steps_x, int steps_y);
 	
 	/** Draws a help message at the center of the MapWidget. */
-	void showHelpMessage(QPainter* painter, const QString& text);
+	void showHelpMessage(QPainter* painter, const QString& text) const;
 	
 	/** Updates the content of the zoom label, set by setZoomLabel(). */
 	void updateZoomLabel();
@@ -440,41 +435,51 @@ private:
 	bool show_help;
 	bool force_antialiasing;
 	
-	// Panning
+	// Dragging (interaction)
 	bool dragging;
 	QPoint drag_start_pos;
-	QPoint drag_offset;
 	/** Cursor used when not dragging */
 	QCursor normal_cursor;
 	
+	// Pinching (interaction)
+	bool pinching;
+	qreal pinching_factor;
+	QPoint pinching_center;
+	
+	// Panning (operation)
+	QPoint pan_offset;
+	
 	// Template caches
 	/** Cache for templates below map layer */
-	QImage* below_template_cache;
+	QImage below_template_cache;
 	QRect below_template_cache_dirty_rect;
+	
 	/** Cache for templates above map layer */
-	QImage* above_template_cache;
+	QImage above_template_cache;
 	QRect above_template_cache_dirty_rect;
 	
-	// Map cache
-	QImage* map_cache;
+	/** Map layer cache  */
+	QImage map_cache;
 	QRect map_cache_dirty_rect;
 	
 	// Dirty regions for drawings (tools) and activities
-	/**
-	 * Dirty rect for dynamic display which has been drawn
-	 * (and will have to be erased by the next draw operation)
-	 */
-	QRect drawing_dirty_rect_old;
-	/**
-	 * Dirty rect for dynamic display which has maybe not been drawn yet,
-	 * but must be drawn by the next draw operation
-	 */
-	QRectF drawing_dirty_rect_new;
-	int drawing_dirty_rect_new_border;
+	/** Dirty rect for the current tool, in viewport coordinates (pixels). */
+	QRect drawing_dirty_rect;
 	
-	QRect activity_dirty_rect_old;
-	QRectF activity_dirty_rect_new;
-	int activity_dirty_rect_new_border;
+	/** Dirty rect for the current tool, in map coordinates. */
+	QRectF drawing_dirty_rect_map;
+	
+	/** Additional pixel border for the tool dirty rect, in pixels. */
+	int drawing_dirty_rect_border;
+	
+	/** Dirty rect for the current activity, in viewport coordinates (pixels). */
+	QRect activity_dirty_rect;
+	
+	/** Dirty rect for the current activity, in map coordinates. */
+	QRectF activity_dirty_rect_map;
+	
+	/** Additional pixel border for the activity dirty rect, in pixels. */
+	int activity_dirty_rect_border;
 	
 	/** Cached updates */
 	QRect cached_update_rect;
@@ -483,7 +488,7 @@ private:
 	PieMenu* context_menu;
 	
 	/** Optional touch cursor for mobile devices */
-	TouchCursor* touch_cursor;
+	QScopedPointer<TouchCursor> touch_cursor;
 	
 	/** For checking for interaction with the widget: the last QTime where
 	 *  a mouse release event happened. Check for current_pressed_buttons == 0
@@ -494,8 +499,6 @@ private:
 	
 	/** Optional GPS display */
 	GPSDisplay* gps_display;
-	/** Optional compass display */
-	CompassDisplay* compass_display;
 	/** Optional temporary GPS marker display. */
 	GPSTemporaryMarkers* marker_display;
 	
@@ -508,9 +511,41 @@ private:
 // ### MapWidget inline code ###
 
 inline
+MapView* MapWidget::getMapView() const
+{
+	return view;
+}
+
+inline
 bool MapWidget::gesturesEnabled() const
 {
 	return gestures_enabled;
+}
+
+inline
+QPointF MapWidget::mapToViewport(QPointF input) const
+{
+	// This is a convenience method for situations when we have got a plain QPointF.
+	// We rely on MapCoordF adding nothing but functions to its base, QPointF.
+	static_assert(std::is_base_of<QPointF, MapCoordF>::value,
+	              "MapCoordF must be derived from QPointF");
+	static_assert(!std::has_virtual_destructor<MapCoordF>::value,
+	              "MapCoordF and its base must not have virtual members");
+	static_assert(sizeof(QPointF) == sizeof(MapCoordF),
+	              "MapCoordF must have the same size as QPointF");
+	return mapToViewport(static_cast<MapCoordF>(input));
+}
+
+inline
+QPoint MapWidget::panOffset() const
+{
+	return pan_offset;
+}
+
+inline
+MapWidget::CoordsType MapWidget::getCoordsDisplay() const
+{
+	return coords_type;
 }
 
 #endif

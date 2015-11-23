@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2013, 2014 Kai Pastor
+ *    Copyright 2013-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -25,9 +25,16 @@
 #include <vector>
 
 #include <QAction>
+#include <QPointer>
 
-#include "map_coord.h"
+#include "core/map_coord.h"
 #include "gui/point_handles.h"
+
+class QAction;
+class QFocusEvent;
+class QGestureEvent;
+class QKeyEvent;
+class QMouseEvent;
 
 class MainWindow;
 class Map;
@@ -37,7 +44,6 @@ class MapWidget;
 class Object;
 class Renderable;
 class Symbol;
-typedef std::vector<Renderable*> RenderableVector;
 
 /** 
  * @brief An abstract tool for editing a map.
@@ -84,7 +90,7 @@ public:
 	 * @param tool_action  Optional button which will be unchecked on
 	 *                     destruction of this tool.
 	 */
-	MapEditorTool(MapEditorController* editor, Type tool_type, QAction* tool_action = NULL);
+	MapEditorTool(MapEditorController* editor, Type tool_type, QAction* tool_action = nullptr);
 	
 	/**
 	 * @brief Destructs the MapEditorTool.
@@ -131,7 +137,7 @@ public:
 	 * 
 	 * @todo How to change the cursor for all map widgets while a tool is active?
 	 */
-	virtual QCursor* getCursor() = 0;
+	virtual const QCursor& getCursor() const = 0;
 	
 	/**
 	 * @brief Draws the tool's visualisation for a map widget.
@@ -152,6 +158,17 @@ public:
 	virtual bool keyPressEvent(QKeyEvent* event);
 	virtual bool keyReleaseEvent(QKeyEvent* event);
 	virtual void focusOutEvent(QFocusEvent* event);
+	
+	// Gesture input
+	virtual bool gestureEvent(QGestureEvent* event, MapWidget* widget);
+	
+	/**
+	 * This is called to signal the start of a gesture.
+	 * 
+	 * Tools may reimplement this if they want to cancel ongoing interactions
+	 * such as dragging.
+	 */	
+	virtual void gestureStarted();
 	
 	/**
 	 * @brief Returns the type of this tool.
@@ -240,6 +257,11 @@ public:
 	 */
 	int scaleFactor() const;
 	
+	/**
+	 * @brief A value representing how close the user must click or hover to select a point.
+	 */
+	float clickTolerance() const;
+	
 	// General color definitions which are used by all tools
 	
 	/// Color for normal (not active) elements
@@ -282,18 +304,18 @@ protected:
 	
 	
 	// Helper methods for editing the selected objects with preview
-	void startEditingSelection(MapRenderables& old_renderables, std::vector<Object*>* undo_duplicates = NULL);
-	void resetEditedObjects(std::vector<Object*>* undo_duplicates);
-	void finishEditingSelection(MapRenderables& renderables, MapRenderables& old_renderables, bool create_undo_step, std::vector<Object*>* undo_duplicates = NULL, bool delete_objects = false);
+	void startEditingSelection(MapRenderables& old_renderables);
+	void resetEditedObjects();
+	void finishEditingSelection(MapRenderables& renderables, MapRenderables& old_renderables, bool create_undo_step, bool delete_objects = false);
 	void updateSelectionEditPreview(MapRenderables& renderables);
 	void deleteOldSelectionRenderables(MapRenderables& old_renderables, bool set_area_dirty);
 	
 	/**
 	 * @brief Finds and returns the point of the given object over which the cursor hovers.
 	 * 
-	 * Returns -1 if not hovering over a point.
+	 * Returns no_point if not hovering over a point.
 	 */
-	int findHoverPoint(QPointF cursor, Object* object, bool include_curve_handles, QRectF* selection_extent, MapWidget* widget, MapCoordF* out_handle_pos = NULL) const;
+	MapCoordVector::size_type findHoverPoint(QPointF cursor, const MapWidget* widget, const Object* object, bool include_curve_handles, MapCoordF* out_handle_pos = nullptr) const;
 	
 	
 	/**
@@ -318,11 +340,6 @@ protected:
 	
 private slots:
 	/**
-	 * @brief Listens to the destruction of the tool's action.
-	 */
-	void toolActionDestroyed();
-	
-	/**
 	 * Updates cached settings.
 	 */
 	void settingsChanged();
@@ -334,13 +351,15 @@ protected:
 	MapEditorController* const editor;
 	
 private:	
-	QAction* tool_action;
+	QPointer<QAction> tool_action;
 	Type tool_type;
+	float click_tolerance;
+	int scale_factor;
 	bool editing_in_progress;
 	bool uses_touch_cursor;
-	int scale_factor;
-	PointHandles point_handles;
 	bool draw_on_right_click;
+	PointHandles point_handles;
+	std::vector<Object*> undo_duplicates;
 };
 
 
@@ -387,6 +406,12 @@ inline
 int MapEditorTool::scaleFactor() const
 {
 	return point_handles.scaleFactor();
+}
+
+inline
+float MapEditorTool::clickTolerance() const
+{
+	return click_tolerance;
 }
 
 #endif

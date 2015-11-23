@@ -1,21 +1,22 @@
 /*
-*    Copyright 2012, 2013 Pete Curtis
-*
-*    This file is part of OpenOrienteering.
-*
-*    OpenOrienteering is free software: you can redistribute it and/or modify
-*    it under the terms of the GNU General Public License as published by
-*    the Free Software Foundation, either version 3 of the License, or
-*    (at your option) any later version.
-*
-*    OpenOrienteering is distributed in the hope that it will be useful,
-*    but WITHOUT ANY WARRANTY; without even the implied warranty of
-*    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-*    GNU General Public License for more details.
-*
-*    You should have received a copy of the GNU General Public License
-*    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ *    Copyright 2012, 2013 Pete Curtis
+ *    Copyright 2014, 2015 Kai Pastor
+ *
+ *    This file is part of OpenOrienteering.
+ *
+ *    OpenOrienteering is free software: you can redistribute it and/or modify
+ *    it under the terms of the GNU General Public License as published by
+ *    the Free Software Foundation, either version 3 of the License, or
+ *    (at your option) any later version.
+ *
+ *    OpenOrienteering is distributed in the hope that it will be useful,
+ *    but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *    GNU General Public License for more details.
+ *
+ *    You should have received a copy of the GNU General Public License
+ *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 #ifndef _OPENORIENTEERING_FILE_FORMAT_OCAD_P_H
 #define _OPENORIENTEERING_FILE_FORMAT_OCAD_P_H
@@ -28,11 +29,10 @@
 
 #include "libocad/libocad.h"
 
-#include "map_coord.h"
+#include "core/map_coord.h"
 
 class Map;
 class MapColor;
-class MapCoord;
 class MapPart;
 class Object;
 class PointObject;
@@ -74,10 +74,8 @@ public:
 
 	void setStringEncodings(const char *narrow, const char *wide = "UTF-16LE");
 
-	static const float ocad_pt_in_mm;
-
 protected:
-	void import(bool load_symbols_only) throw (FileFormatException);
+	void import(bool load_symbols_only);
 	
 	// Symbol import
 	Symbol *importPointSymbol(const OCADPointSymbol *ocad_symbol);
@@ -112,7 +110,7 @@ protected:
 	QString convertWideCString(const char *p, size_t n, bool ignore_first_newline);
 	float convertRotation(int angle);
 	void convertPoint(MapCoord &c, int ocad_x, int ocad_y);
-	qint64 convertSize(int ocad_size);
+	qint32 convertSize(int ocad_size);
 	const MapColor *convertColor(int color);
 	double convertTemplateScale(double ocad_scale);
 	
@@ -153,7 +151,7 @@ public:
 	OCAD8FileExport(QIODevice* stream, Map *map, MapView *view);
 	~OCAD8FileExport();
 	
-	void doExport() throw (FileFormatException);
+	void doExport();
 	
 protected:
 	
@@ -183,10 +181,10 @@ protected:
 	/// Returns the number of bytes written into buffer
 	int convertWideCString(const QString& text, unsigned char* buffer, int buffer_size);
 	int convertRotation(float angle);
-	OCADPoint convertPoint(qint64 x, qint64 y);
+	OCADPoint convertPoint(qint32 x, qint32 y);
 	/// Attention: this ignores the coordinate flags!
 	OCADPoint convertPoint(const MapCoord& coord);
-	s32 convertSize(qint64 size);
+	s32 convertSize(qint32 size);
 	s16 convertColor(const MapColor* color) const;
 	double convertTemplateScale(double mapper_scale);
 	

@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2012-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -20,7 +21,13 @@
 
 #include "template_tool_paint.h"
 
-#include <QtWidgets>
+#include <QListWidget>
+#include <QListWidgetItem>
+#include <QMouseEvent>
+#include <QPainter>
+#include <QPushButton>
+#include <QSettings>
+#include <QVBoxLayout>
 
 #include "map_widget.h"
 #include "template.h"
@@ -30,7 +37,6 @@
 
 // ### PaintOnTemplateTool ###
 
-QCursor* PaintOnTemplateTool::cursor = NULL;
 int PaintOnTemplateTool::erase_width = 4;
 
 PaintOnTemplateTool::PaintOnTemplateTool(MapEditorController* editor, QAction* tool_button, Template* temp) : MapEditorTool(editor, Other, tool_button)
@@ -40,9 +46,6 @@ PaintOnTemplateTool::PaintOnTemplateTool(MapEditorController* editor, QAction* t
 	
 	this->temp = temp;
 	connect(map(), SIGNAL(templateDeleted(int, const Template*)), this, SLOT(templateDeleted(int, const Template*)));
-	
-	if (!cursor)
-		cursor = new QCursor(QPixmap(":/images/cursor-paint-on-template.png"), 1, 1);
 }
 
 PaintOnTemplateTool::~PaintOnTemplateTool()
@@ -62,6 +65,12 @@ void PaintOnTemplateTool::init()
 	colorSelected(widget->getSelectedColor());
 	
 	MapEditorTool::init();
+}
+
+const QCursor&PaintOnTemplateTool::getCursor() const
+{
+	static auto const cursor = QCursor(QPixmap(":/images/cursor-paint-on-template.png"), 1, 1);
+	return cursor;
 }
 
 void PaintOnTemplateTool::templateDeleted(int pos, const Template* temp)
@@ -93,7 +102,7 @@ bool PaintOnTemplateTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coor
 	if (event->button() == Qt::LeftButton || event->button() == Qt::RightButton)
 	{
 		coords.push_back(map_coord);
-		map_bbox = QRectF(map_coord.getX(), map_coord.getY(), 0, 0);
+		map_bbox = QRectF(map_coord.x(), map_coord.y(), 0, 0);
 		dragging = true;
 		erasing = (event->button() == Qt::RightButton) || (paint_color == qRgb(255, 255, 255));
 		return true;
@@ -111,9 +120,10 @@ bool PaintOnTemplateTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord
 		float scale = qMin(temp->getTemplateScaleX(), temp->getTemplateScaleY());
 		
 		coords.push_back(map_coord);
-		rectInclude(map_bbox, map_coord.toQPointF());
+		rectInclude(map_bbox, map_coord);
 		
-		map()->setDrawingBoundingBox(map_bbox, widget->getMapView()->lengthToPixel((erasing ? (erase_width/2) : 1) * 1000 * scale * 1));
+		auto pixel_border = widget->getMapView()->lengthToPixel(1000.0 * scale * (erasing ? erase_width/2 : 1));
+		map()->setDrawingBoundingBox(map_bbox, pixel_border);
 		
 		return true;
 	}
@@ -129,7 +139,7 @@ bool PaintOnTemplateTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_co
 	if (dragging)
 	{
 		coords.push_back(map_coord);
-		rectInclude(map_bbox, map_coord.toQPointF());
+		rectInclude(map_bbox, map_coord);
 		
 		temp->drawOntoTemplate(&coords[0], coords.size(), erasing ? QColor(255, 255, 255, 0) : paint_color, erasing ? erase_width : 0, map_bbox);
 		
@@ -148,7 +158,7 @@ void PaintOnTemplateTool::draw(QPainter* painter, MapWidget* widget)
 	float scale = qMin(temp->getTemplateScaleX(), temp->getTemplateScaleY());
 	
 	QPen pen(erasing ? qRgb(255, 255, 255) : paint_color);
-	pen.setWidthF(widget->getMapView()->lengthToPixel(1000 * scale * (erasing ? erase_width : 1)));
+	pen.setWidthF(widget->getMapView()->lengthToPixel(1000.0 * scale * (erasing ? erase_width : 1)));
 	pen.setCapStyle(Qt::RoundCap);
 	pen.setJoinStyle(Qt::RoundJoin);
 	painter->setPen(pen);
