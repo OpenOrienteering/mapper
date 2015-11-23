@@ -25,7 +25,7 @@ include(ExternalProject)
 
 # Configuration options
 
-set(QT5_VERSION_DEFAULT 5.5.1-openorienteering-2015-11-02)
+set(QT5_VERSION_DEFAULT 5.5.1-openorienteering-2015-11-20)
 set(QT5_VERSION ${QT5_VERSION_DEFAULT} CACHE STRING
   "Version number of the Qt5 library, recommended value: ${QT5_VERSION_DEFAULT}")
 mark_as_advanced(QT5_VERSION)
@@ -58,8 +58,7 @@ set(QT5_MD5SUMS
   # Schema: VERSION:MD5[:DOWNLOAD_URL]
   5.4.2:fa1c4d819b401b267eb246a543a63ea5
   5.5.1:59f0216819152b77536cf660b015d784
-  5.5.1-openorienteering-2015-11-02:cd904d4a093e740f3aaaeef9dda00a09
-  5.5.1-openorienteering-2015-11-11:647c4b213f52dcf9260272c47a46ce55
+  5.5.1-openorienteering-2015-11-20:3799677d2835ad57e8fe4493c2e5c2de
 )
 foreach(line ${QT5_MD5SUMS})
 	if(${line} MATCHES "^${QT5_VERSION}:")
