@@ -7,7 +7,7 @@ keywords: Map
 edited: 25 February 2013
 ---
 
-<p><img class=small src="../../images/grid.png" width="32" height="32" border="0" /> The map grid can be activated by clicking the corresponding button in the <a href="toolbars.md#view">view toolbar</a>. Settings for the grid can be changed by clicking the arrow to the right of this button.</p>
+<p><img class=small src="../mapper-images/grid.png" width="32" height="32" border="0" /> The map grid can be activated by clicking the corresponding button in the <a href="toolbars.md#view">view toolbar</a>. Settings for the grid can be changed by clicking the arrow to the right of this button.</p>
 
 <h3>Grid settings</h3>
 <img src="images/grid_settings.png" border="0" />
