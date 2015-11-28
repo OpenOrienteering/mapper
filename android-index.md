@@ -1,23 +1,26 @@
-The Mapper app for Android
-==========================
+---
+title: The Mapper App for Android
+keywords: Android
+online: http://openorienteering.github.io/mapper-manual/pages/android-index.html
+---
 
 The Android version of OpenOrienteering Mapper is not as self-descriptive as
 the desktop version, so please read this first for important instructions.
  
-**Note:** The OpenOrienteering Mapper user wiki contains an
-          [online version of this documentation](http://sourceforge.net/p/oorienteering/wiki/Android Manual).
-          It may contain additions and corrections.
+{% if doxygen %}
+**Note:** The [online version]({{ page.online }}) of this documentation may contain additions and corrections.
+{% endif %}
+		  
 
 Contents
 --------
 
-\subpage android-requirements
+[Device requirements and recommendations](android-requirements.md){: .subpage}
 												  
-\subpage android-preparing-a-map
+[Preparing a map on the PC](android-preparing-a-map.md){: .subpage}
                                                  
-\subpage android-transfer-to-device
+[Transferring the map to the Android device](android-transfer-to-device.md){: .subpage}
 
-\subpage android-app
+[Using the Mapper app](android-app.md){: .subpage}
 
-\subpage android-transfer-to-pc
-
+[Transferring the map back to the PC](android-transfer-to-pc.md){: .subpage}
