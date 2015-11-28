@@ -2,6 +2,7 @@
 title: User Manual
 edited: 26 November 2015
 online: http://openorienteering.github.io/mapper-manual/manual/index.html
+redirect_from: /
 ---
 
 {% if doxygen %}
