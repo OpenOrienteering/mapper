@@ -7,23 +7,23 @@ keywords: Menus
 edited: 22 April 2013
 ---
 
-<table><tr><td width="180"><h4>Pan</h4></td><td width="60"><h4>(F6)</h4></td><td width="40"><img class=small src="../mapper-images/move.png" width="32" height="32" border="0" alt="" /></td><td width="400">
+<table><tr><td width="180"><h4>Pan</h4></td><td width="60"><h4>(F6)</h4></td><td width="40"><img class="small" src="../mapper-images/move.png" width="32" height="32" border="0" alt="" /></td><td width="400">
 <p>Activates the <a href="toolbars.md#pan_map">pan tool</a> which can be used to move the map.
 Note that key F6 starts panning immediately.</td></tr>
 
-<tr><td><h4>Zoom in</h4></td><td><h4>F7</h4></td><td><img class=small src="../mapper-images/view-zoom-in.png" width="32" height="32" border="0" alt="" /></td><td width="400">
+<tr><td><h4>Zoom in</h4></td><td><h4>F7</h4></td><td><img class="small" src="../mapper-images/view-zoom-in.png" width="32" height="32" border="0" alt="" /></td><td width="400">
 <p>Zoom in (enlarge) to view the map closer. </td></tr>
 
-<tr><td><h4>Zoom out</h4></td><td><h4>F8</h4></td><td><img class=small src="../mapper-images/view-zoom-out.png" width="32" height="32" border="0" alt="" /></td><td>
+<tr><td><h4>Zoom out</h4></td><td><h4>F8</h4></td><td><img class="small" src="../mapper-images/view-zoom-out.png" width="32" height="32" border="0" alt="" /></td><td>
 <p>Zoom out (shrink) the map to see more of it.</p></td></tr>
 
-<tr><td><h4><a name="zoom-all">Show whole map</a></h4></td><td><h4></h4></td><td><img class=small src="../mapper-images/view-show-all.png" width="32" height="32" border="0" alt="" /></td><td>
+<tr><td><h4><a name="zoom-all">Show whole map</a></h4></td><td><h4></h4></td><td><img class="small" src="../mapper-images/view-show-all.png" width="32" height="32" border="0" alt="" /></td><td>
 <p>Use this tool to display the whole map on your screen.  </p></td></tr>
 
 <tr><td><h4>Set custom zoom factor...</h4></td><td><h4></h4></td><td></td><td>
 <p>Shows a dialog to enter a specific zoom factor. Note that the zoom factor on the screen is not necessarily equal to the printed scale of the map.</p></td></tr>
 
-<tr><td><h4>Show grid</h4></td><td><h4>G</h4></td><td><img class=small src="../mapper-images/grid.png" width="32" height="32" border="0" alt="" /></td><td>
+<tr><td><h4>Show grid</h4></td><td><h4>G</h4></td><td><img class="small" src="../mapper-images/grid.png" width="32" height="32" border="0" alt="" /></td><td>
 <p>Shows or hides the <a href="grid.md">map grid</a>.</p></td></tr>
 
 <tr><td><h4>Hatch areas</h4></td><td><h4>F2</h4></td><td></td><td>
