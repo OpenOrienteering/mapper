@@ -1,7 +1,9 @@
-Using the Mapper app
-====================
+---
+title: Using the Mapper App
+keywords: Android
+---
 
-[Toolbars]: toolbars.html
+[Toolbars]: toolbars.md
 
 On startup, the app shows a list of available map files. In case there are no map files, you probably misspelled the map folder name (see previous section). To start editing a map, touch its filename.
 

@@ -1,5 +1,6 @@
 ---
 title: Templates
+keywords: Templates
 edited: 26 November 2015
 ---
 

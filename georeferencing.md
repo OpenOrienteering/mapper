@@ -1,16 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD html 4.01 Transitional//EN">
-<html>
-<head>
-<title>OpenOrienteering Mapper Help - Georeferencing</title>
-<link rel="stylesheet" href="oomap.css" type="text/css" title="OOMapper stylesheet">
-<meta name="author" content="Kai Pastor, Peter Hoban, Thomas Schoeps">
-<meta name="description" content="Open Orienteering Mapper help">
-<meta name="keywords" content="Help, Orienteering, mapping">
-</head>
-<body>
+---
+title: Georeferencing
+authors:
+  - Peter Hoban
+  - Thomas Schoeps
+keywords: Georeferencing
+edited: 25 February 2013
+---
 
-
-<h3>Georeferencing</h3>
 <ul>
 <li><a href="#intro">Introduction</a></li>
 <li><a href="#map_crs">Map coordinate reference system</a></li>
@@ -71,7 +67,7 @@ latitude and longitude. Latitude and longitude are measured in decimal degrees. 
 
 
 <h4 id="related">Related functions</h4>
-<p>The (mouse) cursor position of the map editor can be displayed in map coordinates, projected coordinates or geographic coordinates (decimal or as degrees/minutes/seconds, DMS). The coordinates of the cursor on the map sheet are discussed <a href="view_menu.html#coords">here</a>.</p>
+<p>The (mouse) cursor position of the map editor can be displayed in map coordinates, projected coordinates or geographic coordinates (decimal or as degrees/minutes/seconds, DMS). The coordinates of the cursor on the map sheet are discussed <a href="view_menu.md#coords">here</a>.</p>
 
 <h4 id="further_reading">Further reading</h4>
 <ul>
@@ -80,8 +76,3 @@ latitude and longitude. Latitude and longitude are measured in decimal degrees. 
 <li>Larry Simons (2005): <a href="http://www.threelittlemaids.co.uk/magdec/explain.html">Magnetic Declination &amp; Grid Convergence</a></li>
 </ul>
 
-<p>&nbsp;</p>
-<hr/>
-<p><small>Updated on February 25th, 2013</small></p>
-</body>
-</html>

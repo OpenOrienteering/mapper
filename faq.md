@@ -1,16 +1,11 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD html 4.01 Transitional//EN">
-<html>
-<head>
-<title>OpenOrienteering Mapper Help - FAQ</title>
-<link rel="stylesheet" href="oomap.css" type="text/css" title="OOMapper stylesheet">
-<meta name="author" content="Peter Hoban, Thomas Schoeps">
-<meta name="description" content="Open Orienteering Mapper help">
-<meta name="keywords" content="Help, Orienteering, mapping">
-</head>
-<body>
-
-
-<h3>FAQ</h3>
+---
+title: Frequently Asked Questions (FAQ)
+authors:
+  - Peter Hoban
+  - Thomas Schoeps
+keywords: FAQ
+edited: 24 February 2013
+---
 
 <h4>Navigation</h4>
 
@@ -24,13 +19,13 @@ You can use the mouse wheel, if you have one, press F7 / F8. There are also zoom
 <h4>Drawing</h4>
 
 <!--<p><b>I want to start drawing a map, but have no idea how to.</b><br/>
-Start by reading the <a href="mapping/index.html">short introduction to o-mapping</a>.</p>-->
+Start by reading the <a href="mapping/index.md">short introduction to o-mapping</a>.</p>-->
 
 <p><b>How do I add points to an existing path or delete points from it?</b><br/>
 With the path object selected using the edit tool, hold Ctrl and click a free spot on the path to create a new point there. You can even move the mouse in the same action to set the position of the new point. To delete a point, hold Ctrl and click an existing point.</p>
 
 <p><b>How do I change line segments from curved to straight and vice versa?</b><br/>
-With the <a href="toolbars.html#tool_edit_line">line edit tool</a>, select the object you want to edit and hold Ctrl while clicking the line segment. This switches the segment between curved and straight.
+With the <a href="toolbars.md#tool_edit_line">line edit tool</a>, select the object you want to edit and hold Ctrl while clicking the line segment. This switches the segment between curved and straight.
 
 <h4>File formats</h4>
 
@@ -47,11 +42,5 @@ Yes, but currently only .ocd files of version 8 are supported. Furthermore, some
 Probably not.</p>
 
 <p><b>Will Mapper be available for Android?</b><br/>
-An Android version is planned, however it cannot be said when it will be ready yet.</p>
+An Android version is available. While it is fully supported, it is still more a proof-of-concept than a true mobile app.</p>
 
-
-<p>&nbsp;</p>
-<hr/>
-<p><small>Updated on February 24th, 2013</small></p>
-</body>
-</html>

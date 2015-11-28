@@ -1,10 +1,11 @@
 ---
 title: Reference
+keywords: Reference
 edited: 26 November 2015
 ---
 
 * [Toolbars](toolbars.md){: .subpage}
-  * [All drawing tools](toolbars.html#drawing)
+  * [All drawing tools](toolbars.md#drawing)
 
 
 * [File Menu](file_menu.md){: .subpage}

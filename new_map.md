@@ -1,16 +1,11 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD html 4.01 Transitional//EN">
-<html>
-<head>
-<title>OpenOrienteering Mapper Help - Starting a new map</title>
-<link rel="stylesheet" href="oomap.css" type="text/css" title="OOMapper stylesheet">
-<meta name="author" content="Peter Hoban, Thomas Schoeps">
-<meta name="description" content="Open Orienteering Mapper help">
-<meta name="keywords" content="Help, Orienteering, mapping">
-</head>
-<body>
-
-
-<h3>Starting a new map</h3>
+---
+title: Starting a New Map
+authors:
+  - Peter Hoban
+  - Thomas Schoeps
+keywords: Map
+edited: 26 February 2013
+---
 
 <p>Choose the menu item File -&gt; New... to show the new map dialog.</p>
 
@@ -29,13 +24,7 @@
 
 <h4>Next steps</h4>
 
-<p>After clicking Create, the <a href="main_window.html">map screen</a> will be shown. Now you probably want to load some <a href="templates.html">templates</a> and establish the map's <a href="georeferencing.html">georeferencing</a>. Note that loading a georeferenced template will show the georeferencing dialog with some values already pre-filled and adapted to your template file, so you probably do not need to do this step separately.</p>
+<p>After clicking Create, the <a href="main_window.md">map screen</a> will be shown. Now you probably want to load some <a href="templates.md">templates</a> and establish the map's <a href="georeferencing.md">georeferencing</a>. Note that loading a georeferenced template will show the georeferencing dialog with some values already pre-filled and adapted to your template file, so you probably do not need to do this step separately.</p>
 
-<p>After loading your templates you can start <a href="toolbars.html#drawing">drawing</a> your map objects with the map <a href="symbol_dock_widget.html">symbols</a>.</p>
+<p>After loading your templates you can start <a href="toolbars.md#drawing">drawing</a> your map objects with the map <a href="symbol_dock_widget.md">symbols</a>.</p>
 
-
-<p>&nbsp;</p>
-<hr/>
-<p><small>Updated on February 26th, 2013</small></p>
-</body>
-</html>

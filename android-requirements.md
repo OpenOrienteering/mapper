@@ -1,5 +1,7 @@
-Device requirements and recommendations
-=======================================
+---
+title: Device Requirements and Recommendations
+keywords: Android
+---
 
 Android version
 ---------------

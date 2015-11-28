@@ -1,16 +1,11 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD html 4.01 Transitional//EN">
-<html>
-<head>
-<title>OpenOrienteering Mapper Help - Symbol pane</title>
-<link rel="stylesheet" href="oomap.css" type="text/css" title="OOMapper stylesheet">
-<meta name="author" content="Peter Hoban, Thomas Schoeps">
-<meta name="description" content="Open Orienteering Mapper help">
-<meta name="keywords" content="Help, Orienteering, mapping">
-</head>
-<body>
-
-
-<h3>Symbol pane</h3>
+---
+title: Symbol Pane
+authors:
+  - Peter Hoban
+  - Thomas Schoeps
+keywords: Symbols
+edited: 24 February 2013
+---
 
 <br/><br/><img src="images/symbol_dock_widget.png" border="0" /><br/><br/>
 
@@ -50,7 +45,7 @@ Text size may be approximated as 0.24 times the point size for a typical easy to
 <ul>
 <li>The actions in the first section enable to create new symbols or edit the selected symbol.</li>
 <li>The actions in the second section enable to copy/paste symbols.</li>
-<li>In the third section, in additon to the possibility to select all symbols with the selected object, there are shortcuts to the two drawing functions <a href="toolbars.html#switch_symbol">switch symbol</a> and <a href="toolbars.html#fill_create_border">fill / create border</a>.</li>
+<li>In the third section, in additon to the possibility to select all symbols with the selected object, there are shortcuts to the two drawing functions <a href="toolbars.md#switch_symbol">switch symbol</a> and <a href="toolbars.md#fill_create_border">fill / create border</a>.</li>
 <li>The fourth section enables to hide all objects with a given symbol, for example to remove all paths from a map, and to protect all objects with a given symbol from editing. This is useful to make large area symbols static while editing other objects on top of them.</li>
 <li>The last section offers actions for symbol selection and sorting.
 </ul>
@@ -94,7 +89,7 @@ It is recommended that helper symbols are given numbers in the third subset (whi
 <p>Some line symbols require an <b>outline</b> which is enabled by selecting the border check box.  Border width is the width (thickness) of the border lines.  Shift moves the border lines further apart &#8212; shift equal to half the border width will place the line just outside the edge of the main line. A dash feature with characteristics which do not have to match the main line is enabled by the corresponding check box.</p>
 
 <h4 id="startsymbol">Start symbol</h4>
-<p>The start symbol will appear only at the first-fixed end of the line.  This can be changed for a particular line with the <a href="toolbars.html#switch_dashes">switch dashes / reversing tool</a>.  The start is the left end of the horizontal sample lines in the illustrative graphic to the right of the symbol editor.  The start symbol may be made of several elements.  To add an element click the + button at the bottom of the elements list.  To delete one click the - button.  An element may be a point (a circular element), a line or an area element.
+<p>The start symbol will appear only at the first-fixed end of the line.  This can be changed for a particular line with the <a href="toolbars.md#switch_dashes">switch dashes / reversing tool</a>.  The start is the left end of the horizontal sample lines in the illustrative graphic to the right of the symbol editor.  The start symbol may be made of several elements.  To add an element click the + button at the bottom of the elements list.  To delete one click the - button.  An element may be a point (a circular element), a line or an area element.
 
 <p>The default feature is a point element (line or area elements must be added).  <b>Point elements</b> have inner diameter and outer width which may be different colours, and will be centred on the beginning of the main line. </p>
 
@@ -107,7 +102,7 @@ The coordinate system origin is the beginning point of the symbol line, the X ax
 <p>These symbols appear along the line at the spacing set for mid-symbols in the 'line settings' dialog. Mid symbols are edited like start symbols (see above).</p>
 
 <h4 id="endsymbol">End symbol</h4>
-<p>This symbol appears only at the last-fixed end of the symbol line.  This can be changed for a particular line with the <a href="toolbars.html#switch_dashes">switch dashes / reversing tool</a>.  The end symbol will appear at the right end of the of the horizontal sample lines in the illustrative graphic to the right of the symbol editor.  End symbols are edited like start symbols (see above).</p>
+<p>This symbol appears only at the last-fixed end of the symbol line.  This can be changed for a particular line with the <a href="toolbars.md#switch_dashes">switch dashes / reversing tool</a>.  The end symbol will appear at the right end of the of the horizontal sample lines in the illustrative graphic to the right of the symbol editor.  End symbols are edited like start symbols (see above).</p>
 
 <h4 id="dashsymbol">Dash symbol</h4>
 <p>This symbol will appear at dash points along a line; drawing these can be toggled by pressing the spacebar while the drawing tool is active. The symbol will appear at each node drawn while the helpful tip at the bottom edge shows "<b>Dash points on.</b>" This switch may vary from point to point along the line. Dash symbols are edited like start symbols (see above).</p>
@@ -121,9 +116,3 @@ The coordinate system origin is the beginning point of the symbol line, the X ax
 
 <!-- TODO: add description of combined settings. -->
 
-
-<p>&nbsp;</p>
-<hr/>
-<p><small>Updated on February 24th, 2013</small></p>
-</body>
-</html>

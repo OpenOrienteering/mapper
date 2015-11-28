@@ -1,16 +1,11 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD html 4.01 Transitional//EN">
-<html>
-<head>
-<title>OpenOrienteering Mapper Help - Edit menu</title>
-<link rel="stylesheet" href="oomap.css" type="text/css" title="OOMapper stylesheet">
-<meta name="author" content="Peter Hoban, Thomas Schoeps">
-<meta name="description" content="Open Orienteering Mapper help">
-<meta name="keywords" content="Help, Orienteering, mapping">
-</head>
-<body>
-
-
-<h3>Edit menu</h3>
+---
+title: Edit Menu
+authors:
+  - Peter Hoban
+  - Thomas Schoeps
+keywords: Menus
+edited: 24 February 2013
+---
 
 <table><tr><td width="100"><h4>Undo</h4></td><td width="70"><h4>Ctrl + Z</h4></td><td width="40"><img class=small src="../../images/undo.png" width="32" height="32" border="0" alt="" /></td><td width="400">
 <p>This most important function reverses the last change made to the map. Repeating 'Undo' will undo earlier changes, one step at a time.<br/><br/>
@@ -37,11 +32,5 @@
 
 
 <h3>Editing tools</h3>
-<p>OOMapper offers many editing tools which may be accessed through the <a href="tools_menu.html">Tools menu</a> or the <a href="toolbars.html">toolbars</a>.</p>
+<p>OOMapper offers many editing tools which may be accessed through the <a href="tools_menu.md">Tools menu</a> or the <a href="toolbars.md">toolbars</a>.</p>
 
-
-<p>&nbsp;</p>
-<hr/>
-<p><small>Updated on February 24th, 2013</small></p>
-</body>
-</html>

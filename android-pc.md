@@ -1,5 +1,6 @@
-Preparing a map on the PC {#android-preparing-a-map}
-=========================
+---
+title: Preparing a Map on the PC
+---
 
 The Android app cannot be used to create new maps because it would be cumbersome
 to setup the base maps there. Instead, maps should be prepared with templates

@@ -1,16 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD html 4.01 Transitional//EN">
-<html>
-<head>
-<title>OpenOrienteering Mapper Help - Settings</title>
-<link rel="stylesheet" href="oomap.css" type="text/css" title="OOMapper stylesheet">
-<meta name="author" content="Peter Hoban, Thomas Schoeps">
-<meta name="description" content="Open Orienteering Mapper help">
-<meta name="keywords" content="Help, Orienteering, mapping">
-</head>
-<body>
+---
+title: Settings
+authors:
+  - Peter Hoban
+  - Thomas Schoeps
+keywords: Settings
+edited: 25 February 2013
+---
 
-
-<h3>Settings</h3>
 <p>In the settings dialog, the program can be adjusted to suit your application.</p>
 
 <h3>General page</h3>
@@ -34,7 +30,7 @@
 <p>This controls the same option as the above for map texts. It is separate because text display is particularly slow.</p>
 
 <h4 id="tolerance">Click tolerance</h4>
-<p>This controls how close you need to click on map objects or object handles for selecting them, but also for cut lines with the <a href="toolbars.html#cut_tool">cut tool</a> for example. Set a larger value if you have difficulties (or if you use a tablet), however this may lead to some unintentional selections.</p>
+<p>This controls how close you need to click on map objects or object handles for selecting them, but also for cut lines with the <a href="toolbars.md#cut_tool">cut tool</a> for example. Set a larger value if you have difficulties (or if you use a tablet), however this may lead to some unintentional selections.</p>
 
 <h4 id="snap_distance">Snap distance (Shift)</h4>
 <p>This controls how close you need to be for snapping to an existing object when holding Shift while editing an object or drawing.</p>
@@ -66,8 +62,3 @@
 <h4 id="rectange_preview_width">Rectangle tool: preview the width of lines with the helper cross</h4>
 <p>When this is checked, the helper cross adapts to the selected symbol: for each direction, two lines are drawn which show the radius of the used (line) symbol. This allows for better judgement of the result while drawing, but leads to more cluttering on the screen.</p>
 
-<p>&nbsp;</p>
-<hr/>
-<p><small>Updated on February 25th, 2013</small></p>
-</body>
-</html>

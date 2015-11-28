@@ -1,16 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD html 4.01 Transitional//EN">
-<html>
-<head>
-<title>OpenOrienteering Mapper Help - Templates</title>
-<link rel="stylesheet" href="oomap.css" type="text/css" title="OOMapper stylesheet">
-<meta name="author" content="Peter Hoban, Thomas Schoeps">
-<meta name="description" content="Open Orienteering Mapper help">
-<meta name="keywords" content="Help, Orienteering, mapping">
-</head>
-<body>
+---
+title: Introduction to Templates
+authors:
+  - Peter Hoban
+  - Thomas Schoeps
+keywords: Templates
+edited: 25 February 2013
+---
 
-
-<h3>Templates</h3>
 <p>Images, tracks recorded with GPS receivers and other layers which are used to provide base information for the mapper are called templates. They can be loaded into the map file using the template setup window which is available via the menu item Templates -&gt; Template Setup Window. Templates can also be "abused" to display information on the final map, for example sponsor logos which are only available as raster images.</p>
 
 <p><b>Attention</b>: as templates are not covered by the undo/redo system, be sure to save your map before making changes to them!</p>
@@ -23,7 +19,7 @@
 <li><a href="#type_map">Map templates</a>: omap, ocd files</li>
 </ul>
 
-<p>Additionally, templates can be classified into <b>georeferenced</b> and <b>non-georeferenced</b> templates. For georeferenced templates, information about the exact positioning of the template in a known world coordinate system is available - see <a href="georeferencing.html">georeferencing</a>. This way, they can be positioned on the map automatically provided that the map is georeferenced too. For non-georeferenced templates, this information is not available, so they have to be <a href="#positioning">positioned manually</a>.
+<p>Additionally, templates can be classified into <b>georeferenced</b> and <b>non-georeferenced</b> templates. For georeferenced templates, information about the exact positioning of the template in a known world coordinate system is available - see <a href="georeferencing.md">georeferencing</a>. This way, they can be positioned on the map automatically provided that the map is georeferenced too. For non-georeferenced templates, this information is not available, so they have to be <a href="#positioning">positioned manually</a>.
 
 <a name="setup"><h4>Template setup window</h4></a>
 
@@ -40,7 +36,7 @@
 <p>When a template is selected, it can be moved up and down in the list using the Move Up and Mode Down buttons to change its position in the display order.</p>
 
 <h4 id="close">Deleting or closing templates</h4>
-<p>Using the Delete or Close button, templates can be removed. The label text depends on the <a href="settings.html#keep_closed_templates">corresponding setting</a> "Keep settings of closed templates": if it is activated, it will be "Close" and it will be possible to reopen the template later with the menu item Templates -&gt; Reopen template..., otherwise it will be "Delete" and it will not be possible to reopen the template later.</p>
+<p>Using the Delete or Close button, templates can be removed. The label text depends on the <a href="settings.md#keep_closed_templates">corresponding setting</a> "Keep settings of closed templates": if it is activated, it will be "Close" and it will be possible to reopen the template later with the menu item Templates -&gt; Reopen template..., otherwise it will be "Delete" and it will not be possible to reopen the template later.</p>
 
 <h4 id="positioning">Positioning</h4>
 <p>At the bottom of the window, there are the template positioning capabilities:</p>
@@ -51,7 +47,7 @@
 
 <p>At the lower right is the toggle for the <b>template positioning window</b>. It enables to enter numerical values for the positioning of non-georeferenced templates, e.g. to rotate a template by 90 degrees, or to adapt the template rotation to the magnetic declination.</p>
 
-<p><a name="adjust">At the upper right is the <b>Adjust</b> button which enables to adjust the position of a non-georeferenced template to that of an existing template, or the map, which is in the correct position already.</a> <a href="template_adjust.html">Detailed instructions here</a>.</p>
+<p><a name="adjust">At the upper right is the <b>Adjust</b> button which enables to adjust the position of a non-georeferenced template to that of an existing template, or the map, which is in the correct position already.</a> <a href="template_adjust.md">Detailed instructions here</a>.</p>
 
 
 <h4>Template types</h4>
@@ -68,7 +64,7 @@
 
 <p>World files are text files containing 6 entries of a transformation matrix mapping pixel coordinates to grid coordinates of some geodesic coordinate reference system (<a href="http://en.wikipedia.org/wiki/World_file">more information on Wikipedia</a>). Unfortunately, they do not specify which coordinate reference system it is. So if you choose this option for positioning, you have to specify the coordinate reference system in the next step. You should get this information from the place where you got the georeferenced image from. For example, in Germany it is usually UTM or Gauss-Kr&uuml;ger with a limited range of possible middle meridians.</p>
 
-<p>In order for georeferenced positioning to work, the map must be georeferenced, too. If it is not at this point in time, the <a href="georeferencing.html">map georeferencing dialog</a> is shown as the next step, with the reference point coordinates already pre-filled as the center of the loaded image.</p>
+<p>In order for georeferenced positioning to work, the map must be georeferenced, too. If it is not at this point in time, the <a href="georeferencing.md">map georeferencing dialog</a> is shown as the next step, with the reference point coordinates already pre-filled as the center of the loaded image.</p>
 
 <h4>Manual positioning</h4>
 
@@ -96,9 +92,3 @@
 
 <p>For now, map templates can only be loaded as non-georeferenced.</p>
 
-
-<p>&nbsp;</p>
-<hr/>
-<p><small>Updated on February 25th, 2013</small></p>
-</body>
-</html>

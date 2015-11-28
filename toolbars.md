@@ -1,16 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD html 4.01 Transitional//EN">
-<html>
-<head>
-<title>OpenOrienteering Mapper Help - Toolbars</title>
-<link rel="stylesheet" href="oomap.css" type="text/css" title="OOMapper stylesheet">
-<meta name="author" content="Peter Hoban, Thomas Schoeps">
-<meta name="description" content="Open Orienteering Mapper help">
-<meta name="keywords" content="Help, Orienteering, mapping">
-</head>
-<body>
+---
+title: Toolbars
+authors:
+  - Peter Hoban
+  - Thomas Schoeps
+keywords: Toolbars
+edited: 25 February 2013
+---
 
-
-<h3>Toolbars</h3>
 <ul>
 <li><a href="#general">General</a></li>
 <li><a href="#view">View</a></li>
@@ -41,7 +37,7 @@
 <h3 id="view">View toolbar</h3>
 
 <h4 id="grid">Grid</h4>
-<p><img class=small src="../../images/grid.png" width="32" height="32" border="0" /> Click this button to toggle showing the <a href="grid.html">map grid</a>. Click the arrow to the right of this button to show the <a href="grid.html">grid configuration</a>.</p><br clear=all />
+<p><img class=small src="../../images/grid.png" width="32" height="32" border="0" /> Click this button to toggle showing the <a href="grid.md">map grid</a>. Click the arrow to the right of this button to show the <a href="grid.md">grid configuration</a>.</p><br clear=all />
 
 <h4 id="pan_map">Pan map</h4>
 <p><img class=small src="../../images/move.png" width="32" height="32" border="0" /> Use this tool <b>or the middle mouse button, or F6, or the arrow keys</b> to move the map by clicking the map and dragging the mouse.</p><br clear=all />
@@ -95,7 +91,7 @@ Using this tool, objects can be selected like with the <a href="#tool_edit_point
 <h4 id="tool_draw_path">Draw path tool (to draw lines and areas)</h4>
 <p><img class=small src="../../images/draw-path.png" width="32" height="32" border="0">The path tool draws line objects such as contour lines, watercourses and roads and area objects such as open land or different vegetation densities. To draw, first choose the symbol for the feature to be inserted by clicking it on the symbol window, then click the line tool if it has not been activated automatically.</p>
 
-<p>To draw a path consisting of <b>straight segments</b>, like the shape of a house, proceed by clicking at the position of each corner on the map. At the last corner, right click or double click to finish the path. Area symbols will be closed automatically, so you do not need to click the first position again. In case you do not want right clicking to set the last path point in addition to finishing the path, you can change this behavior in the <a href="settings.html">program settings</a>.</p>
+<p>To draw a path consisting of <b>straight segments</b>, like the shape of a house, proceed by clicking at the position of each corner on the map. At the last corner, right click or double click to finish the path. Area symbols will be closed automatically, so you do not need to click the first position again. In case you do not want right clicking to set the last path point in addition to finishing the path, you can change this behavior in the <a href="settings.md">program settings</a>.</p>
 
 <p>To create a <b>smooth path</b> (a cubic bezier spline), click and drag the mouse away in the continuing direction. This creates a node with control handles which may be subsequently used to refine the shape of the curve.<br/>
 <b>Important notice</b>: while this way of drawing curves may seem to be difficult at first, it is important to get used to it. Drawing "smooth" curves with many small straight segments instead is <b>not an alternative</b>, as these will look ugly when viewed closely. Just practice bezier curve drawing until you get used to it. Less nodes are often better than too many.</p>
@@ -151,7 +147,7 @@ Using this tool, objects can be selected like with the <a href="#tool_edit_point
 <p>When text is edited, a small window with horizontal and vertical alignment options is shown. To edit text after it is created, choose the <a href="#tool_edit_point">point edit tool</a>, select the text object, and click again inside the object.</p><br clear=all />
 
 <h4 id="draw_on_template">Template markup tool</h4>
-<p><img class=small src="../../images/pencil.png" width="32" height="32" border="0">This tool enables the freehand drawing of lines, annotation and erasure on images loaded as <a href="templates.html">templates</a>, in a choice of 8 colors. It is intended for surveying with a mobile computer.</p>
+<p><img class=small src="../../images/pencil.png" width="32" height="32" border="0">This tool enables the freehand drawing of lines, annotation and erasure on images loaded as <a href="templates.md">templates</a>, in a choice of 8 colors. It is intended for surveying with a mobile computer.</p>
 
 <p>Click and hold the left mouse button to draw while the mouse is moved. Hold the right mouse button as the mouse is moved to erase. The markup is saved in the template image file <b>permanently</b>, so it is good practice to keep a copy of the template file in another place or use a blank transparent image for drawing.</p><br clear=all />
 
@@ -162,7 +158,7 @@ Using this tool, objects can be selected like with the <a href="#tool_edit_point
 <p><img class=small src="../../images/tool-switch-symbol.png" width="32" height="32" border="0">This tool changes the symbols of the selected objects to another. To use it, select the object(s) to change on the map, then select the target symbol in the symbol window. (<b>Attention</b>: with default settings, it is not possible to do this the other way round as selecting an object will select its symbol, so the initial symbol selection is discarded.) Then click the tool and the map symbols will change to the target symbol - provided that the target symbol can be applied to the selected map objects (i.e. either both must be points, or both texts, or both one of line, area or combined symbols.)</p><br clear=all />
 
 <h4 id="fill_create_border">Fill or create border</h4>
-<p><img class=small src="../../images/tool-fill-border.png" width="32" height="32" border="0">Having drawn a <a href="drawing_toolbar.html#closed_object">closed boundary</a> which requires a fill (such as a fence containing a thicket) select the boundary on the map (using the <a href="#tool_edit_point">point edit tool</a> tool), then choose the required fill symbol in the symbols window. (<b>Attention</b>: with default settings, it is not possible to do this the other way round as selecting an object will select its symbol, so the initial symbol selection is discarded.) A left click on the fill tool will put the chosen fill into the selected boundary.</p>
+<p><img class=small src="../../images/tool-fill-border.png" width="32" height="32" border="0">Having drawn a <a href="drawing_toolbar.md#closed_object">closed boundary</a> which requires a fill (such as a fence containing a thicket) select the boundary on the map (using the <a href="#tool_edit_point">point edit tool</a> tool), then choose the required fill symbol in the symbols window. (<b>Attention</b>: with default settings, it is not possible to do this the other way round as selecting an object will select its symbol, so the initial symbol selection is discarded.) A left click on the fill tool will put the chosen fill into the selected boundary.</p>
 
 <p>Internally, this tool creates a duplicate of the selected object and assigns it the selected symbol. So, in addition to filling closed boundaries, it is also possible to create a boundary around an area, or create duplicates of lines with another symbol using this tool.</p><br clear=all />
 
@@ -182,7 +178,7 @@ Using this tool, objects can be selected like with the <a href="#tool_edit_point
 
 <p>To cut <b>lines</b>, click at the point where it is desired to break the line. The object will be split into two at this point and both will be selected, so it is possible to insert more cuts after the first. It is also possible to click on a line and drag the mouse along it to remove the marked part completely.</p>
 
-<p>To cut an <b>area object</b>, select it and draw a cut line from one side of its boundary to another. Drawing works exactly as with the <a href="#tool_draw_path">draw path tool</a>. It is necessary to start and end the cut line on the boundary of the area to be cut. It is not sufficient to cross the boundary; both ends of the line must be on the boundary within a tolerance of 5 pixels (this may be altered in the <a href="settings.html">settings dialog</a>). The cut line may contain any number of internal vertices and can be polygonal or curved. The cut occurs immediately when the line is finished on the boundary (with a right click or double click).</p><br clear=all />
+<p>To cut an <b>area object</b>, select it and draw a cut line from one side of its boundary to another. Drawing works exactly as with the <a href="#tool_draw_path">draw path tool</a>. It is necessary to start and end the cut line on the boundary of the area to be cut. It is not sufficient to cross the boundary; both ends of the line must be on the boundary within a tolerance of 5 pixels (this may be altered in the <a href="settings.md">settings dialog</a>). The cut line may contain any number of internal vertices and can be polygonal or curved. The cut occurs immediately when the line is finished on the boundary (with a right click or double click).</p><br clear=all />
 
 <h4 id="cut_hole">Cut holes</h4>
 <p><img class=small src="../../images/tool-cut-hole.png" width="32" height="32" border="0">This tool cuts a hole into an area object. To do so, first select the object with the <a href="#tool_edit_point">point edit tool</a>, then click the cut holes tool. Then simply draw the shape of the hole on the area as you would draw with the <a href="#tool_draw_path">draw path tool</a>. After finishing, the boundary of the hole may then be edited in the same way as any path.</p>
@@ -248,9 +244,3 @@ This tool is useful for making training maps where certain symbols are missing i
 <h4 id="area_xor">Area XOr</h4>
 <p><img class=small src="../../images/tool-boolean-xor.png" width="32" height="32" border="0">This tool will XOr all selected areas. This means that all parts of the selected areas that overlap with another selected area will be deleted. Select two or more objects of the same area type and then click on this tool to use it.</p><br clear=all />
 
-
-<p>&nbsp;</p>
-<hr/>
-<p><small>Updated on February 25th, 2013</small></p>
-</body>
-</html>

@@ -1,16 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD html 4.01 Transitional//EN">
-<html>
-<head>
-<title>OpenOrienteering Mapper Help - Color window</title>
-<link rel="stylesheet" href="oomap.css" type="text/css" title="OOMapper stylesheet">
-<meta name="author" content="Peter Hoban, Thomas Schoeps">
-<meta name="description" content="Open Orienteering Mapper help">
-<meta name="keywords" content="Help, Orienteering, mapping">
-</head>
-<body>
+---
+title: Color Window
+authors:
+  - Peter Hoban
+  - Thomas Schoeps
+keywords: Colors
+edited: 26 February 2013
+---
 
-
-<h3>Color window</h3>
 <p>This window can be shown by clicking the menu item Symbols -&gt; Color window.</p>
 
 <br/><br/><img src="images/color_dock_widget.png" border="0" /><br/><br/>
@@ -37,7 +33,7 @@
 <li><b>Custom RGB color</b>: you can enter the RGB value directly</li>
 </ul>
 
-<p>Note that while defining RGB colors is enough for normal desktop printing, using the <a href="view_menu.html#overprinting">overprinting simulation</a> effect requires to define spot color printing options also.
+<p>Note that while defining RGB colors is enough for normal desktop printing, using the <a href="view_menu.md#overprinting">overprinting simulation</a> effect requires to define spot color printing options also.
 
 <h4>Professional printing</h4>
 
@@ -49,7 +45,7 @@
 <li>If the second option is activated, this color entry represents a color which is printed as a percentage of a spot color (screen) or a mixture of multiple spot colors (overprint). Choose the referenced spot colors and their amounts below.</li>
 </ul>
 
-<p>When multiple colors overlap each other on the map and <a href="view_menu.html#overprinting">overprinting simulation</a> is activated, the program simulates the effect of overprinting real spot colors where the colors are darkened when printed on top of each other. This can be very useful to increase map legibility, however it is not desired in all situations. Sometimes a color on top of another should erase the lower color completely. This can be set by activating the "<b>Knockout</b>" option.</p>
+<p>When multiple colors overlap each other on the map and <a href="view_menu.md#overprinting">overprinting simulation</a> is activated, the program simulates the effect of overprinting real spot colors where the colors are darkened when printed on top of each other. This can be very useful to increase map legibility, however it is not desired in all situations. Sometimes a color on top of another should erase the lower color completely. This can be set by activating the "<b>Knockout</b>" option.</p>
 
 <p>On the right side of the professional page, there are the options for <b>CMYK color printing</b>. These are similar to the RGB color options:</p>
 
@@ -59,9 +55,3 @@
 <li><b>Custom process color</b>: you can enter the CMYK value directly</li>
 </ul>
 
-
-<p>&nbsp;</p>
-<hr/>
-<p><small>Updated on February 26th, 2013</small></p>
-</body>
-</html>

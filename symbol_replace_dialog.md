@@ -1,16 +1,11 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD html 4.01 Transitional//EN">
-<html>
-<head>
-<title>OpenOrienteering Mapper Help - Symbol replacement dialog</title>
-<link rel="stylesheet" href="oomap.css" type="text/css" title="OOMapper stylesheet">
-<meta name="author" content="Peter Hoban, Thomas Schoeps">
-<meta name="description" content="Open Orienteering Mapper help">
-<meta name="keywords" content="Help, Orienteering, mapping">
-</head>
-<body>
-
-
-<h3>Symbol replacement dialog</h3>
+---
+title: Symbol Replacement Dialog
+authors:
+  - Peter Hoban
+  - Thomas Schoeps
+keywords: Templates
+edited: 26 February 2013
+---
 
 <p>This dialog enables to replace the symbol set in the current map file by the set of another file. It is possible to accurately select a replacement symbol for each old symbol. Show it by clicking the menu item Symbols -&gt; Replace symbol set..., then select the map file from which to take the new symbol set. Note that this is not a way to e.g. rescale a map from 1:10000 to 1:15000, use Map -> Scale map... instead.</p>
 
@@ -29,8 +24,3 @@
 <p>As long as this check is activated, replacement symbols will be matched to existing symbols based on their numbers only. You can check the replacements in the symbol list below.</p>
 <p>After deactivating this, you can choose any replacement symbol (or also to not replace a certain symbol) for any old symbol by clicking the replacement symbol in the list and choosing the desired option.</p>
 
-<p>&nbsp;</p>
-<hr/>
-<p><small>Updated on February 26th, 2013</small></p>
-</body>
-</html>
