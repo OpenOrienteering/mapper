@@ -49,7 +49,7 @@ These controls provide standard file management tools.
 </tr>
 <tr>
 <td> </td>
-<td><b>Export...</b></td>
+<td><b>Export as..</b></td>
 <td> </td>
 <td>Permits the export of the currently opened map to another format. Currently pdf and raster image export are supported.</td>
 </tr>
@@ -75,7 +75,7 @@ These controls provide standard file management tools.
 <tr>
 <td> </td>
 <td><b>Exit</b></td>
-<td> </td>
+<td><b>Ctrl-Q</b></td>
 <td>Exits the program, which will close all open map windows.</td>
 </tr>
 </table>
