@@ -55,5 +55,5 @@ Yes, Mapper reads .ocd files from different version (8 .. 11). But currently onl
 ### Will Mapper be available for Android?
 An Android version is available. It already has a special user interface, but it needs a lot of work. See the [instructions for the Android app](android-index.md).
 
-### Will Mapper be available for iPhone / iPad?**
+### Will Mapper be available for iPhone / iPad?
 Probably not, due to distribution issues. Technically, a build should be feasible.
