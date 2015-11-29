@@ -23,8 +23,8 @@ PROJECT_LOGO           = "@CMAKE_CURRENT_SOURCE_DIR@/../openorienteering.png"
 
 QUIET                  = YES
 
-INPUT                  = "@CMAKE_CURRENT_BINARY_DIR@/pages"
-STRIP_FROM_PATH        = "@CMAKE_CURRENT_BINARY_DIR@/pages"
+INPUT                  = "@CMAKE_CURRENT_BINARY_DIR@/pages-tmp"
+STRIP_FROM_PATH        = "@CMAKE_CURRENT_BINARY_DIR@/pages-tmp"
 IMAGE_PATH             = "@CMAKE_CURRENT_SOURCE_DIR@/pages/images"
 IMAGE_PATH            += "@CMAKE_CURRENT_SOURCE_DIR@/../../images"
 ENABLE_PREPROCESSING   = NO
