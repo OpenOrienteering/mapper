@@ -28,7 +28,7 @@ Ctrl+N
 
 Click to create a new map.
 
-#### ![ ](../mapper-images/open.png) ![ ](../mapper-images/save.png) Open / Save map {#open_save_map}
+#### ![ ](../mapper-images/open.png) ![ ](../mapper-images/save.png) Open / save map {#open_save_map}
 Ctrl+O / Ctrl+S
 
 Click to open/save an existing map.
