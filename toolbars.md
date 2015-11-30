@@ -13,15 +13,16 @@ todo:
 
 <!-- Note: Each item needs an ID. This ID is used to open the context-sensitive help. -->
 
- * [General toolbar](#general)
- * [View toolbar](#view)
- * [Drawing toolbar](#drawing)
- * [Advanced drawing](#advanceddrawing)
+ * [General toolbar](#general-toolbar)
+ * [View toolbar](#view-toolbar)
+ * [Map parts toolbar](#map-parts-toolbar)
+ * [Drawing toolbar](#drawing-toolbar)
+ * [Advanced drawing](#advanced-drawing-toolbar)
 
 *Note:* Toolbars may be moved to a more convenient position.  To detach and move, pick the handle (the vertical line of dots) at the left end and drag the toolbar to your preferred position.  The resulting order of your tools may thus be different from this page.
 
 
-## General toolbar {#general}
+## General toolbar
 
 #### ![ ](../mapper-images/new.png) New map {#new_map}
 Ctrl+N
@@ -49,7 +50,7 @@ Ctrl+Z / Ctrl+Y
 Click to undo or redo the last map editing step.
 
 
-## View toolbar {#view}
+## View toolbar
 
 #### ![ ](../mapper-images/grid.png) Grid {#grid}
 G
@@ -74,14 +75,24 @@ Use this tool to display the whole map, including the currently visible template
 This can be particularly useful when items (objects, templates) are accidentally moved far from your working area and out of sight. This tool brings them onscreen. If the map is just a dot in one corner then the rogue feature is near the other edge of the screen.
 
 
-## Drawing toolbar {#drawing}
+## Map parts toolbar
+
+This toolbar will not be shown unless the map has multiple parts.
+
+At the moment, the map parts toolbar has only a signle drop down box for indicating and selecting the active map part.
+
+
+
+## Drawing toolbar
 
 #### ![ ](../mapper-images/tool-edit.png) Object selection and point editing tool {#tool_edit_point}
+E
+
 Using this tool, click on the map to select a single object. If the object you wish is not selected with the first click, click more times to go through all objects below the cursor. To select multiple object hold the Shift key when you click subsequent objects. If you Shift-click on an object which has been already been selected the click will deselect that object. A group of objects may also be selected by drawing a selection box with a left-click and drag.
 
 If only a few objects are selected, the nodes defining these object become visible. There are different types of nodes:
  - A square stands for a normal node.
- - A diamond depicts a [dash point (see below)](#dashpoint).
+ - A diamond depicts a [dash point (see below)](#dash-points).
  - A circle depicts a bezier curve handle, defining the tangent of a curve point.
 Individual nodes can be dragged with the mouse to change their position. To change the tangent direction of a node on a bezier curve click the end of the handle and drag it. Longer handles have greater influence, while shorter handles have only local effect.
 
@@ -93,6 +104,8 @@ To move the selected objects as a whole, click and drag the dashed box which enc
 
 
 #### ![ ](../mapper-images/tool-edit-line.png) Object selection and line editing tool {#tool_edit_line}
+L
+
 Using this tool, objects can be selected like with the [point editing tool](#tool_edit_point).
 
 If only a few objects are selected, line segments of these objects can be edited by clicking them and dragging the mouse. For straight lines, the angle constraint will be active automatically. This makes it easy to edit e.g. rectangular houses while ensuring that they stay rectangular. To toggle the angle constraint, hold Ctrl.
@@ -101,13 +114,68 @@ To switch a line segment between curved and straight, hold Ctrl while clicking t
 
 
 #### ![ ](../mapper-images/draw-point.png) Draw point tool {#tool_draw_point}
+S
+
 This tool enables you to insert a point symbol from the map symbol window. This includes boulders, rocky ground, knolls, waterholes or any other symbol representing a point feature too small to be drawn to scale. Select the symbol for the feature to be inserted by clicking it on the symbol window, click the point tool (if it is not activated automatically) and then click on the map to insert that feature on the map.
 
 Some point symbols may be rotated, like the cave or the elongated small knoll. To set the desired orientation, click and move the mouse into the desired direction while holding the left mouse button down. To change the orientation after the point object has been placed, use the [rotate pattern tool](#tool_rotate_pattern).
 
 
-#### ![ ]()  {#}
-...
+#### ![ ](../mapper-images/draw-path.png) Draw path tool (to draw lines and areas) {#tool_draw_path}
+P
+
+The path tool draws line objects such as contour lines, watercourses and roads and area objects such as open land or different vegetation densities. To draw, first choose the symbol for the feature to be inserted by clicking it on the symbol window, then click the line tool if it has not been activated automatically.
+
+To draw a path consisting of **straight segments**, like the shape of a house, proceed by clicking at the position of each corner on the map. At the last corner, right click or double click to finish the path. Area symbols will be closed automatically, so you do not need to click the first position again. In case you do not want right clicking to set the last path point in addition to finishing the path, you can change this behavior in the [program settings](settings.md).
+
+To create a **smooth path** (a cubic bezier spline), click and drag the mouse away in the continuing direction. This creates a node with control handles which may be subsequently used to refine the shape of the curve.
+
+*Note:* While this way of drawing curves may seem to be difficult at first, it is important to get used to it. Drawing "smooth" curves with many small straight segments instead is **not an alternative**, as these will look ugly when viewed closely. Just practice bezier curve drawing until you get used to it. Less nodes are often better than too many.
+
+It is also possible to **mix straight and curved segments**: click once to create a corner point, click and drag to create a curve points. Segments between two curve points will be created as smooth curves, while all other segments will be straight.
+
+To **snap** to existing objects when starting to draw or while drawing a path, hold Shift. To **follow** the shape of existing objects while drawing, click at the existing object while holding Shift and drag the mouse along it. Depending on the direction in which you drag the mouse, the object will be followed along this direction.
+
+To constrain the **drawing angle**, hold Ctrl while drawing a path. The available angles will be intelligently chosen such that you can continue paths straight forward, or insert 90 or 45 degree corners.
+
+To **pick a direction** of an existing object, Ctrl+click the desired object before starting to draw the path. Drawing angles will then be automatically constrained to the picked direction (and its perpendicular directions) until you press the Ctrl key. This is very useful for e.g. drawing parallel houses or hedges/fences in front of houses which are parallel to them.
+
+To remove a misplaced point while drawing a line use the backspace key to **undo** one step at a time, or leave it and correct the position using the [point editing tool](#tool_edit_point). If the partly drawn line is discovered to be a mistake use the Esc key to abort and remove it entirely.
+
+##### Closed paths
+To draw a **closed path** (closed contour line, lake, etc.), press the return key to close the last segment of the path to the starting point. When drawing with area symbols, paths are closed automatically. However, there may be an unwanted corner at the start/end point if you just finish the path roughly at the position where you started it, instead of pressing return.
+
+##### Dash points
+Dash points serve different purposes, depending on the symbol on which they are used:
+
+1. For dashed line symbols like small paths it is sometimes useful to be able to steer the positioning of the dashes, e.g. path crossings should preferably be at the center of line dashes. When a dash point is inserted in a line, dashes will be exactly centered on this point.
+2. For lines with patterns such as fences, it is sometimes useful to be able to steer the positioning of the patterns. When a dash point is inserted in a line with such a pattern, patterns are shifted away from it. This is e.g. useful for corners of a fence to ensure a minimum distance of the dash patterns to the corners.
+3. Some symbols (e.g. 516 Power line) require bars at some nodes (pylons) but for example not at the point where the line ends at the edge of the map (no pylon). The bar is defined as a dash symbol inside the line symbol for 516 Power line. It will appear only at dash points along a line.
+
+In general, it is enough to remember that dash points steer the positioning of line dashes, patterns, and dash symbols. When drawing, just try out how it behaves. Dash point nodes have a diamond shape when the line is selected (ordinary nodes are square). Drawing of a node as a dash point is toggled with the space bar: dash points will be drawn while the helpful tip at the bottom edge shows "**Dash points on**". This switch may be varied from node to node along the line.
+
+
+#### ![ ](../mapper-images/draw-circle.png) Draw circle / ellipse tool (to draw lines and areas) {#tool_draw_circle}
+O
+
+The circle tool can be used to draw round lines and areas. To start drawing, first select a symbol of type line or area and the circle tool.
+
+To draw a circle, either click on one point on the circle and then on the opposite point, or click and hold at the starting point and release the mouse button at the end point.
+
+To draw an ellipse, click at one of the boundary points on the major or minor axis of the ellipse, then click and hold at the opposite point on the ellipse and define the extent by dragging the mouse away.
+
+Circles and ellipses are represented by four bezier curves and can be edited like any other path.
+
+
+#### ![ ](../mapper-images/draw-rectangle.png) Draw rectangle tool (to draw lines and areas) {#tool_draw_rectangle}
+R
+
+The rectangle tool is used to draw shapes with any number of 90 or 45 degree corners such as a building. To draw, first select the line or area symbol you want to draw with and select the rectangle tool. Then click once at each corner and double click or right click at the last corner of the rectangle. You can speed up drawing by clicking and dragging the mouse to draw two corners in one step: one at the click position and one at the release position.
+
+While drawing, hold Ctrl to constrain the position of the next corner to positions which align with already drawn segments. For example, when drawing a small indentation, Ctrl can be held at its last corner to set it exactly at the position to which the line before the indentation would extend.
+
+Rectangle objects can be edited like any path. However, consider using the [line edit tool](#tool_edit_line) to preserve the angles.
+
 
 #### ![ ]()  {#}
 ...
@@ -120,55 +188,6 @@ Some point symbols may be rotated, like the cave or the elongated small knoll. T
 #### ![ ]()  {#}
 ...
 
----
-
-
-<h4 id="tool_draw_path">Draw path tool (to draw lines and areas)</h4>
-<p><img class="small" src="../mapper-images/draw-path.png" width="32" height="32" border="0">The path tool draws line objects such as contour lines, watercourses and roads and area objects such as open land or different vegetation densities. To draw, first choose the symbol for the feature to be inserted by clicking it on the symbol window, then click the line tool if it has not been activated automatically.</p>
-
-<p>To draw a path consisting of <b>straight segments</b>, like the shape of a house, proceed by clicking at the position of each corner on the map. At the last corner, right click or double click to finish the path. Area symbols will be closed automatically, so you do not need to click the first position again. In case you do not want right clicking to set the last path point in addition to finishing the path, you can change this behavior in the <a href="settings.md">program settings</a>.</p>
-
-<p>To create a <b>smooth path</b> (a cubic bezier spline), click and drag the mouse away in the continuing direction. This creates a node with control handles which may be subsequently used to refine the shape of the curve.<br/>
-<b>Important notice</b>: while this way of drawing curves may seem to be difficult at first, it is important to get used to it. Drawing "smooth" curves with many small straight segments instead is <b>not an alternative</b>, as these will look ugly when viewed closely. Just practice bezier curve drawing until you get used to it. Less nodes are often better than too many.</p>
-
-<p>It is also possible to <b>mix straight and curved segments</b>: click once to create a corner point, click and drag to create a curve points. Segments between two curve points will be created as smooth curves, while all other segments will be straight.</p>
-
-<p><a name="closed_object"></a>To draw a <b>closed path</b> (closed contour line, lake, etc.), press the return key to close the last segment of the path to the starting point. When drawing with area symbols, paths are closed automatically, however there may be an unwanted corner at the start/end point if you just finish the path roughly at the position where you started it, instead of pressing return.</p>
-
-<p>To <b>snap</b> to existing objects when starting to draw or while drawing a path, hold Shift. To <b>follow</b> the shape of existing objects while drawing, click at the existing object while holding Shift and drag the mouse along it. Depending on the direction in which you drag the mouse, the object will be followed along this direction.</p>
-
-<p>To constrain the <b>drawing angle</b>, hold Ctrl while drawing a path. The available angles will be intelligently chosen such that you can continue paths straight forward, or insert 90 or 45 degree corners.</p>
-
-<p>To <b>pick a direction</b> of an existing object, Ctrl+click the desired object before starting to draw the path. Drawing angles will then be automatically constrained to the picked direction (and its perpendicular directions) until you press the Ctrl key. This is very useful for e.g. drawing parallel houses or hedges/fences in front of houses which are parallel to them.</p>
-
-<p>To remove a misplaced point while drawing a line use the backspace key to <b>undo</b> one step at a time, or leave it and correct the position using the <a href="#tool_edit_point">edit tool</a>. If the partly drawn line is discovered to be a mistake use the Esc key to abort and remove it entirely.</p>
-
-<h4 id name="dashpoint">Dash points</h4>
-<p>Dash points serve different purposes, depending on the symbol on which they are used:</p>
-
-<p><b>1.</b> For dashed line symbols like small paths it is sometimes useful to be able to steer the positioning of the dashes, e.g. path crossings should preferably be at the center of line dashes. When a dash point is inserted in a line, dashes will be exactly centered on this point.</p>
-
-<p><b>2.</b> For lines with patterns such as fences, it is sometimes useful to be able to steer the positioning of the patterns. When a dash point is inserted in a line with such a pattern, patterns are shifted away from it. This is e.g. useful for corners of a fence to ensure a minimum distance of the dash patterns to the corners.</p>
-
-<p><b>3.</b> Some symbols (e.g. 516 Power line) require bars at some nodes (pylons) but for example not at the point where the line ends at the edge of the map (no pylon). The bar is defined as a dash symbol inside the line symbol for 516 Power line. It will appear only at dash points along a line.</p>
-
-<p>In general, it is enough to remember that dash points steer the positioning of line dashes, patterns, and dash symbols. When drawing, just try out how it behaves. Dash point nodes have a diamond shape when the line is selected (ordinary nodes are square). Drawing of a node as a dash point is toggled with the space bar: dash points will be drawn while the helpful tip at the bottom edge shows "<b>Dash points on</b>". This switch may be varied from node to node along the line.<br clear="all" />
-
-<h4 id="tool_draw_circle">Draw circle / ellipse tool (to draw lines and areas)</h4>
-<p><img class="small" src="../mapper-images/draw-circle.png" width="32" height="32" border="0">The circle tool can be used to draw round lines and areas. To start drawing, first select a symbol of type line or area and the circle tool.</p>
-
-<p>To draw a circle, either click on one point on the circle and then on the opposite point, or click and hold at the starting point and release the mouse button at the end point.</p>
-
-<p>To draw an ellipse, click at one of the boundary points on the major or minor axis of the ellipse, then click and hold at the opposite point on the ellipse and define the extent by dragging the mouse away.</p>
-
-<p>Circles and ellipses are represented by four bezier curves and can be edited like any other path.</p><br clear="all" />
-
-<h4 id="tool_draw_rectangle">Draw rectangle tool (to draw lines and areas)</h4>
-<p><img class="small" src="../mapper-images/draw-rectangle.png" width="32" height="32" border="0">The rectangle tool is used to draw shapes with any number of 90 or 45 degree corners such as a building. To draw, first select the line or area symbol you want to draw with and select the rectangle tool. Then click once at each corner and double click or right click at the last corner of the rectangle. You can speed up drawing by clicking and dragging the mouse to draw two corners in one step: one at the click position and one at the release position.</p>
-
-<p>While drawing, hold Ctrl to constrain the position of the next corner to positions which align with already drawn segments. For example, when drawing a small indentation, Ctrl can be held at its last corner to set it exactly at the position to which the line before the indentation would extend.</p>
-
-<p>Rectangle objects can be edited like any path. However, consider using the <a href="#tool_edit_line">line edit tool</a> to preserve the angles.</p><br clear="all" />
 
 <h4 id="tool_draw_text">Write text tool</h4>
 <p><img class="small" src="../mapper-images/draw-text.png" width="32" height="32" border="0">This tool places text on the map. In order to be language-independent orienteering maps generally do not have names or text information on features,  but text is useful for map titles and version numbers for example. It is necessary to select a text symbol (which determines the font settings) before the text tool will become available.</p>
@@ -193,7 +212,7 @@ Some point symbols may be rotated, like the cave or the elongated small knoll. T
 <p><img class="small" src="../mapper-images/tool-switch-symbol.png" width="32" height="32" border="0">This tool changes the symbols of the selected objects to another. To use it, select the object(s) to change on the map, then select the target symbol in the symbol window. (<b>Attention</b>: with default settings, it is not possible to do this the other way round as selecting an object will select its symbol, so the initial symbol selection is discarded.) Then click the tool and the map symbols will change to the target symbol - provided that the target symbol can be applied to the selected map objects (i.e. either both must be points, or both texts, or both one of line, area or combined symbols.)</p><br clear="all" />
 
 <h4 id="fill_create_border">Fill or create border</h4>
-<p><img class="small" src="../mapper-images/tool-fill-border.png" width="32" height="32" border="0">Having drawn a <a href="drawing_toolbar.md#closed_object">closed boundary</a> which requires a fill (such as a fence containing a thicket) select the boundary on the map (using the <a href="#tool_edit_point">point edit tool</a> tool), then choose the required fill symbol in the symbols window. (<b>Attention</b>: with default settings, it is not possible to do this the other way round as selecting an object will select its symbol, so the initial symbol selection is discarded.) A left click on the fill tool will put the chosen fill into the selected boundary.</p>
+<p><img class="small" src="../mapper-images/tool-fill-border.png" width="32" height="32" border="0">Having drawn a <a href="drawing_toolbar.md#closed-paths">closed boundary</a> which requires a fill (such as a fence containing a thicket) select the boundary on the map (using the <a href="#tool_edit_point">point edit tool</a> tool), then choose the required fill symbol in the symbols window. (<b>Attention</b>: with default settings, it is not possible to do this the other way round as selecting an object will select its symbol, so the initial symbol selection is discarded.) A left click on the fill tool will put the chosen fill into the selected boundary.</p>
 
 <p>Internally, this tool creates a duplicate of the selected object and assigns it the selected symbol. So, in addition to filling closed boundaries, it is also possible to create a boundary around an area, or create duplicates of lines with another symbol using this tool.</p><br clear="all" />
 
