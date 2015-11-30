@@ -86,7 +86,7 @@ At the moment, the map parts toolbar has only a signle drop down box for indicat
 
 ## Drawing toolbar
 
-#### ![ ](../mapper-images/tool-edit.png) Edit objects tool {#tool_edit_point}
+#### ![ ](../mapper-images/tool-edit.png) Edit objects {#tool_edit_point}
 E
 
 Using this tool, click on the map to select a single object. If the object you wish is not selected with the first click, click more times to go through all objects below the cursor. To select multiple object hold the Shift key when you click subsequent objects. If you Shift-click on an object which has been already been selected the click will deselect that object. A group of objects may also be selected by drawing a selection box with a left-click and drag.
@@ -104,7 +104,7 @@ To move the selected objects as a whole, click and drag the dashed box which enc
  - Holding **Shift** makes the cursor snap to other existing objects.
 
 
-#### ![ ](../mapper-images/tool-edit-line.png) Edit lines tool {#tool_edit_line}
+#### ![ ](../mapper-images/tool-edit-line.png) Edit lines {#tool_edit_line}
 L
 
 Using this tool, objects can be selected like with the [point editing tool](#tool_edit_point).
@@ -114,7 +114,7 @@ If only a few objects are selected, line segments of these objects can be edited
 To switch a line segment between curved and straight, hold Ctrl while clicking the segment.
 
 
-#### ![ ](../mapper-images/draw-point.png) Set point objects tool {#tool_draw_point}
+#### ![ ](../mapper-images/draw-point.png) Set point objects {#tool_draw_point}
 S
 
 This tool enables you to insert a point symbol from the map symbol window. This includes boulders, rocky ground, knolls, waterholes or any other symbol representing a point feature too small to be drawn to scale. Select the symbol for the feature to be inserted by clicking it on the symbol window, click the point tool (if it is not activated automatically) and then click on the map to insert that feature on the map.
@@ -122,7 +122,7 @@ This tool enables you to insert a point symbol from the map symbol window. This 
 Some point symbols may be rotated, like the cave or the elongated small knoll. To set the desired orientation, click and move the mouse into the desired direction while holding the left mouse button down. To change the orientation after the point object has been placed, use the [rotate pattern tool](#tool_rotate_pattern).
 
 
-#### ![ ](../mapper-images/draw-path.png) Draw paths tool {#tool_draw_path}
+#### ![ ](../mapper-images/draw-path.png) Draw paths {#tool_draw_path}
 P
 
 The path tool draws line objects such as contour lines, watercourses and roads and area objects such as open land or different vegetation densities. To draw, first choose the symbol for the feature to be inserted by clicking it on the symbol window, then click the line tool if it has not been activated automatically.
@@ -156,7 +156,7 @@ Dash points serve different purposes, depending on the symbol on which they are 
 In general, it is enough to remember that dash points steer the positioning of line dashes, patterns, and dash symbols. When drawing, just try out how it behaves. Dash point nodes have a diamond shape when the line is selected (ordinary nodes are square). Drawing of a node as a dash point is toggled with the space bar: dash points will be drawn while the helpful tip at the bottom edge shows "**Dash points on**". This switch may be varied from node to node along the line.
 
 
-#### ![ ](../mapper-images/draw-circle.png) Draw circles and ellipses tool {#tool_draw_circle}
+#### ![ ](../mapper-images/draw-circle.png) Draw circles and ellipses {#tool_draw_circle}
 O
 
 The circle tool can be used to draw round lines and areas. To start drawing, first select a symbol of type line or area and the circle tool.
@@ -168,7 +168,7 @@ To draw an ellipse, click at one of the boundary points on the major or minor ax
 Circles and ellipses are represented by four bezier curves and can be edited like any other path.
 
 
-#### ![ ](../mapper-images/draw-rectangle.png) Draw rectangles tool {#tool_draw_rectangle}
+#### ![ ](../mapper-images/draw-rectangle.png) Draw rectangles {#tool_draw_rectangle}
 Ctrl+R
 
 The rectangle tool is used to draw shapes with any number of 90 or 45 degree corners such as a building. To draw, first select the line or area symbol you want to draw with and select the rectangle tool. Then click once at each corner and double click or right click at the last corner of the rectangle. You can speed up drawing by clicking and dragging the mouse to draw two corners in one step: one at the click position and one at the release position.
@@ -178,17 +178,17 @@ While drawing, hold Ctrl to constrain the position of the next corner to positio
 Rectangle objects can be edited like any path. However, consider using the [line edit tool](#tool_edit_line) to preserve the angles.
 
 
-#### ![ ](../mapper-images/draw-freehand.png) Draw free-handedly tool {#tool_draw_freehand}
+#### ![ ](../mapper-images/draw-freehand.png) Draw free-handedly {#tool_draw_freehand}
 This tool draws both line and area objects by approximating the path taken by the cursor using straight line segments. To use this tool, click at the starting point, drag the cursor where you want the path to go then release the mouse to finish drawing. The object you have created can be edited in the same way as other line or area objects.
 
-#### ![ ](../mapper-images/tool-fill.png) Fill bounded areas tool {#tool_fill}
+#### ![ ](../mapper-images/tool-fill.png) Fill bounded areas {#tool_fill}
 F
 
 This tool fills areas of unbroken white space with an area symbol. To use this tool, select the area symbol then click on white space i.e. any place not already covered by another area object. Internally, this tool first finds all paths, which can belong to many different objects, that form a boundary around the unbroken white space. A new closed shape is created that has the same paths as the white space boundary and is filled with your chosen symbol. Also, if you use this tool with a line symbol selected, then a border around the white space will be created. 
 
 *Attention:* This tool will not work if your chosen white space is not completely contained by other path objects. 
 
-#### ![ ](../mapper-images/draw-text.png) Write text tool {#tool_draw_text}
+#### ![ ](../mapper-images/draw-text.png) Write text {#tool_draw_text}
 T
 
 This tool places text on the map. In order to be language-independent orienteering maps generally do not have names or text information on features, but text is useful for map titles and version numbers for example. It is necessary to select a text symbol (which determines the font settings) before the text tool will become available.
@@ -200,7 +200,7 @@ Two different types of text objects can be placed with this tool:
 
 When text is edited, a small window with horizontal and vertical alignment options is shown. To edit text after it is created, choose the [edit objects tool](#tool_edit_point), select the text object, and click again inside the object.
 
-#### ![ ](../mapper-images/pencil.png) Template markup tool {#draw_on_template}
+#### ![ ](../mapper-images/pencil.png) Template markup {#draw_on_template}
 This tool enables the freehand drawing of lines, annotation and erasure on images loaded as [templates](templates.md), in a choice of 8 colors. It is intended for surveying with a mobile computer.
 
 Click and hold the left mouse button to draw while the mouse is moved. Hold the right mouse button as the mouse is moved to erase. The markup is saved in the template image file **permanently**, so it is good practice to keep a copy of the template file in another place or use a blank transparent image for drawing.
@@ -208,13 +208,13 @@ Click and hold the left mouse button to draw while the mouse is moved. Hold the 
 
 ## Editing toolbar
 
-#### ![ ](../mapper-images/delete.png) Delete tool {#tool_delete}
+#### ![ ](../mapper-images/delete.png) Delete {#tool_delete}
 Del
 
 This tool deletes a currently selected object(s).
 
 
-#### ![ ](../mapper-images/tool-duplicate.png) Duplicate tool {#duplicate}
+#### ![ ](../mapper-images/tool-duplicate.png) Duplicate {#duplicate}
 D
 
 This tool creates a duplicate of any selected object. Select the object(s), then click the tool to create an identical second symbol in the same place. As the duplicate is created in the same place, the appearance of the map does not immediately change. However, the duplicate can be selected and dragged to another location leaving the original symbol behind. To drag a symbol select the [edit objects tool](#tool_edit_point), then click and hold on the enclosing box and drag as required. The duplicate tool is particularly useful when applied to create and move identical groups of items.
@@ -233,13 +233,13 @@ Having drawn a [closed boundary](drawing_toolbar.md#closed-paths) which requires
 Internally, this tool creates a duplicate of the selected object and assigns it the selected symbol. So, in addition to filling closed boundaries, it is also possible to create a boundary around an area, or create duplicates of lines with another symbol using this tool.
 
 
-#### ![ ](../mapper-images/tool-switch-dashes.png) Switch dash direction tool {#switch_dashes}
+#### ![ ](../mapper-images/tool-switch-dashes.png) Switch dash direction {#switch_dashes}
 Ctrl+D
 
 This tool changes the direction of the selected (line) objects, so e.g. dashes of fences or cliffs will be flipped to the other side. Internally, the tool just reverses the coordinates of the path objects.
 
 
-#### ![ ](../mapper-images/tool-connect-paths.png) Connect path tool {#connect}
+#### ![ ](../mapper-images/tool-connect-paths.png) Connect path {#connect}
 C
 
 This tool enables two (or more) selected lines to be joined together to create a single line.
@@ -247,13 +247,13 @@ This tool enables two (or more) selected lines to be joined together to create a
 It is necessary that the ends to be joined are very close together, otherwise nothing will happen. It may be necessary to adjust the position and direction of the node at the join after connecting the lines.
 
 
-#### ![ ](../mapper-images/tool-boolean-union.png) Unify areas tool {#unify_areas}
+#### ![ ](../mapper-images/tool-boolean-union.png) Unify areas {#unify_areas}
 U
 
 This tool merges two or more areas (having the same symbol) into one, deleting the overlapping parts. Simply select two or more areas using the [edit objects tool](#tool_edit_point) and then click on the Unify Areas tool to apply it.
 
 
-#### ![ ](../mapper-images/tool-cut.png) Cut object tool {#cut_tool}
+#### ![ ](../mapper-images/tool-cut.png) Cut object {#cut_tool}
 K
 
 This tool cuts a selected existing line or area object into two parts.
@@ -263,7 +263,7 @@ To cut **lines*, click at the point where it is desired to break the line. The o
 To cut an **area object**, select it and draw a cut line from one side of its boundary to another. Drawing works exactly as with the [draw path tool](#tool_draw_path). It is necessary to start and end the cut line on the boundary of the area to be cut. It is not sufficient to cross the boundary; both ends of the line must be on the boundary within a tolerance of 5 pixels (this may be altered in the [settings dialog](settings.md)). The cut line may contain any number of internal vertices and can be polygonal or curved. The cut occurs immediately when the line is finished on the boundary (with a right click or double click).
 
 
-#### ![ ](../mapper-images/tool-cut-hole.png) Cut free form hole tool {#cut_hole}
+#### ![ ](../mapper-images/tool-cut-hole.png) Cut free form hole {#cut_hole}
 H
 
 This tool cuts a hole into an area object. To do so, first select the object with the [point edit tool](#tool_edit_point), then click the cut free form hole tool. Then simply draw the shape of the hole on the area as you would draw with the [draw path tool](#tool_draw_path). After finishing, the boundary of the hole may then be edited in the same way as any path.
@@ -273,7 +273,7 @@ Apart from free form holes, the menu shown by clicking the arrow to the right of
 If the line describing the hole crosses the boundary of the object, the area outside the former boundary and inside the "hole" will be filled with the area symbol; however, this **must be avoided**! Features such as the unify areas tool or the area measurement will fail for such objects.
 
 
-#### ![ ](../mapper-images/tool-rotate.png) Rotate object(s) tool {#rotate}
+#### ![ ](../mapper-images/tool-rotate.png) Rotate object(s) {#rotate}
 Z
 
 This tool rotates any selected object(s), which can include the whole map, about a selected pivot point and by any angle. Select the item(s) to be rotated using the [point edit tool](#tool_edit_point), then click the rotate tool. 
@@ -290,13 +290,13 @@ This tool has two purposes:
 To use it, first select the object to be changed with the [point edit tool](#tool_edit_point), then click the rotate pattern tool. Then click any position on the map and drag the mouse into the desired direction to change the object's pattern to.
 
 
-#### ![ ](../mapper-images/tool-scale.png) Scale object(s) tool {#scale}
+#### ![ ](../mapper-images/tool-scale.png) Scale object(s) {#scale}
 Z
 
 This tool scales the selected object(s), which can include the whole map. It works completely analogous to the [rotate tool](#rotate).
 
 
-#### ![ ](../mapper-images/tool-measure.png) Measure lengths and areas tool {#measure}
+#### ![ ](../mapper-images/tool-measure.png) Measure lengths and areas {#measure}
 M
 
 This tool can be used to measure line lengths and area sizes. It will show both real world length or area in meters and the resulting length or area on the printed map.
@@ -356,5 +356,5 @@ This tool deletes all parts of the first selected area object that overlap with 
 This tool will XOr all selected areas. This means that all parts of the selected areas that overlap with another selected area will be deleted. Select two or more objects of the same area type and then click on this tool to use it.
 
 
-#### ![ ](../mapper-images/tool-boolean-merge-holes.png) Merge area holes {#}
-This tool unifies the areas of two or more overlapping holes in an area object into a single hole. These holes must be created using the [cut hole tools](#cut_hole). This tool is useful as when two area holes overlap, the overlapping portion(s) have the same fill as the parent area object instead of being empty, which may not be desired.
+#### ![ ](../mapper-images/tool-boolean-merge-holes.png) Merge area holes {#area_merge_holes}
+This tool unifies the areas of two or more overlapping holes in an area object into a single hole. These holes must be created using the [cut hole tools](#cut_hole). This tool is useful as when two area holes overlap, the overlapping portion(s) have the same fill as the parent area object instead of being empty, which may not be desired. This tool may also be useful after boolean operations on objects.
