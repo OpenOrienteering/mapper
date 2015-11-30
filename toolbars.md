@@ -7,19 +7,24 @@ keywords: Toolbars
 edited: 25 February 2013
 ---
 
-<ul>
-<li><a href="#general">General</a></li>
-<li><a href="#view">View</a></li>
-<li><a href="#drawing">Drawing</a></li>
-<li><a href="#advanceddrawing">Advanced drawing</a></li>
-</ul>
-<p><i>Note:</i> Toolbars may be moved to a more convenient position.  To detach and move, pick the handle (the vertical line of dots) at the left end and drag the toolbar to your preferred position.  The resulting order of your tools may thus be different from this page.</p>
+* TOC
+{:toc}
+
+*Note:* Toolbars may be moved to a more convenient position.  To detach and move, pick the handle (the vertical line of dots) at the left end and drag the toolbar to your preferred position.  The resulting order of your tools may thus be different from this page.
 
 
-<h3 id="general">General toolbar</h3>
+## General toolbar {#general}
+
+#### ![ ](../mapper-images/new.png) New Map {#new_map}
+Click to create a new map.
+
+#### ![ ](./mapper-images/save.png) Open / Save map {#open_save_map}
+Click to open/save an existing map.
+
+---
 
 <h4 id="new_map">New map</h4>
-<p><img class="small" src="../mapper-images/new.png" width="32" height="32" border="0" /> Click to create a new map.</p><br clear="all" />
+<p><img class="small" src="../mapper-images/new.png" width="32" height="32" border="0" /> </p><br clear="all" />
 
 <h4 id="open_save_map">Open / Save map</h4>
 <p><img class="small" src="../mapper-images/open.png" width="32" height="32" border="0" /> <img class="small" src="../mapper-images/save.png" width="32" height="32" border="0" /> Click to open / save an existing map.</p><br clear="all" />
