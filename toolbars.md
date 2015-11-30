@@ -76,6 +76,42 @@ This can be particularly useful when items (objects, templates) are accidentally
 
 ## Drawing toolbar {#drawing}
 
+#### ![ ](../mapper-images/tool-edit.png) Object selection and point editing tool {#tool_edit_point}
+Using this tool, click on the map to select a single object. If the object you wish is not selected with the first click, click more times to go through all objects below the cursor. To select multiple object hold the Shift key when you click subsequent objects. If you Shift-click on an object which has been already been selected the click will deselect that object. A group of objects may also be selected by drawing a selection box with a left-click and drag.
+
+If only a few objects are selected, the nodes defining these object become visible. There are different types of nodes:
+ - A square stands for a normal node.
+ - A diamond depicts a [dash point (see below)](#dashpoint).
+ - A circle depicts a bezier curve handle, defining the tangent of a curve point.
+Individual nodes can be dragged with the mouse to change their position. To change the tangent direction of a node on a bezier curve click the end of the handle and drag it. Longer handles have greater influence, while shorter handles have only local effect.
+
+To **add** an extra node to an existing line or curve, Ctrl-click on an empty spot of a path. By moving the mouse, the new node can be positioned in the same action. If a **dash point** is required, hold the space bar down while Ctrl-clicking. To **remove** a node, Ctrl-click an existing node.
+
+To move the selected objects as a whole, click and drag the dashed box which encloses all selected objects. While dragging nodes or objects, there are means for more accurate positioning:
+ - Holding **Ctrl** constrains the movement angle. For nodes and regularly shaped objects, these will be the parallel and perpendicular directions to the object.
+ - Holding **Shift** makes the cursor snap to other existing objects.
+
+
+#### ![ ](../mapper-images/tool-edit-line.png) Object selection and line editing tool {#tool_edit_line}
+Using this tool, objects can be selected like with the [point editing tool](#tool_edit_point).
+
+If only a few objects are selected, line segments of these objects can be edited by clicking them and dragging the mouse. For straight lines, the angle constraint will be active automatically. This makes it easy to edit e.g. rectangular houses while ensuring that they stay rectangular. To toggle the angle constraint, hold Ctrl.
+
+To switch a line segment between curved and straight, hold Ctrl while clicking the segment.
+
+
+#### ![ ](../mapper-images/draw-point.png) Draw point tool {#tool_draw_point}
+This tool enables you to insert a point symbol from the map symbol window. This includes boulders, rocky ground, knolls, waterholes or any other symbol representing a point feature too small to be drawn to scale. Select the symbol for the feature to be inserted by clicking it on the symbol window, click the point tool (if it is not activated automatically) and then click on the map to insert that feature on the map.
+
+Some point symbols may be rotated, like the cave or the elongated small knoll. To set the desired orientation, click and move the mouse into the desired direction while holding the left mouse button down. To change the orientation after the point object has been placed, use the [rotate pattern tool](#tool_rotate_pattern).
+
+
+#### ![ ]()  {#}
+...
+
+#### ![ ]()  {#}
+...
+
 #### ![ ]()  {#}
 ...
 
@@ -86,39 +122,6 @@ This can be particularly useful when items (objects, templates) are accidentally
 
 ---
 
-<h4 id="tool_edit_point">Object selector and point edit tool</h4>
-<p><img class="small" src="../mapper-images/tool-edit.png" width="32" height="32" border="0" alt="" />Using this tool, click on the map to select a single object. If the object you wish is not selected with the first click, click more times to go through all objects below the cursor. To select multiple object hold the Shift key as you click subsequent objects. If you Shift-click on an object which has been already been selected the click will deselect that object. A group of objects may also be selected by drawing a selection box with a left-click and drag.</p>
-
-<p>If only a few objects are selected, the nodes defining these object become visible. There are different types of nodes:
-<ul><li>A square stands for a normal node</li>
-<li>A diamond depicts a <a href="#dashpoint">dash point (see below)</a></li>
-<li>A circle depicts a bezier curve handle, defining the tangent of a curve point</li></ul></p>
-
-<p>Individual nodes can be dragged with the mouse to change their position. To change the tangent direction of a node on a bezier curve click the end of the handle and drag it. Longer handles have greater influence, while shorter handles have only local effect.</p>
-
-<p>To <b>add</b> an extra node to an existing line or curve, ctrl-click on an empty spot of a path. By moving the mouse, the new node can be positioned in the same action. If a <b>dash point</b> is required, hold the space bar down while ctrl-clicking. To <b>remove</b> a node, ctrl-click an existing node.</p>
-
-<p>To move the selected objects as a whole, click and drag the dashed box which encloses all selected objects.</p>
-
-<p>While dragging nodes or objects, there are means for more accurate positioning:</p>
-<ul>
-<li>Holding <b>Ctrl</b> constrains the movement angle. For nodes and regularly shaped objects, these will be the parallel and perpendicular directions to the object.</li>
-<li>Holding <b>Shift</b> makes the cursor snap to other existing objects.</li>
-</ul>
-<br clear="all" />
-
-<h4 id="tool_edit_line">Object selector and line edit tool</h4>
-<p><img class="small" src="../mapper-images/tool-edit-line.png" width="32" height="32" border="0" alt="" />
-Using this tool, objects can be selected like with the <a href="#tool_edit_point">point edit tool</a>.</p>
-
-<p>If only a few objects are selected, line segments of these objects can be edited by clicking them and dragging the mouse. For straight lines, the angle constraint will be active automatically. This makes it easy to edit e.g. rectangular houses while ensuring that they stay rectangular. To toggle the angle constraint, hold Ctrl.</p>
-
-<p>To switch a line segment between curved and straight, hold Ctrl while clicking the segment.</p><br clear="all" />
-
-<h4 id="tool_draw_point">Draw point tool</h4>
-<p><img class="small" src="../mapper-images/draw-point.png" width="32" height="32" border="0">This tool enables you to insert a point symbol from the map symbol window. This includes boulders, rocky ground, knolls, waterholes or any other symbol representing a point feature too small to be drawn to scale. Select the symbol for the feature to be inserted by clicking it on the symbol window, click the point tool (if it is not activated automatically) and then click on the map to insert that feature on the map.</p>
-
-<p>Some point symbols may be rotated, like the cave or the elongated small knoll. To set the desired orientation, click and move the mouse into the desired direction while holding the left mouse button down. To change the orientation after the point object has been placed, use the <a href="#tool_rotate_pattern">rotate pattern tool</a>.</p><br clear="all" />
 
 <h4 id="tool_draw_path">Draw path tool (to draw lines and areas)</h4>
 <p><img class="small" src="../mapper-images/draw-path.png" width="32" height="32" border="0">The path tool draws line objects such as contour lines, watercourses and roads and area objects such as open land or different vegetation densities. To draw, first choose the symbol for the feature to be inserted by clicking it on the symbol window, then click the line tool if it has not been activated automatically.</p>
