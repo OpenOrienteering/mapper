@@ -73,7 +73,7 @@ Use this tool to display the whole map, including the currently visible template
 This can be particularly useful when items (objects, templates) are accidentally moved far from your working area and out of sight. This tool brings them onscreen. If the map is just a dot in one corner then the rogue feature is near the other edge of the screen.
 
 
-Drawing toolbar {#drawing}
+## Drawing toolbar {#drawing}
 
 #### ![ ]()  {#}
 ...
