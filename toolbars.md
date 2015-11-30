@@ -7,39 +7,40 @@ keywords: Toolbars
 edited: 25 February 2013
 ---
 
-* TOC
-{:toc}
+* [General toolbar](#general)
+* [View toolbar](#view)
 
 *Note:* Toolbars may be moved to a more convenient position.  To detach and move, pick the handle (the vertical line of dots) at the left end and drag the toolbar to your preferred position.  The resulting order of your tools may thus be different from this page.
 
 
 ## General toolbar {#general}
 
-#### ![ ](../mapper-images/new.png) New Map {#new_map}
+#### ![ ](../mapper-images/new.png) New map {#new_map}
 Click to create a new map.
 
-#### ![ ](./mapper-images/save.png) Open / Save map {#open_save_map}
+#### ![ ](../mapper-images/open.png) ![ ](../mapper-images/save.png) Open / Save map {#open_save_map}
 Click to open/save an existing map.
+
+#### ![ ](../mapper-images/print.png) Print map {#print}
+Click to open the print dialog.
+
+#### ![ ](../mapper-images/cut.png)  ![ ](../mapper-images/copy.png) ![ ](../mapper-images/paste.png) Cut / copy / paste objects {#cut_copy_paste}
+Click to cut (<b>Ctrl + X</b>) / copy (<b>Ctrl + C</b>) the currently selected objects or to paste (<b>Ctrl + V</b>) the clipboard contents into the map (at the center of the view).
+
+#### ![ ](../mapper-images/undo.png) Undo / redo object editing {#undo_redo}
+Click to undo / redo the last map editing step.
 
 ---
 
-<h4 id="new_map">New map</h4>
-<p><img class="small" src="../mapper-images/new.png" width="32" height="32" border="0" /> </p><br clear="all" />
+#### ![ ]()  {#}
+...
 
-<h4 id="open_save_map">Open / Save map</h4>
-<p><img class="small" src="../mapper-images/open.png" width="32" height="32" border="0" /> <img class="small" src="../mapper-images/save.png" width="32" height="32" border="0" /> Click to open / save an existing map.</p><br clear="all" />
+#### ![ ]()  {#}
+...
 
-<h4 id="print">Print</h4>
-<p><img class="small" src="../mapper-images/print.png" width="32" height="32" border="0" /> Click to toggle showing the print widget. <!-- TODO: write and link to print widget documentation --></p><br clear="all" />
+---
 
-<h4 id="cut_copy_paste">Cut / Copy / Paste objects</h4>
-<p><img class="small" src="../mapper-images/cut.png" width="32" height="32" border="0" /> <img class="small" src="../mapper-images/copy.png" width="32" height="32" border="0" /> <img class="small" src="../mapper-images/paste.png" width="32" height="32" border="0" /> Click to cut / copy the currently selected objects or to paste the clipboard contents into the map (at the center of the view).</p><br clear="all" />
-
-<h4 id="undo_redo">Undo / Redo object editing</h4>
-<p><img class="small" src="../mapper-images/undo.png" width="32" height="32" border="0" /> <img class="small" src="../mapper-images/redo.png" width="32" height="32" border="0" /> Click to undo / redo the last map editing step.</p><br clear="all" />
-
-
-<h3 id="view">View toolbar</h3>
+## View toolbar {#view}
 
 <h4 id="grid">Grid</h4>
 <p><img class="small" src="../mapper-images/grid.png" width="32" height="32" border="0" /> Click this button to toggle showing the <a href="grid.md">map grid</a>. Click the arrow to the right of this button to show the <a href="grid.md">grid configuration</a>.</p><br clear="all" />
