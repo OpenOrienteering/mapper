@@ -2,15 +2,20 @@
 title: Toolbars
 authors:
   - Peter Hoban
+  - Kai Pastor
   - Thomas Schoeps
 keywords: Toolbars
-edited: 25 February 2013
+edited: 30 November 2015
+todo:
+  - Split this page and update ALL context help in Mapper.
+  - Update context help for zoom-in and -out in Mapper.
 ---
 
 <!-- Note: Each item needs an ID. This ID is used to open the context-sensitive help. -->
 
-* [General toolbar](#general)
-* [View toolbar](#view)
+ * [General toolbar](#general)
+ * [View toolbar](#view)
+ * [Drawing toolbar](#drawing)
 
 *Note:* Toolbars may be moved to a more convenient position.  To detach and move, pick the handle (the vertical line of dots) at the left end and drag the toolbar to your preferred position.  The resulting order of your tools may thus be different from this page.
 
@@ -42,35 +47,43 @@ Ctrl+Z / Ctrl+Y
 
 Click to undo or redo the last map editing step.
 
----
-
-#### ![ ]()  {#}
-...
-
-#### ![ ]()  {#}
-...
-
----
 
 ## View toolbar {#view}
 
-<h4 id="grid">Grid</h4>
-<p><img class="small" src="../mapper-images/grid.png" width="32" height="32" border="0" /> Click this button to toggle showing the <a href="grid.md">map grid</a>. Click the arrow to the right of this button to show the <a href="grid.md">grid configuration</a>.</p><br clear="all" />
+#### ![ ](../mapper-images/grid.png) Grid {#grid}
+G
 
-<h4 id="pan_map">Pan map</h4>
-<p><img class="small" src="../mapper-images/move.png" width="32" height="32" border="0" /> Use this tool <b>or the middle mouse button, or F6, or the arrow keys</b> to move the map by clicking the map and dragging the mouse.</p><br clear="all" />
+Click the button to toggle showing the [map grid](grid.md). Click the arrow to the right of this button to show the [grid configuration](grid.md).
 
-<h4 id="zoom_in">Zoom in</h4>
-<p><img class="small" src="../mapper-images/view-zoom-in.png" width="32" height="32" border="0" alt="" /> Use this tool <b>or F7</b> to zoom in (enlarge) to view the map closer, centered on the present view. </p><br clear="all" />
+#### ![ ](../mapper-images/move.png) Pan map {#pan_map}
+F6
 
-<h4 id="zoom_out">Zoom out</h4>
-<p><img class="small" src="../mapper-images/view-zoom-out.png" width="32" height="32" border="0" alt="" /> Use this tool <b>or F8</b> to zoom out (shrink) the map to see more of it, centered on the present view.</p><br clear="all" />
+Use this tool to move the map by clicking the map and dragging the mouse.
 
-<h4 id="zoom_all">Show whole map</h4>
-<p><img class="small" src="../mapper-images/view-show-all.png" width="32" height="32" border="0" alt="" /> Use this tool to display the whole map on your screen.<br/>This can be particularly useful when items are accidentally moved far from your working area and out of sight.  This tool brings it onscreen - if your map is just a dot in one corner then the rogue feature is near the other edge of the screen.</p><br clear="all" />
+*Note:* You may always move the map by dragging with middle mouse button, or by using the arrow keys.
+
+#### ![ ](../mapper-images/view-zoom-in.png) ![ ](../mapper-images/view-zoom-out.png) Zoom in / zoom out {#zoom_in_out}
+F7 / F8
+
+Use these actions to zoom in (enlarge) or zoom out (shrink). The center of the view stays at the same position in the map.
+
+#### ![ ](../mapper-images/view-show-all.png) Show whole map {#zoom_all}
+Use this tool to display the whole map, including the currently visible templates, at maximum possible zoom.
+
+This can be particularly useful when items (objects, templates) are accidentally moved far from your working area and out of sight. This tool brings them onscreen. If the map is just a dot in one corner then the rogue feature is near the other edge of the screen.
 
 
-<h3 id="drawing">Drawing toolbar</h3>
+Drawing toolbar {#drawing}
+
+#### ![ ]()  {#}
+...
+
+---
+
+#### ![ ]()  {#}
+...
+
+---
 
 <h4 id="tool_edit_point">Object selector and point edit tool</h4>
 <p><img class="small" src="../mapper-images/tool-edit.png" width="32" height="32" border="0" alt="" />Using this tool, click on the map to select a single object. If the object you wish is not selected with the first click, click more times to go through all objects below the cursor. To select multiple object hold the Shift key as you click subsequent objects. If you Shift-click on an object which has been already been selected the click will deselect that object. A group of objects may also be selected by drawing a selection box with a left-click and drag.</p>
