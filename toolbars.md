@@ -16,6 +16,7 @@ todo:
  * [General toolbar](#general)
  * [View toolbar](#view)
  * [Drawing toolbar](#drawing)
+ * [Advanced drawing](#advanceddrawing)
 
 *Note:* Toolbars may be moved to a more convenient position.  To detach and move, pick the handle (the vertical line of dots) at the left end and drag the toolbar to your preferred position.  The resulting order of your tools may thus be different from this page.
 
