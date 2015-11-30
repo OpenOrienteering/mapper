@@ -14,7 +14,7 @@ This will show a map editor screen which is similar to the desktop version. In t
 The mobile map editor
 ---------------------
 
-[[img src=Android_UI_explanation.png]]
+![ ](images/Android_UI_explanation.png)
 
 (1) Hides the top bar.
 
