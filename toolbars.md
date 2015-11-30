@@ -7,6 +7,8 @@ keywords: Toolbars
 edited: 25 February 2013
 ---
 
+<!-- Note: Each item needs an ID. This ID is used to open the context-sensitive help. -->
+
 * [General toolbar](#general)
 * [View toolbar](#view)
 
@@ -16,19 +18,29 @@ edited: 25 February 2013
 ## General toolbar {#general}
 
 #### ![ ](../mapper-images/new.png) New map {#new_map}
+Ctrl+N
+
 Click to create a new map.
 
 #### ![ ](../mapper-images/open.png) ![ ](../mapper-images/save.png) Open / Save map {#open_save_map}
+Ctrl+O / Ctrl+S
+
 Click to open/save an existing map.
 
 #### ![ ](../mapper-images/print.png) Print map {#print}
+Ctrl+P
+
 Click to open the print dialog.
 
 #### ![ ](../mapper-images/cut.png)  ![ ](../mapper-images/copy.png) ![ ](../mapper-images/paste.png) Cut / copy / paste objects {#cut_copy_paste}
-Click to cut (<b>Ctrl + X</b>) / copy (<b>Ctrl + C</b>) the currently selected objects or to paste (<b>Ctrl + V</b>) the clipboard contents into the map (at the center of the view).
+Ctrl+X / Ctrl+C / Ctrl+V
 
-#### ![ ](../mapper-images/undo.png) Undo / redo object editing {#undo_redo}
-Click to undo / redo the last map editing step.
+Click to cut / copy the currently selected objects to the clipboard, or to paste the clipboard contents into the map (at the center of the view).
+
+#### ![ ](../mapper-images/undo.png) ![ ](../mapper-images/redo.png) Undo / redo object editing {#undo_redo}
+Ctrl+Z / Ctrl+Y
+
+Click to undo or redo the last map editing step.
 
 ---
 
