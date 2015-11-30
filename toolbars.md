@@ -17,6 +17,7 @@ todo:
  * [View toolbar](#view-toolbar)
  * [Map parts toolbar](#map-parts-toolbar)
  * [Drawing toolbar](#drawing-toolbar)
+ * [Editing toolbar](#edition-toolbar)
  * [Advanced drawing](#advanced-drawing-toolbar)
 
 *Note:* Toolbars may be moved to a more convenient position.  To detach and move, pick the handle (the vertical line of dots) at the left end and drag the toolbar to your preferred position.  The resulting order of your tools may thus be different from this page.
@@ -85,7 +86,7 @@ At the moment, the map parts toolbar has only a signle drop down box for indicat
 
 ## Drawing toolbar
 
-#### ![ ](../mapper-images/tool-edit.png) Object selection and point editing tool {#tool_edit_point}
+#### ![ ](../mapper-images/tool-edit.png) Edit objects tool {#tool_edit_point}
 E
 
 Using this tool, click on the map to select a single object. If the object you wish is not selected with the first click, click more times to go through all objects below the cursor. To select multiple object hold the Shift key when you click subsequent objects. If you Shift-click on an object which has been already been selected the click will deselect that object. A group of objects may also be selected by drawing a selection box with a left-click and drag.
@@ -103,7 +104,7 @@ To move the selected objects as a whole, click and drag the dashed box which enc
  - Holding **Shift** makes the cursor snap to other existing objects.
 
 
-#### ![ ](../mapper-images/tool-edit-line.png) Object selection and line editing tool {#tool_edit_line}
+#### ![ ](../mapper-images/tool-edit-line.png) Edit lines tool {#tool_edit_line}
 L
 
 Using this tool, objects can be selected like with the [point editing tool](#tool_edit_point).
@@ -113,7 +114,7 @@ If only a few objects are selected, line segments of these objects can be edited
 To switch a line segment between curved and straight, hold Ctrl while clicking the segment.
 
 
-#### ![ ](../mapper-images/draw-point.png) Draw point tool {#tool_draw_point}
+#### ![ ](../mapper-images/draw-point.png) Set point objects tool {#tool_draw_point}
 S
 
 This tool enables you to insert a point symbol from the map symbol window. This includes boulders, rocky ground, knolls, waterholes or any other symbol representing a point feature too small to be drawn to scale. Select the symbol for the feature to be inserted by clicking it on the symbol window, click the point tool (if it is not activated automatically) and then click on the map to insert that feature on the map.
@@ -121,7 +122,7 @@ This tool enables you to insert a point symbol from the map symbol window. This 
 Some point symbols may be rotated, like the cave or the elongated small knoll. To set the desired orientation, click and move the mouse into the desired direction while holding the left mouse button down. To change the orientation after the point object has been placed, use the [rotate pattern tool](#tool_rotate_pattern).
 
 
-#### ![ ](../mapper-images/draw-path.png) Draw path tool (to draw lines and areas) {#tool_draw_path}
+#### ![ ](../mapper-images/draw-path.png) Draw paths tool {#tool_draw_path}
 P
 
 The path tool draws line objects such as contour lines, watercourses and roads and area objects such as open land or different vegetation densities. To draw, first choose the symbol for the feature to be inserted by clicking it on the symbol window, then click the line tool if it has not been activated automatically.
@@ -155,7 +156,7 @@ Dash points serve different purposes, depending on the symbol on which they are 
 In general, it is enough to remember that dash points steer the positioning of line dashes, patterns, and dash symbols. When drawing, just try out how it behaves. Dash point nodes have a diamond shape when the line is selected (ordinary nodes are square). Drawing of a node as a dash point is toggled with the space bar: dash points will be drawn while the helpful tip at the bottom edge shows "**Dash points on**". This switch may be varied from node to node along the line.
 
 
-#### ![ ](../mapper-images/draw-circle.png) Draw circle / ellipse tool (to draw lines and areas) {#tool_draw_circle}
+#### ![ ](../mapper-images/draw-circle.png) Draw circles and ellipses tool {#tool_draw_circle}
 O
 
 The circle tool can be used to draw round lines and areas. To start drawing, first select a symbol of type line or area and the circle tool.
@@ -167,8 +168,8 @@ To draw an ellipse, click at one of the boundary points on the major or minor ax
 Circles and ellipses are represented by four bezier curves and can be edited like any other path.
 
 
-#### ![ ](../mapper-images/draw-rectangle.png) Draw rectangle tool (to draw lines and areas) {#tool_draw_rectangle}
-R
+#### ![ ](../mapper-images/draw-rectangle.png) Draw rectangles tool {#tool_draw_rectangle}
+Ctrl+R
 
 The rectangle tool is used to draw shapes with any number of 90 or 45 degree corners such as a building. To draw, first select the line or area symbol you want to draw with and select the rectangle tool. Then click once at each corner and double click or right click at the last corner of the rectangle. You can speed up drawing by clicking and dragging the mouse to draw two corners in one step: one at the click position and one at the release position.
 
@@ -177,33 +178,44 @@ While drawing, hold Ctrl to constrain the position of the next corner to positio
 Rectangle objects can be edited like any path. However, consider using the [line edit tool](#tool_edit_line) to preserve the angles.
 
 
-#### ![ ]()  {#}
-...
+#### ![ ](../mapper-images/draw-freehand.png) Draw free-handedly tool {#tool_draw_freehand}
+This tool draws both line and area objects by approximating the path taken by the cursor using straight line segments. To use this tool, click at the starting point, drag the cursor where you want the path to go then release the mouse to finish drawing. The object you have created can be edited in the same way as other line or area objects.
+
+#### ![ ](../mapper-images/tool-fill.png) Fill bounded areas tool {#tool_fill}
+F
+
+This tool fills areas of unbroken white space with an area symbol. To use this tool, select the area symbol then click on white space i.e. any place not already covered by another area object. Internally, this tool first finds all paths, which can belong to many different objects, that form a boundary around the unbroken white space. A new closed shape is created that has the same paths as the white space boundary and is filled with your chosen symbol. Also, if you use this tool with a line symbol selected, then a border around the white space will be created. 
+
+*Attention:* This tool will not work if your chosen white space is not completely contained by other path objects. 
+
+#### ![ ](../mapper-images/draw-text.png) Write text tool {#tool_draw_text}
+T
+
+This tool places text on the map. In order to be language-independent orienteering maps generally do not have names or text information on features, but text is useful for map titles and version numbers for example. It is necessary to select a text symbol (which determines the font settings) before the text tool will become available.
+
+Two different types of text objects can be placed with this tool:
+
+ - Clicking once creates a text object with a single anchor point.
+ - Clicking and dragging the mouse creates a text box (with automatic text wrap).
+
+When text is edited, a small window with horizontal and vertical alignment options is shown. To edit text after it is created, choose the [edit objects tool](#tool_edit_point), select the text object, and click again inside the object.
+
+#### ![ ](../mapper-images/pencil.png) Template markup tool {#draw_on_template}
+This tool enables the freehand drawing of lines, annotation and erasure on images loaded as [templates](templates.md), in a choice of 8 colors. It is intended for surveying with a mobile computer.
+
+Click and hold the left mouse button to draw while the mouse is moved. Hold the right mouse button as the mouse is moved to erase. The markup is saved in the template image file **permanently**, so it is good practice to keep a copy of the template file in another place or use a blank transparent image for drawing.
+
+
+## Editing toolbar
 
 #### ![ ]()  {#}
 ...
 
----
-
 #### ![ ]()  {#}
 ...
 
 
-<h4 id="tool_draw_text">Write text tool</h4>
-<p><img class="small" src="../mapper-images/draw-text.png" width="32" height="32" border="0">This tool places text on the map. In order to be language-independent orienteering maps generally do not have names or text information on features,  but text is useful for map titles and version numbers for example. It is necessary to select a text symbol (which determines the font settings) before the text tool will become available.</p>
 
-<p>Two different types of text objects can be placed with this tool:</p>
-<ul>
-<li>Clicking once creates a text object with a single anchor point</li>
-<li>Clicking and dragging the mouse creates a text box (with automatic text wrap)</li>
-</ul>
-
-<p>When text is edited, a small window with horizontal and vertical alignment options is shown. To edit text after it is created, choose the <a href="#tool_edit_point">point edit tool</a>, select the text object, and click again inside the object.</p><br clear="all" />
-
-<h4 id="draw_on_template">Template markup tool</h4>
-<p><img class="small" src="../mapper-images/pencil.png" width="32" height="32" border="0">This tool enables the freehand drawing of lines, annotation and erasure on images loaded as <a href="templates.md">templates</a>, in a choice of 8 colors. It is intended for surveying with a mobile computer.</p>
-
-<p>Click and hold the left mouse button to draw while the mouse is moved. Hold the right mouse button as the mouse is moved to erase. The markup is saved in the template image file <b>permanently</b>, so it is good practice to keep a copy of the template file in another place or use a blank transparent image for drawing.</p><br clear="all" />
 
 <h4 id="duplicate">Duplicate objects</h4>
 <p><img class="small" src="../mapper-images/tool-duplicate.png" width="32" height="32" border="0" />This tool creates a duplicate of any selected object. Select the object(s), then click the tool to create an identical second symbol in the same place. As the duplicate is created in the same place, the appearance of the map does not immediately change. However, the duplicate can be selected and dragged to another location leaving the original symbol behind. To drag a symbol select the <a href="#tool_edit_point">point edit tool</a>, then click and hold on the enclosing box and drag as required. The duplicate tool is particularly useful when applied to create and move identical groups of items.</p><br clear="all" />
