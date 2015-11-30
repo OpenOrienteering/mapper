@@ -7,7 +7,7 @@ keywords: Android
 
 On startup, the app shows a list of available map files. In case there are no map files, you probably misspelled the map folder name (see previous section). To start editing a map, touch its filename.
 
-This will show a map editor screen which is similar to the desktop version. In the following, only the functionality which differs from the desktop version will be explained. To find out about the other symbols, see [Toolbars] the desktop version's manual.
+This will show a map editor screen which is similar to the desktop version. In the following, only the functionality which differs from the desktop version will be explained. To find out about the other symbols, see [Toolbars] in the desktop application's manual.
 
 
 		  
