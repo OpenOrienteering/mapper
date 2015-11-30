@@ -306,42 +306,55 @@ When this tool is activated, a window appears containing the measurements for th
 
 ## Advanced drawing toolbar
 
-#### ![ ]() {#}
-...
+#### ![ ](../mapper-images/tool-cutout-physical.png) Cutout {#cutout_physical}
+This cuts away all objects except inside a given region, making a map excerpt. It can also be used to cut away only a selected subset of objects outside the region. To use it:
 
-<h4 id="cutout_physical">Cutout</h4>
-<p><img class="small" src="../mapper-images/tool-cutout-physical.png" width="32" height="32" border="0" /> This cuts away all objects except inside a given region, making a map excerpt. It can also be used to cut away only a selected subset of objects outside the region.<br/>
-To use it:
-<ul>
-<li>Draw the cutout shape (with any line or area symbol). The shape must be closed, ensure this by finishing the drawing by pressing the return key.</li>
-<li>Then select the cutout tool. The shape will be marked in red.</li>
-<li>For making a cutout of the map, now press the return key.</li>
-<li>For cutting only some object, select those objects before pressing return.</li>
-</ul></p><br clear="all" />
+ - Draw the cutout shape (with any line or area symbol). The shape must be closed, ensure this by finishing the drawing by pressing the return key.
+ - Then select the cutout tool. The shape will be marked in red.
+ - For making a cutout of the map, now press the return key.
+ - For cutting only some object, select those objects before pressing return.
 
-<h4 id="cutaway_physical">Cut away</h4>
-<p><img class="small" src="../mapper-images/tool-cutout-physical-inner.png" width="32" height="32" border="0" /> This is the opposite to the above cutout tool. It cuts away all or a subset of objects inside a selected cutout region. Usage is identical to those of the cutout tool.<br/>
+
+#### ![ ](../mapper-images/tool-cutout-physical-inner.png) Cut away {#cutaway_physical}
+This is the opposite to the above cutout tool. It cuts away all or a subset of objects inside a selected cutout region. Usage is identical to those of the cutout tool.
+
 This tool is useful for making training maps where certain symbols are missing in some places. For example, to create a contour-only region in a map, proceed like this:
-<ul>
-<li>Draw the cutout shape (with any line or area symbol). The shape must be closed, ensure this by finishing the drawing by pressing the return key.</li>
-<li>Click the cut away tool. The shape will be marked in red.</li>
-<li>In the symbol pane, select all symbols you want to cut away, e.g. everything except contours. You can select a range of symbols by clicking the first symbol, then clicking the last symbol while holding the Shift key.</li>
-<li>Press the return key.</li>
-</ul>
-</p><br clear="all" />
 
-<h4 id="convert_to_curves">Convert to curves</h4>
-<p><img class="small" src="../mapper-images/tool-convert-to-curves.png" width="32" height="32" border="0" /> This tool changes the shape of selected polygonal objects to smooth. It can be used to "prettify" objects which have been drawn as polygonal objects but are curved in reality (however, it is usually less effort to draw these as curved objects from the start). Note that this tool is still experimental and might take some time to compute for a large number of objects.</p><br clear="all" />
+ - Draw the cutout shape (with any line or area symbol). The shape must be closed, ensure this by finishing the drawing by pressing the return key.
+ - Click the cut away tool. The shape will be marked in red.
+ - In the symbol pane, select all symbols you want to cut away, e.g. everything except contours. You can select a range of symbols by clicking the first symbol, then clicking the last symbol while holding the Shift key.
+ - Press the return key.
 
-<h4 id="simplify_path">Simplify path</h4>
-<p><img class="small" src="../mapper-images/tool-simplify-path.png" width="32" height="32" border="0" /> This tool simplifies the shape of the selected paths by removing points which can be removed without changing the object's shape significantly. Note that this tool is still experimental and might take some time to compute for a large number of objects.</p><br clear="all" />
 
-<h4 id="intersect_areas">Intersect areas</h4>
-<p><img class="small" src="../mapper-images/tool-boolean-intersection.png" width="32" height="32" border="0">This tool deletes all of the selected area objects that do not intersect with first-selected area. The only part which will remain is that part of the first area selected which was previously overlapped by one or more of the other selected areas. Select two or more overlapping objects of the same area type and then click on this tool to use it.</p><br clear="all" />
+#### ![ ](../mapper-images/tool-convert-to-curves.png) Convert to curves {#convert_to_curves}
+N
 
-<h4 id="area_difference">Area difference</h4>
-<p><img class="small" src="../mapper-images/tool-boolean-difference.png" width="32" height="32" border="0">This tool deletes all parts of the first selected area object that overlap with one of the other selected areas. Select two or more overlapping objects of the same area type and then click on this tool to use it.</p><br clear="all" />
+This tool changes the shape of selected polygonal objects to smooth. It can be used to "prettify" objects which have been drawn as polygonal objects but are curved in reality (however, it is usually less effort to draw these as curved objects from the start). Note that this tool is still experimental and might take some time to compute for a large number of objects.
 
-<h4 id="area_xor">Area XOr</h4>
-<p><img class="small" src="../mapper-images/tool-boolean-xor.png" width="32" height="32" border="0">This tool will XOr all selected areas. This means that all parts of the selected areas that overlap with another selected area will be deleted. Select two or more objects of the same area type and then click on this tool to use it.</p><br clear="all" />
 
+#### ![ ](../mapper-images/tool-simplify-path.png) Simplify path {#simplify_path}
+Ctrl-M
+
+This tool simplifies the shape of the selected paths by removing points which can be removed without changing the object's shape significantly. Note that this tool is still experimental and might take some time to compute for a large number of objects.
+
+
+#### ![ ](../mapper-images/tool-distribute-points.png) Distribute points along path {#distribute_points}
+This tool lets you create a number of point objects evenly distributed along a path.
+
+To use this tool, you need to select a path object first, then select the point symbol. Now the action will open a dialog which lets you choose the number of objects and various other parameters.
+
+
+#### ![ ](../mapper-images/tool-boolean-intersection.png) Intersect areas {#intersect_areas}
+This tool deletes all of the selected area objects that do not intersect with first-selected area. The only part which will remain is that part of the first area selected which was previously overlapped by one or more of the other selected areas. Select two or more overlapping objects of the same area type and then click on this tool to use it.
+
+
+#### ![ ](../mapper-images/tool-boolean-difference.png) Cut away from area {#area_difference}
+This tool deletes all parts of the first selected area object that overlap with one of the other selected areas. Select two or more overlapping objects of the same area type and then click on this tool to use it.
+
+
+#### ![ ](../mapper-images/tool-boolean-xor.png) Area XOr {#area_xor}
+This tool will XOr all selected areas. This means that all parts of the selected areas that overlap with another selected area will be deleted. Select two or more objects of the same area type and then click on this tool to use it.
+
+
+#### ![ ](../mapper-images/tool-boolean-merge-holes.png) Merge area holes {#}
+This tool unifies the areas of two or more overlapping holes in an area object into a single hole. These holes must be created using the [cut hole tools](#cut_hole). This tool is useful as when two area holes overlap, the overlapping portion(s) have the same fill as the parent area object instead of being empty, which may not be desired.
