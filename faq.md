@@ -23,7 +23,7 @@ You can use the mouse wheel, press F7/F8 or +/- keys, or click the zoom buttons 
 ## Drawing
 
 ### I want to start drawing a map, but have no idea how to.
-Start by reading the [short introduction to o-mapping](mapping-index.md).
+Start by reading the [short introduction to o-mapping](mapping-introduction.md).
 
 ### How do I add points to an existing path or delete points from it?
 With the path object selected using the edit tool, hold Ctrl and click a free spot on the path to create a new point there. You can even move the mouse in the same action to set the position of the new point. To delete a point, hold Ctrl and click an existing point.
