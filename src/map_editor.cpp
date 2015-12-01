@@ -62,6 +62,7 @@
 #include "gui/widgets/action_grid_bar.h"
 #include "gui/widgets/compass_display.h"
 #include "gui/widgets/symbol_widget.h"
+#include "gui/widgets/template_list_widget.h"
 #include "color_dock_widget.h"
 #include "compass.h"
 #include "file_format_registry.h"
@@ -89,7 +90,6 @@
 #include "symbol_point.h"
 #include "template.h"
 #include "template_dialog_reopen.h"
-#include "template_dock_widget.h"
 #include "template_track.h"
 #include "template_position_dock_widget.h"
 #include "template_tool_paint.h"
@@ -1722,7 +1722,7 @@ void MapEditorController::showTemplateWindow(bool show)
 {
 	if (!template_dock_widget)
 	{
-		TemplateWidget* template_widget = new TemplateWidget(map, main_view, this, template_dock_widget);
+		TemplateListWidget* template_widget = new TemplateListWidget(map, main_view, this, template_dock_widget);
 		connect(hide_all_templates_act, SIGNAL(toggled(bool)), template_widget, SLOT(setAllTemplatesHidden(bool)));
 		template_dock_widget = new EditorDockWidget(tr("Templates"), template_window_act, this, window);
 		template_dock_widget->setWidget(template_widget);
@@ -1739,7 +1739,7 @@ void MapEditorController::showTemplateWindow(bool show)
 
 void MapEditorController::openTemplateClicked()
 {
-	Template* new_template = TemplateWidget::showOpenTemplateDialog(window, this);
+	Template* new_template = TemplateListWidget::showOpenTemplateDialog(window, this);
 	if (!new_template)
 		return;
 	
@@ -1747,7 +1747,7 @@ void MapEditorController::openTemplateClicked()
 	showTemplateWindow(true);
 	
 	// FIXME: this should be done through the core map, not through the UI
-	TemplateWidget* template_widget = reinterpret_cast<TemplateWidget*>(template_dock_widget->widget());
+	TemplateListWidget* template_widget = reinterpret_cast<TemplateListWidget*>(template_dock_widget->widget());
 	template_widget->addTemplateAt(new_template, -1);
 }
 

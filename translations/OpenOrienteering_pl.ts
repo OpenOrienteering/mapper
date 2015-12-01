@@ -6726,7 +6726,7 @@ Not an OSM file.</source>
     </message>
 </context>
 <context>
-    <name>TemplateWidget</name>
+    <name>TemplateListWidget</name>
     <message>
         <source>no</source>
         <translation type="obsolete">nie</translation>

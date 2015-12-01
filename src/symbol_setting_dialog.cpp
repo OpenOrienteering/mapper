@@ -33,6 +33,7 @@
 #include <QToolButton>
 #include <QVBoxLayout>
 
+#include "gui/widgets/template_list_widget.h"
 #include "map.h"
 #include "object.h"
 #include "object_text.h"
@@ -46,7 +47,6 @@
 #include "map_widget.h"
 #include "template.h"
 #include "template_image.h"
-#include "template_dock_widget.h"
 #include "symbol_point_editor.h"
 #include "symbol_combined.h"
 #include "symbol_properties_widget.h"
@@ -192,7 +192,7 @@ void SymbolSettingDialog::updatePreview()
 
 void SymbolSettingDialog::loadTemplateClicked()
 {
-	Template* temp = TemplateWidget::showOpenTemplateDialog(this, preview_controller);
+	Template* temp = TemplateListWidget::showOpenTemplateDialog(this, preview_controller);
 	if (!temp)
 		return;
 	

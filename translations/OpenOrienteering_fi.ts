@@ -6633,7 +6633,7 @@ Tuetaan vain versioon %2 asti.</translation>
     </message>
 </context>
 <context>
-    <name>TemplateWidget</name>
+    <name>TemplateListWidget</name>
     <message>
         <location filename="../src/template_dock_widget.cpp" line="119"/>
         <source>Show</source>

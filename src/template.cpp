@@ -394,7 +394,7 @@ bool Template::execSwitchTemplateFileDialog(QWidget* dialog_parent)
 	switchTemplateFile(new_path, true);
 	if (getTemplateState() != Loaded)
 	{
-		QString error_template = QCoreApplication::translate("TemplateWidget", "Cannot open template\n%1:\n%2").arg(new_path);
+		QString error_template = QCoreApplication::translate("TemplateListWidget", "Cannot open template\n%1:\n%2").arg(new_path);
 		QString error = errorString();
 		Q_ASSERT(!error.isEmpty());
 		QMessageBox::warning(dialog_parent,
