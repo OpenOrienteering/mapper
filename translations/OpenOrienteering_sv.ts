@@ -4523,7 +4523,7 @@ valda</translation>
         <location filename="../src/map_widget.cpp" line="542"/>
         <source>%1x</source>
         <comment>Zoom factor</comment>
-        <translation>Zoom faktor</translation>
+        <translation>%1x</translation>
     </message>
     <message>
         <location filename="../src/map_widget.cpp" line="563"/>
