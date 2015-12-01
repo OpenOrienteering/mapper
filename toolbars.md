@@ -200,7 +200,7 @@ Two different types of text objects can be placed with this tool:
 
 When text is edited, a small window with horizontal and vertical alignment options is shown. To edit text after it is created, choose the [edit objects tool](#tool_edit_point), select the text object, and click again inside the object.
 
-#### ![ ](../mapper-images/pencil.png) Template markup {#draw_on_template}
+#### ![ ](../mapper-images/pencil.png) Paint on template {#draw_on_template}
 This tool enables the freehand drawing of lines, annotation and erasure on images loaded as [templates](templates.md), in a choice of 8 colors. It is intended for surveying with a mobile computer.
 
 Click and hold the left mouse button to draw while the mouse is moved. Hold the right mouse button as the mouse is moved to erase. The markup is saved in the template image file **permanently**, so it is good practice to keep a copy of the template file in another place or use a blank transparent image for drawing.
