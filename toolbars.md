@@ -66,7 +66,7 @@ Use this tool to move the map by clicking the map and dragging the mouse.
 *Note:* You may always move the map by dragging with middle mouse button, or by using the arrow keys.
 
 #### ![ ](../mapper-images/view-zoom-in.png) ![ ](../mapper-images/view-zoom-out.png) Zoom in / zoom out {#zoom_in_out}
-F7 / F8
+F7, + / F8, -
 
 Use these actions to zoom in (enlarge) or zoom out (shrink). The center of the view stays at the same position in the map.
 
