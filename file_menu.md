@@ -19,7 +19,7 @@ These controls provide standard file management tools.
 </tr>
 <tr>
 <td><img class="small" src="../mapper-images/open.png" width="32" height="32" border="0" alt="" /></td>
-<td><b>Open</b></td>
+<td><b>Open...</b></td>
 <td><b>Ctrl+O</b></td>
 <td>Shows the dialog to open an existing map file. Currently supported formats are .omap, .xmap or .ocd (versions 6 to 11).</td>
 </tr>
