@@ -8,6 +8,7 @@
   <file>images/arrow-thin-downright.png</file>
   <file>images/arrow-up.png</file>
   <file>images/close.png</file>
+  <file>images/colors.png</file>
   <file>images/compass.png</file>
   <file>images/control.png</file>
   <file>images/copy.png</file>
@@ -67,6 +68,7 @@
   <file>images/save.png</file>
   <file>images/settings.png</file>
   <file>images/symbol_point_explanation.png</file>
+  <file>images/templates.png</file>
   <file>images/text-align-left.png</file>
   <file>images/text-align-hcenter.png</file>
   <file>images/text-align-right.png</file>
@@ -101,7 +103,6 @@
   <file>images/tool-simplify-path.png</file>
   <file>images/tool-switch-dashes.png</file>
   <file>images/tool-switch-symbol.png</file>
-  <file>images/tool-template-toggle.png</file>
   <file>images/tool-touch-cursor.png</file>
   <file>images/undo.png</file>
   <file>images/view-show-all.png</file>
