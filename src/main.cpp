@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2012-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -52,11 +53,6 @@
 
 int main(int argc, char** argv)
 {
-#ifdef Q_OS_ANDROID
-	// Android native style is activated later.
-	qputenv("QT_USE_ANDROID_NATIVE_STYLE", "0");
-#endif
-	
 #if MAPPER_USE_QTSINGLEAPPLICATION
 	// Create single-instance application.
 	// Use "oo-mapper" instead of the executable as identifier, in case we launch from different paths.
@@ -110,9 +106,7 @@ int main(int argc, char** argv)
 	doStaticInitializations();
 	
 	QStyle* base_style = nullptr;
-#if defined(Q_OS_ANDROID)
-	base_style = QStyleFactory::create("android");
-#elif !defined(Q_OS_WIN) && !defined(Q_OS_OSX)
+#if !defined(Q_OS_WIN) && !defined(Q_OS_OSX)
 	if (QGuiApplication::platformName() == QLatin1String("xcb"))
 	{
 		// Use the modern 'fusion' style instead of the 
