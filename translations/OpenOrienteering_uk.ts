@@ -1585,21 +1585,9 @@
         <translation>м</translation>
     </message>
     <message>
-        <source>General</source>
-        <translation type="obsolete">Основне</translation>
-    </message>
-    <message>
-        <source>Map scale:</source>
-        <translation type="obsolete">Масштаб мапи:</translation>
-    </message>
-    <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="197"/>
         <source>Declination:</source>
         <translation>Магнітне відхилення:</translation>
-    </message>
-    <message>
-        <source>Reference point:</source>
-        <translation type="obsolete">Точка прив’язки:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="145"/>
@@ -1613,29 +1601,9 @@
         <translation type="unfinished">&amp;Система прив’язки координат:</translation>
     </message>
     <message>
-        <source>&amp;Zone:</source>
-        <translation type="obsolete">&amp;Зона:</translation>
-    </message>
-    <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="98"/>
         <source>Status:</source>
         <translation>Статус:</translation>
-    </message>
-    <message>
-        <source>Reference point &amp;easting:</source>
-        <translation type="obsolete">Найс&amp;хідніша точка прив’язки:</translation>
-    </message>
-    <message>
-        <source>Reference point &amp;northing:</source>
-        <translation type="obsolete">Найпівні&amp;чніша точка прив’язки:</translation>
-    </message>
-    <message>
-        <source>Convergence:</source>
-        <translation type="obsolete">Збіжність:</translation>
-    </message>
-    <message>
-        <source>&amp;Grivation:</source>
-        <translation type="obsolete">&amp;Кут мапи:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="146"/>
@@ -1643,25 +1611,9 @@
         <translation>Географічні координати</translation>
     </message>
     <message>
-        <source>Datum</source>
-        <translation type="obsolete">Датум</translation>
-    </message>
-    <message>
-        <source>Reference point &amp;latitude:</source>
-        <translation type="obsolete">&amp;Широта точки прив’язки:</translation>
-    </message>
-    <message>
-        <source>Reference point longitude:</source>
-        <translation type="obsolete">Довгота точки прив’язки:</translation>
-    </message>
-    <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="141"/>
         <source>Show reference point in:</source>
         <translation>Показати точку прив’язки у:</translation>
-    </message>
-    <message>
-        <source>%1 %2 (mm)</source>
-        <translation type="obsolete">%1 %2 (мм)</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="329"/>
@@ -1680,17 +1632,9 @@
         <translation>Онлайн пошук відхилення</translation>
     </message>
     <message>
-        <source>The magnetic declination for the reference point %1� %2� will now be retrieved from &lt;a href=&quot;%3&quot;&gt;%3&lt;/a&gt;. Do you want to continue?</source>
-        <translation type="obsolete">Магнітне відхилення для точки прив’язки %1� %2� відтепер буде взято з &lt;a href=&quot;%3&quot;&gt;%3&lt;/a&gt;. Ви хочете продовжити?</translation>
-    </message>
-    <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="93"/>
         <source>Map coordinate reference system</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>- none -</source>
-        <translation type="obsolete">- немає -</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="96"/>
@@ -1839,28 +1783,13 @@
         <comment>degree value</comment>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Custom coordinates</source>
-        <translation type="obsolete">Користувацькі координати</translation>
-    </message>
 </context>
 <context>
     <name>GeoreferencingTool</name>
     <message>
-        <source>&lt;b&gt;Left click&lt;/b&gt; to set the reference point, another button to cancel</source>
-        <translation type="obsolete">&lt;b&gt;Клацніть лівою&lt;/b&gt; для встановлення точки прив’язки, іншою кнопкою щоб скасувати</translation>
-    </message>
-    <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="683"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set the reference point. &lt;b&gt;Right click&lt;/b&gt;: Cancel.</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>Global</name>
-    <message>
-        <source>OpenOrienteering Mapper</source>
-        <translation type="obsolete">OpenOrienteering Mapper</translation>
     </message>
 </context>
 <context>
@@ -1869,66 +1798,6 @@
         <location filename="../src/gui/home_screen_controller.cpp" line="144"/>
         <source>Welcome to OpenOrienteering Mapper!</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>HomeScreenWidget</name>
-    <message>
-        <source>Clear list</source>
-        <translation type="vanished">Очистити журнал</translation>
-    </message>
-    <message>
-        <source>Exit</source>
-        <translation type="vanished">Вихід</translation>
-    </message>
-    <message>
-        <source>Settings</source>
-        <translation type="vanished">Налаштування</translation>
-    </message>
-    <message>
-        <source>About %1</source>
-        <translation type="obsolete">Про %1</translation>
-    </message>
-    <message>
-        <source>Help</source>
-        <translation type="vanished">Довідка</translation>
-    </message>
-    <message>
-        <source>Tip of the day</source>
-        <translation type="vanished">Порада дня</translation>
-    </message>
-    <message>
-        <source>Previous</source>
-        <translation type="vanished">Попередня</translation>
-    </message>
-    <message>
-        <source>Next</source>
-        <translation type="vanished">Наступна</translation>
-    </message>
-    <message>
-        <source>Maps</source>
-        <translation type="obsolete">Мапи</translation>
-    </message>
-    <message>
-        <source>Create a new map ...</source>
-        <translation type="vanished">Створити нову мапу ...</translation>
-    </message>
-    <message>
-        <source>Open map ...</source>
-        <translation type="vanished">Відкрити мапу ...</translation>
-    </message>
-    <message>
-        <source>About %1</source>
-        <comment>As in &apos;About OpenOrienteering Mapper&apos;</comment>
-        <translation type="obsolete">Про %1</translation>
-    </message>
-    <message>
-        <source>Recent maps</source>
-        <translation type="vanished">Попередні мапи</translation>
-    </message>
-    <message>
-        <source>Maps (*.omap *.ocd);;All files (*.*)</source>
-        <translation type="obsolete">Мапи (*.omap *.ocd);;Усі файли (*.*)</translation>
     </message>
 </context>
 <context>
@@ -2045,10 +1914,6 @@
         <location filename="../src/symbol.cpp" line="285"/>
         <source>Error while loading a symbol of type %1 at line %2 column %3: %4</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Error while loading a symbol.</source>
-        <translation type="obsolete">Помилка під час завантаження символу.</translation>
     </message>
     <message>
         <location filename="../src/object.cpp" line="393"/>
@@ -2456,10 +2321,6 @@
         <translation>Відстань від кінця лінії:</translation>
     </message>
     <message>
-        <source>Border</source>
-        <translation type="obsolete">Межа</translation>
-    </message>
-    <message>
         <location filename="../src/symbol_line.cpp" line="2473"/>
         <source>Border width:</source>
         <translation>Ширина межі:</translation>
@@ -2623,10 +2484,6 @@
         <location filename="../src/gui/main_window.cpp" line="257"/>
         <source>Close</source>
         <translation>Закрити</translation>
-    </message>
-    <message>
-        <source>Ctrl+W</source>
-        <translation type="obsolete">Ctrl+W</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="259"/>
@@ -2814,45 +2671,9 @@ Press No to choose a different format.</source>
         <source>Please report this as a bug.</source>
         <translation>Будь-ласка повідомте про цю помилку.</translation>
     </message>
-    <message>
-        <source>Developers in alphabetical order:&lt;br/&gt;%1&lt;br/&gt;For contributions, thanks to:&lt;br/&gt;%2&lt;br/&gt;Additional information:</source>
-        <translation type="obsolete">Розробники у абетковому порядку:&lt;br/&gt;%1&lt;br/&gt;Подяка за сприяння і участь:&lt;br/&gt;%2&lt;br/&gt;Українська локалізація:&lt;br/&gt;Eugeniy Fedirets&lt;br/&gt;Artem Sokolovsky (boy 5 years of age!)&lt;br/&gt;&lt;br/&gt;Додаткова інформація:</translation>
-    </message>
-    <message>
-        <source>(project leader)</source>
-        <translation type="obsolete">(лідер проекту)</translation>
-    </message>
-    <message>
-        <source>Failed to locate the help files.</source>
-        <translation type="obsolete">Не вдається показати файли довідки.</translation>
-    </message>
-    <message>
-        <source>Failed to find the help browser (&quot;Qt Assistant&quot;). For Windows, it is available as a separate download. After extracting this archive, copy its contents into the directory containing the Mapper executable, so the Mapper and assistant executables are in the same directory, and try again.</source>
-        <translation type="obsolete">Не вдається знайти переглядач довідки (&quot;Qt Assistant&quot;). Для Windows доступне його завантаження окремо.Після розпакування цього архіву, скопіюйте його вміст до теки з виконуваним файлом Mapper, тобто Mapper.exe та assistant.exe знаходитимуться в одній теці, і спробуйе знову.</translation>
-    </message>
-    <message>
-        <source>About %1</source>
-        <translation type="obsolete">Про %1</translation>
-    </message>
-    <message>
-        <source>Developers in alphabetical order:&lt;br/&gt;Peter Curtis&lt;br/&gt;Kai Pastor&lt;br/&gt;Russell Porter&lt;br/&gt;Thomas Sch&amp;ouml;ps (project leader)&lt;br/&gt;&lt;br/&gt;For contributions, thanks to:&lt;br/&gt;Jon Cundill&lt;br/&gt;Jan Dalheimer&lt;br/&gt;Eugeniy Fedirets&lt;br/&gt;Peter Hoban&lt;br/&gt;Henrik Johansson&lt;br/&gt;Tojo Masaya&lt;br/&gt;Aivars Zogla&lt;br/&gt;&lt;br/&gt;Additional information:</source>
-        <translatorcomment>Ukrianian localisations team: Eugeniy Fedirets together with Artem Sokolovsky.
-Artem Sokolovsky (boy 5 years of age!), who insert more then 30 symbols in this translation file, is nephew of Eugeniy Fedirets.
-Українська команда перекладачів: Євгеній Федірець разом з Артем Соколовський.
-Артем Соколовський (5-річний хлопчик!), котрий увів понад 30 символів у цей файл перекладу, є племінником Євгенія Федірця.</translatorcomment>
-        <translation type="obsolete">Розробники у абетковому порядку:&lt;br/&gt;Peter Curtis&lt;br/&gt;Kai Pastor&lt;br/&gt;Russell Porter&lt;br/&gt;Thomas Sch&amp;ouml;ps (лідер проекту)&lt;br/&gt;&lt;br/&gt;Подяка за сприяння і участь:&lt;br/&gt;Jon Cundill&lt;br/&gt;Jan Dalheimer&lt;br/&gt;Eugeniy Fedirets&lt;br/&gt;Peter Hoban&lt;br/&gt;Henrik Johansson&lt;br/&gt;Tojo Masaya&lt;br/&gt;Aivars Zogla&lt;br/&gt;&lt;br/&gt;Українська локалізація:&lt;br/&gt;Eugeniy Fedirets&lt;br/&gt;Artem Sokolovsky (boy 5 years of age!)&lt;br/&gt;&lt;br/&gt;Додаткова інформація:</translation>
-    </message>
-    <message>
-        <source>OK</source>
-        <translation type="obsolete">Гаразд</translation>
-    </message>
 </context>
 <context>
     <name>Map</name>
-    <message>
-        <source>default layer</source>
-        <translation type="obsolete">основний шар</translation>
-    </message>
     <message>
         <location filename="../src/map.cpp" line="601"/>
         <location filename="../src/map.cpp" line="606"/>
@@ -2881,12 +2702,6 @@ because the format is unknown.</source>
         <translation>Неможливо експортувати мапу як
 &quot;%1&quot;
 бо формат невідомий.</translation>
-    </message>
-    <message>
-        <source>File does not exist or insufficient permissions to open:
-%1</source>
-        <translation type="vanished">Файл не існує або недостатньо прав доступу для відкриття:
-%1</translation>
     </message>
     <message>
         <location filename="../src/map.cpp" line="667"/>
@@ -2943,16 +2758,6 @@ for reading.</source>
 %1
 
 %2</translation>
-    </message>
-    <message>
-        <source>Problem while opening file:
-%1
-
-Error during symbol post-processing.</source>
-        <translation type="obsolete">Проблема в ході відкриття файлу:
-%1
-
-Помилка під час пост-обробки символа.</translation>
     </message>
     <message>
         <location filename="../src/map.cpp" line="788"/>
@@ -4644,10 +4449,6 @@ zoom using the mouse wheel, if available.</source>
         <translation type="unfinished">Не імпортовано текстовий символ, невдається відобразити зовнішній шлях&apos; (npts=%1): %2</translation>
     </message>
     <message>
-        <source>Unable to import template: %1</source>
-        <translation type="obsolete">Неможливо імпортувати шаблон: %1</translation>
-    </message>
-    <message>
         <location filename="../src/file_format_ocad8.cpp" line="1195"/>
         <location filename="../src/file_format_ocad8.cpp" line="1303"/>
         <source>Unable to import template: background &quot;%1&quot; doesn&apos;t seem to be a raster image</source>
@@ -4848,10 +4649,6 @@ zoom using the mouse wheel, if available.</source>
 <context>
     <name>PaintOnTemplateTool</name>
     <message>
-        <source>&lt;b&gt;Left mouse click and drag&lt;/b&gt; to paint, &lt;b&gt;Right mouse click and drag&lt;/b&gt; to erase</source>
-        <translation type="obsolete">&lt;b&gt;Клацніть лівою кнопкою мишки і потягніть&lt;/b&gt; для малювання, &lt;b&gt;Клацніть правою кнопкою мишки і потягніть&lt;/b&gt; для витирання</translation>
-    </message>
-    <message>
         <location filename="../src/template_tool_paint.cpp" line="58"/>
         <source>&lt;b&gt;Click and drag&lt;/b&gt;: Paint. &lt;b&gt;Right click and drag&lt;/b&gt;: Erase. </source>
         <translation type="unfinished"></translation>
@@ -4881,10 +4678,6 @@ zoom using the mouse wheel, if available.</source>
 </context>
 <context>
     <name>PointSymbolEditorTool</name>
-    <message>
-        <source>&lt;b&gt;Click&lt;/b&gt; to add a coordinate, &lt;b&gt;Ctrl+Click&lt;/b&gt; to change the selected coordinate</source>
-        <translation type="obsolete">&lt;b&gt;Клацнути&lt;/b&gt; щоб додати координату, &lt;b&gt;Ctrl+Клацнути&lt;/b&gt; щоб змінити виділену координату</translation>
-    </message>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="967"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Add a coordinate. &lt;b&gt;%1+Click&lt;/b&gt;: Change the selected coordinate. </source>
@@ -5053,10 +4846,6 @@ zoom using the mouse wheel, if available.</source>
 <context>
     <name>PointSymbolSettings</name>
     <message>
-        <source>Always oriented to north (not rotatable)</source>
-        <translation type="obsolete">Завжди орієнтувати на північ (не обертається)</translation>
-    </message>
-    <message>
         <location filename="../src/symbol_point.cpp" line="436"/>
         <source>Point symbol</source>
         <translation>Точковий символ</translation>
@@ -5079,10 +4868,6 @@ zoom using the mouse wheel, if available.</source>
 </context>
 <context>
     <name>PrintTool</name>
-    <message>
-        <source>&lt;b&gt;Drag&lt;/b&gt; to move the print area</source>
-        <translation type="obsolete">&lt;b&gt;Потягніть&lt;/b&gt; для зміщення зони друку</translation>
-    </message>
     <message>
         <location filename="../src/gui/print_tool.cpp" line="52"/>
         <location filename="../src/gui/print_tool.cpp" line="364"/>
@@ -5114,18 +4899,6 @@ zoom using the mouse wheel, if available.</source>
 </context>
 <context>
     <name>PrintWidget</name>
-    <message>
-        <source>Printer or exporter:</source>
-        <translation type="obsolete">Принтер чи експортер:</translation>
-    </message>
-    <message>
-        <source>Export to PDF or PS</source>
-        <translation type="vanished">Експорт як PDF або PS</translation>
-    </message>
-    <message>
-        <source>Export to image</source>
-        <translation type="obsolete">Експорт як зображення</translation>
-    </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="201"/>
         <source>Show templates</source>
@@ -5162,17 +4935,9 @@ zoom using the mouse wheel, if available.</source>
         <translation>Формат сторінки:</translation>
     </message>
     <message>
-        <source>Dots per inch (dpi):</source>
-        <translation type="obsolete">Точок на дюйм (dpi):</translation>
-    </message>
-    <message>
         <location filename="../src/gui/print_widget.cpp" line="128"/>
         <source>Copies:</source>
         <translation>Копії:</translation>
-    </message>
-    <message>
-        <source>Print area</source>
-        <translation type="obsolete">Зона друку</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="141"/>
@@ -5195,17 +4960,9 @@ zoom using the mouse wheel, if available.</source>
         <translation>Висота:</translation>
     </message>
     <message>
-        <source>Center area on map</source>
-        <translation type="obsolete">Центрувати на мапі</translation>
-    </message>
-    <message>
         <location filename="../src/gui/print_widget.cpp" line="244"/>
         <source>Preview...</source>
         <translation>Попередній перегляд...</translation>
-    </message>
-    <message>
-        <source>Export</source>
-        <translation type="obsolete">Експорт</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="133"/>
@@ -5485,61 +5242,6 @@ separations</source>
         <source>The map area is empty. Output canceled.</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Letter</source>
-        <translation type="obsolete">Letter</translation>
-    </message>
-    <message>
-        <source>Legal</source>
-        <translation type="obsolete">Legal</translation>
-    </message>
-    <message>
-        <source>Executive</source>
-        <translation type="obsolete">Executive</translation>
-    </message>
-    <message>
-        <source>C5E</source>
-        <translation type="obsolete">C5E</translation>
-    </message>
-    <message>
-        <source>Comm10E</source>
-        <translation type="obsolete">Comm10E</translation>
-    </message>
-    <message>
-        <source>DLE</source>
-        <translation type="obsolete">DLE</translation>
-    </message>
-    <message>
-        <source>Folio</source>
-        <translation type="obsolete">Folio</translation>
-    </message>
-    <message>
-        <source>Ledger</source>
-        <translation type="obsolete">Ledger</translation>
-    </message>
-    <message>
-        <source>Tabloid</source>
-        <translation type="obsolete">Tabloid</translation>
-    </message>
-    <message>
-        <source>Custom</source>
-        <translation type="obsolete">Користувацький</translation>
-    </message>
-    <message>
-        <source>Unknown</source>
-        <translation type="obsolete">Невідомий</translation>
-    </message>
-    <message>
-        <source>The map is empty, there is nothing to print!</source>
-        <translation type="obsolete">Мапа порожня, немає чого друкувати!</translation>
-    </message>
-</context>
-<context>
-    <name>ProjectedCRSSelector</name>
-    <message>
-        <source>&amp;Coordinate reference system:</source>
-        <translation type="obsolete">&amp;Система прив’язки координат:</translation>
-    </message>
 </context>
 <context>
     <name>QDialogButtonBox</name>
@@ -5550,327 +5252,11 @@ separations</source>
     </message>
 </context>
 <context>
-    <name>QFile</name>
-    <message>
-        <source>Error</source>
-        <translation type="obsolete">Помилка</translation>
-    </message>
-    <message>
-        <source>Failed to locate the help files.</source>
-        <translation type="obsolete">Не вдається показати файли довідки.</translation>
-    </message>
-</context>
-<context>
     <name>QFileDialog</name>
     <message>
         <location filename="../src/gui/text_browser_dialog.cpp" line="59"/>
         <source>Back</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QObject</name>
-    <message>
-        <source>Invalid file format version.</source>
-        <translation type="obsolete">Недійсна версія формату файла.</translation>
-    </message>
-    <message>
-        <source>Unsupported file format version. Please use an older program version to load and update the stream-&gt;</source>
-        <translation type="obsolete">Непідтримувана версія формату файла. Будь-ласка використовуйте старішу версію програми для завантаження і оновіть потік-&gt;</translation>
-    </message>
-    <message>
-        <source>File format version too high. Please update to a newer program version to load this stream-&gt;</source>
-        <translation type="obsolete">Версія формату файла зависока. Будь-ласка оновіться до нової версії програми для завантаження цього потоку-&gt;</translation>
-    </message>
-    <message>
-        <source>The geographic coordinate reference system of the map was &quot;%1&quot;. This CRS is not supported. Using &quot;%2&quot;.</source>
-        <translation type="obsolete">Система прив’язки географічних координат мапи була &quot;%1&quot;. Ця система не підтримується. Застосовано &quot;%2&quot;.</translation>
-    </message>
-    <message>
-        <source>Error while loading a symbol with type %2.</source>
-        <translation type="obsolete">Помилка під час завантаження символу типу %2.</translation>
-    </message>
-    <message>
-        <source>Error while loading a symbol.</source>
-        <translation type="obsolete">Помилка під час завантаження символу.</translation>
-    </message>
-    <message>
-        <source>Error while loading undo steps.</source>
-        <translation type="obsolete">Помилка під час завантаження попередніх кроків.</translation>
-    </message>
-    <message>
-        <source>Error while reading layer count.</source>
-        <translation type="obsolete">Помилка під час читання порядку шарів.</translation>
-    </message>
-    <message>
-        <source>Error while loading layer %2.</source>
-        <translation type="obsolete">Помилка під час завантаження шару %2.</translation>
-    </message>
-    <message>
-        <source>Could not open file: libocad returned %1</source>
-        <translation type="obsolete">Неможливо відкрити файл: libocad повернув %1</translation>
-    </message>
-    <message>
-        <source>OCAD files of version %1 cannot be loaded!</source>
-        <translation type="obsolete">OCAD файл версії %1 неможе бути завантажений!</translation>
-    </message>
-    <message>
-        <source>Unable to import symbol &quot;%3&quot; (%1.%2)</source>
-        <translation type="obsolete">Неможливо імпортувати символ &quot;%3&quot; (%1.%2)</translation>
-    </message>
-    <message>
-        <source>OCAD import layer</source>
-        <translation type="obsolete">Шар імпорту OCAD</translation>
-    </message>
-    <message>
-        <source>In dashed line symbol %1, pointed cap lengths for begin and end are different (%2 and %3). Using %4.</source>
-        <translation type="obsolete">У символі %1 штрихової лінії, довжина закінчення для початку і кінця різні (%2 and %3). Використовується %4.</translation>
-    </message>
-    <message>
-        <source>In dashed line symbol %1, the end length cannot be imported correctly.</source>
-        <translation type="obsolete">У символі %1 штрихової лінії, кінцева довжина неможе бути корректно імпортована.</translation>
-    </message>
-    <message>
-        <source>In dashed line symbol %1, the end gap cannot be imported correctly.</source>
-        <translation type="obsolete">У символі %1 штрихової лінії, кінцевий проміжок неможе бути корректно імпортований.</translation>
-    </message>
-    <message>
-        <source>In dashed line symbol %1, main and end length are different (%2 and %3). Using %4.</source>
-        <translation type="obsolete">У символі %1 штрихової лінії, головна і кінцева довжина різні (%2 and %3). Використати %4.</translation>
-    </message>
-    <message>
-        <source>In dashed line symbol %1, gaps D and E are different (%2 and %3). Using %4.</source>
-        <translation type="obsolete">У символі %1 штрихової лінії, проміжки D та E різні (%2 and %3). Використати %4.</translation>
-    </message>
-    <message>
-        <source>In symbol %1, left and right borders are different colors (%2 and %3). Using %4.</source>
-        <translation type="obsolete">У символі %1, ліва і права межа різного кольору (%2 and %3). Використати %4.</translation>
-    </message>
-    <message>
-        <source>In symbol %1, left and right borders are different width (%2 and %3). Using %4.</source>
-        <translation type="obsolete">У символі %1, ліва і права межа різної товщини (%2 and %3). Використати %4.</translation>
-    </message>
-    <message>
-        <source>In line symbol %1, ignoring that only the left border line should be dashed</source>
-        <translation type="obsolete">У лінійному символі %1, проігноровано що лише ліва межа лінії має бути штриховою</translation>
-    </message>
-    <message>
-        <source>Dash symbol</source>
-        <translation type="obsolete">Вузловий символ</translation>
-    </message>
-    <message>
-        <source>Start symbol</source>
-        <translation type="obsolete">Початковий символ</translation>
-    </message>
-    <message>
-        <source>In symbol %1, ignoring framing line.</source>
-        <translation type="obsolete">У символі %1,проігноровано обрамлення.</translation>
-    </message>
-    <message>
-        <source>During import of text symbol %1: ignoring justified alignment</source>
-        <translation type="obsolete">Під час імпорту текстового символу %1: проігноровано центрування</translation>
-    </message>
-    <message>
-        <source>During import of text symbol %1: ignoring custom weight (%2)</source>
-        <translation type="obsolete">Під час імпорту текстового символу %1: проігноровано користувацький якір (%2)</translation>
-    </message>
-    <message>
-        <source>During import of text symbol %1: custom character spacing is set, its implementation does not match OCAD&apos;s behavior yet</source>
-        <translation type="obsolete">Під час імпорту текстового символу %1: користувацький міжсимвольний інтервал встановлений так, що реалізувати його подібно до OCAD&apos;у поки що неможливо</translation>
-    </message>
-    <message>
-        <source>During import of text symbol %1: ignoring custom word spacing (%2%)</source>
-        <translation type="obsolete">Під час імпорту текстового символу %1: проігноровано користувацький інтервал між словами (%2%)</translation>
-    </message>
-    <message>
-        <source>During import of text symbol %1: ignoring custom indents (%2/%3)</source>
-        <translation type="obsolete">Під час імпорту текстового символу %1: проігноровано користувацькі відступи (%2/%3)</translation>
-    </message>
-    <message>
-        <source>During import of text symbol %1: ignoring text framing (mode %2)</source>
-        <translation type="obsolete">Під час імпорту текстового символу %1: проігноровано обрамлення тексту (значення %2)</translation>
-    </message>
-    <message>
-        <source>Unable to load object</source>
-        <translation type="obsolete">Неможливо завантажити об&apos;єкт</translation>
-    </message>
-    <message>
-        <source>Unable to import rectangle object</source>
-        <translation type="obsolete">Неможливо імпортувати прямокутний об&apos;єкт</translation>
-    </message>
-    <message>
-        <source>Color id not found: %1, ignoring this color</source>
-        <translation type="obsolete">Ідентифікатор кольору не знайдено: %1, проігноровано цей колір</translation>
-    </message>
-    <message>
-        <source>The map contains more than 256 colors which is not supported by ocd version 8.</source>
-        <translation type="obsolete">Мапа містить понад 256 кольорів що  не підтримується форматом ocd версії 8.</translation>
-    </message>
-    <message>
-        <source>Could not create new file: libocad returned %1</source>
-        <translation type="obsolete">Невдається створити новий файл: libocad вернув значення %1</translation>
-    </message>
-    <message>
-        <source>Unable to export template: file type of &quot;%1&quot; is not supported yet</source>
-        <translation type="obsolete">Неможливо експортувати шаблон: тип файлу &quot;%1&quot; не підтримується поки що</translation>
-    </message>
-    <message>
-        <source>In line symbol &quot;%1&quot;, cannot represent cap/join combination.</source>
-        <translation type="obsolete">У лінійному символі &quot;%1&quot;, неможливо відобразити комбінацію закінчення/з’єднання.</translation>
-    </message>
-    <message>
-        <source>In line symbol &quot;%1&quot;, neglecting the dash grouping.</source>
-        <translation type="obsolete">У лінійному символі &quot;%1&quot;, не відтворено групування штрихів.</translation>
-    </message>
-    <message>
-        <source>In line symbol &quot;%1&quot;, the number of dashes in a group has been reduced to 2.</source>
-        <translation type="obsolete">У лінійному символі &quot;%1&quot;, кількість штрихів у групі зменшено в 2 рази.</translation>
-    </message>
-    <message>
-        <source>In area symbol &quot;%1&quot;, skipping a fill pattern.</source>
-        <translation type="obsolete">У площинному символі &quot;%1&quot;, пропущено заповнення візерунку.</translation>
-    </message>
-    <message>
-        <source>In area symbol &quot;%1&quot;, assuming a &quot;shifted rows&quot; point pattern. This might be correct as well as incorrect.</source>
-        <translation type="obsolete">У площинному символі &quot;%1&quot;, виявлено &quot;зміщення рядків&quot; точкового візерунку. Це може бути як добре так і погано.</translation>
-    </message>
-    <message>
-        <source>In text symbol %1: custom character spacing is set, its implementation does not match OCAD&apos;s behavior yet</source>
-        <translation type="obsolete">У тексті %1: встановлений міжсимвольний інтервал так, що це неможливо записати у вигляді OCAD поки що</translation>
-    </message>
-    <message>
-        <source>In text symbol %1: ignoring underlining</source>
-        <translation type="obsolete">У тексті %1: ігнорується перекреслювання</translation>
-    </message>
-    <message>
-        <source>In text symbol %1: ignoring kerning</source>
-        <translation type="obsolete">У тексті %1: ігнорується кернінг</translation>
-    </message>
-    <message>
-        <source>String truncated (truncation marked with three &apos;|&apos;): %1</source>
-        <translation type="obsolete">Рядок обрізаний (обрізання позначено з допомогою потрійного &apos;|&apos;): %1</translation>
-    </message>
-    <message>
-        <source>Not importing text symbol, couldn&apos;t figure out path&apos; (npts=%1): %2</source>
-        <translation type="obsolete">Не імпортовано текстовий символ, невдається відобразити зовнішній шлях&apos; (npts=%1): %2</translation>
-    </message>
-    <message>
-        <source>Unable to import template: %1</source>
-        <translation type="obsolete">Неможливо імпортувати шаблон: %1</translation>
-    </message>
-    <message>
-        <source>Unable to import template: background &quot;%1&quot; doesn&apos;t seem to be a raster image</source>
-        <translation type="obsolete">Неможливо імпортувати шаблон: фон &quot;%1&quot; не являється растровим зображенням</translation>
-    </message>
-    <message>
-        <source>Trying to import a text object with unknown coordinate format</source>
-        <translation type="obsolete">Спроба імпортувати текстовий об&apos;єкт з невідомим форматом координат</translation>
-    </message>
-    <message>
-        <source>OCAD Versions 7, 8</source>
-        <translation type="obsolete">OCAD Версії 7, 8</translation>
-    </message>
-    <message>
-        <source>OpenOrienteering Mapper</source>
-        <translation type="obsolete">OpenOrienteering Mapper</translation>
-    </message>
-    <message>
-        <source>Error reading</source>
-        <translation type="obsolete">Помилка читання</translation>
-    </message>
-    <message>
-        <source>There was an error reading the DXF file %1:
-
-%1</source>
-        <translation type="obsolete">Помилка читання DXF файлу %1:
-
-%1</translation>
-    </message>
-    <message>
-        <source>Question</source>
-        <translation type="obsolete">Проблема</translation>
-    </message>
-    <message>
-        <source>Are the coordinates in the DXF file in degrees?</source>
-        <translation type="obsolete">Чи координати всередині DXF файлу у градусах?</translation>
-    </message>
-    <message>
-        <source>Scale value</source>
-        <translation type="obsolete">Значення масштабу</translation>
-    </message>
-    <message>
-        <source>Choose a value to scale latitude coordinates by. A value of 1 does nothing, over one scales up and under one scales down.</source>
-        <translation type="obsolete">Виберіть значення для масштабування по координат довготи. Значення 1 не дасть нічого, окрім збільшення на один масштаб вгору і зменшення на один масштаб вниз.</translation>
-    </message>
-    <message>
-        <source>Choose a value to scale longitude coordinates by. A value of 1 does nothing, over one scales up and under one scales down.</source>
-        <translation type="obsolete">Виберіть значення для масштабування по координат широти. Значення 1 не дасть нічого, окрім збільшення на один масштаб вгору і зменшення на один масштаб вниз.</translation>
-    </message>
-    <message>
-        <source>The OSM file has version %1.
-The minimum supported version is %2.</source>
-        <translation type="obsolete">OSM файл має версію %1.
-Мінімальна підтримувана версія %2.</translation>
-    </message>
-    <message>
-        <source>The OSM file has version %1.
-The maximum supported version is %2.</source>
-        <translation type="obsolete">OSM файл має версію %1.
-Максимальна підтримувана версія %2.</translation>
-    </message>
-    <message>
-        <source>Problems</source>
-        <translation type="obsolete">Проблеми</translation>
-    </message>
-    <message>
-        <source>%1 nodes could not be processed correctly.</source>
-        <translation type="obsolete">%1 точок неможливо правильно обробити.</translation>
-    </message>
-    <message>
-        <source>Object selection</source>
-        <translation type="obsolete">Виділення об’єкту</translation>
-    </message>
-    <message>
-        <source>No objects were selected because there are no objects with the selected symbol(s)</source>
-        <translation type="obsolete">Жоден об’єкт не виділено бо відсутні об’єкти з обраним символом(-ами)</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translation type="obsolete">Помилка</translation>
-    </message>
-    <message>
-        <source>Unification failed.</source>
-        <translation type="obsolete">Об’єднання невдале.</translation>
-    </message>
-    <message>
-        <source>Intersection failed.</source>
-        <translation type="obsolete">Перетин невдалий.</translation>
-    </message>
-    <message>
-        <source>Difference failed.</source>
-        <translation type="obsolete">Різниця невдала.</translation>
-    </message>
-    <message>
-        <source>XOr failed.</source>
-        <translation type="obsolete">Взаємовиключення невдале.</translation>
-    </message>
-    <message>
-        <source>A</source>
-        <comment>First capital letter of the local alphabet</comment>
-        <translatorcomment>Перша літера локальної абетки (тут: англійська)</translatorcomment>
-        <translation type="obsolete">A</translation>
-    </message>
-    <message>
-        <source>Mid symbol</source>
-        <translation type="obsolete">Серединний символ</translation>
-    </message>
-    <message>
-        <source>End symbol</source>
-        <translation type="obsolete">Кінцевий символ</translation>
-    </message>
-    <message>
-        <source>OpenOrienteering Mapper XML (export only)</source>
-        <translation type="obsolete">OpenOrienteering Mapper XML (лише експорт)</translation>
     </message>
 </context>
 <context>
@@ -6094,18 +5480,6 @@ The maximum supported version is %2.</source>
 <context>
     <name>RotateTool</name>
     <message>
-        <source>&lt;b&gt;Rotation:&lt;/b&gt; %1</source>
-        <translation type="obsolete">&lt;b&gt;Обертання:&lt;/b&gt; %1</translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;Click&lt;/b&gt; to set the rotation center</source>
-        <translation type="obsolete">&lt;b&gt;Клацніть&lt;/b&gt; для встановлення центра обертання</translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;Click&lt;/b&gt; to set the rotation center, &lt;b&gt;drag&lt;/b&gt; to rotate the selected object(s)</source>
-        <translation type="obsolete">&lt;b&gt;Клацніть&lt;/b&gt; для встановлення центра обертання, &lt;b&gt;потягніть&lt;/b&gt; щоб обертати об&apos;єкт(-и)</translation>
-    </message>
-    <message>
         <location filename="../src/tool_rotate.cpp" line="185"/>
         <source>&lt;b&gt;Rotation:&lt;/b&gt; %1° </source>
         <translation type="unfinished"></translation>
@@ -6210,14 +5584,6 @@ The maximum supported version is %2.</source>
         <source>Scale non-georeferenced templates</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Скасувати</translation>
-    </message>
-    <message>
-        <source>Adjust</source>
-        <translation type="obsolete">Вирівняти</translation>
-    </message>
 </context>
 <context>
     <name>ScaleTool</name>
@@ -6236,14 +5602,6 @@ The maximum supported version is %2.</source>
         <location filename="../src/tool_scale.cpp" line="205"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Scale the selected objects. </source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;Click&lt;/b&gt; to set the scaling center</source>
-        <translation type="obsolete">&lt;b&gt;Клацніть&lt;/b&gt; для встановлення центру масштабування</translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;Click&lt;/b&gt; to set the scaling center, &lt;b&gt;drag&lt;/b&gt; to scale the selected object(s)</source>
-        <translation type="obsolete">&lt;b&gt;Клацніть&lt;/b&gt; для встановлення центру масштабування, &lt;b&gt;потягніть&lt;/b&gt; щоб масштабувати виділений об’єкт(-и)</translation>
     </message>
 </context>
 <context>
@@ -6419,14 +5777,6 @@ The maximum supported version is %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>All</source>
-        <translation type="obsolete">Усі</translation>
-    </message>
-    <message>
-        <source>Unused</source>
-        <translation type="obsolete">Невикористовувані</translation>
-    </message>
-    <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="965"/>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="980"/>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="993"/>
@@ -6524,10 +5874,6 @@ The maximum supported version is %2.</source>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="267"/>
         <source>Sort by primary color priority</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Scale symbol %1</source>
-        <translation type="obsolete">Масштабувати символ %1</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="896"/>
@@ -6629,13 +5975,6 @@ to jump over the lazy dog
     </message>
 </context>
 <context>
-    <name>TagsDialog</name>
-    <message>
-        <source>Close</source>
-        <translation type="obsolete">Закрити</translation>
-    </message>
-</context>
-<context>
     <name>TagsWidget</name>
     <message>
         <location filename="../src/gui/widgets/tags_widget.cpp" line="53"/>
@@ -6690,10 +6029,6 @@ to jump over the lazy dog
         <source>Is the format of the file correct for this template type?</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Cannot change the template to this file! Is the format of the file correct for this template type?</source>
-        <translation type="obsolete">Невдається змінити шаблон на цей файл! Чи формат файлу корректний для цього типу шаблону?</translation>
-    </message>
 </context>
 <context>
     <name>TemplateAdjustActivity</name>
@@ -6716,14 +6051,6 @@ to jump over the lazy dog
 <context>
     <name>TemplateAdjustAddTool</name>
     <message>
-        <source>&lt;b&gt;Click&lt;/b&gt; to set the template position of the pass point</source>
-        <translation type="obsolete">&lt;b&gt;Клацніть&lt;/b&gt; для встановлення позиції точки суміщення на шаблоні</translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;Click&lt;/b&gt; to set the map position of the pass point, &lt;b&gt;Esc&lt;/b&gt; to abort</source>
-        <translation type="obsolete">&lt;b&gt;Клацніть&lt;/b&gt; для встановлення позиції точки суміщення на мапі, &lt;b&gt;Esc&lt;/b&gt; для відміни</translation>
-    </message>
-    <message>
         <location filename="../src/template_adjust.cpp" line="572"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set the template position of the pass point. </source>
         <translation type="unfinished"></translation>
@@ -6737,10 +6064,6 @@ to jump over the lazy dog
 <context>
     <name>TemplateAdjustDeleteTool</name>
     <message>
-        <source>&lt;b&gt;Click&lt;/b&gt; to delete pass points</source>
-        <translation type="obsolete">&lt;b&gt;Клацніть&lt;/b&gt; для видалення точок суміщення</translation>
-    </message>
-    <message>
         <location filename="../src/template_adjust.cpp" line="806"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Delete pass points. </source>
         <translation type="unfinished"></translation>
@@ -6748,10 +6071,6 @@ to jump over the lazy dog
 </context>
 <context>
     <name>TemplateAdjustMoveTool</name>
-    <message>
-        <source>&lt;b&gt;Drag&lt;/b&gt; to move pass points</source>
-        <translation type="obsolete">&lt;b&gt;Потягніть&lt;/b&gt; для переміщення точок суміщення</translation>
-    </message>
     <message>
         <location filename="../src/template_adjust.cpp" line="681"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move pass points. </source>
@@ -6824,25 +6143,6 @@ to jump over the lazy dog
         <location filename="../src/template_adjust.cpp" line="225"/>
         <source>Clear all</source>
         <translation>Очистити всі</translation>
-    </message>
-</context>
-<context>
-    <name>TemplateGPS</name>
-    <message>
-        <source>Error</source>
-        <translation type="obsolete">Помилка</translation>
-    </message>
-    <message>
-        <source>The path is empty, there is nothing to import!</source>
-        <translation type="obsolete">Контур порожній, немає чого імпортувати!</translation>
-    </message>
-    <message>
-        <source>Question</source>
-        <translation type="obsolete">Проблема</translation>
-    </message>
-    <message>
-        <source>Should the waypoints be imported as a line going through all points?</source>
-        <translation type="obsolete">Імпортувати шляхові точки як лінію, що проходить через всі ці точки?</translation>
     </message>
 </context>
 <context>
@@ -7070,14 +6370,6 @@ If you do not intend to draw on this template however, that is no problem.</sour
         <translation type="unfinished">Помилка читання</translation>
     </message>
     <message>
-        <source>There was an error reading the DXF file %1:
-
-%1</source>
-        <translation type="obsolete">Помилка читання DXF файлу %1:
-
-%1</translation>
-    </message>
-    <message>
         <location filename="../src/gps_track.cpp" line="423"/>
         <source>There was an error reading the DXF file %1:
 
@@ -7138,10 +6430,6 @@ The maximum supported version is %2.</source>
         <location filename="../src/template_dock_widget.cpp" line="112"/>
         <source>Filename</source>
         <translation>Назва файлу</translation>
-    </message>
-    <message>
-        <source>Create...</source>
-        <translation type="obsolete">Створити...</translation>
     </message>
     <message>
         <location filename="../src/template_dock_widget.cpp" line="153"/>
@@ -7206,10 +6494,6 @@ The maximum supported version is %2.</source>
         <translation>Довідка</translation>
     </message>
     <message>
-        <source>Selected template(s)</source>
-        <translation type="obsolete">Обраний шаблон(-и)</translation>
-    </message>
-    <message>
         <location filename="../src/template_dock_widget.cpp" line="186"/>
         <source>Move by hand</source>
         <translation>Перемістити вручну</translation>
@@ -7235,25 +6519,9 @@ The maximum supported version is %2.</source>
         <translation>Усі файли</translation>
     </message>
     <message>
-        <source>More...</source>
-        <translation type="obsolete">Більше...</translation>
-    </message>
-    <message>
         <location filename="../src/template_dock_widget.cpp" line="190"/>
         <source>Adjust...</source>
         <translation>Вирівняти...</translation>
-    </message>
-    <message>
-        <source>Numeric transformation window</source>
-        <translation type="obsolete">Вікно формату чисел</translation>
-    </message>
-    <message>
-        <source>Set transparent color...</source>
-        <translation type="obsolete">Оберіть прозорий колір...</translation>
-    </message>
-    <message>
-        <source>Trace lines...</source>
-        <translation type="obsolete">Трасування ліній...</translation>
     </message>
     <message>
         <location filename="../src/template_dock_widget.cpp" line="335"/>
@@ -7271,10 +6539,6 @@ The maximum supported version is %2.</source>
         <location filename="../src/template_dock_widget.cpp" line="348"/>
         <source>Failed to load template. Does the file exist and is it valid?</source>
         <translation>Невдале завантаження шаблону. Чи справді існує файл і він дійсний?</translation>
-    </message>
-    <message>
-        <source>Please enter a valid number from 0 to 1, or specify a percentage from 0 to 100!</source>
-        <translation type="obsolete">Будь-ласка уведіть дійсне значення від 0 до 1, або вкажіть у відсотках від 0 до 100!</translation>
     </message>
     <message>
         <location filename="../src/template_dock_widget.cpp" line="626"/>
@@ -7320,18 +6584,6 @@ The maximum supported version is %2.</source>
         <location filename="../src/template_dock_widget.cpp" line="982"/>
         <source>- Map -</source>
         <translation>- Мапа -</translation>
-    </message>
-    <message>
-        <source>Find the moved template file</source>
-        <translation type="obsolete">Знайти переміщений файл шаблону</translation>
-    </message>
-    <message>
-        <source>All files (*.*)</source>
-        <translation type="obsolete">Усі файли (*.*)</translation>
-    </message>
-    <message>
-        <source>Cannot change the template to this file! Is the format of the file correct for this template type?</source>
-        <translation type="obsolete">Невдається змінити шаблон на цей файл! Чи формат файлу корректний для цього типу шаблону?</translation>
     </message>
 </context>
 <context>
