@@ -91,7 +91,7 @@
     <message>
         <location filename="../src/symbol_area.cpp" line="774"/>
         <source>Pattern fill</source>
-        <translation>Заповнення візерунку</translation>
+        <translation type="unfinished">Заповнення візерунком</translation>
     </message>
     <message>
         <location filename="../src/symbol_area.cpp" line="812"/>
@@ -271,7 +271,7 @@
         <location filename="../src/gui/color_dialog.cpp" line="139"/>
         <location filename="../src/gui/color_dialog.cpp" line="349"/>
         <source>%</source>
-        <translation type="unfinished">%</translation>
+        <translation>%</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="91"/>
@@ -297,22 +297,22 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="125"/>
         <source>Cyan</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Блакитний</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="130"/>
         <source>Magenta</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Пурпурний</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="135"/>
         <source>Yellow</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Жовтий</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="140"/>
         <source>Black</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Чорний</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="171"/>
@@ -327,22 +327,22 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="182"/>
         <source>Red</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Червоний</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="187"/>
         <source>Green</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Зелений</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="192"/>
         <source>Blue</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Синій</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="197"/>
         <source>#RRGGBB</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">#RRGGBB</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="215"/>
@@ -352,7 +352,7 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="216"/>
         <source>Professional printing</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Професійний друк</translation>
     </message>
 </context>
 <context>
@@ -454,13 +454,13 @@
     <message>
         <location filename="../src/color_dock_widget.cpp" line="310"/>
         <source>Please enter a percentage from 0% to 100%!</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Введіть будь-ласка значення від 0% до 100%!</translation>
     </message>
     <message>
         <location filename="../src/color_dock_widget.cpp" line="377"/>
         <location filename="../src/color_dock_widget.cpp" line="419"/>
         <source>Double click to define the color</source>
-        <translation type="unfinished">Зробіть подвійний клік щоб вибрати кольір</translation>
+        <translation type="unfinished">Зробіть подвійний клік щоб задати кольір</translation>
     </message>
     <message>
         <location filename="../src/color_dock_widget.cpp" line="384"/>
@@ -516,7 +516,7 @@
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="50"/>
         <source>Configure grid</source>
-        <translation type="unfinished">Налаштувати сітку</translation>
+        <translation>Налаштувати сітку</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="52"/>
@@ -667,7 +667,7 @@
     <message>
         <location filename="../src/tool_cut_hole.cpp" line="241"/>
         <source>&lt;b&gt;Click or drag&lt;/b&gt;: Start drawing the hole. </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;b&gt;Клікніть або потягніть&lt;/b&gt; щоб почати малювати отвір.</translation>
     </message>
 </context>
 <context>
@@ -698,7 +698,7 @@
     <message>
         <location filename="../src/tool_cut.cpp" line="675"/>
         <source>&lt;b&gt;Click&lt;/b&gt; on a line: Split it into two. &lt;b&gt;Drag&lt;/b&gt; along a line: Remove this line part. &lt;b&gt;Click or Drag&lt;/b&gt; at an area boundary: Start a split line. </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;b&gt;Клікніть&lt;/b&gt; на лінії щоб розділити її на дві частини. &lt;b&gt;Потягніть&lt;/b&gt; вздовж лінії щоб вирізати її ділянку. &lt;b&gt;Клікніть або потягніть&lt;/b&gt; від межі площі щоб розділии її.</translation>
     </message>
     <message>
         <location filename="../src/tool_cut.cpp" line="683"/>
@@ -730,12 +730,12 @@
     <message>
         <location filename="../src/dxfparser.cpp" line="36"/>
         <source>Could not open the file.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Неможливо відкрити файл.</translation>
     </message>
     <message>
         <location filename="../src/dxfparser.cpp" line="52"/>
         <source>The file is not an DXF file.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Цей фал не є DXF файлом.</translation>
     </message>
 </context>
 <context>
@@ -776,38 +776,38 @@
     <message>
         <location filename="../src/tool_distribute_points.cpp" line="121"/>
         <source>Distribute points evenly along path</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Розподілити точки рівномірно вздовж відрізку</translation>
     </message>
     <message>
         <location filename="../src/tool_distribute_points.cpp" line="127"/>
         <source>Number of points per path:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Кількість точок вздовж відрізку:</translation>
     </message>
     <message>
         <location filename="../src/tool_distribute_points.cpp" line="129"/>
         <source>Also place objects at line end points</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Розмістити об&apos;єкти також на кінцях відрізку</translation>
     </message>
     <message>
         <location filename="../src/tool_distribute_points.cpp" line="135"/>
         <source>Rotation settings</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Параметри обертання</translation>
     </message>
     <message>
         <location filename="../src/tool_distribute_points.cpp" line="138"/>
         <source>Align points with direction of line</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Вирівняти точки у напрямку лінії</translation>
     </message>
     <message>
         <location filename="../src/tool_distribute_points.cpp" line="142"/>
         <source>°</source>
         <comment>degrees</comment>
-        <translation type="unfinished">°</translation>
+        <translation>°</translation>
     </message>
     <message>
         <location filename="../src/tool_distribute_points.cpp" line="144"/>
         <source>Additional rotation angle (counter-clockwise):</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Додатковий кут повороту (проти годинникової стрілки):</translation>
     </message>
 </context>
 <context>
@@ -816,32 +816,32 @@
         <location filename="../src/tool_draw_circle.cpp" line="59"/>
         <source>From center</source>
         <comment>Draw circle starting from center</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Від центру</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_circle.cpp" line="294"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Start a circle or ellipse. </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;b&gt;Клікніть&lt;/b&gt; щоб почати креслити коло або еліпс.</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_circle.cpp" line="295"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Draw a circle. </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;b&gt;Потягніть&lt;/b&gt; щоб накреслити коло.</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_circle.cpp" line="297"/>
         <source>Hold %1 to start drawing from the center.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Утримуйте %1 щоб малювати від центру.</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_circle.cpp" line="301"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Finish the circle. </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;b&gt;Клікніть&lt;/b&gt; щоб завершити коло.</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_circle.cpp" line="302"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Draw an ellipse. </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;b&gt;Протягніть&lt;/b&gt; щоб накреслити еліпс.</translation>
     </message>
 </context>
 <context>
@@ -849,7 +849,7 @@
     <message>
         <location filename="../src/tool_draw_freehand.cpp" line="276"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Draw a path. </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;b&gt;Потягніть&lt;/b&gt;щоб намалювати лінію.</translation>
     </message>
 </context>
 <context>
@@ -858,37 +858,37 @@
         <location filename="../src/tool_draw_path.cpp" line="1028"/>
         <location filename="../src/tool_draw_rectangle.cpp" line="700"/>
         <source>&lt;b&gt;Dash points on.&lt;/b&gt; </source>
-        <translation type="unfinished">&lt;b&gt;Вузли увімкнено.&lt;/b&gt; </translation>
+        <translation type="unfinished">&lt;b&gt;Штрихи ввімкнено.&lt;/b&gt; </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1034"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt;: Snap or append to existing objects. </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;b&gt;%1+Click&lt;/b&gt;: Прив&apos;язуватись чи чіплятися за існуючі об&apos;єкти.</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1039"/>
         <location filename="../src/tool_draw_rectangle.cpp" line="706"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt;: Pick direction from existing objects. </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;b&gt;%1+Click&lt;/b&gt;: Слідувати напрямку існуючих об&apos;єктів.</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1052"/>
         <location filename="../src/tool_draw_rectangle.cpp" line="711"/>
         <location filename="../src/tool_draw_rectangle.cpp" line="735"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt;: Snap to existing objects. </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;b&gt;%1+Click&lt;/b&gt;: Прив&apos;язуватись до існуючих об&apos;єктів.</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1058"/>
         <location filename="../src/tool_draw_rectangle.cpp" line="725"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Fixed angles. </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;b&gt;%1&lt;/b&gt;: Фіксовані кути.</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1066"/>
         <location filename="../src/tool_draw_rectangle.cpp" line="741"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Undo last point. </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;b&gt;%1&lt;/b&gt;: Скасувати останній крок.</translation>
     </message>
 </context>
 <context>
@@ -896,7 +896,7 @@
     <message>
         <location filename="../src/tool_draw_path.cpp" line="87"/>
         <source>Finish</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Завершити</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="88"/>
@@ -907,19 +907,19 @@
         <location filename="../src/tool_draw_path.cpp" line="89"/>
         <source>Snap</source>
         <comment>Snap to existing objects</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Прив&apos;язати</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="90"/>
         <source>Angle</source>
         <comment>Using constrained angles</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Кут</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="91"/>
         <source>Dash</source>
         <comment>Drawing dash points</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Штрих</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="92"/>
@@ -929,27 +929,27 @@
     <message>
         <location filename="../src/tool_draw_path.cpp" line="93"/>
         <source>Abort</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Перервати</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1023"/>
         <source>&lt;b&gt;Length:&lt;/b&gt; %1 m </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;b&gt;Довжина:&lt;/b&gt; %1 м </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1044"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Start a straight line. &lt;b&gt;Drag&lt;/b&gt;: Start a curve. </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;b&gt;Клік&lt;/b&gt; почне ламану лінію. &lt;b&gt;Потягніть&lt;/b&gt; щоб накреслити криву. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1053"/>
         <source>&lt;b&gt;%1+Drag&lt;/b&gt;: Follow existing objects. </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;b&gt;%1+Потягніть&lt;/b&gt; вздовж об&apos;єкта щоб повторити його контур. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1063"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Draw a straight line. &lt;b&gt;Drag&lt;/b&gt;: Draw a curve. &lt;b&gt;Right or double click&lt;/b&gt;: Finish the path. &lt;b&gt;%1&lt;/b&gt;: Close the path. </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;b&gt;Клік&lt;/b&gt;: почне ламану лінію. &lt;b&gt;Протягніть&lt;/b&gt; щоб накреслити криву. &lt;b&gt;Правий або подвійний клік&lt;/b&gt; завершить лінію. &lt;b&gt;%1&lt;/b&gt; замкне лінію. </translation>
     </message>
 </context>
 <context>
@@ -957,12 +957,12 @@
     <message>
         <location filename="../src/tool_draw_point_gps.cpp" line="73"/>
         <source>Touch the map to finish averaging</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Торкніться карти щоб завершити усереднення</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_point_gps.cpp" line="183"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Finish setting the object. </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;b&gt;Клік&lt;/b&gt; завершить установку об&apos;єкта. </translation>
     </message>
 </context>
 <context>
@@ -971,46 +971,46 @@
         <location filename="../src/tool_draw_point.cpp" line="60"/>
         <source>Snap</source>
         <comment>Snap to existing objects</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Прив&apos;язка</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_point.cpp" line="61"/>
         <source>Angle</source>
         <comment>Using constrained angles</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Кут</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_point.cpp" line="62"/>
         <source>Reset</source>
         <comment>Reset rotation</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Скинути</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_point.cpp" line="329"/>
         <location filename="../src/tool_draw_point.cpp" line="341"/>
         <source>&lt;b&gt;Angle:&lt;/b&gt; %1° </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;b&gt;Кут:&lt;/b&gt; %1° </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_point.cpp" line="330"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Fixed angles. </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;b&gt;%1&lt;/b&gt;: Фіксовані кути. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_point.cpp" line="335"/>
         <location filename="../src/tool_draw_point.cpp" line="349"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Create a point object.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;b&gt;Клік&lt;/b&gt;: Створить точковий об&apos;єкт.</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_point.cpp" line="336"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Create an object and set its orientation.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;b&gt;Протягніть&lt;/b&gt; щоб створити об&apos;єкт і задати його орієнтацію.</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_point.cpp" line="342"/>
         <source>&lt;b&gt;%1, 0&lt;/b&gt;: Reset rotation.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;b&gt;%1, 0&lt;/b&gt;: Скасувати поворот.</translation>
     </message>
 </context>
 <context>
@@ -1018,25 +1018,25 @@
     <message>
         <location filename="../src/tool_draw_rectangle.cpp" line="78"/>
         <source>Finish</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Завершити</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_rectangle.cpp" line="79"/>
         <source>Snap</source>
         <comment>Snap to existing objects</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Прив&apos;язка</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_rectangle.cpp" line="80"/>
         <source>Line snap</source>
         <comment>Snap to previous lines</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Прив&apos;язка до лінії</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_rectangle.cpp" line="81"/>
         <source>Dash</source>
         <comment>Drawing dash points</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Штрих</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_rectangle.cpp" line="82"/>
@@ -1046,22 +1046,22 @@
     <message>
         <location filename="../src/tool_draw_rectangle.cpp" line="83"/>
         <source>Abort</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Перервати</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_rectangle.cpp" line="716"/>
         <source>&lt;b&gt;Click or Drag&lt;/b&gt;: Start drawing a rectangle. </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;b&gt;Клікніть або потягніть&lt;/b&gt; щоб накреслити прямокутник. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_rectangle.cpp" line="729"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Snap to previous lines. </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;b&gt;%1&lt;/b&gt;: Прив&apos;язка до попередньої лінії. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_rectangle.cpp" line="740"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set a corner point. &lt;b&gt;Right or double click&lt;/b&gt;: Finish the rectangle. </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;b&gt;Клік&lt;/b&gt;: щоб поставити вузлову точку. &lt;b&gt;Правий або подвійний клік&lt;/b&gt; завершить прямокутник. </translation>
     </message>
 </context>
 <context>
@@ -1069,12 +1069,12 @@
     <message>
         <location filename="../src/tool_draw_text.cpp" line="306"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Finish editing. </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;b&gt;%1&lt;/b&gt;: Завершить правку. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_text.cpp" line="308"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Create a text object with a single anchor. &lt;b&gt;Drag&lt;/b&gt;: Create a text box. </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;b&gt;Клік&lt;/b&gt;: Створить текстовий об&apos;єкт з простим якорем. &lt;b&gt;Потягніть&lt;/b&gt; щоб створити текстову область. </translation>
     </message>
 </context>
 <context>
@@ -1083,23 +1083,23 @@
         <location filename="../src/tool_edit_line.cpp" line="345"/>
         <source>Snap</source>
         <comment>Snap to existing objects</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Прив&apos;язка</translation>
     </message>
     <message>
         <location filename="../src/tool_edit_line.cpp" line="346"/>
         <source>Toggle curve</source>
         <comment>Toggle between curved and flat segment</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Перемикач кривої</translation>
     </message>
     <message>
         <location filename="../src/tool_edit_line.cpp" line="453"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Free movement. </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;b&gt;%1&lt;/b&gt;: Вільний рух. </translation>
     </message>
     <message>
         <location filename="../src/tool_edit_line.cpp" line="472"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on segment: Toggle between straight and curved. </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;b&gt;%1+Клік&lt;/b&gt; на сегменті: Перемкне між прямою та кривою. </translation>
     </message>
 </context>
 <context>
@@ -1210,7 +1210,7 @@
         <location filename="../src/gui/settings_dialog.cpp" line="214"/>
         <source>mm</source>
         <comment>millimeters</comment>
-        <translation type="unfinished">мм</translation>
+        <translation>мм</translation>
     </message>
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="170"/>
@@ -1226,7 +1226,7 @@
         <location filename="../src/gui/settings_dialog.cpp" line="176"/>
         <source>°</source>
         <comment>Degree sign for angles</comment>
-        <translation type="unfinished">°</translation>
+        <translation>°</translation>
     </message>
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="180"/>
@@ -2916,7 +2916,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="760"/>
         <source>Map notes...</source>
-        <translation type="unfinished">Нотатки до карти...</translation>
+        <translation>Примітки до карти...</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="762"/>
@@ -2936,7 +2936,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="742"/>
         <source>Show whole map</source>
-        <translation type="unfinished">Показати карту повністю</translation>
+        <translation>Показати всю карту</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="770"/>
@@ -2956,7 +2956,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="774"/>
         <source>Draw circles and ellipses</source>
-        <translation>Креслити кола і еліпси</translation>
+        <translation>Креслити кола та еліпси</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="778"/>
@@ -2996,7 +2996,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="802"/>
         <source>Rotate object(s)</source>
-        <translation>Обертати об&apos;єкт(-и)</translation>
+        <translation>Обертати об&apos;єкт(и)</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="805"/>
@@ -3053,29 +3053,29 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="734"/>
         <source>Show grid</source>
-        <translation type="unfinished">Показати сітку</translation>
+        <translation>Показати сітку</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="735"/>
         <location filename="../src/map_editor.cpp" line="1038"/>
         <source>Configure grid...</source>
-        <translation type="unfinished">Налаштувати сітку...</translation>
+        <translation>Налаштування сітки...</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="746"/>
         <source>Hatch areas</source>
-        <translation type="unfinished">Заштрихувати площі</translation>
+        <translation>Заштрихувати площі</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="747"/>
         <source>Baseline view</source>
-        <translation type="unfinished">Вид основних ліній</translation>
+        <translation>Вид основних ліній</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="748"/>
         <location filename="../src/template_dock_widget.cpp" line="103"/>
         <source>Hide all templates</source>
-        <translation type="unfinished">Приховати всі підложки</translation>
+        <translation>Приховати всі підложки</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="757"/>
@@ -3120,7 +3120,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="803"/>
         <source>Rotate pattern</source>
-        <translation type="unfinished">Повернути pattern</translation>
+        <translation type="unfinished">Повернути візерунок</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="804"/>
@@ -3513,61 +3513,61 @@ Rescale the imported data?</source>
         <location filename="../src/map_editor.cpp" line="847"/>
         <location filename="../src/map_editor.cpp" line="3298"/>
         <source>Add new part...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Додати нову частину...</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="848"/>
         <location filename="../src/map_editor.cpp" line="3358"/>
         <source>Rename current part...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Переіменувати частину...</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="849"/>
         <location filename="../src/map_editor.cpp" line="3319"/>
         <source>Remove current part</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Видалити частину</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="850"/>
         <source>Merge all parts</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">З&apos;єднати усі частини</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="894"/>
         <source>&amp;Export as...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Експортувати як...</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1049"/>
         <location filename="../src/map_editor.cpp" line="1054"/>
         <location filename="../src/map_editor.cpp" line="3233"/>
         <source>Map parts</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Частини карти</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1138"/>
         <source>Select symbol</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Вибрати знак</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1141"/>
         <source>Hide top bar</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Приховати верхню панель</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1144"/>
         <source>Show top bar</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Показати верхню панель</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1378"/>
         <source>Print / Export is not available in this program version!</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Друк / Експорт неможливий у цій версії програми!</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1786"/>
         <source>Tag Editor</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Редактор тегів</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1842"/>
@@ -3575,7 +3575,9 @@ Rescale the imported data?</source>
 symbol
 selected</source>
         <comment>Keep it short. Should not be much longer per line than the longest word in the original.</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Знак
+не
+вибраний</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1843"/>
@@ -3583,22 +3585,24 @@ selected</source>
 symbols
 selected</source>
         <comment>Keep it short. Should not be much longer per line than the longest word in the original.</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Вибрано
+кілька
+знаків</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1927"/>
         <source>Draw paths free-handedly.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Намалювати лінію від руки.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1929"/>
         <source>Fill bounded areas.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Заповнити замкнену площу.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1931"/>
         <source>Write text on the map.</source>
-        <translation type="unfinished">Напишіть текст на карті.</translation>
+        <translation type="unfinished">Написати текст на карті.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1931"/>
@@ -3608,7 +3612,7 @@ selected</source>
     <message>
         <location filename="../src/map_editor.cpp" line="2024"/>
         <source>Deletes the selected object(s).</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Видалити виділені об&apos;єкти.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2026"/>
@@ -3618,7 +3622,7 @@ selected</source>
     <message>
         <location filename="../src/map_editor.cpp" line="3320"/>
         <source>Do you want to remove map part &quot;%1&quot; and all its objects?</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ви дійсно хочете видалити частину &quot;%1&quot; і усі об&apos;єкти при ній?</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2024"/>
