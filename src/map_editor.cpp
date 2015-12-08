@@ -738,7 +738,7 @@ void MapEditorController::createActions()
 	hide_all_templates_act = newCheckAction("hidealltemplates", tr("Hide all templates"), this, SLOT(hideAllTemplates(bool)), NULL, QString::null, "view_menu.html");
 	overprinting_simulation_act = newCheckAction("overprintsimulation", tr("Overprinting simulation"), this, SLOT(overprintingSimulation(bool)), NULL, QString::null, "view_menu.html");
 	
-	symbol_window_act = newCheckAction("symbolwindow", tr("Symbol window"), this, SLOT(showSymbolWindow(bool)), "window-new.png", tr("Show/Hide the symbol window"), "symbol_dock_widget.html");
+	symbol_window_act = newCheckAction("symbolwindow", tr("Symbol window"), this, SLOT(showSymbolWindow(bool)), "symbols.png", tr("Show/Hide the symbol window"), "symbol_dock_widget.html");
 	color_window_act = newCheckAction("colorwindow", tr("Color window"), this, SLOT(showColorWindow(bool)), "colors.png", tr("Show/Hide the color window"), "color_dock_widget.html");
 	load_symbols_from_act = newAction("loadsymbols", tr("Replace symbol set..."), this, SLOT(loadSymbolsFromClicked()), NULL, tr("Replace the symbols with those from another map file"), "symbol_replace_dialog.html");
 	/*QAction* load_colors_from_act = newAction("loadcolors", tr("Load colors from..."), this, SLOT(loadColorsFromClicked()), NULL, tr("Replace the colors with those from another map file"));*/
