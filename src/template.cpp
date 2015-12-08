@@ -699,20 +699,42 @@ void Template::setAdjustmentDirty(bool value)
 		map->setTemplatesDirty();
 }
 
+const std::vector<QByteArray>& Template::supportedExtensions()
+{
+	static std::vector<QByteArray> extensions;
+	if (extensions.empty())
+	{
+		auto& image_extensions = TemplateImage::supportedExtensions();
+		auto& map_extensions   = TemplateMap::supportedExtensions();
+		auto& track_extensions = TemplateTrack::supportedExtensions();
+		extensions.reserve(image_extensions.size()
+		                   + map_extensions.size()
+		                   + track_extensions.size());
+		extensions.insert(end(extensions), begin(image_extensions), end(image_extensions));
+		extensions.insert(end(extensions), begin(map_extensions), end(map_extensions));
+		extensions.insert(end(extensions), begin(track_extensions), end(track_extensions));
+	}
+	return extensions;
+}
+
 Template* Template::templateForFile(const QString& path, Map* map)
 {
-	if (path.endsWith(".png", Qt::CaseInsensitive) || path.endsWith(".bmp", Qt::CaseInsensitive) ||
-		path.endsWith(".jpg", Qt::CaseInsensitive) || path.endsWith(".gif", Qt::CaseInsensitive) ||
-		path.endsWith(".jpeg", Qt::CaseInsensitive) || path.endsWith(".tif", Qt::CaseInsensitive) ||
-		path.endsWith(".tiff", Qt::CaseInsensitive))
-		return new TemplateImage(path, map);
-	else if (path.endsWith(".ocd", Qt::CaseInsensitive) || path.endsWith(".omap", Qt::CaseInsensitive) || path.endsWith(".xmap", Qt::CaseInsensitive))
-		return new TemplateMap(path, map);
-	else if (path.endsWith(".gpx", Qt::CaseInsensitive) || path.endsWith(".dxf", Qt::CaseInsensitive) ||
-			 path.endsWith(".osm", Qt::CaseInsensitive))
-		return new TemplateTrack(path, map);
-	else
-		return NULL;
+	auto path_ends_with_any_of = [path](const std::vector<QByteArray>& list) -> bool {
+		using namespace std;
+		return any_of(begin(list), end(list), [path](const QByteArray& extension) {
+			return path.endsWith(extension, Qt::CaseInsensitive);
+		} );
+	};
+	
+	Template* t = nullptr;
+	if (path_ends_with_any_of(TemplateImage::supportedExtensions()))
+		t = new TemplateImage(path, map);
+	else if (path_ends_with_any_of(TemplateMap::supportedExtensions()))
+		t = new TemplateMap(path, map);
+	else if (path_ends_with_any_of(TemplateTrack::supportedExtensions()))
+		t = new TemplateTrack(path, map);
+	
+	return t;
 }
 
 bool Template::loadTypeSpecificTemplateConfiguration(QIODevice* stream, int version)

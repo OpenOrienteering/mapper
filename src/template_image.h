@@ -49,6 +49,11 @@ public:
 		Georeferencing_GeoTiff
 	};
 	
+	/**
+	 * Returns the filename extensions supported by this template class.
+	 */
+	static const std::vector<QByteArray>& supportedExtensions();
+	
 	TemplateImage(const QString& path, Map* map);
     virtual ~TemplateImage();
 	virtual QString getTemplateType() const {return "TemplateImage";}

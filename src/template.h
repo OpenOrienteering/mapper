@@ -328,6 +328,10 @@ public:
 	void setAdjustmentDirty(bool value);
 	
 	// Static
+	/**
+	 * Returns the filename extensions supported by known subclasses.
+	 */
+	static const std::vector<QByteArray>& supportedExtensions();
 	
 	/// Tries to find a matching template subclass for the given path by looking at the file extension
 	static Template* templateForFile(const QString& path, Map* map);

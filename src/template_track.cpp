@@ -42,6 +42,12 @@
 #include "util_task_dialog.h"
 #include "util_gui.h"
 
+const std::vector<QByteArray>& TemplateTrack::supportedExtensions()
+{
+	static std::vector<QByteArray> extensions = { "dxf", "gpx", "osm" };
+	return extensions;
+}
+
 TemplateTrack::TemplateTrack(const QString& path, Map* map)
  : Template(path, map)
 {

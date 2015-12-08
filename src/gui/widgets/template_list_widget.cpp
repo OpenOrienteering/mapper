@@ -321,7 +321,21 @@ Template* TemplateListWidget::showOpenTemplateDialog(QWidget* dialog_parent, Map
 	QSettings settings;
 	QString template_directory = settings.value("templateFileDirectory", QDir::homePath()).toString();
 	
-	QString path = QFileDialog::getOpenFileName(dialog_parent, tr("Open image, GPS track or DXF file"), template_directory, QString("%1 (*.omap *.xmap *.ocd *.bmp *.jpg *.jpeg *.gif *.png *.tif *.tiff *.gpx *.dxf *.osm);;%2 (*.*)").arg(tr("Template files")).arg(tr("All files")));
+	QString pattern;
+	for (const auto& extension : Template::supportedExtensions())
+	{
+		pattern.append(QLatin1String(" *."));
+		pattern.append(QLatin1String(extension));
+		pattern.append(QLatin1String(" *."));
+		pattern.append(QString(QLatin1String(extension)).toUpper());
+	}
+	pattern.remove(0, 1);
+	QString path = QFileDialog::getOpenFileName(dialog_parent,
+	                                            tr("Open image, GPS track or DXF file"),
+	                                            template_directory,
+	                                            QString("%1 (%2);;%3 (*.*)").arg(tr("Template files"),
+	                                                                             pattern,
+	                                                                             tr("All files")));
 	path = QFileInfo(path).canonicalFilePath();
 	if (path.isEmpty())
 		return NULL;
