@@ -338,7 +338,7 @@ void NativeFileImport::import(bool load_symbols_only)
 		{
 			QString path;
 			loadString(stream, path);
-			Template* temp = Template::templateForFile(path, map);
+			auto temp = Template::templateForFile(path, map);
 			if (version >= 27)
 			{
 				loadString(stream, path);
@@ -347,7 +347,7 @@ void NativeFileImport::import(bool load_symbols_only)
 			
 			temp->loadTemplateConfiguration(stream, version);
 
-			map->templates[i] = temp;
+			map->templates[i] = temp.release();
 		}
 		
 		if (version >= 28)
@@ -360,13 +360,13 @@ void NativeFileImport::import(bool load_symbols_only)
 			{
 				QString path;
 				loadString(stream, path);
-				Template* temp = Template::templateForFile(path, map);
+				auto temp = Template::templateForFile(path, map);
 				loadString(stream, path);
 				temp->setTemplateRelativePath(path);
 				
 				temp->loadTemplateConfiguration(stream, version);
 				
-				map->closed_templates[i] = temp;
+				map->closed_templates[i] = temp.release();
 			}
 		}
 

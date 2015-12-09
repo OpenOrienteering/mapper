@@ -316,7 +316,7 @@ void TemplateListWidget::addTemplateAt(Template* new_template, int pos)
 	map->setTemplatesDirty();
 }
 
-Template* TemplateListWidget::showOpenTemplateDialog(QWidget* dialog_parent, MapEditorController* controller)
+std::unique_ptr<Template> TemplateListWidget::showOpenTemplateDialog(QWidget* dialog_parent, MapEditorController* controller)
 {
 	QSettings settings;
 	QString template_directory = settings.value("templateFileDirectory", QDir::homePath()).toString();
@@ -342,36 +342,31 @@ Template* TemplateListWidget::showOpenTemplateDialog(QWidget* dialog_parent, Map
 	
 	settings.setValue("templateFileDirectory", QFileInfo(path).canonicalPath());
 	
+	bool center_in_view = true;
 	QString error = tr("Cannot open template\n%1:\n%2").arg(path);
-	QScopedPointer<Template> new_temp(Template::templateForFile(path, controller->getMap()));
+	auto new_temp = Template::templateForFile(path, controller->getMap());
 	if (!new_temp)
 	{
 		QMessageBox::warning(dialog_parent, tr("Error"), error.arg(tr("File format not recognized.")));
-		return NULL;
 	}
-	
-	if (!new_temp->preLoadConfiguration(dialog_parent))
+	else if (!new_temp->preLoadConfiguration(dialog_parent))
 	{
-		return NULL;
+		new_temp.reset();
 	}
-	
-	if (!new_temp->loadTemplateFile(true))
+	else if (!new_temp->loadTemplateFile(true))
 	{
 		QString error_detail = new_temp->errorString();
 		if (error_detail.isEmpty())
 			error_detail = tr("Failed to load template. Does the file exist and is it valid?");
 		QMessageBox::warning(dialog_parent, tr("Error"), error.arg(error_detail));
-		return NULL;
+		new_temp.reset();
 	}
-	
-	bool center_in_view = true;
-	if (!new_temp->postLoadConfiguration(dialog_parent, center_in_view))
+	else if (!new_temp->postLoadConfiguration(dialog_parent, center_in_view))
 	{
-		return NULL;
+		new_temp.reset();
 	}
-	
 	// If the template is not georeferenced, position it at the viewport midpoint
-	if (!new_temp->isTemplateGeoreferenced() && center_in_view)
+	else if (!new_temp->isTemplateGeoreferenced() && center_in_view)
 	{
 		MapView* main_view = controller->getMainWidget()->getMapView();
 		auto view_pos = main_view->center();
@@ -379,7 +374,7 @@ Template* TemplateListWidget::showOpenTemplateDialog(QWidget* dialog_parent, Map
 		new_temp->setTemplatePosition(view_pos - offset);
 	}
 	
-	return new_temp.take();
+	return new_temp;
 }
 
 bool TemplateListWidget::eventFilter(QObject* watched, QEvent* event)
@@ -422,18 +417,16 @@ void TemplateListWidget::newTemplate(QAction* action)
 
 void TemplateListWidget::openTemplate()
 {
-	Template* new_template = showOpenTemplateDialog(window(), controller);
-	if (!new_template)
-		return;
-	
-	int pos;
-	int row = template_table->currentRow();
-	if (row < 0)
-		pos = -1;
-	else
-		pos = posFromRow(row);
-	
-	addTemplateAt(new_template, pos);
+	auto new_template = showOpenTemplateDialog(window(), controller);
+	if (new_template)
+	{
+		int pos = -1;
+		int row = template_table->currentRow();
+		if (row >= 0)
+			pos = posFromRow(row);
+		
+		addTemplateAt(new_template.release(), pos);
+	}
 }
 
 void TemplateListWidget::deleteTemplate()

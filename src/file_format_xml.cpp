@@ -793,11 +793,11 @@ void XMLFileImporter::importTemplates()
 		if (xml.name() == literal::template_string)
 		{
 			bool opened = true;
-			Template* temp = Template::loadTemplateConfiguration(xml, *map, opened);
+			auto temp = Template::loadTemplateConfiguration(xml, *map, opened);
 			if (opened)
-				map->templates.push_back(temp);
+				map->templates.push_back(temp.release());
 			else
-				map->closed_templates.push_back(temp);
+				map->closed_templates.push_back(temp.release());
 		}
 		else if (xml.name() == literal::defaults)
 		{

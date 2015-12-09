@@ -22,6 +22,8 @@
 #ifndef _OPENORIENTEERING_TEMPLATE_H_
 #define _OPENORIENTEERING_TEMPLATE_H_
 
+#include <memory>
+
 #include "matrix.h"
 #include "transformation.h"
 
@@ -109,7 +111,7 @@ public:
 	
 	/// Loads template parameters, see saveTemplateConfiguration(), and returns true if successful
 	bool loadTemplateConfiguration(QIODevice* stream, int version);
-	static Template* loadTemplateConfiguration(QXmlStreamReader& xml, Map& map, bool& open);
+	static std::unique_ptr<Template> loadTemplateConfiguration(QXmlStreamReader& xml, Map& map, bool& open);
 	
 	/// Saves the template itself, returns true if successful.
 	/// This is called when saving the map and the template's hasUnsavedChanges() returns true
@@ -331,8 +333,14 @@ public:
 	 */
 	static const std::vector<QByteArray>& supportedExtensions();
 	
-	/// Tries to find a matching template subclass for the given path by looking at the file extension
-	static Template* templateForFile(const QString& path, Map* map);
+	/**
+	 * Creates a Template instance for the given path.
+	 * 
+	 * This function tries to find a matching template subclass by looking at
+	 * the file extension. It may return nullptr if no subclass supports the
+	 * extension.
+	 */
+	static std::unique_ptr<Template> templateForFile(const QString& path, Map* map);
 	
 signals:
 	/// Emitted whenever template_state was changed

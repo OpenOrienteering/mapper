@@ -1739,16 +1739,16 @@ void MapEditorController::showTemplateWindow(bool show)
 
 void MapEditorController::openTemplateClicked()
 {
-	Template* new_template = TemplateListWidget::showOpenTemplateDialog(window, this);
-	if (!new_template)
-		return;
-	
-	hideAllTemplates(false);
-	showTemplateWindow(true);
-	
-	// FIXME: this should be done through the core map, not through the UI
-	TemplateListWidget* template_widget = reinterpret_cast<TemplateListWidget*>(template_dock_widget->widget());
-	template_widget->addTemplateAt(new_template, -1);
+	auto new_template = TemplateListWidget::showOpenTemplateDialog(window, this);
+	if (new_template)
+	{
+		hideAllTemplates(false);
+		showTemplateWindow(true);
+		
+		// FIXME: this should be done through the core map, not through the UI
+		TemplateListWidget* template_widget = reinterpret_cast<TemplateListWidget*>(template_dock_widget->widget());
+		template_widget->addTemplateAt(new_template.release(), -1);
+	}
 }
 
 void MapEditorController::reopenTemplateClicked()

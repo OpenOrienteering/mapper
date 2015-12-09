@@ -263,7 +263,7 @@ void Template::saveTemplateConfiguration(QXmlStreamWriter& xml, bool open)
 	xml.writeEndElement(/*template*/);
 }
 
-Template* Template::loadTemplateConfiguration(QXmlStreamReader& xml, Map& map, bool& open)
+std::unique_ptr<Template> Template::loadTemplateConfiguration(QXmlStreamReader& xml, Map& map, bool& open)
 {
 	Q_ASSERT(xml.name() == "template");
 	
@@ -272,7 +272,7 @@ Template* Template::loadTemplateConfiguration(QXmlStreamReader& xml, Map& map, b
 		open = (attributes.value("open") == "true");
 	
 	QString path = attributes.value("path").toString();
-	Template* temp = templateForFile(path, &map);
+	auto temp = templateForFile(path, &map);
 	temp->setTemplateRelativePath(attributes.value("relpath").toString());
 	if (attributes.hasAttribute("name"))
 		temp->template_file = attributes.value("name").toString();
@@ -332,12 +332,12 @@ Q_ASSERT(temp->passpoints.size() == 0);
 		}
 		else if (!temp->loadTypeSpecificTemplateConfiguration(xml))
 		{
-			delete temp;
-			return NULL;
+			temp.reset();
+			break;
 		}
 	}
 	
-	if (!temp->is_georeferenced)
+	if (temp && !temp->is_georeferenced)
 	{
 		// Fix template adjustment after moving objects during import (cf. #513)
 		const auto offset = MapCoord::boundsOffset();
@@ -717,7 +717,7 @@ const std::vector<QByteArray>& Template::supportedExtensions()
 	return extensions;
 }
 
-Template* Template::templateForFile(const QString& path, Map* map)
+std::unique_ptr<Template> Template::templateForFile(const QString& path, Map* map)
 {
 	auto path_ends_with_any_of = [path](const std::vector<QByteArray>& list) -> bool {
 		using namespace std;
@@ -726,13 +726,13 @@ Template* Template::templateForFile(const QString& path, Map* map)
 		} );
 	};
 	
-	Template* t = nullptr;
+	std::unique_ptr<Template> t;
 	if (path_ends_with_any_of(TemplateImage::supportedExtensions()))
-		t = new TemplateImage(path, map);
+		t.reset(new TemplateImage(path, map));
 	else if (path_ends_with_any_of(TemplateMap::supportedExtensions()))
-		t = new TemplateMap(path, map);
+		t.reset(new TemplateMap(path, map));
 	else if (path_ends_with_any_of(TemplateTrack::supportedExtensions()))
-		t = new TemplateTrack(path, map);
+		t.reset(new TemplateTrack(path, map));
 	
 	return t;
 }

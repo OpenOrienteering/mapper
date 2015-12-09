@@ -21,6 +21,8 @@
 #ifndef _OPENORIENTEERING_TEMPLATE_LIST_WIDGET_H_
 #define _OPENORIENTEERING_TEMPLATE_LIST_WIDGET_H_
 
+#include <memory>
+
 #include <QWidget>
 
 class QBoxLayout;
@@ -48,7 +50,7 @@ public:
 	
 	void addTemplateAt(Template* new_template, int pos);
 	
-	static Template* showOpenTemplateDialog(QWidget* dialog_parent, MapEditorController* controller);
+	static std::unique_ptr<Template> showOpenTemplateDialog(QWidget* dialog_parent, MapEditorController* controller);
 	
 public slots:
 	/**
