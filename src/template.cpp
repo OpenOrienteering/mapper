@@ -273,6 +273,9 @@ std::unique_ptr<Template> Template::loadTemplateConfiguration(QXmlStreamReader& 
 	
 	QString path = attributes.value("path").toString();
 	auto temp = templateForFile(path, &map);
+	if (!temp)
+		temp.reset(new TemplateImage(path, &map)); // fallback
+	
 	temp->setTemplateRelativePath(attributes.value("relpath").toString());
 	if (attributes.hasAttribute("name"))
 		temp->template_file = attributes.value("name").toString();

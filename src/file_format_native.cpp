@@ -33,6 +33,7 @@
 #include "map.h"
 #include "symbol.h"
 #include "template.h"
+#include "template_image.h"
 #include "undo_manager.h"
 #include "util.h"
 
@@ -339,6 +340,9 @@ void NativeFileImport::import(bool load_symbols_only)
 			QString path;
 			loadString(stream, path);
 			auto temp = Template::templateForFile(path, map);
+			if (!temp)
+				temp.reset(new TemplateImage(path, map)); // fallback
+			
 			if (version >= 27)
 			{
 				loadString(stream, path);
@@ -361,6 +365,9 @@ void NativeFileImport::import(bool load_symbols_only)
 				QString path;
 				loadString(stream, path);
 				auto temp = Template::templateForFile(path, map);
+				if (!temp)
+					temp.reset(new TemplateImage(path, map)); // fallback
+				
 				loadString(stream, path);
 				temp->setTemplateRelativePath(path);
 				
