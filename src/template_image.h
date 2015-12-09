@@ -23,6 +23,7 @@
 
 #include "template.h"
 
+#include <QDialog>
 #include <QImage>
 
 QT_BEGIN_NAMESPACE
@@ -143,6 +144,8 @@ protected:
 /**
  * Initial setting dialog when opening a raster image as template,
  * asking for how to position the image.
+ * 
+ * \todo Move this class to separate files.
  */
 class TemplateImageOpenDialog : public QDialog
 {

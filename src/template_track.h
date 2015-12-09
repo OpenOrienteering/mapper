@@ -22,6 +22,9 @@
 #define _OPENORIENTEERING_TEMPLATE_TRACK_H_
 
 #include "template.h"
+
+#include <QDialog>
+
 #include "gps_track.h"
 
 QT_BEGIN_NAMESPACE

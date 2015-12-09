@@ -22,9 +22,6 @@
 #ifndef _OPENORIENTEERING_TEMPLATE_H_
 #define _OPENORIENTEERING_TEMPLATE_H_
 
-#include <QDialog>
-#include <QRectF>
-
 #include "matrix.h"
 #include "transformation.h"
 
@@ -33,6 +30,7 @@ class QIODevice;
 class QLineEdit;
 class QPainter;
 class QPixmap;
+class QRectF;
 class QXmlStreamReader;
 class QXmlStreamWriter;
 QT_END_NAMESPACE
