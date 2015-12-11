@@ -40,6 +40,19 @@
 #include "map.h"
 #include "util.h"
 
+const std::vector<QByteArray>& TemplateImage::supportedExtensions()
+{
+	static std::vector<QByteArray> extensions;
+	if (extensions.empty())
+	{
+		using namespace std;
+		auto formats = QImageReader::supportedImageFormats();
+		extensions.reserve(formats.size());
+		extensions.insert(end(extensions), begin(formats), end(formats));
+	}
+	return extensions;
+}
+
 TemplateImage::TemplateImage(const QString& path, Map* map) : Template(path, map)
 {
 	undo_index = 0;

@@ -19,7 +19,7 @@
  */
 
 
-#include "template_dock_widget.h"
+#include "template_list_widget.h"
 
 #include <QApplication>
 #include <QCheckBox>
@@ -34,21 +34,21 @@
 #include <QTableWidget>
 #include <QToolButton>
 
-#include "core/georeferencing.h"
-#include "gui/main_window.h"
-#include "gui/widgets/segmented_button_layout.h"
-#include "map.h"
-#include "map_editor.h"
-#include "map_widget.h"
-#include "object.h"
-#include "settings.h"
-#include "template.h"
-#include "template_adjust.h"
-#include "template_map.h"
-#include "template_position_dock_widget.h"
-#include "template_tool_move.h"
-#include "util.h"
-#include "util/item_delegates.h"
+#include "segmented_button_layout.h"
+#include "../main_window.h"
+#include "../../core/georeferencing.h"
+#include "../../map.h"
+#include "../../map_editor.h"
+#include "../../map_widget.h"
+#include "../../object.h"
+#include "../../settings.h"
+#include "../../template.h"
+#include "../../template_adjust.h"
+#include "../../template_map.h"
+#include "../../template_position_dock_widget.h"
+#include "../../template_tool_move.h"
+#include "../../util.h"
+#include "../../util/item_delegates.h"
 
 // TODO: Review formatting et al.
 
@@ -61,7 +61,7 @@ struct ApplyTemplateTransform
 {
 	inline ApplyTemplateTransform(const TemplateTransform& transform) : transform(transform) {}
 	inline bool operator()(Object* object, MapPart* part, int object_index) const
-	{
+	{ 
 		Q_UNUSED(part);
 		Q_UNUSED(object_index);
 		object->rotate(transform.template_rotation);
@@ -76,9 +76,9 @@ private:
 
 
 
-// ### TemplateWidget ###
+// ### TemplateListWidget ###
 
-TemplateWidget::TemplateWidget(Map* map, MapView* main_view, MapEditorController* controller, QWidget* parent)
+TemplateListWidget::TemplateListWidget(Map* map, MapView* main_view, MapEditorController* controller, QWidget* parent)
 : QWidget(parent), 
   map(map), 
   main_view(main_view), 
@@ -269,12 +269,12 @@ TemplateWidget::TemplateWidget(Map* map, MapView* main_view, MapEditorController
 	connect(controller, SIGNAL(templatePositionDockWidgetClosed(Template*)), this, SLOT(templatePositionDockWidgetClosed(Template*)));
 }
 
-TemplateWidget::~TemplateWidget()
+TemplateListWidget::~TemplateListWidget()
 {
 	; // Nothing
 }
 
-QToolButton* TemplateWidget::newToolButton(const QIcon& icon, const QString& text)
+QToolButton* TemplateListWidget::newToolButton(const QIcon& icon, const QString& text)
 {
 	QToolButton* button = new QToolButton();
 	button->setToolButtonStyle(Qt::ToolButtonIconOnly);
@@ -286,7 +286,7 @@ QToolButton* TemplateWidget::newToolButton(const QIcon& icon, const QString& tex
 }
 
 // slot
-void TemplateWidget::setAllTemplatesHidden(bool value)
+void TemplateListWidget::setAllTemplatesHidden(bool value)
 {
 	all_hidden_check->setChecked(value);
 	
@@ -296,7 +296,7 @@ void TemplateWidget::setAllTemplatesHidden(bool value)
 	updateButtons();
 }
 
-void TemplateWidget::addTemplateAt(Template* new_template, int pos)
+void TemplateListWidget::addTemplateAt(Template* new_template, int pos)
 {
 	/*int row;
 	if (pos >= 0)
@@ -316,48 +316,57 @@ void TemplateWidget::addTemplateAt(Template* new_template, int pos)
 	map->setTemplatesDirty();
 }
 
-Template* TemplateWidget::showOpenTemplateDialog(QWidget* dialog_parent, MapEditorController* controller)
+std::unique_ptr<Template> TemplateListWidget::showOpenTemplateDialog(QWidget* dialog_parent, MapEditorController* controller)
 {
 	QSettings settings;
 	QString template_directory = settings.value("templateFileDirectory", QDir::homePath()).toString();
 	
-	QString path = QFileDialog::getOpenFileName(dialog_parent, tr("Open image, GPS track or DXF file"), template_directory, QString("%1 (*.omap *.xmap *.ocd *.bmp *.jpg *.jpeg *.gif *.png *.tif *.tiff *.gpx *.dxf *.osm);;%2 (*.*)").arg(tr("Template files")).arg(tr("All files")));
+	QString pattern;
+	for (const auto& extension : Template::supportedExtensions())
+	{
+		pattern.append(QLatin1String(" *."));
+		pattern.append(QLatin1String(extension));
+		pattern.append(QLatin1String(" *."));
+		pattern.append(QString(QLatin1String(extension)).toUpper());
+	}
+	pattern.remove(0, 1);
+	QString path = QFileDialog::getOpenFileName(dialog_parent,
+	                                            tr("Open image, GPS track or DXF file"),
+	                                            template_directory,
+	                                            QString("%1 (%2);;%3 (*.*)").arg(tr("Template files"),
+	                                                                             pattern,
+	                                                                             tr("All files")));
 	path = QFileInfo(path).canonicalFilePath();
 	if (path.isEmpty())
 		return NULL;
 	
 	settings.setValue("templateFileDirectory", QFileInfo(path).canonicalPath());
 	
+	bool center_in_view = true;
 	QString error = tr("Cannot open template\n%1:\n%2").arg(path);
-	QScopedPointer<Template> new_temp(Template::templateForFile(path, controller->getMap()));
+	auto new_temp = Template::templateForFile(path, controller->getMap());
 	if (!new_temp)
 	{
 		QMessageBox::warning(dialog_parent, tr("Error"), error.arg(tr("File format not recognized.")));
-		return NULL;
 	}
-	
-	if (!new_temp->preLoadConfiguration(dialog_parent))
+	else if (!new_temp->preLoadConfiguration(dialog_parent))
 	{
-		return NULL;
+		new_temp.reset();
 	}
-	
-	if (!new_temp->loadTemplateFile(true))
+	else if (!new_temp->loadTemplateFile(true))
 	{
 		QString error_detail = new_temp->errorString();
 		if (error_detail.isEmpty())
 			error_detail = tr("Failed to load template. Does the file exist and is it valid?");
 		QMessageBox::warning(dialog_parent, tr("Error"), error.arg(error_detail));
-		return NULL;
+		new_temp.reset();
 	}
-	
-	bool center_in_view = true;
-	if (!new_temp->postLoadConfiguration(dialog_parent, center_in_view))
+	else if (!new_temp->postLoadConfiguration(dialog_parent, center_in_view))
 	{
-		return NULL;
+		new_temp.reset();
 	}
-	
 	// If the template is not georeferenced, position it at the viewport midpoint
-	if (!new_temp->isTemplateGeoreferenced() && center_in_view)
+	else if (!new_temp->isTemplateGeoreferenced() && center_in_view)
 	{
 		MapView* main_view = controller->getMainWidget()->getMapView();
 		auto view_pos = main_view->center();
@@ -365,10 +374,10 @@ Template* TemplateWidget::showOpenTemplateDialog(QWidget* dialog_parent, MapEdit
 		new_temp->setTemplatePosition(view_pos - offset);
 	}
 	
-	return new_temp.take();
+	return new_temp;
 }
 
-bool TemplateWidget::eventFilter(QObject* watched, QEvent* event)
+bool TemplateListWidget::eventFilter(QObject* watched, QEvent* event)
 {
 	if (watched == template_table)
 	{
@@ -394,7 +403,7 @@ bool TemplateWidget::eventFilter(QObject* watched, QEvent* event)
 	return false;
 }
 
-void TemplateWidget::newTemplate(QAction* action)
+void TemplateListWidget::newTemplate(QAction* action)
 {
 	if (action->text() == tr("Sketch"))
 	{
@@ -406,23 +415,21 @@ void TemplateWidget::newTemplate(QAction* action)
 	}
 }
 
-void TemplateWidget::openTemplate()
+void TemplateListWidget::openTemplate()
 {
-	Template* new_template = showOpenTemplateDialog(window(), controller);
-	if (!new_template)
-		return;
-	
-	int pos;
-	int row = template_table->currentRow();
-	if (row < 0)
-		pos = -1;
-	else
-		pos = posFromRow(row);
-	
-	addTemplateAt(new_template, pos);
+	auto new_template = showOpenTemplateDialog(window(), controller);
+	if (new_template)
+	{
+		int pos = -1;
+		int row = template_table->currentRow();
+		if (row >= 0)
+			pos = posFromRow(row);
+		
+		addTemplateAt(new_template.release(), pos);
+	}
 }
 
-void TemplateWidget::deleteTemplate()
+void TemplateListWidget::deleteTemplate()
 {
 	int pos = posFromRow(template_table->currentRow());
 	Q_ASSERT(pos >= 0);
@@ -452,7 +459,7 @@ void TemplateWidget::deleteTemplate()
 	template_table->selectRow(current_row);
 }
 
-void TemplateWidget::duplicateTemplate()
+void TemplateListWidget::duplicateTemplate()
 {
 	int row = template_table->currentRow();
 	Q_ASSERT(row >= 0);
@@ -463,7 +470,7 @@ void TemplateWidget::duplicateTemplate()
 	addTemplateAt(new_template, pos);
 }
 
-void TemplateWidget::moveTemplateUp()
+void TemplateListWidget::moveTemplateUp()
 {
 	int row = template_table->currentRow();
 	Q_ASSERT(row >= 1);
@@ -508,7 +515,7 @@ void TemplateWidget::moveTemplateUp()
 	map->setTemplatesDirty();
 }
 
-void TemplateWidget::moveTemplateDown()
+void TemplateListWidget::moveTemplateDown()
 {
 	int row = template_table->currentRow();
 	Q_ASSERT(row >= 0);
@@ -555,12 +562,12 @@ void TemplateWidget::moveTemplateDown()
 	map->setTemplatesDirty();
 }
 
-void TemplateWidget::showHelp()
+void TemplateListWidget::showHelp()
 {
 	Util::showHelp(controller->getWindow(), "templates.html", "setup");
 }
 
-void TemplateWidget::cellChange(int row, int column)
+void TemplateListWidget::cellChange(int row, int column)
 {
 	if (!react_to_changes)
 		return;
@@ -674,7 +681,7 @@ void TemplateWidget::cellChange(int row, int column)
 	}
 }
 
-void TemplateWidget::updateButtons()
+void TemplateListWidget::updateButtons()
 {
 	if (!react_to_changes)
 		return;
@@ -764,7 +771,7 @@ void TemplateWidget::updateButtons()
 // 	}
 }
 
-void TemplateWidget::currentCellChange(int current_row, int current_column, int previous_row, int previous_column)
+void TemplateListWidget::currentCellChange(int current_row, int current_column, int previous_row, int previous_column)
 {
 	Q_UNUSED(previous_row);
 	Q_UNUSED(previous_column);
@@ -786,7 +793,7 @@ void TemplateWidget::currentCellChange(int current_row, int current_column, int 
 	}
 }
 
-void TemplateWidget::cellDoubleClick(int row, int column)
+void TemplateListWidget::cellDoubleClick(int row, int column)
 {
 	int pos = posFromRow(row);
 	Template* temp = (row >= 0 && pos >= 0) ? map->getTemplate(pos) : NULL;
@@ -800,20 +807,20 @@ void TemplateWidget::cellDoubleClick(int row, int column)
 	}
 }
 
-void TemplateWidget::updateDeleteButtonText()
+void TemplateListWidget::updateDeleteButtonText()
 {
 	bool keep_transformation_of_closed_templates = Settings::getInstance().getSettingCached(Settings::Templates_KeepSettingsOfClosed).toBool();
 	delete_button->setToolTip(keep_transformation_of_closed_templates ? tr("Close") : tr("Delete"));
 }
 
-void TemplateWidget::moveByHandClicked(bool checked)
+void TemplateListWidget::moveByHandClicked(bool checked)
 {
 	Template* temp = getCurrentTemplate();
 	Q_ASSERT(temp);
 	controller->setTool(checked ? new TemplateMoveTool(temp, controller, move_by_hand_action) : NULL);
 }
 
-void TemplateWidget::adjustClicked(bool checked)
+void TemplateListWidget::adjustClicked(bool checked)
 {
 	if (checked)
 	{
@@ -829,7 +836,7 @@ void TemplateWidget::adjustClicked(bool checked)
 	}
 }
 
-void TemplateWidget::adjustWindowClosed()
+void TemplateListWidget::adjustWindowClosed()
 {
 	Template* current_template = getCurrentTemplate();
 	if (!current_template)
@@ -839,12 +846,12 @@ void TemplateWidget::adjustWindowClosed()
 		adjust_button->setChecked(false);
 }
 
-/*void TemplateWidget::groupClicked()
+/*void TemplateListWidget::groupClicked()
 {
 	// TODO
 }*/
 
-void TemplateWidget::positionClicked(bool checked)
+void TemplateListWidget::positionClicked(bool checked)
 {
 	Q_UNUSED(checked);
 	
@@ -858,7 +865,7 @@ void TemplateWidget::positionClicked(bool checked)
 		controller->addTemplatePositionDockWidget(temp);
 }
 
-void TemplateWidget::importClicked()
+void TemplateListWidget::importClicked()
 {
 	Template* templ = qobject_cast< TemplateMap* >(getCurrentTemplate());
 	QScopedPointer<Map> template_map(new Map());
@@ -907,13 +914,13 @@ void TemplateWidget::importClicked()
 	}
 }
 
-void TemplateWidget::moreActionClicked(QAction* action)
+void TemplateListWidget::moreActionClicked(QAction* action)
 {
 	Q_UNUSED(action);
 	// TODO
 }
 
-void TemplateWidget::templateAdded(int pos, const Template* temp)
+void TemplateListWidget::templateAdded(int pos, const Template* temp)
 {
 	Q_UNUSED(temp);
 	int row = rowFromPos(pos);
@@ -922,14 +929,14 @@ void TemplateWidget::templateAdded(int pos, const Template* temp)
 	template_table->setCurrentCell(row, 0);
 }
 
-void TemplateWidget::templatePositionDockWidgetClosed(Template* temp)
+void TemplateListWidget::templatePositionDockWidgetClosed(Template* temp)
 {
 	Template* current_temp = getCurrentTemplate();
 	if (current_temp == temp)
 		position_action->setChecked(false);
 }
 
-void TemplateWidget::addRow(int row)
+void TemplateListWidget::addRow(int row)
 {
 	react_to_changes = false;
 	
@@ -946,7 +953,7 @@ void TemplateWidget::addRow(int row)
 	react_to_changes = true;
 }
 
-void TemplateWidget::updateRow(int row)
+void TemplateListWidget::updateRow(int row)
 {
 	int pos = posFromRow(row);
 	
@@ -1033,7 +1040,7 @@ void TemplateWidget::updateRow(int row)
 	react_to_changes = true;
 }
 
-int TemplateWidget::posFromRow(int row)
+int TemplateListWidget::posFromRow(int row)
 {
 	int pos = template_table->rowCount() - 1 - row;
 	
@@ -1046,13 +1053,13 @@ int TemplateWidget::posFromRow(int row)
 		return pos;
 }
 
-int TemplateWidget::rowFromPos(int pos)
+int TemplateListWidget::rowFromPos(int pos)
 {
 	Q_ASSERT(pos >= 0);
 	return map->getNumTemplates() - 1 - ((pos >= map->getFirstFrontTemplate()) ? pos : (pos - 1));
 }
 
-Template* TemplateWidget::getCurrentTemplate()
+Template* TemplateListWidget::getCurrentTemplate()
 {
 	int current_row = template_table->currentRow();
 	if (current_row < 0)
@@ -1063,7 +1070,7 @@ Template* TemplateWidget::getCurrentTemplate()
 	return map->getTemplate(pos);
 }
 
-void TemplateWidget::changeTemplateFile()
+void TemplateListWidget::changeTemplateFile()
 {
 	int row = template_table->currentRow();
 	int pos = posFromRow(row);

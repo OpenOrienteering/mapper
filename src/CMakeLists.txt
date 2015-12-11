@@ -96,7 +96,6 @@ set(Mapper_Common_SRCS
  template_track.cpp
  template_map.cpp
  template_dialog_reopen.cpp
- template_dock_widget.cpp
  template_position_dock_widget.cpp
  template_adjust.cpp
  template_tool_move.cpp
@@ -178,6 +177,7 @@ set(Mapper_Common_SRCS
  gui/widgets/symbol_tooltip.cpp
  gui/widgets/symbol_widget.cpp
  gui/widgets/tags_widget.cpp
+ gui/widgets/template_list_widget.cpp
  
  util/item_delegates.cpp
  util/overriding_shortcut.cpp
@@ -217,7 +217,6 @@ set(Mapper_Common_MOC_INPUT
  template.h
  template_adjust.h
  template_dialog_reopen.h
- template_dock_widget.h
  template_track.h
  template_image.h
  template_map.h
@@ -288,6 +287,7 @@ set(Mapper_Common_MOC_INPUT
  gui/widgets/symbol_tooltip.h
  gui/widgets/symbol_widget.h
  gui/widgets/tags_widget.h
+ gui/widgets/template_list_widget.h
  
  util/item_delegates.h
  util/overriding_shortcut.h

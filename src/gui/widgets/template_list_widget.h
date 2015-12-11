@@ -18,8 +18,10 @@
  */
 
 
-#ifndef _OPENORIENTEERING_TEMPLATE_DOCK_WIDGET_H_
-#define _OPENORIENTEERING_TEMPLATE_DOCK_WIDGET_H_
+#ifndef _OPENORIENTEERING_TEMPLATE_LIST_WIDGET_H_
+#define _OPENORIENTEERING_TEMPLATE_LIST_WIDGET_H_
+
+#include <memory>
 
 #include <QWidget>
 
@@ -39,16 +41,16 @@ class PercentageDelegate;
  * Allows to load templates, set their view properties and reoder them,
  * and do various other actions like adjusting template positions.
  */
-class TemplateWidget : public QWidget
+class TemplateListWidget : public QWidget
 {
 Q_OBJECT
 public:
-	TemplateWidget(Map* map, MapView* main_view, MapEditorController* controller, QWidget* parent = NULL);
-	virtual ~TemplateWidget();
+	TemplateListWidget(Map* map, MapView* main_view, MapEditorController* controller, QWidget* parent = NULL);
+	virtual ~TemplateListWidget();
 	
 	void addTemplateAt(Template* new_template, int pos);
 	
-	static Template* showOpenTemplateDialog(QWidget* dialog_parent, MapEditorController* controller);
+	static std::unique_ptr<Template> showOpenTemplateDialog(QWidget* dialog_parent, MapEditorController* controller);
 	
 public slots:
 	/**

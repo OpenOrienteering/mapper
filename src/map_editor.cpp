@@ -62,6 +62,7 @@
 #include "gui/widgets/action_grid_bar.h"
 #include "gui/widgets/compass_display.h"
 #include "gui/widgets/symbol_widget.h"
+#include "gui/widgets/template_list_widget.h"
 #include "color_dock_widget.h"
 #include "compass.h"
 #include "file_format_registry.h"
@@ -89,7 +90,6 @@
 #include "symbol_point.h"
 #include "template.h"
 #include "template_dialog_reopen.h"
-#include "template_dock_widget.h"
 #include "template_track.h"
 #include "template_position_dock_widget.h"
 #include "template_tool_paint.h"
@@ -738,8 +738,8 @@ void MapEditorController::createActions()
 	hide_all_templates_act = newCheckAction("hidealltemplates", tr("Hide all templates"), this, SLOT(hideAllTemplates(bool)), NULL, QString::null, "view_menu.html");
 	overprinting_simulation_act = newCheckAction("overprintsimulation", tr("Overprinting simulation"), this, SLOT(overprintingSimulation(bool)), NULL, QString::null, "view_menu.html");
 	
-	symbol_window_act = newCheckAction("symbolwindow", tr("Symbol window"), this, SLOT(showSymbolWindow(bool)), "window-new.png", tr("Show/Hide the symbol window"), "symbol_dock_widget.html");
-	color_window_act = newCheckAction("colorwindow", tr("Color window"), this, SLOT(showColorWindow(bool)), "window-new.png", tr("Show/Hide the color window"), "color_dock_widget.html");
+	symbol_window_act = newCheckAction("symbolwindow", tr("Symbol window"), this, SLOT(showSymbolWindow(bool)), "symbols.png", tr("Show/Hide the symbol window"), "symbol_dock_widget.html");
+	color_window_act = newCheckAction("colorwindow", tr("Color window"), this, SLOT(showColorWindow(bool)), "colors.png", tr("Show/Hide the color window"), "color_dock_widget.html");
 	load_symbols_from_act = newAction("loadsymbols", tr("Replace symbol set..."), this, SLOT(loadSymbolsFromClicked()), NULL, tr("Replace the symbols with those from another map file"), "symbol_replace_dialog.html");
 	/*QAction* load_colors_from_act = newAction("loadcolors", tr("Load colors from..."), this, SLOT(loadColorsFromClicked()), NULL, tr("Replace the colors with those from another map file"));*/
 	
@@ -749,7 +749,7 @@ void MapEditorController::createActions()
 	rotate_map_act = newAction("rotatemap", tr("Rotate map..."), this, SLOT(rotateMapClicked()), "tool-rotate.png", tr("Rotate the whole map"), "map_menu.html");
 	map_notes_act = newAction("mapnotes", tr("Map notes..."), this, SLOT(mapNotesClicked()), NULL, QString::null, "map_menu.html");
 	
-	template_window_act = newCheckAction("templatewindow", tr("Template setup window"), this, SLOT(showTemplateWindow(bool)), "window-new", tr("Show/Hide the template window"), "templates_menu.html");
+	template_window_act = newCheckAction("templatewindow", tr("Template setup window"), this, SLOT(showTemplateWindow(bool)), "templates", tr("Show/Hide the template window"), "templates_menu.html");
 	//QAction* template_config_window_act = newCheckAction("templateconfigwindow", tr("Template configurations window"), this, SLOT(showTemplateConfigurationsWindow(bool)), "window-new", tr("Show/Hide the template configurations window"));
 	//QAction* template_visibilities_window_act = newCheckAction("templatevisibilitieswindow", tr("Template visibilities window"), this, SLOT(showTemplateVisbilitiesWindow(bool)), "window-new", tr("Show/Hide the template visibilities window"));
 	open_template_act = newAction("opentemplate", tr("Open template..."), this, SLOT(openTemplateClicked()), NULL, QString::null, "templates_menu.html");
@@ -832,7 +832,7 @@ void MapEditorController::createActions()
 	compass_action = newCheckAction("compassdisplay", tr("Enable compass display"), this, SLOT(enableCompassDisplay(bool)), "compass.png", QString::null, "toolbars.html#compass_display"); // TODO: write documentation
 	align_map_with_north_act = newCheckAction("alignmapwithnorth", tr("Align map with north"), this, SLOT(alignMapWithNorth(bool)), "rotate-map.png", QString::null, "toolbars.html#align_map_with_north"); // TODO: write documentation
 	
-	template_toggle_action = newAction("toggletemplate", tr("Toggle template visibility"), this, SLOT(toggleTemplateClicked()), "tool-template-toggle.png", QString::null, "toolbars.html#toggle_template"); // TODO: write documentation
+	template_toggle_action = newAction("toggletemplate", tr("Toggle template visibility"), this, SLOT(toggleTemplateClicked()), "templates.png", QString::null, "toolbars.html#toggle_template"); // TODO: write documentation
 	
 	mappart_add_act = newAction("addmappart", tr("Add new part..."), this, SLOT(addMapPart()));
 	mappart_rename_act = newAction("renamemappart", tr("Rename current part..."), this, SLOT(renameMapPart()));
@@ -1722,7 +1722,7 @@ void MapEditorController::showTemplateWindow(bool show)
 {
 	if (!template_dock_widget)
 	{
-		TemplateWidget* template_widget = new TemplateWidget(map, main_view, this, template_dock_widget);
+		TemplateListWidget* template_widget = new TemplateListWidget(map, main_view, this, template_dock_widget);
 		connect(hide_all_templates_act, SIGNAL(toggled(bool)), template_widget, SLOT(setAllTemplatesHidden(bool)));
 		template_dock_widget = new EditorDockWidget(tr("Templates"), template_window_act, this, window);
 		template_dock_widget->setWidget(template_widget);
@@ -1739,16 +1739,16 @@ void MapEditorController::showTemplateWindow(bool show)
 
 void MapEditorController::openTemplateClicked()
 {
-	Template* new_template = TemplateWidget::showOpenTemplateDialog(window, this);
-	if (!new_template)
-		return;
-	
-	hideAllTemplates(false);
-	showTemplateWindow(true);
-	
-	// FIXME: this should be done through the core map, not through the UI
-	TemplateWidget* template_widget = reinterpret_cast<TemplateWidget*>(template_dock_widget->widget());
-	template_widget->addTemplateAt(new_template, -1);
+	auto new_template = TemplateListWidget::showOpenTemplateDialog(window, this);
+	if (new_template)
+	{
+		hideAllTemplates(false);
+		showTemplateWindow(true);
+		
+		// FIXME: this should be done through the core map, not through the UI
+		TemplateListWidget* template_widget = reinterpret_cast<TemplateListWidget*>(template_dock_widget->widget());
+		template_widget->addTemplateAt(new_template.release(), -1);
+	}
 }
 
 void MapEditorController::reopenTemplateClicked()

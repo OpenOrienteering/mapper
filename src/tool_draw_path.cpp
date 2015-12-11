@@ -239,32 +239,27 @@ bool DrawPathTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapW
 
 bool DrawPathTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
-	bool mouse_down = containsDrawingButtons(event->buttons());
-	if (mouse_down)
-		left_mouse_down = true;
 	cur_pos = event->pos();
 	cur_pos_map = map_coord;
 	
-	if (!mouse_down)
+	if (!containsDrawingButtons(event->buttons()))
 	{
 		updateHover();
 	}
-	else // if (mouse_down)
+	else if (!editingInProgress())
 	{
-		if (!editingInProgress() && picking_angle)
-		{
+		left_mouse_down = true;
+		if (picking_angle)
 			pickAngle(map_coord, widget);
-			return true;
-		}
-		else if (!editingInProgress())
+		else
 			return false;
-		
-		if (following)
-		{
-			updateFollowing();
-			return true;
-		}
-		
+	}
+	else if (following)
+	{
+		updateFollowing();
+	}
+	else
+	{
 		bool drag_distance_reached = (event->pos() - click_pos).manhattanLength() >= Settings::getInstance().getStartDragDistancePx();
 		if (dragging && !drag_distance_reached)
 		{
@@ -274,16 +269,7 @@ bool DrawPathTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWi
 			}
 			else if (path_has_preview_point)
 			{
-				// Remove preview
-				int last = preview_path->getCoordinateCount() - 1;
-				preview_path->deleteCoordinate(last, false);
-				
-				path_has_preview_point = false;
-				dragging = false;
-				create_segment = false;
-				
-				updatePreviewPath();
-				updateDirtyRect();
+				undoLastPoint();
 			}
 		}
 		else if (drag_distance_reached)
@@ -326,7 +312,9 @@ bool DrawPathTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, Ma
 {
 	if (!isDrawingButton(event->button()))
 		return false;
+
 	left_mouse_down = false;
+	
 	if (picking_angle)
 	{
 		picking_angle = false;
@@ -334,7 +322,10 @@ bool DrawPathTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, Ma
 		return true;
 	}
 	else if (!editingInProgress())
+	{
 		return false;
+	}
+	
 	if (following)
 	{
 		finishFollowing();
@@ -342,6 +333,7 @@ bool DrawPathTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, Ma
 			finishDrawing();
 		return true;
 	}
+	
 	if (!create_segment)
 		return true;
 	
@@ -350,7 +342,9 @@ bool DrawPathTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, Ma
 		// The new point has not been added yet
 		MapCoord coord;
 		if (shift_pressed)
+		{
 			coord = snap_helper->snapToObject(map_coord, widget);
+		}
 		else if (angle_helper->isActive())
 		{
 			QPointF constrained_pos;
@@ -358,7 +352,10 @@ bool DrawPathTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, Ma
 			coord = MapCoord(constrained_pos_map);
 		}
 		else
+		{
 			coord = MapCoord(map_coord);
+		}
+		
 		if (draw_dash_points)
 			coord.setDashPoint(true);
 		preview_path->addCoordinate(coord);
@@ -518,7 +515,9 @@ void DrawPathTool::draw(QPainter* painter, MapWidget* widget)
 	}
 	
 	if (shift_pressed && !dragging)
+	{
 		snap_helper->draw(painter, widget);
+	}
 	else if (!editingInProgress() && (picking_angle || picked_angle))
 	{
 		if (picking_angle)
@@ -621,38 +620,70 @@ void DrawPathTool::undoLastPoint()
 		return;
 	}
 	
-	int last = preview_path->getCoordinateCount() - 1;
+	auto& part = preview_path->parts().back();
+	auto last_index = part.last_index;
+	auto prev_coord_index = part.prevCoordIndex(part.last_index);
+	auto prev_coord = preview_path->getCoordinate(prev_coord_index);
+	
+	// Pre-undo preparation
 	if (path_has_preview_point)
 	{
-		preview_path->deleteCoordinate(last, false);
-		last = preview_path->getCoordinateCount() - 1;
+		if (prev_coord.isCurveStart())
+		{
+			// Undo just the preview point
+			path_has_preview_point = false;
+		}
+		else
+		{
+			// Remove the preview point from a straight edge, preparing for re-adding.
+			Q_ASSERT(!previous_point_is_curve_point);
+			
+			preview_path->deleteCoordinate(last_index, false);
+			last_index = prev_coord_index;
+			prev_coord_index = part.prevCoordIndex(part.last_index);
+			prev_coord = preview_path->getCoordinate(prev_coord_index);
+			
+			path_has_preview_point = !prev_coord.isCurveStart();
+		}
 	}
 	
-	if (last >= 3 && preview_path->getCoordinate(last - 3).isCurveStart())
+	if (prev_coord.isCurveStart())
 	{
-		MapCoord first = preview_path->getCoordinate(last - 3);
-		MapCoord second = preview_path->getCoordinate(last - 2);
-		
+		// Removing last point of a curve, no re-adding of preview point.
+		MapCoord prev_drag = preview_path->getCoordinate(prev_coord_index+1);
+		previous_point_direction = -atan2(prev_drag.x() - prev_coord.x(), prev_coord.y() - prev_drag.y());
+		previous_pos_map = MapCoordF(prev_coord);
+		previous_drag_map = MapCoordF((prev_coord.x() + prev_drag.x()) / 2, (prev_coord.y() + prev_drag.y()) / 2);
 		previous_point_is_curve_point = true;
-		previous_point_direction = -atan2(second.x() - first.x(), first.y() - second.y());
-		previous_pos_map = MapCoordF(first);
-		previous_drag_map = MapCoordF((first.x() + second.x()) / 2, (first.y() + second.y()) / 2);
-		
+		path_has_preview_point = false;
 	}
-	else
+	else if (!path_has_preview_point)
 	{
+		// Removing last point from a straight edge, no re-adding of preview point.
 		previous_point_is_curve_point = false;
 	}
 	
-	preview_path->deleteCoordinate(last, false);
+	// Actually delete the last point of the edge.
+	preview_path->deleteCoordinate(last_index, false);
+	if (preview_path->getRawCoordinateVector().empty())
+	{
+		// Re-add first point.
+		prev_coord.setCurveStart(false);
+		preview_path->addCoordinate(prev_coord);
+	}
 	
-	path_has_preview_point = false;
+	// Post-undo
+	if (path_has_preview_point)
+	{
+		// Re-add preview point.
+		preview_path->addCoordinate(MapCoord(cur_pos_map));
+	}
+	
 	dragging = false;
 	
 	updateHover();
 	updatePreviewPath();
 	updateAngleHelper();
-	cur_pos_map = click_pos_map;
 	updateDirtyRect();
 }
 
@@ -835,13 +866,15 @@ void DrawPathTool::updateAngleHelper()
 {
 	if (picked_angle)
 		return;
-	if (!preview_path)
+	
+	if (!preview_path
+	    || (updatePreviewPath(), preview_path->parts().empty()))
 	{
 		angle_helper->clearAngles();
 		angle_helper->addDefaultAnglesDeg(0);
 		return;
 	}
-	updatePreviewPath();
+	
 	const auto& part = preview_path->parts().back();
 	
 	bool rectangular_stepping = true;

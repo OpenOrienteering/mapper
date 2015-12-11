@@ -263,7 +263,7 @@ void Template::saveTemplateConfiguration(QXmlStreamWriter& xml, bool open)
 	xml.writeEndElement(/*template*/);
 }
 
-Template* Template::loadTemplateConfiguration(QXmlStreamReader& xml, Map& map, bool& open)
+std::unique_ptr<Template> Template::loadTemplateConfiguration(QXmlStreamReader& xml, Map& map, bool& open)
 {
 	Q_ASSERT(xml.name() == "template");
 	
@@ -272,7 +272,10 @@ Template* Template::loadTemplateConfiguration(QXmlStreamReader& xml, Map& map, b
 		open = (attributes.value("open") == "true");
 	
 	QString path = attributes.value("path").toString();
-	Template* temp = templateForFile(path, &map);
+	auto temp = templateForFile(path, &map);
+	if (!temp)
+		temp.reset(new TemplateImage(path, &map)); // fallback
+	
 	temp->setTemplateRelativePath(attributes.value("relpath").toString());
 	if (attributes.hasAttribute("name"))
 		temp->template_file = attributes.value("name").toString();
@@ -332,12 +335,12 @@ Q_ASSERT(temp->passpoints.size() == 0);
 		}
 		else if (!temp->loadTypeSpecificTemplateConfiguration(xml))
 		{
-			delete temp;
-			return NULL;
+			temp.reset();
+			break;
 		}
 	}
 	
-	if (!temp->is_georeferenced)
+	if (temp && !temp->is_georeferenced)
 	{
 		// Fix template adjustment after moving objects during import (cf. #513)
 		const auto offset = MapCoord::boundsOffset();
@@ -394,7 +397,7 @@ bool Template::execSwitchTemplateFileDialog(QWidget* dialog_parent)
 	switchTemplateFile(new_path, true);
 	if (getTemplateState() != Loaded)
 	{
-		QString error_template = QCoreApplication::translate("TemplateWidget", "Cannot open template\n%1:\n%2").arg(new_path);
+		QString error_template = QCoreApplication::translate("TemplateListWidget", "Cannot open template\n%1:\n%2").arg(new_path);
 		QString error = errorString();
 		Q_ASSERT(!error.isEmpty());
 		QMessageBox::warning(dialog_parent,
@@ -699,20 +702,42 @@ void Template::setAdjustmentDirty(bool value)
 		map->setTemplatesDirty();
 }
 
-Template* Template::templateForFile(const QString& path, Map* map)
+const std::vector<QByteArray>& Template::supportedExtensions()
 {
-	if (path.endsWith(".png", Qt::CaseInsensitive) || path.endsWith(".bmp", Qt::CaseInsensitive) ||
-		path.endsWith(".jpg", Qt::CaseInsensitive) || path.endsWith(".gif", Qt::CaseInsensitive) ||
-		path.endsWith(".jpeg", Qt::CaseInsensitive) || path.endsWith(".tif", Qt::CaseInsensitive) ||
-		path.endsWith(".tiff", Qt::CaseInsensitive))
-		return new TemplateImage(path, map);
-	else if (path.endsWith(".ocd", Qt::CaseInsensitive) || path.endsWith(".omap", Qt::CaseInsensitive) || path.endsWith(".xmap", Qt::CaseInsensitive))
-		return new TemplateMap(path, map);
-	else if (path.endsWith(".gpx", Qt::CaseInsensitive) || path.endsWith(".dxf", Qt::CaseInsensitive) ||
-			 path.endsWith(".osm", Qt::CaseInsensitive))
-		return new TemplateTrack(path, map);
-	else
-		return NULL;
+	static std::vector<QByteArray> extensions;
+	if (extensions.empty())
+	{
+		auto& image_extensions = TemplateImage::supportedExtensions();
+		auto& map_extensions   = TemplateMap::supportedExtensions();
+		auto& track_extensions = TemplateTrack::supportedExtensions();
+		extensions.reserve(image_extensions.size()
+		                   + map_extensions.size()
+		                   + track_extensions.size());
+		extensions.insert(end(extensions), begin(image_extensions), end(image_extensions));
+		extensions.insert(end(extensions), begin(map_extensions), end(map_extensions));
+		extensions.insert(end(extensions), begin(track_extensions), end(track_extensions));
+	}
+	return extensions;
+}
+
+std::unique_ptr<Template> Template::templateForFile(const QString& path, Map* map)
+{
+	auto path_ends_with_any_of = [path](const std::vector<QByteArray>& list) -> bool {
+		using namespace std;
+		return any_of(begin(list), end(list), [path](const QByteArray& extension) {
+			return path.endsWith(extension, Qt::CaseInsensitive);
+		} );
+	};
+	
+	std::unique_ptr<Template> t;
+	if (path_ends_with_any_of(TemplateImage::supportedExtensions()))
+		t.reset(new TemplateImage(path, map));
+	else if (path_ends_with_any_of(TemplateMap::supportedExtensions()))
+		t.reset(new TemplateMap(path, map));
+	else if (path_ends_with_any_of(TemplateTrack::supportedExtensions()))
+		t.reset(new TemplateTrack(path, map));
+	
+	return t;
 }
 
 bool Template::loadTypeSpecificTemplateConfiguration(QIODevice* stream, int version)

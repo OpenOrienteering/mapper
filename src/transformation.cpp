@@ -23,6 +23,7 @@
 
 #include <qmath.h>
 #include <QScopedValueRollback>
+#include <QTransform>
 #include <QXmlStreamWriter>
 
 #include "core/map_coord.h"
