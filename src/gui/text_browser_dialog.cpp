@@ -70,13 +70,7 @@ TextBrowserDialog::TextBrowserDialog(const QUrl& initial_url, QWidget* parent)
 	connect(text_browser, &QTextBrowser::sourceChanged, this, &TextBrowserDialog::sourceChanged);
 	connect(text_browser, &QTextBrowser::textChanged, this, &TextBrowserDialog::updateWindowTitle);
 	connect(text_browser, &QTextBrowser::backwardAvailable, back_button, &TextBrowserDialog::setEnabled);
-// Android: Crash in Qt 5.3.0 beta, Qt 5.4
-// cf. https://bugreports.qt-project.org/browse/QTBUG-38434
-// and highlighting won't work anyway due to missing (stylus) hover events,
-// cf. https://bugreports.qt-project.org/browse/QTBUG-36105
-#if !defined(Q_OS_ANDROID)
 	connect(text_browser, (void (QTextBrowser::*)(const QString &))&QTextBrowser::highlighted, this, &TextBrowserDialog::highlighted);
-#endif
 	connect(back_button,  &QPushButton::clicked, text_browser, &QTextBrowser::backward);
 	connect(close_button, &QPushButton::clicked, this, &TextBrowserDialog::accept);
 	
@@ -84,7 +78,7 @@ TextBrowserDialog::TextBrowserDialog(const QUrl& initial_url, QWidget* parent)
 	text_browser->document()->adjustSize();  // needed for sizeHint()
 	
 #if defined(Q_OS_ANDROID)
-	QScroller::grabGesture(text_browser->viewport(), QScroller::LeftMouseButtonGesture);
+	QScroller::grabGesture(text_browser->viewport(), QScroller::TouchGesture);
 	// Disable selection, so that it doesn't interfere with scrolling
 	text_browser->setTextInteractionFlags(Qt::TextInteractionFlags(Qt::TextBrowserInteraction) & ~Qt::TextSelectableByMouse);
 	// Note: Only the above combination of QScroller::LeftMouseButtonGesture
