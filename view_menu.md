@@ -45,6 +45,9 @@ Note that key F6 starts panning immediately.</td></tr>
 <tr><td><a name="fullscreen"><h4>Toggle Fullscreen</h4></a></td><td><h4>F11</h4></td><td></td><td>
 <p>This toggle switches the display to full-screen mode and back.</p></td></tr>
 
+<tr><td><h4>Tag Editor</h4></td><td><h4>Ctrl + Shift + 6</h4></td><td></td><td>
+<p>This toggle shows or hides the <a href="tag_editor.md">tag editor</a>.</p></td></tr>
+
 <tr><td><h4>Color Window</h4></td><td><h4>Ctrl + Shift + 7</h4></td><td></td><td>
 <p>This toggle shows or hides the <a href="color_dock_widget.md">color window</a>.</p></td></tr>
 
