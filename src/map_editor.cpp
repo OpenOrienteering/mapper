@@ -1352,6 +1352,7 @@ void MapEditorController::printClicked(int task)
 	{
 		print_dock_widget = new EditorDockWidget(QString::null, NULL, this, window);
 		print_dock_widget->setAllowedAreas(Qt::NoDockWidgetArea);
+		print_dock_widget->toggleViewAction()->setVisible(false);
 		print_widget = new PrintWidget(map, window, main_view, this, print_dock_widget);
 		connect(print_dock_widget, SIGNAL(visibilityChanged(bool)), print_widget, SLOT(setActive(bool)));
 		connect(print_widget, SIGNAL(closeClicked()), print_dock_widget, SLOT(close()));
@@ -1364,7 +1365,6 @@ void MapEditorController::printClicked(int task)
 	
 	print_widget->setTask((PrintWidget::TaskFlags)task);
 	print_dock_widget->show();
-	QTimer::singleShot(0, print_dock_widget, SLOT(raise()));
 #else
 	Q_UNUSED(task)
 	QMessageBox::warning(window, tr("Error"), tr("Print / Export is not available in this program version!"));
@@ -1629,8 +1629,6 @@ void MapEditorController::showSymbolWindow(bool show)
 	}
 	
 	symbol_dock_widget->setVisible(show);
-	if (show)
-		QTimer::singleShot(0, symbol_dock_widget, SLOT(raise()));
 }
 
 void MapEditorController::showColorWindow(bool show)
@@ -1646,8 +1644,6 @@ void MapEditorController::showColorWindow(bool show)
 	}
 	
 	color_dock_widget->setVisible(show);
-	if (show)
-		QTimer::singleShot(0, color_dock_widget, SLOT(raise()));
 }
 
 void MapEditorController::loadSymbolsFromClicked()
@@ -1733,8 +1729,6 @@ void MapEditorController::showTemplateWindow(bool show)
 	
 	template_window_act->setChecked(show);
 	template_dock_widget->setVisible(show);
-	if (show)
-		QTimer::singleShot(0, template_dock_widget, SLOT(raise()));
 }
 
 void MapEditorController::openTemplateClicked()
@@ -1784,8 +1778,6 @@ void MapEditorController::showTagsWindow(bool show)
 	
 	tags_window_act->setChecked(show);
 	tags_dock_widget->setVisible(show);
-	if (show)
-		QTimer::singleShot(0, tags_dock_widget, SLOT(raise()));
 }
 
 void MapEditorController::editGeoreferencing()
@@ -2754,6 +2746,7 @@ void MapEditorController::measureClicked(bool checked)
 	if (!measure_dock_widget)
 	{
 		measure_dock_widget = new EditorDockWidget(tr("Measure"), measure_act, this, window);
+		measure_dock_widget->toggleViewAction()->setVisible(false);
 		MeasureWidget* measure_widget = new MeasureWidget(map);
 		measure_dock_widget->setWidget(measure_widget);
 		measure_dock_widget->setObjectName("Measure dock widget");
@@ -2761,8 +2754,6 @@ void MapEditorController::measureClicked(bool checked)
 	}
 	
 	measure_dock_widget->setVisible(checked);
-	if (checked)
-		QTimer::singleShot(0, measure_dock_widget, SLOT(raise()));
 }
 
 void MapEditorController::booleanUnionClicked()
@@ -3711,7 +3702,7 @@ EditorDockWidget::EditorDockWidget(const QString& title, QAction* action, MapEdi
 	
 	if (action)
 	{
-		connect(this, &EditorDockWidget::visibilityChanged, action, &QAction::setChecked);
+		connect(toggleViewAction(), &QAction::toggled, action, &QAction::setChecked);
 	}
 	
 #ifdef Q_OS_ANDROID
@@ -3721,8 +3712,21 @@ EditorDockWidget::EditorDockWidget(const QString& title, QAction* action, MapEdi
 
 bool EditorDockWidget::event(QEvent* event)
 {
-	if (event->type() == QEvent::ShortcutOverride && editor->getWindow()->areShortcutsDisabled())
-		event->accept();
+	switch (event->type())
+	{
+	case QEvent::ShortcutOverride:
+		if (editor->getWindow()->areShortcutsDisabled())
+			event->accept();
+		break;
+		
+	case QEvent::Show:
+		QTimer::singleShot(0, this, SLOT(raise()));
+		break;
+		
+	default:
+		; // nothing
+	}
+
 	return QDockWidget::event(event);
 }
 
