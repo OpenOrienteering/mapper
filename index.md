@@ -1,12 +1,11 @@
 ---
 title: User Manual
 edited: 26 November 2015
-online: http://openorienteering.github.io/mapper-manual/
 redirect_from: /
 ---
 
 {% if doxygen %}
-**Note:** The [online version]({{ page.online }}) of this documentation may contain additions and corrections.
+**Note:** The [online version](http://openorienteering.github.io/mapper-manual/) of this documentation may contain additions and corrections.
 {% endif %}
 
 Contents    {#index_contents}
