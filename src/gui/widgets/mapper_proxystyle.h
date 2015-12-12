@@ -1,5 +1,5 @@
 /*
- *    Copyright 2013 Kai Pastor
+ *    Copyright 2013, 2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -18,8 +18,8 @@
  */
 
 
-#ifndef _OPENORIENTEERING_MAPPER_PROXYSTYLE_H_
-#define _OPENORIENTEERING_MAPPER_PROXYSTYLE_H_
+#ifndef OPENORIENTEERING_MAPPER_PROXYSTYLE_H_
+#define OPENORIENTEERING_MAPPER_PROXYSTYLE_H_
 
 #include <QProxyStyle>
 
@@ -40,38 +40,30 @@ public:
 	 * Being a QProxyStyle, MapperProxyStyle takes ownership of the base style,
 	 * if given.
 	 */
-	MapperProxyStyle(QStyle* base_style = NULL);
+	MapperProxyStyle(QStyle* base_style = nullptr);
 	
 	/**
 	 * Destroys the object.
 	 */
-	virtual ~MapperProxyStyle();
+	~MapperProxyStyle() override;
 	
 	/**
 	 * Draws the given primitive element.
 	 * Implements rendering of segmented buttons.
 	 */
-	virtual void drawPrimitive(PrimitiveElement element, const QStyleOption* option, QPainter* painter, const QWidget* widget = NULL) const;
-	
-	/**
-	 * Draw the left margin of a button segment.
-	 */
-	static void drawLeftSeparatorLine(QPainter* painter, const QStyleOption* option);
-	
-	/**
-	 * Draw the right margin of a button segment.
-	 */
-	static void drawRightSeparatorLine(QPainter* painter, const QStyleOption* option);
+	void drawPrimitive(PrimitiveElement element, const QStyleOption* option, QPainter* painter, const QWidget* widget = nullptr) const override;
 	
 #ifdef Q_OS_MAC
 	/**
 	 * On OS X, returns a reduced size for QStyle::PM_ToolBarIconSize.
 	 */ 
-	virtual int pixelMetric(PixelMetric metric, const QStyleOption* option = NULL, const QWidget* widget = NULL) const;
+	int pixelMetric(PixelMetric metric, const QStyleOption* option = nullptr, const QWidget* widget = nullptr) const override;
 #endif
 	
 private:
+	void drawSegmentedButton(int segment, PrimitiveElement element, const QStyleOption* option, QPainter* painter, const QWidget* widget) const;
+	
 	Q_DISABLE_COPY(MapperProxyStyle)
 };
 
-#endif // _OPENORIENTEERING_MAPPER_PROXYSTYLE_H_
+#endif // OPENORIENTEERING_MAPPER_PROXYSTYLE_H_
