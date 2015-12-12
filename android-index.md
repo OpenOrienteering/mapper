@@ -1,14 +1,13 @@
 ---
 title: The Mapper App for Android
 keywords: Android
-online: http://openorienteering.github.io/mapper-manual/pages/android-index.html
 ---
 
 The Android version of OpenOrienteering Mapper is not as self-descriptive as
 the desktop version, so please read this first for important instructions.
  
 {% if doxygen %}
-**Note:** The [online version]({{ page.online }}) of this documentation may contain additions and corrections.
+**Note:** The [online version](http://openorienteering.github.io/mapper-manual/pages/android-index.html) of this documentation may contain additions and corrections.
 {% endif %}
 
 
