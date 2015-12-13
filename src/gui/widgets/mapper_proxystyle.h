@@ -26,10 +26,8 @@
 /**
  * MapperProxyStyle customizes the platform's base style.
  * 
- * It implements the rendering of segmented buttons (in connection with
- * SegmentedButtonLayout).
- * 
- * On OS X, it modifies the size of the toolbar icons.
+ * It supports the implementation of missing UI elements, and 
+ * it adjustes the size of some elements to more practical values.
  */
 class MapperProxyStyle : public QProxyStyle
 {
@@ -37,6 +35,7 @@ Q_OBJECT
 public:
 	/**
 	 * Constructs a new MapperProxyStyle.
+	 * 
 	 * Being a QProxyStyle, MapperProxyStyle takes ownership of the base style,
 	 * if given.
 	 */
@@ -49,16 +48,25 @@ public:
 	
 	/**
 	 * Draws the given primitive element.
-	 * Implements rendering of segmented buttons.
+	 * 
+	 * Implements rendering of segmented buttons for all platforms.
+	 * 
+	 * On Android:
+	 * - QStyle::PE_IndicatorItemViewItemCheck is modified for disabled and tristate checkboxes.
 	 */
 	void drawPrimitive(PrimitiveElement element, const QStyleOption* option, QPainter* painter, const QWidget* widget = nullptr) const override;
 	
-#ifdef Q_OS_MAC
 	/**
-	 * On OS X, returns a reduced size for QStyle::PM_ToolBarIconSize.
+	 * Returns some adjusted pixel metrics.
+	 *
+	 * On OS X:
+	 * - QStyle::PM_ToolBarIconSize is adjusted (reduced) towards QStyle::PM_SmallIconSize.
+	 * 
+	 * On Android:
+	 * - QStyle::PM_ButtonIconSize is enlarged to QStyle::PM_IndicatorWidth (checkbox size),
+	 * - QStyle::PM_ToolBarIconSize is adjusted (enlarged) towards QStyle::PM_SmallIconSize.
 	 */ 
 	int pixelMetric(PixelMetric metric, const QStyleOption* option = nullptr, const QWidget* widget = nullptr) const override;
-#endif
 	
 private:
 	void drawSegmentedButton(int segment, PrimitiveElement element, const QStyleOption* option, QPainter* painter, const QWidget* widget) const;

@@ -56,6 +56,28 @@ void MapperProxyStyle::drawPrimitive(QStyle::PrimitiveElement element, const QSt
 		}
 		break;
 		
+#ifdef Q_OS_ANDROID
+	case QStyle::PE_IndicatorItemViewItemCheck:
+		if (option->state.testFlag(QStyle::State_NoChange)
+		    || !option->state.testFlag(QStyle::State_Enabled))
+		{
+			auto item = qstyleoption_cast<const QStyleOptionViewItem*>(option);
+			auto o = QStyleOptionViewItem{ *item };
+			o.state |= QStyle::State_Enabled;
+			if (option->state.testFlag(QStyle::State_NoChange))
+			{
+				o.state &= ~QStyle::State_NoChange;
+				o.state |= QStyle::State_On;
+			}
+			auto opacity = painter->opacity();
+			painter->setOpacity(0.4);
+			QProxyStyle::drawPrimitive(element, &o, painter, widget);
+			painter->setOpacity(opacity);
+			return;
+		}
+		break;
+#endif
+		
 	default:
 		; // Nothing
 	}
@@ -108,15 +130,32 @@ void MapperProxyStyle::drawSegmentedButton(int segment, QStyle::PrimitiveElement
 	painter->restore();
 }
 
-#ifdef Q_OS_MAC
 int MapperProxyStyle::pixelMetric(PixelMetric metric, const QStyleOption* option, const QWidget* widget) const
 {
-	if (metric == QStyle::PM_ToolBarIconSize)
+	switch (metric)
 	{
-		static int s = (QProxyStyle::pixelMetric(QStyle::PM_SmallIconSize) + QProxyStyle::pixelMetric(QStyle::PM_ToolBarIconSize)) / 2;
-		return s;
+#ifdef Q_OS_ANDROID
+	case QStyle::PM_ButtonIconSize:
+		{
+			static int s = qMax(QProxyStyle::pixelMetric(metric), QProxyStyle::pixelMetric(QStyle::PM_IndicatorWidth));
+			return s;
+		}
+	case QStyle::PM_SplitterWidth:
+		{
+			static int s = (QProxyStyle::pixelMetric(metric), QProxyStyle::pixelMetric(QStyle::PM_IndicatorWidth)) / 2;
+			return s;
+		}
+#endif
+#ifdef Q_OS_MAC
+	case QStyle::PM_ToolBarIconSize:
+		{
+			static int s = (QProxyStyle::pixelMetric(metric) + QProxyStyle::pixelMetric(QStyle::PM_SmallIconSize)) / 2;
+			return s;
+		}
+#endif
+	default:
+		break;
 	}
+	
 	return QProxyStyle::pixelMetric(metric, option, widget);
 }
-#endif
-
