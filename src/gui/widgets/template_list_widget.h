@@ -34,7 +34,6 @@ class Map;
 class MapEditorController;
 class MapView;
 class Template;
-class PercentageDelegate;
 
 /**
  * Widget showing the list of templates, including the map layer.
@@ -45,7 +44,7 @@ class TemplateListWidget : public QWidget
 {
 Q_OBJECT
 public:
-	TemplateListWidget(Map* map, MapView* main_view, MapEditorController* controller, QWidget* parent = NULL);
+	TemplateListWidget(Map* map, MapView* main_view, MapEditorController* controller, QWidget* parent = nullptr);
 	virtual ~TemplateListWidget();
 	
 	void addTemplateAt(Template* new_template, int pos);
@@ -58,6 +57,9 @@ public slots:
 	 * When all templates are hidden, operations on templates are disabled.
 	 */
 	void setAllTemplatesHidden(bool value);
+	
+signals:
+	void closeClicked();
 	
 protected:
 	/**
@@ -82,9 +84,8 @@ protected slots:
 	
 	void cellChange(int row, int column);
 	void updateButtons();
-	void currentCellChange(int current_row, int current_column, int previous_row, int previous_column);
-	void cellDoubleClick(int row, int column);
-	void updateDeleteButtonText();
+	void cellClicked(int row, int column);
+	void cellDoubleClicked(int row, int column);
 	
 	void moveByHandClicked(bool checked);
 	void adjustClicked(bool checked);
@@ -97,16 +98,22 @@ protected slots:
 	void templateAdded(int pos, const Template* temp);
 	void templatePositionDockWidgetClosed(Template* temp);
 	
-	void changeTemplateFile();
+	void changeTemplateFile(int pos);
+	
+	void showOpacitySlider(int row);
 	
 private:
-	void addRow(int row);
+	void addRowItems(int row);
 	void updateRow(int row);
 	int posFromRow(int row);
 	int rowFromPos(int pos);
 	Template* getCurrentTemplate();
 	
-	PercentageDelegate* percentage_delegate;
+	Map* map;
+	MapView* main_view;
+	MapEditorController* controller;
+	bool mobile_mode;
+	int name_column;
 	
 	QCheckBox* all_hidden_check;
 	QTableWidget* template_table;
@@ -129,11 +136,6 @@ private:
 	
 	//QToolButton* group_button;
 	//QToolButton* more_button;
-	
-	Map* map;
-	MapView* main_view;
-	MapEditorController* controller;
-	bool react_to_changes;
 };
 
 #endif

@@ -25,6 +25,7 @@
 #include <vector>
 
 #include <QClipboard>
+#include <QPointer>
 #include <QScopedPointer>
 #include <QTimer>
 
@@ -59,6 +60,7 @@ class PrintWidget;
 class ReopenTemplateDialog;
 class SymbolWidget;
 class Template;
+class TemplateListWidget;
 class TemplatePositionDockWidget;
 
 
@@ -307,7 +309,9 @@ public slots:
 	void openTemplateClicked();
 	/** Shows the ReopenTemplateDialog. */
 	void reopenTemplateClicked();
-	/** Updates the reopen_template_act enabled state. */
+	/** Adjusts action availability based on the presence of templates */
+	void templateAvailabilityChanged();
+	/** Adjusts action availability based on the presence of closed templates */
 	void closedTemplateAvailabilityChanged();
 	
 	/** Shows or hides the tags editor dock widget. */
@@ -332,8 +336,6 @@ public slots:
 	void clipboardChanged(QClipboard::Mode mode);
 	/** Adjusts the enabled state of the paste action. */
 	void updatePasteAvailability();
-	/** Adjusts action availability based on the presence of templates */
-	void templateAvailabilityChanged();
 	
 	/**
 	 * Checks the presence of spot colors,
@@ -447,11 +449,6 @@ public slots:
 	/** Called regularly after enabled with alignMapWithNorth() to update the map rotation. */
 	void alignMapWithNorthUpdate();
 	
-	/** Shows a list of templates to toggle their visibility. */
-	void toggleTemplateClicked();
-	/** Follow-up for toggleTemplateClicked(). */
-	void toggleTemplateItemClicked(QAction* item);
-	
 	/** For mobile UI: hides the top action bar. */
 	void hideTopActionBar();
 	/** For mobile UI: shows the top action bar again after hiding it. */
@@ -556,6 +553,8 @@ private:
 	
 	void createSymbolWidget(QWidget* parent = NULL);
 	
+	void createTemplateWindow();
+	
 	QAction* newAction(const char* id, const QString& tr_text, QObject* receiver, const char* slot, const char* icon = NULL, const QString& tr_tip = QString::null, const QString& whatsThisLink = QString::null);
 	QAction* newCheckAction(const char* id, const QString& tr_text, QObject* receiver, const char* slot, const char* icon = NULL, const QString& tr_tip = QString::null, const QString& whatsThisLink = QString::null);
 	QAction* newToolAction(const char* id, const QString& tr_text, QObject* receiver, const char* slot, const char* icon = NULL, const QString& tr_tip = QString::null, const QString& whatsThisLink = QString::null);
@@ -635,7 +634,8 @@ private:
 	SymbolWidget* symbol_widget;
 	
 	QAction* template_window_act;
-	EditorDockWidget* template_dock_widget;
+	QPointer<QWidget> template_dock_widget;
+	TemplateListWidget* template_list_widget;
 	QAction* open_template_act;
 	QAction* reopen_template_act;
 	
@@ -697,8 +697,6 @@ private:
 	CompassDisplay* compass_display;
 	QAction* align_map_with_north_act;
 	QTimer align_map_with_north_timer;
-	QAction* template_toggle_action;
-	QMenu* toggle_template_menu;
 	
 	QAction* mappart_add_act;
 	QAction* mappart_rename_act;

@@ -45,6 +45,7 @@
 #include <QSettings>
 #include <QSignalMapper>
 #include <QSizeGrip>
+#include <QSplitter>
 #include <QStatusBar>
 #include <QStringBuilder>
 #include <QTextEdit>
@@ -117,11 +118,55 @@
 #include "util.h"
 #include "util/scoped_signals_blocker.h"
 
+
+namespace
+{
+	/**
+	 * Creates a partial, resizable widget overlay over the main window.
+	 * 
+	 * This widget is meant to be used as a dock widget replacement in the
+	 * mobile app. In landscape mode, the child widget is placed on the right
+	 * side, spanning the full height. In portrait mode, the child is placed
+	 * on the top, spanning the full width.
+	 */
+	QSplitter* createDockWidgetSubstitute(MainWindow* window, QWidget* child)
+	{
+		auto splitter = new QSplitter(window);
+		splitter->setChildrenCollapsible(false);
+		
+		auto placeholder = new QWidget();
+		
+		splitter->setAttribute(Qt::WA_NoSystemBackground, true);
+		placeholder->setAttribute(Qt::WA_NoSystemBackground, true);
+		child->setAutoFillBackground(true);
+		
+		auto geometry = window->geometry();
+		splitter->setGeometry(geometry);
+		if (geometry.height() > geometry.width())
+		{
+			splitter->setOrientation(Qt::Vertical);
+			splitter->addWidget(child);
+			splitter->addWidget(placeholder);
+		}
+		else
+		{
+			splitter->setOrientation(Qt::Horizontal);
+			splitter->addWidget(placeholder);
+			splitter->addWidget(child);
+		}
+		
+		return splitter;
+	}
+	
+} // namespace
+
+
 // ### MapEditorController ###
 
 MapEditorController::MapEditorController(OperatingMode mode, Map* map)
 : MainWindowController()
 , active_symbol(NULL)
+, template_list_widget(nullptr)
 , mappart_remove_act(NULL)
 , mappart_merge_act(NULL)
 , mappart_merge_menu(NULL)
@@ -139,7 +184,6 @@ MapEditorController::MapEditorController(OperatingMode mode, Map* map)
 	window = NULL;
 	editing_in_progress = false;
 	
-	toggle_template_menu = NULL;
 	cut_hole_menu = NULL;
 	
 	if (map)
@@ -153,7 +197,6 @@ MapEditorController::MapEditorController(OperatingMode mode, Map* map)
 	paste_act = NULL;
 	reopen_template_act = NULL;
 	overprinting_simulation_act = NULL;
-	template_toggle_action = NULL;
 	
 	toolbar_view = NULL;
 	toolbar_mapparts = NULL;
@@ -164,7 +207,6 @@ MapEditorController::MapEditorController(OperatingMode mode, Map* map)
 	measure_dock_widget = NULL;
 	color_dock_widget = NULL;
 	symbol_dock_widget = NULL;
-	template_dock_widget = NULL;
 	tags_dock_widget = NULL;
 	
 	statusbar_zoom_frame = NULL;
@@ -197,13 +239,13 @@ MapEditorController::~MapEditorController()
 	delete measure_dock_widget;
 	delete color_dock_widget;
 	delete symbol_dock_widget;
-	delete template_dock_widget;
+	if (template_dock_widget)
+		delete template_dock_widget;
 	delete tags_dock_widget;
 	delete cut_hole_menu;
 	delete mappart_merge_act;
 	delete mappart_merge_menu;
 	delete mappart_move_menu;
-	delete toggle_template_menu;
 	for (QHash<Template*, TemplatePositionDockWidget*>::iterator it = template_position_widgets.begin(); it != template_position_widgets.end(); ++it)
 		delete it.value();
 	delete gps_display;
@@ -483,7 +525,6 @@ void MapEditorController::attach(MainWindow* window)
 	measure_dock_widget = NULL;
 	color_dock_widget = NULL;
 	symbol_dock_widget = NULL;
-	template_dock_widget = NULL;
 	QLabel* statusbar_zoom_label = NULL;
 	
 	this->window = window;
@@ -583,11 +624,16 @@ void MapEditorController::attach(MainWindow* window)
 	
 	if (mode == MapEditor)
 	{
-		// Show / create the symbol window
+		// Create/show the dock widgets
 		if (mobile_mode)
+		{
 			createSymbolWidget(window);
+		}
 		else
+		{
+			createTemplateWindow();
 			symbol_window_act->trigger();
+		}
 		
 		// Auto-select the edit tool
 		edit_tool_act->setChecked(true);
@@ -831,8 +877,6 @@ void MapEditorController::createActions()
 	
 	compass_action = newCheckAction("compassdisplay", tr("Enable compass display"), this, SLOT(enableCompassDisplay(bool)), "compass.png", QString::null, "toolbars.html#compass_display"); // TODO: write documentation
 	align_map_with_north_act = newCheckAction("alignmapwithnorth", tr("Align map with north"), this, SLOT(alignMapWithNorth(bool)), "rotate-map.png", QString::null, "toolbars.html#align_map_with_north"); // TODO: write documentation
-	
-	template_toggle_action = newAction("toggletemplate", tr("Toggle template visibility"), this, SLOT(toggleTemplateClicked()), "templates.png", QString::null, "toolbars.html#toggle_template"); // TODO: write documentation
 	
 	mappart_add_act = newAction("addmappart", tr("Add new part..."), this, SLOT(addMapPart()));
 	mappart_rename_act = newAction("renamemappart", tr("Rename current part..."), this, SLOT(renameMapPart()));
@@ -1216,7 +1260,7 @@ void MapEditorController::createMobileGUI()
 	top_action_bar->addActionAtEnd(undo_act, 1, col++);
 	
 	top_action_bar->addActionAtEnd(touch_cursor_action, 0, col);
-	top_action_bar->addActionAtEnd(template_toggle_action, 1, col++);
+	top_action_bar->addActionAtEnd(template_window_act, 1, col++);
 	
 	top_action_bar->addActionAtEnd(edit_tool_act, 0, col);
 	top_action_bar->addActionAtEnd(edit_line_tool_act, 1, col++);
@@ -1714,18 +1758,36 @@ void MapEditorController::mapNotesClicked()
 	}
 }
 
+void MapEditorController::createTemplateWindow()
+{
+	Q_ASSERT(!template_dock_widget);
+	
+	template_list_widget = new TemplateListWidget(map, main_view, this);
+	connect(hide_all_templates_act, &QAction::toggled, template_list_widget, &TemplateListWidget::setAllTemplatesHidden);
+	
+	if (isInMobileMode())
+	{
+		template_dock_widget = createDockWidgetSubstitute(window, template_list_widget);
+		connect(template_list_widget, &TemplateListWidget::closeClicked, [this]() { showTemplateWindow(false); });
+	}
+	else
+	{
+		auto dock_widget = new EditorDockWidget(tr("Templates"), template_window_act, this, window);
+		dock_widget->setWidget(template_list_widget);
+		dock_widget->setObjectName("Templates dock widget");
+		if (window->restoreDockWidget(dock_widget))
+			dock_widget->setVisible(false);
+		else
+			window->addDockWidget(Qt::RightDockWidgetArea, dock_widget, Qt::Vertical);
+		
+		template_dock_widget = dock_widget;
+	}
+}
+
 void MapEditorController::showTemplateWindow(bool show)
 {
 	if (!template_dock_widget)
-	{
-		TemplateListWidget* template_widget = new TemplateListWidget(map, main_view, this, template_dock_widget);
-		connect(hide_all_templates_act, SIGNAL(toggled(bool)), template_widget, SLOT(setAllTemplatesHidden(bool)));
-		template_dock_widget = new EditorDockWidget(tr("Templates"), template_window_act, this, window);
-		template_dock_widget->setWidget(template_widget);
-		template_dock_widget->setObjectName("Templates dock widget");
-		if (!window->restoreDockWidget(template_dock_widget))
-			window->addDockWidget(Qt::RightDockWidgetArea, template_dock_widget, Qt::Vertical);
-	}
+		createTemplateWindow();
 	
 	template_window_act->setChecked(show);
 	template_dock_widget->setVisible(show);
@@ -1740,8 +1802,7 @@ void MapEditorController::openTemplateClicked()
 		showTemplateWindow(true);
 		
 		// FIXME: this should be done through the core map, not through the UI
-		TemplateListWidget* template_widget = reinterpret_cast<TemplateListWidget*>(template_dock_widget->widget());
-		template_widget->addTemplateAt(new_template.release(), -1);
+		template_list_widget->addTemplateAt(new_template.release(), -1);
 	}
 }
 
@@ -1758,6 +1819,11 @@ void MapEditorController::reopenTemplateClicked()
 	delete dialog;
 }
 
+void MapEditorController::templateAvailabilityChanged()
+{
+	// Nothing
+}
+
 void MapEditorController::closedTemplateAvailabilityChanged()
 {
 	if (reopen_template_act)
@@ -1768,7 +1834,7 @@ void MapEditorController::showTagsWindow(bool show)
 {
 	if (!tags_dock_widget)
 	{
-		TagsWidget* tags_widget = new TagsWidget(map, main_view, this, template_dock_widget);
+		TagsWidget* tags_widget = new TagsWidget(map, main_view, this);
 		tags_dock_widget = new EditorDockWidget(tr("Tag Editor"), tags_window_act, this, window);
 		tags_dock_widget->setWidget(tags_widget);
 		tags_dock_widget->setObjectName("Tag editor dock widget");
@@ -2126,12 +2192,6 @@ void MapEditorController::updatePasteAvailability()
 			&& QApplication::clipboard()->mimeData()->hasFormat("openorienteering/objects")
 			&& !editing_in_progress);
 	}
-}
-
-void MapEditorController::templateAvailabilityChanged()
-{
-	if (template_toggle_action)
-		template_toggle_action->setEnabled(map->getNumTemplates() > 0);
 }
 
 void MapEditorController::showWholeMap()
@@ -3141,60 +3201,6 @@ void MapEditorController::alignMapWithNorthUpdate()
 	
 	// Set map rotation
 	main_view->setRotation(-1 * M_PI / 180.0f * Compass::getInstance().getCurrentAzimuth());
-}
-
-void MapEditorController::toggleTemplateClicked()
-{
-	// Build the menu
-	if (! toggle_template_menu)
-	{
-		toggle_template_menu = new QMenu(tr("Toggle template visibility"));
-		connect(toggle_template_menu, SIGNAL(triggered(QAction*)), this, SLOT(toggleTemplateItemClicked(QAction*)));
-	}
-	else
-		toggle_template_menu->clear();
-	
-	for (int i = map->getNumTemplates() - 1; i >= 0; -- i)
-	{
-		Template* temp = map->getTemplate(i);
-		QAction* temp_action = toggle_template_menu->addAction(temp->getTemplateFilename());
-		temp_action->setCheckable(true);
-		temp_action->setChecked(main_view->isTemplateVisible(temp));
-		temp_action->setEnabled(temp->getTemplateState() == Template::Loaded);
-		temp_action->setData(qVariantFromValue<void*>(temp));
-	}
-	
-	// Find place to show the menu
-	QToolButton* button = NULL;
-	if (top_action_bar)
-	{
-		button = top_action_bar->getButtonForAction(template_toggle_action);
-		if (! button)
-			button = top_action_bar->getButtonForAction(top_action_bar->getOverflowAction());
-	}
-	QPoint menu_anchor = button ? button->mapToGlobal(QPoint(0, button->height())) : map_widget->mapToGlobal(QPoint(0, 0));
-	
-	// Show the menu
-	toggle_template_menu->popup(menu_anchor);
-}
-
-void MapEditorController::toggleTemplateItemClicked(QAction* item)
-{
-	Template* temp = reinterpret_cast<Template*>(item->data().value<void*>());
-	TemplateVisibility* vis = main_view->getTemplateVisibility(temp);
-	if (temp->getTemplateState() != Template::Invalid)
-	{
-		bool visible_new = ! vis->visible;
-		if (!visible_new)
-			map->setTemplateAreaDirty(map->findTemplateIndex(temp));
-		
-		vis->visible = visible_new;
-		
-		if (visible_new)
-			map->setTemplateAreaDirty(map->findTemplateIndex(temp));
-	}
-	
-	main_view->setHideAllTemplates(false);
 }
 
 void MapEditorController::hideTopActionBar()
