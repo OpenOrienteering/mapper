@@ -119,13 +119,25 @@ foreach(file ${input_files})
 		message(FATAL_ERROR "${file}:1: Unsupported HTML element ${unsupported_element}")
 	endif()
 	string(REGEX REPLACE "<hr */?>\r?\n?" "\n---\n" output "${output}")
-	string(REGEX REPLACE "src=\"../mapper-images/" "src=\"" output "${output}")
 	string(REGEX REPLACE "\n?<img [^>]*src=\"([^\"]*)\"[^>]*>[\n ]?" "\n![](\\1)\n" output "${output}")
+	
+	# SF Markdown
 	string(REGEX REPLACE "\\[\\[img +(src=)?([^] ]+) *]]" "![](\\2)" output "${output}")
 	string(REGEX REPLACE "\\[\\[img +(src=)?([^] ]+) +alt=\"([^\"]+)\" *]]" "![\\3](\\2)" output "${output}")
 	string(REGEX REPLACE "\\[\\[img +(src=)?([^] ]+) +alt=([^]]*) *]]" "![\\3](\\2)" output "${output}")
+	
+	# Resource paths
+	string(REGEX REPLACE "(!\\[[^]]*\\]\\()../mapper-images/" "\\1" output "${output}")
 	string(REGEX REPLACE "href=\"attachment/" "href=\"" output "${output}")
 
+	# toolbar.md H4 entries with icon - doxygen doesn't support inline images
+	string(REGEX REPLACE "(\r?\n)#### +(( *!\\[([^]]*)\\]\\(([^)]*)\\))*) *" "\\1<h4-icon-table><tr bgcolor=\"#eeeeee\"><td>\\2</td><td width=\"100%\" valign=\"middle\"><b>" output "${output}")
+	while(output MATCHES "(<h4-icon-table>[^\r\n]*!\\[[^]]*\\]\\([^)]*\\)) *(!\\[[^]]*\\]\\([^)]*\\))")
+		string(REGEX REPLACE "(<h4-icon-table>[^\r\n]*!\\[[^]]*\\]\\([^)]*\\)) *(!\\[[^]]*\\]\\([^)]*\\))" "\\1</td><td>\\2" output "${output}")
+	endwhile()
+	string(REGEX REPLACE "(<h4-icon-table>[^\r\n]*<b>[^\r\n{]*){#([^\r\n]*)}" "<a name=\"\\2\" >\n\\1" output "${output}")
+	string(REGEX REPLACE "<h4-icon-table>([^\r\n]*)" "<table cellspacing=\"0\" cellpadding=\"2\">\\1</b></td></tr></table>" output "${output}")
+	
 	# Liquid/Kramdown/Markdown markup
 	string(REGEX REPLACE "\r?\n *[-*]  *[^\r\n]*\r?\n{:toc}" "\\\\tableofcontents" output "${output}")
 	string(REGEX REPLACE "\\[([^]]*)\\]\\(([^\)]*).md\\){: \\.subpage}" "\\\\subpage \\2 \"\\1\"" output "${output}")
