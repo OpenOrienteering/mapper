@@ -553,7 +553,11 @@ private:
 	
 	void createSymbolWidget(QWidget* parent = NULL);
 	
+	void createColorWindow();
+	
 	void createTemplateWindow();
+	
+	void createTagEditor();
 	
 	QAction* newAction(const char* id, const QString& tr_text, QObject* receiver, const char* slot, const char* icon = NULL, const QString& tr_tip = QString::null, const QString& whatsThisLink = QString::null);
 	QAction* newCheckAction(const char* id, const QString& tr_text, QObject* receiver, const char* slot, const char* icon = NULL, const QString& tr_tip = QString::null, const QString& whatsThisLink = QString::null);
@@ -626,7 +630,7 @@ private:
 	QAction* map_notes_act;
 	
 	QAction* color_window_act;
-	EditorDockWidget* color_dock_widget;
+	QPointer<EditorDockWidget> color_dock_widget;
 	QAction* load_symbols_from_act;
 	
 	QAction* symbol_window_act;
@@ -640,7 +644,7 @@ private:
 	QAction* reopen_template_act;
 	
 	QAction* tags_window_act;
-	EditorDockWidget* tags_dock_widget;
+	QPointer<EditorDockWidget> tags_dock_widget;
 	
 	QAction* edit_tool_act;
 	QAction* edit_line_tool_act;

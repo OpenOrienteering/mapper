@@ -205,9 +205,7 @@ MapEditorController::MapEditorController(OperatingMode mode, Map* map)
 	toolbar_advanced_editing = NULL;
 	print_dock_widget = NULL;
 	measure_dock_widget = NULL;
-	color_dock_widget = NULL;
 	symbol_dock_widget = NULL;
-	tags_dock_widget = NULL;
 	
 	statusbar_zoom_frame = NULL;
 	statusbar_cursorpos_label = NULL;
@@ -237,11 +235,13 @@ MapEditorController::~MapEditorController()
 	delete toolbar_mapparts;
 	delete print_dock_widget;
 	delete measure_dock_widget;
-	delete color_dock_widget;
+	if (color_dock_widget)
+		delete color_dock_widget;
 	delete symbol_dock_widget;
 	if (template_dock_widget)
 		delete template_dock_widget;
-	delete tags_dock_widget;
+	if (tags_dock_widget)
+		delete tags_dock_widget;
 	delete cut_hole_menu;
 	delete mappart_merge_act;
 	delete mappart_merge_menu;
@@ -631,8 +631,10 @@ void MapEditorController::attach(MainWindow* window)
 		}
 		else
 		{
-			createTemplateWindow();
 			symbol_window_act->trigger();
+			createColorWindow();
+			createTemplateWindow();
+			createTagEditor();
 		}
 		
 		// Auto-select the edit tool
@@ -1675,17 +1677,23 @@ void MapEditorController::showSymbolWindow(bool show)
 	symbol_dock_widget->setVisible(show);
 }
 
+void MapEditorController::createColorWindow()
+{
+	Q_ASSERT(!color_dock_widget);
+	
+	color_dock_widget = new EditorDockWidget(tr("Colors"), color_window_act, this, window);
+	color_dock_widget->setWidget(new ColorWidget(map, window, color_dock_widget));
+	color_dock_widget->widget()->setEnabled(!editing_in_progress);
+	color_dock_widget->setObjectName("Color dock widget");
+	if (!window->restoreDockWidget(color_dock_widget))
+		window->addDockWidget(Qt::LeftDockWidgetArea, color_dock_widget, Qt::Vertical);
+	color_dock_widget->setVisible(false);
+}
+
 void MapEditorController::showColorWindow(bool show)
 {
 	if (!color_dock_widget)
-	{
-		color_dock_widget = new EditorDockWidget(tr("Colors"), color_window_act, this, window);
-		color_dock_widget->setWidget(new ColorWidget(map, window, color_dock_widget));
-		color_dock_widget->widget()->setEnabled(!editing_in_progress);
-		color_dock_widget->setObjectName("Color dock widget");
-		if (!window->restoreDockWidget(color_dock_widget))
-			window->addDockWidget(Qt::LeftDockWidgetArea, color_dock_widget, Qt::Vertical);
-	}
+		createColorWindow();
 	
 	color_dock_widget->setVisible(show);
 }
@@ -1775,10 +1783,9 @@ void MapEditorController::createTemplateWindow()
 		auto dock_widget = new EditorDockWidget(tr("Templates"), template_window_act, this, window);
 		dock_widget->setWidget(template_list_widget);
 		dock_widget->setObjectName("Templates dock widget");
-		if (window->restoreDockWidget(dock_widget))
-			dock_widget->setVisible(false);
-		else
+		if (!window->restoreDockWidget(dock_widget))
 			window->addDockWidget(Qt::RightDockWidgetArea, dock_widget, Qt::Vertical);
+		dock_widget->setVisible(false);
 		
 		template_dock_widget = dock_widget;
 	}
@@ -1830,17 +1837,23 @@ void MapEditorController::closedTemplateAvailabilityChanged()
 		reopen_template_act->setEnabled(map->getNumClosedTemplates() > 0);
 }
 
+void MapEditorController::createTagEditor()
+{
+	Q_ASSERT(!tags_dock_widget);
+	
+	TagsWidget* tags_widget = new TagsWidget(map, main_view, this);
+	tags_dock_widget = new EditorDockWidget(tr("Tag Editor"), tags_window_act, this, window);
+	tags_dock_widget->setWidget(tags_widget);
+	tags_dock_widget->setObjectName("Tag editor dock widget");
+	if (!window->restoreDockWidget(tags_dock_widget))
+		window->addDockWidget(Qt::RightDockWidgetArea, tags_dock_widget, Qt::Vertical);
+	tags_dock_widget->setVisible(false);
+}
+
 void MapEditorController::showTagsWindow(bool show)
 {
 	if (!tags_dock_widget)
-	{
-		TagsWidget* tags_widget = new TagsWidget(map, main_view, this);
-		tags_dock_widget = new EditorDockWidget(tr("Tag Editor"), tags_window_act, this, window);
-		tags_dock_widget->setWidget(tags_widget);
-		tags_dock_widget->setObjectName("Tag editor dock widget");
-		if (!window->restoreDockWidget(tags_dock_widget))
-			window->addDockWidget(Qt::RightDockWidgetArea, tags_dock_widget, Qt::Vertical);
-	}
+		createTagEditor();
 	
 	tags_window_act->setChecked(show);
 	tags_dock_widget->setVisible(show);
