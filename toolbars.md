@@ -80,7 +80,7 @@ This can be particularly useful when items (objects, templates) are accidentally
 
 This toolbar will not be shown unless the map has multiple parts.
 
-At the moment, the map parts toolbar has only a signle drop down box for indicating and selecting the active map part.
+At the moment, the map parts toolbar has only a single drop down box for indicating and selecting the active map part.
 
 
 
