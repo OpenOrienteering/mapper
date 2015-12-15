@@ -32,6 +32,9 @@ Working with templates
 [Colors and Symbols](colors_symbols.md){: .subpage} <br/>
 Modifying map colors and symbols
 
+[Tag Editor](tag_editor.md){: .subpage} <br/>
+Attaching arbitrary key-value pairs to objects
+
 [Settings](settings.md){: .subpage} <br/>
 Adjusting the program to your preferences.
 
