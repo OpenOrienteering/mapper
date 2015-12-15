@@ -23,7 +23,7 @@ todo:
 *Note:* Toolbars may be moved to a more convenient position.  To detach and move, pick the handle (the vertical line of dots) at the left end and drag the toolbar to your preferred position.  The resulting order of your tools may thus be different from this page.
 
 
-## General toolbar
+## General toolbar {#general-toolbar}
 
 #### ![ ](../mapper-images/new.png) New map {#new_map}
 Ctrl+N
@@ -51,7 +51,7 @@ Ctrl+Z / Ctrl+Y
 Click to undo or redo the last map editing step.
 
 
-## View toolbar
+## View toolbar {#view-toolbar}
 
 #### ![ ](../mapper-images/grid.png) Grid {#grid}
 G
@@ -76,7 +76,7 @@ Use this tool to display the whole map, including the currently visible template
 This can be particularly useful when items (objects, templates) are accidentally moved far from your working area and out of sight. This tool brings them onscreen. If the map is just a dot in one corner then the rogue feature is near the other edge of the screen.
 
 
-## Map parts toolbar
+## Map parts toolbar {#map-parts-toolbar}
 
 This toolbar will not be shown unless the map has multiple parts.
 
@@ -84,7 +84,7 @@ At the moment, the map parts toolbar has only a single drop down box for indicat
 
 
 
-## Drawing toolbar
+## Drawing toolbar {#drawing-toolbar}
 
 #### ![ ](../mapper-images/tool-edit.png) Edit objects {#tool_edit_point}
 E
@@ -206,7 +206,7 @@ This tool enables the freehand drawing of lines, annotation and erasure on image
 Click and hold the left mouse button to draw while the mouse is moved. Hold the right mouse button as the mouse is moved to erase. The markup is saved in the template image file **permanently**, so it is good practice to keep a copy of the template file in another place or use a blank transparent image for drawing.
 
 
-## Editing toolbar
+## Editing toolbar {#editing-toolbar}
 
 #### ![ ](../mapper-images/delete.png) Delete {#tool_delete}
 Del
@@ -304,7 +304,7 @@ This tool can be used to measure line lengths and area sizes. It will show both 
 When this tool is activated, a window appears containing the measurements for the selected object. To measure different objects, the selection can be changed using the edit tool while the window is active. It is also possible to draw new paths and have their length or area shown as they are drawn.
 
 
-## Advanced drawing toolbar
+## Advanced drawing toolbar {#advanced-drawing-toolbar}
 
 #### ![ ](../mapper-images/tool-cutout-physical.png) Cutout {#cutout_physical}
 This cuts away all objects except inside a given region, making a map excerpt. It can also be used to cut away only a selected subset of objects outside the region. To use it:
