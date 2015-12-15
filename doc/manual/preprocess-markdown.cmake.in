@@ -129,9 +129,12 @@ foreach(file ${input_files})
 	# Resource paths
 	string(REGEX REPLACE "(!\\[[^]]*\\]\\()../mapper-images/" "\\1" output "${output}")
 	string(REGEX REPLACE "href=\"attachment/" "href=\"" output "${output}")
-
-	# toolbar.md H4 entries with icon - doxygen doesn't support inline images
-	string(REGEX REPLACE "(\r?\n)#### +(( *!\\[([^]]*)\\]\\(([^)]*)\\))*) *" "\\1<h4-icon-table><tr bgcolor=\"#eeeeee\"><td>\\2</td><td width=\"100%\" valign=\"middle\"><b>" output "${output}")
+	
+	# Headlines: workaround doxygen strict hierarchy requirements
+	string(REGEX REPLACE "(\r?\n)#(#+ +[^\r\n{]*{#[^\r\n]*})" "\\1\\2" output "${output}")
+	
+	# toolbar.md headline entries with icon - doxygen doesn't support inline images
+	string(REGEX REPLACE "(\r?\n)###+ +(( *!\\[([^]]*)\\]\\(([^)]*)\\))*) *" "\\1<h4-icon-table><tr bgcolor=\"#eeeeee\"><td>\\2</td><td width=\"100%\" valign=\"middle\"><b>" output "${output}")
 	while(output MATCHES "(<h4-icon-table>[^\r\n]*!\\[[^]]*\\]\\([^)]*\\)) *(!\\[[^]]*\\]\\([^)]*\\))")
 		string(REGEX REPLACE "(<h4-icon-table>[^\r\n]*!\\[[^]]*\\]\\([^)]*\\)) *(!\\[[^]]*\\]\\([^)]*\\))" "\\1</td><td>\\2" output "${output}")
 	endwhile()
