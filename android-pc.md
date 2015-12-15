@@ -62,7 +62,7 @@ tedious undistortion. Mapper does not provide a tool for this.
 Preparing for free-hand scribbling
 ----------------------------------
 
-[[img src=pencil.png]]
+[[img src=../mapper-images/pencil.png]]
 
 OO Mapper supports free-hand drawing onto image templates using the tool with
 the pencil icon shown above. This is especially convenient to use in case you
