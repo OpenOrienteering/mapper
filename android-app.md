@@ -46,7 +46,7 @@ When this toggle is active, the map is automatically rotated to north using the 
 
 This symbol activates a helper cursor which allows slow, but precise editing with fingers only. The cursor consists of a circular area and a pointer above the circle.
 
-[[img src=touch_cursor.png]]
+![ ](images/touch_cursor.png)
 
 Touching the map anywhere outside the circle moves the pointer to this position. Touching the circle simulates a real touch at the pointer position above the circle.
 

@@ -1,12 +1,11 @@
 ---
 title: User Manual
 edited: 26 November 2015
-online: http://openorienteering.github.io/mapper-manual/
 redirect_from: /
 ---
 
 {% if doxygen %}
-**Note:** The [online version]({{ page.online }}) of this documentation may contain additions and corrections.
+**Note:** The [online version](http://openorienteering.github.io/mapper-manual/) of this documentation may contain additions and corrections.
 {% endif %}
 
 Contents    {#index_contents}
@@ -32,6 +31,9 @@ Working with templates
 
 [Colors and Symbols](colors_symbols.md){: .subpage} <br/>
 Modifying map colors and symbols
+
+[Tag Editor](tag_editor.md){: .subpage} <br/>
+Attaching arbitrary key-value pairs to objects
 
 [Settings](settings.md){: .subpage} <br/>
 Adjusting the program to your preferences.
