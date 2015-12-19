@@ -85,6 +85,21 @@ else()
 	  COMMAND   ${CMAKE_COMMAND} -P preprocess-markdown.cmake
 	)
 
+	if(NOT MANUAL_SECTIONS)
+		if(APPLE)
+			set(MANUAL_SECTIONS_DEFAULT OSX)
+		elseif(UNIX)
+			set(MANUAL_SECTIONS_DEFAULT LINUX)
+		elseif(WIN32)
+			set(MANUAL_SECTIONS_DEFAULT WINDOWS)
+		else()
+			set(MANUAL_SECTIONS_DEFAULT OTHER)
+		endif()
+		set(MANUAL_SECTIONS "${MANUAL_SECTIONS_DEFAULT}"
+		    CACHE STRING "Conditional manual sections to be enabled")
+	endif()
+	message(STATUS "Conditional manual sections: ${MANUAL_SECTIONS}")
+
 	configure_file(Doxyfile.in Doxyfile @ONLY)
 	
 	configure_file(postprocess-qhp.cmake.in postprocess-qhp.cmake @ONLY)
