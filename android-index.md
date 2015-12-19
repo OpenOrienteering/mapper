@@ -1,7 +1,9 @@
 ---
 title: The Mapper App for Android
 keywords: Android
-redirect_from: /android/
+redirect_from: 
+  - /android/
+  - '/Android Manual'
 ---
 
 The Android version of OpenOrienteering Mapper is not as self-descriptive as
