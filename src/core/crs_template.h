@@ -128,7 +128,7 @@ private:
  * CRSTemplateParameter class. For each parameter, spec_template must contain a
  * number of free parameters for QString::arg(), e.g. "%1" for the first parameter.
  */
-struct CRSTemplate
+class CRSTemplate
 {
 public:
 	using Parameter = CRSTemplateParameter;
