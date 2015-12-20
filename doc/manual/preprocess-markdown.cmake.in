@@ -144,7 +144,8 @@ foreach(file ${input_files})
 	# Liquid/Kramdown/Markdown markup
 	string(REGEX REPLACE "\r?\n *[-*]  *[^\r\n]*\r?\n{:toc}" "\\\\tableofcontents" output "${output}")
 	string(REGEX REPLACE "\\[([^]]*)\\]\\(([^\)]*).md\\){: \\.subpage}" "\\\\subpage \\2 \"\\1\"" output "${output}")
-	string(REGEX REPLACE "(\\[[^]]*\\]\\([^\)]*).md(\\)|#)" "\\1.html\\2" output "${output}")
+	string(REGEX REPLACE "(\\[[^]]*\\]\\([^\)]*)\\.md(\\)|#)" "\\1.html\\2" output "${output}")
+	string(REGEX REPLACE "(href=\"[^\"]*)\\.md(\"|#)" "\\1.html\\2" output "${output}")
 	string(REGEX REPLACE "(\r?\n *\\[[^]]*\\]: *[^ ]*).md(\r?\n| |#)" "\\1.html\\2" output "${output}")
 	string(REGEX REPLACE "{% [^%]* %}|{:[^}]*}" "" output "${output}")
 	
