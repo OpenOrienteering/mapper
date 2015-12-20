@@ -1,7 +1,9 @@
 ---
 title: User Manual
 edited: 26 November 2015
-redirect_from: /
+redirect_from:
+  - /
+  - /Home
 ---
 
 {% if doxygen %}
