@@ -75,7 +75,7 @@ These controls provide standard file management tools.
 <tr>
 <td> </td>
 <td><b>Exit</b></td>
-<td><b>Ctrl-Q</b></td>
+<td><b>Ctrl+Q</b></td>
 <td>Exits the program, which will close all open map windows.</td>
 </tr>
 </table>

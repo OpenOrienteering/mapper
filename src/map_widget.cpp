@@ -1059,7 +1059,10 @@ bool MapWidget::keyPressEventFilter(QKeyEvent* event)
 	switch (event->key())
 	{
 	case Qt::Key_F6:
-		startDragging(mapFromGlobal(QCursor::pos()));
+		if (dragging)
+			finishDragging(mapFromGlobal(QCursor::pos()));
+		else
+			startDragging(mapFromGlobal(QCursor::pos()));
 		return true;
 		
 	case Qt::Key_Up:

@@ -144,10 +144,18 @@ foreach(file ${input_files})
 	# Liquid/Kramdown/Markdown markup
 	string(REGEX REPLACE "\r?\n *[-*]  *[^\r\n]*\r?\n{:toc}" "\\\\tableofcontents" output "${output}")
 	string(REGEX REPLACE "\\[([^]]*)\\]\\(([^\)]*).md\\){: \\.subpage}" "\\\\subpage \\2 \"\\1\"" output "${output}")
-	string(REGEX REPLACE "(\\[[^]]*\\]\\([^\)]*).md(\\)|#)" "\\1.html\\2" output "${output}")
+	string(REGEX REPLACE "(\\[[^]]*\\]\\([^\)]*)\\.md(\\)|#)" "\\1.html\\2" output "${output}")
+	string(REGEX REPLACE "(href=\"[^\"]*)\\.md(\"|#)" "\\1.html\\2" output "${output}")
 	string(REGEX REPLACE "(\r?\n *\\[[^]]*\\]: *[^ ]*).md(\r?\n| |#)" "\\1.html\\2" output "${output}")
 	string(REGEX REPLACE "{% [^%]* %}|{:[^}]*}" "" output "${output}")
-
+	
+	if (APPLE)
+		string(REGEX REPLACE "Alt[+]"   "⌥" output "${output}")
+		string(REGEX REPLACE "Ctrl[+]"  "⌘" output "${output}")
+		string(REGEX REPLACE "Shift[+]" "⇧" output "${output}")
+		string(REGEX REPLACE "⌘⇧" "⇧⌘" output "${output}")
+	endif()
+	
 	string(MD5 output_md5 "${output}")
 	set(file_md5)
 	if(EXISTS "pages-tmp/${file}")

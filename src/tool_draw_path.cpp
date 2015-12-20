@@ -678,6 +678,11 @@ void DrawPathTool::undoLastPoint()
 		// Re-add preview point.
 		preview_path->addCoordinate(MapCoord(cur_pos_map));
 	}
+	else if (previous_point_is_curve_point && dragging)
+	{
+		cur_pos = click_pos;
+		cur_pos_map = click_pos_map;
+	}
 	
 	dragging = false;
 	

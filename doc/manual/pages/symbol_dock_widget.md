@@ -36,7 +36,7 @@ Text size may be approximated as 0.24 times the point size for a typical easy to
 <p><b>Combined symbols</b> are made up of two or more other line or area symbols. This is for example used to combine the gray fill and black outline for houses in sprint maps into a single symbol.</p>
 
 
-<a name="symbolmenu"><h4>Symbol menu</h4></a>
+<h4 id="symbolmenu">Symbol menu</h4>
 
 <p>To show the symbol menu, right click the symbol pane:</p>
 
