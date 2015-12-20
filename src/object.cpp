@@ -503,6 +503,14 @@ Object* Object::load(QXmlStreamReader& xml, Map* map, const SymbolDictionary& sy
 	}
 	object->output_dirty = true;
 	
+	if (map &&
+	    ( object->coords.empty()
+	      || !object->coords.front().isRegular()
+	      || !object->coords.back().isRegular() ) )
+	{
+		map->markAsIrregular(object);
+	}
+	
 	return object;
 }
 

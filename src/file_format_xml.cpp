@@ -451,6 +451,12 @@ void XMLFileImporter::import(bool load_symbols_only)
 			map->setGeoreferencing(georef);
 		}
 	}
+	
+	if (!map->irregularObjects().empty())
+	{
+		auto deleted = map->deleteIrregularObjects();
+		addWarning(Importer::tr("Dropped %n irregular object(s).", "", deleted));
+	}
 }
 
 void XMLFileImporter::importElements(bool load_symbols_only)
