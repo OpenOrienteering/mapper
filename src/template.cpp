@@ -101,7 +101,9 @@ void TemplateTransform::load(QXmlStreamReader& xml)
 
 // ### Template ###
 
-Template::Template(const QString& path, Map* map) : map(map)
+Template::Template(const QString& path, Map* map)
+ : map(map)
+ , template_group(0)
 {
 	template_path = path;
 	if (! QFileInfo(path).canonicalFilePath().isEmpty())
@@ -117,10 +119,9 @@ Template::Template(const QString& path, Map* map) : map(map)
 	adjusted = false;
 	adjustment_dirty = true;
 	
-	template_group = -1;
-	
 	updateTransformationMatrices();
 }
+
 Template::~Template()
 {
 	Q_ASSERT(template_state != Loaded);
@@ -225,12 +226,17 @@ void Template::saveTemplateConfiguration(QXmlStreamWriter& xml, bool open)
 	xml.writeAttribute("name", getTemplateFilename());
 	xml.writeAttribute("path", getTemplatePath());
 	xml.writeAttribute("relpath", getTemplateRelativePath());
-	if (is_georeferenced)
-		xml.writeAttribute("georef", "true");
-	else
+	if (template_group)
 	{
 		xml.writeAttribute("group", QString::number(template_group));
-		
+	}
+	
+	if (is_georeferenced)
+	{
+		xml.writeAttribute("georef", "true");
+	}
+	else
+	{
 		xml.writeStartElement("transformations");
 		if (adjusted)
 			xml.writeAttribute("adjusted", "true");
@@ -280,7 +286,7 @@ std::unique_ptr<Template> Template::loadTemplateConfiguration(QXmlStreamReader& 
 	if (attributes.hasAttribute("name"))
 		temp->template_file = attributes.value("name").toString();
 	temp->is_georeferenced = (attributes.value("georef") == "true");
-	if (!temp->is_georeferenced)
+	if (attributes.hasAttribute("group"))
 		temp->template_group = attributes.value("group").toString().toInt();
 		
 	while (xml.readNextStartElement())
