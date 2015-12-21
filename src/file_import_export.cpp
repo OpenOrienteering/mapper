@@ -117,6 +117,11 @@ void Importer::doImport(bool load_symbols_only, const QString& map_path)
 		}
 	}
 	
+	if (auto deleted = map->deleteIrregularObjects())
+	{
+		addWarning(tr("Dropped %n irregular object(s).", "", deleted));
+	}
+	
 	// Symbol post processing
 	for (int i = 0; i < map->getNumSymbols(); ++i)
 	{
