@@ -83,36 +83,7 @@ void Importer::doImport(bool load_symbols_only, const QString& map_path)
 				if (contained_types & Symbol::Area && !(contained_types & Symbol::Line))
 					path->closeAllParts();
 				
-				for (MapCoordVector::size_type i = 0; i < path->getCoordinateCount(); ++i)
-				{
-					if (path->getCoordinate(i).isCurveStart())
-					{
-						if (i+3 >= path->getCoordinateCount())
-						{
-							path->getCoordinate(i).setCurveStart(false);
-							continue;
-						}
-						
-						if (path->getCoordinate(i + 1).isClosePoint() || path->getCoordinate(i + 1).isHolePoint() ||
-						    path->getCoordinate(i + 2).isClosePoint() || path->getCoordinate(i + 2).isHolePoint())
-						{
-							path->getCoordinate(i).setCurveStart(false);
-							continue;
-						}
-						
-						path->getCoordinate(i + 1).setCurveStart(false);
-						path->getCoordinate(i + 1).setDashPoint(false);
-						path->getCoordinate(i + 2).setCurveStart(false);
-						path->getCoordinate(i + 2).setDashPoint(false);
-						i += 2;
-					}
-					
-					if (i > 0 && path->getCoordinate(i).isHolePoint())
-					{
-						if (path->getCoordinate(i-1).isHolePoint())
-							path->deleteCoordinate(i, false);
-					}
-				}
+				path->normalize();
 			}
 		}
 	}

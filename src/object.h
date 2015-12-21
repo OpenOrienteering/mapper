@@ -472,6 +472,10 @@ public:
 	Object& operator=(const Object& other) override;
 	
 	
+	/** Checks the path for valid flags, and makes corrections as neccessary. */
+	void normalize();
+	
+	
 	bool intersectsBox(QRectF box) const override;
 	
 	
