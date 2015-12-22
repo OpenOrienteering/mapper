@@ -67,7 +67,7 @@
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="392"/>
         <source>Show tip of the day</source>
-        <translation>Visa dagens tips:</translation>
+        <translation>Visa dagens tips</translation>
     </message>
 </context>
 <context>
@@ -347,7 +347,7 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="119"/>
         <source>Custom process color:</source>
-        <translation>Egen process färg:</translation>
+        <translation>Egen färg:</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="125"/>
@@ -484,7 +484,7 @@
     <message>
         <location filename="../src/color_dock_widget.cpp" line="109"/>
         <source>Double-click a color value to open a dialog.</source>
-        <translation>Dubbelklicka ett färg värde för att öppna en dialog.</translation>
+        <translation>Dubbelklicka på en färg för att öppna en dialog.</translation>
     </message>
     <message>
         <location filename="../src/color_dock_widget.cpp" line="187"/>
@@ -1092,7 +1092,7 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
         <location filename="../src/tool_draw_point.cpp" line="62"/>
         <source>Reset</source>
         <comment>Reset rotation</comment>
-        <translation type="unfinished"></translation>
+        <translation>Återställ</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_point.cpp" line="329"/>
@@ -1109,17 +1109,17 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
         <location filename="../src/tool_draw_point.cpp" line="335"/>
         <location filename="../src/tool_draw_point.cpp" line="349"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Create a point object.</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Klicka&lt;/b&gt;: Skapa ett punktobjekt.</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_point.cpp" line="336"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Create an object and set its orientation.</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Dra&lt;/b&gt;: Skapa ett objekt och sätt dess orientering.</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_point.cpp" line="342"/>
         <source>&lt;b&gt;%1, 0&lt;/b&gt;: Reset rotation.</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1, 0&lt;/b&gt;: Återställ rotation.</translation>
     </message>
     <message>
         <source>&lt;b&gt;Click&lt;/b&gt;: Create a point object. &lt;b&gt;Drag&lt;/b&gt;: Create an object and set its orientation (if rotatable). </source>
@@ -1588,7 +1588,7 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="369"/>
         <source>Pixels per inch:</source>
-        <translation>Pixlar per tum:</translation>
+        <translation>Pixlar per tum(PPI):</translation>
     </message>
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="384"/>
@@ -1598,7 +1598,7 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="400"/>
         <source>Saving files</source>
-        <translation>Sparar filer</translation>
+        <translation>Sparning av filer</translation>
     </message>
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="403"/>
@@ -1613,7 +1613,7 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="417"/>
         <source>Recovery information saving interval:</source>
-        <translation>Intervall för sparning av återställningsinformation:</translation>
+        <translation>Intervall för att spara återställningsinformation:</translation>
     </message>
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="420"/>
@@ -1624,7 +1624,7 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="429"/>
         <source>File import and export</source>
-        <translation>Fil import och export</translation>
+        <translation>Import och export</translation>
     </message>
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="432"/>
@@ -1791,7 +1791,7 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
     <name>GeoreferencingActivity</name>
     <message>
         <source>Georeferencing</source>
-        <translation type="obsolete">Gereferera</translation>
+        <translation type="obsolete">Georeferera</translation>
     </message>
     <message>
         <source>Error</source>
@@ -2232,11 +2232,11 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
     </message>
     <message>
         <source>Create a new map ...</source>
-        <translation type="vanished">Skapa ny karta.…</translation>
+        <translation type="vanished">Skapa ny karta…</translation>
     </message>
     <message>
         <source>Open map ...</source>
-        <translation type="vanished">Öppna karta …</translation>
+        <translation type="vanished">Öppna karta…</translation>
     </message>
     <message>
         <source>About %1</source>
@@ -2429,13 +2429,13 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
     <message>
         <location filename="../src/file_format_xml.cpp" line="858"/>
         <source>Error while loading the printing configuration at %1:%2: %3</source>
-        <translation type="unfinished"></translation>
+        <translation>Fel vid läsning av utskriftskonfigurationen vid %1:%2: %3</translation>
     </message>
     <message>
         <location filename="../src/file_format_xml.cpp" line="871"/>
         <location filename="../src/file_format_xml.cpp" line="885"/>
         <source>Error while loading the undo/redo steps at %1:%2: %3</source>
-        <translation type="unfinished"></translation>
+        <translation>Fel vid läsning av ångra/gör om stegen vid %1:%2: %3</translation>
     </message>
 </context>
 <context>
@@ -2469,7 +2469,7 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
     <message>
         <location filename="../src/file_format_native.cpp" line="122"/>
         <source>This file uses an obsolete format. Support for this format is to be removed from this program soon. To be able to open the file in the future, save it again.</source>
-        <translation type="unfinished"></translation>
+        <translation>Denna fil använder ett föråldrat format. Stöd för detta format kommer försvinna från detta program snart.</translation>
     </message>
     <message>
         <location filename="../src/file_format_native.cpp" line="135"/>
@@ -3346,7 +3346,7 @@ Skala om den importerade datan?</translation>
     <message>
         <location filename="../src/core/map_coord.cpp" line="173"/>
         <source>Coordinates are out-of-bounds.</source>
-        <translation type="unfinished"></translation>
+        <translation>Koordinater är utanför området.</translation>
     </message>
 </context>
 <context>
@@ -4540,7 +4540,7 @@ valda</translation>
     <message>
         <location filename="../src/core/map_printer.cpp" line="476"/>
         <source>- Map -</source>
-        <translation type="unfinished">- Karta -</translation>
+        <translation>- Karta -</translation>
     </message>
     <message>
         <location filename="../src/core/map_printer.cpp" line="1197"/>
@@ -4898,8 +4898,8 @@ zooma med scrollhjulet om tillgängligt.</translation>
     <message numerus="yes">
         <location filename="../src/file_format_ocad8.cpp" line="145"/>
         <source>%n color separation(s) were skipped, reason: Import disabled.</source>
-        <translation type="unfinished">
-            <numerusform>%n färgseperationer skippades, anledning: importering avslagen.</numerusform>
+        <translation>
+            <numerusform>%n färgseperationer skippades, anledning: importering avstängd.</numerusform>
             <numerusform></numerusform>
         </translation>
     </message>
@@ -5530,7 +5530,7 @@ zooma med scrollhjulet om tillgängligt.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="99"/>
         <source>Page format:</source>
-        <translation>Sidformat:</translation>
+        <translation>Storlek:</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="128"/>
@@ -5638,17 +5638,17 @@ zooma med scrollhjulet om tillgängligt.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="220"/>
         <source>Default</source>
-        <translation type="unfinished"></translation>
+        <translation>Förvald</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="221"/>
         <source>Device CMYK (experimental)</source>
-        <translation type="unfinished"></translation>
+        <translation>Enhets CMYK (experimentell)</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="222"/>
         <source>Color mode:</source>
-        <translation type="unfinished"></translation>
+        <translation>Färgläge</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="246"/>
@@ -5690,7 +5690,7 @@ zooma med scrollhjulet om tillgängligt.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1033"/>
         <source>Failed to prepare the preview.</source>
-        <translation type="unfinished"></translation>
+        <translation>Misslyckades med att förbereda förhandsvisningen.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1044"/>
@@ -5730,7 +5730,7 @@ zooma med scrollhjulet om tillgängligt.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1136"/>
         <source>Failed to prepare the PDF export.</source>
-        <translation type="unfinished"></translation>
+        <translation>Misslyckades med att förbereda PDF exporten.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1146"/>
@@ -5740,7 +5740,7 @@ zooma med scrollhjulet om tillgängligt.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1199"/>
         <source>An error occured during printing.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ett fel inträffade under utskrift.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1084"/>
@@ -5759,7 +5759,7 @@ zooma med scrollhjulet om tillgängligt.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1185"/>
         <source>Failed to prepare the printing.</source>
-        <translation type="unfinished"></translation>
+        <translation>Misslyckades med förberedning av utskrift.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1194"/>
@@ -5822,7 +5822,7 @@ separations</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1166"/>
         <source>Failed to finish the PDF export.</source>
-        <translation type="unfinished"></translation>
+        <translation>Misslyckades med färdigställning av PDF exporten.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1176"/>
@@ -6865,7 +6865,7 @@ Högsta versionen som stöds är %2.</translation>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="268"/>
         <source>Enable drag and drop</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktivera dra och släppa</translation>
     </message>
     <message>
         <source>All</source>
@@ -7550,9 +7550,9 @@ Tänker du inte rita på bakgrundsbilden är det inget problem.</translation>
     <message numerus="yes">
         <location filename="../src/template_track.cpp" line="473"/>
         <source>%n path object(s) could not be imported (reason: missing coordinates).</source>
-        <translation type="unfinished">
+        <translation>
             <numerusform>%n linjeobjekt kunde inte importeras (anledning: koordinater fattas).</numerusform>
-            <numerusform></numerusform>
+            <numerusform>%n linjeobjekt kunde inte importeras (anledning: koordinater fattas).</numerusform>
         </translation>
     </message>
     <message>
@@ -8180,7 +8180,7 @@ Högsta versionen som stöds är %2.</translation>
     <message>
         <location filename="../src/file_format_xml.cpp" line="427"/>
         <source>Some coordinates were out of bounds for printing. Map content was adjusted.</source>
-        <translation type="unfinished"></translation>
+        <translation>Vissa koordinater var utanför det aktuella området. Kartans innehåll justerades.</translation>
     </message>
     <message>
         <location filename="../src/file_format_xml.cpp" line="475"/>
