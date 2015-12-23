@@ -28,31 +28,27 @@
 int XMLFileFormat::active_version = 6;
 
 
-// Mockup
-namespace CRSTemplates
+namespace
 {
-
-CRSTemplateRegistry::TemplateList defaultList()
-{
-	return CRSTemplateRegistry::TemplateList();
-}
-
-} // namespace CRSTemplates
-
-
-
-double GeoreferencingTest::degFromDMS(double d, double m, double s)
-{
-	return d + m/60.0 + s/3600.0;
+	QString epsg5514_spec = QLatin1String("+init=epsg:5514");
+	QString gk2_spec   = QLatin1String("+proj=tmerc +lat_0=0 +lon_0=6 +k=1.000000 +x_0=2500000 +y_0=0 +ellps=bessel +datum=potsdam +units=m +no_defs");
+	QString gk3_spec   = QLatin1String("+proj=tmerc +lat_0=0 +lon_0=9 +k=1.000000 +x_0=3500000 +y_0=0 +ellps=bessel +datum=potsdam +units=m +no_defs");
+	QString utm32_spec = QLatin1String("+proj=utm +zone=32 +datum=WGS84");
+	
+	
+	/**
+	 * Returns the radian value of a value given in degree or degree/minutes/seconds.
+	 */
+	double degFromDMS(double d, double m=0.0, double s=0.0)
+	{
+		return d + m/60.0 + s/3600.0;
+	}
 }
 
 
 void GeoreferencingTest::initTestCase()
 {
-	gk2_spec = "+proj=tmerc +lat_0=0 +lon_0=6 +k=1.000000 +x_0=2500000 +y_0=0 +ellps=bessel +datum=potsdam +units=m +no_defs";
-	gk3_spec = "+proj=tmerc +lat_0=0 +lon_0=9 +k=1.000000 +x_0=3500000 +y_0=0 +ellps=bessel +datum=potsdam +units=m +no_defs";
-	utm32_spec = "+proj=utm +zone=32 +datum=WGS84";
-	
+	// nothing
 }
 
 
@@ -80,6 +76,16 @@ void GeoreferencingTest::testCRS()
 }
 
 
+void GeoreferencingTest::testCRSTemplates()
+{
+	auto epsg_template = CRSTemplateRegistry().find("EPSG");
+	QCOMPARE(epsg_template->parameters().size(), (std::size_t)1);
+	
+	georef.setProjectedCRS("EPSG", epsg_template->specificationTemplate().arg("5514"), { "5514" });
+	QVERIFY(georef.isValid());
+}
+
+
 void GeoreferencingTest::testProjection_data()
 {
 	QTest::addColumn<QString>("proj");
@@ -88,15 +94,20 @@ void GeoreferencingTest::testProjection_data()
 	QTest::addColumn<double>("latitude");
 	QTest::addColumn<double>("longitude");
 	
-	// Selected from http://www.lvermgeo.rlp.de/index.php?id=5809
 	// Record name                               CRS spec      Easting      Northing     Latitude (radian)           Longitude (radian)
+	// Selected from http://www.lvermgeo.rlp.de/index.php?id=5809
 	QTest::newRow("LVermGeo RLP Koblenz UTM") << utm32_spec <<  398125.0 << 5579523.0 << degFromDMS(50, 21, 32.2) << degFromDMS( 7, 34, 4.0);
 	QTest::newRow("LVermGeo RLP Koblenz GK3") << gk3_spec   << 3398159.0 << 5581315.0 << degFromDMS(50, 21, 32.2) << degFromDMS( 7, 34, 4.0);
 	QTest::newRow("LVermGeo RLP Pruem UTM")   << utm32_spec <<  316464.0 << 5565150.0 << degFromDMS(50, 12, 36.1) << degFromDMS( 6, 25, 39.6);
 	QTest::newRow("LVermGeo RLP Pruem GK2")   << gk2_spec   << 2530573.0 << 5563858.0 << degFromDMS(50, 12, 36.1) << degFromDMS( 6, 25, 39.6);
 	QTest::newRow("LVermGeo RLP Landau UTM")  << utm32_spec <<  436705.0 << 5450182.0 << degFromDMS(49, 12,  4.2) << degFromDMS( 8,  7, 52.0);
 	QTest::newRow("LVermGeo RLP Landau GK3")  << gk3_spec   << 3436755.0 << 5451923.0 << degFromDMS(49, 12,  4.2) << degFromDMS( 8,  7, 52.0);
+	
+	// Selected from http://geoportal.cuzk.cz/geoprohlizec/?lng=EN, source Bodová pole, layer Bod ZPBP určený v ETRS
+	// http://dataz.cuzk.cz/gu.php?1=25&2=08&3=024&4=a&stamp=7oexTQLNPE8ri5SXY04ARS7vIMnJu3N2
+	QTest::newRow("EPSG 5514 ČÚZK Dolní Temenice") << epsg5514_spec   << -563714.79 << -1076943.54 << degFromDMS(49, 58, 37.5577) << degFromDMS(16, 57, 35.5493);
 }
+
 
 void GeoreferencingTest::testProjection()
 {
@@ -122,6 +133,7 @@ void GeoreferencingTest::testProjection()
 	bool ok;
 	QPointF proj_coord = georef.toProjectedCoords(lat_lon, &ok);
 	QVERIFY(ok);
+	
 	if (fabs(proj_coord.x() - easting) > max_dist_error)
 		QCOMPARE(QString::number(proj_coord.x(), 'f'), QString::number(easting, 'f'));
 	if (fabs(proj_coord.y() - northing) > max_dist_error)
@@ -136,6 +148,7 @@ void GeoreferencingTest::testProjection()
 	if (fabs(lat_lon.longitude() - longitude) > (max_angl_error / cos(latitude)))
 		QCOMPARE(QString::number(lat_lon.longitude(), 'f'), QString::number(longitude, 'f'));
 }
+
 
 
 QTEST_GUILESS_MAIN(GeoreferencingTest)

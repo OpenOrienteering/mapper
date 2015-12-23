@@ -23,6 +23,7 @@
 
 #include "template.h"
 
+#include <QDialog>
 #include <QImage>
 
 QT_BEGIN_NAMESPACE
@@ -48,6 +49,11 @@ public:
 		Georeferencing_WorldFile,
 		Georeferencing_GeoTiff
 	};
+	
+	/**
+	 * Returns the filename extensions supported by this template class.
+	 */
+	static const std::vector<QByteArray>& supportedExtensions();
 	
 	TemplateImage(const QString& path, Map* map);
     virtual ~TemplateImage();
@@ -138,6 +144,8 @@ protected:
 /**
  * Initial setting dialog when opening a raster image as template,
  * asking for how to position the image.
+ * 
+ * \todo Move this class to separate files.
  */
 class TemplateImageOpenDialog : public QDialog
 {

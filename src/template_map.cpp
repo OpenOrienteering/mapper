@@ -30,6 +30,12 @@
 
 QStringList TemplateMap::locked_maps;
 
+const std::vector<QByteArray>& TemplateMap::supportedExtensions()
+{
+	static std::vector<QByteArray> extensions = { "ocd", "omap", "xmap" };
+	return extensions;
+}
+
 TemplateMap::TemplateMap(const QString& path, Map* map) : Template(path, map), template_map(NULL)
 {
 }

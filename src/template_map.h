@@ -30,6 +30,11 @@ class TemplateMap : public Template
 {
 Q_OBJECT
 public:
+	/**
+	 * Returns the filename extensions supported by this template class.
+	 */
+	static const std::vector<QByteArray>& supportedExtensions();
+	
 	TemplateMap(const QString& path, Map* map);
     virtual ~TemplateMap();
 	virtual QString getTemplateType() const {return "TemplateMap";}

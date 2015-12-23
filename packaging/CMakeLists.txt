@@ -46,7 +46,7 @@ macro(deploy_qt_translations basename)
 		endforeach()
 		list(APPEND install_translations_code
 		  "execute_process(COMMAND \"${LCONVERT_EXECUTABLE}\" -o \"${CMAKE_CURRENT_BINARY_DIR}/${basename_file}\" ${input_files})"
-		  "file(INSTALL DESTINATION \"\${CMAKE_INSTALL_PREFIX}/translations\" TYPE FILE FILES \"${CMAKE_CURRENT_BINARY_DIR}/${basename_file}\")"
+		  "file(INSTALL DESTINATION \"\${CMAKE_INSTALL_PREFIX}/${MAPPER_DATA_DESTINATION}/translations\" TYPE FILE FILES \"${CMAKE_CURRENT_BINARY_DIR}/${basename_file}\")"
 		)
 	endforeach()
 	string(REPLACE ";" "\n  " install_translations_code "${install_translations_code}")

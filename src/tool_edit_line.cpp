@@ -512,6 +512,12 @@ void EditLineTool::updateHoverState(MapCoordF cursor_pos)
 						best_distance_sq = distance_sq;
 						hover_path_coord = path_coord;
 						handle_offset    = hover_path_coord.pos - cursor_pos;
+						
+						const auto part = path->findPartForIndex(new_hover_line);
+						if (new_hover_line == part->last_index)
+						{
+							new_hover_line = part->prevCoordIndex(new_hover_line);
+						}
 					}
 				}
 			}

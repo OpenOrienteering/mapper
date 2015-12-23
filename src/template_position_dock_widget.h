@@ -29,7 +29,7 @@ QT_END_NAMESPACE
 
 class MapEditorController;
 class Template;
-class TemplateWidget;
+class TemplateListWidget;
 
 /** Dock widget allowing to enter template positioning properties numerically. */
 class TemplatePositionDockWidget : public QDockWidget

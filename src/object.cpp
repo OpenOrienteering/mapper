@@ -503,6 +503,14 @@ Object* Object::load(QXmlStreamReader& xml, Map* map, const SymbolDictionary& sy
 	}
 	object->output_dirty = true;
 	
+	if (map &&
+	    ( object->coords.empty()
+	      || !object->coords.front().isRegular()
+	      || !object->coords.back().isRegular() ) )
+	{
+		map->markAsIrregular(object);
+	}
+	
 	return object;
 }
 
@@ -1029,6 +1037,40 @@ Object& PathObject::operator=(const Object& other)
 		path_parts.emplace_back(*this, part);
 	}
 	return *this;
+}
+
+void PathObject::normalize()
+{
+	for (MapCoordVector::size_type i = 0; i < coords.size(); ++i)
+	{
+		if (coords[i].isCurveStart())
+		{
+			if (i+3 >= getCoordinateCount())
+			{
+				coords[i].setCurveStart(false);
+				continue;
+			}
+			
+			if (coords[i + 1].isClosePoint() || coords[i + 1].isHolePoint() ||
+			    coords[i + 2].isClosePoint() || coords[i + 2].isHolePoint())
+			{
+				coords[i].setCurveStart(false);
+				continue;
+			}
+			
+			coords[i + 1].setCurveStart(false);
+			coords[i + 1].setDashPoint(false);
+			coords[i + 2].setCurveStart(false);
+			coords[i + 2].setDashPoint(false);
+			i += 2;
+		}
+		
+		if (i > 0 && coords[i].isHolePoint())
+		{
+			if (coords[i-1].isHolePoint())
+				deleteCoordinate(i, false);
+		}
+	}
 }
 
 bool PathObject::intersectsBox(QRectF box) const

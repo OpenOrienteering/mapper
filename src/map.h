@@ -917,6 +917,28 @@ public:
 	void insertRenderablesOfObject(const Object* object);
 	
 	
+	/**
+	 * Marks an object as irregular.
+	 */
+	void markAsIrregular(Object* object);
+	
+	/**
+	 * Returns the list of objects marked as irregular.
+	 */
+	const std::set<Object*> irregularObjects() const;
+	
+	/**
+	 * Deletes the irregular objects.
+	 * 
+	 * This function deletes the objects which were previously marked as irregular.
+	 * Only objects which are actually member of map parts are deleted. Objects in
+	 * undo steps or similar are ignored.
+	 * 
+	 * \return The number of deleted objects.
+	 */
+	std::size_t deleteIrregularObjects();
+	
+	
 	// Object selection
 	
 	const ObjectSelection& selectedObjects() const;
@@ -1418,6 +1440,8 @@ private:
 	bool objects_dirty;				//    ... for the objects?
 	bool other_dirty;				//    ... for any other settings?
 	bool unsaved_changes;			// are there unsaved changes for any component?
+	
+	std::set<Object*> irregular_objects;
 	
 	// Static
 	

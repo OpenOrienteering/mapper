@@ -277,6 +277,12 @@ public:
 	
 	
 	/**
+	 * Returns true iff the coordinates are within "regular" bounds.
+	 */
+	bool isRegular() const;
+	
+	
+	/**
 	 * Returns the length of this coord, seen as a vector from the origin
 	 * to the given coordinate, in millimeters on the map.
 	 */
@@ -742,6 +748,7 @@ void MapCoord::setFlags(int flags)
 {
 	fp = Flags(flags);
 }
+
 
 inline
 qreal MapCoord::length() const

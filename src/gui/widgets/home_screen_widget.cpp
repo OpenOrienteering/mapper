@@ -32,6 +32,7 @@
 #include <QListWidget>
 #include <QPainter>
 #include <QProcessEnvironment>
+#include <QScroller>
 #include <QStackedLayout>
 
 #include "../home_screen_controller.h"
@@ -440,6 +441,7 @@ QWidget* HomeScreenWidgetMobile::makeFileListWidget(HomeScreenController* contro
 	file_list_layout->setRowStretch(1, 1);
 	
 	file_list = new QListWidget();
+	QScroller::grabGesture(file_list->viewport(), QScroller::TouchGesture);
 	QFont list_font = file_list->font();
 	int pixel_size = list_font.pixelSize();
 	if (pixel_size > 0)

@@ -127,8 +127,8 @@ namespace
 {
 
 // Acceptable coord bounds on import, derived from printing UI bounds
-constexpr qint64 min_coord = -500000000;
-constexpr qint64 max_coord = +500000000;
+constexpr qint64 min_coord = -50000000;
+constexpr qint64 max_coord = +50000000;
 
 MapCoord::BoundsOffset bounds_offset;
 
@@ -183,6 +183,13 @@ MapCoord::BoundsOffset& MapCoord::boundsOffset()
 	return bounds_offset;
 }
 
+bool MapCoord::isRegular() const
+{
+	return (xp > 2 * min_coord
+	        && xp < 2 * max_coord
+	        && yp > 2 * min_coord
+	        && yp < 2 * max_coord );
+}
 
 MapCoord MapCoord::fromNative64(qint64 x64, qint64 y64)
 {

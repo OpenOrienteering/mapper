@@ -224,7 +224,19 @@ void EditPointTool::clickPress()
 				{
 					// Not enough remaining points -> delete the part and maybe object
 					if (hover_object->parts().size() == 1)
-						deleteSelectedObjects();
+					{
+						map()->removeObjectFromSelection(hover_object, false);
+						auto undo_step = new AddObjectsUndoStep(map());
+						auto part = map()->getCurrentPart();
+						int index = part->findObjectIndex(hover_object);
+						Q_ASSERT(index >= 0);
+						undo_step->addObject(index, hover_object);
+						map()->deleteObject(hover_object, true);
+						map()->push(undo_step);
+						map()->setObjectsDirty();
+						map()->emitSelectionEdited();
+						updateHoverState(cur_pos_map);
+					}
 					else
 					{
 						createReplaceUndoStep(hover_object);

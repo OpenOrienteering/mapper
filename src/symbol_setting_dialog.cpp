@@ -33,6 +33,7 @@
 #include <QToolButton>
 #include <QVBoxLayout>
 
+#include "gui/widgets/template_list_widget.h"
 #include "map.h"
 #include "object.h"
 #include "object_text.h"
@@ -46,7 +47,6 @@
 #include "map_widget.h"
 #include "template.h"
 #include "template_image.h"
-#include "template_dock_widget.h"
 #include "symbol_point_editor.h"
 #include "symbol_combined.h"
 #include "symbol_properties_widget.h"
@@ -192,27 +192,28 @@ void SymbolSettingDialog::updatePreview()
 
 void SymbolSettingDialog::loadTemplateClicked()
 {
-	Template* temp = TemplateWidget::showOpenTemplateDialog(this, preview_controller);
-	if (!temp)
-		return;
-	
-	if (preview_map->getNumTemplates() > 0)
+	auto new_template = TemplateListWidget::showOpenTemplateDialog(this, preview_controller);
+	if (new_template)
 	{
-		// Delete old template
+		if (preview_map->getNumTemplates() > 0)
+		{
+			// Delete old template
+			preview_map->setTemplateAreaDirty(0);
+			preview_map->deleteTemplate(0);
+		}
+		
+		preview_map->setFirstFrontTemplate(1);
+		
+		auto temp = new_template.release(); // avoid double release after addTemplate
+		preview_map->addTemplate(temp, 0);
+		TemplateVisibility* vis = preview_map_view->getTemplateVisibility(temp);
+		vis->visible = true;
+		vis->opacity = 1;
 		preview_map->setTemplateAreaDirty(0);
-		preview_map->deleteTemplate(0);
+		
+		template_file_label->setText(temp->getTemplateFilename());
+		center_template_button->setEnabled(temp->getTemplateType().compare("TemplateImage") == 0);
 	}
-	
-	preview_map->setFirstFrontTemplate(1);
-	
-	preview_map->addTemplate(temp, 0);
-	TemplateVisibility* vis = preview_map_view->getTemplateVisibility(temp);
-	vis->visible = true;
-	vis->opacity = 1;
-	preview_map->setTemplateAreaDirty(0);
-	
-	template_file_label->setText(temp->getTemplateFilename());
-	center_template_button->setEnabled(temp->getTemplateType().compare("TemplateImage") == 0);
 }
 
 void SymbolSettingDialog::centerTemplateBBox()

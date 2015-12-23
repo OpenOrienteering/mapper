@@ -114,6 +114,16 @@ namespace
 		*pj_get_errno_ref() = 0;
 		return pj_init_plus(spec_latin1);
 	}
+	
+	
+	/**
+	 * List of substitutions for specifications which are known to be broken in Proj.4.
+	 */
+	std::vector< std::pair<QString, QString> > spec_substitutions {
+		// #542, S-JTSK (Greenwich) / Krovak East North
+		{ "+init=epsg:5514", "+proj=krovak +lat_0=49.5 +lon_0=24.83333333333333 +alpha=30.28813972222222 +k=0.9999 +x_0=0 +y_0=0 "
+		                     "+ellps=bessel +towgs84=542.5,89.2,456.9,5.517,2.275,5.516,6.96 +pm=greenwich +units=m +no_defs" },
+	};
 }
 
 
@@ -577,10 +587,19 @@ void Georeferencing::setTransformationDirectly(const QTransform& transform)
 	}
 }
 
-bool Georeferencing::setProjectedCRS(const QString& id, const QString& spec, std::vector< QString > params)
+bool Georeferencing::setProjectedCRS(const QString& id, QString spec, std::vector< QString > params)
 {
 	// Default return value if no change is neccessary
 	bool ok = (state == Normal || projected_crs_spec.isEmpty());
+	
+	for (const auto& substitution : spec_substitutions)
+	{
+		if (substitution.first == spec)
+		{
+			spec = substitution.second;
+			break;
+		}
+	}
 	
 	// Changes in params shall already be recorded in spec
 	if (projected_crs_id != id

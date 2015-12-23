@@ -1009,6 +1009,41 @@ void Map::insertRenderablesOfObject(const Object* object)
 		addSelectionRenderables(object);
 }
 
+
+void Map::markAsIrregular(Object* object)
+{
+	irregular_objects.insert(object);
+}
+
+const std::set<Object*> Map::irregularObjects() const
+{
+	return irregular_objects;
+}
+
+std::size_t Map::deleteIrregularObjects()
+{
+	std::size_t result = 0;
+	std::set<Object*> unhandled;
+	for (auto object : irregular_objects)
+	{
+		for (auto part : parts)
+		{
+			if (part->deleteObject(object, false))
+			{
+				++result;
+				goto next_object;
+			}
+		}
+		unhandled.insert(object);
+next_object:
+		; // nothing else
+	}
+	
+	irregular_objects.swap(unhandled);
+	return result;
+}
+
+
 void Map::getSelectionToSymbolCompatibility(const Symbol* symbol, bool& out_compatible, bool& out_different) const
 {
 	out_compatible = symbol && !object_selection.empty();

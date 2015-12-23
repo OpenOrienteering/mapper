@@ -16,68 +16,174 @@
 #    You should have received a copy of the GNU General Public License
 #    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
 
-execute_process(COMMAND "date" "+%Y-%m-%d %H:%M:%S"
-  OUTPUT_VARIABLE date
-  OUTPUT_STRIP_TRAILING_WHITESPACE
-)
+cmake_policy(SET CMP0007 NEW)
 
-if(NOT EXISTS "docs")
-	file(MAKE_DIRECTORY "docs")
+# Splits the frontmatter from the body of the input, and stores these parts
+# in the variables with the names given in the frontmatter and body parameters.
+function(split_frontmatter frontmatter body input)
+	string(REGEX MATCH "\r?\n----*\r?\n.*$" _body "${input}")
+	string(REPLACE "${_body}" "" _frontmatter "${input}")
+	string(REGEX REPLACE "^----*(\r?\n)(.*)" "\\1\\2" _frontmatter "${_frontmatter}")
+	string(REGEX REPLACE "^\r?\n----*\r?\n" "" _body "${_body}")
+	set(${frontmatter} "${_frontmatter}" PARENT_SCOPE)
+	set(${body} "${_body}" PARENT_SCOPE)
+endfunction()
+
+# Gets the value of the given field from the YAML input, and stores it
+# in the variable named by result.
+function(get_yaml_field result input field)
+	string(REGEX MATCH "(^|\r?\n)${field} *:.*" match "${input}")
+	if(match)
+		string(REGEX REPLACE "\r?\n?${field} *: *" "" value "${match}")
+		if(value MATCHES "^\r?\n")
+			# list
+			string(REGEX REPLACE "\r?\n(---|[^\n\r]*:).*" "" value "${value}")
+			string(REGEX REPLACE "\r?\n *- *([^\n\r]*)" "\\1;" value "${value}")
+			list(REMOVE_ITEM value "")
+		else()
+			# single value
+			string(REGEX REPLACE "\r?\n.*" "" value "${value}")
+		endif()
+		set(${result} ${value} PARENT_SCOPE)
+	else()
+		set(${result} "${field}-NOTFOUND" PARENT_SCOPE)
+	endif()
+endfunction()
+
+
+
+if(NOT EXISTS "pages-tmp")
+	file(MAKE_DIRECTORY "pages-tmp")
 endif()
 
 if(NOT EXISTS "preprocess-markdown.stamp")
 	file(WRITE "preprocess-markdown.stamp")
 endif()
 
-file(GLOB input_files RELATIVE "@CMAKE_CURRENT_SOURCE_DIR@/docs" "@CMAKE_CURRENT_SOURCE_DIR@/docs/*.md")
+set(all_pages )
+
+file(GLOB input_files RELATIVE "@CMAKE_CURRENT_SOURCE_DIR@/pages" "@CMAKE_CURRENT_SOURCE_DIR@/pages/*.md")
 foreach(file ${input_files})
-	file(READ "@CMAKE_CURRENT_SOURCE_DIR@/docs/${file}" output)
-	if(NOT output MATCHES "^[^\n\r]*\r?\n==")
-		string(REGEX REPLACE "[.]md$" ""  pagename        "${file}")
-		string(REPLACE       "_"     " " pagename_spaces "${pagename}")
-		string(REGEX REPLACE "[-_ ]" "_" pagename_safe   "${pagename}")
-		set(output "${pagename_spaces} {#${pagename_safe}}\n======\n\n${output}")
-		string(REGEX REPLACE "^[^{]*({#.*}.*)<title *>(OpenOrienteering Mapper Help - )?(.*)</title>" "\\3  \\1" output "${output}")
-		string(REGEX REPLACE " *{#.*$" "" title "${output}")
-		string(REGEX REPLACE "^(${title} *{#.*}.*)<h3>${title} *</h3>" "\\1" output "${output}")
-	elseif(NOT output MATCHES "^[^\n\r{]*{#[^\n\r]*\r?\n")
-		string(REGEX REPLACE "[.]md$" ""  pagename        "${file}")
-		string(REGEX REPLACE "[_ ]" "_" pagename_safe   "${pagename}")
-		string(REGEX REPLACE "^(.[^\n\r]*)(.*)" "\\1 {#${pagename_safe}}\\2" output "${output}")
+	set(file_remarks )
+
+	string(REGEX REPLACE "[.]md$" "" pagename "${file}")
+	string(REPLACE " " "_" pagename_safe   "${pagename}")
+	if(NOT "${pagename}" STREQUAL "${pagename_safe}")
+		list(APPEND file_remarks "unsafe filename")
 	endif()
-	string(REGEX REPLACE "</?(!DOCTYPE|html|head|title|link|meta|body)[^>]*>" "" output "${output}")
+
+	file(READ "@CMAKE_CURRENT_SOURCE_DIR@/pages/${file}" input)
+
+	# YAML frontmatter
+	split_frontmatter(frontmatter output "${input}")
+	if(NOT frontmatter)
+		message(FATAL_ERROR "${file}:1: Missing frontmatter")
+	endif()
+
+	get_yaml_field(title "${frontmatter}" "title")
+	if(NOT title)
+		message(FATAL_ERROR "${file}:1: No title in frontmatter")
+	endif()
+	set(output "${title} {#${pagename_safe}}\n===\n\n${output}")
+
+	get_yaml_field(subpages ${frontmatter} "subpages")
+	if(subpages)
+		string(REPLACE ".md" "" subpages "${subpages}")
+		list(INSERT subpages 0 "## More Information\n")
+		string(REGEX REPLACE ";" "\n - \\\\subpage " subpages "${subpages}")
+		set(output "${output}\n\n${subpages}")
+	endif()
+
+	get_yaml_field(keywords ${frontmatter} "keywords")
+	if(keywords)
+		string(REGEX REPLACE ";" "\n\\\\addindex " keywords "${keywords}")
+		# Not working as expected:
+		#set(output "${output}\n\n\\addindex ${keywords}")
+	endif()
+
+	get_yaml_field(edited ${frontmatter} "edited")
+	if(edited)
+		set(output "${output}\n\n---\nUpdate on ${edited}")
+	else()
+		list(APPEND file_remarks "missing field 'edited'")
+	endif()
+
+	get_yaml_field(online ${frontmatter} "online")
+	if(online)
+		string(REPLACE "{{ page.online }}" "${online}" output "${output}")
+	endif()
+
+	# HTML markup
+	string(REGEX MATCH "</?(!DOCTYPE|html|head|title|link|meta|body)[^>]*>" unsupported_element "${output}")
+	if(unsupported_element)
+		message(FATAL_ERROR "${file}:1: Unsupported HTML element ${unsupported_element}")
+	endif()
 	string(REGEX REPLACE "<hr */?>\r?\n?" "\n---\n" output "${output}")
-	string(REGEX REPLACE "src=\"../../images/" "src=\"" output "${output}")
 	string(REGEX REPLACE "\n?<img [^>]*src=\"([^\"]*)\"[^>]*>[\n ]?" "\n![](\\1)\n" output "${output}")
+	
+	# SF Markdown
 	string(REGEX REPLACE "\\[\\[img +(src=)?([^] ]+) *]]" "![](\\2)" output "${output}")
 	string(REGEX REPLACE "\\[\\[img +(src=)?([^] ]+) +alt=\"([^\"]+)\" *]]" "![\\3](\\2)" output "${output}")
 	string(REGEX REPLACE "\\[\\[img +(src=)?([^] ]+) +alt=([^]]*) *]]" "![\\3](\\2)" output "${output}")
+	
+	# Resource paths
+	string(REGEX REPLACE "(!\\[[^]]*\\]\\()../mapper-images/" "\\1" output "${output}")
 	string(REGEX REPLACE "href=\"attachment/" "href=\"" output "${output}")
+	
+	# Headlines: workaround doxygen strict hierarchy requirements
+	string(REGEX REPLACE "(\r?\n)#(#+ +[^\r\n{]*{#[^\r\n]*})" "\\1\\2" output "${output}")
+	
+	# toolbar.md headline entries with icon - doxygen doesn't support inline images
+	string(REGEX REPLACE "(\r?\n)###+ +(( *!\\[([^]]*)\\]\\(([^)]*)\\))*) *" "\\1<h4-icon-table><tr bgcolor=\"#eeeeee\"><td>\\2</td><td width=\"100%\" valign=\"middle\"><b>" output "${output}")
+	while(output MATCHES "(<h4-icon-table>[^\r\n]*!\\[[^]]*\\]\\([^)]*\\)) *(!\\[[^]]*\\]\\([^)]*\\))")
+		string(REGEX REPLACE "(<h4-icon-table>[^\r\n]*!\\[[^]]*\\]\\([^)]*\\)) *(!\\[[^]]*\\]\\([^)]*\\))" "\\1</td><td>\\2" output "${output}")
+	endwhile()
+	string(REGEX REPLACE "(<h4-icon-table>[^\r\n]*<b>[^\r\n{]*){#([^\r\n]*)}" "<a name=\"\\2\" >\n\\1" output "${output}")
+	string(REGEX REPLACE "<h4-icon-table>([^\r\n]*)" "<table cellspacing=\"0\" cellpadding=\"2\">\\1</b></td></tr></table>" output "${output}")
+	
+	# Liquid/Kramdown/Markdown markup
+	string(REGEX REPLACE "\r?\n *[-*]  *[^\r\n]*\r?\n{:toc}" "\\\\tableofcontents" output "${output}")
+	string(REGEX REPLACE "\\[([^]]*)\\]\\(([^\)]*).md\\){: \\.subpage}" "\\\\subpage \\2 \"\\1\"" output "${output}")
+	string(REGEX REPLACE "(\\[[^]]*\\]\\([^\)]*)\\.md(\\)|#)" "\\1.html\\2" output "${output}")
+	string(REGEX REPLACE "(href=\"[^\"]*)\\.md(\"|#)" "\\1.html\\2" output "${output}")
+	string(REGEX REPLACE "(\r?\n *\\[[^]]*\\]: *[^ ]*).md(\r?\n| |#)" "\\1.html\\2" output "${output}")
+	string(REGEX REPLACE "{% [^%]* %}|{:[^}]*}" "" output "${output}")
+	
+	if (APPLE)
+		string(REGEX REPLACE "Alt[+]"   "⌥" output "${output}")
+		string(REGEX REPLACE "Ctrl[+]"  "⌘" output "${output}")
+		string(REGEX REPLACE "Shift[+]" "⇧" output "${output}")
+		string(REGEX REPLACE "⌘⇧" "⇧⌘" output "${output}")
+	endif()
+	
 	string(MD5 output_md5 "${output}")
 	set(file_md5)
-	if(EXISTS "docs/${file}")
-		file(MD5 "docs/${file}" file_md5)
+	if(EXISTS "pages-tmp/${file}")
+		file(MD5 "pages-tmp/${file}" file_md5)
 	endif()
 	if(NOT "${output_md5}" STREQUAL "${file_md5}")
 		message(STATUS "Updating ${file}")
-		file(WRITE "docs/${file}" "${output}")
+		file(WRITE "pages-tmp/${file}" "${output}")
 		if(EXISTS "preprocess-markdown.stamp")
 			file(READ "preprocess-markdown.stamp" markdown_log)
 			string(REGEX REPLACE "([.+[\(\)^$*?|]|])" "\\\\\\1" file_esc "${file}")
-			string(REGEX REPLACE "(^|\n)[^\n]*: ${file_esc}\r?\n" "\\1" markdown_log "${markdown_log}")
+			string(REGEX REPLACE "(^|\n)[^\n]*: ${file_esc}( \\([^)]*\\))?\r?\n" "\\1" markdown_log "${markdown_log}")
 		else()
 			set(markdown_log "")
 		endif()
-		file(WRITE  "preprocess-markdown.stamp" "${markdown_log}")
-		file(APPEND "preprocess-markdown.stamp" "${date}: ${file}\n")
+		string(TIMESTAMP date "%Y-%m-%d %H:%M:%S")
+		if (file_remarks)
+			set(file_remarks " (${file_remarks})")
+		endif()
+		file(WRITE "preprocess-markdown.stamp" "${markdown_log}" "${date}: ${file}${file_remarks}\n")
 	endif()
 endforeach()
 
-file(GLOB output_files RELATIVE "@CMAKE_CURRENT_BINARY_DIR@/docs" "@CMAKE_CURRENT_BINARY_DIR@/docs/*.md")
+file(GLOB output_files RELATIVE "@CMAKE_CURRENT_BINARY_DIR@/pages-tmp" "@CMAKE_CURRENT_BINARY_DIR@/pages-tmp/*.md")
 foreach(file ${output_files})
-	if(NOT EXISTS "@CMAKE_CURRENT_SOURCE_DIR@/docs/${file}")
+	if(NOT EXISTS "@CMAKE_CURRENT_SOURCE_DIR@/pages/${file}")
 		message(STATUS "Removing ${file}")
-		file(REMOVE "docs/${file}")
+		file(REMOVE "pages-tmp/${file}")
 		if(EXISTS "preprocess-markdown.stamp")
 			file(READ "preprocess-markdown.stamp" markdown_log)
 			string(REGEX REPLACE "([.+[\(\)^$*?|]|])" "\\\\\\1" file_esc "${file}")

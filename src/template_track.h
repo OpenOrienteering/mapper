@@ -22,6 +22,9 @@
 #define _OPENORIENTEERING_TEMPLATE_TRACK_H_
 
 #include "template.h"
+
+#include <QDialog>
+
 #include "gps_track.h"
 
 QT_BEGIN_NAMESPACE
@@ -39,6 +42,11 @@ class TemplateTrack : public Template
 {
 Q_OBJECT
 public:
+	/**
+	 * Returns the filename extensions supported by this template class.
+	 */
+	static const std::vector<QByteArray>& supportedExtensions();
+	
 	TemplateTrack(const QString& path, Map* map);
     virtual ~TemplateTrack();
 	virtual QString getTemplateType() const {return "TemplateTrack";}
