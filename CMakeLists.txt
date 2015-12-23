@@ -32,10 +32,10 @@ set(Mapper_COPYRIGHT "(C) 2012-2015 OpenOrienteering developers")
 # All version components must be integers.
 # We use Mapper_VERSION_PATCH >= 99 to mark development builds.
 set(Mapper_VERSION_MAJOR 0)
-set(Mapper_VERSION_MINOR 5)
+set(Mapper_VERSION_MINOR 6)
 if(NOT Mapper_VERSION_PATCH)
 	# This can be configured when running cmake
-	set(Mapper_VERSION_PATCH 97)
+	set(Mapper_VERSION_PATCH 0)
 endif()
 
 set(MAPPER_VERSION_PRI "${PROJECT_SOURCE_DIR}/oo-mapper-version.pri")
