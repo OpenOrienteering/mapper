@@ -82,8 +82,6 @@ void GeoreferencingTest::testCRSTemplates()
 	QCOMPARE(epsg_template->parameters().size(), (std::size_t)1);
 	
 	georef.setProjectedCRS("EPSG", epsg_template->specificationTemplate().arg("5514"), { "5514" });
-	if (PJ_VERSION < 490)
-		QEXPECT_FAIL("", "EPSG 5514 is undefined in specifications supplied by proj < 4.9.0", Continue);
 	QVERIFY(georef.isValid());
 }
 
@@ -122,8 +120,6 @@ void GeoreferencingTest::testProjection()
 #endif
 	
 	QFETCH(QString, proj);
-	if (PJ_VERSION < 490)
-		QEXPECT_FAIL("EPSG 5514 ČÚZK Dolní Temenice", "EPSG 5514 is undefined in specifications supplied by proj < 4.9.0", Abort);
 	QVERIFY2(georef.setProjectedCRS(proj, proj), proj.toLatin1());
 	QCOMPARE(georef.getErrorText(), QString(""));
 	
@@ -138,7 +134,6 @@ void GeoreferencingTest::testProjection()
 	QPointF proj_coord = georef.toProjectedCoords(lat_lon, &ok);
 	QVERIFY(ok);
 	
-	QEXPECT_FAIL("EPSG 5514 ČÚZK Dolní Temenice", "EPSG 5514 is broken in proj-supplied specifications", Abort);
 	if (fabs(proj_coord.x() - easting) > max_dist_error)
 		QCOMPARE(QString::number(proj_coord.x(), 'f'), QString::number(easting, 'f'));
 	if (fabs(proj_coord.y() - northing) > max_dist_error)
