@@ -19,6 +19,7 @@ For building Mapper from source see [`INSTALL.md`](https://github.com/OpenOrient
  - [API documentation](http://openorienteering.github.io/api-docs/mapper/)
  - [Unstable Builds](http://openorienteering.github.io/news/2015/mapper-unstable-packages/)
  - [Developer mailing list](https://lists.sourceforge.net/lists/listinfo/oorienteering-devel)
+ - [Developer wiki](https://github.com/OpenOrienteering/mapper/wiki)
 
 
 ### Translating
