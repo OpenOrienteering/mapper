@@ -2262,12 +2262,12 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="142"/>
         <source>Create a new map ...</source>
-        <translation>Skapa ny karta.…</translation>
+        <translation>Skapa ny karta…</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="145"/>
         <source>Open map ...</source>
-        <translation>Öppna karta ...</translation>
+        <translation>Öppna karta…</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="151"/>
