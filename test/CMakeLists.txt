@@ -95,7 +95,14 @@ include_directories("${CMAKE_CURRENT_BINARY_DIR}")
 
 # Unit tests
 add_unit_test(autosave_t ../src/core/autosave ../src/settings ../src/util ../src/mapper_resource)
-add_unit_test(georeferencing_t ../src/core/georeferencing ../src/core/latlon ../src/core/crs_template ../src/mapper_resource ../src/file_format)
+add_unit_test(georeferencing_t ../src/core/georeferencing
+	../src/core/latlon
+	../src/core/crs_template
+	../src/core/crs_template_implementation
+	../src/gui/widgets/crs_param_widgets
+	../src/mapper_resource
+	../src/file_format
+)
 add_unit_test(map_color_t ../src/core/map_color)
 add_unit_test(qpainter_t)
 

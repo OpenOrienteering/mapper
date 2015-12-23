@@ -1,5 +1,5 @@
 /*
- *    Copyright 2012, 2013, 2014 Kai Pastor
+ *    Copyright 2012-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -51,6 +51,11 @@ private slots:
 	void testCRS_data();
 	
 	/**
+	 * Tests CRS templates.
+	 */
+	void testCRSTemplates();
+	
+	/**
 	 * Tests whether Georeferencing can convert geographic coordinates to
 	 * projected coordinates and vice versa for a collection of known points.
 	 */
@@ -59,16 +64,7 @@ private slots:
 	void testProjection_data();
 	
 private:
-	/**
-	 * Returns the radian value of a value given in degree or degree/minutes/seconds.
-	 */
-	double degFromDMS(double d, double m=0.0, double s=0.0);
-	
 	Georeferencing georef;
-	
-	QString utm32_spec;
-	QString gk2_spec;
-	QString gk3_spec;
 };
 
 #endif
