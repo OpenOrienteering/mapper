@@ -213,13 +213,13 @@
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="43"/>
         <source>Autosaved file</source>
-        <translation type="unfinished">Автоматично збережені файли</translation>
+        <translation>Автоматично збережені файли</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/gui/autosave_dialog.cpp" line="45"/>
         <location filename="../src/gui/autosave_dialog.cpp" line="51"/>
         <source>%n bytes</source>
-        <translation type="unfinished">
+        <translation>
             <numerusform>%n байт</numerusform>
             <numerusform>%n байти</numerusform>
             <numerusform>%n байт</numerusform>
@@ -228,22 +228,22 @@
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="49"/>
         <source>File saved by the user</source>
-        <translation type="unfinished">Файл збережений користувачем</translation>
+        <translation>Файл збережений користувачем</translation>
     </message>
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="56"/>
         <source>File recovery</source>
-        <translation type="unfinished">Відновлення файлу</translation>
+        <translation>Відновлення файлу</translation>
     </message>
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="58"/>
         <source>File %1 was not properly closed. At the moment, there are two versions:</source>
-        <translation type="unfinished">Файл %1 не був збережений перед закриттям. Наразі існує дві версії цього файла:</translation>
+        <translation>Файл %1 не був збережений перед закриттям. Наразі існує дві версії цього файла:</translation>
     </message>
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="72"/>
         <source>Save the active file to remove the conflicting version.</source>
-        <translation type="unfinished">Збережіть поточну версію файла і позбудьтеся конфлікту версій.</translation>
+        <translation>Збережіть активну версію файла щоб позбутися конфлікту версій.</translation>
     </message>
 </context>
 <context>
@@ -465,7 +465,7 @@
     <message>
         <location filename="../src/color_dock_widget.cpp" line="384"/>
         <source>Click to select the name and click again to edit.</source>
-        <translation type="unfinished">Клікніть щоб вибоати колір і клікніть ще раз щоб редагувати його.</translation>
+        <translation type="unfinished">Клацніть щоб вибрати колір і клацніть ще раз щоб редагувати його.</translation>
     </message>
 </context>
 <context>
@@ -667,7 +667,7 @@
     <message>
         <location filename="../src/tool_cut_hole.cpp" line="241"/>
         <source>&lt;b&gt;Click or drag&lt;/b&gt;: Start drawing the hole. </source>
-        <translation type="unfinished">&lt;b&gt;Клікніть або потягніть&lt;/b&gt; щоб почати малювати отвір.</translation>
+        <translation>&lt;b&gt;Клацніть або потягніть&lt;/b&gt; щоб почати малювати отвір.</translation>
     </message>
 </context>
 <context>
@@ -698,7 +698,7 @@
     <message>
         <location filename="../src/tool_cut.cpp" line="675"/>
         <source>&lt;b&gt;Click&lt;/b&gt; on a line: Split it into two. &lt;b&gt;Drag&lt;/b&gt; along a line: Remove this line part. &lt;b&gt;Click or Drag&lt;/b&gt; at an area boundary: Start a split line. </source>
-        <translation>&lt;b&gt;Клікніть&lt;/b&gt; на лінії щоб розділити її на дві частини. &lt;b&gt;Потягніть&lt;/b&gt; вздовж лінії щоб вирізати її ділянку. &lt;b&gt;Клікніть або потягніть&lt;/b&gt; від межі площі щоб розділии її.</translation>
+        <translation>&lt;b&gt;Click&lt;/b&gt; на лінії щоб розділити її на дві частини. &lt;b&gt;Потягніть&lt;/b&gt; вздовж лінії щоб вирізати її ділянку. &lt;b&gt;Клацніть або потягніть&lt;/b&gt; від межі площі щоб розділии її.</translation>
     </message>
     <message>
         <location filename="../src/tool_cut.cpp" line="683"/>
@@ -717,7 +717,7 @@
         <location filename="../src/tool_cutout.cpp" line="135"/>
         <location filename="../src/tool_cutout.cpp" line="139"/>
         <source>&lt;b&gt;%1+Click or drag&lt;/b&gt;: Select the objects to be clipped. </source>
-        <translation type="unfinished">&lt;b&gt;%1+Клік або потягнути&lt;/b&gt;: Вибрати всі об&apos;єкти, що будуть відсічені.</translation>
+        <translation type="unfinished">&lt;b&gt;%1+Click або потягнути&lt;/b&gt;: Вибрати всі об&apos;єкти, що будуть відсічені.</translation>
     </message>
     <message>
         <location filename="../src/tool_cutout.cpp" line="140"/>
@@ -730,12 +730,12 @@
     <message>
         <location filename="../src/dxfparser.cpp" line="36"/>
         <source>Could not open the file.</source>
-        <translation type="unfinished">Неможливо відкрити файл.</translation>
+        <translation>Неможливо відкрити файл.</translation>
     </message>
     <message>
         <location filename="../src/dxfparser.cpp" line="52"/>
         <source>The file is not an DXF file.</source>
-        <translation type="unfinished">Цей фал не є DXF файлом.</translation>
+        <translation>Цей фал не є DXF файлом.</translation>
     </message>
 </context>
 <context>
@@ -816,32 +816,32 @@
         <location filename="../src/tool_draw_circle.cpp" line="59"/>
         <source>From center</source>
         <comment>Draw circle starting from center</comment>
-        <translation type="unfinished">Від центру</translation>
+        <translation>Від центру</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_circle.cpp" line="294"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Start a circle or ellipse. </source>
-        <translation type="unfinished">&lt;b&gt;Клікніть&lt;/b&gt; щоб почати креслити коло або еліпс.</translation>
+        <translation>&lt;b&gt;Click&lt;/b&gt;: Почати креслити коло або еліпс. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_circle.cpp" line="295"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Draw a circle. </source>
-        <translation type="unfinished">&lt;b&gt;Потягніть&lt;/b&gt; щоб накреслити коло.</translation>
+        <translation>&lt;b&gt;Потягніть&lt;/b&gt; щоб накреслити коло. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_circle.cpp" line="297"/>
         <source>Hold %1 to start drawing from the center.</source>
-        <translation type="unfinished">Утримуйте %1 щоб малювати від центру.</translation>
+        <translation>Утримуйте %1 щоб малювати від центру.</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_circle.cpp" line="301"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Finish the circle. </source>
-        <translation type="unfinished">&lt;b&gt;Клікніть&lt;/b&gt; щоб завершити коло.</translation>
+        <translation>&lt;b&gt;Click&lt;/b&gt;: Завершити коло. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_circle.cpp" line="302"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Draw an ellipse. </source>
-        <translation type="unfinished">&lt;b&gt;Протягніть&lt;/b&gt; щоб накреслити еліпс.</translation>
+        <translation>&lt;b&gt;Протягніть&lt;/b&gt; щоб накреслити еліпс. </translation>
     </message>
 </context>
 <context>
@@ -849,7 +849,7 @@
     <message>
         <location filename="../src/tool_draw_freehand.cpp" line="276"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Draw a path. </source>
-        <translation type="unfinished">&lt;b&gt;Потягніть&lt;/b&gt;щоб намалювати лінію.</translation>
+        <translation>&lt;b&gt;Потягніть&lt;/b&gt;щоб намалювати лінію.</translation>
     </message>
 </context>
 <context>
@@ -858,37 +858,37 @@
         <location filename="../src/tool_draw_path.cpp" line="1028"/>
         <location filename="../src/tool_draw_rectangle.cpp" line="700"/>
         <source>&lt;b&gt;Dash points on.&lt;/b&gt; </source>
-        <translation type="unfinished">&lt;b&gt;Точка-на-штриху.&lt;/b&gt; </translation>
+        <translation>&lt;b&gt;Штрихові точки ввімкнено&lt;/b&gt; </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1034"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt;: Snap or append to existing objects. </source>
-        <translation type="unfinished">&lt;b&gt;%1+Click&lt;/b&gt;: Прив&apos;язуватись чи чіплятися за існуючі об&apos;єкти.</translation>
+        <translation>&lt;b&gt;%1+Click&lt;/b&gt;: Прив&apos;язуватись чи чіплятися за існуючі об&apos;єкти.</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1039"/>
         <location filename="../src/tool_draw_rectangle.cpp" line="706"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt;: Pick direction from existing objects. </source>
-        <translation type="unfinished">&lt;b&gt;%1+Click&lt;/b&gt;: Слідувати напрямку існуючих об&apos;єктів.</translation>
+        <translation>&lt;b&gt;%1+Click&lt;/b&gt;: Слідувати напрямку існуючих об&apos;єктів.</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1052"/>
         <location filename="../src/tool_draw_rectangle.cpp" line="711"/>
         <location filename="../src/tool_draw_rectangle.cpp" line="735"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt;: Snap to existing objects. </source>
-        <translation type="unfinished">&lt;b&gt;%1+Click&lt;/b&gt;: Прив&apos;язуватись до існуючих об&apos;єктів.</translation>
+        <translation>&lt;b&gt;%1+Click&lt;/b&gt;: Прив&apos;язуватись до існуючих об&apos;єктів.</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1058"/>
         <location filename="../src/tool_draw_rectangle.cpp" line="725"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Fixed angles. </source>
-        <translation type="unfinished">&lt;b&gt;%1&lt;/b&gt;: Фіксовані кути.</translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Фіксовані кути. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1066"/>
         <location filename="../src/tool_draw_rectangle.cpp" line="741"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Undo last point. </source>
-        <translation type="unfinished">&lt;b&gt;%1&lt;/b&gt;: Скасувати останній крок.</translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Скасувати останній крок.</translation>
     </message>
 </context>
 <context>
@@ -896,60 +896,60 @@
     <message>
         <location filename="../src/tool_draw_path.cpp" line="87"/>
         <source>Finish</source>
-        <translation type="unfinished">Завершити</translation>
+        <translation>Завершити</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="88"/>
         <source>Close</source>
-        <translation type="unfinished">Закрити</translation>
+        <translation>Закрити</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="89"/>
         <source>Snap</source>
         <comment>Snap to existing objects</comment>
-        <translation type="unfinished">Прив&apos;язати</translation>
+        <translation>Прив&apos;язка</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="90"/>
         <source>Angle</source>
         <comment>Using constrained angles</comment>
-        <translation type="unfinished">Кут</translation>
+        <translation>Кут</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="91"/>
         <source>Dash</source>
         <comment>Drawing dash points</comment>
-        <translation type="unfinished">Штрих</translation>
+        <translation>Штрих</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="92"/>
         <source>Undo</source>
-        <translation type="unfinished">Відмінити</translation>
+        <translation>Відмінити</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="93"/>
         <source>Abort</source>
-        <translation type="unfinished">Перервати</translation>
+        <translation>Перервати</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1023"/>
         <source>&lt;b&gt;Length:&lt;/b&gt; %1 m </source>
-        <translation type="unfinished">&lt;b&gt;Довжина:&lt;/b&gt; %1 м </translation>
+        <translation>&lt;b&gt;Довжина:&lt;/b&gt; %1 м </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1044"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Start a straight line. &lt;b&gt;Drag&lt;/b&gt;: Start a curve. </source>
-        <translation type="unfinished">&lt;b&gt;Клік&lt;/b&gt; почне ламану лінію. &lt;b&gt;Потягніть&lt;/b&gt; щоб накреслити криву. </translation>
+        <translation>&lt;b&gt;Click&lt;/b&gt;: Почати ламану лінію. &lt;b&gt;Потягніть&lt;/b&gt; щоб накреслити криву. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1053"/>
         <source>&lt;b&gt;%1+Drag&lt;/b&gt;: Follow existing objects. </source>
-        <translation type="unfinished">&lt;b&gt;%1+Потягніть&lt;/b&gt; вздовж об&apos;єкта щоб повторити його контур. </translation>
+        <translation>&lt;b&gt;%1+Потягніть&lt;/b&gt; вздовж об&apos;єкта щоб повторити його контур. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1063"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Draw a straight line. &lt;b&gt;Drag&lt;/b&gt;: Draw a curve. &lt;b&gt;Right or double click&lt;/b&gt;: Finish the path. &lt;b&gt;%1&lt;/b&gt;: Close the path. </source>
-        <translation type="unfinished">&lt;b&gt;Клік&lt;/b&gt;: почне ламану лінію. &lt;b&gt;Протягніть&lt;/b&gt; щоб накреслити криву. &lt;b&gt;Правий або подвійний клік&lt;/b&gt; завершить лінію. &lt;b&gt;%1&lt;/b&gt; замкне лінію. </translation>
+        <translation>&lt;b&gt;Click&lt;/b&gt;: Почати ламану лінію. &lt;b&gt;Протягніть&lt;/b&gt; щоб накреслити криву. &lt;b&gt;Правий або подвійний клік&lt;/b&gt;: Завершити лінію. &lt;b&gt;%1&lt;/b&gt;: Замкнути лінію. </translation>
     </message>
 </context>
 <context>
@@ -962,7 +962,7 @@
     <message>
         <location filename="../src/tool_draw_point_gps.cpp" line="183"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Finish setting the object. </source>
-        <translation type="unfinished">&lt;b&gt;Клік&lt;/b&gt; завершить установку об&apos;єкта. </translation>
+        <translation type="unfinished">&lt;b&gt;Click&lt;/b&gt; завершить установку об&apos;єкта. </translation>
     </message>
 </context>
 <context>
@@ -971,46 +971,46 @@
         <location filename="../src/tool_draw_point.cpp" line="60"/>
         <source>Snap</source>
         <comment>Snap to existing objects</comment>
-        <translation type="unfinished">Прив&apos;язка</translation>
+        <translation>Прив&apos;язка</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_point.cpp" line="61"/>
         <source>Angle</source>
         <comment>Using constrained angles</comment>
-        <translation type="unfinished">Кут</translation>
+        <translation>Кут</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_point.cpp" line="62"/>
         <source>Reset</source>
         <comment>Reset rotation</comment>
-        <translation type="unfinished">Скинути</translation>
+        <translation>Скинути</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_point.cpp" line="329"/>
         <location filename="../src/tool_draw_point.cpp" line="341"/>
         <source>&lt;b&gt;Angle:&lt;/b&gt; %1° </source>
-        <translation type="unfinished">&lt;b&gt;Кут:&lt;/b&gt; %1° </translation>
+        <translation>&lt;b&gt;Кут:&lt;/b&gt; %1° </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_point.cpp" line="330"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Fixed angles. </source>
-        <translation type="unfinished">&lt;b&gt;%1&lt;/b&gt;: Фіксовані кути. </translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Фіксовані кути. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_point.cpp" line="335"/>
         <location filename="../src/tool_draw_point.cpp" line="349"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Create a point object.</source>
-        <translation type="unfinished">&lt;b&gt;Клік&lt;/b&gt;: Створить точковий об&apos;єкт.</translation>
+        <translation>&lt;b&gt;Click&lt;/b&gt;: Створити точковий об&apos;єкт.</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_point.cpp" line="336"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Create an object and set its orientation.</source>
-        <translation type="unfinished">&lt;b&gt;Протягніть&lt;/b&gt; щоб створити об&apos;єкт і задати його орієнтацію.</translation>
+        <translation>&lt;b&gt;Протягніть&lt;/b&gt; щоб створити об&apos;єкт і задати його орієнтацію.</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_point.cpp" line="342"/>
         <source>&lt;b&gt;%1, 0&lt;/b&gt;: Reset rotation.</source>
-        <translation type="unfinished">&lt;b&gt;%1, 0&lt;/b&gt;: Скасувати поворот.</translation>
+        <translation>&lt;b&gt;%1, 0&lt;/b&gt;: Скинути поворот.</translation>
     </message>
 </context>
 <context>
@@ -1018,50 +1018,50 @@
     <message>
         <location filename="../src/tool_draw_rectangle.cpp" line="78"/>
         <source>Finish</source>
-        <translation type="unfinished">Завершити</translation>
+        <translation>Завершити</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_rectangle.cpp" line="79"/>
         <source>Snap</source>
         <comment>Snap to existing objects</comment>
-        <translation type="unfinished">Прив&apos;язка</translation>
+        <translation>Прив&apos;язка</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_rectangle.cpp" line="80"/>
         <source>Line snap</source>
         <comment>Snap to previous lines</comment>
-        <translation type="unfinished">Прив&apos;язка до лінії</translation>
+        <translation>Прив&apos;язка до лінії</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_rectangle.cpp" line="81"/>
         <source>Dash</source>
         <comment>Drawing dash points</comment>
-        <translation type="unfinished">Штрих</translation>
+        <translation>Штрих</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_rectangle.cpp" line="82"/>
         <source>Undo</source>
-        <translation type="unfinished">Відмінити</translation>
+        <translation>Відмінити</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_rectangle.cpp" line="83"/>
         <source>Abort</source>
-        <translation type="unfinished">Перервати</translation>
+        <translation>Перервати</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_rectangle.cpp" line="716"/>
         <source>&lt;b&gt;Click or Drag&lt;/b&gt;: Start drawing a rectangle. </source>
-        <translation type="unfinished">&lt;b&gt;Клікніть або потягніть&lt;/b&gt; щоб накреслити прямокутник. </translation>
+        <translation>&lt;b&gt;Click або потягніть&lt;/b&gt; щоб накреслити прямокутник. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_rectangle.cpp" line="729"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Snap to previous lines. </source>
-        <translation type="unfinished">&lt;b&gt;%1&lt;/b&gt;: Прив&apos;язка до попередньої лінії. </translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Прив&apos;язка до попередньої лінії. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_rectangle.cpp" line="740"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set a corner point. &lt;b&gt;Right or double click&lt;/b&gt;: Finish the rectangle. </source>
-        <translation type="unfinished">&lt;b&gt;Клік&lt;/b&gt;: щоб поставити вузлову точку. &lt;b&gt;Правий або подвійний клік&lt;/b&gt; завершить прямокутник. </translation>
+        <translation>&lt;b&gt;Click&lt;/b&gt;: щоб поставити кутову точку. &lt;b&gt;Правий або подвійний клік&lt;/b&gt; завершить прямокутник. </translation>
     </message>
 </context>
 <context>
@@ -1069,12 +1069,12 @@
     <message>
         <location filename="../src/tool_draw_text.cpp" line="306"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Finish editing. </source>
-        <translation type="unfinished">&lt;b&gt;%1&lt;/b&gt;: Завершить правку. </translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Завершити правку. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_text.cpp" line="308"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Create a text object with a single anchor. &lt;b&gt;Drag&lt;/b&gt;: Create a text box. </source>
-        <translation type="unfinished">&lt;b&gt;Клік&lt;/b&gt;: Створить текстовий об&apos;єкт з простим якорем. &lt;b&gt;Потягніть&lt;/b&gt; щоб створити текстову область. </translation>
+        <translation>&lt;b&gt;Click&lt;/b&gt;: Створити текстовий об&apos;єкт з простим якорем. &lt;b&gt;Потягніть&lt;/b&gt; щоб створити текстову область. </translation>
     </message>
 </context>
 <context>
@@ -1099,7 +1099,7 @@
     <message>
         <location filename="../src/tool_edit_line.cpp" line="472"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on segment: Toggle between straight and curved. </source>
-        <translation type="unfinished">&lt;b&gt;%1+Клік&lt;/b&gt; на сегменті: Перемкне між прямою та кривою. </translation>
+        <translation>&lt;b&gt;%1+Click&lt;/b&gt; на сегменті: Переключити між прямою та кривою. </translation>
     </message>
 </context>
 <context>
@@ -1120,12 +1120,12 @@
         <location filename="../src/tool_edit_point.cpp" line="482"/>
         <source>Toggle dash</source>
         <comment>Toggle dash points</comment>
-        <translation type="unfinished">Переключити штрихи</translation>
+        <translation>Переключити штрихи</translation>
     </message>
     <message>
         <location filename="../src/tool_edit_point.cpp" line="632"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Finish editing. </source>
-        <translation type="unfinished">&lt;b&gt;%1&lt;/b&gt;: Завершити правку.</translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Завершити правку.</translation>
     </message>
     <message>
         <location filename="../src/tool_edit_point.cpp" line="652"/>
@@ -1135,17 +1135,17 @@
     <message>
         <location filename="../src/tool_edit_point.cpp" line="673"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on point: Delete it; on path: Add a new dash point; with &lt;b&gt;%2&lt;/b&gt;: Add a normal point. </source>
-        <translation type="unfinished">&lt;b&gt;%1+Click&lt;/b&gt; на точці видалить її; на лінії: Додасть нову точку-на-шриху; з &lt;b&gt;%2&lt;/b&gt;: Додасть нормальну точку. </translation>
+        <translation>&lt;b&gt;%1+Click&lt;/b&gt; на точці видалить її; на лінії: Додасть нову штрихову точку; з &lt;b&gt;%2&lt;/b&gt;: Додасть нормальну точку. </translation>
     </message>
     <message>
         <location filename="../src/tool_edit_point.cpp" line="676"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on point: Delete it; on path: Add a new point; with &lt;b&gt;%2&lt;/b&gt;: Add a dash point. </source>
-        <translation type="unfinished">&lt;b&gt;%1+Клік&lt;/b&gt; на точці видалить її; на лінії: Додасть нову точку; з &lt;b&gt;%2&lt;/b&gt;: Додасть нову точку-на-штриху. </translation>
+        <translation>&lt;b&gt;%1+Click&lt;/b&gt; на точці видалить її; на лінії: Додасть нову точку; з &lt;b&gt;%2&lt;/b&gt;: Додасть нову штрихову точку. </translation>
     </message>
     <message>
         <location filename="../src/tool_edit_point.cpp" line="680"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on point to switch between dash and normal point. </source>
-        <translation type="unfinished">&lt;b&gt;%1+Клік&lt;/b&gt; на точці змінює її тип (точка-на-штриху / нормальна точка).</translation>
+        <translation>&lt;b&gt;%1+Click&lt;/b&gt; на точці змінює її тип (штрихова точка / нормальна точка).</translation>
     </message>
 </context>
 <context>
@@ -1154,31 +1154,31 @@
         <location filename="../src/tool_edit_point.cpp" line="637"/>
         <location filename="../src/tool_edit_line.cpp" line="444"/>
         <source>&lt;b&gt;Coordinate offset:&lt;/b&gt; %1, %2 mm  &lt;b&gt;Distance:&lt;/b&gt; %3 m </source>
-        <translation type="unfinished">&lt;b&gt;Зміщення координат:&lt;/b&gt; %1, %2 мм  &lt;b&gt;Відстань:&lt;/b&gt; %3 м </translation>
+        <translation>&lt;b&gt;Координати зміщення:&lt;/b&gt; %1, %2 мм  &lt;b&gt;Відстань:&lt;/b&gt; %3 м </translation>
     </message>
     <message>
         <location filename="../src/tool_edit_point.cpp" line="644"/>
         <location filename="../src/tool_edit_line.cpp" line="455"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Fixed angles. </source>
-        <translation type="unfinished">&lt;b&gt;%1&lt;/b&gt;: Фіксовані кути. </translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Фіксовані кути. </translation>
     </message>
     <message>
         <location filename="../src/tool_edit_point.cpp" line="656"/>
         <location filename="../src/tool_edit_line.cpp" line="459"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Snap to existing objects. </source>
-        <translation type="unfinished">&lt;b&gt;%1&lt;/b&gt;: Прив&apos;язуватись до існуючих об&apos;єктів. </translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Прив&apos;язуватись до існуючих об&apos;єктів. </translation>
     </message>
     <message>
         <location filename="../src/tool_edit_point.cpp" line="662"/>
         <location filename="../src/tool_edit_line.cpp" line="464"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Select a single object. &lt;b&gt;Drag&lt;/b&gt;: Select multiple objects. &lt;b&gt;%1+Click&lt;/b&gt;: Toggle selection. </source>
-        <translation>&lt;b&gt;Клік&lt;/b&gt;: Вибрати об&apos;єкт. &lt;b&gt;Потягніть&lt;/b&gt; щоб вибрати кілька об&apos;єктів. &lt;b&gt;%1+Клік&lt;/b&gt;: Перекине виділення. </translation>
+        <translation>&lt;b&gt;Click&lt;/b&gt;: Вибрати об&apos;єкт. &lt;b&gt;Потягніть&lt;/b&gt; щоб вибрати кілька об&apos;єктів. &lt;b&gt;%1+Click&lt;/b&gt;: Переключити виділення. </translation>
     </message>
     <message>
         <location filename="../src/tool_edit_point.cpp" line="665"/>
         <location filename="../src/tool_edit_line.cpp" line="467"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Delete selected objects. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: Видалиь виділений об&apos;єкт. </translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Видалити виділений об&apos;єкт. </translation>
     </message>
 </context>
 <context>
@@ -1311,39 +1311,39 @@
     <message>
         <location filename="../src/tool_fill.cpp" line="99"/>
         <source>Warning</source>
-        <translation type="unfinished">Попередження</translation>
+        <translation>Попередження</translation>
     </message>
     <message>
         <location filename="../src/tool_fill.cpp" line="100"/>
         <source>The map area is large. Use of the fill tool may be very slow. Do you want to use it anyway?</source>
-        <translation type="unfinished">Площа карти дуже велика. Застосування інструменту заливки може бути повільним. Все одно застосувати?</translation>
+        <translation>Площа карти дуже велика. Застосування інструменту заливки може бути повільним. Все одно застосувати?</translation>
     </message>
     <message>
         <location filename="../src/tool_fill.cpp" line="85"/>
         <location filename="../src/tool_fill.cpp" line="119"/>
         <location filename="../src/tool_fill.cpp" line="167"/>
         <source>Error</source>
-        <translation type="unfinished">Помилка</translation>
+        <translation>Помилка</translation>
     </message>
     <message>
         <location filename="../src/tool_fill.cpp" line="86"/>
         <source>The clicked area is not bounded by lines or areas, cannot fill this area.</source>
-        <translation type="unfinished">Ділянка не є обмеженою лініями, або іншими ділянками, неможливо залити таку ділянку.</translation>
+        <translation>Ділянка не є обмеженою лініями, або іншими ділянками, неможливо залити таку ділянку.</translation>
     </message>
     <message>
         <location filename="../src/tool_fill.cpp" line="120"/>
         <source>The clicked position is not free, cannot use the fill tool there.</source>
-        <translation type="unfinished">Ця ділянка не є вільною, неможливо використати інструмент Заливка тут.</translation>
+        <translation>Ця ділянка не є вільною, тут неможливо використати інструмент заливки.</translation>
     </message>
     <message>
         <location filename="../src/tool_fill.cpp" line="168"/>
         <source>Failed to create the fill object.</source>
-        <translation type="unfinished">Невдалося створити об&apos;єкт заливки.</translation>
+        <translation>Невдалося створити об&apos;єкт заливки.</translation>
     </message>
     <message>
         <location filename="../src/tool_fill.cpp" line="179"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Fill area with active symbol. The area to be filled must be bounded by lines or areas, other symbols are not taken into account. </source>
-        <translation type="unfinished">&lt;b&gt;Клік&lt;/b&gt;: Заливка площі активним знаком. Ділянка, що буде залита, має бути обмежена лініями або межами площі; інші знаки не будть взяті до уваги.</translation>
+        <translation>&lt;b&gt;Click&lt;/b&gt;: Залити площу активним знаком. Ділянка, що буде залита, має бути обмежена лініями або межами площі; інші знаки не будть взяті до уваги.</translation>
     </message>
 </context>
 <context>
@@ -1613,7 +1613,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="141"/>
         <source>Show reference point in:</source>
-        <translation>Показати точку прив’язки у:</translation>
+        <translation type="unfinished">Показати опорну точку в:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="329"/>
@@ -1644,7 +1644,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="101"/>
         <source>Reference point</source>
-        <translation type="unfinished">Відносна точка</translation>
+        <translation type="unfinished">Опорна точка</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="103"/>
@@ -1733,7 +1733,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="355"/>
         <source>The magnetic declination for the reference point %1° %2° will now be retrieved from &lt;a href=&quot;%3&quot;&gt;%3&lt;/a&gt;. Do you want to continue?</source>
-        <translation type="unfinished">Магнітне відхилення для точки прив’язки %1° %2° буде взято з &lt;a href=&quot;%3&quot;&gt;%3&lt;/a&gt;. Ви хочете продовжити?</translation>
+        <translation type="unfinished">Магнітне схилення для опорної точки прив’язки %1° %2° буде взято з &lt;a href=&quot;%3&quot;&gt;%3&lt;/a&gt;. Ви хочете продовжити?</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="428"/>
@@ -1789,7 +1789,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="683"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set the reference point. &lt;b&gt;Right click&lt;/b&gt;: Cancel.</source>
-        <translation type="unfinished">&lt;b&gt;Клік&lt;/b&gt;: Установить точку прив&apos;язки. &lt;b&gt;Правий клік&lt;/b&gt;: Відміна.</translation>
+        <translation>&lt;b&gt;Click&lt;/b&gt;: Установити опорну точку. &lt;b&gt;Правий клік&lt;/b&gt;: Відміна.</translation>
     </message>
 </context>
 <context>
@@ -2904,7 +2904,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="756"/>
         <source>Scale the whole symbol set</source>
-        <translation type="unfinished">Масштабувати весь набір знаків</translation>
+        <translation>Масштабувати весь набір знаків</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="758"/>
@@ -3295,17 +3295,17 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="1919"/>
         <source>Place point objects on the map.</source>
-        <translation type="unfinished">Розмістити точкові об’єкти на карті.</translation>
+        <translation>Розмістити точкові об’єкти на карті.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1919"/>
         <source>Select a point symbol to be able to use this tool.</source>
-        <translation type="unfinished">Оберіть точковий знак щоб використати цей інструмент.</translation>
+        <translation>Оберіть точковий знак щоб використати цей інструмент.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1921"/>
         <source>Draw polygonal and curved lines.</source>
-        <translation>Кресліть ламані і криві лінії.</translation>
+        <translation>Накреслити ламані чи криві лінії.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1921"/>
@@ -3314,22 +3314,22 @@ Rescale the imported data?</source>
         <location filename="../src/map_editor.cpp" line="1927"/>
         <location filename="../src/map_editor.cpp" line="1929"/>
         <source>Select a line, area or combined symbol to be able to use this tool.</source>
-        <translation>Оберіть лінію, площу або комбінований знак щоб використати цей інструмент.</translation>
+        <translation>Оберіть лінійний, площадний або комбінований знак щоб використати цей інструмент.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1923"/>
         <source>Draw circles and ellipses.</source>
-        <translation>Накреслити кола і еліпси.</translation>
+        <translation>Накреслити кола чи еліпси.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2035"/>
         <source>Set the direction of area fill patterns or point objects.</source>
-        <translation type="unfinished">Встановити напрямок візерунка для заповнення площі, або точкового об&apos;єкта.</translation>
+        <translation>Встановити напрямок візерунка для заповнення площі, або точкового об&apos;єкта.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2035"/>
         <source>Select an area object with rotatable fill pattern or a rotatable point object to activate this tool.</source>
-        <translation type="unfinished">Виберіть площинний об&apos;єкт із заповненням або точковий об&apos;єкт, що можливо обертати для активації цього інструменту.</translation>
+        <translation>Виберіть площинний об&apos;єкт із заповненням або точковий об&apos;єкт, що можливо обертати для активації цього інструменту.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="3663"/>
@@ -3545,7 +3545,7 @@ Rescale the imported data?</source>
         <location filename="../src/map_editor.cpp" line="1054"/>
         <location filename="../src/map_editor.cpp" line="3233"/>
         <source>Map parts</source>
-        <translation type="unfinished">Частини карти</translation>
+        <translation>Частини карти</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1138"/>
@@ -3772,7 +3772,7 @@ selected</source>
     <message>
         <location filename="../src/map_editor.cpp" line="2117"/>
         <source>Places evenly spaced point objects along an existing path object</source>
-        <translation type="unfinished">Розподілити рівномірно точкові об&apos;кти вздовж існуючого лінійного об&apos;єкту</translation>
+        <translation>Розподілити рівномірно точкові обє&apos;кти вздовж існуючого лінійного об&apos;єкту</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2117"/>
@@ -4611,7 +4611,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/tool_pan.cpp" line="72"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the map. </source>
-        <translation type="unfinished">&lt;b&gt;Потягніть&lt;/b&gt; щоб рухати карту. </translation>
+        <translation>&lt;b&gt;Потягніть&lt;/b&gt; щоб рухати карту. </translation>
     </message>
 </context>
 <context>
@@ -4628,7 +4628,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="967"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Add a coordinate. &lt;b&gt;%1+Click&lt;/b&gt;: Change the selected coordinate. </source>
-        <translation type="unfinished">&lt;b&gt;Клік&lt;/b&gt;: Додати координату. &lt;b&gt;%1+Клік&lt;/b&gt;: Змінити вибрану координату. </translation>
+        <translation type="unfinished">&lt;b&gt;Click&lt;/b&gt;: Додати координату. &lt;b&gt;%1+Click&lt;/b&gt;: Змінити вибрану координату. </translation>
     </message>
 </context>
 <context>
@@ -4795,7 +4795,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/symbol_point.cpp" line="436"/>
         <source>Point symbol</source>
-        <translation type="unfinished">Точковий знак</translation>
+        <translation>Точковий знак</translation>
     </message>
 </context>
 <context>
@@ -5198,7 +5198,7 @@ separations</source>
     <message>
         <location filename="../src/gui/text_browser_dialog.cpp" line="64"/>
         <source>&amp;Close</source>
-        <translation type="unfinished">&amp;Закрити</translation>
+        <translation>&amp;Закрити</translation>
     </message>
 </context>
 <context>
@@ -5206,7 +5206,7 @@ separations</source>
     <message>
         <location filename="../src/gui/text_browser_dialog.cpp" line="59"/>
         <source>Back</source>
-        <translation type="unfinished">Назад</translation>
+        <translation>Назад</translation>
     </message>
 </context>
 <context>
@@ -5247,27 +5247,27 @@ separations</source>
     <message>
         <location filename="../src/symbol_dialog_replace.cpp" line="44"/>
         <source>Replace symbol set</source>
-        <translation type="unfinished">Замінити набір знаків</translation>
+        <translation>Замінити набір знаків</translation>
     </message>
     <message>
         <location filename="../src/symbol_dialog_replace.cpp" line="46"/>
         <source>Configure how the symbols should be replaced, and which.</source>
-        <translation type="unfinished">Налаштувати як саме слід замінювати знаки і на які.</translation>
+        <translation>Налаштувати як саме слід замінювати знаки і на які.</translation>
     </message>
     <message>
         <location filename="../src/symbol_dialog_replace.cpp" line="48"/>
         <source>Import all new symbols, even if not used as replacement</source>
-        <translation type="unfinished">Імпортувати всі нові знаки, навіть якщо вони не використовуються для заміщення</translation>
+        <translation>Імпортувати всі нові знаки, навіть якщо вони не використовуються для заміщення</translation>
     </message>
     <message>
         <location filename="../src/symbol_dialog_replace.cpp" line="50"/>
         <source>Delete original symbols which are unused after the replacement</source>
-        <translation type="unfinished">Видалити оригінальні знаки, що не використовуються після заміни</translation>
+        <translation>Видалити оригінальні знаки, що не використовуються після заміни</translation>
     </message>
     <message>
         <location filename="../src/symbol_dialog_replace.cpp" line="52"/>
         <source>Delete unused colors after the replacement</source>
-        <translation type="unfinished">Видалити кольори, що не використовуються після заміни</translation>
+        <translation>Видалити кольори, що не використовуються після заміни</translation>
     </message>
     <message>
         <location filename="../src/symbol_dialog_replace.cpp" line="55"/>
@@ -5277,37 +5277,37 @@ separations</source>
     <message>
         <location filename="../src/symbol_dialog_replace.cpp" line="56"/>
         <source>Keep the symbols&apos; hidden / protected states of the old symbol set</source>
-        <translation type="unfinished">Зберегти статуси Прихований / Захищений з старого набору знаків</translation>
+        <translation>Зберегти статуси Прихований / Захищений з старого набору знаків</translation>
     </message>
     <message>
         <location filename="../src/symbol_dialog_replace.cpp" line="58"/>
         <source>Match replacement symbols by symbol number</source>
-        <translation type="unfinished">Виконати заміну по співпадаючим кодам знаків</translation>
+        <translation>Виконати заміну по співпадаючим кодам знаків</translation>
     </message>
     <message>
         <location filename="../src/symbol_dialog_replace.cpp" line="64"/>
         <source>Original</source>
-        <translation type="unfinished">Оригінал</translation>
+        <translation>Оригінал</translation>
     </message>
     <message>
         <location filename="../src/symbol_dialog_replace.cpp" line="64"/>
         <source>Replacement</source>
-        <translation type="unfinished">Заміна</translation>
+        <translation>Заміна</translation>
     </message>
     <message>
         <location filename="../src/symbol_dialog_replace.cpp" line="295"/>
         <source>- None -</source>
-        <translation type="unfinished">- Немає -</translation>
+        <translation>- Немає -</translation>
     </message>
     <message>
         <location filename="../src/symbol_dialog_replace.cpp" line="327"/>
         <source>Choose map file to load symbols from</source>
-        <translation type="unfinished">Взяти набір знаків з файлу карти</translation>
+        <translation>Взяти набір знаків з файлу карти</translation>
     </message>
     <message>
         <location filename="../src/symbol_dialog_replace.cpp" line="335"/>
         <source>Error</source>
-        <translation type="unfinished">Помилка</translation>
+        <translation>Помилка</translation>
     </message>
     <message>
         <location filename="../src/symbol_dialog_replace.cpp" line="335"/>
@@ -5317,12 +5317,12 @@ separations</source>
     <message>
         <location filename="../src/symbol_dialog_replace.cpp" line="341"/>
         <source>Warning</source>
-        <translation type="unfinished">Попередження</translation>
+        <translation>Попередження</translation>
     </message>
     <message>
         <location filename="../src/symbol_dialog_replace.cpp" line="342"/>
         <source>The chosen symbol set has a scale of 1:%1, while the map scale is 1:%2. Do you really want to choose this set?</source>
-        <translation type="unfinished">Вибраний набір знаків має масштаб 1:%1, тоді як масштаб карти 1:%2. Застосувати цей набір знаків?</translation>
+        <translation>Вибраний набір знаків має масштаб 1:%1, тоді як масштаб карти 1:%2. Застосувати цей набір знаків?</translation>
     </message>
 </context>
 <context>
@@ -5362,7 +5362,7 @@ separations</source>
         <location filename="../src/map_dialog_rotate.cpp" line="52"/>
         <source>Georeferencing reference point</source>
         <comment>Rotation center point</comment>
-        <translation type="unfinished">Відносної точки геоприв&apos;язки</translation>
+        <translation type="unfinished">Опорної точки геоприв&apos;язки</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_rotate.cpp" line="57"/>
@@ -5396,7 +5396,7 @@ separations</source>
     <message>
         <location filename="../src/map_dialog_rotate.cpp" line="72"/>
         <source>Adjust georeferencing reference point</source>
-        <translation type="unfinished">Підігнати відносну точку геоприв&apos;язки</translation>
+        <translation type="unfinished">Підігнати опорну точку геоприв&apos;язки</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_rotate.cpp" line="79"/>
@@ -5414,17 +5414,17 @@ separations</source>
     <message>
         <location filename="../src/tool_rotate_pattern.cpp" line="157"/>
         <source>&lt;b&gt;Angle:&lt;/b&gt; %1° </source>
-        <translation type="unfinished">&lt;b&gt;Кур:&lt;/b&gt; %1° </translation>
+        <translation>&lt;b&gt;Кут:&lt;/b&gt; %1° </translation>
     </message>
     <message>
         <location filename="../src/tool_rotate_pattern.cpp" line="158"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Fixed angles. </source>
-        <translation type="unfinished">&lt;b&gt;%1&lt;/b&gt;: Фіксовані кути. </translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Фіксовані кути. </translation>
     </message>
     <message>
         <location filename="../src/tool_rotate_pattern.cpp" line="162"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Set the direction of area fill patterns or point objects. </source>
-        <translation type="unfinished">&lt;b&gt;Потягніть&lt;/b&gt; щоб задати напрямок візерунку заповнення площі, або поворот точкового об&apos;єкту.</translation>
+        <translation>&lt;b&gt;Потягніть&lt;/b&gt; щоб задати напрямок візерунку заповнення, або поворот точкового об&apos;єкту.</translation>
     </message>
 </context>
 <context>
@@ -5432,23 +5432,23 @@ separations</source>
     <message>
         <location filename="../src/tool_rotate.cpp" line="185"/>
         <source>&lt;b&gt;Rotation:&lt;/b&gt; %1° </source>
-        <translation type="unfinished">&lt;b&gt;Поворот:&lt;/b&gt; %1° </translation>
+        <translation>&lt;b&gt;Поворот:&lt;/b&gt; %1° </translation>
     </message>
     <message>
         <location filename="../src/tool_rotate.cpp" line="186"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Fixed angles. </source>
-        <translation type="unfinished">&lt;b&gt;%1&lt;/b&gt;: Фіксовані кути. </translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Фіксовані кути. </translation>
     </message>
     <message>
         <location filename="../src/tool_rotate.cpp" line="190"/>
         <location filename="../src/tool_rotate.cpp" line="194"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set the center of rotation. </source>
-        <translation type="unfinished">&lt;b&gt;Клік&lt;/b&gt;: Задати центр обертання. </translation>
+        <translation>&lt;b&gt;Click&lt;/b&gt;: Задати центр обертання. </translation>
     </message>
     <message>
         <location filename="../src/tool_rotate.cpp" line="195"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Rotate the selected objects. </source>
-        <translation type="unfinished">&lt;b&gt;Потягніть&lt;/b&gt; щоб обертатии вибрані об&apos;єкти.</translation>
+        <translation>&lt;b&gt;Потягніть&lt;/b&gt; щоб обертатии вибрані об&apos;єкти.</translation>
     </message>
 </context>
 <context>
@@ -5456,12 +5456,12 @@ separations</source>
     <message>
         <location filename="../src/map_dialog_scale.cpp" line="36"/>
         <source>Change map scale</source>
-        <translation type="unfinished">Змінити масштаб карти</translation>
+        <translation>Змінити масштаб карти</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_scale.cpp" line="40"/>
         <source>Scaling parameters</source>
-        <translation type="unfinished">Параетри масштабування</translation>
+        <translation>Параетри масштабування</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_scale.cpp" line="44"/>
@@ -5471,25 +5471,25 @@ separations</source>
     <message>
         <location filename="../src/map_dialog_scale.cpp" line="46"/>
         <source>Scaling center:</source>
-        <translation type="unfinished">Центр масштабування:</translation>
+        <translation>Центр масштабування:</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_scale.cpp" line="48"/>
         <source>Map coordinate system origin</source>
         <comment>Scaling center point</comment>
-        <translation type="unfinished">Початок координат карти</translation>
+        <translation>Початок координат карти</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_scale.cpp" line="52"/>
         <source>Georeferencing reference point</source>
         <comment>Scaling center point</comment>
-        <translation type="unfinished">Геоприв&apos;язана відносна точка</translation>
+        <translation type="unfinished">Опорна точка геоприв&apos;язки</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_scale.cpp" line="57"/>
         <source>Other point,</source>
         <comment>Scaling center point</comment>
-        <translation type="unfinished">Інша точка,</translation>
+        <translation>Інша точка,</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_scale.cpp" line="58"/>
@@ -5512,27 +5512,27 @@ separations</source>
     <message>
         <location filename="../src/map_dialog_scale.cpp" line="69"/>
         <source>Options</source>
-        <translation type="unfinished">Опції</translation>
+        <translation>Опції</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_scale.cpp" line="71"/>
         <source>Scale symbol sizes</source>
-        <translation type="unfinished">Масштабувати розмір знаків</translation>
+        <translation>Масштабувати розмір знаків</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_scale.cpp" line="78"/>
         <source>Scale map object positions</source>
-        <translation type="unfinished">Масштабувати позиції об&apos;єктів на карті</translation>
+        <translation>Масштабувати позиції об&apos;єктів на карті</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_scale.cpp" line="85"/>
         <source>Adjust georeferencing reference point</source>
-        <translation type="unfinished">Підігнати геоприв&apos;язану відносну точку</translation>
+        <translation type="unfinished">Підігнати опорну точку геоприв&apos;язки</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_scale.cpp" line="92"/>
         <source>Scale non-georeferenced templates</source>
-        <translation type="unfinished">Масштабувати негеоприв&apos;язані підложки</translation>
+        <translation>Масштабувати негеоприв&apos;язані підложки</translation>
     </message>
 </context>
 <context>
@@ -5546,7 +5546,7 @@ separations</source>
         <location filename="../src/tool_scale.cpp" line="202"/>
         <location filename="../src/tool_scale.cpp" line="204"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set the scaling center. </source>
-        <translation type="unfinished">&lt;b&gt;Клік&lt;/b&gt;: Задає центр масштабування. </translation>
+        <translation type="unfinished">&lt;b&gt;Click&lt;/b&gt;: Задати центр масштабування. </translation>
     </message>
     <message>
         <location filename="../src/tool_scale.cpp" line="205"/>
@@ -6543,7 +6543,7 @@ The maximum supported version is %2.</source>
     <message>
         <location filename="../src/gui/text_browser_dialog.cpp" line="132"/>
         <source>Click to view</source>
-        <translation type="unfinished">Клікніть щоб переглянути</translation>
+        <translation type="unfinished">Клацніть для перегляду</translation>
     </message>
 </context>
 <context>
@@ -6801,12 +6801,12 @@ The maximum supported version is %2.</source>
     <message>
         <location filename="../src/undo_manager.cpp" line="127"/>
         <source>Undoing this step will go beyond the point where the file was loaded. Are you sure?</source>
-        <translation type="unfinished">Відміна цього кроку призведе до стану у якому файл був відкритий. Хочете зробити це?</translation>
+        <translation>Відміна цього кроку призведе до стану у якому файл був відкритий. Хочете зробити це?</translation>
     </message>
     <message>
         <location filename="../src/undo_manager.cpp" line="159"/>
         <source>Cannot redo because the first redo step became invalid. This can for example happen if you delete the symbol of an object you have drawn.</source>
-        <translation type="unfinished">Неможливо відмінити останній крок бо попередній крок став непридатним. Це могло трапитися наприклад якщо ви видалили знак об&apos;єкту який накреслили.</translation>
+        <translation type="unfinished">Неможливо відмінити останній крок бо попередній крок став непридатним. Це могло трапитись, наприклад, якщо ви видалили знак об&apos;єкту який накреслили.</translation>
     </message>
 </context>
 <context>
