@@ -1,0 +1,502 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map xmlns="http://openorienteering.org/apps/mapper/xml/v2" version="5">
+    <notes></notes>
+    <georeferencing scale="15000"/>
+    <colors count="2">
+        <color priority="0" name="White Cover" c="0.000" m="0.000" y="0.000" k="0.000" opacity="1.000">
+            <cmyk method="rgb"/>
+            <rgb method="custom" r="1.000" g="1.000" b="1.000"/>
+        </color>
+        <color priority="1" name="Purple Course Items" c="0.200" m="1.000" y="0.000" k="0.000" opacity="1.000">
+            <cmyk method="rgb"/>
+            <rgb method="custom" r="0.800" g="0.000" b="1.000"/>
+        </color>
+    </colors>
+    <symbols count="23">
+        <symbol type="1" id="0" code="1001" name="Start">
+            <point_symbol rotatable="true" inner_radius="1001" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
+                <element>
+                    <symbol type="2" code="">
+                        <line_symbol color="1" line_width="350" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1001" segment_length="4001" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4001" break_length="1001" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                    </symbol>
+                    <object type="1">
+                        <coords count="4">
+                            <coord x="-3500" y="2021"/>
+                            <coord x="0" y="-4040"/>
+                            <coord x="3500" y="2021"/>
+                            <coord x="-3500" y="2021" flags="18"/>
+                        </coords>
+                        <pattern rotation="0">
+                            <coord x="0" y="0"/>
+                        </pattern>
+                    </object>
+                </element>
+            </point_symbol>
+        </symbol>
+        <symbol type="1" id="1" code="1002" name="Finish">
+            <point_symbol inner_radius="2325" inner_color="-1" outer_width="350" outer_color="1" elements="1">
+                <element>
+                    <symbol type="1" code="">
+                        <point_symbol inner_radius="3326" inner_color="-1" outer_width="350" outer_color="1" elements="0"/>
+                    </symbol>
+                    <object type="0">
+                        <coords count="1">
+                            <coord x="0" y="0"/>
+                        </coords>
+                    </object>
+                </element>
+            </point_symbol>
+        </symbol>
+        <symbol type="1" id="2" code="1003" name="Control point">
+            <point_symbol inner_radius="2825" inner_color="-1" outer_width="350" outer_color="1" elements="0"/>
+        </symbol>
+        <symbol type="1" id="3" code="1004" name="Control point double size">
+            <point_symbol inner_radius="5651" inner_color="-1" outer_width="350" outer_color="1" elements="0"/>
+        </symbol>
+        <symbol type="1" id="4" code="1005" name="Control point with center point">
+            <point_symbol inner_radius="2825" inner_color="-1" outer_width="350" outer_color="1" elements="1">
+                <element>
+                    <symbol type="1" code="">
+                        <point_symbol inner_radius="450" inner_color="1" outer_width="0" outer_color="-1" elements="0"/>
+                    </symbol>
+                    <object type="0">
+                        <coords count="1">
+                            <coord x="0" y="0"/>
+                        </coords>
+                    </object>
+                </element>
+            </point_symbol>
+        </symbol>
+        <symbol type="2" id="5" code="1006" name="Course">
+            <line_symbol color="-1" line_width="0" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1001" segment_length="1151" end_length="3650" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="1001" break_length="1451" dashes_in_group="1" in_group_break_length="1601" mid_symbols_per_spot="1" mid_symbol_distance="0" suppress_dash_symbol_at_ends="true">
+                <start_symbol>
+                    <symbol type="1" code="" name="Startsymbol">
+                        <point_symbol rotatable="true" inner_radius="1001" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
+                            <element>
+                                <symbol type="2" code="">
+                                    <line_symbol color="1" line_width="350" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1001" segment_length="4001" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4001" break_length="1001" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                                </symbol>
+                                <object type="1">
+                                    <coords count="2">
+                                        <coord x="3041" y="0"/>
+                                        <coord x="3542" y="0"/>
+                                    </coords>
+                                    <pattern rotation="0">
+                                        <coord x="0" y="0"/>
+                                    </pattern>
+                                </object>
+                            </element>
+                            <element>
+                                <symbol type="2" code="">
+                                    <line_symbol color="1" line_width="350" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1001" segment_length="4001" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4001" break_length="1001" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                                </symbol>
+                                <object type="1">
+                                    <coords count="4">
+                                        <coord x="-3021" y="3500"/>
+                                        <coord x="3041" y="0"/>
+                                        <coord x="-3021" y="-3500"/>
+                                        <coord x="-3021" y="3500" flags="18"/>
+                                    </coords>
+                                    <pattern rotation="0">
+                                        <coord x="0" y="0"/>
+                                    </pattern>
+                                </object>
+                            </element>
+                        </point_symbol>
+                    </symbol>
+                </start_symbol>
+                <mid_symbol>
+                    <symbol type="1" code="" name="Mittsymbol">
+                        <point_symbol rotatable="true" inner_radius="1001" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
+                            <element>
+                                <symbol type="2" code="">
+                                    <line_symbol color="1" line_width="350" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1001" segment_length="4001" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4001" break_length="1001" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                                </symbol>
+                                <object type="1">
+                                    <coords count="2">
+                                        <coord x="-600" y="0"/>
+                                        <coord x="600" y="0"/>
+                                    </coords>
+                                    <pattern rotation="0">
+                                        <coord x="0" y="0"/>
+                                    </pattern>
+                                </object>
+                            </element>
+                        </point_symbol>
+                    </symbol>
+                </mid_symbol>
+                <end_symbol>
+                    <symbol type="1" code="" name="Slutsymbol">
+                        <point_symbol rotatable="true" inner_radius="3326" inner_color="-1" outer_width="350" outer_color="1" elements="1">
+                            <element>
+                                <symbol type="1" code="">
+                                    <point_symbol inner_radius="2325" inner_color="-1" outer_width="350" outer_color="1" elements="0"/>
+                                </symbol>
+                                <object type="0">
+                                    <coords count="1">
+                                        <coord x="0" y="0"/>
+                                    </coords>
+                                </object>
+                            </element>
+                        </point_symbol>
+                    </symbol>
+                </end_symbol>
+                <dash_symbol>
+                    <symbol type="1" code="" name="Strecksymbol">
+                        <point_symbol rotatable="true" inner_radius="2825" inner_color="-1" outer_width="350" outer_color="1" elements="0"/>
+                    </symbol>
+                </dash_symbol>
+            </line_symbol>
+        </symbol>
+        <symbol type="1" id="6" code="1007" name="Point">
+            <point_symbol inner_radius="449" inner_color="1" outer_width="0" outer_color="-1" elements="0"/>
+        </symbol>
+        <symbol type="2" id="7" code="1008" name="Line">
+            <line_symbol color="1" line_width="350" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1001" segment_length="4001" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4001" break_length="1001" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
+                <start_symbol>
+                    <symbol type="1" code="" name="Startsymbol">
+                        <point_symbol rotatable="true" inner_radius="1001" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
+                    </symbol>
+                </start_symbol>
+                <mid_symbol>
+                    <symbol type="1" code="" name="Mittsymbol">
+                        <point_symbol rotatable="true" inner_radius="1001" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
+                    </symbol>
+                </mid_symbol>
+                <end_symbol>
+                    <symbol type="1" code="" name="Slutsymbol">
+                        <point_symbol rotatable="true" inner_radius="1001" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
+                    </symbol>
+                </end_symbol>
+                <dash_symbol>
+                    <symbol type="1" code="" name="Strecksymbol">
+                        <point_symbol rotatable="true" inner_radius="1001" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
+                    </symbol>
+                </dash_symbol>
+            </line_symbol>
+        </symbol>
+        <symbol type="2" id="8" code="1009" name="Marked route">
+            <line_symbol color="1" line_width="350" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1001" dashed="true" segment_length="4001" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="2000" break_length="500" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
+                <start_symbol>
+                    <symbol type="1" code="" name="Startsymbol">
+                        <point_symbol rotatable="true" inner_radius="1001" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
+                    </symbol>
+                </start_symbol>
+                <mid_symbol>
+                    <symbol type="1" code="" name="Mittsymbol">
+                        <point_symbol rotatable="true" inner_radius="1001" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
+                    </symbol>
+                </mid_symbol>
+                <end_symbol>
+                    <symbol type="1" code="" name="Slutsymbol">
+                        <point_symbol rotatable="true" inner_radius="1001" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
+                    </symbol>
+                </end_symbol>
+                <dash_symbol>
+                    <symbol type="1" code="" name="Strecksymbol">
+                        <point_symbol rotatable="true" inner_radius="1001" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
+                    </symbol>
+                </dash_symbol>
+            </line_symbol>
+        </symbol>
+        <symbol type="2" id="9" code="1010" name="Boundary">
+            <line_symbol color="1" line_width="701" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1001" segment_length="4001" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4001" break_length="1001" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
+                <start_symbol>
+                    <symbol type="1" code="" name="Startsymbol">
+                        <point_symbol rotatable="true" inner_radius="1001" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
+                    </symbol>
+                </start_symbol>
+                <mid_symbol>
+                    <symbol type="1" code="" name="Mittsymbol">
+                        <point_symbol rotatable="true" inner_radius="1001" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
+                    </symbol>
+                </mid_symbol>
+                <end_symbol>
+                    <symbol type="1" code="" name="Slutsymbol">
+                        <point_symbol rotatable="true" inner_radius="1001" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
+                    </symbol>
+                </end_symbol>
+                <dash_symbol>
+                    <symbol type="1" code="" name="Strecksymbol">
+                        <point_symbol rotatable="true" inner_radius="1001" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
+                    </symbol>
+                </dash_symbol>
+            </line_symbol>
+        </symbol>
+        <symbol type="4" id="10" code="1011" name="Out-of-bounds">
+            <area_symbol inner_color="-1" min_area="0" patterns="1">
+                <pattern type="1" angle="1.5708" line_spacing="600" line_offset="0" offset_along_line="0" color="1" line_width="251"/>
+            </area_symbol>
+        </symbol>
+        <symbol type="4" id="11" code="1012" name="Dangerous area">
+            <area_symbol inner_color="-1" min_area="0" patterns="2">
+                <pattern type="1" angle="0.785398" line_spacing="600" line_offset="0" offset_along_line="0" color="1" line_width="251"/>
+                <pattern type="1" angle="5.49779" line_spacing="600" line_offset="0" offset_along_line="0" color="1" line_width="251"/>
+            </area_symbol>
+        </symbol>
+        <symbol type="1" id="12" code="1013" name="Forbidden route">
+            <point_symbol inner_radius="1001" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
+                <element>
+                    <symbol type="2" code="">
+                        <line_symbol color="1" line_width="350" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1001" segment_length="4001" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4001" break_length="1001" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                    </symbol>
+                    <object type="1">
+                        <coords count="2">
+                            <coord x="1061" y="-1060"/>
+                            <coord x="-1060" y="1061"/>
+                        </coords>
+                        <pattern rotation="0">
+                            <coord x="0" y="0"/>
+                        </pattern>
+                    </object>
+                </element>
+                <element>
+                    <symbol type="2" code="">
+                        <line_symbol color="1" line_width="350" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1001" segment_length="4001" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4001" break_length="1001" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                    </symbol>
+                    <object type="1">
+                        <coords count="2">
+                            <coord x="1061" y="1061"/>
+                            <coord x="-1060" y="-1060"/>
+                        </coords>
+                        <pattern rotation="0">
+                            <coord x="0" y="0"/>
+                        </pattern>
+                    </object>
+                </element>
+            </point_symbol>
+        </symbol>
+        <symbol type="1" id="13" code="1014" name="Forbbiden route">
+            <point_symbol rotatable="true" inner_radius="1500" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
+                <element>
+                    <symbol type="2" code="">
+                        <line_symbol color="1" line_width="375" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1500" segment_length="6000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="6000" break_length="1500" dashes_in_group="1" in_group_break_length="749" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                    </symbol>
+                    <object type="1">
+                        <coords count="2">
+                            <coord x="-1001" y="0"/>
+                            <coord x="1001" y="0"/>
+                        </coords>
+                        <pattern rotation="0">
+                            <coord x="0" y="0"/>
+                        </pattern>
+                    </object>
+                </element>
+            </point_symbol>
+        </symbol>
+        <symbol type="1" id="14" code="1015" name="Crossing">
+            <point_symbol rotatable="true" inner_radius="1001" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
+                <element>
+                    <symbol type="2" code="">
+                        <line_symbol color="1" line_width="350" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1001" segment_length="4001" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4001" break_length="1001" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                    </symbol>
+                    <object type="1">
+                        <coords count="4">
+                            <coord x="-1500" y="724" flags="1"/>
+                            <coord x="-500" y="449"/>
+                            <coord x="500" y="449"/>
+                            <coord x="1500" y="724"/>
+                        </coords>
+                        <pattern rotation="0">
+                            <coord x="0" y="0"/>
+                        </pattern>
+                    </object>
+                </element>
+                <element>
+                    <symbol type="2" code="">
+                        <line_symbol color="1" line_width="350" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1001" segment_length="4001" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4001" break_length="1001" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                    </symbol>
+                    <object type="1">
+                        <coords count="4">
+                            <coord x="-1500" y="-724" flags="1"/>
+                            <coord x="-500" y="-448"/>
+                            <coord x="500" y="-448"/>
+                            <coord x="1500" y="-724"/>
+                        </coords>
+                        <pattern rotation="0">
+                            <coord x="0" y="0"/>
+                        </pattern>
+                    </object>
+                </element>
+            </point_symbol>
+        </symbol>
+        <symbol type="1" id="15" code="1016" name="Aid">
+            <point_symbol inner_radius="1001" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
+                <element>
+                    <symbol type="2" code="">
+                        <line_symbol color="1" line_width="1001" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1001" segment_length="4001" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4001" break_length="1001" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                    </symbol>
+                    <object type="1">
+                        <coords count="2">
+                            <coord x="-1500" y="0"/>
+                            <coord x="1500" y="0"/>
+                        </coords>
+                        <pattern rotation="0">
+                            <coord x="0" y="0"/>
+                        </pattern>
+                    </object>
+                </element>
+                <element>
+                    <symbol type="2" code="">
+                        <line_symbol color="1" line_width="1001" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1001" segment_length="4001" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4001" break_length="1001" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                    </symbol>
+                    <object type="1">
+                        <coords count="2">
+                            <coord x="0" y="-1500"/>
+                            <coord x="0" y="1500"/>
+                        </coords>
+                        <pattern rotation="0">
+                            <coord x="0" y="0"/>
+                        </pattern>
+                    </object>
+                </element>
+            </point_symbol>
+        </symbol>
+        <symbol type="1" id="16" code="1017" name="Refreshment">
+            <point_symbol inner_radius="1001" inner_color="-1" outer_width="0" outer_color="-1" elements="4">
+                <element>
+                    <symbol type="2" code="">
+                        <line_symbol color="1" line_width="350" minimum_length="0" join_style="1" cap_style="1" pointed_cap_length="1001" segment_length="4001" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4001" break_length="1001" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                    </symbol>
+                    <object type="1">
+                        <coords count="2">
+                            <coord x="-1340" y="-1395"/>
+                            <coord x="-820" y="1380"/>
+                        </coords>
+                        <pattern rotation="0">
+                            <coord x="0" y="0"/>
+                        </pattern>
+                    </object>
+                </element>
+                <element>
+                    <symbol type="2" code="">
+                        <line_symbol color="1" line_width="350" minimum_length="0" join_style="1" cap_style="1" pointed_cap_length="1001" segment_length="4001" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4001" break_length="1001" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                    </symbol>
+                    <object type="1">
+                        <coords count="2">
+                            <coord x="1340" y="-1395"/>
+                            <coord x="821" y="1380"/>
+                        </coords>
+                        <pattern rotation="0">
+                            <coord x="0" y="0"/>
+                        </pattern>
+                    </object>
+                </element>
+                <element>
+                    <symbol type="2" code="">
+                        <line_symbol color="1" line_width="350" minimum_length="0" join_style="2" cap_style="0" pointed_cap_length="1001" segment_length="4001" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4001" break_length="1001" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                    </symbol>
+                    <object type="1">
+                        <coords count="13">
+                            <coord x="0" y="-1770" flags="1"/>
+                            <coord x="600" y="-1770"/>
+                            <coord x="1200" y="-1620"/>
+                            <coord x="1340" y="-1395" flags="1"/>
+                            <coord x="1200" y="-1170"/>
+                            <coord x="600" y="-1020"/>
+                            <coord x="0" y="-1020" flags="1"/>
+                            <coord x="-600" y="-1020"/>
+                            <coord x="-1200" y="-1170"/>
+                            <coord x="-1340" y="-1395" flags="1"/>
+                            <coord x="-1200" y="-1620"/>
+                            <coord x="-600" y="-1770"/>
+                            <coord x="0" y="-1770"/>
+                        </coords>
+                        <pattern rotation="0">
+                            <coord x="0" y="0"/>
+                        </pattern>
+                    </object>
+                </element>
+                <element>
+                    <symbol type="2" code="">
+                        <line_symbol color="1" line_width="350" minimum_length="0" join_style="2" cap_style="1" pointed_cap_length="1001" segment_length="4001" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4001" break_length="1001" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                    </symbol>
+                    <object type="1">
+                        <coords count="4">
+                            <coord x="-820" y="1380" flags="1"/>
+                            <coord x="-679" y="1680"/>
+                            <coord x="680" y="1680"/>
+                            <coord x="821" y="1380"/>
+                        </coords>
+                        <pattern rotation="0">
+                            <coord x="0" y="0"/>
+                        </pattern>
+                    </object>
+                </element>
+            </point_symbol>
+        </symbol>
+        <symbol type="16" id="17" code="1018" name="Cover, with border line">
+            <combined_symbol parts="2">
+                <part symbol="9"/>
+                <part symbol="18"/>
+            </combined_symbol>
+        </symbol>
+        <symbol type="4" id="18" code="1019" name="Cover">
+            <area_symbol inner_color="0" min_area="0" patterns="0"/>
+        </symbol>
+        <symbol type="8" id="19" code="1020" name="Number/text">
+            <text_symbol icon_text="5">
+                <font family="Arial" size="5501"/>
+                <text color="1" line_spacing="1" paragraph_spacing="0" character_spacing="0" kerning="true"/>
+            </text_symbol>
+        </symbol>
+        <symbol type="4" id="20" code="1021" name="Grid">
+            <area_symbol inner_color="-1" min_area="0" patterns="2">
+                <pattern type="1" angle="0" line_spacing="6000" line_offset="0" offset_along_line="0" color="1" line_width="251"/>
+                <pattern type="1" angle="1.5708" line_spacing="6000" line_offset="0" offset_along_line="0" color="1" line_width="251"/>
+            </area_symbol>
+        </symbol>
+        <symbol type="4" id="21" code="1022" name="Point grid">
+            <area_symbol inner_color="-1" min_area="0" patterns="1">
+                <pattern type="2" angle="0" line_spacing="5000" line_offset="0" offset_along_line="0" point_distance="5000">
+                    <symbol type="1" code="" name="Mönsterfyllning 1">
+                        <point_symbol rotatable="true" inner_radius="449" inner_color="1" outer_width="0" outer_color="-1" elements="0"/>
+                    </symbol>
+                </pattern>
+            </area_symbol>
+        </symbol>
+        <symbol type="2" id="22" code="1023" name="Dotted line">
+            <line_symbol color="-1" line_width="0" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="2000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
+                <start_symbol>
+                    <symbol type="1" code="" name="Startsymbol">
+                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
+                    </symbol>
+                </start_symbol>
+                <mid_symbol>
+                    <symbol type="1" code="" name="Mittsymbol">
+                        <point_symbol rotatable="true" inner_radius="450" inner_color="1" outer_width="0" outer_color="-1" elements="0"/>
+                    </symbol>
+                </mid_symbol>
+                <end_symbol>
+                    <symbol type="1" code="" name="Slutsymbol">
+                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
+                    </symbol>
+                </end_symbol>
+                <dash_symbol>
+                    <symbol type="1" code="" name="Strecksymbol">
+                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
+                    </symbol>
+                </dash_symbol>
+            </line_symbol>
+        </symbol>
+    </symbols>
+    <parts count="1" current="0">
+        <part name="default part">
+            <objects count="0"/>
+        </part>
+    </parts>
+    <templates count="0" first_front_template="0">
+        <defaults use_meters_per_pixel="true" meters_per_pixel="0" dpi="0" scale="0"/>
+    </templates>
+    <view>
+        <grid color="#646464" display="0" alignment="0" additional_rotation="0" unit="1" h_spacing="500" v_spacing="500" h_offset="0" v_offset="0" snapping_enabled="true"/>
+        <map_view zoom="1" rotation="0" position_x="0" position_y="0">
+            <map opacity="1" visible="true"/>
+            <templates count="0"/>
+        </map_view>
+    </view>
+    <barrier version="6" required="0.6.0">
+        <undo/>
+        <redo/>
+    </barrier>
+</map>

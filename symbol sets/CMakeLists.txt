@@ -22,6 +22,9 @@ set(Mapper_SYMBOL_SETS
   10000/ISOM_10000.omap
   15000/ISOM_15000.omap
   
+  10000/Training_Course_Items_10000.omap
+  15000/Training_Course_Items_15000.omap
+  
   4000/ISSOM_cs_4000.omap
   5000/ISSOM_cs_5000.omap
   10000/ISOM_cs_10000.omap
