@@ -311,8 +311,6 @@ if(Mapper_PACKAGE_QT)
 	  printsupport/cocoaprintersupport
 	  printsupport/cupsprintersupport
 	  printsupport/windowsprintersupport
-	  sqldrivers/qsqlite.dll
-	  CACHE INTERNAL "The plugins which need to be deployed"
 	)
 
 	# Cf. Qt5's qt_de.ts for dependencies - qt_de.ts would not load without them.
@@ -347,6 +345,9 @@ if(Mapper_PACKAGE_ASSISTANT)
 	if(APPLE)
 		set(FIXUP_ASSISTANT "Mapper.app/Contents/MacOS/Assistant")
 	endif()
+	list(APPEND MAPPER_QT_PLUGINS
+	  sqldrivers/qsqlite
+	)
 
 	deploy_qt_translations(assistant qt_help)
 endif(Mapper_PACKAGE_ASSISTANT)
