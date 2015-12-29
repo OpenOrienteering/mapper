@@ -123,6 +123,7 @@ QString AboutDialog::about()
 	  << QStringLiteral("Vincent Poinsignon")
 	  << QStringLiteral("Russell Porter")
 	  << QStringLiteral("Christopher Schive")
+	  << QStringLiteral("Semyon Yakimov")
 	  << QStringLiteral("Aivars Zogla")
 	);
 	
