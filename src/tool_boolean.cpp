@@ -649,7 +649,7 @@ void BooleanTool::rebuildSegment(
 	// Get polygon point coordinates
 	const auto& start_point       = polygon.at(start_index);
 	const auto& second_point      = polygon.at((start_index + 1) % num_points);
-	const auto& second_last_point = polygon.at((end_index - 1) % num_points);
+	const auto& second_last_point = polygon.at((end_index ? end_index : num_points) - 1);
 	const auto& end_point         = polygon.at(end_index);
 	
 	// Try to find the middle coordinates in the same part
