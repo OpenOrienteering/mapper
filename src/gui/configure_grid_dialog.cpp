@@ -59,9 +59,6 @@ ConfigureGridDialog::ConfigureGridDialog(QWidget* parent, const MapGrid& grid, b
 	display_mode_combo->addItem(tr("Horizontal lines"), (int)MapGrid::HorizontalLines);
 	display_mode_combo->addItem(tr("Vertical lines"), (int)MapGrid::VerticalLines);
 	
-	
-	QGroupBox* alignment_group = new QGroupBox(tr("Alignment"));
-	
 	mag_north_radio = new QRadioButton(tr("Align with magnetic north"));
 	grid_north_radio = new QRadioButton(tr("Align with grid north"));
 	true_north_radio = new QRadioButton(tr("Align with true north"));
@@ -70,8 +67,6 @@ ConfigureGridDialog::ConfigureGridDialog(QWidget* parent, const MapGrid& grid, b
 	additional_rotation_edit = Util::SpinBox::create(Georeferencing::declinationPrecision(), -360, +360, trUtf8("°"));
 	additional_rotation_edit->setWrapping(true);
 	
-	
-	QGroupBox* position_group = new QGroupBox(tr("Positioning"));
 	
 	unit_combo = new QComboBox();
 	unit_combo->addItem(tr("meters in terrain"), (int)MapGrid::MetersInTerrain);
@@ -107,32 +102,30 @@ ConfigureGridDialog::ConfigureGridDialog(QWidget* parent, const MapGrid& grid, b
 	horz_offset_edit->setValue(grid.getHorizontalOffset());
 	vert_offset_edit->setValue(-1 * grid.getVerticalOffset());
 	
-	
-	QFormLayout* alignment_layout = new QFormLayout();
-	alignment_layout->addRow(mag_north_radio);
-	alignment_layout->addRow(grid_north_radio);
-	alignment_layout->addRow(true_north_radio);
-	alignment_layout->addRow(rotate_label, additional_rotation_edit);
-	alignment_group->setLayout(alignment_layout);
-	
-	QFormLayout* position_layout = new QFormLayout();
-	position_layout->addRow(tr("Unit:", "measurement unit"), unit_combo);
-	position_layout->addRow(horz_spacing_label, horz_spacing_edit);
-	position_layout->addRow(vert_spacing_label, vert_spacing_edit);
-	position_layout->addRow(new QLabel(" "));
-	position_layout->addRow(origin_label);
-	position_layout->addRow(horz_offset_label, horz_offset_edit);
-	position_layout->addRow(vert_offset_label, vert_offset_edit);
-	position_group->setLayout(position_layout);
-	
 	QFormLayout* layout = new QFormLayout();
 	layout->addRow(show_grid_check);
 	layout->addRow(snap_to_grid_check);
 	layout->addRow(tr("Line color:"), choose_color_button);
 	layout->addRow(tr("Display:"), display_mode_combo);
-	layout->addRow(new QLabel(" "));
-	layout->addRow(alignment_group);
-	layout->addRow(position_group);
+	layout->addItem(Util::SpacerItem::create(this));
+	
+	layout->addRow(Util::Headline::create(tr("Alignment")));
+	layout->addRow(mag_north_radio);
+	layout->addRow(grid_north_radio);
+	layout->addRow(true_north_radio);
+	layout->addRow(rotate_label, additional_rotation_edit);
+	layout->addItem(Util::SpacerItem::create(this));
+	
+	layout->addRow(Util::Headline::create(tr("Positioning")));
+	layout->addRow(tr("Unit:", "measurement unit"), unit_combo);
+	layout->addRow(horz_spacing_label, horz_spacing_edit);
+	layout->addRow(vert_spacing_label, vert_spacing_edit);
+	layout->addItem(Util::SpacerItem::create(this));
+	layout->addRow(origin_label);
+	layout->addRow(horz_offset_label, horz_offset_edit);
+	layout->addRow(vert_offset_label, vert_offset_edit);
+	layout->addItem(Util::SpacerItem::create(this));
+	
 	layout->addRow(button_box);
 	setLayout(layout);
 	
