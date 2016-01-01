@@ -453,7 +453,7 @@ void GeoreferencingDialog::updateWidgets()
 	ref_point_button->setEnabled(controller != nullptr);
 	
 	if (crs_selector->currentCRSTemplate())
-		projected_ref_label->setText(crs_selector->currentCRSTemplate()->coordinatesName() + ":");
+		projected_ref_label->setText(crs_selector->currentCRSTemplate()->coordinatesName(crs_selector->parameters()) + ":");
 	else
 		projected_ref_label->setText(tr("Local coordinates:"));
 	

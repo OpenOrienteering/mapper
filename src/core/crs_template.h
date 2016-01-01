@@ -140,6 +140,10 @@ public:
 	 * 
 	 * The id must be unique and different from "Local".
 	 * The template takes ownership of the parameters in the list.
+	 * 
+	 * The coordinates_name may contain placeholders written @id@ which refer
+	 * to the parameter with the given ID. They can be replaced with actual
+	 * parameter values when calling coordinatesName().
 	 */
 	CRSTemplate(
 	        const QString& template_id,
@@ -176,8 +180,13 @@ public:
 	/**
 	 * Returns the display name for the coordinates of this template,
 	 * e.g. "UTM coordinates".
+	 * 
+	 * The values list must be either of the same size as the templates list
+	 * parameters, or empty. The given parameter values are substituted for the
+	 * respective @id@ placeholders in the coordinates_name which was passed to
+	 * the constructor.
 	 */
-	QString coordinatesName() const;
+	QString coordinatesName(const std::vector<QString>& values = {}) const;
 	
 	/** 
 	 * Returns the specification string template in Proj.4 format.
@@ -268,12 +277,6 @@ inline
 QString CRSTemplate::name() const
 {
 	return template_name;
-}
-
-inline
-QString CRSTemplate::coordinatesName() const
-{
-	return coordinates_name;
 }
 
 inline
