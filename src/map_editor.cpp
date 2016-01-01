@@ -635,6 +635,9 @@ void MapEditorController::attach(MainWindow* window)
 			createColorWindow();
 			createTemplateWindow();
 			createTagEditor();
+			
+			if (map->getNumColors() == 0)
+				QTimer::singleShot(0, color_dock_widget, SLOT(show()));
 		}
 		
 		// Auto-select the edit tool
