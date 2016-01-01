@@ -603,6 +603,7 @@ private:
 	QAction* cut_act;
 	QAction* copy_act;
 	QAction* paste_act;
+	QAction* delete_act;
 	QAction* clear_undo_redo_history_act;
 	
 	QAction* pan_act;
@@ -656,7 +657,6 @@ private:
 	QAction* draw_fill_act;
 	QAction* draw_text_act;
 	
-	QAction* delete_act;
 	QAction* duplicate_act;
 	QAction* switch_symbol_act;
 	QAction* fill_border_act;
