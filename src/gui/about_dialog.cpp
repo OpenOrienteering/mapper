@@ -155,7 +155,7 @@ QString AboutDialog::about()
 	    // %3
 	    arg(tr("A free software for drawing orienteering maps")).
 	    // %4
-	    arg("http://openorienteering.org").
+	    arg("http://openorienteering.org/apps/mapper/").
 	    // %5
 	    arg(tr("This program is free software: you can redistribute it "
 	           "and/or modify it under the terms of the "
