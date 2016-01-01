@@ -281,6 +281,7 @@ bool FileFormatTest::compareMaps(const Map* a, const Map* b, QString& error)
 		a_geo.getProjectedRefPoint() != b_geo.getProjectedRefPoint() ||
 		a_geo.getProjectedCRSId() != b_geo.getProjectedCRSId() ||
 		a_geo.getProjectedCRSName() != b_geo.getProjectedCRSName() ||
+		a_geo.getProjectedCoordinatesName() != b_geo.getProjectedCoordinatesName() ||
 		a_geo.getProjectedCRSSpec() != b_geo.getProjectedCRSSpec() ||
 		qAbs(a_geo.getGeographicRefPoint().latitude() - b_geo.getGeographicRefPoint().latitude()) > 0.5e-8 ||
 		qAbs(a_geo.getGeographicRefPoint().longitude() - b_geo.getGeographicRefPoint().longitude())  > 0.5e-8)

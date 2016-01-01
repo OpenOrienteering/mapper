@@ -504,6 +504,15 @@ QString Georeferencing::getProjectedCRSName() const
 	return name;
 }
 
+QString Georeferencing::getProjectedCoordinatesName() const
+{
+	QString name = tr("Local coordinates");
+	if (auto temp = CRSTemplateRegistry().find(projected_crs_id))
+		name = temp->coordinatesName(projected_crs_parameters);
+	
+	return name;
+}
+
 double Georeferencing::getConvergence() const
 {
 	if (state != Normal || !isValid())

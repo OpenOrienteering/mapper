@@ -1649,7 +1649,7 @@ void MapEditorController::projectionChanged()
 {
 	const Georeferencing& geo(map->getGeoreferencing());
 	
-	projected_coordinates_act->setText(geo.getProjectedCRSName());
+	projected_coordinates_act->setText(geo.getProjectedCoordinatesName());
 	
 	bool enable_geographic = !geo.isLocal();
 	geographic_coordinates_act->setEnabled(enable_geographic);
