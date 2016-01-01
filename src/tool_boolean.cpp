@@ -418,6 +418,7 @@ void BooleanTool::pathObjectToPolygons(
         PolyMap& polymap)
 {
 	object->update();
+	auto coords = object->getRawCoordinateVector();
 	
 	polygons.reserve(polygons.size() + object->parts().size());
 	
@@ -431,9 +432,18 @@ void BooleanTool::pathObjectToPolygons(
 		ClipperLib::Path polygon;
 		for (auto i = 0u; i < path_coords_end; ++i)
 		{
-			auto point = MapCoord { path_coords[i].pos };
-			polygon.push_back(ClipperLib::IntPoint(point.nativeX(), point.nativeY()));
-			polymap.insertMulti(polygon.back(), std::make_pair(&part, &path_coords[i]));
+			auto& path_coord = path_coords[i];
+			if (path_coord.param == 0.0)
+			{
+				auto point = coords[path_coord.index];
+				polygon.push_back(ClipperLib::IntPoint(point.nativeX(), point.nativeY()));
+			}
+			else
+			{
+				auto point = MapCoord { path_coord.pos };
+				polygon.push_back(ClipperLib::IntPoint(point.nativeX(), point.nativeY()));
+			}
+			polymap.insertMulti(polygon.back(), std::make_pair(&part, &path_coord));
 		}
 		
 		bool orientation = Orientation(polygon);
@@ -479,7 +489,7 @@ void BooleanTool::polygonToPathPart(const ClipperLib::Path& polygon, const PolyM
 	{
 		// Did not find a valid starting point. Return the part as a polygon.
 		for (auto i = 0u; i < num_points; ++i)
-			object->addCoordinate(MapCoord(0.001 * polygon.at(i).X, 0.001 * polygon.at(i).Y), (i == 0));
+			object->addCoordinate(MapCoord::fromNative64(polygon.at(i).X, polygon.at(i).Y), i == 0);
 		object->parts().back().setClosed(true, true);
 		return;
 	}
@@ -710,7 +720,7 @@ void BooleanTool::rebuildSegment(
 	
 	// Find out start tangent
 	auto start_param = 0.0;
-	MapCoord start_coord = MapCoord(0.001 * start_point.X, 0.001 * start_point.Y);
+	MapCoord start_coord = MapCoord::fromNative64(start_point.X, start_point.Y);
 	MapCoord start_tangent;
 	MapCoord end_tangent;
 	MapCoord end_coord;
@@ -1010,7 +1020,7 @@ void BooleanTool::rebuildCoordinate(
         PathObject* object,
         bool start_new_part)
 {
-	MapCoord coord(0.001 * polygon.at(index).X, 0.001 * polygon.at(index).Y);
+	auto coord = MapCoord::fromNative64(polygon.at(index).X, polygon.at(index).Y);
 	if (polymap.contains(polygon.at(index)))
 	{
 		PathCoordInfo info = polymap.value(polygon.at(index));
