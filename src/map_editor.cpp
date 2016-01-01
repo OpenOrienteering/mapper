@@ -707,6 +707,12 @@ void MapEditorController::assignKeyboardShortcuts()
 	findAction("paste")->setShortcut(QKeySequence::Paste);
 	
 	// Custom keyboard shortcuts
+	
+	// QKeySequence::Deselect is empty for Windows, so be explicit all select-*
+	findAction("select-all")->setShortcut(QKeySequence("Ctrl+A"));
+	findAction("select-nothing")->setShortcut(QKeySequence("Ctrl+Shift+A"));
+	findAction("invert-selection")->setShortcut(QKeySequence("Ctrl+I"));
+	
 	findAction("showgrid")->setShortcut(QKeySequence("G"));
 	findAction("zoomin")->setShortcuts(QList<QKeySequence>() << QKeySequence("F7") << QKeySequence("+") << QKeySequence(Qt::KeypadModifier + Qt::Key_Plus));
 	findAction("zoomout")->setShortcuts(QList<QKeySequence>() << QKeySequence("F8") << QKeySequence("-") << QKeySequence(Qt::KeypadModifier + Qt::Key_Minus));
@@ -768,6 +774,10 @@ void MapEditorController::createActions()
 	copy_act = newAction("copy", tr("C&opy"), this, SLOT(copy()), "copy.png", QString::null, "edit_menu.html");
 	paste_act = newAction("paste", tr("&Paste"), this, SLOT(paste()), "paste", QString::null, "edit_menu.html");
 	delete_act = newAction("delete", tr("Delete"), this, SLOT(deleteClicked()), "delete.png", QString::null, "toolbars.html#delete");
+	select_all_act = newAction("select-all", tr("Select all"), this, SLOT(selectAll()), nullptr, QString::null, "edit_menu.html");
+	select_nothing_act = newAction("select-nothing", tr("Select nothing"), this, SLOT(selectNothing()), nullptr, QString::null, "edit_menu.html");
+	invert_selection_act = newAction("invert-selection", tr("Invert selection"), this, SLOT(invertSelection()), nullptr, QString::null, "edit_menu.html");
+	select_by_current_symbol_act = newAction("select-by-symbol", QApplication::translate("SymbolRenderWidget", "Select all objects with selected symbols"), this, SLOT(selectByCurrentSymbols()), nullptr, QString::null, "edit_menu.html");
 	clear_undo_redo_history_act = newAction("clearundoredohistory", tr("Clear undo / redo history"), this, SLOT(clearUndoRedoHistory()), NULL, tr("Clear the undo / redo history to reduce map file size."), "edit_menu.html");
 	
 	show_grid_act = newCheckAction("showgrid", tr("Show grid"), this, SLOT(showGrid()), "grid.png", QString::null, "grid.html");
@@ -944,6 +954,11 @@ void MapEditorController::createMenuAndToolbars()
 	edit_menu->addAction(copy_act);
 	edit_menu->addAction(paste_act);
 	edit_menu->addAction(delete_act);
+	edit_menu->addSeparator();
+	edit_menu->addAction(select_all_act);
+	edit_menu->addAction(select_nothing_act);
+	edit_menu->addAction(invert_selection_act);
+	edit_menu->addAction(select_by_current_symbol_act);
 	edit_menu->addSeparator();
 	edit_menu->addAction(clear_undo_redo_history_act);
 	
@@ -2528,6 +2543,54 @@ void MapEditorController::deselectObjectsClicked()
 		if (current_tool && current_tool->isDrawTool())
 			setEditTool();
 	}
+}
+
+void MapEditorController::selectAll()
+{
+	auto num_selected_objects = map->getNumSelectedObjects();
+	map->clearObjectSelection(false);
+	map->getCurrentPart()->applyOnAllObjects([this](Object* object, MapPart*, int) {
+		map->addObjectToSelection(object, false);
+		return true;
+	});
+	
+	if (map->getNumSelectedObjects() != num_selected_objects)
+	{
+		map->emitSelectionChanged();
+		if (current_tool && current_tool->isDrawTool())
+			setEditTool();
+	}
+}
+
+void MapEditorController::selectNothing()
+{
+	if (map->getNumSelectedObjects() > 0)
+		map->clearObjectSelection(true);
+}
+
+void MapEditorController::invertSelection()
+{
+	auto selection = Map::ObjectSelection{ map->selectedObjects() };
+	map->clearObjectSelection(false);
+	map->getCurrentPart()->applyOnAllObjects([this, &selection](Object* object, MapPart*, int) {
+		if (selection.find(object) == end(selection))
+		{
+			map->addObjectToSelection(object, false);
+		}
+		return true;
+	});
+	
+	if (map->getCurrentPart()->getNumObjects() > 0)
+	{
+		map->emitSelectionChanged();
+		if (current_tool && current_tool->isDrawTool())
+			setEditTool();
+	}
+}
+
+void MapEditorController::selectByCurrentSymbols()
+{
+	selectObjectsClicked(true);
 }
 
 void MapEditorController::switchDashesClicked()

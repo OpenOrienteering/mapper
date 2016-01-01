@@ -377,6 +377,16 @@ public slots:
 	void selectObjectsClicked(bool select_exclusively);
 	/** Deselects all objects with the selected symbol(s) */
 	void deselectObjectsClicked();
+	
+	/** Selects all objects in the current map part. */
+	void selectAll();
+	/** Clears the object selection. */
+	void selectNothing();
+	/** Inverts in the object selection in the current map part. */
+	void invertSelection();
+	/** Selects all objects having the current selected symbols. */
+	void selectByCurrentSymbols();
+	
 	/**
 	 * Reverses the selected object(s) direcction(s),
 	 * thus switching dash directions for lines.
@@ -604,6 +614,10 @@ private:
 	QAction* copy_act;
 	QAction* paste_act;
 	QAction* delete_act;
+	QAction* select_all_act;
+	QAction* select_nothing_act;
+	QAction* invert_selection_act;
+	QAction* select_by_current_symbol_act;
 	QAction* clear_undo_redo_history_act;
 	
 	QAction* pan_act;
