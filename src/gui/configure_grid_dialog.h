@@ -43,6 +43,8 @@ Q_OBJECT
 public:
 	ConfigureGridDialog(QWidget* parent, const MapGrid& grid, bool grid_visible);
 	
+	~ConfigureGridDialog() override;
+	
 	const MapGrid& grid() const;
 	
 	bool gridVisible() const;
@@ -58,7 +60,6 @@ private:
 	QCheckBox* show_grid_check;
 	QCheckBox* snap_to_grid_check;
 	QPushButton* choose_color_button;
-	QRgb current_color;
 	QComboBox* display_mode_combo;
 
 	QRadioButton* mag_north_radio;
@@ -75,6 +76,7 @@ private:
 	
 	MapGrid result_grid;
 	bool grid_visible;
+	QRgb current_color;
 };
 
 inline const MapGrid& ConfigureGridDialog::grid() const

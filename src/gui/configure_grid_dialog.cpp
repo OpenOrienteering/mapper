@@ -44,8 +44,9 @@
 
 ConfigureGridDialog::ConfigureGridDialog(QWidget* parent, const MapGrid& grid, bool grid_visible)
 : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint)
-, result_grid(grid)
-, grid_visible(grid_visible)
+, result_grid{ grid }
+, grid_visible{ grid_visible }
+, current_color{ grid.getColor() }
 {
 	setWindowTitle(tr("Configure grid"));
 	
@@ -92,7 +93,6 @@ ConfigureGridDialog::ConfigureGridDialog(QWidget* parent, const MapGrid& grid, b
 	
 	show_grid_check->setChecked(grid_visible);
 	snap_to_grid_check->setChecked(grid.isSnappingEnabled());
-	current_color = grid.getColor();
 	display_mode_combo->setCurrentIndex(display_mode_combo->findData((int)grid.getDisplayMode()));
 	if (grid.getAlignment() == MapGrid::MagneticNorth)
 		mag_north_radio->setChecked(true);
@@ -139,17 +139,23 @@ ConfigureGridDialog::ConfigureGridDialog(QWidget* parent, const MapGrid& grid, b
 	updateStates();
 	updateColorDisplay();
 	
-	connect(show_grid_check, SIGNAL(clicked(bool)), this, SLOT(updateStates()));
-	connect(choose_color_button, SIGNAL(clicked(bool)), this, SLOT(chooseColor()));
-	connect(display_mode_combo, SIGNAL(currentIndexChanged(int)), this, SLOT(updateStates()));
-	connect(mag_north_radio, SIGNAL(clicked(bool)), this, SLOT(updateStates()));
-	connect(grid_north_radio, SIGNAL(clicked(bool)), this, SLOT(updateStates()));
-	connect(true_north_radio, SIGNAL(clicked(bool)), this, SLOT(updateStates()));
-	connect(unit_combo, SIGNAL(currentIndexChanged(int)), this, SLOT(updateStates()));
-	connect(button_box, SIGNAL(helpRequested()), this, SLOT(showHelp()));
+	using TakingIntArgument = void (QComboBox::*)(int);
+	connect(show_grid_check, &QAbstractButton::clicked, this, &ConfigureGridDialog::updateStates);
+	connect(choose_color_button, &QAbstractButton::clicked, this, &ConfigureGridDialog::chooseColor);
+	connect(display_mode_combo, (TakingIntArgument)&QComboBox::currentIndexChanged, this, &ConfigureGridDialog::updateStates);
+	connect(mag_north_radio, &QAbstractButton::clicked, this, &ConfigureGridDialog::updateStates);
+	connect(grid_north_radio, &QAbstractButton::clicked, this, &ConfigureGridDialog::updateStates);
+	connect(true_north_radio, &QAbstractButton::clicked, this, &ConfigureGridDialog::updateStates);
+	connect(unit_combo, (TakingIntArgument)&QComboBox::currentIndexChanged, this, &ConfigureGridDialog::updateStates);
+	connect(button_box, &QDialogButtonBox::helpRequested, this, &ConfigureGridDialog::showHelp);
 	
-	connect(button_box, SIGNAL(accepted()), this, SLOT(okClicked()));
-	connect(button_box, SIGNAL(rejected()), this, SLOT(reject()));
+	connect(button_box, &QDialogButtonBox::accepted, this, &ConfigureGridDialog::okClicked);
+	connect(button_box, &QDialogButtonBox::rejected, this, &QDialog::reject);
+}
+
+ConfigureGridDialog::~ConfigureGridDialog()
+{
+	// nothing, not inlined
 }
 
 void ConfigureGridDialog::chooseColor()
