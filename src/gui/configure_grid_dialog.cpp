@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2014 Kai Pastor
+ *    Copyright 2014, 2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -42,11 +42,13 @@
 #include "../util_gui.h"
 
 
-ConfigureGridDialog::ConfigureGridDialog(QWidget* parent, const MapGrid& grid, bool grid_visible)
+ConfigureGridDialog::ConfigureGridDialog(QWidget* parent, const Map& map, bool grid_visible)
 : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint)
-, result_grid{ grid }
+, map(map)
+, grid{ map.getGrid() }
 , grid_visible{ grid_visible }
 , current_color{ grid.getColor() }
+, current_unit{ grid.getUnit() }
 {
 	setWindowTitle(tr("Configure grid"));
 	
@@ -96,7 +98,7 @@ ConfigureGridDialog::ConfigureGridDialog(QWidget* parent, const MapGrid& grid, b
 	else // if (grid.getAlignment() == MapGrid::TrueNorth)
 		true_north_radio->setChecked(true);
 	additional_rotation_edit->setValue(grid.getAdditionalRotation() * 180 / M_PI);
-	unit_combo->setCurrentIndex(unit_combo->findData((int)grid.getUnit()));
+	unit_combo->setCurrentIndex(unit_combo->findData(current_unit));
 	horz_spacing_edit->setValue(grid.getHorizontalSpacing());
 	vert_spacing_edit->setValue(grid.getVerticalSpacing());
 	horz_offset_edit->setValue(grid.getHorizontalOffset());
@@ -139,7 +141,7 @@ ConfigureGridDialog::ConfigureGridDialog(QWidget* parent, const MapGrid& grid, b
 	connect(mag_north_radio, &QAbstractButton::clicked, this, &ConfigureGridDialog::updateStates);
 	connect(grid_north_radio, &QAbstractButton::clicked, this, &ConfigureGridDialog::updateStates);
 	connect(true_north_radio, &QAbstractButton::clicked, this, &ConfigureGridDialog::updateStates);
-	connect(unit_combo, (TakingIntArgument)&QComboBox::currentIndexChanged, this, &ConfigureGridDialog::updateStates);
+	connect(unit_combo, (TakingIntArgument)&QComboBox::currentIndexChanged, this, &ConfigureGridDialog::unitChanged);
 	connect(button_box, &QDialogButtonBox::helpRequested, this, &ConfigureGridDialog::showHelp);
 	
 	connect(button_box, &QDialogButtonBox::accepted, this, &ConfigureGridDialog::okClicked);
@@ -171,28 +173,55 @@ void ConfigureGridDialog::updateColorDisplay()
 	choose_color_button->setIcon(icon);
 }
 
+void ConfigureGridDialog::unitChanged(int index)
+{
+	auto unit = (MapGrid::Unit)unit_combo->itemData(index).toInt();
+	if (unit != current_unit)
+	{
+		current_unit = unit;
+		double factor = 1.0;
+		switch (current_unit)
+		{
+		case MapGrid::MetersInTerrain:
+			factor = 0.001 * map.getScaleDenominator();
+			break;
+		case MapGrid::MillimetersOnMap:
+			factor = 1000.0 / map.getScaleDenominator();
+		    break;
+		default:
+			Q_ASSERT(!"Illegal unit");
+		}
+		
+		for (auto editor : { horz_spacing_edit, vert_spacing_edit, horz_offset_edit, vert_offset_edit })
+		{
+			editor->setValue(editor->value() * factor);
+		}
+	}
+	updateStates();
+}
+
 void ConfigureGridDialog::okClicked()
 {
 	grid_visible = show_grid_check->isChecked();
 	
-	result_grid.setSnappingEnabled(snap_to_grid_check->isChecked());
-	result_grid.setColor(current_color);
-	result_grid.setDisplayMode((MapGrid::DisplayMode)display_mode_combo->itemData(display_mode_combo->currentIndex()).toInt());
+	grid.setSnappingEnabled(snap_to_grid_check->isChecked());
+	grid.setColor(current_color);
+	grid.setDisplayMode((MapGrid::DisplayMode)display_mode_combo->itemData(display_mode_combo->currentIndex()).toInt());
 	
 	if (mag_north_radio->isChecked())
-		result_grid.setAlignment(MapGrid::MagneticNorth);
+		grid.setAlignment(MapGrid::MagneticNorth);
 	else if (grid_north_radio->isChecked())
-		result_grid.setAlignment(MapGrid::GridNorth);
+		grid.setAlignment(MapGrid::GridNorth);
 	else // if (true_north_radio->isChecked())
-		result_grid.setAlignment(MapGrid::TrueNorth);
-	result_grid.setAdditionalRotation(additional_rotation_edit->value() * M_PI / 180);
+		grid.setAlignment(MapGrid::TrueNorth);
+	grid.setAdditionalRotation(additional_rotation_edit->value() * M_PI / 180);
 	
-	result_grid.setUnit((MapGrid::Unit)unit_combo->itemData(unit_combo->currentIndex()).toInt());
+	grid.setUnit(current_unit);
 	
-	result_grid.setHorizontalSpacing(horz_spacing_edit->value());
-	result_grid.setVerticalSpacing(vert_spacing_edit->value());
-	result_grid.setHorizontalOffset(horz_offset_edit->value());
-	result_grid.setVerticalOffset(-1 * vert_offset_edit->value());
+	grid.setHorizontalSpacing(horz_spacing_edit->value());
+	grid.setVerticalSpacing(vert_spacing_edit->value());
+	grid.setHorizontalOffset(horz_offset_edit->value());
+	grid.setVerticalOffset(-1 * vert_offset_edit->value());
 	
 	accept();
 }
@@ -211,7 +240,7 @@ void ConfigureGridDialog::updateStates()
 	
 	unit_combo->setEnabled(show_grid_check->isChecked());
 	
-	QString unit_suffix = QString(" ") % ((unit_combo->itemData(unit_combo->currentIndex()).toInt() == (int)MapGrid::MetersInTerrain) ? tr("m", "meters") : tr("mm", "millimeters"));
+	QString unit_suffix = QString(" ") % ((current_unit == MapGrid::MetersInTerrain) ? tr("m", "meters") : tr("mm", "millimeters"));
 	horz_spacing_edit->setEnabled(show_grid_check->isChecked() && display_mode != MapGrid::HorizontalLines);
 	horz_spacing_edit->setSuffix(unit_suffix);
 	vert_spacing_edit->setEnabled(show_grid_check->isChecked() && display_mode != MapGrid::VerticalLines);

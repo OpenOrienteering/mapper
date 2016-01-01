@@ -1591,11 +1591,11 @@ void MapEditorController::showGrid()
 
 void MapEditorController::configureGrid()
 {
-	ConfigureGridDialog dialog(window, map->getGrid(), show_grid_act->isChecked());
+	ConfigureGridDialog dialog(window, *map, show_grid_act->isChecked());
 	dialog.setWindowModality(Qt::WindowModal);
 	if (dialog.exec() == QDialog::Accepted)
 	{
-		map->setGrid(dialog.grid());
+		map->setGrid(dialog.resultGrid());
 		if (dialog.gridVisible() != show_grid_act->isChecked())
 			show_grid_act->trigger();
 	}

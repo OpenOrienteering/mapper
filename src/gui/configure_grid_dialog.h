@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2014 Kai Pastor
+ *    Copyright 2014, 2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -41,17 +41,18 @@ class ConfigureGridDialog : public QDialog
 {
 Q_OBJECT
 public:
-	ConfigureGridDialog(QWidget* parent, const MapGrid& grid, bool grid_visible);
+	ConfigureGridDialog(QWidget* parent, const Map& map, bool grid_visible);
 	
 	~ConfigureGridDialog() override;
 	
-	const MapGrid& grid() const;
+	const MapGrid& resultGrid() const;
 	
 	bool gridVisible() const;
 	
 private slots:
 	void chooseColor();
 	void updateColorDisplay();
+	void unitChanged(int index);
 	void okClicked();
 	void updateStates();
 	void showHelp();
@@ -74,14 +75,16 @@ private:
 	QDoubleSpinBox* horz_offset_edit;
 	QDoubleSpinBox* vert_offset_edit;
 	
-	MapGrid result_grid;
+	const Map& map;
+	MapGrid grid;
 	bool grid_visible;
 	QRgb current_color;
+	MapGrid::Unit current_unit;
 };
 
-inline const MapGrid& ConfigureGridDialog::grid() const
+inline const MapGrid& ConfigureGridDialog::resultGrid() const
 {
-	return result_grid;
+	return grid;
 }
 
 inline bool ConfigureGridDialog::gridVisible() const
