@@ -109,11 +109,11 @@ void MeasureWidget::objectSelectionChanged()
 				}
 				double real_area = paper_area * paper_to_real * paper_to_real;
 				
-				auto papper_area_text = locale().toString(paper_area, 'f', 2);
+				auto paper_area_text = locale().toString(paper_area, 'f', 2);
 				auto real_area_text   = locale().toString(real_area, 'f', 0);
 				
 				body.append(table_row.arg(tr("Area:"),
-				                          papper_area_text, trUtf8("mm²", "square millimeters"),
+				                          paper_area_text, trUtf8("mm²", "square millimeters"),
 				                          real_area_text , trUtf8("m²", "square meters")));
 				
 				auto minimum_area = 0.0;
@@ -124,7 +124,7 @@ void MeasureWidget::objectSelectionChanged()
 					minimum_area_text = locale().toString(minimum_area, 'f', 2);
 				}
 				
-				if (paper_area < minimum_area && papper_area_text != minimum_area_text)
+				if (paper_area < minimum_area && paper_area_text != minimum_area_text)
 				{
 					extra_text = QLatin1String("<b>") % tr("This object is too small.") % QLatin1String("</b><br/>")
 					             % tr("The minimimum area is %1 %2.").arg(minimum_area_text, trUtf8("mm²"))
