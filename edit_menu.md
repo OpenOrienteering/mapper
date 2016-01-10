@@ -12,7 +12,7 @@ edited: 24 February 2013
 <b>Attention</b>: while changes to map objects can be undone this way, not all map changes are covered by the undo system. This includes changes to colors, symbols or templates. Because of this, it is very advisable to make a backup of your map before making such changes.</p>
 </td></tr>
 
-<tr><td><img class="small" src="../mapper-images/redo.png" width="32" height="32" border="0" alt="" /></td><td><h4>Redo</h4></td><td><h4>Ctrl+Y</h4></td><td>
+<tr><td><img class="small" src="../mapper-images/redo.png" width="32" height="32" border="0" alt="" /></td><td><h4>Redo</h4></td><td><h4>Ctrl+Y, Ctrl+Shift+Z</h4></td><td>
 <p>When you have taken Undo too far this will reverse the process &#8212; again one step at a time.</p></td></tr>
 
 <tr><td><img class="small" src="../mapper-images/cut.png" width="32" height="32" border="0" alt="" /></td><td><h4>Cut</h4></td><td><h4>Ctrl+X</h4></td><td>
