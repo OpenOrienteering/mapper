@@ -220,8 +220,8 @@
         <location filename="../src/gui/autosave_dialog.cpp" line="51"/>
         <source>%n bytes</source>
         <translation>
-            <numerusform>%n Datei</numerusform>
-            <numerusform>%n Dateien</numerusform>
+            <numerusform>%n Byte</numerusform>
+            <numerusform>%n Bytes</numerusform>
         </translation>
     </message>
     <message>
@@ -1542,7 +1542,7 @@
         <location filename="../src/core/crs_template_implementation.cpp" line="82"/>
         <source>EPSG @code@ coordinates</source>
         <extracomment>Don&apos;t translate @code@. It is placeholder.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>EPSG-@code@-Koordinaten</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="93"/>
@@ -2051,9 +2051,9 @@
     <message numerus="yes">
         <location filename="../src/file_import_export.cpp" line="93"/>
         <source>Dropped %n irregular object(s).</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Ein irreguläres Objekt ausgelassen.</numerusform>
+            <numerusform>%n irreguläre Objekte ausgelassen.</numerusform>
         </translation>
     </message>
     <message>
@@ -3427,17 +3427,17 @@ Importierte Daten auf Kartenmaßstab umrechnen?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="777"/>
         <source>Select all</source>
-        <translation type="unfinished">Alle auswählen</translation>
+        <translation>Alles auswählen</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="778"/>
         <source>Select nothing</source>
-        <translation type="unfinished"></translation>
+        <translation>Nichts auswählen</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="779"/>
         <source>Invert selection</source>
-        <translation type="unfinished">Auswahl umkehren</translation>
+        <translation>Auswahl umkehren</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1082"/>
@@ -4421,7 +4421,7 @@ Zoomen ist mit dem Mausrad möglich.</translation>
         <location filename="../src/file_format_ocad8.cpp" line="145"/>
         <source>%n color separation(s) were skipped, reason: Import disabled.</source>
         <translation>
-            <numerusform>Eine Farbseparation wurden ignoriert, Grund: Import deaktiviert.</numerusform>
+            <numerusform>Eine Farbseparation wurde ignoriert, Grund: Import deaktiviert.</numerusform>
             <numerusform>%n Farbseparationen wurden ignoriert, Grund: Import deaktiviert.</numerusform>
         </translation>
     </message>
@@ -6462,7 +6462,7 @@ Speichern im GIF-Format wird nicht unterstützt. Zeichnungen auf solchen Vorlage
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="212"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Entfernen</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="243"/>
@@ -6658,7 +6658,7 @@ Speichern im GIF-Format wird nicht unterstützt. Zeichnungen auf solchen Vorlage
         <location filename="../src/template_track.cpp" line="479"/>
         <source>%n path object(s) could not be imported (reason: missing coordinates).</source>
         <translation>
-            <numerusform>%n Pfadobjekt konnte nicht importiert werden (Grund: fehlende Koordinaten).</numerusform>
+            <numerusform>Ein Pfadobjekt konnte nicht importiert werden (Grund: fehlende Koordinaten).</numerusform>
             <numerusform>%n Pfadobjekte konnte nicht importiert werden (Grund: fehlende Koordinaten).</numerusform>
         </translation>
     </message>
