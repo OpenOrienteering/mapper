@@ -42,6 +42,12 @@ edited: 10 Januar 2016
 <b>Note:</b> When copying objects between different maps, their symbols and colors may be copied too in order to be able to display the objects in the new map in the same way as in the source map.</td>
 </tr>
 <tr>
+<td><img class="small" src="../mapper-images/delete.png" width="32" height="32" border="0" alt="" /></td>
+<td><b>Delete</b></td>
+<td><b>Del</b></td>
+<td>This action deletes the selected object(s).</td>
+</tr>
+<tr>
 <td></td>
 <td><b>Clear undo / redo history</b></td>
 <td></td>
