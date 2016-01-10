@@ -142,7 +142,8 @@ protected:
 	template< class F >
 	void importGeoreferencing(const OcdFile< F >& file);
 	
-	void importGeoreferencing(const QString& param_string);
+	/// Imports string 1039.
+	void importScalesSettings(const QString& param_string);
 	
 	template< class F >
 	void importColors(const OcdFile< F >& file);

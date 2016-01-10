@@ -221,13 +221,13 @@ void OcdFileImport::importGeoreferencing(const OcdFile< F >& file)
 	{
 		if (string.type == 1039)
 		{
-			importGeoreferencing(convertOcdString< typename F::Encoding >(file[string]));
+			importScalesSettings(convertOcdString< typename F::Encoding >(file[string]));
 			break;
 		}
 	}
 }
 
-void OcdFileImport::importGeoreferencing(const QString& param_string)
+void OcdFileImport::importScalesSettings(const QString& param_string)
 {
 	const QChar* unicode = param_string.unicode();
 	
@@ -268,6 +268,19 @@ void OcdFileImport::importGeoreferencing(const QString& param_string)
 			case 'y':
 			{
 				proj_ref_point.setY(param_value.toDouble(&y_ok));
+				break;
+			}
+			case 'd':
+			{
+				auto spacing = param_value.toDouble(&ok);
+				if (ok && spacing >= 0.001)
+				{
+					auto grid = map->getGrid();
+					grid.setUnit(MapGrid::MetersInTerrain);
+					grid.setHorizontalSpacing(spacing);
+					grid.setVerticalSpacing(spacing);
+					map->setGrid(grid);
+				}
 				break;
 			}
 			default:
