@@ -30,7 +30,3 @@ edited: 24 February 2013
 
 </table>
 
-
-<h3>Editing tools</h3>
-<p>OOMapper offers many editing tools which may be accessed through the <a href="tools_menu.md">Tools menu</a> or the <a href="toolbars.md">toolbars</a>.</p>
-
