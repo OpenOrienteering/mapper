@@ -1,5 +1,5 @@
 /*
- *    Copyright 2014 Kai Pastor
+ *    Copyright 2014, 2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -26,23 +26,57 @@
 #include "../src/settings.h"
 
 
+/**
+ * Saves the map to the given path iff this changes the file's content.
+ */
+void saveIfDifferent(const QString& path, Map* map, MapView* view = nullptr)
+{
+	QByteArray new_data;
+	QByteArray existing_data;
+	QFile file(path);
+	if (file.exists())
+	{
+		QVERIFY(file.open(QIODevice::ReadOnly));
+		existing_data.reserve(file.size()+1);
+		existing_data = file.readAll();
+		QCOMPARE(file.error(), QFileDevice::NoError);
+		file.close();
+		
+		new_data.reserve(existing_data.size()*2);
+	}
+	
+	QBuffer buffer(&new_data);
+	buffer.open(QFile::WriteOnly);
+	XMLFileExporter exporter(&buffer, map, view);
+	exporter.doExport();
+	QVERIFY(exporter.warnings().empty());
+	buffer.close();
+	
+	if (new_data != existing_data)
+	{
+		QVERIFY(file.open(QIODevice::WriteOnly | QIODevice::Truncate));
+		file.write(new_data);
+		QVERIFY(file.flush());
+		file.close();
+		QCOMPARE(file.error(), QFileDevice::NoError);
+	}
+}
+
 void SymbolSetTool::initTestCase()
 {
 	QCoreApplication::setOrganizationName("OpenOrienteering.org");
 	QCoreApplication::setApplicationName("SymbolSetTool");
+	Settings::getInstance().setSetting(Settings::General_RetainCompatiblity, QVariant(false));
 	
 	doStaticInitializations();
 	
 	symbol_set_dir.cd(QFileInfo(__FILE__).dir().absoluteFilePath(QString("../symbol sets")));
-	examples_dir.cd(QFileInfo(__FILE__).dir().absoluteFilePath(QString("../examples")));
+	QVERIFY(symbol_set_dir.exists());
 	
-	Settings::getInstance().setSetting(Settings::General_RetainCompatiblity, QVariant(false));
+	examples_dir.cd(QFileInfo(__FILE__).dir().absoluteFilePath(QString("../examples")));
+	QVERIFY(examples_dir.exists());
 }
 
-void SymbolSetTool::symbolSetDirExists()
-{
-	QVERIFY(symbol_set_dir.exists());
-}
 
 void SymbolSetTool::processSymbolSet_data()
 {
@@ -72,13 +106,13 @@ void SymbolSetTool::processSymbolSet()
 	QFETCH(unsigned int, source_scale);
 	QFETCH(unsigned int, target_scale);
 	
-	QString source_filename = QString("src/%1_%2.xmap").arg(name).arg(source_scale);
+	QString source_filename = QString("src/%1_%2.xmap").arg(name, QString::number(source_scale));
 	QVERIFY(symbol_set_dir.exists(source_filename));
 	
 	QString source_path = symbol_set_dir.absoluteFilePath(source_filename);
 	
 	Map map;
-	map.loadFrom(source_path, NULL, NULL, false, false);
+	map.loadFrom(source_path, nullptr, nullptr, false, false);
 	
 	const int num_symbols = map.getNumSymbols();
 	QStringList previous_numbers;
@@ -162,12 +196,10 @@ void SymbolSetTool::processSymbolSet()
 		}
 	}
 	
-	QString target_filename = QString("%2/%1_%2.omap").arg(name).arg(target_scale);
-	QFile target_file(symbol_set_dir.absoluteFilePath(target_filename));
-	target_file.open(QFile::WriteOnly);
-	XMLFileExporter exporter(&target_file, &map, NULL);
-	exporter.doExport();
+	QString target_filename = QString("%2/%1_%2.omap").arg(name, QString::number(target_scale));
+	saveIfDifferent(symbol_set_dir.absoluteFilePath(target_filename), &map);
 }
+
 
 void SymbolSetTool::processExamples_data()
 {
@@ -190,20 +222,15 @@ void SymbolSetTool::processExamples()
 	
 	Map map;
 	MapView view(&map);
-	map.loadFrom(source_path, NULL, &view, false, false);
+	map.loadFrom(source_path, nullptr, &view, false, false);
 	
 	QString target_filename = QString("%1.omap").arg(name);
-	QFile target_file(examples_dir.absoluteFilePath(target_filename));
-	target_file.open(QFile::WriteOnly);
-	XMLFileExporter exporter(&target_file, &map, &view);
-	exporter.doExport();
+	saveIfDifferent(examples_dir.absoluteFilePath(target_filename), &map, &view);
 }
 
+
 /*
- * We select a non-standard QPA because we don't need a real GUI window.
- * 
- * Normally, the "offscreen" plugin would be the correct one.
- * However, it bails out with a QFontDatabase error (cf. QTBUG-33674)
+ * We don't need a real GUI window.
  */
 auto qpa_selected = qputenv("QT_QPA_PLATFORM", "minimal");
 
