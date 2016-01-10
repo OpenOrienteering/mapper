@@ -18,9 +18,9 @@
     <message numerus="yes">
         <location filename="../src/file_import_export.cpp" line="93"/>
         <source>Dropped %n irregular object(s).</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Dropped one irregular object.</numerusform>
+            <numerusform>Dropped %n irregular objects.</numerusform>
         </translation>
     </message>
 </context>
@@ -30,7 +30,7 @@
         <location filename="../src/file_format_ocad8.cpp" line="145"/>
         <source>%n color separation(s) were skipped, reason: Import disabled.</source>
         <translation>
-            <numerusform>%n color separation was skipped, reason: Import disabled.</numerusform>
+            <numerusform>One color separation was skipped, reason: Import disabled.</numerusform>
             <numerusform>%n color separations were skipped, reason: Import disabled.</numerusform>
         </translation>
     </message>
@@ -41,7 +41,7 @@
         <location filename="../src/template_track.cpp" line="479"/>
         <source>%n path object(s) could not be imported (reason: missing coordinates).</source>
         <translation>
-            <numerusform>%n path object could not be imported (reason: missing coordinates).</numerusform>
+            <numerusform>One path object could not be imported (reason: missing coordinates).</numerusform>
             <numerusform>%n path objects could not be imported (reason: missing coordinates).</numerusform>
         </translation>
     </message>
