@@ -49,6 +49,30 @@ edited: 10 Januar 2016
 </tr>
 <tr>
 <td></td>
+<td><b>Select all</b></td>
+<td><b>Ctrl+A</b></td>
+<td>This selects all objects in the current map part.</td>
+</tr>
+<tr>
+<td></td>
+<td><b>Select nothing</b></td>
+<td><b>Ctrl+Shift+A</b></td>
+<td>After this action, no object is selected.</td>
+</tr>
+<tr>
+<td></td>
+<td><b>Invert selection</b></td>
+<td><b>Ctrl+I</b></td>
+<td>This action inverts the selection in the current map part.</td>
+</tr>
+<tr>
+<td></td>
+<td><b>Select all objects with selected symbols</b></td>
+<td></td>
+<td>After this action, the selection consists of all objects in the current map part which have the selected symbol(s).</td>
+</tr>
+<tr>
+<td></td>
 <td><b>Clear undo / redo history</b></td>
 <td></td>
 <td>Clears the history of undo and redo steps, i.e. all undo and redo steps will be deleted. This reduces the file size for map file formats where the last undo and redo steps are stored, e.g. the omap format.</td>
