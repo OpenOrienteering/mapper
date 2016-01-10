@@ -42,7 +42,7 @@ Note that key F6 starts panning immediately.</td></tr>
 <p>The coordinates of the cursor on the map are shown in the position box at the bottom right corner of the program window. Paper coordinates refer to positions on a paper print, from an arbitrary origin. If your map has been <a href="georeferencing.md">georeferenced</a>, additional coordinate systems will be available. Projected coordinates are meters of easting and northing. Latitude &amp; longitude may be expressed in decimal degrees or in degrees, minutes and seconds.</p>
 <p>The coordinate system may also be selected by a right-click on the position box at the bottom right corner of your screen which will provide the same choices.<br/><br/></p></td></tr>
 
-<tr><td></td><td><a name="fullscreen"><h4>Toggle Fullscreen</h4></a></td><td><h4>F11</h4></td><td>
+<tr><td></td><td><a name="fullscreen"><h4>Toggle fullscreen mode</h4></a></td><td><h4>F11</h4></td><td>
 <p>This toggle switches the display to full-screen mode and back.</p></td></tr>
 
 <tr><td><img class="small" src="../mapper-images/window-new.png" width="32" height="32" border="0" alt="" /></td><td><h4>Tag editor</h4></td><td><h4>Ctrl+Shift+6</h4></td><td>
