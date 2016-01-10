@@ -97,9 +97,9 @@ void AboutDialog::updateWindowTitle()
 QString AboutDialog::about()
 {
 	static QStringList developers_list( QStringList()
-	  << QStringLiteral("Peter Curtis")
-	  << QStringLiteral("Kai Pastor")
-	  << QStringLiteral("Thomas Schöps %1")
+	  << QStringLiteral("Peter Curtis (2012-2013)")
+	  << QStringLiteral("<b>Kai Pastor</b>")
+	  << QStringLiteral("Thomas Schöps (2012-2014, %1)")
 	);
 	
 	static QStringList contributors_list( QStringList()
@@ -117,12 +117,14 @@ QString AboutDialog::about()
 	  << QStringLiteral("Oskar Karlin")
 	  << QStringLiteral("Matthias Kühlewein")
 	  << QStringLiteral("Albin Larsson")
+	  << QStringLiteral("István Marczis")
 	  << QStringLiteral("Tojo Masaya")
 	  << QStringLiteral("Yevhen Mazur")
 	  << QStringLiteral("Fraser Mills")
 	  << QStringLiteral("Vincent Poinsignon")
 	  << QStringLiteral("Russell Porter")
 	  << QStringLiteral("Christopher Schive")
+	  << QStringLiteral("Semyon Yakimov")
 	  << QStringLiteral("Aivars Zogla")
 	);
 	
@@ -153,7 +155,7 @@ QString AboutDialog::about()
 	    // %3
 	    arg(tr("A free software for drawing orienteering maps")).
 	    // %4
-	    arg("http://openorienteering.org").
+	    arg("http://openorienteering.org/apps/mapper/").
 	    // %5
 	    arg(tr("This program is free software: you can redistribute it "
 	           "and/or modify it under the terms of the "
@@ -174,7 +176,7 @@ QString AboutDialog::about()
 	    // %8
 	    arg(tr("The OpenOrienteering developers in alphabetical order:")).
 	    // %9
-	    arg(formatBlock(developers_list).arg(tr("(project initiator)"))).
+	    arg(formatBlock(developers_list).arg(tr("(project initiator)").replace('(',QString::null).replace(')',QString::null))).
 	    // %10
 	    arg(tr("For contributions, thanks to:")).
 	    // %11

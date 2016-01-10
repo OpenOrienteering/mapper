@@ -21,161 +21,143 @@
 
 #include "measure_widget.h"
 
-#include <QGridLayout>
-#include <QLabel>
 #include <QLocale>
-#include <QSettings>
-#include <QStackedWidget>
+#include <QScroller>
 #include <QStringBuilder>
-#include <QStyle>
 
 #include "../../map.h"
-#include "../../global.h"
 #include "../../object.h"
 #include "../../symbol.h"
 #include "../../symbol_area.h"
 #include "../../symbol_line.h"
 
+
 MeasureWidget::MeasureWidget(Map* map, QWidget* parent)
-: QWidget(parent),
-  map(map)
+: QTextBrowser(parent)
+, map(map)
 {
-	QSettings settings;
-	settings.beginGroup("MeasureWidget");
-	preferred_size = settings.value("size", QSize(250, 150)).toSize();
-	settings.endGroup();
+	QScroller::grabGesture(viewport(), QScroller::TouchGesture);
 	
-	QGridLayout* layout = new QGridLayout();
-	setLayout(layout);
+	connect(map, &Map::objectSelectionChanged, this, &MeasureWidget::objectSelectionChanged);
+	connect(map, &Map::selectedObjectEdited, this, &MeasureWidget::objectSelectionChanged);
+	connect(map, &Map::symbolChanged, this, &MeasureWidget::objectSelectionChanged);
 	
-	int margin = style()->pixelMetric(QStyle::PM_DefaultFrameWidth);
-	layout->setContentsMargins(margin, margin, margin, margin);
-	
-	headline_label = new QLabel();
-	layout->addWidget(headline_label, 0, 0, 1, -1);
-	
-	length_stack = new QStackedWidget();
-	length_stack->addWidget(new QLabel(""));
-	length_stack->addWidget(new QLabel(tr("Boundary length:"))); // for area
-	length_stack->addWidget(new QLabel(tr("Length:")));          // for line
-	layout->addWidget(length_stack, 1, 0);
-	paper_length_label = new QLabel();
-	layout->addWidget(paper_length_label, 1, 1);
-	real_length_label = new QLabel();
-	layout->addWidget(real_length_label, 1, 2);
-	
-	area_stack = new QStackedWidget();
-	area_stack->addWidget(new QLabel(""));
-	area_stack->addWidget(new QLabel(tr("Area:")));
-	layout->addWidget(area_stack, 2, 0);
-	paper_area_label = new QLabel();
-	layout->addWidget(paper_area_label, 2, 1);
-	real_area_label = new QLabel();
-	layout->addWidget(real_area_label, 2, 2);
-	
-	warning_label = new QLabel();
-	warning_label->setWordWrap(true);
-	layout->addWidget(warning_label, 3, 0, 1, -1);
-	layout->setRowStretch(3, 1);
-	
-	layout->setColumnStretch(1, 1);
-	layout->setColumnStretch(2, 1);
-	
-	connect(map, SIGNAL(objectSelectionChanged()), this, SLOT(objectSelectionChanged()));
-	connect(map, SIGNAL(selectedObjectEdited()), this, SLOT(objectSelectionChanged()));
-	connect(map, SIGNAL(symbolChanged(int, const Symbol*, const Symbol*)), this, SLOT(objectSelectionChanged()));
 	objectSelectionChanged();
 }
 
 MeasureWidget::~MeasureWidget()
 {
-	QSettings settings;
-	settings.beginGroup("MeasureWidget");
-	settings.setValue("size", size());
-	settings.endGroup();
-}
-
-QSize MeasureWidget::sizeHint() const
-{
-	return preferred_size;
+	// nothing
 }
 
 void MeasureWidget::objectSelectionChanged()
 {
-	length_stack->setCurrentIndex(0);
-	paper_length_label->clear();
-	real_length_label->clear();
-	area_stack->setCurrentIndex(0);
-	paper_area_label->clear();
-	real_area_label->clear();
-	warning_label->setText(" <br/> <br/> ");
+	QString headline;   // inline HTML
+	QString body;       // HTML blocks
+	QString extra_text; // inline HTML
 	
-	if (map->getNumSelectedObjects() == 0)
+	auto& selected_objects = map->selectedObjects();
+	if (selected_objects.empty())
 	{
-		headline_label->setText("<b>" % tr("No object selected.") % "</b>");
+		extra_text = tr("No object selected.");
 	}
-	else if (map->getNumSelectedObjects() > 1)
+	else if (selected_objects.size() > 1)
 	{
-		headline_label->setText("<b>" % tr("%1 objects selected.").arg(locale().toString(map->getNumSelectedObjects())) % "</b>");
+		extra_text = tr("%1 objects selected.").arg(locale().toString(map->getNumSelectedObjects()));
 	}
 	else
 	{
-		Object* object = *map->selectedObjectsBegin();
-		object->update();
-		
+		const Object* object = *begin(selected_objects);
 		const Symbol* symbol = object->getSymbol();
-		headline_label->setText(symbol->getNumberAsString() % " <b>" % symbol->getName() % "</b>");
+		headline = symbol->getNumberAsString() % QLatin1Char(' ') % symbol->getName();
 		
 		if (object->getType() != Object::Path)
 		{
-			warning_label->setText(tr("The selected object is not a path."));
+			extra_text = tr("The selected object is not a path.");
 		}
 		else
 		{
-			const PathPartVector& parts = static_cast<PathObject*>(object)->parts();
+			body = QLatin1String{ "<table>" };
+			static const QString table_row{ QLatin1String{
+			  "<tr><td>%1</td><td align=\"center\">%2 %3</td><td align=\"center\">(%4 %5)</td></tr>" 
+			} };
+			
+			double paper_to_real = 0.001 * map->getScaleDenominator();
+			
+			object->update();
+			const PathPartVector& parts = static_cast<const PathObject*>(object)->parts();
 			Q_ASSERT(!parts.empty());
 			
-			double mm_to_meters  = 0.001 * map->getScaleDenominator();
+			auto paper_length = parts.front().length();
+			auto real_length  = paper_length * paper_to_real;
 			
-			double length_mm     = parts.front().length();
-			double length_meters = length_mm * mm_to_meters;
-			
-			paper_length_label->setText(locale().toString(length_mm, 'f', 2) % " " % tr("mm", "millimeters"));
-			real_length_label->setText(locale().toString(length_meters, 'f', 0) % " " % tr("m", "meters"));
+			auto paper_length_text = locale().toString(paper_length, 'f', 2);
+			auto real_length_text  = locale().toString(real_length, 'f', 0);
 			
 			if (symbol->getContainedTypes() & Symbol::Area)
 			{
-				length_stack->setCurrentIndex(1);
-				area_stack->setCurrentIndex(1);
+				body.append(table_row.arg(tr("Boundary length:"),
+				                          paper_length_text, tr("mm", "millimeters"),
+				                          real_length_text, tr("m", "meters")));
 				
-				double area_mm = { parts.front().calculateArea() };
+				auto paper_area = parts.front().calculateArea();
 				if (parts.size() > 1)
 				{
-					area_mm *= 2;
-					for (auto part : parts)
-						area_mm -= part.calculateArea();
+					paper_area *= 2;
+					for (const auto& part : parts)
+						paper_area -= part.calculateArea();
 				}
-				double area_meters = area_mm * mm_to_meters * mm_to_meters;
+				double real_area = paper_area * paper_to_real * paper_to_real;
 				
-				paper_area_label->setText(locale().toString(area_mm, 'f', 2) % " " % trUtf8("mm²", "square millimeters"));
-				real_area_label->setText(locale().toString(area_meters, 'f', 0) % " " % trUtf8("m²", "square meters"));
+				auto paper_area_text = locale().toString(paper_area, 'f', 2);
+				auto real_area_text   = locale().toString(real_area, 'f', 0);
 				
-				if (symbol->getType() == Symbol::Area && static_cast<const AreaSymbol*>(symbol)->getMinimumArea() > 1000*area_mm)
-					warning_label->setText("<b>" % tr("This object is too small.") % "</b><br/>" %
-					                       tr("The minimimum area is %1 %2.").arg(locale().toString(static_cast<const AreaSymbol*>(symbol)->getMinimumArea()/1000.0, 'f', 2), trUtf8("mm²")));
-				else
-					warning_label->setText(tr("Note: Boundary length and area are correct only if there are no self-intersections and holes are used as such."));
+				body.append(table_row.arg(tr("Area:"),
+				                          paper_area_text, trUtf8("mm²", "square millimeters"),
+				                          real_area_text , trUtf8("m²", "square meters")));
+				
+				auto minimum_area = 0.0;
+				auto minimum_area_text = QString{ };
+				if (symbol->getType() == Symbol::Area)
+				{
+					minimum_area      = 0.001 * static_cast<const AreaSymbol*>(symbol)->getMinimumArea();
+					minimum_area_text = locale().toString(minimum_area, 'f', 2);
+				}
+				
+				if (paper_area < minimum_area && paper_area_text != minimum_area_text)
+				{
+					extra_text = QLatin1String("<b>") % tr("This object is too small.") % QLatin1String("</b><br/>")
+					             % tr("The minimimum area is %1 %2.").arg(minimum_area_text, trUtf8("mm²"))
+					             % QLatin1String("<br/>");
+				}
+				extra_text.append(tr("Note: Boundary length and area are correct only if there are no self-intersections and holes are used as such."));
 			}
 			else
 			{
-				length_stack->setCurrentIndex(2);
-				if (symbol->getType() == Symbol::Line && static_cast<const LineSymbol*>(symbol)->getMinimumLength() > 1000*length_mm)
+				body.append(table_row.arg(tr("Length:"),
+				                          paper_length_text, tr("mm", "millimeters"),
+				                          real_length_text, tr("m", "meters")));
+				
+				auto minimum_length  = 0.0;
+				auto minimum_length_text = QString{ };
+				if (symbol->getType() == Symbol::Line)
 				{
-					auto length_string = locale().toString(static_cast<const LineSymbol*>(symbol)->getMinimumLength()/1000.0, 'f', 2);
-					warning_label->setText("<b>" % tr("This line is too short.") % "</b><br/>" %
-					                       tr("The minimum length is %1 %2.").arg(length_string).arg(tr("mm")));
+					minimum_length      = 0.001 * static_cast<const LineSymbol*>(symbol)->getMinimumLength();
+					minimum_length_text = locale().toString(minimum_length, 'f', 2);
+				}
+				
+				if (paper_length < minimum_length && paper_length_text != minimum_length_text)
+				{
+					extra_text = QLatin1String("<b>") % tr("This line is too short.") % QLatin1String("</b><br/>")
+					             % tr("The minimum length is %1 %2.").arg(minimum_length_text).arg(tr("mm"));
 				}
 			}
+			
+			body.append(QLatin1String("</table>"));
 		}
 	}
+	
+	if (!extra_text.isEmpty())
+		body.append(QLatin1String("<p>") % extra_text % QLatin1String("</p>"));
+	setHtml(QLatin1String("<p><b>") % headline % QLatin1String("</b></p>") % body);
 }

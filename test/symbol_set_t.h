@@ -1,5 +1,5 @@
 /*
- *    Copyright 2014 Kai Pastor
+ *    Copyright 2014, 2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -17,13 +17,13 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _OPENORIENTEERING_SYMBOL_SET_T_H
-#define _OPENORIENTEERING_SYMBOL_SET_T_H
+#ifndef OPENORIENTEERING_SYMBOL_SET_T_H
+#define OPENORIENTEERING_SYMBOL_SET_T_H
 
 #include <QtTest/QtTest>
 
 /**
- * @test Creates compressed files and scales symbol sets.
+ * @test Updates compressed and scaled symbol sets and examples files.
  * 
  * This tool overwrites the .omap symbol set files in the symbol set directory.
  * This is not only a test uncovering changes in the standard file format but
@@ -31,6 +31,8 @@
  * of verbose source symbol sets.
  * 
  * This tool also creates compressed example files out of orignal .xmap files.
+ * 
+ * The target files remain untouched if there is no change.
  */
 class SymbolSetTool : public QObject
 {
@@ -38,7 +40,6 @@ Q_OBJECT
 	
 private slots:
 	void initTestCase();
-	void symbolSetDirExists();
 	void processSymbolSet_data();
 	void processSymbolSet();
 	void processExamples_data();
@@ -49,4 +50,4 @@ private:
 	QDir examples_dir;
 };
 
-#endif // _OPENORIENTEERING_SYMBOL_SET_T_H
+#endif // OPENORIENTEERING_SYMBOL_SET_T_H

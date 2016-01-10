@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -18,14 +19,10 @@
  */
 
 
-#ifndef _OPENORIENTEERING_MEASURE_WIDGET_H_
-#define _OPENORIENTEERING_MEASURE_WIDGET_H_
+#ifndef OPENORIENTEERING_MEASURE_WIDGET_H
+#define OPENORIENTEERING_MEASURE_WIDGET_H
 
-#include <QSize>
-#include <QWidget>
-
-class QLabel;
-class QStackedWidget;
+#include <QTextBrowser>
 
 class Map;
 
@@ -33,18 +30,15 @@ class Map;
  * The widget which is shown in a dock widget when the measure tool is active.
  * Displays information about the currently selected objects.
  */
-class MeasureWidget : public QWidget
+class MeasureWidget : public QTextBrowser
 {
 Q_OBJECT
 public:
 	/** Creates a new MeasureWidget for a given map. */
-	MeasureWidget(Map* map, QWidget* parent = NULL);
+	MeasureWidget(Map* map, QWidget* parent = nullptr);
 
 	/** Destroys the MeasureWidget. */
-	virtual ~MeasureWidget();
-	
-	/** Returns the preferred size for this widget. */
-	virtual QSize sizeHint() const;
+	~MeasureWidget() override;
 	
 protected slots:
 	/**
@@ -55,17 +49,6 @@ protected slots:
 	
 private:
 	Map* map;
-	
-	QSize preferred_size;
-	
-	QLabel* headline_label;
-	QStackedWidget* length_stack;
-	QLabel* paper_length_label;
-	QLabel* real_length_label;
-	QStackedWidget* area_stack;
-	QLabel* paper_area_label;
-	QLabel* real_area_label;
-	QLabel* warning_label;
 };
 
 #endif

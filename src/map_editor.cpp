@@ -635,6 +635,9 @@ void MapEditorController::attach(MainWindow* window)
 			createColorWindow();
 			createTemplateWindow();
 			createTagEditor();
+			
+			if (map->getNumColors() == 0)
+				QTimer::singleShot(0, color_dock_widget, SLOT(show()));
 		}
 		
 		// Auto-select the edit tool
@@ -707,6 +710,12 @@ void MapEditorController::assignKeyboardShortcuts()
 	findAction("paste")->setShortcut(QKeySequence::Paste);
 	
 	// Custom keyboard shortcuts
+	
+	// QKeySequence::Deselect is empty for Windows, so be explicit all select-*
+	findAction("select-all")->setShortcut(QKeySequence("Ctrl+A"));
+	findAction("select-nothing")->setShortcut(QKeySequence("Ctrl+Shift+A"));
+	findAction("invert-selection")->setShortcut(QKeySequence("Ctrl+I"));
+	
 	findAction("showgrid")->setShortcut(QKeySequence("G"));
 	findAction("zoomin")->setShortcuts(QList<QKeySequence>() << QKeySequence("F7") << QKeySequence("+") << QKeySequence(Qt::KeypadModifier + Qt::Key_Plus));
 	findAction("zoomout")->setShortcuts(QList<QKeySequence>() << QKeySequence("F8") << QKeySequence("-") << QKeySequence(Qt::KeypadModifier + Qt::Key_Minus));
@@ -767,6 +776,11 @@ void MapEditorController::createActions()
 	cut_act = newAction("cut", tr("Cu&t"), this, SLOT(cut()), "cut.png", QString::null, "edit_menu.html");
 	copy_act = newAction("copy", tr("C&opy"), this, SLOT(copy()), "copy.png", QString::null, "edit_menu.html");
 	paste_act = newAction("paste", tr("&Paste"), this, SLOT(paste()), "paste", QString::null, "edit_menu.html");
+	delete_act = newAction("delete", tr("Delete"), this, SLOT(deleteClicked()), "delete.png", QString::null, "toolbars.html#delete");
+	select_all_act = newAction("select-all", tr("Select all"), this, SLOT(selectAll()), nullptr, QString::null, "edit_menu.html");
+	select_nothing_act = newAction("select-nothing", tr("Select nothing"), this, SLOT(selectNothing()), nullptr, QString::null, "edit_menu.html");
+	invert_selection_act = newAction("invert-selection", tr("Invert selection"), this, SLOT(invertSelection()), nullptr, QString::null, "edit_menu.html");
+	select_by_current_symbol_act = newAction("select-by-symbol", QApplication::translate("SymbolRenderWidget", "Select all objects with selected symbols"), this, SLOT(selectByCurrentSymbols()), nullptr, QString::null, "edit_menu.html");
 	clear_undo_redo_history_act = newAction("clearundoredohistory", tr("Clear undo / redo history"), this, SLOT(clearUndoRedoHistory()), NULL, tr("Clear the undo / redo history to reduce map file size."), "edit_menu.html");
 	
 	show_grid_act = newCheckAction("showgrid", tr("Show grid"), this, SLOT(showGrid()), "grid.png", QString::null, "grid.html");
@@ -814,7 +828,6 @@ void MapEditorController::createActions()
 	draw_freehand_act = newToolAction("drawfreehand", tr("Draw free-handedly"), this, SLOT(drawFreehandClicked()), "draw-freehand.png", QString::null, "toolbars.html#tool_draw_freehand"); // TODO: documentation
 	draw_fill_act = newToolAction("drawfill", tr("Fill bounded areas"), this, SLOT(drawFillClicked()), "tool-fill.png", QString::null, "toolbars.html#tool_draw_fill"); // TODO: documentation
 	draw_text_act = newToolAction("drawtext", tr("Write text"), this, SLOT(drawTextClicked()), "draw-text.png", QString::null, "toolbars.html#tool_draw_text");
-	delete_act = newAction("delete", tr("Delete"), this, SLOT(deleteClicked()), "delete.png", QString::null, "toolbars.html#delete");
 	duplicate_act = newAction("duplicate", tr("Duplicate"), this, SLOT(duplicateClicked()), "tool-duplicate.png", QString::null, "toolbars.html#duplicate");
 	switch_symbol_act = newAction("switchsymbol", tr("Switch symbol"), this, SLOT(switchSymbolClicked()), "tool-switch-symbol.png", QString::null, "toolbars.html#switch_symbol");
 	fill_border_act = newAction("fillborder", tr("Fill / Create border"), this, SLOT(fillBorderClicked()), "tool-fill-border.png", QString::null, "toolbars.html#fill_create_border");
@@ -943,6 +956,12 @@ void MapEditorController::createMenuAndToolbars()
 	edit_menu->addAction(cut_act);
 	edit_menu->addAction(copy_act);
 	edit_menu->addAction(paste_act);
+	edit_menu->addAction(delete_act);
+	edit_menu->addSeparator();
+	edit_menu->addAction(select_all_act);
+	edit_menu->addAction(select_nothing_act);
+	edit_menu->addAction(invert_selection_act);
+	edit_menu->addAction(select_by_current_symbol_act);
 	edit_menu->addSeparator();
 	edit_menu->addAction(clear_undo_redo_history_act);
 	
@@ -987,7 +1006,6 @@ void MapEditorController::createMenuAndToolbars()
 	tools_menu->addAction(draw_freehand_act);
 	tools_menu->addAction(draw_fill_act);
 	tools_menu->addAction(draw_text_act);
-	tools_menu->addAction(delete_act);
 	tools_menu->addAction(duplicate_act);
 	tools_menu->addAction(switch_symbol_act);
 	tools_menu->addAction(fill_border_act);
@@ -1573,11 +1591,11 @@ void MapEditorController::showGrid()
 
 void MapEditorController::configureGrid()
 {
-	ConfigureGridDialog dialog(window, map->getGrid(), show_grid_act->isChecked());
+	ConfigureGridDialog dialog(window, *map, show_grid_act->isChecked());
 	dialog.setWindowModality(Qt::WindowModal);
 	if (dialog.exec() == QDialog::Accepted)
 	{
-		map->setGrid(dialog.grid());
+		map->setGrid(dialog.resultGrid());
 		if (dialog.gridVisible() != show_grid_act->isChecked())
 			show_grid_act->trigger();
 	}
@@ -1649,7 +1667,7 @@ void MapEditorController::projectionChanged()
 {
 	const Georeferencing& geo(map->getGeoreferencing());
 	
-	projected_coordinates_act->setText(geo.getProjectedCRSName());
+	projected_coordinates_act->setText(geo.getProjectedCoordinatesName());
 	
 	bool enable_geographic = !geo.isLocal();
 	geographic_coordinates_act->setEnabled(enable_geographic);
@@ -2528,6 +2546,54 @@ void MapEditorController::deselectObjectsClicked()
 		if (current_tool && current_tool->isDrawTool())
 			setEditTool();
 	}
+}
+
+void MapEditorController::selectAll()
+{
+	auto num_selected_objects = map->getNumSelectedObjects();
+	map->clearObjectSelection(false);
+	map->getCurrentPart()->applyOnAllObjects([this](Object* object, MapPart*, int) {
+		map->addObjectToSelection(object, false);
+		return true;
+	});
+	
+	if (map->getNumSelectedObjects() != num_selected_objects)
+	{
+		map->emitSelectionChanged();
+		if (current_tool && current_tool->isDrawTool())
+			setEditTool();
+	}
+}
+
+void MapEditorController::selectNothing()
+{
+	if (map->getNumSelectedObjects() > 0)
+		map->clearObjectSelection(true);
+}
+
+void MapEditorController::invertSelection()
+{
+	auto selection = Map::ObjectSelection{ map->selectedObjects() };
+	map->clearObjectSelection(false);
+	map->getCurrentPart()->applyOnAllObjects([this, &selection](Object* object, MapPart*, int) {
+		if (selection.find(object) == end(selection))
+		{
+			map->addObjectToSelection(object, false);
+		}
+		return true;
+	});
+	
+	if (map->getCurrentPart()->getNumObjects() > 0)
+	{
+		map->emitSelectionChanged();
+		if (current_tool && current_tool->isDrawTool())
+			setEditTool();
+	}
+}
+
+void MapEditorController::selectByCurrentSymbols()
+{
+	selectObjectsClicked(true);
 }
 
 void MapEditorController::switchDashesClicked()

@@ -21,6 +21,7 @@
 
 #include "crs_template.h"
 
+#include <QStringBuilder>
 
 
 // From crs_template_implementation.h/.cpp
@@ -73,6 +74,25 @@ CRSTemplate::~CRSTemplate()
 {
 	for (auto&& param : params)
 		delete param;
+}
+
+QString CRSTemplate::coordinatesName(const std::vector<QString>& values) const
+{
+	Q_ASSERT(params.size() == values.size()
+	         || values.empty());
+	
+	auto name = coordinates_name;
+	
+	auto value = begin(values);
+	auto last_value = end(values);
+	for (auto key = begin(params), last = end(params);
+	     key != last && value != last_value;
+	     ++key, ++value)
+	{
+		name.replace(QLatin1String("@") % (*key)->id() % QLatin1String("@"), *value);
+	}
+	
+	return name;
 }
 
 

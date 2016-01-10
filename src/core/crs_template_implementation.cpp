@@ -78,7 +78,8 @@ CRSTemplateRegistry::TemplateList defaultList()
 	temp = make_unique<CRSTemplate>(
 		"EPSG",
 		Georeferencing::tr("by EPSG code", "as in: The CRS is specified by EPSG code"),
-		Georeferencing::tr("Local coordinates"),
+		//: Don't translate @code@. It is placeholder.
+		Georeferencing::tr("EPSG @code@ coordinates"),
 		"+init=epsg:%1",
 	    CRSTemplate::ParameterList {
 	        new IntRangeParameter("code", Georeferencing::tr("EPSG code"), 1000, 99999)

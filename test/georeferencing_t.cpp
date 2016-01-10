@@ -81,8 +81,12 @@ void GeoreferencingTest::testCRSTemplates()
 	auto epsg_template = CRSTemplateRegistry().find("EPSG");
 	QCOMPARE(epsg_template->parameters().size(), (std::size_t)1);
 	
+	QCOMPARE(epsg_template->coordinatesName(), QString{"EPSG @code@ coordinates"});
+	QCOMPARE(epsg_template->coordinatesName({ "4326" }), QString{"EPSG 4326 coordinates"});
+	
 	georef.setProjectedCRS("EPSG", epsg_template->specificationTemplate().arg("5514"), { "5514" });
 	QVERIFY(georef.isValid());
+	QCOMPARE(georef.getProjectedCoordinatesName(), QString{"EPSG 5514 coordinates"});
 }
 
 

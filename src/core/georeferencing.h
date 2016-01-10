@@ -290,6 +290,11 @@ public:
 	 */
 	QString getProjectedCRSName() const;
 	
+	/** 
+	 * Returns the name of the projected coordinates.
+	 */
+	QString getProjectedCoordinatesName() const;
+	
 	/**
 	 * Returns the array of projected crs parameter values.
 	 */
