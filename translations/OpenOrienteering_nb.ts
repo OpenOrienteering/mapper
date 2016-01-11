@@ -266,7 +266,7 @@
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="58"/>
         <source>File %1 was not properly closed. At the moment, there are two versions:</source>
-        <translation>Fil %1 ble ikke riktig lukket. For øyeblikket, finnes to versjoner av filen:</translation>
+        <translation>Fil %1 ble ikke riktig lukket. For øyeblikket finnes to versjoner av filen:</translation>
     </message>
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="72"/>
