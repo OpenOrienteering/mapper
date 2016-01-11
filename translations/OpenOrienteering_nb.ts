@@ -598,7 +598,7 @@
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="66"/>
         <source>Align with true north</source>
-        <translation>Tilpass med sant nord</translation>
+        <translation>Tilpass med sann nord</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="68"/>
