@@ -1497,7 +1497,7 @@
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="523"/>
         <source>The program must be restarted for the language change to take effect!</source>
-        <translation>Programmet må startes på nytt for at endringen av språk skal bli effektiv!</translation>
+        <translation>Programmet må startes på nytt for at endringen av språk skal tre i kraft!</translation>
     </message>
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="592"/>
