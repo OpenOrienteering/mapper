@@ -1177,7 +1177,7 @@
     <message>
         <location filename="../src/tool_edit_point.cpp" line="685"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on point: Delete it; on path: Add a new dash point; with &lt;b&gt;%2&lt;/b&gt;: Add a normal point. </source>
-        <translation>&lt;b&gt;%1+Klikk&lt;/b&gt; på punkt: Slett det; på linje:                          Legg til nytt styrepunkt; med &lt;b&gt;%2&lt;/b&gt;: Legg til normalpunkt. </translation>
+        <translation>&lt;b&gt;%1+Klikk&lt;/b&gt; på punkt: Slett det; på linje: Legg til nytt styrepunkt; med &lt;b&gt;%2&lt;/b&gt;: Legg til normalpunkt. </translation>
     </message>
     <message>
         <location filename="../src/tool_edit_point.cpp" line="688"/>
