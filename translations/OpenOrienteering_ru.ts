@@ -6487,7 +6487,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/template_track.cpp" line="170"/>
         <source>Projects the track using an orthographic projection with center at the track&apos;s coordinate average. Allows adjustment of the transformation and setting the map georeferencing using the adjusted track position.</source>
-        <translation>Проецировать трек с использованием ортогональной проекцией с центром в точке усредненных координат трека. Это позволит осуществить трансформацию карты и установить её геопривязку подгонкой относительно позиции трека.</translation>
+        <translation>Проецировать трек с использованием ортогональной проекции с центром в точке усредненных координат трека. Это позволит осуществить трансформацию карты и установить её геопривязку подгонкой относительно позиции трека.</translation>
     </message>
     <message>
         <location filename="../src/template_track.cpp" line="398"/>
