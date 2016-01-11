@@ -22,7 +22,7 @@
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="173"/>
         <source>&lt;a %1&gt;All about licenses, copyright notices, conditions and disclaimers.&lt;/a&gt;</source>
-        <translation>&lt;a %1&gt;Allt om lisenser, copyright info, betingelser og fraskrivningsklausul.&lt;/a&gt;</translation>
+        <translation>&lt;a %1&gt;Alt om lisenser, copyright info, betingelser og fraskrivningsklausul.&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="177"/>
