@@ -1580,7 +1580,7 @@
         <location filename="../src/core/crs_template_implementation.cpp" line="82"/>
         <source>EPSG @code@ coordinates</source>
         <extracomment>Don&apos;t translate @code@. It is placeholder.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>EPSG @code@ koordinater</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="93"/>
@@ -3053,17 +3053,17 @@ Skal de importerte dataene omskaleres?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="777"/>
         <source>Select all</source>
-        <translation type="unfinished">Velg alle</translation>
+        <translation>Velg alle</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="778"/>
         <source>Select nothing</source>
-        <translation type="unfinished"></translation>
+        <translation>Velg ingen</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="779"/>
         <source>Invert selection</source>
-        <translation type="unfinished">Invertér valg</translation>
+        <translation>Invertér valg</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="789"/>
@@ -6657,7 +6657,7 @@ Hvis du ikke har til hensikt å endre denne malen, er det ikke noe problem.</tra
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="212"/>
         <source>Remove</source>
-        <translation type="unfinished">Fjern</translation>
+        <translation>Fjern</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="218"/>
