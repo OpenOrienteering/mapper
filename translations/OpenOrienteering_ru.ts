@@ -1530,7 +1530,7 @@
         <location filename="../src/core/crs_template_implementation.cpp" line="82"/>
         <source>EPSG @code@ coordinates</source>
         <extracomment>Don&apos;t translate @code@. It is placeholder.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Координаты EPSG @code@</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="93"/>
@@ -3350,17 +3350,17 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="777"/>
         <source>Select all</source>
-        <translation type="unfinished">Выбрать всё</translation>
+        <translation>Выбрать всё</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="778"/>
         <source>Select nothing</source>
-        <translation type="unfinished"></translation>
+        <translation>Ничего не выбрать</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="779"/>
         <source>Invert selection</source>
-        <translation type="unfinished">Обратить выделение</translation>
+        <translation>Обратить выделение</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1082"/>
