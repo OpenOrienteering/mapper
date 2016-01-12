@@ -1530,7 +1530,7 @@
         <location filename="../src/core/crs_template_implementation.cpp" line="82"/>
         <source>EPSG @code@ coordinates</source>
         <extracomment>Don&apos;t translate @code@. It is placeholder.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Координаты EPSG @code@</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="93"/>
@@ -3350,17 +3350,17 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="777"/>
         <source>Select all</source>
-        <translation type="unfinished">Выбрать всё</translation>
+        <translation>Выбрать всё</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="778"/>
         <source>Select nothing</source>
-        <translation type="unfinished"></translation>
+        <translation>Ничего не выбрать</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="779"/>
         <source>Invert selection</source>
-        <translation type="unfinished">Обратить выделение</translation>
+        <translation>Обратить выделение</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1082"/>
@@ -6487,7 +6487,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/template_track.cpp" line="170"/>
         <source>Projects the track using an orthographic projection with center at the track&apos;s coordinate average. Allows adjustment of the transformation and setting the map georeferencing using the adjusted track position.</source>
-        <translation>Проецировать трек с использованием ортогональной проекцией с центром в точке усредненных координат трека. Это позволит осуществить трансформацию карты и установить её геопривязку подгонкой относительно позиции трека.</translation>
+        <translation>Проецировать трек с использованием ортогональной проекции с центром в точке усредненных координат трека. Это позволит осуществить трансформацию карты и установить её геопривязку подгонкой относительно позиции трека.</translation>
     </message>
     <message>
         <location filename="../src/template_track.cpp" line="398"/>
