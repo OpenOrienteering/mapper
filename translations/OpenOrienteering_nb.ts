@@ -22,7 +22,7 @@
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="173"/>
         <source>&lt;a %1&gt;All about licenses, copyright notices, conditions and disclaimers.&lt;/a&gt;</source>
-        <translation>&lt;a %1&gt;Allt om lisenser, copyright info, betingelser og fraskrivningsklausul.&lt;/a&gt;</translation>
+        <translation>&lt;a %1&gt;Alt om lisenser, copyright info, betingelser og fraskrivningsklausul.&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="177"/>
@@ -266,7 +266,7 @@
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="58"/>
         <source>File %1 was not properly closed. At the moment, there are two versions:</source>
-        <translation>Fil %1 ble ikke riktig lukket. For øyeblikket, finnes to versjoner av filen:</translation>
+        <translation>Fil %1 ble ikke riktig lukket. For øyeblikket finnes to versjoner av filen:</translation>
     </message>
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="72"/>
@@ -598,7 +598,7 @@
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="66"/>
         <source>Align with true north</source>
-        <translation>Tilpass med sant nord</translation>
+        <translation>Tilpass med sann nord</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="68"/>
@@ -1177,7 +1177,7 @@
     <message>
         <location filename="../src/tool_edit_point.cpp" line="685"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on point: Delete it; on path: Add a new dash point; with &lt;b&gt;%2&lt;/b&gt;: Add a normal point. </source>
-        <translation>&lt;b&gt;%1+Klikk&lt;/b&gt; på punkt: Slett det; på linje:                          Legg til nytt styrepunkt; med &lt;b&gt;%2&lt;/b&gt;: Legg til normalpunkt. </translation>
+        <translation>&lt;b&gt;%1+Klikk&lt;/b&gt; på punkt: Slett det; på linje: Legg til nytt styrepunkt; med &lt;b&gt;%2&lt;/b&gt;: Legg til normalpunkt. </translation>
     </message>
     <message>
         <location filename="../src/tool_edit_point.cpp" line="688"/>
@@ -1497,7 +1497,7 @@
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="523"/>
         <source>The program must be restarted for the language change to take effect!</source>
-        <translation>Programmet må startes på nytt for at endringen av språk skal bli effektiv!</translation>
+        <translation>Programmet må startes på nytt for at endringen av språk skal tre i kraft!</translation>
     </message>
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="592"/>
@@ -1580,7 +1580,7 @@
         <location filename="../src/core/crs_template_implementation.cpp" line="82"/>
         <source>EPSG @code@ coordinates</source>
         <extracomment>Don&apos;t translate @code@. It is placeholder.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>EPSG @code@ koordinater</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="93"/>
@@ -3053,17 +3053,17 @@ Skal de importerte dataene omskaleres?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="777"/>
         <source>Select all</source>
-        <translation type="unfinished">Velg alle</translation>
+        <translation>Velg alle</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="778"/>
         <source>Select nothing</source>
-        <translation type="unfinished"></translation>
+        <translation>Velg ingen</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="779"/>
         <source>Invert selection</source>
-        <translation type="unfinished">Invertér valg</translation>
+        <translation>Invertér valg</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="789"/>
@@ -6657,7 +6657,7 @@ Hvis du ikke har til hensikt å endre denne malen, er det ikke noe problem.</tra
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="212"/>
         <source>Remove</source>
-        <translation type="unfinished">Fjern</translation>
+        <translation>Fjern</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="218"/>
