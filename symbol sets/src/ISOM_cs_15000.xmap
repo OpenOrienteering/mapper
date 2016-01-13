@@ -166,80 +166,17 @@
         <symbol type="2" id="0" code="101" name="Vrstevnice">
             <description>Čára spojující body stejné {nadmořské} výšky. Základní výškový interval mezi vrstevnicemi je 5 metrů. Nejmenší ohyb vrstevnice je 0,25 mm od středu ke středu linie.
 Barva: hnědá.</description>
-            <line_symbol color="4" line_width="140" minimum_length="0" join_style="2" cap_style="1" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Symbol pro začátek">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
-                <mid_symbol>
-                    <symbol type="1" code="" name="Vnitřní symbol">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Symbol pro konec">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Symbol pro čárku">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
-            </line_symbol>
+            <line_symbol color="4" line_width="140" minimum_length="0" join_style="2" cap_style="1" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="2" id="1" code="102" name="Hlavní vrstevnice">
             <description>Každá pátá vrstevnice se kreslí silnější čarou. To napomáhá rychlé-mu odhadu výškového rozdílu a celkového tvaru terénu. Tam, kde se hlavní vrstevnice vyskytuje v oblasti s mnoha detaily, může být nakreslena jako normální vrstevnice {aby některé detaily nebyly neúměrně zvýrazněny}.
 Barva: hnědá.</description>
-            <line_symbol color="4" line_width="250" minimum_length="0" join_style="2" cap_style="1" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Symbol pro začátek">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
-                <mid_symbol>
-                    <symbol type="1" code="" name="Vnitřní symbol">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Symbol pro konec">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Symbol pro čárku">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
-            </line_symbol>
+            <line_symbol color="4" line_width="250" minimum_length="0" join_style="2" cap_style="1" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="2" id="2" code="103" name="Pomocná vrstevnice">
             <description>Mezivrstevnice. Pomocné vrstevnice se použijí tam, kde dají více informací o utváření terénu. Užívají se pouze tehdy, když není možné znázornění řádnými vrstevnicemi. Mezi sousedními vrstevnicemi může být použita pouze jedna pomocná vrstevnice.
 Barva: hnědá.</description>
-            <line_symbol color="4" line_width="140" minimum_length="0" join_style="2" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="1250" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Symbol pro začátek">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
-                <mid_symbol>
-                    <symbol type="1" code="" name="Vnitřní symbol">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Symbol pro konec">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Symbol pro čárku">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
-            </line_symbol>
+            <line_symbol color="4" line_width="140" minimum_length="0" join_style="2" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="1250" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="1" id="3" code="104" name="Spádnice">
             <description>Spádnice se mohou kreslit na nižší straně vrstevnice, například v ose údolí nebo v prohlubních. {Nekreslí se na hřbetech a kupkách.} Používají se pouze tehdy, když je nutné vyjasnit směr spádu.
@@ -333,11 +270,6 @@ Barva: hnědá.</description>
                         </point_symbol>
                     </symbol>
                 </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Symbol pro čárku">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
             </line_symbol>
         </symbol>
         <symbol type="1" id="6" code="106.0.1" name="Sráz, nejmenší velikost">
@@ -451,11 +383,6 @@ Barva: hnědá.</description>
                         </point_symbol>
                     </symbol>
                 </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Symbol pro čárku">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
             </line_symbol>
         </symbol>
         <symbol type="1" id="8" code="106.1.1" name="Velmi vysoký sráz, nejmenší velikost">
@@ -507,131 +434,44 @@ Barva: hnědá.</description>
         </symbol>
         <symbol type="2" id="9" code="106.2" name="Sráz, souvislá čára">
             <description>Tento symbol se použije k zobrazení celého rozsahu širokých srázů.</description>
-            <line_symbol color="4" line_width="140" minimum_length="500" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Symbol pro začátek">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
-                <mid_symbol>
-                    <symbol type="1" code="" name="Vnitřní symbol">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Symbol pro konec">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Symbol pro čárku">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
-            </line_symbol>
+            <line_symbol color="4" line_width="140" minimum_length="500" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="2" id="10" code="107" name="Hráz">
             <description>Výrazný hliněný val {- úzký násep bez komunikace}. Minimální výška je 1 m. {Širší náspy se kreslí pomocí dvou značek 106.}
 Barva: hnědá.</description>
             <line_symbol color="4" line_width="140" minimum_length="0" join_style="2" cap_style="0" pointed_cap_length="1000" segment_length="2500" end_length="1250" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Symbol pro začátek">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
                 <mid_symbol>
                     <symbol type="1" code="" name="Vnitřní symbol">
                         <point_symbol rotatable="true" inner_radius="200" inner_color="4" outer_width="0" outer_color="-1" elements="0"/>
                     </symbol>
                 </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Symbol pro konec">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Symbol pro čárku">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
             </line_symbol>
         </symbol>
         <symbol type="2" id="11" code="108" name="Malá hráz">
             <description>Malá nebo částečně rozpadlá hráz může být znázorněna přerušova-nou linií. Minimální výška je 0,5 m.
 Barva: hnědá.</description>
             <line_symbol color="4" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="2240" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Symbol pro začátek">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
                 <mid_symbol>
                     <symbol type="1" code="" name="Vnitřní symbol">
                         <point_symbol rotatable="true" inner_radius="200" inner_color="4" outer_width="0" outer_color="-1" elements="0"/>
                     </symbol>
                 </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Symbol pro konec">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Symbol pro čárku">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
             </line_symbol>
         </symbol>
         <symbol type="2" id="12" code="109" name="Rýha">
             <description>Erozní rýha nebo příkop, které jsou příliš úzké pro znázornění {vrstevnicemi nebo} značkou 106, se znázorní jedinou čarou. Šířka linie odpovídá šířce rýhy. Minimální hloubka 1 m. Konec čáry je zašpičatělý.
 Barva: hnědá.</description>
-            <line_symbol color="4" line_width="250" minimum_length="0" join_style="2" cap_style="3" pointed_cap_length="747" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Symbol pro začátek">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
-                <mid_symbol>
-                    <symbol type="1" code="" name="Vnitřní symbol">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Symbol pro konec">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Symbol pro čárku">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
-            </line_symbol>
+            <line_symbol color="4" line_width="250" minimum_length="0" join_style="2" cap_style="3" pointed_cap_length="747" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="2" id="13" code="110" name="Mělká rýha">
             <description>Mělká erozní rýha nebo příkop. Minimální hloubka 0,5 m.
 Barva: hnědá.</description>
             <line_symbol color="-1" line_width="0" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="500" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Symbol pro začátek">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
                 <mid_symbol>
                     <symbol type="1" code="" name="Vnitřní symbol">
                         <point_symbol rotatable="true" inner_radius="125" inner_color="4" outer_width="0" outer_color="-1" elements="0"/>
                     </symbol>
                 </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Symbol pro konec">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Symbol pro čárku">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
             </line_symbol>
         </symbol>
         <symbol type="1" id="14" code="112" name="Malá kupka">
@@ -844,11 +684,6 @@ Barva: černá.</description>
                         </point_symbol>
                     </symbol>
                 </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Symbol pro čárku">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
             </line_symbol>
         </symbol>
         <symbol type="1" id="22" code="201.0.1" name="Neschůdný sráz, nejmenší velikost">
@@ -901,53 +736,11 @@ Barva: černá.</description>
         </symbol>
         <symbol type="2" id="23" code="201.1" name="Neschůdný sráz, žádné čárky">
             <description>Pro svislé skalní srázy mohou být čárky vynechány, byly-li by krátké, například úzké průchody mezi skalami (průchod má být kreslen v šířce alespoň 0,3 mm).</description>
-            <line_symbol color="1" line_width="350" minimum_length="600" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="600" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Symbol pro začátek">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
-                <mid_symbol>
-                    <symbol type="1" code="" name="Vnitřní symbol">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Symbol pro konec">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Symbol pro čárku">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
-            </line_symbol>
+            <line_symbol color="1" line_width="350" minimum_length="600" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="600" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="2" id="24" code="201.2" name="Neschůdný sráz, souvislá čára">
             <description>Tento symbol se použije k zobrazení celého rozsahu širokého srázu.</description>
-            <line_symbol color="1" line_width="120" minimum_length="500" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Symbol pro začátek">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
-                <mid_symbol>
-                    <symbol type="1" code="" name="Vnitřní symbol">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Symbol pro konec">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Symbol pro čárku">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
-            </line_symbol>
+            <line_symbol color="1" line_width="120" minimum_length="500" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="4" id="25" code="202" name="Skalní masiv/stěna">
             <description>V případě neobvyklých útvarů, jako jsou skalní bloky {věže} nebo velké srázy nebo obrovské balvany, mohou být skály nakresleny půdorysem bez čárek.
@@ -1018,11 +811,6 @@ Barva: černá.</description>
                         </point_symbol>
                     </symbol>
                 </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Symbol pro čárku">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
             </line_symbol>
         </symbol>
         <symbol type="1" id="27" code="203.0.1" name="Schůdný skalní sráz, nejmenší velikost">
@@ -1075,28 +863,7 @@ Barva: černá.</description>
         </symbol>
         <symbol type="2" id="28" code="203.1" name="Schůdný skalní sráz, bez čárek">
             <description>Should be used if the direction of fall of the rock face is apparent from the contours and the legibility is good.</description>
-            <line_symbol color="1" line_width="250" minimum_length="600" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Symbol pro začátek">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
-                <mid_symbol>
-                    <symbol type="1" code="" name="Vnitřní symbol">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Symbol pro konec">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Symbol pro čárku">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
-            </line_symbol>
+            <line_symbol color="1" line_width="250" minimum_length="600" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="1" id="29" code="203.1.1" name="Schůdný skalní sráz, bez čárek, nejmenší velikost">
             <description>Should be used if the direction of fall of the rock face is apparent from the contours and the legibility is good.</description>
@@ -1119,28 +886,7 @@ Barva: černá.</description>
         </symbol>
         <symbol type="2" id="30" code="203.2" name="Schůdný skalní sráz, bez čárek, kulaté">
             <description>For passable rock faces shown without tags the ends of the line may be rounded to improve legibility.</description>
-            <line_symbol color="1" line_width="250" minimum_length="600" join_style="2" cap_style="1" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Symbol pro začátek">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
-                <mid_symbol>
-                    <symbol type="1" code="" name="Vnitřní symbol">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Symbol pro konec">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Symbol pro čárku">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
-            </line_symbol>
+            <line_symbol color="1" line_width="250" minimum_length="600" join_style="2" cap_style="1" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="1" id="31" code="203.2.1" name="Schůdný skalní sráz, bez čárek, kulaté, nejmenší velikost">
             <description>For passable rock faces shown without tags the ends of the line may be rounded to improve legibility.</description>
@@ -1347,28 +1093,7 @@ Barva: modrá 50% (60 linek/cm), černá.</description>
         </symbol>
         <symbol type="2" id="46" code="301.1" name="Jezero, okrajová čára">
             <description>Černá břehová čára ukazuje, že objekt nelze překročit.</description>
-            <line_symbol color="1" line_width="180" minimum_length="0" join_style="0" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Symbol pro začátek">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
-                <mid_symbol>
-                    <symbol type="1" code="" name="Vnitřní symbol">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Symbol pro konec">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Symbol pro čárku">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
-            </line_symbol>
+            <line_symbol color="1" line_width="180" minimum_length="0" join_style="0" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="16" id="47" code="301.2" name="Jezero, s břehovou čárou">
             <combined_symbol parts="2">
@@ -1416,105 +1141,27 @@ Poznámka:
 
 Nepřekonatelná řeka nebo kanál se kreslí s černými břehovými čarami. Břehové čáry jsou přerušeny v místě brodu. {Pro nepřekona-telné vodní toky užší než 0,2 mm v tiskovém měřítku se použije místo modré 50% modrá 100%.}
 Barva: modrá 50% (60 linek/cm), černá.</description>
-            <line_symbol color="7" line_width="250" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Symbol pro začátek">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
-                <mid_symbol>
-                    <symbol type="1" code="" name="Vnitřní symbol">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Symbol pro konec">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Symbol pro čárku">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
-            </line_symbol>
+            <line_symbol color="7" line_width="250" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="2" id="51" code="306" name="Překonatelný malý vodní tok">
             <description>Překonatelný vodní tok (včetně větších odvodňovacích příkopů) široký méně než 2 m. Pro zlepšení čitelnosti se odvodňovací příkop v bažině znázorňuje jako překonatelný vodní tok (305).
 Barva: modrá.</description>
-            <line_symbol color="7" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Symbol pro začátek">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
-                <mid_symbol>
-                    <symbol type="1" code="" name="Vnitřní symbol">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Symbol pro konec">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Symbol pro čárku">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
-            </line_symbol>
+            <line_symbol color="7" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="2" id="52" code="307" name="Malý vodní příkop">
             <description>Přírodní nebo umělý malý vodní příkop {vodoteč}, který může obsa-hovat vodu pouze občas.
 Barva: modrá.</description>
-            <line_symbol color="7" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="1250" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Symbol pro začátek">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
-                <mid_symbol>
-                    <symbol type="1" code="" name="Vnitřní symbol">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Symbol pro konec">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Symbol pro čárku">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
-            </line_symbol>
+            <line_symbol color="7" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="1250" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="2" id="53" code="308" name="Úzká bažina">
             <description>Bažina nebo vodní průsak, které jsou příliš úzké pro znázornění značkou 310 (užší než asi 5 m).
 Barva: modrá.</description>
             <line_symbol color="-1" line_width="0" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="500" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Symbol pro začátek">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
                 <mid_symbol>
                     <symbol type="1" code="" name="Vnitřní symbol">
                         <point_symbol rotatable="true" inner_radius="125" inner_color="7" outer_width="0" outer_color="-1" elements="0"/>
                     </symbol>
                 </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Symbol pro konec">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Symbol pro čárku">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
             </line_symbol>
         </symbol>
         <symbol type="4" id="54" code="309" name="Nepřekonatelná bažina">
@@ -1526,28 +1173,7 @@ Barva: modrá, černá.</description>
         </symbol>
         <symbol type="2" id="55" code="309.1" name="Nepřekonatelná bažina, okrajová čára">
             <description>Černá čára ohraničuje symbol.</description>
-            <line_symbol color="1" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Symbol pro začátek">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
-                <mid_symbol>
-                    <symbol type="1" code="" name="Vnitřní symbol">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Symbol pro konec">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Symbol pro čárku">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
-            </line_symbol>
+            <line_symbol color="1" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="16" id="56" code="309.2" name="Nepřekonatelná bažina, s okrajovou čárou">
             <combined_symbol parts="2">
@@ -1832,28 +1458,7 @@ Barva: zelená 100%.</description>
         </symbol>
         <symbol type="2" id="74" code="410.1" name="Porost: velmi obtížný běh, neprůchodný, čára">
             <description>Nejmenší šířka čáry pro symbol 410.</description>
-            <line_symbol color="13" line_width="250" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Symbol pro začátek">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
-                <mid_symbol>
-                    <symbol type="1" code="" name="Vnitřní symbol">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Symbol pro konec">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Symbol pro čárku">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
-            </line_symbol>
+            <line_symbol color="13" line_width="250" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="4" id="75" code="411.0" name="Les průběžný v jednom směru, 1">
             <description>Když nějaká oblast lesa vykazuje dobrou průběžnost v jednom směru, ale nižší v ostatních, ponechají se v rastrové značce {406, 408, 410} bílé pruhy ke znázornění směru dobré průběžnosti.
@@ -1936,28 +1541,7 @@ Barva: žlutá a zelená.</description>
         <symbol type="2" id="80" code="414" name="Výrazná hranice obdělávané půdy">
             <description>Hranice obdělávané půdy, pokud není zachycena jinými značkami (plot, zeď, pěšina a tak dále), se kreslí černou čarou. Touto značkou se také vyjadřuje stálá hranice mezi různými typy obdělávané půdy.
 Barva: černá.</description>
-            <line_symbol color="1" line_width="120" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Symbol pro začátek">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
-                <mid_symbol>
-                    <symbol type="1" code="" name="Vnitřní symbol">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Symbol pro konec">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Symbol pro čárku">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
-            </line_symbol>
+            <line_symbol color="1" line_width="120" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="4" id="81" code="415" name="Obdělávaná půda">
             <description>Obdělávaná půda, která je sezónně nepřístupná kvůli pěstování úrody, může být znázorněna černým tečkovým rastrem.
@@ -1980,26 +1564,11 @@ Poznámka:
 
 Nevýrazné hranice mezi oblastmi zelené, žluté nebo bílé se znázorňují bez linie. Okraje oblasti se znázorňují pouze změnou barvy nebo tečkového rastru.</description>
             <line_symbol color="-1" line_width="0" minimum_length="220" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="500" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="2" minimum_mid_symbol_count_when_closed="5" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Symbol pro začátek">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
                 <mid_symbol>
                     <symbol type="1" code="" name="Vnitřní symbol">
                         <point_symbol rotatable="true" inner_radius="110" inner_color="1" outer_width="0" outer_color="-1" elements="0"/>
                     </symbol>
                 </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Symbol pro konec">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Symbol pro čárku">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
             </line_symbol>
         </symbol>
         <symbol type="1" id="83" code="418" name="Zvláštní vegetační objekt">
@@ -2089,26 +1658,6 @@ Barva: černá a hnědá 50% (60 linek/cm).</description>
             <description>Silnice širší než 5 m. Šířka značky se kreslí v měřítku, ale nesmí být menší než minimální šířka. Vnější hraniční čáry mohou být nahrazeny značkami 519, 521, 522 nebo 524 jestliže plot nebo zeď je tak blízko u silničního okraje, že prakticky nemůže být zobrazen samostatnou značkou. Prostor mezi černými čarami musí být vyplněn hnědou (50%). Silnice ve výstavbě mohou být zobrazeny přerušovanými čarami.
 Barva: černá a hnědá 50% (60 linek/cm).</description>
             <line_symbol color="2" line_width="500" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Symbol pro začátek">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
-                <mid_symbol>
-                    <symbol type="1" code="" name="Vnitřní symbol">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Symbol pro konec">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Symbol pro čárku">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
                 <borders>
                     <border color="3" width="180" shift="90" dash_length="2000" break_length="1000"/>
                 </borders>
@@ -2117,26 +1666,6 @@ Barva: černá a hnědá 50% (60 linek/cm).</description>
         <symbol type="2" id="89" code="502.1" name="Větší silnice, nejmenší šířka, ve výstavbě">
             <description>Silnice ve výstavbě mohou být zobrazeny přerušovanými čarami.</description>
             <line_symbol color="2" line_width="500" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="3000" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Symbol pro začátek">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
-                <mid_symbol>
-                    <symbol type="1" code="" name="Vnitřní symbol">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Symbol pro konec">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Symbol pro čárku">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
                 <borders>
                     <border color="3" width="180" shift="90" dash_length="2000" break_length="1000"/>
                 </borders>
@@ -2146,26 +1675,6 @@ Barva: černá a hnědá 50% (60 linek/cm).</description>
             <description>Silnice šířky 3-5 m. Prostor mezi černými čarami musí být vyplněn hnědou (50%). Silnice ve výstavbě mohou být zobrazeny přerušova-nými čarami.
 Barva: černá a hnědá 50% (60 linek/cm).</description>
             <line_symbol color="2" line_width="300" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Symbol pro začátek">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
-                <mid_symbol>
-                    <symbol type="1" code="" name="Vnitřní symbol">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Symbol pro konec">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Symbol pro čárku">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
                 <borders>
                     <border color="3" width="180" shift="90" dash_length="2000" break_length="1000"/>
                 </borders>
@@ -2174,26 +1683,6 @@ Barva: černá a hnědá 50% (60 linek/cm).</description>
         <symbol type="2" id="91" code="503.1" name="Menší silnice, ve výstavbě">
             <description>Silnice ve výstavbě mohou být zobrazeny přerušovanými čarami.</description>
             <line_symbol color="2" line_width="300" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="3000" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Symbol pro začátek">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
-                <mid_symbol>
-                    <symbol type="1" code="" name="Vnitřní symbol">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Symbol pro konec">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Symbol pro čárku">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
                 <borders>
                     <border color="3" width="180" shift="90" dash_length="2000" break_length="1000"/>
                 </borders>
@@ -2202,132 +1691,27 @@ Barva: černá a hnědá 50% (60 linek/cm).</description>
         <symbol type="2" id="92" code="504" name="Silnička">
             <description>Udržovaná silnice vhodná pro motorová vozidla za každého počasí. Šířka menší než 3 m.
 Barva: černá.</description>
-            <line_symbol color="1" line_width="350" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Symbol pro začátek">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
-                <mid_symbol>
-                    <symbol type="1" code="" name="Vnitřní symbol">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Symbol pro konec">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Symbol pro čárku">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
-            </line_symbol>
+            <line_symbol color="1" line_width="350" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="2" id="93" code="505" name="Vozová cesta">
             <description>Cesta {široká, částečně zpevněná} nebo špatně udržovaná silnice vhodná pro vozidla pouze při pomalé jízdě. Šířka menší než 3 m.
 Barva: černá.</description>
-            <line_symbol color="1" line_width="350" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="3000" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Symbol pro začátek">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
-                <mid_symbol>
-                    <symbol type="1" code="" name="Vnitřní symbol">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Symbol pro konec">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Symbol pro čárku">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
-            </line_symbol>
+            <line_symbol color="1" line_width="350" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="3000" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="2" id="94" code="506" name="Pěší cesta">
             <description>Velká pěší cesta nebo stará vozová cesta, která je zřetelná v terénu.
 Barva: černá.</description>
-            <line_symbol color="1" line_width="250" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="2000" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Symbol pro začátek">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
-                <mid_symbol>
-                    <symbol type="1" code="" name="Vnitřní symbol">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Symbol pro konec">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Symbol pro čárku">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
-            </line_symbol>
+            <line_symbol color="1" line_width="250" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="2000" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="2" id="95" code="507" name="Pěšina">
             <description>Pěšina nebo (dočasná) cesta pro těžbu dřeva, kterou lze sledovat v běžecké rychlosti.
 Barva: černá.</description>
-            <line_symbol color="1" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="1000" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Symbol pro začátek">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
-                <mid_symbol>
-                    <symbol type="1" code="" name="Vnitřní symbol">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Symbol pro konec">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Symbol pro čárku">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
-            </line_symbol>
+            <line_symbol color="1" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="1000" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="2" id="96" code="508" name="Nevýrazná pěšina">
             <description>Nevýrazná pěšina nebo cesta pro těžbu dřeva. {Délka čárky se předpokládá jako u značky 507.}
 Barva: černá.</description>
-            <line_symbol color="1" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="1000" break_length="1000" dashes_in_group="2" in_group_break_length="250" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Symbol pro začátek">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
-                <mid_symbol>
-                    <symbol type="1" code="" name="Vnitřní symbol">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Symbol pro konec">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Symbol pro čárku">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
-            </line_symbol>
+            <line_symbol color="1" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="1000" break_length="1000" dashes_in_group="2" in_group_break_length="250" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="2" id="97" code="509" name="Průsek">
             <description>Výrazný průsek, užší než asi 5 m. Průsek je lineární přerušení lesa (obvykle vysázeného) po němž nevede výrazná pěšina. Pokud průsekem prochází pěšina, místo značky 509 se použije značka 507 či 508.
@@ -2344,28 +1728,7 @@ Barva: černá.
 
 Je-li větvení nebo křížení cest a pěšin nejasné, nejsou čárky značek ve větvení spojeny.
 Barva: černá.</description>
-            <line_symbol color="1" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="3000" break_length="500" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Symbol pro začátek">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
-                <mid_symbol>
-                    <symbol type="1" code="" name="Vnitřní symbol">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Symbol pro konec">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Symbol pro čárku">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
-            </line_symbol>
+            <line_symbol color="1" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="3000" break_length="500" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="1" id="98" code="512" name="Lávka">
             <description>Lávka k níž nevede žádná pěšina.
@@ -2405,11 +1768,6 @@ Barva: černá.</description>
             <description>Železnice nebo jiný druh kolejové dráhy (tramvaj, vlečka atd.).
 Barva: černá.</description>
             <line_symbol color="1" line_width="350" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="3000" end_length="1500" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Symbol pro začátek">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
                 <mid_symbol>
                     <symbol type="1" code="" name="Vnitřní symbol">
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
@@ -2430,37 +1788,12 @@ Barva: černá.</description>
                         </point_symbol>
                     </symbol>
                 </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Symbol pro konec">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Symbol pro čárku">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
             </line_symbol>
         </symbol>
         <symbol type="2" id="100" code="516" name="Elektrické vedení">
             <description>Elektrické vedení, lanovka nebo lyžařský vlek. Příčky udávají přesné umístění sloupů.
 Barva: černá.</description>
             <line_symbol color="1" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Symbol pro začátek">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
-                <mid_symbol>
-                    <symbol type="1" code="" name="Vnitřní symbol">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Symbol pro konec">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
                 <dash_symbol>
                     <symbol type="1" code="" name="Symbol pro čárku">
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
@@ -2487,21 +1820,6 @@ Barva: černá.</description>
             <description>Hlavní elektrické vedení kreslí dvojitou čarou. Mezera mezi čarami může indikovat velikost elektrického vedení. {Příčky udávají přesné umístění sloupů.}
 Barva: černá.</description>
             <line_symbol color="-1" line_width="620" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Symbol pro začátek">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
-                <mid_symbol>
-                    <symbol type="1" code="" name="Vnitřní symbol">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Symbol pro konec">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
                 <dash_symbol>
                     <symbol type="1" code="" name="Symbol pro čárku">
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
@@ -2552,11 +1870,6 @@ Barva: černá.</description>
                         </point_symbol>
                     </symbol>
                 </start_symbol>
-                <mid_symbol>
-                    <symbol type="1" code="" name="Vnitřní symbol">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </mid_symbol>
                 <end_symbol>
                     <symbol type="1" code="" name="Symbol pro konec">
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
@@ -2578,11 +1891,6 @@ Barva: černá.</description>
                         </point_symbol>
                     </symbol>
                 </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Symbol pro čárku">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
             </line_symbol>
         </symbol>
         <symbol type="1" id="103" code="518.1" name="Tunel, nejmenší velikost">
@@ -2610,89 +1918,39 @@ Barva: černá.</description>
             <description>Kamenná zeď nebo kameny obložený násep.
 Barva: černá.</description>
             <line_symbol color="1" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="2500" end_length="1250" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Symbol pro začátek">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
                 <mid_symbol>
                     <symbol type="1" code="" name="Vnitřní symbol">
                         <point_symbol rotatable="true" inner_radius="200" inner_color="1" outer_width="0" outer_color="-1" elements="0"/>
                     </symbol>
                 </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Symbol pro konec">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Symbol pro čárku">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
             </line_symbol>
         </symbol>
         <symbol type="2" id="105" code="520" name="Rozpadlá kamenná zídka">
             <description>Rozpadlá kamenná zeď může být znázorněna přerušovanou čarou.
 Barva: černá.</description>
             <line_symbol color="1" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="2500" end_length="1250" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="2250" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Symbol pro začátek">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
                 <mid_symbol>
                     <symbol type="1" code="" name="Vnitřní symbol">
                         <point_symbol rotatable="true" inner_radius="200" inner_color="1" outer_width="0" outer_color="-1" elements="0"/>
                     </symbol>
                 </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Symbol pro konec">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Symbol pro čárku">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
             </line_symbol>
         </symbol>
         <symbol type="2" id="106" code="521" name="Vysoká kamenná zeď">
             <description>Kamenná zeď, vyšší než asi 1,5 m, nepřekonatelná pro průměrného orientačního běžce.
 Barva: černá.</description>
             <line_symbol color="1" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="2500" end_length="1250" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="2" mid_symbol_distance="700">
-                <start_symbol>
-                    <symbol type="1" code="" name="Symbol pro začátek">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
                 <mid_symbol>
                     <symbol type="1" code="" name="Vnitřní symbol">
                         <point_symbol rotatable="true" inner_radius="250" inner_color="1" outer_width="0" outer_color="-1" elements="0"/>
                     </symbol>
                 </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Symbol pro konec">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Symbol pro čárku">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
             </line_symbol>
         </symbol>
         <symbol type="2" id="107" code="522" name="Plot">
             <description>Dřevěný nebo drátěný plot nižší než asi 1,5 m.
 Barva: černá.</description>
             <line_symbol color="1" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="2500" end_length="1250" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Symbol pro začátek">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
                 <mid_symbol>
                     <symbol type="1" code="" name="Vnitřní symbol">
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
@@ -2713,27 +1971,12 @@ Barva: černá.</description>
                         </point_symbol>
                     </symbol>
                 </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Symbol pro konec">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Symbol pro čárku">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
             </line_symbol>
         </symbol>
         <symbol type="2" id="108" code="523" name="Rozpadlý plot">
             <description>Rozpadlý plot může být zobrazen přerušovanou čarou.
 Barva: černá.</description>
             <line_symbol color="1" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="2500" end_length="1250" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="2500" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Symbol pro začátek">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
                 <mid_symbol>
                     <symbol type="1" code="" name="Vnitřní symbol">
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
@@ -2754,27 +1997,12 @@ Barva: černá.</description>
                         </point_symbol>
                     </symbol>
                 </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Symbol pro konec">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Symbol pro čárku">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
             </line_symbol>
         </symbol>
         <symbol type="2" id="109" code="524" name="Vysoký plot">
             <description>Prkenný nebo drátěný plot, vyšší než asi 1,5 m, nepřekonatelný pro průměrného orientačního běžce, například plot obory.
 Barva: černá.</description>
             <line_symbol color="1" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="3100" end_length="1550" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Symbol pro začátek">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
                 <mid_symbol>
                     <symbol type="1" code="" name="Vnitřní symbol">
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
@@ -2809,16 +2037,6 @@ Barva: černá.</description>
                         </point_symbol>
                     </symbol>
                 </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Symbol pro konec">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Symbol pro čárku">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
             </line_symbol>
         </symbol>
         <symbol type="1" id="110" code="525" name="Průchod, přechod">
@@ -2902,28 +2120,7 @@ Barva: černá nebo fialová 33.3% (13.3 linek/cm).</description>
         </symbol>
         <symbol type="2" id="116" code="528.1" name="Trvale nepřístupná oblast, hraniční čára">
             <description>Hraniční čára může být kreslena tam, kde není žádná přirozená hranice (viz 709).</description>
-            <line_symbol color="1" line_width="350" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Symbol pro začátek">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
-                <mid_symbol>
-                    <symbol type="1" code="" name="Vnitřní symbol">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Symbol pro konec">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Symbol pro čárku">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
-            </line_symbol>
+            <line_symbol color="1" line_width="350" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="4" id="117" code="529" name="Dlážděná plocha">
             <description>Oblast s pevným povrchem užívaná pro parkování nebo jiné účely.
@@ -2931,28 +2128,7 @@ Barva: černá a hnědá 50% (60 linek/cm).</description>
             <area_symbol inner_color="2" min_area="500" patterns="0"/>
         </symbol>
         <symbol type="2" id="118" code="529.1" name="Dlážděná plocha, hraniční čára">
-            <line_symbol color="1" line_width="120" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Symbol pro začátek">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
-                <mid_symbol>
-                    <symbol type="1" code="" name="Vnitřní symbol">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Symbol pro konec">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Symbol pro čárku">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
-            </line_symbol>
+            <line_symbol color="1" line_width="120" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="16" id="119" code="529.2" name="Dlážděná plocha, s hraniční čárou">
             <combined_symbol parts="2">
@@ -2963,53 +2139,11 @@ Barva: černá a hnědá 50% (60 linek/cm).</description>
         <symbol type="2" id="120" code="530" name="Zřícenina">
             <description>Půdorys zříceniny je zobrazován v měřítku až po vedle uvedenou minimální velikost. Velmi malé zříceniny mohou být kresleny plnou čarou.
 Barva: černá.</description>
-            <line_symbol color="1" line_width="160" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="1500" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Symbol pro začátek">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
-                <mid_symbol>
-                    <symbol type="1" code="" name="Vnitřní symbol">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Symbol pro konec">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Symbol pro čárku">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
-            </line_symbol>
+            <line_symbol color="1" line_width="160" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="1500" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="2" id="121" code="530.1" name="Zřícenina, žádné čárky">
             <description>Velmi malé zříceniny mohou být kresleny plnou čarou.</description>
-            <line_symbol color="1" line_width="160" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="1500" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Symbol pro začátek">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
-                <mid_symbol>
-                    <symbol type="1" code="" name="Vnitřní symbol">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Symbol pro konec">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Symbol pro čárku">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
-            </line_symbol>
+            <line_symbol color="1" line_width="160" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="1500" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="1" id="122" code="530.2" name="Zřícenina, nejmenší velikost">
             <description>Velmi malé zříceniny mohou být kresleny plnou čarou.</description>
@@ -3037,16 +2171,6 @@ Barva: černá.</description>
             <description>Střelnice se zobrazují zvláštní značkou, aby se vyznačila potřeba opatrnosti. Přidružené budovy se kreslí jednotlivě.
 Barva: černá.</description>
             <line_symbol color="1" line_width="350" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Symbol pro začátek">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
-                <mid_symbol>
-                    <symbol type="1" code="" name="Vnitřní symbol">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </mid_symbol>
                 <end_symbol>
                     <symbol type="1" code="" name="Symbol pro konec">
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
@@ -3084,11 +2208,6 @@ Barva: černá.</description>
                         </point_symbol>
                     </symbol>
                 </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Symbol pro čárku">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
             </line_symbol>
         </symbol>
         <symbol type="1" id="124" code="532" name="Hrob">
@@ -3129,11 +2248,6 @@ Barva: černá.</description>
             <description>Potrubí (plyn, voda, ropa, a podobně) nad úrovní země, které může být překonáno vrchem, nebo spodem.
 Barva: černá.</description>
             <line_symbol color="1" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="2500" end_length="1250" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Symbol pro začátek">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
                 <mid_symbol>
                     <symbol type="1" code="" name="Vnitřní symbol">
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
@@ -3168,27 +2282,12 @@ Barva: černá.</description>
                         </point_symbol>
                     </symbol>
                 </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Symbol pro konec">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Symbol pro čárku">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
             </line_symbol>
         </symbol>
         <symbol type="2" id="126" code="534" name="Nepřekonatelné potrubí">
             <description>Potrubí, které nemůže být překonáno.
 Barva: černá.</description>
             <line_symbol color="1" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="2500" end_length="1250" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="2" mid_symbol_distance="600">
-                <start_symbol>
-                    <symbol type="1" code="" name="Symbol pro začátek">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
                 <mid_symbol>
                     <symbol type="1" code="" name="Vnitřní symbol">
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
@@ -3223,16 +2322,6 @@ Barva: černá.</description>
                         </point_symbol>
                     </symbol>
                 </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Symbol pro konec">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Symbol pro čárku">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
             </line_symbol>
         </symbol>
         <symbol type="1" id="127" code="535" name="Vysoká věž">
@@ -3396,28 +2485,7 @@ Barva: černá.</description>
         <symbol type="2" id="133" code="601" name="Magnetické poledníky {severníky}">
             <description>Magnetické poledníky jsou čáry umístěné na mapu tak, aby směřova-ly k magnetickému severu. Jejich rozestup na mapě je 33,33 mm což představuje 500 m ve skutečnosti v měřítku 1 : 15 000. Pro mapy s jinými měřítky se čáry umísťují ve vzdálenostech, které reprezentují zaokrouhlený počet metrů (například 50 m, 100 m, 250 m, 500 m) a tak, aby rozestup byl mezi 20 mm a 40 mm na mapě. Severníky mohou být přerušeny tam, kde by zakrývaly malé objekty, jako balvany, kupky, srázy, větvení potoků, konce cest a tak dále. V oblastech s malým počtem vodních objektů lze použít modré čáry.
 Barva: černá (modrá).</description>
-            <line_symbol color="1" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Symbol pro začátek">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
-                <mid_symbol>
-                    <symbol type="1" code="" name="Vnitřní symbol">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Symbol pro konec">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Symbol pro čárku">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
-            </line_symbol>
+            <line_symbol color="1" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="4" id="134" code="601.1" name="Vzor poledníku">
             <area_symbol inner_color="-1" min_area="0" patterns="1">
@@ -3427,28 +2495,7 @@ Barva: černá (modrá).</description>
         <symbol type="2" id="135" code="601.2" name="Magnetické poledníky {severníky}, modré">
             <description>Magnetické poledníky jsou čáry umístěné na mapu tak, aby směřova-ly k magnetickému severu. Jejich rozestup na mapě je 33,33 mm což představuje 500 m ve skutečnosti v měřítku 1 : 15 000. Pro mapy s jinými měřítky se čáry umísťují ve vzdálenostech, které reprezentují zaokrouhlený počet metrů (například 50 m, 100 m, 250 m, 500 m) a tak, aby rozestup byl mezi 20 mm a 40 mm na mapě. Severníky mohou být přerušeny tam, kde by zakrývaly malé objekty, jako balvany, kupky, srázy, větvení potoků, konce cest a tak dále. V oblastech s malým počtem vodních objektů lze použít modré čáry.
 Barva: černá (modrá).</description>
-            <line_symbol color="7" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Symbol pro začátek">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
-                <mid_symbol>
-                    <symbol type="1" code="" name="Vnitřní symbol">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Symbol pro konec">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Symbol pro čárku">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
-            </line_symbol>
+            <line_symbol color="7" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="4" id="136" code="601.3" name="Vzor poledníku, modrý">
             <area_symbol inner_color="-1" min_area="0" patterns="1">
@@ -3540,54 +2587,12 @@ Barva: fialová.</description>
         <symbol type="2" id="143" code="704" name="Spojnice">
             <description>Mají-li být kontroly absolvovány v určitém pořadí, jsou start, kontroly a cíl spojeny přímými čarami. Části čar mohou být vynechány, aby zůstaly viditelné důležité detaily.
 Barva: fialová.</description>
-            <line_symbol color="0" line_width="350" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Symbol pro začátek">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
-                <mid_symbol>
-                    <symbol type="1" code="" name="Vnitřní symbol">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Symbol pro konec">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Symbol pro čárku">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
-            </line_symbol>
+            <line_symbol color="0" line_width="350" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="2" id="144" code="705" name="Značený úsek">
             <description>Značený úsek je zobrazen na mapě přerušovanou čarou.
 Barva: fialová.</description>
-            <line_symbol color="0" line_width="350" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="2000" break_length="500" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Symbol pro začátek">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
-                <mid_symbol>
-                    <symbol type="1" code="" name="Vnitřní symbol">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Symbol pro konec">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Symbol pro čárku">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
-            </line_symbol>
+            <line_symbol color="0" line_width="350" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="2000" break_length="500" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="1" id="145" code="706" name="Cíl">
             <description>Cíl je zobrazen dvěma soustřednými kružnicemi.
@@ -3608,28 +2613,7 @@ Barva: fialová.</description>
         <symbol type="2" id="146" code="707" name="Nepřekročitelná hranice">
             <description>Hranice, kterou není povoleno překračovat.
 Barva: fialová.</description>
-            <line_symbol color="0" line_width="700" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Symbol pro začátek">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
-                <mid_symbol>
-                    <symbol type="1" code="" name="Vnitřní symbol">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Symbol pro konec">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Symbol pro čárku">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
-            </line_symbol>
+            <line_symbol color="0" line_width="700" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="1" id="147" code="708" name="Průchod, přechod">
             <description>Průchod, přechod nebo tunel přes zeď, plot, silnici či železnici, nebo nepřístupnou oblast je do mapy zakreslen dvěma od sebe zahnutými čarami.
@@ -3681,53 +2665,11 @@ Barva: fialová.</description>
         </symbol>
         <symbol type="2" id="149" code="709.1" name="Nepřístupná oblast, souvislá čára">
             <description>Souvislá čára vyjadřuje, že hranice je v terénu spojitě vyznačena (páskou a podobně).</description>
-            <line_symbol color="0" line_width="250" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Symbol pro začátek">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
-                <mid_symbol>
-                    <symbol type="1" code="" name="Vnitřní symbol">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Symbol pro konec">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Symbol pro čárku">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
-            </line_symbol>
+            <line_symbol color="0" line_width="250" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="2" id="150" code="709.2" name="Nepřístupná oblast, přerušovaná čára">
             <description>Přerušovaná čára vyjadřuje přerušované značení v terénu.</description>
-            <line_symbol color="0" line_width="250" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="3000" break_length="500" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Start symbol">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
-                <mid_symbol>
-                    <symbol type="1" code="" name="Mid symbol">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="End symbol">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Dash symbol">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
-            </line_symbol>
+            <line_symbol color="0" line_width="250" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="3000" break_length="500" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="4" id="151" code="710" name="Nebezpečná oblast">
             <description>Oblast představující nebezpečí pro závodníka je zobrazena křižující-mi se úhlopříčnými čarami.

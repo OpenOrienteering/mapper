@@ -218,10 +218,12 @@ Symbol* LineSymbol::duplicate(const MapColorMap* color_map) const
 	new_line->cap_style = cap_style;
 	new_line->join_style = join_style;
 	new_line->pointed_cap_length = pointed_cap_length;
-	new_line->start_symbol = start_symbol ? static_cast<PointSymbol*>(start_symbol->duplicate(color_map)) : NULL;
-	new_line->mid_symbol = mid_symbol ? static_cast<PointSymbol*>(mid_symbol->duplicate(color_map)) : NULL;
-	new_line->end_symbol = end_symbol ? static_cast<PointSymbol*>(end_symbol->duplicate(color_map)) : NULL;
-	new_line->dash_symbol = dash_symbol ? static_cast<PointSymbol*>(dash_symbol->duplicate(color_map)) : NULL;
+	for (auto member : { &LineSymbol::start_symbol, &LineSymbol::mid_symbol, &LineSymbol::end_symbol, &LineSymbol::dash_symbol })
+	{
+		auto sub_symbol = this->*member;
+		if (sub_symbol && !sub_symbol->isEmpty())
+			new_line->*member = static_cast<PointSymbol*>(sub_symbol->duplicate(color_map));
+	}
 	new_line->dashed = dashed;
 	new_line->segment_length = segment_length;
 	new_line->end_length = end_length;
@@ -1751,6 +1753,9 @@ bool LineSymbol::loadImpl(QIODevice* file, int version, Map* map)
 		else
 			right_border.assign(border, NULL);
 	}
+	
+	cleanupPointSymbols();
+	
 	return true;
 }
 
@@ -1900,6 +1905,9 @@ bool LineSymbol::loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionar
 		else
 			xml.skipCurrentElement(); // unknown
 	}
+	
+	cleanupPointSymbols();
+	
 	return true;
 }
 
