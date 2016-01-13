@@ -24,6 +24,7 @@
 #include "../src/map.h"
 #include "../src/symbol_area.h"
 #include "../src/settings.h"
+#include "../src/undo_manager.h"
 
 
 /**
@@ -113,6 +114,9 @@ void SymbolSetTool::processSymbolSet()
 	
 	Map map;
 	map.loadFrom(source_path, nullptr, nullptr, false, false);
+	
+	map.resetPrinterConfig();
+	map.undoManager().clear();
 	
 	const int num_symbols = map.getNumSymbols();
 	QStringList previous_numbers;
@@ -223,6 +227,8 @@ void SymbolSetTool::processExamples()
 	Map map;
 	MapView view(&map);
 	map.loadFrom(source_path, nullptr, &view, false, false);
+	
+	map.undoManager().clear();
 	
 	QString target_filename = QString("%1.omap").arg(name);
 	saveIfDifferent(examples_dir.absoluteFilePath(target_filename), &map, &view);
