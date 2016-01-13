@@ -2383,6 +2383,15 @@ void Map::setPrinterConfig(const MapPrinterConfig& config)
 	}
 }
 
+void Map::resetPrinterConfig()
+{
+	if (printer_config)
+	{
+		printer_config.reset();
+		setOtherDirty();
+	}
+}
+
 void Map::setImageTemplateDefaults(bool use_meters_per_pixel, double meters_per_pixel, double dpi, double scale)
 {
 	image_template_use_meters_per_pixel = use_meters_per_pixel;

@@ -1169,6 +1169,12 @@ public:
 	/** Sets the print configuration. */
 	void setPrinterConfig(const MapPrinterConfig& config);
 	
+	/** Clears the print configuration.
+	 *
+	 * After calling this method, hasPrinterConfig() returns false.
+	 */
+	void resetPrinterConfig();
+	
 	
 	/** Returns the default parameters for loading of image tempaltes. */
 	void getImageTemplateDefaults(bool& use_meters_per_pixel, double& meters_per_pixel,
