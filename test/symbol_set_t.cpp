@@ -49,6 +49,9 @@ void saveIfDifferent(const QString& path, Map* map, MapView* view = nullptr)
 	QBuffer buffer(&new_data);
 	buffer.open(QFile::WriteOnly);
 	XMLFileExporter exporter(&buffer, map, view);
+	auto is_src_format = bool{ path.contains(".xmap") };
+	exporter.setOption("autoFormatting", is_src_format);
+	Settings::getInstance().setSetting(Settings::General_RetainCompatiblity, QVariant(is_src_format));
 	exporter.doExport();
 	QVERIFY(exporter.warnings().empty());
 	buffer.close();
@@ -67,7 +70,6 @@ void SymbolSetTool::initTestCase()
 {
 	QCoreApplication::setOrganizationName("OpenOrienteering.org");
 	QCoreApplication::setApplicationName("SymbolSetTool");
-	Settings::getInstance().setSetting(Settings::General_RetainCompatiblity, QVariant(false));
 	
 	doStaticInitializations();
 	
@@ -113,10 +115,12 @@ void SymbolSetTool::processSymbolSet()
 	QString source_path = symbol_set_dir.absoluteFilePath(source_filename);
 	
 	Map map;
-	map.loadFrom(source_path, nullptr, nullptr, false, false);
+	MapView view(&map);
+	map.loadFrom(source_path, nullptr, &view, false, false);
 	
 	map.resetPrinterConfig();
 	map.undoManager().clear();
+	saveIfDifferent(source_path, &map, &view);
 	
 	const int num_symbols = map.getNumSymbols();
 	QStringList previous_numbers;
@@ -229,6 +233,7 @@ void SymbolSetTool::processExamples()
 	map.loadFrom(source_path, nullptr, &view, false, false);
 	
 	map.undoManager().clear();
+	saveIfDifferent(source_path, &map, &view);
 	
 	QString target_filename = QString("%1.omap").arg(name);
 	saveIfDifferent(examples_dir.absoluteFilePath(target_filename), &map, &view);

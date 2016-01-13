@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map xmlns="http://openorienteering.org/apps/mapper/xml/v2" version="5">
     <notes></notes>
-    <georeferencing scale="5000"/>
+    <georeferencing scale="5000">
+        <projected_crs id="Local"/>
+    </georeferencing>
     <colors count="36">
         <color priority="0" name="Purple" c="0.200" m="1.000" y="0.000" k="0.000" opacity="1.000">
             <spotcolors>
@@ -8175,88 +8177,13 @@ Yhdysviiva menee hieman maaliympyrän sisäpuolelle, mikä on symbolin helppoude
     </templates>
     <view>
         <grid color="#646464" display="0" alignment="0" additional_rotation="0" unit="1" h_spacing="500" v_spacing="500" h_offset="0" v_offset="0" snapping_enabled="true"/>
-        <map_view zoom="4" rotation="0" position_x="-5896" position_y="-8594" view_x="0" view_y="0" drag_offset_x="0" drag_offset_y="0">
-            <map opacity="1"/>
+        <map_view zoom="4" rotation="0" position_x="-5896" position_y="-8594">
+            <map opacity="1" visible="true"/>
             <templates count="0"/>
         </map_view>
     </view>
-    <print scale="5000" resolution="600" mode="vector">
-        <page_format paper_size="Custom" orientation="portrait" h_overlap="5.00" v_overlap="5.00">
-            <dimensions width="110.000" height="110.000"/>
-            <page_rect left="5.000" top="5.000" width="100.000" height="100.000"/>
-        </page_format>
-        <print_area left="0.000" top="0.000" width="0.000" height="0.000"/>
-    </print>
     <barrier version="6" required="0.6.0">
-        <undo>
-            <step type="1">
-                <affected_objects part="0">
-                    <ref object="0"/>
-                </affected_objects>
-            </step>
-            <step type="1">
-                <affected_objects part="0">
-                    <ref object="1"/>
-                </affected_objects>
-            </step>
-            <step type="2">
-                <affected_objects part="0">
-                    <ref object="0"/>
-                    <ref object="1"/>
-                </affected_objects>
-                <contained_objects count="2">
-                    <object type="1" symbol="99">
-                        <coords count="7">
-                            <coord x="38601" y="-30001" flags="32"/>
-                            <coord x="-46201" y="-8600" flags="32"/>
-                            <coord x="-55202" y="8400" flags="32"/>
-                            <coord x="-47202" y="23801" flags="32"/>
-                            <coord x="-24201" y="40401" flags="32"/>
-                            <coord x="6000" y="21801" flags="32"/>
-                            <coord x="31201" y="21801"/>
-                        </coords>
-                        <pattern rotation="0">
-                            <coord x="0" y="0"/>
-                        </pattern>
-                    </object>
-                    <object type="1" symbol="99">
-                        <coords count="11">
-                            <coord x="-5761" y="10743" flags="1"/>
-                            <coord x="-12972" y="11773"/>
-                            <coord x="-16238" y="15229"/>
-                            <coord x="-22562" y="18843"/>
-                            <coord x="-25162" y="22843"/>
-                            <coord x="-23162" y="24944"/>
-                            <coord x="-15862" y="23043"/>
-                            <coord x="-11462" y="20843"/>
-                            <coord x="-3861" y="18143"/>
-                            <coord x="5039" y="13743"/>
-                            <coord x="9439" y="10743"/>
-                        </coords>
-                        <pattern rotation="0">
-                            <coord x="0" y="0"/>
-                        </pattern>
-                    </object>
-                </contained_objects>
-            </step>
-            <step type="1">
-                <affected_objects part="0">
-                    <ref object="0"/>
-                </affected_objects>
-            </step>
-            <step type="2">
-                <affected_objects part="0">
-                    <ref object="0"/>
-                </affected_objects>
-                <contained_objects count="1">
-                    <object type="0" symbol="168">
-                        <coords count="1">
-                            <coord x="-11096" y="-9394"/>
-                        </coords>
-                    </object>
-                </contained_objects>
-            </step>
-        </undo>
+        <undo/>
         <redo/>
     </barrier>
 </map>

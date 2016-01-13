@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map xmlns="http://openorienteering.org/apps/mapper/xml/v2" version="5">
     <notes></notes>
-    <georeferencing scale="15000" declination="0.00" grivation="0.00">
-        <ref_point x="0" y="0"/>
-        <projected_crs id="Local coordinates">
-            <spec language="PROJ.4"></spec>
-            <ref_point x="0.000000" y="0.000000"/>
-        </projected_crs>
+    <georeferencing scale="15000">
+        <projected_crs id="Local coordinates"/>
     </georeferencing>
     <colors count="22">
         <color priority="0" name="Purple" c="0.200" m="1.000" y="0.000" k="0.000" opacity="1.000">
@@ -7132,8 +7128,8 @@ overprinting preview.</text>
     </templates>
     <view>
         <grid color="#646464" display="0" alignment="0" additional_rotation="0" unit="1" h_spacing="500" v_spacing="500" h_offset="0" v_offset="0" snapping_enabled="true"/>
-        <map_view zoom="4" rotation="0" position_x="-25283" position_y="-43762" view_x="0" view_y="0" drag_offset_x="0" drag_offset_y="0" overprinting_simulation_enabled="true">
-            <map opacity="1"/>
+        <map_view zoom="4" rotation="0" position_x="-25283" position_y="-43762" overprinting_simulation_enabled="true">
+            <map opacity="1" visible="true"/>
             <templates count="0"/>
         </map_view>
     </view>
