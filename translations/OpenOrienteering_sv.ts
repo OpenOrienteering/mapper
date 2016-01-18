@@ -12,17 +12,17 @@
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="173"/>
         <source>&lt;a %1&gt;All about licenses, copyright notices, conditions and disclaimers.&lt;/a&gt;</source>
-        <translation>&lt;a %1&gt;Allt om licenser, upphovsrätt, villkor och friskrivningar&lt;/a&gt;</translation>
+        <translation>&lt;a %1&gt;Allt om licenser, upphovsrätt, villkor och friskrivningar.&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="177"/>
         <source>The OpenOrienteering developers in alphabetical order:</source>
-        <translation>OpenOrienteerings utvecklarna i alfabetisk ordning:</translation>
+        <translation>OpenOrienteerings utvecklare i alfabetisk ordning:</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="179"/>
         <source>(project initiator)</source>
-        <translation>(inisiativtagare)</translation>
+        <translation>(initiativtagare)</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="156"/>
@@ -32,7 +32,7 @@
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="160"/>
         <source>This program is free software: you can redistribute it and/or modify it under the terms of the &lt;a %1&gt;GNU General Public License (GPL), version&amp;nbsp;3&lt;/a&gt;, as published by the Free Software Foundation.</source>
-        <translation>Detta program är öppen mjukvara: du kan sprida den och/eller modifiera den under vilkoren i &lt;a %1&gt;GNU General Public License (GPL), version&amp;nbsp;3&lt;/a&gt;, publicerad av Free Software Foundation</translation>
+        <translation>Detta program är öppen mjukvara: du kan sprida den och/eller modifiera den under vilkoren i &lt;a %1&gt;GNU General Public License (GPL), version&amp;nbsp;3&lt;/a&gt;, publicerad av Free Software Foundation.</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="166"/>
@@ -83,7 +83,7 @@
     <message>
         <location filename="../src/symbol_area.cpp" line="752"/>
         <source>mm²</source>
-        <translation></translation>
+        <translation</translation>
     </message>
     <message>
         <location filename="../src/symbol_area.cpp" line="753"/>
@@ -98,7 +98,7 @@
     <message>
         <location filename="../src/symbol_area.cpp" line="773"/>
         <source>Line fill</source>
-        <translation>Linjefyllningar</translation>
+        <translation>Linjefyllning</translation>
     </message>
     <message>
         <location filename="../src/symbol_area.cpp" line="774"/>
@@ -269,7 +269,7 @@
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="43"/>
         <source>Autosaved file</source>
-        <translation>Auto sparad fil</translation>
+        <translation>Autosparad fil</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/gui/autosave_dialog.cpp" line="45"/>
@@ -288,7 +288,7 @@
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="56"/>
         <source>File recovery</source>
-        <translation>Fil återställning</translation>
+        <translation>Filåterställning</translation>
     </message>
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="58"/>
@@ -316,7 +316,7 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="71"/>
         <source>Mixture of spot colors (screens and overprint):</source>
-        <translation>Mix av dekorfärger (skärmar och övertryck)</translation>
+        <translation>Mix av dekorfärger (skärmar och övertryck):</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="86"/>
@@ -494,7 +494,7 @@
     <message>
         <location filename="../src/color_dock_widget.cpp" line="187"/>
         <source>The map contains symbols with this color. Deleting it will remove the color from these objects! Do you really want to do that?</source>
-        <translation>Kartan innehåller symboler med denna färg. Tar du bort den försvinner färgen från de symbolerna. Vill du verkligen göra det?</translation>
+        <translation>Kartan innehåller symboler med denna färg. Tar du bort den försvinner färgen från de symbolerna! Vill du verkligen göra det?</translation>
     </message>
     <message>
         <location filename="../src/color_dock_widget.cpp" line="204"/>
@@ -546,7 +546,7 @@
     <message>
         <location filename="../src/symbol_combined.cpp" line="408"/>
         <source>- Private area symbol -</source>
-        <translation>- Privat yt symbol -</translation>
+        <translation>- Privat ytsymbol -</translation>
     </message>
     <message>
         <location filename="../src/symbol_combined.cpp" line="414"/>
@@ -583,7 +583,7 @@
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="50"/>
         <source>Configure grid</source>
-        <translation>Konfigurera rutnät:</translation>
+        <translation>Konfigurera rutnät</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="52"/>
@@ -593,7 +593,7 @@
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="53"/>
         <source>Snap to grid</source>
-        <translation>Snäpp till rutnät</translation>
+        <translation>Snappa till rutnät</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="54"/>
@@ -633,12 +633,12 @@
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="66"/>
         <source>Align with true north</source>
-        <translation>Passa till värkliga norr</translation>
+        <translation>Passa till verkliga norr</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="68"/>
         <source>Additional rotation (counter-clockwise):</source>
-        <translation>Ytteligare rotation (motsols)</translation>
+        <translation>Ytteligare rotation (motsols):</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="69"/>
@@ -663,7 +663,7 @@
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="79"/>
         <source>Horizontal spacing:</source>
-        <translation>Horisontell avstånd:</translation>
+        <translation>Horisontellt avstånd:</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="81"/>
@@ -733,7 +733,7 @@
     <name>CutHoleTool</name>
     <message>
         <source>&lt;b&gt;Click&lt;/b&gt; on a line to split it into two, &lt;b&gt;Drag&lt;/b&gt; along a line to remove this line part, &lt;b&gt;Click or Drag&lt;/b&gt; at an area boundary to start drawing a split line</source>
-        <translation type="obsolete">&lt;b&gt;Klicka&lt;/b&gt; på en linje för att dela den, &lt;b&gt;dra&lt;/b&gt; längs med en linje för att ta bort en del av linjen, &lt;b&gt;dra eller klicka&lt;/b&gt; på en ytas kant för att börja rita en delningslinje</translation>
+        <translation type="obsolete">&lt;b&gt;Klicka&lt;/b&gt; på en linje för att dela den, &lt;b&gt;Dra&lt;/b&gt; längs med en linje för att ta bort en del av linjen, &lt;b&gt;Klicka eller Dra&lt;/b&gt; på en ytas kant för att börja rita en delningslinje</translation>
     </message>
     <message>
         <location filename="../src/tool_cut_hole.cpp" line="241"/>
@@ -769,7 +769,7 @@
     <message>
         <location filename="../src/tool_cut.cpp" line="675"/>
         <source>&lt;b&gt;Click&lt;/b&gt; on a line: Split it into two. &lt;b&gt;Drag&lt;/b&gt; along a line: Remove this line part. &lt;b&gt;Click or Drag&lt;/b&gt; at an area boundary: Start a split line. </source>
-        <translation>&lt;b&gt;Klicka&lt;/b&gt; på en linje: Dela den i två. &lt;b&gt;Dra&lt;/b&gt; längs en linje: Ta bort denna linjedel. &lt;b&gt;Klicka eller dra&lt;/b&gt; en ytgräns: Starta en delad linje. </translation>
+        <translation>&lt;b&gt;Klicka&lt;/b&gt; på en linje: Dela den i två. &lt;b&gt;Dra&lt;/b&gt; längs en linje: Ta bort denna linjedel. &lt;b&gt;Klicka eller dra&lt;/b&gt; på en ytgräns: Starta en delad linje. </translation>
     </message>
     <message>
         <source>&lt;b&gt;Click&lt;/b&gt; on a line to split it into two, &lt;b&gt;Drag&lt;/b&gt; along a line to remove this line part, &lt;b&gt;Click or Drag&lt;/b&gt; at an area boundary to start drawing a split line</source>
