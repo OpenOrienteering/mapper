@@ -707,13 +707,13 @@ constexpr qreal MapCoord::y() const
 inline
 void MapCoord::setX(qreal x)
 {
-	this->xp = qRound64(x * 1000);
+	this->xp = qRound(x * 1000);
 }
 
 inline
 void MapCoord::setY(qreal y)
 {
-	this->yp = qRound64(y * 1000);
+	this->yp = qRound(y * 1000);
 }
 
 constexpr qint32 MapCoord::nativeX() const

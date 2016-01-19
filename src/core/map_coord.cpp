@@ -30,6 +30,9 @@
 #include "../util/xml_stream_util.h"
 
 
+static_assert(sizeof(qint32) <= sizeof(int), 
+              "MapCoord::setX/Y uses qRound() returning int, xp/yp is of type qint32");
+
 static_assert(!MapCoord::BoundsOffset().check_for_offset,
               "Default-constructed BoundsOffset must have check_for_offset == false.");
 static_assert(MapCoord::BoundsOffset().x == 0,
