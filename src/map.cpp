@@ -779,8 +779,14 @@ bool Map::loadFrom(const QString& path, QWidget* dialog_parent, MapView* view, b
 	return true;
 }
 
-void Map::importMap(Map* other, ImportMode mode, QWidget* dialog_parent, std::vector<bool>* filter, int symbol_insert_pos,
-					bool merge_duplicate_symbols, QHash<const Symbol*, Symbol*>* out_symbol_map)
+void Map::importMap(
+        const Map* other,
+        ImportMode mode,
+        QWidget* dialog_parent,
+        std::vector<bool>* filter,
+        int symbol_insert_pos,
+        bool merge_duplicate_symbols,
+        QHash<const Symbol*, Symbol*>* out_symbol_map )
 {
 	// Check if there is something to import
 	if (other->getNumColors() == 0 && other->getNumSymbols() == 0 && other->getNumObjects() == 0)
@@ -797,7 +803,25 @@ void Map::importMap(Map* other, ImportMode mode, QWidget* dialog_parent, std::ve
 										   .arg(QLocale().toString(other->getScaleDenominator()))
 										   .arg(QLocale().toString(getScaleDenominator())), QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
 		if (answer == QMessageBox::Yes)
-			other->changeScale(getScaleDenominator(), MapCoord(0, 0), true, true, true, true);
+		{
+			Map clone;
+			clone.setGeoreferencing(other->getGeoreferencing());
+			clone.importMap(other, mode, dialog_parent, filter, -1, false, out_symbol_map);
+			clone.changeScale(getScaleDenominator(), MapCoord(0, 0), true, true, true, true);
+			QHash<const Symbol*, Symbol*> symbol_map;
+			importMap(&clone, mode, dialog_parent, nullptr, symbol_insert_pos, merge_duplicate_symbols, &symbol_map);
+			if (out_symbol_map)
+			{
+				Q_ASSERT(symbol_map.size() == out_symbol_map->size());
+				auto end = out_symbol_map->end();
+				for (auto item = out_symbol_map->begin(); item != end; ++item)
+				{
+					Q_ASSERT(symbol_map.contains(item.key()));
+					item.value() = symbol_map.value(item.key());
+				}
+			}
+			return;
+		}
 	}
 	
 	// TODO: As a special case if both maps are georeferenced, the location of the imported objects could be corrected
@@ -1474,8 +1498,14 @@ bool Map::hasSpotColors() const
 	return false;
 }
 
-void Map::importSymbols(Map* other, const MapColorMap& color_map, int insert_pos, bool merge_duplicates, std::vector< bool >* filter,
-						QHash< int, int >* out_indexmap, QHash<const Symbol*, Symbol*>* out_pointermap)
+void Map::importSymbols(
+        const Map* other,
+        const MapColorMap& color_map,
+        int insert_pos,
+        bool merge_duplicates,
+        std::vector< bool >* filter,
+        QHash<int, int>* out_indexmap,
+        QHash<const Symbol*, Symbol*>* out_pointermap )
 {
 	// We need a pointer map (and keep track of added symbols) to adjust the references of combined symbols
 	std::vector<Symbol*> added_symbols;
@@ -1764,7 +1794,7 @@ void Map::scaleAllSymbols(double factor)
 	setSymbolsDirty();
 }
 
-void Map::determineSymbolsInUse(std::vector< bool >& out)
+void Map::determineSymbolsInUse(std::vector< bool >& out) const
 {
 	out.assign(symbols.size(), false);
 	for (std::size_t l = 0; l < parts.size(); ++l)
@@ -1781,7 +1811,7 @@ void Map::determineSymbolsInUse(std::vector< bool >& out)
 	determineSymbolUseClosure(out);
 }
 
-void Map::determineSymbolUseClosure(std::vector< bool >& symbol_bitfield)
+void Map::determineSymbolUseClosure(std::vector< bool >& symbol_bitfield) const
 {
 	bool change;
 	do
@@ -2151,7 +2181,7 @@ std::size_t Map::mergeParts(std::size_t source, std::size_t destination)
 }
 
 
-int Map::getNumObjects()
+int Map::getNumObjects() const
 {
 	int num_objects = 0;
 	for (const MapPart* part : parts)

@@ -193,8 +193,15 @@ public:
 	 * WARNING: this method potentially changes the 'other' map if the
 	 *          scales differ (by rescaling to fit this map's scale)!
 	 */
-	void importMap(Map* other, ImportMode mode, QWidget* dialog_parent = nullptr, std::vector<bool>* filter = nullptr, int symbol_insert_pos = -1,
-				   bool merge_duplicate_symbols = true, QHash<const Symbol*, Symbol*>* out_symbol_map = nullptr);
+	void importMap(
+	        const Map* other,
+	        ImportMode mode,
+	        QWidget* dialog_parent = nullptr,
+	        std::vector<bool>* filter = nullptr,
+	        int symbol_insert_pos = -1,
+	        bool merge_duplicate_symbols = true,
+	        QHash<const Symbol*, Symbol*>* out_symbol_map = nullptr
+	);
 	
 	/**
 	 * Serializes the map directly into the given IO device in a known format.
@@ -519,13 +526,13 @@ public:
 	 * is set to true if there is at least one object which uses this symbol or
 	 * a derived (combined) symbol.
 	 */
-	void determineSymbolsInUse(std::vector<bool>& out);
+	void determineSymbolsInUse(std::vector<bool>& out) const;
 	
 	/**
 	 * Adds to the given symbol bitfield all other symbols which are needed to
 	 * display the symbols indicated by the bitfield because of symbol dependencies.
 	 */
-	void determineSymbolUseClosure(std::vector< bool >& symbol_bitfield);
+	void determineSymbolUseClosure(std::vector< bool >& symbol_bitfield) const;
 	
 	
 	// Templates
@@ -760,7 +767,7 @@ public:
 	// Objects
 	
 	/** Returns the total number of objects in this map (sum of all parts) */
-	int getNumObjects();
+	int getNumObjects() const;
 	
 	/**
 	 * Adds the object as new object in the part with the given index,
@@ -1401,8 +1408,15 @@ private:
 	
 	/// Imports the other symbol set into this set, only importing the symbols for which filter[color_index] == true and
 	/// returning the map from symbol indices in other to imported indices. Imported symbols are placed after the existing symbols.
-	void importSymbols(Map* other, const MapColorMap& color_map, int insert_pos = -1, bool merge_duplicates = true, std::vector<bool>* filter = nullptr,
-					   QHash<int, int>* out_indexmap = nullptr, QHash<const Symbol*, Symbol*>* out_pointermap = nullptr);
+	void importSymbols(
+	        const Map* other,
+	        const MapColorMap& color_map,
+	        int insert_pos = -1,
+	        bool merge_duplicates = true,
+	        std::vector<bool>* filter = nullptr,
+	        QHash<int, int>* out_indexmap = nullptr,
+	        QHash<const Symbol*, Symbol*>* out_pointermap = nullptr
+	);
 	
 	void addSelectionRenderables(const Object* object);
 	void updateSelectionRenderables(const Object* object);
@@ -1771,37 +1785,37 @@ const MapColor* Map::getRegistrationColor()
 }
 
 inline
-LineSymbol*Map::getCoveringWhiteLine()
+LineSymbol* Map::getCoveringWhiteLine()
 {
 	return covering_white_line;
 }
 
 inline
-LineSymbol*Map::getCoveringRedLine()
+LineSymbol* Map::getCoveringRedLine()
 {
 	return covering_red_line;
 }
 
 inline
-CombinedSymbol*Map::getCoveringCombinedLine()
+CombinedSymbol* Map::getCoveringCombinedLine()
 {
 	return covering_combined_line;
 }
 
 inline
-LineSymbol*Map::getUndefinedLine()
+LineSymbol* Map::getUndefinedLine()
 {
 	return undefined_line;
 }
 
 inline
-PointSymbol*Map::getUndefinedPoint()
+PointSymbol* Map::getUndefinedPoint()
 {
 	return undefined_point;
 }
 
 inline
-TextSymbol*Map::getUndefinedText()
+TextSymbol* Map::getUndefinedText()
 {
 	return undefined_text;
 }
