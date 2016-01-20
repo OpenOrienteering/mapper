@@ -919,18 +919,30 @@ void TemplateListWidget::positionClicked(bool checked)
 
 void TemplateListWidget::importClicked()
 {
-	Template* templ = qobject_cast< TemplateMap* >(getCurrentTemplate());
-	QScopedPointer<Map> template_map(new Map());
-	if (templ && template_map->loadFrom(templ->getTemplatePath(), this, nullptr, false, true))
+	auto prototype = qobject_cast<const TemplateMap*>(getCurrentTemplate());
+	if (!prototype)
+		return;
+	
+	TemplateTransform transform;
+	prototype->getTransform(transform);
+	
+	Map template_map;
+	
+	bool ok = true;
+	if (prototype->getTemplateType() == QLatin1String("OgrTemplate"))
 	{
-		TemplateTransform transform;
-		templ->getTransform(transform);
-		template_map->applyOnAllObjects(ApplyTemplateTransform(transform));
+		template_map.setGeoreferencing(prototype->templateMap()->getGeoreferencing());
+		template_map.importMap(prototype->templateMap(), Map::MinimalObjectImport, window());
+		template_map.applyOnAllObjects(ApplyTemplateTransform(transform));
+	}
+	else if (prototype->getTemplateType() == QLatin1String("TemplateMap")
+	         && template_map.loadFrom(prototype->getTemplatePath(), this, nullptr, false, true))
+	{
+		template_map.applyOnAllObjects(ApplyTemplateTransform(transform));
 		
-		double nominal_scale = (double)template_map->getScaleDenominator() / (double)map->getScaleDenominator();
+		double nominal_scale = (double)template_map.getScaleDenominator() / (double)map->getScaleDenominator();
 		double current_scale = 0.5 * (transform.template_scale_x + transform.template_scale_y);
 		double scale = 1.0;
-		bool ok = true;
 		QStringList scale_options;
 		if (qAbs(nominal_scale - 1.0) > 0.009)
 			scale_options.append(tr("Scale by nominal map scale ratio (%1 %)").arg(locale().toString(nominal_scale * 100.0, 'f', 1)));
@@ -953,16 +965,22 @@ void TemplateListWidget::importClicked()
 				scale = current_scale;
 		}
 		
-		if (ok)
-		{
-			if (scale != 1.0)
-				template_map->scaleAllSymbols(scale);
+		if (ok && scale != 1.0)
+				template_map.scaleAllSymbols(scale);
 			
-			// Symbols and objects are already adjusted. Merge as is.
-			template_map->setGeoreferencing(map->getGeoreferencing());
-			map->importMap(template_map.data(), Map::MinimalObjectImport, window());
-			deleteTemplate();
-		}
+		// Symbols and objects are already adjusted. Merge as is.
+		template_map.setGeoreferencing(map->getGeoreferencing());
+	}
+	else
+	{
+		Q_UNREACHABLE();
+		ok = false;
+	}
+
+	if (ok)
+	{
+		map->importMap(&template_map, Map::MinimalObjectImport, window());
+		deleteTemplate();
 	}
 }
 

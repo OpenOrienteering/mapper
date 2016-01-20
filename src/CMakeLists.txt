@@ -368,6 +368,9 @@ if(Qt5PrintSupport_FOUND)
 	  Qt5::PrintSupport
 	)
 endif()
+if(TARGET mapper-gdal)
+	target_link_libraries(Mapper_Common mapper-gdal)
+endif()
 
 
 qt5_translations_sources(

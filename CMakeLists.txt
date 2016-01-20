@@ -89,6 +89,8 @@ option(Mapper_BUILD_CLIPPER "Build the Clipper package from source" ${Mapper_BUI
 
 option(Mapper_BUILD_PROJ "Build the Proj library from source" ${Mapper_BUILD_PROJ_DEFAULT})
 
+option(Mapper_USE_GDAL   "Use the GDAL library" OFF)
+
 option(Mapper_BUILD_QT   "Build the Qt library from source" ${Mapper_BUILD_QT_DEFAULT})
 
 option(Mapper_BUILD_DOXYGEN "Build the doxygen tool from source" ${Mapper_BUILD_DOXYGEN_DEFAULT})
@@ -251,6 +253,9 @@ add_subdirectory("symbol sets")
 add_subdirectory("translations")
 add_subdirectory("3rd-party/qbezier")
 add_subdirectory("3rd-party/qtsingleapplication")
+if (Mapper_USE_GDAL)
+	add_subdirectory("src/gdal")
+endif()
 add_subdirectory("src/libocad")
 add_subdirectory("src/printsupport")
 add_subdirectory("src")

@@ -1,6 +1,5 @@
 /*
- *    Copyright 2012, 2013, 2014 Thomas Schöps
- *    Copyright 2012, 2013, 2014 Kai Pastor
+ *    Copyright 2016 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -18,26 +17,36 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#ifndef OPENORIENTEERING_OGR_TEMPLATE_H
+#define OPENORIENTEERING_OGR_TEMPLATE_H
 
-#include "global.h"
+#include "../template_map.h"
 
-#include <mapper_config.h>
+#include "../core/georeferencing.h"
 
-#include "file_format_registry.h"
-#include "file_format_native.h"
-#include "file_format_xml.h"
-#include "fileformats/ocd_file_format.h"
-#include "gdal/ogr_file_format.h"
 
-void doStaticInitializations()
+/**
+ * Template displaying a file supported by OGR.
+ */
+class OgrTemplate : public TemplateMap
 {
-	// Register the supported file formats
-	FileFormats.registerFormat(new XMLFileFormat());
-	FileFormats.registerFormat(new OcdFileFormat());
-#ifdef MAPPER_USE_GDAL
-	FileFormats.registerFormat(new OgrFileFormat());
-#endif
-#ifndef NO_NATIVE_FILE_FORMAT
-	FileFormats.registerFormat(new NativeFileFormat()); // TODO: Remove before release 1.0
-#endif
-}
+Q_OBJECT
+public:
+	static const std::vector<QByteArray>& supportedExtensions();
+	
+	
+	OgrTemplate(const QString& path, Map* map);
+	
+	~OgrTemplate() override;
+	
+	
+	QString getTemplateType() const override;
+	
+	
+	bool loadTemplateFileImpl(bool configuring) override;
+	
+protected:
+	Template* duplicateImpl() const override;
+};
+
+#endif // OPENORIENTEERING_OGR_TEMPLATE_H

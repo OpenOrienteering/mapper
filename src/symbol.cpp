@@ -387,7 +387,7 @@ QImage Symbol::createIcon(const Map* map, int side_length, bool antialiasing, in
 	Symbol* icon_symbol = NULL;
 	if (type == Point)
 	{
-		PointObject* point = new PointObject(this);
+		PointObject* point = new PointObject(static_cast<const PointSymbol*>(this));
 		point->setPosition(0, 0);
 		object = point;
 	}

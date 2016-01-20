@@ -100,8 +100,9 @@ public:
 	enum FileType
 	{
 		MapFile     = 0x01,
+		OgrFile     = 0x02,     ///< Geospatial vector data supported by OGR
 		
-		AllFiles    = MapFile,
+		AllFiles    = MapFile,  ///< All types which can be handled by an editor.
 		
 		EndOfFileTypes
 	};

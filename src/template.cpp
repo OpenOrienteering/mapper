@@ -36,6 +36,7 @@
 #include "template_image.h"
 #include "template_map.h"
 #include "template_track.h"
+#include "gdal/ogr_template.h"
 #include "util.h"
 #include "util/xml_stream_util.h"
 
@@ -361,7 +362,9 @@ Q_ASSERT(temp->passpoints.size() == 0);
 		
 		// Fix template alignment problems caused by grivation rounding since version 0.6
 		const double correction = map.getGeoreferencing().getGrivationError();
-		if (qAbs(correction) != 0.0 && temp->getTemplateType() == "TemplateTrack")
+		if (qAbs(correction) != 0.0
+		    && (temp->getTemplateType() == "TemplateTrack"
+		        || temp->getTemplateType() == "OgrTemplate") )
 		{
 			temp->setTemplateRotation(temp->getTemplateRotation() + Georeferencing::degToRad(correction));
 		}
@@ -715,12 +718,18 @@ const std::vector<QByteArray>& Template::supportedExtensions()
 	{
 		auto& image_extensions = TemplateImage::supportedExtensions();
 		auto& map_extensions   = TemplateMap::supportedExtensions();
+#ifdef MAPPER_USE_GDAL
+		auto& ogr_extensions   = OgrTemplate::supportedExtensions();
+#else
+		auto ogr_extensions    = std::vector<QByteArray>{ };
+#endif
 		auto& track_extensions = TemplateTrack::supportedExtensions();
 		extensions.reserve(image_extensions.size()
 		                   + map_extensions.size()
 		                   + track_extensions.size());
 		extensions.insert(end(extensions), begin(image_extensions), end(image_extensions));
 		extensions.insert(end(extensions), begin(map_extensions), end(map_extensions));
+		extensions.insert(end(extensions), begin(ogr_extensions), end(ogr_extensions));
 		extensions.insert(end(extensions), begin(track_extensions), end(track_extensions));
 	}
 	return extensions;
@@ -740,6 +749,10 @@ std::unique_ptr<Template> Template::templateForFile(const QString& path, Map* ma
 		t.reset(new TemplateImage(path, map));
 	else if (path_ends_with_any_of(TemplateMap::supportedExtensions()))
 		t.reset(new TemplateMap(path, map));
+#ifdef MAPPER_USE_GDAL
+	else if (path_ends_with_any_of(OgrTemplate::supportedExtensions()))
+		t.reset(new OgrTemplate(path, map));
+#endif
 	else if (path_ends_with_any_of(TemplateTrack::supportedExtensions()))
 		t.reset(new TemplateTrack(path, map));
 	
