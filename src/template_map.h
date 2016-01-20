@@ -23,9 +23,13 @@
 
 #include "template.h"
 
+#include <memory>
+
 #include <QStringList>
 
-/** Template displaying a map file. */
+/**
+ * Template displaying a map file.
+ */
 class TemplateMap : public Template
 {
 Q_OBJECT
@@ -35,23 +39,40 @@ public:
 	 */
 	static const std::vector<QByteArray>& supportedExtensions();
 	
+	
 	TemplateMap(const QString& path, Map* map);
-    virtual ~TemplateMap();
-	virtual QString getTemplateType() const {return "TemplateMap";}
-	virtual bool isRasterGraphics() const {return false;}
 	
-	virtual bool loadTemplateFileImpl(bool configuring);
-	virtual bool postLoadConfiguration(QWidget* dialog_parent, bool& out_center_in_view);
-	virtual void unloadTemplateFileImpl();
+	virtual ~TemplateMap() override;
 	
-    virtual void drawTemplate(QPainter* painter, QRectF& clip_rect, double scale, bool on_screen, float opacity) const;
-	virtual QRectF getTemplateExtent() const;
-
+	
+	QString getTemplateType() const override;
+	
+	bool isRasterGraphics() const override;
+	
+	
+	bool loadTemplateFileImpl(bool configuring) override;
+	
+	bool postLoadConfiguration(QWidget* dialog_parent, bool& out_center_in_view) override;
+	
+	void unloadTemplateFileImpl() override;
+	
+	
+	void drawTemplate(QPainter* painter, QRectF& clip_rect, double scale, bool on_screen, float opacity) const override;
+	
+	QRectF getTemplateExtent() const override;
+	
+	
+	const Map* templateMap() const;
+	
 protected:
-	virtual Template* duplicateImpl() const;
+	Template* duplicateImpl() const override;
+	
+	Map* templateMap();
+	
+	void setTemplateMap(std::unique_ptr<Map>&& map);
 	
 private:
-	Map* template_map;
+	std::unique_ptr<Map> template_map;
 	
 	static QStringList locked_maps;
 };

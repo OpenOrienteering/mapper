@@ -36,14 +36,26 @@ const std::vector<QByteArray>& TemplateMap::supportedExtensions()
 	return extensions;
 }
 
-TemplateMap::TemplateMap(const QString& path, Map* map) : Template(path, map), template_map(NULL)
+TemplateMap::TemplateMap(const QString& path, Map* map)
+: Template(path, map)
 {
+	// nothing
 }
 
 TemplateMap::~TemplateMap()
 {
 	if (template_state == Loaded)
 		unloadTemplateFile();
+}
+
+QString TemplateMap::getTemplateType() const
+{
+	return QLatin1String{"TemplateMap"};
+}
+
+bool TemplateMap::isRasterGraphics() const
+{
+	return false;
 }
 
 bool TemplateMap::loadTemplateFileImpl(bool configuring)
@@ -53,25 +65,23 @@ bool TemplateMap::loadTemplateFileImpl(bool configuring)
 		return true;
 	
 	locked_maps.append(template_path);
-	Map* new_template_map = new Map();
-	bool new_template_valid = new_template_map->loadFrom(template_path, NULL, NULL, false, configuring);
+	std::unique_ptr<Map> new_template_map{ new Map() };
+	bool new_template_valid = new_template_map->loadFrom(template_path, nullptr, nullptr, false, configuring);
 	locked_maps.removeAll(template_path);
 	
-	if (!new_template_valid)
+	if (new_template_valid)
 	{
-		delete new_template_map;
-		return false;
+		// Remove all template's templates from memory
+		// TODO: prevent loading and/or let user decide
+		for (int i = new_template_map->getNumTemplates()-1; i >= 0; i--)
+		{
+			new_template_map->deleteTemplate(i);
+		}
+		
+		template_map = std::move(new_template_map);
 	}
 	
-	// Remove all template's templates from memory
-	// TODO: prevent loading and/or let user decide
-	for (int i = new_template_map->getNumTemplates()-1; i >= 0; i--)
-	{
-		new_template_map->deleteTemplate(i);
-	}
-	
-	template_map = new_template_map;
-	return true;
+	return new_template_valid;
 }
 
 bool TemplateMap::postLoadConfiguration(QWidget* dialog_parent, bool& out_center_in_view)
@@ -89,8 +99,7 @@ bool TemplateMap::postLoadConfiguration(QWidget* dialog_parent, bool& out_center
 
 void TemplateMap::unloadTemplateFileImpl()
 {
-	delete template_map;
-	template_map = NULL;
+	template_map.reset();
 }
 
 void TemplateMap::drawTemplate(QPainter* painter, QRectF& clip_rect, double scale, bool on_screen, float opacity) const
@@ -117,16 +126,18 @@ void TemplateMap::drawTemplate(QPainter* painter, QRectF& clip_rect, double scal
 	RenderConfig::Options options;
 	if (on_screen)
 		options |= RenderConfig::Screen;
-	RenderConfig config = { *template_map, transformed_clip_rect, scale, options, opacity };
+	RenderConfig config = { *(template_map.get()), transformed_clip_rect, scale, options, opacity };
 	// TODO: introduce template-specific options, adjustable by the user, to allow changing some of these parameters
 	template_map->draw(painter, config);
 }
 
 QRectF TemplateMap::getTemplateExtent() const
 {
-    // If the template is invalid, the extent is an empty rectangle.
-    if (!template_map) return QRectF();
-	return template_map->calculateExtent(false, false, NULL);
+	// If the template is invalid, the extent is an empty rectangle.
+	QRectF extent;
+	if (template_map)
+		extent = template_map->calculateExtent(false, false, nullptr);
+	return extent;
 }
 
 Template* TemplateMap::duplicateImpl() const
@@ -135,4 +146,19 @@ Template* TemplateMap::duplicateImpl() const
 	if (template_state == Loaded)
 		copy->loadTemplateFileImpl(false);
 	return copy;
+}
+
+const Map* TemplateMap::templateMap() const
+{
+	return template_map.get();
+}
+
+Map* TemplateMap::templateMap()
+{
+	return template_map.get();
+}
+
+void TemplateMap::setTemplateMap(std::unique_ptr<Map>&& map)
+{
+	template_map = std::move(map);
 }
