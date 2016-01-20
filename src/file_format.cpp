@@ -47,8 +47,8 @@ FileFormat::FileFormat(FileFormat::FileType file_type, const QString& id, const 
 	Q_ASSERT(file_type != 0);
 	Q_ASSERT(!id.isEmpty());
 	Q_ASSERT(!description.isEmpty());
-	Q_ASSERT(!file_extension.isEmpty());
-	addExtension(file_extension);
+	if (!file_extension.isEmpty())
+		addExtension(file_extension);
 }
 
 FileFormat::~FileFormat()
