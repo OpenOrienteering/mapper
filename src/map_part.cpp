@@ -165,6 +165,11 @@ void MapPart::setObject(Object* object, int pos, bool delete_old)
 	map->setObjectsDirty(); // TODO: remove from here, dirty state handling should be separate
 }
 
+void MapPart::addObject(Object* object)
+{
+	addObject(object, objects.size());
+}
+
 void MapPart::addObject(Object* object, int pos)
 {
 	objects.insert(objects.begin() + pos, object);

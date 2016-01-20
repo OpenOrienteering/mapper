@@ -136,6 +136,11 @@ public:
 	void setObject(Object* object, int pos, bool delete_old);
 	
 	/**
+	 * Adds the object as new object at the end.
+	 */
+	void addObject(Object* object);
+	
+	/**
 	 * Adds the object as new object at the given index.
 	 */
 	void addObject(Object* object, int pos);
