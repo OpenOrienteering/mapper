@@ -3712,53 +3712,56 @@ void MapEditorController::importClicked()
 	
 	settings.setValue("importFileDirectory", QFileInfo(filename).canonicalPath());
 	
-	if ( filename.endsWith(".dxf", Qt::CaseInsensitive) || 
-	     filename.endsWith(".gpx", Qt::CaseInsensitive) ||
-	     filename.endsWith(".osm", Qt::CaseInsensitive) )
+	bool success = false;
+	auto map_format = FileFormats.findFormatForFilename(filename);
+	if (map_format)
+	{
+		// Map format recognized by filename extension
+		importMapFile(filename, true); // Error reporting in Map::loadFrom()
+		return;
+	}
+	else if (importMapFile(filename, false))
+	{
+		// Map format recognized by try-and-error
+		success = true;
+	}
+	else if (filename.endsWith(".dxf", Qt::CaseInsensitive)
+	         || filename.endsWith(".gpx", Qt::CaseInsensitive)
+	         || filename.endsWith(".osm", Qt::CaseInsensitive))
 	{
 		importGeoFile(filename);
+		return; // Error reporting in Track::import()
 	}
 	else
 	{
-		bool is_map_format = false;
-		for (auto&& ext : map_extensions)
-		{
-			if (filename.endsWith("." + ext, Qt::CaseInsensitive))
-			{
-				is_map_format = true;
-				break;
-			}
-		}
-		
-		if (is_map_format)
-			importMapFile(filename);
-		else
-			QMessageBox::critical(window, tr("Error"), tr("Cannot import the selected file because its file format is not supported."));
+		QMessageBox::critical(window, tr("Error"), tr("Cannot import the selected file because its file format is not supported."));
+		return;
+	}
+	
+	if (!success)
+	{
+		/// \todo Reword message (not a map file here). Requires new translations
+		QMessageBox::critical(window, tr("Error"), tr("Cannot import the selected map file because it could not be loaded."));
 	}
 }
 
-void MapEditorController::importGeoFile(const QString& filename)
+bool MapEditorController::importGeoFile(const QString& filename)
 {
 	TemplateTrack temp(filename, map);
-	if (!temp.configureAndLoad(window, main_view))
-		return;
-	temp.import(window);
+	return !temp.configureAndLoad(window, main_view)
+	       || temp.import(window);
 }
 
-bool MapEditorController::importMapFile(const QString& filename)
+bool MapEditorController::importMapFile(const QString& filename, bool show_errors)
 {
-	Map* imported_map = new Map();
-	bool result = imported_map->loadFrom(filename, window, NULL);
-	if (!result)
-	{
-		QMessageBox::critical(window, tr("Error"), tr("Cannot import the selected map file because it could not be loaded."));
-		return false;
-	}
+	Map imported_map;
+	imported_map.setScaleDenominator(map->getScaleDenominator()); // for non-scaled geodata
 	
-	map->importMap(imported_map, Map::MinimalObjectImport, window);
+	bool result = imported_map.loadFrom(filename, window, nullptr, false, show_errors);
+	if (result)
+		map->importMap(&imported_map, Map::MinimalObjectImport, window);
 	
-	delete imported_map;
-	return true;
+	return result;
 }
 
 // slot

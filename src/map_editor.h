@@ -487,9 +487,9 @@ public slots:
 	void templateDeleted(int pos, const Template* temp);
 	
 	/** Imports a track file (GPX, DXF, OSM, ...) into the map */
-	void importGeoFile(const QString& filename);
+	bool importGeoFile(const QString& filename);
 	/** Imports a map file into the loaded map */
-	bool importMapFile(const QString& filename);
+	bool importMapFile(const QString& filename, bool show_errors);
 	/** Shows the import file selector and imports the selected file, if any. */
 	void importClicked();
 	
