@@ -102,6 +102,9 @@ int main(int argc, char** argv)
 	qapp.installTranslator(&translation.getQtTranslator());
 	qapp.installTranslator(&translation.getAppTranslator());
 	
+	// Avoid numeric issues in libraries such as GDAL
+	setlocale(LC_NUMERIC, "C");
+	
 	// Initialize static things like the file format registry.
 	doStaticInitializations();
 	

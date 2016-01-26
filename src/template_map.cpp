@@ -120,7 +120,7 @@ void TemplateMap::drawTemplate(QPainter* painter, QRectF& clip_rect, double scal
 	}
 	else
 	{
-		// TODO!
+		transformed_clip_rect = clip_rect;
 	}
 	
 	RenderConfig::Options options;

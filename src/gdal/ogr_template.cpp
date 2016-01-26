@@ -20,44 +20,32 @@
 #include "ogr_template.h"
 
 #include <QFile>
+#include <QXmlStreamReader>
 
 #include "ogr_file_format_p.h"
 #include "../map.h"
-
-
-namespace
-{
-	/**
-	 * OGR driver registration utility.
-	 */
-	class OgrDriverSetup
-	{
-	public:
-		OgrDriverSetup()
-		{
-			OGRRegisterAll();
-		}
-	};
-}
+#include "../object.h"
 
 
 const std::vector<QByteArray>& OgrTemplate::supportedExtensions()
 {
 	/// \todo Build from driver list in GDAL/OGR >= 2.0
-	static std::vector<QByteArray> extensions = { "dxf" };
+	static std::vector<QByteArray> extensions = { "dxf", "shp", "shx", "dbf" };
 	return extensions;
 }
 
 
 OgrTemplate::OgrTemplate(const QString& path, Map* map)
 : TemplateMap(path, map)
+, migrating_from_template_track(false)
 {
-	static OgrDriverSetup registered;
+	// nothing else
 }
 
 OgrTemplate::~OgrTemplate()
 {
-	// nothing, not inlined
+	if (template_state == Loaded)
+		unloadTemplateFile();
 }
 
 
@@ -75,11 +63,32 @@ bool OgrTemplate::loadTemplateFileImpl(bool configuring)
 	new_template_map->setGeoreferencing(map->getGeoreferencing());
 	
 	QFile stream{ template_path };
-	OgrFileImport importer{ &stream, new_template_map.get(), nullptr };
-	importer.doImport(false, template_path);
-	
-	setTemplateMap(std::move(new_template_map));
-	return true;
+	try
+	{
+		OgrFileImport importer{ &stream, new_template_map.get(), nullptr, migrating_from_template_track };
+		importer.doImport(false, template_path);
+		setTemplateMap(std::move(new_template_map));
+		
+		if (!importer.warnings().empty())
+		{
+			QString message;
+			message.reserve((importer.warnings().back().length()+1) * importer.warnings().size());
+			for (auto& warning : importer.warnings())
+			{
+				message.append(warning);
+				message.append('\n');
+			}
+			message.chop(1);
+			setErrorString(message);
+		}
+		
+		return true;
+	}
+	catch (FileFormatException& e)
+	{
+		setErrorString(e.what());
+		return false;
+	}
 }
 
 
@@ -89,4 +98,23 @@ Template* OgrTemplate::duplicateImpl() const
 	if (template_state == Loaded)
 		copy->loadTemplateFileImpl(false);
 	return copy;
+}
+
+
+bool OgrTemplate::loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml)
+{
+	if (xml.name() == QLatin1String("crs_spec"))
+	{
+		migrating_from_template_track = true;
+	}
+	xml.skipCurrentElement();
+	return true;
+}
+
+void OgrTemplate::saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml) const
+{
+	if (migrating_from_template_track)
+	{
+		xml.writeEmptyElement(QLatin1String("crs_spec"));
+	}
 }

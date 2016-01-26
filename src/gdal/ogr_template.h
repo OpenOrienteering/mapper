@@ -47,6 +47,13 @@ public:
 	
 protected:
 	Template* duplicateImpl() const override;
+	
+	bool loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml) override;
+	
+	void saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml) const override;
+	
+private:
+	bool migrating_from_template_track;
 };
 
 #endif // OPENORIENTEERING_OGR_TEMPLATE_H
