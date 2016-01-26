@@ -92,7 +92,7 @@ public:
 	/** Constructs an empty line symbol. */
 	LineSymbol();
 	virtual ~LineSymbol();
-	Symbol* duplicate(const MapColorMap* color_map) const override;
+	Symbol* duplicate(const MapColorMap* color_map = nullptr) const override;
 	
 	void createRenderables(
 	        const Object *object,
