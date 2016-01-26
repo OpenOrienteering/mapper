@@ -3174,6 +3174,11 @@ void PointObject::setPosition(qint32 x, qint32 y)
 	setOutputDirty();
 }
 
+void PointObject::setPosition(MapCoord coord)
+{
+	coords[0] = coord;
+}
+
 void PointObject::setPosition(MapCoordF coord)
 {
 	coords[0].setX(coord.x());

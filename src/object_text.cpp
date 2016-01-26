@@ -160,6 +160,13 @@ void TextObject::setAnchorPosition(qint32 x, qint32 y)
 	setOutputDirty();
 }
 
+void TextObject::setAnchorPosition(MapCoord coord)
+{
+	coords.resize(1);
+	coords[0] = coord;
+	setOutputDirty();
+}
+
 void TextObject::setAnchorPosition(MapCoordF coord)
 {
 	coords.resize(1);
