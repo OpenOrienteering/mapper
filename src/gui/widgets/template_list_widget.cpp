@@ -95,6 +95,9 @@ TemplateListWidget::TemplateListWidget(Map* map, MapView* main_view, MapEditorCo
 , mobile_mode(controller->isInMobileMode())
 , name_column(3)
 {
+	Q_ASSERT(main_view);
+	Q_ASSERT(controller);
+	
 	setWhatsThis("<a href=\"templates.html#setup\">See more</a>");
 	
 	QStyleOption style_option(QStyleOption::Version, QStyleOption::SO_DockWidget);
@@ -924,7 +927,8 @@ void TemplateListWidget::importClicked()
 		return;
 	
 	TemplateTransform transform;
-	prototype->getTransform(transform);
+	if (!prototype->isTemplateGeoreferenced())
+		prototype->getTransform(transform);
 	
 	Map template_map;
 	
@@ -938,7 +942,8 @@ void TemplateListWidget::importClicked()
 	else if (prototype->getTemplateType() == QLatin1String("TemplateMap")
 	         && template_map.loadFrom(prototype->getTemplatePath(), this, nullptr, false, true))
 	{
-		template_map.applyOnAllObjects(ApplyTemplateTransform(transform));
+		if (!prototype->isTemplateGeoreferenced())
+			template_map.applyOnAllObjects(ApplyTemplateTransform(transform));
 		
 		double nominal_scale = (double)template_map.getScaleDenominator() / (double)map->getScaleDenominator();
 		double current_scale = 0.5 * (transform.template_scale_x + transform.template_scale_y);
@@ -981,6 +986,31 @@ void TemplateListWidget::importClicked()
 	{
 		map->importMap(&template_map, Map::MinimalObjectImport, window());
 		deleteTemplate();
+		
+		if (main_view->isOverprintingSimulationEnabled()
+		    && !template_map.hasSpotColors())
+		{
+			auto answer = QMessageBox::question(
+			                  window(),
+			                  tr("Template import"),
+			                  tr("The template will be invisible in the overprinting simulation. "
+			                     "Switch to normal view?"),
+			                  QMessageBox::StandardButtons(QMessageBox::Yes | QMessageBox::No), 
+			                  QMessageBox::Yes );
+			if (answer == QMessageBox::Yes)
+			{
+				if (auto action = controller->getAction("overprintsimulation"))
+					action->trigger();
+			}
+		}
+		
+		
+		auto map_visibility = main_view->getMapVisibility();
+		if (!map_visibility->visible)
+		{
+			map_visibility->visible = true;
+			updateRow(map->getNumTemplates() - map->getFirstFrontTemplate());
+		}
 	}
 }
 
