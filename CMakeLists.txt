@@ -107,8 +107,15 @@ option(Mapper_AUTORUN_UNIT_TESTS "Run the unit tests as part of the default targ
 option(Mapper_AUTORUN_SYSTEM_TESTS "Run the system tests as part of the default target" OFF)
 mark_as_advanced(Mapper_AUTORUN_UNIT_TESTS Mapper_AUTORUN_SYSTEM_TESTS)
 
+if (WIN32 OR APPLE)
+	set(Mapper_PACKAGE_GDAL_DEFAULT Mapper_USE_GDAL)
+else()
+	set(Mapper_PACKAGE_GDAL_DEFAULT OFF)
+endif()
+
 option(Mapper_BUILD_PACKAGE     "Create a target for building packages"                ${Mapper_BUILD_PACKAGE_DEFAULT})
 option(Mapper_PACKAGE_PROJ      "Include all required Proj components in the packages" ${Mapper_BUILD_PROJ})
+option(Mapper_PACKAGE_GDAL      "Include all required GDAL components in the packages" ${Mapper_PACKAGE_GDAL_DEFAULT})
 option(Mapper_PACKAGE_QT        "Include all required Qt components in the packages"   ${Mapper_BUILD_QT})
 option(Mapper_PACKAGE_ASSISTANT "Include Qt Assistant in the packages"                 ${Mapper_BUILD_QT})
 option(Mapper_PACKAGE_LINGUIST  "Build a Qt Linguist package"                          ${Mapper_BUILD_PACKAGE_DEFAULT})
