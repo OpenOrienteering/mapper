@@ -453,6 +453,7 @@ bool Template::tryToFindAndReloadTemplateFile(QString map_directory, bool* out_l
 {
 	if (!map_directory.isEmpty() && !map_directory.endsWith('/'))
 		map_directory.append('/');
+	
 	if (out_loaded_from_map_dir)
 		*out_loaded_from_map_dir = false;
 	
@@ -461,31 +462,36 @@ bool Template::tryToFindAndReloadTemplateFile(QString map_directory, bool* out_l
 	// First try relative path (if this information is available)
 	if (!getTemplateRelativePath().isEmpty() && !map_directory.isEmpty())
 	{
-		setTemplatePath(map_directory + getTemplateRelativePath());
-		loadTemplateFile(false);
-		if (getTemplateState() == Template::Loaded)
-			return true;
+		auto path = QString{ map_directory + getTemplateRelativePath() };
+		if (QFileInfo(path).exists())
+		{
+			setTemplatePath(path);
+			return loadTemplateFile(false);
+		}
 	}
 	
-	// Then try absolute path
-	loadTemplateFile(false);
-	if (getTemplateState() == Template::Loaded)
-		return true;
+	// Second try absolute path
+	if (QFileInfo(template_path).exists())
+	{
+		return loadTemplateFile(false);
+	}
 	
-	// Then try the template filename in the map's directory
+	// Third try the template filename in the map's directory
 	if (!map_directory.isEmpty())
 	{
-		setTemplatePath(map_directory + getTemplateFilename());
-		loadTemplateFile(false);
-		if (getTemplateState() == Template::Loaded)
+		auto path = QString{ map_directory + getTemplateFilename() };
+		if (QFileInfo(path).exists())
 		{
+			setTemplatePath(path);
+			bool success = loadTemplateFile(false);
 			if (out_loaded_from_map_dir)
 				*out_loaded_from_map_dir = true;
-			return true;
+			return success;
 		}
 	}
 	
 	setTemplatePath(old_absolute_path);
+	setErrorString(tr("No such file."));
 	return false;
 }
 
