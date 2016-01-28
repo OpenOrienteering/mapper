@@ -98,6 +98,16 @@ THE SOFTWARE.
 \endquotation
 
 
+\section2 GDAL - Geospatial Data Abstraction Library
+
+\e {GDAL is an open source X/MIT licensed translator library for raster and
+    vector geospatial data formats.}
+\break
+\l http://www.gdal.org/
+
+\include gdal-licensing.qdocinc
+
+
 \section2 GNU Standard C++ Library v3
 
 \e {The GNU Standard C++ Library v3 is an ongoing project to implement the

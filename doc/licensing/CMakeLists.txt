@@ -47,6 +47,7 @@ set(LICENSING_SRCS
   licensing-html.qdocconf
   licensing.css
   src/licensing.qdoc
+  src/gdal-licensing.qdocinc
   src/qt-licensing.qdocinc
   src/trademarks.qdocinc
   src/apache-2.0.qdoc

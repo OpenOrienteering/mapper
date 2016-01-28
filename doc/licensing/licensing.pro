@@ -36,6 +36,7 @@ LICENSING_SRCS = \
   $$PWD/licensing-html.qdocconf \
   $$PWD/licensing.css \
   $$PWD/src/licensing.qdoc \
+  $$PWD/src/gdal-licensing.qdocinc \
   $$PWD/src/qt-licensing.qdocinc \
   $$PWD/src/trademarks.qdocinc \
   $$PWD/src/apache-2.0.qdoc \
