@@ -1,6 +1,6 @@
 #
 #    Copyright 2012, 2013, 2014 Thomas Schöps
-#    Copyright 2012-2015 Kai Pastor
+#    Copyright 2012-2016 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -75,11 +75,13 @@ option(Mapper_DEBUG_TRANSLATIONS "Debug missing translations" OFF)
 set(Mapper_BUILD_CLIPPER_DEFAULT ON)
 if(WIN32 OR APPLE)
 	set(Mapper_BUILD_PROJ_DEFAULT ON)
+	set(Mapper_BUILD_GDAL_DEFAULT ON)
 	set(Mapper_BUILD_QT_DEFAULT ON)
 	set(Mapper_BUILD_DOXYGEN_DEFAULT ON)
 	set(Mapper_BUILD_PACKAGE_DEFAULT ON)
 else()
 	set(Mapper_BUILD_PROJ_DEFAULT OFF)
+	set(Mapper_BUILD_GDAL_DEFAULT OFF)
 	set(Mapper_BUILD_QT_DEFAULT ON)
 	set(Mapper_BUILD_DOXYGEN_DEFAULT OFF)
 	set(Mapper_BUILD_PACKAGE_DEFAULT OFF)
@@ -89,7 +91,9 @@ option(Mapper_BUILD_CLIPPER "Build the Clipper package from source" ${Mapper_BUI
 
 option(Mapper_BUILD_PROJ "Build the Proj library from source" ${Mapper_BUILD_PROJ_DEFAULT})
 
-option(Mapper_USE_GDAL   "Use the GDAL library" OFF)
+option(Mapper_BUILD_GDAL "Build the GDAL library" ${Mapper_BUILD_GDAL_DEFAULT})
+
+option(Mapper_USE_GDAL   "Use the GDAL library" ${Mapper_BUILD_GDAL})
 
 option(Mapper_BUILD_QT   "Build the Qt library from source" ${Mapper_BUILD_QT_DEFAULT})
 
@@ -107,15 +111,9 @@ option(Mapper_AUTORUN_UNIT_TESTS "Run the unit tests as part of the default targ
 option(Mapper_AUTORUN_SYSTEM_TESTS "Run the system tests as part of the default target" OFF)
 mark_as_advanced(Mapper_AUTORUN_UNIT_TESTS Mapper_AUTORUN_SYSTEM_TESTS)
 
-if (WIN32 OR APPLE)
-	set(Mapper_PACKAGE_GDAL_DEFAULT Mapper_USE_GDAL)
-else()
-	set(Mapper_PACKAGE_GDAL_DEFAULT OFF)
-endif()
-
 option(Mapper_BUILD_PACKAGE     "Create a target for building packages"                ${Mapper_BUILD_PACKAGE_DEFAULT})
 option(Mapper_PACKAGE_PROJ      "Include all required Proj components in the packages" ${Mapper_BUILD_PROJ})
-option(Mapper_PACKAGE_GDAL      "Include all required GDAL components in the packages" ${Mapper_PACKAGE_GDAL_DEFAULT})
+option(Mapper_PACKAGE_GDAL      "Include all required GDAL components in the packages" ${Mapper_BUILD_GDAL})
 option(Mapper_PACKAGE_QT        "Include all required Qt components in the packages"   ${Mapper_BUILD_QT})
 option(Mapper_PACKAGE_ASSISTANT "Include Qt Assistant in the packages"                 ${Mapper_BUILD_QT})
 option(Mapper_PACKAGE_LINGUIST  "Build a Qt Linguist package"                          ${Mapper_BUILD_PACKAGE_DEFAULT})
@@ -210,6 +208,17 @@ if(Mapper_BUILD_PROJ)
 	add_feature_info(Mapper_BUILD_PROJ 1 "version: ${PROJ_VERSION}")
 else()
 	find_package(Proj REQUIRED)
+endif()
+
+if(Mapper_BUILD_GDAL)
+	add_subdirectory(3rd-party/gdal)
+	add_dependencies(Mapper_prerequisites GDAL)
+	if (TARGET Proj)
+		add_dependencies(GDAL Proj)
+	endif()
+	add_feature_info(Mapper_BUILD_GDAL 1 "version: ${GDAL_VERSION}")
+else()
+	find_package(GDAL)
 endif()
 
 if(Mapper_BUILD_QT)
