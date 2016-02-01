@@ -1582,7 +1582,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="485"/>
         <source>Lookup...</source>
-        <translation>Огляд...</translation>
+        <translation>Розрахувати...</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="120"/>
@@ -1593,7 +1593,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="197"/>
         <source>Declination:</source>
-        <translation type="unfinished">Магнітне схилення:</translation>
+        <translation>Магнітне схилення:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="145"/>
@@ -1604,7 +1604,7 @@
         <location filename="../src/gui/georeferencing_dialog.cpp" line="181"/>
         <location filename="../src/gui/select_crs_dialog.cpp" line="84"/>
         <source>&amp;Coordinate reference system:</source>
-        <translation type="unfinished">&amp;Система прив’язки координат:</translation>
+        <translation>&amp;Базова система координат:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="98"/>
@@ -1619,7 +1619,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="141"/>
         <source>Show reference point in:</source>
-        <translation type="unfinished">Показати опорну точку в:</translation>
+        <translation>Показати опорну точку в:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="329"/>
@@ -1640,62 +1640,62 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="93"/>
         <source>Map coordinate reference system</source>
-        <translation type="unfinished">Відносна система координат карти</translation>
+        <translation>Відносна система координат карти</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="89"/>
         <source>Map Georeferencing</source>
-        <translation type="unfinished"></translation>
+        <translation>Геоприв&apos;язка карти</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="96"/>
         <source>- local -</source>
-        <translation type="unfinished">- локально -</translation>
+        <translation>- локально -</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="101"/>
         <source>Reference point</source>
-        <translation type="unfinished">Опорна точка</translation>
+        <translation>Опорна точка</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="103"/>
         <source>&amp;Pick on map</source>
-        <translation type="unfinished">&amp;Закріпити на карті</translation>
+        <translation>&amp;Указати на карті</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="105"/>
         <source>(Datum: WGS84)</source>
-        <translation type="unfinished">(Датум: WGS84)</translation>
+        <translation>(Датум: WGS84)</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="108"/>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="109"/>
         <source>mm</source>
-        <translation type="unfinished">мм</translation>
+        <translation>мм</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="113"/>
         <source>X</source>
         <comment>x coordinate</comment>
-        <translation type="unfinished">X</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="115"/>
         <source>Y</source>
         <comment>y coordinate</comment>
-        <translation type="unfinished">Y</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="124"/>
         <source>E</source>
         <comment>west / east</comment>
-        <translation type="unfinished">E</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="126"/>
         <source>N</source>
         <comment>north / south</comment>
-        <translation type="unfinished">N</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="130"/>
@@ -1708,28 +1708,28 @@
         <location filename="../src/gui/georeferencing_dialog.cpp" line="134"/>
         <source>N</source>
         <comment>north</comment>
-        <translation type="unfinished">N</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="136"/>
         <source>E</source>
         <comment>east</comment>
-        <translation type="unfinished">E</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="157"/>
         <source>Map north</source>
-        <translation type="unfinished">Північ карти</translation>
+        <translation>Північ карти</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="187"/>
         <source>Map coordinates:</source>
-        <translation type="unfinished">Координати карти:</translation>
+        <translation>Координати карти:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="189"/>
         <source>Geographic coordinates:</source>
-        <translation type="unfinished">Географічні координати:</translation>
+        <translation>Географічні координати:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="192"/>
@@ -1739,27 +1739,27 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="198"/>
         <source>Grivation:</source>
-        <translation type="unfinished">Кути карти:</translation>
+        <translation type="unfinished">Квазісхилення:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="355"/>
         <source>The magnetic declination for the reference point %1° %2° will now be retrieved from &lt;a href=&quot;%3&quot;&gt;%3&lt;/a&gt;. Do you want to continue?</source>
-        <translation type="unfinished">Магнітне схилення для опорної точки прив’язки %1° %2° буде взято з &lt;a href=&quot;%3&quot;&gt;%3&lt;/a&gt;. Ви хочете продовжити?</translation>
+        <translation>Магнітне схилення для опорної точки прив’язки %1° %2° буде взято з &lt;a href=&quot;%3&quot;&gt;%3&lt;/a&gt;. Хочете продовжити?</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="428"/>
         <source>Declination change</source>
-        <translation type="unfinished">Зміна магнітного схилення</translation>
+        <translation>Зміна магнітного схилення</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="428"/>
         <source>The declination has been changed. Do you want to rotate the map content accordingly, too?</source>
-        <translation type="unfinished">Величину магнітного схилення змінено. Повернути вміст карти відповідно?</translation>
+        <translation>Величину магнітного схилення змінено. Повернути вміст карти відповідно?</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="458"/>
         <source>Local coordinates:</source>
-        <translation type="unfinished">Локальні координати:</translation>
+        <translation>Локальні координати:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="485"/>
@@ -1779,7 +1779,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="650"/>
         <source>Declination value not found.</source>
-        <translation type="unfinished">Значення схилення не знайдено.</translation>
+        <translation>Значення схилення не знайдено.</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="655"/>
