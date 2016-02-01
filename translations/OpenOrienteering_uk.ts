@@ -1624,7 +1624,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="329"/>
         <source>valid</source>
-        <translation>дійсне</translation>
+        <translation>дійсний</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="322"/>
