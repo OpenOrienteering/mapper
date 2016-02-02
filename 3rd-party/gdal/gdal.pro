@@ -27,7 +27,7 @@ if (exists($$CMAKE_TOOLCHAIN_FILE)) {
 
 gdal.dir      = $$OUT_PWD/gdal
 gdal.target   = $$gdal.dir/GDAL-prefix/lib/libgdal.so
-osx: gdal.target = $$gdal.dir/GDAL-prefix/lib/libgdal.20.dylib
+osx: gdal.target = $$gdal.dir/GDAL-prefix/lib/libgdal.dylib
 win32: gdal.target = $$gdal.dir/GDAL-prefix/bin/libgdal-20.dll
 gdal.cflags   = $$QMAKE_CFLAGS -Wno-declaration-after-statement -Wno-int-to-pointer-cast
 gdal.commands = \
