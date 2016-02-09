@@ -535,8 +535,13 @@ void TemplateListWidget::duplicateTemplate()
 	int pos = posFromRow(row);
 	Q_ASSERT(pos >= 0);
 	
-	Template* new_template = map->getTemplate(pos)->duplicate();
+	const auto prototype = map->getTemplate(pos);
+	const auto visibility = main_view->getTemplateVisibility(prototype);
+	
+	auto new_template = prototype->duplicate();
 	addTemplateAt(new_template, pos);
+	(*main_view->getTemplateVisibility(new_template)) = *visibility;
+	updateRow(row+1);
 }
 
 void TemplateListWidget::moveTemplateUp()
