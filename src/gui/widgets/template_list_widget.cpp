@@ -1098,7 +1098,7 @@ void TemplateListWidget::updateRow(int row)
 	auto opacity_color  = QColor{ Qt::transparent };   
 	auto text_color     = QColor::fromRgb(255, 51, 51); 
 	auto decoration     = QVariant{ };
-	auto enabled        = Qt::ItemIsEnabled;
+	auto checkable      = Qt::ItemIsUserCheckable;
 	auto editable       = Qt::NoItemFlags;
 	auto group_editable = Qt::NoItemFlags;
 	
@@ -1132,7 +1132,8 @@ void TemplateListWidget::updateRow(int row)
 			text_color = text_color.darker();
 		}
 		decoration = QVariant{ QIcon(":/images/delete.png") };
-		enabled = Qt::NoItemFlags;
+		checkable  = Qt::NoItemFlags;
+		editable   = Qt::NoItemFlags;
 	}
 	
 	auto foreground = QBrush(text_color);
@@ -1143,7 +1144,7 @@ void TemplateListWidget::updateRow(int row)
 		auto item0 = template_table->item(row, 0);
 		item0->setBackground(background);
 		item0->setCheckState(check_state);
-		item0->setFlags(Qt::ItemIsUserCheckable | enabled);
+		item0->setFlags(checkable | Qt::ItemIsEnabled);
 #ifdef Q_OS_ANDROID
 		// Some combinations not working well in Android style
 		if (!valid)
@@ -1159,7 +1160,7 @@ void TemplateListWidget::updateRow(int row)
 		item1->setForeground(foreground);
 		item1->setData(Qt::DisplayRole, vis->opacity);
 		item1->setData(Qt::DecorationRole, decoration);
-		item1->setFlags(Qt::ItemIsSelectable | enabled | editable);
+		item1->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | editable);
 	}
 #ifndef NO_TEMPLATE_GROUP_SUPPORT
 	{
@@ -1167,7 +1168,7 @@ void TemplateListWidget::updateRow(int row)
 		item->setBackground(background);
 		item->setForeground(foreground);
 		item->setText((group < 0) ? "" : QString::number(group));
-		item->setFlags(Qt::ItemIsSelectable | enabled | groupable);
+		item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | groupable);
 	}
 #endif
 	{
@@ -1176,8 +1177,8 @@ void TemplateListWidget::updateRow(int row)
 		name_item->setForeground(foreground);
 		name_item->setText(name);
 		name_item->setData(Qt::ToolTipRole, path);
-		auto checkable = name_item->flags() & Qt::ItemIsUserCheckable;
-		name_item->setFlags(Qt::ItemIsSelectable | enabled | checkable);
+		auto prev_checkable = name_item->flags() & Qt::ItemIsUserCheckable;
+		name_item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | prev_checkable);
 	}
 }
 
