@@ -87,7 +87,12 @@ if(CMAKE_CROSSCOMPILING AND NOT GNU_SYSTEM_NAME AND MINGW)
 	string(REGEX REPLACE ".*Target: ?([^\n]*).*" \\1 GNU_SYSTEM_NAME ${GNU_SYSTEM_NAME})
 endif()
 if(CMAKE_CROSSCOMPILING AND GNU_SYSTEM_NAME)
-	set(GDAL_CONFIG_EXTRA "--host=${GNU_SYSTEM_NAME}")
+	execute_process(
+	  COMMAND "${CMAKE_CURRENT_SOURCE_DIR}/patches/config.guess"
+	  OUTPUT_VARIABLE build
+	  OUTPUT_STRIP_TRAILING_WHITESPACE
+	  )
+	set(GDAL_CONFIG_EXTRA "--host=${GNU_SYSTEM_NAME}" "--build=${build}" --without-expat)
 	get_directory_property(_include_dirs INCLUDE_DIRECTORIES)
 	if(_include_dirs)
 		unset(_cpp_flags)
