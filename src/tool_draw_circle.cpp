@@ -63,7 +63,7 @@ void DrawCircleTool::init()
 
 const QCursor& DrawCircleTool::getCursor() const
 {
-	static auto const cursor = QCursor(QPixmap(":/images/cursor-draw-circle.png"), 11, 11);
+	static auto const cursor = scaledToScreen(QCursor{ QPixmap{ ":/images/cursor-draw-circle.png" }, 11, 11 });
 	return cursor;
 }
 

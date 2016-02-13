@@ -68,7 +68,7 @@ void DrawTextTool::init()
 
 const QCursor& DrawTextTool::getCursor() const
 {
-	static auto const cursor = QCursor(QPixmap(":/images/cursor-draw-text.png"), 11, 11);
+	static auto const cursor = scaledToScreen(QCursor{ QPixmap{ ":/images/cursor-draw-text.png" }, 11, 11 });
 	return cursor;
 }
 

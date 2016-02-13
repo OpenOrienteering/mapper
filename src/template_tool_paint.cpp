@@ -69,7 +69,7 @@ void PaintOnTemplateTool::init()
 
 const QCursor&PaintOnTemplateTool::getCursor() const
 {
-	static auto const cursor = QCursor(QPixmap(":/images/cursor-paint-on-template.png"), 1, 1);
+	static auto const cursor = scaledToScreen(QCursor{ QPixmap{ ":/images/cursor-paint-on-template.png" }, 1, 1 });
 	return cursor;
 }
 

@@ -56,7 +56,7 @@ void CutHoleTool::init()
 
 const QCursor& CutHoleTool::getCursor() const
 {
-	static auto const cursor = QCursor(QPixmap(":/images/cursor-cut.png"), 11, 11);
+	static auto const cursor = scaledToScreen(QCursor{ QPixmap{ ":/images/cursor-cut.png" }, 11, 11 });
 	return cursor;
 }
 

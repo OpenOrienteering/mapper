@@ -47,7 +47,7 @@ MapEditorToolBase::MapEditorToolBase(const QCursor& cursor, MapEditorTool::Type 
   snap_exclude_object(NULL),
   cur_map_widget(editor->getMainWidget()),
   key_button_bar(NULL),
-  cursor(cursor),
+  cursor(scaledToScreen(cursor)),
   preview_update_triggered(false),
   dragging(false),
   dragging_canceled(false),

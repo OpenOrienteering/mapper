@@ -721,6 +721,6 @@ bool GeoreferencingTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coo
 
 const QCursor& GeoreferencingTool::getCursor() const
 {
-	static auto const cursor = QCursor(QPixmap(":/images/cursor-crosshair.png"), 11, 11);
+	static auto const cursor = scaledToScreen(QCursor{ QPixmap{ ":/images/cursor-crosshair.png" }, 11, 11 });
 	return cursor;
 }

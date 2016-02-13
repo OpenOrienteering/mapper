@@ -985,7 +985,7 @@ bool PointSymbolEditorTool::mousePressEvent(QMouseEvent* event, MapCoordF map_co
 
 const QCursor& PointSymbolEditorTool::getCursor() const
 {
-	static auto const cursor = QCursor(QPixmap(":/images/cursor-crosshair.png"), 11, 11);
+	static auto const cursor = scaledToScreen(QCursor{ QPixmap{ ":/images/cursor-crosshair.png" }, 11, 11 });
 	return cursor;
 }
 
