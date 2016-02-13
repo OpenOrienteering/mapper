@@ -41,14 +41,12 @@
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="160"/>
         <source>This program is free software: you can redistribute it and/or modify it under the terms of the &lt;a %1&gt;GNU General Public License (GPL), version&amp;nbsp;3&lt;/a&gt;, as published by the Free Software Foundation.</source>
-        <translation>Ez a program egy ingyenes szoftver, ami a &lt;a %1&gt; GNU General Public License (GPL) &amp;nbsp;3. verziója -  (ahogy a Szabad Szoftver Alapítvány kiadta)-&lt;/a&gt; szerint  terjeszthető és/ vagy módosítható.</translation>
+        <translation>Ez a program egy szabad szoftver, ami a &lt;a %1&gt; GNU General Public License (GPL) &amp;nbsp;3. verziója&lt;/a&gt; - (ahogy a Szabad Szoftver Alapítvány kiadta)- szerint terjeszthető és/ vagy módosítható.</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="166"/>
         <source>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License (GPL), version&amp;nbsp;3, for &lt;a %1&gt;more details&lt;/a&gt;.</source>
-        <translation>Ezt a programot  abban a reményben terjesztik, hogy hasznos lesz, de BÁRMILYEN GARANCIA NÉLKÜL ... Lásd a GNU General Public License  (GPL), &amp;nbsp;3. verziót, &quot;
-&lt;egy %1&gt;részletek&lt;/a&gt;.).
-arg(&quot;href=&quot;gpl-3-0.html#15-disclaimer-of-warranty)).</translation>
+        <translation>Ezt a programot abban a reményben terjesztik, hogy hasznos lesz, de BÁRMILYEN GARANCIA NÉLKÜL beleértve az ELADHATÓSÁGRA vagy BÁRMELY MÁS KÜLÖNÖS CÉLRA vonatkozóan. Lásd a GNU General Public License (GPL), 3. verzióját&amp;nbsp; &lt;egy %1&gt;részletek&lt;/a&gt;.</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="181"/>
@@ -288,7 +286,7 @@ arg(&quot;href=&quot;gpl-3-0.html#15-disclaimer-of-warranty)).</translation>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="91"/>
         <source>Knockout: erases lower colors</source>
-        <translation>Kiütés:törli a gyengébb színeket</translation>
+        <translation>Kiütés: törli a gyengébb színeket</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="109"/>
@@ -372,7 +370,7 @@ arg(&quot;href=&quot;gpl-3-0.html#15-disclaimer-of-warranty)).</translation>
     <message>
         <location filename="../src/gui/widgets/color_dropdown.cpp" line="32"/>
         <source>- none -</source>
-        <translation>semmilyen</translation>
+        <translation>- semmilyen -</translation>
     </message>
 </context>
 <context>
@@ -451,12 +449,12 @@ arg(&quot;href=&quot;gpl-3-0.html#15-disclaimer-of-warranty)).</translation>
     <message>
         <location filename="../src/color_dock_widget.cpp" line="187"/>
         <source>The map contains symbols with this color. Deleting it will remove the color from these objects! Do you really want to do that?</source>
-        <translation>A térkép szimbólumokat tartalmaz ezzel a színnel.A szín törlése a szimbólumokból is törli ezt a színt. Valóban ezt akarja?</translation>
+        <translation>A térkép szimbólumokat tartalmaz ezzel a színnel. A szín törlése a szimbólumokból is törli ezt a színt. Valóban ezt akarja?</translation>
     </message>
     <message>
         <location filename="../src/color_dock_widget.cpp" line="204"/>
         <source> (Duplicate)</source>
-        <translation>.(Megkettőz)</translation>
+        <translation> (Megkettőz)</translation>
     </message>
     <message>
         <location filename="../src/color_dock_widget.cpp" line="310"/>
@@ -680,7 +678,7 @@ arg(&quot;href=&quot;gpl-3-0.html#15-disclaimer-of-warranty)).</translation>
     <message>
         <location filename="../src/tool_cut_hole.cpp" line="241"/>
         <source>&lt;b&gt;Click or drag&lt;/b&gt;: Start drawing the hole. </source>
-        <translation>&lt;b&gt;Kattint vagy megragad&lt;/b&gt;:Kezdje rajzolni a lyukat.</translation>
+        <translation>&lt;b&gt;Kattint vagy megragad&lt;/b&gt;: Kezdje rajzolni a lyukat.</translation>
     </message>
 </context>
 <context>
@@ -711,7 +709,7 @@ arg(&quot;href=&quot;gpl-3-0.html#15-disclaimer-of-warranty)).</translation>
     <message>
         <location filename="../src/tool_cut.cpp" line="675"/>
         <source>&lt;b&gt;Click&lt;/b&gt; on a line: Split it into two. &lt;b&gt;Drag&lt;/b&gt; along a line: Remove this line part. &lt;b&gt;Click or Drag&lt;/b&gt; at an area boundary: Start a split line. </source>
-        <translation>&lt;b&gt;Kattintson&lt;/b&gt; a vonalon a két részre vágáshoz. &lt;b&gt;Megragad&lt;/b&gt;ja a vonalszakaszt: Eltávolítja a vonalszakaszt. &lt;b&gt;Kattintson vagy Ragadja meg&lt;/b&gt; egy területhatárain:Indítson egy vágó vonalat. </translation>
+        <translation>&lt;b&gt;Kattintson&lt;/b&gt; a vonalon a két részre vágáshoz. &lt;b&gt;Megragad&lt;/b&gt;ja a vonalszakaszt: Eltávolítja a vonalszakaszt. &lt;b&gt;Kattintson vagy Ragadja meg&lt;/b&gt; egy területhatárain: Indítson egy vágó vonalat. </translation>
     </message>
     <message>
         <location filename="../src/tool_cut.cpp" line="683"/>
@@ -836,7 +834,7 @@ arg(&quot;href=&quot;gpl-3-0.html#15-disclaimer-of-warranty)).</translation>
     <message>
         <location filename="../src/tool_draw_circle.cpp" line="294"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Start a circle or ellipse. </source>
-        <translation>&lt;b&gt;Kattintson&lt;/b&gt;:egy kör vagy ellipszis indításához.</translation>
+        <translation>&lt;b&gt;Kattintson&lt;/b&gt;: egy kör vagy ellipszis indításához.</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_circle.cpp" line="295"/>
@@ -851,7 +849,7 @@ arg(&quot;href=&quot;gpl-3-0.html#15-disclaimer-of-warranty)).</translation>
     <message>
         <location filename="../src/tool_draw_circle.cpp" line="301"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Finish the circle. </source>
-        <translation>&lt;b&gt;Kattintás&lt;/b&gt;:Befejezi a kört.</translation>
+        <translation>&lt;b&gt;Kattintás&lt;/b&gt;: Befejezi a kört.</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_circle.cpp" line="302"/>
@@ -891,19 +889,19 @@ arg(&quot;href=&quot;gpl-3-0.html#15-disclaimer-of-warranty)).</translation>
         <location filename="../src/tool_draw_rectangle.cpp" line="711"/>
         <location filename="../src/tool_draw_rectangle.cpp" line="735"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt;: Snap to existing objects. </source>
-        <translation>&lt;b&gt;%1+Kattintás&lt;/b&gt;:Ugorjon létező ojektumokhoz.</translation>
+        <translation>&lt;b&gt;%1+Kattintás&lt;/b&gt;: Ugorjon létező ojektumokhoz.</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1096"/>
         <location filename="../src/tool_draw_rectangle.cpp" line="725"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Fixed angles. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;:Fix szögek.</translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Fix szögek.</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1104"/>
         <location filename="../src/tool_draw_rectangle.cpp" line="741"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Undo last point. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;:Az utolsó pont visszavonása.</translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Az utolsó pont visszavonása.</translation>
     </message>
 </context>
 <context>
@@ -957,7 +955,7 @@ arg(&quot;href=&quot;gpl-3-0.html#15-disclaimer-of-warranty)).</translation>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1082"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Start a straight line. &lt;b&gt;Drag&lt;/b&gt;: Start a curve. </source>
-        <translation>&lt;b&gt;Kattintás&lt;/b&gt;:Elindít egy egyenes vonalat.&lt;b&gt;Megragad&lt;/b&gt;Elindít egy görbét.</translation>
+        <translation>&lt;b&gt;Kattintás&lt;/b&gt;: Elindít egy egyenes vonalat. &lt;b&gt;Megragad&lt;/b&gt;: Elindít egy görbét.</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1091"/>
@@ -980,7 +978,7 @@ arg(&quot;href=&quot;gpl-3-0.html#15-disclaimer-of-warranty)).</translation>
     <message>
         <location filename="../src/tool_draw_point_gps.cpp" line="182"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Finish setting the object. </source>
-        <translation>&lt;b&gt;Kattintás&lt;/b&gt;:Az objektum beállítás befejezése.</translation>
+        <translation>&lt;b&gt;Kattintás&lt;/b&gt;: Az objektum beállítás befejezése.</translation>
     </message>
 </context>
 <context>
@@ -989,7 +987,7 @@ arg(&quot;href=&quot;gpl-3-0.html#15-disclaimer-of-warranty)).</translation>
         <location filename="../src/tool_draw_point.cpp" line="60"/>
         <source>Snap</source>
         <comment>Snap to existing objects</comment>
-        <translatorcomment>Létező  objektumhoz illeszt</translatorcomment>
+        <translatorcomment>Létező objektumhoz illeszt</translatorcomment>
         <translation>Illeszt</translation>
     </message>
     <message>
@@ -1123,7 +1121,7 @@ arg(&quot;href=&quot;gpl-3-0.html#15-disclaimer-of-warranty)).</translation>
     <message>
         <location filename="../src/tool_edit_line.cpp" line="453"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Free movement. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;:Szabad mozgatás.</translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Szabad mozgatás.</translation>
     </message>
     <message>
         <location filename="../src/tool_edit_line.cpp" line="472"/>
@@ -1185,31 +1183,31 @@ arg(&quot;href=&quot;gpl-3-0.html#15-disclaimer-of-warranty)).</translation>
         <location filename="../src/tool_edit_point.cpp" line="649"/>
         <location filename="../src/tool_edit_line.cpp" line="444"/>
         <source>&lt;b&gt;Coordinate offset:&lt;/b&gt; %1, %2 mm  &lt;b&gt;Distance:&lt;/b&gt; %3 m </source>
-        <translation>&lt;b&gt;Koordináta távolság:&lt;b&gt;%1,%2 mm &lt;b&gt;Különbség&lt;/b&gt;%3 m</translation>
+        <translation>&lt;b&gt;Koordináta távolság:&lt;b&gt;%1, %2 mm &lt;b&gt;Különbség&lt;/b&gt; %3 m</translation>
     </message>
     <message>
         <location filename="../src/tool_edit_point.cpp" line="656"/>
         <location filename="../src/tool_edit_line.cpp" line="455"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Fixed angles. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;:Fix szögek.</translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Fix szögek.</translation>
     </message>
     <message>
         <location filename="../src/tool_edit_point.cpp" line="668"/>
         <location filename="../src/tool_edit_line.cpp" line="459"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Snap to existing objects. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;:Létező objektumhoz igazít.</translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Létező objektumhoz igazít.</translation>
     </message>
     <message>
         <location filename="../src/tool_edit_point.cpp" line="674"/>
         <location filename="../src/tool_edit_line.cpp" line="464"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Select a single object. &lt;b&gt;Drag&lt;/b&gt;: Select multiple objects. &lt;b&gt;%1+Click&lt;/b&gt;: Toggle selection. </source>
-        <translation>&lt;b&gt;Kattintás&lt;/b&gt;:Egy objektum kiválasztása.&lt;b&gt;Megragad&lt;/b&gt;: Több objektum kiválasztása. &lt;b&gt;%1+Kattintás&lt;/b&gt;: Kiválasztás megfordítása.</translation>
+        <translation>&lt;b&gt;Kattintás&lt;/b&gt;: Egy objektum kiválasztása. &lt;b&gt;Megragad&lt;/b&gt;: Több objektum kiválasztása. &lt;b&gt;%1+Kattintás&lt;/b&gt;: Kiválasztás megfordítása.</translation>
     </message>
     <message>
         <location filename="../src/tool_edit_point.cpp" line="677"/>
         <location filename="../src/tool_edit_line.cpp" line="467"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Delete selected objects. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;:Kiválasztott objektum törlése.</translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Kiválasztott objektum törlése.</translation>
     </message>
 </context>
 <context>
@@ -1228,7 +1226,7 @@ arg(&quot;href=&quot;gpl-3-0.html#15-disclaimer-of-warranty)).</translation>
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="161"/>
         <source>High quality text display in map (antialiasing), slow</source>
-        <translation>Magas minőségű szöveg megjelenítés a térképen (élsimítás) , lassú</translation>
+        <translation>Magas minőségű szöveg megjelenítés a térképen (élsimítás), lassú</translation>
     </message>
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="165"/>
@@ -1384,7 +1382,7 @@ arg(&quot;href=&quot;gpl-3-0.html#15-disclaimer-of-warranty)).</translation>
     <message>
         <location filename="../src/gps_display.cpp" line="90"/>
         <source>GPS is disabled in the device settings. Open settings now?</source>
-        <translation>A GPS tiltva az eszköz beállításokban.Megnyitja a beállításokat?</translation>
+        <translation>A GPS tiltva az eszköz beállításokban. Megnyitja a beállításokat?</translation>
     </message>
     <message>
         <location filename="../src/gps_display.cpp" line="91"/>
@@ -1540,7 +1538,7 @@ arg(&quot;href=&quot;gpl-3-0.html#15-disclaimer-of-warranty)).</translation>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="61"/>
         <source>UTM Zone (number north/south)</source>
-        <translation type="unfinished"></translation>
+        <translation>UTM zóna (szám Észak/Dél)</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="68"/>
@@ -1604,12 +1602,12 @@ arg(&quot;href=&quot;gpl-3-0.html#15-disclaimer-of-warranty)).</translation>
         <location filename="../src/core/georeferencing.cpp" line="260"/>
         <location filename="../src/core/georeferencing.cpp" line="287"/>
         <source>Unknown CRS specification language: %1</source>
-        <translation>Ismeretlen CRS leíró nyelv:%1</translation>
+        <translation>Ismeretlen CRS leíró nyelv: %1</translation>
     </message>
     <message>
         <location filename="../src/core/georeferencing.cpp" line="290"/>
         <source>Unsupported geographic CRS specification: %1</source>
-        <translation>Nem támogatott földrajzi CRS leírás:%1</translation>
+        <translation>Nem támogatott földrajzi CRS leírás: %1</translation>
     </message>
     <message>
         <source>Scale only</source>
@@ -1811,7 +1809,7 @@ arg(&quot;href=&quot;gpl-3-0.html#15-disclaimer-of-warranty)).</translation>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="355"/>
         <source>The magnetic declination for the reference point %1° %2° will now be retrieved from &lt;a href=&quot;%3&quot;&gt;%3&lt;/a&gt;. Do you want to continue?</source>
-        <translation>A referenciapont mágneses elhajlásának %1° %2°  visszanyerése &lt;egy href=&quot;%3&quot;&gt;%3&lt;/a&gt;. Folytatni akarja?</translation>
+        <translation>A referenciapont mágneses elhajlásának %1° %2° visszanyerése &lt;egy href=&quot;%3&quot;&gt;%3&lt;/a&gt;. Folytatni akarja?</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="428"/>
@@ -1856,7 +1854,8 @@ arg(&quot;href=&quot;gpl-3-0.html#15-disclaimer-of-warranty)).</translation>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="655"/>
         <source>The online declination lookup failed:
 %1</source>
-        <translation>Az élő elhajlás keresés sikertelen:%1</translation>
+        <translation>Az élő elhajlás keresés sikertelen:
+%1</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="490"/>
@@ -1870,7 +1869,7 @@ arg(&quot;href=&quot;gpl-3-0.html#15-disclaimer-of-warranty)).</translation>
     <name>GeoreferencingTool</name>
     <message>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set the reference point. Another button to cancel.</source>
-        <translation type="vanished">&lt;&gt;Kattintás&lt;&gt;:Viszonyítási pont megadása. Más gomb: mégsem.</translation>
+        <translation type="vanished">&lt;&gt;Kattintás&lt;&gt;: Viszonyítási pont megadása. Más gomb: mégsem.</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="683"/>
@@ -1912,7 +1911,7 @@ arg(&quot;href=&quot;gpl-3-0.html#15-disclaimer-of-warranty)).</translation>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="155"/>
         <source>About %1</source>
         <comment>As in &apos;About OpenOrienteering Mapper&apos;</comment>
-        <translation>Névjegy:%1</translation>
+        <translation>Névjegy: %1</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="158"/>
@@ -1998,7 +1997,7 @@ arg(&quot;href=&quot;gpl-3-0.html#15-disclaimer-of-warranty)).</translation>
     <message>
         <location filename="../src/symbol.cpp" line="237"/>
         <source>Symbol ID &apos;%1&apos; not unique at line %2 column %3.</source>
-        <translation>A  &apos;%1&apos; szimbólum ID nem egyedi a a %3 oszlop %2 sorában.</translation>
+        <translation>A &apos;%1&apos; szimbólum ID nem egyedi a a %3 oszlop %2 sorában.</translation>
     </message>
     <message>
         <location filename="../src/symbol.cpp" line="285"/>
@@ -2017,7 +2016,7 @@ arg(&quot;href=&quot;gpl-3-0.html#15-disclaimer-of-warranty)).</translation>
     <message>
         <location filename="../src/object.cpp" line="457"/>
         <source>Error while loading an object of type %1 at %2:%3: %4</source>
-        <translation>Hiba egy %1 típusú objektum betöltésekor %2:%3:%4</translation>
+        <translation>Hiba egy %1 típusú objektum betöltésekor %2:%3: %4</translation>
     </message>
     <message>
         <location filename="../src/object.cpp" line="425"/>
@@ -2127,7 +2126,7 @@ arg(&quot;href=&quot;gpl-3-0.html#15-disclaimer-of-warranty)).</translation>
     <message>
         <location filename="../src/file_format_native.cpp" line="144"/>
         <source>Unsupported new file format version. Some map features will not be loaded or saved by this version of the program. Consider updating.</source>
-        <translation>Nem támogatott új fájl formátum verzió. Néhány térkép tulajdonság nem lesz betöltve vagy mentve a program e verziójában.Gondolkozzon a frissítésen.</translation>
+        <translation>Nem támogatott új fájl formátum verzió. Néhány térkép tulajdonság nem lesz betöltve vagy mentve a program e verziójában. Gondolkozzon a frissítésen.</translation>
     </message>
     <message>
         <location filename="../src/file_format_native.cpp" line="200"/>
@@ -2157,7 +2156,7 @@ arg(&quot;href=&quot;gpl-3-0.html#15-disclaimer-of-warranty)).</translation>
     <message>
         <location filename="../src/file_format_native.cpp" line="416"/>
         <source>Error while loading map part %2.</source>
-        <translation>Hiba a  %2 térképrész betöltésekor.</translation>
+        <translation>Hiba a %2 térképrész betöltésekor.</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="116"/>
@@ -3668,7 +3667,7 @@ kiválasztva</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="2143"/>
         <source>Resulting symbol: %1 %2.</source>
-        <translation>Létrejövő térképjel:  %1 %2.</translation>
+        <translation>Létrejövő térképjel: %1 %2.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2144"/>
@@ -3952,7 +3951,7 @@ kiválasztva</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="2310"/>
         <source>%1 object(s) duplicated</source>
-        <translation>%1  objektum(ok) megkettőzve</translation>
+        <translation>%1 objektum(ok) megkettőzve</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2522"/>
@@ -4398,12 +4397,12 @@ zoomoljon az egér görgetőgombjával, ha van ilyen lehetősége.</translation>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="2295"/>
         <source>In text symbol %1: ignoring kerning</source>
-        <translation>A(z) &quot;%1&quot; szöveges szimbólumban:alsó index figyelmen kívül hagyva</translation>
+        <translation>A(z) &quot;%1&quot; szöveges szimbólumban: alsó index figyelmen kívül hagyva</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="2666"/>
         <source>String truncated (truncation marked with three &apos;|&apos;): %1</source>
-        <translation>A szöveg levágva (A vágást három &apos;|&apos; karakter jelzi):%1</translation>
+        <translation>A szöveg levágva (A vágást három &apos;|&apos; karakter jelzi): %1</translation>
     </message>
 </context>
 <context>
@@ -4594,7 +4593,7 @@ zoomoljon az egér görgetőgombjával, ha van ilyen lehetősége.</translation>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="841"/>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="873"/>
         <source>The dash pattern&apos;s end length (%1 mm) cannot be imported correctly. Using %2 mm.</source>
-        <translation>A vonalkázott minta végének hossza  (%1 mm) nem importálható megfelelően. Importálás %2 mm használatával.</translation>
+        <translation>A vonalkázott minta végének hossza (%1 mm) nem importálható megfelelően. Importálás %2 mm használatával.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="848"/>
@@ -4632,7 +4631,7 @@ zoomoljon az egér görgetőgombjával, ha van ilyen lehetősége.</translation>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="1212"/>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="1301"/>
         <source>Vertical alignment &apos;%1&apos; is not supported.</source>
-        <translation>A vertikális illesztés  &apos;%1&apos; nem támogatott.</translation>
+        <translation>A vertikális illesztés &apos;%1&apos; nem támogatott.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="1218"/>
@@ -4758,7 +4757,7 @@ zoomoljon az egér görgetőgombjával, ha van ilyen lehetősége.</translation>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="967"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Add a coordinate. &lt;b&gt;%1+Click&lt;/b&gt;: Change the selected coordinate. </source>
-        <translation>&lt;b&gt;Kattintás&lt;/b&gt;:Egy koordinátát hozzáad &lt;b&gt;%1+kattintás&lt;/b&gt;Változtasd meg a kiválasztott koordinátát.</translation>
+        <translation>&lt;b&gt;Kattintás&lt;/b&gt;: Egy koordinátát hozzáad &lt;b&gt;%1+kattintás&lt;/b&gt;Változtasd meg a kiválasztott koordinátát.</translation>
     </message>
 </context>
 <context>
@@ -4949,7 +4948,7 @@ zoomoljon az egér görgetőgombjával, ha van ilyen lehetősége.</translation>
         <location filename="../src/gui/print_tool.cpp" line="52"/>
         <location filename="../src/gui/print_tool.cpp" line="364"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the map, the print area or the area&apos;s borders. </source>
-        <translation>&lt;b&gt;Megragad&lt;/b&gt;:Mozgatja a térképet, a nyomtatási területet vagy a terület határait.</translation>
+        <translation>&lt;b&gt;Megragad&lt;/b&gt;: Mozgatja a térképet, a nyomtatási területet vagy a terület határait.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_tool.cpp" line="336"/>
@@ -4965,13 +4964,13 @@ zoomoljon az egér görgetőgombjával, ha van ilyen lehetősége.</translation>
         <location filename="../src/gui/print_tool.cpp" line="345"/>
         <location filename="../src/gui/print_tool.cpp" line="350"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the print area&apos;s border. </source>
-        <translation>&lt;b&gt;Megragad&lt;/b&gt;:Mozgatja a nyomtatási terület határát.</translation>
+        <translation>&lt;b&gt;Megragad&lt;/b&gt;: Mozgatja a nyomtatási terület határát.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_tool.cpp" line="355"/>
         <location filename="../src/gui/print_tool.cpp" line="360"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the print area&apos;s borders. </source>
-        <translation>&lt;b&gt;Megragad&lt;/b&gt;:Mozgatja a nyomtatási terület határait.</translation>
+        <translation>&lt;b&gt;Megragad&lt;/b&gt;: Mozgatja a nyomtatási terület határait.</translation>
     </message>
 </context>
 <context>
@@ -5442,7 +5441,7 @@ separations</source>
     <message>
         <location filename="../src/symbol_dialog_replace.cpp" line="327"/>
         <source>Choose map file to load symbols from</source>
-        <translation>Válasszon térkép fájlt  a szimbólumok fájlból való betöltéséhez</translation>
+        <translation>Válasszon térkép fájlt a szimbólumok fájlból való betöltéséhez</translation>
     </message>
     <message>
         <location filename="../src/symbol_dialog_replace.cpp" line="335"/>
@@ -5563,12 +5562,12 @@ separations</source>
     <message>
         <location filename="../src/tool_rotate_pattern.cpp" line="158"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Fixed angles. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;:Fix szögek.</translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Fix szögek.</translation>
     </message>
     <message>
         <location filename="../src/tool_rotate_pattern.cpp" line="162"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Set the direction of area fill patterns or point objects. </source>
-        <translation>&lt;b&gt;Megragad&lt;/b&gt;:Beállítja a kitöltési minta, vagy pont objektum irányát.</translation>
+        <translation>&lt;b&gt;Megragad&lt;/b&gt;: Beállítja a kitöltési minta, vagy pont objektum irányát.</translation>
     </message>
 </context>
 <context>
@@ -5581,18 +5580,18 @@ separations</source>
     <message>
         <location filename="../src/tool_rotate.cpp" line="186"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Fixed angles. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;:Fix szögek.</translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Fix szögek.</translation>
     </message>
     <message>
         <location filename="../src/tool_rotate.cpp" line="190"/>
         <location filename="../src/tool_rotate.cpp" line="194"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set the center of rotation. </source>
-        <translation>&lt;b&gt;Kattintás&lt;/b&gt;:A forgatás középpontjának beállítása.</translation>
+        <translation>&lt;b&gt;Kattintás&lt;/b&gt;: A forgatás középpontjának beállítása.</translation>
     </message>
     <message>
         <location filename="../src/tool_rotate.cpp" line="195"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Rotate the selected objects. </source>
-        <translation>&lt;b&gt;Kattintás&lt;/b&gt;:A kiválasztott objektum forgatása.</translation>
+        <translation>&lt;b&gt;Kattintás&lt;/b&gt;: A kiválasztott objektum forgatása.</translation>
     </message>
 </context>
 <context>
@@ -5698,7 +5697,7 @@ separations</source>
     <message>
         <location filename="../src/tool_scale.cpp" line="205"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Scale the selected objects. </source>
-        <translation>&lt;b&gt;Kattintás&lt;/b&gt;:A kiválasztott objektum méretezése.</translation>
+        <translation>&lt;b&gt;Kattintás&lt;/b&gt;: A kiválasztott objektum méretezése.</translation>
     </message>
 </context>
 <context>
@@ -6180,7 +6179,7 @@ a lusta kutyát átugrotta
     <message>
         <location filename="../src/template_adjust.cpp" line="806"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Delete pass points. </source>
-        <translation>&lt;b&gt;Kattintás&lt;/b&gt;:Törli az illesztőpontokat.</translation>
+        <translation>&lt;b&gt;Kattintás&lt;/b&gt;: Törli az illesztőpontokat.</translation>
     </message>
 </context>
 <context>
@@ -6264,7 +6263,7 @@ a lusta kutyát átugrotta
     <message>
         <location filename="../src/template_image.cpp" line="129"/>
         <source>Not enough free memory (image size: %1x%2 pixels)</source>
-        <translation>Nincs elég szabad memória (képméret:%1x%2 képpont)</translation>
+        <translation>Nincs elég szabad memória (képméret: %1x%2 képpont)</translation>
     </message>
     <message>
         <location filename="../src/template_image.cpp" line="169"/>
@@ -6841,7 +6840,7 @@ A legnagyobb támogatott verzió a %2.</translation>
     <message>
         <location filename="../src/gui/text_browser_dialog.cpp" line="122"/>
         <source>External link: %1</source>
-        <translation type="unfinished">Külső link %1</translation>
+        <translation type="unfinished">Külső link: %1</translation>
     </message>
     <message>
         <location filename="../src/gui/text_browser_dialog.cpp" line="126"/>
@@ -7151,7 +7150,7 @@ A legnagyobb támogatott verzió a %2.</translation>
     <message>
         <location filename="../src/file_format_xml.cpp" line="396"/>
         <source>Unsupported element: %1 (line %2 column %3)</source>
-        <translation>Nem támogatott elem:%1 (%2. sor, %3. oszlop)</translation>
+        <translation>Nem támogatott elem: %1 (%2. sor, %3. oszlop)</translation>
     </message>
     <message>
         <location filename="../src/file_format_xml.cpp" line="427"/>
@@ -7181,7 +7180,7 @@ A legnagyobb támogatott verzió a %2.</translation>
     <message>
         <location filename="../src/file_format_xml.cpp" line="532"/>
         <source>Unsupported or invalid georeferencing specification &apos;%1&apos;: %2</source>
-        <translation>Nem támogatott vagy érvénytelen georeferációs leírás &apos;%1&apos;:%2</translation>
+        <translation>Nem támogatott vagy érvénytelen georeferációs leírás &apos;%1&apos;: %2</translation>
     </message>
     <message>
         <location filename="../src/file_format_xml.cpp" line="650"/>
