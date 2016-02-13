@@ -15,7 +15,7 @@
     </message>
     <message>
         <source>Click to view</source>
-        <translation type="vanished">Kattins a megtekitéshez</translation>
+        <translation type="vanished">Kattins a megtekintéshez</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="173"/>
@@ -41,12 +41,14 @@
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="160"/>
         <source>This program is free software: you can redistribute it and/or modify it under the terms of the &lt;a %1&gt;GNU General Public License (GPL), version&amp;nbsp;3&lt;/a&gt;, as published by the Free Software Foundation.</source>
-        <translation>Ez a program egy szabad szoftver, ami a &lt;a %1&gt; GNU General Public License (GPL) &amp;nbsp;3. verziója&lt;/a&gt; -  (ahogy a Szabad Szoftver Alapítvány kiadta)- szerint  terjeszthető és/ vagy módosítható.</translation>
+        <translation>Ez a program egy ingyenes szoftver, ami a &lt;a %1&gt; GNU General Public License (GPL) &amp;nbsp;3. verziója -  (ahogy a Szabad Szoftver Alapítvány kiadta)-&lt;/a&gt; szerint  terjeszthető és/ vagy módosítható.</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="166"/>
         <source>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License (GPL), version&amp;nbsp;3, for &lt;a %1&gt;more details&lt;/a&gt;.</source>
-        <translation>Ezt a programot  abban a reményben terjesztik, hogy hasznos lesz, de BÁRMILYEN GARANCIA NÉLKÜL beleértve az ELADHATÓSÁGRA vagy BÁRMELY MÁS KÜLÖNÖS CÉLRA vonatkozóan.          Lásd a GNU General Public License (GPL), 3. verzióját&amp;nbsp;   &lt;egy %1&gt;részletek&lt;/a&gt;.</translation>
+        <translation>Ezt a programot  abban a reményben terjesztik, hogy hasznos lesz, de BÁRMILYEN GARANCIA NÉLKÜL ... Lásd a GNU General Public License  (GPL), &amp;nbsp;3. verziót, &quot;
+&lt;egy %1&gt;részletek&lt;/a&gt;.).
+arg(&quot;href=&quot;gpl-3-0.html#15-disclaimer-of-warranty)).</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="181"/>
@@ -72,8 +74,7 @@
     <message>
         <location filename="../src/gui/widgets/action_grid_bar.cpp" line="53"/>
         <source>Show remaining items</source>
-        <translatorcomment>Megmaradó tételeket mutat</translatorcomment>
-        <translation>Mutasd a fennmaradó összetevőket</translation>
+        <translation>Megmaradó tételeket mutat</translation>
     </message>
 </context>
 <context>
@@ -143,7 +144,7 @@
     <message>
         <location filename="../src/symbol_area.cpp" line="853"/>
         <source>Pattern offset:</source>
-        <translation>Minta távolság:</translation>
+        <translation>Minta eltolás:</translation>
     </message>
     <message>
         <location filename="../src/symbol_area.cpp" line="858"/>
@@ -293,12 +294,12 @@
         <location filename="../src/gui/color_dialog.cpp" line="109"/>
         <location filename="../src/gui/color_dialog.cpp" line="166"/>
         <source>Calculate from spot colors</source>
-        <translation>Szémol egy folt színéből</translation>
+        <translation>Számol egy folt színéből</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="114"/>
         <source>Calculate from RGB color</source>
-        <translation>Szémol egy RGB színből</translation>
+        <translation>Számol egy RGB színből</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="119"/>
@@ -313,7 +314,7 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="130"/>
         <source>Magenta</source>
-        <translation>Bíbor vörös</translation>
+        <translation>Magenta</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="135"/>
@@ -333,7 +334,7 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="176"/>
         <source>Custom RGB color:</source>
-        <translation>RGB színek beállítása</translation>
+        <translation>RGB színek beállítása:</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="182"/>
@@ -343,7 +344,7 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="187"/>
         <source>Green</source>
-        <translation>Zöld</translation>
+        <translation>Züld</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="192"/>
@@ -371,7 +372,7 @@
     <message>
         <location filename="../src/gui/widgets/color_dropdown.cpp" line="32"/>
         <source>- none -</source>
-        <translation>- semmilyen -</translation>
+        <translation>semmilyen</translation>
     </message>
 </context>
 <context>
@@ -450,7 +451,7 @@
     <message>
         <location filename="../src/color_dock_widget.cpp" line="187"/>
         <source>The map contains symbols with this color. Deleting it will remove the color from these objects! Do you really want to do that?</source>
-        <translation>A térkép térképjeleket tartalmaz ezzel a színnel. A szín törlése a a térképjelekből is törli ezt a színt. Valóban ezt akarja?</translation>
+        <translation>A térkép szimbólumokat tartalmaz ezzel a színnel.A szín törlése a szimbólumokból is törli ezt a színt. Valóban ezt akarja?</translation>
     </message>
     <message>
         <location filename="../src/color_dock_widget.cpp" line="204"/>
@@ -476,7 +477,7 @@
     <message>
         <location filename="../src/color_dock_widget.cpp" line="384"/>
         <source>Click to select the name and click again to edit.</source>
-        <translation>Kattintson a név kiválasztásához és ismét kattintson a módosításához!</translation>
+        <translation>Kattintson a név kiválasztásához és ismét kattintson a módosításához.</translation>
     </message>
 </context>
 <context>
@@ -542,7 +543,7 @@
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="54"/>
         <source>Choose...</source>
-        <translation>Cserél...</translation>
+        <translation>Kiválaszt...</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="57"/>
@@ -552,7 +553,7 @@
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="58"/>
         <source>Horizontal lines</source>
-        <translation>Vízszintes vonal</translation>
+        <translation>Vízszintes vonalak</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="59"/>
@@ -582,7 +583,7 @@
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="68"/>
         <source>Additional rotation (counter-clockwise):</source>
-        <translation>Forgatás (óramutató járásával megegyező irányban):</translation>
+        <translation>Forgatás (óramutató járásával ellenkező irányban):</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="69"/>
@@ -617,12 +618,12 @@
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="85"/>
         <source>Horizontal offset:</source>
-        <translation>Vízszintes távolság:</translation>
+        <translation>Vízszintes eltolás:</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="87"/>
         <source>Vertical offset:</source>
-        <translation>Függőleges távolság:</translation>
+        <translation>Függőleges eltolás:</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="119"/>
@@ -639,7 +640,7 @@
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="132"/>
         <source>Display:</source>
-        <translation>Megjelenítő:</translation>
+        <translation>Megjelenít:</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="158"/>
@@ -650,14 +651,12 @@
         <location filename="../src/gui/configure_grid_dialog.cpp" line="215"/>
         <source>m</source>
         <comment>meters</comment>
-        <translatorcomment>méter</translatorcomment>
         <translation>m</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="215"/>
         <source>mm</source>
         <comment>millimeters</comment>
-        <translatorcomment>miliméter</translatorcomment>
         <translation>mm</translation>
     </message>
     <message>
@@ -712,12 +711,12 @@
     <message>
         <location filename="../src/tool_cut.cpp" line="675"/>
         <source>&lt;b&gt;Click&lt;/b&gt; on a line: Split it into two. &lt;b&gt;Drag&lt;/b&gt; along a line: Remove this line part. &lt;b&gt;Click or Drag&lt;/b&gt; at an area boundary: Start a split line. </source>
-        <translation>&lt;b&gt;Kattintson&lt;/b&gt; a vonalon a két részre vágáshoz. &lt;b&gt;Megragad&lt;/b&gt;ja a vonalszakaszt: eltávolítja a vonalszakaszt. &lt;b&gt;Kattintson vagy Ragadja meg&lt;/b&gt; egy területhatárain:Indítson egy vágó vonalat. </translation>
+        <translation>&lt;b&gt;Kattintson&lt;/b&gt; a vonalon a két részre vágáshoz. &lt;b&gt;Megragad&lt;/b&gt;ja a vonalszakaszt: Eltávolítja a vonalszakaszt. &lt;b&gt;Kattintson vagy Ragadja meg&lt;/b&gt; egy területhatárain:Indítson egy vágó vonalat. </translation>
     </message>
     <message>
         <location filename="../src/tool_cut.cpp" line="683"/>
         <source>Splitting holes of area objects is not supported yet!</source>
-        <translation>A terület objektumokba vágott lyukak vágása nem támogatott! </translation>
+        <translation>A terület objektumokba a lyukak vágása nem támogatott! </translation>
     </message>
 </context>
 <context>
@@ -791,7 +790,7 @@
     <message>
         <location filename="../src/tool_distribute_points.cpp" line="121"/>
         <source>Distribute points evenly along path</source>
-        <translation>Vonal mentén oszt el pontokat egyformán</translation>
+        <translation>Vonal mentén oszt el pontokat egyenletesen</translation>
     </message>
     <message>
         <location filename="../src/tool_distribute_points.cpp" line="127"/>
@@ -806,12 +805,12 @@
     <message>
         <location filename="../src/tool_distribute_points.cpp" line="135"/>
         <source>Rotation settings</source>
-        <translation>Forgatási beálítások</translation>
+        <translation>Forgatási beálítás</translation>
     </message>
     <message>
         <location filename="../src/tool_distribute_points.cpp" line="138"/>
         <source>Align points with direction of line</source>
-        <translation>Pontok igazítása egy vonal irányításával</translation>
+        <translation>Vonal által meghatározott pontok igazítása</translation>
     </message>
     <message>
         <location filename="../src/tool_distribute_points.cpp" line="142"/>
@@ -822,7 +821,7 @@
     <message>
         <location filename="../src/tool_distribute_points.cpp" line="144"/>
         <source>Additional rotation angle (counter-clockwise):</source>
-        <translation>További forgásszög (óramutató járásával megegyező):</translation>
+        <translation>További forgásszög (óramutató járásával ellentétes):</translation>
     </message>
 </context>
 <context>
@@ -831,7 +830,7 @@
         <location filename="../src/tool_draw_circle.cpp" line="59"/>
         <source>From center</source>
         <comment>Draw circle starting from center</comment>
-        <translatorcomment>Kör rajzolása egy középpont köré</translatorcomment>
+        <translatorcomment>Kör rajzolása a középpont köré</translatorcomment>
         <translation>A középpontból</translation>
     </message>
     <message>
@@ -847,7 +846,7 @@
     <message>
         <location filename="../src/tool_draw_circle.cpp" line="297"/>
         <source>Hold %1 to start drawing from the center.</source>
-        <translation>Tartsa %1 a központból indított rajzoláshoz.</translation>
+        <translation>Nyomja le %1, hogy elkezdje a rajzolást a központból.</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_circle.cpp" line="301"/>
@@ -865,7 +864,7 @@
     <message>
         <location filename="../src/tool_draw_freehand.cpp" line="276"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Draw a path. </source>
-        <translation>&lt;b&gt;Megragad&lt;/b&gt;: Egy utat rajzol.</translation>
+        <translation>&lt;b&gt;Megragad&lt;/b&gt;: Utat rajzol.</translation>
     </message>
 </context>
 <context>
@@ -923,14 +922,14 @@
         <location filename="../src/tool_draw_path.cpp" line="89"/>
         <source>Snap</source>
         <comment>Snap to existing objects</comment>
-        <translatorcomment>Létező objektumokhoz illeszt</translatorcomment>
+        <translatorcomment>Létező objektumokhoz ugrik</translatorcomment>
         <translation>Illeszt</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="90"/>
         <source>Angle</source>
         <comment>Using constrained angles</comment>
-        <translatorcomment>Fix a szögeket használ</translatorcomment>
+        <translatorcomment>Kényszerítse a szögeket</translatorcomment>
         <translation>Szög</translation>
     </message>
     <message>
@@ -948,12 +947,12 @@
     <message>
         <location filename="../src/tool_draw_path.cpp" line="93"/>
         <source>Abort</source>
-        <translation>Eldob</translation>
+        <translation>Elvet</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1061"/>
         <source>&lt;b&gt;Length:&lt;/b&gt; %1 m </source>
-        <translation>&lt;b&gt;Hosszúság:&lt;/b&gt; % m</translation>
+        <translation>&lt;b&gt;Hosszúság:&lt;/b&gt; %1 m </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1082"/>
@@ -990,7 +989,7 @@
         <location filename="../src/tool_draw_point.cpp" line="60"/>
         <source>Snap</source>
         <comment>Snap to existing objects</comment>
-        <translatorcomment>Létező objektumhoz illeszt</translatorcomment>
+        <translatorcomment>Létező  objektumhoz illeszt</translatorcomment>
         <translation>Illeszt</translation>
     </message>
     <message>
@@ -1097,7 +1096,7 @@
     <message>
         <location filename="../src/tool_draw_text.cpp" line="306"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Finish editing. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: Módosítás befejezése. </translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Szerkesztés befejezése. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_text.cpp" line="308"/>
@@ -1119,7 +1118,7 @@
         <source>Toggle curve</source>
         <comment>Toggle between curved and flat segment</comment>
         <translatorcomment>Váltás egy görbített és egy egyenes rész között</translatorcomment>
-        <translation>Váltó görbe</translation>
+        <translation>Görbévé alakít</translation>
     </message>
     <message>
         <location filename="../src/tool_edit_line.cpp" line="453"/>
@@ -1157,7 +1156,7 @@
     <message>
         <location filename="../src/tool_edit_point.cpp" line="644"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Finish editing. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: Befejezi a módosítást. </translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Befejezi a szerkesztést. </translation>
     </message>
     <message>
         <location filename="../src/tool_edit_point.cpp" line="664"/>
@@ -1167,12 +1166,12 @@
     <message>
         <location filename="../src/tool_edit_point.cpp" line="685"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on point: Delete it; on path: Add a new dash point; with &lt;b&gt;%2&lt;/b&gt;: Add a normal point. </source>
-        <translation>&lt;b&gt;%1+Kattintás&lt;/b&gt;a ponton: Törli a vonal pontját: Hozzáad egy új sarokpontot; &lt;b&gt;%2&lt;/b&gt;: Adj hozzá egy normális pontot.</translation>
+        <translation>&lt;b&gt;%1+Kattintás&lt;/b&gt;a ponton: Törli azt; az útvonalon: Hozzáad egy új sarokpontot; &lt;b&gt;%2&lt;/b&gt;: Adj hozzá egy normál pontot.</translation>
     </message>
     <message>
         <location filename="../src/tool_edit_point.cpp" line="688"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on point: Delete it; on path: Add a new point; with &lt;b&gt;%2&lt;/b&gt;: Add a dash point. </source>
-        <translation>&lt;b&gt;%1+Kattintás&lt;/b&gt; a vonal egy pontjára: törli azt; a vonalon: Hozzáad egy új pontot; &lt;b&gt;%2&lt;/b&gt;-val: Adj hozzá egy sarokpontot.</translation>
+        <translation>&lt;b&gt;%1+Kattintás&lt;/b&gt; ponton: Törli azt; az útvonalon: Hozzáad egy új pontot; &lt;b&gt;%2&lt;/b&gt;-val: Adj hozzá egy sarokpontot.</translation>
     </message>
     <message>
         <location filename="../src/tool_edit_point.cpp" line="692"/>
@@ -1218,7 +1217,7 @@
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="157"/>
         <source>High quality map display (antialiasing)</source>
-        <translation>Magas minőségű térkép megjelenítés (élsimítással)</translation>
+        <translation>Magas minőségű megjelenítés (élsimítással)</translation>
     </message>
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="158"/>
@@ -1229,7 +1228,7 @@
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="161"/>
         <source>High quality text display in map (antialiasing), slow</source>
-        <translation>Magas minőségű szöveg megjelenítés a térképen (élsimítással), lassú</translation>
+        <translation>Magas minőségű szöveg megjelenítés a térképen (élsimítás) , lassú</translation>
     </message>
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="165"/>
@@ -1285,7 +1284,7 @@
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="194"/>
         <source>Edit tool:</source>
-        <translation>Módosító eszköz:</translation>
+        <translation>Szerkesztő eszköz:</translation>
     </message>
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="197"/>
@@ -1309,7 +1308,7 @@
         <location filename="../src/gui/settings_dialog.cpp" line="200"/>
         <location filename="../src/gui/settings_dialog.cpp" line="207"/>
         <source>Action on deleting a curve point with %1:</source>
-        <translation>Akció a görbe egy pontjának törlésekor %1:</translation>
+        <translation>Görbe pontjának törlése esetén így jár el %1:</translation>
     </message>
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="211"/>
@@ -1345,12 +1344,12 @@
     <message>
         <location filename="../src/tool_fill.cpp" line="99"/>
         <source>Warning</source>
-        <translation>Figyelem</translation>
+        <translation>Figyelmeztetés</translation>
     </message>
     <message>
         <location filename="../src/tool_fill.cpp" line="100"/>
         <source>The map area is large. Use of the fill tool may be very slow. Do you want to use it anyway?</source>
-        <translation>A térkép terület nagy. A kitöltő eszköz használata nagyon lassú lehet. Így is használni akarja?</translation>
+        <translation>A térkép terület nagy. A kitltő eszköz használata nagyon lassú lehet. Így is használni akarja?</translation>
     </message>
     <message>
         <location filename="../src/tool_fill.cpp" line="85"/>
@@ -1367,7 +1366,7 @@
     <message>
         <location filename="../src/tool_fill.cpp" line="120"/>
         <source>The clicked position is not free, cannot use the fill tool there.</source>
-        <translation>A kiválasztott pozíció nem szabad, a kitöltés eszköz nem hsználható ott.</translation>
+        <translation>A kiválasztott pozíció nem szabad, a kitöltés eszköz nem használható.</translation>
     </message>
     <message>
         <location filename="../src/tool_fill.cpp" line="168"/>
@@ -1377,7 +1376,7 @@
     <message>
         <location filename="../src/tool_fill.cpp" line="179"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Fill area with active symbol. The area to be filled must be bounded by lines or areas, other symbols are not taken into account. </source>
-        <translation>&lt;b&gt;Kattintás&lt;/b&gt;: Terület kitöltése aktív szimbólummal.  A kitöltendő területet vonalaknak, vagy más területeknek kell határolniuk, Más szimbólumok nem vehetők figyelembe.</translation>
+        <translation>&lt;b&gt;Kattintás&lt;/b&gt;: Terület kitöltése aktív szimbólummal. A kitöltendő területet vonalaknak, vagy más területeknek kell határolniuk, más szimbólumok nem vehetők figyelembe.</translation>
     </message>
 </context>
 <context>
@@ -1385,7 +1384,7 @@
     <message>
         <location filename="../src/gps_display.cpp" line="90"/>
         <source>GPS is disabled in the device settings. Open settings now?</source>
-        <translation>A GPS tiltva az eszköz beállításokban.Megynitja a beállításokat?</translation>
+        <translation>A GPS tiltva az eszköz beállításokban.Megnyitja a beállításokat?</translation>
     </message>
     <message>
         <location filename="../src/gps_display.cpp" line="91"/>
@@ -1418,7 +1417,7 @@
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="369"/>
         <source>Pixels per inch:</source>
-        <translation>Képpont incsenként (1 incs 2,54 cm):</translation>
+        <translation>Képpont inchenként (1 inch 2,54 cm):</translation>
     </message>
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="384"/>
@@ -1428,12 +1427,12 @@
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="400"/>
         <source>Saving files</source>
-        <translation>Fájl mentés</translation>
+        <translation>Fájl mentése</translation>
     </message>
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="403"/>
         <source>Retain compatibility with Mapper %1</source>
-        <translation>A Mapper megtartja a kompatibilitást %1 verzióval</translation>
+        <translation>Mapper %1-rel megtartja a kompatibilitást</translation>
     </message>
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="412"/>
@@ -1460,7 +1459,7 @@
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="432"/>
         <source>8-bit encoding:</source>
-        <translation>8 bites karakter kódolás:</translation>
+        <translation>8 bites titkosítás:</translation>
     </message>
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="451"/>
@@ -1471,7 +1470,7 @@
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="460"/>
         <source>Use the new OCD importer also for version 8 files</source>
-        <translation>Használja az új OCD importálót  a 8-as verzióhoz is</translation>
+        <translation>Használja az új OCD importálót a 8-as verzióhoz is</translation>
     </message>
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="490"/>
@@ -1517,7 +1516,7 @@
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="721"/>
         <source>Primary screen size in inches (diagonal):</source>
-        <translation>Az elsődleges képernyő mérete incsekben (átló):</translation>
+        <translation>Az elsődleges képernyő mérete inchekben (átló):</translation>
     </message>
 </context>
 <context>
@@ -1536,7 +1535,7 @@
     </message>
     <message>
         <source>UTM Zone (number north/south, e.g. &quot;32 N&quot;, &quot;24 S&quot;)</source>
-        <translation type="vanished">UTM zóna (szám Észak/Dél, &quot;32 N&quot;, &quot;24 S&quot;)</translation>
+        <translation type="vanished">UTM zóna (szám Észak/Dél, pl. &quot;32 N&quot;, &quot;24 S&quot;)</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="61"/>
@@ -1614,7 +1613,7 @@
     </message>
     <message>
         <source>Scale only</source>
-        <translation type="vanished">Csak skála</translation>
+        <translation type="vanished">Csak méretez</translation>
     </message>
     <message>
         <location filename="../src/core/georeferencing.cpp" line="500"/>
@@ -1647,7 +1646,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="197"/>
         <source>Declination:</source>
-        <translation>Deklináció:</translation>
+        <translation>Elhajlás:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="145"/>
@@ -1667,7 +1666,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="141"/>
         <source>Show reference point in:</source>
-        <translation>Mutassa benne hivatkozási pontot:</translation>
+        <translation>Hivatkozási pont keresése itt:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="329"/>
@@ -1683,7 +1682,7 @@
         <location filename="../src/gui/georeferencing_dialog.cpp" line="354"/>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="654"/>
         <source>Online declination lookup</source>
-        <translation>Élő deklináció keresés</translation>
+        <translation>Élő elhajlás keresés</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="93"/>
@@ -1780,7 +1779,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="157"/>
         <source>Map north</source>
-        <translation>Térkép Észak</translation>
+        <translation>Térkép észak</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="181"/>
@@ -1801,28 +1800,28 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="192"/>
         <source>On CRS changes, keep:</source>
-        <translation>A koordináta hivatkozási rendszer cseréjekor tartsa meg:</translation>
+        <translation>CRS változtatásoknál megtart:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="198"/>
         <source>Grivation:</source>
         <translatorcomment>A szög bármilyen a Föld felszínén található pontnál a hálózati Észak és az iránytű szerinti Észak között. </translatorcomment>
-        <translation>Griváció:(eltérés a Földfelszín bármely pontjában a hálózati és a mágneses Észak között)</translation>
+        <translation>Griváció:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="355"/>
         <source>The magnetic declination for the reference point %1° %2° will now be retrieved from &lt;a href=&quot;%3&quot;&gt;%3&lt;/a&gt;. Do you want to continue?</source>
-        <translation>The magnetic declination for the reference point %1° %2° will now be retrieved from &lt;egy href=&quot;%3&quot;&gt;%3&lt;/a&gt;. Folytatni akarja?</translation>
+        <translation>A referenciapont mágneses elhajlásának %1° %2°  visszanyerése &lt;egy href=&quot;%3&quot;&gt;%3&lt;/a&gt;. Folytatni akarja?</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="428"/>
         <source>Declination change</source>
-        <translation>A deklinációváltás</translation>
+        <translation>Elhajlás váltás</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="428"/>
         <source>The declination has been changed. Do you want to rotate the map content accordingly, too?</source>
-        <translation>A deklináció megváltoztatva. El akarja forgatni a térképi elemeket is?</translation>
+        <translation>Az elhajlás megváltoztatva. El akarja forgatni a térképi elemeket is?</translation>
     </message>
     <message>
         <source>Projected coordinates:</source>
@@ -1851,13 +1850,13 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="650"/>
         <source>Declination value not found.</source>
-        <translation>Nem található Deklináció érték.</translation>
+        <translation>Nem található elhajlási érték.</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="655"/>
         <source>The online declination lookup failed:
 %1</source>
-        <translation>Az élő dekliáció követés sikertelen:%1</translation>
+        <translation>Az élő elhajlás keresés sikertelen:%1</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="490"/>
@@ -1871,7 +1870,7 @@
     <name>GeoreferencingTool</name>
     <message>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set the reference point. Another button to cancel.</source>
-        <translation type="vanished">&lt;&gt;Kattintás&lt;&gt;:Viszonyítási pont megadása. Más gomb - mégsem.</translation>
+        <translation type="vanished">&lt;&gt;Kattintás&lt;&gt;:Viszonyítási pont megadása. Más gomb: mégsem.</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="683"/>
@@ -1897,12 +1896,12 @@
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="143"/>
         <source>Create a new map ...</source>
-        <translation>Új térképet készít ...</translation>
+        <translation>Új térképet készítése ...</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="146"/>
         <source>Open map ...</source>
-        <translation>Megnyit egy térképet ...</translation>
+        <translation>Térkép megnyitása ...</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="152"/>
@@ -1913,7 +1912,6 @@
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="155"/>
         <source>About %1</source>
         <comment>As in &apos;About OpenOrienteering Mapper&apos;</comment>
-        <translatorcomment>Mint az OpenOrienteering Mapper névjegyében</translatorcomment>
         <translation>Névjegy:%1</translation>
     </message>
     <message>
@@ -1930,7 +1928,7 @@
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="181"/>
         <source>Recent maps</source>
-        <translation>Használt térképek</translation>
+        <translation>Nemrég megnyitott térképek</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="206"/>
@@ -1987,7 +1985,7 @@
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="497"/>
         <source>No map files found!&lt;br/&gt;&lt;br/&gt;Copy map files to a top-level folder named &apos;OOMapper&apos; on the device or a memory card.</source>
-        <translation>Nem találtam térkép fájlt!&lt;br/&gt;&lt;br/&gt;Másoljon térkép fájlt az  &apos;OOMapper&apos; mappába az eszköz elsődleges memoria kártyájára (/sdcard/OOMapper).</translation>
+        <translation>Nem találtam térkép fájlt!&lt;br/&gt;&lt;br/&gt;Másoljon térkép fájlt egy &apos;OOMapper&apos; nevű főkönyvtárba az eszközön vagy a memória kártyán (/sdcard/OOMapper).</translation>
     </message>
 </context>
 <context>
@@ -1995,12 +1993,12 @@
     <message>
         <location filename="../src/symbol.cpp" line="229"/>
         <source>Error while loading a symbol of type %1 at line %2 column %3.</source>
-        <translation>Hiba történt a %1 szímbólum betöltésekor a %2 sorban %3 oszlopban.</translation>
+        <translation>Hiba történt a %1 típusú szimbólum betöltésekor a %3 oszlop %2 sorában.</translation>
     </message>
     <message>
         <location filename="../src/symbol.cpp" line="237"/>
         <source>Symbol ID &apos;%1&apos; not unique at line %2 column %3.</source>
-        <translation>A szimbólum ID %1 nem egyedi a %2sor %3 oszlopában.</translation>
+        <translation>A  &apos;%1&apos; szimbólum ID nem egyedi a a %3 oszlop %2 sorában.</translation>
     </message>
     <message>
         <location filename="../src/symbol.cpp" line="285"/>
@@ -2049,7 +2047,7 @@
     </message>
     <message>
         <source>Could not parse the data.</source>
-        <translation type="vanished">Nemértelmezhetők az adatok.</translation>
+        <translation type="vanished">Nem értelmezhetők az adatok.</translation>
     </message>
     <message>
         <location filename="../src/util/xml_stream_util.cpp" line="72"/>
@@ -2096,18 +2094,18 @@
     <message>
         <location filename="../src/file_import_export.cpp" line="112"/>
         <source>Template &quot;%1&quot; has been loaded from the map&apos;s directory instead of the relative location to the map file where it was previously.</source>
-        <translation>A Háttérállomány &quot;%1&quot;  be lett töltve a térképállomány, ahhoz viszonyítva hogy a térkép fájl mappája hol volt előzőleg.</translation>
+        <translation>A &quot;%1&quot; háttér a térkép könyvtárából lett betöltve a térképfájlban meghatározott eredeti útvonal helyett.</translation>
     </message>
     <message>
         <location filename="../src/file_import_export.cpp" line="120"/>
         <location filename="../src/file_import_export.cpp" line="122"/>
         <source>At least one template file could not be found.</source>
-        <translation>Az utolsó háttér fájlt nem találom.</translation>
+        <translation>Legalább egy háttér fájl nem található.</translation>
     </message>
     <message>
         <location filename="../src/file_import_export.cpp" line="123"/>
         <source>Click the red template name(s) in the Templates -&gt; Template setup window to locate the template file name(s).</source>
-        <translation>Kattinson a vörös színű nevekre a háttér állományok listáján -&gt; Háttérállományok beállítása ablakban adja meg azok nevét és helyét.</translation>
+        <translation>Kattinson a vörös színű nevekre a háttér állományok listáján -&gt; Háttérállományok beállítása ablakban adja meg azok megváltozott nevét/helyét.</translation>
     </message>
     <message>
         <location filename="../src/file_format_native.cpp" line="123"/>
@@ -2129,17 +2127,17 @@
     <message>
         <location filename="../src/file_format_native.cpp" line="144"/>
         <source>Unsupported new file format version. Some map features will not be loaded or saved by this version of the program. Consider updating.</source>
-        <translation>Nem támogatott új fájl formátum verzió. Néhány térkép tulajdonság nem lesz betöltve vagy mentve a program e verziójában.Gondolkozzon a frissítésen!</translation>
+        <translation>Nem támogatott új fájl formátum verzió. Néhány térkép tulajdonság nem lesz betöltve vagy mentve a program e verziójában.Gondolkozzon a frissítésen.</translation>
     </message>
     <message>
         <location filename="../src/file_format_native.cpp" line="200"/>
         <source>The geographic coordinate reference system of the map was &quot;%1&quot;. This CRS is not supported. Using &quot;%2&quot;.</source>
-        <translation>A térkép földrajzi koordináta hivatkozási rendszere %1 volt. Ez a CRS nem támogatott. Használja a &quot;%2&quot;-t.</translation>
+        <translation>A térkép földrajzi koordináta hivatkozási rendszere &quot;%1&quot; volt. Ez a CRS nem támogatott. Használja a &quot;%2&quot;-t.</translation>
     </message>
     <message>
         <location filename="../src/file_format_native.cpp" line="319"/>
         <source>Error while loading a symbol with type %2.</source>
-        <translation>Hiba a %2 szimbólum típus betöltésekor.</translation>
+        <translation>Hiba a %2 típusú szimbólum betöltésekor.</translation>
     </message>
     <message>
         <location filename="../src/file_format_native.cpp" line="324"/>
@@ -2180,7 +2178,7 @@
     <message>
         <location filename="../src/file_format_xml.cpp" line="417"/>
         <source>Unsupported new file format version. Some map features will not be loaded or saved by this version of the program.</source>
-        <translation>Nem támogatott új fájl verzió. Néhány térkép tulajdonság nem lesz betöltve vagy mentve a program ezen verziójával.</translation>
+        <translation>Nem támogatott új fájl formátum verzió. Néhány térkép tulajdonság nem lesz betöltve vagy mentve a program ezen verziójával.</translation>
     </message>
 </context>
 <context>
@@ -2220,7 +2218,7 @@
     <message>
         <location filename="../src/symbol_line.cpp" line="2042"/>
         <source>Minimum line length:</source>
-        <translation>A legkisebb vonalossz:</translation>
+        <translation>A legkisebb vonalhossz:</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2045"/>
@@ -2241,7 +2239,7 @@
     <message>
         <location filename="../src/symbol_line.cpp" line="2049"/>
         <source>square</source>
-        <translation>derékszögű</translation>
+        <translation>négyszögletes</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2050"/>
@@ -2256,12 +2254,12 @@
     <message>
         <location filename="../src/symbol_line.cpp" line="2058"/>
         <source>miter</source>
-        <translation>ferde</translation>
+        <translation>derékszög</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2060"/>
         <source>bevel</source>
-        <translation>ferde</translation>
+        <translation>tompaszög</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2053"/>
@@ -2276,22 +2274,22 @@
     <message>
         <location filename="../src/symbol_line.cpp" line="2169"/>
         <source>Show at least one mid symbol</source>
-        <translation>Legalább egy középső szimbólumot mutat</translation>
+        <translation>Legalább egy középső jel mutatása</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2172"/>
         <source>Minimum mid symbol count:</source>
-        <translation>Minimális középső szimbólumszámolás:</translation>
+        <translation>Középső jelek minimuma:</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2175"/>
         <source>Minimum mid symbol count when closed:</source>
-        <translation>Minimális középső szimbólumszámolás mikor zárva van:</translation>
+        <translation>Középső jelek minimuma amikor zárva:</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2096"/>
         <source>Dash length:</source>
-        <translation>Szaggatás hossza:</translation>
+        <translation>Vonalkák hossza:</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2092"/>
@@ -2301,12 +2299,12 @@
     <message>
         <location filename="../src/symbol_line.cpp" line="2099"/>
         <source>Break length:</source>
-        <translation>Törés hossza:</translation>
+        <translation>Vonalkák közti távolság hossza:</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2102"/>
         <source>Dashes grouped together:</source>
-        <translation>A szaggatások csoportosultak:</translation>
+        <translation>Szaggatott vonalak összekötése:</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2104"/>
@@ -2331,38 +2329,37 @@
     <message>
         <location filename="../src/symbol_line.cpp" line="2110"/>
         <source>In-group break length:</source>
-        <translation>Csoportosítás megszakítás hossza:</translation>
+        <translation>Csoporton belüli vonaltörés hossza:</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2113"/>
         <source>Half length of first and last dash</source>
-        <translation>
-Az és utolsó szaggatás jel félhosszú</translation>
+        <translation>Első és utolsó vonalka hosszának fele</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2142"/>
         <source>Mid symbols</source>
-        <translation>Középső jel elemek</translation>
+        <translation>Középső jelek</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2145"/>
         <source>Mid symbols per spot:</source>
-        <translation>Középső jel elemek foltonként: </translation>
+        <translation>Középső jelek foltonként:</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2148"/>
         <source>Mid symbol distance:</source>
-        <translation>Középső jel távolság:</translation>
+        <translation>Középső jel távolsága:</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2204"/>
         <source>Borders</source>
-        <translation>Határolók</translation>
+        <translation>Szegélyek</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2208"/>
         <source>Different borders on left and right sides</source>
-        <translation>Különböző határolók a jobb és a bal oldalon</translation>
+        <translation>Eltérő szegély a bal és jobb oldalon</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2213"/>
@@ -2372,7 +2369,7 @@ Az és utolsó szaggatás jel félhosszú</translation>
     <message>
         <location filename="../src/symbol_line.cpp" line="2218"/>
         <source>Right border:</source>
-        <translation>Jobb oldali szegély:</translation>
+        <translation>Jobboldali szegély:</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="1648"/>
@@ -2381,14 +2378,14 @@ Az és utolsó szaggatás jel félhosszú</translation>
         <location filename="../src/file_format_ocad8.cpp" line="596"/>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="1033"/>
         <source>Start symbol</source>
-        <translation>Indító jel elem</translation>
+        <translation>Kiindulási jel</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="1652"/>
         <location filename="../src/symbol_line.cpp" line="2252"/>
         <location filename="../src/symbol_line.cpp" line="2710"/>
         <source>Mid symbol</source>
-        <translation>Középső jel elem</translation>
+        <translation>Középső jel</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="1656"/>
@@ -2406,17 +2403,17 @@ Az és utolsó szaggatás jel félhosszú</translation>
         <location filename="../src/file_format_ocad8.cpp" line="590"/>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="1026"/>
         <source>Dash symbol</source>
-        <translation>Szaggató jel elem</translation>
+        <translation>Szaggatott vonal szimbóluma</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2066"/>
         <source>Enable border lines</source>
-        <translation>Határvonalak engedélyezése</translation>
+        <translation>Szegélyvonal használata</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2163"/>
         <source>Distance between spots:</source>
-        <translation>Foltok közötti távolság:</translation>
+        <translation>Pontok közti távolság:</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2166"/>
@@ -2426,7 +2423,7 @@ Az és utolsó szaggatás jel félhosszú</translation>
     <message>
         <location filename="../src/symbol_line.cpp" line="2232"/>
         <source>Suppress the dash symbol at line start and line end</source>
-        <translation>A vonal kezdésnél és vonalvégnél nyomja el a szaggató szimbólumot</translation>
+        <translation>Szaggatott vonal megszüntetése a vonal elején és végén</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2473"/>
@@ -2436,27 +2433,27 @@ Az és utolsó szaggatás jel félhosszú</translation>
     <message>
         <location filename="../src/symbol_line.cpp" line="2476"/>
         <source>Border color:</source>
-        <translation>Keret színe:</translation>
+        <translation>Szegély színe:</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2479"/>
         <source>Border shift:</source>
-        <translation>Keret elcsúsztatás:</translation>
+        <translation>Szegély elcsúsztatás:</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2482"/>
         <source>Border is dashed</source>
-        <translation>A keret szaggatott</translation>
+        <translation>A szegély szaggatott</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2503"/>
         <source>Border dash length:</source>
-        <translation>A keret szaggatás hossza:</translation>
+        <translation>Vonalkák hossza:</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2506"/>
         <source>Border break length:</source>
-        <translation>Határoló törés hossz:</translation>
+        <translation>Szegélyvonalak közti távolság hossza:</translation>
     </message>
 </context>
 <context>
@@ -2464,7 +2461,7 @@ Az és utolsó szaggatás jel félhosszú</translation>
     <message>
         <location filename="../src/template_track.cpp" line="528"/>
         <source>Track scaling and positioning</source>
-        <translation>Nyom méretarány és helyzet</translation>
+        <translation>Nyomvonal méretaránya és helyzete</translation>
     </message>
     <message>
         <location filename="../src/template_track.cpp" line="533"/>
@@ -2509,12 +2506,12 @@ Az és utolsó szaggatás jel félhosszú</translation>
     <message>
         <location filename="../src/gui/main_window.cpp" line="76"/>
         <source>Services</source>
-        <translation>Szervizek</translation>
+        <translation>Szolgáltatások</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="77"/>
         <source>Hide %1</source>
-        <translation>Elrejt %1</translation>
+        <translation>%1 elrejtése</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="78"/>
@@ -2534,7 +2531,7 @@ Az és utolsó szaggatás jel félhosszú</translation>
     <message>
         <location filename="../src/gui/main_window.cpp" line="81"/>
         <source>Quit %1</source>
-        <translation>Kilép %1</translation>
+        <translation>Kilépés ebből: %1</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="82"/>
@@ -2572,12 +2569,12 @@ Az és utolsó szaggatás jel félhosszú</translation>
     <message>
         <location filename="../src/gui/main_window.cpp" line="248"/>
         <source>&amp;Save</source>
-        <translation>&amp;Ment</translation>
+        <translation>&amp;Mentés</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="253"/>
         <source>Save &amp;as...</source>
-        <translation>Mentés má&amp;sképp...</translation>
+        <translation>Mentés má&amp;sként...</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="255"/>
@@ -2633,7 +2630,7 @@ Az és utolsó szaggatás jel félhosszú</translation>
     <message>
         <location filename="../src/gui/main_window.cpp" line="322"/>
         <source>&amp;About %1</source>
-        <translation>%1 &amp;Névjegy</translation>
+        <translation>%1 &amp;névjegye</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="323"/>
@@ -2683,9 +2680,9 @@ Menti a változtatásokat?</translation>
         <source>The selected map scale is 1:%1, but the chosen symbol set has a nominal scale of 1:%2.
 
 Do you want to scale the symbols to the selected scale?</source>
-        <translation>A kiválasztott térkép méretaránya 1: %1, de a csere szimbólum készlet egy nominál skálán 1: %2.
+        <translation>A térkép választott méretaránya 1:%1, de a kiválasztott jelkészlet névleges méretaránya 1:%2.
 
-Akarod a szimbólumokra alkalmazni a kiválasztott méretarányt?</translation>
+Átméretezi a jelkészletet a válsztott térkép új méretarányának megfelelően?</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="709"/>
@@ -2695,7 +2692,7 @@ Akarod a szimbólumokra alkalmazni a kiválasztott méretarányt?</translation>
     <message>
         <location filename="../src/gui/main_window.cpp" line="710"/>
         <source>It seems that %1 crashed the last time this file was opened:&lt;br /&gt;&lt;tt&gt;%2&lt;/tt&gt;&lt;br /&gt;&lt;br /&gt;Really retry to open it?</source>
-        <translation>Úgy tűnik hogy a %1 összeomlott, amikor a fájlt megnyitották:&lt;br /&gt;&lt;tt&gt;%2&lt;/tt&gt;&lt;br /&gt;&lt;br /&gt;Valóban újra akarja nyitni?</translation>
+        <translation>Úgy tűnik %1 összeomlott amikor ezt a fájlt legutóbb megnyitotta &lt;br /&gt;&lt;tt&gt;%2&lt;/tt&gt;&lt;br /&gt;&lt;br /&gt;Biztos megpróbálja megnyitni?</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="899"/>
@@ -2715,7 +2712,7 @@ Akarod a szimbólumokra alkalmazni a kiválasztott méretarányt?</translation>
     <message>
         <location filename="../src/gui/main_window.cpp" line="988"/>
         <source>All files</source>
-        <translation>inden fájl</translation>
+        <translation>Minden fájl</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="677"/>
@@ -2757,10 +2754,10 @@ El akarja dobni a módosításokat?</translation>
 
 Press Yes to save in this format.
 Press No to choose a different format.</source>
-        <translation>A térkép mentésre kerül egy &quot;%1&quot; fájlba. Bizonyos információk elveszhetnek.
+        <translation>A térképet &quot;%1&quot; formátumban menti. Bizonyos információk elveszhetnek.
 
-Nyomjon Igen-t, ha ebben a formában akarja meteni.
-Nyomjon Nem-et, ha egy másik formátumban akarja meteni.</translation>
+Ebben a formátumban mentem - nyomja meg az Igen gombot.
+Más formátumot választok - nyomja meg a Nem gombot.</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="1024"/>
@@ -2801,61 +2798,61 @@ Nyomjon Nem-et, ha egy másik formátumban akarja meteni.</translation>
         <source>Cannot export the map as
 &quot;%1&quot;
 because saving as %2 (.%3) is not supported.</source>
-        <translation>Nem exportálható a térkép
-&quot;%1&quot;-ként.
-Mert a mentés mint %2 (%3) nem támogatott.</translation>
+        <translation>Nem lehet exportálni a térképet mint
+&quot;%1&quot;
+mert a mentés mint %2 (.%3) nem támogatott.</translation>
     </message>
     <message>
         <location filename="../src/map.cpp" line="601"/>
         <source>Cannot export the map as
 &quot;%1&quot;
 because the format is unknown.</source>
-        <translation>Nem exportálható a térkép
-&quot;%1&quot;-ként,
+        <translation>Nem lehet exportálni a térképet mint
+&quot;%1&quot;
 mert a formátum ismeretlen.</translation>
     </message>
     <message>
         <source>File does not exist or insufficient permissions to open:
 %1</source>
-        <translation type="vanished">A fájl megnyitásához nincs vagy nem elegendő a jogosultsága: 
+        <translation type="vanished">Fájl nem létezik vagy nincs engedélyezve a megnyitása:
 %1</translation>
     </message>
     <message>
         <location filename="../src/map.cpp" line="667"/>
         <location filename="../src/map.cpp" line="736"/>
         <source>Warning</source>
-        <translation>Figyelem</translation>
+        <translation>Figyelmeztetés</translation>
     </message>
     <message>
         <location filename="../src/map.cpp" line="667"/>
         <source>The map export generated warnings.</source>
-        <translation>A térkép export figyelmeztetéseket generált.</translation>
+        <translation>A térkép exportálása figyelmeztetéseket generált.</translation>
     </message>
     <message>
         <location filename="../src/map.cpp" line="642"/>
         <source>Internal error while saving:
 %1</source>
-        <translation>Belső hiba a mentéskor:
+        <translation>Belső hiba a mentés során:
 %1</translation>
     </message>
     <message>
         <location filename="../src/map.cpp" line="737"/>
         <source>The map import generated warnings.</source>
-        <translation>A térkép import figyelmeztetéseket generált.</translation>
+        <translation>A térkép importálása figyelmeztetéseket generált.</translation>
     </message>
     <message>
         <location filename="../src/map.cpp" line="685"/>
         <source>Cannot open file:
 %1
 for reading.</source>
-        <translation>Nem olvasható
-%1 
-fájl.</translation>
+        <translation>Fájl nem megnyitható:
+%1
+olvasásra.</translation>
     </message>
     <message>
         <location filename="../src/map.cpp" line="699"/>
         <source>Invalid file type.</source>
-        <translation>Hibás fájl típus.</translation>
+        <translation>Érvénytelen fájl formátum.</translation>
     </message>
     <message>
         <location filename="../src/map.cpp" line="655"/>
@@ -2864,9 +2861,8 @@ fájl.</translation>
 %1
 
 %2</source>
-        <translation>Nem lehet megnyitni a fájlt:
-%1
-
+        <translation>Fájl nem megnyitható.
+%1:
 %2</translation>
     </message>
     <message>
@@ -2879,7 +2875,7 @@ fájl.</translation>
     <message>
         <location filename="../src/map.cpp" line="788"/>
         <source>Nothing to import.</source>
-        <translation>Semmi nem importálható.</translation>
+        <translation>Nincs mit importálni.</translation>
     </message>
     <message>
         <location filename="../src/map.cpp" line="795"/>
@@ -2891,14 +2887,14 @@ fájl.</translation>
         <source>The scale of the imported data is 1:%1 which is different from this map&apos;s scale of 1:%2.
 
 Rescale the imported data?</source>
-        <translation>Az importált adat méretaránya 1:%1, ami különbözik ennek térképnek a méretarányától ami 1:%2
+        <translation>Az importált adatok méretaránya 1:%1, ami különbözik a térkép méretarányától, ami 1:%2.
 
 Átméretezi az importált adatokat?</translation>
     </message>
     <message>
         <location filename="../src/map.cpp" line="440"/>
         <source>default part</source>
-        <translation>alapértelmezett rész</translation>
+        <translation>alapértelmezett része</translation>
     </message>
     <message>
         <location filename="../src/core/map_color.cpp" line="28"/>
@@ -2943,7 +2939,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="772"/>
         <source>Redo the last step</source>
-        <translation>Az utolsó lépés végrehajtása</translation>
+        <translation>Visszavont lépés végrehajtása</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="773"/>
@@ -2978,7 +2974,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="793"/>
         <source>Set custom zoom factor...</source>
-        <translation>Beállítja a nagyítást...</translation>
+        <translation>Nagyítás beállítása...</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="800"/>
@@ -2988,22 +2984,22 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="800"/>
         <source>Show/Hide the symbol window</source>
-        <translation>Mutatja/Elrejti a térképjelek ablakot</translation>
+        <translation>Térképjelek ablak mutatása/elrejtése</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="801"/>
         <source>Color window</source>
-        <translation>Színek ablak</translation>
+        <translation>Színkészlet ablak</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="801"/>
         <source>Show/Hide the color window</source>
-        <translation>Mutatja/Elrejti a szín ablakot</translation>
+        <translation>Színkészlet ablak mutatása/elrejtése</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="802"/>
         <source>Replace the symbols with those from another map file</source>
-        <translation>A térképjeleket cseréli egy másik térképfájl jeleire</translation>
+        <translation>Szimbólumtábla lecserélése egy másik térképfájléval</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="805"/>
@@ -3018,12 +3014,12 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="807"/>
         <source>Change map scale...</source>
-        <translation>Térkép méretarányának cseréje...</translation>
+        <translation>Térkép méretarányának megváltoztatása...</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="807"/>
         <source>Change the map scale and adjust map objects and symbol sizes</source>
-        <translation>Cseréli a térkép méretarányát és beállítja a térkép objektumok és jelek méretét</translation>
+        <translation>Megváltoztatja a térkép méretarányát és beállítja a térkép objektumok és jelek méretét</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="809"/>
@@ -3038,7 +3034,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="811"/>
         <source>Show/Hide the template window</source>
-        <translation>Mutatja/rejti a háttér ablakot</translation>
+        <translation>Háttér ablak mutatása/elrejtése</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="814"/>
@@ -3053,12 +3049,12 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="819"/>
         <source>Edit objects</source>
-        <translation>Objektum módosítása</translation>
+        <translation>Objektumok szerkesztése</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="821"/>
         <source>Set point objects</source>
-        <translation>Pont objektum beállítása</translation>
+        <translation>Pont objektum rajzolása</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="822"/>
@@ -3068,7 +3064,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="823"/>
         <source>Draw circles and ellipses</source>
-        <translation>Körök és ellipszisek rajzolása</translation>
+        <translation>Kör és ellipszis rajzolása</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="827"/>
@@ -3088,17 +3084,17 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="830"/>
         <source>Fill / Create border</source>
-        <translation>Kitölt/Létrehoz egy határolót</translation>
+        <translation>Szegély kitöltés/létrehozás</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="831"/>
         <source>Switch dash direction</source>
-        <translation>Megcseréli a jel irányát</translation>
+        <translation>A jel iránynak megfordítása</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="832"/>
         <source>Connect paths</source>
-        <translation>Jelek összekötése</translation>
+        <translation>Vonalak egyesítése</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="834"/>
@@ -3108,12 +3104,12 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="850"/>
         <source>Rotate object(s)</source>
-        <translation>Obkektum(ok) elforgatása</translation>
+        <translation>Objektum(ok) elforgatása</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="853"/>
         <source>Measure lengths and areas</source>
-        <translation>Hossz és terület mérés</translation>
+        <translation>Hossz és terület mérése</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="856"/>
@@ -3123,12 +3119,12 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="858"/>
         <source>Merge area holes</source>
-        <translation>Lyukakat olvaszt össze</translation>
+        <translation>Lyukak egyesítése</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="870"/>
         <source>Paint on template settings</source>
-        <translation>A háttérre rajzolás beállítása</translation>
+        <translation>Háttérre rajzolás beállításai</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="876"/>
@@ -3153,7 +3149,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="883"/>
         <source>Set temporary marker at GPS position</source>
-        <translation>Egy átmrnrti jelölő elhelyezése a GPS pozíción</translation>
+        <translation>Egy átmeneti jelölő elhelyezése a GPS pozíción</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="885"/>
@@ -3163,7 +3159,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="887"/>
         <source>Clear temporary GPS markers</source>
-        <translation>GPS jelölők törlése</translation>
+        <translation>GPS átmeneti jelölők törlése</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="890"/>
@@ -3200,7 +3196,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="896"/>
         <source>Merge all parts</source>
-        <translation>Minden rész összeolvasztása</translation>
+        <translation>Részek egyesítése</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="898"/>
@@ -3212,7 +3208,7 @@ Rescale the imported data?</source>
         <location filename="../src/color_dock_widget.cpp" line="85"/>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="245"/>
         <source>&amp;Edit</source>
-        <translation>&amp;Módosítás</translation>
+        <translation>&amp;Szerkesztés</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="966"/>
@@ -3247,22 +3243,22 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="865"/>
         <source>Paint on template</source>
-        <translation>festés a háttéren</translation>
+        <translation>Háttérre rajzolás</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="473"/>
         <source>Editing in progress</source>
-        <translation>Módosítás folyamatban</translation>
+        <translation>Szerkesztés folyamatban</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="473"/>
         <source>The map is currently being edited. Please finish the edit operation before saving.</source>
-        <translation>A térkép javítás alatt. Kérem, hogy fejezze be a műveletet a mentés előtt.</translation>
+        <translation>A térkép szerkesztés alatt. Kérem, hogy fejezze be a műveletet a mentés előtt.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="478"/>
         <source>Map saved</source>
-        <translation>A térkép mentve</translation>
+        <translation>Térkép mentve</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="783"/>
@@ -3289,12 +3285,12 @@ Rescale the imported data?</source>
         <location filename="../src/map_editor.cpp" line="797"/>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="107"/>
         <source>Hide all templates</source>
-        <translation>Minden hátteret rejtsen el</translation>
+        <translation>Minden háttér elrejtése</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="802"/>
         <source>Replace symbol set...</source>
-        <translation>Cserélje a térkép jelkészletet...</translation>
+        <translation>Jelkészlet cseréje innen...</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="806"/>
@@ -3319,12 +3315,12 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="817"/>
         <source>Tag editor</source>
-        <translation>Leírás szerkesztő</translation>
+        <translation>Címke szerkesztő</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="817"/>
         <source>Show/Hide the tag editor window</source>
-        <translation>Mutatja/elrejti a leírás szerkesztő ablakot</translation>
+        <translation>Címke szerkesztő ablak mutatása/elrejtése</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="824"/>
@@ -3334,12 +3330,12 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="825"/>
         <source>Draw free-handedly</source>
-        <translation>Szabadkézi rajz</translation>
+        <translation>Szabadkézi rajzolás</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="826"/>
         <source>Fill bounded areas</source>
-        <translation>Kitölti a határolt területeket</translation>
+        <translation>Kitöltés</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="776"/>
@@ -3349,52 +3345,52 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="835"/>
         <source>Cut free form hole</source>
-        <translation>Szabadkézi lyukat vág</translation>
+        <translation>Szabadkézi lyuk vágása</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="836"/>
         <source>Cut round hole</source>
-        <translation>Kerek lyukat vág</translation>
+        <translation>Kerek lyuk vágása</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="840"/>
         <source>Cut rectangular hole</source>
-        <translation>Téglalap alakú lyukat vág</translation>
+        <translation>Téglalap alakú lyuk vágása</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="851"/>
         <source>Rotate pattern</source>
-        <translation>Mintát elforgatja</translation>
+        <translation>Minta elforgatása</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="852"/>
         <source>Scale object(s)</source>
-        <translation>Objektumokat méretez</translation>
+        <translation>Objektum(ok) méretezése</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="854"/>
         <source>Unify areas</source>
-        <translation>Területek egyesítése</translation>
+        <translation>Terület egyesítése</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="855"/>
         <source>Intersect areas</source>
-        <translation>Területek felosztása</translation>
+        <translation>Átfedések meghagyása</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="857"/>
         <source>Area XOr</source>
-        <translation>Terület XOr</translation>
+        <translation>Átfedések kitörlése</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="861"/>
         <source>Cutout</source>
-        <translation>Kivágás</translation>
+        <translation>Terület kivágása</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="862"/>
         <source>Cut away</source>
-        <translation>Távolra vágás</translation>
+        <translation>Terület kitörlése</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="863"/>
@@ -3444,7 +3440,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="779"/>
         <source>Invert selection</source>
-        <translation type="unfinished">Kiválasztás megfordítása</translation>
+        <translation type="unfinished">Kijelölés megfordítása</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1082"/>
@@ -3466,12 +3462,12 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="1138"/>
         <source>Editing</source>
-        <translation>Módosítás</translation>
+        <translation>Szerkesztés</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1163"/>
         <source>Advanced editing</source>
-        <translation>Haladó módosítás</translation>
+        <translation>Haladó szerkesztés</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1189"/>
@@ -3486,7 +3482,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="1195"/>
         <source>Show top bar</source>
-        <translation></translation>
+        <translation>Mutatja a felső állapotsort</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1431"/>
@@ -3568,12 +3564,12 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="1728"/>
         <source>Scale to percentage:</source>
-        <translation>Százalék beállítás:</translation>
+        <translation>Átméretezési arány (százalék):</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1752"/>
         <source>Map notes</source>
-        <translation>Térkép megjegyzések</translation>
+        <translation>Térképhez fűzött megjegyzések</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1757"/>
@@ -3593,7 +3589,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="1860"/>
         <source>Tag Editor</source>
-        <translation>Leírás szerkesztő</translation>
+        <translation>Címke szerkesztő</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1920"/>
@@ -3601,7 +3597,6 @@ Rescale the imported data?</source>
 symbol
 selected</source>
         <comment>Keep it short. Should not be much longer per line than the longest word in the original.</comment>
-        <translatorcomment>Rövidítsen! Nem lehet hosszabb egy soronként min a leghosszab eredeti szó.</translatorcomment>
         <translation>Nincs
 térképjel
 kiválasztva</translation>
@@ -3612,7 +3607,6 @@ kiválasztva</translation>
 symbols
 selected</source>
         <comment>Keep it short. Should not be much longer per line than the longest word in the original.</comment>
-        <translatorcomment>Rövidítsen! Nem lehet hosszabb egy soronként min a leghosszab eredeti szó.</translatorcomment>
         <translation>Több
 térképjel
 kiválasztva</translation>
@@ -3620,17 +3614,17 @@ kiválasztva</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="1997"/>
         <source>Place point objects on the map.</source>
-        <translation>Pont objektumokat helyez a térképre.</translation>
+        <translation>Pont objektum elhelyezése a térképre.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1997"/>
         <source>Select a point symbol to be able to use this tool.</source>
-        <translation>Egy pontszerű térképjel használatát teszi lehetővé ez az eszköz.</translation>
+        <translation>Az eszköz használatához jelöljön ki egy pont objektumot.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1999"/>
         <source>Draw polygonal and curved lines.</source>
-        <translation>Sokszög és görbített vonalakat rajzol.</translation>
+        <translation>Sokszög és görbe vonal rajzolás.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1999"/>
@@ -3639,7 +3633,7 @@ kiválasztva</translation>
         <location filename="../src/map_editor.cpp" line="2005"/>
         <location filename="../src/map_editor.cpp" line="2007"/>
         <source>Select a line, area or combined symbol to be able to use this tool.</source>
-        <translation>Válaszzon egy vonalat, területet vagy egy kombinált szimbólumot ami képes használni ezt az eszközt.</translation>
+        <translation>Az eszköz használatához jelöljön ki egy vonalat, területet vagy kombinált szimbólumot.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2001"/>
@@ -3649,99 +3643,99 @@ kiválasztva</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="2005"/>
         <source>Draw paths free-handedly.</source>
-        <translation>Vonalak szabadkézi rajzolása.</translation>
+        <translation>Szabadkézi rajz készítése.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2007"/>
         <source>Fill bounded areas.</source>
-        <translation>Határolt területek kitöltése.</translation>
+        <translation>Körülhatárolt terület kitöltése.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2102"/>
         <source>Deletes the selected object(s).</source>
-        <translation>Törli a kiválasztott objektumokat.</translation>
+        <translation>Kijelölt objektum(ok) törlése.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2113"/>
         <source>Set the direction of area fill patterns or point objects.</source>
-        <translation>Beállítja egy terület kitöltő mintájának vagy egy pontszerű objektum irányát.</translation>
+        <translation>Területkitöltés és pont objektum irányának állítása.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2113"/>
         <source>Select an area object with rotatable fill pattern or a rotatable point object to activate this tool.</source>
-        <translation>Válasszon ki egy terület objektumot egy elforgatható kitöltési mintával vagy egy elforgatható pontszerű objektumot, hogy használni tudja ezt a segédeszközt.</translation>
+        <translation>Az eszköz használatához jelöljön ki egy forgatható mintával kitöltött területobjektumot vagy egy forgatható pontobjektumot.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2143"/>
         <source>Resulting symbol: %1 %2.</source>
-        <translation>Származtatott szimbólum:%1 %2.</translation>
+        <translation>Létrejövő térképjel:  %1 %2.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2144"/>
         <source>Select at least two area or path objects activate this tool.</source>
-        <translation>Válasszon két területet vagy vonalat a segédeszköz aktiválásához.</translation>
+        <translation>Az eszköz használatához legalább két terület vagy vonal objektum kijelölése szükséges.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2146"/>
         <source>Unify overlapping objects.</source>
-        <translation>Átlapolt objektumok egyesításe.</translation>
+        <translation>Átfedésben lévő területek egyesítése.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2148"/>
         <source>Remove all parts which are not overlaps with the first selected object.</source>
-        <translation>Távolíts el minden részt, ami nem áll átfedésben az először kiválasztott objektummal.</translation>
+        <translation>Az elsőnek kiválasztott objektummal átfedésben nem lévő részeket kitörli.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2150"/>
         <source>Remove overlapped parts of the first selected object.</source>
-        <translation>Távolíts átfedett résztét először kiválasztott objektumnak.</translation>
+        <translation>Az elsőnek kijelölt objektummal átfedésben lévő területeket kitörli.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2152"/>
         <source>Remove all parts which overlap the first selected object.</source>
-        <translation>Távolíts minden részt amelyik átfedi az először kiválasztott objektumot.</translation>
+        <translation>Az elsőnek kijelölt objektummal átfedésben lévő területeket kitörli.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2156"/>
         <source>Merge area holes together, or merge holes with the object boundary to cut out this part.</source>
-        <translation>Összeolvasztja lyukakat, vagy a tárgyhatárral lyukakat olvaszt össze hogy kiszabja belőle ezt a részt.</translation>
+        <translatorcomment>&quot;cut out this part&quot; nem tudom mire vonatkozik</translatorcomment>
+        <translation>Lyukak egyesítése, vagy lyukak egyesítése az objektum határvonalával.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2156"/>
         <source>Select one area object with holes to activate this tool.</source>
-        <translation>Válassz ki egy területi objektumot lyukakkal, hogy aktiválja ezt az eszközt.</translation>
+        <translation>Az eszköz használatához jelöljön ki egy lyukat tartalmazó területet.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2161"/>
         <source>Create a cutout of some objects or the whole map.</source>
-        <translation>Létrehoz objektum kivágását vagy az egész térképet.
-</translation>
+        <translation>Kivágat készítése néhány objektumról vagy az egész térképről.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2161"/>
         <location filename="../src/map_editor.cpp" line="2163"/>
         <source>Select a closed path object as cutout shape to activate this tool.</source>
-        <translation>Válasszon egy zárt vonalat, mint kivágó sablont a segédeszköz aktiválásához.</translation>
+        <translation>Jelöljön ki egy zárt határvonalú objektumot a kivágandó terület meghatározásához.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2163"/>
         <source>Cut away some objects or everything in a limited area.</source>
-        <translation>Vágj ki néhány tárgyat vagy mindent egy korlátozott területen.</translation>
+        <translation>Néhány objektum vagy minden kitörlése egy meghatározott területen belül.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2195"/>
         <source>Places evenly spaced point objects along an existing path object</source>
-        <translation>Egyformán ritkított pont objektumok helyezkednek el egy létező vonalszerű objektum mentén</translation>
+        <translation>Egy meglévő vonal mentén pont objektumokat helyez el egyenletesen</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2195"/>
         <source>Select at least one path object and a single point symbol to activate this tool.</source>
-        <translation>Válassz ki legalább egy útvonaltárgyat és egy  pontszimbólumot, hogy a segédeszköz aktiválásához.</translation>
+        <translation>Az eszköz használatához legalább egy vonal és egy pont objektum kijelölése szükséges.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2925"/>
         <source>Merging holes failed.</source>
-        <translation>A lyukak összeolvasztása sikertelen.</translation>
+        <translation>Lyukak egyesítése sikertelen.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="3213"/>
@@ -3751,53 +3745,53 @@ kiválasztva</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="3213"/>
         <source>Are you sure you want to delete all temporary GPS markers? This cannot be undone.</source>
-        <translation>Biztos, gogy törli az összes átmeneti GPS jelölőt? Ez visszavonhatatlan.</translation>
+        <translation>Biztos, hogy törli az összes átmeneti GPS jelölőt? Ezt a lépést nem lehet visszavonni.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="3327"/>
         <source>Merge this part with</source>
-        <translation>E rész összeolvasztása ...</translation>
+        <translation>A rész egyesítése ezzel</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="3333"/>
         <source>Move selected objects to</source>
-        <translation>A kiválasztott objektum mozgatása</translation>
+        <translation>Kijelölt objektumok mozgatása</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="3387"/>
         <location filename="../src/map_editor.cpp" line="3447"/>
         <source>Enter the name of the map part:</source>
-        <translation>Adja meg a térképrész nevét:</translation>
+        <translation>A térképrészlet nevének bevitele:</translation>
     </message>
     <message>
         <source>Do you want to remove map part &quot;%1&quot; and all its objects? This cannot be undone.</source>
-        <translation type="vanished">Térképrészt akarsz eltávolítani &quot;%1&quot; és aminden objektumát? Ezt nem lehet visszavonni.</translation>
+        <translation type="vanished">Biztos, hogy törli a a &quot;%1&quot; térképrészletet minden objektumával együtt? Ezt a lépést nem lehet visszavonni.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="3484"/>
         <location filename="../src/map_editor.cpp" line="3514"/>
         <source>Merge map parts</source>
-        <translation>Térképrészek összeolvasztása</translation>
+        <translation>Térképrészek egyesítése</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="3485"/>
         <source>Do you want to move all objects from map part &quot;%1&quot; to &quot;%2&quot;, and to remove &quot;%1&quot;?</source>
-        <translation>Mozgatni akar minden objektumot a &quot;%1&quot; térkép részből a &quot;%2&quot;-be és törölni a &quot;%1&quot;-ből?</translation>
+        <translation>Biztos, hogy a &quot;%1&quot; térképrész minden objektumát &quot;%2&quot;-be mozgatja, és törli &quot;%1&quot;-t?</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="3515"/>
         <source>Do you want to move all objects to map part &quot;%1&quot;, and to remove all other map parts?</source>
-        <translation>Mozgatni akar minden objektumot a &quot;%1&quot; térképrészbe és törölni minden más részt?</translation>
+        <translation>Biztos, hogy minden objektumot áthelyez a &quot;%1&quot; térképrészbe, és minden más térképrészt töröl?</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="3751"/>
         <source>Cannot import the selected map file because it could not be loaded.</source>
-        <translation>Nem importálható a kiválasztott térkép fájl mert nem lehetett betölteni.</translation>
+        <translation>Nem lehetséges a kiválasztott fájl importálása, mert nem sikerült betölteni.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2003"/>
         <source>Draw rectangles.</source>
-        <translation>Tégllapok rajzolása.</translation>
+        <translation>Téglalap rajzolása.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="759"/>
@@ -3827,7 +3821,7 @@ kiválasztva</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="788"/>
         <source>Pan</source>
-        <translation>Csúsztat</translation>
+        <translation>Megfog</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="798"/>
@@ -3837,22 +3831,22 @@ kiválasztva</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="820"/>
         <source>Edit lines</source>
-        <translation>Vonalak módosítása</translation>
+        <translation>Vonalak szerkesztése</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="859"/>
         <source>Convert to curves</source>
-        <translation>Görbékké alakít</translation>
+        <translation>Görbévé alakít</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="860"/>
         <source>Simplify path</source>
-        <translation>Egyszerűsíti a vonalat</translation>
+        <translation>Vonal(ak) egyszerüsítése</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="940"/>
         <source>&amp;Export as...</source>
-        <translation>&amp;Exportál mint...</translation>
+        <translation>&amp;Exportálás mint...</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2009"/>
@@ -3862,7 +3856,7 @@ kiválasztva</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="2009"/>
         <source>Select a text symbol to be able to use this tool.</source>
-        <translation>Válasszon egy szöveges térképjelet a segédeszköz használatához.</translation>
+        <translation>Az eszköz használatához jelöljön ki egy szöveg objektumot.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2104"/>
@@ -3875,90 +3869,90 @@ kiválasztva</translation>
         <location filename="../src/map_editor.cpp" line="2106"/>
         <location filename="../src/map_editor.cpp" line="2108"/>
         <source>Select at least one object to activate this tool.</source>
-        <translation>Válasszon ki legalább egy objektumot, a segédeszköz használatához..</translation>
+        <translation>Az eszköz használatához jelöljön ki legalább egy objektumot.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2117"/>
         <source>Switch the direction of symbols on line objects.</source>
-        <translation>Átfordítja a vonalszimbólumok helyzetét a vonalon. </translation>
+        <translation>Jelek irányának változtatása vonal objektumon.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2117"/>
         <location filename="../src/map_editor.cpp" line="2119"/>
         <source>Select at least one line object to activate this tool.</source>
-        <translation>Válasszon ki legalább egy vonal objektumot, a segédeszköz használatához..</translation>
+        <translation>Az eszköz használatához jelöljön ki legalább egy vonal objektumot.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2119"/>
         <source>Connect endpoints of paths which are close together.</source>
-        <translation>Csatlakoztasd olyan útvonalak végpontjait, amik egymáshoz közel vannak.</translation>
+        <translation>Utak egymáshoz közeli végpontjainak egyesítése.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2123"/>
         <source>Cut the selected object(s) into smaller parts.</source>
-        <translation>A kiválasztott objektumokat kisebb részekre vágja.</translation>
+        <translation>Kiválasztott objektum(ok) szétdarabolása.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2123"/>
         <source>Select at least one line or area object to activate this tool.</source>
-        <translation>Válasszon ki legalább egy terület objektumot, a segédeszköz használatához..</translation>
+        <translation>Az eszköz használatához legalább egy terület vagy vonal objektum kijelölése szükséges.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2132"/>
         <source>Cut a hole into the selected area object.</source>
-        <translation>Egy lyukat vág a kiválasztott terület objektumba.</translation>
+        <translation>Lyuk vágása a kijelölt területbe.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2132"/>
         <source>Select a single area object to activate this tool.</source>
-        <translation>Válasszon egy egyszerű terület objektumot, a segédeszköz aktiválásához.</translation>
+        <translation>Az eszköz használatához jelöljön ki egy területet.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2106"/>
         <source>Rotate the selected object(s).</source>
-        <translation>Elforgatja a kiválasztott objektumokat.</translation>
+        <translation>Kiválasztott objektum(ok) forgatása.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2108"/>
         <source>Scale the selected object(s).</source>
-        <translation>Átméretezi a kiválasztott objektumokat.</translation>
+        <translation>Kiválasztott objektum(ok) átméretezése.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2125"/>
         <source>Turn paths made of straight segments into smooth bezier splines.</source>
-        <translation>Sima bezier görbékké változtatja az egyenes részekből készült vonalakat.</translation>
+        <translation>Szögletes vonalak bezier görbévé alakítása.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2125"/>
         <location filename="../src/map_editor.cpp" line="2127"/>
         <source>Select a path object to activate this tool.</source>
-        <translation>Válasszon egy vonal objektumot a segédeszköz használatához.</translation>
+        <translation>Az eszköz használatához jelöljön ki legalább egy vonal objektumot.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2127"/>
         <source>Reduce the number of points in path objects while trying to retain their shape.</source>
-        <translation>Útvonaltárgyakban csökkenti a pontok számát úgy, hogy megpróbálja megtartani az alakjukat.</translation>
+        <translation>Vonal objektumon a töréspontok számának csökkentése az eredeti alak megtartásával.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2188"/>
         <source>Switches the symbol of the selected object(s) to the selected symbol.</source>
-        <translation>A kiválasztott objektum térképjelét kicseréli a kiválasztott térképjelre.</translation>
+        <translation>A kijelölt objektum(ok) jelkulcsát erre változtatja.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2188"/>
         <location filename="../src/map_editor.cpp" line="2190"/>
         <source>Select at least one object and a fitting, different symbol to activate this tool.</source>
-        <translation>Válassz ki legalább egy objektumot és egy megfelelő, különböző térképjelet, a segédeszköz aktiválásához.</translation>
+        <translation>Az eszköz használatához válasszon ki egy objektumot, és egy azonos típusú, de másik jelkulcsot.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2190"/>
         <source>Fill the selected line(s) or create a border for the selected area(s).</source>
-        <translation>Tölti a kiválasztott vonalat vagy létrehoz egy határolót a kiválasztott terület(ek)hez.</translation>
+        <translation>Kijelölt vonal(ak) kitöltése, vagy keret létrehozása a kijelölt terület(ek) köré.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2310"/>
         <source>%1 object(s) duplicated</source>
-        <translation>%1 objektum(ok) megkettőzve</translation>
+        <translation>%1  objektum(ok) megkettőzve</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2522"/>
@@ -3968,7 +3962,7 @@ kiválasztva</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="2522"/>
         <source>No objects were selected because there are no objects with the selected symbol(s).</source>
-        <translation>Nem volt objektum kiválasztva, mert nincsenek objektumok a kiválasztott térképjelekkel.</translation>
+        <translation>Objektum kijelölése sikertelen, mert nincs a kijelölt jelkulcsnak megfelelő objektum a térképen.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2884"/>
@@ -3978,22 +3972,22 @@ kiválasztva</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="2898"/>
         <source>Unification failed.</source>
-        <translation>Az egyesítés sikertelen.</translation>
+        <translation>Egyesítés sikertelen.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2904"/>
         <source>Intersection failed.</source>
-        <translation>A darabolás sikertelen.</translation>
+        <translation>Átfedés sikertelen.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2910"/>
         <source>Difference failed.</source>
-        <translation>A kivonás sikertelen.</translation>
+        <translation>Szétválasztás sikertelen.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2916"/>
         <source>XOr failed.</source>
-        <translation>A XOr-olás sikertelen.</translation>
+        <translation>Átfedések kitörlése sikertelen.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="3408"/>
@@ -4003,12 +3997,12 @@ kiválasztva</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="3569"/>
         <source>Paint free-handedly on a template</source>
-        <translation>Szabadkézi festés a háttéren</translation>
+        <translation>Szabadkézi rajz készítése háttérre</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="3571"/>
         <source>Paint free-handedly on a template. Create or load a template which can be drawn onto to activate this button</source>
-        <translation>Fessen szabadkézzel a háttérre. Készítsen, vagy töltsön be egy hátteret, amelyiken rajzolhat, a nyomógomb aktiválásához</translation>
+        <translation>Szabadkézi rajz készítése háttérre. Hozzon létre vagy töltsön be egy rajzolható hátteret a gomb bekapcsolásához</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="3700"/>
@@ -4028,7 +4022,7 @@ kiválasztva</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="3733"/>
         <source>Cannot import the selected file because its file format is not supported.</source>
-        <translation>Nem lehetséges a kiválasztott fájl, mert nem támogatott formátumú.</translation>
+        <translation>Nem lehetséges a kiválasztott fájl importálása, mert nem támogatott formátumú.</translation>
     </message>
 </context>
 <context>
@@ -4041,7 +4035,7 @@ kiválasztva</translation>
         <location filename="../src/tool_draw_freehand.cpp" line="277"/>
         <location filename="../src/tool_cutout.cpp" line="142"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Abort. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: Mégsem. </translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Megszakítás.</translation>
     </message>
     <message>
         <location filename="../src/tool_edit_point.cpp" line="694"/>
@@ -4061,7 +4055,7 @@ kiválasztva</translation>
         <location filename="../src/tool_draw_path.cpp" line="1052"/>
         <location filename="../src/tool_draw_rectangle.cpp" line="694"/>
         <source>More: %1, %2, %3</source>
-        <translation>Több: %1, %2,%3</translation>
+        <translation>Több: %1, %2, %3</translation>
     </message>
 </context>
 <context>
@@ -4069,17 +4063,17 @@ kiválasztva</translation>
     <message>
         <location filename="../src/core/map_printer.cpp" line="476"/>
         <source>- Map -</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">- Térkép -</translation>
     </message>
     <message>
         <location filename="../src/core/map_printer.cpp" line="1197"/>
         <source>Processing separations of page %1...</source>
-        <translation>A %1 lap szétválogatás folyamatban...</translation>
+        <translation> %1 oldal szétbontása folyamatban...</translation>
     </message>
     <message>
         <location filename="../src/core/map_printer.cpp" line="1198"/>
         <source>Processing page %1...</source>
-        <translation>%1 oldal feldolgozása...</translation>
+        <translation>%1 oldal feldolgozása folyamatban...</translation>
     </message>
     <message>
         <location filename="../src/core/map_printer.cpp" line="1248"/>
@@ -4103,20 +4097,22 @@ kiválasztva</translation>
         <location filename="../src/map_widget.cpp" line="547"/>
         <source>%1x</source>
         <comment>Zoom factor</comment>
+        <translatorcomment>Zoom tényező</translatorcomment>
         <translation>%1x</translation>
     </message>
     <message>
         <location filename="../src/map_widget.cpp" line="568"/>
         <source>mm</source>
         <comment>millimeters</comment>
-        <translatorcomment>miliméter</translatorcomment>
+        <translatorcomment>milliméter</translatorcomment>
         <translation>mm</translation>
     </message>
     <message>
         <location filename="../src/map_widget.cpp" line="581"/>
         <source>m</source>
         <comment>meters</comment>
-        <translation>méter</translation>
+        <translatorcomment>méter</translatorcomment>
+        <translation>m</translation>
     </message>
     <message>
         <location filename="../src/map_widget.cpp" line="609"/>
@@ -4133,10 +4129,10 @@ open the color dialog and
 define the colors there.</source>
         <translation>Üres térkép!
 
-Kezdje néhány szín megadásával:
-Váassza a szimbólumokat -&gt; 
-a Színek párbeszédablakot nyissa meg 
-és ott adja meg a színeket.</translation>
+Kezdje a színek meghatározásával:
+Válassza a Szimbólumok -&gt; Színek menüpontot hogy
+megnyíljon a színválasztó ablak és
+ott határozza meg a színeket.</translation>
     </message>
     <message>
         <location filename="../src/map_widget.cpp" line="809"/>
@@ -4146,12 +4142,12 @@ Now define some symbols:
 Right-click in the symbol bar
 and select &quot;New symbol&quot;
 to create one.</source>
-        <translation>Nincsenek szimbólumok!
+        <translation>Nincsenek szimbólumok:
 
-Most adjon meg néhány jelet
-Jobb kattintás a jel négyzeten
-és válassza ki az &quot;Új jel&quot; helyi
-menüt a létrehozáshoz.</translation>
+Szimbólumok létrehozása:
+Jobb egérgombbal kattintson a szimbólum sávra
+majd válassza az &quot;Új szimbólum&quot; opciót
+a létrehozáshoz.</translation>
     </message>
     <message>
         <location filename="../src/map_widget.cpp" line="811"/>
@@ -4160,17 +4156,19 @@ menüt a létrehozáshoz.</translation>
 Start drawing or load a base map.
 To load a base map, click
 Templates -&gt; Open template...</source>
-        <translation>Rajzolhat!
-Kezdje a rajzolást vagyy töltse be az alaptérképet.
-Az alaptérkép betöltéséhez kattintson
-az &quot;Hátterek&quot; -&gt; Háttér megnyitása...</translation>
+        <translation>Rajzolásra kész!
+
+kezdjen rajzolni vagy töltsön be egy alaptérképet.
+Alaptérkép betöltéséhez kattintson az alábbi menüpontra:
+Háttér -&gt; Háttér hozzáadása ...
+</translation>
     </message>
     <message>
         <location filename="../src/map_widget.cpp" line="811"/>
         <source>Hint: Hold the middle mouse button to drag the map,
 zoom using the mouse wheel, if available.</source>
-        <translation>Tipp: Tartsa a középső egérgombot hogy húzza a térképet,
-A nagyításhoz használja az egérkereket, ha van.</translation>
+        <translation>Tipp: tartsa az egér középső gombját lenyomva a térkép megfogásához,
+zoomoljon az egér görgetőgombjával, ha van ilyen lehetősége.</translation>
     </message>
 </context>
 <context>
@@ -4178,7 +4176,7 @@ A nagyításhoz használja az egérkereket, ha van.</translation>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="99"/>
         <source>Boundary length:</source>
-        <translation>Határoló hossz:</translation>
+        <translation>Kerület hossza:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="137"/>
@@ -4198,19 +4196,19 @@ A nagyításhoz használja az egérkereket, ha van.</translation>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="66"/>
         <source>%1 objects selected.</source>
-        <translation>A %1 objektum kiválasztva.</translation>
+        <translation>%1 objektum kiválasztva.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="76"/>
         <source>The selected object is not a path.</source>
-        <translation>A kiválasztott objektum nincs a vonalon.</translation>
+        <translation>A kijelölt objektum nem útvonal.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="100"/>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="138"/>
         <source>mm</source>
         <comment>millimeters</comment>
-        <translatorcomment>miliméter</translatorcomment>
+        <translatorcomment>milliméter</translatorcomment>
         <translation>mm</translation>
     </message>
     <message>
@@ -4225,7 +4223,7 @@ A nagyításhoz használja az egérkereket, ha van.</translation>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="116"/>
         <source>mm²</source>
         <comment>square millimeters</comment>
-        <translatorcomment>mégyzetmiliméter</translatorcomment>
+        <translatorcomment>négyzetmiliméter</translatorcomment>
         <translation>mm²</translation>
     </message>
     <message>
@@ -4238,12 +4236,12 @@ A nagyításhoz használja az egérkereket, ha van.</translation>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="129"/>
         <source>This object is too small.</source>
-        <translation>Az objektum túl kicsi.</translation>
+        <translation>Ez az ojektum túl kicsi.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="130"/>
         <source>The minimimum area is %1 %2.</source>
-        <translation>A legkisebb terület %1 %2.</translation>
+        <translation>A minimum terület %1 %2.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="130"/>
@@ -4253,7 +4251,7 @@ A nagyításhoz használja az egérkereket, ha van.</translation>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="133"/>
         <source>Note: Boundary length and area are correct only if there are no self-intersections and holes are used as such.</source>
-        <translation>Megjegyzés: A határoló hossza és terület csak akkor helyes, ha azok nem kereszteződnek önmagukkal és lyukakkal a használatkor.</translation>
+        <translation>Megjegyzés: Kerület és terület csak akkor pontos, ha az objektumban nincsenek lukak és önmagával nem kereszteződik.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="151"/>
@@ -4263,7 +4261,7 @@ A nagyításhoz használja az egérkereket, ha van.</translation>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="152"/>
         <source>The minimum length is %1 %2.</source>
-        <translation>A legrövidebb hossz %1 %2.</translation>
+        <translation>A minimum hossz %1 %2.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="152"/>
@@ -4276,32 +4274,32 @@ A nagyításhoz használja az egérkereket, ha van.</translation>
     <message>
         <location filename="../src/map_dialog_new.cpp" line="45"/>
         <source>Create new map</source>
-        <translation>Új térkép létrehozás</translation>
+        <translation>Új térkép létrehozása</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_new.cpp" line="47"/>
         <source>Choose the scale and symbol set for the new map.</source>
-        <translation>Válaszza ki a méretarányt és a térképjel készletet.</translation>
+        <translation>Válassza ki az új térkép méretarányát és szimbólumkészletét.</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_new.cpp" line="49"/>
         <source>Scale:  1 : </source>
-        <translation>Méretarány: 1:</translation>
+        <translation>Méretarány:  1 : </translation>
     </message>
     <message>
         <location filename="../src/map_dialog_new.cpp" line="54"/>
         <source>Symbol sets:</source>
-        <translation>Térképjel készlet:</translation>
+        <translation>Szimbólumtábla:</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_new.cpp" line="57"/>
         <source>Only show symbol sets matching the selected scale</source>
-        <translation>Csak a méretaránynak megfelelő jelkészleteket mutatja</translation>
+        <translation>Csak a kiválasztott méretaránynak megfelelő szimbólumok mutatása</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_new.cpp" line="59"/>
         <source>Cancel</source>
-        <translation>Mégsem</translation>
+        <translation>Elvet</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_new.cpp" line="60"/>
@@ -4311,18 +4309,18 @@ A nagyításhoz használja az egérkereket, ha van.</translation>
     <message>
         <location filename="../src/map_dialog_new.cpp" line="148"/>
         <source>Empty symbol set</source>
-        <translation>Üres térképjel készlet</translation>
+        <translation>Üres szimbólumtábla</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_new.cpp" line="186"/>
         <location filename="../src/map_dialog_new.cpp" line="241"/>
         <source>Load symbol set from a file...</source>
-        <translation>Térképjel készlet betöltése egy fájlból...</translation>
+        <translation>Szimbólumtábla betöltése fájlból...</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_new.cpp" line="237"/>
         <source>All symbol set files</source>
-        <translation>Minden térképjel készlet fájl</translation>
+        <translation>Minden szimbólumtábla fájl</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_new.cpp" line="239"/>
@@ -4335,7 +4333,7 @@ A nagyításhoz használja az egérkereket, ha van.</translation>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="1543"/>
         <source>The map contains more than 256 colors which is not supported by ocd version 8.</source>
-        <translation>A térkép több mint 256 színt tartalmaz amit nem támogat az ocd 8-as verzió.</translation>
+        <translation>A térkép több, mint 256 színt tartalmaz, ami nem támogatott az OCAD8-as verzióban.</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="1547"/>
@@ -4350,62 +4348,62 @@ A nagyításhoz használja az egérkereket, ha van.</translation>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="1684"/>
         <source>Unable to export fill pattern shift for an area object</source>
-        <translation>Nem lehet exportálni a kitöltési minta elcsúsztataást egy terület objektumnál</translation>
+        <translation>Nem lehet exportálni a terület objektum megváltoztatott kitöltési mintáját</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="1832"/>
         <source>Unable to export template: file type of &quot;%1&quot; is not supported yet</source>
-        <translation>Nem exportálható sablonként: %1 fájl típusa nem támogatott jelenleg</translation>
+        <translation>Nem exportálható háttér: %1 típusú fájl jelenleg nem támogatott</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="2050"/>
         <source>In line symbol &quot;%1&quot;, cannot represent cap/join combination.</source>
-        <translation>A vonalszerű térképjelben &quot;%1&quot; nem lehet megjeleníteni vég/összeadás kombinációt.</translation>
+        <translation>A(z) &quot;%1&quot; vonalas szimbólumban ebben a kombinációban nem ábrázolható.</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="2074"/>
         <source>In line symbol &quot;%1&quot;, neglecting the dash grouping.</source>
-        <translation>A vonalszerű térképjelben &quot;%1&quot; elhanyolva a szaggatás csoportosítás.</translation>
+        <translation>A(z) &quot;%1&quot; vonalas szimbólumban a szaggatott vonalak csoportosítása kihagyva.</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="2085"/>
         <source>In line symbol &quot;%1&quot;, the number of dashes in a group has been reduced to 2.</source>
-        <translation>A vonalszerű térképjelben &quot;%1&quot; a szaggatások száma a csoportban 2-re lett lecsökkentve.</translation>
+        <translation>A(z) &quot;%1&quot; vonalas szimbólumban, a szaggatott vonalak csoporton belüli száma kettőre csökkentve.</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="2141"/>
         <source>In line symbol &quot;%1&quot;, cannot export the borders correctly.</source>
-        <translation>A vonalszerű térképjelben &quot;%1&quot; nem lehet exportálni a határolókat helyesen.</translation>
+        <translation>A(z) &quot;%1&quot; vonalas szimbólumban a szegélyek nem exportálhatók megfelelően.</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="2200"/>
         <source>In area symbol &quot;%1&quot;, skipping a fill pattern.</source>
-        <translation>A szöveges térképjelben %1: kihagyva a kitöltési minta.</translation>
+        <translation>A(z) &quot;%1&quot; terület szimbólumban a kitöltési minta kihagyva.</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="2247"/>
         <source>In area symbol &quot;%1&quot;, assuming a &quot;shifted rows&quot; point pattern. This might be correct as well as incorrect.</source>
-        <translation>Területi szimbólumban %1,feltehetőleg egy &quot;elmozdított sorok&quot; pontjai alkotják a mintát. Lehet, hogy ez helyesen vagy helytelenül jelenik meg.</translation>
+        <translation>A(z) &quot;%1&quot; terület szimbólumban váltakozó pontsoros minta alkalmazva. Ez lehet hogy megfelelő, de az is hogy nem.</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="2286"/>
         <source>In text symbol %1: custom character spacing is set, its implementation does not match OCAD&apos;s behavior yet</source>
-        <translation>A szöveges térképjelben %1: beállított karakter köz van beállítva, a megjelenítése nem egyezik meg az OCAD-ben megszokottal </translation>
+        <translation>A(z) &quot;%1&quot; szöveges szimbólumban: egyedi betűköz van beállítva, aminek a végrehajtása egyelőre nem illeszkedik az OCAD működéséhez</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="2293"/>
         <source>In text symbol %1: ignoring underlining</source>
-        <translation>A szöveges térképjelben %1: az aláhúzás figyelmen kívül hagyva</translation>
+        <translation>A(z) &quot;%1&quot; szöveges objektumban: aláhúzás figyelmen kívül hagyva</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="2295"/>
         <source>In text symbol %1: ignoring kerning</source>
-        <translation>A szöveges térképjelben %1: az alávágás figyelmen kívül hagyva</translation>
+        <translation>A(z) &quot;%1&quot; szöveges szimbólumban:alsó index figyelmen kívül hagyva</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="2666"/>
         <source>String truncated (truncation marked with three &apos;|&apos;): %1</source>
-        <translation>A szöveg levágva (A vágást a &quot;|&quot; karakter jelzi):%1</translation>
+        <translation>A szöveg levágva (A vágást három &apos;|&apos; karakter jelzi):%1</translation>
     </message>
 </context>
 <context>
@@ -4413,39 +4411,39 @@ A nagyításhoz használja az egérkereket, ha van.</translation>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="114"/>
         <source>Could not allocate buffer.</source>
-        <translation>Nem lejet puffert  foglalni.</translation>
+        <translation>Háttérkapacitás foglalása sikertelen.</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="118"/>
         <source>libocad returned %1</source>
-        <translation>libocad visszatért  %1</translation>
+        <translation>libocad visszatért %1</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="121"/>
         <source>OCAD files of version %1 are not supported!</source>
-        <translation>Az OCAD %1 Verziójú fájlok nem támogatottak!</translation>
+        <translation>Az OCAD %1 verziójú fájlok nem támogatottak!</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/file_format_ocad8.cpp" line="145"/>
         <source>%n color separation(s) were skipped, reason: Import disabled.</source>
         <translation>
-            <numerusform>%n színelválasztás kihagyva az ok:az importálás tiltott.</numerusform>
+            <numerusform>%n  szín(ek) szétválasztása kihagyva, ok: Import letiltott.</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="150"/>
         <source>Could not load the spot color definitions, error: %1</source>
-        <translation>Nem lehet betölteni a folt szín definíciókat, hiba: %1</translation>
+        <translation>Pontszín betöltése sikertelen, hiba: %1</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="210"/>
         <source>Color &quot;Registration black&quot; is imported as a special color.</source>
-        <translation>A fekete szín egy speciális színként lett regisztrálva.</translation>
+        <translation>&quot;Fekete beállítás&quot; szín különleges színként importálva.</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="274"/>
         <source>Unable to import symbol &quot;%3&quot; (%1.%2)</source>
-        <translation>Nem importálható térképjel &quot;%3&quot; (%1.%2)</translation>
+        <translation>Szimbólum &quot;%3&quot; importálása sikertelen (%1.%2)</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="287"/>
@@ -4455,93 +4453,93 @@ A nagyításhoz használja az egérkereket, ha van.</translation>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="427"/>
         <source>In dashed line symbol %1, pointed cap lengths for begin and end are different (%2 and %3). Using %4.</source>
-        <translation>A szaggatott vonal szimbólum %1, pontozott vonalvégek különböznek (%2 és %3).Helyettük a program a(z) %4-t használja.</translation>
+        <translation>A(z) %1 szaggatott vonalas szimbólumban különböző végződések (%2 és %3) vannak. %4 alkalmazva.</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="444"/>
         <source>In dashed line symbol %1, the end length cannot be imported correctly.</source>
-        <translation>A szaggatott vonal szimbólum %1, a vége jel nem lehetett importálni helyesen.</translation>
+        <translation>A(z) %1 szaggatott vonalas szimbólumban a végződés hossza nem importálható megfelelően.</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="446"/>
         <source>In dashed line symbol %1, the end gap cannot be imported correctly.</source>
-        <translation>A szaggatott vonal szimbólum %1, a vég hézag nem importálható helyesen.</translation>
+        <translation>A(z) %1 szaggatott vonalas szimbólumban a befejeződési távolság nem importálható megfelelően.</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="455"/>
         <source>In dashed line symbol %1, main and end length are different (%2 and %3). Using %4.</source>
-        <translation>A szaggatott vonal-szimbólumon %1, fő és véghossz különböző (%2 és %3).Egységesítve: %4.)</translation>
+        <translation>A(z) %1 szaggatott vonalas szimbólumban a fő és a záró távolságok (%2 és %3) eltérnek. %4 alkalmazva.</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="465"/>
         <source>In dashed line symbol %1, gaps D and E are different (%2 and %3). Using %4.</source>
-        <translation>A szaggatott vonal szimbólum %1,hézagok D és E különböznek (%2 és %3).Helyettük a program a(z) %4-t használja.</translation>
+        <translation>A(z) %1 szaggatott vonalas szimbólumban D és E távolságok eltérnek. (%2 és %3). %4 alkalmazva.</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="615"/>
         <source>Line symbol %1: suppressing dash symbol at line ends.</source>
-        <translation>%1 vonal szimbólum végeinál a szaggató jel elnyomva.</translation>
+        <translation>A(z) %1 vonal szimbólum végeinél a szaggatott jel elnyomva.</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="753"/>
         <source>During import of text symbol %1: ignoring justified alignment</source>
-        <translation>A szöveges térképjel %1 importjánál az két szélhez való igazítás figyelmen kívül hagyva</translation>
+        <translation>A(z) %1 szöveges szimbólum importálása során: sorkizárás figyelmen kívül hagyva</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="759"/>
         <source>During import of text symbol %1: ignoring custom weight (%2)</source>
-        <translation>A szöveges térképjel %1 importjánál a szélesség (%2) figyelmen kívül hagyva</translation>
+        <translation>A(z) %1 szöveges szimbólum importálása során: (%2) egyedi súlyozás figyelmen kívül hagyva</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="764"/>
         <source>During import of text symbol %1: custom character spacing is set, its implementation does not match OCAD&apos;s behavior yet</source>
-        <translation>A szöveges térképjel %1 importjánál karakter köz van beállítva, aminek a megjelenítése nem egyezik meg az OCAD-ben megszokottal </translation>
+        <translation>A(z) %1 szöveges szimbólum importálása során: egyedi betűköz van beállítva, aminek a végrehajtása egyelőre nem illeszkedik az OCAD működéséhez</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="769"/>
         <source>During import of text symbol %1: ignoring custom word spacing (%2%)</source>
-        <translation>A szöveges térképjel %1 importjánál a beállított szóköz (%2) figyelmen kívül hagyva</translation>
+        <translation>A(z) %1 szöveges szimbólum importálása során: (%2%) egyedi betűköz beállítás figyelmen kívül hagyva</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="774"/>
         <source>During import of text symbol %1: ignoring custom indents (%2/%3)</source>
-        <translation>A szöveges térképjel %1 importjánál a beállított bevágás (%2/%3) figyelmen kívül hagyva</translation>
+        <translation>A(z) %1 szöveges szimbólum importálása során: (%2/%3) egyedi bekezdés beállítások figyelmen kívül hagyva</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="795"/>
         <source>During import of text symbol %1: ignoring text framing (mode %2)</source>
-        <translation>A szöveges térképjel %1 importjánál a szöveg keretezés (%2 mód) figyelmen kívül hagyva</translation>
+        <translation>A(z) %1 szöveges szimbólum importálása során: (%2) szövegkeretezés figyelmen kívül hagyva</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="949"/>
         <source>Unable to load object</source>
-        <translation>Nem lehet betölteni az objektumot</translation>
+        <translation>Objektum betöltése sikertelen</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="956"/>
         <source>Unable to import rectangle object</source>
-        <translation>Nem lehet betölteni a téglalap objektumot</translation>
+        <translation>Szögletes objektum importálása sikertelen</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="1003"/>
         <source>Not importing text symbol, couldn&apos;t figure out path&apos; (npts=%1): %2</source>
-        <translation>Nem importálom a szöveges térképjelet, nem lehet ábrázolni a külső vonalat (NTPS=%1):%2</translation>
+        <translation>Szöveg szimbólum importálás sikertelen, útvonal nem található &apos; (npts=%1): %2</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="1195"/>
         <location filename="../src/file_format_ocad8.cpp" line="1303"/>
         <source>Unable to import template: background &quot;%1&quot; doesn&apos;t seem to be a raster image</source>
-        <translation>Nem lehet importálni a háttér hátterét &quot;%1&quot; Nem tűnik raszteres képnek</translation>
+        <translation>Háttér importálása sikertelen: a &quot;%1&quot; háttérkép nem raszteres</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="1408"/>
         <source>Trying to import a text object with unknown coordinate format</source>
-        <translation>Megpróbalám importálni a szöveges objektumot ismeretlen egy koordináta formátummal</translation>
+        <translation>Ismeretlen koordináta formátumú szöveges objektum importálásának megkísérlése</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="1507"/>
         <source>Color id not found: %1, ignoring this color</source>
-        <translation>A szín azonosító nem található:%1, a szín figyelmen kívül hagyva</translation>
+        <translation>Színkód nem ismert: %1, ez a szín figyelmen kívül hagyva</translation>
     </message>
 </context>
 <context>
@@ -4549,12 +4547,12 @@ A nagyításhoz használja az egérkereket, ha van.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="104"/>
         <source>In line symbol %1 &apos;%2&apos;: %3</source>
-        <translation>A vonalon lévő jelelem %1 &apos;%2&apos;: %3</translation>
+        <translation>%1 &apos;%2&apos;: %3 vonalas szimbólum</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="112"/>
         <source>In text symbol %1 &apos;%2&apos;: %3</source>
-        <translation>A szöveges térképjelben %1 &apos;%2&apos;: %3</translation>
+        <translation>%1 &apos;%2&apos;: %3 szöveges szimbólum</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="313"/>
@@ -4565,17 +4563,17 @@ A nagyításhoz használja az egérkereket, ha van.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="445"/>
         <source>Unable to import symbol %1.%2 &quot;%3&quot;: %4</source>
-        <translation>Nem lehet importálni %1.%2 &quot;%3&quot;:%4</translation>
+        <translation>%1.%2 &quot;%3&quot;: %4 Szimbólumok importálása sikertelen</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="449"/>
         <source>Unsupported type &quot;%1&quot;.</source>
-        <translation>Nem támogatott ypus &quot;%1&quot; .</translation>
+        <translation>Nem támogatott típus &quot;%1&quot;.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="530"/>
         <source>Unable to import template: &quot;%1&quot; is not a supported template type.</source>
-        <translation>Nem importálható a háttér:%1 mert a típusa nem támogatott.</translation>
+        <translation>Háttér importálása sikertelen: &quot;%1&quot; nem támogatott háttértípus.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="798"/>
@@ -4585,25 +4583,24 @@ A nagyításhoz használja az egérkereket, ha van.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="810"/>
         <source>Different lengths for pointed caps at begin (%1 mm) and end (%2 mm) are not supported. Using %3 mm.</source>
-        <translatorcomment>Nem támogatott a különböző hosszúságú pontozott végzárók a kezdetnél (%1 mm) és a végződésnél (%2 mm). Helyette %3 mm-t használ.</translatorcomment>
-        <translation>Különböző hosszúságú vonalvég nem támogatott. Az eleje (%1 mm), a vége (%2 mm).Átlagolva használom, ami %3 mm.</translation>
+        <translation>Külömböző végződés a kezdeténél (%1 mm) és a végénél (%2 mm) nem támogatott. %3 mm-es alkalmazva.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="826"/>
         <source>The dash pattern cannot be imported correctly.</source>
-        <translation>A szaggatás minta nem importálható helyesen.</translation>
+        <translation>A vonalkázott minta nem importálható megfelelően.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="841"/>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="873"/>
         <source>The dash pattern&apos;s end length (%1 mm) cannot be imported correctly. Using %2 mm.</source>
-        <translation>A szaggatás minta vég hossza (%1 mm) nem lehet helyesen imoortálni. Helyette %2 mm-t használ.</translation>
+        <translation>A vonalkázott minta végének hossza  (%1 mm) nem importálható megfelelően. Importálás %2 mm használatával.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="848"/>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="888"/>
         <source>The dash pattern&apos;s end gap (%1 mm) cannot be imported correctly. Using %2 mm.</source>
-        <translation>A szaggató minta vég hézag (%1 mm) nem importálható helyesen. Helyette %2 mm-t használ.</translation>
+        <translation>A vonalkázott minta végtávolsága (%1 mm) nem importálható megfelelően. Importálás %2 mm használatával.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="932"/>
@@ -4613,12 +4610,12 @@ A nagyításhoz használja az egérkereket, ha van.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="1020"/>
         <source>Skipped secondary point symbol.</source>
-        <translation>A másodlagos pont szimbólum figyelmen kívül hagyva.</translation>
+        <translation>Másodlagos pontszimbólum átugorva.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="1055"/>
         <source>Suppressing dash symbol at line ends.</source>
-        <translation>A vonal kezdésnél és vonalvégnél a szaggató szimbólum elnyomva.</translation>
+        <translation>Vonalvégi szaggatott szimbólum törölve.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="1092"/>
@@ -4629,67 +4626,67 @@ A nagyításhoz használja az egérkereket, ha van.</translation>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="1201"/>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="1290"/>
         <source>Justified alignment is not supported.</source>
-        <translation>A széthúzásos igazítás nem támogatott.</translation>
+        <translation>Az igazított illesztés nem támogatott.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="1212"/>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="1301"/>
         <source>Vertical alignment &apos;%1&apos; is not supported.</source>
-        <translation>A függőleges igazítás &apos;%1&apos; ben támogatott.</translation>
+        <translation>A vertikális illesztés  &apos;%1&apos; nem támogatott.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="1218"/>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="1307"/>
         <source>Ignoring custom weight (%1).</source>
-        <translation>A beállított súly (%1) figyelmen kívül hagyva. </translation>
+        <translation>Egyedi súlyozás (%1) figyelmen kivül hagyva.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="1222"/>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="1311"/>
         <source>Custom character spacing may be incorrect.</source>
-        <translation>A beállított karakter köz lehet, hogy nem helyes.</translation>
+        <translation>Az egyedi karaktertávolság lehet, hogy hibás.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="1226"/>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="1315"/>
         <source>Ignoring custom word spacing (%1 %).</source>
-        <translation>A beállított szóköz (%1 %) figyelmen kívül hagyva.</translation>
+        <translation>Egyedi szóköztávolság (%1 %) figyelmen kívül hagyása.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="1230"/>
         <source>Ignoring custom indents (%1/%2).</source>
-        <translation>A beállított bevágás (%1/%2) figyelmen kívül hagyva.</translation>
+        <translation>Egyedi behúzás (%1/%2) figyelmen kívül hagyása.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="1250"/>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="1335"/>
         <source>Ignoring text framing (mode %1).</source>
-        <translation>A szöveg keretezés (mód %1) figyelmen kívül hagyva.</translation>
+        <translation>Szöveg keret (%1 mód) figyelmen kívül hagyása.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="1341"/>
         <source>Line text symbols are not yet supported. Marking the symbol as hidden.</source>
-        <translation> vonal szöveg szimbólum jelenleg nem támogatott.A jel elrejtve.</translation>
+        <translation>Vonal-szöveg szimbólum még nem támogatott. Rejtett szimbólumként jelölve.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="1529"/>
         <source>Unable to load object</source>
-        <translation>Az objektum nem betölthető</translation>
+        <translation>Objektum betöltése sikertelen</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="1539"/>
         <source>Unable to import rectangle object</source>
-        <translation>Nem importálható téglalap objektum</translation>
+        <translation>Szögletes objektum importálása sikertelen</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="1580"/>
         <source>Not importing text symbol, couldn&apos;t figure out path&apos; (npts=%1): %2</source>
-        <translation>Nem importálom a szöveg szimbólum, nem lehet kialakítani (npts=%1): %2</translation>
+        <translation>Szöveg szimbólum importálása sikertelen, útvonal nem található (npts=%1): %2</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="1856"/>
         <source>Trying to import a text object with unknown coordinate format</source>
-        <translation>Meppróbálom importálni a szöveg objektumot ismeretlen koorfináta formátummal</translation>
+        <translation>Ismeretlen koordináta formátumú szöveges objektum importálási kísérlete</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="1877"/>
@@ -4700,12 +4697,12 @@ A nagyításhoz használja az egérkereket, ha van.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="1891"/>
         <source>Untested file importer for format: OCD %1</source>
-        <translation>Nem tesztelt fájl importáló a fájl formátumhoz:OCD %1</translation>
+        <translation>Nem tesztelt fájl importálás az alábbi formátumhoz: OCD %1</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="1913"/>
         <source>OCD files of version %1 are not supported!</source>
-        <translation>OCD fájl verziója %1, ami nem támogatott!</translation>
+        <translation>A %1 verziójú OCD fájlok nem támogatottak!</translation>
     </message>
 </context>
 <context>
@@ -4769,7 +4766,7 @@ A nagyításhoz használja az egérkereket, ha van.</translation>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="59"/>
         <source>Always oriented to north (not rotatable)</source>
-        <translation>Mindig tájolja Északra (nem lehet elforgatni)</translation>
+        <translation>Mindig tájolja északra (nem lehet elforgatni)</translation>
     </message>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="62"/>
@@ -4802,7 +4799,7 @@ A nagyításhoz használja az egérkereket, ha van.</translation>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="81"/>
         <source>Current element</source>
-        <translation>Aktális elem</translation>
+        <translation>Aktuális elem</translation>
     </message>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="87"/>
@@ -4860,7 +4857,7 @@ A nagyításhoz használja az egérkereket, ha van.</translation>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="131"/>
         <source>square</source>
-        <translation>derékszög</translation>
+        <translation>négyzet</translation>
     </message>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="134"/>
@@ -4870,17 +4867,17 @@ A nagyításhoz használja az egérkereket, ha van.</translation>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="136"/>
         <source>miter</source>
-        <translation>ferde</translation>
+        <translation>derékszög</translation>
     </message>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="138"/>
         <source>bevel</source>
-        <translation>ferde</translation>
+        <translation>tompaszög</translation>
     </message>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="140"/>
         <source>Line closed</source>
-        <translation>A vonal bezárult</translation>
+        <translation>Zárt vonal</translation>
     </message>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="160"/>
@@ -4910,7 +4907,7 @@ A nagyításhoz használja az egérkereket, ha van.</translation>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="189"/>
         <source>Center by coordinate average</source>
-        <translation>koordináta átlag középpont</translation>
+        <translation>Átlag középpontba helyez</translation>
     </message>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="371"/>
@@ -4968,13 +4965,13 @@ A nagyításhoz használja az egérkereket, ha van.</translation>
         <location filename="../src/gui/print_tool.cpp" line="345"/>
         <location filename="../src/gui/print_tool.cpp" line="350"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the print area&apos;s border. </source>
-        <translation>&lt;b&gt;Megragad&lt;/b&gt;:Mozgasd a nyomtatási terület határát.</translation>
+        <translation>&lt;b&gt;Megragad&lt;/b&gt;:Mozgatja a nyomtatási terület határát.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_tool.cpp" line="355"/>
         <location filename="../src/gui/print_tool.cpp" line="360"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the print area&apos;s borders. </source>
-        <translation>&lt;b&gt;Megragad&lt;/b&gt;:Mozgasd a nyomtatási terület határait.</translation>
+        <translation>&lt;b&gt;Megragad&lt;/b&gt;:Mozgatja a nyomtatási terület határait.</translation>
     </message>
 </context>
 <context>
@@ -4982,12 +4979,12 @@ A nagyításhoz használja az egérkereket, ha van.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="201"/>
         <source>Show templates</source>
-        <translation>Mutasd a hátteret</translation>
+        <translation>Hátterek mutatása</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="212"/>
         <source>Show grid</source>
-        <translation>Mutasd a rácsot</translation>
+        <translation>Rács mutatása</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="125"/>
@@ -5052,7 +5049,7 @@ A nagyításhoz használja az egérkereket, ha van.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="134"/>
         <source>Custom area</source>
-        <translation>Beállított terület</translation>
+        <translation>Egyedi méret beállítás</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="135"/>
@@ -5062,7 +5059,7 @@ A nagyításhoz használja az egérkereket, ha van.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="137"/>
         <source>Center print area</source>
-        <translation>Nyomtatási terület központja</translation>
+        <translation>Nyomtatási területet középpontba helyezése</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="105"/>
@@ -5098,7 +5095,7 @@ A nagyításhoz használja az egérkereket, ha van.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="208"/>
         <source>Template appearance may differ.</source>
-        <translation>A háttér kinézete különbözhet.</translation>
+        <translation>A háttér megjelenítése eltérő lehet.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="215"/>
@@ -5150,7 +5147,7 @@ A nagyításhoz használja az egérkereket, ha van.</translation>
         <location filename="../src/gui/print_widget.cpp" line="856"/>
         <location filename="../src/gui/print_widget.cpp" line="896"/>
         <source>dpi</source>
-        <translation>ppi</translation>
+        <translation>dpi</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1025"/>
@@ -5175,7 +5172,7 @@ A nagyításhoz használja az egérkereket, ha van.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1062"/>
         <source>A non-standard view mode is activated. Are you sure to print / export the map like this?</source>
-        <translation>Egy nem szabványos nézeti mód aktivált. Biztos nyomtatni/exportálni akarja így a térképet?</translation>
+        <translation>Ez egy nem szabványos nézet. Biztos nyomtatni/exportálni akarja így a térképet?</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1079"/>
@@ -5234,7 +5231,7 @@ A nagyításhoz használja az egérkereket, ha van.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1194"/>
         <source>Printing Progress</source>
-        <translation>Nyomtatá folyamatban</translation>
+        <translation>Nyomtatás folyamatban</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1025"/>
@@ -5254,13 +5251,15 @@ A nagyításhoz használja az egérkereket, ha van.</translation>
         <location filename="../src/gui/print_widget.cpp" line="164"/>
         <source>Vector
 graphics</source>
-        <translation>Vektor grafikák</translation>
+        <translation>Vektoros
+grafikák</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="165"/>
         <source>Raster
 graphics</source>
-        <translation>Raszter grafikák</translation>
+        <translation>Raszteres
+grafikák</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="166"/>
@@ -5276,7 +5275,7 @@ separations</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1121"/>
         <source>Failed to save the image. Does the path exist? Do you have sufficient rights?</source>
-        <translation>A fájl mentésének hibája: Létezik az útvonal? Elegendő a jogosultsága?</translation>
+        <translation>Kép mentése sikertelen. Létezik az útvonal? Elegendő a jogosultsága?</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1125"/>
@@ -5324,7 +5323,7 @@ separations</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1276"/>
         <source>The map area is empty. Output canceled.</source>
-        <translation>A térkép területe üres.A kimenet elvetve.</translation>
+        <translation>A térkép területe üres. A kimenet elvetve.</translation>
     </message>
 </context>
 <context>
@@ -5360,7 +5359,7 @@ separations</source>
     <message>
         <location filename="../src/template_dialog_reopen.cpp" line="37"/>
         <source>Drag items from the left list to the desired spot in the right list to reload them.</source>
-        <translation>Drag items from the left list to the desired spot in the right list to reload them.</translation>
+        <translation>Bal oldali listából az elemek megfogásával és a jobb oldali listába mozgatásával újratölti azokat.</translation>
     </message>
     <message>
         <location filename="../src/template_dialog_reopen.cpp" line="39"/>
@@ -5398,12 +5397,12 @@ separations</source>
     <message>
         <location filename="../src/symbol_dialog_replace.cpp" line="48"/>
         <source>Import all new symbols, even if not used as replacement</source>
-        <translation>Importálja az összes új szimbólumot, ha nem helyettesíthető</translation>
+        <translation>Importálja az összes új szimbólumot, akkor is ha az nem helyettesít egy régi szimbólumot</translation>
     </message>
     <message>
         <location filename="../src/symbol_dialog_replace.cpp" line="50"/>
         <source>Delete original symbols which are unused after the replacement</source>
-        <translation>Törli az eredeti szimbólumokata csere után, amelyek nincsenek használatban</translation>
+        <translation>Törli azokat a szimbólumokat a csere után, amelyek nincsenek használatban</translation>
     </message>
     <message>
         <location filename="../src/symbol_dialog_replace.cpp" line="52"/>
@@ -5418,12 +5417,12 @@ separations</source>
     <message>
         <location filename="../src/symbol_dialog_replace.cpp" line="56"/>
         <source>Keep the symbols&apos; hidden / protected states of the old symbol set</source>
-        <translation>Megtartja a szimbólumok rejtett/védett állapotát a régi szimbólum készletnek</translation>
+        <translation>Megtartja a régi szimbólumkészletből származó szimbólumok rejtett/védett állapotát</translation>
     </message>
     <message>
         <location filename="../src/symbol_dialog_replace.cpp" line="58"/>
         <source>Match replacement symbols by symbol number</source>
-        <translation>Szimbólumszám által párosít össze pótszimbólumokat</translation>
+        <translation>Szimbólumszám alapján párosít össze szimbólumokat</translation>
     </message>
     <message>
         <location filename="../src/symbol_dialog_replace.cpp" line="64"/>
@@ -5453,7 +5452,7 @@ separations</source>
     <message>
         <location filename="../src/symbol_dialog_replace.cpp" line="335"/>
         <source>Cannot load map file, aborting.</source>
-        <translation>Nem lehet betölteni a térkép fájlt, eldobás.</translation>
+        <translation>Nem lehet betölteni a térkép fájlt, elvetés.</translation>
     </message>
     <message>
         <location filename="../src/symbol_dialog_replace.cpp" line="341"/>
@@ -5476,7 +5475,7 @@ separations</source>
     <message>
         <location filename="../src/map_dialog_rotate.cpp" line="44"/>
         <source>Angle (counter-clockwise):</source>
-        <translation>Szög (óramutató járásával megegyező):</translation>
+        <translation>Szög (óramutató járásával ellentétes):</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_rotate.cpp" line="42"/>
@@ -5491,7 +5490,7 @@ separations</source>
     <message>
         <location filename="../src/map_dialog_rotate.cpp" line="46"/>
         <source>Rotate around:</source>
-        <translation>Körbeforgat:</translation>
+        <translation>Megforgatás a következő körül:</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_rotate.cpp" line="48"/>
@@ -5541,7 +5540,7 @@ separations</source>
     <message>
         <location filename="../src/map_dialog_rotate.cpp" line="72"/>
         <source>Adjust georeferencing reference point</source>
-        <translation>Georeferálás referencia pontjának illesztése</translation>
+        <translation>Georeferálás referencia pontjának beállítása</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_rotate.cpp" line="79"/>
@@ -5601,12 +5600,12 @@ separations</source>
     <message>
         <location filename="../src/map_dialog_scale.cpp" line="36"/>
         <source>Change map scale</source>
-        <translation>A térkép méretarányának cseréje</translation>
+        <translation>A térkép méretarányának megváltoztatása</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_scale.cpp" line="40"/>
         <source>Scaling parameters</source>
-        <translation>Méretarány beállytások</translation>
+        <translation>Méretarány beállítások</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_scale.cpp" line="44"/>
@@ -5616,7 +5615,7 @@ separations</source>
     <message>
         <location filename="../src/map_dialog_scale.cpp" line="46"/>
         <source>Scaling center:</source>
-        <translation>Méretező központ:</translation>
+        <translation>Méretezés középpontja:</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_scale.cpp" line="48"/>
@@ -5670,7 +5669,7 @@ separations</source>
     <message>
         <location filename="../src/map_dialog_scale.cpp" line="78"/>
         <source>Scale map object positions</source>
-        <translation>Térkép méretarány objektum helyzet</translation>
+        <translation>Térképobjektumok helyzetének méretezése</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_scale.cpp" line="85"/>
@@ -5694,7 +5693,7 @@ separations</source>
         <location filename="../src/tool_scale.cpp" line="202"/>
         <location filename="../src/tool_scale.cpp" line="204"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set the scaling center. </source>
-        <translation>&lt;b&gt;Kattintás&lt;/b&gt;: A méretezés központ beállítása.</translation>
+        <translation>&lt;b&gt;Kattintás&lt;/b&gt;: A méretezés középpontjának beállítása.</translation>
     </message>
     <message>
         <location filename="../src/tool_scale.cpp" line="205"/>
@@ -5707,11 +5706,11 @@ separations</source>
     <message>
         <location filename="../src/gui/select_crs_dialog.cpp" line="54"/>
         <source>Select coordinate reference system</source>
-        <translation>Koordináta viszonyítási renszer kiválasztása</translation>
+        <translation>Koordináta viszonyítási rendszer kiválasztása</translation>
     </message>
     <message>
         <source>Same as map&apos;s</source>
-        <translation type="vanished">Ugyanaz térképként</translation>
+        <translation type="vanished">Ugyanaz mint a térképen</translation>
     </message>
     <message>
         <location filename="../src/gui/select_crs_dialog.cpp" line="62"/>
@@ -5768,7 +5767,7 @@ separations</source>
     <message>
         <location filename="../src/gui/widgets/symbol_dropdown.cpp" line="45"/>
         <source>- none -</source>
-        <translation>- semmi -</translation>
+        <translation>- nincs -</translation>
     </message>
 </context>
 <context>
@@ -5812,7 +5811,7 @@ separations</source>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="223"/>
         <source>For symbols with description, press F1 while the tooltip is visible to show it</source>
-        <translation>A szimbólumhoz leírással tartsa nyomva az F1-et amig a buborék súgó megjelenik.</translation>
+        <translation>A szimbólum leírásának mutatásához tartsa nyomva az F1-et amíg a súgószöveg megjelenik</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="227"/>
@@ -5847,7 +5846,7 @@ separations</source>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="236"/>
         <source>Edit</source>
-        <translation>Módosít</translation>
+        <translation>Szerkeszt</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="237"/>
@@ -5897,7 +5896,7 @@ separations</source>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="896"/>
         <source>Scale symbol(s)</source>
-        <translation>Méretezi a szmbólumo(ka)t</translation>
+        <translation>Méretezi a szimbólumo(ka)t</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="965"/>
@@ -5915,63 +5914,63 @@ separations</source>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="980"/>
         <source>There are no symbols in clipboard which could be pasted!</source>
-        <translation>Nincs beilleszthető objektum a vágólapra másolva!</translation>
+        <translation>A vágólapon nincsenek beilleszthető szimbólumok!</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1149"/>
         <source>Select all objects with this symbol</source>
-        <translation>Kiválasztja az objektumokat ezzel a szimbólummal</translation>
+        <translation>Kiválasztja az ilyen szimbólummal jelölt objektumokat</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1150"/>
         <source>Add all objects with this symbol to selection</source>
-        <translation>Hozzáad minden objeltumot ezzel a jellel a kiválasztáshoz</translation>
+        <translation>Minden ilyen szimbólummal jelölt objektum kiválasztása</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1151"/>
         <source>Remove all objects with this symbol from selection</source>
-        <translation>Töröl minden objektumot ezzel a szimbólummal a kiválasztásból</translation>
+        <translation>Ezzel a szimbólummal jelölt objektumok kivétele a kiválasztásból</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1152"/>
         <source>Hide objects with this symbol</source>
-        <translation>Rejti az összes objektumot ezzel a térkép jellel</translation>
+        <translation>Kijelölt szimbólummal jelölt objektumok elrejtése</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1153"/>
         <source>Protect objects with this symbol</source>
-        <translation>Minden objektumot védetté tesz ezzel a térképjellel</translation>
+        <translation>Ezzel a szimbollal jelölt objektumok zárolása</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1158"/>
         <source>Add all objects with selected symbols to selection</source>
-        <translation>Válassza ki az összes objektumot ezzel térképjellel</translation>
+        <translation>Ezzel a szimbólummal jelölt objektumok hozzáadása a kiválasztáshoz</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1159"/>
         <source>Remove all objects with selected symbols from selection</source>
-        <translation>Törölje az összes objektumot az kiválasztott térkép jellel</translation>
+        <translation>Ezzel a szimbólummal jelölt objektumok törlése a kijelölésből</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1160"/>
         <source>Hide objects with selected symbols</source>
-        <translation>Elrejti az objektumokat a kiválasztott térkép jellel</translation>
+        <translation>Kijelölt szimbólummal jelölt objektumok elrejtése</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1161"/>
         <source>Protect objects with selected symbols</source>
-        <translation>Védetté teszi az objektumokat ezzel a térkép jellel</translation>
+        <translation>Ezzel a szimbólummal jelölt objektumok zárolása</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="261"/>
         <source>Invert selection</source>
-        <translation>Kiválasztás megfordítása</translation>
+        <translation>Kijelölés megfordítása</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="218"/>
         <source>F1</source>
         <comment>Shortcut for displaying the symbol&apos;s description</comment>
-        <translatorcomment>Gyorselérés a  térképjelek leírásához</translatorcomment>
+        <translatorcomment>Gyorsbillentyű a szimbol leírásához</translatorcomment>
         <translation>F1</translation>
     </message>
     <message>
@@ -5982,32 +5981,32 @@ separations</source>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="259"/>
         <source>Select unused</source>
-        <translation>Kiválasztja a nem használt térképjeleket</translation>
+        <translation>Nem használtak kijelölése</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="264"/>
         <source>Sort symbols</source>
-        <translation>Térképjelek rendezése</translation>
+        <translation>Szimbólumok rendezése</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="265"/>
         <source>Sort by number</source>
-        <translation>Rendezés Térképjel száma szerint</translation>
+        <translation>Kódszám szerinti sorrendezés</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="266"/>
         <source>Sort by primary color</source>
-        <translation>Rendezés az elsődleges szín szerint</translation>
+        <translation>Alapszínek szerinti sorrendezés</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="267"/>
         <source>Sort by primary color priority</source>
-        <translation>Rendezés az elsődleges szín láthatósága szerint</translation>
+        <translation>Alapszín prioritás szerinti sorrendezés</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="896"/>
         <source>Scale to percentage:</source>
-        <translation>Százalékos méretezés:</translation>
+        <translation>Méretezés százalékban:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="927"/>
@@ -6017,13 +6016,13 @@ separations</source>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="927"/>
         <source>The map contains objects with the symbol &quot;%1&quot;. Deleting it will delete those objects and clear the undo history! Do you really want to do that?</source>
-        <translation>A tékép objektumokat tartalmaz a %1 térképjellel. A törlés törölni fogja azokat az objektumokat és törli a visszavonási listát is! Valóban Ezt akarja?</translation>
+        <translation>A térkép tartalmaz &quot;%1&quot; szimbólummal jelölt objektumot. A törléssel az objektumok is törlődnek és a változtatás nem visszavonható. Valóban ezt akarja csinálni?</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="780"/>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1157"/>
         <source>Select all objects with selected symbols</source>
-        <translation>Válassza ki az összes objektumot a kiválasztott térképjelekkel</translation>
+        <translation>Kijelöli ezzel a szimbólummal jelölt objektumokat</translation>
     </message>
 </context>
 <context>
@@ -6031,17 +6030,17 @@ separations</source>
     <message>
         <location filename="../src/symbol_setting_dialog.cpp" line="61"/>
         <source>Symbol settings</source>
-        <translation>Térképjel beállítások</translation>
+        <translation>Szimbólum beállítások</translation>
     </message>
     <message>
         <location filename="../src/symbol_setting_dialog.cpp" line="104"/>
         <source>&lt;b&gt;Template:&lt;/b&gt; </source>
-        <translation>&lt;b&gt;Háttér:&lt;/b&gt;</translation>
+        <translation>&lt;b&gt; Háttér:&lt;/b&gt; </translation>
     </message>
     <message>
         <location filename="../src/symbol_setting_dialog.cpp" line="105"/>
         <source>(none)</source>
-        <translation>(nincs)</translation>
+        <translation>- nincs -</translation>
     </message>
     <message>
         <location filename="../src/symbol_setting_dialog.cpp" line="106"/>
@@ -6051,22 +6050,22 @@ separations</source>
     <message>
         <location filename="../src/symbol_setting_dialog.cpp" line="109"/>
         <source>Center template...</source>
-        <translation>Hátterek központja...</translation>
+        <translation>Háttér középre igazítása ...</translation>
     </message>
     <message>
         <location filename="../src/symbol_setting_dialog.cpp" line="114"/>
         <source>bounding box on origin</source>
-        <translation>Kötött doboz az eredeten</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/symbol_setting_dialog.cpp" line="115"/>
         <source>center of gravity on origin</source>
-        <translation>Eredeten levő gravitáció központ</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/symbol_setting_dialog.cpp" line="235"/>
         <source>Select background color</source>
-        <translation>Háttér színének kiválasztása</translation>
+        <translation>Háttérszín kiválasztása</translation>
     </message>
     <message>
         <location filename="../src/symbol_setting_dialog.cpp" line="420"/>
@@ -6074,10 +6073,11 @@ separations</source>
 takes the routechoice
 to jump over the lazy dog
 1234567890</source>
-        <translation>A gyors barna róka
-a lusta kutya fölötti ugrás
-útvonalválasztást választja
-1234567890</translation>
+        <translation>A fürge barna róka
+útvonalat választana
+a lusta kutyát átugrotta
+1234567890
+</translation>
     </message>
 </context>
 <context>
@@ -6085,7 +6085,7 @@ a lusta kutya fölötti ugrás
     <message>
         <location filename="../src/gui/widgets/symbol_tooltip.cpp" line="164"/>
         <source>No description!</source>
-        <translation>Nem leírás!</translation>
+        <translation>Nincs leírás!</translation>
     </message>
 </context>
 <context>
@@ -6113,7 +6113,7 @@ a lusta kutya fölötti ugrás
     <message>
         <location filename="../src/gui/widgets/tags_widget.cpp" line="234"/>
         <source>The key &quot;%1&quot; already exists and must not be used twice.</source>
-        <translation>A %1 kulcs már létezik és nem lehet jétszeresen használni.</translation>
+        <translation>A %1 kulcs már létezik és nem lehet kétszer használni.</translation>
     </message>
 </context>
 <context>
@@ -6141,7 +6141,7 @@ a lusta kutya fölötti ugrás
     <message>
         <location filename="../src/template.cpp" line="522"/>
         <source>Is the format of the file correct for this template type?</source>
-        <translation>A sablonfájl típus formátuma korrekt?</translation>
+        <translation>A fájl formátuma használható ehhez a háttértípushoz?</translation>
     </message>
 </context>
 <context>
@@ -6167,12 +6167,12 @@ a lusta kutya fölötti ugrás
     <message>
         <location filename="../src/template_adjust.cpp" line="572"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set the template position of the pass point. </source>
-        <translation>&lt;&gt;Kattintás&lt;&gt;Adja meg a háttér helyzetének illesztő pontjainat.</translation>
+        <translation>&lt;b&gt;Kattintás&lt;/b&gt;: Adja meg az illesztőpont helyét a háttéren.</translation>
     </message>
     <message>
         <location filename="../src/template_adjust.cpp" line="597"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set the map position of the pass point. </source>
-        <translation>&lt;&gt;Kattintás&lt;&gt;Adja meg a térkép helyzetének illesztő pontjainat.</translation>
+        <translation>&lt;b&gt;Kattintás&lt;/b&gt;: Adja meg az illesztőpont helyét a térképen.</translation>
     </message>
 </context>
 <context>
@@ -6180,7 +6180,7 @@ a lusta kutya fölötti ugrás
     <message>
         <location filename="../src/template_adjust.cpp" line="806"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Delete pass points. </source>
-        <translation>&lt;b&gt;Kattintás&lt;/b&gt;:Törli az illesztő pontokat.</translation>
+        <translation>&lt;b&gt;Kattintás&lt;/b&gt;:Törli az illesztőpontokat.</translation>
     </message>
 </context>
 <context>
@@ -6188,7 +6188,7 @@ a lusta kutya fölötti ugrás
     <message>
         <location filename="../src/template_adjust.cpp" line="681"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move pass points. </source>
-        <translation>&lt;b&gt;Megragad&lt;/b&gt;: Az illető pontokat mozgatja.</translation>
+        <translation>&lt;b&gt;Megragad&lt;/b&gt;: Az illesztőpontokat mozgatja.</translation>
     </message>
 </context>
 <context>
@@ -6196,7 +6196,7 @@ a lusta kutya fölötti ugrás
     <message>
         <location filename="../src/template_adjust.cpp" line="193"/>
         <source>Pass points:</source>
-        <translation>Illesztő pontok:</translation>
+        <translation>Illesztőpontok:</translation>
     </message>
     <message>
         <location filename="../src/template_adjust.cpp" line="195"/>
@@ -6276,9 +6276,9 @@ a lusta kutya fölötti ugrás
         <source>Loading a GIF image template.
 Saving GIF files is not supported. This means that drawings on this template won&apos;t be saved!
 If you do not intend to draw on this template however, that is no problem.</source>
-        <translation>Egy GIF képsablon betöltése.
-A GIF fájloklmentése nem támogatott. Ez azt jelenti, hogy rajzokat ezen a sablonon nem lehet menteni!
-Ha neked nem áll szándékodban mindazonáltal felhasználni ezt a sablont, az nem probléma.</translation>
+        <translation>Egy GIF háttérkép betöltése.
+A GIF fájlok mentése nem támogatott. Ez azt jelenti, hogy rajzokat ezen a sablonon nem lehet menteni!
+De ha nem akarsz a háttérre rajzolni, akkor ez nem jelent problémát.</translation>
     </message>
     <message>
         <location filename="../src/template_image.cpp" line="211"/>
@@ -6292,12 +6292,12 @@ Ha neked nem áll szándékodban mindazonáltal felhasználni ezt a sablont, az 
     <message>
         <location filename="../src/template_image.cpp" line="595"/>
         <source>Opening %1</source>
-        <translation>Megnyitás %1</translation>
+        <translation>%1 megnyitása</translation>
     </message>
     <message>
         <location filename="../src/template_image.cpp" line="597"/>
         <source>Image size:</source>
-        <translation>Kép méret:</translation>
+        <translation>Kép mérete:</translation>
     </message>
     <message>
         <location filename="../src/template_image.cpp" line="600"/>
@@ -6317,7 +6317,7 @@ Ha neked nem áll szándékodban mindazonáltal felhasználni ezt a sablont, az 
     <message>
         <location filename="../src/template_image.cpp" line="614"/>
         <source>no georeferencing information</source>
-        <translation>nem georeferencia információ</translation>
+        <translation>nincs georeferencia információ</translation>
     </message>
     <message>
         <location filename="../src/template_image.cpp" line="616"/>
@@ -6327,27 +6327,27 @@ Ha neked nem áll szándékodban mindazonáltal felhasználni ezt a sablont, az 
     <message>
         <location filename="../src/template_image.cpp" line="620"/>
         <source>Meters per pixel:</source>
-        <translation>Pixelenkénti méter:</translation>
+        <translation>Méter per pixel:</translation>
     </message>
     <message>
         <location filename="../src/template_image.cpp" line="624"/>
         <source>Scanned with</source>
-        <translation>Kép felbontása</translation>
+        <translation>-vel szkennelve</translation>
     </message>
     <message>
         <location filename="../src/template_image.cpp" line="627"/>
         <source>dpi</source>
-        <translation>ppi</translation>
+        <translation>dpi</translation>
     </message>
     <message>
         <location filename="../src/template_image.cpp" line="629"/>
         <source>Template scale:  1 :</source>
-        <translation>Háttér méretaránya 1:</translation>
+        <translation>Háttér méretaránya: 1:</translation>
     </message>
     <message>
         <location filename="../src/template_image.cpp" line="655"/>
         <source>Cancel</source>
-        <translation>Elvet</translation>
+        <translation>Mégsem</translation>
     </message>
     <message>
         <location filename="../src/template_image.cpp" line="656"/>
@@ -6363,7 +6363,7 @@ Ha neked nem áll szándékodban mindazonáltal felhasználni ezt a sablont, az 
         <source>Cannot open template
 %1:
 %2</source>
-        <translation type="unfinished">Nem lehet megnyini a hátteret
+        <translation type="unfinished">Háttér fájl nem megnyitható.
 %1:
 %2</translation>
     </message>
@@ -6375,12 +6375,12 @@ Ha neked nem áll szándékodban mindazonáltal felhasználni ezt a sablont, az 
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="152"/>
         <source>Group</source>
-        <translation type="unfinished">Csoport</translation>
+        <translation type="unfinished">Csoportosít</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="152"/>
         <source>Filename</source>
-        <translation type="unfinished">Fájlnév</translation>
+        <translation type="unfinished">Fájl név</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="153"/>
@@ -6390,7 +6390,7 @@ Ha neked nem áll szándékodban mindazonáltal felhasználni ezt a sablont, az 
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="197"/>
         <source>Open...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Megnyitás...</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="200"/>
@@ -6427,17 +6427,17 @@ Ha neked nem áll szándékodban mindazonáltal felhasználni ezt a sablont, az 
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="218"/>
         <source>Move Up</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Fölfelé mozgat</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="220"/>
         <source>Move Down</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Lefelé mozgat</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="228"/>
         <source>Georeferenced: %1</source>
-        <translation type="unfinished">Georeferált:%1</translation>
+        <translation type="unfinished">Georeferált: %1</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="233"/>
@@ -6452,12 +6452,12 @@ Ha neked nem áll szándékodban mindazonáltal felhasználni ezt a sablont, az 
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="241"/>
         <source>Positioning...</source>
-        <translation type="unfinished">Elhelyezés...</translation>
+        <translation type="unfinished">Pozicionálás...</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="243"/>
         <source>Import and remove</source>
-        <translation type="unfinished">Import és törlés</translation>
+        <translation type="unfinished">Importálás és törlés</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="275"/>
@@ -6467,7 +6467,7 @@ Ha neked nem áll szándékodban mindazonáltal felhasználni ezt a sablont, az 
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="385"/>
         <source>Open image, GPS track or DXF file</source>
-        <translation type="unfinished">Kép, vagy GPS nyomvonl vagy DFX fájl megnyitása</translation>
+        <translation type="unfinished">Kép, GPS útvonal vagy DXF fájl megnyitása</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="387"/>
@@ -6477,7 +6477,7 @@ Ha neked nem áll szándékodban mindazonáltal felhasználni ezt a sablont, az 
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="389"/>
         <source>All files</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Minden fájl</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="402"/>
@@ -6489,22 +6489,22 @@ Ha neked nem áll szándékodban mindazonáltal felhasználni ezt a sablont, az 
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="402"/>
         <source>File format not recognized.</source>
-        <translation type="unfinished">A fájl formátum nem felismerhető.</translation>
+        <translation type="unfinished">Ismeretlen fájl formátum.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="412"/>
         <source>Failed to load template. Does the file exist and is it valid?</source>
-        <translation type="unfinished">Nem sikerült a háttér betöltésr. A fájl nem létezik, vagy hibás?</translation>
+        <translation type="unfinished">Nem sikerült a háttér betöltése. A fájl nem létezik, vagy hibás?</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="711"/>
         <source>Please enter a valid integer number to set a group or leave the field empty to ungroup the template!</source>
-        <translation type="unfinished">Kérem, hogy adjon meg egy érvényes egész számot a csoport beállításához, vagy a mezőt hagyja üresen a háttér állományok csoportjának felbontásához !</translation>
+        <translation type="unfinished">Kérem, hogy adjon meg egy érvényes egész számot a csoport beállításához, vagy a mezőt hagyja üresen a háttér állományok csoportjának felbontásához!</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="936"/>
         <source>Scale by nominal map scale ratio (%1 %)</source>
-        <translation type="unfinished">A térkép névleges méretarányával méretezve (%1 %)</translation>
+        <translation type="unfinished">Méretezés a térkép névleges méretarányával: (%1 %)</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="938"/>
@@ -6514,22 +6514,22 @@ Ha neked nem áll szándékodban mindazonáltal felhasználni ezt a sablont, az 
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="941"/>
         <source>Don&apos;t scale</source>
-        <translation type="unfinished">Ne méretezze</translation>
+        <translation type="unfinished">Nincs méretezés</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="943"/>
         <source>Template import</source>
-        <translation type="unfinished">Háttér importja</translation>
+        <translation type="unfinished">Háttér importálása</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="944"/>
         <source>How shall the symbols of the imported template map be scaled?</source>
-        <translation type="unfinished">Hogy szeretné méretezni az importálandó a szimbólumokat?</translation>
+        <translation type="unfinished">Hogy szeretné méretezni az importálandó szimbólumokat?</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="1036"/>
         <source>- Map -</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">- Térkép -</translation>
     </message>
 </context>
 <context>
@@ -6578,27 +6578,28 @@ Ha neked nem áll szándékodban mindazonáltal felhasználni ezt a sablont, az 
     <message>
         <location filename="../src/template_track.cpp" line="145"/>
         <source>Select the coordinate reference system of the track coordinates</source>
-        <translation>Válassza ki a nyom koordináták kordináta hivatkozási rendszerét</translation>
+        <translation>Kiválasztja az útvonal koordináták egyenrangú hivatkozási rendszerét
+</translation>
     </message>
     <message>
         <location filename="../src/template_track.cpp" line="163"/>
         <source>Opening track ...</source>
-        <translation>Nyom megnyitása...</translation>
+        <translation>Útvonal megnyitása ...</translation>
     </message>
     <message>
         <location filename="../src/template_track.cpp" line="164"/>
         <source>Load the track in georeferenced or non-georeferenced mode?</source>
-        <translation>Georeferált vagy nem georeferált módban tölti be a nyomot?</translation>
+        <translation>Az útvonalat georeferált vagy nem georeferált módon töltse be?</translation>
     </message>
     <message>
         <location filename="../src/template_track.cpp" line="166"/>
         <source>Positions the track according to the map&apos;s georeferencing settings.</source>
-        <translation>A nyom pozíciók a térkép georeferencia beálltásai szerint.</translation>
+        <translation>Az útvonalat a térkép georeferációs beállításai szerint helyezi el.</translation>
     </message>
     <message>
         <location filename="../src/template_track.cpp" line="168"/>
         <source>These are not configured yet, so they will be shown as the next step.</source>
-        <translation>Ezek még nem beállítottak, úgyhogy azokat a következő lépésként fogják mutatni .</translation>
+        <translation>Ezek még nincsenek konfigurálva, a következő lépésben lesznek láthatóak.</translation>
     </message>
     <message>
         <location filename="../src/template_track.cpp" line="169"/>
@@ -6613,7 +6614,7 @@ Ha neked nem áll szándékodban mindazonáltal felhasználni ezt a sablont, az 
     <message>
         <location filename="../src/template_track.cpp" line="170"/>
         <source>Projects the track using an orthographic projection with center at the track&apos;s coordinate average. Allows adjustment of the transformation and setting the map georeferencing using the adjusted track position.</source>
-        <translation>Tervezi a nyomot használni ami egy merőleges vetítés a nyomok koordináta átlagának központjával használ egy merőleges vetítést. Megengedi az leképezés igazítását beállítását és a térkép georeferencia, használatát a a beállított nyompozíciót.</translation>
+        <translation>Projects the track using an orthographic projection with center at the track&apos;s coordinate average. Allows adjustment of the transformation and setting the map georeferencing using the adjusted track position.</translation>
     </message>
     <message>
         <location filename="../src/template_track.cpp" line="398"/>
@@ -6626,7 +6627,7 @@ Ha neked nem áll szándékodban mindazonáltal felhasználni ezt a sablont, az 
     <message>
         <location filename="../src/template_track.cpp" line="398"/>
         <source>The path is empty, there is nothing to import!</source>
-        <translation>Az  útvonal üres, azok ne,importálhatók!</translation>
+        <translation>Fájl útvonal üres, nincs mit importálni!</translation>
     </message>
     <message>
         <location filename="../src/template_track.cpp" line="411"/>
@@ -6636,18 +6637,18 @@ Ha neked nem áll szándékodban mindazonáltal felhasználni ezt a sablont, az 
     <message>
         <location filename="../src/template_track.cpp" line="411"/>
         <source>Should the waypoints be imported as a line going through all points?</source>
-        <translation>Szeretné, ha az útpontok összekötve, vonalként lennének importálva?</translation>
+        <translation>Az útvonalpontok importálása olyan vonalként, ami minden ponton átmegy?</translation>
     </message>
     <message>
         <location filename="../src/template_track.cpp" line="478"/>
         <source>Import problems</source>
-        <translation>Importállási probléma</translation>
+        <translation>Probléma import</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/template_track.cpp" line="479"/>
         <source>%n path object(s) could not be imported (reason: missing coordinates).</source>
         <translation>
-            <numerusform>%n útvonal objektumait nem lehetett importálni (ok:hiányzó koordináták).</numerusform>
+            <numerusform>%n útvonal objektum(ok) nem importáható(k). (Ok: hiányzó koordináták).</numerusform>
         </translation>
     </message>
     <message>
@@ -6660,7 +6661,7 @@ Ha neked nem áll szándékodban mindazonáltal felhasználni ezt a sablont, az 
         <source>There was an error reading the DXF file %1:
 
 %2</source>
-        <translation>Egy hiba volt a DXF fáj olvasásakor %1:
+        <translation>Hiba történt a DXF fájl olvasása során %1:
 
 %2</translation>
     </message>
@@ -6668,22 +6669,22 @@ Ha neked nem áll szándékodban mindazonáltal felhasználni ezt a sablont, az 
         <location filename="../src/gps_track.cpp" line="501"/>
         <source>%1:
 Not an OSM file.</source>
-        <translation>%1
-Nem egy OSM fájl.</translation>
+        <translation>%1:
+Nem OSM fájl.</translation>
     </message>
     <message>
         <location filename="../src/gps_track.cpp" line="510"/>
         <source>The OSM file has version %1.
 The minimum supported version is %2.</source>
         <translation>Az OSM fájl verziója %1.
-A legkisebb támogatott verzió %2.</translation>
+A legkisebb támogatott verzió a %2.</translation>
     </message>
     <message>
         <location filename="../src/gps_track.cpp" line="515"/>
         <source>The OSM file has version %1.
 The maximum supported version is %2.</source>
-        <translation>Az OSM fájl verziója %1
-A legnayobb támogatott verzió %2.</translation>
+        <translation>Az OSM fájl verziója %1.
+A legnagyobb támogatott verzió a %2.</translation>
     </message>
     <message>
         <location filename="../src/gps_track.cpp" line="614"/>
@@ -6693,7 +6694,7 @@ A legnayobb támogatott verzió %2.</translation>
     <message>
         <location filename="../src/gps_track.cpp" line="614"/>
         <source>%1 nodes could not be processed correctly.</source>
-        <translation>%1 csomópontokat nem lehetett rendben feldolgozni.</translation>
+        <translation>%1 csomópontok feldolgozása nem volt megfelelő.</translation>
     </message>
 </context>
 <context>
@@ -6708,11 +6709,11 @@ A legnayobb támogatott verzió %2.</translation>
     </message>
     <message>
         <source>Group</source>
-        <translation type="vanished">Csoport</translation>
+        <translation type="vanished">Csoportosít</translation>
     </message>
     <message>
         <source>Filename</source>
-        <translation type="vanished">Fájlnév</translation>
+        <translation type="vanished">Fájl név</translation>
     </message>
     <message>
         <source>Sketch</source>
@@ -6724,11 +6725,11 @@ A legnayobb támogatott verzió %2.</translation>
     </message>
     <message>
         <source>Open...</source>
-        <translation type="vanished">Megnyit...</translation>
+        <translation type="vanished">Megnyitás...</translation>
     </message>
     <message>
         <source>Georeferenced: %1</source>
-        <translation type="vanished">Georeferált:%1</translation>
+        <translation type="vanished">Georeferált: %1</translation>
     </message>
     <message>
         <source>Delete</source>
@@ -6748,15 +6749,15 @@ A legnayobb támogatott verzió %2.</translation>
     </message>
     <message>
         <source>Move Up</source>
-        <translation type="vanished">Mozgat felfelé</translation>
+        <translation type="vanished">Fölfelé mozgat</translation>
     </message>
     <message>
         <source>Move Down</source>
-        <translation type="vanished">Mozgat lefelé</translation>
+        <translation type="vanished">Lefelé mozgat</translation>
     </message>
     <message>
         <source>Import and remove</source>
-        <translation type="vanished">Import és törlés</translation>
+        <translation type="vanished">Importálás és törlés</translation>
     </message>
     <message>
         <source>Help</source>
@@ -6768,11 +6769,11 @@ A legnayobb támogatott verzió %2.</translation>
     </message>
     <message>
         <source>Open image, GPS track or DXF file</source>
-        <translation type="vanished">Kép, vagy GPS nyomvonl vagy DFX fájl megnyitása</translation>
+        <translation type="vanished">Kép, GPS útvonal vagy DXF fájl megnyitása</translation>
     </message>
     <message>
         <source>Positioning...</source>
-        <translation type="vanished">Elhelyezés...</translation>
+        <translation type="vanished">Pozicionálás...</translation>
     </message>
     <message>
         <source>Template files</source>
@@ -6792,31 +6793,31 @@ A legnayobb támogatott verzió %2.</translation>
     </message>
     <message>
         <source>Please enter a valid integer number to set a group or leave the field empty to ungroup the template!</source>
-        <translation type="vanished">Kérem, hogy adjon meg egy érvényes egész számot a csoport beállításához, vagy a mezőt hagyja üresen a háttér állományok csoportjának felbontásához !</translation>
+        <translation type="vanished">Kérem, hogy adjon meg egy érvényes egész számot a csoport beállításához, vagy a mezőt hagyja üresen a háttér állományok csoportjának felbontásához!</translation>
     </message>
     <message>
         <source>Don&apos;t scale</source>
-        <translation type="vanished">Ne méretezze</translation>
+        <translation type="vanished">Nincs méretezés</translation>
     </message>
     <message>
         <source>Scale by nominal map scale ratio (%1 %)</source>
-        <translation type="vanished">A térkép névleges méretarányával méretezve (%1 %)</translation>
+        <translation type="vanished">Méretezés a térkép névleges méretarányával: (%1 %)</translation>
     </message>
     <message>
         <source>Cannot open template
 %1:
 %2</source>
-        <translation type="vanished">Nem lehet megnyini a hátteret
+        <translation type="vanished">Háttér fájl nem megnyitható.
 %1:
 %2</translation>
     </message>
     <message>
         <source>File format not recognized.</source>
-        <translation type="vanished">A fájl formátum nem felismerhető.</translation>
+        <translation type="vanished">Ismeretlen fájl formátum.</translation>
     </message>
     <message>
         <source>Failed to load template. Does the file exist and is it valid?</source>
-        <translation type="vanished">Nem sikerült a háttér betöltésr. A fájl nem létezik, vagy hibás?</translation>
+        <translation type="vanished">Nem sikerült a háttér betöltése. A fájl nem létezik, vagy hibás?</translation>
     </message>
     <message>
         <source>Scale by current template scaling (%1 %)</source>
@@ -6824,15 +6825,15 @@ A legnayobb támogatott verzió %2.</translation>
     </message>
     <message>
         <source>Template import</source>
-        <translation type="vanished">Háttér importja</translation>
+        <translation type="vanished">Háttér importálása</translation>
     </message>
     <message>
         <source>How shall the symbols of the imported template map be scaled?</source>
-        <translation type="vanished">Hogy szeretné méretezni az importálandó a szimbólumokat?</translation>
+        <translation type="vanished">Hogy szeretné méretezni az importálandó szimbólumokat?</translation>
     </message>
     <message>
         <source>- Map -</source>
-        <translation type="vanished">- Térkép- </translation>
+        <translation type="vanished">- Térkép -</translation>
     </message>
 </context>
 <context>
@@ -6845,7 +6846,7 @@ A legnayobb támogatott verzió %2.</translation>
     <message>
         <location filename="../src/gui/text_browser_dialog.cpp" line="126"/>
         <source>Click to view</source>
-        <translation type="unfinished">Kattins a megtekitéshez</translation>
+        <translation type="unfinished">Kattins a megtekintéshez</translation>
     </message>
 </context>
 <context>
@@ -6858,33 +6859,33 @@ A legnayobb támogatott verzió %2.</translation>
     <message>
         <location filename="../src/tool_draw_text.cpp" line="468"/>
         <source>Left</source>
-        <translation>Bal</translation>
+        <translation>Balra</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_text.cpp" line="468"/>
         <location filename="../src/tool_draw_text.cpp" line="484"/>
         <source>Center</source>
-        <translation>Közép</translation>
+        <translation>Középre</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_text.cpp" line="468"/>
         <source>Right</source>
-        <translation>Jobb</translation>
+        <translation>Jobbra</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_text.cpp" line="484"/>
         <source>Top</source>
-        <translation>Felső</translation>
+        <translation>Felülre</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_text.cpp" line="484"/>
         <source>Baseline</source>
-        <translation>Alapvonal</translation>
+        <translation>Alapvonalra</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_text.cpp" line="484"/>
         <source>Bottom</source>
-        <translation>Alsó</translation>
+        <translation>Alulra</translation>
     </message>
 </context>
 <context>
@@ -6897,7 +6898,7 @@ A legnayobb támogatott verzió %2.</translation>
     <message>
         <location filename="../src/symbol_text.cpp" line="596"/>
         <source>Font family:</source>
-        <translation>Betűcsalád:</translation>
+        <translation>Betűtípus:</translation>
     </message>
     <message>
         <location filename="../src/symbol_text.cpp" line="615"/>
@@ -6930,7 +6931,7 @@ A legnayobb támogatott verzió %2.</translation>
     <message>
         <location filename="../src/symbol_text.cpp" line="607"/>
         <source>pt</source>
-        <translation>pont</translation>
+        <translation>pt</translation>
     </message>
     <message>
         <location filename="../src/symbol_text.cpp" line="618"/>
@@ -6940,12 +6941,12 @@ A legnayobb támogatott verzió %2.</translation>
     <message>
         <location filename="../src/symbol_text.cpp" line="621"/>
         <source>bold</source>
-        <translation>Félkövér</translation>
+        <translation>félkövér</translation>
     </message>
     <message>
         <location filename="../src/symbol_text.cpp" line="623"/>
         <source>italic</source>
-        <translation>Dőlt</translation>
+        <translation>dőlt</translation>
     </message>
     <message>
         <location filename="../src/symbol_text.cpp" line="625"/>
@@ -6971,7 +6972,7 @@ A legnayobb támogatott verzió %2.</translation>
     <message>
         <location filename="../src/symbol_text.cpp" line="636"/>
         <source>Paragraph spacing:</source>
-        <translation>Bekezdés köz:</translation>
+        <translation>Bekezdés térköz:</translation>
     </message>
     <message>
         <location filename="../src/symbol_text.cpp" line="639"/>
@@ -6981,7 +6982,7 @@ A legnayobb támogatott verzió %2.</translation>
     <message>
         <location filename="../src/symbol_text.cpp" line="641"/>
         <source>Kerning</source>
-        <translation>Betű alávágás</translation>
+        <translation>Alsó index</translation>
     </message>
     <message>
         <location filename="../src/symbol_text.cpp" line="648"/>
@@ -7037,7 +7038,7 @@ A legnayobb támogatott verzió %2.</translation>
     <message>
         <location filename="../src/symbol_text.cpp" line="692"/>
         <source>enabled</source>
-        <translation>engedélyzve</translation>
+        <translation>engedélyezve</translation>
     </message>
     <message>
         <location filename="../src/symbol_text.cpp" line="696"/>
@@ -7057,7 +7058,7 @@ A legnayobb támogatott verzió %2.</translation>
     <message>
         <location filename="../src/symbol_text.cpp" line="690"/>
         <source>Line below paragraphs</source>
-        <translation>A soron belülnbekezdések</translation>
+        <translation>Bekezdések alatti vonal</translation>
     </message>
     <message>
         <location filename="../src/symbol_text.cpp" line="702"/>
@@ -7072,7 +7073,7 @@ A legnayobb támogatott verzió %2.</translation>
     <message>
         <location filename="../src/symbol_text.cpp" line="968"/>
         <source>Add custom tabulator</source>
-        <translation>Egy beállított tabulátor hozzáadása</translation>
+        <translation>Egyedi tabulátor hozzáadása</translation>
     </message>
 </context>
 <context>
@@ -7094,7 +7095,7 @@ A legnayobb támogatott verzió %2.</translation>
     <message>
         <location filename="../src/undo_manager.cpp" line="121"/>
         <source>Cannot undo because the last undo step became invalid. This can for example happen if you change the symbol of an object to another and then delete the old symbol.</source>
-        <translation>Nem lehet visszavonni ,mert az utolsó visszavonási lépés érvénytelenné vált. Ez például akkor történhet, ha egy objektumot egy másikra cserélt, vagy a régi szimbólumot törölte.</translation>
+        <translation>Nem lehet visszavonni, mert az utolsó visszavonási lépés érvénytelenné vált. Ez például akkor történhet, ha egy objektumot egy újra cserélt és azután a régi szimbólumot törölte.</translation>
     </message>
     <message>
         <location filename="../src/undo_manager.cpp" line="127"/>
@@ -7109,7 +7110,7 @@ A legnayobb támogatott verzió %2.</translation>
     <message>
         <location filename="../src/undo_manager.cpp" line="159"/>
         <source>Cannot redo because the first redo step became invalid. This can for example happen if you delete the symbol of an object you have drawn.</source>
-        <translation>Nem lehet mégis végrehajtani, mert a &quot;mégis&quot; lépés érvénytelenné vált. Ez például akkor történhet, ha törölve lett egy szimbólum amivel rajzolt.</translation>
+        <translation>Nem lehet mégis végrehajtani, mert a &quot;mégis&quot; lépés érvénytelenné vált. Ez például akkor történhet, ha törölve lett a szimbólum, amivel rajzolt.</translation>
     </message>
 </context>
 <context>
@@ -7129,12 +7130,12 @@ A legnayobb támogatott verzió %2.</translation>
     <message>
         <location filename="../src/util.cpp" line="242"/>
         <source>Failed to locate the help browser (&quot;Qt Assistant&quot;).</source>
-        <translation>Nem található a súgó böngésző program(Qt Assistant).</translation>
+        <translation>Nem található a súgó böngésző program (&quot;Qt Assistant&quot;).</translation>
     </message>
     <message>
         <location filename="../src/util.cpp" line="276"/>
         <source>Failed to launch the help browser (&quot;Qt Assistant&quot;).</source>
-        <translation>A súgó fájl böngésző(Qt Assistant) nem indult el.</translation>
+        <translation>A súgó fájl böngésző (&quot;Qt Assistant&quot;) nem indult el.</translation>
     </message>
 </context>
 <context>
@@ -7142,7 +7143,7 @@ A legnayobb támogatott verzió %2.</translation>
     <message>
         <location filename="../src/file_format_xml.cpp" line="184"/>
         <source>Older versions of Mapper do not support multiple map parts. To save the map in compatibility mode, you must first merge all map parts.</source>
-        <translation>A Mapper régebbi verziói nem támogatnak többszörös térképrészeket. Ahhoz, hogy kompatíbilis üzemmódban mentsd el a térképet,  először össze kell olvasztanod minden térképrészt.</translation>
+        <translation>A Mapper régebbi verziói nem támogatnak többszörös térképrészeket. Ahhoz, hogy kompatibilis üzemmódban mentse el a térképet, először össze kell olvasztania minden térképrészt.</translation>
     </message>
 </context>
 <context>
@@ -7180,33 +7181,33 @@ A legnayobb támogatott verzió %2.</translation>
     <message>
         <location filename="../src/file_format_xml.cpp" line="532"/>
         <source>Unsupported or invalid georeferencing specification &apos;%1&apos;: %2</source>
-        <translation>Nem támogatott vagy érvénytelen georeferrációs leírás &apos;%1&apos;:%2</translation>
+        <translation>Nem támogatott vagy érvénytelen georeferációs leírás &apos;%1&apos;:%2</translation>
     </message>
     <message>
         <location filename="../src/file_format_xml.cpp" line="650"/>
         <location filename="../src/file_format_xml.cpp" line="709"/>
         <source>Could not set knockout property of color &apos;%1&apos;.</source>
-        <translation>Nem lehet beállítani a KO tulajdonságát &apos;%1&apos;.</translation>
+        <translation>Nem lehet beállítani a színátmenetek tulajdonságait &apos;%1&apos;.</translation>
     </message>
     <message>
         <location filename="../src/file_format_xml.cpp" line="669"/>
         <source>Expected %1 colors, found %2.</source>
-        <translation>A várt %1 színek megtalálva %2.</translation>
+        <translation>A várt %1 színből %2 megtalálva.</translation>
     </message>
     <message>
         <location filename="../src/file_format_xml.cpp" line="685"/>
         <source>Spot color %1 not found while processing %2 (%3).</source>
-        <translation>A pont szín %1 nem alálható amíg tart %2 (%3).</translation>
+        <translation>A %2 feldolgozása közben a %1 pont szín nem található (%3).</translation>
     </message>
     <message>
         <location filename="../src/file_format_xml.cpp" line="740"/>
         <source>Expected %1 symbols, found %2.</source>
-        <translation>A várt %1 szimbólumok megtalálva %2.</translation>
+        <translation>A várt %1 szimbólumból %2 megtalálva.</translation>
     </message>
     <message>
         <location filename="../src/file_format_xml.cpp" line="771"/>
         <source>Expected %1 map parts, found %2.</source>
-        <translation>A várt %1 térkép részek megtalálva %2.</translation>
+        <translation>A várt %1 térképrészből %2 megtalálva.</translation>
     </message>
 </context>
 </TS>
