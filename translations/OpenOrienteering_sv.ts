@@ -1363,7 +1363,7 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
     </message>
 </context>
 <context>
-    <name>EditorPage</name>
+    <name>EditorSettingsPage</name>
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="157"/>
         <source>High quality map display (antialiasing)</source>
@@ -1569,7 +1569,7 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
     </message>
 </context>
 <context>
-    <name>GeneralPage</name>
+    <name>GeneralSettingsPage</name>
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="348"/>
         <source>Appearance</source>

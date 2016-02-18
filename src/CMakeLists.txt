@@ -166,12 +166,15 @@ set(Mapper_Common_SRCS
  gui/widgets/compass_display.cpp
  gui/widgets/crs_param_widgets.cpp
  gui/widgets/crs_selector.cpp
+ gui/widgets/editor_settings_page.cpp
+ gui/widgets/general_settings_page.cpp
  gui/widgets/home_screen_widget.cpp
  gui/widgets/key_button_bar.cpp
  gui/widgets/mapper_proxystyle.cpp
  gui/widgets/measure_widget.cpp
  gui/widgets/pie_menu.cpp
  gui/widgets/segmented_button_layout.cpp
+ gui/widgets/settings_page.cpp
  gui/widgets/symbol_dropdown.cpp
  gui/widgets/symbol_render_widget.cpp
  gui/widgets/symbol_tooltip.cpp
@@ -268,7 +271,6 @@ set(Mapper_Common_MOC_INPUT
  gui/print_widget.h
  gui/select_crs_dialog.h
  gui/settings_dialog.h
- gui/settings_dialog_p.h
  gui/text_browser_dialog.h
  
  gui/widgets/action_grid_bar.h
@@ -276,12 +278,15 @@ set(Mapper_Common_MOC_INPUT
  gui/widgets/compass_display.h
  gui/widgets/crs_param_widgets.h
  gui/widgets/crs_selector.h
+ gui/widgets/editor_settings_page.h
+ gui/widgets/general_settings_page.h
  gui/widgets/home_screen_widget.h
  gui/widgets/key_button_bar.h
  gui/widgets/mapper_proxystyle.h
  gui/widgets/measure_widget.h
  gui/widgets/pie_menu.h
  gui/widgets/segmented_button_layout.h
+ gui/widgets/settings_page.h
  gui/widgets/symbol_dropdown.h
  gui/widgets/symbol_render_widget.h
  gui/widgets/symbol_tooltip.h

@@ -1219,7 +1219,7 @@
     </message>
 </context>
 <context>
-    <name>EditorPage</name>
+    <name>EditorSettingsPage</name>
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="157"/>
         <source>High quality map display (antialiasing)</source>
@@ -1406,7 +1406,7 @@
     </message>
 </context>
 <context>
-    <name>GeneralPage</name>
+    <name>GeneralSettingsPage</name>
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="348"/>
         <source>Appearance</source>
