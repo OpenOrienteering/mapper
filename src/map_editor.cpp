@@ -933,6 +933,8 @@ void MapEditorController::createActions()
 	map_coordinates_act->setChecked(true);
 	QObject::connect(&map->getGeoreferencing(), SIGNAL(projectionChanged()), this, SLOT(projectionChanged()));
 	projectionChanged();
+	
+	copy_coords_act = newAction("copy-coords", tr("Copy position"), this, SLOT(copyDisplayedCoords()), "copy-coords.png", tr("Copy position to clipboard."));
 }
 
 void MapEditorController::createMenuAndToolbars()
@@ -1200,6 +1202,7 @@ void MapEditorController::createMenuAndToolbars()
 	context_menu->addAction(cut_hole_act);
 	context_menu->addAction(switch_dashes_act);
 	context_menu->addAction(connect_paths_act);
+	context_menu->addAction(copy_coords_act);
 }
 
 void MapEditorController::createMobileGUI()
@@ -1677,6 +1680,11 @@ void MapEditorController::coordsDisplayChanged()
 		map_widget->setCoordsDisplay(MapWidget::PROJECTED_COORDS);	
 	else
 		map_widget->setCoordsDisplay(MapWidget::MAP_COORDS);
+}
+
+void MapEditorController::copyDisplayedCoords()
+{
+	QApplication::clipboard()->setText(statusbar_cursorpos_label->text());
 }
 
 void MapEditorController::projectionChanged()

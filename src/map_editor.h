@@ -284,6 +284,8 @@ public slots:
 	
 	/** Adjusts the coordinates display of the map widget to the selected option. */
 	void coordsDisplayChanged();
+	/** Copies the displayed coordinates to the clipboard. */
+	void copyDisplayedCoords();
 	
 	/** Shows or hides the symbol pane. */
 	void showSymbolWindow(bool show);
@@ -728,6 +730,7 @@ private:
 	QFrame* statusbar_zoom_frame;
 	QLabel* statusbar_cursorpos_label;
 	QLabel* statusbar_objecttag_label;
+	QAction* copy_coords_act;
 	
 	QToolBar* toolbar_view;
 	QToolBar* toolbar_drawing;
