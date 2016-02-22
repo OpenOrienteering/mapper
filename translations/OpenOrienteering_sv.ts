@@ -17,12 +17,12 @@
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="173"/>
         <source>The OpenOrienteering developers in alphabetical order:</source>
-        <translation>OpenOrienteerings utvecklarna i alfabetisk ordning:</translation>
+        <translation>OpenOrienteerings utvecklare i alfabetisk ordning:</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="175"/>
         <source>(project initiator)</source>
-        <translation>(inisiativtagare)</translation>
+        <translation>(initiativtagare)</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="152"/>
@@ -32,7 +32,7 @@
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="156"/>
         <source>This program is free software: you can redistribute it and/or modify it under the terms of the &lt;a %1&gt;GNU General Public License (GPL), version&amp;nbsp;3&lt;/a&gt;, as published by the Free Software Foundation.</source>
-        <translation>Detta program är öppen mjukvara: du kan sprida den och/eller modifiera den under vilkoren i &lt;a %1&gt;GNU General Public License (GPL), version&amp;nbsp;3&lt;/a&gt;, publicerad av Free Software Foundation</translation>
+        <translation>Detta program är öppen mjukvara: du kan sprida den och/eller modifiera den under vilkoren i &lt;a %1&gt;GNU General Public License (GPL), version&amp;nbsp;3&lt;/a&gt;, publicerad av Free Software Foundation.</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="162"/>
@@ -98,7 +98,7 @@
     <message>
         <location filename="../src/symbol_area.cpp" line="773"/>
         <source>Line fill</source>
-        <translation>Linjefyllningar</translation>
+        <translation>Linjefyllning</translation>
     </message>
     <message>
         <location filename="../src/symbol_area.cpp" line="774"/>
@@ -269,7 +269,7 @@
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="43"/>
         <source>Autosaved file</source>
-        <translation>Auto sparad fil</translation>
+        <translation>Autosparad fil</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/gui/autosave_dialog.cpp" line="45"/>
@@ -288,7 +288,7 @@
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="56"/>
         <source>File recovery</source>
-        <translation>Fil återställning</translation>
+        <translation>Filåterställning</translation>
     </message>
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="58"/>
@@ -316,7 +316,7 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="71"/>
         <source>Mixture of spot colors (screens and overprint):</source>
-        <translation>Mix av dekorfärger (skärmar och övertryck)</translation>
+        <translation>Mix av dekorfärger (skärmar och övertryck):</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="86"/>
@@ -494,7 +494,7 @@
     <message>
         <location filename="../src/color_dock_widget.cpp" line="187"/>
         <source>The map contains symbols with this color. Deleting it will remove the color from these objects! Do you really want to do that?</source>
-        <translation>Kartan innehåller symboler med denna färg. Tar du bort den försvinner färgen från de symbolerna. Vill du verkligen göra det?</translation>
+        <translation>Kartan innehåller symboler med denna färg. Tar du bort den försvinner färgen från de symbolerna! Vill du verkligen göra det?</translation>
     </message>
     <message>
         <location filename="../src/color_dock_widget.cpp" line="204"/>
@@ -546,7 +546,7 @@
     <message>
         <location filename="../src/symbol_combined.cpp" line="408"/>
         <source>- Private area symbol -</source>
-        <translation>- Privat yt symbol -</translation>
+        <translation>- Privat ytsymbol -</translation>
     </message>
     <message>
         <location filename="../src/symbol_combined.cpp" line="414"/>
@@ -583,7 +583,7 @@
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="50"/>
         <source>Configure grid</source>
-        <translation>Konfigurera rutnät:</translation>
+        <translation>Konfigurera rutnät</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="52"/>
@@ -593,7 +593,7 @@
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="53"/>
         <source>Snap to grid</source>
-        <translation>Snäpp till rutnät</translation>
+        <translation>Fäst till rutnät</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="54"/>
@@ -633,7 +633,7 @@
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="66"/>
         <source>Align with true north</source>
-        <translation>Passa till värkliga norr</translation>
+        <translation>Passa till verkliga norr</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="68"/>
@@ -663,7 +663,7 @@
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="79"/>
         <source>Horizontal spacing:</source>
-        <translation>Horisontell avstånd:</translation>
+        <translation>Horisontellt avstånd:</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="81"/>
@@ -733,7 +733,7 @@
     <name>CutHoleTool</name>
     <message>
         <source>&lt;b&gt;Click&lt;/b&gt; on a line to split it into two, &lt;b&gt;Drag&lt;/b&gt; along a line to remove this line part, &lt;b&gt;Click or Drag&lt;/b&gt; at an area boundary to start drawing a split line</source>
-        <translation type="obsolete">&lt;b&gt;Klicka&lt;/b&gt; på en linje för att dela den, &lt;b&gt;dra&lt;/b&gt; längs med en linje för att ta bort en del av linjen, &lt;b&gt;dra eller klicka&lt;/b&gt; på en ytas kant för att börja rita en delningslinje</translation>
+        <translation type="obsolete">&lt;b&gt;Klicka&lt;/b&gt; på en linje för att dela den, &lt;b&gt;Dra&lt;/b&gt; längs med en linje för att ta bort en del av linjen, &lt;b&gt;Dra eller Klicka&lt;/b&gt; på en ytas kant för att börja rita en delningslinje</translation>
     </message>
     <message>
         <location filename="../src/tool_cut_hole.cpp" line="241"/>
@@ -769,7 +769,7 @@
     <message>
         <location filename="../src/tool_cut.cpp" line="675"/>
         <source>&lt;b&gt;Click&lt;/b&gt; on a line: Split it into two. &lt;b&gt;Drag&lt;/b&gt; along a line: Remove this line part. &lt;b&gt;Click or Drag&lt;/b&gt; at an area boundary: Start a split line. </source>
-        <translation>&lt;b&gt;Klicka&lt;/b&gt; på en linje: Dela den i två. &lt;b&gt;Dra&lt;/b&gt; längs en linje: Ta bort denna linjedel. &lt;b&gt;Klicka eller dra&lt;/b&gt; en ytgräns: Starta en delad linje. </translation>
+        <translation>&lt;b&gt;Klicka&lt;/b&gt; på en linje: Dela den i två. &lt;b&gt;Dra&lt;/b&gt; längs en linje: Ta bort denna linjedel. &lt;b&gt;Klicka på eller dra i&lt;/b&gt; en ytgräns: Starta en delad linje. </translation>
     </message>
     <message>
         <source>&lt;b&gt;Click&lt;/b&gt; on a line to split it into two, &lt;b&gt;Drag&lt;/b&gt; along a line to remove this line part, &lt;b&gt;Click or Drag&lt;/b&gt; at an area boundary to start drawing a split line</source>
@@ -956,7 +956,7 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1034"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt;: Snap or append to existing objects. </source>
-        <translation>&lt;b&gt;%1+Klicka&lt;/b&gt;: Snäpp eller fortsätt existerande objekt. </translation>
+        <translation>&lt;b&gt;%1+Klicka&lt;/b&gt;: Fäst eller fortsätt existerande objekt. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1039"/>
@@ -969,7 +969,7 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
         <location filename="../src/tool_draw_rectangle.cpp" line="711"/>
         <location filename="../src/tool_draw_rectangle.cpp" line="735"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt;: Snap to existing objects. </source>
-        <translation>&lt;b&gt;%1+Klicka&lt;/b&gt;: Snäpp till existerande objekt. </translation>
+        <translation>&lt;b&gt;%1+Klicka&lt;/b&gt;: Fäst till existerande objekt. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1058"/>
@@ -1012,19 +1012,19 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
         <location filename="../src/tool_draw_path.cpp" line="89"/>
         <source>Snap</source>
         <comment>Snap to existing objects</comment>
-        <translation>Snäpp</translation>
+        <translation>Fäst till</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="90"/>
         <source>Angle</source>
         <comment>Using constrained angles</comment>
-        <translation>´Vinkel</translation>
+        <translation>Vinkel</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="91"/>
         <source>Dash</source>
         <comment>Drawing dash points</comment>
-        <translation>Sträckning</translation>
+        <translation>Sträck</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="92"/>
@@ -1080,7 +1080,7 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
         <location filename="../src/tool_draw_point.cpp" line="60"/>
         <source>Snap</source>
         <comment>Snap to existing objects</comment>
-        <translation>Snäpp</translation>
+        <translation>Fäst till</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_point.cpp" line="61"/>
@@ -1153,19 +1153,19 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
         <location filename="../src/tool_draw_rectangle.cpp" line="79"/>
         <source>Snap</source>
         <comment>Snap to existing objects</comment>
-        <translation>Snäpp</translation>
+        <translation>Fäst till</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_rectangle.cpp" line="80"/>
         <source>Line snap</source>
         <comment>Snap to previous lines</comment>
-        <translation>Snäpp till linje</translation>
+        <translation>Fäst till linje</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_rectangle.cpp" line="81"/>
         <source>Dash</source>
         <comment>Drawing dash points</comment>
-        <translation>Sträckning</translation>
+        <translation>Sträck</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_rectangle.cpp" line="82"/>
@@ -1185,7 +1185,7 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
     <message>
         <location filename="../src/tool_draw_rectangle.cpp" line="729"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Snap to previous lines. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: Snäpp till föregående linjer. </translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Fäst till föregående linjer. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_rectangle.cpp" line="740"/>
@@ -1197,7 +1197,7 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
     <name>DrawTextTool</name>
     <message>
         <source>&lt;b&gt;Click&lt;/b&gt; to write text with a single anchor, &lt;b&gt;Drag&lt;/b&gt; to create a text box</source>
-        <translation type="obsolete">&lt;b&gt;Klicka&lt;/b&gt; för att skriva text från en punkt, &lt;b&gt;Dra&lt;/b&gt; för att skapa en textlåda</translation>
+        <translation type="obsolete">&lt;b&gt;Klicka&lt;/b&gt; för att skriva text från ett ankare, &lt;b&gt;Dra&lt;/b&gt; för att skapa en textlåda</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_text.cpp" line="306"/>
@@ -1228,7 +1228,7 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
         <location filename="../src/tool_edit_line.cpp" line="345"/>
         <source>Snap</source>
         <comment>Snap to existing objects</comment>
-        <translation>Snäpp</translation>
+        <translation>Fäst till</translation>
     </message>
     <message>
         <location filename="../src/tool_edit_line.cpp" line="346"/>
@@ -1265,7 +1265,7 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
         <location filename="../src/tool_edit_point.cpp" line="480"/>
         <source>Snap</source>
         <comment>Snap to existing objects</comment>
-        <translation>Snäpp</translation>
+        <translation>Fäst till</translation>
     </message>
     <message>
         <location filename="../src/tool_edit_point.cpp" line="481"/>
@@ -1277,7 +1277,7 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
         <location filename="../src/tool_edit_point.cpp" line="482"/>
         <source>Toggle dash</source>
         <comment>Toggle dash points</comment>
-        <translation>Växla sträckning</translation>
+        <translation>Sträck av/på</translation>
     </message>
     <message>
         <location filename="../src/tool_edit_point.cpp" line="632"/>
@@ -1347,7 +1347,7 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
         <location filename="../src/tool_edit_point.cpp" line="656"/>
         <location filename="../src/tool_edit_line.cpp" line="459"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Snap to existing objects. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: Snäpp till existerande objekt. </translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Fäst till existerande objekt. </translation>
     </message>
     <message>
         <location filename="../src/tool_edit_point.cpp" line="662"/>
@@ -1396,7 +1396,7 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="170"/>
         <source>Snap distance (%1):</source>
-        <translation>Snäpp distans (%1)</translation>
+        <translation>Fäst distans (%1)</translation>
     </message>
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="175"/>
@@ -1444,13 +1444,13 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
         <location filename="../src/gui/settings_dialog.cpp" line="198"/>
         <location filename="../src/gui/settings_dialog.cpp" line="205"/>
         <source>Reset outer curve handles</source>
-        <translation>Nollställ ytterkurvans handtag</translation>
+        <translation>Nollställ kurvans yttre handtag</translation>
     </message>
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="199"/>
         <location filename="../src/gui/settings_dialog.cpp" line="206"/>
         <source>Keep outer curve handles</source>
-        <translation>Behåll ytterkurvans handtag</translation>
+        <translation>Behåll kurvans yttre handtag</translation>
     </message>
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="200"/>
@@ -1701,7 +1701,7 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
         <location filename="../src/core/crs_template_implementation.cpp" line="57"/>
         <source>UTM</source>
         <comment>UTM coordinate reference system</comment>
-        <translation>UTM koordinatsystem</translation>
+        <translation>UTM koordinat referenssystem</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="58"/>
@@ -1775,7 +1775,7 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
     </message>
     <message>
         <source>Scale only</source>
-        <translation type="vanished">Bara skala</translation>
+        <translation type="vanished">Skala endast</translation>
     </message>
     <message>
         <location filename="../src/core/georeferencing.cpp" line="485"/>
@@ -1806,7 +1806,7 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
     <name>GeoreferencingAddTool</name>
     <message>
         <source>&lt;b&gt;Click&lt;/b&gt; to set the template position of the pass point</source>
-        <translation type="obsolete">&lt;b&gt;Klicka&lt;/b&gt; för att sätta kalibreringspunktens position på bakgrundsbilden</translation>
+        <translation type="obsolete">&lt;b&gt;Klicka&lt;/b&gt; för att placera kalibreringspunktens position på bakgrunden</translation>
     </message>
     <message>
         <source>&lt;b&gt;Click&lt;/b&gt; to set the map position of the pass point, &lt;b&gt;Esc&lt;/b&gt; to abort</source>
@@ -1940,7 +1940,7 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="93"/>
         <source>Map coordinate reference system</source>
-        <translation>koordinatsystem</translation>
+        <translation>Koordinat referenssystem</translation>
     </message>
     <message>
         <source>- none -</source>
@@ -2056,7 +2056,7 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="428"/>
         <source>Declination change</source>
-        <translation>Avvikande förändringar</translation>
+        <translation>Lutnings förändringar</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="428"/>
@@ -2393,7 +2393,7 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
     <message>
         <location filename="../src/object.cpp" line="437"/>
         <source>Point object with undefined or wrong symbol at %1:%2.</source>
-        <translation>Punkt objekt utan eller med fel symbol, på %1:%2.</translation>
+        <translation>Punkt objekt utan eller med felaktig, på %1:%2.</translation>
     </message>
     <message>
         <location filename="../src/file_format_native.cpp" line="91"/>
@@ -2491,7 +2491,7 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
     <message>
         <location filename="../src/file_format_native.cpp" line="199"/>
         <source>The geographic coordinate reference system of the map was &quot;%1&quot;. This CRS is not supported. Using &quot;%2&quot;.</source>
-        <translation>Det geografiska koordinatreferenssystemet för kartan var&quot;%1&quot;. Detta CRS system stöds ej. Använder &quot;%2&quot;.</translation>
+        <translation>Det geografiska koordinat referenssystemet för kartan var&quot;%1&quot;. Detta CRS system stöds ej. Använder &quot;%2&quot;.</translation>
     </message>
     <message>
         <location filename="../src/file_format_native.cpp" line="318"/>
@@ -2721,12 +2721,12 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
     <message>
         <location filename="../src/symbol_line.cpp" line="2204"/>
         <source>Borders</source>
-        <translation>Gränser</translation>
+        <translation>Kantlinjer</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2208"/>
         <source>Different borders on left and right sides</source>
-        <translation>Olika gränser på höger och vänster sida</translation>
+        <translation>Olika kantlinjer på höger och vänster sida</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2213"/>
@@ -4845,7 +4845,7 @@ zooma med scrollhjulet om tillgängligt.</translation>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="2141"/>
         <source>In line symbol &quot;%1&quot;, cannot export the borders correctly.</source>
-        <translation>I linjesymbol &quot;%1&quot; kan inte gränser exporteras korrekt.</translation>
+        <translation>I linjesymbol &quot;%1&quot; kan inte kantlinjen exporteras korrekt.</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="2200"/>
@@ -6151,7 +6151,7 @@ for skrivning.</translation>
     </message>
     <message>
         <source>Unable to export template: file type of &quot;%1&quot; is not supported yet</source>
-        <translation type="obsolete">Kunde inte exportera mall: filtypen &quot;%1&quot; stöds inte än</translation>
+        <translation type="obsolete">Kunde inte exportera bakgrund: filtypen &quot;%1&quot; stöds inte än</translation>
     </message>
     <message>
         <source>In line symbol &quot;%1&quot;, cannot represent cap/join combination.</source>
@@ -6498,7 +6498,7 @@ Högsta versionen som stöds är %2.</translation>
     <message>
         <location filename="../src/map_dialog_rotate.cpp" line="79"/>
         <source>Adjust georeferencing declination</source>
-        <translation>Justera georeferensens missvisning</translation>
+        <translation>Justera georeferensens lutning</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_rotate.cpp" line="86"/>
@@ -6582,7 +6582,7 @@ Högsta versionen som stöds är %2.</translation>
         <location filename="../src/map_dialog_scale.cpp" line="48"/>
         <source>Map coordinate system origin</source>
         <comment>Scaling center point</comment>
-        <translation>Kartkoordinats centrum</translation>
+        <translation>Kartkoordinats origo</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_scale.cpp" line="52"/>
@@ -6680,7 +6680,7 @@ Högsta versionen som stöds är %2.</translation>
     <message>
         <location filename="../src/gui/select_crs_dialog.cpp" line="54"/>
         <source>Select coordinate reference system</source>
-        <translation>Välj koordinatsystem</translation>
+        <translation>Välj koordinat referenssystem</translation>
     </message>
     <message>
         <source>Same as map&apos;s</source>
@@ -7063,7 +7063,7 @@ Högsta versionen som stöds är %2.</translation>
     <message>
         <location filename="../src/symbol_setting_dialog.cpp" line="114"/>
         <source>bounding box on origin</source>
-        <translation>begränsningsruta på utgångspunkten</translation>
+        <translation>begränsningsruta på origo</translation>
     </message>
     <message>
         <location filename="../src/symbol_setting_dialog.cpp" line="115"/>
@@ -7180,7 +7180,7 @@ to jump over the lazy dog
     </message>
     <message>
         <source>Cannot change the template to this file! Is the format of the file correct for this template type?</source>
-        <translation type="obsolete">Kan inte ändra bakgrundsbilden till denna fil! Är filformatet korrekt för denna typ av bakgrundsbild?</translation>
+        <translation type="obsolete">Kan inte ändra bakgrund till denna fil! Är filformatet korrekt för denna typ av bakgrund?</translation>
     </message>
 </context>
 <context>
@@ -7205,7 +7205,7 @@ to jump over the lazy dog
     <name>TemplateAdjustAddTool</name>
     <message>
         <source>&lt;b&gt;Click&lt;/b&gt; to set the template position of the pass point</source>
-        <translation type="obsolete">&lt;b&gt;Klicka&lt;/b&gt; för att sätta kalibreringspunktens position på bakgrundsbilden</translation>
+        <translation type="obsolete">&lt;b&gt;Klicka&lt;/b&gt; för att sätta kalibreringspunktens position på bakgrunden.</translation>
     </message>
     <message>
         <source>&lt;b&gt;Click&lt;/b&gt; to set the map position of the pass point, &lt;b&gt;Esc&lt;/b&gt; to abort</source>
@@ -7271,12 +7271,12 @@ to jump over the lazy dog
     <message>
         <location filename="../src/template_adjust.cpp" line="210"/>
         <source>Template X</source>
-        <translation>Bakgrundsbild X</translation>
+        <translation>Bakgrund X</translation>
     </message>
     <message>
         <location filename="../src/template_adjust.cpp" line="210"/>
         <source>Template Y</source>
-        <translation>Bakgrundsbild Y</translation>
+        <translation>Bakgrund Y</translation>
     </message>
     <message>
         <location filename="../src/template_adjust.cpp" line="210"/>
@@ -7350,9 +7350,9 @@ to jump over the lazy dog
         <source>Loading a GIF image template.
 Saving GIF files is not supported. This means that drawings on this template won&apos;t be saved!
 If you do not intend to draw on this template however, that is no problem.</source>
-        <translation>Öppnar en GIF-bakgrundsbild.
-Stöd för att spara GIF-filer finns inte. Det du ritar på denna bakgrundsbild kommer inte att sparas!
-Tänker du inte rita på bakgrundsbilden är det inget problem.</translation>
+        <translation>Öppnar en GIF-bakgrund.
+Stöd för att spara GIF-filer finns inte. Det du ritar på denna bakgrund kommer inte att sparas!
+Tänker du inte rita på bakgrunden är det inget problem.</translation>
     </message>
     <message>
         <location filename="../src/template_image.cpp" line="198"/>
@@ -7423,7 +7423,7 @@ Tänker du inte rita på bakgrundsbilden är det inget problem.</translation>
     </message>
     <message>
         <source>Different template scale 1 :</source>
-        <translation type="obsolete">Annan skala för bakgrundsbild 1 :</translation>
+        <translation type="obsolete">Annan skala för bakgrund 1 :</translation>
     </message>
     <message>
         <location filename="../src/template_image.cpp" line="642"/>
@@ -7698,7 +7698,7 @@ Högsta versionen som stöds är %2.</translation>
     </message>
     <message>
         <source>Selected template(s)</source>
-        <translation type="obsolete">Valda bakgrundsbilder</translation>
+        <translation type="obsolete">Valda bakgrunder</translation>
     </message>
     <message>
         <location filename="../src/template_dock_widget.cpp" line="186"/>
@@ -7777,7 +7777,7 @@ Högsta versionen som stöds är %2.</translation>
     <message>
         <location filename="../src/template_dock_widget.cpp" line="348"/>
         <source>Failed to load template. Does the file exist and is it valid?</source>
-        <translation>Kunde inte ladda bakgrundsbild. Existerar filen och är den korrekt?</translation>
+        <translation>Kunde inte ladda bakgrund. Existerar filen och är den korrekt?</translation>
     </message>
     <message>
         <source>Please enter a valid number from 0 to 1, or specify a percentage from 0 to 100!</source>
@@ -7786,7 +7786,7 @@ Högsta versionen som stöds är %2.</translation>
     <message>
         <location filename="../src/template_dock_widget.cpp" line="626"/>
         <source>Please enter a valid integer number to set a group or leave the field empty to ungroup the template!</source>
-        <translation>Ange ett heltal för att sätta en grupp eller lämna fältet tomt för att avgruppera bakgrundsbilden!</translation>
+        <translation>Ange ett heltal för att sätta en grupp eller lämna fältet tomt för att avgruppera bakgrunden!</translation>
     </message>
     <message>
         <location filename="../src/template_dock_widget.cpp" line="882"/>
@@ -7804,7 +7804,7 @@ Högsta versionen som stöds är %2.</translation>
         <source>Cannot open template
 %1:
 %2</source>
-        <translation>Kan inte öppna bakgrundsbild
+        <translation>Kan inte öppna bakgrund
 %1:
 %2</translation>
     </message>
@@ -7830,7 +7830,7 @@ Högsta versionen som stöds är %2.</translation>
     </message>
     <message>
         <source>Find the moved template file</source>
-        <translation type="obsolete">Sök upp den flyttade bakgrundsbilden</translation>
+        <translation type="obsolete">Sök upp den flyttade bakgrundsfilen</translation>
     </message>
     <message>
         <source>All files (*.*)</source>
@@ -7838,7 +7838,7 @@ Högsta versionen som stöds är %2.</translation>
     </message>
     <message>
         <source>Cannot change the template to this file! Is the format of the file correct for this template type?</source>
-        <translation type="obsolete">Kan inte ändra bakgrundsbilden till denna fil! Är filformatet korrekt för denna typ av bakgrundsbild?</translation>
+        <translation type="obsolete">Kan inte ändra bakgrunden till denna fil! Är filformatet korrekt för denna typ av bakgrund?</translation>
     </message>
 </context>
 <context>
