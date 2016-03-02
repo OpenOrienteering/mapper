@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Pete Curtis
+ *    Copyright 2013, 2015, 2016 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -38,6 +39,18 @@ void FileFormatRegistry::registerFormat(FileFormat *format)
 	if (fmts.size() == 1) default_format_id = format->id();
 	Q_ASSERT(findFormatForFilename("filename."+format->primaryExtension()) != NULL); // There may be more than one format!
 	Q_ASSERT(findFormatByFilter(format->filter()) == format); // The filter shall be unique at least by description.
+}
+
+std::unique_ptr<FileFormat> FileFormatRegistry::unregisterFormat(const FileFormat* format)
+{
+	std::unique_ptr<FileFormat> ret;
+	auto it = std::find(begin(fmts), end(fmts), format);
+	if (it != end(fmts))
+	{
+		ret.reset(*it);
+		fmts.erase(it);
+	}
+	return ret;
 }
 
 const FileFormat *FileFormatRegistry::findFormat(const QString& id) const

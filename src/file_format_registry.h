@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Pete Curtis
+ *    Copyright 2013, 2016 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -20,6 +21,7 @@
 #ifndef _OPENORIENTEERING_FILE_FORMAT_REGISTRY_H
 #define _OPENORIENTEERING_FILE_FORMAT_REGISTRY_H
 
+#include <memory>
 #include <vector>
 
 #include <QHash>
@@ -74,6 +76,13 @@ public:
 	/** Registers a new file format. The registry takes ownership of the provided Format.
 	 */
 	void registerFormat(FileFormat *format);
+	
+	/**
+	 * Unregisters a file format.
+	 * 
+	 * Returns a non-const pointer to the file format and transfers ownership to the caller.
+	 */
+	std::unique_ptr<FileFormat> unregisterFormat(const FileFormat *format);
 	
 private:
 	std::vector<FileFormat *> fmts;
