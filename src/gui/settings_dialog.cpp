@@ -29,6 +29,9 @@
 
 #include "widgets/editor_settings_page.h"
 #include "widgets/general_settings_page.h"
+#ifdef MAPPER_USE_GDAL
+#  include "../gdal/gdal_settings_page.h"
+#endif
 
 
 SettingsDialog::SettingsDialog(QWidget* parent)
@@ -51,6 +54,9 @@ SettingsDialog::SettingsDialog(QWidget* parent)
 	// Add all pages
 	addPage(new GeneralSettingsPage(this));
 	addPage(new EditorSettingsPage(this));
+#ifdef MAPPER_USE_GDAL
+	addPage(new GdalSettingsPage(this));
+#endif
 }
 
 SettingsDialog::~SettingsDialog()
