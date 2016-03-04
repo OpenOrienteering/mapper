@@ -229,7 +229,7 @@ void Georeferencing::load(QXmlStreamReader& xml, bool load_scale_only)
 	
 	if (georef_element.hasAttribute(literal::grid_scale_factor))
 	{
-		grid_scale_factor = roundScaleFactor(georef_element.attribute<double>(literal::scale));
+		grid_scale_factor = roundScaleFactor(georef_element.attribute<double>(literal::grid_scale_factor));
 		if (grid_scale_factor <= 0.0)
 			throw FileFormatException(tr("Invalid grid scale factor: %1").arg(QString::number(grid_scale_factor)));
 	}
