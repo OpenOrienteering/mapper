@@ -4267,7 +4267,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="2074"/>
         <source>In line symbol &quot;%1&quot;, neglecting the dash grouping.</source>
-        <translationДля лінійного знаку &quot;%1&quot;, не відтворено групування штрихів.</translation>
+        <translation>Для лінійного знаку &quot;%1&quot;, не відтворено групування штрихів.</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="2085"/>
