@@ -1461,7 +1461,7 @@ void OcdFileImport::setupPointSymbolPattern(PointSymbol* symbol, std::size_t dat
 			case E::TypeCircle:
 			{
 				int element_radius = circleRadius(element);
-				if (element_radius > 0)
+				if (element_radius > 0 && element->line_width > 0)
 				{
 					bool can_use_base_symbol = (!base_symbol_used && (!element->num_coords || (!coords[0].x && !coords[0].y)));
 					PointSymbol* working_symbol = can_use_base_symbol ? symbol : new PointSymbol();
@@ -1488,6 +1488,7 @@ void OcdFileImport::setupPointSymbolPattern(PointSymbol* symbol, std::size_t dat
 				break;
 			}
 			case E::TypeLine:
+				if (element->line_width > 0)
 				{
 					OcdImportedLineSymbol* element_symbol = new OcdImportedLineSymbol();
 					element_symbol->line_width = convertLength(element->line_width);
