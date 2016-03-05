@@ -1,5 +1,5 @@
 /*
- *    Copyright 2013, 2015 Kai Pastor
+ *    Copyright 2013, 2015, 2016 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -542,14 +542,20 @@ const OcdEntityIndexIterator<F,T,E>& OcdEntityIndexIterator<F,T,E>::operator++()
 			{
 				index = 0;
 				quint32 next_block = block->next_block;
-				if (next_block)
-				{
-					block = reinterpret_cast<const IndexBlock*>(&(*data)[next_block]);
-				}
-				else
+				if (next_block == 0)
 				{
 					block = nullptr;
 					data = nullptr;
+				}
+				else if (Q_UNLIKELY(next_block >= data->byteArray().size()))
+				{
+					qWarning("OcdEntityIndexIterator: Next index block is out of bounds");
+					block = nullptr;
+					data = nullptr;
+				}
+				else
+				{
+					block = reinterpret_cast<const IndexBlock*>(&(*data)[next_block]);
 				}
 			}
 		}
