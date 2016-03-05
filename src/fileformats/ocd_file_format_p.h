@@ -29,6 +29,7 @@
 #include <cmath>
 
 #include "ocd_types.h"
+#include "ocd_types_v8.h"
 #include "../file_import_export.h"
 #include "../object.h"
 #include "../object_text.h"
@@ -172,10 +173,10 @@ protected:
 	// Symbol import
 	
 	template< class S >
-	PointSymbol* importPointSymbol(const S& ocd_symbol);
+	PointSymbol* importPointSymbol(const S& ocd_symbol, int ocd_version);
 	
 	template< class S >
-	Symbol* importLineSymbol(const S& ocd_symbol);
+	Symbol* importLineSymbol(const S& ocd_symbol, int ocd_version);
 	
 	template< class S >
 	AreaSymbol* importAreaSymbol(const S& ocd_symbol, int ocd_version);
@@ -192,11 +193,7 @@ protected:
 	template< class S >
 	void setupBaseSymbol(Symbol* symbol, const S& ocd_symbol);
 	
-	template< class E >
-	void setupPointSymbolPattern(PointSymbol* symbol, std::size_t data_size, const E* elements);
-	
-	template< class E >
-	int circleRadius(const E* element) const;
+	void setupPointSymbolPattern(PointSymbol* symbol, std::size_t data_size, const Ocd::PointSymbolElementV8* elements, int version);
 	
 	// Object import
 	

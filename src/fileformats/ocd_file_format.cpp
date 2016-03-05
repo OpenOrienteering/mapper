@@ -29,7 +29,6 @@
 #include <QFileInfo>
 #include <QImageReader>
 
-#include "ocd_types_v8.h"
 #include "ocd_types_v9.h"
 #include "ocd_types_v10.h"
 #include "ocd_types_v11.h"
@@ -432,11 +431,11 @@ void OcdFileImport::importSymbols(const OcdFile< F >& file)
 		// Don't use switch, because F::SymbolType may have duplicate values.
 		if (it->type == F::TypePoint)
 		{
-			symbol = importPointSymbol((const typename F::PointSymbol&)*it);
+			symbol = importPointSymbol((const typename F::PointSymbol&)*it, F::version());
 		}
 		else if (it->type == F::TypeLine)
 		{
-			symbol = importLineSymbol((const typename F::LineSymbol&)*it);
+			symbol = importLineSymbol((const typename F::LineSymbol&)*it, F::version());
 		}
 		else if (it->type == F::TypeArea)
 		{
@@ -754,17 +753,17 @@ void OcdFileImport::setupBaseSymbol(Symbol* symbol, const S& ocd_symbol)
 }
 
 template< class S >
-PointSymbol* OcdFileImport::importPointSymbol(const S& ocd_symbol)
+PointSymbol* OcdFileImport::importPointSymbol(const S& ocd_symbol, int ocd_version)
 {
 	OcdImportedPointSymbol* symbol = new OcdImportedPointSymbol();
 	setupBaseSymbol(symbol, ocd_symbol);
-	setupPointSymbolPattern(symbol, ocd_symbol.data_size, ocd_symbol.begin_of_elements);
+	setupPointSymbolPattern(symbol, ocd_symbol.data_size, ocd_symbol.begin_of_elements, ocd_version);
 	symbol->setRotatable(ocd_symbol.base.flags & 1);
 	return symbol;
 }
 
 template< class S >
-Symbol* OcdFileImport::importLineSymbol(const S& ocd_symbol)
+Symbol* OcdFileImport::importLineSymbol(const S& ocd_symbol, int ocd_version)
 {
 	OcdImportedLineSymbol* line_for_borders = nullptr;
 	
@@ -1022,7 +1021,7 @@ Symbol* OcdFileImport::importLineSymbol(const S& ocd_symbol)
 	const Ocd::OcdPoint32* coords = reinterpret_cast<const Ocd::OcdPoint32*>(ocd_symbol.begin_of_elements);
 	
 	symbol_line->mid_symbol = new OcdImportedPointSymbol();
-	setupPointSymbolPattern(symbol_line->mid_symbol, ocd_symbol.primary_data_size, ocd_symbol.begin_of_elements);
+	setupPointSymbolPattern(symbol_line->mid_symbol, ocd_symbol.primary_data_size, ocd_symbol.begin_of_elements, ocd_version);
 	symbol_line->mid_symbols_per_spot = ocd_symbol.num_prim_sym;
 	symbol_line->mid_symbol_distance = convertLength(ocd_symbol.prim_sym_dist);
 	coords += ocd_symbol.primary_data_size;
@@ -1036,21 +1035,21 @@ Symbol* OcdFileImport::importLineSymbol(const S& ocd_symbol)
 	if (ocd_symbol.corner_data_size > 0)
 	{
 		symbol_line->dash_symbol = new OcdImportedPointSymbol();
-		setupPointSymbolPattern(symbol_line->dash_symbol, ocd_symbol.corner_data_size, reinterpret_cast<const typename S::Element*>(coords));
+		setupPointSymbolPattern(symbol_line->dash_symbol, ocd_symbol.corner_data_size, reinterpret_cast<const typename S::Element*>(coords), ocd_version);
 		symbol_line->dash_symbol->setName(LineSymbolSettings::tr("Dash symbol"));
 		coords += ocd_symbol.corner_data_size;
 	}
 	if (ocd_symbol.start_data_size > 0)
 	{
 		symbol_line->start_symbol = new OcdImportedPointSymbol();
-		setupPointSymbolPattern(symbol_line->start_symbol, ocd_symbol.start_data_size, reinterpret_cast<const typename S::Element*>(coords));
+		setupPointSymbolPattern(symbol_line->start_symbol, ocd_symbol.start_data_size, reinterpret_cast<const typename S::Element*>(coords), ocd_version);
 		symbol_line->start_symbol->setName(LineSymbolSettings::tr("Start symbol"));
 		coords += ocd_symbol.start_data_size;
 	}
 	if (ocd_symbol.end_data_size > 0)
 	{
 		symbol_line->end_symbol = new OcdImportedPointSymbol();
-		setupPointSymbolPattern(symbol_line->end_symbol, ocd_symbol.end_data_size, reinterpret_cast<const typename S::Element*>(coords));
+		setupPointSymbolPattern(symbol_line->end_symbol, ocd_symbol.end_data_size, reinterpret_cast<const typename S::Element*>(coords), ocd_version);
 		symbol_line->end_symbol->setName(LineSymbolSettings::tr("End symbol"));
 	}
 	// FIXME: not really sure how this translates... need test cases
@@ -1159,7 +1158,7 @@ AreaSymbol* OcdFileImport::importAreaSymbol(const S& ocd_symbol, int ocd_version
 		// FIXME: somebody needs to own this symbol and be responsible for deleting it
 		// Right now it looks like a potential memory leak
 		pattern.point = new OcdImportedPointSymbol();
-		setupPointSymbolPattern(pattern.point, ocd_symbol.data_size, ocd_symbol.begin_of_elements);
+		setupPointSymbolPattern(pattern.point, ocd_symbol.data_size, ocd_symbol.begin_of_elements, ocd_version);
 		
 		// OC*D 8 has a "staggered" pattern mode, where successive rows are shifted width/2 relative
 		// to each other. We need to simulate this in Mapper with two overlapping patterns, each with
@@ -1406,20 +1405,7 @@ LineSymbol* OcdFileImport::importRectangleSymbol(const S& ocd_symbol)
 	return symbol;
 }
 
-template< > // OCD::FormatV8
-int OcdFileImport::circleRadius(const Ocd::PointSymbolElementV8* element) const
-{
-	return element->diameter / 2 - element->line_width;
-}
-
-template< class E >
-int OcdFileImport::circleRadius(const E* element) const
-{
-	return (element->diameter - element->line_width) / 2;
-}
-
-template< class E >
-void OcdFileImport::setupPointSymbolPattern(PointSymbol* symbol, std::size_t data_size, const E* elements)
+void OcdFileImport::setupPointSymbolPattern(PointSymbol* symbol, std::size_t data_size, const Ocd::PointSymbolElementV8* elements, int version)
 {
 	Q_ASSERT(symbol != nullptr);
 	
@@ -1428,11 +1414,11 @@ void OcdFileImport::setupPointSymbolPattern(PointSymbol* symbol, std::size_t dat
 	
 	for (std::size_t i = 0; i < data_size; i += 2)
 	{
-		const E* element = reinterpret_cast<const E*>(&reinterpret_cast<const Ocd::OcdPoint32*>(elements)[i]);
+		const Ocd::PointSymbolElementV8* element = reinterpret_cast<const Ocd::PointSymbolElementV8*>(&reinterpret_cast<const Ocd::OcdPoint32*>(elements)[i]);
 		const Ocd::OcdPoint32* const coords = reinterpret_cast<const Ocd::OcdPoint32*>(elements) + i + 2;
 		switch (element->type)
 		{
-			case E::TypeDot:
+			case Ocd::PointSymbolElementV8::TypeDot:
 				if (element->diameter > 0)
 				{
 					bool can_use_base_symbol = (!base_symbol_used && (!element->num_coords || (!coords[0].x && !coords[0].y)));
@@ -1458,9 +1444,10 @@ void OcdFileImport::setupPointSymbolPattern(PointSymbol* symbol, std::size_t dat
 					}
 				}
 				break;
-			case E::TypeCircle:
+			case Ocd::PointSymbolElementV8::TypeCircle:
 			{
-				int element_radius = circleRadius(element);
+				int element_radius = (version <= 8) ? (element->diameter / 2 - element->line_width)
+				                                    : ((element->diameter - element->line_width) / 2);
 				if (element_radius > 0 && element->line_width > 0)
 				{
 					bool can_use_base_symbol = (!base_symbol_used && (!element->num_coords || (!coords[0].x && !coords[0].y)));
@@ -1487,7 +1474,7 @@ void OcdFileImport::setupPointSymbolPattern(PointSymbol* symbol, std::size_t dat
 				}
 				break;
 			}
-			case E::TypeLine:
+			case Ocd::PointSymbolElementV8::TypeLine:
 				if (element->line_width > 0)
 				{
 					OcdImportedLineSymbol* element_symbol = new OcdImportedLineSymbol();
@@ -1499,7 +1486,7 @@ void OcdFileImport::setupPointSymbolPattern(PointSymbol* symbol, std::size_t dat
 					symbol->addElement(symbol->getNumElements(), element_object, element_symbol);
 				}
 				break;
-			case E::TypeArea:
+			case Ocd::PointSymbolElementV8::TypeArea:
 				{
 					OcdImportedAreaSymbol* element_symbol = new OcdImportedAreaSymbol();
 					element_symbol->color = convertColor(element->color);
