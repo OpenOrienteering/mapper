@@ -576,7 +576,7 @@
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="69"/>
         <source>°</source>
-        <translation>°</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="73"/>
@@ -1303,7 +1303,7 @@
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="1547"/>
         <source>Could not create new file: %1</source>
-        <translation>Неможливо сворити новіий файл: %1</translation>
+        <translation>Неможливо сворити новий файл: %1</translation>
     </message>
 </context>
 <context>
@@ -1351,17 +1351,17 @@
     <message>
         <location filename="../src/gps_display.cpp" line="90"/>
         <source>GPS is disabled in the device settings. Open settings now?</source>
-        <translation type="unfinished">GPS вимкнений у налаштуваннях пристрою. Відкрити налаштування?</translation>
+        <translation>GPS вимкнений у налаштуваннях пристрою. Відкрити налаштування?</translation>
     </message>
     <message>
         <location filename="../src/gps_display.cpp" line="91"/>
         <source>Yes</source>
-        <translation type="unfinished">Так</translation>
+        <translation>Так</translation>
     </message>
     <message>
         <location filename="../src/gps_display.cpp" line="92"/>
         <source>No</source>
-        <translation type="unfinished">Ні</translation>
+        <translation>Ні</translation>
     </message>
 </context>
 <context>
@@ -1446,7 +1446,7 @@
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="523"/>
         <source>The program must be restarted for the language change to take effect!</source>
-        <translation>Потрібно перезапустити прграму щоб зміни вступили в силу!</translation>
+        <translation>Потрібно перезапустити програму щоб зміни вступили в силу!</translation>
     </message>
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="592"/>
@@ -1530,13 +1530,13 @@
         <location filename="../src/core/crs_template_implementation.cpp" line="80"/>
         <source>by EPSG code</source>
         <comment>as in: The CRS is specified by EPSG code</comment>
-        <translation type="unfinished">код у EPSG</translation>
+        <translation type="unfinished">за кодом EPSG</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="82"/>
         <source>EPSG @code@ coordinates</source>
         <extracomment>Don&apos;t translate @code@. It is placeholder.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">EPSG @code@ координати</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="85"/>
@@ -1564,7 +1564,7 @@
         <location filename="../src/core/georeferencing.cpp" line="260"/>
         <location filename="../src/core/georeferencing.cpp" line="287"/>
         <source>Unknown CRS specification language: %1</source>
-        <translation type="unfinished">Невідома мова CRS специфікації: %1</translation>
+        <translation type="unfinished">Невідома мова опису CRS: %1</translation>
     </message>
     <message>
         <location filename="../src/core/georeferencing.cpp" line="290"/>
@@ -1635,12 +1635,12 @@
         <location filename="../src/gui/georeferencing_dialog.cpp" line="354"/>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="654"/>
         <source>Online declination lookup</source>
-        <translation>Онлайн пошук відхилення</translation>
+        <translation>Пошук схилення онлайн</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="93"/>
         <source>Map coordinate reference system</source>
-        <translation>Відносна система координат карти</translation>
+        <translation>Базова система координат карти</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="89"/>
@@ -1744,7 +1744,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="355"/>
         <source>The magnetic declination for the reference point %1° %2° will now be retrieved from &lt;a href=&quot;%3&quot;&gt;%3&lt;/a&gt;. Do you want to continue?</source>
-        <translation>Магнітне схилення для опорної точки прив’язки %1° %2° буде взято з &lt;a href=&quot;%3&quot;&gt;%3&lt;/a&gt;. Хочете продовжити?</translation>
+        <translation>Магнітне схилення для опорної точки %1° %2° буде взято з &lt;a href=&quot;%3&quot;&gt;%3&lt;/a&gt;. Хочете продовжити?</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="428"/>
@@ -1769,7 +1769,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="492"/>
         <source>locked</source>
-        <translation type="unfinished">змкнено</translation>
+        <translation type="unfinished">замкнено</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="625"/>
@@ -1785,14 +1785,14 @@
         <location filename="../src/gui/georeferencing_dialog.cpp" line="655"/>
         <source>The online declination lookup failed:
 %1</source>
-        <translation>Онлайн пошук відхилення невдалий:
+        <translation>Онлайн пошук схилення невдалий:
 %1</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="490"/>
         <source>%1 °</source>
         <comment>degree value</comment>
-        <translation>%1 °</translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -1821,12 +1821,12 @@
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="143"/>
         <source>Create a new map ...</source>
-        <translation>Створити нову курту ...</translation>
+        <translation>Створити нову карту ...</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="146"/>
         <source>Open map ...</source>
-        <translation>Відкрити курту ...</translation>
+        <translation>Відкрити карту ...</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="152"/>
@@ -1996,9 +1996,9 @@
         <location filename="../src/file_import_export.cpp" line="93"/>
         <source>Dropped %n irregular object(s).</source>
         <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+            <numerusform>Відкинуто %n нерегулярний об&apos;єкт.</numerusform>
+            <numerusform>Відкинуто %n нерегулярних об&apos;єкти.</numerusform>
+            <numerusform>Відкинуто %n нерегулярних об&apos;єктів.</numerusform>
         </translation>
     </message>
     <message>
@@ -2009,7 +2009,7 @@
     <message>
         <location filename="../src/file_import_export.cpp" line="112"/>
         <source>Template &quot;%1&quot; has been loaded from the map&apos;s directory instead of the relative location to the map file where it was previously.</source>
-        <translation type="unfinished">Підложка &quot;%1&quot; була завантажена з папки карти, а не з міця її розташування відносно файлу карти, до вона знаходилася раніше.</translation>
+        <translation type="unfinished">Підложка &quot;%1&quot; була завантажена з папки карти, а не з міця її розташування відносно файлу карти, де вона знаходилася раніше.</translation>
     </message>
     <message>
         <location filename="../src/file_import_export.cpp" line="120"/>
@@ -2025,7 +2025,7 @@
     <message>
         <location filename="../src/file_format_native.cpp" line="123"/>
         <source>This file uses an obsolete format. Support for this format is to be removed from this program soon. To be able to open the file in the future, save it again.</source>
-        <translation type="unfinished">Цей файл має у застарілий формат. Підтримка цього формату невдовзі буде припинена програмою. Щоб зберегти можливість відкривати цей файл у майбутньому, збережіть його ще раз.</translation>
+        <translation type="unfinished">Цей файл має застарілий формат. Підтримка цього формату невдовзі буде припинена програмою. Щоб зберегти можливість відкривати цей файл у майбутньому, збережіть його ще раз.</translation>
     </message>
     <message>
         <location filename="../src/file_format_native.cpp" line="136"/>
@@ -2047,7 +2047,7 @@
     <message>
         <location filename="../src/file_format_native.cpp" line="200"/>
         <source>The geographic coordinate reference system of the map was &quot;%1&quot;. This CRS is not supported. Using &quot;%2&quot;.</source>
-        <translation type="unfinished">Використовувалась система прив’язки географічних координат карти &quot;%1&quot;. Ця система не підтримується. Застосовано &quot;%2&quot;.</translation>
+        <translation type="unfinished">Була використана базова система географічних координат карти &quot;%1&quot;. Ця система не підтримується. Застосовано &quot;%2&quot;.</translation>
     </message>
     <message>
         <location filename="../src/file_format_native.cpp" line="319"/>
@@ -2402,17 +2402,17 @@
     <message>
         <location filename="../src/template_track.cpp" line="541"/>
         <source>One coordinate unit equals:</source>
-        <translation type="unfinished">Одна одиниця координат орівнює:</translation>
+        <translation type="unfinished">Одна одиниця координат дорівнює:</translation>
     </message>
     <message>
         <location filename="../src/template_track.cpp" line="543"/>
         <source>Position track at given coordinates</source>
-        <translation type="unfinished">Позиціонувати трек у отриманих координатах</translation>
+        <translation type="unfinished">Розмістити трек у отриманих координатах</translation>
     </message>
     <message>
         <location filename="../src/template_track.cpp" line="547"/>
         <source>Position track at view center</source>
-        <translation type="unfinished">Позиціонувати трек у центрі екрану</translation>
+        <translation type="unfinished">Розмістити трек у центрі екрану</translation>
     </message>
 </context>
 <context>
@@ -2493,7 +2493,7 @@
     <message>
         <location filename="../src/gui/main_window.cpp" line="255"/>
         <source>Ctrl+Shift+S</source>
-        <translation>Ctrl+Shift+S</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="261"/>
@@ -2529,7 +2529,7 @@
     <message>
         <location filename="../src/gui/main_window.cpp" line="302"/>
         <source>General</source>
-        <translation type="unfinished">Основне</translation>
+        <translation type="unfinished">Загальне</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="317"/>
@@ -2594,7 +2594,7 @@ Do you want to save your changes?</source>
         <source>The selected map scale is 1:%1, but the chosen symbol set has a nominal scale of 1:%2.
 
 Do you want to scale the symbols to the selected scale?</source>
-        <translation type="unfinished">Обратий масштаб карти 1:%1, але вибраний набір знакві має масштаб 1:%2.
+        <translation type="unfinished">Обраний масштаб карти 1:%1, але вибраний набір знакві має масштаб 1:%2.
 
 Ви хочете масштабувати набір знаків до обраного масштабу?</translation>
     </message>
@@ -2660,7 +2660,7 @@ Do you want to discard your changes?</source>
     <message>
         <location filename="../src/gui/main_window.cpp" line="852"/>
         <source>&amp;%1 %2</source>
-        <translation>&amp;%1 %2</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="931"/>
@@ -2668,7 +2668,7 @@ Do you want to discard your changes?</source>
 
 Press Yes to save in this format.
 Press No to choose a different format.</source>
-        <translation type="unfinished">Цю картиу буде збережено як &quot;%1&quot; файл. Інформація може бути втрачена.
+        <translation type="unfinished">Цю карту буде збережено як &quot;%1&quot; файл.Частина інформації може бути втрачена.
 
 Натисніть Так для збереження в цьому форматі.
 Натисніть Ні щоб обрати інший формат.</translation>
@@ -2686,12 +2686,12 @@ Press No to choose a different format.</source>
     <message>
         <location filename="../src/gui/main_window.cpp" line="1046"/>
         <source>There was a problem in determining the file format.</source>
-        <translation>Проблема у визначеному форматі файлу.</translation>
+        <translation type="unfinished">Виникла проблема при визначенні формату файла.</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="1047"/>
         <source>Please report this as a bug.</source>
-        <translation>Будь-ласка повідомте про цю помилку.</translation>
+        <translation type="unfinished">Будь ласка повідомте про цю помилку.</translation>
     </message>
 </context>
 <context>
@@ -3199,7 +3199,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="1082"/>
         <source>View</source>
-        <translation>Перегляд</translation>
+        <translation type="unfinished">Перегляд</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1132"/>
@@ -3235,7 +3235,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="1451"/>
         <source>No undo steps available.</source>
-        <translation>Відсутні попередні кроки.</translation>
+        <translation>Попередні кроки відсутні.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1464"/>
@@ -3246,7 +3246,7 @@ Rescale the imported data?</source>
         <location filename="../src/map_editor.cpp" line="1508"/>
         <location filename="../src/map_editor.cpp" line="1541"/>
         <source>An internal error occurred, sorry!</source>
-        <translation>Внутрішня непередбачена помилка, вибачте!</translation>
+        <translation>Внутрішня непередбачена помилка, вибачайте!</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1519"/>
@@ -3385,17 +3385,17 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="763"/>
         <source>&amp;PDF</source>
-        <translation>&amp;PDF</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="781"/>
         <source>Clear undo / redo history</source>
-        <translation>Очистити історию відмін / повернень</translation>
+        <translation>Очистити історію відмін / повернень</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="781"/>
         <source>Clear the undo / redo history to reduce map file size.</source>
-        <translation>Очистити історию відмін / повернень щоб зменшити розмір файла.</translation>
+        <translation>Очистити історію відмін / повернень щоб зменшити розмір файла.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="788"/>
@@ -3405,7 +3405,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="798"/>
         <source>Overprinting simulation</source>
-        <translation>Емулювати Overprinting</translation>
+        <translation>Емулювати overprinting</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="802"/>
@@ -3480,7 +3480,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="870"/>
         <source>Paint on template settings</source>
-        <translation type="unfinished">Налаштування малювання по підложці</translation>
+        <translation>Настройки малювання по підложці</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="876"/>
@@ -3495,7 +3495,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="879"/>
         <source>Enable GPS distance rings</source>
-        <translation type="unfinished">Показувати кльце відстані GPS</translation>
+        <translation type="unfinished">Показувати кільце відстані GPS</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="881"/>
@@ -3526,10 +3526,6 @@ Rescale the imported data?</source>
         <location filename="../src/map_editor.cpp" line="891"/>
         <source>Align map with north</source>
         <translation type="unfinished">Вирівняти карту по півночі</translation>
-    </message>
-    <message>
-        <source>Toggle template visibility</source>
-        <translation type="obsolete">Переключити видимість підложки</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="893"/>
@@ -3703,7 +3699,7 @@ selected</source>
     <message>
         <location filename="../src/map_editor.cpp" line="778"/>
         <source>Select nothing</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Нічого не вибрати</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="779"/>
@@ -3718,7 +3714,7 @@ selected</source>
     <message>
         <location filename="../src/map_editor.cpp" line="2125"/>
         <source>Turn paths made of straight segments into smooth bezier splines.</source>
-        <translation type="unfinished">Включити лінії складені з прямих відрізків всередині кривих Безьє.</translation>
+        <translation type="unfinished">Перетворити лінії з прямих відрізків на згладжені криві Безьє.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2125"/>
@@ -3744,7 +3740,7 @@ selected</source>
     <message>
         <location filename="../src/map_editor.cpp" line="2146"/>
         <source>Unify overlapping objects.</source>
-        <translation type="unfinished">Об&apos;єднати об&apos;єкти що перекриваються.</translation>
+        <translation>Об&apos;єднати об&apos;єкти що перекриваються.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2148"/>
@@ -3785,7 +3781,7 @@ selected</source>
     <message>
         <location filename="../src/map_editor.cpp" line="2163"/>
         <source>Cut away some objects or everything in a limited area.</source>
-        <translation type="unfinished">Відрізати деякі або всі об&apos;єкти в обмежаній убласті.</translation>
+        <translation type="unfinished">Відрізати деякі або всі об&apos;єкти в обмежаній області.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2188"/>
@@ -3796,7 +3792,7 @@ selected</source>
         <location filename="../src/map_editor.cpp" line="2188"/>
         <location filename="../src/map_editor.cpp" line="2190"/>
         <source>Select at least one object and a fitting, different symbol to activate this tool.</source>
-        <translation type="unfinished">Виділіть хоч один об’єкт та підходящий, інший знак щоб використати цей інструмент.</translation>
+        <translation type="unfinished">Виділіть хоч один об’єкт та підходящий, відмінний знак щоб використати цей інструмент.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2190"/>
@@ -3918,7 +3914,7 @@ selected</source>
     <message>
         <location filename="../src/map_editor.cpp" line="3704"/>
         <source>Importable files</source>
-        <translation type="unfinished">Імпортовані файли</translation>
+        <translation type="unfinished">Файли що імпортуються</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="3706"/>
