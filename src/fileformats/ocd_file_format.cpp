@@ -1,5 +1,5 @@
 /*
- *    Copyright 2013-2015 Kai Pastor
+ *    Copyright 2013-2016 Kai Pastor
  *
  *    Some parts taken from file_format_oc*d8{.h,_p.h,cpp} which are
  *    Copyright 2012 Pete Curtis
@@ -33,6 +33,7 @@
 #include "ocd_types_v9.h"
 #include "ocd_types_v10.h"
 #include "ocd_types_v11.h"
+#include "ocd_types_v12.h"
 #include "../core/map_color.h"
 #include "../core/map_view.h"
 #include "../core/georeferencing.h"
@@ -1919,6 +1920,9 @@ void OcdFileImport::import(bool load_symbols_only)
 			break;
 		case 11:
 			importImplementation< Ocd::FormatV11 >(load_symbols_only);
+			break;
+		case 12:
+			importImplementation< Ocd::FormatV12 >(load_symbols_only);
 			break;
 		default:
 			throw FileFormatException(

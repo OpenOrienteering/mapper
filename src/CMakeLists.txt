@@ -1,6 +1,6 @@
 #
-#    Copyright 2012, 2013, 2014 Thomas Schöps
-#    Copyright 2012-2015 Kai Pastor
+#    Copyright 2012-2014 Thomas Schöps
+#    Copyright 2012-2016 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -317,6 +317,7 @@ set(Mapper_Common_HEADERS
   fileformats/ocd_types_v9.h
   fileformats/ocd_types_v10.h
   fileformats/ocd_types_v11.h
+  fileformats/ocd_types_v12.h
 
   gui/point_handles.h
 
