@@ -175,7 +175,7 @@ bool TemplateImage::postLoadConfiguration(QWidget* dialog_parent, bool& out_cent
 		if (open_dialog.exec() == QDialog::Rejected)
 			return false;
 		
-		if (open_dialog.isGeorefRadioChecked() && !map->getGeoreferencing().isValid())
+		if (open_dialog.isGeorefRadioChecked() && map->getGeoreferencing().isLocal())
 		{
 			// Make sure that the map is georeferenced;
 			// use the center coordinates of the image as initial reference point.
