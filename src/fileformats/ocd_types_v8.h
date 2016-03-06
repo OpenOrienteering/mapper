@@ -315,12 +315,25 @@ namespace Ocd
 		quint16 alignment;
 		quint8  framing_mode;
 		quint8  RESERVED_MEMBER;
-		char    RESERVED_MEMBER[32];
+		PascalString<31> RESERVED_MEMBER;
 		quint16 framing_color;
 		quint16 framing_line_width;
 		quint16 RESERVED_MEMBER[2];
 		quint16 framing_offset_x;
 		quint16 framing_offset_y;
+		
+		enum TextAlignment
+		{
+			HAlignMask      = 0x03,
+			HAlignLeft      = 0x00,
+			HAlignCenter    = 0x01,
+			HAlignRight     = 0x02,
+			HAlignAllLine   = 0x03,
+			VAlignMask      = 0x0c, /// \since V10
+			VAlignBottom    = 0x00, /// \since V10
+			VAlignMiddle    = 0x04, /// \since V10
+			VAlignTop       = 0x08  /// \since V10
+		};
 	};
 	
 	struct RectangleSymbolV8

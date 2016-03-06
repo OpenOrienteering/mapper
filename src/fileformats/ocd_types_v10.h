@@ -42,30 +42,7 @@ namespace Ocd
 	
 	using TextSymbolV10 = TextSymbolV9;
 	
-	struct LineTextSymbolV10 // TODO: use and test...
-	{
-		typedef BaseSymbolV10 BaseSymbol;
-		
-		BaseSymbol base;
-		
-		PascalString<31> font_name;
-		quint16 font_color;
-		quint16 font_size;
-		quint16 font_weight;
-		quint8  font_italic;
-		quint8  RESERVED_MEMBER;
-		quint16 char_spacing;
-		quint16 word_spacing;
-		quint16 alignment;
-		quint8  framing_mode;
-		quint8  framing_line_style;
-		char    RESERVED_MEMBER[32];
-		quint16 framing_color;
-		quint16 framing_line_width;
-		quint16 RESERVED_MEMBER[2];
-		quint16 framing_offset_x;
-		quint16 framing_offset_y;
-	};
+	using LineTextSymbolV10 = LineTextSymbolV9;
 	
 	struct RectangleSymbolV10
 	{
