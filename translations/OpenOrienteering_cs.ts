@@ -36,7 +36,7 @@
     </message>
     <message>
         <source>License (%1)</source>
-        <translation type="vanished">Povolení</translation>
+        <translation>Povolení</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="156"/>
@@ -45,11 +45,11 @@
     </message>
     <message>
         <source>This software is licensed under the term of the GNU General Public License (GPL), version 3.&lt;br/&gt;You are welcome to redistribute it under the terms of this license.&lt;br/&gt;THERE IS NO WARRANTY FOR THE PROGRAM, TO THE EXTENT PERMITTED BY APPLICABLE LAW.&lt;br&gt;The full license text is supplied in the file %1.</source>
-        <translation type="vanished">Tento program je licencován za podmínek GNU General Public License (GPL), verz 3, nebo (podle své volby) v kterékoli pozdější verzi..&lt;br/&gt;Můžete jej šířit za podmínek této licence&lt;br&gt;Tento balík je šířen v naději, že bude užitečný, ale BEZ JAKÉKOLI ZÁRUKY; také bez předpokládané záruky PRODEJNOSTI nebo POUŽITELNOSTI PRO NĚJAKÝ URČITÝ ÚČEL. &lt;br&gt;Celý text licence naleznete v souboru %1.</translation>
+        <translation>Tento program je licencován za podmínek GNU General Public License (GPL), verz 3, nebo (podle své volby) v kterékoli pozdější verzi..&lt;br/&gt;Můžete jej šířit za podmínek této licence&lt;br&gt;Tento balík je šířen v naději, že bude užitečný, ale BEZ JAKÉKOLI ZÁRUKY; také bez předpokládané záruky PRODEJNOSTI nebo POUŽITELNOSTI PRO NĚJAKÝ URČITÝ ÚČEL. &lt;br&gt;Celý text licence naleznete v souboru %1.</translation>
     </message>
     <message>
         <source>Developers in alphabetical order:</source>
-        <translation type="vanished">Vývojáři v abecedním pořadí:</translation>
+        <translation>Vývojáři v abecedním pořadí:</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="181"/>
@@ -58,19 +58,19 @@
     </message>
     <message>
         <source>This program uses the &lt;b&gt;Clipper library&lt;/b&gt; by Angus Johnson.</source>
-        <translation type="vanished">Tento program používá &lt;b&gt;Clipper library&lt;/b&gt; od Anguse Johnsona.</translation>
+        <translation>Tento program používá &lt;b&gt;Clipper library&lt;/b&gt; od Anguse Johnsona.</translation>
     </message>
     <message>
         <source>See &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt; for more information.</source>
-        <translation type="vanished">Další informace na &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;.</translation>
+        <translation>Další informace na &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;.</translation>
     </message>
     <message>
         <source>This program uses the &lt;b&gt;PROJ.4 Cartographic Projections Library&lt;/b&gt; by Frank Warmerdam.</source>
-        <translation type="vanished">Tento program používá &lt;b&gt;PROJ.4 Cartographic Projections Library&lt;/b&gt; od Franka Warmerdama.</translation>
+        <translation>Tento program používá &lt;b&gt;PROJ.4 Cartographic Projections Library&lt;/b&gt; od Franka Warmerdama.</translation>
     </message>
     <message>
         <source>Additional information</source>
-        <translation type="vanished">Doplňkové informace</translation>
+        <translation>Doplňkové informace</translation>
     </message>
 </context>
 <context>
@@ -241,37 +241,37 @@
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="43"/>
         <source>Autosaved file</source>
-        <translation type="unfinished"></translation>
+        <translation>Automaticky uložený soubor</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/gui/autosave_dialog.cpp" line="45"/>
         <location filename="../src/gui/autosave_dialog.cpp" line="51"/>
         <source>%n bytes</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n byt</numerusform>
+            <numerusform>%n byty</numerusform>
+            <numerusform>%n bytů</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="49"/>
         <source>File saved by the user</source>
-        <translation type="unfinished"></translation>
+        <translation>Soubor uložený uživatelem</translation>
     </message>
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="56"/>
         <source>File recovery</source>
-        <translation type="unfinished">Obnova souboru</translation>
+        <translation>Obnova souboru</translation>
     </message>
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="58"/>
         <source>File %1 was not properly closed. At the moment, there are two versions:</source>
-        <translation type="unfinished"></translation>
+        <translation>Soubor %1 nebyl řádně zavřen. V současnosti jsou dvě verze tohoto souboru:</translation>
     </message>
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="72"/>
         <source>Save the active file to remove the conflicting version.</source>
-        <translation type="unfinished"></translation>
+        <translation>Uložit činný soubor pro odstranění střetávající se verze.</translation>
     </message>
 </context>
 <context>
@@ -1015,7 +1015,7 @@
         <location filename="../src/tool_draw_point.cpp" line="62"/>
         <source>Reset</source>
         <comment>Reset rotation</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nastavit znovu</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_point.cpp" line="325"/>
@@ -1032,21 +1032,21 @@
         <location filename="../src/tool_draw_point.cpp" line="331"/>
         <location filename="../src/tool_draw_point.cpp" line="345"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Create a point object.</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Klepnout&lt;/b&gt;: Vytvořit bodový objekt.</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_point.cpp" line="332"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Create an object and set its orientation.</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Táhnout&lt;/b&gt;: Vytvořit objekt a nastavit jeho natočení.</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_point.cpp" line="338"/>
         <source>&lt;b&gt;%1, 0&lt;/b&gt;: Reset rotation.</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1, 0&lt;/b&gt;: Nastavit otočení znovu.</translation>
     </message>
     <message>
         <source>&lt;b&gt;Click&lt;/b&gt;: Create a point object. &lt;b&gt;Drag&lt;/b&gt;: Create an object and set its orientation (if rotatable). </source>
-        <translation type="vanished">&lt;b&gt;Klepnout&lt;/b&gt;: Vytvořit bodový objekt. &lt;b&gt;Táhnout&lt;/b&gt;: Vytvořit objekt a nastavit jeho natočení (pokud je otočný). </translation>
+        <translation>&lt;b&gt;Klepnout&lt;/b&gt;: Vytvořit bodový objekt. &lt;b&gt;Táhnout&lt;/b&gt;: Vytvořit objekt a nastavit jeho natočení (pokud je otočný). </translation>
     </message>
 </context>
 <context>
@@ -1114,7 +1114,7 @@
     </message>
     <message>
         <source>A</source>
-        <translation type="vanished">A</translation>
+        <translation>A</translation>
     </message>
 </context>
 <context>
@@ -1246,7 +1246,7 @@
     </message>
     <message>
         <source>px</source>
-        <translation type="vanished">px</translation>
+        <translation>px</translation>
     </message>
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="166"/>
@@ -1339,7 +1339,7 @@
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="261"/>
         <source>Editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Editor</translation>
     </message>
 </context>
 <context>
@@ -1395,17 +1395,17 @@
     <message>
         <location filename="../src/gps_display.cpp" line="90"/>
         <source>GPS is disabled in the device settings. Open settings now?</source>
-        <translation type="unfinished"></translation>
+        <translation>GPS je zakázáno v nastavení zařízení. Otevřít nastavení nyní?</translation>
     </message>
     <message>
         <location filename="../src/gps_display.cpp" line="91"/>
         <source>Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>Ano</translation>
     </message>
     <message>
         <location filename="../src/gps_display.cpp" line="92"/>
         <source>No</source>
-        <translation type="unfinished"></translation>
+        <translation>Ne</translation>
     </message>
 </context>
 <context>
@@ -1475,7 +1475,7 @@
         <location filename="../src/gui/settings_dialog.cpp" line="451"/>
         <location filename="../src/gui/settings_dialog.cpp" line="619"/>
         <source>More...</source>
-        <translation type="unfinished"></translation>
+        <translation>Více...</translation>
     </message>
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="460"/>
@@ -1485,7 +1485,7 @@
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="490"/>
         <source>General</source>
-        <translation type="unfinished">Obecné</translation>
+        <translation>Obecné</translation>
     </message>
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="523"/>
@@ -1522,7 +1522,7 @@
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="713"/>
         <source>Primary screen resolution in pixels:</source>
-        <translation>Rozlišení hlavní obrazovky v pixelech:</translation>
+        <translation>Rozlišení hlavní obrazovky v obrazových bodech:</translation>
     </message>
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="721"/>
@@ -1545,12 +1545,12 @@
     </message>
     <message>
         <source>UTM Zone (number north/south, e.g. &quot;32 N&quot;, &quot;24 S&quot;)</source>
-        <translation type="vanished">Zóna Univerzálního transverzálního Mercatorova systému souřadnic (UTM) (číslo sever/jih, např. &quot;32 N&quot;, &quot;24 S&quot;)</translation>
+        <translation>Zóna Univerzálního transverzálního Mercatorova systému souřadnic (UTM) (číslo sever/jih, např. &quot;32 N&quot;, &quot;24 S&quot;)</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="61"/>
         <source>UTM Zone (number north/south)</source>
-        <translation type="unfinished"></translation>
+        <translation>Pásmo UTM (číslo sever/jih)</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="68"/>
@@ -1573,36 +1573,36 @@
         <location filename="../src/core/crs_template_implementation.cpp" line="80"/>
         <source>by EPSG code</source>
         <comment>as in: The CRS is specified by EPSG code</comment>
-        <translation type="unfinished"></translation>
+        <translation>pomocí kódu EPSG</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="82"/>
         <source>EPSG @code@ coordinates</source>
         <extracomment>Don&apos;t translate @code@. It is placeholder.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Souřadnice EPSG @code@</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="93"/>
         <location filename="../src/core/georeferencing.cpp" line="509"/>
         <source>Local coordinates</source>
-        <translation type="unfinished"></translation>
+        <translation>Místní souřadnice</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="85"/>
         <source>EPSG code</source>
-        <translation type="unfinished"></translation>
+        <translation>Kód EPSG</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="92"/>
         <source>Custom PROJ.4</source>
         <comment>PROJ.4 specification</comment>
-        <translation type="unfinished"></translation>
+        <translation>Vlastní  PROJ.4</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="96"/>
         <source>Specification</source>
         <comment>PROJ.4 specification</comment>
-        <translation type="unfinished"></translation>
+        <translation>Přesný popis</translation>
     </message>
     <message>
         <location filename="../src/core/georeferencing.cpp" line="224"/>
@@ -1622,7 +1622,7 @@
     </message>
     <message>
         <source>Scale only</source>
-        <translation type="vanished">Jen měřítko</translation>
+        <translation>Jen měřítko</translation>
     </message>
     <message>
         <location filename="../src/core/georeferencing.cpp" line="500"/>
@@ -1631,7 +1631,7 @@
     </message>
     <message>
         <source>Projected</source>
-        <translation type="vanished">Promítnuto</translation>
+        <translation>Promítnuto</translation>
     </message>
 </context>
 <context>
@@ -1700,11 +1700,11 @@
     </message>
     <message>
         <source>- none -</source>
-        <translation type="vanished">- žádná -</translation>
+        <translation>- žádná -</translation>
     </message>
     <message>
         <source>- from Proj.4 specification -</source>
-        <translation type="vanished">- z popisu Proj. 4 -</translation>
+        <translation>- z popisu Proj. 4 -</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="96"/>
@@ -1713,7 +1713,7 @@
     </message>
     <message>
         <source>CRS specification:</source>
-        <translation type="vanished">Definice souřadnicového systému:</translation>
+        <translation>Definice souřadnicového systému:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="101"/>
@@ -1788,7 +1788,7 @@
         <location filename="../src/gui/georeferencing_dialog.cpp" line="181"/>
         <location filename="../src/gui/select_crs_dialog.cpp" line="84"/>
         <source>&amp;Coordinate reference system:</source>
-        <translation type="unfinished">Soustava &amp;souřadnic:</translation>
+        <translation>Soustava &amp;souřadnic:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="187"/>
@@ -1827,7 +1827,7 @@
     </message>
     <message>
         <source>Projected coordinates:</source>
-        <translation type="vanished">Reálné souřadnice:</translation>
+        <translation>Reálné souřadnice:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="458"/>
@@ -1842,7 +1842,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="492"/>
         <source>locked</source>
-        <translation type="unfinished"></translation>
+        <translation>zamknuto</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="625"/>
@@ -1872,12 +1872,12 @@
     <name>GeoreferencingTool</name>
     <message>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set the reference point. Another button to cancel.</source>
-        <translation type="vanished">&lt;b&gt;Klepnutí&lt;/b&gt;: Nastavit referenční bod. Stisknout jiné tlačítko myši pro zrušení.</translation>
+        <translation>&lt;b&gt;Klepnutí&lt;/b&gt;: Nastavit referenční bod. Stisknout jiné tlačítko myši pro zrušení.</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="683"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set the reference point. &lt;b&gt;Right click&lt;/b&gt;: Cancel.</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Klepnutí&lt;/b&gt;: Nastavit referenční bod. &lt;b&gt;Klepnutí pravým tlačítkem myši&lt;/b&gt;: Zrušit.</translation>
     </message>
 </context>
 <context>
@@ -1892,64 +1892,64 @@
     <name>HomeScreenWidget</name>
     <message>
         <source>Clear list</source>
-        <translation type="vanished">Vyprázdnit seznam</translation>
+        <translation>Vyprázdnit seznam</translation>
     </message>
     <message>
         <source>Exit</source>
-        <translation type="vanished">Ukončit</translation>
+        <translation>Ukončit</translation>
     </message>
     <message>
         <source>Activities</source>
-        <translation type="vanished">Činnosti</translation>
+        <translation>Činnosti</translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation type="vanished">Nastavení</translation>
+        <translation>Nastavení</translation>
     </message>
     <message>
         <source>Help</source>
-        <translation type="vanished">Nápověda</translation>
+        <translation>Nápověda</translation>
     </message>
     <message>
         <source>Open most recently used file on start</source>
-        <translation type="vanished">Otevřít naposledy používaný soubor při spuštění programu</translation>
+        <translation>Otevřít naposledy používaný soubor při spuštění programu</translation>
     </message>
     <message>
         <source>Tip of the day</source>
-        <translation type="vanished">Rada dne</translation>
+        <translation>Rada dne</translation>
     </message>
     <message>
         <source>Previous</source>
-        <translation type="vanished">Předchozí</translation>
+        <translation>Předchozí</translation>
     </message>
     <message>
         <source>Next</source>
-        <translation type="vanished">Další</translation>
+        <translation>Další</translation>
     </message>
     <message>
         <source>Create a new map ...</source>
-        <translation type="vanished">Vytvořit novou mapu...</translation>
+        <translation>Vytvořit novou mapu...</translation>
     </message>
     <message>
         <source>Open map ...</source>
-        <translation type="vanished">Otevřít mapu...</translation>
+        <translation>Otevřít mapu...</translation>
     </message>
     <message>
         <source>About %1</source>
         <comment>As in &apos;About OpenOrienteering Mapper&apos;</comment>
-        <translation type="vanished">O programu %1</translation>
+        <translation>O programu %1</translation>
     </message>
     <message>
         <source>Recent maps</source>
-        <translation type="vanished">Naposledy otevřené mapy</translation>
+        <translation>Naposledy otevřené mapy</translation>
     </message>
     <message>
         <source>Open most recently used file</source>
-        <translation type="vanished">Otevřít naposledy používaný soubor</translation>
+        <translation>Otevřít naposledy používaný soubor</translation>
     </message>
     <message>
         <source>Show tip of the day</source>
-        <translation type="vanished">Ukázat radu dne</translation>
+        <translation>Ukázat radu dne</translation>
     </message>
 </context>
 <context>
@@ -2041,7 +2041,7 @@
     </message>
     <message>
         <source>About Qt</source>
-        <translation type="vanished">O Qt</translation>
+        <translation>O Qt</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="436"/>
@@ -2051,11 +2051,11 @@
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="497"/>
         <source>No map files found!&lt;br/&gt;&lt;br/&gt;Copy map files to a top-level folder named &apos;OOMapper&apos; on the device or a memory card.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nenalezeny žádné mapové soubory!&lt;br/&gt;&lt;br/&gt;Kopírujte soubory s mapami do složky v nejhořejší úrovni s názvem /OOMapper na zařízení nebo paměťové kartě.</translation>
     </message>
     <message>
         <source>No map files found!&lt;br/&gt;&lt;br/&gt;Copy a map file to /OOMapper or /sdcard/OOMapper to list it here.</source>
-        <translation type="vanished">Nenalezeny žádné mapové soubory!&lt;br/&gt;&lt;br/&gt;Kopírujte soubor s mapou do /OOMapper nebo /sdcard/OOMapper, aby zde byly v seznamu uvedeny.</translation>
+        <translation>Nenalezeny žádné mapové soubory!&lt;br/&gt;&lt;br/&gt;Kopírujte soubor s mapou do /OOMapper nebo /sdcard/OOMapper, aby zde byly v seznamu uvedeny.</translation>
     </message>
 </context>
 <context>
@@ -2073,11 +2073,11 @@
     <message>
         <location filename="../src/symbol.cpp" line="285"/>
         <source>Error while loading a symbol of type %1 at line %2 column %3: %4</source>
-        <translation type="unfinished"></translation>
+        <translation>Chyba při nahrávání symbolu typu %1, řádek %2, sloupec %3: %4</translation>
     </message>
     <message>
         <source>Error while loading a symbol.</source>
-        <translation type="vanished">Chyba při nahrávání symbolu.</translation>
+        <translation>Chyba při nahrávání symbolu.</translation>
     </message>
     <message>
         <location filename="../src/object.cpp" line="393"/>
@@ -2117,7 +2117,7 @@
     </message>
     <message>
         <source>Could not parse the data.</source>
-        <translation type="vanished">Nepodařilo se zpracovat data.</translation>
+        <translation>Nepodařilo se zpracovat data.</translation>
     </message>
     <message>
         <location filename="../src/util/xml_stream_util.cpp" line="72"/>
@@ -2133,13 +2133,13 @@
     <message>
         <location filename="../src/file_format_xml.cpp" line="858"/>
         <source>Error while loading the printing configuration at %1:%2: %3</source>
-        <translation type="unfinished"></translation>
+        <translation>Chyba při nahrávání nastavení tisku v %1: %2: %3</translation>
     </message>
     <message>
         <location filename="../src/file_format_xml.cpp" line="871"/>
         <location filename="../src/file_format_xml.cpp" line="885"/>
         <source>Error while loading the undo/redo steps at %1:%2: %3</source>
-        <translation type="unfinished"></translation>
+        <translation>Chyba při nahrávání kroků zpět/znovu v %1: %2: %3</translation>
     </message>
 </context>
 <context>
@@ -2152,10 +2152,10 @@
     <message numerus="yes">
         <location filename="../src/file_import_export.cpp" line="93"/>
         <source>Dropped %n irregular object(s).</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Zahodil %n nepravidelný objekt.</numerusform>
+            <numerusform>Zahodil %n nepravidelné objekty.</numerusform>
+            <numerusform>Zahodil %n nepravidelných objektů.</numerusform>
         </translation>
     </message>
     <message>
@@ -2172,21 +2172,21 @@
         <location filename="../src/file_import_export.cpp" line="120"/>
         <location filename="../src/file_import_export.cpp" line="122"/>
         <source>At least one template file could not be found.</source>
-        <translation type="unfinished"></translation>
+        <translation>Jeden nebo více souborů s podkladem se nepodařilo najít.</translation>
     </message>
     <message>
         <location filename="../src/file_import_export.cpp" line="123"/>
         <source>Click the red template name(s) in the Templates -&gt; Template setup window to locate the template file name(s).</source>
-        <translation type="unfinished"></translation>
+        <translation>Klepněte na červeně označený název souboru v Podklady -&gt; okno Spravovat podklady pro nalezení názvu (názvů) souboru (souborů) s podkladem (podklady).</translation>
     </message>
     <message>
         <source>At least one template file could not be found. Click the red template name(s) in the Templates -&gt; Template setup window to locate the template file name(s).</source>
-        <translation type="vanished">Jeden nebo více souborů s podkladem se nepodařilo najít. Klepněte na červeně označený název souboru v Podklady -&gt; okno Spravovat podklady pro nalezení názvu (názvů) souboru (souborů) s podkladem (podklady).</translation>
+        <translation>Jeden nebo více souborů s podkladem se nepodařilo najít. Klepněte na červeně označený název souboru v Podklady -&gt; okno Spravovat podklady pro nalezení názvu (názvů) souboru (souborů) s podkladem (podklady).</translation>
     </message>
     <message>
         <location filename="../src/file_format_native.cpp" line="123"/>
         <source>This file uses an obsolete format. Support for this format is to be removed from this program soon. To be able to open the file in the future, save it again.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tento soubor používá zastaralý formát. Podpora pro tento formát bude z tohoto programu brzy odstraněna. Pro opětovné otevření souboru v budoucnu jej znovu uložte.</translation>
     </message>
     <message>
         <location filename="../src/file_format_native.cpp" line="136"/>
@@ -2737,7 +2737,7 @@ Neznámý souborový formát.</translation>
     <message>
         <location filename="../src/gui/main_window.cpp" line="516"/>
         <source>Do you want to remove the autosaved version?</source>
-        <translation type="unfinished"></translation>
+        <translation>Chcete odstranit automaticky uloženou verzi?</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="522"/>
@@ -2767,11 +2767,11 @@ Má se změnit velikost symbolů na vybrané měřítko?</translation>
     </message>
     <message>
         <source>File recovery</source>
-        <translation type="vanished">Obnova souboru</translation>
+        <translation>Obnova souboru</translation>
     </message>
     <message>
         <source>There is an automatically saved version of &lt;br /&gt;&lt;tt&gt;%1&lt;/tt&gt;&lt;br /&gt;&lt;br /&gt;Load this version?</source>
-        <translation type="vanished">Je automaticky uložený obnovovací soubor &lt;br /&gt;&lt;tt&gt;%1&lt;/tt&gt;&lt;br /&gt;&lt;br /&gt;Nahrát tento soubor?</translation>
+        <translation>Je automaticky uložený obnovovací soubor &lt;br /&gt;&lt;tt&gt;%1&lt;/tt&gt;&lt;br /&gt;&lt;br /&gt;Nahrát tento soubor?</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="899"/>
@@ -2843,7 +2843,8 @@ Má se změnit velikost symbolů na vybrané měřítko?</translation>
         <location filename="../src/gui/main_window.cpp" line="800"/>
         <source>The file has been modified.
 Do you want to discard your changes?</source>
-        <translation type="unfinished"></translation>
+        <translation>Soubor byl změněn.
+Chcete zahodit změny?</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="988"/>
@@ -2902,7 +2903,7 @@ protože formát je neznámý.</translation>
     <message>
         <source>File does not exist or insufficient permissions to open:
 %1</source>
-        <translation type="vanished">Soubor neexistuje, nebo jsou oprávnění k otevření nedostatečná:
+        <translation>Soubor neexistuje, nebo jsou oprávnění k otevření nedostatečná:
 %1</translation>
     </message>
     <message>
@@ -2958,7 +2959,9 @@ Soubor nelze otevřít pro čtení.</translation>
         <source>Cannot save file
 %1:
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Nelze uložit soubor:
+%1:
+%2</translation>
     </message>
     <message>
         <location filename="../src/map.cpp" line="788"/>
@@ -3004,7 +3007,7 @@ Přepočítat zavedená data na měřítko mapy?</translation>
     <message>
         <location filename="../src/core/map_coord.cpp" line="173"/>
         <source>Coordinates are out-of-bounds.</source>
-        <translation type="unfinished"></translation>
+        <translation>Souřadnice jsou mimo meze.</translation>
     </message>
 </context>
 <context>
@@ -3143,17 +3146,17 @@ Přepočítat zavedená data na měřítko mapy?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="777"/>
         <source>Select all</source>
-        <translation type="unfinished">Vybrat vše</translation>
+        <translation>Vybrat vše</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="778"/>
         <source>Select nothing</source>
-        <translation type="unfinished"></translation>
+        <translation>Nevybrat nic</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="779"/>
         <source>Invert selection</source>
-        <translation type="unfinished">Obrátit výběr</translation>
+        <translation>Obrátit výběr</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="819"/>
@@ -3283,7 +3286,7 @@ Přepočítat zavedená data na měřítko mapy?</translation>
     </message>
     <message>
         <source>Toggle template visibility</source>
-        <translation type="vanished">Přepnout viditelnost podkladu</translation>
+        <translation>Přepnout viditelnost podkladu</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="893"/>
@@ -3490,7 +3493,7 @@ Přepočítat zavedená data na měřítko mapy?</translation>
     </message>
     <message>
         <source>Area difference</source>
-        <translation type="vanished">Odečíst plochy</translation>
+        <translation>Odečíst plochy</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="857"/>
@@ -3544,7 +3547,7 @@ Přepočítat zavedená data na měřítko mapy?</translation>
     </message>
     <message>
         <source>Dummy</source>
-        <translation type="vanished">Falešný</translation>
+        <translation>Falešný</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1082"/>
@@ -3871,7 +3874,7 @@ symbolů</translation>
     </message>
     <message>
         <source>Do you want to remove map part &quot;%1&quot; and all its objects? This cannot be undone.</source>
-        <translation type="vanished">Chcete odstranit část mapy &quot;%1&quot; a všechny její objekty? Tento krok nelze vrátit zpět.</translation>
+        <translation>Chcete odstranit část mapy &quot;%1&quot; a všechny její objekty? Tento krok nelze vrátit zpět.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="3484"/>
@@ -4020,27 +4023,27 @@ symbolů</translation>
     </message>
     <message>
         <source>Unify overlapping areas.</source>
-        <translation type="vanished">Sloučit překrývající se plochy.</translation>
+        <translation>Sloučit překrývající se plochy.</translation>
     </message>
     <message>
         <source>Select at least two area objects with the same symbol to activate this tool.</source>
-        <translation type="vanished">Vyberte alespoň dva objekty plochy mající tentýž symbol, abyste tento nástroj zapnuli.</translation>
+        <translation>Vyberte alespoň dva objekty plochy mající tentýž symbol, abyste tento nástroj zapnuli.</translation>
     </message>
     <message>
         <source>Intersect the first selected area object with all other selected overlapping areas.</source>
-        <translation type="vanished">Protnout první vybraný objekt plochy se všemi ostatními vybranými překrývajícími se plochami.</translation>
+        <translation>Protnout první vybraný objekt plochy se všemi ostatními vybranými překrývajícími se plochami.</translation>
     </message>
     <message>
         <source>Subtract all other selected area objects from the first selected area object.</source>
-        <translation type="vanished">Odečíst všechny ostatní vybrané objekty plochy z prvního vybraného objektu plochy.</translation>
+        <translation>Odečíst všechny ostatní vybrané objekty plochy z prvního vybraného objektu plochy.</translation>
     </message>
     <message>
         <source>Select at least two area objects to activate this tool.</source>
-        <translation type="vanished">Vyberte alespoň dva objekty plochy, abyste tento nástroj zapnuli.</translation>
+        <translation>Vyberte alespoň dva objekty plochy, abyste tento nástroj zapnuli.</translation>
     </message>
     <message>
         <source>Calculate nonoverlapping parts of areas.</source>
-        <translation type="vanished">Vypočítat nepřekrývající se části objektů ploch.</translation>
+        <translation>Vypočítat nepřekrývající se části objektů ploch.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2125"/>
@@ -4117,7 +4120,7 @@ symbolů</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="3408"/>
         <source>Do you want to remove map part &quot;%1&quot; and all its objects?</source>
-        <translation type="unfinished"></translation>
+        <translation>Chcete odstranit část mapy &quot;%1&quot; a všechny objekty na ní?</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="3569"/>
@@ -4189,7 +4192,7 @@ symbolů</translation>
     <message>
         <location filename="../src/core/map_printer.cpp" line="476"/>
         <source>- Map -</source>
-        <translation type="unfinished">- Mapa -</translation>
+        <translation>- Mapa -</translation>
     </message>
     <message>
         <location filename="../src/core/map_printer.cpp" line="1197"/>
@@ -4555,7 +4558,7 @@ mapy. Změna zvětšení je možná pomocí kolečka myši.</translation>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="150"/>
         <source>Could not load the spot color definitions, error: %1</source>
-        <translation>Nepodařilo se nahrát popisy berev míst. Chyba: %1</translation>
+        <translation>Nepodařilo se nahrát popisy barev míst. Chyba: %1</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="210"/>
@@ -4770,7 +4773,7 @@ mapy. Změna zvětšení je možná pomocí kolečka myši.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="1092"/>
         <source>This symbol cannot be saved as a proper OCD symbol again.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tento symbol nelze znovu uložit jako řádný symbol OCD.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="1201"/>
@@ -5084,13 +5087,13 @@ mapy. Změna zvětšení je možná pomocí kolečka myši.</translation>
         <location filename="../src/gui/print_progress_dialog.cpp" line="56"/>
         <source>Printing</source>
         <comment>PrintWidget</comment>
-        <translation type="unfinished">Tisk</translation>
+        <translation>Tisk</translation>
     </message>
     <message>
         <location filename="../src/gui/print_progress_dialog.cpp" line="57"/>
         <source>An error occured during processing.</source>
         <comment>PrintWidget</comment>
-        <translation type="unfinished"></translation>
+        <translation>Při zpracování se vyskytla chyba.</translation>
     </message>
 </context>
 <context>
@@ -5132,7 +5135,7 @@ mapy. Změna zvětšení je možná pomocí kolečka myši.</translation>
     <name>PrintWidget</name>
     <message>
         <source>Export to PDF or PS</source>
-        <translation type="vanished">Vyvést jako PDF nebo PS</translation>
+        <translation>Vyvést jako PDF nebo PS</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="201"/>
@@ -5198,24 +5201,27 @@ mapy. Změna zvětšení je možná pomocí kolečka myši.</translation>
         <location filename="../src/gui/print_widget.cpp" line="164"/>
         <source>Vector
 graphics</source>
-        <translation type="unfinished"></translation>
+        <translation>Vektorová
+grafika</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="165"/>
         <source>Raster
 graphics</source>
-        <translation type="unfinished"></translation>
+        <translation>Bitmapová
+grafika</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="166"/>
         <source>Color
 separations</source>
-        <translation type="unfinished"></translation>
+        <translation>Oddělení
+barev</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="179"/>
         <source>Mode:</source>
-        <translation type="unfinished"></translation>
+        <translation>Režim:</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="244"/>
@@ -5265,11 +5271,11 @@ separations</source>
     </message>
     <message>
         <source>Normal output</source>
-        <translation type="vanished">Obvyklý výstup</translation>
+        <translation>Obvyklý výstup</translation>
     </message>
     <message>
         <source>Color separations</source>
-        <translation type="vanished">Oddělení barev</translation>
+        <translation>Oddělení barev</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="185"/>
@@ -5284,7 +5290,7 @@ separations</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="208"/>
         <source>Template appearance may differ.</source>
-        <translation type="unfinished"></translation>
+        <translation>Vzhled podkladů se může lišit.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="215"/>
@@ -5294,17 +5300,17 @@ separations</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="220"/>
         <source>Default</source>
-        <translation type="unfinished"></translation>
+        <translation>Výchozí</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="221"/>
         <source>Device CMYK (experimental)</source>
-        <translation type="unfinished"></translation>
+        <translation>Zařízení CMYK (pokusné)</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="222"/>
         <source>Color mode:</source>
-        <translation type="unfinished"></translation>
+        <translation>Barevný režim:</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="246"/>
@@ -5346,7 +5352,7 @@ separations</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1033"/>
         <source>Failed to prepare the preview.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nepodařilo se připravit náhled.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1044"/>
@@ -5386,7 +5392,7 @@ separations</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1136"/>
         <source>Failed to prepare the PDF export.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nepodařilo se připravit vyvedení do PDF.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1146"/>
@@ -5396,7 +5402,7 @@ separations</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1199"/>
         <source>An error occured during printing.</source>
-        <translation type="unfinished"></translation>
+        <translation>Při tisku se vyskytla chyba.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1084"/>
@@ -5443,12 +5449,12 @@ separations</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1166"/>
         <source>Failed to finish the PDF export.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nepodařilo se dokončit vyvedení do PDF.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1185"/>
         <source>Failed to prepare the printing.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nepodařilo se připravit tisk.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1194"/>
@@ -5458,7 +5464,7 @@ separations</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1102"/>
         <source>Failed to prepare the image. Not enough memory.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nepodařilo se připravit obrázek. Nedostatek paměti.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1176"/>
@@ -5468,7 +5474,7 @@ separations</source>
     </message>
     <message>
         <source>Printing</source>
-        <translation type="vanished">Tisk</translation>
+        <translation>Tisk</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1212"/>
@@ -5497,7 +5503,7 @@ separations</source>
     <name>ProjectedCRSSelector</name>
     <message>
         <source>&amp;Coordinate reference system:</source>
-        <translation type="vanished">Soustava &amp;souřadnic:</translation>
+        <translation>Soustava &amp;souřadnic:</translation>
     </message>
 </context>
 <context>
@@ -5505,17 +5511,17 @@ separations</source>
     <message>
         <source>Could not open the file.</source>
         <comment>DXFParser</comment>
-        <translation type="vanished">Nepodařilo se otevřít soubor.</translation>
+        <translation>Nepodařilo se otevřít soubor.</translation>
     </message>
     <message>
         <source>The file is not an DXF file.</source>
         <comment>DXFParser</comment>
-        <translation type="vanished">Soubor není ve formátu DXF.</translation>
+        <translation>Soubor není ve formátu DXF.</translation>
     </message>
     <message>
         <source>Registration black (all printed colors)</source>
         <comment>MapColor</comment>
-        <translation type="vanished">Černá zápisu je (všechny tištěné barvy)</translation>
+        <translation>Černá zápisu je (všechny tištěné barvy)</translation>
     </message>
 </context>
 <context>
@@ -5530,15 +5536,15 @@ separations</source>
     <name>QFile</name>
     <message>
         <source>Error</source>
-        <translation type="vanished">Chyba</translation>
+        <translation>Chyba</translation>
     </message>
     <message>
         <source>Failed to locate the help files.</source>
-        <translation type="vanished">Soubory s nápovědou se nepodařilo najít.</translation>
+        <translation>Soubory s nápovědou se nepodařilo najít.</translation>
     </message>
     <message>
         <source>Failed to locate the help browser (&quot;Qt Assistant&quot;).</source>
-        <translation type="vanished">Program pro procházení souboru s nápovědou (&quot;Qt Assistant&quot;) se nepodařilo najít.</translation>
+        <translation>Program pro procházení souboru s nápovědou (&quot;Qt Assistant&quot;) se nepodařilo najít.</translation>
     </message>
     <message>
         <source>The help browser (&quot;Qt Assistant&quot;) is not installed.</source>
@@ -5554,7 +5560,7 @@ separations</source>
     </message>
     <message>
         <source>Failed to launch the help browser (&quot;Qt Assistant&quot;).</source>
-        <translation type="vanished">Program pro procházení souboru s nápovědou (&quot;Qt Assistant&quot;) se nepodařilo spustit.</translation>
+        <translation>Program pro procházení souboru s nápovědou (&quot;Qt Assistant&quot;) se nepodařilo spustit.</translation>
     </message>
 </context>
 <context>
@@ -5920,12 +5926,12 @@ separations</source>
     </message>
     <message>
         <source>Same as map&apos;s</source>
-        <translation type="vanished">Stejná jako soustava mapy</translation>
+        <translation>Stejná jako soustava mapy</translation>
     </message>
     <message>
         <location filename="../src/gui/select_crs_dialog.cpp" line="62"/>
         <source>Same as map</source>
-        <translation type="unfinished"></translation>
+        <translation>Stejná jako mapa</translation>
     </message>
     <message>
         <location filename="../src/gui/select_crs_dialog.cpp" line="68"/>
@@ -5939,19 +5945,19 @@ separations</source>
     </message>
     <message>
         <source>From list</source>
-        <translation type="vanished">Ze seznamu</translation>
+        <translation>Ze seznamu</translation>
     </message>
     <message>
         <source>From specification</source>
-        <translation type="vanished">Z popisu</translation>
+        <translation>Z popisu</translation>
     </message>
     <message>
         <source>(local)</source>
-        <translation type="vanished">(místní)</translation>
+        <translation>(místní)</translation>
     </message>
     <message>
         <source>CRS Specification:</source>
-        <translation type="vanished">Popis soustavy souřadnic:</translation>
+        <translation>Popis soustavy souřadnic:</translation>
     </message>
     <message>
         <location filename="../src/gui/select_crs_dialog.cpp" line="85"/>
@@ -6102,7 +6108,7 @@ separations</source>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="268"/>
         <source>Enable drag and drop</source>
-        <translation type="unfinished"></translation>
+        <translation>Povolit tažení a upuštění</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="896"/>
@@ -6140,7 +6146,7 @@ separations</source>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1151"/>
         <source>Remove all objects with this symbol from selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Odstranit všechny objekty s tímto symbolem z výběru</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1152"/>
@@ -6160,7 +6166,7 @@ separations</source>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1159"/>
         <source>Remove all objects with selected symbols from selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Odstranit všechny objekty s vybranými symboly z výběru</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1160"/>
@@ -6311,31 +6317,31 @@ před chvílí, víme, vypadla z kabiny svého létadla.
     <name>TagsDialog</name>
     <message>
         <source>Add</source>
-        <translation type="vanished">Přidat</translation>
+        <translation>Přidat</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="vanished">Odstranit</translation>
+        <translation>Odstranit</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="vanished">Zavřít</translation>
+        <translation>Zavřít</translation>
     </message>
     <message>
         <source>Key</source>
-        <translation type="vanished">Klíč</translation>
+        <translation>Klíč</translation>
     </message>
     <message>
         <source>Value</source>
-        <translation type="vanished">Hodnota</translation>
+        <translation>Hodnota</translation>
     </message>
     <message>
         <source>key</source>
-        <translation type="vanished">Klíč</translation>
+        <translation>Klíč</translation>
     </message>
     <message>
         <source>key %0</source>
-        <translation type="vanished">Klíč %0</translation>
+        <translation>Klíč %0</translation>
     </message>
 </context>
 <context>
@@ -6386,16 +6392,16 @@ před chvílí, víme, vypadla z kabiny svého létadla.
     <message>
         <location filename="../src/template.cpp" line="504"/>
         <source>No such file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Žádný takový soubor.</translation>
     </message>
     <message>
         <location filename="../src/template.cpp" line="522"/>
         <source>Is the format of the file correct for this template type?</source>
-        <translation type="unfinished"></translation>
+        <translation>Je formát souboru pro tento typ podkladu správný?</translation>
     </message>
     <message>
         <source>Cannot change the template to this file! Is the format of the file correct for this template type?</source>
-        <translation type="vanished">Nelze změnit podklad tohoto souboru. Je soubor vybrán ve správném formátu?</translation>
+        <translation>Nelze změnit podklad tohoto souboru. Je soubor vybrán ve správném formátu?</translation>
     </message>
 </context>
 <context>
@@ -6518,7 +6524,7 @@ před chvílí, víme, vypadla z kabiny svého létadla.
     <message>
         <location filename="../src/template_image.cpp" line="129"/>
         <source>Not enough free memory (image size: %1x%2 pixels)</source>
-        <translation type="unfinished"></translation>
+        <translation>Nedostatek volné paměti (velikost obrázku: %1x%2 obrazových bodů)</translation>
     </message>
     <message>
         <location filename="../src/template_image.cpp" line="169"/>
@@ -6679,7 +6685,7 @@ Pokud ovšem není vaším úmyslem na tento podklad kreslit, nejde o žádný p
     </message>
     <message>
         <source>Delete</source>
-        <translation type="vanished">Smazat</translation>
+        <translation>Smazat</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="212"/>
@@ -6735,7 +6741,7 @@ Pokud ovšem není vaším úmyslem na tento podklad kreslit, nejde o žádný p
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="212"/>
         <source>Remove</source>
-        <translation type="unfinished">Odstranit</translation>
+        <translation>Odstranit</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="243"/>
@@ -7239,7 +7245,7 @@ Nejvyšší podporovaná verze je %2.</translation>
     <message>
         <location filename="../src/gui/widgets/crs_param_widgets.cpp" line="60"/>
         <source>Calculate</source>
-        <translation type="unfinished"></translation>
+        <translation>Spočítat</translation>
     </message>
 </context>
 <context>
@@ -7315,7 +7321,7 @@ Nejvyšší podporovaná verze je %2.</translation>
     <message>
         <location filename="../src/file_format_xml.cpp" line="427"/>
         <source>Some coordinates were out of bounds for printing. Map content was adjusted.</source>
-        <translation type="unfinished"></translation>
+        <translation>Některé souřadnice byly za tisknutelnými hranicemi. Obsah mapy byl přizpůsoben.</translation>
     </message>
     <message>
         <location filename="../src/file_format_xml.cpp" line="475"/>
@@ -7330,23 +7336,23 @@ Nejvyšší podporovaná verze je %2.</translation>
     <message>
         <location filename="../src/file_format_xml.cpp" line="512"/>
         <source>Error at line %1 column %2: %3</source>
-        <translation type="unfinished"></translation>
+        <translation>Chyba na řádku %1, ve sloupci %2: %3</translation>
     </message>
     <message>
         <location filename="../src/file_format_xml.cpp" line="531"/>
         <source>Unknown error</source>
-        <translation type="unfinished"></translation>
+        <translation>Neznámá chyba</translation>
     </message>
     <message>
         <location filename="../src/file_format_xml.cpp" line="532"/>
         <source>Unsupported or invalid georeferencing specification &apos;%1&apos;: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Nepodporovaný nebo neplatný popis souřadnicového systému &apos;%1&apos;: %2</translation>
     </message>
     <message>
         <location filename="../src/file_format_xml.cpp" line="650"/>
         <location filename="../src/file_format_xml.cpp" line="709"/>
         <source>Could not set knockout property of color &apos;%1&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nepodařilo se vyřadit vlastnost barvy &apos;%1&apos;.</translation>
     </message>
     <message>
         <location filename="../src/file_format_xml.cpp" line="669"/>
