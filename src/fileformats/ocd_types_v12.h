@@ -34,39 +34,7 @@ namespace Ocd
 		quint32 first_multi_rep_block;
 	};
 	
-	struct BaseSymbolV12
-	{
-		typedef quint32 IndexEntryType;
-		
-		typedef BaseSymbolV12 BaseSymbol;
-		static const int symbol_number_factor = 1000;
-		
-		quint32 size;
-		quint32 number;
-		quint8  type;
-		quint8  flags;
-		quint8  selected;
-		quint8  status;
-		quint8  tool;
-		quint8  cs_mode;
-		quint8  cs_type;
-		quint8  cd_flags;
-		qint32  extent;
-		quint32 file_pos;
-		quint8  RESERVED_MEMBER[2];
-		quint16 num_colors;
-		quint16 colors[14];
-		QChar   description[64];
-		quint8  icon_bits[484];
-		quint16 group[64];
-		
-		enum StatusFlag
-		{
-			StatusNormal    = 0,
-			StatusProtected = 1,
-			StatusHidden    = 2
-		};
-	};
+	using BaseSymbolV12 = BaseSymbolV11;
 	
 	typedef PointSymbolElementV11 PointSymbolElementV12;
 	

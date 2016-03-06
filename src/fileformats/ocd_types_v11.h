@@ -48,7 +48,7 @@ namespace Ocd
 		quint8  cs_type;
 		quint8  cd_flags;
 		qint32  extent;
-		qint32  file_pos;
+		quint32 file_pos;
 		quint8  RESERVED_MEMBER[2];
 		quint16 num_colors;
 		quint16 colors[14];
@@ -58,6 +58,7 @@ namespace Ocd
 		
 		enum StatusFlag
 		{
+			StatusNormal    = 0,
 			StatusProtected = 1,
 			StatusHidden    = 2
 		};
