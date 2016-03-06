@@ -212,6 +212,22 @@ namespace Ocd
 	};
 	
 	/**
+	 * Text alignment flags.
+	 */
+	enum TextAlignment
+	{
+		HAlignMask      = 0x03,
+		HAlignLeft      = 0x00,
+		HAlignCenter    = 0x01,
+		HAlignRight     = 0x02,
+		HAlignJustified = 0x03, /// All-line for line text symbols
+		VAlignMask      = 0x0c, /// \since V10
+		VAlignBottom    = 0x00, /// \since V10
+		VAlignMiddle    = 0x04, /// \since V10
+		VAlignTop       = 0x08  /// \since V10
+	};
+	
+	/**
 	 * A generic OCD file format trait.
 	 *
 	 * It is suitable for detecting the actual format.

@@ -1243,36 +1243,7 @@ TextSymbol* OcdFileImport::importTextSymbol(const S& ocd_symbol, int ocd_version
 	for (int i = 0; i < ocd_symbol.num_tabs; ++i)
 		symbol->custom_tabs[i] = convertLength(ocd_symbol.tab_pos[i]);
 	
-	switch (ocd_symbol.alignment & S::HAlignMask)
-	{
-	case S::HAlignLeft:
-		text_halign_map[symbol] = TextObject::AlignLeft;
-		break;
-	case S::HAlignRight:
-		text_halign_map[symbol] = TextObject::AlignRight;
-		break;
-	case S::HAlignJustified:
-		/// \todo Implement justified alignment
-		addSymbolWarning(symbol, tr("Justified alignment is not supported."));
-		// fall through
-	default:
-		text_halign_map[symbol] = TextObject::AlignHCenter;
-	}
-	
-	switch (ocd_symbol.alignment & S::VAlignMask)
-	{
-	case S::VAlignTop:
-		text_valign_map[symbol] = TextObject::AlignTop;
-		break;
-	case S::VAlignMiddle:
-		text_valign_map[symbol] = TextObject::AlignVCenter;
-		break;
-	default:
-		addSymbolWarning(symbol, tr("Vertical alignment '%1' is not supported.").arg(ocd_symbol.alignment & S::VAlignMask));
-		// fall through
-	case S::VAlignBottom:
-		text_valign_map[symbol] = TextObject::AlignBaseline;
-	}
+	setTextAlignment(symbol, ocd_symbol.alignment);
 	
 	if (ocd_symbol.font_weight != 400 && ocd_symbol.font_weight != 700)
 	{
@@ -1339,36 +1310,7 @@ TextSymbol* OcdFileImport::importLineTextSymbol(const S& ocd_symbol, int ocd_ver
 	symbol->line_below = false;
 	symbol->custom_tabs.resize(0);
 	
-	switch (ocd_symbol.alignment & S::HAlignMask)
-	{
-	case S::HAlignLeft:
-		text_halign_map[symbol] = TextObject::AlignLeft;
-		break;
-	case S::HAlignRight:
-		text_halign_map[symbol] = TextObject::AlignRight;
-		break;
-	case S::HAlignAllLine:
-		/// \todo Implement justified alignment
-		addSymbolWarning(symbol, tr("All-line alignment is not supported."));
-		// fall through
-	default:
-		text_halign_map[symbol] = TextObject::AlignHCenter;
-	}
-	
-	switch (ocd_symbol.alignment & S::VAlignMask)
-	{
-	case S::VAlignTop:
-		text_valign_map[symbol] = TextObject::AlignTop;
-		break;
-	case S::VAlignMiddle:
-		text_valign_map[symbol] = TextObject::AlignVCenter;
-		break;
-	default:
-		addSymbolWarning(symbol, tr("Vertical alignment '%1' is not supported.").arg(ocd_symbol.alignment & S::VAlignMask));
-		// fall through
-	case S::VAlignBottom:
-		text_valign_map[symbol] = TextObject::AlignBaseline;
-	}
+	setTextAlignment(symbol, ocd_symbol.alignment);
 	
 	if (ocd_symbol.font_weight != 400 && ocd_symbol.font_weight != 700)
 	{
@@ -1925,6 +1867,40 @@ bool OcdFileImport::fillTextPathCoords(TextObject *object, TextSymbol *symbol, q
 	}
 	
 	return true;
+}
+
+void OcdFileImport::setTextAlignment(TextSymbol* symbol, quint16 alignment)
+{
+	switch (alignment & Ocd::HAlignMask)
+	{
+	case Ocd::HAlignLeft:
+		text_halign_map[symbol] = TextObject::AlignLeft;
+		break;
+	case Ocd::HAlignRight:
+		text_halign_map[symbol] = TextObject::AlignRight;
+		break;
+	case Ocd::HAlignJustified:
+		/// \todo Implement justified alignment
+		addSymbolWarning(symbol, tr("Justified alignment is not supported."));
+		// fall through
+	default:
+		text_halign_map[symbol] = TextObject::AlignHCenter;
+	}
+	
+	switch (alignment & Ocd::VAlignMask)
+	{
+	case Ocd::VAlignTop:
+		text_valign_map[symbol] = TextObject::AlignTop;
+		break;
+	case Ocd::VAlignMiddle:
+		text_valign_map[symbol] = TextObject::AlignVCenter;
+		break;
+	default:
+		addSymbolWarning(symbol, tr("Vertical alignment '%1' is not supported.").arg(alignment & Ocd::VAlignMask));
+		// fall through
+	case Ocd::VAlignBottom:
+		text_valign_map[symbol] = TextObject::AlignBaseline;
+	}
 }
 
 void OcdFileImport::import(bool load_symbols_only)

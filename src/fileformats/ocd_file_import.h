@@ -246,6 +246,8 @@ protected:
 	
 	bool fillTextPathCoords(TextObject* object, TextSymbol* symbol, quint16 npts, const Ocd::OcdPoint32* ocd_points);
 	
+	void setTextAlignment(TextSymbol* symbol, quint16 alignment);
+	
 protected:
 	/// The locale is used for number formatting.
 	QLocale locale;
