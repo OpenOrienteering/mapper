@@ -40,70 +40,7 @@ namespace Ocd
 	
 	using PointSymbolV12 = PointSymbolV11;
 	
-	struct LineSymbolV12
-	{
-		typedef BaseSymbolV12 BaseSymbol;
-		typedef PointSymbolElementV12 Element;
-		
-		BaseSymbol base;
-		
-		quint16 line_color;
-		quint16 line_width;
-		quint16 line_style;
-		qint16  dist_from_start;
-		qint16  dist_from_end;
-		qint16  main_length;
-		qint16  end_length;
-		qint16  main_gap;
-		qint16  sec_gap;
-		qint16  end_gap;
-		qint16  min_sym;
-		qint16  num_prim_sym;
-		qint16  prim_sym_dist;
-		quint16 double_mode;
-		quint16 double_flags;
-		quint16 double_color;
-		quint16 double_left_color;
-		quint16 double_right_color;
-		qint16  double_width;
-		qint16  double_left_width;
-		qint16  double_right_width;
-		qint16  double_length;
-		qint16  double_gap;
-		quint16 double_background_color;
-		quint16 RESERVED_MEMBER[2];
-		quint16 dec_mode;
-		quint16 dec_last;
-		quint16 RESERVED_MEMBER;
-		quint16 framing_color;
-		qint16  framing_width;
-		quint16 framing_style;
-		quint16 primary_data_size;
-		quint16 secondary_data_size;
-		quint16 corner_data_size;
-		quint16 start_data_size;
-		quint16 end_data_size;
-		quint8  active_symbols;
-		quint8  RESERVED_MEMBER;
-		
-		Element begin_of_elements[1];
-		
-		enum LineStyleFlag
-		{
-			BevelJoin_FlatCap    = 0,
-			RoundJoin_RoundCap   = 1,
-			BevelJoin_PointedCap = 2,
-			RoundJoin_PointedCap = 3,
-			MiterJoin_FlatCap    = 4,
-			MiterJoin_PointedCap = 6
-		};
-		
-		enum DoubleLineFlag
-		{
-			DoubleFillColorOn       = 1,
-			DoubleBackgroundColorOn = 2
-		};
-	};
+	using LineSymbolV12 = LineSymbolV11;
 	
 	struct AreaSymbolV12
 	{
