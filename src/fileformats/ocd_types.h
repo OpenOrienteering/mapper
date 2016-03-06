@@ -228,6 +228,26 @@ namespace Ocd
 	};
 	
 	/**
+	 * Area hatch mode values.
+	 */
+	enum HatchMode
+	{
+		HatchNone   = 0,
+		HatchSingle = 1,
+		HatchCross  = 2
+	};
+	
+	/**
+	 * Area pattern structure values.
+	 */
+	enum StructureMode
+	{
+		StructureNone = 0,
+		StructureAlignedRows = 1,
+		StructureShiftedRows = 2
+	};
+	
+	/**
 	 * A generic OCD file format trait.
 	 *
 	 * It is suitable for detecting the actual format.

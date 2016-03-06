@@ -161,20 +161,6 @@ namespace Ocd
 		quint16 data_size;
 		
 		Element begin_of_elements[1];
-		
-		enum HatchMode
-		{
-			HatchNone   = 0,
-			HatchSingle = 1,
-			HatchCross  = 2
-		};
-		
-		enum StructureMode
-		{
-			StructureNone = 0,
-			StructureAlignedRows = 1,
-			StructureShiftedRows = 2
-		};
 	};
 	
 	struct TextSymbolV11

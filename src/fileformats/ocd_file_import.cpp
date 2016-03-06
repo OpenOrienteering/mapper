@@ -1162,7 +1162,7 @@ AreaSymbol* OcdFileImport::importAreaSymbol(const S& ocd_symbol, int ocd_version
 	symbol->patterns.reserve(4);
 	
 	// Hatching
-	if (ocd_symbol.hatch_mode != S::HatchNone)
+	if (ocd_symbol.hatch_mode != Ocd::HatchNone)
 	{
 		AreaSymbol::FillPattern pattern;
 		pattern.type = AreaSymbol::FillPattern::LinePattern;
@@ -1178,7 +1178,7 @@ AreaSymbol* OcdFileImport::importAreaSymbol(const S& ocd_symbol, int ocd_version
 		}
 		symbol->patterns.push_back(pattern);
 		
-		if (ocd_symbol.hatch_mode == S::HatchCross)
+		if (ocd_symbol.hatch_mode == Ocd::HatchCross)
 		{
 			// Second hatch, same as the first, just a different angle
 			pattern.angle = convertAngle(ocd_symbol.hatch_angle_2);
@@ -1186,7 +1186,7 @@ AreaSymbol* OcdFileImport::importAreaSymbol(const S& ocd_symbol, int ocd_version
 		}
 	}
 	
-	if (ocd_symbol.structure_mode != S::StructureNone)
+	if (ocd_symbol.structure_mode != Ocd::StructureNone)
 	{
 		AreaSymbol::FillPattern pattern;
 		pattern.type = AreaSymbol::FillPattern::PointPattern;
@@ -1204,7 +1204,7 @@ AreaSymbol* OcdFileImport::importAreaSymbol(const S& ocd_symbol, int ocd_version
 		// OC*D 8 has a "staggered" pattern mode, where successive rows are shifted width/2 relative
 		// to each other. We need to simulate this in Mapper with two overlapping patterns, each with
 		// twice the height. The second is then offset by width/2, height/2.
-		if (ocd_symbol.structure_mode == S::StructureShiftedRows)
+		if (ocd_symbol.structure_mode == Ocd::StructureShiftedRows)
 		{
 			pattern.line_spacing *= 2;
 			symbol->patterns.push_back(pattern);
