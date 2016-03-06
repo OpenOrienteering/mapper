@@ -406,44 +406,44 @@ MapColor* OcdFileImport::importColor(const QString& param_string)
 		const QString param_value = QString::fromRawData(unicode+i+2, len); // no copying!
 		switch (param_string[i+1].toLatin1())
 		{
-			case '\t':
-				// empty item
-				break;
-			case 'n':
-				number = param_value.toInt(&number_ok);
-				break;
-			case 'c':
-				f_value = param_value.toFloat(&ok);
-				if (ok && f_value >= 0 && f_value <= 100)
-					cmyk.c = 0.01f * f_value;
-				break;
-			case 'm':
-				f_value = param_value.toFloat(&ok);
-				if (ok && f_value >= 0 && f_value <= 100)
-					cmyk.m = 0.01f * f_value;
-				break;
-			case 'y':
-				f_value = param_value.toFloat(&ok);
-				if (ok && f_value >= 0 && f_value <= 100)
-					cmyk.y = 0.01f * f_value;
-				break;
-			case 'k':
-				f_value = param_value.toFloat(&ok);
-				if (ok && f_value >= 0 && f_value <= 100)
-					cmyk.k = 0.01f * f_value;
-				break;
-			case 'o':
-				i_value = param_value.toInt(&ok);
-				if (ok)
-					overprinting = i_value;
-				break;
-			case 't':
-				f_value = param_value.toFloat(&ok);
-				if (ok && f_value >= 0.f && f_value <= 100.f)
-					opacity = 0.01f * f_value;
-				break;
-			default:
-				; // nothing
+		case '\t':
+			// empty item
+			break;
+		case 'n':
+			number = param_value.toInt(&number_ok);
+			break;
+		case 'c':
+			f_value = param_value.toFloat(&ok);
+			if (ok && f_value >= 0 && f_value <= 100)
+				cmyk.c = 0.01f * f_value;
+			break;
+		case 'm':
+			f_value = param_value.toFloat(&ok);
+			if (ok && f_value >= 0 && f_value <= 100)
+				cmyk.m = 0.01f * f_value;
+			break;
+		case 'y':
+			f_value = param_value.toFloat(&ok);
+			if (ok && f_value >= 0 && f_value <= 100)
+				cmyk.y = 0.01f * f_value;
+			break;
+		case 'k':
+			f_value = param_value.toFloat(&ok);
+			if (ok && f_value >= 0 && f_value <= 100)
+				cmyk.k = 0.01f * f_value;
+			break;
+		case 'o':
+			i_value = param_value.toInt(&ok);
+			if (ok)
+				overprinting = i_value;
+			break;
+		case 't':
+			f_value = param_value.toFloat(&ok);
+			if (ok && f_value >= 0.f && f_value <= 100.f)
+				opacity = 0.01f * f_value;
+			break;
+		default:
+			; // nothing
 		}
 		i = next_i;
 	}
@@ -606,44 +606,44 @@ Template* OcdFileImport::importTemplate(const QString& param_string, const int o
 		const QString param_value = QString::fromRawData(unicode+i+2, len); // no copying!
 		switch (param_string[i+1].toLatin1())
 		{
-			case '\t':
-				// empty item
-				break;
-			case 'x':
-				value = param_value.toDouble(&ok);
-				if (ok)
-					templ->setTemplateX(qRound64(value*1000*scale_factor));
-				break;
-			case 'y':
-				value = param_value.toDouble(&ok);
-				if (ok)
-					templ->setTemplateY(-qRound64(value*1000*scale_factor));
-				break;
-			case 'a':
-			case 'b':
-				// TODO: use the distinct angles correctly, not just the average
-				rotation += param_value.toDouble(&ok);
-				if (ok)
-					++num_rotation_params;
-				break;
-			case 'u':
-				value = param_value.toDouble(&ok);
-				if (ok && qAbs(value) >= 0.0000000001)
-					scale_x = value;
-				break;
-			case 'v':
-				value = param_value.toDouble(&ok);
-				if (ok && qAbs(value) >= 0.0000000001)
-					scale_y = value;
-				break;
-			case 'd':
-				dimming = param_value.toInt();
-				break;
-			case 's':
-				visible = param_value.toInt();
-				break;
-			default:
-				; // nothing
+		case '\t':
+			// empty item
+			break;
+		case 'x':
+			value = param_value.toDouble(&ok);
+			if (ok)
+				templ->setTemplateX(qRound64(value*1000*scale_factor));
+			break;
+		case 'y':
+			value = param_value.toDouble(&ok);
+			if (ok)
+				templ->setTemplateY(-qRound64(value*1000*scale_factor));
+			break;
+		case 'a':
+		case 'b':
+			// TODO: use the distinct angles correctly, not just the average
+			rotation += param_value.toDouble(&ok);
+			if (ok)
+				++num_rotation_params;
+			break;
+		case 'u':
+			value = param_value.toDouble(&ok);
+			if (ok && qAbs(value) >= 0.0000000001)
+				scale_x = value;
+			break;
+		case 'v':
+			value = param_value.toDouble(&ok);
+			if (ok && qAbs(value) >= 0.0000000001)
+				scale_y = value;
+			break;
+		case 'd':
+			dimming = param_value.toInt();
+			break;
+		case 's':
+			visible = param_value.toInt();
+			break;
+		default:
+			; // nothing
 		}
 		i = next_i;
 	}
@@ -745,26 +745,26 @@ void OcdFileImport::importView(const QString& param_string)
 		const QString param_value = QString::fromRawData(unicode+i+2, len); // no copying!
 		switch (param_string[i+1].toLatin1())
 		{
-			case '\t':
-				// empty item
-				break;
-			case 'x':
+		case '\t':
+			// empty item
+			break;
+		case 'x':
 			{
 				offset_x = param_value.toDouble();
 				break;
 			}
-			case 'y':
+		case 'y':
 			{
 				offset_y = param_value.toDouble();
 				break;
 			}
-			case 'z':
+		case 'z':
 			{
 				zoom = param_value.toDouble(&zoom_ok);
 				break;
 			}
-			default:
-				; // nothing
+		default:
+			; // nothing
 		}
 		i = next_i;
 	}
@@ -826,34 +826,34 @@ Symbol* OcdFileImport::importLineSymbol(const S& ocd_symbol, int ocd_version)
 		// Cap and join styles
 		switch (ocd_symbol.line_style)
 		{
-			case S::BevelJoin_FlatCap:
-				main_line->join_style = LineSymbol::BevelJoin;
-				main_line->cap_style = LineSymbol::FlatCap;
-				break;
-			case S::RoundJoin_RoundCap:
-				main_line->join_style = LineSymbol::RoundJoin;
-				main_line->cap_style = LineSymbol::RoundCap;
-				break;
-			case S::BevelJoin_PointedCap:
-				main_line->join_style = LineSymbol::BevelJoin;
-				main_line->cap_style = LineSymbol::PointedCap;
-				break;
-			case S::RoundJoin_PointedCap:
-				main_line->join_style = LineSymbol::RoundJoin;
-				main_line->cap_style = LineSymbol::PointedCap;
-				break;
-			case S::MiterJoin_FlatCap:
-				main_line->join_style = LineSymbol::MiterJoin;
-				main_line->cap_style = LineSymbol::FlatCap;
-				break;
-			case S::MiterJoin_PointedCap:
-				main_line->join_style = LineSymbol::MiterJoin;
-				main_line->cap_style = LineSymbol::PointedCap;
-				break;
-			default:
-				addSymbolWarning( main_line,
-				  tr("Unsupported line style '%1'.").
-				  arg(ocd_symbol.line_style) );
+		case S::BevelJoin_FlatCap:
+			main_line->join_style = LineSymbol::BevelJoin;
+			main_line->cap_style = LineSymbol::FlatCap;
+			break;
+		case S::RoundJoin_RoundCap:
+			main_line->join_style = LineSymbol::RoundJoin;
+			main_line->cap_style = LineSymbol::RoundCap;
+			break;
+		case S::BevelJoin_PointedCap:
+			main_line->join_style = LineSymbol::BevelJoin;
+			main_line->cap_style = LineSymbol::PointedCap;
+			break;
+		case S::RoundJoin_PointedCap:
+			main_line->join_style = LineSymbol::RoundJoin;
+			main_line->cap_style = LineSymbol::PointedCap;
+			break;
+		case S::MiterJoin_FlatCap:
+			main_line->join_style = LineSymbol::MiterJoin;
+			main_line->cap_style = LineSymbol::FlatCap;
+			break;
+		case S::MiterJoin_PointedCap:
+			main_line->join_style = LineSymbol::MiterJoin;
+			main_line->cap_style = LineSymbol::PointedCap;
+			break;
+		default:
+			addSymbolWarning( main_line,
+			                  tr("Unsupported line style '%1'.").
+			                  arg(ocd_symbol.line_style) );
 		}
 		
 		if (main_line->cap_style == LineSymbol::PointedCap)
@@ -972,22 +972,22 @@ Symbol* OcdFileImport::importLineSymbol(const S& ocd_symbol, int ocd_version)
 		// Cap and join styles
 		switch (ocd_symbol.framing_style)
 		{
-			case S::BevelJoin_FlatCap:
-				framing_line->join_style = LineSymbol::BevelJoin;
-				framing_line->cap_style = LineSymbol::FlatCap;
-				break;
-			case S::RoundJoin_RoundCap:
-				framing_line->join_style = LineSymbol::RoundJoin;
-				framing_line->cap_style = LineSymbol::RoundCap;
-				break;
-			case S::MiterJoin_FlatCap:
-				framing_line->join_style = LineSymbol::MiterJoin;
-				framing_line->cap_style = LineSymbol::FlatCap;
-				break;
-			default:
-				addSymbolWarning( main_line, 
-				                  tr("Unsupported framing line style '%1'.").
-				                  arg(ocd_symbol.line_style) );
+		case S::BevelJoin_FlatCap:
+			framing_line->join_style = LineSymbol::BevelJoin;
+			framing_line->cap_style = LineSymbol::FlatCap;
+			break;
+		case S::RoundJoin_RoundCap:
+			framing_line->join_style = LineSymbol::RoundJoin;
+			framing_line->cap_style = LineSymbol::RoundCap;
+			break;
+		case S::MiterJoin_FlatCap:
+			framing_line->join_style = LineSymbol::MiterJoin;
+			framing_line->cap_style = LineSymbol::FlatCap;
+			break;
+		default:
+			addSymbolWarning( main_line, 
+			                  tr("Unsupported framing line style '%1'.").
+			                  arg(ocd_symbol.line_style) );
 		}
 	}
 	
@@ -1462,33 +1462,33 @@ void OcdFileImport::setupPointSymbolPattern(PointSymbol* symbol, std::size_t dat
 		const Ocd::OcdPoint32* const coords = reinterpret_cast<const Ocd::OcdPoint32*>(elements) + i + 2;
 		switch (element->type)
 		{
-			case Ocd::PointSymbolElementV8::TypeDot:
-				if (element->diameter > 0)
+		case Ocd::PointSymbolElementV8::TypeDot:
+			if (element->diameter > 0)
+			{
+				bool can_use_base_symbol = (!base_symbol_used && (!element->num_coords || (!coords[0].x && !coords[0].y)));
+				PointSymbol* working_symbol = can_use_base_symbol ? symbol : new PointSymbol();
+				working_symbol->setInnerColor(convertColor(element->color));
+				working_symbol->setInnerRadius(convertLength(element->diameter) / 2);
+				working_symbol->setOuterColor(nullptr);
+				working_symbol->setOuterWidth(0);
+				if (can_use_base_symbol)
 				{
-					bool can_use_base_symbol = (!base_symbol_used && (!element->num_coords || (!coords[0].x && !coords[0].y)));
-					PointSymbol* working_symbol = can_use_base_symbol ? symbol : new PointSymbol();
-					working_symbol->setInnerColor(convertColor(element->color));
-					working_symbol->setInnerRadius(convertLength(element->diameter) / 2);
-					working_symbol->setOuterColor(nullptr);
-					working_symbol->setOuterWidth(0);
-					if (can_use_base_symbol)
-					{
-						base_symbol_used = true;
-					}
-					else
-					{
-						working_symbol->setRotatable(false);
-						PointObject* element_object = new PointObject(working_symbol);
-						if (element->num_coords)
-						{
-							const MapCoord coord = convertOcdPoint(coords[0]);
-							element_object->setPosition(coord.nativeX(), coord.nativeY());
-						}
-						symbol->addElement(symbol->getNumElements(), element_object, working_symbol);
-					}
+					base_symbol_used = true;
 				}
-				break;
-			case Ocd::PointSymbolElementV8::TypeCircle:
+				else
+				{
+					working_symbol->setRotatable(false);
+					PointObject* element_object = new PointObject(working_symbol);
+					if (element->num_coords)
+					{
+						const MapCoord coord = convertOcdPoint(coords[0]);
+						element_object->setPosition(coord.nativeX(), coord.nativeY());
+					}
+					symbol->addElement(symbol->getNumElements(), element_object, working_symbol);
+				}
+			}
+			break;
+		case Ocd::PointSymbolElementV8::TypeCircle:
 			{
 				int element_radius = (version <= 8) ? (element->diameter / 2 - element->line_width)
 				                                    : ((element->diameter - element->line_width) / 2);
@@ -1518,30 +1518,30 @@ void OcdFileImport::setupPointSymbolPattern(PointSymbol* symbol, std::size_t dat
 				}
 				break;
 			}
-			case Ocd::PointSymbolElementV8::TypeLine:
-				if (element->line_width > 0)
-				{
-					OcdImportedLineSymbol* element_symbol = new OcdImportedLineSymbol();
-					element_symbol->line_width = convertLength(element->line_width);
-					element_symbol->color = convertColor(element->color);
-					OcdImportedPathObject* element_object = new OcdImportedPathObject(element_symbol);
-					fillPathCoords(element_object, false, element->num_coords, coords);
-					element_object->recalculateParts();
-					symbol->addElement(symbol->getNumElements(), element_object, element_symbol);
-				}
-				break;
-			case Ocd::PointSymbolElementV8::TypeArea:
-				{
-					OcdImportedAreaSymbol* element_symbol = new OcdImportedAreaSymbol();
-					element_symbol->color = convertColor(element->color);
-					OcdImportedPathObject* element_object = new OcdImportedPathObject(element_symbol);
-					fillPathCoords(element_object, true, element->num_coords, coords);
-					element_object->recalculateParts();
-					symbol->addElement(symbol->getNumElements(), element_object, element_symbol);
-				}
-				break;
-			default:
-				; // TODO: not-supported warning
+		case Ocd::PointSymbolElementV8::TypeLine:
+			if (element->line_width > 0)
+			{
+				OcdImportedLineSymbol* element_symbol = new OcdImportedLineSymbol();
+				element_symbol->line_width = convertLength(element->line_width);
+				element_symbol->color = convertColor(element->color);
+				OcdImportedPathObject* element_object = new OcdImportedPathObject(element_symbol);
+				fillPathCoords(element_object, false, element->num_coords, coords);
+				element_object->recalculateParts();
+				symbol->addElement(symbol->getNumElements(), element_object, element_symbol);
+			}
+			break;
+		case Ocd::PointSymbolElementV8::TypeArea:
+			{
+				OcdImportedAreaSymbol* element_symbol = new OcdImportedAreaSymbol();
+				element_symbol->color = convertColor(element->color);
+				OcdImportedPathObject* element_object = new OcdImportedPathObject(element_symbol);
+				fillPathCoords(element_object, true, element->num_coords, coords);
+				element_object->recalculateParts();
+				symbol->addElement(symbol->getNumElements(), element_object, element_symbol);
+			}
+			break;
+		default:
+			; // TODO: not-supported warning
 		}
 		i += element->num_coords;
 	}
@@ -1929,38 +1929,38 @@ void OcdFileImport::import(bool load_symbols_only)
 	int version = generic_file.header()->version;
 	switch (version)
 	{
-		case 6:
-		case 7:
-			// We keep the following existing translation just in case
-			// we add support for version 6/7 to the new importer.
-			/* addWarning( */
-				(void)tr("Untested file importer for format: OCD %1").arg(version)
-			/* ) */;
+	case 6:
+	case 7:
+		// We keep the following existing translation just in case
+		// we add support for version 6/7 to the new importer.
+		/* addWarning( */
+		(void)tr("Untested file importer for format: OCD %1").arg(version)
+		        /* ) */;
+		importImplementationLegacy(load_symbols_only);
+		break;
+	case 8:
+		if (Settings::getInstance().getSetting(Settings::General_NewOcd8Implementation).toBool())
+			importImplementation< Ocd::FormatV8 >(load_symbols_only);
+		else
 			importImplementationLegacy(load_symbols_only);
-			break;
-		case 8:
-			if (Settings::getInstance().getSetting(Settings::General_NewOcd8Implementation).toBool())
-				importImplementation< Ocd::FormatV8 >(load_symbols_only);
-			else
-				importImplementationLegacy(load_symbols_only);
-			break;
-		case 9:
-			importImplementation< Ocd::FormatV9 >(load_symbols_only);
-			break;
-		case 10:
-			importImplementation< Ocd::FormatV10 >(load_symbols_only);
-			break;
-		case 11:
-			importImplementation< Ocd::FormatV11 >(load_symbols_only);
-			break;
-		case 12:
-			importImplementation< Ocd::FormatV12 >(load_symbols_only);
-			break;
-		default:
-			throw FileFormatException(
-			  Importer::tr("Could not read file: %1").
-			  arg(tr("OCD files of version %1 are not supported!").arg(version))
-			);
+		break;
+	case 9:
+		importImplementation< Ocd::FormatV9 >(load_symbols_only);
+		break;
+	case 10:
+		importImplementation< Ocd::FormatV10 >(load_symbols_only);
+		break;
+	case 11:
+		importImplementation< Ocd::FormatV11 >(load_symbols_only);
+		break;
+	case 12:
+		importImplementation< Ocd::FormatV12 >(load_symbols_only);
+		break;
+	default:
+		throw FileFormatException(
+		            Importer::tr("Could not read file: %1").
+		            arg(tr("OCD files of version %1 are not supported!").arg(version))
+		            );
 	}
 }
 
