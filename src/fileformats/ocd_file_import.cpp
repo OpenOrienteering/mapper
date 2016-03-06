@@ -145,11 +145,14 @@ template< class F >
 void OcdFileImport::importImplementation(bool load_symbols_only)
 {
 	OcdFile< F > file(buffer);
-#if 0
-	qDebug() << "*** OcdFileImport <" << F::version() << ">";
-	for (auto&& string : file.strings())
+#ifdef MAPPER_DEVELOPMENT_BUILD
+	if (!qApp->applicationName().endsWith(QStringLiteral("Test")))
 	{
-		qDebug() << string.type << convertOcdString< typename F::Encoding >(file[string]);
+		qDebug("*** OcdFileImport: Importing a version %d.%d file", file.header()->version, file.header()->subversion);
+		for (const auto& string : file.strings())
+		{
+			qDebug(" %d \t%s", string.type, qPrintable(convertOcdString< typename F::Encoding >(file[string])));
+		}
 	}
 #endif
 	
