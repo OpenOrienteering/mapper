@@ -1,5 +1,5 @@
 /*
- *    Copyright 2013, 2015 Kai Pastor
+ *    Copyright 2013, 2015, 2016 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -28,22 +28,7 @@ namespace Ocd
 	
 #pragma pack(push, 1)
 	
-	struct FileHeaderV10
-	{
-		quint16 vendor_mark;
-		quint8  file_type;
-		quint8  file_status;
-		quint16 version;
-		quint8  subversion;
-		quint8  subsubversion;
-		quint32 first_symbol_block;
-		quint32 first_object_block;
-		quint32 RESERVED_MEMBER[4];
-		quint32 first_string_block;
-		quint32 file_name_pos;
-		quint32 file_name_size;
-		quint32 RESERVED_MEMBER;
-	};
+	using FileHeaderV10 = FileHeaderV9;
 	
 	typedef BaseSymbolV9 BaseSymbolV10;
 	

@@ -28,23 +28,9 @@ namespace Ocd
 	
 #pragma pack(push, 1)
 	
-	struct FileHeaderV12
+	struct FileHeaderV12 : public FileHeaderV11
 	{
-		quint16 vendor_mark;
-		quint8  file_type;
-		quint8  file_status;
-		quint16 version;
-		quint8  subversion;
-		quint8  subsubversion;
-		quint32 first_symbol_block;
-		quint32 first_object_block;
-		quint32 offline_sync_serial;
-		quint32 current_file_version;
 		quint32 RESERVED_MEMBER[2];
-		quint32 first_string_block;
-		quint32 file_name_pos;
-		quint32 file_name_size;
-		quint32 RESERVED_MEMBER[3];
 		quint32 first_multi_rep_block;
 	};
 	
