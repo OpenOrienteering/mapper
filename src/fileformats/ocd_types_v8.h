@@ -353,14 +353,6 @@ namespace Ocd
 		quint32 pos;
 		quint16 size_MISC; /// Different interpretation for version < 8
 		qint16  symbol;
-		
-		enum ObjectStatus
-		{
-			StatusDeleted = 0,
-			StatusNormal  = 1,
-			StatusHidden  = 2,
-			StatusDeletedForUndo = 3
-		};
 	};
 	
 	struct ObjectV8

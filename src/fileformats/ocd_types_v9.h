@@ -316,14 +316,6 @@ namespace Ocd
 		quint16 layer;
 		quint8  layout_font_V11_ONLY; /// only in V11
 		quint8  RESERVED_MEMBER;
-		
-		enum ObjectStatus
-		{
-			StatusDeleted = 0,
-			StatusNormal  = 1,
-			StatusHidden  = 2,
-			StatusDeletedForUndo = 3
-		};
 	};
 	
 	struct ObjectV9

@@ -187,6 +187,17 @@ namespace Ocd
 	};
 	
 	/**
+	 * Status values for objects.
+	 */
+	enum ObjectStatus
+	{
+		ObjectDeleted = 0,
+		ObjectNormal  = 1,
+		ObjectHidden  = 2,
+		ObjectDeletedForUndo = 3
+	};
+	
+	/**
 	 * A generic OCD file format trait.
 	 *
 	 * It is suitable for detecting the actual format.

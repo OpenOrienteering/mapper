@@ -520,18 +520,16 @@ void OcdFileImport::importSymbols(const OcdFile< F >& file)
 
 void OcdFileImport::importObjects(const OcdFile<Ocd::FormatV8>& file)
 {
+	auto ocd_version = file.header()->version;
 	MapPart* part = map->getCurrentPart();
 	Q_ASSERT(part);
 	
-	for (auto&& object_entry : file.objects())
+	for (const auto& object_entry : file.objects())
 	{
 		if (object_entry.symbol)
 		{
-			auto object = importObject(file[object_entry], part, file.header()->version);
-			if (object)
-			{
+			if (auto object = importObject(file[object_entry], part, ocd_version))
 				part->addObject(object, part->getNumObjects());
-			}
 		}
 	}
 }
@@ -539,20 +537,18 @@ void OcdFileImport::importObjects(const OcdFile<Ocd::FormatV8>& file)
 template< class F >
 void OcdFileImport::importObjects(const OcdFile< F >& file)
 {
+	auto ocd_version = file.header()->version;
 	MapPart* part = map->getCurrentPart();
 	Q_ASSERT(part);
 	
-	for (auto&& object_entry : file.objects())
+	for (const auto& object_entry : file.objects())
 	{
 		if ( object_entry.symbol
-		     && object_entry.status != OcdFile< F >::ObjectIndex::EntryType::StatusDeleted
-		     && object_entry.status != OcdFile< F >::ObjectIndex::EntryType::StatusDeletedForUndo )
+		     && object_entry.status != Ocd::ObjectDeleted
+		     && object_entry.status != Ocd::ObjectDeletedForUndo )
 		{
-			auto object = importObject(file[object_entry], part, file.header()->version);
-			if (object)
-			{
+			if (auto object = importObject(file[object_entry], part, ocd_version))
 				part->addObject(object, part->getNumObjects());
-			}
 		}
 	}
 }
