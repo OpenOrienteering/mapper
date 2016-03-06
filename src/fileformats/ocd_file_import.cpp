@@ -396,7 +396,7 @@ MapColor* OcdFileImport::importColor(const QString& param_string)
 	
 	int number;
 	bool number_ok = false;
-	MapColorCmyk cmyk;
+	MapColorCmyk cmyk { 0.0, 0.0, 0.0, 0.0 };
 	bool overprinting = false;
 	float opacity = 1.0f;
 	
