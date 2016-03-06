@@ -478,19 +478,19 @@ void OcdFileImport::importSymbols(const OcdFile< F >& file)
 		// Don't use switch, because F::SymbolType may have duplicate values.
 		if (it->type == F::TypePoint)
 		{
-			symbol = importPointSymbol((const typename F::PointSymbol&)*it, F::version());
+			symbol = importPointSymbol((const typename F::PointSymbol&)*it, file.header()->version);
 		}
 		else if (it->type == F::TypeLine)
 		{
-			symbol = importLineSymbol((const typename F::LineSymbol&)*it, F::version());
+			symbol = importLineSymbol((const typename F::LineSymbol&)*it, file.header()->version);
 		}
 		else if (it->type == F::TypeArea)
 		{
-			symbol = importAreaSymbol((const typename F::AreaSymbol&)*it, F::version());
+			symbol = importAreaSymbol((const typename F::AreaSymbol&)*it, file.header()->version);
 		}
 		else if (it->type == F::TypeText)
 		{
-			symbol = importTextSymbol((const typename F::TextSymbol&)*it);
+			symbol = importTextSymbol((const typename F::TextSymbol&)*it, file.header()->version);
 		}
 		else if (it->type == F::TypeRectangle)
 		{
@@ -498,7 +498,7 @@ void OcdFileImport::importSymbols(const OcdFile< F >& file)
 		}
 		else if (it->type == F::TypeLineText)
 		{
-			symbol = importLineTextSymbol((const typename F::LineTextSymbol&)*it);
+			symbol = importLineTextSymbol((const typename F::LineTextSymbol&)*it, file.header()->version);
 		}
 		else if (it->type)
 		{
@@ -525,7 +525,7 @@ void OcdFileImport::importObjects< struct Ocd::FormatV8 >(const OcdFile< Ocd::Fo
 	{
 		if (object_entry.symbol)
 		{
-			auto object = importObject(file[object_entry], part);
+			auto object = importObject(file[object_entry], part, file.header()->version);
 			if (object)
 			{
 				part->addObject(object, part->getNumObjects());
@@ -546,7 +546,7 @@ void OcdFileImport::importObjects(const OcdFile< F >& file)
 		     && object_entry.status != OcdFile< F >::ObjectIndex::EntryType::StatusDeleted
 		     && object_entry.status != OcdFile< F >::ObjectIndex::EntryType::StatusDeletedForUndo )
 		{
-			auto object = importObject(file[object_entry], part);
+			auto object = importObject(file[object_entry], part, file.header()->version);
 			if (object)
 			{
 				part->addObject(object, part->getNumObjects());
@@ -562,7 +562,7 @@ void OcdFileImport::importTemplates(const OcdFile< F >& file)
 	{
 		if (string.type == 8)
 		{
-			importTemplate(convertOcdString< typename F::Encoding >(file[string]), F::version());
+			importTemplate(convertOcdString< typename F::Encoding >(file[string]), file.header()->version);
 		}
 	}
 }
@@ -961,7 +961,7 @@ Symbol* OcdFileImport::importLineSymbol(const S& ocd_symbol, int ocd_version)
 	
 	// Import a 'framing' line?
 	OcdImportedLineSymbol* framing_line = nullptr;
-	if (ocd_symbol.framing_width > 0)
+	if (ocd_symbol.framing_width > 0 && ocd_version >= 7)
 	{
 		framing_line = new OcdImportedLineSymbol();
 		if (!line_for_borders)
@@ -1226,7 +1226,7 @@ AreaSymbol* OcdFileImport::importAreaSymbol(const S& ocd_symbol, int ocd_version
 }
 
 template< class S >
-TextSymbol* OcdFileImport::importTextSymbol(const S& ocd_symbol)
+TextSymbol* OcdFileImport::importTextSymbol(const S& ocd_symbol, int ocd_version)
 {
 	OcdImportedTextSymbol* symbol = new OcdImportedTextSymbol();
 	setupBaseSymbol(symbol, ocd_symbol);
@@ -1290,7 +1290,7 @@ TextSymbol* OcdFileImport::importTextSymbol(const S& ocd_symbol)
 		addSymbolWarning(symbol, tr("Ignoring custom indents (%1/%2).").arg(ocd_symbol.indent_first_line).arg(ocd_symbol.indent_other_lines));
 	}
 	
-	if (ocd_symbol.framing_mode > 0) // TODO: Identifiers
+	if (ocd_symbol.framing_mode > 0 && ocd_version >= 8) // TODO: Identifiers; version 6, 7
 	{
 		symbol->framing = true;
 		symbol->framing_color = convertColor(ocd_symbol.framing_color);
@@ -1321,7 +1321,7 @@ TextSymbol* OcdFileImport::importTextSymbol(const S& ocd_symbol)
 }
 
 template< class S >
-TextSymbol* OcdFileImport::importLineTextSymbol(const S& ocd_symbol)
+TextSymbol* OcdFileImport::importLineTextSymbol(const S& ocd_symbol, int ocd_version)
 {
 	OcdImportedTextSymbol* symbol = new OcdImportedTextSymbol();
 	setupBaseSymbol(symbol, ocd_symbol);
@@ -1375,7 +1375,7 @@ TextSymbol* OcdFileImport::importLineTextSymbol(const S& ocd_symbol)
 		addSymbolWarning(symbol, tr("Ignoring custom word spacing (%1 %).").arg(ocd_symbol.word_spacing));
 	}
 	
-	if (ocd_symbol.framing_mode > 0) // TODO: Identifiers
+	if (ocd_symbol.framing_mode > 0 && ocd_version >= 8) // TODO: Identifiers; version 6,7
 	{
 		symbol->framing = true;
 		symbol->framing_color = convertColor(ocd_symbol.framing_color);
@@ -1551,7 +1551,7 @@ void OcdFileImport::setupPointSymbolPattern(PointSymbol* symbol, std::size_t dat
 }
 
 template< class O >
-Object* OcdFileImport::importObject(const O& ocd_object, MapPart* part)
+Object* OcdFileImport::importObject(const O& ocd_object, MapPart* part, int ocd_version)
 {
 	Symbol* symbol = nullptr;
 	if (ocd_object.symbol >= 0)
@@ -1618,7 +1618,7 @@ Object* OcdFileImport::importObject(const O& ocd_object, MapPart* part)
 	else if (symbol->getType() == Symbol::Text)
 	{
 		TextObject *t = new TextObject(symbol);
-		t->setText(getObjectText(ocd_object));
+		t->setText(getObjectText(ocd_object, ocd_version));
 		t->setRotation(convertAngle(ocd_object.angle));
 		t->setHorizontalAlignment(text_halign_map.value(symbol));
 		// Vertical alignment is set in fillTextPathCoords().
@@ -1651,10 +1651,10 @@ Object* OcdFileImport::importObject(const O& ocd_object, MapPart* part)
 
 template< >
 inline
-QString OcdFileImport::getObjectText< struct Ocd::ObjectV8 >(const Ocd::ObjectV8& ocd_object) const
+QString OcdFileImport::getObjectText< struct Ocd::ObjectV8 >(const Ocd::ObjectV8& ocd_object, int ocd_version) const
 {
 	QString object_text;
-	if (ocd_object.unicode)
+	if (ocd_object.unicode && ocd_version >= 8)
 	{
 		object_text = convertOcdString((const QChar*)(ocd_object.coords + ocd_object.num_items));
 	}
@@ -1675,7 +1675,7 @@ QString OcdFileImport::getObjectText< struct Ocd::ObjectV8 >(const Ocd::ObjectV8
 
 template< class O >
 inline
-QString OcdFileImport::getObjectText(const O& ocd_object) const
+QString OcdFileImport::getObjectText(const O& ocd_object, int /*ocd_version*/) const
 {
 	return QString((const QChar *)(ocd_object.coords + ocd_object.num_items));
 }
@@ -1934,14 +1934,10 @@ void OcdFileImport::import(bool load_symbols_only)
 	{
 	case 6:
 	case 7:
-		// We keep the following existing translation just in case
-		// we add support for version 6/7 to the new importer.
-		/* addWarning( */
-		(void)tr("Untested file importer for format: OCD %1").arg(version)
-		        /* ) */;
-		importImplementationLegacy(load_symbols_only);
-		break;
 	case 8:
+		// Note: Version 6 and 7 do have some differences, which will need to be
+		//       handled in the version 8 implementation by looking up the
+		//       actual format version in the file header.
 		if (Settings::getInstance().getSetting(Settings::General_NewOcd8Implementation).toBool())
 			importImplementation< Ocd::FormatV8 >(load_symbols_only);
 		else

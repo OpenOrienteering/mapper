@@ -189,10 +189,10 @@ protected:
 	AreaSymbol* importAreaSymbol(const S& ocd_symbol, int ocd_version);
 	
 	template< class S >
-	TextSymbol* importTextSymbol(const S& ocd_symbol);
+	TextSymbol* importTextSymbol(const S& ocd_symbol, int ocd_version);
 	
 	template< class S >
-	TextSymbol* importLineTextSymbol(const S& ocd_symbol);
+	TextSymbol* importLineTextSymbol(const S& ocd_symbol, int ocd_version);
 	
 	template< class S >
 	LineSymbol* importRectangleSymbol(const S& ocd_symbol);
@@ -205,10 +205,10 @@ protected:
 	// Object import
 	
 	template< class O >
-	Object* importObject(const O& ocd_object, MapPart* part);
+	Object* importObject(const O& ocd_object, MapPart* part, int ocd_version);
 	
 	template< class O >
-	QString getObjectText(const O& ocd_object) const;
+	QString getObjectText(const O& ocd_object, int ocd_version) const;
 	
 	template< class O >
 	Object* importRectangleObject(const O& ocd_object, MapPart* part, const OcdFileImport::RectangleInfo& rect);

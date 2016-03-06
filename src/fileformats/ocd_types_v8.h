@@ -335,7 +335,7 @@ namespace Ocd
 		OcdPoint32 bottom_left_bound;
 		OcdPoint32 top_right_bound;
 		quint32 pos;
-		quint16 size;
+		quint16 size_IGNORED; // different interpretation for version < 8
 		qint16  symbol;
 		
 		enum ObjectStatus
@@ -428,13 +428,14 @@ namespace Ocd
 		PascalDouble zoom;
 		ZoomRectV8 zoom_history[8];
 		quint32 zoom_history_size;
-		quint16 real_coords;
-		char    filename[256];
-		quint16 hatch_areas;
-		quint16 dim_templates;
-		quint16 hide_templates;
-		quint16 template_mode;
-		qint16 template_color;
+		// V6 header ends here, but Mapper doesn't use the following fields.
+		quint16 real_coords_IGNORED;
+		char    filename_IGNORED[256];
+		quint16 hatch_areas_IGNORED;
+		quint16 dim_templates_IGNORED;
+		quint16 hide_templates_IGNORED;
+		quint16 template_mode_IGNORED;
+		qint16  template_color_IGNORED;
 	};
 	
 #pragma pack(pop)

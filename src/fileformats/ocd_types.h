@@ -488,7 +488,7 @@ quint32 FirstIndexBlock<F,T>::operator()(const OcdFile<F>* file) const
 template< class F >
 quint32 FirstIndexBlock<F,Ocd::ParameterString>::operator()(const OcdFile<F>* file) const
 {
-	return file->header()->first_string_block;
+	return (file->header()->version < 8) ? 0 : file->header()->first_string_block;
 }
 
 template< class F >
