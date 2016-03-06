@@ -1,5 +1,5 @@
 /*
- *    Copyright 2013, 2015 Kai Pastor
+ *    Copyright 2013, 2015, 2016 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -17,8 +17,8 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _OPENORIENTEERING_OCD_TYPES_V8_
-#define _OPENORIENTEERING_OCD_TYPES_V8_
+#ifndef OPENORIENTEERING_OCD_TYPES_V8_H
+#define OPENORIENTEERING_OCD_TYPES_V8_H
 
 #include "ocd_types.h"
 
@@ -495,4 +495,4 @@ namespace Ocd
 	};
 }
 
-#endif // _OPENORIENTEERING_OCD_TYPES_V8_
+#endif // OPENORIENTEERING_OCD_TYPES_V8_H

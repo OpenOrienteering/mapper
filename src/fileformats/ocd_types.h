@@ -17,11 +17,10 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _OPENORIENTEERING_OCD_TYPES_
-#define _OPENORIENTEERING_OCD_TYPES_
+#ifndef OPENORIENTEERING_OCD_TYPES_H
+#define OPENORIENTEERING_OCD_TYPES_H
 
 #include <QtGlobal>
-#include <QtEndian>
 #include <QByteArray>
 #include <QChar>
 
@@ -131,7 +130,7 @@ namespace Ocd
 	{
 		quint32 pos;
 		quint32 size;
-		qint32 type;
+		qint32  type;
 		quint32 obj_index;
 	};
 	
@@ -777,4 +776,4 @@ const typename F::Object& OcdFile<F>::operator[](const typename OcdFile<F>::Obje
 	return reinterpret_cast<const typename F::Object&>((*this)[object_entry.pos]);
 }
 
-#endif
+#endif // OPENORIENTEERING_OCD_TYPES_H

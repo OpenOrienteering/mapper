@@ -17,8 +17,8 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _OPENORIENTEERING_OCD_TYPES_V10_
-#define _OPENORIENTEERING_OCD_TYPES_V10_
+#ifndef OPENORIENTEERING_OCD_TYPES_V10
+#define OPENORIENTEERING_OCD_TYPES_V10
 
 #include "ocd_types.h"
 #include "ocd_types_v9.h"
@@ -30,15 +30,15 @@ namespace Ocd
 	
 	using FileHeaderV10 = FileHeaderV9;
 	
-	typedef BaseSymbolV9 BaseSymbolV10;
+	using BaseSymbolV10 = BaseSymbolV9;
 	
-	typedef PointSymbolElementV9 PointSymbolElementV10;
+	using PointSymbolElementV10 = PointSymbolElementV9;
 	
-	typedef PointSymbolV9 PointSymbolV10;
+	using PointSymbolV10 = PointSymbolV9;
 	
-	typedef LineSymbolV9 LineSymbolV10;
+	using LineSymbolV10 = LineSymbolV9;
 	
-	typedef AreaSymbolV9 AreaSymbolV10;
+	using AreaSymbolV10 = AreaSymbolV9;
 	
 	using TextSymbolV10 = TextSymbolV9;
 	
@@ -46,7 +46,7 @@ namespace Ocd
 	
 	using RectangleSymbolV10 = RectangleSymbolV9;
 	
-	typedef ObjectIndexEntryV9 ObjectIndexEntryV10;
+	using ObjectIndexEntryV10 = ObjectIndexEntryV9;
 	
 	using ObjectV10 = ObjectV9;
 	
@@ -83,4 +83,4 @@ namespace Ocd
 	};
 }
 
-#endif // _OPENORIENTEERING_OCD_TYPES_V10_
+#endif // OPENORIENTEERING_OCD_TYPES_V10_H

@@ -17,8 +17,8 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _OPENORIENTEERING_OCD_TYPES_V9_
-#define _OPENORIENTEERING_OCD_TYPES_V9_
+#ifndef OPENORIENTEERING_OCD_TYPES_V9_H
+#define OPENORIENTEERING_OCD_TYPES_V9_H
 
 #include "ocd_types.h"
 #include "ocd_types_v8.h"
@@ -73,7 +73,7 @@ namespace Ocd
 		};
 	};
 	
-	typedef PointSymbolElementV8 PointSymbolElementV9;
+	using PointSymbolElementV9 = PointSymbolElementV8;
 	
 	struct PointSymbolV9
 	{
@@ -391,4 +391,4 @@ namespace Ocd
 	};
 }
 
-#endif // _OPENORIENTEERING_OCD_TYPES_V9_
+#endif // OPENORIENTEERING_OCD_TYPES_V9_H
