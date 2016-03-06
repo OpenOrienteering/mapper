@@ -141,7 +141,9 @@ set(Mapper_Common_SRCS
  file_format_ocad8.cpp
  file_format_xml.cpp
  
+ fileformats/ocd_file_export.cpp
  fileformats/ocd_file_format.cpp
+ fileformats/ocd_file_import.cpp
  fileformats/ocd_types.cpp
  
  gui/about_dialog.cpp
@@ -256,7 +258,8 @@ set(Mapper_Common_MOC_INPUT
  core/georeferencing.h
  core/map_printer.h
  
- fileformats/ocd_file_format_p.h
+ fileformats/ocd_file_export.h
+ fileformats/ocd_file_import.h
  
  gui/about_dialog.h
  gui/autosave_dialog.h

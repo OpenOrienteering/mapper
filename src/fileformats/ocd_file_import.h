@@ -1,5 +1,5 @@
 /*
- *    Copyright 2013-2015 Kai Pastor
+ *    Copyright 2013-2016 Kai Pastor
  *
  *    Some parts taken from file_format_oc*d8{.h,_p.h,cpp} which are
  *    Copyright 2012 Pete Curtis
@@ -20,17 +20,18 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _OPENORIENTEERING_OCD_FILE_FORMAT_P_
-#define _OPENORIENTEERING_OCD_FILE_FORMAT_P_
+#ifndef OPENORIENTEERING_OCD_FILE_IMPORT
+#define OPENORIENTEERING_OCD_FILE_IMPORT
+
+#include "../file_import_export.h"
+
+#include <cmath>
 
 #include <QLocale>
 #include <QTextCodec>
 
-#include <cmath>
-
 #include "ocd_types.h"
 #include "ocd_types_v8.h"
-#include "../file_import_export.h"
 #include "../object.h"
 #include "../object_text.h"
 #include "../symbol.h"
@@ -96,12 +97,13 @@ protected:
 		friend class OcdFileImport;
 		
 	public:
-		OcdImportedPathObject(Symbol* symbol = NULL) : PathObject(symbol) { }
+		OcdImportedPathObject(Symbol* symbol = nullptr) : PathObject(symbol) { }
 	};
 	
 public:
 	OcdFileImport(QIODevice* stream, Map *map, MapView *view);
-	virtual ~OcdFileImport();
+	
+	virtual ~OcdFileImport() override;
 	
 	void setCustom8BitEncoding(const char *encoding);
 	
@@ -132,10 +134,10 @@ public:
 	
 	void addSymbolWarning(TextSymbol* symbol, const QString& warning);
 	
-	virtual void finishImport();
+	virtual void finishImport() override;
 	
 protected:
-	virtual void import(bool load_symbols_only);
+	virtual void import(bool load_symbols_only) override;
 	
 	template< class F >
 	void importImplementation(bool load_symbols_only);
@@ -251,14 +253,12 @@ protected:
 // ### OcdFileImport inline code ###
 
 template< std::size_t N >
-inline
 QString OcdFileImport::convertOcdString(const Ocd::PascalString<N>& src) const
 {
 	return custom_8bit_encoding->toUnicode(src.data, src.length);
 }
 
 template< std::size_t N >
-inline
 QString OcdFileImport::convertOcdString(const Ocd::Utf8PascalString<N>& src) const
 {
 	return QString::fromUtf8(src.data, src.length);
@@ -281,7 +281,6 @@ QString OcdFileImport::convertOcdString< Ocd::Utf8Encoding >(const char* src, st
 }
 
 template< class E >
-inline
 QString OcdFileImport::convertOcdString(const QByteArray& data) const
 {
 	return OcdFileImport::convertOcdString< E >(data.constData(), data.length());
@@ -323,11 +322,11 @@ MapColor *OcdFileImport::convertColor(int ocd_color)
 	if (!color_index.contains(ocd_color))
 	{
 		addWarning(tr("Color id not found: %1, ignoring this color").arg(ocd_color));
-		return NULL;
+		return nullptr;
 	}
 	
 	return color_index[ocd_color];
 }
 
 
-#endif // _OPENORIENTEERING_OCD_FILE_FORMAT_P_
+#endif // OPENORIENTEERING_OCD_FILE_IMPORT
