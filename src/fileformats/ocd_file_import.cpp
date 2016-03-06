@@ -1253,29 +1253,36 @@ TextSymbol* OcdFileImport::importTextSymbol(const S& ocd_symbol, int ocd_version
 	for (int i = 0; i < ocd_symbol.num_tabs; ++i)
 		symbol->custom_tabs[i] = convertLength(ocd_symbol.tab_pos[i]);
 	
-	TextObject::HorizontalAlignment halign = TextObject::AlignHCenter;
-	int ocd_halign = ocd_symbol.alignment & 3;
-	if (ocd_halign == 0) // TODO: Named identifiers, all values
-		halign = TextObject::AlignLeft;
-	else if (ocd_halign == 1)
-		halign = TextObject::AlignHCenter;
-	else if (ocd_halign == 2)
-		halign = TextObject::AlignRight;
-	else if (ocd_halign == 3)
-		addSymbolWarning(symbol, tr("Justified alignment is not supported.")); // TODO
+	switch (ocd_symbol.alignment & S::HAlignMask)
+	{
+	case S::HAlignLeft:
+		text_halign_map[symbol] = TextObject::AlignLeft;
+		break;
+	case S::HAlignRight:
+		text_halign_map[symbol] = TextObject::AlignRight;
+		break;
+	case S::HAlignJustified:
+		/// \todo Implement justified alignment
+		addSymbolWarning(symbol, tr("Justified alignment is not supported."));
+		// fall through
+	default:
+		text_halign_map[symbol] = TextObject::AlignHCenter;
+	}
 	
-	text_halign_map[symbol] = halign;
-	
-	TextObject::VerticalAlignment valign = TextObject::AlignBaseline;
-	int ocd_valign = ocd_symbol.alignment & 12;
-	if (ocd_valign == 4) // TODO: Named identifiers, all values
-		valign = TextObject::AlignVCenter;
-	else if (ocd_valign == 8)
-		valign = TextObject::AlignTop;
-	else if (ocd_valign == 12)
-		addSymbolWarning(symbol, tr("Vertical alignment '%1' is not supported.").arg(ocd_symbol.alignment)); // TODO
-	
-	text_valign_map[symbol] = valign;
+	switch (ocd_symbol.alignment & S::VAlignMask)
+	{
+	case S::VAlignTop:
+		text_valign_map[symbol] = TextObject::AlignTop;
+		break;
+	case S::VAlignMiddle:
+		text_valign_map[symbol] = TextObject::AlignVCenter;
+		break;
+	default:
+		addSymbolWarning(symbol, tr("Vertical alignment '%1' is not supported.").arg(ocd_symbol.alignment & S::VAlignMask));
+		// fall through
+	case S::VAlignBottom:
+		text_valign_map[symbol] = TextObject::AlignBaseline;
+	}
 	
 	if (ocd_symbol.font_weight != 400 && ocd_symbol.font_weight != 700)
 	{
@@ -1679,7 +1686,10 @@ template< class O >
 inline
 QString OcdFileImport::getObjectText(const O& ocd_object, int /*ocd_version*/) const
 {
-	return QString((const QChar *)(ocd_object.coords + ocd_object.num_items));
+	auto data = (const QChar *)(ocd_object.coords + ocd_object.num_items);
+	if (data[0] == QChar{'\r'} && data [1] == QChar{'\n'})
+		data += 2;
+	return QString(data);
 }
 
 template< class O >
