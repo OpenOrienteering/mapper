@@ -55,13 +55,6 @@ namespace Ocd
 		QChar   description[64];
 		quint8  icon_bits[484];
 		quint16 group[64];
-		
-		enum StatusFlag
-		{
-			StatusNormal    = 0,
-			StatusProtected = 1,
-			StatusHidden    = 2
-		};
 	};
 	
 	using PointSymbolElementV11 = PointSymbolElementV10;

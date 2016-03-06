@@ -177,6 +177,16 @@ namespace Ocd
 #pragma pack(pop)
 	
 	/**
+	 * Status flags for symbols.
+	 */
+	enum SymbolStatus
+	{
+		SymbolNormal    = 0,
+		SymbolProtected = 1,
+		SymbolHidden    = 2
+	};
+	
+	/**
 	 * A generic OCD file format trait.
 	 *
 	 * It is suitable for detecting the actual format.

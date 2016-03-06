@@ -65,12 +65,6 @@ namespace Ocd
 		quint16 colors[14];
 		PascalString<31> description;
 		quint8  icon_bits[484];
-		
-		enum StatusFlag
-		{
-			StatusProtected = 1,
-			StatusHidden    = 2
-		};
 	};
 	
 	using PointSymbolElementV9 = PointSymbolElementV8;

@@ -797,10 +797,8 @@ void OcdFileImport::setupBaseSymbol(Symbol* symbol, const S& ocd_symbol)
 	symbol->setNumberComponent(1, base_symbol.number % BaseSymbol::symbol_number_factor);
 	symbol->setNumberComponent(2, -1);
 	symbol->setIsHelperSymbol(false);
-	if (base_symbol.status & BaseSymbol::StatusProtected)
-		symbol->setProtected(true);
-	if (base_symbol.status & BaseSymbol::StatusHidden)
-		symbol->setHidden(true);
+	symbol->setProtected(base_symbol.status & Ocd::SymbolProtected);
+	symbol->setHidden(base_symbol.status & Ocd::SymbolHidden);
 }
 
 template< class S >
