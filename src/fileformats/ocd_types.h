@@ -92,13 +92,23 @@ namespace Ocd
 	
 	/**
 	 * The generic header at the beginning of all supported OCD file formats.
+	 * 
+	 * For implementation efficiency, this header is generalized in comparison
+	 * with the upstream documentation:
+	 * 
+	 *  - Until V8, the format actually used a 16 bit file type field, but no
+	 *    file status field.
+	 * 	- Until V9, the format actually used a 16 bit subversion field, but no
+	 *    subsubversion field.
 	 */
 	struct FileHeaderGeneric
 	{
 		quint16 vendor_mark;
-		quint16 RESERVED_MEMBER;
+		quint8  file_type_V9;   /// \since V9
+		quint8  file_status_V9; /// \since V9
 		quint16 version;
-		quint16 subversion;
+		quint8  subversion;
+		quint8  subsubversion;
 	};
 	
 	/**

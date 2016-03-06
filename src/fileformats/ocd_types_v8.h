@@ -69,12 +69,8 @@ namespace Ocd
 		SeparationInfoV8 separation_info[32];
 	};
 	
-	struct FileHeaderV8
+	struct FileHeaderV8 : public FileHeaderGeneric
 	{
-		quint16 vendor_mark;
-		quint16 section_mark;
-		quint16 version;
-		quint16 subversion;
 		quint32 first_symbol_block;
 		quint32 first_object_block;
 		quint32 setup_pos;

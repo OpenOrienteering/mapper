@@ -28,16 +28,8 @@ namespace Ocd
 	
 #pragma pack(push, 1)
 	
-	struct FileHeaderV9
+	struct FileHeaderV9 : public FileHeaderGeneric
 	{
-		quint16 vendor_mark;
-		quint8  file_type;
-		quint8  file_status;
-		quint16 version;
-		// V9 actually uses a 16 bit subversion field without subsubversion,
-		// but it is no harm to use the V10 interpretation.
-		quint8  subversion;
-		quint8  subsubversion;
 		quint32 first_symbol_block;
 		quint32 first_object_block;
 		quint32 offline_sync_serial_V11;  /// \since V11
