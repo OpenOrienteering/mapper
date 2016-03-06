@@ -165,40 +165,11 @@ namespace Ocd
 		
 		BaseSymbol base;
 		
-		PascalString<31> font_name;
-		quint16 font_color;
-		quint16 font_size;
-		quint16 font_weight;
-		quint8  font_italic;
-		quint8  RESERVED_MEMBER;
-		quint16 char_spacing;
-		quint16 word_spacing;
-		quint16 alignment;
-		quint16 line_spacing;
-		qint16  para_spacing;
-		quint16 indent_first_line;
-		quint16 indent_other_lines;
-		quint16 num_tabs;
-		quint32 tab_pos[32];
-		quint16 line_below_on;
-		quint16 line_below_color;
-		quint16 line_below_width;
-		quint16 line_below_offset;
-		quint16 RESERVED_MEMBER;
-		quint8  framing_mode;
-		quint8  framing_line_style;
-		quint8  point_symbol_on_V10;     /// \since V10
-		quint32 point_symbol_number_V10; /// \since V10
-		PascalString<18> RESERVED_MEMBER;
-		quint16 framing_border_left;
-		quint16 framing_border_bottom;
-		quint16 framing_border_right;
-		quint16 framing_border_top;
-		quint16 framing_color;
-		quint16 framing_line_width;
-		quint16 RESERVED_MEMBER[2];
-		quint16 framing_offset_x;
-		quint16 framing_offset_y;
+		PascalString<31>        font_name;
+		BasicTextAttributesV8   basic;
+		SpecialTextAttributesV8 special;
+		quint16                 RESERVED_MEMBER;
+		FramingAttributesV8     framing;
 	};
 	
 	struct LineTextSymbolV9
@@ -207,23 +178,9 @@ namespace Ocd
 		
 		BaseSymbol base;
 		
-		PascalString<31> font_name;
-		quint16 font_color;
-		quint16 font_size;
-		quint16 font_weight;
-		quint8  font_italic;
-		quint8  RESERVED_MEMBER;
-		quint16 char_spacing;
-		quint16 word_spacing;
-		quint16 alignment;
-		quint8  framing_mode;
-		quint8  framing_line_style_V10; /// \since V10
-		PascalString<31> RESERVED_MEMBER;
-		quint16 framing_color;
-		quint16 framing_line_width;
-		quint16 RESERVED_MEMBER[2];
-		quint16 framing_offset_x;
-		quint16 framing_offset_y;
+		PascalString<31>      font_name;
+		BasicTextAttributesV8 basic;
+		FramingAttributesV8   framing;
 	};
 	
 	struct RectangleSymbolV9

@@ -257,7 +257,11 @@ protected:
 	
 	bool fillTextPathCoords(TextObject* object, TextSymbol* symbol, quint16 npts, const Ocd::OcdPoint32* ocd_points);
 	
-	void setTextAlignment(TextSymbol* symbol, quint16 alignment);
+	void setBasicAttributes(OcdImportedTextSymbol* symbol, const QString& font_name, const Ocd::BasicTextAttributesV8& attributes);
+	
+	void setSpecialAttributes(OcdImportedTextSymbol* symbol, const Ocd::SpecialTextAttributesV8& attributes);
+	
+	void setFraming(OcdImportedTextSymbol* symbol, const Ocd::FramingAttributesV8& framing);
 	
 protected:
 	/// The locale is used for number formatting.

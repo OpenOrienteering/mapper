@@ -1244,137 +1244,26 @@ void OcdFileImport::setupAreaSymbolCommon(OcdImportedAreaSymbol* symbol, bool fi
 }
 
 template< class S >
-TextSymbol* OcdFileImport::importTextSymbol(const S& ocd_symbol, int ocd_version)
+TextSymbol* OcdFileImport::importTextSymbol(const S& ocd_symbol, int /*ocd_version*/)
 {
 	OcdImportedTextSymbol* symbol = new OcdImportedTextSymbol();
 	setupBaseSymbol(symbol, ocd_symbol);
-	
-	symbol->font_family = convertOcdString(ocd_symbol.font_name); // FIXME: font mapping?
-	symbol->color = convertColor(ocd_symbol.font_color);
-	double d_font_size = (0.1 * ocd_symbol.font_size) / 72.0 * 25.4;
-	symbol->font_size = qRound(1000 * d_font_size);
-	symbol->bold = (ocd_symbol.font_weight>= 550) ? true : false;
-	symbol->italic = (ocd_symbol.font_italic) ? true : false;
-	symbol->underline = false;
-	symbol->paragraph_spacing = convertLength(ocd_symbol.para_spacing);
-	symbol->character_spacing = ocd_symbol.char_spacing / 100.0;
-	symbol->kerning = false;
-	symbol->line_below = ocd_symbol.line_below_on;
-	symbol->line_below_color = convertColor(ocd_symbol.line_below_color);
-	symbol->line_below_width = convertLength(ocd_symbol.line_below_width);
-	symbol->line_below_distance = convertLength(ocd_symbol.line_below_offset);
-	symbol->custom_tabs.resize(ocd_symbol.num_tabs);
-	for (int i = 0; i < ocd_symbol.num_tabs; ++i)
-		symbol->custom_tabs[i] = convertLength(ocd_symbol.tab_pos[i]);
-	
-	setTextAlignment(symbol, ocd_symbol.alignment);
-	
-	if (ocd_symbol.font_weight != 400 && ocd_symbol.font_weight != 700)
-	{
-		addSymbolWarning(symbol, tr("Ignoring custom weight (%1).").arg(ocd_symbol.font_weight));
-	}
-	if (ocd_symbol.char_spacing != 0)
-	{
-		addSymbolWarning(symbol, tr("Custom character spacing may be incorrect."));
-	}
-	if (ocd_symbol.word_spacing != 100)
-	{
-		addSymbolWarning(symbol, tr("Ignoring custom word spacing (%1 %).").arg(ocd_symbol.word_spacing));
-	}
-	if (ocd_symbol.indent_first_line != 0 || ocd_symbol.indent_other_lines != 0)
-	{
-		addSymbolWarning(symbol, tr("Ignoring custom indents (%1/%2).").arg(ocd_symbol.indent_first_line).arg(ocd_symbol.indent_other_lines));
-	}
-	
-	if (ocd_symbol.framing_mode > 0 && ocd_version >= 8) // TODO: Identifiers; version 6, 7
-	{
-		symbol->framing = true;
-		symbol->framing_color = convertColor(ocd_symbol.framing_color);
-		if (ocd_symbol.framing_mode == 1)
-		{
-			symbol->framing_mode = TextSymbol::ShadowFraming;
-			symbol->framing_shadow_x_offset = convertLength(ocd_symbol.framing_offset_x);
-			symbol->framing_shadow_y_offset = -1 * convertLength(ocd_symbol.framing_offset_y);
-		}
-		else if (ocd_symbol.framing_mode == 2)
-		{
-			symbol->framing_mode = TextSymbol::LineFraming;
-			symbol->framing_line_half_width = convertLength(ocd_symbol.framing_line_width);
-		}
-		else
-		{
-			addSymbolWarning(symbol, tr("Ignoring text framing (mode %1).").arg(ocd_symbol.framing_mode));
-		}
-	}
-	
-	symbol->updateQFont();
-	
-	// Convert line spacing
-	double absolute_line_spacing = d_font_size * 0.01 * ocd_symbol.line_spacing;
-	symbol->line_spacing = absolute_line_spacing / (symbol->getFontMetrics().lineSpacing() / symbol->calculateInternalScaling());
-	
+	setBasicAttributes(symbol, convertOcdString(ocd_symbol.font_name), ocd_symbol.basic);
+	setSpecialAttributes(symbol, ocd_symbol.special);
+	setFraming(symbol, ocd_symbol.framing);
 	return symbol;
 }
 
 template< class S >
-TextSymbol* OcdFileImport::importLineTextSymbol(const S& ocd_symbol, int ocd_version)
+TextSymbol* OcdFileImport::importLineTextSymbol(const S& ocd_symbol, int /*ocd_version*/)
 {
 	OcdImportedTextSymbol* symbol = new OcdImportedTextSymbol();
 	setupBaseSymbol(symbol, ocd_symbol);
-	
-	symbol->font_family = convertOcdString(ocd_symbol.font_name); // FIXME: font mapping?
-	symbol->color = convertColor(ocd_symbol.font_color);
-	double d_font_size = (0.1 * ocd_symbol.font_size) / 72.0 * 25.4;
-	symbol->font_size = qRound(1000 * d_font_size);
-	symbol->bold = (ocd_symbol.font_weight>= 550) ? true : false;
-	symbol->italic = (ocd_symbol.font_italic) ? true : false;
-	symbol->underline = false;
-	symbol->character_spacing = ocd_symbol.char_spacing / 100.0;
-	symbol->kerning = false;
-	symbol->line_below = false;
-	symbol->custom_tabs.resize(0);
-	
-	setTextAlignment(symbol, ocd_symbol.alignment);
-	
-	if (ocd_symbol.font_weight != 400 && ocd_symbol.font_weight != 700)
-	{
-		addSymbolWarning(symbol, tr("Ignoring custom weight (%1).").arg(ocd_symbol.font_weight));
-	}
-	if (ocd_symbol.char_spacing != 0)
-	{
-		addSymbolWarning(symbol, tr("Custom character spacing may be incorrect."));
-	}
-	if (ocd_symbol.word_spacing != 100)
-	{
-		addSymbolWarning(symbol, tr("Ignoring custom word spacing (%1 %).").arg(ocd_symbol.word_spacing));
-	}
-	
-	if (ocd_symbol.framing_mode > 0 && ocd_version >= 8) // TODO: Identifiers; version 6,7
-	{
-		symbol->framing = true;
-		symbol->framing_color = convertColor(ocd_symbol.framing_color);
-		if (ocd_symbol.framing_mode == 1)
-		{
-			symbol->framing_mode = TextSymbol::ShadowFraming;
-			symbol->framing_shadow_x_offset = convertLength(ocd_symbol.framing_offset_x);
-			symbol->framing_shadow_y_offset = -1 * convertLength(ocd_symbol.framing_offset_y);
-		}
-		else if (ocd_symbol.framing_mode == 2)
-		{
-			symbol->framing_mode = TextSymbol::LineFraming;
-			symbol->framing_line_half_width = convertLength(ocd_symbol.framing_line_width);
-		}
-		else
-		{
-			addSymbolWarning(symbol, tr("Ignoring text framing (mode %1).").arg(ocd_symbol.framing_mode));
-		}
-	}
-	
-	symbol->updateQFont();
+	setBasicAttributes(symbol, convertOcdString(ocd_symbol.font_name), ocd_symbol.basic);
+	setFraming(symbol, ocd_symbol.framing);
 	
 	addSymbolWarning(symbol, tr("Line text symbols are not yet supported. Marking the symbol as hidden."));
 	symbol->setHidden(true);
-	
 	return symbol;
 }
 
@@ -1893,9 +1782,24 @@ bool OcdFileImport::fillTextPathCoords(TextObject *object, TextSymbol *symbol, q
 	return true;
 }
 
-void OcdFileImport::setTextAlignment(TextSymbol* symbol, quint16 alignment)
+void OcdFileImport::setBasicAttributes(OcdFileImport::OcdImportedTextSymbol* symbol, const QString& font_name, const Ocd::BasicTextAttributesV8& attributes)
 {
-	switch (alignment & Ocd::HAlignMask)
+	symbol->font_family = font_name;
+	symbol->color = convertColor(attributes.color);
+	symbol->font_size = qRound(100.0 * attributes.font_size / 72.0 * 25.4);
+	symbol->bold = (attributes.font_weight>= 550) ? true : false;
+	symbol->italic = (attributes.font_italic) ? true : false;
+	symbol->underline = false;
+	symbol->kerning = false;
+	symbol->line_below = false;
+	symbol->custom_tabs.resize(0);
+
+	if (attributes.font_weight != 400 && attributes.font_weight != 700)
+	{
+		addSymbolWarning(symbol, tr("Ignoring custom weight (%1).").arg(attributes.font_weight));
+	}
+	
+	switch (attributes.alignment & Ocd::HAlignMask)
 	{
 	case Ocd::HAlignLeft:
 		text_halign_map[symbol] = TextObject::AlignLeft;
@@ -1911,7 +1815,7 @@ void OcdFileImport::setTextAlignment(TextSymbol* symbol, quint16 alignment)
 		text_halign_map[symbol] = TextObject::AlignHCenter;
 	}
 	
-	switch (alignment & Ocd::VAlignMask)
+	switch (attributes.alignment & Ocd::VAlignMask)
 	{
 	case Ocd::VAlignTop:
 		text_valign_map[symbol] = TextObject::AlignTop;
@@ -1920,10 +1824,70 @@ void OcdFileImport::setTextAlignment(TextSymbol* symbol, quint16 alignment)
 		text_valign_map[symbol] = TextObject::AlignVCenter;
 		break;
 	default:
-		addSymbolWarning(symbol, tr("Vertical alignment '%1' is not supported.").arg(alignment & Ocd::VAlignMask));
+		addSymbolWarning(symbol, tr("Vertical alignment '%1' is not supported.").arg(attributes.alignment & Ocd::VAlignMask));
 		// fall through
 	case Ocd::VAlignBottom:
 		text_valign_map[symbol] = TextObject::AlignBaseline;
+	}
+	
+	if (attributes.char_spacing != 0)
+	{
+		symbol->character_spacing = attributes.char_spacing / 100.0;
+		addSymbolWarning(symbol, tr("Custom character spacing may be incorrect."));
+	}
+	
+	if (attributes.word_spacing != 100)
+	{
+		addSymbolWarning(symbol, tr("Ignoring custom word spacing (%1 %).").arg(attributes.word_spacing));
+	}
+	
+	symbol->updateQFont();
+}
+
+void OcdFileImport::setSpecialAttributes(OcdFileImport::OcdImportedTextSymbol* symbol, const Ocd::SpecialTextAttributesV8& attributes)
+{
+	// Convert line spacing
+	double absolute_line_spacing = 0.00001 * symbol->font_size * attributes.line_spacing;
+	symbol->line_spacing = absolute_line_spacing / (symbol->getFontMetrics().lineSpacing() / symbol->calculateInternalScaling());
+	symbol->paragraph_spacing = convertLength(attributes.para_spacing);
+	
+	symbol->line_below = attributes.line_below_on;
+	symbol->line_below_color = convertColor(attributes.line_below_color);
+	symbol->line_below_width = convertLength(attributes.line_below_width);
+	symbol->line_below_distance = convertLength(attributes.line_below_offset);
+	
+	symbol->custom_tabs.resize(attributes.num_tabs);
+	for (int i = 0; i < attributes.num_tabs; ++i)
+		symbol->custom_tabs[i] = convertLength(attributes.tab_pos[i]);
+	
+	if (attributes.indent_first_line != 0 || attributes.indent_other_lines != 0)
+	{
+		addSymbolWarning(symbol, tr("Ignoring custom indents (%1/%2).").arg(attributes.indent_first_line).arg(attributes.indent_other_lines));
+	}
+}
+
+void OcdFileImport::setFraming(OcdFileImport::OcdImportedTextSymbol* symbol, const Ocd::FramingAttributesV8& framing)
+{
+	switch (framing.mode)
+	{
+	case Ocd::FramingShadow:
+		symbol->framing = true;
+		symbol->framing_mode = TextSymbol::ShadowFraming;
+		symbol->framing_color = convertColor(framing.color);
+		symbol->framing_shadow_x_offset = convertLength(framing.offset_x);
+		symbol->framing_shadow_y_offset = -1 * convertLength(framing.offset_y);
+		break;
+	case Ocd::FramingLine: // since V7
+		symbol->framing = true;
+		symbol->framing_mode = TextSymbol::LineFraming;
+		symbol->framing_line_half_width = convertLength(framing.line_width);
+		break;
+	case Ocd::FramingRectangle:
+	default:
+		addSymbolWarning(symbol, tr("Ignoring text framing (mode %1).").arg(framing.mode));
+		// fall through
+	case Ocd::FramingNone:
+		symbol->framing = false;
 	}
 }
 

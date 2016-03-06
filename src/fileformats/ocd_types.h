@@ -248,6 +248,17 @@ namespace Ocd
 	};
 	
 	/**
+	 *
+	 */
+	enum FramingMode
+	{
+		FramingNone      = 0,
+		FramingShadow    = 1, /// Somehow different in older versions
+		FramingLine      = 2, /// \since V7
+		FramingRectangle = 3  /// \since V8; Not for line text symbols
+	};
+	
+	/**
 	 * A generic OCD file format trait.
 	 *
 	 * It is suitable for detecting the actual format.

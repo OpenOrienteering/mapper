@@ -232,21 +232,20 @@ namespace Ocd
 		Element begin_of_elements[1];
 	};
 	
-	struct TextSymbolV8
+	struct BasicTextAttributesV8
 	{
-		typedef BaseSymbolV8 BaseSymbol;
-		
-		BaseSymbol base;
-		
-		PascalString<31> font_name;
-		quint16 font_color;
+		quint16 color;
 		quint16 font_size;
 		quint16 font_weight;
 		quint8  font_italic;
-		quint8  charset;
+		quint8  charset_V8_ONLY;         /// V8 text symbols only
 		quint16 char_spacing;
 		quint16 word_spacing;
 		quint16 alignment;
+	};
+	
+	struct SpecialTextAttributesV8
+	{
 		quint16 line_spacing;
 		qint16  para_spacing;
 		quint16 indent_first_line;
@@ -257,15 +256,38 @@ namespace Ocd
 		quint16 line_below_color;
 		quint16 line_below_width;
 		quint16 line_below_offset;
-		quint16 RESERVED_MEMBER;
-		quint16 framing_mode;
-		PascalString<31> framing_font;
-		quint16 framing_color;
-		quint16 framing_line_width;
-		quint16 framing_font_weight;
-		quint16 framing_italic;
-		quint16 framing_offset_x;
-		quint16 framing_offset_y;
+	};
+	
+	struct FramingAttributesV8
+	{
+		quint8  mode;                    /// 16 bit in V8
+		quint8  line_style;              /// \since V9
+		quint8  point_symbol_on_V10;     /// \since V10
+		quint32 point_symbol_number_V10; /// \since V10
+		char    RESERVED_MEMBER[19];
+		quint16 border_left_V9;          /// \since V9; TextSymbol only
+		quint16 border_bottom_V9;        /// \since V9; TextSymbol only
+		quint16 border_right_V9;         /// \since V9; TextSymbol only
+		quint16 border_top_V9;           /// \since V9; TextSymbol only
+		quint16 color;
+		quint16 line_width;
+		quint16 font_weight;             /// TextSymbol only
+		quint16 italic;                  /// TextSymbol only
+		quint16 offset_x;
+		quint16 offset_y;
+	};
+
+	struct TextSymbolV8
+	{
+		typedef BaseSymbolV8 BaseSymbol;
+		
+		BaseSymbol base;
+		
+		PascalString<31>        font_name;
+		BasicTextAttributesV8   basic;
+		SpecialTextAttributesV8 special;
+		quint16                 RESERVED_MEMBER;
+		FramingAttributesV8     framing;
 	};
 	
 	struct LineTextSymbolV8 // TODO: use and test...
@@ -274,23 +296,9 @@ namespace Ocd
 		
 		BaseSymbol base;
 		
-		PascalString<31> font_name;
-		quint16 font_color;
-		quint16 font_size;
-		quint16 font_weight;
-		quint8  font_italic;
-		quint8  RESERVED_MEMBER;
-		quint16 char_spacing;
-		quint16 word_spacing;
-		quint16 alignment;
-		quint8  framing_mode;
-		quint8  RESERVED_MEMBER;
-		PascalString<31> RESERVED_MEMBER;
-		quint16 framing_color;
-		quint16 framing_line_width;
-		quint16 RESERVED_MEMBER[2];
-		quint16 framing_offset_x;
-		quint16 framing_offset_y;
+		PascalString<31>      font_name;
+		BasicTextAttributesV8 basic;
+		FramingAttributesV8   framing;
 	};
 	
 	struct RectangleSymbolV8
