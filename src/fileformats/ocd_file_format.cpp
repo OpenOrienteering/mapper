@@ -33,6 +33,7 @@
 #include "ocd_types_v10.h"
 #include "ocd_types_v11.h"
 #include "ocd_types_v12.h"
+#include "../core/crs_template.h"
 #include "../core/map_color.h"
 #include "../core/map_view.h"
 #include "../core/georeferencing.h"
@@ -177,6 +178,7 @@ void OcdFileImport::importImplementation(bool load_symbols_only)
 {
 	OcdFile< F > file(buffer);
 #if 0
+	qDebug() << "*** OcdFileImport <" << F::version() << ">";
 	for (auto&& string : file.strings())
 	{
 		qDebug() << string.type << convertOcdString< typename F::Encoding >(file[string]);
@@ -221,17 +223,18 @@ void OcdFileImport::importGeoreferencing(const OcdFile< F >& file)
 	{
 		if (string.type == 1039)
 		{
-			importScalesSettings(convertOcdString< typename F::Encoding >(file[string]));
+			importGeoreferencing(convertOcdString< typename F::Encoding >(file[string]));
 			break;
 		}
 	}
 }
 
-void OcdFileImport::importScalesSettings(const QString& param_string)
+void OcdFileImport::importGeoreferencing(const QString& param_string)
 {
 	const QChar* unicode = param_string.unicode();
 	
 	Georeferencing georef;
+	QString combined_grid_zone;
 	QPointF proj_ref_point;
 	bool x_ok = false, y_ok = false;
 	
@@ -245,32 +248,27 @@ void OcdFileImport::importScalesSettings(const QString& param_string)
 		const QString param_value = QString::fromRawData(unicode+i+2, len); // no copying!
 		switch (param_string[i+1].toLatin1())
 		{
-			case '\t':
-				// empty item
-				break;
-			case 'm':
+		case 'm':
 			{
 				double scale = param_value.toDouble(&ok);
-				if (ok && scale >= 0) georef.setScaleDenominator(qRound(scale));
-				break;
+				if (ok && scale >= 0)
+					georef.setScaleDenominator(qRound(scale));
 			}
-			case 'a':
+			break;
+		case 'a':
 			{
 				double angle = param_value.toDouble(&ok);
-				if (ok && qAbs(angle) >= 0.01) georef.setGrivation(angle);
-				break;
+				if (ok && qAbs(angle) >= 0.01)
+					georef.setGrivation(angle);
 			}
-			case 'x':
-			{
-				proj_ref_point.setX(param_value.toDouble(&x_ok));
-				break;
-			}
-			case 'y':
-			{
-				proj_ref_point.setY(param_value.toDouble(&y_ok));
-				break;
-			}
-			case 'd':
+			break;
+		case 'x':
+			proj_ref_point.setX(param_value.toDouble(&x_ok));
+			break;
+		case 'y':
+			proj_ref_point.setY(param_value.toDouble(&y_ok));
+			break;
+		case 'd':
 			{
 				auto spacing = param_value.toDouble(&ok);
 				if (ok && spacing >= 0.001)
@@ -281,12 +279,22 @@ void OcdFileImport::importScalesSettings(const QString& param_string)
 					grid.setVerticalSpacing(spacing);
 					map->setGrid(grid);
 				}
-				break;
 			}
-			default:
-				; // nothing
+			break;
+		case 'i':
+			combined_grid_zone = param_value;
+			break;
+		case '\t':
+			// empty item, fall through
+		default:
+			; // nothing
 		}
 		i = next_i;
+	}
+	
+	if (!combined_grid_zone.isEmpty())
+	{
+		applyGridAndZone(georef, combined_grid_zone);
 	}
 	
 	if (x_ok && y_ok)
@@ -296,6 +304,74 @@ void OcdFileImport::importScalesSettings(const QString& param_string)
 	
 	map->setGeoreferencing(georef);
 }
+
+void OcdFileImport::applyGridAndZone(Georeferencing& georef, const QString& combined_grid_zone)
+{
+	bool zone_ok = false;
+	const CRSTemplate* crs_template = nullptr;
+	QString id;
+	QString spec;
+	std::vector<QString> values;
+	
+	if (combined_grid_zone.startsWith("20"))
+	{
+		auto zone = combined_grid_zone.midRef(2).toUInt(&zone_ok);
+		zone_ok &= (zone >= 1 && zone <= 60);
+		if (zone_ok)
+		{
+			id = QLatin1String{"UTM"};
+			crs_template = CRSTemplateRegistry().find(id);
+			values.reserve(1);
+			values.push_back(QString::number(zone));
+		}
+	}
+	else if (combined_grid_zone.startsWith("80"))
+	{
+		auto zone = combined_grid_zone.midRef(2).toUInt(&zone_ok);
+		if (zone_ok)
+		{
+			id = QLatin1String{"Gauss-Krueger, datum: Potsdam"};
+			crs_template = CRSTemplateRegistry().find(id);
+			values.reserve(1);
+			values.push_back(QString::number(zone));
+		}
+	}
+	else if (combined_grid_zone == "14000")
+	{
+		id = QLatin1String{"EPSG"};
+		crs_template = CRSTemplateRegistry().find(id);
+		values.reserve(1);
+		values.push_back(QLatin1String{"21781"});
+	}
+	else if (combined_grid_zone == "1000")
+	{
+		return;
+	}
+	
+	if (crs_template)
+	{
+		spec = crs_template->specificationTemplate();
+		auto param = crs_template->parameters().begin();
+		for (const auto& value : values)
+		{
+			for (const auto& spec_value : (*param)->specValues(value))
+			{
+				spec = spec.arg(spec_value);
+			}
+			++param;
+		}
+	}
+	
+	if (spec.isEmpty())
+	{
+		addWarning(tr("Could not load the coordinate reference system '%1'.").arg(combined_grid_zone));
+	}
+	else
+	{
+		georef.setProjectedCRS(id, spec, std::move(values));
+	}
+}
+
 
 template< >
 void OcdFileImport::importColors< struct Ocd::FormatV8 >(const OcdFile< Ocd::FormatV8 >& file)
