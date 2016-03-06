@@ -198,6 +198,24 @@ namespace Ocd
 		};
 	};
 	
+	struct AreaSymbolCommonV8
+	{
+		quint16 fill_color;
+		quint16 hatch_mode;
+		quint16 hatch_color;
+		quint16 hatch_line_width;
+		quint16 hatch_dist;
+		qint16  hatch_angle_1;
+		qint16  hatch_angle_2;
+		quint8  fill_on_V9;         /// \since V12
+		quint8  border_on_V9;       /// \since V12
+		quint8  structure_mode;
+		quint8  structure_draw_V12; /// \since V12
+		quint16 structure_width;
+		quint16 structure_height;
+		qint16  structure_angle;
+	};
+	
 	struct AreaSymbolV8
 	{
 		typedef BaseSymbolV8 BaseSymbol;
@@ -207,18 +225,7 @@ namespace Ocd
 		
 		quint16 area_flags;
 		quint16 fill_on;
-		quint16 fill_color;
-		quint16 hatch_mode;
-		quint16 hatch_color;
-		quint16 hatch_line_width;
-		quint16 hatch_dist;
-		qint16  hatch_angle_1;
-		qint16  hatch_angle_2;
-		quint16 RESERVED_MEMBER;
-		quint16 structure_mode;
-		quint16 structure_width;
-		quint16 structure_height;
-		qint16  structure_angle;
+		AreaSymbolCommonV8 common;
 		quint16 RESERVED_MEMBER;
 		quint16 data_size;
 		

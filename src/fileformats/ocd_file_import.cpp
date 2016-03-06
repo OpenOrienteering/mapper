@@ -1148,16 +1148,42 @@ Symbol* OcdFileImport::importLineSymbol(const S& ocd_symbol, int ocd_version)
 	}
 }
 
+AreaSymbol* OcdFileImport::importAreaSymbol(const Ocd::AreaSymbolV8& ocd_symbol, int ocd_version)
+{
+	Q_ASSERT(ocd_version <= 8);
+	OcdImportedAreaSymbol* symbol = new OcdImportedAreaSymbol();
+	setupBaseSymbol(symbol, ocd_symbol);
+	setupAreaSymbolCommon(
+	            symbol,
+	            ocd_symbol.fill_on,
+	            ocd_symbol.common,
+	            ocd_symbol.data_size,
+	            ocd_symbol.begin_of_elements,
+	            ocd_version);
+	return symbol;
+}
+
 template< class S >
 AreaSymbol* OcdFileImport::importAreaSymbol(const S& ocd_symbol, int ocd_version)
 {
+	Q_ASSERT(ocd_version >= 8);
 	OcdImportedAreaSymbol* symbol = new OcdImportedAreaSymbol();
 	setupBaseSymbol(symbol, ocd_symbol);
-	
+	setupAreaSymbolCommon(
+	            symbol,
+	            ocd_symbol.common.fill_on_V9,
+	            ocd_symbol.common,
+	            ocd_symbol.data_size,
+	            ocd_symbol.begin_of_elements,
+	            ocd_version);
+	return symbol;
+}
+
+void OcdFileImport::setupAreaSymbolCommon(OcdImportedAreaSymbol* symbol, bool fill_on, const Ocd::AreaSymbolCommonV8& ocd_symbol, std::size_t data_size, const Ocd::PointSymbolElementV8* elements, int ocd_version)
+{
 	// Basic area symbol fields: minimum_area, color
 	symbol->minimum_area = 0;
-	symbol->color = ocd_symbol.fill_on ? convertColor(ocd_symbol.fill_color) : nullptr;
-	
+	symbol->color = fill_on ? convertColor(ocd_symbol.fill_color) : nullptr;
 	symbol->patterns.clear();
 	symbol->patterns.reserve(4);
 	
@@ -1199,7 +1225,7 @@ AreaSymbol* OcdFileImport::importAreaSymbol(const S& ocd_symbol, int ocd_version
 		// FIXME: somebody needs to own this symbol and be responsible for deleting it
 		// Right now it looks like a potential memory leak
 		pattern.point = new OcdImportedPointSymbol();
-		setupPointSymbolPattern(pattern.point, ocd_symbol.data_size, ocd_symbol.begin_of_elements, ocd_version);
+		setupPointSymbolPattern(pattern.point, data_size, elements, ocd_version);
 		
 		// OC*D 8 has a "staggered" pattern mode, where successive rows are shifted width/2 relative
 		// to each other. We need to simulate this in Mapper with two overlapping patterns, each with
@@ -1215,8 +1241,6 @@ AreaSymbol* OcdFileImport::importAreaSymbol(const S& ocd_symbol, int ocd_version
 		}
 		symbol->patterns.push_back(pattern);
 	}
-	
-	return symbol;
 }
 
 template< class S >

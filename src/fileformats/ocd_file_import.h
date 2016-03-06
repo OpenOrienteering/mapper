@@ -203,8 +203,19 @@ protected:
 	template< class S >
 	Symbol* importLineSymbol(const S& ocd_symbol, int ocd_version);
 	
+	AreaSymbol* importAreaSymbol(const Ocd::AreaSymbolV8& ocd_symbol, int ocd_version);
+	
 	template< class S >
 	AreaSymbol* importAreaSymbol(const S& ocd_symbol, int ocd_version);
+	
+	void setupAreaSymbolCommon(
+	        OcdImportedAreaSymbol* symbol,
+	        bool fill_on,
+	        const Ocd::AreaSymbolCommonV8& ocd_symbol,
+	        std::size_t data_size,
+	        const Ocd::PointSymbolElementV8* elements,
+	        int ocd_version
+	);
 	
 	template< class S >
 	TextSymbol* importTextSymbol(const S& ocd_symbol, int ocd_version);

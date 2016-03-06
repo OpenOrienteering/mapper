@@ -152,19 +152,7 @@ namespace Ocd
 		BaseSymbol base;
 		
 		quint32 border_symbol;
-		quint16 fill_color;
-		quint16 hatch_mode;
-		quint16 hatch_color;
-		quint16 hatch_line_width;
-		quint16 hatch_dist;
-		qint16  hatch_angle_1;
-		qint16  hatch_angle_2;
-		quint8  fill_on;
-		quint8  border_on;
-		quint16 structure_mode;
-		quint16 structure_width;
-		quint16 structure_height;
-		qint16  structure_angle;
+		AreaSymbolCommonV8 common;
 		quint16 RESERVED_MEMBER;
 		quint16 data_size;
 		
