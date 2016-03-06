@@ -361,7 +361,7 @@ namespace Ocd
 		OcdPoint32 bottom_left_bound;
 		OcdPoint32 top_right_bound;
 		quint32 pos;
-		quint16 size_IGNORED; // different interpretation for version < 8
+		quint16 size_MISC; /// Different interpretation for version < 8
 		qint16  symbol;
 		
 		enum ObjectStatus

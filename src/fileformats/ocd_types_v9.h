@@ -322,13 +322,14 @@ namespace Ocd
 		quint32 size;
 		qint32  symbol;
 		quint8  type;
-		quint8  RESERVED_MEMBER;
+		quint8  encryption_mode_V11;  /// \since V11
 		quint8  status;
 		quint8  view_type;
 		quint16 color;
-		quint16 RESERVED_MEMBER;
+		quint16 group_V11;            /// \since V11
 		quint16 layer;
-		quint16 RESERVED_MEMBER;
+		quint8  layout_font_V11_ONLY; /// only in V11
+		quint8  RESERVED_MEMBER;
 		
 		enum ObjectStatus
 		{

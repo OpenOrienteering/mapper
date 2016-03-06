@@ -299,31 +299,7 @@ namespace Ocd
 		quint16 RESERVED_MEMBER[4];
 	};
 	
-	struct ObjectIndexEntryV11
-	{
-		OcdPoint32 bottom_left_bound;
-		OcdPoint32 top_right_bound;
-		quint32 pos;
-		quint32 size;
-		qint32  symbol;
-		quint8  type;
-		quint8  encryption_mode;
-		quint8  status;
-		quint8  view_type;
-		quint16 color;
-		quint16 group;
-		quint16 layer;
-		quint8  layout_font;
-		quint8  RESERVED_MEMBER;
-		
-		enum ObjectStatus
-		{
-			StatusDeleted = 0,
-			StatusNormal  = 1,
-			StatusHidden  = 2,
-			StatusDeletedForUndo = 3
-		};
-	};
+	using ObjectIndexEntryV11 = ObjectIndexEntryV10;
 	
 	struct ObjectV11
 	{
