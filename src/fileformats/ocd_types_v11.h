@@ -291,11 +291,11 @@ namespace Ocd
 		quint16 cell_height;
 		quint16 RESERVED_MEMBER[2];
 		quint16 unnumbered_cells;
-		QChar   unnumbered_text[4];
+		Utf8PascalString<3> unnumbered_text;
 		quint16 line_style;
-		QChar   RESERVED_MEMBER[32];
+		Utf8PascalString<31> RESERVED_MEMBER;
 		quint16 RESERVED_MEMBER;
-		quint16 font_size;
+		quint16 font_size_V10;      /// \since V10
 		quint16 RESERVED_MEMBER[4];
 	};
 	

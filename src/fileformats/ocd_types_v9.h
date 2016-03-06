@@ -308,8 +308,10 @@ namespace Ocd
 		quint16 unnumbered_cells;
 		PascalString<3> unnumbered_text;
 		quint16 RESERVED_MEMBER;
-		char    RESERVED_MEMBER[32];
-		quint16 RESERVED_MEMBER[6];
+		PascalString<31> RESERVED_MEMBER;
+		quint16 RESERVED_MEMBER;
+		quint16 font_size_V10;      /// \since V10
+		quint16 RESERVED_MEMBER[4];
 	};
 	
 	struct ObjectIndexEntryV9

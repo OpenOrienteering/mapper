@@ -352,7 +352,7 @@ namespace Ocd
 		quint16 unnumbered_cells;
 		PascalString<3> unnumbered_text;
 		quint16 RESERVED_MEMBER;
-		char    RESERVED_MEMBER[32];
+		PascalString<31> RESERVED_MEMBER;
 		quint16 RESERVED_MEMBER[6];
 	};
 	

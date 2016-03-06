@@ -91,27 +91,7 @@ namespace Ocd
 	
 	using LineTextSymbolV12 = LineTextSymbolV11;
 	
-	struct RectangleSymbolV12
-	{
-		typedef BaseSymbolV12 BaseSymbol;
-		
-		BaseSymbol base;
-		
-		quint16 line_color;
-		quint16 line_width;
-		quint16 corner_radius;
-		quint16 grid_flags;
-		quint16 cell_width;
-		quint16 cell_height;
-		quint16 RESERVED_MEMBER[2];
-		quint16 unnumbered_cells;
-		QChar   unnumbered_text[4];
-		quint16 line_style;
-		QChar   RESERVED_MEMBER[32];
-		quint16 RESERVED_MEMBER;
-		quint16 font_size;
-		quint16 RESERVED_MEMBER[4];
-	};
+	using RectangleSymbolV12 = RectangleSymbolV11;
 	
 	struct ObjectIndexEntryV12
 	{

@@ -44,27 +44,7 @@ namespace Ocd
 	
 	using LineTextSymbolV10 = LineTextSymbolV9;
 	
-	struct RectangleSymbolV10
-	{
-		typedef BaseSymbolV10 BaseSymbol;
-		
-		BaseSymbol base;
-		
-		quint16 line_color;
-		quint16 line_width;
-		quint16 corner_radius;
-		quint16 grid_flags;
-		quint16 cell_width;
-		quint16 cell_height;
-		quint16 RESERVED_MEMBER[2];
-		quint16 unnumbered_cells;
-		PascalString<3> unnumbered_text;
-		quint16 RESERVED_MEMBER;
-		char    RESERVED_MEMBER[32];
-		quint16 RESERVED_MEMBER;
-		quint16 font_size;
-		quint16 RESERVED_MEMBER[4];
-	};
+	using RectangleSymbolV10 = RectangleSymbolV9;
 	
 	typedef ObjectIndexEntryV9 ObjectIndexEntryV10;
 	
