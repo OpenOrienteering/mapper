@@ -48,25 +48,7 @@ namespace Ocd
 	
 	typedef ObjectIndexEntryV9 ObjectIndexEntryV10;
 	
-	struct ObjectV10
-	{
-		typedef ObjectIndexEntryV10 IndexEntryType;
-		
-		qint32  symbol;
-		quint8  type;
-		quint8  RESERVED_MEMBER;
-		qint16  angle;
-		quint32 num_items;
-		quint16 num_text;
-		quint16 RESERVED_MEMBER;
-		quint32 color;
-		quint16 line_width;
-		quint16 diam_flags;
-		quint32 RESERVED_MEMBER[3];
-		quint32 height_mm;
-		
-		OcdPoint32 coords[1];
-	};
+	using ObjectV10 = ObjectV9;
 	
 #pragma pack(pop)
 	

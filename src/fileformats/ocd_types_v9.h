@@ -346,15 +346,22 @@ namespace Ocd
 		
 		qint32  symbol;
 		quint8  type;
-		quint8  RESERVED_MEMBER;
+		quint8  customer_V11;      /// \since V11
 		qint16  angle;
 		quint32 num_items;
 		quint16 num_text;
-		quint16 RESERVED_MEMBER;
+		quint8  mark_V11;          /// \since V11
+		quint8  snapping_mark_V11; /// \since V11
 		quint32 color;
 		quint16 line_width;
 		quint16 diam_flags;
-		quint64 RESERVED_MEMBER[2];
+		// The usage of the following 16 bytes has changed significantly in the
+		// versions 9 to 12. This is an abstraction, capturing what seems most
+		// relevant.
+		quint32 RESERVED_MEMBER; /// V11: Server object ID
+		quint32 height_V11_ONLY; /// V11 only; unit: 1/256 mm
+		quint32 RESERVED_MEMBER;
+		quint32 height_V10_ONLY; /// V10 only; unit: mm
 		
 		OcdPoint32 coords[1];
 	};

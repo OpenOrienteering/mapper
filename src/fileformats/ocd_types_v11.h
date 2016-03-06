@@ -301,27 +301,7 @@ namespace Ocd
 	
 	using ObjectIndexEntryV11 = ObjectIndexEntryV10;
 	
-	struct ObjectV11
-	{
-		typedef ObjectIndexEntryV11 IndexEntryType;
-		
-		qint32  symbol;
-		quint8  type;
-		quint8  customer;
-		qint16  angle;
-		quint32 num_items;
-		quint16 num_text;
-		quint8  mark;
-		quint8  snapping_mark;
-		qint32  color;
-		quint16 line_width;
-		quint16 diam_flags;
-		quint32 server_object_id;
-		quint32 height;
-		quint64 date;
-		
-		OcdPoint32 coords[1];
-	};
+	using ObjectV11 = ObjectV10;
 	
 #pragma pack(pop)
 	
