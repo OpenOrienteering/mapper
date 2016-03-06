@@ -234,6 +234,8 @@ protected:
 	template< class O >
 	Object* importRectangleObject(const O& ocd_object, MapPart* part, const OcdFileImport::RectangleInfo& rect);
 	
+	Object* importRectangleObject(const Ocd::OcdPoint32* ocd_points, MapPart* part, const OcdFileImport::RectangleInfo& rect);
+	
 	// Some helper functions that are used in multiple places
 	
 	void setPointFlags(OcdImportedPathObject* object, quint16 pos, bool is_area, const Ocd::OcdPoint32& ocd_point);

@@ -1699,6 +1699,7 @@ QString OcdFileImport::getObjectText(const O& ocd_object, int /*ocd_version*/) c
 	return QString(data);
 }
 
+
 template< class O >
 Object* OcdFileImport::importRectangleObject(const O& ocd_object, MapPart* part, const OcdFileImport::RectangleInfo& rect)
 {
@@ -1708,12 +1709,16 @@ Object* OcdFileImport::importRectangleObject(const O& ocd_object, MapPart* part,
 		if (ocd_object.num_items != 5)  // 5 coords are handled like 4 coords now
 			return nullptr;
 	}
-	
+	return importRectangleObject(ocd_object.coords, part, rect);
+}
+
+Object* OcdFileImport::importRectangleObject(const Ocd::OcdPoint32* ocd_points, MapPart* part, const OcdFileImport::RectangleInfo& rect)
+{
 	// Convert corner points
-	MapCoord bottom_left = convertOcdPoint(ocd_object.coords[0]);
-	MapCoord bottom_right = convertOcdPoint(ocd_object.coords[1]);
-	MapCoord top_right = convertOcdPoint(ocd_object.coords[2]);
-	MapCoord top_left = convertOcdPoint(ocd_object.coords[3]);
+	MapCoord bottom_left = convertOcdPoint(ocd_points[0]);
+	MapCoord bottom_right = convertOcdPoint(ocd_points[1]);
+	MapCoord top_right = convertOcdPoint(ocd_points[2]);
+	MapCoord top_left = convertOcdPoint(ocd_points[3]);
 	
 	MapCoordF top_left_f = MapCoordF(top_left);
 	MapCoordF top_right_f = MapCoordF(top_right);
