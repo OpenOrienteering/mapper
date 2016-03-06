@@ -139,6 +139,8 @@ public:
 protected:
 	virtual void import(bool load_symbols_only) override;
 	
+	void importImplementationLegacy(bool load_symbols_only);
+	
 	template< class F >
 	void importImplementation(bool load_symbols_only);
 	

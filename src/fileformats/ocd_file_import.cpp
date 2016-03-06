@@ -122,8 +122,7 @@ qint64 OcdFileImport::convertLength< quint32 >(quint32 ocd_length) const
 }
 #endif // !NDEBUG
 
-template< >
-void OcdFileImport::importImplementation< Ocd::FormatLegacyImporter >(bool load_symbols_only)
+void OcdFileImport::importImplementationLegacy(bool load_symbols_only)
 {
 	QBuffer new_stream(&buffer);
 	new_stream.open(QIODevice::ReadOnly);
@@ -1937,13 +1936,13 @@ void OcdFileImport::import(bool load_symbols_only)
 			/* addWarning( */
 				(void)tr("Untested file importer for format: OCD %1").arg(version)
 			/* ) */;
-			importImplementation< Ocd::FormatLegacyImporter >(load_symbols_only);
+			importImplementationLegacy(load_symbols_only);
 			break;
 		case 8:
 			if (Settings::getInstance().getSetting(Settings::General_NewOcd8Implementation).toBool())
 				importImplementation< Ocd::FormatV8 >(load_symbols_only);
 			else
-				importImplementation< Ocd::FormatLegacyImporter >(load_symbols_only);
+				importImplementationLegacy(load_symbols_only);
 			break;
 		case 9:
 			importImplementation< Ocd::FormatV9 >(load_symbols_only);

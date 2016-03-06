@@ -183,15 +183,6 @@ namespace Ocd
 		struct Object { typedef quint32 IndexEntryType; };
 	};
 	
-	/**
-	 * A OCD file format trait for selecting the old version 8 importer.
-	 */
-	struct FormatLegacyImporter
-	{
-		static constexpr int version() { return 8; }
-		
-		typedef FileHeaderGeneric FileHeader;
-	};
 }
 
 
