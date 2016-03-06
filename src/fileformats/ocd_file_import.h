@@ -144,6 +144,9 @@ protected:
 	template< class F >
 	void importImplementation(bool load_symbols_only);
 	
+	
+	void importGeoreferencing(const OcdFile<Ocd::FormatV8>& file);
+	
 	template< class F >
 	void importGeoreferencing(const OcdFile< F >& file);
 	
@@ -153,29 +156,44 @@ protected:
 	/// Imports string 1039 field i.
 	void applyGridAndZone(Georeferencing& georef, const QString& combined_grid_zone);
 	
+	
+	void importColors(const OcdFile<struct Ocd::FormatV8>& file);
+	
 	template< class F >
 	void importColors(const OcdFile< F >& file);
 	
 	MapColor* importColor(const QString& param_string);
 	
+	
 	template< class F >
 	void importSymbols(const OcdFile< F >& file);
 	
+	
+	void importObjects(const OcdFile<Ocd::FormatV8>& file);
+	
 	template< class F >
 	void importObjects(const OcdFile< F >& file);
+	
 	
 	template< class F >
 	void importTemplates(const OcdFile< F >& file);
 	
 	Template* importTemplate(const QString& param_string, const int ocd_version);
 	
+	
+	void importExtras(const OcdFile<Ocd::FormatV8>& file);
+	
 	template< class F >
 	void importExtras(const OcdFile< F >& file);
+	
+	
+	void importView(const OcdFile<Ocd::FormatV8>& file);
 	
 	template< class F >
 	void importView(const OcdFile< F >& file);
 	
 	void importView(const QString& param_string);
+	
 	
 	// Symbol import
 	
@@ -202,10 +220,13 @@ protected:
 	
 	void setupPointSymbolPattern(PointSymbol* symbol, std::size_t data_size, const Ocd::PointSymbolElementV8* elements, int version);
 	
+	
 	// Object import
 	
 	template< class O >
 	Object* importObject(const O& ocd_object, MapPart* part, int ocd_version);
+	
+	QString getObjectText(const Ocd::ObjectV8& ocd_object, int ocd_version) const;
 	
 	template< class O >
 	QString getObjectText(const O& ocd_object, int ocd_version) const;

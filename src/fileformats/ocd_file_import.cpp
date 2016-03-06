@@ -53,10 +53,11 @@
 
 
 OcdFileImport::OcdFileImport(QIODevice* stream, Map* map, MapView* view)
- : Importer(stream, map, view)
- , delegate(nullptr)
+ : Importer { stream, map, view }
+ , delegate { nullptr }
+ , custom_8bit_encoding {  QTextCodec::codecForName("Windows-1252") }
 {
-    custom_8bit_encoding = QTextCodec::codecForName("Windows-1252");
+    // nothing else
 }
 
 OcdFileImport::~OcdFileImport()
@@ -64,26 +65,25 @@ OcdFileImport::~OcdFileImport()
 	// nothing
 }
 
+
 void OcdFileImport::setCustom8BitEncoding(const char* encoding)
 {
     custom_8bit_encoding = QTextCodec::codecForName(encoding);
 }
 
+
 void OcdFileImport::addSymbolWarning(LineSymbol* symbol, const QString& warning)
 {
 	addWarning( tr("In line symbol %1 '%2': %3").
-	            arg(symbol->getNumberAsString()).
-	            arg(symbol->getName()).
-	            arg(warning) );
+	            arg(symbol->getNumberAsString(), symbol->getName(), warning) );
 }
 
 void OcdFileImport::addSymbolWarning(TextSymbol* symbol, const QString& warning)
 {
 	addWarning( tr("In text symbol %1 '%2': %3").
-	            arg(symbol->getNumberAsString()).
-	            arg(symbol->getName()).
-	            arg(warning) );
+	            arg(symbol->getNumberAsString(), symbol->getName(), warning) );
 }
+
 
 #ifndef NDEBUG
 
@@ -120,7 +120,9 @@ qint64 OcdFileImport::convertLength< quint32 >(quint32 ocd_length) const
 		qDebug() << "quint32 has value" << ocd_length << ", might be qint32" << (qint32)ocd_length;
 	return ((qint64)ocd_length) * 10;
 }
+
 #endif // !NDEBUG
+
 
 void OcdFileImport::importImplementationLegacy(bool load_symbols_only)
 {
@@ -156,23 +158,23 @@ void OcdFileImport::importImplementation(bool load_symbols_only)
 	}
 #endif
 	
-	importGeoreferencing< F >(file);
-	importColors< F >(file);
-	importSymbols< F >(file);
+	importGeoreferencing(file);
+	importColors(file);
+	importSymbols(file);
 	if (!load_symbols_only)
 	{
-		importExtras< F >(file);
-		importObjects< F >(file);
-		importTemplates< F >(file);
+		importExtras(file);
+		importObjects(file);
+		importTemplates(file);
 		if (view)
 		{
-			importView< F >(file);
+			importView(file);
 		}
 	}
 }
 
-template< >
-void OcdFileImport::importGeoreferencing< Ocd::FormatV8 >(const OcdFile< Ocd::FormatV8 >& file)
+
+void OcdFileImport::importGeoreferencing(const OcdFile<Ocd::FormatV8>& file)
 {
 	const Ocd::FileHeaderV8* header = file.header();
 	const Ocd::SetupV8* setup = reinterpret_cast< const Ocd::SetupV8* >(file.byteArray().data() + header->setup_pos);
@@ -344,8 +346,7 @@ void OcdFileImport::applyGridAndZone(Georeferencing& georef, const QString& comb
 }
 
 
-template< >
-void OcdFileImport::importColors< struct Ocd::FormatV8 >(const OcdFile< Ocd::FormatV8 >& file)
+void OcdFileImport::importColors(const OcdFile<Ocd::FormatV8>& file)
 {
 	const Ocd::SymbolHeaderV8 & symbol_header = file.header()->symbol_header;
 	int num_colors = symbol_header.num_colors;
@@ -465,6 +466,7 @@ MapColor* OcdFileImport::importColor(const QString& param_string)
 	return color;
 }
 
+
 template< class F >
 void OcdFileImport::importSymbols(const OcdFile< F >& file)
 {
@@ -515,8 +517,8 @@ void OcdFileImport::importSymbols(const OcdFile< F >& file)
 	}
 }
 
-template< >
-void OcdFileImport::importObjects< struct Ocd::FormatV8 >(const OcdFile< Ocd::FormatV8 >& file)
+
+void OcdFileImport::importObjects(const OcdFile<Ocd::FormatV8>& file)
 {
 	MapPart* part = map->getCurrentPart();
 	Q_ASSERT(part);
@@ -554,6 +556,7 @@ void OcdFileImport::importObjects(const OcdFile< F >& file)
 		}
 	}
 }
+
 
 template< class F >
 void OcdFileImport::importTemplates(const OcdFile< F >& file)
@@ -671,8 +674,8 @@ Template* OcdFileImport::importTemplate(const QString& param_string, const int o
 	return templ;
 }
 
-template< >
-void OcdFileImport::importExtras< struct Ocd::FormatV8 >(const OcdFile< Ocd::FormatV8 >& file)
+
+void OcdFileImport::importExtras(const OcdFile<Ocd::FormatV8>& file)
 {
 	const Ocd::FileHeaderV8* header = file.header();
 	map->setMapNotes(convertOcdString< Ocd::FormatV8::Encoding >(file.byteArray().data() + header->info_pos, header->info_size));
@@ -704,8 +707,8 @@ void OcdFileImport::importExtras(const OcdFile< F >& file)
 	map->setMapNotes(notes);
 }
 
-template< >
-void OcdFileImport::importView< struct Ocd::FormatV8 >(const OcdFile< Ocd::FormatV8 >& file)
+
+void OcdFileImport::importView(const OcdFile<Ocd::FormatV8>& file)
 {
 	if (view)
 	{
@@ -781,6 +784,7 @@ void OcdFileImport::importView(const QString& param_string)
 		}
 	}
 }
+
 
 template< class S >
 void OcdFileImport::setupBaseSymbol(Symbol* symbol, const S& ocd_symbol)
@@ -1649,9 +1653,7 @@ Object* OcdFileImport::importObject(const O& ocd_object, MapPart* part, int ocd_
 	return nullptr;
 }
 
-template< >
-inline
-QString OcdFileImport::getObjectText< struct Ocd::ObjectV8 >(const Ocd::ObjectV8& ocd_object, int ocd_version) const
+QString OcdFileImport::getObjectText(const Ocd::ObjectV8& ocd_object, int ocd_version) const
 {
 	QString object_text;
 	if (ocd_object.unicode && ocd_version >= 8)
