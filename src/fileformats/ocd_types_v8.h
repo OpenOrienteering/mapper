@@ -283,6 +283,19 @@ namespace Ocd
 		quint16 framing_italic;
 		quint16 framing_offset_x;
 		quint16 framing_offset_y;
+		
+		enum TextAlignment
+		{
+			HAlignMask      = 0x03,
+			HAlignLeft      = 0x00,
+			HAlignCenter    = 0x01,
+			HAlignRight     = 0x02,
+			HAlignJustified = 0x03,
+			VAlignMask      = 0x00, /// \since V10
+			VAlignBottom    = 0xfd, /// \since V10
+			VAlignMiddle    = 0xfe, /// \since V10
+			VAlignTop       = 0xff  /// \since V10
+		};
 	};
 	
 	struct LineTextSymbolV8 // TODO: use and test...

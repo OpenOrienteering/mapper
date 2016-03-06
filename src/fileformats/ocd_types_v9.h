@@ -227,7 +227,9 @@ namespace Ocd
 		quint16 RESERVED_MEMBER;
 		quint8  framing_mode;
 		quint8  framing_line_style;
-		char    RESERVED_MEMBER[23];
+		quint8  point_symbol_on_V10;     /// \since V10
+		quint32 point_symbol_number_V10; /// \since V10
+		PascalString<18> RESERVED_MEMBER;
 		quint16 framing_border_left;
 		quint16 framing_border_bottom;
 		quint16 framing_border_right;
@@ -237,6 +239,19 @@ namespace Ocd
 		quint16 RESERVED_MEMBER[2];
 		quint16 framing_offset_x;
 		quint16 framing_offset_y;
+		
+		enum TextAlignment
+		{
+			HAlignMask      = 0x03,
+			HAlignLeft      = 0x00,
+			HAlignCenter    = 0x01,
+			HAlignRight     = 0x02,
+			HAlignJustified = 0x03,
+			VAlignMask      = 0x0c, /// \since V10
+			VAlignBottom    = 0x00, /// \since V10
+			VAlignMiddle    = 0x04, /// \since V10
+			VAlignTop       = 0x08  /// \since V10
+		};
 	};
 	
 	struct LineTextSymbolV9 // TODO: use and test...

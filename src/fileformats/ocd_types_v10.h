@@ -40,60 +40,7 @@ namespace Ocd
 	
 	typedef AreaSymbolV9 AreaSymbolV10;
 	
-	struct TextSymbolV10
-	{
-		typedef BaseSymbolV10 BaseSymbol;
-		
-		BaseSymbol base;
-		
-		PascalString<31> font_name;
-		quint16 font_color;
-		quint16 font_size;
-		quint16 font_weight;
-		quint8  font_italic;
-		quint8  RESERVED_MEMBER;
-		quint16 char_spacing;
-		quint16 word_spacing;
-		quint16 alignment;           // TODO: changed from OCD9
-		quint16 line_spacing;
-		qint16  para_spacing;
-		quint16 indent_first_line;
-		quint16 indent_other_lines;
-		quint16 num_tabs;
-		quint32 tab_pos[32];
-		quint16 line_below_on;
-		quint16 line_below_color;
-		quint16 line_below_width;
-		quint16 line_below_offset;
-		quint16 RESERVED_MEMBER;
-		quint8  framing_mode;
-		quint8  framing_line_style;
-		quint8  point_symbol_on;
-		quint32 point_symbol_number;
-		QChar   RESERVED_MEMBER[18];
-		quint16 framing_border_left;
-		quint16 framing_border_bottom;
-		quint16 framing_border_right;
-		quint16 framing_border_top;
-		quint16 framing_color;
-		quint16 framing_line_width;
-		quint16 RESERVED_MEMBER[2];
-		quint16 framing_offset_x;
-		quint16 framing_offset_y;
-		
-		enum TextAlignment
-		{
-			HAlignMask      = 0x03,
-			HAlignLeft      = 0x00,
-			HAlignCenter    = 0x01,
-			HAlignRight     = 0x02,
-			HAlignJustified = 0x03,
-			VAlignMask      = 0x0c,
-			VAlignBottom    = 0x00,
-			VAlignMiddle    = 0x04,
-			VAlignTop       = 0x08
-		};
-	};
+	using TextSymbolV10 = TextSymbolV9;
 	
 	struct LineTextSymbolV10 // TODO: use and test...
 	{
