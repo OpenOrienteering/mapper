@@ -38,17 +38,7 @@ namespace Ocd
 	
 	typedef PointSymbolElementV11 PointSymbolElementV12;
 	
-	struct PointSymbolV12
-	{
-		typedef BaseSymbolV12 BaseSymbol;
-		typedef PointSymbolElementV12 Element;
-		
-		BaseSymbol base;
-		
-		quint16 data_size;
-		quint16 RESERVED_MEMBER;
-		Element begin_of_elements[1];
-	};
+	using PointSymbolV12 = PointSymbolV11;
 	
 	struct LineSymbolV12
 	{
