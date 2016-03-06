@@ -177,6 +177,20 @@ namespace Ocd
 #pragma pack(pop)
 	
 	/**
+	 * Symbol type values.
+	 */
+	enum SymbolType
+	{
+		SymbolTypePoint        = 1,
+		SymbolTypeLine         = 2,
+		SymbolTypeArea         = 3,
+		SymbolTypeText         = 4,
+		SymbolTypeRectangle_V8 = 5, /// Until V8
+		SymbolTypeLineText_V9  = 6, /// \since V9
+		SymbolTypeRectangle_V9 = 7  /// \since V9
+	};
+	
+	/**
 	 * Status flags for symbols.
 	 */
 	enum SymbolStatus

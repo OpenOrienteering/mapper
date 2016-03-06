@@ -470,40 +470,36 @@ MapColor* OcdFileImport::importColor(const QString& param_string)
 template< class F >
 void OcdFileImport::importSymbols(const OcdFile< F >& file)
 {
+	auto ocd_version = file.header()->version;
 	for (typename OcdFile< F >::SymbolIndex::iterator it = file.symbols().begin(); it != file.symbols().end(); ++it)
 	{
 		// When extra symbols are created, we want to insert the main symbol
-		// before them, i.e. at pos.
-		int pos = map->getNumSymbols();
-		Symbol* symbol = nullptr;
+		// before them. That is why pos needs to be determined first.
+		auto pos = map->getNumSymbols();
 		
-		// Don't use switch, because F::SymbolType may have duplicate values.
-		if (it->type == F::TypePoint)
+		Symbol* symbol = nullptr;
+		switch (it->type)
 		{
-			symbol = importPointSymbol((const typename F::PointSymbol&)*it, file.header()->version);
-		}
-		else if (it->type == F::TypeLine)
-		{
-			symbol = importLineSymbol((const typename F::LineSymbol&)*it, file.header()->version);
-		}
-		else if (it->type == F::TypeArea)
-		{
-			symbol = importAreaSymbol((const typename F::AreaSymbol&)*it, file.header()->version);
-		}
-		else if (it->type == F::TypeText)
-		{
-			symbol = importTextSymbol((const typename F::TextSymbol&)*it, file.header()->version);
-		}
-		else if (it->type == F::TypeRectangle)
-		{
+		case Ocd::SymbolTypePoint:
+			symbol = importPointSymbol((const typename F::PointSymbol&)*it, ocd_version);
+			break;
+		case Ocd::SymbolTypeLine:
+			symbol = importLineSymbol((const typename F::LineSymbol&)*it, ocd_version);
+			break;
+		case Ocd::SymbolTypeArea:
+			symbol = importAreaSymbol((const typename F::AreaSymbol&)*it, ocd_version);
+			break;
+		case Ocd::SymbolTypeText:
+			symbol = importTextSymbol((const typename F::TextSymbol&)*it, ocd_version);
+			break;
+		case Ocd::SymbolTypeRectangle_V8:
+		case Ocd::SymbolTypeRectangle_V9:
 			symbol = importRectangleSymbol((const typename F::RectangleSymbol&)*it);
-		}
-		else if (it->type == F::TypeLineText)
-		{
-			symbol = importLineTextSymbol((const typename F::LineTextSymbol&)*it, file.header()->version);
-		}
-		else if (it->type)
-		{
+			break;
+		case Ocd::SymbolTypeLineText_V9:
+			symbol = importLineTextSymbol((const typename F::LineTextSymbol&)*it, ocd_version);
+			break;
+		default:
 			addWarning(tr("Unable to import symbol %1.%2 \"%3\": %4") .
 			           arg(it->number / F::BaseSymbol::symbol_number_factor) .
 			           arg(it->number % F::BaseSymbol::symbol_number_factor) .

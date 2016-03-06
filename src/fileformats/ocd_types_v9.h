@@ -364,16 +364,6 @@ namespace Ocd
 		typedef ObjectV9 Object;
 		
 		typedef Custom8BitEncoding Encoding;
-		
-		enum SymbolType
-		{
-			TypePoint     = 1,
-			TypeLine      = 2,
-			TypeArea      = 3,
-			TypeText      = 4,
-			TypeLineText  = 6,
-			TypeRectangle = 7
-		};
 	};
 }
 
