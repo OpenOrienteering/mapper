@@ -466,6 +466,20 @@ MapColor* OcdFileImport::importColor(const QString& param_string)
 	return color;
 }
 
+namespace {
+	quint16 symbolType(const OcdFile<Ocd::FormatV8>::SymbolIndex::iterator& t)
+	{
+		if (t->type == Ocd::SymbolTypeLine && t->type2 == 1)
+			return Ocd::SymbolTypeLineText;
+		return t->type;
+	}
+	
+	template< class T >
+	quint8 symbolType(const T& t)
+	{
+		return t->type;
+	}
+}
 
 template< class F >
 void OcdFileImport::importSymbols(const OcdFile< F >& file)
@@ -478,7 +492,7 @@ void OcdFileImport::importSymbols(const OcdFile< F >& file)
 		auto pos = map->getNumSymbols();
 		
 		Symbol* symbol = nullptr;
-		switch (it->type)
+		switch (symbolType(it))
 		{
 		case Ocd::SymbolTypePoint:
 			symbol = importPointSymbol((const typename F::PointSymbol&)*it, ocd_version);
@@ -496,7 +510,7 @@ void OcdFileImport::importSymbols(const OcdFile< F >& file)
 		case Ocd::SymbolTypeRectangle_V9:
 			symbol = importRectangleSymbol((const typename F::RectangleSymbol&)*it);
 			break;
-		case Ocd::SymbolTypeLineText_V9:
+		case Ocd::SymbolTypeLineText:
 			symbol = importLineTextSymbol((const typename F::LineTextSymbol&)*it, ocd_version);
 			break;
 		default:
