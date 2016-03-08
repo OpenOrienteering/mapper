@@ -3246,7 +3246,7 @@ Voulez-vous redimensionner le fichier importé ?</translation>
         <location filename="../src/map_editor.cpp" line="784"/>
         <location filename="../src/map_editor.cpp" line="1089"/>
         <source>Configure grid...</source>
-        <translation>Configurer la grill e...</translation>
+        <translation>Configurer la grille...</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="795"/>
