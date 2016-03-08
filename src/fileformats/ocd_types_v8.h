@@ -135,13 +135,8 @@ namespace Ocd
 		Element begin_of_elements[1];
 	};
 	
-	struct LineSymbolV8
+	struct LineSymbolCommonV8
 	{
-		typedef BaseSymbolV8 BaseSymbol;
-		typedef PointSymbolElementV8 Element;
-		
-		BaseSymbol base;
-		
 		quint16 line_color;
 		quint16 line_width;
 		quint16 line_style;
@@ -165,7 +160,8 @@ namespace Ocd
 		qint16  double_right_width;
 		qint16  double_length;
 		qint16  double_gap;
-		quint16 RESERVED_MEMBER[3];
+		quint16 double_background_color_V11; /// \since V11
+		quint16 RESERVED_MEMBER[2];
 		quint16 dec_mode;
 		quint16 dec_last;
 		quint16 RESERVED_MEMBER;
@@ -177,9 +173,8 @@ namespace Ocd
 		quint16 corner_data_size;
 		quint16 start_data_size;
 		quint16 end_data_size;
-		quint16 RESERVED_MEMBER;
-		
-		Element begin_of_elements[1];
+		quint8  active_symbols_V11;          /// \since V11
+		quint8  RESERVED_MEMBER;
 		
 		enum LineStyleFlag
 		{
@@ -196,6 +191,18 @@ namespace Ocd
 			DoubleFillColorOn       = 1,
 			DoubleBackgroundColorOn = 2
 		};
+	};
+
+	struct LineSymbolV8
+	{
+		typedef BaseSymbolV8 BaseSymbol;
+		typedef PointSymbolElementV8 Element;
+		
+		BaseSymbol base;
+		
+		LineSymbolCommonV8 common;
+		
+		Element begin_of_elements[1];
 	};
 	
 	struct AreaSymbolCommonV8
