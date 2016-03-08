@@ -43,6 +43,7 @@ SettingsDialog::SettingsDialog(QWidget* parent)
 	this->setLayout(layout);
 	
 	tab_widget = new QTabWidget();
+	tab_widget->setDocumentMode(true);
 	layout->addWidget(tab_widget);
 	
 	button_box = new QDialogButtonBox(
@@ -66,6 +67,13 @@ SettingsDialog::~SettingsDialog()
 
 void SettingsDialog::addPage(SettingsPage* page)
 {
+	if (auto layout = page->layout())
+	{
+		auto margins = layout->contentsMargins();
+		margins.setLeft(0);
+		margins.setRight(0);
+		layout->setContentsMargins(margins);
+	}
 	tab_widget->addTab(page, page->title());
 }
 
