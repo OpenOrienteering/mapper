@@ -1367,7 +1367,7 @@
     <message>
         <location filename="../src/tool_fill.cpp" line="86"/>
         <source>The clicked area is not bounded by lines or areas, cannot fill this area.</source>
-        <translation>La surface ,sélectionnée n&apos;est pas fermée par des lignes ou surfaces, elle ne peut pas être remplie. </translation>
+        <translation>La surface sélectionnée n&apos;est pas fermée par des lignes ou surfaces, elle ne peut pas être remplie. </translation>
     </message>
     <message>
         <location filename="../src/tool_fill.cpp" line="120"/>
