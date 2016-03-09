@@ -65,6 +65,13 @@ SettingsDialog::~SettingsDialog()
 	// Nothing, not inlined.
 }
 
+void SettingsDialog::applyChanges()
+{
+	for (auto count = tab_widget->count(), i = 0; i < count; i++)
+		static_cast< SettingsPage* >(tab_widget->widget(i))->apply();
+	Settings::getInstance().applySettings();
+}
+
 void SettingsDialog::addPage(SettingsPage* page)
 {
 	if (auto layout = page->layout())
@@ -80,18 +87,15 @@ void SettingsDialog::addPage(SettingsPage* page)
 void SettingsDialog::buttonPressed(QAbstractButton* button)
 {
 	QDialogButtonBox::StandardButton id = button_box->standardButton(button);
-	const int count = tab_widget->count();
 	switch (id)
 	{
 	case QDialogButtonBox::Ok:
-		for (int i = 0; i < count; i++)
-			static_cast< SettingsPage* >(tab_widget->widget(i))->apply();
-		Settings::getInstance().applySettings();
+		applyChanges();
 		this->accept();
 		break;
 		
 	case QDialogButtonBox::Reset:
-		for (int i = 0; i < count; i++)
+		for (auto count = tab_widget->count(), i = 0; i < count; i++)
 			static_cast< SettingsPage* >(tab_widget->widget(i))->reset();
 		break;
 		

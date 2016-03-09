@@ -44,6 +44,9 @@ public:
 	/** Destroys the settings dialog. */
 	virtual ~SettingsDialog();
 	
+	/** Applies the changes from all pages. */
+	void applyChanges();
+	
 private slots:
 	/** Reacts to button presses (OK, Cancel, Rest) */
 	void buttonPressed(QAbstractButton* button);
