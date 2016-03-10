@@ -268,7 +268,7 @@ namespace Ocd
 	struct FramingAttributesV8
 	{
 		quint8  mode;                    /// 16 bit in V8
-		quint8  line_style;              /// \since V9
+		quint8  line_style_V9;           /// \since V9
 		quint8  point_symbol_on_V10;     /// \since V10
 		quint32 point_symbol_number_V10; /// \since V10
 		char    RESERVED_MEMBER[19];

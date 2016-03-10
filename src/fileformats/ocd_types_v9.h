@@ -191,7 +191,7 @@ namespace Ocd
 		// versions 9 to 12. This is an abstraction, capturing what seems most
 		// relevant.
 		quint32 RESERVED_MEMBER; /// V11: Server object ID
-		quint32 height_V11_ONLY; /// V11 only; unit: 1/256 mm
+		quint32 height_V11;      /// \since V11; unit: 1/256 mm
 		quint32 RESERVED_MEMBER;
 		quint32 height_V10_ONLY; /// V10 only; unit: mm
 		
