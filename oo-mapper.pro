@@ -144,6 +144,7 @@ SUBDIRS  += \
   manual \
   examples \
   symbol_sets \
+  translations \
   src
 
 manual.subdir = doc/manual
