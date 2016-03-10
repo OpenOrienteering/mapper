@@ -61,7 +61,7 @@ TextBrowserDialog::TextBrowserDialog(const QUrl& initial_url, QWidget* parent)
 	
 	buttons_layout->addStretch(1);
 	
-	QPushButton* close_button  = new QPushButton(QApplication::translate("QDialogButtonBox", "&Close"));
+	QPushButton* close_button  = new QPushButton(QApplication::translate("QPlatformTheme", "Close"));
 	close_button->setDefault(true);
 	buttons_layout->addWidget(close_button);
 	
