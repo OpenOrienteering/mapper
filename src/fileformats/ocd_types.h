@@ -629,7 +629,7 @@ const OcdEntityIndexIterator<F,T,E>& OcdEntityIndexIterator<F,T,E>::operator++()
 					block = nullptr;
 					data = nullptr;
 				}
-				else if (Q_UNLIKELY(next_block >= data->byteArray().size()))
+				else if (Q_UNLIKELY(next_block >= (unsigned int)data->byteArray().size()))
 				{
 					qWarning("OcdEntityIndexIterator: Next index block is out of bounds");
 					block = nullptr;
