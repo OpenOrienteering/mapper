@@ -1,5 +1,5 @@
 /*
- *    Copyright 2013-2015 Kai Pastor
+ *    Copyright 2013-2016 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -20,6 +20,7 @@
 
 #include "mapper_proxystyle.h"
 
+#include <QFormLayout>
 #include <QPainter>
 #include <QStyleOption>
 #include <QWidget>
@@ -158,4 +159,19 @@ int MapperProxyStyle::pixelMetric(PixelMetric metric, const QStyleOption* option
 	}
 	
 	return QProxyStyle::pixelMetric(metric, option, widget);
+}
+
+int MapperProxyStyle::styleHint(QStyle::StyleHint hint, const QStyleOption* option, const QWidget* widget, QStyleHintReturn* return_data) const
+{
+	switch (hint)
+	{
+#ifdef Q_OS_ANDROID
+	case QStyle::SH_FormLayoutWrapPolicy:
+		return QFormLayout::WrapLongRows;
+#endif		
+	default:
+		break;
+	}
+	
+	return QProxyStyle::styleHint(hint, option, widget, return_data);
 }
