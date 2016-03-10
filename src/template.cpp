@@ -353,11 +353,18 @@ Q_ASSERT(temp->passpoints.size() == 0);
 		const auto offset = MapCoord::boundsOffset();
 		if (!offset.isZero())
 		{
-			temp->template_to_map.set(0, 2, temp->template_to_map_other.get(0, 2) - offset.x / 1000.0);
-			temp->template_to_map.set(1, 2, temp->template_to_map_other.get(1, 2) - offset.y / 1000.0);
-			temp->template_to_map.invert(temp->map_to_template);
-			temp->template_to_map_other.set(0, 2, temp->template_to_map_other.get(0, 2) - offset.x / 1000.0);
-			temp->template_to_map_other.set(1, 2, temp->template_to_map_other.get(1, 2) - offset.y / 1000.0);
+			if (temp->template_to_map.getCols() == 3 && temp->template_to_map.getRows() == 3)
+			{
+				temp->template_to_map.set(0, 2, temp->template_to_map.get(0, 2) - offset.x / 1000.0);
+				temp->template_to_map.set(1, 2, temp->template_to_map.get(1, 2) - offset.y / 1000.0);
+				temp->template_to_map.invert(temp->map_to_template);
+			}
+				
+			if (temp->template_to_map_other.getCols() == 3 && temp->template_to_map_other.getRows() == 3)
+			{
+				temp->template_to_map_other.set(0, 2, temp->template_to_map_other.get(0, 2) - offset.x / 1000.0);
+				temp->template_to_map_other.set(1, 2, temp->template_to_map_other.get(1, 2) - offset.y / 1000.0);
+			}
 		}
 		
 		// Fix template alignment problems caused by grivation rounding since version 0.6
