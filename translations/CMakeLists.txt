@@ -22,9 +22,11 @@ find_package(Qt5LinguistTools REQUIRED)
 
 # Qt translations which are not yet available from upstream
 set(Mapper_QT_TRANS
-  qt_lv.ts
   qt_nb.ts
 )
+if (${Qt5LinguistTools_VERSION} VERSION_LESS 5.4.0)
+	list(APPEND Mapper_QT_TRANS qt_lv.ts)
+endif()
 
 set(Mapper_TRANS
  OpenOrienteering_cs.ts
