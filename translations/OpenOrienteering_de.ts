@@ -1484,7 +1484,7 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="325"/>
         <source>%1 x %2</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 x %2</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="326"/>
@@ -1579,7 +1579,7 @@
     <message>
         <location filename="../src/core/georeferencing.cpp" line="234"/>
         <source>Invalid grid scale factor: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Ungültiger Maßstabsfaktor: %1</translation>
     </message>
     <message>
         <location filename="../src/core/georeferencing.cpp" line="271"/>
@@ -1643,7 +1643,8 @@
         <location filename="../src/gui/georeferencing_dialog.cpp" line="104"/>
         <source>Grid scale factor:</source>
         <extracomment>The grid scale factor is the ratio between a length in the grid plane and the corresponding length on the curved earth model. It is applied as a factor to ground distances to get grid plane distances.</extracomment>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Maßstabsfaktor der Projektionsverzerrung</translatorcomment>
+        <translation>Maßstabsfaktor:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="152"/>
@@ -2085,13 +2086,14 @@
     <message>
         <location filename="../src/file_import_export.cpp" line="120"/>
         <source>Failed to load template &apos;%1&apos;&apos;, reason: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Vorlage &apos;%1&apos; konnte nicht geladen werden, Grund: %2</translation>
     </message>
     <message>
         <location filename="../src/file_import_export.cpp" line="125"/>
         <source>Warnings when loading template &apos;%1&apos;:
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Warnung beim Laden der Vorlage &apos;%1&apos;:
+%2</translation>
     </message>
     <message>
         <location filename="../src/file_import_export.cpp" line="132"/>
@@ -3469,12 +3471,14 @@ Importierte Daten auf Kartenmaßstab umrechnen?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="937"/>
         <source>Copy position</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>... in die Zwischenablage</translatorcomment>
+        <translation>Position kopieren</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="937"/>
         <source>Copy position to clipboard.</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>\todo Update English version</translatorcomment>
+        <translation>Kopiert die Koordinaten der Position in die Zwischenablage</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1103"/>
@@ -4589,7 +4593,7 @@ Zoomen ist mit dem Mausrad möglich.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="340"/>
         <source>Could not load the coordinate reference system &apos;%1&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Das Koordinatenreferenzsystem &apos;%1&apos; konnte nicht geladen werden.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="374"/>
@@ -6560,7 +6564,7 @@ Speichern im GIF-Format wird nicht unterstützt. Zeichnungen auf solchen Vorlage
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="1001"/>
         <source>The template will be invisible in the overprinting simulation. Switch to normal view?</source>
-        <translation type="unfinished"></translation>
+        <translation>Die Vorlage wird in der Überdruck-Simulation nicht sichtbar sein. In normale Ansicht wechseln?</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="1089"/>
