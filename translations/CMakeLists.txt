@@ -140,6 +140,9 @@ macro(QT5_TRANSLATIONS_SOURCES)
 			if("${_ts_filename}" STREQUAL "OpenOrienteering_en")
 				list(APPEND LUPDATE_OPTIONS -pluralonly)
 			endif()
+			if("${_ts_filename}" STREQUAL "OpenOrienteering_template")
+				list(APPEND LUPDATE_OPTIONS -no-obsolete)
+			endif()
 			add_custom_target(${PROJECT_NAME}_${_ts_filename}_update
 			  COMMAND ${Qt5_LUPDATE_EXECUTABLE} ${LUPDATE_OPTIONS} @${${PROJECT_NAME}_TRANSLATIONS_LISTFILE} -ts ${Mapper_TRANS_DIR}/${_arg}
 			  DEPENDS ${${PROJECT_NAME}_TRANSLATIONS_LISTFILE}
