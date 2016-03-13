@@ -1,5 +1,6 @@
 #
-#    Copyright 2012 Thomas Schöps, Kai Pastor
+#    Copyright 2012 Thomas Schöps
+#    Copyright 2012, 201, 2016 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -37,6 +38,10 @@ set(Mapper_SYMBOL_SETS
   10000/ISMTBOM_10000.omap
   15000/ISMTBOM_15000.omap
   20000/ISMTBOM_20000.omap
+  
+  5000/ISSkiOM_5000.omap
+  10000/ISSkiOM_10000.omap
+  15000/ISSkiOM_15000.omap
 )
 
 set(_symbol_sets)
