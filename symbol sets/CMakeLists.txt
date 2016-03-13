@@ -31,6 +31,12 @@ set(Mapper_SYMBOL_SETS
   5000/ISSOM_fi_5000.omap
   10000/ISOM_fi_10000.omap
   15000/ISOM_fi_15000.omap
+  
+  5000/ISMTBOM_5000.omap
+  7500/ISMTBOM_7500.omap
+  10000/ISMTBOM_10000.omap
+  15000/ISMTBOM_15000.omap
+  20000/ISMTBOM_20000.omap
 )
 
 set(_symbol_sets)

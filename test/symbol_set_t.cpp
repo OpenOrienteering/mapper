@@ -101,6 +101,12 @@ void SymbolSetTool::processSymbolSet_data()
 	QTest::newRow("ISOM 1:10000 Finnish") << "ISOM_fi"  << 15000u << 10000u;
 	QTest::newRow("ISSOM 1:5000 Finnish") << "ISSOM_fi" <<  5000u <<  5000u;
 	QTest::newRow("ISSOM 1:4000 Finnish") << "ISSOM_fi" <<  5000u <<  4000u;
+    
+	QTest::newRow("ISMTBOM 1:20000") << "ISMTBOM" << 15000u << 20000u;
+	QTest::newRow("ISMTBOM 1:15000") << "ISMTBOM" << 15000u << 15000u;
+	QTest::newRow("ISMTBOM 1:10000") << "ISMTBOM" << 15000u << 10000u;
+	QTest::newRow("ISMTBOM 1:7500")  << "ISMTBOM" << 15000u <<  7500u;
+	QTest::newRow("ISMTBOM 1:5000")  << "ISMTBOM" << 15000u <<  5000u;
 }
 
 void SymbolSetTool::processSymbolSet()
@@ -201,6 +207,26 @@ void SymbolSetTool::processSymbolSet()
 				}
 			}
 			QCOMPARE(north_lines_changed, 2);
+		}
+		
+		if (name == "ISMTBOM")
+		{
+			QCOMPARE(source_scale, 15000u);
+			const double factor = (target_scale >= 15000u) ? 1.0 : 1.5;
+			map.scaleAllObjects(factor, MapCoord());
+			
+			int symbols_changed = 0;
+			for (int i = 0; i < num_symbols; ++i)
+			{
+				Symbol* symbol = map.getSymbol(i);
+				const int code = symbol->getNumberComponent(0);
+				if (code != 602)
+				{
+					symbol->scale(factor);
+					++symbols_changed;
+				}
+			}
+			QCOMPARE(symbols_changed, 169);
 		}
 	}
 	
