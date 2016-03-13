@@ -53,6 +53,7 @@
 #include "../settings.h"
 #include "settings_dialog.h"
 #include "text_browser_dialog.h"
+#include "../symbol.h"
 #include "../util.h"
 
 #if defined(Q_OS_ANDROID)
@@ -656,6 +657,17 @@ void MainWindow::showNewMapWizard()
 			}
 			
 			new_map->setScaleDenominator(newMapDialog.getSelectedScale());
+		}
+		
+		for (int i = new_map->getNumSymbols(); i > 0; i = qMin(i, new_map->getNumSymbols()))
+		{
+			--i;
+			auto symbol = new_map->getSymbol(i);
+			if (symbol->isHidden()
+			    && !new_map->existsObjectWithSymbol(symbol))
+			{
+				new_map->deleteSymbol(i);
+			}
 		}
 	}
 	
