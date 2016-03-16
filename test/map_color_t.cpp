@@ -42,18 +42,37 @@ namespace QTest
 	template<>
 	char* toString(const MapColor& c)
 	{
-		QByteArray ba = "MapColor(" + QString::number(c.getPriority()).toLocal8Bit();
-		ba += " " + c.getName().toLocal8Bit();
-		ba += " (SPOT: " + QString(toString(c.getSpotColorMethod())) + " " + c.getSpotColorName();
+		auto spot_method = QTest::toString(c.getSpotColorMethod());
+		auto cmyk_method = QTest::toString(c.getCmykColorMethod());
+		auto rgb_method  = QTest::toString(c.getRgbColorMethod());
+		
+		QByteArray ba;
+		ba.reserve(1000);
+		ba += "MapColor(";
+		ba += QByteArray::number(c.getPriority());
+		ba += " ";
+		ba += c.getName().toLocal8Bit();
+		ba += " (SPOT: ";
+		ba += spot_method;
+		ba += " ";
+		ba += c.getSpotColorName();
 		ba += (c.getKnockout() ? " k.o." : " ---");
-		ba += QString(" [%1%]").arg(c.getOpacity()*100.0,0,'f',0);
-		ba += " CMYK: " + QString(toString(c.getCmykColorMethod()));
+		ba += " [";
+		ba += QByteArray::number(c.getOpacity()*100.0,'f',0);
+		ba += "] CMYK: ";
+		ba += cmyk_method;
 		const MapColorCmyk& cmyk = c.getCmyk();
 		ba += QString(" %1/%2/%3/%4").arg(cmyk.c*100.0,0,'f',1).arg(cmyk.m*100.0,0,'f',1).arg(cmyk.y*100.0,0,'f',1).arg(cmyk.k*100.0,0,'f',1);
-		ba += " RGB: " + QString(toString(c.getRgbColorMethod()));
+		ba += " RGB: ";
+		ba += rgb_method;
 		const MapColorRgb& rgb = c.getRgb();
 		ba += QString(" %1/%2/%3").arg(rgb.r*255.0,0,'f',0).arg(rgb.g*255.0,0,'f',0).arg(rgb.b*255.0,0,'f',0);
 		ba += ")";
+		
+		delete [] spot_method;
+		delete [] cmyk_method;
+		delete [] rgb_method;
+		
 		return qstrdup(ba.data());
 	}
 }
