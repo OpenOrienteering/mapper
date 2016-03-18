@@ -1,6 +1,6 @@
 /*
  *    Copyright 2013 Thomas Schöps
- *    Copyright 2015 Kai Pastor
+ *    Copyright 2015, 2016 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -415,5 +415,50 @@ void PathObjectTest::calcIntersectionsTest_data()
 	
 	QTest::newRow("b inside a") << (void*)aib2 << (void*)aib1 << (void*)intersections_bia;
 }
+
+void PathObjectTest::atypicalPathTest()
+{
+	// This is a zero-length closed path of three arcs.
+	MapCoordVector coords(10, {2.0, 2.0});
+	coords[0].setCurveStart(true);
+	coords[3].setCurveStart(true);
+	coords[6].setCurveStart(true);
+	coords[9].setClosePoint(true);
+	coords[9].setHolePoint(true);
+	
+	PathCoordVector path_coords { coords };
+	path_coords.update(0);
+	QCOMPARE(path_coords.size(), (std::size_t)7u);
+	
+	for (std::size_t i = 0, end = path_coords.size(); i< end; ++i)
+	{
+		switch (i)
+		{
+		case 0:
+			QCOMPARE(path_coords[i].index, 0u);
+			QCOMPARE(path_coords[i].param, 0.0f);
+			QCOMPARE(path_coords[i].clen, 0.0f);
+			break;
+		default:
+			if (path_coords[i].param == 0.0)
+				QVERIFY(path_coords[i-1].index < path_coords[i].index);
+			else
+				QVERIFY(path_coords[i-1].index == path_coords[i].index);
+			QCOMPARE(path_coords[i].clen, 0.0f);
+			break;
+		case 9:
+			QCOMPARE(path_coords[i].index, 9u);
+			QCOMPARE(path_coords[i].param, 0.0f);
+			QCOMPARE(path_coords[i].clen, 0.0f);
+			break;
+		}
+		
+		auto split = SplitPathCoord::at(path_coords, i);
+		QCOMPARE((std::size_t)split.path_coord_index, i);
+		auto tangent = split.tangentVector();
+		Q_UNUSED(tangent)
+	}
+}
+	
 
 QTEST_GUILESS_MAIN(PathObjectTest)
