@@ -2645,7 +2645,7 @@ OCADPoint OCAD8FileExport::convertPoint(const MapCoord& coord)
 
 s32 OCAD8FileExport::convertSize(qint32 size)
 {
-	return (s32)(size / 10);
+	return (s32)((size+5) / 10);
 }
 
 s16 OCAD8FileExport::convertColor(const MapColor* color) const
