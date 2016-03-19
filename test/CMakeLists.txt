@@ -1,5 +1,5 @@
 #
-#    Copyright 2012-2015 Kai Pastor
+#    Copyright 2012-2016 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -154,13 +154,17 @@ add_dependencies(AUTORUN_TESTS Mapper_prerequisites)
 # unlike the default "test" target, it will
 #   a) generate the test executables if necessary,
 #   b) display the output of failed tests,
-#   c) show up in KDevelop's project view.
+#   c) show up in Qt Creator's project view.
 #
-add_custom_target(Mapper_Test
-  DEPENDS ${Mapper_UNIT_TESTS} ${Mapper_SYSTEM_TESTS}
+add_executable(Mapper_Test mapper_t.cpp)
+add_dependencies(Mapper_Test
+  Mapper_prerequisites
+  ${Mapper_UNIT_TESTS}
+  ${Mapper_SYSTEM_TESTS}
+)
+add_custom_command(TARGET Mapper_Test POST_BUILD
   COMMAND ${CMAKE_CTEST_COMMAND} --output-on-failure
 )
-add_dependencies(Mapper_Test Mapper_prerequisites)
 
 
 if(Mapper_BUILD_QT)
