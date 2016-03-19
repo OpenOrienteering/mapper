@@ -24,6 +24,10 @@ find_package(Qt5PrintSupport REQUIRED)
 find_package(Qt5Test REQUIRED)
 find_package(Qt5Widgets REQUIRED)
 
+if(Mapper_DEVELOPMENT_BUILD)
+	include(EnableSanitize)
+	enable_sanitize(address undefined NO_RECOVER)
+endif()
 
 # This macro defines a unit test from a list of source file names 
 # (without ending). For each filename, a .cpp file and .h must exist.

@@ -253,6 +253,9 @@ include_directories(${QT_INCLUDES} ${CMAKE_CURRENT_BINARY_DIR} ${PROJ_INCLUDE_DI
 
 if(Mapper_DEVELOPMENT_BUILD)
 	add_definitions(-DMAPPER_DEVELOPMENT_BUILD)
+	include(EnableSanitize)
+	enable_sanitize(address undefined)
+	configure_file(suppress.txt.in suppress.txt COPY_ONLY)
 else()
 	add_definitions(-DQT_NO_DEBUG -DQT_NO_DEBUG_OUTPUT -DQT_NO_WARNING_OUTPUT -DNDEBUG)
 endif()
