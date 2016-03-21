@@ -1337,7 +1337,7 @@ LineSymbol* OcdFileImport::importRectangleSymbol(const S& ocd_symbol)
 	
 	symbol->line_width = convertLength(ocd_symbol.line_width);
 	symbol->color = convertColor(ocd_symbol.line_color);
-	symbol->cap_style = LineSymbol::FlatCap;
+	symbol->cap_style = LineSymbol::RoundCap;
 	symbol->join_style = LineSymbol::RoundJoin;
 	
 	RectangleInfo rect;
