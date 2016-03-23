@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2015 Kai Pastor
+ *    Copyright 2012-2016  Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -401,7 +401,7 @@ void PrintWidget::setActive(bool active)
 			// Save the current state of the map view.
 			saved_view_state.clear();
 			QXmlStreamWriter writer(&saved_view_state);
-			main_view->save(writer, QLatin1String("saved_view"), true);
+			main_view->save(writer, QLatin1String("saved_view"));
 			
 			editor->setViewOptionsEnabled(false);
 			
