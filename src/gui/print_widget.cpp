@@ -432,9 +432,11 @@ void PrintWidget::setActive(bool active)
 				print_tool = new PrintTool(editor, map_printer);
 			}
 			editor->setOverrideTool(print_tool);
+			editor->setEditingInProgress(true);
 		}
 		else
 		{
+			editor->setEditingInProgress(false);
 			editor->setOverrideTool(NULL);
 			print_tool = NULL;
 			
