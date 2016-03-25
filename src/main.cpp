@@ -78,6 +78,7 @@ int main(int argc, char** argv)
 	// QSettings on OS X benefits from using an internet domain here.
 	QCoreApplication::setOrganizationName("OpenOrienteering.org");
 	QCoreApplication::setApplicationName("Mapper");
+	qapp.setApplicationDisplayName(APP_NAME + " " + APP_VERSION);
 	
 	// Set settings defaults
 	Settings& settings = Settings::getInstance();

@@ -82,9 +82,25 @@ public:
 	bool mobileMode() const;
 	
 	
-	/** Change the controller to new_controller. */
-	void setController(MainWindowController* new_controller, const QString& path = QString());
+	/**
+	 * Changes the controller.
+	 *
+	 * The new controller does not edit a file.
+	 */
+	void setController(MainWindowController* new_controller);
 	
+	/**
+	 * Changes the controller.
+	 *
+	 * The new controller edits the file with the given path.
+	 * The path may be empty for a new (unnamed) file.
+	 */
+	void setController(MainWindowController* new_controller, const QString& path);
+	
+private:
+	void setController(MainWindowController* new_controller, bool has_file);
+
+public:	
 	/** Returns the current controller. */
 	MainWindowController* getController() const;
 	
@@ -100,9 +116,6 @@ public:
 	 *  used files, and the directory is saved as most recently used directory.
 	 */
 	static void setMostRecentlyUsedFile(const QString& path);
-	
-	/** Sets the opened-file state to value. */
-	void setHasOpenedFile(bool value);
 	
 	/** Returns true if a file is opened in this main window. */
 	bool hasOpenedFile() const;
@@ -301,6 +314,11 @@ public slots:
 	
 	/**
 	 * Notifies this window of unsaved changes.
+	 * 
+	 * If the controller was set as having an opened file, setting this value to
+	 * true will start the autosave countdown if the previous value was false.
+	 * 
+	 * This will update the window title via QWidget::setWindowModified().
 	 */
 	void setHasUnsavedChanges(bool value);
 	
@@ -349,9 +367,10 @@ protected:
 	/** 
 	 * Sets the path of the file edited by this windows' controller.
 	 * 
-	 * This will trigger updates to the window title, 
-	 * to the list of recently used files, and 
-	 * to the least recently used directory.
+	 * This will update the window title via QWidget::setWindowFilePath().
+	 * 
+	 * If the controller was not set as having an opened file,
+	 * the path must be empty.
 	 */
 	void setCurrentPath(const QString& path);
 	
@@ -401,8 +420,6 @@ private:
 	void loadWindowSettings();
 	
 	
-	void updateWindowTitle();
-	
 	void createFileMenu();
 	void createHelpMenu();
 
@@ -411,14 +428,13 @@ private:
 	
 	/// The active controller
 	MainWindowController* controller;
-	bool create_menu;
+	const bool create_menu;
 	bool show_menu;
 	bool shortcuts_blocked;
 	
 	QToolBar* general_toolbar;
 	QMenu* file_menu;
 	QAction* save_act;
-	QAction* save_as_act;
 	QMenu* open_recent_menu;
 	bool open_recent_menu_inserted;
 	QAction* recent_file_act[max_recent_files];

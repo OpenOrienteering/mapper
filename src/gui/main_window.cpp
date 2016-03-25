@@ -57,6 +57,7 @@
 #include "../file_format.h"
 #include "../settings.h"
 #include "../symbol.h"
+#include "../undo_manager.h"
 #include "../util.h"
 #include "../util/backports.h"
 
@@ -168,7 +169,19 @@ void MainWindow::setHomeScreenDisabled(bool disabled)
 	homescreen_disabled = disabled;
 }
 
+void MainWindow::setController(MainWindowController* new_controller)
+{
+	setController(new_controller, false);
+	setCurrentPath({});
+}
+
 void MainWindow::setController(MainWindowController* new_controller, const QString& path)
+{
+	setController(new_controller, true);
+	setCurrentPath(path);
+}
+
+void MainWindow::setController(MainWindowController* new_controller, bool has_file)
 {
 	if (controller)
 	{
@@ -182,10 +195,8 @@ void MainWindow::setController(MainWindowController* new_controller, const QStri
 		general_toolbar = nullptr;
 	}
 	
-	has_opened_file = false;
-	has_unsaved_changes = false;
+	has_opened_file = has_file;
 	shortcuts_blocked = false;
-	setCurrentPath(path);
 	
 	if (create_menu)
 		createFileMenu();
@@ -195,7 +206,7 @@ void MainWindow::setController(MainWindowController* new_controller, const QStri
 	
 	if (create_menu)
 		createHelpMenu();
-		
+	
 #if defined(Q_OS_MAC)
 	if (isVisible() && qApp->activeWindow() == this)
 	{
@@ -205,6 +216,9 @@ void MainWindow::setController(MainWindowController* new_controller, const QStri
 		qApp->focusWindowChanged(qApp->focusWindow());
 	}
 #endif
+	
+	setHasAutosaveConflict(false);
+	setHasUnsavedChanges(false);
 }
 
 void MainWindow::createFileMenu()
@@ -237,7 +251,7 @@ void MainWindow::createFileMenu()
 	save_act->setWhatsThis("<a href=\"file_menu.html\">See more</a>");
 	connect(save_act, &QAction::triggered, this, &MainWindow::save);
 	
-	save_as_act = new QAction(tr("Save &as..."), this);
+	auto save_as_act = new QAction(tr("Save &as..."), this);
 	if (QKeySequence::keyBindings(QKeySequence::SaveAs).empty())
 		save_as_act->setShortcut(tr("Ctrl+Shift+S"));
 	else
@@ -290,9 +304,9 @@ void MainWindow::createFileMenu()
 	general_toolbar->addAction(open_act);
 	general_toolbar->addAction(save_act);
 	
-	save_act->setEnabled(false);
-	save_as_act->setEnabled(false);
-	close_act->setEnabled(false);
+	save_act->setEnabled(has_opened_file);
+	save_as_act->setEnabled(has_opened_file);
+	close_act->setEnabled(has_opened_file);
 	updateRecentFileActions();
 }
 
@@ -327,11 +341,19 @@ void MainWindow::createHelpMenu()
 
 void MainWindow::setCurrentPath(const QString& path)
 {
-	if (current_path != path)
+	Q_ASSERT(has_opened_file || path.isEmpty());
+	
+	QString window_file_path;
+	current_path.clear();
+	if (has_opened_file)
 	{
-		current_path = QFileInfo(path).canonicalFilePath();
-		updateWindowTitle();
+		window_file_path = QFileInfo(path).canonicalFilePath();
+		if (window_file_path.isEmpty())
+			window_file_path = tr("Unsaved file");
+		else
+			current_path = window_file_path;
 	}
+	setWindowFilePath(window_file_path);
 }
 
 void MainWindow::setMostRecentlyUsedFile(const QString& path)
@@ -354,32 +376,14 @@ void MainWindow::setMostRecentlyUsedFile(const QString& path)
 	}
 }
 
-void MainWindow::setHasOpenedFile(bool value)
-{
-	if (create_menu)
-	{
-		if (value && !has_opened_file)
-		{
-			save_act->setEnabled(true);
-			save_as_act->setEnabled(true);
-			close_act->setEnabled(true);
-		}
-		else if (!value && has_opened_file)
-		{
-			save_act->setEnabled(false);
-			save_as_act->setEnabled(false);
-			close_act->setEnabled(false);
-		}
-	}
-	has_opened_file = value;
-	updateWindowTitle();
-}
-
 void MainWindow::setHasUnsavedChanges(bool value)
 {
-	has_unsaved_changes = value;
-	setAutosaveNeeded(has_unsaved_changes && !has_autosave_conflict);
-	updateWindowTitle();
+	if (hasOpenedFile())
+	{
+		has_unsaved_changes = value;
+		setAutosaveNeeded(has_unsaved_changes && !has_autosave_conflict);
+	}
+	setWindowModified(has_unsaved_changes);
 }
 
 void MainWindow::setStatusBarText(const QString& text)
@@ -597,27 +601,6 @@ MainWindow* MainWindow::findMainWindow(const QString& file_name)
 	return nullptr;
 }
 
-void MainWindow::updateWindowTitle()
-{
-	QString window_title = "";
-	
-	if (has_unsaved_changes)
-		window_title += "(*)";
-	
-	if (has_opened_file)
-	{
-		const QString current_file_path = currentPath();
-		if (current_file_path.isEmpty())
-			window_title += tr("Unsaved file") + " - ";
-		else
-			window_title += QFileInfo(current_file_path).fileName() + " - ";
-	}
-	
-	window_title += appName() + " " + APP_VERSION;
-	
-	setWindowTitle(window_title);
-}
-
 void MainWindow::showNewMapWizard()
 {
 	NewMapDialog newMapDialog(this);
@@ -658,9 +641,11 @@ void MainWindow::showNewMapWizard()
 			}
 		}
 	}
+	new_map->setHasUnsavedChanges(false);
+	new_map->undoManager().clear();
 	
-	MainWindow* new_window = has_opened_file ? new MainWindow() : this;
-	new_window->setController(new MapEditorController(MapEditorController::MapEditor, new_map));
+	MainWindow* new_window = hasOpenedFile() ? new MainWindow() : this;
+	new_window->setController(new MapEditorController(MapEditorController::MapEditor, new_map), QString());
 	
 	new_window->show();
 	new_window->raise();
