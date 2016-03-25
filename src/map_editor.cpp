@@ -3827,7 +3827,7 @@ bool EditorDockWidget::event(QEvent* event)
 	switch (event->type())
 	{
 	case QEvent::ShortcutOverride:
-		if (editor->getWindow()->areShortcutsDisabled())
+		if (editor->getWindow()->shortcutsBlocked())
 			event->accept();
 		break;
 		

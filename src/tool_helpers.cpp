@@ -49,7 +49,7 @@ TextObjectEditorHelper::TextObjectEditorHelper(TextObject* object, MapEditorCont
 	original_cursor_retrieved = false;
 	
 	editor->setEditingInProgress(true);
-	editor->getWindow()->setShortcutsEnabled(false);
+	editor->getWindow()->setShortcutsBlocked(true);
 	
 	// Show dock in floating state
 	dock_widget = new TextObjectAlignmentDockWidget(object, (int)object->getHorizontalAlignment(), (int)object->getVerticalAlignment(), this, editor->getWindow());
@@ -71,7 +71,7 @@ TextObjectEditorHelper::~TextObjectEditorHelper()
 	delete dock_widget;
 	
 	editor->setEditingInProgress(false);
-	editor->getWindow()->setShortcutsEnabled(true);
+	editor->getWindow()->setShortcutsBlocked(false);
 }
 void TextObjectEditorHelper::setFocus()
 {

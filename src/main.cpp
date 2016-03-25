@@ -125,7 +125,7 @@ int main(int argc, char** argv)
 #endif
 	
 	// Create first main window
-	MainWindow first_window(true);
+	MainWindow first_window;
 	first_window.setAttribute(Qt::WA_DeleteOnClose, false);
 	first_window.setController(new HomeScreenController());
 	
