@@ -55,8 +55,8 @@ extern "C" void registerProjFileHelper();
  *
  * Conversions between map coordinates and "projected coordinates" (flat metric
  * coordinates in a projected coordinate reference system) are made as affine 
- * transformation based on the map scale, the grivation and a defined 
- * reference point.
+ * transformation based on the map scale (principal scale), grid scale factor,
+ * the grivation and a defined reference point.
  * 
  * Conversions between projected coordinates and geographic coordinates (here:
  * latitude/longitude for the WGS84 datum) are made based on a specification
@@ -92,6 +92,22 @@ public:
 	
 	
 	/**
+	 * @brief Returns the precision of the grid scale factor.
+	 * 
+	 * The precision is given in number of decimal places,
+	 * i.e. digits after the decimal point.
+	 */
+	static constexpr unsigned int scaleFactorPrecision();
+	
+	/**
+	 * @brief Rounds according to the defined precision of the grid scale factor.
+	 * 
+	 * @see scaleFactorPrecision();
+	 */
+	static double roundScaleFactor(double value);
+	
+	
+	/**
 	 * @brief Returns the precision of declination/grivation/convergence.
 	 * 
 	 * The precision is given in number of decimal places,
@@ -99,7 +115,7 @@ public:
 	 * 
 	 * All values set as declination or grivation will be rounded to this precisison.
 	 */
-	static unsigned int declinationPrecision();
+	static constexpr unsigned int declinationPrecision();
 	
 	/**
 	 * @brief Rounds according to the defined precision of declination/grivation/convergence.
@@ -183,14 +199,38 @@ public:
 	
 	
 	/**
-	 * Returns the map scale denominator.
+	 * Returns the principal scale denominator.
+	 * 
+	 * The principal scale - or representative fraction - is the ratio between
+	 * units on the printed map and units on ground.
 	 */
 	unsigned int getScaleDenominator() const;
 	
 	/**
-	 * Sets the map scale denominator.
+	 * Sets the principal scale denominator.
 	 */
 	void setScaleDenominator(int value);
+	
+	
+	/**
+	 * Returns the grid scale factor.
+	 * 
+	 * The grid scale factor is the ratio between a length in the grid and the
+	 * length on the earth model. It is applied as a factor to ground distances
+	 * to get grid plane distances.
+	 * 
+	 * Mapper doesn't explicitly deal with any other factors (elevation factor,
+	 * unit of measurement). Technically, this property can be used as a
+	 * combined factor.
+	 */
+	double getGridScaleFactor() const;
+	
+	/**
+	 * Sets the grid scale factor.
+	 * 
+	 * \see getGridScaleFactor()
+	 */
+	void setGridScaleFactor(double value);
 	
 	
 	/**
@@ -486,6 +526,7 @@ private:
 	State state;
 	
 	unsigned int scale_denominator;
+	double grid_scale_factor;
 	double declination;
 	double grivation;
 	double grivation_error;
@@ -522,7 +563,20 @@ QDebug operator<<(QDebug dbg, const Georeferencing &georef);
 //### Georeferencing inline code ###
 
 inline
-unsigned int Georeferencing::declinationPrecision()
+constexpr unsigned int Georeferencing::scaleFactorPrecision()
+{
+	return 6u;
+}
+
+inline
+double Georeferencing::roundScaleFactor(double value)
+{
+	// This must match the implementation in scaleFactorPrecision().
+	return floor(value*1000000.0+0.5)/1000000.0;
+}
+
+inline
+constexpr unsigned int Georeferencing::declinationPrecision()
 {
 	// This must match the implementation in declinationRound().
 	return 2u;
@@ -557,6 +611,12 @@ inline
 unsigned int Georeferencing::getScaleDenominator() const
 {
 	return scale_denominator;
+}
+
+inline
+double Georeferencing::getGridScaleFactor() const
+{
+	return grid_scale_factor;
 }
 
 inline

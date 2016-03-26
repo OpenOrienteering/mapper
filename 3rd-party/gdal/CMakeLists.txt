@@ -40,7 +40,7 @@ if (NOT "${GDAL_VERSION}" MATCHES "^${GDAL_MAJOR_MINOR_REVISION}")
 endif()
 
 set(GDAL_MD5SUMS
-  2.0.1+dfsg:18e207a12f920e2a40405891eb6168ec:http://http.debian.net/debian/pool/main/g/gdal/gdal_2.0.1+dfsg.orig.tar.gz
+  2.0.1+dfsg:18e207a12f920e2a40405891eb6168ec:https://github.com/OpenOrienteering/sources/releases/download/3rd-party/gdal_2.0.1.dfsg.orig.tar.gz
 )
 string(REPLACE "+" "[+]" GDAL_VERSION_REGEX "${GDAL_VERSION}")
 foreach(line ${GDAL_MD5SUMS})
@@ -73,8 +73,9 @@ endif()
 
 # External project definition
 
-string(REGEX REPLACE "-Wpedantic|-Wall" "" GDAL_CFLAGS "${CMAKE_C_FLAGS} ${CMAKE_C_FLAGS_RELEASE}")
-string(REGEX REPLACE "-Wpedantic|-Wall" "" GDAL_CXXFLAGS "${CMAKE_CXX_FLAGS} ${CMAKE_CXX_FLAGS_RELEASE}")
+set(GDAL_EXTRA_FLAGS "-Wno-unused-parameter -Wno-ignored-qualifiers -Wno-unused-private-field -Wno-deprecated-register")
+string(REGEX REPLACE "-Wpedantic|-Wall" "" GDAL_CFLAGS "${CMAKE_C_FLAGS} ${CMAKE_C_FLAGS_RELEASE} ${GDAL_EXTRA_FLAGS}")
+string(REGEX REPLACE "-Wpedantic|-Wall" "" GDAL_CXXFLAGS "${CMAKE_CXX_FLAGS} ${CMAKE_CXX_FLAGS_RELEASE} ${GDAL_EXTRA_FLAGS}")
 if(CMAKE_CROSSCOMPILING AND NOT GNU_SYSTEM_NAME AND MINGW)
 	set(_env_lang $ENV{LC_ALL})
 	set(ENV{LC_ALL} C)
@@ -86,14 +87,19 @@ if(CMAKE_CROSSCOMPILING AND NOT GNU_SYSTEM_NAME AND MINGW)
 	string(REGEX REPLACE ".*Target: ?([^\n]*).*" \\1 GNU_SYSTEM_NAME ${GNU_SYSTEM_NAME})
 endif()
 if(CMAKE_CROSSCOMPILING AND GNU_SYSTEM_NAME)
-	set(GDAL_CONFIG_CROSS "--host=${GNU_SYSTEM_NAME}")
+	execute_process(
+	  COMMAND "${CMAKE_CURRENT_SOURCE_DIR}/patches/config.guess"
+	  OUTPUT_VARIABLE build
+	  OUTPUT_STRIP_TRAILING_WHITESPACE
+	  )
+	set(GDAL_CONFIG_EXTRA "--host=${GNU_SYSTEM_NAME}" "--build=${build}" --without-expat)
 	get_directory_property(_include_dirs INCLUDE_DIRECTORIES)
 	if(_include_dirs)
 		unset(_cpp_flags)
 		foreach(_dir ${_include_dirs})
 			set(_cpp_flags "${_cpp_flags} -I${_dir}")
 		endforeach()
-		list(APPEND GDAL_CONFIG_CROSS "CPPFLAGS=${_cpp_flags}")
+		list(APPEND GDAL_CONFIG_EXTRA "CPPFLAGS=${_cpp_flags}")
 	endif()
 	if(GNU_SYSTEM_NAME STREQUAL "arm-linux-androideabi")
 		set(STANDALONE_TOOLCHAIN arm-linux-androideabi-4.9)
@@ -106,10 +112,14 @@ if(CMAKE_CROSSCOMPILING AND GNU_SYSTEM_NAME)
 	elseif(ANDROID)
 		message(WARNING "Unsupported Android architecture '${GNU_SYSTEM_NAME}'")
 	endif()
+elseif(APPLE)
+	set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -stdlib=libc++")
+	# Didn't manage to pass the deployment target to all libtool link steps
+	#string(REGEX REPLACE "(^| )(--?[^W])" "\\1-Wl,\\2" CMAKE_EXE_LINKER_FLAGS ${CMAKE_EXE_LINKER_FLAGS})
+	set(GDAL_CONFIG_EXTRA --without-libtool) 
 else()
-	unset(GDAL_CONFIG_CROSS)
+	unset(GDAL_CONFIG_EXTRA)
 endif()
-
 
 include(ExternalProject)
 ExternalProject_Add(
@@ -126,20 +136,21 @@ ExternalProject_Add(
     find ${PROJECT_SOURCE_DIR}/patches -name gdal-${GDAL_MAJOR_MINOR_REVISION}*.patch -exec patch -p0 -N -i {} +
   CONFIGURE_COMMAND
     "<SOURCE_DIR>/configure"
-	"--prefix=<INSTALL_DIR>"
+    "--prefix=<INSTALL_DIR>"
     --disable-static
     --enable-shared
     --with-ogr
-	--with-hide-internal-symbols
-	--with-rename-internal-libtiff-symbols
-	--with-threads=no
-	--without-pcraster
-	--without-grib
-	--without-perl
+    --with-hide-internal-symbols
+    --with-rename-internal-libtiff-symbols
+    --without-jpeg12 # possible violation of ODR in GDAL < 2.1
+    --with-threads=no
+    --without-pcraster
+    --without-grib
+    --without-perl
     --without-php
     --without-python
     --without-java
-	${GDAL_CONFIG_CROSS}
+    ${GDAL_CONFIG_EXTRA}
     "CC=${CMAKE_C_COMPILER}"
     "CFLAGS=${GDAL_CFLAGS}"
     "CXX=${CMAKE_CXX_COMPILER}"

@@ -29,6 +29,8 @@
 #include <QPainter>
 #include <QStyleOption>
 
+#include "../settings.h"
+
 PieMenu::PieMenu(QWidget* parent)
 : QWidget(parent, Qt::Popup | Qt::FramelessWindowHint),	// NOTE: use Qt::Window for debugging to avoid mouse grab
    minimum_action_count(3),
@@ -42,6 +44,12 @@ PieMenu::PieMenu(QWidget* parent)
 	setAttribute(Qt::WA_ShowWithoutActivating);
 	setAutoFillBackground(false);
 	setMouseTracking(true);
+	
+	auto scale = Settings::getInstance().getSetting(Settings::General_PixelsPerInch).toReal() / 96.0;
+	if (scale > 1.5)
+	{
+		icon_size = qRound(icon_size * scale);
+	}
 	
 	updateCachedState();
 }

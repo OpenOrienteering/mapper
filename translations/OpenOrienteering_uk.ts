@@ -399,7 +399,7 @@
         <location filename="../src/color_dock_widget.cpp" line="61"/>
         <location filename="../src/color_dock_widget.cpp" line="66"/>
         <source>New</source>
-        <translation type="unfinished">Новий</translation>
+        <translation>Новий</translation>
     </message>
     <message>
         <location filename="../src/color_dock_widget.cpp" line="69"/>
@@ -439,7 +439,7 @@
     <message>
         <location filename="../src/color_dock_widget.cpp" line="187"/>
         <source>The map contains symbols with this color. Deleting it will remove the color from these objects! Do you really want to do that?</source>
-        <translation type="unfinished">Карта містить знаки такого кольору. Видалення знебарвить ці об’єкти! Ви справді хочете це зробити?</translation>
+        <translation>Карта містить знаки такого кольору. Видалення знебарвить ці об’єкти! Ви справді хочете це зробити?</translation>
     </message>
     <message>
         <location filename="../src/color_dock_widget.cpp" line="204"/>
@@ -454,18 +454,18 @@
     <message>
         <location filename="../src/color_dock_widget.cpp" line="310"/>
         <source>Please enter a percentage from 0% to 100%!</source>
-        <translation type="unfinished">Введіть будь-ласка значення від 0% до 100%!</translation>
+        <translation>Введіть будь-ласка значення від 0% до 100%!</translation>
     </message>
     <message>
         <location filename="../src/color_dock_widget.cpp" line="377"/>
         <location filename="../src/color_dock_widget.cpp" line="419"/>
         <source>Double click to define the color</source>
-        <translation type="unfinished">Зробіть подвійний клік щоб задати кольір</translation>
+        <translation>Зробіть подвійний клік щоб задати кольір</translation>
     </message>
     <message>
         <location filename="../src/color_dock_widget.cpp" line="384"/>
         <source>Click to select the name and click again to edit.</source>
-        <translation type="unfinished">Клацніть щоб вибрати колір і клацніть ще раз щоб редагувати його.</translation>
+        <translation>Клацніть щоб вибрати колір і клацніть ще раз щоб редагувати його.</translation>
     </message>
 </context>
 <context>
@@ -1446,7 +1446,7 @@
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="523"/>
         <source>The program must be restarted for the language change to take effect!</source>
-        <translation>Потрібно перезапустити програму щоб зміни вступили в силу!</translation>
+        <translation>Потрібно перезапустити прграму щоб зміни вступили в силу!</translation>
     </message>
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="592"/>
@@ -1530,13 +1530,13 @@
         <location filename="../src/core/crs_template_implementation.cpp" line="80"/>
         <source>by EPSG code</source>
         <comment>as in: The CRS is specified by EPSG code</comment>
-        <translation type="unfinished">за кодом EPSG</translation>
+        <translation type="unfinished">код у EPSG</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="82"/>
         <source>EPSG @code@ coordinates</source>
         <extracomment>Don&apos;t translate @code@. It is placeholder.</extracomment>
-        <translation type="unfinished">EPSG @code@ координати</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="85"/>
@@ -1564,7 +1564,7 @@
         <location filename="../src/core/georeferencing.cpp" line="260"/>
         <location filename="../src/core/georeferencing.cpp" line="287"/>
         <source>Unknown CRS specification language: %1</source>
-        <translation type="unfinished">Невідома мова опису CRS: %1</translation>
+        <translation type="unfinished">Невідома мова CRS специфікації: %1</translation>
     </message>
     <message>
         <location filename="../src/core/georeferencing.cpp" line="290"/>
@@ -1635,12 +1635,12 @@
         <location filename="../src/gui/georeferencing_dialog.cpp" line="354"/>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="654"/>
         <source>Online declination lookup</source>
-        <translation>Пошук схилення онлайн</translation>
+        <translation>Онлайн пошук відхилення</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="93"/>
         <source>Map coordinate reference system</source>
-        <translation>Базова система координат карти</translation>
+        <translation>Відносна система координат карти</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="89"/>
@@ -1744,7 +1744,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="355"/>
         <source>The magnetic declination for the reference point %1° %2° will now be retrieved from &lt;a href=&quot;%3&quot;&gt;%3&lt;/a&gt;. Do you want to continue?</source>
-        <translation>Магнітне схилення для опорної точки %1° %2° буде взято з &lt;a href=&quot;%3&quot;&gt;%3&lt;/a&gt;. Хочете продовжити?</translation>
+        <translation>Магнітне схилення для опорної точки прив’язки %1° %2° буде взято з &lt;a href=&quot;%3&quot;&gt;%3&lt;/a&gt;. Хочете продовжити?</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="428"/>
@@ -1769,7 +1769,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="492"/>
         <source>locked</source>
-        <translation type="unfinished">замкнено</translation>
+        <translation type="unfinished">змкнено</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="625"/>
@@ -1785,14 +1785,14 @@
         <location filename="../src/gui/georeferencing_dialog.cpp" line="655"/>
         <source>The online declination lookup failed:
 %1</source>
-        <translation>Онлайн пошук схилення невдалий:
+        <translation>Онлайн пошук відхилення невдалий:
 %1</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="490"/>
         <source>%1 °</source>
         <comment>degree value</comment>
-        <translation></translation>
+        <translation>%1 °</translation>
     </message>
 </context>
 <context>
@@ -1821,12 +1821,12 @@
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="143"/>
         <source>Create a new map ...</source>
-        <translation>Створити нову карту ...</translation>
+        <translation>Створити нову курту ...</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="146"/>
         <source>Open map ...</source>
-        <translation>Відкрити карту ...</translation>
+        <translation>Відкрити курту ...</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="152"/>
@@ -1996,9 +1996,9 @@
         <location filename="../src/file_import_export.cpp" line="93"/>
         <source>Dropped %n irregular object(s).</source>
         <translation type="unfinished">
-            <numerusform>Відкинуто %n нерегулярний об&apos;єкт.</numerusform>
-            <numerusform>Відкинуто %n нерегулярних об&apos;єкти.</numerusform>
-            <numerusform>Відкинуто %n нерегулярних об&apos;єктів.</numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
         </translation>
     </message>
     <message>
@@ -2009,7 +2009,7 @@
     <message>
         <location filename="../src/file_import_export.cpp" line="112"/>
         <source>Template &quot;%1&quot; has been loaded from the map&apos;s directory instead of the relative location to the map file where it was previously.</source>
-        <translation type="unfinished">Підложка &quot;%1&quot; була завантажена з папки карти, а не з міця її розташування відносно файлу карти, де вона знаходилася раніше.</translation>
+        <translation type="unfinished">Підложка &quot;%1&quot; була завантажена з папки карти, а не з міця її розташування відносно файлу карти, до вона знаходилася раніше.</translation>
     </message>
     <message>
         <location filename="../src/file_import_export.cpp" line="120"/>
@@ -2025,7 +2025,7 @@
     <message>
         <location filename="../src/file_format_native.cpp" line="123"/>
         <source>This file uses an obsolete format. Support for this format is to be removed from this program soon. To be able to open the file in the future, save it again.</source>
-        <translation type="unfinished">Цей файл має застарілий формат. Підтримка цього формату невдовзі буде припинена програмою. Щоб зберегти можливість відкривати цей файл у майбутньому, збережіть його ще раз.</translation>
+        <translation type="unfinished">Цей файл має у застарілий формат. Підтримка цього формату невдовзі буде припинена програмою. Щоб зберегти можливість відкривати цей файл у майбутньому, збережіть його ще раз.</translation>
     </message>
     <message>
         <location filename="../src/file_format_native.cpp" line="136"/>
@@ -2047,7 +2047,7 @@
     <message>
         <location filename="../src/file_format_native.cpp" line="200"/>
         <source>The geographic coordinate reference system of the map was &quot;%1&quot;. This CRS is not supported. Using &quot;%2&quot;.</source>
-        <translation type="unfinished">Була використана базова система географічних координат карти &quot;%1&quot;. Ця система не підтримується. Застосовано &quot;%2&quot;.</translation>
+        <translation type="unfinished">Використовувалась система прив’язки географічних координат карти &quot;%1&quot;. Ця система не підтримується. Застосовано &quot;%2&quot;.</translation>
     </message>
     <message>
         <location filename="../src/file_format_native.cpp" line="319"/>
@@ -2402,17 +2402,17 @@
     <message>
         <location filename="../src/template_track.cpp" line="541"/>
         <source>One coordinate unit equals:</source>
-        <translation type="unfinished">Одна одиниця координат дорівнює:</translation>
+        <translation type="unfinished">Одна одиниця координат орівнює:</translation>
     </message>
     <message>
         <location filename="../src/template_track.cpp" line="543"/>
         <source>Position track at given coordinates</source>
-        <translation type="unfinished">Розмістити трек у отриманих координатах</translation>
+        <translation type="unfinished">Позиціонувати трек у отриманих координатах</translation>
     </message>
     <message>
         <location filename="../src/template_track.cpp" line="547"/>
         <source>Position track at view center</source>
-        <translation type="unfinished">Розмістити трек у центрі екрану</translation>
+        <translation type="unfinished">Позиціонувати трек у центрі екрану</translation>
     </message>
 </context>
 <context>
@@ -2493,7 +2493,7 @@
     <message>
         <location filename="../src/gui/main_window.cpp" line="255"/>
         <source>Ctrl+Shift+S</source>
-        <translation></translation>
+        <translation>Ctrl+Shift+S</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="261"/>
@@ -2529,7 +2529,7 @@
     <message>
         <location filename="../src/gui/main_window.cpp" line="302"/>
         <source>General</source>
-        <translation type="unfinished">Загальне</translation>
+        <translation type="unfinished">Основне</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="317"/>
@@ -2594,7 +2594,7 @@ Do you want to save your changes?</source>
         <source>The selected map scale is 1:%1, but the chosen symbol set has a nominal scale of 1:%2.
 
 Do you want to scale the symbols to the selected scale?</source>
-        <translation type="unfinished">Обраний масштаб карти 1:%1, але вибраний набір знакві має масштаб 1:%2.
+        <translation type="unfinished">Обратий масштаб карти 1:%1, але вибраний набір знакві має масштаб 1:%2.
 
 Ви хочете масштабувати набір знаків до обраного масштабу?</translation>
     </message>
@@ -2660,7 +2660,7 @@ Do you want to discard your changes?</source>
     <message>
         <location filename="../src/gui/main_window.cpp" line="852"/>
         <source>&amp;%1 %2</source>
-        <translation></translation>
+        <translation>&amp;%1 %2</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="931"/>
@@ -2668,7 +2668,7 @@ Do you want to discard your changes?</source>
 
 Press Yes to save in this format.
 Press No to choose a different format.</source>
-        <translation type="unfinished">Цю карту буде збережено як &quot;%1&quot; файл.Частина інформації може бути втрачена.
+        <translation type="unfinished">Цю карту буде збережено як &quot;%1&quot; файл. Інформація може бути втрачена.
 
 Натисніть Так для збереження в цьому форматі.
 Натисніть Ні щоб обрати інший формат.</translation>
@@ -2686,12 +2686,12 @@ Press No to choose a different format.</source>
     <message>
         <location filename="../src/gui/main_window.cpp" line="1046"/>
         <source>There was a problem in determining the file format.</source>
-        <translation type="unfinished">Виникла проблема при визначенні формату файла.</translation>
+        <translation>Проблема у визначеному форматі файлу.</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="1047"/>
         <source>Please report this as a bug.</source>
-        <translation type="unfinished">Будь ласка повідомте про цю помилку.</translation>
+        <translation>Будь-ласка повідомте про цю помилку.</translation>
     </message>
 </context>
 <context>
@@ -3199,7 +3199,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="1082"/>
         <source>View</source>
-        <translation type="unfinished">Перегляд</translation>
+        <translation>Перегляд</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1132"/>
@@ -3235,7 +3235,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="1451"/>
         <source>No undo steps available.</source>
-        <translation>Попередні кроки відсутні.</translation>
+        <translation>Відсутні попередні кроки.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1464"/>
@@ -3246,7 +3246,7 @@ Rescale the imported data?</source>
         <location filename="../src/map_editor.cpp" line="1508"/>
         <location filename="../src/map_editor.cpp" line="1541"/>
         <source>An internal error occurred, sorry!</source>
-        <translation>Внутрішня непередбачена помилка, вибачайте!</translation>
+        <translation>Внутрішня непередбачена помилка, вибачте!</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1519"/>
@@ -3385,17 +3385,17 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="763"/>
         <source>&amp;PDF</source>
-        <translation></translation>
+        <translation>&amp;PDF</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="781"/>
         <source>Clear undo / redo history</source>
-        <translation>Очистити історію відмін / повернень</translation>
+        <translation>Очистити історию відмін / повернень</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="781"/>
         <source>Clear the undo / redo history to reduce map file size.</source>
-        <translation>Очистити історію відмін / повернень щоб зменшити розмір файла.</translation>
+        <translation>Очистити історию відмін / повернень щоб зменшити розмір файла.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="788"/>
@@ -3405,7 +3405,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="798"/>
         <source>Overprinting simulation</source>
-        <translation>Емулювати overprinting</translation>
+        <translation>Емулювати Overprinting</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="802"/>
@@ -3480,7 +3480,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="870"/>
         <source>Paint on template settings</source>
-        <translation>Настройки малювання по підложці</translation>
+        <translation type="unfinished">Налаштування малювання по підложці</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="876"/>
@@ -3495,7 +3495,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="879"/>
         <source>Enable GPS distance rings</source>
-        <translation type="unfinished">Показувати кільце відстані GPS</translation>
+        <translation type="unfinished">Показувати кльце відстані GPS</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="881"/>
@@ -3526,6 +3526,10 @@ Rescale the imported data?</source>
         <location filename="../src/map_editor.cpp" line="891"/>
         <source>Align map with north</source>
         <translation type="unfinished">Вирівняти карту по півночі</translation>
+    </message>
+    <message>
+        <source>Toggle template visibility</source>
+        <translation type="obsolete">Переключити видимість підложки</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="893"/>
@@ -3699,7 +3703,7 @@ selected</source>
     <message>
         <location filename="../src/map_editor.cpp" line="778"/>
         <source>Select nothing</source>
-        <translation type="unfinished">Нічого не вибрати</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="779"/>
@@ -3714,7 +3718,7 @@ selected</source>
     <message>
         <location filename="../src/map_editor.cpp" line="2125"/>
         <source>Turn paths made of straight segments into smooth bezier splines.</source>
-        <translation type="unfinished">Перетворити лінії з прямих відрізків на згладжені криві Безьє.</translation>
+        <translation type="unfinished">Включити лінії складені з прямих відрізків всередині кривих Безьє.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2125"/>
@@ -3740,7 +3744,7 @@ selected</source>
     <message>
         <location filename="../src/map_editor.cpp" line="2146"/>
         <source>Unify overlapping objects.</source>
-        <translation>Об&apos;єднати об&apos;єкти що перекриваються.</translation>
+        <translation type="unfinished">Об&apos;єднати об&apos;єкти що перекриваються.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2148"/>
@@ -3781,7 +3785,7 @@ selected</source>
     <message>
         <location filename="../src/map_editor.cpp" line="2163"/>
         <source>Cut away some objects or everything in a limited area.</source>
-        <translation type="unfinished">Відрізати деякі або всі об&apos;єкти в обмежаній області.</translation>
+        <translation type="unfinished">Відрізати деякі або всі об&apos;єкти в обмежаній убласті.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2188"/>
@@ -3792,7 +3796,7 @@ selected</source>
         <location filename="../src/map_editor.cpp" line="2188"/>
         <location filename="../src/map_editor.cpp" line="2190"/>
         <source>Select at least one object and a fitting, different symbol to activate this tool.</source>
-        <translation type="unfinished">Виділіть хоч один об’єкт та підходящий, відмінний знак щоб використати цей інструмент.</translation>
+        <translation type="unfinished">Виділіть хоч один об’єкт та підходящий, інший знак щоб використати цей інструмент.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2190"/>
@@ -3914,7 +3918,7 @@ selected</source>
     <message>
         <location filename="../src/map_editor.cpp" line="3704"/>
         <source>Importable files</source>
-        <translation type="unfinished">Файли що імпортуються</translation>
+        <translation type="unfinished">Імпортовані файли</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="3706"/>
@@ -4390,58 +4394,58 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="759"/>
         <source>During import of text symbol %1: ignoring custom weight (%2)</source>
-        <translation type="unfinished">Під час імпорту текстового знаку %1: проігноровано користувацький якір (%2)</translation>
+        <translation>Під час імпорту текстового знаку %1: проігноровано нестандартну ширину (%2)</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="764"/>
         <source>During import of text symbol %1: custom character spacing is set, its implementation does not match OCAD&apos;s behavior yet</source>
-        <translation type="unfinished">Під час імпорту текстового знаку %1: встановлен користувацький міжсимвольний інтервал, його реалізація покищо не сумісна з поведінкою OCAD</translation>
+        <translation>Під час імпорту текстового знаку %1: встановлено нестандартний міжсимвольний інтервал, його реалізація покищо не сумісна з OCAD</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="769"/>
         <source>During import of text symbol %1: ignoring custom word spacing (%2%)</source>
-        <translation type="unfinished">Під час імпорту текстового знаку %1: проігноровано користувацький інтервал між словами (%2%)</translation>
+        <translation>Під час імпорту текстового знаку %1: проігноровано нестандартний інтервал між словами (%2%)</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="774"/>
         <source>During import of text symbol %1: ignoring custom indents (%2/%3)</source>
-        <translation type="unfinished">Під час імпорту текстового знаку %1: проігноровано користувацькі відступи (%2/%3)</translation>
+        <translation>Під час імпорту текстового знаку %1: проігноровано нестандартні відступи (%2/%3)</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="795"/>
         <source>During import of text symbol %1: ignoring text framing (mode %2)</source>
-        <translation type="unfinished">Під час імпорту текстового знаку %1: проігноровано обрамлення тексту (значення %2)</translation>
+        <translation>Під час імпорту текстового знаку %1: проігноровано обрамлення тексту (значення %2)</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="949"/>
         <source>Unable to load object</source>
-        <translation type="unfinished">Неможливо завантажити об&apos;єкт</translation>
+        <translation>Неможливо завантажити об&apos;єкт</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="956"/>
         <source>Unable to import rectangle object</source>
-        <translation type="unfinished">Неможливо імпортувати прямокутний об&apos;єкт</translation>
+        <translation>Неможливо імпортувати прямокутний об&apos;єкт</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="1003"/>
         <source>Not importing text symbol, couldn&apos;t figure out path&apos; (npts=%1): %2</source>
-        <translation type="unfinished">Не імпортовано текстовий знак, невдається відобразити зовнішній шлях&apos; (npts=%1): %2</translation>
+        <translation>Текстовий знак не імпортовано, невдається відобразити зовнішній шлях&apos; (npts=%1): %2</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="1195"/>
         <location filename="../src/file_format_ocad8.cpp" line="1303"/>
         <source>Unable to import template: background &quot;%1&quot; doesn&apos;t seem to be a raster image</source>
-        <translation type="unfinished">Неможливо імпортувати підложку: схоже що фон &quot;%1&quot; не є растровим зображенням</translation>
+        <translation>Неможливо імпортувати підложку: схоже що фон &quot;%1&quot; не є растровим зображенням</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="1408"/>
         <source>Trying to import a text object with unknown coordinate format</source>
-        <translation type="unfinished">Спроба імпортувати текстовий об&apos;єкт з невідомим форматом координат</translation>
+        <translation>Спроба імпортувати текстовий об&apos;єкт з невідомим форматом координат</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="1507"/>
         <source>Color id not found: %1, ignoring this color</source>
-        <translation type="unfinished">Ідентифікатор кольору не знайдено: %1, цей колір проігноровано</translation>
+        <translation>Ідентифікатор кольору не знайдено: %1, цей колір проігноровано</translation>
     </message>
 </context>
 <context>
@@ -4449,162 +4453,162 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="104"/>
         <source>In line symbol %1 &apos;%2&apos;: %3</source>
-        <translation type="unfinished">У лінійному знаці %1 &apos;%2&apos;: %3</translation>
+        <translation>У лінійному знаку %1 &apos;%2&apos;: %3</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="112"/>
         <source>In text symbol %1 &apos;%2&apos;: %3</source>
-        <translation type="unfinished">У текстовому знаці %1 &apos;%2&apos;: %3</translation>
+        <translation>У текстовому знаку %1 &apos;%2&apos;: %3</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="313"/>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="326"/>
         <source>Spot color information was ignored.</source>
-        <translation type="unfinished">Інформація про планшетні кольори проігнорована.</translation>
+        <translation>Інформація про планшетні кольори проігнорована.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="445"/>
         <source>Unable to import symbol %1.%2 &quot;%3&quot;: %4</source>
-        <translation type="unfinished">Неможливо імпортувати знак %1.%2 &quot;%3&quot;: %4</translation>
+        <translation>Неможливо імпортувати знак %1.%2 &quot;%3&quot;: %4</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="449"/>
         <source>Unsupported type &quot;%1&quot;.</source>
-        <translation type="unfinished">Непідтримуваний шрифт &quot;%1&quot;.</translation>
+        <translation>Непідтримуваний шрифт &quot;%1&quot;.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="530"/>
         <source>Unable to import template: &quot;%1&quot; is not a supported template type.</source>
-        <translation type="unfinished">Неможливо імпортувати підложку: підложки типу &quot;%1&quot; не підтримуються.</translation>
+        <translation>Неможливо імпортувати підложку: підложки типу &quot;%1&quot; не підтримуються.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="798"/>
         <source>Unsupported line style &apos;%1&apos;.</source>
-        <translation type="unfinished">Непідтримуваний стиль лінії &apos;%1&apos;.</translation>
+        <translation>Непідтримуваний стиль лінії &apos;%1&apos;.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="810"/>
         <source>Different lengths for pointed caps at begin (%1 mm) and end (%2 mm) are not supported. Using %3 mm.</source>
-        <translation type="unfinished">Різні довжини загострень на початку (%1 мм) і кінці (%2 мм) лінії - не підтримуються. Буде використано %3 мм.</translation>
+        <translation>Різні довжини загострень на початку (%1 мм) і кінці (%2 мм) лінії - не підтримуються. Буде використано %3 мм.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="826"/>
         <source>The dash pattern cannot be imported correctly.</source>
-        <translation type="unfinished">Штриховий візерунок неможливо імпортувати корректно.</translation>
+        <translation>Штриховий візерунок неможливо імпортувати коректно.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="841"/>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="873"/>
         <source>The dash pattern&apos;s end length (%1 mm) cannot be imported correctly. Using %2 mm.</source>
-        <translation type="unfinished">Довжина кінцевого штриха у візерунку (%1 мм) не може бути корректно імпортована. Буде використано %2 мм.</translation>
+        <translation>Довжина кінцевого штриха у візерунку (%1 мм) не може бути коректно імпортована. Буде використано %2 мм.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="848"/>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="888"/>
         <source>The dash pattern&apos;s end gap (%1 mm) cannot be imported correctly. Using %2 mm.</source>
-        <translation type="unfinished">Відстань до кінцевого штриха у візерунку (%1 мм) не може бути корректно імпортована. Буде використано %2 мм.</translation>
+        <translation>Відстань до кінцевого штриха у візерунку (%1 мм) не може бути коректно імпортована. Буде використано %2 мм.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="932"/>
         <source>Unsupported framing line style &apos;%1&apos;.</source>
-        <translation type="unfinished">Непідтримуваний стиль лінії обрамлення &apos;%1&apos;.</translation>
+        <translation>Непідтримуваний стиль лінії обрамлення &apos;%1&apos;.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="1020"/>
         <source>Skipped secondary point symbol.</source>
-        <translation type="unfinished">Пропущено вторинний точковий знак.</translation>
+        <translation>Пропущено вторинний точковий знак.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="1055"/>
         <source>Suppressing dash symbol at line ends.</source>
-        <translation type="unfinished">Подавлення знаків на кінцях відрізку.</translation>
+        <translation>Подавляти знаки на кінцях відрізку.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="1092"/>
         <source>This symbol cannot be saved as a proper OCD symbol again.</source>
-        <translation type="unfinished">Цей знак но може бути збережений як правильний знак OCD.</translation>
+        <translation>Цей знак не може бути збережений як правильний знак OCD.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="1201"/>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="1290"/>
         <source>Justified alignment is not supported.</source>
-        <translation type="unfinished">Вирівнювання по ширині не підтримується.</translation>
+        <translation>Вирівнювання по ширині не підтримується.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="1212"/>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="1301"/>
         <source>Vertical alignment &apos;%1&apos; is not supported.</source>
-        <translation type="unfinished">Вирівнювання по висоті &apos;%1&apos; не підтримується.</translation>
+        <translation>Вирівнювання по висоті &apos;%1&apos; не підтримується.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="1218"/>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="1307"/>
         <source>Ignoring custom weight (%1).</source>
-        <translation type="unfinished">Проігноровано користувацьку вагу (%1).</translation>
+        <translation type="unfinished">Проігноровано нестандартну ширину (%1).</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="1222"/>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="1311"/>
         <source>Custom character spacing may be incorrect.</source>
-        <translation type="unfinished">Можливо, некорректний користувацький міжсимвольний інтервал.</translation>
+        <translation type="unfinished">Нестандартний міжсимвольний інтервал може відображатись некоректно.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="1226"/>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="1315"/>
         <source>Ignoring custom word spacing (%1 %).</source>
-        <translation type="unfinished">Проігноровано користувацький міжслівний інтервал (%1 %).</translation>
+        <translation>Проігноровано нестандартний міжслівний інтервал (%1 %).</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="1230"/>
         <source>Ignoring custom indents (%1/%2).</source>
-        <translation type="unfinished">Проігноровано користувацькі відступи (%1/%2).</translation>
+        <translation>Проігноровано нестандартні відступи (%1/%2).</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="1250"/>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="1335"/>
         <source>Ignoring text framing (mode %1).</source>
-        <translation type="unfinished">Проігноровано фарматування тексту (режим %1).</translation>
+        <translation>Проігноровано фарматування тексту (режим %1).</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="1341"/>
         <source>Line text symbols are not yet supported. Marking the symbol as hidden.</source>
-        <translation type="unfinished">Знаки лінійного нексту покищо не підтримуються. Цей знак приховано.</translation>
+        <translation>Лінійні текстові знаки покищо не підтримуються. Цей знак приховано.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="1529"/>
         <source>Unable to load object</source>
-        <translation type="unfinished">Неможливо завантажити об&apos;єкт</translation>
+        <translation>Неможливо завантажити об&apos;єкт</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="1539"/>
         <source>Unable to import rectangle object</source>
-        <translation type="unfinished">Неможливо імпортувати прямокутний об&apos;єкт</translation>
+        <translation>Неможливо імпортувати прямокутний об&apos;єкт</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="1580"/>
         <source>Not importing text symbol, couldn&apos;t figure out path&apos; (npts=%1): %2</source>
-        <translation type="unfinished">Не імпортовано текстовий знак, невдається відобразити зовнішній шлях (npts=%1): %2</translation>
+        <translation type="unfinished">Не імпортовано текстовий знак, невдається відобразити зовнішній контур (npts=%1): %2</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="1856"/>
         <source>Trying to import a text object with unknown coordinate format</source>
-        <translation type="unfinished">Спроба імпортувати текстовий об&apos;єкт з невідомим форматом координат</translation>
+        <translation>Спроба імпортувати текстовий об&apos;єкт з невідомим форматом координат</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="1877"/>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="1881"/>
         <source>Invalid data.</source>
-        <translation type="unfinished">Недійсні дані.</translation>
+        <translation>Недійсні дані.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="1891"/>
         <source>Untested file importer for format: OCD %1</source>
-        <translation type="unfinished">Неперевірений імпортер для формату: OCD %1</translation>
+        <translation>Неперевірений імпортер для формату: OCD %1</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="1913"/>
         <source>OCD files of version %1 are not supported!</source>
-        <translation type="unfinished">OCD файли версії %1 не підтримуються!</translation>
+        <translation>OCD файли версії %1 не підтримуються!</translation>
     </message>
 </context>
 <context>
@@ -4630,7 +4634,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/template_tool_paint.cpp" line="58"/>
         <source>&lt;b&gt;Click and drag&lt;/b&gt;: Paint. &lt;b&gt;Right click and drag&lt;/b&gt;: Erase. </source>
-        <translation type="unfinished">&lt;b&gt;Кілкніть і тягніть&lt;/b&gt; щоб малювати. &lt;b&gt;Правий клік і тягніть&lt;/b&gt; щоб витерти. </translation>
+        <translation>&lt;b&gt;Клікніть і тягніть&lt;/b&gt; щоб малювати. &lt;b&gt;Правий клік і тягніть&lt;/b&gt; щоб витерти. </translation>
     </message>
     <message>
         <location filename="../src/template_tool_paint.cpp" line="61"/>
@@ -4660,7 +4664,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="967"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Add a coordinate. &lt;b&gt;%1+Click&lt;/b&gt;: Change the selected coordinate. </source>
-        <translation type="unfinished">&lt;b&gt;Click&lt;/b&gt;: Додати координату. &lt;b&gt;%1+Click&lt;/b&gt;: Змінити вибрану координату. </translation>
+        <translation>&lt;b&gt;Клік&lt;/b&gt;: Додати координату. &lt;b&gt;%1+Клік&lt;/b&gt;: Змінити вибрану координату. </translation>
     </message>
 </context>
 <context>
@@ -4956,7 +4960,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="135"/>
         <source>Map area:</source>
-        <translation type="unfinished">Вся карта:</translation>
+        <translation>Область друку карти:</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="137"/>
@@ -5099,7 +5103,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1136"/>
         <source>Failed to prepare the PDF export.</source>
-        <translation type="unfinished">Не вдалося підготувати експорт в PDF.</translation>
+        <translation>Не вдалося підготувати експорт в PDF.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1146"/>
@@ -5128,12 +5132,12 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1185"/>
         <source>Failed to prepare the printing.</source>
-        <translation type="unfinished">Підготовка до друку зазнала невдачі.</translation>
+        <translation>Підготовка до друку зазнала невдачі.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1194"/>
         <source>Printing Progress</source>
-        <translation type="unfinished">Друкується</translation>
+        <translation>Друкується</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1025"/>
@@ -5178,7 +5182,7 @@ separations</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1102"/>
         <source>Failed to prepare the image. Not enough memory.</source>
-        <translation type="unfinished">Не вдалося підготувати зображення. Не достатньо пам&apos;яті.</translation>
+        <translation>Не вдалося підготувати зображення. Не достатньо пам&apos;яті.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1121"/>
@@ -5205,24 +5209,24 @@ separations</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1212"/>
         <source>The print job could not be stopped.</source>
-        <translation type="unfinished">Неможливо зупинити друк.</translation>
+        <translation>Неможливо зупинити друк.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1203"/>
         <source>Successfully created print job</source>
-        <translation type="unfinished">Успішно сформовано задачу друку</translation>
+        <translation>Задачу друку успішно сформовано</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1260"/>
         <location filename="../src/gui/print_widget.cpp" line="1268"/>
         <source>Unknown</source>
         <comment>Paper size</comment>
-        <translation type="unfinished">Незрозумілий</translation>
+        <translation>Незрозумілий</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1276"/>
         <source>The map area is empty. Output canceled.</source>
-        <translation type="unfinished">Область друку поржня. Вивід скасовано.</translation>
+        <translation>Область друку поржня. Вивід скасовано.</translation>
     </message>
 </context>
 <context>
@@ -5304,7 +5308,7 @@ separations</source>
     <message>
         <location filename="../src/symbol_dialog_replace.cpp" line="55"/>
         <source>Symbol mapping:</source>
-        <translation type="unfinished">Відображення знаків:</translation>
+        <translation>Відображення знаків:</translation>
     </message>
     <message>
         <location filename="../src/symbol_dialog_replace.cpp" line="56"/>
@@ -5344,7 +5348,7 @@ separations</source>
     <message>
         <location filename="../src/symbol_dialog_replace.cpp" line="335"/>
         <source>Cannot load map file, aborting.</source>
-        <translation type="unfinished">Неможливо завантажити файл карти, перепвано.</translation>
+        <translation>Неможливо завантажити файл карти, перепвано.</translation>
     </message>
     <message>
         <location filename="../src/symbol_dialog_replace.cpp" line="341"/>
@@ -5428,12 +5432,12 @@ separations</source>
     <message>
         <location filename="../src/map_dialog_rotate.cpp" line="72"/>
         <source>Adjust georeferencing reference point</source>
-        <translation type="unfinished">Підігнати опорну точку геоприв&apos;язки</translation>
+        <translation>Підігнати опорну точку геоприв&apos;язки</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_rotate.cpp" line="79"/>
         <source>Adjust georeferencing declination</source>
-        <translation type="unfinished">Підігнати геоприв&apos;язане схилення</translation>
+        <translation>Підігнати геоприв&apos;язане схилення</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_rotate.cpp" line="86"/>
@@ -5475,7 +5479,7 @@ separations</source>
         <location filename="../src/tool_rotate.cpp" line="190"/>
         <location filename="../src/tool_rotate.cpp" line="194"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set the center of rotation. </source>
-        <translation>&lt;b&gt;Click&lt;/b&gt;: Задати центр обертання. </translation>
+        <translation>&lt;b&gt;Клік&lt;/b&gt;: Задати центр обертання. </translation>
     </message>
     <message>
         <location filename="../src/tool_rotate.cpp" line="195"/>
@@ -5515,7 +5519,7 @@ separations</source>
         <location filename="../src/map_dialog_scale.cpp" line="52"/>
         <source>Georeferencing reference point</source>
         <comment>Scaling center point</comment>
-        <translation type="unfinished">Опорна точка геоприв&apos;язки</translation>
+        <translation>Опорна точка геоприв&apos;язки</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_scale.cpp" line="57"/>
@@ -5578,12 +5582,12 @@ separations</source>
         <location filename="../src/tool_scale.cpp" line="202"/>
         <location filename="../src/tool_scale.cpp" line="204"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set the scaling center. </source>
-        <translation type="unfinished">&lt;b&gt;Click&lt;/b&gt;: Задати центр масштабування. </translation>
+        <translation>&lt;b&gt;Клік&lt;/b&gt;: Задати центр масштабування. </translation>
     </message>
     <message>
         <location filename="../src/tool_scale.cpp" line="205"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Scale the selected objects. </source>
-        <translation type="unfinished">&lt;b&gt;Потягніть&lt;/b&gt; щоб масштабувати вибраний об&apos;єкт.</translation>
+        <translation>&lt;b&gt;Потягніть&lt;/b&gt; щоб масштабувати вибраний об&apos;єкт.</translation>
     </message>
 </context>
 <context>
@@ -5591,32 +5595,32 @@ separations</source>
     <message>
         <location filename="../src/gui/select_crs_dialog.cpp" line="54"/>
         <source>Select coordinate reference system</source>
-        <translation type="unfinished">Виберіть відносну систему координат</translation>
+        <translation type="unfinished">Виберіть базову систему координат</translation>
     </message>
     <message>
         <location filename="../src/gui/select_crs_dialog.cpp" line="62"/>
         <source>Same as map</source>
-        <translation type="unfinished">Так само як на карті</translation>
+        <translation>Так само як на карті</translation>
     </message>
     <message>
         <location filename="../src/gui/select_crs_dialog.cpp" line="68"/>
         <source>Local</source>
-        <translation type="unfinished">Локально</translation>
+        <translation>Локально</translation>
     </message>
     <message>
         <location filename="../src/gui/select_crs_dialog.cpp" line="73"/>
         <source>Geographic coordinates (WGS84)</source>
-        <translation type="unfinished">Географічні координати (WGS84)</translation>
+        <translation>Географічні координати (WGS84)</translation>
     </message>
     <message>
         <location filename="../src/gui/select_crs_dialog.cpp" line="85"/>
         <source>Status:</source>
-        <translation type="unfinished">Статус:</translation>
+        <translation>Статус:</translation>
     </message>
     <message>
         <location filename="../src/gui/select_crs_dialog.cpp" line="130"/>
         <source>valid</source>
-        <translation type="unfinished">дійсне</translation>
+        <translation>дійсне</translation>
     </message>
 </context>
 <context>
@@ -5640,7 +5644,7 @@ separations</source>
     <message>
         <location filename="../src/gui/widgets/symbol_dropdown.cpp" line="144"/>
         <source>- None -</source>
-        <translation type="unfinished">- Немає -</translation>
+        <translation>- Немає -</translation>
     </message>
 </context>
 <context>
@@ -5663,7 +5667,7 @@ separations</source>
     <message>
         <location filename="../src/symbol_properties_widget.cpp" line="52"/>
         <source>Helper symbol (not shown in finished map)</source>
-        <translation type="unfinished">Допоміжний знак (не відображатиметься на кінцевій карті)</translation>
+        <translation>Допоміжний знак (не відображатиметься на кінцевій карті)</translation>
     </message>
     <message>
         <location filename="../src/symbol_properties_widget.cpp" line="87"/>
@@ -5676,32 +5680,32 @@ separations</source>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="223"/>
         <source>For symbols with description, press F1 while the tooltip is visible to show it</source>
-        <translation type="unfinished">Для знаків з описом, натисніть F1 щоб переглянути підказку</translation>
+        <translation>Для знаків з описом, натисніть F1 щоб переглянути підказку</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="227"/>
         <source>New symbol</source>
-        <translation type="unfinished">Новий знак</translation>
+        <translation>Новий знак</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="229"/>
         <source>Point</source>
-        <translation type="unfinished">Точка</translation>
+        <translation>Точка</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="230"/>
         <source>Line</source>
-        <translation type="unfinished">Лінія</translation>
+        <translation>Лінія</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="231"/>
         <source>Area</source>
-        <translation type="unfinished">Площа</translation>
+        <translation>Площа</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="232"/>
         <source>Text</source>
-        <translation type="unfinished">Текст</translation>
+        <translation>Текст</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="233"/>
@@ -5711,90 +5715,90 @@ separations</source>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="236"/>
         <source>Edit</source>
-        <translation type="unfinished">Редагувати</translation>
+        <translation>Редагувати</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="237"/>
         <source>Duplicate</source>
-        <translation type="unfinished">Дублювати</translation>
+        <translation>Дублювати</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="238"/>
         <source>Delete</source>
-        <translation type="unfinished">Видалити</translation>
+        <translation>Видалити</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="239"/>
         <source>Scale...</source>
-        <translation type="unfinished">Масштаб...</translation>
+        <translation>Масштаб...</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="241"/>
         <source>Copy</source>
-        <translation type="unfinished">Копіювати</translation>
+        <translation>Копіювати</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="242"/>
         <source>Paste</source>
-        <translation type="unfinished">Вставити</translation>
+        <translation>Вставити</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="244"/>
         <source>Switch symbol of selected object(s)</source>
-        <translation type="unfinished">Замінити знак для виділеного об&apos;єкту(ів)</translation>
+        <translation>Замінити знак для виділеного об&apos;єкту(ів)</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="245"/>
         <source>Fill / Create border for selected object(s)</source>
-        <translation type="unfinished">Заповнити / Створити границию для обраного об&apos;єкту(ів)</translation>
+        <translation>Заповнити / Створити границию для обраного об&apos;єкту(ів)</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="257"/>
         <source>Select symbols</source>
-        <translation type="unfinished">Виділити знаки</translation>
+        <translation>Виділити знаки</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="268"/>
         <source>Enable drag and drop</source>
-        <translation type="unfinished">Дозволити drag and drop</translation>
+        <translation>Дозволити drag and drop</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="965"/>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="980"/>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="993"/>
         <source>Error</source>
-        <translation type="unfinished">Помилка</translation>
+        <translation>Помилка</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="965"/>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="993"/>
         <source>An internal error occurred, sorry!</source>
-        <translation type="unfinished">Внутрішня непередбачена помилка, вибачте!</translation>
+        <translation>Внутрішня непередбачена помилка, вибачте!</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="980"/>
         <source>There are no symbols in clipboard which could be pasted!</source>
-        <translation type="unfinished">У буфері обміну немає знаків які можна було б вставити!</translation>
+        <translation>У буфері обміну немає знаків які можна було б вставити!</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1149"/>
         <source>Select all objects with this symbol</source>
-        <translation type="unfinished">Виділити усі об’єкти з цим знаком</translation>
+        <translation>Виділити усі об’єкти з цим знаком</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1151"/>
         <source>Remove all objects with this symbol from selection</source>
-        <translation type="unfinished">Видалити всі об&apos;єкти цього знаку з виділення</translation>
+        <translation>Видалити всі об&apos;єкти цього знаку з виділення</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1152"/>
         <source>Hide objects with this symbol</source>
-        <translation type="unfinished">Приховати об&apos;єкти з цим знаком</translation>
+        <translation>Приховати об&apos;єкти з цим знаком</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1153"/>
         <source>Protect objects with this symbol</source>
-        <translation type="unfinished">Захистити об&apos;єкти з цим знаком</translation>
+        <translation>Захистити об&apos;єкти з цим знаком</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1158"/>
@@ -5804,22 +5808,22 @@ separations</source>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1159"/>
         <source>Remove all objects with selected symbols from selection</source>
-        <translation type="unfinished">Видалити всі об&apos;єкти обраного знаку з виділення</translation>
+        <translation>Видалити всі об&apos;єкти обраного знаку з виділення</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1160"/>
         <source>Hide objects with selected symbols</source>
-        <translation type="unfinished">Приховати об’єкти виділеного знаку</translation>
+        <translation>Приховати об’єкти виділеного знаку</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1161"/>
         <source>Protect objects with selected symbols</source>
-        <translation type="unfinished">Захистити об’єкти з виділеного знаку</translation>
+        <translation>Захистити об’єкти з виділеного знаку</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="261"/>
         <source>Invert selection</source>
-        <translation type="unfinished">Інвертувати вибір</translation>
+        <translation>Інвертувати вибір</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="218"/>
@@ -5830,27 +5834,27 @@ separations</source>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="258"/>
         <source>Select all</source>
-        <translation type="unfinished">Вибрати всі</translation>
+        <translation>Вибрати всі</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="259"/>
         <source>Select unused</source>
-        <translation type="unfinished">Вибрати ті що не використовуються</translation>
+        <translation>Вибрати ті що не використовуються</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="264"/>
         <source>Sort symbols</source>
-        <translation type="unfinished">Сортувати знаки</translation>
+        <translation>Сортувати знаки</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="265"/>
         <source>Sort by number</source>
-        <translation type="unfinished">Сортувати за номером</translation>
+        <translation>Сортувати за номером</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="266"/>
         <source>Sort by primary color</source>
-        <translation type="unfinished">Сортувати за головним кольором</translation>
+        <translation>Сортувати за головним кольором</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="267"/>
@@ -5860,33 +5864,33 @@ separations</source>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="896"/>
         <source>Scale to percentage:</source>
-        <translation type="unfinished">Масштабувати у відсотках:</translation>
+        <translation>Масштабувати у відсотках:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="896"/>
         <source>Scale symbol(s)</source>
-        <translation type="unfinished">Масштабувати знак(и)</translation>
+        <translation>Масштабувати знак(и)</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="927"/>
         <source>Confirmation</source>
-        <translation type="unfinished">Підтвердження</translation>
+        <translation>Підтвердження</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="927"/>
         <source>The map contains objects with the symbol &quot;%1&quot;. Deleting it will delete those objects and clear the undo history! Do you really want to do that?</source>
-        <translation type="unfinished">Карта містить об&apos;єкти з знаком &quot;%1&quot;. Видалення знаку призведе до видалення цих об&apos;єктів і очистки історії попередніх кроків! Ви впевнені що хочете зробити це?</translation>
+        <translation>Карта містить об&apos;єкти з знаком &quot;%1&quot;. Видалення знаку призведе до видалення цих об&apos;єктів і очистки історії попередніх кроків! Ви впевнені що хочете зробити це?</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1150"/>
         <source>Add all objects with this symbol to selection</source>
-        <translation type="unfinished">Додати всі об&apos;єкти цього знаку до виділення</translation>
+        <translation>Додати всі об&apos;єкти цього знаку до виділення</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="780"/>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1157"/>
         <source>Select all objects with selected symbols</source>
-        <translation type="unfinished">Виділити всі об’єкти обраного знаку</translation>
+        <translation>Виділити всі об’єкти обраного знаку</translation>
     </message>
 </context>
 <context>
@@ -5894,22 +5898,22 @@ separations</source>
     <message>
         <location filename="../src/symbol_setting_dialog.cpp" line="61"/>
         <source>Symbol settings</source>
-        <translation type="unfinished">Параметри знака</translation>
+        <translation>Параметри знака</translation>
     </message>
     <message>
         <location filename="../src/symbol_setting_dialog.cpp" line="104"/>
         <source>&lt;b&gt;Template:&lt;/b&gt; </source>
-        <translation type="unfinished">&lt;b&gt;Підложка:&lt;/b&gt; </translation>
+        <translation>&lt;b&gt;Підложка:&lt;/b&gt; </translation>
     </message>
     <message>
         <location filename="../src/symbol_setting_dialog.cpp" line="105"/>
         <source>(none)</source>
-        <translation type="unfinished">(немає)</translation>
+        <translation>(немає)</translation>
     </message>
     <message>
         <location filename="../src/symbol_setting_dialog.cpp" line="106"/>
         <source>Open...</source>
-        <translation type="unfinished">Відкрити...</translation>
+        <translation>Відкрити...</translation>
     </message>
     <message>
         <location filename="../src/symbol_setting_dialog.cpp" line="109"/>
@@ -5929,7 +5933,7 @@ separations</source>
     <message>
         <location filename="../src/symbol_setting_dialog.cpp" line="235"/>
         <source>Select background color</source>
-        <translation type="unfinished">Вибрати колір фону</translation>
+        <translation>Вибрати колір фону</translation>
     </message>
     <message>
         <location filename="../src/symbol_setting_dialog.cpp" line="420"/>
@@ -5937,7 +5941,7 @@ separations</source>
 takes the routechoice
 to jump over the lazy dog
 1234567890</source>
-        <translation type="unfinished">The quick brown fox
+        <translation>The quick brown fox
 takes the routechoice
 to jump over the lazy dog
 1234567890
@@ -5962,27 +5966,27 @@ to jump over the lazy dog
     <message>
         <location filename="../src/gui/widgets/tags_widget.cpp" line="53"/>
         <source>Key</source>
-        <translation type="unfinished">Ключ</translation>
+        <translation>Ключ</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tags_widget.cpp" line="53"/>
         <source>Value</source>
-        <translation type="unfinished">Значення</translation>
+        <translation>Значення</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tags_widget.cpp" line="63"/>
         <source>Help</source>
-        <translation type="unfinished">Довідка</translation>
+        <translation>Довідка</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tags_widget.cpp" line="233"/>
         <source>Key exists</source>
-        <translation type="unfinished">Ключ існує</translation>
+        <translation>Ключ існує</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tags_widget.cpp" line="234"/>
         <source>The key &quot;%1&quot; already exists and must not be used twice.</source>
-        <translation type="unfinished">Ключ &quot;%1&quot; вже існує і не можу використовуватись двічи.</translation>
+        <translation type="unfinished">Ключ &quot;%1&quot; вже існує і не може використовуватись двічи.</translation>
     </message>
 </context>
 <context>
@@ -5990,27 +5994,27 @@ to jump over the lazy dog
     <message>
         <location filename="../src/template.cpp" line="393"/>
         <source>Find the moved template file</source>
-        <translation type="unfinished">Знайти переміщений файл підложки</translation>
+        <translation>Знайти переміщений файл підложки</translation>
     </message>
     <message>
         <location filename="../src/template.cpp" line="395"/>
         <source>All files (*.*)</source>
-        <translation type="unfinished">Усі файли (*.*)</translation>
+        <translation>Усі файли (*.*)</translation>
     </message>
     <message>
         <location filename="../src/template.cpp" line="410"/>
         <source>Error</source>
-        <translation type="unfinished">Помилка</translation>
+        <translation>Помилка</translation>
     </message>
     <message>
         <location filename="../src/template.cpp" line="504"/>
         <source>No such file.</source>
-        <translation type="unfinished">Немає такого файлу.</translation>
+        <translation>Немає такого файлу.</translation>
     </message>
     <message>
         <location filename="../src/template.cpp" line="522"/>
         <source>Is the format of the file correct for this template type?</source>
-        <translation type="unfinished">Чи вірний формат цього файлу для такого типу підложок?</translation>
+        <translation>Чи вірний формат цього файлу для такого типу підложок?</translation>
     </message>
 </context>
 <context>
@@ -6018,7 +6022,7 @@ to jump over the lazy dog
     <message>
         <location filename="../src/template_adjust.cpp" line="63"/>
         <source>Template adjustment</source>
-        <translation type="unfinished">Підгонка підложки</translation>
+        <translation>Підгонка підложки</translation>
     </message>
     <message>
         <location filename="../src/template_adjust.cpp" line="140"/>
@@ -6028,7 +6032,7 @@ to jump over the lazy dog
     <message>
         <location filename="../src/template_adjust.cpp" line="140"/>
         <source>Failed to calculate adjustment!</source>
-        <translation type="unfinished">Обахунок підгонки зазнав невдачі!</translation>
+        <translation>Обахунок підгонки зазнав невдачі!</translation>
     </message>
 </context>
 <context>
@@ -6036,12 +6040,12 @@ to jump over the lazy dog
     <message>
         <location filename="../src/template_adjust.cpp" line="572"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set the template position of the pass point. </source>
-        <translation type="unfinished">&lt;b&gt;Click&lt;/b&gt;: Вкажіть характерну точку на підложці.</translation>
+        <translation>&lt;b&gt;Клік&lt;/b&gt;: Вкажіть характерну точку на підложці.</translation>
     </message>
     <message>
         <location filename="../src/template_adjust.cpp" line="597"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set the map position of the pass point. </source>
-        <translation type="unfinished">&lt;b&gt;Click&lt;/b&gt;: Вкажіть відповідну точку на карті.</translation>
+        <translation>&lt;b&gt;Клік&lt;/b&gt;: Вкажіть відповідну точку на карті.</translation>
     </message>
 </context>
 <context>
@@ -6049,7 +6053,7 @@ to jump over the lazy dog
     <message>
         <location filename="../src/template_adjust.cpp" line="806"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Delete pass points. </source>
-        <translation type="unfinished">&lt;b&gt;Click&lt;/b&gt;: Видалити точку суміщення.</translation>
+        <translation>&lt;b&gt;Клік&lt;/b&gt;: Видалити точку суміщення.</translation>
     </message>
 </context>
 <context>
@@ -6057,7 +6061,7 @@ to jump over the lazy dog
     <message>
         <location filename="../src/template_adjust.cpp" line="681"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move pass points. </source>
-        <translation type="unfinished">&lt;b&gt;Потягніть&lt;/b&gt; щоб перемістити точку суміщення.</translation>
+        <translation>&lt;b&gt;Потягніть&lt;/b&gt; щоб перемістити точку суміщення.</translation>
     </message>
 </context>
 <context>
@@ -6085,22 +6089,22 @@ to jump over the lazy dog
     <message>
         <location filename="../src/template_adjust.cpp" line="210"/>
         <source>Template X</source>
-        <translation type="unfinished">Підложка по X</translation>
+        <translation>Підложка по X</translation>
     </message>
     <message>
         <location filename="../src/template_adjust.cpp" line="210"/>
         <source>Template Y</source>
-        <translation type="unfinished">Підложка по Y</translation>
+        <translation>Підложка по Y</translation>
     </message>
     <message>
         <location filename="../src/template_adjust.cpp" line="210"/>
         <source>Map X</source>
-        <translation type="unfinished">Карта по X</translation>
+        <translation>Карта по X</translation>
     </message>
     <message>
         <location filename="../src/template_adjust.cpp" line="210"/>
         <source>Map Y</source>
-        <translation type="unfinished">Карта по Y</translation>
+        <translation>Карта по Y</translation>
     </message>
     <message>
         <location filename="../src/template_adjust.cpp" line="210"/>
@@ -6110,17 +6114,17 @@ to jump over the lazy dog
     <message>
         <location filename="../src/template_adjust.cpp" line="221"/>
         <source>Apply pass points</source>
-        <translation type="unfinished">Сумістити точки</translation>
+        <translation>Сумістити точки</translation>
     </message>
     <message>
         <location filename="../src/template_adjust.cpp" line="223"/>
         <source>Help</source>
-        <translation type="unfinished">Довідка</translation>
+        <translation>Довідка</translation>
     </message>
     <message>
         <location filename="../src/template_adjust.cpp" line="224"/>
         <source>Apply &amp;&amp; clear all</source>
-        <translation type="unfinished">Сумістити &amp;&amp; очистити всі</translation>
+        <translation>Сумістити &amp;&amp; очистити всі</translation>
     </message>
     <message>
         <location filename="../src/template_adjust.cpp" line="225"/>
@@ -6133,7 +6137,7 @@ to jump over the lazy dog
     <message>
         <location filename="../src/template_image.cpp" line="129"/>
         <source>Not enough free memory (image size: %1x%2 pixels)</source>
-        <translation type="unfinished">Не вистачає оперативної пам&apos;яті (розмір зображення: %1x%2 пікселів)</translation>
+        <translation>Не вистачає оперативної пам&apos;яті (розмір зображення: %1x%2 пікселів)</translation>
     </message>
     <message>
         <location filename="../src/template_image.cpp" line="169"/>
@@ -6152,7 +6156,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/template_image.cpp" line="211"/>
         <source>Select the coordinate reference system of the coordinates in the world file</source>
-        <translation type="unfinished">Виберіть відносну систему координат з координат world file-у</translation>
+        <translation type="unfinished">Виберіть базову систему координат для координат у world file-і</translation>
     </message>
 </context>
 <context>
@@ -6160,17 +6164,17 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/template_image.cpp" line="595"/>
         <source>Opening %1</source>
-        <translation type="unfinished">Відкривається %1</translation>
+        <translation>Відкривається %1</translation>
     </message>
     <message>
         <location filename="../src/template_image.cpp" line="597"/>
         <source>Image size:</source>
-        <translation type="unfinished">Розмір зображення:</translation>
+        <translation>Розмір зображення:</translation>
     </message>
     <message>
         <location filename="../src/template_image.cpp" line="600"/>
         <source>Specify how to position or scale the image:</source>
-        <translation type="unfinished">Вкажіть як розмістити і змасштабувати зображення:</translation>
+        <translation>Вкажіть як розмістити і змасштабувати зображення:</translation>
     </message>
     <message>
         <location filename="../src/template_image.cpp" line="610"/>
@@ -6185,12 +6189,12 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/template_image.cpp" line="614"/>
         <source>no georeferencing information</source>
-        <translation type="unfinished">немає інформації щодо геоприв&apos;язки</translation>
+        <translation>немає інформації щодо геоприв&apos;язки</translation>
     </message>
     <message>
         <location filename="../src/template_image.cpp" line="616"/>
         <source>Georeferenced</source>
-        <translation type="unfinished">Геоприв&apos;язка</translation>
+        <translation>Геоприв&apos;язка</translation>
     </message>
     <message>
         <location filename="../src/template_image.cpp" line="620"/>
@@ -6210,7 +6214,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/template_image.cpp" line="629"/>
         <source>Template scale:  1 :</source>
-        <translation type="unfinished">Масштаб підложки:  1 :</translation>
+        <translation>Масштаб підложки:  1 :</translation>
     </message>
     <message>
         <location filename="../src/template_image.cpp" line="655"/>
@@ -6265,16 +6269,16 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="228"/>
         <source>Georeferenced: %1</source>
-        <translation type="unfinished">Геоприв&apos;яка: %1</translation>
+        <translation>Геоприв&apos;язка: %1</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation type="vanished">Видалити</translation>
+        <translation>Видалити</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="212"/>
         <source>Close</source>
-        <translation type="unfinished">Закрити</translation>
+        <translation>Закрити</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="200"/>
@@ -6284,12 +6288,12 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="208"/>
         <source>Add template...</source>
-        <translation type="unfinished">Додати підложку...</translation>
+        <translation>Додати підложку...</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="212"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Видалити</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="218"/>
@@ -6304,7 +6308,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="243"/>
         <source>Import and remove</source>
-        <translation type="unfinished">Імпортувати і видалити</translation>
+        <translation>Імпортувати і видалити</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="275"/>
@@ -6329,17 +6333,17 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="387"/>
         <source>Template files</source>
-        <translation type="unfinished">Файл підложки</translation>
+        <translation>Файл підложки</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="389"/>
         <source>All files</source>
-        <translation type="unfinished">Всі файли</translation>
+        <translation>Всі файли</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="237"/>
         <source>Adjust...</source>
-        <translation type="unfinished">Підігнати...</translation>
+        <translation>Підігнати...</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="402"/>
@@ -6356,22 +6360,22 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="412"/>
         <source>Failed to load template. Does the file exist and is it valid?</source>
-        <translation type="unfinished">Невдале завантаження підложки. Такий файл дійсно існує і він корректний?</translation>
+        <translation>Невдале завантаження підложки. Такий файл дійсно існує і він корректний?</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="711"/>
         <source>Please enter a valid integer number to set a group or leave the field empty to ungroup the template!</source>
-        <translation type="unfinished">Введіть ціле число для встановлення групи або залиште поле пустим щоб розгрупувати підложку!</translation>
+        <translation>Введіть ціле число для встановлення групи або залиште поле пустим щоб розгрупувати підложку!</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="941"/>
         <source>Don&apos;t scale</source>
-        <translation type="unfinished">Не масштабувати</translation>
+        <translation>Не масштабувати</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="936"/>
         <source>Scale by nominal map scale ratio (%1 %)</source>
-        <translation type="unfinished">Масштабувати відносно номінального масштабу карти (%1 %)</translation>
+        <translation>Масштабувати відносно номінального масштабу карти (%1 %)</translation>
     </message>
     <message>
         <location filename="../src/template.cpp" line="406"/>
@@ -6379,29 +6383,29 @@ If you do not intend to draw on this template however, that is no problem.</sour
         <source>Cannot open template
 %1:
 %2</source>
-        <translation type="unfinished">Невдається відкрити підложку
+        <translation>Невдається відкрити підложку
 %1:
 %2</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="938"/>
         <source>Scale by current template scaling (%1 %)</source>
-        <translation type="unfinished">Масштабувати відносно поточного масштабу карти (%1 %)</translation>
+        <translation>Масштабувати відносно поточного масштабу карти (%1 %)</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="943"/>
         <source>Template import</source>
-        <translation type="unfinished">Імпортувати підложку</translation>
+        <translation>Імпортувати підложку</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="944"/>
         <source>How shall the symbols of the imported template map be scaled?</source>
-        <translation type="unfinished">Як слід масштабувати знаки з підложки що імпортується?</translation>
+        <translation>Як слід масштабувати знаки з підложки що імпортується?</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="1036"/>
         <source>- Map -</source>
-        <translation type="unfinished">- Карта -</translation>
+        <translation>- Карта -</translation>
     </message>
 </context>
 <context>
@@ -6409,7 +6413,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/template_tool_move.cpp" line="36"/>
         <source>&lt;b&gt;Drag&lt;/b&gt; to move the current template</source>
-        <translation type="unfinished">&lt;b&gt;Потягніть&lt;/b&gt; для переміщення активної підложки</translation>
+        <translation>&lt;b&gt;Потягніть&lt;/b&gt; для переміщення активної підложки</translation>
     </message>
 </context>
 <context>
@@ -6450,17 +6454,17 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/template_track.cpp" line="145"/>
         <source>Select the coordinate reference system of the track coordinates</source>
-        <translation type="unfinished">Виберіть відносну систему координат для треку</translation>
+        <translation>Виберіть відносну систему координат для треку</translation>
     </message>
     <message>
         <location filename="../src/template_track.cpp" line="163"/>
         <source>Opening track ...</source>
-        <translation type="unfinished">Відкрити трек...</translation>
+        <translation>Відкрити трек...</translation>
     </message>
     <message>
         <location filename="../src/template_track.cpp" line="164"/>
         <source>Load the track in georeferenced or non-georeferenced mode?</source>
-        <translation type="unfinished">Завантажити трек у геоприв&apos;язаному чи негеоприв&apos;язаному режимі?</translation>
+        <translation>Завантажити трек у геоприв&apos;язаному чи негеоприв&apos;язаному режимі?</translation>
     </message>
     <message>
         <location filename="../src/template_track.cpp" line="166"/>
@@ -6470,7 +6474,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/template_track.cpp" line="168"/>
         <source>These are not configured yet, so they will be shown as the next step.</source>
-        <translation type="unfinished">Вони ще не налаштовані, тому будуть показані на наступному кроці.</translation>
+        <translation>Вони ще не налаштовані, тому будуть показані на наступному кроці.</translation>
     </message>
     <message>
         <location filename="../src/template_track.cpp" line="169"/>
@@ -6493,32 +6497,32 @@ If you do not intend to draw on this template however, that is no problem.</sour
         <location filename="../src/gps_track.cpp" line="510"/>
         <location filename="../src/gps_track.cpp" line="515"/>
         <source>Error</source>
-        <translation type="unfinished">Помилка</translation>
+        <translation>Помилка</translation>
     </message>
     <message>
         <location filename="../src/template_track.cpp" line="398"/>
         <source>The path is empty, there is nothing to import!</source>
-        <translation type="unfinished">Контур порожній, немає чого імпортувати!</translation>
+        <translation>Контур порожній, немає чого імпортувати!</translation>
     </message>
     <message>
         <location filename="../src/template_track.cpp" line="411"/>
         <source>Question</source>
-        <translation type="unfinished">Проблема</translation>
+        <translation>Проблема</translation>
     </message>
     <message>
         <location filename="../src/template_track.cpp" line="411"/>
         <source>Should the waypoints be imported as a line going through all points?</source>
-        <translation type="unfinished">Імпортувати точки шляху як лінію, що проходить через всі ці точки?</translation>
+        <translation>Імпортувати точки шляху як лінію, що проходить через всі ці точки?</translation>
     </message>
     <message>
         <location filename="../src/template_track.cpp" line="478"/>
         <source>Import problems</source>
-        <translation type="unfinished">Є проблеми при імпорті</translation>
+        <translation>Є проблеми при імпорті</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/template_track.cpp" line="479"/>
         <source>%n path object(s) could not be imported (reason: missing coordinates).</source>
-        <translation type="unfinished">
+        <translation>
             <numerusform>Неможливо імпортувати %n об&apos;єкт шляху (причина: відсутні координати).</numerusform>
             <numerusform>Неможливо імпортувати %n об&apos;єкти шляху (причина: відсутні координати).</numerusform>
             <numerusform>Неможливо імпортувати %n об&apos;єктів шляху (причина: відсутні координати).</numerusform>
@@ -6527,14 +6531,14 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/gps_track.cpp" line="423"/>
         <source>Error reading</source>
-        <translation type="unfinished">Помилка читання</translation>
+        <translation>Помилка читання</translation>
     </message>
     <message>
         <location filename="../src/gps_track.cpp" line="423"/>
         <source>There was an error reading the DXF file %1:
 
 %2</source>
-        <translation type="unfinished">Помилка читання DXF файлу %1:
+        <translation>Помилка читання DXF файлу %1:
 
 %2</translation>
     </message>
@@ -6542,32 +6546,32 @@ If you do not intend to draw on this template however, that is no problem.</sour
         <location filename="../src/gps_track.cpp" line="501"/>
         <source>%1:
 Not an OSM file.</source>
-        <translation type="unfinished">%1:
+        <translation>%1:
 Не є OSM файлом.</translation>
     </message>
     <message>
         <location filename="../src/gps_track.cpp" line="510"/>
         <source>The OSM file has version %1.
 The minimum supported version is %2.</source>
-        <translation type="unfinished">OSM файл має версію %1.
+        <translation>OSM файл має версію %1.
 Підтримуються версії починаючи з %2.</translation>
     </message>
     <message>
         <location filename="../src/gps_track.cpp" line="515"/>
         <source>The OSM file has version %1.
 The maximum supported version is %2.</source>
-        <translation type="unfinished">OSM файл має версію %1.
+        <translation>OSM файл має версію %1.
 Підтримуються версії не новіші від %2.</translation>
     </message>
     <message>
         <location filename="../src/gps_track.cpp" line="614"/>
         <source>Problems</source>
-        <translation type="unfinished">Проблеми</translation>
+        <translation>Проблеми</translation>
     </message>
     <message>
         <location filename="../src/gps_track.cpp" line="614"/>
         <source>%1 nodes could not be processed correctly.</source>
-        <translation type="unfinished">%1 вузлів неможливо правильно обробити.</translation>
+        <translation>%1 вузлів неможливо правильно обробити.</translation>
     </message>
 </context>
 <context>
@@ -6575,12 +6579,12 @@ The maximum supported version is %2.</source>
     <message>
         <location filename="../src/gui/text_browser_dialog.cpp" line="122"/>
         <source>External link: %1</source>
-        <translation type="unfinished">Зовнішнє посилання: %1</translation>
+        <translation>Зовнішнє посилання: %1</translation>
     </message>
     <message>
         <location filename="../src/gui/text_browser_dialog.cpp" line="126"/>
         <source>Click to view</source>
-        <translation type="unfinished">Клацніть для перегляду</translation>
+        <translation>Клацніть для перегляду</translation>
     </message>
 </context>
 <context>
@@ -6731,7 +6735,7 @@ The maximum supported version is %2.</source>
     <message>
         <location filename="../src/symbol_text.cpp" line="655"/>
         <source>OCAD compatibility settings</source>
-        <translation type="unfinished">Параметри сумісності з OCAD</translation>
+        <translation>Параметри сумісності з OCAD</translation>
     </message>
     <message>
         <location filename="../src/symbol_text.cpp" line="666"/>
@@ -6814,7 +6818,7 @@ The maximum supported version is %2.</source>
     <message>
         <location filename="../src/gui/widgets/crs_param_widgets.cpp" line="60"/>
         <source>Calculate</source>
-        <translation type="unfinished">Обчислення</translation>
+        <translation>Обчислення</translation>
     </message>
 </context>
 <context>
@@ -6823,17 +6827,17 @@ The maximum supported version is %2.</source>
         <location filename="../src/undo_manager.cpp" line="121"/>
         <location filename="../src/undo_manager.cpp" line="159"/>
         <source>Error</source>
-        <translation type="unfinished">Помилка</translation>
+        <translation>Помилка</translation>
     </message>
     <message>
         <location filename="../src/undo_manager.cpp" line="121"/>
         <source>Cannot undo because the last undo step became invalid. This can for example happen if you change the symbol of an object to another and then delete the old symbol.</source>
-        <translation type="unfinished">Неможливо відмінити останній крок, бо він став непридатним. Це могло трапитися якщо ви змінили знак об&apos;єкту на інший, а потім видалили старий знак.</translation>
+        <translation>Неможливо відмінити останній крок, бо він став непридатним. Це могло трапитися якщо ви змінили знак об&apos;єкту на інший, а потім видалили старий знак.</translation>
     </message>
     <message>
         <location filename="../src/undo_manager.cpp" line="127"/>
         <source>Confirmation</source>
-        <translation type="unfinished">Підтвердження</translation>
+        <translation>Підтвердження</translation>
     </message>
     <message>
         <location filename="../src/undo_manager.cpp" line="127"/>
@@ -6843,7 +6847,7 @@ The maximum supported version is %2.</source>
     <message>
         <location filename="../src/undo_manager.cpp" line="159"/>
         <source>Cannot redo because the first redo step became invalid. This can for example happen if you delete the symbol of an object you have drawn.</source>
-        <translation type="unfinished">Неможливо відмінити останній крок бо попередній крок став непридатним. Це могло трапитись, наприклад, якщо ви видалили знак об&apos;єкту який накреслили.</translation>
+        <translation>Неможливо відмінити останній крок бо попередній крок став непридатним. Це могло трапитись, наприклад, якщо ви видалили знак об&apos;єкту який накреслили.</translation>
     </message>
 </context>
 <context>
@@ -6853,22 +6857,22 @@ The maximum supported version is %2.</source>
         <location filename="../src/util.cpp" line="242"/>
         <location filename="../src/util.cpp" line="275"/>
         <source>Error</source>
-        <translation type="unfinished">Помилка</translation>
+        <translation>Помилка</translation>
     </message>
     <message>
         <location filename="../src/util.cpp" line="235"/>
         <source>Failed to locate the help files.</source>
-        <translation type="unfinished">Не вдалося знайти файли довідки.</translation>
+        <translation>Не вдалося знайти файли довідки.</translation>
     </message>
     <message>
         <location filename="../src/util.cpp" line="242"/>
         <source>Failed to locate the help browser (&quot;Qt Assistant&quot;).</source>
-        <translation type="unfinished">Не знайдено переглядач для довідки (&quot;Qt Assistant&quot;).</translation>
+        <translation>Не знайдено переглядач для довідки (&quot;Qt Assistant&quot;).</translation>
     </message>
     <message>
         <location filename="../src/util.cpp" line="276"/>
         <source>Failed to launch the help browser (&quot;Qt Assistant&quot;).</source>
-        <translation type="unfinished">Не вдалося запустити переглядач для довідки (&quot;Qt Assistant&quot;).</translation>
+        <translation>Не вдалося запустити переглядач для довідки (&quot;Qt Assistant&quot;).</translation>
     </message>
 </context>
 <context>
@@ -6884,63 +6888,63 @@ The maximum supported version is %2.</source>
     <message>
         <location filename="../src/file_format_xml.cpp" line="396"/>
         <source>Unsupported element: %1 (line %2 column %3)</source>
-        <translation type="unfinished">Непідтримуваний елемент: %1 (рядок %2 стовбчик %3)</translation>
+        <translation>Непідтримуваний елемент: %1 (рядок %2 стовбчик %3)</translation>
     </message>
     <message>
         <location filename="../src/file_format_xml.cpp" line="427"/>
         <source>Some coordinates were out of bounds for printing. Map content was adjusted.</source>
-        <translation type="unfinished">Деякі координати поза межами області друку. Вміста карти був підігнаний.</translation>
+        <translation>Деякі координати поза межами області друку. Вміста карти був підігнаний.</translation>
     </message>
     <message>
         <location filename="../src/file_format_xml.cpp" line="475"/>
         <source>unknown</source>
-        <translation type="unfinished">невідомо</translation>
+        <translation>невідомо</translation>
     </message>
     <message>
         <location filename="../src/file_format_xml.cpp" line="476"/>
         <source>Parts of this file cannot be read by this version of Mapper. Minimum required version: %1</source>
-        <translation type="unfinished">Частина цього файлу не може бути почитана цією версією Mapper. Мінімальна придатна версія: %1</translation>
+        <translation>Частина цього файлу не може бути почитана цією версією Mapper. Мінімальна придатна версія: %1</translation>
     </message>
     <message>
         <location filename="../src/file_format_xml.cpp" line="512"/>
         <source>Error at line %1 column %2: %3</source>
-        <translation type="unfinished">Помилка у рядку %1 колонка %2: %3</translation>
+        <translation>Помилка у рядку %1 колонка %2: %3</translation>
     </message>
     <message>
         <location filename="../src/file_format_xml.cpp" line="531"/>
         <source>Unknown error</source>
-        <translation type="unfinished">Невідома помилка</translation>
+        <translation>Невідома помилка</translation>
     </message>
     <message>
         <location filename="../src/file_format_xml.cpp" line="532"/>
         <source>Unsupported or invalid georeferencing specification &apos;%1&apos;: %2</source>
-        <translation type="unfinished">Непідтримувана або недійсна специфікація геоприв&apos;язки &apos;%1&apos;: %2</translation>
+        <translation>Непідтримувана або недійсна специфікація геоприв&apos;язки &apos;%1&apos;: %2</translation>
     </message>
     <message>
         <location filename="../src/file_format_xml.cpp" line="650"/>
         <location filename="../src/file_format_xml.cpp" line="709"/>
         <source>Could not set knockout property of color &apos;%1&apos;.</source>
-        <translation type="unfinished">Неможливо встановити властивості перекривання для кольору %1&apos;.</translation>
+        <translation>Неможливо встановити властивості перекривання для кольору %1&apos;.</translation>
     </message>
     <message>
         <location filename="../src/file_format_xml.cpp" line="669"/>
         <source>Expected %1 colors, found %2.</source>
-        <translation type="unfinished">Очікувався колір %1, а знайдено %2.</translation>
+        <translation>Очікувався колір %1, а знайдено %2.</translation>
     </message>
     <message>
         <location filename="../src/file_format_xml.cpp" line="685"/>
         <source>Spot color %1 not found while processing %2 (%3).</source>
-        <translation type="unfinished">Планшетний колір %1 не знайдений під час обробки %2 (%3).</translation>
+        <translation>Планшетний колір %1 не знайдений під час обробки %2 (%3).</translation>
     </message>
     <message>
         <location filename="../src/file_format_xml.cpp" line="740"/>
         <source>Expected %1 symbols, found %2.</source>
-        <translation type="unfinished">Очікувався знак %1, а знайдено %2.</translation>
+        <translation>Очікувався знак %1, а знайдено %2.</translation>
     </message>
     <message>
         <location filename="../src/file_format_xml.cpp" line="771"/>
         <source>Expected %1 map parts, found %2.</source>
-        <translation type="unfinished">Очікувалася частина карти %1, а знайдено %2.</translation>
+        <translation>Очікувалася частина карти %1, а знайдено %2.</translation>
     </message>
 </context>
 </TS>

@@ -65,7 +65,7 @@ void ScaleTool::init()
 
 const QCursor& ScaleTool::getCursor() const
 {
-	static auto const cursor = QCursor(QPixmap(":/images/cursor-scale.png"), 1, 1);
+	static auto const cursor = scaledToScreen(QCursor{ QPixmap{ ":/images/cursor-scale.png" }, 1, 1 });
 	return cursor;
 }
 

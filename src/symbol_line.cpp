@@ -2684,6 +2684,8 @@ void LineSymbolSettings::updateContents()
 	updateBorderContents(symbol->getBorder(), border_widgets);
 	updateBorderContents(symbol->getRightBorder(), right_border_widgets);
 	
+	supress_dash_symbol_check->setChecked(symbol->getSuppressDashSymbolAtLineEnds());
+	
 	blockSignalsRecursively(this, false);
 /*	
 	PointSymbolEditorWidget* point_symbol_editor = 0;

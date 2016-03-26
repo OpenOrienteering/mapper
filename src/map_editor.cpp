@@ -545,27 +545,39 @@ void MapEditorController::attach(MainWindow* window)
 	{
 		// Add zoom / cursor position field to status bar
 		QLabel* statusbar_zoom_icon = new QLabel();
-		statusbar_zoom_icon->setPixmap(QPixmap(":/images/magnifying-glass-12.png"));
+		auto fontmetrics = statusbar_zoom_icon->fontMetrics();
+		auto pixmap = QPixmap(QLatin1String(":/images/magnifying-glass.png"));
+		auto scale = qreal(fontmetrics.height()) / pixmap.height();
+		if (scale < 0.9 || scale > 1.1)
+			pixmap = pixmap.scaledToHeight(qRound(scale * pixmap.height()), Qt::SmoothTransformation);
+		statusbar_zoom_icon->setPixmap(pixmap);
 		
 		statusbar_zoom_label = new QLabel();
-		statusbar_zoom_label->setFixedWidth(51);
+		statusbar_zoom_label->setMinimumWidth(fontmetrics.width(QLatin1String(" 0.333x")));
 		statusbar_zoom_label->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
+		statusbar_zoom_label->setFrameShape(QFrame::NoFrame);
 		
 		statusbar_zoom_frame = new QFrame();
+#ifdef Q_OS_WIN
+		statusbar_zoom_frame->setFrameShape(QFrame::NoFrame);
+#else
 		statusbar_zoom_frame->setFrameStyle(QFrame::StyledPanel | QFrame::Sunken);
-		statusbar_zoom_frame->setLineWidth(1);
+#endif
 		QHBoxLayout* statusbar_zoom_frame_layout = new QHBoxLayout();
 		statusbar_zoom_frame_layout->setMargin(0);
 		statusbar_zoom_frame_layout->setSpacing(0);
 		statusbar_zoom_frame_layout->addSpacing(1);
 		statusbar_zoom_frame_layout->addWidget(statusbar_zoom_icon);
-		//statusbar_zoom_frame_layout->addStretch(1);
 		statusbar_zoom_frame_layout->addWidget(statusbar_zoom_label);
 		statusbar_zoom_frame->setLayout(statusbar_zoom_frame_layout);
 		
 		statusbar_cursorpos_label = new QLabel();
+#ifdef Q_OS_WIN
+		statusbar_cursorpos_label->setFrameShape(QFrame::NoFrame);
+#else
 		statusbar_cursorpos_label->setFrameStyle(QFrame::StyledPanel | QFrame::Sunken);
-		statusbar_cursorpos_label->setFixedWidth(160);
+#endif
+		statusbar_cursorpos_label->setMinimumWidth(fontmetrics.width(QLatin1String("-3,333.33 -333.33 (mm)")));
 		statusbar_cursorpos_label->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
 		
 		window->statusBar()->addPermanentWidget(statusbar_zoom_frame);
@@ -574,8 +586,12 @@ void MapEditorController::attach(MainWindow* window)
 		if (mode == MapEditor)
 		{
 			statusbar_objecttag_label = new QLabel();
+#ifdef Q_OS_WIN
+			statusbar_objecttag_label->setFrameShape(QFrame::NoFrame);
+#else
 			statusbar_objecttag_label->setFrameStyle(QFrame::StyledPanel | QFrame::Sunken);
-			statusbar_objecttag_label->setFixedWidth(160);
+#endif
+			statusbar_objecttag_label->setMinimumWidth(statusbar_cursorpos_label->minimumWidth());
 			statusbar_objecttag_label->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
 		}
 	}
@@ -917,6 +933,8 @@ void MapEditorController::createActions()
 	map_coordinates_act->setChecked(true);
 	QObject::connect(&map->getGeoreferencing(), SIGNAL(projectionChanged()), this, SLOT(projectionChanged()));
 	projectionChanged();
+	
+	copy_coords_act = newAction("copy-coords", tr("Copy position"), this, SLOT(copyDisplayedCoords()), "copy-coords.png", tr("Copy position to clipboard."));
 }
 
 void MapEditorController::createMenuAndToolbars()
@@ -1184,6 +1202,7 @@ void MapEditorController::createMenuAndToolbars()
 	context_menu->addAction(cut_hole_act);
 	context_menu->addAction(switch_dashes_act);
 	context_menu->addAction(connect_paths_act);
+	context_menu->addAction(copy_coords_act);
 }
 
 void MapEditorController::createMobileGUI()
@@ -1661,6 +1680,11 @@ void MapEditorController::coordsDisplayChanged()
 		map_widget->setCoordsDisplay(MapWidget::PROJECTED_COORDS);	
 	else
 		map_widget->setCoordsDisplay(MapWidget::MAP_COORDS);
+}
+
+void MapEditorController::copyDisplayedCoords()
+{
+	QApplication::clipboard()->setText(statusbar_cursorpos_label->text());
 }
 
 void MapEditorController::projectionChanged()

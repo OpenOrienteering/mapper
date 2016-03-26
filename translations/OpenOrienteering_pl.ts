@@ -1230,7 +1230,7 @@
     </message>
 </context>
 <context>
-    <name>EditorPage</name>
+    <name>EditorSettingsPage</name>
     <message>
         <source>px</source>
         <translation type="vanished">px</translation>
@@ -1421,7 +1421,7 @@
     </message>
 </context>
 <context>
-    <name>GeneralPage</name>
+    <name>GeneralSettingsPage</name>
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="654"/>
         <source>Translation files (*.qm)</source>

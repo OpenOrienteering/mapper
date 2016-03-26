@@ -31,6 +31,7 @@
 #include <QRegularExpression>
 #include <QtMath>
 
+#include "gdal_manager.h"
 #include "../core/georeferencing.h"
 #include "../map.h"
 #include "../object_text.h"
@@ -71,24 +72,6 @@ namespace ogr
 
 namespace
 {
-	/**
-	 * OGR driver setup utility.
-	 */
-	class OgrDriverSetup
-	{
-	public:
-		OgrDriverSetup()
-		{
-			// Options for debugging and for some drivers
-			//CPLSetConfigOption("CPL_DEBUG", "ON");
-			CPLSetConfigOption("USE_PROJ_480_FEATURES", "YES");
-			CPLSetConfigOption("OSM_USE_CUSTOM_INDEXING", "NO");
-			
-			// GDAL 2.0: GDALAllRegister();
-			OGRRegisterAll();
-		}
-	};
-	
 	void applyPenWidth(OGRStyleToolH tool, LineSymbol* line_symbol)
 	{
 		int is_null;
@@ -254,11 +237,8 @@ namespace
 OgrFileFormat::OgrFileFormat()
  : FileFormat(OgrFile, "OGR", ImportExport::tr("Geospatial vector data"), QString::null, ImportSupported)
 {
-	static OgrDriverSetup setup;
-	
-	/// \todo Query GDAL/OGR 2.0 for drivers and extensions
-	addExtension(QLatin1String("dxf"));
-	addExtension(QLatin1String("shp"));
+	for (const auto extension : GdalManager().supportedVectorExtensions())
+		addExtension(QString::fromLatin1(extension));
 }
 
 bool OgrFileFormat::understands(const unsigned char*, size_t) const
@@ -281,6 +261,8 @@ OgrFileImport::OgrFileImport(QIODevice* stream, Map* map, MapView* view, bool dr
  , manager{ OGR_SM_Create(nullptr) }
  , drawing_from_projected{ drawing_from_projected }
 {
+	GdalManager().configure();
+	
 	setOption(QLatin1String{ "Separate layers" }, QVariant{ false });
 	
 	auto spec = QByteArray::fromRawData("WGS84", 6);

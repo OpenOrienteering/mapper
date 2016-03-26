@@ -22,6 +22,7 @@
 #include <QFile>
 #include <QXmlStreamReader>
 
+#include "gdal_manager.h"
 #include "ogr_file_format_p.h"
 #include "../map.h"
 #include "../object.h"
@@ -29,9 +30,7 @@
 
 const std::vector<QByteArray>& OgrTemplate::supportedExtensions()
 {
-	/// \todo Build from driver list in GDAL/OGR >= 2.0
-	static std::vector<QByteArray> extensions = { "dxf", "shp", "shx", "dbf" };
-	return extensions;
+	return GdalManager().supportedVectorExtensions();
 }
 
 

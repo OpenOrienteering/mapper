@@ -278,7 +278,7 @@ if(Mapper_PACKAGE_GDAL)
 	  DIRECTORY "${GDAL_BINARY_DIR}/../share/gdal"
 	  DESTINATION "${MAPPER_DATA_DESTINATION}")
 	if(WIN32)
-		set(GDAL_LIB_SUFFIX -1)
+		set(GDAL_LIB_SUFFIX -20)
 	else()
 		set(GDAL_LIB_SUFFIX "")
 	endif()

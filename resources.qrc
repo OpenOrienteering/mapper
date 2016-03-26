@@ -12,6 +12,7 @@
         <file>images/compass.png</file>
         <file>images/control.png</file>
         <file>images/copy.png</file>
+        <file>images/copy-coords.png</file>
         <file>images/cursor-crosshair.png</file>
         <file>images/cursor-cut.png</file>
         <file>images/cursor-delete.png</file>
@@ -45,7 +46,7 @@
         <file>images/grid.png</file>
         <file>images/group.png</file>
         <file>images/help.png</file>
-        <file>images/magnifying-glass-12.png</file>
+        <file>images/magnifying-glass.png</file>
         <file>images/mapper.png</file>
         <file>images/minus.png</file>
         <file>images/move.png</file>

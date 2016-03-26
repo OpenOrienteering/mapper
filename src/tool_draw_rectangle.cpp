@@ -89,7 +89,7 @@ void DrawRectangleTool::init()
 
 const QCursor& DrawRectangleTool::getCursor() const
 {
-	static auto const cursor = QCursor(QPixmap(":/images/cursor-draw-rectangle.png"), 11, 11);
+	static auto const cursor = scaledToScreen(QCursor{ QPixmap{ ":/images/cursor-draw-rectangle.png" }, 11, 11 });
 	return cursor;
 }
 

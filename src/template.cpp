@@ -491,6 +491,7 @@ bool Template::tryToFindAndReloadTemplateFile(QString map_directory, bool* out_l
 	}
 	
 	setTemplatePath(old_absolute_path);
+	template_state = Invalid;
 	setErrorString(tr("No such file."));
 	return false;
 }

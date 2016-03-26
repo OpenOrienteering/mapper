@@ -576,7 +576,7 @@ void TemplateAdjustAddTool::init()
 
 const QCursor& TemplateAdjustAddTool::getCursor() const
 {
-	static auto const cursor = QCursor(QPixmap(":/images/cursor-georeferencing-add.png"), 11, 11);
+	static auto const cursor = scaledToScreen(QCursor{ QPixmap{ ":/images/cursor-georeferencing-add.png" }, 11, 11 });
 	return cursor;
 }
 
@@ -810,7 +810,7 @@ void TemplateAdjustDeleteTool::init()
 
 const QCursor& TemplateAdjustDeleteTool::getCursor() const
 {
-	static auto const cursor = QCursor(QPixmap(":/images/cursor-delete.png"), 1, 1);
+	static auto const cursor = scaledToScreen(QCursor{ QPixmap{ ":/images/cursor-delete.png" }, 1, 1});
 	return cursor;
 }
 

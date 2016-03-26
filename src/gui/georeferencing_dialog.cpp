@@ -98,6 +98,12 @@ GeoreferencingDialog::GeoreferencingDialog(
 	status_label = new QLabel(tr("Status:"));
 	status_field = new QLabel();
 	
+	/*: The grid scale factor is the ratio between a length in the grid plane
+	    and the corresponding length on the curved earth model. It is applied
+	    as a factor to ground distances to get grid plane distances. */
+	auto scale_factor_label = new QLabel(tr("Grid scale factor:"));
+	scale_factor_edit = Util::SpinBox::create(Georeferencing::scaleFactorPrecision(), 0.001, 1000.0);
+	
 	QLabel* reference_point_label = Util::Headline::create(tr("Reference point"));
 	
 	ref_point_button = new QPushButton(tr("&Pick on map"));
@@ -181,6 +187,7 @@ GeoreferencingDialog::GeoreferencingDialog(
 	edit_layout->addRow(tr("&Coordinate reference system:"), crs_selector);
 	crs_selector->setDialogLayout(edit_layout);
 	edit_layout->addRow(status_label, status_field);
+	edit_layout->addRow(scale_factor_label, scale_factor_edit);
 	edit_layout->addItem(Util::SpacerItem::create(this));
 	
 	edit_layout->addRow(reference_point_label);
@@ -208,6 +215,8 @@ GeoreferencingDialog::GeoreferencingDialog(
 	connect(crs_selector, &CRSSelector::crsChanged, this, &GeoreferencingDialog::crsEdited);
 	
 	using TakingDoubleArgument = void (QDoubleSpinBox::*)(double);
+	connect(scale_factor_edit, (TakingDoubleArgument)&QDoubleSpinBox::valueChanged, this, &GeoreferencingDialog::scaleFactorEdited);
+	
 	connect(map_x_edit, (TakingDoubleArgument)&QDoubleSpinBox::valueChanged, this, &GeoreferencingDialog::mapRefChanged);
 	connect(map_y_edit, (TakingDoubleArgument)&QDoubleSpinBox::valueChanged, this, &GeoreferencingDialog::mapRefChanged);
 	connect(ref_point_button, &QPushButton::clicked, this, &GeoreferencingDialog::selectMapRefPoint);
@@ -271,7 +280,8 @@ void GeoreferencingDialog::transformationChanged()
 {
 	ScopedMultiSignalsBlocker block(
 	            map_x_edit, map_y_edit,
-	            easting_edit, northing_edit
+	            easting_edit, northing_edit,
+	            scale_factor_edit
 	);
 	
 	map_x_edit->setValue(georef->getMapRefPoint().x());
@@ -279,6 +289,8 @@ void GeoreferencingDialog::transformationChanged()
 	
 	easting_edit->setValue(georef->getProjectedRefPoint().x());
 	northing_edit->setValue(georef->getProjectedRefPoint().y());
+	
+	scale_factor_edit->setValue(georef->getGridScaleFactor());
 	
 	updateGrivation();
 }
@@ -527,6 +539,13 @@ void GeoreferencingDialog::crsEdited()
 	reset_button->setEnabled(true);
 }
 
+void GeoreferencingDialog::scaleFactorEdited()
+{
+	const QSignalBlocker block{scale_factor_edit};
+	georef->setGridScaleFactor(scale_factor_edit->value());
+	reset_button->setEnabled(true);
+}
+
 void GeoreferencingDialog::selectMapRefPoint()
 {
 	if (controller)
@@ -721,6 +740,6 @@ bool GeoreferencingTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coo
 
 const QCursor& GeoreferencingTool::getCursor() const
 {
-	static auto const cursor = QCursor(QPixmap(":/images/cursor-crosshair.png"), 11, 11);
+	static auto const cursor = scaledToScreen(QCursor{ QPixmap{ ":/images/cursor-crosshair.png" }, 11, 11 });
 	return cursor;
 }

@@ -67,6 +67,15 @@ QStringList MapperResource::getLocations(MapperResource::RESOURCE_TYPE resource_
 			resource_path = "/examples";
 			break;
 			
+		case GDAL_DATA:
+#if defined(Mapper_BUILD_GDAL) || defined(Q_OS_WIN)
+			resource_path = "/gdal";
+			break;
+#else
+			// Don't fiddle with gdal resource path.
+			return locations;
+#endif
+		
 		case MANUAL:
 			// TODO: Support localized manual
 			resource_path = "/doc/manual";

@@ -50,6 +50,7 @@ namespace literal
 	static const QLatin1String georeferencing("georeferencing");
 	
 	static const QLatin1String scale("scale");
+	static const QLatin1String grid_scale_factor{"grid_scale_factor"};
 	static const QLatin1String declination("declination");
 	static const QLatin1String grivation("grivation");
 	
@@ -134,6 +135,7 @@ const QString Georeferencing::geographic_crs_spec("+proj=latlong +datum=WGS84");
 Georeferencing::Georeferencing()
 : state(Local),
   scale_denominator(1),
+  grid_scale_factor{1.0},
   declination(0.0),
   grivation(0.0),
   grivation_error(0.0),
@@ -154,6 +156,7 @@ Georeferencing::Georeferencing(const Georeferencing& other)
 : QObject(),
   state(other.state),
   scale_denominator(other.scale_denominator),
+  grid_scale_factor{other.grid_scale_factor},
   declination(other.declination),
   grivation(other.grivation),
   grivation_error(other.grivation_error),
@@ -183,6 +186,7 @@ Georeferencing& Georeferencing::operator=(const Georeferencing& other)
 {
 	state                    = other.state;
 	scale_denominator        = other.scale_denominator;
+	grid_scale_factor        = other.grid_scale_factor;
 	declination              = other.declination;
 	grivation                = other.grivation;
 	grivation_error          = other.grivation_error;
@@ -222,6 +226,13 @@ void Georeferencing::load(QXmlStreamReader& xml, bool load_scale_only)
 	scale_denominator = georef_element.attribute<int>(literal::scale);
 	if (scale_denominator <= 0)
 		throw FileFormatException(tr("Map scale specification invalid or missing."));
+	
+	if (georef_element.hasAttribute(literal::grid_scale_factor))
+	{
+		grid_scale_factor = roundScaleFactor(georef_element.attribute<double>(literal::grid_scale_factor));
+		if (grid_scale_factor <= 0.0)
+			throw FileFormatException(tr("Invalid grid scale factor: %1").arg(QString::number(grid_scale_factor)));
+	}
 	
 	state = Local;
 	if (load_scale_only)
@@ -337,6 +348,8 @@ void Georeferencing::save(QXmlStreamWriter& xml) const
 {
 	XmlElementWriter georef_element(xml, literal::georeferencing);
 	georef_element.writeAttribute(literal::scale, scale_denominator);
+	if (grid_scale_factor != 1.0)
+		georef_element.writeAttribute(literal::grid_scale_factor, grid_scale_factor, scaleFactorPrecision());
 	if (!qIsNull(declination))
 		georef_element.writeAttribute(literal::declination, declination, declinationPrecision());
 	if (!qIsNull(grivation))
@@ -424,6 +437,16 @@ void Georeferencing::setScaleDenominator(int value)
 	if (scale_denominator != (unsigned int)value)
 	{
 		scale_denominator = value;
+		updateTransformation();
+	}
+}
+
+void Georeferencing::setGridScaleFactor(double value)
+{
+	Q_ASSERT(value > 0);
+	if (grid_scale_factor != value)
+	{
+		grid_scale_factor = value;
 		updateTransformation();
 	}
 }
@@ -564,7 +587,7 @@ void Georeferencing::updateTransformation()
 	transform.translate(projected_ref_point.x(), projected_ref_point.y());
 	transform.rotate(-grivation);
 	
-	double scale = double(scale_denominator) / 1000.0;
+	double scale = grid_scale_factor * scale_denominator / 1000.0; // to meters
 	transform.scale(scale, -scale);
 	transform.translate(-map_ref_point.x(), -map_ref_point.y());
 	
@@ -779,6 +802,7 @@ QDebug operator<<(QDebug dbg, const Georeferencing &georef)
 {
 	dbg.nospace() 
 	  << "Georeferencing(1:" << georef.scale_denominator
+	  << " " << georef.grid_scale_factor
 	  << " " << georef.declination
 	  << " " << georef.grivation
 	  << "deg, " << georef.projected_crs_id

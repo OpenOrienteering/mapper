@@ -574,12 +574,24 @@ void MapWidget::updateCursorposLabel(const MapCoordF pos)
 		if (coords_type == PROJECTED_COORDS)
 		{
 			const QPointF projected_point(georef.toProjectedCoords(pos));
-			cursorpos_label->setText(
-			  QStringLiteral("%1 %2 (%3)").
-			  arg(QString::number(projected_point.x(), 'f', 0)).
-			  arg(QString::number(projected_point.y(), 'f', 0)).
-			  arg(tr("m", "meters"))
-			); 
+			if (qAbs(georef.getGridScaleFactor() - 1.0) < 0.02)
+			{
+				// Grid unit differs less than 2% from meter.
+				cursorpos_label->setText(
+				  QStringLiteral("%1 %2 (%3)").
+				  arg(QString::number(projected_point.x(), 'f', 0)).
+				  arg(QString::number(projected_point.y(), 'f', 0)).
+				  arg(tr("m", "meters"))
+				); 
+			}
+			else
+			{
+				cursorpos_label->setText(
+				  QStringLiteral("%1 %2").
+				  arg(QString::number(projected_point.x(), 'f', 0)).
+				  arg(QString::number(projected_point.y(), 'f', 0))
+				); 
+			}
 		}
 		else if (coords_type == GEOGRAPHIC_COORDS)
 		{
@@ -594,7 +606,7 @@ void MapWidget::updateCursorposLabel(const MapCoordF pos)
 		{
 			const LatLon lat_lon(georef.toGeographicCoords(pos, &ok));
 			cursorpos_label->setText(
-			  QString::fromUtf8("%1 %2").
+			  QStringLiteral("%1 %2").
 			  arg(georef.degToDMS(lat_lon.latitude())).
 			  arg(georef.degToDMS(lat_lon.longitude()))
 			); 
