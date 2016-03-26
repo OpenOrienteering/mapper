@@ -22,9 +22,11 @@ find_package(Qt5LinguistTools REQUIRED)
 
 # Qt translations which are not yet available from upstream
 set(Mapper_QT_TRANS
-  qt_lv.ts
   qt_nb.ts
 )
+if (${Qt5LinguistTools_VERSION} VERSION_LESS 5.4.0)
+	list(APPEND Mapper_QT_TRANS qt_lv.ts)
+endif()
 
 set(Mapper_TRANS
  OpenOrienteering_cs.ts
@@ -138,8 +140,12 @@ macro(QT5_TRANSLATIONS_SOURCES)
 			if("${_ts_filename}" STREQUAL "OpenOrienteering_en")
 				list(APPEND LUPDATE_OPTIONS -pluralonly)
 			endif()
+			if("${_ts_filename}" STREQUAL "OpenOrienteering_template")
+				list(APPEND LUPDATE_OPTIONS -no-obsolete)
+			endif()
 			add_custom_target(${PROJECT_NAME}_${_ts_filename}_update
 			  COMMAND ${Qt5_LUPDATE_EXECUTABLE} ${LUPDATE_OPTIONS} @${${PROJECT_NAME}_TRANSLATIONS_LISTFILE} -ts ${Mapper_TRANS_DIR}/${_arg}
+			  COMMAND sed -i -e "/<name>Q[A-Z]/,/<context>/d" ${Mapper_TRANS_DIR}/${_arg}
 			  DEPENDS ${${PROJECT_NAME}_TRANSLATIONS_LISTFILE}
 			  VERBATIM)
 			add_dependencies(${PROJECT_NAME}_translations_update ${PROJECT_NAME}_${_ts_filename}_update)

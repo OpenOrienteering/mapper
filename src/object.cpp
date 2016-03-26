@@ -250,9 +250,12 @@ void Object::load(QIODevice* file, int version, Map* map)
 	
 	int symbol_index;
 	file->read((char*)&symbol_index, sizeof(int));
-	Symbol* read_symbol = map->getSymbol(symbol_index);
-	if (read_symbol)
-		symbol = read_symbol;
+	if (map)
+	{
+		Symbol* read_symbol = map->getSymbol(symbol_index);
+		if (read_symbol)
+			symbol = read_symbol;
+	}
 	
 	int num_coords;
 	file->read((char*)&num_coords, sizeof(int));

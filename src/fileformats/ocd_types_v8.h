@@ -1,5 +1,5 @@
 /*
- *    Copyright 2013, 2015 Kai Pastor
+ *    Copyright 2013, 2015, 2016 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -17,8 +17,8 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _OPENORIENTEERING_OCD_TYPES_V8_
-#define _OPENORIENTEERING_OCD_TYPES_V8_
+#ifndef OPENORIENTEERING_OCD_TYPES_V8_H
+#define OPENORIENTEERING_OCD_TYPES_V8_H
 
 #include "ocd_types.h"
 
@@ -69,12 +69,8 @@ namespace Ocd
 		SeparationInfoV8 separation_info[32];
 	};
 	
-	struct FileHeaderV8
+	struct FileHeaderV8 : public FileHeaderGeneric
 	{
-		quint16 vendor_mark;
-		quint16 section_mark;
-		quint16 version;
-		quint16 subversion;
 		quint32 first_symbol_block;
 		quint32 first_object_block;
 		quint32 setup_pos;
@@ -106,12 +102,6 @@ namespace Ocd
 		quint8  colors[32];
 		PascalString<31> description;
 		quint8  icon_bits[264];
-		
-		enum StatusFlag
-		{
-			StatusProtected = 1,
-			StatusHidden    = 2
-		};
 	};
 	
 	struct PointSymbolElementV8
@@ -145,13 +135,8 @@ namespace Ocd
 		Element begin_of_elements[1];
 	};
 	
-	struct LineSymbolV8
+	struct LineSymbolCommonV8
 	{
-		typedef BaseSymbolV8 BaseSymbol;
-		typedef PointSymbolElementV8 Element;
-		
-		BaseSymbol base;
-		
 		quint16 line_color;
 		quint16 line_width;
 		quint16 line_style;
@@ -175,7 +160,8 @@ namespace Ocd
 		qint16  double_right_width;
 		qint16  double_length;
 		qint16  double_gap;
-		quint16 RESERVED_MEMBER[3];
+		quint16 double_background_color_V11; /// \since V11
+		quint16 RESERVED_MEMBER[2];
 		quint16 dec_mode;
 		quint16 dec_last;
 		quint16 RESERVED_MEMBER;
@@ -187,9 +173,8 @@ namespace Ocd
 		quint16 corner_data_size;
 		quint16 start_data_size;
 		quint16 end_data_size;
-		quint16 RESERVED_MEMBER;
-		
-		Element begin_of_elements[1];
+		quint8  active_symbols_V11;          /// \since V11
+		quint8  RESERVED_MEMBER;
 		
 		enum LineStyleFlag
 		{
@@ -207,6 +192,36 @@ namespace Ocd
 			DoubleBackgroundColorOn = 2
 		};
 	};
+
+	struct LineSymbolV8
+	{
+		typedef BaseSymbolV8 BaseSymbol;
+		typedef PointSymbolElementV8 Element;
+		
+		BaseSymbol base;
+		
+		LineSymbolCommonV8 common;
+		
+		Element begin_of_elements[1];
+	};
+	
+	struct AreaSymbolCommonV8
+	{
+		quint16 fill_color;
+		quint16 hatch_mode;
+		quint16 hatch_color;
+		quint16 hatch_line_width;
+		quint16 hatch_dist;
+		qint16  hatch_angle_1;
+		qint16  hatch_angle_2;
+		quint8  fill_on_V9;         /// \since V12
+		quint8  border_on_V9;       /// \since V12
+		quint8  structure_mode;
+		quint8  structure_draw_V12; /// \since V12
+		quint16 structure_width;
+		quint16 structure_height;
+		qint16  structure_angle;
+	};
 	
 	struct AreaSymbolV8
 	{
@@ -217,53 +232,27 @@ namespace Ocd
 		
 		quint16 area_flags;
 		quint16 fill_on;
-		quint16 fill_color;
-		quint16 hatch_mode;
-		quint16 hatch_color;
-		quint16 hatch_line_width;
-		quint16 hatch_dist;
-		qint16  hatch_angle_1;
-		qint16  hatch_angle_2;
-		quint16 RESERVED_MEMBER;
-		quint16 structure_mode;
-		quint16 structure_width;
-		quint16 structure_height;
-		qint16  structure_angle;
+		AreaSymbolCommonV8 common;
 		quint16 RESERVED_MEMBER;
 		quint16 data_size;
 		
 		Element begin_of_elements[1];
-		
-		enum HatchMode
-		{
-			HatchNone   = 0,
-			HatchSingle = 1,
-			HatchCross  = 2
-		};
-		
-		enum StructureMode
-		{
-			StructureNone = 0,
-			StructureAlignedRows = 1,
-			StructureShiftedRows = 2
-		};
 	};
 	
-	struct TextSymbolV8
+	struct BasicTextAttributesV8
 	{
-		typedef BaseSymbolV8 BaseSymbol;
-		
-		BaseSymbol base;
-		
-		PascalString<31> font_name;
-		quint16 font_color;
+		quint16 color;
 		quint16 font_size;
 		quint16 font_weight;
 		quint8  font_italic;
-		quint8  charset;
+		quint8  charset_V8_ONLY;         /// V8 text symbols only
 		quint16 char_spacing;
 		quint16 word_spacing;
 		quint16 alignment;
+	};
+	
+	struct SpecialTextAttributesV8
+	{
 		quint16 line_spacing;
 		qint16  para_spacing;
 		quint16 indent_first_line;
@@ -274,15 +263,38 @@ namespace Ocd
 		quint16 line_below_color;
 		quint16 line_below_width;
 		quint16 line_below_offset;
-		quint16 RESERVED_MEMBER;
-		quint16 framing_mode;
-		PascalString<31> framing_font;
-		quint16 framing_color;
-		quint16 framing_line_width;
-		quint16 framing_font_weight;
-		quint16 framing_italic;
-		quint16 framing_offset_x;
-		quint16 framing_offset_y;
+	};
+	
+	struct FramingAttributesV8
+	{
+		quint8  mode;                    /// 16 bit in V8
+		quint8  line_style_V9;           /// \since V9
+		quint8  point_symbol_on_V10;     /// \since V10
+		quint32 point_symbol_number_V10; /// \since V10
+		char    RESERVED_MEMBER[19];
+		quint16 border_left_V9;          /// \since V9; TextSymbol only
+		quint16 border_bottom_V9;        /// \since V9; TextSymbol only
+		quint16 border_right_V9;         /// \since V9; TextSymbol only
+		quint16 border_top_V9;           /// \since V9; TextSymbol only
+		quint16 color;
+		quint16 line_width;
+		quint16 font_weight;             /// TextSymbol only
+		quint16 italic;                  /// TextSymbol only
+		quint16 offset_x;
+		quint16 offset_y;
+	};
+
+	struct TextSymbolV8
+	{
+		typedef BaseSymbolV8 BaseSymbol;
+		
+		BaseSymbol base;
+		
+		PascalString<31>        font_name;
+		BasicTextAttributesV8   basic;
+		SpecialTextAttributesV8 special;
+		quint16                 RESERVED_MEMBER;
+		FramingAttributesV8     framing;
 	};
 	
 	struct LineTextSymbolV8 // TODO: use and test...
@@ -291,23 +303,9 @@ namespace Ocd
 		
 		BaseSymbol base;
 		
-		PascalString<31> font_name;
-		quint16 font_color;
-		quint16 font_size;
-		quint16 font_weight;
-		quint8  font_italic;
-		quint8  RESERVED_MEMBER;
-		quint16 char_spacing;
-		quint16 word_spacing;
-		quint16 alignment;
-		quint8  framing_mode;
-		quint8  RESERVED_MEMBER;
-		char    RESERVED_MEMBER[32];
-		quint16 framing_color;
-		quint16 framing_line_width;
-		quint16 RESERVED_MEMBER[2];
-		quint16 framing_offset_x;
-		quint16 framing_offset_y;
+		PascalString<31>      font_name;
+		BasicTextAttributesV8 basic;
+		FramingAttributesV8   framing;
 	};
 	
 	struct RectangleSymbolV8
@@ -326,7 +324,7 @@ namespace Ocd
 		quint16 unnumbered_cells;
 		PascalString<3> unnumbered_text;
 		quint16 RESERVED_MEMBER;
-		char    RESERVED_MEMBER[32];
+		PascalString<31> RESERVED_MEMBER;
 		quint16 RESERVED_MEMBER[6];
 	};
 	
@@ -335,16 +333,8 @@ namespace Ocd
 		OcdPoint32 bottom_left_bound;
 		OcdPoint32 top_right_bound;
 		quint32 pos;
-		quint16 size;
+		quint16 size_MISC; /// Different interpretation for version < 8
 		qint16  symbol;
-		
-		enum ObjectStatus
-		{
-			StatusDeleted = 0,
-			StatusNormal  = 1,
-			StatusHidden  = 2,
-			StatusDeletedForUndo = 3
-		};
 	};
 	
 	struct ObjectV8
@@ -428,13 +418,14 @@ namespace Ocd
 		PascalDouble zoom;
 		ZoomRectV8 zoom_history[8];
 		quint32 zoom_history_size;
-		quint16 real_coords;
-		char    filename[256];
-		quint16 hatch_areas;
-		quint16 dim_templates;
-		quint16 hide_templates;
-		quint16 template_mode;
-		qint16 template_color;
+		// V6 header ends here, but Mapper doesn't use the following fields.
+		quint16 real_coords_IGNORED;
+		char    filename_IGNORED[256];
+		quint16 hatch_areas_IGNORED;
+		quint16 dim_templates_IGNORED;
+		quint16 hide_templates_IGNORED;
+		quint16 template_mode_IGNORED;
+		qint16  template_color_IGNORED;
 	};
 	
 #pragma pack(pop)
@@ -459,17 +450,7 @@ namespace Ocd
 		typedef ObjectV8 Object;
 		
 		typedef Custom8BitEncoding Encoding;
-		
-		enum SymbolType
-		{
-			TypePoint     = 1,
-			TypeLine      = 2,
-			TypeLineText  = 2, // same as TypeLine!
-			TypeArea      = 3,
-			TypeText      = 4,
-			TypeRectangle = 5  // or formatted text...
-		};
 	};
 }
 
-#endif // _OPENORIENTEERING_OCD_TYPES_V8_
+#endif // OPENORIENTEERING_OCD_TYPES_V8_H

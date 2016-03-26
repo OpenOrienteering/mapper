@@ -1,5 +1,5 @@
 /*
- *    Copyright 2013 Kai Pastor
+ *    Copyright 2013, 2016 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -22,6 +22,7 @@
 #include "ocd_types_v9.h"
 #include "ocd_types_v10.h"
 #include "ocd_types_v11.h"
+#include "ocd_types_v12.h"
 
 namespace Ocd
 {
@@ -40,4 +41,6 @@ namespace Ocd
 	Q_STATIC_ASSERT(sizeof(FileHeaderV10) == 48);
 	
 	Q_STATIC_ASSERT(sizeof(FileHeaderV11) == 48);
+	
+	Q_STATIC_ASSERT(sizeof(FileHeaderV12) == 60);
 }

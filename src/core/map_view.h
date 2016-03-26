@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2014, 2015 Kai Pastor
+ *    Copyright 2014-2016  Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -70,9 +70,8 @@ public:
 	/** Saves the map view state to an XML stream.
 	 *  @param xml The XML output stream.
 	 *  @param element_name The name of the element which will be written. 
-	 *  @param skip_templates If true, visibility details of individual templates are not saved.
 	 */
-	void save(QXmlStreamWriter& xml, const QLatin1String& element_name, bool skip_templates = false);
+	void save(QXmlStreamWriter& xml, const QLatin1String& element_name) const;
 	
 	/** Loads the map view state from the current element of an xml stream. */
 	void load(QXmlStreamReader& xml);

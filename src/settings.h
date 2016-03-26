@@ -123,6 +123,8 @@ private:
 	Settings();
 	void registerSetting(SettingsEnum id, const QString& path, const QVariant& default_value);
 	
+	void migrateSettings(QSettings& settings, QVariant version);
+	
 	/** Migrates a value from an old key to a new key.
 	 *  Uses the given or a newly constructed QSettings object.
 	 *  Returns true if the value was migrated. */

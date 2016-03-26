@@ -1,5 +1,5 @@
 /*
- *    Copyright 2013-2015 Kai Pastor
+ *    Copyright 2013-2016 Kai Pastor
  *
  *    Some parts taken from file_format_oc*d8{.h,_p.h,cpp} which are
  *    Copyright 2012 Pete Curtis
@@ -20,16 +20,18 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _OPENORIENTEERING_OCD_FILE_FORMAT_P_
-#define _OPENORIENTEERING_OCD_FILE_FORMAT_P_
+#ifndef OPENORIENTEERING_OCD_FILE_IMPORT
+#define OPENORIENTEERING_OCD_FILE_IMPORT
+
+#include "../file_import_export.h"
+
+#include <cmath>
 
 #include <QLocale>
 #include <QTextCodec>
 
-#include <cmath>
-
 #include "ocd_types.h"
-#include "../file_import_export.h"
+#include "ocd_types_v8.h"
 #include "../object.h"
 #include "../object_text.h"
 #include "../symbol.h"
@@ -95,12 +97,13 @@ protected:
 		friend class OcdFileImport;
 		
 	public:
-		OcdImportedPathObject(Symbol* symbol = NULL) : PathObject(symbol) { }
+		OcdImportedPathObject(Symbol* symbol = nullptr) : PathObject(symbol) { }
 	};
 	
 public:
 	OcdFileImport(QIODevice* stream, Map *map, MapView *view);
-	virtual ~OcdFileImport();
+	
+	virtual ~OcdFileImport() override;
 	
 	void setCustom8BitEncoding(const char *encoding);
 	
@@ -127,64 +130,110 @@ public:
 	
 	MapColor* convertColor(int ocd_color);
 	
-	void addSymbolWarning(LineSymbol* symbol, const QString& warning);
+	void addSymbolWarning(const LineSymbol* symbol, const QString& warning);
 	
-	void addSymbolWarning(TextSymbol* symbol, const QString& warning);
+	void addSymbolWarning(const TextSymbol* symbol, const QString& warning);
 	
-	virtual void finishImport();
+	virtual void finishImport() override;
 	
 protected:
-	virtual void import(bool load_symbols_only);
+	virtual void import(bool load_symbols_only) override;
+	
+	void importImplementationLegacy(bool load_symbols_only);
 	
 	template< class F >
 	void importImplementation(bool load_symbols_only);
+	
+	
+	void importGeoreferencing(const OcdFile<Ocd::FormatV8>& file);
 	
 	template< class F >
 	void importGeoreferencing(const OcdFile< F >& file);
 	
 	/// Imports string 1039.
-	void importScalesSettings(const QString& param_string);
+	void importGeoreferencing(const QString& param_string);
+	
+	/// Imports string 1039 field i.
+	void applyGridAndZone(Georeferencing& georef, const QString& combined_grid_zone);
+	
+	
+	void importColors(const OcdFile<struct Ocd::FormatV8>& file);
 	
 	template< class F >
 	void importColors(const OcdFile< F >& file);
 	
 	MapColor* importColor(const QString& param_string);
 	
+	
 	template< class F >
 	void importSymbols(const OcdFile< F >& file);
 	
+	
+	void importObjects(const OcdFile<Ocd::FormatV8>& file);
+	
 	template< class F >
 	void importObjects(const OcdFile< F >& file);
+	
 	
 	template< class F >
 	void importTemplates(const OcdFile< F >& file);
 	
 	Template* importTemplate(const QString& param_string, const int ocd_version);
 	
+	
+	void importExtras(const OcdFile<Ocd::FormatV8>& file);
+	
 	template< class F >
 	void importExtras(const OcdFile< F >& file);
+	
+	
+	void importView(const OcdFile<Ocd::FormatV8>& file);
 	
 	template< class F >
 	void importView(const OcdFile< F >& file);
 	
 	void importView(const QString& param_string);
 	
+	
 	// Symbol import
 	
 	template< class S >
-	PointSymbol* importPointSymbol(const S& ocd_symbol);
+	PointSymbol* importPointSymbol(const S& ocd_symbol, int ocd_version);
 	
 	template< class S >
-	Symbol* importLineSymbol(const S& ocd_symbol);
+	Symbol* importLineSymbol(const S& ocd_symbol, int ocd_version);
+	
+	OcdImportedLineSymbol* importLineSymbolBase(const Ocd::LineSymbolCommonV8& attributes);
+	
+	OcdImportedLineSymbol* importLineSymbolFraming(const Ocd::LineSymbolCommonV8& attributes, const LineSymbol* main_line);
+	
+	OcdImportedLineSymbol* importLineSymbolDoubleBorder(const Ocd::LineSymbolCommonV8& attributes);
+	
+	void setupLineSymbolForBorder(OcdImportedLineSymbol* line_for_borders, const Ocd::LineSymbolCommonV8& attributes);
+	
+	void setupLineSymbolPointSymbol(OcdImportedLineSymbol* line_symbol, const Ocd::LineSymbolCommonV8& attributes, const Ocd::PointSymbolElementV8* elements, int ocd_version);
+	
+	void mergeLineSymbol(CombinedSymbol* full_line, LineSymbol* main_line, LineSymbol* framing_line, LineSymbol* double_line);
+	
+	AreaSymbol* importAreaSymbol(const Ocd::AreaSymbolV8& ocd_symbol, int ocd_version);
 	
 	template< class S >
 	AreaSymbol* importAreaSymbol(const S& ocd_symbol, int ocd_version);
 	
-	template< class S >
-	TextSymbol* importTextSymbol(const S& ocd_symbol);
+	void setupAreaSymbolCommon(
+	        OcdImportedAreaSymbol* symbol,
+	        bool fill_on,
+	        const Ocd::AreaSymbolCommonV8& ocd_symbol,
+	        std::size_t data_size,
+	        const Ocd::PointSymbolElementV8* elements,
+	        int ocd_version
+	);
 	
 	template< class S >
-	TextSymbol* importLineTextSymbol(const S& ocd_symbol);
+	TextSymbol* importTextSymbol(const S& ocd_symbol, int ocd_version);
+	
+	template< class S >
+	TextSymbol* importLineTextSymbol(const S& ocd_symbol, int ocd_version);
 	
 	template< class S >
 	LineSymbol* importRectangleSymbol(const S& ocd_symbol);
@@ -192,22 +241,23 @@ protected:
 	template< class S >
 	void setupBaseSymbol(Symbol* symbol, const S& ocd_symbol);
 	
-	template< class E >
-	void setupPointSymbolPattern(PointSymbol* symbol, std::size_t data_size, const E* elements);
+	void setupPointSymbolPattern(PointSymbol* symbol, std::size_t data_size, const Ocd::PointSymbolElementV8* elements, int version);
 	
-	template< class E >
-	int circleRadius(const E* element) const;
 	
 	// Object import
 	
 	template< class O >
-	Object* importObject(const O& ocd_object, MapPart* part);
+	Object* importObject(const O& ocd_object, MapPart* part, int ocd_version);
+	
+	QString getObjectText(const Ocd::ObjectV8& ocd_object, int ocd_version) const;
 	
 	template< class O >
-	QString getObjectText(const O& ocd_object) const;
+	QString getObjectText(const O& ocd_object, int ocd_version) const;
 	
 	template< class O >
 	Object* importRectangleObject(const O& ocd_object, MapPart* part, const OcdFileImport::RectangleInfo& rect);
+	
+	Object* importRectangleObject(const Ocd::OcdPoint32* ocd_points, MapPart* part, const OcdFileImport::RectangleInfo& rect);
 	
 	// Some helper functions that are used in multiple places
 	
@@ -218,6 +268,12 @@ protected:
 	void fillPathCoords(OcdFileImport::OcdImportedPathObject* object, bool is_area, quint16 num_points, const Ocd::OcdPoint32* ocd_points);
 	
 	bool fillTextPathCoords(TextObject* object, TextSymbol* symbol, quint16 npts, const Ocd::OcdPoint32* ocd_points);
+	
+	void setBasicAttributes(OcdImportedTextSymbol* symbol, const QString& font_name, const Ocd::BasicTextAttributesV8& attributes);
+	
+	void setSpecialAttributes(OcdImportedTextSymbol* symbol, const Ocd::SpecialTextAttributesV8& attributes);
+	
+	void setFraming(OcdImportedTextSymbol* symbol, const Ocd::FramingAttributesV8& framing);
 	
 protected:
 	/// The locale is used for number formatting.
@@ -251,14 +307,12 @@ protected:
 // ### OcdFileImport inline code ###
 
 template< std::size_t N >
-inline
 QString OcdFileImport::convertOcdString(const Ocd::PascalString<N>& src) const
 {
 	return custom_8bit_encoding->toUnicode(src.data, src.length);
 }
 
 template< std::size_t N >
-inline
 QString OcdFileImport::convertOcdString(const Ocd::Utf8PascalString<N>& src) const
 {
 	return QString::fromUtf8(src.data, src.length);
@@ -281,7 +335,6 @@ QString OcdFileImport::convertOcdString< Ocd::Utf8Encoding >(const char* src, st
 }
 
 template< class E >
-inline
 QString OcdFileImport::convertOcdString(const QByteArray& data) const
 {
 	return OcdFileImport::convertOcdString< E >(data.constData(), data.length());
@@ -323,11 +376,11 @@ MapColor *OcdFileImport::convertColor(int ocd_color)
 	if (!color_index.contains(ocd_color))
 	{
 		addWarning(tr("Color id not found: %1, ignoring this color").arg(ocd_color));
-		return NULL;
+		return nullptr;
 	}
 	
 	return color_index[ocd_color];
 }
 
 
-#endif // _OPENORIENTEERING_OCD_FILE_FORMAT_P_
+#endif // OPENORIENTEERING_OCD_FILE_IMPORT

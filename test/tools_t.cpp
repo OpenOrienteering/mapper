@@ -109,7 +109,7 @@ TestMap::~TestMap()
 
 TestMapEditor::TestMapEditor(Map* map)
 {
-	window = new MainWindow(true);
+	window = new MainWindow();
 	editor = new MapEditorController(MapEditorController::MapEditor, map);
 	window->setController(editor);
 	map_widget = editor->getMainWidget();

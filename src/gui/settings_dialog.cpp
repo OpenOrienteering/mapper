@@ -43,6 +43,7 @@ SettingsDialog::SettingsDialog(QWidget* parent)
 	this->setLayout(layout);
 	
 	tab_widget = new QTabWidget();
+	tab_widget->setDocumentMode(true);
 	layout->addWidget(tab_widget);
 	
 	button_box = new QDialogButtonBox(
@@ -64,26 +65,37 @@ SettingsDialog::~SettingsDialog()
 	// Nothing, not inlined.
 }
 
+void SettingsDialog::applyChanges()
+{
+	for (auto count = tab_widget->count(), i = 0; i < count; i++)
+		static_cast< SettingsPage* >(tab_widget->widget(i))->apply();
+	Settings::getInstance().applySettings();
+}
+
 void SettingsDialog::addPage(SettingsPage* page)
 {
+	if (auto layout = page->layout())
+	{
+		auto margins = layout->contentsMargins();
+		margins.setLeft(0);
+		margins.setRight(0);
+		layout->setContentsMargins(margins);
+	}
 	tab_widget->addTab(page, page->title());
 }
 
 void SettingsDialog::buttonPressed(QAbstractButton* button)
 {
 	QDialogButtonBox::StandardButton id = button_box->standardButton(button);
-	const int count = tab_widget->count();
 	switch (id)
 	{
 	case QDialogButtonBox::Ok:
-		for (int i = 0; i < count; i++)
-			static_cast< SettingsPage* >(tab_widget->widget(i))->apply();
-		Settings::getInstance().applySettings();
+		applyChanges();
 		this->accept();
 		break;
 		
 	case QDialogButtonBox::Reset:
-		for (int i = 0; i < count; i++)
+		for (auto count = tab_widget->count(), i = 0; i < count; i++)
 			static_cast< SettingsPage* >(tab_widget->widget(i))->reset();
 		break;
 		

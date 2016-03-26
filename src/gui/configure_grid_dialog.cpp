@@ -45,10 +45,10 @@
 ConfigureGridDialog::ConfigureGridDialog(QWidget* parent, const Map& map, bool grid_visible)
 : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint)
 , map(map)
-, grid{ map.getGrid() }
-, grid_visible{ grid_visible }
-, current_color{ grid.getColor() }
-, current_unit{ grid.getUnit() }
+, grid(map.getGrid())
+, grid_visible(grid_visible)
+, current_color(grid.getColor())
+, current_unit(grid.getUnit())
 {
 	setWindowTitle(tr("Configure grid"));
 	

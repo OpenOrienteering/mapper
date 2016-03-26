@@ -1,6 +1,6 @@
 #
-#    Copyright 2012, 2013, 2014 Thomas Schöps
-#    Copyright 2012-2015 Kai Pastor
+#    Copyright 2012-2014 Thomas Schöps
+#    Copyright 2012-2016 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -141,7 +141,9 @@ set(Mapper_Common_SRCS
  file_format_ocad8.cpp
  file_format_xml.cpp
  
+ fileformats/ocd_file_export.cpp
  fileformats/ocd_file_format.cpp
+ fileformats/ocd_file_import.cpp
  fileformats/ocd_types.cpp
  
  gui/about_dialog.cpp
@@ -256,7 +258,8 @@ set(Mapper_Common_MOC_INPUT
  core/georeferencing.h
  core/map_printer.h
  
- fileformats/ocd_file_format_p.h
+ fileformats/ocd_file_export.h
+ fileformats/ocd_file_import.h
  
  gui/about_dialog.h
  gui/autosave_dialog.h
@@ -317,9 +320,11 @@ set(Mapper_Common_HEADERS
   fileformats/ocd_types_v9.h
   fileformats/ocd_types_v10.h
   fileformats/ocd_types_v11.h
+  fileformats/ocd_types_v12.h
 
   gui/point_handles.h
 
+  util/backports.h
   util/scoped_signals_blocker.h
 
   map_part.h

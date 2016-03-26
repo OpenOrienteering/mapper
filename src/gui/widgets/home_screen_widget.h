@@ -173,6 +173,9 @@ public slots:
 	 *  if they are not already there. */
 	void showExamples();
 	
+	/** Shows the settings dialog, adjusted for small screens. */
+	void showSettings();
+	
 protected slots:
 	/** Opens a file when its is list item is clicked. */
 	void fileClicked(QListWidgetItem* item);

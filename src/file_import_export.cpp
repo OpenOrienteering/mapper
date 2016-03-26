@@ -90,7 +90,7 @@ void Importer::doImport(bool load_symbols_only, const QString& map_path)
 	
 	if (auto deleted = map->deleteIrregularObjects())
 	{
-		addWarning(tr("Dropped %n irregular object(s).", nullptr, deleted));
+		addWarning(tr("Dropped %n irregular object(s).", 0, deleted));
 	}
 	
 	// Symbol post processing

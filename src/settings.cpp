@@ -30,6 +30,7 @@
 
 #include "util.h"
 
+
 Settings::Settings()
  : QObject()
 {
@@ -84,7 +85,7 @@ Settings::Settings()
 	registerSetting(General_RecentFilesList, "recentFileList", QVariant(QStringList()));
 	registerSetting(General_OpenMRUFile, "openMRUFile", false);
 	registerSetting(General_Local8BitEncoding, "local_8bit_encoding", "Windows-1252");
-	registerSetting(General_NewOcd8Implementation, "new_ocd8_implementation_v0.6", true);
+	registerSetting(General_NewOcd8Implementation, "new_ocd8_implementation", true);
 	registerSetting(General_StartDragDistance, "startDragDistance", start_drag_distance_default);
 	
 	registerSetting(HomeScreen_TipsVisible, "HomeScreen/tipsVisible", true);
@@ -94,25 +95,24 @@ Settings::Settings()
 	registerSetting(MapDisplay_Antialiasing, "MapDisplay/antialiasing", Util::isAntialiasingRequired(getSetting(General_PixelsPerInch).toReal()));
 	
 	// Migrate old settings
-	static QVariant current_version("0.5.9");
-	QSettings settings;
-	if (settings.value("version") != current_version)
+	static bool migration_checked = false;
+	if (!migration_checked)
 	{
-		migrateValue("General/language", General_Language, settings);
-		if (migrateValue("MapEditor/click_tolerance", MapEditor_ClickToleranceMM, settings))
-			settings.setValue(getSettingPath(MapEditor_ClickToleranceMM), Util::pixelToMMLogical(settings.value(getSettingPath(MapEditor_ClickToleranceMM)).toFloat()));
-		if (migrateValue("MapEditor/snap_distance", MapEditor_SnapDistanceMM, settings))
-			settings.setValue(getSettingPath(MapEditor_SnapDistanceMM), Util::pixelToMMLogical(settings.value(getSettingPath(MapEditor_SnapDistanceMM)).toFloat()));
-		if (migrateValue("RectangleTool/helper_cross_radius", RectangleTool_HelperCrossRadiusMM, settings))
-			settings.setValue(getSettingPath(RectangleTool_HelperCrossRadiusMM), Util::pixelToMMLogical(settings.value(getSettingPath(RectangleTool_HelperCrossRadiusMM)).toFloat()));
-		
-		settings.setValue("version", current_version);
-		
-		if (!current_version.toString().startsWith("0."))
+		QVariant current_version { "0.5.9" };
+		QSettings settings;
+		if (settings.value("version") != current_version)
 		{
-			// Future cleanup
+			migrateSettings(settings, current_version);
+		}
+		
+		if (!settings.value("new_ocd8_implementation_v0.6").isNull())
+		{
+			// Remove/reset to default
+			settings.remove("new_ocd8_implementation_v0.6");
 			settings.remove("new_ocd8_implementation");
 		}
+		
+		migration_checked = true;
 	}
 }
 
@@ -120,6 +120,25 @@ void Settings::registerSetting(Settings::SettingsEnum id, const QString& path, c
 {
 	setting_paths[id] = path;
 	setting_defaults[id] = default_value;
+}
+
+void Settings::migrateSettings(QSettings& settings, QVariant version)
+{
+	migrateValue("General/language", General_Language, settings);
+	if (migrateValue("MapEditor/click_tolerance", MapEditor_ClickToleranceMM, settings))
+		settings.setValue(getSettingPath(MapEditor_ClickToleranceMM), Util::pixelToMMLogical(settings.value(getSettingPath(MapEditor_ClickToleranceMM)).toFloat()));
+	if (migrateValue("MapEditor/snap_distance", MapEditor_SnapDistanceMM, settings))
+		settings.setValue(getSettingPath(MapEditor_SnapDistanceMM), Util::pixelToMMLogical(settings.value(getSettingPath(MapEditor_SnapDistanceMM)).toFloat()));
+	if (migrateValue("RectangleTool/helper_cross_radius", RectangleTool_HelperCrossRadiusMM, settings))
+		settings.setValue(getSettingPath(RectangleTool_HelperCrossRadiusMM), Util::pixelToMMLogical(settings.value(getSettingPath(RectangleTool_HelperCrossRadiusMM)).toFloat()));
+	
+	if (!version.toByteArray().startsWith("0."))
+	{
+		// Future cleanup
+		settings.remove("new_ocd8_implementation");
+	}
+
+	settings.setValue("version", version);
 }
 
 bool Settings::migrateValue(const QString& old_key, SettingsEnum new_setting, QSettings& settings) const

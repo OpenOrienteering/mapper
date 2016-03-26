@@ -102,7 +102,8 @@ HEADERS += \
   core/autosave_p.h \
   core/georeferencing.h \
   core/map_printer.h \
-  fileformats/ocd_file_format_p.h \
+  fileformats/ocd_file_export.h \
+  fileformats/ocd_file_import.h \
   gui/about_dialog.h \
   gui/autosave_dialog.h \
   gui/color_dialog.h \
@@ -155,7 +156,9 @@ HEADERS += \
   fileformats/ocd_types_v9.h \
   fileformats/ocd_types_v10.h \
   fileformats/ocd_types_v11.h \
+  fileformats/ocd_types_v12.h \
   gui/point_handles.h \
+  util/backports.h \
   util/scoped_signals_blocker.h \
   map_part.h \
   map_part_undo.h \
@@ -261,7 +264,9 @@ SOURCES += \
   file_format_native.cpp \
   file_format_ocad8.cpp \
   file_format_xml.cpp \
+  fileformats/ocd_file_export.cpp \
   fileformats/ocd_file_format.cpp \
+  fileformats/ocd_file_import.cpp \
   fileformats/ocd_types.cpp \
   gui/about_dialog.cpp \
   gui/autosave_dialog.cpp \

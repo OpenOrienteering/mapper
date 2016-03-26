@@ -171,7 +171,7 @@ TemplateAdjustDockWidget::TemplateAdjustDockWidget(const QString& title, MapEdit
 
 bool TemplateAdjustDockWidget::event(QEvent* event)
 {
-	if (event->type() == QEvent::ShortcutOverride && controller->getWindow()->areShortcutsDisabled())
+	if (event->type() == QEvent::ShortcutOverride && controller->getWindow()->shortcutsBlocked())
 		event->accept();
     return QDockWidget::event(event);
 }

@@ -1,6 +1,6 @@
 /*
  *    Copyright 2013 Thomas Schöps
- *    Copyright 2015 Kai Pastor
+ *    Copyright 2015, 2016 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -19,8 +19,8 @@
  */
 
 
-#ifndef _OPENORIENTEERING_PATH_OBJECT_T_H
-#define _OPENORIENTEERING_PATH_OBJECT_T_H
+#ifndef OPENORIENTEERING_PATH_OBJECT_T_H
+#define OPENORIENTEERING_PATH_OBJECT_T_H
 
 #include <QtTest/QtTest>
 
@@ -37,7 +37,7 @@ class PathObjectTest : public QObject
 Q_OBJECT
 public:
 	/** Constructor */
-	explicit PathObjectTest(QObject* parent = NULL);
+	explicit PathObjectTest(QObject* parent = nullptr);
 	
 private slots:
 	void initTestCase();
@@ -51,6 +51,9 @@ private slots:
 	/** Tests finding intersections with calcAllIntersectionsWith(). */
 	void calcIntersectionsTest();
 	void calcIntersectionsTest_data();
+	
+	/** Tests PathCoord and SplitPathCoord for a non-trivial zero-length path. */
+	void atypicalPathTest();
 	
 };
 

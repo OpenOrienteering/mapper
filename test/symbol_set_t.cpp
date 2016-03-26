@@ -1,5 +1,5 @@
 /*
- *    Copyright 2014, 2015 Kai Pastor
+ *    Copyright 2014-2016 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -19,6 +19,7 @@
 
 #include "symbol_set_t.h"
 
+#include "../src/core/map_color.h"
 #include "../src/core/map_view.h"
 #include "../src/file_format_xml_p.h"
 #include "../src/map.h"
@@ -101,6 +102,16 @@ void SymbolSetTool::processSymbolSet_data()
 	QTest::newRow("ISOM 1:10000 Finnish") << "ISOM_fi"  << 15000u << 10000u;
 	QTest::newRow("ISSOM 1:5000 Finnish") << "ISSOM_fi" <<  5000u <<  5000u;
 	QTest::newRow("ISSOM 1:4000 Finnish") << "ISSOM_fi" <<  5000u <<  4000u;
+    
+	QTest::newRow("ISMTBOM 1:20000") << "ISMTBOM" << 15000u << 20000u;
+	QTest::newRow("ISMTBOM 1:15000") << "ISMTBOM" << 15000u << 15000u;
+	QTest::newRow("ISMTBOM 1:10000") << "ISMTBOM" << 15000u << 10000u;
+	QTest::newRow("ISMTBOM 1:7500")  << "ISMTBOM" << 15000u <<  7500u;
+	QTest::newRow("ISMTBOM 1:5000")  << "ISMTBOM" << 15000u <<  5000u;
+	
+	QTest::newRow("ISSkiOM 1:15000") << "ISSkiOM" << 15000u << 15000u;
+	QTest::newRow("ISSkiOM 1:10000") << "ISSkiOM" << 15000u << 10000u;
+	QTest::newRow("ISSkiOM 1:5000")  << "ISSkiOM" << 15000u <<  5000u;
 }
 
 void SymbolSetTool::processSymbolSet()
@@ -149,7 +160,9 @@ void SymbolSetTool::processSymbolSet()
 			{
 				Symbol* symbol = map.getSymbol(i);
 				const int code = symbol->getNumberComponent(0);
-				if (code < 700 && code != 602)
+				if (!symbol->guessDominantColor()->getSpotColorName().startsWith(QLatin1String("PURPLE"))
+				    && code != 602
+				    && code != 999)
 				{
 					symbol->scale(factor);
 					++symbols_changed;
@@ -200,6 +213,68 @@ void SymbolSetTool::processSymbolSet()
 					}
 				}
 			}
+			QCOMPARE(north_lines_changed, 2);
+		}
+		
+		if (name == "ISMTBOM")
+		{
+			QCOMPARE(source_scale, 15000u);
+			const double factor = (target_scale >= 15000u) ? 1.0 : 1.5;
+			map.scaleAllObjects(factor, MapCoord());
+			
+			int symbols_changed = 0;
+			for (int i = 0; i < num_symbols; ++i)
+			{
+				Symbol* symbol = map.getSymbol(i);
+				const int code = symbol->getNumberComponent(0);
+				if (code != 602)
+				{
+					symbol->scale(factor);
+					++symbols_changed;
+				}
+			}
+			QCOMPARE(symbols_changed, 169);
+		}
+		
+		if (name == "ISSkiOM")
+		{
+			QCOMPARE(source_scale, 15000u);
+			const double factor = (target_scale >= 15000u) ? 1.0 : 1.5;
+			map.scaleAllObjects(factor, MapCoord());
+			
+			int symbols_changed = 0;
+			int north_lines_changed = 0;
+			for (int i = 0; i < num_symbols; ++i)
+			{
+				Symbol* symbol = map.getSymbol(i);
+				const int code = symbol->getNumberComponent(0);
+				if (!symbol->guessDominantColor()->getSpotColorName().startsWith(QLatin1String("PURPLE"))
+				    && code != 602
+				    && code != 999)
+				{
+					symbol->scale(factor);
+					++symbols_changed;
+				}
+				
+				if (code == 601 && symbol->getType() == Symbol::Area)
+				{
+					AreaSymbol::FillPattern& pattern0 = symbol->asArea()->getFillPattern(0);
+					if (pattern0.type == AreaSymbol::FillPattern::LinePattern)
+					{
+						switch (target_scale)
+						{
+						case 5000u:
+						case 10000u:
+							pattern0.line_spacing = 40000;
+							break;
+						default:
+							QFAIL("Undefined north line spacing for this scale");
+						}
+						++north_lines_changed;
+					}
+				}
+			}
+			QCOMPARE(symbols_changed, 152);
 			QCOMPARE(north_lines_changed, 2);
 		}
 	}

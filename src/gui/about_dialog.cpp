@@ -104,6 +104,7 @@ QString AboutDialog::about()
 	
 	static QStringList contributors_list( QStringList()
 	  << QStringLiteral("Javier Arufe")
+	  << QStringLiteral("Eric Boulet")
 	  << QStringLiteral("Jon Cundill")
 	  << QStringLiteral("Sławomir Cygler")
 	  << QStringLiteral("Jan Dalheimer")

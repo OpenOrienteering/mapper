@@ -1,5 +1,5 @@
 /*
- *    Copyright 2013, 2015 Kai Pastor
+ *    Copyright 2013, 2015, 2016 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -17,11 +17,10 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _OPENORIENTEERING_OCD_TYPES_
-#define _OPENORIENTEERING_OCD_TYPES_
+#ifndef OPENORIENTEERING_OCD_TYPES_H
+#define OPENORIENTEERING_OCD_TYPES_H
 
 #include <QtGlobal>
-#include <QtEndian>
 #include <QByteArray>
 #include <QChar>
 
@@ -92,13 +91,23 @@ namespace Ocd
 	
 	/**
 	 * The generic header at the beginning of all supported OCD file formats.
+	 * 
+	 * For implementation efficiency, this header is generalized in comparison
+	 * to the upstream documentation:
+	 * 
+	 *  - Until V8, the format actually used a 16 bit file type field called
+	 *    "section mark", but no file status field.
+	 *  - Until V9, the format actually used a 16 bit subversion field, but no
+	 *    subsubversion field.
 	 */
 	struct FileHeaderGeneric
 	{
 		quint16 vendor_mark;
-		quint16 RESERVED_MEMBER;
+		quint8  file_type;          /// aka "section mark" until V8
+		quint8  file_status_V9;     /// \since V9
 		quint16 version;
-		quint16 subversion;
+		quint8  subversion;
+		quint8  subsubversion_V10;  /// \since V10
 	};
 	
 	/**
@@ -121,7 +130,7 @@ namespace Ocd
 	{
 		quint32 pos;
 		quint32 size;
-		qint32 type;
+		qint32  type;
 		quint32 obj_index;
 	};
 	
@@ -168,6 +177,88 @@ namespace Ocd
 #pragma pack(pop)
 	
 	/**
+	 * Symbol type values.
+	 */
+	enum SymbolType
+	{
+		SymbolTypePoint        = 1,
+		SymbolTypeLine         = 2,
+		SymbolTypeArea         = 3,
+		SymbolTypeText         = 4,
+		SymbolTypeRectangle_V8 = 5, /// Until V8
+		SymbolTypeLineText  = 6, /// \since V9
+		SymbolTypeRectangle_V9 = 7  /// \since V9
+	};
+	
+	/**
+	 * Status flags for symbols.
+	 */
+	enum SymbolStatus
+	{
+		SymbolNormal    = 0,
+		SymbolProtected = 1,
+		SymbolHidden    = 2
+	};
+	
+	/**
+	 * Status values for objects.
+	 */
+	enum ObjectStatus
+	{
+		ObjectDeleted = 0,
+		ObjectNormal  = 1,
+		ObjectHidden  = 2,
+		ObjectDeletedForUndo = 3
+	};
+	
+	/**
+	 * Text alignment flags.
+	 */
+	enum TextAlignment
+	{
+		HAlignMask      = 0x03,
+		HAlignLeft      = 0x00,
+		HAlignCenter    = 0x01,
+		HAlignRight     = 0x02,
+		HAlignJustified = 0x03, /// All-line for line text symbols
+		VAlignMask      = 0x0c, /// \since V10
+		VAlignBottom    = 0x00, /// \since V10
+		VAlignMiddle    = 0x04, /// \since V10
+		VAlignTop       = 0x08  /// \since V10
+	};
+	
+	/**
+	 * Area hatch mode values.
+	 */
+	enum HatchMode
+	{
+		HatchNone   = 0,
+		HatchSingle = 1,
+		HatchCross  = 2
+	};
+	
+	/**
+	 * Area pattern structure values.
+	 */
+	enum StructureMode
+	{
+		StructureNone = 0,
+		StructureAlignedRows = 1,
+		StructureShiftedRows = 2
+	};
+	
+	/**
+	 *
+	 */
+	enum FramingMode
+	{
+		FramingNone      = 0,
+		FramingShadow    = 1, /// Somehow different in older versions
+		FramingLine      = 2, /// \since V7
+		FramingRectangle = 3  /// \since V8; Not for line text symbols
+	};
+	
+	/**
 	 * A generic OCD file format trait.
 	 *
 	 * It is suitable for detecting the actual format.
@@ -183,15 +274,6 @@ namespace Ocd
 		struct Object { typedef quint32 IndexEntryType; };
 	};
 	
-	/**
-	 * A OCD file format trait for selecting the old version 8 importer.
-	 */
-	struct FormatLegacyImporter
-	{
-		static constexpr int version() { return 8; }
-		
-		typedef FileHeaderGeneric FileHeader;
-	};
 }
 
 
@@ -497,7 +579,7 @@ quint32 FirstIndexBlock<F,T>::operator()(const OcdFile<F>* file) const
 template< class F >
 quint32 FirstIndexBlock<F,Ocd::ParameterString>::operator()(const OcdFile<F>* file) const
 {
-	return file->header()->first_string_block;
+	return (file->header()->version < 8) ? 0 : file->header()->first_string_block;
 }
 
 template< class F >
@@ -542,14 +624,20 @@ const OcdEntityIndexIterator<F,T,E>& OcdEntityIndexIterator<F,T,E>::operator++()
 			{
 				index = 0;
 				quint32 next_block = block->next_block;
-				if (next_block)
-				{
-					block = reinterpret_cast<const IndexBlock*>(&(*data)[next_block]);
-				}
-				else
+				if (next_block == 0)
 				{
 					block = nullptr;
 					data = nullptr;
+				}
+				else if (Q_UNLIKELY(next_block >= (unsigned int)data->byteArray().size()))
+				{
+					qWarning("OcdEntityIndexIterator: Next index block is out of bounds");
+					block = nullptr;
+					data = nullptr;
+				}
+				else
+				{
+					block = reinterpret_cast<const IndexBlock*>(&(*data)[next_block]);
 				}
 			}
 		}
@@ -770,4 +858,4 @@ const typename F::Object& OcdFile<F>::operator[](const typename OcdFile<F>::Obje
 	return reinterpret_cast<const typename F::Object&>((*this)[object_entry.pos]);
 }
 
-#endif
+#endif // OPENORIENTEERING_OCD_TYPES_H

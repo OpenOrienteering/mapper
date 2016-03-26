@@ -21,11 +21,11 @@
 
 #include "map_color.h"
 
-#include <QApplication>
+#include <QCoreApplication>
 
 
 MapColor::MapColor()
-: name(QApplication::translate("Map", "New color")),
+: name(QCoreApplication::translate("Map", "New color")),
   priority(Undefined),
   opacity(1.0f),
   q_color(Qt::black),
@@ -39,7 +39,7 @@ MapColor::MapColor()
 }
 
 MapColor::MapColor(int priority)
-: name(QApplication::translate("Map", "New color")),
+: name(QCoreApplication::translate("Map", "New color")),
   priority(priority),
   opacity(1.0f),
   q_color(Qt::black),
@@ -68,7 +68,7 @@ MapColor::MapColor(int priority)
 			break;
 		case Registration:
 			Q_ASSERT(isBlack());
-			name = QApplication::translate("MapColor", "Registration black (all printed colors)");
+			name = QCoreApplication::translate("MapColor", "Registration black (all printed colors)");
 			break;
 		default:
 			; // no change
