@@ -69,7 +69,7 @@ source directory (`SOURCE_DIR`).
 
 The standard g++ compiler from a recent distribution should work. The Ubuntu
 14.04 g++ is known to work. Make sure that the development packages of the
-PROJ.4 library and of CUPS are installed. For a Ubuntu or Debian system, installlibproj-dev and libcups2-dev.
+PROJ.4 library and of CUPS are installed. For a Ubuntu or Debian system, install libproj-dev and libcups2-dev.
 To create a DEB package from CMake, fakeroot must be installed.
 For using the Qt libraries provided by the repositories, the following packages
 need to be installed:
