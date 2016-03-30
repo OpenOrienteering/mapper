@@ -278,7 +278,7 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="45"/>
         <source>Edit map color</source>
-        <translation>Editer la palette des couleurs</translation>
+        <translation>Éditer la palette des couleurs</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="62"/>
@@ -515,7 +515,7 @@
     <message>
         <location filename="../src/symbol_combined.cpp" line="414"/>
         <source>Edit private symbol...</source>
-        <translation>Editer le symbole utilisé en combinaison ...</translation>
+        <translation>Éditer le symbole utilisé en combinaison ...</translation>
     </message>
     <message>
         <location filename="../src/symbol_combined.cpp" line="434"/>
@@ -694,7 +694,7 @@
     <message>
         <location filename="../src/tool_cut_hole.cpp" line="241"/>
         <source>&lt;b&gt;Click or drag&lt;/b&gt;: Start drawing the hole. </source>
-        <translation>&lt;b&gt;Clic ou glisser&lt;/b&gt;: Débuter le dessin du trou. </translation>
+        <translation>&lt;b&gt;Clic ou glisser&lt;/b&gt; : Débuter le dessin du trou. </translation>
     </message>
 </context>
 <context>
@@ -744,7 +744,7 @@
         <location filename="../src/tool_cutout.cpp" line="135"/>
         <location filename="../src/tool_cutout.cpp" line="139"/>
         <source>&lt;b&gt;%1+Click or drag&lt;/b&gt;: Select the objects to be clipped. </source>
-        <translation>&lt;b&gt;%1+Clic ou Glisser&lt;/b&gt;: Sélectionner les objets à rogner. </translation>
+        <translation>&lt;b&gt;%1+Clic ou Glisser&lt;/b&gt; : Sélectionner les objets à rogner. </translation>
     </message>
     <message>
         <location filename="../src/tool_cutout.cpp" line="140"/>
@@ -848,12 +848,12 @@
     <message>
         <location filename="../src/tool_draw_circle.cpp" line="294"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Start a circle or ellipse. </source>
-        <translation>&lt;b&gt;Clic&lt;/b&gt;: Débuter le dessin du cercle ou de l&apos;ellipse. </translation>
+        <translation>&lt;b&gt;Clic&lt;/b&gt; : Débuter le dessin du cercle ou de l&apos;ellipse. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_circle.cpp" line="295"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Draw a circle. </source>
-        <translation>&lt;b&gt;Glisser&lt;/b&gt;: Dessiner le cercle. </translation>
+        <translation>&lt;b&gt;Glisser&lt;/b&gt; : Dessiner le cercle. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_circle.cpp" line="297"/>
@@ -863,12 +863,12 @@
     <message>
         <location filename="../src/tool_draw_circle.cpp" line="301"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Finish the circle. </source>
-        <translation>&lt;b&gt;Clic&lt;/b&gt;: Terminer le cercle. </translation>
+        <translation>&lt;b&gt;Clic&lt;/b&gt; : Terminer le cercle. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_circle.cpp" line="302"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Draw an ellipse. </source>
-        <translation>&lt;b&gt;Glisser&lt;/b&gt;: Dessiner une ellipse. </translation>
+        <translation>&lt;b&gt;Glisser&lt;/b&gt; : Dessiner une ellipse. </translation>
     </message>
 </context>
 <context>
@@ -876,7 +876,7 @@
     <message>
         <location filename="../src/tool_draw_freehand.cpp" line="276"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Draw a path. </source>
-        <translation>&lt;b&gt;Glisser&lt;/b&gt;: Dessiner un segment.</translation>
+        <translation>&lt;b&gt;Glisser&lt;/b&gt; : Dessiner un segment.</translation>
     </message>
 </context>
 <context>
@@ -890,26 +890,26 @@
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1072"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt;: Snap or append to existing objects. </source>
-        <translation>&lt;b&gt;%1+Clic&lt;/b&gt;: Aimanter ou ajouter à d&apos;autres objets. </translation>
+        <translation>&lt;b&gt;%1+Clic&lt;/b&gt; : Aimanter ou ajouter à d&apos;autres objets. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1077"/>
         <location filename="../src/tool_draw_rectangle.cpp" line="706"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt;: Pick direction from existing objects. </source>
-        <translation>&lt;b&gt;%1+Clic&lt;/b&gt;: Choisir la direction à partir des objets existants. </translation>
+        <translation>&lt;b&gt;%1+Clic&lt;/b&gt; : Choisir la direction à partir des objets existants. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1090"/>
         <location filename="../src/tool_draw_rectangle.cpp" line="711"/>
         <location filename="../src/tool_draw_rectangle.cpp" line="735"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt;: Snap to existing objects. </source>
-        <translation>&lt;b&gt;%1+Clic&lt;/b&gt;: Aimanter aux objets existants. </translation>
+        <translation>&lt;b&gt;%1+Clic&lt;/b&gt; : Aimanter aux objets existants. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1096"/>
         <location filename="../src/tool_draw_rectangle.cpp" line="725"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Fixed angles. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: Angles fixés. </translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt; : Angles fixés. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1104"/>
@@ -966,12 +966,12 @@
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1082"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Start a straight line. &lt;b&gt;Drag&lt;/b&gt;: Start a curve. </source>
-        <translation>&lt;b&gt;Clic&lt;/b&gt;: Débuter une ligne droite. &lt;b&gt;Glisser&lt;/b&gt;: Débuter une ligne courbe. </translation>
+        <translation>&lt;b&gt;Clic&lt;/b&gt; : Débuter une ligne droite. &lt;b&gt;Glisser&lt;/b&gt; : Débuter une ligne courbe. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1091"/>
         <source>&lt;b&gt;%1+Drag&lt;/b&gt;: Follow existing objects. </source>
-        <translation>&lt;b&gt;%1+Glisser&lt;/b&gt;: Suivre les objets existants. </translation>
+        <translation>&lt;b&gt;%1+Glisser&lt;/b&gt; : Suivre les objets existants. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1101"/>
@@ -989,7 +989,7 @@
     <message>
         <location filename="../src/tool_draw_point_gps.cpp" line="182"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Finish setting the object. </source>
-        <translation>&lt;b&gt;Clic&lt;/b&gt;: Terminer le paramétrage de l&apos;objet.</translation>
+        <translation>&lt;b&gt;Clic&lt;/b&gt; : Terminer le paramétrage de l&apos;objet.</translation>
     </message>
 </context>
 <context>
@@ -1027,12 +1027,12 @@
         <location filename="../src/tool_draw_point.cpp" line="331"/>
         <location filename="../src/tool_draw_point.cpp" line="345"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Create a point object.</source>
-        <translation>&lt;b&gt;Clic&lt;/b&gt;: Créer un point.</translation>
+        <translation>&lt;b&gt;Clic&lt;/b&gt; : Créer un point.</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_point.cpp" line="332"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Create an object and set its orientation.</source>
-        <translation>&lt;b&gt;Glisser&lt;/b&gt;: Créer un objet et indiquer son oritentation.</translation>
+        <translation>&lt;b&gt;Glisser&lt;/b&gt; : Créer un objet et indiquer son orientation.</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_point.cpp" line="338"/>
@@ -1041,7 +1041,7 @@
     </message>
     <message>
         <source>&lt;b&gt;Click&lt;/b&gt;: Create a point object. &lt;b&gt;Drag&lt;/b&gt;: Create an object and set its orientation (if rotatable). </source>
-        <translation type="vanished">&lt;b&gt;Clic&lt;/b&gt;: Créer un point. &lt;b&gt;Glisser&lt;/b&gt;: Créer un objet et indiquer son orientation (si sa rotation est possible). </translation>
+        <translation type="vanished">&lt;b&gt;Clic&lt;/b&gt; : Créer un point. &lt;b&gt;Glisser&lt;/b&gt; : Créer un objet et indiquer son orientation (si sa rotation est possible). </translation>
     </message>
 </context>
 <context>
@@ -1082,7 +1082,7 @@
     <message>
         <location filename="../src/tool_draw_rectangle.cpp" line="716"/>
         <source>&lt;b&gt;Click or Drag&lt;/b&gt;: Start drawing a rectangle. </source>
-        <translation>&lt;b&gt;Clic ou Glisser&lt;/b&gt;: Débuter le dessin d&apos;un rectangle. </translation>
+        <translation>&lt;b&gt;Clic ou Glisser&lt;/b&gt; : Débuter le dessin d&apos;un rectangle. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_rectangle.cpp" line="729"/>
@@ -1092,7 +1092,7 @@
     <message>
         <location filename="../src/tool_draw_rectangle.cpp" line="740"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set a corner point. &lt;b&gt;Right or double click&lt;/b&gt;: Finish the rectangle. </source>
-        <translation>&lt;b&gt;Clic&lt;/b&gt;: Placer un sommet. &lt;b&gt;Clic droit ou Double-clic&lt;/b&gt;: Terminer le rectangle. </translation>
+        <translation>&lt;b&gt;Clic&lt;/b&gt; : Placer un sommet. &lt;b&gt;Clic droit ou Double-clic&lt;/b&gt ;: Terminer le rectangle. </translation>
     </message>
 </context>
 <context>
@@ -1105,7 +1105,7 @@
     <message>
         <location filename="../src/tool_draw_text.cpp" line="308"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Create a text object with a single anchor. &lt;b&gt;Drag&lt;/b&gt;: Create a text box. </source>
-        <translation>&lt;b&gt;Clic&lt;/b&gt;: Créer un texte avec un seul ancrage. &lt;b&gt;Glisser&lt;/b&gt;: Créer une boîte de texte. </translation>
+        <translation>&lt;b&gt;Clic&lt;/b&gt; : Créer un texte avec un seul ancrage. &lt;b&gt;Glisser&lt;/b&gt; : Créer une boîte de texte. </translation>
     </message>
     <message>
         <source>A</source>
@@ -1207,7 +1207,7 @@
         <location filename="../src/tool_edit_point.cpp" line="674"/>
         <location filename="../src/tool_edit_line.cpp" line="464"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Select a single object. &lt;b&gt;Drag&lt;/b&gt;: Select multiple objects. &lt;b&gt;%1+Click&lt;/b&gt;: Toggle selection. </source>
-        <translation>&lt;b&gt;Clic&lt;/b&gt;: Sélectionner un seul objet. &lt;b&gt;Glisser&lt;/b&gt;: Sélectionner plusieurs objets. &lt;b&gt;%1+Clic&lt;/b&gt;: Basculer (ou non) en mode sélection. </translation>
+        <translation>&lt;b&gt;Clic&lt;/b&gt; : Sélectionner un seul objet. &lt;b&gt;Glisser&lt;/b&gt; : Sélectionner plusieurs objets. &lt;b&gt;%1+Clic&lt;/b&gt; : Basculer (ou non) en mode sélection. </translation>
     </message>
     <message>
         <location filename="../src/tool_edit_point.cpp" line="677"/>
@@ -1382,7 +1382,7 @@
     <message>
         <location filename="../src/tool_fill.cpp" line="179"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Fill area with active symbol. The area to be filled must be bounded by lines or areas, other symbols are not taken into account. </source>
-        <translation>&lt;b&gt;Click&lt;/b&gt;: Remplir la surface avec le symbole sélectionné. La surface à remplir doit être limité par des lignes ou dess surfaces, les autres symboles ne sont pas pris en compte.</translation>
+        <translation>&lt;b&gt;Click&lt;/b&gt; : Remplir la surface avec le symbole sélectionné. La surface à remplir doit être limité par des lignes ou dess surfaces, les autres symboles ne sont pas pris en compte.</translation>
     </message>
 </context>
 <context>
@@ -1881,12 +1881,12 @@
     <name>GeoreferencingTool</name>
     <message>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set the reference point. Another button to cancel.</source>
-        <translation type="vanished">&lt;b&gt;Clic&lt;/b&gt;: Placer le point de référence. Appuyez sur un autre bouton pour annuler.</translation>
+        <translation type="vanished">&lt;b&gt;Clic&lt;/b&gt; : Placer le point de référence. Appuyez sur un autre bouton pour annuler.</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="702"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set the reference point. &lt;b&gt;Right click&lt;/b&gt;: Cancel.</source>
-        <translation>b&gt;Clic&lt;/b&gt;: Placer le point de référence. &lt;b&gt;Clic droit&lt;/b&gt;: Annuler.</translation>
+        <translation>b&gt;Clic&lt;/b&gt; : Placer le point de référence. &lt;b&gt;Clic droit&lt;/b&gt; : Annuler.</translation>
     </message>
 </context>
 <context>
@@ -1946,7 +1946,7 @@
     <message>
         <source>About %1</source>
         <comment>As in &apos;About OpenOrienteering Mapper&apos;</comment>
-        <translation type="vanished">A propos de %1</translation>
+        <translation type="vanished">À propos de %1</translation>
     </message>
     <message>
         <source>Recent maps</source>
@@ -1988,7 +1988,7 @@
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="159"/>
         <source>About %1</source>
         <comment>As in &apos;About OpenOrienteering Mapper&apos;</comment>
-        <translation>A propos de %1</translation>
+        <translation>À propos de %1</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="162"/>
@@ -2047,7 +2047,7 @@
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="338"/>
         <source>About Mapper</source>
-        <translation>A propos de Mapper</translation>
+        <translation>À propos de Mapper</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="478"/>
@@ -2619,7 +2619,7 @@
     <message>
         <location filename="../src/gui/main_window.cpp" line="82"/>
         <source>About %1</source>
-        <translation>A propos de %1</translation>
+        <translation>À propos de %1</translation>
     </message>
 </context>
 <context>
@@ -2713,7 +2713,7 @@
     <message>
         <location filename="../src/gui/main_window.cpp" line="322"/>
         <source>&amp;About %1</source>
-        <translation>&amp;A propos de %1</translation>
+        <translation>&amp;À propos de %1</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="323"/>
@@ -3155,7 +3155,7 @@ Voulez-vous redimensionner le fichier importé ?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="838"/>
         <source>Edit objects</source>
-        <translation>Editer des objets</translation>
+        <translation>Éditer des objets</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="840"/>
@@ -3283,7 +3283,7 @@ Voulez-vous redimensionner le fichier importé ?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="815"/>
         <source>Baseline view</source>
-        <translation>Afficher que les lignes de bases</translation>
+        <translation>Afficher uniquement les lignes de bases</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="816"/>
@@ -3710,7 +3710,7 @@ Voulez-vous redimensionner le fichier importé ?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="839"/>
         <source>Edit lines</source>
-        <translation>Editer des lignes</translation>
+        <translation>Éditer des lignes</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="844"/>
@@ -3816,7 +3816,7 @@ Voulez-vous redimensionner le fichier importé ?</translation>
         <location filename="../src/map_editor.cpp" line="912"/>
         <location filename="../src/map_editor.cpp" line="3413"/>
         <source>Add new part...</source>
-        <translation>Ajouter un nouvelle partie ...</translation>
+        <translation>Ajouter une nouvelle partie ...</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="913"/>
@@ -3930,7 +3930,7 @@ sdélectionnés</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="2131"/>
         <source>Duplicate the selected object(s).</source>
-        <translation>Dupliqure les objets sélectionnés.</translation>
+        <translation>Dupliquer les objets sélectionnés.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2129"/>
@@ -4405,7 +4405,7 @@ zoomez en utilisant la molette de votre souris.</translation>
     <message>
         <location filename="../src/map_dialog_new.cpp" line="57"/>
         <source>Only show symbol sets matching the selected scale</source>
-        <translation>N&apos;afficher que les bibliothèques de symboles compatibles avec l&apos;échelle sélectionnée</translation>
+        <translation>N&apos;afficher uniquement les bibliothèques de symboles compatibles avec l&apos;échelle sélectionnée</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_new.cpp" line="59"/>
@@ -4842,7 +4842,7 @@ zoomez en utilisant la molette de votre souris.</translation>
     <message>
         <location filename="../src/template_tool_paint.cpp" line="58"/>
         <source>&lt;b&gt;Click and drag&lt;/b&gt;: Paint. &lt;b&gt;Right click and drag&lt;/b&gt;: Erase. </source>
-        <translation>&lt;b&gt;Clic et Glisser&lt;/b&gt;: Peindre. &lt;b&gt;Clic-droit et Glisser&lt;/b&gt;: Effacer. </translation>
+        <translation>&lt;b&gt;Clic et Glisser&lt;/b&gt; : Peindre. &lt;b&gt;Clic-droit et Glisser&lt;/b&gt; : Effacer. </translation>
     </message>
     <message>
         <location filename="../src/template_tool_paint.cpp" line="61"/>
@@ -4872,7 +4872,7 @@ zoomez en utilisant la molette de votre souris.</translation>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="967"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Add a coordinate. &lt;b&gt;%1+Click&lt;/b&gt;: Change the selected coordinate. </source>
-        <translation>&lt;b&gt;Clic&lt;/b&gt;: Ajouter une coordonnée. &lt;b&gt;%1+Clic&lt;/b&gt;: Changer les coordonnées sélectionnées. </translation>
+        <translation>&lt;b&gt;Clic&lt;/b&gt; : Ajouter une coordonnée. &lt;b&gt;%1+Clic&lt;/b&gt; : Changer les coordonnées sélectionnées. </translation>
     </message>
 </context>
 <context>
@@ -5061,35 +5061,35 @@ zoomez en utilisant la molette de votre souris.</translation>
     <name>PrintTool</name>
     <message>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the print area or its borders. </source>
-        <translation type="obsolete">&lt;b&gt;Glisser&lt;/b&gt;: Déplacer la zone d&apos;impression ou ses limites. </translation>
+        <translation type="obsolete">&lt;b&gt;Glisser&lt;/b&gt; : Déplacer la zone d&apos;impression ou ses limites. </translation>
     </message>
     <message>
         <location filename="../src/gui/print_tool.cpp" line="52"/>
         <location filename="../src/gui/print_tool.cpp" line="364"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the map, the print area or the area&apos;s borders. </source>
-        <translation>&lt;b&gt;Glisser&lt;/b&gt;: Déplacer la carte, la zone d&apos;impression ou les bordures des surfaces.</translation>
+        <translation>&lt;b&gt;Glisser&lt;/b&gt; : Déplacer la carte, la zone d&apos;impression ou les bordures des surfaces.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_tool.cpp" line="336"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the print area. </source>
-        <translation>&lt;b&gt;Glisser&lt;/b&gt;: Déplacer la surface d&apos;impressio. </translation>
+        <translation>&lt;b&gt;Glisser&lt;/b&gt; : Déplacer la surface d&apos;impressio. </translation>
     </message>
     <message>
         <location filename="../src/gui/print_tool.cpp" line="340"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the map. </source>
-        <translation>&lt;b&gt;Glisser&lt;/b&gt;: Déplacer la carte. </translation>
+        <translation>&lt;b&gt;Glisser&lt;/b&gt; : Déplacer la carte. </translation>
     </message>
     <message>
         <location filename="../src/gui/print_tool.cpp" line="345"/>
         <location filename="../src/gui/print_tool.cpp" line="350"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the print area&apos;s border. </source>
-        <translation>&lt;b&gt;Glisser&lt;/b&gt;:Déplacer le bordure de la surface d&apos;impression. </translation>
+        <translation>&lt;b&gt;Glisser&lt;/b&gt; :Déplacer le bordure de la surface d&apos;impression. </translation>
     </message>
     <message>
         <location filename="../src/gui/print_tool.cpp" line="355"/>
         <location filename="../src/gui/print_tool.cpp" line="360"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the print area&apos;s borders. </source>
-        <translation>&lt;b&gt;Glisser&lt;/b&gt;:Déplacer la bordures de la surface d&apos;impression. </translation>
+        <translation>&lt;b&gt;Glisser&lt;/b&gt; :Déplacer la bordures de la surface d&apos;impression. </translation>
     </message>
 </context>
 <context>
@@ -5667,7 +5667,7 @@ des couleurs</translation>
     <message>
         <location filename="../src/tool_rotate_pattern.cpp" line="162"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Set the direction of area fill patterns or point objects. </source>
-        <translation>&lt;b&gt;Glisser&lt;/b&gt;: Définir la direction des surfaces avec motifs ou des objets ponctuels. </translation>
+        <translation>&lt;b&gt;Glisser&lt;/b&gt; : Définir la direction des surfaces avec motifs ou des objets ponctuels. </translation>
     </message>
 </context>
 <context>
@@ -5686,12 +5686,12 @@ des couleurs</translation>
         <location filename="../src/tool_rotate.cpp" line="190"/>
         <location filename="../src/tool_rotate.cpp" line="194"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set the center of rotation. </source>
-        <translation>&lt;b&gt;Clic&lt;/b&gt;: Placer le centre de rotation. </translation>
+        <translation>&lt;b&gt;Clic&lt;/b&gt; : Placer le centre de rotation. </translation>
     </message>
     <message>
         <location filename="../src/tool_rotate.cpp" line="195"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Rotate the selected objects. </source>
-        <translation>&lt;b&gt;Glisser&lt;/b&gt;: Appliquer une rotation aux objets sélectionnés. </translation>
+        <translation>&lt;b&gt;Glisser&lt;/b&gt; : Appliquer une rotation aux objets sélectionnés. </translation>
     </message>
 </context>
 <context>
@@ -5789,12 +5789,12 @@ des couleurs</translation>
         <location filename="../src/tool_scale.cpp" line="202"/>
         <location filename="../src/tool_scale.cpp" line="204"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set the scaling center. </source>
-        <translation>&lt;b&gt;Clic&lt;/b&gt;: Placer le centre de redimensionnement. </translation>
+        <translation>&lt;b&gt;Clic&lt;/b&gt; : Placer le centre de redimensionnement. </translation>
     </message>
     <message>
         <location filename="../src/tool_scale.cpp" line="205"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Scale the selected objects. </source>
-        <translation>&lt;b&gt;Glisser&lt;/b&gt;: Redimensionner les objets sélectionnés. </translation>
+        <translation>&lt;b&gt;Glisser&lt;/b&gt; : Redimensionner les objets sélectionnés. </translation>
     </message>
 </context>
 <context>
@@ -5942,7 +5942,7 @@ des couleurs</translation>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="236"/>
         <source>Edit</source>
-        <translation>Editer</translation>
+        <translation>Éditer</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="237"/>
@@ -6277,12 +6277,12 @@ traverser les jattes de kiwis
     <message>
         <location filename="../src/template_adjust.cpp" line="572"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set the template position of the pass point. </source>
-        <translation>&lt;b&gt;Clic&lt;/b&gt;: Définir la position du point de calage sur le modèle. </translation>
+        <translation>&lt;b&gt;Clic&lt;/b&gt; : Définir la position du point de calage sur le modèle. </translation>
     </message>
     <message>
         <location filename="../src/template_adjust.cpp" line="597"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set the map position of the pass point. </source>
-        <translation>&lt;b&gt;Clic&lt;/b&gt;: Définir la position du point de calage sur la carte. </translation>
+        <translation>&lt;b&gt;Clic&lt;/b&gt; : Définir la position du point de calage sur la carte. </translation>
     </message>
 </context>
 <context>
@@ -6290,7 +6290,7 @@ traverser les jattes de kiwis
     <message>
         <location filename="../src/template_adjust.cpp" line="806"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Delete pass points. </source>
-        <translation>&lt;b&gt;Clic&lt;/b&gt;: Effacer les points de calage. </translation>
+        <translation>&lt;b&gt;Clic&lt;/b&gt; : Effacer les points de calage. </translation>
     </message>
 </context>
 <context>
@@ -6298,7 +6298,7 @@ traverser les jattes de kiwis
     <message>
         <location filename="../src/template_adjust.cpp" line="681"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move pass points. </source>
-        <translation>&lt;b&gt;Glisser&lt;/b&gt; Déplacer les points de calage. </translation>
+        <translation>&lt;b&gt;Glisser&lt;/b&gt; : Déplacer les points de calage. </translation>
     </message>
 </context>
 <context>
