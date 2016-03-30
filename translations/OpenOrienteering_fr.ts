@@ -12,7 +12,7 @@
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="161"/>
         <source>This program is free software: you can redistribute it and/or modify it under the terms of the &lt;a %1&gt;GNU General Public License (GPL), version&amp;nbsp;3&lt;/a&gt;, as published by the Free Software Foundation.</source>
-        <translation>Le programme est un logiciel libre ; vous pouvez le redistribuer ou le modifier suivant les termes de la &lt;a %1&gt;“GNU General Public License” &lt;/a&gt; telle que publiée par la Free Software Foundation : soit la version 3 de cette licence, soit (à votre gré) toute version ultérieure.</translation>
+        <translation>Ce programme est un logiciel libre ; vous pouvez le redistribuer ou le modifier suivant les termes de la &lt;a %1&gt;“GNU General Public License” &lt;/a&gt; telle que publiée par la Free Software Foundation : soit la version 3 de cette licence, soit (à votre gré) toute version ultérieure.</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="167"/>
@@ -54,7 +54,7 @@
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="182"/>
         <source>For contributions, thanks to:</source>
-        <translation>Pour leurs contributions, merci à:</translation>
+        <translation>Pour leurs contributions, merci à :</translation>
     </message>
     <message>
         <source>This program uses the &lt;b&gt;Clipper library&lt;/b&gt; by Angus Johnson.</source>
@@ -303,7 +303,7 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="91"/>
         <source>Knockout: erases lower colors</source>
-        <translation>Knockout: efface les couleurs les plus basses</translation>
+        <translation>Knockout : efface les couleurs les plus basses</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="109"/>
@@ -738,7 +738,7 @@
     <message>
         <location filename="../src/tool_cutout.cpp" line="134"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Clip the whole map. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: Rogner toute la carte. </translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt; : Rogner toute la carte. </translation>
     </message>
     <message>
         <location filename="../src/tool_cutout.cpp" line="135"/>
@@ -3175,7 +3175,7 @@ Voulez-vous redimensionner le fichier importé ?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="846"/>
         <source>Write text</source>
-        <translation>Ecrire un texte</translation>
+        <translation>Écrire un texte</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="847"/>
@@ -3915,7 +3915,7 @@ sdélectionnés</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="2036"/>
         <source>Write text on the map.</source>
-        <translation>Ecrire du texte sur la carte.</translation>
+        <translation>Écrire du texte sur la carte.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2036"/>
