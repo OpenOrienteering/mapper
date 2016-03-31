@@ -1092,7 +1092,7 @@
     <message>
         <location filename="../src/tool_draw_rectangle.cpp" line="740"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set a corner point. &lt;b&gt;Right or double click&lt;/b&gt;: Finish the rectangle. </source>
-        <translation>&lt;b&gt;Clic&lt;/b&gt; : Placer un sommet. &lt;b&gt;Clic droit ou Double-clic&lt;/b&gt ;: Terminer le rectangle. </translation>
+        <translation>&lt;b&gt;Clic&lt;/b&gt; : Placer un sommet. &lt;b&gt;Clic droit ou Double-clic&lt;/b&gt; : Terminer le rectangle. </translation>
     </message>
 </context>
 <context>
