@@ -25,18 +25,22 @@
 #include <QAbstractButton>
 #include <QCheckBox>
 #include <QCommandLinkButton>
+#include <QDialogButtonBox>
 #include <QDirIterator>
 #include <QFileInfo>
+#include <QFormLayout>
 #include <QGridLayout>
 #include <QLabel>
 #include <QListWidget>
 #include <QPainter>
 #include <QProcessEnvironment>
+#include <QScrollArea>
 #include <QScroller>
 #include <QStackedLayout>
 
 #include "../home_screen_controller.h"
 #include "../main_window.h"
+#include "../settings_dialog.h"
 #include "../../file_format_registry.h"
 #include "../../mapper_resource.h"
 
@@ -327,6 +331,8 @@ HomeScreenWidgetMobile::HomeScreenWidgetMobile(HomeScreenController* controller,
 	
 	examples_button = new QPushButton(tr("Examples"));
 	connect(examples_button, &QPushButton::clicked, this, &HomeScreenWidgetMobile::showExamples);
+	auto settings_button = new QPushButton(HomeScreenWidgetDesktop::tr("Settings"));
+	connect(settings_button, &QPushButton::clicked, this, &HomeScreenWidgetMobile::showSettings);
 	QPushButton* help_button = new QPushButton(HomeScreenWidgetDesktop::tr("Help"));
 	connect(help_button, &QPushButton::clicked, controller->getWindow(), &MainWindow::showHelp);
 	QPushButton* about_button = new QPushButton(tr("About Mapper"));
@@ -335,6 +341,7 @@ HomeScreenWidgetMobile::HomeScreenWidgetMobile(HomeScreenController* controller,
 	buttons_layout->setContentsMargins(0, 0, 0, 0);
 	buttons_layout->addWidget(examples_button);
 	buttons_layout->addStretch(1);
+	buttons_layout->addWidget(settings_button);
 	buttons_layout->addWidget(help_button);
 	buttons_layout->addWidget(about_button);
 	
@@ -418,6 +425,41 @@ void HomeScreenWidgetMobile::showExamples()
 		file_list->setCurrentRow(old_size, QItemSelectionModel::ClearAndSelect);
 		examples_button->setEnabled(false);
 	}
+}
+
+void HomeScreenWidgetMobile::showSettings()
+{
+	auto window = this->window();
+	
+	QDialog dialog(window);
+	dialog.setGeometry(window->geometry());
+	
+	auto layout = new QVBoxLayout();
+	layout->setContentsMargins({ });
+	dialog.setLayout(layout);
+	
+	auto scrollarea = new QScrollArea();
+	scrollarea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+	scrollarea->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+	QScroller::grabGesture(scrollarea, QScroller::TouchGesture);
+	layout->addWidget(scrollarea);
+	
+	auto settings_widget = new SettingsDialog();
+	settings_widget->setMaximumWidth(dialog.width());
+	const auto form_layouts = settings_widget->findChildren<QFormLayout*>();
+	for (auto child_layout : form_layouts)
+	{
+		child_layout->setRowWrapPolicy(QFormLayout::WrapLongRows);
+	}
+	auto buttons = settings_widget->findChild<QDialogButtonBox*>();
+	if (buttons)
+		buttons->hide();
+	scrollarea->setWidget(settings_widget);
+	
+	dialog.exec();
+	
+	if (buttons)
+		settings_widget->applyChanges();
 }
 
 void HomeScreenWidgetMobile::fileClicked(QListWidgetItem* item)

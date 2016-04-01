@@ -529,7 +529,9 @@ void MapEditorController::attach(MainWindow* window)
 	
 	this->window = window;
 	if (mode == MapEditor)
-		window->setHasOpenedFile(true);
+	{
+		window->setHasUnsavedChanges(map->hasUnsavedChanged());
+	}
 	connect(map, SIGNAL(hasUnsavedChanges(bool)), window, SLOT(setHasUnsavedChanges(bool)));
 	
 #ifdef Q_OS_ANDROID
@@ -3827,7 +3829,7 @@ bool EditorDockWidget::event(QEvent* event)
 	switch (event->type())
 	{
 	case QEvent::ShortcutOverride:
-		if (editor->getWindow()->areShortcutsDisabled())
+		if (editor->getWindow()->shortcutsBlocked())
 			event->accept();
 		break;
 		

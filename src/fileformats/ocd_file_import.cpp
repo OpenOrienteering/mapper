@@ -72,13 +72,13 @@ void OcdFileImport::setCustom8BitEncoding(const char* encoding)
 }
 
 
-void OcdFileImport::addSymbolWarning(LineSymbol* symbol, const QString& warning)
+void OcdFileImport::addSymbolWarning(const LineSymbol* symbol, const QString& warning)
 {
 	addWarning( tr("In line symbol %1 '%2': %3").
 	            arg(symbol->getNumberAsString(), symbol->getName(), warning) );
 }
 
-void OcdFileImport::addSymbolWarning(TextSymbol* symbol, const QString& warning)
+void OcdFileImport::addSymbolWarning(const TextSymbol* symbol, const QString& warning)
 {
 	addWarning( tr("In text symbol %1 '%2': %3").
 	            arg(symbol->getNumberAsString(), symbol->getName(), warning) );
@@ -820,245 +820,47 @@ PointSymbol* OcdFileImport::importPointSymbol(const S& ocd_symbol, int ocd_versi
 template< class S >
 Symbol* OcdFileImport::importLineSymbol(const S& ocd_symbol, int ocd_version)
 {
+	using LineStyle = Ocd::LineSymbolCommonV8;
+	
 	OcdImportedLineSymbol* line_for_borders = nullptr;
 	
 	// Import a main line?
 	OcdImportedLineSymbol* main_line = nullptr;
-	if (ocd_symbol.double_mode == 0 || ocd_symbol.line_width > 0)
+	if (ocd_symbol.common.double_mode == 0 || ocd_symbol.common.line_width > 0)
 	{
-		main_line = new OcdImportedLineSymbol();
-		line_for_borders = main_line;
+		main_line = importLineSymbolBase(ocd_symbol.common);
 		setupBaseSymbol(main_line, ocd_symbol);
-		
-		// Basic line options
-		main_line->line_width = convertLength(ocd_symbol.line_width);
-		main_line->color = convertColor(ocd_symbol.line_color);
-		
-		// Cap and join styles
-		switch (ocd_symbol.line_style)
-		{
-		case S::BevelJoin_FlatCap:
-			main_line->join_style = LineSymbol::BevelJoin;
-			main_line->cap_style = LineSymbol::FlatCap;
-			break;
-		case S::RoundJoin_RoundCap:
-			main_line->join_style = LineSymbol::RoundJoin;
-			main_line->cap_style = LineSymbol::RoundCap;
-			break;
-		case S::BevelJoin_PointedCap:
-			main_line->join_style = LineSymbol::BevelJoin;
-			main_line->cap_style = LineSymbol::PointedCap;
-			break;
-		case S::RoundJoin_PointedCap:
-			main_line->join_style = LineSymbol::RoundJoin;
-			main_line->cap_style = LineSymbol::PointedCap;
-			break;
-		case S::MiterJoin_FlatCap:
-			main_line->join_style = LineSymbol::MiterJoin;
-			main_line->cap_style = LineSymbol::FlatCap;
-			break;
-		case S::MiterJoin_PointedCap:
-			main_line->join_style = LineSymbol::MiterJoin;
-			main_line->cap_style = LineSymbol::PointedCap;
-			break;
-		default:
-			addSymbolWarning( main_line,
-			                  tr("Unsupported line style '%1'.").
-			                  arg(ocd_symbol.line_style) );
-		}
-		
-		if (main_line->cap_style == LineSymbol::PointedCap)
-		{
-			int ocd_length = ocd_symbol.dist_from_start;
-			if (ocd_symbol.dist_from_start != ocd_symbol.dist_from_end)
-			{
-				// FIXME: Different lengths for start and end length of pointed line ends are not supported yet, so take the average
-				ocd_length = (ocd_symbol.dist_from_start + ocd_symbol.dist_from_end) / 2;
-				addSymbolWarning( main_line,
-				  tr("Different lengths for pointed caps at begin (%1 mm) and end (%2 mm) are not supported. Using %3 mm.").
-				  arg(locale.toString(0.001f * convertLength(ocd_symbol.dist_from_start))).
-				  arg(locale.toString(0.001f * convertLength(ocd_symbol.dist_from_end))).
-				  arg(locale.toString(0.001f * convertLength(ocd_length))) );
-			}
-			main_line->pointed_cap_length = convertLength(ocd_length);
-			main_line->join_style = LineSymbol::RoundJoin;	// NOTE: while the setting may be different (see what is set in the first place), OC*D always draws round joins if the line cap is pointed!
-		}
-		
-		// Handle the dash pattern
-		if (ocd_symbol.main_gap || ocd_symbol.sec_gap)
-		{
-			if (!ocd_symbol.main_length)
-			{
-				// Invalid dash pattern
-				addSymbolWarning( main_line,
-				  tr("The dash pattern cannot be imported correctly.") );
-			}
-			else if (ocd_symbol.sec_gap && !ocd_symbol.main_gap)
-			{
-				// Special case main_gap == 0
-				main_line->dashed = true;
-				main_line->dash_length = convertLength(ocd_symbol.main_length - ocd_symbol.sec_gap);
-				main_line->break_length = convertLength(ocd_symbol.sec_gap);
-				
-				if (ocd_symbol.end_length)
-				{
-					if (qAbs((qint32)ocd_symbol.main_length - 2*ocd_symbol.end_length) > 1)
-					{
-						// End length not equal to 0.5 * main length
-						addSymbolWarning( main_line,
-						  tr("The dash pattern's end length (%1 mm) cannot be imported correctly. Using %2 mm.").
-						  arg(locale.toString(0.001f * convertLength(ocd_symbol.end_length))).
-						  arg(locale.toString(0.001f * main_line->dash_length)) );
-					}
-					if (ocd_symbol.end_gap)
-					{
-						addSymbolWarning( main_line,
-						  tr("The dash pattern's end gap (%1 mm) cannot be imported correctly. Using %2 mm.").
-						  arg(locale.toString(0.001f * convertLength(ocd_symbol.end_gap))).
-						  arg(locale.toString(0.001f * main_line->break_length)) );
-					}
-				}
-			}
-			else
-			{
-				// Standard case
-				main_line->dashed = true;
-				main_line->dash_length = convertLength(ocd_symbol.main_length);
-				main_line->break_length = convertLength(ocd_symbol.main_gap);
-				
-				if (ocd_symbol.end_length && ocd_symbol.end_length != ocd_symbol.main_length)
-				{
-					if (ocd_symbol.main_length && 0.75 >= ocd_symbol.end_length / ocd_symbol.main_length)
-					{
-						// End length max. 75 % of main length
-						main_line->half_outer_dashes = true;
-					}
-					
-					if (qAbs((qint32)ocd_symbol.main_length - 2*ocd_symbol.end_length) > 1)
-					{
-						// End length not equal to 0.5 * main length
-						addSymbolWarning( main_line,
-						  tr("The dash pattern's end length (%1 mm) cannot be imported correctly. Using %2 mm.").
-						  arg(locale.toString(0.001f * convertLength(ocd_symbol.end_length))).
-						  arg(locale.toString(0.001f * (main_line->half_outer_dashes ? (main_line->dash_length/2) : main_line->dash_length))) );
-					}
-				}
-				
-				if (ocd_symbol.sec_gap)
-				{
-					main_line->dashes_in_group = 2;
-					main_line->in_group_break_length = convertLength(ocd_symbol.sec_gap);
-					main_line->dash_length = (main_line->dash_length - main_line->in_group_break_length) / 2;
-					
-					if (ocd_symbol.end_length && ocd_symbol.end_gap != ocd_symbol.sec_gap)
-					{
-						addSymbolWarning( main_line,
-						  tr("The dash pattern's end gap (%1 mm) cannot be imported correctly. Using %2 mm.").
-						  arg(locale.toString(0.001f * convertLength(ocd_symbol.end_gap))).
-						  arg(locale.toString(0.001f * main_line->in_group_break_length)) );
-					}
-				}
-			}
-		} 
-		else
-		{
-			main_line->segment_length = convertLength(ocd_symbol.main_length);
-			main_line->end_length = convertLength(ocd_symbol.end_length);
-		}
+		line_for_borders = main_line;
 	}
 	
 	// Import a 'framing' line?
 	OcdImportedLineSymbol* framing_line = nullptr;
-	if (ocd_symbol.framing_width > 0 && ocd_version >= 7)
+	if (ocd_symbol.common.framing_width > 0 && ocd_version >= 7)
 	{
-		framing_line = new OcdImportedLineSymbol();
+		framing_line = importLineSymbolFraming(ocd_symbol.common, main_line);
+		setupBaseSymbol(framing_line, ocd_symbol);
 		if (!line_for_borders)
 			line_for_borders = framing_line;
-		setupBaseSymbol(framing_line, ocd_symbol);
-		
-		// Basic line options
-		framing_line->line_width = convertLength(ocd_symbol.framing_width);
-		framing_line->color = convertColor(ocd_symbol.framing_color);
-		
-		// Cap and join styles
-		switch (ocd_symbol.framing_style)
-		{
-		case S::BevelJoin_FlatCap:
-			framing_line->join_style = LineSymbol::BevelJoin;
-			framing_line->cap_style = LineSymbol::FlatCap;
-			break;
-		case S::RoundJoin_RoundCap:
-			framing_line->join_style = LineSymbol::RoundJoin;
-			framing_line->cap_style = LineSymbol::RoundCap;
-			break;
-		case S::MiterJoin_FlatCap:
-			framing_line->join_style = LineSymbol::MiterJoin;
-			framing_line->cap_style = LineSymbol::FlatCap;
-			break;
-		default:
-			addSymbolWarning( main_line, 
-			                  tr("Unsupported framing line style '%1'.").
-			                  arg(ocd_symbol.line_style) );
-		}
 	}
 	
 	// Import a 'double' line?
 	bool has_border_line =
-	        (ocd_symbol.double_mode != 0) &&
-	        (ocd_symbol.double_left_width > 0 || ocd_symbol.double_right_width > 0);
+	        (ocd_symbol.common.double_mode != 0) &&
+	        (ocd_symbol.common.double_left_width > 0 || ocd_symbol.common.double_right_width > 0);
 	OcdImportedLineSymbol *double_line = nullptr;
 	if ( has_border_line &&
-		(ocd_symbol.double_flags & S::DoubleFillColorOn || (has_border_line && !line_for_borders)))
+		(ocd_symbol.common.double_flags & LineStyle::DoubleFillColorOn || !line_for_borders) )
 	{
-		double_line = new OcdImportedLineSymbol();
-		line_for_borders = double_line;
+		double_line = importLineSymbolDoubleBorder(ocd_symbol.common);
 		setupBaseSymbol(double_line, ocd_symbol);
-		
-		double_line->line_width = convertLength(ocd_symbol.double_width);
-		if (ocd_symbol.double_flags & S::DoubleFillColorOn)
-			double_line->color = convertColor(ocd_symbol.double_color);
-		else
-			double_line->color = nullptr;
-		
-		double_line->cap_style = LineSymbol::FlatCap;
-		double_line->join_style = LineSymbol::MiterJoin;
-		
-		double_line->segment_length = convertLength(ocd_symbol.main_length);
-		double_line->end_length = convertLength(ocd_symbol.end_length);
+		line_for_borders = double_line;
 	}
 	
 	// Border lines
 	if (has_border_line)
 	{
 		Q_ASSERT(line_for_borders);
-		line_for_borders->have_border_lines = true;
-		LineSymbolBorder& border = line_for_borders->getBorder();
-		LineSymbolBorder& right_border = line_for_borders->getRightBorder();
-		
-		// Border color and width
-		border.color = convertColor(ocd_symbol.double_left_color);
-		border.width = convertLength(ocd_symbol.double_left_width);
-		border.shift = convertLength(ocd_symbol.double_left_width) / 2 + (convertLength(ocd_symbol.double_width) - line_for_borders->line_width) / 2;
-		
-		right_border.color = convertColor(ocd_symbol.double_right_color);
-		right_border.width = convertLength(ocd_symbol.double_right_width);
-		right_border.shift = convertLength(ocd_symbol.double_right_width) / 2 + (convertLength(ocd_symbol.double_width) - line_for_borders->line_width) / 2;
-		
-		// The borders may be dashed
-		if (ocd_symbol.double_gap > 0 && ocd_symbol.double_mode > 1)
-		{
-			border.dashed = true;
-			border.dash_length = convertLength(ocd_symbol.double_length);
-			border.break_length = convertLength(ocd_symbol.double_gap);
-			
-			// If ocd_symbol->dmode == 2, only the left border should be dashed
-			if (ocd_symbol.double_mode > 2)
-			{
-				right_border.dashed = border.dashed;
-				right_border.dash_length = border.dash_length;
-				right_border.break_length = border.break_length;
-			}
-		}
+		setupLineSymbolForBorder(line_for_borders, ocd_symbol.common);
 	}
 	
 	// Create point symbols along line; middle ("normal") dash, corners, start, and end.
@@ -1069,97 +871,343 @@ Symbol* OcdFileImport::importLineSymbol(const S& ocd_symbol, int ocd_version)
 		symbol_line = main_line;
 		setupBaseSymbol(main_line, ocd_symbol);
 		
-		main_line->segment_length = convertLength(ocd_symbol.main_length);
-		main_line->end_length = convertLength(ocd_symbol.end_length);
+		main_line->segment_length = convertLength(ocd_symbol.common.main_length);
+		main_line->end_length = convertLength(ocd_symbol.common.end_length);
 	}
 	
-	const Ocd::OcdPoint32* coords = reinterpret_cast<const Ocd::OcdPoint32*>(ocd_symbol.begin_of_elements);
-	
-	symbol_line->mid_symbol = new OcdImportedPointSymbol();
-	setupPointSymbolPattern(symbol_line->mid_symbol, ocd_symbol.primary_data_size, ocd_symbol.begin_of_elements, ocd_version);
-	symbol_line->mid_symbols_per_spot = ocd_symbol.num_prim_sym;
-	symbol_line->mid_symbol_distance = convertLength(ocd_symbol.prim_sym_dist);
-	coords += ocd_symbol.primary_data_size;
-	
-	if (ocd_symbol.secondary_data_size > 0)
-	{
-		//symbol_line->dash_symbol = importPattern( ocd_symbol->ssnpts, symbolptr);
-		coords += ocd_symbol.secondary_data_size;
-		addSymbolWarning(symbol_line, tr("Skipped secondary point symbol."));
-	}
-	if (ocd_symbol.corner_data_size > 0)
-	{
-		symbol_line->dash_symbol = new OcdImportedPointSymbol();
-		setupPointSymbolPattern(symbol_line->dash_symbol, ocd_symbol.corner_data_size, reinterpret_cast<const typename S::Element*>(coords), ocd_version);
-		symbol_line->dash_symbol->setName(LineSymbolSettings::tr("Dash symbol"));
-		coords += ocd_symbol.corner_data_size;
-	}
-	if (ocd_symbol.start_data_size > 0)
-	{
-		symbol_line->start_symbol = new OcdImportedPointSymbol();
-		setupPointSymbolPattern(symbol_line->start_symbol, ocd_symbol.start_data_size, reinterpret_cast<const typename S::Element*>(coords), ocd_version);
-		symbol_line->start_symbol->setName(LineSymbolSettings::tr("Start symbol"));
-		coords += ocd_symbol.start_data_size;
-	}
-	if (ocd_symbol.end_data_size > 0)
-	{
-		symbol_line->end_symbol = new OcdImportedPointSymbol();
-		setupPointSymbolPattern(symbol_line->end_symbol, ocd_symbol.end_data_size, reinterpret_cast<const typename S::Element*>(coords), ocd_version);
-		symbol_line->end_symbol->setName(LineSymbolSettings::tr("End symbol"));
-	}
-	// FIXME: not really sure how this translates... need test cases
-	symbol_line->minimum_mid_symbol_count = 0; //1 + ocd_symbol->smin;
-	symbol_line->minimum_mid_symbol_count_when_closed = 0; //1 + ocd_symbol->smin;
-	symbol_line->show_at_least_one_symbol = false; // NOTE: this works in a different way than OC*D's 'at least X symbols' setting (per-segment instead of per-object)
-	
-	// Suppress dash symbol at line ends if both start symbol and end symbol exist,
-	// but don't create a warning unless a dash symbol is actually defined
-	// and the line symbol is not Mapper's 799 Simple orienteering course.
-	if (symbol_line->start_symbol != nullptr && symbol_line->end_symbol != nullptr)
-	{
-		symbol_line->setSuppressDashSymbolAtLineEnds(true);
-		if (symbol_line->dash_symbol && symbol_line->number[0] != 799)
-		{
-			addSymbolWarning(symbol_line, tr("Suppressing dash symbol at line ends."));
-		}
-	}
+	setupLineSymbolPointSymbol(symbol_line, ocd_symbol.common, ocd_symbol.begin_of_elements, ocd_version);
 	
 	// TODO: taper fields (tmode and tlast)
 	
 	if (main_line == nullptr && framing_line == nullptr)
+	{
 		return double_line;
+	}
 	else if (double_line == nullptr && framing_line == nullptr)
+	{
 		return main_line;
+	}
 	else if (main_line == nullptr && double_line == nullptr)
+	{
 		return framing_line;
+	}
 	else
 	{
 		CombinedSymbol* full_line = new CombinedSymbol();
 		setupBaseSymbol(full_line, ocd_symbol);
-		full_line->setNumParts(3);
-		int part = 0;
-		if (main_line)
-		{
-			full_line->setPart(part++, main_line, true);
-			main_line->setHidden(false);
-			main_line->setProtected(false);
-		}
-		if (double_line)
-		{
-			full_line->setPart(part++, double_line, true);
-			double_line->setHidden(false);
-			double_line->setProtected(false);
-		}
-		if (framing_line)
-		{
-			full_line->setPart(part++, framing_line, true);
-			framing_line->setHidden(false);
-			framing_line->setProtected(false);
-		}
-		full_line->setNumParts(part);
+		mergeLineSymbol(full_line, main_line, framing_line, double_line);
 		addSymbolWarning(symbol_line, tr("This symbol cannot be saved as a proper OCD symbol again."));
 		return full_line;
 	}
+}
+
+OcdFileImport::OcdImportedLineSymbol* OcdFileImport::importLineSymbolBase(const Ocd::LineSymbolCommonV8& attributes)
+{
+	using LineStyle = Ocd::LineSymbolCommonV8;
+	
+	// Basic line options
+	auto symbol = new OcdImportedLineSymbol();
+	symbol->line_width = convertLength(attributes.line_width);
+	symbol->color = convertColor(attributes.line_color);
+	
+	// Cap and join styles
+	switch (attributes.line_style)
+	{
+	default:
+		addSymbolWarning( symbol,
+		                  tr("Unsupported line style '%1'.").
+		                  arg(attributes.line_style) );
+		// fall through
+	case LineStyle::BevelJoin_FlatCap:
+		symbol->join_style = LineSymbol::BevelJoin;
+		symbol->cap_style = LineSymbol::FlatCap;
+		break;
+	case LineStyle::RoundJoin_RoundCap:
+		symbol->join_style = LineSymbol::RoundJoin;
+		symbol->cap_style = LineSymbol::RoundCap;
+		break;
+	case LineStyle::BevelJoin_PointedCap:
+		symbol->join_style = LineSymbol::BevelJoin;
+		symbol->cap_style = LineSymbol::PointedCap;
+		break;
+	case LineStyle::RoundJoin_PointedCap:
+		symbol->join_style = LineSymbol::RoundJoin;
+		symbol->cap_style = LineSymbol::PointedCap;
+		break;
+	case LineStyle::MiterJoin_FlatCap:
+		symbol->join_style = LineSymbol::MiterJoin;
+		symbol->cap_style = LineSymbol::FlatCap;
+		break;
+	case LineStyle::MiterJoin_PointedCap:
+		symbol->join_style = LineSymbol::MiterJoin;
+		symbol->cap_style = LineSymbol::PointedCap;
+		break;
+	}
+	
+	if (symbol->cap_style == LineSymbol::PointedCap)
+	{
+		int ocd_length = attributes.dist_from_start;
+		if (attributes.dist_from_start != attributes.dist_from_end)
+		{
+			// FIXME: Different lengths for start and end length of pointed line ends are not supported yet, so take the average
+			ocd_length = (attributes.dist_from_start + attributes.dist_from_end) / 2;
+			addSymbolWarning( symbol,
+			  tr("Different lengths for pointed caps at begin (%1 mm) and end (%2 mm) are not supported. Using %3 mm.").
+			  arg(locale.toString(0.001f * convertLength(attributes.dist_from_start))).
+			  arg(locale.toString(0.001f * convertLength(attributes.dist_from_end))).
+			  arg(locale.toString(0.001f * convertLength(ocd_length))) );
+		}
+		symbol->pointed_cap_length = convertLength(ocd_length);
+		symbol->join_style = LineSymbol::RoundJoin;	// NOTE: while the setting may be different (see what is set in the first place), OC*D always draws round joins if the line cap is pointed!
+	}
+	
+	// Handle the dash pattern
+	if (attributes.main_gap || attributes.sec_gap)
+	{
+		if (!attributes.main_length)
+		{
+			// Invalid dash pattern
+			addSymbolWarning( symbol,
+			  tr("The dash pattern cannot be imported correctly.") );
+		}
+		else if (attributes.sec_gap && !attributes.main_gap)
+		{
+			// Special case main_gap == 0
+			symbol->dashed = true;
+			symbol->dash_length = convertLength(attributes.main_length - attributes.sec_gap);
+			symbol->break_length = convertLength(attributes.sec_gap);
+			
+			if (attributes.end_length)
+			{
+				if (qAbs((qint32)attributes.main_length - 2*attributes.end_length) > 1)
+				{
+					// End length not equal to 0.5 * main length
+					addSymbolWarning( symbol,
+					  tr("The dash pattern's end length (%1 mm) cannot be imported correctly. Using %2 mm.").
+					  arg(locale.toString(0.001f * convertLength(attributes.end_length))).
+					  arg(locale.toString(0.001f * symbol->dash_length)) );
+				}
+				if (attributes.end_gap)
+				{
+					addSymbolWarning( symbol,
+					  tr("The dash pattern's end gap (%1 mm) cannot be imported correctly. Using %2 mm.").
+					  arg(locale.toString(0.001f * convertLength(attributes.end_gap))).
+					  arg(locale.toString(0.001f * symbol->break_length)) );
+				}
+			}
+		}
+		else
+		{
+			// Standard case
+			symbol->dashed = true;
+			symbol->dash_length = convertLength(attributes.main_length);
+			symbol->break_length = convertLength(attributes.main_gap);
+			
+			if (attributes.end_length && attributes.end_length != attributes.main_length)
+			{
+				if (attributes.main_length && 0.75 >= attributes.end_length / attributes.main_length)
+				{
+					// End length max. 75 % of main length
+					symbol->half_outer_dashes = true;
+				}
+				
+				if (qAbs((qint32)attributes.main_length - 2*attributes.end_length) > 1)
+				{
+					// End length not equal to 0.5 * main length
+					addSymbolWarning( symbol,
+					  tr("The dash pattern's end length (%1 mm) cannot be imported correctly. Using %2 mm.").
+					  arg(locale.toString(0.001f * convertLength(attributes.end_length))).
+					  arg(locale.toString(0.001f * (symbol->half_outer_dashes ? (symbol->dash_length/2) : symbol->dash_length))) );
+				}
+			}
+			
+			if (attributes.sec_gap)
+			{
+				symbol->dashes_in_group = 2;
+				symbol->in_group_break_length = convertLength(attributes.sec_gap);
+				symbol->dash_length = (symbol->dash_length - symbol->in_group_break_length) / 2;
+				
+				if (attributes.end_length && attributes.end_gap != attributes.sec_gap)
+				{
+					addSymbolWarning( symbol,
+					  tr("The dash pattern's end gap (%1 mm) cannot be imported correctly. Using %2 mm.").
+					  arg(locale.toString(0.001f * convertLength(attributes.end_gap))).
+					  arg(locale.toString(0.001f * symbol->in_group_break_length)) );
+				}
+			}
+		}
+	} 
+	else
+	{
+		symbol->segment_length = convertLength(attributes.main_length);
+		symbol->end_length = convertLength(attributes.end_length);
+	}
+	
+	return symbol;
+}
+
+OcdFileImport::OcdImportedLineSymbol* OcdFileImport::importLineSymbolFraming(const Ocd::LineSymbolCommonV8& attributes, const LineSymbol* main_line)
+{
+	using LineStyle = Ocd::LineSymbolCommonV8;
+	
+	// Basic line options
+	auto framing_line = new OcdImportedLineSymbol();
+	framing_line->line_width = convertLength(attributes.framing_width);
+	framing_line->color = convertColor(attributes.framing_color);
+	
+	// Cap and join styles
+	switch (attributes.framing_style)
+	{
+	case LineStyle::BevelJoin_FlatCap:
+		framing_line->join_style = LineSymbol::BevelJoin;
+		framing_line->cap_style = LineSymbol::FlatCap;
+		break;
+	case LineStyle::RoundJoin_RoundCap:
+		framing_line->join_style = LineSymbol::RoundJoin;
+		framing_line->cap_style = LineSymbol::RoundCap;
+		break;
+	case LineStyle::MiterJoin_FlatCap:
+		framing_line->join_style = LineSymbol::MiterJoin;
+		framing_line->cap_style = LineSymbol::FlatCap;
+		break;
+	default:
+		addSymbolWarning( main_line, 
+		                  tr("Unsupported framing line style '%1'.").
+		                  arg(attributes.line_style) );
+	}
+	
+	return framing_line;
+}
+
+OcdFileImport::OcdImportedLineSymbol* OcdFileImport::importLineSymbolDoubleBorder(const Ocd::LineSymbolCommonV8& attributes)
+{
+	using LineStyle = Ocd::LineSymbolCommonV8;
+	
+	auto double_line = new OcdImportedLineSymbol();
+	double_line->line_width = convertLength(attributes.double_width);
+	double_line->cap_style = LineSymbol::FlatCap;
+	double_line->join_style = LineSymbol::MiterJoin;
+	double_line->segment_length = convertLength(attributes.main_length);
+	double_line->end_length = convertLength(attributes.end_length);
+	
+	if (attributes.double_flags & LineStyle::DoubleFillColorOn)
+		double_line->color = convertColor(attributes.double_color);
+	else
+		double_line->color = nullptr;
+	
+	return double_line;
+}
+
+void OcdFileImport::setupLineSymbolForBorder(OcdFileImport::OcdImportedLineSymbol* line_for_borders, const Ocd::LineSymbolCommonV8& attributes)
+{
+	line_for_borders->have_border_lines = true;
+	LineSymbolBorder& border = line_for_borders->getBorder();
+	LineSymbolBorder& right_border = line_for_borders->getRightBorder();
+	
+	// Border color and width
+	border.color = convertColor(attributes.double_left_color);
+	border.width = convertLength(attributes.double_left_width);
+	border.shift = convertLength(attributes.double_left_width) / 2 + (convertLength(attributes.double_width) - line_for_borders->line_width) / 2;
+	
+	right_border.color = convertColor(attributes.double_right_color);
+	right_border.width = convertLength(attributes.double_right_width);
+	right_border.shift = convertLength(attributes.double_right_width) / 2 + (convertLength(attributes.double_width) - line_for_borders->line_width) / 2;
+	
+	// The borders may be dashed
+	if (attributes.double_gap > 0 && attributes.double_mode > 1)
+	{
+		border.dashed = true;
+		border.dash_length = convertLength(attributes.double_length);
+		border.break_length = convertLength(attributes.double_gap);
+		
+		// If ocd_symbol->dmode == 2, only the left border should be dashed
+		if (attributes.double_mode > 2)
+		{
+			right_border.dashed = border.dashed;
+			right_border.dash_length = border.dash_length;
+			right_border.break_length = border.break_length;
+		}
+	}
+}
+
+void OcdFileImport::setupLineSymbolPointSymbol(OcdFileImport::OcdImportedLineSymbol* line_symbol, const Ocd::LineSymbolCommonV8& attributes, const Ocd::PointSymbolElementV8* elements, int ocd_version)
+{
+	const Ocd::OcdPoint32* coords = reinterpret_cast<const Ocd::OcdPoint32*>(elements);
+	
+	line_symbol->mid_symbols_per_spot = attributes.num_prim_sym;
+	line_symbol->mid_symbol_distance = convertLength(attributes.prim_sym_dist);
+	line_symbol->mid_symbol = new OcdImportedPointSymbol();
+	setupPointSymbolPattern(line_symbol->mid_symbol, attributes.primary_data_size, elements, ocd_version);
+	coords += attributes.primary_data_size;
+	
+	if (attributes.secondary_data_size > 0)
+	{
+		//symbol_line->dash_symbol = importPattern( ocd_symbol->ssnpts, symbolptr);
+		coords += attributes.secondary_data_size;
+		addSymbolWarning(line_symbol, tr("Skipped secondary point symbol."));
+	}
+	if (attributes.corner_data_size > 0)
+	{
+		line_symbol->dash_symbol = new OcdImportedPointSymbol();
+		setupPointSymbolPattern(line_symbol->dash_symbol, attributes.corner_data_size, reinterpret_cast<const Ocd::PointSymbolElementV8*>(coords), ocd_version);
+		line_symbol->dash_symbol->setName(LineSymbolSettings::tr("Dash symbol"));
+		coords += attributes.corner_data_size;
+	}
+	if (attributes.start_data_size > 0)
+	{
+		line_symbol->start_symbol = new OcdImportedPointSymbol();
+		setupPointSymbolPattern(line_symbol->start_symbol, attributes.start_data_size, reinterpret_cast<const Ocd::PointSymbolElementV8*>(coords), ocd_version);
+		line_symbol->start_symbol->setName(LineSymbolSettings::tr("Start symbol"));
+		coords += attributes.start_data_size;
+	}
+	if (attributes.end_data_size > 0)
+	{
+		line_symbol->end_symbol = new OcdImportedPointSymbol();
+		setupPointSymbolPattern(line_symbol->end_symbol, attributes.end_data_size, reinterpret_cast<const Ocd::PointSymbolElementV8*>(coords), ocd_version);
+		line_symbol->end_symbol->setName(LineSymbolSettings::tr("End symbol"));
+	}
+	
+	// FIXME: not really sure how this translates... need test cases
+	line_symbol->minimum_mid_symbol_count = 0; //1 + ocd_symbol->smin;
+	line_symbol->minimum_mid_symbol_count_when_closed = 0; //1 + ocd_symbol->smin;
+	line_symbol->show_at_least_one_symbol = false; // NOTE: this works in a different way than OC*D's 'at least X symbols' setting (per-segment instead of per-object)
+	
+	// Suppress dash symbol at line ends if both start symbol and end symbol exist,
+	// but don't create a warning unless a dash symbol is actually defined
+	// and the line symbol is not Mapper's 799 Simple orienteering course.
+	if (line_symbol->start_symbol && line_symbol->end_symbol)
+	{
+		line_symbol->setSuppressDashSymbolAtLineEnds(true);
+		if (line_symbol->dash_symbol && line_symbol->number[0] != 799)
+		{
+			addSymbolWarning(line_symbol, tr("Suppressing dash symbol at line ends."));
+		}
+	}
+}
+
+void OcdFileImport::mergeLineSymbol(CombinedSymbol* full_line, LineSymbol* main_line, LineSymbol* framing_line, LineSymbol* double_line)
+{
+	full_line->setNumParts(3); // reserve
+	int part = 0;
+	if (main_line)
+	{
+		full_line->setPart(part++, main_line, true);
+		main_line->setHidden(false);
+		main_line->setProtected(false);
+	}
+	if (double_line)
+	{
+		full_line->setPart(part++, double_line, true);
+		double_line->setHidden(false);
+		double_line->setProtected(false);
+	}
+	if (framing_line)
+	{
+		full_line->setPart(part++, framing_line, true);
+		framing_line->setHidden(false);
+		framing_line->setProtected(false);
+	}
+	full_line->setNumParts(part);
 }
 
 AreaSymbol* OcdFileImport::importAreaSymbol(const Ocd::AreaSymbolV8& ocd_symbol, int ocd_version)
@@ -1289,7 +1337,7 @@ LineSymbol* OcdFileImport::importRectangleSymbol(const S& ocd_symbol)
 	
 	symbol->line_width = convertLength(ocd_symbol.line_width);
 	symbol->color = convertColor(ocd_symbol.line_color);
-	symbol->cap_style = LineSymbol::FlatCap;
+	symbol->cap_style = LineSymbol::RoundCap;
 	symbol->join_style = LineSymbol::RoundJoin;
 	
 	RectangleInfo rect;

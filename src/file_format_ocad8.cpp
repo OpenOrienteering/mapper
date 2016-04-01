@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Pete Curtis
- *    Copyright 2013-2015 Kai Pastor
+ *    Copyright 2013-2016  Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -2381,10 +2381,7 @@ u16 OCAD8FileExport::exportCoordinates(const MapCoordVector& coords, OCADPoint**
 	for (size_t i = 0, end = coords.size(); i < end; ++i)
 	{
 		const MapCoord& point = coords[i];
-		OCADPoint p;
-		p.x = (point.nativeX() / 10) << 8;
-		p.y = (point.nativeY() / -10) << 8;
-		
+		OCADPoint p = convertPoint(point);
 		if (point.isDashPoint())
 		{
 			if (symbol == NULL || symbol->getType() != Symbol::Line)
@@ -2627,13 +2624,20 @@ int OCAD8FileExport::convertRotation(float angle)
 	return qRound(10 * (angle * 180 / M_PI));
 }
 
+namespace
+{
+	constexpr s32 convertPointMember(s32 value)
+	{
+		return (value < 0) ? (0x80000000 | ((0x7fffffu & ((value-5)/10)) << 8)) : ((0x7fffffu & ((value+5)/10)) << 8);
+	}
+	
+}
+
 OCADPoint OCAD8FileExport::convertPoint(qint32 x, qint32 y)
 {
-	OCADPoint result;
-	result.x = (s32)qRound(x / 10.0) << 8;
-	result.y = (s32)qRound(y / -10.0) << 8;
-	return result;
+	return { convertPointMember(x), convertPointMember(-y) };
 }
+
 OCADPoint OCAD8FileExport::convertPoint(const MapCoord& coord)
 {
 	return convertPoint(coord.nativeX(), coord.nativeY());
@@ -2641,7 +2645,7 @@ OCADPoint OCAD8FileExport::convertPoint(const MapCoord& coord)
 
 s32 OCAD8FileExport::convertSize(qint32 size)
 {
-	return (s32)(size / 10);
+	return (s32)((size+5) / 10);
 }
 
 s16 OCAD8FileExport::convertColor(const MapColor* color) const

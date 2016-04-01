@@ -93,21 +93,21 @@ namespace Ocd
 	 * The generic header at the beginning of all supported OCD file formats.
 	 * 
 	 * For implementation efficiency, this header is generalized in comparison
-	 * with the upstream documentation:
+	 * to the upstream documentation:
 	 * 
-	 *  - Until V8, the format actually used a 16 bit file type field, but no
-	 *    file status field.
-	 * 	- Until V9, the format actually used a 16 bit subversion field, but no
+	 *  - Until V8, the format actually used a 16 bit file type field called
+	 *    "section mark", but no file status field.
+	 *  - Until V9, the format actually used a 16 bit subversion field, but no
 	 *    subsubversion field.
 	 */
 	struct FileHeaderGeneric
 	{
 		quint16 vendor_mark;
-		quint8  file_type_V9;   /// \since V9
-		quint8  file_status_V9; /// \since V9
+		quint8  file_type;          /// aka "section mark" until V8
+		quint8  file_status_V9;     /// \since V9
 		quint16 version;
 		quint8  subversion;
-		quint8  subsubversion;
+		quint8  subsubversion_V10;  /// \since V10
 	};
 	
 	/**
@@ -629,7 +629,7 @@ const OcdEntityIndexIterator<F,T,E>& OcdEntityIndexIterator<F,T,E>::operator++()
 					block = nullptr;
 					data = nullptr;
 				}
-				else if (Q_UNLIKELY(next_block >= data->byteArray().size()))
+				else if (Q_UNLIKELY(next_block >= (unsigned int)data->byteArray().size()))
 				{
 					qWarning("OcdEntityIndexIterator: Next index block is out of bounds");
 					block = nullptr;

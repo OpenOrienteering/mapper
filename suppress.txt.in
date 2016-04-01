@@ -1,0 +1,16 @@
+# Set LSAN_OPTIONS=suppressions=../suppress.txt
+# and UBSAN_OPTIONS=suppressions=../suppress.txt
+# to build and run environment.
+#
+# Cf. https://github.com/google/sanitizers/wiki/AddressSanitizerLeakSanitizer
+
+# Qt 5.2.1 issues
+leak:libfontconfig
+leak:libQt5Gui
+leak:libxcb
+leak:QArrayData::allocate
+leak:QObject
+leak:XIQueryDevice
+
+# Qt < 5.6.1 issue (tools_t)
+vptr_check:QMouseEvent

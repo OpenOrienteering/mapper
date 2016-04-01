@@ -23,7 +23,7 @@ CONFIG  -= debug_and_release
     # Copy examples to shadow build dir.
     symbol_sets.target   = symbol_sets.stamp
     symbol_sets.commands = \
-      for I in 4000 5000 10000 15000; do \
+      for I in 4000 5000 7500 10000 15000 20000; do \
         $(COPY_DIR) \"$$PWD/\$\${I}\" \"$$OUT_PWD/\"; \
       done && \
       echo > $$symbol_sets.target

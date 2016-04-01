@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2014 Thomas Schöps, Kai Pastor
+ *    Copyright 2013-2016  Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -19,8 +19,8 @@
  */
 
 
-#ifndef _OPENORIENTEERING_MAIN_WINDOW_H_
-#define _OPENORIENTEERING_MAIN_WINDOW_H_
+#ifndef OPENORIENTEERING_MAIN_WINDOW_H
+#define OPENORIENTEERING_MAIN_WINDOW_H
 
 #include <QMainWindow>
 
@@ -35,27 +35,42 @@ QT_END_NAMESPACE
 
 class MainWindowController;
 
-/** The MainWindow class provides the generic application window. 
- *  It always has an active controller (class MainWindowController) 
- *  which provides the specific window content and behaviours.
- *  The controller can be exchanged while the window is visible.
+/**
+ * The MainWindow class provides the generic application window.
+ * 
+ * It always has an active controller (class MainWindowController)
+ * which provides the specific window content and behaviours.
+ * The controller can be exchanged while the window is visible.
  */
 class MainWindow : public QMainWindow, private Autosave
 {
 Q_OBJECT
 public:
-	/** Creates a new main window.
-	 *  FIXME: as_main_window seems to be contradictory and is used only
-	 *  with value false (in SymbolSettingDialog).
-	 *  @param as_main_window if false, disables the loading of save windows geometry and hides the bottom-right handle for resizing.
+	/**
+	 * Creates a new main window.
 	 */
-	explicit MainWindow(bool as_main_window = true);
+	explicit MainWindow(QWidget* parent = nullptr, Qt::WindowFlags flags = Qt::WindowFlags());
 	
+private:
+	/**
+	 * Creates a new main window.
+	 * 
+	 * The flag as_main_window is a contradiction to the general intent of this
+	 * class. The value fals is used only once, in SymbolSettingDialog. For this
+	 * case, it disables some features such as the main menu.
+	 * 
+	 * \todo Refactor to remove the flag as_main_window.
+	 */
+	explicit MainWindow(bool as_main_window, QWidget* parent = nullptr, Qt::WindowFlags flags = Qt::WindowFlags());
+	
+	friend class SymbolSettingDialog;
+	
+public:
 	/** Destroys a main window. */
-	virtual ~MainWindow();
+	~MainWindow() override;
 	
-	/** Returns the application's name. */
-	const QString& appName() const;
+	/** Returns the application's localized name. */
+	QString appName() const;
 	
 	
 	/**
@@ -67,64 +82,83 @@ public:
 	bool mobileMode() const;
 	
 	
-	/** Change the controller to new_controller. */
-	void setController(MainWindowController* new_controller, const QString& path = QString());
+	/**
+	 * Changes the controller.
+	 *
+	 * The new controller does not edit a file.
+	 */
+	void setController(MainWindowController* new_controller);
 	
+	/**
+	 * Changes the controller.
+	 *
+	 * The new controller edits the file with the given path.
+	 * The path may be empty for a new (unnamed) file.
+	 */
+	void setController(MainWindowController* new_controller, const QString& path);
+	
+private:
+	void setController(MainWindowController* new_controller, bool has_file);
+
+public:	
 	/** Returns the current controller. */
-	inline MainWindowController* getController() const {return controller;}
+	MainWindowController* getController() const;
 	
 	
 	/** Returns the canonical path of the currently open file or 
 	 *  an empty string if no file is open.
 	 */
-	inline const QString& currentPath() const {return current_path;}
+	const QString& currentPath() const;
 	
-	/** @brief Registers the given path as most recently used file.
+	/** Registers the given path as most recently used file.
+	 * 
 	 *  The path is added at (or moved to) the top of the list of most recently
 	 *  used files, and the directory is saved as most recently used directory.
 	 */
 	static void setMostRecentlyUsedFile(const QString& path);
 	
-	/** Sets the opened-file state to value. */
-	void setHasOpenedFile(bool value);
-	
 	/** Returns true if a file is opened in this main window. */
-	inline bool hasOpenedFile() const {return has_opened_file;}
+	bool hasOpenedFile() const;
 	
 	
 	/** Returns true if the opened file is marked as having unsaved changes. */
-	inline bool hasUnsavedChanges() const {return has_unsaved_changes;}
+	bool hasUnsavedChanges() const;
 	
 	
 	/** Sets the text in the status bar. */ 
 	void setStatusBarText(const QString& text);
+	
 	/** Shows a temporary message in the status bar. */
 	void showStatusBarMessage(const QString& text, int timeout = 0);
+	
 	/** Clears temporary messages set in the status bar with showStatusBarMessage(). */
 	void clearStatusBarMessage();
 	
 	
-	/** Enable or disable shortcuts.
-	 *  During text input, it may be neccessary to disable shortcuts.
-	 *  @param enable true for enabling shortcuts, false for disabling.
+	/**
+	 * Blocks shortcuts.
+	 * 
+	 * During text input, it may be neccessary to disable shortcuts.
+	 * 
+	 * @param blocked true for blocking shortcuts, false for normal behaviour.
 	 */
-	inline void setShortcutsEnabled(bool enable) {disable_shortcuts = !enable;}
+	void setShortcutsBlocked(bool blocked);
 	
 	/** Returns true if shortcuts are currently disabled. */
-	inline bool areShortcutsDisabled() const {return disable_shortcuts;}
+	bool shortcutsBlocked() const;
 	
 	
 	/** Returns the main window's file menu so that it can be extended. */
-	inline QMenu* getFileMenu() const {return file_menu;}
+	QMenu* getFileMenu() const;
 	
 	/** Returns an QAction which serves as extension point in the file menu. */
-	inline QAction* getFileMenuExtensionAct() const {return settings_act;}
+	QAction* getFileMenuExtensionAct() const;
 	
 	/** Returns the save action. */
-	inline QAction* getSaveAct() const {return save_act;}
+	QAction* getSaveAct() const;
 	
 	/** Returns the close action. */
-	inline QAction* getCloseAct() const {return close_act;}
+	QAction* getCloseAct() const;
 	
 	
 	/**
@@ -133,7 +167,7 @@ public:
 	 * The MainWindowController is responsible to add it to the main window.
 	 * It will be destroyed (and recreated) when the controller changes.
 	 */
-	inline QToolBar* getGeneralToolBar() const { return general_toolbar; }
+	QToolBar* getGeneralToolBar() const;
 	
 	
 	/** Open the file with the given path after all events have been processed.
@@ -155,6 +189,7 @@ public:
 	
 	/**
 	 * Sets the MainWindow's effective central widget.
+	 * 
 	 * Any previously set widget will be hidden and scheduled for deletion.
 	 * 
 	 * Hides an implementation in QMainWindow which causes problems with
@@ -181,50 +216,65 @@ public:
 	void setHomeScreenDisabled(bool disabled);
 	
 public slots:
-	/** Show a wizard for creating new maps.
-	 *  May open a new main window.
+	/**
+	 * Show a wizard for creating new maps.
+	 * 
+	 * May open a new main window.
 	 */
 	void showNewMapWizard();
 	
-	/** Show a file-open dialog and load the select file.
-	 *  May open a new main window.
-	 *  If loading is successful, the selected path will become
-	 *  the [new] window's current path.
+	/**
+	 * Show a file-open dialog and load the select file.
+	 * 
+	 * May open a new main window.
+	 * If loading is successful, the selected path will become
+	 * the [new] window's current path.
 	 */
 	void showOpenDialog();
 	
-	/** Show a file-save dialog.
-	 *  If saving is successful, the selected path will become
-	 *  this window's current path.
-	 *  @return true if saving was succesful, false otherwise
+	/**
+	 * Show a file-save dialog.
+	 * 
+	 * If saving is successful, the selected path will become
+	 * this window's current path.
+	 * 
+	 * @return true if saving was succesful, false otherwise
 	 */
 	bool showSaveAsDialog();
 	
-	/** Open the file with the given path.
-	 *  May open a new main window.
-	 *  If loading is successful, the selected path will become
-	 *  the [new] window's current path.
-	 *  @return true if loading was succesful, false otherwise
+	/**
+	 * Open the file with the given path.
+	 * 
+	 * May open a new main window.
+	 * If loading is successful, the selected path will become
+	 * the [new] window's current path.
+	 * 
+	 * @return true if loading was succesful, false otherwise
 	 */
 	bool openPath(const QString &path);
 	
-	/** Open the file specified in the sending action's data.
-	 *  This is intended for opening recent files.
+	/**
+	 * Open the file specified in the sending action's data.
+	 * 
+	 * This is intended for opening recent files.
 	 */
 	void openRecentFile();
 	
-	/** Notify the main window of a change to the list of recent files.
+	/**
+	 * Notify the main window of a change to the list of recent files.
 	 */
 	void updateRecentFileActions();
 	
-	/** Save the current content to the current path.
-	 *  This will trigger a file-save dialog if the current path is not set (i.e. empty).
+	/**
+	 * Save the current content to the current path.
+	 * 
+	 * This will trigger a file-save dialog if the current path is not set (i.e. empty).
 	 */
 	bool save();
 	
 	/** Save the current content to the current path.
 	 */
-	virtual Autosave::AutosaveResult autosave();
+	Autosave::AutosaveResult autosave() override;
 	
 	/**
 	 * Close the file currently opened.
@@ -264,6 +314,11 @@ public slots:
 	
 	/**
 	 * Notifies this window of unsaved changes.
+	 * 
+	 * If the controller was set as having an opened file, setting this value to
+	 * true will start the autosave countdown if the previous value was false.
+	 * 
+	 * This will update the window title via QWidget::setWindowModified().
 	 */
 	void setHasUnsavedChanges(bool value);
 	
@@ -310,16 +365,17 @@ protected slots:
 	
 protected:
 	/** 
-	 * @brief Sets the path of the file edited by this windows' controller.
+	 * Sets the path of the file edited by this windows' controller.
 	 * 
-	 * This will trigger updates to the window title, 
-	 * to the list of recently used files, and 
-	 * to the least recently used directory.
+	 * This will update the window title via QWidget::setWindowFilePath().
+	 * 
+	 * If the controller was not set as having an opened file,
+	 * the path must be empty.
 	 */
 	void setCurrentPath(const QString& path);
 	
 	/**
-	 * @brief Notifies the windows of autosave conflicts.
+	 * Notifies the windows of autosave conflicts.
 	 * 
 	 * An autosave conflict is the situation where a autosaved file exists
 	 * when the original file is opened. This autosaved file indicates that
@@ -329,28 +385,30 @@ protected:
 	void setHasAutosaveConflict(bool value);
 	
 	/**
-	 * @brief Removes the autosave file if it exists.
+	 * Removes the autosave file if it exists.
 	 * 
 	 * Returns true if the file was removed or didn't exist, false otherwise.
 	 */
 	bool removeAutosaveFile() const;
 	
-	virtual bool event(QEvent* event);
-	virtual void closeEvent(QCloseEvent *event);
-	virtual void keyPressEvent(QKeyEvent* event);
-	virtual void keyReleaseEvent(QKeyEvent* event);
+	bool event(QEvent* event) override;
+	void closeEvent(QCloseEvent *event) override;
+	void keyPressEvent(QKeyEvent* event) override;
+	void keyReleaseEvent(QKeyEvent* event) override;
 	
-	virtual bool eventFilter(QObject* object, QEvent* event);
+	bool eventFilter(QObject* object, QEvent* event) override;
 	
 private:
-	enum {
-		max_recent_files = 10
-	};
+	static constexpr int max_recent_files = 10;
 	
-	/** If this main window has an opened file with unsaved changes, shows
-	 *  a dialog which lets the user save the file, discard the changes or
-	 *  cancel. 
-	 *  Returns true if the window can be closed, false otherwise.
+	/**
+	 * Conditionally shows a dialog for saving pending changes.
+	 * 
+	 * If this main window has an opened file with unsaved changes, shows
+	 * a dialog which lets the user save the file, discard the changes or
+	 * cancel. 
+	 * 
+	 * Returns true if the window can be closed, false otherwise.
 	 */
 	bool showSaveOnCloseDialog();
 	
@@ -362,8 +420,6 @@ private:
 	void loadWindowSettings();
 	
 	
-	void updateWindowTitle();
-	
 	void createFileMenu();
 	void createHelpMenu();
 
@@ -372,14 +428,13 @@ private:
 	
 	/// The active controller
 	MainWindowController* controller;
-	bool create_menu;
+	const bool create_menu;
 	bool show_menu;
-	bool disable_shortcuts;
+	bool shortcuts_blocked;
 	
 	QToolBar* general_toolbar;
 	QMenu* file_menu;
 	QAction* save_act;
-	QAction* save_as_act;
 	QMenu* open_recent_menu;
 	bool open_recent_menu_inserted;
 	QAction* recent_file_act[max_recent_files];
@@ -415,6 +470,66 @@ private:
 
 
 // ### MainWindow inline code ###
+
+inline
+MainWindowController* MainWindow::getController() const
+{
+	return controller;
+}
+
+inline
+const QString& MainWindow::currentPath() const
+{
+	return current_path;
+}
+
+inline
+bool MainWindow::hasOpenedFile() const
+{
+	return has_opened_file;
+}
+
+inline
+bool MainWindow::hasUnsavedChanges() const
+{
+	return has_unsaved_changes;
+}
+
+inline
+bool MainWindow::shortcutsBlocked() const
+{
+	return shortcuts_blocked;
+}
+
+inline
+QMenu* MainWindow::getFileMenu() const
+{
+	return file_menu;
+}
+
+inline
+QAction* MainWindow::getFileMenuExtensionAct() const
+{
+	return settings_act;
+}
+
+inline
+QAction* MainWindow::getSaveAct() const
+{
+	return save_act;
+}
+
+inline
+QAction* MainWindow::getCloseAct() const
+{
+	return close_act;
+}
+
+inline
+QToolBar* MainWindow::getGeneralToolBar() const
+{
+	return general_toolbar;
+}
 
 inline
 bool MainWindow::homeScreenDisabled() const

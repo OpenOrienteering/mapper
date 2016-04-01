@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2014, 2015 Kai Pastor
+ *    Copyright 2014-2016  Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -122,7 +122,7 @@ void MapView::load(QIODevice* file, int version)
 
 #endif
 
-void MapView::save(QXmlStreamWriter& xml, const QLatin1String& element_name, bool skip_templates)
+void MapView::save(QXmlStreamWriter& xml, const QLatin1String& element_name) const
 {
 	XmlElementWriter mapview_element(xml, element_name);
 	mapview_element.writeAttribute(literal::zoom, zoom);
@@ -139,20 +139,16 @@ void MapView::save(QXmlStreamWriter& xml, const QLatin1String& element_name, boo
 	}
 	
 	{
-		if (!skip_templates)
+		XmlElementWriter templates_element(xml, literal::templates);
+		templates_element.writeAttribute(literal::hidden, all_templates_hidden);
+		templates_element.writeAttribute(XmlStreamLiteral::count, template_visibilities.size());
+		
+		for (auto it = template_visibilities.constBegin(), last = template_visibilities.constEnd(); it != last; ++it)
 		{
-			XmlElementWriter templates_element(xml, literal::templates);
-			templates_element.writeAttribute(literal::hidden, all_templates_hidden);
-			templates_element.writeAttribute(XmlStreamLiteral::count, template_visibilities.size());
-			
-			QHash<const Template*, TemplateVisibility*>::const_iterator it = template_visibilities.constBegin();
-			for ( ; it != template_visibilities.constEnd(); ++it)
-			{
-				XmlElementWriter ref_element(xml, literal::ref);
-				ref_element.writeAttribute(literal::template_string, map->findTemplateIndex(it.key()));
-				ref_element.writeAttribute(literal::visible, (*it)->visible);
-				ref_element.writeAttribute(literal::opacity, (*it)->opacity);
-			}
+			XmlElementWriter ref_element(xml, literal::ref);
+			ref_element.writeAttribute(literal::template_string, map->findTemplateIndex(it.key()));
+			ref_element.writeAttribute(literal::visible, (*it)->visible);
+			ref_element.writeAttribute(literal::opacity, (*it)->opacity);
 		}
 	}
 }

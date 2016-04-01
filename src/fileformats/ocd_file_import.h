@@ -130,9 +130,9 @@ public:
 	
 	MapColor* convertColor(int ocd_color);
 	
-	void addSymbolWarning(LineSymbol* symbol, const QString& warning);
+	void addSymbolWarning(const LineSymbol* symbol, const QString& warning);
 	
-	void addSymbolWarning(TextSymbol* symbol, const QString& warning);
+	void addSymbolWarning(const TextSymbol* symbol, const QString& warning);
 	
 	virtual void finishImport() override;
 	
@@ -202,6 +202,18 @@ protected:
 	
 	template< class S >
 	Symbol* importLineSymbol(const S& ocd_symbol, int ocd_version);
+	
+	OcdImportedLineSymbol* importLineSymbolBase(const Ocd::LineSymbolCommonV8& attributes);
+	
+	OcdImportedLineSymbol* importLineSymbolFraming(const Ocd::LineSymbolCommonV8& attributes, const LineSymbol* main_line);
+	
+	OcdImportedLineSymbol* importLineSymbolDoubleBorder(const Ocd::LineSymbolCommonV8& attributes);
+	
+	void setupLineSymbolForBorder(OcdImportedLineSymbol* line_for_borders, const Ocd::LineSymbolCommonV8& attributes);
+	
+	void setupLineSymbolPointSymbol(OcdImportedLineSymbol* line_symbol, const Ocd::LineSymbolCommonV8& attributes, const Ocd::PointSymbolElementV8* elements, int ocd_version);
+	
+	void mergeLineSymbol(CombinedSymbol* full_line, LineSymbol* main_line, LineSymbol* framing_line, LineSymbol* double_line);
 	
 	AreaSymbol* importAreaSymbol(const Ocd::AreaSymbolV8& ocd_symbol, int ocd_version);
 	

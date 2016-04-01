@@ -1,5 +1,5 @@
 /*
- *    Copyright 2013, 2015 Kai Pastor
+ *    Copyright 2013, 2016 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -67,6 +67,14 @@ public:
 	 * - QStyle::PM_ToolBarIconSize is adjusted (enlarged) towards QStyle::PM_SmallIconSize.
 	 */ 
 	int pixelMetric(PixelMetric metric, const QStyleOption* option = nullptr, const QWidget* widget = nullptr) const override;
+	
+	/**
+	 * Returns adjusted style hints.
+	 * 
+	 * On Android:
+	 * - QStyle::SH_FormLayoutWrapPolicy is QFormLayout::QFormLayout::WrapLongRows.
+	 */
+	int styleHint(StyleHint hint, const QStyleOption* option = nullptr, const QWidget* widget = nullptr, QStyleHintReturn* return_data = nullptr) const override;
 	
 private:
 	void drawSegmentedButton(int segment, PrimitiveElement element, const QStyleOption* option, QPainter* painter, const QWidget* widget) const;

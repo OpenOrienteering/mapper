@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2015 Kai Pastor
+ *    Copyright 2012-2016  Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -47,6 +47,7 @@
 
 #include "main_window.h"
 #include "print_progress_dialog.h"
+#include "print_tool.h"
 #include "../core/map_printer.h"
 #include "../map.h"
 #include "../map_editor.h"
@@ -54,13 +55,13 @@
 #include "../settings.h"
 #include "../util.h"
 #include "../util_gui.h"
+#include "../util/backports.h"
 #include "../util/scoped_signals_blocker.h"
-#include "print_tool.h"
 
 
 namespace
 {
-	QToolButton* createPrintModeButton(const QIcon& icon, const QString& label, QWidget* parent = NULL)
+	QToolButton* createPrintModeButton(const QIcon& icon, const QString& label, QWidget* parent = nullptr)
 	{
 		static const QSize icon_size(48,48);
 		QToolButton* button = new QToolButton(parent);
@@ -77,17 +78,17 @@ namespace
 //### PrintWidget ###
 
 PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, MapEditorController* editor, QWidget* parent)
-: QWidget(parent), 
-  task(UNDEFINED_TASK),
-  map(map), 
-  map_printer(new MapPrinter(*map, main_view)),
-  main_window(main_window), 
-  main_view(main_view), 
-  editor(editor),
-  print_tool(NULL),
-  active(false)
+: QWidget     { parent }
+, task        { UNDEFINED_TASK }
+, map         { map }
+, map_printer { new MapPrinter(*map, main_view) }
+, main_window { main_window }
+, main_view   { main_view }
+, editor      { editor }
+, print_tool  { nullptr }
+, active      { false }
 {
-	Q_ASSERT(main_window != NULL);
+	Q_ASSERT(main_window);
 	
 	layout = new QFormLayout();
 	
@@ -186,7 +187,7 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 	
 	different_scale_check = new QCheckBox(tr("Print in different scale:"));
 	// Limit the difference between nominal and printing scale in order to limit the number of page breaks.
-	int min_scale = qMax((unsigned int)1, map->getScaleDenominator() / 10000 * 100);
+	int min_scale = qMax(1, int(map->getScaleDenominator() / 10000) * 100);
 	different_scale_edit = Util::SpinBox::create(min_scale, std::numeric_limits<int>::max(), "", 500);
 	different_scale_edit->setPrefix("1 : ");
 	different_scale_edit->setEnabled(false);
@@ -255,53 +256,52 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 	
 	setLayout(outer_layout);
 	
-	connect(target_combo, SIGNAL(currentIndexChanged(int)), this, SLOT(targetChanged(int)));
-	connect(paper_size_combo, SIGNAL(currentIndexChanged(int)), this, SLOT(paperSizeChanged(int)));
-	connect(page_width_edit, SIGNAL(valueChanged(double)), this, SLOT(paperDimensionsChanged()));
-	connect(page_orientation_group, SIGNAL(buttonClicked(int)), this, SLOT(pageOrientationChanged(int)));
-	connect(page_height_edit, SIGNAL(valueChanged(double)), this, SLOT(paperDimensionsChanged()));
+	connect(target_combo, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &PrintWidget::targetChanged);
+	connect(paper_size_combo, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &PrintWidget::paperSizeChanged);
+	connect(page_width_edit, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &PrintWidget::paperDimensionsChanged);
+	connect(page_orientation_group, QOverload<int>::of(&QButtonGroup::buttonClicked), this, &PrintWidget::pageOrientationChanged);
+	connect(page_height_edit, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &PrintWidget::paperDimensionsChanged);
 	
-	connect(top_edit, SIGNAL(valueChanged(double)), this, SLOT(printAreaMoved()));
-	connect(left_edit, SIGNAL(valueChanged(double)), this, SLOT(printAreaMoved()));
-	connect(width_edit, SIGNAL(valueChanged(double)), this, SLOT(printAreaResized()));
-	connect(height_edit, SIGNAL(valueChanged(double)), this, SLOT(printAreaResized()));
-	connect(overlap_edit, SIGNAL(valueChanged(double)), this, SLOT(overlapEdited(double)));
+	connect(top_edit, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &PrintWidget::printAreaMoved);
+	connect(left_edit, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &PrintWidget::printAreaMoved);
+	connect(width_edit, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &PrintWidget::printAreaResized);
+	connect(height_edit, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &PrintWidget::printAreaResized);
+	connect(overlap_edit, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &PrintWidget::overlapEdited);
 	
-	connect(mode_button_group, SIGNAL(buttonClicked(QAbstractButton*)), this, SLOT(printModeChanged(QAbstractButton*)));
-	connect(dpi_combo->lineEdit(), SIGNAL(editingFinished()), this, SLOT(resolutionEdited()));
-	connect(different_scale_check, SIGNAL(clicked(bool)), this, SLOT(differentScaleClicked(bool)));
-	connect(different_scale_edit, SIGNAL(valueChanged(int)), this, SLOT(differentScaleEdited(int)));
-	connect(show_templates_check, SIGNAL(clicked(bool)), this, SLOT(showTemplatesClicked(bool)));
-	connect(show_grid_check, SIGNAL(clicked(bool)), this, SLOT(showGridClicked(bool)));
-	connect(overprinting_check, SIGNAL(clicked(bool)), this, SLOT(overprintingClicked(bool)));
+	connect(mode_button_group, QOverload<QAbstractButton*>::of(&QButtonGroup::buttonClicked), this, &PrintWidget::printModeChanged);
+	connect(dpi_combo->lineEdit(), &QLineEdit::editingFinished, this, &PrintWidget::resolutionEdited);
+	connect(different_scale_check, &QAbstractButton::clicked, this, &PrintWidget::differentScaleClicked);
+	connect(different_scale_edit, QOverload<int>::of(&QSpinBox::valueChanged), this, &PrintWidget::differentScaleEdited);
+	connect(show_templates_check, &QAbstractButton::clicked, this, &PrintWidget::showTemplatesClicked);
+	connect(show_grid_check, &QAbstractButton::clicked, this, &PrintWidget::showGridClicked);
+	connect(overprinting_check, &QAbstractButton::clicked, this, &PrintWidget::overprintingClicked);
 	connect(color_mode_combo, &QComboBox::currentTextChanged, this, &PrintWidget::colorModeChanged);
 	
-	connect(preview_button, SIGNAL(clicked(bool)), this, SLOT(previewClicked()));
-	connect(print_button, SIGNAL(clicked(bool)), this, SLOT(printClicked()));
-	connect(export_button, SIGNAL(clicked(bool)), this, SLOT(printClicked()));
-	connect(close_button, SIGNAL(clicked(bool)), this, SIGNAL(closeClicked()));
+	connect(preview_button, &QAbstractButton::clicked, this, &PrintWidget::previewClicked);
+	connect(print_button, &QAbstractButton::clicked, this, &PrintWidget::printClicked);
+	connect(export_button, &QAbstractButton::clicked, this, &PrintWidget::printClicked);
+	connect(close_button, &QAbstractButton::clicked, this, &PrintWidget::closeClicked);
 	
 	policy = map_printer->config().single_page_print_area ? SinglePage : CustomArea;
 	policy_combo->setCurrentIndex(policy_combo->findData(policy));
-	connect(policy_combo, SIGNAL(currentIndexChanged(int)), this, SLOT(printAreaPolicyChanged(int)));
+	connect(policy_combo, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &PrintWidget::printAreaPolicyChanged);
 	
 	center_check->setChecked(map_printer->config().center_print_area);
-	connect(center_check, SIGNAL(clicked(bool)), this, SLOT(applyCenterPolicy()));
+	connect(center_check, &QAbstractButton::clicked, this, &PrintWidget::applyCenterPolicy);
 	
 	setPageFormat(map_printer->getPageFormat());
-	connect(map_printer, SIGNAL(pageFormatChanged(const MapPrinterPageFormat&)),
-	        this, SLOT(setPageFormat(const MapPrinterPageFormat&)));
+	connect(map_printer, &MapPrinter::pageFormatChanged, this, &PrintWidget::setPageFormat);
 	
-	connect(map_printer, SIGNAL(optionsChanged(const MapPrinterOptions&)), this, SLOT(setOptions(const MapPrinterOptions&)));
+	connect(map_printer, &MapPrinter::optionsChanged, this, &PrintWidget::setOptions);
 	spotColorPresenceChanged(map->hasSpotColors());
-	connect(map, SIGNAL(spotColorPresenceChanged(bool)), this, SLOT(spotColorPresenceChanged(bool)));
+	connect(map, &Map::spotColorPresenceChanged, this, &PrintWidget::spotColorPresenceChanged);
 	
 	setPrintArea(map_printer->getPrintArea());
-	connect(map_printer, SIGNAL(printAreaChanged(QRectF)), this, SLOT(setPrintArea(QRectF)));
+	connect(map_printer, &MapPrinter::printAreaChanged, this, &PrintWidget::setPrintArea);
 	
-	connect(map_printer, SIGNAL(targetChanged(const QPrinterInfo*)), this, SLOT(setTarget(const QPrinterInfo*)));
+	connect(map_printer, &MapPrinter::targetChanged, this, &PrintWidget::setTarget);
 	
-	connect(this, SIGNAL(finished(int)), this, SLOT(savePrinterConfig()));
+	connect(this, &PrintWidget::finished, this, &PrintWidget::savePrinterConfig);
 }
 
 PrintWidget::~PrintWidget()
@@ -401,7 +401,7 @@ void PrintWidget::setActive(bool active)
 			// Save the current state of the map view.
 			saved_view_state.clear();
 			QXmlStreamWriter writer(&saved_view_state);
-			main_view->save(writer, QLatin1String("saved_view"), true);
+			main_view->save(writer, QLatin1String("saved_view"));
 			
 			editor->setViewOptionsEnabled(false);
 			
@@ -432,11 +432,13 @@ void PrintWidget::setActive(bool active)
 				print_tool = new PrintTool(editor, map_printer);
 			}
 			editor->setOverrideTool(print_tool);
+			editor->setEditingInProgress(true);
 		}
 		else
 		{
-			editor->setOverrideTool(NULL);
-			print_tool = NULL;
+			editor->setEditingInProgress(false);
+			editor->setOverrideTool(nullptr);
+			print_tool = nullptr;
 			
 			// Restore view
 			QXmlStreamReader reader(saved_view_state);
@@ -454,7 +456,7 @@ void PrintWidget::updateTargets()
 {
 	QVariant current_target = target_combo->itemData(target_combo->currentIndex());
 	const QPrinterInfo* saved_printer = map_printer->getTarget();
-	const QString saved_printer_name = (saved_printer == NULL) ? "" : saved_printer->printerName();
+	const QString saved_printer_name = saved_printer ? saved_printer->printerName() : QString::null;
 	int saved_target_index = -1;
 	int default_printer_index = -1;
 	{
@@ -464,7 +466,7 @@ void PrintWidget::updateTargets()
 		if (task == PRINT_TASK)
 		{
 			// Exporters
-			target_combo->addItem(tr("Save to PDF"), QVariant((int)PdfExporter));
+			target_combo->addItem(tr("Save to PDF"), QVariant(int(PdfExporter)));
 			target_combo->insertSeparator(target_combo->count());
 			target_combo->setCurrentIndex(0);
 			
@@ -515,9 +517,9 @@ void PrintWidget::setTarget(const QPrinterInfo* target)
 	{
 		for (; target_index >= 0; target_index--)
 		{
-			if (target != NULL && printers[target_index].printerName() == target->printerName())
+			if (target && printers[target_index].printerName() == target->printerName())
 				break;
-			else if (target == NULL)
+			else if (!target)
 				break;
 		}
 	}
@@ -527,7 +529,7 @@ void PrintWidget::setTarget(const QPrinterInfo* target)
 	updateResolutions(target);
 	
 	bool supports_pages = (target != MapPrinter::imageTarget());
-	bool supports_copies = (supports_pages && target != NULL && QPrinter(*target).supportsMultipleCopies());
+	bool supports_copies = (supports_pages && target && QPrinter(*target).supportsMultipleCopies());
 	copies_edit->setEnabled(supports_copies);
 	layout->labelForField(copies_edit)->setEnabled(supports_copies);
 	
@@ -557,9 +559,9 @@ void PrintWidget::targetChanged(int index) const
 	
 	int target_index = target_combo->itemData(index).toInt();
 	Q_ASSERT(target_index >= -2);
-	Q_ASSERT(target_index < (int)printers.size());
+	Q_ASSERT(target_index < printers.size());
 	
-	const QPrinterInfo* target = NULL;
+	const QPrinterInfo* target = nullptr;
 	if (target_index == PdfExporter)
 		target = MapPrinter::pdfTarget();
 	else if (target_index == ImageExporter)
@@ -582,12 +584,12 @@ void PrintWidget::updatePaperSizes(const QPrinterInfo* target) const
 		
 		paper_size_combo->clear();
 		QList<QPrinter::PaperSize> size_list;
-		if (target != NULL)
+		if (target)
 			size_list = target->supportedPaperSizes();
 		if (size_list.isEmpty())
 			size_list = defaultPaperSizes();
 		
-		for (auto size : size_list)
+		for (auto size : qAsConst(size_list))
 		{
 			if (size == QPrinter::Custom)
 				have_custom_size = true; // add it once after all other entires
@@ -598,7 +600,7 @@ void PrintWidget::updatePaperSizes(const QPrinterInfo* target) const
 		if (have_custom_size)
 			paper_size_combo->addItem(toString(QPrinter::Custom), QPrinter::Custom);
 	
-		int paper_size_index = paper_size_combo->findData((int)map_printer->getPageFormat().paper_size);
+		int paper_size_index = paper_size_combo->findData(map_printer->getPageFormat().paper_size);
 		if (!prev_paper_size_name.isEmpty())
 		{
 			paper_size_index = paper_size_combo->findText(prev_paper_size_name);
@@ -633,7 +635,7 @@ void PrintWidget::paperSizeChanged(int index) const
 {
 	if (index >= 0)
 	{
-		QPrinter::PaperSize paper_size = (QPrinter::PaperSize)paper_size_combo->itemData(index).toInt();
+		QPrinter::PaperSize paper_size = QPrinter::PaperSize(paper_size_combo->itemData(index).toInt());
 		map_printer->setPaperSize(paper_size);
 	}
 }
@@ -658,7 +660,7 @@ void PrintWidget::pageOrientationChanged(int id) const
 // slot
 void PrintWidget::printAreaPolicyChanged(int index)
 {
-	policy = (PrintAreaPolicy)policy_combo->itemData(index).toInt();
+	policy = PrintAreaPolicy(policy_combo->itemData(index).toInt());
 	applyPrintAreaPolicy();
 }
 
@@ -856,9 +858,9 @@ void PrintWidget::setOptions(const MapPrinterOptions& options)
 	static QString dpi_template("%1 " + tr("dpi"));
 	dpi_combo->setEditText(dpi_template.arg(options.resolution));
 	
-	if (different_scale_edit->value() != (int)options.scale)
+	if (different_scale_edit->value() != int(options.scale))
 	{
-		different_scale_edit->setValue(options.scale);
+		different_scale_edit->setValue(int(options.scale));
 		if (options.scale != map->getScaleDenominator())
 		{
 			different_scale_check->setChecked(true);
@@ -875,11 +877,11 @@ void PrintWidget::setOptions(const MapPrinterOptions& options)
 
 void PrintWidget::updateResolutions(const QPrinterInfo* target) const
 {
-	static QList<int> default_resolutions(QList<int>() << 150 << 300 << 600 << 1200);
+	static const QList<int> default_resolutions(QList<int>() << 150 << 300 << 600 << 1200);
 	
 	// Numeric resolution list
 	QList<int> supported_resolutions;
-	if (target != NULL)
+	if (target)
 	{
 		QPrinter pr(*target, QPrinter::HighResolution);
 		supported_resolutions = pr.supportedResolutions();
@@ -895,7 +897,7 @@ void PrintWidget::updateResolutions(const QPrinterInfo* target) const
 	// Resolution list item with unit "dpi"
 	static QString dpi_template("%1 " + tr("dpi"));
 	QStringList resolutions;
-	for (auto resolution : supported_resolutions)
+	for (auto resolution : qAsConst(supported_resolutions))
 		resolutions << dpi_template.arg(resolution);
 	
 	QString dpi_text = dpi_combo->currentText();
@@ -922,7 +924,7 @@ void PrintWidget::resolutionEdited()
 {
 	QString resolution_text = dpi_combo->currentText();
 	int index_of_space = resolution_text.indexOf(" ");
-	int dpi_value = resolution_text.left(index_of_space).toInt();
+	auto dpi_value = resolution_text.left(index_of_space).toUInt();
 	if (dpi_value > 0)
 		map_printer->setResolution(dpi_value);
 }
@@ -931,7 +933,7 @@ void PrintWidget::resolutionEdited()
 void PrintWidget::differentScaleClicked(bool checked)
 {
 	if (!checked)
-		different_scale_edit->setValue(map->getScaleDenominator());
+		different_scale_edit->setValue(int(map->getScaleDenominator()));
 	
 	different_scale_edit->setEnabled(checked);
 }
@@ -939,7 +941,7 @@ void PrintWidget::differentScaleClicked(bool checked)
 // slot
 void PrintWidget::differentScaleEdited(int value)
 {
-	map_printer->setScale(value);
+	map_printer->setScale(static_cast<unsigned int>(value));
 	if (policy == SinglePage)
 	{
 		// Adjust the print area.

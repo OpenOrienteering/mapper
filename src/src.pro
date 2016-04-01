@@ -158,6 +158,7 @@ HEADERS += \
   fileformats/ocd_types_v11.h \
   fileformats/ocd_types_v12.h \
   gui/point_handles.h \
+  util/backports.h \
   util/scoped_signals_blocker.h \
   map_part.h \
   map_part_undo.h \
