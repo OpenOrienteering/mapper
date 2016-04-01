@@ -306,27 +306,14 @@ int MapPart::countObjectsInRect(QRectF map_coord_rect, bool include_hidden_objec
 QRectF MapPart::calculateExtent(bool include_helper_symbols) const
 {
 	QRectF rect;
-	
-	int i = 0;
-	int size = objects.size();
-	while (size > i && !rect.isValid())
+	for (const auto object : objects)
 	{
-		if ((include_helper_symbols || !objects[i]->getSymbol()->isHelperSymbol()) && !objects[i]->getSymbol()->isHidden())
+		if (!object->getSymbol()->isHidden()
+		    && (include_helper_symbols || !object->getSymbol()->isHelperSymbol()) )
 		{
-			objects[i]->update();
-			rect = objects[i]->getExtent();
-		}
-		++i;
-	}
-	
-	for (; i < size; ++i)
-	{
-		if ((include_helper_symbols || !objects[i]->getSymbol()->isHelperSymbol()) && !objects[i]->getSymbol()->isHidden())
-		{
-			objects[i]->update();
-			rectInclude(rect, objects[i]->getExtent());
+			object->update();
+			rectIncludeSafe(rect, object->getExtent());
 		}
 	}
-	
 	return rect;
 }

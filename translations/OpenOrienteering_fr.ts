@@ -7,12 +7,12 @@
         <location filename="../src/gui/about_dialog.cpp" line="93"/>
         <location filename="../src/gui/about_dialog.cpp" line="153"/>
         <source>About %1</source>
-        <translation>A propos de %1</translation>
+        <translation>À propos de %1</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="161"/>
         <source>This program is free software: you can redistribute it and/or modify it under the terms of the &lt;a %1&gt;GNU General Public License (GPL), version&amp;nbsp;3&lt;/a&gt;, as published by the Free Software Foundation.</source>
-        <translation>Le programme est un logiciel libre: vous pouvez le redistribuer et/ou le modifier suivant les termes de la &lt;a %1&gt;GNU General Public License (GPL), version&amp;nbsp;3 &lt;/a&gt;, telle que publiée par la Free Software Foundation.</translation>
+        <translation>Ce programme est un logiciel libre ; vous pouvez le redistribuer ou le modifier suivant les termes de la &lt;a %1&gt;“GNU General Public License” &lt;/a&gt; telle que publiée par la Free Software Foundation : soit la version 3 de cette licence, soit (à votre gré) toute version ultérieure.</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="167"/>
@@ -54,7 +54,7 @@
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="182"/>
         <source>For contributions, thanks to:</source>
-        <translation>Pour leurs contributions, merci à:</translation>
+        <translation>Pour leurs contributions, merci à :</translation>
     </message>
     <message>
         <source>This program uses the &lt;b&gt;Clipper library&lt;/b&gt; by Angus Johnson.</source>
@@ -278,7 +278,7 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="45"/>
         <source>Edit map color</source>
-        <translation>Editer la palette des couleurs</translation>
+        <translation>Éditer la palette des couleurs</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="62"/>
@@ -303,7 +303,7 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="91"/>
         <source>Knockout: erases lower colors</source>
-        <translation>Effacer les couleurs les plus basses (Knockout)</translation>
+        <translation>Knockout : efface les couleurs les plus basses</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="109"/>
@@ -515,7 +515,7 @@
     <message>
         <location filename="../src/symbol_combined.cpp" line="414"/>
         <source>Edit private symbol...</source>
-        <translation>Editer le symbole utilisé en combinaison...</translation>
+        <translation>Éditer le symbole utilisé en combinaison ...</translation>
     </message>
     <message>
         <location filename="../src/symbol_combined.cpp" line="434"/>
@@ -876,7 +876,7 @@
     <message>
         <location filename="../src/tool_draw_freehand.cpp" line="276"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Draw a path. </source>
-        <translation>&lt;b&gt;Glisser&lt;/b&gt;: Dessiner un segment.</translation>
+        <translation>&lt;b&gt;Glisser&lt;/b&gt; : Dessiner un segment.</translation>
     </message>
 </context>
 <context>
@@ -909,7 +909,7 @@
         <location filename="../src/tool_draw_path.cpp" line="1096"/>
         <location filename="../src/tool_draw_rectangle.cpp" line="725"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Fixed angles. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: Angles fixés. </translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt; : Angles fixés. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1104"/>
@@ -1610,7 +1610,7 @@
     <message>
         <location filename="../src/core/georeferencing.cpp" line="234"/>
         <source>Invalid grid scale factor: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Facteur d&apos;échelle incorrect: %1</translation>
     </message>
     <message>
         <location filename="../src/core/georeferencing.cpp" line="271"/>
@@ -1674,7 +1674,7 @@
         <location filename="../src/gui/georeferencing_dialog.cpp" line="104"/>
         <source>Grid scale factor:</source>
         <extracomment>The grid scale factor is the ratio between a length in the grid plane and the corresponding length on the curved earth model. It is applied as a factor to ground distances to get grid plane distances.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Facteur d&apos;échelle:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="152"/>
@@ -1881,12 +1881,12 @@
     <name>GeoreferencingTool</name>
     <message>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set the reference point. Another button to cancel.</source>
-        <translation>&lt;b&gt;Clic&lt;/b&gt;: Placer le point de référence. Appuyez sur un autre bouton pour annuler.</translation>
+        <translation>&lt;b&gt;Clic&lt;/b&gt; : Placer le point de référence. Appuyez sur un autre bouton pour annuler.</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="702"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set the reference point. &lt;b&gt;Right click&lt;/b&gt;: Cancel.</source>
-        <translation>b&gt;Clic&lt;/b&gt;: Placer le point de référence. &lt;b&gt;Clic droit&lt;/b&gt;: Annuler.</translation>
+        <translation>b&gt;Clic&lt;/b&gt; : Placer le point de référence. &lt;b&gt;Clic droit&lt;/b&gt; : Annuler.</translation>
     </message>
 </context>
 <context>
@@ -1946,7 +1946,7 @@
     <message>
         <source>About %1</source>
         <comment>As in &apos;About OpenOrienteering Mapper&apos;</comment>
-        <translation>A propos de %1</translation>
+        <translation>À propos de %1</translation>
     </message>
     <message>
         <source>Recent maps</source>
@@ -1988,7 +1988,7 @@
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="159"/>
         <source>About %1</source>
         <comment>As in &apos;About OpenOrienteering Mapper&apos;</comment>
-        <translation>A propos de %1</translation>
+        <translation>À propos de %1</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="162"/>
@@ -2047,7 +2047,7 @@
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="338"/>
         <source>About Mapper</source>
-        <translation>A propos de Mapper</translation>
+        <translation>À propos de Mapper</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="478"/>
@@ -2174,7 +2174,8 @@
         <location filename="../src/file_import_export.cpp" line="125"/>
         <source>Warnings when loading template &apos;%1&apos;:
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Alertes durant le chagement du template &apos;%1&apos;:
+%2</translation>
     </message>
     <message>
         <location filename="../src/file_import_export.cpp" line="132"/>
@@ -2619,7 +2620,7 @@
     <message>
         <location filename="../src/gui/main_window.cpp" line="82"/>
         <source>About %1</source>
-        <translation>A propos de %1</translation>
+        <translation>À propos de %1</translation>
     </message>
 </context>
 <context>
@@ -2713,7 +2714,7 @@
     <message>
         <location filename="../src/gui/main_window.cpp" line="322"/>
         <source>&amp;About %1</source>
-        <translation>&amp;A propos de %1</translation>
+        <translation>&amp;À propos de %1</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="323"/>
@@ -3155,7 +3156,7 @@ Voulez-vous redimensionner le fichier importé?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="838"/>
         <source>Edit objects</source>
-        <translation>Editer des objets</translation>
+        <translation>Éditer des objets</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="840"/>
@@ -3175,7 +3176,7 @@ Voulez-vous redimensionner le fichier importé?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="846"/>
         <source>Write text</source>
-        <translation>Ecrire un texte</translation>
+        <translation>Écrire un texte</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="847"/>
@@ -3710,7 +3711,7 @@ Voulez-vous redimensionner le fichier importé?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="839"/>
         <source>Edit lines</source>
-        <translation>Editer des lignes</translation>
+        <translation>Éditer des lignes</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="844"/>
@@ -3843,7 +3844,7 @@ Voulez-vous redimensionner le fichier importé?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="937"/>
         <source>Copy position to clipboard.</source>
-        <translation type="unfinished"></translation>
+        <translation>Copier la popsition dans le presse-papier.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="961"/>
@@ -3915,7 +3916,7 @@ sdélectionnés</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="2036"/>
         <source>Write text on the map.</source>
-        <translation>Ecrire du texte sur la carte.</translation>
+        <translation>Écrire du texte sur la carte.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2036"/>
@@ -4405,7 +4406,7 @@ utiliser la molette de la souris pour zoomer.</translation>
     <message>
         <location filename="../src/map_dialog_new.cpp" line="57"/>
         <source>Only show symbol sets matching the selected scale</source>
-        <translation>Afficher que les bibliothèques de symboles compatibles avec l&apos;échelle sélectionnée</translation>
+        <translation>N&apos;afficher uniquement les bibliothèques de symboles compatibles avec l&apos;échelle sélectionnée</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_new.cpp" line="59"/>
@@ -5062,7 +5063,7 @@ utiliser la molette de la souris pour zoomer.</translation>
     <name>PrintTool</name>
     <message>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the print area or its borders. </source>
-        <translation type="obsolete">&lt;b&gt;Glisser&lt;/b&gt;: Déplacer la zone d&apos;impression ou ses limites. </translation>
+        <translation type="obsolete">&lt;b&gt;Glisser&lt;/b&gt; : Déplacer la zone d&apos;impression ou ses limites. </translation>
     </message>
     <message>
         <location filename="../src/gui/print_tool.cpp" line="52"/>
@@ -5943,7 +5944,7 @@ des couleurs</translation>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="236"/>
         <source>Edit</source>
-        <translation>Editer</translation>
+        <translation>Éditer</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="237"/>
