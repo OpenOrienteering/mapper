@@ -1802,12 +1802,12 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="194"/>
         <source>Map coordinates:</source>
-        <translation>Coordonnées de la carte:</translation>
+        <translation>Coordonnées de la carte :</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="196"/>
         <source>Geographic coordinates:</source>
-        <translation>Coordonnées géographiques:</translation>
+        <translation>Coordonnées géographiques :</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="199"/>
@@ -1836,12 +1836,12 @@
     </message>
     <message>
         <source>Projected coordinates:</source>
-        <translation>Coordonnées projetées:</translation>
+        <translation>Coordonnées projetées :</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="470"/>
         <source>Local coordinates:</source>
-        <translation>Coordonnées locales:</translation>
+        <translation>Coordonnées locales :</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="497"/>
@@ -2126,7 +2126,7 @@
     <message>
         <location filename="../src/util/xml_stream_util.cpp" line="113"/>
         <source>Expected %1 coordinates, found %2.</source>
-        <translation>Coordonnées attendues %1, mais trouvées %2.</translation>
+        <translation>%1 coordonnées attendues, %2 trouvées.</translation>
     </message>
     <message>
         <location filename="../src/file_format_xml.cpp" line="858"/>
@@ -3403,7 +3403,7 @@ Voulez-vous redimensionner le fichier importé?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="1153"/>
         <source>Select template...</source>
-        <translation>Sélectionner un modèle ...</translation>
+        <translation>Sélectionner un modèle...</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1159"/>
@@ -3434,7 +3434,7 @@ Voulez-vous redimensionner le fichier importé?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="1473"/>
         <source>No undo steps available.</source>
-        <translation>Aucune action ne peut être défaite.</translation>
+        <translation>Aucune action ne peut être annulée.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1486"/>
