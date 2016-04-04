@@ -3,8 +3,8 @@
 Lors de l'édition d'une carte, appuyer sur Tab pour basculer rapidement entre l'outil d'édition et les outils de dessin.
 Une carte avec peu de symboles bien choisis sera bien meilleure qu'une carte encombrée de symboles inutiles.   Eduard Imhof
 Les objets inutiles pour un orienteur dans une course d'orientation de sprint ne devraient pas être cartographiés. Par exemple les corbeilles de rue, les bouches d'incendie, les parcmètres, les révèrbères sont des détails inutiles qui encombrent la carte.
-Le rôle du cartographe est de produire une carte précise et lisible en appliquant les principes spécifiques et généraux suivant : sélection, simplification et exagération.
-Mapping multilevel structures (bridges, underpasses or underground buildings) is confusing. Generally only the main "running" level should be shown. However, underground passages (e.g. underpasses, lighted tunnels) or overpasses (e.g. bridges), which are important for competitors should be mapped.
+L'objectif du cartographe est de produire une carte précise et lisible en appliquant les principes spécifiques et généraux suivant : sélection, simplification et exagération.
+Cartographier des structures multi-niveaux (pont, passages souterrains ou batîments souterrains) est source de confusion. En général, seul le niveau principal "de course" doit apparaître. Cependant les passages souterrains; tunnel éclairés ou les passages aériens comme les pont qui sont utiles pour les orienteurs doivent être cartographiés.
 All line widths and symbol dimensions must be kept strictly to their specified value. Certain minimum dimensions must also be observed. These are based on both printing technology and the need for legibility.
 Minimum gap between two line symbols of the same colour, in brown or black: 0.15 mm, in blue: 0.25 mm
 Minimum gap between line symbols and area symbols of the same colour, in black: 0.15 mm
