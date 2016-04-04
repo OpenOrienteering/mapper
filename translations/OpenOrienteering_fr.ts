@@ -1413,7 +1413,7 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="53"/>
         <source>Language:</source>
-        <translation>Langue:</translation>
+        <translation>Langue :</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="63"/>
@@ -1423,12 +1423,12 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="68"/>
         <source>Pixels per inch:</source>
-        <translation>Pixels par pouce:</translation>
+        <translation>Pixels par pouce :</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="78"/>
         <source>Program start</source>
-        <translation>Démarrage du logiciel</translation>
+        <translation>À l'ouverture du logiciel :</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="87"/>
@@ -1443,12 +1443,12 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="94"/>
         <source>Save information for automatic recovery</source>
-        <translation>Sauvegarder les informations pour sauvegarde automatique</translation>
+        <translation>Activer la sauvegarde automatique en cas de plantage</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="98"/>
         <source>Recovery information saving interval:</source>
-        <translation>Intervales des sauvegardes automatiques:</translation>
+        <translation>Intervalles des sauvegardes automatiques :</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="97"/>
@@ -1475,7 +1475,7 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="126"/>
         <source>Use the new OCD importer also for version 8 files</source>
-        <translation>Utiliser le nouveau importateur Ocad, y compris pour les fichiers version 8   </translation>
+        <translation>Utiliser le nouvel importateur Ocad, y compris pour les fichiers version 8/translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="146"/>
