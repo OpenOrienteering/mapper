@@ -466,7 +466,7 @@
     <message>
         <location filename="../src/color_dock_widget.cpp" line="187"/>
         <source>The map contains symbols with this color. Deleting it will remove the color from these objects! Do you really want to do that?</source>
-        <translation>La carte contient des symboles utilisant cette couleur. Sa suppression effacera la couleur de ces objets! Voulez vous vraiment le faire?</translation>
+        <translation>La carte contient des symboles utilisant cette couleur. Sa suppression effacera la couleur de ces objets! Voulez vous vraiment le faire ?</translation>
     </message>
     <message>
         <location filename="../src/color_dock_widget.cpp" line="204"/>
@@ -543,7 +543,7 @@
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="53"/>
         <source>Configure grid</source>
-        <translation>Paramètrage de la grille</translation>
+        <translation>Paramétrage de la grille</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="55"/>
@@ -1072,7 +1072,7 @@
     <message>
         <location filename="../src/tool_draw_rectangle.cpp" line="82"/>
         <source>Undo</source>
-        <translation>Défaire</translation>
+        <translation>Annuler</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_rectangle.cpp" line="83"/>
@@ -1285,7 +1285,7 @@
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="62"/>
         <source>Templates: keep settings of closed templates</source>
-        <translation>Modèles: garder les réglages des modèles fermés</translation>
+        <translation>Modèles: garder les préférences des modèles fermés</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="67"/>
@@ -1913,7 +1913,7 @@
     </message>
     <message>
         <source>Settings</source>
-        <translation>Réglages</translation>
+        <translation>Préférences</translation>
     </message>
     <message>
         <source>Help</source>
@@ -1982,7 +1982,7 @@
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="156"/>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="334"/>
         <source>Settings</source>
-        <translation>Réglages</translation>
+        <translation>Préférences</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="159"/>
@@ -2271,7 +2271,7 @@
     <message>
         <location filename="../src/symbol_line.cpp" line="2255"/>
         <source>Line settings</source>
-        <translation>Paramètrage de ligne</translation>
+        <translation>Paramétrage de ligne</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2035"/>
@@ -2610,7 +2610,7 @@
     <message>
         <location filename="../src/gui/main_window.cpp" line="80"/>
         <source>Preferences...</source>
-        <translation>Réglages...</translation>
+        <translation>Préférences...</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="81"/>
@@ -2668,7 +2668,7 @@
     <message>
         <location filename="../src/gui/main_window.cpp" line="261"/>
         <source>Settings...</source>
-        <translation>Réglages...</translation>
+        <translation>Préférences...</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="268"/>
@@ -2714,7 +2714,7 @@
     <message>
         <location filename="../src/gui/main_window.cpp" line="322"/>
         <source>&amp;About %1</source>
-        <translation>&amp;À propos de %1</translation>
+        <translation>À &amp;propos de %1</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="323"/>
@@ -2724,7 +2724,7 @@
     <message>
         <location filename="../src/gui/main_window.cpp" line="329"/>
         <source>About &amp;Qt</source>
-        <translation>A propos de &amp;Qt</translation>
+        <translation>À propos de &amp;Qt</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="330"/>
@@ -3016,12 +3016,12 @@ Voulez-vous redimensionner le fichier importé?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="790"/>
         <source>Undo</source>
-        <translation>Défaire</translation>
+        <translation>Annuler</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="790"/>
         <source>Undo the last step</source>
-        <translation>Défaire la dernière action</translation>
+        <translation>Annuler la dernière action</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="791"/>
@@ -3081,7 +3081,7 @@ Voulez-vous redimensionner le fichier importé?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="812"/>
         <source>Set custom zoom factor...</source>
-        <translation>Définir un facteur de zoom ...</translation>
+        <translation>Définir un facteur de zoom...</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="819"/>
@@ -3111,7 +3111,7 @@ Voulez-vous redimensionner le fichier importé?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="824"/>
         <source>Scale all symbols...</source>
-        <translation>Redimensionner tous les symboles ...</translation>
+        <translation>Redimensionner tous les symboles...</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="824"/>
@@ -3121,7 +3121,7 @@ Voulez-vous redimensionner le fichier importé?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="826"/>
         <source>Change map scale...</source>
-        <translation>Changer l&apos;échelle de la carte ...</translation>
+        <translation>Changer l&apos;échelle de la carte...</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="826"/>
@@ -3146,7 +3146,7 @@ Voulez-vous redimensionner le fichier importé?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="833"/>
         <source>Open template...</source>
-        <translation>Ouvrir un modèle ...</translation>
+        <translation>Ouvrir un modèle...</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="810"/>
@@ -3221,7 +3221,7 @@ Voulez-vous redimensionner le fichier importé?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="917"/>
         <source>Import...</source>
-        <translation>Importer ...</translation>
+        <translation>Importer...</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="969"/>
@@ -3676,12 +3676,12 @@ Voulez-vous redimensionner le fichier importé?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="800"/>
         <source>Clear undo / redo history</source>
-        <translation>Effacer l&apos;historique des actions (défaire/refaire)</translation>
+        <translation>Effacer l&apos;historique des actions (annuler/rétablir)</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="800"/>
         <source>Clear the undo / redo history to reduce map file size.</source>
-        <translation>Efface l&apos;historique des actions (défaire/refaire) afin de réduire la taille du fichier.</translation>
+        <translation>Efface l&apos;historique des actions (annuler/rétablir) afin de réduire la taille du fichier.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="807"/>
@@ -3696,7 +3696,7 @@ Voulez-vous redimensionner le fichier importé?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="821"/>
         <source>Replace symbol set...</source>
-        <translation>Remplacer la bibliothèque de symboles ...</translation>
+        <translation>Remplacer la bibliothèque de symboles...</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="836"/>
@@ -3817,7 +3817,7 @@ Voulez-vous redimensionner le fichier importé?</translation>
         <location filename="../src/map_editor.cpp" line="912"/>
         <location filename="../src/map_editor.cpp" line="3413"/>
         <source>Add new part...</source>
-        <translation>Ajouter un nouvelle partie...</translation>
+        <translation>Ajouter une nouvelle partie...</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="913"/>
@@ -5857,7 +5857,7 @@ des couleurs</translation>
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="40"/>
         <source>Settings</source>
-        <translation>Paramétrages</translation>
+        <translation>Préférences</translation>
     </message>
 </context>
 <context>
@@ -6762,7 +6762,7 @@ Si vous ne souhaitez pas dessiner sur le modèle, cela ne pose alors aucun probl
     <message>
         <location filename="../src/template_track.cpp" line="170"/>
         <source>Projects the track using an orthographic projection with center at the track&apos;s coordinate average. Allows adjustment of the transformation and setting the map georeferencing using the adjusted track position.</source>
-        <translation>Projeter la trace en utilisant une projection orthographique avec pour centre la moyenne des coordonnées de la trace. Autoriser l&apos;ajustement de la transformation et le paramètrage du géoréférencement de la carte en utilisant la position ajustée de la trace.</translation>
+        <translation>Projeter la trace en utilisant une projection orthographique avec pour centre la moyenne des coordonnées de la trace. Autoriser l&apos;ajustement de la transformation et le paramétrage du géoréférencement de la carte en utilisant la position ajustée de la trace.</translation>
     </message>
     <message>
         <location filename="../src/template_track.cpp" line="398"/>
@@ -7112,7 +7112,7 @@ La version maximale supportée est la version %2.</translation>
     <message>
         <location filename="../src/undo_manager.cpp" line="121"/>
         <source>Cannot undo because the last undo step became invalid. This can for example happen if you change the symbol of an object to another and then delete the old symbol.</source>
-        <translation>Impossible d&apos;annuler car la dernière action &quot;Défaire&quot; deviendrait alors invalide. Cela peut arriver par exemple lorsque vous changez le symbole d&apos;un objet par un autre et qu&apos;ensuite vous supprimez l&apos;ancien symbole.</translation>
+        <translation>Impossible d&apos;annuler car la dernière action &quot;Annuler&quot; deviendrait alors invalide. Cela peut arriver par exemple lorsque vous changez le symbole d&apos;un objet par un autre et qu&apos;ensuite vous supprimez l&apos;ancien symbole.</translation>
     </message>
     <message>
         <location filename="../src/undo_manager.cpp" line="127"/>
@@ -7122,12 +7122,12 @@ La version maximale supportée est la version %2.</translation>
     <message>
         <location filename="../src/undo_manager.cpp" line="127"/>
         <source>Undoing this step will go beyond the point where the file was loaded. Are you sure?</source>
-        <translation>Défaire cette action vous ramènera dans l&apos;état ANTÉRIEUR au chargement de ce fichier. Êtes vous sûr de vouloir défaire?</translation>
+        <translation>Annuler cette action vous ramènera dans l&apos;état ANTÉRIEUR au chargement de ce fichier. Êtes vous sûr de vouloir annuler ?</translation>
     </message>
     <message>
         <location filename="../src/undo_manager.cpp" line="159"/>
         <source>Cannot redo because the first redo step became invalid. This can for example happen if you delete the symbol of an object you have drawn.</source>
-        <translation>Impossible de défaire la dernière action car elle deviendrait invalide. Cela peut arriver par exemple lorsque vous supprimez le symbole d&apos;un objet que vous avez dessiné.</translation>
+        <translation>Impossible d'annuler la dernière action car elle deviendrait invalide. Cela peut arriver par exemple lorsque vous supprimez le symbole d&apos;un objet que vous avez dessiné.</translation>
     </message>
 </context>
 <context>
