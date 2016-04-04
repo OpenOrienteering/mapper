@@ -6,8 +6,8 @@ Les objets inutiles pour un orienteur dans une course d'orientation de sprint ne
 L'objectif du cartographe est de produire une carte précise et lisible en appliquant les principes spécifiques et généraux suivant : sélection, simplification et exagération.
 Cartographier des structures multi-niveaux (pont, passages souterrains ou batîments souterrains) est source de confusion. En général, seul le niveau principal "de course" doit apparaître. Cependant les passages souterrains; tunnel éclairés ou les passages aériens comme les pont qui sont utiles pour les orienteurs doivent être cartographiés.
 Toutes les largeurs de lignes et les tailles des symboles doivent conserver leur valeur spécifiée. Certaines dimensions minimales doivent être respectées, elles s'appuient à la fois sur la technologie d'impression et de la nécessité pour la lisibilité.
-Minimum gap between two line symbols of the same colour, in brown or black: 0.15 mm, in blue: 0.25 mm
-Minimum gap between line symbols and area symbols of the same colour, in black: 0.15 mm
+Écart minimum entre deux symboles de ligne de la même couleur : en brun ou noir : 0,15 mm, en bleu : 0,25 mm
+Écart minimum entre deux symboles de surface de la même couleur r, in black: 0.15 mm
 Shortest dotted line: at least two dots
 Shortest dashed line: at least two dashes
 Smallest area enclosed by a dotted line: 1.5 mm (diameter) with 5 dots
