@@ -5,7 +5,7 @@ Une carte avec peu de symboles bien choisis sera bien meilleure qu'une carte enc
 Les objets inutiles pour un orienteur dans une course d'orientation de sprint ne devraient pas être cartographiés. Par exemple les corbeilles de rue, les bouches d'incendie, les parcmètres, les révèrbères sont des détails inutiles qui encombrent la carte.
 L'objectif du cartographe est de produire une carte précise et lisible en appliquant les principes spécifiques et généraux suivant : sélection, simplification et exagération.
 Cartographier des structures multi-niveaux (pont, passages souterrains ou batîments souterrains) est source de confusion. En général, seul le niveau principal "de course" doit apparaître. Cependant les passages souterrains; tunnel éclairés ou les passages aériens comme les pont qui sont utiles pour les orienteurs doivent être cartographiés.
-All line widths and symbol dimensions must be kept strictly to their specified value. Certain minimum dimensions must also be observed. These are based on both printing technology and the need for legibility.
+Toutes les largeurs de lignes et les tailles des symboles doivent conserver leur valeur spécifiée. Certaines dimensions minimales doivent être respectées, elles s'appuient à la fois sur la technologie d'impression et de la nécessité pour la lisibilité.
 Minimum gap between two line symbols of the same colour, in brown or black: 0.15 mm, in blue: 0.25 mm
 Minimum gap between line symbols and area symbols of the same colour, in black: 0.15 mm
 Shortest dotted line: at least two dots
