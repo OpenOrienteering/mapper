@@ -45,6 +45,8 @@
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
+#include <printer_properties.h>
+
 #include "main_window.h"
 #include "print_progress_dialog.h"
 #include "print_tool.h"
@@ -95,6 +97,17 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 	target_combo = new QComboBox();
 	target_combo->setMinimumWidth(1); // Not zero, but not as long as the items
 	layout->addRow(Util::Headline::create(tr("Printer:")), target_combo);
+	
+	if (PlatformPrinterProperties::dialogSupported())
+	{
+		printer_properties_button = new QToolButton();
+		printer_properties_button->setText(tr("Properties"));
+		layout->addRow(nullptr, printer_properties_button);
+	}
+	else 
+	{
+		printer_properties_button = nullptr;
+	}
 	
 	paper_size_combo = new QComboBox();
 	layout->addRow(tr("Page format:"), paper_size_combo);
@@ -257,6 +270,8 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 	setLayout(outer_layout);
 	
 	connect(target_combo, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &PrintWidget::targetChanged);
+	if (printer_properties_button)
+		connect(printer_properties_button, &QAbstractButton::clicked, this, &PrintWidget::propertiesClicked, Qt::QueuedConnection);
 	connect(paper_size_combo, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &PrintWidget::paperSizeChanged);
 	connect(page_width_edit, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &PrintWidget::paperDimensionsChanged);
 	connect(page_orientation_group, QOverload<int>::of(&QButtonGroup::buttonClicked), this, &PrintWidget::pageOrientationChanged);
@@ -538,6 +553,8 @@ void PrintWidget::setTarget(const QPrinterInfo* target)
 	print_button->setDefault(is_printer);
 	export_button->setVisible(!is_printer);
 	export_button->setDefault(!is_printer);
+	if (printer_properties_button)
+		printer_properties_button->setEnabled(is_printer);
 	
 	bool is_image_target = target == MapPrinter::imageTarget();
 	vector_mode_button->setEnabled(!is_image_target);
@@ -572,7 +589,17 @@ void PrintWidget::targetChanged(int index) const
 	map_printer->setTarget(target);
 }
 
-
+// slot
+void PrintWidget::propertiesClicked()
+{
+	if (map_printer && map_printer->isPrinter())
+	{
+		auto printer = map_printer->makePrinter();
+		Q_ASSERT(printer->outputFormat() == QPrinter::NativeFormat);
+		if (PlatformPrinterProperties::execDialog(printer.get(), this) == QDialog::Accepted)
+			map_printer->takePrinterSettings(printer.get());
+	}
+}
 
 void PrintWidget::updatePaperSizes(const QPrinterInfo* target) const
 {
