@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2015 Kai Pastor
+ *    Copyright 2012-2016  Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -34,6 +34,7 @@
 
 #if defined(QT_PRINTSUPPORT_LIB)
 #  include <advanced_pdf_printer.h>
+#  include <printer_properties.h>
 #  if defined(Q_OS_WIN)
 #    include <private/qprintengine_win_p.h>
 #  endif
@@ -473,6 +474,13 @@ std::unique_ptr<QPrinter> MapPrinter::makePrinter() const
 		return printer;
 	}
 	
+	// Color can only be changed in (native) properties dialogs. This is the default.
+	printer->setColorMode(separationsModeSelected() ? QPrinter::GrayScale : QPrinter::Color);
+	if (printer->outputFormat() == QPrinter::NativeFormat)
+	{
+		PlatformPrinterProperties::restore(printer.get(), native_data);
+	}
+	
 	printer->setDocName(tr("- Map -"));
 	printer->setFullPage(true);
 	if (page_format.paper_size == QPrinter::Custom)
@@ -485,7 +493,6 @@ std::unique_ptr<QPrinter> MapPrinter::makePrinter() const
 		printer->setPaperSize((QPrinter::PaperSize)page_format.paper_size);
 		printer->setOrientation((page_format.orientation == MapPrinterPageFormat::Portrait) ? QPrinter::Portrait : QPrinter::Landscape);
 	}
-	printer->setColorMode(separationsModeSelected() ? QPrinter::GrayScale : QPrinter::Color);
 	printer->setResolution(options.resolution);
 	
 	if (page_format.paper_size == QPrinter::Custom || !isPrinter())
@@ -784,6 +791,11 @@ void MapPrinter::takePrinterSettings(const QPrinter* printer)
 	}
 
 	setResolution(printer->resolution());
+	
+	if (printer && printer->outputFormat() == QPrinter::NativeFormat)
+	{
+		PlatformPrinterProperties::save(printer, native_data);
+	}
 }
 
 // local
@@ -1264,4 +1276,4 @@ void MapPrinter::cancelPrintMap()
 	cancel_print_map = true;
 }
 
-#endif
+#endif // QT_PRINTSUPPORT_LIB

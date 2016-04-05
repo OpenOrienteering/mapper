@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2015 Kai Pastor
+ *    Copyright 2012-2016  Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -192,6 +192,9 @@ public:
 	/** A flag which indicates to the UI whether to adjust the print area size
 	 *  to the current page size. */
 	bool single_page_print_area;
+	
+	/** Platform-dependent data. */
+	std::shared_ptr<const void> native_data;
 };
 
 
