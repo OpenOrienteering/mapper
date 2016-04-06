@@ -1610,7 +1610,7 @@
     <message>
         <location filename="../src/core/georeferencing.cpp" line="234"/>
         <source>Invalid grid scale factor: %1</source>
-        <translation>Facteur d&apos;échelle incorrect: %1</translation>
+        <translation>Facteur d&apos;échelle incorrect : %1</translation>
     </message>
     <message>
         <location filename="../src/core/georeferencing.cpp" line="271"/>
@@ -1668,13 +1668,13 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="98"/>
         <source>Status:</source>
-        <translation>Statut:</translation>
+        <translation>Statut :</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="104"/>
         <source>Grid scale factor:</source>
         <extracomment>The grid scale factor is the ratio between a length in the grid plane and the corresponding length on the curved earth model. It is applied as a factor to ground distances to get grid plane distances.</extracomment>
-        <translation>Facteur d&apos;échelle:</translation>
+        <translation>Facteur d&apos;échelle :</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="152"/>
@@ -1684,7 +1684,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="147"/>
         <source>Show reference point in:</source>
-        <translation>Afficher le point de référence sur:</translation>
+        <translation>Afficher le point de référence sur :</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="341"/>
@@ -3470,7 +3470,7 @@ Voulez-vous redimensionner le fichier importé?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="1638"/>
         <source>Zoom factor:</source>
-        <translation>Facteur de zoom:</translation>
+        <translation>Facteur de zoom :</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1712"/>
@@ -3490,7 +3490,7 @@ Voulez-vous redimensionner le fichier importé?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="1755"/>
         <source>Scale to percentage:</source>
-        <translation>Facteur de redimendionnement:</translation>
+        <translation>Facteur de redimendionnement :</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1779"/>
@@ -5113,7 +5113,7 @@ utiliser la molette de la souris pour zoomer.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="125"/>
         <source>Page orientation:</source>
-        <translation>Orientation de la page:</translation>
+        <translation>Orientation de la page :</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="96"/>
@@ -5133,32 +5133,32 @@ utiliser la molette de la souris pour zoomer.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="99"/>
         <source>Page format:</source>
-        <translation>Format de la page:</translation>
+        <translation>Format de la page :</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="128"/>
         <source>Copies:</source>
-        <translation>Copies:</translation>
+        <translation>Copies :</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="141"/>
         <source>Left:</source>
-        <translation>Gauche:</translation>
+        <translation>Gauche :</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="144"/>
         <source>Top:</source>
-        <translation>Haut:</translation>
+        <translation>Haut :</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="147"/>
         <source>Width:</source>
-        <translation>Largeur:</translation>
+        <translation>Largeur :</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="150"/>
         <source>Height:</source>
-        <translation>Hauteur:</translation>
+        <translation>Hauteur :</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="244"/>
@@ -5178,7 +5178,7 @@ utiliser la molette de la souris pour zoomer.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="135"/>
         <source>Map area:</source>
-        <translation>Zone de la carte:</translation>
+        <translation>Zone de la carte :</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="137"/>
@@ -5199,7 +5199,7 @@ utiliser la molette de la souris pour zoomer.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="153"/>
         <source>Page overlap:</source>
-        <translation>Chevauchement des pages:</translation>
+        <translation>Chevauchement des pages :</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="157"/>
@@ -5209,17 +5209,17 @@ utiliser la molette de la souris pour zoomer.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="185"/>
         <source>Resolution:</source>
-        <translation>Résolution:</translation>
+        <translation>Résolution :</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="187"/>
         <source>Print in different scale:</source>
-        <translation>Imprimer à une échelle différente:</translation>
+        <translation>Imprimer à une échelle différente :</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="208"/>
         <source>Template appearance may differ.</source>
-        <translation>L&apos;apparence du modèle peut être différent.</translation>
+        <translation>L&apos;apparence des modèles peut être différente.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="215"/>
@@ -5239,7 +5239,7 @@ utiliser la molette de la souris pour zoomer.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="222"/>
         <source>Color mode:</source>
-        <translation>Mode de couleur:</translation>
+        <translation>Mode de couleur :</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="246"/>
@@ -5716,7 +5716,7 @@ des couleurs</translation>
     <message>
         <location filename="../src/map_dialog_scale.cpp" line="46"/>
         <source>Scaling center:</source>
-        <translation>Centre du redimensionnement:</translation>
+        <translation>Centre du redimensionnement :</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_scale.cpp" line="48"/>
