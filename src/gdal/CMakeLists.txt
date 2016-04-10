@@ -40,6 +40,12 @@ add_library(mapper-gdal STATIC
   ogr_template.cpp
 )
 
+target_compile_definitions(mapper-gdal PRIVATE
+  QT_NO_CAST_FROM_ASCII
+  QT_NO_CAST_TO_ASCII
+  QT_USE_QSTRINGBUILDER
+)
+
 target_compile_definitions(mapper-gdal INTERFACE MAPPER_USE_GDAL)
 
 target_include_directories(mapper-gdal PRIVATE "${GDAL_INCLUDE_DIR}")

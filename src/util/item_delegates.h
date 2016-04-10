@@ -70,7 +70,7 @@ public:
 	 *                suffix to the value.
 	 *  @param step   The size of single step when using the spin box button.
 	 */
-	SpinBoxDelegate(QObject* parent, int min, int max, const QString &unit = "", int step = 0);
+	SpinBoxDelegate(QObject* parent, int min, int max, const QString &unit = QString{}, int step = 0);
 	
 	/** Creates a new SpinBoxDelegate.
 	 *  @param min    The minimum valid value.
@@ -79,7 +79,7 @@ public:
 	 *                suffix to the value.
 	 *  @param step   The size of single step when using the spinbox button.
 	 */
-	SpinBoxDelegate(int min, int max, const QString &unit = "", int step = 0);
+	SpinBoxDelegate(int min, int max, const QString &unit = QString{}, int step = 0);
 	
 	/** Returns a new QSpinBox configured according to the delegates properties. 
 	 *  @see QItemDelegate::createEditor().
@@ -134,7 +134,7 @@ public:
 	 *  @param parent The parent object which will be passed to QItemDelegate.
 	 *  @param step   The size of single step when using the spin box button.
 	 */
-	PercentageDelegate(QObject* parent, int step = 0);
+	PercentageDelegate(QObject* parent, int step = 5);
 	
 	/** Creates a new PercentageDelegate.
 	 *  @param step   The size of single step when using the spinbox button.

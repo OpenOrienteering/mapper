@@ -123,7 +123,7 @@ GeneralSettingsPage::GeneralSettingsPage(QWidget* parent)
 	encoding_box->setCompleter(completer);
 	layout->addRow(tr("8-bit encoding:"), encoding_box);
 	
-	ocd_importer_check = new QCheckBox(tr("Use the new OCD importer also for version 8 files").replace("8", "6-8"));
+	ocd_importer_check = new QCheckBox(tr("Use the new OCD importer also for version 8 files").replace(QLatin1Char('8'), QString::fromLatin1("6-8")));
 	layout->addRow(ocd_importer_check);
 	
 	updateWidgets();

@@ -29,6 +29,12 @@ if(Mapper_DEVELOPMENT_BUILD)
 	enable_sanitize(address undefined NO_RECOVER)
 endif()
 
+add_definitions(
+  -DQT_NO_CAST_FROM_ASCII
+  -DQT_NO_CAST_TO_ASCII
+  -DQT_USE_QSTRINGBUILDER
+)
+
 # This macro defines a unit test from a list of source file names 
 # (without ending). For each filename, a .cpp file and .h must exist.
 # The .h file is processed with Qt's moc.

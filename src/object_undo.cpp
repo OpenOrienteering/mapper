@@ -128,7 +128,7 @@ void ObjectModifyingUndoStep::saveImpl(QXmlStreamWriter& xml) const
 
 void ObjectModifyingUndoStep::loadImpl(QXmlStreamReader& xml, SymbolDictionary& symbol_dict)
 {
-	if (xml.name() == "affected_objects")
+	if (xml.name() == QLatin1String("affected_objects"))
 	{
 		XmlElementReader element(xml);
 		part_index = element.attribute<int>(QLatin1String("part"));
@@ -137,7 +137,7 @@ void ObjectModifyingUndoStep::loadImpl(QXmlStreamReader& xml, SymbolDictionary& 
 			modified_objects.reserve(size);
 		while (xml.readNextStartElement())
 		{
-			if (xml.name() == "ref")
+			if (xml.name() == QLatin1String("ref"))
 			{
 				XmlElementReader ref(xml);
 				modified_objects.push_back(ref.attribute<int>(QLatin1String("object")));
@@ -230,9 +230,9 @@ void ObjectCreatingUndoStep::saveImpl(QXmlStreamWriter& xml) const
 {
 	ObjectModifyingUndoStep::saveImpl(xml);
 	
-	xml.writeStartElement("contained_objects");
+	xml.writeStartElement(QLatin1String("contained_objects"));
 	int size = (int)objects.size();
-	xml.writeAttribute("count", QString::number(size));
+	xml.writeAttribute(QLatin1String("count"), QString::number(size));
 	for (int i = 0; i < size; ++i)
 	{
 		objects[i]->setMap(map);	// IMPORTANT: only if the object's map pointer is set it will save its symbol index correctly
@@ -243,13 +243,13 @@ void ObjectCreatingUndoStep::saveImpl(QXmlStreamWriter& xml) const
 
 void ObjectCreatingUndoStep::loadImpl(QXmlStreamReader& xml, SymbolDictionary& symbol_dict)
 {
-	if (xml.name() == "contained_objects")
+	if (xml.name() == QLatin1String("contained_objects"))
 	{
-		int size = xml.attributes().value("count").toString().toInt();
+		int size = xml.attributes().value(QLatin1String("count")).toInt();
 		objects.reserve(qMin(size, 1000)); // 1000 is not a limit
 		while (xml.readNextStartElement())
 		{
-			if (xml.name() == "object")
+			if (xml.name() == QLatin1String("object"))
 				objects.push_back(Object::load(xml, map, symbol_dict));
 			else
 				xml.skipCurrentElement(); // unknown
@@ -580,29 +580,29 @@ void SwitchSymbolUndoStep::saveImpl(QXmlStreamWriter& xml) const
 {
 	ObjectModifyingUndoStep::saveImpl(xml);
 	
-	xml.writeStartElement("switch_symbol");
+	xml.writeStartElement(QLatin1String("switch_symbol"));
 	int size = (int)target_symbols.size();
-	xml.writeAttribute("count", QString::number(size));
+	xml.writeAttribute(QLatin1String("count"), QString::number(size));
 	for (int i = 0; i < size; ++i)
 	{
 		int index = map->findSymbolIndex(target_symbols[i]);
-		xml.writeEmptyElement("ref");
-		xml.writeAttribute("symbol", QString::number(index));
+		xml.writeEmptyElement(QLatin1String("ref"));
+		xml.writeAttribute(QLatin1String("symbol"), QString::number(index));
 	}
 	xml.writeEndElement(/*switch_symbol*/);
 }
 
 void SwitchSymbolUndoStep::loadImpl(QXmlStreamReader& xml, SymbolDictionary& symbol_dict)
 {
-	if (xml.name() == "switch_symbol")
+	if (xml.name() == QLatin1String("switch_symbol"))
 	{
-		int size = xml.attributes().value("count").toString().toInt();
+		int size = xml.attributes().value(QLatin1String("count")).toInt();
 		target_symbols.reserve(qMin(size, 1000)); // 1000 is not a limit
 		while (xml.readNextStartElement())
 		{
-			if (xml.name() == "ref")
+			if (xml.name() == QLatin1String("ref"))
 			{
-				QString key = xml.attributes().value("symbol").toString();
+				QString key = xml.attributes().value(QLatin1String("symbol")).toString();
 				target_symbols.push_back(symbol_dict[key]);
 			}
 			
@@ -739,7 +739,7 @@ void ObjectTagsUndoStep::loadImpl(QXmlStreamReader &xml, SymbolDictionary &symbo
 	namespace literal = XmlStreamLiteral;
 	
 	// Note: This implementation copies, not calls, the parent's implementation.
-	if (xml.name() == "affected_objects")
+	if (xml.name() == QLatin1String("affected_objects"))
 	{
 		XmlElementReader element(xml);
 		setPartIndex(element.attribute<int>(QLatin1String("part")));
@@ -749,7 +749,7 @@ void ObjectTagsUndoStep::loadImpl(QXmlStreamReader &xml, SymbolDictionary &symbo
 		
 		while (xml.readNextStartElement())
 		{
-			if (xml.name() == "ref")
+			if (xml.name() == QLatin1String("ref"))
 			{
 				XmlElementReader tags_element(xml);
 				int index = tags_element.attribute<int>(literal::object);

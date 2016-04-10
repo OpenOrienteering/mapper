@@ -158,7 +158,7 @@ MapPrinterOptions::MapPrinterOptions(unsigned int scale, unsigned int resolution
 // ### MapPrinterConfig ###
 
 MapPrinterConfig::MapPrinterConfig(const Map& map)
- : printer_name("DEFAULT"),
+ : printer_name(QString::fromLatin1("DEFAULT")),
    print_area(map.calculateExtent()),
    page_format(MapPrinterPageFormat::fromDefaultPrinter()),
    options(map.getScaleDenominator()),
@@ -176,7 +176,7 @@ MapPrinterConfig::MapPrinterConfig(const Map& map)
 }
 
 MapPrinterConfig::MapPrinterConfig(const Map& map, QXmlStreamReader& xml)
- : printer_name("DEFAULT"),
+ : printer_name(QString::fromLatin1("DEFAULT")),
    print_area(0.0, 0.0, 100.0, 100.0), // Avoid expensive calculation before loading.
    page_format(),
    options(map.getScaleDenominator()),
@@ -225,7 +225,7 @@ MapPrinterConfig::MapPrinterConfig(const Map& map, QXmlStreamReader& xml)
 			const QHash< int, const char* >& paper_size_names = MapPrinter::paperSizeNames();
 			for (int i = 0; i < paper_size_names.count(); ++i)
 			{
-				if (value == paper_size_names[i])
+				if (value == QLatin1String(paper_size_names[i]))
 					page_format.paper_size = i;
 			}
 #endif

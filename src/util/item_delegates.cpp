@@ -130,7 +130,7 @@ void SpinBoxDelegate::setModelData(QAbstractItemModel* model, const QModelIndex&
 	data[Qt::UserRole] = value;
 	data[Qt::DisplayRole] = unit.isEmpty() ?
 	  QLocale().toString(value) : 
-	  (QLocale().toString(value) % " " % unit);
+	  (QLocale().toString(value) + QLatin1Char(' ') + unit);
 	model->setItemData(index, data);
 }
 
@@ -148,20 +148,20 @@ PercentageDelegate::PercentageDelegate(QObject* parent, int step)
  : QStyledItemDelegate(parent),
    step(step)
 {
-	unit = QLatin1String(" ") % tr("%");
+	unit = QLatin1Char(' ') + tr("%");
 }
 
 PercentageDelegate::PercentageDelegate(int step)
  : QStyledItemDelegate(),
    step(step)
 {
-	unit = QLatin1String(" ") % tr("%");
+	unit = QLatin1Char(' ') + tr("%");
 }
 
 QString PercentageDelegate::displayText(const QVariant& value, const QLocale& locale) const
 {
 	int int_value = qRound(value.toFloat() * 100);
-	return locale.toString(int_value) % unit;
+	return locale.toString(int_value) + unit;
 }
 
 QWidget* PercentageDelegate::createEditor(QWidget* parent, const QStyleOptionViewItem& option, const QModelIndex& index) const

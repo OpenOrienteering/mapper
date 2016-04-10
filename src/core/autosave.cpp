@@ -119,7 +119,7 @@ Autosave::~Autosave()
 
 QString Autosave::autosavePath(const QString &path) const
 {
-	return path + ".autosave";
+	return path + QLatin1String(".autosave");
 }
 
 void Autosave::setAutosaveNeeded(bool needed)

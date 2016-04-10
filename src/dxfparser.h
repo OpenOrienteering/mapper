@@ -127,7 +127,7 @@ DXFCoordinate::DXFCoordinate()
 
 inline
 DXFPath::DXFPath(type_e type)
- : layer("1"),
+ : layer(QLatin1Char('1')),
    color(127,127,127),
    thickness(0),
    radius(0),

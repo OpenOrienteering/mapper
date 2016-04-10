@@ -33,7 +33,7 @@ void MapTest::initTestCase()
 {
 	Q_INIT_RESOURCE(resources);
 	doStaticInitializations();
-	examples_dir.cd(QFileInfo(__FILE__).dir().absoluteFilePath(QString("../examples")));
+	examples_dir.cd(QFileInfo(QString::fromUtf8(__FILE__)).dir().absoluteFilePath(QString::fromLatin1("../examples")));
 	// Static map initializations
 	Map map;
 }

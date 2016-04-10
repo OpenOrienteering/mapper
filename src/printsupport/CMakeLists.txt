@@ -42,6 +42,11 @@ endif()
 
 add_library(printsupport STATIC ${PRINTSUPPORT_SRCS})
 
+target_compile_definitions(printsupport PRIVATE
+  QT_NO_CAST_FROM_ASCII
+  QT_NO_CAST_TO_ASCII
+  QT_USE_QSTRINGBUILDER
+)
 target_include_directories(printsupport
   BEFORE PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/${FORK_VERSION}"
   INTERFACE "${CMAKE_CURRENT_SOURCE_DIR}"

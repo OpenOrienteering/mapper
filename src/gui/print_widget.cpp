@@ -119,11 +119,11 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 	page_width_edit = Util::SpinBox::create(1, 0.1, 1000.0, tr("mm"), 1.0);
 	page_width_edit->setEnabled(false);
 	page_size_layout->addWidget(page_width_edit, 1);
-	page_size_layout->addWidget(new QLabel("x"), 0);
+	page_size_layout->addWidget(new QLabel(QString::fromLatin1("x")), 0);
 	page_height_edit = Util::SpinBox::create(1, 0.1, 1000.0, tr("mm"), 1.0);
 	page_height_edit->setEnabled(false);
 	page_size_layout->addWidget(page_height_edit, 1);
-	layout->addRow("", page_size_widget);
+	layout->addRow({}, page_size_widget);
 	
 	page_orientation_widget = new QWidget();
 	QBoxLayout* page_orientation_layout = new QHBoxLayout();
@@ -175,9 +175,9 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 	mode_widget->setLayout(mode_layout);
 	mode_layout->setMargin(0);
 	
-	vector_mode_button = createPrintModeButton(QIcon(":/images/print-mode-vector.png"), tr("Vector\ngraphics"));
-	raster_mode_button = createPrintModeButton(QIcon(":/images/print-mode-raster.png"), tr("Raster\ngraphics"));
-	separations_mode_button = createPrintModeButton(QIcon(":/images/print-mode-separations.png"), tr("Color\nseparations"));
+	vector_mode_button = createPrintModeButton(QIcon(QString::fromLatin1(":/images/print-mode-vector.png")), tr("Vector\ngraphics"));
+	raster_mode_button = createPrintModeButton(QIcon(QString::fromLatin1(":/images/print-mode-raster.png")), tr("Raster\ngraphics"));
+	separations_mode_button = createPrintModeButton(QIcon(QString::fromLatin1(":/images/print-mode-separations.png")), tr("Color\nseparations"));
 	vector_mode_button->setChecked(true);
 	
 	QButtonGroup* mode_button_group = new QButtonGroup(this);
@@ -194,15 +194,15 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 	
 	dpi_combo = new QComboBox();
 	dpi_combo->setEditable(true);
-	dpi_combo->setValidator(new QRegExpValidator(QRegExp("^[1-9]\\d{1,4} dpi$|^[1-9]\\d{1,4}$"), dpi_combo));
+	dpi_combo->setValidator(new QRegExpValidator(QRegExp(QString::fromLatin1("^[1-9]\\d{1,4} dpi$|^[1-9]\\d{1,4}$")), dpi_combo));
 	// TODO: Implement spinbox-style " dpi" suffix
 	layout->addRow(tr("Resolution:"), dpi_combo);
 	
 	different_scale_check = new QCheckBox(tr("Print in different scale:"));
 	// Limit the difference between nominal and printing scale in order to limit the number of page breaks.
 	int min_scale = qMax(1, int(map->getScaleDenominator() / 10000) * 100);
-	different_scale_edit = Util::SpinBox::create(min_scale, std::numeric_limits<int>::max(), "", 500);
-	different_scale_edit->setPrefix("1 : ");
+	different_scale_edit = Util::SpinBox::create(min_scale, std::numeric_limits<int>::max(), {}, 500);
+	different_scale_edit->setPrefix(QString::fromLatin1("1 : "));
 	different_scale_edit->setEnabled(false);
 	int different_scale_height = qMax(
 	  different_scale_edit->minimumSizeHint().height(),
@@ -382,7 +382,7 @@ void PrintWidget::setTask(PrintWidget::TaskFlags type)
 				break;
 				
 			default:
-				emit taskChanged(QString::null);
+				emit taskChanged(QString{});
 		}
 	}
 }
@@ -471,7 +471,7 @@ void PrintWidget::updateTargets()
 {
 	QVariant current_target = target_combo->itemData(target_combo->currentIndex());
 	const QPrinterInfo* saved_printer = map_printer->getTarget();
-	const QString saved_printer_name = saved_printer ? saved_printer->printerName() : QString::null;
+	const QString saved_printer_name = saved_printer ? saved_printer->printerName() : QString{};
 	int saved_target_index = -1;
 	int default_printer_index = -1;
 	{
@@ -882,7 +882,7 @@ void PrintWidget::setOptions(const MapPrinterOptions& options)
 	checkTemplateConfiguration();
 	updateColorMode();
 	
-	static QString dpi_template("%1 " + tr("dpi"));
+	static QString dpi_template(QLatin1String("%1 ") + tr("dpi"));
 	dpi_combo->setEditText(dpi_template.arg(options.resolution));
 	
 	if (different_scale_edit->value() != int(options.scale))
@@ -922,7 +922,7 @@ void PrintWidget::updateResolutions(const QPrinterInfo* target) const
 		supported_resolutions = default_resolutions;
 	
 	// Resolution list item with unit "dpi"
-	static QString dpi_template("%1 " + tr("dpi"));
+	static QString dpi_template(QLatin1String("%1 ") + tr("dpi"));
 	QStringList resolutions;
 	for (auto resolution : qAsConst(supported_resolutions))
 		resolutions << dpi_template.arg(resolution);
@@ -950,7 +950,7 @@ void PrintWidget::updateColorMode()
 void PrintWidget::resolutionEdited()
 {
 	QString resolution_text = dpi_combo->currentText();
-	int index_of_space = resolution_text.indexOf(" ");
+	int index_of_space = resolution_text.indexOf(QLatin1Char(' '));
 	auto dpi_value = resolution_text.left(index_of_space).toUInt();
 	if (dpi_value > 0)
 		map_printer->setResolution(dpi_value);
@@ -1104,22 +1104,22 @@ void PrintWidget::printClicked()
 
 void PrintWidget::exportToImage()
 {
-	static const QString filter_template("%1 (%2)");
-	QStringList filters = { filter_template.arg(tr("PNG")).arg("*.png"),
-	                        filter_template.arg(tr("BMP")).arg("*.bmp"),
-	                        filter_template.arg(tr("TIFF")).arg("*.tif *.tiff"),
-	                        filter_template.arg(tr("JPEG")).arg("*.jpg *.jpeg"),
+	static const QString filter_template(QString::fromLatin1("%1 (%2)"));
+	QStringList filters = { filter_template.arg(tr("PNG"), QString::fromLatin1("*.png")),
+	                        filter_template.arg(tr("BMP"), QString::fromLatin1("*.bmp")),
+	                        filter_template.arg(tr("TIFF"), QString::fromLatin1("*.tif *.tiff")),
+	                        filter_template.arg(tr("JPEG"), QString::fromLatin1("*.jpg *.jpeg")),
 	                        tr("All files (*.*)") };
-	QString path = QFileDialog::getSaveFileName(this, tr("Export map ..."), {}, filters.join(";;"));
+	QString path = QFileDialog::getSaveFileName(this, tr("Export map ..."), {}, filters.join(QString::fromLatin1(";;")));
 	if (path.isEmpty())
 		return;
 	
-	if (!path.endsWith(".png", Qt::CaseInsensitive)
-	    && !path.endsWith(".bmp", Qt::CaseInsensitive)
-	    && !path.endsWith(".tif", Qt::CaseInsensitive) && !path.endsWith(".tiff", Qt::CaseInsensitive)
-	    && !path.endsWith(".jpg", Qt::CaseInsensitive) && !path.endsWith(".jpeg", Qt::CaseInsensitive) )
+	if (!path.endsWith(QLatin1String(".png"), Qt::CaseInsensitive)
+	    && !path.endsWith(QLatin1String(".bmp"), Qt::CaseInsensitive)
+	    && !path.endsWith(QLatin1String(".tif"), Qt::CaseInsensitive) && !path.endsWith(QLatin1String(".tiff"), Qt::CaseInsensitive)
+	    && !path.endsWith(QLatin1String(".jpg"), Qt::CaseInsensitive) && !path.endsWith(QLatin1String(".jpeg"), Qt::CaseInsensitive) )
 	{
-		path.append(".png");
+		path.append(QString::fromLatin1(".png"));
 	}
 	
 	qreal pixel_per_mm = map_printer->getOptions().resolution / 25.4;
@@ -1171,17 +1171,17 @@ void PrintWidget::exportToPdf()
 	printer->setCreator(main_window->appName());
 	printer->setDocName(QFileInfo(main_window->currentPath()).baseName());
 	
-	static const QString filter_template("%1 (%2)");
-	QStringList filters = { filter_template.arg(tr("PDF")).arg("*.pdf"),
+	static const QString filter_template(QString::fromLatin1("%1 (%2)"));
+	QStringList filters = { filter_template.arg(tr("PDF"), QString::fromLatin1("*.pdf")),
 	                        tr("All files (*.*)") };
-	QString path = QFileDialog::getSaveFileName(this, tr("Export map ..."), {}, filters.join(";;"));
+	QString path = QFileDialog::getSaveFileName(this, tr("Export map ..."), {}, filters.join(QString::fromLatin1(";;")));
 	if (path.isEmpty())
 	{
 		return;
 	}
-	else if (!path.endsWith(".pdf", Qt::CaseInsensitive))
+	else if (!path.endsWith(QLatin1String(".pdf"), Qt::CaseInsensitive))
 	{
-		path.append(".pdf");
+		path.append(QLatin1String(".pdf"));
 	}
 	printer->setOutputFileName(path);
 	

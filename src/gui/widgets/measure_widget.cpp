@@ -23,7 +23,6 @@
 
 #include <QLocale>
 #include <QScroller>
-#include <QStringBuilder>
 
 #include "../../map.h"
 #include "../../object.h"
@@ -69,7 +68,7 @@ void MeasureWidget::objectSelectionChanged()
 	{
 		const Object* object = *begin(selected_objects);
 		const Symbol* symbol = object->getSymbol();
-		headline = symbol->getNumberAsString() % QLatin1Char(' ') % symbol->getName();
+		headline = symbol->getNumberAsString() + QLatin1Char(' ') + symbol->getName();
 		
 		if (object->getType() != Object::Path)
 		{
@@ -126,9 +125,9 @@ void MeasureWidget::objectSelectionChanged()
 				
 				if (paper_area < minimum_area && paper_area_text != minimum_area_text)
 				{
-					extra_text = QLatin1String("<b>") % tr("This object is too small.") % QLatin1String("</b><br/>")
-					             % tr("The minimimum area is %1 %2.").arg(minimum_area_text, trUtf8("mm²"))
-					             % QLatin1String("<br/>");
+					extra_text = QLatin1String("<b>") + tr("This object is too small.") + QLatin1String("</b><br/>")
+					             + tr("The minimimum area is %1 %2.").arg(minimum_area_text, trUtf8("mm²"))
+					             + QLatin1String("<br/>");
 				}
 				extra_text.append(tr("Note: Boundary length and area are correct only if there are no self-intersections and holes are used as such."));
 			}
@@ -148,8 +147,8 @@ void MeasureWidget::objectSelectionChanged()
 				
 				if (paper_length < minimum_length && paper_length_text != minimum_length_text)
 				{
-					extra_text = QLatin1String("<b>") % tr("This line is too short.") % QLatin1String("</b><br/>")
-					             % tr("The minimum length is %1 %2.").arg(minimum_length_text).arg(tr("mm"));
+					extra_text = QLatin1String("<b>") + tr("This line is too short.") + QLatin1String("</b><br/>")
+					             + tr("The minimum length is %1 %2.").arg(minimum_length_text).arg(tr("mm"));
 				}
 			}
 			
@@ -158,6 +157,6 @@ void MeasureWidget::objectSelectionChanged()
 	}
 	
 	if (!extra_text.isEmpty())
-		body.append(QLatin1String("<p>") % extra_text % QLatin1String("</p>"));
-	setHtml(QLatin1String("<p><b>") % headline % QLatin1String("</b></p>") % body);
+		body.append(QLatin1String("<p>") + extra_text + QLatin1String("</p>"));
+	setHtml(QLatin1String("<p><b>") + headline + QLatin1String("</b></p>") + body);
 }

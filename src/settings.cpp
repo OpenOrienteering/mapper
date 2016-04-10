@@ -81,10 +81,10 @@ Settings::Settings()
 	registerSetting(General_AutosaveInterval, "autosave", 15); // unit: minutes
 	registerSetting(General_Language, "language", QVariant((int)QLocale::system().language()));
 	registerSetting(General_PixelsPerInch, "pixelsPerInch", ppi);
-	registerSetting(General_TranslationFile, "translationFile", QVariant(QString::null));
+	registerSetting(General_TranslationFile, "translationFile", QVariant(QString{}));
 	registerSetting(General_RecentFilesList, "recentFileList", QVariant(QStringList()));
 	registerSetting(General_OpenMRUFile, "openMRUFile", false);
-	registerSetting(General_Local8BitEncoding, "local_8bit_encoding", "Windows-1252");
+	registerSetting(General_Local8BitEncoding, "local_8bit_encoding", QLatin1String("Windows-1252"));
 	registerSetting(General_NewOcd8Implementation, "new_ocd8_implementation", true);
 	registerSetting(General_StartDragDistance, "startDragDistance", start_drag_distance_default);
 	
@@ -98,27 +98,27 @@ Settings::Settings()
 	static bool migration_checked = false;
 	if (!migration_checked)
 	{
-		QVariant current_version { "0.5.9" };
+		QVariant current_version { QLatin1String("0.5.9") };
 		QSettings settings;
-		if (settings.value("version") != current_version)
+		if (settings.value(QString::fromLatin1("version")) != current_version)
 		{
 			migrateSettings(settings, current_version);
 		}
 		
-		if (!settings.value("new_ocd8_implementation_v0.6").isNull())
+		if (!settings.value(QString::fromLatin1("new_ocd8_implementation_v0.6")).isNull())
 		{
 			// Remove/reset to default
-			settings.remove("new_ocd8_implementation_v0.6");
-			settings.remove("new_ocd8_implementation");
+			settings.remove(QString::fromLatin1("new_ocd8_implementation_v0.6"));
+			settings.remove(QString::fromLatin1("new_ocd8_implementation"));
 		}
 		
 		migration_checked = true;
 	}
 }
 
-void Settings::registerSetting(Settings::SettingsEnum id, const QString& path, const QVariant& default_value)
+void Settings::registerSetting(Settings::SettingsEnum id, const char* path_latin1, const QVariant& default_value)
 {
-	setting_paths[id] = path;
+	setting_paths[id] = QString::fromLatin1(path_latin1);
 	setting_defaults[id] = default_value;
 }
 
@@ -135,20 +135,21 @@ void Settings::migrateSettings(QSettings& settings, QVariant version)
 	if (!version.toByteArray().startsWith("0."))
 	{
 		// Future cleanup
-		settings.remove("new_ocd8_implementation");
+		settings.remove(QString::fromLatin1("new_ocd8_implementation"));
 	}
 
-	settings.setValue("version", version);
+	settings.setValue(QString::fromLatin1("version"), version);
 }
 
-bool Settings::migrateValue(const QString& old_key, SettingsEnum new_setting, QSettings& settings) const
+bool Settings::migrateValue(const char* old_key_latin1, SettingsEnum new_setting, QSettings& settings) const
 {
+	auto old_key = QString::fromLatin1(old_key_latin1);
 	bool value_migrated = false;
 	if (settings.contains(old_key))
 	{
 		const QString new_key = getSettingPath(new_setting);
 		Q_ASSERT_X(new_key != old_key, "Settings::migrateValue",
-		  QString("New key \"%1\" equals old key").arg(new_key).toLocal8Bit().constData() );
+		  qPrintable(QString::fromLatin1("New key \"%1\" equals old key").arg(new_key)) );
 		
 		if (!settings.contains(new_key))
 		{

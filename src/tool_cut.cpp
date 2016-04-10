@@ -74,7 +74,7 @@ void CutTool::init()
 
 const QCursor& CutTool::getCursor() const
 {
-	static auto const cursor = scaledToScreen(QCursor{ QPixmap{ ":/images/cursor-cut.png" }, 11, 11 });
+	static auto const cursor = scaledToScreen(QCursor{ QPixmap(QString::fromLatin1(":/images/cursor-cut.png")), 11, 11 });
 	return cursor;
 }
 

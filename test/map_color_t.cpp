@@ -34,7 +34,7 @@ namespace QTest
 			case MapColor::SpotColor:       ba = "SpotColor"; break;
 			case MapColor::CmykColor:       ba = "CmykColor"; break;
 			case MapColor::RgbColor:        ba = "RgbColor"; break;
-			default:                        ba += QString("unknown %1").arg(method);
+			default:                        ba += "unknown " + QString::number(method).toLatin1();
 		}
 		return qstrdup(ba.data());
 	}
@@ -55,18 +55,18 @@ namespace QTest
 		ba += " (SPOT: ";
 		ba += spot_method;
 		ba += " ";
-		ba += c.getSpotColorName();
+		ba += c.getSpotColorName().toLocal8Bit();
 		ba += (c.getKnockout() ? " k.o." : " ---");
 		ba += " [";
 		ba += QByteArray::number(c.getOpacity()*100.0,'f',0);
 		ba += "] CMYK: ";
 		ba += cmyk_method;
 		const MapColorCmyk& cmyk = c.getCmyk();
-		ba += QString(" %1/%2/%3/%4").arg(cmyk.c*100.0,0,'f',1).arg(cmyk.m*100.0,0,'f',1).arg(cmyk.y*100.0,0,'f',1).arg(cmyk.k*100.0,0,'f',1);
+		ba += QString::fromLatin1(" %1/%2/%3/%4").arg(cmyk.c*100.0,0,'f',1).arg(cmyk.m*100.0,0,'f',1).arg(cmyk.y*100.0,0,'f',1).arg(cmyk.k*100.0,0,'f',1).toLocal8Bit();
 		ba += " RGB: ";
 		ba += rgb_method;
 		const MapColorRgb& rgb = c.getRgb();
-		ba += QString(" %1/%2/%3").arg(rgb.r*255.0,0,'f',0).arg(rgb.g*255.0,0,'f',0).arg(rgb.b*255.0,0,'f',0);
+		ba += QString::fromLatin1(" %1/%2/%3").arg(rgb.r*255.0,0,'f',0).arg(rgb.g*255.0,0,'f',0).arg(rgb.b*255.0,0,'f',0).toLocal8Bit();
 		ba += ")";
 		
 		delete [] spot_method;
@@ -106,7 +106,7 @@ void MapColorTest::constructorTest()
 	QCOMPARE(priority_9_color.getRgbColorMethod(),  MapColor::CmykColor);
 	QCOMPARE(priority_9_color.getPriority(),        9);
 	
-	MapColor named_color("Name of the color", 7);
+	MapColor named_color(QString::fromLatin1("Name of the color"), 7);
 	QVERIFY(named_color.isBlack());
 	QVERIFY(named_color.getCmyk().isBlack());
 	QVERIFY(named_color.getRgb().isBlack());
@@ -115,7 +115,7 @@ void MapColorTest::constructorTest()
 	QCOMPARE(named_color.getCmykColorMethod(), MapColor::CustomColor);
 	QCOMPARE(named_color.getRgbColorMethod(),  MapColor::CmykColor);
 	QCOMPARE(named_color.getPriority(),        7);
-	QCOMPARE(named_color.getName(),            QString("Name of the color"));
+	QCOMPARE(named_color.getName(),            QString::fromLatin1("Name of the color"));
 	
 	MapColor* duplicate_color = named_color.duplicate();
 	QVERIFY(duplicate_color != NULL);
@@ -127,7 +127,7 @@ void MapColorTest::constructorTest()
 	QCOMPARE(duplicate_color->getCmykColorMethod(), MapColor::CustomColor);
 	QCOMPARE(duplicate_color->getRgbColorMethod(),  MapColor::CmykColor);
 	QCOMPARE(duplicate_color->getPriority(),        7);
-	QCOMPARE(duplicate_color->getName(),            QString("Name of the color"));
+	QCOMPARE(duplicate_color->getName(),            QString::fromLatin1("Name of the color"));
 	QVERIFY(duplicate_color->equals(named_color, true));
 	delete duplicate_color;
 	
@@ -143,24 +143,24 @@ void MapColorTest::constructorTest()
 	QCOMPARE(duplicate_color->getCmykColorMethod(), MapColor::CustomColor);
 	QCOMPARE(duplicate_color->getRgbColorMethod(),  MapColor::CmykColor);
 	QCOMPARE(duplicate_color->getPriority(),        7);
-	QCOMPARE(duplicate_color->getName(),            QString("Name of the color"));
+	QCOMPARE(duplicate_color->getName(),            QString::fromLatin1("Name of the color"));
 	QVERIFY(duplicate_color->equals(named_color, true));
 	duplicate_color = NULL;
 }
 
 void MapColorTest::equalsTest()
 {
-	MapColor black("Black", 0);
+	MapColor black(QString::fromLatin1("Black"), 0);
 	
 	// Difference in priority: equals' result depends on second attribute. 
-	MapColor black_1("Black", 1);
+	MapColor black_1(QString::fromLatin1("Black"), 1);
 	QVERIFY(black_1.equals(black, false));
 	QVERIFY(black.equals(black_1, false));
 	QVERIFY(!black_1.equals(black, true));
 	QVERIFY(!black.equals(black_1, true));
 	
 	// Difference in case of name: equals operates case-insensitive.
-	black_1.setName("BLACK");
+	black_1.setName(QString::fromLatin1("BLACK"));
 	QVERIFY(black_1.equals(black, false));
 	QVERIFY(!black_1.equals(black, true));
 	
@@ -172,7 +172,7 @@ void MapColorTest::equalsTest()
 	QVERIFY(!black_1.equals(black, true));
 	
 	// Difference in knockout attribute, spot color method defined
-	black_1.setSpotColorName("BLACK");
+	black_1.setSpotColorName(QString::fromLatin1("BLACK"));
 	QVERIFY(black_1.getSpotColorMethod() == MapColor::SpotColor);
 	black_1.setKnockout(!black.getKnockout());
 	QVERIFY(black_1.getKnockout()); // must not be set
@@ -180,7 +180,7 @@ void MapColorTest::equalsTest()
 	QVERIFY(!black_1.equals(black, true));
 	
 	// Difference in name.
-	MapColor blue("Blue", 0);
+	MapColor blue(QString::fromLatin1("Blue"), 0);
 	QVERIFY(!blue.equals(black, false));
 	QVERIFY(!black.equals(blue, false));
 	QVERIFY(!blue.equals(black, true));
@@ -199,10 +199,10 @@ void MapColorTest::spotColorTest()
 	QScopedPointer<MapColor> duplicate;
 	
 	// Initalizing a spot color.
-	MapColor spot_cyan("Cyan", 0);
-	spot_cyan.setSpotColorName("CYAN");
+	MapColor spot_cyan(QString::fromLatin1("Cyan"), 0);
+	spot_cyan.setSpotColorName(QString::fromLatin1("CYAN"));
 	QCOMPARE(spot_cyan.getSpotColorMethod(), MapColor::SpotColor);
-	QCOMPARE(spot_cyan.getSpotColorName(), QString("CYAN"));
+	QCOMPARE(spot_cyan.getSpotColorName(), QString(QString::fromLatin1("CYAN")));
 	
 	spot_cyan.setCmyk(MapColorCmyk(1.0, 0.0, 0.0, 0.0));
 	QCOMPARE(spot_cyan.getSpotColorMethod(), MapColor::SpotColor);  // unchanged
@@ -219,9 +219,9 @@ void MapColorTest::spotColorTest()
 	QCOMPARE(*duplicate, spot_cyan_copy);
 	
 	// Renaming the clone's spot color name.
-	spot_cyan_copy.setSpotColorName("CYAN2");
+	spot_cyan_copy.setSpotColorName(QString::fromLatin1("CYAN2"));
 	QCOMPARE(spot_cyan_copy.getSpotColorMethod(), MapColor::SpotColor);
-	QCOMPARE(spot_cyan_copy.getSpotColorName(), QString("CYAN2"));        // new
+	QCOMPARE(spot_cyan_copy.getSpotColorName(), QString(QString::fromLatin1("CYAN2")));        // new
 	QVERIFY(!spot_cyan_copy.equals(spot_cyan, true));
 	QCOMPARE(spot_cyan_copy.getCmykColorMethod(), MapColor::CustomColor); // unchanged
 	QCOMPARE(spot_cyan_copy.getCmyk(), spot_cyan.getCmyk());              // unchanged
@@ -231,7 +231,7 @@ void MapColorTest::spotColorTest()
 	composition.push_back(SpotColorComponent(&spot_cyan, 1.0));
 	spot_cyan_copy.setSpotColorComposition(composition);
 	QCOMPARE(spot_cyan_copy.getSpotColorMethod(), MapColor::CustomColor); // new
-	QVERIFY(spot_cyan_copy.getSpotColorName() != "CYAN2");                // new
+	QVERIFY(spot_cyan_copy.getSpotColorName() != QLatin1String("CYAN2")); // new
 	QCOMPARE(spot_cyan_copy.getCmykColorMethod(), MapColor::CustomColor); // unchanged
 	QCOMPARE(spot_cyan_copy.getCmyk(), spot_cyan.getCmyk());              // unchanged
 	
@@ -258,7 +258,7 @@ void MapColorTest::spotColorTest()
 	duplicate.reset(spot_cyan_copy.duplicate());
 	QCOMPARE(*duplicate, spot_cyan_copy);
 	
-	MapColor spot_yellow("Yellow", 8);
+	MapColor spot_yellow(QString::fromLatin1("Yellow"), 8);
 	spot_yellow.setCmyk(MapColorCmyk(0.0, 0.0, 1.0, 0.0));
 	
 	composition.clear();

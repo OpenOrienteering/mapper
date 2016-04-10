@@ -123,11 +123,11 @@ void SelectCRSDialog::updateWidgets()
 {
 	Georeferencing georef;
 	auto spec =  currentCRSSpec();
-	auto valid = spec.isEmpty() || georef.setProjectedCRS("", spec);
+	auto valid = spec.isEmpty() || georef.setProjectedCRS({}, spec);
 	
 	button_box->button(QDialogButtonBox::Ok)->setEnabled(valid);
 	if (valid)
 		status_label->setText(tr("valid"));
 	else
-		status_label->setText(QString("<b style=\"color:red\">") % georef.getErrorText() % "</b>");
+		status_label->setText(QLatin1String("<b style=\"color:red\">") + georef.getErrorText() + QLatin1String("</b>"));
 }

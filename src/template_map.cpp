@@ -48,9 +48,9 @@ TemplateMap::~TemplateMap()
 		unloadTemplateFile();
 }
 
-QString TemplateMap::getTemplateType() const
+const char* TemplateMap::getTemplateType() const
 {
-	return QLatin1String{"TemplateMap"};
+	return "TemplateMap";
 }
 
 bool TemplateMap::isRasterGraphics() const

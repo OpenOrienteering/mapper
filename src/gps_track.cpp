@@ -39,7 +39,7 @@ namespace
 {
 	// Shared definition of standard geographic CRS.
 	// TODO: Merge with Georeferencing.
-	static const QString geographic_crs_spec = "+proj=latlong +datum=WGS84";
+	static const QString geographic_crs_spec = QString::fromLatin1("+proj=latlong +datum=WGS84");
 }
 
 
@@ -62,17 +62,17 @@ TrackPoint::TrackPoint(LatLon coord, QDateTime datetime, float elevation, int nu
 }
 void TrackPoint::save(QXmlStreamWriter* stream) const
 {
-	stream->writeAttribute("lat", QString::number(gps_coord.latitude(), 'f', 12));
-	stream->writeAttribute("lon", QString::number(gps_coord.longitude(), 'f', 12));
+	stream->writeAttribute(QStringLiteral("lat"), QString::number(gps_coord.latitude(), 'f', 12));
+	stream->writeAttribute(QStringLiteral("lon"), QString::number(gps_coord.longitude(), 'f', 12));
 	
 	if (datetime.isValid())
-		stream->writeTextElement("time", datetime.toString(Qt::ISODate) + 'Z');
+		stream->writeTextElement(QStringLiteral("time"), datetime.toString(Qt::ISODate) + QLatin1Char('Z'));
 	if (elevation > -9999)
-		stream->writeTextElement("ele", QString::number(elevation, 'f', 3));
+		stream->writeTextElement(QStringLiteral("ele"), QString::number(elevation, 'f', 3));
 	if (num_satellites >= 0)
-		stream->writeTextElement("sat", QString::number(num_satellites));
+		stream->writeTextElement(QStringLiteral("sat"), QString::number(num_satellites));
 	if (hDOP >= 0)
-		stream->writeTextElement("hdop", QString::number(hDOP, 'f', 3));
+		stream->writeTextElement(QStringLiteral("hdop"), QString::number(hDOP, 'f', 3));
 }
 
 
@@ -161,17 +161,17 @@ bool Track::loadFrom(const QString& path, bool project_points, QWidget* dialog_p
 	
 	clear();
 
-	if (path.endsWith(".gpx", Qt::CaseInsensitive))
+	if (path.endsWith(QLatin1String(".gpx"), Qt::CaseInsensitive))
 	{
 		if (!loadFromGPX(&file, project_points, dialog_parent))
 			return false;
 	}
-	else if (path.endsWith(".dxf", Qt::CaseInsensitive))
+	else if (path.endsWith(QLatin1String(".dxf"), Qt::CaseInsensitive))
 	{
 		if (!loadFromDXF(&file, project_points, dialog_parent))
 			return false;
 	}
-	else if (path.endsWith(".osm", Qt::CaseInsensitive))
+	else if (path.endsWith(QLatin1String(".osm"), Qt::CaseInsensitive))
 	{
 		if (!loadFromOSM(&file, project_points, dialog_parent))
 			return false;
@@ -190,28 +190,28 @@ bool Track::saveTo(const QString& path) const
 	
 	QXmlStreamWriter stream(&file);
 	stream.writeStartDocument();
-	stream.writeStartElement("gpx");
-	stream.writeAttribute("version", "1.1");
-	stream.writeAttribute("creator", APP_NAME);
+	stream.writeStartElement(QString::fromLatin1("gpx"));
+	stream.writeAttribute(QString::fromLatin1("version"), QString::fromLatin1("1.1"));
+	stream.writeAttribute(QString::fromLatin1("creator"), APP_NAME);
 	
 	int size = getNumWaypoints();
 	for (int i = 0; i < size; ++i)
 	{
-		stream.writeStartElement("wpt");
+		stream.writeStartElement(QStringLiteral("wpt"));
 		const TrackPoint& point = getWaypoint(i);
 		point.save(&stream);
-		stream.writeTextElement("name", waypoint_names[i]);
+		stream.writeTextElement(QStringLiteral("name"), waypoint_names[i]);
 		stream.writeEndElement();
 	}
 	
-	stream.writeStartElement("trk");
+	stream.writeStartElement(QStringLiteral("trk"));
 	for (int i = 0; i < getNumSegments(); ++i)
 	{
-		stream.writeStartElement("trkseg");
+		stream.writeStartElement(QStringLiteral("trkseg"));
 		size = getSegmentPointCount(i);
 		for (int k = 0; k < size; ++k)
 		{
-			stream.writeStartElement("trkpt");
+			stream.writeStartElement(QStringLiteral("trkpt"));
 			const TrackPoint& point = getSegmentPoint(i, k);
 			point.save(&stream);
 			stream.writeEndElement();
@@ -347,7 +347,7 @@ bool Track::loadFromGPX(QFile* file, bool project_points, QWidget* dialog_parent
 	Q_UNUSED(dialog_parent);
 	
 	track_crs = new Georeferencing();
-	track_crs->setProjectedCRS("", geographic_crs_spec);
+	track_crs->setProjectedCRS({}, geographic_crs_spec);
 	track_crs->setTransformationDirectly(QTransform());
 	
 	TrackPoint point;
@@ -359,18 +359,18 @@ bool Track::loadFromGPX(QFile* file, bool project_points, QWidget* dialog_parent
 		stream.readNext();
 		if (stream.tokenType() == QXmlStreamReader::StartElement)
 		{
-			if (stream.name().compare("wpt", Qt::CaseInsensitive) == 0 ||
-				stream.name().compare("trkpt", Qt::CaseInsensitive) == 0 ||
-				stream.name().compare("rtept", Qt::CaseInsensitive) == 0)
+			if (stream.name().compare(QLatin1String("wpt"), Qt::CaseInsensitive) == 0
+			    || stream.name().compare(QLatin1String("trkpt"), Qt::CaseInsensitive) == 0
+				|| stream.name().compare(QLatin1String("rtept"), Qt::CaseInsensitive) == 0)
 			{
-				point = TrackPoint(LatLon(stream.attributes().value("lat").toString().toDouble(),
-				                          stream.attributes().value("lon").toString().toDouble()));
+				point = TrackPoint(LatLon(stream.attributes().value(QLatin1String("lat")).toDouble(),
+				                          stream.attributes().value(QLatin1String("lon")).toDouble()));
 				if (project_points)
 					point.map_coord = map_georef.toMapCoordF(point.gps_coord); // TODO: check for errors
-				point_name = "";
+				point_name.clear();
 			}
-			else if (stream.name().compare("trkseg", Qt::CaseInsensitive) == 0 ||
-				stream.name().compare("rte", Qt::CaseInsensitive) == 0)
+			else if (stream.name().compare(QLatin1String("trkseg"), Qt::CaseInsensitive) == 0
+			         || stream.name().compare(QLatin1String("rte"), Qt::CaseInsensitive) == 0)
 			{
 				if (segment_starts.size() == 0 ||
 					segment_starts.back() < (int)segment_points.size())
@@ -378,26 +378,26 @@ bool Track::loadFromGPX(QFile* file, bool project_points, QWidget* dialog_parent
 					segment_starts.push_back(segment_points.size());
 				}
 			}
-			else if (stream.name().compare("ele", Qt::CaseInsensitive) == 0)
+			else if (stream.name().compare(QLatin1String("ele"), Qt::CaseInsensitive) == 0)
 				point.elevation = stream.readElementText().toFloat();
-			else if (stream.name().compare("time", Qt::CaseInsensitive) == 0)
+			else if (stream.name().compare(QLatin1String("time"), Qt::CaseInsensitive) == 0)
 				point.datetime = QDateTime::fromString(stream.readElementText(), Qt::ISODate);
-			else if (stream.name().compare("sat", Qt::CaseInsensitive) == 0)
+			else if (stream.name().compare(QLatin1String("sat"), Qt::CaseInsensitive) == 0)
 				point.num_satellites = stream.readElementText().toInt();
-			else if (stream.name().compare("hdop", Qt::CaseInsensitive) == 0)
+			else if (stream.name().compare(QLatin1String("hdop"), Qt::CaseInsensitive) == 0)
 				point.hDOP = stream.readElementText().toFloat();
-			else if (stream.name().compare("name", Qt::CaseInsensitive) == 0)
+			else if (stream.name().compare(QLatin1String("name"), Qt::CaseInsensitive) == 0)
 				point_name = stream.readElementText();
 		}
 		else if (stream.tokenType() == QXmlStreamReader::EndElement)
 		{
-			if (stream.name().compare("wpt", Qt::CaseInsensitive) == 0)
+			if (stream.name().compare(QLatin1String("wpt"), Qt::CaseInsensitive) == 0)
 			{
 				waypoints.push_back(point);
 				waypoint_names.push_back(point_name);
 			}
-			else if (stream.name().compare("trkpt", Qt::CaseInsensitive) == 0 ||
-				stream.name().compare("rtept", Qt::CaseInsensitive) == 0)
+			else if (stream.name().compare(QLatin1String("trkpt"), Qt::CaseInsensitive) == 0
+			         || stream.name().compare(QLatin1String("rtept"), Qt::CaseInsensitive) == 0)
 			{
 				segment_points.push_back(point);
 			}
@@ -483,7 +483,7 @@ bool Track::loadFromDXF(QFile* file, bool project_points, QWidget* dialog_parent
 bool Track::loadFromOSM(QFile* file, bool project_points, QWidget* dialog_parent)
 {
 	track_crs = new Georeferencing();
-	track_crs->setProjectedCRS("", geographic_crs_spec);
+	track_crs->setProjectedCRS({}, geographic_crs_spec);
 	track_crs->setTransformationDirectly(QTransform());
 	
 	// Basic OSM file support
@@ -496,7 +496,7 @@ bool Track::loadFromOSM(QFile* file, bool project_points, QWidget* dialog_parent
 	QXmlStreamReader xml(file);
 	if (xml.readNextStartElement())
 	{
-		if (xml.name() != "osm")
+		if (xml.name() != QLatin1String("osm"))
 		{
 			QMessageBox::critical(dialog_parent, TemplateTrack::tr("Error"), TemplateTrack::tr("%1:\nNot an OSM file."));
 			return false;
@@ -504,15 +504,19 @@ bool Track::loadFromOSM(QFile* file, bool project_points, QWidget* dialog_parent
 		else
 		{
 			QXmlStreamAttributes attributes(xml.attributes());
-			const double osm_version = attributes.value("version").toString().toDouble();
+			const double osm_version = attributes.value(QLatin1String("version")).toDouble();
 			if (osm_version < min_supported_version)
 			{
-				QMessageBox::critical(dialog_parent, TemplateTrack::tr("Error"), TemplateTrack::tr("The OSM file has version %1.\nThe minimum supported version is %2.").arg(attributes.value("version").toString(), QString::number(min_supported_version, 'g', 1)));
+				QMessageBox::critical(dialog_parent, TemplateTrack::tr("Error"),
+				                      TemplateTrack::tr("The OSM file has version %1.\nThe minimum supported version is %2.").arg(
+				                          attributes.value(QLatin1String("version")).toString(), QString::number(min_supported_version, 'g', 1)));
 				return false;
 			}
 			if (osm_version > max_supported_version)
 			{
-				QMessageBox::critical(dialog_parent, TemplateTrack::tr("Error"), TemplateTrack::tr("The OSM file has version %1.\nThe maximum supported version is %2.").arg(attributes.value("version").toString(), QString::number(min_supported_version, 'g', 1)));
+				QMessageBox::critical(dialog_parent, TemplateTrack::tr("Error"),
+				                      TemplateTrack::tr("The OSM file has version %1.\nThe maximum supported version is %2.").arg(
+				                          attributes.value(QLatin1String("version")).toString(), QString::number(max_supported_version, 'g', 1)));
 				return false;
 			}
 		}
@@ -523,24 +527,24 @@ bool Track::loadFromOSM(QFile* file, bool project_points, QWidget* dialog_parent
 	{
 		const QStringRef name(xml.name());
 		QXmlStreamAttributes attributes(xml.attributes());
-		if (attributes.value("visible") == "false")
+		if (attributes.value(QLatin1String("visible")) == QLatin1String("false"))
 		{
 			xml.skipCurrentElement();
 			continue;
 		}
 		
-		QString id(attributes.value("id").toString());
+		QString id(attributes.value(QLatin1String("id")).toString());
 		if (id.isEmpty())
 		{
-			id = "!" + QString::number(++internal_node_id);
+			id = QLatin1Char('!') + QString::number(++internal_node_id);
 		}
 		
-		if (name == "node")
+		if (name == QLatin1String("node"))
 		{
 			bool ok = true;
 			double lat = 0.0, lon = 0.0;
-			if (ok) lat = attributes.value("lat").toString().toDouble(&ok);
-			if (ok) lon = attributes.value("lon").toString().toDouble(&ok);
+			if (ok) lat = attributes.value(QLatin1String("lat")).toDouble(&ok);
+			if (ok) lon = attributes.value(QLatin1String("lon")).toDouble(&ok);
 			if (!ok)
 			{
 				node_problems++;
@@ -557,19 +561,19 @@ bool Track::loadFromOSM(QFile* file, bool project_points, QWidget* dialog_parent
 			
 			while (xml.readNextStartElement())
 			{
-				if (xml.name() == "tag")
+				if (xml.name() == QLatin1String("tag"))
 				{
-					const QString k(xml.attributes().value("k").toString());
-					const QString v(xml.attributes().value("v").toString());
+					const QString k(xml.attributes().value(QLatin1String("k")).toString());
+					const QString v(xml.attributes().value(QLatin1String("v")).toString());
 					element_tags[id][k] = v;
 					
-					if (k == "ele")
+					if (k == QLatin1String("ele"))
 					{
 						bool ok;
 						double elevation = v.toDouble(&ok);
 						if (ok) nodes[id].elevation = elevation;
 					}
-					else if (k == "name")
+					else if (k == QLatin1String("name"))
 					{
 						if (!v.isEmpty() && !nodes.contains(v)) 
 						{
@@ -581,24 +585,24 @@ bool Track::loadFromOSM(QFile* file, bool project_points, QWidget* dialog_parent
 				xml.skipCurrentElement();
 			}
 		}
-		else if (name == "way")
+		else if (name == QLatin1String("way"))
 		{
 			segment_starts.push_back(segment_points.size());
 			segment_names.push_back(id);
 			while (xml.readNextStartElement())
 			{
-				if (xml.name() == "nd")
+				if (xml.name() == QLatin1String("nd"))
 				{
-					QString ref = xml.attributes().value("ref").toString();
+					QString ref = xml.attributes().value(QLatin1String("ref")).toString();
 					if (ref.isEmpty() || !nodes.contains(ref))
 						node_problems++;
 					else
 						segment_points.push_back(nodes[ref]);
 				}
-				else if (xml.name() == "tag")
+				else if (xml.name() == QLatin1String("tag"))
 				{
-					const QString k(xml.attributes().value("k").toString());
-					const QString v(xml.attributes().value("v").toString());
+					const QString k(xml.attributes().value(QLatin1String("k")).toString());
+					const QString v(xml.attributes().value(QLatin1String("v")).toString());
 					element_tags[id][k] = v;
 				}
 				xml.skipCurrentElement();

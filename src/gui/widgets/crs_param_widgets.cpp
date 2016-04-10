@@ -37,16 +37,16 @@ UTMZoneEdit::UTMZoneEdit(CRSParameterWidgetObserver& observer, QWidget* parent)
  : QWidget(parent)
  , observer(observer)
 {
-	static const QRegExp zone_regexp("(?:[0-5]?[1-9]|[1-6]0)(?: [NS])?");
+	static const QRegExp zone_regexp(QString::fromLatin1("(?:[0-5]?[1-9]|[1-6]0)(?: [NS])?"));
 	static QStringList zone_list;
 	if (zone_list.isEmpty())
 	{
 		for (int i = 1; i <= 60; ++i)
 		{
 			QString zone = QString::number(i);
-			zone_list << QString("%1 N").arg(zone) << QString("%1 S").arg(zone);
+			zone_list << QString::fromLatin1("%1 N").arg(zone) << QString::fromLatin1("%1 S").arg(zone);
 			if (i < 10)
-				zone_list << QString("0%1 N").arg(zone) << QString("0%1 S").arg(zone);
+				zone_list << QString::fromLatin1("0%1 N").arg(zone) << QString::fromLatin1("0%1 S").arg(zone);
 		}
 	}
 	

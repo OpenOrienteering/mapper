@@ -29,7 +29,7 @@
 
 #include "mapper_resource.h"
 
-QString TranslationUtil::base_name("qt_"); 
+QString TranslationUtil::base_name(QString::fromLatin1("qt_"));
 
 QStringList TranslationUtil::search_path;
 
@@ -42,7 +42,7 @@ TranslationUtil::TranslationUtil(QLocale::Language lang, QString translation_fil
 	
 	QString locale_name = locale.name();
 	
-	QString translation_name = "qt_" + locale_name;
+	QString translation_name = QLatin1String("qt_") + locale_name;
 	if (!qt_translator.load(translation_name, QLibraryInfo::location(QLibraryInfo::TranslationsPath)))
 		load(qt_translator, translation_name);
 	
@@ -79,7 +79,7 @@ LanguageCollection TranslationUtil::getAvailableLanguages()
 	language_map.insert(QLocale::languageToString(QLocale::English), QLocale::English);
 	
 	QStringList name_filter;
-	name_filter << (base_name + "*.qm");
+	name_filter << (base_name + QLatin1String("*.qm"));
 	
 	for (auto&& translation_dir : search_path)
 	{
@@ -87,9 +87,9 @@ LanguageCollection TranslationUtil::getAvailableLanguages()
 		for (auto name : dir.entryList(name_filter, QDir::Files))
 		{
 			name.remove(0, base_name.length());
-			name.remove(name.length()-3, 3);
+			name.remove(name.length()-3, 3); // ".qm"
 			
-			if (name != "en")
+			if (name != QLatin1String("en"))
 			{
 				QString language_name = QLocale(name).nativeLanguageName();
 				language_map.insert(language_name, QLocale(name).language());
@@ -102,7 +102,7 @@ LanguageCollection TranslationUtil::getAvailableLanguages()
 
 QString TranslationUtil::localeNameForFile(const QString& filename)
 {
-	if (!filename.endsWith(".qm", Qt::CaseInsensitive))
+	if (!filename.endsWith(QLatin1String(".qm"), Qt::CaseInsensitive))
 		return QString();
 	
 	QFileInfo info(filename);
@@ -120,7 +120,7 @@ QString TranslationUtil::localeNameForFile(const QString& filename)
 
 void TranslationUtil::setBaseName(const QString& name)
 {
-	base_name = name + "_";
+	base_name = name + QLatin1Char('_');
 }
 
 void TranslationUtil::init_search_path()

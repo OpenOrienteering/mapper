@@ -79,7 +79,7 @@ TestMap::TestMap()
 	MapColor* black = new MapColor();
 	black->setCmyk(MapColorCmyk(0.0f, 0.0f, 0.0f, 1.0f));
 	black->setOpacity(1.0f);
-	black->setName("black");
+	black->setName(QString::fromLatin1("black"));
 	map->addColor(black, 0);
 	
 	line_symbol = new LineSymbol();

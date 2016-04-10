@@ -84,7 +84,7 @@ MapColor::MapColor(const QString& name, int priority)
   cmyk_color_method(MapColor::CustomColor),
   rgb_color_method(MapColor::CmykColor),
   flags(0),
-  spot_color_name("")
+  spot_color_name()
 {
 	Q_ASSERT(isBlack());
 }
@@ -302,9 +302,8 @@ void MapColor::updateCompositionName()
 		{
 			if (!spot_color_name.isEmpty())
 				spot_color_name += QLatin1String(", ");
-			spot_color_name += QString("%1 %2%").arg(
-			  component.spot_color->getSpotColorName(),
-			  QString::number(component.factor * 100) /* % */);
+			spot_color_name += component.spot_color->getSpotColorName() + QLatin1Char(' ')
+			                   + QString::number(component.factor * 100) /* % */;
 		}
 	}
 }

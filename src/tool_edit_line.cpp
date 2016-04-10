@@ -344,7 +344,7 @@ void EditLineTool::initImpl()
 		key_button_bar = new KeyButtonBar(this, editor->getMainWidget());
 		key_button_bar->addModifierKey(Qt::Key_Shift, Qt::ShiftModifier, tr("Snap", "Snap to existing objects"));
 		key_button_bar->addModifierKey(Qt::Key_Control, Qt::ControlModifier, tr("Toggle curve", "Toggle between curved and flat segment"));
-		editor->showPopupWidget(key_button_bar, "");
+		editor->showPopupWidget(key_button_bar, QString{});
 	}
 }
 
@@ -441,11 +441,11 @@ void EditLineTool::updateStatusText()
 	if (editingInProgress())
 	{
 		MapCoordF drag_vector = constrained_pos_map - click_pos_map;
-		text = EditTool::tr("<b>Coordinate offset:</b> %1, %2 mm  <b>Distance:</b> %3 m ").
-		       arg(QLocale().toString(drag_vector.x(), 'f', 1)).
-		       arg(QLocale().toString(-drag_vector.y(), 'f', 1)).
-		       arg(QLocale().toString(0.001 * map()->getScaleDenominator() * drag_vector.length(), 'f', 1)) +
-		       "| ";
+		text = EditTool::tr("<b>Coordinate offset:</b> %1, %2 mm  <b>Distance:</b> %3 m ").arg(
+		         QLocale().toString(drag_vector.x(), 'f', 1),
+		         QLocale().toString(-drag_vector.y(), 'f', 1),
+		         QLocale().toString(0.001 * map()->getScaleDenominator() * drag_vector.length(), 'f', 1))
+		       + QLatin1String("| ");
 		
 		if (!(active_modifiers & Qt::ShiftModifier))
 		{

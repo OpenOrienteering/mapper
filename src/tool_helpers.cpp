@@ -313,7 +313,7 @@ bool TextObjectEditorHelper::keyPressEvent(QKeyEvent* event)
 			clipboard->setText(object->getText().mid(selection_start, selection_end - selection_start));
 			
 			if (event->matches(QKeySequence::Cut))
-				insertText("");
+				insertText(QString{});
 		}
 	}
 	else if (event->matches(QKeySequence::Paste))
@@ -325,9 +325,9 @@ bool TextObjectEditorHelper::keyPressEvent(QKeyEvent* event)
 			insertText(clipboard->text());
 	}
 	else if (event->key() == Qt::Key_Tab)
-		insertText("\t");
+		insertText(QString(QLatin1Char('\t')));
 	else if (event->key() == Qt::Key_Return)
-		insertText("\n");
+		insertText(QString(QLatin1Char('\n')));
 	else if (!event->text().isEmpty() && event->text()[0].isPrint() )
 		insertText(event->text());
 	else

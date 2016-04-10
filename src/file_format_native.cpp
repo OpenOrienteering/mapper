@@ -89,7 +89,7 @@ const int NativeFileFormat::current_file_format_version = 30;
 const char NativeFileFormat::magic_bytes[4] = {0x4F, 0x4D, 0x41, 0x50};	// "OMAP"
 
 NativeFileFormat::NativeFileFormat()
- : FileFormat(FileFormat::MapFile, "native (deprecated)", ImportExport::tr("OpenOrienteering Mapper").append(" pre-0.5"), "omap", 
+ : FileFormat(FileFormat::MapFile, "native (deprecated)", ImportExport::tr("OpenOrienteering Mapper").append(QLatin1String(" pre-0.5")), QString::fromLatin1("omap"),
               FileFormat::ImportSupported)
 {
 	// Nothing
@@ -410,7 +410,7 @@ void NativeFileImport::import(bool load_symbols_only)
 
 		for (int i = 0; i < num_parts; ++i)
 		{
-			MapPart* part = new MapPart("", map);
+			MapPart* part = new MapPart({}, map);
 			if (!part->load(stream, version, map))
 			{
 				throw FileFormatException(Importer::tr("Error while loading map part %2.").arg(i+1));

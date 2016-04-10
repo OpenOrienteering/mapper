@@ -603,7 +603,8 @@ bool Map::exportTo(const QString& path, MapView* view, const FileFormat* format)
 	}
 	else if (!format->supportsExport())
 	{
-		QMessageBox::warning(nullptr, tr("Error"), tr("Cannot export the map as\n\"%1\"\nbecause saving as %2 (.%3) is not supported.").arg(path).arg(format->description()).arg(format->fileExtensions().join(", ")));
+		QMessageBox::warning(nullptr, tr("Error"), tr("Cannot export the map as\n\"%1\"\nbecause saving as %2 (.%3) is not supported.").
+		                     arg(path, format->description(), format->fileExtensions().join(QLatin1String(", "))));
 		return false;
 	}
 	
@@ -661,7 +662,7 @@ bool Map::exportTo(const QString& path, MapView* view, const FileFormat* format)
 		QString warnings;
 		for (std::vector<QString>::const_iterator it = exporter->warnings().begin(); it != exporter->warnings().end(); ++it) {
 			if (!warnings.isEmpty())
-				warnings += '\n';
+				warnings += QLatin1Char('\n');
 			warnings += *it;
 		}
 		QMessageBox msgBox(QMessageBox::Warning, tr("Warning"), tr("The map export generated warnings."), QMessageBox::Ok);
@@ -728,7 +729,7 @@ bool Map::loadFrom(const QString& path, QWidget* dialog_parent, MapView* view, b
 					QString warnings;
 					for (std::vector<QString>::const_iterator it = importer->warnings().begin(); it != importer->warnings().end(); ++it) {
 						if (!warnings.isEmpty())
-							warnings += '\n';
+							warnings += QLatin1Char('\n');
 						warnings += *it;
 					}
 					QMessageBox msgBox(
@@ -747,7 +748,7 @@ bool Map::loadFrom(const QString& path, QWidget* dialog_parent, MapView* view, b
 			catch (std::exception &e)
 			{
 				qDebug() << "Exception:" << e.what();
-				error_msg = e.what();
+				error_msg = QString::fromLatin1(e.what());
 			}
 			if (importer) delete importer;
 		}
@@ -921,7 +922,7 @@ bool Map::exportToIODevice(QIODevice* stream)
 	stream->open(QIODevice::WriteOnly);
 	Exporter* exporter = nullptr;
 	try {
-		const FileFormat* native_format = FileFormats.findFormat(QStringLiteral("XML"));
+		const FileFormat* native_format = FileFormats.findFormat("XML");
 		exporter = native_format->createExporter(stream, this, nullptr);
 		exporter->doExport();
 		stream->close();
@@ -941,7 +942,7 @@ bool Map::importFromIODevice(QIODevice* stream)
 {
 	Importer* importer = nullptr;
 	try {
-		const FileFormat* native_format = FileFormats.findFormat(QStringLiteral("XML"));
+		const FileFormat* native_format = FileFormats.findFormat("XML");
 		importer = native_format->createImporter(stream, this, nullptr);
 		importer->doImport(false);
 		importer->finishImport();

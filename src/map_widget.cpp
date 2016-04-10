@@ -820,7 +820,7 @@ void MapWidget::paintEvent(QPaintEvent* event)
 		else if (view->getMap()->getNumSymbols() == 0)
 			showHelpMessage(&painter, tr("No symbols!\n\nNow define some symbols:\nRight-click in the symbol bar\nand select \"New symbol\"\nto create one."));
 		else
-			showHelpMessage(&painter, tr("Ready to draw!\n\nStart drawing or load a base map.\nTo load a base map, click\nTemplates -> Open template...") + "\n\n" + tr("Hint: Hold the middle mouse button to drag the map,\nzoom using the mouse wheel, if available."));
+			showHelpMessage(&painter, tr("Ready to draw!\n\nStart drawing or load a base map.\nTo load a base map, click\nTemplates -> Open template...") + QLatin1String("\n\n") + tr("Hint: Hold the middle mouse button to drag the map,\nzoom using the mouse wheel, if available."));
 		painter.restore();
 	}
 	else

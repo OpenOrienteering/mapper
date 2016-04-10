@@ -51,7 +51,7 @@ const float TextSymbol::internal_point_size = 256;
 TextSymbol::TextSymbol() : Symbol(Symbol::Text), metrics(QFont())
 {
 	color = NULL;
-	font_family = "Arial";
+	font_family = QString::fromLatin1("Arial");
 	font_size = 4 * 1000;
 	bold = false;
 	italic = false;
@@ -60,7 +60,7 @@ TextSymbol::TextSymbol() : Symbol(Symbol::Text), metrics(QFont())
 	paragraph_spacing = 0;
 	character_spacing = 0;
 	kerning = true;
-	icon_text = "";
+	icon_text = QString{};
 	framing = false;
 	framing_color = NULL;
 	framing_mode = LineFraming;
@@ -296,7 +296,7 @@ void TextSymbol::updateQFont()
 	qfont.setHintingPreference(QFont::PreferNoHinting);
 	qfont.setKerning(kerning);
 	metrics = QFontMetricsF(qfont);
-	qfont.setLetterSpacing(QFont::AbsoluteSpacing, metrics.width(" ") * character_spacing);
+	qfont.setLetterSpacing(QFont::AbsoluteSpacing, metrics.width(QString(QLatin1Char{' '})) * character_spacing);
 	
 	qfont.setStyleStrategy(QFont::ForceOutline);
 
@@ -357,56 +357,56 @@ bool TextSymbol::loadImpl(QIODevice* file, int version, Map* map)
 
 void TextSymbol::saveImpl(QXmlStreamWriter& xml, const Map& map) const
 {
-	xml.writeStartElement("text_symbol");
-	xml.writeAttribute("icon_text", icon_text);
+	xml.writeStartElement(QStringLiteral("text_symbol"));
+	xml.writeAttribute(QStringLiteral("icon_text"), icon_text);
 	
-	xml.writeStartElement("font");
-	xml.writeAttribute("family", font_family);
-	xml.writeAttribute("size", QString::number(font_size));
+	xml.writeStartElement(QStringLiteral("font"));
+	xml.writeAttribute(QStringLiteral("family"), font_family);
+	xml.writeAttribute(QStringLiteral("size"), QString::number(font_size));
 	if (bold)
-		xml.writeAttribute("bold", "true");
+		xml.writeAttribute(QStringLiteral("bold"), QStringLiteral("true"));
 	if (italic)
-		xml.writeAttribute("italic", "true");
+		xml.writeAttribute(QStringLiteral("italic"), QStringLiteral("true"));
 	if (underline)
-		xml.writeAttribute("underline", "true");
+		xml.writeAttribute(QStringLiteral("underline"), QStringLiteral("true"));
 	xml.writeEndElement(/*font*/);
 	
-	xml.writeStartElement("text");
-	xml.writeAttribute("color", QString::number(map.findColorIndex(color)));
-	xml.writeAttribute("line_spacing", QString::number(line_spacing));
-	xml.writeAttribute("paragraph_spacing", QString::number(paragraph_spacing));
-	xml.writeAttribute("character_spacing", QString::number(character_spacing));
+	xml.writeStartElement(QStringLiteral("text"));
+	xml.writeAttribute(QStringLiteral("color"), QString::number(map.findColorIndex(color)));
+	xml.writeAttribute(QStringLiteral("line_spacing"), QString::number(line_spacing));
+	xml.writeAttribute(QStringLiteral("paragraph_spacing"), QString::number(paragraph_spacing));
+	xml.writeAttribute(QStringLiteral("character_spacing"), QString::number(character_spacing));
 	if (kerning)
-		xml.writeAttribute("kerning", "true");
+		xml.writeAttribute(QStringLiteral("kerning"), QStringLiteral("true"));
 	xml.writeEndElement(/*text*/);
 	
 	if (framing)
 	{
-		xml.writeStartElement("framing");
-		xml.writeAttribute("color", QString::number(map.findColorIndex(framing_color)));
-		xml.writeAttribute("mode", QString::number(framing_mode));
-		xml.writeAttribute("line_half_width", QString::number(framing_line_half_width));
-		xml.writeAttribute("shadow_x_offset", QString::number(framing_shadow_x_offset));
-		xml.writeAttribute("shadow_y_offset", QString::number(framing_shadow_y_offset));
+		xml.writeStartElement(QStringLiteral("framing"));
+		xml.writeAttribute(QStringLiteral("color"), QString::number(map.findColorIndex(framing_color)));
+		xml.writeAttribute(QStringLiteral("mode"), QString::number(framing_mode));
+		xml.writeAttribute(QStringLiteral("line_half_width"), QString::number(framing_line_half_width));
+		xml.writeAttribute(QStringLiteral("shadow_x_offset"), QString::number(framing_shadow_x_offset));
+		xml.writeAttribute(QStringLiteral("shadow_y_offset"), QString::number(framing_shadow_y_offset));
 		xml.writeEndElement(/*framing*/);
 	}
 	
 	if (line_below)
 	{
-		xml.writeStartElement("line_below");
-		xml.writeAttribute("color", QString::number(map.findColorIndex(line_below_color)));
-		xml.writeAttribute("width", QString::number(line_below_width));
-		xml.writeAttribute("distance", QString::number(line_below_distance));
+		xml.writeStartElement(QStringLiteral("line_below"));
+		xml.writeAttribute(QStringLiteral("color"), QString::number(map.findColorIndex(line_below_color)));
+		xml.writeAttribute(QStringLiteral("width"), QString::number(line_below_width));
+		xml.writeAttribute(QStringLiteral("distance"), QString::number(line_below_distance));
 		xml.writeEndElement(/*line_below*/);
 	}
 	
 	int num_custom_tabs = getNumCustomTabs();
 	if (num_custom_tabs > 0)
 	{
-		xml.writeStartElement("tabs");
-		xml.writeAttribute("count", QString::number(num_custom_tabs));
+		xml.writeStartElement(QStringLiteral("tabs"));
+		xml.writeAttribute(QStringLiteral("count"), QString::number(num_custom_tabs));
 		for (int i = 0; i < num_custom_tabs; ++i)
-			xml.writeTextElement("tab", QString::number(custom_tabs[i]));
+			xml.writeTextElement(QStringLiteral("tab"), QString::number(custom_tabs[i]));
 		xml.writeEndElement(/*tabs*/);
 	}
 	
@@ -417,10 +417,10 @@ bool TextSymbol::loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionar
 {
 	Q_UNUSED(symbol_dict);
 	
-	if (xml.name() != "text_symbol")
+	if (xml.name() != QLatin1String("text_symbol"))
 		return false;
 	
-	icon_text = xml.attributes().value("icon_text").toString();
+	icon_text = xml.attributes().value(QLatin1String("icon_text")).toString();
 	framing = false;
 	line_below = false;
 	custom_tabs.clear();
@@ -428,52 +428,52 @@ bool TextSymbol::loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionar
 	while (xml.readNextStartElement())
 	{
 		QXmlStreamAttributes attributes(xml.attributes());
-		if (xml.name() == "font")
+		if (xml.name() == QLatin1String("font"))
 		{
-			font_family = xml.attributes().value("family").toString();
-			font_size = attributes.value("size").toString().toInt();
-			bold = (attributes.value("bold") == "true");
-			italic = (attributes.value("italic") == "true");
-			underline = (attributes.value("underline") == "true");
+			font_family = xml.attributes().value(QLatin1String("family")).toString();
+			font_size = attributes.value(QLatin1String("size")).toInt();
+			bold = (attributes.value(QLatin1String("bold")) == QLatin1String("true"));
+			italic = (attributes.value(QLatin1String("italic")) == QLatin1String("true"));
+			underline = (attributes.value(QLatin1String("underline")) == QLatin1String("true"));
 			xml.skipCurrentElement();
 		}
-		else if (xml.name() == "text")
+		else if (xml.name() == QLatin1String("text"))
 		{
-			int temp = attributes.value("color").toString().toInt();
+			int temp = attributes.value(QLatin1String("color")).toInt();
 			color = map.getColor(temp);
-			line_spacing = attributes.value("line_spacing").toString().toFloat();
-			paragraph_spacing = attributes.value("paragraph_spacing").toString().toInt();
-			character_spacing = attributes.value("character_spacing").toString().toFloat();
-			kerning = (attributes.value("kerning") == "true");
+			line_spacing = attributes.value(QLatin1String("line_spacing")).toFloat();
+			paragraph_spacing = attributes.value(QLatin1String("paragraph_spacing")).toInt();
+			character_spacing = attributes.value(QLatin1String("character_spacing")).toFloat();
+			kerning = (attributes.value(QLatin1String("kerning")) == QLatin1String("true"));
 			xml.skipCurrentElement();
 		}
-		else if (xml.name() == "framing")
+		else if (xml.name() == QLatin1String("framing"))
 		{
 			framing = true;
-			int temp = attributes.value("color").toString().toInt();
+			int temp = attributes.value(QLatin1String("color")).toInt();
 			framing_color = map.getColor(temp);
-			framing_mode = attributes.value("mode").toString().toInt();
-			framing_line_half_width = attributes.value("line_half_width").toString().toInt();
-			framing_shadow_x_offset = attributes.value("shadow_x_offset").toString().toInt();
-			framing_shadow_y_offset = attributes.value("shadow_y_offset").toString().toInt();
+			framing_mode = attributes.value(QLatin1String("mode")).toInt();
+			framing_line_half_width = attributes.value(QLatin1String("line_half_width")).toInt();
+			framing_shadow_x_offset = attributes.value(QLatin1String("shadow_x_offset")).toInt();
+			framing_shadow_y_offset = attributes.value(QLatin1String("shadow_y_offset")).toInt();
 			xml.skipCurrentElement();
 		}
-		else if (xml.name() == "line_below")
+		else if (xml.name() == QLatin1String("line_below"))
 		{
 			line_below = true;
-			int temp = attributes.value("color").toString().toInt();
+			int temp = attributes.value(QLatin1String("color")).toInt();
 			line_below_color = map.getColor(temp);
-			line_below_width = attributes.value("width").toString().toInt();
-			line_below_distance = attributes.value("distance").toString().toInt();
+			line_below_width = attributes.value(QLatin1String("width")).toInt();
+			line_below_distance = attributes.value(QLatin1String("distance")).toInt();
 			xml.skipCurrentElement();
 		}
-		else if (xml.name() == "tabs")
+		else if (xml.name() == QLatin1String("tabs"))
 		{
-			int num_custom_tabs = attributes.value("count").toString().toInt();
+			int num_custom_tabs = attributes.value(QLatin1String("count")).toInt();
 			custom_tabs.reserve(num_custom_tabs % 20); // 20 is not the limit
 			while (xml.readNextStartElement())
 			{
-				if (xml.name() == "tab")
+				if (xml.name() == QLatin1String("tab"))
 					custom_tabs.push_back(xml.readElementText().toInt());
 				else
 					xml.skipCurrentElement();
@@ -639,7 +639,7 @@ TextSymbolSettings::TextSymbolSettings(TextSymbol* symbol, SymbolSettingDialog* 
 	layout->addRow(tr("Character spacing:"), character_spacing_edit);
 	
 	kerning_check = new QCheckBox(tr("Kerning"));
-	layout->addRow("", kerning_check);
+	layout->addRow(QString{}, kerning_check);
 	
 	layout->addItem(Util::SpacerItem::create(this));
 	
@@ -709,9 +709,9 @@ TextSymbolSettings::TextSymbolSettings(TextSymbol* symbol, SymbolSettingDialog* 
 	ocad_compat_layout->addRow(custom_tab_list);
 	
 	QHBoxLayout* custom_tabs_button_layout = new QHBoxLayout();
-	custom_tab_add = new QPushButton(QIcon(":/images/plus.png"), "");
+	custom_tab_add = new QPushButton(QIcon(QStringLiteral(":/images/plus.png")), QString{});
 	custom_tabs_button_layout->addWidget(custom_tab_add);
-	custom_tab_remove = new QPushButton(QIcon(":/images/minus.png"), "");
+	custom_tab_remove = new QPushButton(QIcon(QStringLiteral(":/images/minus.png")), QString{});
 	custom_tabs_button_layout->addWidget(custom_tab_remove);
 	custom_tabs_button_layout->addStretch(1);
 	
@@ -965,7 +965,7 @@ void TextSymbolSettings::addCustomTabClicked()
 {
 	bool ok = false;
 	// FIXME: Unit of measurement display in unusual way
-	double position = QInputDialog::getDouble(dialog, tr("Add custom tabulator"), QString("%1 (%2)").arg(tr("Position:")).arg(tr("mm")), 0, 0, 999999, 3, &ok);
+	double position = QInputDialog::getDouble(dialog, tr("Add custom tabulator"), QString::fromLatin1("%1 (%2)").arg(tr("Position:")).arg(tr("mm")), 0, 0, 999999, 3, &ok);
 	if (ok)
 	{
 		int int_position = qRound(1000 * position);
@@ -982,7 +982,7 @@ void TextSymbolSettings::addCustomTabClicked()
 			}
 		}
 		
-		custom_tab_list->insertItem(row, locale().toString(position, 'g', 3) % ' ' % tr("mm"));
+		custom_tab_list->insertItem(row, locale().toString(position, 'g', 3) + QLatin1Char(' ') + tr("mm"));
 		custom_tab_list->setCurrentRow(row);
 		symbol->custom_tabs.insert(symbol->custom_tabs.begin() + row, int_position);
 		emit propertiesModified();
@@ -1071,7 +1071,7 @@ void TextSymbolSettings::updateCompatibilityContents()
 
 	custom_tab_list->clear();
 	for (int i = 0; i < symbol->getNumCustomTabs(); ++i)
-		custom_tab_list->addItem(locale().toString(0.001 * symbol->getCustomTab(i), 'g', 3) % ' ' % tr("mm"));
+		custom_tab_list->addItem(locale().toString(0.001 * symbol->getCustomTab(i), 'g', 3) + QLatin1Char(' ') + tr("mm"));
 	
 	react_to_changes = true;
 }

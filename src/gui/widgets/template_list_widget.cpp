@@ -98,7 +98,7 @@ TemplateListWidget::TemplateListWidget(Map* map, MapView* main_view, MapEditorCo
 	Q_ASSERT(main_view);
 	Q_ASSERT(controller);
 	
-	setWhatsThis("<a href=\"templates.html#setup\">See more</a>");
+	setWhatsThis(Util::makeWhatThis("templates.html#setup"));
 	
 	QStyleOption style_option(QStyleOption::Version, QStyleOption::SO_DockWidget);
 	
@@ -112,7 +112,7 @@ TemplateListWidget::TemplateListWidget(Map* map, MapView* main_view, MapEditorCo
 	
 	if (mobile_mode)
 	{
-		auto close_action = new QAction(QIcon(":/images/close.png"), MainWindow::tr("Close"), this);
+		auto close_action = new QAction(QIcon(QString::fromLatin1(":/images/close.png")), MainWindow::tr("Close"), this);
 		connect(close_action, &QAction::triggered, this, &TemplateListWidget::closeClicked );
 		
 		auto close_button = new QToolButton();
@@ -152,7 +152,7 @@ TemplateListWidget::TemplateListWidget(Map* map, MapView* main_view, MapEditorCo
 	}
 	else
 	{
-		template_table->setHorizontalHeaderLabels(QStringList() << QString::null << tr("Opacity") << tr("Group") << tr("Filename"));
+		template_table->setHorizontalHeaderLabels(QStringList() << QString{} << tr("Opacity") << tr("Group") << tr("Filename"));
 		template_table->horizontalHeaderItem(0)->setData(Qt::ToolTipRole, tr("Show"));
 		
 		header_view->setSectionResizeMode(0, QHeaderView::Fixed);
@@ -197,10 +197,10 @@ TemplateListWidget::TemplateListWidget(Map* map, MapView* main_view, MapEditorCo
 	QMenu* new_button_menu = new QMenu(this);
 	if (!mobile_mode)
 	{
-		new_button_menu->addAction(QIcon(":/images/open.png"), tr("Open..."), this, SLOT(openTemplate()));
+		new_button_menu->addAction(QIcon(QString::fromLatin1(":/images/open.png")), tr("Open..."), this, SLOT(openTemplate()));
 		new_button_menu->addAction(controller->getAction("reopentemplate"));
 	}
-	duplicate_action = new_button_menu->addAction(QIcon(":/images/tool-duplicate.png"), tr("Duplicate"), this, SLOT(duplicateTemplate()));
+	duplicate_action = new_button_menu->addAction(QIcon(QString::fromLatin1(":/images/tool-duplicate.png")), tr("Duplicate"), this, SLOT(duplicateTemplate()));
 #if 0
 	current_action = new_button_menu->addAction(tr("Sketch"));
 	current_action->setDisabled(true);
@@ -208,19 +208,19 @@ TemplateListWidget::TemplateListWidget(Map* map, MapView* main_view, MapEditorCo
 	current_action->setDisabled(true);
 #endif
 	
-	QToolButton* new_button = newToolButton(QIcon(":/images/plus.png"), tr("Add template..."));
+	QToolButton* new_button = newToolButton(QIcon(QString::fromLatin1(":/images/plus.png")), tr("Add template..."));
 	new_button->setPopupMode(QToolButton::InstantPopup);
 	new_button->setMenu(new_button_menu);
 	
-	delete_button = newToolButton(QIcon(":/images/minus.png"), (tr("Remove"), tr("Close"))); /// \todo Use "Remove instead of "Close"
+	delete_button = newToolButton(QIcon(QString::fromLatin1(":/images/minus.png")), (tr("Remove"), tr("Close"))); /// \todo Use "Remove instead of "Close"
 	
 	SegmentedButtonLayout* add_remove_layout = new SegmentedButtonLayout();
 	add_remove_layout->addWidget(new_button);
 	add_remove_layout->addWidget(delete_button);
 	
-	move_up_button = newToolButton(QIcon(":/images/arrow-up.png"), tr("Move Up"));
+	move_up_button = newToolButton(QIcon(QString::fromLatin1(":/images/arrow-up.png")), tr("Move Up"));
 	move_up_button->setAutoRepeat(true);
-	move_down_button = newToolButton(QIcon(":/images/arrow-down.png"), tr("Move Down"));
+	move_down_button = newToolButton(QIcon(QString::fromLatin1(":/images/arrow-down.png")), tr("Move Down"));
 	move_down_button->setAutoRepeat(true);
 	
 	SegmentedButtonLayout* up_down_layout = new SegmentedButtonLayout();
@@ -228,16 +228,16 @@ TemplateListWidget::TemplateListWidget(Map* map, MapView* main_view, MapEditorCo
 	up_down_layout->addWidget(move_down_button);
 	
 	// TODO: Fix string
-	georef_button = newToolButton(QIcon(":/images/grid.png"), tr("Georeferenced: %1").remove(": %1"));
+	georef_button = newToolButton(QIcon(QString::fromLatin1(":/images/grid.png")), tr("Georeferenced: %1").remove(QLatin1String(": %1")));
 	georef_button->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
 	georef_button->setCheckable(true);
 	georef_button->setChecked(true);
 	georef_button->setEnabled(false); // TODO
-	move_by_hand_action = new QAction(QIcon(":/images/move.png"), tr("Move by hand"), this);
+	move_by_hand_action = new QAction(QIcon(QString::fromLatin1(":/images/move.png")), tr("Move by hand"), this);
 	move_by_hand_action->setCheckable(true);
 	move_by_hand_button = newToolButton(move_by_hand_action->icon(), move_by_hand_action->text());
 	move_by_hand_button->setDefaultAction(move_by_hand_action);
-	adjust_button = newToolButton(QIcon(":/images/georeferencing.png"), tr("Adjust..."));
+	adjust_button = newToolButton(QIcon(QString::fromLatin1(":/images/georeferencing.png")), tr("Adjust..."));
 	adjust_button->setCheckable(true);
 	
 	QMenu* edit_menu = new QMenu(this);
@@ -245,7 +245,7 @@ TemplateListWidget::TemplateListWidget(Map* map, MapView* main_view, MapEditorCo
 	position_action->setCheckable(true);
 	import_action =  edit_menu->addAction(tr("Import and remove"), this, SLOT(importClicked()));
 	
-	edit_button = newToolButton(QIcon(":/images/settings.png"), MapEditorController::tr("&Edit").remove(QChar('&')));
+	edit_button = newToolButton(QIcon(QString::fromLatin1(":/images/settings.png")), MapEditorController::tr("&Edit").remove(QLatin1Char('&')));
 	edit_button->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
 	edit_button->setPopupMode(QToolButton::InstantPopup);
 	edit_button->setMenu(edit_menu);
@@ -271,11 +271,11 @@ TemplateListWidget::TemplateListWidget(Map* map, MapView* main_view, MapEditorCo
 		style()->pixelMetric(QStyle::PM_LayoutBottomMargin, &style_option) / 2
 	);
 	all_buttons_layout->addWidget(list_buttons_group);
-	all_buttons_layout->addWidget(new QLabel("   "), 1);
+	all_buttons_layout->addWidget(new QLabel(QString::fromLatin1("   ")), 1);
 	
 	if (!mobile_mode)
 	{
-		QToolButton* help_button = newToolButton(QIcon(":/images/help.png"), tr("Help"));
+		QToolButton* help_button = newToolButton(QIcon(QString::fromLatin1(":/images/help.png")), tr("Help"));
 		help_button->setAutoRaise(true);
 		all_buttons_layout->addWidget(help_button);
 		connect(help_button, &QAbstractButton::clicked, this, &TemplateListWidget::showHelp);
@@ -285,13 +285,13 @@ TemplateListWidget::TemplateListWidget(Map* map, MapView* main_view, MapEditorCo
 	
 	setLayout(all_templates_layout);
 	
-	//group_button = new QPushButton(QIcon(":/images/group.png"), tr("(Un)group"));
+	//group_button = new QPushButton(QIcon(QString::fromLatin1(":/images/group.png")), tr("(Un)group"));
 	/*more_button = new QToolButton();
 	more_button->setText(tr("More..."));
 	more_button->setPopupMode(QToolButton::InstantPopup);
 	more_button->setSizePolicy(QSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed));
 	QMenu* more_button_menu = new QMenu(more_button);
-	more_button_menu->addAction(QIcon(":/images/window-new.png"), tr("Numeric transformation window"));
+	more_button_menu->addAction(QIcon(QString::fromLatin1(":/images/window-new.png")), tr("Numeric transformation window"));
 	more_button_menu->addAction(tr("Set transparent color..."));
 	more_button_menu->addAction(tr("Trace lines..."));
 	more_button->setMenu(more_button_menu);*/
@@ -335,7 +335,7 @@ QToolButton* TemplateListWidget::newToolButton(const QIcon& icon, const QString&
 	button->setToolTip(text);
 	button->setIcon(icon);
 	button->setText(text);
-	button->setWhatsThis("<a href=\"templates.html#setup\">See more</a>");
+	button->setWhatsThis(Util::makeWhatThis("templates.html#setup"));
 	return button;
 }
 
@@ -373,7 +373,7 @@ void TemplateListWidget::addTemplateAt(Template* new_template, int pos)
 std::unique_ptr<Template> TemplateListWidget::showOpenTemplateDialog(QWidget* dialog_parent, MapEditorController* controller)
 {
 	QSettings settings;
-	QString template_directory = settings.value("templateFileDirectory", QDir::homePath()).toString();
+	QString template_directory = settings.value(QString::fromLatin1("templateFileDirectory"), QDir::homePath()).toString();
 	
 	QString pattern;
 	for (const auto& extension : Template::supportedExtensions())
@@ -387,15 +387,14 @@ std::unique_ptr<Template> TemplateListWidget::showOpenTemplateDialog(QWidget* di
 	QString path = QFileDialog::getOpenFileName(dialog_parent,
 	                                            tr("Open image, GPS track or DXF file"),
 	                                            template_directory,
-	                                            QString("%1 (%2);;%3 (*.*)").arg(tr("Template files"),
-	                                                                             pattern,
-	                                                                             tr("All files")));
+	                                            QString::fromLatin1("%1 (%2);;%3 (*.*)").arg(
+	                                                tr("Template files"), pattern, tr("All files")));
 	path = QFileInfo(path).canonicalFilePath();
 	
 	if (path.isEmpty())
 		return nullptr;
 	
-	settings.setValue("templateFileDirectory", QFileInfo(path).canonicalPath());
+	settings.setValue(QString::fromLatin1("templateFileDirectory"), QFileInfo(path).canonicalPath());
 	
 	bool center_in_view = true;
 	QString error = tr("Cannot open template\n%1:\n%2").arg(path);
@@ -938,13 +937,13 @@ void TemplateListWidget::importClicked()
 	Map template_map;
 	
 	bool ok = true;
-	if (prototype->getTemplateType() == QLatin1String("OgrTemplate"))
+	if (qstrcmp(prototype->getTemplateType(), "OgrTemplate") == 0)
 	{
 		template_map.setGeoreferencing(prototype->templateMap()->getGeoreferencing());
 		template_map.importMap(prototype->templateMap(), Map::MinimalObjectImport, window());
 		template_map.applyOnAllObjects(ApplyTemplateTransform(transform));
 	}
-	else if (prototype->getTemplateType() == QLatin1String("TemplateMap")
+	else if (qstrcmp(prototype->getTemplateType(), "TemplateMap") == 0
 	         && template_map.loadFrom(prototype->getTemplatePath(), this, nullptr, false, true))
 	{
 		if (!prototype->isTemplateGeoreferenced())
@@ -1136,7 +1135,7 @@ void TemplateListWidget::updateRow(int row)
 			check_state = Qt::PartiallyChecked;
 			text_color = text_color.darker();
 		}
-		decoration = QVariant{ QIcon(":/images/delete.png") };
+		decoration = QVariant{ QIcon(QString::fromLatin1(":/images/delete.png")) };
 		checkable  = Qt::NoItemFlags;
 		editable   = Qt::NoItemFlags;
 	}

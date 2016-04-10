@@ -257,14 +257,18 @@ QString MapCoord::toString() const
 	 *            3
 	 *  Total:   28 */
 	constexpr std::size_t buf_size = 1+2+2+20+3;
-	static QChar encoded[10] = {
-	    '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'
+	static const QChar encoded[10] = {
+	    QLatin1Char{'0'}, QLatin1Char{'1'},
+	    QLatin1Char{'2'}, QLatin1Char{'3'},
+	    QLatin1Char{'4'}, QLatin1Char{'5'},
+	    QLatin1Char{'6'}, QLatin1Char{'7'},
+	    QLatin1Char{'8'}, QLatin1Char{'9'}
 	};
 	QChar buffer[buf_size];
 	
 	// For efficiency, we construct the string from the back.
 	std::size_t j = buf_size - 1;
-	buffer[j] = QChar{ ';' };
+	buffer[j] = QLatin1Char{';'};
 	--j;
 	
 	int flags = fp;
@@ -289,7 +293,7 @@ QString MapCoord::toString() const
 	QChar sign { QChar::Null };
 	if (tmp < 0)
 	{
-		sign = QChar{ '-' };
+		sign = QLatin1Char{'-'};
 		tmp = -tmp;
 	}
 	do
@@ -315,7 +319,7 @@ QString MapCoord::toString() const
 	tmp = xp;
 	if (tmp < 0)
 	{
-		sign = QChar{ '-' };
+		sign = QLatin1Char{'-'};
 		tmp = -tmp;
 	}
 	do

@@ -163,7 +163,7 @@ GeoreferencingDialog::GeoreferencingDialog(
 	QLabel* map_north_label = Util::Headline::create(tr("Map north"));
 	
 	declination_edit = Util::SpinBox::create(Georeferencing::declinationPrecision(), -180.0, +180.0, trUtf8("°"));
-	declination_button = new QPushButton("");
+	declination_button = new QPushButton(tr("Lookup..."));
 	QHBoxLayout* declination_layout = new QHBoxLayout();
 	declination_layout->addWidget(declination_edit, 1);
 #if defined(QT_NETWORK_LIB)
@@ -197,7 +197,7 @@ GeoreferencingDialog::GeoreferencingDialog(
 	edit_layout->addRow(show_refpoint_label, link_label);
 	edit_layout->addRow(show_refpoint_label, link_label);
 	edit_layout->addRow(tr("On CRS changes, keep:"), keep_projected_radio);
-	edit_layout->addRow("", keep_geographic_radio);
+	edit_layout->addRow({}, keep_geographic_radio);
 	edit_layout->addItem(Util::SpacerItem::create(this));
 	
 	edit_layout->addRow(map_north_label);
@@ -311,7 +311,7 @@ void GeoreferencingDialog::projectionChanged()
 		{
 			// The CRS id is not there anymore or the number of parameters has changed.
 			// Enter as custom spec.
-			crs_selector->setCurrentCRS(CRSTemplateRegistry().find("PROJ.4"), { georef->getProjectedCRSSpec() });
+			crs_selector->setCurrentCRS(CRSTemplateRegistry().find(QString::fromLatin1("PROJ.4")), { georef->getProjectedCRSSpec() });
 		}
 		else
 		{
@@ -325,10 +325,10 @@ void GeoreferencingDialog::projectionChanged()
 	lat_edit->setValue(latitude);
 	lon_edit->setValue(longitude);
 	QString osm_link =
-	  QString("http://www.openstreetmap.org/?lat=%1&lon=%2&zoom=18&layers=M").
+	  QString::fromLatin1("http://www.openstreetmap.org/?lat=%1&lon=%2&zoom=18&layers=M").
 	  arg(latitude).arg(longitude);
 	QString worldofo_link =
-	  QString("http://maps.worldofo.com/?zoom=15&lat=%1&lng=%2").
+	  QString::fromLatin1("http://maps.worldofo.com/?zoom=15&lat=%1&lng=%2").
 	  arg(latitude).arg(longitude);
 	link_label->setText(
 	  tr("<a href=\"%1\">OpenStreetMap</a> | <a href=\"%2\">World of O Maps</a>").
@@ -340,7 +340,7 @@ void GeoreferencingDialog::projectionChanged()
 	if (error.length() == 0)
 		status_field->setText(tr("valid"));
 	else
-		status_field->setText(QString("<b style=\"color:red\">") % error % "</b>");
+		status_field->setText(QLatin1String("<b style=\"color:red\">") + error + QLatin1String("</b>"));
 }
 
 // slot
@@ -357,8 +357,8 @@ void GeoreferencingDialog::requestDeclination(bool no_confirm)
 		return;
 	
 	// TODO: Move to resources or preferences. Assess security risks of url distinction.
-	QString user_url("http://www.ngdc.noaa.gov/geomag-web/");
-	QUrl service_url("http://www.ngdc.noaa.gov/geomag-web/calculators/calculateDeclination");
+	QString user_url(QString::fromLatin1("http://www.ngdc.noaa.gov/geomag-web/"));
+	QUrl service_url(QString::fromLatin1("http://www.ngdc.noaa.gov/geomag-web/calculators/calculateDeclination"));
 	LatLon latlon(georef->getGeographicRefPoint());
 	
 	if (!no_confirm)
@@ -380,12 +380,12 @@ void GeoreferencingDialog::requestDeclination(bool no_confirm)
 	
 	QUrlQuery query;
 	QDate today = QDate::currentDate();
-	query.addQueryItem("lat1", QString::number(latlon.latitude()));
-	query.addQueryItem("lon1", QString::number(latlon.longitude()));
-	query.addQueryItem("startYear", QString::number(today.year()));
-	query.addQueryItem("startMonth", QString::number(today.month()));
-	query.addQueryItem("startDay", QString::number(today.day()));
-	query.addQueryItem("resultFormat", "xml");
+	query.addQueryItem(QString::fromLatin1("lat1"), QString::number(latlon.latitude()));
+	query.addQueryItem(QString::fromLatin1("lon1"), QString::number(latlon.longitude()));
+	query.addQueryItem(QString::fromLatin1("startYear"), QString::number(today.year()));
+	query.addQueryItem(QString::fromLatin1("startMonth"), QString::number(today.month()));
+	query.addQueryItem(QString::fromLatin1("startDay"), QString::number(today.day()));
+	query.addQueryItem(QString::fromLatin1("resultFormat"), QString::fromLatin1("xml"));
 	service_url.setQuery(query);
 	network->get(QNetworkRequest(service_url));
 #else
@@ -465,7 +465,7 @@ void GeoreferencingDialog::updateWidgets()
 	ref_point_button->setEnabled(controller != nullptr);
 	
 	if (crs_selector->currentCRSTemplate())
-		projected_ref_label->setText(crs_selector->currentCRSTemplate()->coordinatesName(crs_selector->parameters()) + ":");
+		projected_ref_label->setText(crs_selector->currentCRSTemplate()->coordinatesName(crs_selector->parameters()) + QLatin1Char(':'));
 	else
 		projected_ref_label->setText(tr("Local coordinates:"));
 	
@@ -501,7 +501,7 @@ void GeoreferencingDialog::updateGrivation()
 {
 	QString text = trUtf8("%1 °", "degree value").arg(QLocale().toString(georef->getGrivation(), 'f', Georeferencing::declinationPrecision()));
 	if (grivation_locked)
-		text.append(QString(" (%1)").arg(tr("locked")));
+		text.append(QString::fromLatin1(" (%1)").arg(tr("locked")));
 	grivation_label->setText(text);
 }
 
@@ -621,15 +621,15 @@ void GeoreferencingDialog::declinationReplyFinished(QNetworkReply* reply)
 		QXmlStreamReader xml(reply);
 		while (xml.readNextStartElement())
 		{
-			if (xml.name() == "maggridresult")
+			if (xml.name() == QLatin1String("maggridresult"))
 			{
 				while(xml.readNextStartElement())
 				{
-					if (xml.name() == "result")
+					if (xml.name() == QLatin1String("result"))
 					{
 						while (xml.readNextStartElement())
 						{
-							if (xml.name() == "declination")
+							if (xml.name() == QLatin1String("declination"))
 							{
 								QString text = xml.readElementText(QXmlStreamReader::IncludeChildElements);
 								bool ok;
@@ -641,7 +641,7 @@ void GeoreferencingDialog::declinationReplyFinished(QNetworkReply* reply)
 								}
 								else 
 								{
-									error_string = tr("Could not parse data.") % ' ';
+									error_string = tr("Could not parse data.") + QLatin1Char(' ');
 								}
 							}
 							
@@ -652,9 +652,9 @@ void GeoreferencingDialog::declinationReplyFinished(QNetworkReply* reply)
 					xml.skipCurrentElement(); // child of mapgridresult
 				}
 			}
-			else if (xml.name() == "errors")
+			else if (xml.name() == QLatin1String("errors"))
 			{
-				error_string.append(xml.readElementText(QXmlStreamReader::IncludeChildElements) % ' ');
+				error_string.append(xml.readElementText(QXmlStreamReader::IncludeChildElements) + QLatin1Char(' '));
 			}
 			
 			xml.skipCurrentElement(); // child of root
@@ -740,6 +740,6 @@ bool GeoreferencingTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coo
 
 const QCursor& GeoreferencingTool::getCursor() const
 {
-	static auto const cursor = scaledToScreen(QCursor{ QPixmap{ ":/images/cursor-crosshair.png" }, 11, 11 });
+	static auto const cursor = scaledToScreen(QCursor{ QPixmap{ QString::fromLatin1(":/images/cursor-crosshair.png") }, 11, 11 });
 	return cursor;
 }

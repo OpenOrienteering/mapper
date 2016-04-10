@@ -112,9 +112,9 @@ void UndoStep::getModifiedObjects(int, ObjectSet&) const
 // static
 UndoStep* UndoStep::load(QXmlStreamReader& xml, Map* map, SymbolDictionary& symbol_dict)
 {
-	Q_ASSERT(xml.name() == "step");
+	Q_ASSERT(xml.name() == QLatin1String("step"));
 	
-	int type = xml.attributes().value("type").toString().toInt();
+	int type = xml.attributes().value(QLatin1String("type")).toInt();
 	UndoStep* step = UndoStep::getUndoStepForType((Type)type, map);
 	while (xml.readNextStartElement())
 		step->loadImpl(xml, symbol_dict);
@@ -228,11 +228,11 @@ void CombinedUndoStep::saveImpl(QXmlStreamWriter& xml) const
 
 void CombinedUndoStep::loadImpl(QXmlStreamReader& xml, SymbolDictionary& symbol_dict)
 {
-	if (xml.name() == "substeps")
+	if (xml.name() == QLatin1String("substeps"))
 	{
 		// Mapper before 0.6
 		// @todo Remove in a future version
-		int size = xml.attributes().value("count").toString().toInt();
+		int size = xml.attributes().value(QLatin1String("count")).toInt();
 		steps.reserve(qMin(size, 10)); // 10 is not a limit
 		while (xml.readNextStartElement())
 		{

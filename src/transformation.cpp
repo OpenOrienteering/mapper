@@ -30,6 +30,7 @@
 #include "file_format.h"
 #include "matrix.h"
 #include "template.h"
+#include "util/xml_stream_util.h"
 
 // ### PassPoint ###
 
@@ -52,44 +53,44 @@ void PassPoint::load(QIODevice* file, int version)
 
 void PassPoint::save(QXmlStreamWriter& xml) const
 {
-	xml.writeStartElement("passpoint");
-	xml.writeAttribute("error", QString::number(error));
+	XmlElementWriter passpoint{xml, QLatin1String("passpoint")};
+	passpoint.writeAttribute(QLatin1String("error"), error);
 	
-	xml.writeStartElement("source");
-	MapCoord(src_coords).save(xml);
-	xml.writeEndElement();
-	
-	xml.writeStartElement("destination");
-	MapCoord(dest_coords).save(xml);
-	xml.writeEndElement();
-	
-	xml.writeStartElement("calculated");
-	MapCoord(calculated_coords).save(xml);
-	xml.writeEndElement();
-	
-	xml.writeEndElement(/*passpoint*/);
+	{
+		XmlElementWriter element{xml, QLatin1String("source")};
+		MapCoord(src_coords).save(xml);
+	}
+	{
+		XmlElementWriter element{xml, QLatin1String("destination")};
+		MapCoord(dest_coords).save(xml);
+	}
+	{
+		XmlElementWriter element{xml, QLatin1String("calculated")};
+		MapCoord(calculated_coords).save(xml);
+	}
 }
 
 PassPoint PassPoint::load(QXmlStreamReader& xml)
 {
-	Q_ASSERT(xml.name() == "passpoint");
+	Q_ASSERT(xml.name() == QLatin1String("passpoint"));
 	
+	XmlElementReader passpoint{xml};
 	PassPoint p;
-	p.error = xml.attributes().value("error").toString().toDouble();
+	p.error = passpoint.attribute<double>(QLatin1String("error"));
 	while (xml.readNextStartElement())
 	{
 		QStringRef name = xml.name();
 		while (xml.readNextStartElement())
 		{
-			if (xml.name() == "coord")
+			if (xml.name() == QLatin1String("coord"))
 			{
 				try
 				{
-					if (name == "source")
+					if (name == QLatin1String("source"))
 						p.src_coords = MapCoordF(MapCoord::load(xml));
-					else if (name == "destination")
+					else if (name == QLatin1String("destination"))
 						p.dest_coords = MapCoordF(MapCoord::load(xml));
-					else if (name == "calculated")
+					else if (name == QLatin1String("calculated"))
 						p.calculated_coords = MapCoordF(MapCoord::load(xml));
 					else
 						xml.skipCurrentElement(); // unsupported

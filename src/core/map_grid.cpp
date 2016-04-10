@@ -32,6 +32,7 @@
 #include "../map.h"
 #include "../core/map_coord.h"
 #include "../util.h"
+#include "../util/xml_stream_util.h"
 
 struct ProcessLine
 {
@@ -89,35 +90,35 @@ const MapGrid& MapGrid::load(QIODevice* file, int version)
 
 void MapGrid::save(QXmlStreamWriter& xml) const
 {
-	xml.writeEmptyElement("grid");
-	xml.writeAttribute("color", QColor(color).name());
-	xml.writeAttribute("display", QString::number(display));
-	xml.writeAttribute("alignment", QString::number(alignment));
-	xml.writeAttribute("additional_rotation", QString::number(additional_rotation));
-	xml.writeAttribute("unit", QString::number(unit));
-	xml.writeAttribute("h_spacing", QString::number(horz_spacing));
-	xml.writeAttribute("v_spacing", QString::number(vert_spacing));
-	xml.writeAttribute("h_offset", QString::number(horz_offset));
-	xml.writeAttribute("v_offset", QString::number(vert_offset));
-	xml.writeAttribute("snapping_enabled", snapping_enabled ? "true" : "false");
+	XmlElementWriter element{xml, QLatin1String("grid")};
+	element.writeAttribute(QLatin1String("color"), QColor(color).name());
+	element.writeAttribute(QLatin1String("display"), display);
+	element.writeAttribute(QLatin1String("alignment"), alignment);
+	element.writeAttribute(QLatin1String("additional_rotation"), additional_rotation);
+	element.writeAttribute(QLatin1String("unit"), unit);
+	element.writeAttribute(QLatin1String("h_spacing"), horz_spacing);
+	element.writeAttribute(QLatin1String("v_spacing"), vert_spacing);
+	element.writeAttribute(QLatin1String("h_offset"), horz_offset);
+	element.writeAttribute(QLatin1String("v_offset"), vert_offset);
+	element.writeAttribute(QLatin1String("snapping_enabled"), snapping_enabled);
 }
 
 const MapGrid& MapGrid::load(QXmlStreamReader& xml)
 {
-	Q_ASSERT(xml.name() == "grid");
+	Q_ASSERT(xml.name() == QLatin1String("grid"));
 	
+	XmlElementReader element(xml);
 	QXmlStreamAttributes attributes = xml.attributes();
-	color = QColor(attributes.value("color").toString()).rgba();
-	display = (MapGrid::DisplayMode) attributes.value("display").toString().toInt();
-	alignment = (MapGrid::Alignment) attributes.value("alignment").toString().toInt();
-	additional_rotation = attributes.value("additional_rotation").toString().toDouble();
-	unit = (MapGrid::Unit) attributes.value("unit").toString().toInt();
-	horz_spacing = attributes.value("h_spacing").toString().toDouble();
-	vert_spacing = attributes.value("v_spacing").toString().toDouble();
-	horz_offset = attributes.value("h_offset").toString().toDouble();
-	vert_offset = attributes.value("v_offset").toString().toDouble();
-	snapping_enabled = (attributes.value("snapping_enabled") == "true");
-	xml.skipCurrentElement();
+	color = QColor(element.attribute<QString>(QLatin1String("color"))).rgba();
+	display = MapGrid::DisplayMode(element.attribute<int>(QLatin1String("display")));
+	alignment = MapGrid::Alignment(element.attribute<int>(QLatin1String("alignment")));
+	additional_rotation = element.attribute<double>(QLatin1String("additional_rotation"));
+	unit = MapGrid::Unit(element.attribute<int>(QLatin1String("unit")));
+	horz_spacing = element.attribute<double>(QLatin1String("h_spacing"));
+	vert_spacing = element.attribute<double>(QLatin1String("v_spacing"));
+	horz_offset = element.attribute<double>(QLatin1String("h_offset"));
+	vert_offset = element.attribute<double>(QLatin1String("v_offset"));
+	snapping_enabled = element.attribute<bool>(QLatin1String("snapping_enabled"));
 	
 	return *this;
 }

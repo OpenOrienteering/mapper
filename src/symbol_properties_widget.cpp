@@ -64,9 +64,9 @@ SymbolPropertiesWidget::SymbolPropertiesWidget(Symbol* symbol, SymbolSettingDial
 	layout->addWidget(number_label, row, col++);
 	// 5 cols
 	layout->addWidget(number_edit[0], row, col++);
-	layout->addWidget(new QLabel("."), row, col++);
+	layout->addWidget(new QLabel(QString(QLatin1Char{'.'})), row, col++);
 	layout->addWidget(number_edit[1], row, col++);
-	layout->addWidget(new QLabel("."), row, col++);
+	layout->addWidget(new QLabel(QString(QLatin1Char{'.'})), row, col++);
 	layout->addWidget(number_edit[2], row, col++);
 	// 7th col
 	layout->setColumnStretch(col, 1);
@@ -185,7 +185,7 @@ void SymbolPropertiesWidget::reset(Symbol* symbol)
 	for (int i=0; i<Symbol::number_components; i++)
 	{
 		int number_edit_value = symbol->getNumberComponent(i);
-		number_edit[i]->setText((number_edit_enabled && number_edit_value >= 0) ? QString::number(number_edit_value) : "");
+		number_edit[i]->setText((number_edit_enabled && number_edit_value >= 0) ? QString::number(number_edit_value) : QString{});
 		number_edit[i]->setEnabled(number_edit_enabled);
 		number_edit_enabled = number_edit_enabled && number_edit_value >= 0;
 	}

@@ -147,14 +147,36 @@ namespace Util
 {
 	/**
 	 * Show the manual in Qt assistant.
-	 * @param filename the name of the help html file
-	 * @param fragment the fragment in the specified file to jump to
+	 * 
+	 * @param filename_latin1 the name of the manual page html file
+	 * @param anchor_latin1 the anchor in the specified file to jump to
 	 */
-	void showHelp(QWidget* dialog_parent, QString filename = QStringLiteral("index.html"), QString fragment = QString());
+	void showHelp(QWidget* dialog_parent, const char* filename_latin1, const char* anchor_latin1);
 	
-	/** Converts the given help file name to a string
-	 *  which can be used to access it inside QtHelp. */
-	QString makeHelpUrl(QString filename, QString fragment);
+	/**
+	 * Show the manual in Qt assistant.
+	 * 
+	 * The anchor may be left out or given with the filename.
+	 * 
+	 * @param file_and_anchor_latin1 the name of the manual page html file, optionally including an anchor
+	 */
+	void showHelp(QWidget* dialog_parent, const char* file_and_anchor_latin1 = nullptr);
+	
+	/**
+	 * Show the manual in Qt assistant.
+	 * 
+	 * The anchor may be left out or given with the filename.
+	 * 
+	 * @param file_and_anchor the name of the manual page html file, optionally including an anchor
+	 */
+	void showHelp(QWidget* dialog_parent, QString file_and_anchor);
+	
+	/**
+	 * Creates a What's-this text "See more" linking to the given page and
+	 * fragment in the manual.
+	 */
+	QString makeWhatThis(const char* reference_latin1);
+	
 	
 	/** See Util::gridOperation(). This function handles only parallel lines. */
 	template<typename T> void hatchingOperation(QRectF extent, double spacing, double offset, double rotation, T& processor)

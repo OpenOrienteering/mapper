@@ -24,7 +24,6 @@
 #include <QDebug>
 #include <QFile>
 #include <QPainter>
-#include <QStringBuilder>
 #include <QTextDocument>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
@@ -199,40 +198,40 @@ bool Symbol::load(QIODevice* file, int version, Map* map)
 
 void Symbol::save(QXmlStreamWriter& xml, const Map& map) const
 {
-	xml.writeStartElement("symbol");
-	xml.writeAttribute("type", QString::number(type));
+	xml.writeStartElement(QString::fromLatin1("symbol"));
+	xml.writeAttribute(QString::fromLatin1("type"), QString::number(type));
 	int id = map.findSymbolIndex(this);
 	if (id >= 0)
-		xml.writeAttribute("id", QString::number(id)); // unique if given
-	xml.writeAttribute("code", getNumberAsString()); // not always unique
+		xml.writeAttribute(QString::fromLatin1("id"), QString::number(id)); // unique if given
+	xml.writeAttribute(QString::fromLatin1("code"), getNumberAsString()); // not always unique
 	if (!name.isEmpty())
-		xml.writeAttribute("name", name);
+		xml.writeAttribute(QString::fromLatin1("name"), name);
 	if (is_helper_symbol)
-		xml.writeAttribute("is_helper_symbol","true");
+		xml.writeAttribute(QString::fromLatin1("is_helper_symbol"), QString::fromLatin1("true"));
 	if (is_hidden)
-		xml.writeAttribute("is_hidden","true");
+		xml.writeAttribute(QString::fromLatin1("is_hidden"), QString::fromLatin1("true"));
 	if (is_protected)
-		xml.writeAttribute("is_protected","true");
+		xml.writeAttribute(QString::fromLatin1("is_protected"), QString::fromLatin1("true"));
 	if (!description.isEmpty())
-		xml.writeTextElement("description", description);
+		xml.writeTextElement(QString::fromLatin1("description"), description);
 	saveImpl(xml, map);
 	xml.writeEndElement(/*symbol*/);
 }
 
 Symbol* Symbol::load(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict)
 {
-	Q_ASSERT(xml.name() == "symbol");
+	Q_ASSERT(xml.name() == QLatin1String("symbol"));
 	
-	int symbol_type = xml.attributes().value("type").toString().toInt();
+	int symbol_type = xml.attributes().value(QLatin1String("type")).toInt();
 	Symbol* symbol = Symbol::getSymbolForType(static_cast<Symbol::Type>(symbol_type));
 	if (!symbol)
 		throw FileFormatException(ImportExport::tr("Error while loading a symbol of type %1 at line %2 column %3.").arg(symbol_type).arg(xml.lineNumber()).arg(xml.columnNumber()));
 	
 	QXmlStreamAttributes attributes = xml.attributes();
-	QString code = attributes.value("code").toString();
-	if (attributes.hasAttribute("id"))
+	QString code = attributes.value(QLatin1String("code")).toString();
+	if (attributes.hasAttribute(QLatin1String("id")))
 	{
-		QString id = attributes.value("id").toString();
+		QString id = attributes.value(QLatin1String("id")).toString();
 		if (symbol_dict.contains(id)) 
 			throw FileFormatException(ImportExport::tr("Symbol ID '%1' not unique at line %2 column %3.").arg(id).arg(xml.lineNumber()).arg(xml.columnNumber()));
 		
@@ -252,7 +251,7 @@ Symbol* Symbol::load(QXmlStreamReader& xml, const Map& map, SymbolDictionary& sy
 				symbol->number[i] = -1;
 			else
 			{
-				int dot = code.indexOf(".", index+1);
+				int dot = code.indexOf(QLatin1Char('.'), index+1);
 				int num = code.mid(index, (dot == -1) ? -1 : (dot - index)).toInt();
 				symbol->number[i] = num;
 				index = dot;
@@ -262,14 +261,14 @@ Symbol* Symbol::load(QXmlStreamReader& xml, const Map& map, SymbolDictionary& sy
 		}
 	}
 	
-	symbol->name = attributes.value("name").toString();
-	symbol->is_helper_symbol = (attributes.value("is_helper_symbol") == "true");
-	symbol->is_hidden = (attributes.value("is_hidden") == "true");
-	symbol->is_protected = (attributes.value("is_protected") == "true");
+	symbol->name = attributes.value(QLatin1String("name")).toString();
+	symbol->is_helper_symbol = (attributes.value(QLatin1String("is_helper_symbol")) == QLatin1String("true"));
+	symbol->is_hidden = (attributes.value(QLatin1String("is_hidden")) == QLatin1String("true"));
+	symbol->is_protected = (attributes.value(QLatin1String("is_protected")) == QLatin1String("true"));
 	
 	while (xml.readNextStartElement())
 	{
-		if (xml.name() == "description")
+		if (xml.name() == QLatin1String("description"))
 			symbol->description = xml.readElementText();
 		else
 		{
@@ -513,7 +512,7 @@ float Symbol::calculateLargestLineExtent(Map* map) const
 
 QString Symbol::getPlainTextName() const
 {
-	if (name.contains('<'))
+	if (name.contains(QLatin1Char('<')))
 	{
 		QTextDocument doc;
 		doc.setHtml(name);
@@ -525,13 +524,13 @@ QString Symbol::getPlainTextName() const
 
 QString Symbol::getNumberAsString() const
 {
-	QString str = "";
+	QString str;
 	for (int i = 0; i < number_components; ++i)
 	{
 		if (number[i] < 0)
 			break;
 		if (!str.isEmpty())
-			str += ".";
+			str += QLatin1Char('.');
 		str += QString::number(number[i]);
 	}
 	return str;

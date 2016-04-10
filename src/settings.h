@@ -121,14 +121,14 @@ signals:
 	
 private:
 	Settings();
-	void registerSetting(SettingsEnum id, const QString& path, const QVariant& default_value);
+	void registerSetting(SettingsEnum id, const char* path_latin1, const QVariant& default_value);
 	
 	void migrateSettings(QSettings& settings, QVariant version);
 	
 	/** Migrates a value from an old key to a new key.
 	 *  Uses the given or a newly constructed QSettings object.
 	 *  Returns true if the value was migrated. */
-	bool migrateValue(const QString& old_key, SettingsEnum new_setting, QSettings& settings) const;
+	bool migrateValue(const char* old_key_latin1, SettingsEnum new_setting, QSettings& settings) const;
 	
 	QHash<SettingsEnum, QVariant> settings_cache;
 	QHash<SettingsEnum, QString> setting_paths;

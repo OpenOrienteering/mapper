@@ -46,7 +46,7 @@ QString DXFParser::parse()
 	buffer.open(QIODevice::ReadOnly);
 	readNextCodeValue(&buffer, code, value);
 	buffer.close();
-	if (code != 0 || value != "SECTION")
+	if (code != 0 || value != QLatin1String("SECTION"))
 	{
 		// File does not start with DXF section
 		return QApplication::translate("DXFParser", "The file is not an DXF file.");
@@ -66,56 +66,56 @@ QString DXFParser::parse()
 	  */
 	while (readNextCodeValue(device, code, value))
 	{
-		if (code == 0 && value == "ENDSEC")
+		if (code == 0 && value == QLatin1String("ENDSEC"))
 		{
 			current_section = NOTHING;
 		}
-		else if (code == 0 && value == "EOF")
+		else if (code == 0 && value == QLatin1String("EOF"))
 		{
 			current_section = NOTHING;
 		}
 		else if (current_section == NOTHING)
 		{
-			if (code == 0 && value == "SECTION")
+			if (code == 0 && value == QLatin1String("SECTION"))
 			{
 				current_section = SECTION;
 			}
-			else if (value == "EOF")
+			else if (value == QLatin1String("EOF"))
 			{
 				break;
 			}
 		}
 		else if (current_section == SECTION)
 		{
-			if (code == 2 && value == "ENTITIES")
+			if (code == 2 && value == QLatin1String("ENTITIES"))
 			{
 				current_section = ENTITIES;
 			}
-			if (code == 2 && value == "HEADER")
+			if (code == 2 && value == QLatin1String("HEADER"))
 			{
 				current_section = HEADER;
 			}
 		}
 		else if (current_section == ENTITIES)
 		{
-			if (code == 0 && value == "LINE")
+			if (code == 0 && value == QLatin1String("LINE"))
 				parseLine(device, &paths);
-			else if (code == 0 && value == "POLYLINE")
+			else if (code == 0 && value == QLatin1String("POLYLINE"))
 			{
 				parsePolyline(device, &paths);
 				current_section = POLYLINE;
 			}
-			else if (code == 0 && value == "LWPOLYLINE")
+			else if (code == 0 && value == QLatin1String("LWPOLYLINE"))
 				parseLwPolyline(device, &paths);
-			else if (code == 0 && value == "SPLINE")
+			else if (code == 0 && value == QLatin1String("SPLINE"))
 				parseSpline(device, &paths);
-			else if (code == 0 && value == "CIRCLE")
+			else if (code == 0 && value == QLatin1String("CIRCLE"))
 				parseCircle(device, &paths);
-			else if (code == 0 && value == "POINT")
+			else if (code == 0 && value == QLatin1String("POINT"))
 				parsePoint(device, &paths);
-			else if (code == 0 && value == "TEXT")
+			else if (code == 0 && value == QLatin1String("TEXT"))
 				parseText(device, &paths);
-			else if (code == 0 && value == "ARC")
+			else if (code == 0 && value == QLatin1String("ARC"))
 				parseArc(device, &paths);
 #if defined(MAPPER_DEVELOPMENT_BUILD)
 			else if (code == 0)
@@ -124,19 +124,19 @@ QString DXFParser::parse()
 		}
 		else if (current_section == HEADER)
 		{
-			if (code == 9 && value == "$EXTMIN")
+			if (code == 9 && value == QLatin1String("$EXTMIN"))
 				parseExtminmax(device, bottom_right);
-			else if (code == 9 && value == "$EXTMAX")
+			else if (code == 9 && value == QLatin1String("$EXTMAX"))
 				parseExtminmax(device, top_left);
 		}
 		else if (current_section == POLYLINE)
 		{
-			if (code == 0 && value == "SEQEND")
+			if (code == 0 && value == QLatin1String("SEQEND"))
 			{
 				parseSeqend(device, &paths);
 				current_section = ENTITIES;
 			}
-			else if (code == 0 && value == "VERTEX")
+			else if (code == 0 && value == QLatin1String("VERTEX"))
 				parseVertex(device, &paths);
 		}
 	}
@@ -164,7 +164,7 @@ inline
 bool DXFParser::readNextCodeValue(QIODevice *device, int &code, QString &value)
 {
 	code  = device->readLine(128).trimmed().toInt();
-	value = device->readLine(256).trimmed();
+	value = QString::fromUtf8(device->readLine(256).trimmed());
 	return !device->atEnd();
 }
 
@@ -309,9 +309,9 @@ void DXFParser::parseSpline(QIODevice* d, QList<DXFPath>* p)
 	{
 		if (code == 71)
 		{
-			if (value != "3")
+			if (value != QLatin1String("3"))
 			{
-				qWarning() << QString("DXFParser: Splines of degree %1 are not supported!").arg(value);
+				qWarning() << "DXFParser: Splines of degree" << value << "are not supported!";
 				return;
 			}
 		}
@@ -457,7 +457,7 @@ void DXFParser::parseText(QIODevice *d, QList<DXFPath> *p)
 	
 	DXFPath path(TEXT);
 	path.color = Qt::red;
-	path.text = "<span style=\"%1\"></span>";
+	path.text = QString::fromLatin1("<span style=\"%1\"></span>");
 	DXFCoordinate co;
 	int alignment = 0;
 	int valignment = 0;
@@ -477,9 +477,9 @@ void DXFParser::parseText(QIODevice *d, QList<DXFPath> *p)
 		else if (code == 50)
 			path.rotation = value.toDouble();
 		else if (code == 1)
-			path.text = path.text.insert(path.text.indexOf(">")+1, value);
+			path.text = path.text.insert(path.text.indexOf(QLatin1Char('>'))+1, value);
 		else if (code == 7)
-			path.text = path.text.arg(QString("font-family:")+value+QString(";%1"));
+			path.text = path.text.arg(QLatin1String("font-family:") + value + QLatin1String(";%1"));
 		else if (code == 40)
 			path.font.setPointSizeF(value.toDouble());
 		else if (code == 72)
@@ -492,40 +492,40 @@ void DXFParser::parseText(QIODevice *d, QList<DXFPath> *p)
 	
 	if (path.color != QColor(127,127,127))
 	{
-		path.text = path.text.arg(QString("color:")+path.color.name()+QString(";%1"));
+		path.text = path.text.arg(QLatin1String("color:") + path.color.name() + QLatin1String(";%1"));
 	}
-	if (!path.text.contains("color"))
+	if (!path.text.contains(QLatin1String("color")))
 	{
-		path.text = path.text.arg("color:red");
+		path.text = path.text.arg(QString::fromLatin1("color:red"));
 	}
 	switch(alignment)
 	{
 	case 0:
-		path.text = path.text.arg(QString("text-align:left;%1"));
+		path.text = path.text.arg(QString::fromLatin1("text-align:left;%1"));
 		break;
 	case 1:
-		path.text = path.text.arg(QString("text-align:center;%1"));
+		path.text = path.text.arg(QString::fromLatin1("text-align:center;%1"));
 		break;
 	case 2:
-		path.text = path.text.arg(QString("text-align:right;%1"));
+		path.text = path.text.arg(QString::fromLatin1("text-align:right;%1"));
 		break;
 	}
 	switch(valignment)
 	{
 	case 0:
-		path.text = path.text.arg(QString("text-align:baseline;%1"));
+		path.text = path.text.arg(QString::fromLatin1("text-align:baseline;%1"));
 		break;
 	case 1:
-		path.text = path.text.arg(QString("text-align:bottom;%1"));
+		path.text = path.text.arg(QString::fromLatin1("text-align:bottom;%1"));
 		break;
 	case 2:
-		path.text = path.text.arg(QString("text-align:middle;%1"));
+		path.text = path.text.arg(QString::fromLatin1("text-align:middle;%1"));
 		break;
 	case 3:
-		path.text = path.text.arg(QString("text-align:top;%1"));
+		path.text = path.text.arg(QString::fromLatin1("text-align:top;%1"));
 	}
 
-	path.text = path.text.arg("");
+	    path.text = path.text.arg(QString{});
 	//qDebug() << path.text;
 	path.coords.append(co);
 	p->append(path);

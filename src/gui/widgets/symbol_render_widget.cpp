@@ -49,6 +49,16 @@
 #include "symbol_tooltip.h"
 
 
+namespace MimeType {
+
+/// The index of a symbol during drag-and-drop
+static const QString oo_symbol_index { QStringLiteral("openorienteering/symbol_index") };
+
+/// Symbol definitions
+static const QString oo_symbols      { QStringLiteral("openorienteering/symbols") };
+
+}
+
 //### SymbolIconDecorator ###
 
 /**
@@ -225,7 +235,7 @@ SymbolRenderWidget::SymbolRenderWidget(Map* map, bool mobile_mode, QWidget* pare
 	context_menu = new QMenu(this);
 	
 	QMenu* new_menu = new QMenu(tr("New symbol"), context_menu);
-	new_menu->setIcon(QIcon(":/images/plus.png"));
+	new_menu->setIcon(QIcon(QStringLiteral(":/images/plus.png")));
 	/*QAction* new_point_action =*/ new_menu->addAction(tr("Point"), this, SLOT(newPointSymbol()));
 	/*QAction* new_line_action =*/ new_menu->addAction(tr("Line"), this, SLOT(newLineSymbol()));
 	/*QAction* new_area_action =*/ new_menu->addAction(tr("Area"), this, SLOT(newAreaSymbol()));
@@ -234,23 +244,23 @@ SymbolRenderWidget::SymbolRenderWidget(Map* map, bool mobile_mode, QWidget* pare
 	context_menu->addMenu(new_menu);
 	
 	edit_action = context_menu->addAction(tr("Edit"), this, SLOT(editSymbol()));
-	duplicate_action = context_menu->addAction(QIcon(":/images/tool-duplicate.png"), tr("Duplicate"), this, SLOT(duplicateSymbol()));
-	delete_action = context_menu->addAction(QIcon(":/images/minus.png"), tr("Delete"), this, SLOT(deleteSymbols()));
-	scale_action = context_menu->addAction(QIcon(":/images/tool-scale.png"), tr("Scale..."), this, SLOT(scaleSymbol()));
+	duplicate_action = context_menu->addAction(QIcon(QStringLiteral(":/images/tool-duplicate.png")), tr("Duplicate"), this, SLOT(duplicateSymbol()));
+	delete_action = context_menu->addAction(QIcon(QStringLiteral(":/images/minus.png")), tr("Delete"), this, SLOT(deleteSymbols()));
+	scale_action = context_menu->addAction(QIcon(QStringLiteral(":/images/tool-scale.png")), tr("Scale..."), this, SLOT(scaleSymbol()));
 	context_menu->addSeparator();
-	copy_action = context_menu->addAction(QIcon(":/images/copy.png"), tr("Copy"), this, SLOT(copySymbols()));
-	paste_action = context_menu->addAction(QIcon(":/images/paste.png"), tr("Paste"), this, SLOT(pasteSymbols()));
+	copy_action = context_menu->addAction(QIcon(QStringLiteral(":/images/copy.png")), tr("Copy"), this, SLOT(copySymbols()));
+	paste_action = context_menu->addAction(QIcon(QStringLiteral(":/images/paste.png")), tr("Paste"), this, SLOT(pasteSymbols()));
 	context_menu->addSeparator();
-	switch_symbol_action = context_menu->addAction(QIcon(":/images/tool-switch-symbol.png"), tr("Switch symbol of selected object(s)"), this, SIGNAL(switchSymbolClicked()));
-	fill_border_action = context_menu->addAction(QIcon(":/images/tool-fill-border.png"), tr("Fill / Create border for selected object(s)"), this, SIGNAL(fillBorderClicked()));
+	switch_symbol_action = context_menu->addAction(QIcon(QStringLiteral(":/images/tool-switch-symbol.png")), tr("Switch symbol of selected object(s)"), this, SIGNAL(switchSymbolClicked()));
+	fill_border_action = context_menu->addAction(QIcon(QStringLiteral(":/images/tool-fill-border.png")), tr("Fill / Create border for selected object(s)"), this, SIGNAL(fillBorderClicked()));
 	// text will be filled in by updateContextMenuState()
-	select_objects_action = context_menu->addAction(QIcon(":/images/tool-edit.png"), "", this, SLOT(selectObjectsExclusively()));
-	select_objects_additionally_action = context_menu->addAction(QIcon(":/images/tool-edit.png"), "", this, SLOT(selectObjectsAdditionally()));
-	deselect_objects_action = context_menu->addAction(QIcon(":/images/tool-edit.png"), "", this, SLOT(deselectObjects()));
+	select_objects_action = context_menu->addAction(QIcon(QStringLiteral(":/images/tool-edit.png")), {}, this, SLOT(selectObjectsExclusively()));
+	select_objects_additionally_action = context_menu->addAction(QIcon(QStringLiteral(":/images/tool-edit.png")), {}, this, SLOT(selectObjectsAdditionally()));
+	deselect_objects_action = context_menu->addAction(QIcon(QStringLiteral(":/images/tool-edit.png")), {}, this, SLOT(deselectObjects()));
 	context_menu->addSeparator();
-	hide_action = context_menu->addAction("", this, SLOT(setSelectedSymbolVisibility(bool)));
+	hide_action = context_menu->addAction({}, this, SLOT(setSelectedSymbolVisibility(bool)));
 	hide_action->setCheckable(true);
-	protect_action = context_menu->addAction("", this, SLOT(setSelectedSymbolProtection(bool)));
+	protect_action = context_menu->addAction({}, this, SLOT(setSelectedSymbolProtection(bool)));
 	protect_action->setCheckable(true);
 	context_menu->addSeparator();
 	
@@ -632,7 +642,7 @@ void SymbolRenderWidget::mouseMoveEvent(QMouseEvent* event)
 			
 			QByteArray data;
 			data.append((const char*)&current_symbol_index, sizeof(int));
-			mime_data->setData("openorienteering/symbol_index", data);
+			mime_data->setData(MimeType::oo_symbol_index, data);
 			drag->setMimeData(mime_data);
 			
 			drag->exec(Qt::MoveAction);
@@ -761,13 +771,13 @@ void SymbolRenderWidget::leaveEvent(QEvent* event)
 
 void SymbolRenderWidget::dragEnterEvent(QDragEnterEvent* event)
 {
-	if (event->mimeData()->hasFormat("openorienteering/symbol_index"))
+	if (event->mimeData()->hasFormat(MimeType::oo_symbol_index))
 		event->acceptProposedAction();
 }
 
 void SymbolRenderWidget::dragMoveEvent(QDragMoveEvent* event)
 {
-	if (event->mimeData()->hasFormat("openorienteering/symbol_index"))
+	if (event->mimeData()->hasFormat(MimeType::oo_symbol_index))
 	{
 		int row, pos_in_row;
 		if (!dropPosition(event->pos(), row, pos_in_row))
@@ -969,20 +979,20 @@ void SymbolRenderWidget::copySymbols()
 	
 	// Put buffer into clipboard
 	QMimeData* mime_data = new QMimeData();
-	mime_data->setData("openorienteering/symbols", buffer.data());
+	mime_data->setData(MimeType::oo_symbols, buffer.data());
 	QApplication::clipboard()->setMimeData(mime_data);
 }
 
 void SymbolRenderWidget::pasteSymbols()
 {
-	if (!QApplication::clipboard()->mimeData()->hasFormat("openorienteering/symbols"))
+	if (!QApplication::clipboard()->mimeData()->hasFormat(MimeType::oo_symbols))
 	{
 		QMessageBox::warning(NULL, tr("Error"), tr("There are no symbols in clipboard which could be pasted!"));
 		return;
 	}
 	
 	// Get buffer from clipboard
-	QByteArray byte_array = QApplication::clipboard()->mimeData()->data("openorienteering/symbols");
+	QByteArray byte_array = QApplication::clipboard()->mimeData()->data(MimeType::oo_symbols);
 	QBuffer buffer(&byte_array);
 	buffer.open(QIODevice::ReadOnly);
 	
@@ -1134,7 +1144,7 @@ void SymbolRenderWidget::updateContextMenuState()
 	edit_action->setEnabled(single_selection);
 	scale_action->setEnabled(have_selection);
 	copy_action->setEnabled(have_selection);
-	paste_action->setEnabled(QApplication::clipboard()->mimeData()->hasFormat("openorienteering/symbols"));
+	paste_action->setEnabled(QApplication::clipboard()->mimeData()->hasFormat(MimeType::oo_symbols));
 	switch_symbol_action->setEnabled(single_symbol_compatible && single_symbol_different);
 	fill_border_action->setEnabled(single_symbol_compatible && single_symbol_different);
 	hide_action->setEnabled(have_selection);

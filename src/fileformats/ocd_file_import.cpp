@@ -148,7 +148,7 @@ void OcdFileImport::importImplementation(bool load_symbols_only)
 {
 	OcdFile< F > file(buffer);
 #ifdef MAPPER_DEVELOPMENT_BUILD
-	if (!qApp->applicationName().endsWith(QStringLiteral("Test")))
+	if (!qApp->applicationName().endsWith(QLatin1String("Test")))
 	{
 		qDebug("*** OcdFileImport: Importing a version %d.%d file", file.header()->version, file.header()->subversion);
 		for (const auto& string : file.strings())
@@ -211,12 +211,12 @@ void OcdFileImport::importGeoreferencing(const QString& param_string)
 	QPointF proj_ref_point;
 	bool x_ok = false, y_ok = false;
 	
-	int i = param_string.indexOf('\t', 0);
+	int i = param_string.indexOf(QLatin1Char('\t'), 0);
 	; // skip first word for this entry type
 	while (i >= 0)
 	{
 		bool ok;
-		int next_i = param_string.indexOf('\t', i+1);
+		int next_i = param_string.indexOf(QLatin1Char('\t'), i+1);
 		int len = (next_i > 0 ? next_i : param_string.length()) - i - 2;
 		const QString param_value = QString::fromRawData(unicode+i+2, len); // no copying!
 		switch (param_string[i+1].toLatin1())
@@ -286,7 +286,7 @@ void OcdFileImport::applyGridAndZone(Georeferencing& georef, const QString& comb
 	QString spec;
 	std::vector<QString> values;
 	
-	if (combined_grid_zone.startsWith("20"))
+	if (combined_grid_zone.startsWith(QLatin1String("20")))
 	{
 		auto zone = combined_grid_zone.midRef(2).toUInt(&zone_ok);
 		zone_ok &= (zone >= 1 && zone <= 60);
@@ -298,7 +298,7 @@ void OcdFileImport::applyGridAndZone(Georeferencing& georef, const QString& comb
 			values.push_back(QString::number(zone));
 		}
 	}
-	else if (combined_grid_zone.startsWith("80"))
+	else if (combined_grid_zone.startsWith(QLatin1String("80")))
 	{
 		auto zone = combined_grid_zone.midRef(2).toUInt(&zone_ok);
 		if (zone_ok)
@@ -309,14 +309,14 @@ void OcdFileImport::applyGridAndZone(Georeferencing& georef, const QString& comb
 			values.push_back(QString::number(zone));
 		}
 	}
-	else if (combined_grid_zone == "14000")
+	else if (combined_grid_zone == QLatin1String("14000"))
 	{
 		id = QLatin1String{"EPSG"};
 		crs_template = CRSTemplateRegistry().find(id);
 		values.reserve(1);
 		values.push_back(QLatin1String{"21781"});
 	}
-	else if (combined_grid_zone == "1000")
+	else if (combined_grid_zone == QLatin1String("1000"))
 	{
 		return;
 	}
@@ -391,7 +391,7 @@ MapColor* OcdFileImport::importColor(const QString& param_string)
 {
 	const QChar* unicode = param_string.unicode();
 	
-	int i = param_string.indexOf('\t', 0);
+	int i = param_string.indexOf(QLatin1Char('\t'), 0);
 	const QString name = param_string.left(qMax(-1, i)); // copied
 	
 	int number;
@@ -405,7 +405,7 @@ MapColor* OcdFileImport::importColor(const QString& param_string)
 		float f_value;
 		int i_value;
 		bool ok;
-		int next_i = param_string.indexOf('\t', i+1);
+		int next_i = param_string.indexOf(QLatin1Char('\t'), i+1);
 		int len = (next_i > 0 ? next_i : param_string.length()) - i - 2;
 		const QString param_value = QString::fromRawData(unicode+i+2, len); // no copying!
 		switch (param_string[i+1].toLatin1())
@@ -580,13 +580,13 @@ Template* OcdFileImport::importTemplate(const QString& param_string, const int o
 {
 	const QChar* unicode = param_string.unicode();
 	
-	int i = param_string.indexOf('\t', 0);
+	int i = param_string.indexOf(QLatin1Char('\t'), 0);
 	const QString filename = QString::fromRawData(unicode, qMax(-1, i));
-	const QString clean_path = QDir::cleanPath(QString(filename).replace('\\', '/'));
+	const QString clean_path = QDir::cleanPath(QString(filename).replace(QLatin1Char('\\'), QLatin1Char('/')));
 	const QString extension = QFileInfo(clean_path).suffix().toLower();
 	
 	Template* templ = nullptr;
-	if (extension.compare("ocd") == 0)
+	if (extension.compare(QLatin1String("ocd")) == 0)
 	{
 		templ = new TemplateMap(clean_path, map);
 	}
@@ -613,7 +613,7 @@ Template* OcdFileImport::importTemplate(const QString& param_string, const int o
 	{
 		double value;
 		bool ok;
-		int next_i = param_string.indexOf('\t', i+1);
+		int next_i = param_string.indexOf(QLatin1Char('\t'), i+1);
 		int len = (next_i > 0 ? next_i : param_string.length()) - i - 2;
 		const QString param_value = QString::fromRawData(unicode+i+2, len); // no copying!
 		switch (param_string[i+1].toLatin1())
@@ -699,7 +699,7 @@ void OcdFileImport::importExtras(const OcdFile< F >& file)
 		case 11:
 			// OCD 9, 10
 			notes.append(convertOcdString< typename F::Encoding >(file[string]));
-			notes.append("\n");
+			notes.append(QLatin1Char('\n'));
 			break;
 		case 1061:
 			// OCD 11
@@ -748,11 +748,11 @@ void OcdFileImport::importView(const QString& param_string)
 	bool zoom_ok = false;
 	double zoom=1.0, offset_x=0.0, offset_y=0.0;
 	
-	int i = param_string.indexOf('\t', 0);
+	int i = param_string.indexOf(QLatin1Char('\t'), 0);
 	; // skip first word for this entry type
 	while (i >= 0)
 	{
-		int next_i = param_string.indexOf('\t', i+1);
+		int next_i = param_string.indexOf(QLatin1Char('\t'), i+1);
 		int len = (next_i > 0 ? next_i : param_string.length()) - i - 2;
 		const QString param_value = QString::fromRawData(unicode+i+2, len); // no copying!
 		switch (param_string[i+1].toLatin1())
@@ -1357,7 +1357,7 @@ LineSymbol* OcdFileImport::importRectangleSymbol(const S& ocd_symbol)
 		OcdImportedTextSymbol* text = new OcdImportedTextSymbol();
 		setupBaseSymbol(text, ocd_symbol);
 		text->setNumberComponent(2, 2);  // TODO: Dynamic
-		text->font_family = "Arial";
+		text->font_family = QString::fromLatin1("Arial");
 		text->font_size = qRound(1000 * (15 / 72.0 * 25.4));
 		text->color = symbol->color;
 		text->bold = true;
@@ -1588,7 +1588,7 @@ QString OcdFileImport::getObjectText(const Ocd::ObjectV8& ocd_object, int ocd_ve
 	}
 	
 	// Remove leading "\r\n"
-	if (object_text.startsWith("\r\n"))
+	if (object_text.startsWith(QLatin1String("\r\n")))
 	{
 		object_text.remove(0, 2);
 	}
@@ -1601,7 +1601,7 @@ inline
 QString OcdFileImport::getObjectText(const O& ocd_object, int /*ocd_version*/) const
 {
 	auto data = (const QChar *)(ocd_object.coords + ocd_object.num_items);
-	if (data[0] == QChar{'\r'} && data [1] == QChar{'\n'})
+	if (data[0] == QLatin1Char{'\r'} && data[1] == QLatin1Char{'\n'})
 		data += 2;
 	return QString(data);
 }

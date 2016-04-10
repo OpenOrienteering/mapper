@@ -36,7 +36,7 @@
 #include "gui/modifier_key.h"
 
 CutoutTool::CutoutTool(MapEditorController* editor, QAction* tool_button, bool cut_away)
- : MapEditorToolBase(QCursor(QPixmap(":/images/cursor-hollow.png"), 1, 1), Other, editor, tool_button),
+ : MapEditorToolBase(QCursor(QPixmap(QString::fromLatin1(":/images/cursor-hollow.png")), 1, 1), Other, editor, tool_button),
    cut_away(cut_away),
    object_selector(new ObjectSelector(map()))
 {

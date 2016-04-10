@@ -45,7 +45,7 @@ public:
 	virtual ~TemplateMap() override;
 	
 	
-	QString getTemplateType() const override;
+	const char* getTemplateType() const override;
 	
 	bool isRasterGraphics() const override;
 	

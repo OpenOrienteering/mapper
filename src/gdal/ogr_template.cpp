@@ -48,9 +48,9 @@ OgrTemplate::~OgrTemplate()
 }
 
 
-QString OgrTemplate::getTemplateType() const
+const char* OgrTemplate::getTemplateType() const
 {
-	return QLatin1String("OgrTemplate");
+	return "OgrTemplate";
 }
 
 
@@ -75,7 +75,7 @@ bool OgrTemplate::loadTemplateFileImpl(bool configuring)
 			for (auto& warning : importer.warnings())
 			{
 				message.append(warning);
-				message.append('\n');
+				message.append(QLatin1Char{'\n'});
 			}
 			message.chop(1);
 			setErrorString(message);
@@ -85,7 +85,7 @@ bool OgrTemplate::loadTemplateFileImpl(bool configuring)
 	}
 	catch (FileFormatException& e)
 	{
-		setErrorString(e.what());
+		setErrorString(QString::fromUtf8(e.what()));
 		return false;
 	}
 }

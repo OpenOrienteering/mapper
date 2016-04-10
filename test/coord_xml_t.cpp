@@ -383,12 +383,12 @@ void CoordXmlTest::readXml()
 		header.open(QBuffer::ReadWrite);
 		xml.setAutoFormatting(false);
 		xml.writeStartDocument();
-		xml.writeStartElement("root");
-		xml.writeCharacters(" "); // flush root start element
+		xml.writeStartElement(QString::fromLatin1("root"));
+		xml.writeCharacters(QString::fromLatin1(" ")); // flush root start element
 		
 		buffer.open(QBuffer::ReadWrite);
 		xml.setDevice(&buffer);
-		xml.writeStartElement("coords");
+		xml.writeStartElement(QString::fromLatin1("coords"));
 		writeXml_implementation(coords, xml);
 		xml.writeEndElement(/* coords */);
 		
@@ -403,7 +403,7 @@ void CoordXmlTest::readXml()
 	QXmlStreamReader xml;
 	xml.addData(header.buffer());
 	xml.readNextStartElement();
-	QCOMPARE(xml.name().toString(), QString("root"));
+	QCOMPARE(xml.name().toString(), QString::fromLatin1("root"));
 	
 	bool failed = false;
 	QBENCHMARK
@@ -413,7 +413,7 @@ void CoordXmlTest::readXml()
 		xml.addData(buffer.data());
 		
 		xml.readNextStartElement();
-		if (xml.name() != "coords")
+		if (xml.name() != QLatin1String("coords"))
 		{
 			failed = true;
 			break;
@@ -464,12 +464,12 @@ void CoordXmlTest::readHumanReadableStream()
 		header.open(QBuffer::ReadWrite);
 		xml.setAutoFormatting(false);
 		xml.writeStartDocument();
-		xml.writeStartElement("root");
-		xml.writeCharacters(""); // flush root start element
+		xml.writeStartElement(QString::fromLatin1("root"));
+		xml.writeCharacters(QString{}); // flush root start element
 		
 		buffer.open(QBuffer::ReadWrite);
 		xml.setDevice(&buffer);
-		xml.writeStartElement("coords");
+		xml.writeStartElement(QString::fromLatin1("coords"));
 		// Using the more efficient string implementation.
 		writeHumanReadableString_implementation(coords, xml);
 		xml.writeEndElement();
@@ -485,7 +485,7 @@ void CoordXmlTest::readHumanReadableStream()
 	QXmlStreamReader xml;
 	xml.addData(header.buffer());
 	xml.readNextStartElement();
-	QCOMPARE(xml.name().toString(), QString("root"));
+	QCOMPARE(xml.name().toString(), QString::fromLatin1("root"));
 	
 	bool failed = false;
 	QBENCHMARK
@@ -495,7 +495,7 @@ void CoordXmlTest::readHumanReadableStream()
 		xml.addData(buffer.data());
 		
 		xml.readNextStartElement();
-		if (xml.name() != "coords")
+		if (xml.name() != QLatin1String("coords"))
 		{
 			failed = true;
 			break;
@@ -575,12 +575,12 @@ void CoordXmlTest::readCompressed()
 		header.open(QBuffer::ReadWrite);
 		xml.setAutoFormatting(false);
 		xml.writeStartDocument();
-		xml.writeStartElement("root");
-		xml.writeCharacters(""); // flush root start element
+		xml.writeStartElement(QString::fromLatin1("root"));
+		xml.writeCharacters(QString{}); // flush root start element
 		
 		buffer.open(QBuffer::ReadWrite);
 		xml.setDevice(&buffer);
-		xml.writeStartElement("coords");
+		xml.writeStartElement(QString::fromLatin1("coords"));
 		writeCompressed_implementation(coords, xml);
 		xml.writeEndElement();
 		
@@ -596,7 +596,7 @@ void CoordXmlTest::readCompressed()
 	xml.addData(header.buffer());
 	
 	xml.readNextStartElement();
-	QCOMPARE(xml.name().toString(), QString("root"));
+	QCOMPARE(xml.name().toString(), QString::fromLatin1("root"));
 	
 	bool failed = false;
 	QBENCHMARK
@@ -605,7 +605,7 @@ void CoordXmlTest::readCompressed()
 		coords.clear();
 		xml.addData(buffer.data());
 		xml.readNextStartElement();
-		if (xml.name() != "coords")
+		if (xml.name() != QLatin1String("coords"))
 		{
 			failed = true;
 			break;
@@ -813,8 +813,8 @@ void CoordXmlTest::readFastImplementation()
 		
 		XMLFileFormat::active_version = 6; // Activate fast text format.
 		
-		xml.writeStartElement("root");
-		xml.writeCharacters(""); // flush root start element
+		xml.writeStartElement(QString::fromLatin1("root"));
+		xml.writeCharacters(QString{}); // flush root start element
 		
 		buffer.open(QBuffer::ReadWrite);
 		xml.setDevice(&buffer);
@@ -834,7 +834,7 @@ void CoordXmlTest::readFastImplementation()
 	QXmlStreamReader xml;
 	xml.addData(header.buffer());
 	xml.readNextStartElement();
-	QCOMPARE(xml.name().toString(), QString("root"));
+	QCOMPARE(xml.name().toString(), QString::fromLatin1("root"));
 	
 	bool failed = false;
 	QBENCHMARK
@@ -844,7 +844,7 @@ void CoordXmlTest::readFastImplementation()
 		xml.addData(buffer.data());
 		
 		xml.readNextStartElement();
-		if (xml.name() != "coords")
+		if (xml.name() != QLatin1String("coords"))
 		{
 			failed = true;
 			break;

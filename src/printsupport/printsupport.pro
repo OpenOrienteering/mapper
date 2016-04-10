@@ -21,6 +21,7 @@ TARGET   = printsupport
 CONFIG  += staticlib c++11
 CONFIG  -= debug_and_release
 QT      += printsupport printsupport-private gui-private core-private
+DEFINES *= QT_USE_QSTRINGBUILDER QT_NO_CAST_FROM_ASCII QT_NO_CAST_TO_ASCII
 
 lessThan(QT_MINOR_VERSION, 3):FORK_VERSION = qt-5.2.1
 else:FORK_VERSION = qt-5.5.1

@@ -131,7 +131,7 @@ void Importer::doImport(bool load_symbols_only, const QString& map_path)
 #if defined(Q_OS_ANDROID)
 		addWarning(tr("At least one template file could not be found."));
 #else
-		addWarning(tr("At least one template file could not be found.") + " " +
+		addWarning(tr("At least one template file could not be found.") + QLatin1Char(' ') +
 		           tr("Click the red template name(s) in the Templates -> Template setup window to locate the template file name(s)."));
 #endif
 	}
