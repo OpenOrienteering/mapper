@@ -59,10 +59,14 @@ macro(add_unit_test testname)
 	qt5_wrap_cpp(TEST_${testname}_XTRA_MOC ${TEST_${testname}_HDRS} OPTIONS -nw)
 	add_executable(${testname} ${testname}.cpp ${TEST_${testname}_SRCS} ${TEST_${testname}_MOC} ${TEST_${testname}_XTRA_MOC})
 	target_link_libraries(${testname} libocad ${PROJ_LIBRARY} Qt5::Test Qt5::Widgets polyclipping)
-	add_test(${testname} ${CMAKE_COMMAND} -P ${testname}-RUN.cmake)
-	list(APPEND Mapper_UNIT_TESTS ${testname})
 	set(TESTNAME ${testname}) # required for configure_file
 	configure_file(TESTNAME-RUN.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/${testname}-RUN.cmake @ONLY)
+	add_test(${testname} ${CMAKE_COMMAND} -P ${testname}-RUN.cmake)
+	add_custom_command(OUTPUT ${testname}-RUN.stamp
+	  COMMAND ${CMAKE_COMMAND} -P ${testname}-RUN.cmake
+	  DEPENDS ${testname}
+	)
+	list(APPEND Mapper_UNIT_TESTS ${testname})
 endmacro(add_unit_test)
 unset(Mapper_UNIT_TESTS)
 
@@ -90,10 +94,14 @@ macro(add_system_test testname)
 	qt5_wrap_cpp(TEST_${testname}_XTRA_MOC ${TEST_${testname}_HDRS} OPTIONS -nw)
 	add_executable(${testname} ${testname}.cpp ${TEST_${testname}_SRCS} ${TEST_${testname}_MOC} ${TEST_${testname}_XTRA_MOC})
 	target_link_libraries(${testname} Mapper_Common libocad ${PROJ_LIBRARY} Qt5::Test Qt5::Widgets polyclipping)
-	add_test(${testname} ${CMAKE_COMMAND} -P ${testname}-RUN.cmake)
-	list(APPEND Mapper_SYSTEM_TESTS ${testname})
 	set(TESTNAME ${testname}) # required for configure_file
 	configure_file(TESTNAME-RUN.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/${testname}-RUN.cmake @ONLY)
+	add_test(${testname} ${CMAKE_COMMAND} -P ${testname}-RUN.cmake)
+	add_custom_command(OUTPUT ${testname}-RUN.stamp
+	  COMMAND ${CMAKE_COMMAND} -P ${testname}-RUN.cmake
+	  DEPENDS ${testname}
+	)
+	list(APPEND Mapper_SYSTEM_TESTS ${testname})
 endmacro(add_system_test)
 unset(Mapper_SYSTEM_TESTS)
 
@@ -133,49 +141,25 @@ add_system_test(symbol_set_t)
 
 
 # Collect the AUTORUN_TESTS
-set(Mapper_AUTORUN_TESTS )
-if(Mapper_AUTORUN_UNIT_TESTS)
-	list(APPEND Mapper_AUTORUN_TESTS ${Mapper_UNIT_TESTS})
-endif()
+set(Mapper_AUTORUN_TESTS ${Mapper_UNIT_TESTS})
 if(Mapper_AUTORUN_SYSTEM_TESTS)
 	list(APPEND Mapper_AUTORUN_TESTS ${Mapper_SYSTEM_TESTS})
-elseif(Mapper_AUTORUN_UNIT_TESTS)
-	# Don't autorun expensive unit tests unless system tests are autorun, too.
-	list(REMOVE_ITEM Mapper_AUTORUN_TESTS autosave_t coord_xml_t)
+endif()
+if(NOT Mapper_AUTORUN_MANUAL_TESTS)
+	list(REMOVE_ITEM Mapper_AUTORUN_TESTS autosave_t coord_xml_t symbol_set_t)
 endif()
 configure_file(AUTORUN_TESTS.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/AUTORUN_TESTS.cmake @ONLY)
 
 
-# This top-level target builds and runs selected test as part the default 
-# "all" target. For a particular test to run, 
-#   a) autorun must be configured for that type of test
-#      (Mapper_AUTORUN_UNIT_TESTS Mapper_AUTORUN_SYSTEM_TESTS), and
-#   b) the test or its dependencies must have been modified.
-#
-add_custom_target(AUTORUN_TESTS
-  ALL
-  DEPENDS ${Mapper_AUTORUN_TESTS}
-  COMMAND ${CMAKE_COMMAND} -P AUTORUN_TESTS.cmake
-  WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-)
-add_dependencies(AUTORUN_TESTS Mapper_prerequisites)
-
-
-# This top-level target always runs CTest (i.e. all tests) but
-# unlike the default "test" target, it will
-#   a) generate the test executables if necessary,
-#   b) display the output of failed tests,
-#   c) show up in Qt Creator's project view.
-#
+# This executable first runs all tests which are marked for auto-run. If the
+# tests don't fail, it start the Mapper executable. Unlike the default "test"
+# target, it is displayed in Qt Creator's project view, and when run, it prints
+# the output of failed tests.
 add_executable(Mapper_Test mapper_t.cpp)
-add_dependencies(Mapper_Test
-  Mapper_prerequisites
-  ${Mapper_UNIT_TESTS}
-  ${Mapper_SYSTEM_TESTS}
-)
-add_custom_command(TARGET Mapper_Test POST_BUILD
-  COMMAND ${CMAKE_CTEST_COMMAND} --output-on-failure
-)
+add_dependencies(Mapper_Test Mapper_prerequisites)
+target_link_libraries(Mapper_Test Qt5::Core)
+get_target_property(mapper_location Mapper LOCATION)
+target_compile_definitions(Mapper_Test PRIVATE -DCMAKE_COMMAND="${CMAKE_COMMAND}" -DMAPPER_LOCATION="${mapper_location}")
 
 
 if(Mapper_BUILD_QT)
