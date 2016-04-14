@@ -341,27 +341,99 @@ QString MapCoord::toString() const
 	return QString(buffer+j, buf_size-j);
 }
 
-
-
-QTextStream& operator>>(QTextStream& stream, MapCoord& coord)
+MapCoord::MapCoord(QStringRef& text)
+: MapCoord{}
 {
-	// Always update all MapCoord members here (xp, yp, flags).
-	qint64 x64, y64;
-	QChar separator;
-	stream >> x64 >> y64 >> separator;
+	const int len = text.length();
+	if (Q_UNLIKELY(len < 2))
+		throw std::invalid_argument("Premature end of data");
 	
-	handleBoundsOffset(x64, y64);
-	ensureBoundsForQint32(x64, y64);
+	auto data = text.constData();
+	int i = 0;
 	
-	coord.xp = static_cast<qint32>(x64);
-	coord.yp = static_cast<qint32>(y64);
-	
-	int flags = 0;
-	if (separator == QChar::Space)
+	qint64 x64 = data[0].unicode();
+	if (x64 == '-')
 	{
-		stream >> flags >> separator;
+		x64 = '0' - data[1].unicode();
+		for (i = 2; i != len; ++i)
+		{
+			auto c = data[i].unicode();
+			if (c < '0' || c > '9')
+				break;
+			else
+				x64 = 10*x64 + '0' - c;
+		}
 	}
-	coord.setFlags(flags);
+	else if (x64 >= '0' && x64 <= '9')
+	{
+		x64 -= '0';
+		for (i = 1; i != len; ++i)
+		{
+			auto c = data[i].unicode();
+			if (c < '0' || c > '9')
+				break;
+			else
+				x64 = 10*x64 + c - '0';
+		}
+	}
 	
-	return stream;
+	++i;
+	if (Q_UNLIKELY(i+1 >= len))
+		throw std::invalid_argument("Premature end of data");
+	
+	qint64 y64 = data[i].unicode();
+	if (y64 == '-')
+	{
+		++i;
+		y64 = '0' - data[i].unicode();
+		for (++i; i != len; ++i)
+		{
+			auto c = data[i].unicode();
+			if (c < '0' || c > '9')
+				break;
+			else
+				y64 = 10*y64 + '0' - c;
+		}
+	}
+	else if (y64 >= '0' && y64 <= '9')
+	{
+		y64 -= '0';
+		for (++i; i != len; ++i)
+		{
+			auto c = data[i].unicode();
+			if (c < '0' || c > '9')
+				break;
+			else
+				y64 = 10*y64 + c - '0';
+		}
+	}
+	
+	handleBoundsOffset(y64, y64);
+	ensureBoundsForQint32(y64, y64);
+	xp = static_cast<qint32>(x64);
+	yp = static_cast<qint32>(y64);
+	
+	if (i < len && data[i] == QChar::Space)
+	{
+		++i;
+		if (Q_UNLIKELY(i == len))
+			throw std::invalid_argument("Premature end of data");
+		
+		// there are no negative flags
+		fp = Flags(data[i].unicode() - '0');
+		for (++i; i < len; ++i)
+		{
+			auto c = data[i].unicode();
+			if (c < '0' || c > '9')
+				break;
+			else
+				fp = Flags(10*int(fp) + c - '0');
+		}
+	}
+	
+	if (Q_UNLIKELY(i >= len || data[i] != QLatin1Char{';'}))
+		throw std::invalid_argument("Invalid data");
+	
+	++i;
+	text = text.mid(i, len-i);
 }

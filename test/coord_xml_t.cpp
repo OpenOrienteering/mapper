@@ -49,6 +49,7 @@ void CoordXmlTest::common_data()
 	QTest::newRow("num_coords = 50000") << 50000;
 }
 
+
 void CoordXmlTest::writeXml_data()
 {
 	common_data();
@@ -556,11 +557,204 @@ void CoordXmlTest::readHumanReadableStream()
 	buffer.close();
 }
 
-void CoordXmlTest::readCompressed_data()
+
+void CoordXmlTest::readHumanReadableStringRef_data()
 {
 	common_data();
 }
 
+void CoordXmlTest::readHumanReadableStringRef()
+{
+	namespace literal = XmlStreamLiteral;
+	
+	QFETCH(int, num_coords);
+	MapCoordVector coords(num_coords, proto_coord);
+	
+	buffer.buffer().truncate(0);
+	QBuffer header;
+	{
+		QXmlStreamWriter xml(&header);
+		
+		header.open(QBuffer::ReadWrite);
+		xml.setAutoFormatting(false);
+		xml.writeStartDocument();
+		xml.writeStartElement(QString::fromLatin1("root"));
+		xml.writeCharacters(QString{}); // flush root start element
+		
+		buffer.open(QBuffer::ReadWrite);
+		xml.setDevice(&buffer);
+		xml.writeStartElement(QString::fromLatin1("coords"));
+		// Using the more efficient string implementation.
+		writeHumanReadableString_implementation(coords, xml);
+		xml.writeEndElement();
+		
+		xml.setDevice(NULL);
+		
+		buffer.close();
+		header.close();
+	}
+	
+	header.open(QBuffer::ReadOnly);
+	buffer.open(QBuffer::ReadOnly);
+	QXmlStreamReader xml;
+	xml.addData(header.buffer());
+	xml.readNextStartElement();
+	QCOMPARE(xml.name().toString(), QString::fromLatin1("root"));
+	
+	bool failed = false;
+	QBENCHMARK
+	{
+		// benchmark iteration overhead
+		coords.clear();
+		xml.addData(buffer.data());
+		
+		xml.readNextStartElement();
+		if (xml.name() != QLatin1String("coords"))
+		{
+			failed = true;
+			break;
+		}
+		
+		for( xml.readNext();
+		     xml.tokenType() != QXmlStreamReader::EndElement;
+		     xml.readNext() )
+		{
+			if (xml.error())
+			{
+				qDebug() << xml.errorString();
+				failed = true;
+				break;
+			}
+			
+			const QXmlStreamReader::TokenType token = xml.tokenType();
+			if (token == QXmlStreamReader::EndDocument)
+			{
+				failed = true;
+				break;
+			}
+			
+			if (token == QXmlStreamReader::Characters && !xml.isWhitespace())
+			{
+				QStringRef text = xml.text();
+				auto data = text.constData();
+				while (text.length() > 0)
+				{
+					int len = text.length();
+					int i = 0;
+					qint64 x64 = data[0].unicode();
+					if (x64 == '-')
+					{
+						x64 = '0' - data[1].unicode();
+						for (i = 2; i != len; ++i)
+						{
+							auto c = data[i].unicode();
+							if (c < '0' || c > '9')
+								break;
+							else
+								x64 = 10*x64 + '0' - c;
+						}
+					}
+					else if (x64 >= '0' && x64 <= '9')
+					{
+						x64 -= '0';
+						for (i = 1; i != len; ++i)
+						{
+							auto c = data[i].unicode();
+							if (c < '0' || c > '9')
+								break;
+							else
+								x64 = 10*x64 + c - '0';
+						}
+					}
+					
+					++i;
+					if (Q_UNLIKELY(i+1 >= len))
+					{
+						failed = true;
+						break;
+					}
+					
+					qint64 y64 = data[i].unicode();
+					if (y64 == '-')
+					{
+						++i;
+						y64 = '0' - data[i].unicode();
+						for (++i; i != len; ++i)
+						{
+							auto c = data[i].unicode();
+							if (c < '0' || c > '9')
+								break;
+							else
+								y64 = 10*y64 + '0' - c;
+						}
+					}
+					else if (y64 >= '0' && y64 <= '9')
+					{
+						y64 -= '0';
+						for (++i; i != len; ++i)
+						{
+							auto c = data[i].unicode();
+							if (c < '0' || c > '9')
+								break;
+							else
+								y64 = 10*y64 + c - '0';
+						}
+					}
+					
+					coords.push_back(MapCoord::fromNative64(x64, y64));
+					
+					if (i < len && data[i] == QChar::Space)
+					{
+						++i;
+						if (Q_UNLIKELY(i == len))
+						{
+							failed = true;
+							break;
+						}
+						
+						// there are no negative flags
+						int fp = data[i].unicode() - '0';
+						for (++i; i < len; ++i)
+						{
+							auto c = data[i].unicode();
+							if (c < '0' || c > '9')
+								break;
+							else
+								fp = 10*fp + c - '0';
+						}
+						coords.back().setFlags(fp);
+					}
+					
+					if (Q_UNLIKELY(i >= len || data[i] != QLatin1Char{';'}))
+					{
+						failed = true;
+						break;
+					}
+					
+					++i;
+					text = text.mid(i, len-i);
+				}
+				if (failed)
+					break;
+			}
+			// otherwise: ignore element
+		}
+		
+	}
+	
+	QVERIFY(!failed);
+	QCOMPARE((int)coords.size(), num_coords);
+	QVERIFY(compare_all(coords, proto_coord));
+	
+	header.close();
+	buffer.close();
+}
+
+
+void CoordXmlTest::readCompressed_data()
+{
+	common_data();
+}
 
 void CoordXmlTest::readCompressed()
 {

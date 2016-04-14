@@ -381,6 +381,20 @@ public:
 	 */
 	QString toString() const;
 	
+	/**
+	 * Constructs the MapCoord from the beginning of text, and moves the 
+	 * reference to behind the this coordinates data.
+	 * 
+	 * This is the counterpiece to toString(). It will throw a
+	 * std::invalid_argument if the (beginning of) text does not
+	 * contain valid data.
+	 *
+	 * This constructor will initialize the boundsOffset() if neccessary.
+	 * Otherwise it will apply the BoundsOffset() and throw a std::range_error
+	 * if the adjusted coordinates are out of bounds for qint32.
+	 */
+	MapCoord(QStringRef& text);
+	
 	
 	/** Saves the MapCoord in xml format to the stream. */
 	void save(QXmlStreamWriter& xml) const;
@@ -402,7 +416,6 @@ public:
 	friend constexpr MapCoord operator*(const MapCoord& lhs, qreal factor);
 	friend constexpr MapCoord operator*(qreal factor, const MapCoord& rhs);
 	friend constexpr MapCoord operator/(const MapCoord& lhs, qreal divisor);
-	friend QTextStream& operator>>(QTextStream& stream, MapCoord& coord);
 };
 
 /** Compare MapCoord for equality. */
@@ -432,18 +445,6 @@ constexpr MapCoord operator*(qreal factor, const MapCoord& rhs);
 
 /** Divide MapCoord by scalar factor. */
 constexpr MapCoord operator/(const MapCoord& lhs, qreal divisor);
-
-
-/**
- * Reads raw coordinates and flags from a text stream.
- * 
- * This will initialize the boundsOffset() if neccessary. Otherwise it will
- * apply the BoundsOffset() and throw a std::range_error if the adjusted
- * coordinates are out of bounds for qint32.
- * 
- * @see MapCoord::toString()
- */
-QTextStream& operator>>(QTextStream& stream, MapCoord& coord);
 
 
 
