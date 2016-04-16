@@ -138,7 +138,7 @@ void TextSymbol::createRenderables(
 		{
 			if (framing_mode == LineFraming && framing_line_half_width > 0)
 			{
-				output.insertRenderable(new TextRenderable(this, text_object, framing_color, anchor_x, anchor_y, true));
+				output.insertRenderable(new TextFramingRenderable(this, text_object, framing_color, anchor_x, anchor_y));
 			}
 			else if (framing_mode == ShadowFraming)
 			{

@@ -529,21 +529,21 @@ void AreaRenderable::render(QPainter &painter, const RenderConfig &) const
 	painter.setBrush(brush);*/
 }
 
+
+
 // ### TextRenderable ###
 
-TextRenderable::TextRenderable(const TextSymbol* symbol, const TextObject* text_object, const MapColor* color, double anchor_x, double anchor_y, bool framing_line)
- : Renderable(color)
+TextRenderable::TextRenderable(const TextSymbol* symbol, const TextObject* text_object, const MapColor* color, double anchor_x, double anchor_y)
+: Renderable { color }
+, anchor_x   { anchor_x }
+, anchor_y   { anchor_y }
+, rotation   { 0.0 }
+, scale_factor { symbol->getFontSize() / TextSymbol::internal_point_size }
 {
+	path.setFillRule(Qt::WindingFill);	// Otherwise, when text and an underline intersect, holes appear
+	
 	const QFont& font(symbol->getQFont());
 	const QFontMetricsF& metrics(symbol->getFontMetrics());
-	this->anchor_x = anchor_x;
-	this->anchor_y = anchor_y;
-	this->rotation = text_object->getRotation();
-	scale_factor = symbol->getFontSize() / TextSymbol::internal_point_size;
-	this->framing_line = framing_line;
-	framing_line_width = framing_line ? (2 * 0.001 * symbol->getFramingLineHalfWidth() / scale_factor) : 0;
-	
-	path.setFillRule(Qt::WindingFill);	// Otherwise, when text and an underline intersect, holes appear
 	
 	int num_lines = text_object->getNumLines();
 	for (int i=0; i < num_lines; i++)
@@ -556,8 +556,8 @@ TextRenderable::TextRenderable(const TextSymbol* symbol, const TextObject* text_
 		double underline_y0 = line_info->line_y + metrics.underlinePos();
 		double underline_y1 = underline_y0 + metrics.lineWidth();
 		
-		int num_parts = line_info->part_infos.size();
-		for (int j=0; j < num_parts; j++)
+		auto num_parts = line_info->part_infos.size();
+		for (size_t j=0; j < num_parts; j++)
 		{
 			const TextObjectPartInfo& part(line_info->part_infos.at(j));
 			if (font.underline())
@@ -578,48 +578,33 @@ TextRenderable::TextRenderable(const TextSymbol* symbol, const TextObject* text_
 		}
 	}
 	
-	extent = path.controlPointRect();
-	extent = QRectF(scale_factor * (extent.left() - 0.5f * framing_line_width),
-					scale_factor * (extent.top() - 0.5f * framing_line_width),
-					scale_factor * (extent.width() + framing_line_width),
-					scale_factor * (extent.height() + framing_line_width));
-	if (rotation != 0)
-	{
-		float rcos = cos(-rotation);
-		float rsin = sin(-rotation);
-		
-		std::vector<QPointF> extent_corners;
-		extent_corners.push_back(extent.topLeft());
-		extent_corners.push_back(extent.topRight());
-		extent_corners.push_back(extent.bottomRight());
-		extent_corners.push_back(extent.bottomLeft());
-		
-		for (int i = 0; i < 4; ++i)
-		{
-			auto x = extent_corners[i].x() * rcos - extent_corners[i].y() * rsin;
-			auto y = extent_corners[i].y() * rcos + extent_corners[i].x() * rsin;
-			
-			if (i == 0)
-				extent = QRectF(x, y, 0, 0);
-			else
-				rectInclude(extent, QPointF(x, y));
-		}
-	}
-	extent = QRectF(extent.left() + anchor_x, extent.top() + anchor_y, extent.width(), extent.height());
+	QTransform t { 1.0, 0.0, 0.0, 1.0, anchor_x, anchor_y };
+	t.scale(scale_factor, scale_factor);
 	
-	Q_ASSERT(extent.right() < 999999);	// assert if bogus values are returned
+	auto rotation_rad = text_object->getRotation();
+	if (!qIsNull(rotation_rad))
+	{
+		rotation = -qRadiansToDegrees(rotation_rad);
+		t.rotate(rotation);
+	}
+	
+	extent = t.mapRect(path.controlPointRect());
 }
 
 PainterConfig TextRenderable::getPainterConfig(const QPainterPath* clip_path) const
 {
-	return framing_line ? PainterConfig{ color_priority, PainterConfig::PenOnly, framing_line_width, clip_path }
-	                    : PainterConfig{ color_priority, PainterConfig::BrushOnly, 0, clip_path };
+	return { color_priority, PainterConfig::BrushOnly, 0.0, clip_path };
 }
 
 void TextRenderable::render(QPainter &painter, const RenderConfig &config) const
 {
 	painter.save();
-	
+	renderCommon(painter, config);
+	painter.restore();
+}
+
+void TextRenderable::renderCommon(QPainter& painter, const RenderConfig& config) const
+{
 	bool disable_antialiasing = config.options.testFlag(RenderConfig::Screen) && !(Settings::getInstance().getSettingCached(Settings::MapDisplay_TextAntialiasing).toBool());
 	if (disable_antialiasing)
 	{
@@ -627,19 +612,37 @@ void TextRenderable::render(QPainter &painter, const RenderConfig &config) const
 		painter.setRenderHint(QPainter::TextAntialiasing, false);
 	}
 	
-	if (framing_line)
-	{
-		QPen pen(painter.pen());
-		pen.setJoinStyle(Qt::MiterJoin);
-		pen.setMiterLimit(0.5);
-		painter.setPen(pen);
-	}
-	
 	painter.translate(anchor_x, anchor_y);
-	if (rotation != 0)
-		painter.rotate(-rotation * 180 / M_PI);
+	if (rotation != 0.0)
+		painter.rotate(rotation);
 	painter.scale(scale_factor, scale_factor);
 	painter.drawPath(path);
-	
+}
+
+
+
+// ### TextRenderable ###
+
+TextFramingRenderable::TextFramingRenderable(const TextSymbol* symbol, const TextObject* text_object, const MapColor* color, double anchor_x, double anchor_y)
+: TextRenderable     { symbol, text_object, color, anchor_x, anchor_y }
+, framing_line_width { 2 * 0.001 * symbol->getFramingLineHalfWidth() / scale_factor }
+{
+	auto adjustment = 0.001 * symbol->getFramingLineHalfWidth() ;
+	extent.adjust(-adjustment, -adjustment, +adjustment, +adjustment);
+}
+
+PainterConfig TextFramingRenderable::getPainterConfig(const QPainterPath* clip_path) const
+{
+	return { color_priority, PainterConfig::PenOnly, framing_line_width, clip_path };
+}
+
+void TextFramingRenderable::render(QPainter& painter, const RenderConfig& config) const
+{
+	painter.save();
+	QPen pen(painter.pen());
+	pen.setJoinStyle(Qt::MiterJoin);
+	pen.setMiterLimit(0.5);
+	painter.setPen(pen);
+	TextRenderable::renderCommon(painter, config);
 	painter.restore();
 }
