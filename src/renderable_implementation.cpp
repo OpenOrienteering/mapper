@@ -33,6 +33,41 @@
 #include "symbol_text.h"
 #include "util.h"
 
+#ifdef QT_PRINTSUPPORT_LIB
+#  include "advanced_pdf_printer.h"
+#endif
+
+namespace {
+
+/**
+ * When painting to a PDF engine, the miter limit must be adjusted from Qt's
+ * concept to PDF's concept. This should be done in the PDF engine, but this
+ * isn't the case. This may even result in PDF files which are considered
+ * invalid by Reader & Co.
+ * 
+ * The PDF miter limit could be precalculated for the Mapper use cases, but
+ * this optimization would be lost when Qt gets fixed.
+ * 
+ * Upstream issue: QTBUG-52641
+ */
+inline void fixPenForPdf(QPen& pen, const QPainter& painter)
+{
+#ifdef QT_PRINTSUPPORT_LIB
+	auto engine = painter.paintEngine()->type();
+	if (Q_UNLIKELY(engine == QPaintEngine::Pdf
+	               || engine == AdvancedPdfPrinter::paintEngineType()))
+	{
+		const auto miter_limit = pen.miterLimit();
+		pen.setMiterLimit(qSqrt(1.0 + miter_limit * miter_limit * 4));
+	}
+#else
+	Q_UNUSED(pen)
+	Q_UNUSED(painter)
+#endif
+}
+
+}
+
 // ### DotRenderable ###
 
 DotRenderable::DotRenderable(const PointSymbol* symbol, MapCoordF coord)
@@ -296,7 +331,10 @@ void LineRenderable::render(QPainter &painter, const RenderConfig &config) const
 	pen.setCapStyle(cap_style);
 	pen.setJoinStyle(join_style);
 	if (join_style == Qt::MiterJoin)
+	{
 		pen.setMiterLimit(LineSymbol::miterLimit());
+		fixPenForPdf(pen, painter);
+	}
 	painter.setPen(pen);
 	
 	// One-time adjustment for line width
@@ -642,6 +680,7 @@ void TextFramingRenderable::render(QPainter& painter, const RenderConfig& config
 	QPen pen(painter.pen());
 	pen.setJoinStyle(Qt::MiterJoin);
 	pen.setMiterLimit(0.5);
+	fixPenForPdf(pen, painter);
 	painter.setPen(pen);
 	TextRenderable::renderCommon(painter, config);
 	painter.restore();
