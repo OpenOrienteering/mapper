@@ -117,4 +117,7 @@
     <qresource prefix="/" lang="de">
         <file alias="help/tip-of-the-day/tips.txt">help/tip-of-the-day/tips_de.txt</file>
     </qresource>
+        <qresource prefix="/" lang="fr">
+        <file alias="help/tip-of-the-day/tips.txt">help/tip-of-the-day/tips_fr.txt</file>
+    </qresource>
 </RCC>
