@@ -2025,8 +2025,8 @@
     </message>
     <message>
         <location filename="../src/file_import_export.cpp" line="120"/>
-        <source>Failed to load template &apos;%1&apos;&apos;, reason: %2</source>
-        <translation>Не вдалося завантажити підложку &apos;%1&apos;&apos;, причина: %2</translation>
+        <source>Failed to load template &apos;%1&apos;, reason: %2</source>
+        <translation>Не вдалося завантажити підложку &apos;%1&apos;, причина: %2</translation>
     </message>
     <message>
         <location filename="../src/file_import_export.cpp" line="125"/>

@@ -117,7 +117,7 @@ void Importer::doImport(bool load_symbols_only, const QString& map_path)
 		if (temp->getTemplateState() != Template::Loaded)
 		{
 			have_lost_template = true;
-			addWarning(tr("Failed to load template '%1'', reason: %2")
+			addWarning(tr("Failed to load template '%1', reason: %2")
 			           .arg(temp->getTemplateFilename(), temp->errorString()));
 		}
 		else if (!temp->errorString().isEmpty())

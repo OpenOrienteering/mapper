@@ -2487,7 +2487,7 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
     </message>
     <message>
         <location filename="../src/file_import_export.cpp" line="120"/>
-        <source>Failed to load template &apos;%1&apos;&apos;, reason: %2</source>
+        <source>Failed to load template &apos;%1&apos;, reason: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
