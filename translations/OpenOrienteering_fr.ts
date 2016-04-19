@@ -1475,7 +1475,7 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="126"/>
         <source>Use the new OCD importer also for version 8 files</source>
-        <translation>Utiliser le nouvel importateur Ocad, y compris pour les fichiers version 8/translation>
+        <translation>Utiliser le nouvel importateur Ocad, y compris pour les fichiers version 8</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="146"/>
@@ -2168,7 +2168,7 @@
     <message>
         <location filename="../src/file_import_export.cpp" line="120"/>
         <source>Failed to load template &apos;%1&apos;&apos;, reason: %2</source>
-        <translation>Au moins un fichier modèle n&apos;a pu être trouvé.</translation>
+        <translation>Fichier modèle &apos;%1&apos; ne peut pas être chargé, raison: %2</translation>
     </message>
     <message>
         <location filename="../src/file_import_export.cpp" line="125"/>
