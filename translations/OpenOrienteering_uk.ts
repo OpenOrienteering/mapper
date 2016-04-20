@@ -256,7 +256,7 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="62"/>
         <source>Defines a spot color:</source>
-        <translation>Завдати планшетний колір:</translation>
+        <translation>Створити планшетний колір:</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="71"/>
@@ -1513,7 +1513,7 @@
         <location filename="../src/core/crs_template_implementation.cpp" line="68"/>
         <source>Gauss-Krueger, datum: Potsdam</source>
         <comment>Gauss-Krueger coordinate reference system</comment>
-        <translation>Проекція Гауса-Крюгера, датум: Постдатум</translation>
+        <translation>Проекція Гауса-Крюгера, датум: Потсдам</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="69"/>
@@ -2026,7 +2026,7 @@
     <message>
         <location filename="../src/file_import_export.cpp" line="120"/>
         <source>Failed to load template &apos;%1&apos;, reason: %2</source>
-        <translation>Не вдалося завантажити підложку &apos;%1&apos;, причина: %2</translation>
+        <translation type="unfinished">Не вдалося завантажити підложку &apos;%1&apos;, причина: %2</translation>
     </message>
     <message>
         <location filename="../src/file_import_export.cpp" line="125"/>
@@ -6657,7 +6657,7 @@ The maximum supported version is %2.</source>
     <message>
         <location filename="../src/symbol_text.cpp" line="611"/>
         <source>Determine size...</source>
-        <translation>Завдати розмір...</translation>
+        <translation>Задати розмір...</translation>
     </message>
     <message>
         <location filename="../src/symbol_text.cpp" line="544"/>
