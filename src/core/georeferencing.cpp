@@ -842,7 +842,7 @@ extern "C"
 	{
 		if (temp_dir->isValid())
 		{
-			QString path = QDir(temp_dir->path()).filePath(name);
+			QString path = QDir(temp_dir->path()).filePath(QString::fromUtf8(name));
 			QFile file(path);
 			if (file.exists() || QFile::copy(QLatin1String("assets:/proj/") + QLatin1String(name), path))
 			{
