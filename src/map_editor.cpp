@@ -174,6 +174,7 @@ static const QString oo_objects { QStringLiteral("openorienteering/objects") };
 
 MapEditorController::MapEditorController(OperatingMode mode, Map* map)
 : MainWindowController()
+, mobile_mode(MainWindow::mobileMode())
 , active_symbol(NULL)
 , template_list_widget(nullptr)
 , mappart_remove_act(NULL)
@@ -185,8 +186,6 @@ MapEditorController::MapEditorController(OperatingMode mode, Map* map)
 , mappart_move_mapper(new QSignalMapper(this))
 {
 	this->mode = mode;
-	mobile_mode = false; // Updated in attach()
-	
 	this->map = NULL;
 	main_view = NULL;
 	symbol_widget = NULL;
@@ -529,7 +528,6 @@ bool MapEditorController::load(const QString& path, QWidget* dialog_parent)
 
 void MapEditorController::attach(MainWindow* window)
 {
-	mobile_mode = window->mobileMode();
 	print_dock_widget = NULL;
 	measure_dock_widget = NULL;
 	color_dock_widget = NULL;

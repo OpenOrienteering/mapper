@@ -79,7 +79,7 @@ public:
 	 * Mobile mode is the default on Android. The default may be overwritten by
 	 * setting the environment variable MAPPER_MOBILE_GUI to 0 or 1.
 	 */
-	bool mobileMode() const;
+	static bool mobileMode();
 	
 	
 	/**

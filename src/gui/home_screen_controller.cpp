@@ -44,7 +44,7 @@ void HomeScreenController::attach(MainWindow* window)
 {
 	this->window = window;
 	
-	if (window->mobileMode())
+	if (MainWindow::mobileMode())
 	{
 		widget = new HomeScreenWidgetMobile(this);
 	}
@@ -64,7 +64,7 @@ void HomeScreenController::attach(MainWindow* window)
 
 void HomeScreenController::detach()
 {
-	if (!window->mobileMode())
+	if (!MainWindow::mobileMode())
 	{
 		window->statusBar()->show();
 	}
