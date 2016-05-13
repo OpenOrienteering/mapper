@@ -186,7 +186,7 @@ void CutHoleTool::pathDirtyRectChanged(const QRectF& rect)
 
 void CutHoleTool::pathAborted()
 {
-	delete path_tool;
+	path_tool->deleteLater();
 	path_tool = NULL;
 	updateDirtyRect();
 	updateStatusText();

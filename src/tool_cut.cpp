@@ -474,7 +474,7 @@ void CutTool::pathDirtyRectChanged(const QRectF& rect)
 
 void CutTool::pathAborted()
 {
-	delete path_tool;
+	path_tool->deleteLater();
 	path_tool = nullptr;
 	cutting_area = false;
 	updateDirtyRect();
