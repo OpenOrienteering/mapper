@@ -494,6 +494,14 @@ void Map::changeScale(unsigned int new_scale_denominator, const MapCoord& scalin
 	{
 		undo_manager->clear();
 		scaleAllObjects(factor, scaling_center);
+		if (hasPrinterConfig())
+		{
+			auto print_area = printer_config->print_area;
+			auto center = QPointF(scaling_center);
+			print_area.setTopLeft(center + factor * (print_area.topLeft() - center));
+			print_area.setBottomRight(center + factor * (print_area.bottomRight() - center));
+			printer_config->print_area = print_area;
+		}
 	}
 	if (scale_georeferencing)
 		georeferencing->setMapRefPoint(scaling_center + factor * (georeferencing->getMapRefPoint() - scaling_center));
