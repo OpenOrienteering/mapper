@@ -509,26 +509,31 @@ QWidget* HomeScreenWidgetMobile::makeFileListWidget(HomeScreenController* contro
 #ifdef Q_OS_ANDROID
 	QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
 	// Actual SD card mount points may be found in secondary storage
-	QStringList folder_list = env.value("SECONDARY_STORAGE").split(':');
+	QStringList folder_list = env.value(QString::fromLatin1("SECONDARY_STORAGE")).split(QLatin1Char{':'});
 	// The primary volume that can be accessed externally (from PC)
-	QString external_storage = env.value("EXTERNAL_STORAGE");
+	QString external_storage = env.value(QString::fromLatin1("EXTERNAL_STORAGE"));
 	if (!external_storage.isEmpty())
 		folder_list.insert(0, external_storage);
 	// Optional fallback locations
-	folder_list << "/" << "/mnt" << "/mnt/sdcard" << "/sdcard" << "/storage";
+	folder_list << QString::fromLatin1("/")
+	            << QString::fromLatin1("/mnt")
+	            << QString::fromLatin1("/mnt/sdcard")
+	            << QString::fromLatin1("/sdcard")
+	            << QString::fromLatin1("/storage");
 	
 	bool oomapper_found = false;
 	for (auto&& path : folder_list)
 	{
-		if (oomapper_found && path == "/")
+		if (oomapper_found && path == QLatin1String{"/"})
 			// Don't need fallback (avoid duplicate entries)
 			break;
 		
 		QDir dir(path);
-		if (dir.exists("OOMapper"))
+		auto oomapper = QString::fromLatin1("OOMapper"); 
+		if (dir.exists(oomapper))
 		{
 			oomapper_found = true;
-			addFilesToFileList(file_list, dir.filePath("OOMapper"));
+			addFilesToFileList(file_list, dir.filePath(oomapper));
 		}
 	}
 #endif
