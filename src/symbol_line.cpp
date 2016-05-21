@@ -218,7 +218,10 @@ Symbol* LineSymbol::duplicate(const MapColorMap* color_map) const
 	new_line->cap_style = cap_style;
 	new_line->join_style = join_style;
 	new_line->pointed_cap_length = pointed_cap_length;
-	for (auto member : { &LineSymbol::start_symbol, &LineSymbol::mid_symbol, &LineSymbol::end_symbol, &LineSymbol::dash_symbol })
+	
+	using MemberSymbol = PointSymbol* LineSymbol::*;
+	MemberSymbol members[4] = { &LineSymbol::start_symbol, &LineSymbol::mid_symbol, &LineSymbol::end_symbol, &LineSymbol::dash_symbol };
+	for (auto member : members)
 	{
 		auto sub_symbol = this->*member;
 		if (sub_symbol && !sub_symbol->isEmpty())
