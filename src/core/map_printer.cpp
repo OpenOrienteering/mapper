@@ -40,6 +40,7 @@
 #  endif
 #endif
 
+#include "../core/georeferencing.h"
 #include "../core/map_color.h"
 #include "../core/map_view.h"
 #include "../map.h"
@@ -395,6 +396,7 @@ MapPrinter::MapPrinter(Map& map, const MapView* view, QObject* parent)
 {
 	scale_adjustment = map.getScaleDenominator() / qreal(options.scale);
 	updatePaperDimensions();
+	connect(&map.getGeoreferencing(), &Georeferencing::transformationChanged, this, &MapPrinter::mapScaleChanged);
 }
 
 MapPrinter::~MapPrinter()
@@ -763,6 +765,17 @@ void MapPrinter::updatePageBreaks()
 		const qreal v_offset = 0.5 * (v_pos + v_overlap - print_area.bottom());
 		for (auto& pos : v_page_pos)
 			pos -= v_offset;
+	}
+}
+
+void MapPrinter::mapScaleChanged()
+{
+	auto value = qreal(map.getScaleDenominator()) / options.scale;
+	if (!qFuzzyCompare(scale_adjustment, value))
+	{
+		scale_adjustment = value;
+		updatePageBreaks();
+		emit optionsChanged(options);
 	}
 }
 

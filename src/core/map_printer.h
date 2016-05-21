@@ -382,6 +382,9 @@ protected:
 	/** Updates the page breaks from map area and page format. */
 	void updatePageBreaks();
 	
+	/** Updates the scale adjustment and page breaks. */
+	void mapScaleChanged();
+	
 	Map& map;
 	const MapView* view;
 	const QPrinterInfo* target;
