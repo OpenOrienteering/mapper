@@ -949,9 +949,9 @@ void PrintWidget::updateColorMode()
 // slot
 void PrintWidget::resolutionEdited()
 {
-	QString resolution_text = dpi_combo->currentText();
-	int index_of_space = resolution_text.indexOf(QLatin1Char(' '));
-	auto dpi_value = resolution_text.left(index_of_space).toUInt();
+	auto resolution_text = dpi_combo->currentText();
+	auto index_of_space = resolution_text.indexOf(QLatin1Char(' '));
+	auto dpi_value = resolution_text.leftRef(index_of_space).toInt();
 	if (dpi_value > 0)
 		map_printer->setResolution(dpi_value);
 }

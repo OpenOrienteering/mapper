@@ -121,13 +121,13 @@ public:
 	 *  The scale, the mode and the resolution are initialized to the given
 	 *  values, all boolean properties are initialized to false.
 	 */
-	MapPrinterOptions(unsigned int scale, unsigned int resolution = 600, MapPrinterMode mode = Vector);
+	MapPrinterOptions(unsigned int scale, int resolution = 600, MapPrinterMode mode = Vector);
 	
 	/** The scale to be used for printing. */
 	unsigned int scale;
 	
 	/** The nominal resolution to be used. */
-	unsigned int resolution;
+	int resolution;
 	
 	/** The mode of printing.
 	 * 
@@ -313,9 +313,9 @@ public slots:
 	/** Sets the desired printing resolution in dpi.
 	 *  The actual resolution will	be set by the printer.
 	 * 
-	 * Does nothing if dpi is 0.
+	 * Does nothing if dpi is 0 or less.
 	 */
-	void setResolution(const unsigned int dpi);
+	void setResolution(int dpi);
 	
 	/** Sets the denominator of the map scale for printing. */
 	void setScale(const unsigned int value);

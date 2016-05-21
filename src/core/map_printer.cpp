@@ -141,7 +141,7 @@ bool operator==(const MapPrinterPageFormat& lhs, const MapPrinterPageFormat& rhs
 
 // ### MapPrinterOptions ###
 
-MapPrinterOptions::MapPrinterOptions(unsigned int scale, unsigned int resolution, MapPrinterMode mode)
+MapPrinterOptions::MapPrinterOptions(unsigned int scale, int resolution, MapPrinterMode mode)
  : scale(scale),
    resolution(resolution),
    mode(mode),
@@ -165,12 +165,6 @@ MapPrinterConfig::MapPrinterConfig(const Map& map)
    center_print_area(false),
    single_page_print_area(false)
 {
-	options.resolution = 600.0;
-	options.scale = map.getScaleDenominator();
-	options.show_grid = false;
-	options.show_templates = false;
-	options.simulate_overprinting = false;
-	
 	if (print_area.isEmpty())
 		print_area = page_format.page_rect;
 }
@@ -186,7 +180,7 @@ MapPrinterConfig::MapPrinterConfig(const Map& map, QXmlStreamReader& xml)
 	XmlElementReader printer_config_element(xml);
 	
 	options.scale = printer_config_element.attribute<unsigned int>(literal::scale);
-	options.resolution = printer_config_element.attribute<unsigned int>(literal::resolution);
+	options.resolution = printer_config_element.attribute<int>(literal::resolution);
 	options.show_templates = printer_config_element.attribute<bool>(literal::templates_visible);
 	options.show_grid = printer_config_element.attribute<bool>(literal::grid_visible);
 	options.simulate_overprinting = printer_config_element.attribute<bool>(literal::simulate_overprinting);
@@ -292,7 +286,7 @@ void MapPrinterConfig::save(QXmlStreamWriter& xml, const QLatin1String& element_
 		break;
 	default:
 		// Do not fail on saving
-		qDebug() << "Unsupported map printig mode:" << options.mode;
+		qDebug() << "Unsupported map printing mode:" << options.mode;
 	}
 
 	switch (options.color_mode)
@@ -399,7 +393,7 @@ MapPrinter::MapPrinter(Map& map, const MapView* view, QObject* parent)
   view(view),
   target(nullptr)
 {
-	scale_adjustment = map.getScaleDenominator() / (qreal) options.scale;
+	scale_adjustment = map.getScaleDenominator() / qreal(options.scale);
 	updatePaperDimensions();
 }
 
@@ -490,7 +484,7 @@ std::unique_ptr<QPrinter> MapPrinter::makePrinter() const
 	}
 	else
 	{
-		printer->setPaperSize((QPrinter::PaperSize)page_format.paper_size);
+		printer->setPaperSize(QPrinter::PaperSize(page_format.paper_size));
 		printer->setOrientation((page_format.orientation == MapPrinterPageFormat::Portrait) ? QPrinter::Portrait : QPrinter::Landscape);
 	}
 	printer->setResolution(options.resolution);
@@ -589,8 +583,8 @@ void MapPrinter::setOverlap(qreal h_overlap, qreal v_overlap)
 {
 	if (page_format.h_overlap != h_overlap || page_format.v_overlap != v_overlap)
 	{
-		page_format.h_overlap = qMax((qreal)0.0, qMin(h_overlap, page_format.page_rect.width()));
-		page_format.v_overlap = qMax((qreal)0.0, qMin(v_overlap, page_format.page_rect.height()));
+		page_format.h_overlap = qMax(qreal(0), qMin(h_overlap, page_format.page_rect.width()));
+		page_format.v_overlap = qMax(qreal(0), qMin(v_overlap, page_format.page_rect.height()));
 		updatePageBreaks();
 		emit pageFormatChanged(page_format);
 	}
@@ -602,8 +596,8 @@ void MapPrinter::updatePaperDimensions()
 	{
 		// No margins, no need to query QPrinter.
 		page_format.page_rect = QRectF(QPointF(0.0, 0.0), page_format.paper_dimensions);
-		page_format.h_overlap = qMax((qreal)0.0, qMin(page_format.h_overlap, page_format.page_rect.width()));
-		page_format.v_overlap = qMax((qreal)0.0, qMin(page_format.v_overlap, page_format.page_rect.height()));
+		page_format.h_overlap = qMax(qreal(0), qMin(page_format.h_overlap, page_format.page_rect.width()));
+		page_format.v_overlap = qMax(qreal(0), qMin(page_format.v_overlap, page_format.page_rect.height()));
 		updatePageBreaks();
 		return;
 	}
@@ -620,7 +614,7 @@ void MapPrinter::updatePaperDimensions()
 	}
 	else
 	{
-		printer->setPaperSize((QPrinter::PaperSize)page_format.paper_size);
+		printer->setPaperSize(QPrinter::PaperSize(page_format.paper_size));
 		printer->setOrientation((page_format.orientation == MapPrinterPageFormat::Portrait) ? QPrinter::Portrait : QPrinter::Landscape);
 	}
 	
@@ -634,15 +628,15 @@ void MapPrinter::updatePaperDimensions()
 		printer->getPageMargins(&left, &top, &right, &bottom, QPrinter::Millimeter);
 		page_format.page_rect.adjust(left, top, -right, -bottom);
 	}
-	page_format.h_overlap = qMax((qreal)0.0, qMin(page_format.h_overlap, page_format.page_rect.width()));
-	page_format.v_overlap = qMax((qreal)0.0, qMin(page_format.v_overlap, page_format.page_rect.height()));
+	page_format.h_overlap = qMax(qreal(0), qMin(page_format.h_overlap, page_format.page_rect.width()));
+	page_format.v_overlap = qMax(qreal(0), qMin(page_format.v_overlap, page_format.page_rect.height()));
 	
 	delete printer;
 	updatePageBreaks();
 }
 
 // slot
-void MapPrinter::setResolution(const unsigned int dpi)
+void MapPrinter::setResolution(int dpi)
 {
 	if (dpi > 0 && options.resolution != dpi)
 	{
@@ -658,7 +652,7 @@ void MapPrinter::setScale(const unsigned int value)
 	{
 		Q_ASSERT(value > 0);
 		options.scale = value;
-		scale_adjustment = map.getScaleDenominator() / (qreal) value;
+		scale_adjustment = map.getScaleDenominator() / qreal(value);
 		updatePageBreaks();
 		emit optionsChanged(options);
 	}
@@ -1147,7 +1141,7 @@ bool MapPrinter::printMap(QPrinter* printer)
 	QSizeF extent_size = page_format.page_rect.size() / scale_adjustment;
 	QPainter painter(printer);
 	
-	float resolution = (float)options.resolution;
+	auto resolution = float(options.resolution);
 	
 #if defined(Q_OS_WIN)
 	// Workaround for Wine
@@ -1204,7 +1198,7 @@ bool MapPrinter::printMap(QPrinter* printer)
 	
 	cancel_print_map = false;
 	int step = 0;
-	int num_steps = v_page_pos.size() * h_page_pos.size();
+	auto num_steps = v_page_pos.size() * h_page_pos.size();
 	const QString message_template( (options.mode == MapPrinterOptions::Separations) ?
 	  tr("Processing separations of page %1...") :
 	  tr("Processing page %1...") );
@@ -1227,7 +1221,7 @@ bool MapPrinter::printMap(QPrinter* printer)
 			}
 			
 			++step;
-			int progress = qMin(99, qMax(1, (100*step-50)/num_steps));
+			auto progress = qMin(99, qMax(1, int((100 * static_cast<decltype(num_steps)>(step) - 50) / num_steps)));
 			emit printProgress(progress, message_template.arg(step));
 			
 			if (cancel_print_map) /* during printProgress handling */
