@@ -712,6 +712,7 @@ TextSymbolSettings::TextSymbolSettings(TextSymbol* symbol, SymbolSettingDialog* 
 	custom_tab_add = new QPushButton(QIcon(QStringLiteral(":/images/plus.png")), QString{});
 	custom_tabs_button_layout->addWidget(custom_tab_add);
 	custom_tab_remove = new QPushButton(QIcon(QStringLiteral(":/images/minus.png")), QString{});
+	custom_tab_remove->setEnabled(false);
 	custom_tabs_button_layout->addWidget(custom_tab_remove);
 	custom_tabs_button_layout->addStretch(1);
 	
@@ -992,12 +993,15 @@ void TextSymbolSettings::addCustomTabClicked()
 
 void TextSymbolSettings::removeCustomTabClicked()
 {
-	int row = custom_tab_list->row(custom_tab_list->currentItem());
-	delete custom_tab_list->item(row);
-	custom_tab_list->setCurrentRow(row - 1);
-	symbol->custom_tabs.erase(symbol->custom_tabs.begin() + row);
-	emit propertiesModified();
-	updateCompatibilityCheckEnabled();
+	if (auto item = custom_tab_list->currentItem())
+	{
+		int row = custom_tab_list->row(item);
+		delete custom_tab_list->item(row);
+		custom_tab_list->setCurrentRow(row - 1);
+		symbol->custom_tabs.erase(symbol->custom_tabs.begin() + row);
+		emit propertiesModified();
+		updateCompatibilityCheckEnabled();
+	}
 }
 
 void TextSymbolSettings::updateGeneralContents()
