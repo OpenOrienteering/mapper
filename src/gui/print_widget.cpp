@@ -885,20 +885,16 @@ void PrintWidget::setOptions(const MapPrinterOptions& options)
 	static QString dpi_template(QLatin1String("%1 ") + tr("dpi"));
 	dpi_combo->setEditText(dpi_template.arg(options.resolution));
 	
-	if (different_scale_edit->value() != int(options.scale))
+	if (options.scale != map->getScaleDenominator())
 	{
-		different_scale_edit->setValue(int(options.scale));
-		if (options.scale != map->getScaleDenominator())
-		{
-			different_scale_check->setChecked(true);
-			different_scale_edit->setEnabled(true);
-		}
-		applyPrintAreaPolicy();
+		different_scale_check->setChecked(true);
+		different_scale_edit->setEnabled(true);
 	}
-	else
-	{
-		applyCenterPolicy();
-	}
+	
+	auto scale = int(options.scale);
+	different_scale_edit->setValue(scale);
+	differentScaleEdited(scale);
+	
 	main_view->updateAllMapWidgets();
 }
 
@@ -969,11 +965,7 @@ void PrintWidget::differentScaleClicked(bool checked)
 void PrintWidget::differentScaleEdited(int value)
 {
 	map_printer->setScale(static_cast<unsigned int>(value));
-	if (policy == SinglePage)
-	{
-		// Adjust the print area.
-		applyPrintAreaPolicy();
-	}
+	applyPrintAreaPolicy();
 	
 	if (different_scale_edit->value() < 500)
 	{
