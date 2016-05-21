@@ -78,6 +78,7 @@
 #include "gps_track_recorder.h"
 #include "gui/main_window.h"
 #include "gui/print_widget.h"
+#include "gui/widgets/key_button_bar.h"
 #include "gui/widgets/measure_widget.h"
 #include "gui/widgets/tags_widget.h"
 #include "object_operations.h"
@@ -1420,6 +1421,15 @@ bool MapEditorController::keyPressEventFilter(QKeyEvent* event)
 		if (symbol_widget && symbol_widget->isVisible())
 		{
 			mobileSymbolSelectorFinished();
+			return true;
+		}
+		
+		if (isEditingInProgress() && !map_widget->findChild<KeyButtonBar*>())
+		{
+			QKeyEvent escape_pressed{ QEvent::KeyPress, Qt::Key_Escape, event->modifiers() };
+			QCoreApplication::sendEvent(window, &escape_pressed);
+			QKeyEvent escape_released{ QEvent::KeyRelease, Qt::Key_Escape, event->modifiers() };
+			QCoreApplication::sendEvent(window, &escape_released);
 			return true;
 		}
 	}
