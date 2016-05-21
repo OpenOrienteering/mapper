@@ -34,6 +34,7 @@
 #include <QToolButton>
 
 #include "home_screen_widget.h"
+#include "../main_window.h"
 #include "../../util_gui.h"
 #include "../../util_translation.h"
 #include "../../util/scoped_signals_blocker.h"
@@ -56,7 +57,14 @@ GeneralSettingsPage::GeneralSettingsPage(QWidget* parent)
 	language_layout->addWidget(language_box);
 	
 	QAbstractButton* language_file_button = new QToolButton();
-	language_file_button->setIcon(QIcon(QLatin1String(":/images/open.png")));
+	if (MainWindow::mobileMode())
+	{
+		language_file_button->setVisible(false);
+	}
+	else
+	{
+		language_file_button->setIcon(QIcon(QLatin1String(":/images/open.png")));
+	}
 	language_layout->addWidget(language_file_button);
 	
 	layout->addItem(Util::SpacerItem::create(this));
@@ -317,6 +325,10 @@ void GeneralSettingsPage::openPPICalculationDialog()
 	float old_screen_diagonal_inches = screen_diagonal_pixels / old_ppi;
 	
 	QDialog* dialog = new QDialog(window(), Qt::WindowSystemMenuHint | Qt::WindowTitleHint);
+	if (MainWindow::mobileMode())
+	{
+		dialog->setGeometry(window()->geometry());
+	}
 	
 	auto layout = new QVBoxLayout(dialog);
 	

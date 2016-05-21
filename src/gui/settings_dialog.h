@@ -24,9 +24,10 @@
 #include <QDialog>
 
 QT_BEGIN_NAMESPACE
-class QTabWidget;
 class QAbstractButton;
 class QDialogButtonBox;
+class QStackedWidget;
+class QTabBar;
 QT_END_NAMESPACE
 
 class SettingsPage;
@@ -38,27 +39,60 @@ class SettingsDialog : public QDialog
 {
 Q_OBJECT
 public:
-	/** Constructs a new settings dialog. */
+	/** 
+	 * Constructs a new settings dialog.
+	 */
 	explicit SettingsDialog(QWidget* parent = nullptr);
 	
-	/** Destroys the settings dialog. */
-	virtual ~SettingsDialog();
+	/** 
+	 * Destroys the settings dialog.
+	 */
+	~SettingsDialog() override;
 	
-	/** Applies the changes from all pages. */
-	void applyChanges();
+protected:
+	/**
+	 * Adds all known pages to the dialog.
+	 * 
+	 * This function is called from the constructor. It may be overridden to
+	 * provide dialogs with different pages.
+	 */
+	virtual void addPages();
+	
+	/**
+	 * Adds a single page to the dialog.
+	 */
+	void addPage(SettingsPage* page);
+	
+	/**
+	 * Calls a SettingsPage member function on all pages.
+	 */
+	void callOnAllPages(void (SettingsPage::*member)());
+	
+	
+	void closeEvent(QCloseEvent* event) override;
+	
+	void keyPressEvent(QKeyEvent* event) override;
 	
 private slots:
-	/** Reacts to button presses (OK, Cancel, Rest) */
+	/**
+	 * Reacts to dialog buttons (OK, Cancel, Rest).
+	 */
 	void buttonPressed(QAbstractButton* button);
 	
 private:
-	/** Adds a page to the dialog. */
-	void addPage(SettingsPage* page);
+	/**
+	 * A tab bar for switching pages in desktop mode.
+	 */
+	QTabBar* tab_bar_widget;
 	
-	/** A tab widget which holds all pages. */
-	QTabWidget* tab_widget;
+	/**
+	 * A stack widget which holds all pages.
+	 */
+	QStackedWidget* pages_widget;
 	
-	/** The box of dialog buttons. */
+	/** 
+	 * The box of standard dialog buttons.
+	 */
 	QDialogButtonBox* button_box;
 };
 
