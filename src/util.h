@@ -160,7 +160,7 @@ namespace Util
 	 * 
 	 * @param file_and_anchor_latin1 the name of the manual page html file, optionally including an anchor
 	 */
-	void showHelp(QWidget* dialog_parent, const char* file_and_anchor_latin1 = nullptr);
+	void showHelp(QWidget* dialog_parent, const char* file_and_anchor_latin1 = "index.html");
 	
 	/**
 	 * Show the manual in Qt assistant.
