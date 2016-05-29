@@ -160,6 +160,11 @@ public:
 	/** Sets the position of the anchor point to coord. 
 	 *  This will drop an existing word wrap box.
 	 */
+	void setAnchorPosition(MapCoord coord);
+	
+	/** Sets the position of the anchor point to coord. 
+	 *  This will drop an existing word wrap box.
+	 */
 	void setAnchorPosition(MapCoordF coord);
 	
 	/** Returns the coordinates of the anchor point or midpoint */

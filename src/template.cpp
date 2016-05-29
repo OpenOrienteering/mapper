@@ -36,6 +36,7 @@
 #include "template_image.h"
 #include "template_map.h"
 #include "template_track.h"
+#include "gdal/ogr_template.h"
 #include "util.h"
 #include "util/xml_stream_util.h"
 
@@ -72,19 +73,19 @@ void TemplateTransform::load(QIODevice* file)
 
 void TemplateTransform::save(QXmlStreamWriter& xml, const QString role) const
 {
-	xml.writeStartElement("transformation");
-	xml.writeAttribute("role", role);
-	xml.writeAttribute("x", QString::number(template_x));
-	xml.writeAttribute("y", QString::number(template_y));
-	xml.writeAttribute("scale_x", QString::number(template_scale_x));
-	xml.writeAttribute("scale_y", QString::number(template_scale_y));
-	xml.writeAttribute("rotation", QString::number(template_rotation));
+	xml.writeStartElement(QString::fromLatin1("transformation"));
+	xml.writeAttribute(QString::fromLatin1("role"), role);
+	xml.writeAttribute(QString::fromLatin1("x"), QString::number(template_x));
+	xml.writeAttribute(QString::fromLatin1("y"), QString::number(template_y));
+	xml.writeAttribute(QString::fromLatin1("scale_x"), QString::number(template_scale_x));
+	xml.writeAttribute(QString::fromLatin1("scale_y"), QString::number(template_scale_y));
+	xml.writeAttribute(QString::fromLatin1("rotation"), QString::number(template_rotation));
 	xml.writeEndElement(/*transformation*/);
 }
 
 void TemplateTransform::load(QXmlStreamReader& xml)
 {
-	Q_ASSERT(xml.name() == "transformation");
+	Q_ASSERT(xml.name() == QLatin1String("transformation"));
 	
 	XmlElementReader element { xml };
 	auto x64 = element.attribute<qint64>(QLatin1String("x"));
@@ -109,7 +110,7 @@ Template::Template(const QString& path, Map* map)
 	if (! QFileInfo(path).canonicalFilePath().isEmpty())
 		template_path = QFileInfo(path).canonicalFilePath();
 	template_file = QFileInfo(path).fileName();
-	template_relative_path = "";
+	template_relative_path = QString{};
 	template_state = Unloaded;
 	
 	has_unsaved_changes = false;
@@ -206,8 +207,8 @@ bool Template::loadTemplateConfiguration(QIODevice* stream, int version)
 	else
 	{
 		// Adjust old file format version's templates
-		is_georeferenced = getTemplateType() == "TemplateTrack";
-		if (getTemplateType() == "TemplateImage")
+		is_georeferenced = qstrcmp(getTemplateType(), "TemplateTrack") == 0;
+		if (qstrcmp(getTemplateType(), "TemplateImage") == 0)
 		{
 			transform.template_scale_x *= 1000.0 / map->getScaleDenominator();
 			transform.template_scale_y *= 1000.0 / map->getScaleDenominator();
@@ -221,39 +222,39 @@ bool Template::loadTemplateConfiguration(QIODevice* stream, int version)
 
 void Template::saveTemplateConfiguration(QXmlStreamWriter& xml, bool open)
 {
-	xml.writeStartElement("template");
-	xml.writeAttribute("open", open ? "true" : "false");
-	xml.writeAttribute("name", getTemplateFilename());
-	xml.writeAttribute("path", getTemplatePath());
-	xml.writeAttribute("relpath", getTemplateRelativePath());
+	xml.writeStartElement(QString::fromLatin1("template"));
+	xml.writeAttribute(QString::fromLatin1("open"), QString::fromLatin1(open ? "true" : "false"));
+	xml.writeAttribute(QString::fromLatin1("name"), getTemplateFilename());
+	xml.writeAttribute(QString::fromLatin1("path"), getTemplatePath());
+	xml.writeAttribute(QString::fromLatin1("relpath"), getTemplateRelativePath());
 	if (template_group)
 	{
-		xml.writeAttribute("group", QString::number(template_group));
+		xml.writeAttribute(QString::fromLatin1("group"), QString::number(template_group));
 	}
 	
 	if (is_georeferenced)
 	{
-		xml.writeAttribute("georef", "true");
+		xml.writeAttribute(QString::fromLatin1("georef"), QString::fromLatin1("true"));
 	}
 	else
 	{
-		xml.writeStartElement("transformations");
+		xml.writeStartElement(QString::fromLatin1("transformations"));
 		if (adjusted)
-			xml.writeAttribute("adjusted", "true");
+			xml.writeAttribute(QString::fromLatin1("adjusted"), QString::fromLatin1("true"));
 		if (adjustment_dirty)
-			xml.writeAttribute("adjustment_dirty", "true");
+			xml.writeAttribute(QString::fromLatin1("adjustment_dirty"), QString::fromLatin1("true"));
 		int num_passpoints = (int)passpoints.size();
-		xml.writeAttribute("passpoints", QString::number(num_passpoints));
+		xml.writeAttribute(QString::fromLatin1("passpoints"), QString::number(num_passpoints));
 		
-		transform.save(xml, "active");
-		other_transform.save(xml, "other");
+		transform.save(xml, QString::fromLatin1("active"));
+		other_transform.save(xml, QString::fromLatin1("other"));
 		
 		for (int i = 0; i < num_passpoints; ++i)
 			passpoints[i].save(xml);
 		
-		map_to_template.save(xml, "map_to_template");
-		template_to_map.save(xml, "template_to_map");
-		template_to_map_other.save(xml, "template_to_map_other");
+		map_to_template.save(xml, QString::fromLatin1("map_to_template"));
+		template_to_map.save(xml, QString::fromLatin1("template_to_map"));
+		template_to_map_other.save(xml, QString::fromLatin1("template_to_map_other"));
 		
 		xml.writeEndElement(/*transformations*/);
 	}
@@ -271,42 +272,42 @@ void Template::saveTemplateConfiguration(QXmlStreamWriter& xml, bool open)
 
 std::unique_ptr<Template> Template::loadTemplateConfiguration(QXmlStreamReader& xml, Map& map, bool& open)
 {
-	Q_ASSERT(xml.name() == "template");
+	Q_ASSERT(xml.name() == QLatin1String("template"));
 	
 	QXmlStreamAttributes attributes = xml.attributes();
-	if (attributes.hasAttribute("open"))
-		open = (attributes.value("open") == "true");
+	if (attributes.hasAttribute(QLatin1String("open")))
+		open = (attributes.value(QLatin1String("open")) == QLatin1String("true"));
 	
-	QString path = attributes.value("path").toString();
+	QString path = attributes.value(QLatin1String("path")).toString();
 	auto temp = templateForFile(path, &map);
 	if (!temp)
 		temp.reset(new TemplateImage(path, &map)); // fallback
 	
-	temp->setTemplateRelativePath(attributes.value("relpath").toString());
-	if (attributes.hasAttribute("name"))
-		temp->template_file = attributes.value("name").toString();
-	temp->is_georeferenced = (attributes.value("georef") == "true");
-	if (attributes.hasAttribute("group"))
-		temp->template_group = attributes.value("group").toString().toInt();
+	temp->setTemplateRelativePath(attributes.value(QLatin1String("relpath")).toString());
+	if (attributes.hasAttribute(QLatin1String("name")))
+		temp->template_file = attributes.value(QLatin1String("name")).toString();
+	temp->is_georeferenced = (attributes.value(QLatin1String("georef")) == QLatin1String("true"));
+	if (attributes.hasAttribute(QLatin1String("group")))
+		temp->template_group = attributes.value(QLatin1String("group")).toInt();
 		
 	while (xml.readNextStartElement())
 	{
-		if (!temp->is_georeferenced && xml.name() == "transformations")
+		if (!temp->is_georeferenced && xml.name() == QLatin1String("transformations"))
 		{
-			temp->adjusted = (xml.attributes().value("adjusted") == "true");
-			temp->adjustment_dirty = (xml.attributes().value("adjustment_dirty") == "true");
-			int num_passpoints = xml.attributes().value("passpoints").toString().toInt();
+			temp->adjusted = (xml.attributes().value(QLatin1String("adjusted")) == QLatin1String("true"));
+			temp->adjustment_dirty = (xml.attributes().value(QLatin1String("adjustment_dirty")) == QLatin1String("true"));
+			int num_passpoints = xml.attributes().value(QLatin1String("passpoints")).toInt();
 Q_ASSERT(temp->passpoints.size() == 0);
 			temp->passpoints.reserve(qMin(num_passpoints, 10)); // 10 is not a limit
 			
 			while (xml.readNextStartElement())
 			{
-				QStringRef role = xml.attributes().value("role");
-				if (xml.name() == "transformation")
+				QStringRef role = xml.attributes().value(QLatin1String("role"));
+				if (xml.name() == QLatin1String("transformation"))
 				{
-					if (role == "active")
+					if (role == QLatin1String("active"))
 						temp->transform.load(xml);
-					else if (xml.attributes().value("role") == "other")
+					else if (xml.attributes().value(QLatin1String("role")) == QLatin1String("other"))
 						temp->other_transform.load(xml);
 					else
 					{
@@ -314,17 +315,17 @@ Q_ASSERT(temp->passpoints.size() == 0);
 						xml.skipCurrentElement(); // unsupported
 					}
 				}
-				else if (xml.name() == "passpoint")
+				else if (xml.name() == QLatin1String("passpoint"))
 				{
 					temp->passpoints.push_back(PassPoint::load(xml));
 				}
-				else if (xml.name() == "matrix")
+				else if (xml.name() == QLatin1String("matrix"))
 				{
-					if (role == "map_to_template")
+					if (role == QLatin1String("map_to_template"))
 						temp->map_to_template.load(xml);
-					else if (role == "template_to_map")
+					else if (role == QLatin1String("template_to_map"))
 						temp->template_to_map.load(xml);
-					else if (role == "template_to_map_other")
+					else if (role == QLatin1String("template_to_map_other"))
 						temp->template_to_map_other.load(xml);
 					else
 					{
@@ -352,16 +353,25 @@ Q_ASSERT(temp->passpoints.size() == 0);
 		const auto offset = MapCoord::boundsOffset();
 		if (!offset.isZero())
 		{
-			temp->template_to_map.set(0, 2, temp->template_to_map_other.get(0, 2) - offset.x / 1000.0);
-			temp->template_to_map.set(1, 2, temp->template_to_map_other.get(1, 2) - offset.y / 1000.0);
-			temp->template_to_map.invert(temp->map_to_template);
-			temp->template_to_map_other.set(0, 2, temp->template_to_map_other.get(0, 2) - offset.x / 1000.0);
-			temp->template_to_map_other.set(1, 2, temp->template_to_map_other.get(1, 2) - offset.y / 1000.0);
+			if (temp->template_to_map.getCols() == 3 && temp->template_to_map.getRows() == 3)
+			{
+				temp->template_to_map.set(0, 2, temp->template_to_map.get(0, 2) - offset.x / 1000.0);
+				temp->template_to_map.set(1, 2, temp->template_to_map.get(1, 2) - offset.y / 1000.0);
+				temp->template_to_map.invert(temp->map_to_template);
+			}
+				
+			if (temp->template_to_map_other.getCols() == 3 && temp->template_to_map_other.getRows() == 3)
+			{
+				temp->template_to_map_other.set(0, 2, temp->template_to_map_other.get(0, 2) - offset.x / 1000.0);
+				temp->template_to_map_other.set(1, 2, temp->template_to_map_other.get(1, 2) - offset.y / 1000.0);
+			}
 		}
 		
 		// Fix template alignment problems caused by grivation rounding since version 0.6
 		const double correction = map.getGeoreferencing().getGrivationError();
-		if (qAbs(correction) != 0.0 && temp->getTemplateType() == "TemplateTrack")
+		if (qAbs(correction) != 0.0
+		    && (qstrcmp(temp->getTemplateType(), "TemplateTrack") == 0
+		        || qstrcmp(temp->getTemplateType(), "OgrTemplate") == 0) )
 		{
 			temp->setTemplateRotation(temp->getTemplateRotation() + Georeferencing::degToRad(correction));
 		}
@@ -448,8 +458,9 @@ bool Template::configureAndLoad(QWidget* dialog_parent, MapView* view)
 
 bool Template::tryToFindAndReloadTemplateFile(QString map_directory, bool* out_loaded_from_map_dir)
 {
-	if (!map_directory.isEmpty() && !map_directory.endsWith('/'))
-		map_directory.append('/');
+	if (!map_directory.isEmpty() && !map_directory.endsWith(QLatin1Char('/')))
+		map_directory.append(QLatin1Char('/'));
+	
 	if (out_loaded_from_map_dir)
 		*out_loaded_from_map_dir = false;
 	
@@ -458,31 +469,37 @@ bool Template::tryToFindAndReloadTemplateFile(QString map_directory, bool* out_l
 	// First try relative path (if this information is available)
 	if (!getTemplateRelativePath().isEmpty() && !map_directory.isEmpty())
 	{
-		setTemplatePath(map_directory + getTemplateRelativePath());
-		loadTemplateFile(false);
-		if (getTemplateState() == Template::Loaded)
-			return true;
+		auto path = QString{ map_directory + getTemplateRelativePath() };
+		if (QFileInfo(path).exists())
+		{
+			setTemplatePath(path);
+			return loadTemplateFile(false);
+		}
 	}
 	
-	// Then try absolute path
-	loadTemplateFile(false);
-	if (getTemplateState() == Template::Loaded)
-		return true;
+	// Second try absolute path
+	if (QFileInfo(template_path).exists())
+	{
+		return loadTemplateFile(false);
+	}
 	
-	// Then try the template filename in the map's directory
+	// Third try the template filename in the map's directory
 	if (!map_directory.isEmpty())
 	{
-		setTemplatePath(map_directory + getTemplateFilename());
-		loadTemplateFile(false);
-		if (getTemplateState() == Template::Loaded)
+		auto path = QString{ map_directory + getTemplateFilename() };
+		if (QFileInfo(path).exists())
 		{
+			setTemplatePath(path);
+			bool success = loadTemplateFile(false);
 			if (out_loaded_from_map_dir)
 				*out_loaded_from_map_dir = true;
-			return true;
+			return success;
 		}
 	}
 	
 	setTemplatePath(old_absolute_path);
+	template_state = Invalid;
+	setErrorString(tr("No such file."));
 	return false;
 }
 
@@ -518,7 +535,7 @@ bool Template::loadTemplateFile(bool configuring)
 			{
 				qDebug("%s: Missing error message from failure in %s::loadTemplateFileImpl(bool)", \
 				         Q_FUNC_INFO, \
-				         qPrintable(getTemplateType()) );
+				         getTemplateType() );
 				setErrorString(tr("Is the format of the file correct for this template type?"));
 			}
 		}
@@ -715,12 +732,18 @@ const std::vector<QByteArray>& Template::supportedExtensions()
 	{
 		auto& image_extensions = TemplateImage::supportedExtensions();
 		auto& map_extensions   = TemplateMap::supportedExtensions();
+#ifdef MAPPER_USE_GDAL
+		auto& ogr_extensions   = OgrTemplate::supportedExtensions();
+#else
+		auto ogr_extensions    = std::vector<QByteArray>{ };
+#endif
 		auto& track_extensions = TemplateTrack::supportedExtensions();
 		extensions.reserve(image_extensions.size()
 		                   + map_extensions.size()
 		                   + track_extensions.size());
 		extensions.insert(end(extensions), begin(image_extensions), end(image_extensions));
 		extensions.insert(end(extensions), begin(map_extensions), end(map_extensions));
+		extensions.insert(end(extensions), begin(ogr_extensions), end(ogr_extensions));
 		extensions.insert(end(extensions), begin(track_extensions), end(track_extensions));
 	}
 	return extensions;
@@ -731,7 +754,7 @@ std::unique_ptr<Template> Template::templateForFile(const QString& path, Map* ma
 	auto path_ends_with_any_of = [path](const std::vector<QByteArray>& list) -> bool {
 		using namespace std;
 		return any_of(begin(list), end(list), [path](const QByteArray& extension) {
-			return path.endsWith(extension, Qt::CaseInsensitive);
+			return path.endsWith(QLatin1String(extension), Qt::CaseInsensitive);
 		} );
 	};
 	
@@ -740,6 +763,10 @@ std::unique_ptr<Template> Template::templateForFile(const QString& path, Map* ma
 		t.reset(new TemplateImage(path, map));
 	else if (path_ends_with_any_of(TemplateMap::supportedExtensions()))
 		t.reset(new TemplateMap(path, map));
+#ifdef MAPPER_USE_GDAL
+	else if (path_ends_with_any_of(OgrTemplate::supportedExtensions()))
+		t.reset(new OgrTemplate(path, map));
+#endif
 	else if (path_ends_with_any_of(TemplateTrack::supportedExtensions()))
 		t.reset(new TemplateTrack(path, map));
 	

@@ -39,7 +39,7 @@
 #include "gui/widgets/key_button_bar.h"
 
 DrawPointTool::DrawPointTool(MapEditorController* editor, QAction* tool_button)
-: MapEditorToolBase(QCursor(QPixmap(":/images/cursor-draw-point.png"), 11, 11), DrawPoint, editor, tool_button)
+: MapEditorToolBase(QCursor(QPixmap(QString::fromLatin1(":/images/cursor-draw-point.png")), 11, 11), DrawPoint, editor, tool_button)
 , renderables(new MapRenderables(map()))
 {
 	// all done in initImpl()
@@ -60,7 +60,7 @@ void DrawPointTool::initImpl()
 		key_button_bar->addModifierKey(Qt::Key_Shift, Qt::ShiftModifier, tr("Snap", "Snap to existing objects"));
 		key_button_bar->addModifierKey(Qt::Key_Control, Qt::ControlModifier, tr("Angle", "Using constrained angles"));
 		key_button_bar->addPressKey(Qt::Key_Escape, tr("Reset", "Reset rotation"));
-		editor->showPopupWidget(key_button_bar, "");
+		editor->showPopupWidget(key_button_bar, QString{});
 	}
 	
 	if (!preview_object)
@@ -322,7 +322,7 @@ void DrawPointTool::updateStatusText()
 	if (isDragging())
 	{
 		auto angle = qRadiansToDegrees(preview_object->getRotation());
-		setStatusBarText( trUtf8("<b>Angle:</b> %1° ").arg(QLocale().toString(angle, 'f', 1)) + "| " +
+		setStatusBarText( trUtf8("<b>Angle:</b> %1° ").arg(QLocale().toString(angle, 'f', 1)) + QLatin1String("| ") +
 		                  tr("<b>%1</b>: Fixed angles. ").arg(ModifierKey::control()) );
 	}
 	else if (static_cast<const PointSymbol*>(preview_object->getSymbol())->isRotatable())
@@ -334,10 +334,10 @@ void DrawPointTool::updateStatusText()
 		auto angle = qRadiansToDegrees(preview_object->getRotation());
 		if (!qIsNull(angle))
 		{
-			parts.push_front(trUtf8("<b>Angle:</b> %1° ").arg(QLocale().toString(angle, 'f', 1)) + "|");
+			parts.push_front(trUtf8("<b>Angle:</b> %1° ").arg(QLocale().toString(angle, 'f', 1)) + QLatin1Char('|'));
 			parts.push_back(tr("<b>%1, 0</b>: Reset rotation.").arg(ModifierKey::escape()));
 		}
-		setStatusBarText(parts.join(QLatin1String(" ")));
+		setStatusBarText(parts.join(QLatin1Char(' ')));
 	}
 	else
 	{

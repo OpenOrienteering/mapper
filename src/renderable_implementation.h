@@ -105,18 +105,30 @@ protected:
 class TextRenderable : public Renderable
 {
 public:
-	TextRenderable(const TextSymbol* symbol, const TextObject* text_object, const MapColor* color, double anchor_x, double anchor_y, bool framing_line = false);
-	virtual void render(QPainter& painter, const RenderConfig& config) const override;
-	virtual PainterConfig getPainterConfig(const QPainterPath* clip_path = nullptr) const override;
+	TextRenderable(const TextSymbol* symbol, const TextObject* text_object, const MapColor* color, double anchor_x, double anchor_y);
+	PainterConfig getPainterConfig(const QPainterPath* clip_path = nullptr) const override;
+	void render(QPainter& painter, const RenderConfig& config) const override;
 	
 protected:
+	void renderCommon(QPainter& painter, const RenderConfig& config) const;
+	
 	QPainterPath path;
 	double anchor_x;
 	double anchor_y;
 	double rotation;
 	double scale_factor;
-	bool framing_line;
-	float framing_line_width;
+};
+
+/** Renderable for displaying framing line for text. */
+class TextFramingRenderable : public TextRenderable
+{
+public:
+	TextFramingRenderable(const TextSymbol* symbol, const TextObject* text_object, const MapColor* color, double anchor_x, double anchor_y);
+	PainterConfig getPainterConfig(const QPainterPath* clip_path = nullptr) const override;
+	void render(QPainter& painter, const RenderConfig& config) const override;
+	
+protected:
+	double framing_line_width;
 };
 
 

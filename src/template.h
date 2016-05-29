@@ -90,7 +90,7 @@ public:
 	
 	/// Returns a string which should identify the type of the template uniquely:
 	/// the class name. Very simple RTTI feature.
-	virtual QString getTemplateType() const = 0;
+	virtual const char* getTemplateType() const = 0;
 	
 	/**
 	 * Returns a description of the last error that occurred.

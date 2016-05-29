@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map xmlns="http://openorienteering.org/apps/mapper/xml/v2" version="5">
     <notes></notes>
-    <georeferencing scale="4000" declination="0.00" grivation="0.00">
-        <ref_point x="0" y="0"/>
-        <projected_crs id="Local coordinates">
-            <spec language="PROJ.4"></spec>
-            <ref_point x="0.000000" y="0.000000"/>
-        </projected_crs>
+    <georeferencing scale="4000">
+        <projected_crs id="Local coordinates"/>
     </georeferencing>
     <colors count="39">
         <color priority="0" name="Purple" c="0.200" m="1.000" y="0.000" k="0.000" opacity="1.000">
@@ -1898,28 +1894,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</description>
         </symbol>
         <symbol type="2" id="113" code="526.1.2" name="Building helper 2">
             <description>Do not use this symbol on its own!</description>
-            <line_symbol color="2" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Start symbol">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
-                <mid_symbol>
-                    <symbol type="1" code="" name="Mid symbol">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="End symbol">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Dash symbol">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
-            </line_symbol>
+            <line_symbol color="2" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="1" id="114" code="526.1.3" name="Building, minimum size &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to pass through or over)&lt;/span&gt;">
             <description>A building is a relatively permanent construction having a roof. Buildings within symbol area with forbidden access (527.1) may just be represented in a simplified manner.Areas totally contained within a building shall be mapped as being a part of the building. 
@@ -2722,28 +2697,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</description>
         </symbol>
         <symbol type="2" id="164" code="709.2" name="Out-of-bounds area, dashed boundary">
             <description>A dashed line indicates intermittent marking on the ground.</description>
-            <line_symbol color="0" line_width="250" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="3000" break_length="500" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Start symbol">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
-                <mid_symbol>
-                    <symbol type="1" code="" name="Mid symbol">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="End symbol">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Dash symbol">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
-            </line_symbol>
+            <line_symbol color="0" line_width="250" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="3000" break_length="500" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="1" id="165" code="712" name="First aid post">
             <description>The location of a first aid post.</description>
@@ -74871,9 +74825,9 @@ Well; Small erosion gully
         <defaults use_meters_per_pixel="true" meters_per_pixel="0.25" dpi="0" scale="0"/>
     </templates>
     <view>
-        <grid color="#646464" display="0" alignment="0" additional_rotation="0" unit="1" h_spacing="5" v_spacing="5" h_offset="0" v_offset="0" snapping_enabled="false"/>
-        <map_view zoom="0.707107" rotation="0" position_x="-2902" position_y="-1183" view_x="0" view_y="0" drag_offset_x="0" drag_offset_y="0">
-            <map opacity="1"/>
+        <grid color="#646464" display="0" alignment="0" additional_rotation="0" unit="1" h_spacing="5" v_spacing="5" h_offset="0" v_offset="0"/>
+        <map_view zoom="0.707107" rotation="0" position_x="-2902" position_y="-1183">
+            <map opacity="1" visible="true"/>
             <templates hidden="true" count="0"/>
         </map_view>
     </view>

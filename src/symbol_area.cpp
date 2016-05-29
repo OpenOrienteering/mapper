@@ -111,23 +111,23 @@ bool AreaSymbol::FillPattern::load(QIODevice* file, int version, Map* map)
 
 void AreaSymbol::FillPattern::save(QXmlStreamWriter& xml, const Map& map) const
 {
-	xml.writeStartElement("pattern");
-	xml.writeAttribute("type", QString::number(type));
-	xml.writeAttribute("angle", QString::number(angle));
+	xml.writeStartElement(QString::fromLatin1("pattern"));
+	xml.writeAttribute(QString::fromLatin1("type"), QString::number(type));
+	xml.writeAttribute(QString::fromLatin1("angle"), QString::number(angle));
 	if (rotatable)
-		xml.writeAttribute("rotatable", "true");
-	xml.writeAttribute("line_spacing", QString::number(line_spacing));
-	xml.writeAttribute("line_offset", QString::number(line_offset));
-	xml.writeAttribute("offset_along_line", QString::number(offset_along_line));
+		xml.writeAttribute(QString::fromLatin1("rotatable"), QString::fromLatin1("true"));
+	xml.writeAttribute(QString::fromLatin1("line_spacing"), QString::number(line_spacing));
+	xml.writeAttribute(QString::fromLatin1("line_offset"), QString::number(line_offset));
+	xml.writeAttribute(QString::fromLatin1("offset_along_line"), QString::number(offset_along_line));
 	
 	if (type == LinePattern)
 	{
-		xml.writeAttribute("color", QString::number(map.findColorIndex(line_color)));
-		xml.writeAttribute("line_width", QString::number(line_width));
+		xml.writeAttribute(QString::fromLatin1("color"), QString::number(map.findColorIndex(line_color)));
+		xml.writeAttribute(QString::fromLatin1("line_width"), QString::number(line_width));
 	}
 	else
 	{
-		xml.writeAttribute("point_distance", QString::number(point_distance));
+		xml.writeAttribute(QString::fromLatin1("point_distance"), QString::number(point_distance));
 		if (point != NULL)
 			point->save(xml, map);
 	}
@@ -137,29 +137,29 @@ void AreaSymbol::FillPattern::save(QXmlStreamWriter& xml, const Map& map) const
 
 void AreaSymbol::FillPattern::load(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict)
 {
-	Q_ASSERT (xml.name() == "pattern");
+	Q_ASSERT (xml.name() == QLatin1String("pattern"));
 	
 	QXmlStreamAttributes attributes = xml.attributes();
-	type = static_cast<Type>(attributes.value("type").toString().toInt());
-	angle = attributes.value("angle").toString().toFloat();
-	rotatable = (attributes.value("rotatable") == "true");
-	line_spacing = attributes.value("line_spacing").toString().toInt();
-	line_offset = attributes.value("line_offset").toString().toInt();
-	offset_along_line = attributes.value("offset_along_line").toString().toInt();
+	type = static_cast<Type>(attributes.value(QLatin1String("type")).toInt());
+	angle = attributes.value(QLatin1String("angle")).toFloat();
+	rotatable = (attributes.value(QLatin1String("rotatable")) == QLatin1String("true"));
+	line_spacing = attributes.value(QLatin1String("line_spacing")).toInt();
+	line_offset = attributes.value(QLatin1String("line_offset")).toInt();
+	offset_along_line = attributes.value(QLatin1String("offset_along_line")).toInt();
 	
 	if (type == LinePattern)
 	{
-		int temp = attributes.value("color").toString().toInt();
+		int temp = attributes.value(QLatin1String("color")).toInt();
 		line_color = map.getColor(temp);
-		line_width = attributes.value("line_width").toString().toInt();
+		line_width = attributes.value(QLatin1String("line_width")).toInt();
 		xml.skipCurrentElement();
 	}
 	else
 	{
-		point_distance = attributes.value("point_distance").toString().toInt();
+		point_distance = attributes.value(QLatin1String("point_distance")).toInt();
 		while (xml.readNextStartElement())
 		{
-			if (xml.name() == "symbol")
+			if (xml.name() == QLatin1String("symbol"))
 				point = static_cast<PointSymbol*>(Symbol::load(xml, map, symbol_dict));
 			else
 				xml.skipCurrentElement();
@@ -673,12 +673,12 @@ bool AreaSymbol::loadImpl(QIODevice* file, int version, Map* map)
 
 void AreaSymbol::saveImpl(QXmlStreamWriter& xml, const Map& map) const
 {
-	xml.writeStartElement("area_symbol");
-	xml.writeAttribute("inner_color", QString::number(map.findColorIndex(color)));
-	xml.writeAttribute("min_area", QString::number(minimum_area));
+	xml.writeStartElement(QString::fromLatin1("area_symbol"));
+	xml.writeAttribute(QString::fromLatin1("inner_color"), QString::number(map.findColorIndex(color)));
+	xml.writeAttribute(QString::fromLatin1("min_area"), QString::number(minimum_area));
 	
 	int num_patterns = (int)patterns.size();
-	xml.writeAttribute("patterns", QString::number(num_patterns));
+	xml.writeAttribute(QString::fromLatin1("patterns"), QString::number(num_patterns));
 	for (int i = 0; i < num_patterns; ++i)
 		patterns[i].save(xml, map);
 	xml.writeEndElement(/*area_symbol*/);
@@ -686,19 +686,19 @@ void AreaSymbol::saveImpl(QXmlStreamWriter& xml, const Map& map) const
 
 bool AreaSymbol::loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict)
 {
-	if (xml.name() != "area_symbol")
+	if (xml.name() != QLatin1String("area_symbol"))
 		return false;
 	
 	QXmlStreamAttributes attributes = xml.attributes();
-	int temp = attributes.value("inner_color").toString().toInt();
+	int temp = attributes.value(QLatin1String("inner_color")).toInt();
 	color = map.getColor(temp);
-	minimum_area = attributes.value("min_area").toString().toInt();
+	minimum_area = attributes.value(QLatin1String("min_area")).toInt();
 	
-	int num_patterns = attributes.value("patterns").toString().toInt();
+	int num_patterns = attributes.value(QLatin1String("patterns")).toInt();
 	patterns.reserve(num_patterns % 5); // 5 is not the limit
 	while (xml.readNextStartElement())
 	{
-		if (xml.name() == "pattern")
+		if (xml.name() == QLatin1String("pattern"))
 		{
 			patterns.push_back(FillPattern());
 			patterns.back().load(xml, map, symbol_dict);
@@ -762,9 +762,9 @@ AreaSymbolSettings::AreaSymbolSettings(AreaSymbol* symbol, SymbolSettingDialog* 
 	pattern_list = new QListWidget();
 	fill_patterns_list_layout->addWidget(pattern_list, 1);
 	
-	del_pattern_button = new QPushButton(QIcon(":/images/minus.png"), "");
+	del_pattern_button = new QPushButton(QIcon(QString::fromLatin1(":/images/minus.png")), QString{});
 	add_pattern_button = new QToolButton();
-	add_pattern_button->setIcon(QIcon(":/images/plus.png"));
+	add_pattern_button->setIcon(QIcon(QString::fromLatin1(":/images/plus.png")));
 	add_pattern_button->setToolButtonStyle(Qt::ToolButtonIconOnly);
 	add_pattern_button->setPopupMode(QToolButton::InstantPopup);
 	add_pattern_button->setSizePolicy(QSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed));
@@ -872,7 +872,7 @@ AreaSymbolSettings::AreaSymbolSettings(AreaSymbol* symbol, SymbolSettingDialog* 
 	fill_pattern_layout->addRow(tr("Angle:"), pattern_angle_edit);
 	
 	pattern_rotatable_check = new QCheckBox(tr("adjustable per object"));
-	fill_pattern_layout->addRow("", pattern_rotatable_check);
+	fill_pattern_layout->addRow(QString{}, pattern_rotatable_check);
 	
 	
 	QHBoxLayout* fill_patterns_layout = new QHBoxLayout();
@@ -993,7 +993,7 @@ void AreaSymbolSettings::updatePatternWidgets()
 	del_pattern_button->setEnabled(pattern_active);
 	
 	AreaSymbol::FillPattern* pattern = pattern_active ? &*active_pattern : new AreaSymbol::FillPattern();
-	pattern_name_edit->setText(pattern_active ? QString("<b>%1</b>").arg(active_pattern->name) : tr("No fill selected"));
+	pattern_name_edit->setText(pattern_active ? (QLatin1String("<b>") + active_pattern->name + QLatin1String("</b>")) : tr("No fill selected"));
 	
 	pattern_angle_edit->blockSignals(true);
 	pattern_rotatable_check->blockSignals(true);
@@ -1064,7 +1064,7 @@ void AreaSymbolSettings::addPattern(AreaSymbol::FillPattern::Type type)
 		index = symbol->patterns.size();
 	
 	active_pattern = symbol->patterns.insert(symbol->patterns.begin() + index, AreaSymbol::FillPattern());
-	QString temp_name("new");
+	auto temp_name = QString::fromLatin1("new");
 	pattern_list->insertItem(index, temp_name);
 	Q_ASSERT(int(symbol->patterns.size()) == pattern_list->count());
 	

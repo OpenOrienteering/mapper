@@ -56,7 +56,7 @@ AutosaveTest::AutosaveTest(QObject* parent)
 {
 	// Set distinct application name in order to use distinct settings.
 	// Autosave objects must not be constructed before this!
-	QCoreApplication::setApplicationName("Tests");
+	QCoreApplication::setApplicationName(QString::fromLatin1("Tests"));
 }
 
 void AutosaveTest::autosaveTestDocumentTest()

@@ -92,7 +92,7 @@ void TemplatePositionDockWidget::updateValues()
 
 bool TemplatePositionDockWidget::event(QEvent* event)
 {
-	if (event->type() == QEvent::ShortcutOverride && controller->getWindow()->areShortcutsDisabled())
+	if (event->type() == QEvent::ShortcutOverride && controller->getWindow()->shortcutsBlocked())
 		event->accept();
 	return QDockWidget::event(event);
 }

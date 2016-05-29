@@ -45,36 +45,38 @@ ColorWidget::ColorWidget(Map* map, MainWindow* window, QWidget* parent)
 {
 	react_to_changes = true;
 	
-	setWhatsThis("<a href=\"color_dock_widget.html\">See more</a>");
+	setWhatsThis(Util::makeWhatThis("color_dock_widget.html"));
 	
 	// Color table
-	color_table = new QTableWidget(map->getNumColors(), 6);
+	color_table = new QTableWidget(map->getNumColors(), 7);
 	color_table->setEditTriggers(QAbstractItemView::SelectedClicked | QAbstractItemView::AnyKeyPressed);
 	color_table->setSelectionMode(QAbstractItemView::SingleSelection);
 	color_table->setSelectionBehavior(QAbstractItemView::SelectRows);
 	color_table->verticalHeader()->setVisible(false);
 	color_table->setHorizontalHeaderLabels(QStringList() <<
-	  "" << tr("Name") << tr("Spot color") << tr("CMYK") << tr("RGB") << tr("K.o.") << tr("Opacity") );
+	  QString{} << tr("Name") << tr("Spot color") << tr("CMYK") << tr("RGB") << tr("K.o.") << tr("Opacity") );
 	color_table->setItemDelegateForColumn(0, new ColorItemDelegate(this));
+	color_table->setItemDelegateForColumn(6, new PercentageDelegate(this));
+	color_table->setColumnHidden(6, true);
 	
 	QMenu* new_button_menu = new QMenu(this);
 	(void) new_button_menu->addAction(tr("New"), this, SLOT(newColor()));
 	duplicate_action = new_button_menu->addAction(tr("Duplicate"), this, SLOT(duplicateColor()));
-	duplicate_action->setIcon(QIcon(":/images/tool-duplicate.png"));
+	duplicate_action->setIcon(QIcon(QString::fromLatin1(":/images/tool-duplicate.png")));
 	
 	// Buttons
-	QToolButton* new_button = newToolButton(QIcon(":/images/plus.png"), tr("New"));
+	QToolButton* new_button = newToolButton(QIcon(QString::fromLatin1(":/images/plus.png")), tr("New"));
 	new_button->setPopupMode(QToolButton::DelayedPopup); // or MenuButtonPopup
 	new_button->setMenu(new_button_menu);
-	delete_button = newToolButton(QIcon(":/images/minus.png"), tr("Delete"));
+	delete_button = newToolButton(QIcon(QString::fromLatin1(":/images/minus.png")), tr("Delete"));
 	
 	SegmentedButtonLayout* add_remove_layout = new SegmentedButtonLayout();
 	add_remove_layout->addWidget(new_button);
 	add_remove_layout->addWidget(delete_button);
 	
-	move_up_button = newToolButton(QIcon(":/images/arrow-up.png"), tr("Move Up"));
+	move_up_button = newToolButton(QIcon(QString::fromLatin1(":/images/arrow-up.png")), tr("Move Up"));
 	move_up_button->setAutoRepeat(true);
-	move_down_button = newToolButton(QIcon(":/images/arrow-down.png"), tr("Move Down"));
+	move_down_button = newToolButton(QIcon(QString::fromLatin1(":/images/arrow-down.png")), tr("Move Down"));
 	move_down_button->setAutoRepeat(true);
 	
 	SegmentedButtonLayout* up_down_layout = new SegmentedButtonLayout();
@@ -82,10 +84,10 @@ ColorWidget::ColorWidget(Map* map, MainWindow* window, QWidget* parent)
 	up_down_layout->addWidget(move_down_button);
 	
 	// TODO: In Mapper >= 0.6, switch to ColorWidget (or generic) translation context.
-	edit_button = newToolButton(QIcon(":/images/settings.png"), QApplication::translate("MapEditorController", "&Edit").remove(QChar('&')));
+	edit_button = newToolButton(QIcon(QString::fromLatin1(":/images/settings.png")), QApplication::translate("MapEditorController", "&Edit").remove(QLatin1Char('&')));
 	edit_button->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
 	
-	QToolButton* help_button = newToolButton(QIcon(":/images/help.png"), tr("Help"));
+	QToolButton* help_button = newToolButton(QIcon(QString::fromLatin1(":/images/help.png")), tr("Help"));
 	help_button->setAutoRaise(true);
 	
 	// The buttons row layout
@@ -93,7 +95,7 @@ ColorWidget::ColorWidget(Map* map, MainWindow* window, QWidget* parent)
 	buttons_group_layout->addLayout(add_remove_layout);
 	buttons_group_layout->addLayout(up_down_layout);
 	buttons_group_layout->addWidget(edit_button);
-	buttons_group_layout->addWidget(new QLabel("   "), 1);
+	buttons_group_layout->addWidget(new QLabel(QString::fromLatin1("   ")), 1);
 	buttons_group_layout->addWidget(help_button);
 	
 	// The layout of all components below the table
@@ -159,7 +161,7 @@ QToolButton* ColorWidget::newToolButton(const QIcon& icon, const QString& text)
 	button->setToolTip(text);
 	button->setIcon(icon);
 	button->setText(text);
-	button->setWhatsThis("<a href=\"color_dock_widget.html\">See more</a>");
+	button->setWhatsThis(whatsThis());
 	return button;
 }
 
@@ -269,7 +271,7 @@ void ColorWidget::editCurrentColor()
 
 void ColorWidget::showHelp() const
 {
-	Util::showHelp(window, "color_dock_widget.html", "");
+	Util::showHelp(window, "color_dock_widget.html");
 }
 
 void ColorWidget::cellChange(int row, int column)
@@ -289,26 +291,11 @@ void ColorWidget::cellChange(int row, int column)
 	}
 	else if (column == 6) // Opacity
 	{
-		bool ok = true;
-		float fvalue;
-		
-		if (text.endsWith('%'))
-			text.chop(1);
-		
-		fvalue = text.toFloat(&ok) / 100.0f;
-		
-		if (fvalue < 0.0f || fvalue > 1.0f)
-			ok = false;
-		
-		if (ok)
+		auto opacity = color_table->item(row, column)->data(Qt::DisplayRole).toFloat();
+		if (!qFuzzyCompare(1.0f+opacity, 1.0f+color->getOpacity()))
 		{
-			color->setOpacity(fvalue);
+			color->setOpacity(qBound(0.0f, opacity, 1.0f));
 			updateRow(row);
-		}
-		else
-		{
-			QMessageBox::warning(window, tr("Error"), tr("Please enter a percentage from 0% to 100%!"));
-			color_table->item(row, column)->setText(QString::number(color->getOpacity() * 100) + "%");
 		}
 		react_to_changes = true;
 	}
@@ -385,6 +372,10 @@ void ColorWidget::addRow(int row)
 	
 	react_to_changes = true;
 	
+	// Opacity
+	item = color_table->item(row, 6);
+	item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable);
+	
 	updateRow(row);
 }
 
@@ -418,7 +409,10 @@ void ColorWidget::updateRow(int row)
 	item = color_table->item(row, 3);
 	item->setToolTip(tr("Double click to define the color"));
 	const MapColorCmyk& cmyk = color->getCmyk();
-	item->setText(QString("%1/%2/%3/%4").arg(100*cmyk.c,0,'g',3).arg(100*cmyk.m,0,'g',3).arg(100*cmyk.y,0,'g',3).arg(100*cmyk.k,0,'g',3));
+	QLocale l;
+	item->setText(QString::fromLatin1("%1/%2/%3/%4").arg(
+	                l.toString(100*cmyk.c, 'g', 3), l.toString(100*cmyk.m, 'g', 3),
+	                l.toString(100*cmyk.y, 'g', 3), l.toString(100*cmyk.k, 'g', 3)));
 	switch (color->getCmykColorMethod())
 	{
 		case MapColor::SpotColor:
@@ -452,7 +446,9 @@ void ColorWidget::updateRow(int row)
 	item->setCheckState(color->getKnockout() ? Qt::Checked : Qt::Unchecked);
 	item->setForeground(palette().color(QPalette::Disabled, QPalette::Text));
 	
-// 	color_table->item(row, 6)->setText(QString::number(color->getOpacity() * 100) + "%");
+	// Opacity
+	item = color_table->item(row, 6);
+	item->setData(Qt::DisplayRole, color->getOpacity());
 	
 	react_to_changes = true;
 }

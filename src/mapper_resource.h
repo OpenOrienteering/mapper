@@ -40,6 +40,7 @@ namespace MapperResource
 	enum RESOURCE_TYPE {
 		ASSISTANT,
 		EXAMPLE,
+		GDAL_DATA,
 		MANUAL,
 		PROJ_DATA,
 		SYMBOLSET,

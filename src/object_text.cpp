@@ -160,6 +160,13 @@ void TextObject::setAnchorPosition(qint32 x, qint32 y)
 	setOutputDirty();
 }
 
+void TextObject::setAnchorPosition(MapCoord coord)
+{
+	coords.resize(1);
+	coords[0] = coord;
+	setOutputDirty();
+}
+
 void TextObject::setAnchorPosition(MapCoordF coord)
 {
 	coords.resize(1);
@@ -237,7 +244,7 @@ QTransform TextObject::calcMapToTextTransform() const
 void TextObject::setText(const QString& text)
 {
 	this->text = text;
-	this->text.remove(QChar('\r'));
+	this->text.remove(QLatin1Char('\r'));
 	setOutputDirty();
 }
 
@@ -334,9 +341,9 @@ void TextObject::prepareLineInfos() const
 	double box_height = word_wrap ? (scaling * getBoxHeight()) : 0.0;
 	
 	int text_end = text.length();
-	const QChar line_break('\n');
-	const QChar part_break('\t');
-	const QChar word_break(' ');
+	const QLatin1Char line_break('\n');
+	const QLatin1Char part_break('\t');
+	const QLatin1Char word_break(' ');
 	
 	line_infos.clear();
 	
@@ -383,7 +390,7 @@ void TextObject::prepareLineInfos() const
 			else if (part_end > line_end)
 				part_end = line_end;
 			
-			if (part_start > 0 && text[part_start - 1] == '\t')
+			if (part_start > 0 && text[part_start - 1] == part_break)
 				part_x = line_x + text_symbol->getNextTab(part_x - line_x);
 			
 			QString part = text.mid(part_start, part_end - part_start);

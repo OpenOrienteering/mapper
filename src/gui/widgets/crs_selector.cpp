@@ -290,7 +290,7 @@ void CRSSelector::addParameterFields(const CRSTemplate* crs)
 			auto field = parameter->createEditor(*this);
 			setParameterWidget(field, true);
 			setParameterKey(field, parameter->id());
-			auto label = new QLabel(parameter->name() + ":");
+			auto label = new QLabel(parameter->name() + QLatin1Char(':'));
 			if (dialog_layout->itemAt(row, QFormLayout::FieldRole))
 			{
 				dialog_layout->insertRow(row, label, field);

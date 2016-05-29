@@ -1,5 +1,5 @@
 /*
- *    Copyright 2013 Kai Pastor
+ *    Copyright 2013, 2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -36,6 +36,9 @@ class MapTest : public QObject
 Q_OBJECT
 private slots:
 	void initTestCase();
+	
+	/** Tests basic print configuration properties. */
+	void printerConfigTest();
 	
 	/** Tests if special colors are correctly handled. */
 	void specialColorsTest();

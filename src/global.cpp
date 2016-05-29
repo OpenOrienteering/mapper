@@ -27,12 +27,16 @@
 #include "file_format_native.h"
 #include "file_format_xml.h"
 #include "fileformats/ocd_file_format.h"
+#include "gdal/ogr_file_format.h"
 
 void doStaticInitializations()
 {
 	// Register the supported file formats
 	FileFormats.registerFormat(new XMLFileFormat());
 	FileFormats.registerFormat(new OcdFileFormat());
+#ifdef MAPPER_USE_GDAL
+	FileFormats.registerFormat(new OgrFileFormat());
+#endif
 #ifndef NO_NATIVE_FILE_FORMAT
 	FileFormats.registerFormat(new NativeFileFormat()); // TODO: Remove before release 1.0
 #endif

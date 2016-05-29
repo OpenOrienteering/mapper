@@ -947,6 +947,9 @@ public:
 	void setPosition(qint32 x, qint32 y);
 	
 	/** Changes the point's position. */
+	void setPosition(MapCoord coord);
+	
+	/** Changes the point's position. */
 	void setPosition(MapCoordF coord);
 	
 	/** Returns the point's position as MapCoordF. */

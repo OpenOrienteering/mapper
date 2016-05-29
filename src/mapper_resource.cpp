@@ -64,17 +64,26 @@ QStringList MapperResource::getLocations(MapperResource::RESOURCE_TYPE resource_
 			return MapperResource::getProgramLocations(resource_type);
 			
 		case EXAMPLE:
-			resource_path = "/examples";
+			resource_path = QString::fromLatin1("/examples");
 			break;
 			
+		case GDAL_DATA:
+#if defined(Mapper_BUILD_GDAL) || defined(Q_OS_WIN)
+			resource_path = QString::fromLatin1("/gdal");
+			break;
+#else
+			// Don't fiddle with gdal resource path.
+			return locations;
+#endif
+		
 		case MANUAL:
 			// TODO: Support localized manual
-			resource_path = "/doc/manual";
+			resource_path = QString::fromLatin1("/doc/manual");
 			break;
 			
 		case PROJ_DATA:
 #if defined(Mapper_BUILD_PROJ) || defined(Q_OS_WIN)
-			resource_path = "/proj";
+			resource_path = QString::fromLatin1("/proj");
 			break;
 #else
 			// Don't fiddle with proj resource path.
@@ -84,13 +93,13 @@ QStringList MapperResource::getLocations(MapperResource::RESOURCE_TYPE resource_
 		case SYMBOLSET:
 			// TODO: Translate directory name "my symbol sets"?
 			//       Possible Windows solution: desktop.ini
-			addIfExists(locations, QDir::homePath() + "/my symbol sets");
-			resource_path = "/symbol sets";
+			addIfExists(locations, QDir::homePath() + QLatin1String("/my symbol sets"));
+			resource_path = QString::fromLatin1("/symbol sets");
 			break;
 			
 		case TEST_DATA:
-			addIfExists(locations, app_dir.absoluteFilePath("data"));
-			resource_path = "/test/data";
+			addIfExists(locations, app_dir.absoluteFilePath(QString::fromLatin1("data")));
+			resource_path = QString::fromLatin1("/test/data");
 			break;
 	
 		case TRANSLATION:
@@ -98,7 +107,7 @@ QStringList MapperResource::getLocations(MapperResource::RESOURCE_TYPE resource_
 			// Always load embedded translations first if enabled
 			addIfExists(locations, ":/translations");
 #endif
-			resource_path = "/translations";
+			resource_path = QString::fromLatin1("/translations");
 			break;
 			
 		default:
@@ -108,19 +117,19 @@ QStringList MapperResource::getLocations(MapperResource::RESOURCE_TYPE resource_
 #if defined(MAPPER_DEVELOPMENT_BUILD) && defined(MAPPER_DEVELOPMENT_RES_DIR)
 	// Use the directory where Mapper is built during development, 
 	// even for the unit tests located in other directories.
-	QString build_dir(MAPPER_DEVELOPMENT_RES_DIR + resource_path);
+	QString build_dir = QLatin1String(MAPPER_DEVELOPMENT_RES_DIR) + resource_path;
 	addIfExists(locations, build_dir);
 #endif
 	
 #if defined(MAPPER_PACKAGE_NAME)
 	// Linux: program in xxx/bin, resources in xxx/bin/../share/PACKAGE_NAME
-	QString linux_dir(app_dir.absoluteFilePath(QString("../share/") + MAPPER_PACKAGE_NAME + resource_path));
+	QString linux_dir(app_dir.absoluteFilePath(QLatin1String("../share/") + QString::fromUtf8(MAPPER_PACKAGE_NAME) + resource_path));
 	addIfExists(locations, linux_dir);
 #endif
 	
 #if defined(Q_OS_MAC)
 	// Mac OS X: load resources from the Resources directory of the bundle
-	QString osx_dir(app_dir.absoluteFilePath("../Resources" + resource_path));
+	QString osx_dir(app_dir.absoluteFilePath(QLatin1String("../Resources") + resource_path));
 	addIfExists(locations, osx_dir);
 #elif defined(Q_OS_WIN)
 	// Windows: load resources from the application directory
@@ -128,12 +137,12 @@ QStringList MapperResource::getLocations(MapperResource::RESOURCE_TYPE resource_
 	addIfExists(locations, win_dir);
 #elif defined(Q_OS_ANDROID)
 	// Android: load resources from the application directory
-	QString assets_dir(QStringLiteral("assets:") + resource_path);
+	QString assets_dir(QString::fromLatin1("assets:") + resource_path);
 	addIfExists(locations, assets_dir);
 #endif
 	
 	// General default path: Qt resource system
-	addIfExists(locations, QString(":") + resource_path);
+	addIfExists(locations, QLatin1Char(':') + resource_path);
 	
 	return locations;
 }
@@ -148,11 +157,11 @@ QStringList MapperResource::getProgramLocations(MapperResource::RESOURCE_TYPE re
 	{
 		case ASSISTANT:
 #if defined(Q_OS_WIN)
-			program_name = "assistant.exe";
+			program_name = QString::fromLatin1("assistant.exe");
 #elif defined(Q_OS_MAC)
-			program_name = "Assistant";
+			program_name = QString::fromLatin1("Assistant");
 #else
-			program_name = "assistant";
+			program_name = QString::fromLatin1("assistant");
 #endif
 			break;
 		default:
@@ -160,14 +169,14 @@ QStringList MapperResource::getProgramLocations(MapperResource::RESOURCE_TYPE re
 	}
 	
 #if defined(MAPPER_DEVELOPMENT_BUILD) and defined(QT_QTASSISTANT_EXECUTABLE)
-	addIfExists(locations, QString(QT_QTASSISTANT_EXECUTABLE));
+	addIfExists(locations, QString::fromUtf8(QT_QTASSISTANT_EXECUTABLE));
 #endif
 	
 	QDir app_dir(QCoreApplication::applicationDirPath());
 	
 #if defined(Mapper_PACKAGE_ASSISTANT) and defined(MAPPER_PACKAGE_NAME)
 	// Linux: extra binaries in xxx/bin/../share/PACKAGE_NAME/bin
-	addIfExists(locations, app_dir.absoluteFilePath(QString("../lib/") + MAPPER_PACKAGE_NAME + "/bin/" + program_name));
+	addIfExists(locations, app_dir.absoluteFilePath(QLatin1String("../lib/") + QString::fromUtf8(MAPPER_PACKAGE_NAME) + QLatin1String("/bin/") + program_name));
 #endif
 	
 	// Find the program which is in the same directory as Mapper

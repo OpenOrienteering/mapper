@@ -79,7 +79,7 @@ TestMap::TestMap()
 	MapColor* black = new MapColor();
 	black->setCmyk(MapColorCmyk(0.0f, 0.0f, 0.0f, 1.0f));
 	black->setOpacity(1.0f);
-	black->setName("black");
+	black->setName(QString::fromLatin1("black"));
 	map->addColor(black, 0);
 	
 	line_symbol = new LineSymbol();
@@ -109,7 +109,7 @@ TestMap::~TestMap()
 
 TestMapEditor::TestMapEditor(Map* map)
 {
-	window = new MainWindow(true);
+	window = new MainWindow();
 	editor = new MapEditorController(MapEditorController::MapEditor, map);
 	window->setController(editor);
 	map_widget = editor->getMainWidget();

@@ -168,6 +168,26 @@ void MapEditorTool::gestureStarted()
 }
 
 
+// static
+QCursor MapEditorTool::scaledToScreen(const QCursor& unscaled_cursor)
+{
+	auto scale = Settings::getInstance().getSetting(Settings::General_PixelsPerInch).toReal() / 96.0;
+	if (unscaled_cursor.shape() == Qt::BitmapCursor
+	    && scale > 1.5)
+	{
+		// Need to scale our low res image for high DPI screen
+		const auto unscaled_pixmap = unscaled_cursor.pixmap();
+		const auto scaled_hotspot = QPointF{ unscaled_cursor.hotSpot() } * scale;
+		return QCursor{ unscaled_pixmap.scaledToWidth(unscaled_pixmap.width() * scale, Qt::SmoothTransformation),
+		                qRound(scaled_hotspot.x()), qRound(scaled_hotspot.y()) };
+	}
+	else
+	{
+		return unscaled_cursor;
+	}
+}
+
+
 void MapEditorTool::useTouchCursor(bool enabled)
 {
 	uses_touch_cursor = enabled;

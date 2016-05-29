@@ -1,5 +1,5 @@
 #
-#    Copyright 2015 Kai Pastor
+#    Copyright 2015, 2016 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -28,14 +28,25 @@ endif()
 
 set(PRINTSUPPORT_SRCS
   advanced_pdf_printer.cpp
+  printer_properties.h
   ${FORK_VERSION}/advanced_pdf.cpp
   ${FORK_VERSION}/printengine_advanced_pdf.cpp
   ${FORK_VERSION}/qfontsubset.cpp
 )
 
+if(WIN32)
+	list(APPEND PRINTSUPPORT_SRCS printer_properties_win.cpp)
+else()
+	list(APPEND PRINTSUPPORT_SRCS printer_properties.cpp)
+endif()
 
 add_library(printsupport STATIC ${PRINTSUPPORT_SRCS})
 
+target_compile_definitions(printsupport PRIVATE
+  QT_NO_CAST_FROM_ASCII
+  QT_NO_CAST_TO_ASCII
+  QT_USE_QSTRINGBUILDER
+)
 target_include_directories(printsupport
   BEFORE PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/${FORK_VERSION}"
   INTERFACE "${CMAKE_CURRENT_SOURCE_DIR}"

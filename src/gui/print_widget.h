@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012, 2013, 2014 Kai Pastor
+ *    Copyright 2012-2016  Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -21,8 +21,8 @@
 
 #ifdef QT_PRINTSUPPORT_LIB
 
-#ifndef _OPENORIENTEERING_PRINT_WIDGET_H_
-#define _OPENORIENTEERING_PRINT_WIDGET_H_
+#ifndef OPENORIENTEERING_PRINT_WIDGET_H
+#define OPENORIENTEERING_PRINT_WIDGET_H
 
 #include <QPrinterInfo>
 #include <QWidget>
@@ -72,13 +72,13 @@ public:
 	Q_DECLARE_FLAGS(TaskFlags, TaskFlag)
 	
 	/** Constructs a new print widget. */
-	PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, MapEditorController* editor, QWidget* parent = NULL);
+	PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, MapEditorController* editor, QWidget* parent = nullptr);
 	
 	/** Destroys the widget. */
-	virtual ~PrintWidget();
+	~PrintWidget() override;
 	
 	/** Indicates the default widget size. */
-	virtual QSize sizeHint() const;
+	QSize sizeHint() const override;
 	
 	/** Returns a translated name for the given paper size. */
 	static QString toString(QPrinter::PaperSize size);
@@ -136,6 +136,9 @@ signals:
 protected slots:
 	/** This slot reacts to changes of the target combobox. */
 	void targetChanged(int index) const;
+	
+	/** Opens a dialog to change printer properties. */
+	void propertiesClicked();
 	
 	/** This slot reacts to changes of the paper size combobox. */
 	void paperSizeChanged(int index) const;
@@ -261,6 +264,7 @@ private:
 	QDialogButtonBox* button_box;
 	
 	QComboBox* target_combo;
+	QToolButton* printer_properties_button;
 	QComboBox* paper_size_combo;
 	QWidget*   page_orientation_widget;
 	QButtonGroup* page_orientation_group;

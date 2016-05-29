@@ -453,7 +453,7 @@ const Qt::Key EditTool::delete_object_key = Qt::Key_Delete;
 #endif
 
 EditTool::EditTool(MapEditorController* editor, MapEditorTool::Type type, QAction* tool_button)
- : MapEditorToolBase { QCursor(QPixmap(":/images/cursor-hollow.png"), 1, 1), type, editor, tool_button }
+ : MapEditorToolBase { QCursor(QPixmap(QString::fromLatin1(":/images/cursor-hollow.png")), 1, 1), type, editor, tool_button }
  , object_selector { new ObjectSelector(map()) }
 {
 	; // nothing

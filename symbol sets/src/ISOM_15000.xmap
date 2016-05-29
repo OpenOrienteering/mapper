@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map xmlns="http://openorienteering.org/apps/mapper/xml/v2" version="5">
     <notes></notes>
-    <georeferencing scale="15000"/>
+    <georeferencing scale="15000">
+        <projected_crs id="Local"/>
+    </georeferencing>
     <colors count="22">
         <color priority="0" name="Purple" c="0.200" m="1.000" y="0.000" k="0.000" opacity="1.000">
             <spotcolors>
@@ -2496,28 +2498,7 @@ A bounding line may be drawn if there is no natural boundary, as follows:
         </symbol>
         <symbol type="2" id="150" code="709.2" name="Out-of-bounds area, dashed boundary">
             <description>A dashed line indicates intermittent marking on the ground.</description>
-            <line_symbol color="0" line_width="250" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="3000" break_length="500" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Start symbol">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
-                <mid_symbol>
-                    <symbol type="1" code="" name="Mid symbol">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="End symbol">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Dash symbol">
-                        <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
-            </line_symbol>
+            <line_symbol color="0" line_width="250" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="3000" break_length="500" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="4" id="151" code="710" name="Dangerous area">
             <description>An area presenting danger to the competitor is shown with cross-hatched diagonal lines.</description>
@@ -7200,18 +7181,11 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     </templates>
     <view>
         <grid color="#646464" display="0" alignment="0" additional_rotation="0" unit="1" h_spacing="500" v_spacing="500" h_offset="0" v_offset="0" snapping_enabled="true"/>
-        <map_view zoom="4" rotation="0" position_x="-8346" position_y="-30237" view_x="0" view_y="0" drag_offset_x="0" drag_offset_y="0" overprinting_simulation_enabled="true">
-            <map opacity="1"/>
+        <map_view zoom="4" rotation="0" position_x="-8346" position_y="-30237" overprinting_simulation_enabled="true">
+            <map opacity="1" visible="true"/>
             <templates count="0"/>
         </map_view>
     </view>
-    <print scale="15000" resolution="600" simulate_overprinting="true" mode="vector">
-        <page_format paper_size="A4" orientation="portrait" h_overlap="5.00" v_overlap="5.00">
-            <dimensions width="209.889" height="297.053"/>
-            <page_rect left="0.000" top="0.000" width="209.889" height="297.053"/>
-        </page_format>
-        <print_area left="-113.291" top="-178.764" width="209.889" height="297.053" center_area="true" single_page="true"/>
-    </print>
     <barrier version="6" required="0.6.0">
         <undo/>
         <redo/>

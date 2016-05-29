@@ -30,6 +30,7 @@
 
 #include "util.h"
 
+
 Settings::Settings()
  : QObject()
 {
@@ -76,15 +77,15 @@ Settings::Settings()
 	registerSetting(ActionGridBar_ButtonSizeMM, "ActionGridBar/button_size_mm", touch_button_minimum_size_default);
 	registerSetting(SymbolWidget_IconSizeMM, "SymbolWidget/icon_size_mm", symbol_widget_icon_size_mm_default);
 	
-	registerSetting(General_RetainCompatiblity, "retainCompatiblity", true);
+	registerSetting(General_RetainCompatiblity, "retainCompatiblity", false);
 	registerSetting(General_AutosaveInterval, "autosave", 15); // unit: minutes
 	registerSetting(General_Language, "language", QVariant((int)QLocale::system().language()));
 	registerSetting(General_PixelsPerInch, "pixelsPerInch", ppi);
-	registerSetting(General_TranslationFile, "translationFile", QVariant(QString::null));
+	registerSetting(General_TranslationFile, "translationFile", QVariant(QString{}));
 	registerSetting(General_RecentFilesList, "recentFileList", QVariant(QStringList()));
 	registerSetting(General_OpenMRUFile, "openMRUFile", false);
-	registerSetting(General_Local8BitEncoding, "local_8bit_encoding", "Windows-1252");
-	registerSetting(General_NewOcd8Implementation, "new_ocd8_implementation_v0.6", true);
+	registerSetting(General_Local8BitEncoding, "local_8bit_encoding", QLatin1String("Windows-1252"));
+	registerSetting(General_NewOcd8Implementation, "new_ocd8_implementation", true);
 	registerSetting(General_StartDragDistance, "startDragDistance", start_drag_distance_default);
 	
 	registerSetting(HomeScreen_TipsVisible, "HomeScreen/tipsVisible", true);
@@ -94,42 +95,61 @@ Settings::Settings()
 	registerSetting(MapDisplay_Antialiasing, "MapDisplay/antialiasing", Util::isAntialiasingRequired(getSetting(General_PixelsPerInch).toReal()));
 	
 	// Migrate old settings
-	static QVariant current_version("0.5.9");
-	QSettings settings;
-	if (settings.value("version") != current_version)
+	static bool migration_checked = false;
+	if (!migration_checked)
 	{
-		migrateValue("General/language", General_Language, settings);
-		if (migrateValue("MapEditor/click_tolerance", MapEditor_ClickToleranceMM, settings))
-			settings.setValue(getSettingPath(MapEditor_ClickToleranceMM), Util::pixelToMMLogical(settings.value(getSettingPath(MapEditor_ClickToleranceMM)).toFloat()));
-		if (migrateValue("MapEditor/snap_distance", MapEditor_SnapDistanceMM, settings))
-			settings.setValue(getSettingPath(MapEditor_SnapDistanceMM), Util::pixelToMMLogical(settings.value(getSettingPath(MapEditor_SnapDistanceMM)).toFloat()));
-		if (migrateValue("RectangleTool/helper_cross_radius", RectangleTool_HelperCrossRadiusMM, settings))
-			settings.setValue(getSettingPath(RectangleTool_HelperCrossRadiusMM), Util::pixelToMMLogical(settings.value(getSettingPath(RectangleTool_HelperCrossRadiusMM)).toFloat()));
-		
-		settings.setValue("version", current_version);
-		
-		if (!current_version.toString().startsWith("0."))
+		QVariant current_version { QLatin1String("0.5.9") };
+		QSettings settings;
+		if (settings.value(QString::fromLatin1("version")) != current_version)
 		{
-			// Future cleanup
-			settings.remove("new_ocd8_implementation");
+			migrateSettings(settings, current_version);
 		}
+		
+		if (!settings.value(QString::fromLatin1("new_ocd8_implementation_v0.6")).isNull())
+		{
+			// Remove/reset to default
+			settings.remove(QString::fromLatin1("new_ocd8_implementation_v0.6"));
+			settings.remove(QString::fromLatin1("new_ocd8_implementation"));
+		}
+		
+		migration_checked = true;
 	}
 }
 
-void Settings::registerSetting(Settings::SettingsEnum id, const QString& path, const QVariant& default_value)
+void Settings::registerSetting(Settings::SettingsEnum id, const char* path_latin1, const QVariant& default_value)
 {
-	setting_paths[id] = path;
+	setting_paths[id] = QString::fromLatin1(path_latin1);
 	setting_defaults[id] = default_value;
 }
 
-bool Settings::migrateValue(const QString& old_key, SettingsEnum new_setting, QSettings& settings) const
+void Settings::migrateSettings(QSettings& settings, QVariant version)
 {
+	migrateValue("General/language", General_Language, settings);
+	if (migrateValue("MapEditor/click_tolerance", MapEditor_ClickToleranceMM, settings))
+		settings.setValue(getSettingPath(MapEditor_ClickToleranceMM), Util::pixelToMMLogical(settings.value(getSettingPath(MapEditor_ClickToleranceMM)).toFloat()));
+	if (migrateValue("MapEditor/snap_distance", MapEditor_SnapDistanceMM, settings))
+		settings.setValue(getSettingPath(MapEditor_SnapDistanceMM), Util::pixelToMMLogical(settings.value(getSettingPath(MapEditor_SnapDistanceMM)).toFloat()));
+	if (migrateValue("RectangleTool/helper_cross_radius", RectangleTool_HelperCrossRadiusMM, settings))
+		settings.setValue(getSettingPath(RectangleTool_HelperCrossRadiusMM), Util::pixelToMMLogical(settings.value(getSettingPath(RectangleTool_HelperCrossRadiusMM)).toFloat()));
+	
+	if (!version.toByteArray().startsWith("0."))
+	{
+		// Future cleanup
+		settings.remove(QString::fromLatin1("new_ocd8_implementation"));
+	}
+
+	settings.setValue(QString::fromLatin1("version"), version);
+}
+
+bool Settings::migrateValue(const char* old_key_latin1, SettingsEnum new_setting, QSettings& settings) const
+{
+	auto old_key = QString::fromLatin1(old_key_latin1);
 	bool value_migrated = false;
 	if (settings.contains(old_key))
 	{
 		const QString new_key = getSettingPath(new_setting);
 		Q_ASSERT_X(new_key != old_key, "Settings::migrateValue",
-		  QString("New key \"%1\" equals old key").arg(new_key).toLocal8Bit().constData() );
+		  qPrintable(QString::fromLatin1("New key \"%1\" equals old key").arg(new_key)) );
 		
 		if (!settings.contains(new_key))
 		{

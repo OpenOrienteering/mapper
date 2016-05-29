@@ -1,6 +1,6 @@
 /*
  *    Copyright 2013 Thomas Schöps
- *    Copyright 2014 Kai Pastor
+ *    Copyright 2014, 2016 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -27,43 +27,41 @@
 #  include <jni.h>
 #  include <QtAndroidExtras/QAndroidJniObject>
 #endif
-#include <QPainter>
-#include <QDebug>
 #include <qmath.h>
+#include <QPainter>
 #include <QTimer>
 
 #include "core/georeferencing.h"
+#include "compass.h"
 #include "map_widget.h"
 #include "util.h"
-#include "compass.h"
+#include "util/backports.h"
 
-GPSDisplay::GPSDisplay(MapWidget* widget, const Georeferencing& georeferencing)
- : QObject()
- , visible(false)
- , source(NULL)
+GPSDisplay::GPSDisplay(MapWidget* widget, const Georeferencing& georeferencing, QObject* parent)
+ : QObject(parent)
  , widget(widget)
  , georeferencing(georeferencing)
+ , source(nullptr)
+ , tracking_lost(false)
+ , has_valid_position(false)
+ , gps_updated(false)
+ , visible(false)
+ , distance_rings_enabled(false)
+ , heading_indicator_enabled(false)
 {
-	gps_updated = false;
-	tracking_lost = false;
-	has_valid_position = false;
-	
-	distance_rings_enabled = false;
-	heading_indicator_enabled = false;
-	
 #if defined(QT_POSITIONING_LIB)
 	source = QGeoPositionInfoSource::createDefaultSource(this);
 	if (!source)
 	{
-		qDebug() << "Cannot create QGeoPositionInfoSource!";
+		qDebug("Cannot create QGeoPositionInfoSource!");
 		return;
 	}
 	
 	source->setPreferredPositioningMethods(QGeoPositionInfoSource::SatellitePositioningMethods);
 	source->setUpdateInterval(1000);
-	connect(source, SIGNAL(positionUpdated(const QGeoPositionInfo&)), this, SLOT(positionUpdated(const QGeoPositionInfo&)), Qt::QueuedConnection);
-	connect(source, SIGNAL(error(QGeoPositionInfoSource::Error)), this, SLOT(error(QGeoPositionInfoSource::Error)));
-	connect(source, SIGNAL(updateTimeout()), this, SLOT(updateTimeout()));
+	connect(source, &QGeoPositionInfoSource::positionUpdated, this, &GPSDisplay::positionUpdated, Qt::QueuedConnection);
+	connect(source, QOverload<QGeoPositionInfoSource::Error>::of(&QGeoPositionInfoSource::error), this, &GPSDisplay::error);
+	connect(source, &QGeoPositionInfoSource::updateTimeout, this, &GPSDisplay::updateTimeout);
 #elif defined(MAPPER_DEVELOPMENT_BUILD)
 	// DEBUG
 	QTimer* debug_timer = new QTimer(this);
@@ -78,7 +76,7 @@ GPSDisplay::GPSDisplay(MapWidget* widget, const Georeferencing& georeferencing)
 GPSDisplay::~GPSDisplay()
 {
 	stopUpdates();
-	widget->setGPSDisplay(NULL);
+	widget->setGPSDisplay(nullptr);
 }
 
 bool GPSDisplay::checkGPSEnabled()
@@ -172,12 +170,11 @@ void GPSDisplay::paint(QPainter* painter)
 	painter->setBrush(QBrush(tracking_lost ? Qt::gray : Qt::red));
 	if (heading_indicator_enabled)
 	{
-		const qreal arrow_length = Util::mmToPixelLogical(1.5f);
-		const qreal heading_indicator_length = Util::mmToPixelLogical(9999.0f); // very long
+		const qreal base_length_unit = Util::mmToPixelLogical(0.6);
 
 		// For heading indicator, get azimuth from compass and calculate
 		// the relative rotation to map view rotation, clockwise.
-		float heading_rotation_deg = Compass::getInstance().getCurrentAzimuth() + 180.0f / M_PI * widget->getMapView()->getRotation();
+		qreal heading_rotation_deg = Compass::getInstance().getCurrentAzimuth() + qRadiansToDegrees(widget->getMapView()->getRotation());
 		
 		painter->save();
 		painter->translate(gps_pos);
@@ -185,17 +182,17 @@ void GPSDisplay::paint(QPainter* painter)
 		
 		// Draw arrow
 		static const QPointF arrow_points[4] = {
-			QPointF(0, -arrow_length),
-			QPointF(0.4f * arrow_length, 0.4f * arrow_length),
+			QPointF(0, -2.5 * base_length_unit),
+			QPointF(base_length_unit, base_length_unit),
 			QPointF(0, 0),
-			QPointF(-0.4f * arrow_length, 0.4f * arrow_length)
+			QPointF(base_length_unit, base_length_unit)
 		};
 		painter->drawPolygon(arrow_points, 4);
 		
 		// Draw heading line
-		painter->setPen(QPen(Qt::gray, Util::mmToPixelLogical(0.1f)));
+		painter->setPen(QPen(Qt::gray, base_length_unit / 6));
 		painter->setBrush(Qt::NoBrush);
-		painter->drawLine(QPointF(0, 0), QPointF(0, -1 * heading_indicator_length));
+		painter->drawLine(QPointF(0, 0), QPointF(0, -10000 * base_length_unit)); // very long
 		
 		painter->restore();
 	}
@@ -205,27 +202,28 @@ void GPSDisplay::paint(QPainter* painter)
 		painter->drawEllipse(gps_pos, dot_radius, dot_radius);
 	}
 	
+	auto meters_to_pixels = widget->getMapView()->lengthToPixel(qreal(1000000) / georeferencing.getScaleDenominator());
 	// Draw distance circles
 	if (distance_rings_enabled)
 	{
 		const int num_distance_rings = 2;
-		const float distance_ring_radius_meters = 10;
+		const qreal distance_ring_radius_meters = 10;
 		
-		float distance_ring_radius_pixels = widget->getMapView()->lengthToPixel(100000.0 * distance_ring_radius_meters / georeferencing.getScaleDenominator());
-		painter->setPen(QPen(Qt::gray, Util::mmToPixelLogical(0.1f)));
+		auto distance_ring_radius_pixels = distance_ring_radius_meters * meters_to_pixels;
+		painter->setPen(QPen(Qt::gray, Util::mmToPixelLogical(0.1)));
 		painter->setBrush(Qt::NoBrush);
-		for (int i = 0; i < num_distance_rings; ++ i)
+		auto radius = distance_ring_radius_pixels;
+		for (int i = 0; i < num_distance_rings; ++i)
 		{
-			float radius = (i + 1) * distance_ring_radius_pixels;
 			painter->drawEllipse(gps_pos, radius, radius);
+			radius += distance_ring_radius_pixels;
 		}
 	}
 	
 	// Draw accuracy circle
 	if (latest_gps_coord_accuracy >= 0)
 	{
-		float accuracy_meters = latest_gps_coord_accuracy;
-		float accuracy_pixels = widget->getMapView()->lengthToPixel(1000000.0 * accuracy_meters / georeferencing.getScaleDenominator());
+		auto accuracy_pixels = latest_gps_coord_accuracy * meters_to_pixels;
 		
 		painter->setPen(QPen(tracking_lost ? Qt::gray : Qt::red, Util::mmToPixelLogical(0.2f)));
 		painter->setBrush(Qt::NoBrush);
@@ -286,7 +284,7 @@ void GPSDisplay::updateTimeout()
 void GPSDisplay::debugPositionUpdate()
 {
 #if MAPPER_DEVELOPMENT_BUILD
-	if (! visible)
+	if (!visible)
 		return;
 	
 	QTime now = QTime::currentTime();
@@ -344,17 +342,16 @@ MapCoordF GPSDisplay::calcLatestGPSCoord(bool& ok)
 	latest_gps_coord = georeferencing.toMapCoordF(latlon, &ok);
 	if (!ok)
 	{
-		qDebug() << "GPSDisplay::calcLatestGPSCoord(): Cannot convert LatLon to MapCoordF!";
+		qDebug("GPSDisplay::calcLatestGPSCoord(): Cannot convert LatLon to MapCoordF!");
 		return latest_gps_coord;
 	}
 	
 	gps_updated = false;
 	ok = true;
-	return latest_gps_coord;
 #else
 	ok = has_valid_position;
-	return latest_gps_coord;
 #endif
+	return latest_gps_coord;
 }
 
 void GPSDisplay::updateMapWidget()

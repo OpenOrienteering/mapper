@@ -574,12 +574,24 @@ void MapWidget::updateCursorposLabel(const MapCoordF pos)
 		if (coords_type == PROJECTED_COORDS)
 		{
 			const QPointF projected_point(georef.toProjectedCoords(pos));
-			cursorpos_label->setText(
-			  QStringLiteral("%1 %2 (%3)").
-			  arg(QString::number(projected_point.x(), 'f', 0)).
-			  arg(QString::number(projected_point.y(), 'f', 0)).
-			  arg(tr("m", "meters"))
-			); 
+			if (qAbs(georef.getGridScaleFactor() - 1.0) < 0.02)
+			{
+				// Grid unit differs less than 2% from meter.
+				cursorpos_label->setText(
+				  QStringLiteral("%1 %2 (%3)").
+				  arg(QString::number(projected_point.x(), 'f', 0)).
+				  arg(QString::number(projected_point.y(), 'f', 0)).
+				  arg(tr("m", "meters"))
+				); 
+			}
+			else
+			{
+				cursorpos_label->setText(
+				  QStringLiteral("%1 %2").
+				  arg(QString::number(projected_point.x(), 'f', 0)).
+				  arg(QString::number(projected_point.y(), 'f', 0))
+				); 
+			}
 		}
 		else if (coords_type == GEOGRAPHIC_COORDS)
 		{
@@ -594,7 +606,7 @@ void MapWidget::updateCursorposLabel(const MapCoordF pos)
 		{
 			const LatLon lat_lon(georef.toGeographicCoords(pos, &ok));
 			cursorpos_label->setText(
-			  QString::fromUtf8("%1 %2").
+			  QStringLiteral("%1 %2").
 			  arg(georef.degToDMS(lat_lon.latitude())).
 			  arg(georef.degToDMS(lat_lon.longitude()))
 			); 
@@ -808,7 +820,7 @@ void MapWidget::paintEvent(QPaintEvent* event)
 		else if (view->getMap()->getNumSymbols() == 0)
 			showHelpMessage(&painter, tr("No symbols!\n\nNow define some symbols:\nRight-click in the symbol bar\nand select \"New symbol\"\nto create one."));
 		else
-			showHelpMessage(&painter, tr("Ready to draw!\n\nStart drawing or load a base map.\nTo load a base map, click\nTemplates -> Open template...") + "\n\n" + tr("Hint: Hold the middle mouse button to drag the map,\nzoom using the mouse wheel, if available."));
+			showHelpMessage(&painter, tr("Ready to draw!\n\nStart drawing or load a base map.\nTo load a base map, click\nTemplates -> Open template...") + QLatin1String("\n\n") + tr("Hint: Hold the middle mouse button to drag the map,\nzoom using the mouse wheel, if available."));
 		painter.restore();
 	}
 	else

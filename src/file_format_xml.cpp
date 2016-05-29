@@ -25,7 +25,6 @@
 #include <QDebug>
 #include <QFile>
 #include <QScopedValueRollback>
-#include <QStringBuilder>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
@@ -59,22 +58,22 @@ const int XMLFileFormat::current_version = 6;
 
 int XMLFileFormat::active_version = 5; // updated by XMLFileExporter::doExport()
 
-const QString XMLFileFormat::magic_string = "<?xml ";
-const QString XMLFileFormat::mapper_namespace = "http://openorienteering.org/apps/mapper/xml/v2";
+namespace {
+const char* magic_string = "<?xml ";
+const QString mapper_namespace = QString::fromLatin1("http://openorienteering.org/apps/mapper/xml/v2");
+}
 
 XMLFileFormat::XMLFileFormat()
- : FileFormat(MapFile, "XML", ImportExport::tr("OpenOrienteering Mapper"), "omap", 
+ : FileFormat(MapFile, "XML", ImportExport::tr("OpenOrienteering Mapper"), QString::fromLatin1("omap"),
               ImportSupported | ExportSupported) 
 {
-	addExtension("xmap");
+	addExtension(QString::fromLatin1("xmap"));
 }
 
 bool XMLFileFormat::understands(const unsigned char *buffer, size_t sz) const
 {
-	uint len = magic_string.length();
-	if (sz >= len && memcmp(buffer, magic_string.toUtf8().data(), len) == 0) 
-		return true;
-	return false;
+	static const uint len = qstrlen(magic_string);
+	return (sz >= len && memcmp(buffer, magic_string, len) == 0);
 }
 
 Importer *XMLFileFormat::createImporter(QIODevice* stream, Map *map, MapView *view) const
@@ -166,13 +165,13 @@ XMLFileExporter::XMLFileExporter(QIODevice* stream, Map *map, MapView *view)
 {
 	// Determine auto-formatting default from filename, if possible.
 	auto file = qobject_cast<const QFileDevice*>(stream);
-	bool auto_formatting = (file && file->fileName().contains(".xmap"));
-	setOption("autoFormatting", auto_formatting);
+	bool auto_formatting = (file && file->fileName().contains(QLatin1String(".xmap")));
+	setOption(QString::fromLatin1("autoFormatting"), auto_formatting);
 }
 
 void XMLFileExporter::doExport()
 {
-	if (option("autoFormatting").toBool() == true)
+	if (option(QString::fromLatin1("autoFormatting")).toBool())
 		xml.setAutoFormatting(true);
 	
 	int current_version = XMLFileFormat::current_version;
@@ -184,7 +183,7 @@ void XMLFileExporter::doExport()
 		throw FileFormatException(tr("Older versions of Mapper do not support multiple map parts. To save the map in compatibility mode, you must first merge all map parts."));
 	}
 	
-	xml.writeDefaultNamespace(XMLFileFormat::mapper_namespace);
+	xml.writeDefaultNamespace(mapper_namespace);
 	xml.writeStartDocument();
 	
 	{

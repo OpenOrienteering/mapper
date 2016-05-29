@@ -156,7 +156,7 @@ void SymbolToolTip::scheduleShow(const Symbol* symbol, QRect icon_rect)
 	this->icon_rect = icon_rect;
 	this->symbol = symbol;
 	
-	name_label->setText(symbol->getNumberAsString() + " <b>" + symbol->getName() + "</b>");
+	name_label->setText(symbol->getNumberAsString() + QLatin1String(" <b>") + symbol->getName() + QLatin1String("</b>"));
 	
 	QString help_text(symbol->getDescription());
 	if (help_text.isEmpty())
@@ -165,8 +165,8 @@ void SymbolToolTip::scheduleShow(const Symbol* symbol, QRect icon_rect)
 	}
 	else
 	{
-		help_text.replace("\n", "<br>");
-		help_text.remove('\r');
+		help_text.replace(QLatin1Char('\n'), QStringLiteral("<br>"));
+		help_text.remove(QLatin1Char('\r'));
 	}
 	description_label->setText(help_text);
 	description_label->hide();

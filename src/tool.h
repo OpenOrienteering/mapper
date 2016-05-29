@@ -273,6 +273,15 @@ public:
 	
 protected:
 	/**
+	 * Returns a cursor which is scaled to the screen's resolution.
+	 * 
+	 * Return standard cursor shapes unchanged, but scales pixmap cursors
+	 * from (default) 96 dpi to the screen's physical dpi (according to the
+	 * settings) if the difference is significant.
+	 */
+	static QCursor scaledToScreen(const QCursor& unscaled_cursor);
+	
+	/**
 	 * Sets the flag which indicates whether the touch cursor shall be used.
 	 * 
 	 * @see usesTouchCursor()

@@ -284,6 +284,8 @@ public slots:
 	
 	/** Adjusts the coordinates display of the map widget to the selected option. */
 	void coordsDisplayChanged();
+	/** Copies the displayed coordinates to the clipboard. */
+	void copyDisplayedCoords();
 	
 	/** Shows or hides the symbol pane. */
 	void showSymbolWindow(bool show);
@@ -487,9 +489,9 @@ public slots:
 	void templateDeleted(int pos, const Template* temp);
 	
 	/** Imports a track file (GPX, DXF, OSM, ...) into the map */
-	void importGeoFile(const QString& filename);
+	bool importGeoFile(const QString& filename);
 	/** Imports a map file into the loaded map */
-	bool importMapFile(const QString& filename);
+	bool importMapFile(const QString& filename, bool show_errors);
 	/** Shows the import file selector and imports the selected file, if any. */
 	void importClicked();
 	
@@ -569,9 +571,9 @@ private:
 	
 	void createTagEditor();
 	
-	QAction* newAction(const char* id, const QString& tr_text, QObject* receiver, const char* slot, const char* icon = NULL, const QString& tr_tip = QString::null, const QString& whatsThisLink = QString::null);
-	QAction* newCheckAction(const char* id, const QString& tr_text, QObject* receiver, const char* slot, const char* icon = NULL, const QString& tr_tip = QString::null, const QString& whatsThisLink = QString::null);
-	QAction* newToolAction(const char* id, const QString& tr_text, QObject* receiver, const char* slot, const char* icon = NULL, const QString& tr_tip = QString::null, const QString& whatsThisLink = QString::null);
+	QAction* newAction(const char* id, const QString& tr_text, QObject* receiver, const char* slot, const char* icon = nullptr, const QString& tr_tip = QString{}, const char* whats_this_link = nullptr);
+	QAction* newCheckAction(const char* id, const QString& tr_text, QObject* receiver, const char* slot, const char* icon = nullptr, const QString& tr_tip = QString{}, const char* whats_this_link = nullptr);
+	QAction* newToolAction(const char* id, const QString& tr_text, QObject* receiver, const char* slot, const char* icon = nullptr, const QString& tr_tip = QString{}, const char* whats_this_link = nullptr);
 	QAction* findAction(const char* id);
 	void assignKeyboardShortcuts();
 	void createActions();
@@ -599,7 +601,7 @@ private:
 	bool editing_in_progress;
 	
 	// Action handling
-	QHash<QString, QAction *> actionsById;
+	QHash<QByteArray, QAction*> actionsById;
 	
 	EditorDockWidget* print_dock_widget;
 	PrintWidget* print_widget;
@@ -728,6 +730,7 @@ private:
 	QFrame* statusbar_zoom_frame;
 	QLabel* statusbar_cursorpos_label;
 	QLabel* statusbar_objecttag_label;
+	QAction* copy_coords_act;
 	
 	QToolBar* toolbar_view;
 	QToolBar* toolbar_drawing;

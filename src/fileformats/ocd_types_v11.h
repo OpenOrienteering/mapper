@@ -1,5 +1,5 @@
 /*
- *    Copyright 2013, 2015 Kai Pastor
+ *    Copyright 2013, 2015, 2016 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -17,8 +17,8 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _OPENORIENTEERING_OCD_TYPES_V11_
-#define _OPENORIENTEERING_OCD_TYPES_V11_
+#ifndef OPENORIENTEERING_OCD_TYPES_V11_H
+#define OPENORIENTEERING_OCD_TYPES_V11_H
 
 #include "ocd_types.h"
 #include "ocd_types_v10.h"
@@ -28,23 +28,7 @@ namespace Ocd
 	
 #pragma pack(push, 1)
 	
-	struct FileHeaderV11
-	{
-		quint16 vendor_mark;
-		quint8  file_type;
-		quint8  file_status;
-		quint16 version;
-		quint8  subversion;
-		quint8  subsubversion;
-		quint32 first_symbol_block;
-		quint32 first_object_block;
-		quint32 offline_sync_serial;
-		quint32 RESERVED_MEMBER[3];
-		quint32 first_string_block;
-		quint32 file_name_pos;
-		quint32 file_name_size;
-		quint32 RESERVED_MEMBER;
-	};
+	using FileHeaderV11 = FileHeaderV10;
 	
 	struct BaseSymbolV11
 	{
@@ -64,22 +48,16 @@ namespace Ocd
 		quint8  cs_type;
 		quint8  cd_flags;
 		qint32  extent;
-		qint32  file_pos;
+		quint32 file_pos;
 		quint8  RESERVED_MEMBER[2];
 		quint16 num_colors;
 		quint16 colors[14];
 		QChar   description[64];
 		quint8  icon_bits[484];
 		quint16 group[64];
-		
-		enum StatusFlag
-		{
-			StatusProtected = 1,
-			StatusHidden    = 2
-		};
 	};
 	
-	typedef PointSymbolElementV10 PointSymbolElementV11;
+	using PointSymbolElementV11 = PointSymbolElementV10;
 	
 	struct PointSymbolV11
 	{
@@ -100,62 +78,9 @@ namespace Ocd
 		
 		BaseSymbol base;
 		
-		quint16 line_color;
-		quint16 line_width;
-		quint16 line_style;
-		qint16  dist_from_start;
-		qint16  dist_from_end;
-		qint16  main_length;
-		qint16  end_length;
-		qint16  main_gap;
-		qint16  sec_gap;
-		qint16  end_gap;
-		qint16  min_sym;
-		qint16  num_prim_sym;
-		qint16  prim_sym_dist;
-		quint16 double_mode;
-		quint16 double_flags;
-		quint16 double_color;
-		quint16 double_left_color;
-		quint16 double_right_color;
-		qint16  double_width;
-		qint16  double_left_width;
-		qint16  double_right_width;
-		qint16  double_length;
-		qint16  double_gap;
-		quint16 double_background_color;
-		quint16 RESERVED_MEMBER[2];
-		quint16 dec_mode;
-		quint16 dec_last;
-		quint16 RESERVED_MEMBER;
-		quint16 framing_color;
-		qint16  framing_width;
-		quint16 framing_style;
-		quint16 primary_data_size;
-		quint16 secondary_data_size;
-		quint16 corner_data_size;
-		quint16 start_data_size;
-		quint16 end_data_size;
-		quint8  active_symbols;
-		quint8  RESERVED_MEMBER;
+		LineSymbolCommonV8 common;
 		
 		Element begin_of_elements[1];
-		
-		enum LineStyleFlag
-		{
-			BevelJoin_FlatCap    = 0,
-			RoundJoin_RoundCap   = 1,
-			BevelJoin_PointedCap = 2,
-			RoundJoin_PointedCap = 3,
-			MiterJoin_FlatCap    = 4,
-			MiterJoin_PointedCap = 6
-		};
-		
-		enum DoubleLineFlag
-		{
-			DoubleFillColorOn       = 1,
-			DoubleBackgroundColorOn = 2
-		};
 	};
 	
 	struct AreaSymbolV11
@@ -166,37 +91,11 @@ namespace Ocd
 		BaseSymbol base;
 		
 		quint32 border_symbol;
-		quint16 fill_color;
-		quint16 hatch_mode;
-		quint16 hatch_color;
-		quint16 hatch_line_width;
-		quint16 hatch_dist;
-		qint16  hatch_angle_1;
-		qint16  hatch_angle_2;
-		quint8  fill_on;
-		quint8  border_on;
-		quint16 structure_mode;
-		quint16 structure_width;
-		quint16 structure_height;
-		qint16  structure_angle;
+		AreaSymbolCommonV8 common;
 		quint16 RESERVED_MEMBER;
 		quint16 data_size;
 		
 		Element begin_of_elements[1];
-		
-		enum HatchMode
-		{
-			HatchNone   = 0,
-			HatchSingle = 1,
-			HatchCross  = 2
-		};
-		
-		enum StructureMode
-		{
-			StructureNone = 0,
-			StructureAlignedRows = 1,
-			StructureShiftedRows = 2
-		};
 	};
 	
 	struct TextSymbolV11
@@ -205,65 +104,22 @@ namespace Ocd
 		
 		BaseSymbol base;
 		
-		Utf8PascalString<31> font_name;
-		quint16 font_color;
-		quint16 font_size;
-		quint16 font_weight;
-		quint8  font_italic;
-		quint8  RESERVED_MEMBER;
-		quint16 char_spacing;
-		quint16 word_spacing;
-		quint16 alignment;
-		quint16 line_spacing;
-		qint16  para_spacing;
-		quint16 indent_first_line;
-		quint16 indent_other_lines;
-		quint16 num_tabs;
-		quint32 tab_pos[32];
-		quint16 line_below_on;
-		quint16 line_below_color;
-		quint16 line_below_width;
-		quint16 line_below_offset;
-		quint16 RESERVED_MEMBER;
-		quint8  framing_mode;
-		quint8  framing_line_style;
-		quint8  point_symbol_on;
-		quint32 point_symbol_number;
-		QChar   RESERVED_MEMBER[18];
-		quint16 framing_border_left;
-		quint16 framing_border_bottom;
-		quint16 framing_border_right;
-		quint16 framing_border_top;
-		quint16 framing_color;
-		quint16 framing_line_width;
-		quint16 RESERVED_MEMBER[2];
-		quint16 framing_offset_x;
-		quint16 framing_offset_y;
+		Utf8PascalString<31>    font_name;
+		BasicTextAttributesV8   basic;
+		SpecialTextAttributesV8 special;
+		quint16                 RESERVED_MEMBER;
+		FramingAttributesV8     framing;
 	};
 	
-	struct LineTextSymbolV11 // TODO: use and test...
+	struct LineTextSymbolV11
 	{
 		typedef BaseSymbolV11 BaseSymbol;
 		
 		BaseSymbol base;
 		
-		Utf8PascalString<31> font_name;
-		quint16 font_color;
-		quint16 font_size;
-		quint16 font_weight;
-		quint8  font_italic;
-		quint8  RESERVED_MEMBER;
-		quint16 char_spacing;
-		quint16 word_spacing;
-		quint16 alignment;
-		quint8  framing_mode;
-		quint8  framing_line_style;
-		QChar   RESERVED_MEMBER[32];
-		quint16 framing_color;
-		quint16 framing_line_width;
-		quint16 RESERVED_MEMBER[2];
-		quint16 framing_offset_x;
-		quint16 framing_offset_y;
+		Utf8PascalString<31>  font_name;
+		BasicTextAttributesV8 basic;
+		FramingAttributesV8   framing;
 	};
 	
 	struct RectangleSymbolV11
@@ -280,61 +136,17 @@ namespace Ocd
 		quint16 cell_height;
 		quint16 RESERVED_MEMBER[2];
 		quint16 unnumbered_cells;
-		QChar   unnumbered_text[4];
+		Utf8PascalString<3> unnumbered_text;
 		quint16 line_style;
-		QChar   RESERVED_MEMBER[32];
+		Utf8PascalString<31> RESERVED_MEMBER;
 		quint16 RESERVED_MEMBER;
-		quint16 font_size;
+		quint16 font_size_V10;      /// \since V10
 		quint16 RESERVED_MEMBER[4];
 	};
 	
-	struct ObjectIndexEntryV11
-	{
-		OcdPoint32 bottom_left_bound;
-		OcdPoint32 top_right_bound;
-		quint32 pos;
-		quint32 size;
-		qint32  symbol;
-		quint8  type;
-		quint8  encryption_mode;
-		quint8  status;
-		quint8  view_type;
-		quint16 color;
-		quint16 group;
-		quint16 layer;
-		quint8  layout_font;
-		quint8  RESERVED_MEMBER;
-		
-		enum ObjectStatus
-		{
-			StatusDeleted = 0,
-			StatusNormal  = 1,
-			StatusHidden  = 2,
-			StatusDeletedForUndo = 3
-		};
-	};
+	using ObjectIndexEntryV11 = ObjectIndexEntryV10;
 	
-	struct ObjectV11
-	{
-		typedef ObjectIndexEntryV11 IndexEntryType;
-		
-		qint32  symbol;
-		quint8  type;
-		quint8  customer;
-		qint16  angle;
-		quint32 num_items;
-		quint16 num_text;
-		quint8  mark;
-		quint8  snapping_mark;
-		qint32  color;
-		quint16 line_width;
-		quint16 diam_flags;
-		quint32 server_object_id;
-		quint32 height;
-		quint64 date;
-		
-		OcdPoint32 coords[1];
-	};
+	using ObjectV11 = ObjectV10;
 	
 #pragma pack(pop)
 	
@@ -356,17 +168,7 @@ namespace Ocd
 		typedef ObjectV11 Object;
 		
 		typedef Utf8Encoding Encoding;
-		
-		enum SymbolType
-		{
-			TypePoint     = 1,
-			TypeLine      = 2,
-			TypeArea      = 3,
-			TypeText      = 4,
-			TypeLineText  = 6,
-			TypeRectangle = 7
-		};
 	};
 }
 
-#endif // _OPENORIENTEERING_OCD_TYPES_V11_
+#endif // OPENORIENTEERING_OCD_TYPES_V11_H

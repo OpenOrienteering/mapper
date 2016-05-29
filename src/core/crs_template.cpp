@@ -21,8 +21,6 @@
 
 #include "crs_template.h"
 
-#include <QStringBuilder>
-
 
 // From crs_template_implementation.h/.cpp
 namespace CRSTemplates
@@ -89,7 +87,7 @@ QString CRSTemplate::coordinatesName(const std::vector<QString>& values) const
 	     key != last && value != last_value;
 	     ++key, ++value)
 	{
-		name.replace(QLatin1String("@") % (*key)->id() % QLatin1String("@"), *value);
+		name.replace(QLatin1Char('@') + (*key)->id() + QLatin1Char('@'), *value);
 	}
 	
 	return name;

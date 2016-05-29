@@ -32,16 +32,16 @@
 #include <QListWidget>
 #include <QPushButton>
 #include <QSettings>
-#include <QStringBuilder>
 #include <QVBoxLayout>
 
 #include "file_format.h"
 #include "file_format_registry.h"
 #include "mapper_resource.h"
+#include "util.h"
 
 NewMapDialog::NewMapDialog(QWidget* parent) : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint)
 {
-	this->setWhatsThis("<a href=\"new_map.html\">See more</a>");
+	this->setWhatsThis(Util::makeWhatThis("new_map.html"));
 	setWindowTitle(tr("Create new map"));
 	
 	QLabel* desc_label = new QLabel(tr("Choose the scale and symbol set for the new map."));
@@ -57,7 +57,7 @@ NewMapDialog::NewMapDialog(QWidget* parent) : QDialog(parent, Qt::WindowSystemMe
 	symbol_set_matching = new QCheckBox(tr("Only show symbol sets matching the selected scale"));
 	
 	QPushButton* cancel_button = new QPushButton(tr("Cancel"));
-	create_button = new QPushButton(QIcon(":/images/arrow-right.png"), tr("Create"));
+	create_button = new QPushButton(QIcon(QString::fromLatin1(":/images/arrow-right.png")), tr("Create"));
 	create_button->setDefault(true);
 	
 	QHBoxLayout* scale_layout = new QHBoxLayout();
@@ -87,9 +87,9 @@ NewMapDialog::NewMapDialog(QWidget* parent) : QDialog(parent, Qt::WindowSystemMe
 			scale_combo->addItem(it->first);
 	
 	QSettings settings;
-	settings.beginGroup("NewMapDialog");
-	const QString default_scale = settings.value("DefaultScale", "10000").toString();
-	const bool matching = settings.value("OnlyMatchingSymbolSets", "true").toBool();
+	settings.beginGroup(QString::fromLatin1("NewMapDialog"));
+	const QString default_scale = settings.value(QString::fromLatin1("DefaultScale"), QVariant(10000)).toString();
+	const bool matching = settings.value(QString::fromLatin1("OnlyMatchingSymbolSets"), QVariant(true)).toBool();
 	settings.endGroup();
 	
 	scale_combo->setEditText(default_scale);
@@ -114,7 +114,7 @@ QString NewMapDialog::getSelectedSymbolSetPath() const
 	{
 		// FIXME: add proper error handling for release builds, or remove.
 		Q_ASSERT(false);
-		return "";
+		return QString{};
 	}
 
 	return item->data(Qt::UserRole).toString();
@@ -123,9 +123,9 @@ QString NewMapDialog::getSelectedSymbolSetPath() const
 void NewMapDialog::accept()
 {
 	QSettings settings;
-	settings.beginGroup("NewMapDialog");
-	settings.setValue("DefaultScale", getSelectedScale());
-	settings.setValue("OnlyMatchingSymbolSets", symbol_set_matching->isChecked());
+	settings.beginGroup(QString::fromLatin1("NewMapDialog"));
+	settings.setValue(QString::fromLatin1("DefaultScale"), getSelectedScale());
+	settings.setValue(QString::fromLatin1("OnlyMatchingSymbolSets"), symbol_set_matching->isChecked());
 	settings.endGroup();
 	
 	QDialog::accept();
@@ -146,11 +146,11 @@ void NewMapDialog::updateSymbolSetList()
 	symbol_set_list->clear();
 		
 	QListWidgetItem* item = new QListWidgetItem(tr("Empty symbol set"));
-	item->setData(Qt::UserRole, "");
-	item->setIcon(QIcon(":/images/new.png"));
+	item->setData(Qt::UserRole, QVariant(QString{}));
+	item->setIcon(QIcon(QString::fromLatin1(":/images/new.png")));
 	symbol_set_list->addItem(item);
 	
-	QIcon control(":/images/control.png");
+	QIcon control(QString::fromLatin1(":/images/control.png"));
 	SymbolSetMap::iterator it = symbol_set_map.find(scale);
 	if (it != symbol_set_map.end())
 	{
@@ -171,11 +171,11 @@ void NewMapDialog::updateSymbolSetList()
 				continue;
 			
 			bool is_scale = (it->first.toInt() > 0);
-			QString remark = " (" % QString(is_scale ? ("1 : ") : "") % it->first % ")";
+			QString remark = QLatin1String(" (") + QLatin1String(is_scale ? ("1 : ") : "") + it->first + QLatin1Char(')');
 			
 			for (auto&& symbol_set : it->second)
 			{
-				item = new QListWidgetItem(symbol_set.completeBaseName() % remark);
+				item = new QListWidgetItem(symbol_set.completeBaseName() + remark);
 				item->setData(Qt::UserRole, symbol_set.canonicalFilePath());
 				item->setIcon(control);
 				symbol_set_list->addItem(item);
@@ -185,7 +185,7 @@ void NewMapDialog::updateSymbolSetList()
 	
 	load_from_file = new QListWidgetItem(tr("Load symbol set from a file..."));
 	load_from_file->setData(Qt::UserRole, qVariantFromValue<void*>(NULL));
-	load_from_file->setIcon(QIcon(":/images/open.png"));
+	load_from_file->setIcon(QIcon(QString::fromLatin1(":/images/open.png")));
 	symbol_set_list->addItem(load_from_file);
 	
 	// Select second row, which usually is the first (and only) symbol set
@@ -213,7 +213,7 @@ void NewMapDialog::createClicked()
 void NewMapDialog::showFileDialog()
 {
 	// Get the saved directory to start in, defaulting to the user's home directory.
-	QString open_directory = QSettings().value("openFileDirectory", QDir::homePath()).toString();
+	QString open_directory = QSettings().value(QString::fromLatin1("openFileDirectory"), QDir::homePath()).toString();
 	
 	// Build the list of supported file filters based on the file format registry
 	QString filters, extensions;
@@ -224,19 +224,19 @@ void NewMapDialog::showFileDialog()
 			if (filters.isEmpty())
 			{
 				filters    = format->filter();
-				extensions = "*." % format->fileExtensions().join(" *.");
+				extensions = QLatin1String("*.") + format->fileExtensions().join(QString::fromLatin1(" *."));
 			}
 			else
 			{
-				filters    = filters    % ";;"  % format->filter();
-				extensions = extensions % " *." % format->fileExtensions().join(" *.");
+				filters    = filters    + QLatin1String(";;")  + format->filter();
+				extensions = extensions + QLatin1String(" *.") + format->fileExtensions().join(QString::fromLatin1(" *."));
 			}
 		}
 	}
 	filters = 
-	  tr("All symbol set files")  % " (" % extensions % ");;" %
-	  filters         % ";;" %
-	  tr("All files") % " (*.*)";
+	  tr("All symbol set files") + QLatin1String(" (") + extensions + QLatin1String(");;") +
+	  filters         + QLatin1String(";;") +
+	  tr("All files") + QLatin1String(" (*.*)");
 
 	QString path = QFileDialog::getOpenFileName(this, tr("Load symbol set from a file..."), open_directory, filters);
 	path = QFileInfo(path).canonicalFilePath();
@@ -264,13 +264,13 @@ void NewMapDialog::loadSymbolSetDir(const QDir& symbol_set_dir)
 		//int scale = dir_name.toInt();
 		//if (scale == 0)
 		//{
-		//	qDebug() << dir_name % ": not a valid map scale denominator, using it as group name.";
+		//	qDebug() << dir_name + ": not a valid map scale denominator, using it as group name.";
 		//}
 		
 		QDir subdir(symbol_set_dir);
 		if (! subdir.cd(dir_name))
 		{
-			qDebug() << dir_name % ": cannot access this directory.";
+			qDebug() << dir_name << ": cannot access this directory.";
 			continue;
 		}
 		
@@ -278,7 +278,7 @@ void NewMapDialog::loadSymbolSetDir(const QDir& symbol_set_dir)
 		for (auto format : FileFormats.formats())
 		{
 			if (format->supportsImport())
-				symbol_set_filters << QStringList(format->fileExtensions()).replaceInStrings(QRegExp("^"), "*.");
+				symbol_set_filters << QStringList(format->fileExtensions()).replaceInStrings(QRegExp(QString(QLatin1Char{'^'})), QString::fromLatin1("*."));
 		}
 		subdir.setNameFilters(symbol_set_filters);
 		

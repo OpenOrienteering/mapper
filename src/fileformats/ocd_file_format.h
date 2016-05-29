@@ -1,5 +1,5 @@
 /*
- *    Copyright 2013 Kai Pastor
+ *    Copyright 2013, 2016 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -17,8 +17,8 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _OPENORIENTEERING_OCD_FILE_FORMAT_
-#define _OPENORIENTEERING_OCD_FILE_FORMAT_
+#ifndef OPENORIENTEERING_OCD_FILE_FORMAT
+#define OPENORIENTEERING_OCD_FILE_FORMAT
 
 #include "../file_format.h"
 
@@ -35,21 +35,17 @@ public:
 	
 	/**
 	 * Detects whether the buffer may be the start of a valid OCD file.
+	 * 
 	 * At the moment, it requires at least two bytes of data.
 	 * It will return false if compiled for a big endian system.
 	 */
-	bool understands(const unsigned char *buffer, size_t sz) const;
+	bool understands(const unsigned char *buffer, size_t sz) const override;
 	
-	/**
-	 * Creates an importer object and configures for the given input stream
-	 * and output map and view.
-	 */
-	virtual Importer* createImporter(QIODevice* stream, Map *map, MapView *view) const;
+	/// \copydoc FileFormat::createImporter()
+	virtual Importer* createImporter(QIODevice* stream, Map *map, MapView *view) const override;
 	
-	/**
-	 * Creates an OCAD8FileFormat exporter.
-	 */
-	virtual Exporter* createExporter(QIODevice* stream, Map* map, MapView* view) const;
+	/// \copydoc FileFormat::createExporter()
+	virtual Exporter* createExporter(QIODevice* stream, Map* map, MapView* view) const override;
 };
 
-#endif // _OPENORIENTEERING_OCD_FILE_FORMAT_
+#endif // OPENORIENTEERING_OCD_FILE_FORMAT

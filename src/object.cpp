@@ -250,9 +250,12 @@ void Object::load(QIODevice* file, int version, Map* map)
 	
 	int symbol_index;
 	file->read((char*)&symbol_index, sizeof(int));
-	Symbol* read_symbol = map->getSymbol(symbol_index);
-	if (read_symbol)
-		symbol = read_symbol;
+	if (map)
+	{
+		Symbol* read_symbol = map->getSymbol(symbol_index);
+		if (read_symbol)
+			symbol = read_symbol;
+	}
 	
 	int num_coords;
 	file->read((char*)&num_coords, sizeof(int));
@@ -3172,6 +3175,11 @@ void PointObject::setPosition(qint32 x, qint32 y)
 	coords[0].setNativeX(x);
 	coords[0].setNativeY(y);
 	setOutputDirty();
+}
+
+void PointObject::setPosition(MapCoord coord)
+{
+	coords[0] = coord;
 }
 
 void PointObject::setPosition(MapCoordF coord)

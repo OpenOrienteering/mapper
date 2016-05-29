@@ -1,6 +1,6 @@
 #
 #    Copyright 2012, 2013, 2014 Thomas Schöps
-#    Copyright 2012-2015 Kai Pastor
+#    Copyright 2012-2016 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -67,6 +67,11 @@ addPrerequisite(src, qbezier, 3rd-party/qbezier)
 !android:addPrerequisite(src, qtsingleapplication, 3rd-party/qtsingleapplication)
 !linux:addPrerequisite(src, proj, 3rd-party/proj)
 android:addPrerequisite(src, proj, 3rd-party/proj)
+CONFIG(gdal) {
+	addPrerequisite(src, gdal, 3rd-party/gdal)
+	!linux:gdal.depends += proj
+	android:gdal.depends += proj
+}
 addPrerequisite(src, licensing, doc/licensing)
 !android:addPrerequisite(src, printsupport, src/printsupport)
 # Doxygen: Separate test and prerequisite, or Qt Creator gets confused.
@@ -139,6 +144,7 @@ SUBDIRS  += \
   manual \
   examples \
   symbol_sets \
+  translations \
   src
 
 manual.subdir = doc/manual

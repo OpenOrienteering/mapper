@@ -60,7 +60,7 @@ TagsWidget::TagsWidget(Map* map, MapView* main_view, MapEditorController* contro
 	
 	layout->addWidget(tags_table);
 	
-	QToolButton* help_button = newToolButton(QIcon(":/images/help.png"), tr("Help"));
+	QToolButton* help_button = newToolButton(QIcon(QString::fromLatin1(":/images/help.png")), tr("Help"));
 	help_button->setAutoRaise(true);
 	
 	QBoxLayout* all_buttons_layout = new QHBoxLayout();
@@ -71,7 +71,7 @@ TagsWidget::TagsWidget(Map* map, MapView* main_view, MapEditorController* contro
 		style()->pixelMetric(QStyle::PM_LayoutRightMargin, &style_option) / 2,
 		style()->pixelMetric(QStyle::PM_LayoutBottomMargin, &style_option) / 2
 	);
-	all_buttons_layout->addWidget(new QLabel("   "), 1);
+	all_buttons_layout->addWidget(new QLabel(QString::fromLatin1("   ")), 1);
 	all_buttons_layout->addWidget(help_button);
 	
 	layout->addLayout(all_buttons_layout);
@@ -99,7 +99,7 @@ QToolButton* TagsWidget::newToolButton(const QIcon& icon, const QString& text)
 	button->setToolTip(text);
 	button->setIcon(icon);
 	button->setText(text);
-	button->setWhatsThis("<a href=\"templates.html#setup\">See more</a>");
+	button->setWhatsThis(Util::makeWhatThis("templates.html#setup"));
 	return button;
 }
 
@@ -220,7 +220,7 @@ void TagsWidget::cellChange(int row, int column)
 			else
 			{
 				// Reset current row
-				tags_table->item(row, 1)->setText("");
+				tags_table->item(row, 1)->setText({});
 				QTableWidgetItem* value_item = tags_table->item(row, 1);
 				value_item->setFlags(value_item->flags() & ~Qt::ItemIsEnabled);
 			}
@@ -241,7 +241,7 @@ void TagsWidget::cellChange(int row, int column)
 				if (value.isEmpty() && old_key.isEmpty())
 				{
 					// New key, empty value - dont insert yet
-					tags_table->item(row, 0)->setData(Qt::UserRole, "ABOUT TO INSERT NEW VALUE");
+					tags_table->item(row, 0)->setData(Qt::UserRole, QLatin1String("ABOUT TO INSERT NEW VALUE"));
 					tags_table->setCurrentCell(row, 1);
 				}
 				else

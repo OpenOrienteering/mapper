@@ -50,6 +50,7 @@ namespace literal
 	static const QLatin1String georeferencing("georeferencing");
 	
 	static const QLatin1String scale("scale");
+	static const QLatin1String grid_scale_factor{"grid_scale_factor"};
 	static const QLatin1String declination("declination");
 	static const QLatin1String grivation("grivation");
 	
@@ -121,19 +122,21 @@ namespace
 	 */
 	std::vector< std::pair<QString, QString> > spec_substitutions {
 		// #542, S-JTSK (Greenwich) / Krovak East North
-		{ "+init=epsg:5514", "+proj=krovak +lat_0=49.5 +lon_0=24.83333333333333 +alpha=30.28813972222222 +k=0.9999 +x_0=0 +y_0=0 "
-		                     "+ellps=bessel +towgs84=542.5,89.2,456.9,5.517,2.275,5.516,6.96 +pm=greenwich +units=m +no_defs" },
+		{ QString::fromLatin1("+init=epsg:5514"),
+		  QString::fromLatin1("+proj=krovak +lat_0=49.5 +lon_0=24.83333333333333 +alpha=30.28813972222222 +k=0.9999 +x_0=0 +y_0=0 "
+		                      "+ellps=bessel +towgs84=542.5,89.2,456.9,5.517,2.275,5.516,6.96 +pm=greenwich +units=m +no_defs") },
 	};
 }
 
 
 //### Georeferencing ###
 
-const QString Georeferencing::geographic_crs_spec("+proj=latlong +datum=WGS84");
+const QString Georeferencing::geographic_crs_spec(QString::fromLatin1("+proj=latlong +datum=WGS84"));
 
 Georeferencing::Georeferencing()
 : state(Local),
   scale_denominator(1),
+  grid_scale_factor{1.0},
   declination(0.0),
   grivation(0.0),
   grivation_error(0.0),
@@ -144,7 +147,7 @@ Georeferencing::Georeferencing()
 	
 	updateTransformation();
 	
-	projected_crs_id = "Local";
+	projected_crs_id = QString::fromLatin1("Local");
 	projected_crs  = NULL;
 	geographic_crs = pj_init_plus_no_defs(geographic_crs_spec);
 	Q_ASSERT(geographic_crs != NULL);
@@ -154,6 +157,7 @@ Georeferencing::Georeferencing(const Georeferencing& other)
 : QObject(),
   state(other.state),
   scale_denominator(other.scale_denominator),
+  grid_scale_factor{other.grid_scale_factor},
   declination(other.declination),
   grivation(other.grivation),
   grivation_error(other.grivation_error),
@@ -183,6 +187,7 @@ Georeferencing& Georeferencing::operator=(const Georeferencing& other)
 {
 	state                    = other.state;
 	scale_denominator        = other.scale_denominator;
+	grid_scale_factor        = other.grid_scale_factor;
 	declination              = other.declination;
 	grivation                = other.grivation;
 	grivation_error          = other.grivation_error;
@@ -222,6 +227,13 @@ void Georeferencing::load(QXmlStreamReader& xml, bool load_scale_only)
 	scale_denominator = georef_element.attribute<int>(literal::scale);
 	if (scale_denominator <= 0)
 		throw FileFormatException(tr("Map scale specification invalid or missing."));
+	
+	if (georef_element.hasAttribute(literal::grid_scale_factor))
+	{
+		grid_scale_factor = roundScaleFactor(georef_element.attribute<double>(literal::grid_scale_factor));
+		if (grid_scale_factor <= 0.0)
+			throw FileFormatException(tr("Invalid grid scale factor: %1").arg(QString::number(grid_scale_factor)));
+	}
 	
 	state = Local;
 	if (load_scale_only)
@@ -337,6 +349,8 @@ void Georeferencing::save(QXmlStreamWriter& xml) const
 {
 	XmlElementWriter georef_element(xml, literal::georeferencing);
 	georef_element.writeAttribute(literal::scale, scale_denominator);
+	if (grid_scale_factor != 1.0)
+		georef_element.writeAttribute(literal::grid_scale_factor, grid_scale_factor, scaleFactorPrecision());
 	if (!qIsNull(declination))
 		georef_element.writeAttribute(literal::declination, declination, declinationPrecision());
 	if (!qIsNull(grivation))
@@ -412,7 +426,7 @@ void Georeferencing::setState(Georeferencing::State value)
 		updateTransformation();
 		
 		if (state != Normal)
-			setProjectedCRS("Local");
+			setProjectedCRS(QString::fromLatin1("Local"));
 		
 		emit stateChanged();
 	}
@@ -424,6 +438,16 @@ void Georeferencing::setScaleDenominator(int value)
 	if (scale_denominator != (unsigned int)value)
 	{
 		scale_denominator = value;
+		updateTransformation();
+	}
+}
+
+void Georeferencing::setGridScaleFactor(double value)
+{
+	Q_ASSERT(value > 0);
+	if (grid_scale_factor != value)
+	{
+		grid_scale_factor = value;
 		updateTransformation();
 	}
 }
@@ -564,7 +588,7 @@ void Georeferencing::updateTransformation()
 	transform.translate(projected_ref_point.x(), projected_ref_point.y());
 	transform.rotate(-grivation);
 	
-	double scale = double(scale_denominator) / 1000.0;
+	double scale = grid_scale_factor * scale_denominator / 1000.0; // to meters
 	transform.scale(scale, -scale);
 	transform.translate(-map_ref_point.x(), -map_ref_point.y());
 	
@@ -596,7 +620,7 @@ void Georeferencing::setTransformationDirectly(const QTransform& transform)
 	}
 }
 
-bool Georeferencing::setProjectedCRS(const QString& id, QString spec, std::vector< QString > params)
+bool Georeferencing::setProjectedCRS(const QString& id, QString spec, std::vector<QString> params)
 {
 	// Default return value if no change is neccessary
 	bool ok = (state == Normal || projected_crs_spec.isEmpty());
@@ -779,6 +803,7 @@ QDebug operator<<(QDebug dbg, const Georeferencing &georef)
 {
 	dbg.nospace() 
 	  << "Georeferencing(1:" << georef.scale_denominator
+	  << " " << georef.grid_scale_factor
 	  << " " << georef.declination
 	  << " " << georef.grivation
 	  << "deg, " << georef.projected_crs_id
@@ -817,9 +842,9 @@ extern "C"
 	{
 		if (temp_dir->isValid())
 		{
-			QString path = QDir(temp_dir->path()).filePath(name);
+			QString path = QDir(temp_dir->path()).filePath(QString::fromUtf8(name));
 			QFile file(path);
-			if (file.exists() || QFile::copy(QString("assets:/proj/") % QLatin1String(name), path))
+			if (file.exists() || QFile::copy(QLatin1String("assets:/proj/") + QLatin1String(name), path))
 			{
 				c_string = path.toLocal8Bit();
 				return c_string.constData();

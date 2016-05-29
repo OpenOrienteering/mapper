@@ -273,6 +273,22 @@ if(Mapper_PACKAGE_PROJ)
 	list(APPEND MAPPER_LIB_HINTS ${PROJ_BINARY_DIR})
 endif()
 
+if(Mapper_PACKAGE_GDAL)
+	install(
+	  DIRECTORY "${GDAL_BINARY_DIR}/../share/gdal"
+	  DESTINATION "${MAPPER_DATA_DESTINATION}")
+	if(WIN32)
+		set(GDAL_LIB_SUFFIX -20)
+	else()
+		set(GDAL_LIB_SUFFIX "")
+	endif()
+	list(APPEND MAPPER_LIBS      gdal${GDAL_LIB_SUFFIX})
+	list(APPEND MAPPER_LIB_HINTS ${GDAL_BINARY_DIR})
+	if(WIN32)
+		list(APPEND MAPPER_LIBS  tiff-5 lzma-5)
+	endif()
+endif()
+
 unset(MAPPER_QT_PLUGINS)
 if(Mapper_PACKAGE_QT)
 	set(QT_LIB_SUFFIX "")

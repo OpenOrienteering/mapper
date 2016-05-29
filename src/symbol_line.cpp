@@ -77,29 +77,29 @@ bool LineSymbolBorder::load(QIODevice* file, int version, Map* map)
 
 void LineSymbolBorder::save(QXmlStreamWriter& xml, const Map& map) const
 {
-	xml.writeStartElement("border");
-	xml.writeAttribute("color", QString::number(map.findColorIndex(color)));
-	xml.writeAttribute("width", QString::number(width));
-	xml.writeAttribute("shift", QString::number(shift));
+	xml.writeStartElement(QString::fromLatin1("border"));
+	xml.writeAttribute(QString::fromLatin1("color"), QString::number(map.findColorIndex(color)));
+	xml.writeAttribute(QString::fromLatin1("width"), QString::number(width));
+	xml.writeAttribute(QString::fromLatin1("shift"), QString::number(shift));
 	if (dashed)
-		xml.writeAttribute("dashed", "true");
-	xml.writeAttribute("dash_length", QString::number(dash_length));
-	xml.writeAttribute("break_length", QString::number(break_length));
+		xml.writeAttribute(QString::fromLatin1("dashed"), QString::fromLatin1("true"));
+	xml.writeAttribute(QString::fromLatin1("dash_length"), QString::number(dash_length));
+	xml.writeAttribute(QString::fromLatin1("break_length"), QString::number(break_length));
 	xml.writeEndElement(/*border*/);
 }
 
 bool LineSymbolBorder::load(QXmlStreamReader& xml, const Map& map)
 {
-	Q_ASSERT(xml.name() == "border");
+	Q_ASSERT(xml.name() == QLatin1String("border"));
 	
 	QXmlStreamAttributes attributes = xml.attributes();
-	int temp = attributes.value("color").toString().toInt();
+	int temp = attributes.value(QLatin1String("color")).toInt();
 	color = map.getColor(temp);
-	width = attributes.value("width").toString().toInt();
-	shift = attributes.value("shift").toString().toInt();
-	dashed = (attributes.value("dashed") == "true");
-	dash_length = attributes.value("dash_length").toString().toInt();
-	break_length = attributes.value("break_length").toString().toInt();
+	width = attributes.value(QLatin1String("width")).toInt();
+	shift = attributes.value(QLatin1String("shift")).toInt();
+	dashed = (attributes.value(QLatin1String("dashed")) == QLatin1String("true"));
+	dash_length = attributes.value(QLatin1String("dash_length")).toInt();
+	break_length = attributes.value(QLatin1String("break_length")).toInt();
 	xml.skipCurrentElement();
 	return !xml.error();
 }
@@ -218,10 +218,15 @@ Symbol* LineSymbol::duplicate(const MapColorMap* color_map) const
 	new_line->cap_style = cap_style;
 	new_line->join_style = join_style;
 	new_line->pointed_cap_length = pointed_cap_length;
-	new_line->start_symbol = start_symbol ? static_cast<PointSymbol*>(start_symbol->duplicate(color_map)) : NULL;
-	new_line->mid_symbol = mid_symbol ? static_cast<PointSymbol*>(mid_symbol->duplicate(color_map)) : NULL;
-	new_line->end_symbol = end_symbol ? static_cast<PointSymbol*>(end_symbol->duplicate(color_map)) : NULL;
-	new_line->dash_symbol = dash_symbol ? static_cast<PointSymbol*>(dash_symbol->duplicate(color_map)) : NULL;
+	
+	using MemberSymbol = PointSymbol* LineSymbol::*;
+	MemberSymbol members[4] = { &LineSymbol::start_symbol, &LineSymbol::mid_symbol, &LineSymbol::end_symbol, &LineSymbol::dash_symbol };
+	for (auto member : members)
+	{
+		auto sub_symbol = this->*member;
+		if (sub_symbol && !sub_symbol->isEmpty())
+			new_line->*member = static_cast<PointSymbol*>(sub_symbol->duplicate(color_map));
+	}
 	new_line->dashed = dashed;
 	new_line->segment_length = segment_length;
 	new_line->end_length = end_length;
@@ -1751,6 +1756,9 @@ bool LineSymbol::loadImpl(QIODevice* file, int version, Map* map)
 		else
 			right_border.assign(border, NULL);
 	}
+	
+	cleanupPointSymbols();
+	
 	return true;
 }
 
@@ -1758,67 +1766,67 @@ bool LineSymbol::loadImpl(QIODevice* file, int version, Map* map)
 
 void LineSymbol::saveImpl(QXmlStreamWriter& xml, const Map& map) const
 {
-	xml.writeStartElement("line_symbol");
-	xml.writeAttribute("color", QString::number(map.findColorIndex(color)));
-	xml.writeAttribute("line_width", QString::number(line_width));
-	xml.writeAttribute("minimum_length", QString::number(minimum_length));
-	xml.writeAttribute("join_style", QString::number(join_style));
-	xml.writeAttribute("cap_style", QString::number(cap_style));
-	xml.writeAttribute("pointed_cap_length", QString::number(pointed_cap_length));
+	xml.writeStartElement(QString::fromLatin1("line_symbol"));
+	xml.writeAttribute(QString::fromLatin1("color"), QString::number(map.findColorIndex(color)));
+	xml.writeAttribute(QString::fromLatin1("line_width"), QString::number(line_width));
+	xml.writeAttribute(QString::fromLatin1("minimum_length"), QString::number(minimum_length));
+	xml.writeAttribute(QString::fromLatin1("join_style"), QString::number(join_style));
+	xml.writeAttribute(QString::fromLatin1("cap_style"), QString::number(cap_style));
+	xml.writeAttribute(QString::fromLatin1("pointed_cap_length"), QString::number(pointed_cap_length));
 	
 	if (dashed)
-		xml.writeAttribute("dashed", "true");
-	xml.writeAttribute("segment_length", QString::number(segment_length));
-	xml.writeAttribute("end_length", QString::number(end_length));
+		xml.writeAttribute(QString::fromLatin1("dashed"), QString::fromLatin1("true"));
+	xml.writeAttribute(QString::fromLatin1("segment_length"), QString::number(segment_length));
+	xml.writeAttribute(QString::fromLatin1("end_length"), QString::number(end_length));
 	if (show_at_least_one_symbol)
-		xml.writeAttribute("show_at_least_one_symbol", "true");
-	xml.writeAttribute("minimum_mid_symbol_count", QString::number(minimum_mid_symbol_count));
-	xml.writeAttribute("minimum_mid_symbol_count_when_closed", QString::number(minimum_mid_symbol_count_when_closed));
-	xml.writeAttribute("dash_length", QString::number(dash_length));
-	xml.writeAttribute("break_length", QString::number(break_length));
-	xml.writeAttribute("dashes_in_group", QString::number(dashes_in_group));
-	xml.writeAttribute("in_group_break_length", QString::number(in_group_break_length));
+		xml.writeAttribute(QString::fromLatin1("show_at_least_one_symbol"), QString::fromLatin1("true"));
+	xml.writeAttribute(QString::fromLatin1("minimum_mid_symbol_count"), QString::number(minimum_mid_symbol_count));
+	xml.writeAttribute(QString::fromLatin1("minimum_mid_symbol_count_when_closed"), QString::number(minimum_mid_symbol_count_when_closed));
+	xml.writeAttribute(QString::fromLatin1("dash_length"), QString::number(dash_length));
+	xml.writeAttribute(QString::fromLatin1("break_length"), QString::number(break_length));
+	xml.writeAttribute(QString::fromLatin1("dashes_in_group"), QString::number(dashes_in_group));
+	xml.writeAttribute(QString::fromLatin1("in_group_break_length"), QString::number(in_group_break_length));
 	if (half_outer_dashes)
-		xml.writeAttribute("half_outer_dashes", "true");
-	xml.writeAttribute("mid_symbols_per_spot", QString::number(mid_symbols_per_spot));
-	xml.writeAttribute("mid_symbol_distance", QString::number(mid_symbol_distance));
+		xml.writeAttribute(QString::fromLatin1("half_outer_dashes"), QString::fromLatin1("true"));
+	xml.writeAttribute(QString::fromLatin1("mid_symbols_per_spot"), QString::number(mid_symbols_per_spot));
+	xml.writeAttribute(QString::fromLatin1("mid_symbol_distance"), QString::number(mid_symbol_distance));
 	if (suppress_dash_symbol_at_ends)
-		xml.writeAttribute("suppress_dash_symbol_at_ends", "true");
+		xml.writeAttribute(QString::fromLatin1("suppress_dash_symbol_at_ends"), QString::fromLatin1("true"));
 	
 	if (start_symbol != NULL)
 	{
-		xml.writeStartElement("start_symbol");
+		xml.writeStartElement(QString::fromLatin1("start_symbol"));
 		start_symbol->save(xml, map);
 		xml.writeEndElement();
 	}
 	
 	if (mid_symbol != NULL)
 	{
-		xml.writeStartElement("mid_symbol");
+		xml.writeStartElement(QString::fromLatin1("mid_symbol"));
 		mid_symbol->save(xml, map);
 		xml.writeEndElement();
 	}
 	
 	if (end_symbol != NULL)
 	{
-		xml.writeStartElement("end_symbol");
+		xml.writeStartElement(QString::fromLatin1("end_symbol"));
 		end_symbol->save(xml, map);
 		xml.writeEndElement();
 	}
 	
 	if (dash_symbol != NULL)
 	{
-		xml.writeStartElement("dash_symbol");
+		xml.writeStartElement(QString::fromLatin1("dash_symbol"));
 		dash_symbol->save(xml, map);
 		xml.writeEndElement();
 	}
 	
 	if (have_border_lines)
 	{
-		xml.writeStartElement("borders");
+		xml.writeStartElement(QString::fromLatin1("borders"));
 		bool are_borders_different = areBordersDifferent();
 		if (are_borders_different)
-			xml.writeAttribute("borders_different", "true");
+			xml.writeAttribute(QString::fromLatin1("borders_different"), QString::fromLatin1("true"));
 		border.save(xml, map);
 		if (are_borders_different)
 			right_border.save(xml, map);
@@ -1830,52 +1838,52 @@ void LineSymbol::saveImpl(QXmlStreamWriter& xml, const Map& map) const
 
 bool LineSymbol::loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict)
 {
-	if (xml.name() != "line_symbol")
+	if (xml.name() != QLatin1String("line_symbol"))
 		return false;
 	
 	QXmlStreamAttributes attributes = xml.attributes();
-	int temp = attributes.value("color").toString().toInt();
+	int temp = attributes.value(QLatin1String("color")).toInt();
 	color = map.getColor(temp);
-	line_width = attributes.value("line_width").toString().toInt();
-	minimum_length = attributes.value("minimum_length").toString().toInt();
-	join_style = static_cast<LineSymbol::JoinStyle>(attributes.value("join_style").toString().toInt());
-	cap_style = static_cast<LineSymbol::CapStyle>(attributes.value("cap_style").toString().toInt());
-	pointed_cap_length = attributes.value("pointed_cap_length").toString().toInt();
+	line_width = attributes.value(QLatin1String("line_width")).toInt();
+	minimum_length = attributes.value(QLatin1String("minimum_length")).toInt();
+	join_style = static_cast<LineSymbol::JoinStyle>(attributes.value(QLatin1String("join_style")).toInt());
+	cap_style = static_cast<LineSymbol::CapStyle>(attributes.value(QLatin1String("cap_style")).toInt());
+	pointed_cap_length = attributes.value(QLatin1String("pointed_cap_length")).toInt();
 	
-	dashed = (attributes.value("dashed") == "true");
-	segment_length = attributes.value("segment_length").toString().toInt();
-	end_length = attributes.value("end_length").toString().toInt();
-	show_at_least_one_symbol = (attributes.value("show_at_least_one_symbol") == "true");
-	minimum_mid_symbol_count = attributes.value("minimum_mid_symbol_count").toString().toInt();
-	minimum_mid_symbol_count_when_closed = attributes.value("minimum_mid_symbol_count_when_closed").toString().toInt();
-	dash_length = attributes.value("dash_length").toString().toInt();
-	break_length = attributes.value("break_length").toString().toInt();
-	dashes_in_group = attributes.value("dashes_in_group").toString().toInt();
-	in_group_break_length = attributes.value("in_group_break_length").toString().toInt();
-	half_outer_dashes = (attributes.value("half_outer_dashes") == "true");
-	mid_symbols_per_spot = attributes.value("mid_symbols_per_spot").toString().toInt();
-	mid_symbol_distance = attributes.value("mid_symbol_distance").toString().toInt();
-	suppress_dash_symbol_at_ends = (attributes.value("suppress_dash_symbol_at_ends") == "true");
+	dashed = (attributes.value(QLatin1String("dashed")) == QLatin1String("true"));
+	segment_length = attributes.value(QLatin1String("segment_length")).toInt();
+	end_length = attributes.value(QLatin1String("end_length")).toInt();
+	show_at_least_one_symbol = (attributes.value(QLatin1String("show_at_least_one_symbol")) == QLatin1String("true"));
+	minimum_mid_symbol_count = attributes.value(QLatin1String("minimum_mid_symbol_count")).toInt();
+	minimum_mid_symbol_count_when_closed = attributes.value(QLatin1String("minimum_mid_symbol_count_when_closed")).toInt();
+	dash_length = attributes.value(QLatin1String("dash_length")).toInt();
+	break_length = attributes.value(QLatin1String("break_length")).toInt();
+	dashes_in_group = attributes.value(QLatin1String("dashes_in_group")).toInt();
+	in_group_break_length = attributes.value(QLatin1String("in_group_break_length")).toInt();
+	half_outer_dashes = (attributes.value(QLatin1String("half_outer_dashes")) == QLatin1String("true"));
+	mid_symbols_per_spot = attributes.value(QLatin1String("mid_symbols_per_spot")).toInt();
+	mid_symbol_distance = attributes.value(QLatin1String("mid_symbol_distance")).toInt();
+	suppress_dash_symbol_at_ends = (attributes.value(QLatin1String("suppress_dash_symbol_at_ends")) == QLatin1String("true"));
 	
 	have_border_lines = false;
 	while (xml.readNextStartElement())
 	{
-		if (xml.name() == "start_symbol")
+		if (xml.name() == QLatin1String("start_symbol"))
 			start_symbol = loadPointSymbol(xml, map, symbol_dict);
-		else if (xml.name() == "mid_symbol")
+		else if (xml.name() == QLatin1String("mid_symbol"))
 			mid_symbol = loadPointSymbol(xml, map, symbol_dict);
-		else if (xml.name() == "end_symbol")
+		else if (xml.name() == QLatin1String("end_symbol"))
 			end_symbol = loadPointSymbol(xml, map, symbol_dict);
-		else if (xml.name() == "dash_symbol")
+		else if (xml.name() == QLatin1String("dash_symbol"))
 			dash_symbol = loadPointSymbol(xml, map, symbol_dict);
-		else if (xml.name() == "borders")
+		else if (xml.name() == QLatin1String("borders"))
 		{
 //			bool are_borders_different = (xml.attributes().value("borders_different") == "true");
 			
 			bool right_border_loaded = false;
 			while (xml.readNextStartElement())
 			{
-				if (xml.name() == "border")
+				if (xml.name() == QLatin1String("border"))
 				{
 					if (!have_border_lines)
 					{
@@ -1900,6 +1908,9 @@ bool LineSymbol::loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionar
 		else
 			xml.skipCurrentElement(); // unknown
 	}
+	
+	cleanupPointSymbols();
+	
 	return true;
 }
 
@@ -1907,7 +1918,7 @@ PointSymbol* LineSymbol::loadPointSymbol(QXmlStreamReader& xml, const Map& map, 
 {
 	while (xml.readNextStartElement())
 	{
-		if (xml.name() == "symbol")
+		if (xml.name() == QLatin1String("symbol"))
 		{
 			PointSymbol* symbol = static_cast<PointSymbol*>(Symbol::load(xml, map, symbol_dict));
 			xml.skipCurrentElement();
@@ -2089,7 +2100,7 @@ LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, SymbolSettingDialog* 
 	row++; col = 0;
 	layout->addWidget(new QWidget(), row, col, 1, -1);
 	row++; col = 0;
-	layout->addWidget(new QLabel(QString("<b>%1</b>").arg(tr("Dashed line"))), row, col++, 1, -1);
+	layout->addWidget(Util::Headline::create(tr("Dashed line")), row, col++, 1, -1);
 	row++; col = 0;
 	layout->addWidget(dashed_check, row, col, 1, -1);
 	
@@ -2139,7 +2150,7 @@ LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, SymbolSettingDialog* 
 	row++; col = 0;
 	layout->addWidget(new QWidget(), row, col, 1, -1);
 	row++; col = 0;
-	layout->addWidget(new QLabel(QString("<b>%1</b>").arg(tr("Mid symbols"))), row, col, 1, -1);
+	layout->addWidget(Util::Headline::create(tr("Mid symbols")), row, col, 1, -1);
 	
 	
 	QLabel* mid_symbol_per_spot_label = new QLabel(tr("Mid symbols per spot:"));
@@ -2201,7 +2212,7 @@ LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, SymbolSettingDialog* 
 	row++; col = 0;
 	layout->addWidget(new QWidget(), row, col, 1, -1);
 	row++; col = 0;
-	layout->addWidget(new QLabel(QString("<b>%1</b>").arg(tr("Borders"))), row, col++, 1, -1);
+	layout->addWidget(Util::Headline::create(tr("Borders")), row, col++, 1, -1);
 	row++; col = 0;
 	layout->addWidget(border_check, row, col, 1, -1);
 	
@@ -2210,12 +2221,12 @@ LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, SymbolSettingDialog* 
 	row++; col = 0;
 	layout->addWidget(different_borders_check, row, col, 1, -1);
 	
-	QLabel* left_border_label = new QLabel(QString("<b>%1</b>").arg(tr("Left border:")));
+	QLabel* left_border_label = Util::Headline::create(tr("Left border:"));
 	row++; col = 0;
 	layout->addWidget(left_border_label, row, col++, 1, -1);
 	createBorderWidgets(symbol->getBorder(), map, row, col, layout, border_widgets);
 	
-	QLabel* right_border_label = new QLabel(QString("<b>%1</b>").arg(tr("Right border:")));
+	QLabel* right_border_label = Util::Headline::create(tr("Right border:"));
 	row++; col = 0;
 	layout->addWidget(right_border_label, row, col++, 1, -1);
 	createBorderWidgets(symbol->getRightBorder(), map, row, col, layout, right_border_widgets);
@@ -2227,7 +2238,7 @@ LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, SymbolSettingDialog* 
 	row++; col = 0;
 	layout->addWidget(new QWidget(), row, col, 1, -1);
 	row++; col = 0;
-	layout->addWidget(new QLabel(QString("<b>%1</b>").arg(tr("Dash symbol"))), row, col++, 1, -1);
+	layout->addWidget(Util::Headline::create(tr("Dash symbol")), row, col++, 1, -1);
 	
 	supress_dash_symbol_check = new QCheckBox(tr("Suppress the dash symbol at line start and line end"));
 	supress_dash_symbol_check->setChecked(symbol->getSuppressDashSymbolAtLineEnds());
@@ -2675,6 +2686,8 @@ void LineSymbolSettings::updateContents()
 	
 	updateBorderContents(symbol->getBorder(), border_widgets);
 	updateBorderContents(symbol->getRightBorder(), right_border_widgets);
+	
+	supress_dash_symbol_check->setChecked(symbol->getSuppressDashSymbolAtLineEnds());
 	
 	blockSignalsRecursively(this, false);
 /*	

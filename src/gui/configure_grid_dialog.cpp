@@ -45,10 +45,10 @@
 ConfigureGridDialog::ConfigureGridDialog(QWidget* parent, const Map& map, bool grid_visible)
 : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint)
 , map(map)
-, grid{ map.getGrid() }
-, grid_visible{ grid_visible }
-, current_color{ grid.getColor() }
-, current_unit{ grid.getUnit() }
+, grid(map.getGrid())
+, grid_visible(grid_visible)
+, current_color(grid.getColor())
+, current_unit(grid.getUnit())
 {
 	setWindowTitle(tr("Configure grid"));
 	
@@ -240,7 +240,7 @@ void ConfigureGridDialog::updateStates()
 	
 	unit_combo->setEnabled(show_grid_check->isChecked());
 	
-	QString unit_suffix = QString(" ") % ((current_unit == MapGrid::MetersInTerrain) ? tr("m", "meters") : tr("mm", "millimeters"));
+	QString unit_suffix = QLatin1Char(' ') + ((current_unit == MapGrid::MetersInTerrain) ? tr("m", "meters") : tr("mm", "millimeters"));
 	horz_spacing_edit->setEnabled(show_grid_check->isChecked() && display_mode != MapGrid::HorizontalLines);
 	horz_spacing_edit->setSuffix(unit_suffix);
 	vert_spacing_edit->setEnabled(show_grid_check->isChecked() && display_mode != MapGrid::VerticalLines);

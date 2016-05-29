@@ -44,7 +44,7 @@ void HomeScreenController::attach(MainWindow* window)
 {
 	this->window = window;
 	
-	if (window->mobileMode())
+	if (MainWindow::mobileMode())
 	{
 		widget = new HomeScreenWidgetMobile(this);
 	}
@@ -52,7 +52,7 @@ void HomeScreenController::attach(MainWindow* window)
 	{
 		widget = new HomeScreenWidgetDesktop(this);
 		window->statusBar()->hide();
-		window->setStatusBarText("");
+		window->setStatusBarText(QString{});
 	}
 	
 	window->setCentralWidget(widget);
@@ -64,7 +64,7 @@ void HomeScreenController::attach(MainWindow* window)
 
 void HomeScreenController::detach()
 {
-	if (!window->mobileMode())
+	if (!MainWindow::mobileMode())
 	{
 		window->statusBar()->show();
 	}
@@ -126,13 +126,13 @@ void HomeScreenController::goToTip(int index)
 	if (tips.isEmpty())
 	{
 		// Normally, this will be read only once.
-		QFile file(":/help/tip-of-the-day/tips.txt");
+		QFile file(QString::fromLatin1(":/help/tip-of-the-day/tips.txt"));
 		if (file.open(QIODevice::ReadOnly))
 		{
 			while (!file.atEnd())
 			{
 				QString tip(QString::fromUtf8(file.readLine().constData()));
-				if (tip.endsWith('\n'))
+				if (tip.endsWith(QLatin1Char('\n')))
 					tip.chop(1);
 				if (!tip.isEmpty())
 					tips.push_back(tip);
@@ -144,7 +144,7 @@ void HomeScreenController::goToTip(int index)
 	{
 		// Some error may have occured during reading the tips file.
 		// Display a welcome text.
-		widget->setTipOfTheDay(QString("<h2>%1</h2>").arg(tr("Welcome to OpenOrienteering Mapper!")));
+		widget->setTipOfTheDay(QString::fromLatin1("<h2>%1</h2>").arg(tr("Welcome to OpenOrienteering Mapper!")));
 	}
 	else
 	{

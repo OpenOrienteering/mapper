@@ -1,0 +1,47 @@
+/*
+ *    Copyright 2016 Kai Pastor
+ *
+ *    Some parts taken from file_format_oc*d8{.h,_p.h,cpp} which are
+ *    Copyright 2012 Pete Curtis
+ *
+ *    This file is part of OpenOrienteering.
+ *
+ *    OpenOrienteering is free software: you can redistribute it and/or modify
+ *    it under the terms of the GNU General Public License as published by
+ *    the Free Software Foundation, either version 3 of the License, or
+ *    (at your option) any later version.
+ *
+ *    OpenOrienteering is distributed in the hope that it will be useful,
+ *    but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *    GNU General Public License for more details.
+ *
+ *    You should have received a copy of the GNU General Public License
+ *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+#include "ocd_file_export.h"
+
+#include "../file_format_ocad8_p.h"
+
+
+OcdFileExport::OcdFileExport(QIODevice* stream, Map* map, MapView* view)
+: Exporter { stream, map, view }
+{
+	// nothing else
+}
+
+OcdFileExport::~OcdFileExport()
+{
+	// nothing
+}
+
+void OcdFileExport::doExport()
+{
+	OCAD8FileExport delegate { stream, map, view };
+	delegate.doExport();
+	for (auto&& w : delegate.warnings())
+	{
+		addWarning(w);
+	}
+}

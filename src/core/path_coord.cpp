@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2015 Kai Pastor
+ *    Copyright 2012-2016 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -124,7 +124,7 @@ MapCoordF SplitPathCoord::tangentVector() const
 				goto next_found;
 		}
 		
-		if (flags[path_coords[index].index].isCurveStart())
+		if (flags[index].isCurveStart())
 		{
 			next = coords[index+1];
 			if (pos.distanceSquaredTo(next) >= PathCoord::tangentEpsilonSquared())
@@ -132,8 +132,8 @@ MapCoordF SplitPathCoord::tangentVector() const
 		}
 		
 		// Search along curve
-		Q_ASSERT(index = path_coords[path_coord_index].index);
-		Q_ASSERT(index >= path_coords[index].index);
+		Q_ASSERT(index == path_coords[path_coord_index].index);
+		
 		// Attention, switching from MapCoordVectorF index to PathCoordVector index.
 		auto pc = std::lower_bound(std::begin(path_coords), std::begin(path_coords)+path_coord_index, index, PathCoord::indexLessThanValue);
 		index = std::distance(std::begin(path_coords), pc);
@@ -208,7 +208,6 @@ next_found:
 		
 		// Search along curve
 		Q_ASSERT(index > path_coords[path_coord_index].index);
-		Q_ASSERT(index >= path_coords[index].index);
 		// Attention, switching from MapCoordVectorF index to PathCoordVector index.
 		index = std::upper_bound(std::begin(path_coords)+path_coord_index, std::end(path_coords)-1, index, PathCoord::valueLessThanIndex)->index;
 		last_index = path_coord_index + 1;

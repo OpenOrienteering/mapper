@@ -6,6 +6,7 @@ TEMPLATE = app
 TARGET   = Mapper
 CONFIG  += c++11
 CONFIG  -= debug_and_release
+DEFINES *= QT_USE_QSTRINGBUILDER QT_NO_CAST_FROM_ASCII QT_NO_CAST_TO_ASCII
 
 include(../oo-mapper-version.pri)
 include($$OUT_PWD/../prerequisites.pri)
@@ -102,7 +103,8 @@ HEADERS += \
   core/autosave_p.h \
   core/georeferencing.h \
   core/map_printer.h \
-  fileformats/ocd_file_format_p.h \
+  fileformats/ocd_file_export.h \
+  fileformats/ocd_file_import.h \
   gui/about_dialog.h \
   gui/autosave_dialog.h \
   gui/color_dialog.h \
@@ -116,19 +118,21 @@ HEADERS += \
   gui/print_widget.h \
   gui/select_crs_dialog.h \
   gui/settings_dialog.h \
-  gui/settings_dialog_p.h \
   gui/text_browser_dialog.h \
   gui/widgets/action_grid_bar.h \
   gui/widgets/color_dropdown.h \
   gui/widgets/compass_display.h \
   gui/widgets/crs_param_widgets.h \
   gui/widgets/crs_selector.h \
+  gui/widgets/editor_settings_page.h \
+  gui/widgets/general_settings_page.h \
   gui/widgets/home_screen_widget.h \
   gui/widgets/key_button_bar.h \
   gui/widgets/mapper_proxystyle.h \
   gui/widgets/measure_widget.h \
   gui/widgets/pie_menu.h \
   gui/widgets/segmented_button_layout.h \
+  gui/widgets/settings_page.h \
   gui/widgets/symbol_dropdown.h \
   gui/widgets/symbol_render_widget.h \
   gui/widgets/symbol_tooltip.h \
@@ -153,7 +157,9 @@ HEADERS += \
   fileformats/ocd_types_v9.h \
   fileformats/ocd_types_v10.h \
   fileformats/ocd_types_v11.h \
+  fileformats/ocd_types_v12.h \
   gui/point_handles.h \
+  util/backports.h \
   util/scoped_signals_blocker.h \
   map_part.h \
   map_part_undo.h \
@@ -161,7 +167,8 @@ HEADERS += \
   renderable.h \
   renderable_implementation.h \
   symbol.h \
-  undo.h
+  undo.h \
+  util_gui.h
 
 SOURCES += \
   main.cpp \
@@ -259,7 +266,9 @@ SOURCES += \
   file_format_native.cpp \
   file_format_ocad8.cpp \
   file_format_xml.cpp \
+  fileformats/ocd_file_export.cpp \
   fileformats/ocd_file_format.cpp \
+  fileformats/ocd_file_import.cpp \
   fileformats/ocd_types.cpp \
   gui/about_dialog.cpp \
   gui/autosave_dialog.cpp \
@@ -282,12 +291,15 @@ SOURCES += \
   gui/widgets/compass_display.cpp \
   gui/widgets/crs_param_widgets.cpp \
   gui/widgets/crs_selector.cpp \
+  gui/widgets/editor_settings_page.cpp \
+  gui/widgets/general_settings_page.cpp \
   gui/widgets/home_screen_widget.cpp \
   gui/widgets/key_button_bar.cpp \
   gui/widgets/mapper_proxystyle.cpp \
   gui/widgets/measure_widget.cpp \
   gui/widgets/pie_menu.cpp \
   gui/widgets/segmented_button_layout.cpp \
+  gui/widgets/settings_page.cpp \
   gui/widgets/symbol_dropdown.cpp \
   gui/widgets/symbol_render_widget.cpp \
   gui/widgets/symbol_tooltip.cpp \

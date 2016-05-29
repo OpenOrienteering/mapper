@@ -50,7 +50,7 @@ ActionGridBar::ActionGridBar(Direction direction, int rows, QWidget* parent)
 		setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
 	
 	// Create overflow action
-	overflow_action = new QAction(QIcon(":/images/three-dots.png"), tr("Show remaining items"), this);
+	overflow_action = new QAction(QIcon(QString::fromLatin1(":/images/three-dots.png")), tr("Show remaining items"), this);
  	connect(overflow_action, SIGNAL(triggered()), this, SLOT(overflowActionClicked()));
 	overflow_button = NULL;
 	overflow_menu = new QMenu(this);

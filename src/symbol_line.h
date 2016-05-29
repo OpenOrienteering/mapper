@@ -92,7 +92,7 @@ public:
 	/** Constructs an empty line symbol. */
 	LineSymbol();
 	virtual ~LineSymbol();
-	Symbol* duplicate(const MapColorMap* color_map) const override;
+	Symbol* duplicate(const MapColorMap* color_map = nullptr) const override;
 	
 	void createRenderables(
 	        const Object *object,
@@ -127,9 +127,10 @@ public:
 	void scale(double factor) override;
 	
 	/**
-	 * Creates empty point symbols for contained NULL symbols
-	 * with the given names. Useful to prevent having to deal with NULL
-	 * pointers. Use cleanupPointSymbols() later.
+	 * Creates empty point symbols with the given names for undefined subsymbols.
+	 * 
+	 * After calling this method, all subsymbols are defined, i.e. not nullptr.
+	 * Call cleanupPointSymbols() later to remove the empty symbols.
 	 */
     void ensurePointSymbols(
 		const QString& start_name,
@@ -139,7 +140,8 @@ public:
 	);
 	
 	/**
-	 * Deletes unused point symbols and sets them to NULL again.
+	 * Deletes unused point symbols and sets them to nullptr again.
+	 * 
 	 * See ensurePointSymbols().
 	 */
 	void cleanupPointSymbols();

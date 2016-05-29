@@ -1,5 +1,5 @@
 /*
- *    Copyright 2013,2014 Kai Pastor
+ *    Copyright 2013-2015 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -21,6 +21,7 @@
 
 #include "../src/map.h"
 #include "../src/core/map_color.h"
+#include "../src/core/map_printer.h"
 #include "../src/core/map_view.h"
 
 namespace
@@ -32,9 +33,19 @@ void MapTest::initTestCase()
 {
 	Q_INIT_RESOURCE(resources);
 	doStaticInitializations();
-	examples_dir.cd(QFileInfo(__FILE__).dir().absoluteFilePath(QString("../examples")));
+	examples_dir.cd(QFileInfo(QString::fromUtf8(__FILE__)).dir().absoluteFilePath(QString::fromLatin1("../examples")));
 	// Static map initializations
 	Map map;
+}
+
+void MapTest::printerConfigTest()
+{
+	Map map;
+	QVERIFY(!map.hasPrinterConfig());
+	map.setPrinterConfig({ map });
+	QVERIFY(map.hasPrinterConfig());
+	map.resetPrinterConfig();
+	QVERIFY(!map.hasPrinterConfig());
 }
 
 void MapTest::specialColorsTest()

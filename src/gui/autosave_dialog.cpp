@@ -36,7 +36,7 @@ AutosaveDialog::AutosaveDialog(QString path, QString autosave_path, QString actu
 , autosave_path(autosave_path)
 , resolved(false)
 {
-	const QString text_template = QString("<b>%1</b><br/>%2<br/>%3");
+	const QString text_template = QString::fromLatin1("<b>%1</b><br/>%2<br/>%3");
 	
 	QFileInfo autosaved_file_info(autosave_path);
 	autosaved_text.setHtml(text_template.
@@ -56,7 +56,7 @@ AutosaveDialog::AutosaveDialog(QString path, QString autosave_path, QString actu
 	setWindowTitle(tr("File recovery"));
 	
 	QString intro_text = tr("File %1 was not properly closed. At the moment, there are two versions:");
-	QLabel* label = new QLabel(intro_text.arg(QString("<b>%1</b>").arg(user_saved_file_info.fileName())));
+	QLabel* label = new QLabel(intro_text.arg(QString::fromLatin1("<b>%1</b>").arg(user_saved_file_info.fileName())));
 	label->setWordWrap(true);
 	layout->addWidget(label);
 	

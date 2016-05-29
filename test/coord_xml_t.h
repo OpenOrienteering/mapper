@@ -69,6 +69,10 @@ private slots:
 	void readHumanReadableStream();
 	void readHumanReadableStream_data();
 	
+	/** Reads a simple human readable format by means of QStringRef. */
+	void readHumanReadableStringRef();
+	void readHumanReadableStringRef_data();
+	
 	/** Reads a dense base64-like format. */
 	void readCompressed();
 	void readCompressed_data();

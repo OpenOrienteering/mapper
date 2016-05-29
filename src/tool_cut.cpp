@@ -74,7 +74,7 @@ void CutTool::init()
 
 const QCursor& CutTool::getCursor() const
 {
-	static auto const cursor = QCursor(QPixmap(":/images/cursor-cut.png"), 11, 11);
+	static auto const cursor = scaledToScreen(QCursor{ QPixmap(QString::fromLatin1(":/images/cursor-cut.png")), 11, 11 });
 	return cursor;
 }
 
@@ -474,7 +474,7 @@ void CutTool::pathDirtyRectChanged(const QRectF& rect)
 
 void CutTool::pathAborted()
 {
-	delete path_tool;
+	path_tool->deleteLater();
 	path_tool = nullptr;
 	cutting_area = false;
 	updateDirtyRect();

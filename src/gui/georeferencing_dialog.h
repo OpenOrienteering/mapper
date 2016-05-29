@@ -189,6 +189,11 @@ protected:
 	void crsEdited();
 	
 	/**
+	 * Notifies the dialog of a change in the grid scale factor.
+	 */
+	void scaleFactorEdited();
+	
+	/**
 	 * Hides the dialog and activates a GeoreferencingTool for selecting
 	 * the reference point on the map.
 	 */
@@ -245,6 +250,7 @@ private:
 	CRSSelector* crs_selector;
 	QLabel* status_label;
 	QLabel* status_field;
+	QDoubleSpinBox* scale_factor_edit;
 	
 	QDoubleSpinBox* map_x_edit;
 	QDoubleSpinBox* map_y_edit;

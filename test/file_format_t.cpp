@@ -79,8 +79,8 @@ namespace QTest
 
 void FileFormatTest::initTestCase()
 {
-	QCoreApplication::setOrganizationName("OpenOrienteering.org");
-	QCoreApplication::setApplicationName("FileFormatTest");
+	QCoreApplication::setOrganizationName(QString::fromLatin1("OpenOrienteering.org"));
+	QCoreApplication::setApplicationName(QString::fromLatin1("FileFormatTest"));
 	Settings::getInstance().setSetting(Settings::General_NewOcd8Implementation, true);
 	
 	doStaticInitializations();
@@ -88,15 +88,15 @@ void FileFormatTest::initTestCase()
 		FileFormats.registerFormat(new OCAD8FileFormat());
 	
 	map_filenames
-	  << "COPY_OF_issue-513-coords-outside-printable.xmap"
-	  << "COPY_OF_issue-513-coords-outside-qint32.omap"
-	  << "COPY_OF_spotcolor_overprint.xmap"
-	  << "COPY_OF_test_map.omap";
+	  << QString::fromLatin1("COPY_OF_issue-513-coords-outside-printable.xmap")
+	  << QString::fromLatin1("COPY_OF_issue-513-coords-outside-qint32.omap")
+	  << QString::fromLatin1("COPY_OF_spotcolor_overprint.xmap")
+	  << QString::fromLatin1("COPY_OF_test_map.omap");
 	
 	for (auto&& filename : map_filenames)
 	{
 		QString path = MapperResource::locate(MapperResource::TEST_DATA, filename);
-		QVERIFY2(!path.isEmpty(), QString("Unable to locate %1").arg(filename).toLocal8Bit());
+		QVERIFY2(!path.isEmpty(), QString::fromLatin1("Unable to locate %1").arg(filename).toLocal8Bit());
 		filename = path;
 	}
 }
@@ -104,14 +104,14 @@ void FileFormatTest::initTestCase()
 
 void FileFormatTest::mapCoordtoString()
 {
-	QCOMPARE(MapCoord().toString(), QString("0 0;"));
+	QCOMPARE(MapCoord().toString(), QLatin1String("0 0;"));
 	
 	// Verify toString for native coordinates at the numeric limits.
 	auto native_x = MapCoord().nativeX();
 	using bounds = std::numeric_limits<decltype(native_x)>;
 	static_assert(sizeof(decltype(native_x)) == sizeof(qint32), "This test assumes qint32 native coordinates");
-	QCOMPARE(MapCoord::fromNative(bounds::max(), bounds::max(), 8).toString(), QString("2147483647 2147483647 8;"));
-	QCOMPARE(MapCoord::fromNative(bounds::min(), bounds::min(), 1).toString(), QString("-2147483648 -2147483648 1;"));
+	QCOMPARE(MapCoord::fromNative(bounds::max(), bounds::max(), 8).toString(), QString::fromLatin1("2147483647 2147483647 8;"));
+	QCOMPARE(MapCoord::fromNative(bounds::min(), bounds::min(), 1).toString(), QString::fromLatin1("-2147483648 -2147483648 1;"));
 }
 
 
@@ -121,7 +121,7 @@ void FileFormatTest::issue_513_high_coordinates_data()
 	
 	for (const auto& filename : map_filenames)
 	{
-		if (filename.contains(QString("issue-513")))
+		if (filename.contains(QString::fromLatin1("issue-513")))
 			QTest::newRow(QFileInfo(filename).fileName().toLocal8Bit()) << filename;
 	}
 }
@@ -155,7 +155,7 @@ void FileFormatTest::issue_513_high_coordinates()
 void FileFormatTest::saveAndLoad_data()
 {
 	// Add all file formats which support import and export
-	QTest::addColumn<QString>("format_id");
+	QTest::addColumn<QByteArray>("format_id");
 	QTest::addColumn<QString>("map_filename");
 	
 	for (auto format : FileFormats.formats())
@@ -164,8 +164,8 @@ void FileFormatTest::saveAndLoad_data()
 		{
 			for (const auto& filename : map_filenames)
 			{
-				auto id = QString { QFileInfo(filename).fileName() % " <> " % format->id() };
-				QTest::newRow(id.toLocal8Bit()) << format->id() << filename;
+				auto id = QString { QFileInfo(filename).fileName() + QLatin1String(" <> ") + QLatin1String(format->id()) };
+				QTest::newRow(id.toLocal8Bit()) << QByteArray{format->id()} << filename;
 			}
 		}
 	}
@@ -173,7 +173,7 @@ void FileFormatTest::saveAndLoad_data()
 
 void FileFormatTest::saveAndLoad()
 {
-	QFETCH(QString, format_id);
+	QFETCH(QByteArray, format_id);
 	QFETCH(QString, map_filename);
 	
 	// Find the file format and verify that it exists
@@ -211,10 +211,10 @@ void FileFormatTest::saveAndLoad()
 	if (!new_map)
 		QFAIL("Exception while importing / exporting.");
 	
-	QString error = "";
+	QString error;
 	bool equal = compareMaps(original, new_map, error);
 	if (!equal)
-		QFAIL(QString("Loaded map does not equal saved map, error: %1").arg(error).toLocal8Bit());
+		QFAIL(QString::fromLatin1("Loaded map does not equal saved map, error: %1").arg(error).toLocal8Bit());
 	
 	comparePrinterConfig(new_map->printerConfig(), original->printerConfig());
 	
@@ -262,12 +262,12 @@ bool FileFormatTest::compareMaps(const Map* a, const Map* b, QString& error)
 	
 	if (a->getScaleDenominator() != b->getScaleDenominator())
 	{
-		error = "The map scales differ.";
+		error = QString::fromLatin1("The map scales differ.");
 		return false;
 	}
 	if (a->getMapNotes().compare(b->getMapNotes()) != 0)
 	{
-		error = "The map notes differ.";
+		error = QString::fromLatin1("The map notes differ.");
 		return false;
 	}
 	
@@ -286,7 +286,7 @@ bool FileFormatTest::compareMaps(const Map* a, const Map* b, QString& error)
 		qAbs(a_geo.getGeographicRefPoint().latitude() - b_geo.getGeographicRefPoint().latitude()) > 0.5e-8 ||
 		qAbs(a_geo.getGeographicRefPoint().longitude() - b_geo.getGeographicRefPoint().longitude())  > 0.5e-8)
 	{
-		error = "The georeferencing differs.";
+		error = QString::fromLatin1("The georeferencing differs.");
 		return false;
 	}
 	
@@ -295,28 +295,28 @@ bool FileFormatTest::compareMaps(const Map* a, const Map* b, QString& error)
 	
 	if (a_grid != b_grid || !(a_grid == b_grid))
 	{
-		error = "The map grid differs.";
+		error = QString::fromLatin1("The map grid differs.");
 		return false;
 	}
 	
 	if (a->isAreaHatchingEnabled() != b->isAreaHatchingEnabled() ||
 		a->isBaselineViewEnabled() != b->isBaselineViewEnabled())
 	{
-		error = "The view mode differs.";
+		error = QString::fromLatin1("The view mode differs.");
 		return false;
 	}
 	
 	// Colors
 	if (a->getNumColors() != b->getNumColors())
 	{
-		error = "The number of colors differs.";
+		error = QString::fromLatin1("The number of colors differs.");
 		return false;
 	}
 	for (int i = 0; i < a->getNumColors(); ++i)
 	{
 		if (!a->getColor(i)->equals(*b->getColor(i), true))
 		{
-			error = QString("Color #%1 (%2) differs.").arg(i).arg(a->getColor(i)->getName());
+			error = QString::fromLatin1("Color #%1 (%2) differs.").arg(i).arg(a->getColor(i)->getName());
 			return false;
 		}
 	}
@@ -324,7 +324,7 @@ bool FileFormatTest::compareMaps(const Map* a, const Map* b, QString& error)
 	// Symbols
 	if (a->getNumSymbols() != b->getNumSymbols())
 	{
-		error = "The number of symbols differs.";
+		error = QString::fromLatin1("The number of symbols differs.");
 		return false;
 	}
 	for (int i = 0; i < a->getNumSymbols(); ++i)
@@ -332,7 +332,7 @@ bool FileFormatTest::compareMaps(const Map* a, const Map* b, QString& error)
 		const Symbol* a_symbol = a->getSymbol(i);
 		if (!a_symbol->equals(b->getSymbol(i), Qt::CaseSensitive, true))
 		{
-			error = QString("Symbol #%1 (%2) differs.").arg(i).arg(a_symbol->getName());
+			error = QString::fromLatin1("Symbol #%1 (%2) differs.").arg(i).arg(a_symbol->getName());
 			return false;
 		}
 	}
@@ -341,12 +341,12 @@ bool FileFormatTest::compareMaps(const Map* a, const Map* b, QString& error)
 	// TODO: Only a single part is compared here! Add comparison for parts ...
 	if (a->getNumParts() != b->getNumParts())
 	{
-		error = "The number of parts differs.";
+		error = QString::fromLatin1("The number of parts differs.");
 		return false;
 	}
 	if (a->getCurrentPartIndex() != b->getCurrentPartIndex())
 	{
-		error = "The current part differs.";
+		error = QString::fromLatin1("The current part differs.");
 		return false;
 	}
 	for (int part = 0; part < a->getNumParts(); ++part)
@@ -355,19 +355,19 @@ bool FileFormatTest::compareMaps(const Map* a, const Map* b, QString& error)
 		MapPart* b_part = b->getPart(part);
 		if (a_part->getName().compare(b_part->getName(), Qt::CaseSensitive) != 0)
 		{
-			error = QString("The names of part #%1 differ (%2 <-> %3).").arg(part).arg(a_part->getName()).arg(b_part->getName());
+			error = QString::fromLatin1("The names of part #%1 differ (%2 <-> %3).").arg(part).arg(a_part->getName()).arg(b_part->getName());
 			return false;
 		}
 		if (a_part->getNumObjects() != b_part->getNumObjects())
 		{
-			error = "The number of objects differs.";
+			error = QString::fromLatin1("The number of objects differs.");
 			return false;
 		}
 		for (int i = 0; i < a_part->getNumObjects(); ++i)
 		{
 			if (!a_part->getObject(i)->equals(b_part->getObject(i), true))
 			{
-				error = QString("Object #%1 (with symbol %2) in part #%3 differs.").arg(i).arg(a_part->getObject(i)->getSymbol()->getName()).arg(part);
+				error = QString::fromLatin1("Object #%1 (with symbol %2) in part #%3 differs.").arg(i).arg(a_part->getObject(i)->getSymbol()->getName()).arg(part);
 				return false;
 			}
 		}
@@ -376,21 +376,21 @@ bool FileFormatTest::compareMaps(const Map* a, const Map* b, QString& error)
 	// Object selection
 	if (a->getNumSelectedObjects() != b->getNumSelectedObjects())
 	{
-		error = "The number of selected objects differs.";
+		error = QString::fromLatin1("The number of selected objects differs.");
 		return false;
 	}
 	if ((a->getFirstSelectedObject() == NULL && b->getFirstSelectedObject() != NULL) || (a->getFirstSelectedObject() != NULL && b->getFirstSelectedObject() == NULL) ||
 		(a->getFirstSelectedObject() != NULL && b->getFirstSelectedObject() != NULL &&
 		 a->getCurrentPart()->findObjectIndex(a->getFirstSelectedObject()) != b->getCurrentPart()->findObjectIndex(b->getFirstSelectedObject())))
 	{
-		error = "The first selected object differs.";
+		error = QString::fromLatin1("The first selected object differs.");
 		return false;
 	}
 	for (Map::ObjectSelection::const_iterator it = a->selectedObjectsBegin(), end = a->selectedObjectsEnd(); it != end; ++it)
 	{
 		if (!b->isObjectSelected(b->getCurrentPart()->getObject(a->getCurrentPart()->findObjectIndex(*it))))
 		{
-			error = "The selected objects differ.";
+			error = QString::fromLatin1("The selected objects differ.");
 			return false;
 		}
 	}
@@ -400,31 +400,31 @@ bool FileFormatTest::compareMaps(const Map* a, const Map* b, QString& error)
 	if (a->undoManager().undoStepCount() != b->undoManager().undoStepCount() ||
 		a->undoManager().redoStepCount() != b->undoManager().redoStepCount())
 	{
-		error = "The number of undo / redo steps differs.";
+		error = QString::fromLatin1("The number of undo / redo steps differs.");
 		return false;
 	}
 	if (a->undoManager().canUndo() &&
 	    a->undoManager().nextUndoStep()->getType() != b->undoManager().nextUndoStep()->getType())
 	{
-		error = "The type of the first undo step is different.";
+		error = QString::fromLatin1("The type of the first undo step is different.");
 		return false;
 	}
 	if (a->undoManager().canRedo() &&
 	    a->undoManager().nextRedoStep()->getType() != b->undoManager().nextRedoStep()->getType())
 	{
-		error = "The type of the first redo step is different.";
+		error = QString::fromLatin1("The type of the first redo step is different.");
 		return false;
 	}
 	
 	// Templates
 	if (a->getNumTemplates() != b->getNumTemplates())
 	{
-		error = "The number of templates differs.";
+		error = QString::fromLatin1("The number of templates differs.");
 		return false;
 	}
 	if (a->getFirstFrontTemplate() != b->getFirstFrontTemplate())
 	{
-		error = "The division into front / back templates differs.";
+		error = QString::fromLatin1("The division into front / back templates differs.");
 		return false;
 	}
 	for (int i = 0; i < a->getNumTemplates(); ++i)
@@ -432,7 +432,7 @@ bool FileFormatTest::compareMaps(const Map* a, const Map* b, QString& error)
 		// TODO: only template filenames are compared
 		if (a->getTemplate(i)->getTemplateFilename().compare(b->getTemplate(i)->getTemplateFilename()) != 0)
 		{
-			error = QString("Template filename #%1 differs.").arg(i);
+			error = QString::fromLatin1("Template filename #%1 differs.").arg(i);
 			return false;
 		}
 	}

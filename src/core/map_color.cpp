@@ -21,11 +21,11 @@
 
 #include "map_color.h"
 
-#include <QApplication>
+#include <QCoreApplication>
 
 
 MapColor::MapColor()
-: name(QApplication::translate("Map", "New color")),
+: name(QCoreApplication::translate("Map", "New color")),
   priority(Undefined),
   opacity(1.0f),
   q_color(Qt::black),
@@ -39,7 +39,7 @@ MapColor::MapColor()
 }
 
 MapColor::MapColor(int priority)
-: name(QApplication::translate("Map", "New color")),
+: name(QCoreApplication::translate("Map", "New color")),
   priority(priority),
   opacity(1.0f),
   q_color(Qt::black),
@@ -68,7 +68,7 @@ MapColor::MapColor(int priority)
 			break;
 		case Registration:
 			Q_ASSERT(isBlack());
-			name = QApplication::translate("MapColor", "Registration black (all printed colors)");
+			name = QCoreApplication::translate("MapColor", "Registration black (all printed colors)");
 			break;
 		default:
 			; // no change
@@ -84,7 +84,7 @@ MapColor::MapColor(const QString& name, int priority)
   cmyk_color_method(MapColor::CustomColor),
   rgb_color_method(MapColor::CmykColor),
   flags(0),
-  spot_color_name("")
+  spot_color_name()
 {
 	Q_ASSERT(isBlack());
 }
@@ -302,9 +302,8 @@ void MapColor::updateCompositionName()
 		{
 			if (!spot_color_name.isEmpty())
 				spot_color_name += QLatin1String(", ");
-			spot_color_name += QString("%1 %2%").arg(
-			  component.spot_color->getSpotColorName(),
-			  QString::number(component.factor * 100) /* % */);
+			spot_color_name += component.spot_color->getSpotColorName() + QLatin1Char(' ')
+			                   + QString::number(component.factor * 100) /* % */;
 		}
 	}
 }

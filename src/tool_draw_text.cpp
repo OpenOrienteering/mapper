@@ -68,7 +68,7 @@ void DrawTextTool::init()
 
 const QCursor& DrawTextTool::getCursor() const
 {
-	static auto const cursor = QCursor(QPixmap(":/images/cursor-draw-text.png"), 11, 11);
+	static auto const cursor = scaledToScreen(QCursor{ QPixmap(QString::fromLatin1(":/images/cursor-draw-text.png")), 11, 11 });
 	return cursor;
 }
 
@@ -156,7 +156,7 @@ bool DrawTextTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, Ma
 	else
 		setPreviewLetter();
 	
-	preview_text->setText("");
+	preview_text->setText(QString{});
 
 	// Create the TextObjectEditor
 	text_editor = new TextObjectEditorHelper(preview_text, editor);
@@ -389,14 +389,14 @@ TextObjectAlignmentDockWidget::TextObjectAlignmentDockWidget(TextObject* object,
 	
 	QWidget* widget = new QWidget();
 	
-	addHorzButton(0, ":/images/text-align-left.png", horz_default);
-	addHorzButton(1, ":/images/text-align-hcenter.png", horz_default);
-	addHorzButton(2, ":/images/text-align-right.png", horz_default);
+	addHorzButton(0, QString::fromLatin1(":/images/text-align-left.png"), horz_default);
+	addHorzButton(1, QString::fromLatin1(":/images/text-align-hcenter.png"), horz_default);
+	addHorzButton(2, QString::fromLatin1(":/images/text-align-right.png"), horz_default);
 	
-	addVertButton(0, ":/images/text-align-top.png", vert_default);
-	addVertButton(1, ":/images/text-align-vcenter.png", vert_default);
-	addVertButton(2, ":/images/text-align-baseline.png", vert_default);
-	addVertButton(3, ":/images/text-align-bottom.png", vert_default);
+	addVertButton(0, QString::fromLatin1(":/images/text-align-top.png"), vert_default);
+	addVertButton(1, QString::fromLatin1(":/images/text-align-vcenter.png"), vert_default);
+	addVertButton(2, QString::fromLatin1(":/images/text-align-baseline.png"), vert_default);
+	addVertButton(3, QString::fromLatin1(":/images/text-align-bottom.png"), vert_default);
 	
 	QHBoxLayout* horz_layout = new QHBoxLayout();
 	horz_layout->setMargin(0);
@@ -467,7 +467,7 @@ void TextObjectAlignmentDockWidget::addHorzButton(int index, const QString& icon
 	const TextObject::HorizontalAlignment horz_array[] = {TextObject::AlignLeft, TextObject::AlignHCenter, TextObject::AlignRight};
 	const QString tooltips[] = {tr("Left"), tr("Center"), tr("Right")};
 	
-	horz_buttons[index] = new QPushButton(QIcon(icon_path), "");
+	horz_buttons[index] = new QPushButton(QIcon(icon_path), QString{});
 	horz_buttons[index]->setFocusPolicy(Qt::NoFocus);
 	horz_buttons[index]->setCheckable(true);
 	horz_buttons[index]->setToolTip(tooltips[index]);
@@ -483,7 +483,7 @@ void TextObjectAlignmentDockWidget::addVertButton(int index, const QString& icon
 	const TextObject::VerticalAlignment vert_array[] = {TextObject::AlignTop, TextObject::AlignVCenter, TextObject::AlignBaseline, TextObject::AlignBottom};
 	const QString tooltips[] = {tr("Top"), tr("Center"), tr("Baseline"), tr("Bottom")};
 	
-	vert_buttons[index] = new QPushButton(QIcon(icon_path), "");
+	vert_buttons[index] = new QPushButton(QIcon(icon_path), QString{});
 	vert_buttons[index]->setFocusPolicy(Qt::NoFocus);
 	vert_buttons[index]->setCheckable(true);
 	vert_buttons[index]->setToolTip(tooltips[index]);

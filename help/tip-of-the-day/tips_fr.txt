@@ -1,0 +1,16 @@
+<h2>Bienvenue dans OpenOrienteering Mapper !</h2>Si c'est la première fois que vous utilisez ce logiciel, prenez le temps de lire ceci.<br/><br/>Il est possible d'accéder aux <a href="settings:">préférences</a> et de personnaliser la configuration du logiciel. Pour des conseils détaillés sur l'utilisation de Mapper, consultez le <a href="help:">manuel</a>.<br/><br/><b>Conseils pour commencer tout de suite</b>:<br/>- Créer ou charger une carte avec les boutons à gauche<br/>- Maintenir appuyer la molette de la souris pour déplacer la carte<br/>- Pour zoomer, utiliser la molette de la souris, si disponible<br/>- Lire les conseils dans la barre d'état (en bas de l'écran) afin d'apprendre à utiliser les outils.
+<h2>Exemples</h2><ul><li><a href="examples:complete map.omap">carte complete.omap</a></li><li><a href="examples:sprint sample.omap">échantillon sprint.omap</a></li><li><a href="examples:forest sample.omap">échantillon forêt.omap</a></li><li><a href="examples:overprinting.omap">surimpression.omap</a> (cf. ISOM 2000 section 3.5 Printing on overprinting)</li></ul>
+Lors de l'édition d'une carte, appuyer sur Tab pour basculer rapidement entre l'outil d'édition et les outils de dessin.
+Une carte avec peu de symboles bien choisis sera bien meilleure qu'une carte encombrée de symboles inutiles.<br/><br/>Eduard Imhof
+Les objets inutiles pour les compétiteurs dans une course d'orientation de sprint ne devraient pas être cartographiés. Par exemple les corbeilles de rue, les bouches d'incendie, les parcmètres, les révèrbères sont des détails inutiles qui encombrent la carte.
+L'objectif du cartographe est de produire une carte précise et lisible en appliquant les principes spécifiques et généraux suivant : sélection, simplification et exagération.
+Cartographier des structures multi-niveaux (pont, passages souterrains ou batîments souterrains) est source de confusion. En général, seul le "niveau principal de course" doit apparaître. Cependant les passages souterrains, tunnel éclairés ou les passages aériens comme les ponts qui sont utiles pour les orienteurs doivent être cartographiés.
+Toutes les largeurs de lignes et les tailles des symboles doivent conserver leur valeur spécifiée. Certaines dimensions minimales doivent être respectées pour apparaître correctement à l'impression et permettre une bonne lisibilité de la carte.
+Écart minimum entre deux symboles de ligne de la même couleur :<br/>en brun ou noir : 0,15 mm<br/>en bleu : 0,25 mm
+Écart minimum entre deux symboles de surface de la même couleur : en noir : 0,15 mm
+Pour les lignes en pointillés : au moins deux pointillés doivent apparaître
+Pour les lignes en tirets : au moins deux tirets doivent apparaître
+Les surfaces délimitées par des lignes tirets doivent avoir un diamètre au moins égal à 1,5 mm et être composées d'au moins 5 tirets
+Les surfaces de couleurs doivent avoir un diamètre mininum :<br/>Bleu, vert, gris ou jaune en plein : 0,5 mm²; <br/>Pointillés noirs : 0,5 mm²; <br/>Bleu, marron, vert ou jaune en pointillés : 1,0 mm²
+Tous les objets plus petits que les dimensions minimums doivent être exagérées (agrandies sur la carte) ou ne pas apparaître, en fonction de leur utilité ou non pour les orienteurs.
+La taille d'une carte de sprint ne doit pas dépasser le format A4.

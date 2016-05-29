@@ -327,18 +327,18 @@ bool PointSymbol::loadImpl(QIODevice* file, int version, Map* map)
 
 void PointSymbol::saveImpl(QXmlStreamWriter& xml, const Map& map) const
 {
-	xml.writeStartElement("point_symbol");
+	xml.writeStartElement(QString::fromLatin1("point_symbol"));
 	if (rotatable)
-		xml.writeAttribute("rotatable", "true");
-	xml.writeAttribute("inner_radius", QString::number(inner_radius));
-	xml.writeAttribute("inner_color", QString::number(map.findColorIndex(inner_color)));
-	xml.writeAttribute("outer_width", QString::number(outer_width));
-	xml.writeAttribute("outer_color", QString::number(map.findColorIndex(outer_color)));
+		xml.writeAttribute(QString::fromLatin1("rotatable"), QString::fromLatin1("true"));
+	xml.writeAttribute(QString::fromLatin1("inner_radius"), QString::number(inner_radius));
+	xml.writeAttribute(QString::fromLatin1("inner_color"), QString::number(map.findColorIndex(inner_color)));
+	xml.writeAttribute(QString::fromLatin1("outer_width"), QString::number(outer_width));
+	xml.writeAttribute(QString::fromLatin1("outer_color"), QString::number(map.findColorIndex(outer_color)));
 	int num_elements = (int)objects.size();
-	xml.writeAttribute("elements", QString::number(num_elements));
+	xml.writeAttribute(QString::fromLatin1("elements"), QString::number(num_elements));
 	for (int i = 0; i < num_elements; ++i)
 	{
-		xml.writeStartElement("element");
+		xml.writeStartElement(QString::fromLatin1("element"));
 		symbols[i]->save(xml, map);
 		objects[i]->save(xml);
 		xml.writeEndElement(/*element*/);
@@ -348,30 +348,30 @@ void PointSymbol::saveImpl(QXmlStreamWriter& xml, const Map& map) const
 
 bool PointSymbol::loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict)
 {
-	if (xml.name() != "point_symbol")
+	if (xml.name() != QLatin1String("point_symbol"))
 		return false;
 	
 	QXmlStreamAttributes attributes(xml.attributes());
-	rotatable = (attributes.value("rotatable") == "true");
-	inner_radius = attributes.value("inner_radius").toString().toInt();
-	int temp = attributes.value("inner_color").toString().toInt();
+	rotatable = (attributes.value(QLatin1String("rotatable")) == QLatin1String("true"));
+	inner_radius = attributes.value(QLatin1String("inner_radius")).toInt();
+	int temp = attributes.value(QLatin1String("inner_color")).toInt();
 	inner_color = (temp >= 0) ? map.getColor(temp) : NULL;
-	outer_width = attributes.value("outer_width").toString().toInt();
-	temp = attributes.value("outer_color").toString().toInt();
+	outer_width = attributes.value(QLatin1String("outer_width")).toInt();
+	temp = attributes.value(QLatin1String("outer_color")).toInt();
 	outer_color = (temp >= 0) ? map.getColor(temp) : NULL;
-	int num_elements = attributes.value("elements").toString().toInt();
+	int num_elements = attributes.value(QLatin1String("elements")).toInt();
 	
 	symbols.reserve(qMin(num_elements, 10)); // 10 is not a limit
 	objects.reserve(qMin(num_elements, 10)); // 10 is not a limit
 	for (int i = 0; xml.readNextStartElement(); ++i)
 	{
-		if (xml.name() == "element")
+		if (xml.name() == QLatin1String("element"))
 		{
 			while (xml.readNextStartElement())
 			{
-				if (xml.name() == "symbol")
+				if (xml.name() == QLatin1String("symbol"))
 					symbols.push_back(Symbol::load(xml, map, symbol_dict));
-				else if (xml.name() == "object")
+				else if (xml.name() == QLatin1String("object"))
 					objects.push_back(Object::load(xml, NULL, symbol_dict, symbols.back()));
 				else
 					xml.skipCurrentElement(); // unknown element

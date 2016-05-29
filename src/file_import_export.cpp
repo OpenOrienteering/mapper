@@ -90,7 +90,7 @@ void Importer::doImport(bool load_symbols_only, const QString& map_path)
 	
 	if (auto deleted = map->deleteIrregularObjects())
 	{
-		addWarning(tr("Dropped %n irregular object(s).", "", deleted));
+		addWarning(tr("Dropped %n irregular object(s).", 0, deleted));
 	}
 	
 	// Symbol post processing
@@ -108,18 +108,30 @@ void Importer::doImport(bool load_symbols_only, const QString& map_path)
 		
 		bool loaded_from_template_dir = false;
 		temp->tryToFindAndReloadTemplateFile(map_path, &loaded_from_template_dir);
+		
 		if (loaded_from_template_dir)
+		{
 			addWarning(Importer::tr("Template \"%1\" has been loaded from the map's directory instead of the relative location to the map file where it was previously.").arg(temp->getTemplateFilename()));
+		}
 		
 		if (temp->getTemplateState() != Template::Loaded)
+		{
 			have_lost_template = true;
+			addWarning(tr("Failed to load template '%1', reason: %2")
+			           .arg(temp->getTemplateFilename(), temp->errorString()));
+		}
+		else if (!temp->errorString().isEmpty())
+		{
+			addWarning(tr("Warnings when loading template '%1':\n%2")
+			           .arg(temp->getTemplateFilename(), temp->errorString()));
+		}
 	}
 	if (have_lost_template)
 	{
 #if defined(Q_OS_ANDROID)
 		addWarning(tr("At least one template file could not be found."));
 #else
-		addWarning(tr("At least one template file could not be found.") + " " +
+		addWarning(tr("At least one template file could not be found.") + QLatin1Char(' ') +
 		           tr("Click the red template name(s) in the Templates -> Template setup window to locate the template file name(s)."));
 #endif
 	}

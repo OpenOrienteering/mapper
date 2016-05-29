@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map xmlns="http://openorienteering.org/apps/mapper/xml/v2" version="5">
     <notes></notes>
-    <georeferencing scale="15000"/>
+    <georeferencing scale="15000">
+        <projected_crs id="Local"/>
+    </georeferencing>
     <colors count="22">
         <color priority="0" name="Purple" c="0.200" m="1.000" y="0.000" k="0.000" opacity="1.000">
             <spotcolors>
@@ -163,78 +165,15 @@
     <symbols count="157">
         <symbol type="2" id="0" code="101" name="Korkeuskäyrä">
             <description>Viiva joka yhdistää samalla korkeudella olevat pisteet. Standardikäyräväli on 5 m. Pienin käyrien välinen etäisyys on 0.25 mm viivan keskeltä keskelle. </description>
-            <line_symbol color="4" line_width="140" minimum_length="0" join_style="2" cap_style="1" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Aloitussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
-                <mid_symbol>
-                    <symbol type="1" code="" name="Välisymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Lopetussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Solmupisteen symboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
-            </line_symbol>
+            <line_symbol color="4" line_width="140" minimum_length="0" join_style="2" cap_style="1" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="2" id="1" code="102" name="Johtokäyrä">
             <description>Korkeuserojen nopeaa arviointia helpottamaan kuvataan joka viides käyrä johtokäyränä. Johtokäyrälle osuvat pienmuodot, kuten notkot ja nenät, sekä pienet kukkulat ja supat kuvataan korkeuskäyrällä (101). </description>
-            <line_symbol color="4" line_width="250" minimum_length="0" join_style="2" cap_style="1" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Aloitussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
-                <mid_symbol>
-                    <symbol type="1" code="" name="Välisymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Lopetussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Solmupisteen symboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
-            </line_symbol>
+            <line_symbol color="4" line_width="250" minimum_length="0" join_style="2" cap_style="1" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="2" id="2" code="103" name="Apukäyrä">
             <description>Maanpinnan muotojen kuvausta täydentämään käytetään puolta käyräväliä vastaavia apukäyriä. Niiden avulla voidaan antaa maanpinnan muodoista lisätietoja, kun muotoja ei saada kuvatuiksi käyräväliä vastaavin korkeuskäyrin. Kahden korkeuskäyrän välissä saa käyttää vain yhtä apukäyrää. </description>
-            <line_symbol color="4" line_width="140" minimum_length="0" join_style="2" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="1250" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Aloitussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
-                <mid_symbol>
-                    <symbol type="1" code="" name="Välisymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Lopetussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Solmupisteen symboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
-            </line_symbol>
+            <line_symbol color="4" line_width="140" minimum_length="0" join_style="2" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="1250" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="1" id="3" code="104" name="Rinneviiva">
             <description>Maanpinnan muotojen kuvauksen selventämiseksi piirrettävä maaston laskevan kaltevuuden suuntaa osoittavia rinneviivoja. Kaikkiin sulkeutuviin suppakäyriin kuuluu rinneviiva. Usean käyrän supassa on rinneviiva merkittävä jokaiseen käyrään.</description>
@@ -325,11 +264,6 @@
                         </point_symbol>
                     </symbol>
                 </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Solmupisteen symboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
             </line_symbol>
         </symbol>
         <symbol type="1" id="6" code="106.0.1" name="Irtomaarinne, minimikoko">
@@ -442,11 +376,6 @@
                         </point_symbol>
                     </symbol>
                 </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Solmupisteen symboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
             </line_symbol>
         </symbol>
         <symbol type="1" id="8" code="106.1.1" name="Irtomaarinne, hyvin korkea, minimikoko">
@@ -498,127 +427,40 @@
         </symbol>
         <symbol type="2" id="9" code="106.2" name="Irtomaarinne, rinneviiva">
             <description>Käytä tätä kuvaamaan leveiden irtomaarinteiden todellinen leveys. </description>
-            <line_symbol color="4" line_width="140" minimum_length="500" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Aloitussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
-                <mid_symbol>
-                    <symbol type="1" code="" name="Välisymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Lopetussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Solmupisteen symboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
-            </line_symbol>
+            <line_symbol color="4" line_width="140" minimum_length="500" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="2" id="10" code="107" name="Maavalli">
             <description>Selvästi havaittava maavalli. Minimikorkeus 1m.</description>
             <line_symbol color="4" line_width="140" minimum_length="0" join_style="2" cap_style="0" pointed_cap_length="1000" segment_length="2500" end_length="1250" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Aloitussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
                 <mid_symbol>
                     <symbol type="1" code="" name="Välisymboli">
                         <point_symbol rotatable="true" inner_radius="200" inner_color="4" outer_width="0" outer_color="-1" elements="0"/>
                     </symbol>
                 </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Lopetussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Solmupisteen symboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
             </line_symbol>
         </symbol>
         <symbol type="2" id="11" code="108" name="Pieni maavalli">
             <description>Pieni, osittain sortunut tai epäselvä maavalli. Minimikorkeus 0.75</description>
             <line_symbol color="4" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="2240" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Aloitussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
                 <mid_symbol>
                     <symbol type="1" code="" name="Välisymboli">
                         <point_symbol rotatable="true" inner_radius="200" inner_color="4" outer_width="0" outer_color="-1" elements="0"/>
                     </symbol>
                 </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Lopetussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Solmupisteen symboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
             </line_symbol>
         </symbol>
         <symbol type="2" id="12" code="109" name="Uurre">
             <description>Jyrkkäreunainen kapea irtomaarinteinen uoma, jota ei mahdu kuvaamaan irtomaarinteen merkillä (106). Minimisyvyys 1 m ja minimipituus 20 m. Viivan päät ovat terävät.</description>
-            <line_symbol color="4" line_width="250" minimum_length="0" join_style="2" cap_style="3" pointed_cap_length="747" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Aloitussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
-                <mid_symbol>
-                    <symbol type="1" code="" name="Välisymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Lopetussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Solmupisteen symboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
-            </line_symbol>
+            <line_symbol color="4" line_width="250" minimum_length="0" join_style="2" cap_style="3" pointed_cap_length="747" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="2" id="13" code="110" name="Kuiva pieni uoma">
             <description>Hyvin pieni uoma, jossa ei virtaa vettä ja joka ei ole soinen. Minimisyvyys 0.5 m ja minimipituus 20 m.</description>
             <line_symbol color="-1" line_width="0" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="500" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Aloitussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
                 <mid_symbol>
                     <symbol type="1" code="" name="Välisymboli">
                         <point_symbol rotatable="true" inner_radius="125" inner_color="4" outer_width="0" outer_color="-1" elements="0"/>
                     </symbol>
                 </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Lopetussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Solmupisteen symboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
             </line_symbol>
         </symbol>
         <symbol type="1" id="14" code="112" name="Pieni kumpare">
@@ -809,11 +651,6 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</description
                         </point_symbol>
                     </symbol>
                 </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Solmupisteen symboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
             </line_symbol>
         </symbol>
         <symbol type="1" id="22" code="201.0.1" name="Ylipääsemätön jyrkänne, minimikoko">
@@ -865,53 +702,11 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</description
         </symbol>
         <symbol type="2" id="23" code="201.1" name="Ylipääsemätön jyrkänne, ei poikkiviivoja">
             <description>Tilanpuutteen takia viettosuuntaviivat voidaan jättää pois. Tämä tulee kyseeseen erikoisesti solissa. Solissa selkäviivaa voidaan ohentaa 0.30 mm. </description>
-            <line_symbol color="1" line_width="350" minimum_length="600" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="600" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Aloitussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
-                <mid_symbol>
-                    <symbol type="1" code="" name="Välisymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Lopetussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Solmupisteen symboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
-            </line_symbol>
+            <line_symbol color="1" line_width="350" minimum_length="600" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="600" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="2" id="24" code="201.2" name="Ylipääsemätön jyrkänne, poikkiviiva">
             <description>Käytä tätä kuvaamaan jyrkänteiden todellinen korkeus. </description>
-            <line_symbol color="1" line_width="120" minimum_length="500" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Aloitussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
-                <mid_symbol>
-                    <symbol type="1" code="" name="Välisymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Lopetussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Solmupisteen symboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
-            </line_symbol>
+            <line_symbol color="1" line_width="120" minimum_length="500" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="4" id="25" code="202" name="Hiekkakivijyrkänne">
             <description>Erikoisen maastotyypin (esim. Hiekkakivivuoriston) jyrkänteet ja pilarit kuvataan pohjapiirroksen mukaisesti ilman viettosuuntaviivoja. Kuvauksen selventämiseksi kallioiden korkeus kuvataan erilevyisillä viivoilla.</description>
@@ -980,11 +775,6 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</description
                         </point_symbol>
                     </symbol>
                 </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Solmupisteen symboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
             </line_symbol>
         </symbol>
         <symbol type="1" id="27" code="203.0.1" name="Pieni jyrkänne, minimikoko">
@@ -1036,28 +826,7 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</description
         </symbol>
         <symbol type="2" id="28" code="203.1" name="Pieni jyrkänne, ei poikkiviivoja">
             <description>Käytetään jos jyrkänteen suunta on pääteltävissä korkeuskäyristä.</description>
-            <line_symbol color="1" line_width="250" minimum_length="600" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Aloitussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
-                <mid_symbol>
-                    <symbol type="1" code="" name="Välisymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Lopetussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Solmupisteen symboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
-            </line_symbol>
+            <line_symbol color="1" line_width="250" minimum_length="600" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="1" id="29" code="203.1.1" name="Pieni jyrkänne, ei poikkiviivoja, minimikoko">
             <description>Käytetään jos jyrkänteen suunta on pääteltävissä korkeuskäyristä.</description>
@@ -1080,28 +849,7 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</description
         </symbol>
         <symbol type="2" id="30" code="203.2" name="Pieni jyrkänne, ei poikkiviivoja, pyöristetty">
             <description>Symboliviivan päitä voidaan pyöristää luettavuuden parantamiseksi kun viettosuuntaviivoja ei käytetä.</description>
-            <line_symbol color="1" line_width="250" minimum_length="600" join_style="2" cap_style="1" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Aloitussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
-                <mid_symbol>
-                    <symbol type="1" code="" name="Välisymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Lopetussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Solmupisteen symboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
-            </line_symbol>
+            <line_symbol color="1" line_width="250" minimum_length="600" join_style="2" cap_style="1" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="1" id="31" code="203.2.1" name="Pieni jyrkänne, pyöristetty, minimikoko">
             <description>Symboliviivan päitä voidaan pyöristää luettavuuden parantamiseksi kun viettosuuntaviivoja ei käytetä.</description>
@@ -1294,28 +1042,7 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</description
         </symbol>
         <symbol type="2" id="46" code="301.1" name="Rantaviiva">
             <description>Rantaviiva esittää ylipääsemättömyyttä. Kahluupaikan kohdalta rantaviiva jätetään pois.</description>
-            <line_symbol color="1" line_width="180" minimum_length="0" join_style="0" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Aloitussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
-                <mid_symbol>
-                    <symbol type="1" code="" name="Välisymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Lopetussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Solmupisteen symboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
-            </line_symbol>
+            <line_symbol color="1" line_width="180" minimum_length="0" join_style="0" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="16" id="47" code="301.2" name="Vesialue, rantaviivalla">
             <combined_symbol parts="2">
@@ -1353,102 +1080,24 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</description
         </symbol>
         <symbol type="2" id="50" code="305" name="Leveä puro tai oja">
             <description>Ylitettävä vähintään 2 m leveä vesiuoma. Yli 5m leveä vesistö kuvataan mittakaavan mukaisesti.</description>
-            <line_symbol color="7" line_width="250" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Aloitussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
-                <mid_symbol>
-                    <symbol type="1" code="" name="Välisymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Lopetussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Solmupisteen symboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
-            </line_symbol>
+            <line_symbol color="7" line_width="250" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="2" id="51" code="306" name="Pieni puro tai oja">
             <description>Ylitettävä, maastossa selvästi havaittava puro tai oja , leveys alle 2 m.</description>
-            <line_symbol color="7" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Aloitussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
-                <mid_symbol>
-                    <symbol type="1" code="" name="Välisymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Lopetussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Solmupisteen symboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
-            </line_symbol>
+            <line_symbol color="7" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="2" id="52" code="307" name="Epäselvä oja">
             <description>Selvästi havaittava pieni kaivettu tai luonnon vesiuoma joka voi ajoittain olla kuiva. Metsittyvän niityn ja pellon sarkaojat sekä soiden vanhat umpeutuvat ojat kuvataan tällä merkillä.</description>
-            <line_symbol color="7" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="1250" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Aloitussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
-                <mid_symbol>
-                    <symbol type="1" code="" name="Välisymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Lopetussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Solmupisteen symboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
-            </line_symbol>
+            <line_symbol color="7" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="1250" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="2" id="53" code="308" name="Suojuotti">
             <description>Maastossa selvästi havaittava suomainen juotti, jota ei kapeutensa vuoksi voida kuvata suon merkillä 310 (kapeampi kuin 5 m).</description>
             <line_symbol color="-1" line_width="0" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="500" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Aloitussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
                 <mid_symbol>
                     <symbol type="1" code="" name="Välisymboli">
                         <point_symbol rotatable="true" inner_radius="125" inner_color="7" outer_width="0" outer_color="-1" elements="0"/>
                     </symbol>
                 </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Lopetussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Solmupisteen symboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
             </line_symbol>
         </symbol>
         <symbol type="4" id="54" code="309" name="Ylipääsemätön suo">
@@ -1459,28 +1108,7 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</description
         </symbol>
         <symbol type="2" id="55" code="309.1" name="Ylipääsemättömän suon reunaviiva">
             <description>A black line surrounds the symbol.</description>
-            <line_symbol color="1" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Aloitussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
-                <mid_symbol>
-                    <symbol type="1" code="" name="Välisymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Lopetussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Solmupisteen symboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
-            </line_symbol>
+            <line_symbol color="1" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="16" id="56" code="309.2" name="Ylipääsemätön suo, reunaviivalla">
             <combined_symbol parts="2">
@@ -1751,28 +1379,7 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</description
         </symbol>
         <symbol type="2" id="74" code="410.1" name="Erittäin vaikeakulkuinen metsä, viiva">
             <description>Minimileveydellä piirrettävä viiva.</description>
-            <line_symbol color="13" line_width="250" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Aloitussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
-                <mid_symbol>
-                    <symbol type="1" code="" name="Välisymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Lopetussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Solmupisteen symboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
-            </line_symbol>
+            <line_symbol color="13" line_width="250" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="4" id="75" code="411.0" name="Yhteensuuntaan helppokulkuinen metsä, 1">
             <description>Tiheä metsä, jossa helppo kulkusuunta osoitetaan valkoisilla käytävillä. Merkin käyttö soveltuu alueisiin, joilla metsää on istutettu säännöllisiin riveihin esim. entisille pelloille.</description>
@@ -1849,28 +1456,7 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</description
         </symbol>
         <symbol type="2" id="80" code="414" name="Erittäin selvä kuvioraja">
             <description>Pellon ja viljellyn maan erottama alue, jos sitä ei erota leveä puro tai oja (305), aita, tie, polku jne. Kahden selvästi toisistaan erottuvan viljelyksen erottamiseksi käytetään tätä merkkiä. Juoksuhauta kuvataan Suomessa tällä merkillä .</description>
-            <line_symbol color="1" line_width="120" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Aloitussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
-                <mid_symbol>
-                    <symbol type="1" code="" name="Välisymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Lopetussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Solmupisteen symboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
-            </line_symbol>
+            <line_symbol color="1" line_width="120" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="4" id="81" code="415" name="Viljelty maa">
             <description>Viljelty peltomaa, joka eri vuodenaikoina voi olla viljelyn eri vaiheissa kynnöksestä sadonkorjuuseen. Alue on pysyvästi kielletty viljelyn vaiheista riippumatta. Alueelle meno voidaan sallia vain kilpailuohjeissa mainitulla tavalla. </description>
@@ -1885,26 +1471,11 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</description
         <symbol type="2" id="82" code="416" name="Selvä kuvioraja">
             <description>Selvä metsän reuna ja selvästi havaittava metsätyypin ero (ikä ja laatu). Kuvioraja piirretään ojan, polun, linjan, aidan tms. viereen, jos metsän reunaa tai metsätyypin eroa ei voida väripinnoista havaita. </description>
             <line_symbol color="-1" line_width="0" minimum_length="220" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="500" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="2" minimum_mid_symbol_count_when_closed="5" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Aloitussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
                 <mid_symbol>
                     <symbol type="1" code="" name="Välisymboli">
                         <point_symbol rotatable="true" inner_radius="110" inner_color="1" outer_width="0" outer_color="-1" elements="0"/>
                     </symbol>
                 </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Lopetussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Solmupisteen symboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
             </line_symbol>
         </symbol>
         <symbol type="1" id="83" code="418" name="Kasvillisuuden erikoiskohde">
@@ -1989,26 +1560,6 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</description
         <symbol type="2" id="88" code="502" name="Kaksikaistainen maantie">
             <description>Tie, jonka leveys on yli 5 m. Reunaviivojen väli täytetään ruskealla värillä. </description>
             <line_symbol color="2" line_width="500" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Aloitussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
-                <mid_symbol>
-                    <symbol type="1" code="" name="Välisymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Lopetussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Solmupisteen symboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
                 <borders>
                     <border color="3" width="180" shift="90" dash_length="2000" break_length="1000"/>
                 </borders>
@@ -2017,26 +1568,6 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</description
         <symbol type="2" id="89" code="502.1" name="Kaksikaistainen maantie, rakenteilla">
             <description>Rakenteilla oleva tie kuvataan katkoviivoin.</description>
             <line_symbol color="2" line_width="500" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="3000" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Aloitussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
-                <mid_symbol>
-                    <symbol type="1" code="" name="Välisymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Lopetussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Solmupisteen symboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
                 <borders>
                     <border color="3" width="180" shift="90" dash_length="2000" break_length="1000"/>
                 </borders>
@@ -2045,26 +1576,6 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</description
         <symbol type="2" id="90" code="503" name="Yksikaistainen maantie">
             <description>Tie, jonka leveys on 3-5 m. Reunaviivojen väli täytetään ruskealla värillä.</description>
             <line_symbol color="2" line_width="300" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Aloitussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
-                <mid_symbol>
-                    <symbol type="1" code="" name="Välisymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Lopetussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Solmupisteen symboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
                 <borders>
                     <border color="3" width="180" shift="90" dash_length="2000" break_length="1000"/>
                 </borders>
@@ -2073,26 +1584,6 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</description
         <symbol type="2" id="91" code="503.1" name="Yksikaistainen maantie, rakenteilla">
             <description>Rakenteilla oleva tie kuvataan katkoviivoin.</description>
             <line_symbol color="2" line_width="300" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="3000" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Aloitussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
-                <mid_symbol>
-                    <symbol type="1" code="" name="Välisymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Lopetussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Solmupisteen symboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
                 <borders>
                     <border color="3" width="180" shift="90" dash_length="2000" break_length="1000"/>
                 </borders>
@@ -2100,153 +1591,27 @@ Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</description
         </symbol>
         <symbol type="2" id="92" code="504" name="Ajotie">
             <description>Rakennettu tie, jota pitkin voidaan ajaa vaikeuksitta mm henkilöautolla, kuten metsäautotiet. Erilliset kevyen liikenteen väylät ja kylätiet. Ajoradan leveys alle 3 m. </description>
-            <line_symbol color="1" line_width="350" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Aloitussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
-                <mid_symbol>
-                    <symbol type="1" code="" name="Välisymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Lopetussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Solmupisteen symboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
-            </line_symbol>
+            <line_symbol color="1" line_width="350" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="2" id="93" code="505" name="Ajopolku">
             <description>Ajamalla syntynyt tai pohjustettu pysyväluonteinen heikko tie, jolla voidaan ajaa traktorilla ja maastoajoneuvolla. Leveys alle 3 m. Suomessa leveä pururata kuvataan merkillä 505.1.</description>
-            <line_symbol color="1" line_width="350" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="3000" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Aloitussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
-                <mid_symbol>
-                    <symbol type="1" code="" name="Välisymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Lopetussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Solmupisteen symboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
-            </line_symbol>
+            <line_symbol color="1" line_width="350" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="3000" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="2" id="94" code="506" name="Polku">
             <description>Selvästi havaittava hyvä polku, tai vanha ajopolku. Polkua on pystyttävä seuraamaan kilpailuvauhdissa myös yöllä, eikä sitä voida ylittää huomaamatta. Suomessa pieni purupolku ja pitkospuut kuvataan merkillä 506.1.</description>
-            <line_symbol color="1" line_width="250" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="2000" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Aloitussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
-                <mid_symbol>
-                    <symbol type="1" code="" name="Välisymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Lopetussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Solmupisteen symboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
-            </line_symbol>
+            <line_symbol color="1" line_width="250" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="2000" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="2" id="95" code="507" name="Pieni polku">
             <description>A sPieni jalan liikkumalla syntynyt polku tai vanha metsäkoneiden ajoura jota on helppo seurata kilpailuvauhdilla päivällä. Polkua poikittain ylitettäessä on se helposti havaittava. Maastoon rakennetut portaat kuvataan tällä merkillä.</description>
-            <line_symbol color="1" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="1000" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Aloitussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
-                <mid_symbol>
-                    <symbol type="1" code="" name="Välisymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Lopetussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Solmupisteen symboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
-            </line_symbol>
+            <line_symbol color="1" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="1000" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="2" id="96" code="508" name="Epäselvä polku">
             <description>Pieni polku tai juontoura tai ajoura, jota on paikoitellen vaikeata seurata ja havaita.</description>
-            <line_symbol color="1" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="1000" break_length="1000" dashes_in_group="2" in_group_break_length="250" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Aloitussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
-                <mid_symbol>
-                    <symbol type="1" code="" name="Välisymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Lopetussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Solmupisteen symboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
-            </line_symbol>
+            <line_symbol color="1" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="1000" break_length="1000" dashes_in_group="2" in_group_break_length="250" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="2" id="97" code="509" name="Kapea linja - juontoura">
             <description>Alle 5 m leveä hyvin havaittava linja, joka on maapohjaltaan ja aluskasvillisuudeltaan samanlainen kuin ympäröivä maasto. Kun linjalla on polku on merkki korvattava merkillä 507 tai 508. Merkillä kuvataan myös metsähakkuiden myötä syntyneet metsäkoneiden juontourat, joiden kuljettavuus on yleensä polkua huonompi.</description>
-            <line_symbol color="1" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="3000" break_length="500" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Aloitussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
-                <mid_symbol>
-                    <symbol type="1" code="" name="Välisymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Lopetussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Solmupisteen symboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
-            </line_symbol>
+            <line_symbol color="1" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="3000" break_length="500" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="1" id="98" code="512" name="Polkusilta">
             <description>Silta tai ylityspaikka jolle ei johda polkua tai juontouraa.
@@ -2271,11 +1636,6 @@ Huom: jos vesistö on leveämpi kuin 0.25mm, säädä symbolia niin että se ylt
         <symbol type="2" id="99" code="515" name="Rautatie">
             <description>Kaikki kiskoväylät.</description>
             <line_symbol color="1" line_width="350" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="3000" end_length="1500" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Aloitussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
                 <mid_symbol>
                     <symbol type="1" code="" name="Välisymboli">
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
@@ -2296,36 +1656,11 @@ Huom: jos vesistö on leveämpi kuin 0.25mm, säädä symbolia niin että se ylt
                         </point_symbol>
                     </symbol>
                 </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Lopetussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Solmupisteen symboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
             </line_symbol>
         </symbol>
         <symbol type="2" id="100" code="516" name="Sähkölinja">
             <description>Sähkölinjat, köysiradat ja hiihtohissit. Poikkiviivoilla osoitetaan tarkasti pylväiden paikat. Jos sähkölinjan auki hakattu leveys ylittää 5 m, on merkkiin liitettävä merkki 416 ja linjalla oleva kasvillisuus kuvataan tilanteen mukaisesti. Maastossa pylväiden varassa olevia yksittäisiä sähkö- tai puhelinkaapeleita ei kuvata.</description>
             <line_symbol color="1" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Aloitussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
-                <mid_symbol>
-                    <symbol type="1" code="" name="Välisymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Lopetussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
                 <dash_symbol>
                     <symbol type="1" code="" name="Solmupisteen symboli">
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
@@ -2351,21 +1686,6 @@ Huom: jos vesistö on leveämpi kuin 0.25mm, säädä symbolia niin että se ylt
         <symbol type="2" id="101" code="517" name="Korkeajännitelinja">
             <description>Korkeajännitelinjat kuvataan kaksoisviivalla. Linjan aukko kuvataan kuten merkissä 516. </description>
             <line_symbol color="-1" line_width="620" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Aloitussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
-                <mid_symbol>
-                    <symbol type="1" code="" name="Välisymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Lopetussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
                 <dash_symbol>
                     <symbol type="1" code="" name="Solmupisteen symboli">
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
@@ -2415,11 +1735,6 @@ Huom: jos vesistö on leveämpi kuin 0.25mm, säädä symbolia niin että se ylt
                         </point_symbol>
                     </symbol>
                 </start_symbol>
-                <mid_symbol>
-                    <symbol type="1" code="" name="Välisymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </mid_symbol>
                 <end_symbol>
                     <symbol type="1" code="" name="Lopetussymboli">
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
@@ -2441,11 +1756,6 @@ Huom: jos vesistö on leveämpi kuin 0.25mm, säädä symbolia niin että se ylt
                         </point_symbol>
                     </symbol>
                 </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Solmupisteen symboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
             </line_symbol>
         </symbol>
         <symbol type="1" id="103" code="518.1" name="Tunneli, minimikoko">
@@ -2471,86 +1781,36 @@ Huom: jos vesistö on leveämpi kuin 0.25mm, säädä symbolia niin että se ylt
         <symbol type="2" id="104" code="519" name="Kiviaita">
             <description>Kiviaita tai kiviseinämä. Minimikorkeus 0.75 m ja minimipituus15 m. Kiviaita on pystyttävä vaikeuksitta ylittämään.</description>
             <line_symbol color="1" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="2500" end_length="1250" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Aloitussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
                 <mid_symbol>
                     <symbol type="1" code="" name="Välisymboli">
                         <point_symbol rotatable="true" inner_radius="200" inner_color="1" outer_width="0" outer_color="-1" elements="0"/>
                     </symbol>
                 </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Lopetussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Solmupisteen symboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
             </line_symbol>
         </symbol>
         <symbol type="2" id="105" code="520" name="Matala kiviaita">
             <description>Matala tai sortunut, mutta selvästi havaittava kiviaita. Minimipituus 30 m.</description>
             <line_symbol color="1" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="2500" end_length="1250" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="2250" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Aloitussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
                 <mid_symbol>
                     <symbol type="1" code="" name="Välisymboli">
                         <point_symbol rotatable="true" inner_radius="200" inner_color="1" outer_width="0" outer_color="-1" elements="0"/>
                     </symbol>
                 </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Lopetussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Solmupisteen symboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
             </line_symbol>
         </symbol>
         <symbol type="2" id="106" code="521" name="Kivimuuri">
             <description>Yli 1.5 m korkea kivimuuri, jonka ylittäminen on vaikeata. Minimipituus 20 m.</description>
             <line_symbol color="1" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="2500" end_length="1250" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="2" mid_symbol_distance="700">
-                <start_symbol>
-                    <symbol type="1" code="" name="Aloitussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
                 <mid_symbol>
                     <symbol type="1" code="" name="Välisymboli">
                         <point_symbol rotatable="true" inner_radius="250" inner_color="1" outer_width="0" outer_color="-1" elements="0"/>
                     </symbol>
                 </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Lopetussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Solmupisteen symboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
             </line_symbol>
         </symbol>
         <symbol type="2" id="107" code="522" name="Aita">
             <description>Maastossa hyvin havaittava alle 1.5 m korkea puu- tai rauta-aita. Aita on suunnistajan mahdollista ylittää. Minimipituus 15 m.</description>
             <line_symbol color="1" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="2500" end_length="1250" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Aloitussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
                 <mid_symbol>
                     <symbol type="1" code="" name="Välisymboli">
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
@@ -2571,26 +1831,11 @@ Huom: jos vesistö on leveämpi kuin 0.25mm, säädä symbolia niin että se ylt
                         </point_symbol>
                     </symbol>
                 </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Lopetussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Solmupisteen symboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
             </line_symbol>
         </symbol>
         <symbol type="2" id="108" code="523" name="Sortunut aita">
             <description>Osittain sortunut, mutta hyvin havaittava aita kuvataan katkotulla aidan merkillä. Minimipituus 30 m.</description>
             <line_symbol color="1" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="2500" end_length="1250" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="2500" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Aloitussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
                 <mid_symbol>
                     <symbol type="1" code="" name="Välisymboli">
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
@@ -2611,26 +1856,11 @@ Huom: jos vesistö on leveämpi kuin 0.25mm, säädä symbolia niin että se ylt
                         </point_symbol>
                     </symbol>
                 </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Lopetussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Solmupisteen symboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
             </line_symbol>
         </symbol>
         <symbol type="2" id="109" code="524" name="Korkea aita">
             <description>Yli 1.5 m korkea puu- tai rauta-aita, jota ei voi vaivatta ylittää. Minimipituus 20 m.</description>
             <line_symbol color="1" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="3100" end_length="1550" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Aloitussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
                 <mid_symbol>
                     <symbol type="1" code="" name="Välisymboli">
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
@@ -2665,16 +1895,6 @@ Huom: jos vesistö on leveämpi kuin 0.25mm, säädä symbolia niin että se ylt
                         </point_symbol>
                     </symbol>
                 </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Lopetussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Solmupisteen symboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
             </line_symbol>
         </symbol>
         <symbol type="1" id="110" code="525" name="Portti">
@@ -2753,56 +1973,14 @@ Huom: jos vesistö on leveämpi kuin 0.25mm, säädä symbolia niin että se ylt
         </symbol>
         <symbol type="2" id="116" code="528.1" name="Pysyvästi kielletty alue, reunaviiva">
             <description>Alue rajataan, ellei sillä ole selkeitä rajoja kuten aita, oja, tie jne. </description>
-            <line_symbol color="1" line_width="350" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Aloitussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
-                <mid_symbol>
-                    <symbol type="1" code="" name="Välisymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Lopetussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Solmupisteen symboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
-            </line_symbol>
+            <line_symbol color="1" line_width="350" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="4" id="117" code="529" name="Kenttä">
             <description>Asfaltilla tai hiekalla päällystetty pysäköintialue, hiekkapohjaiset urheilu-, pallo- yms. kentät, sekä hiekkakuopan pohjalla olevat autolla ajokelpoiset alueet.</description>
             <area_symbol inner_color="2" min_area="500" patterns="0"/>
         </symbol>
         <symbol type="2" id="118" code="529.1" name="Kenttä, reunaviiva">
-            <line_symbol color="1" line_width="120" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Aloitussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
-                <mid_symbol>
-                    <symbol type="1" code="" name="Välisymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Lopetussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Solmupisteen symboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
-            </line_symbol>
+            <line_symbol color="1" line_width="120" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="16" id="119" code="529.2" name="Kenttä reunaviivalla">
             <description>Asfaltilla tai hiekalla päällystetty pysäköintialue, hiekkapohjaiset urheilu-, pallo- yms. kentät, sekä hiekkakuopan pohjalla olevat autolla ajokelpoiset alueet.</description>
@@ -2813,53 +1991,11 @@ Huom: jos vesistö on leveämpi kuin 0.25mm, säädä symbolia niin että se ylt
         </symbol>
         <symbol type="2" id="120" code="530" name="Raunio">
             <description>Rauniot kuvataan pohjapiirroksen mukaisesti minimimittaan saakka. Minimimitoilla kuvatut rauniot piirretään yhtenäisellä viivalla. Tällä merkillä kuvataan myös katokset, hyppyrimäet ja vastaavat rakenteet. jotka eivät muodosta kulkuestettä.</description>
-            <line_symbol color="1" line_width="160" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="1500" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Aloitussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
-                <mid_symbol>
-                    <symbol type="1" code="" name="Välisymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Lopetussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Solmupisteen symboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
-            </line_symbol>
+            <line_symbol color="1" line_width="160" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="1500" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="2" id="121" code="530.1" name="Raunio, yhtenäinen viiva">
             <description>Minimimitoilla kuvatut rauniot piirretään yhtenäisellä viivalla. </description>
-            <line_symbol color="1" line_width="160" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="1500" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Aloitussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
-                <mid_symbol>
-                    <symbol type="1" code="" name="Välisymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Lopetussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Solmupisteen symboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
-            </line_symbol>
+            <line_symbol color="1" line_width="160" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="1500" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="1" id="122" code="530.2" name="Raunio, minimikoko">
             <description>Minimimitoilla kuvatut rauniot piirretään yhtenäisellä viivalla. </description>
@@ -2886,16 +2022,6 @@ Huom: jos vesistö on leveämpi kuin 0.25mm, säädä symbolia niin että se ylt
         <symbol type="2" id="123" code="531" name="Ampumarata">
             <description>Ampumarata kuvataan erikoismerkillä, jolla osoitetaan myös mahdollista vaaraa. Ampumaradan rakennukset ja ampumakatokset kuvataan rakennuksina, myöskin muut kohteet kartoitetaan, kuten tiestö, ojat, aukeat ym.</description>
             <line_symbol color="1" line_width="350" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Aloitussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
-                <mid_symbol>
-                    <symbol type="1" code="" name="Välisymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </mid_symbol>
                 <end_symbol>
                     <symbol type="1" code="" name="Lopetussymboli">
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
@@ -2933,11 +2059,6 @@ Huom: jos vesistö on leveämpi kuin 0.25mm, säädä symbolia niin että se ylt
                         </point_symbol>
                     </symbol>
                 </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Solmupisteen symboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
             </line_symbol>
         </symbol>
         <symbol type="1" id="124" code="532" name="Hauta">
@@ -2976,11 +2097,6 @@ Huom: jos vesistö on leveämpi kuin 0.25mm, säädä symbolia niin että se ylt
         <symbol type="2" id="125" code="533" name="Ylitettävä putki">
             <description>Maan pinnalla oleva putkilinja (kaasu, vesi, öljy, kaukolämpö, ym.) jonka voi ylittää tai alittaa.</description>
             <line_symbol color="1" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="2500" end_length="1250" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Aloitussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
                 <mid_symbol>
                     <symbol type="1" code="" name="Välisymboli">
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
@@ -3015,26 +2131,11 @@ Huom: jos vesistö on leveämpi kuin 0.25mm, säädä symbolia niin että se ylt
                         </point_symbol>
                     </symbol>
                 </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Lopetussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Solmupisteen symboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
             </line_symbol>
         </symbol>
         <symbol type="2" id="126" code="534" name="Ylipääsemätön putki">
             <description>Maan pinnalla oleva putkilinja jota ei voi ylittää.</description>
             <line_symbol color="1" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="2500" end_length="1250" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="2" mid_symbol_distance="600">
-                <start_symbol>
-                    <symbol type="1" code="" name="Aloitussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
                 <mid_symbol>
                     <symbol type="1" code="" name="Välisymboli">
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
@@ -3069,16 +2170,6 @@ Huom: jos vesistö on leveämpi kuin 0.25mm, säädä symbolia niin että se ylt
                         </point_symbol>
                     </symbol>
                 </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Lopetussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Solmupisteen symboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
             </line_symbol>
         </symbol>
         <symbol type="1" id="127" code="535" name="Korkea torni">
@@ -3237,28 +2328,7 @@ Rasti: koju, romukasa, autonromu tms.</description>
         </symbol>
         <symbol type="2" id="133" code="601" name="Suunnanottoviiva">
             <description>Suunnanottoviivoilla osoitetaan maaston magneettinen pohjoissuunta. Viivojen etäisyys 1:15000 kartalla on 33.33 mm (500 maastometriä). Viivojen etäisyys 1:10000 kartalla on 25.00 mm (250 maastometriä. Muissa mittakaavoissa viivat piirretään 20-40 mm:n välein niin, että niiden väli maastometreinä on tasametrejä (esim. 50, 100, 250 tai 500 m). Maastoalue asemoidaan arkille aina niin, että suunnanottoviivat tulevat arkin reunojen suuntaisesti pystysuoraan. Suunnanottoviivat katkaistaan kohdista, joissa ne peittäisivät karttamerkkejä, kuten kumpareita, kiviä, polunhaaroja, polunpäitä jne. </description>
-            <line_symbol color="1" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Aloitussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
-                <mid_symbol>
-                    <symbol type="1" code="" name="Välisymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Lopetussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Solmupisteen symboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
-            </line_symbol>
+            <line_symbol color="1" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="4" id="134" code="601.1" name="Suunnanottoviiva, kuvio">
             <area_symbol inner_color="-1" min_area="0" patterns="1">
@@ -3267,28 +2337,7 @@ Rasti: koju, romukasa, autonromu tms.</description>
         </symbol>
         <symbol type="2" id="135" code="601.2" name="Suunnanottoviiva">
             <description>Suunnanottoviivoilla osoitetaan maaston magneettinen pohjoissuunta. Viivojen etäisyys 1:15000 kartalla on 33.33 mm (500 maastometriä). Viivojen etäisyys 1:10000 kartalla on 25.00 mm (250 maastometriä. Muissa mittakaavoissa viivat piirretään 20-40 mm:n välein niin, että niiden väli maastometreinä on tasametrejä (esim. 50, 100, 250 tai 500 m). Maastoalue asemoidaan arkille aina niin, että suunnanottoviivat tulevat arkin reunojen suuntaisesti pystysuoraan. Suunnanottoviivat katkaistaan kohdista, joissa ne peittäisivät karttamerkkejä, kuten kumpareita, kiviä, polunhaaroja, polunpäitä jne. </description>
-            <line_symbol color="7" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Aloitussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
-                <mid_symbol>
-                    <symbol type="1" code="" name="Välisymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Lopetussymboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Solmupisteen symboli">
-                        <point_symbol rotatable="true" inner_radius="667" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
-            </line_symbol>
+            <line_symbol color="7" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="4" id="136" code="601.3" name="Suunnanottoviiva, kuvio, sininen">
             <area_symbol inner_color="-1" min_area="0" patterns="1">
@@ -3373,53 +2422,11 @@ Rasti: koju, romukasa, autonromu tms.</description>
         </symbol>
         <symbol type="2" id="143" code="704" name="Yhdysviiva">
             <description>Lähtö ja rastit yhdistetään yhdysviivalla käyntijärjestyksen mukaisesti. Yhdysviivat voidaan katkaista niiltä kohdin kuin ne peittävät tärkeitä kartanlukukohteita.</description>
-            <line_symbol color="0" line_width="350" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1500" segment_length="6000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="6000" break_length="1500" dashes_in_group="1" in_group_break_length="750" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Aloitussymboli">
-                        <point_symbol rotatable="true" inner_radius="1001" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
-                <mid_symbol>
-                    <symbol type="1" code="" name="Välisymboli">
-                        <point_symbol rotatable="true" inner_radius="1001" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Lopetussymboli">
-                        <point_symbol rotatable="true" inner_radius="1001" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Solmupisteen symboli">
-                        <point_symbol rotatable="true" inner_radius="1001" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
-            </line_symbol>
+            <line_symbol color="0" line_width="350" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1500" segment_length="6000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="6000" break_length="1500" dashes_in_group="1" in_group_break_length="750" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="2" id="144" code="705" name="Viitoitus">
             <description>Viitoitettu taival , jota on noudatettava, merkitään katkoviivalla.</description>
-            <line_symbol color="0" line_width="350" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1500" dashed="true" segment_length="6000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="2000" break_length="500" dashes_in_group="1" in_group_break_length="750" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Aloitussymboli">
-                        <point_symbol rotatable="true" inner_radius="1001" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
-                <mid_symbol>
-                    <symbol type="1" code="" name="Välisymboli">
-                        <point_symbol rotatable="true" inner_radius="1001" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Lopetussymboli">
-                        <point_symbol rotatable="true" inner_radius="1001" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Solmupisteen symboli">
-                        <point_symbol rotatable="true" inner_radius="1001" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
-            </line_symbol>
+            <line_symbol color="0" line_width="350" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1500" dashed="true" segment_length="6000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="2000" break_length="500" dashes_in_group="1" in_group_break_length="750" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="1" id="145" code="706" name="Maali">
             <description>Maali merkitään kaksoisympyrällä.</description>
@@ -3438,28 +2445,7 @@ Rasti: koju, romukasa, autonromu tms.</description>
         </symbol>
         <symbol type="2" id="146" code="707" name="Ylistyskielto">
             <description>Kohde, jonka ylittäminen on kielletty, esim. tie, aita, oja, linja, kuvioraja, jne.</description>
-            <line_symbol color="0" line_width="699" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1500" segment_length="6000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="6000" break_length="1500" dashes_in_group="1" in_group_break_length="750" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Aloitussymboli">
-                        <point_symbol rotatable="true" inner_radius="1001" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
-                <mid_symbol>
-                    <symbol type="1" code="" name="Välisymboli">
-                        <point_symbol rotatable="true" inner_radius="1001" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Lopetussymboli">
-                        <point_symbol rotatable="true" inner_radius="1001" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Solmupisteen symboli">
-                        <point_symbol rotatable="true" inner_radius="1001" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
-            </line_symbol>
+            <line_symbol color="0" line_width="699" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1500" segment_length="6000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="6000" break_length="1500" dashes_in_group="1" in_group_break_length="750" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="1" id="147" code="708" name="Ylityspaikka">
             <description>Tärkeät ylitys- ja alituspaikat, kuten aidan, rautatien ja vesistön ylityspaikka tai tien ja rautatien alituspaikka merkitään kahdella ulospäin kaarevalla viivalla. Rastien yhdysviiva 704 ja viitoitusviiva 705 on vietävä pakollisen ylitys/alituspaikan kautta.</description>
@@ -3516,53 +2502,11 @@ Kielletty alue (ks. myös merkki 528), merkitään pystysuorin viivoin. Mikäli 
         </symbol>
         <symbol type="2" id="149" code="709.1" name="Kielletty alue, yhtenäinen viiva">
             <description>Yhtenäinen viiva osoittaa, että alue on merkitty maastoon yhtenäisellä nauhalla.</description>
-            <line_symbol color="0" line_width="251" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1001" segment_length="4001" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4001" break_length="1001" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Aloitussymboli">
-                        <point_symbol rotatable="true" inner_radius="1001" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
-                <mid_symbol>
-                    <symbol type="1" code="" name="Välisymboli">
-                        <point_symbol rotatable="true" inner_radius="1001" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="Lopetussymboli">
-                        <point_symbol rotatable="true" inner_radius="1001" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Solmupisteen symboli">
-                        <point_symbol rotatable="true" inner_radius="1001" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
-            </line_symbol>
+            <line_symbol color="0" line_width="251" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1001" segment_length="4001" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4001" break_length="1001" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="2" id="150" code="709.2" name="Kielletty alue, katkoviiva">
             <description>Katkoviiva osoittaa, että alue on merkitty maastoon kuitunauhoin tms.</description>
-            <line_symbol color="0" line_width="251" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1001" dashed="true" segment_length="4001" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="3000" break_length="500" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
-                <start_symbol>
-                    <symbol type="1" code="" name="Start symbol">
-                        <point_symbol rotatable="true" inner_radius="1001" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </start_symbol>
-                <mid_symbol>
-                    <symbol type="1" code="" name="Mid symbol">
-                        <point_symbol rotatable="true" inner_radius="1001" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </mid_symbol>
-                <end_symbol>
-                    <symbol type="1" code="" name="End symbol">
-                        <point_symbol rotatable="true" inner_radius="1001" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </end_symbol>
-                <dash_symbol>
-                    <symbol type="1" code="" name="Dash symbol">
-                        <point_symbol rotatable="true" inner_radius="1001" inner_color="-1" outer_width="0" outer_color="-1" elements="0"/>
-                    </symbol>
-                </dash_symbol>
-            </line_symbol>
+            <line_symbol color="0" line_width="251" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1001" dashed="true" segment_length="4001" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="3000" break_length="500" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="4" id="151" code="710" name="Vaarallinen alue">
             <description>Merkillä osoitetaan suunnistajalle vaaralliset alueet. Rajaukset tehdään kuten merkissä 709. </description>
@@ -7742,18 +6686,11 @@ Yhdysviiva menee hieman maaliympyrän sisäpuolelle, mikä on symbolin helppoude
     </templates>
     <view>
         <grid color="#646464" display="0" alignment="0" additional_rotation="0" unit="1" h_spacing="500" v_spacing="500" h_offset="0" v_offset="0" snapping_enabled="true"/>
-        <map_view zoom="4" rotation="0" position_x="-3756" position_y="13872" view_x="0" view_y="0" drag_offset_x="0" drag_offset_y="0">
-            <map opacity="1"/>
+        <map_view zoom="4" rotation="0" position_x="-3756" position_y="13872">
+            <map opacity="1" visible="true"/>
             <templates count="0"/>
         </map_view>
     </view>
-    <print scale="10000" resolution="600" mode="vector">
-        <page_format paper_size="Custom" orientation="portrait" h_overlap="5.00" v_overlap="5.00">
-            <dimensions width="110.000" height="110.000"/>
-            <page_rect left="5.000" top="5.000" width="100.000" height="100.000"/>
-        </page_format>
-        <print_area left="0.000" top="0.000" width="0.000" height="0.000"/>
-    </print>
     <barrier version="6" required="0.6.0">
         <undo/>
         <redo/>
