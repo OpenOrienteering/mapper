@@ -30,6 +30,7 @@
 #include <QFormLayout>
 #include <QMessageBox>
 #include <QScreen>
+#include <QSettings>
 #include <QTextCodec>
 #include <QToolButton>
 
@@ -188,7 +189,7 @@ void GeneralSettingsPage::apply()
 		// AppleLanguages array in the application's .plist file -
 		// and this file is also the one used by QSettings.
 		const QString mapper_language(translation.getLocale().name().left(2));
-		QSettings().setValue(QLatin1String{"AppleLanguages"}, { mapper_language });
+		QSettings().setValue(QString::fromLatin1("AppleLanguages"), { mapper_language });
 #endif
 	}
 	

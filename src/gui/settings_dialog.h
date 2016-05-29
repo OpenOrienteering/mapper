@@ -27,7 +27,7 @@ QT_BEGIN_NAMESPACE
 class QAbstractButton;
 class QDialogButtonBox;
 class QStackedWidget;
-class QTabBar;
+class QTabWidget;
 QT_END_NAMESPACE
 
 class SettingsPage;
@@ -81,14 +81,14 @@ private slots:
 	
 private:
 	/**
-	 * A tab bar for switching pages in desktop mode.
+	 * A tab widget which holds all pages in desktop mode.
 	 */
-	QTabBar* tab_bar_widget;
+	QTabWidget* tab_widget;
 	
 	/**
-	 * A stack widget which holds all pages.
+	 * A stack widget which holds all pages in mobile mode.
 	 */
-	QStackedWidget* pages_widget;
+	QStackedWidget* stack_widget;
 	
 	/** 
 	 * The box of standard dialog buttons.

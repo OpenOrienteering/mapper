@@ -29,6 +29,7 @@
 #include <QScrollArea>
 #include <QScroller>
 #include <QStackedWidget>
+#include <QTabWidget>
 #include <QTabBar>
 #include <QToolBar>
 #include <QVBoxLayout>
@@ -46,35 +47,37 @@
 
 SettingsDialog::SettingsDialog(QWidget* parent)
  : QDialog        { parent }
- , tab_bar_widget { nullptr }
+ , tab_widget     { nullptr }
+ , stack_widget   { nullptr }
 {
 	setWindowTitle(tr("Settings"));
 	
 	QVBoxLayout* layout = new QVBoxLayout(this);
 	
-	pages_widget = new QStackedWidget();
 	auto buttons = QDialogButtonBox::StandardButtons{ QDialogButtonBox::Ok };
 	if (MainWindow::mobileMode())
 	{
 		if (parent)
 			setGeometry(parent->geometry());
 		
+		stack_widget = new QStackedWidget();
+		layout->addWidget(stack_widget, 1);
+		
 		auto menu_widget = new QToolBar();
 		menu_widget->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
 		menu_widget->setOrientation(Qt::Vertical);
-		pages_widget->addWidget(menu_widget);
+		stack_widget->addWidget(menu_widget);
 	}
 	else
 	{
 		buttons |=  QDialogButtonBox::Reset | QDialogButtonBox::Cancel | QDialogButtonBox::Help;
-		tab_bar_widget = new QTabBar();
-		tab_bar_widget->setDocumentMode(true);
-		connect(tab_bar_widget, &QTabBar::currentChanged, pages_widget, &QStackedWidget::setCurrentIndex);
-		layout->addWidget(tab_bar_widget);
+		
+		tab_widget = new QTabWidget();
+#ifndef Q_OS_OSX
+		tab_widget->setDocumentMode(true);
+#endif
+		layout->addWidget(tab_widget, 1);
 	}
-	
-	addPages();
-	layout->addWidget(pages_widget, 1);
 	
 	button_box = new QDialogButtonBox(buttons, Qt::Horizontal);
 	connect(button_box, &QDialogButtonBox::clicked, this, &SettingsDialog::buttonPressed);
@@ -94,6 +97,8 @@ SettingsDialog::SettingsDialog(QWidget* parent)
 	{
 		layout->addWidget(button_box);
 	}
+	
+	addPages();
 }
 
 SettingsDialog::~SettingsDialog()
@@ -114,9 +119,9 @@ void SettingsDialog::keyPressEvent(QKeyEvent* event)
 	{
 	case Qt::Key_Back:
 	case Qt::Key_Escape:
-		if (MainWindow::mobileMode() && pages_widget->currentIndex() > 0)
+		if (MainWindow::mobileMode() && stack_widget->currentIndex() > 0)
 		{
-			pages_widget->setCurrentIndex(0);
+			stack_widget->setCurrentIndex(0);
 			auto buttons = button_box->standardButtons();
 			button_box->setStandardButtons((buttons & ~QDialogButtonBox::Reset) | QDialogButtonBox::Help);
 			return;
@@ -154,26 +159,27 @@ void SettingsDialog::addPage(SettingsPage* page)
 		scrollarea->setFrameShape(QFrame::NoFrame);
 		QScroller::grabGesture(scrollarea, QScroller::TouchGesture);
 		scrollarea->setWidget(page);
-		pages_widget->addWidget(scrollarea);
+		stack_widget->addWidget(scrollarea);
 		
-		auto menu_widget = qobject_cast<QToolBar*>(pages_widget->widget(0));
+		auto menu_widget = qobject_cast<QToolBar*>(stack_widget->widget(0));
 		auto action = menu_widget->addAction(page->title());
 		connect(action, &QAction::triggered, [this, scrollarea]()
 		{
-			pages_widget->setCurrentWidget(scrollarea);
+			stack_widget->setCurrentWidget(scrollarea);
+			scrollarea->ensureVisible(0, 0);
 			button_box->setStandardButtons(button_box->standardButtons() | QDialogButtonBox::Reset);
 		} );
 	}
 	else
 	{
-		pages_widget->addWidget(page);
-		tab_bar_widget->addTab(page->title());
+		tab_widget->addTab(page, page->title());
 	}
 }
 
 void SettingsDialog::callOnAllPages(void (SettingsPage::*member)())
 {
-	auto pages = pages_widget->findChildren<SettingsPage*>();
+	auto pages = MainWindow::mobileMode() ? stack_widget->findChildren<SettingsPage*>()
+	                                      : tab_widget->findChildren<SettingsPage*>();
 	for (auto page : qAsConst(pages))
 		(page->*member)();
 }
@@ -185,9 +191,9 @@ void SettingsDialog::buttonPressed(QAbstractButton* button)
 	{
 	case QDialogButtonBox::Ok:
 		callOnAllPages(&SettingsPage::apply);
-		if (MainWindow::mobileMode() && pages_widget->currentIndex() > 0)
+		if (MainWindow::mobileMode() && stack_widget->currentIndex() > 0)
 		{
-			pages_widget->setCurrentIndex(0);
+			stack_widget->setCurrentIndex(0);
 			button_box->setStandardButtons(button_box->standardButtons() & ~QDialogButtonBox::Reset);
 		}
 		else

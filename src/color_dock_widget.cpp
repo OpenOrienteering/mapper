@@ -271,7 +271,7 @@ void ColorWidget::editCurrentColor()
 
 void ColorWidget::showHelp() const
 {
-	Util::showHelp(window, "color_dock_widget.html", "");
+	Util::showHelp(window, "color_dock_widget.html");
 }
 
 void ColorWidget::cellChange(int row, int column)
