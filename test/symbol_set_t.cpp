@@ -102,7 +102,10 @@ void SymbolSetTool::processSymbolSet_data()
 	QTest::newRow("ISOM 1:10000 Finnish") << QString::fromLatin1("ISOM_fi")  << 15000u << 10000u;
 	QTest::newRow("ISSOM 1:5000 Finnish") << QString::fromLatin1("ISSOM_fi") <<  5000u <<  5000u;
 	QTest::newRow("ISSOM 1:4000 Finnish") << QString::fromLatin1("ISSOM_fi") <<  5000u <<  4000u;
-    
+	
+	QTest::newRow("ISOM 1:15000 Russian") << QString::fromLatin1("ISOM_ru")  << 15000u << 15000u;
+	QTest::newRow("ISOM 1:10000 Russian") << QString::fromLatin1("ISOM_ru")  << 15000u << 10000u;
+	
 	QTest::newRow("ISMTBOM 1:20000") << QString::fromLatin1("ISMTBOM") << 15000u << 20000u;
 	QTest::newRow("ISMTBOM 1:15000") << QString::fromLatin1("ISMTBOM") << 15000u << 15000u;
 	QTest::newRow("ISMTBOM 1:10000") << QString::fromLatin1("ISMTBOM") << 15000u << 10000u;
