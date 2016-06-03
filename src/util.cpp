@@ -29,10 +29,12 @@
 #include <QProcess>
 #include <QSettings>
 #include <QScreen>
+#include <QUrl>
 
 #include "core/map_coord.h"
 #include "mapper_resource.h"
 #include "settings.h"
+#include "gui/text_browser_dialog.h"
 #include <mapper_config.h>
 
 DoubleValidator::DoubleValidator(double bottom, double top, QObject* parent, int decimals) : QDoubleValidator(bottom, top, decimals, parent)
@@ -230,6 +232,13 @@ void showHelp(QWidget* dialog_parent, const char* file_and_anchor_latin1)
 
 void showHelp(QWidget* dialog_parent, QString filename)
 {
+#if defined(Q_OS_ANDROID)
+	const QString manual_path = MapperResource::locate(MapperResource::MANUAL, filename);
+	const QUrl help_url = QUrl::fromLocalFile(manual_path);
+	TextBrowserDialog help_dialog(help_url, dialog_parent);
+	help_dialog.exec();
+	return;
+#else
 	const auto base_url = QLatin1String("qthelp://" MAPPER_HELP_NAMESPACE "/manual/");
 	
 	static QProcess assistant_process;
@@ -271,7 +280,7 @@ void showHelp(QWidget* dialog_parent, QString filename)
 			args << QLatin1String("-style") << QLatin1String("fusion");
 		}
 		
-#if defined(Q_OS_LINUX) && !defined(Q_OS_ANDROID)
+#if defined(Q_OS_LINUX)
 		auto env = QProcessEnvironment::systemEnvironment();
 		env.insert(QLatin1String("QT_SELECT"), QLatin1String("qt5")); // #541
 		assistant_process.setProcessEnvironment(env);
@@ -294,6 +303,7 @@ void showHelp(QWidget* dialog_parent, QString filename)
 			msg_box.exec();
 		}
 	}
+#endif
 }
 
 QString makeWhatThis(const char* reference_latin1)

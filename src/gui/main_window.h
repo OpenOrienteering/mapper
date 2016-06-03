@@ -307,7 +307,7 @@ public slots:
 	 */
 	void showAbout();
 	
-	/** Show the index page of the manual in Qt assistant.
+	/** Show the index page of the manual in the help browser.
 	 */
 	void showHelp();
 	
