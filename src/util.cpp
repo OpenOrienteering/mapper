@@ -282,7 +282,7 @@ void showHelp(QWidget* dialog_parent, QString filename)
 		
 #if defined(Q_OS_LINUX)
 		auto env = QProcessEnvironment::systemEnvironment();
-		env.insert(QLatin1String("QT_SELECT"), QLatin1String("qt5")); // #541
+		env.insert(QLatin1String("QT_SELECT"), QLatin1String("5")); // #541
 		assistant_process.setProcessEnvironment(env);
 #endif
 		
