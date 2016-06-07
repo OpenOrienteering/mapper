@@ -440,6 +440,8 @@ install(TARGETS Mapper
 
 if(Mapper_BUILD_QT)
 	write_qt_conf()
+elseif(EXISTS "${CMAKE_CURRENT_BINARY_DIR}/qt.conf")
+	file(REMOVE "${CMAKE_CURRENT_BINARY_DIR}/qt.conf")
 endif()
 
 
