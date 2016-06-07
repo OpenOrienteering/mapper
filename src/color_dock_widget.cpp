@@ -370,11 +370,11 @@ void ColorWidget::addRow(int row)
 	item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable);
 	item->setToolTip(tr("Click to select the name and click again to edit."));
 	
-	react_to_changes = true;
-	
 	// Opacity
 	item = color_table->item(row, 6);
 	item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable);
+	
+	react_to_changes = true;
 	
 	updateRow(row);
 }
@@ -384,10 +384,11 @@ void ColorWidget::updateRow(int row)
 	react_to_changes = false;
 	
 	const MapColor* color = map->getColor(row);
+	auto color_with_opacity = colorWithOpacity(*color);
 	
 	// Color preview
 	QTableWidgetItem* item = color_table->item(row, 0);
-	item->setBackground((const QColor&) *color);
+	item->setBackground(color_with_opacity);
 	
 	// Name
 	item = color_table->item(row, 1);
@@ -399,7 +400,7 @@ void ColorWidget::updateRow(int row)
 	switch (color->getSpotColorMethod())
 	{
 		case MapColor::SpotColor:
-			item->setData(Qt::DecorationRole, (const QColor&)*color);
+			item->setData(Qt::DecorationRole, color_with_opacity);
 			break;
 		default:
 			item->setData(Qt::DecorationRole, QColor(Qt::transparent));
@@ -422,7 +423,7 @@ void ColorWidget::updateRow(int row)
 			break;
 		default:
 			item->setForeground(palette().color(QPalette::Active, QPalette::Text));
-			item->setData(Qt::DecorationRole, (QColor)(color->getCmyk()));
+			item->setData(Qt::DecorationRole, colorWithOpacity(color->getCmyk(), color->getOpacity()));
 	}
 	
 	// RGB
@@ -438,7 +439,7 @@ void ColorWidget::updateRow(int row)
 			break;
 		default:
 			item->setForeground(palette().color(QPalette::Active, QPalette::Text));
-			item->setData(Qt::DecorationRole, (const QColor&)(color->getRgb()));
+			item->setData(Qt::DecorationRole, colorWithOpacity(color->getRgb(), color->getOpacity()));
 	}
 	
 	// Knockout

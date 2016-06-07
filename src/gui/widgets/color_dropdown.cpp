@@ -45,7 +45,7 @@ ColorDropDown::ColorDropDown(const Map* map, const MapColor* initial_color, bool
 		if (initial_color == color)
 			initial_index = count();
 		
-		pixmap.fill(*color);
+		pixmap.fill(colorWithOpacity(*color));
 		QString name = spot_colors_only ? color->getSpotColorName() : color->getName();
 		addItem(QIcon(pixmap), name, QVariant::fromValue(color));
 	}

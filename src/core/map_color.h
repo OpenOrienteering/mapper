@@ -498,6 +498,21 @@ private:
 };
 
 
+/**
+ * Constructs a QColor with the alpha given by opacity from the prototype c.
+ * 
+ * A QColor object must be constructible from c.
+ */
+template <class T>
+QColor colorWithOpacity(T c, float opacity);
+
+/**
+ * Constructs a QColor with opacity from the given MapColor.
+ */
+QColor colorWithOpacity(const MapColor& c);
+
+
+
 // ### MapColorCmyk inline code ###
 
 inline
@@ -849,6 +864,20 @@ inline
 const MapColor* & MapColorMap::operator[](const MapColor* key)
 {
 	return mapping[key];
+}
+
+template <class T>
+QColor colorWithOpacity(T c, float opacity)
+{
+	auto color = static_cast<QColor>(c);
+	color.setAlphaF(opacity);
+	return color;
+}
+
+inline
+QColor colorWithOpacity(const MapColor& c)
+{
+	return colorWithOpacity(static_cast<const QColor&>(c), c.getOpacity());
 }
 
 
