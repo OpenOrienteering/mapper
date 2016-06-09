@@ -28,18 +28,19 @@ exists($$LRELEASE):exists($$LCONVERT) {
     android: translations.path = /assets/translations
     win32:   translations.path = /translations
     
-    lrelease.input         = TRANSLATIONS
-    lrelease.output        = ${QMAKE_FILE_BASE}.qm
-    lrelease.commands      = $${LRELEASE} -qm ${QMAKE_FILE_OUT} ${QMAKE_FILE_NAME}
-    lrelease.CONFIG        = no_link
-    lrelease.variable_out  = translations.files
-    QMAKE_EXTRA_COMPILERS += lrelease
-    
     LANGUAGES = cs de en es fi fr hu it ja lv nb pl ru sv uk
     QT_TRANSLATIONS_PREFIXES = qtbase
     for(lang, LANGUAGES) {
         TRANSLATIONS += OpenOrienteering_$${lang}.ts
-        translations.depends += OpenOrienteering_$${lang}.qm
+
+        qm_file = OpenOrienteering_$${lang}.qm
+        oo_$${lang}.target    = $$qm_file
+        oo_$${lang}.depends   = $$PWD/OpenOrienteering_$${lang}.ts
+        oo_$${lang}.commands  = $$LRELEASE -qm $$qm_file $$PWD/OpenOrienteering_$${lang}.ts
+        QMAKE_EXTRA_TARGETS  += oo_$${lang}
+        QMAKE_CLEAN          += $$qm_file
+        translations.depends += $$qm_file
+        translations.files   += $$OUT_PWD/$$qm_file
         
         qt_qm_files =
         for(qt_prefix, QT_TRANSLATIONS_PREFIXES) {
@@ -56,8 +57,14 @@ exists($$LRELEASE):exists($$LCONVERT) {
             translations.depends += $$qm_file
             translations.files   += $$OUT_PWD/$$qm_file
         } else:exists($$PWD/qt_$${lang}.ts) {
-            TRANSLATIONS += qt_$${lang}.ts
-            translations.depends += qt_$${lang}.qm
+            qm_file = qt_$${lang}.qm
+            qt_$${lang}.target    = $$qm_file
+            qt_$${lang}.depends   = $$PWD/qt_$${lang}.ts
+            qt_$${lang}.commands  = $$LRELEASE -qm $$qm_file $$PWD/qt_$${lang}.ts
+            QMAKE_EXTRA_TARGETS  += qt_$${lang}
+            QMAKE_CLEAN          += $$qm_file
+            translations.depends += $$qm_file
+            translations.files   += $$OUT_PWD/$$qm_file
         }
     }
 }
