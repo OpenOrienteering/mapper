@@ -4283,7 +4283,8 @@ Pour charger un modèle, cliquez sur
         <location filename="../src/map_widget.cpp" line="823"/>
         <source>Hint: Hold the middle mouse button to drag the map,
 zoom using the mouse wheel, if available.</source>
-        <translation>Conseil : Maintenir le bouton central de la souris enfoncé pour déplacer la carte,
+        <translation>Conseil : Maintenir le bouton central
+de la souris enfoncé pour déplacer la carte,
 utiliser la molette de la souris pour zoomer.</translation>
     </message>
 </context>
