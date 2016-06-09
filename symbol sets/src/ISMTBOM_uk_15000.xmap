@@ -628,10 +628,10 @@
                 <part symbol="23"/>
             </combined_symbol>
         </symbol>
-        <symbol type="4" id="25" code="302" name="Pond">
-            <description>Small areas of water should be shown with full colour.
+        <symbol type="4" id="25" code="302" name="Ставок">
+            <description>Малі площі води відображають суцільним кольором.
 
-This is symbol &quot;302 Pond&quot; in ISOM, but is a variation of &quot;301 Lake&quot; in ISMTBOM.</description>
+Це УЗ &quot;302 Ставок&quot; зі стандарту ISOM, але також є варіантом УЗ &quot;301 Озеро&quot; у специфікації ISMTBOM.</description>
             <area_symbol inner_color="8" min_area="500" patterns="0"/>
         </symbol>
         <symbol type="2" id="26" code="305" name="Струмок, що долається">
