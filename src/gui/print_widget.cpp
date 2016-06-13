@@ -486,6 +486,7 @@ void PrintWidget::updateTargets()
 			target_combo->setCurrentIndex(0);
 			
 			// Printers
+#if QT_VERSION < 0x050300
 			printers = QPrinterInfo::availablePrinters();
 			for (int i = 0; i < printers.size(); ++i)
 			{
@@ -495,6 +496,19 @@ void PrintWidget::updateTargets()
 					default_printer_index = target_combo->count();
 				target_combo->addItem(printers[i].printerName(), i);
 			}
+#else
+			auto default_printer_name = QPrinterInfo::defaultPrinterName();
+			printers = QPrinterInfo::availablePrinterNames();
+			for (int i = 0; i < printers.size(); ++i)
+			{
+				const QString& name = printers[i];
+				if (name == saved_printer_name)
+					saved_target_index = target_combo->count();
+				if (name == default_printer_name)
+					default_printer_index = target_combo->count();
+				target_combo->addItem(name, i);
+			}
+#endif
 		}
 		
 		// Restore selected target if possible and exit on success
@@ -532,7 +546,11 @@ void PrintWidget::setTarget(const QPrinterInfo* target)
 	{
 		for (; target_index >= 0; target_index--)
 		{
+#if QT_VERSION < 0x050300
 			if (target && printers[target_index].printerName() == target->printerName())
+#else
+			if (target && printers[target_index] == target->printerName())
+#endif
 				break;
 			else if (!target)
 				break;
@@ -578,15 +596,19 @@ void PrintWidget::targetChanged(int index) const
 	Q_ASSERT(target_index >= -2);
 	Q_ASSERT(target_index < printers.size());
 	
-	const QPrinterInfo* target = nullptr;
 	if (target_index == PdfExporter)
-		target = MapPrinter::pdfTarget();
+		map_printer->setTarget(MapPrinter::pdfTarget());
 	else if (target_index == ImageExporter)
-		target = MapPrinter::imageTarget();
+		map_printer->setTarget(MapPrinter::imageTarget());
 	else
-		target = &printers[target_index];
-	
-	map_printer->setTarget(target);
+#if QT_VERSION < 0x050300
+		map_printer->setTarget(&printers[target_index]);
+#else
+	{
+		auto info = QPrinterInfo::printerInfo(printers[target_index]);
+		map_printer->setTarget(&info);
+	}
+#endif
 }
 
 // slot
