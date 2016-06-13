@@ -41,14 +41,14 @@ namespace PlatformPrinterProperties
 	 * 
 	 * The default implementation does nothing.
 	 */
-	void save(const QPrinter* printer, std::shared_ptr<const void>& buffer);
+	void save(const QPrinter* printer, std::shared_ptr<void>& buffer);
 	
 	/**
 	 * Applies platform-dependent properties to the printer, if possible.
 	 * 
 	 * The default implementation does nothing.
 	 */
-	void restore(QPrinter* printer, const std::shared_ptr<const void> buffer);
+	void restore(QPrinter* printer, const std::shared_ptr<void>& buffer);
 	
 	/**
 	 * Returns true iff the platform supports execDialog().

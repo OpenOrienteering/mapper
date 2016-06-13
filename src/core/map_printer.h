@@ -194,7 +194,7 @@ public:
 	bool single_page_print_area;
 	
 	/** Platform-dependent data. */
-	std::shared_ptr<const void> native_data;
+	std::shared_ptr<void> native_data;
 };
 
 
