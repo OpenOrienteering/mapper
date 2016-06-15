@@ -56,14 +56,22 @@ namespace
 	 */
 	struct
 	{
-		void operator()(void* ptr) const
+		void operator()(void* handle) const
 		{
-			if (ptr)
-				free(ptr);
+			if (handle
+			    && GlobalUnlock(handle) == 0
+			    && GetLastError() == NO_ERROR)
+			{
+				GlobalFree(handle);
+			}
+			else
+			{
+				qDebug("Could not unlock and free handle");
+			}
 		}
-	} deleter;
+	} tryUnlockAndFree;
 	
-}	
+}
 
 
 namespace PlatformPrinterProperties
@@ -81,14 +89,29 @@ namespace PlatformPrinterProperties
 		auto ep_devmode = ep->devMode;
 		auto ep_handle = ep->globalDevMode;
 		if (ep_handle)
+		{
+			if (ep_handle == buffer.get())
+				return; // Printer properties already in buffer
 			ep_devmode = static_cast<DEVMODE*>(GlobalLock(ep_handle));
+		}
 		if (!ep_devmode)
 			return;
 		
 		auto devmode_size = sizeof(DEVMODE) + ep_devmode->dmDriverExtra;
-		auto devmode = malloc(devmode_size);
-		memcpy(devmode, ep_devmode, devmode_size);
-		buffer.reset(devmode, deleter);
+		if (auto devmode_handle = GlobalAlloc(GHND, devmode_size))
+		{
+			if (auto devmode = static_cast<DEVMODE*>(GlobalLock(devmode_handle)))
+			{
+				memcpy(devmode, ep_devmode, devmode_size);
+				buffer.reset(devmode_handle, tryUnlockAndFree);
+				// Handle in buffer will have a lock count of one.
+			}
+			else
+			{
+				qDebug("Could not lock handle");
+				GlobalFree(devmode_handle);
+			}
+		}
 		
 		if (ep_handle)
 			GlobalUnlock(ep_handle);
@@ -110,39 +133,31 @@ namespace PlatformPrinterProperties
 		auto ep_devmode = ep->devMode;
 		auto ep_handle = ep->globalDevMode;
 		if (ep_handle)
+		{
+			if (ep_handle == buffer.get())
+				return; // Buffer already effective
 			ep_devmode = static_cast<DEVMODE*>(GlobalLock(ep_handle));
+		}
 		if (!ep_devmode)
 			return;
 		
-		auto devmode = static_cast<const DEVMODE*>(buffer.get());
+		// Handle in buffer already has a lock count of one.
+		// We need a (temporary) lock to get the right pointer.
+		auto devmode = static_cast<const DEVMODE*>(GlobalLock(buffer.get()));
+		GlobalUnlock(buffer.get());
 		if (wcsncmp(ep_devmode->dmDeviceName, devmode->dmDeviceName, CCHDEVICENAME) == 0
 		    && ep_devmode->dmSpecVersion == devmode->dmSpecVersion
 		    && ep_devmode->dmDriverVersion == devmode->dmDriverVersion
 		    && ep_devmode->dmDriverExtra == devmode->dmDriverExtra)
 		{
 			// Same device
-			if (ep_handle)
-				GlobalUnlock(ep_handle);
-				
-			auto devmode_size = sizeof(DEVMODE) + devmode->dmDriverExtra;
-			if (auto devmode_copy_handle = GlobalAlloc(GHND, devmode_size))
-			{
-				if (auto devmode_copy = static_cast<DEVMODE*>(GlobalLock(devmode_copy_handle)))
-				{
-					memcpy(devmode_copy, devmode, devmode_size);
-					GlobalUnlock(devmode_copy_handle);
-					engine->setGlobalDevMode(nullptr, devmode_copy_handle);
-				}
-				else
-				{
-					GlobalFree(devmode_copy_handle);
-				}
-			}
+			engine->setGlobalDevMode(nullptr, buffer.get());
+			tryUnlockAndFree(ep_handle);
+			return;
 		}
-		else if (ep_handle)
-		{
+		
+		if (ep_handle)
 			GlobalUnlock(ep_handle);
-		}
 	}
 	
 	bool dialogSupported()
@@ -180,16 +195,18 @@ namespace PlatformPrinterProperties
 				auto result = DocumentProperties(hwnd, ep->hPrinter, LPWSTR(ep->m_printDevice.id().utf16()),
 				                                 devmode, ep_devmode,
 				                                 DM_IN_BUFFER | DM_IN_PROMPT | DM_OUT_BUFFER);
-				GlobalUnlock(devmode_handle);
 				if (result == IDOK)
 				{
-					// Success
-					if (ep_handle)
-						GlobalUnlock(ep_handle);
-					
+					// Properties accepted
 					engine->setGlobalDevMode(nullptr, devmode_handle);
+					GlobalUnlock(devmode_handle);
+					tryUnlockAndFree(ep_handle);
 					return QDialog::Accepted;
 				}
+			}
+			else
+			{
+				qDebug("Could not lock handle");
 			}
 			GlobalFree(devmode_handle);
 		}
