@@ -616,9 +616,10 @@ void PrintWidget::propertiesClicked()
 {
 	if (map_printer && map_printer->isPrinter())
 	{
+		std::shared_ptr<void> buffer; // must not be destroyed before printer.
 		auto printer = map_printer->makePrinter();
 		Q_ASSERT(printer->outputFormat() == QPrinter::NativeFormat);
-		if (PlatformPrinterProperties::execDialog(printer.get(), this) == QDialog::Accepted)
+		if (PlatformPrinterProperties::execDialog(printer.get(), buffer, this) == QDialog::Accepted)
 			map_printer->takePrinterSettings(printer.get());
 	}
 }

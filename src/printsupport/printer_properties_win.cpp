@@ -165,7 +165,7 @@ namespace PlatformPrinterProperties
 		return true;
 	}
 	
-	int execDialog(QPrinter* printer, QWidget* parent)
+	int execDialog(QPrinter* printer, std::shared_ptr<void>& buffer, QWidget* parent)
 	{
 		auto engine = win32PrintEngine(printer);
 		if (!engine)
@@ -199,7 +199,7 @@ namespace PlatformPrinterProperties
 				{
 					// Properties accepted
 					engine->setGlobalDevMode(nullptr, devmode_handle);
-					GlobalUnlock(devmode_handle);
+					buffer.reset(devmode_handle, tryUnlockAndFree);
 					tryUnlockAndFree(ep_handle);
 					return QDialog::Accepted;
 				}

@@ -39,7 +39,7 @@ namespace PlatformPrinterProperties
 		return false;
 	}
 	
-	int execDialog(QPrinter*, QWidget*)
+	int execDialog(QPrinter*, std::shared_ptr<void>&, QWidget*)
 	{
 		return QDialog::Rejected;
 	}
