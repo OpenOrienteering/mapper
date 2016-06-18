@@ -46,7 +46,6 @@
 #include "autosave_dialog.h"
 #include "home_screen_controller.h"
 #include "settings_dialog.h"
-#include "text_browser_dialog.h"
 #include "../file_format_registry.h"
 #include "../file_import_export.h"
 #include "../map.h"
@@ -1074,14 +1073,7 @@ void MainWindow::showAbout()
 
 void MainWindow::showHelp()
 {
-#ifdef Q_OS_ANDROID
-	const QString manual_path = MapperResource::locate(MapperResource::MANUAL, QString::fromLatin1("index.html"));
-	const QUrl help_url = QUrl::fromLocalFile(manual_path);
-	TextBrowserDialog help_dialog(help_url, this);
-	help_dialog.exec();
-#else
 	Util::showHelp(this);
-#endif
 }
 
 void MainWindow::linkClicked(const QString &link)

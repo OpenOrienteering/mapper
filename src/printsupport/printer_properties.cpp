@@ -24,12 +24,12 @@
 
 namespace PlatformPrinterProperties
 {
-	void save(const QPrinter*, std::shared_ptr<const void>&)
+	void save(const QPrinter*, std::shared_ptr<void>&)
 	{
 		// nothing
 	}
 	
-	void restore(QPrinter*, const std::shared_ptr<const void>)
+	void restore(QPrinter*, const std::shared_ptr<void>&)
 	{
 		// nothing
 	}
@@ -39,7 +39,7 @@ namespace PlatformPrinterProperties
 		return false;
 	}
 	
-	int execDialog(QPrinter*, QWidget*)
+	int execDialog(QPrinter*, std::shared_ptr<void>&, QWidget*)
 	{
 		return QDialog::Rejected;
 	}

@@ -164,5 +164,7 @@ target_compile_definitions(Mapper_Test PRIVATE -DCMAKE_COMMAND="${CMAKE_COMMAND}
 
 if(Mapper_BUILD_QT)
 	write_qt_conf()
+elseif(EXISTS "${CMAKE_CURRENT_BINARY_DIR}/qt.conf")
+	file(REMOVE "${CMAKE_CURRENT_BINARY_DIR}/qt.conf")
 endif()
 

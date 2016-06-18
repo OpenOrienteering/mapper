@@ -35,53 +35,129 @@ namespace
 		Q_DECLARE_PRIVATE(QWin32PrintEngine)
 	};
 	
-}	
+	/**
+	 * Returns the printer's QWin32PrintEngine if possible, or nullptr.
+	 */
+	template <typename PointerToPrinter>
+	AccessToPrintEnginePrivate* win32PrintEngine(PointerToPrinter printer)
+	{
+		// Attention, QPrintPreviewWidget uses QPreviewPaintEngine,
+		// type() == QPaintEngine::Picture
+		if (printer
+		    && printer->outputFormat() == QPrinter::NativeFormat
+		    && printer->paintEngine()->type() == QPaintEngine::Windows)
+			return static_cast<AccessToPrintEnginePrivate*>(printer->printEngine());
+		else
+			return nullptr;
+	}
+	
+	/**
+	 * Deletes the properties' data structure.
+	 */
+	struct
+	{
+		void operator()(void* handle) const
+		{
+			if (handle
+			    && GlobalUnlock(handle) == 0
+			    && GetLastError() == NO_ERROR)
+			{
+				GlobalFree(handle);
+			}
+			else
+			{
+				qDebug("Could not unlock and free handle");
+			}
+		}
+	} tryUnlockAndFree;
+	
+}
 
 
 namespace PlatformPrinterProperties
 {
-	void save(const QPrinter* printer, std::shared_ptr<const void>& buffer)
+	void save(const QPrinter* printer, std::shared_ptr<void>& buffer)
 	{
-		Q_ASSERT(printer->outputFormat() == QPrinter::NativeFormat);
-		auto engine = static_cast<QWin32PrintEngine *>(printer->printEngine());
-		auto ep = static_cast<AccessToPrintEnginePrivate*>(engine)->d_func();
-		if (ep->devMode && ep->hPrinter)
-		{
-			auto devmode_size = sizeof(DEVMODE) + ep->devMode->dmDriverExtra;
-			auto devmode = static_cast<DEVMODE*>(malloc(devmode_size));
-			if (devmode)
-				memcpy(devmode, ep->devMode, devmode_size);
-			
-			buffer.reset(devmode);
-		}
-	}
-	
-	void restore(QPrinter* printer, const std::shared_ptr<const void> buffer)
-	{
-		Q_ASSERT(printer->outputFormat() == QPrinter::NativeFormat);
+		auto engine = win32PrintEngine(printer);
+		if (!engine)
+			return;
 		
-		auto engine = static_cast<QWin32PrintEngine *>(printer->printEngine());
-		auto ep = static_cast<AccessToPrintEnginePrivate*>(engine)->d_func();
-		if (ep->devMode && ep->hPrinter && buffer)
+		auto ep = engine->d_func();
+		if (!ep->hPrinter)
+			return;
+		
+		auto ep_devmode = ep->devMode;
+		auto ep_handle = ep->globalDevMode;
+		if (ep_handle)
 		{
-			auto devmode = static_cast<const DEVMODE*>(buffer.get());
-			if (wcsncmp(ep->devMode->dmDeviceName, devmode->dmDeviceName, CCHDEVICENAME) == 0
-			    && ep->devMode->dmSpecVersion == devmode->dmSpecVersion
-			    && ep->devMode->dmDriverVersion == devmode->dmDriverVersion
-			    && ep->devMode->dmDriverExtra == devmode->dmDriverExtra)
+			if (ep_handle == buffer.get())
+				return; // Printer properties already in buffer
+			ep_devmode = static_cast<DEVMODE*>(GlobalLock(ep_handle));
+		}
+		if (!ep_devmode)
+			return;
+		
+		auto devmode_size = sizeof(DEVMODE) + ep_devmode->dmDriverExtra;
+		if (auto devmode_handle = GlobalAlloc(GHND, devmode_size))
+		{
+			if (auto devmode = static_cast<DEVMODE*>(GlobalLock(devmode_handle)))
 			{
-				auto devmode_size = sizeof(DEVMODE) + ep->devMode->dmDriverExtra;
-				auto devmode_copy = LPDEVMODE(malloc(devmode_size));
-				if (devmode_copy)
-				{
-					memcpy(devmode_copy, devmode, devmode_size);
-					engine->setGlobalDevMode(nullptr, devmode_copy);
-					ep->globalDevMode = nullptr;
-					ep->ownsDevMode = true;
-					GlobalUnlock(devmode_copy);
-				}
+				memcpy(devmode, ep_devmode, devmode_size);
+				buffer.reset(devmode_handle, tryUnlockAndFree);
+				// Handle in buffer will have a lock count of one.
+			}
+			else
+			{
+				qDebug("Could not lock handle");
+				GlobalFree(devmode_handle);
 			}
 		}
+		
+		if (ep_handle)
+			GlobalUnlock(ep_handle);
+	}
+	
+	void restore(QPrinter* printer, const std::shared_ptr<void>& buffer)
+	{
+		if (!buffer)
+			return;
+		
+		auto engine = win32PrintEngine(printer);
+		if (!engine)
+			return;
+		
+		auto ep = engine->d_func();
+		if (!ep->hPrinter)
+			return;
+		
+		auto ep_devmode = ep->devMode;
+		auto ep_handle = ep->globalDevMode;
+		if (ep_handle)
+		{
+			if (ep_handle == buffer.get())
+				return; // Buffer already effective
+			ep_devmode = static_cast<DEVMODE*>(GlobalLock(ep_handle));
+		}
+		if (!ep_devmode)
+			return;
+		
+		// Handle in buffer already has a lock count of one.
+		// We need a (temporary) lock to get the right pointer.
+		auto devmode = static_cast<const DEVMODE*>(GlobalLock(buffer.get()));
+		GlobalUnlock(buffer.get());
+		if (wcsncmp(ep_devmode->dmDeviceName, devmode->dmDeviceName, CCHDEVICENAME) == 0
+		    && ep_devmode->dmSpecVersion == devmode->dmSpecVersion
+		    && ep_devmode->dmDriverVersion == devmode->dmDriverVersion
+		    && ep_devmode->dmDriverExtra == devmode->dmDriverExtra)
+		{
+			// Same device
+			engine->setGlobalDevMode(nullptr, buffer.get());
+			tryUnlockAndFree(ep_handle);
+			return;
+		}
+		
+		if (ep_handle)
+			GlobalUnlock(ep_handle);
 	}
 	
 	bool dialogSupported()
@@ -89,38 +165,55 @@ namespace PlatformPrinterProperties
 		return true;
 	}
 	
-	int execDialog(QPrinter* printer, QWidget* parent)
+	int execDialog(QPrinter* printer, std::shared_ptr<void>& buffer, QWidget* parent)
 	{
-		if (!printer || !printer->outputFormat() == QPrinter::NativeFormat)
+		auto engine = win32PrintEngine(printer);
+		if (!engine)
 			return QDialog::Rejected;
 		
-		auto engine = static_cast<QWin32PrintEngine *>(printer->printEngine());
-		auto ep = static_cast<AccessToPrintEnginePrivate*>(engine)->d_func();
+		auto ep = engine->d_func();
+		if (!ep->hPrinter)
+			return QDialog::Rejected;
 		
-		if (!ep->devMode || !ep->hPrinter)
+		auto ep_devmode = ep->devMode;
+		auto ep_handle = ep->globalDevMode;
+		if (ep_handle)
+			ep_devmode = static_cast<DEVMODE*>(GlobalLock(ep_handle));
+		if (!ep_devmode)
 			return QDialog::Rejected;
 		
 		HWND hwnd = nullptr;
 		auto window = parent ? parent->window() : QApplication::activeWindow();
 		if (auto window_handle = window->windowHandle())
-			hwnd = (HWND)QGuiApplication::platformNativeInterface()->nativeResourceForWindow("handle", window_handle);
+			hwnd = HWND(QGuiApplication::platformNativeInterface()->nativeResourceForWindow("handle", window_handle));
 		
-		auto devmode_size = sizeof(DEVMODE) + ep->devMode->dmDriverExtra;
-		auto devmode = LPDEVMODE(malloc(devmode_size));
-		if (!devmode)
-			return QDialog::Rejected;
+		auto devmode_size = sizeof(DEVMODE) + ep_devmode->dmDriverExtra;
+		if (auto devmode_handle = GlobalAlloc(GHND, devmode_size))
+		{
+			if (auto devmode = static_cast<DEVMODE*>(GlobalLock(devmode_handle)))
+			{
+				auto result = DocumentProperties(hwnd, ep->hPrinter, LPWSTR(ep->m_printDevice.id().utf16()),
+				                                 devmode, ep_devmode,
+				                                 DM_IN_BUFFER | DM_IN_PROMPT | DM_OUT_BUFFER);
+				if (result == IDOK)
+				{
+					// Properties accepted
+					engine->setGlobalDevMode(nullptr, devmode_handle);
+					buffer.reset(devmode_handle, tryUnlockAndFree);
+					tryUnlockAndFree(ep_handle);
+					return QDialog::Accepted;
+				}
+			}
+			else
+			{
+				qDebug("Could not lock handle");
+			}
+			GlobalFree(devmode_handle);
+		}
 		
-		auto result = DocumentProperties(hwnd, ep->hPrinter, (LPWSTR)ep->m_printDevice.id().utf16(),
-		                                 devmode, ep->devMode,
-		                                 DM_IN_BUFFER | DM_IN_PROMPT | DM_OUT_BUFFER);
-		if (result != IDOK)
-			return QDialog::Rejected;
+		if (ep_handle)
+			GlobalUnlock(ep_handle);
 		
-		engine->setGlobalDevMode(nullptr, devmode);
-		ep->globalDevMode = nullptr;
-		ep->ownsDevMode = true;
-		GlobalUnlock(devmode);
-		
-		return QDialog::Accepted;
+		return QDialog::Rejected;
 	}
 }

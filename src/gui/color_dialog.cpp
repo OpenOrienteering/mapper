@@ -268,7 +268,7 @@ void ColorDialog::updateWidgets()
 	react_to_changes = false;
 	
 	QPixmap pixmap(icon_size, icon_size);
-	pixmap.fill(color);
+	pixmap.fill(colorWithOpacity(color));
 	color_preview_label->setPixmap(pixmap);
 	
 	mc_name_edit->setText(color.getName());

@@ -102,12 +102,21 @@ void SymbolSetTool::processSymbolSet_data()
 	QTest::newRow("ISOM 1:10000 Finnish") << QString::fromLatin1("ISOM_fi")  << 15000u << 10000u;
 	QTest::newRow("ISSOM 1:5000 Finnish") << QString::fromLatin1("ISSOM_fi") <<  5000u <<  5000u;
 	QTest::newRow("ISSOM 1:4000 Finnish") << QString::fromLatin1("ISSOM_fi") <<  5000u <<  4000u;
-    
+	
+	QTest::newRow("ISOM 1:15000 Russian") << QString::fromLatin1("ISOM_ru")  << 15000u << 15000u;
+	QTest::newRow("ISOM 1:10000 Russian") << QString::fromLatin1("ISOM_ru")  << 15000u << 10000u;
+	
 	QTest::newRow("ISMTBOM 1:20000") << QString::fromLatin1("ISMTBOM") << 15000u << 20000u;
 	QTest::newRow("ISMTBOM 1:15000") << QString::fromLatin1("ISMTBOM") << 15000u << 15000u;
 	QTest::newRow("ISMTBOM 1:10000") << QString::fromLatin1("ISMTBOM") << 15000u << 10000u;
 	QTest::newRow("ISMTBOM 1:7500")  << QString::fromLatin1("ISMTBOM") << 15000u <<  7500u;
 	QTest::newRow("ISMTBOM 1:5000")  << QString::fromLatin1("ISMTBOM") << 15000u <<  5000u;
+	
+	QTest::newRow("ISMTBOM 1:20000 Ukrainian") << QString::fromLatin1("ISMTBOM_uk") << 15000u << 20000u;
+	QTest::newRow("ISMTBOM 1:15000 Ukrainian") << QString::fromLatin1("ISMTBOM_uk") << 15000u << 15000u;
+	QTest::newRow("ISMTBOM 1:10000 Ukrainian") << QString::fromLatin1("ISMTBOM_uk") << 15000u << 10000u;
+	QTest::newRow("ISMTBOM 1:7500 Ukrainian")  << QString::fromLatin1("ISMTBOM_uk") << 15000u <<  7500u;
+	QTest::newRow("ISMTBOM 1:5000 Ukrainian")  << QString::fromLatin1("ISMTBOM_uk") << 15000u <<  5000u;
 	
 	QTest::newRow("ISSkiOM 1:15000") << QString::fromLatin1("ISSkiOM") << 15000u << 15000u;
 	QTest::newRow("ISSkiOM 1:10000") << QString::fromLatin1("ISSkiOM") << 15000u << 10000u;

@@ -29,7 +29,7 @@
 #include <QPainter>
 #include <QStyleOption>
 
-#include "../settings.h"
+#include "../../settings.h"
 
 PieMenu::PieMenu(QWidget* parent)
 : QWidget(parent, Qt::Popup | Qt::FramelessWindowHint),	// NOTE: use Qt::Window for debugging to avoid mouse grab

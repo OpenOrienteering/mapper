@@ -3242,7 +3242,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="825"/>
         <source>Georeferencing...</source>
-        <translation>Гоепривязка...</translation>
+        <translation>Геопривязка...</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="827"/>

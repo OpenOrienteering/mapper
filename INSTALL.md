@@ -72,7 +72,6 @@ The standard g++ compiler from a recent distribution should work. The Ubuntu
 PROJ.4 library and of CUPS are installed. For a Ubuntu or Debian system, install
 `libproj-dev` and `libcups2-dev`.
 
-To create a DEB package from CMake, fakeroot must be installed.
 For using the Qt libraries provided by the repositories, the following packages
 need to be installed:
 `qt5-default` (>= 5.2), `qttools5-dev`, `qttools5-dev-tools`, `libqt5sql5-sqlite`
@@ -90,14 +89,6 @@ Now you may start the build process by running
 ```
 make
 ```
-
-and generate a DEB package by
-
-```
-make deb
-```
-
-(The deb target works around some issues with CMake's DEB generator.)
 
 
 ## Compiling on OS X
@@ -142,7 +133,6 @@ and proceed with
 
 ```
 make
-make package
 ```
 
 
@@ -214,23 +204,16 @@ cmake .. -DCMAKE_BUILD_TYPE=Release
 make
 ```
 
-The actual package maybe built by `make package`. However, this is used
+The actual package may be built by `make package`. However, this is used
 (i.e. tested) only for OS X at the moment.
+Android packages are built in Qt Creator using the provided `oo-mapper.pro` file.
 Windows and Linux packages are regularly build on
-https://build.opensuse.org/project/show/home:dg0yt, so package recipes for
-common distributions can be found there.
+https://build.opensuse.org/project/show/home:dg0yt, so proper package recipes for
+common distributions and package managers can be found there.
 
-
-#Speeding up with parallel build jobs
-
-The build can make use of multiple processor cores. Add the option
-
-```
--jN
-```
-
-to the call to make (or mingw32-make), where N is the number of cores
-to be used.
+Packaging with cmake is not enabled by default for Linux. Add `-DMapper_BUILD_PACKAGE=1`
+to change this. As already stated, this is untested, and you might need to look for
+additional tweaks.
 
 
 ## Making a source package
