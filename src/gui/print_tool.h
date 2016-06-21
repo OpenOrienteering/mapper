@@ -1,5 +1,6 @@
 /*
- *    Copyright 2012, 2013 Thomas Schöps, Kai Pastor
+ *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2012-2016  Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -18,10 +19,10 @@
  */
 
 
-#ifdef QT_PRINTSUPPORT_LIB
+#ifndef OPENORIENTEERING_PRINT_TOOL_H
+#define OPENORIENTEERING_PRINT_TOOL_H
 
-#ifndef _OPENORIENTEERING_PRINT_TOOL_H_
-#define _OPENORIENTEERING_PRINT_TOOL_H_
+#ifdef QT_PRINTSUPPORT_LIB
 
 #include <QWidget>
 
@@ -42,27 +43,30 @@ Q_OBJECT
 public:
 	/** Constructs a new PrintTool to configure the given map printer in the 
 	 *  context of the editor.
-	 *  The parameters must not be NULL. */
+	 * 
+	 *  The parameters must not be null. */
 	PrintTool(MapEditorController* editor, MapPrinter* map_printer);
 	
+	~PrintTool() override;
+	
 	/** Notifies the tool that it becomes active. */
-	virtual void init();
+	void init() override;
 	
 	/** Always returns the tool's default cursor. */
-	virtual const QCursor& getCursor() const;
+	const QCursor& getCursor() const override;
 	
 	/** Starts a dragging interaction. */
-	virtual bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
+	bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
 	
 	/** Updates the state of a running dragging interaction. When not dragging,
 	 *  it will update the cursor to indicate a possible interaction. */
-	virtual bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
+	bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
 	
 	/** Finishes dragging interactions. */
-	virtual bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
+	bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
 	
 	/** Draws a visualization of the print area the map widget. */
-	virtual void draw(QPainter* painter, MapWidget* widget);
+	void draw(QPainter* painter, MapWidget* widget) override;
 	
 public slots:
 	/** Updates the print area visualization in the map editors. */
@@ -108,6 +112,6 @@ protected:
 	MapCoordF click_pos_map;
 };
 
-#endif
+#endif // QT_PRINTSUPPORT_LIB
 
-#endif
+#endif // OPENORIENTEERING_PRINT_TOOL_H
