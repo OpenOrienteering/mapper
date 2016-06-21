@@ -558,7 +558,7 @@ protected slots:
 	void updateMapPartsUI();
 	
 private:
-	void setMap(Map* map, bool create_new_map_view);
+	void setMapAndView(Map* map, MapView* map_view);
 	
 	/// Updates enabled state of all widgets
 	void updateWidgets();

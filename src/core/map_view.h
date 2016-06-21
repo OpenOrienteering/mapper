@@ -19,10 +19,11 @@
  */
 
 
-#ifndef _OPENORIENTEERING_MAP_VIEW_H_
-#define _OPENORIENTEERING_MAP_VIEW_H_
+#ifndef OPENORIENTEERING_MAP_VIEW_H
+#define OPENORIENTEERING_MAP_VIEW_H
 
 #include <QHash>
+#include <QObject>
 #include <QRectF>
 #include <QTransform>
 
@@ -45,7 +46,7 @@ class QXmlStreamWriter;
  * measured in pixels. The class provides methods to convert between view
  * coordinates and map coordinates (defined as millimeter on map paper).
  */
-class MapView
+class MapView : public QObject
 {
 public:
 	enum ChangeFlag
@@ -58,11 +59,17 @@ public:
 	
 	Q_DECLARE_FLAGS(ChangeFlags, ChangeFlag)
 	
-	/** Creates a default view looking at the origin */
+	/** Creates a default view looking at the origin. */
+	MapView(QObject* parent, Map* map);
+	
+	/** Creates a default view looking at the origin.
+	 *
+	 * The map takes ownership of the map view.
+	 */
 	MapView(Map* map);
 	
 	/** Destroys the map view. */
-	~MapView();
+	~MapView() override;
 	
 	/** Loads the map view in the old "native" format from the file. */
 	void load(QIODevice* file, int version);
@@ -278,6 +285,8 @@ public:
 	static const double zoom_out_limit;
 	
 private:
+	Q_DISABLE_COPY(MapView)
+	
 	typedef std::vector<MapWidget*> WidgetVector;
 	
 	void updateTransform(MapView::ChangeFlags change);		// recalculates the x_to_y matrices

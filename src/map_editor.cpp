@@ -196,7 +196,7 @@ MapEditorController::MapEditorController(OperatingMode mode, Map* map)
 	cut_hole_menu = NULL;
 	
 	if (map)
-		setMap(map, true);
+		setMapAndView(map, new MapView(this, map));
 	
 	editor_activity = NULL;
 	current_tool = NULL;
@@ -260,7 +260,6 @@ MapEditorController::~MapEditorController()
 	delete gps_display;
 	delete gps_track_recorder;
 	delete compass_display;
-	delete main_view;
 	delete map;
 }
 
@@ -507,21 +506,21 @@ bool MapEditorController::load(const QString& path, QWidget* dialog_parent)
 		dialog_parent = window;
 	
 	if (!map)
+	{
 		map = new Map();
-	if (!main_view)
-		main_view = new MapView(map);
+		main_view = new MapView(this, map);
+	}
 	
 	bool success = map->loadFrom(path, dialog_parent, main_view);
 	if (success)
 	{
-		setMap(map, false);
+		setMapAndView(map, main_view);
 	}
 	else
 	{
 		delete map;
-		map = NULL;
-		delete main_view;
-		main_view = NULL;
+		map = nullptr;
+		main_view = nullptr;
 	}
 	
 	return success;
@@ -3634,8 +3633,11 @@ void MapEditorController::templateDeleted(int pos, const Template* temp)
 		templateAvailabilityChanged();
 }
 
-void MapEditorController::setMap(Map* map, bool create_new_map_view)
+void MapEditorController::setMapAndView(Map* map, MapView* map_view)
 {
+	Q_ASSERT(map);
+	Q_ASSERT(map_view);
+	
 	if (this->map)
 	{
 		this->map->disconnect(this);
@@ -3647,10 +3649,7 @@ void MapEditorController::setMap(Map* map, bool create_new_map_view)
 	}
 	
 	this->map = map;
-	if (create_new_map_view)
-	{
-		main_view = new MapView(map);
-	}
+	this->main_view = map_view;
 	
 	connect(&map->undoManager(), SIGNAL(canRedoChanged(bool)), this, SLOT(undoStepAvailabilityChanged()));
 	connect(&map->undoManager(), SIGNAL(canUndoChanged(bool)), this, SLOT(undoStepAvailabilityChanged()));

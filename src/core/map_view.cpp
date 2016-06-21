@@ -50,16 +50,23 @@ const double MapView::zoom_in_limit = 512;
 const double MapView::zoom_out_limit = 1 / 16.0;
 
 
-MapView::MapView(Map* map)
- : map{ map }
- , zoom{ 1.0 }
- , rotation{ 0.0 }
- , map_visibility{ new TemplateVisibility { 1.0f, true } }
- , all_templates_hidden{ false }
- , grid_visible{ false }
- , overprinting_simulation_enabled{ false }
+MapView::MapView(QObject* parent, Map* map)
+: QObject  { parent }
+, map      { map }
+, zoom     { 1.0 }
+, rotation { 0.0 }
+, map_visibility{ new TemplateVisibility { 1.0f, true } }
+, all_templates_hidden{ false }
+, grid_visible{ false }
+, overprinting_simulation_enabled{ false }
 {
 	updateTransform(NoChange);
+}
+
+MapView::MapView(Map* map)
+: MapView { map, map }
+{
+	// nothing else
 }
 
 MapView::~MapView()

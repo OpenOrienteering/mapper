@@ -109,7 +109,7 @@ void MapTest::importTest()
 	
 	QString first_path = examples_dir.absoluteFilePath(first_file);
 	Map map;
-	MapView view(&map);
+	MapView view{ &map };
 	QVERIFY(map.loadFrom(first_path, nullptr, &view, false, false));
 	
 	auto original_size = map.getNumObjects();

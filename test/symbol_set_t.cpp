@@ -135,7 +135,7 @@ void SymbolSetTool::processSymbolSet()
 	QString source_path = symbol_set_dir.absoluteFilePath(source_filename);
 	
 	Map map;
-	MapView view(&map);
+	MapView view{ &map };
 	map.loadFrom(source_path, nullptr, &view, false, false);
 	
 	map.resetPrinterConfig();
@@ -313,7 +313,7 @@ void SymbolSetTool::processExamples()
 	QString source_path = examples_dir.absoluteFilePath(source_filename);
 	
 	Map map;
-	MapView view(&map);
+	MapView view{ &map };
 	map.loadFrom(source_path, nullptr, &view, false, false);
 	
 	map.undoManager().clear();

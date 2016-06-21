@@ -384,7 +384,7 @@ void NativeFileImport::import(bool load_symbols_only)
 		}
 		else
 		{
-			MapView tmp(map);
+			MapView tmp{ map };
 			tmp.load(stream, version);
 		}
 
