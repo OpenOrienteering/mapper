@@ -22,7 +22,8 @@
 #ifndef OPENORIENTEERING_MAP_VIEW_H
 #define OPENORIENTEERING_MAP_VIEW_H
 
-#include <QHash>
+#include <memory>
+
 #include <QObject>
 #include <QRectF>
 #include <QTransform>
@@ -35,6 +36,24 @@ class TemplateVisibility;
 
 class QXmlStreamReader;
 class QXmlStreamWriter;
+
+
+/**
+ * Contains the visibility information for a template (or the map).
+ */
+class TemplateVisibility
+{
+public:
+	/** Opacity from 0.0f (invisible) to 1.0f (opaque) */
+	float opacity;
+	
+	/** Visibility flag */
+	bool visible;
+};
+
+bool operator==(TemplateVisibility lhs, TemplateVisibility rhs);
+
+bool operator!=(TemplateVisibility lhs, TemplateVisibility rhs);
 
 
 /**
@@ -344,7 +363,28 @@ protected:
 private:
 	Q_DISABLE_COPY(MapView)
 	
+	struct TemplateVisibilityEntry : public TemplateVisibility
+	{
+		const Template* temp;
+		TemplateVisibilityEntry() = default;
+		TemplateVisibilityEntry(const TemplateVisibilityEntry&) = default;
+		TemplateVisibilityEntry(TemplateVisibilityEntry&&) = default;
+		TemplateVisibilityEntry& operator=(const TemplateVisibilityEntry&) = default;
+		TemplateVisibilityEntry& operator=(TemplateVisibilityEntry&&) = default;
+		TemplateVisibilityEntry(const Template* temp, TemplateVisibility vis)
+		: TemplateVisibility(vis)
+		, temp(temp)
+		{}
+	};
+	typedef std::vector<TemplateVisibilityEntry> TemplateVisibilityVector;
+	
+	
 	void updateTransform();		// recalculates the x_to_y matrices
+	
+	TemplateVisibilityVector::const_iterator findVisibility(const Template* temp) const;
+	
+	TemplateVisibilityVector::iterator findVisibility(const Template* temp);
+	
 	
 	Map* map;
 	
@@ -357,8 +397,8 @@ private:
 	QTransform map_to_view;
 	QTransform world_transform;
 	
-	TemplateVisibility* map_visibility;
-	QHash<const Template*, TemplateVisibility*> template_visibilities;
+	TemplateVisibility map_visibility;
+	TemplateVisibilityVector template_visibilities;
 	
 	bool all_templates_hidden;
 	bool grid_visible;
@@ -367,18 +407,7 @@ private:
 
 
 
-/**
- * Contains the visibility information for a template (or the map).
- */
-class TemplateVisibility
-{
-public:
-	/** Opacity from 0.0f (invisible) to 1.0f (opaque) */
-	float opacity;
-	
-	/** Visibility flag */
-	bool visible;
-};
+// ### TemplateVisibility inline code ###
 
 inline
 bool operator==(TemplateVisibility lhs, TemplateVisibility rhs)
@@ -392,6 +421,8 @@ bool operator!=(TemplateVisibility lhs, TemplateVisibility rhs)
 {
 	return !(lhs == rhs);
 }
+
+
 
 // ### MapView inline code ###
 
@@ -455,6 +486,12 @@ inline
 QPoint MapView::panOffset() const
 {
 	return pan_offset;
+}
+
+inline
+TemplateVisibility MapView::getMapVisibility() const
+{
+	return map_visibility;
 }
 
 inline
