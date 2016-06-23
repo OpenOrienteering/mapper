@@ -560,11 +560,11 @@ public:
 	
 	/**
 	 * Adds a new template at the given index.
-	 * If a view is given, the template is made visible in this view
-	 * (by default, templates are hidden).
-	 * NOTE: if required, adjust first_front_template manually with setFirstFrontTemplate()!
+	 * 
+	 * To place a template immediately below the map, adjust first_front_template
+	 * manually with setFirstFrontTemplate()!
 	 */
-	void addTemplate(Template* temp, int pos, MapView* view = nullptr);
+	void addTemplate(Template* temp, int pos);
 	
 	/**
 	 * Removes the template with the given index from the template list,
@@ -649,12 +649,10 @@ public:
 	 * @param i The index of the closed template to reload.
 	 * @param target_pos The desired index in the normal template list after loading.
 	 * @param dialog_parent Widget as parent for possible dialogs.
-	 * @param view Optional view in which the template will be set to visible.
 	 * @param map_path Path where the map is saved currently. Used as possible
 	 *     search location to locate missing templates.
 	 */
-	bool reloadClosedTemplate(int i, int target_pos, QWidget* dialog_parent,
-							  MapView* view, const QString& map_path = QString());
+	bool reloadClosedTemplate(int i, int target_pos, QWidget* dialog_parent, const QString& map_path = QString());
 	
 	
 	// Undo & Redo

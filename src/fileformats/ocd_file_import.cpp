@@ -667,14 +667,13 @@ Template* OcdFileImport::importTemplate(const QString& param_string, const int o
 	templ->setTemplateScaleY(scale_y * scale_factor);
 	
 	int template_pos = map->getFirstFrontTemplate();
-	map->addTemplate(templ, 0, view);
+	map->addTemplate(templ, 0);
 	map->setFirstFrontTemplate(template_pos+1);
 	
 	if (view)
 	{
-		TemplateVisibility* visibility = view->getTemplateVisibility(templ);
-		visibility->opacity = qMax(0.0, qMin(1.0, 0.01 * (100 - dimming)));
-		visibility->visible = visible;
+		auto opacity = qMax(0.0, qMin(1.0, 0.01 * (100 - dimming)));
+		view->setTemplateVisibility(templ, { float(opacity), visible });
 	}
 	
 	return templ;

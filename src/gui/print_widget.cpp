@@ -865,7 +865,7 @@ void PrintWidget::setOptions(const MapPrinterOptions& options)
 		setEnabledAndChecked(show_templates_check, options.show_templates);
 		setEnabledAndChecked(show_grid_check,      options.show_grid);
 		setDisabledAndChecked(overprinting_check,  options.simulate_overprinting);
-		main_view->setHideAllTemplates(!options.show_templates);
+		main_view->setAllTemplatesHidden(!options.show_templates);
 		main_view->setGridVisible(options.show_grid);
 		main_view->setOverprintingSimulationEnabled(false);
 		break;
@@ -874,7 +874,7 @@ void PrintWidget::setOptions(const MapPrinterOptions& options)
 		setEnabledAndChecked(show_templates_check, options.show_templates);
 		setEnabledAndChecked(show_grid_check,      options.show_grid);
 		setEnabledAndChecked(overprinting_check,   options.simulate_overprinting);
-		main_view->setHideAllTemplates(!options.show_templates);
+		main_view->setAllTemplatesHidden(!options.show_templates);
 		main_view->setGridVisible(options.show_grid);
 		main_view->setOverprintingSimulationEnabled(options.simulate_overprinting);
 		break;
@@ -883,7 +883,7 @@ void PrintWidget::setOptions(const MapPrinterOptions& options)
 		setDisabledAndChecked(show_templates_check, options.show_templates);
 		setDisabledAndChecked(show_grid_check,      options.show_grid);
 		setDisabledAndChecked(overprinting_check,   options.simulate_overprinting);
-		main_view->setHideAllTemplates(true);
+		main_view->setAllTemplatesHidden(true);
 		main_view->setGridVisible(false);
 		main_view->setOverprintingSimulationEnabled(true);
 		break;
@@ -917,8 +917,6 @@ void PrintWidget::setOptions(const MapPrinterOptions& options)
 	auto scale = int(options.scale);
 	different_scale_edit->setValue(scale);
 	differentScaleEdited(scale);
-	
-	main_view->updateAllMapWidgets();
 }
 
 void PrintWidget::updateResolutions(const QPrinterInfo* target) const

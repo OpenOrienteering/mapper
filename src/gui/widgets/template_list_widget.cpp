@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2015 Kai Pastor
+ *    Copyright 2012-2016 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -319,7 +319,7 @@ TemplateListWidget::TemplateListWidget(Map* map, MapView* main_view, MapEditorCo
 	//connect(group_button, SIGNAL(clicked(bool)), this, SLOT(groupClicked()));
 	//connect(more_button_menu, SIGNAL(triggered(QAction*)), this, SLOT(moreActionClicked(QAction*)));
 	
-	connect(map, &Map::templateAdded, this, &TemplateListWidget::templateAdded);
+	connect(main_view, &MapView::visibilityChanged, this, &TemplateListWidget::updateVisibility);
 	connect(controller, &MapEditorController::templatePositionDockWidgetClosed, this, &TemplateListWidget::templatePositionDockWidgetClosed);
 }
 
@@ -363,8 +363,7 @@ void TemplateListWidget::addTemplateAt(Template* new_template, int pos)
 	if (pos < 0)
 		pos = map->getFirstFrontTemplate() - 1;
 	
-	// Add template and make it visible in the currently active view; TODO: currently, it is made visible in the main view -> support multiple views
-	map->addTemplate(new_template, pos, main_view);
+	map->addTemplate(new_template, pos);
 	map->setTemplateAreaDirty(pos);
 	
 	map->setTemplatesDirty();
@@ -539,7 +538,7 @@ void TemplateListWidget::duplicateTemplate()
 	
 	auto new_template = prototype->duplicate();
 	addTemplateAt(new_template, pos);
-	(*main_view->getTemplateVisibility(new_template)) = *visibility;
+	main_view->setTemplateVisibility(new_template, visibility);
 	updateRow(row+1);
 }
 
@@ -651,6 +650,14 @@ void TemplateListWidget::cellChange(int row, int column)
 		visibility = main_view->getTemplateVisibility(temp);
 	}
 	
+	auto updateVisibility = [this](const Template* temp, TemplateVisibility vis)
+	{
+		if (temp)
+			main_view->setTemplateVisibility(temp, vis);
+		else
+			main_view->setMapVisibility(vis);
+	};
+	
 	if (state != Template::Invalid)
 	{
 		auto setAreaDirty = [this, pos, temp]()
@@ -672,16 +679,18 @@ void TemplateListWidget::cellChange(int row, int column)
 		case 0:  // Visibility checkbox
 			{
 				bool visible = template_table->item(row, column)->checkState() == Qt::Checked;
-				if (visibility->visible != visible)
+				if (visibility.visible != visible)
 				{
 					if (!visible)
 					{
 						setAreaDirty();
-						visibility->visible = false;
+						visibility.visible = false;
+						updateVisibility(temp, visibility);
 					}
 					else
 					{
-						visibility->visible = true;
+						visibility.visible = true;
+						updateVisibility(temp, visibility);
 						setAreaDirty();
 					}
 					updateRow(row);
@@ -693,11 +702,12 @@ void TemplateListWidget::cellChange(int row, int column)
 		case 1:  // Opacity spinbox or slider
 			{
 				float opacity = template_table->item(row, column)->data(Qt::DisplayRole).toFloat();
-				if (!qFuzzyCompare(1.0f+opacity, 1.0f+visibility->opacity))
+				if (!qFuzzyCompare(1.0f+opacity, 1.0f+visibility.opacity))
 				{
-					visibility->opacity = qBound(0.0f, opacity, 1.0f);
+					visibility.opacity = qBound(0.0f, opacity, 1.0f);
+					updateVisibility(temp, visibility);
 					setAreaDirty();
-					template_table->item(row, 1)->setData(Qt::DecorationRole, QColor::fromCmykF(0.0f, 0.0f, 0.0f, visibility->opacity));
+					template_table->item(row, 1)->setData(Qt::DecorationRole, QColor::fromCmykF(0.0f, 0.0f, 0.0f, visibility.opacity));
 				}
 			}
 			break;
@@ -1010,9 +1020,9 @@ void TemplateListWidget::importClicked()
 		
 		
 		auto map_visibility = main_view->getMapVisibility();
-		if (!map_visibility->visible)
+		if (!map_visibility.visible)
 		{
-			map_visibility->visible = true;
+			map_visibility.visible = true;
 			updateRow(map->getNumTemplates() - map->getFirstFrontTemplate());
 		}
 	}
@@ -1040,6 +1050,51 @@ void TemplateListWidget::templatePositionDockWidgetClosed(Template* temp)
 		position_action->setChecked(false);
 }
 
+void TemplateListWidget::updateVisibility(MapView::VisibilityFeature feature, bool active, const Template* temp)
+{
+	switch (feature)
+	{
+	case MapView::AllTemplatesHidden:
+		setAllTemplatesHidden(active);
+		break;
+		
+	case MapView::MapVisible:
+		updateRow(map->getFirstFrontTemplate());
+		break;
+		
+	case MapView::TemplateVisible:
+		if (map->getNumTemplates() == template_table->rowCount()+1)
+		{
+			auto row = map->findTemplateIndex(temp);
+			if (row >= 0)
+				updateRow(posFromRow(row));
+			break;
+		}
+		// fallthrough
+	case MapView::MultipleFeatures:
+		updateAll();
+		break;
+		
+	default:
+		;  // nothing
+	}
+}
+
+void TemplateListWidget::updateAll()
+{
+	auto templates_hidden = main_view->areAllTemplatesHidden();
+	template_table->setEnabled(!templates_hidden); // Color scheme depends on state
+	
+	auto old_size = template_table->rowCount();
+	template_table->setRowCount(map->getNumTemplates() + 1);
+	for (auto i = 0; i < old_size; ++i)
+		updateRow(i);
+	for (auto i = old_size; i < template_table->rowCount(); ++i)
+		addRowItems(i);
+	
+	setAllTemplatesHidden(templates_hidden);  // implicit updateButtons
+}
+
 void TemplateListWidget::addRowItems(int row)
 {
 	QSignalBlocker block(template_table);
@@ -1064,7 +1119,7 @@ void TemplateListWidget::updateRow(int row)
 	QString path;
 	bool valid = true;
 	
-	TemplateVisibility* vis = nullptr;
+	TemplateVisibility vis;
 	
 	QPalette::ColorGroup color_group = template_table->isEnabled() ? QPalette::Active : QPalette::Disabled;
 #ifdef Q_OS_ANDROID
@@ -1097,7 +1152,7 @@ void TemplateListWidget::updateRow(int row)
 #endif
 	}
 	
-	// Cheep defaults, mostly for !vis->visible
+	// Cheep defaults, mostly for !vis.visible
 	auto check_state    = Qt::Unchecked;
 	auto opacity_color  = QColor{ Qt::transparent };   
 	auto text_color     = QColor::fromRgb(255, 51, 51); 
@@ -1108,10 +1163,10 @@ void TemplateListWidget::updateRow(int row)
 	
 	if (valid)
 	{
-		if (vis->visible)
+		if (vis.visible)
 		{
 			check_state   = Qt::Checked;
-			opacity_color = QColor::fromCmykF(0.0f, 0.0f, 0.0f, vis->opacity);
+			opacity_color = QColor::fromCmykF(0.0f, 0.0f, 0.0f, vis.opacity);
 			text_color    = QPalette().color(color_group, QPalette::Foreground);
 			if (!mobile_mode)
 			{
@@ -1130,7 +1185,7 @@ void TemplateListWidget::updateRow(int row)
 	}
 	else
 	{
-		if (vis->visible)
+		if (vis.visible)
 		{
 			check_state = Qt::PartiallyChecked;
 			text_color = text_color.darker();
@@ -1162,7 +1217,7 @@ void TemplateListWidget::updateRow(int row)
 		auto item1 = template_table->item(row, 1);
 		item1->setBackground(background);
 		item1->setForeground(foreground);
-		item1->setData(Qt::DisplayRole, vis->opacity);
+		item1->setData(Qt::DisplayRole, vis.opacity);
 		item1->setData(Qt::DecorationRole, decoration);
 		item1->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | editable);
 	}

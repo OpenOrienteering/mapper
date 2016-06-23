@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012-2014 Thomas Schöps
- *    Copyright 2013-2015 Kai Pastor
+ *    Copyright 2013-2016 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -43,6 +43,7 @@
 #include "tool_edit.h"
 #include "touch_cursor.h"
 #include "util.h"
+#include "util/backports.h"
 #include "gps_display.h"
 #include "gps_temporary_markers.h"
 #include "gui/widgets/pie_menu.h"
@@ -87,8 +88,7 @@ MapWidget::MapWidget(bool show_help, bool force_antialiasing, QWidget* parent)
 
 MapWidget::~MapWidget()
 {
-	if (view)
-		view->removeMapWidget(this);
+	// nothing, not inlined
 }
 
 void MapWidget::setMapView(MapView* view)
@@ -96,14 +96,28 @@ void MapWidget::setMapView(MapView* view)
 	if (this->view != view)
 	{
 		if (this->view)
-			this->view->removeMapWidget(this);
+		{
+			auto map = view->getMap();
+			map->removeMapWidget(this);
+			disconnect(map, &Map::objectSelectionChanged, this,  QOverload<>::of(&MapWidget::updateObjectTagLabel));
+			
+			disconnect(this->view, &MapView::viewChanged, this, &MapWidget::viewChanged);
+			disconnect(this->view, &MapView::panOffsetChanged, this, &MapWidget::setPanOffset);
+			disconnect(this->view, &MapView::visibilityChanged, this, &MapWidget::updateEverything);
+		}
 		
 		this->view = view;
 		
 		if (view)
-			view->addMapWidget(this);
-		
-		connect(view->getMap(), &Map::objectSelectionChanged, this, static_cast<void (MapWidget::*)()>(&MapWidget::updateObjectTagLabel));
+		{
+			connect(this->view, &MapView::viewChanged, this, &MapWidget::viewChanged);
+			connect(this->view, &MapView::panOffsetChanged, this, &MapWidget::setPanOffset);
+			connect(this->view, &MapView::visibilityChanged, this, &MapWidget::updateEverything);
+			
+			auto map = this->view->getMap();
+			connect(map, &Map::objectSelectionChanged, this,  QOverload<>::of(&MapWidget::updateObjectTagLabel));
+			map->addMapWidget(this);
+		}
 		
 		update();
 	}
@@ -829,10 +843,10 @@ void MapWidget::paintEvent(QPaintEvent* event)
 	}
 	
 	const auto map_visibility = view->effectiveMapVisibility();
-	if (!map_cache.isNull() && map_visibility->visible)
+	if (!map_cache.isNull() && map_visibility.visible)
 	{
 		qreal saved_opacity = painter.opacity();
-		painter.setOpacity(map_visibility->opacity);
+		painter.setOpacity(map_visibility.opacity);
 		painter.drawImage(target, map_cache, exposed);
 		painter.setOpacity(saved_opacity);
 	}
@@ -1030,22 +1044,29 @@ void MapWidget::wheelEvent(QWheelEvent* event)
 {
 	if (event->orientation() == Qt::Vertical)
 	{
-		float degrees = event->delta() / 8.0f;
-		float num_steps = degrees / 15.0f;
-		
 		if (view)
 		{
+			auto degrees = event->delta() / 8.0;
+			auto num_steps = degrees / 15.0;
+			auto cursor_pos_view = viewportToView(event->pos());
 			bool preserve_cursor_pos = (event->modifiers() & Qt::ControlModifier) == 0;
 			if (num_steps < 0 && !Settings::getInstance().getSettingCached(Settings::MapEditor_ZoomOutAwayFromCursor).toBool())
 				preserve_cursor_pos = !preserve_cursor_pos;
-			view->zoomSteps(num_steps, preserve_cursor_pos, viewportToView(event->pos()));
+			if (preserve_cursor_pos)
+			{
+				view->zoomSteps(num_steps, cursor_pos_view);
+			}
+			else
+			{
+				view->zoomSteps(num_steps);
+				updateCursorposLabel(view->viewToMapF(cursor_pos_view));
+			}
 			
 			// Send a mouse move event to the current tool as zooming out can move the mouse position on the map
 			if (tool)
 			{
-				QMouseEvent* mouse_event = new QMouseEvent(QEvent::HoverMove, event->pos(), Qt::NoButton, QApplication::mouseButtons(), Qt::NoModifier);
-				tool->mouseMoveEvent(mouse_event, view->viewToMapF(viewportToView(event->pos())), this);
-				delete mouse_event;
+				QMouseEvent mouse_event{ QEvent::HoverMove, event->pos(), Qt::NoButton, QApplication::mouseButtons(), Qt::NoModifier };
+				tool->mouseMoveEvent(&mouse_event, view->viewToMapF(cursor_pos_view), this);
 			}
 		}
 		

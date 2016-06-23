@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2015 Kai Pastor
+ *    Copyright 2012-2016 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -1640,11 +1640,11 @@ void MapEditorController::pan()
 }
 void MapEditorController::zoomIn()
 {
-	main_view->zoomSteps(1, false);
+	main_view->zoomSteps(1);
 }
 void MapEditorController::zoomOut()
 {
-	main_view->zoomSteps(-1, false);
+	main_view->zoomSteps(-1);
 }
 void MapEditorController::setCustomZoomFactorClicked()
 {
@@ -1672,7 +1672,7 @@ void MapEditorController::baselineView(bool checked)
 void MapEditorController::hideAllTemplates(bool checked)
 {
 	hide_all_templates_act->setChecked(checked);
-	main_view->setHideAllTemplates(checked);
+	main_view->setAllTemplatesHidden(checked);
 }
 
 void MapEditorController::overprintingSimulation(bool checked)
@@ -1876,7 +1876,7 @@ void MapEditorController::reopenTemplateClicked()
 	QString map_directory = window->currentPath();
 	if (!map_directory.isEmpty())
 		map_directory = QFileInfo(map_directory).canonicalPath();
-	ReopenTemplateDialog* dialog = new ReopenTemplateDialog(window, map, main_view, map_directory); 
+	ReopenTemplateDialog* dialog = new ReopenTemplateDialog(window, map, map_directory); 
 	dialog->setWindowModality(Qt::WindowModal);
 	dialog->exec();
 	delete dialog;
@@ -3188,7 +3188,7 @@ void MapEditorController::enableGPSDisplay(bool enable)
 				TemplateTrack* new_template = new TemplateTrack(gpx_file_path, map);
 				new_template->configureForGPSTrack();
 				template_index = map->getNumTemplates();
-				map->addTemplate(new_template, template_index, NULL);
+				map->addTemplate(new_template, template_index);
 				map->setTemplateAreaDirty(template_index);
 				map->setTemplatesDirty();
 			}
@@ -3318,7 +3318,7 @@ void MapEditorController::alignMapWithNorthUpdate()
 		return;
 	
 	// Set map rotation
-	main_view->setRotation(-1 * M_PI / 180.0f * Compass::getInstance().getCurrentAzimuth());
+	main_view->setRotation(M_PI / -180.0 * Compass::getInstance().getCurrentAzimuth());
 }
 
 void MapEditorController::hideTopActionBar()

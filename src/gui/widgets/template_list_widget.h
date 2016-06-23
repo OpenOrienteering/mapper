@@ -18,12 +18,14 @@
  */
 
 
-#ifndef _OPENORIENTEERING_TEMPLATE_LIST_WIDGET_H_
-#define _OPENORIENTEERING_TEMPLATE_LIST_WIDGET_H_
+#ifndef OPENORIENTEERING_TEMPLATE_LIST_WIDGET_H
+#define OPENORIENTEERING_TEMPLATE_LIST_WIDGET_H
 
 #include <memory>
 
 #include <QWidget>
+
+#include "../../core/map_view.h"
 
 class QBoxLayout;
 class QCheckBox;
@@ -102,7 +104,15 @@ protected slots:
 	
 	void showOpacitySlider(int row);
 	
+	/**
+	 * Reacts to feature visibility changes.
+	 * 
+	 * @see MapView::visibilityChanged
+	 */
+	void updateVisibility(MapView::VisibilityFeature feature, bool active, const Template* temp = nullptr);
+	
 private:
+	void updateAll();
 	void addRowItems(int row);
 	void updateRow(int row);
 	int posFromRow(int row);
