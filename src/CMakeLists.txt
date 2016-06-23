@@ -257,6 +257,7 @@ set(Mapper_Common_MOC_INPUT
  core/autosave_p.h
  core/georeferencing.h
  core/map_printer.h
+ core/map_view.h
  
  fileformats/ocd_file_export.h
  fileformats/ocd_file_import.h

@@ -48,6 +48,8 @@ class QXmlStreamWriter;
  */
 class MapView : public QObject
 {
+	Q_OBJECT
+	
 public:
 	enum ChangeFlag
 	{
