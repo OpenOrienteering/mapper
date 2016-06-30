@@ -671,12 +671,11 @@ void MapPrinter::setMode(const MapPrinterOptions::MapPrinterMode mode)
 }
 
 // slot
-void MapPrinter::setPrintTemplates(const bool visible, const MapView* view)
+void MapPrinter::setPrintTemplates(const bool visible)
 {
-	if (options.show_templates != visible || this->view != view)
+	if (options.show_templates != visible)
 	{
 		options.show_templates = visible;
-		this->view = visible ? view : nullptr;
 		emit optionsChanged(options);
 	}
 }

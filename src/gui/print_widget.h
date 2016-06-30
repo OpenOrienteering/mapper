@@ -112,6 +112,9 @@ public slots:
 	/** Sets output options: resolution, overprinting. */
 	void setOptions(const MapPrinterOptions& parameters);
 	
+	/** Listens to view feature changes. */
+	void onVisibilityChanged();
+	
 signals:
 	/**
 	 * This signal is emitted when the type of task changes.

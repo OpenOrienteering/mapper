@@ -1451,7 +1451,9 @@ void MapEditorController::printClicked(int task)
 		print_dock_widget->setAllowedAreas(Qt::NoDockWidgetArea);
 		print_dock_widget->toggleViewAction()->setVisible(false);
 		print_widget = new PrintWidget(map, window, main_view, this, print_dock_widget);
-		connect(print_dock_widget, SIGNAL(visibilityChanged(bool)), print_widget, SLOT(setActive(bool)));
+		connect(print_dock_widget, &QDockWidget::visibilityChanged, [this]() {
+			print_widget->setActive(print_dock_widget->isVisible());
+		} );
 		connect(print_widget, SIGNAL(closeClicked()), print_dock_widget, SLOT(close()));
 		connect(print_widget, SIGNAL(finished(int)), print_dock_widget, SLOT(close()));
 		connect(print_widget, SIGNAL(taskChanged(QString)), print_dock_widget, SLOT(setWindowTitle(QString)));
@@ -1462,6 +1464,7 @@ void MapEditorController::printClicked(int task)
 	
 	print_widget->setTask((PrintWidget::TaskFlags)task);
 	print_dock_widget->show();
+	print_dock_widget->raise();
 #else
 	Q_UNUSED(task)
 	QMessageBox::warning(window, tr("Error"), tr("Print / Export is not available in this program version!"));

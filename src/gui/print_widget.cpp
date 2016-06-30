@@ -55,6 +55,7 @@
 #include "../map_editor.h"
 #include "../map_widget.h"
 #include "../settings.h"
+#include "../template.h"
 #include "../util.h"
 #include "../util_gui.h"
 #include "../util/backports.h"
@@ -425,6 +426,7 @@ void PrintWidget::setActive(bool active)
 			
 			// Update the map view from the current options
 			setOptions(map_printer->getOptions());
+			connect(main_view, &MapView::visibilityChanged, this, &PrintWidget::onVisibilityChanged);
 			
 			// Set reasonable zoom.
 			bool zoom_to_map = true;
@@ -451,6 +453,8 @@ void PrintWidget::setActive(bool active)
 		}
 		else
 		{
+			disconnect(main_view, &MapView::visibilityChanged, this, &PrintWidget::onVisibilityChanged);
+			
 			editor->setEditingInProgress(false);
 			editor->setOverrideTool(nullptr);
 			print_tool = nullptr;
@@ -919,6 +923,13 @@ void PrintWidget::setOptions(const MapPrinterOptions& options)
 	differentScaleEdited(scale);
 }
 
+void PrintWidget::onVisibilityChanged()
+{
+	map_printer->setPrintTemplates(!main_view->areAllTemplatesHidden());
+	map_printer->setPrintGrid(main_view->isGridVisible());
+	map_printer->setSimulateOverprinting(main_view->isOverprintingSimulationEnabled());
+}
+
 void PrintWidget::updateResolutions(const QPrinterInfo* target) const
 {
 	static const QList<int> default_resolutions(QList<int>() << 150 << 300 << 600 << 1200);
@@ -1028,7 +1039,7 @@ void PrintWidget::printModeChanged(QAbstractButton* button)
 // slot
 void PrintWidget::showTemplatesClicked(bool checked)
 {
-	map_printer->setPrintTemplates(checked, main_view);
+	map_printer->setPrintTemplates(checked);
 	checkTemplateConfiguration();
 }
 
