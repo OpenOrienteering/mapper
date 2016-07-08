@@ -71,6 +71,7 @@ TextSymbol::TextSymbol() : Symbol(Symbol::Text), metrics(QFont())
 	line_below_color = NULL;
 	line_below_width = 0;
 	line_below_distance = 0;
+	updateQFont();
 }
 
 TextSymbol::~TextSymbol()
