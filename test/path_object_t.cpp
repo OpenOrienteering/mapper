@@ -461,4 +461,10 @@ void PathObjectTest::atypicalPathTest()
 }
 	
 
-QTEST_GUILESS_MAIN(PathObjectTest)
+/*
+ * We don't need a real GUI window.
+ */
+auto qpa_selected = qputenv("QT_QPA_PLATFORM", "minimal");
+
+
+QTEST_MAIN(PathObjectTest)
