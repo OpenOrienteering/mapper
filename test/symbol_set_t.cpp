@@ -199,8 +199,7 @@ void SymbolSetTool::processSymbolSet()
 			QCOMPARE(symbols_changed, 139);
 			QCOMPARE(north_lines_changed, 2);
 		}
-		
-		if (name.startsWith(QLatin1String("ISSOM")))
+		else if (name.startsWith(QLatin1String("ISSOM")))
 		{
 			int north_lines_changed = 0;
 			for (int i = 0; i < num_symbols; ++i)
@@ -226,8 +225,7 @@ void SymbolSetTool::processSymbolSet()
 			}
 			QCOMPARE(north_lines_changed, 2);
 		}
-		
-		if (name.startsWith(QLatin1String("ISMTBOM")))
+		else if (name.startsWith(QLatin1String("ISMTBOM")))
 		{
 			QCOMPARE(source_scale, 15000u);
 			const double factor = (target_scale >= 15000u) ? 1.0 : 1.5;
@@ -246,8 +244,7 @@ void SymbolSetTool::processSymbolSet()
 			}
 			QCOMPARE(symbols_changed, 169);
 		}
-		
-		if (name.startsWith(QLatin1String("ISSkiOM")))
+		else if (name.startsWith(QLatin1String("ISSkiOM")))
 		{
 			QCOMPARE(source_scale, 15000u);
 			const double factor = (target_scale >= 15000u) ? 1.0 : 1.5;
@@ -288,6 +285,10 @@ void SymbolSetTool::processSymbolSet()
 			}
 			QCOMPARE(symbols_changed, 152);
 			QCOMPARE(north_lines_changed, 2);
+		}
+		else
+		{
+			QFAIL("Symbol set not recognized");
 		}
 	}
 	
