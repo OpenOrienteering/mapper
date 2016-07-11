@@ -154,11 +154,12 @@ void SymbolSetTool::processSymbolSet()
 		previous_numbers.append(number);
 	}
 	
+	auto purple = QColor::fromCmykF(0, 1, 0, 0).hueF();
 	if (source_scale != target_scale)
 	{
 		map.setScaleDenominator(target_scale);
 		
-		if (name == QLatin1String("ISOM"))
+		if (name.startsWith(QLatin1String("ISOM")))
 		{
 			const double factor = double(source_scale) / double(target_scale);
 			map.scaleAllObjects(factor, MapCoord());
@@ -169,7 +170,8 @@ void SymbolSetTool::processSymbolSet()
 			{
 				Symbol* symbol = map.getSymbol(i);
 				const int code = symbol->getNumberComponent(0);
-				if (!symbol->guessDominantColor()->getSpotColorName().startsWith(QLatin1String("PURPLE"))
+				const QColor& color = *symbol->guessDominantColor();
+				if (qAbs(purple - color.hueF()) > 0.1
 				    && code != 602
 				    && code != 999)
 				{
@@ -198,7 +200,7 @@ void SymbolSetTool::processSymbolSet()
 			QCOMPARE(north_lines_changed, 2);
 		}
 		
-		if (name == QLatin1String("ISSOM"))
+		if (name.startsWith(QLatin1String("ISSOM")))
 		{
 			int north_lines_changed = 0;
 			for (int i = 0; i < num_symbols; ++i)
@@ -225,7 +227,7 @@ void SymbolSetTool::processSymbolSet()
 			QCOMPARE(north_lines_changed, 2);
 		}
 		
-		if (name == QLatin1String("ISMTBOM"))
+		if (name.startsWith(QLatin1String("ISMTBOM")))
 		{
 			QCOMPARE(source_scale, 15000u);
 			const double factor = (target_scale >= 15000u) ? 1.0 : 1.5;
@@ -245,7 +247,7 @@ void SymbolSetTool::processSymbolSet()
 			QCOMPARE(symbols_changed, 169);
 		}
 		
-		if (name == QLatin1String("ISSkiOM"))
+		if (name.startsWith(QLatin1String("ISSkiOM")))
 		{
 			QCOMPARE(source_scale, 15000u);
 			const double factor = (target_scale >= 15000u) ? 1.0 : 1.5;
@@ -257,7 +259,8 @@ void SymbolSetTool::processSymbolSet()
 			{
 				Symbol* symbol = map.getSymbol(i);
 				const int code = symbol->getNumberComponent(0);
-				if (!symbol->guessDominantColor()->getSpotColorName().startsWith(QLatin1String("PURPLE"))
+				const QColor& color = *symbol->guessDominantColor();
+				if (qAbs(purple - color.hueF()) > 0.1
 				    && code != 602
 				    && code != 999)
 				{
