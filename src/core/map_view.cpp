@@ -134,7 +134,7 @@ void MapView::load(QIODevice* file, int version)
 
 #endif
 
-void MapView::save(QXmlStreamWriter& xml, const QLatin1String& element_name) const
+void MapView::save(QXmlStreamWriter& xml, const QLatin1String& element_name, bool template_details) const
 {
 	XmlElementWriter mapview_element(xml, element_name);
 	mapview_element.writeAttribute(literal::zoom, zoom);
@@ -153,14 +153,16 @@ void MapView::save(QXmlStreamWriter& xml, const QLatin1String& element_name) con
 	{
 		XmlElementWriter templates_element(xml, literal::templates);
 		templates_element.writeAttribute(literal::hidden, all_templates_hidden);
-		templates_element.writeAttribute(XmlStreamLiteral::count, template_visibilities.size());
-		
-		for (auto entry : template_visibilities)
+		if (template_details)
 		{
-			XmlElementWriter ref_element(xml, literal::ref);
-			ref_element.writeAttribute(literal::template_string, map->findTemplateIndex(entry.temp));
-			ref_element.writeAttribute(literal::visible, entry.visible);
-			ref_element.writeAttribute(literal::opacity, entry.opacity);
+			templates_element.writeAttribute(XmlStreamLiteral::count, template_visibilities.size());
+			for (auto entry : template_visibilities)
+			{
+				XmlElementWriter ref_element(xml, literal::ref);
+				ref_element.writeAttribute(literal::template_string, map->findTemplateIndex(entry.temp));
+				ref_element.writeAttribute(literal::visible, entry.visible);
+				ref_element.writeAttribute(literal::opacity, entry.opacity);
+			}
 		}
 	}
 }

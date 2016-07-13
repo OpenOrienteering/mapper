@@ -417,7 +417,7 @@ void PrintWidget::setActive(bool active)
 			// Save the current state of the map view.
 			saved_view_state.clear();
 			QXmlStreamWriter writer(&saved_view_state);
-			main_view->save(writer, QLatin1String("saved_view"));
+			main_view->save(writer, QLatin1String("saved_view"), false);
 			
 			editor->setViewOptionsEnabled(false);
 			
