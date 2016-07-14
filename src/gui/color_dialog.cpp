@@ -149,7 +149,7 @@ ColorDialog::ColorDialog(const Map& map, const MapColor& source_color, QWidget* 
 	
 	QWidget* prof_color_widget = new QWidget();
 	prof_color_widget->setLayout(prof_color_layout);
-	prof_color_widget->setObjectName("professional");
+	prof_color_widget->setObjectName(QString::fromLatin1("professional"));
 	
 	
 	QGridLayout* desktop_layout = new QGridLayout();
@@ -178,17 +178,17 @@ ColorDialog::ColorDialog(const Map& map, const MapColor& source_color, QWidget* 
 	desktop_layout->addWidget(custom_rgb_option, row, col, 1, 2);
 	
 	++row;
-	r_edit = Util::SpinBox::create(1, 0.0, 255.0, "", 5);
+	r_edit = Util::SpinBox::create(1, 0.0, 255.0, {}, 5);
 	desktop_layout->addWidget(new QLabel(tr("Red")), row, col);
 	desktop_layout->addWidget(r_edit, row, col+1);
 	
 	++row;
-	g_edit = Util::SpinBox::create(1, 0.0, 255.0, "", 5);
+	g_edit = Util::SpinBox::create(1, 0.0, 255.0, {}, 5);
 	desktop_layout->addWidget(new QLabel(tr("Green")), row, col);
 	desktop_layout->addWidget(g_edit, row, col+1);
 	
 	++row;
-	b_edit = Util::SpinBox::create(1, 0.0, 255.0, "", 5);
+	b_edit = Util::SpinBox::create(1, 0.0, 255.0, {}, 5);
 	desktop_layout->addWidget(new QLabel(tr("Blue")), row, col);
 	desktop_layout->addWidget(b_edit, row, col+1);
 	
@@ -208,7 +208,7 @@ ColorDialog::ColorDialog(const Map& map, const MapColor& source_color, QWidget* 
 	
 	QWidget* desktop_color_widget = new QWidget();
 	desktop_color_widget->setLayout(desktop_layout);
-	desktop_color_widget->setObjectName("desktop");
+	desktop_color_widget->setObjectName(QString::fromLatin1("desktop"));
 	
 	
 	properties_widget = new QTabWidget();
@@ -257,8 +257,8 @@ ColorDialog::ColorDialog(const Map& map, const MapColor& source_color, QWidget* 
 	connect(b_edit, SIGNAL(valueChanged(double)), this, SLOT(rgbValueChanged()));
 	
 	QSettings settings;
-	settings.beginGroup("ColorDialog");
-	QString default_view = settings.value("view").toString();
+	settings.beginGroup(QString::fromLatin1("ColorDialog"));
+	QString default_view = settings.value(QString::fromLatin1("view")).toString();
 	settings.endGroup();
 	properties_widget->setCurrentWidget(properties_widget->findChild<QWidget*>(default_view));
 }
@@ -268,7 +268,7 @@ void ColorDialog::updateWidgets()
 	react_to_changes = false;
 	
 	QPixmap pixmap(icon_size, icon_size);
-	pixmap.fill(color);
+	pixmap.fill(colorWithOpacity(color));
 	color_preview_label->setPixmap(pixmap);
 	
 	mc_name_edit->setText(color.getName());
@@ -433,8 +433,8 @@ void ColorDialog::updateWidgets()
 void ColorDialog::accept()
 {
 	QSettings settings;
-	settings.beginGroup("ColorDialog");
-	settings.setValue("view", properties_widget->currentWidget()->objectName());
+	settings.beginGroup(QString::fromLatin1("ColorDialog"));
+	settings.setValue(QString::fromLatin1("view"), properties_widget->currentWidget()->objectName());
 	settings.endGroup();
 	
 	QDialog::accept();
@@ -489,7 +489,7 @@ void ColorDialog::spotColorTypeChanged(int id)
 		case MapColor::SpotColor:
 			name = color.getName();
 			if (name.isEmpty())
-				name = "?";
+				name = QLatin1Char('?');
 			color.setSpotColorName(name);
 			break;
 		case MapColor::CustomColor:

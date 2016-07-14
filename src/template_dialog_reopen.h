@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2016 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -18,8 +19,8 @@
  */
 
 
-#ifndef _OPENORIENTEERING_TEMPLATE_DIALOG_REOPEN_H_
-#define _OPENORIENTEERING_TEMPLATE_DIALOG_REOPEN_H_
+#ifndef OPENORIENTEERING_TEMPLATE_DIALOG_REOPEN_H
+#define OPENORIENTEERING_TEMPLATE_DIALOG_REOPEN_H
 
 #include <QDialog>
 #include <QListWidget>
@@ -29,18 +30,19 @@ class QAbstractButton;
 QT_END_NAMESPACE
 
 class Map;
-class MapView;
+
 
 /**
- * Dialog showing a list of closed templates for which the settings are still
- * stored. Enables to reopen those templates by dragging them into the
- * list of open templates shown next to them.
+ * Dialog showing a list of closed templates.
+ * 
+ * Offers to reopen those templates by dragging them into the list of open
+ * templates shown next to them.
  */
 class ReopenTemplateDialog : public QDialog
 {
 Q_OBJECT
 public:
-	ReopenTemplateDialog(QWidget* parent, Map* map, MapView* view, const QString& map_directory);
+	ReopenTemplateDialog(QWidget* parent, Map* map, const QString& map_directory);
 	
 private slots:
 	void updateClosedTemplateList();
@@ -62,7 +64,6 @@ private:
 	QPushButton* clear_button;
 	
 	Map* map;
-	MapView* view;
 	QString map_directory;
 };
 

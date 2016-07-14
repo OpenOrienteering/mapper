@@ -33,7 +33,6 @@
 #include <QSettings>
 #include <QStackedWidget>
 #include <QStatusBar>
-#include <QStringBuilder>
 #include <QToolBar>
 #include <QWhatsThis>
 
@@ -47,7 +46,6 @@
 #include "autosave_dialog.h"
 #include "home_screen_controller.h"
 #include "settings_dialog.h"
-#include "text_browser_dialog.h"
 #include "../file_format_registry.h"
 #include "../file_import_export.h"
 #include "../map.h"
@@ -86,7 +84,7 @@ MainWindow::MainWindow(bool as_main_window, QWidget* parent, Qt::WindowFlags fla
 , maximized_before_fullscreen { false }
 , homescreen_disabled   { false }
 {
-	setWindowIcon(QIcon(":/images/mapper.png"));
+	setWindowIcon(QIcon(QString::fromLatin1(":/images/mapper.png")));
 	setAttribute(Qt::WA_DeleteOnClose);
 	
 	status_label = new QLabel();
@@ -131,19 +129,15 @@ QString MainWindow::appName() const
 	return APP_NAME;
 }
 
-bool MainWindow::mobileMode() const
+#ifndef Q_OS_ANDROID
+bool MainWindow::mobileMode()
 {
-#ifdef Q_OS_ANDROID
-	static bool mobile_mode = qEnvironmentVariableIsSet("MAPPER_MOBILE_GUI")
-	                          ? (qgetenv("MAPPER_MOBILE_GUI") != "0")
-	                          : 1;
-#else
 	static bool mobile_mode = qEnvironmentVariableIsSet("MAPPER_MOBILE_GUI")
 	                          ? (qgetenv("MAPPER_MOBILE_GUI") != "0")
 	                          : 0;
-#endif
 	return mobile_mode;
 }
+#endif
 
 void MainWindow::setCentralWidget(QWidget* widget)
 {
@@ -223,20 +217,20 @@ void MainWindow::setController(MainWindowController* new_controller, bool has_fi
 
 void MainWindow::createFileMenu()
 {
-	QAction* new_act = new QAction(QIcon(":/images/new.png"), tr("&New"), this);
+	QAction* new_act = new QAction(QIcon(QString::fromLatin1(":/images/new.png")), tr("&New"), this);
 	new_act->setShortcuts(QKeySequence::New);
 	new_act->setStatusTip(tr("Create a new map"));
-	new_act->setWhatsThis("<a href=\"file_menu.html\">See more</a>");
+	new_act->setWhatsThis(Util::makeWhatThis("file_menu.html"));
 	connect(new_act, &QAction::triggered, this, &MainWindow::showNewMapWizard);
 	
-	QAction* open_act = new QAction(QIcon(":/images/open.png"), tr("&Open..."), this);
+	QAction* open_act = new QAction(QIcon(QString::fromLatin1(":/images/open.png")), tr("&Open..."), this);
 	open_act->setShortcuts(QKeySequence::Open);
 	open_act->setStatusTip(tr("Open an existing file"));
-	open_act->setWhatsThis("<a href=\"file_menu.html\">See more</a>");
+	open_act->setWhatsThis(Util::makeWhatThis("file_menu.html"));
 	connect(open_act, &QAction::triggered, this, &MainWindow::showOpenDialog);
 	
 	open_recent_menu = new QMenu(tr("Open &recent"), this);
-	open_recent_menu->setWhatsThis("<a href=\"file_menu.html\">See more</a>");
+	open_recent_menu->setWhatsThis(Util::makeWhatThis("file_menu.html"));
 	for (int i = 0; i < max_recent_files; ++i)
 	{
 		recent_file_act[i] = new QAction(this);
@@ -246,9 +240,9 @@ void MainWindow::createFileMenu()
 	
 	// NOTE: if you insert something between open_recent_menu and save_act, adjust updateRecentFileActions()!
 	
-	save_act = new QAction(QIcon(":/images/save.png"), tr("&Save"), this);
+	save_act = new QAction(QIcon(QString::fromLatin1(":/images/save.png")), tr("&Save"), this);
 	save_act->setShortcuts(QKeySequence::Save);
-	save_act->setWhatsThis("<a href=\"file_menu.html\">See more</a>");
+	save_act->setWhatsThis(Util::makeWhatThis("file_menu.html"));
 	connect(save_act, &QAction::triggered, this, &MainWindow::save);
 	
 	auto save_as_act = new QAction(tr("Save &as..."), this);
@@ -256,7 +250,7 @@ void MainWindow::createFileMenu()
 		save_as_act->setShortcut(tr("Ctrl+Shift+S"));
 	else
 		save_as_act->setShortcuts(QKeySequence::SaveAs);
-	save_as_act->setWhatsThis("<a href=\"file_menu.html\">See more</a>");
+	save_as_act->setWhatsThis(Util::makeWhatThis("file_menu.html"));
 	connect(save_as_act, &QAction::triggered, this, &MainWindow::showSaveAsDialog);
 	
 	settings_act = new QAction(tr("Settings..."), this);
@@ -264,17 +258,17 @@ void MainWindow::createFileMenu()
 	settings_act->setMenuRole(QAction::PreferencesRole);
 	connect(settings_act, &QAction::triggered, this, &MainWindow::showSettings);
 	
-	close_act = new QAction(QIcon(":/images/close.png"), tr("Close"), this);
+	close_act = new QAction(QIcon(QString::fromLatin1(":/images/close.png")), tr("Close"), this);
 	close_act->setShortcut(QKeySequence::Close);
 	close_act->setStatusTip(tr("Close this file"));
-	close_act->setWhatsThis("<a href=\"file_menu.html\">See more</a>");
+	close_act->setWhatsThis(Util::makeWhatThis("file_menu.html"));
 	connect(close_act, &QAction::triggered, this, &MainWindow::closeFile);
 	
 	QAction* exit_act = new QAction(tr("E&xit"), this);
 	exit_act->setShortcuts(QKeySequence::Quit);
 	exit_act->setStatusTip(tr("Exit the application"));
 	exit_act->setMenuRole(QAction::QuitRole);
-	exit_act->setWhatsThis("<a href=\"file_menu.html\">See more</a>");
+	exit_act->setWhatsThis(Util::makeWhatThis("file_menu.html"));
 	connect(exit_act, &QAction::triggered, qApp, &QApplication::closeAllWindows);
 	
 	if (show_menu)
@@ -287,7 +281,7 @@ void MainWindow::createFileMenu()
 		file_menu = new QMenu(this);
 	}
 
-	file_menu->setWhatsThis("<a href=\"file_menu.html\">See more</a>");
+	file_menu->setWhatsThis(Util::makeWhatThis("file_menu.html"));
 	file_menu->addAction(new_act);
 	file_menu->addAction(open_act);
 	file_menu->addAction(save_act);
@@ -299,7 +293,7 @@ void MainWindow::createFileMenu()
 	file_menu->addAction(exit_act);
 	
 	general_toolbar = new QToolBar(tr("General"));
-	general_toolbar->setObjectName("General toolbar");
+	general_toolbar->setObjectName(QString::fromLatin1("General toolbar"));
 	general_toolbar->addAction(new_act);
 	general_toolbar->addAction(open_act);
 	general_toolbar->addAction(save_act);
@@ -313,7 +307,7 @@ void MainWindow::createFileMenu()
 void MainWindow::createHelpMenu()
 {
 	// Help menu
-	QAction* manualAct = new QAction(QIcon(":/images/help.png"), tr("Open &Manual"), this);
+	QAction* manualAct = new QAction(QIcon(QString::fromLatin1(":/images/help.png")), tr("Open &Manual"), this);
 	manualAct->setStatusTip(tr("Show the help file for this application"));
 	manualAct->setShortcut(QKeySequence::HelpContents);
 	connect(manualAct, &QAction::triggered, this, &MainWindow::showHelp);
@@ -364,7 +358,7 @@ void MainWindow::setMostRecentlyUsedFile(const QString& path)
 		
 		// Update least recently used directory
 		const QString open_directory = QFileInfo(path).canonicalPath();
-		QSettings().setValue("openFileDirectory", open_directory);
+		QSettings().setValue(QString::fromLatin1("openFileDirectory"), open_directory);
 		
 		// Update recent file lists
 		QStringList files = settings.getSettingCached(Settings::General_RecentFilesList).toStringList();
@@ -555,10 +549,10 @@ void MainWindow::saveWindowSettings()
 #if !defined(Q_OS_ANDROID)
 	QSettings settings;
 	
-	settings.beginGroup("MainWindow");
-	settings.setValue("pos", pos());
-	settings.setValue("size", size());
-	settings.setValue("maximized", isMaximized());
+	settings.beginGroup(QString::fromLatin1("MainWindow"));
+	settings.setValue(QString::fromLatin1("pos"), pos());
+	settings.setValue(QString::fromLatin1("size"), size());
+	settings.setValue(QString::fromLatin1("maximized"), isMaximized());
 	settings.endGroup();
 #endif
 }
@@ -571,10 +565,10 @@ void MainWindow::loadWindowSettings()
 #else
 	QSettings settings;
 	
-	settings.beginGroup("MainWindow");
-	QPoint pos = settings.value("pos", QPoint(100, 100)).toPoint();
-	QSize size = settings.value("size", QSize(800, 600)).toSize();
-	bool maximized = settings.value("maximized", false).toBool();
+	settings.beginGroup(QString::fromLatin1("MainWindow"));
+	QPoint pos = settings.value(QString::fromLatin1("pos"), QPoint(100, 100)).toPoint();
+	QSize size = settings.value(QString::fromLatin1("size"), QSize(800, 600)).toSize();
+	bool maximized = settings.value(QString::fromLatin1("maximized"), false).toBool();
 	settings.endGroup();
 	
 	move(pos);
@@ -679,7 +673,7 @@ bool MainWindow::openPath(const QString &path)
 	
 	// Check a blocker that prevents immediate re-opening of crashing files.
 	// Needed for stopping auto-loading a crashing file on startup.
-	static const QString reopen_blocker = "open_in_progress";
+	static const QString reopen_blocker = QString::fromLatin1("open_in_progress");
 	QSettings settings;
 	const QString open_in_progress(settings.value(reopen_blocker).toString());
 	if (open_in_progress == path)
@@ -934,7 +928,7 @@ QString MainWindow::getOpenFileName(QWidget* parent, const QString& title, FileF
 {
 	// Get the saved directory to start in, defaulting to the user's home directory.
 	QSettings settings;
-	QString open_directory = settings.value("openFileDirectory", QDir::homePath()).toString();
+	QString open_directory = settings.value(QString::fromLatin1("openFileDirectory"), QDir::homePath()).toString();
 	
 	// Build the list of supported file filters based on the file format registry
 	QString filters, extensions;
@@ -948,21 +942,21 @@ QString MainWindow::getOpenFileName(QWidget* parent, const QString& title, FileF
 				if (filters.isEmpty())
 				{
 					filters    = format->filter();
-					extensions = "*." % format->fileExtensions().join(" *.");
+					extensions = QLatin1String("*.") + format->fileExtensions().join(QString::fromLatin1(" *."));
 				}
 				else
 				{
-					filters    = filters    % ";;"  % format->filter();
-					extensions = extensions % " *." % format->fileExtensions().join(" *.");
+					filters    = filters    + QLatin1String(";;")  + format->filter();
+					extensions = extensions + QLatin1String(" *.") + format->fileExtensions().join(QString::fromLatin1(" *."));
 				}
 			}
 		}
 		filters = 
-			tr("All maps")  % " (" % extensions % ");;" %
-			filters         % ";;";
+			tr("All maps")  + QLatin1String(" (") + extensions + QLatin1String(");;") +
+			filters         + QLatin1String(";;");
 	}
 	
-	filters += tr("All files") % " (*.*)";
+	filters += tr("All files") + QLatin1String(" (*.*)");
 	
 	QString path = QFileDialog::getOpenFileName(parent, title, open_directory, filters);
 	QFileInfo info(path);
@@ -981,7 +975,7 @@ bool MainWindow::showSaveAsDialog()
 	{
 		// revert to least recently used directory or home directory.
 		QSettings settings;
-		save_directory = settings.value("openFileDirectory", QDir::homePath()).toString();
+		save_directory = settings.value(QString::fromLatin1("openFileDirectory"), QDir::homePath()).toString();
 	}
 	
 	// Build the list of supported file filters based on the file format registry
@@ -993,7 +987,7 @@ bool MainWindow::showSaveAsDialog()
 			if (filters.isEmpty()) 
 				filters = format->filter();
 			else
-				filters = filters % ";;" % format->filter();
+				filters = filters + QLatin1String(";;") + format->filter();
 		}
 	}
 	
@@ -1006,7 +1000,7 @@ bool MainWindow::showSaveAsDialog()
 	// This results in an error later, because "*" is not a valid character.
 	// But it is reasonable to apply the workaround to all platforms, 
 	// due to the special meaning of "*" in shell patterns.
-	const int extensions_quirk = path.indexOf(" *.");
+	const int extensions_quirk = path.indexOf(QLatin1String(" *."));
 	if (extensions_quirk >= 0)
 	{
 		path.truncate(extensions_quirk);
@@ -1019,8 +1013,8 @@ bool MainWindow::showSaveAsDialog()
 	if (!format)
 	{
 		QMessageBox::information(this, tr("Error"), 
-		  tr("File could not be saved:") % "\n" %
-		  tr("There was a problem in determining the file format.") % "\n\n" %
+		  tr("File could not be saved:") + QLatin1Char('\n') +
+		  tr("There was a problem in determining the file format.") + QLatin1Char('\n') + QLatin1Char('\n') +
 		  tr("Please report this as a bug.") );
 		return false;
 	}
@@ -1028,9 +1022,9 @@ bool MainWindow::showSaveAsDialog()
 	// Ensure that the provided filename has a correct file extension.
 	// Among other things, this will ensure that FileFormats.formatForFilename()
 	// returns the same thing the user selected in the dialog.
-// 	QString selected_extension = "." % format->primaryExtension();
+// 	QString selected_extension = "." + format->primaryExtension();
 	QStringList selected_extensions(format->fileExtensions());
-	selected_extensions.replaceInStrings(QRegExp("^"), ".");
+	selected_extensions.replaceInStrings(QRegExp(QString::fromLatin1("^")), QString::fromLatin1("."));
 	bool has_extension = false;
 	for (auto selected_extension : qAsConst(selected_extensions))
 	{
@@ -1041,7 +1035,7 @@ bool MainWindow::showSaveAsDialog()
 		}
 	}
 	if (!has_extension)
-		path.append(".").append(format->primaryExtension());
+		path += QLatin1Char('.') + format->primaryExtension();
 	// Ensure that the file name matches the format.
 	Q_ASSERT(format->fileExtensions().contains(QFileInfo(path).suffix()));
 	// Fails when using different formats for import and export:
@@ -1079,28 +1073,21 @@ void MainWindow::showAbout()
 
 void MainWindow::showHelp()
 {
-#ifdef Q_OS_ANDROID
-	const QString manual_path = MapperResource::locate(MapperResource::MANUAL, "index.html");
-	const QUrl help_url = QUrl::fromLocalFile(manual_path);
-	TextBrowserDialog help_dialog(help_url, this);
-	help_dialog.exec();
-#else
 	Util::showHelp(this);
-#endif
 }
 
 void MainWindow::linkClicked(const QString &link)
 {
-	if (link.compare("settings:", Qt::CaseInsensitive) == 0)
+	if (link.compare(QLatin1String("settings:"), Qt::CaseInsensitive) == 0)
 		showSettings();
-	else if (link.compare("help:", Qt::CaseInsensitive) == 0)
+	else if (link.compare(QLatin1String("help:"), Qt::CaseInsensitive) == 0)
 		showHelp();
-	else if (link.compare("about:", Qt::CaseInsensitive) == 0)
+	else if (link.compare(QLatin1String("about:"), Qt::CaseInsensitive) == 0)
 		showAbout();
-	else if (link.startsWith("examples:", Qt::CaseInsensitive))
+	else if (link.startsWith(QLatin1String("examples:"), Qt::CaseInsensitive))
 	{
 		auto example = link.midRef(9);
-		openPathLater(MapperResource::locate(MapperResource::EXAMPLE) % '/' % example);
+		openPathLater(MapperResource::locate(MapperResource::EXAMPLE) + QLatin1Char('/') + example);
 	}
 	else
 		QDesktopServices::openUrl(link);
@@ -1115,13 +1102,7 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
 	case QEvent::WhatsThisClicked:
 		{
 			QWhatsThisClickedEvent* e = static_cast<QWhatsThisClickedEvent*>(event);
-			QStringList parts = e->href().split("#");
-			if(parts.size() == 0)
-				Util::showHelp(this);
-			else if(parts.size() == 1)
-				Util::showHelp(this, parts.at(0));
-			else if(parts.size() == 2)
-				Util::showHelp(this, parts.at(0), parts.at(1));
+			Util::showHelp(this, e->href());
 		};
 		break;
 #if defined(Q_OS_ANDROID)

@@ -278,7 +278,7 @@ void ReplaceSymbolSetDialog::updateMappingTable()
 	for (int row = 0; row < map->getNumSymbols(); ++row)
 	{
 		Symbol* original_symbol = map->getSymbol(row);
-		QTableWidgetItem* original_item = new QTableWidgetItem(original_symbol->getNumberAsString() + " " + original_symbol->getPlainTextName());
+		QTableWidgetItem* original_item = new QTableWidgetItem(original_symbol->getNumberAsString() + QLatin1Char(' ') + original_symbol->getPlainTextName());
 		original_item->setFlags(Qt::ItemIsEnabled); // make item non-editable
 		QVariantList original_item_data =
 			QVariantList() << qVariantFromValue<const Map*>(map) << qVariantFromValue<const Symbol*>(original_symbol);
@@ -290,7 +290,7 @@ void ReplaceSymbolSetDialog::updateMappingTable()
 		const Symbol* replacement_symbol = mapping.contains(original_symbol) ? mapping.value(original_symbol) : NULL;
 		QTableWidgetItem* replacement_item;
 		if (replacement_symbol)
-			replacement_item = new QTableWidgetItem(replacement_symbol->getNumberAsString() + " " + replacement_symbol->getPlainTextName());
+			replacement_item = new QTableWidgetItem(replacement_symbol->getNumberAsString() + QLatin1Char(' ') + replacement_symbol->getPlainTextName());
 		else
 			replacement_item = new QTableWidgetItem(tr("- None -"));
 		QVariantList replacement_item_data =

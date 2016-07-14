@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2015 Kai Pastor
+ *    Copyright 2012-2016 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -29,7 +29,6 @@
 #include <QMenu>
 #include <QPushButton>
 #include <QSplitter>
-#include <QStringBuilder>
 #include <QToolButton>
 #include <QVBoxLayout>
 
@@ -101,6 +100,7 @@ SymbolSettingDialog::SymbolSettingDialog(Symbol* source_symbol, Map* source_map,
 	QVBoxLayout* preview_layout = NULL;
 	if (symbol->getType() == Symbol::Point)
 	{
+		Q_UNUSED(QT_TR_NOOP("Template:")) /// \todo Switch the following line to Util::Headline::create
 		QLabel* template_label = new QLabel(tr("<b>Template:</b> "));
 		template_file_label = new QLabel(tr("(none)"));
 		QPushButton* load_template_button = new QPushButton(tr("Open..."));
@@ -206,13 +206,11 @@ void SymbolSettingDialog::loadTemplateClicked()
 		
 		auto temp = new_template.release(); // avoid double release after addTemplate
 		preview_map->addTemplate(temp, 0);
-		TemplateVisibility* vis = preview_map_view->getTemplateVisibility(temp);
-		vis->visible = true;
-		vis->opacity = 1;
+		preview_map_view->setTemplateVisibility(temp, { 1, true });
 		preview_map->setTemplateAreaDirty(0);
 		
 		template_file_label->setText(temp->getTemplateFilename());
-		center_template_button->setEnabled(temp->getTemplateType().compare("TemplateImage") == 0);
+		center_template_button->setEnabled(qstrcmp(temp->getTemplateType(), "TemplateImage") == 0);
 	}
 }
 
@@ -444,11 +442,13 @@ void SymbolSettingDialog::createPreviewMap()
 
 void SymbolSettingDialog::showHelp()
 {
-	QString fragment = "editor";
+	QByteArray fragment;
+	fragment.reserve(100);
+	fragment = "editor";
 	if (properties_widget->currentIndex() > 0)
 	{
 		fragment = "symbol-type-";
-		fragment.append(QString::number(symbol->getType()));
+		fragment.append(QByteArray::number(symbol->getType()));
 	}
 	Util::showHelp(preview_controller->getWindow(), "symbol_dock_widget.html", fragment);
 }
@@ -477,11 +477,11 @@ void SymbolSettingDialog::updateSymbolLabel()
 {
 	QString number = symbol->getNumberAsString();
 	if (number.isEmpty())
-		number = "???";
+		number = QString::fromLatin1("???");
 	QString name = symbol->getName();
 	if (name.isEmpty())
-		name = "- unnamed -";
-	symbol_text_label->setText(QString("<b>") % number % "  " % name % "</b>");
+		name = tr("- unnamed -");
+	symbol_text_label->setText(QLatin1String("<b>") + number + QLatin1String("  ") + name + QLatin1String("</b>"));
 }
 
 void SymbolSettingDialog::updateButtons()

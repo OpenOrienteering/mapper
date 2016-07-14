@@ -38,7 +38,7 @@
 
 
 RotatePatternTool::RotatePatternTool(MapEditorController* editor, QAction* tool_button)
-: MapEditorToolBase(QCursor(QPixmap(":/images/cursor-rotate.png"), 1, 1), Other, editor, tool_button),
+: MapEditorToolBase(QCursor(QPixmap(QString::fromLatin1(":/images/cursor-rotate.png")), 1, 1), Other, editor, tool_button),
   angle_helper(new ConstrainAngleToolHelper())
 {
 	angle_helper->addDefaultAnglesDeg(0);
@@ -154,7 +154,7 @@ void RotatePatternTool::updateStatusText()
 		static const double pi_x_2 = M_PI * 2.0;
 		static const double to_deg = 180.0 / M_PI;
 		double rotation = fmod(-(constrained_pos_map - click_pos_map).angle() + pi_x_1_5, pi_x_2) * to_deg;
-		setStatusBarText( trUtf8("<b>Angle:</b> %1° ").arg(QLocale().toString(rotation, 'f', 1)) + "| " +
+		setStatusBarText( trUtf8("<b>Angle:</b> %1° ").arg(QLocale().toString(rotation, 'f', 1)) + QLatin1String("| ") +
 		                  tr("<b>%1</b>: Fixed angles. ").arg(ModifierKey::control()) );
 	}
 	else

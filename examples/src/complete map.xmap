@@ -74825,7 +74825,7 @@ Well; Small erosion gully
         <defaults use_meters_per_pixel="true" meters_per_pixel="0.25" dpi="0" scale="0"/>
     </templates>
     <view>
-        <grid color="#646464" display="0" alignment="0" additional_rotation="0" unit="1" h_spacing="5" v_spacing="5" h_offset="0" v_offset="0" snapping_enabled="false"/>
+        <grid color="#646464" display="0" alignment="0" additional_rotation="0" unit="1" h_spacing="5" v_spacing="5" h_offset="0" v_offset="0"/>
         <map_view zoom="0.707107" rotation="0" position_x="-2902" position_y="-1183">
             <map opacity="1" visible="true"/>
             <templates hidden="true" count="0"/>

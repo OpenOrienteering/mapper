@@ -40,7 +40,7 @@ public:
 	~OgrTemplate() override;
 	
 	
-	QString getTemplateType() const override;
+	const char* getTemplateType() const override;
 	
 	
 	bool loadTemplateFileImpl(bool configuring) override;

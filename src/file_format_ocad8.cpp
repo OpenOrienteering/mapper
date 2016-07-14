@@ -54,7 +54,7 @@
 // ### OCAD8FileFormat ###
 
 OCAD8FileFormat::OCAD8FileFormat()
- : FileFormat(MapFile, "OCAD78", ImportExport::tr("OCAD Versions 7, 8"), "ocd", 
+ : FileFormat(MapFile, "OCAD78", ImportExport::tr("OCAD Versions 7, 8"), QString::fromLatin1("ocd"),
               ImportSupported | ExportSupported | ExportLossy)
 {
 	// Nothing
@@ -97,7 +97,7 @@ OCAD8FileImport::~OCAD8FileImport()
 
 bool OCAD8FileImport::isRasterImageFile(const QString &filename)
 {
-	int dot_pos = filename.lastIndexOf('.');
+	int dot_pos = filename.lastIndexOf(QLatin1Char('.'));
 	if (dot_pos < 0)
 		return false;
 	QString extension = filename.right(filename.length() - dot_pos - 1).toLower();
@@ -612,7 +612,7 @@ Symbol *OCAD8FileImport::importLineSymbol(const OCADLineSymbol *ocad_symbol)
 	{
 		symbol_line->setSuppressDashSymbolAtLineEnds(true);
 		if (symbol_line->dash_symbol && symbol_line->number[0] != 799)
-			addWarning(tr("Line symbol %1: suppressing dash symbol at line ends.").arg(QString::number(0.1 * ocad_symbol->number) + " " + symbol_line->getName()));
+			addWarning(tr("Line symbol %1: suppressing dash symbol at line ends.").arg(QString::number(0.1 * ocad_symbol->number) + QLatin1Char(' ') + symbol_line->getName()));
 	}
 	
     // TODO: taper fields (tmode and tlast)
@@ -828,7 +828,7 @@ OCAD8FileImport::RectangleInfo* OCAD8FileImport::importRectSymbol(const OCADRect
 		rect.text = new TextSymbol();
 		fillCommonSymbolFields(rect.text, (OCADSymbol *)ocad_symbol);
 		rect.text->setNumberComponent(2, 2);
-		rect.text->font_family = "Arial";
+		rect.text->font_family = QString::fromLatin1("Arial");
 		rect.text->font_size = qRound(1000 * (15 / 72.0 * 25.4));
 		rect.text->color = rect.border_line->color;
 		rect.text->bold = true;
@@ -1180,9 +1180,9 @@ Template *OCAD8FileImport::importTemplate(OCADCString* ocad_str)
 	Template* templ = NULL;
 	QByteArray data(ocad_str->str); // copies the data.
 	QString filename = encoding_1byte->toUnicode(data.left(data.indexOf('\t', 0)));
-	QString clean_path = QDir::cleanPath(QString(filename).replace('\\', '/'));
+	QString clean_path = QDir::cleanPath(QString(filename).replace(QLatin1Char('\\'), QLatin1Char('/')));
 	QString extension = QFileInfo(clean_path).suffix();
-	if (extension.compare("ocd", Qt::CaseInsensitive) == 0)
+	if (extension.compare(QLatin1String("ocd"), Qt::CaseInsensitive) == 0)
 	{
 		templ = new TemplateMap(clean_path, map);
 	}
@@ -1208,9 +1208,8 @@ Template *OCAD8FileImport::importTemplate(OCADCString* ocad_str)
 	
 	if (view)
 	{
-		TemplateVisibility* visibility = view->getTemplateVisibility(templ);
-		visibility->opacity = qMax(0.0, qMin(1.0, 0.01 * (100 - background.dimming)));
-		visibility->visible = background.s;
+		auto opacity = qMax(0.0, qMin(1.0, 0.01 * (100 - background.dimming)));
+		view->setTemplateVisibility(templ, { float(opacity), bool(background.s) });
 	}
 	
 	return templ;
@@ -1283,7 +1282,7 @@ OCADBackground OCAD8FileImport::importBackground(const QByteArray& data)
 Template *OCAD8FileImport::importRasterTemplate(const OCADBackground &background)
 {
 	QString filename(encoding_1byte->toUnicode(background.filename));
-	filename = QDir::cleanPath(filename.replace('\\', '/'));
+	filename = QDir::cleanPath(filename.replace(QLatin1Char('\\'), QLatin1Char('/')));
 	if (isRasterImageFile(filename))
     {
         TemplateImage* templ = new TemplateImage(filename, map);
@@ -1598,7 +1597,7 @@ void OCAD8FileExport::doExport()
 		ocad_color->magenta = qRound(1 / 0.005f * cmyk.m);
 		ocad_color->yellow = qRound(1 / 0.005f * cmyk.y);
 		ocad_color->black = qRound(1 / 0.005f * cmyk.k);
-		convertPascalString(QString("Registration black"), ocad_color->name, 32); // not translated
+		convertPascalString(QString::fromLatin1("Registration black"), ocad_color->name, 32); // not translated
 		
 		++ocad_color_index;
 	}
@@ -1799,8 +1798,8 @@ void OCAD8FileExport::doExport()
 		const Template* temp = map->getTemplate(i);
 		
 		QString template_path = temp->getTemplatePath();
-		if ( temp->getTemplateType() == "TemplateImage" ||
-		     QFileInfo(template_path).suffix().compare("ocd", Qt::CaseInsensitive) == 0 )
+		if (qstrcmp(temp->getTemplateType(), "TemplateImage") == 0
+		    || QFileInfo(template_path).suffix().compare(QLatin1String("ocd"), Qt::CaseInsensitive) == 0)
 		{
 			// FIXME: export template view parameters
 			
@@ -1816,7 +1815,7 @@ void OCAD8FileExport::doExport()
 			double u = convertTemplateScale(temp->getTemplateScaleX());
 			double v = convertTemplateScale(temp->getTemplateScaleY());
 			
-			template_path.replace('/', '\\');
+			template_path.replace(QLatin1Char('/'), QLatin1Char('\\'));
 			
 			QString string;
 			string.sprintf("%s\ts%d\tx%d\ty%d\ta%f\tu%f\tv%f\td%d\tp%d\tt%d\to%d",
@@ -2598,11 +2597,11 @@ int OCAD8FileExport::convertWideCString(const QString& text, unsigned char* buff
 	// - if it starts with a newline, add another
 	// - convert \n to \r\n
 	QString exported_text;
-	if (text.startsWith('\n'))
-		exported_text = "\n" + text;
+	if (text.startsWith(QLatin1Char('\n')))
+		exported_text = QLatin1Char('\n') + text;
 	else
 		exported_text = text;
-	exported_text.replace('\n', "\r\n");
+	exported_text.replace(QLatin1Char('\n'), QLatin1String("\r\n"));
 	
 	if (2 * (exported_text.length() + 1) > buffer_size)
 		addStringTruncationWarning(exported_text, buffer_size - 1);
@@ -2666,6 +2665,6 @@ double OCAD8FileExport::convertTemplateScale(double mapper_scale)
 void OCAD8FileExport::addStringTruncationWarning(const QString& text, int truncation_pos)
 {
 	QString temp = text;
-	temp.insert(truncation_pos, "|||");
+	temp.insert(truncation_pos, QLatin1String("|||"));
 	addWarning(tr("String truncated (truncation marked with three '|'): %1").arg(temp));
 }

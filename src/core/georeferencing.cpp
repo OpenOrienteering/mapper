@@ -122,15 +122,16 @@ namespace
 	 */
 	std::vector< std::pair<QString, QString> > spec_substitutions {
 		// #542, S-JTSK (Greenwich) / Krovak East North
-		{ "+init=epsg:5514", "+proj=krovak +lat_0=49.5 +lon_0=24.83333333333333 +alpha=30.28813972222222 +k=0.9999 +x_0=0 +y_0=0 "
-		                     "+ellps=bessel +towgs84=542.5,89.2,456.9,5.517,2.275,5.516,6.96 +pm=greenwich +units=m +no_defs" },
+		{ QString::fromLatin1("+init=epsg:5514"),
+		  QString::fromLatin1("+proj=krovak +lat_0=49.5 +lon_0=24.83333333333333 +alpha=30.28813972222222 +k=0.9999 +x_0=0 +y_0=0 "
+		                      "+ellps=bessel +towgs84=542.5,89.2,456.9,5.517,2.275,5.516,6.96 +pm=greenwich +units=m +no_defs") },
 	};
 }
 
 
 //### Georeferencing ###
 
-const QString Georeferencing::geographic_crs_spec("+proj=latlong +datum=WGS84");
+const QString Georeferencing::geographic_crs_spec(QString::fromLatin1("+proj=latlong +datum=WGS84"));
 
 Georeferencing::Georeferencing()
 : state(Local),
@@ -146,7 +147,7 @@ Georeferencing::Georeferencing()
 	
 	updateTransformation();
 	
-	projected_crs_id = "Local";
+	projected_crs_id = QString::fromLatin1("Local");
 	projected_crs  = NULL;
 	geographic_crs = pj_init_plus_no_defs(geographic_crs_spec);
 	Q_ASSERT(geographic_crs != NULL);
@@ -425,7 +426,7 @@ void Georeferencing::setState(Georeferencing::State value)
 		updateTransformation();
 		
 		if (state != Normal)
-			setProjectedCRS("Local");
+			setProjectedCRS(QString::fromLatin1("Local"));
 		
 		emit stateChanged();
 	}
@@ -619,7 +620,7 @@ void Georeferencing::setTransformationDirectly(const QTransform& transform)
 	}
 }
 
-bool Georeferencing::setProjectedCRS(const QString& id, QString spec, std::vector< QString > params)
+bool Georeferencing::setProjectedCRS(const QString& id, QString spec, std::vector<QString> params)
 {
 	// Default return value if no change is neccessary
 	bool ok = (state == Normal || projected_crs_spec.isEmpty());
@@ -841,9 +842,9 @@ extern "C"
 	{
 		if (temp_dir->isValid())
 		{
-			QString path = QDir(temp_dir->path()).filePath(name);
+			QString path = QDir(temp_dir->path()).filePath(QString::fromUtf8(name));
 			QFile file(path);
-			if (file.exists() || QFile::copy(QString("assets:/proj/") % QLatin1String(name), path))
+			if (file.exists() || QFile::copy(QLatin1String("assets:/proj/") + QLatin1String(name), path))
 			{
 				c_string = path.toLocal8Bit();
 				return c_string.constData();

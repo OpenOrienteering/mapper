@@ -59,13 +59,6 @@ public:
 	 */
 	static int active_version;
 	
-	/** @brief The characteristic magic string at the beginning of the file
-	 */
-	static const QString magic_string;
-	
-	/** @brief The XML namespace of the Mapper XML file format
-	 */
-	static const QString mapper_namespace;
 };
 
 #endif // _OPENORIENTEERING_FILE_FORMAT_XML_H

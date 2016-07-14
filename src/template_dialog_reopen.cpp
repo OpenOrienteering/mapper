@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2016 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -28,21 +29,24 @@
 
 #include "map.h"
 #include "template.h"
+#include "util_gui.h"
 
-ReopenTemplateDialog::ReopenTemplateDialog(QWidget* parent, Map* map, MapView* view, const QString& map_directory)
- : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint), map(map), view(view), map_directory(map_directory)
+ReopenTemplateDialog::ReopenTemplateDialog(QWidget* parent, Map* map, const QString& map_directory)
+: QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint)
+, map(map)
+, map_directory(map_directory)
 {
 	setWindowTitle(tr("Reopen template"));
 	
 	QLabel* description = new QLabel(tr("Drag items from the left list to the desired spot in the right list to reload them."));
 	
-	QLabel* closed_template_list_label = new QLabel("<b>" + tr("Closed templates:") + "</b>");
+	QLabel* closed_template_list_label = Util::Headline::create(tr("Closed templates:"));
 	closed_template_list = new QListWidget();
 	updateClosedTemplateList();
 	clear_button = new QPushButton(tr("Clear list"));
 	clear_button->setEnabled(map->getNumClosedTemplates() > 0);
 	
-	QLabel* open_template_list_label = new QLabel("<b>" + tr("Active templates:") + "</b>");
+	QLabel* open_template_list_label = Util::Headline::create(tr("Active templates:"));
 	open_template_list = new OpenTemplateList(this);
 	for (int i = map->getNumTemplates() - 1; i >= 0; --i)
 	{
@@ -140,7 +144,7 @@ void ReopenTemplateDialog::OpenTemplateList::dropEvent(QDropEvent* event)
 	
 	if (!in_front)
 		dialog->map->setFirstFrontTemplate(dialog->map->getFirstFrontTemplate() + 1);
-	if (!dialog->map->reloadClosedTemplate(src_pos, target_pos, dialog, dialog->view, dialog->map_directory))
+	if (!dialog->map->reloadClosedTemplate(src_pos, target_pos, dialog, dialog->map_directory))
 	{
 		// Revert action
 		if (!in_front)

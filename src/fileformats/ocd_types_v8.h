@@ -214,8 +214,8 @@ namespace Ocd
 		quint16 hatch_dist;
 		qint16  hatch_angle_1;
 		qint16  hatch_angle_2;
-		quint8  fill_on_V9;         /// \since V12
-		quint8  border_on_V9;       /// \since V12
+		quint8  fill_on_V9;         /// \since V9
+		quint8  border_on_V9;       /// \since V9
 		quint8  structure_mode;
 		quint8  structure_draw_V12; /// \since V12
 		quint16 structure_width;

@@ -112,6 +112,9 @@ public slots:
 	/** Sets output options: resolution, overprinting. */
 	void setOptions(const MapPrinterOptions& parameters);
 	
+	/** Listens to view feature changes. */
+	void onVisibilityChanged();
+	
 signals:
 	/**
 	 * This signal is emitted when the type of task changes.
@@ -136,6 +139,9 @@ signals:
 protected slots:
 	/** This slot reacts to changes of the target combobox. */
 	void targetChanged(int index) const;
+	
+	/** Opens a dialog to change printer properties. */
+	void propertiesClicked();
 	
 	/** This slot reacts to changes of the paper size combobox. */
 	void paperSizeChanged(int index) const;
@@ -261,6 +267,7 @@ private:
 	QDialogButtonBox* button_box;
 	
 	QComboBox* target_combo;
+	QToolButton* printer_properties_button;
 	QComboBox* paper_size_combo;
 	QWidget*   page_orientation_widget;
 	QButtonGroup* page_orientation_group;
@@ -294,7 +301,11 @@ private:
 	QPushButton* print_button;
 	QPushButton* export_button;
 	
+#if QT_VERSION < 0x050300
 	QList<QPrinterInfo> printers;
+#else
+	QStringList printers;
+#endif
 	
 	PrintAreaPolicy policy;
 	

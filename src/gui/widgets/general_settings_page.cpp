@@ -30,10 +30,12 @@
 #include <QFormLayout>
 #include <QMessageBox>
 #include <QScreen>
+#include <QSettings>
 #include <QTextCodec>
 #include <QToolButton>
 
 #include "home_screen_widget.h"
+#include "../main_window.h"
 #include "../../util_gui.h"
 #include "../../util_translation.h"
 #include "../../util/scoped_signals_blocker.h"
@@ -56,7 +58,14 @@ GeneralSettingsPage::GeneralSettingsPage(QWidget* parent)
 	language_layout->addWidget(language_box);
 	
 	QAbstractButton* language_file_button = new QToolButton();
-	language_file_button->setIcon(QIcon(QLatin1String(":/images/open.png")));
+	if (MainWindow::mobileMode())
+	{
+		language_file_button->setVisible(false);
+	}
+	else
+	{
+		language_file_button->setIcon(QIcon(QLatin1String(":/images/open.png")));
+	}
 	language_layout->addWidget(language_file_button);
 	
 	layout->addItem(Util::SpacerItem::create(this));
@@ -123,7 +132,7 @@ GeneralSettingsPage::GeneralSettingsPage(QWidget* parent)
 	encoding_box->setCompleter(completer);
 	layout->addRow(tr("8-bit encoding:"), encoding_box);
 	
-	ocd_importer_check = new QCheckBox(tr("Use the new OCD importer also for version 8 files").replace("8", "6-8"));
+	ocd_importer_check = new QCheckBox(tr("Use the new OCD importer also for version 8 files").replace(QLatin1Char('8'), QString::fromLatin1("6-8")));
 	layout->addRow(ocd_importer_check);
 	
 	updateWidgets();
@@ -180,7 +189,7 @@ void GeneralSettingsPage::apply()
 		// AppleLanguages array in the application's .plist file -
 		// and this file is also the one used by QSettings.
 		const QString mapper_language(translation.getLocale().name().left(2));
-		QSettings().setValue(QLatin1String{"AppleLanguages"}, { mapper_language });
+		QSettings().setValue(QString::fromLatin1("AppleLanguages"), { mapper_language });
 #endif
 	}
 	
@@ -317,6 +326,10 @@ void GeneralSettingsPage::openPPICalculationDialog()
 	float old_screen_diagonal_inches = screen_diagonal_pixels / old_ppi;
 	
 	QDialog* dialog = new QDialog(window(), Qt::WindowSystemMenuHint | Qt::WindowTitleHint);
+	if (MainWindow::mobileMode())
+	{
+		dialog->setGeometry(window()->geometry());
+	}
 	
 	auto layout = new QVBoxLayout(dialog);
 	

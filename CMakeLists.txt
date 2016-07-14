@@ -35,7 +35,7 @@ set(Mapper_VERSION_MAJOR 0)
 set(Mapper_VERSION_MINOR 6)
 if(NOT Mapper_VERSION_PATCH)
 	# This can be configured when running cmake
-	set(Mapper_VERSION_PATCH 1)
+	set(Mapper_VERSION_PATCH 3)
 endif()
 
 set(MAPPER_VERSION_PRI "${PROJECT_SOURCE_DIR}/oo-mapper-version.pri")
@@ -107,9 +107,9 @@ endif()
 option(Mapper_DEVELOPMENT_BUILD "Configure development build (loading resource from the build directory)" ${Mapper_DEVELOPMENT_BUILD_DEFAULT})
 mark_as_advanced(Mapper_DEVELOPMENT_BUILD)
 
-option(Mapper_AUTORUN_UNIT_TESTS "Run the unit tests as part of the default target"   ${Mapper_DEVELOPMENT_BUILD})
-option(Mapper_AUTORUN_SYSTEM_TESTS "Run the system tests as part of the default target" OFF)
-mark_as_advanced(Mapper_AUTORUN_UNIT_TESTS Mapper_AUTORUN_SYSTEM_TESTS)
+option(Mapper_AUTORUN_SYSTEM_TESTS "Run the system tests as part of the Mapper_Test target" ${Mapper_DEVELOPMENT_BUILD})
+option(Mapper_AUTORUN_MANUAL_TESTS "Run the system tests as part of the Mapper_Test target" OFF)
+mark_as_advanced(Mapper_AUTORUN_SYSTEM_TESTS Mapper_AUTORUN_MANUAL_TESTS)
 
 option(Mapper_BUILD_PACKAGE     "Create a target for building packages"                ${Mapper_BUILD_PACKAGE_DEFAULT})
 option(Mapper_PACKAGE_PROJ      "Include all required Proj components in the packages" ${Mapper_BUILD_PROJ})

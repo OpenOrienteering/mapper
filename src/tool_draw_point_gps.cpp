@@ -40,7 +40,7 @@
 
 
 DrawPointGPSTool::DrawPointGPSTool(GPSDisplay* gps_display, MapEditorController* editor, QAction* tool_button)
-: MapEditorToolBase(QCursor(QPixmap(":/images/cursor-draw-point.png"), 11, 11), DrawPoint, editor, tool_button)
+: MapEditorToolBase(QCursor(QPixmap(QString::fromLatin1(":/images/cursor-draw-point.png")), 11, 11), DrawPoint, editor, tool_button)
 , renderables(new MapRenderables(map()))
 , help_label(NULL)
 {
@@ -71,7 +71,7 @@ void DrawPointGPSTool::initImpl()
 	if (editor->isInMobileMode())
 	{
 		help_label = new QLabel(tr("Touch the map to finish averaging"));
-		editor->showPopupWidget(help_label, "");
+		editor->showPopupWidget(help_label, QString{});
 	}
 }
 

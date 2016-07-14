@@ -492,7 +492,7 @@ void EditPointTool::initImpl()
 		key_button_bar->addModifierKey(Qt::Key_Shift, Qt::ShiftModifier, tr("Snap", "Snap to existing objects"));
 		key_button_bar->addModifierKey(Qt::Key_Control, Qt::ControlModifier, tr("Point / Angle", "Modify points or use constrained angles"));
 		key_button_bar->addModifierKey(Qt::Key_Space, 0, tr("Toggle dash", "Toggle dash points"));
-		editor->showPopupWidget(key_button_bar, "");
+		editor->showPopupWidget(key_button_bar, QString{});
 	}
 }
 
@@ -650,7 +650,7 @@ void EditPointTool::updateStatusText()
 		       arg(QLocale().toString(drag_vector.x(), 'f', 1)).
 		       arg(QLocale().toString(-drag_vector.y(), 'f', 1)).
 		       arg(QLocale().toString(0.001 * map()->getScaleDenominator() * drag_vector.length(), 'f', 1)) +
-		       "| ";
+		       QLatin1String("| ");
 		
 		if (!angle_helper->isActive())
 			text += EditTool::tr("<b>%1</b>: Fixed angles. ").arg(ModifierKey::control());
@@ -691,7 +691,7 @@ void EditPointTool::updateStatusText()
 				else if (space_pressed)
 					text = tr("<b>%1+Click</b> on point to switch between dash and normal point. ").arg(ModifierKey::space());
 				else
-					text += "| " + MapEditorTool::tr("More: %1, %2").arg(ModifierKey::control(), ModifierKey::space());
+					text += QLatin1String("| ") + MapEditorTool::tr("More: %1, %2").arg(ModifierKey::control(), ModifierKey::space());
 			}
 		}
 	}

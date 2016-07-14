@@ -76,10 +76,17 @@ public:
 	/**
 	 * Returns whether the window is operating in mobile mode.
 	 * 
-	 * Mobile mode is the default on Android. The default may be overwritten by
+	 * On the desktop, the default (desktop) mode may be overwritten by
 	 * setting the environment variable MAPPER_MOBILE_GUI to 0 or 1.
+	 * 
+	 * For Android, this evaluates to constexpr true so that the compiler
+	 * may optimize away desktop code in conditional blocks.
 	 */
-	bool mobileMode() const;
+#ifndef Q_OS_ANDROID
+	static bool mobileMode();
+#else
+	static constexpr bool mobileMode() { return true; }
+#endif
 	
 	
 	/**
@@ -300,7 +307,7 @@ public slots:
 	 */
 	void showAbout();
 	
-	/** Show the index page of the manual in Qt assistant.
+	/** Show the index page of the manual in the help browser.
 	 */
 	void showHelp();
 	

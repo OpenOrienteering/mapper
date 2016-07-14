@@ -71,11 +71,11 @@ void GeoreferencingTest::testEmptyProjectedCRS()
 void GeoreferencingTest::testGridScaleFactor()
 {
 	Georeferencing utm_georef;
-	utm_georef.setProjectedCRS("UTM", utm32_spec);
+	utm_georef.setProjectedCRS(QString::fromLatin1("UTM"), utm32_spec);
 	QVERIFY(utm_georef.isValid());
 	
 	Georeferencing mercator_georef;
-	mercator_georef.setProjectedCRS("EPSG:3857", CRSTemplateRegistry().find("EPSG")->specificationTemplate().arg("3857"), { "3857" });
+	mercator_georef.setProjectedCRS(QString::fromLatin1("EPSG:3857"), CRSTemplateRegistry().find(QString::fromLatin1("EPSG"))->specificationTemplate().arg(QString::fromLatin1("3857")), { QString::fromLatin1("3857") });
 	QVERIFY(mercator_georef.isValid());
 	
 	// Use UTM as a convenient approximation for the ground,
@@ -125,8 +125,8 @@ void GeoreferencingTest::testCRS_data()
 	QTest::addColumn<QString>("id");
 	QTest::addColumn<QString>("spec");
 	
-	QTest::newRow("EPSG:4326") << "EPSG:4326" << QString("+init=epsg:4326");
-	QTest::newRow("UTM")       << "UTM"       << utm32_spec;
+	QTest::newRow("EPSG:4326") << QString::fromLatin1("EPSG:4326") << QString::fromLatin1("+init=epsg:4326");
+	QTest::newRow("UTM")       << QString::fromLatin1("UTM")       << utm32_spec;
 }
 
 void GeoreferencingTest::testCRS()
@@ -139,15 +139,15 @@ void GeoreferencingTest::testCRS()
 
 void GeoreferencingTest::testCRSTemplates()
 {
-	auto epsg_template = CRSTemplateRegistry().find("EPSG");
+	auto epsg_template = CRSTemplateRegistry().find(QString::fromLatin1("EPSG"));
 	QCOMPARE(epsg_template->parameters().size(), (std::size_t)1);
 	
-	QCOMPARE(epsg_template->coordinatesName(), QString{"EPSG @code@ coordinates"});
-	QCOMPARE(epsg_template->coordinatesName({ "4326" }), QString{"EPSG 4326 coordinates"});
+	QCOMPARE(epsg_template->coordinatesName(), QString::fromLatin1("EPSG @code@ coordinates"));
+	QCOMPARE(epsg_template->coordinatesName({ QString::fromLatin1("4326") }), QString::fromLatin1("EPSG 4326 coordinates"));
 	
-	georef.setProjectedCRS("EPSG", epsg_template->specificationTemplate().arg("5514"), { "5514" });
+	georef.setProjectedCRS(QString::fromLatin1("EPSG"), epsg_template->specificationTemplate().arg(QString::fromLatin1("5514")), { QString::fromLatin1("5514") });
 	QVERIFY(georef.isValid());
-	QCOMPARE(georef.getProjectedCoordinatesName(), QString{"EPSG 5514 coordinates"});
+	QCOMPARE(georef.getProjectedCoordinatesName(), QString::fromLatin1("EPSG 5514 coordinates"));
 }
 
 
@@ -186,7 +186,7 @@ void GeoreferencingTest::testProjection()
 	
 	QFETCH(QString, proj);
 	QVERIFY2(georef.setProjectedCRS(proj, proj), proj.toLatin1());
-	QCOMPARE(georef.getErrorText(), QString(""));
+	QCOMPARE(georef.getErrorText(), QString{});
 	
 	QFETCH(double, easting);
 	QFETCH(double, northing);

@@ -19,22 +19,41 @@
  */
 
 
-#ifndef _OPENORIENTEERING_MAP_VIEW_H_
-#define _OPENORIENTEERING_MAP_VIEW_H_
+#ifndef OPENORIENTEERING_MAP_VIEW_H
+#define OPENORIENTEERING_MAP_VIEW_H
 
-#include <QHash>
+#include <memory>
+
+#include <QObject>
 #include <QRectF>
 #include <QTransform>
 
 #include "../core/map_coord.h"
 
 class Map;
-class MapWidget;
 class Template;
 class TemplateVisibility;
 
 class QXmlStreamReader;
 class QXmlStreamWriter;
+
+
+/**
+ * Contains the visibility information for a template (or the map).
+ */
+class TemplateVisibility
+{
+public:
+	/** Opacity from 0.0f (invisible) to 1.0f (opaque) */
+	float opacity;
+	
+	/** Visibility flag */
+	bool visible;
+};
+
+bool operator==(TemplateVisibility lhs, TemplateVisibility rhs);
+
+bool operator!=(TemplateVisibility lhs, TemplateVisibility rhs);
 
 
 /**
@@ -45,8 +64,11 @@ class QXmlStreamWriter;
  * measured in pixels. The class provides methods to convert between view
  * coordinates and map coordinates (defined as millimeter on map paper).
  */
-class MapView
+class MapView : public QObject
 {
+	Q_OBJECT
+	Q_FLAGS(ChangeFlags  VisibilityFeature)
+	
 public:
 	enum ChangeFlag
 	{
@@ -58,32 +80,46 @@ public:
 	
 	Q_DECLARE_FLAGS(ChangeFlags, ChangeFlag)
 	
-	/** Creates a default view looking at the origin */
+	enum VisibilityFeature
+	{
+		MultipleFeatures    =  0,
+		GridVisible         =  1,
+		OverprintingEnabled =  2,
+		AllTemplatesHidden  =  4,
+		TemplateVisible     =  8,
+		MapVisible          = 16,
+	};
+	
+	
+	/**
+	 * Creates a default view looking at the origin.
+	 * 
+	 * The parameter map must not be null.
+	 */
+	MapView(QObject* parent, Map* map);
+	
+	/** Creates a default view looking at the origin.
+	 *
+	 * The map takes ownership of the map view. It must not be null.
+	 */
 	MapView(Map* map);
 	
 	/** Destroys the map view. */
-	~MapView();
+	~MapView() override;
 	
 	/** Loads the map view in the old "native" format from the file. */
 	void load(QIODevice* file, int version);
 	
-	/** Saves the map view state to an XML stream.
-	 *  @param xml The XML output stream.
-	 *  @param element_name The name of the element which will be written. 
+	/**
+	 * Saves the map view state to an XML stream.
+	 * @param xml The XML output stream.
+	 * @param element_name The name of the element which will be written.
+	 * @param template_details Save template visibilities (default: true)
 	 */
-	void save(QXmlStreamWriter& xml, const QLatin1String& element_name) const;
+	void save(QXmlStreamWriter& xml, const QLatin1String& element_name, bool template_details = true) const;
 	
 	/** Loads the map view state from the current element of an xml stream. */
 	void load(QXmlStreamReader& xml);
-	
-	/**
-	 * Must be called to notify the map view of new widgets displaying it.
-	 * Useful to notify the widgets which need to be redrawn
-	 */
-	void addMapWidget(MapWidget* widget);
-	
-	/** Removes a widget, see addMapWidget(). */
-	void removeMapWidget(MapWidget* widget);
 	
 	/**
 	 * Redraws all map widgets completely.
@@ -168,19 +204,27 @@ public:
 	
 	
 	/** Returns the map this view is defined on. */
-	Map* getMap() const;
+	const Map* getMap() const;
+	
+	/** Returns the map this view is defined on. */
+	Map* getMap();
 	
 	
 	/**
-	 * Zooms the maps (in steps).
+	 * Zooms the maps (in steps), preserving the given cursor position.
 	 * 
-	 * @param num_steps Number of zoom steps to zoom in. Can be negative to zoom out.
-	 * @param preserve_cursor_pos If set, shifts the center of the view so the
-	 *     cursor position will stay at the same map coordinate.
+	 * @param num_steps Number of zoom steps to zoom in. Negative numbers zoom out.
 	 * @param cursor_pos_view The cursor position in view coordinates, must be
 	 *     set if preserve_cursor_pos is used.
 	 */
-	void zoomSteps(float num_steps, bool preserve_cursor_pos, QPointF cursor_pos_view = QPointF());
+	void zoomSteps(double num_steps, QPointF cursor_pos_view);
+	
+	/**
+	 * Zooms the maps (in steps), preserving the center of the view.
+	 * 
+	 * @param num_steps Number of zoom steps to zoom in. Negative numbers zoom out.
+	 */
+	void zoomSteps(double num_steps);
 	
 	/**
 	 * Returns the final zoom factor for use in transformations.
@@ -199,10 +243,10 @@ public:
 	
 	
 	/** Returns the view rotation (in radians). */
-	float getRotation() const;
+	double getRotation() const;
 	
 	/** Sets the view roation (in radians). */
-	void setRotation(float value);
+	void setRotation(double value);
 	
 	
 	/** Returns the position of the view center. */
@@ -221,10 +265,12 @@ public:
 	 * and it return an invisible configuration when the map's opacity is
 	 * below 0.005.
 	 */
-	const TemplateVisibility* effectiveMapVisibility() const;
+	TemplateVisibility effectiveMapVisibility() const;
 	
 	/** Returns the visibility settings of the map drawing. */
-	TemplateVisibility* getMapVisibility();
+	TemplateVisibility getMapVisibility() const;
+	
+	void setMapVisibility(TemplateVisibility vis);
 	
 	/**
 	 * Checks if the template is visible without creating
@@ -233,24 +279,20 @@ public:
 	bool isTemplateVisible(const Template* temp) const;
 	
 	/**
-	 * Returns the template visibility object, creates one if not there yet
-	 * with the default settings (invisible)
+	 * Returns the template visibility.
+	 * 
+	 * If the template is unknown, returns default settings.
 	 */
-	const TemplateVisibility* getTemplateVisibility(const Template* temp) const;
+	TemplateVisibility getTemplateVisibility(const Template* temp) const;
 	
 	/**
-	 * Returns the template visibility object, creates one if not there yet
-	 * with the default settings (invisible)
+	 * Sets the template visibility, and emits a change signal.
 	 */
-	TemplateVisibility* getTemplateVisibility(const Template* temp);
+	void setTemplateVisibility(const Template* temp, TemplateVisibility vis);
 	
-	/**
-	 * Call this when a template is deleted to destroy the template visibility object
-	 */
-	void deleteTemplateVisibility(const Template* temp);
 	
 	/** Enables or disables hiding all templates in this view */
-	void setHideAllTemplates(bool value);
+	void setAllTemplatesHidden(bool value);
 	
 	/**
 	 * Returns if the "hide all templates" toggle is active.
@@ -258,11 +300,13 @@ public:
 	 */
 	bool areAllTemplatesHidden() const;
 	
+	
 	/** Returns if the map grid is visible. */
 	bool isGridVisible() const;
 	
 	/** Sets the map grid visibility. */
 	void setGridVisible(bool visible);
+	
 	
 	/** Returns if overprinting simulation is enabled. */
 	bool isOverprintingSimulationEnabled() const;
@@ -270,6 +314,31 @@ public:
 	/** Enables or disables overprinting simulation. */
 	void setOverprintingSimulationEnabled(bool enabled);
 	
+	
+signals:
+	/**
+	 * Indicates a change of the viewed area of the map.
+	 * 
+	 * @param change The aspects that have chaneged.
+	 */
+	void viewChanged(ChangeFlags change);
+	
+	/**
+	 * Indicates a change of the pan offset.
+	 */
+	void panOffsetChanged(QPoint offset);
+	
+	/**
+	 * Indicates a particular change of visibility.
+	 * 
+	 * @param feature The map view feature that has changed.
+	 * @param active  The features current state of activation.
+	 * @param temp    If a the feature is a template, a pointer to this template.
+	 */
+	void visibilityChanged(VisibilityFeature feature, bool active, const Template* temp = nullptr);
+	
+	
+public:
 	// Static
 	
 	/** The global zoom in limit for the zoom factor. */
@@ -277,10 +346,47 @@ public:
 	/** The global zoom out limit for the zoom factor. */
 	static const double zoom_out_limit;
 	
-private:
-	typedef std::vector<MapWidget*> WidgetVector;
+protected:
+	/**
+	 * Sets the template visibility without emitting signals.
+	 */
+	bool setTemplateVisibilityHelper(const Template *temp, TemplateVisibility vis);
 	
-	void updateTransform(MapView::ChangeFlags change);		// recalculates the x_to_y matrices
+	/**
+	 * Creates the visibility data when a template is added to the map.
+	 */
+	void onTemplateAdded(int pos, const Template* temp);
+	
+	/**
+	 * Removes the visibility data when a template is deleted.
+	 */
+	void onTemplateDeleted(int pos, const Template* temp);
+	
+private:
+	Q_DISABLE_COPY(MapView)
+	
+	struct TemplateVisibilityEntry : public TemplateVisibility
+	{
+		const Template* temp;
+		TemplateVisibilityEntry() = default;
+		TemplateVisibilityEntry(const TemplateVisibilityEntry&) = default;
+		TemplateVisibilityEntry(TemplateVisibilityEntry&&) = default;
+		TemplateVisibilityEntry& operator=(const TemplateVisibilityEntry&) = default;
+		TemplateVisibilityEntry& operator=(TemplateVisibilityEntry&&) = default;
+		TemplateVisibilityEntry(const Template* temp, TemplateVisibility vis)
+		: TemplateVisibility(vis)
+		, temp(temp)
+		{}
+	};
+	typedef std::vector<TemplateVisibilityEntry> TemplateVisibilityVector;
+	
+	
+	void updateTransform();		// recalculates the x_to_y matrices
+	
+	TemplateVisibilityVector::const_iterator findVisibility(const Template* temp) const;
+	
+	TemplateVisibilityVector::iterator findVisibility(const Template* temp);
+	
 	
 	Map* map;
 	
@@ -293,9 +399,8 @@ private:
 	QTransform map_to_view;
 	QTransform world_transform;
 	
-	TemplateVisibility* map_visibility;
-	QHash<const Template*, TemplateVisibility*> template_visibilities;
-	WidgetVector widgets;
+	TemplateVisibility map_visibility;
+	TemplateVisibilityVector template_visibilities;
 	
 	bool all_templates_hidden;
 	bool grid_visible;
@@ -304,18 +409,20 @@ private:
 
 
 
-/**
- * Contains the visibility information for a template (or the map).
- */
-class TemplateVisibility
+// ### TemplateVisibility inline code ###
+
+inline
+bool operator==(TemplateVisibility lhs, TemplateVisibility rhs)
 {
-public:
-	/** Opacity from 0.0f (invisible) to 1.0f (opaque) */
-	float opacity;
-	
-	/** Visibility flag */
-	bool visible;
-};
+	return lhs.visible == rhs.visible
+	       && qFuzzyCompare(1.0f+rhs.opacity, 1.0f+lhs.opacity);
+}
+
+inline
+bool operator!=(TemplateVisibility lhs, TemplateVisibility rhs)
+{
+	return !(lhs == rhs);
+}
 
 
 
@@ -342,7 +449,13 @@ const QTransform& MapView::worldTransform() const
 }
 
 inline
-Map* MapView::getMap() const
+Map* MapView::getMap()
+{
+	return map;
+}
+
+inline
+const Map* MapView::getMap() const
 {
 	return map;
 }
@@ -360,7 +473,7 @@ double MapView::getZoom() const
 }
 
 inline
-float MapView::getRotation() const
+double MapView::getRotation() const
 {
 	return rotation;
 }
@@ -375,6 +488,12 @@ inline
 QPoint MapView::panOffset() const
 {
 	return pan_offset;
+}
+
+inline
+TemplateVisibility MapView::getMapVisibility() const
+{
+	return map_visibility;
 }
 
 inline

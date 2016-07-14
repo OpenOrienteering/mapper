@@ -27,6 +27,8 @@
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
+#include "util/xml_stream_util.h"
+
 #ifndef NO_NATIVE_FILE_FORMAT
 
 void Matrix::load(QIODevice* file)
@@ -43,34 +45,33 @@ void Matrix::load(QIODevice* file)
 
 void Matrix::save(QXmlStreamWriter& xml, const QString role) const
 {
-	xml.writeStartElement("matrix");
-	xml.writeAttribute("role", role);
-	xml.writeAttribute("n", QString::number(n));
-	xml.writeAttribute("m", QString::number(m));
+	XmlElementWriter matrix{xml, QLatin1String("matrix")};
+	matrix.writeAttribute(QLatin1String("role"), role);
+	matrix.writeAttribute(QLatin1String("n"), n);
+	matrix.writeAttribute(QLatin1String("m"), m);
 	int count = n * m;
 	for (int i=0; i<count; i++)
 	{
-		xml.writeStartElement("element");
-		xml.writeAttribute("value", QString::number(d[i]));
-		xml.writeEndElement();
+		XmlElementWriter element{xml, QLatin1String("element")};
+		element.writeAttribute(QLatin1String("value"), d[i]);
 	}
-	xml.writeEndElement(/*matrix*/);
 }
 
 void Matrix::load(QXmlStreamReader& xml)
 {
-	Q_ASSERT(xml.name() == "matrix");
+	Q_ASSERT(xml.name() == QLatin1String("matrix"));
 	
-	int new_n = qMax(0, xml.attributes().value("n").toString().toInt());
-	int new_m = qMax(0, xml.attributes().value("m").toString().toInt());
+	XmlElementReader matrix{xml};
+	int new_n = qMax(0, matrix.attribute<int>(QLatin1String("n")));
+	int new_m = qMax(0, matrix.attribute<int>(QLatin1String("m")));
 	setSize(new_n, new_m);
 	int count = n*m;
 	int i = 0;
 	while (xml.readNextStartElement())
 	{
-		if (i < count && xml.name() == "element")
+		if (i < count && xml.name() == QLatin1String("element"))
 		{
-			d[i] = xml.attributes().value("value").toString().toDouble();
+			d[i] = xml.attributes().value(QLatin1String("value")).toDouble();
 			i++;
 		}
 		xml.skipCurrentElement();

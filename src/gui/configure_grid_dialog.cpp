@@ -240,7 +240,7 @@ void ConfigureGridDialog::updateStates()
 	
 	unit_combo->setEnabled(show_grid_check->isChecked());
 	
-	QString unit_suffix = QString(" ") % ((current_unit == MapGrid::MetersInTerrain) ? tr("m", "meters") : tr("mm", "millimeters"));
+	QString unit_suffix = QLatin1Char(' ') + ((current_unit == MapGrid::MetersInTerrain) ? tr("m", "meters") : tr("mm", "millimeters"));
 	horz_spacing_edit->setEnabled(show_grid_check->isChecked() && display_mode != MapGrid::HorizontalLines);
 	horz_spacing_edit->setSuffix(unit_suffix);
 	vert_spacing_edit->setEnabled(show_grid_check->isChecked() && display_mode != MapGrid::VerticalLines);

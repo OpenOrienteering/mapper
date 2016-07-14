@@ -9,19 +9,19 @@ The general build process prerequisites are:
  - The OpenOrienteering Mapper source code.
  - CMake >= 2.8.12.
    CMake is available from http://www.cmake.org/.
- - A supported C++ compiler toolchain. 
+ - A supported C++ compiler toolchain. C++11 is mandatory.
 
 See below for platform-specific details and build instructions.
 
 
 ## Qt Library
 
-This program uses the Qt library from http://qt-project.org which is released
+This program uses the Qt library from http://www.qt.io which is released
 under the terms of the GNU General Public License, Version 3. 
-The program is known to work with 5.2 and not to compile with 
-Qt 4.8 or earlier. Qt 5.5.1 is the recommended version. By default CMake build
-settings for OS X and Windows, a special OpenOrienteering source package of
-Qt 5.5.1 will be downloaded and built as part of the build process.
+The program needs at least Qt 5.2. Qt 5.5.1 is the recommended version.
+By default CMake build settings for OS X and Windows,
+a special OpenOrienteering source package of Qt 5.5.1 will be downloaded
+and built as part of the build process.
 You can change the cmake option `Mapper_BUILD_QT` to adjust this.
 
 
@@ -42,7 +42,7 @@ You can change the cmake option `Mapper_BUILD_CLIPPER` to adjust this.
 The program uses the PROJ.4 Cartographic Projections Library from
 http://trac.osgeo.org/proj/ which is released under permissive license terms.
 The program is known to work with the releases 4.8.0 (as contained in Ubuntu
-14.04), 4.9.1 and 4.9.2. By default build settings, proj 4.8.0 will be
+14.04), 4.9.1 and 4.9.2. By default build settings, proj 4.9.2 will be
 downloaded and built as part of the build process. On Linux, default settings
 will use the installed proj library.
 You can change the cmake option `Mapper_BUILD_PROJ` to adjust this.
@@ -69,11 +69,12 @@ source directory (`SOURCE_DIR`).
 
 The standard g++ compiler from a recent distribution should work. The Ubuntu
 14.04 g++ is known to work. Make sure that the development packages of the
-PROJ.4 library and of CUPS are installed. For a Ubuntu or Debian system, installlibproj-dev and libcups2-dev.
-To create a DEB package from CMake, fakeroot must be installed.
+PROJ.4 library and of CUPS are installed. For a Ubuntu or Debian system, install
+`libproj-dev` and `libcups2-dev`.
+
 For using the Qt libraries provided by the repositories, the following packages
 need to be installed:
-`qt5-default` (>= 5), `qttools5-dev`, `qttools5-dev-tools`, `libqt5sql5-sqlite`
+`qt5-default` (>= 5.2), `qttools5-dev`, `qttools5-dev-tools`, `libqt5sql5-sqlite`
 
 Open a terminal, and create a build directory, e.g. as subdirectory build in
 the source directory, and change to that directory. From the build directory,
@@ -88,14 +89,6 @@ Now you may start the build process by running
 ```
 make
 ```
-
-and generate a DEB package by
-
-```
-make deb
-```
-
-(The deb target works around some issues with CMake's DEB generator.)
 
 
 ## Compiling on OS X
@@ -128,7 +121,7 @@ make package
 
 Some linux distributions may offer cross compiler packages based on MinGW or
 MinGW-w64 (for Ubuntu: g++-mingw-w64 et al.), and even NSIS/makensis is
-available.
+available. MXE.cc provides an alternative cross-compilation environment
 
 For MinGW-w64 i686 (32 bit) builds, configure the build with
 
@@ -140,7 +133,6 @@ and proceed with
 
 ```
 make
-make package
 ```
 
 
@@ -162,7 +154,7 @@ can define different "kits" representing different types of target devices.
 Qt Creator takes care of switching between debug and release configurations.
 For setting up the kits, see the Qt Creator documentation:
 
-http://qt-project.org/doc/qtcreator/creator-targets.html
+http://doc.qt.io/qtcreator/creator-targets.html
 
 Mapper's dependencies, such as the PROJ.4 library, are build by cmake, based on
 the exisiting CMakeList.txt files and Qt Creator's kit settings.
@@ -210,19 +202,18 @@ mkdir build
 cd build
 cmake .. -DCMAKE_BUILD_TYPE=Release
 make
-make package
 ```
 
-#Speeding up with parallel build jobs
+The actual package may be built by `make package`. However, this is used
+(i.e. tested) only for OS X at the moment.
+Android packages are built in Qt Creator using the provided `oo-mapper.pro` file.
+Windows and Linux packages are regularly build on
+https://build.opensuse.org/project/show/home:dg0yt, so proper package recipes for
+common distributions and package managers can be found there.
 
-The build can make use of multiple processor cores. Add the option
-
-```
--jN
-```
-
-to the call to make (or mingw32-make), where N is the number of cores
-to be used.
+Packaging with cmake is not enabled by default for Linux. Add `-DMapper_BUILD_PACKAGE=1`
+to change this. As already stated, this is untested, and you might need to look for
+additional tweaks.
 
 
 ## Making a source package

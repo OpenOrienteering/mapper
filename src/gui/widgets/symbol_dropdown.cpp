@@ -25,7 +25,6 @@
 #include <QDebug>
 #include <QFile>
 #include <QPainter>
-#include <QStringBuilder>
 #include <QTextDocument>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
@@ -59,7 +58,7 @@ SymbolDropDown::SymbolDropDown(const Map* map, int filter, const Symbol* initial
 				continue;
 		}
 		
-		QString symbol_name = symbol->getNumberAsString() % " " % symbol->getPlainTextName();
+		QString symbol_name = symbol->getNumberAsString() + QLatin1Char(' ') + symbol->getPlainTextName();
 		addItem(QPixmap::fromImage(symbol->getIcon(map)), symbol_name, QVariant::fromValue<const Symbol*>(symbol));
 	}
 	setSymbol(initial_symbol);
@@ -136,7 +135,7 @@ void SymbolDropDownDelegate::setModelData(QWidget* editor, QAbstractItemModel* m
 	
 	if (symbol)
 	{
-		model->setData(index, symbol->getNumberAsString() + " " + symbol->getPlainTextName(), Qt::EditRole);
+		model->setData(index, QVariant(symbol->getNumberAsString() + QLatin1Char(' ') + symbol->getPlainTextName()), Qt::EditRole);
 		model->setData(index, symbol->getIcon(list[0].value<const Map*>()), Qt::DecorationRole);
 	}
 	else

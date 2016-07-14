@@ -111,7 +111,7 @@ QAbstractButton* AbstractHomeScreenWidget::makeButton(const QString& text, const
 HomeScreenWidgetDesktop::HomeScreenWidgetDesktop(HomeScreenController* controller, QWidget* parent)
 : AbstractHomeScreenWidget(controller, parent)
 {
-	QLabel* title_label = new QLabel(QString("<img src=\":/images/title.png\"/>"));
+	QLabel* title_label = new QLabel(QString::fromLatin1("<img src=\":/images/title.png\"/>"));
 	title_label->setAlignment(Qt::AlignCenter);
 	QWidget* menu_widget = makeMenuWidget(controller, parent);
 	QWidget* recent_files_widget = makeRecentFilesWidget(controller, parent);
@@ -144,25 +144,25 @@ QWidget* HomeScreenWidgetDesktop::makeMenuWidget(HomeScreenController* controlle
 	QLabel* menu_headline = makeHeadline(tr("Activities"));
 	menu_layout->addWidget(menu_headline);
 	QAbstractButton* button_new_map = makeButton(
-	  tr("Create a new map ..."), QIcon(":/images/new.png"));
+	  tr("Create a new map ..."), QIcon(QString::fromLatin1(":/images/new.png")));
 	menu_layout->addWidget(button_new_map);
 	QAbstractButton* button_open_map = makeButton(
-	  tr("Open map ..."), QIcon(":/images/open.png"));
+	  tr("Open map ..."), QIcon(QString::fromLatin1(":/images/open.png")));
 	menu_layout->addWidget(button_open_map);
 	
 	menu_layout->addStretch(1);
 	
 	QAbstractButton* button_settings = makeButton(
-	  tr("Settings"), QIcon(":/images/settings.png"));
+	  tr("Settings"), QIcon(QString::fromLatin1(":/images/settings.png")));
 	menu_layout->addWidget(button_settings);
 	QAbstractButton* button_about = makeButton(
-	  tr("About %1", "As in 'About OpenOrienteering Mapper'").arg(window->appName()), QIcon(":/images/about.png"));
+	  tr("About %1", "As in 'About OpenOrienteering Mapper'").arg(window->appName()), QIcon(QString::fromLatin1(":/images/about.png")));
 	menu_layout->addWidget(button_about);
 	QAbstractButton* button_help = makeButton(
-	  tr("Help"), QIcon(":/images/help.png"));
+	  tr("Help"), QIcon(QString::fromLatin1(":/images/help.png")));
 	menu_layout->addWidget(button_help);
 	QAbstractButton* button_exit = makeButton(
-	  tr("Exit"), QIcon(":/qt-project.org/styles/commonstyle/images/standardbutton-close-32.png")); // From Qt5
+	  tr("Exit"), QIcon(QString::fromLatin1(":/qt-project.org/styles/commonstyle/images/standardbutton-close-32.png"))); // From Qt5
 	menu_layout->addWidget(button_exit);
 	
 	connect(button_new_map, SIGNAL(clicked(bool)), window, SLOT(showNewMapWizard()));
@@ -200,11 +200,11 @@ QWidget* HomeScreenWidgetDesktop::makeRecentFilesWidget(HomeScreenController* co
 	recent_files_list->setFont(list_font);
 	recent_files_list->setSpacing(pixel_size/2);
 	recent_files_list->setCursor(Qt::PointingHandCursor);
-	recent_files_list->setStyleSheet(" \
+	recent_files_list->setStyleSheet(QString::fromLatin1(" \
 	  QListWidget::item:hover { \
 	    color: palette(highlighted-text); \
 	    background: palette(highlight); \
-	  } ");
+	  } "));
 	recent_files_layout->addWidget(recent_files_list, 1, 0, 1, 2);
 	
 	open_mru_file_check = new QCheckBox(tr("Open most recently used file on start"));
@@ -238,9 +238,9 @@ QWidget* HomeScreenWidgetDesktop::makeTipsWidget(HomeScreenController* controlle
 	tips_check->setChecked(true);
 	tips_layout->addWidget(tips_check, 2, 0, 1, 1);
 	tips_layout->addWidget(tips_label, 1, 0, 1, 3);
-	QPushButton* prev_button = new QPushButton(QIcon(":/images/arrow-left.png"), tr("Previous"));
+	QPushButton* prev_button = new QPushButton(QIcon(QString::fromLatin1(":/images/arrow-left.png")), tr("Previous"));
 	tips_layout->addWidget(prev_button, 2, 1, 1, 1);
-	QPushButton* next_button = new QPushButton(QIcon(":/images/arrow-right.png"), tr("Next"));
+	QPushButton* next_button = new QPushButton(QIcon(QString::fromLatin1(":/images/arrow-right.png")), tr("Next"));
 	tips_layout->addWidget(next_button, 2, 2, 1, 1);
 	
 	tips_layout->setRowStretch(1, 1);
@@ -321,7 +321,7 @@ void HomeScreenWidgetDesktop::setTipsVisible(bool state)
 HomeScreenWidgetMobile::HomeScreenWidgetMobile(HomeScreenController* controller, QWidget* parent)
 : AbstractHomeScreenWidget(controller, parent)
 {
-	title_pixmap = QPixmap::fromImage(QImage(":/images/title.png"));
+	title_pixmap = QPixmap::fromImage(QImage(QString::fromLatin1(":/images/title.png")));
 	
 	title_label = new QLabel();
 	title_label->setPixmap(title_pixmap);
@@ -332,7 +332,7 @@ HomeScreenWidgetMobile::HomeScreenWidgetMobile(HomeScreenController* controller,
 	examples_button = new QPushButton(tr("Examples"));
 	connect(examples_button, &QPushButton::clicked, this, &HomeScreenWidgetMobile::showExamples);
 	auto settings_button = new QPushButton(HomeScreenWidgetDesktop::tr("Settings"));
-	connect(settings_button, &QPushButton::clicked, this, &HomeScreenWidgetMobile::showSettings);
+	connect(settings_button, &QPushButton::clicked, controller->getWindow(), &MainWindow::showSettings);
 	QPushButton* help_button = new QPushButton(HomeScreenWidgetDesktop::tr("Help"));
 	connect(help_button, &QPushButton::clicked, controller->getWindow(), &MainWindow::showHelp);
 	QPushButton* about_button = new QPushButton(tr("About Mapper"));
@@ -431,35 +431,9 @@ void HomeScreenWidgetMobile::showSettings()
 {
 	auto window = this->window();
 	
-	QDialog dialog(window);
+	SettingsDialog dialog(window);
 	dialog.setGeometry(window->geometry());
-	
-	auto layout = new QVBoxLayout();
-	layout->setContentsMargins({ });
-	dialog.setLayout(layout);
-	
-	auto scrollarea = new QScrollArea();
-	scrollarea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-	scrollarea->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
-	QScroller::grabGesture(scrollarea, QScroller::TouchGesture);
-	layout->addWidget(scrollarea);
-	
-	auto settings_widget = new SettingsDialog();
-	settings_widget->setMaximumWidth(dialog.width());
-	const auto form_layouts = settings_widget->findChildren<QFormLayout*>();
-	for (auto child_layout : form_layouts)
-	{
-		child_layout->setRowWrapPolicy(QFormLayout::WrapLongRows);
-	}
-	auto buttons = settings_widget->findChild<QDialogButtonBox*>();
-	if (buttons)
-		buttons->hide();
-	scrollarea->setWidget(settings_widget);
-	
 	dialog.exec();
-	
-	if (buttons)
-		settings_widget->applyChanges();
 }
 
 void HomeScreenWidgetMobile::fileClicked(QListWidgetItem* item)
@@ -498,37 +472,42 @@ QWidget* HomeScreenWidgetMobile::makeFileListWidget(HomeScreenController* contro
 	file_list->setFont(list_font);
 	file_list->setSpacing(pixel_size/2);
 	file_list->setCursor(Qt::PointingHandCursor);
-	file_list->setStyleSheet(" \
+	file_list->setStyleSheet(QString::fromLatin1(" \
 	  QListWidget::item:hover { \
 	    color: palette(highlighted-text); \
 	    background: palette(highlight); \
-	  } ");
+	  } "));
 	file_list_stack->addWidget(file_list);
 	
 	// Look for map files at device-specific locations
 #ifdef Q_OS_ANDROID
 	QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
 	// Actual SD card mount points may be found in secondary storage
-	QStringList folder_list = env.value("SECONDARY_STORAGE").split(':');
+	QStringList folder_list = env.value(QString::fromLatin1("SECONDARY_STORAGE")).split(QLatin1Char{':'});
 	// The primary volume that can be accessed externally (from PC)
-	QString external_storage = env.value("EXTERNAL_STORAGE");
+	QString external_storage = env.value(QString::fromLatin1("EXTERNAL_STORAGE"));
 	if (!external_storage.isEmpty())
 		folder_list.insert(0, external_storage);
 	// Optional fallback locations
-	folder_list << "/" << "/mnt" << "/mnt/sdcard" << "/sdcard" << "/storage";
+	folder_list << QString::fromLatin1("/")
+	            << QString::fromLatin1("/mnt")
+	            << QString::fromLatin1("/mnt/sdcard")
+	            << QString::fromLatin1("/sdcard")
+	            << QString::fromLatin1("/storage");
 	
 	bool oomapper_found = false;
 	for (auto&& path : folder_list)
 	{
-		if (oomapper_found && path == "/")
+		if (oomapper_found && path == QLatin1String{"/"})
 			// Don't need fallback (avoid duplicate entries)
 			break;
 		
 		QDir dir(path);
-		if (dir.exists("OOMapper"))
+		auto oomapper = QString::fromLatin1("OOMapper"); 
+		if (dir.exists(oomapper))
 		{
 			oomapper_found = true;
-			addFilesToFileList(file_list, dir.filePath("OOMapper"));
+			addFilesToFileList(file_list, dir.filePath(oomapper));
 		}
 	}
 #endif

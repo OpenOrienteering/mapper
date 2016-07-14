@@ -28,7 +28,7 @@
 void DuplicateEqualsTest::initTestCase()
 {
 	doStaticInitializations();
-	map_filename = MapperResource::locate(MapperResource::TEST_DATA, "COPY_OF_test_map.omap");
+	map_filename = MapperResource::locate(MapperResource::TEST_DATA, QString::fromLatin1("COPY_OF_test_map.omap"));
 	QVERIFY2(!map_filename.isEmpty(), "Unable to locate test map");
 }
 

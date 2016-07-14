@@ -56,7 +56,7 @@ public:
 	/** Finds a file format with the given internal ID, or returns NULL if no format
 	 *  is found.
 	 */
-	const FileFormat *findFormat(const QString& id) const;
+	const FileFormat *findFormat(const char* id) const;
 	
 	/** Finds a file format which implements the given filter, or returns NULL if no 
 	 * format is found.
@@ -71,7 +71,7 @@ public:
 	/** Returns the ID of default file format for this registry. This will automatically
 	 *  be set to the first registered format.
 	 */
-	const QString& defaultFormat() const { return default_format_id; }
+	const char* defaultFormat() const { return default_format_id; }
 	
 	/** Registers a new file format. The registry takes ownership of the provided Format.
 	 */
@@ -86,7 +86,7 @@ public:
 	
 private:
 	std::vector<FileFormat *> fmts;
-	QString default_format_id;
+	const char* default_format_id;
 };
 
 /** A FileFormatRegistry that is globally defined for convenience. Within the scope of a single

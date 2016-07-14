@@ -192,15 +192,15 @@ TemplateAdjustWidget::TemplateAdjustWidget(Template* temp, MapEditorController* 
 	
 	QLabel* passpoint_label = new QLabel(tr("Pass points:"));
 	
-	new_act = new QAction(QIcon(":/images/cursor-georeferencing-add.png"), tr("New"), this);
+	new_act = new QAction(QIcon(QString::fromLatin1(":/images/cursor-georeferencing-add.png")), tr("New"), this);
 	new_act->setCheckable(true);
 	toolbar->addAction(new_act);
 
-	move_act = new QAction(QIcon(":/images/move.png"), tr("Move"), this);
+	move_act = new QAction(QIcon(QString::fromLatin1(":/images/move.png")), tr("Move"), this);
 	move_act->setCheckable(true);
 	toolbar->addAction(move_act);
 	
-	delete_act = new QAction(QIcon(":/images/delete.png"), tr("Delete"), this);
+	delete_act = new QAction(QIcon(QString::fromLatin1(":/images/delete.png")), tr("Delete"), this);
 	delete_act->setCheckable(true);
 	toolbar->addAction(delete_act);
 	
@@ -220,7 +220,7 @@ TemplateAdjustWidget::TemplateAdjustWidget(Template* temp, MapEditorController* 
 	
 	apply_check = new QCheckBox(tr("Apply pass points"));
 	apply_check->setChecked(temp->isAdjustmentApplied());
-	QPushButton* help_button = new QPushButton(QIcon(":/images/help.png"), tr("Help"));
+	QPushButton* help_button = new QPushButton(QIcon(QString::fromLatin1(":/images/help.png")), tr("Help"));
 	clear_and_apply_button = new QPushButton(tr("Apply && clear all"));
 	clear_and_revert_button = new QPushButton(tr("Clear all"));
 	
@@ -455,7 +455,7 @@ void TemplateAdjustWidget::updatePointErrors()
 	for (int row = 0; row < temp->getNumPassPoints(); ++row)
 	{
 		PassPoint& point = *temp->getPassPoint(row);
-		table->item(row, 4)->setText((point.error > 0) ? QString::number(point.error) : "?");
+		table->item(row, 4)->setText((point.error > 0) ? QString::number(point.error) : QString(QLatin1Char{'?'}));
 	}
 	
 	react_to_changes = true;
@@ -481,7 +481,7 @@ void TemplateAdjustWidget::updateRow(int row)
 	table->item(row, 1)->setText(QString::number(src_coords_template.y()));
 	table->item(row, 2)->setText(QString::number(point.dest_coords.x()));
 	table->item(row, 3)->setText(QString::number(point.dest_coords.y()));
-	table->item(row, 4)->setText((point.error > 0) ? QString::number(point.error) : "?");
+	table->item(row, 4)->setText((point.error > 0) ? QString::number(point.error) : QString(QLatin1Char{'?'}));
 	
 	react_to_changes = true;
 }
@@ -576,7 +576,7 @@ void TemplateAdjustAddTool::init()
 
 const QCursor& TemplateAdjustAddTool::getCursor() const
 {
-	static auto const cursor = scaledToScreen(QCursor{ QPixmap{ ":/images/cursor-georeferencing-add.png" }, 11, 11 });
+	static auto const cursor = scaledToScreen(QCursor{ QPixmap(QString::fromLatin1(":/images/cursor-georeferencing-add.png")), 11, 11 });
 	return cursor;
 }
 
@@ -672,8 +672,8 @@ TemplateAdjustMoveTool::TemplateAdjustMoveTool(MapEditorController* editor, QAct
 	
 	if (!cursor)
 	{
-		cursor = new QCursor(QPixmap(":/images/cursor-georeferencing-move.png"), 1, 1);
-		cursor_invisible = new QCursor(QPixmap(":/images/cursor-invisible.png"), 0, 0);
+		cursor = new QCursor(QPixmap(QString::fromLatin1(":/images/cursor-georeferencing-move.png")), 1, 1);
+		cursor_invisible = new QCursor(QPixmap(QString::fromLatin1(":/images/cursor-invisible.png")), 0, 0);
 	}
 }
 void TemplateAdjustMoveTool::init()
@@ -810,7 +810,7 @@ void TemplateAdjustDeleteTool::init()
 
 const QCursor& TemplateAdjustDeleteTool::getCursor() const
 {
-	static auto const cursor = scaledToScreen(QCursor{ QPixmap{ ":/images/cursor-delete.png" }, 1, 1});
+	static auto const cursor = scaledToScreen(QCursor{ QPixmap(QString::fromLatin1(":/images/cursor-delete.png")), 1, 1});
 	return cursor;
 }
 

@@ -19,6 +19,8 @@
 
 #include "file_format.h"
 
+#include <QCoreApplication>
+
 
 // ### FileFormatException ###
 
@@ -38,14 +40,14 @@ const char* FileFormatException::what() const noexcept
 
 // ### FileFormat ###
 
-FileFormat::FileFormat(FileFormat::FileType file_type, const QString& id, const QString& description, const QString& file_extension, FileFormat::FormatFeatures features)
+FileFormat::FileFormat(FileFormat::FileType file_type, const char* id, const QString& description, const QString& file_extension, FileFormat::FormatFeatures features)
  : file_type(file_type),
    format_id(id),
    format_description(description),
    format_features(features)
 {
 	Q_ASSERT(file_type != 0);
-	Q_ASSERT(!id.isEmpty());
+	Q_ASSERT(qstrlen(id) > 0);
 	Q_ASSERT(!description.isEmpty());
 	if (!file_extension.isEmpty())
 		addExtension(file_extension);
@@ -59,7 +61,7 @@ FileFormat::~FileFormat()
 void FileFormat::addExtension(const QString& file_extension)
 {
 	file_extensions << file_extension;
-	format_filter = QString("%1 (*.%2)").arg(format_description).arg(file_extensions.join(" *."));
+	format_filter = QString::fromLatin1("%1 (*.%2)").arg(format_description, file_extensions.join(QString::fromLatin1(" *.")));
 }
 
 bool FileFormat::understands(const unsigned char *buffer, size_t sz) const
@@ -74,7 +76,7 @@ Importer *FileFormat::createImporter(QIODevice* stream, Map *map, MapView *view)
 	Q_UNUSED(stream);
 	Q_UNUSED(map);
 	Q_UNUSED(view);
-	throw FileFormatException(QString("Format (%1) does not support import").arg(description()));
+	throw FileFormatException(QCoreApplication::translate("Importer", "Format (%1) does not support import").arg(description()));
 }
 
 Exporter *FileFormat::createExporter(QIODevice* stream, Map *map, MapView *view) const
@@ -82,5 +84,5 @@ Exporter *FileFormat::createExporter(QIODevice* stream, Map *map, MapView *view)
 	Q_UNUSED(stream);
 	Q_UNUSED(map);
 	Q_UNUSED(view);
-	throw FileFormatException(QString("Format (%1) does not support export").arg(description()));
+	throw FileFormatException(QCoreApplication::translate("Exporter", "Format (%1) does not support export").arg(description()));
 }

@@ -57,7 +57,7 @@ public:
 	
 	TemplateImage(const QString& path, Map* map);
     virtual ~TemplateImage();
-	virtual QString getTemplateType() const {return "TemplateImage";}
+	virtual const char* getTemplateType() const {return "TemplateImage";}
 	virtual bool isRasterGraphics() const {return true;}
 
 	virtual bool saveTemplateFile() const;

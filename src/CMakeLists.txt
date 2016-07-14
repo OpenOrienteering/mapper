@@ -257,6 +257,7 @@ set(Mapper_Common_MOC_INPUT
  core/autosave_p.h
  core/georeferencing.h
  core/map_printer.h
+ core/map_view.h
  
  fileformats/ocd_file_export.h
  fileformats/ocd_file_import.h
@@ -334,6 +335,7 @@ set(Mapper_Common_HEADERS
   renderable_implementation.h
   symbol.h
   undo.h
+  util_gui.h
 )
 
 qt5_wrap_cpp(Mapper_Common_MOC ${Mapper_Common_MOC_INPUT} TARGET Mapper_Common)
@@ -382,7 +384,11 @@ endif()
 if(TARGET mapper-gdal)
 	target_link_libraries(Mapper_Common mapper-gdal)
 endif()
-
+target_compile_definitions(Mapper_Common PRIVATE
+  QT_NO_CAST_FROM_ASCII
+  QT_NO_CAST_TO_ASCII
+  QT_USE_QSTRINGBUILDER
+)
 
 qt5_translations_sources(
   SOURCES ${Mapper_Common_SRCS} ${Mapper_COMMON_MOC_INPUT}
@@ -422,6 +428,11 @@ target_link_libraries(Mapper
   Mapper_Common
   doc-licensing
 )
+target_compile_definitions(Mapper PRIVATE
+  QT_NO_CAST_FROM_ASCII
+  QT_NO_CAST_TO_ASCII
+  QT_USE_QSTRINGBUILDER
+)
 
 install(TARGETS Mapper
   RUNTIME DESTINATION "${MAPPER_RUNTIME_DESTINATION}"
@@ -430,6 +441,8 @@ install(TARGETS Mapper
 
 if(Mapper_BUILD_QT)
 	write_qt_conf()
+elseif(EXISTS "${CMAKE_CURRENT_BINARY_DIR}/qt.conf")
+	file(REMOVE "${CMAKE_CURRENT_BINARY_DIR}/qt.conf")
 endif()
 
 

@@ -52,7 +52,7 @@ TemplateTrack::TemplateTrack(const QString& path, Map* map)
  : Template(path, map)
 {
 	// set default value
-	track_crs_spec = "+proj=latlong +datum=WGS84";
+	track_crs_spec = QString::fromLatin1("+proj=latlong +datum=WGS84");
 	
 	const Georeferencing& georef = map->getGeoreferencing();
 	connect(&georef, SIGNAL(projectionChanged()), this, SLOT(updateGeoreferencing()));
@@ -72,21 +72,21 @@ bool TemplateTrack::loadTypeSpecificTemplateConfiguration(QIODevice* stream, int
 	if (version >= 30)
 		loadString(stream, track_crs_spec);
 	else
-		track_crs_spec = "+proj=latlong +datum=WGS84";
+		track_crs_spec = QString::fromLatin1("+proj=latlong +datum=WGS84");
 	return true;
 }
 
 void TemplateTrack::saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml) const
 {
 	// Follow map georeferencing XML structure
-	xml.writeStartElement("crs_spec");
-	// TODO: xml.writeAttribute("language", "PROJ.4");
+	xml.writeStartElement(QString::fromLatin1("crs_spec"));
+	// TODO: xml.writeAttribute(QString::fromLatin1("language"), "PROJ.4");
 	xml.writeCharacters(track_crs_spec);
 	xml.writeEndElement(/*crs_spec*/);
 }
 bool TemplateTrack::loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml)
 {
-	if (xml.name() == "crs_spec")
+	if (xml.name() == QLatin1String("crs_spec"))
 	{
 		// TODO: check specification language
 		track_crs_spec = xml.readElementText();
@@ -111,11 +111,11 @@ bool TemplateTrack::loadTemplateFileImpl(bool configuring)
 	{
 		Georeferencing* track_crs = new Georeferencing();
 		if (!track_crs_spec.isEmpty())
-			track_crs->setProjectedCRS("", track_crs_spec);
+			track_crs->setProjectedCRS(QString{}, track_crs_spec);
 		track_crs->setTransformationDirectly(QTransform());
 		track.setTrackCRS(track_crs);
 		
-		bool crs_is_geographic = track_crs_spec.contains("+proj=latlong");
+		bool crs_is_geographic = track_crs_spec.contains(QLatin1String("+proj=latlong"));
 		if (!is_georeferenced && crs_is_geographic)
 			calculateLocalGeoreferencing();
 		else
@@ -134,7 +134,7 @@ bool TemplateTrack::postLoadConfiguration(QWidget* dialog_parent, bool& out_cent
 	{
 		if (map->getGeoreferencing().isLocal())
 		{
-			track_crs_spec = "";
+			track_crs_spec.clear();
 		}
 		else
 		{
@@ -150,14 +150,14 @@ bool TemplateTrack::postLoadConfiguration(QWidget* dialog_parent, bool& out_cent
 		
 		Georeferencing* track_crs = new Georeferencing();
 		if (!track_crs_spec.isEmpty())
-			track_crs->setProjectedCRS("", track_crs_spec);
+			track_crs->setProjectedCRS(QString{}, track_crs_spec);
 		track_crs->setTransformationDirectly(QTransform());
 		track.setTrackCRS(track_crs);
 	}
 	
 	// If the CRS is geographic, ask if track should be loaded using map georeferencing or ad-hoc georeferencing
 	track_crs_spec = track.getTrackCRS()->getProjectedCRSSpec();
-	bool crs_is_geographic = track_crs_spec.contains("+proj=latlong"); // TODO: should that be case insensitive?
+	bool crs_is_geographic = track_crs_spec.contains(QLatin1String("+proj=latlong")); // TODO: should that be case insensitive?
 	if (crs_is_geographic)
 	{
 		TaskDialog georef_dialog(dialog_parent, tr("Opening track ..."),
@@ -165,7 +165,7 @@ bool TemplateTrack::postLoadConfiguration(QWidget* dialog_parent, bool& out_cent
 			QDialogButtonBox::Abort);
 		QString georef_text = tr("Positions the track according to the map's georeferencing settings.");
 		if (!map->getGeoreferencing().isValid())
-			georef_text += " " + tr("These are not configured yet, so they will be shown as the next step.");
+			georef_text += QLatin1Char(' ') + tr("These are not configured yet, so they will be shown as the next step.");
 		QAbstractButton* georef_button = georef_dialog.addCommandButton(tr("Georeferenced"), georef_text);
 		QAbstractButton* non_georef_button = georef_dialog.addCommandButton(tr("Non-georeferenced"), tr("Projects the track using an orthographic projection with center at the track's coordinate average. Allows adjustment of the transformation and setting the map georeferencing using the adjusted track position."));
 		
@@ -385,7 +385,7 @@ PointObject* TemplateTrack::importWaypoint(const MapCoordF& position, const QStr
 {
 	PointObject* point = new PointObject(map->getUndefinedPoint());
 	point->setPosition(position);
-	point->setTag("name", name);
+	point->setTag(QStringLiteral("name"), name);
 	map->addObject(point);
 	map->addObjectToSelection(point, false);
 	return point;
@@ -420,7 +420,7 @@ bool TemplateTrack::import(QWidget* dialog_parent)
 			for (int i = 0; i < track.getNumWaypoints(); i++)
 				path->addCoordinate(MapCoord(templateToMap(track.getWaypoint(i).map_coord)));
 			importPathEnd(path);
-			path->setTag("name", "");
+			path->setTag(QStringLiteral("name"), QString{});
 			result.push_back(path);
 		}
 	}
@@ -443,7 +443,7 @@ bool TemplateTrack::import(QWidget* dialog_parent)
 		}
 		else
 		{
-			path->setTag("name", name);
+			path->setTag(QStringLiteral("name"), name);
 		}
 		
 		for (int j = 0; j < segment_size; j++)
@@ -486,9 +486,9 @@ void TemplateTrack::configureForGPSTrack()
 {
 	is_georeferenced = true;
 	
-	track_crs_spec = "+proj=latlong +datum=WGS84";
+	track_crs_spec = QString::fromLatin1("+proj=latlong +datum=WGS84");
 	Georeferencing* track_crs = new Georeferencing();
-	track_crs->setProjectedCRS("", track_crs_spec);
+	track_crs->setProjectedCRS(QString{}, track_crs_spec);
 	track_crs->setTransformationDirectly(QTransform());
 	track.setTrackCRS(track_crs);
 	
@@ -512,7 +512,7 @@ void TemplateTrack::calculateLocalGeoreferencing()
 	
 	Georeferencing georef;
 	georef.setScaleDenominator(map->getScaleDenominator());
-	georef.setProjectedCRS("", QString("+proj=ortho +datum=WGS84 +lat_0=%1 +lon_0=%2")
+	georef.setProjectedCRS(QString{}, QString::fromLatin1("+proj=ortho +datum=WGS84 +lat_0=%1 +lon_0=%2")
 		.arg(proj_center.latitude()).arg(proj_center.longitude()));
 	georef.setGeographicRefPoint(proj_center);
 	track.changeMapGeoreferencing(georef);

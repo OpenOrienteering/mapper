@@ -558,7 +558,7 @@ protected slots:
 	void updateMapPartsUI();
 	
 private:
-	void setMap(Map* map, bool create_new_map_view);
+	void setMapAndView(Map* map, MapView* map_view);
 	
 	/// Updates enabled state of all widgets
 	void updateWidgets();
@@ -571,9 +571,9 @@ private:
 	
 	void createTagEditor();
 	
-	QAction* newAction(const char* id, const QString& tr_text, QObject* receiver, const char* slot, const char* icon = NULL, const QString& tr_tip = QString::null, const QString& whatsThisLink = QString::null);
-	QAction* newCheckAction(const char* id, const QString& tr_text, QObject* receiver, const char* slot, const char* icon = NULL, const QString& tr_tip = QString::null, const QString& whatsThisLink = QString::null);
-	QAction* newToolAction(const char* id, const QString& tr_text, QObject* receiver, const char* slot, const char* icon = NULL, const QString& tr_tip = QString::null, const QString& whatsThisLink = QString::null);
+	QAction* newAction(const char* id, const QString& tr_text, QObject* receiver, const char* slot, const char* icon = nullptr, const QString& tr_tip = QString{}, const char* whats_this_link = nullptr);
+	QAction* newCheckAction(const char* id, const QString& tr_text, QObject* receiver, const char* slot, const char* icon = nullptr, const QString& tr_tip = QString{}, const char* whats_this_link = nullptr);
+	QAction* newToolAction(const char* id, const QString& tr_text, QObject* receiver, const char* slot, const char* icon = nullptr, const QString& tr_tip = QString{}, const char* whats_this_link = nullptr);
 	QAction* findAction(const char* id);
 	void assignKeyboardShortcuts();
 	void createActions();
@@ -601,7 +601,7 @@ private:
 	bool editing_in_progress;
 	
 	// Action handling
-	QHash<QString, QAction *> actionsById;
+	QHash<QByteArray, QAction*> actionsById;
 	
 	EditorDockWidget* print_dock_widget;
 	PrintWidget* print_widget;

@@ -1,5 +1,6 @@
 /*
  *    Copyright 2013 Thomas Schöps
+ *    Copyright 2016 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -31,11 +32,12 @@
 
 QT_BEGIN_NAMESPACE
 class QPainter;
-QT_END_NAMESPACE
-class MapWidget;
-class Georeferencing;
 class QGeoPositionInfo;
 class QGeoPositionInfoSource;
+QT_END_NAMESPACE
+
+class MapWidget;
+class Georeferencing;
 
 
 /**
@@ -46,9 +48,9 @@ class GPSDisplay : public QObject
 Q_OBJECT
 public:
 	/// Creates a GPS display for the given map widget and georeferencing.
-	GPSDisplay(MapWidget* widget, const Georeferencing& georeferencing);
+	GPSDisplay(MapWidget* widget, const Georeferencing& georeferencing, QObject* parent = nullptr);
 	/// Destructor, removes the GPS display from the map widget.
-	virtual ~GPSDisplay();
+	~GPSDisplay() override;
 	
 	/**
 	 * @brief Checks if GPS is enabled and may guide the user to the device settings.
@@ -115,7 +117,9 @@ private:
 	MapCoordF calcLatestGPSCoord(bool& ok);
 	void updateMapWidget();
 	
-	bool gps_updated;
+	MapWidget* widget;
+	const Georeferencing& georeferencing;
+	QGeoPositionInfoSource* source;
 #if defined(QT_POSITIONING_LIB)
 	QGeoPositionInfo latest_pos_info;
 #endif
@@ -123,14 +127,10 @@ private:
 	float latest_gps_coord_accuracy;
 	bool tracking_lost;
 	bool has_valid_position;
-	
+	bool gps_updated;
 	bool visible;
 	bool distance_rings_enabled;
 	bool heading_indicator_enabled;
-	
-	QGeoPositionInfoSource* source;
-	MapWidget* widget;
-	const Georeferencing& georeferencing;
 };
 
 #endif

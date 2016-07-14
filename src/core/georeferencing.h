@@ -360,7 +360,7 @@ public:
 	 * @param params parameter values (ignore for empty spec)
 	 * @return true if the specification is valid or empty, false otherwise
 	 */
-	bool setProjectedCRS(const QString& id, QString spec = QString::null, std::vector< QString > params = std::vector< QString >());
+	bool setProjectedCRS(const QString& id, QString spec = QString{}, std::vector< QString > params = std::vector<QString>());
 	
 	/**
 	 * Calculates the meridian convergence at the reference point.

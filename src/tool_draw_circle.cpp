@@ -57,13 +57,13 @@ void DrawCircleTool::init()
 		// Create key replacement bar
 		key_button_bar = new KeyButtonBar(this, editor->getMainWidget());
 		key_button_bar->addModifierKey(Qt::Key_Control, Qt::ControlModifier, tr("From center", "Draw circle starting from center"));
-		editor->showPopupWidget(key_button_bar, "");
+		editor->showPopupWidget(key_button_bar, QString{});
 	}
 }
 
 const QCursor& DrawCircleTool::getCursor() const
 {
-	static auto const cursor = scaledToScreen(QCursor{ QPixmap{ ":/images/cursor-draw-circle.png" }, 11, 11 });
+	static auto const cursor = scaledToScreen(QCursor{ QPixmap(QString::fromLatin1(":/images/cursor-draw-circle.png")), 11, 11 });
 	return cursor;
 }
 
@@ -291,16 +291,16 @@ void DrawCircleTool::updateStatusText()
 	QString text;
 	if (!first_point_set || (!second_point_set && dragging))
 	{
-		text = tr("<b>Click</b>: Start a circle or ellipse. ") + 
-		       tr("<b>Drag</b>: Draw a circle. ") +
-			   "| " +
-			   tr("Hold %1 to start drawing from the center.").arg(ModifierKey::control());
+		text = tr("<b>Click</b>: Start a circle or ellipse. ")
+		       + tr("<b>Drag</b>: Draw a circle. ")
+		       + QLatin1String("| ")
+		       + tr("Hold %1 to start drawing from the center.").arg(ModifierKey::control());
 	}
 	else
 	{
-		text = tr("<b>Click</b>: Finish the circle. ") +
-		       tr("<b>Drag</b>: Draw an ellipse. ") +
-		       MapEditorTool::tr("<b>%1</b>: Abort. ").arg(ModifierKey::escape());
+		text = tr("<b>Click</b>: Finish the circle. ")
+		       + tr("<b>Drag</b>: Draw an ellipse. ")
+		       + MapEditorTool::tr("<b>%1</b>: Abort. ").arg(ModifierKey::escape());
 	}
 	setStatusBarText(text);
 }

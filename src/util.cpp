@@ -29,10 +29,12 @@
 #include <QProcess>
 #include <QSettings>
 #include <QScreen>
+#include <QUrl>
 
 #include "core/map_coord.h"
 #include "mapper_resource.h"
 #include "settings.h"
+#include "gui/text_browser_dialog.h"
 #include <mapper_config.h>
 
 DoubleValidator::DoubleValidator(double bottom, double top, QObject* parent, int decimals) : QDoubleValidator(bottom, top, decimals, parent)
@@ -43,7 +45,7 @@ DoubleValidator::DoubleValidator(double bottom, double top, QObject* parent, int
 QValidator::State DoubleValidator::validate(QString& input, int& pos) const
 {
 	// Transform thousands group separators into decimal points to avoid confusion
-	input.replace(',', '.');
+	input.replace(QLatin1Char(','), QLatin1Char('.'));
 	
 	return QDoubleValidator::validate(input, pos);
 }
@@ -212,24 +214,43 @@ void loadString(QIODevice* file, QString& str)
 		file->read((char*)str.data(), length * sizeof(QChar));
 	}
 	else
-		str = "";
+		str.clear();
 }
 
 namespace Util
 {
 
-void showHelp(QWidget* dialog_parent, QString filename, QString fragment)
+void showHelp(QWidget* dialog_parent, const char* filename_latin1, const char* anchor_latin1)
 {
+	showHelp(dialog_parent, QString::fromLatin1(filename_latin1) + QLatin1Char('#') + QString::fromLatin1(anchor_latin1));
+}
+
+void showHelp(QWidget* dialog_parent, const char* file_and_anchor_latin1)
+{
+	showHelp(dialog_parent, QString::fromLatin1(file_and_anchor_latin1));
+}
+
+void showHelp(QWidget* dialog_parent, QString filename)
+{
+#if defined(Q_OS_ANDROID)
+	const QString manual_path = MapperResource::locate(MapperResource::MANUAL, filename);
+	const QUrl help_url = QUrl::fromLocalFile(manual_path);
+	TextBrowserDialog help_dialog(help_url, dialog_parent);
+	help_dialog.exec();
+	return;
+#else
+	const auto base_url = QLatin1String("qthelp://" MAPPER_HELP_NAMESPACE "/manual/");
+	
 	static QProcess assistant_process;
 	if (assistant_process.state() == QProcess::Running)
 	{
-		QString command("setSource " + makeHelpUrl(filename, fragment) + "\n");
+		QString command = QLatin1String("setSource ") + base_url + filename + QLatin1Char('\n');
 		assistant_process.write(command.toLatin1());
 	}
 	else
 	{
-		const QString help_collection_path(MapperResource::locate(MapperResource::MANUAL, QLatin1String("Mapper ")+APP_VERSION+" Manual.qhc"));
-		const QString compiled_help_path(MapperResource::locate(MapperResource::MANUAL, QLatin1String("Mapper ")+APP_VERSION+" Manual.qch"));
+		const QString help_collection_path(MapperResource::locate(MapperResource::MANUAL, QString::fromUtf8("Mapper " APP_VERSION " Manual.qhc")));
+		const QString compiled_help_path(MapperResource::locate(MapperResource::MANUAL, QString::fromUtf8("Mapper " APP_VERSION " Manual.qch")));
 		if (help_collection_path.isEmpty() || compiled_help_path.isEmpty())
 		{
 			QMessageBox::warning(dialog_parent, QApplication::translate("Util", "Error"), QApplication::translate("Util", "Failed to locate the help files."));
@@ -248,7 +269,7 @@ void showHelp(QWidget* dialog_parent, QString filename, QString fragment)
 		args << QLatin1String("-collectionFile")
 			 << QDir::toNativeSeparators(help_collection_path)
 			 << QLatin1String("-showUrl")
-			 << makeHelpUrl(filename, fragment)
+			 << (base_url + filename)
 			 << QLatin1String("-enableRemoteControl");
 		
 		if ( QGuiApplication::platformName() == QLatin1String("xcb") ||
@@ -259,9 +280,9 @@ void showHelp(QWidget* dialog_parent, QString filename, QString fragment)
 			args << QLatin1String("-style") << QLatin1String("fusion");
 		}
 		
-#if defined(Q_OS_LINUX) && !defined(Q_OS_ANDROID)
+#if defined(Q_OS_LINUX)
 		auto env = QProcessEnvironment::systemEnvironment();
-		env.insert(QLatin1String("QT_SELECT"), QLatin1String("qt5")); // #541
+		env.insert(QLatin1String("QT_SELECT"), QLatin1String("5")); // #541
 		assistant_process.setProcessEnvironment(env);
 #endif
 		
@@ -275,18 +296,21 @@ void showHelp(QWidget* dialog_parent, QString filename, QString fragment)
 			msg_box.setWindowTitle(QApplication::translate("Util", "Error"));
 			msg_box.setText(QApplication::translate("Util", "Failed to launch the help browser (\"Qt Assistant\")."));
 			msg_box.setStandardButtons(QMessageBox::Ok);
-			QString details = assistant_process.readAllStandardError();
+			auto details = assistant_process.readAllStandardError();
 			if (! details.isEmpty())
-				msg_box.setDetailedText(details);
+				msg_box.setDetailedText(QString::fromLocal8Bit(details));
 			
 			msg_box.exec();
 		}
 	}
+#endif
 }
 
-QString makeHelpUrl(QString filename, QString fragment)
+QString makeWhatThis(const char* reference_latin1)
 {
-	return QLatin1String("qthelp://") + MAPPER_HELP_NAMESPACE + "/manual/" + filename + (fragment.isEmpty() ? "" : ("#" + fragment));
+	//: This "See more" is displayed as a link to the manual in What's-this tooltips.
+	return QStringLiteral("<a href=\"%1\">%2</a>").arg(
+	         QString::fromLatin1(reference_latin1), QApplication::translate("Util", "See more...") );
 }
 
 qreal mmToPixelPhysical(qreal millimeters)

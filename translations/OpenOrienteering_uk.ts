@@ -256,7 +256,7 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="62"/>
         <source>Defines a spot color:</source>
-        <translation>Завдати планшетний колір:</translation>
+        <translation>Створити планшетний колір:</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="71"/>
@@ -1338,7 +1338,7 @@
     <message>
         <location filename="../src/tool_fill.cpp" line="168"/>
         <source>Failed to create the fill object.</source>
-        <translation>Невдалося створити об&apos;єкт заливки.</translation>
+        <translation>Не вдалося створити об&apos;єкт заливки.</translation>
     </message>
     <message>
         <location filename="../src/tool_fill.cpp" line="179"/>
@@ -1446,11 +1446,7 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="170"/>
         <source>The program must be restarted for the language change to take effect!</source>
-        <translation>Потрібно перезапустити прграму щоб зміни вступили в силу!</translation>
-    </message>
-    <message>
-        <source>Use translation file...</source>
-        <translation type="vanished">Використати файл перекладу...</translation>
+        <translation>Потрібно перезапустити програму щоб зміни вступили в силу!</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="292"/>
@@ -1471,7 +1467,7 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="325"/>
         <source>%1 x %2</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="326"/>
@@ -1534,13 +1530,13 @@
         <location filename="../src/core/crs_template_implementation.cpp" line="80"/>
         <source>by EPSG code</source>
         <comment>as in: The CRS is specified by EPSG code</comment>
-        <translation>код у EPSG</translation>
+        <translation>за кодом EPSG</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="82"/>
         <source>EPSG @code@ coordinates</source>
         <extracomment>Don&apos;t translate @code@. It is placeholder.</extracomment>
-        <translation>координати EPSG @code@</translation>
+        <translation type="unfinished">EPSG @code@ координати</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="85"/>
@@ -1567,18 +1563,18 @@
     <message>
         <location filename="../src/core/georeferencing.cpp" line="234"/>
         <source>Invalid grid scale factor: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Некоректний коефіцієнт викривлення сітки: %1</translation>
     </message>
     <message>
         <location filename="../src/core/georeferencing.cpp" line="271"/>
         <location filename="../src/core/georeferencing.cpp" line="298"/>
         <source>Unknown CRS specification language: %1</source>
-        <translation>Невідома мова CRS специфікації: %1</translation>
+        <translation>Невідома мова опису БСК: %1</translation>
     </message>
     <message>
         <location filename="../src/core/georeferencing.cpp" line="301"/>
         <source>Unsupported geographic CRS specification: %1</source>
-        <translation>CRS специфікація %1 не підтримується</translation>
+        <translation>Специфікація географічної СК %1 не підтримується</translation>
     </message>
     <message>
         <location filename="../src/core/georeferencing.cpp" line="523"/>
@@ -1644,12 +1640,12 @@
         <location filename="../src/gui/georeferencing_dialog.cpp" line="366"/>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="673"/>
         <source>Online declination lookup</source>
-        <translation>Онлайн пошук відхилення</translation>
+        <translation>Пошук схилення онлайн</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="93"/>
         <source>Map coordinate reference system</source>
-        <translation>Відносна система координат карти</translation>
+        <translation>Базова система координат карти</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="89"/>
@@ -1665,7 +1661,7 @@
         <location filename="../src/gui/georeferencing_dialog.cpp" line="104"/>
         <source>Grid scale factor:</source>
         <extracomment>The grid scale factor is the ratio between a length in the grid plane and the corresponding length on the curved earth model. It is applied as a factor to ground distances to get grid plane distances.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Коефіцієнт викривлення сітки:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="107"/>
@@ -1749,7 +1745,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="199"/>
         <source>On CRS changes, keep:</source>
-        <translation>При змінах в CRS, зберегти:</translation>
+        <translation>При змінах в БСК, зберегти:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="205"/>
@@ -1759,7 +1755,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="367"/>
         <source>The magnetic declination for the reference point %1° %2° will now be retrieved from &lt;a href=&quot;%3&quot;&gt;%3&lt;/a&gt;. Do you want to continue?</source>
-        <translation>Магнітне схилення для опорної точки прив’язки %1° %2° буде взято з &lt;a href=&quot;%3&quot;&gt;%3&lt;/a&gt;. Хочете продовжити?</translation>
+        <translation>Магнітне схилення для опорної точки %1° %2° буде взято з &lt;a href=&quot;%3&quot;&gt;%3&lt;/a&gt;. Хочете продовжити?</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="440"/>
@@ -1800,7 +1796,7 @@
         <location filename="../src/gui/georeferencing_dialog.cpp" line="674"/>
         <source>The online declination lookup failed:
 %1</source>
-        <translation>Онлайн пошук відхилення невдалий:
+        <translation>Онлайн пошук схилення невдалий:
 %1</translation>
     </message>
     <message>
@@ -2012,9 +2008,9 @@
         <location filename="../src/file_import_export.cpp" line="93"/>
         <source>Dropped %n irregular object(s).</source>
         <translation>
-            <numerusform>Віхилено %n незвичайний об&apos;єкт</numerusform>
-            <numerusform>Віхилено %n незвичайні об&apos;єкти</numerusform>
-            <numerusform>Віхилено %n незвичайних об&apos;єктів</numerusform>
+            <numerusform>Відкинуто %n нестандартний об&apos;єкт.</numerusform>
+            <numerusform>Відкинуто %n нестандартних об&apos;єкти.</numerusform>
+            <numerusform>Відкинуто %n нестандартних об&apos;єктів.</numerusform>
         </translation>
     </message>
     <message>
@@ -2025,18 +2021,19 @@
     <message>
         <location filename="../src/file_import_export.cpp" line="114"/>
         <source>Template &quot;%1&quot; has been loaded from the map&apos;s directory instead of the relative location to the map file where it was previously.</source>
-        <translation>Підложка &quot;%1&quot; була завантажена з папки карти, а не з місця її розташування відносно файлу карти, до вона знаходилася раніше.</translation>
+        <translation>Підложка &quot;%1&quot; була завантажена з папки карти, а не з міця її розташування відносно файлу карти, де вона знаходилася раніше.</translation>
     </message>
     <message>
         <location filename="../src/file_import_export.cpp" line="120"/>
-        <source>Failed to load template &apos;%1&apos;&apos;, reason: %2</source>
-        <translation type="unfinished"></translation>
+        <source>Failed to load template &apos;%1&apos;, reason: %2</source>
+        <translation type="unfinished">Не вдалося завантажити підложку &apos;%1&apos;, причина: %2</translation>
     </message>
     <message>
         <location filename="../src/file_import_export.cpp" line="125"/>
         <source>Warnings when loading template &apos;%1&apos;:
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Попередження під час завантаження підложки &apos;%1&apos;:
+%2</translation>
     </message>
     <message>
         <location filename="../src/file_import_export.cpp" line="132"/>
@@ -2047,12 +2044,12 @@
     <message>
         <location filename="../src/file_import_export.cpp" line="135"/>
         <source>Click the red template name(s) in the Templates -&gt; Template setup window to locate the template file name(s).</source>
-        <translation>Клацніть на червону назву підложки у меню Підложки -&gt; Вікно параметрів підложок щоб вказате нове розтшування файла підложки.</translation>
+        <translation>Клацніть на червону назву підложки у меню Підложки -&gt; Вікно параметрів підложок щоб вказати нове розтшування файла підложки.</translation>
     </message>
     <message>
         <location filename="../src/file_format_native.cpp" line="123"/>
         <source>This file uses an obsolete format. Support for this format is to be removed from this program soon. To be able to open the file in the future, save it again.</source>
-        <translation>Цей файл має у застарілий формат. Підтримка цього формату невдовзі буде припинена програмою. Щоб зберегти можливість відкривати цей файл у майбутньому, збережіть його ще раз.</translation>
+        <translation>Цей файл має застарілий формат. Підтримка цього формату невдовзі буде припинена програмою. Щоб зберегти можливість відкривати цей файл у майбутньому, збережіть його ще раз.</translation>
     </message>
     <message>
         <location filename="../src/file_format_native.cpp" line="136"/>
@@ -2074,7 +2071,7 @@
     <message>
         <location filename="../src/file_format_native.cpp" line="200"/>
         <source>The geographic coordinate reference system of the map was &quot;%1&quot;. This CRS is not supported. Using &quot;%2&quot;.</source>
-        <translation>Використовувалась система прив’язки географічних координат карти &quot;%1&quot;. Ця система не підтримується. Застосовано &quot;%2&quot;.</translation>
+        <translation>Була використана базова система географічних координат карти &quot;%1&quot;. Ця БСК не підтримується. Застосовано &quot;%2&quot;.</translation>
     </message>
     <message>
         <location filename="../src/file_format_native.cpp" line="319"/>
@@ -2429,17 +2426,17 @@
     <message>
         <location filename="../src/template_track.cpp" line="541"/>
         <source>One coordinate unit equals:</source>
-        <translation>Одна одиниця координат дорівнює:</translation>
+        <translation>Одна одиниця координат становить:</translation>
     </message>
     <message>
         <location filename="../src/template_track.cpp" line="543"/>
         <source>Position track at given coordinates</source>
-        <translation>Позиціонувати трек у отриманих координатах</translation>
+        <translation>Розмістити трек у отриманих координатах</translation>
     </message>
     <message>
         <location filename="../src/template_track.cpp" line="547"/>
         <source>Position track at view center</source>
-        <translation>Позиціонувати трек у центрі екрану</translation>
+        <translation>Розмістити трек у центрі екрану</translation>
     </message>
 </context>
 <context>
@@ -2556,7 +2553,7 @@
     <message>
         <location filename="../src/gui/main_window.cpp" line="302"/>
         <source>General</source>
-        <translation>Основне</translation>
+        <translation>Загальне</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="317"/>
@@ -2713,7 +2710,7 @@ Press No to choose a different format.</source>
     <message>
         <location filename="../src/gui/main_window.cpp" line="1046"/>
         <source>There was a problem in determining the file format.</source>
-        <translation>Проблема у визначеному форматі файлу.</translation>
+        <translation>Виникла проблема при визначенні формату файла.</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="1047"/>
@@ -2796,7 +2793,7 @@ for reading.</source>
     <message>
         <location filename="../src/map.cpp" line="699"/>
         <source>Invalid file type.</source>
-        <translation>Недійсний тип файлу.</translation>
+        <translation>Некоректний тип файлу.</translation>
     </message>
     <message>
         <location filename="../src/map.cpp" line="655"/>
@@ -3201,7 +3198,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="921"/>
         <source>Projected coordinates</source>
-        <translation>Проекційні координати</translation>
+        <translation>Координати на проекції</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="923"/>
@@ -3262,7 +3259,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="1473"/>
         <source>No undo steps available.</source>
-        <translation>Відсутні попередні кроки.</translation>
+        <translation>Попередні кроки відсутні.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1486"/>
@@ -3417,12 +3414,12 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="800"/>
         <source>Clear undo / redo history</source>
-        <translation>Очистити історию відмін / повернень</translation>
+        <translation>Очистити історію відмін / повернень</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="800"/>
         <source>Clear the undo / redo history to reduce map file size.</source>
-        <translation>Очистити історию відмін / повернень щоб зменшити розмір файла.</translation>
+        <translation>Очистити історію відмін / повернень щоб зменшити розмір файла.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="807"/>
@@ -3432,7 +3429,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="817"/>
         <source>Overprinting simulation</source>
-        <translation>Емулювати Overprinting</translation>
+        <translation>Емулювати overprinting</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="821"/>
@@ -3507,7 +3504,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="889"/>
         <source>Paint on template settings</source>
-        <translation>Налаштування малювання по підложці</translation>
+        <translation>Настройки малювання по підложці</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="895"/>
@@ -3522,7 +3519,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="898"/>
         <source>Enable GPS distance rings</source>
-        <translation>Показувати кільце відстані GPS</translation>
+        <translation>Показувати кільце похибки GPS</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="900"/>
@@ -3553,10 +3550,6 @@ Rescale the imported data?</source>
         <location filename="../src/map_editor.cpp" line="910"/>
         <source>Align map with north</source>
         <translation>Вирівняти карту по півночі</translation>
-    </message>
-    <message>
-        <source>Toggle template visibility</source>
-        <translation type="vanished">Переключити видимість підложки</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="912"/>
@@ -3740,12 +3733,12 @@ selected</source>
     <message>
         <location filename="../src/map_editor.cpp" line="937"/>
         <source>Copy position</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Скопіювати координати</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="937"/>
         <source>Copy position to clipboard.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Скопіювати координати в буфер обміну.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2135"/>
@@ -3822,7 +3815,7 @@ selected</source>
     <message>
         <location filename="../src/map_editor.cpp" line="2190"/>
         <source>Cut away some objects or everything in a limited area.</source>
-        <translation>Відрізати деякі або всі об&apos;єкти в обмежаній убласті.</translation>
+        <translation type="unfinished">Відрізати деякі або всі об&apos;єкти в обмежаній області.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2215"/>
@@ -3955,7 +3948,7 @@ selected</source>
     <message>
         <location filename="../src/map_editor.cpp" line="3731"/>
         <source>Importable files</source>
-        <translation>Імпортовані файли</translation>
+        <translation type="unfinished">Файли що імпортуються</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="3733"/>
@@ -4182,7 +4175,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="130"/>
         <source>The minimimum area is %1 %2.</source>
-        <translation>Мінімальна площа рівна %1 %2.</translation>
+        <translation>Мінімальна площа становить %1 %2.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="130"/>
@@ -4192,7 +4185,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="133"/>
         <source>Note: Boundary length and area are correct only if there are no self-intersections and holes are used as such.</source>
-        <translation>Пам’ятайте: Довжина межі та площа коректні лише в разі відсутності самоперетинів і якщо отвори використовуються як такі.</translation>
+        <translation>Зверніть увагу: Довжина межі та площа коректні лише в разі відсутності самоперетинів і якщо отвори використовуються як такі.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="151"/>
@@ -4202,7 +4195,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="152"/>
         <source>The minimum length is %1 %2.</source>
-        <translation>Мінімальна довжина рівна %1 %2.</translation>
+        <translation>Мінімальна довжина становить %1 %2.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="152"/>
@@ -4299,12 +4292,12 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="2050"/>
         <source>In line symbol &quot;%1&quot;, cannot represent cap/join combination.</source>
-        <translation>Для лінійного знаку &quot;%1&quot;, неможливо відобразити комбінацію закінчення/з’єднання.</translation>
+        <translation type="unfinished">Для лінійного знаку &quot;%1&quot;, неможливо відобразити комбінацію закінчення/з’єднання.</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="2074"/>
         <source>In line symbol &quot;%1&quot;, neglecting the dash grouping.</source>
-        <translation>Для лінійного знаку &quot;%1&quot;, не відтворено групування штрихів.</translation>
+        <translation>Для лінійного знаку &quot;%1&quot;, не виконано групування штрихів.</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="2085"/>
@@ -4319,7 +4312,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="2200"/>
         <source>In area symbol &quot;%1&quot;, skipping a fill pattern.</source>
-        <translation>Для площинного знаку &quot;%1&quot;, пропущено заповнення візерунку.</translation>
+        <translation>Для площинного знаку &quot;%1&quot;, пропущено заповнення візерунком.</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="2247"/>
@@ -4329,7 +4322,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="2286"/>
         <source>In text symbol %1: custom character spacing is set, its implementation does not match OCAD&apos;s behavior yet</source>
-        <translation>Для текстового знаку %1: встановлений міжсимвольний інтервал таким чином, що це неможливо зберегти у форматі OCAD поки що</translation>
+        <translation>Для текстового знаку %1: встановлений такий міжсимвольний інтервал, що покищо неможе бути збережений у форматі OCAD</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="2293"/>
@@ -4401,17 +4394,17 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="444"/>
         <source>In dashed line symbol %1, the end length cannot be imported correctly.</source>
-        <translation>У штриховій лінії знака %1, довжина останнього штриха неможе бути корректно імпортована.</translation>
+        <translation>У штриховій лінії знака %1, довжина останнього штриха не може бути коректно імпортована.</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="446"/>
         <source>In dashed line symbol %1, the end gap cannot be imported correctly.</source>
-        <translation>У штриховій лінії знака %1, кінцевий проміжок неможе бути корректно імпортований.</translation>
+        <translation>У штриховій лінії знака %1, кінцевий проміжок не може бути коректно імпортований.</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="455"/>
         <source>In dashed line symbol %1, main and end length are different (%2 and %3). Using %4.</source>
-        <translation>У штриховій лінії знака %1, головна і кінцева довжина різні (%2 і %3). Використовується %4.</translation>
+        <translation type="unfinished">У штриховій лінії знака %1, головна і кінцева довжини різні (%2 і %3). Використовується %4.</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="465"/>
@@ -4421,7 +4414,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="615"/>
         <source>Line symbol %1: suppressing dash symbol at line ends.</source>
-        <translation>Лінійний знак %1: пригнічений штрих на кінцях лінії.</translation>
+        <translation>Лінійний знак %1: подвляти штриховий знак на кінцях відрізку.</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="753"/>
@@ -4431,17 +4424,17 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="759"/>
         <source>During import of text symbol %1: ignoring custom weight (%2)</source>
-        <translation>Під час імпорту текстового знаку %1: проігноровано користувацький якір (%2)</translation>
+        <translation>Під час імпорту текстового знаку %1: проігноровано нестандартну ширину (%2)</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="764"/>
         <source>During import of text symbol %1: custom character spacing is set, its implementation does not match OCAD&apos;s behavior yet</source>
-        <translation>Під час імпорту текстового знаку %1: встановлен користувацький міжсимвольний інтервал, його реалізація покищо не сумісна з поведінкою OCAD</translation>
+        <translation>Під час імпорту текстового знаку %1: встановлено нестандартний міжсимвольний інтервал, його реалізація покищо не сумісна з OCAD</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="769"/>
         <source>During import of text symbol %1: ignoring custom word spacing (%2%)</source>
-        <translation>Під час імпорту текстового знаку %1: проігноровано користувацький інтервал між словами (%2%)</translation>
+        <translation>Під час імпорту текстового знаку %1: проігноровано нестандартний інтервал між словами (%2%)</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="774"/>
@@ -4500,7 +4493,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="340"/>
         <source>Could not load the coordinate reference system &apos;%1&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Неможливо завантажити базову систему координат &apos;%1&apos;.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="374"/>
@@ -4536,19 +4529,19 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="971"/>
         <source>The dash pattern cannot be imported correctly.</source>
-        <translation>Штриховий візерунок неможливо імпортувати корректно.</translation>
+        <translation>Неможливо коректно імпортувати штриховий візерунок.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="986"/>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1018"/>
         <source>The dash pattern&apos;s end length (%1 mm) cannot be imported correctly. Using %2 mm.</source>
-        <translation>Довжина кінцевого штриха у візерунку (%1 мм) не може бути корректно імпортована. Буде використано %2 мм.</translation>
+        <translation>Довжина кінцевого штриха у візерунку (%1 мм) не може бути коректно імпортована. Буде використано %2 мм.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="993"/>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1033"/>
         <source>The dash pattern&apos;s end gap (%1 mm) cannot be imported correctly. Using %2 mm.</source>
-        <translation>Відстань до кінцевого штриха у візерунку (%1 мм) не може бути корректно імпортована. Буде використано %2 мм.</translation>
+        <translation>Відстань до кінцевого штриха у візерунку (%1 мм) не може бути коректно імпортована. Буде використано %2 мм.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1075"/>
@@ -4563,12 +4556,12 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1183"/>
         <source>Suppressing dash symbol at line ends.</source>
-        <translation>Подавлення знаків на кінцях відрізку.</translation>
+        <translation>Подавляти знаки на кінцях відрізку.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="899"/>
         <source>This symbol cannot be saved as a proper OCD symbol again.</source>
-        <translation>Цей знак но може бути збережений як правильний знак OCD.</translation>
+        <translation>Цей знак не може бути збережений як правильний знак OCD.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1874"/>
@@ -4583,22 +4576,22 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1861"/>
         <source>Ignoring custom weight (%1).</source>
-        <translation>Проігноровано користувацьку вагу (%1).</translation>
+        <translation>Проігноровано нестандартну ширину (%1).</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1898"/>
         <source>Custom character spacing may be incorrect.</source>
-        <translation>Можливо, некорректний користувацький міжсимвольний інтервал.</translation>
+        <translation>Нестандартний міжсимвольний інтервал може відображатись некоректно.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1903"/>
         <source>Ignoring custom word spacing (%1 %).</source>
-        <translation>Проігноровано користувацький міжслівний інтервал (%1 %).</translation>
+        <translation>Проігноровано нестандартний міжслівний інтервал (%1 %).</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1927"/>
         <source>Ignoring custom indents (%1/%2).</source>
-        <translation>Проігноровано користувацькі відступи (%1/%2).</translation>
+        <translation>Проігноровано нестандартні відступи (%1/%2).</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1949"/>
@@ -4608,7 +4601,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1327"/>
         <source>Line text symbols are not yet supported. Marking the symbol as hidden.</source>
-        <translation>Знаки лінійного нексту покищо не підтримуються. Цей знак приховано.</translation>
+        <translation>Лінійні текстові знаки покищо не підтримуються. Цей знак приховано.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1503"/>
@@ -4623,7 +4616,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1554"/>
         <source>Not importing text symbol, couldn&apos;t figure out path&apos; (npts=%1): %2</source>
-        <translation>Не імпортовано текстовий знак, невдається відобразити зовнішній шлях (npts=%1): %2</translation>
+        <translation>Не імпортовано текстовий знак, не вдається відобразити зовнішній контур (npts=%1): %2</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1836"/>
@@ -4635,10 +4628,6 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1970"/>
         <source>Invalid data.</source>
         <translation>Недійсні дані.</translation>
-    </message>
-    <message>
-        <source>Untested file importer for format: OCD %1</source>
-        <translation type="vanished">Неперевірений імпортер для формату: OCD %1</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="2001"/>
@@ -4900,7 +4889,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_tool.cpp" line="340"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the map. </source>
-        <translation>&lt;b&gt;Потягніть&lt;/b&gt; щоб рукати карту.</translation>
+        <translation>&lt;b&gt;Потягніть&lt;/b&gt; щоб рухати карту.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_tool.cpp" line="345"/>
@@ -5249,7 +5238,7 @@ separations</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1203"/>
         <source>Successfully created print job</source>
-        <translation>Успішно сформовано задачу друку</translation>
+        <translation>Задачу друку успішно сформовано</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1260"/>
@@ -5367,7 +5356,7 @@ separations</source>
     <message>
         <location filename="../src/symbol_dialog_replace.cpp" line="335"/>
         <source>Cannot load map file, aborting.</source>
-        <translation>Неможливо завантажити файл карти, перепвано.</translation>
+        <translation>Неможливо завантажити файл карти, перервано.</translation>
     </message>
     <message>
         <location filename="../src/symbol_dialog_replace.cpp" line="341"/>
@@ -5479,7 +5468,7 @@ separations</source>
     <message>
         <location filename="../src/tool_rotate_pattern.cpp" line="162"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Set the direction of area fill patterns or point objects. </source>
-        <translation>&lt;b&gt;Потягніть&lt;/b&gt; щоб задати напрямок візерунку заповнення, або поворот точкового об&apos;єкту.</translation>
+        <translation>&lt;b&gt;Потягніть&lt;/b&gt; щоб задати напрямок візерунку заповнення, або повернути точковий об&apos;єкт.</translation>
     </message>
 </context>
 <context>
@@ -5614,7 +5603,7 @@ separations</source>
     <message>
         <location filename="../src/gui/select_crs_dialog.cpp" line="54"/>
         <source>Select coordinate reference system</source>
-        <translation>Виберіть відносну систему координат</translation>
+        <translation>Виберіть базову систему координат</translation>
     </message>
     <message>
         <location filename="../src/gui/select_crs_dialog.cpp" line="62"/>
@@ -5639,7 +5628,7 @@ separations</source>
     <message>
         <location filename="../src/gui/select_crs_dialog.cpp" line="130"/>
         <source>valid</source>
-        <translation>дійсне</translation>
+        <translation>дійсний</translation>
     </message>
 </context>
 <context>
@@ -5837,7 +5826,7 @@ separations</source>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1161"/>
         <source>Protect objects with selected symbols</source>
-        <translation>Захистити об’єкти з виділеного знаку</translation>
+        <translation>Захистити об’єкти виділеного знаку</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="261"/>
@@ -5898,7 +5887,7 @@ separations</source>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="927"/>
         <source>The map contains objects with the symbol &quot;%1&quot;. Deleting it will delete those objects and clear the undo history! Do you really want to do that?</source>
-        <translation>Карта містить об&apos;єкти з знаком &quot;%1&quot;. Видалення знаку призведе до видалення цих об&apos;єктів і очистки історії попередніх кроків! Ви впевнені що хочете зробити це?</translation>
+        <translation>Карта містить об&apos;єкти зі знаком &quot;%1&quot;. Видалення знаку призведе до видалення цих об&apos;єктів і очистки історії попередніх кроків! Ви впевнені що хочете зробити це?</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1150"/>
@@ -5942,12 +5931,12 @@ separations</source>
     <message>
         <location filename="../src/symbol_setting_dialog.cpp" line="114"/>
         <source>bounding box on origin</source>
-        <translation>робоча рамка на початок</translation>
+        <translation>обмежуюча рамка на початок</translation>
     </message>
     <message>
         <location filename="../src/symbol_setting_dialog.cpp" line="115"/>
         <source>center of gravity on origin</source>
-        <translation>центр масс на початок</translation>
+        <translation>центр мас на початок</translation>
     </message>
     <message>
         <location filename="../src/symbol_setting_dialog.cpp" line="235"/>
@@ -5968,6 +5957,7 @@ to jump over the lazy dog
 Заспівав шпак півню:
 - Ти не вмієш так як я,
 Так як ти, не вмію я!
+1234567890
 </translation>
     </message>
 </context>
@@ -6004,7 +5994,7 @@ to jump over the lazy dog
     <message>
         <location filename="../src/gui/widgets/tags_widget.cpp" line="234"/>
         <source>The key &quot;%1&quot; already exists and must not be used twice.</source>
-        <translation>Ключ &quot;%1&quot; вже існує і не можу використовуватись двічи.</translation>
+        <translation>Ключ &quot;%1&quot; вже існує і не може використовуватись двічи.</translation>
     </message>
 </context>
 <context>
@@ -6175,7 +6165,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/template_image.cpp" line="211"/>
         <source>Select the coordinate reference system of the coordinates in the world file</source>
-        <translation>Виберіть відносну систему координат з координат world file-у</translation>
+        <translation>Виберіть базову систему координат для координат у world file-і</translation>
     </message>
 </context>
 <context>
@@ -6288,11 +6278,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="231"/>
         <source>Georeferenced: %1</source>
-        <translation>Геоприв&apos;яка: %1</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation type="vanished">Видалити</translation>
+        <translation>Геоприв&apos;язка: %1</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="215"/>
@@ -6379,7 +6365,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="415"/>
         <source>Failed to load template. Does the file exist and is it valid?</source>
-        <translation>Невдале завантаження підложки. Такий файл дійсно існує і він корректний?</translation>
+        <translation>Невдале завантаження підложки. Такий файл дійсно існує і він коректний?</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="719"/>
@@ -6425,7 +6411,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="1001"/>
         <source>The template will be invisible in the overprinting simulation. Switch to normal view?</source>
-        <translation type="unfinished"></translation>
+        <translation>При емуляції overprinting підложку буде приховано. Переключитися в звичайний режим?</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="1089"/>
@@ -6479,7 +6465,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/template_track.cpp" line="145"/>
         <source>Select the coordinate reference system of the track coordinates</source>
-        <translation>Виберіть відносну систему координат для треку</translation>
+        <translation>Виберіть базову систему координат для треку</translation>
     </message>
     <message>
         <location filename="../src/template_track.cpp" line="163"/>
@@ -6671,7 +6657,7 @@ The maximum supported version is %2.</source>
     <message>
         <location filename="../src/symbol_text.cpp" line="611"/>
         <source>Determine size...</source>
-        <translation>Завдати розмір...</translation>
+        <translation>Задати розмір...</translation>
     </message>
     <message>
         <location filename="../src/symbol_text.cpp" line="544"/>
@@ -6830,12 +6816,12 @@ The maximum supported version is %2.</source>
     <message>
         <location filename="../src/symbol_text.cpp" line="706"/>
         <source>Custom tabulator positions</source>
-        <translation>Користувацька позиція табулятора</translation>
+        <translation>Нестандартна позиція табулятора</translation>
     </message>
     <message>
         <location filename="../src/symbol_text.cpp" line="968"/>
         <source>Add custom tabulator</source>
-        <translation>Додати користувацький табулятор</translation>
+        <translation>Додати нестандартний табулятор</translation>
     </message>
 </context>
 <context>
@@ -6872,7 +6858,7 @@ The maximum supported version is %2.</source>
     <message>
         <location filename="../src/undo_manager.cpp" line="159"/>
         <source>Cannot redo because the first redo step became invalid. This can for example happen if you delete the symbol of an object you have drawn.</source>
-        <translation>Неможливо відмінити останній крок бо попередній крок став непридатним. Це могло трапитись, наприклад, якщо ви видалили знак об&apos;єкту який накреслили.</translation>
+        <translation>Неможливо відмінити останній крок бо попередній крок став недоступним. Це могло трапитись, наприклад, якщо ви видалили знак щойно створеного об&apos;єкту.</translation>
     </message>
 </context>
 <context>
@@ -6905,7 +6891,7 @@ The maximum supported version is %2.</source>
     <message>
         <location filename="../src/file_format_xml.cpp" line="184"/>
         <source>Older versions of Mapper do not support multiple map parts. To save the map in compatibility mode, you must first merge all map parts.</source>
-        <translation>Старіша версія Mapper не підтримує частини карти. Для збереження карти у режимі сумісності вам доведеться об&apos;єднати усі частини карти.</translation>
+        <translation>Старіші версії Mapper не підтримують частини карти. Для збереження карти у режимі сумісності вам доведеться об&apos;єднати усі частини карти.</translation>
     </message>
 </context>
 <context>
@@ -6918,7 +6904,7 @@ The maximum supported version is %2.</source>
     <message>
         <location filename="../src/file_format_xml.cpp" line="427"/>
         <source>Some coordinates were out of bounds for printing. Map content was adjusted.</source>
-        <translation>Деякі координати поза межами області друку. Вміста карти був підігнаний.</translation>
+        <translation>Деякі координати поза межами області друку. Вміст карти був підігнаний.</translation>
     </message>
     <message>
         <location filename="../src/file_format_xml.cpp" line="475"/>
@@ -6928,7 +6914,7 @@ The maximum supported version is %2.</source>
     <message>
         <location filename="../src/file_format_xml.cpp" line="476"/>
         <source>Parts of this file cannot be read by this version of Mapper. Minimum required version: %1</source>
-        <translation>Частина цього файлу не може бути почитана цією версією Mapper. Мінімальна придатна версія: %1</translation>
+        <translation>Частина цього файлу не може бути прочитана цією версією Mapper. Мінімальна необхідна версія: %1</translation>
     </message>
     <message>
         <location filename="../src/file_format_xml.cpp" line="512"/>

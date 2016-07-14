@@ -35,7 +35,7 @@
 
 
 FillTool::FillTool(MapEditorController* editor, QAction* tool_button)
-: MapEditorToolBase(QCursor(QPixmap(":/images/cursor-fill.png"), 11, 11), Other, editor, tool_button)
+: MapEditorToolBase(QCursor(QPixmap(QString::fromLatin1(":/images/cursor-fill.png")), 11, 11), Other, editor, tool_button)
 {
 	drawing_symbol = editor->activeSymbol();
 	setDrawingSymbol(editor->activeSymbol());
@@ -195,12 +195,12 @@ QImage FillTool::rasterizeMap(const QRectF& extent, QTransform& out_transform)
 	const float zoom_level = 4;
 	
 	// Create map view centered on the extent
-	MapView* view = new MapView(map());
-	view->setCenter(MapCoord{ extent.center() });
-	view->setZoom(zoom_level);
+	MapView view{ map() };
+	view.setCenter(MapCoord{ extent.center() });
+	view.setZoom(zoom_level);
 	
 	// Allocate the image
-	QRect image_size = view->calculateViewBoundingBox(extent).toAlignedRect();
+	QRect image_size = view.calculateViewBoundingBox(extent).toAlignedRect();
 	QImage image = QImage(image_size.size(), QImage::Format_ARGB32_Premultiplied);
 	
 	// Start drawing
@@ -215,10 +215,10 @@ QImage FillTool::rasterizeMap(const QRectF& extent, QTransform& out_transform)
 	
 	// Draw map
 	RenderConfig::Options options = RenderConfig::DisableAntialiasing | RenderConfig::ForceMinSize;
-	RenderConfig config = { *map(), extent, view->calculateFinalZoomFactor(), options, 1.0 };
+	RenderConfig config = { *map(), extent, view.calculateFinalZoomFactor(), options, 1.0 };
 	
 	painter.translate(image_size.width() / 2.0, image_size.height() / 2.0);
-	painter.setWorldTransform(view->worldTransform(), true);
+	painter.setWorldTransform(view.worldTransform(), true);
 	
 	auto original_area_hatching = map()->isAreaHatchingEnabled();
 	if (original_area_hatching)
@@ -251,7 +251,6 @@ QImage FillTool::rasterizeMap(const QRectF& extent, QTransform& out_transform)
 	
 	out_transform = painter.combinedTransform();
 	painter.end();
-	delete view;
 	return image;
 }
 

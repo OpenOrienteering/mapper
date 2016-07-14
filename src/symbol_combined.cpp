@@ -251,22 +251,22 @@ bool CombinedSymbol::loadImpl(QIODevice* file, int version, Map* map)
 
 void CombinedSymbol::saveImpl(QXmlStreamWriter& xml, const Map& map) const
 {
-	xml.writeStartElement("combined_symbol");
+	xml.writeStartElement(QString::fromLatin1("combined_symbol"));
 	int num_parts = (int)parts.size();
-	xml.writeAttribute("parts", QString::number(num_parts));
+	xml.writeAttribute(QString::fromLatin1("parts"), QString::number(num_parts));
 	for (int i = 0; i < num_parts; ++i)
 	{
-		xml.writeStartElement("part");
+		xml.writeStartElement(QString::fromLatin1("part"));
 		bool is_private = private_parts[i];
 		if (is_private)
 		{
-			xml.writeAttribute("private", "true");
+			xml.writeAttribute(QString::fromLatin1("private"), QString::fromLatin1("true"));
 			parts[i]->save(xml, map);
 		}
 		else
 		{
 			int temp = (parts[i] == NULL) ? -1 : map.findSymbolIndex(parts[i]);
-			xml.writeAttribute("symbol", QString::number(temp));
+			xml.writeAttribute(QString::fromLatin1("symbol"), QString::number(temp));
 		}
 		xml.writeEndElement(/*part*/);
 	}
@@ -275,10 +275,10 @@ void CombinedSymbol::saveImpl(QXmlStreamWriter& xml, const Map& map) const
 
 bool CombinedSymbol::loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict)
 {
-	if (xml.name() != "combined_symbol")
+	if (xml.name() != QLatin1String("combined_symbol"))
 		return false;
 	
-	int num_parts = xml.attributes().value("parts").toString().toInt();
+	int num_parts = xml.attributes().value(QLatin1String("parts")).toInt();
 	temp_part_indices.reserve(num_parts % 10); // 10 is not the limit
 	private_parts.clear();
 	private_parts.reserve(num_parts % 10);
@@ -286,9 +286,9 @@ bool CombinedSymbol::loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDicti
 	parts.reserve(num_parts % 10);
 	while (xml.readNextStartElement())
 	{
-		if (xml.name() == "part")
+		if (xml.name() == QLatin1String("part"))
 		{
-			bool is_private = (xml.attributes().value("private") == "true");
+			bool is_private = (xml.attributes().value(QLatin1String("private")) == QLatin1String("true"));
 			private_parts.push_back(is_private);
 			if (is_private)
 			{
@@ -298,7 +298,7 @@ bool CombinedSymbol::loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDicti
 			}
 			else
 			{
-				int temp = xml.attributes().value("symbol").toString().toInt();
+				int temp = xml.attributes().value(QLatin1String("symbol")).toInt();
 				temp_part_indices.push_back(temp);
 				parts.push_back(NULL);
 			}

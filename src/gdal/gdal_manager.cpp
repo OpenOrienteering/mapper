@@ -31,11 +31,11 @@
 
 namespace
 {
-	const QString gdal_manager_group{ QStringLiteral("GdalManager") };
-	const QString gdal_configuration_group{ QStringLiteral("GdalConfiguration") };
-	const QString gdal_dxf_key{ QStringLiteral("dxf") };
-	const QString gdal_gpx_key{ QStringLiteral("gpx") };
-	const QString gdal_osm_key{ QStringLiteral("osm") };
+	const QString gdal_manager_group{ QString::fromLatin1("GdalManager") };
+	const QString gdal_configuration_group{ QString::fromLatin1("GdalConfiguration") };
+	const QString gdal_dxf_key{ QString::fromLatin1("dxf") };
+	const QString gdal_gpx_key{ QString::fromLatin1("gpx") };
+	const QString gdal_osm_key{ QString::fromLatin1("osm") };
 	
 }
 
@@ -179,16 +179,16 @@ private:
 		if (new_parameters.isEmpty())
 		{
 			// Default options for debugging and for some drivers
-			settings.setValue(QStringLiteral("CPL_DEBUG"), QVariant{"OFF"});
-			settings.setValue(QStringLiteral("USE_PROJ_480_FEATURES"), QVariant{"YES"});
-			settings.setValue(QStringLiteral("OSM_USE_CUSTOM_INDEXING"), QVariant{"NO"});
+			settings.setValue(QString::fromLatin1("CPL_DEBUG"), QVariant{QLatin1String("OFF")});
+			settings.setValue(QString::fromLatin1("USE_PROJ_480_FEATURES"), QVariant{QLatin1String("YES")});
+			settings.setValue(QString::fromLatin1("OSM_USE_CUSTOM_INDEXING"), QVariant{QLatin1String("NO")});
 			new_parameters = settings.childKeys();
 		}
 		
 		new_parameters.sort();
 		for (auto parameter : new_parameters)
 		{
-			CPLSetConfigOption(parameter.toLatin1(), settings.value(parameter).toString().toLatin1());
+			CPLSetConfigOption(parameter.toLatin1(), settings.value(parameter).toByteArray());
 		}
 		for (auto parameter : static_cast<const QStringList&>(applied_parameters))
 		{

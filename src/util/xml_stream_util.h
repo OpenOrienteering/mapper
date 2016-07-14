@@ -354,7 +354,7 @@ XmlElementWriter::~XmlElementWriter()
 inline
 void XmlElementWriter::writeAttribute(const QLatin1String& qualifiedName, const char* value)
 {
-	xml.writeAttribute(qualifiedName, QString(value));
+	xml.writeAttribute(qualifiedName, QString::fromUtf8(value));
 }
 
 inline

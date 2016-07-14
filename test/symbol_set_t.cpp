@@ -50,8 +50,8 @@ void saveIfDifferent(const QString& path, Map* map, MapView* view = nullptr)
 	QBuffer buffer(&new_data);
 	buffer.open(QFile::WriteOnly);
 	XMLFileExporter exporter(&buffer, map, view);
-	auto is_src_format = bool{ path.contains(".xmap") };
-	exporter.setOption("autoFormatting", is_src_format);
+	auto is_src_format = bool{ path.contains(QLatin1String(".xmap")) };
+	exporter.setOption(QString::fromLatin1("autoFormatting"), is_src_format);
 	Settings::getInstance().setSetting(Settings::General_RetainCompatiblity, QVariant(is_src_format));
 	exporter.doExport();
 	QVERIFY(exporter.warnings().empty());
@@ -69,15 +69,15 @@ void saveIfDifferent(const QString& path, Map* map, MapView* view = nullptr)
 
 void SymbolSetTool::initTestCase()
 {
-	QCoreApplication::setOrganizationName("OpenOrienteering.org");
-	QCoreApplication::setApplicationName("SymbolSetTool");
+	QCoreApplication::setOrganizationName(QString::fromLatin1("OpenOrienteering.org"));
+	QCoreApplication::setApplicationName(QString::fromLatin1("SymbolSetTool"));
 	
 	doStaticInitializations();
 	
-	symbol_set_dir.cd(QFileInfo(__FILE__).dir().absoluteFilePath(QString("../symbol sets")));
+	symbol_set_dir.cd(QFileInfo(QString::fromUtf8(__FILE__)).dir().absoluteFilePath(QString::fromLatin1("../symbol sets")));
 	QVERIFY(symbol_set_dir.exists());
 	
-	examples_dir.cd(QFileInfo(__FILE__).dir().absoluteFilePath(QString("../examples")));
+	examples_dir.cd(QFileInfo(QString::fromUtf8(__FILE__)).dir().absoluteFilePath(QString::fromLatin1("../examples")));
 	QVERIFY(examples_dir.exists());
 }
 
@@ -88,30 +88,39 @@ void SymbolSetTool::processSymbolSet_data()
 	QTest::addColumn<unsigned int>("source_scale");
 	QTest::addColumn<unsigned int>("target_scale");
 
-	QTest::newRow("ISOM 1:15000") << "ISOM"  << 15000u << 15000u;
-	QTest::newRow("ISOM 1:10000") << "ISOM"  << 15000u << 10000u;
-	QTest::newRow("ISSOM 1:5000") << "ISSOM" <<  5000u <<  5000u;
-	QTest::newRow("ISSOM 1:4000") << "ISSOM" <<  5000u <<  4000u;
+	QTest::newRow("ISOM 1:15000") << QString::fromLatin1("ISOM")  << 15000u << 15000u;
+	QTest::newRow("ISOM 1:10000") << QString::fromLatin1("ISOM")  << 15000u << 10000u;
+	QTest::newRow("ISSOM 1:5000") << QString::fromLatin1("ISSOM") <<  5000u <<  5000u;
+	QTest::newRow("ISSOM 1:4000") << QString::fromLatin1("ISSOM") <<  5000u <<  4000u;
 	
-	QTest::newRow("ISOM 1:15000 Czech") << "ISOM_cs"  << 15000u << 15000u;
-	QTest::newRow("ISOM 1:10000 Czech") << "ISOM_cs"  << 15000u << 10000u;
-	QTest::newRow("ISSOM 1:5000 Czech") << "ISSOM_cs" <<  5000u <<  5000u;
-	QTest::newRow("ISSOM 1:4000 Czech") << "ISSOM_cs" <<  5000u <<  4000u;
+	QTest::newRow("ISOM 1:15000 Czech") << QString::fromLatin1("ISOM_cs")  << 15000u << 15000u;
+	QTest::newRow("ISOM 1:10000 Czech") << QString::fromLatin1("ISOM_cs")  << 15000u << 10000u;
+	QTest::newRow("ISSOM 1:5000 Czech") << QString::fromLatin1("ISSOM_cs") <<  5000u <<  5000u;
+	QTest::newRow("ISSOM 1:4000 Czech") << QString::fromLatin1("ISSOM_cs") <<  5000u <<  4000u;
 	
-	QTest::newRow("ISOM 1:15000 Finnish") << "ISOM_fi"  << 15000u << 15000u;
-	QTest::newRow("ISOM 1:10000 Finnish") << "ISOM_fi"  << 15000u << 10000u;
-	QTest::newRow("ISSOM 1:5000 Finnish") << "ISSOM_fi" <<  5000u <<  5000u;
-	QTest::newRow("ISSOM 1:4000 Finnish") << "ISSOM_fi" <<  5000u <<  4000u;
-    
-	QTest::newRow("ISMTBOM 1:20000") << "ISMTBOM" << 15000u << 20000u;
-	QTest::newRow("ISMTBOM 1:15000") << "ISMTBOM" << 15000u << 15000u;
-	QTest::newRow("ISMTBOM 1:10000") << "ISMTBOM" << 15000u << 10000u;
-	QTest::newRow("ISMTBOM 1:7500")  << "ISMTBOM" << 15000u <<  7500u;
-	QTest::newRow("ISMTBOM 1:5000")  << "ISMTBOM" << 15000u <<  5000u;
+	QTest::newRow("ISOM 1:15000 Finnish") << QString::fromLatin1("ISOM_fi")  << 15000u << 15000u;
+	QTest::newRow("ISOM 1:10000 Finnish") << QString::fromLatin1("ISOM_fi")  << 15000u << 10000u;
+	QTest::newRow("ISSOM 1:5000 Finnish") << QString::fromLatin1("ISSOM_fi") <<  5000u <<  5000u;
+	QTest::newRow("ISSOM 1:4000 Finnish") << QString::fromLatin1("ISSOM_fi") <<  5000u <<  4000u;
 	
-	QTest::newRow("ISSkiOM 1:15000") << "ISSkiOM" << 15000u << 15000u;
-	QTest::newRow("ISSkiOM 1:10000") << "ISSkiOM" << 15000u << 10000u;
-	QTest::newRow("ISSkiOM 1:5000")  << "ISSkiOM" << 15000u <<  5000u;
+	QTest::newRow("ISOM 1:15000 Russian") << QString::fromLatin1("ISOM_ru")  << 15000u << 15000u;
+	QTest::newRow("ISOM 1:10000 Russian") << QString::fromLatin1("ISOM_ru")  << 15000u << 10000u;
+	
+	QTest::newRow("ISMTBOM 1:20000") << QString::fromLatin1("ISMTBOM") << 15000u << 20000u;
+	QTest::newRow("ISMTBOM 1:15000") << QString::fromLatin1("ISMTBOM") << 15000u << 15000u;
+	QTest::newRow("ISMTBOM 1:10000") << QString::fromLatin1("ISMTBOM") << 15000u << 10000u;
+	QTest::newRow("ISMTBOM 1:7500")  << QString::fromLatin1("ISMTBOM") << 15000u <<  7500u;
+	QTest::newRow("ISMTBOM 1:5000")  << QString::fromLatin1("ISMTBOM") << 15000u <<  5000u;
+	
+	QTest::newRow("ISMTBOM 1:20000 Ukrainian") << QString::fromLatin1("ISMTBOM_uk") << 15000u << 20000u;
+	QTest::newRow("ISMTBOM 1:15000 Ukrainian") << QString::fromLatin1("ISMTBOM_uk") << 15000u << 15000u;
+	QTest::newRow("ISMTBOM 1:10000 Ukrainian") << QString::fromLatin1("ISMTBOM_uk") << 15000u << 10000u;
+	QTest::newRow("ISMTBOM 1:7500 Ukrainian")  << QString::fromLatin1("ISMTBOM_uk") << 15000u <<  7500u;
+	QTest::newRow("ISMTBOM 1:5000 Ukrainian")  << QString::fromLatin1("ISMTBOM_uk") << 15000u <<  5000u;
+	
+	QTest::newRow("ISSkiOM 1:15000") << QString::fromLatin1("ISSkiOM") << 15000u << 15000u;
+	QTest::newRow("ISSkiOM 1:10000") << QString::fromLatin1("ISSkiOM") << 15000u << 10000u;
+	QTest::newRow("ISSkiOM 1:5000")  << QString::fromLatin1("ISSkiOM") << 15000u <<  5000u;
 }
 
 void SymbolSetTool::processSymbolSet()
@@ -120,13 +129,13 @@ void SymbolSetTool::processSymbolSet()
 	QFETCH(unsigned int, source_scale);
 	QFETCH(unsigned int, target_scale);
 	
-	QString source_filename = QString("src/%1_%2.xmap").arg(name, QString::number(source_scale));
+	QString source_filename = QString::fromLatin1("src/%1_%2.xmap").arg(name, QString::number(source_scale));
 	QVERIFY(symbol_set_dir.exists(source_filename));
 	
 	QString source_path = symbol_set_dir.absoluteFilePath(source_filename);
 	
 	Map map;
-	MapView view(&map);
+	MapView view{ &map };
 	map.loadFrom(source_path, nullptr, &view, false, false);
 	
 	map.resetPrinterConfig();
@@ -139,17 +148,18 @@ void SymbolSetTool::processSymbolSet()
 	{
 		const Symbol* symbol = map.getSymbol(i);
 		QString number = symbol->getNumberAsString();
-		QString number_and_name = number % " " % symbol->getPlainTextName();
+		QString number_and_name = number + QLatin1Char(' ') % symbol->getPlainTextName();
 		QVERIFY2(!symbol->getName().isEmpty(), qPrintable(number_and_name));
 		QVERIFY2(!previous_numbers.contains(number), qPrintable(number_and_name));
 		previous_numbers.append(number);
 	}
 	
+	auto purple = QColor::fromCmykF(0, 1, 0, 0).hueF();
 	if (source_scale != target_scale)
 	{
 		map.setScaleDenominator(target_scale);
 		
-		if (name == "ISOM")
+		if (name.startsWith(QLatin1String("ISOM")))
 		{
 			const double factor = double(source_scale) / double(target_scale);
 			map.scaleAllObjects(factor, MapCoord());
@@ -160,7 +170,8 @@ void SymbolSetTool::processSymbolSet()
 			{
 				Symbol* symbol = map.getSymbol(i);
 				const int code = symbol->getNumberComponent(0);
-				if (!symbol->guessDominantColor()->getSpotColorName().startsWith(QLatin1String("PURPLE"))
+				const QColor& color = *symbol->guessDominantColor();
+				if (qAbs(purple - color.hueF()) > 0.1
 				    && code != 602
 				    && code != 999)
 				{
@@ -188,8 +199,7 @@ void SymbolSetTool::processSymbolSet()
 			QCOMPARE(symbols_changed, 139);
 			QCOMPARE(north_lines_changed, 2);
 		}
-		
-		if (name == "ISSOM")
+		else if (name.startsWith(QLatin1String("ISSOM")))
 		{
 			int north_lines_changed = 0;
 			for (int i = 0; i < num_symbols; ++i)
@@ -215,8 +225,7 @@ void SymbolSetTool::processSymbolSet()
 			}
 			QCOMPARE(north_lines_changed, 2);
 		}
-		
-		if (name == "ISMTBOM")
+		else if (name.startsWith(QLatin1String("ISMTBOM")))
 		{
 			QCOMPARE(source_scale, 15000u);
 			const double factor = (target_scale >= 15000u) ? 1.0 : 1.5;
@@ -235,8 +244,7 @@ void SymbolSetTool::processSymbolSet()
 			}
 			QCOMPARE(symbols_changed, 169);
 		}
-		
-		if (name == "ISSkiOM")
+		else if (name.startsWith(QLatin1String("ISSkiOM")))
 		{
 			QCOMPARE(source_scale, 15000u);
 			const double factor = (target_scale >= 15000u) ? 1.0 : 1.5;
@@ -248,7 +256,8 @@ void SymbolSetTool::processSymbolSet()
 			{
 				Symbol* symbol = map.getSymbol(i);
 				const int code = symbol->getNumberComponent(0);
-				if (!symbol->guessDominantColor()->getSpotColorName().startsWith(QLatin1String("PURPLE"))
+				const QColor& color = *symbol->guessDominantColor();
+				if (qAbs(purple - color.hueF()) > 0.1
 				    && code != 602
 				    && code != 999)
 				{
@@ -277,9 +286,13 @@ void SymbolSetTool::processSymbolSet()
 			QCOMPARE(symbols_changed, 152);
 			QCOMPARE(north_lines_changed, 2);
 		}
+		else
+		{
+			QFAIL("Symbol set not recognized");
+		}
 	}
 	
-	QString target_filename = QString("%2/%1_%2.omap").arg(name, QString::number(target_scale));
+	QString target_filename = QString::fromLatin1("%2/%1_%2.omap").arg(name, QString::number(target_scale));
 	saveIfDifferent(symbol_set_dir.absoluteFilePath(target_filename), &map);
 }
 
@@ -288,29 +301,29 @@ void SymbolSetTool::processExamples_data()
 {
 	QTest::addColumn<QString>("name");
 
-	QTest::newRow("complete map")  << "complete map";
-	QTest::newRow("forest sample") << "forest sample";
-	QTest::newRow("overprinting")  << "overprinting";
-	QTest::newRow("sprint sample") << "sprint sample";
+	QTest::newRow("complete map")  << QString::fromLatin1("complete map");
+	QTest::newRow("forest sample") << QString::fromLatin1("forest sample");
+	QTest::newRow("overprinting")  << QString::fromLatin1("overprinting");
+	QTest::newRow("sprint sample") << QString::fromLatin1("sprint sample");
 }
 
 void SymbolSetTool::processExamples()
 {
 	QFETCH(QString, name);
 	
-	QString source_filename = QString("src/%1.xmap").arg(name);
+	QString source_filename = QString::fromLatin1("src/%1.xmap").arg(name);
 	QVERIFY(examples_dir.exists(source_filename));
 	
 	QString source_path = examples_dir.absoluteFilePath(source_filename);
 	
 	Map map;
-	MapView view(&map);
+	MapView view{ &map };
 	map.loadFrom(source_path, nullptr, &view, false, false);
 	
 	map.undoManager().clear();
 	saveIfDifferent(source_path, &map, &view);
 	
-	QString target_filename = QString("%1.omap").arg(name);
+	QString target_filename = QString::fromLatin1("%1.omap").arg(name);
 	saveIfDifferent(examples_dir.absoluteFilePath(target_filename), &map, &view);
 }
 

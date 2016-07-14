@@ -29,7 +29,7 @@
 // ### OcdFileFormat ###
 
 OcdFileFormat::OcdFileFormat()
-: FileFormat { MapFile, "OCD", ImportExport::tr("OCAD"), "ocd",
+: FileFormat { MapFile, "OCD", ImportExport::tr("OCAD"), QString::fromLatin1("ocd"),
                ImportSupported | ExportSupported | ExportLossy }
 {
 	// Nothing

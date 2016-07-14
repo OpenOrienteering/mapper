@@ -81,7 +81,7 @@ void DrawRectangleTool::init()
 		key_button_bar->addPressKey(Qt::Key_Space, tr("Dash", "Drawing dash points"));
 		key_button_bar->addPressKey(Qt::Key_Backspace, tr("Undo"));
 		key_button_bar->addPressKey(Qt::Key_Escape, tr("Abort"));
-		editor->showPopupWidget(key_button_bar, "");
+		editor->showPopupWidget(key_button_bar, QString{});
 	}
 	
 	MapEditorTool::init();
@@ -89,7 +89,7 @@ void DrawRectangleTool::init()
 
 const QCursor& DrawRectangleTool::getCursor() const
 {
-	static auto const cursor = scaledToScreen(QCursor{ QPixmap{ ":/images/cursor-draw-rectangle.png" }, 11, 11 });
+	static auto const cursor = scaledToScreen(QCursor{ QPixmap(QString::fromLatin1(":/images/cursor-draw-rectangle.png")), 11, 11 });
 	return cursor;
 }
 
@@ -697,7 +697,7 @@ void DrawRectangleTool::updateStatusText()
 	QString text_more(text_more_shift_control_space);
 	
 	if (draw_dash_points)
-		text += DrawLineAndAreaTool::tr("<b>Dash points on.</b> ") + "| ";
+		text += DrawLineAndAreaTool::tr("<b>Dash points on.</b> ") + QLatin1String("| ");
 	
 	if (!editingInProgress())
 	{
@@ -743,7 +743,7 @@ void DrawRectangleTool::updateStatusText()
 		}
 	}
 	
-	text += "| " + text_more;
+	text += QLatin1String("| ") + text_more;
 	
 	setStatusBarText(text);
 }

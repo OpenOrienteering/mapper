@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2015 Kai Pastor
+ *    Copyright 2012-2016  Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -121,13 +121,13 @@ public:
 	 *  The scale, the mode and the resolution are initialized to the given
 	 *  values, all boolean properties are initialized to false.
 	 */
-	MapPrinterOptions(unsigned int scale, unsigned int resolution = 600, MapPrinterMode mode = Vector);
+	MapPrinterOptions(unsigned int scale, int resolution = 600, MapPrinterMode mode = Vector);
 	
 	/** The scale to be used for printing. */
 	unsigned int scale;
 	
 	/** The nominal resolution to be used. */
-	unsigned int resolution;
+	int resolution;
 	
 	/** The mode of printing.
 	 * 
@@ -192,6 +192,9 @@ public:
 	/** A flag which indicates to the UI whether to adjust the print area size
 	 *  to the current page size. */
 	bool single_page_print_area;
+	
+	/** Platform-dependent data. */
+	std::shared_ptr<void> native_data;
 };
 
 
@@ -310,9 +313,9 @@ public slots:
 	/** Sets the desired printing resolution in dpi.
 	 *  The actual resolution will	be set by the printer.
 	 * 
-	 * Does nothing if dpi is 0.
+	 * Does nothing if dpi is 0 or less.
 	 */
-	void setResolution(const unsigned int dpi);
+	void setResolution(int dpi);
 	
 	/** Sets the denominator of the map scale for printing. */
 	void setScale(const unsigned int value);
@@ -323,7 +326,7 @@ public slots:
 	/** Controls whether to print templates. 
 	 *  If a MapView is given when enabling template printing, 
 	 *  it will determine the visibility of map and templates. */
-	void setPrintTemplates(const bool visible, const MapView* view = nullptr);
+	void setPrintTemplates(const bool visible);
 	
 	/** Controls whether to print the map grid. */
 	void setPrintGrid(const bool visible);
@@ -378,6 +381,9 @@ protected:
 	
 	/** Updates the page breaks from map area and page format. */
 	void updatePageBreaks();
+	
+	/** Updates the scale adjustment and page breaks. */
+	void mapScaleChanged();
 	
 	Map& map;
 	const MapView* view;

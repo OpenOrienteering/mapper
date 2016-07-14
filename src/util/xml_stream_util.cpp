@@ -74,18 +74,17 @@ void XmlElementReader::read(MapCoordVector& coords)
 			else if (token == QXmlStreamReader::Characters && !xml.isWhitespace())
 			{
 				QStringRef text = xml.text();
-				QString data = QString::fromRawData(text.constData(), text.length());
-				
-				QTextStream stream(&data, QIODevice::ReadOnly);
-				stream.setIntegerBase(10);
-				while (!stream.atEnd())
+				try
 				{
-					coords.emplace_back();
-					stream >> coords.back();
+					while (text.length())
+					{
+						coords.emplace_back(text);
+					}
 				}
-				
-				if (stream.status() == QTextStream::ReadCorruptData)
+				catch (std::exception& e)
 				{
+					Q_UNUSED(e)
+					qDebug("Could not parse the coordinates: %s", e.what());
 					throw FileFormatException(ImportExport::tr("Could not parse the coordinates."));
 				}
 			}

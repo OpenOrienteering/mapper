@@ -494,6 +494,14 @@ void Map::changeScale(unsigned int new_scale_denominator, const MapCoord& scalin
 	{
 		undo_manager->clear();
 		scaleAllObjects(factor, scaling_center);
+		if (hasPrinterConfig())
+		{
+			auto print_area = printer_config->print_area;
+			auto center = QPointF(scaling_center);
+			print_area.setTopLeft(center + factor * (print_area.topLeft() - center));
+			print_area.setBottomRight(center + factor * (print_area.bottomRight() - center));
+			printer_config->print_area = print_area;
+		}
 	}
 	if (scale_georeferencing)
 		georeferencing->setMapRefPoint(scaling_center + factor * (georeferencing->getMapRefPoint() - scaling_center));
@@ -603,7 +611,8 @@ bool Map::exportTo(const QString& path, MapView* view, const FileFormat* format)
 	}
 	else if (!format->supportsExport())
 	{
-		QMessageBox::warning(nullptr, tr("Error"), tr("Cannot export the map as\n\"%1\"\nbecause saving as %2 (.%3) is not supported.").arg(path).arg(format->description()).arg(format->fileExtensions().join(", ")));
+		QMessageBox::warning(nullptr, tr("Error"), tr("Cannot export the map as\n\"%1\"\nbecause saving as %2 (.%3) is not supported.").
+		                     arg(path, format->description(), format->fileExtensions().join(QLatin1String(", "))));
 		return false;
 	}
 	
@@ -661,7 +670,7 @@ bool Map::exportTo(const QString& path, MapView* view, const FileFormat* format)
 		QString warnings;
 		for (std::vector<QString>::const_iterator it = exporter->warnings().begin(); it != exporter->warnings().end(); ++it) {
 			if (!warnings.isEmpty())
-				warnings += '\n';
+				warnings += QLatin1Char('\n');
 			warnings += *it;
 		}
 		QMessageBox msgBox(QMessageBox::Warning, tr("Warning"), tr("The map export generated warnings."), QMessageBox::Ok);
@@ -728,7 +737,7 @@ bool Map::loadFrom(const QString& path, QWidget* dialog_parent, MapView* view, b
 					QString warnings;
 					for (std::vector<QString>::const_iterator it = importer->warnings().begin(); it != importer->warnings().end(); ++it) {
 						if (!warnings.isEmpty())
-							warnings += '\n';
+							warnings += QLatin1Char('\n');
 						warnings += *it;
 					}
 					QMessageBox msgBox(
@@ -747,7 +756,7 @@ bool Map::loadFrom(const QString& path, QWidget* dialog_parent, MapView* view, b
 			catch (std::exception &e)
 			{
 				qDebug() << "Exception:" << e.what();
-				error_msg = e.what();
+				error_msg = QString::fromLatin1(e.what());
 			}
 			if (importer) delete importer;
 		}
@@ -921,7 +930,7 @@ bool Map::exportToIODevice(QIODevice* stream)
 	stream->open(QIODevice::WriteOnly);
 	Exporter* exporter = nullptr;
 	try {
-		const FileFormat* native_format = FileFormats.findFormat(QStringLiteral("XML"));
+		const FileFormat* native_format = FileFormats.findFormat("XML");
 		exporter = native_format->createExporter(stream, this, nullptr);
 		exporter->doExport();
 		stream->close();
@@ -941,7 +950,7 @@ bool Map::importFromIODevice(QIODevice* stream)
 {
 	Importer* importer = nullptr;
 	try {
-		const FileFormat* native_format = FileFormats.findFormat(QStringLiteral("XML"));
+		const FileFormat* native_format = FileFormats.findFormat("XML");
 		importer = native_format->createImporter(stream, this, nullptr);
 		importer->doImport(false);
 		importer->finishImport();
@@ -1000,9 +1009,9 @@ void Map::drawTemplates(QPainter* painter, QRectF bounding_box, int first_templa
 		float opacity = 1.0f;
 		if (view)
 		{
-			const TemplateVisibility* visibility = view->getTemplateVisibility(temp);
-			visible &= visibility->visible;
-			opacity  = visibility->opacity;
+			auto visibility = view->getTemplateVisibility(temp);
+			visible &= visibility.visible;
+			opacity  = visibility.opacity;
 			scale   *= view->getZoom();
 		}
 		if (visible)
@@ -1848,20 +1857,13 @@ void Map::setTemplate(Template* temp, int pos)
 	emit(templateChanged(pos, templates[pos]));
 }
 
-void Map::addTemplate(Template* temp, int pos, MapView* view)
+void Map::addTemplate(Template* temp, int pos)
 {
 	templates.insert(templates.begin() + pos, temp);
 	if (templates.size() == 1)
 	{
 		// This is the first template - the help text in the map widget(s) should be updated
 		updateAllMapWidgets();
-	}
-	
-	if (view)
-	{
-		TemplateVisibility* vis = view->getTemplateVisibility(temp);
-		vis->visible = true;
-		vis->opacity = 1;
 	}
 	
 	emit(templateAdded(pos, temp));
@@ -1871,20 +1873,14 @@ void Map::removeTemplate(int pos)
 {
 	TemplateVector::iterator it = templates.begin() + pos;
 	Template* temp = *it;
-	
-	// Delete visibility information for the template from all views - get the views indirectly by iterating over all widgets
-	for (MapWidget* widget : widgets)
-		widget->getMapView()->deleteTemplateVisibility(temp);
-	
 	templates.erase(it);
-	
 	if (templates.empty())
 	{
 		// That was the last template - the help text in the map widget(s) should maybe be updated (if there are no objects)
 		updateAllMapWidgets();
 	}
 	
-	emit(templateDeleted(pos, temp));
+	emit templateDeleted(pos, temp);
 }
 
 void Map::deleteTemplate(int pos)
@@ -1965,7 +1961,7 @@ void Map::closeTemplate(int i)
 		emit closedTemplateAvailabilityChanged();
 }
 
-bool Map::reloadClosedTemplate(int i, int target_pos, QWidget* dialog_parent, MapView* view, const QString& map_path)
+bool Map::reloadClosedTemplate(int i, int target_pos, QWidget* dialog_parent, const QString& map_path)
 {
 	Template* temp = closed_templates[i];
 	
@@ -1983,7 +1979,7 @@ bool Map::reloadClosedTemplate(int i, int target_pos, QWidget* dialog_parent, Ma
 	if (temp->getTemplateState() == Template::Loaded)
 	{
 		closed_templates.erase(closed_templates.begin() + i);
-		addTemplate(temp, target_pos, view);
+		addTemplate(temp, target_pos);
 		temp->setTemplateAreaDirty();
 		setTemplatesDirty();
 		if (closed_templates.size() == 0)

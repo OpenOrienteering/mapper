@@ -69,7 +69,7 @@ void PaintOnTemplateTool::init()
 
 const QCursor&PaintOnTemplateTool::getCursor() const
 {
-	static auto const cursor = scaledToScreen(QCursor{ QPixmap{ ":/images/cursor-paint-on-template.png" }, 1, 1 });
+	static auto const cursor = scaledToScreen(QCursor{ QPixmap(QString::fromLatin1(":/images/cursor-paint-on-template.png")), 1, 1 });
 	return cursor;
 }
 
@@ -177,8 +177,8 @@ PaintOnTemplatePaletteWidget::PaintOnTemplatePaletteWidget(bool close_on_selecti
 	setAutoFillBackground(false);
 
 	QSettings settings;
-	settings.beginGroup("PaintOnTemplatePaletteWidget");
-	selected_color = qMax(0, qMin(getNumFieldsX()*getNumFieldsY() - 1, settings.value("selectedColor").toInt()));
+	settings.beginGroup(QString::fromLatin1("PaintOnTemplatePaletteWidget"));
+	selected_color = qMax(0, qMin(getNumFieldsX()*getNumFieldsY() - 1, settings.value(QString::fromLatin1("selectedColor")).toInt()));
 	settings.endGroup();
 	
 	pressed_buttons = 0;
@@ -187,8 +187,8 @@ PaintOnTemplatePaletteWidget::PaintOnTemplatePaletteWidget(bool close_on_selecti
 PaintOnTemplatePaletteWidget::~PaintOnTemplatePaletteWidget()
 {
 	QSettings settings;
-	settings.beginGroup("PaintOnTemplatePaletteWidget");
-	settings.setValue("selectedColor", selected_color);
+	settings.beginGroup(QString::fromLatin1("PaintOnTemplatePaletteWidget"));
+	settings.setValue(QString::fromLatin1("selectedColor"), selected_color);
 	settings.endGroup();
 }
 
@@ -223,9 +223,9 @@ void PaintOnTemplatePaletteWidget::paintEvent(QPaintEvent* event)
 			QRect field_rect = QRect(field_x, field_y, field_width, field_height);
 
 			if (isUndoField(x, y))
-				drawIcon(&painter, ":/images/undo.png", field_rect);
+				drawIcon(&painter, QString::fromLatin1(":/images/undo.png"), field_rect);
 			else if (isRedoField(x, y))
-				drawIcon(&painter, ":/images/redo.png", field_rect);
+				drawIcon(&painter, QString::fromLatin1(":/images/redo.png"), field_rect);
 			else if (selected_color == x + getNumFieldsX()*y)
 			{
 				int line_width = qMax(1, qRound(Util::mmToPixelLogical(0.2f)));
@@ -339,7 +339,7 @@ PaintOnTemplateSelectDialog::PaintOnTemplateSelectDialog(Map* map, QWidget* pare
 	}
 	
 	QPushButton* cancel_button = new QPushButton(tr("Cancel"));
-	draw_button = new QPushButton(QIcon(":/images/pencil.png"), tr("Draw"));
+	draw_button = new QPushButton(QIcon(QString::fromLatin1(":/images/pencil.png")), tr("Draw"));
 	draw_button->setDefault(true);
 	
 	QHBoxLayout* buttons_layout = new QHBoxLayout();

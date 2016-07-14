@@ -35,7 +35,7 @@
 #include "gui/modifier_key.h"
 
 RotateTool::RotateTool(MapEditorController* editor, QAction* tool_button)
- : MapEditorToolBase(QCursor(QPixmap(":/images/cursor-rotate.png"), 1, 1), Other, editor, tool_button),
+ : MapEditorToolBase(QCursor(QPixmap(QString::fromLatin1(":/images/cursor-rotate.png")), 1, 1), Other, editor, tool_button),
    angle_helper(new ConstrainAngleToolHelper())
 {
 	angle_helper->setActive(false);
@@ -182,7 +182,7 @@ void RotateTool::updateStatusText()
 			delta_rotation = delta_rotation + pi_x_2;
 		else if (delta_rotation > M_PI)
 			delta_rotation = delta_rotation - pi_x_2;
-		setStatusBarText( trUtf8("<b>Rotation:</b> %1° ").arg(QLocale().toString(-delta_rotation * to_deg, 'f', 1)) + "| " +
+		setStatusBarText( trUtf8("<b>Rotation:</b> %1° ").arg(QLocale().toString(-delta_rotation * to_deg, 'f', 1)) + QLatin1String("| ") +
 		                  tr("<b>%1</b>: Fixed angles. ").arg(ModifierKey::control()) );
 	}
 	else if (!rotation_center_set)

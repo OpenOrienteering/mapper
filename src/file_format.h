@@ -42,6 +42,11 @@ public:
 	 */
 	FileFormatException(const QString& message = QString());
 	
+	/** Creates a new exception with the given message
+	 *  \param message a text describing the exceptional event that has occured.
+	 */
+	FileFormatException(const char* message);
+	
 	/** Copy-constructor (C++ FAQ 17.17).
 	 */
 	FileFormatException(const FileFormatException& other) noexcept;
@@ -133,7 +138,7 @@ public:
 	 *  Don't use a leading dot on the file extension.
 	 *  
 	 */
-	FileFormat(FileType file_type, const QString& id, const QString& description, const QString& file_extension, FormatFeatures features);
+	FileFormat(FileType file_type, const char* id, const QString& description, const QString& file_extension, FormatFeatures features);
 	
 	/** Destroys the file format information. */
 	virtual ~FileFormat();
@@ -149,7 +154,7 @@ public:
 	
 	/** Returns the internal ID of the file format.
 	 */
-	const QString& id() const;
+	const char* id() const;
 	
 	/** Returns a short human-readable description of the file format.
 	 */
@@ -210,7 +215,7 @@ public:
 	
 private:
 	FileType file_type;
-	QString format_id;
+	const char* format_id;
 	QString format_description;
 	QStringList file_extensions;
 	QString format_filter;
@@ -224,6 +229,14 @@ inline
 FileFormatException::FileFormatException(const QString& message)
  : msg(message)
  , msg_c(message.toLocal8Bit())
+{
+	// Nothing
+}
+
+inline
+FileFormatException::FileFormatException(const char* message)
+ : msg(QString::fromLatin1(message))
+ , msg_c(message)
 {
 	// Nothing
 }
@@ -256,7 +269,7 @@ FileFormat::FileType FileFormat::fileType() const
 }
 
 inline
-const QString& FileFormat::id() const
+const char* FileFormat::id() const
 {
 	return format_id;
 }

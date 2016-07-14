@@ -53,48 +53,48 @@ CRSTemplateRegistry::TemplateList defaultList()
 	
 	// UTM
 	auto temp = make_unique<CRSTemplate>(
-		"UTM",
-		Georeferencing::tr("UTM", "UTM coordinate reference system"),
-		Georeferencing::tr("UTM coordinates"),
-		"+proj=utm +datum=WGS84 +zone=%1",
-	    CRSTemplate::ParameterList {
-	        new UTMZoneParameter("zone", Georeferencing::tr("UTM Zone (number north/south)"))
-	    } );
+	  QString::fromLatin1("UTM"),
+	  Georeferencing::tr("UTM", "UTM coordinate reference system"),
+	  Georeferencing::tr("UTM coordinates"),
+	  QString::fromLatin1("+proj=utm +datum=WGS84 +zone=%1"),
+	  CRSTemplate::ParameterList {
+	    new UTMZoneParameter(QString::fromLatin1("zone"), Georeferencing::tr("UTM Zone (number north/south)"))
+	  } );
 	templates.push_back(std::move(temp));
 	
 	// Gauss-Krueger
 	temp = make_unique<CRSTemplate>(
-		"Gauss-Krueger, datum: Potsdam",
-		Georeferencing::tr("Gauss-Krueger, datum: Potsdam", "Gauss-Krueger coordinate reference system"),
-		Georeferencing::tr("Gauss-Krueger coordinates"),
-		"+proj=tmerc +lat_0=0 +lon_0=%1 +k=1.000000 +x_0=%2 +y_0=0 +ellps=bessel +datum=potsdam +units=m +no_defs",
-	    CRSTemplate::ParameterList {
-	        new IntRangeParameter("zone", Georeferencing::tr("Zone number (1 to 119)", "Zone number for Gauss-Krueger coordinates"),
-	                              1, 119, { {3, 0}, {1000000, 500000} })
-	    } );
+	  QString::fromLatin1("Gauss-Krueger, datum: Potsdam"),
+	  Georeferencing::tr("Gauss-Krueger, datum: Potsdam", "Gauss-Krueger coordinate reference system"),
+	  Georeferencing::tr("Gauss-Krueger coordinates"),
+	  QString::fromLatin1("+proj=tmerc +lat_0=0 +lon_0=%1 +k=1.000000 +x_0=%2 +y_0=0 +ellps=bessel +datum=potsdam +units=m +no_defs"),
+	  CRSTemplate::ParameterList {
+	    new IntRangeParameter(QString::fromLatin1("zone"), Georeferencing::tr("Zone number (1 to 119)", "Zone number for Gauss-Krueger coordinates"),
+	                          1, 119, { {3, 0}, {1000000, 500000} })
+	  } );
 	templates.push_back(std::move(temp));
 	
 	// EPSG
 	temp = make_unique<CRSTemplate>(
-		"EPSG",
-		Georeferencing::tr("by EPSG code", "as in: The CRS is specified by EPSG code"),
-		//: Don't translate @code@. It is placeholder.
-		Georeferencing::tr("EPSG @code@ coordinates"),
-		"+init=epsg:%1",
-	    CRSTemplate::ParameterList {
-	        new IntRangeParameter("code", Georeferencing::tr("EPSG code"), 1000, 99999)
-	    } );
+	  QString::fromLatin1("EPSG"),
+	  Georeferencing::tr("by EPSG code", "as in: The CRS is specified by EPSG code"),
+	  //: Don't translate @code@. It is placeholder.
+	  Georeferencing::tr("EPSG @code@ coordinates"),
+	  QString::fromLatin1("+init=epsg:%1"),
+	  CRSTemplate::ParameterList {
+	    new IntRangeParameter(QString::fromLatin1("code"), Georeferencing::tr("EPSG code"), 1000, 99999)
+	  } );
 	templates.push_back(std::move(temp));
 	
 	// Custom
 	temp = make_unique<CRSTemplate>(
-		"PROJ.4", // Don't change this ID.
-		Georeferencing::tr("Custom PROJ.4", "PROJ.4 specification"),
-		Georeferencing::tr("Local coordinates"),
-		"%1",
-	    CRSTemplate::ParameterList {
-	        new FullSpecParameter("spec", Georeferencing::tr("Specification", "PROJ.4 specification"))
-	    } );
+	  QString::fromLatin1("PROJ.4"), // Don't change this ID.
+	  Georeferencing::tr("Custom PROJ.4", "PROJ.4 specification"),
+	  Georeferencing::tr("Local coordinates"),
+	  QString::fromLatin1("%1"),
+	  CRSTemplate::ParameterList {
+	    new FullSpecParameter(QString::fromLatin1("spec"), Georeferencing::tr("Specification", "PROJ.4 specification"))
+	  } );
 	templates.push_back(std::move(temp));
 	
 	return templates;
@@ -187,8 +187,8 @@ QWidget* UTMZoneParameter::createEditor(WidgetObserver& observer) const
 std::vector<QString> UTMZoneParameter::specValues(const QString& edit_value) const
 {
 	auto zone = QString { edit_value };
-	zone.replace(" N", "");
-	zone.replace(" S", " +south");
+	zone.remove(QLatin1String(" N"));
+	zone.replace(QLatin1String(" S"), QLatin1String(" +south"));
 	return { zone };
 }
 
@@ -223,8 +223,8 @@ QVariant UTMZoneParameter::calculateUTMZone(const LatLon lat_lon)
 			zone_no = 2 * (int(floor(lon) + 3.0) / 12) + 31; // Svalbard
 		QString zone = QString::number(zone_no);
 		if (zone_no < 10)
-			zone.prepend('0');
-		zone.append((lat >= 0.0) ? " N" : " S");
+			zone.prepend(QLatin1Char('0'));
+		zone.append((lat >= 0.0) ? QLatin1String(" N") : QLatin1String(" S"));
 		ret = zone;
 	}
 	

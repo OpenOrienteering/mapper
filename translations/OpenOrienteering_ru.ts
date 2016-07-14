@@ -2038,7 +2038,7 @@
     </message>
     <message>
         <location filename="../src/file_import_export.cpp" line="120"/>
-        <source>Failed to load template &apos;%1&apos;&apos;, reason: %2</source>
+        <source>Failed to load template &apos;%1&apos;, reason: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3242,7 +3242,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="825"/>
         <source>Georeferencing...</source>
-        <translation>Гоепривязка...</translation>
+        <translation>Геопривязка...</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="827"/>

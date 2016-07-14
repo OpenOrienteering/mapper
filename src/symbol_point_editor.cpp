@@ -63,9 +63,9 @@ PointSymbolEditorWidget::PointSymbolEditorWidget(MapEditorController* controller
 	element_list = new QListWidget();
 	initElementList();
 	
-	delete_element_button = new QPushButton(QIcon(":/images/minus.png"), "");
+	delete_element_button = new QPushButton(QIcon(QString::fromLatin1(":/images/minus.png")), QString{});
 	QToolButton* add_element_button = new QToolButton();
-	add_element_button->setIcon(QIcon(":/images/plus.png"));
+	add_element_button->setIcon(QIcon(QString::fromLatin1(":/images/plus.png")));
 	add_element_button->setToolButtonStyle(Qt::ToolButtonIconOnly);
 	add_element_button->setPopupMode(QToolButton::InstantPopup);
 	add_element_button->setSizePolicy(QSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed));
@@ -97,7 +97,7 @@ PointSymbolEditorWidget::PointSymbolEditorWidget(MapEditorController* controller
 	point_outer_color_edit = new ColorDropDown(map);
 	
 	QLabel* explanation_label = new QLabel();
-	explanation_label->setPixmap(QPixmap(":/images/symbol_point_explanation.png"));
+	explanation_label->setPixmap(QPixmap(QString::fromLatin1(":/images/symbol_point_explanation.png")));
 	
 	QGridLayout* point_layout = new QGridLayout();
 	point_layout->setContentsMargins(0, 0, 0, 0);
@@ -184,8 +184,8 @@ PointSymbolEditorWidget::PointSymbolEditorWidget(MapEditorController* controller
 	header_view->setSectionResizeMode(2, QHeaderView::ResizeToContents);
 	header_view->setSectionsClickable(false);
 	
-	add_coord_button = new QPushButton(QIcon(":/images/plus.png"), "");
-	delete_coord_button = new QPushButton(QIcon(":/images/minus.png"), "");
+	add_coord_button = new QPushButton(QIcon(QString::fromLatin1(":/images/plus.png")), QString{});
+	delete_coord_button = new QPushButton(QIcon(QString::fromLatin1(":/images/minus.png")), QString{});
 	center_coords_button = new QPushButton(tr("Center by coordinate average"));
 	
 	// Layout
@@ -985,7 +985,7 @@ bool PointSymbolEditorTool::mousePressEvent(QMouseEvent* event, MapCoordF map_co
 
 const QCursor& PointSymbolEditorTool::getCursor() const
 {
-	static auto const cursor = scaledToScreen(QCursor{ QPixmap{ ":/images/cursor-crosshair.png" }, 11, 11 });
+	static auto const cursor = scaledToScreen(QCursor{ QPixmap(QString::fromLatin1(":/images/cursor-crosshair.png")), 11, 11 });
 	return cursor;
 }
 

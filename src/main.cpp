@@ -58,10 +58,10 @@ int main(int argc, char** argv)
 #if MAPPER_USE_QTSINGLEAPPLICATION
 	// Create single-instance application.
 	// Use "oo-mapper" instead of the executable as identifier, in case we launch from different paths.
-	QtSingleApplication qapp("oo-mapper", argc, argv);
+	QtSingleApplication qapp(QString::fromLatin1("oo-mapper"), argc, argv);
 	if (qapp.isRunning()) {
 		// Send a message to activate the running app, and optionally open a file
-		qapp.sendMessage((argc > 1) ? argv[1] : "");
+		qapp.sendMessage(QString::fromUtf8((argc > 1) ? argv[1] : ""));
 		return 0;
 	}
 #else
@@ -76,9 +76,9 @@ int main(int argc, char** argv)
 	Q_INIT_RESOURCE(licensing);
 	
 	// QSettings on OS X benefits from using an internet domain here.
-	QCoreApplication::setOrganizationName("OpenOrienteering.org");
-	QCoreApplication::setApplicationName("Mapper");
-	qapp.setApplicationDisplayName(APP_NAME + " " + APP_VERSION);
+	QCoreApplication::setOrganizationName(QString::fromLatin1("OpenOrienteering.org"));
+	QCoreApplication::setApplicationName(QString::fromLatin1("Mapper"));
+	qapp.setApplicationDisplayName(APP_NAME + QString::fromUtf8(" " APP_VERSION));
 	
 	// Set settings defaults
 	Settings& settings = Settings::getInstance();
@@ -86,11 +86,11 @@ int main(int argc, char** argv)
 	
 #ifdef WIN32
 	// Load plugins on Windows
-	qapp.addLibraryPath(QCoreApplication::applicationDirPath() + "/plugins");
+	qapp.addLibraryPath(QCoreApplication::applicationDirPath() + QLatin1String("/plugins"));
 #endif
 	
 	// Localization
-	TranslationUtil::setBaseName(QString("OpenOrienteering"));
+	TranslationUtil::setBaseName(QString::fromLatin1("OpenOrienteering"));
 	QLocale::Language lang = (QLocale::Language)settings.getSetting(Settings::General_Language).toInt();
 	QString translation_file = settings.getSetting(Settings::General_TranslationFile).toString();
 	TranslationUtil translation(lang, translation_file);
@@ -117,7 +117,7 @@ int main(int argc, char** argv)
 	{
 		// Use the modern 'fusion' style instead of the 
 		// default "windows" style on X11.
-		base_style = QStyleFactory::create("fusion");
+		base_style = QStyleFactory::create(QString::fromLatin1("fusion"));
 	}
 #endif
 	QApplication::setStyle(new MapperProxyStyle(base_style));
@@ -164,7 +164,7 @@ int main(int argc, char** argv)
 	args.removeFirst(); // the program name
 	for (auto&& arg : args)
 	{
-		if (arg[0] != '-')
+		if (arg[0] != QLatin1Char{'-'})
 		{
 			first_window.openPathLater(arg);
 			no_files_given = false;

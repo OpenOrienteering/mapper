@@ -401,7 +401,7 @@ void UndoManager::saveSteps(iterator begin, iterator end, QXmlStreamWriter& xml)
 
 bool UndoManager::loadUndo(QXmlStreamReader& xml, SymbolDictionary& symbol_dict)
 {
-	Q_ASSERT(xml.name() == "undo");
+	Q_ASSERT(xml.name() == QLatin1String("undo"));
 	
 	clear();
 	
@@ -424,7 +424,7 @@ bool UndoManager::loadUndo(QXmlStreamReader& xml, SymbolDictionary& symbol_dict)
 
 bool UndoManager::loadRedo(QXmlStreamReader& xml, SymbolDictionary& symbol_dict)
 {
-	Q_ASSERT(xml.name() == "redo");
+	Q_ASSERT(xml.name() == QLatin1String("redo"));
 	
 	clearRedoSteps();
 	
@@ -446,7 +446,7 @@ bool UndoManager::loadSteps(StepList& steps, QXmlStreamReader& xml, SymbolDictio
 {
 	while (xml.readNextStartElement())
 	{
-		if (xml.name() == "step")
+		if (xml.name() == QLatin1String("step"))
 			steps.push_back(UndoStep::load(xml, map, symbol_dict));
 		else
 			xml.skipCurrentElement(); // unknown

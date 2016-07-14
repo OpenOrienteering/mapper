@@ -90,8 +90,8 @@ void TemplateImage::saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml)
 	if (is_georeferenced)
 	{
 		// Follow map georeferencing XML structure
-		xml.writeStartElement("crs_spec");
-// TODO: xml.writeAttribute("language", "PROJ.4");
+		xml.writeStartElement(QString::fromLatin1("crs_spec"));
+// TODO: xml.writeAttribute(QString::fromLatin1("language"), "PROJ.4");
 		xml.writeCharacters(temp_crs_spec);
 		xml.writeEndElement(/*crs_spec*/);
 	}
@@ -99,7 +99,7 @@ void TemplateImage::saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml)
 
 bool TemplateImage::loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml)
 {
-	if (is_georeferenced && xml.name() == "crs_spec")
+	if (is_georeferenced && xml.name() == QLatin1String("crs_spec"))
 	{
 		// TODO: check specification language
 		temp_crs_spec = xml.readElementText();
@@ -165,7 +165,7 @@ bool TemplateImage::postLoadConfiguration(QWidget* dialog_parent, bool& out_cent
 {
 	Q_UNUSED(out_center_in_view);
 	
-	if (getTemplateFilename().endsWith(".gif", Qt::CaseInsensitive))
+	if (getTemplateFilename().endsWith(QLatin1String(".gif"), Qt::CaseInsensitive))
 		QMessageBox::warning(dialog_parent, tr("Warning"), tr("Loading a GIF image template.\nSaving GIF files is not supported. This means that drawings on this template won't be saved!\nIf you do not intend to draw on this template however, that is no problem."));
 	
 	TemplateImageOpenDialog open_dialog(this, dialog_parent);
@@ -446,7 +446,7 @@ void TemplateImage::calculateGeoreferencing()
 	// is mapped to the world position of the middle of the top-left pixel
 	georef.reset(new Georeferencing());
 	if (!temp_crs_spec.isEmpty())
-		georef->setProjectedCRS("", temp_crs_spec);
+		georef->setProjectedCRS(QString{}, temp_crs_spec);
 	
 	if (available_georef == Georeferencing_WorldFile)
 	{
@@ -457,7 +457,7 @@ void TemplateImage::calculateGeoreferencing()
 			return;
 		}
 		if (!temp_crs_spec.isEmpty())
-			georef->setProjectedCRS("", temp_crs_spec);
+			georef->setProjectedCRS(QString{}, temp_crs_spec);
 		georef->setTransformationDirectly(world_file.pixel_to_world);
 	}
 	else if (available_georef == Georeferencing_GeoTiff)
@@ -560,7 +560,7 @@ bool TemplateImage::WorldFile::load(const QString& path)
 
 bool TemplateImage::WorldFile::tryToLoadForImage(const QString& image_path)
 {
-	int last_dot_index = image_path.lastIndexOf('.');
+	int last_dot_index = image_path.lastIndexOf(QLatin1Char('.'));
 	if (last_dot_index < 0)
 		return false;
 	QString path_without_ext = image_path.left(last_dot_index + 1);
@@ -569,17 +569,17 @@ bool TemplateImage::WorldFile::tryToLoadForImage(const QString& image_path)
 		return false;
 	
 	// Possibility 1: use first and last character from image filename extension and 'w'
-	QString test_path = path_without_ext + ext[0] + ext[ext.size() - 1] + 'w';
+	QString test_path = path_without_ext + ext[0] + ext[ext.size() - 1] + QLatin1Char('w');
 	if (load(test_path))
 		return true;
 	
 	// Possibility 2: append 'w' to original extension
-	test_path = image_path + 'w';
+	test_path = image_path + QLatin1Char('w');
 	if (load(test_path))
 		return true;
 	
 	// Possibility 3: replace original extension by 'wld'
-	test_path = path_without_ext + "wld";
+	test_path = path_without_ext + QLatin1String("wld");
 	if (load(test_path))
 		return true;
 	
@@ -594,9 +594,9 @@ TemplateImageOpenDialog::TemplateImageOpenDialog(TemplateImage* templ, QWidget* 
 {
 	setWindowTitle(tr("Opening %1").arg(templ->getTemplateFilename()));
 	
-	QLabel* size_label = new QLabel("<b>" + tr("Image size:") + QString("</b> %1 x %2")
-		.arg(templ->getImage().width()).arg(templ->getImage().height()));
-	
+	QLabel* size_label = new QLabel(QLatin1String("<b>") + tr("Image size:") + QLatin1String("</b> ")
+	                                + QString::number(templ->getImage().width()) + QLatin1String(" x ")
+	                                + QString::number(templ->getImage().height()));
 	QLabel* desc_label = new QLabel(tr("Specify how to position or scale the image:"));
 	
 	bool use_meters_per_pixel;
@@ -614,20 +614,20 @@ TemplateImageOpenDialog::TemplateImageOpenDialog(TemplateImage* templ, QWidget* 
 		georef_type_string = tr("no georeferencing information");
 	
 	georef_radio = new QRadioButton(tr("Georeferenced") +
-		(georef_type_string.isEmpty() ? "" : (" (" + georef_type_string + ")")));
+		(georef_type_string.isEmpty() ? QString{} : (QLatin1String(" (") + georef_type_string + QLatin1String(")"))));
 	georef_radio->setEnabled(templ->getAvailableGeoreferencing() != TemplateImage::Georeferencing_None);
 	
 	mpp_radio = new QRadioButton(tr("Meters per pixel:"));
-	mpp_edit = new QLineEdit((meters_per_pixel > 0) ? QString::number(meters_per_pixel) : "");
+	mpp_edit = new QLineEdit((meters_per_pixel > 0) ? QString::number(meters_per_pixel) : QString{});
 	mpp_edit->setValidator(new DoubleValidator(0, 999999, mpp_edit));
 	
 	dpi_radio = new QRadioButton(tr("Scanned with"));
-	dpi_edit = new QLineEdit((dpi > 0) ? QString::number(dpi) : "");
+	dpi_edit = new QLineEdit((dpi > 0) ? QString::number(dpi) : QString{});
 	dpi_edit->setValidator(new DoubleValidator(1, 999999, dpi_edit));
 	QLabel* dpi_label = new QLabel(tr("dpi"));
 	
 	QLabel* scale_label = new QLabel(tr("Template scale:  1 :"));
-	scale_edit = new QLineEdit((scale > 0) ? QString::number(scale) : "");
+	scale_edit = new QLineEdit((scale > 0) ? QString::number(scale) : QString{});
 	scale_edit->setValidator(new QIntValidator(1, 999999, scale_edit));
 	
 	if (georef_radio->isEnabled())
@@ -653,7 +653,7 @@ TemplateImageOpenDialog::TemplateImageOpenDialog(TemplateImage* templ, QWidget* 
 	scale_layout->addStretch(1);
 	
 	QPushButton* cancel_button = new QPushButton(tr("Cancel"));
-	open_button = new QPushButton(QIcon(":/images/arrow-right.png"), tr("Open"));
+	open_button = new QPushButton(QIcon(QString::fromLatin1(":/images/arrow-right.png")), tr("Open"));
 	open_button->setDefault(true);
 	
 	QHBoxLayout* buttons_layout = new QHBoxLayout();

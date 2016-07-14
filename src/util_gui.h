@@ -30,7 +30,6 @@
 #include <QDoubleSpinBox>
 #include <QSpacerItem>
 #include <QSpinBox>
-#include <QStringBuilder>
 #include <QStyle>
 
 class MapCoordF;
@@ -125,7 +124,7 @@ namespace Util
 		 */ 
 		inline QLabel* create(const QString& text)
 		{
-			return new QLabel(QStringLiteral("<b>") % text % QStringLiteral("</b>"));
+			return new QLabel(QLatin1String("<b>") + text + QLatin1String("</b>"));
 		}
 		
 		/** 
@@ -133,9 +132,9 @@ namespace Util
 		 *
 		 * This headline is intended for use in dialogs.
 		 */ 
-		inline QLabel* create(const char* text)
+		inline QLabel* create(const char* text_utf8)
 		{
-			return new QLabel(QStringLiteral("<b>") % QString::fromUtf8(text) % QStringLiteral("</b>"));
+			return create(QString::fromUtf8(text_utf8));
 		}
 	}
 	
@@ -186,7 +185,7 @@ namespace Util
 			if (unit.startsWith(space))
 				box->setSuffix(unit);
 			else if (unit.length() > 0)
-				box->setSuffix(space % unit);
+				box->setSuffix(space + unit);
 			if (step > 0)
 				box->setSingleStep(step);
 #ifndef NDEBUG
@@ -222,7 +221,7 @@ namespace Util
 			if (unit.startsWith(space))
 				box->setSuffix(unit);
 			else if (unit.length() > 0)
-				box->setSuffix(space % unit);
+				box->setSuffix(space + unit);
 			if (step > 0.0)
 				box->setSingleStep(step);
 			else

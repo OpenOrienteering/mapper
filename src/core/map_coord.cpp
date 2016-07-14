@@ -257,14 +257,18 @@ QString MapCoord::toString() const
 	 *            3
 	 *  Total:   28 */
 	constexpr std::size_t buf_size = 1+2+2+20+3;
-	static QChar encoded[10] = {
-	    '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'
+	static const QChar encoded[10] = {
+	    QLatin1Char{'0'}, QLatin1Char{'1'},
+	    QLatin1Char{'2'}, QLatin1Char{'3'},
+	    QLatin1Char{'4'}, QLatin1Char{'5'},
+	    QLatin1Char{'6'}, QLatin1Char{'7'},
+	    QLatin1Char{'8'}, QLatin1Char{'9'}
 	};
 	QChar buffer[buf_size];
 	
 	// For efficiency, we construct the string from the back.
 	std::size_t j = buf_size - 1;
-	buffer[j] = QChar{ ';' };
+	buffer[j] = QLatin1Char{';'};
 	--j;
 	
 	int flags = fp;
@@ -289,7 +293,7 @@ QString MapCoord::toString() const
 	QChar sign { QChar::Null };
 	if (tmp < 0)
 	{
-		sign = QChar{ '-' };
+		sign = QLatin1Char{'-'};
 		tmp = -tmp;
 	}
 	do
@@ -315,7 +319,7 @@ QString MapCoord::toString() const
 	tmp = xp;
 	if (tmp < 0)
 	{
-		sign = QChar{ '-' };
+		sign = QLatin1Char{'-'};
 		tmp = -tmp;
 	}
 	do
@@ -337,27 +341,99 @@ QString MapCoord::toString() const
 	return QString(buffer+j, buf_size-j);
 }
 
-
-
-QTextStream& operator>>(QTextStream& stream, MapCoord& coord)
+MapCoord::MapCoord(QStringRef& text)
+: MapCoord{}
 {
-	// Always update all MapCoord members here (xp, yp, flags).
-	qint64 x64, y64;
-	QChar separator;
-	stream >> x64 >> y64 >> separator;
+	const int len = text.length();
+	if (Q_UNLIKELY(len < 2))
+		throw std::invalid_argument("Premature end of data");
 	
-	handleBoundsOffset(x64, y64);
-	ensureBoundsForQint32(x64, y64);
+	auto data = text.constData();
+	int i = 0;
 	
-	coord.xp = static_cast<qint32>(x64);
-	coord.yp = static_cast<qint32>(y64);
-	
-	int flags = 0;
-	if (separator == QChar::Space)
+	qint64 x64 = data[0].unicode();
+	if (x64 == '-')
 	{
-		stream >> flags >> separator;
+		x64 = '0' - data[1].unicode();
+		for (i = 2; i != len; ++i)
+		{
+			auto c = data[i].unicode();
+			if (c < '0' || c > '9')
+				break;
+			else
+				x64 = 10*x64 + '0' - c;
+		}
 	}
-	coord.setFlags(flags);
+	else if (x64 >= '0' && x64 <= '9')
+	{
+		x64 -= '0';
+		for (i = 1; i != len; ++i)
+		{
+			auto c = data[i].unicode();
+			if (c < '0' || c > '9')
+				break;
+			else
+				x64 = 10*x64 + c - '0';
+		}
+	}
 	
-	return stream;
+	++i;
+	if (Q_UNLIKELY(i+1 >= len))
+		throw std::invalid_argument("Premature end of data");
+	
+	qint64 y64 = data[i].unicode();
+	if (y64 == '-')
+	{
+		++i;
+		y64 = '0' - data[i].unicode();
+		for (++i; i != len; ++i)
+		{
+			auto c = data[i].unicode();
+			if (c < '0' || c > '9')
+				break;
+			else
+				y64 = 10*y64 + '0' - c;
+		}
+	}
+	else if (y64 >= '0' && y64 <= '9')
+	{
+		y64 -= '0';
+		for (++i; i != len; ++i)
+		{
+			auto c = data[i].unicode();
+			if (c < '0' || c > '9')
+				break;
+			else
+				y64 = 10*y64 + c - '0';
+		}
+	}
+	
+	handleBoundsOffset(y64, y64);
+	ensureBoundsForQint32(y64, y64);
+	xp = static_cast<qint32>(x64);
+	yp = static_cast<qint32>(y64);
+	
+	if (i < len && data[i] == QChar::Space)
+	{
+		++i;
+		if (Q_UNLIKELY(i == len))
+			throw std::invalid_argument("Premature end of data");
+		
+		// there are no negative flags
+		fp = Flags(data[i].unicode() - '0');
+		for (++i; i < len; ++i)
+		{
+			auto c = data[i].unicode();
+			if (c < '0' || c > '9')
+				break;
+			else
+				fp = Flags(10*int(fp) + c - '0');
+		}
+	}
+	
+	if (Q_UNLIKELY(i >= len || data[i] != QLatin1Char{';'}))
+		throw std::invalid_argument("Invalid data");
+	
+	++i;
+	text = text.mid(i, len-i);
 }

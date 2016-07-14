@@ -2085,7 +2085,7 @@
     </message>
     <message>
         <location filename="../src/file_import_export.cpp" line="120"/>
-        <source>Failed to load template &apos;%1&apos;&apos;, reason: %2</source>
+        <source>Failed to load template &apos;%1&apos;, reason: %2</source>
         <translation>Vorlage &apos;%1&apos; konnte nicht geladen werden, Grund: %2</translation>
     </message>
     <message>
