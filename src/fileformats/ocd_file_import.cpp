@@ -68,9 +68,14 @@ OcdFileImport::~OcdFileImport()
 
 void OcdFileImport::setCustom8BitEncoding(const char* encoding)
 {
-    custom_8bit_encoding = QTextCodec::codecForName(encoding);
+	custom_8bit_encoding = QTextCodec::codecForName(encoding);
 }
 
+void OcdFileImport::addSymbolWarning(const AreaSymbol* symbol, const QString& warning)
+{
+	addWarning( tr("In area symbol %1 '%2': %3").
+	            arg(symbol->getNumberAsString(), symbol->getName(), warning) );
+}
 
 void OcdFileImport::addSymbolWarning(const LineSymbol* symbol, const QString& warning)
 {
@@ -524,6 +529,27 @@ void OcdFileImport::importSymbols(const OcdFile< F >& file)
 		
 		map->addSymbol(symbol, pos);
 		symbol_index[it->number] = symbol;
+	}
+	resolveSubsymbols();
+}
+
+void OcdFileImport::resolveSubsymbols()
+{
+	for (auto i = 0; i < map->getNumSymbols(); ++i)
+	{
+		auto symbol = map->getSymbol(i);
+		if (symbol->getType() == Symbol::Combined)
+		{
+			auto combined = symbol->asCombined();
+			if (combined->getNumParts() == 2)
+			{
+				auto number = combined->getPart(1)->getNumberComponent(2);
+				if (number >= 0 && symbol_index.contains(number))
+				{
+					combined->setPart(1, symbol_index[number], false);
+				}
+			}
+		}
 	}
 }
 
@@ -1209,7 +1235,7 @@ void OcdFileImport::mergeLineSymbol(CombinedSymbol* full_line, LineSymbol* main_
 	full_line->setNumParts(part);
 }
 
-AreaSymbol* OcdFileImport::importAreaSymbol(const Ocd::AreaSymbolV8& ocd_symbol, int ocd_version)
+Symbol* OcdFileImport::importAreaSymbol(const Ocd::AreaSymbolV8& ocd_symbol, int ocd_version)
 {
 	Q_ASSERT(ocd_version <= 8);
 	OcdImportedAreaSymbol* symbol = new OcdImportedAreaSymbol();
@@ -1225,9 +1251,9 @@ AreaSymbol* OcdFileImport::importAreaSymbol(const Ocd::AreaSymbolV8& ocd_symbol,
 }
 
 template< class S >
-AreaSymbol* OcdFileImport::importAreaSymbol(const S& ocd_symbol, int ocd_version)
+Symbol* OcdFileImport::importAreaSymbol(const S& ocd_symbol, int ocd_version)
 {
-	Q_ASSERT(ocd_version >= 8);
+	Q_ASSERT(ocd_version >= 9);
 	OcdImportedAreaSymbol* symbol = new OcdImportedAreaSymbol();
 	setupBaseSymbol(symbol, ocd_symbol);
 	setupAreaSymbolCommon(
@@ -1237,6 +1263,20 @@ AreaSymbol* OcdFileImport::importAreaSymbol(const S& ocd_symbol, int ocd_version
 	            ocd_symbol.data_size,
 	            ocd_symbol.begin_of_elements,
 	            ocd_version);
+	if (ocd_symbol.common.border_on_V9)
+	{
+		CombinedSymbol* combined = new CombinedSymbol();
+		setupBaseSymbol(combined, ocd_symbol);
+		combined->setNumParts(2);
+		combined->setPart(0, symbol, true);
+		auto border = map->getUndefinedLine()->duplicate();
+		border->setNumberComponent(0, symbol->getNumberComponent(0));
+		border->setNumberComponent(1, symbol->getNumberComponent(1));
+		border->setNumberComponent(2, static_cast<int>(ocd_symbol.border_symbol));
+		combined->setPart(1, border, true);
+		addSymbolWarning(symbol, tr("This symbol cannot be saved as a proper OCD symbol again."));
+		return combined;
+	}
 	return symbol;
 }
 
