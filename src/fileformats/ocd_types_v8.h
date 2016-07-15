@@ -341,7 +341,7 @@ namespace Ocd
 	{
 		typedef ObjectIndexEntryV8 IndexEntryType;
 		
-		qint16  symbol;
+		quint16 symbol;
 		quint8  type;
 		quint8  unicode;
 		quint16 num_items;

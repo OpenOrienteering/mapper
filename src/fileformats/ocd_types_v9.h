@@ -176,7 +176,7 @@ namespace Ocd
 	{
 		typedef ObjectIndexEntryV9 IndexEntryType;
 		
-		qint32  symbol;
+		quint32 symbol;
 		quint8  type;
 		quint8  customer_V11;      /// \since V11
 		qint16  angle;
