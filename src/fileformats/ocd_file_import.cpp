@@ -314,6 +314,13 @@ void OcdFileImport::applyGridAndZone(Georeferencing& georef, const QString& comb
 			values.push_back(QString::number(zone));
 		}
 	}
+	else if (combined_grid_zone == QLatin1String("6005"))
+	{
+		id = QLatin1String{"EPSG"};
+		crs_template = CRSTemplateRegistry().find(id);
+		values.reserve(1);
+		values.push_back(QLatin1String{"3067"});
+	}
 	else if (combined_grid_zone == QLatin1String("14000"))
 	{
 		id = QLatin1String{"EPSG"};

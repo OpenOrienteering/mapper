@@ -1658,6 +1658,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="204"/>
         <source>Declination:</source>
+        <translatorcomment>#729: &quot;Neulaluvun korjaus (NEK)&quot;</translatorcomment>
         <translation>Deklinaatio:</translation>
     </message>
     <message>
@@ -1817,6 +1818,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="205"/>
         <source>Grivation:</source>
+        <translatorcomment>#729: &quot;Kokonaiskorjaus (KOK)&quot;</translatorcomment>
         <translation>Eranto:</translation>
     </message>
     <message>
