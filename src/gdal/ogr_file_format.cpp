@@ -338,8 +338,8 @@ void OgrFileImport::import(bool load_symbols_only)
 	auto data_source = ogr::unique_datasource(OGROpen(filename.toLatin1(), 0, nullptr));
 	if (data_source == nullptr)
 	{
-		throw FileFormatException(Importer::tr("Could not read '%1'")
-		                          .arg(filename));
+		throw FileFormatException(Importer::tr("Could not read '%1': %2")
+		                          .arg(filename, QString::fromLatin1(CPLGetLastErrorMsg())));
 	}
 	
 	empty_geometries = 0;
