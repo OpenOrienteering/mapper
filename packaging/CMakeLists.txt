@@ -493,4 +493,21 @@ if(Mapper_BUILD_QT AND Mapper_PACKAGE_LINGUIST)
 	install(CODE
 	  "execute_process(COMMAND \${CMAKE_COMMAND} --build \"${BINARY_DIR}\" --target \"package-install\" -- \"DESTDIR=${PROJECT_BINARY_DIR}\")"
 	)
+elseif(Mapper_PACKAGE_LINGUIST)
+	if(NOT Qt5LinguistTools_LINGUIST_EXECUTABLE)
+		message(FATAL_ERROR "Qt5LinguistTools_LINGUIST_EXECUTABLE: not found, "
+		  "but required by option Mapper_PACKAGE_LINGUIST="
+		  ${Mapper_PACKAGE_LINGUIST})
+	endif()
+	message(STATUS "Qt Linguist - found")
+	if(WIN32 OR APPLE)
+		install(
+		  PROGRAMS ${Qt5LinguistTools_LINGUIST_EXECUTABLE}
+		  DESTINATION "${MAPPER_RUNTIME_DESTINATION}${MAPPER_MACOS_SUBDIR}")
+	else()
+		install(
+		  PROGRAMS ${Qt5LinguistTools_LINGUIST_EXECUTABLE}
+		  DESTINATION "${MAPPER_LIBRARY_DESTINATION}/bin")
+	endif()
+	deploy_qt_translations(linguist)
 endif()
