@@ -68,6 +68,19 @@ namespace ogr
 	/** A convenience class for OGR C API feature handles, similar to std::unique_ptr. */
 	using unique_feature = std::unique_ptr<typename std::remove_pointer<OGRFeatureH>::type, OGRFeatureHDeleter>;
 	
+	
+	class OGRGeometryHDeleter
+	{
+	public:
+		void operator()(OGRGeometryH geometry) const
+		{
+			OGR_G_DestroyGeometry(geometry);
+		}
+	};
+	
+	/** A convenience class for OGR C API geometry handles, similar to std::unique_ptr. */
+	using unique_geometry = std::unique_ptr<typename std::remove_pointer<OGRGeometryH>::type, OGRGeometryHDeleter>;
+	
 }
 
 namespace
@@ -434,7 +447,6 @@ void OgrFileImport::importLayer(MapPart* map_part, OGRLayerH layer)
 			continue;
 		}
 		
-		OGR_G_FlattenTo2D(geometry);
 		importFeature(map_part, feature_definition, feature.get(), geometry);
 	}
 }
@@ -589,7 +601,12 @@ Object* OgrFileImport::importPointGeometry(MapPart* map_part, OGRFeatureH featur
 
 PathObject* OgrFileImport::importLineStringGeometry(MapPart* map_part, OGRFeatureH feature, OGRGeometryH geometry)
 {
-	geometry = OGR_G_ForceToLineString(geometry);
+	auto managed_geometry = ogr::unique_geometry(nullptr);
+	if (OGR_G_GetGeometryType(geometry) != wkbLineString)
+	{
+		geometry = OGR_G_ForceToLineString(OGR_G_Clone(geometry));
+		managed_geometry.reset(geometry);
+	}
 	
 	auto num_points = OGR_G_GetPointCount(geometry);
 	if (num_points < 2)
@@ -617,7 +634,13 @@ PathObject* OgrFileImport::importPolygonGeometry(MapPart* map_part, OGRFeatureH 
 		return nullptr;
 	}
 	
-	auto outline = OGR_G_ForceToLineString(OGR_G_GetGeometryRef(geometry, 0));
+	auto outline = OGR_G_GetGeometryRef(geometry, 0);
+	auto managed_outline = ogr::unique_geometry(nullptr);
+	if (OGR_G_GetGeometryType(outline) != wkbLineString)
+	{
+		outline = OGR_G_ForceToLineString(OGR_G_Clone(outline));
+		managed_outline.reset(outline);
+	}
 	auto num_points = OGR_G_GetPointCount(outline);
 	if (num_points < 3)
 	{
