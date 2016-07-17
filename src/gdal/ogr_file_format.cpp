@@ -365,6 +365,12 @@ void OgrFileImport::import(bool load_symbols_only)
 
 	if (!load_symbols_only)
 	{
+		if (!drawing_from_projected)
+		{
+			Q_ASSERT(MapCoord::boundsOffset().isZero());
+			MapCoord::boundsOffset().reset(true);
+		}
+		
 		auto num_layers = OGR_DS_GetLayerCount(data_source.get());
 		for (int i = 0; i < num_layers; ++i)
 		{
@@ -395,6 +401,11 @@ void OgrFileImport::import(bool load_symbols_only)
 			}
 				
 			importLayer(part, layer);
+		}
+		
+		if (!drawing_from_projected)
+		{
+			MapCoord::boundsOffset().reset(false);
 		}
 	}
 	
@@ -1050,7 +1061,7 @@ AreaSymbol* OgrFileImport::getSymbolForBrush(OGRStyleToolH tool, const QByteArra
 
 MapCoord OgrFileImport::fromDrawing(double x, double y) const
 {
-	return { x, -y };
+	return MapCoord::load(x, y, 0);
 }
 
 MapCoord OgrFileImport::fromProjected(double x, double y) const
