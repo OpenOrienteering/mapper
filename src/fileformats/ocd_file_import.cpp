@@ -2041,10 +2041,10 @@ void OcdFileImport::import(bool load_symbols_only)
 			importImplementationLegacy(load_symbols_only);
 		break;
 	case 9:
-		importImplementation< Ocd::FormatV9 >(load_symbols_only);
-		break;
 	case 10:
-		importImplementation< Ocd::FormatV10 >(load_symbols_only);
+		using FormatV10Assumption = std::is_same<Ocd::FormatV10, Ocd::FormatV9>;
+		Q_STATIC_ASSERT(FormatV10Assumption::value);
+		importImplementation< Ocd::FormatV9 >(load_symbols_only);
 		break;
 	case 11:
 		importImplementation< Ocd::FormatV11 >(load_symbols_only);
