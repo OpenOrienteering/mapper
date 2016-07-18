@@ -28,24 +28,16 @@ namespace Ocd
 	
 #pragma pack(push, 1)
 	
-	struct FileHeaderV12 : public FileHeaderV11
+	struct FileHeaderV12 : public FormatV11::FileHeader
 	{
 		quint32 RESERVED_MEMBER[2];
 		quint32 first_multi_rep_block;
 	};
 	
-	using BaseSymbolV12 = BaseSymbolV11;
-	
-	using PointSymbolElementV12 = PointSymbolElementV11;
-	
-	using PointSymbolV12 = PointSymbolV11;
-	
-	using LineSymbolV12 = LineSymbolV11;
-	
 	struct AreaSymbolV12
 	{
-		typedef BaseSymbolV12 BaseSymbol;
-		typedef PointSymbolElementV12 Element;
+		using BaseSymbol = FormatV11::BaseSymbol;
+		using Element    = FormatV11::PointSymbol::Element;
 		
 		BaseSymbol base;
 		
@@ -60,17 +52,9 @@ namespace Ocd
 		Element begin_of_elements[1];
 	};
 	
-	using TextSymbolV12 = TextSymbolV11;
-	
-	using LineTextSymbolV12 = LineTextSymbolV11;
-	
-	using RectangleSymbolV12 = RectangleSymbolV11;
-	
-	using ObjectIndexEntryV12 = ObjectIndexEntryV11;
-	
 	struct ObjectV12
 	{
-		typedef ObjectIndexEntryV12 IndexEntryType;
+		using IndexEntryType = FormatV11::Object::IndexEntryType;
 		
 		quint32 symbol;
 		quint8  type;
@@ -99,21 +83,16 @@ namespace Ocd
 	/** OCD file format version 11 trait. */
 	struct FormatV12
 	{
-		static constexpr int version() { return 12; }
-		
-		typedef FileHeaderV12 FileHeader;
-		
-		typedef BaseSymbolV12 BaseSymbol;
-		typedef PointSymbolV12 PointSymbol;
-		typedef LineSymbolV12 LineSymbol;
-		typedef AreaSymbolV12 AreaSymbol;
-		typedef TextSymbolV12 TextSymbol;
-		typedef LineTextSymbolV12 LineTextSymbol;
-		typedef RectangleSymbolV12 RectangleSymbol;
-		
-		typedef ObjectV12 Object;
-		
-		typedef Utf8Encoding Encoding;
+		using FileHeader      = FileHeaderV12;
+		using BaseSymbol      = FormatV11::BaseSymbol;
+		using PointSymbol     = FormatV11::PointSymbol;
+		using LineSymbol      = FormatV11::LineSymbol;
+		using AreaSymbol      = AreaSymbolV12;
+		using TextSymbol      = FormatV11::TextSymbol;
+		using LineTextSymbol  = FormatV11::LineTextSymbol;
+		using RectangleSymbol = FormatV11::RectangleSymbol;
+		using Object          = ObjectV12;
+		using Encoding        = Utf8Encoding;
 	};
 }
 

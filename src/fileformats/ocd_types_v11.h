@@ -28,13 +28,9 @@ namespace Ocd
 	
 #pragma pack(push, 1)
 	
-	using FileHeaderV11 = FileHeaderV10;
-	
 	struct BaseSymbolV11
 	{
-		typedef quint32 IndexEntryType;
-		
-		typedef BaseSymbolV11 BaseSymbol;
+		using IndexEntryType = quint32;
 		static const int symbol_number_factor = 1000;
 		
 		quint32 size;
@@ -57,12 +53,10 @@ namespace Ocd
 		quint16 group[64];
 	};
 	
-	using PointSymbolElementV11 = PointSymbolElementV10;
-	
 	struct PointSymbolV11
 	{
-		typedef BaseSymbolV11 BaseSymbol;
-		typedef PointSymbolElementV11 Element;
+		using BaseSymbol = BaseSymbolV11;
+		using Element    = FormatV10::PointSymbol::Element;
 		
 		BaseSymbol base;
 		
@@ -73,8 +67,8 @@ namespace Ocd
 	
 	struct LineSymbolV11
 	{
-		typedef BaseSymbolV11 BaseSymbol;
-		typedef PointSymbolElementV11 Element;
+		using BaseSymbol = BaseSymbolV11;
+		using Element    = FormatV10::LineSymbol::Element;
 		
 		BaseSymbol base;
 		
@@ -85,8 +79,8 @@ namespace Ocd
 	
 	struct AreaSymbolV11
 	{
-		typedef BaseSymbolV11 BaseSymbol;
-		typedef PointSymbolElementV11 Element;
+		using BaseSymbol = BaseSymbolV11;
+		using Element    = FormatV10::AreaSymbol::Element;
 		
 		BaseSymbol base;
 		
@@ -100,7 +94,7 @@ namespace Ocd
 	
 	struct TextSymbolV11
 	{
-		typedef BaseSymbolV11 BaseSymbol;
+		using BaseSymbol = BaseSymbolV11;
 		
 		BaseSymbol base;
 		
@@ -113,7 +107,7 @@ namespace Ocd
 	
 	struct LineTextSymbolV11
 	{
-		typedef BaseSymbolV11 BaseSymbol;
+		using BaseSymbol = BaseSymbolV11;
 		
 		BaseSymbol base;
 		
@@ -124,7 +118,7 @@ namespace Ocd
 	
 	struct RectangleSymbolV11
 	{
-		typedef BaseSymbolV11 BaseSymbol;
+		using BaseSymbol = BaseSymbolV11;
 		
 		BaseSymbol base;
 		
@@ -144,30 +138,21 @@ namespace Ocd
 		quint16 RESERVED_MEMBER[4];
 	};
 	
-	using ObjectIndexEntryV11 = ObjectIndexEntryV10;
-	
-	using ObjectV11 = ObjectV10;
-	
 #pragma pack(pop)
 	
 	/** OCD file format version 11 trait. */
 	struct FormatV11
 	{
-		static constexpr int version() { return 11; }
-		
-		typedef FileHeaderV11 FileHeader;
-		
-		typedef BaseSymbolV11 BaseSymbol;
-		typedef PointSymbolV11 PointSymbol;
-		typedef LineSymbolV11 LineSymbol;
-		typedef AreaSymbolV11 AreaSymbol;
-		typedef TextSymbolV11 TextSymbol;
-		typedef LineTextSymbolV11 LineTextSymbol;
-		typedef RectangleSymbolV11 RectangleSymbol;
-		
-		typedef ObjectV11 Object;
-		
-		typedef Utf8Encoding Encoding;
+		using FileHeader      = FormatV10::FileHeader;
+		using BaseSymbol      = BaseSymbolV11;
+		using PointSymbol     = PointSymbolV11;
+		using LineSymbol      = LineSymbolV11;
+		using AreaSymbol      = AreaSymbolV11;
+		using TextSymbol      = TextSymbolV11;
+		using LineTextSymbol  = LineTextSymbolV11;
+		using RectangleSymbol = RectangleSymbolV11;
+		using Object          = FormatV10::Object;
+		using Encoding        = Utf8Encoding;
 	};
 }
 

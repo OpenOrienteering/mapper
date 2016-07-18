@@ -43,9 +43,7 @@ namespace Ocd
 	
 	struct BaseSymbolV9
 	{
-		typedef quint32 IndexEntryType;
-		
-		typedef BaseSymbolV9 BaseSymbol;
+		using IndexEntryType = quint32;
 		static const int symbol_number_factor = 1000;
 		
 		quint32 size;
@@ -67,12 +65,10 @@ namespace Ocd
 		quint8  icon_bits[484];
 	};
 	
-	using PointSymbolElementV9 = PointSymbolElementV8;
-	
 	struct PointSymbolV9
 	{
-		typedef BaseSymbolV9 BaseSymbol;
-		typedef PointSymbolElementV9 Element;
+		using BaseSymbol = BaseSymbolV9;
+		using Element = FormatV8::PointSymbol::Element;
 		
 		BaseSymbol base;
 		
@@ -83,8 +79,8 @@ namespace Ocd
 	
 	struct LineSymbolV9
 	{
-		typedef BaseSymbolV9 BaseSymbol;
-		typedef PointSymbolElementV9 Element;
+		using BaseSymbol = BaseSymbolV9;
+		using Element    = FormatV8::LineSymbol::Element;
 		
 		BaseSymbol base;
 		
@@ -95,8 +91,8 @@ namespace Ocd
 	
 	struct AreaSymbolV9
 	{
-		typedef BaseSymbolV9 BaseSymbol;
-		typedef PointSymbolElementV9 Element;
+		using BaseSymbol = BaseSymbolV9;
+		using Element    = FormatV8::AreaSymbol::Element;
 		
 		BaseSymbol base;
 		
@@ -110,7 +106,7 @@ namespace Ocd
 	
 	struct TextSymbolV9
 	{
-		typedef BaseSymbolV9 BaseSymbol;
+		using BaseSymbol = BaseSymbolV9;
 		
 		BaseSymbol base;
 		
@@ -123,7 +119,7 @@ namespace Ocd
 	
 	struct LineTextSymbolV9
 	{
-		typedef BaseSymbolV9 BaseSymbol;
+		using BaseSymbol = BaseSymbolV9;
 		
 		BaseSymbol base;
 		
@@ -134,7 +130,7 @@ namespace Ocd
 	
 	struct RectangleSymbolV9
 	{
-		typedef BaseSymbolV9 BaseSymbol;
+		using BaseSymbol = BaseSymbolV9;
 		
 		BaseSymbol base;
 		
@@ -174,7 +170,7 @@ namespace Ocd
 	
 	struct ObjectV9
 	{
-		typedef ObjectIndexEntryV9 IndexEntryType;
+		using IndexEntryType = ObjectIndexEntryV9;
 		
 		quint32 symbol;
 		quint8  type;
@@ -203,21 +199,16 @@ namespace Ocd
 	/** OCD file format version 9 trait. */
 	struct FormatV9
 	{
-		static constexpr int version() { return 9; }
-		
-		typedef FileHeaderV9 FileHeader;
-		
-		typedef BaseSymbolV9 BaseSymbol;
-		typedef PointSymbolV9 PointSymbol;
-		typedef LineSymbolV9 LineSymbol;
-		typedef AreaSymbolV9 AreaSymbol;
-		typedef TextSymbolV9 TextSymbol;
-		typedef LineTextSymbolV9 LineTextSymbol;
-		typedef RectangleSymbolV9 RectangleSymbol;
-		
-		typedef ObjectV9 Object;
-		
-		typedef Custom8BitEncoding Encoding;
+		using FileHeader      = FileHeaderV9;
+		using BaseSymbol      = BaseSymbolV9;
+		using PointSymbol     = PointSymbolV9;
+		using LineSymbol      = LineSymbolV9;
+		using AreaSymbol      = AreaSymbolV9;
+		using TextSymbol      = TextSymbolV9;
+		using LineTextSymbol  = LineTextSymbolV9;
+		using RectangleSymbol = RectangleSymbolV9;
+		using Object          = ObjectV9;
+		using Encoding        = Custom8BitEncoding;
 	};
 }
 

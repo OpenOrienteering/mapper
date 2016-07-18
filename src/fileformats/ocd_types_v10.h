@@ -26,51 +26,8 @@
 namespace Ocd
 {
 	
-#pragma pack(push, 1)
+	using FormatV10 = FormatV9;
 	
-	using FileHeaderV10 = FileHeaderV9;
-	
-	using BaseSymbolV10 = BaseSymbolV9;
-	
-	using PointSymbolElementV10 = PointSymbolElementV9;
-	
-	using PointSymbolV10 = PointSymbolV9;
-	
-	using LineSymbolV10 = LineSymbolV9;
-	
-	using AreaSymbolV10 = AreaSymbolV9;
-	
-	using TextSymbolV10 = TextSymbolV9;
-	
-	using LineTextSymbolV10 = LineTextSymbolV9;
-	
-	using RectangleSymbolV10 = RectangleSymbolV9;
-	
-	using ObjectIndexEntryV10 = ObjectIndexEntryV9;
-	
-	using ObjectV10 = ObjectV9;
-	
-#pragma pack(pop)
-	
-	/** OCD file format version 10 trait. */
-	struct FormatV10
-	{
-		static constexpr int version() { return 10; }
-		
-		typedef FileHeaderV10 FileHeader;
-		
-		typedef BaseSymbolV10 BaseSymbol;
-		typedef PointSymbolV10 PointSymbol;
-		typedef LineSymbolV10 LineSymbol;
-		typedef AreaSymbolV10 AreaSymbol;
-		typedef TextSymbolV10 TextSymbol;
-		typedef LineTextSymbolV10 LineTextSymbol;
-		typedef RectangleSymbolV10 RectangleSymbol;
-		
-		typedef ObjectV10 Object;
-		
-		typedef Custom8BitEncoding Encoding;
-	};
 }
 
 #endif // OPENORIENTEERING_OCD_TYPES_V10_H
