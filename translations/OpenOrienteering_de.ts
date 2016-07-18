@@ -7192,7 +7192,7 @@ Die höchste unterstütze Version ist %2.</translation>
         <location filename="../src/util.cpp" line="313"/>
         <source>See more...</source>
         <extracomment>This &quot;See more&quot; is displayed as a link to the manual in What&apos;s-this tooltips.</extracomment>
-        <translation type="unfinished">Mehr...</translation>
+        <translation>Mehr...</translation>
     </message>
 </context>
 <context>
