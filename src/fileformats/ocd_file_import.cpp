@@ -484,17 +484,17 @@ MapColor* OcdFileImport::importColor(const QString& param_string)
 }
 
 namespace {
-	quint16 symbolType(const OcdFile<Ocd::FormatV8>::SymbolIndex::iterator& t)
+	quint16 symbolType(const Ocd::BaseSymbolV8& ocd_symbol)
 	{
-		if (t->type == Ocd::SymbolTypeLine && t->type2 == 1)
+		if (ocd_symbol.type == Ocd::SymbolTypeLine && ocd_symbol.type2 == 1)
 			return Ocd::SymbolTypeLineText;
-		return t->type;
+		return ocd_symbol.type;
 	}
 	
 	template< class T >
-	quint8 symbolType(const T& t)
+	quint8 symbolType(const T& ocd_symbol)
 	{
-		return t->type;
+		return ocd_symbol.type;
 	}
 }
 
@@ -502,45 +502,45 @@ template< class F >
 void OcdFileImport::importSymbols(const OcdFile< F >& file)
 {
 	auto ocd_version = file.header()->version;
-	for (typename OcdFile< F >::SymbolIndex::iterator it = file.symbols().begin(); it != file.symbols().end(); ++it)
+	for (const auto& ocd_symbol : file.symbols())
 	{
 		// When extra symbols are created, we want to insert the main symbol
 		// before them. That is why pos needs to be determined first.
 		auto pos = map->getNumSymbols();
 		
 		Symbol* symbol = nullptr;
-		switch (symbolType(it))
+		switch (symbolType(ocd_symbol))
 		{
 		case Ocd::SymbolTypePoint:
-			symbol = importPointSymbol(reinterpret_cast<const typename F::PointSymbol&>(*it), ocd_version);
+			symbol = importPointSymbol(reinterpret_cast<const typename F::PointSymbol&>(ocd_symbol), ocd_version);
 			break;
 		case Ocd::SymbolTypeLine:
-			symbol = importLineSymbol(reinterpret_cast<const typename F::LineSymbol&>(*it), ocd_version);
+			symbol = importLineSymbol(reinterpret_cast<const typename F::LineSymbol&>(ocd_symbol), ocd_version);
 			break;
 		case Ocd::SymbolTypeArea:
-			symbol = importAreaSymbol(reinterpret_cast<const typename F::AreaSymbol&>(*it), ocd_version);
+			symbol = importAreaSymbol(reinterpret_cast<const typename F::AreaSymbol&>(ocd_symbol), ocd_version);
 			break;
 		case Ocd::SymbolTypeText:
-			symbol = importTextSymbol(reinterpret_cast<const typename F::TextSymbol&>(*it), ocd_version);
+			symbol = importTextSymbol(reinterpret_cast<const typename F::TextSymbol&>(ocd_symbol), ocd_version);
 			break;
 		case Ocd::SymbolTypeRectangle_V8:
 		case Ocd::SymbolTypeRectangle_V9:
-			symbol = importRectangleSymbol(reinterpret_cast<const typename F::RectangleSymbol&>(*it));
+			symbol = importRectangleSymbol(reinterpret_cast<const typename F::RectangleSymbol&>(ocd_symbol));
 			break;
 		case Ocd::SymbolTypeLineText:
-			symbol = importLineTextSymbol(reinterpret_cast<const typename F::LineTextSymbol&>(*it), ocd_version);
+			symbol = importLineTextSymbol(reinterpret_cast<const typename F::LineTextSymbol&>(ocd_symbol), ocd_version);
 			break;
 		default:
 			addWarning(tr("Unable to import symbol %1.%2 \"%3\": %4") .
-			           arg(it->number / F::BaseSymbol::symbol_number_factor) .
-			           arg(it->number % F::BaseSymbol::symbol_number_factor) .
-			           arg(convertOcdString(it->description)).
-			           arg(tr("Unsupported type \"%1\".").arg(it->type)) );
+			           arg(ocd_symbol.number / F::BaseSymbol::symbol_number_factor) .
+			           arg(ocd_symbol.number % F::BaseSymbol::symbol_number_factor) .
+			           arg(convertOcdString(ocd_symbol.description)).
+			           arg(tr("Unsupported type \"%1\".").arg(ocd_symbol.type)) );
 			continue;
 		}
 		
 		map->addSymbol(symbol, pos);
-		symbol_index[it->number] = symbol;
+		symbol_index[ocd_symbol.number] = symbol;
 	}
 	resolveSubsymbols();
 }
