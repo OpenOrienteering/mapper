@@ -202,17 +202,10 @@ void OcdFileImport::importGeoreferencing(const OcdFile<Ocd::FormatV8>& file)
 template< class F >
 void OcdFileImport::importGeoreferencing(const OcdFile< F >& file)
 {
-	for (auto&& string : file.strings())
-	{
-		if (string.type == 1039)
-		{
-			importGeoreferencing(convertOcdString< typename F::Encoding >(file[string]));
-			break;
-		}
-	}
+	handleStrings(file, { { 1039, &OcdFileImport::importGeoreferencing } });
 }
 
-void OcdFileImport::importGeoreferencing(const QString& param_string)
+void OcdFileImport::importGeoreferencing(const QString& param_string, int)
 {
 	const QChar* unicode = param_string.unicode();
 	
@@ -394,17 +387,11 @@ void OcdFileImport::importColors(const OcdFile<Ocd::FormatV8>& file)
 template< class F >
 void OcdFileImport::importColors(const OcdFile< F >& file)
 {
-	for (auto&& string : file.strings())
-	{
-		if (string.type == 9)
-		{
-			importColor(convertOcdString< typename F::Encoding >(file[string]));
-		}
-	}
+	handleStrings(file, { { 9, &OcdFileImport::importColor } });
 	addWarning(tr("Spot color information was ignored."));
 }
 
-MapColor* OcdFileImport::importColor(const QString& param_string)
+void OcdFileImport::importColor(const QString& param_string, int)
 {
 	const QChar* unicode = param_string.unicode();
 	
@@ -470,7 +457,7 @@ MapColor* OcdFileImport::importColor(const QString& param_string)
 	}
 	
 	if (!number_ok)
-		return nullptr;
+		return;
 		
 	int color_pos = map->getNumColors();
 	MapColor* color = new MapColor(name, color_pos);
@@ -479,8 +466,6 @@ MapColor* OcdFileImport::importColor(const QString& param_string)
 	color->setOpacity(opacity);
 	map->addColor(color, color_pos);
 	color_index[number] = color;
-	
-	return color;
 }
 
 namespace {
@@ -605,16 +590,10 @@ void OcdFileImport::importObjects(const OcdFile< F >& file)
 template< class F >
 void OcdFileImport::importTemplates(const OcdFile< F >& file)
 {
-	for (auto&& string : file.strings())
-	{
-		if (string.type == 8)
-		{
-			importTemplate(convertOcdString< typename F::Encoding >(file[string]), file.header()->version);
-		}
-	}
+	handleStrings(file, { { 8, &OcdFileImport::importTemplate } });
 }
 
-Template* OcdFileImport::importTemplate(const QString& param_string, const int ocd_version)
+void OcdFileImport::importTemplate(const QString& param_string, int ocd_version)
 {
 	const QChar* unicode = param_string.unicode();
 	
@@ -635,7 +614,7 @@ Template* OcdFileImport::importTemplate(const QString& param_string, const int o
 	else
 	{
 		addWarning(tr("Unable to import template: \"%1\" is not a supported template type.").arg(filename));
-		return nullptr;
+		return;
 	}
 	
 	// 8 or 9 or 10 ? Only tested with 8 and 11
@@ -713,8 +692,6 @@ Template* OcdFileImport::importTemplate(const QString& param_string, const int o
 		auto opacity = qMax(0.0, qMin(1.0, 0.01 * (100 - dimming)));
 		view->setTemplateVisibility(templ, { float(opacity), visible });
 	}
-	
-	return templ;
 }
 
 
@@ -727,26 +704,21 @@ void OcdFileImport::importExtras(const OcdFile<Ocd::FormatV8>& file)
 template< class F >
 void OcdFileImport::importExtras(const OcdFile< F >& file)
 {
-	QString notes;
-	
-	for (auto&& string : file.strings())
-	{
-		switch (string.type)
-		{
-		case 11:
-			// OCD 9, 10
-			notes.append(convertOcdString< typename F::Encoding >(file[string]));
-			notes.append(QLatin1Char('\n'));
-			break;
-		case 1061:
-			// OCD 11
-			notes.append(convertOcdString< typename F::Encoding >(file[string]));
-			break;
-		default:
-			; // nothing
-		}
-	}
-	
+	map->setMapNotes({ });
+	handleStrings(file, extraStringHandlers);
+}
+
+const std::initializer_list<OcdFileImport::StringHandler> OcdFileImport::extraStringHandlers = {
+    {   11, &OcdFileImport::appendNotes },
+    { 1061, &OcdFileImport::appendNotes }
+};
+
+void OcdFileImport::appendNotes(const QString& param_string, int ocd_version)
+{
+	QString notes = map->getMapNotes();
+	notes.append(param_string);
+	if (ocd_version <= 10)
+		notes.append(QLatin1Char('\n'));
 	map->setMapNotes(notes);
 }
 
@@ -768,17 +740,10 @@ void OcdFileImport::importView(const OcdFile<Ocd::FormatV8>& file)
 template< class F >
 void OcdFileImport::importView(const OcdFile< F >& file)
 {
-	for (auto&& string : file.strings())
-	{
-		if (string.type == 1030)
-		{
-			importView(convertOcdString< typename F::Encoding >(file[string]));
-			break;
-		}
-	}
+	handleStrings(file, { { 1030, &OcdFileImport::importView } });
 }
 
-void OcdFileImport::importView(const QString& param_string)
+void OcdFileImport::importView(const QString& param_string, int)
 {
 	const QChar* unicode = param_string.unicode();
 	
@@ -2073,5 +2038,20 @@ void OcdFileImport::finishImport()
 		// Propagate new warnings and actions from the delegate to this importer.
 		std::for_each(begin(delegate->warnings()) + warnings_size, end(delegate->warnings()), [this](const QString& w) { addWarning(w); });
 		std::for_each(begin(delegate->actions()) + actions_size, end(delegate->actions()), [this](const ImportAction& a) { addAction(a); });
+	}
+}
+
+template< class F >
+void OcdFileImport::handleStrings(const OcdFile<F>& file, std::initializer_list<StringHandler> handlers)
+{
+	for (const auto& string : file.strings())
+	{
+		for (const auto& handler : handlers)
+		{
+			if (string.type == handler.type)
+			{
+				(this->*handler.callback)(convertOcdString<typename F::Encoding>(file[string]), file.header()->version);
+			}
+		}
 	}
 }

@@ -152,13 +152,24 @@ protected:
 	void importImplementation(bool load_symbols_only);
 	
 	
+	struct StringHandler
+	{
+		using Callback = void (OcdFileImport::*)(const QString&, int);
+		qint32   type;
+		Callback callback;
+	};
+	
+	template< class F >
+	void handleStrings(const OcdFile< F >& file, std::initializer_list<StringHandler> handlers);
+	
+	
 	void importGeoreferencing(const OcdFile<Ocd::FormatV8>& file);
 	
 	template< class F >
 	void importGeoreferencing(const OcdFile< F >& file);
 	
 	/// Imports string 1039.
-	void importGeoreferencing(const QString& param_string);
+	void importGeoreferencing(const QString& param_string, int ocd_version);
 	
 	/// Imports string 1039 field i.
 	void applyGridAndZone(Georeferencing& georef, const QString& combined_grid_zone);
@@ -169,7 +180,7 @@ protected:
 	template< class F >
 	void importColors(const OcdFile< F >& file);
 	
-	MapColor* importColor(const QString& param_string);
+	void importColor(const QString& param_string, int ocd_version);
 	
 	
 	template< class F >
@@ -187,7 +198,7 @@ protected:
 	template< class F >
 	void importTemplates(const OcdFile< F >& file);
 	
-	Template* importTemplate(const QString& param_string, const int ocd_version);
+	void importTemplate(const QString& param_string, int ocd_version);
 	
 	
 	void importExtras(const OcdFile<Ocd::FormatV8>& file);
@@ -195,13 +206,17 @@ protected:
 	template< class F >
 	void importExtras(const OcdFile< F >& file);
 	
+	static const std::initializer_list<StringHandler> extraStringHandlers;
+	
+	void appendNotes(const QString& param_string, int ocd_version);
+	
 	
 	void importView(const OcdFile<Ocd::FormatV8>& file);
 	
 	template< class F >
 	void importView(const OcdFile< F >& file);
 	
-	void importView(const QString& param_string);
+	void importView(const QString& param_string, int ocd_version);
 	
 	
 	// Symbol import
