@@ -1638,12 +1638,12 @@ void LineSymbol::cleanupPointSymbols()
 float LineSymbol::calculateLargestLineExtent(Map* map) const
 {
 	Q_UNUSED(map);
-	float line_extent_f = 0.001f * 0.5f * asLine()->getLineWidth();
+	float line_extent_f = 0.001f * 0.5f * getLineWidth();
 	float result = line_extent_f;
-	if (asLine()->hasBorder())
+	if (hasBorder())
 	{
-		result = qMax(result, line_extent_f + 0.001f * (asLine()->getBorder().shift + 0.5f * asLine()->getBorder().width));
-		result = qMax(result, line_extent_f + 0.001f * (asLine()->getRightBorder().shift + 0.5f * asLine()->getRightBorder().width));
+		result = qMax(result, line_extent_f + 0.001f * (getBorder().shift + 0.5f * getBorder().width));
+		result = qMax(result, line_extent_f + 0.001f * (getRightBorder().shift + 0.5f * getRightBorder().width));
 	}
 	return result;
 }
