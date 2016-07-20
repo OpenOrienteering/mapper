@@ -12,12 +12,12 @@
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="158"></location>
         <source>This program is free software: you can redistribute it and/or modify it under the terms of the &lt;a %1&gt;GNU General Public License (GPL), version&amp;nbsp;3&lt;/a&gt;, as published by the Free Software Foundation.</source>
-        <translation>Ce programme est un logiciel libre ; vous pouvez le redistribuer ou le modifier suivant les termes de la &lt;a %1&gt;“GNU General Public License” &lt;/a&gt; telle que publiée par la Free Software Foundation : soit la version 3 de cette licence, soit (à votre gré) toute version ultérieure.</translation>
+        <translation>Ce programme est un logiciel libre : vous pouvez le redistribuer ou le modifier suivant les termes de la &lt;a %1&gt;“GNU General Public License” &lt;/a&gt; telle que publiée par la Free Software Foundation.</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="163"></location>
         <source>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License (GPL), version&amp;nbsp;3, for &lt;a %1&gt;more details&lt;/a&gt;.</source>
-        <translation>Ce programme est distribué dans l’espoir qu’il vous sera utile, mais SANS AUCUNE GARANTIE : sans même la garantie implicite de COMMERCIALISABILITÉ ni d’ADÉQUATION À UN OBJECTIF PARTICULIER. Consultez la General Public License (GPL), version &amp;nbsp;3, pour&lt;a %1&gt;plus de details&lt;/a&gt;.</translation>
+        <translation>Ce programme est distribué dans l’espoir qu’il vous sera utile, mais SANS AUCUNE GARANTIE ; sans même la garantie implicite de COMMERCIALISABILITÉ ni D’ADÉQUATION À UN OBJECTIF PARTICULIER. Consultez la General Public License (GPL), version &amp;nbsp;3, pour&lt;a %1&gt;plus de details&lt;/a&gt;.</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="168"></location>
@@ -1310,17 +1310,17 @@
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="73"></location>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="79"></location>
         <source>Action on deleting a curve point with %1:</source>
-        <translation>Action lors de la suppression d'un point de courbe avec %1:</translation>
+        <translation>Action lors de la suppression d'un point de courbe avec %1 :</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="82"></location>
         <source>Rectangle tool:</source>
-        <translation>Outil rectangle:</translation>
+        <translation>Outil rectangle :</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="85"></location>
         <source>Radius of helper cross:</source>
-        <translation>Rayon de la croix d'aide:</translation>
+        <translation>Rayon de la croix d'aide :</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="87"></location>
