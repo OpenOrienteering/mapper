@@ -665,7 +665,7 @@
     <message>
         <location filename="../src/tool_cut_hole.cpp" line="241"></location>
         <source>&lt;b&gt;Click or drag&lt;/b&gt;: Start drawing the hole. </source>
-        <translation>&lt;b&gt;Клацніть або потягніть&lt;/b&gt; щоб почати малювати отвір.</translation>
+        <translation>&lt;b&gt;Клацніть або потягніть&lt;/b&gt; щоб почати малювати отвір. </translation>
     </message>
 </context>
 <context>
@@ -696,7 +696,7 @@
     <message>
         <location filename="../src/tool_cut.cpp" line="675"></location>
         <source>&lt;b&gt;Click&lt;/b&gt; on a line: Split it into two. &lt;b&gt;Drag&lt;/b&gt; along a line: Remove this line part. &lt;b&gt;Click or Drag&lt;/b&gt; at an area boundary: Start a split line. </source>
-        <translation>&lt;b&gt;Клік&lt;/b&gt; на лінії щоб розділити її на дві частини. &lt;b&gt;Потягніть&lt;/b&gt; вздовж лінії щоб вирізати її ділянку. &lt;b&gt;Клацніть або потягніть&lt;/b&gt; від межі площі щоб розділии її.</translation>
+        <translation>&lt;b&gt;Клік&lt;/b&gt; на лінії щоб розділити її на дві частини. &lt;b&gt;Потягніть&lt;/b&gt; вздовж лінії щоб вирізати її ділянку. &lt;b&gt;Клацніть або потягніть&lt;/b&gt; від межі площі щоб розділии її. </translation>
     </message>
     <message>
         <location filename="../src/tool_cut.cpp" line="683"></location>
@@ -709,18 +709,18 @@
     <message>
         <location filename="../src/tool_cutout.cpp" line="134"></location>
         <source>&lt;b&gt;%1&lt;/b&gt;: Clip the whole map. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: Відсікти всю карту.</translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Відсікти всю карту. </translation>
     </message>
     <message>
         <location filename="../src/tool_cutout.cpp" line="135"></location>
         <location filename="../src/tool_cutout.cpp" line="139"></location>
         <source>&lt;b&gt;%1+Click or drag&lt;/b&gt;: Select the objects to be clipped. </source>
-        <translation>&lt;b&gt;%1+Клік або потягнути&lt;/b&gt;: Вибрати всі об'єкти, що будуть відсічені.</translation>
+        <translation>&lt;b&gt;%1+Клік або потягнути&lt;/b&gt;: Вибрати всі об'єкти, що будуть відсічені. </translation>
     </message>
     <message>
         <location filename="../src/tool_cutout.cpp" line="140"></location>
         <source>&lt;b&gt;%1&lt;/b&gt;: Clip the selected objects. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: Відсікти виділені об'єкти.</translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Відсікти виділені об'єкти. </translation>
     </message>
 </context>
 <context>
@@ -847,7 +847,7 @@
     <message>
         <location filename="../src/tool_draw_freehand.cpp" line="276"></location>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Draw a path. </source>
-        <translation>&lt;b&gt;Потягніть&lt;/b&gt;щоб намалювати лінію.</translation>
+        <translation>&lt;b&gt;Потягніть&lt;/b&gt;щоб намалювати лінію. </translation>
     </message>
 </context>
 <context>
@@ -861,20 +861,20 @@
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1071"></location>
         <source>&lt;b&gt;%1+Click&lt;/b&gt;: Snap or append to existing objects. </source>
-        <translation>&lt;b&gt;%1+Клік&lt;/b&gt;: Прив'язуватись чи чіплятися за існуючі об'єкти.</translation>
+        <translation>&lt;b&gt;%1+Клік&lt;/b&gt;: Прив'язуватись чи чіплятися за існуючі об'єкти. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1076"></location>
         <location filename="../src/tool_draw_rectangle.cpp" line="706"></location>
         <source>&lt;b&gt;%1+Click&lt;/b&gt;: Pick direction from existing objects. </source>
-        <translation>&lt;b&gt;%1+Клік&lt;/b&gt;: Слідувати напрямку існуючих об'єктів.</translation>
+        <translation>&lt;b&gt;%1+Клік&lt;/b&gt;: Слідувати напрямку існуючих об'єктів. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1089"></location>
         <location filename="../src/tool_draw_rectangle.cpp" line="711"></location>
         <location filename="../src/tool_draw_rectangle.cpp" line="735"></location>
         <source>&lt;b&gt;%1+Click&lt;/b&gt;: Snap to existing objects. </source>
-        <translation>&lt;b&gt;%1+Клік&lt;/b&gt;: Прив'язуватись до існуючих об'єктів.</translation>
+        <translation>&lt;b&gt;%1+Клік&lt;/b&gt;: Прив'язуватись до існуючих об'єктів. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1095"></location>
@@ -886,7 +886,7 @@
         <location filename="../src/tool_draw_path.cpp" line="1103"></location>
         <location filename="../src/tool_draw_rectangle.cpp" line="741"></location>
         <source>&lt;b&gt;%1&lt;/b&gt;: Undo last point. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: Скасувати останній крок.</translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Скасувати останній крок. </translation>
     </message>
 </context>
 <context>
@@ -1123,7 +1123,7 @@
     <message>
         <location filename="../src/tool_edit_point.cpp" line="644"></location>
         <source>&lt;b&gt;%1&lt;/b&gt;: Finish editing. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: Завершити правку.</translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Завершити правку. </translation>
     </message>
     <message>
         <location filename="../src/tool_edit_point.cpp" line="664"></location>
@@ -1143,7 +1143,7 @@
     <message>
         <location filename="../src/tool_edit_point.cpp" line="692"></location>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on point to switch between dash and normal point. </source>
-        <translation>&lt;b&gt;%1+Клік&lt;/b&gt; на точці змінює її тип (штрихова точка / нормальна точка).</translation>
+        <translation>&lt;b&gt;%1+Клік&lt;/b&gt; на точці змінює її тип (штрихова точка / нормальна точка). </translation>
     </message>
 </context>
 <context>
@@ -1346,7 +1346,7 @@
     <message>
         <location filename="../src/tool_fill.cpp" line="179"></location>
         <source>&lt;b&gt;Click&lt;/b&gt;: Fill area with active symbol. The area to be filled must be bounded by lines or areas, other symbols are not taken into account. </source>
-        <translation>&lt;b&gt;Клік&lt;/b&gt;: Залити площу активним знаком. Ділянка, що буде залита, має бути обмежена лініями або межами площі; інші знаки не будть взяті до уваги.</translation>
+        <translation>&lt;b&gt;Клік&lt;/b&gt;: Залити площу активним знаком. Ділянка, що буде залита, має бути обмежена лініями або межами площі; інші знаки не будть взяті до уваги. </translation>
     </message>
 </context>
 <context>
@@ -5012,29 +5012,29 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/gui/print_tool.cpp" line="57"></location>
         <location filename="../src/gui/print_tool.cpp" line="369"></location>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the map, the print area or the area's borders. </source>
-        <translation>&lt;b&gt;Потягніть&lt;/b&gt; щоб перемістити карту, область друку або межі області друку.</translation>
+        <translation>&lt;b&gt;Потягніть&lt;/b&gt; щоб перемістити карту, область друку або межі області друку. </translation>
     </message>
     <message>
         <location filename="../src/gui/print_tool.cpp" line="341"></location>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the print area. </source>
-        <translation>&lt;b&gt;Потягніть&lt;/b&gt; щоб рухати область друку.</translation>
+        <translation>&lt;b&gt;Потягніть&lt;/b&gt; щоб рухати область друку. </translation>
     </message>
     <message>
         <location filename="../src/gui/print_tool.cpp" line="345"></location>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the map. </source>
-        <translation>&lt;b&gt;Потягніть&lt;/b&gt; щоб рухати карту.</translation>
+        <translation>&lt;b&gt;Потягніть&lt;/b&gt; щоб рухати карту. </translation>
     </message>
     <message>
         <location filename="../src/gui/print_tool.cpp" line="350"></location>
         <location filename="../src/gui/print_tool.cpp" line="355"></location>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the print area's border. </source>
-        <translation>&lt;b&gt;Потягніть&lt;/b&gt; щоб рухати межу області друку.</translation>
+        <translation>&lt;b&gt;Потягніть&lt;/b&gt; щоб рухати межу області друку. </translation>
     </message>
     <message>
         <location filename="../src/gui/print_tool.cpp" line="360"></location>
         <location filename="../src/gui/print_tool.cpp" line="365"></location>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the print area's borders. </source>
-        <translation>&lt;b&gt;Потягніть&lt;/b&gt; щоб рухати межі області друку.</translation>
+        <translation>&lt;b&gt;Потягніть&lt;/b&gt; щоб рухати межі області друку. </translation>
     </message>
 </context>
 <context>
@@ -5606,7 +5606,7 @@ separations</source>
     <message>
         <location filename="../src/tool_rotate_pattern.cpp" line="162"></location>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Set the direction of area fill patterns or point objects. </source>
-        <translation>&lt;b&gt;Потягніть&lt;/b&gt; щоб задати напрямок візерунку заповнення, або повернути точковий об'єкт.</translation>
+        <translation>&lt;b&gt;Потягніть&lt;/b&gt; щоб задати напрямок візерунку заповнення, або повернути точковий об'єкт. </translation>
     </message>
 </context>
 <context>
@@ -5630,7 +5630,7 @@ separations</source>
     <message>
         <location filename="../src/tool_rotate.cpp" line="195"></location>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Rotate the selected objects. </source>
-        <translation>&lt;b&gt;Потягніть&lt;/b&gt; щоб обертатии вибрані об'єкти.</translation>
+        <translation>&lt;b&gt;Потягніть&lt;/b&gt; щоб обертатии вибрані об'єкти. </translation>
     </message>
 </context>
 <context>
@@ -5733,7 +5733,7 @@ separations</source>
     <message>
         <location filename="../src/tool_scale.cpp" line="205"></location>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Scale the selected objects. </source>
-        <translation>&lt;b&gt;Потягніть&lt;/b&gt; щоб масштабувати вибраний об'єкт.</translation>
+        <translation>&lt;b&gt;Потягніть&lt;/b&gt; щоб масштабувати вибраний об'єкт. </translation>
     </message>
 </context>
 <context>
@@ -6100,8 +6100,7 @@ to jump over the lazy dog
 Заспівав шпак півню:
 - Ти не вмієш так як я,
 Так як ти, не вмію я!
-1234567890
-</translation>
+1234567890</translation>
     </message>
     <message>
         <location filename="../src/symbol_setting_dialog.cpp" line="483"></location>
@@ -6197,12 +6196,12 @@ to jump over the lazy dog
     <message>
         <location filename="../src/template_adjust.cpp" line="572"></location>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set the template position of the pass point. </source>
-        <translation>&lt;b&gt;Клік&lt;/b&gt;: Вкажіть характерну точку на підложці.</translation>
+        <translation>&lt;b&gt;Клік&lt;/b&gt;: Вкажіть характерну точку на підложці. </translation>
     </message>
     <message>
         <location filename="../src/template_adjust.cpp" line="597"></location>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set the map position of the pass point. </source>
-        <translation>&lt;b&gt;Клік&lt;/b&gt;: Вкажіть відповідну точку на карті.</translation>
+        <translation>&lt;b&gt;Клік&lt;/b&gt;: Вкажіть відповідну точку на карті. </translation>
     </message>
 </context>
 <context>
@@ -6210,7 +6209,7 @@ to jump over the lazy dog
     <message>
         <location filename="../src/template_adjust.cpp" line="806"></location>
         <source>&lt;b&gt;Click&lt;/b&gt;: Delete pass points. </source>
-        <translation>&lt;b&gt;Клік&lt;/b&gt;: Видалити точку суміщення.</translation>
+        <translation>&lt;b&gt;Клік&lt;/b&gt;: Видалити точку суміщення. </translation>
     </message>
 </context>
 <context>
@@ -6218,7 +6217,7 @@ to jump over the lazy dog
     <message>
         <location filename="../src/template_adjust.cpp" line="681"></location>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move pass points. </source>
-        <translation>&lt;b&gt;Потягніть&lt;/b&gt; щоб перемістити точку суміщення.</translation>
+        <translation>&lt;b&gt;Потягніть&lt;/b&gt; щоб перемістити точку суміщення. </translation>
     </message>
 </context>
 <context>
