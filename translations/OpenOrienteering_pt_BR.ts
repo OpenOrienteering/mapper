@@ -711,18 +711,18 @@ Tradução em Português-BR feita por João Manoel Franco.</translation>
     <message>
         <location filename="../src/tool_cutout.cpp" line="134"></location>
         <source>&lt;b&gt;%1&lt;/b&gt;: Clip the whole map. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: Recortar todo o mapa.</translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Recortar todo o mapa. </translation>
     </message>
     <message>
         <location filename="../src/tool_cutout.cpp" line="135"></location>
         <location filename="../src/tool_cutout.cpp" line="139"></location>
         <source>&lt;b&gt;%1+Click or drag&lt;/b&gt;: Select the objects to be clipped. </source>
-        <translation>&lt;b&gt;%1+Clicar ou arrastar&lt;/b&gt;: Selecionar os objetos a recortar.</translation>
+        <translation>&lt;b&gt;%1+Clicar ou arrastar&lt;/b&gt;: Selecionar os objetos a recortar. </translation>
     </message>
     <message>
         <location filename="../src/tool_cutout.cpp" line="140"></location>
         <source>&lt;b&gt;%1&lt;/b&gt;: Clip the selected objects. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: Recortar os objetos selecionados.</translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Recortar os objetos selecionados. </translation>
     </message>
 </context>
 <context>
