@@ -1306,7 +1306,7 @@
     <message>
         <location filename="../src/file_format.cpp" line="87"></location>
         <source>Format (%1) does not support export</source>
-        <translation type="unfinished"></translation>
+        <translation>Формат (%1) не поддерживает экспорт</translation>
     </message>
 </context>
 <context>
@@ -1479,7 +1479,7 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="338"></location>
         <source>%1 x %2</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 x %2</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="339"></location>
@@ -1570,7 +1570,7 @@
     <message>
         <location filename="../src/core/georeferencing.cpp" line="235"></location>
         <source>Invalid grid scale factor: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Некорректный коэффициент масштабирования сетки: %1</translation>
     </message>
     <message>
         <location filename="../src/core/georeferencing.cpp" line="272"></location>
@@ -1663,7 +1663,7 @@
         <location filename="../src/gui/georeferencing_dialog.cpp" line="104"></location>
         <source>Grid scale factor:</source>
         <extracomment>The grid scale factor is the ratio between a length in the grid plane and the corresponding length on the curved earth model. It is applied as a factor to ground distances to get grid plane distances.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Коэффициент масштабирования сетки:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="107"></location>
