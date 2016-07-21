@@ -28,7 +28,7 @@ exists($$LRELEASE):exists($$LCONVERT) {
     android: translations.path = /assets/translations
     win32:   translations.path = /translations
     
-    LANGUAGES = cs de en es fi fr hu it ja lv nb pl pt_BR ru sv uk
+    LANGUAGES = cs de en es fi fr hu it ja lv nb nl pl pt_BR ru sv uk
     QT_TRANSLATIONS_PREFIXES = qtbase
     for(lang, LANGUAGES) {
         TRANSLATIONS += OpenOrienteering_$${lang}.ts

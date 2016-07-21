@@ -40,6 +40,7 @@ set(Mapper_TRANS
  OpenOrienteering_ja.ts
  OpenOrienteering_lv.ts
  OpenOrienteering_nb.ts
+ OpenOrienteering_nl.ts
  OpenOrienteering_pl.ts
  OpenOrienteering_pt_BR.ts
  OpenOrienteering_ru.ts

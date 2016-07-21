@@ -128,6 +128,7 @@ QString AboutDialog::about()
 	  << QString::fromLatin1("Vincent Poinsignon")
 	  << QString::fromLatin1("Russell Porter")
 	  << QString::fromLatin1("Christopher Schive")
+	  << QString::fromLatin1("Jan-Gerard van der Toorn")
 	  << QString::fromLatin1("Semyon Yakimov")
 	  << QString::fromLatin1("Aivars Zogla")
 	);
