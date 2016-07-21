@@ -4797,7 +4797,7 @@ utiliser la molette de la souris pour zoomer.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="357"></location>
         <source>Could not load the coordinate reference system '%1'.</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="391"></location>
@@ -5655,7 +5655,7 @@ des couleurs</translation>
     <message>
         <location filename="../src/symbol_dialog_replace.cpp" line="56"></location>
         <source>Keep the symbols' hidden / protected states of the old symbol set</source>
-        <translation>Attribuer le status Cacher/Protégé à l'ancien jeu de symboles.</translation>
+        <translation>Conserver le statut caché/protégé à l'ancien jeu de symboles</translation>
     </message>
     <message>
         <location filename="../src/symbol_dialog_replace.cpp" line="58"></location>
@@ -6816,7 +6816,7 @@ Si vous ne souhaitez pas dessiner sur le modèle, cela ne pose alors aucun probl
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="1010"></location>
         <source>The template will be invisible in the overprinting simulation. Switch to normal view?</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="1143"></location>
