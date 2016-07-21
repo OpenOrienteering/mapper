@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2015 Kai Pastor
+ *    Copyright 2012-2016 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -19,8 +19,8 @@
  */
 
 
-#ifndef _OPENORIENTEERING_TOOL_HELPERS_H_
-#define _OPENORIENTEERING_TOOL_HELPERS_H_
+#ifndef OPENORIENTEERING_TOOL_HELPERS_H
+#define OPENORIENTEERING_TOOL_HELPERS_H
 
 #include <memory>
 #include <set>
@@ -282,8 +282,12 @@ public:
 	/** Includes this helper's drawing region in the given rect. */
 	void includeDirtyRect(QRectF& rect);
 	
-	/** Returns the radius of the visualization in pixels. */
-	inline int getDisplayRadius() const {return (snapped_type != NoSnapping) ? 6 : 0;}
+	/**
+	 * Returns the radius of the visualization in pixels.
+	 * 
+	 * \todo Return a dynamic value, or adjust for screen density.
+	 */
+	inline int getDisplayRadius() const {return (snapped_type != NoSnapping) ? 12 : 0;}
 	
 signals:
 	/** Emitted whenever the snap mark changes position. */
