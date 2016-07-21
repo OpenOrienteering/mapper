@@ -654,12 +654,12 @@
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="251"></location>
         <source>paper coordinates origin</source>
-        <translation>Nulpunt van papier-coördinaten</translation>
+        <translation>nulpunt van papier-coördinaten</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="253"></location>
         <source>projected coordinates origin</source>
-        <translation>Nulpunt van geprojecteerde coördinaten</translation>
+        <translation>nulpunt van geprojecteerde coördinaten</translation>
     </message>
 </context>
 <context>
@@ -2692,14 +2692,14 @@
     <message>
         <location filename="../src/template_track.cpp" line="547"></location>
         <source>Position track at view center</source>
-        <translation>Positioneer ("track") in het midden van het beeld</translation>
+        <translation>Positioneer spoor ("track") in het midden van het beeld</translation>
     </message>
 </context>
 <context>
     <name>MAC_APPLICATION_MENU</name>
     <message>
         <source>Services</source>
-        <translation type="vanished">Services</translation>
+        <translation>Ondersteunende functies</translation>
     </message>
     <message>
         <source>Hide %1</source>
@@ -3881,7 +3881,7 @@ Geimporteerde gegevens schalen?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="1567"></location>
         <source>There are no objects in clipboard which could be pasted!</source>
-        <translation>Er zijn geen objecten op het klembord die ingevoegd kunnen worden.</translation>
+        <translation>Er zijn geen objecten op het klembord die ingevoegd kunnen worden!</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1597"></location>
@@ -5403,7 +5403,7 @@ graphics</translation>
         <source>Raster
 graphics</source>
         <translation>Raster
-graphics</translation>
+afbeelding</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="181"></location>
@@ -6671,7 +6671,7 @@ Indien dat toch niet de bedoeling is, is dat geen probleem.</translation>
     <message>
         <location filename="../src/template_image.cpp" line="610"></location>
         <source>World file</source>
-        <translation>World file</translation>
+        <translation>World-file</translation>
     </message>
     <message>
         <location filename="../src/template_image.cpp" line="612"></location>
