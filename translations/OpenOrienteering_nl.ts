@@ -1401,7 +1401,7 @@
     <message>
         <location filename="../src/file_format.cpp" line="87"></location>
         <source>Format (%1) does not support export</source>
-        <translation type="unfinished"></translation>
+        <translation>Exporteren naar bestandsformaat (%1) is niet mogelijk</translation>
     </message>
 </context>
 <context>
@@ -5017,7 +5017,7 @@ en gebruik -indien beschikbaar- het muiswiel om uit te vergroten/verkleinen.</tr
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="81"></location>
         <source>In area symbol %1 '%2': %3</source>
-        <translation type="unfinished">... %1 '%2': %3</translation>
+        <translation>In vlak-symbool %1 '%2': %3</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1520"></location>
