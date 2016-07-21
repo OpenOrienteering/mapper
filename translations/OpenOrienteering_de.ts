@@ -3605,7 +3605,7 @@ Importierte Daten auf Kartenmaßstab umrechnen?</translation>
         <location filename="../src/map_editor.cpp" line="942"></location>
         <source>Copy position to clipboard.</source>
         <translatorcomment>\todo Update English version</translatorcomment>
-        <translation>Kopiert die Koordinaten der Position in die Zwischenablage</translation>
+        <translation>Kopiert die Koordinaten der Position in die Zwischenablage.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1108"></location>
