@@ -676,7 +676,7 @@
     <message>
         <location filename="../src/tool_cut_hole.cpp" line="241"></location>
         <source>&lt;b&gt;Click or drag&lt;/b&gt;: Start drawing the hole. </source>
-        <translation>&lt;b&gt;Kattint vagy megragad&lt;/b&gt;: Kezdje rajzolni a lyukat.</translation>
+        <translation>&lt;b&gt;Kattint vagy megragad&lt;/b&gt;: Kezdje rajzolni a lyukat. </translation>
     </message>
 </context>
 <context>
