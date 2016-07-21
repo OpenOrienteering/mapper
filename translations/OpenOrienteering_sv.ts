@@ -407,7 +407,7 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="216"></location>
         <source>Professional printing</source>
-        <translation>Professionell utskrift</translation>
+        <translation type="unfinished">Professionell utskrift</translation>
     </message>
 </context>
 <context>
@@ -539,17 +539,17 @@
     <message>
         <location filename="../src/symbol_combined.cpp" line="407"></location>
         <source>- Private line symbol -</source>
-        <translation>- Privat linje symbol -</translation>
+        <translation>- Personlig linjesymbol -</translation>
     </message>
     <message>
         <location filename="../src/symbol_combined.cpp" line="408"></location>
         <source>- Private area symbol -</source>
-        <translation>- Privat ytsymbol -</translation>
+        <translation type="unfinished">- Personlig ytsymbol -</translation>
     </message>
     <message>
         <location filename="../src/symbol_combined.cpp" line="414"></location>
         <source>Edit private symbol...</source>
-        <translation>Redigera privat symbol...</translation>
+        <translation type="unfinished">Redigera personlig symbol...</translation>
     </message>
     <message>
         <location filename="../src/symbol_combined.cpp" line="434"></location>
@@ -559,12 +559,12 @@
     <message>
         <location filename="../src/symbol_combined.cpp" line="487"></location>
         <source>Change from public to private symbol</source>
-        <translation>Ändra från offentlig till privat symbol</translation>
+        <translation type="unfinished">Ändra från offentlig till personlig symbol</translation>
     </message>
     <message>
         <location filename="../src/symbol_combined.cpp" line="488"></location>
         <source>Take the old symbol as template for the private symbol?</source>
-        <translation>Använd den gamla symbolen som mall för den privata symbolen?</translation>
+        <translation type="unfinished">Använd den gamla symbolen som mall för den personliga symbolen?</translation>
     </message>
     <message>
         <source>Symbol count:</source>
@@ -591,7 +591,7 @@
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="56"></location>
         <source>Snap to grid</source>
-        <translation>Fäst till rutnät</translation>
+        <translation>Snappa till rutnät</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="57"></location>
@@ -636,7 +636,7 @@
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="68"></location>
         <source>Additional rotation (counter-clockwise):</source>
-        <translation>Ytteligare rotation (motsols):</translation>
+        <translation>Ytterligare rotation (motsols):</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="69"></location>
@@ -646,7 +646,7 @@
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="121"></location>
         <source>Positioning</source>
-        <translation>Positionering</translation>
+        <translation type="unfinished">Positionering</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="74"></location>
@@ -714,7 +714,7 @@
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="249"></location>
         <source>Origin at: %1</source>
-        <translation>Ursprung vid: %1</translation>
+        <translation type="unfinished">Ursprung vid: %1</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="251"></location>
