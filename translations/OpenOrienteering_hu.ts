@@ -6215,12 +6215,12 @@ separations</source>
     <message>
         <location filename="../src/symbol_setting_dialog.cpp" line="114"></location>
         <source>bounding box on origin</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/symbol_setting_dialog.cpp" line="115"></location>
         <source>center of gravity on origin</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/symbol_setting_dialog.cpp" line="233"></location>
@@ -6783,7 +6783,7 @@ De ha nem akarsz a háttérre rajzolni, akkor ez nem jelent problémát.</transl
     <message>
         <location filename="../src/template_track.cpp" line="170"></location>
         <source>Projects the track using an orthographic projection with center at the track's coordinate average. Allows adjustment of the transformation and setting the map georeferencing using the adjusted track position.</source>
-        <translation>Projects the track using an orthographic projection with center at the track's coordinate average. Allows adjustment of the transformation and setting the map georeferencing using the adjusted track position.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/template_track.cpp" line="398"></location>
