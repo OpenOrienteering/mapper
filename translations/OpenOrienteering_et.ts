@@ -7,7 +7,7 @@
         <location filename="../src/gui/autosave_dialog.cpp" line="45"></location>
         <location filename="../src/gui/autosave_dialog.cpp" line="51"></location>
         <source>%n bytes</source>
-        <translation type="unfinished"><numerusform></numerusform>
+        <translation><numerusform></numerusform>
         <numerusform></numerusform>
         </translation></message>
 </context>
@@ -34,8 +34,8 @@
     <message numerus="yes">
         <location filename="../src/template_track.cpp" line="479"></location>
         <source>%n path object(s) could not be imported (reason: missing coordinates).</source>
-        <translation type="unfinished"><numerusform></numerusform>
-        <numerusform></numerusform>
+        <translation type="unfinished"><numerusform>%n objekti ei saanud importida (põhjus: puuduvad koordinaadid)</numerusform>
+        <numerusform>%n objekte ei saanud importida (põhjus: puuduvad koordinaadid)</numerusform>
         </translation></message>
 </context>
 </TS>
