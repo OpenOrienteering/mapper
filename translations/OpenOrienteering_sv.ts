@@ -32,7 +32,7 @@
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="158"></location>
         <source>This program is free software: you can redistribute it and/or modify it under the terms of the &lt;a %1&gt;GNU General Public License (GPL), version&amp;nbsp;3&lt;/a&gt;, as published by the Free Software Foundation.</source>
-        <translation>Detta program är öppen mjukvara: du kan sprida den och/eller modifiera den under vilkoren i &lt;a %1&gt;GNU General Public License (GPL), version&amp;nbsp;3&lt;/a&gt;, publicerad av Free Software Foundation.</translation>
+        <translation>Detta program är öppen mjukvara: du kan sprida den och/eller modifiera den under villkoren i &lt;a %1&gt;GNU General Public License (GPL), version&amp;nbsp;3&lt;/a&gt;, publicerad av Free Software Foundation.</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="163"></location>
@@ -75,7 +75,7 @@
     <message>
         <location filename="../src/gui/widgets/action_grid_bar.cpp" line="53"></location>
         <source>Show remaining items</source>
-        <translation>Visa återstående</translation>
+        <translation type="unfinished">Visa återstående</translation>
     </message>
 </context>
 <context>
@@ -306,7 +306,7 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="45"></location>
         <source>Edit map color</source>
-        <translation>Redigera kartfärg.</translation>
+        <translation>Redigera kartfärg</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="62"></location>
@@ -316,7 +316,7 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="71"></location>
         <source>Mixture of spot colors (screens and overprint):</source>
-        <translation>Mix av dekorfärger (skärmar och övertryck):</translation>
+        <translation type="unfinished">Mix av dekorfärger (skärmar och övertryck):</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="86"></location>
@@ -372,12 +372,12 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="171"></location>
         <source>Calculate from CMYK color</source>
-        <translation>Beräkna från CMYK färg</translation>
+        <translation>Beräkna från CMYK-färg</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="176"></location>
         <source>Custom RGB color:</source>
-        <translation>Egen RGB färg:</translation>
+        <translation>Egen RGB-färg:</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="182"></location>
@@ -5092,11 +5092,9 @@ zooma med scrollhjulet om tillgängligt.</translation>
     <message numerus="yes">
         <location filename="../src/file_format_ocad8.cpp" line="145"></location>
         <source>%n color separation(s) were skipped, reason: Import disabled.</source>
-        <translation>
-            <numerusform>%n färgseperationer skippades, anledning: importering avstängd.</numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>%n färgseperation(-er) skippades, anledning: importering avstängd.</numerusform>
+        <numerusform>%n färgseperation(-er) skippades, anledning: importering avstängd.</numerusform>
+        </translation></message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="150"></location>
         <source>Could not load the spot color definitions, error: %1</source>
