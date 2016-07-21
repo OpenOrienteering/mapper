@@ -75,7 +75,7 @@
     <message>
         <location filename="../src/gui/widgets/action_grid_bar.cpp" line="53"></location>
         <source>Show remaining items</source>
-        <translation type="unfinished">Visa återstående</translation>
+        <translation>Visa återstående delar</translation>
     </message>
 </context>
 <context>
@@ -4554,22 +4554,22 @@ valda</translation>
         <location filename="../src/map_editor.cpp" line="2232"></location>
         <location filename="../src/map_editor.cpp" line="2234"></location>
         <source>Select at least one object and a fitting, different symbol to activate this tool.</source>
-        <translation>Välj minst ett objekt och en annan symbol för att använda detta verktyg.</translation>
+        <translation>Välj minst ett objekt och en annan, passande, symbol för att använda detta verktyg.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2234"></location>
         <source>Fill the selected line(s) or create a border for the selected area(s).</source>
-        <translation>Fyller den valda linjen eller skapar en kantlinje för den valda ytan.</translation>
+        <translation>Fyll den valda linjen eller skapa en kantlinje för vald yta.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2239"></location>
         <source>Places evenly spaced point objects along an existing path object</source>
-        <translation>Plaserar jämnt fördelade punktobjekt längs ett befintligt linjeobjekt</translation>
+        <translation>Placerar jämnt fördelade punktobjekt längs ett befintligt linjeobjekt</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2239"></location>
         <source>Select at least one path object and a single point symbol to activate this tool.</source>
-        <translation>Väl minst ett linjeobjekt och ett punktobjekt, för att aktivera detta verktyg.</translation>
+        <translation>Välj minst ett linjeobjekt och ett punktobjekt, för att aktivera detta verktyg.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2354"></location>
@@ -4599,7 +4599,7 @@ valda</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="2948"></location>
         <source>Intersection failed.</source>
-        <translation>Delning misslyckades.</translation>
+        <translation type="unfinished">Delning misslyckades.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2954"></location>
@@ -4614,7 +4614,7 @@ valda</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="2969"></location>
         <source>Merging holes failed.</source>
-        <translation>Ihop slagning av hål misslyckades.</translation>
+        <translation>Ihopslagning av hål misslyckades.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="3258"></location>
@@ -4624,7 +4624,7 @@ valda</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="3258"></location>
         <source>Are you sure you want to delete all temporary GPS markers? This cannot be undone.</source>
-        <translation>Är du säker på att du vill radera alla temporära GPS punkter? Detta går inte att ångra.</translation>
+        <translation>Är du säker på att du vill radera alla temporära GPS-punkter? Detta går inte att ångra.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="3372"></location>
@@ -4640,7 +4640,7 @@ valda</translation>
         <location filename="../src/map_editor.cpp" line="3432"></location>
         <location filename="../src/map_editor.cpp" line="3492"></location>
         <source>Enter the name of the map part:</source>
-        <translation>Infoga namnet på kartdelen:</translation>
+        <translation>Skriv in namnet på kartdelen:</translation>
     </message>
     <message>
         <source>Do you want to remove map part "%1" and all its objects? This cannot be undone.</source>
@@ -4665,7 +4665,7 @@ valda</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="3614"></location>
         <source>Paint free-handedly on a template</source>
-        <translation>Rita på firhand på en bakgrundsbild</translation>
+        <translation>Rita på fri hand på en bakgrundsbild</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="3616"></location>
@@ -4675,7 +4675,7 @@ valda</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="3745"></location>
         <source>Import %1, GPX, OSM or DXF file</source>
-        <translation>Importera %1, GPX, OSM eller DXF filer</translation>
+        <translation>Importera %1, GPX-, OSM- eller DXF-fil</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="3749"></location>
@@ -4736,7 +4736,7 @@ valda</translation>
     <message>
         <location filename="../src/core/map_printer.cpp" line="1215"></location>
         <source>Processing separations of page %1...</source>
-        <translation>Bearbetnings separationer av sidan %1...</translation>
+        <translation>Bearbetar separering av sidan %1...</translation>
     </message>
     <message>
         <location filename="../src/core/map_printer.cpp" line="1216"></location>
