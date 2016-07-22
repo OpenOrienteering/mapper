@@ -1,6 +1,6 @@
 /*
- *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2013-2015 Kai Pastor
+ *    Copyright 2012-2014 Thomas Schöps
+ *    Copyright 2013-2016 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -455,8 +455,7 @@ bool EditPointTool::keyRelease(QKeyEvent* event)
 		angle_helper->setActive(false);
 		if (editingInProgress())
 		{
-			calcConstrainedPositions(cur_map_widget);
-			dragMove();
+			reapplyConstraintHelpers();
 		}
 	}
 	else if (event->key() == Qt::Key_Shift)
@@ -464,8 +463,7 @@ bool EditPointTool::keyRelease(QKeyEvent* event)
 		snap_helper->setFilter(SnappingToolHelper::NoSnapping);
 		if (editingInProgress())
 		{
-			calcConstrainedPositions(cur_map_widget);
-			dragMove();
+			reapplyConstraintHelpers();
 		}
 	}
 	else if (event->key() == Qt::Key_Space)

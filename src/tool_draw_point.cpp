@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012-2014 Thomas Schöps
- *    Copyright 2013-2015 Kai Pastor
+ *    Copyright 2013-2016 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -211,11 +211,7 @@ bool DrawPointTool::keyPress(QKeyEvent* event)
 		
 	case Qt::Key_Shift:
 		snap_helper->setFilter(SnappingToolHelper::AllTypes);
-		calcConstrainedPositions(cur_map_widget);
-		if (isDragging())
-			dragMove();
-		else if (!editor->isInMobileMode())
-			mouseMove();
+		reapplyConstraintHelpers();
 		break;
 		
 	default:
@@ -237,11 +233,7 @@ bool DrawPointTool::keyRelease(QKeyEvent* event)
 		
 	case Qt::Key_Shift:
 		snap_helper->setFilter(SnappingToolHelper::NoSnapping);
-		calcConstrainedPositions(cur_map_widget);
-		if (isDragging())
-			dragMove();
-		else if (!editor->isInMobileMode())
-			mouseMove();
+		reapplyConstraintHelpers();
 		break;
 		
 	default:

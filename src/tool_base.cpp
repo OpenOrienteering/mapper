@@ -1,6 +1,6 @@
 /*
- *    Copyright 2012, 2013, 2014 Thomas Schöps
- *    Copyright 2013, 2014 Kai Pastor
+ *    Copyright 2012-2014 Thomas Schöps
+ *    Copyright 2013-2016 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -434,9 +434,9 @@ void MapEditorToolBase::finishEditing(bool delete_objects, bool create_undo_step
 	MapEditorTool::finishEditing();
 }
 
-void MapEditorToolBase::activateAngleHelperWhileEditing(bool enable)
+
+void MapEditorToolBase::reapplyConstraintHelpers()
 {
-	angle_helper->setActive(enable);
 	calcConstrainedPositions(cur_map_widget);
 	if (dragging)
 		dragMove();
@@ -444,16 +444,18 @@ void MapEditorToolBase::activateAngleHelperWhileEditing(bool enable)
 		mouseMove();
 }
 
+void MapEditorToolBase::activateAngleHelperWhileEditing(bool enable)
+{
+	angle_helper->setActive(enable);
+	reapplyConstraintHelpers();
+}
+
 void MapEditorToolBase::activateSnapHelperWhileEditing(bool enable)
 {
 	Q_UNUSED(enable);
 	
 	snap_helper->setFilter(SnappingToolHelper::AllTypes);
-	calcConstrainedPositions(cur_map_widget);
-	if (dragging)
-		dragMove();
-	else
-		mouseMove();
+	reapplyConstraintHelpers();
 }
 
 void MapEditorToolBase::calcConstrainedPositions(MapWidget* widget)

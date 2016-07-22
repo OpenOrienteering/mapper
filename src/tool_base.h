@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2014 Thomas Schöps
- *    Copyright 2013, 2014 Kai Pastor
+ *    Copyright 2013-2016 Kai Pastor
  *    
  *    This file is part of OpenOrienteering.
  * 
@@ -19,8 +19,8 @@
  */
 
 
-#ifndef _OPENORIENTEERING_TOOL_BASE_H_
-#define _OPENORIENTEERING_TOOL_BASE_H_
+#ifndef OPENORIENTEERING_TOOL_BASE_H
+#define OPENORIENTEERING_TOOL_BASE_H
 
 #include <vector>
 
@@ -126,6 +126,15 @@ protected:
 	virtual bool keyRelease(QKeyEvent* event);
 	
 	// Helper methods
+	
+	/**
+	 * Applies the constraint helpers and generates a pointer event.
+	 * 
+	 * This function re-applies the constraint helpers to the current pointer
+	 * position. Then it calls either mouseMove() or dragMove(), depending on
+	 * the current state.
+	 */
+	void reapplyConstraintHelpers();
 	
 	/// Call this before editing the selected objects, and finish/abortEditing() afterwards.
 	/// Takes care of the preview renderables handling, map dirty flag, and objects edited signal.
