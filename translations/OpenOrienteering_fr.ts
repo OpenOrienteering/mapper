@@ -27,7 +27,7 @@
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="170"></location>
         <source>The OpenOrienteering developers in alphabetical order:</source>
-        <translation>Les développeurs d'OpenOrienteering par ordre alphabétique:</translation>
+        <translation>Les développeurs d'OpenOrienteering par ordre alphabétique :</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="171"></location>
@@ -49,7 +49,7 @@
     </message>
     <message>
         <source>Developers in alphabetical order:</source>
-        <translation type="vanished">Les développeurs dans l'ordre alphabétique:</translation>
+        <translation>Développeurs par ordre alphabétique :</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="172"></location>
@@ -104,7 +104,7 @@
     <message>
         <location filename="../src/symbol_area.cpp" line="753"></location>
         <source>Minimum size:</source>
-        <translation>Taille minimale:</translation>
+        <translation>Taille minimale :</translation>
     </message>
     <message>
         <location filename="../src/symbol_area.cpp" line="760"></location>
@@ -143,7 +143,7 @@
     <message>
         <location filename="../src/symbol_area.cpp" line="843"></location>
         <source>Line spacing:</source>
-        <translation>Espacement des lignes:</translation>
+        <translation>Espacement des lignes :</translation>
     </message>
     <message>
         <location filename="../src/symbol_area.cpp" line="846"></location>
@@ -153,7 +153,7 @@
     <message>
         <location filename="../src/symbol_area.cpp" line="848"></location>
         <source>Pattern interval:</source>
-        <translation>Espacement des motifs:</translation>
+        <translation>Espacement des motifs :</translation>
     </message>
     <message>
         <location filename="../src/symbol_area.cpp" line="853"></location>
@@ -1343,7 +1343,7 @@
     <message>
         <location filename="../src/file_format.cpp" line="87"></location>
         <source>Format (%1) does not support export</source>
-        <translation type="unfinished"></translation>
+        <translation>Le format (%1) ne permet pas l'export</translation>
     </message>
 </context>
 <context>
@@ -2268,7 +2268,7 @@
     <message>
         <location filename="../src/file_format.cpp" line="79"></location>
         <source>Format (%1) does not support import</source>
-        <translation type="unfinished"></translation>
+        <translation>Le format (%1) ne permet pas l'import</translation>
     </message>
 </context>
 <context>
@@ -3729,127 +3729,127 @@ Voulez-vous redimensionner le fichier importé?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="736"></location>
         <source>Ctrl+A</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+A</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="737"></location>
         <source>Ctrl+Shift+A</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+Shift+A</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="738"></location>
         <source>Ctrl+I</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+I</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="740"></location>
         <source>G</source>
-        <translation type="unfinished"></translation>
+        <translation>G</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="753"></location>
         <source>E</source>
-        <translation type="unfinished">E</translation>
+        <translation>E</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="754"></location>
         <source>L</source>
-        <translation type="unfinished"></translation>
+        <translation>L</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="755"></location>
         <source>S</source>
-        <translation type="unfinished"></translation>
+        <translation>S</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="756"></location>
         <source>P</source>
-        <translation type="unfinished"></translation>
+        <translation>P</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="757"></location>
         <source>O</source>
-        <translation type="unfinished"></translation>
+        <translation>O</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="758"></location>
         <source>Ctrl+R</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+R</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="759"></location>
         <source>F</source>
-        <translation type="unfinished"></translation>
+        <translation>F</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="760"></location>
         <source>T</source>
-        <translation type="unfinished"></translation>
+        <translation>T</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="762"></location>
         <source>D</source>
-        <translation type="unfinished"></translation>
+        <translation>D</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="763"></location>
         <source>Ctrl+G</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+G</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="764"></location>
         <source>Ctrl+F</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+F</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="765"></location>
         <source>Ctrl+D</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+D</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="766"></location>
         <source>C</source>
-        <translation type="unfinished"></translation>
+        <translation>C</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="767"></location>
         <source>R</source>
-        <translation type="unfinished"></translation>
+        <translation>R</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="768"></location>
         <source>Z</source>
-        <translation type="unfinished"></translation>
+        <translation>Z</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="769"></location>
         <source>K</source>
-        <translation type="unfinished"></translation>
+        <translation>K</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="770"></location>
         <source>H</source>
-        <translation type="unfinished"></translation>
+        <translation>H</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="771"></location>
         <source>M</source>
-        <translation type="unfinished"></translation>
+        <translation>M</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="772"></location>
         <source>U</source>
-        <translation type="unfinished"></translation>
+        <translation>U</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="773"></location>
         <source>N</source>
-        <translation type="unfinished">N</translation>
+        <translation>N</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="774"></location>
         <source>Ctrl+M</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl + M</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="880"></location>
@@ -3859,7 +3859,7 @@ Voulez-vous redimensionner le fichier importé?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="882"></location>
         <source>Merge area holes</source>
-        <translation>Réunir les trous</translation>
+        <translation>Fusionner les trous</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="883"></location>
@@ -3874,7 +3874,7 @@ Voulez-vous redimensionner le fichier importé?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="885"></location>
         <source>Cutout</source>
-        <translation>Découpage extérieur</translation>
+        <translation>Découpe</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="886"></location>
@@ -4797,7 +4797,7 @@ utiliser la molette de la souris pour zoomer.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="357"></location>
         <source>Could not load the coordinate reference system '%1'.</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de charger le système de géoréférencement '%1'.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="391"></location>
@@ -4850,7 +4850,7 @@ utiliser la molette de la souris pour zoomer.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1112"></location>
         <source>Unsupported framing line style '%1'.</source>
-        <translation type="unfinished">Style de ligne '%1' n'est pas-supportée.</translation>
+        <translation>Le style de ligne '%1' n'est pas supporté.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1184"></location>
@@ -4911,7 +4911,7 @@ utiliser la molette de la souris pour zoomer.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="81"></location>
         <source>In area symbol %1 '%2': %3</source>
-        <translation type="unfinished"></translation>
+        <translation>Dans le symbole surface %1 '%2' : %3</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1555"></location>
@@ -5327,7 +5327,7 @@ utiliser la molette de la souris pour zoomer.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="105"></location>
         <source>Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Propriétés</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="168"></location>
@@ -6269,7 +6269,7 @@ des couleurs</translation>
     <message>
         <location filename="../src/symbol_setting_dialog.cpp" line="103"></location>
         <source>Template:</source>
-        <translation type="unfinished"></translation>
+        <translation>Modèle :</translation>
     </message>
     <message>
         <location filename="../src/symbol_setting_dialog.cpp" line="104"></location>
@@ -6320,7 +6320,7 @@ traverser les jattes de kiwis
     <message>
         <location filename="../src/symbol_setting_dialog.cpp" line="483"></location>
         <source>- unnamed -</source>
-        <translation type="unfinished"></translation>
+        <translation>-sans nom-</translation>
     </message>
 </context>
 <context>
@@ -6816,7 +6816,7 @@ Si vous ne souhaitez pas dessiner sur le modèle, cela ne pose alors aucun probl
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="1010"></location>
         <source>The template will be invisible in the overprinting simulation. Switch to normal view?</source>
-        <translation type="unfinished"></translation>
+        <translation>Le modèle sera invisible dans la simulation de surimpression. Basculer en mode normal ?</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="1143"></location>
@@ -7301,7 +7301,7 @@ La version maximale supportée est la version %2.</translation>
         <location filename="../src/util.cpp" line="313"></location>
         <source>See more...</source>
         <extracomment>This "See more" is displayed as a link to the manual in What's-this tooltips.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>En savoir plus...</translation>
     </message>
 </context>
 <context>
