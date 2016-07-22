@@ -188,7 +188,7 @@
     <message>
         <location filename="../src/symbol_area.cpp" line="872"></location>
         <source>Angle:</source>
-        <translation>Angle:</translation>
+        <translation>Angle :</translation>
     </message>
     <message>
         <location filename="../src/symbol_area.cpp" line="874"></location>
@@ -511,7 +511,7 @@
     <message>
         <location filename="../src/symbol_combined.cpp" line="414"></location>
         <source>Edit private symbol...</source>
-        <translation>Éditer le symbole utilisé en combinaison ...</translation>
+        <translation>Éditer le symbole personnel...</translation>
     </message>
     <message>
         <location filename="../src/symbol_combined.cpp" line="434"></location>
@@ -521,7 +521,7 @@
     <message>
         <location filename="../src/symbol_combined.cpp" line="487"></location>
         <source>Change from public to private symbol</source>
-        <translation>Changer ce symbole en symbole de combinaison</translation>
+        <translation>Modifier le statut du symbole de public à personnel</translation>
     </message>
     <message>
         <location filename="../src/symbol_combined.cpp" line="488"></location>
@@ -677,12 +677,12 @@
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="251"></location>
         <source>paper coordinates origin</source>
-        <translation>l'origine des coordonnées papier</translation>
+        <translation>Origine des coordonnées papier</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="253"></location>
         <source>projected coordinates origin</source>
-        <translation>l'origine des coordonnées projetées</translation>
+        <translation>origine des coordonnées projetées</translation>
     </message>
 </context>
 <context>
@@ -1012,7 +1012,7 @@
         <location filename="../src/tool_draw_point.cpp" line="325"></location>
         <location filename="../src/tool_draw_point.cpp" line="337"></location>
         <source>&lt;b&gt;Angle:&lt;/b&gt; %1° </source>
-        <translation>&lt;b&gt;Angle:&lt;/b&gt; %1° </translation>
+        <translation>&lt;b&gt;Angle :&lt;/b&gt; %1° </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_point.cpp" line="326"></location>
@@ -1799,7 +1799,7 @@
         <location filename="../src/gui/georeferencing_dialog.cpp" line="187"></location>
         <location filename="../src/gui/select_crs_dialog.cpp" line="84"></location>
         <source>&amp;Coordinate reference system:</source>
-        <translation>&amp;Système de coordonnées de référence:</translation>
+        <translation>&amp;Système de coordonnées de référence :</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="194"></location>
@@ -3962,7 +3962,7 @@ Voulez-vous redimensionner le fichier importé?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="942"></location>
         <source>Copy position</source>
-        <translation></translation>
+        <translation>Copier la position</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="942"></location>
@@ -5792,7 +5792,7 @@ des couleurs</translation>
     <message>
         <location filename="../src/tool_rotate_pattern.cpp" line="157"></location>
         <source>&lt;b&gt;Angle:&lt;/b&gt; %1° </source>
-        <translation>&lt;b&gt;Angle:&lt;/b&gt; %1° </translation>
+        <translation>&lt;b&gt;Angle :&lt;/b&gt; %1° </translation>
     </message>
     <message>
         <location filename="../src/tool_rotate_pattern.cpp" line="158"></location>
@@ -5810,7 +5810,7 @@ des couleurs</translation>
     <message>
         <location filename="../src/tool_rotate.cpp" line="185"></location>
         <source>&lt;b&gt;Rotation:&lt;/b&gt; %1° </source>
-        <translation>&lt;b&gt;Rotation:&lt;/b&gt; %1° </translation>
+        <translation>&lt;b&gt;Rotation :&lt;/b&gt; %1° </translation>
     </message>
     <message>
         <location filename="../src/tool_rotate.cpp" line="186"></location>
@@ -6862,7 +6862,7 @@ Si vous ne souhaitez pas dessiner sur le modèle, cela ne pose alors aucun probl
     <message>
         <location filename="../src/template_position_dock_widget.cpp" line="52"></location>
         <source>Rotation:</source>
-        <translation>Rotation:</translation>
+        <translation>Rotation :</translation>
     </message>
 </context>
 <context>
