@@ -2,3 +2,4 @@
 .gitattributes       export-ignore
 *.omap               binary diff=xmllint
 *.ocd                binary
+*.ts                 binary diff=xmllint
