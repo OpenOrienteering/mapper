@@ -26,16 +26,7 @@ Pull requests are very welcome.
 
 ### Translating
 
-The translations for Mapper are stored in `translations/OpenOrienteering_{LANGUAGE}.ts`.
-The best way to edit those files is by using [Qt Linguist for translation](http://doc.qt.io/qt-5/linguist-translators.html).
-The translations can also be edited with any XML editor.
-
-Adding a new translation is done by making a new copy of `OpenOrienteering_template.ts`
-and replacing `template` in the file name with the matching language code.
-The new file also has to be added to `translations/CMakeLists.txt`.
-
-Some strings such as basic buttons and colors get their translation from the
-Qt Framework. For translating those see [Qt Localization](https://wiki.qt.io/Qt_Localization).
+Translations can be edited online on [Weblate](https://hosted.weblate.org/projects/openorienteering/mapper/). You can register/login with your Github account. Find out more about translation in our [wiki](https://github.com/OpenOrienteering/mapper/wiki/Translation).
 
 
 ### Writing Documentation
