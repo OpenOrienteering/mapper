@@ -31,62 +31,87 @@
 #include "../../tool_helpers.h"
 
 
-TextObjectAlignmentDockWidget::TextObjectAlignmentDockWidget(TextObject* object, int horz_default, int vert_default, TextObjectEditorHelper* text_editor, QWidget* parent)
- : QDockWidget(tr("Alignment"), parent), object(object), text_editor(text_editor)
+namespace
+{
+
+struct AlignmentOption
+{
+	int alignment;
+	const char* text;
+	const char* icon;
+};
+
+const AlignmentOption horizontal_options[] = { 
+    { TextObject::AlignLeft,    QT_TRANSLATE_NOOP("TextObjectAlignmentDockWidget", "Left"),    ":/images/text-align-left.png" },
+    { TextObject::AlignHCenter, QT_TRANSLATE_NOOP("TextObjectAlignmentDockWidget", "Center"),  ":/images/text-align-hcenter.png" },
+    { TextObject::AlignRight,   QT_TRANSLATE_NOOP("TextObjectAlignmentDockWidget", "Right"),   ":/images/text-align-right.png" },
+};
+
+const AlignmentOption vertical_options[] = { 
+    { TextObject::AlignTop,     QT_TRANSLATE_NOOP("TextObjectAlignmentDockWidget", "Top"),     ":/images/text-align-top.png" },
+    { TextObject::AlignVCenter, QT_TRANSLATE_NOOP("TextObjectAlignmentDockWidget", "Center"),  ":/images/text-align-vcenter.png" },
+    { TextObject::AlignBaseline,QT_TRANSLATE_NOOP("TextObjectAlignmentDockWidget", "Baseline"),":/images/text-align-baseline.png" },
+    { TextObject::AlignBottom,  QT_TRANSLATE_NOOP("TextObjectAlignmentDockWidget", "Bottom"),  ":/images/text-align-bottom.png" },
+};
+
+}
+
+
+TextObjectAlignmentDockWidget::TextObjectAlignmentDockWidget(TextObjectEditorHelper* text_editor, QWidget* parent)
+: QDockWidget { tr("Alignment"), parent }
+, text_editor { text_editor }
+, horizontal_alignment { text_editor->getObject()->getHorizontalAlignment() }
+, vertical_alignment   { text_editor->getObject()->getVerticalAlignment() }
 {
 	setFocusPolicy(Qt::NoFocus);
 	setFeatures(features() & ~QDockWidget::DockWidgetClosable);
 	
-	QWidget* widget = new QWidget();
+	QHBoxLayout* horizontal_layout = new QHBoxLayout();
+	horizontal_layout->setMargin(0);
+	horizontal_layout->setSpacing(0);
+	horizontal_layout->addStretch(1);
+	for (size_t i = 0; i < 3; ++i)
+	{
+		auto& entry = horizontal_options[i];
+		auto button = makeButton(QString::fromLatin1(entry.icon), tr(entry.text));
+		if (entry.alignment == horizontal_alignment)
+			button->setChecked(true);
+		horizontal_layout->addWidget(button);
+		connect(button, &QPushButton::clicked, this, &TextObjectAlignmentDockWidget::horizontalClicked);
+		horizontal_buttons[i] = button;
+	}
+	horizontal_layout->addStretch(1);
 	
-	addHorzButton(0, QString::fromLatin1(":/images/text-align-left.png"), horz_default);
-	addHorzButton(1, QString::fromLatin1(":/images/text-align-hcenter.png"), horz_default);
-	addHorzButton(2, QString::fromLatin1(":/images/text-align-right.png"), horz_default);
-	
-	addVertButton(0, QString::fromLatin1(":/images/text-align-top.png"), vert_default);
-	addVertButton(1, QString::fromLatin1(":/images/text-align-vcenter.png"), vert_default);
-	addVertButton(2, QString::fromLatin1(":/images/text-align-baseline.png"), vert_default);
-	addVertButton(3, QString::fromLatin1(":/images/text-align-bottom.png"), vert_default);
-	
-	QHBoxLayout* horz_layout = new QHBoxLayout();
-	horz_layout->setMargin(0);
-	horz_layout->setSpacing(0);
-	horz_layout->addStretch(1);
-	for (int i = 0; i < 3; ++i)
-		horz_layout->addWidget(horz_buttons[i]);
-	horz_layout->addStretch(1);
-	
-	QHBoxLayout* vert_layout = new QHBoxLayout();
-	vert_layout->setMargin(0);
-	vert_layout->setSpacing(0);
-	for (int i = 0; i <4; ++i)
-		vert_layout->addWidget(vert_buttons[i]);
+	QHBoxLayout* vertical_layout = new QHBoxLayout();
+	vertical_layout->setMargin(0);
+	vertical_layout->setSpacing(0);
+	for (size_t i = 0; i < 4; ++i)
+	{
+		auto& entry = vertical_options[i];
+		auto button = makeButton(QString::fromLatin1(entry.icon), tr(entry.text));
+		if (entry.alignment == vertical_alignment)
+			button->setChecked(true);
+		vertical_layout->addWidget(button);
+		connect(button, &QPushButton::clicked, this, &TextObjectAlignmentDockWidget::verticalClicked);
+		vertical_buttons[i] = button;
+	}
 	
 	QVBoxLayout* layout = new QVBoxLayout();
 	layout->setMargin(0);
 	layout->setSpacing(0);
-	layout->addLayout(horz_layout);
-	layout->addLayout(vert_layout);
+	layout->addLayout(horizontal_layout);
+	layout->addLayout(vertical_layout);
+	
+	QWidget* widget = new QWidget();
 	widget->setLayout(layout);
-	
 	setWidget(widget);
-	
-	QSignalMapper* horz_mapper = new QSignalMapper(this);
-	connect(horz_mapper, SIGNAL(mapped(int)), this, SLOT(horzClicked(int)));
-	for (int i = 0; i < 3; ++i)
-	{
-		horz_mapper->setMapping(horz_buttons[i], i);
-		connect(horz_buttons[i], SIGNAL(clicked()), horz_mapper, SLOT(map()));
-	}
-	
-	QSignalMapper* vert_mapper = new QSignalMapper(this);
-	connect(vert_mapper, SIGNAL(mapped(int)), this, SLOT(vertClicked(int)));
-	for (int i = 0; i < 4; ++i)
-	{
-		vert_mapper->setMapping(vert_buttons[i], i);
-		connect(vert_buttons[i], SIGNAL(clicked()), vert_mapper, SLOT(map()));
-	}
 }
+
+TextObjectAlignmentDockWidget::~TextObjectAlignmentDockWidget()
+{
+	// nothing, not inlined
+}
+
 
 bool TextObjectAlignmentDockWidget::event(QEvent* event)
 {
@@ -112,58 +137,47 @@ void TextObjectAlignmentDockWidget::keyReleaseEvent(QKeyEvent* event)
 		QWidget::keyReleaseEvent(event);
 }
 
-void TextObjectAlignmentDockWidget::addHorzButton(int index, const QString& icon_path, int horz_default)
+void TextObjectAlignmentDockWidget::horizontalClicked()
 {
-	const TextObject::HorizontalAlignment horz_array[] = {TextObject::AlignLeft, TextObject::AlignHCenter, TextObject::AlignRight};
-	const QString tooltips[] = {tr("Left"), tr("Center"), tr("Right")};
-	
-	horz_buttons[index] = new QPushButton(QIcon(icon_path), QString{});
-	horz_buttons[index]->setFocusPolicy(Qt::NoFocus);
-	horz_buttons[index]->setCheckable(true);
-	horz_buttons[index]->setToolTip(tooltips[index]);
-	if (horz_default == horz_array[index])
+	auto alignment = horizontal_alignment;
+	auto const button = sender();
+	for (size_t i = 0; i < 3; ++i)
 	{
-		horz_buttons[index]->setChecked(true);
-		horz_index = index;
-	}	
-}
-
-void TextObjectAlignmentDockWidget::addVertButton(int index, const QString& icon_path, int vert_default)
-{
-	const TextObject::VerticalAlignment vert_array[] = {TextObject::AlignTop, TextObject::AlignVCenter, TextObject::AlignBaseline, TextObject::AlignBottom};
-	const QString tooltips[] = {tr("Top"), tr("Center"), tr("Baseline"), tr("Bottom")};
-	
-	vert_buttons[index] = new QPushButton(QIcon(icon_path), QString{});
-	vert_buttons[index]->setFocusPolicy(Qt::NoFocus);
-	vert_buttons[index]->setCheckable(true);
-	vert_buttons[index]->setToolTip(tooltips[index]);
-	if (vert_default == vert_array[index])
+		if (button == horizontal_buttons[i])
+			alignment = horizontal_options[i].alignment;
+		else
+			horizontal_buttons[i]->setChecked(false);
+	}
+	if (alignment != horizontal_alignment)
 	{
-		vert_buttons[index]->setChecked(true);
-		vert_index = index;
-	}	
+		horizontal_alignment = alignment;
+		emit alignmentChanged(horizontal_alignment, vertical_alignment);
+	}
 }
 
-void TextObjectAlignmentDockWidget::horzClicked(int index)
+void TextObjectAlignmentDockWidget::verticalClicked()
 {
-	for (int i = 0; i < 3; ++i)
-		horz_buttons[i]->setChecked(index == i);
-	horz_index = index;
-	emitAlignmentChanged();
+	auto alignment = vertical_alignment;
+	auto const button = sender();
+	for (size_t i = 0; i < 4; ++i)
+	{
+		if (button == vertical_buttons[i])
+			alignment = vertical_options[i].alignment;
+		else
+			vertical_buttons[i]->setChecked(false);
+	}
+	if (alignment != vertical_alignment)
+	{
+		vertical_alignment = alignment;
+		emit alignmentChanged(horizontal_alignment, vertical_alignment);
+	}
 }
 
-void TextObjectAlignmentDockWidget::vertClicked(int index)
+QPushButton* TextObjectAlignmentDockWidget::makeButton(const QString& icon_path, const QString& text) const
 {
-	for (int i = 0; i < 4; ++i)
-		vert_buttons[i]->setChecked(index == i);
-	vert_index = index;
-	emitAlignmentChanged();
-}
-
-void TextObjectAlignmentDockWidget::emitAlignmentChanged()
-{
-	const TextObject::HorizontalAlignment horz_array[] = {TextObject::AlignLeft, TextObject::AlignHCenter, TextObject::AlignRight};
-	const TextObject::VerticalAlignment vert_array[] = {TextObject::AlignTop, TextObject::AlignVCenter, TextObject::AlignBaseline, TextObject::AlignBottom};
-	
-	emit(alignmentChanged((int)horz_array[horz_index], (int)vert_array[vert_index]));
+	auto button = new QPushButton(QIcon(icon_path), {});
+	button->setToolTip(text);
+	button->setFocusPolicy(Qt::NoFocus);
+	button->setCheckable(true);
+	return button;
 }

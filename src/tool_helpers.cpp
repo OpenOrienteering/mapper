@@ -53,7 +53,7 @@ TextObjectEditorHelper::TextObjectEditorHelper(TextObject* object, MapEditorCont
 	editor->getWindow()->setShortcutsBlocked(true);
 	
 	// Show dock in floating state
-	dock_widget = new TextObjectAlignmentDockWidget(object, (int)object->getHorizontalAlignment(), (int)object->getVerticalAlignment(), this, editor->getWindow());
+	dock_widget = new TextObjectAlignmentDockWidget(this, editor->getWindow());
 	dock_widget->setFloating(true);
 	dock_widget->show();
 	dock_widget->resize(0, 0);

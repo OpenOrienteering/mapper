@@ -29,7 +29,6 @@ QT_BEGIN_NAMESPACE
 class QPushButton;
 QT_END_NAMESPACE
 
-class TextObject;
 class TextObjectEditorHelper;
 
 
@@ -44,32 +43,28 @@ class TextObjectAlignmentDockWidget : public QDockWidget
 {
 Q_OBJECT
 public:
-	TextObjectAlignmentDockWidget(TextObject* object, int horz_default, int vert_default, TextObjectEditorHelper* text_editor, QWidget* parent);
-	virtual QSize sizeHint() const {return QSize(10, 10);}
-	
-	virtual bool event(QEvent* event);
-	virtual void keyPressEvent(QKeyEvent* event);
-	virtual void keyReleaseEvent(QKeyEvent* event);
+	explicit TextObjectAlignmentDockWidget(TextObjectEditorHelper* text_editor, QWidget* parent = nullptr);
+	~TextObjectAlignmentDockWidget() override;
 	
 signals:
-	void alignmentChanged(int horz, int vert);
+	void alignmentChanged(int horizontal, int vertical);
 	
-public slots:
-	void horzClicked(int index);
-	void vertClicked(int index);
+protected:
+	bool event(QEvent* event) override;
+	void keyPressEvent(QKeyEvent* event) override;
+	void keyReleaseEvent(QKeyEvent* event) override;
+	
+	void horizontalClicked();
+	void verticalClicked();
+	
+	QPushButton* makeButton(const QString& icon_path, const QString& text) const;
 	
 private:
-	void addHorzButton(int index, const QString& icon_path, int horz_default);
-	void addVertButton(int index, const QString& icon_path, int vert_default);
-	void emitAlignmentChanged();
-	
-	QPushButton* horz_buttons[3];
-	QPushButton* vert_buttons[4];
-	int horz_index;
-	int vert_index;
-	
-	TextObject* object;
 	TextObjectEditorHelper* text_editor;
+	QPushButton* horizontal_buttons[3];
+	QPushButton* vertical_buttons[4];
+	int horizontal_alignment;
+	int vertical_alignment;
 };
 
 #endif
