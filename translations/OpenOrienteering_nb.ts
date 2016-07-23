@@ -5,27 +5,27 @@
     <name>AboutDialog</name>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="94"></location>
-        <location filename="../src/gui/about_dialog.cpp" line="154"></location>
+        <location filename="../src/gui/about_dialog.cpp" line="156"></location>
         <source>About %1</source>
         <translation>Om %1</translation>
     </message>
     <message>
-        <location filename="../src/gui/about_dialog.cpp" line="158"></location>
+        <location filename="../src/gui/about_dialog.cpp" line="160"></location>
         <source>This program is free software: you can redistribute it and/or modify it under the terms of the &lt;a %1&gt;GNU General Public License (GPL), version&amp;nbsp;3&lt;/a&gt;, as published by the Free Software Foundation.</source>
         <translation>Dette programmet er fri programvare: du kan distribuere det videre og/eller endre det iht. betingelsene i &lt;a %1&gt;GNU General Public License (GPL), version&amp;nbsp;3&lt;/a&gt;, as published by the Free Software Foundation.</translation>
     </message>
     <message>
-        <location filename="../src/gui/about_dialog.cpp" line="163"></location>
+        <location filename="../src/gui/about_dialog.cpp" line="165"></location>
         <source>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License (GPL), version&amp;nbsp;3, for &lt;a %1&gt;more details&lt;/a&gt;.</source>
         <translation>Dette programmet er distribuert i håp om at det vil være nyttig, men UTEN NOEN GARANTI; selv uten en garanti om SALGBARHET eller EGNETHET FOR ET VISST FORMÅL. Se GNU General Public License (GPL), versjon&amp;nbsp;3, for &lt;a %1&gt;flere detaljer&lt;/a&gt;.</translation>
     </message>
     <message>
-        <location filename="../src/gui/about_dialog.cpp" line="168"></location>
+        <location filename="../src/gui/about_dialog.cpp" line="170"></location>
         <source>&lt;a %1&gt;All about licenses, copyright notices, conditions and disclaimers.&lt;/a&gt;</source>
         <translation>&lt;a %1&gt;Alt om lisenser, copyright info, betingelser og fraskrivningsklausul.&lt;/a&gt;</translation>
     </message>
     <message>
-        <location filename="../src/gui/about_dialog.cpp" line="170"></location>
+        <location filename="../src/gui/about_dialog.cpp" line="172"></location>
         <source>The OpenOrienteering developers in alphabetical order:</source>
         <translation>OpenOrienteering-utviklere i alfabetisk rekkefølge:</translation>
     </message>
@@ -38,12 +38,12 @@
         <translation type="vanished">Tilleggsinformasjon</translation>
     </message>
     <message>
-        <location filename="../src/gui/about_dialog.cpp" line="171"></location>
+        <location filename="../src/gui/about_dialog.cpp" line="173"></location>
         <source>(project initiator)</source>
         <translation>(prosjektets initiativtaker)</translation>
     </message>
     <message>
-        <location filename="../src/gui/about_dialog.cpp" line="156"></location>
+        <location filename="../src/gui/about_dialog.cpp" line="158"></location>
         <source>A free software for drawing orienteering maps</source>
         <translation>Fri programvare for tegning av orienteringskart</translation>
     </message>
@@ -57,7 +57,7 @@
         <translation type="vanished">Utviklere i alfabetisk rekkefølge:</translation>
     </message>
     <message>
-        <location filename="../src/gui/about_dialog.cpp" line="172"></location>
+        <location filename="../src/gui/about_dialog.cpp" line="174"></location>
         <source>For contributions, thanks to:</source>
         <translation>For bidrag, takk til:</translation>
     </message>
@@ -2078,7 +2078,7 @@
     </message>
     <message>
         <source>No map files found!&lt;br/&gt;&lt;br/&gt;Copy a map file to /OOMapper or /sdcard/OOMapper to list it here.</source>
-        <translation>Ingen kartfiler funnet!&lt;br/&gt;&lt;br/&gt;Kopier en kartfil til/OOMapper eller /sdcard/OOMapper for å liste den her.</translation>
+        <translation type="vanished">Ingen kartfiler funnet!&lt;br/&gt;&lt;br/&gt;Kopier en kartfil til/OOMapper eller /sdcard/OOMapper for å liste den her.</translation>
     </message>
 </context>
 <context>
@@ -2272,10 +2272,10 @@
         <location filename="../src/file_format_ocad8.cpp" line="116"></location>
         <location filename="../src/file_format_ocad8.cpp" line="118"></location>
         <location filename="../src/file_format_ocad8.cpp" line="121"></location>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="2020"></location>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="2023"></location>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="2027"></location>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="2057"></location>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1985"></location>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1988"></location>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1992"></location>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="2022"></location>
         <source>Could not read file: %1</source>
         <translation>Kan ikke lese filen: %1</translation>
     </message>
@@ -2496,7 +2496,7 @@
         <location filename="../src/symbol_line.cpp" line="2263"></location>
         <location filename="../src/symbol_line.cpp" line="2723"></location>
         <location filename="../src/file_format_ocad8.cpp" line="596"></location>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1197"></location>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1162"></location>
         <source>Start symbol</source>
         <translation>Startsymbol</translation>
     </message>
@@ -2511,7 +2511,7 @@
         <location filename="../src/symbol_line.cpp" line="1661"></location>
         <location filename="../src/symbol_line.cpp" line="2263"></location>
         <location filename="../src/symbol_line.cpp" line="2723"></location>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1204"></location>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1169"></location>
         <source>End symbol</source>
         <translation>Endesymbol</translation>
     </message>
@@ -2521,7 +2521,7 @@
         <location filename="../src/symbol_line.cpp" line="2263"></location>
         <location filename="../src/symbol_line.cpp" line="2723"></location>
         <location filename="../src/file_format_ocad8.cpp" line="590"></location>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1190"></location>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1155"></location>
         <source>Dash symbol</source>
         <translation>Styresymbol</translation>
     </message>
@@ -4836,117 +4836,117 @@ rull musehjulet for å zoome.</translation>
         <translation>I tekstsymbol %1 '%2': %3</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="357"></location>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="350"></location>
         <source>Could not load the coordinate reference system '%1'.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="384"></location>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="391"></location>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="404"></location>
         <source>Spot color information was ignored.</source>
         <translation>Spotfargeinformasjon ble utelatt.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="534"></location>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="519"></location>
         <source>Unable to import symbol %1.%2 "%3": %4</source>
         <translation>Kunne ikke importere symbol %1.%2 "%3": %4</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="538"></location>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="523"></location>
         <source>Unsupported type "%1".</source>
         <translation>Ikke støttet type "%1".</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="637"></location>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="616"></location>
         <source>Unable to import template: "%1" is not a supported template type.</source>
         <translation>Klarte ikke å importere bakgrunnsbilde "%1" er ikke en støttet  bildetype.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="955"></location>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="920"></location>
         <source>Unsupported line style '%1'.</source>
         <translation>Ikke støttet linjetype '%1'.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="992"></location>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="957"></location>
         <source>Different lengths for pointed caps at begin (%1 mm) and end (%2 mm) are not supported. Using %3 mm.</source>
         <translatorcomment>FInner ikke oversettelse for pointed caps</translatorcomment>
         <translation>Ulike lengder for pointed caps i start (%1 mm) og slutt (%2 mm) er ikke støttet. Bruker %3 mm.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1008"></location>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="973"></location>
         <source>The dash pattern cannot be imported correctly.</source>
         <translation>Linjestilen kan ikke importeres korrekt.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1023"></location>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1055"></location>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="988"></location>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1020"></location>
         <source>The dash pattern's end length (%1 mm) cannot be imported correctly. Using %2 mm.</source>
         <translation>Linjestilens endelengde (%1 mm) kan ikke importeres korrekt. Bruker %2 mm.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1030"></location>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1070"></location>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="995"></location>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1035"></location>
         <source>The dash pattern's end gap (%1 mm) cannot be imported correctly. Using %2 mm.</source>
         <translation>Linjestilens endeavstand (%1 mm) kan ikke importeres korrekt. Bruker %2 mm.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1112"></location>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1077"></location>
         <source>Unsupported framing line style '%1'.</source>
         <translation>Ikke støttet rammestil '%1'.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1184"></location>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1149"></location>
         <source>Skipped secondary point symbol.</source>
         <translation>Hoppet over sekundært punktsymbol.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1220"></location>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1185"></location>
         <source>Suppressing dash symbol at line ends.</source>
         <translation>Utelater streksymbol i lijeendene.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="936"></location>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1289"></location>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="901"></location>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1254"></location>
         <source>This symbol cannot be saved as a proper OCD symbol again.</source>
         <translation>Dette symbolet kan ikke lagres som et riktig OCD-symbol igjen.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1931"></location>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1896"></location>
         <source>Justified alignment is not supported.</source>
         <translation>Blokkjustering er ikke støttet.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1946"></location>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1911"></location>
         <source>Vertical alignment '%1' is not supported.</source>
         <translation>Vertikal tilpasning '%1' er ikke støttet.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1918"></location>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1883"></location>
         <source>Ignoring custom weight (%1).</source>
         <translation>Ignorerer valgt strektykkelse (%1).</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1955"></location>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1920"></location>
         <source>Custom character spacing may be incorrect.</source>
         <translation>Valgt bokstavmellomrom kan være feil.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1960"></location>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1925"></location>
         <source>Ignoring custom word spacing (%1 %).</source>
         <translation>Ignorerer valgt ordmellomrom (%1 %).</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1984"></location>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1949"></location>
         <source>Ignoring custom indents (%1/%2).</source>
         <translation>Ignorerer valgte innrykk (%1/%2).</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="2006"></location>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1971"></location>
         <source>Ignoring text framing (mode %1).</source>
         <translation>Ignorerer tekstrammer (modus %1).</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1378"></location>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1343"></location>
         <source>Line text symbols are not yet supported. Marking the symbol as hidden.</source>
         <translation>Linjetekstsymboler er ikke støttet ennå. Markerer symbolet som skjult.</translation>
     </message>
@@ -4956,28 +4956,28 @@ rull musehjulet for å zoome.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1555"></location>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1520"></location>
         <source>Unable to load object</source>
         <translation>Klarte ikke å laste inn objekt</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1565"></location>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1530"></location>
         <source>Unable to import rectangle object</source>
         <translation>Klarte ikke å importere rektangelobjekt</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1606"></location>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1571"></location>
         <source>Not importing text symbol, couldn't figure out path' (npts=%1): %2</source>
         <translation>Importerte ikke tekstsymbol, kunne ikke få tak i filsti' (ntps=%1): %2</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1893"></location>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1858"></location>
         <source>Trying to import a text object with unknown coordinate format</source>
         <translation>Forsøker å importere et tekstobjekt med ukjent koordinatformat</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="2023"></location>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="2027"></location>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1988"></location>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1992"></location>
         <source>Invalid data.</source>
         <translation>Ugyldig verdi.</translation>
     </message>
@@ -4986,7 +4986,7 @@ rull musehjulet for å zoome.</translation>
         <translation type="vanished">Utestet filimport for format: OCD %1</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="2058"></location>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="2023"></location>
         <source>OCD files of version %1 are not supported!</source>
         <translation>OCD-filer i versjon %1 er ikke støttet!</translation>
     </message>
