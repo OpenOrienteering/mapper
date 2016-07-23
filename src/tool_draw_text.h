@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2013, 2014 Kai Pastor
+ *    Copyright 2012-2016 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -19,21 +19,14 @@
  */
 
 
-#ifndef _OPENORIENTEERING_DRAW_TEXT_H_
-#define _OPENORIENTEERING_DRAW_TEXT_H_
-
-#include <QDockWidget>
+#ifndef OPENORIENTEERING_DRAW_TEXT_H
+#define OPENORIENTEERING_DRAW_TEXT_H
 
 #include "tool.h"
 
-QT_BEGIN_NAMESPACE
-class QPushButton;
-QT_END_NAMESPACE
 
 class TextObject;
-struct TextObjectLineInfo;
 class TextObjectEditorHelper;
-class TextObjectAlignmentDockWidget;
 class MapRenderables;
 class Symbol;
 
@@ -88,42 +81,6 @@ protected:
 	TextObjectEditorHelper* text_editor;
 	
 	QScopedPointer<MapRenderables> renderables;
-};
-
-/**
- * Widget which is shown while the DrawTextTool is active, allowing the set
- * the text alignment.
- */
-class TextObjectAlignmentDockWidget : public QDockWidget
-{
-Q_OBJECT
-public:
-	TextObjectAlignmentDockWidget(TextObject* object, int horz_default, int vert_default, TextObjectEditorHelper* text_editor, QWidget* parent);
-	virtual QSize sizeHint() const {return QSize(10, 10);}
-	
-	virtual bool event(QEvent* event);
-	virtual void keyPressEvent(QKeyEvent* event);
-	virtual void keyReleaseEvent(QKeyEvent* event);
-	
-signals:
-	void alignmentChanged(int horz, int vert);
-	
-public slots:
-	void horzClicked(int index);
-	void vertClicked(int index);
-	
-private:
-	void addHorzButton(int index, const QString& icon_path, int horz_default);
-	void addVertButton(int index, const QString& icon_path, int vert_default);
-	void emitAlignmentChanged();
-	
-	QPushButton* horz_buttons[3];
-	QPushButton* vert_buttons[4];
-	int horz_index;
-	int vert_index;
-	
-	TextObject* object;
-	TextObjectEditorHelper* text_editor;
 };
 
 #endif
