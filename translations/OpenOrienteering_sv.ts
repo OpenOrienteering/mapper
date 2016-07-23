@@ -719,7 +719,7 @@
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="251"></location>
         <source>paper coordinates origin</source>
-        <translation type="unfinished">papperskoordinaters origo</translation>
+        <translation>papperskoordinaters origo</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="253"></location>
