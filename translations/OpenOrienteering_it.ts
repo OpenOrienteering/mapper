@@ -5,42 +5,42 @@
     <name>AboutDialog</name>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="94"></location>
-        <location filename="../src/gui/about_dialog.cpp" line="154"></location>
+        <location filename="../src/gui/about_dialog.cpp" line="156"></location>
         <source>About %1</source>
         <translation>Informazioni %1</translation>
     </message>
     <message>
-        <location filename="../src/gui/about_dialog.cpp" line="168"></location>
+        <location filename="../src/gui/about_dialog.cpp" line="170"></location>
         <source>&lt;a %1&gt;All about licenses, copyright notices, conditions and disclaimers.&lt;/a&gt;</source>
         <translation>&lt;a %1&gt;Tutto su licenze, note di copyright, condizioni e liberatorie.&lt;/a&gt;</translation>
     </message>
     <message>
-        <location filename="../src/gui/about_dialog.cpp" line="170"></location>
+        <location filename="../src/gui/about_dialog.cpp" line="172"></location>
         <source>The OpenOrienteering developers in alphabetical order:</source>
         <translation>Gli sviluppatori di OpenOrienteering in ordine alfabetico:</translation>
     </message>
     <message>
-        <location filename="../src/gui/about_dialog.cpp" line="171"></location>
+        <location filename="../src/gui/about_dialog.cpp" line="173"></location>
         <source>(project initiator)</source>
         <translation>(iniziatore del progetto)</translation>
     </message>
     <message>
-        <location filename="../src/gui/about_dialog.cpp" line="156"></location>
+        <location filename="../src/gui/about_dialog.cpp" line="158"></location>
         <source>A free software for drawing orienteering maps</source>
         <translation>Un software libero per il disegno delle mappe per orienteering</translation>
     </message>
     <message>
-        <location filename="../src/gui/about_dialog.cpp" line="158"></location>
+        <location filename="../src/gui/about_dialog.cpp" line="160"></location>
         <source>This program is free software: you can redistribute it and/or modify it under the terms of the &lt;a %1&gt;GNU General Public License (GPL), version&amp;nbsp;3&lt;/a&gt;, as published by the Free Software Foundation.</source>
         <translation>Queasto programma è software libero: può essere redistribuito e/o modificato in accordo ai termini della &lt;a %1&gt;GNU General Public License (GPL), versione&amp;nbsp;3&lt;/a&gt;, come pubblicato dalla Free Software Foundation.</translation>
     </message>
     <message>
-        <location filename="../src/gui/about_dialog.cpp" line="163"></location>
+        <location filename="../src/gui/about_dialog.cpp" line="165"></location>
         <source>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License (GPL), version&amp;nbsp;3, for &lt;a %1&gt;more details&lt;/a&gt;.</source>
         <translation>Questo programma è distribuito nella speranza che sia utile, ma SENZA NESSUNA GARANZIA; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. Vedere la GNU General Public License (GPL), versione&amp;nbsp;3, per &lt;a %1&gt;ulteriori dettagli&lt;/a&gt;.</translation>
     </message>
     <message>
-        <location filename="../src/gui/about_dialog.cpp" line="172"></location>
+        <location filename="../src/gui/about_dialog.cpp" line="174"></location>
         <source>For contributions, thanks to:</source>
         <translation>Per i contributori: grazie a:</translation>
     </message>
@@ -2157,10 +2157,10 @@
         <location filename="../src/file_format_ocad8.cpp" line="116"></location>
         <location filename="../src/file_format_ocad8.cpp" line="118"></location>
         <location filename="../src/file_format_ocad8.cpp" line="121"></location>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="2020"></location>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="2023"></location>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="2027"></location>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="2057"></location>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1985"></location>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1988"></location>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1992"></location>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="2022"></location>
         <source>Could not read file: %1</source>
         <translation>Impossibile leggere il file: %1</translation>
     </message>
@@ -2375,7 +2375,7 @@
         <location filename="../src/symbol_line.cpp" line="2263"></location>
         <location filename="../src/symbol_line.cpp" line="2723"></location>
         <location filename="../src/file_format_ocad8.cpp" line="596"></location>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1197"></location>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1162"></location>
         <source>Start symbol</source>
         <translation>Simbolo iniziale</translation>
     </message>
@@ -2390,7 +2390,7 @@
         <location filename="../src/symbol_line.cpp" line="1661"></location>
         <location filename="../src/symbol_line.cpp" line="2263"></location>
         <location filename="../src/symbol_line.cpp" line="2723"></location>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1204"></location>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1169"></location>
         <source>End symbol</source>
         <translation>Simbolo di termine</translation>
     </message>
@@ -2400,7 +2400,7 @@
         <location filename="../src/symbol_line.cpp" line="2263"></location>
         <location filename="../src/symbol_line.cpp" line="2723"></location>
         <location filename="../src/file_format_ocad8.cpp" line="590"></location>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1190"></location>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1155"></location>
         <source>Dash symbol</source>
         <translation>Simbolo di tratteggio</translation>
     </message>
@@ -4674,116 +4674,116 @@ se disponibile si può zoomare con la rotella del mouse.</translation>
         <translation>Nei simboli testol %1 '%2': %3</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="357"></location>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="350"></location>
         <source>Could not load the coordinate reference system '%1'.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="384"></location>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="391"></location>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="404"></location>
         <source>Spot color information was ignored.</source>
         <translation>Le informazioni sul colore di calamaio sono state ignorate.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="534"></location>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="519"></location>
         <source>Unable to import symbol %1.%2 "%3": %4</source>
         <translation>Impossibile importare i simboli %1.%2 "%3": %4</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="538"></location>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="523"></location>
         <source>Unsupported type "%1".</source>
         <translation>Tipo non supprtato "%1".</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="637"></location>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="616"></location>
         <source>Unable to import template: "%1" is not a supported template type.</source>
         <translation>Impossibile importare il template/sfondo: "%1" non è un tipo supportato.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="955"></location>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="920"></location>
         <source>Unsupported line style '%1'.</source>
         <translation>Stile di linea non supportato '%1'.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="992"></location>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="957"></location>
         <source>Different lengths for pointed caps at begin (%1 mm) and end (%2 mm) are not supported. Using %3 mm.</source>
         <translation>Lunghezze differenti per i terminali appuntiti di inizio (%1 mm) e di fine (%2 mm) non sono supportate. Viene usato %3.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1008"></location>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="973"></location>
         <source>The dash pattern cannot be imported correctly.</source>
         <translation>Lo schema di tratteggio non può essere importato correttamente.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1023"></location>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1055"></location>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="988"></location>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1020"></location>
         <source>The dash pattern's end length (%1 mm) cannot be imported correctly. Using %2 mm.</source>
         <translation>La lunghezza finale del motivo di tratteggio (%1 mm) non può essere importata correttamente. Verrà usato %2 mm.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1030"></location>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1070"></location>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="995"></location>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1035"></location>
         <source>The dash pattern's end gap (%1 mm) cannot be imported correctly. Using %2 mm.</source>
         <translation>La lunghezza finale della spaziatura di tratteggio (%1 mm) non può essere importata correttamente. Verrà usato %2 mm.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1112"></location>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1077"></location>
         <source>Unsupported framing line style '%1'.</source>
         <translation>Stile di incorniciatura linea non supportato '%1'.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1184"></location>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1149"></location>
         <source>Skipped secondary point symbol.</source>
         <translation>Simbolo punto secondario Saltato.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1220"></location>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1185"></location>
         <source>Suppressing dash symbol at line ends.</source>
         <translation>Soppressione dei simboli tratteggio alle estremità della linea.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="936"></location>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1289"></location>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="901"></location>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1254"></location>
         <source>This symbol cannot be saved as a proper OCD symbol again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1931"></location>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1896"></location>
         <source>Justified alignment is not supported.</source>
         <translation>Allineamento giustificato non supportato.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1946"></location>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1911"></location>
         <source>Vertical alignment '%1' is not supported.</source>
         <translation>L'allineamento verticale '%1' non è supportato.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1918"></location>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1883"></location>
         <source>Ignoring custom weight (%1).</source>
         <translation>Pesatura custom ignorata (%1).</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1955"></location>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1920"></location>
         <source>Custom character spacing may be incorrect.</source>
         <translation>La spaziatura custom dei caratteri potrebbe non essere corretta.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1960"></location>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1925"></location>
         <source>Ignoring custom word spacing (%1 %).</source>
         <translation>La paziatura custom delle parole viene ignorata (%1 %).</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1984"></location>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1949"></location>
         <source>Ignoring custom indents (%1/%2).</source>
         <translation>L'indentazione custom viene ignorata (%1/%2).</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="2006"></location>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1971"></location>
         <source>Ignoring text framing (mode %1).</source>
         <translation>L'incorniciatura del testo viene ignorata (modo %1).</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1378"></location>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1343"></location>
         <source>Line text symbols are not yet supported. Marking the symbol as hidden.</source>
         <translation>I simboli "line text" non sono supportati. Il simbolo viene marcato come nascosto.</translation>
     </message>
@@ -4793,28 +4793,28 @@ se disponibile si può zoomare con la rotella del mouse.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1555"></location>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1520"></location>
         <source>Unable to load object</source>
         <translation>Impossibile caricare l'oggetto</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1565"></location>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1530"></location>
         <source>Unable to import rectangle object</source>
         <translation>Impossibile importare l'oggetto rettangolo</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1606"></location>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1571"></location>
         <source>Not importing text symbol, couldn't figure out path' (npts=%1): %2</source>
         <translation>Simboli testo non importati, impossibile immaginare il percorso (npts=%1): %2</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1893"></location>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1858"></location>
         <source>Trying to import a text object with unknown coordinate format</source>
         <translation>Tentativo di importare un oggetto testo con formato delle coordinate sconosciuto</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="2023"></location>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="2027"></location>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1988"></location>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1992"></location>
         <source>Invalid data.</source>
         <translation>Dati non validi.</translation>
     </message>
@@ -4823,7 +4823,7 @@ se disponibile si può zoomare con la rotella del mouse.</translation>
         <translation type="vanished">Importatore per il formato OCD %1 non testato</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="2058"></location>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="2023"></location>
         <source>OCD files of version %1 are not supported!</source>
         <translation>I files OCD di versione %1 non sono supportati!</translation>
     </message>

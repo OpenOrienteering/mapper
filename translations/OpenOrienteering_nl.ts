@@ -5,42 +5,42 @@
     <name>AboutDialog</name>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="94"></location>
-        <location filename="../src/gui/about_dialog.cpp" line="155"></location>
+        <location filename="../src/gui/about_dialog.cpp" line="156"></location>
         <source>About %1</source>
         <translation>Over %1</translation>
     </message>
     <message>
-        <location filename="../src/gui/about_dialog.cpp" line="159"></location>
+        <location filename="../src/gui/about_dialog.cpp" line="160"></location>
         <source>This program is free software: you can redistribute it and/or modify it under the terms of the &lt;a %1&gt;GNU General Public License (GPL), version&amp;nbsp;3&lt;/a&gt;, as published by the Free Software Foundation.</source>
         <translation>Deze software is gratis: het mag gedistribueerd en/of aangepast worden onder de voorwaarden &lt;a %1&gt;GNU General Public License (GPL), Version&amp;nbsp;3&lt;/a&gt;, zoals gepubliceerd door de Free Software Foundation.</translation>
     </message>
     <message>
-        <location filename="../src/gui/about_dialog.cpp" line="164"></location>
+        <location filename="../src/gui/about_dialog.cpp" line="165"></location>
         <source>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License (GPL), version&amp;nbsp;3, for &lt;a %1&gt;more details&lt;/a&gt;.</source>
         <translation>Dit programma wordt verspreid in de veronderstelling dat het nuttig zal zijn, maar ZONDER ENIGE GARANTIE; zelfs zonder de impliciete garantie van verkoopbaarheid of geschiktheid voor een bepaald doel. Voor &lt;a %1&gt;details&lt;/a&gt;, zie de GNU General Public License, Version&amp;nbsp;3.</translation>
     </message>
     <message>
-        <location filename="../src/gui/about_dialog.cpp" line="169"></location>
+        <location filename="../src/gui/about_dialog.cpp" line="170"></location>
         <source>&lt;a %1&gt;All about licenses, copyright notices, conditions and disclaimers.&lt;/a&gt;</source>
         <translation>&lt;a %1&gt;Alles over licenties, auteursrechtduidingen, voorwaarden en disclaimers.&lt;/a&gt;</translation>
     </message>
     <message>
-        <location filename="../src/gui/about_dialog.cpp" line="171"></location>
+        <location filename="../src/gui/about_dialog.cpp" line="172"></location>
         <source>The OpenOrienteering developers in alphabetical order:</source>
         <translation>De OpenOrienteering-ontwikkelaars in alfabetische volgorde:</translation>
     </message>
     <message>
-        <location filename="../src/gui/about_dialog.cpp" line="172"></location>
+        <location filename="../src/gui/about_dialog.cpp" line="173"></location>
         <source>(project initiator)</source>
         <translation>(initiatiefnemer)</translation>
     </message>
     <message>
-        <location filename="../src/gui/about_dialog.cpp" line="157"></location>
+        <location filename="../src/gui/about_dialog.cpp" line="158"></location>
         <source>A free software for drawing orienteering maps</source>
         <translation>Een gratis programma voor het tekenen van oriëntatieloop kaarten</translation>
     </message>
     <message>
-        <location filename="../src/gui/about_dialog.cpp" line="173"></location>
+        <location filename="../src/gui/about_dialog.cpp" line="174"></location>
         <source>For contributions, thanks to:</source>
         <translation>Dank voor bijdragen gaat uit naar:</translation>
     </message>
@@ -2699,7 +2699,7 @@
     <name>MAC_APPLICATION_MENU</name>
     <message>
         <source>Services</source>
-        <translation>Ondersteunende functies</translation>
+        <translation type="vanished">Ondersteunende functies</translation>
     </message>
     <message>
         <source>Hide %1</source>

@@ -5,43 +5,43 @@
     <name>AboutDialog</name>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="94"></location>
-        <location filename="../src/gui/about_dialog.cpp" line="154"></location>
+        <location filename="../src/gui/about_dialog.cpp" line="156"></location>
         <source>About %1</source>
         <translation>Sobre %1</translation>
     </message>
     <message>
-        <location filename="../src/gui/about_dialog.cpp" line="168"></location>
+        <location filename="../src/gui/about_dialog.cpp" line="170"></location>
         <source>&lt;a %1&gt;All about licenses, copyright notices, conditions and disclaimers.&lt;/a&gt;</source>
         <translation>&lt;a %1&gt;Tudo sobre licenças, notas de direitos autorais, condições e renúncias.&lt;/a&gt;</translation>
     </message>
     <message>
-        <location filename="../src/gui/about_dialog.cpp" line="170"></location>
+        <location filename="../src/gui/about_dialog.cpp" line="172"></location>
         <source>The OpenOrienteering developers in alphabetical order:</source>
         <translation>Desenvolvedores do OpenOrienteering em ordem alfabética:</translation>
     </message>
     <message>
-        <location filename="../src/gui/about_dialog.cpp" line="171"></location>
+        <location filename="../src/gui/about_dialog.cpp" line="173"></location>
         <source>(project initiator)</source>
         <translation>(iniciador do projeto)</translation>
     </message>
     <message>
-        <location filename="../src/gui/about_dialog.cpp" line="156"></location>
+        <location filename="../src/gui/about_dialog.cpp" line="158"></location>
         <source>A free software for drawing orienteering maps</source>
         <translation>Um programa livre para desenho de mapas de orientação</translation>
     </message>
     <message>
-        <location filename="../src/gui/about_dialog.cpp" line="158"></location>
+        <location filename="../src/gui/about_dialog.cpp" line="160"></location>
         <source>This program is free software: you can redistribute it and/or modify it under the terms of the &lt;a %1&gt;GNU General Public License (GPL), version&amp;nbsp;3&lt;/a&gt;, as published by the Free Software Foundation.</source>
         <translation>Este programa é um aplicativo livre: você pode redistribuir e/ou modificar sob os termos de &lt;a %1&gt;GNU General Public License (GPL), version&amp;nbsp;3&lt;/a&gt;, as published by the Free Software Foundation.
 Tradução em Português-BR feita por João Manoel Franco.</translation>
     </message>
     <message>
-        <location filename="../src/gui/about_dialog.cpp" line="163"></location>
+        <location filename="../src/gui/about_dialog.cpp" line="165"></location>
         <source>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License (GPL), version&amp;nbsp;3, for &lt;a %1&gt;more details&lt;/a&gt;.</source>
         <translation>Este aplicativo é distribuído na esperança de ser útil, mas SEM NENHUMA GARANTIA; nem mesmo a garantia implícita de APTIDÃO PARA COMERCIALIZAÇÃO ou PARA UM DETERMINADO FIM. Veja a GNU General Public License (GPL), versão&amp;nbsp;3, para &lt;a %1&gt;mais detalhes&lt;/a&gt;.</translation>
     </message>
     <message>
-        <location filename="../src/gui/about_dialog.cpp" line="172"></location>
+        <location filename="../src/gui/about_dialog.cpp" line="174"></location>
         <source>For contributions, thanks to:</source>
         <translation>Agradecemos às seguintes pessoas pelas contribuições:</translation>
     </message>
