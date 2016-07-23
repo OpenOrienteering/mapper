@@ -110,6 +110,9 @@ bool MapEditorToolBase::mousePressEvent(QMouseEvent* event, MapCoordF map_coord,
 
 bool MapEditorToolBase::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
+	auto old_constrained_pos     = constrained_pos;
+	auto old_constrained_pos_map = constrained_pos_map;
+	
 	active_modifiers = Qt::KeyboardModifiers(event->modifiers() | (key_button_bar ? key_button_bar->activeModifiers() : 0));
 	cur_pos = event->pos();
 	cur_pos_map = map_coord;
@@ -127,8 +130,13 @@ bool MapEditorToolBase::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, 
 			click_pos_map = cur_pos_map;
 			dragging_canceled = false;
 		}
-		else if ((event->pos() - click_pos).manhattanLength() >= start_drag_distance)
+		else if ((cur_pos - click_pos).manhattanLength() >= start_drag_distance)
 		{
+			// Use the actual click and current position to detect dragging, but
+			// use the constrained variant of the click position as start of the
+			// dragging operation.
+			click_pos     = old_constrained_pos;
+			click_pos_map = old_constrained_pos_map;
 			startDragging();
 		}
 		return true;
