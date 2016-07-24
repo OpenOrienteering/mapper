@@ -35,8 +35,10 @@
 #include "settings.h"
 #include "symbol.h"
 #include "symbol_text.h"
+#include "tool_edit.h"
 #include "tool_helpers.h"
 #include "util.h"
+
 
 #if defined(__MINGW32__) and defined(DrawText)
 // MinGW(64) winuser.h issue
@@ -45,34 +47,23 @@
 
 
 DrawTextTool::DrawTextTool(MapEditorController* editor, QAction* tool_button)
-: MapEditorTool(editor, DrawText, tool_button)
-, drawing_symbol(editor->activeSymbol())
-, dragging(false)
-, preview_text(NULL)
-, text_editor(NULL)
-, renderables(new MapRenderables(map()))
+: MapEditorToolBase { QCursor{ QPixmap(QString::fromLatin1(":/images/cursor-draw-text.png")), 11, 11 }, DrawText, editor, tool_button }
+, drawing_symbol { editor->activeSymbol() }
+, renderables    { map() }
+, preview_text   { new TextObject(), { renderables } }
 {
-	connect(editor, SIGNAL(activeSymbolChanged(const Symbol*)), this, SLOT(setDrawingSymbol(const Symbol*)));
+	connect(editor, &MapEditorController::activeSymbolChanged, this, &DrawTextTool::setDrawingSymbol);
 }
 
-void DrawTextTool::init()
+void DrawTextTool::initImpl()
 {
-	updateStatusText();
-	
-	MapEditorTool::init();
-}
-
-const QCursor& DrawTextTool::getCursor() const
-{
-	static auto const cursor = scaledToScreen(QCursor{ QPixmap(QString::fromLatin1(":/images/cursor-draw-text.png")), 11, 11 });
-	return cursor;
+	preview_text->setSymbol(drawing_symbol, false);
 }
 
 DrawTextTool::~DrawTextTool()
 {
 	if (text_editor)
 		finishEditing();
-	deletePreviewText();
 }
 
 bool DrawTextTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
@@ -80,94 +71,32 @@ bool DrawTextTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapW
 	if (text_editor)
 		return text_editor->mousePressEvent(event, map_coord, widget);
 	
-	if (event->buttons() & Qt::LeftButton)
-	{
-		click_pos = event->pos();
-		click_pos_map = map_coord;
-		cur_pos = event->pos();
-		cur_pos_map = map_coord;
-		dragging = false;
-		
-		return true;
-	}
-	return false;
+	return MapEditorToolBase::mousePressEvent(event, map_coord, widget);
 }
 
 bool DrawTextTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
-	bool mouse_down = event->buttons() & Qt::LeftButton;
-	cur_pos = event->pos();
-	cur_pos_map = map_coord;
-	
 	if (text_editor)
 		return text_editor->mouseMoveEvent(event, map_coord, widget);
 	
-	if (!mouse_down)
-	{
-		setPreviewLetter();
-	}
-	else // if (mouse_down)
-	{
-		if (!dragging && (event->pos() - click_pos).manhattanLength() >= Settings::getInstance().getStartDragDistancePx())
-		{
-			// Start dragging
-			dragging = true;
-		}
-		
-		if (dragging)
-			updateDirtyRect();
-	}
-	return true;
+	return MapEditorToolBase::mouseMoveEvent(event, map_coord, widget);
 }
 
 bool DrawTextTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
 	if (text_editor)
 	{
-		if (text_editor->mouseReleaseEvent(event, map_coord, widget))
-			return true;
-		else
-		{
-			cur_pos = event->pos();
-			cur_pos_map = map_coord;
+		if (!text_editor->mouseReleaseEvent(event, map_coord, widget))
 			finishEditing();
-			return true;
-		}
+		return true;
 	}
 	
-	if (event->button() != Qt::LeftButton)
-		return false;
-	
-	if (dragging)
-	{
-		// Create box text
-		double width = qAbs(cur_pos_map.x() - click_pos_map.x());
-		double height = qAbs(cur_pos_map.y() - click_pos_map.y());
-		auto midpoint = MapCoord { 0.5 * (cur_pos_map + click_pos_map) };
-		preview_text->setBox(midpoint.nativeX(), midpoint.nativeY(), width, height);
-		
-		dragging = false;
-		updateDirtyRect();
-	}
-	else
-		setPreviewLetter();
-	
-	preview_text->setText(QString{});
-
-	// Create the TextObjectEditor
-	text_editor = new TextObjectEditorHelper(preview_text, editor);
-	connect(text_editor, SIGNAL(selectionChanged(bool)), this, SLOT(selectionChanged(bool)));
-	
-	updatePreviewText();
-	updateStatusText();
-	
-	return true;
+	return MapEditorToolBase::mouseReleaseEvent(event, map_coord, widget);
 }
 
 void DrawTextTool::leaveEvent(QEvent* event)
 {
 	Q_UNUSED(event);
-	
 	if (!text_editor)
 		map()->clearDrawingBoundingBox();
 }
@@ -186,13 +115,8 @@ bool DrawTextTool::keyPressEvent(QKeyEvent* event)
 			return true;
 		}
 	}
-	else if (event->key() == Qt::Key_Tab)
-	{
-		deactivate();
-		return true;
-	}
 	
-	return false;
+	return MapEditorToolBase::keyPressEvent(event);
 }
 
 bool DrawTextTool::keyReleaseEvent(QKeyEvent* event)
@@ -203,173 +127,254 @@ bool DrawTextTool::keyReleaseEvent(QKeyEvent* event)
 			return true;
 	}
 	
-	return false;
+	return MapEditorToolBase::keyReleaseEvent(event);
 }
 
-void DrawTextTool::draw(QPainter* painter, MapWidget* widget)
+void DrawTextTool::drawImpl(QPainter* painter, MapWidget* widget)
 {
-	if (preview_text && !dragging)
-	{
-		painter->save();
-		widget->applyMapTransform(painter);
-		
-		float opacity = text_editor ? 1.0f : 0.5f;
-		RenderConfig config = { *map(), widget->getMapView()->calculateViewedRect(widget->viewportToView(widget->rect())), widget->getMapView()->calculateFinalZoomFactor(), RenderConfig::Tool, opacity };
-		renderables->draw(painter, config);
-		
-		if (text_editor)
-			text_editor->draw(painter, widget);
-		
-		painter->restore();
-	}
+	painter->save();
 	
-	if (dragging)
+	if (!preview_text->hasSingleAnchor())
 	{
 		painter->setPen(active_color);
 		painter->setBrush(Qt::NoBrush);
 		
-		QPoint point1 = widget->mapToViewport(click_pos_map).toPoint();
-		QPoint point2 = widget->mapToViewport(cur_pos_map).toPoint();
-		QPoint top_left = QPoint(qMin(point1.x(), point2.x()), qMin(point1.y(), point2.y()));
-		QPoint bottom_right = QPoint(qMax(point1.x(), point2.x()), qMax(point1.y(), point2.y()));
-		
-		painter->drawRect(QRect(top_left, bottom_right - QPoint(1, 1)));
+		auto rect = widget->mapToViewport(QRectF(click_pos_map, constrained_pos_map));
+		painter->drawRect(rect);
+		rect.adjust(1, 1, -1, -1);
 		painter->setPen(qRgb(255, 255, 255));
-		painter->drawRect(QRect(top_left + QPoint(1, 1), bottom_right - QPoint(2, 2)));
+		painter->drawRect(rect);
 	}
+	
+	widget->applyMapTransform(painter);
+	
+	float opacity = text_editor ? 1.0f : 0.5f;
+	RenderConfig config = { *map(), widget->getMapView()->calculateViewedRect(widget->viewportToView(widget->rect())), widget->getMapView()->calculateFinalZoomFactor(), RenderConfig::Tool, opacity };
+	renderables.draw(painter, config);
+	
+	if (text_editor)
+		text_editor->draw(painter, widget);
+	
+	painter->restore();
 }
 
 void DrawTextTool::setDrawingSymbol(const Symbol* symbol)
 {
-	// Avoid using deleted symbol
-	if (map()->findSymbolIndex(drawing_symbol) == -1)
-		symbol = NULL;
-	
-	// End current editing
-	if (text_editor)
+	if (symbol != drawing_symbol)
 	{
-		if (symbol)
-			finishEditing();
-		else
-			abortEditing();
+		// End current editing
+		if (text_editor)
+		{
+			// Avoid using deleted symbol
+			if (map()->findSymbolIndex(drawing_symbol) == -1)
+				abortEditing();
+			else
+				finishEditing();
+		}
+		
+		// Handle new symbol
+		drawing_symbol = symbol;
+		if (!symbol || symbol->isHidden())
+			deactivate();
+		else if (!preview_text->setSymbol(symbol, false))
+			switchToDefaultDrawTool(symbol);
 	}
-	
-	// Handle new symbol
-	drawing_symbol = symbol;
-	deletePreviewText();
-	
-	if (!symbol)
-		deactivate();
-	else if (symbol->isHidden())
-		deactivate();
-	else if (symbol->getType() != Symbol::Text)
-		switchToDefaultDrawTool(symbol);
 }
 
 void DrawTextTool::selectionChanged(bool text_change)
 {
 	Q_UNUSED(text_change);
-	preview_text->setOutputDirty(); // TODO: Check if neccessary here.
+	preview_text->setOutputDirty();
 	updatePreviewText();
 }
 
-void DrawTextTool::updateDirtyRect()
+
+int DrawTextTool::updateDirtyRectImpl(QRectF& rect)
 {
-	QRectF rect;
+	rectIncludeSafe(rect, preview_text->getExtent());
 	
-	if (preview_text && !dragging)
-	{
-		rectIncludeSafe(rect, preview_text->getExtent());
-		if (text_editor)
-			text_editor->includeDirtyRect(rect);
-	}
-	
-	if (dragging)
+	if (isDragging())
 	{
 		rectIncludeSafe(rect, click_pos_map);
-		rectIncludeSafe(rect, cur_pos_map);
+		rectIncludeSafe(rect, constrained_pos_map);
+	}
+	else if (text_editor)
+	{
+		text_editor->includeDirtyRect(rect);
 	}
 	
-	if (rect.isValid())
-		map()->setDrawingBoundingBox(rect, 1, true);
-	else
-		map()->clearDrawingBoundingBox();
+	return 1;
 }
 
 void DrawTextTool::updateStatusText()
 {
+	QString text;
 	if (text_editor)
-		setStatusBarText(tr("<b>%1</b>: Finish editing. ").arg(ModifierKey::escape()));
+	{
+		text = tr("<b>%1</b>: Finish editing. ").arg(ModifierKey::escape());
+	}
 	else
-		setStatusBarText(tr("<b>Click</b>: Create a text object with a single anchor. <b>Drag</b>: Create a text box. "));
+	{
+		text = tr("<b>Click</b>: Create a text object with a single anchor. <b>Drag</b>: Create a text box. ");
+		if (!(active_modifiers & Qt::ShiftModifier))
+			text += EditTool::tr("<b>%1</b>: Snap to existing objects. ").arg(ModifierKey::shift());
+	}
+	setStatusBarText(text);
 }
 
 void DrawTextTool::updatePreviewText()
 {
-	renderables->removeRenderablesOfObject(preview_text, false);
-	preview_text->update();
-	renderables->insertRenderablesOfObject(preview_text);
+	auto text = preview_text.get();
+	renderables.removeRenderablesOfObject(text, false);
+	text->update();
+	renderables.insertRenderablesOfObject(text);
 	updateDirtyRect();
-}
-
-void DrawTextTool::deletePreviewText()
-{
-	if (preview_text)
-	{
-		renderables->removeRenderablesOfObject(preview_text, false);
-		delete preview_text;
-		preview_text = NULL;
-	}
 }
 
 void DrawTextTool::setPreviewLetter()
 {
-	if (!preview_text)
+	if (auto symbol = preview_text->getSymbol())
 	{
-		preview_text = new TextObject(drawing_symbol);
+		preview_text->setText(static_cast<const TextSymbol*>(symbol)->getIconText());
+		updatePreviewText();
 	}
+}
+
+void DrawTextTool::startEditing()
+{
+	snap_helper->setFilter(SnappingToolHelper::NoSnapping);
+	preview_text->setText(QString{});
+
+	// Create the TextObjectEditor
+	text_editor.reset(new TextObjectEditorHelper(preview_text.get(), editor));
+	connect(text_editor.get(), &TextObjectEditorHelper::selectionChanged, this, &DrawTextTool::selectionChanged);
 	
-	preview_text->setText(static_cast<const TextSymbol*>(drawing_symbol)->getIconText());
-	preview_text->setAnchorPosition(cur_pos_map);
+	editor->setEditingInProgress(true);
+	
 	updatePreviewText();
+	updateStatusText();
 }
 
 void DrawTextTool::abortEditing()
 {
-	delete text_editor;
-	text_editor = NULL;
+	text_editor.reset(nullptr);
 	
-	renderables->removeRenderablesOfObject(preview_text, false);
+	renderables.removeRenderablesOfObject(preview_text.get(), false);
 	map()->clearDrawingBoundingBox();
 	
+	editor->setEditingInProgress(false);
+	
+	preview_text->setAnchorPosition(cur_pos_map);
 	setPreviewLetter();
 	updateStatusText();
 }
 
 void DrawTextTool::finishEditing()
 {
-	delete text_editor;
-	text_editor = NULL;
+	text_editor.reset(nullptr);
 	
-	renderables->removeRenderablesOfObject(preview_text, false);
+	renderables.removeRenderablesOfObject(preview_text.get(), false);
 	map()->clearDrawingBoundingBox();
 	
 	if (!preview_text->getText().isEmpty())
 	{
-		int index = map()->addObject(preview_text);
+		auto object = preview_text.release();
+		int index = map()->addObject(object);
 		map()->clearObjectSelection(false);
-		map()->addObjectToSelection(preview_text, true);
+		map()->addObjectToSelection(object, true);
 		map()->setObjectsDirty();
 		
 		DeleteObjectsUndoStep* undo_step = new DeleteObjectsUndoStep(map());
 		undo_step->addObject(index);
 		map()->push(undo_step);
 		
-		preview_text = NULL;
+		preview_text.reset(new TextObject(drawing_symbol));
 	}
 	
-	setPreviewLetter();
+	editor->setEditingInProgress(false);
 	updateStatusText();
+}
+
+
+
+void DrawTextTool::mouseMove()
+{
+	preview_text->setAnchorPosition(constrained_pos_map);
+	setPreviewLetter();
+}
+
+void DrawTextTool::clickPress()
+{
+	preview_text->setAnchorPosition(constrained_pos_map);
+	setPreviewLetter();
+}
+
+void DrawTextTool::clickRelease()
+{
+	startEditing();
+}
+
+void DrawTextTool::dragMove()
+{
+	auto p1 = click_pos_map;
+	auto p2 = constrained_pos_map;
+	auto width = qAbs(p1.x() - p2.x());
+	auto height = qAbs(p1.y() - p2.y());
+	auto midpoint = MapCoord { (p1 + p2) / 2 };
+	preview_text->setBox(midpoint.nativeX(), midpoint.nativeY(), width, height);
+	updatePreviewText();
+}
+
+void DrawTextTool::dragFinish()
+{
+	startEditing();
+}
+
+bool DrawTextTool::keyPress(QKeyEvent* event)
+{
+	switch (event->key())
+	{
+	case Qt::Key_Shift:
+		if (!text_editor)
+		{
+			snap_helper->setFilter(SnappingToolHelper::AllTypes);
+			reapplyConstraintHelpers();
+			return true;
+		}
+		break;
+		
+	case Qt::Key_Tab:
+		deactivate();
+		return true;
+		
+	default:
+		; // nothing
+	}
+	return false;
+}
+
+bool DrawTextTool::keyRelease(QKeyEvent* event)
+{
+	switch (event->key())
+	{
+	case Qt::Key_Shift:
+		if (!text_editor)
+		{
+			snap_helper->setFilter(SnappingToolHelper::NoSnapping);
+			reapplyConstraintHelpers();
+			return true;
+		}
+		break;
+		
+	default:
+		; // nothing
+	}
 	
-	MapEditorTool::finishEditing();
+	return false;
+}
+
+
+void DrawTextTool::objectSelectionChangedImpl()
+{
+	// nothing
 }

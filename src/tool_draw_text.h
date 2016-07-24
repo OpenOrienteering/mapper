@@ -19,10 +19,14 @@
  */
 
 
-#ifndef OPENORIENTEERING_DRAW_TEXT_H
-#define OPENORIENTEERING_DRAW_TEXT_H
+#ifndef OPENORIENTEERING_DRAW_TEXT_TOOL_H
+#define OPENORIENTEERING_DRAW_TEXT_TOOL_H
 
-#include "tool.h"
+#include "tool_base.h"
+
+#include <memory>
+
+#include "renderable.h"
 
 
 class TextObject;
@@ -33,15 +37,15 @@ class Symbol;
 /**
  * Tool to draw text objects.
  */
-class DrawTextTool : public MapEditorTool
+class DrawTextTool : public MapEditorToolBase
 {
 Q_OBJECT
 public:
 	DrawTextTool(MapEditorController* editor, QAction* tool_action);
 	virtual ~DrawTextTool();
 	
-	virtual void init();
-	virtual const QCursor& getCursor() const;
+protected:
+	virtual void initImpl();
 	
 	virtual bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
 	virtual bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
@@ -51,36 +55,38 @@ public:
 	virtual bool keyPressEvent(QKeyEvent* event);
 	virtual bool keyReleaseEvent(QKeyEvent* event);
 	
-	virtual void draw(QPainter* painter, MapWidget* widget);
+	virtual void drawImpl(QPainter* painter, MapWidget* widget);
 	
+	void startEditing();
 	virtual void finishEditing();
 	
-protected slots:
 	void setDrawingSymbol(const Symbol* symbol);
 	
 	void selectionChanged(bool text_change);
 	
-protected:
-	void updateDirtyRect();
+	virtual int updateDirtyRectImpl(QRectF& rect);
 	void updateStatusText();
 	
 	void updatePreviewText();
-	void deletePreviewText();
 	void setPreviewLetter();
 	void abortEditing();
 	
 	const Symbol* drawing_symbol;
 	
-	QPoint click_pos;
-	MapCoordF click_pos_map;
-	QPoint cur_pos;
-	MapCoordF cur_pos_map;
-	bool dragging;
 	
-	TextObject* preview_text;
-	TextObjectEditorHelper* text_editor;
 	
-	QScopedPointer<MapRenderables> renderables;
+	MapRenderables renderables;
+	std::unique_ptr<TextObject, MapRenderables::ObjectDeleter> preview_text;
+	std::unique_ptr<TextObjectEditorHelper> text_editor;
+	
+	virtual void mouseMove();
+	virtual void clickPress();
+	virtual void clickRelease();
+	virtual void dragMove();
+	virtual void dragFinish();
+	virtual bool keyPress(QKeyEvent* event);
+	virtual bool keyRelease(QKeyEvent* event);
+	virtual void objectSelectionChangedImpl();
 };
 
 #endif
