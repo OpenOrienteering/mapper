@@ -20,14 +20,6 @@ message(STATUS "Configuring ${PROJECT_NAME} translations")
 
 find_package(Qt5LinguistTools REQUIRED)
 
-# Qt translations which are not yet available from upstream
-set(Mapper_QT_TRANS
-  qt_nb.ts
-)
-if (${Qt5LinguistTools_VERSION} VERSION_LESS 5.4.0)
-	list(APPEND Mapper_QT_TRANS qt_lv.ts)
-endif()
-
 set(Mapper_TRANS
  OpenOrienteering_cs.ts
  OpenOrienteering_de.ts
@@ -49,7 +41,7 @@ set(Mapper_TRANS
  OpenOrienteering_uk.ts
  CACHE INTERNAL "Translation files"
 )
-qt5_add_translation(Mapper_QM ${Mapper_TRANS} ${Mapper_QT_TRANS})
+qt5_add_translation(Mapper_QM ${Mapper_TRANS})
 
 set(Mapper_TRANS_TEMPLATE
  OpenOrienteering_template.ts
@@ -146,10 +138,31 @@ macro(QT5_TRANSLATIONS_SOURCES)
 			if("${_ts_filename}" STREQUAL "OpenOrienteering_template")
 				list(APPEND LUPDATE_OPTIONS -no-obsolete)
 			endif()
+			if("${_ts_filename}" MATCHES "OpenOrienteering_(et|lv|nb|nl)")
+				# Qt translations which are not yet available from upstream, as of Qt 5.5.1.
+				# Inserted from qt_template.ts into the OpenOrienteering .ts file by
+				#   lconvert -sort-contexts -o OpenOrienteering_XX.ts 
+				# Need to revert the "obsolete" and "vanished" marker created by lupdate,
+				# but prevent deletion of empty "vanished" items.
+				set(PRE_LUPDATE_ACTION
+				  COMMAND sed -i -e "/<name>Q[A-Z]/,/<context>/s/\\(<translation[^>]*>\\)</\\1REMOVE_ME\\</" ${Mapper_TRANS_DIR}/${_arg}
+				)
+				set(POST_LUPDATE_ACTION
+				  COMMAND sed -i -e "/<name>Q[A-Z]/,/<context>/s/<translation[^>]*>REMOVE_ME</<translation type=\"unfinished\"></" ${Mapper_TRANS_DIR}/${_arg}
+				  COMMAND sed -i -e "s/>REMOVE_ME</></g" ${Mapper_TRANS_DIR}/${_arg}
+				  COMMAND sed -i -e "/<name>Q[A-Z]/,/<context>/s/ type=.[ov][a-z]*.//g" ${Mapper_TRANS_DIR}/${_arg}
+				  COMMAND sed -i -e "/<name>Q[A-Z]/,/<context>/s/\\(<translation\\)\\/>/\\1 type='unfinished'><\\/translation>/g" ${Mapper_TRANS_DIR}/${_arg}
+				)
+			else()
+				set(PRE_LUPDATE_ACTION )
+				set(POST_LUPDATE_ACTION
+				  COMMAND sed -i -e "/<name>Q[A-Z]/,/<context>/d" ${Mapper_TRANS_DIR}/${_arg}
+				)
+			endif()
 			add_custom_target(${PROJECT_NAME}_${_ts_filename}_update
+			  ${PRE_LUPDATE_ACTION}
 			  COMMAND ${Qt5_LUPDATE_EXECUTABLE} ${LUPDATE_OPTIONS} @${${PROJECT_NAME}_TRANSLATIONS_LISTFILE} -ts ${Mapper_TRANS_DIR}/${_arg}
-			  # Reuse of Qt translation
-			  COMMAND sed -i -e "/<name>Q[A-Z]/,/<context>/d" ${Mapper_TRANS_DIR}/${_arg}
+			  ${POST_LUPDATE_ACTION}
 			  # Reformat for Weblate to minimize git noise
 			  COMMAND sed -i -e "1s/\"/'/g" ${Mapper_TRANS_DIR}/${_arg}
 			  COMMAND sed -i -e "/<location/s/\\/>$/><\\/location>/" ${Mapper_TRANS_DIR}/${_arg}

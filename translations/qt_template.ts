@@ -2,13 +2,6 @@
 <!DOCTYPE TS>
 <TS version="2.0">
 <context>
-    <name>CloseButton</name>
-    <message>
-        <source>Close Tab</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>QAbstractSpinBox</name>
     <message>
         <source>Step &amp;down</source>
@@ -41,7 +34,7 @@
 <context>
     <name>QDialog</name>
     <message>
-        <source>What&apos;s This?</source>
+        <source>What's This?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -140,7 +133,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Don&apos;t Save</source>
+        <source>Don't Save</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -224,6 +217,7 @@
 <context>
     <name>QFileDialog</name>
     <message>
+        <location filename="../src/gui/text_browser_dialog.cpp" line="59"></location>
         <source>Back</source>
         <translation type="unfinished"></translation>
     </message>
@@ -260,12 +254,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&apos;%1&apos; is write protected.
+        <source>'%1' is write protected.
 Do you want to delete it anyway?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Are you sure you want to delete &apos;%1&apos;?</source>
+        <source>Are you sure you want to delete '%1'?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -465,7 +459,7 @@ Please verify the correct file name was given.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&lt;b&gt;The name &quot;%1&quot; can not be used.&lt;/b&gt;&lt;p&gt;Try using another name, with fewer characters or no punctuations marks.</source>
+        <source>&lt;b&gt;The name "%1" can not be used.&lt;/b&gt;&lt;p&gt;Try using another name, with fewer characters or no punctuations marks.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -520,57 +514,6 @@ Please verify the correct file name was given.</source>
     <name>QInputDialog</name>
     <message>
         <source>Enter a value:</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QLibrary</name>
-    <message>
-        <source>Cannot unload library %1: %2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot load library %1: %2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&apos;%1&apos; is not an ELF object (%2)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The plugin &apos;%1&apos; uses incompatible Qt library. (%2.%3.%4) [%5]</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot resolve symbol &quot;%1&quot; in %2: %3</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Plugin verification data mismatch in &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&apos;%1&apos; is an invalid ELF object (%2)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The plugin &apos;%1&apos; uses incompatible Qt library. (Cannot mix debug and release libraries.)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&apos;%1&apos; is not an ELF object</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The file &apos;%1&apos; is not a valid Qt plugin.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The shared library was not found.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unknown error</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -727,13 +670,10 @@ Please verify the correct file name was given.</source>
     </message>
 </context>
 <context>
-    <name>QPluginLoader</name>
+    <name>QPlatformTheme</name>
     <message>
-        <source>The plugin was not loaded.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unknown error</source>
+        <location filename="../src/gui/text_browser_dialog.cpp" line="64"></location>
+        <source>Close</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -901,7 +841,7 @@ Do you want to overwrite it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The &apos;From&apos; value cannot be greater than the &apos;To&apos; value.</source>
+        <source>The 'From' value cannot be greater than the 'To' value.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1247,10 +1187,6 @@ Please choose a different file name.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>CD</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Go</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1268,10 +1204,6 @@ Please choose a different file name.</source>
     </message>
     <message>
         <source>F%1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>DOS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1296,10 +1228,6 @@ Please choose a different file name.</source>
     </message>
     <message>
         <source>Tab</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>WWW</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1339,10 +1267,6 @@ Please choose a different file name.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Game</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Help</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1363,10 +1287,6 @@ Please choose a different file name.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>News</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>PgUp</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1379,15 +1299,7 @@ Please choose a different file name.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Shop</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Stop</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1399,10 +1311,6 @@ Please choose a different file name.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Split Screen</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Clear</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1411,19 +1319,7 @@ Please choose a different file name.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Eject</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Enter</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Kanji</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Music</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1435,15 +1331,7 @@ Please choose a different file name.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Phone</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Print</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Reply</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1455,35 +1343,11 @@ Please choose a different file name.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Sleep</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Space</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Tools</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Video</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Hiragana</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Wireless</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Media Record</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Multiple Candidate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1495,159 +1359,11 @@ Please choose a different file name.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Audio Rewind</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Audio Repeat</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Toggle Call/Hangup</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Zoom In</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Camera Shutter</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ultra Wide Band</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Hangul Special</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Treble Down</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Scroll Lock</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Media Pause</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Word Processor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Volume Down</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Volume Mute</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Kana Shift</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Media Previous</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Home Page</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Meeting</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Volume Up</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Menu PB</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Keyboard Brightness Up</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Hangul PostHanja</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Kana Lock</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Community</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Launch (6)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Launch (7)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Launch (8)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Launch (9)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Launch (2)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Launch (3)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Launch (4)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Launch (5)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Launch (0)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Launch (1)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Launch (F)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Launch (B)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Launch (C)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Launch (D)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Launch (E)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Launch (A)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1659,47 +1375,7 @@ Please choose a different file name.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Audio Random Play</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Hangul</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Hangup</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Henkan</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Insert</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Home Office</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Last Number Redial</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Logoff</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Market</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Massyo</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Bass Boost</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1719,10 +1395,6 @@ Please choose a different file name.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Romaji</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Search</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1735,55 +1407,11 @@ Please choose a different file name.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Travel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>NumLock</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Audio Forward</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>WebCam</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Hiragana Katakana</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Top Menu</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>ScrollLock</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Hot Links</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Audio Cycle Track</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Context1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Context2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Context3</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Context4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1795,59 +1423,7 @@ Please choose a different file name.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Open URL</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>iTouch</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Previous Candidate</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Toggle Media Play/Pause</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Caps Lock</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Eisu Shift</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Code input</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Camera Focus</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Adjust Brightness</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Spreadsheet</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Eisu toggle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Keyboard Brightness Down</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Clear Grab</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Monitor Brightness Up</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1863,199 +1439,7 @@ Please choose a different file name.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Bass Up</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Battery</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Katakana</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Refresh</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Hibernate</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Application Left</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Voice Dial</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Browser</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Keyboard Menu</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back Forward</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Launch Mail</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Keyboard Light On/Off</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Backspace</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Bass Down</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Mail Forward</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Messenger</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Hangul Banja</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Hangul Hanja</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Standby</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Hangul Start</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Rotation KB</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Rotation PB</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Documents</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Calculator</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Support</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Suspend</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Display</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Hangul Romaja</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>My Sites</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Rotate Windows</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Touroku</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Zenkaku Hankaku</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Hangul Jeonja</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Treble Up</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Subtitle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Hangul Jamo</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Bluetooth</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Muhenkan</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Num Lock</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Screensaver</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Number Lock</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Spellchecker</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Hangul PreHanja</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Terminal</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Add Favorite</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Finance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Task Panel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Favorites</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Forward</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2067,51 +1451,7 @@ Please choose a different file name.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Power Off</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>LightBulb</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Hankaku</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Hangul End</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Monitor Brightness Down</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>History</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Media Play</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Media Stop</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Media Next</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Launch Media</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Application Right</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pictures</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2239,56 +1579,9 @@ Please choose a different file name.</source>
     </message>
 </context>
 <context>
-    <name>QUnicodeControlCharacterMenu</name>
-    <message>
-        <source>RLE Start of right-to-left embedding</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ZWSP Zero width space</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Insert Unicode control character</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>LRO Start of left-to-right override</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>LRE Start of left-to-right embedding</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>RLM Right-to-left mark</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>PDF Pop directional formatting</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ZWNJ Zero width non-joiner</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>RLO Start of right-to-left override</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ZWJ Zero width joiner</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>LRM Left-to-right mark</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>QWhatsThisAction</name>
     <message>
-        <source>What&apos;s This?</source>
+        <source>What's This?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
