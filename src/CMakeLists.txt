@@ -363,7 +363,6 @@ add_library(Mapper_Common STATIC
 )
 add_dependencies(Mapper_Common
   Mapper_prerequisites
-  Mapper_Extras
 )
 target_link_libraries(Mapper_Common
   libocad

@@ -19,6 +19,8 @@
  
 cmake_minimum_required(VERSION 2.8.12 FATAL_ERROR)
 cmake_policy(SET CMP0020 OLD)
+cmake_policy(SET CMP0026 OLD)
+cmake_policy(SET CMP0048 OLD)
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
 include(FeatureSummary)
@@ -255,7 +257,7 @@ if(Mapper_DEVELOPMENT_BUILD)
 	add_definitions(-DMAPPER_DEVELOPMENT_BUILD)
 	include(EnableSanitize)
 	enable_sanitize(address undefined)
-	configure_file(suppress.txt.in suppress.txt COPY_ONLY)
+	configure_file(suppress.txt.in suppress.txt COPYONLY)
 else()
 	add_definitions(-DQT_NO_DEBUG -DQT_NO_DEBUG_OUTPUT -DQT_NO_WARNING_OUTPUT -DNDEBUG)
 endif()
