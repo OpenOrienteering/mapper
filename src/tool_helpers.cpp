@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2013-2015 Kai Pastor
+ *    Copyright 2013-2016 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -29,9 +29,10 @@
 #include <QPainter>
 #include <QTimer>
 
-#include "gui/main_window.h"
-#include "map_editor.h"
 #include "core/map_grid.h"
+#include "gui/main_window.h"
+#include "gui/widgets/text_alignment_widget.h"
+#include "map_editor.h"
 #include "map_widget.h"
 #include "object_text.h"
 #include "settings.h"
@@ -52,7 +53,7 @@ TextObjectEditorHelper::TextObjectEditorHelper(TextObject* object, MapEditorCont
 	editor->getWindow()->setShortcutsBlocked(true);
 	
 	// Show dock in floating state
-	dock_widget = new TextObjectAlignmentDockWidget(object, (int)object->getHorizontalAlignment(), (int)object->getVerticalAlignment(), this, editor->getWindow());
+	dock_widget = new TextObjectAlignmentDockWidget(this, editor->getWindow());
 	dock_widget->setFloating(true);
 	dock_widget->show();
 	dock_widget->resize(0, 0);
