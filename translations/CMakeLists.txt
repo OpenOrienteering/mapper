@@ -138,7 +138,7 @@ macro(QT5_TRANSLATIONS_SOURCES)
 			if("${_ts_filename}" STREQUAL "OpenOrienteering_template")
 				list(APPEND LUPDATE_OPTIONS -no-obsolete)
 			endif()
-			if("${_ts_filename}" MATCHES "OpenOrienteering_(et|lv|nb|nl)")
+			if("${_ts_filename}" MATCHES "OpenOrienteering_(et|lv|nb|nl|template)")
 				# Qt translations which are not yet available from upstream, as of Qt 5.5.1.
 				# Inserted from qt_template.ts into the OpenOrienteering .ts file by
 				#   lconvert -sort-contexts -o OpenOrienteering_XX.ts 
