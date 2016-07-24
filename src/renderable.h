@@ -298,6 +298,20 @@ typedef std::map<const Object*, SharedRenderables::Pointer> ObjectRenderablesMap
 class MapRenderables : protected std::map<int, ObjectRenderablesMap>
 {
 public:
+	/**
+	 * An Object deleter which takes care of removing the renderables of the object.
+	 * 
+	 * Synopsis:
+	 *   std::unique_ptr<Object, MapRenderables::ObjectDeleter> object { nullptr, { renderables } };
+	 */
+	class ObjectDeleter
+	{
+	public:
+		MapRenderables& renderables;
+		void operator()(Object* object) const;
+	};
+	
+	
 	MapRenderables(Map* map);
 	
 	/**
