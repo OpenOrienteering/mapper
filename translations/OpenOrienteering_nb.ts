@@ -6369,7 +6369,7 @@ Vennligst sjekk at riktig filnavn ble angitt.</translation>
     <message>
         <location filename="../src/gui/text_browser_dialog.cpp" line="64"></location>
         <source>Close</source>
-        <translation type="unfinished">Lukk</translation>
+        <translation>Lukk</translation>
     </message>
 </context>
 <context>
