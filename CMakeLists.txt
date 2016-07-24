@@ -19,8 +19,10 @@
  
 cmake_minimum_required(VERSION 2.8.12 FATAL_ERROR)
 cmake_policy(SET CMP0020 OLD)
+if(CMAKE_VERSION VERSION_GREATER 2.9)
 cmake_policy(SET CMP0026 OLD)
 cmake_policy(SET CMP0048 OLD)
+endif()
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
 include(FeatureSummary)
