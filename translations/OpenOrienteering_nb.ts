@@ -1017,29 +1017,29 @@
         <translation>Resett</translation>
     </message>
     <message>
-        <location filename="../src/tool_draw_point.cpp" line="325"></location>
-        <location filename="../src/tool_draw_point.cpp" line="337"></location>
+        <location filename="../src/tool_draw_point.cpp" line="317"></location>
+        <location filename="../src/tool_draw_point.cpp" line="329"></location>
         <source>&lt;b&gt;Angle:&lt;/b&gt; %1° </source>
         <translation>&lt;b&gt;Vinkel:&lt;/b&gt; %1° </translation>
     </message>
     <message>
-        <location filename="../src/tool_draw_point.cpp" line="326"></location>
+        <location filename="../src/tool_draw_point.cpp" line="318"></location>
         <source>&lt;b&gt;%1&lt;/b&gt;: Fixed angles. </source>
         <translation>&lt;b&gt;%1&lt;/b&gt;: Faste vinkler. </translation>
     </message>
     <message>
-        <location filename="../src/tool_draw_point.cpp" line="331"></location>
-        <location filename="../src/tool_draw_point.cpp" line="345"></location>
+        <location filename="../src/tool_draw_point.cpp" line="323"></location>
+        <location filename="../src/tool_draw_point.cpp" line="337"></location>
         <source>&lt;b&gt;Click&lt;/b&gt;: Create a point object.</source>
         <translation>&lt;b&gt;Klikk&lt;/b&gt;: Lag et punktobjekt.</translation>
     </message>
     <message>
-        <location filename="../src/tool_draw_point.cpp" line="332"></location>
+        <location filename="../src/tool_draw_point.cpp" line="324"></location>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Create an object and set its orientation.</source>
         <translation>&lt;b&gt;Dra&lt;/b&gt;: Lag et objekt og angi objektets retning.</translation>
     </message>
     <message>
-        <location filename="../src/tool_draw_point.cpp" line="338"></location>
+        <location filename="../src/tool_draw_point.cpp" line="330"></location>
         <source>&lt;b&gt;%1, 0&lt;/b&gt;: Reset rotation.</source>
         <translation>&lt;b&gt;%1, 0&lt;/b&gt;: Resett retning.</translation>
     </message>
@@ -1102,12 +1102,12 @@
 <context>
     <name>DrawTextTool</name>
     <message>
-        <location filename="../src/tool_draw_text.cpp" line="306"></location>
+        <location filename="../src/tool_draw_text.cpp" line="375"></location>
         <source>&lt;b&gt;%1&lt;/b&gt;: Finish editing. </source>
         <translation>&lt;b&gt;%1&lt;/b&gt;: Avslutt redigering. </translation>
     </message>
     <message>
-        <location filename="../src/tool_draw_text.cpp" line="308"></location>
+        <location filename="../src/tool_draw_text.cpp" line="379"></location>
         <source>&lt;b&gt;Click&lt;/b&gt;: Create a text object with a single anchor. &lt;b&gt;Drag&lt;/b&gt;: Create a text box. </source>
         <translation>&lt;b&gt;Klikk&lt;/b&gt; Lag tekstobjekt med et enkelt anker, &lt;b&gt;Dra&lt;/b&gt;: Lag tekstboks. </translation>
     </message>
@@ -1144,46 +1144,46 @@
 <context>
     <name>EditPointTool</name>
     <message>
-        <location filename="../src/tool_edit_point.cpp" line="492"></location>
+        <location filename="../src/tool_edit_point.cpp" line="490"></location>
         <source>Snap</source>
         <comment>Snap to existing objects</comment>
         <translation>Tilknytt</translation>
     </message>
     <message>
-        <location filename="../src/tool_edit_point.cpp" line="493"></location>
+        <location filename="../src/tool_edit_point.cpp" line="491"></location>
         <source>Point / Angle</source>
         <comment>Modify points or use constrained angles</comment>
         <translation>Punkt / Vinkel</translation>
     </message>
     <message>
-        <location filename="../src/tool_edit_point.cpp" line="494"></location>
+        <location filename="../src/tool_edit_point.cpp" line="492"></location>
         <source>Toggle dash</source>
         <comment>Toggle dash points</comment>
         <translation>Veksle mellom styrepunkter</translation>
     </message>
     <message>
-        <location filename="../src/tool_edit_point.cpp" line="644"></location>
+        <location filename="../src/tool_edit_point.cpp" line="642"></location>
         <source>&lt;b&gt;%1&lt;/b&gt;: Finish editing. </source>
         <translation>&lt;b&gt;%1&lt;/b&gt;: Avslutt redigering. </translation>
     </message>
     <message>
-        <location filename="../src/tool_edit_point.cpp" line="664"></location>
+        <location filename="../src/tool_edit_point.cpp" line="662"></location>
         <source>&lt;b&gt;%1&lt;/b&gt;: Keep opposite handle positions. </source>
         <translatorcomment>meget usikker på denne</translatorcomment>
         <translation>&lt;b&gt;%1&lt;/b&gt;: Behold motsatte innstillinger. </translation>
     </message>
     <message>
-        <location filename="../src/tool_edit_point.cpp" line="685"></location>
+        <location filename="../src/tool_edit_point.cpp" line="683"></location>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on point: Delete it; on path: Add a new dash point; with &lt;b&gt;%2&lt;/b&gt;: Add a normal point. </source>
         <translation>&lt;b&gt;%1+Klikk&lt;/b&gt; på punkt: Slett det; på linje: Legg til nytt styrepunkt; med &lt;b&gt;%2&lt;/b&gt;: Legg til normalpunkt. </translation>
     </message>
     <message>
-        <location filename="../src/tool_edit_point.cpp" line="688"></location>
+        <location filename="../src/tool_edit_point.cpp" line="686"></location>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on point: Delete it; on path: Add a new point; with &lt;b&gt;%2&lt;/b&gt;: Add a dash point. </source>
         <translation>&lt;b&gt;%1+Klikk&lt;/b&gt; på punkt: Slett det; på linje: Legg til nytt punkt; med &lt;b&gt;%2&lt;/b&gt;: Legg til styringspunkt. </translation>
     </message>
     <message>
-        <location filename="../src/tool_edit_point.cpp" line="692"></location>
+        <location filename="../src/tool_edit_point.cpp" line="690"></location>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on point to switch between dash and normal point. </source>
         <translation>&lt;b&gt;%1+Klikk&lt;/b&gt; på punkt for å bytte mellom styre- og normalpunkt. </translation>
     </message>
@@ -1191,31 +1191,32 @@
 <context>
     <name>EditTool</name>
     <message>
-        <location filename="../src/tool_edit_point.cpp" line="649"></location>
+        <location filename="../src/tool_edit_point.cpp" line="647"></location>
         <location filename="../src/tool_edit_line.cpp" line="444"></location>
         <source>&lt;b&gt;Coordinate offset:&lt;/b&gt; %1, %2 mm  &lt;b&gt;Distance:&lt;/b&gt; %3 m </source>
         <translation>&lt;b&gt;Koordinatforskyvning:&lt;/b&gt; %1, %2 mm  &lt;b&gt;Avstand:&lt;/b&gt; %3 m </translation>
     </message>
     <message>
-        <location filename="../src/tool_edit_point.cpp" line="656"></location>
+        <location filename="../src/tool_edit_point.cpp" line="654"></location>
         <location filename="../src/tool_edit_line.cpp" line="455"></location>
         <source>&lt;b&gt;%1&lt;/b&gt;: Fixed angles. </source>
         <translation>&lt;b&gt;%1&lt;/b&gt;: Faste vinkler. </translation>
     </message>
     <message>
-        <location filename="../src/tool_edit_point.cpp" line="668"></location>
+        <location filename="../src/tool_edit_point.cpp" line="666"></location>
         <location filename="../src/tool_edit_line.cpp" line="459"></location>
+        <location filename="../src/tool_draw_text.cpp" line="381"></location>
         <source>&lt;b&gt;%1&lt;/b&gt;: Snap to existing objects. </source>
         <translation>&lt;b&gt;%1&lt;/b&gt;: Fest til eksisterende objekter. </translation>
     </message>
     <message>
-        <location filename="../src/tool_edit_point.cpp" line="674"></location>
+        <location filename="../src/tool_edit_point.cpp" line="672"></location>
         <location filename="../src/tool_edit_line.cpp" line="464"></location>
         <source>&lt;b&gt;Click&lt;/b&gt;: Select a single object. &lt;b&gt;Drag&lt;/b&gt;: Select multiple objects. &lt;b&gt;%1+Click&lt;/b&gt;: Toggle selection. </source>
         <translation>&lt;b&gt;Klikk&lt;/b&gt;: Velg et enkelt objekt. &lt;b&gt;Dra&lt;/b&gt;: Velg flere objekter. &lt;b&gt;%1+Klikk&lt;/b&gt;: Bytt mellom valgene. </translation>
     </message>
     <message>
-        <location filename="../src/tool_edit_point.cpp" line="677"></location>
+        <location filename="../src/tool_edit_point.cpp" line="675"></location>
         <location filename="../src/tool_edit_line.cpp" line="467"></location>
         <source>&lt;b&gt;%1&lt;/b&gt;: Delete selected objects. </source>
         <translation>&lt;b&gt;%1&lt;/b&gt;: Slett valgte objekter. </translation>
@@ -4322,7 +4323,7 @@ er valgt</translation>
         <translation>&lt;b&gt;%1&lt;/b&gt;: Avbryt. </translation>
     </message>
     <message>
-        <location filename="../src/tool_edit_point.cpp" line="694"></location>
+        <location filename="../src/tool_edit_point.cpp" line="692"></location>
         <location filename="../src/tool_draw_path.cpp" line="1053"></location>
         <location filename="../src/tool_draw_path.cpp" line="1054"></location>
         <location filename="../src/tool_draw_rectangle.cpp" line="695"></location>
@@ -7089,38 +7090,38 @@ Høyeste støttede versjon er %2.</translation>
 <context>
     <name>TextObjectAlignmentDockWidget</name>
     <message>
-        <location filename="../src/tool_draw_text.cpp" line="385"></location>
+        <location filename="../src/gui/widgets/text_alignment_widget.cpp" line="61"></location>
         <source>Alignment</source>
         <translation>Tekstjustering</translation>
     </message>
     <message>
-        <location filename="../src/tool_draw_text.cpp" line="468"></location>
+        <location filename="../src/gui/widgets/text_alignment_widget.cpp" line="45"></location>
         <source>Left</source>
         <translation>Venstre</translation>
     </message>
     <message>
-        <location filename="../src/tool_draw_text.cpp" line="468"></location>
-        <location filename="../src/tool_draw_text.cpp" line="484"></location>
+        <location filename="../src/gui/widgets/text_alignment_widget.cpp" line="46"></location>
+        <location filename="../src/gui/widgets/text_alignment_widget.cpp" line="52"></location>
         <source>Center</source>
         <translation>Midtstilt</translation>
     </message>
     <message>
-        <location filename="../src/tool_draw_text.cpp" line="468"></location>
+        <location filename="../src/gui/widgets/text_alignment_widget.cpp" line="47"></location>
         <source>Right</source>
         <translation>Høyre</translation>
     </message>
     <message>
-        <location filename="../src/tool_draw_text.cpp" line="484"></location>
+        <location filename="../src/gui/widgets/text_alignment_widget.cpp" line="51"></location>
         <source>Top</source>
         <translation>Topp</translation>
     </message>
     <message>
-        <location filename="../src/tool_draw_text.cpp" line="484"></location>
+        <location filename="../src/gui/widgets/text_alignment_widget.cpp" line="53"></location>
         <source>Baseline</source>
         <translation>Grunnlinje</translation>
     </message>
     <message>
-        <location filename="../src/tool_draw_text.cpp" line="484"></location>
+        <location filename="../src/gui/widgets/text_alignment_widget.cpp" line="54"></location>
         <source>Bottom</source>
         <translation>Bunn</translation>
     </message>
