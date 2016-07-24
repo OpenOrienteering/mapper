@@ -42,51 +42,48 @@ class DrawTextTool : public MapEditorToolBase
 Q_OBJECT
 public:
 	DrawTextTool(MapEditorController* editor, QAction* tool_action);
-	virtual ~DrawTextTool();
-	
-protected:
-	virtual void initImpl();
-	
-	virtual bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
-	virtual bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
-	virtual bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
-	void leaveEvent(QEvent* event);
-	
-	virtual bool keyPressEvent(QKeyEvent* event);
-	virtual bool keyReleaseEvent(QKeyEvent* event);
-	
-	virtual void drawImpl(QPainter* painter, MapWidget* widget);
-	
-	void startEditing();
-	virtual void finishEditing();
+	~DrawTextTool() override;
 	
 	void setDrawingSymbol(const Symbol* symbol);
 	
-	void selectionChanged(bool text_change);
+protected:
+	void initImpl() override;
 	
-	virtual int updateDirtyRectImpl(QRectF& rect);
-	void updateStatusText();
+	void objectSelectionChangedImpl() override;
 	
-	void updatePreviewText();
-	void setPreviewLetter();
+	void startEditing();
+	void selectionChanged();
 	void abortEditing();
+	void finishEditing() override;
+	
+	bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
+	bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
+	bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
+	
+	bool keyPressEvent(QKeyEvent* event) override;
+	bool keyReleaseEvent(QKeyEvent* event) override;
+	
+	void mouseMove() override;
+	void clickPress() override;
+	void clickRelease() override;
+	void dragMove() override;
+	void dragFinish() override;
+	
+	bool keyPress(QKeyEvent* event) override;
+	bool keyRelease(QKeyEvent* event) override;
+	
+	void leaveEvent(QEvent* event) override;
+	
+	void setPreviewLetter();
+	void updatePreviewText();
+	int updateDirtyRectImpl(QRectF& rect) override;
+	void drawImpl(QPainter* painter, MapWidget* widget) override;
+	void updateStatusText() override;
 	
 	const Symbol* drawing_symbol;
-	
-	
-	
 	MapRenderables renderables;
 	std::unique_ptr<TextObject, MapRenderables::ObjectDeleter> preview_text;
 	std::unique_ptr<TextObjectEditorHelper> text_editor;
-	
-	virtual void mouseMove();
-	virtual void clickPress();
-	virtual void clickRelease();
-	virtual void dragMove();
-	virtual void dragFinish();
-	virtual bool keyPress(QKeyEvent* event);
-	virtual bool keyRelease(QKeyEvent* event);
-	virtual void objectSelectionChangedImpl();
 };
 
 #endif

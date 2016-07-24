@@ -55,108 +55,12 @@ DrawTextTool::DrawTextTool(MapEditorController* editor, QAction* tool_button)
 	connect(editor, &MapEditorController::activeSymbolChanged, this, &DrawTextTool::setDrawingSymbol);
 }
 
-void DrawTextTool::initImpl()
-{
-	preview_text->setSymbol(drawing_symbol, false);
-}
-
 DrawTextTool::~DrawTextTool()
 {
 	if (text_editor)
 		finishEditing();
 }
 
-bool DrawTextTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
-{
-	if (text_editor)
-		return text_editor->mousePressEvent(event, map_coord, widget);
-	
-	return MapEditorToolBase::mousePressEvent(event, map_coord, widget);
-}
-
-bool DrawTextTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
-{
-	if (text_editor)
-		return text_editor->mouseMoveEvent(event, map_coord, widget);
-	
-	return MapEditorToolBase::mouseMoveEvent(event, map_coord, widget);
-}
-
-bool DrawTextTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
-{
-	if (text_editor)
-	{
-		if (!text_editor->mouseReleaseEvent(event, map_coord, widget))
-			finishEditing();
-		return true;
-	}
-	
-	return MapEditorToolBase::mouseReleaseEvent(event, map_coord, widget);
-}
-
-void DrawTextTool::leaveEvent(QEvent* event)
-{
-	Q_UNUSED(event);
-	if (!text_editor)
-		map()->clearDrawingBoundingBox();
-}
-
-bool DrawTextTool::keyPressEvent(QKeyEvent* event)
-{
-	if (text_editor)
-	{
-		if (event->key() == Qt::Key_Escape)
-		{
-			finishEditing();
-			return true;
-		}
-		else if (text_editor->keyPressEvent(event))
-		{
-			return true;
-		}
-	}
-	
-	return MapEditorToolBase::keyPressEvent(event);
-}
-
-bool DrawTextTool::keyReleaseEvent(QKeyEvent* event)
-{
-	if (text_editor)
-	{
-		if (text_editor->keyReleaseEvent(event))
-			return true;
-	}
-	
-	return MapEditorToolBase::keyReleaseEvent(event);
-}
-
-void DrawTextTool::drawImpl(QPainter* painter, MapWidget* widget)
-{
-	painter->save();
-	
-	if (!preview_text->hasSingleAnchor())
-	{
-		painter->setPen(active_color);
-		painter->setBrush(Qt::NoBrush);
-		
-		auto rect = widget->mapToViewport(QRectF(click_pos_map, constrained_pos_map));
-		painter->drawRect(rect);
-		rect.adjust(1, 1, -1, -1);
-		painter->setPen(qRgb(255, 255, 255));
-		painter->drawRect(rect);
-	}
-	
-	widget->applyMapTransform(painter);
-	
-	float opacity = text_editor ? 1.0f : 0.5f;
-	RenderConfig config = { *map(), widget->getMapView()->calculateViewedRect(widget->viewportToView(widget->rect())), widget->getMapView()->calculateFinalZoomFactor(), RenderConfig::Tool, opacity };
-	renderables.draw(painter, config);
-	
-	if (text_editor)
-		text_editor->draw(painter, widget);
-	
-	painter->restore();
-}
 
 void DrawTextTool::setDrawingSymbol(const Symbol* symbol)
 {
@@ -181,64 +85,18 @@ void DrawTextTool::setDrawingSymbol(const Symbol* symbol)
 	}
 }
 
-void DrawTextTool::selectionChanged(bool text_change)
+
+void DrawTextTool::initImpl()
 {
-	Q_UNUSED(text_change);
-	preview_text->setOutputDirty();
-	updatePreviewText();
+	preview_text->setSymbol(drawing_symbol, false);
 }
 
 
-int DrawTextTool::updateDirtyRectImpl(QRectF& rect)
+void DrawTextTool::objectSelectionChangedImpl()
 {
-	rectIncludeSafe(rect, preview_text->getExtent());
-	
-	if (isDragging())
-	{
-		rectIncludeSafe(rect, click_pos_map);
-		rectIncludeSafe(rect, constrained_pos_map);
-	}
-	else if (text_editor)
-	{
-		text_editor->includeDirtyRect(rect);
-	}
-	
-	return 1;
+	// nothing
 }
 
-void DrawTextTool::updateStatusText()
-{
-	QString text;
-	if (text_editor)
-	{
-		text = tr("<b>%1</b>: Finish editing. ").arg(ModifierKey::escape());
-	}
-	else
-	{
-		text = tr("<b>Click</b>: Create a text object with a single anchor. <b>Drag</b>: Create a text box. ");
-		if (!(active_modifiers & Qt::ShiftModifier))
-			text += EditTool::tr("<b>%1</b>: Snap to existing objects. ").arg(ModifierKey::shift());
-	}
-	setStatusBarText(text);
-}
-
-void DrawTextTool::updatePreviewText()
-{
-	auto text = preview_text.get();
-	renderables.removeRenderablesOfObject(text, false);
-	text->update();
-	renderables.insertRenderablesOfObject(text);
-	updateDirtyRect();
-}
-
-void DrawTextTool::setPreviewLetter()
-{
-	if (auto symbol = preview_text->getSymbol())
-	{
-		preview_text->setText(static_cast<const TextSymbol*>(symbol)->getIconText());
-		updatePreviewText();
-	}
-}
 
 void DrawTextTool::startEditing()
 {
@@ -253,6 +111,12 @@ void DrawTextTool::startEditing()
 	
 	updatePreviewText();
 	updateStatusText();
+}
+
+void DrawTextTool::selectionChanged()
+{
+	preview_text->setOutputDirty();
+	updatePreviewText();
 }
 
 void DrawTextTool::abortEditing()
@@ -296,6 +160,64 @@ void DrawTextTool::finishEditing()
 }
 
 
+bool DrawTextTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+{
+	if (text_editor)
+		return text_editor->mousePressEvent(event, map_coord, widget);
+	
+	return MapEditorToolBase::mousePressEvent(event, map_coord, widget);
+}
+
+bool DrawTextTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+{
+	if (text_editor)
+		return text_editor->mouseMoveEvent(event, map_coord, widget);
+	
+	return MapEditorToolBase::mouseMoveEvent(event, map_coord, widget);
+}
+
+bool DrawTextTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+{
+	if (text_editor)
+	{
+		if (!text_editor->mouseReleaseEvent(event, map_coord, widget))
+			finishEditing();
+		return true;
+	}
+	
+	return MapEditorToolBase::mouseReleaseEvent(event, map_coord, widget);
+}
+
+
+bool DrawTextTool::keyPressEvent(QKeyEvent* event)
+{
+	if (text_editor)
+	{
+		if (event->key() == Qt::Key_Escape)
+		{
+			finishEditing();
+			return true;
+		}
+		else if (text_editor->keyPressEvent(event))
+		{
+			return true;
+		}
+	}
+	
+	return MapEditorToolBase::keyPressEvent(event);
+}
+
+bool DrawTextTool::keyReleaseEvent(QKeyEvent* event)
+{
+	if (text_editor)
+	{
+		if (text_editor->keyReleaseEvent(event))
+			return true;
+	}
+	
+	return MapEditorToolBase::keyReleaseEvent(event);
+}
+
 
 void DrawTextTool::mouseMove()
 {
@@ -329,6 +251,7 @@ void DrawTextTool::dragFinish()
 {
 	startEditing();
 }
+
 
 bool DrawTextTool::keyPress(QKeyEvent* event)
 {
@@ -374,7 +297,88 @@ bool DrawTextTool::keyRelease(QKeyEvent* event)
 }
 
 
-void DrawTextTool::objectSelectionChangedImpl()
+void DrawTextTool::leaveEvent(QEvent*)
 {
-	// nothing
+	if (!text_editor)
+		map()->clearDrawingBoundingBox();
+}
+
+
+void DrawTextTool::setPreviewLetter()
+{
+	if (auto symbol = preview_text->getSymbol())
+	{
+		preview_text->setText(static_cast<const TextSymbol*>(symbol)->getIconText());
+		updatePreviewText();
+	}
+}
+
+void DrawTextTool::updatePreviewText()
+{
+	auto text = preview_text.get();
+	renderables.removeRenderablesOfObject(text, false);
+	text->update();
+	renderables.insertRenderablesOfObject(text);
+	updateDirtyRect();
+}
+
+int DrawTextTool::updateDirtyRectImpl(QRectF& rect)
+{
+	rectIncludeSafe(rect, preview_text->getExtent());
+	
+	if (isDragging())
+	{
+		rectIncludeSafe(rect, click_pos_map);
+		rectIncludeSafe(rect, constrained_pos_map);
+	}
+	else if (text_editor)
+	{
+		text_editor->includeDirtyRect(rect);
+	}
+	
+	return 1;
+}
+
+void DrawTextTool::drawImpl(QPainter* painter, MapWidget* widget)
+{
+	painter->save();
+	
+	if (!preview_text->hasSingleAnchor())
+	{
+		painter->setPen(active_color);
+		painter->setBrush(Qt::NoBrush);
+		
+		auto rect = widget->mapToViewport(QRectF(click_pos_map, constrained_pos_map));
+		painter->drawRect(rect);
+		rect.adjust(1, 1, -1, -1);
+		painter->setPen(qRgb(255, 255, 255));
+		painter->drawRect(rect);
+	}
+	
+	widget->applyMapTransform(painter);
+	
+	float opacity = text_editor ? 1.0f : 0.5f;
+	RenderConfig config = { *map(), widget->getMapView()->calculateViewedRect(widget->viewportToView(widget->rect())), widget->getMapView()->calculateFinalZoomFactor(), RenderConfig::Tool, opacity };
+	renderables.draw(painter, config);
+	
+	if (text_editor)
+		text_editor->draw(painter, widget);
+	
+	painter->restore();
+}
+
+void DrawTextTool::updateStatusText()
+{
+	QString text;
+	if (text_editor)
+	{
+		text = tr("<b>%1</b>: Finish editing. ").arg(ModifierKey::escape());
+	}
+	else
+	{
+		text = tr("<b>Click</b>: Create a text object with a single anchor. <b>Drag</b>: Create a text box. ");
+		if (!(active_modifiers & Qt::ShiftModifier))
+			text += EditTool::tr("<b>%1</b>: Snap to existing objects. ").arg(ModifierKey::shift());
+	}
+	setStatusBarText(text);
 }
