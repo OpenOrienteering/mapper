@@ -885,7 +885,7 @@
         <location filename="../src/tool_draw_path.cpp" line="1065"></location>
         <location filename="../src/tool_draw_rectangle.cpp" line="700"></location>
         <source>&lt;b&gt;Dash points on.&lt;/b&gt; </source>
-        <translation>&lt;b&gt;Mezglu punkti ieslēgti.&lt;/b&gt;</translation>
+        <translation>&lt;b&gt;Mezglu punkti ieslēgti.&lt;/b&gt; </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1071"></location>
@@ -966,7 +966,7 @@
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1081"></location>
         <source>&lt;b&gt;Click&lt;/b&gt;: Start a straight line. &lt;b&gt;Drag&lt;/b&gt;: Start a curve. </source>
-        <translation>&lt;b&gt;Klikšķis&lt;/b&gt;: Sākt taisnu līniju. &lt;b&gt;Vilkt&lt;/b&gt;: Sākt līkni.</translation>
+        <translation>&lt;b&gt;Klikšķis&lt;/b&gt;: Sākt taisnu līniju. &lt;b&gt;Vilkt&lt;/b&gt;: Sākt līkni. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1090"></location>
@@ -1170,7 +1170,7 @@
     <message>
         <location filename="../src/tool_edit_point.cpp" line="683"></location>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on point: Delete it; on path: Add a new dash point; with &lt;b&gt;%2&lt;/b&gt;: Add a normal point. </source>
-        <translation>&lt;b&gt;%1+Klikšķis&lt;/b&gt; uz punktu: Dzēst to; uz līniju: Pievienot jaunu mezgla punktu; ar &lt;b&gt;%2&gt;: Pievienot normālu punktu. </translation>
+        <translation>&lt;b&gt;%1+Klikšķis&lt;/b&gt; uz punktu: Dzēst to; uz līniju: Pievienot jaunu mezgla punktu; ar &lt;b&gt;%2&lt;/b&gt;: Pievienot normālu punktu. </translation>
     </message>
     <message>
         <location filename="../src/tool_edit_point.cpp" line="686"></location>
@@ -4278,7 +4278,7 @@ selected</source>
         <location filename="../src/tool_draw_freehand.cpp" line="277"></location>
         <location filename="../src/tool_cutout.cpp" line="142"></location>
         <source>&lt;b&gt;%1&lt;/b&gt;: Abort. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: Pārtraukt.</translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Pārtraukt. </translation>
     </message>
     <message>
         <location filename="../src/tool_edit_point.cpp" line="692"></location>
@@ -7861,7 +7861,7 @@ Izvēlies citu datnes nosaukumu.</translation>
     <message>
         <location filename="../src/tool_rotate_pattern.cpp" line="162"></location>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Set the direction of area fill patterns or point objects. </source>
-        <translation>&lt;b&gt;Vilkt&lt;/b&gt;: Iestatīt laukuma aizpildījuma paraugu vai punktveida objektu virzienu.</translation>
+        <translation>&lt;b&gt;Vilkt&lt;/b&gt;: Iestatīt laukuma aizpildījuma paraugu vai punktveida objektu virzienu. </translation>
     </message>
 </context>
 <context>
