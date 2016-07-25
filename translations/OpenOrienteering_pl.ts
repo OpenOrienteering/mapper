@@ -78,12 +78,12 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="89"></location>
         <source>Open most recently used file</source>
-        <translation type="unfinished">Otwórz ostatnio używany plik</translation>
+        <translation>Otwórz ostatnio używany plik</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="92"></location>
         <source>Show tip of the day</source>
-        <translation type="unfinished">Pokaż wskazówkę dnia</translation>
+        <translation>Pokaż wskazówkę dnia</translation>
     </message>
 </context>
 <context>
@@ -685,19 +685,19 @@
         <location filename="../src/gui/configure_grid_dialog.cpp" line="122"></location>
         <source>Unit:</source>
         <comment>measurement unit</comment>
-        <translation type="unfinished">Jednostki:</translation>
+        <translation>Jednostki:</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="243"></location>
         <source>m</source>
         <comment>meters</comment>
-        <translation type="unfinished">m</translation>
+        <translation>m</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="243"></location>
         <source>mm</source>
         <comment>millimeters</comment>
-        <translation type="unfinished">mm</translation>
+        <translation>mm</translation>
     </message>
 </context>
 <context>
@@ -840,7 +840,7 @@
         <location filename="../src/tool_distribute_points.cpp" line="142"></location>
         <source>°</source>
         <comment>degrees</comment>
-        <translation type="unfinished">°</translation>
+        <translation>°</translation>
     </message>
     <message>
         <location filename="../src/tool_distribute_points.cpp" line="144"></location>
@@ -853,22 +853,22 @@
     <message>
         <location filename="../src/tool_draw_circle.cpp" line="294"></location>
         <source>&lt;b&gt;Click&lt;/b&gt;: Start a circle or ellipse. </source>
-        <translation>&lt;b&gt;Click&lt;/b&gt;: Zacznij rysować okrąg lub elipsę.</translation>
+        <translation>&lt;b&gt;Click&lt;/b&gt;: Zacznij rysować okrąg lub elipsę. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_circle.cpp" line="301"></location>
         <source>&lt;b&gt;Click&lt;/b&gt;: Finish the circle. </source>
-        <translation>&lt;b&gt;Kliknij&lt;/b&gt;: Zakończ rysować okrąg.</translation>
+        <translation>&lt;b&gt;Kliknij&lt;/b&gt;: Zakończ rysować okrąg. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_circle.cpp" line="295"></location>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Draw a circle. </source>
-        <translation>&lt;b&gt;Przeciągnij&lt;/b&gt;: Narysuj okrąg.</translation>
+        <translation>&lt;b&gt;Przeciągnij&lt;/b&gt;: Narysuj okrąg. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_circle.cpp" line="302"></location>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Draw an ellipse. </source>
-        <translation>&lt;b&gt;Przeciągnij&lt;/b&gt;: Zacznij rysować elipsę.</translation>
+        <translation>&lt;b&gt;Przeciągnij&lt;/b&gt;: Zacznij rysować elipsę. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_circle.cpp" line="59"></location>
@@ -896,37 +896,37 @@
         <location filename="../src/tool_draw_path.cpp" line="1095"></location>
         <location filename="../src/tool_draw_rectangle.cpp" line="725"></location>
         <source>&lt;b&gt;%1&lt;/b&gt;: Fixed angles. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: Stałe kąty.</translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Stałe kąty. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1089"></location>
         <location filename="../src/tool_draw_rectangle.cpp" line="711"></location>
         <location filename="../src/tool_draw_rectangle.cpp" line="735"></location>
         <source>&lt;b&gt;%1+Click&lt;/b&gt;: Snap to existing objects. </source>
-        <translation>&lt;b&gt;%1+Click&lt;/b&gt;: Przyciągnij do istniejących obiektów.</translation>
+        <translation>&lt;b&gt;%1+Click&lt;/b&gt;: Przyciągnij do istniejących obiektów. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1103"></location>
         <location filename="../src/tool_draw_rectangle.cpp" line="741"></location>
         <source>&lt;b&gt;%1&lt;/b&gt;: Undo last point. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: Cofnij ostatni punkt.</translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Cofnij ostatni punkt. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1076"></location>
         <location filename="../src/tool_draw_rectangle.cpp" line="706"></location>
         <source>&lt;b&gt;%1+Click&lt;/b&gt;: Pick direction from existing objects. </source>
-        <translation>&lt;b&gt;%1+Kliknij&lt;/b&gt;: Wybierz kierunek z istniejących obiektów.</translation>
+        <translation>&lt;b&gt;%1+Kliknij&lt;/b&gt;: Wybierz kierunek z istniejących obiektów. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1065"></location>
         <location filename="../src/tool_draw_rectangle.cpp" line="700"></location>
         <source>&lt;b&gt;Dash points on.&lt;/b&gt; </source>
-        <translation>&lt;b&gt;Punkty przerwy włączone.&lt;/b&gt;</translation>
+        <translation>&lt;b&gt;Punkty przerwy włączone.&lt;/b&gt; </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1071"></location>
         <source>&lt;b&gt;%1+Click&lt;/b&gt;: Snap or append to existing objects. </source>
-        <translation>&lt;b&gt;%1+Kliknij&lt;/b&gt;: Przyciągnij lub najedź na istniejące obiekty.</translation>
+        <translation>&lt;b&gt;%1+Kliknij&lt;/b&gt;: Przyciągnij lub najedź na istniejące obiekty. </translation>
     </message>
 </context>
 <context>
@@ -959,7 +959,7 @@
     <message>
         <location filename="../src/tool_draw_path.cpp" line="88"></location>
         <source>Close</source>
-        <translation type="unfinished">Zamknij</translation>
+        <translation>Zamknij</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="89"></location>
@@ -982,7 +982,7 @@
     <message>
         <location filename="../src/tool_draw_path.cpp" line="92"></location>
         <source>Undo</source>
-        <translation type="unfinished">Cofnij</translation>
+        <translation>Cofnij</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="93"></location>
@@ -1092,7 +1092,7 @@
     <message>
         <location filename="../src/tool_draw_rectangle.cpp" line="82"></location>
         <source>Undo</source>
-        <translation type="unfinished">Cofnij</translation>
+        <translation>Cofnij</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_rectangle.cpp" line="83"></location>
@@ -1163,7 +1163,7 @@
     <message>
         <location filename="../src/tool_edit_point.cpp" line="690"></location>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on point to switch between dash and normal point. </source>
-        <translation>&lt;b&gt;%1+Kliknięcie&lt;/b&gt; na punkcie aby przełączać pomiędzy pośrednim a normalnym punktem.</translation>
+        <translation>&lt;b&gt;%1+Kliknięcie&lt;/b&gt; na punkcie aby przełączać pomiędzy pośrednim a normalnym punktem. </translation>
     </message>
     <message>
         <location filename="../src/tool_edit_point.cpp" line="686"></location>
@@ -1212,7 +1212,7 @@
         <location filename="../src/tool_edit_point.cpp" line="647"></location>
         <location filename="../src/tool_edit_line.cpp" line="444"></location>
         <source>&lt;b&gt;Coordinate offset:&lt;/b&gt; %1, %2 mm  &lt;b&gt;Distance:&lt;/b&gt; %3 m </source>
-        <translation>&lt;b&gt;Przesunięcie koordynatów:&lt;/&gt; %1, %2 mm  &lt;b&gt;Dystans: &lt;/b&gt; %3 m </translation>
+        <translation>&lt;b&gt;Przesunięcie koordynatów:&lt;/b&gt; %1, %2 mm  &lt;b&gt;Dystans:&lt;/b&gt; %3 m </translation>
     </message>
     <message>
         <location filename="../src/tool_edit_point.cpp" line="666"></location>
@@ -1342,7 +1342,7 @@
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="50"></location>
         <source>°</source>
         <comment>Degree sign for angles</comment>
-        <translation type="unfinished">°</translation>
+        <translation>°</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="44"></location>
@@ -1350,7 +1350,7 @@
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="84"></location>
         <source>mm</source>
         <comment>millimeters</comment>
-        <translation type="unfinished">mm</translation>
+        <translation>mm</translation>
     </message>
 </context>
 <context>
@@ -1892,25 +1892,25 @@
         <location filename="../src/gui/georeferencing_dialog.cpp" line="119"></location>
         <source>X</source>
         <comment>x coordinate</comment>
-        <translation type="unfinished">X</translation>
+        <translation>X</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="121"></location>
         <source>Y</source>
         <comment>y coordinate</comment>
-        <translation type="unfinished">Y</translation>
+        <translation>Y</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="130"></location>
         <source>E</source>
         <comment>west / east</comment>
-        <translation type="unfinished">E</translation>
+        <translation>E</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="132"></location>
         <source>N</source>
         <comment>north / south</comment>
-        <translation type="unfinished">N</translation>
+        <translation>N</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="187"></location>
@@ -1922,7 +1922,7 @@
         <location filename="../src/gui/georeferencing_dialog.cpp" line="502"></location>
         <source>%1 °</source>
         <comment>degree value</comment>
-        <translation type="unfinished">%1 °</translation>
+        <translation>%1 °</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="504"></location>
@@ -2023,18 +2023,18 @@
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="147"></location>
         <source>Create a new map ...</source>
-        <translation type="unfinished">Utwórz nową mapę...</translation>
+        <translation>Utwórz nową mapę...</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="150"></location>
         <source>Open map ...</source>
-        <translation type="unfinished">Otwórz mapę...</translation>
+        <translation>Otwórz mapę...</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="156"></location>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="334"></location>
         <source>Settings</source>
-        <translation type="unfinished">Ustawienia</translation>
+        <translation>Ustawienia</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="159"></location>
@@ -2046,12 +2046,12 @@
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="162"></location>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="336"></location>
         <source>Help</source>
-        <translation type="unfinished">Pomoc</translation>
+        <translation>Pomoc</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="165"></location>
         <source>Exit</source>
-        <translation type="unfinished">Zakończ</translation>
+        <translation>Zakończ</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="185"></location>
@@ -2071,22 +2071,22 @@
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="232"></location>
         <source>Tip of the day</source>
-        <translation type="unfinished">Wskazówka dnia</translation>
+        <translation>Wskazówka dnia</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="237"></location>
         <source>Show tip of the day</source>
-        <translation type="unfinished">Pokaż wskazówkę dnia</translation>
+        <translation>Pokaż wskazówkę dnia</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="241"></location>
         <source>Previous</source>
-        <translation type="unfinished">Poprzednie</translation>
+        <translation>Poprzednie</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="243"></location>
         <source>Next</source>
-        <translation type="unfinished">Następne</translation>
+        <translation>Następne</translation>
     </message>
 </context>
 <context>
@@ -2628,7 +2628,7 @@
         <location filename="../src/template_track.cpp" line="538"></location>
         <source>m</source>
         <comment>meters</comment>
-        <translation type="unfinished">m</translation>
+        <translation>m</translation>
     </message>
     <message>
         <location filename="../src/template_track.cpp" line="533"></location>
@@ -3955,7 +3955,7 @@ do odczytu.</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="753"></location>
         <source>E</source>
-        <translation type="unfinished">E</translation>
+        <translation>E</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="754"></location>
@@ -4050,7 +4050,7 @@ do odczytu.</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="773"></location>
         <source>N</source>
-        <translation type="unfinished">N</translation>
+        <translation>N</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="774"></location>
@@ -4060,7 +4060,7 @@ do odczytu.</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="801"></location>
         <source>Select all</source>
-        <translation type="unfinished">Wybierz wszystko</translation>
+        <translation>Wybierz wszystko</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="802"></location>
@@ -4070,7 +4070,7 @@ do odczytu.</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="803"></location>
         <source>Invert selection</source>
-        <translation type="unfinished">Odwróć zaznaczenie</translation>
+        <translation>Odwróć zaznaczenie</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="880"></location>
@@ -4354,7 +4354,7 @@ selected</source>
     <message>
         <location filename="../src/core/map_printer.cpp" line="480"></location>
         <source>- Map -</source>
-        <translation type="unfinished">- Mapa -</translation>
+        <translation>- Mapa -</translation>
     </message>
     <message>
         <location filename="../src/core/map_printer.cpp" line="1215"></location>
@@ -4454,19 +4454,19 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/map_widget.cpp" line="561"></location>
         <source>%1x</source>
         <comment>Zoom factor</comment>
-        <translation type="unfinished">%1x</translation>
+        <translation>%1x</translation>
     </message>
     <message>
         <location filename="../src/map_widget.cpp" line="582"></location>
         <source>mm</source>
         <comment>millimeters</comment>
-        <translation type="unfinished">mm</translation>
+        <translation>mm</translation>
     </message>
     <message>
         <location filename="../src/map_widget.cpp" line="598"></location>
         <source>m</source>
         <comment>meters</comment>
-        <translation type="unfinished">m</translation>
+        <translation>m</translation>
     </message>
 </context>
 <context>
@@ -4562,13 +4562,13 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="138"></location>
         <source>m</source>
         <comment>meters</comment>
-        <translation type="unfinished">m</translation>
+        <translation>m</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="116"></location>
         <source>m²</source>
         <comment>square meters</comment>
-        <translation type="unfinished">m²</translation>
+        <translation>m²</translation>
     </message>
 </context>
 <context>
@@ -4984,22 +4984,22 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1520"></location>
         <source>Unable to load object</source>
-        <translation type="unfinished">Nie można załadować obiektu</translation>
+        <translation>Nie można załadować obiektu</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1530"></location>
         <source>Unable to import rectangle object</source>
-        <translation type="unfinished">Nie można załadować prostokątnego obiektu</translation>
+        <translation>Nie można załadować prostokątnego obiektu</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1571"></location>
         <source>Not importing text symbol, couldn't figure out path' (npts=%1): %2</source>
-        <translation type="unfinished">Nie importuję symbolu tekstowego, nie mogę rozpoznać ścieżki (npts=%1): %2</translation>
+        <translation>Nie importuję symbolu tekstowego, nie mogę rozpoznać ścieżki (npts=%1): %2</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1858"></location>
         <source>Trying to import a text object with unknown coordinate format</source>
-        <translation type="unfinished">Próba importu obiektu tekstowego z nieznanym formacie koordynatów</translation>
+        <translation>Próba importu obiektu tekstowego z nieznanym formacie koordynatów</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1988"></location>
@@ -5041,7 +5041,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/template_tool_paint.cpp" line="58"></location>
         <source>&lt;b&gt;Click and drag&lt;/b&gt;: Paint. &lt;b&gt;Right click and drag&lt;/b&gt;: Erase. </source>
-        <translation>&lt;b&gt;Kliknij i przeciągnij&lt;/b&gt;: Rysuj. &lt;b&gt; Kliknij PPM i przeciągnij&lt;/b&gt;: Usuń.</translation>
+        <translation>&lt;b&gt;Kliknij i przeciągnij&lt;/b&gt;: Rysuj. &lt;b&gt; Kliknij PPM i przeciągnij&lt;/b&gt;: Usuń. </translation>
     </message>
 </context>
 <context>
@@ -5058,7 +5058,7 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/util/item_delegates.cpp" line="151"></location>
         <location filename="../src/util/item_delegates.cpp" line="158"></location>
         <source>%</source>
-        <translation type="unfinished">%</translation>
+        <translation>%</translation>
     </message>
 </context>
 <context>
@@ -5863,13 +5863,13 @@ separations</source>
         <location filename="../src/map_dialog_rotate.cpp" line="62"></location>
         <source>X:</source>
         <comment>x coordinate</comment>
-        <translation type="unfinished">X:</translation>
+        <translation>X:</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_rotate.cpp" line="64"></location>
         <source>Y:</source>
         <comment>y coordinate</comment>
-        <translation type="unfinished">Y:</translation>
+        <translation>Y:</translation>
     </message>
 </context>
 <context>
@@ -6009,13 +6009,13 @@ separations</source>
         <location filename="../src/map_dialog_scale.cpp" line="62"></location>
         <source>X:</source>
         <comment>x coordinate</comment>
-        <translation type="unfinished">X:</translation>
+        <translation>X:</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_scale.cpp" line="64"></location>
         <source>Y:</source>
         <comment>y coordinate</comment>
-        <translation type="unfinished">Y:</translation>
+        <translation>Y:</translation>
     </message>
 </context>
 <context>
@@ -6458,7 +6458,7 @@ przeskoczenia leniwego psa
     <message>
         <location filename="../src/gui/widgets/tags_widget.cpp" line="63"></location>
         <source>Help</source>
-        <translation type="unfinished">Pomoc</translation>
+        <translation>Pomoc</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tags_widget.cpp" line="233"></location>
@@ -7091,9 +7091,9 @@ Maksymalna obsługiwana wersja to %2.</translation>
         <source>There was an error reading the DXF file %1:
 
 %2</source>
-        <translation type="unfinished">Wystąpił błąd podczas wszytywania pliku DXF %2:
+        <translation>Wystąpił błąd podczas wszytywania pliku DXF %1:
 
-%2 {1:?}</translation>
+%2</translation>
     </message>
     <message>
         <location filename="../src/gps_track.cpp" line="501"></location>
@@ -7342,7 +7342,7 @@ Not an OSM file.</source>
         <location filename="../src/symbol_text.cpp" line="545"></location>
         <source>A</source>
         <comment>First capital letter of the local alphabet</comment>
-        <translation type="unfinished">A</translation>
+        <translation>A</translation>
     </message>
 </context>
 <context>
@@ -7394,17 +7394,17 @@ Not an OSM file.</source>
     <message>
         <location filename="../src/util.cpp" line="256"></location>
         <source>Failed to locate the help files.</source>
-        <translation type="unfinished">Nie udało się zlokalizować plików pomocy.</translation>
+        <translation>Nie udało się zlokalizować plików pomocy.</translation>
     </message>
     <message>
         <location filename="../src/util.cpp" line="263"></location>
         <source>Failed to locate the help browser ("Qt Assistant").</source>
-        <translation type="unfinished">Nie udało się zlokalizować przeglądarki pomocy ("Qt Assistant").</translation>
+        <translation>Nie udało się zlokalizować przeglądarki pomocy ("Qt Assistant").</translation>
     </message>
     <message>
         <location filename="../src/util.cpp" line="297"></location>
         <source>Failed to launch the help browser ("Qt Assistant").</source>
-        <translation type="unfinished">Nie udało się uruchomić przeglądarki pomocy ("Qt Assistant").</translation>
+        <translation>Nie udało się uruchomić przeglądarki pomocy ("Qt Assistant").</translation>
     </message>
     <message>
         <location filename="../src/util.cpp" line="313"></location>
