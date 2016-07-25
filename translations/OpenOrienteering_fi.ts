@@ -45,7 +45,7 @@
     </message>
     <message>
         <source>This software is licensed under the term of the GNU General Public License (GPL), version 3.&lt;br/&gt;You are welcome to redistribute it under the terms of this license.&lt;br/&gt;THERE IS NO WARRANTY FOR THE PROGRAM, TO THE EXTENT PERMITTED BY APPLICABLE LAW.&lt;br&gt;The full license text is supplied in the file %1.</source>
-        <translation type="vanished">This software is licensed under the term of the GNU General Public License (GPL), version 3.&lt;br/&gt;You are welcome to redistribute it under the terms of this license.&lt;br/&gt;THERE IS NO WARRANTY FOR THE PROGRAM, TO THE EXTENT PERMITTED BY APPLICABLE LAW.&lt;br&gt;The full license text is supplied in the file %1.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Developers in alphabetical order:</source>
@@ -58,15 +58,15 @@
     </message>
     <message>
         <source>This program uses the &lt;b&gt;Clipper library&lt;/b&gt; by Angus Johnson.</source>
-        <translation type="vanished">This program uses the &lt;b&gt;Clipper library&lt;/b&gt; by Angus Johnson.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>See &lt;a href="%1"&gt;%1&lt;/a&gt; for more information.</source>
-        <translation type="vanished">See &lt;a href="%1"&gt;%1&lt;/a&gt; for more information.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>This program uses the &lt;b&gt;PROJ.4 Cartographic Projections Library&lt;/b&gt; by Frank Warmerdam.</source>
-        <translation type="vanished">This program uses the &lt;b&gt;PROJ.4 Cartographic Projections Library&lt;/b&gt; by Frank Warmerdam.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Additional information</source>
@@ -846,12 +846,12 @@
     <message>
         <location filename="../src/tool_draw_circle.cpp" line="294"></location>
         <source>&lt;b&gt;Click&lt;/b&gt;: Start a circle or ellipse. </source>
-        <translation>&lt;b&gt;Klikkaa&lt;/b&gt;: Aloita ympyrä tai ellipsi.</translation>
+        <translation>&lt;b&gt;Klikkaa&lt;/b&gt;: Aloita ympyrä tai ellipsi. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_circle.cpp" line="295"></location>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Draw a circle. </source>
-        <translation>&lt;b&gt;Vedä&lt;/b&gt;: Piirrä ympyrä.</translation>
+        <translation>&lt;b&gt;Vedä&lt;/b&gt;: Piirrä ympyrä. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_circle.cpp" line="297"></location>
@@ -861,12 +861,12 @@
     <message>
         <location filename="../src/tool_draw_circle.cpp" line="301"></location>
         <source>&lt;b&gt;Click&lt;/b&gt;: Finish the circle. </source>
-        <translation>&lt;b&gt;Klikkaa&lt;/b&gt;: Lopeta ympyrä.</translation>
+        <translation>&lt;b&gt;Klikkaa&lt;/b&gt;: Lopeta ympyrä. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_circle.cpp" line="302"></location>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Draw an ellipse. </source>
-        <translation>&lt;b&gt;Vedä&lt;/b&gt;: Piirrä ellipsi.</translation>
+        <translation>&lt;b&gt;Vedä&lt;/b&gt;: Piirrä ellipsi. </translation>
     </message>
 </context>
 <context>
@@ -883,37 +883,37 @@
         <location filename="../src/tool_draw_path.cpp" line="1065"></location>
         <location filename="../src/tool_draw_rectangle.cpp" line="700"></location>
         <source>&lt;b&gt;Dash points on.&lt;/b&gt; </source>
-        <translation>&lt;b&gt;Käytä katkopisteitä&lt;/b&gt;</translation>
+        <translation>&lt;b&gt;Käytä katkopisteitä&lt;/b&gt; </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1071"></location>
         <source>&lt;b&gt;%1+Click&lt;/b&gt;: Snap or append to existing objects. </source>
-        <translation>&lt;b&gt;%1+Klikkaa&lt;/b&gt;: Tartu kohteeseen tai liitä loppuun.</translation>
+        <translation>&lt;b&gt;%1+Klikkaa&lt;/b&gt;: Tartu kohteeseen tai liitä loppuun. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1076"></location>
         <location filename="../src/tool_draw_rectangle.cpp" line="706"></location>
         <source>&lt;b&gt;%1+Click&lt;/b&gt;: Pick direction from existing objects. </source>
-        <translation>&lt;b&gt;%1+Klikkaa&lt;/b&gt;: Ota suunta kohteesta.</translation>
+        <translation>&lt;b&gt;%1+Klikkaa&lt;/b&gt;: Ota suunta kohteesta. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1089"></location>
         <location filename="../src/tool_draw_rectangle.cpp" line="711"></location>
         <location filename="../src/tool_draw_rectangle.cpp" line="735"></location>
         <source>&lt;b&gt;%1+Click&lt;/b&gt;: Snap to existing objects. </source>
-        <translation>&lt;b&gt;%1+Klikkaa&lt;/b&gt;: Tartu kohteeseen.</translation>
+        <translation>&lt;b&gt;%1+Klikkaa&lt;/b&gt;: Tartu kohteeseen. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1095"></location>
         <location filename="../src/tool_draw_rectangle.cpp" line="725"></location>
         <source>&lt;b&gt;%1&lt;/b&gt;: Fixed angles. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: Kiinteät suunnat.</translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Kiinteät suunnat. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1103"></location>
         <location filename="../src/tool_draw_rectangle.cpp" line="741"></location>
         <source>&lt;b&gt;%1&lt;/b&gt;: Undo last point. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: Kumoa viimeisin piste.</translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Kumoa viimeisin piste. </translation>
     </message>
 </context>
 <context>
@@ -959,12 +959,12 @@
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1061"></location>
         <source>&lt;b&gt;Length:&lt;/b&gt; %1 m </source>
-        <translation>&lt;b&gt;Pituus:&lt;/b&gt;%1 m</translation>
+        <translation>&lt;b&gt;Pituus:&lt;/b&gt;%1 m </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1081"></location>
         <source>&lt;b&gt;Click&lt;/b&gt;: Start a straight line. &lt;b&gt;Drag&lt;/b&gt;: Start a curve. </source>
-        <translation>&lt;b&gt;Klikkaa&lt;/b&gt;: Aloita suora viiva. &lt;b&gt;Vedä&lt;/b&gt;: Aloita kaariviiva.</translation>
+        <translation>&lt;b&gt;Klikkaa&lt;/b&gt;: Aloita suora viiva. &lt;b&gt;Vedä&lt;/b&gt;: Aloita kaariviiva. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1090"></location>
@@ -1014,12 +1014,12 @@
         <location filename="../src/tool_draw_point.cpp" line="317"></location>
         <location filename="../src/tool_draw_point.cpp" line="329"></location>
         <source>&lt;b&gt;Angle:&lt;/b&gt; %1° </source>
-        <translation>&lt;b&gt;Kulma:&lt;/b&gt; %1°</translation>
+        <translation>&lt;b&gt;Kulma:&lt;/b&gt; %1° </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_point.cpp" line="318"></location>
         <source>&lt;b&gt;%1&lt;/b&gt;: Fixed angles. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: Kiinteät suunnat.</translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Kiinteät suunnat. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_point.cpp" line="323"></location>
@@ -1039,7 +1039,7 @@
     </message>
     <message>
         <source>&lt;b&gt;Click&lt;/b&gt;: Create a point object. &lt;b&gt;Drag&lt;/b&gt;: Create an object and set its orientation (if rotatable). </source>
-        <translation type="vanished">&lt;b&gt;Klikkaa&lt;/b&gt;: Piirrä pistemäinen kohde. &lt;b&gt;Vedä&lt;/b&gt;: Piirrä kohde ja aseta suunta (jos kierrettävä).</translation>
+        <translation>&lt;b&gt;Klikkaa&lt;/b&gt;: Piirrä pistemäinen kohde. &lt;b&gt;Vedä&lt;/b&gt;: Piirrä kohde ja aseta suunta (jos kierrettävä). </translation>
     </message>
 </context>
 <context>
@@ -1085,7 +1085,7 @@
     <message>
         <location filename="../src/tool_draw_rectangle.cpp" line="729"></location>
         <source>&lt;b&gt;%1&lt;/b&gt;: Snap to previous lines. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: Tartu viivoihin.</translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Tartu viivoihin. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_rectangle.cpp" line="740"></location>
@@ -1103,7 +1103,7 @@
     <message>
         <location filename="../src/tool_draw_text.cpp" line="379"></location>
         <source>&lt;b&gt;Click&lt;/b&gt;: Create a text object with a single anchor. &lt;b&gt;Drag&lt;/b&gt;: Create a text box. </source>
-        <translation>&lt;b&gt;Klikkaa&lt;/b&gt;:Kirjoita tekstiä. &lt;b&gt;Vedä&lt;/B&gt;: Tee tekstilaatikko.</translation>
+        <translation>&lt;b&gt;Klikkaa&lt;/b&gt;:Kirjoita tekstiä. &lt;b&gt;Vedä&lt;/b&gt;: Tee tekstilaatikko. </translation>
     </message>
     <message>
         <source>A</source>
@@ -1127,12 +1127,12 @@
     <message>
         <location filename="../src/tool_edit_line.cpp" line="453"></location>
         <source>&lt;b&gt;%1&lt;/b&gt;: Free movement. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: Vapaa liike.</translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Vapaa liike. </translation>
     </message>
     <message>
         <location filename="../src/tool_edit_line.cpp" line="472"></location>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on segment: Toggle between straight and curved. </source>
-        <translation>&lt;b&gt;%1+Klikkaa&lt;/b&gt; viivan osaan: Vaihda suoran ja käyrän välillä.</translation>
+        <translation>&lt;b&gt;%1+Klikkaa&lt;/b&gt; viivan osaan: Vaihda suoran ja käyrän välillä. </translation>
     </message>
 </context>
 <context>
@@ -1163,12 +1163,12 @@
     <message>
         <location filename="../src/tool_edit_point.cpp" line="662"></location>
         <source>&lt;b&gt;%1&lt;/b&gt;: Keep opposite handle positions. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: Säilytä vastakkaiset kahvat.</translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Säilytä vastakkaiset kahvat. </translation>
     </message>
     <message>
         <location filename="../src/tool_edit_point.cpp" line="683"></location>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on point: Delete it; on path: Add a new dash point; with &lt;b&gt;%2&lt;/b&gt;: Add a normal point. </source>
-        <translation>&lt;b&gt;%1+Klikkaa&lt;/b&gt; pistettä: Poista; viivaa: Lisää uusi katkopiste; &lt;b&gt;%2&lt;/b&gt;:llä: Lisää tavallinen piste.</translation>
+        <translation>&lt;b&gt;%1+Klikkaa&lt;/b&gt; pistettä: Poista; viivaa: Lisää uusi katkopiste; &lt;b&gt;%2&lt;/b&gt;:llä: Lisää tavallinen piste. </translation>
     </message>
     <message>
         <location filename="../src/tool_edit_point.cpp" line="686"></location>
@@ -1187,13 +1187,13 @@
         <location filename="../src/tool_edit_point.cpp" line="647"></location>
         <location filename="../src/tool_edit_line.cpp" line="444"></location>
         <source>&lt;b&gt;Coordinate offset:&lt;/b&gt; %1, %2 mm  &lt;b&gt;Distance:&lt;/b&gt; %3 m </source>
-        <translation>&lt;b&gt;Koordinaatin siirto:&lt;/b&gt; %1, %2 mm  &lt;b&gt;Etäisyys:&lt;/b&gt; %3 m</translation>
+        <translation>&lt;b&gt;Koordinaatin siirto:&lt;/b&gt; %1, %2 mm  &lt;b&gt;Etäisyys:&lt;/b&gt; %3 m </translation>
     </message>
     <message>
         <location filename="../src/tool_edit_point.cpp" line="654"></location>
         <location filename="../src/tool_edit_line.cpp" line="455"></location>
         <source>&lt;b&gt;%1&lt;/b&gt;: Fixed angles. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: Kiinteät suunnat.</translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Kiinteät suunnat. </translation>
     </message>
     <message>
         <location filename="../src/tool_edit_point.cpp" line="666"></location>
@@ -1206,7 +1206,7 @@
         <location filename="../src/tool_edit_point.cpp" line="672"></location>
         <location filename="../src/tool_edit_line.cpp" line="464"></location>
         <source>&lt;b&gt;Click&lt;/b&gt;: Select a single object. &lt;b&gt;Drag&lt;/b&gt;: Select multiple objects. &lt;b&gt;%1+Click&lt;/b&gt;: Toggle selection. </source>
-        <translation>&lt;b&gt;Klikkaa&lt;/b&gt;: Valitse yksittäinen kohde. &lt;b&gt;Vedä&lt;/b&gt;: Valitse useita kohteita. &lt;b&gt;%1+Klikkaa&lt;/b&gt;: Vaihda valintaa.</translation>
+        <translation>&lt;b&gt;Klikkaa&lt;/b&gt;: Valitse yksittäinen kohde. &lt;b&gt;Vedä&lt;/b&gt;: Valitse useita kohteita. &lt;b&gt;%1+Klikkaa&lt;/b&gt;: Vaihda valintaa. </translation>
     </message>
     <message>
         <location filename="../src/tool_edit_point.cpp" line="675"></location>
@@ -3168,7 +3168,7 @@ Skaalataanko tuotu tieto?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="847"></location>
         <source>Draw circles and ellipses</source>
-        <translation>Piirrä ympyröitä ja ellipsejä </translation>
+        <translation>Piirrä ympyröitä ja ellipsejä</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="851"></location>
@@ -4484,7 +4484,7 @@ zoomaa hiiren rullalla.</translation>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="132"></location>
         <source>Note: Boundary length and area are correct only if there are no self-intersections and holes are used as such.</source>
-        <translation>Huom: Reunaviivan pituus ja pinta-ala ovat oikein vain jos viiva ei ole itsensä leikkaava ja reikiä on käyettty oikein. </translation>
+        <translation>Huom: Reunaviivan pituus ja pinta-ala ovat oikein vain jos viiva ei ole itsensä leikkaava ja reikiä on käyettty oikein.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="150"></location>
@@ -4571,7 +4571,7 @@ zoomaa hiiren rullalla.</translation>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="1546"></location>
         <source>libocad returned %1</source>
-        <translation>libocad returned %1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="1588"></location>
@@ -4644,12 +4644,12 @@ zoomaa hiiren rullalla.</translation>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="114"></location>
         <source>Could not allocate buffer.</source>
-        <translation>Could not allocate buffer.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="118"></location>
         <source>libocad returned %1</source>
-        <translation>libocad returned %1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="121"></location>
@@ -4687,7 +4687,7 @@ zoomaa hiiren rullalla.</translation>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="427"></location>
         <source>In dashed line symbol %1, pointed cap lengths for begin and end are different (%2 and %3). Using %4.</source>
-        <translation>Katkoviivasymbolissa %1 terävän viivanpään pituus on eri alussa ja lopussa (%2 ja %3). Käytetään %4.  </translation>
+        <translation>Katkoviivasymbolissa %1 terävän viivanpään pituus on eri alussa ja lopussa (%2 ja %3). Käytetään %4.</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="444"></location>
@@ -4931,7 +4931,7 @@ zoomaa hiiren rullalla.</translation>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1988"></location>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1992"></location>
         <source>Invalid data.</source>
-        <translation>Invalid data.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Untested file importer for format: OCD %1</source>
@@ -5187,29 +5187,29 @@ zoomaa hiiren rullalla.</translation>
         <location filename="../src/gui/print_tool.cpp" line="57"></location>
         <location filename="../src/gui/print_tool.cpp" line="369"></location>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the map, the print area or the area's borders. </source>
-        <translation>&lt;b&gt;Vedä&lt;/b&gt;: Siirrä karttaa, tulostusaluetta tai tulostusalueen reunoja.</translation>
+        <translation>&lt;b&gt;Vedä&lt;/b&gt;: Siirrä karttaa, tulostusaluetta tai tulostusalueen reunoja. </translation>
     </message>
     <message>
         <location filename="../src/gui/print_tool.cpp" line="341"></location>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the print area. </source>
-        <translation>&lt;b&gt;Vedä&lt;/b&gt;: Siirrä tulostusaluetta.</translation>
+        <translation>&lt;b&gt;Vedä&lt;/b&gt;: Siirrä tulostusaluetta. </translation>
     </message>
     <message>
         <location filename="../src/gui/print_tool.cpp" line="345"></location>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the map. </source>
-        <translation>&lt;b&gt;Vedä&lt;/b&gt;: Siirrä karttaa.</translation>
+        <translation>&lt;b&gt;Vedä&lt;/b&gt;: Siirrä karttaa. </translation>
     </message>
     <message>
         <location filename="../src/gui/print_tool.cpp" line="350"></location>
         <location filename="../src/gui/print_tool.cpp" line="355"></location>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the print area's border. </source>
-        <translation>&lt;b&gt;Vedä&lt;/b&gt;: Siirrä tulostusalueen reunaa.</translation>
+        <translation>&lt;b&gt;Vedä&lt;/b&gt;: Siirrä tulostusalueen reunaa. </translation>
     </message>
     <message>
         <location filename="../src/gui/print_tool.cpp" line="360"></location>
         <location filename="../src/gui/print_tool.cpp" line="365"></location>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the print area's borders. </source>
-        <translation>&lt;b&gt;Vedä&lt;/b&gt;: Siirrä tulostusalueen reunoja.</translation>
+        <translation>&lt;b&gt;Vedä&lt;/b&gt;: Siirrä tulostusalueen reunoja. </translation>
     </message>
 </context>
 <context>
@@ -5801,7 +5801,7 @@ separations</source>
     <message>
         <location filename="../src/tool_rotate_pattern.cpp" line="162"></location>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Set the direction of area fill patterns or point objects. </source>
-        <translation>&lt;b&gt;Vedä&lt;/b&gt;: Aseta alueen täytön kuvioiden tai pistemäisten kohteiden suunta.</translation>
+        <translation>&lt;b&gt;Vedä&lt;/b&gt;: Aseta alueen täytön kuvioiden tai pistemäisten kohteiden suunta. </translation>
     </message>
 </context>
 <context>
@@ -5814,7 +5814,7 @@ separations</source>
     <message>
         <location filename="../src/tool_rotate.cpp" line="186"></location>
         <source>&lt;b&gt;%1&lt;/b&gt;: Fixed angles. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: Kiinteät suunnat.</translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Kiinteät suunnat. </translation>
     </message>
     <message>
         <location filename="../src/tool_rotate.cpp" line="190"></location>
@@ -6269,7 +6269,7 @@ separations</source>
     <message>
         <location filename="../src/symbol_setting_dialog.cpp" line="104"></location>
         <source>&lt;b&gt;Template:&lt;/b&gt; </source>
-        <translation>&lt;b&gt;Malli:&lt;/b&gt;</translation>
+        <translation>&lt;b&gt;Malli:&lt;/b&gt; </translation>
     </message>
     <message>
         <location filename="../src/symbol_setting_dialog.cpp" line="105"></location>
@@ -6307,10 +6307,7 @@ separations</source>
 takes the routechoice
 to jump over the lazy dog
 1234567890</source>
-        <translation>The quick brown fox
-takes the routechoice
-to jump over the lazy dog
-1234567890</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/symbol_setting_dialog.cpp" line="483"></location>
@@ -6441,7 +6438,7 @@ to jump over the lazy dog
     <message>
         <location filename="../src/template_adjust.cpp" line="572"></location>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set the template position of the pass point. </source>
-        <translation>&lt;b&gt;Klikkaa&lt;/b&gt;: Aseta piste taustakartalle.</translation>
+        <translation>&lt;b&gt;Klikkaa&lt;/b&gt;: Aseta piste taustakartalle. </translation>
     </message>
     <message>
         <location filename="../src/template_adjust.cpp" line="597"></location>
