@@ -35,7 +35,7 @@ Creating the control description sheet
 
 The Course Design symbol set contains the individual pictograms as well as
 symbols for the different sections which together form the control description
-sheet. The pictograms indicate the column of the control description sheet where
+sheet. The pictograms' names indicate the column of the control description sheet where
 they are to be used.
 
 The control description symbols are meant to be used with a grid of horizontal
