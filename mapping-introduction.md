@@ -25,7 +25,7 @@ edited: 1 December 2015
    Surveying the terrain by printing out templates, drawing in map details, scanning your drawings and doing the final drawing at home.
  - Surveying: digital method<br />
    Surveying the terrain with help of mobile computers.
- - Drawing</a>
+ - toolbars.md<br />
    Doing the final drawing with OpenOrienteering Mapper.
  - Generalization<br />
    The importance of generalization.
@@ -76,7 +76,7 @@ With the advent of inexpensive ink-jet printers and high quality printing papers
 
 This tool defines colors in terms of the CMYK system or the RGB system.  Default colors for orienteering maps are entered but the colors that are actually printed by a particular printer on a particular paper type can produce a result which is quite different from the PMS color intended.
 
-The IOF Map Commission has prepared an offset printed paper test sheet (Print Tech Test Sheet - available from your national mapping officer) and as a map file printtech2006.ocd (available as download from http://lazarus.elte.hu/mc/print-tech/printtech2006.pdf ).  The offset printed paper sheet has the currently prescribed colors for the production of maps (Store in a heavy envelope, do not use copies which have been kept loose and may be faded).   The colors for a particular printer and paper may be adjusted using the Color Window so that a better match with the offset printed test sheet is achieved.  The colors yellow (open space on the terrain) and brown (contour lines) are commonly quite divergent from the standard.
+The IOF Map Commission has prepared an offset printed paper test sheet (Print Tech Test Sheet - available from your national mapping officer) and as a map file printtech2006.ocd (available as download from the [IOF](http://orienteering.org/resources/mapping/test-sheet-for-assessing-print-quality-for-orienteering-maps/).The offset printed paper sheet has the currently prescribed colors for the production of maps (Store in a heavy envelope, do not use copies which have been kept loose and may be faded).   The colors for a particular printer and paper may be adjusted using the Color Window so that a better match with the offset printed test sheet is achieved.  The colors yellow (open space on the terrain) and brown (contour lines) are commonly quite divergent from the standard.
 
 ### Color adjustment
 
@@ -99,6 +99,6 @@ Map scales are set in accordance with the Internationsl Standard for Orienteerin
 Printing of a map prepared at 1:15000 may be at either scale (and conversely a map prepared at 1:10k can be printed at 1:15k) with no loss of accuracy or information. Most course planning software provides for this re-scaling at the point of printing.
 
 The ISOM details the size, shape and use of all the permitted symbols and codes on the map, and these are the only acceptable symbols and sizes on a map to be printed at a scale of 1:15000.  If it is desired to prepare the original map at a scale of 1:10000 (or some other scale) a new symbol set appropriate to that scale would need to be created with proportionately larger symbols.  There seems little point in this.
-Do not confuse this with the scale of fieldwork which is sensibly at a larger scale than the finished map.  Fieldwork is rescaled to the scale of the map when it is loaded as a [template](template_menu.md).
+Do not confuse this with the scale of fieldwork which is sensibly at a larger scale than the finished map.  Fieldwork is rescaled to the scale of the map when it is loaded as a [template](templates.md).
 
 Using a larger scale with symbol sizes appropriate to a smaller scale provides more white space and enables more detail to be included but this is at the expense of readability, and the additional detail is almost always unnecessary and thus unhelpful.
