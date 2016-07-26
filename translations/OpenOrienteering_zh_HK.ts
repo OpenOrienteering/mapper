@@ -7,7 +7,7 @@
         <location filename="../src/gui/autosave_dialog.cpp" line="45"></location>
         <location filename="../src/gui/autosave_dialog.cpp" line="51"></location>
         <source>%n bytes</source>
-        <translation type="unfinished"><numerusform></numerusform>
+        <translation><numerusform>%n 位元組</numerusform>
         </translation></message>
 </context>
 <context>
