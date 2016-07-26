@@ -5705,11 +5705,11 @@ separations</source>
     <name>QAbstractSpinBox</name>
     <message>
         <source>Step &amp;down</source>
-        <translation type="unfinished"></translation>
+        <translation>S&amp;tap omlaag</translation>
     </message>
     <message>
         <source>&amp;Step up</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Stap omhoog</translation>
     </message>
     <message>
         <source>&amp;Select All</source>
@@ -5911,7 +5911,7 @@ separations</source>
     </message>
     <message>
         <source>Will not rename sequential file using block copy</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Zal opeenvolgend bestand niet hernoemen middels blok-kopie</translation>
     </message>
 </context>
 <context>
@@ -6031,11 +6031,13 @@ Wilt u het toch verwijderen?</translation>
         <source>%1
 Directory not found.
 Please verify the correct directory name was given.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1
+Map niet gevonden.
+Controleer of de juiste naam van de map is ingevoerd.</translation>
     </message>
     <message>
         <source>Sidebar</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Zijbalk</translation>
     </message>
     <message>
         <source>List View</source>
@@ -6101,7 +6103,7 @@ Wilt u dit overschrijven?</translation>
     </message>
     <message>
         <source>Change to detail view mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Ga naar detail-weergave modus</translation>
     </message>
     <message>
         <source>Create New Folder</source>
@@ -6195,7 +6197,7 @@ Controleer of de juiste bestandsnaam is opgegeven.</translation>
     <name>QIODevice</name>
     <message>
         <source>No such file or directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Geen geldig bestand of map</translation>
     </message>
     <message>
         <source>Permission denied</source>
@@ -6203,7 +6205,7 @@ Controleer of de juiste bestandsnaam is opgegeven.</translation>
     </message>
     <message>
         <source>No space left on device</source>
-        <translation type="unfinished"></translation>
+        <translation>Opslagmedium is vol</translation>
     </message>
     <message>
         <source>Unknown error</source>
@@ -6211,7 +6213,7 @@ Controleer of de juiste bestandsnaam is opgegeven.</translation>
     </message>
     <message>
         <source>Too many open files</source>
-        <translation type="unfinished"></translation>
+        <translation>Te veel bestanden geopend</translation>
     </message>
 </context>
 <context>
@@ -6276,7 +6278,7 @@ Controleer of de juiste bestandsnaam is opgegeven.</translation>
     </message>
     <message>
         <source>&lt;h3&gt;About Qt&lt;/h3&gt;&lt;p&gt;This program uses Qt version %1.&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;h3&gt;Over Qt&lt;/h3&gt; &lt;p&gt;Dit programma gebruikt Qt versie %1.&lt;/p&gt;</translation>
     </message>
 </context>
 <context>
@@ -6294,7 +6296,7 @@ Controleer of de juiste bestandsnaam is opgegeven.</translation>
     <name>QPageSetupWidget</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Formulier</translation>
     </message>
     <message>
         <source>bottom margin</source>
@@ -6306,7 +6308,7 @@ Controleer of de juiste bestandsnaam is opgegeven.</translation>
     </message>
     <message>
         <source>Paper source:</source>
-        <translation type="unfinished"></translation>
+        <translation>Papierbron:</translation>
     </message>
     <message>
         <source>Centimeters (cm)</source>
@@ -6510,7 +6512,8 @@ Controleer of de juiste bestandsnaam is opgegeven.</translation>
     <message>
         <source>%1 already exists.
 Do you want to overwrite it?</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 bestaat reeds.
+Wilt u het overschrijven?</translation>
     </message>
     <message>
         <source>Custom</source>
@@ -6546,21 +6549,23 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>The 'From' value cannot be greater than the 'To' value.</source>
-        <translation type="unfinished"></translation>
+        <translation>De waarde 'Van' kan niet groter zijn dan de waarde 'Tot'.</translation>
     </message>
     <message>
         <source>US Common #10 Envelope</source>
-        <translation>US Common #10 Envelope</translation>
+        <translation>US Common #10 Envelop</translation>
     </message>
     <message>
         <source>%1 is a directory.
 Please choose a different file name.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 is een map.
+Kies een andere bestandsnaam.</translation>
     </message>
     <message>
         <source>File %1 is not writable.
 Please choose a different file name.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bestand %1 is niet schrijfbaar.
+Kies een andere bestandsnaam.</translation>
     </message>
 </context>
 <context>
@@ -6650,7 +6655,7 @@ Please choose a different file name.</source>
     <name>QPrintPropertiesWidget</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Formulier</translation>
     </message>
     <message>
         <source>Page</source>
@@ -6669,7 +6674,7 @@ Please choose a different file name.</source>
     </message>
     <message>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Formulier</translation>
     </message>
     <message>
         <source>None</source>
@@ -6729,7 +6734,7 @@ Please choose a different file name.</source>
     </message>
     <message>
         <source>Collate</source>
-        <translation type="unfinished"></translation>
+        <translation>Verzamelen</translation>
     </message>
     <message>
         <source>Copies:</source>
@@ -6752,7 +6757,7 @@ Please choose a different file name.</source>
     </message>
     <message>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Formulier</translation>
     </message>
     <message>
         <source>Type:</source>
@@ -6764,7 +6769,7 @@ Please choose a different file name.</source>
     </message>
     <message>
         <source>Output &amp;file:</source>
-        <translation type="unfinished"></translation>
+        <translation>Uitvoer &amp;bestand:</translation>
     </message>
     <message>
         <source>P&amp;roperties</source>
@@ -6787,101 +6792,101 @@ Please choose a different file name.</source>
     <name>QProcess</name>
     <message>
         <source>Error writing to process</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Fout bij het schrijven naar proces</translation>
     </message>
     <message>
         <source>Resource error (fork failure): %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Hulpbron fout (afsplitsings fout): %1</translation>
     </message>
     <message>
         <source>Error reading from process</source>
-        <translation type="unfinished"></translation>
+        <translation>Fout bij het lezen van proces</translation>
     </message>
     <message>
         <source>Process failed to start: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Proces kan niet worden gestart: %1</translation>
     </message>
     <message>
         <source>Could not open input redirection for reading</source>
-        <translation type="unfinished"></translation>
+        <translation>Invoer-verwijzing kan niet worden geopend voor lezen</translation>
     </message>
     <message>
         <source>No program defined</source>
-        <translation type="unfinished"></translation>
+        <translation>Geen enkel programma gedefinieerd</translation>
     </message>
     <message>
         <source>Could not open output redirection for writing</source>
-        <translation type="unfinished"></translation>
+        <translation>Omleiding voor de schrijf-uitvoer mislukt</translation>
     </message>
     <message>
         <source>Process operation timed out</source>
-        <translation type="unfinished"></translation>
+        <translation>Proces duurde te lang</translation>
     </message>
     <message>
         <source>Process crashed</source>
-        <translation type="unfinished"></translation>
+        <translation>Proces is vastgelopen</translation>
     </message>
 </context>
 <context>
     <name>QProgressDialog</name>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Annuleren</translation>
     </message>
 </context>
 <context>
     <name>QScrollBar</name>
     <message>
         <source>Top</source>
-        <translation type="unfinished"></translation>
+        <translation>Boven</translation>
     </message>
     <message>
         <source>Scroll down</source>
-        <translation type="unfinished"></translation>
+        <translation>Blader omlaag</translation>
     </message>
     <message>
         <source>Scroll here</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Blader hier naartoe</translation>
     </message>
     <message>
         <source>Scroll left</source>
-        <translation type="unfinished"></translation>
+        <translation>Blader naar links</translation>
     </message>
     <message>
         <source>Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>Onderkant</translation>
     </message>
     <message>
         <source>Page up</source>
-        <translation type="unfinished"></translation>
+        <translation>Bladzijde omhoog</translation>
     </message>
     <message>
         <source>Page right</source>
-        <translation type="unfinished"></translation>
+        <translation>Bladzijde naar rechts</translation>
     </message>
     <message>
         <source>Scroll up</source>
-        <translation type="unfinished"></translation>
+        <translation>Blader omhoog</translation>
     </message>
     <message>
         <source>Scroll right</source>
-        <translation type="unfinished"></translation>
+        <translation>Blader naar rechts</translation>
     </message>
     <message>
         <source>Left edge</source>
-        <translation type="unfinished"></translation>
+        <translation>Linkerkant</translation>
     </message>
     <message>
         <source>Page down</source>
-        <translation type="unfinished"></translation>
+        <translation>Bladzijde omlaag</translation>
     </message>
     <message>
         <source>Page left</source>
-        <translation type="unfinished"></translation>
+        <translation>Bladzijde naar links</translation>
     </message>
     <message>
         <source>Right edge</source>
-        <translation type="unfinished"></translation>
+        <translation>Rechterkant</translation>
     </message>
 </context>
 <context>
@@ -6900,7 +6905,7 @@ Please choose a different file name.</source>
     </message>
     <message>
         <source>Up</source>
-        <translation type="unfinished"></translation>
+        <translation>Omhoog</translation>
     </message>
     <message>
         <source>Alt</source>
@@ -6944,7 +6949,7 @@ Please choose a different file name.</source>
     </message>
     <message>
         <source>Away</source>
-        <translation type="unfinished"></translation>
+        <translation>Weg</translation>
     </message>
     <message>
         <source>Book</source>
@@ -6952,7 +6957,7 @@ Please choose a different file name.</source>
     </message>
     <message>
         <source>Call</source>
-        <translation type="unfinished"></translation>
+        <translation>Oproep</translation>
     </message>
     <message>
         <source>Copy</source>
@@ -6976,7 +6981,7 @@ Please choose a different file name.</source>
     </message>
     <message>
         <source>Home</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Huis</translation>
     </message>
     <message>
         <source>Left</source>
@@ -6988,7 +6993,7 @@ Please choose a different file name.</source>
     </message>
     <message>
         <source>Meta</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Meta</translation>
     </message>
     <message>
         <source>PgUp</source>
@@ -7008,11 +7013,11 @@ Please choose a different file name.</source>
     </message>
     <message>
         <source>XFer</source>
-        <translation type="unfinished"></translation>
+        <translation>Overdracht</translation>
     </message>
     <message>
         <source>View</source>
-        <translation type="unfinished"></translation>
+        <translation>Weergave</translation>
     </message>
     <message>
         <source>Clear</source>
@@ -7084,23 +7089,23 @@ Please choose a different file name.</source>
     </message>
     <message>
         <source>Option</source>
-        <translation type="unfinished"></translation>
+        <translation>Optie</translation>
     </message>
     <message>
         <source>PgDown</source>
-        <translation type="unfinished"></translation>
+        <translation>PgDown</translation>
     </message>
     <message>
         <source>Reload</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Opnieuw inlezen</translation>
     </message>
     <message>
         <source>Return</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Terug</translation>
     </message>
     <message>
         <source>Search</source>
-        <translation type="unfinished"></translation>
+        <translation>Zoeken</translation>
     </message>
     <message>
         <source>Select</source>
@@ -7108,15 +7113,15 @@ Please choose a different file name.</source>
     </message>
     <message>
         <source>SysReq</source>
-        <translation type="unfinished"></translation>
+        <translation>SysReq</translation>
     </message>
     <message>
         <source>NumLock</source>
-        <translation type="unfinished"></translation>
+        <translation>NumLock</translation>
     </message>
     <message>
         <source>ScrollLock</source>
-        <translation type="unfinished"></translation>
+        <translation>ScrollLock</translation>
     </message>
     <message>
         <source>Zoom Out</source>
@@ -7124,54 +7129,54 @@ Please choose a different file name.</source>
     </message>
     <message>
         <source>Page Up</source>
-        <translation type="unfinished"></translation>
+        <translation>Bladzijde omhoog</translation>
     </message>
     <message>
         <source>Caps Lock</source>
-        <translation type="unfinished"></translation>
+        <translation>Caps Lock</translation>
     </message>
     <message>
         <source>System Request</source>
-        <translation type="unfinished"></translation>
+        <translation>System Request</translation>
     </message>
     <message>
         <source>CapsLock</source>
-        <translation type="unfinished"></translation>
+        <translation>CapsLock</translation>
     </message>
     <message>
         <source>Backtab</source>
-        <translation type="unfinished"></translation>
+        <translation>Tab-terug</translation>
     </message>
     <message>
         <source>Backspace</source>
-        <translation type="unfinished"></translation>
+        <translation>Terugstellen</translation>
     </message>
     <message>
         <source>Page Down</source>
-        <translation type="unfinished"></translation>
+        <translation>Bladzijde omlaag</translation>
     </message>
     <message>
         <source>Wake Up</source>
-        <translation type="unfinished"></translation>
+        <translation>Word wakker</translation>
     </message>
     <message>
         <source>Monitor Brightness Down</source>
-        <translation type="unfinished"></translation>
+        <translation>Scherm dimmen</translation>
     </message>
 </context>
 <context>
     <name>QStandardPaths</name>
     <message>
         <source>Home</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Huis</translation>
     </message>
     <message>
         <source>Cache</source>
-        <translation type="unfinished"></translation>
+        <translation>Cache</translation>
     </message>
     <message>
         <source>Fonts</source>
-        <translation type="unfinished"></translation>
+        <translation>Lettertypen</translation>
     </message>
     <message>
         <source>Music</source>
@@ -7179,7 +7184,7 @@ Please choose a different file name.</source>
     </message>
     <message>
         <source>Shared Cache</source>
-        <translation type="unfinished"></translation>
+        <translation>Gedeelde cache</translation>
     </message>
     <message>
         <source>Movies</source>
@@ -7187,15 +7192,15 @@ Please choose a different file name.</source>
     </message>
     <message>
         <source>Download</source>
-        <translation type="unfinished"></translation>
+        <translation>Downloaden</translation>
     </message>
     <message>
         <source>Configuration</source>
-        <translation type="unfinished"></translation>
+        <translation>Configuratie</translation>
     </message>
     <message>
         <source>Application Data</source>
-        <translation type="unfinished"></translation>
+        <translation>Toepassingsgegevens</translation>
     </message>
     <message>
         <source>Runtime</source>
@@ -7215,7 +7220,7 @@ Please choose a different file name.</source>
     </message>
     <message>
         <source>Shared Data</source>
-        <translation type="unfinished"></translation>
+        <translation>Gedeelde gegevens</translation>
     </message>
     <message>
         <source>Applications</source>
@@ -7230,11 +7235,11 @@ Please choose a different file name.</source>
     <name>QTabBar</name>
     <message>
         <source>Scroll Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Blader naar links</translation>
     </message>
     <message>
         <source>Scroll Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Blader naar rechts</translation>
     </message>
 </context>
 <context>
@@ -7286,7 +7291,7 @@ Please choose a different file name.</source>
     <name>QWhatsThisAction</name>
     <message>
         <source>What's This?</source>
-        <translation type="unfinished"></translation>
+        <translation>Wat is dit?</translation>
     </message>
 </context>
 <context>
@@ -7328,7 +7333,7 @@ Please choose a different file name.</source>
     </message>
     <message>
         <source>Copy &amp;Link Location</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopieer &amp;locatie van koppeling</translation>
     </message>
 </context>
 <context>
@@ -7351,7 +7356,7 @@ Please choose a different file name.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Annuleer</translation>
     </message>
     <message>
         <source>Commit</source>
@@ -7359,7 +7364,7 @@ Please choose a different file name.</source>
     </message>
     <message>
         <source>Continue</source>
-        <translation type="unfinished"></translation>
+        <translation>Doorgaan</translation>
     </message>
     <message>
         <source>&amp;Finish</source>
