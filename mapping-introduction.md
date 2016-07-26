@@ -25,7 +25,7 @@ edited: 1 December 2015
    Surveying the terrain by printing out templates, drawing in map details, scanning your drawings and doing the final drawing at home.
  - Surveying: digital method<br />
    Surveying the terrain with help of mobile computers.
- - toolbars.md<br />
+ - Drawing<br />
    Doing the final drawing with OpenOrienteering Mapper.
  - Generalization<br />
    The importance of generalization.
