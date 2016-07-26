@@ -2249,11 +2249,9 @@
         <location filename="../src/file_import_export.cpp" line="93"></location>
         <source>Dropped %n irregular object(s).</source>
         <translatorcomment>What is meant with 'irregular'? Not-normal? Or not-typical?</translatorcomment>
-        <translation>
-            <numerusform>%n onregelmatige objecten zijn weggelaten.</numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>%n uitzonderlijke objecten zijn weggelaten.</numerusform>
+        <numerusform>%n uitzonderlijk object is weggelaten.</numerusform>
+        </translation></message>
     <message>
         <location filename="../src/file_import_export.cpp" line="100"></location>
         <source>Error during symbol post-processing.</source>
@@ -2416,7 +2414,7 @@
     <message>
         <location filename="../src/symbol_line.cpp" line="2056"></location>
         <source>Line cap:</source>
-        <translation>Eind van lijn:</translation>
+        <translation>Lijn uiteinde:</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2058"></location>
@@ -3118,7 +3116,7 @@ Geimporteerde gegevens schalen?</translation>
     <message>
         <location filename="../src/core/map_color.cpp" line="71"></location>
         <source>Registration black (all printed colors)</source>
-        <translation>CMYK-zwart (alle afgedrukte kleuren)</translation>
+        <translation>CMYK-zwart (alle gedrukte kleuren)</translation>
     </message>
 </context>
 <context>
@@ -5638,7 +5636,7 @@ separations</source>
         <location filename="../src/gui/print_widget.cpp" line="1223"></location>
         <source>Exported successfully to %1</source>
         <translatorcomment>Check original</translatorcomment>
-        <translation>Exporteren naar %1 gelukt</translation>
+        <translation>Exporteren naar %1 is gelukt</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1219"></location>
@@ -5911,7 +5909,7 @@ separations</source>
     </message>
     <message>
         <source>Will not rename sequential file using block copy</source>
-        <translation type="unfinished">Zal opeenvolgend bestand niet hernoemen middels blok-kopie</translation>
+        <translation>Zal opeenvolgend bestand niet hernoemen middels blok-kopie</translation>
     </message>
 </context>
 <context>
@@ -6037,7 +6035,7 @@ Controleer of de juiste naam van de map is ingevoerd.</translation>
     </message>
     <message>
         <source>Sidebar</source>
-        <translation type="unfinished">Zijbalk</translation>
+        <translation>Zijbalk</translation>
     </message>
     <message>
         <source>List View</source>
@@ -6296,7 +6294,7 @@ Controleer of de juiste bestandsnaam is opgegeven.</translation>
     <name>QPageSetupWidget</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished">Formulier</translation>
+        <translation>Formulier</translation>
     </message>
     <message>
         <source>bottom margin</source>
@@ -6792,11 +6790,11 @@ Kies een andere bestandsnaam.</translation>
     <name>QProcess</name>
     <message>
         <source>Error writing to process</source>
-        <translation type="unfinished">Fout bij het schrijven naar proces</translation>
+        <translation>Fout bij schrijven naar proces</translation>
     </message>
     <message>
         <source>Resource error (fork failure): %1</source>
-        <translation type="unfinished">Hulpbron fout (afsplitsings fout): %1</translation>
+        <translation>Hulpbron fout (afsplitsings-fout): %1</translation>
     </message>
     <message>
         <source>Error reading from process</source>
@@ -6846,7 +6844,7 @@ Kies een andere bestandsnaam.</translation>
     </message>
     <message>
         <source>Scroll here</source>
-        <translation type="unfinished">Blader hier naartoe</translation>
+        <translation>Blader hier naartoe</translation>
     </message>
     <message>
         <source>Scroll left</source>
@@ -6953,7 +6951,7 @@ Kies een andere bestandsnaam.</translation>
     </message>
     <message>
         <source>Book</source>
-        <translation type="unfinished">Boek</translation>
+        <translation>Boek</translation>
     </message>
     <message>
         <source>Call</source>
@@ -6993,7 +6991,7 @@ Kies een andere bestandsnaam.</translation>
     </message>
     <message>
         <source>Meta</source>
-        <translation type="unfinished">Meta</translation>
+        <translation>Meta</translation>
     </message>
     <message>
         <source>PgUp</source>
@@ -7061,7 +7059,7 @@ Kies een andere bestandsnaam.</translation>
     </message>
     <message>
         <source>Zenkaku</source>
-        <translation type="unfinished"></translation>
+        <translation>Extra brede letters</translation>
     </message>
     <message>
         <source>Print Screen</source>
@@ -7077,15 +7075,15 @@ Kies een andere bestandsnaam.</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation type="unfinished">Delete</translation>
+        <translation>Verwijderen</translation>
     </message>
     <message>
         <source>Escape</source>
-        <translation type="unfinished">Escape</translation>
+        <translation>Ontsnappen</translation>
     </message>
     <message>
         <source>Insert</source>
-        <translation type="unfinished">Insert</translation>
+        <translation>Invoegen</translation>
     </message>
     <message>
         <source>Option</source>
@@ -7097,7 +7095,7 @@ Kies een andere bestandsnaam.</translation>
     </message>
     <message>
         <source>Reload</source>
-        <translation type="unfinished">Opnieuw inlezen</translation>
+        <translation>Opnieuw inlezen</translation>
     </message>
     <message>
         <source>Return</source>
@@ -7204,7 +7202,7 @@ Kies een andere bestandsnaam.</translation>
     </message>
     <message>
         <source>Runtime</source>
-        <translation type="unfinished"></translation>
+        <translation>Evaluatie tijdens uitvoeren ('runtime')</translation>
     </message>
     <message>
         <source>Documents</source>
@@ -7360,7 +7358,7 @@ Kies een andere bestandsnaam.</translation>
     </message>
     <message>
         <source>Commit</source>
-        <translation type="unfinished"></translation>
+        <translation>Toekennen</translation>
     </message>
     <message>
         <source>Continue</source>
@@ -7943,12 +7941,12 @@ Kies een andere bestandsnaam.</translation>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="975"></location>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1003"></location>
         <source>An internal error occurred, sorry!</source>
-        <translation>Er is een interne fout opgetreden. Excuses!</translation>
+        <translation>Er is een interne fout opgetreden. Onze excuses.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="990"></location>
         <source>There are no symbols in clipboard which could be pasted!</source>
-        <translation>Het klembord bevat geen symbolen die hier ingevoegd kunnen worden!</translation>
+        <translation>Het klembord bevat geen symbolen die hier ingevoegd kunnen worden.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1159"></location>
@@ -8546,7 +8544,7 @@ Indien dat toch niet de bedoeling is, is dat geen probleem.</translation>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="728"></location>
         <source>Please enter a valid integer number to set a group or leave the field empty to ungroup the template!</source>
-        <translation>Voer een geldig geheel getal in om een groep aan te geven, of laat leeg om het sjabloon te ont-groeperen!</translation>
+        <translation>Voer een geldig geheel getal in om een groep aan te geven, of laat leeg om het sjabloon aan geen enkele groep toe te wijzen.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="967"></location>
