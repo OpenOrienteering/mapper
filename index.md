@@ -43,6 +43,9 @@ Attaching arbitrary key-value pairs to objects
 [Settings](settings.md){: .subpage} <br/>
 Adjusting the program to your preferences.
 
+[Course Design](course_design.md){: .subpage} <br/>
+Using the course design symbol set.
+
 [The Mapper App for Android](android-index.md){: .subpage} <br/>
 Working with the Android version of Mapper.
 
