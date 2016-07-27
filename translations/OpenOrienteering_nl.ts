@@ -1000,12 +1000,12 @@
         <location filename="../src/tool_draw_point.cpp" line="323"></location>
         <location filename="../src/tool_draw_point.cpp" line="337"></location>
         <source>&lt;b&gt;Click&lt;/b&gt;: Create a point object.</source>
-        <translation>&lt;b&gt;Klik&lt;/b&gt;: PuntObject erstellen.</translation>
+        <translation>&lt;b&gt;Klik&lt;/b&gt;: Punt-object maken.</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_point.cpp" line="324"></location>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Create an object and set its orientation.</source>
-        <translation>&lt;b&gt;Slepen&lt;/b&gt;: Object erstellen en Uitlijning festlegen.</translation>
+        <translation>&lt;b&gt;Slepen&lt;/b&gt;: Maak een object en bepaal de uitlijning.</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_point.cpp" line="330"></location>
@@ -1397,7 +1397,7 @@
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="1546"></location>
         <source>Could not create new file: %1</source>
-        <translation>Nieuw bestand aanmaken niet gelukt: %1</translation>
+        <translation>Nieuw bestand creëren niet gelukt: %1</translation>
     </message>
     <message>
         <location filename="../src/file_format.cpp" line="87"></location>
@@ -4648,7 +4648,7 @@ en gebruik -indien beschikbaar- het muiswiel om uit te vergroten/verkleinen.</tr
     <message>
         <location filename="../src/map_dialog_new.cpp" line="60"></location>
         <source>Create</source>
-        <translation>Aanmaken</translation>
+        <translation>Creëren</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_new.cpp" line="148"></location>
