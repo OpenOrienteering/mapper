@@ -720,18 +720,18 @@
     <message>
         <location filename="../src/tool_cutout.cpp" line="134"></location>
         <source>&lt;b&gt;%1&lt;/b&gt;: Clip the whole map. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: Kivágja az egész térképet.</translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Kivágja az egész térképet. </translation>
     </message>
     <message>
         <location filename="../src/tool_cutout.cpp" line="135"></location>
         <location filename="../src/tool_cutout.cpp" line="139"></location>
         <source>&lt;b&gt;%1+Click or drag&lt;/b&gt;: Select the objects to be clipped. </source>
-        <translation>&lt;b&gt;%1+Kattintás vagy megragadás&lt;/b&gt;: Válassza ki a kivágandó objektumot.</translation>
+        <translation>&lt;b&gt;%1+Kattintás vagy megragadás&lt;/b&gt;: Válassza ki a kivágandó objektumot. </translation>
     </message>
     <message>
         <location filename="../src/tool_cutout.cpp" line="140"></location>
         <source>&lt;b&gt;%1&lt;/b&gt;: Clip the selected objects. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: Kivágja a kijelölt objektumot.</translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Kivágja a kijelölt objektumot. </translation>
     </message>
 </context>
 <context>
@@ -832,12 +832,12 @@
     <message>
         <location filename="../src/tool_draw_circle.cpp" line="294"></location>
         <source>&lt;b&gt;Click&lt;/b&gt;: Start a circle or ellipse. </source>
-        <translation>&lt;b&gt;Kattintson&lt;/b&gt;: egy kör vagy ellipszis indításához.</translation>
+        <translation>&lt;b&gt;Kattintson&lt;/b&gt;: egy kör vagy ellipszis indításához. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_circle.cpp" line="295"></location>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Draw a circle. </source>
-        <translation>&lt;b&gt;Megragad&lt;/b&gt;: Egy kört rajzol.</translation>
+        <translation>&lt;b&gt;Megragad&lt;/b&gt;: Egy kört rajzol. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_circle.cpp" line="297"></location>
@@ -847,12 +847,12 @@
     <message>
         <location filename="../src/tool_draw_circle.cpp" line="301"></location>
         <source>&lt;b&gt;Click&lt;/b&gt;: Finish the circle. </source>
-        <translation>&lt;b&gt;Kattintás&lt;/b&gt;: Befejezi a kört.</translation>
+        <translation>&lt;b&gt;Kattintás&lt;/b&gt;: Befejezi a kört. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_circle.cpp" line="302"></location>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Draw an ellipse. </source>
-        <translation>&lt;b&gt;Megragad&lt;/b&gt;Egy ellipszist rajzol.</translation>
+        <translation>&lt;b&gt;Megragad&lt;/b&gt;Egy ellipszist rajzol. </translation>
     </message>
 </context>
 <context>
@@ -860,7 +860,7 @@
     <message>
         <location filename="../src/tool_draw_freehand.cpp" line="276"></location>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Draw a path. </source>
-        <translation>&lt;b&gt;Megragad&lt;/b&gt;: Utat rajzol.</translation>
+        <translation>&lt;b&gt;Megragad&lt;/b&gt;: Utat rajzol. </translation>
     </message>
 </context>
 <context>
@@ -869,37 +869,37 @@
         <location filename="../src/tool_draw_path.cpp" line="1065"></location>
         <location filename="../src/tool_draw_rectangle.cpp" line="700"></location>
         <source>&lt;b&gt;Dash points on.&lt;/b&gt; </source>
-        <translation>&lt;b&gt;Sarok pontok be.&lt;/b&gt;</translation>
+        <translation>&lt;b&gt;Sarok pontok be.&lt;/b&gt; </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1071"></location>
         <source>&lt;b&gt;%1+Click&lt;/b&gt;: Snap or append to existing objects. </source>
-        <translation>&lt;b&gt;%1+Kattintás&lt;/b&gt;Ugrás vagy hozzáírás egy létező objektumhoz.</translation>
+        <translation>&lt;b&gt;%1+Kattintás&lt;/b&gt;Ugrás vagy hozzáírás egy létező objektumhoz. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1076"></location>
         <location filename="../src/tool_draw_rectangle.cpp" line="706"></location>
         <source>&lt;b&gt;%1+Click&lt;/b&gt;: Pick direction from existing objects. </source>
-        <translation>&lt;b&gt;%1+Kattintás&lt;/b&gt;Olvassa ki az irányt a létező objektumokból.</translation>
+        <translation>&lt;b&gt;%1+Kattintás&lt;/b&gt;Olvassa ki az irányt a létező objektumokból. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1089"></location>
         <location filename="../src/tool_draw_rectangle.cpp" line="711"></location>
         <location filename="../src/tool_draw_rectangle.cpp" line="735"></location>
         <source>&lt;b&gt;%1+Click&lt;/b&gt;: Snap to existing objects. </source>
-        <translation>&lt;b&gt;%1+Kattintás&lt;/b&gt;: Ugorjon létező ojektumokhoz.</translation>
+        <translation>&lt;b&gt;%1+Kattintás&lt;/b&gt;: Ugorjon létező ojektumokhoz. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1095"></location>
         <location filename="../src/tool_draw_rectangle.cpp" line="725"></location>
         <source>&lt;b&gt;%1&lt;/b&gt;: Fixed angles. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: Fix szögek.</translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Fix szögek. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1103"></location>
         <location filename="../src/tool_draw_rectangle.cpp" line="741"></location>
         <source>&lt;b&gt;%1&lt;/b&gt;: Undo last point. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: Az utolsó pont visszavonása.</translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Az utolsó pont visszavonása. </translation>
     </message>
 </context>
 <context>
@@ -953,12 +953,12 @@
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1081"></location>
         <source>&lt;b&gt;Click&lt;/b&gt;: Start a straight line. &lt;b&gt;Drag&lt;/b&gt;: Start a curve. </source>
-        <translation>&lt;b&gt;Kattintás&lt;/b&gt;: Elindít egy egyenes vonalat. &lt;b&gt;Megragad&lt;/b&gt;: Elindít egy görbét.</translation>
+        <translation>&lt;b&gt;Kattintás&lt;/b&gt;: Elindít egy egyenes vonalat. &lt;b&gt;Megragad&lt;/b&gt;: Elindít egy görbét. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1090"></location>
         <source>&lt;b&gt;%1+Drag&lt;/b&gt;: Follow existing objects. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: Létező objektumot követ.</translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Létező objektumot követ. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1100"></location>
@@ -976,7 +976,7 @@
     <message>
         <location filename="../src/tool_draw_point_gps.cpp" line="182"></location>
         <source>&lt;b&gt;Click&lt;/b&gt;: Finish setting the object. </source>
-        <translation>&lt;b&gt;Kattintás&lt;/b&gt;: Az objektum beállítás befejezése.</translation>
+        <translation>&lt;b&gt;Kattintás&lt;/b&gt;: Az objektum beállítás befejezése. </translation>
     </message>
 </context>
 <context>
@@ -1074,12 +1074,12 @@
     <message>
         <location filename="../src/tool_draw_rectangle.cpp" line="716"></location>
         <source>&lt;b&gt;Click or Drag&lt;/b&gt;: Start drawing a rectangle. </source>
-        <translation>&lt;b&gt;Kattint-vagy megragad &lt;/b&gt; Elkezd rajzolni egy téglalapot.</translation>
+        <translation>&lt;b&gt;Kattint-vagy megragad &lt;/b&gt; Elkezd rajzolni egy téglalapot. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_rectangle.cpp" line="729"></location>
         <source>&lt;b&gt;%1&lt;/b&gt;: Snap to previous lines. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: Az előző vonalhoz illeszt.</translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Az előző vonalhoz illeszt. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_rectangle.cpp" line="740"></location>
@@ -1097,7 +1097,7 @@
     <message>
         <location filename="../src/tool_draw_text.cpp" line="379"></location>
         <source>&lt;b&gt;Click&lt;/b&gt;: Create a text object with a single anchor. &lt;b&gt;Drag&lt;/b&gt;: Create a text box. </source>
-        <translation>&lt;b&gt;Kattint&lt;/b&gt;: Egy szövegobjektum létrehozása egy horgonnyal. &lt;b&gt;Megragad&lt;/b&gt;: Egy szövegdobozt készít.</translation>
+        <translation>&lt;b&gt;Kattint&lt;/b&gt;: Egy szövegobjektum létrehozása egy horgonnyal. &lt;b&gt;Megragad&lt;/b&gt;: Egy szövegdobozt készít. </translation>
     </message>
 </context>
 <context>
@@ -1119,12 +1119,12 @@
     <message>
         <location filename="../src/tool_edit_line.cpp" line="453"></location>
         <source>&lt;b&gt;%1&lt;/b&gt;: Free movement. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: Szabad mozgatás.</translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Szabad mozgatás. </translation>
     </message>
     <message>
         <location filename="../src/tool_edit_line.cpp" line="472"></location>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on segment: Toggle between straight and curved. </source>
-        <translation>&lt;b&gt;%1+Kattintás&lt;/b&gt; egy részen: Váltás. egyenes és görbített között.</translation>
+        <translation>&lt;b&gt;%1+Kattintás&lt;/b&gt; egy részen: Váltás. egyenes és görbített között. </translation>
     </message>
 </context>
 <context>
@@ -1157,22 +1157,22 @@
     <message>
         <location filename="../src/tool_edit_point.cpp" line="662"></location>
         <source>&lt;b&gt;%1&lt;/b&gt;: Keep opposite handle positions. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: Tartsa a szembenfekvő fogantyúpozíciókat.</translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Tartsa a szembenfekvő fogantyúpozíciókat. </translation>
     </message>
     <message>
         <location filename="../src/tool_edit_point.cpp" line="683"></location>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on point: Delete it; on path: Add a new dash point; with &lt;b&gt;%2&lt;/b&gt;: Add a normal point. </source>
-        <translation>&lt;b&gt;%1+Kattintás&lt;/b&gt;a ponton: Törli azt; az útvonalon: Hozzáad egy új sarokpontot; &lt;b&gt;%2&lt;/b&gt;: Adj hozzá egy normál pontot.</translation>
+        <translation>&lt;b&gt;%1+Kattintás&lt;/b&gt;a ponton: Törli azt; az útvonalon: Hozzáad egy új sarokpontot; &lt;b&gt;%2&lt;/b&gt;: Adj hozzá egy normál pontot. </translation>
     </message>
     <message>
         <location filename="../src/tool_edit_point.cpp" line="686"></location>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on point: Delete it; on path: Add a new point; with &lt;b&gt;%2&lt;/b&gt;: Add a dash point. </source>
-        <translation>&lt;b&gt;%1+Kattintás&lt;/b&gt; ponton: Törli azt; az útvonalon: Hozzáad egy új pontot; &lt;b&gt;%2&lt;/b&gt;-val: Adj hozzá egy sarokpontot.</translation>
+        <translation>&lt;b&gt;%1+Kattintás&lt;/b&gt; ponton: Törli azt; az útvonalon: Hozzáad egy új pontot; &lt;b&gt;%2&lt;/b&gt;-val: Adj hozzá egy sarokpontot. </translation>
     </message>
     <message>
         <location filename="../src/tool_edit_point.cpp" line="690"></location>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on point to switch between dash and normal point. </source>
-        <translation>&lt;b&gt;%1+Kattintás&lt;/b&gt;a ponton a sarok és normál pont közötti váltáshoz.</translation>
+        <translation>&lt;b&gt;%1+Kattintás&lt;/b&gt;a ponton a sarok és normál pont közötti váltáshoz. </translation>
     </message>
 </context>
 <context>
@@ -1187,26 +1187,26 @@
         <location filename="../src/tool_edit_point.cpp" line="654"></location>
         <location filename="../src/tool_edit_line.cpp" line="455"></location>
         <source>&lt;b&gt;%1&lt;/b&gt;: Fixed angles. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: Fix szögek.</translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Fix szögek. </translation>
     </message>
     <message>
         <location filename="../src/tool_edit_point.cpp" line="666"></location>
         <location filename="../src/tool_edit_line.cpp" line="459"></location>
         <location filename="../src/tool_draw_text.cpp" line="381"></location>
         <source>&lt;b&gt;%1&lt;/b&gt;: Snap to existing objects. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: Létező objektumhoz igazít.</translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Létező objektumhoz igazít. </translation>
     </message>
     <message>
         <location filename="../src/tool_edit_point.cpp" line="672"></location>
         <location filename="../src/tool_edit_line.cpp" line="464"></location>
         <source>&lt;b&gt;Click&lt;/b&gt;: Select a single object. &lt;b&gt;Drag&lt;/b&gt;: Select multiple objects. &lt;b&gt;%1+Click&lt;/b&gt;: Toggle selection. </source>
-        <translation>&lt;b&gt;Kattintás&lt;/b&gt;: Egy objektum kiválasztása. &lt;b&gt;Megragad&lt;/b&gt;: Több objektum kiválasztása. &lt;b&gt;%1+Kattintás&lt;/b&gt;: Kiválasztás megfordítása.</translation>
+        <translation>&lt;b&gt;Kattintás&lt;/b&gt;: Egy objektum kiválasztása. &lt;b&gt;Megragad&lt;/b&gt;: Több objektum kiválasztása. &lt;b&gt;%1+Kattintás&lt;/b&gt;: Kiválasztás megfordítása. </translation>
     </message>
     <message>
         <location filename="../src/tool_edit_point.cpp" line="675"></location>
         <location filename="../src/tool_edit_line.cpp" line="467"></location>
         <source>&lt;b&gt;%1&lt;/b&gt;: Delete selected objects. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: Kiválasztott objektum törlése.</translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Kiválasztott objektum törlése. </translation>
     </message>
 </context>
 <context>
@@ -1378,7 +1378,7 @@
     <message>
         <location filename="../src/tool_fill.cpp" line="179"></location>
         <source>&lt;b&gt;Click&lt;/b&gt;: Fill area with active symbol. The area to be filled must be bounded by lines or areas, other symbols are not taken into account. </source>
-        <translation>&lt;b&gt;Kattintás&lt;/b&gt;: Terület kitöltése aktív szimbólummal. A kitöltendő területet vonalaknak, vagy más területeknek kell határolniuk, más szimbólumok nem vehetők figyelembe.</translation>
+        <translation>&lt;b&gt;Kattintás&lt;/b&gt;: Terület kitöltése aktív szimbólummal. A kitöltendő területet vonalaknak, vagy más területeknek kell határolniuk, más szimbólumok nem vehetők figyelembe. </translation>
     </message>
 </context>
 <context>
@@ -4199,7 +4199,7 @@ kiválasztva</translation>
         <location filename="../src/tool_draw_freehand.cpp" line="277"></location>
         <location filename="../src/tool_cutout.cpp" line="142"></location>
         <source>&lt;b&gt;%1&lt;/b&gt;: Abort. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: Megszakítás.</translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Megszakítás. </translation>
     </message>
     <message>
         <location filename="../src/tool_edit_point.cpp" line="692"></location>
@@ -4908,7 +4908,7 @@ zoomoljon az egér görgetőgombjával, ha van ilyen lehetősége.</translation>
     <message>
         <location filename="../src/tool_pan.cpp" line="72"></location>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the map. </source>
-        <translation>&lt;b&gt;Megragad&lt;/b&gt;: A térkép mozgatása.</translation>
+        <translation>&lt;b&gt;Megragad&lt;/b&gt;: A térkép mozgatása. </translation>
     </message>
 </context>
 <context>
@@ -4925,7 +4925,7 @@ zoomoljon az egér görgetőgombjával, ha van ilyen lehetősége.</translation>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="967"></location>
         <source>&lt;b&gt;Click&lt;/b&gt;: Add a coordinate. &lt;b&gt;%1+Click&lt;/b&gt;: Change the selected coordinate. </source>
-        <translation>&lt;b&gt;Kattintás&lt;/b&gt;: Egy koordinátát hozzáad &lt;b&gt;%1+kattintás&lt;/b&gt;Változtasd meg a kiválasztott koordinátát.</translation>
+        <translation>&lt;b&gt;Kattintás&lt;/b&gt;: Egy koordinátát hozzáad &lt;b&gt;%1+kattintás&lt;/b&gt;Változtasd meg a kiválasztott koordinátát. </translation>
     </message>
 </context>
 <context>
@@ -5116,29 +5116,29 @@ zoomoljon az egér görgetőgombjával, ha van ilyen lehetősége.</translation>
         <location filename="../src/gui/print_tool.cpp" line="57"></location>
         <location filename="../src/gui/print_tool.cpp" line="369"></location>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the map, the print area or the area's borders. </source>
-        <translation>&lt;b&gt;Megragad&lt;/b&gt;: Mozgatja a térképet, a nyomtatási területet vagy a terület határait.</translation>
+        <translation>&lt;b&gt;Megragad&lt;/b&gt;: Mozgatja a térképet, a nyomtatási területet vagy a terület határait. </translation>
     </message>
     <message>
         <location filename="../src/gui/print_tool.cpp" line="341"></location>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the print area. </source>
-        <translation>&lt;b&gt;Megragad&lt;/b&gt;: Mozgatja a nyomtatási területet.</translation>
+        <translation>&lt;b&gt;Megragad&lt;/b&gt;: Mozgatja a nyomtatási területet. </translation>
     </message>
     <message>
         <location filename="../src/gui/print_tool.cpp" line="345"></location>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the map. </source>
-        <translation>&lt;b&gt;Megragad&lt;/b&gt;: Mozgatja a térképet.</translation>
+        <translation>&lt;b&gt;Megragad&lt;/b&gt;: Mozgatja a térképet. </translation>
     </message>
     <message>
         <location filename="../src/gui/print_tool.cpp" line="350"></location>
         <location filename="../src/gui/print_tool.cpp" line="355"></location>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the print area's border. </source>
-        <translation>&lt;b&gt;Megragad&lt;/b&gt;: Mozgatja a nyomtatási terület határát.</translation>
+        <translation>&lt;b&gt;Megragad&lt;/b&gt;: Mozgatja a nyomtatási terület határát. </translation>
     </message>
     <message>
         <location filename="../src/gui/print_tool.cpp" line="360"></location>
         <location filename="../src/gui/print_tool.cpp" line="365"></location>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the print area's borders. </source>
-        <translation>&lt;b&gt;Megragad&lt;/b&gt;: Mozgatja a nyomtatási terület határait.</translation>
+        <translation>&lt;b&gt;Megragad&lt;/b&gt;: Mozgatja a nyomtatási terület határait. </translation>
     </message>
 </context>
 <context>
@@ -5701,7 +5701,7 @@ separations</source>
     <message>
         <location filename="../src/map_dialog_rotate.cpp" line="79"></location>
         <source>Adjust georeferencing declination</source>
-        <translation>Georeferálás deklinációjának beállítása </translation>
+        <translation>Georeferálás deklinációjának beállítása</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_rotate.cpp" line="86"></location>
@@ -5719,12 +5719,12 @@ separations</source>
     <message>
         <location filename="../src/tool_rotate_pattern.cpp" line="158"></location>
         <source>&lt;b&gt;%1&lt;/b&gt;: Fixed angles. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: Fix szögek.</translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Fix szögek. </translation>
     </message>
     <message>
         <location filename="../src/tool_rotate_pattern.cpp" line="162"></location>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Set the direction of area fill patterns or point objects. </source>
-        <translation>&lt;b&gt;Megragad&lt;/b&gt;: Beállítja a kitöltési minta, vagy pont objektum irányát.</translation>
+        <translation>&lt;b&gt;Megragad&lt;/b&gt;: Beállítja a kitöltési minta, vagy pont objektum irányát. </translation>
     </message>
 </context>
 <context>
@@ -5737,18 +5737,18 @@ separations</source>
     <message>
         <location filename="../src/tool_rotate.cpp" line="186"></location>
         <source>&lt;b&gt;%1&lt;/b&gt;: Fixed angles. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: Fix szögek.</translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Fix szögek. </translation>
     </message>
     <message>
         <location filename="../src/tool_rotate.cpp" line="190"></location>
         <location filename="../src/tool_rotate.cpp" line="194"></location>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set the center of rotation. </source>
-        <translation>&lt;b&gt;Kattintás&lt;/b&gt;: A forgatás középpontjának beállítása.</translation>
+        <translation>&lt;b&gt;Kattintás&lt;/b&gt;: A forgatás középpontjának beállítása. </translation>
     </message>
     <message>
         <location filename="../src/tool_rotate.cpp" line="195"></location>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Rotate the selected objects. </source>
-        <translation>&lt;b&gt;Kattintás&lt;/b&gt;: A kiválasztott objektum forgatása.</translation>
+        <translation>&lt;b&gt;Kattintás&lt;/b&gt;: A kiválasztott objektum forgatása. </translation>
     </message>
 </context>
 <context>
@@ -5849,12 +5849,12 @@ separations</source>
         <location filename="../src/tool_scale.cpp" line="202"></location>
         <location filename="../src/tool_scale.cpp" line="204"></location>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set the scaling center. </source>
-        <translation>&lt;b&gt;Kattintás&lt;/b&gt;: A méretezés középpontjának beállítása.</translation>
+        <translation>&lt;b&gt;Kattintás&lt;/b&gt;: A méretezés középpontjának beállítása. </translation>
     </message>
     <message>
         <location filename="../src/tool_scale.cpp" line="205"></location>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Scale the selected objects. </source>
-        <translation>&lt;b&gt;Kattintás&lt;/b&gt;: A kiválasztott objektum méretezése.</translation>
+        <translation>&lt;b&gt;Kattintás&lt;/b&gt;: A kiválasztott objektum méretezése. </translation>
     </message>
 </context>
 <context>
@@ -6333,12 +6333,12 @@ a lusta kutyát átugrotta
     <message>
         <location filename="../src/template_adjust.cpp" line="572"></location>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set the template position of the pass point. </source>
-        <translation>&lt;b&gt;Kattintás&lt;/b&gt;: Adja meg az illesztőpont helyét a háttéren.</translation>
+        <translation>&lt;b&gt;Kattintás&lt;/b&gt;: Adja meg az illesztőpont helyét a háttéren. </translation>
     </message>
     <message>
         <location filename="../src/template_adjust.cpp" line="597"></location>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set the map position of the pass point. </source>
-        <translation>&lt;b&gt;Kattintás&lt;/b&gt;: Adja meg az illesztőpont helyét a térképen.</translation>
+        <translation>&lt;b&gt;Kattintás&lt;/b&gt;: Adja meg az illesztőpont helyét a térképen. </translation>
     </message>
 </context>
 <context>
@@ -6346,7 +6346,7 @@ a lusta kutyát átugrotta
     <message>
         <location filename="../src/template_adjust.cpp" line="806"></location>
         <source>&lt;b&gt;Click&lt;/b&gt;: Delete pass points. </source>
-        <translation>&lt;b&gt;Kattintás&lt;/b&gt;: Törli az illesztőpontokat.</translation>
+        <translation>&lt;b&gt;Kattintás&lt;/b&gt;: Törli az illesztőpontokat. </translation>
     </message>
 </context>
 <context>
@@ -6354,7 +6354,7 @@ a lusta kutyát átugrotta
     <message>
         <location filename="../src/template_adjust.cpp" line="681"></location>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move pass points. </source>
-        <translation>&lt;b&gt;Megragad&lt;/b&gt;: Az illesztőpontokat mozgatja.</translation>
+        <translation>&lt;b&gt;Megragad&lt;/b&gt;: Az illesztőpontokat mozgatja. </translation>
     </message>
 </context>
 <context>
@@ -6407,7 +6407,7 @@ a lusta kutyát átugrotta
     <message>
         <location filename="../src/template_adjust.cpp" line="221"></location>
         <source>Apply pass points</source>
-        <translation>Alkalmazza az illesztő pontokat </translation>
+        <translation>Alkalmazza az illesztő pontokat</translation>
     </message>
     <message>
         <location filename="../src/template_adjust.cpp" line="223"></location>

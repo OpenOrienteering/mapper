@@ -479,7 +479,7 @@
     </message>
     <message>
         <source>Please enter a percentage from 0% to 100%!</source>
-        <translation type="vanished">Veuillez entrer un pourcentage entre 0 et 100%!</translation>
+        <translation>Veuillez entrer un pourcentage entre 0 et 100% !</translation>
     </message>
     <message>
         <location filename="../src/color_dock_widget.cpp" line="364"></location>
@@ -708,12 +708,12 @@
     <message>
         <location filename="../src/tool_cut.cpp" line="499"></location>
         <source>The split line must end on the area boundary!</source>
-        <translation>La ligne de coupe doit se terminer sur la limite de la surface!</translation>
+        <translation>La ligne de coupe doit se terminer sur la limite de la surface !</translation>
     </message>
     <message>
         <location filename="../src/tool_cut.cpp" line="505"></location>
         <source>Start and end of the split line are at different parts of the object!</source>
-        <translation>Le début et la fin de la ligne de coupe sont sur différentes parties de l'objet!</translation>
+        <translation>Le début et la fin de la ligne de coupe sont sur différentes parties de l'objet !</translation>
     </message>
     <message>
         <location filename="../src/tool_cut.cpp" line="511"></location>
@@ -728,7 +728,7 @@
     <message>
         <location filename="../src/tool_cut.cpp" line="683"></location>
         <source>Splitting holes of area objects is not supported yet!</source>
-        <translation>Les trous de coupe des objets-surfaces ne sont pas encore supportés!</translation>
+        <translation>Les trous de coupe des objets-surfaces ne sont pas encore supportés !</translation>
     </message>
 </context>
 <context>
@@ -1394,7 +1394,7 @@
     <message>
         <location filename="../src/gps_display.cpp" line="88"></location>
         <source>GPS is disabled in the device settings. Open settings now?</source>
-        <translation>GPS désactivé dans la configuratione de la tablette. Voulez-vous reconfigurer maintenant?</translation>
+        <translation>GPS désactivé dans la configuratione de la tablette. Voulez-vous reconfigurer maintenant ?</translation>
     </message>
     <message>
         <location filename="../src/gps_display.cpp" line="89"></location>
@@ -1827,7 +1827,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="367"></location>
         <source>The magnetic declination for the reference point %1° %2° will now be retrieved from &lt;a href="%3"&gt;%3&lt;/a&gt;. Do you want to continue?</source>
-        <translation>La déclinaison magnétique du point de référence %1 %2° ne pourra pas être récupérée à partir de &lt;a href="%3"&gt;%3&lt;/a&gt;. Voulez vous continuer?</translation>
+        <translation>La déclinaison magnétique du point de référence %1 %2° ne pourra pas être récupérée à partir de &lt;a href="%3"&gt;%3&lt;/a&gt;. Voulez vous continuer ?</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="440"></location>
@@ -1837,7 +1837,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="440"></location>
         <source>The declination has been changed. Do you want to rotate the map content accordingly, too?</source>
-        <translation>La déclinaison a été changée. Voulez vous appliquer une rotation à la carte en fonction de celle-ci?</translation>
+        <translation>La déclinaison a été changée. Voulez vous appliquer une rotation à la carte en fonction de celle-ci ?</translation>
     </message>
     <message>
         <source>Projected coordinates:</source>
@@ -2769,7 +2769,7 @@ Voulez vous sauvegarder vos modifications ?</translation>
 Do you want to scale the symbols to the selected scale?</source>
         <translation>L'échelle de la carte est 1:%1,mais les symboles sont à l'échelle 1:%2.
 
-Voulez vous redimensionner ces symboles à l'échelle de la carte?</translation>
+Voulez vous redimensionner ces symboles à l'échelle de la carte ?</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="681"></location>
@@ -2779,7 +2779,7 @@ Voulez vous redimensionner ces symboles à l'échelle de la carte?</translation>
     <message>
         <location filename="../src/gui/main_window.cpp" line="682"></location>
         <source>It seems that %1 crashed the last time this file was opened:&lt;br /&gt;&lt;tt&gt;%2&lt;/tt&gt;&lt;br /&gt;&lt;br /&gt;Really retry to open it?</source>
-        <translation>Il semblerait que %1 ait provoqué une anomalie majeure lorsque ce fichier a été ouvert pour la dernière fois:&lt;br /&gt;&lt;tt&gt;%2&lt;/tt&gt;&lt;br /&gt;&lt;br /&gt;Voulez vous vraiment réessayer de l'ouvrir?</translation>
+        <translation>Il semblerait que %1 ait provoqué une anomalie majeure lorsque ce fichier a été ouvert pour la dernière fois:&lt;br /&gt;&lt;tt&gt;%2&lt;/tt&gt;&lt;br /&gt;&lt;br /&gt;Voulez vous vraiment réessayer de l'ouvrir ?</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="870"></location>
@@ -2789,7 +2789,7 @@ Voulez vous redimensionner ces symboles à l'échelle de la carte?</translation>
     <message>
         <location filename="../src/gui/main_window.cpp" line="880"></location>
         <source>Autosaving failed!</source>
-        <translation>Anomalie d'autosauvegarde!</translation>
+        <translation>Anomalie d'autosauvegarde !</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="955"></location>
@@ -2828,7 +2828,7 @@ Format du fichier non reconnu.</translation>
         <source>The file has been modified.
 Do you want to discard your changes?</source>
         <translation>Ce fichier a été modifié.
-Voulez-vous annuler vos modifications?</translation>
+Voulez-vous annuler vos modifications ?</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="823"></location>
@@ -2979,7 +2979,7 @@ en lecture.</translation>
 Rescale the imported data?</source>
         <translation>L'échelle du fichier importé est 1:%1 ce qui est différent de l'échelle de la carte au 1:%2.
 
-Voulez-vous redimensionner le fichier importé?</translation>
+Voulez-vous redimensionner le fichier importé ?</translation>
     </message>
     <message>
         <location filename="../src/map.cpp" line="440"></location>
@@ -3458,7 +3458,7 @@ Voulez-vous redimensionner le fichier importé?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="1567"></location>
         <source>There are no objects in clipboard which could be pasted!</source>
-        <translation>Il n'y a aucun objet dans le presse-papier qui puisse être collé!</translation>
+        <translation>Il n'y a aucun objet dans le presse-papier qui puisse être collé !</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1597"></location>
@@ -3634,12 +3634,12 @@ Voulez-vous redimensionner le fichier importé?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="3530"></location>
         <source>Do you want to move all objects from map part "%1" to "%2", and to remove "%1"?</source>
-        <translation>Voulez-vous déplacer tous les objets de la partie "%1" vers "%2", puis supprimer "%1"?</translation>
+        <translation>Voulez-vous déplacer tous les objets de la partie "%1" vers "%2", puis supprimer "%1" ?</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="3560"></location>
         <source>Do you want to move all objects to map part "%1", and to remove all other map parts?</source>
-        <translation>Voulez-vous déplacer tous les objets vers la partie "%1", et supprimer toutes les autres parties? </translation>
+        <translation>Voulez-vous déplacer tous les objets vers la partie "%1", et supprimer toutes les autres parties ?</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="3784"></location>
@@ -4004,7 +4004,7 @@ Voulez-vous redimensionner le fichier importé?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="1470"></location>
         <source>Print / Export is not available in this program version!</source>
-        <translation>Imprimer/Exporter n'est pas disponible dans cette version du logiciel!</translation>
+        <translation>Imprimer/Exporter n'est pas disponible dans cette version du logiciel !</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1904"></location>
@@ -4240,7 +4240,7 @@ sdélectionnés</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="3453"></location>
         <source>Do you want to remove map part "%1" and all its objects?</source>
-        <translation>Voulez-vous supprimer la partie "%1" et tous les objets qu'elle contient?</translation>
+        <translation>Voulez-vous supprimer la partie "%1" et tous les objets qu'elle contient ?</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="3614"></location>
@@ -4953,7 +4953,7 @@ utiliser la molette de la souris pour zoomer.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="2023"></location>
         <source>OCD files of version %1 are not supported!</source>
-        <translation>Les fichiers OCD en version %1 ne sont pas supportés!</translation>
+        <translation>Les fichiers OCD en version %1 ne sont pas supportés !</translation>
     </message>
 </context>
 <context>
@@ -5436,7 +5436,7 @@ utiliser la molette de la souris pour zoomer.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1115"></location>
         <source>A non-standard view mode is activated. Are you sure to print / export the map like this?</source>
-        <translation>Un mode de vue non standard est activé. Êtes-vous sûr de vouloir imprimer/exporter la carte de cette façon?</translation>
+        <translation>Un mode de vue non standard est activé. Êtes-vous sûr de vouloir imprimer/exporter la carte de cette façon ?</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1132"></location>
@@ -5707,7 +5707,7 @@ des couleurs</translation>
     <message>
         <location filename="../src/symbol_dialog_replace.cpp" line="342"></location>
         <source>The chosen symbol set has a scale of 1:%1, while the map scale is 1:%2. Do you really want to choose this set?</source>
-        <translation>La bibliothèque des symboles sélectionnée a une échelle de 1:%1, alors que la carte est au 1:%2. Voulez vous vraiment choisir cette bibliothèque?</translation>
+        <translation>La bibliothèque des symboles sélectionnée a une échelle de 1:%1, alors que la carte est au 1:%2. Voulez vous vraiment choisir cette bibliothèque ?</translation>
     </message>
 </context>
 <context>
@@ -6147,12 +6147,12 @@ des couleurs</translation>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="975"></location>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1003"></location>
         <source>An internal error occurred, sorry!</source>
-        <translation>Une erreur interne est survenue, désolé!</translation>
+        <translation>Une erreur interne est survenue, désolé !</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="990"></location>
         <source>There are no symbols in clipboard which could be pasted!</source>
-        <translation>Il n'y a aucun symbole dans le presse-papier pourvant être collé!</translation>
+        <translation>Il n'y a aucun symbole dans le presse-papier pourvant être collé !</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1159"></location>
@@ -6252,7 +6252,7 @@ des couleurs</translation>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="937"></location>
         <source>The map contains objects with the symbol "%1". Deleting it will delete those objects and clear the undo history! Do you really want to do that?</source>
-        <translation>La carte contient des objets avec le symbole suivant"%1". En le supprimant, vous supprimerez ces objets et effacerez l'historique de vos dernières actions ! Voulez vous vraiment continuer?</translation>
+        <translation>La carte contient des objets avec le symbole suivant"%1". En le supprimant, vous supprimerez ces objets et effacerez l'historique de vos dernières actions ! Voulez vous vraiment continuer ?</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1160"></location>
@@ -6335,7 +6335,7 @@ traverser les jattes de kiwis
     <message>
         <location filename="../src/gui/widgets/symbol_tooltip.cpp" line="164"></location>
         <source>No description!</source>
-        <translation>Aucune aide en ligne!</translation>
+        <translation>Aucune aide en ligne !</translation>
     </message>
 </context>
 <context>
@@ -6399,11 +6399,11 @@ traverser les jattes de kiwis
     <message>
         <location filename="../src/template.cpp" line="539"></location>
         <source>Is the format of the file correct for this template type?</source>
-        <translation>Le format du fichier est-il adapté à ce type de modèle?</translation>
+        <translation>Le format du fichier est-il adapté à ce type de modèle ?</translation>
     </message>
     <message>
         <source>Cannot change the template to this file! Is the format of the file correct for this template type?</source>
-        <translation type="vanished">Impossible de changer le modèle avec ce fichier! Le format du fichier est-il adapté à ce type de modèle?</translation>
+        <translation>Impossible de changer le modèle avec ce fichier ! Le format du fichier est-il adapté à ce type de modèle ?</translation>
     </message>
 </context>
 <context>
@@ -6421,7 +6421,7 @@ traverser les jattes de kiwis
     <message>
         <location filename="../src/template_adjust.cpp" line="140"></location>
         <source>Failed to calculate adjustment!</source>
-        <translation>Le calcul du calage a échoué!</translation>
+        <translation>Le calcul du calage a échoué !</translation>
     </message>
 </context>
 <context>
@@ -6818,7 +6818,7 @@ Si vous ne souhaitez pas dessiner sur le modèle, cela ne pose alors aucun probl
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="975"></location>
         <source>How shall the symbols of the imported template map be scaled?</source>
-        <translation>Comment les symboles du modèles importé doivent-ils être redimensionné?</translation>
+        <translation>Comment les symboles du modèles importé doivent-ils être redimensionné ?</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="1010"></location>
@@ -6925,7 +6925,7 @@ Si vous ne souhaitez pas dessiner sur le modèle, cela ne pose alors aucun probl
     <message>
         <location filename="../src/template_track.cpp" line="398"></location>
         <source>The path is empty, there is nothing to import!</source>
-        <translation>La trace est vide, il n'y a rien à importer!</translation>
+        <translation>La trace est vide, il n'y a rien à importer !</translation>
     </message>
     <message>
         <location filename="../src/template_track.cpp" line="411"></location>
@@ -6935,7 +6935,7 @@ Si vous ne souhaitez pas dessiner sur le modèle, cela ne pose alors aucun probl
     <message>
         <location filename="../src/template_track.cpp" line="411"></location>
         <source>Should the waypoints be imported as a line going through all points?</source>
-        <translation>Les points GPS (waypoints), doivent-ils être importés dans une ligne reliant tous les points?</translation>
+        <translation>Les points GPS (waypoints), doivent-ils être importés dans une ligne reliant tous les points ?</translation>
     </message>
     <message>
         <location filename="../src/template_track.cpp" line="478"></location>

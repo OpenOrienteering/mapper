@@ -32,7 +32,7 @@
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="173"></location>
         <source>(project initiator)</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>License (%1)</source>
@@ -54,11 +54,11 @@
     </message>
     <message>
         <source>This program uses the &lt;b&gt;Clipper library&lt;/b&gt; by Angus Johnson.</source>
-        <translation type="vanished">This program uses the &lt;b&gt;Clipper library&lt;/b&gt; by Angus Johnson.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>See &lt;a href="%1"&gt;%1&lt;/a&gt; for more information.</source>
-        <translation type="vanished">See &lt;a href="%1"&gt;%1&lt;/a&gt; for more information.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Additional information</source>
@@ -904,7 +904,7 @@
     <message>
         <location filename="../src/tool_draw_circle.cpp" line="301"></location>
         <source>&lt;b&gt;Click&lt;/b&gt;: Finish the circle. </source>
-        <translation>&lt;b&gt;クリック&lt;/b&gt;: 円の描画を終了します。</translation>
+        <translation>&lt;b&gt;クリック&lt;/b&gt;: 円の描画を終了します。 </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_circle.cpp" line="302"></location>
@@ -950,7 +950,7 @@
         <location filename="../src/tool_draw_path.cpp" line="1095"></location>
         <location filename="../src/tool_draw_rectangle.cpp" line="725"></location>
         <source>&lt;b&gt;%1&lt;/b&gt;: Fixed angles. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: 一定角度ずつ回転。</translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: 一定角度ずつ回転。 </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1103"></location>
@@ -1019,12 +1019,12 @@
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1081"></location>
         <source>&lt;b&gt;Click&lt;/b&gt;: Start a straight line. &lt;b&gt;Drag&lt;/b&gt;: Start a curve. </source>
-        <translation>&lt;b&gt;クリック&lt;/b&gt;: 直線を開始。&lt;b&gt;ドラッグ&lt;/b&gt;: 曲線を開始。</translation>
+        <translation>&lt;b&gt;クリック&lt;/b&gt;: 直線を開始。&lt;b&gt;ドラッグ&lt;/b&gt;: 曲線を開始。 </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1090"></location>
         <source>&lt;b&gt;%1+Drag&lt;/b&gt;: Follow existing objects. </source>
-        <translation>&lt;b&gt;%1+ドラッグ&lt;/b&gt;: 既存のオブジェクトをフォローします。</translation>
+        <translation>&lt;b&gt;%1+ドラッグ&lt;/b&gt;: 既存のオブジェクトをフォローします。 </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1100"></location>
@@ -1098,7 +1098,7 @@
     </message>
     <message>
         <source>&lt;b&gt;Click&lt;/b&gt;: Create a point object. &lt;b&gt;Drag&lt;/b&gt;: Create an object and set its orientation (if rotatable). </source>
-        <translation type="vanished">&lt;b&gt;クリック&lt;/b&gt;: ポイントオブジェクトを作成します。&lt;b&gt;ドラッグ&lt;/b&gt;: ポイントオブジェクトを作成し、方向をセットします(回転可能なオブジェクトのみ)。</translation>
+        <translation>&lt;b&gt;クリック&lt;/b&gt;: ポイントオブジェクトを作成します。&lt;b&gt;ドラッグ&lt;/b&gt;: ポイントオブジェクトを作成し、方向をセットします(回転可能なオブジェクトのみ)。 </translation>
     </message>
 </context>
 <context>
@@ -1155,17 +1155,17 @@
     <message>
         <location filename="../src/tool_draw_rectangle.cpp" line="716"></location>
         <source>&lt;b&gt;Click or Drag&lt;/b&gt;: Start drawing a rectangle. </source>
-        <translation>&lt;b&gt;クリックまたはドラッグ&lt;/b&gt;: 矩形の描画を開始します。</translation>
+        <translation>&lt;b&gt;クリックまたはドラッグ&lt;/b&gt;: 矩形の描画を開始します。 </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_rectangle.cpp" line="729"></location>
         <source>&lt;b&gt;%1&lt;/b&gt;: Snap to previous lines. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: 既存のラインにスナップ(吸着)します。</translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: 既存のラインにスナップ(吸着)します。 </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_rectangle.cpp" line="740"></location>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set a corner point. &lt;b&gt;Right or double click&lt;/b&gt;: Finish the rectangle. </source>
-        <translation>&lt;b&gt;クリック&lt;/b&gt;: コーナー点を配置します。&lt;b&gt;右クリックまたはダブルクリック&lt;/b&gt;: 矩形の描画を終了します。</translation>
+        <translation>&lt;b&gt;クリック&lt;/b&gt;: コーナー点を配置します。&lt;b&gt;右クリックまたはダブルクリック&lt;/b&gt;: 矩形の描画を終了します。 </translation>
     </message>
 </context>
 <context>
@@ -1182,7 +1182,7 @@
     <message>
         <location filename="../src/tool_draw_text.cpp" line="379"></location>
         <source>&lt;b&gt;Click&lt;/b&gt;: Create a text object with a single anchor. &lt;b&gt;Drag&lt;/b&gt;: Create a text box. </source>
-        <translation>&lt;b&gt;クリック&lt;/b&gt;: シングルアンカーを基準にテキストオブジェクトを作成します。&lt;b&gt;ドラッグ&lt;/b&gt;: テキストボックスを作成します。</translation>
+        <translation>&lt;b&gt;クリック&lt;/b&gt;: シングルアンカーを基準にテキストオブジェクトを作成します。&lt;b&gt;ドラッグ&lt;/b&gt;: テキストボックスを作成します。 </translation>
     </message>
     <message>
         <source>A</source>
@@ -1218,12 +1218,12 @@
     <message>
         <location filename="../src/tool_edit_line.cpp" line="453"></location>
         <source>&lt;b&gt;%1&lt;/b&gt;: Free movement. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: 自由に移動します。</translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: 自由に移動します。 </translation>
     </message>
     <message>
         <location filename="../src/tool_edit_line.cpp" line="472"></location>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on segment: Toggle between straight and curved. </source>
-        <translation>セグメント上を&lt;b&gt;%1+クリック&lt;/b&gt; で、直線と曲線を切り替えます。</translation>
+        <translation>セグメント上を&lt;b&gt;%1+クリック&lt;/b&gt; で、直線と曲線を切り替えます。 </translation>
     </message>
 </context>
 <context>
@@ -1281,7 +1281,7 @@
     <message>
         <location filename="../src/tool_edit_point.cpp" line="690"></location>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on point to switch between dash and normal point. </source>
-        <translation>ポイント上で&lt;b&gt;%1+クリック&lt;/b&gt;: ダッシュ点と通常の点を切り換え。</translation>
+        <translation>ポイント上で&lt;b&gt;%1+クリック&lt;/b&gt;: ダッシュ点と通常の点を切り換え。 </translation>
     </message>
 </context>
 <context>
@@ -1316,7 +1316,7 @@
         <location filename="../src/tool_edit_point.cpp" line="654"></location>
         <location filename="../src/tool_edit_line.cpp" line="455"></location>
         <source>&lt;b&gt;%1&lt;/b&gt;: Fixed angles. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: 一定の角度上で移動。</translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: 一定の角度上で移動。 </translation>
     </message>
     <message>
         <location filename="../src/tool_edit_point.cpp" line="666"></location>
@@ -1901,7 +1901,7 @@
     </message>
     <message>
         <source>- from Proj.4 specification -</source>
-        <translation type="vanished">- from Proj.4 specification -</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="96"></location>
@@ -2321,7 +2321,7 @@
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="57"></location>
         <source>OCAD Versions 7, 8</source>
-        <translation>OCAD Versions 7, 8</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="32"></location>
@@ -2634,7 +2634,7 @@
     <message>
         <location filename="../src/symbol_line.cpp" line="2153"></location>
         <source>Mid symbols</source>
-        <translation>Mid symbols</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2156"></location>
@@ -2685,7 +2685,7 @@
         <location filename="../src/symbol_line.cpp" line="2263"></location>
         <location filename="../src/symbol_line.cpp" line="2723"></location>
         <source>Mid symbol</source>
-        <translation>Mid symbol</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="1661"></location>
@@ -2917,7 +2917,7 @@
     <message>
         <location filename="../src/gui/main_window.cpp" line="315"></location>
         <source>&amp;About %1</source>
-        <translation>%1 について(&amp;A) </translation>
+        <translation>%1 について(&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="316"></location>
@@ -4848,7 +4848,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/map_dialog_new.cpp" line="49"></location>
         <source>Scale:  1 : </source>
-        <translation>縮尺:  1 :　</translation>
+        <translation>縮尺:  1 : </translation>
     </message>
     <message>
         <location filename="../src/map_dialog_new.cpp" line="54"></location>
@@ -5300,7 +5300,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/template_tool_paint.cpp" line="58"></location>
         <source>&lt;b&gt;Click and drag&lt;/b&gt;: Paint. &lt;b&gt;Right click and drag&lt;/b&gt;: Erase. </source>
-        <translation>&lt;b&gt;左クリックしながらドラッグ&lt;/b&gt;: ペイントします。&lt;b&gt;右クリックしながらドラッグ&lt;/b&gt;: 消去します。</translation>
+        <translation>&lt;b&gt;左クリックしながらドラッグ&lt;/b&gt;: ペイントします。&lt;b&gt;右クリックしながらドラッグ&lt;/b&gt;: 消去します。 </translation>
     </message>
     <message>
         <location filename="../src/template_tool_paint.cpp" line="61"></location>
@@ -5313,7 +5313,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/tool_pan.cpp" line="72"></location>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the map. </source>
-        <translation>&lt;b&gt;ドラッグ&lt;/b&gt;: 地図を移動します。</translation>
+        <translation>&lt;b&gt;ドラッグ&lt;/b&gt;: 地図を移動します。 </translation>
     </message>
 </context>
 <context>
@@ -5334,7 +5334,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="967"></location>
         <source>&lt;b&gt;Click&lt;/b&gt;: Add a coordinate. &lt;b&gt;%1+Click&lt;/b&gt;: Change the selected coordinate. </source>
-        <translation>&lt;b&gt;クリック&lt;/b&gt;: 座標を追加します。&lt;b&gt;%1 + クリック&lt;b&gt;: 選択中の座標を変更します。</translation>
+        <translation>&lt;b&gt;クリック&lt;/b&gt;: 座標を追加します。&lt;b&gt;%1 + クリック&lt;/b&gt;: 選択中の座標を変更します。 </translation>
     </message>
 </context>
 <context>
@@ -5500,7 +5500,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="371"></location>
         <source>[Midpoint]</source>
-        <translation>[Midpoint]</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="936"></location>
@@ -5554,24 +5554,24 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_tool.cpp" line="341"></location>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the print area. </source>
-        <translation>&lt;b&gt;ドラッグ&lt;/b&gt;: プリントエリアを移動します。</translation>
+        <translation>&lt;b&gt;ドラッグ&lt;/b&gt;: プリントエリアを移動します。 </translation>
     </message>
     <message>
         <location filename="../src/gui/print_tool.cpp" line="345"></location>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the map. </source>
-        <translation>&lt;b&gt;ドラッグ&lt;/b&gt;: 地図を移動します。</translation>
+        <translation>&lt;b&gt;ドラッグ&lt;/b&gt;: 地図を移動します。 </translation>
     </message>
     <message>
         <location filename="../src/gui/print_tool.cpp" line="350"></location>
         <location filename="../src/gui/print_tool.cpp" line="355"></location>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the print area's border. </source>
-        <translation>&lt;b&gt;ドラッグ&lt;/b&gt;: プリントエリアの縁を移動します。</translation>
+        <translation>&lt;b&gt;ドラッグ&lt;/b&gt;: プリントエリアの縁を移動します。 </translation>
     </message>
     <message>
         <location filename="../src/gui/print_tool.cpp" line="360"></location>
         <location filename="../src/gui/print_tool.cpp" line="365"></location>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the print area's borders. </source>
-        <translation>&lt;b&gt;ドラッグ&lt;/b&gt;: プリントエリアの縁を移動します。</translation>
+        <translation>&lt;b&gt;ドラッグ&lt;/b&gt;: プリントエリアの縁を移動します。 </translation>
     </message>
 </context>
 <context>
@@ -6226,12 +6226,12 @@ separations</source>
     <message>
         <location filename="../src/tool_rotate_pattern.cpp" line="158"></location>
         <source>&lt;b&gt;%1&lt;/b&gt;: Fixed angles. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: 一定角度ずつ回転。</translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: 一定角度ずつ回転。 </translation>
     </message>
     <message>
         <location filename="../src/tool_rotate_pattern.cpp" line="162"></location>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Set the direction of area fill patterns or point objects. </source>
-        <translation>&lt;b&gt;ドラッグ&lt;/b&gt;: エリアフィルパターンまたはポイントオブジェクトの方向をセットします。</translation>
+        <translation>&lt;b&gt;ドラッグ&lt;/b&gt;: エリアフィルパターンまたはポイントオブジェクトの方向をセットします。 </translation>
     </message>
 </context>
 <context>
@@ -6267,7 +6267,7 @@ separations</source>
     <message>
         <location filename="../src/tool_rotate.cpp" line="195"></location>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Rotate the selected objects. </source>
-        <translation>&lt;b&gt;ドラッグ&lt;/b&gt;: 選択中のオブジェクトを回転します。</translation>
+        <translation>&lt;b&gt;ドラッグ&lt;/b&gt;: 選択中のオブジェクトを回転します。 </translation>
     </message>
 </context>
 <context>
@@ -6373,12 +6373,12 @@ separations</source>
         <location filename="../src/tool_scale.cpp" line="202"></location>
         <location filename="../src/tool_scale.cpp" line="204"></location>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set the scaling center. </source>
-        <translation>&lt;b&gt;クリック&lt;/b&gt;: スケール変更の中心点をセットします。</translation>
+        <translation>&lt;b&gt;クリック&lt;/b&gt;: スケール変更の中心点をセットします。 </translation>
     </message>
     <message>
         <location filename="../src/tool_scale.cpp" line="205"></location>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Scale the selected objects. </source>
-        <translation>&lt;b&gt;ドラッグ&lt;/b&gt;: 選択中のオブジェクトのスケールを変更します。</translation>
+        <translation>&lt;b&gt;ドラッグ&lt;/b&gt;: 選択中のオブジェクトのスケールを変更します。 </translation>
     </message>
     <message>
         <source>&lt;b&gt;Click&lt;/b&gt; to set the scaling center</source>
@@ -6932,12 +6932,12 @@ to jump over the lazy dog
     <message>
         <location filename="../src/template_adjust.cpp" line="572"></location>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set the template position of the pass point. </source>
-        <translation>&lt;b&gt;クリック&lt;/b&gt;: パスポイントのテンプレート上の位置をセットします。</translation>
+        <translation>&lt;b&gt;クリック&lt;/b&gt;: パスポイントのテンプレート上の位置をセットします。 </translation>
     </message>
     <message>
         <location filename="../src/template_adjust.cpp" line="597"></location>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set the map position of the pass point. </source>
-        <translation>&lt;b&gt;クリック&lt;/b&gt;: パスポイントのマップ上の位置をセットします。</translation>
+        <translation>&lt;b&gt;クリック&lt;/b&gt;: パスポイントのマップ上の位置をセットします。 </translation>
     </message>
 </context>
 <context>
@@ -6949,7 +6949,7 @@ to jump over the lazy dog
     <message>
         <location filename="../src/template_adjust.cpp" line="806"></location>
         <source>&lt;b&gt;Click&lt;/b&gt;: Delete pass points. </source>
-        <translation>&lt;b&gt;クリック&lt;/b&gt;: パスポイントを削除します。</translation>
+        <translation>&lt;b&gt;クリック&lt;/b&gt;: パスポイントを削除します。 </translation>
     </message>
 </context>
 <context>
@@ -6961,7 +6961,7 @@ to jump over the lazy dog
     <message>
         <location filename="../src/template_adjust.cpp" line="681"></location>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move pass points. </source>
-        <translation>&lt;b&gt;ドラッグ&lt;/b&gt;: パスポイントを移動します。</translation>
+        <translation>&lt;b&gt;ドラッグ&lt;/b&gt;: パスポイントを移動します。 </translation>
     </message>
 </context>
 <context>
