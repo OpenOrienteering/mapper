@@ -42,8 +42,10 @@ Sensors
 
 OpenOrienteering Mapper can use integrated GPS receivers. However, their
 accuracy may be low, so it may be advantageous to connect to an external GPS
-receiver. This can be done on the level of the Android Operating System (i.e.
-not directly in the Mapper app), and instructions can be found on the internet.
+receiver. There is no direct support for external devices in Mapper, but
+some third party apps bridge the gap. For example the [Bluetooth GPS app](https://play.google.com/store/apps/details?id=googoo.android.btgps&rdid=googoo.android.btgps)
+provides a "mock" location provider which can be used when Android is put in
+developer mode.
 
 The app can use a magnetometer and accelerometer as a compass. Almost all modern
 devices should contain these sensors. If a gyroscope is also available, it will
