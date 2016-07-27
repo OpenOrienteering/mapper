@@ -89,10 +89,13 @@ public:
 	 *     MapEditorController is also used in the symbol editor for the preview.
 	 *     In this case, SymbolEditor is passed to disable showing the menus,
 	 *     toolbars, etc.
-	 * @param map The map for which the controller is created. If passing NULL,
-	 *     it has to be set later using setMap() (private!)
+	 * @param map       A Map which is to be edited by the controller.
+	 * @param map_view  A MapView for the given map.
+	 * 
+	 * \todo Review/remove mode hack. 
+	 * \todo Document and fix ownership of map and map_view. Double deletes waiting...
 	 */
-	MapEditorController(OperatingMode mode, Map* map = NULL);
+	MapEditorController(OperatingMode mode, Map* map = nullptr, MapView* map_view = nullptr);
 	
 	/** Destroys the MapEditorController. */
 	~MapEditorController();
