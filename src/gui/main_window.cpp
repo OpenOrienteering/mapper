@@ -46,6 +46,7 @@
 #include "autosave_dialog.h"
 #include "home_screen_controller.h"
 #include "settings_dialog.h"
+#include "../core/map_view.h"
 #include "../file_format_registry.h"
 #include "../file_import_export.h"
 #include "../map.h"
@@ -605,6 +606,7 @@ void MainWindow::showNewMapWizard()
 		return;
 	
 	Map* new_map = new Map();
+	MapView tmp_view { nullptr, new_map };
 	QString symbol_set_path = newMapDialog.getSelectedSymbolSetPath();
 	if (symbol_set_path.isEmpty())
 	{
@@ -612,7 +614,7 @@ void MainWindow::showNewMapWizard()
 	}
 	else
 	{
-		new_map->loadFrom(symbol_set_path, this, nullptr, true);
+		new_map->loadFrom(symbol_set_path, this, &tmp_view, true);
 		if (new_map->getScaleDenominator() != newMapDialog.getSelectedScale())
 		{
 			if (QMessageBox::question(this, tr("Warning"), tr("The selected map scale is 1:%1, but the chosen symbol set has a nominal scale of 1:%2.\n\nDo you want to scale the symbols to the selected scale?").arg(newMapDialog.getSelectedScale()).arg(new_map->getScaleDenominator()),  QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes)
@@ -635,11 +637,15 @@ void MainWindow::showNewMapWizard()
 			}
 		}
 	}
+	
+	auto map_view = new MapView { new_map };
+	map_view->setGridVisible(tmp_view.isGridVisible());
+	
 	new_map->setHasUnsavedChanges(false);
 	new_map->undoManager().clear();
 	
 	MainWindow* new_window = hasOpenedFile() ? new MainWindow() : this;
-	new_window->setController(new MapEditorController(MapEditorController::MapEditor, new_map), QString());
+	new_window->setController(new MapEditorController(MapEditorController::MapEditor, new_map, map_view), QString());
 	
 	new_window->show();
 	new_window->raise();
