@@ -173,7 +173,7 @@ static const QString oo_objects { QStringLiteral("openorienteering/objects") };
 
 // ### MapEditorController ###
 
-MapEditorController::MapEditorController(OperatingMode mode, Map* map)
+MapEditorController::MapEditorController(OperatingMode mode, Map* map, MapView* map_view)
 : MainWindowController()
 , mobile_mode(MainWindow::mobileMode())
 , active_symbol(NULL)
@@ -196,7 +196,7 @@ MapEditorController::MapEditorController(OperatingMode mode, Map* map)
 	cut_hole_menu = NULL;
 	
 	if (map)
-		setMapAndView(map, new MapView(this, map));
+		setMapAndView(map, map_view ? map_view : new MapView(this, map));
 	
 	editor_activity = NULL;
 	current_tool = NULL;

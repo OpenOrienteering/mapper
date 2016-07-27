@@ -624,7 +624,7 @@
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="111"></location>
         <source>Display:</source>
-        <translation>Display:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="159"></location>
@@ -1254,7 +1254,7 @@
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="67"></location>
         <source>Edit tool:</source>
-        <translation>Strumento modifica</translation>
+        <translation>Strumento modifica:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="70"></location>
@@ -1283,12 +1283,12 @@
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="82"></location>
         <source>Rectangle tool:</source>
-        <translation>Strumento rettangolo</translation>
+        <translation>Strumento rettangolo:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="85"></location>
         <source>Radius of helper cross:</source>
-        <translation>Raggio della croce di aiuto (visualizzazione)</translation>
+        <translation>Raggio della croce di aiuto (visualizzazione):</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="87"></location>
@@ -2142,7 +2142,7 @@
     <message>
         <location filename="../src/file_format_native.cpp" line="396"></location>
         <source>Error while loading undo steps.</source>
-        <translation>Errore durante il caricamento dei passaggi di annulamento</translation>
+        <translation>Errore durante il caricamento dei passaggi di annulamento.</translation>
     </message>
     <message>
         <location filename="../src/file_format_native.cpp" line="406"></location>
@@ -2592,7 +2592,7 @@
     <message>
         <location filename="../src/gui/main_window.cpp" line="267"></location>
         <source>E&amp;xit</source>
-        <translation>E&amp;xit</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="269"></location>
@@ -2887,7 +2887,7 @@ Riscalatura dei dati importati?</translation>
     <message>
         <location filename="../src/map.cpp" line="440"></location>
         <source>default part</source>
-        <translation>default part</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/core/map_color.cpp" line="28"></location>
@@ -2957,7 +2957,7 @@ Riscalatura dei dati importati?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="814"></location>
         <source>Zoom out</source>
-        <translation>Zoom out</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="816"></location>
@@ -3806,7 +3806,7 @@ multipli</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="2190"></location>
         <source>Unify overlapping objects.</source>
-        <translation>Unifica gli oggetti che si sovrappongno</translation>
+        <translation>Unifica gli oggetti che si sovrappongno.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2192"></location>
@@ -5113,7 +5113,7 @@ se disponibile si può zoomare con la rotella del mouse.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="140"></location>
         <source>Page orientation:</source>
-        <translation>Orientamento della pagina</translation>
+        <translation>Orientamento della pagina:</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="100"></location>
@@ -5588,7 +5588,7 @@ separations</source>
     <message>
         <location filename="../src/map_dialog_rotate.cpp" line="44"></location>
         <source>Angle (counter-clockwise):</source>
-        <translation>Angolo (antiorario)</translation>
+        <translation>Angolo (antiorario):</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_rotate.cpp" line="42"></location>
@@ -7111,7 +7111,7 @@ La versione massima supportata è %2.</translation>
     <message>
         <location filename="../src/util.cpp" line="256"></location>
         <source>Failed to locate the help files.</source>
-        <translation>Impossibile trovare i file di Aiuto</translation>
+        <translation>Impossibile trovare i file di Aiuto.</translation>
     </message>
     <message>
         <location filename="../src/util.cpp" line="263"></location>

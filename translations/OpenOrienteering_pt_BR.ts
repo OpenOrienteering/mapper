@@ -822,12 +822,12 @@ Tradução em Português-BR feita por João Manoel Franco.</translation>
     <message>
         <location filename="../src/tool_draw_circle.cpp" line="294"></location>
         <source>&lt;b&gt;Click&lt;/b&gt;: Start a circle or ellipse. </source>
-        <translation>&lt;b&gt;Clicar&lt;/b&gt;: Iniciar um círculo ou elipse.</translation>
+        <translation>&lt;b&gt;Clicar&lt;/b&gt;: Iniciar um círculo ou elipse. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_circle.cpp" line="295"></location>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Draw a circle. </source>
-        <translation>&lt;b&gt;Arrastar&lt;/b&gt;: Desenhar um círculo.</translation>
+        <translation>&lt;b&gt;Arrastar&lt;/b&gt;: Desenhar um círculo. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_circle.cpp" line="297"></location>
@@ -837,12 +837,12 @@ Tradução em Português-BR feita por João Manoel Franco.</translation>
     <message>
         <location filename="../src/tool_draw_circle.cpp" line="301"></location>
         <source>&lt;b&gt;Click&lt;/b&gt;: Finish the circle. </source>
-        <translation>&lt;b&gt;Clicar&lt;/b&gt;: Finalizar o círculo.</translation>
+        <translation>&lt;b&gt;Clicar&lt;/b&gt;: Finalizar o círculo. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_circle.cpp" line="302"></location>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Draw an ellipse. </source>
-        <translation>&lt;b&gt;Arrastar&lt;/b&gt;: Desenhar uma elipse.</translation>
+        <translation>&lt;b&gt;Arrastar&lt;/b&gt;: Desenhar uma elipse. </translation>
     </message>
 </context>
 <context>
@@ -850,7 +850,7 @@ Tradução em Português-BR feita por João Manoel Franco.</translation>
     <message>
         <location filename="../src/tool_draw_freehand.cpp" line="276"></location>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Draw a path. </source>
-        <translation>&lt;b&gt;Arrastar&lt;/b&gt;: Desenhar uma linha.</translation>
+        <translation>&lt;b&gt;Arrastar&lt;/b&gt;: Desenhar uma linha. </translation>
     </message>
 </context>
 <context>
@@ -865,32 +865,32 @@ Tradução em Português-BR feita por João Manoel Franco.</translation>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1071"></location>
         <source>&lt;b&gt;%1+Click&lt;/b&gt;: Snap or append to existing objects. </source>
-        <translation>&lt;b&gt;%1+Clicar&lt;/b&gt;: Encaixar ou anexar a objetos existentes.</translation>
+        <translation>&lt;b&gt;%1+Clicar&lt;/b&gt;: Encaixar ou anexar a objetos existentes. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1076"></location>
         <location filename="../src/tool_draw_rectangle.cpp" line="706"></location>
         <source>&lt;b&gt;%1+Click&lt;/b&gt;: Pick direction from existing objects. </source>
-        <translation>&lt;b&gt;%1+Clicar&lt;/b&gt;: Pegar direção de objeto existente.</translation>
+        <translation>&lt;b&gt;%1+Clicar&lt;/b&gt;: Pegar direção de objeto existente. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1089"></location>
         <location filename="../src/tool_draw_rectangle.cpp" line="711"></location>
         <location filename="../src/tool_draw_rectangle.cpp" line="735"></location>
         <source>&lt;b&gt;%1+Click&lt;/b&gt;: Snap to existing objects. </source>
-        <translation>&lt;b&gt;%1+Clicar&lt;/b&gt;: Encaixar em objeto existente.</translation>
+        <translation>&lt;b&gt;%1+Clicar&lt;/b&gt;: Encaixar em objeto existente. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1095"></location>
         <location filename="../src/tool_draw_rectangle.cpp" line="725"></location>
         <source>&lt;b&gt;%1&lt;/b&gt;: Fixed angles. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: Ângulos fixos.</translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Ângulos fixos. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1103"></location>
         <location filename="../src/tool_draw_rectangle.cpp" line="741"></location>
         <source>&lt;b&gt;%1&lt;/b&gt;: Undo last point. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: Desfazer último ponto.</translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Desfazer último ponto. </translation>
     </message>
 </context>
 <context>
@@ -948,7 +948,7 @@ Tradução em Português-BR feita por João Manoel Franco.</translation>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1090"></location>
         <source>&lt;b&gt;%1+Drag&lt;/b&gt;: Follow existing objects. </source>
-        <translation>&lt;b&gt;%1+Arrastar&lt;/b&gt;: Seguir objeto existente.</translation>
+        <translation>&lt;b&gt;%1+Arrastar&lt;/b&gt;: Seguir objeto existente. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1100"></location>
@@ -966,7 +966,7 @@ Tradução em Português-BR feita por João Manoel Franco.</translation>
     <message>
         <location filename="../src/tool_draw_point_gps.cpp" line="182"></location>
         <source>&lt;b&gt;Click&lt;/b&gt;: Finish setting the object. </source>
-        <translation>&lt;b&gt;Clicar&lt;/b&gt;: Terminar ajuste do objeto.</translation>
+        <translation>&lt;b&gt;Clicar&lt;/b&gt;: Terminar ajuste do objeto. </translation>
     </message>
 </context>
 <context>
@@ -1000,7 +1000,7 @@ Tradução em Português-BR feita por João Manoel Franco.</translation>
     <message>
         <location filename="../src/tool_draw_point.cpp" line="318"></location>
         <source>&lt;b&gt;%1&lt;/b&gt;: Fixed angles. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: Ângulos fixos.</translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Ângulos fixos. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_point.cpp" line="323"></location>
@@ -1058,12 +1058,12 @@ Tradução em Português-BR feita por João Manoel Franco.</translation>
     <message>
         <location filename="../src/tool_draw_rectangle.cpp" line="716"></location>
         <source>&lt;b&gt;Click or Drag&lt;/b&gt;: Start drawing a rectangle. </source>
-        <translation>&lt;b&gt;Clicar ou Arrastar&lt;/b&gt;: Iniciar um retângulo.</translation>
+        <translation>&lt;b&gt;Clicar ou Arrastar&lt;/b&gt;: Iniciar um retângulo. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_rectangle.cpp" line="729"></location>
         <source>&lt;b&gt;%1&lt;/b&gt;: Snap to previous lines. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: Encaixar em linha existente.</translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Encaixar em linha existente. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_rectangle.cpp" line="740"></location>
@@ -1076,12 +1076,12 @@ Tradução em Português-BR feita por João Manoel Franco.</translation>
     <message>
         <location filename="../src/tool_draw_text.cpp" line="375"></location>
         <source>&lt;b&gt;%1&lt;/b&gt;: Finish editing. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: Terminar edição.</translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Terminar edição. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_text.cpp" line="379"></location>
         <source>&lt;b&gt;Click&lt;/b&gt;: Create a text object with a single anchor. &lt;b&gt;Drag&lt;/b&gt;: Create a text box. </source>
-        <translation>&lt;b&gt;Clicar&lt;/b&gt;: Criar um texto com ponto fixo. &lt;b&gt;Drag&lt;/b&gt;: Criar uma caixa de texto.</translation>
+        <translation>&lt;b&gt;Clicar&lt;/b&gt;: Criar um texto com ponto fixo. &lt;b&gt;Drag&lt;/b&gt;: Criar uma caixa de texto. </translation>
     </message>
 </context>
 <context>
@@ -1102,12 +1102,12 @@ Tradução em Português-BR feita por João Manoel Franco.</translation>
     <message>
         <location filename="../src/tool_edit_line.cpp" line="453"></location>
         <source>&lt;b&gt;%1&lt;/b&gt;: Free movement. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: Movimento livre.</translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Movimento livre. </translation>
     </message>
     <message>
         <location filename="../src/tool_edit_line.cpp" line="472"></location>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on segment: Toggle between straight and curved. </source>
-        <translation>&lt;b&gt;%1+Clicar&lt;/b&gt; no segmento: Alternar entre segmento reto e curvo.</translation>
+        <translation>&lt;b&gt;%1+Clicar&lt;/b&gt; no segmento: Alternar entre segmento reto e curvo. </translation>
     </message>
 </context>
 <context>
@@ -1134,24 +1134,24 @@ Tradução em Português-BR feita por João Manoel Franco.</translation>
     <message>
         <location filename="../src/tool_edit_point.cpp" line="642"></location>
         <source>&lt;b&gt;%1&lt;/b&gt;: Finish editing. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: Terminar edição.</translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Terminar edição. </translation>
     </message>
     <message>
         <location filename="../src/tool_edit_point.cpp" line="662"></location>
         <source>&lt;b&gt;%1&lt;/b&gt;: Keep opposite handle positions. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: Manter haste de posições opostas.</translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Manter haste de posições opostas. </translation>
     </message>
     <message>
         <location filename="../src/tool_edit_point.cpp" line="683"></location>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on point: Delete it; on path: Add a new dash point; with &lt;b&gt;%2&lt;/b&gt;: Add a normal point. </source>
         <translatorcomment>Para adicionar pontos de traço/canto Clicar+Ctr+espaço. Para retirar ponto de traço/canto Clicar+Ctr. O ponto de traço/canto tem formato de diamante.</translatorcomment>
-        <translation>&lt;b&gt;%1+Clicar&lt;/b&gt; no ponto: Apagar; na linha: Adicionar ponto de traço; com &lt;b&gt;%2&lt;/b&gt;: Adicionar ponto normal.</translation>
+        <translation>&lt;b&gt;%1+Clicar&lt;/b&gt; no ponto: Apagar; na linha: Adicionar ponto de traço; com &lt;b&gt;%2&lt;/b&gt;: Adicionar ponto normal. </translation>
     </message>
     <message>
         <location filename="../src/tool_edit_point.cpp" line="686"></location>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on point: Delete it; on path: Add a new point; with &lt;b&gt;%2&lt;/b&gt;: Add a dash point. </source>
         <translatorcomment>Para adicionar pontos de traço/canto Clicar+Ctr+espaço. Para retirar ponto de traço/canto Clicar+Ctr. O ponto de traço/canto tem formato de diamante.</translatorcomment>
-        <translation>&lt;b&gt;%1+Clicar&lt;/b&gt; no ponto: Apagar; na linha: Adicionar un novo ponto; com &lt;b&gt;%2&lt;/b&gt;: Adicionar um ponto de traço.</translation>
+        <translation>&lt;b&gt;%1+Clicar&lt;/b&gt; no ponto: Apagar; na linha: Adicionar un novo ponto; com &lt;b&gt;%2&lt;/b&gt;: Adicionar um ponto de traço. </translation>
     </message>
     <message>
         <location filename="../src/tool_edit_point.cpp" line="690"></location>
@@ -1172,14 +1172,14 @@ Tradução em Português-BR feita por João Manoel Franco.</translation>
         <location filename="../src/tool_edit_point.cpp" line="654"></location>
         <location filename="../src/tool_edit_line.cpp" line="455"></location>
         <source>&lt;b&gt;%1&lt;/b&gt;: Fixed angles. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: Ângulos fixos.</translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Ângulos fixos. </translation>
     </message>
     <message>
         <location filename="../src/tool_edit_point.cpp" line="666"></location>
         <location filename="../src/tool_edit_line.cpp" line="459"></location>
         <location filename="../src/tool_draw_text.cpp" line="381"></location>
         <source>&lt;b&gt;%1&lt;/b&gt;: Snap to existing objects. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: Encaixar em objeto existente.</translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Encaixar em objeto existente. </translation>
     </message>
     <message>
         <location filename="../src/tool_edit_point.cpp" line="672"></location>
@@ -1191,7 +1191,7 @@ Tradução em Português-BR feita por João Manoel Franco.</translation>
         <location filename="../src/tool_edit_point.cpp" line="675"></location>
         <location filename="../src/tool_edit_line.cpp" line="467"></location>
         <source>&lt;b&gt;%1&lt;/b&gt;: Delete selected objects. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: Apagar objetos selecionados.</translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Apagar objetos selecionados. </translation>
     </message>
 </context>
 <context>
@@ -1294,7 +1294,7 @@ Tradução em Português-BR feita por João Manoel Franco.</translation>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="82"></location>
         <source>Rectangle tool:</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="85"></location>
@@ -1362,7 +1362,7 @@ Tradução em Português-BR feita por João Manoel Franco.</translation>
     <message>
         <location filename="../src/tool_fill.cpp" line="179"></location>
         <source>&lt;b&gt;Click&lt;/b&gt;: Fill area with active symbol. The area to be filled must be bounded by lines or areas, other symbols are not taken into account. </source>
-        <translation>&lt;b&gt;Click&lt;/b&gt;: Preencher área com o símbolo ativo. A área a ser preenchida deve ter linhas ou areas na borda, outros símbolos não são levados em conta.</translation>
+        <translation>&lt;b&gt;Click&lt;/b&gt;: Preencher área com o símbolo ativo. A área a ser preenchida deve ter linhas ou areas na borda, outros símbolos não são levados em conta. </translation>
     </message>
 </context>
 <context>
@@ -1522,7 +1522,7 @@ Tradução em Português-BR feita por João Manoel Franco.</translation>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="61"></location>
         <source>UTM Zone (number north/south)</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="68"></location>
@@ -1973,7 +1973,7 @@ Tradução em Português-BR feita por João Manoel Franco.</translation>
     <message>
         <location filename="../src/object.cpp" line="460"></location>
         <source>Error while loading an object of type %1 at %2:%3: %4</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/object.cpp" line="428"></location>
@@ -2567,7 +2567,7 @@ Tradução em Português-BR feita por João Manoel Franco.</translation>
     <message>
         <location filename="../src/gui/main_window.cpp" line="267"></location>
         <source>E&amp;xit</source>
-        <translation>Sa&amp;ir </translation>
+        <translation>Sa&amp;ir</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="269"></location>
@@ -4853,7 +4853,7 @@ aproximar e afastar usando a roda do mouse, se disponível.</translation>
     <message>
         <location filename="../src/tool_pan.cpp" line="72"></location>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the map. </source>
-        <translation>&lt;b&gt;Arrastar&lt;/b&gt;: Mover a tela.</translation>
+        <translation>&lt;b&gt;Arrastar&lt;/b&gt;: Mover a tela. </translation>
     </message>
 </context>
 <context>
@@ -5062,29 +5062,29 @@ aproximar e afastar usando a roda do mouse, se disponível.</translation>
         <location filename="../src/gui/print_tool.cpp" line="57"></location>
         <location filename="../src/gui/print_tool.cpp" line="369"></location>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the map, the print area or the area's borders. </source>
-        <translation>&lt;b&gt;Arrastar&lt;/b&gt;: Mover o mapa, a área de impressão ou bordas da área.</translation>
+        <translation>&lt;b&gt;Arrastar&lt;/b&gt;: Mover o mapa, a área de impressão ou bordas da área. </translation>
     </message>
     <message>
         <location filename="../src/gui/print_tool.cpp" line="341"></location>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the print area. </source>
-        <translation>&lt;b&gt;Arrastar&lt;/b&gt;: Mover a área de impressão.</translation>
+        <translation>&lt;b&gt;Arrastar&lt;/b&gt;: Mover a área de impressão. </translation>
     </message>
     <message>
         <location filename="../src/gui/print_tool.cpp" line="345"></location>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the map. </source>
-        <translation>&lt;b&gt;Arrastar&lt;/b&gt;: Mover o mapa.</translation>
+        <translation>&lt;b&gt;Arrastar&lt;/b&gt;: Mover o mapa. </translation>
     </message>
     <message>
         <location filename="../src/gui/print_tool.cpp" line="350"></location>
         <location filename="../src/gui/print_tool.cpp" line="355"></location>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the print area's border. </source>
-        <translation>&lt;b&gt;Arrastar&lt;/b&gt;: Mover a borda da área de impressão.</translation>
+        <translation>&lt;b&gt;Arrastar&lt;/b&gt;: Mover a borda da área de impressão. </translation>
     </message>
     <message>
         <location filename="../src/gui/print_tool.cpp" line="360"></location>
         <location filename="../src/gui/print_tool.cpp" line="365"></location>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the print area's borders. </source>
-        <translation>&lt;b&gt;Arrastar&lt;/b&gt;: Mover as bordas da área de impressão.</translation>
+        <translation>&lt;b&gt;Arrastar&lt;/b&gt;: Mover as bordas da área de impressão. </translation>
     </message>
 </context>
 <context>
@@ -5665,7 +5665,7 @@ de cores</translation>
     <message>
         <location filename="../src/tool_rotate_pattern.cpp" line="162"></location>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Set the direction of area fill patterns or point objects. </source>
-        <translation>&lt;b&gt; Arrastar &lt;/b&gt;: Definir a direção de preenchimento da padronagem ou do objeto de ponto.</translation>
+        <translation>&lt;b&gt; Arrastar &lt;/b&gt;: Definir a direção de preenchimento da padronagem ou do objeto de ponto. </translation>
     </message>
 </context>
 <context>
@@ -6252,12 +6252,12 @@ cegonhas felizes
     <message>
         <location filename="../src/template_adjust.cpp" line="572"></location>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set the template position of the pass point. </source>
-        <translation>&lt;b&gt; Clicar &lt;/b&gt;: Define a posição do ponto de ajuste no Mapa Base.</translation>
+        <translation>&lt;b&gt; Clicar &lt;/b&gt;: Define a posição do ponto de ajuste no Mapa Base. </translation>
     </message>
     <message>
         <location filename="../src/template_adjust.cpp" line="597"></location>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set the map position of the pass point. </source>
-        <translation>&lt;b&gt; Clicar &lt;/b&gt;: Define a posição do ponto de ajuste no mapa.</translation>
+        <translation>&lt;b&gt; Clicar &lt;/b&gt;: Define a posição do ponto de ajuste no mapa. </translation>
     </message>
 </context>
 <context>
@@ -6265,7 +6265,7 @@ cegonhas felizes
     <message>
         <location filename="../src/template_adjust.cpp" line="806"></location>
         <source>&lt;b&gt;Click&lt;/b&gt;: Delete pass points. </source>
-        <translation>&lt;b&gt; Clicar &lt;/b&gt;: Apaga pontos de ajuste.</translation>
+        <translation>&lt;b&gt; Clicar &lt;/b&gt;: Apaga pontos de ajuste. </translation>
     </message>
 </context>
 <context>
@@ -6273,7 +6273,7 @@ cegonhas felizes
     <message>
         <location filename="../src/template_adjust.cpp" line="681"></location>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move pass points. </source>
-        <translation>&lt;b&gt; Arrastar &lt;/b&gt;: Move pontos de ajuste.</translation>
+        <translation>&lt;b&gt; Arrastar &lt;/b&gt;: Move pontos de ajuste. </translation>
     </message>
 </context>
 <context>

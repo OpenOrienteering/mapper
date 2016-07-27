@@ -895,7 +895,7 @@
         <location filename="../src/tool_draw_path.cpp" line="1076"></location>
         <location filename="../src/tool_draw_rectangle.cpp" line="706"></location>
         <source>&lt;b&gt;%1+Click&lt;/b&gt;: Pick direction from existing objects. </source>
-        <translation>&lt;b&gt;%1+Clic&lt;/b&gt;: Elegir dirección de objetos existentes.</translation>
+        <translation>&lt;b&gt;%1+Clic&lt;/b&gt;: Elegir dirección de objetos existentes. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1089"></location>
@@ -908,7 +908,7 @@
         <location filename="../src/tool_draw_path.cpp" line="1095"></location>
         <location filename="../src/tool_draw_rectangle.cpp" line="725"></location>
         <source>&lt;b&gt;%1&lt;/b&gt;: Fixed angles. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: Ángulos fijos.</translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Ángulos fijos. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1103"></location>
@@ -963,22 +963,22 @@
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1061"></location>
         <source>&lt;b&gt;Length:&lt;/b&gt; %1 m </source>
-        <translation>&lt;b&gt;Longitud:&lt;/b&gt; %1 m</translation>
+        <translation>&lt;b&gt;Longitud:&lt;/b&gt; %1 m </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1081"></location>
         <source>&lt;b&gt;Click&lt;/b&gt;: Start a straight line. &lt;b&gt;Drag&lt;/b&gt;: Start a curve. </source>
-        <translation>&lt;b&gt;Clic&lt;/b&gt;: Comenzar una línea recta. &lt;b&gt;Arrastrar&lt;/b&gt;: Comenzar una curva.</translation>
+        <translation>&lt;b&gt;Clic&lt;/b&gt;: Comenzar una línea recta. &lt;b&gt;Arrastrar&lt;/b&gt;: Comenzar una curva. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1090"></location>
         <source>&lt;b&gt;%1+Drag&lt;/b&gt;: Follow existing objects. </source>
-        <translation>&lt;b&gt;%1+Arrastrar&lt;/b&gt;: Continuar objetos existentes.</translation>
+        <translation>&lt;b&gt;%1+Arrastrar&lt;/b&gt;: Continuar objetos existentes. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1100"></location>
         <source>&lt;b&gt;Click&lt;/b&gt;: Draw a straight line. &lt;b&gt;Drag&lt;/b&gt;: Draw a curve. &lt;b&gt;Right or double click&lt;/b&gt;: Finish the path. &lt;b&gt;%1&lt;/b&gt;: Close the path. </source>
-        <translation>&lt;b&gt;Clic&lt;/b&gt;: Dibujar una línea recta. &lt;b&gt;Arrastrar&lt;/b&gt;: Dibujar una curva. &lt;b&gt;Botón derecho o doble-clic&lt;/b&gt;: Finalizar el camino. &lt;b&gt;%1&lt;/b&gt;: Cerrar el camino.</translation>
+        <translation>&lt;b&gt;Clic&lt;/b&gt;: Dibujar una línea recta. &lt;b&gt;Arrastrar&lt;/b&gt;: Dibujar una curva. &lt;b&gt;Botón derecho o doble-clic&lt;/b&gt;: Finalizar el camino. &lt;b&gt;%1&lt;/b&gt;: Cerrar el camino. </translation>
     </message>
 </context>
 <context>
@@ -1021,12 +1021,12 @@
         <location filename="../src/tool_draw_point.cpp" line="317"></location>
         <location filename="../src/tool_draw_point.cpp" line="329"></location>
         <source>&lt;b&gt;Angle:&lt;/b&gt; %1° </source>
-        <translation>&lt;b&gt;Ángulo:&lt;/b&gt; %1°</translation>
+        <translation>&lt;b&gt;Ángulo:&lt;/b&gt; %1° </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_point.cpp" line="318"></location>
         <source>&lt;b&gt;%1&lt;/b&gt;: Fixed angles. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: Ángulos fijos.</translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Ángulos fijos. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_point.cpp" line="323"></location>
@@ -1046,7 +1046,7 @@
     </message>
     <message>
         <source>&lt;b&gt;Click&lt;/b&gt;: Create a point object. &lt;b&gt;Drag&lt;/b&gt;: Create an object and set its orientation (if rotatable). </source>
-        <translation type="vanished">&lt;b&gt;Clic&lt;/b&gt;: Crear un objeto de tipo punto. &lt;b&gt;Arrastrar&lt;/b&gt;: Crear un objeto y establecer su orientación (si se puede rotar).</translation>
+        <translation>&lt;b&gt;Clic&lt;/b&gt;: Crear un objeto de tipo punto. &lt;b&gt;Arrastrar&lt;/b&gt;: Crear un objeto y establecer su orientación (si se puede rotar). </translation>
     </message>
 </context>
 <context>
@@ -1090,17 +1090,17 @@
     <message>
         <location filename="../src/tool_draw_rectangle.cpp" line="716"></location>
         <source>&lt;b&gt;Click or Drag&lt;/b&gt;: Start drawing a rectangle. </source>
-        <translation>&lt;b&gt;Clic o arrastar&lt;/b&gt;: Comenzar a dibujar un rectángulo.</translation>
+        <translation>&lt;b&gt;Clic o arrastar&lt;/b&gt;: Comenzar a dibujar un rectángulo. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_rectangle.cpp" line="729"></location>
         <source>&lt;b&gt;%1&lt;/b&gt;: Snap to previous lines. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: Anexar a líneas previas.</translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Anexar a líneas previas. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_rectangle.cpp" line="740"></location>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set a corner point. &lt;b&gt;Right or double click&lt;/b&gt;: Finish the rectangle. </source>
-        <translation>&lt;b&gt;Clic&lt;/b&gt;: Poner un punto de esquina. &lt;b&gt;Botón derecho o doble-clic&lt;/b&gt;: Finalizar el rectángulo.</translation>
+        <translation>&lt;b&gt;Clic&lt;/b&gt;: Poner un punto de esquina. &lt;b&gt;Botón derecho o doble-clic&lt;/b&gt;: Finalizar el rectángulo. </translation>
     </message>
 </context>
 <context>
@@ -1113,7 +1113,7 @@
     <message>
         <location filename="../src/tool_draw_text.cpp" line="379"></location>
         <source>&lt;b&gt;Click&lt;/b&gt;: Create a text object with a single anchor. &lt;b&gt;Drag&lt;/b&gt;: Create a text box. </source>
-        <translation>&lt;b&gt;Clic&lt;/b&gt;: Crear un objeto de texto con un anclaje simple. &lt;b&gt;Arrastrar&lt;/b&gt;: Crear una caja de texto.</translation>
+        <translation>&lt;b&gt;Clic&lt;/b&gt;: Crear un objeto de texto con un anclaje simple. &lt;b&gt;Arrastrar&lt;/b&gt;: Crear una caja de texto. </translation>
     </message>
     <message>
         <source>A</source>
@@ -1139,12 +1139,12 @@
     <message>
         <location filename="../src/tool_edit_line.cpp" line="453"></location>
         <source>&lt;b&gt;%1&lt;/b&gt;: Free movement. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: Movimiento libre.</translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Movimiento libre. </translation>
     </message>
     <message>
         <location filename="../src/tool_edit_line.cpp" line="472"></location>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on segment: Toggle between straight and curved. </source>
-        <translation>&lt;b&gt;%1+Clic&lt;/b&gt; en un segmento: Cambiar entre recta y curva.</translation>
+        <translation>&lt;b&gt;%1+Clic&lt;/b&gt; en un segmento: Cambiar entre recta y curva. </translation>
     </message>
 </context>
 <context>
@@ -1183,17 +1183,17 @@
     <message>
         <location filename="../src/tool_edit_point.cpp" line="683"></location>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on point: Delete it; on path: Add a new dash point; with &lt;b&gt;%2&lt;/b&gt;: Add a normal point. </source>
-        <translation>&lt;b&gt;%1+Clic&lt;/b&gt; en punto: Lo borra; en camino: Añadir un nuevo punto discontinuo; con &lt;b&gt;%2&lt;/b&gt;: Añadir un punto normal.</translation>
+        <translation>&lt;b&gt;%1+Clic&lt;/b&gt; en punto: Lo borra; en camino: Añadir un nuevo punto discontinuo; con &lt;b&gt;%2&lt;/b&gt;: Añadir un punto normal. </translation>
     </message>
     <message>
         <location filename="../src/tool_edit_point.cpp" line="686"></location>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on point: Delete it; on path: Add a new point; with &lt;b&gt;%2&lt;/b&gt;: Add a dash point. </source>
-        <translation>&lt;b&gt;%1+Clic&lt;/b&gt; en punto: Lo borra; en camino: Añadir un nuevo punto; con &lt;b&gt;%2&lt;/b&gt;: Añadir un  nuevo punto discontinuo.</translation>
+        <translation>&lt;b&gt;%1+Clic&lt;/b&gt; en punto: Lo borra; en camino: Añadir un nuevo punto; con &lt;b&gt;%2&lt;/b&gt;: Añadir un  nuevo punto discontinuo. </translation>
     </message>
     <message>
         <location filename="../src/tool_edit_point.cpp" line="690"></location>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on point to switch between dash and normal point. </source>
-        <translation>&lt;b&gt;%1+Clic&lt;/b&gt; en punto para cambiar entre punto discontinuo o normal.</translation>
+        <translation>&lt;b&gt;%1+Clic&lt;/b&gt; en punto para cambiar entre punto discontinuo o normal. </translation>
     </message>
 </context>
 <context>
@@ -1202,32 +1202,32 @@
         <location filename="../src/tool_edit_point.cpp" line="647"></location>
         <location filename="../src/tool_edit_line.cpp" line="444"></location>
         <source>&lt;b&gt;Coordinate offset:&lt;/b&gt; %1, %2 mm  &lt;b&gt;Distance:&lt;/b&gt; %3 m </source>
-        <translation>&lt;b&gt;Desplazamiento de coordenadas:&lt;/b&gt; %1, %2 mm  &lt;b&gt;Distancia:&lt;/b&gt; %3 m</translation>
+        <translation>&lt;b&gt;Desplazamiento de coordenadas:&lt;/b&gt; %1, %2 mm  &lt;b&gt;Distancia:&lt;/b&gt; %3 m </translation>
     </message>
     <message>
         <location filename="../src/tool_edit_point.cpp" line="654"></location>
         <location filename="../src/tool_edit_line.cpp" line="455"></location>
         <source>&lt;b&gt;%1&lt;/b&gt;: Fixed angles. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: Ángulos fijos.</translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Ángulos fijos. </translation>
     </message>
     <message>
         <location filename="../src/tool_edit_point.cpp" line="666"></location>
         <location filename="../src/tool_edit_line.cpp" line="459"></location>
         <location filename="../src/tool_draw_text.cpp" line="381"></location>
         <source>&lt;b&gt;%1&lt;/b&gt;: Snap to existing objects. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: Enfocar a objetos existentes.</translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Enfocar a objetos existentes. </translation>
     </message>
     <message>
         <location filename="../src/tool_edit_point.cpp" line="672"></location>
         <location filename="../src/tool_edit_line.cpp" line="464"></location>
         <source>&lt;b&gt;Click&lt;/b&gt;: Select a single object. &lt;b&gt;Drag&lt;/b&gt;: Select multiple objects. &lt;b&gt;%1+Click&lt;/b&gt;: Toggle selection. </source>
-        <translation>&lt;b&gt;Clic&lt;/b&gt;: Seleccionar un objeto. &lt;b&gt;Arrastrar&lt;/b&gt;: Seleccionar múltiples objetos. &lt;b&gt;%1+Clic&lt;/b&gt;: Cambiar selección.</translation>
+        <translation>&lt;b&gt;Clic&lt;/b&gt;: Seleccionar un objeto. &lt;b&gt;Arrastrar&lt;/b&gt;: Seleccionar múltiples objetos. &lt;b&gt;%1+Clic&lt;/b&gt;: Cambiar selección. </translation>
     </message>
     <message>
         <location filename="../src/tool_edit_point.cpp" line="675"></location>
         <location filename="../src/tool_edit_line.cpp" line="467"></location>
         <source>&lt;b&gt;%1&lt;/b&gt;: Delete selected objects. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: Borrar objetos seleccionados.</translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Borrar objetos seleccionados. </translation>
     </message>
 </context>
 <context>
@@ -4330,7 +4330,7 @@ selecc</translation>
         <location filename="../src/tool_draw_freehand.cpp" line="277"></location>
         <location filename="../src/tool_cutout.cpp" line="142"></location>
         <source>&lt;b&gt;%1&lt;/b&gt;: Abort. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: Abortar.</translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Abortar. </translation>
     </message>
     <message>
         <location filename="../src/tool_edit_point.cpp" line="692"></location>
@@ -5024,7 +5024,7 @@ zoom usando la rueda del ratón, si dispone de esos elementos.</translation>
     <message>
         <location filename="../src/template_tool_paint.cpp" line="58"></location>
         <source>&lt;b&gt;Click and drag&lt;/b&gt;: Paint. &lt;b&gt;Right click and drag&lt;/b&gt;: Erase. </source>
-        <translation>&lt;b&gt;Clic y arrastrar&lt;/b&gt;: Pintar. &lt;b&gt;Clic en botón derecho y arrastrar&lt;/b&gt;: Borrar.</translation>
+        <translation>&lt;b&gt;Clic y arrastrar&lt;/b&gt;: Pintar. &lt;b&gt;Clic en botón derecho y arrastrar&lt;/b&gt;: Borrar. </translation>
     </message>
     <message>
         <location filename="../src/template_tool_paint.cpp" line="61"></location>
@@ -5037,7 +5037,7 @@ zoom usando la rueda del ratón, si dispone de esos elementos.</translation>
     <message>
         <location filename="../src/tool_pan.cpp" line="72"></location>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the map. </source>
-        <translation>&lt;b&gt;Arrastrar&lt;/b&gt;: Mover el mapa.</translation>
+        <translation>&lt;b&gt;Arrastrar&lt;/b&gt;: Mover el mapa. </translation>
     </message>
 </context>
 <context>
@@ -5054,7 +5054,7 @@ zoom usando la rueda del ratón, si dispone de esos elementos.</translation>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="967"></location>
         <source>&lt;b&gt;Click&lt;/b&gt;: Add a coordinate. &lt;b&gt;%1+Click&lt;/b&gt;: Change the selected coordinate. </source>
-        <translation>&lt;b&gt;Clic&lt;/b&gt;: Añadir una coordenada. &lt;b&gt;%1+Clic&lt;/b&gt;: Cambiar la coordenada seleccionada.</translation>
+        <translation>&lt;b&gt;Clic&lt;/b&gt;: Añadir una coordenada. &lt;b&gt;%1+Clic&lt;/b&gt;: Cambiar la coordenada seleccionada. </translation>
     </message>
 </context>
 <context>
@@ -5259,7 +5259,7 @@ zoom usando la rueda del ratón, si dispone de esos elementos.</translation>
     <message>
         <location filename="../src/gui/print_tool.cpp" line="345"></location>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the map. </source>
-        <translation>&lt;b&gt;Arrastrar&lt;/b&gt;: Mover el mapa.</translation>
+        <translation>&lt;b&gt;Arrastrar&lt;/b&gt;: Mover el mapa. </translation>
     </message>
     <message>
         <location filename="../src/gui/print_tool.cpp" line="350"></location>
@@ -5885,7 +5885,7 @@ de color</translation>
         <location filename="../src/tool_rotate.cpp" line="190"></location>
         <location filename="../src/tool_rotate.cpp" line="194"></location>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set the center of rotation. </source>
-        <translation>&lt;b&gt;Clic&lt;/b&gt;: Configurar el centro de rotación.</translation>
+        <translation>&lt;b&gt;Clic&lt;/b&gt;: Configurar el centro de rotación. </translation>
     </message>
     <message>
         <location filename="../src/tool_rotate.cpp" line="195"></location>
@@ -5988,12 +5988,12 @@ de color</translation>
         <location filename="../src/tool_scale.cpp" line="202"></location>
         <location filename="../src/tool_scale.cpp" line="204"></location>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set the scaling center. </source>
-        <translation>&lt;b&gt;Clic&lt;/b&gt;: Establecer el centro de escalado.</translation>
+        <translation>&lt;b&gt;Clic&lt;/b&gt;: Establecer el centro de escalado. </translation>
     </message>
     <message>
         <location filename="../src/tool_scale.cpp" line="205"></location>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Scale the selected objects. </source>
-        <translation>&lt;b&gt;Arrastrar&lt;/b&gt;: Escalar los objetos seleccionados.</translation>
+        <translation>&lt;b&gt;Arrastrar&lt;/b&gt;: Escalar los objetos seleccionados. </translation>
     </message>
 </context>
 <context>
@@ -6486,12 +6486,12 @@ para saltar sobre el perro perezoso
     <message>
         <location filename="../src/template_adjust.cpp" line="572"></location>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set the template position of the pass point. </source>
-        <translation>&lt;b&gt;Clic&lt;/b&gt;: Establecer la posición del punto de ajuste en la plantilla.</translation>
+        <translation>&lt;b&gt;Clic&lt;/b&gt;: Establecer la posición del punto de ajuste en la plantilla. </translation>
     </message>
     <message>
         <location filename="../src/template_adjust.cpp" line="597"></location>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set the map position of the pass point. </source>
-        <translation>&lt;b&gt;Clic&lt;/b&gt;: Establecer la posición del punto de ajuste en el mapa.</translation>
+        <translation>&lt;b&gt;Clic&lt;/b&gt;: Establecer la posición del punto de ajuste en el mapa. </translation>
     </message>
 </context>
 <context>
@@ -6499,7 +6499,7 @@ para saltar sobre el perro perezoso
     <message>
         <location filename="../src/template_adjust.cpp" line="806"></location>
         <source>&lt;b&gt;Click&lt;/b&gt;: Delete pass points. </source>
-        <translation>&lt;b&gt;Clic&lt;/b&gt;: Borrar puntos de ajuste.</translation>
+        <translation>&lt;b&gt;Clic&lt;/b&gt;: Borrar puntos de ajuste. </translation>
     </message>
 </context>
 <context>
@@ -6507,7 +6507,7 @@ para saltar sobre el perro perezoso
     <message>
         <location filename="../src/template_adjust.cpp" line="681"></location>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move pass points. </source>
-        <translation>&lt;b&gt;Arrastrar&lt;/b&gt;: Mover puntos de ajuste.</translation>
+        <translation>&lt;b&gt;Arrastrar&lt;/b&gt;: Mover puntos de ajuste. </translation>
     </message>
 </context>
 <context>
