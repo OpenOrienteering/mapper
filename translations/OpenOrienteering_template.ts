@@ -6643,10 +6643,6 @@ Please choose a different file name.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Zenkaku</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Print Screen</source>
         <translation type="unfinished"></translation>
     </message>

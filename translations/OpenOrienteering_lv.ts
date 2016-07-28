@@ -7256,10 +7256,6 @@ Izvēlies citu datnes nosaukumu.</translation>
         <translation>Rīki</translation>
     </message>
     <message>
-        <source>Zenkaku</source>
-        <translation>Zenkaku</translation>
-    </message>
-    <message>
         <source>Print Screen</source>
         <translation>Ekrānšāviņš</translation>
     </message>

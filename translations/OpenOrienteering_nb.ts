@@ -7060,10 +7060,6 @@ Velg et annet navn.</translation>
         <translation>Verktøy</translation>
     </message>
     <message>
-        <source>Zenkaku</source>
-        <translation>Zenkaku</translation>
-    </message>
-    <message>
         <source>Print Screen</source>
         <translation>Print Screen</translation>
     </message>

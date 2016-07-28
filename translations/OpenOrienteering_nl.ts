@@ -7058,10 +7058,6 @@ Kies een andere bestandsnaam.</translation>
         <translation>Gereedschappen</translation>
     </message>
     <message>
-        <source>Zenkaku</source>
-        <translation>Extra brede letters</translation>
-    </message>
-    <message>
         <source>Print Screen</source>
         <translation>Schermafdruk</translation>
     </message>
