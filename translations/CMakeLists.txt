@@ -39,6 +39,7 @@ set(Mapper_TRANS
  OpenOrienteering_ru.ts
  OpenOrienteering_sv.ts
  OpenOrienteering_uk.ts
+ OpenOrienteering_zh_CN.ts
  CACHE INTERNAL "Translation files"
 )
 qt5_add_translation(Mapper_QM ${Mapper_TRANS})
