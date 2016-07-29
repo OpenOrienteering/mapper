@@ -161,7 +161,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <symbol type="8" id="3" code="703" name="Control number">
             <description>The number of the control is placed close to the control point circle in such a way that it does not obscure important detail. The numbers are orientated to north.</description>
             <text_symbol icon_text="5">
-                <font family="Nimbus Sans L" size="5500"/>
+                <font family="Arial" size="5500"/>
                 <text color="0" line_spacing="1" paragraph_spacing="0" character_spacing="0" kerning="true"/>
                 <framing color="2" mode="1" line_half_width="100" shadow_x_offset="200" shadow_y_offset="200"/>
             </text_symbol>
@@ -897,14 +897,14 @@ Map symbol: ISOM 701</description>
 
 Map symbol: ISOM 703</description>
             <text_symbol icon_text="1">
-                <font family="Nimbus Sans L" size="4000" bold="true"/>
+                <font family="Arial" size="4000" bold="true"/>
                 <text color="1" line_spacing="1" paragraph_spacing="0" character_spacing="0" kerning="true"/>
             </text_symbol>
         </symbol>
         <symbol type="8" id="24" code="99.7" name="|B| Control code">
             <description>The control code should be a number greater than 30.</description>
             <text_symbol icon_text="31">
-                <font family="Nimbus Sans L" size="3500"/>
+                <font family="Arial" size="3500"/>
                 <text color="1" line_spacing="1" paragraph_spacing="0" character_spacing="0" kerning="true"/>
             </text_symbol>
         </symbol>
@@ -6586,14 +6586,14 @@ The default line shows a box of 5 mm by 5mm and can be removed from the final sy
         <symbol type="8" id="118" code="9.1" name="|F| Height or Depth">
             <description>Height or Depth of the feature in metres; e.g. 2.6</description>
             <text_symbol icon_text="2.5">
-                <font family="Nimbus Sans L" size="2800"/>
+                <font family="Arial" size="2600"/>
                 <text color="1" line_spacing="1" paragraph_spacing="0" character_spacing="0" kerning="true"/>
             </text_symbol>
         </symbol>
         <symbol type="8" id="119" code="9.2" name="|F| Size">
             <description>Horizontal dimensions of the feature in metres; e.g. 8 x 4</description>
             <text_symbol icon_text="8x4">
-                <font family="Nimbus Sans L" size="2800"/>
+                <font family="Arial" size="2600"/>
                 <text color="1" line_spacing="1" paragraph_spacing="0" character_spacing="0" kerning="true"/>
             </text_symbol>
         </symbol>
@@ -6630,7 +6630,7 @@ Use the slash symbol 9.3 for separating the numbers; e.g.
 2.0
 3.0</description>
             <text_symbol icon_text="12">
-                <font family="Nimbus Sans L" size="2200"/>
+                <font family="Arial" size="2100"/>
                 <text color="1" line_spacing="1" paragraph_spacing="0" character_spacing="0" kerning="true"/>
             </text_symbol>
         </symbol>
@@ -10087,7 +10087,7 @@ The orientation of the symbol indicates the direction in which the corner points
         <symbol type="8" id="207" code="13.0" name="Length of special route">
             <description>This is used with the special instruction (13.x) to give the distance from the last control to the end of the route (control, map exchange, or finish).</description>
             <text_symbol icon_text="80m">
-                <font family="Nimbus Sans L" size="3500"/>
+                <font family="Arial" size="3500"/>
                 <text color="1" line_spacing="1" paragraph_spacing="0" character_spacing="0" kerning="true"/>
             </text_symbol>
         </symbol>
