@@ -12,7 +12,7 @@ courses and control desriptions. It contains the overprinting symbols from the
 ISOM 2000 and the control descriptions from IOF's "International Specification
 for Control Descriptions - 2004". See the [IOF Homepage] for details.
 
-![ ](images/course_design.jpg)
+![ ](images/course_design.png)
 
 
 Loading a base map
