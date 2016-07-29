@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map xmlns="http://openorienteering.org/apps/mapper/xml/v2" version="5">
     <notes></notes>
-    <georeferencing scale="15000">
+    <georeferencing scale="10000">
         <projected_crs id="Local"/>
     </georeferencing>
     <colors count="6">
@@ -10094,345 +10094,204 @@ The orientation of the symbol indicates the direction in which the corner points
     </symbols>
     <parts count="1" current="0">
         <part name="default part">
-            <objects count="84">
+            <objects count="41">
                 <object type="0" symbol="16">
                     <coords count="1">
-                        <coord x="0" y="0"/>
-                    </coords>
-                </object>
-                <object type="4" symbol="24" rotation="0" h_align="1" v_align="2">
-                    <coords count="1">
-                        <coord x="-15000" y="24000"/>
-                    </coords>
-                    <text>101</text>
-                </object>
-                <object type="4" symbol="23" rotation="0" h_align="1" v_align="2">
-                    <coords count="1">
-                        <coord x="0" y="0"/>
-                    </coords>
-                    <text>IOF Event Example</text>
-                </object>
-                <object type="4" symbol="23" rotation="0" h_align="1" v_align="2">
-                    <coords count="1">
-                        <coord x="-21000" y="24000"/>
-                    </coords>
-                    <text>1</text>
-                </object>
-                <object type="4" symbol="24" rotation="0" h_align="1" v_align="2">
-                    <coords count="1">
-                        <coord x="-15000" y="30000"/>
-                    </coords>
-                    <text>212</text>
-                </object>
-                <object type="4" symbol="24" rotation="0" h_align="1" v_align="2">
-                    <coords count="1">
-                        <coord x="-15000" y="36000"/>
-                    </coords>
-                    <text>135</text>
-                </object>
-                <object type="0" symbol="20">
-                    <coords count="1">
-                        <coord x="0" y="18000"/>
+                        <coord x="30000" y="-24000"/>
                     </coords>
                 </object>
                 <object type="0" symbol="123">
                     <coords count="1">
-                        <coord x="9000" y="18000"/>
+                        <coord x="39000" y="-6000"/>
                     </coords>
                 </object>
-                <object type="4" symbol="23" rotation="0" h_align="1" v_align="2">
+                <object type="4" symbol="24" rotation="0" h_align="1" v_align="2">
                     <coords count="1">
-                        <coord x="-21000" y="30000"/>
+                        <coord x="15000" y="0"/>
                     </coords>
-                    <text>2</text>
+                    <text>101</text>
                 </object>
-                <object type="4" symbol="23" rotation="0" h_align="1" v_align="2">
+                <object type="0" symbol="80">
                     <coords count="1">
-                        <coord x="-21000" y="36000"/>
+                        <coord x="27000" y="12000"/>
                     </coords>
-                    <text>3</text>
                 </object>
                 <object type="0" symbol="20">
                     <coords count="1">
-                        <coord x="0" y="78000"/>
-                    </coords>
-                </object>
-                <object type="0" symbol="55">
-                    <coords count="1">
-                        <coord x="-3000" y="30000"/>
+                        <coord x="30000" y="-6000"/>
                     </coords>
                 </object>
                 <object type="4" symbol="23" rotation="0" h_align="1" v_align="2">
                     <coords count="1">
-                        <coord x="-21000" y="42000"/>
+                        <coord x="9000" y="12000"/>
+                    </coords>
+                    <text>3</text>
+                </object>
+                <object type="4" symbol="23" rotation="0" h_align="1" v_align="2">
+                    <coords count="1">
+                        <coord x="9000" y="18000"/>
                     </coords>
                     <text>4</text>
                 </object>
                 <object type="4" symbol="23" rotation="0" h_align="1" v_align="2">
                     <coords count="1">
-                        <coord x="-21000" y="48000"/>
-                    </coords>
-                    <text>5</text>
-                </object>
-                <object type="4" symbol="23" rotation="0" h_align="1" v_align="2">
-                    <coords count="1">
-                        <coord x="-21000" y="60000"/>
-                    </coords>
-                    <text>6</text>
-                </object>
-                <object type="4" symbol="23" rotation="0" h_align="1" v_align="2">
-                    <coords count="1">
-                        <coord x="-21000" y="66000"/>
-                    </coords>
-                    <text>7</text>
-                </object>
-                <object type="4" symbol="23" rotation="0" h_align="1" v_align="2">
-                    <coords count="1">
-                        <coord x="-21000" y="72000"/>
-                    </coords>
-                    <text>8</text>
-                </object>
-                <object type="4" symbol="23" rotation="0" h_align="1" v_align="2">
-                    <coords count="1">
-                        <coord x="-21000" y="78000"/>
-                    </coords>
-                    <text>9</text>
-                </object>
-                <object type="4" symbol="24" rotation="0" h_align="1" v_align="2">
-                    <coords count="1">
-                        <coord x="-15000" y="42000"/>
-                    </coords>
-                    <text>246</text>
-                </object>
-                <object type="4" symbol="24" rotation="0" h_align="1" v_align="2">
-                    <coords count="1">
-                        <coord x="-15000" y="48000"/>
-                    </coords>
-                    <text>164</text>
-                </object>
-                <object type="4" symbol="24" rotation="0" h_align="1" v_align="2">
-                    <coords count="1">
-                        <coord x="-15000" y="60000"/>
-                    </coords>
-                    <text>185</text>
-                </object>
-                <object type="4" symbol="24" rotation="0" h_align="1" v_align="2">
-                    <coords count="1">
-                        <coord x="-15000" y="66000"/>
-                    </coords>
-                    <text>178</text>
-                </object>
-                <object type="4" symbol="24" rotation="0" h_align="1" v_align="2">
-                    <coords count="1">
-                        <coord x="-15000" y="72000"/>
-                    </coords>
-                    <text>147</text>
-                </object>
-                <object type="4" symbol="24" rotation="0" h_align="1" v_align="2">
-                    <coords count="1">
-                        <coord x="-15000" y="78000"/>
-                    </coords>
-                    <text>149</text>
-                </object>
-                <object type="0" symbol="33">
-                    <coords count="1">
-                        <coord x="-9000" y="72000"/>
-                    </coords>
-                </object>
-                <object type="0" symbol="52">
-                    <coords count="1">
-                        <coord x="-3000" y="72000"/>
-                    </coords>
-                </object>
-                <object type="0" symbol="122">
-                    <coords count="1">
-                        <coord x="9000" y="78000"/>
-                    </coords>
-                </object>
-                <object type="0" symbol="130">
-                    <coords count="1">
-                        <coord x="15000" y="48000"/>
-                    </coords>
-                </object>
-                <object type="0" symbol="142">
-                    <coords count="1">
-                        <coord x="15000" y="42000"/>
-                    </coords>
-                </object>
-                <object type="0" symbol="126">
-                    <coords count="1">
-                        <coord x="15000" y="30000"/>
-                    </coords>
-                </object>
-                <object type="0" symbol="66">
-                    <coords count="1">
-                        <coord x="-3000" y="24000"/>
-                    </coords>
-                </object>
-                <object type="0" symbol="47">
-                    <coords count="1">
-                        <coord x="-3000" y="42000"/>
-                    </coords>
-                </object>
-                <object type="0" symbol="22">
-                    <coords count="1">
-                        <coord x="-21000" y="18000"/>
-                    </coords>
-                </object>
-                <object type="0" symbol="83">
-                    <coords count="1">
-                        <coord x="3000" y="78000"/>
-                    </coords>
-                </object>
-                <object type="0" symbol="83">
-                    <coords count="1">
-                        <coord x="-3000" y="78000"/>
-                    </coords>
-                </object>
-                <object type="0" symbol="82">
-                    <coords count="1">
-                        <coord x="-3000" y="18000"/>
-                    </coords>
-                </object>
-                <object type="0" symbol="89">
-                    <coords count="1">
-                        <coord x="3000" y="18000"/>
-                    </coords>
-                </object>
-                <object type="0" symbol="94">
-                    <coords count="1">
-                        <coord x="-3000" y="48000"/>
-                    </coords>
-                </object>
-                <object type="0" symbol="19">
-                    <coords count="1">
-                        <coord x="0" y="12000"/>
-                    </coords>
-                </object>
-                <object type="0" symbol="16">
-                    <coords count="1">
-                        <coord x="0" y="6000"/>
-                    </coords>
-                </object>
-                <object type="4" symbol="23" rotation="0" h_align="1" v_align="2">
-                    <coords count="1">
-                        <coord x="0" y="6000"/>
+                        <coord x="29998" y="-17974"/>
                     </coords>
                     <text>M45, M50, W21</text>
                 </object>
                 <object type="4" symbol="23" rotation="0" h_align="1" v_align="2">
                     <coords count="1">
-                        <coord x="-15000" y="12000"/>
+                        <coord x="15000" y="-12000"/>
                     </coords>
-                    <text>5</text>
+                    <text>4</text>
+                </object>
+                <object type="0" symbol="22">
+                    <coords count="1">
+                        <coord x="9000" y="-6000"/>
+                    </coords>
+                </object>
+                <object type="0" symbol="82">
+                    <coords count="1">
+                        <coord x="27000" y="-6000"/>
+                    </coords>
+                </object>
+                <object type="0" symbol="48">
+                    <coords count="1">
+                        <coord x="27000" y="0"/>
+                    </coords>
                 </object>
                 <object type="4" symbol="23" rotation="0" h_align="1" v_align="2">
                     <coords count="1">
-                        <coord x="3000" y="12000"/>
+                        <coord x="33000" y="-12000"/>
                     </coords>
-                    <text>7.6 km</text>
+                    <text>1.1 km</text>
+                </object>
+                <object type="0" symbol="20">
+                    <coords count="1">
+                        <coord x="30000" y="6000"/>
+                    </coords>
+                </object>
+                <object type="0" symbol="83">
+                    <coords count="1">
+                        <coord x="27000" y="18000"/>
+                    </coords>
+                </object>
+                <object type="0" symbol="83">
+                    <coords count="1">
+                        <coord x="33000" y="-6000"/>
+                    </coords>
+                </object>
+                <object type="0" symbol="161">
+                    <coords count="1">
+                        <coord x="45000" y="6000"/>
+                    </coords>
+                </object>
+                <object type="0" symbol="19">
+                    <coords count="1">
+                        <coord x="30000" y="-12000"/>
+                    </coords>
+                </object>
+                <object type="0" symbol="116">
+                    <coords count="1">
+                        <coord x="33000" y="12000"/>
+                    </coords>
+                </object>
+                <object type="4" symbol="24" rotation="0" h_align="1" v_align="2">
+                    <coords count="1">
+                        <coord x="15000" y="18000"/>
+                    </coords>
+                    <text>100</text>
+                </object>
+                <object type="0" symbol="199">
+                    <coords count="1">
+                        <coord x="29998" y="24026"/>
+                    </coords>
+                </object>
+                <object type="0" symbol="20">
+                    <coords count="1">
+                        <coord x="30000" y="12000"/>
+                    </coords>
+                </object>
+                <object type="0" symbol="90">
+                    <coords count="1">
+                        <coord x="27000" y="6000"/>
+                    </coords>
                 </object>
                 <object type="4" symbol="23" rotation="0" h_align="1" v_align="2">
                     <coords count="1">
-                        <coord x="18000" y="12000"/>
+                        <coord x="48000" y="-12000"/>
                     </coords>
-                    <text>210 m</text>
+                    <text>15 m</text>
                 </object>
-                <object type="4" symbol="118" rotation="0" h_align="1" v_align="2">
+                <object type="4" symbol="24" rotation="0" h_align="1" v_align="2">
                     <coords count="1">
-                        <coord x="9000" y="30000"/>
+                        <coord x="15000" y="6000"/>
                     </coords>
-                    <text>1.0</text>
+                    <text>212</text>
                 </object>
-                <object type="0" symbol="32">
+                <object type="4" symbol="24" rotation="0" h_align="1" v_align="2">
                     <coords count="1">
-                        <coord x="-9000" y="30000"/>
+                        <coord x="15000" y="12000"/>
                     </coords>
+                    <text>135</text>
                 </object>
-                <object type="0" symbol="27">
+                <object type="4" symbol="23" rotation="0" h_align="1" v_align="2">
                     <coords count="1">
-                        <coord x="-9000" y="48000"/>
+                        <coord x="30000" y="-24000"/>
                     </coords>
+                    <text>OpenOrienteering</text>
                 </object>
-                <object type="0" symbol="35">
+                <object type="0" symbol="123">
                     <coords count="1">
-                        <coord x="-9000" y="42000"/>
-                    </coords>
-                </object>
-                <object type="0" symbol="76">
-                    <coords count="1">
-                        <coord x="-3000" y="36000"/>
+                        <coord x="39000" y="18000"/>
                     </coords>
                 </object>
-                <object type="0" symbol="76">
+                <object type="4" symbol="23" rotation="0" h_align="1" v_align="2">
                     <coords count="1">
-                        <coord x="3000" y="36000"/>
+                        <coord x="9000" y="0"/>
                     </coords>
+                    <text>1</text>
                 </object>
-                <object type="0" symbol="194">
+                <object type="0" symbol="20">
                     <coords count="1">
-                        <coord x="15000" y="36000"/>
-                    </coords>
-                </object>
-                <object type="0" symbol="172">
-                    <coords count="1">
-                        <coord x="15000" y="24000"/>
-                    </coords>
-                </object>
-                <object type="0" symbol="159">
-                    <coords count="1">
-                        <coord x="15000" y="60000"/>
-                    </coords>
-                </object>
-                <object type="0" symbol="89">
-                    <coords count="1">
-                        <coord x="-3000" y="60000"/>
-                    </coords>
-                </object>
-                <object type="0" symbol="117">
-                    <coords count="1">
-                        <coord x="3000" y="60000"/>
-                    </coords>
-                </object>
-                <object type="0" symbol="193">
-                    <coords count="1">
-                        <coord x="15000" y="66000"/>
-                    </coords>
-                </object>
-                <object type="0" symbol="37">
-                    <coords count="1">
-                        <coord x="-3000" y="66000"/>
+                        <coord x="30000" y="0"/>
                     </coords>
                 </object>
                 <object type="4" symbol="207" rotation="0" h_align="1" v_align="2">
                     <coords count="1">
-                        <coord x="0" y="84000"/>
+                        <coord x="30000" y="24000"/>
                     </coords>
-                    <text>250 m</text>
+                    <text>120 m</text>
                 </object>
-                <object type="0" symbol="204">
+                <object type="0" symbol="20">
                     <coords count="1">
-                        <coord x="0" y="84000"/>
+                        <coord x="30000" y="18000"/>
                     </coords>
                 </object>
-                <object type="0" symbol="199">
+                <object type="0" symbol="20">
                     <coords count="1">
-                        <coord x="0" y="54000"/>
+                        <coord x="30000" y="24000"/>
+                    </coords>
+                </object>
+                <object type="4" symbol="23" rotation="0" h_align="1" v_align="2">
+                    <coords count="1">
+                        <coord x="9000" y="6000"/>
+                    </coords>
+                    <text>2</text>
+                </object>
+                <object type="0" symbol="16">
+                    <coords count="1">
+                        <coord x="30000" y="-18000"/>
                     </coords>
                 </object>
                 <object type="1" symbol="0">
-                    <coords count="11">
-                        <coord x="-69000" y="6000" flags="32"/>
-                        <coord x="-54000" y="9000" flags="32"/>
-                        <coord x="-42000" y="21000" flags="32"/>
-                        <coord x="-39000" y="36000" flags="32"/>
-                        <coord x="-42269" y="51201" flags="32"/>
-                        <coord x="-54000" y="63000" flags="32"/>
-                        <coord x="-69000" y="66000" flags="32"/>
-                        <coord x="-84000" y="63000" flags="32"/>
-                        <coord x="-96000" y="51000" flags="32"/>
-                        <coord x="-99000" y="36000" flags="32"/>
-                        <coord x="-96000" y="21000" flags="32"/>
+                    <coords count="6">
+                        <coord x="-57392" y="-13511" flags="32"/>
+                        <coord x="-57647" y="5052" flags="32"/>
+                        <coord x="-44209" y="20132" flags="32"/>
+                        <coord x="-35692" y="-484" flags="32"/>
+                        <coord x="-28018" y="8471" flags="32"/>
+                        <coord x="-20938" y="9677" flags="32"/>
                     </coords>
                     <pattern rotation="0">
                         <coord x="0" y="0"/>
@@ -10440,145 +10299,75 @@ The orientation of the symbol indicates the direction in which the corner points
                 </object>
                 <object type="4" symbol="3" rotation="0" h_align="1" v_align="2">
                     <coords count="1">
-                        <coord x="-48000" y="6000"/>
+                        <coord x="-51250" y="4156"/>
                     </coords>
                     <text>1</text>
                 </object>
+                <object type="0" symbol="83">
+                    <coords count="1">
+                        <coord x="33000" y="18000"/>
+                    </coords>
+                </object>
                 <object type="4" symbol="3" rotation="0" h_align="1" v_align="2">
                     <coords count="1">
-                        <coord x="-36000" y="18000"/>
+                        <coord x="-39000" y="17029"/>
                     </coords>
                     <text>2</text>
                 </object>
                 <object type="4" symbol="3" rotation="0" h_align="1" v_align="2">
                     <coords count="1">
-                        <coord x="-33000" y="33000"/>
+                        <coord x="-30327" y="-4633"/>
                     </coords>
                     <text>3</text>
                 </object>
                 <object type="4" symbol="3" rotation="0" h_align="1" v_align="2">
                     <coords count="1">
-                        <coord x="-36000" y="54000"/>
+                        <coord x="-29960" y="13062"/>
                     </coords>
                     <text>4</text>
-                </object>
-                <object type="4" symbol="3" rotation="0" h_align="1" v_align="2">
-                    <coords count="1">
-                        <coord x="-48000" y="63000"/>
-                    </coords>
-                    <text>5</text>
-                </object>
-                <object type="4" symbol="3" rotation="0" h_align="1" v_align="2">
-                    <coords count="1">
-                        <coord x="-69000" y="72000"/>
-                    </coords>
-                    <text>6</text>
-                </object>
-                <object type="4" symbol="3" rotation="0" h_align="1" v_align="2">
-                    <coords count="1">
-                        <coord x="-84000" y="69000"/>
-                    </coords>
-                    <text>7</text>
-                </object>
-                <object type="4" symbol="3" rotation="0" h_align="1" v_align="2">
-                    <coords count="1">
-                        <coord x="-102000" y="51000"/>
-                    </coords>
-                    <text>8</text>
-                </object>
-                <object type="4" symbol="3" rotation="0" h_align="1" v_align="2">
-                    <coords count="1">
-                        <coord x="-105000" y="36000"/>
-                    </coords>
-                    <text>9</text>
-                </object>
-                <object type="0" symbol="20">
-                    <coords count="1">
-                        <coord x="0" y="72000"/>
-                    </coords>
-                </object>
-                <object type="0" symbol="20">
-                    <coords count="1">
-                        <coord x="0" y="66000"/>
-                    </coords>
-                </object>
-                <object type="0" symbol="20">
-                    <coords count="1">
-                        <coord x="0" y="60000"/>
-                    </coords>
-                </object>
-                <object type="4" symbol="119" rotation="0" h_align="1" v_align="2">
-                    <coords count="1">
-                        <coord x="9000" y="66000"/>
-                    </coords>
-                    <text>8 x 4</text>
-                </object>
-                <object type="0" symbol="20">
-                    <coords count="1">
-                        <coord x="0" y="24000"/>
-                    </coords>
-                </object>
-                <object type="0" symbol="20">
-                    <coords count="1">
-                        <coord x="0" y="30000"/>
-                    </coords>
-                </object>
-                <object type="0" symbol="20">
-                    <coords count="1">
-                        <coord x="0" y="36000"/>
-                    </coords>
-                </object>
-                <object type="0" symbol="20">
-                    <coords count="1">
-                        <coord x="0" y="42000"/>
-                    </coords>
-                </object>
-                <object type="0" symbol="20">
-                    <coords count="1">
-                        <coord x="0" y="48000"/>
-                    </coords>
-                </object>
-                <object type="4" symbol="207" rotation="0" h_align="1" v_align="2">
-                    <coords count="1">
-                        <coord x="0" y="54000"/>
-                    </coords>
-                    <text>120 m</text>
-                </object>
-                <object type="4" symbol="121" rotation="0" h_align="1" v_align="2">
-                    <coords count="2">
-                        <coord x="7500" y="70500"/>
-                        <coord x="3000" y="3000"/>
-                    </coords>
-                    <text>0.5</text>
-                </object>
-                <object type="4" symbol="121" rotation="0" h_align="1" v_align="2">
-                    <coords count="2">
-                        <coord x="10500" y="73500"/>
-                        <coord x="3000" y="3000"/>
-                    </coords>
-                    <text>2.0</text>
-                </object>
-                <object type="0" symbol="120">
-                    <coords count="1">
-                        <coord x="9000" y="72000"/>
-                    </coords>
-                </object>
-                <object type="0" symbol="20">
-                    <coords count="1">
-                        <coord x="0" y="54000"/>
-                    </coords>
                 </object>
             </objects>
         </part>
     </parts>
-    <templates count="0" first_front_template="0">
+    <templates count="1" first_front_template="1">
+        <template open="true" name="forest sample.omap" path="/home/kpa/Projekte/OpenOrienteering/OpenOrienteering/examples/forest sample.omap" relpath="../../examples/forest sample.omap">
+            <transformations adjustment_dirty="true" passpoints="0">
+                <transformation role="active" x="-131449" y="-52124" scale_x="1" scale_y="1" rotation="0"/>
+                <transformation role="other" x="0" y="0" scale_x="1" scale_y="1" rotation="0"/>
+                <matrix role="map_to_template" n="3" m="3">
+                    <element value="1"/>
+                    <element value="0"/>
+                    <element value="131.449"/>
+                    <element value="0"/>
+                    <element value="1"/>
+                    <element value="52.124"/>
+                    <element value="0"/>
+                    <element value="0"/>
+                    <element value="1"/>
+                </matrix>
+                <matrix role="template_to_map" n="3" m="3">
+                    <element value="1"/>
+                    <element value="0"/>
+                    <element value="-131.449"/>
+                    <element value="0"/>
+                    <element value="1"/>
+                    <element value="-52.124"/>
+                    <element value="0"/>
+                    <element value="0"/>
+                    <element value="1"/>
+                </matrix>
+                <matrix role="template_to_map_other" n="0" m="0"/>
+            </transformations>
+        </template>
         <defaults use_meters_per_pixel="true" meters_per_pixel="100" dpi="0" scale="0"/>
     </templates>
     <view>
         <grid color="#c0c0c0" display="0" alignment="0" additional_rotation="0" unit="0" h_spacing="3" v_spacing="3" h_offset="0" v_offset="0" snapping_enabled="true"/>
-        <map_view zoom="1.5" rotation="0" position_x="-22212" position_y="52244" grid="true">
+        <map_view zoom="1.01678" rotation="0" position_x="-8114" position_y="13" grid="true">
             <map opacity="1" visible="true"/>
-            <templates count="0"/>
+            <templates count="1">
+                <ref template="0" visible="true" opacity="1"/>
+            </templates>
         </map_view>
     </view>
     <barrier version="6" required="0.6.0">

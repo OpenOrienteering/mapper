@@ -125,10 +125,10 @@ void SymbolSetTool::processSymbolSet_data()
 	QTest::newRow("ISSkiOM 1:10000") << QString::fromLatin1("ISSkiOM") << 15000u << 10000u;
 	QTest::newRow("ISSkiOM 1:5000")  << QString::fromLatin1("ISSkiOM") << 15000u <<  5000u;
 	
-	QTest::newRow("Course Design 1:15000") << QString::fromLatin1("Course_Design") << 15000u << 15000u;
-	QTest::newRow("Course Design 1:10000") << QString::fromLatin1("Course_Design") << 15000u << 10000u;
-	QTest::newRow("Course Design 1:5000")  << QString::fromLatin1("Course_Design") << 15000u <<  5000u;
-	QTest::newRow("Course Design 1:4000")  << QString::fromLatin1("Course_Design") << 15000u <<  4000u;
+	QTest::newRow("Course Design 1:15000") << QString::fromLatin1("Course_Design") << 10000u << 15000u;
+	QTest::newRow("Course Design 1:10000") << QString::fromLatin1("Course_Design") << 10000u << 10000u;
+	QTest::newRow("Course Design 1:5000")  << QString::fromLatin1("Course_Design") << 10000u <<  5000u;
+	QTest::newRow("Course Design 1:4000")  << QString::fromLatin1("Course_Design") << 10000u <<  4000u;
 }
 
 void SymbolSetTool::processSymbolSet()
@@ -145,6 +145,8 @@ void SymbolSetTool::processSymbolSet()
 	Map map;
 	MapView view{ &map };
 	map.loadFrom(source_path, nullptr, &view, false, false);
+	QCOMPARE(map.getScaleDenominator(), source_scale);
+	QCOMPARE(map.getNumClosedTemplates(), 0);
 	
 	map.resetPrinterConfig();
 	map.undoManager().clear();
@@ -308,8 +310,17 @@ void SymbolSetTool::processSymbolSet()
 	MapView* new_view = nullptr;
 	if (name.startsWith(QLatin1String("Course_Design")))
 	{
+		QCOMPARE(map.getNumTemplates(), 1);
 		new_view = new MapView { &map };
-		new_view->setGridVisible(view.isGridVisible());
+		new_view->setGridVisible(true);
+		if (target_scale == 10000)
+			new_view->setTemplateVisibility(map.getTemplate(0), { 1, true });
+		else
+			map.deleteTemplate(0);
+	}
+	else
+	{
+		QCOMPARE(map.getNumTemplates(), 0);
 	}
 	
 	QString target_filename = QString::fromLatin1("%2/%1_%2.omap").arg(name, QString::number(target_scale));

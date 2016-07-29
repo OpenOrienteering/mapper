@@ -6677,7 +6677,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     </symbols>
     <parts count="1" current="0">
         <part name="OCAD-Import-Ebene">
-            <objects count="543">
+            <objects count="539">
                 <object type="1" symbol="0">
                     <coords count="67">
                         <coord x="69180" y="53168" flags="1"/>
@@ -20477,36 +20477,6 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                     <pattern rotation="0">
                         <coord x="0" y="0"/>
                     </pattern>
-                </object>
-                <object type="1" symbol="155">
-                    <coords count="5">
-                        <coord x="73898" y="39547"/>
-                        <coord x="73831" y="57316" flags="32"/>
-                        <coord x="86485" y="68962" flags="32"/>
-                        <coord x="95909" y="51662" flags="32"/>
-                        <coord x="107957" y="61624"/>
-                    </coords>
-                    <pattern rotation="0">
-                        <coord x="0" y="0"/>
-                    </pattern>
-                </object>
-                <object type="4" symbol="142" rotation="0" h_align="1" v_align="2">
-                    <coords count="1">
-                        <coord x="66336" y="59806"/>
-                    </coords>
-                    <text>1</text>
-                </object>
-                <object type="4" symbol="142" rotation="0" h_align="1" v_align="2">
-                    <coords count="1">
-                        <coord x="94054" y="71555"/>
-                    </coords>
-                    <text>2</text>
-                </object>
-                <object type="4" symbol="142" rotation="0" h_align="1" v_align="2">
-                    <coords count="1">
-                        <coord x="103860" y="48507"/>
-                    </coords>
-                    <text>3</text>
                 </object>
             </objects>
         </part>
