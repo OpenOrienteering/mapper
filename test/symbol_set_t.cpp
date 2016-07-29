@@ -335,7 +335,6 @@ void SymbolSetTool::processExamples_data()
 	QTest::newRow("complete map")  << QString::fromLatin1("complete map");
 	QTest::newRow("forest sample") << QString::fromLatin1("forest sample");
 	QTest::newRow("overprinting")  << QString::fromLatin1("overprinting");
-	QTest::newRow("sprint sample") << QString::fromLatin1("sprint sample");
 }
 
 void SymbolSetTool::processExamples()
