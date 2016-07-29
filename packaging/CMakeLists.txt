@@ -41,7 +41,7 @@ macro(deploy_qt_translations basename)
 		foreach(arg ${ARGN})
 			string(REPLACE ${basename} ${arg} extra_file ${basename_file})
 			if(EXISTS "${QT_TRANSLATIONS_DIR}/${extra_file}")
-				set(input_files "${input_files} \"${QT_TRANSLATIONS_DIR}/${extra_file}\"")
+				set(input_files "\"${QT_TRANSLATIONS_DIR}/${extra_file}\" ${input_files}")
 			endif()
 		endforeach()
 		list(APPEND install_translations_code
