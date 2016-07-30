@@ -11,7 +11,7 @@ edited: 25 February 2013
 
 <p><b>Attention</b>: as templates are not covered by the undo/redo system, be sure to save your map before making changes to them!</p>
 
-<a name="types"><h4>Types of templates</h4></a>
+<h4 id="types">Types of templates</h4>
 <p>OpenOrienteering Mapper supports the following file formats to be loaded as templates:</p>
 <ul>
 <li><a href="#type_image">Image templates</a>: bmp, jpg, png, tif, gif files</li>
