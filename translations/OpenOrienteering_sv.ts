@@ -12,7 +12,7 @@
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="170"></location>
         <source>&lt;a %1&gt;All about licenses, copyright notices, conditions and disclaimers.&lt;/a&gt;</source>
-        <translation>&lt;a %1&gt;Allt om licenser, upphovsrätt, villkor och friskrivningar&lt;/a&gt;</translation>
+        <translation>&lt;a %1&gt;Allt om licenser, upphovsrätt, villkor och friskrivningar.&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="172"></location>
@@ -37,7 +37,7 @@
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="165"></location>
         <source>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License (GPL), version&amp;nbsp;3, for &lt;a %1&gt;more details&lt;/a&gt;.</source>
-        <translation type="unfinished">This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License (GPL), version&amp;nbsp;3, för &lt;a %1&gt;mer detaljer&lt;/a&gt;.</translation>
+        <translation>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License (GPL), version&amp;nbsp;3, för &lt;a %1&gt;mer detaljer&lt;/a&gt;.</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="174"></location>
@@ -316,7 +316,7 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="71"></location>
         <source>Mixture of spot colors (screens and overprint):</source>
-        <translation type="unfinished">Mix av dekorfärger (skärmar och övertryck):</translation>
+        <translation>Mix av dekorfärger (skärmar och övertryck):</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="86"></location>
@@ -407,7 +407,7 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="216"></location>
         <source>Professional printing</source>
-        <translation type="unfinished">Professionell utskrift</translation>
+        <translation>Professionell utskrift</translation>
     </message>
 </context>
 <context>
@@ -646,7 +646,7 @@
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="121"></location>
         <source>Positioning</source>
-        <translation type="unfinished">Positionering</translation>
+        <translation>Positionering</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="74"></location>
@@ -714,7 +714,7 @@
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="249"></location>
         <source>Origin at: %1</source>
-        <translation type="unfinished">Origo vid: %1</translation>
+        <translation>Origo vid: %1</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="251"></location>
@@ -907,7 +907,7 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
         <location filename="../src/tool_draw_circle.cpp" line="59"></location>
         <source>From center</source>
         <comment>Draw circle starting from center</comment>
-        <translation type="unfinished">Från centrum</translation>
+        <translation>Från centrum</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_circle.cpp" line="294"></location>
