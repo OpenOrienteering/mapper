@@ -20,6 +20,7 @@
 #include "symbol_set_t.h"
 
 #include "../src/core/map_color.h"
+#include "../src/core/map_printer.h"
 #include "../src/core/map_view.h"
 #include "../src/file_format_xml_p.h"
 #include "../src/map.h"
@@ -317,6 +318,12 @@ void SymbolSetTool::processSymbolSet()
 			new_view->setTemplateVisibility(map.getTemplate(0), { 1, true });
 		else
 			map.deleteTemplate(0);
+		
+		auto printer_config = map.printerConfig();
+		printer_config.options.show_templates = true;
+		printer_config.single_page_print_area = true;
+		printer_config.center_print_area = true;
+		map.setPrinterConfig(printer_config);
 	}
 	else
 	{
