@@ -1462,6 +1462,7 @@ void MapEditorController::printClicked(int task)
 		addFloatingDockWidget(print_dock_widget);
 	}
 	
+	print_widget->setActive(true); // Make sure to save the state before setting the task.
 	print_widget->setTask((PrintWidget::TaskFlags)task);
 	print_dock_widget->show();
 	print_dock_widget->raise();
