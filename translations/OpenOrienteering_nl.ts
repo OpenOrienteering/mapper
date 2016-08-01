@@ -6704,7 +6704,7 @@ Kies een andere bestandsnaam.</translation>
     </message>
     <message>
         <source>Print range</source>
-        <translation>Afdruk bereik</translation>
+        <translation>Afdruk gebied</translation>
     </message>
     <message>
         <source>Color Mode</source>
@@ -6716,11 +6716,11 @@ Kies een andere bestandsnaam.</translation>
     </message>
     <message>
         <source>Output Settings</source>
-        <translation>UItvoer instellingen</translation>
+        <translation>Uitvoer instellingen</translation>
     </message>
     <message>
         <source>Reverse</source>
-        <translation type="unfinished">Omkeren</translation>
+        <translation>Omkeren</translation>
     </message>
     <message>
         <source>Grayscale</source>
@@ -6979,7 +6979,7 @@ Kies een andere bestandsnaam.</translation>
     </message>
     <message>
         <source>Home</source>
-        <translation type="unfinished">Huis</translation>
+        <translation>Thuis</translation>
     </message>
     <message>
         <source>Left</source>
@@ -7095,7 +7095,7 @@ Kies een andere bestandsnaam.</translation>
     </message>
     <message>
         <source>Return</source>
-        <translation type="unfinished">Terug</translation>
+        <translation>Thuis</translation>
     </message>
     <message>
         <source>Search</source>
@@ -7162,7 +7162,7 @@ Kies een andere bestandsnaam.</translation>
     <name>QStandardPaths</name>
     <message>
         <source>Home</source>
-        <translation type="unfinished">Huis</translation>
+        <translation>Thuis</translation>
     </message>
     <message>
         <source>Cache</source>
