@@ -95,6 +95,12 @@ int main(int argc, char** argv)
 	QString translation_file = settings.getSetting(Settings::General_TranslationFile).toString();
 	TranslationUtil translation(lang, translation_file);
 	QLocale::setDefault(translation.getLocale());
+#if defined(Q_OS_MAC)
+	// Normally this is done in Settings::apply() because it is too late here.
+	// But Mapper 0.6.2/0.6.3 accidently wrote a string instead of a list. This
+	// error caused crashes when opening native dialogs (i.e. the open-file dialog!).
+	QSettings().setValue(QString::fromLatin1("AppleLanguages"), translation.getLocale().uiLanguages());
+#endif
 #if defined(Mapper_DEBUG_TRANSLATIONS)
 	if (!translation.getAppTranslator().isEmpty())
 	{
