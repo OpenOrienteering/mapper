@@ -6979,7 +6979,7 @@ Kies een andere bestandsnaam.</translation>
     </message>
     <message>
         <source>Home</source>
-        <translation>Thuis</translation>
+        <translation>Home</translation>
     </message>
     <message>
         <source>Left</source>
@@ -7095,7 +7095,7 @@ Kies een andere bestandsnaam.</translation>
     </message>
     <message>
         <source>Return</source>
-        <translation>Thuis</translation>
+        <translation>Return</translation>
     </message>
     <message>
         <source>Search</source>
@@ -7162,7 +7162,7 @@ Kies een andere bestandsnaam.</translation>
     <name>QStandardPaths</name>
     <message>
         <source>Home</source>
-        <translation>Thuis</translation>
+        <translation>Home</translation>
     </message>
     <message>
         <source>Cache</source>
