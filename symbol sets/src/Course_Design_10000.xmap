@@ -48,7 +48,7 @@
             <rgb method="custom" r="0.000" g="0.000" b="0.000"/>
         </color>
     </colors>
-    <symbols count="208">
+    <symbols count="209">
         <symbol type="2" id="0" code="799" name="Simple Orienteering Course">
             <description>This symbol provides a simple and quick way to make training courses.
 
@@ -869,7 +869,28 @@ B: Control code</description>
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="22" code="99.5" name="|A| Start location">
+        <symbol type="1" id="22" code="99.5" name="Thicker horizontal line">
+            <description>A thicker horizontal line should be used after every third description and on either side of any special instruction.
+
+In this symbol set, you need to add this symbol manually after the start location row and after every three consequent rows of 99.3 Description of individual control.</description>
+            <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
+                <element>
+                    <symbol type="2" code="">
+                        <line_symbol color="1" line_width="500" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                    </symbol>
+                    <object type="1">
+                        <coords count="2">
+                            <coord x="-24000" y="0"/>
+                            <coord x="24000" y="0" flags="16"/>
+                        </coords>
+                        <pattern rotation="0">
+                            <coord x="0" y="0"/>
+                        </pattern>
+                    </object>
+                </element>
+            </point_symbol>
+        </symbol>
+        <symbol type="1" id="23" code="99.6" name="|A| Start location">
             <description>Shown in first line of descriptions, using the description as if it were a control feature.
 
 Map symbol: ISOM 701</description>
@@ -892,7 +913,7 @@ Map symbol: ISOM 701</description>
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="8" id="23" code="99.6" name="|A| Control number">
+        <symbol type="8" id="24" code="99.7" name="|A| Control number">
             <description>Numbering of controls is in the sequence they are to be visited, unless the description is for a Score competition.
 
 Map symbol: ISOM 703</description>
@@ -901,14 +922,14 @@ Map symbol: ISOM 703</description>
                 <text color="1" line_spacing="1" paragraph_spacing="0" character_spacing="0" kerning="true"/>
             </text_symbol>
         </symbol>
-        <symbol type="8" id="24" code="99.7" name="|B| Control code">
+        <symbol type="8" id="25" code="99.8" name="|B| Control code">
             <description>The control code should be a number greater than 30.</description>
             <text_symbol icon_text="31">
                 <font family="Arial" size="3500"/>
                 <text color="1" line_spacing="1" paragraph_spacing="0" character_spacing="0" kerning="true"/>
             </text_symbol>
         </symbol>
-        <symbol type="1" id="25" code="0.1.1" name="|C| Northern">
+        <symbol type="1" id="26" code="0.1.1" name="|C| Northern">
             <description>The more northern of two similar features, or the northern-most of several similar features.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                 <element>
@@ -942,7 +963,7 @@ Map symbol: ISOM 703</description>
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="26" code="0.2.1" name="|C| North Eastern">
+        <symbol type="1" id="27" code="0.2.1" name="|C| North Eastern">
             <description>The more northern of two similar features, or the northern-most of several similar features.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                 <element>
@@ -976,7 +997,7 @@ Map symbol: ISOM 703</description>
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="27" code="0.1.2" name="|C| Eastern">
+        <symbol type="1" id="28" code="0.1.2" name="|C| Eastern">
             <description>The more northern of two similar features, or the northern-most of several similar features.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                 <element>
@@ -1010,7 +1031,7 @@ Map symbol: ISOM 703</description>
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="28" code="0.2.2" name="|C| South Eastern">
+        <symbol type="1" id="29" code="0.2.2" name="|C| South Eastern">
             <description>The more south eastern of two similar features, or the south-eastern-most of several similar features.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                 <element>
@@ -1044,7 +1065,7 @@ Map symbol: ISOM 703</description>
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="29" code="0.1.3" name="|C| Southern">
+        <symbol type="1" id="30" code="0.1.3" name="|C| Southern">
             <description>The more northern of two similar features, or the northern-most of several similar features.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                 <element>
@@ -1078,7 +1099,7 @@ Map symbol: ISOM 703</description>
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="30" code="0.2.3" name="|C| South western">
+        <symbol type="1" id="31" code="0.2.3" name="|C| South western">
             <description>The more northern of two similar features, or the northern-most of several similar features.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                 <element>
@@ -1112,7 +1133,7 @@ Map symbol: ISOM 703</description>
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="31" code="0.1.4" name="|C| Western">
+        <symbol type="1" id="32" code="0.1.4" name="|C| Western">
             <description>The more northern of two similar features, or the northern-most of several similar features.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                 <element>
@@ -1146,7 +1167,7 @@ Map symbol: ISOM 703</description>
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="32" code="0.2.4" name="|C| North Western">
+        <symbol type="1" id="33" code="0.2.4" name="|C| North Western">
             <description>The more northern of two similar features, or the northern-most of several similar features.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                 <element>
@@ -1180,7 +1201,7 @@ Map symbol: ISOM 703</description>
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="33" code="0.3" name="|C| Upper">
+        <symbol type="1" id="34" code="0.3" name="|C| Upper">
             <description>Where the control feature is the middle one of a number of similar features.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="3">
                 <element>
@@ -1223,7 +1244,7 @@ Map symbol: ISOM 703</description>
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="34" code="0.4" name="|C| Lower">
+        <symbol type="1" id="35" code="0.4" name="|C| Lower">
             <description>Where the control feature is the middle one of a number of similar features.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="3">
                 <element>
@@ -1266,7 +1287,7 @@ Map symbol: ISOM 703</description>
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="35" code="0.5" name="|C| Middle">
+        <symbol type="1" id="36" code="0.5" name="|C| Middle">
             <description>Where the control feature is the middle one of a number of similar features.</description>
             <point_symbol inner_radius="500" inner_color="1" outer_width="0" outer_color="-1" elements="3">
                 <element>
@@ -1313,7 +1334,7 @@ Map symbol: ISOM 703</description>
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="36" code="1.1" name="|D| Terrace">
+        <symbol type="1" id="37" code="1.1" name="|D| Terrace">
             <description>A level area on a slope.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="3">
                 <element>
@@ -1366,7 +1387,7 @@ Map symbol: ISOM 703</description>
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="37" code="1.2" name="|D| Spur">
+        <symbol type="1" id="38" code="1.2" name="|D| Spur">
             <description>A contour projection or “nose” rising from the surrounding ground.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="3">
                 <element>
@@ -1419,7 +1440,7 @@ Map symbol: ISOM 703</description>
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="38" code="1.3" name="|D| Re-entrant">
+        <symbol type="1" id="39" code="1.3" name="|D| Re-entrant">
             <description>A contour indentation; a valley; the opposite of a spur.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                 <element>
@@ -1456,7 +1477,7 @@ Map symbol: ISOM 703</description>
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="39" code="1.4" name="|D| Earth bank">
+        <symbol type="1" id="40" code="1.4" name="|D| Earth bank">
             <description>An abrupt change in ground level which can clearly be distinguished from its surroundings.
 
 Map symbol: ISOM 106</description>
@@ -1535,7 +1556,7 @@ Map symbol: ISOM 106</description>
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="40" code="1.5" name="|D| Quarry">
+        <symbol type="1" id="41" code="1.5" name="|D| Quarry">
             <description>Gravel, sand or stone working in flat or inclined ground.
 
 Map symbol: ISOM 106</description>
@@ -1630,7 +1651,7 @@ Map symbol: ISOM 106</description>
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="41" code="1.6" name="|D| Earth wall">
+        <symbol type="1" id="42" code="1.6" name="|D| Earth wall">
             <description>A narrow wall of earth projecting above the surrounding terrain; may be partially stone faced, usually man-made. Used with symbol 8.11 to indicate a ruined earth wall.s
 
 Map symbols: ISOM 107, 108</description>
@@ -1707,7 +1728,7 @@ Map symbols: ISOM 107, 108</description>
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="42" code="1.7" name="|D| Erosion gully">
+        <symbol type="1" id="43" code="1.7" name="|D| Erosion gully">
             <description>An erosion gully or trench, normally dry.
 
 Map symbol: ISOM 109</description>
@@ -1729,7 +1750,7 @@ Map symbol: ISOM 109</description>
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="43" code="1.8" name="|D| Small erosion gully">
+        <symbol type="1" id="44" code="1.8" name="|D| Small erosion gully">
             <description>A small erosion gully or trench, normally dry.
 
 Map symbol: ISOM 110</description>
@@ -1804,7 +1825,7 @@ Map symbol: ISOM 110</description>
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="44" code="1.9" name="|D| Hill">
+        <symbol type="1" id="45" code="1.9" name="|D| Hill">
             <description>A high point. Shown on the map with contour lines.
 
 Map symbols: ISOM 101, 111</description>
@@ -1843,13 +1864,13 @@ Map symbols: ISOM 101, 111</description>
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="45" code="1.10" name="|D| Knol">
+        <symbol type="1" id="46" code="1.10" name="|D| Knol">
             <description>A small obvious mound. Used with symbol 8.6 to indicate a rocky knoll.
 
 Map symbols: ISOM 112, 113</description>
             <point_symbol inner_radius="1000" inner_color="1" outer_width="0" outer_color="-1" elements="0"/>
         </symbol>
-        <symbol type="1" id="46" code="1.11" name="|D| Saddle">
+        <symbol type="1" id="47" code="1.11" name="|D| Saddle">
             <description>The low point between two higher points.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                 <element>
@@ -1886,7 +1907,7 @@ Map symbols: ISOM 112, 113</description>
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="47" code="1.12" name="|D| Depression">
+        <symbol type="1" id="48" code="1.12" name="|D| Depression">
             <description>A depression or hollow from which the ground rises on all sides. Shown on the map with contour lines.
 
 Map symbol: ISOM 114</description>
@@ -1953,7 +1974,7 @@ Map symbol: ISOM 114</description>
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="48" code="1.13" name="|D| Small depression">
+        <symbol type="1" id="49" code="1.13" name="|D| Small depression">
             <description>A small, shallow, natural depression or hollow from which the ground rises on all sides.
 
 Map symbol: ISOM 115</description>
@@ -1976,7 +1997,7 @@ Map symbol: ISOM 115</description>
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="49" code="1.14" name="|D| Pit">
+        <symbol type="1" id="50" code="1.14" name="|D| Pit">
             <description>A pit or hole with distinct steep-sides. Usually man made. Used with symbol 8.6 to indicate a rocky pit.
 
 Map symbols: ISOM 116, 204</description>
@@ -1998,7 +2019,7 @@ Map symbols: ISOM 116, 204</description>
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="50" code="1.15" name="|D| Broken ground ">
+        <symbol type="1" id="51" code="1.15" name="|D| Broken ground ">
             <description>Clearly disturbed ground with features too small or too numerous to be mapped individually; including animal earths.
 
 Map symbol: ISOM 107</description>
@@ -2053,7 +2074,7 @@ Map symbol: ISOM 107</description>
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="51" code="1.16" name="|D| Ant hill (termite mound)">
+        <symbol type="1" id="52" code="1.16" name="|D| Ant hill (termite mound)">
             <description>The mound made by ants or termites.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="4">
                 <element>
@@ -2114,7 +2135,7 @@ Map symbol: ISOM 107</description>
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="52" code="2.1" name="|D| Cliff, Rock face">
+        <symbol type="1" id="53" code="2.1" name="|D| Cliff, Rock face">
             <description>A cliff or rock face. May be passable or impassable.
 
 Map symbols: ISOM 201, 203</description>
@@ -2165,7 +2186,7 @@ Map symbols: ISOM 201, 203</description>
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="53" code="2.2" name="|D| Rock pillar">
+        <symbol type="1" id="54" code="2.2" name="|D| Rock pillar">
             <description>A high, natural rock projection.
 
 Map symbol: ISOM 202</description>
@@ -2187,7 +2208,7 @@ Map symbol: ISOM 202</description>
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="54" code="2.3" name="|D| Cave">
+        <symbol type="1" id="55" code="2.3" name="|D| Cave">
             <description>A hole in a rock face or hill side, often leading to underground workings.
 
 Map symbol: ISOM 205</description>
@@ -2241,7 +2262,7 @@ Map symbol: ISOM 205</description>
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="55" code="2.4" name="|D| Boulder">
+        <symbol type="1" id="56" code="2.4" name="|D| Boulder">
             <description>A prominent free-standing block of rock or stone.
 
 Map symbols: ISOM 206, 207</description>
@@ -2263,7 +2284,7 @@ Map symbols: ISOM 206, 207</description>
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="56" code="2.5" name="|D| Boulder field">
+        <symbol type="1" id="57" code="2.5" name="|D| Boulder field">
             <description>An area covered by so many boulders that they cannot be individually mapped.
 
 Map symbol: ISOM 208</description>
@@ -2345,7 +2366,7 @@ Map symbol: ISOM 208</description>
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="57" code="2.6" name="|D| Boulder cluster">
+        <symbol type="1" id="58" code="2.6" name="|D| Boulder cluster">
             <description>A small distinct group of boulders so closely clustered together that they cannot be individually mapped.
 
 Map symbol: ISOM 209</description>
@@ -2382,7 +2403,7 @@ Map symbol: ISOM 209</description>
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="58" code="2.7" name="|D| Stony ground">
+        <symbol type="1" id="59" code="2.7" name="|D| Stony ground">
             <description>An area covered with many small stones or rocks.
 
 Map symbol: ISOM 210</description>
@@ -2629,7 +2650,7 @@ Map symbol: ISOM 210</description>
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="59" code="2.8" name="|D| Bare rock">
+        <symbol type="1" id="60" code="2.8" name="|D| Bare rock">
             <description>A runnable area of rock with no earth or vegetation cover.
 
 Map symbol: ISOM 212</description>
@@ -2748,7 +2769,7 @@ Map symbol: ISOM 212</description>
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="60" code="2.9" name="|D| Narrow passage">
+        <symbol type="1" id="61" code="2.9" name="|D| Narrow passage">
             <description>A gap between two cliffs or rock faces that face each other.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                 <element>
@@ -2785,7 +2806,7 @@ Map symbol: ISOM 212</description>
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="61" code="3.1" name="|D| Lake">
+        <symbol type="1" id="62" code="3.1" name="|D| Lake">
             <description>A high point. Shown on the map with contour lines.
 
 Map symbol: ISOM 301</description>
@@ -2874,7 +2895,7 @@ Map symbol: ISOM 301</description>
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="62" code="3.2" name="|D| Pond">
+        <symbol type="1" id="63" code="3.2" name="|D| Pond">
             <description>A small area of water.
 
 Map symbol: ISOM 302</description>
@@ -2979,7 +3000,7 @@ Map symbol: ISOM 302</description>
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="63" code="3.3" name="|D| Waterhole">
+        <symbol type="1" id="64" code="3.3" name="|D| Waterhole">
             <description>A waterholed pit or depression.
 
 Map symbol: ISOM 303</description>
@@ -3083,7 +3104,7 @@ Map symbol: ISOM 303</description>
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="64" code="3.4" name="|D| River, Stream, Watercourse">
+        <symbol type="1" id="65" code="3.4" name="|D| River, Stream, Watercourse">
             <description>A natural or artificial watercourse with either moving or standing water.
 
 Map symbols: ISOM 304, 305, 306</description>
@@ -3204,7 +3225,7 @@ Map symbols: ISOM 304, 305, 306</description>
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="65" code="3.5" name="|D| Minor water channel, Ditch">
+        <symbol type="1" id="66" code="3.5" name="|D| Minor water channel, Ditch">
             <description>A natural or man made minor water channel which may contain water only intermittently.
 
 Map symbol: ISOM 307</description>
@@ -3409,7 +3430,7 @@ Map symbol: ISOM 307</description>
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="66" code="3.6" name="|D| Narrow marsh">
+        <symbol type="1" id="67" code="3.6" name="|D| Narrow marsh">
             <description>A narrow marsh or trickle of water, too narrow to be shown on the map with the marsh symbol.
 
 Map symbol: ISOM 308</description>
@@ -3456,7 +3477,7 @@ Map symbol: ISOM 308</description>
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="67" code="3.7" name="|D| Marsh">
+        <symbol type="1" id="68" code="3.7" name="|D| Marsh">
             <description>A permanently wet area with marsh vegetation.
 
 Map symbols: ISOM 309, 310, 311</description>
@@ -3533,7 +3554,7 @@ Map symbols: ISOM 309, 310, 311</description>
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="68" code="3.8" name="|D| Firm ground in marsh">
+        <symbol type="1" id="69" code="3.8" name="|D| Firm ground in marsh">
             <description>A non-marshy area within a marsh, or between two marshes.
 
 Map symbols: ISOM 309, 310, 311</description>
@@ -3652,7 +3673,7 @@ Map symbols: ISOM 309, 310, 311</description>
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="69" code="3.9" name="|D| Well">
+        <symbol type="1" id="70" code="3.9" name="|D| Well">
             <description>A shaft containing water or a captive spring, clearly visible on the ground. Often with some form of man-made surround.
 
 Map symbol: ISOM 312</description>
@@ -3719,7 +3740,7 @@ Map symbol: ISOM 312</description>
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="70" code="3.10" name="|D| Spring">
+        <symbol type="1" id="71" code="3.10" name="|D| Spring">
             <description>The source of a watercourse with a distinct outflow.
 
 Map symbol: ISOM 313</description>
@@ -3791,7 +3812,7 @@ Map symbol: ISOM 313</description>
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="71" code="3.11" name="|D| Water tank, Water trough">
+        <symbol type="1" id="72" code="3.11" name="|D| Water tank, Water trough">
             <description>A man made water container.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="6">
                 <element>
@@ -3895,7 +3916,7 @@ Map symbol: ISOM 313</description>
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="72" code="4.1" name="|D| Open land">
+        <symbol type="1" id="73" code="4.1" name="|D| Open land">
             <description>An area with no trees. Grassland, a meadow or a field. Also heath or moorland.
 
 Map symbols: ISOM 401, 403</description>
@@ -3919,7 +3940,7 @@ Map symbols: ISOM 401, 403</description>
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="73" code="4.2" name="|D| Semi-open land">
+        <symbol type="1" id="74" code="4.2" name="|D| Semi-open land">
             <description>An area of open land with scattered trees or bushes.
 
 Map symbols: ISOM 402, 404</description>
@@ -4046,7 +4067,7 @@ Map symbols: ISOM 402, 404</description>
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="74" code="4.3" name="|D| Forest corner">
+        <symbol type="1" id="75" code="4.3" name="|D| Forest corner">
             <description>The corner or tip of a forested area projecting into open land.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                 <element>
@@ -4069,7 +4090,7 @@ Map symbols: ISOM 402, 404</description>
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="75" code="4.4" name="|D| Clearing">
+        <symbol type="1" id="76" code="4.4" name="|D| Clearing">
             <description>A small area of land free from trees within the forest.
 
 Map symbols: ISOM 401, 403</description>
@@ -4196,7 +4217,7 @@ Map symbols: ISOM 401, 403</description>
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="76" code="4.5" name="|D| Thicket">
+        <symbol type="1" id="77" code="4.5" name="|D| Thicket">
             <description>A small area of forest where the tree cover or undergrowth is so dense that it is difficult to pass.
 
 Map symbols: ISOM 408, 410</description>
@@ -4287,7 +4308,7 @@ Map symbols: ISOM 408, 410</description>
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="77" code="4.6" name="|D| Linear thicket">
+        <symbol type="1" id="78" code="4.6" name="|D| Linear thicket">
             <description>A man-made line of trees or bushes that is difficult to cross.
 
 Map symbol: ISOM 410</description>
@@ -4370,7 +4391,7 @@ Map symbol: ISOM 410</description>
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="78" code="4.7" name="|D| Vegetation boundary">
+        <symbol type="1" id="79" code="4.7" name="|D| Vegetation boundary">
             <description>A distinct boundary between different types of trees or vegetation.
 
 Map symbol: ISOM 416</description>
@@ -4467,7 +4488,7 @@ Map symbol: ISOM 416</description>
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="79" code="4.8" name="|D| Copse">
+        <symbol type="1" id="80" code="4.8" name="|D| Copse">
             <description>A small area of trees in open ground.
 
 Map symbols: ISOM 405, 406</description>
@@ -4520,7 +4541,7 @@ Map symbols: ISOM 405, 406</description>
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="80" code="4.9" name="|D| Distinctive tree">
+        <symbol type="1" id="81" code="4.9" name="|D| Distinctive tree">
             <description>An unusual or distinctive tree in either open land or forest; frequently information is also given as to its type.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                 <element>
@@ -4555,7 +4576,7 @@ Map symbols: ISOM 405, 406</description>
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="81" code="4.10" name="|D| Tree stump, Root stock">
+        <symbol type="1" id="82" code="4.10" name="|D| Tree stump, Root stock">
             <description>The stump of a tree. The upturned root of a fallen tree, with or without the trunk.</description>
             <point_symbol inner_radius="1200" inner_color="-1" outer_width="300" outer_color="1" elements="2">
                 <element>
@@ -4588,7 +4609,7 @@ Map symbols: ISOM 405, 406</description>
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="82" code="5.1" name="|D| Road">
+        <symbol type="1" id="83" code="5.1" name="|D| Road">
             <description>A metalled/asphalt surfaced or dirt road, suitable for vehicles in normal weather conditions.
 
 Map symbols: ISOM 501, 502, 503, 504</description>
@@ -4609,7 +4630,7 @@ Map symbols: ISOM 501, 502, 503, 504</description>
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="83" code="5.2" name="|D| Track / Path">
+        <symbol type="1" id="84" code="5.2" name="|D| Track / Path">
             <description>A visible route made by people or animals. Tracks may be driven by rugged vehicles.
 
 Map symbols: ISOM 505, 506, 507, 508</description>
@@ -4658,7 +4679,7 @@ Map symbols: ISOM 505, 506, 507, 508</description>
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="84" code="5.3" name="|D| Ride">
+        <symbol type="1" id="85" code="5.3" name="|D| Ride">
             <description>A clearly visible linear break in the forest which does not have a distinct path along it.
 
 Map symbol: ISOM 509</description>
@@ -4785,7 +4806,7 @@ Map symbol: ISOM 509</description>
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="85" code="5.4" name="|D| Bridge">
+        <symbol type="1" id="86" code="5.4" name="|D| Bridge">
             <description>A crossing point over a watercourse, or other linear feature.
 
 Map symbols: ISOM 512, 513</description>
@@ -4824,7 +4845,7 @@ Map symbols: ISOM 512, 513</description>
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="86" code="5.5" name="|D| Power line">
+        <symbol type="1" id="87" code="5.5" name="|D| Power line">
             <description>A power or telephone line, cableway or ski lift.
 
 Map symbols: ISOM 516, 517</description>
@@ -4887,7 +4908,7 @@ Map symbols: ISOM 516, 517</description>
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="87" code="5.6" name="|D| Power line pylon">
+        <symbol type="1" id="88" code="5.6" name="|D| Power line pylon">
             <description>A support for power or telephone line, cableway or ski lift.
 
 Map symbols: ISOM 516, 517</description>
@@ -4950,7 +4971,7 @@ Map symbols: ISOM 516, 517</description>
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="88" code="5.7" name="|D| Tunnel">
+        <symbol type="1" id="89" code="5.7" name="|D| Tunnel">
             <description>A way under roads, railways, etc.
 
 Map symbol: ISOM 518</description>
@@ -5015,7 +5036,7 @@ Map symbol: ISOM 518</description>
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="89" code="5.8" name="|D| Stone wall">
+        <symbol type="1" id="90" code="5.8" name="|D| Stone wall">
             <description>A stone boundary wall or stone faced bank. Used with symbol 8.11 to indicate a ruined stone wall.
 
 Map symbols: ISOM 519, 520, 521</description>
@@ -5056,7 +5077,7 @@ Map symbols: ISOM 519, 520, 521</description>
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="90" code="5.9" name="|D| Fence">
+        <symbol type="1" id="91" code="5.9" name="|D| Fence">
             <description>A wire or wooden boundary. Used with symbol 8.11 to indicate a ruined fence.
 
 Map symbols: ISOM 522, 523, 524</description>
@@ -5133,7 +5154,7 @@ Map symbols: ISOM 522, 523, 524</description>
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="91" code="5.10" name="|D| Crossing point">
+        <symbol type="1" id="92" code="5.10" name="|D| Crossing point">
             <description>A way through or over a wall, fence, or pipeline, including a gate or stile.
 
 Map symbol: ISOM 525</description>
@@ -5196,7 +5217,7 @@ Map symbol: ISOM 525</description>
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="92" code="5.11" name="|D| Building">
+        <symbol type="1" id="93" code="5.11" name="|D| Building">
             <description>A standing brick, wood or stone structure.
 
 Map symbol: ISOM 526</description>
@@ -5219,7 +5240,7 @@ Map symbol: ISOM 526</description>
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="93" code="5.12" name="|D| Paved area">
+        <symbol type="1" id="94" code="5.12" name="|D| Paved area">
             <description>An area of hard standing used for parking or other purposes.
 
 Map symbol: ISOM 529</description>
@@ -5299,7 +5320,7 @@ Map symbol: ISOM 529</description>
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="94" code="5.13" name="|D| Ruin">
+        <symbol type="1" id="95" code="5.13" name="|D| Ruin">
             <description>The remains of a building that has fallen down.
 
 Map symbol: ISOM 530</description>
@@ -5366,7 +5387,7 @@ Map symbol: ISOM 530</description>
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="95" code="5.14" name="|D| Pipeline">
+        <symbol type="1" id="96" code="5.14" name="|D| Pipeline">
             <description>A pipeline (gas, water, oil, etc.) above ground level.
 
 Map symbols: ISOM 533, 534</description>
@@ -5432,7 +5453,7 @@ Map symbols: ISOM 533, 534</description>
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="96" code="5.15" name="|D| Tower">
+        <symbol type="1" id="97" code="5.15" name="|D| Tower">
             <description>A tall metal, wooden or brick structure, usually built for forest observation.
 
 Map symbols: ISOM 535, 536</description>
@@ -5467,7 +5488,7 @@ Map symbols: ISOM 535, 536</description>
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="97" code="5.16" name="|D| Shooting platform">
+        <symbol type="1" id="98" code="5.16" name="|D| Shooting platform">
             <description>A structure attached to a tree where a marksman or observer can sit.
 
 Map symbol: ISOM 536</description>
@@ -5489,7 +5510,7 @@ Map symbol: ISOM 536</description>
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="98" code="5.17" name="|D| Boundary stone, Cairn">
+        <symbol type="1" id="99" code="5.17" name="|D| Boundary stone, Cairn">
             <description>A man made stone or pile of stones. A cairn, memorial stone, boundary stone or trigonometric point.
 
 Map symbol: ISOM 537</description>
@@ -5506,7 +5527,7 @@ Map symbol: ISOM 537</description>
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="99" code="5.18" name="|D| Fodder rack">
+        <symbol type="1" id="100" code="5.18" name="|D| Fodder rack">
             <description>A construction for holding feed for animals.
 
 Map symbol: ISOM 538</description>
@@ -5556,7 +5577,7 @@ Map symbol: ISOM 538</description>
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="100" code="5.19" name="|D| Charcoal burning ground">
+        <symbol type="1" id="101" code="5.19" name="|D| Charcoal burning ground">
             <description>The clear remains of an area where charcoal was burned. A small level man made area on a slope. (A platform).</description>
             <point_symbol inner_radius="1200" inner_color="-1" outer_width="300" outer_color="1" elements="1">
                 <element>
@@ -5577,7 +5598,7 @@ Map symbol: ISOM 538</description>
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="101" code="5.20" name="|D| Monument or Statue">
+        <symbol type="1" id="102" code="5.20" name="|D| Monument or Statue">
             <description>A monument, memorial or statue.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                 <element>
@@ -5611,7 +5632,7 @@ Map symbol: ISOM 538</description>
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="102" code="5.23" name="|D| Building pass through">
+        <symbol type="1" id="103" code="5.23" name="|D| Building pass through">
             <description>An arcade, indoor passage or route through a building.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="3">
                 <element>
@@ -5658,7 +5679,7 @@ Map symbol: ISOM 538</description>
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="103" code="5.24" name="|D| Stairway">
+        <symbol type="1" id="104" code="5.24" name="|D| Stairway">
             <description>A stairway of at least two steps.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                 <element>
@@ -5683,7 +5704,7 @@ Map symbol: ISOM 538</description>
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="104" code="6.1" name="|D| Special item">
+        <symbol type="1" id="105" code="6.1" name="|D| Special item">
             <description>If used, an explanation of its meaning must be supplied to competitors in the pre-race information.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                 <element>
@@ -5716,11 +5737,11 @@ Map symbol: ISOM 538</description>
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="105" code="6.2" name="|D| Special item">
+        <symbol type="1" id="106" code="6.2" name="|D| Special item">
             <description>If used, an explanation of its meaning must be supplied to competitors in the pre-race information.</description>
             <point_symbol inner_radius="1200" inner_color="-1" outer_width="300" outer_color="1" elements="0"/>
         </symbol>
-        <symbol type="1" id="106" code="7" name="|D| Country Specific features (template)" is_hidden="true">
+        <symbol type="1" id="107" code="7" name="|D| Country Specific features (template)" is_hidden="true">
             <description>It is not generally recommended to introduce local symbols. If local symbols are used then at events likely to attract an international entry information about them should be supplied to competitors in the pre-race details.
 
 The default line shows a box of 5 mm by 5mm and can be removed from the final symbols.</description>
@@ -5744,7 +5765,7 @@ The default line shows a box of 5 mm by 5mm and can be removed from the final sy
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="107" code="8.1" name="|E| Low">
+        <symbol type="1" id="108" code="8.1" name="|E| Low">
             <description>Where the control feature is particularly low or flat at but this is not indicated on the map; e.g. Hill, low.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                 <element>
@@ -5765,7 +5786,7 @@ The default line shows a box of 5 mm by 5mm and can be removed from the final sy
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="108" code="8.2" name="|E| Shallow">
+        <symbol type="1" id="109" code="8.2" name="|E| Shallow">
             <description>Where the control feature is particularly shallow but this is not indicated on the map; e.g. Re-entrant, shallow.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                 <element>
@@ -5786,7 +5807,7 @@ The default line shows a box of 5 mm by 5mm and can be removed from the final sy
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="109" code="8.3" name="|E| Deep">
+        <symbol type="1" id="110" code="8.3" name="|E| Deep">
             <description>Where the control feature is particularly deep but this is not indicated on the map; e.g. Pit, deep.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                 <element>
@@ -5823,7 +5844,7 @@ The default line shows a box of 5 mm by 5mm and can be removed from the final sy
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="110" code="8.4" name="|E| Overgrown">
+        <symbol type="1" id="111" code="8.4" name="|E| Overgrown">
             <description>Where the feature is partially covered in undergrowth or bushes that are not indicated on the map; e.g. Ruin, overgrown.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="8">
                 <element>
@@ -5940,7 +5961,7 @@ The default line shows a box of 5 mm by 5mm and can be removed from the final sy
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="111" code="8.5" name="|E| Open">
+        <symbol type="1" id="112" code="8.5" name="|E| Open">
             <description>Where the feature is in an area where the tree cover is less than the surroundings but this is not indicated on the map; e.g. Marsh, open.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="12">
                 <element>
@@ -6065,7 +6086,7 @@ The default line shows a box of 5 mm by 5mm and can be removed from the final sy
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="112" code="8.6" name="|E| Rocky, Stony ">
+        <symbol type="1" id="113" code="8.6" name="|E| Rocky, Stony ">
             <description>Where the feature is in an area of rocky or stony ground not indicated on the map; e.g. Pit, rocky.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="3">
                 <element>
@@ -6115,7 +6136,7 @@ The default line shows a box of 5 mm by 5mm and can be removed from the final sy
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="113" code="8.7" name="|E| Marshy">
+        <symbol type="1" id="114" code="8.7" name="|E| Marshy">
             <description>Where the feature is in an area of marshy ground not indicated on the map; e.g. Re-entrant, marshy.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="3">
                 <element>
@@ -6162,7 +6183,7 @@ The default line shows a box of 5 mm by 5mm and can be removed from the final sy
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="114" code="8.8" name="|E| Sandy">
+        <symbol type="1" id="115" code="8.8" name="|E| Sandy">
             <description>Where the feature is in an area of sandy ground not indicated on the map; e.g. Spur, sandy.
 </description>
             <point_symbol inner_radius="150" inner_color="1" outer_width="0" outer_color="-1" elements="24">
@@ -6408,7 +6429,7 @@ The default line shows a box of 5 mm by 5mm and can be removed from the final sy
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="115" code="8.9" name="|E| Needle leaved">
+        <symbol type="1" id="116" code="8.9" name="|E| Needle leaved">
             <description>Where the tree or trees associated with the control feature have needle shaped leaves; e.g. Distinctive tree, needle leaved.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                 <element>
@@ -6447,7 +6468,7 @@ The default line shows a box of 5 mm by 5mm and can be removed from the final sy
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="116" code="8.10" name="|E| Broad leaved">
+        <symbol type="1" id="117" code="8.10" name="|E| Broad leaved">
             <description>Where the tree or trees associated with the control feature are broad-leaved; e.g. Copse, broad leaved.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="6">
                 <element>
@@ -6546,7 +6567,7 @@ The default line shows a box of 5 mm by 5mm and can be removed from the final sy
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="117" code="8.11" name="|E| Ruined">
+        <symbol type="1" id="118" code="8.11" name="|E| Ruined">
             <description>Where the feature has fallen to ground level; e.g. Fence, ruined.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                 <element>
@@ -6583,21 +6604,21 @@ The default line shows a box of 5 mm by 5mm and can be removed from the final sy
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="8" id="118" code="9.1" name="|F| Height or Depth">
+        <symbol type="8" id="119" code="9.1" name="|F| Height or Depth">
             <description>Height or Depth of the feature in metres; e.g. 2.6</description>
             <text_symbol icon_text="2.5">
                 <font family="Arial" size="2600"/>
                 <text color="1" line_spacing="1" paragraph_spacing="0" character_spacing="0" kerning="true"/>
             </text_symbol>
         </symbol>
-        <symbol type="8" id="119" code="9.2" name="|F| Size">
+        <symbol type="8" id="120" code="9.2" name="|F| Size">
             <description>Horizontal dimensions of the feature in metres; e.g. 8 x 4</description>
             <text_symbol icon_text="8x4">
                 <font family="Arial" size="2600"/>
                 <text color="1" line_spacing="1" paragraph_spacing="0" character_spacing="0" kerning="true"/>
             </text_symbol>
         </symbol>
-        <symbol type="1" id="120" code="9.3" name="|F| Slash for height on slope">
+        <symbol type="1" id="121" code="9.3" name="|F| Slash for height on slope">
             <description>Use with text symbol 9.4</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                 <element>
@@ -6616,7 +6637,7 @@ The default line shows a box of 5 mm by 5mm and can be removed from the final sy
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="8" id="121" code="9.4" name="|F| Heights of two features, or on slope">
+        <symbol type="8" id="122" code="9.4" name="|F| Heights of two features, or on slope">
             <description>Use this text symbol to give two numbers in different lines.
 
 9.3 Height on slope: Height of the feature on a slope in metres.
@@ -6634,7 +6655,7 @@ Use the slash symbol 9.3 for separating the numbers; e.g.
                 <text color="1" line_spacing="1" paragraph_spacing="0" character_spacing="0" kerning="true"/>
             </text_symbol>
         </symbol>
-        <symbol type="1" id="122" code="10.1" name="|F| Crossing">
+        <symbol type="1" id="123" code="10.1" name="|F| Crossing">
             <description>The point at which two linear features cross. The two features which either cross or meet must be shown in columns |D| and |E|.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                 <element>
@@ -6667,7 +6688,7 @@ Use the slash symbol 9.3 for separating the numbers; e.g.
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="123" code="10.2" name="|F| Junction">
+        <symbol type="1" id="124" code="10.2" name="|F| Junction">
             <description>The point at which two linear features meet. The two features which either cross or meet must be shown in columns |D| and |E|.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                 <element>
@@ -6700,7 +6721,7 @@ Use the slash symbol 9.3 for separating the numbers; e.g.
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="124" code="11.1.1" name="|G| North Side">
+        <symbol type="1" id="125" code="11.1.1" name="|G| North Side">
             <description>Used where the feature extends above the surface of the ground; e.g. Boulder, north east side; Ruin, west side.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                 <element>
@@ -6725,7 +6746,7 @@ Use the slash symbol 9.3 for separating the numbers; e.g.
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="125" code="11.1.2" name="|G| North east Side">
+        <symbol type="1" id="126" code="11.1.2" name="|G| North east Side">
             <description>Used where the feature extends above the surface of the ground; e.g. Boulder, north east side; Ruin, west side.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="300" outer_color="1" elements="1">
                 <element>
@@ -6740,7 +6761,7 @@ Use the slash symbol 9.3 for separating the numbers; e.g.
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="126" code="11.1.3" name="|G| East Side">
+        <symbol type="1" id="127" code="11.1.3" name="|G| East Side">
             <description>Used where the feature extends above the surface of the ground; e.g. Boulder, north east side; Ruin, west side.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                 <element>
@@ -6765,7 +6786,7 @@ Use the slash symbol 9.3 for separating the numbers; e.g.
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="127" code="11.1.4" name="|G| South east Side">
+        <symbol type="1" id="128" code="11.1.4" name="|G| South east Side">
             <description>Used where the feature extends above the surface of the ground; e.g. Boulder, north east side; Ruin, west side.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="300" outer_color="1" elements="1">
                 <element>
@@ -6780,7 +6801,7 @@ Use the slash symbol 9.3 for separating the numbers; e.g.
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="128" code="11.1.5" name="|G| South Side">
+        <symbol type="1" id="129" code="11.1.5" name="|G| South Side">
             <description>Used where the feature extends above the surface of the ground; e.g. Boulder, north east side; Ruin, west side.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                 <element>
@@ -6805,7 +6826,7 @@ Use the slash symbol 9.3 for separating the numbers; e.g.
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="129" code="11.1.6" name="|G| South west Side">
+        <symbol type="1" id="130" code="11.1.6" name="|G| South west Side">
             <description>Used where the feature extends above the surface of the ground; e.g. Boulder, north east side; Ruin, west side.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="300" outer_color="1" elements="1">
                 <element>
@@ -6820,7 +6841,7 @@ Use the slash symbol 9.3 for separating the numbers; e.g.
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="130" code="11.1.7" name="|G| West Side">
+        <symbol type="1" id="131" code="11.1.7" name="|G| West Side">
             <description>Used where the feature extends above the surface of the ground; e.g. Boulder, north east side; Ruin, west side.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                 <element>
@@ -6845,7 +6866,7 @@ Use the slash symbol 9.3 for separating the numbers; e.g.
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="131" code="11.1.8" name="|G| North west Side">
+        <symbol type="1" id="132" code="11.1.8" name="|G| North west Side">
             <description>Used where the feature extends above the surface of the ground; e.g. Boulder, north east side; Ruin, west side.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="300" outer_color="1" elements="1">
                 <element>
@@ -6860,7 +6881,7 @@ Use the slash symbol 9.3 for separating the numbers; e.g.
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="132" code="11.2.1" name="|G| North Edge">
+        <symbol type="1" id="133" code="11.2.1" name="|G| North Edge">
             <description>Used where:
 a) The feature extends down from the surface of the surrounding ground and the control is situated on the edge at ground level; e.g. Depression, south east edge.
 b) The feature extends over a significant area and the control is situated on the border of that area; e.g. Marsh, west edge; Clearing, north west edge.</description>
@@ -6891,7 +6912,7 @@ b) The feature extends over a significant area and the control is situated on th
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="133" code="11.2.2" name="|G| North east Edge">
+        <symbol type="1" id="134" code="11.2.2" name="|G| North east Edge">
             <description>Used where:
 a) The feature extends down from the surface of the surrounding ground and the control is situated on the edge at ground level; e.g. Depression, south east edge.
 b) The feature extends over a significant area and the control is situated on the border of that area; e.g. Marsh, west edge; Clearing, north west edge.</description>
@@ -6912,7 +6933,7 @@ b) The feature extends over a significant area and the control is situated on th
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="134" code="11.2.3" name="|G| East Edge">
+        <symbol type="1" id="135" code="11.2.3" name="|G| East Edge">
             <description>Used where:
 a) The feature extends down from the surface of the surrounding ground and the control is situated on the edge at ground level; e.g. Depression, south east edge.
 b) The feature extends over a significant area and the control is situated on the border of that area; e.g. Marsh, west edge; Clearing, north west edge.</description>
@@ -6943,7 +6964,7 @@ b) The feature extends over a significant area and the control is situated on th
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="135" code="11.2.4" name="|G| South east Edge">
+        <symbol type="1" id="136" code="11.2.4" name="|G| South east Edge">
             <description>Used where:
 a) The feature extends down from the surface of the surrounding ground and the control is situated on the edge at ground level; e.g. Depression, south east edge.
 b) The feature extends over a significant area and the control is situated on the border of that area; e.g. Marsh, west edge; Clearing, north west edge.</description>
@@ -6964,7 +6985,7 @@ b) The feature extends over a significant area and the control is situated on th
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="136" code="11.2.5" name="|G| South Edge">
+        <symbol type="1" id="137" code="11.2.5" name="|G| South Edge">
             <description>Used where:
 a) The feature extends down from the surface of the surrounding ground and the control is situated on the edge at ground level; e.g. Depression, south east edge.
 b) The feature extends over a significant area and the control is situated on the border of that area; e.g. Marsh, west edge; Clearing, north west edge.</description>
@@ -6995,7 +7016,7 @@ b) The feature extends over a significant area and the control is situated on th
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="137" code="11.2.6" name="|G| South west Edge">
+        <symbol type="1" id="138" code="11.2.6" name="|G| South west Edge">
             <description>Used where:
 a) The feature extends down from the surface of the surrounding ground and the control is situated on the edge at ground level; e.g. Depression, south east edge.
 b) The feature extends over a significant area and the control is situated on the border of that area; e.g. Marsh, west edge; Clearing, north west edge.</description>
@@ -7016,7 +7037,7 @@ b) The feature extends over a significant area and the control is situated on th
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="138" code="11.2.7" name="|G| West Edge">
+        <symbol type="1" id="139" code="11.2.7" name="|G| West Edge">
             <description>Used where:
 a) The feature extends down from the surface of the surrounding ground and the control is situated on the edge at ground level; e.g. Depression, south east edge.
 b) The feature extends over a significant area and the control is situated on the border of that area; e.g. Marsh, west edge; Clearing, north west edge.</description>
@@ -7047,7 +7068,7 @@ b) The feature extends over a significant area and the control is situated on th
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="139" code="11.2.8" name="|G| North west Edge">
+        <symbol type="1" id="140" code="11.2.8" name="|G| North west Edge">
             <description>Used where:
 a) The feature extends down from the surface of the surrounding ground and the control is situated on the edge at ground level; e.g. Depression, south east edge.
 b) The feature extends over a significant area and the control is situated on the border of that area; e.g. Marsh, west edge; Clearing, north west edge.</description>
@@ -7068,7 +7089,7 @@ b) The feature extends over a significant area and the control is situated on th
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="140" code="11.3.1" name="|G| North Part">
+        <symbol type="1" id="141" code="11.3.1" name="|G| North Part">
             <description>Used where the feature extends over a significant area and the control is located neither at the centre, nor on any of the edges; e.g. Marsh, west part; Depression, south east part.</description>
             <point_symbol inner_radius="1200" inner_color="-1" outer_width="300" outer_color="1" elements="1">
                 <element>
@@ -7083,7 +7104,7 @@ b) The feature extends over a significant area and the control is situated on th
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="141" code="11.3.2" name="|G| North east Part">
+        <symbol type="1" id="142" code="11.3.2" name="|G| North east Part">
             <description>Used where the feature extends over a significant area and the control is located neither at the centre, nor on any of the edges; e.g. Marsh, west part; Depression, south east part.</description>
             <point_symbol inner_radius="1200" inner_color="-1" outer_width="300" outer_color="1" elements="1">
                 <element>
@@ -7098,7 +7119,7 @@ b) The feature extends over a significant area and the control is situated on th
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="142" code="11.3.3" name="|G| East Part">
+        <symbol type="1" id="143" code="11.3.3" name="|G| East Part">
             <description>Used where the feature extends over a significant area and the control is located neither at the centre, nor on any of the edges; e.g. Marsh, west part; Depression, south east part.</description>
             <point_symbol inner_radius="1200" inner_color="-1" outer_width="300" outer_color="1" elements="1">
                 <element>
@@ -7113,7 +7134,7 @@ b) The feature extends over a significant area and the control is situated on th
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="143" code="11.3.4" name="|G| South east Part">
+        <symbol type="1" id="144" code="11.3.4" name="|G| South east Part">
             <description>Used where the feature extends over a significant area and the control is located neither at the centre, nor on any of the edges; e.g. Marsh, west part; Depression, south east part.</description>
             <point_symbol inner_radius="1200" inner_color="-1" outer_width="300" outer_color="1" elements="1">
                 <element>
@@ -7128,7 +7149,7 @@ b) The feature extends over a significant area and the control is situated on th
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="144" code="11.3.5" name="|G| South Part">
+        <symbol type="1" id="145" code="11.3.5" name="|G| South Part">
             <description>Used where the feature extends over a significant area and the control is located neither at the centre, nor on any of the edges; e.g. Marsh, west part; Depression, south east part.</description>
             <point_symbol inner_radius="1200" inner_color="-1" outer_width="300" outer_color="1" elements="1">
                 <element>
@@ -7143,7 +7164,7 @@ b) The feature extends over a significant area and the control is situated on th
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="145" code="11.3.6" name="|G| South west part">
+        <symbol type="1" id="146" code="11.3.6" name="|G| South west part">
             <description>Used where the feature extends over a significant area and the control is located neither at the centre, nor on any of the edges; e.g. Marsh, west part; Depression, south east part.</description>
             <point_symbol inner_radius="1200" inner_color="-1" outer_width="300" outer_color="1" elements="1">
                 <element>
@@ -7158,7 +7179,7 @@ b) The feature extends over a significant area and the control is situated on th
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="146" code="11.3.7" name="|G| West Part">
+        <symbol type="1" id="147" code="11.3.7" name="|G| West Part">
             <description>Used where the feature extends over a significant area and the control is located neither at the centre, nor on any of the edges; e.g. Marsh, west part; Depression, south east part.</description>
             <point_symbol inner_radius="1200" inner_color="-1" outer_width="300" outer_color="1" elements="1">
                 <element>
@@ -7173,7 +7194,7 @@ b) The feature extends over a significant area and the control is situated on th
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="147" code="11.3.8" name="|G| North west Part">
+        <symbol type="1" id="148" code="11.3.8" name="|G| North west Part">
             <description>Used where the feature extends over a significant area and the control is located neither at the centre, nor on any of the edges; e.g. Marsh, west part; Depression, south east part.</description>
             <point_symbol inner_radius="1200" inner_color="-1" outer_width="300" outer_color="1" elements="1">
                 <element>
@@ -7188,7 +7209,7 @@ b) The feature extends over a significant area and the control is situated on th
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="148" code="11.4.1" name="|G| North Corner (inside)">
+        <symbol type="1" id="149" code="11.4.1" name="|G| North Corner (inside)">
             <description>Used where:
 a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Open land, east corner (inside).
 b) A linear feature turns a corner; e.g. Fence, south corner (inside).
@@ -7222,7 +7243,7 @@ The orientation of the symbol indicates the direction in which the corner points
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="149" code="11.4.2" name="|G| North east Corner (inside)">
+        <symbol type="1" id="150" code="11.4.2" name="|G| North east Corner (inside)">
             <description>Used where:
 a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Open land, east corner (inside).
 b) A linear feature turns a corner; e.g. Fence, south corner (inside).
@@ -7255,7 +7276,7 @@ The orientation of the symbol indicates the direction in which the corner points
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="150" code="11.4.3" name="|G| East Corner (inside)">
+        <symbol type="1" id="151" code="11.4.3" name="|G| East Corner (inside)">
             <description>Used where:
 a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Open land, east corner (inside).
 b) A linear feature turns a corner; e.g. Fence, south corner (inside).
@@ -7288,7 +7309,7 @@ The orientation of the symbol indicates the direction in which the corner points
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="151" code="11.4.4" name="|G| South east Corner (inside)">
+        <symbol type="1" id="152" code="11.4.4" name="|G| South east Corner (inside)">
             <description>Used where:
 a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Open land, east corner (inside).
 b) A linear feature turns a corner; e.g. Fence, south corner (inside).
@@ -7321,7 +7342,7 @@ The orientation of the symbol indicates the direction in which the corner points
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="152" code="11.4.5" name="|G| South Corner (inside)">
+        <symbol type="1" id="153" code="11.4.5" name="|G| South Corner (inside)">
             <description>Used where:
 a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Open land, east corner (inside).
 b) A linear feature turns a corner; e.g. Fence, south corner (inside).
@@ -7354,7 +7375,7 @@ The orientation of the symbol indicates the direction in which the corner points
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="153" code="11.4.6" name="|G| South west Corner (inside)">
+        <symbol type="1" id="154" code="11.4.6" name="|G| South west Corner (inside)">
             <description>Used where:
 a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Open land, east corner (inside).
 b) A linear feature turns a corner; e.g. Fence, south corner (inside).
@@ -7387,7 +7408,7 @@ The orientation of the symbol indicates the direction in which the corner points
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="154" code="11.4.7" name="|G| West Corner (inside)">
+        <symbol type="1" id="155" code="11.4.7" name="|G| West Corner (inside)">
             <description>Used where:
 a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Open land, east corner (inside).
 b) A linear feature turns a corner; e.g. Fence, south corner (inside).
@@ -7420,7 +7441,7 @@ The orientation of the symbol indicates the direction in which the corner points
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="155" code="11.4.8" name="|G| North west Corner (inside)">
+        <symbol type="1" id="156" code="11.4.8" name="|G| North west Corner (inside)">
             <description>Used where:
 a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Open land, east corner (inside).
 b) A linear feature turns a corner; e.g. Fence, south corner (inside).
@@ -7453,7 +7474,7 @@ The orientation of the symbol indicates the direction in which the corner points
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="156" code="11.5.1" name="|G| North Corner (outside)">
+        <symbol type="1" id="157" code="11.5.1" name="|G| North Corner (outside)">
             <description>Used where:
 a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Ruin, north west corner (outside).
 b) A linear feature turns a corner; e.g. Stone wall, south west corner (outside).
@@ -7486,7 +7507,7 @@ The orientation of the symbol indicates the direction in which the corner points
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="157" code="11.5.2" name="|G| North east Corner (outside)">
+        <symbol type="1" id="158" code="11.5.2" name="|G| North east Corner (outside)">
             <description>Used where:
 a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Ruin, north west corner (outside).
 b) A linear feature turns a corner; e.g. Stone wall, south west corner (outside).
@@ -7519,7 +7540,7 @@ The orientation of the symbol indicates the direction in which the corner points
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="158" code="11.5.3" name="|G| East Corner (outside)">
+        <symbol type="1" id="159" code="11.5.3" name="|G| East Corner (outside)">
             <description>Used where:
 a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Ruin, north west corner (outside).
 b) A linear feature turns a corner; e.g. Stone wall, south west corner (outside).
@@ -7552,7 +7573,7 @@ The orientation of the symbol indicates the direction in which the corner points
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="159" code="11.5.4" name="|G| South east Corner (outside)">
+        <symbol type="1" id="160" code="11.5.4" name="|G| South east Corner (outside)">
             <description>Used where:
 a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Ruin, north west corner (outside).
 b) A linear feature turns a corner; e.g. Stone wall, south west corner (outside).
@@ -7585,7 +7606,7 @@ The orientation of the symbol indicates the direction in which the corner points
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="160" code="11.5.5" name="|G| South Corner (outside)">
+        <symbol type="1" id="161" code="11.5.5" name="|G| South Corner (outside)">
             <description>Used where:
 a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Ruin, north west corner (outside).
 b) A linear feature turns a corner; e.g. Stone wall, south west corner (outside).
@@ -7618,7 +7639,7 @@ The orientation of the symbol indicates the direction in which the corner points
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="161" code="11.5.6" name="|G| South west Corner (outside)">
+        <symbol type="1" id="162" code="11.5.6" name="|G| South west Corner (outside)">
             <description>Used where:
 a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Ruin, north west corner (outside).
 b) A linear feature turns a corner; e.g. Stone wall, south west corner (outside).
@@ -7651,7 +7672,7 @@ The orientation of the symbol indicates the direction in which the corner points
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="162" code="11.5.7" name="|G| West Corner (outside)">
+        <symbol type="1" id="163" code="11.5.7" name="|G| West Corner (outside)">
             <description>Used where:
 a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Ruin, north west corner (outside).
 b) A linear feature turns a corner; e.g. Stone wall, south west corner (outside).
@@ -7684,7 +7705,7 @@ The orientation of the symbol indicates the direction in which the corner points
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="163" code="11.5.8" name="|G| North west Corner (outside)">
+        <symbol type="1" id="164" code="11.5.8" name="|G| North west Corner (outside)">
             <description>Used where:
 a) The edge of a feature turns through an angle of 45-135 degrees; e.g. Ruin, north west corner (outside).
 b) A linear feature turns a corner; e.g. Stone wall, south west corner (outside).
@@ -7717,7 +7738,7 @@ The orientation of the symbol indicates the direction in which the corner points
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="164" code="11.6.1" name="|G| North Tip">
+        <symbol type="1" id="165" code="11.6.1" name="|G| North Tip">
             <description>Used where the edge of a feature turns through an angle of less than 45 degrees; e.g. Marsh, south west tip.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                 <element>
@@ -7747,7 +7768,7 @@ The orientation of the symbol indicates the direction in which the corner points
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="165" code="11.6.2" name="|G| North east Tip">
+        <symbol type="1" id="166" code="11.6.2" name="|G| North east Tip">
             <description>Used where the edge of a feature turns through an angle of less than 45 degrees; e.g. Marsh, south west tip.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                 <element>
@@ -7777,7 +7798,7 @@ The orientation of the symbol indicates the direction in which the corner points
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="166" code="11.6.3" name="|G| East Tip">
+        <symbol type="1" id="167" code="11.6.3" name="|G| East Tip">
             <description>Used where the edge of a feature turns through an angle of less than 45 degrees; e.g. Marsh, south west tip.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                 <element>
@@ -7807,7 +7828,7 @@ The orientation of the symbol indicates the direction in which the corner points
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="167" code="11.6.4" name="|G| South east Tip">
+        <symbol type="1" id="168" code="11.6.4" name="|G| South east Tip">
             <description>Used where the edge of a feature turns through an angle of less than 45 degrees; e.g. Marsh, south west tip.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                 <element>
@@ -7837,7 +7858,7 @@ The orientation of the symbol indicates the direction in which the corner points
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="168" code="11.6.5" name="|G| South Tip">
+        <symbol type="1" id="169" code="11.6.5" name="|G| South Tip">
             <description>Used where the edge of a feature turns through an angle of less than 45 degrees; e.g. Marsh, south west tip.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                 <element>
@@ -7867,7 +7888,7 @@ The orientation of the symbol indicates the direction in which the corner points
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="169" code="11.6.6" name="|G| South west Tip">
+        <symbol type="1" id="170" code="11.6.6" name="|G| South west Tip">
             <description>Used where the edge of a feature turns through an angle of less than 45 degrees; e.g. Marsh, south west tip.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                 <element>
@@ -7897,7 +7918,7 @@ The orientation of the symbol indicates the direction in which the corner points
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="170" code="11.6.7" name="|G| West Tip">
+        <symbol type="1" id="171" code="11.6.7" name="|G| West Tip">
             <description>Used where the edge of a feature turns through an angle of less than 45 degrees; e.g. Marsh, south west tip.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                 <element>
@@ -7927,7 +7948,7 @@ The orientation of the symbol indicates the direction in which the corner points
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="171" code="11.6.8" name="|G| North west Tip">
+        <symbol type="1" id="172" code="11.6.8" name="|G| North west Tip">
             <description>Used where the edge of a feature turns through an angle of less than 45 degrees; e.g. Marsh, south west tip.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                 <element>
@@ -7957,7 +7978,7 @@ The orientation of the symbol indicates the direction in which the corner points
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="172" code="11.7" name="|G| Bend">
+        <symbol type="1" id="173" code="11.7" name="|G| Bend">
             <description>Used where a linear feature makes a smooth change of direction; e.g. Path bend; River bend.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="3">
                 <element>
@@ -8006,7 +8027,7 @@ The orientation of the symbol indicates the direction in which the corner points
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="173" code="11.8.1" name="|G| North End">
+        <symbol type="1" id="174" code="11.8.1" name="|G| North End">
             <description>The point at which a linear feature ends or starts; e.g. Ride, north west end; Stone wall, south end.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                 <element>
@@ -8039,7 +8060,7 @@ The orientation of the symbol indicates the direction in which the corner points
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="174" code="11.8.2" name="|G| North east End">
+        <symbol type="1" id="175" code="11.8.2" name="|G| North east End">
             <description>The point at which a linear feature ends or starts; e.g. Ride, north west end; Stone wall, south end.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                 <element>
@@ -8072,7 +8093,7 @@ The orientation of the symbol indicates the direction in which the corner points
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="175" code="11.8.3" name="|G| East End">
+        <symbol type="1" id="176" code="11.8.3" name="|G| East End">
             <description>The point at which a linear feature ends or starts; e.g. Ride, north west end; Stone wall, south end.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                 <element>
@@ -8105,7 +8126,7 @@ The orientation of the symbol indicates the direction in which the corner points
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="176" code="11.8.4" name="|G| South east End">
+        <symbol type="1" id="177" code="11.8.4" name="|G| South east End">
             <description>The point at which a linear feature ends or starts; e.g. Ride, north west end; Stone wall, south end.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                 <element>
@@ -8138,7 +8159,7 @@ The orientation of the symbol indicates the direction in which the corner points
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="177" code="11.8.5" name="|G| South End">
+        <symbol type="1" id="178" code="11.8.5" name="|G| South End">
             <description>The point at which a linear feature ends or starts; e.g. Ride, north west end; Stone wall, south end.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                 <element>
@@ -8171,7 +8192,7 @@ The orientation of the symbol indicates the direction in which the corner points
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="178" code="11.8.6" name="|G| South west End">
+        <symbol type="1" id="179" code="11.8.6" name="|G| South west End">
             <description>The point at which a linear feature ends or starts; e.g. Ride, north west end; Stone wall, south end.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                 <element>
@@ -8204,7 +8225,7 @@ The orientation of the symbol indicates the direction in which the corner points
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="179" code="11.8.7" name="|G| West End">
+        <symbol type="1" id="180" code="11.8.7" name="|G| West End">
             <description>The point at which a linear feature ends or starts; e.g. Ride, north west end; Stone wall, south end.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                 <element>
@@ -8237,7 +8258,7 @@ The orientation of the symbol indicates the direction in which the corner points
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="180" code="11.8.8" name="|G| North west End">
+        <symbol type="1" id="181" code="11.8.8" name="|G| North west End">
             <description>The point at which a linear feature ends or starts; e.g. Ride, north west end; Stone wall, south end.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                 <element>
@@ -8270,7 +8291,7 @@ The orientation of the symbol indicates the direction in which the corner points
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="181" code="11.9" name="|G| Upper Part">
+        <symbol type="1" id="182" code="11.9" name="|G| Upper Part">
             <description>Where the feature extends over two or more contours and the control is located near the top; e.g. Erosion Gully, upper part.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="3">
                 <element>
@@ -8313,7 +8334,7 @@ The orientation of the symbol indicates the direction in which the corner points
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="182" code="11.10" name="|G| Lower Part">
+        <symbol type="1" id="183" code="11.10" name="|G| Lower Part">
             <description>Where the feature extends over two or more contours and the control is located near the bottom; e.g. Re-entrant, lower part.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="3">
                 <element>
@@ -8356,7 +8377,7 @@ The orientation of the symbol indicates the direction in which the corner points
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="183" code="11.11" name="|G| Top">
+        <symbol type="1" id="184" code="11.11" name="|G| Top">
             <description>Where the control is located at the highest point of the feature and this is not the usual location; e.g. Cliff, top.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                 <element>
@@ -8387,7 +8408,7 @@ The orientation of the symbol indicates the direction in which the corner points
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="184" code="11.12" name="|G| Beneath">
+        <symbol type="1" id="185" code="11.12" name="|G| Beneath">
             <description>Where the control is located underneath the feature; e.g. Pipeline, beneath.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                 <element>
@@ -8418,7 +8439,7 @@ The orientation of the symbol indicates the direction in which the corner points
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="185" code="11.13" name="|G| Foot (no direction)">
+        <symbol type="1" id="186" code="11.13" name="|G| Foot (no direction)">
             <description>Where the control is located at the lower junction of the slope of the feature and the surface of the surrounding area; e.g. Earth bank, foot.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                 <element>
@@ -8448,7 +8469,7 @@ The orientation of the symbol indicates the direction in which the corner points
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="186" code="11.14.1" name="|G| North Foot">
+        <symbol type="1" id="187" code="11.14.1" name="|G| North Foot">
             <description>As above, but where the feature is large enough for the control to be placed in more than one location around it; e.g. Hill, north east foot.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                 <element>
@@ -8478,7 +8499,7 @@ The orientation of the symbol indicates the direction in which the corner points
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="187" code="11.14.2" name="|G| North east Foot">
+        <symbol type="1" id="188" code="11.14.2" name="|G| North east Foot">
             <description>As above, but where the feature is large enough for the control to be placed in more than one location around it; e.g. Hill, north east foot.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                 <element>
@@ -8508,7 +8529,7 @@ The orientation of the symbol indicates the direction in which the corner points
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="188" code="11.14.3" name="|G| East Foot">
+        <symbol type="1" id="189" code="11.14.3" name="|G| East Foot">
             <description>As above, but where the feature is large enough for the control to be placed in more than one location around it; e.g. Hill, north east foot.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                 <element>
@@ -8538,7 +8559,7 @@ The orientation of the symbol indicates the direction in which the corner points
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="189" code="11.14.4" name="|G| South east Foot">
+        <symbol type="1" id="190" code="11.14.4" name="|G| South east Foot">
             <description>As above, but where the feature is large enough for the control to be placed in more than one location around it; e.g. Hill, north east foot.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                 <element>
@@ -8568,7 +8589,7 @@ The orientation of the symbol indicates the direction in which the corner points
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="190" code="11.14.5" name="|G| South Foot">
+        <symbol type="1" id="191" code="11.14.5" name="|G| South Foot">
             <description>As above, but where the feature is large enough for the control to be placed in more than one location around it; e.g. Hill, north east foot.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                 <element>
@@ -8598,7 +8619,7 @@ The orientation of the symbol indicates the direction in which the corner points
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="191" code="11.14.6" name="|G| South west Foot">
+        <symbol type="1" id="192" code="11.14.6" name="|G| South west Foot">
             <description>As above, but where the feature is large enough for the control to be placed in more than one location around it; e.g. Hill, north east foot.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                 <element>
@@ -8628,7 +8649,7 @@ The orientation of the symbol indicates the direction in which the corner points
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="192" code="11.14.7" name="|G| West Foot">
+        <symbol type="1" id="193" code="11.14.7" name="|G| West Foot">
             <description>As above, but where the feature is large enough for the control to be placed in more than one location around it; e.g. Hill, north east foot.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                 <element>
@@ -8658,7 +8679,7 @@ The orientation of the symbol indicates the direction in which the corner points
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="193" code="11.14.8" name="|G| North west Foot">
+        <symbol type="1" id="194" code="11.14.8" name="|G| North west Foot">
             <description>As above, but where the feature is large enough for the control to be placed in more than one location around it; e.g. Hill, north east foot.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                 <element>
@@ -8688,7 +8709,7 @@ The orientation of the symbol indicates the direction in which the corner points
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="194" code="11.15" name="|G| Between">
+        <symbol type="1" id="195" code="11.15" name="|G| Between">
             <description>Where the control is located between two features; e.g. Between thickets; Between boulder and knoll. The two features which the control is between must be shown separately in columns |D| and |E|.</description>
             <point_symbol inner_radius="300" inner_color="1" outer_width="0" outer_color="-1" elements="2">
                 <element>
@@ -8721,7 +8742,7 @@ The orientation of the symbol indicates the direction in which the corner points
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="195" code="12.1" name="|G| First aid post">
+        <symbol type="1" id="196" code="12.1" name="|G| First aid post">
             <description>Control site where First aid is available.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                 <element>
@@ -8751,7 +8772,7 @@ The orientation of the symbol indicates the direction in which the corner points
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="196" code="12.2" name="|G| Refreshment point">
+        <symbol type="1" id="197" code="12.2" name="|G| Refreshment point">
             <description>Control site where Refreshments are available.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="4">
                 <element>
@@ -8825,7 +8846,7 @@ The orientation of the symbol indicates the direction in which the corner points
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="197" code="12.3" name="|G| Radio or TV control">
+        <symbol type="1" id="198" code="12.3" name="|G| Radio or TV control">
             <description>Location of a Radio or TV control.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                 <element>
@@ -8846,7 +8867,7 @@ The orientation of the symbol indicates the direction in which the corner points
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="198" code="12.4" name="|G| Control check">
+        <symbol type="1" id="199" code="12.4" name="|G| Control check">
             <description>Manned control site where the control card is checked.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="4">
                 <element>
@@ -8905,7 +8926,7 @@ The orientation of the symbol indicates the direction in which the corner points
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="199" code="13.1" name="Taped Route, away from control">
+        <symbol type="1" id="200" code="13.1" name="Taped Route, away from control">
             <description>A marked route is to be followed away from a particular control. Re-emphasises what is shown on the map.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="10">
                 <element>
@@ -9052,7 +9073,7 @@ The orientation of the symbol indicates the direction in which the corner points
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="200" code="13.2" name="Taped Route, between controls">
+        <symbol type="1" id="201" code="13.2" name="Taped Route, between controls">
             <description>A marked route is to be followed between controls. Re-emphasises what is shown on the map.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="11">
                 <element>
@@ -9209,7 +9230,7 @@ The orientation of the symbol indicates the direction in which the corner points
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="201" code="13.3" name="Mandatory crossing point">
+        <symbol type="1" id="202" code="13.3" name="Mandatory crossing point">
             <description>Mandatory crossing points (or points) between two controls. Re-emphasises what is shown on the map.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="8">
                 <element>
@@ -9329,7 +9350,7 @@ The orientation of the symbol indicates the direction in which the corner points
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="202" code="13.4" name="Mandatory passage through out of bounds area">
+        <symbol type="1" id="203" code="13.4" name="Mandatory passage through out of bounds area">
             <description>Mandatory route between two controls. Re-emphasises what is shown on the map.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="8">
                 <element>
@@ -9449,7 +9470,7 @@ The orientation of the symbol indicates the direction in which the corner points
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="203" code="13.5" name="Taped Route from Control to&#10;Map Exchange">
+        <symbol type="1" id="204" code="13.5" name="Taped Route from Control to&#10;Map Exchange">
             <description>At a map exchange, or if a marked route is to be followed from a control to a map exchange, this instruction follows the last control description of the first part of the course.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="11">
                 <element>
@@ -9612,7 +9633,7 @@ The orientation of the symbol indicates the direction in which the corner points
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="204" code="14.1" name="Taped Route from last control to Finish">
+        <symbol type="1" id="205" code="14.1" name="Taped Route from last control to Finish">
             <description>Mandatory route from the last control to the Finish. Re-emphasises what is shown on the map. Gives the distance from the last control to Finish.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="13">
                 <element>
@@ -9792,7 +9813,7 @@ The orientation of the symbol indicates the direction in which the corner points
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="205" code="14.2" name="Tape Route from finish funnel to Finish">
+        <symbol type="1" id="206" code="14.2" name="Tape Route from finish funnel to Finish">
             <description>The competitor has to navigate from the last control to finish funnel, and the follow tapes. Gives the distance from the last control to Finish.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="13">
                 <element>
@@ -9973,7 +9994,7 @@ The orientation of the symbol indicates the direction in which the corner points
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="206" code="14.3" name="Navigation from last control to Finish (no Taped Route)">
+        <symbol type="1" id="207" code="14.3" name="Navigation from last control to Finish (no Taped Route)">
             <description>The competitor has to navigate from the last control to finish. No tapes. Gives the distance from the last control to Finish.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="8">
                 <element>
@@ -10084,7 +10105,7 @@ The orientation of the symbol indicates the direction in which the corner points
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="8" id="207" code="13.0" name="Length of special route">
+        <symbol type="8" id="208" code="13.0" name="Length of special route">
             <description>This is used with the special instruction (13.x) to give the distance from the last control to the end of the route (control, map exchange, or finish).</description>
             <text_symbol icon_text="80m">
                 <font family="Arial" size="3500"/>
@@ -10094,24 +10115,24 @@ The orientation of the symbol indicates the direction in which the corner points
     </symbols>
     <parts count="1" current="0">
         <part name="default part">
-            <objects count="41">
+            <objects count="43">
                 <object type="0" symbol="16">
                     <coords count="1">
                         <coord x="30000" y="-24000"/>
                     </coords>
                 </object>
-                <object type="0" symbol="123">
+                <object type="0" symbol="124">
                     <coords count="1">
                         <coord x="39000" y="-6000"/>
                     </coords>
                 </object>
-                <object type="4" symbol="24" rotation="0" h_align="1" v_align="2">
+                <object type="4" symbol="25" rotation="0" h_align="1" v_align="2">
                     <coords count="1">
                         <coord x="15000" y="0"/>
                     </coords>
                     <text>101</text>
                 </object>
-                <object type="0" symbol="80">
+                <object type="0" symbol="81">
                     <coords count="1">
                         <coord x="27000" y="12000"/>
                     </coords>
@@ -10121,46 +10142,46 @@ The orientation of the symbol indicates the direction in which the corner points
                         <coord x="30000" y="-6000"/>
                     </coords>
                 </object>
-                <object type="4" symbol="23" rotation="0" h_align="1" v_align="2">
+                <object type="4" symbol="24" rotation="0" h_align="1" v_align="2">
                     <coords count="1">
                         <coord x="9000" y="12000"/>
                     </coords>
                     <text>3</text>
                 </object>
-                <object type="4" symbol="23" rotation="0" h_align="1" v_align="2">
+                <object type="4" symbol="24" rotation="0" h_align="1" v_align="2">
                     <coords count="1">
                         <coord x="9000" y="18000"/>
                     </coords>
                     <text>4</text>
                 </object>
-                <object type="4" symbol="23" rotation="0" h_align="1" v_align="2">
+                <object type="4" symbol="24" rotation="0" h_align="1" v_align="2">
                     <coords count="1">
                         <coord x="29998" y="-17974"/>
                     </coords>
                     <text>M45, M50, W21</text>
                 </object>
-                <object type="4" symbol="23" rotation="0" h_align="1" v_align="2">
+                <object type="4" symbol="24" rotation="0" h_align="1" v_align="2">
                     <coords count="1">
                         <coord x="15000" y="-12000"/>
                     </coords>
                     <text>4</text>
                 </object>
-                <object type="0" symbol="22">
+                <object type="0" symbol="23">
                     <coords count="1">
                         <coord x="9000" y="-6000"/>
                     </coords>
                 </object>
-                <object type="0" symbol="82">
+                <object type="0" symbol="83">
                     <coords count="1">
                         <coord x="27000" y="-6000"/>
                     </coords>
                 </object>
-                <object type="0" symbol="48">
+                <object type="0" symbol="49">
                     <coords count="1">
                         <coord x="27000" y="0"/>
                     </coords>
                 </object>
-                <object type="4" symbol="23" rotation="0" h_align="1" v_align="2">
+                <object type="4" symbol="24" rotation="0" h_align="1" v_align="2">
                     <coords count="1">
                         <coord x="33000" y="-12000"/>
                     </coords>
@@ -10171,17 +10192,17 @@ The orientation of the symbol indicates the direction in which the corner points
                         <coord x="30000" y="6000"/>
                     </coords>
                 </object>
-                <object type="0" symbol="83">
+                <object type="0" symbol="84">
                     <coords count="1">
                         <coord x="27000" y="18000"/>
                     </coords>
                 </object>
-                <object type="0" symbol="83">
+                <object type="0" symbol="84">
                     <coords count="1">
                         <coord x="33000" y="-6000"/>
                     </coords>
                 </object>
-                <object type="0" symbol="161">
+                <object type="0" symbol="162">
                     <coords count="1">
                         <coord x="45000" y="6000"/>
                     </coords>
@@ -10191,18 +10212,18 @@ The orientation of the symbol indicates the direction in which the corner points
                         <coord x="30000" y="-12000"/>
                     </coords>
                 </object>
-                <object type="0" symbol="116">
+                <object type="0" symbol="117">
                     <coords count="1">
                         <coord x="33000" y="12000"/>
                     </coords>
                 </object>
-                <object type="4" symbol="24" rotation="0" h_align="1" v_align="2">
+                <object type="4" symbol="25" rotation="0" h_align="1" v_align="2">
                     <coords count="1">
                         <coord x="15000" y="18000"/>
                     </coords>
                     <text>100</text>
                 </object>
-                <object type="0" symbol="199">
+                <object type="0" symbol="200">
                     <coords count="1">
                         <coord x="29998" y="24026"/>
                     </coords>
@@ -10212,41 +10233,41 @@ The orientation of the symbol indicates the direction in which the corner points
                         <coord x="30000" y="12000"/>
                     </coords>
                 </object>
-                <object type="0" symbol="90">
+                <object type="0" symbol="91">
                     <coords count="1">
                         <coord x="27000" y="6000"/>
                     </coords>
                 </object>
-                <object type="4" symbol="23" rotation="0" h_align="1" v_align="2">
+                <object type="4" symbol="24" rotation="0" h_align="1" v_align="2">
                     <coords count="1">
                         <coord x="48000" y="-12000"/>
                     </coords>
                     <text>15 m</text>
                 </object>
-                <object type="4" symbol="24" rotation="0" h_align="1" v_align="2">
+                <object type="4" symbol="25" rotation="0" h_align="1" v_align="2">
                     <coords count="1">
                         <coord x="15000" y="6000"/>
                     </coords>
                     <text>212</text>
                 </object>
-                <object type="4" symbol="24" rotation="0" h_align="1" v_align="2">
+                <object type="4" symbol="25" rotation="0" h_align="1" v_align="2">
                     <coords count="1">
                         <coord x="15000" y="12000"/>
                     </coords>
                     <text>135</text>
                 </object>
-                <object type="4" symbol="23" rotation="0" h_align="1" v_align="2">
+                <object type="4" symbol="24" rotation="0" h_align="1" v_align="2">
                     <coords count="1">
                         <coord x="30000" y="-24000"/>
                     </coords>
                     <text>OpenOrienteering</text>
                 </object>
-                <object type="0" symbol="123">
+                <object type="0" symbol="124">
                     <coords count="1">
                         <coord x="39000" y="18000"/>
                     </coords>
                 </object>
-                <object type="4" symbol="23" rotation="0" h_align="1" v_align="2">
+                <object type="4" symbol="24" rotation="0" h_align="1" v_align="2">
                     <coords count="1">
                         <coord x="9000" y="0"/>
                     </coords>
@@ -10257,7 +10278,7 @@ The orientation of the symbol indicates the direction in which the corner points
                         <coord x="30000" y="0"/>
                     </coords>
                 </object>
-                <object type="4" symbol="207" rotation="0" h_align="1" v_align="2">
+                <object type="4" symbol="208" rotation="0" h_align="1" v_align="2">
                     <coords count="1">
                         <coord x="30000" y="24000"/>
                     </coords>
@@ -10273,7 +10294,7 @@ The orientation of the symbol indicates the direction in which the corner points
                         <coord x="30000" y="24000"/>
                     </coords>
                 </object>
-                <object type="4" symbol="23" rotation="0" h_align="1" v_align="2">
+                <object type="4" symbol="24" rotation="0" h_align="1" v_align="2">
                     <coords count="1">
                         <coord x="9000" y="6000"/>
                     </coords>
@@ -10303,7 +10324,7 @@ The orientation of the symbol indicates the direction in which the corner points
                     </coords>
                     <text>1</text>
                 </object>
-                <object type="0" symbol="83">
+                <object type="0" symbol="84">
                     <coords count="1">
                         <coord x="33000" y="18000"/>
                     </coords>
@@ -10325,6 +10346,16 @@ The orientation of the symbol indicates the direction in which the corner points
                         <coord x="-29960" y="13062"/>
                     </coords>
                     <text>4</text>
+                </object>
+                <object type="0" symbol="22">
+                    <coords count="1">
+                        <coord x="30000" y="-3000"/>
+                    </coords>
+                </object>
+                <object type="0" symbol="22">
+                    <coords count="1">
+                        <coord x="30000" y="15000"/>
+                    </coords>
                 </object>
             </objects>
         </part>
@@ -10363,7 +10394,7 @@ The orientation of the symbol indicates the direction in which the corner points
     </templates>
     <view>
         <grid color="#c0c0c0" display="0" alignment="0" additional_rotation="0" unit="0" h_spacing="3" v_spacing="3" h_offset="0" v_offset="0" snapping_enabled="true"/>
-        <map_view zoom="1.01678" rotation="0" position_x="-8114" position_y="13" grid="true">
+        <map_view zoom="1.01678" rotation="0" position_x="19572" position_y="30080" grid="true">
             <map opacity="1" visible="true"/>
             <templates count="1">
                 <ref template="0" visible="true" opacity="1"/>
