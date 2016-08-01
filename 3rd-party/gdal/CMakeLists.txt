@@ -127,14 +127,14 @@ ExternalProject_Add(
   DOWNLOAD_DIR ${PROJECT_SOURCE_DIR}/download
   URL ${GDAL_URL}
   URL_MD5 ${GDAL_MD5}
-  # Check that the license hasn't changed.
-  UPDATE_COMMAND
-    ${CMAKE_COMMAND} -E compare_files <SOURCE_DIR>/LICENSE.TXT "${GDAL_LICENSE_FILE}"
   PATCH_COMMAND
     cp ${PROJECT_SOURCE_DIR}/patches/config.sub ${PROJECT_SOURCE_DIR}/patches/config.guess <SOURCE_DIR>/
   COMMAND
     find ${PROJECT_SOURCE_DIR}/patches -name gdal-${GDAL_MAJOR_MINOR_REVISION}*.patch -exec patch -p0 -N -i {} +
   CONFIGURE_COMMAND
+    # Check that the license hasn't changed.
+    ${CMAKE_COMMAND} -E compare_files <SOURCE_DIR>/LICENSE.TXT "${GDAL_LICENSE_FILE}"
+  COMMAND
     "<SOURCE_DIR>/configure"
     "--prefix=<INSTALL_DIR>"
     --disable-static
