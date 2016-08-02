@@ -1353,7 +1353,7 @@
     <message>
         <location filename="../src/file_format.cpp" line="87"></location>
         <source>Format (%1) does not support export</source>
-        <translation type="unfinished"></translation>
+        <translation>Format (%1) støtter ikke eksport</translation>
     </message>
 </context>
 <context>
@@ -1526,7 +1526,7 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="338"></location>
         <source>%1 x %2</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 x %2</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="339"></location>
@@ -1621,7 +1621,7 @@
     <message>
         <location filename="../src/core/georeferencing.cpp" line="235"></location>
         <source>Invalid grid scale factor: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Feil skaleringsfaktor for rutenett: %1</translation>
     </message>
     <message>
         <location filename="../src/core/georeferencing.cpp" line="272"></location>
@@ -1686,7 +1686,7 @@
         <location filename="../src/gui/georeferencing_dialog.cpp" line="104"></location>
         <source>Grid scale factor:</source>
         <extracomment>The grid scale factor is the ratio between a length in the grid plane and the corresponding length on the curved earth model. It is applied as a factor to ground distances to get grid plane distances.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Skaleringsfaktor for rutenett:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="152"></location>
@@ -2176,11 +2176,9 @@
     <message numerus="yes">
         <location filename="../src/file_import_export.cpp" line="93"></location>
         <source>Dropped %n irregular object(s).</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>Utelot %n feilaktige objekt(er).</numerusform>
+        <numerusform></numerusform>
+        </translation></message>
     <message>
         <location filename="../src/file_import_export.cpp" line="100"></location>
         <source>Error during symbol post-processing.</source>
@@ -2194,13 +2192,14 @@
     <message>
         <location filename="../src/file_import_export.cpp" line="120"></location>
         <source>Failed to load template '%1', reason: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Klarte ikke å laste bakgrunnsbilde '%1', årsak: %2</translation>
     </message>
     <message>
         <location filename="../src/file_import_export.cpp" line="125"></location>
         <source>Warnings when loading template '%1':
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Advarsler under lasting av bakgrunnsbilde '%1':
+%2</translation>
     </message>
     <message>
         <location filename="../src/file_import_export.cpp" line="132"></location>
@@ -2293,7 +2292,7 @@
     <message>
         <location filename="../src/file_format.cpp" line="79"></location>
         <source>Format (%1) does not support import</source>
-        <translation type="unfinished"></translation>
+        <translation>Format (%1) støtter ikke import</translation>
     </message>
 </context>
 <context>
@@ -3187,127 +3186,127 @@ Skal de importerte dataene omskaleres?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="736"></location>
         <source>Ctrl+A</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+A</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="737"></location>
         <source>Ctrl+Shift+A</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+Shift+A</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="738"></location>
         <source>Ctrl+I</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+I</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="740"></location>
         <source>G</source>
-        <translation type="unfinished"></translation>
+        <translation>G</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="753"></location>
         <source>E</source>
-        <translation type="unfinished">Ø</translation>
+        <translation>Ø</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="754"></location>
         <source>L</source>
-        <translation type="unfinished"></translation>
+        <translation>L</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="755"></location>
         <source>S</source>
-        <translation type="unfinished"></translation>
+        <translation>S</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="756"></location>
         <source>P</source>
-        <translation type="unfinished"></translation>
+        <translation>P</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="757"></location>
         <source>O</source>
-        <translation type="unfinished"></translation>
+        <translation>O</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="758"></location>
         <source>Ctrl+R</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+R</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="759"></location>
         <source>F</source>
-        <translation type="unfinished"></translation>
+        <translation>F</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="760"></location>
         <source>T</source>
-        <translation type="unfinished"></translation>
+        <translation>T</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="762"></location>
         <source>D</source>
-        <translation type="unfinished"></translation>
+        <translation>D</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="763"></location>
         <source>Ctrl+G</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+G</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="764"></location>
         <source>Ctrl+F</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+F</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="765"></location>
         <source>Ctrl+D</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+D</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="766"></location>
         <source>C</source>
-        <translation type="unfinished"></translation>
+        <translation>C</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="767"></location>
         <source>R</source>
-        <translation type="unfinished"></translation>
+        <translation>R</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="768"></location>
         <source>Z</source>
-        <translation type="unfinished"></translation>
+        <translation>Z</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="769"></location>
         <source>K</source>
-        <translation type="unfinished"></translation>
+        <translation>K</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="770"></location>
         <source>H</source>
-        <translation type="unfinished"></translation>
+        <translation>H</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="771"></location>
         <source>M</source>
-        <translation type="unfinished"></translation>
+        <translation>M</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="772"></location>
         <source>U</source>
-        <translation type="unfinished"></translation>
+        <translation>U</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="773"></location>
         <source>N</source>
-        <translation type="unfinished">N</translation>
+        <translation>N</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="774"></location>
         <source>Ctrl+M</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+M</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="843"></location>
@@ -3382,12 +3381,12 @@ Skal de importerte dataene omskaleres?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="942"></location>
         <source>Copy position</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopier posisjon</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="942"></location>
         <source>Copy position to clipboard.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopier posisjon til utklippstavle.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="974"></location>
@@ -4839,7 +4838,7 @@ rull musehjulet for å zoome.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="350"></location>
         <source>Could not load the coordinate reference system '%1'.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kunne ikke laste koordinatreferansesystemet '%1'.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="384"></location>
@@ -4954,7 +4953,7 @@ rull musehjulet for å zoome.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="81"></location>
         <source>In area symbol %1 '%2': %3</source>
-        <translation type="unfinished"></translation>
+        <translation>I flatesymbol %1 '%2': %3</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1520"></location>
@@ -5553,7 +5552,7 @@ rull musehjulet for å zoome.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="105"></location>
         <source>Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Egenskaper</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="179"></location>
@@ -8108,7 +8107,7 @@ Velg et annet navn.</translation>
     <message>
         <location filename="../src/symbol_setting_dialog.cpp" line="103"></location>
         <source>Template:</source>
-        <translation type="unfinished"></translation>
+        <translation>Bakgrunnsbilde:</translation>
     </message>
     <message>
         <location filename="../src/symbol_setting_dialog.cpp" line="104"></location>
@@ -8160,7 +8159,7 @@ to jump over the lazy dog
     <message>
         <location filename="../src/symbol_setting_dialog.cpp" line="483"></location>
         <source>- unnamed -</source>
-        <translation type="unfinished"></translation>
+        <translation>- ikke navngitt -</translation>
     </message>
 </context>
 <context>
@@ -8680,7 +8679,7 @@ Hvis du ikke har til hensikt å endre denne malen, er det ikke noe problem.</tra
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="1010"></location>
         <source>The template will be invisible in the overprinting simulation. Switch to normal view?</source>
-        <translation type="unfinished"></translation>
+        <translation>Dette bakgrunnsbildet vil ikke være synlig ved simulering av overprinting. Bytt til normal visning?</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="1143"></location>
@@ -9165,7 +9164,7 @@ Høyeste støttede versjon er %2.</translation>
         <location filename="../src/util.cpp" line="313"></location>
         <source>See more...</source>
         <extracomment>This "See more" is displayed as a link to the manual in What's-this tooltips.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Se mer...</translation>
     </message>
 </context>
 <context>
