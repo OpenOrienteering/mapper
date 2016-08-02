@@ -19,6 +19,10 @@
  
 cmake_minimum_required(VERSION 2.8.12 FATAL_ERROR)
 cmake_policy(SET CMP0020 OLD)
+if(CMAKE_VERSION VERSION_GREATER 2.9)
+cmake_policy(SET CMP0026 OLD)
+cmake_policy(SET CMP0048 OLD)
+endif()
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
 include(FeatureSummary)
@@ -27,7 +31,7 @@ include(FeatureSummary)
 
 project(Mapper)
 
-set(Mapper_COPYRIGHT "(C) 2012-2015 OpenOrienteering developers")
+set(Mapper_COPYRIGHT "(C) 2012-2016 OpenOrienteering developers")
 
 # All version components must be integers.
 # We use Mapper_VERSION_PATCH >= 99 to mark development builds.
@@ -35,7 +39,7 @@ set(Mapper_VERSION_MAJOR 0)
 set(Mapper_VERSION_MINOR 6)
 if(NOT Mapper_VERSION_PATCH)
 	# This can be configured when running cmake
-	set(Mapper_VERSION_PATCH 3)
+	set(Mapper_VERSION_PATCH 4)
 endif()
 
 set(MAPPER_VERSION_PRI "${PROJECT_SOURCE_DIR}/oo-mapper-version.pri")
@@ -255,7 +259,7 @@ if(Mapper_DEVELOPMENT_BUILD)
 	add_definitions(-DMAPPER_DEVELOPMENT_BUILD)
 	include(EnableSanitize)
 	enable_sanitize(address undefined)
-	configure_file(suppress.txt.in suppress.txt COPY_ONLY)
+	configure_file(suppress.txt.in suppress.txt COPYONLY)
 else()
 	add_definitions(-DQT_NO_DEBUG -DQT_NO_DEBUG_OUTPUT -DQT_NO_WARNING_OUTPUT -DNDEBUG)
 endif()

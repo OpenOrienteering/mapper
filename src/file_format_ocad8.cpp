@@ -1208,9 +1208,8 @@ Template *OCAD8FileImport::importTemplate(OCADCString* ocad_str)
 	
 	if (view)
 	{
-		TemplateVisibility* visibility = view->getTemplateVisibility(templ);
-		visibility->opacity = qMax(0.0, qMin(1.0, 0.01 * (100 - background.dimming)));
-		visibility->visible = background.s;
+		auto opacity = qMax(0.0, qMin(1.0, 0.01 * (100 - background.dimming)));
+		view->setTemplateVisibility(templ, { float(opacity), bool(background.s) });
 	}
 	
 	return templ;

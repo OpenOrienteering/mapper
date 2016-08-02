@@ -97,9 +97,9 @@ void MapTest::importTest_data()
 	QTest::addColumn<QString>("first_file");
 	QTest::addColumn<QString>("imported_file");
 
-	QTest::newRow("complete map, sprint sample")  << "complete map.omap" << "sprint sample.omap";
 	QTest::newRow("complete map, overprinting")   << "complete map.omap" << "overprinting.omap";
 	QTest::newRow("overprinting, forest sample")  << "overprinting.omap" << "forest sample.omap";
+	QTest::newRow("forest sample, complete map")   << "forest sample.omap" << "complete map.omap";
 }
 
 void MapTest::importTest()
@@ -109,7 +109,7 @@ void MapTest::importTest()
 	
 	QString first_path = examples_dir.absoluteFilePath(first_file);
 	Map map;
-	MapView view(&map);
+	MapView view{ &map };
 	QVERIFY(map.loadFrom(first_path, nullptr, &view, false, false));
 	
 	auto original_size = map.getNumObjects();

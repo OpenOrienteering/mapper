@@ -183,6 +183,7 @@ set(Mapper_Common_SRCS
  gui/widgets/symbol_widget.cpp
  gui/widgets/tags_widget.cpp
  gui/widgets/template_list_widget.cpp
+ gui/widgets/text_alignment_widget.cpp
  
  util/item_delegates.cpp
  util/overriding_shortcut.cpp
@@ -257,6 +258,7 @@ set(Mapper_Common_MOC_INPUT
  core/autosave_p.h
  core/georeferencing.h
  core/map_printer.h
+ core/map_view.h
  
  fileformats/ocd_file_export.h
  fileformats/ocd_file_import.h
@@ -296,6 +298,7 @@ set(Mapper_Common_MOC_INPUT
  gui/widgets/symbol_widget.h
  gui/widgets/tags_widget.h
  gui/widgets/template_list_widget.h
+ gui/widgets/text_alignment_widget.h
  
  util/item_delegates.h
  util/overriding_shortcut.h
@@ -360,7 +363,6 @@ add_library(Mapper_Common STATIC
 )
 add_dependencies(Mapper_Common
   Mapper_prerequisites
-  Mapper_Extras
 )
 target_link_libraries(Mapper_Common
   libocad

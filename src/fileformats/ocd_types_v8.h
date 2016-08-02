@@ -84,9 +84,7 @@ namespace Ocd
 	
 	struct BaseSymbolV8
 	{
-		typedef quint32 IndexEntryType;
-		
-		typedef BaseSymbolV8 BaseSymbol;
+		using IndexEntryType = quint32;
 		static const int symbol_number_factor = 10;
 		
 		quint16 size;
@@ -125,8 +123,8 @@ namespace Ocd
 	
 	struct PointSymbolV8
 	{
-		typedef BaseSymbolV8 BaseSymbol;
-		typedef PointSymbolElementV8 Element;
+		using BaseSymbol = BaseSymbolV8;
+		using Element    = PointSymbolElementV8;
 		
 		BaseSymbol base;
 		
@@ -195,8 +193,8 @@ namespace Ocd
 
 	struct LineSymbolV8
 	{
-		typedef BaseSymbolV8 BaseSymbol;
-		typedef PointSymbolElementV8 Element;
+		using BaseSymbol = BaseSymbolV8;
+		using Element    = PointSymbolElementV8;
 		
 		BaseSymbol base;
 		
@@ -214,8 +212,8 @@ namespace Ocd
 		quint16 hatch_dist;
 		qint16  hatch_angle_1;
 		qint16  hatch_angle_2;
-		quint8  fill_on_V9;         /// \since V12
-		quint8  border_on_V9;       /// \since V12
+		quint8  fill_on_V9;         /// \since V9
+		quint8  border_on_V9;       /// \since V9
 		quint8  structure_mode;
 		quint8  structure_draw_V12; /// \since V12
 		quint16 structure_width;
@@ -225,8 +223,8 @@ namespace Ocd
 	
 	struct AreaSymbolV8
 	{
-		typedef BaseSymbolV8 BaseSymbol;
-		typedef PointSymbolElementV8 Element;
+		using BaseSymbol = BaseSymbolV8;
+		using Element    = PointSymbolElementV8;
 		
 		BaseSymbol base;
 		
@@ -286,7 +284,7 @@ namespace Ocd
 
 	struct TextSymbolV8
 	{
-		typedef BaseSymbolV8 BaseSymbol;
+		using BaseSymbol = BaseSymbolV8;
 		
 		BaseSymbol base;
 		
@@ -297,9 +295,9 @@ namespace Ocd
 		FramingAttributesV8     framing;
 	};
 	
-	struct LineTextSymbolV8 // TODO: use and test...
+	struct LineTextSymbolV8 /// \todo use and test...
 	{
-		typedef BaseSymbolV8 BaseSymbol;
+		using BaseSymbol = BaseSymbolV8;
 		
 		BaseSymbol base;
 		
@@ -310,7 +308,7 @@ namespace Ocd
 	
 	struct RectangleSymbolV8
 	{
-		typedef BaseSymbolV8 BaseSymbol;
+		using BaseSymbol = BaseSymbolV8;
 		
 		BaseSymbol base;
 		
@@ -339,9 +337,9 @@ namespace Ocd
 	
 	struct ObjectV8
 	{
-		typedef ObjectIndexEntryV8 IndexEntryType;
+		using IndexEntryType = ObjectIndexEntryV8;
 		
-		qint16  symbol;
+		quint16 symbol;
 		quint8  type;
 		quint8  unicode;
 		quint16 num_items;
@@ -433,23 +431,16 @@ namespace Ocd
 	/** OCD file format version 8 trait. */
 	struct FormatV8
 	{
-		static constexpr int version() { return 8; }
-		
-		typedef FileHeaderV8 FileHeader;
-		
-		typedef SymbolHeaderV8 SymbolHeader;
-		
-		typedef BaseSymbolV8 BaseSymbol;
-		typedef PointSymbolV8 PointSymbol;
-		typedef LineSymbolV8 LineSymbol;
-		typedef AreaSymbolV8 AreaSymbol;
-		typedef TextSymbolV8 TextSymbol;
-		typedef LineTextSymbolV8 LineTextSymbol;
-		typedef RectangleSymbolV8 RectangleSymbol;
-		
-		typedef ObjectV8 Object;
-		
-		typedef Custom8BitEncoding Encoding;
+		using FileHeader      = FileHeaderV8;
+		using BaseSymbol      = BaseSymbolV8;
+		using PointSymbol     = PointSymbolV8;
+		using LineSymbol      = LineSymbolV8;
+		using AreaSymbol      = AreaSymbolV8;
+		using TextSymbol      = TextSymbolV8;
+		using LineTextSymbol  = LineTextSymbolV8;
+		using RectangleSymbol = RectangleSymbolV8;
+		using Object          = ObjectV8;
+		using Encoding        = Custom8BitEncoding;
 	};
 }
 

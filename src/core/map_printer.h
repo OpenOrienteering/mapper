@@ -326,7 +326,7 @@ public slots:
 	/** Controls whether to print templates. 
 	 *  If a MapView is given when enabling template printing, 
 	 *  it will determine the visibility of map and templates. */
-	void setPrintTemplates(const bool visible, const MapView* view = nullptr);
+	void setPrintTemplates(const bool visible);
 	
 	/** Controls whether to print the map grid. */
 	void setPrintGrid(const bool visible);

@@ -454,7 +454,7 @@ Magnetické poledníky mohou být přerušeny tam, kde by zakrývaly malé objek
 
 Vystřihněte otvory ve vzoru pro vytvoření těchto přerušení.
 
-Barva: černá nebo modrá.</description><area_symbol inner_color="-1" min_area="0" patterns="1"><pattern type="1" angle="1.5708" rotatable="true" line_spacing="30000" line_offset="0" offset_along_line="0" color="2" line_width="140"/></area_symbol></symbol><symbol type="2" id="146" code="601.0.4" name="Magnetický poledník, modrý"><description>Magnetické poledníky jsou čáry umístěné na mapu tak, aby směřovaly k magnetickému severu. Jejich rozestup musí být 30 mm na mapě 1 : 5 000 a 37,5 mm na mapě 1 : 4 000, takže v obou měřítcích vyjadřuje 150 m ve skutečnosti.
+Barva: černá nebo modrá.</description><area_symbol inner_color="-1" min_area="0" patterns="1"><pattern type="1" angle="1.5708" rotatable="true" line_spacing="37500" line_offset="0" offset_along_line="0" color="2" line_width="140"/></area_symbol></symbol><symbol type="2" id="146" code="601.0.4" name="Magnetický poledník, modrý"><description>Magnetické poledníky jsou čáry umístěné na mapu tak, aby směřovaly k magnetickému severu. Jejich rozestup musí být 30 mm na mapě 1 : 5 000 a 37,5 mm na mapě 1 : 4 000, takže v obou měřítcích vyjadřuje 150 m ve skutečnosti.
 
 Magnetické poledníky mohou být přerušeny tam, kde by zakrývaly malé objekty, jako balvany, kupky, srázy, větvení potoků, konce cest a podobně. {Magnetické poledníky musejí být na celé mapě kresleny stejnou barvou. Volba barvy musí zohlednit požadavek čitelnosti mapy.}
 
@@ -470,7 +470,7 @@ Magnetické poledníky mohou být přerušeny tam, kde by zakrývaly malé objek
 
 Vystřihněte otvory ve vzoru pro vytvoření těchto přerušení.
 
-Barva: černá nebo modrá.</description><area_symbol inner_color="-1" min_area="0" patterns="1"><pattern type="1" angle="1.5708" rotatable="true" line_spacing="30000" line_offset="0" offset_along_line="0" color="11" line_width="180"/></area_symbol></symbol><symbol type="1" id="149" code="602" name="Registrační značky (Cyan)"><description>Uvnitř rámu mapy musí být umístěny v nesouměrných pozicích nejméně tři registrační značky {pro kontrolu soutisku}. Navíc má být umožněna i kontrola barev. {Pro tento účel jsou vhodné například nepřekrývající se kruhové výseče pro každou barvu se společným středem ve středu křížku.}
+Barva: černá nebo modrá.</description><area_symbol inner_color="-1" min_area="0" patterns="1"><pattern type="1" angle="1.5708" rotatable="true" line_spacing="37500" line_offset="0" offset_along_line="0" color="11" line_width="180"/></area_symbol></symbol><symbol type="1" id="149" code="602" name="Registrační značky (Cyan)"><description>Uvnitř rámu mapy musí být umístěny v nesouměrných pozicích nejméně tři registrační značky {pro kontrolu soutisku}. Navíc má být umožněna i kontrola barev. {Pro tento účel jsou vhodné například nepřekrývající se kruhové výseče pro každou barvu se společným středem ve středu křížku.}
 
 Barva: všechny tištěné barvy.
 

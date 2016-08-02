@@ -1009,9 +1009,9 @@ void Map::drawTemplates(QPainter* painter, QRectF bounding_box, int first_templa
 		float opacity = 1.0f;
 		if (view)
 		{
-			const TemplateVisibility* visibility = view->getTemplateVisibility(temp);
-			visible &= visibility->visible;
-			opacity  = visibility->opacity;
+			auto visibility = view->getTemplateVisibility(temp);
+			visible &= visibility.visible;
+			opacity  = visibility.opacity;
 			scale   *= view->getZoom();
 		}
 		if (visible)
@@ -1857,20 +1857,13 @@ void Map::setTemplate(Template* temp, int pos)
 	emit(templateChanged(pos, templates[pos]));
 }
 
-void Map::addTemplate(Template* temp, int pos, MapView* view)
+void Map::addTemplate(Template* temp, int pos)
 {
 	templates.insert(templates.begin() + pos, temp);
 	if (templates.size() == 1)
 	{
 		// This is the first template - the help text in the map widget(s) should be updated
 		updateAllMapWidgets();
-	}
-	
-	if (view)
-	{
-		TemplateVisibility* vis = view->getTemplateVisibility(temp);
-		vis->visible = true;
-		vis->opacity = 1;
 	}
 	
 	emit(templateAdded(pos, temp));
@@ -1880,20 +1873,14 @@ void Map::removeTemplate(int pos)
 {
 	TemplateVector::iterator it = templates.begin() + pos;
 	Template* temp = *it;
-	
-	// Delete visibility information for the template from all views - get the views indirectly by iterating over all widgets
-	for (MapWidget* widget : widgets)
-		widget->getMapView()->deleteTemplateVisibility(temp);
-	
 	templates.erase(it);
-	
 	if (templates.empty())
 	{
 		// That was the last template - the help text in the map widget(s) should maybe be updated (if there are no objects)
 		updateAllMapWidgets();
 	}
 	
-	emit(templateDeleted(pos, temp));
+	emit templateDeleted(pos, temp);
 }
 
 void Map::deleteTemplate(int pos)
@@ -1974,7 +1961,7 @@ void Map::closeTemplate(int i)
 		emit closedTemplateAvailabilityChanged();
 }
 
-bool Map::reloadClosedTemplate(int i, int target_pos, QWidget* dialog_parent, MapView* view, const QString& map_path)
+bool Map::reloadClosedTemplate(int i, int target_pos, QWidget* dialog_parent, const QString& map_path)
 {
 	Template* temp = closed_templates[i];
 	
@@ -1992,7 +1979,7 @@ bool Map::reloadClosedTemplate(int i, int target_pos, QWidget* dialog_parent, Ma
 	if (temp->getTemplateState() == Template::Loaded)
 	{
 		closed_templates.erase(closed_templates.begin() + i);
-		addTemplate(temp, target_pos, view);
+		addTemplate(temp, target_pos);
 		temp->setTemplateAreaDirty();
 		setTemplatesDirty();
 		if (closed_templates.size() == 0)

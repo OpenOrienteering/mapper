@@ -68,6 +68,19 @@ namespace ogr
 	/** A convenience class for OGR C API feature handles, similar to std::unique_ptr. */
 	using unique_feature = std::unique_ptr<typename std::remove_pointer<OGRFeatureH>::type, OGRFeatureHDeleter>;
 	
+	
+	class OGRGeometryHDeleter
+	{
+	public:
+		void operator()(OGRGeometryH geometry) const
+		{
+			OGR_G_DestroyGeometry(geometry);
+		}
+	};
+	
+	/** A convenience class for OGR C API geometry handles, similar to std::unique_ptr. */
+	using unique_geometry = std::unique_ptr<typename std::remove_pointer<OGRGeometryH>::type, OGRGeometryHDeleter>;
+	
 }
 
 namespace
@@ -338,8 +351,8 @@ void OgrFileImport::import(bool load_symbols_only)
 	auto data_source = ogr::unique_datasource(OGROpen(filename.toLatin1(), 0, nullptr));
 	if (data_source == nullptr)
 	{
-		throw FileFormatException(Importer::tr("Could not read '%1'")
-		                          .arg(filename));
+		throw FileFormatException(Importer::tr("Could not read '%1': %2")
+		                          .arg(filename, QString::fromLatin1(CPLGetLastErrorMsg())));
 	}
 	
 	empty_geometries = 0;
@@ -352,6 +365,12 @@ void OgrFileImport::import(bool load_symbols_only)
 
 	if (!load_symbols_only)
 	{
+		if (!drawing_from_projected)
+		{
+			Q_ASSERT(MapCoord::boundsOffset().isZero());
+			MapCoord::boundsOffset().reset(true);
+		}
+		
 		auto num_layers = OGR_DS_GetLayerCount(data_source.get());
 		for (int i = 0; i < num_layers; ++i)
 		{
@@ -382,6 +401,11 @@ void OgrFileImport::import(bool load_symbols_only)
 			}
 				
 			importLayer(part, layer);
+		}
+		
+		if (!drawing_from_projected)
+		{
+			MapCoord::boundsOffset().reset(false);
 		}
 	}
 	
@@ -434,7 +458,6 @@ void OgrFileImport::importLayer(MapPart* map_part, OGRLayerH layer)
 			continue;
 		}
 		
-		OGR_G_FlattenTo2D(geometry);
 		importFeature(map_part, feature_definition, feature.get(), geometry);
 	}
 }
@@ -589,7 +612,12 @@ Object* OgrFileImport::importPointGeometry(MapPart* map_part, OGRFeatureH featur
 
 PathObject* OgrFileImport::importLineStringGeometry(MapPart* map_part, OGRFeatureH feature, OGRGeometryH geometry)
 {
-	geometry = OGR_G_ForceToLineString(geometry);
+	auto managed_geometry = ogr::unique_geometry(nullptr);
+	if (OGR_G_GetGeometryType(geometry) != wkbLineString)
+	{
+		geometry = OGR_G_ForceToLineString(OGR_G_Clone(geometry));
+		managed_geometry.reset(geometry);
+	}
 	
 	auto num_points = OGR_G_GetPointCount(geometry);
 	if (num_points < 2)
@@ -617,7 +645,13 @@ PathObject* OgrFileImport::importPolygonGeometry(MapPart* map_part, OGRFeatureH 
 		return nullptr;
 	}
 	
-	auto outline = OGR_G_ForceToLineString(OGR_G_GetGeometryRef(geometry, 0));
+	auto outline = OGR_G_GetGeometryRef(geometry, 0);
+	auto managed_outline = ogr::unique_geometry(nullptr);
+	if (OGR_G_GetGeometryType(outline) != wkbLineString)
+	{
+		outline = OGR_G_ForceToLineString(OGR_G_Clone(outline));
+		managed_outline.reset(outline);
+	}
 	auto num_points = OGR_G_GetPointCount(outline);
 	if (num_points < 3)
 	{
@@ -1027,7 +1061,7 @@ AreaSymbol* OgrFileImport::getSymbolForBrush(OGRStyleToolH tool, const QByteArra
 
 MapCoord OgrFileImport::fromDrawing(double x, double y) const
 {
-	return { x, -y };
+	return MapCoord::load(x, y, 0);
 }
 
 MapCoord OgrFileImport::fromProjected(double x, double y) const

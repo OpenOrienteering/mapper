@@ -24,7 +24,7 @@
 #include <QRectF>
 
 #include "../map.h"
-#include "../map_widget.h"
+#include "../template.h"
 #include "../util.h"
 #include "../util/xml_stream_util.h"
 
@@ -50,23 +50,31 @@ const double MapView::zoom_in_limit = 512;
 const double MapView::zoom_out_limit = 1 / 16.0;
 
 
-MapView::MapView(Map* map)
- : map{ map }
- , zoom{ 1.0 }
- , rotation{ 0.0 }
- , map_visibility{ new TemplateVisibility { 1.0f, true } }
- , all_templates_hidden{ false }
- , grid_visible{ false }
- , overprinting_simulation_enabled{ false }
+MapView::MapView(QObject* parent, Map* map)
+: QObject  { parent }
+, map      { map }
+, zoom     { 1.0 }
+, rotation { 0.0 }
+, map_visibility{ 1.0f, true }
+, all_templates_hidden{ false }
+, grid_visible{ false }
+, overprinting_simulation_enabled{ false }
 {
-	updateTransform(NoChange);
+	Q_ASSERT(map);
+	updateTransform();
+	connect(map, &Map::templateAdded, this, &MapView::onTemplateAdded);
+	connect(map, &Map::templateDeleted, this, &MapView::onTemplateDeleted, Qt::QueuedConnection);
+}
+
+MapView::MapView(Map* map)
+: MapView { map, map }
+{
+	// nothing else
 }
 
 MapView::~MapView()
 {
-	for (auto vis : template_visibilities)
-		delete vis;
-	delete map_visibility;
+	// nothing, not inlined
 }
 
 #ifndef NO_NATIVE_FILE_FORMAT
@@ -92,12 +100,12 @@ void MapView::load(QIODevice* file, int version)
 		// leave center_pos unchanged
 	}
 	
-	updateTransform(CenterChange | ZoomChange | RotationChange);
+	updateTransform();
 	
 	if (version >= 26)
 	{
-		file->read((char*)&map_visibility->visible, sizeof(bool));
-		file->read((char*)&map_visibility->opacity, sizeof(float));
+		file->read((char*)&map_visibility.visible, sizeof(bool));
+		file->read((char*)&map_visibility.opacity, sizeof(float));
 	}
 	
 	int num_template_visibilities;
@@ -108,9 +116,10 @@ void MapView::load(QIODevice* file, int version)
 		int pos;
 		file->read((char*)&pos, sizeof(int));
 		
-		TemplateVisibility* vis = getTemplateVisibility(map->getTemplate(pos));
-		file->read((char*)&vis->visible, sizeof(bool));
-		file->read((char*)&vis->opacity, sizeof(float));
+		TemplateVisibility vis;
+		file->read((char*)&vis.visible, sizeof(bool));
+		file->read((char*)&vis.opacity, sizeof(float));
+		setTemplateVisibilityHelper(map->getTemplate(pos), vis);
 	}
 	
 	if (version >= 29)
@@ -118,11 +127,14 @@ void MapView::load(QIODevice* file, int version)
 	
 	if (version >= 24)
 		file->read((char*)&grid_visible, sizeof(bool));
+	
+	emit viewChanged(CenterChange | ZoomChange | RotationChange);
+	emit visibilityChanged(MultipleFeatures, true);
 }
 
 #endif
 
-void MapView::save(QXmlStreamWriter& xml, const QLatin1String& element_name) const
+void MapView::save(QXmlStreamWriter& xml, const QLatin1String& element_name, bool template_details) const
 {
 	XmlElementWriter mapview_element(xml, element_name);
 	mapview_element.writeAttribute(literal::zoom, zoom);
@@ -134,21 +146,23 @@ void MapView::save(QXmlStreamWriter& xml, const QLatin1String& element_name) con
 	
 	{
 		XmlElementWriter map_element(xml, literal::map);
-		map_element.writeAttribute(literal::opacity, map_visibility->opacity);
-		map_element.writeAttribute(literal::visible, map_visibility->visible);
+		map_element.writeAttribute(literal::opacity, map_visibility.opacity);
+		map_element.writeAttribute(literal::visible, map_visibility.visible);
 	}
 	
 	{
 		XmlElementWriter templates_element(xml, literal::templates);
 		templates_element.writeAttribute(literal::hidden, all_templates_hidden);
-		templates_element.writeAttribute(XmlStreamLiteral::count, template_visibilities.size());
-		
-		for (auto it = template_visibilities.constBegin(), last = template_visibilities.constEnd(); it != last; ++it)
+		if (template_details)
 		{
-			XmlElementWriter ref_element(xml, literal::ref);
-			ref_element.writeAttribute(literal::template_string, map->findTemplateIndex(it.key()));
-			ref_element.writeAttribute(literal::visible, (*it)->visible);
-			ref_element.writeAttribute(literal::opacity, (*it)->opacity);
+			templates_element.writeAttribute(XmlStreamLiteral::count, template_visibilities.size());
+			for (auto entry : template_visibilities)
+			{
+				XmlElementWriter ref_element(xml, literal::ref);
+				ref_element.writeAttribute(literal::template_string, map->findTemplateIndex(entry.temp));
+				ref_element.writeAttribute(literal::visible, entry.visible);
+				ref_element.writeAttribute(literal::opacity, entry.opacity);
+			}
 		}
 	}
 }
@@ -156,8 +170,8 @@ void MapView::save(QXmlStreamWriter& xml, const QLatin1String& element_name) con
 void MapView::load(QXmlStreamReader& xml)
 {
 	XmlElementReader mapview_element(xml);
-	zoom = mapview_element.attribute<double>(literal::zoom);
-	if (zoom < 0.001)
+	zoom = qMin(mapview_element.attribute<double>(literal::zoom), zoom_in_limit);
+	if (zoom < zoom_out_limit)
 		zoom = 1.0;
 	rotation = mapview_element.attribute<double>(literal::rotation);
 	
@@ -171,28 +185,27 @@ void MapView::load(QXmlStreamReader& xml)
 	{
 		// leave center_pos unchanged
 	}
+	updateTransform();
 	
 	grid_visible = mapview_element.attribute<bool>(literal::grid);
 	overprinting_simulation_enabled = mapview_element.attribute<bool>(literal::overprinting_simulation_enabled);
-	updateTransform(CenterChange | ZoomChange | RotationChange);
 	
 	while (xml.readNextStartElement())
 	{
 		if (xml.name() == literal::map)
 		{
 			XmlElementReader map_element(xml);
-			map_visibility->opacity = map_element.attribute<float>(literal::opacity);
+			map_visibility.opacity = map_element.attribute<float>(literal::opacity);
 			if (map_element.hasAttribute(literal::visible))
-				map_visibility->visible = map_element.attribute<bool>(literal::visible);
+				map_visibility.visible = map_element.attribute<bool>(literal::visible);
 			else
-				map_visibility->visible = true;
+				map_visibility.visible = true;
 		}
 		else if (xml.name() == literal::templates)
 		{
 			XmlElementReader templates_element(xml);
-			int num_template_visibilities = templates_element.attribute<int>(XmlStreamLiteral::count);
-			if (num_template_visibilities > 0)
-				template_visibilities.reserve(qMin(num_template_visibilities, 20)); // 20 is not a limit
+			auto num_template_visibilities = templates_element.attribute<unsigned int>(XmlStreamLiteral::count);
+			template_visibilities.reserve(qBound(20u, num_template_visibilities, 1000u));
 			all_templates_hidden = templates_element.attribute<bool>(literal::hidden);
 			
 			while (xml.readNextStartElement())
@@ -203,9 +216,11 @@ void MapView::load(QXmlStreamReader& xml)
 					int pos = ref_element.attribute<int>(literal::template_string);
 					if (pos >= 0 && pos < map->getNumTemplates())
 					{
-						TemplateVisibility* vis = getTemplateVisibility(map->getTemplate(pos));
-						vis->visible = ref_element.attribute<bool>(literal::visible);
-						vis->opacity = ref_element.attribute<float>(literal::opacity);
+						TemplateVisibility vis { 
+						  qBound(0.0f, ref_element.attribute<float>(literal::opacity), 1.0f),
+						  ref_element.attribute<bool>(literal::visible)
+						};
+						setTemplateVisibilityHelper(map->getTemplate(pos), vis);
 					}
 				}
 				else
@@ -215,24 +230,14 @@ void MapView::load(QXmlStreamReader& xml)
 		else
 			xml.skipCurrentElement(); // unsupported
 	}
-}
-
-void MapView::addMapWidget(MapWidget* widget)
-{
-	widgets.push_back(widget);
-	map->addMapWidget(widget);
-}
-
-void MapView::removeMapWidget(MapWidget* widget)
-{
-	widgets.erase(std::remove(widgets.begin(), widgets.end(), widget), widgets.end());
-	map->removeMapWidget(widget);
+	
+	emit viewChanged(CenterChange | ZoomChange | RotationChange);
+	emit visibilityChanged(MultipleFeatures, true);
 }
 
 void MapView::updateAllMapWidgets()
 {
-	for (auto widget : widgets)
-		widget->updateEverything();
+	emit visibilityChanged(MultipleFeatures, true);
 }
 
 MapCoord MapView::viewToMap(double x, double y) const
@@ -302,8 +307,7 @@ void MapView::setPanOffset(QPoint offset)
 	if (offset != pan_offset)
 	{
 		pan_offset = offset;
-		for (auto widget : widgets)
-			widget->setPanOffset(pan_offset);
+		emit panOffsetChanged(offset);
 	}
 }
 
@@ -325,22 +329,16 @@ void MapView::finishPanning(QPoint offset)
 	}
 }
 
-void MapView::zoomSteps(float num_steps, bool preserve_cursor_pos, QPointF cursor_pos_view)
+void MapView::zoomSteps(double num_steps, QPointF cursor_pos_view)
 {
 	auto zoom_to = getZoom() * pow(sqrt(2.0), num_steps);
-	
-	if (preserve_cursor_pos)
-	{
-		setZoom(zoom_to, cursor_pos_view);
-	}
-	else
-	{
-		setZoom(zoom_to);
-		
-		auto mouse_pos_map = viewToMapF(cursor_pos_view);
-		for (auto widget : widgets)
-			widget->updateCursorposLabel(mouse_pos_map);
-	}
+	setZoom(zoom_to, cursor_pos_view);
+}
+
+void MapView::zoomSteps(double num_steps)
+{
+	auto zoom_to = getZoom() * pow(sqrt(2.0), num_steps);
+	setZoom(zoom_to);
 }
 
 void MapView::setZoom(double value, QPointF center)
@@ -361,22 +359,25 @@ void MapView::setZoom(double value, QPointF center)
 void MapView::setZoom(double value)
 {
 	zoom = qBound(zoom_out_limit, value, zoom_in_limit);
-	updateTransform(ZoomChange);
+	updateTransform();
+	emit viewChanged(ZoomChange);
 }
 
-void MapView::setRotation(float value)
+void MapView::setRotation(double value)
 {
 	rotation = value;
-	updateTransform(RotationChange);
+	updateTransform();
+	emit viewChanged(RotationChange);
 }
 
 void MapView::setCenter(MapCoord pos)
 {
 	center_pos = pos;
-	updateTransform(CenterChange);
+	updateTransform();
+	emit viewChanged(CenterChange);
 }
 
-void MapView::updateTransform(ChangeFlags change)
+void MapView::updateTransform()
 {
 	double final_zoom = calculateFinalZoomFactor();
 	double final_zoom_cosr = final_zoom * cos(rotation);
@@ -390,71 +391,101 @@ void MapView::updateTransform(ChangeFlags change)
 	                      0, 0, 1);
 	view_to_map     = map_to_view.inverted();
 	world_transform = map_to_view.transposed();
-	
-	for (auto widget : widgets)
-		widget->viewChanged(change);
 }
 
-const TemplateVisibility* MapView::effectiveMapVisibility() const
+
+TemplateVisibility MapView::effectiveMapVisibility() const
 {
-	static TemplateVisibility opaque    { 1.0f, true };
-	static TemplateVisibility invisible { 0.0f, false };
 	if (all_templates_hidden)
-		return &opaque;
-	else if (map_visibility->opacity < 0.005f)
-		return &invisible;
+		return { 1.0f, true };
+	else if (map_visibility.opacity < 0.005f)
+		return { 0.0f, false };
 	else
 		return map_visibility;
 }
 
-TemplateVisibility* MapView::getMapVisibility()
+void MapView::setMapVisibility(TemplateVisibility vis)
 {
-	return map_visibility;
+	if (map_visibility != vis)
+	{
+		map_visibility = vis;
+		emit visibilityChanged(VisibilityFeature::MapVisible, vis.visible && vis.opacity > 0, nullptr);
+	}
+}
+
+MapView::TemplateVisibilityVector::const_iterator MapView::findVisibility(const Template* temp) const
+{
+	return std::find_if(begin(template_visibilities), end(template_visibilities), [temp](const TemplateVisibilityEntry& entry)
+	{
+		return entry.temp == temp;
+	} );
+}
+
+MapView::TemplateVisibilityVector::iterator MapView::findVisibility(const Template* temp)
+{
+	return std::find_if(begin(template_visibilities), end(template_visibilities), [temp](const TemplateVisibilityEntry& entry)
+	{
+		return entry.temp == temp;
+	} );
 }
 
 bool MapView::isTemplateVisible(const Template* temp) const
 {
-	if (template_visibilities.contains(temp))
-	{
-		const TemplateVisibility* vis = template_visibilities.value(temp);
-		return vis->visible && vis->opacity > 0;
-	}
+	auto entry = findVisibility(temp);
+	return entry != end(template_visibilities)
+	       && entry->visible
+	       && entry->opacity > 0;
+}
+
+TemplateVisibility MapView::getTemplateVisibility(const Template* temp) const
+{
+	auto entry = findVisibility(temp);
+	if (entry != end(template_visibilities)) 
+		return *entry;
 	else
-		return false;
+		return { 1.0f, false };
 }
 
-const TemplateVisibility* MapView::getTemplateVisibility(const Template* temp) const
+void MapView::setTemplateVisibility(const Template* temp, TemplateVisibility vis)
 {
-	if (!template_visibilities.contains(temp))
+	if (setTemplateVisibilityHelper(temp, vis))
+		emit visibilityChanged(VisibilityFeature::TemplateVisible, vis.visible && vis.opacity > 0, temp);
+}
+
+bool MapView::setTemplateVisibilityHelper(const Template *temp, TemplateVisibility vis)
+{
+	auto stored = findVisibility(temp);
+	if (stored == end(template_visibilities)) 
 	{
-		static const TemplateVisibility dummy { 1.0f, false };
-		return &dummy;
+		template_visibilities.emplace_back(temp, vis);
+		return true;
 	}
-	return template_visibilities.value(temp);
-}
-
-TemplateVisibility* MapView::getTemplateVisibility(const Template* temp)
-{
-	if (!template_visibilities.contains(temp))
+	if (*stored != vis)
 	{
-		template_visibilities.insert(temp, new TemplateVisibility { 1.0, true });
+		stored->opacity = vis.opacity;
+		stored->visible = vis.visible;
+		return true;
 	}
-	
-	return const_cast<TemplateVisibility*>(static_cast<const MapView*>(this)->getTemplateVisibility(temp));
+	return false;
 }
 
-void MapView::deleteTemplateVisibility(const Template* temp)
+void MapView::onTemplateAdded(int, const Template* temp)
 {
-	delete template_visibilities.value(temp);
-	template_visibilities.remove(temp);
+	setTemplateVisibility(temp, { 1.0f, true });
 }
 
-void MapView::setHideAllTemplates(bool value)
+void MapView::onTemplateDeleted(int, const Template* temp)
+{
+	template_visibilities.erase(findVisibility(temp));
+}
+
+
+void MapView::setAllTemplatesHidden(bool value)
 {
 	if (all_templates_hidden != value)
 	{
 		all_templates_hidden = value;
-		updateAllMapWidgets();
+		emit visibilityChanged(VisibilityFeature::AllTemplatesHidden, value);
 	}
 }
 
@@ -463,7 +494,7 @@ void MapView::setGridVisible(bool visible)
 	if (grid_visible != visible)
 	{
 		grid_visible = visible;
-		updateAllMapWidgets();
+		emit visibilityChanged(VisibilityFeature::GridVisible, visible);
 	}
 }
 
@@ -472,6 +503,6 @@ void MapView::setOverprintingSimulationEnabled(bool enabled)
 	if (overprinting_simulation_enabled != enabled)
 	{
 		overprinting_simulation_enabled = enabled;
-		updateAllMapWidgets();
+		emit visibilityChanged(VisibilityFeature::OverprintingEnabled, enabled);
 	}
 }

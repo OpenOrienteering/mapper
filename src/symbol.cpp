@@ -354,7 +354,7 @@ QImage Symbol::createIcon(const Map* map, int side_length, bool antialiasing, in
 	// const_cast promise: We won't change the colors, thus we won't change map.
 	icon_map.useColorsFrom(const_cast<Map*>(map));
 	icon_map.setScaleDenominator(map->getScaleDenominator());
-	MapView view(&icon_map);
+	MapView view{ &icon_map };
 	
 	// If the icon is bigger than the rectangle with this zoom factor, it is zoomed out to fit into the rectangle
 	view.setZoom(best_zoom);

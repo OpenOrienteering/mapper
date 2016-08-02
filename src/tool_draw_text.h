@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2013, 2014 Kai Pastor
+ *    Copyright 2012-2016 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -19,111 +19,71 @@
  */
 
 
-#ifndef _OPENORIENTEERING_DRAW_TEXT_H_
-#define _OPENORIENTEERING_DRAW_TEXT_H_
+#ifndef OPENORIENTEERING_DRAW_TEXT_TOOL_H
+#define OPENORIENTEERING_DRAW_TEXT_TOOL_H
 
-#include <QDockWidget>
+#include "tool_base.h"
 
-#include "tool.h"
+#include <memory>
 
-QT_BEGIN_NAMESPACE
-class QPushButton;
-QT_END_NAMESPACE
+#include "renderable.h"
+
 
 class TextObject;
-struct TextObjectLineInfo;
 class TextObjectEditorHelper;
-class TextObjectAlignmentDockWidget;
 class MapRenderables;
 class Symbol;
 
 /**
  * Tool to draw text objects.
  */
-class DrawTextTool : public MapEditorTool
+class DrawTextTool : public MapEditorToolBase
 {
 Q_OBJECT
 public:
 	DrawTextTool(MapEditorController* editor, QAction* tool_action);
-	virtual ~DrawTextTool();
+	~DrawTextTool() override;
 	
-	virtual void init();
-	virtual const QCursor& getCursor() const;
-	
-	virtual bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
-	virtual bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
-	virtual bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
-	void leaveEvent(QEvent* event);
-	
-	virtual bool keyPressEvent(QKeyEvent* event);
-	virtual bool keyReleaseEvent(QKeyEvent* event);
-	
-	virtual void draw(QPainter* painter, MapWidget* widget);
-	
-	virtual void finishEditing();
-	
-protected slots:
 	void setDrawingSymbol(const Symbol* symbol);
 	
-	void selectionChanged(bool text_change);
-	
 protected:
-	void updateDirtyRect();
-	void updateStatusText();
+	void initImpl() override;
 	
-	void updatePreviewText();
-	void deletePreviewText();
-	void setPreviewLetter();
+	void objectSelectionChangedImpl() override;
+	
+	void startEditing();
+	void selectionChanged();
 	void abortEditing();
+	void finishEditing() override;
+	
+	bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
+	bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
+	bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
+	
+	bool keyPressEvent(QKeyEvent* event) override;
+	bool keyReleaseEvent(QKeyEvent* event) override;
+	
+	void mouseMove() override;
+	void clickPress() override;
+	void clickRelease() override;
+	void dragMove() override;
+	void dragFinish() override;
+	
+	bool keyPress(QKeyEvent* event) override;
+	bool keyRelease(QKeyEvent* event) override;
+	
+	void leaveEvent(QEvent* event) override;
+	
+	void setPreviewLetter();
+	void updatePreviewText();
+	int updateDirtyRectImpl(QRectF& rect) override;
+	void drawImpl(QPainter* painter, MapWidget* widget) override;
+	void updateStatusText() override;
 	
 	const Symbol* drawing_symbol;
-	
-	QPoint click_pos;
-	MapCoordF click_pos_map;
-	QPoint cur_pos;
-	MapCoordF cur_pos_map;
-	bool dragging;
-	
-	TextObject* preview_text;
-	TextObjectEditorHelper* text_editor;
-	
-	QScopedPointer<MapRenderables> renderables;
-};
-
-/**
- * Widget which is shown while the DrawTextTool is active, allowing the set
- * the text alignment.
- */
-class TextObjectAlignmentDockWidget : public QDockWidget
-{
-Q_OBJECT
-public:
-	TextObjectAlignmentDockWidget(TextObject* object, int horz_default, int vert_default, TextObjectEditorHelper* text_editor, QWidget* parent);
-	virtual QSize sizeHint() const {return QSize(10, 10);}
-	
-	virtual bool event(QEvent* event);
-	virtual void keyPressEvent(QKeyEvent* event);
-	virtual void keyReleaseEvent(QKeyEvent* event);
-	
-signals:
-	void alignmentChanged(int horz, int vert);
-	
-public slots:
-	void horzClicked(int index);
-	void vertClicked(int index);
-	
-private:
-	void addHorzButton(int index, const QString& icon_path, int horz_default);
-	void addVertButton(int index, const QString& icon_path, int vert_default);
-	void emitAlignmentChanged();
-	
-	QPushButton* horz_buttons[3];
-	QPushButton* vert_buttons[4];
-	int horz_index;
-	int vert_index;
-	
-	TextObject* object;
-	TextObjectEditorHelper* text_editor;
+	MapRenderables renderables;
+	std::unique_ptr<TextObject, MapRenderables::ObjectDeleter> preview_text;
+	std::unique_ptr<TextObjectEditorHelper> text_editor;
 };
 
 #endif

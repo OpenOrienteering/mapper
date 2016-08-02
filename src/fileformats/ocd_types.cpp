@@ -34,13 +34,13 @@ namespace Ocd
 	
 	Q_STATIC_ASSERT(sizeof(FileHeaderGeneric) == 8);
 	
-	Q_STATIC_ASSERT(sizeof(FileHeaderV8) - sizeof(SymbolHeaderV8) == 48);
+	Q_STATIC_ASSERT(sizeof(FormatV8::FileHeader) - sizeof(SymbolHeaderV8) == 48);
 	
-	Q_STATIC_ASSERT(sizeof(FileHeaderV9) == 48);
+	Q_STATIC_ASSERT(sizeof(FormatV9::FileHeader) == 48);
 	
-	Q_STATIC_ASSERT(sizeof(FileHeaderV10) == 48);
+	Q_STATIC_ASSERT(sizeof(FormatV10::FileHeader) == 48);
 	
-	Q_STATIC_ASSERT(sizeof(FileHeaderV11) == 48);
+	Q_STATIC_ASSERT(sizeof(FormatV11::FileHeader) == 48);
 	
-	Q_STATIC_ASSERT(sizeof(FileHeaderV12) == 60);
+	Q_STATIC_ASSERT(sizeof(FormatV12::FileHeader) == 60);
 }

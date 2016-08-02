@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2015 Kai Pastor
+ *    Copyright 2012-2016 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -173,7 +173,7 @@ static const QString oo_objects { QStringLiteral("openorienteering/objects") };
 
 // ### MapEditorController ###
 
-MapEditorController::MapEditorController(OperatingMode mode, Map* map)
+MapEditorController::MapEditorController(OperatingMode mode, Map* map, MapView* map_view)
 : MainWindowController()
 , mobile_mode(MainWindow::mobileMode())
 , active_symbol(NULL)
@@ -196,7 +196,7 @@ MapEditorController::MapEditorController(OperatingMode mode, Map* map)
 	cut_hole_menu = NULL;
 	
 	if (map)
-		setMap(map, true);
+		setMapAndView(map, map_view ? map_view : new MapView(this, map));
 	
 	editor_activity = NULL;
 	current_tool = NULL;
@@ -260,7 +260,6 @@ MapEditorController::~MapEditorController()
 	delete gps_display;
 	delete gps_track_recorder;
 	delete compass_display;
-	delete main_view;
 	delete map;
 }
 
@@ -507,21 +506,21 @@ bool MapEditorController::load(const QString& path, QWidget* dialog_parent)
 		dialog_parent = window;
 	
 	if (!map)
+	{
 		map = new Map();
-	if (!main_view)
-		main_view = new MapView(map);
+		main_view = new MapView(this, map);
+	}
 	
 	bool success = map->loadFrom(path, dialog_parent, main_view);
 	if (success)
 	{
-		setMap(map, false);
+		setMapAndView(map, main_view);
 	}
 	else
 	{
 		delete map;
-		map = NULL;
-		delete main_view;
-		main_view = NULL;
+		map = nullptr;
+		main_view = nullptr;
 	}
 	
 	return success;
@@ -1452,7 +1451,9 @@ void MapEditorController::printClicked(int task)
 		print_dock_widget->setAllowedAreas(Qt::NoDockWidgetArea);
 		print_dock_widget->toggleViewAction()->setVisible(false);
 		print_widget = new PrintWidget(map, window, main_view, this, print_dock_widget);
-		connect(print_dock_widget, SIGNAL(visibilityChanged(bool)), print_widget, SLOT(setActive(bool)));
+		connect(print_dock_widget, &QDockWidget::visibilityChanged, [this]() {
+			print_widget->setActive(print_dock_widget->isVisible());
+		} );
 		connect(print_widget, SIGNAL(closeClicked()), print_dock_widget, SLOT(close()));
 		connect(print_widget, SIGNAL(finished(int)), print_dock_widget, SLOT(close()));
 		connect(print_widget, SIGNAL(taskChanged(QString)), print_dock_widget, SLOT(setWindowTitle(QString)));
@@ -1461,8 +1462,10 @@ void MapEditorController::printClicked(int task)
 		addFloatingDockWidget(print_dock_widget);
 	}
 	
+	print_widget->setActive(true); // Make sure to save the state before setting the task.
 	print_widget->setTask((PrintWidget::TaskFlags)task);
 	print_dock_widget->show();
+	print_dock_widget->raise();
 #else
 	Q_UNUSED(task)
 	QMessageBox::warning(window, tr("Error"), tr("Print / Export is not available in this program version!"));
@@ -1641,11 +1644,11 @@ void MapEditorController::pan()
 }
 void MapEditorController::zoomIn()
 {
-	main_view->zoomSteps(1, false);
+	main_view->zoomSteps(1);
 }
 void MapEditorController::zoomOut()
 {
-	main_view->zoomSteps(-1, false);
+	main_view->zoomSteps(-1);
 }
 void MapEditorController::setCustomZoomFactorClicked()
 {
@@ -1673,7 +1676,7 @@ void MapEditorController::baselineView(bool checked)
 void MapEditorController::hideAllTemplates(bool checked)
 {
 	hide_all_templates_act->setChecked(checked);
-	main_view->setHideAllTemplates(checked);
+	main_view->setAllTemplatesHidden(checked);
 }
 
 void MapEditorController::overprintingSimulation(bool checked)
@@ -1877,7 +1880,7 @@ void MapEditorController::reopenTemplateClicked()
 	QString map_directory = window->currentPath();
 	if (!map_directory.isEmpty())
 		map_directory = QFileInfo(map_directory).canonicalPath();
-	ReopenTemplateDialog* dialog = new ReopenTemplateDialog(window, map, main_view, map_directory); 
+	ReopenTemplateDialog* dialog = new ReopenTemplateDialog(window, map, map_directory); 
 	dialog->setWindowModality(Qt::WindowModal);
 	dialog->exec();
 	delete dialog;
@@ -3189,7 +3192,7 @@ void MapEditorController::enableGPSDisplay(bool enable)
 				TemplateTrack* new_template = new TemplateTrack(gpx_file_path, map);
 				new_template->configureForGPSTrack();
 				template_index = map->getNumTemplates();
-				map->addTemplate(new_template, template_index, NULL);
+				map->addTemplate(new_template, template_index);
 				map->setTemplateAreaDirty(template_index);
 				map->setTemplatesDirty();
 			}
@@ -3319,7 +3322,7 @@ void MapEditorController::alignMapWithNorthUpdate()
 		return;
 	
 	// Set map rotation
-	main_view->setRotation(-1 * M_PI / 180.0f * Compass::getInstance().getCurrentAzimuth());
+	main_view->setRotation(M_PI / -180.0 * Compass::getInstance().getCurrentAzimuth());
 }
 
 void MapEditorController::hideTopActionBar()
@@ -3634,8 +3637,11 @@ void MapEditorController::templateDeleted(int pos, const Template* temp)
 		templateAvailabilityChanged();
 }
 
-void MapEditorController::setMap(Map* map, bool create_new_map_view)
+void MapEditorController::setMapAndView(Map* map, MapView* map_view)
 {
+	Q_ASSERT(map);
+	Q_ASSERT(map_view);
+	
 	if (this->map)
 	{
 		this->map->disconnect(this);
@@ -3647,10 +3653,7 @@ void MapEditorController::setMap(Map* map, bool create_new_map_view)
 	}
 	
 	this->map = map;
-	if (create_new_map_view)
-	{
-		main_view = new MapView(map);
-	}
+	this->main_view = map_view;
 	
 	connect(&map->undoManager(), SIGNAL(canRedoChanged(bool)), this, SLOT(undoStepAvailabilityChanged()));
 	connect(&map->undoManager(), SIGNAL(canUndoChanged(bool)), this, SLOT(undoStepAvailabilityChanged()));

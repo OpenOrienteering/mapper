@@ -20,6 +20,7 @@
 #include "symbol_set_t.h"
 
 #include "../src/core/map_color.h"
+#include "../src/core/map_printer.h"
 #include "../src/core/map_view.h"
 #include "../src/file_format_xml_p.h"
 #include "../src/map.h"
@@ -103,6 +104,9 @@ void SymbolSetTool::processSymbolSet_data()
 	QTest::newRow("ISSOM 1:5000 Finnish") << QString::fromLatin1("ISSOM_fi") <<  5000u <<  5000u;
 	QTest::newRow("ISSOM 1:4000 Finnish") << QString::fromLatin1("ISSOM_fi") <<  5000u <<  4000u;
 	
+	QTest::newRow("ISSOM 1:5000 French") << QString::fromLatin1("ISSOM_fr") <<  5000u <<  5000u;
+	QTest::newRow("ISSOM 1:4000 French") << QString::fromLatin1("ISSOM_fr") <<  5000u <<  4000u;
+	
 	QTest::newRow("ISOM 1:15000 Russian") << QString::fromLatin1("ISOM_ru")  << 15000u << 15000u;
 	QTest::newRow("ISOM 1:10000 Russian") << QString::fromLatin1("ISOM_ru")  << 15000u << 10000u;
 	
@@ -121,6 +125,11 @@ void SymbolSetTool::processSymbolSet_data()
 	QTest::newRow("ISSkiOM 1:15000") << QString::fromLatin1("ISSkiOM") << 15000u << 15000u;
 	QTest::newRow("ISSkiOM 1:10000") << QString::fromLatin1("ISSkiOM") << 15000u << 10000u;
 	QTest::newRow("ISSkiOM 1:5000")  << QString::fromLatin1("ISSkiOM") << 15000u <<  5000u;
+	
+	QTest::newRow("Course Design 1:15000") << QString::fromLatin1("Course_Design") << 10000u << 15000u;
+	QTest::newRow("Course Design 1:10000") << QString::fromLatin1("Course_Design") << 10000u << 10000u;
+	QTest::newRow("Course Design 1:5000")  << QString::fromLatin1("Course_Design") << 10000u <<  5000u;
+	QTest::newRow("Course Design 1:4000")  << QString::fromLatin1("Course_Design") << 10000u <<  4000u;
 }
 
 void SymbolSetTool::processSymbolSet()
@@ -135,8 +144,10 @@ void SymbolSetTool::processSymbolSet()
 	QString source_path = symbol_set_dir.absoluteFilePath(source_filename);
 	
 	Map map;
-	MapView view(&map);
+	MapView view{ &map };
 	map.loadFrom(source_path, nullptr, &view, false, false);
+	QCOMPARE(map.getScaleDenominator(), source_scale);
+	QCOMPARE(map.getNumClosedTemplates(), 0);
 	
 	map.resetPrinterConfig();
 	map.undoManager().clear();
@@ -154,11 +165,12 @@ void SymbolSetTool::processSymbolSet()
 		previous_numbers.append(number);
 	}
 	
+	auto purple = QColor::fromCmykF(0, 1, 0, 0).hueF();
 	if (source_scale != target_scale)
 	{
 		map.setScaleDenominator(target_scale);
 		
-		if (name == QLatin1String("ISOM"))
+		if (name.startsWith(QLatin1String("ISOM")))
 		{
 			const double factor = double(source_scale) / double(target_scale);
 			map.scaleAllObjects(factor, MapCoord());
@@ -169,7 +181,8 @@ void SymbolSetTool::processSymbolSet()
 			{
 				Symbol* symbol = map.getSymbol(i);
 				const int code = symbol->getNumberComponent(0);
-				if (!symbol->guessDominantColor()->getSpotColorName().startsWith(QLatin1String("PURPLE"))
+				const QColor& color = *symbol->guessDominantColor();
+				if (qAbs(purple - color.hueF()) > 0.1
 				    && code != 602
 				    && code != 999)
 				{
@@ -197,8 +210,7 @@ void SymbolSetTool::processSymbolSet()
 			QCOMPARE(symbols_changed, 139);
 			QCOMPARE(north_lines_changed, 2);
 		}
-		
-		if (name == QLatin1String("ISSOM"))
+		else if (name.startsWith(QLatin1String("ISSOM")))
 		{
 			int north_lines_changed = 0;
 			for (int i = 0; i < num_symbols; ++i)
@@ -224,8 +236,7 @@ void SymbolSetTool::processSymbolSet()
 			}
 			QCOMPARE(north_lines_changed, 2);
 		}
-		
-		if (name == QLatin1String("ISMTBOM"))
+		else if (name.startsWith(QLatin1String("ISMTBOM")))
 		{
 			QCOMPARE(source_scale, 15000u);
 			const double factor = (target_scale >= 15000u) ? 1.0 : 1.5;
@@ -244,8 +255,7 @@ void SymbolSetTool::processSymbolSet()
 			}
 			QCOMPARE(symbols_changed, 169);
 		}
-		
-		if (name == QLatin1String("ISSkiOM"))
+		else if (name.startsWith(QLatin1String("ISSkiOM")))
 		{
 			QCOMPARE(source_scale, 15000u);
 			const double factor = (target_scale >= 15000u) ? 1.0 : 1.5;
@@ -257,7 +267,8 @@ void SymbolSetTool::processSymbolSet()
 			{
 				Symbol* symbol = map.getSymbol(i);
 				const int code = symbol->getNumberComponent(0);
-				if (!symbol->guessDominantColor()->getSpotColorName().startsWith(QLatin1String("PURPLE"))
+				const QColor& color = *symbol->guessDominantColor();
+				if (qAbs(purple - color.hueF()) > 0.1
 				    && code != 602
 				    && code != 999)
 				{
@@ -286,10 +297,41 @@ void SymbolSetTool::processSymbolSet()
 			QCOMPARE(symbols_changed, 152);
 			QCOMPARE(north_lines_changed, 2);
 		}
+		else if (name.startsWith(QLatin1String("Course_Design")))
+		{
+			const double factor = double(source_scale) / double(target_scale);
+			map.scaleAllObjects(factor, MapCoord());
+		}
+		else
+		{
+			QFAIL("Symbol set not recognized");
+		}
+	}
+	
+	MapView* new_view = nullptr;
+	if (name.startsWith(QLatin1String("Course_Design")))
+	{
+		QCOMPARE(map.getNumTemplates(), 1);
+		new_view = new MapView { &map };
+		new_view->setGridVisible(true);
+		if (target_scale == 10000)
+			new_view->setTemplateVisibility(map.getTemplate(0), { 1, true });
+		else
+			map.deleteTemplate(0);
+		
+		auto printer_config = map.printerConfig();
+		printer_config.options.show_templates = true;
+		printer_config.single_page_print_area = true;
+		printer_config.center_print_area = true;
+		map.setPrinterConfig(printer_config);
+	}
+	else
+	{
+		QCOMPARE(map.getNumTemplates(), 0);
 	}
 	
 	QString target_filename = QString::fromLatin1("%2/%1_%2.omap").arg(name, QString::number(target_scale));
-	saveIfDifferent(symbol_set_dir.absoluteFilePath(target_filename), &map);
+	saveIfDifferent(symbol_set_dir.absoluteFilePath(target_filename), &map, new_view);
 }
 
 
@@ -300,7 +342,6 @@ void SymbolSetTool::processExamples_data()
 	QTest::newRow("complete map")  << QString::fromLatin1("complete map");
 	QTest::newRow("forest sample") << QString::fromLatin1("forest sample");
 	QTest::newRow("overprinting")  << QString::fromLatin1("overprinting");
-	QTest::newRow("sprint sample") << QString::fromLatin1("sprint sample");
 }
 
 void SymbolSetTool::processExamples()
@@ -313,7 +354,7 @@ void SymbolSetTool::processExamples()
 	QString source_path = examples_dir.absoluteFilePath(source_filename);
 	
 	Map map;
-	MapView view(&map);
+	MapView view{ &map };
 	map.loadFrom(source_path, nullptr, &view, false, false);
 	
 	map.undoManager().clear();

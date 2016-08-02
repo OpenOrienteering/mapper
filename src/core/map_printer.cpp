@@ -671,12 +671,11 @@ void MapPrinter::setMode(const MapPrinterOptions::MapPrinterMode mode)
 }
 
 // slot
-void MapPrinter::setPrintTemplates(const bool visible, const MapView* view)
+void MapPrinter::setPrintTemplates(const bool visible)
 {
-	if (options.show_templates != visible || this->view != view)
+	if (options.show_templates != visible)
 	{
 		options.show_templates = visible;
-		this->view = visible ? view : nullptr;
 		emit optionsChanged(options);
 	}
 }
@@ -718,7 +717,7 @@ void MapPrinter::setColorMode(MapPrinterOptions::ColorMode color_mode)
 bool MapPrinter::isOutputEmpty() const
 {
 	return (
-	  (map.getNumObjects() == 0 || (view && !view->effectiveMapVisibility()->visible)) &&
+	  (map.getNumObjects() == 0 || (view && !view->effectiveMapVisibility().visible)) &&
 	  (!options.show_templates || map.getNumTemplates() == 0) &&
 	  !options.show_grid
 	);
@@ -881,8 +880,8 @@ void MapPrinter::drawPage(QPainter* device_painter, float units_per_inch, const 
 			{
 				if (map.getTemplate(i)->isRasterGraphics())
 				{
-					const TemplateVisibility* visibility = view->getTemplateVisibility(map.getTemplate(i));
-					use_buffer_for_background = visibility->visible && visibility->opacity < 1.0f;
+					auto visibility = view->getTemplateVisibility(map.getTemplate(i));
+					use_buffer_for_background = visibility.visible && visibility.opacity < 1.0f;
 				}
 			}
 		}
@@ -892,8 +891,8 @@ void MapPrinter::drawPage(QPainter* device_painter, float units_per_inch, const 
 			{
 				if (map.getTemplate(i)->isRasterGraphics())
 				{
-					const TemplateVisibility* visibility = view->getTemplateVisibility(map.getTemplate(i));
-					use_buffer_for_foreground = visibility->visible && visibility->opacity < 1.0f;
+					auto visibility = view->getTemplateVisibility(map.getTemplate(i));
+					use_buffer_for_foreground = visibility.visible && visibility.opacity < 1.0f;
 				}
 			}
 		}
@@ -1000,7 +999,7 @@ void MapPrinter::drawPage(QPainter* device_painter, float units_per_inch, const 
 	/*
 	 * Draw the map
 	 */
-	if (!view || view->effectiveMapVisibility()->visible)
+	if (!view || view->effectiveMapVisibility().visible)
 	{
 		QImage map_buffer;
 		QPainter* map_painter = painter;
@@ -1032,7 +1031,7 @@ void MapPrinter::drawPage(QPainter* device_painter, float units_per_inch, const 
 		else
 		{
 			if (vectorModeSelected() && view)
-				config.opacity = view->effectiveMapVisibility()->opacity;
+				config.opacity = view->effectiveMapVisibility().opacity;
 		
 			map.draw(map_painter, config);
 		}
@@ -1047,7 +1046,7 @@ void MapPrinter::drawPage(QPainter* device_painter, float units_per_inch, const 
 			painter->save();
 			painter->resetTransform();
 			if (view)
-				painter->setOpacity(view->effectiveMapVisibility()->opacity);
+				painter->setOpacity(view->effectiveMapVisibility().opacity);
 			painter->setRenderHint(QPainter::SmoothPixmapTransform, false);
 			painter->drawImage(0, 0, map_buffer);
 			painter->restore();

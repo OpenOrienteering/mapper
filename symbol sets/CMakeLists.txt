@@ -33,6 +33,9 @@ set(Mapper_SYMBOL_SETS
   10000/ISOM_fi_10000.omap
   15000/ISOM_fi_15000.omap
   
+  4000/ISSOM_fr_4000.omap
+  5000/ISSOM_fr_5000.omap
+  
   10000/ISOM_ru_10000.omap
   15000/ISOM_ru_15000.omap
   
@@ -51,6 +54,11 @@ set(Mapper_SYMBOL_SETS
   5000/ISSkiOM_5000.omap
   10000/ISSkiOM_10000.omap
   15000/ISSkiOM_15000.omap
+  
+  4000/Course_Design_4000.omap
+  5000/Course_Design_5000.omap
+  10000/Course_Design_10000.omap
+  15000/Course_Design_15000.omap
 )
 
 set(_symbol_sets)

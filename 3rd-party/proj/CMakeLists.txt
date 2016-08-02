@@ -88,10 +88,12 @@ ExternalProject_Add(
   DOWNLOAD_DIR ${PROJECT_SOURCE_DIR}/download
   URL "http://download.osgeo.org/proj/proj-${PROJ_VERSION}.tar.gz"
   URL_MD5 ${PROJ_MD5}
-  # Check that the license hasn't changed.
-  UPDATE_COMMAND ${CMAKE_COMMAND} -E compare_files <SOURCE_DIR>/COPYING "${PROJ_LICENSE_FILE}"
   PATCH_COMMAND "${SH_PROGRAM}" -l -e ${CMAKE_CURRENT_BINARY_DIR}/proj-patch
-  CONFIGURE_COMMAND "${SH_PROGRAM}" -l -e ${CMAKE_CURRENT_BINARY_DIR}/proj-config
+  CONFIGURE_COMMAND
+    # Check that the license hasn't changed.
+    ${CMAKE_COMMAND} -E compare_files <SOURCE_DIR>/COPYING "${PROJ_LICENSE_FILE}"
+  COMMAND
+    "${SH_PROGRAM}" -l -e ${CMAKE_CURRENT_BINARY_DIR}/proj-config
   BUILD_COMMAND ${PROJ_MAKE_COMMAND}
   INSTALL_COMMAND ${PROJ_MAKE_COMMAND} -j1 install
                && "${SH_PROGRAM}" -l -e ${CMAKE_CURRENT_BINARY_DIR}/proj-postinstall

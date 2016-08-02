@@ -220,6 +220,12 @@ void ObjectRenderables::deleteRenderables()
 
 // ### MapRenderables ###
 
+void MapRenderables::ObjectDeleter::operator()(Object* object) const
+{
+	renderables.removeRenderablesOfObject(object, false);
+	delete object;
+}
+
 MapRenderables::MapRenderables(Map* map)
  : map(map)
 {

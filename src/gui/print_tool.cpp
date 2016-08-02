@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2015 Kai Pastor
+ *    Copyright 2012-2016  Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -33,18 +33,23 @@
 
 
 PrintTool::PrintTool(MapEditorController* editor, MapPrinter* map_printer)
-: MapEditorTool(editor, Other, NULL),
-  map_printer(map_printer),
-  region(Unknown),
-  dragging(false)
+: MapEditorTool { editor, Other, nullptr }
+, map_printer   { map_printer }
+, region        { Unknown }
+, dragging      { false }
 {
-	Q_ASSERT(editor != NULL);
-	Q_ASSERT(map_printer != NULL);
+	Q_ASSERT(editor);
+	Q_ASSERT(map_printer);
 	
-	connect(map_printer, SIGNAL(printAreaChanged(QRectF)), this, SLOT(updatePrintArea()));
-	connect(map_printer, SIGNAL(pageFormatChanged(MapPrinterPageFormat)), this, SLOT(updatePrintArea()));
+	connect(map_printer, &MapPrinter::printAreaChanged, this, &PrintTool::updatePrintArea);
+	connect(map_printer, &MapPrinter::pageFormatChanged, this, &PrintTool::updatePrintArea);
 	// Page breaks may change upon scale changes.
-	connect(map_printer, SIGNAL(optionsChanged(MapPrinterOptions)), this, SLOT(updatePrintArea()));
+	connect(map_printer, &MapPrinter::optionsChanged, this, &PrintTool::updatePrintArea);
+}
+
+PrintTool::~PrintTool()
+{
+	// nothing, not inlined
 }
 
 void PrintTool::init()
@@ -57,7 +62,7 @@ void PrintTool::init()
 
 const QCursor& PrintTool::getCursor() const
 {
-	static auto const cursor = QCursor(Qt::ArrowCursor);
+	static auto const cursor = QCursor{ Qt::ArrowCursor };
 	return cursor;
 }
 
@@ -189,25 +194,25 @@ void PrintTool::draw(QPainter* painter, MapWidget* widget)
 			QPointF pos = widget->mapToViewport(MapCoordF(hpos, vpos));
 			painter->setPen(top_left_margin_color);
 			// Left vertical line
-			painter->drawLine(pos.x(), pos.y(), pos.x(), pos.y()+drawing_size.height());
+			painter->drawLine(QLineF{pos.x(), pos.y(), pos.x(), pos.y()+drawing_size.height()});
 			// Top horizontal line
-			painter->drawLine(pos.x(), pos.y(), pos.x()+drawing_size.width(), pos.y());
+			painter->drawLine(QLineF{pos.x(), pos.y(), pos.x()+drawing_size.width(), pos.y()});
 			
 			pos += QPointF(page_size.width(), page_size.height());
 			painter->setPen(bottom_right_margin_color);
 			// Right vertical line
-			painter->drawLine(pos.x(), pos.y()-drawing_size.height(), pos.x(), pos.y());
+			painter->drawLine(QLineF{pos.x(), pos.y()-drawing_size.height(), pos.x(), pos.y()});
 			// Bottom horizontal line
-			painter->drawLine(pos.x()-drawing_size.width(), pos.y(), pos.x(), pos.y());
+			painter->drawLine(QLineF{pos.x()-drawing_size.width(), pos.y(), pos.x(), pos.y()});
 		}
 	}
 	
 	painter->setPen(top_left_margin_color);
-	painter->drawLine(outer_rect.left(), outer_rect.top(), outer_rect.left(), outer_rect.bottom());
-	painter->drawLine(outer_rect.left(), outer_rect.top(), outer_rect.right(), outer_rect.top());
+	painter->drawLine(QLineF{outer_rect.left(), outer_rect.top(), outer_rect.left(), outer_rect.bottom()});
+	painter->drawLine(QLineF{outer_rect.left(), outer_rect.top(), outer_rect.right(), outer_rect.top()});
 	painter->setPen(bottom_right_margin_color);
-	painter->drawLine(outer_rect.right(), outer_rect.top(), outer_rect.right(), outer_rect.bottom());
-	painter->drawLine(outer_rect.left(), outer_rect.bottom(), outer_rect.right(), outer_rect.bottom());
+	painter->drawLine(QLineF{outer_rect.right(), outer_rect.top(), outer_rect.right(), outer_rect.bottom()});
+	painter->drawLine(QLineF{outer_rect.left(), outer_rect.bottom(), outer_rect.right(), outer_rect.bottom()});
 	
 	QRectF print_area_f(print_area);
 	QPen marker(Qt::red);
@@ -328,7 +333,7 @@ void PrintTool::mouseMoved(MapCoordF mouse_pos_map, MapWidget* widget)
 	
 	if (new_region != region)
 	{
-		region = (InteractionRegion)new_region;
+		region = InteractionRegion(new_region);
 		
 		switch (region)
 		{
@@ -369,4 +374,4 @@ void PrintTool::mouseMoved(MapCoordF mouse_pos_map, MapWidget* widget)
 	}
 }
 
-#endif
+#endif // QT_PRINTSUPPORT_LIB

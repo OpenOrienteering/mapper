@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2015 Kai Pastor
+ *    Copyright 2012-2016 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -206,9 +206,7 @@ void SymbolSettingDialog::loadTemplateClicked()
 		
 		auto temp = new_template.release(); // avoid double release after addTemplate
 		preview_map->addTemplate(temp, 0);
-		TemplateVisibility* vis = preview_map_view->getTemplateVisibility(temp);
-		vis->visible = true;
-		vis->opacity = 1;
+		preview_map_view->setTemplateVisibility(temp, { 1, true });
 		preview_map->setTemplateAreaDirty(0);
 		
 		template_file_label->setText(temp->getTemplateFilename());

@@ -41,7 +41,7 @@ macro(deploy_qt_translations basename)
 		foreach(arg ${ARGN})
 			string(REPLACE ${basename} ${arg} extra_file ${basename_file})
 			if(EXISTS "${QT_TRANSLATIONS_DIR}/${extra_file}")
-				set(input_files "${input_files} \"${QT_TRANSLATIONS_DIR}/${extra_file}\"")
+				set(input_files "\"${QT_TRANSLATIONS_DIR}/${extra_file}\" ${input_files}")
 			endif()
 		endforeach()
 		list(APPEND install_translations_code
@@ -493,4 +493,21 @@ if(Mapper_BUILD_QT AND Mapper_PACKAGE_LINGUIST)
 	install(CODE
 	  "execute_process(COMMAND \${CMAKE_COMMAND} --build \"${BINARY_DIR}\" --target \"package-install\" -- \"DESTDIR=${PROJECT_BINARY_DIR}\")"
 	)
+elseif(Mapper_PACKAGE_LINGUIST)
+	if(NOT Qt5LinguistTools_LINGUIST_EXECUTABLE)
+		message(FATAL_ERROR "Qt5LinguistTools_LINGUIST_EXECUTABLE: not found, "
+		  "but required by option Mapper_PACKAGE_LINGUIST="
+		  ${Mapper_PACKAGE_LINGUIST})
+	endif()
+	message(STATUS "Qt Linguist - found")
+	if(WIN32 OR APPLE)
+		install(
+		  PROGRAMS ${Qt5LinguistTools_LINGUIST_EXECUTABLE}
+		  DESTINATION "${MAPPER_RUNTIME_DESTINATION}${MAPPER_MACOS_SUBDIR}")
+	else()
+		install(
+		  PROGRAMS ${Qt5LinguistTools_LINGUIST_EXECUTABLE}
+		  DESTINATION "${MAPPER_LIBRARY_DESTINATION}/bin")
+	endif()
+	deploy_qt_translations(linguist)
 endif()
