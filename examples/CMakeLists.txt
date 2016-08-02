@@ -27,7 +27,7 @@ install(
   DESTINATION "${MAPPER_DATA_DESTINATION}/examples/${_dir}"
 )
 
-foreach(_example ${Mapper_EXAMPLES})
+foreach(_example ${Mapper_EXAMPLES} examples.qrc)
 	configure_file(${_example} ${_example} COPYONLY)
 endforeach()
 
