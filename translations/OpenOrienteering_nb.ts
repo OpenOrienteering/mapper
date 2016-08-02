@@ -248,11 +248,9 @@
         <location filename="../src/gui/autosave_dialog.cpp" line="45"></location>
         <location filename="../src/gui/autosave_dialog.cpp" line="51"></location>
         <source>%n bytes</source>
-        <translation>
-            <numerusform>%n bytes</numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>%n byte</numerusform>
+        <numerusform>%n byte</numerusform>
+        </translation></message>
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="49"></location>
         <source>File saved by the user</source>
@@ -513,7 +511,7 @@
     <message>
         <location filename="../src/symbol_combined.cpp" line="408"></location>
         <source>- Private area symbol -</source>
-        <translation>Spesielt flatesymbol</translation>
+        <translation>- Spesielt flatesymbol -</translation>
     </message>
     <message>
         <location filename="../src/symbol_combined.cpp" line="414"></location>
