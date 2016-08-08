@@ -7,11 +7,11 @@
         <location filename="../src/gui/about_dialog.cpp" line="94"></location>
         <location filename="../src/gui/about_dialog.cpp" line="156"></location>
         <source>About %1</source>
-        <translation>A %1 névjegye</translation>
+        <translation>%1 névjegye</translation>
     </message>
     <message>
         <source>External link: %1</source>
-        <translation type="vanished">Külső link %1</translation>
+        <translation>Külső link: %1</translation>
     </message>
     <message>
         <source>Click to view</source>
@@ -963,7 +963,7 @@
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1100"></location>
         <source>&lt;b&gt;Click&lt;/b&gt;: Draw a straight line. &lt;b&gt;Drag&lt;/b&gt;: Draw a curve. &lt;b&gt;Right or double click&lt;/b&gt;: Finish the path. &lt;b&gt;%1&lt;/b&gt;: Close the path. </source>
-        <translation>&lt;b&gt;Kattintás&lt;/b&gt;: Egy egyenes vonalat rajzol. &lt;b&gt;Megragad&lt;/b&gt;: Egy görbét rajzol. &lt;b&gt;Jobb vagy kettős kattintás&lt;/b&gt;: Befejezi az utat. &lt;b&gt;%1&lt;/b&gt;: Bezárja az utat. </translation>
+        <translation>&lt;b&gt;Kattintás&lt;/b&gt;: Egyenes vonal rajzolása. &lt;b&gt;Húzás&lt;/b&gt;: Görbe rajzolása. &lt;b&gt;Jobb vagy dupla kattintás&lt;/b&gt;: Rajzolt vonal vége. &lt;b&gt;%1&lt;/b&gt;: A vonal visszazárása a kezdőponthoz. </translation>
     </message>
 </context>
 <context>
@@ -971,7 +971,7 @@
     <message>
         <location filename="../src/tool_draw_point_gps.cpp" line="73"></location>
         <source>Touch the map to finish averaging</source>
-        <translation>Érintse me a térképet az átlagolás befejezéséhez</translation>
+        <translation>Érintse meg a térképet az átlagolás befejezéséhez</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_point_gps.cpp" line="182"></location>
@@ -999,7 +999,7 @@
         <location filename="../src/tool_draw_point.cpp" line="62"></location>
         <source>Reset</source>
         <comment>Reset rotation</comment>
-        <translation type="unfinished"></translation>
+        <translation>Alaphelyzet</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_point.cpp" line="317"></location>
@@ -1016,21 +1016,21 @@
         <location filename="../src/tool_draw_point.cpp" line="323"></location>
         <location filename="../src/tool_draw_point.cpp" line="337"></location>
         <source>&lt;b&gt;Click&lt;/b&gt;: Create a point object.</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Kattintás&lt;/b&gt;: Pont objektum létrehozása.</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_point.cpp" line="324"></location>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Create an object and set its orientation.</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Húzás&lt;/b&gt;: Objektum létrehozása és irányának beállítása (ha forgatható).</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_point.cpp" line="330"></location>
         <source>&lt;b&gt;%1, 0&lt;/b&gt;: Reset rotation.</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1, 0&lt;/b&gt;: Elforgatás alaphelyzetbe állítása.</translation>
     </message>
     <message>
         <source>&lt;b&gt;Click&lt;/b&gt;: Create a point object. &lt;b&gt;Drag&lt;/b&gt;: Create an object and set its orientation (if rotatable). </source>
-        <translation type="vanished">&lt;b&gt;Kattintás&lt;/b&gt;: Pont objektum létrehozása. &lt;b&gt;Megragadás&lt;/b&gt;: Egy objektum létrehozása és irányszög beállítása (ha forgatható). </translation>
+        <translation>&lt;b&gt;Kattintás&lt;/b&gt;: Pont objektum létrehozása. &lt;b&gt;Húzás&lt;/b&gt;: Objektum létrehozása és irányának beállítása (ha forgatható). </translation>
     </message>
 </context>
 <context>
@@ -1059,7 +1059,7 @@
         <source>Dash</source>
         <comment>Drawing dash points</comment>
         <translatorcomment>Sarokpontokat rajzol</translatorcomment>
-        <translation>Sarok</translation>
+        <translation>Szaggatott</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_rectangle.cpp" line="82"></location>
@@ -1325,7 +1325,7 @@
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="103"></location>
         <source>Editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Szerkesztő</translation>
     </message>
 </context>
 <context>
@@ -1338,7 +1338,7 @@
     <message>
         <location filename="../src/file_format.cpp" line="87"></location>
         <source>Format (%1) does not support export</source>
-        <translation type="unfinished"></translation>
+        <translation>(%1) - Ezt a formátumot nem lehetséges exportálni</translation>
     </message>
 </context>
 <context>
@@ -1351,7 +1351,7 @@
     <message>
         <location filename="../src/tool_fill.cpp" line="100"></location>
         <source>The map area is large. Use of the fill tool may be very slow. Do you want to use it anyway?</source>
-        <translation>A térkép terület nagy. A kitltő eszköz használata nagyon lassú lehet. Így is használni akarja?</translation>
+        <translation>A térkép területe nagy. A kitöltő eszköz használata sokáig tarthat. Így is használni akarja?</translation>
     </message>
     <message>
         <location filename="../src/tool_fill.cpp" line="85"></location>
@@ -1363,7 +1363,7 @@
     <message>
         <location filename="../src/tool_fill.cpp" line="86"></location>
         <source>The clicked area is not bounded by lines or areas, cannot fill this area.</source>
-        <translation>A kiválasztott területet nem határolják vonalak, nem lehet kitölteni a ezt a területet.</translation>
+        <translation>A kiválasztott területet nem határolják vonalak, nem lehet kitölteni ezt a területet.</translation>
     </message>
     <message>
         <location filename="../src/tool_fill.cpp" line="120"></location>
@@ -1467,7 +1467,7 @@
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="128"></location>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="275"></location>
         <source>More...</source>
-        <translation type="unfinished"></translation>
+        <translation>Tovább...</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="135"></location>
@@ -1477,7 +1477,7 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="155"></location>
         <source>General</source>
-        <translation type="unfinished">Általános</translation>
+        <translation>Egyéb beállítások</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="179"></location>
@@ -1512,7 +1512,7 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="338"></location>
         <source>%1 x %2</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">%1 x %2</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="339"></location>
@@ -1570,36 +1570,36 @@
         <location filename="../src/core/crs_template_implementation.cpp" line="80"></location>
         <source>by EPSG code</source>
         <comment>as in: The CRS is specified by EPSG code</comment>
-        <translation type="unfinished"></translation>
+        <translation>EPSG kód alapján</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="82"></location>
         <source>EPSG @code@ coordinates</source>
         <extracomment>Don't translate @code@. It is placeholder.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>EPSG @code@ koordináták</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="85"></location>
         <source>EPSG code</source>
-        <translation type="unfinished"></translation>
+        <translation>EPSG kód</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="92"></location>
         <source>Custom PROJ.4</source>
         <comment>PROJ.4 specification</comment>
-        <translation type="unfinished"></translation>
+        <translation>Egyedi PROJ.4</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="93"></location>
         <location filename="../src/core/georeferencing.cpp" line="533"></location>
         <source>Local coordinates</source>
-        <translation type="unfinished"></translation>
+        <translation>Helyi koordináták</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="96"></location>
         <source>Specification</source>
         <comment>PROJ.4 specification</comment>
-        <translation type="unfinished"></translation>
+        <translation>Specifikáció</translation>
     </message>
     <message>
         <location filename="../src/core/georeferencing.cpp" line="229"></location>
@@ -1674,7 +1674,7 @@
         <location filename="../src/gui/georeferencing_dialog.cpp" line="104"></location>
         <source>Grid scale factor:</source>
         <extracomment>The grid scale factor is the ratio between a length in the grid plane and the corresponding length on the curved earth model. It is applied as a factor to ground distances to get grid plane distances.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Rács méretezési arány:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="152"></location>
@@ -1894,7 +1894,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="702"></location>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set the reference point. &lt;b&gt;Right click&lt;/b&gt;: Cancel.</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Kattintás&lt;/b&gt;: Referencia pont beállítása. &lt;b&gt;Jobb kattintás&lt;/b&gt;: Mégsem.</translation>
     </message>
 </context>
 <context>
@@ -2023,7 +2023,7 @@
     <message>
         <location filename="../src/symbol.cpp" line="284"></location>
         <source>Error while loading a symbol of type %1 at line %2 column %3: %4</source>
-        <translation type="unfinished"></translation>
+        <translation>Hiba történt az %1 típusú szimbol betöltésekor (%2. sor %3. oszlop): %4</translation>
     </message>
     <message>
         <source>Error while loading a symbol.</source>
@@ -2083,13 +2083,13 @@
     <message>
         <location filename="../src/file_format_xml.cpp" line="857"></location>
         <source>Error while loading the printing configuration at %1:%2: %3</source>
-        <translation type="unfinished"></translation>
+        <translation>Hiba történt a nyomtatási beállítások betöltésekor itt: %1:%2: %3</translation>
     </message>
     <message>
         <location filename="../src/file_format_xml.cpp" line="870"></location>
         <location filename="../src/file_format_xml.cpp" line="884"></location>
         <source>Error while loading the undo/redo steps at %1:%2: %3</source>
-        <translation type="unfinished"></translation>
+        <translation>Hiba történt a visszavonás/előrelépés lépéseinek betöltésekor itt: %1:%2: %3</translation>
     </message>
 </context>
 <context>
@@ -2102,10 +2102,9 @@
     <message numerus="yes">
         <location filename="../src/file_import_export.cpp" line="93"></location>
         <source>Dropped %n irregular object(s).</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>Elhagytam %n szabálytalan objektumot.</numerusform>
+        <numerusform></numerusform>
+        </translation></message>
     <message>
         <location filename="../src/file_import_export.cpp" line="100"></location>
         <source>Error during symbol post-processing.</source>
@@ -2119,13 +2118,14 @@
     <message>
         <location filename="../src/file_import_export.cpp" line="120"></location>
         <source>Failed to load template '%1', reason: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Nem sikerült betölteni a következő sablont: '%1', a hiba oka: %2</translation>
     </message>
     <message>
         <location filename="../src/file_import_export.cpp" line="125"></location>
         <source>Warnings when loading template '%1':
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Figyelmeztetések a következő sablon betöltése kapcsán '%1':
+%2</translation>
     </message>
     <message>
         <location filename="../src/file_import_export.cpp" line="132"></location>
@@ -2141,7 +2141,7 @@
     <message>
         <location filename="../src/file_format_native.cpp" line="123"></location>
         <source>This file uses an obsolete format. Support for this format is to be removed from this program soon. To be able to open the file in the future, save it again.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ez a fájl egy régebbi formátumban van. Ennek a formátumnak a támogatása hamarosan ki fog kerülni ebből a programból. Annak érdekében, hogy a jövőben is meg tudja nyitni, kérem mentse el újból.</translation>
     </message>
     <message>
         <location filename="../src/file_format_native.cpp" line="136"></location>
@@ -2214,7 +2214,7 @@
     <message>
         <location filename="../src/file_format.cpp" line="79"></location>
         <source>Format (%1) does not support import</source>
-        <translation type="unfinished"></translation>
+        <translation>Az adott formátum (%1) nem támogatja az importálást</translation>
     </message>
 </context>
 <context>
@@ -2899,7 +2899,9 @@ olvasásra.</translation>
         <source>Cannot save file
 %1:
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Nem tudtam elmenteni a fájlt
+%1:
+%2</translation>
     </message>
     <message>
         <location filename="../src/map.cpp" line="803"></location>
@@ -2945,7 +2947,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/core/map_coord.cpp" line="176"></location>
         <source>Coordinates are out-of-bounds.</source>
-        <translation type="unfinished"></translation>
+        <translation>A koordináták a széleken kívül esnek.</translation>
     </message>
 </context>
 <context>
@@ -3459,132 +3461,132 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="736"></location>
         <source>Ctrl+A</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ctrl+A</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="737"></location>
         <source>Ctrl+Shift+A</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+Shift+A</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="738"></location>
         <source>Ctrl+I</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+I</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="740"></location>
         <source>G</source>
-        <translation type="unfinished"></translation>
+        <translation>G</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="753"></location>
         <source>E</source>
-        <translation type="unfinished">E</translation>
+        <translation>E</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="754"></location>
         <source>L</source>
-        <translation type="unfinished"></translation>
+        <translation>L</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="755"></location>
         <source>S</source>
-        <translation type="unfinished"></translation>
+        <translation>S</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="756"></location>
         <source>P</source>
-        <translation type="unfinished"></translation>
+        <translation>P</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="757"></location>
         <source>O</source>
-        <translation type="unfinished"></translation>
+        <translation>O</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="758"></location>
         <source>Ctrl+R</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+R</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="759"></location>
         <source>F</source>
-        <translation type="unfinished"></translation>
+        <translation>F</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="760"></location>
         <source>T</source>
-        <translation type="unfinished"></translation>
+        <translation>T</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="762"></location>
         <source>D</source>
-        <translation type="unfinished"></translation>
+        <translation>D</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="763"></location>
         <source>Ctrl+G</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+G</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="764"></location>
         <source>Ctrl+F</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+F</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="765"></location>
         <source>Ctrl+D</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+D</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="766"></location>
         <source>C</source>
-        <translation type="unfinished"></translation>
+        <translation>C</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="767"></location>
         <source>R</source>
-        <translation type="unfinished"></translation>
+        <translation>R</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="768"></location>
         <source>Z</source>
-        <translation type="unfinished"></translation>
+        <translation>Z</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="769"></location>
         <source>K</source>
-        <translation type="unfinished"></translation>
+        <translation>K</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="770"></location>
         <source>H</source>
-        <translation type="unfinished"></translation>
+        <translation>H</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="771"></location>
         <source>M</source>
-        <translation type="unfinished"></translation>
+        <translation>M</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="772"></location>
         <source>U</source>
-        <translation type="unfinished"></translation>
+        <translation>U</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="773"></location>
         <source>N</source>
-        <translation type="unfinished">N</translation>
+        <translation>N</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="774"></location>
         <source>Ctrl+M</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+M</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="801"></location>
         <source>Select all</source>
-        <translation type="unfinished">Mindent kijelöl</translation>
+        <translation>Mindent kijelöl</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="802"></location>
@@ -3594,17 +3596,17 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="803"></location>
         <source>Invert selection</source>
-        <translation type="unfinished">Kijelölés megfordítása</translation>
+        <translation>Kijelölés megfordítása</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="942"></location>
         <source>Copy position</source>
-        <translation type="unfinished"></translation>
+        <translation>Elhelyezkedés másolása</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="942"></location>
         <source>Copy position to clipboard.</source>
-        <translation type="unfinished"></translation>
+        <translation>Elhelyezkedés vágolapra másolása.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1108"></location>
