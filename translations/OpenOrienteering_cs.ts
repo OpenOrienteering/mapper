@@ -510,7 +510,7 @@
     <message>
         <location filename="../src/symbol_combined.cpp" line="408"></location>
         <source>- Private area symbol -</source>
-        <translation>- Soukromý symbol pro plochu -</translation>
+        <translation>- Symbol soukromá plocha -</translation>
     </message>
     <message>
         <location filename="../src/symbol_combined.cpp" line="414"></location>
@@ -526,7 +526,7 @@
     <message>
         <location filename="../src/symbol_combined.cpp" line="487"></location>
         <source>Change from public to private symbol</source>
-        <translation>Změnit z veřejného nak soukromý symbolu</translation>
+        <translation>Změnit symbol z veřejného na soukromý</translation>
     </message>
     <message>
         <location filename="../src/symbol_combined.cpp" line="488"></location>
