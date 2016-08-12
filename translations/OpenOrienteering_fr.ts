@@ -12,7 +12,7 @@
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="160"/>
         <source>This program is free software: you can redistribute it and/or modify it under the terms of the &lt;a %1&gt;GNU General Public License (GPL), version&amp;nbsp;3&lt;/a&gt;, as published by the Free Software Foundation.</source>
-        <translation>Ce programme est un logiciel libre : vous pouvez le redistribuer ou le modifier suivant les termes de la &lt;a %1&gt;“GNU General Public License”, version&amp;nbsp;3,&lt;/a&gt; telle que publiée par la Free Software Foundation.</translation>
+        <translation>Ce programme est un logiciel libre : vous pouvez le redistribuer ou le modifier suivant les termes de la &lt;a %1&gt;“GNU General Public License” (GPL), version&amp;nbsp;3&lt;/a&gt;, telle que publiée par la Free Software Foundation.</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="165"/>
@@ -158,12 +158,12 @@
     <message>
         <location filename="../src/symbol_area.cpp" line="853"/>
         <source>Pattern offset:</source>
-        <translation>Décalage des motifs:</translation>
+        <translation>Décalage des motifs :</translation>
     </message>
     <message>
         <location filename="../src/symbol_area.cpp" line="858"/>
         <source>Row offset:</source>
-        <translation>Décalage des rangées:</translation>
+        <translation>Décalage des rangées :</translation>
     </message>
     <message>
         <location filename="../src/symbol_area.cpp" line="860"/>
@@ -173,7 +173,7 @@
     <message>
         <location filename="../src/symbol_area.cpp" line="862"/>
         <source>Row spacing:</source>
-        <translation>Espacement des rangées:</translation>
+        <translation>Espacement des rangées :</translation>
     </message>
     <message>
         <location filename="../src/symbol_area.cpp" line="868"/>
@@ -218,22 +218,22 @@
     <message>
         <location filename="../src/symbol_area.cpp" line="750"/>
         <source>Area color:</source>
-        <translation>Couleur de surface:</translation>
+        <translation>Couleur de surface :</translation>
     </message>
     <message>
         <location filename="../src/symbol_area.cpp" line="839"/>
         <source>Line offset:</source>
-        <translation>Décalage de ligne:</translation>
+        <translation>Décalage de ligne :</translation>
     </message>
     <message>
         <location filename="../src/symbol_area.cpp" line="834"/>
         <source>Line color:</source>
-        <translation>Couleur de ligne:</translation>
+        <translation>Couleur de ligne :</translation>
     </message>
     <message>
         <location filename="../src/symbol_area.cpp" line="829"/>
         <source>Line width:</source>
-        <translation>Épaisseur de ligne:</translation>
+        <translation>Épaisseur de ligne :</translation>
     </message>
 </context>
 <context>
@@ -265,7 +265,7 @@
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="58"/>
         <source>File %1 was not properly closed. At the moment, there are two versions:</source>
-        <translation>Le fichier %1 n'a pas été correctement fermé. Pour le moment, il existe deux versions:</translation>
+        <translation>Le fichier %1 n'a pas été correctement fermé. Pour le moment, il existe deux versions :</translation>
     </message>
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="72"/>
@@ -283,12 +283,12 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="62"/>
         <source>Defines a spot color:</source>
-        <translation>Définit une couleur en ton direct:</translation>
+        <translation>Définit une couleur en ton direct :</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="71"/>
         <source>Mixture of spot colors (screens and overprint):</source>
-        <translation>Mélanger des tons directs (trames et sur-impression):</translation>
+        <translation>Mélanger des tons directs (trames et sur-impression) :</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="86"/>
@@ -319,7 +319,7 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="119"/>
         <source>Custom process color:</source>
-        <translation>Créer une couleur personnalisée:</translation>
+        <translation>Créer une couleur personnalisée :</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="125"/>
@@ -349,7 +349,7 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="176"/>
         <source>Custom RGB color:</source>
-        <translation>Créer une couleur RVB personnalisée:</translation>
+        <translation>Créer une couleur RVB personnalisée :</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="182"/>
@@ -466,7 +466,7 @@
     <message>
         <location filename="../src/color_dock_widget.cpp" line="189"/>
         <source>The map contains symbols with this color. Deleting it will remove the color from these objects! Do you really want to do that?</source>
-        <translation>La carte contient des symboles utilisant cette couleur. Sa suppression effacera la couleur de ces objets! Voulez vous vraiment le faire ?</translation>
+        <translation>La carte contient des symboles utilisant cette couleur. Sa suppression effacera la couleur de ces objets! Voulez-vous vraiment le faire ?</translation>
     </message>
     <message>
         <location filename="../src/color_dock_widget.cpp" line="206"/>
@@ -498,7 +498,7 @@
     <message>
         <location filename="../src/symbol_combined.cpp" line="392"/>
         <source>&amp;Number of parts:</source>
-        <translation>&amp;Nombre d'éléments:</translation>
+        <translation>&amp;Nombre d'éléments :</translation>
     </message>
     <message>
         <location filename="../src/symbol_combined.cpp" line="407"/>
@@ -513,7 +513,7 @@
     <message>
         <location filename="../src/symbol_combined.cpp" line="414"/>
         <source>Edit private symbol...</source>
-        <translation>Éditer le symbole personnel...</translation>
+        <translation>Éditer le symbole personnel…</translation>
     </message>
     <message>
         <location filename="../src/symbol_combined.cpp" line="434"/>
@@ -533,7 +533,7 @@
     <message>
         <location filename="../src/symbol_combined.cpp" line="404"/>
         <source>Symbol %1:</source>
-        <translation>Symbole %1:</translation>
+        <translation>Symbole %1 :</translation>
     </message>
 </context>
 <context>
@@ -556,7 +556,7 @@
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="57"/>
         <source>Choose...</source>
-        <translation>Choisir ...</translation>
+        <translation>Choisir…</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="60"/>
@@ -596,7 +596,7 @@
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="68"/>
         <source>Additional rotation (counter-clockwise):</source>
-        <translation>Rotation additionnelle (anti-horaire):</translation>
+        <translation>Rotation additionnelle (anti-horaire) :</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="69"/>
@@ -621,38 +621,38 @@
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="77"/>
         <source>Horizontal spacing:</source>
-        <translation>Espacement horizontal:</translation>
+        <translation>Espacement horizontal :</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="79"/>
         <source>Vertical spacing:</source>
-        <translation>Espacement vertical:</translation>
+        <translation>Espacement vertical :</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="83"/>
         <source>Horizontal offset:</source>
-        <translation>Décalage horizontal:</translation>
+        <translation>Décalage horizontal :</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="85"/>
         <source>Vertical offset:</source>
-        <translation>Décalage vertical:</translation>
+        <translation>Décalage vertical :</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="122"/>
         <source>Unit:</source>
         <comment>measurement unit</comment>
-        <translation>Unité:</translation>
+        <translation>Unité :</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="110"/>
         <source>Line color:</source>
-        <translation>Couleur des lignes:</translation>
+        <translation>Couleur des lignes :</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="111"/>
         <source>Display:</source>
-        <translation>Afficher:</translation>
+        <translation>Afficher :</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="159"/>
@@ -773,7 +773,7 @@
     <message>
         <location filename="../src/symbol_text.cpp" line="1113"/>
         <source>Letter:</source>
-        <translation>Lettre:</translation>
+        <translation>Lettre :</translation>
     </message>
     <message>
         <location filename="../src/symbol_text.cpp" line="1111"/>
@@ -793,7 +793,7 @@
     <message>
         <location filename="../src/symbol_text.cpp" line="1117"/>
         <source>Height:</source>
-        <translation>Hauteur:</translation>
+        <translation>Hauteur :</translation>
     </message>
 </context>
 <context>
@@ -806,7 +806,7 @@
     <message>
         <location filename="../src/tool_distribute_points.cpp" line="127"/>
         <source>Number of points per path:</source>
-        <translation>Nombre de points sur le segment:</translation>
+        <translation>Nombre de points sur le segment :</translation>
     </message>
     <message>
         <location filename="../src/tool_distribute_points.cpp" line="129"/>
@@ -1236,7 +1236,7 @@
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="45"/>
         <source>Click tolerance:</source>
-        <translation>Tolérance des clics:</translation>
+        <translation>Tolérance des clics :</translation>
     </message>
     <message>
         <source>px</source>
@@ -1253,12 +1253,12 @@
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="48"/>
         <source>Snap distance (%1):</source>
-        <translation>Distance d'aimantage (%1):</translation>
+        <translation>Distance d'aimantage (%1) :</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="51"/>
         <source>Stepping of fixed angle mode (%1):</source>
-        <translation>Intervalle du mode angles fixés (%1):</translation>
+        <translation>Intervalle du mode angles fixés (%1) :</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="50"/>
@@ -1289,7 +1289,7 @@
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="67"/>
         <source>Edit tool:</source>
-        <translation>Outil d'édition:</translation>
+        <translation>Outil d'édition :</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="70"/>
@@ -1468,13 +1468,13 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="133"/>
         <source>8-bit encoding:</source>
-        <translation>Encodage (8 bits):</translation>
+        <translation>Encodage (8 bits) :</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="128"/>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="275"/>
         <source>More...</source>
-        <translation>Plus...</translation>
+        <translation>Plus…</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="135"/>
@@ -1498,7 +1498,7 @@
     </message>
     <message>
         <source>Use translation file...</source>
-        <translation type="vanished">Utiliser un fichier de traduction ...</translation>
+        <translation>Utiliser un fichier de traduction…</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="301"/>
@@ -1529,7 +1529,7 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="343"/>
         <source>Primary screen size in inches (diagonal):</source>
-        <translation>Taille de la diagonale de l'écran principal (en pouce):</translation>
+        <translation>Taille de la diagonale de l'écran principal (en pouce) :</translation>
     </message>
 </context>
 <context>
@@ -1652,7 +1652,7 @@
         <location filename="../src/gui/georeferencing_dialog.cpp" line="166"/>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="497"/>
         <source>Lookup...</source>
-        <translation>Consultation ...</translation>
+        <translation>Consultation…</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="126"/>
@@ -1663,7 +1663,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="204"/>
         <source>Declination:</source>
-        <translation>Déclinaison:</translation>
+        <translation>Déclinaison :</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="151"/>
@@ -1727,7 +1727,7 @@
     </message>
     <message>
         <source>CRS specification:</source>
-        <translation type="vanished">Spécification CRS:</translation>
+        <translation>Spécification CRS :</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="107"/>
@@ -1817,17 +1817,17 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="199"/>
         <source>On CRS changes, keep:</source>
-        <translation>En cas de changement de CRS, garder:</translation>
+        <translation>En cas de changement de CRS, garder :</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="205"/>
         <source>Grivation:</source>
-        <translation>Déclinaison magnétique:</translation>
+        <translation>Déclinaison magnétique :</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="367"/>
         <source>The magnetic declination for the reference point %1° %2° will now be retrieved from &lt;a href="%3"&gt;%3&lt;/a&gt;. Do you want to continue?</source>
-        <translation>La déclinaison magnétique du point de référence %1 %2° ne pourra pas être récupérée à partir de &lt;a href="%3"&gt;%3&lt;/a&gt;. Voulez vous continuer ?</translation>
+        <translation>La déclinaison magnétique du point de référence %1 %2° ne pourra pas être récupérée à partir de &lt;a href="%3"&gt;%3&lt;/a&gt;. Voulez-vous continuer ?</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="440"/>
@@ -1837,7 +1837,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="440"/>
         <source>The declination has been changed. Do you want to rotate the map content accordingly, too?</source>
-        <translation>La déclinaison a été changée. Voulez vous appliquer une rotation à la carte en fonction de celle-ci ?</translation>
+        <translation>La déclinaison a été changée. Voulez-vous appliquer une rotation à la carte en fonction de celle-ci ?</translation>
     </message>
     <message>
         <source>Projected coordinates:</source>
@@ -1851,7 +1851,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="497"/>
         <source>Loading...</source>
-        <translation>Chargement ...</translation>
+        <translation>Chargement…</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="504"/>
@@ -1942,11 +1942,11 @@
     </message>
     <message>
         <source>Create a new map ...</source>
-        <translation type="vanished">Créer une nouvelle carte...</translation>
+        <translation>Créer une nouvelle carte…</translation>
     </message>
     <message>
         <source>Open map ...</source>
-        <translation type="vanished">Ouvrir une carte...</translation>
+        <translation>Ouvrir une carte…</translation>
     </message>
     <message>
         <source>About %1</source>
@@ -1976,12 +1976,12 @@
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="147"/>
         <source>Create a new map ...</source>
-        <translation>Créer une nouvelle carte ...</translation>
+        <translation>Créer une nouvelle carte…</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="150"/>
         <source>Open map ...</source>
-        <translation>Ouvrir une carte ...</translation>
+        <translation>Ouvrir une carte…</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="156"/>
@@ -2286,7 +2286,7 @@
     <message>
         <location filename="../src/symbol_line.cpp" line="2038"/>
         <source>Line width:</source>
-        <translation>Épaisseur de ligne:</translation>
+        <translation>Épaisseur de ligne :</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2039"/>
@@ -2308,17 +2308,17 @@
     <message>
         <location filename="../src/symbol_line.cpp" line="2041"/>
         <source>Line color:</source>
-        <translation>Couleur de ligne:</translation>
+        <translation>Couleur de ligne :</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2053"/>
         <source>Minimum line length:</source>
-        <translation>Longueur minimale de ligne:</translation>
+        <translation>Longueur minimale de ligne :</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2056"/>
         <source>Line cap:</source>
-        <translation>Extrémité de ligne:</translation>
+        <translation>Extrémité de ligne :</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2058"/>
@@ -2344,7 +2344,7 @@
     <message>
         <location filename="../src/symbol_line.cpp" line="2067"/>
         <source>Line join:</source>
-        <translation>Sommet de ligne:</translation>
+        <translation>Sommet de ligne :</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2069"/>
@@ -2359,7 +2359,7 @@
     <message>
         <location filename="../src/symbol_line.cpp" line="2064"/>
         <source>Cap length:</source>
-        <translation>Longueur des extrémités:</translation>
+        <translation>Longueur des extrémités :</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2074"/>
@@ -2374,17 +2374,17 @@
     <message>
         <location filename="../src/symbol_line.cpp" line="2183"/>
         <source>Minimum mid symbol count:</source>
-        <translation>Minimum de symboles intérieurs:</translation>
+        <translation>Minimum de symboles intérieurs :</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2186"/>
         <source>Minimum mid symbol count when closed:</source>
-        <translation>Minimum de symboles intérieurs dans une ligne close:</translation>
+        <translation>Minimum de symboles intérieurs dans une ligne close :</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2107"/>
         <source>Dash length:</source>
-        <translation>Longueur d'un pointillé:</translation>
+        <translation>Longueur d'un pointillé :</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2103"/>
@@ -2394,12 +2394,12 @@
     <message>
         <location filename="../src/symbol_line.cpp" line="2110"/>
         <source>Break length:</source>
-        <translation>Espacement des pointillés:</translation>
+        <translation>Espacement des pointillés :</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2113"/>
         <source>Dashes grouped together:</source>
-        <translation>Pointillés groupés:</translation>
+        <translation>Pointillés groupés :</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2115"/>
@@ -2424,7 +2424,7 @@
     <message>
         <location filename="../src/symbol_line.cpp" line="2121"/>
         <source>In-group break length:</source>
-        <translation>Espace entre les pointillés groupés:</translation>
+        <translation>Espace entre les pointillés groupés :</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2124"/>
@@ -2439,12 +2439,12 @@
     <message>
         <location filename="../src/symbol_line.cpp" line="2156"/>
         <source>Mid symbols per spot:</source>
-        <translation>Symboles intérieurs par groupe:</translation>
+        <translation>Symboles intérieurs par groupe :</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2159"/>
         <source>Mid symbol distance:</source>
-        <translation>Distance ses symboles intérieurs:</translation>
+        <translation>Distance des symboles intérieurs :</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2215"/>
@@ -2459,12 +2459,12 @@
     <message>
         <location filename="../src/symbol_line.cpp" line="2224"/>
         <source>Left border:</source>
-        <translation>Bordure gauche:</translation>
+        <translation>Bordure gauche :</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2229"/>
         <source>Right border:</source>
-        <translation>Bordure droite:</translation>
+        <translation>Bordure droite :</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2243"/>
@@ -2513,27 +2513,27 @@
     <message>
         <location filename="../src/symbol_line.cpp" line="2174"/>
         <source>Distance between spots:</source>
-        <translation>Distance entre chaque groupement:</translation>
+        <translation>Distance entre chaque groupement :</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2177"/>
         <source>Distance from line end:</source>
-        <translation>Distance depuis la fin de la ligne:</translation>
+        <translation>Distance depuis la fin de la ligne :</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2484"/>
         <source>Border width:</source>
-        <translation>Épaisseur des bordures:</translation>
+        <translation>Épaisseur des bordures :</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2487"/>
         <source>Border color:</source>
-        <translation>Couleur des bordures:</translation>
+        <translation>Couleur des bordures :</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2490"/>
         <source>Border shift:</source>
-        <translation>Décalage des bordures:</translation>
+        <translation>Décalage des bordures :</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2493"/>
@@ -2543,12 +2543,12 @@
     <message>
         <location filename="../src/symbol_line.cpp" line="2514"/>
         <source>Border dash length:</source>
-        <translation>Longueur du pointillé:</translation>
+        <translation>Longueur du pointillé :</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2517"/>
         <source>Border break length:</source>
-        <translation>Espace entre les pointillés:</translation>
+        <translation>Espace entre les pointillés :</translation>
     </message>
 </context>
 <context>
@@ -2566,7 +2566,7 @@
     <message>
         <location filename="../src/template_track.cpp" line="534"/>
         <source>Real</source>
-        <translation>Réel</translation>
+        <translation>Sur le terrain</translation>
     </message>
     <message>
         <location filename="../src/template_track.cpp" line="535"/>
@@ -2582,7 +2582,7 @@
     <message>
         <location filename="../src/template_track.cpp" line="541"/>
         <source>One coordinate unit equals:</source>
-        <translation>Une unité de coordonées équivaut à:</translation>
+        <translation>Une unité de coordonnées équivaut à :</translation>
     </message>
     <message>
         <location filename="../src/template_track.cpp" line="543"/>
@@ -2615,7 +2615,7 @@
     </message>
     <message>
         <source>Preferences...</source>
-        <translation type="vanished">Préférences...</translation>
+        <translation>Préférences…</translation>
     </message>
     <message>
         <source>Quit %1</source>
@@ -2641,7 +2641,7 @@
     <message>
         <location filename="../src/gui/main_window.cpp" line="226"/>
         <source>&amp;Open...</source>
-        <translation>&amp;Ouvrir...</translation>
+        <translation>&amp;Ouvrir…</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="228"/>
@@ -2661,7 +2661,7 @@
     <message>
         <location filename="../src/gui/main_window.cpp" line="248"/>
         <source>Save &amp;as...</source>
-        <translation>Enregistrer &amp;sous...</translation>
+        <translation>Enregistrer &amp;sous…</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="250"/>
@@ -2671,7 +2671,7 @@
     <message>
         <location filename="../src/gui/main_window.cpp" line="256"/>
         <source>Settings...</source>
-        <translation>Préférences...</translation>
+        <translation>Préférences…</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="261"/>
@@ -2749,7 +2749,7 @@
         <source>The file has been modified.
 Do you want to save your changes?</source>
         <translation>Le fichier a été modifié.
-Voulez vous sauvegarder vos modifications ?</translation>
+Voulez-vous enregistrer vos modifications ?</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="346"/>
@@ -2769,7 +2769,7 @@ Voulez vous sauvegarder vos modifications ?</translation>
 Do you want to scale the symbols to the selected scale?</source>
         <translation>L'échelle de la carte est 1:%1,mais les symboles sont à l'échelle 1:%2.
 
-Voulez vous redimensionner ces symboles à l'échelle de la carte ?</translation>
+Voulez-vous redimensionner ces symboles à l'échelle de la carte ?</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="681"/>
@@ -2779,12 +2779,12 @@ Voulez vous redimensionner ces symboles à l'échelle de la carte ?</translation
     <message>
         <location filename="../src/gui/main_window.cpp" line="682"/>
         <source>It seems that %1 crashed the last time this file was opened:&lt;br /&gt;&lt;tt&gt;%2&lt;/tt&gt;&lt;br /&gt;&lt;br /&gt;Really retry to open it?</source>
-        <translation>Il semblerait que %1 ait provoqué une anomalie majeure lorsque ce fichier a été ouvert pour la dernière fois:&lt;br /&gt;&lt;tt&gt;%2&lt;/tt&gt;&lt;br /&gt;&lt;br /&gt;Voulez vous vraiment réessayer de l'ouvrir ?</translation>
+        <translation>Il semblerait que %1 ait provoqué une anomalie majeure lorsque ce fichier a été ouvert pour la dernière fois:&lt;br /&gt;&lt;tt&gt;%2&lt;/tt&gt;&lt;br /&gt;&lt;br /&gt;Voulez-vous vraiment réessayer de l'ouvrir ?</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="870"/>
         <source>Autosaving...</source>
-        <translation>Auto-sauvegarde....</translation>
+        <translation>Auto-sauvegarde…</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="880"/>
@@ -2854,7 +2854,7 @@ Appuyez sur Non pour choisir un autre format.</translation>
     <message>
         <location filename="../src/gui/main_window.cpp" line="1016"/>
         <source>File could not be saved:</source>
-        <translation>Le fichier ne peut être enregistré:</translation>
+        <translation>Le fichier ne peut être enregistré :</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="1017"/>
@@ -2959,7 +2959,7 @@ en lecture.</translation>
 %1:
 %2</source>
         <translation>Impossible de sauvegarder le fichier
-%1:
+%1 :
 %2</translation>
     </message>
     <message>
@@ -3014,7 +3014,7 @@ Voulez-vous redimensionner le fichier importé ?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="783"/>
         <source>Print...</source>
-        <translation>Imprimer...</translation>
+        <translation>Imprimer…</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="795"/>
@@ -3084,7 +3084,7 @@ Voulez-vous redimensionner le fichier importé ?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="817"/>
         <source>Set custom zoom factor...</source>
-        <translation>Définir un facteur de zoom...</translation>
+        <translation>Définir un facteur de zoom…</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="824"/>
@@ -3114,7 +3114,7 @@ Voulez-vous redimensionner le fichier importé ?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="829"/>
         <source>Scale all symbols...</source>
-        <translation>Redimensionner tous les symboles...</translation>
+        <translation>Redimensionner tous les symboles…</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="829"/>
@@ -3124,7 +3124,7 @@ Voulez-vous redimensionner le fichier importé ?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="831"/>
         <source>Change map scale...</source>
-        <translation>Changer l'échelle de la carte...</translation>
+        <translation>Changer l'échelle de la carte…</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="831"/>
@@ -3134,7 +3134,7 @@ Voulez-vous redimensionner le fichier importé ?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="833"/>
         <source>Map notes...</source>
-        <translation>Notes sur la carte...</translation>
+        <translation>Notes sur la carte…</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="835"/>
@@ -3149,7 +3149,7 @@ Voulez-vous redimensionner le fichier importé ?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="838"/>
         <source>Open template...</source>
-        <translation>Ouvrir un modèle...</translation>
+        <translation>Ouvrir un modèle…</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="815"/>
@@ -3224,7 +3224,7 @@ Voulez-vous redimensionner le fichier importé ?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="922"/>
         <source>Import...</source>
-        <translation>Importer...</translation>
+        <translation>Importer…</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="974"/>
@@ -3277,7 +3277,7 @@ Voulez-vous redimensionner le fichier importé ?</translation>
         <location filename="../src/map_editor.cpp" line="808"/>
         <location filename="../src/map_editor.cpp" line="1115"/>
         <source>Configure grid...</source>
-        <translation>Configurer la grille...</translation>
+        <translation>Configurer la grille…</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="819"/>
@@ -3298,12 +3298,12 @@ Voulez-vous redimensionner le fichier importé ?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="830"/>
         <source>Georeferencing...</source>
-        <translation>Géoréférencement ...</translation>
+        <translation>Géoréférencement…</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="832"/>
         <source>Rotate map...</source>
-        <translation>Pivoter la carte...</translation>
+        <translation>Pivoter la carte…</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="832"/>
@@ -3313,7 +3313,7 @@ Voulez-vous redimensionner le fichier importé ?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="839"/>
         <source>Reopen template...</source>
-        <translation>Réouvrir le modèle ...</translation>
+        <translation>Réouvrir le modèle…</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="848"/>
@@ -3387,7 +3387,7 @@ Voulez-vous redimensionner le fichier importé ?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="1006"/>
         <source>Display coordinates as...</source>
-        <translation>Afficher les coordonnées comme...</translation>
+        <translation>Afficher les coordonnées comme…</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="868"/>
@@ -3406,7 +3406,7 @@ Voulez-vous redimensionner le fichier importé ?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="1158"/>
         <source>Select template...</source>
-        <translation>Sélectionner un modèle...</translation>
+        <translation>Sélectionner un modèle…</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1164"/>
@@ -3623,7 +3623,7 @@ Voulez-vous redimensionner le fichier importé ?</translation>
         <location filename="../src/map_editor.cpp" line="3432"/>
         <location filename="../src/map_editor.cpp" line="3492"/>
         <source>Enter the name of the map part:</source>
-        <translation>Entrer le nom de la partie de la carte:</translation>
+        <translation>Entrer le nom de la partie de la carte :</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="3529"/>
@@ -3699,7 +3699,7 @@ Voulez-vous redimensionner le fichier importé ?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="826"/>
         <source>Replace symbol set...</source>
-        <translation>Remplacer la bibliothèque de symboles...</translation>
+        <translation>Remplacer la bibliothèque de symboles…</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="841"/>
@@ -3945,13 +3945,13 @@ Voulez-vous redimensionner le fichier importé ?</translation>
         <location filename="../src/map_editor.cpp" line="917"/>
         <location filename="../src/map_editor.cpp" line="3431"/>
         <source>Add new part...</source>
-        <translation>Ajouter une nouvelle partie...</translation>
+        <translation>Ajouter une nouvelle partie…</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="918"/>
         <location filename="../src/map_editor.cpp" line="3491"/>
         <source>Rename current part...</source>
-        <translation>Renommer la partie active...</translation>
+        <translation>Renommer la partie active…</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="919"/>
@@ -3977,7 +3977,7 @@ Voulez-vous redimensionner le fichier importé ?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="966"/>
         <source>&amp;Export as...</source>
-        <translation>&amp;Exporter comme...</translation>
+        <translation>&amp;Exporter comme…</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1126"/>
@@ -4316,12 +4316,12 @@ sdélectionnés</translation>
     <message>
         <location filename="../src/core/map_printer.cpp" line="1215"/>
         <source>Processing separations of page %1...</source>
-        <translation>Calcul de la séparation de la page %1...</translation>
+        <translation>Calcul de la séparation de la page %1…</translation>
     </message>
     <message>
         <location filename="../src/core/map_printer.cpp" line="1216"/>
         <source>Processing page %1...</source>
-        <translation>Calcul la page %1...</translation>
+        <translation>Calcul la page %1…</translation>
     </message>
     <message>
         <location filename="../src/core/map_printer.cpp" line="1266"/>
@@ -4405,7 +4405,7 @@ Templates -&gt; Open template...</source>
 
 Commencez par dessiner ou charger un modèle.
 Pour charger un modèle, cliquez sur
-"Modèles" -&gt; "Ouvrir modèle"...</translation>
+"Modèles" -&gt; "Ouvrir modèle"…</translation>
     </message>
     <message>
         <location filename="../src/map_widget.cpp" line="837"/>
@@ -4421,17 +4421,17 @@ utiliser la molette de la souris pour zoomer.</translation>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="98"/>
         <source>Boundary length:</source>
-        <translation>Longueur du périmètre:</translation>
+        <translation>Longueur du périmètre :</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="136"/>
         <source>Length:</source>
-        <translation>Longueur:</translation>
+        <translation>Longueur :</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="114"/>
         <source>Area:</source>
-        <translation>Surface:</translation>
+        <translation>Surface :</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="61"/>
@@ -4530,7 +4530,7 @@ utiliser la molette de la souris pour zoomer.</translation>
     <message>
         <location filename="../src/map_dialog_new.cpp" line="54"/>
         <source>Symbol sets:</source>
-        <translation>Bibliothèques des symboles:</translation>
+        <translation>Bibliothèques des symboles :</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_new.cpp" line="57"/>
@@ -4556,7 +4556,7 @@ utiliser la molette de la souris pour zoomer.</translation>
         <location filename="../src/map_dialog_new.cpp" line="186"/>
         <location filename="../src/map_dialog_new.cpp" line="241"/>
         <source>Load symbol set from a file...</source>
-        <translation>Charger une bibliothèque des symboles à partir d'un fichier...</translation>
+        <translation>Charger une bibliothèque des symboles à partir d'un fichier…</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_new.cpp" line="237"/>
@@ -5055,7 +5055,7 @@ utiliser la molette de la souris pour zoomer.</translation>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="87"/>
         <source>Diameter &lt;b&gt;a&lt;/b&gt;:</source>
-        <translation>Diamètre &lt;b&gt;a&lt;/b&gt;:</translation>
+        <translation>Diamètre &lt;b&gt;a&lt;/b&gt; :</translation>
     </message>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="88"/>
@@ -5067,32 +5067,32 @@ utiliser la molette de la souris pour zoomer.</translation>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="90"/>
         <source>Inner color:</source>
-        <translation>Couleur de remplissage:</translation>
+        <translation>Couleur de remplissage :</translation>
     </message>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="93"/>
         <source>Outer width &lt;b&gt;b&lt;/b&gt;:</source>
-        <translation>Épaisseur de bordure &lt;b&gt;b&lt;/b&gt;:</translation>
+        <translation>Épaisseur de bordure &lt;b&gt;b&lt;/b&gt; :</translation>
     </message>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="96"/>
         <source>Outer color:</source>
-        <translation>Couleur de bordure:</translation>
+        <translation>Couleur de bordure :</translation>
     </message>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="121"/>
         <source>Line width:</source>
-        <translation>Épaisseur de ligne:</translation>
+        <translation>Épaisseur de ligne :</translation>
     </message>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="124"/>
         <source>Line color:</source>
-        <translation>Couleur de ligne:</translation>
+        <translation>Couleur de ligne :</translation>
     </message>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="127"/>
         <source>Line cap:</source>
-        <translation>Extrémité de ligne:</translation>
+        <translation>Extrémité de ligne :</translation>
     </message>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="129"/>
@@ -5113,7 +5113,7 @@ utiliser la molette de la souris pour zoomer.</translation>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="134"/>
         <source>Line join:</source>
-        <translation>Sommet de ligne:</translation>
+        <translation>Sommet de ligne :</translation>
     </message>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="136"/>
@@ -5133,12 +5133,12 @@ utiliser la molette de la souris pour zoomer.</translation>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="160"/>
         <source>Area color:</source>
-        <translation>Couleur de surface:</translation>
+        <translation>Couleur de surface :</translation>
     </message>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="173"/>
         <source>Coordinates:</source>
-        <translation>Coordonnées:</translation>
+        <translation>Coordonnées :</translation>
     </message>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="178"/>
@@ -5253,7 +5253,7 @@ utiliser la molette de la souris pour zoomer.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="100"/>
         <source>Printer:</source>
-        <translation>Imprimante:</translation>
+        <translation>Imprimante :</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="133"/>
@@ -5298,7 +5298,7 @@ utiliser la molette de la souris pour zoomer.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="259"/>
         <source>Preview...</source>
-        <translation>Aperçu...</translation>
+        <translation>Aperçu…</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="148"/>
@@ -5390,7 +5390,7 @@ utiliser la molette de la souris pour zoomer.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="265"/>
         <source>Export...</source>
-        <translation>Exporter...</translation>
+        <translation>Exporter…</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="371"/>
@@ -5479,7 +5479,7 @@ utiliser la molette de la souris pour zoomer.</translation>
         <location filename="../src/gui/print_widget.cpp" line="1201"/>
         <location filename="../src/gui/print_widget.cpp" line="1213"/>
         <source>Export map ...</source>
-        <translation>Exporter la carte...</translation>
+        <translation>Exporter la carte…</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1136"/>
@@ -5535,7 +5535,7 @@ des couleurs</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="194"/>
         <source>Mode:</source>
-        <translation>Mode:</translation>
+        <translation>Mode :</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1155"/>
@@ -5591,7 +5591,7 @@ des couleurs</translation>
     <name>ProjectedCRSSelector</name>
     <message>
         <source>&amp;Coordinate reference system:</source>
-        <translation type="vanished">&amp;Système de coordonnées de référence:</translation>
+        <translation>&amp;Système de coordonnées de référence :</translation>
     </message>
 </context>
 <context>
@@ -5609,7 +5609,7 @@ des couleurs</translation>
     <message>
         <location filename="../src/template_dialog_reopen.cpp" line="43"/>
         <source>Closed templates:</source>
-        <translation>Modèles fermés:</translation>
+        <translation>Modèles fermés :</translation>
     </message>
     <message>
         <location filename="../src/template_dialog_reopen.cpp" line="46"/>
@@ -5619,7 +5619,7 @@ des couleurs</translation>
     <message>
         <location filename="../src/template_dialog_reopen.cpp" line="49"/>
         <source>Active templates:</source>
-        <translation>Activer les modèles:</translation>
+        <translation>Activer les modèles :</translation>
     </message>
     <message>
         <location filename="../src/template_dialog_reopen.cpp" line="58"/>
@@ -5657,7 +5657,7 @@ des couleurs</translation>
     <message>
         <location filename="../src/symbol_dialog_replace.cpp" line="55"/>
         <source>Symbol mapping:</source>
-        <translation>Association entre symboles:</translation>
+        <translation>Association entre symboles :</translation>
     </message>
     <message>
         <location filename="../src/symbol_dialog_replace.cpp" line="56"/>
@@ -5707,7 +5707,7 @@ des couleurs</translation>
     <message>
         <location filename="../src/symbol_dialog_replace.cpp" line="342"/>
         <source>The chosen symbol set has a scale of 1:%1, while the map scale is 1:%2. Do you really want to choose this set?</source>
-        <translation>La bibliothèque des symboles sélectionnée a une échelle de 1:%1, alors que la carte est au 1:%2. Voulez vous vraiment choisir cette bibliothèque ?</translation>
+        <translation>La bibliothèque des symboles sélectionnée a une échelle de 1:%1, alors que la carte est au 1:%2. Voulez-vous vraiment choisir cette bibliothèque ?</translation>
     </message>
 </context>
 <context>
@@ -5720,7 +5720,7 @@ des couleurs</translation>
     <message>
         <location filename="../src/map_dialog_rotate.cpp" line="44"/>
         <source>Angle (counter-clockwise):</source>
-        <translation>Angle (sens anti-horaire):</translation>
+        <translation>Angle (sens anti-horaire) :</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_rotate.cpp" line="42"/>
@@ -5735,7 +5735,7 @@ des couleurs</translation>
     <message>
         <location filename="../src/map_dialog_rotate.cpp" line="46"/>
         <source>Rotate around:</source>
-        <translation>Rotation autours de:</translation>
+        <translation>Rotation autour de :</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_rotate.cpp" line="48"/>
@@ -5765,13 +5765,13 @@ des couleurs</translation>
         <location filename="../src/map_dialog_rotate.cpp" line="62"/>
         <source>X:</source>
         <comment>x coordinate</comment>
-        <translation>X:</translation>
+        <translation>X :</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_rotate.cpp" line="64"/>
         <source>Y:</source>
         <comment>y coordinate</comment>
-        <translation>Y:</translation>
+        <translation>Y :</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_rotate.cpp" line="70"/>
@@ -5886,13 +5886,13 @@ des couleurs</translation>
         <location filename="../src/map_dialog_scale.cpp" line="62"/>
         <source>X:</source>
         <comment>x coordinate</comment>
-        <translation>X:</translation>
+        <translation>X :</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_scale.cpp" line="64"/>
         <source>Y:</source>
         <comment>y coordinate</comment>
-        <translation>Y:</translation>
+        <translation>Y :</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_scale.cpp" line="69"/>
@@ -5979,12 +5979,12 @@ des couleurs</translation>
     </message>
     <message>
         <source>CRS Specification:</source>
-        <translation type="vanished">Spécification CRS:</translation>
+        <translation>Spécification CRS :</translation>
     </message>
     <message>
         <location filename="../src/gui/select_crs_dialog.cpp" line="85"/>
         <source>Status:</source>
-        <translation>Statut:</translation>
+        <translation>Statut :</translation>
     </message>
     <message>
         <location filename="../src/gui/select_crs_dialog.cpp" line="130"/>
@@ -6021,17 +6021,17 @@ des couleurs</translation>
     <message>
         <location filename="../src/symbol_properties_widget.cpp" line="40"/>
         <source>Number:</source>
-        <translation>Numéro:</translation>
+        <translation>Numéro :</translation>
     </message>
     <message>
         <location filename="../src/symbol_properties_widget.cpp" line="48"/>
         <source>Name:</source>
-        <translation>Nom:</translation>
+        <translation>Nom :</translation>
     </message>
     <message>
         <location filename="../src/symbol_properties_widget.cpp" line="50"/>
         <source>Description:</source>
-        <translation>Description:</translation>
+        <translation>Description :</translation>
     </message>
     <message>
         <location filename="../src/symbol_properties_widget.cpp" line="52"/>
@@ -6099,7 +6099,7 @@ des couleurs</translation>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="249"/>
         <source>Scale...</source>
-        <translation>Échelle...</translation>
+        <translation>Échelle…</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="251"/>
@@ -6242,7 +6242,7 @@ des couleurs</translation>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="906"/>
         <source>Scale to percentage:</source>
-        <translation>Redimensionner au ratio:</translation>
+        <translation>Redimensionner au ratio :</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="937"/>
@@ -6252,7 +6252,7 @@ des couleurs</translation>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="937"/>
         <source>The map contains objects with the symbol "%1". Deleting it will delete those objects and clear the undo history! Do you really want to do that?</source>
-        <translation>La carte contient des objets avec le symbole suivant"%1". En le supprimant, vous supprimerez ces objets et effacerez l'historique de vos dernières actions ! Voulez vous vraiment continuer ?</translation>
+        <translation>La carte contient des objets avec le symbole suivant"%1". En le supprimant, vous supprimerez ces objets et effacerez l'historique de vos dernières actions ! Voulez-vous vraiment continuer ?</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1160"/>
@@ -6291,12 +6291,12 @@ des couleurs</translation>
     <message>
         <location filename="../src/symbol_setting_dialog.cpp" line="106"/>
         <source>Open...</source>
-        <translation>Ouvrir...</translation>
+        <translation>Ouvrir…</translation>
     </message>
     <message>
         <location filename="../src/symbol_setting_dialog.cpp" line="109"/>
         <source>Center template...</source>
-        <translation>Centrer le modèle...</translation>
+        <translation>Centrer le modèle…</translation>
     </message>
     <message>
         <location filename="../src/symbol_setting_dialog.cpp" line="114"/>
@@ -6458,7 +6458,7 @@ traverser les jattes de kiwis
     <message>
         <location filename="../src/template_adjust.cpp" line="193"/>
         <source>Pass points:</source>
-        <translation>Points de calage:</translation>
+        <translation>Points de calage :</translation>
     </message>
     <message>
         <location filename="../src/template_adjust.cpp" line="195"/>
@@ -6558,12 +6558,12 @@ Si vous ne souhaitez pas dessiner sur le modèle, cela ne pose alors aucun probl
     <message>
         <location filename="../src/template_image.cpp" line="597"/>
         <source>Image size:</source>
-        <translation>Taille de l'image:</translation>
+        <translation>Taille de l'image :</translation>
     </message>
     <message>
         <location filename="../src/template_image.cpp" line="600"/>
         <source>Specify how to position or scale the image:</source>
-        <translation>Spécifier comment positionner ou mettre à l'échelle l'image:</translation>
+        <translation>Spécifier comment positionner ou mettre à l'échelle l'image :</translation>
     </message>
     <message>
         <location filename="../src/template_image.cpp" line="610"/>
@@ -6588,7 +6588,7 @@ Si vous ne souhaitez pas dessiner sur le modèle, cela ne pose alors aucun probl
     <message>
         <location filename="../src/template_image.cpp" line="620"/>
         <source>Meters per pixel:</source>
-        <translation>Mètres par pixel:</translation>
+        <translation>Mètres par pixel :</translation>
     </message>
     <message>
         <location filename="../src/template_image.cpp" line="624"/>
@@ -6657,7 +6657,7 @@ Si vous ne souhaitez pas dessiner sur le modèle, cela ne pose alors aucun probl
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="200"/>
         <source>Open...</source>
-        <translation>Ouvrir...</translation>
+        <translation>Ouvrir…</translation>
     </message>
     <message>
         <source>Please enter a percentage from 0 to 100!</source>
@@ -6701,7 +6701,7 @@ Si vous ne souhaitez pas dessiner sur le modèle, cela ne pose alors aucun probl
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="211"/>
         <source>Add template...</source>
-        <translation>Ajouter un modèle...</translation>
+        <translation>Ajouter un modèle…</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="215"/>
@@ -6741,7 +6741,7 @@ Si vous ne souhaitez pas dessiner sur le modèle, cela ne pose alors aucun probl
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="244"/>
         <source>Positioning...</source>
-        <translation>Positionnement...</translation>
+        <translation>Positionnement…</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="390"/>
@@ -6756,7 +6756,7 @@ Si vous ne souhaitez pas dessiner sur le modèle, cela ne pose alors aucun probl
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="240"/>
         <source>Adjust...</source>
-        <translation>Ajuster...</translation>
+        <translation>Ajuster…</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="403"/>
@@ -6849,22 +6849,22 @@ Si vous ne souhaitez pas dessiner sur le modèle, cela ne pose alors aucun probl
     <message>
         <location filename="../src/template_position_dock_widget.cpp" line="40"/>
         <source>X:</source>
-        <translation>X:</translation>
+        <translation>X :</translation>
     </message>
     <message>
         <location filename="../src/template_position_dock_widget.cpp" line="43"/>
         <source>Y:</source>
-        <translation>Y:</translation>
+        <translation>Y :</translation>
     </message>
     <message>
         <location filename="../src/template_position_dock_widget.cpp" line="46"/>
         <source>X-Scale:</source>
-        <translation>Échelle en X:</translation>
+        <translation>Échelle en X :</translation>
     </message>
     <message>
         <location filename="../src/template_position_dock_widget.cpp" line="49"/>
         <source>Y-Scale:</source>
-        <translation>Échelle en Y:</translation>
+        <translation>Échelle en Y :</translation>
     </message>
     <message>
         <location filename="../src/template_position_dock_widget.cpp" line="52"/>
@@ -6882,7 +6882,7 @@ Si vous ne souhaitez pas dessiner sur le modèle, cela ne pose alors aucun probl
     <message>
         <location filename="../src/template_track.cpp" line="163"/>
         <source>Opening track ...</source>
-        <translation>Ouvrir une trace...</translation>
+        <translation>Ouvrir une trace…</translation>
     </message>
     <message>
         <location filename="../src/template_track.cpp" line="164"/>
@@ -7066,17 +7066,17 @@ La version maximale supportée est la version %2.</translation>
     <message>
         <location filename="../src/symbol_text.cpp" line="597"/>
         <source>Font family:</source>
-        <translation>Choix de la police:</translation>
+        <translation>Choix de la police :</translation>
     </message>
     <message>
         <location filename="../src/symbol_text.cpp" line="616"/>
         <source>Font size:</source>
-        <translation>Taille de la police:</translation>
+        <translation>Taille de la police :</translation>
     </message>
     <message>
         <location filename="../src/symbol_text.cpp" line="612"/>
         <source>Determine size...</source>
-        <translation>Déterminer la taille...</translation>
+        <translation>Déterminer la taille…</translation>
     </message>
     <message>
         <location filename="../src/symbol_text.cpp" line="545"/>
@@ -7103,7 +7103,7 @@ La version maximale supportée est la version %2.</translation>
     <message>
         <location filename="../src/symbol_text.cpp" line="619"/>
         <source>Text color:</source>
-        <translation>Couleur du texte:</translation>
+        <translation>Couleur du texte :</translation>
     </message>
     <message>
         <location filename="../src/symbol_text.cpp" line="622"/>
@@ -7123,7 +7123,7 @@ La version maximale supportée est la version %2.</translation>
     <message>
         <location filename="../src/symbol_text.cpp" line="629"/>
         <source>Text style:</source>
-        <translation>Style du texte:</translation>
+        <translation>Style du texte :</translation>
     </message>
     <message>
         <location filename="../src/symbol_text.cpp" line="633"/>
@@ -7134,17 +7134,17 @@ La version maximale supportée est la version %2.</translation>
     <message>
         <location filename="../src/symbol_text.cpp" line="634"/>
         <source>Line spacing:</source>
-        <translation>Espace entre les lignes:</translation>
+        <translation>Espace entre les lignes :</translation>
     </message>
     <message>
         <location filename="../src/symbol_text.cpp" line="637"/>
         <source>Paragraph spacing:</source>
-        <translation>Espace entre les paragraphes:</translation>
+        <translation>Espace entre les paragraphes :</translation>
     </message>
     <message>
         <location filename="../src/symbol_text.cpp" line="640"/>
         <source>Character spacing:</source>
-        <translation>Espace entre les caractères:</translation>
+        <translation>Espace entre les caractères :</translation>
     </message>
     <message>
         <location filename="../src/symbol_text.cpp" line="642"/>
@@ -7154,7 +7154,7 @@ La version maximale supportée est la version %2.</translation>
     <message>
         <location filename="../src/symbol_text.cpp" line="649"/>
         <source>Symbol icon text:</source>
-        <translation>Icône du symbole:</translation>
+        <translation>Icône du symbole :</translation>
     </message>
     <message>
         <location filename="../src/symbol_text.cpp" line="653"/>
@@ -7170,7 +7170,7 @@ La version maximale supportée est la version %2.</translation>
     <message>
         <location filename="../src/symbol_text.cpp" line="667"/>
         <source>Framing color:</source>
-        <translation>Couleur du contour:</translation>
+        <translation>Couleur du contour :</translation>
     </message>
     <message>
         <location filename="../src/symbol_text.cpp" line="669"/>
@@ -7180,7 +7180,7 @@ La version maximale supportée est la version %2.</translation>
     <message>
         <location filename="../src/symbol_text.cpp" line="673"/>
         <source>Width:</source>
-        <translation>Épaisseur:</translation>
+        <translation>Épaisseur :</translation>
     </message>
     <message>
         <location filename="../src/symbol_text.cpp" line="675"/>
@@ -7190,12 +7190,12 @@ La version maximale supportée est la version %2.</translation>
     <message>
         <location filename="../src/symbol_text.cpp" line="679"/>
         <source>Left/Right Offset:</source>
-        <translation>Décalage Gauche/Droite:</translation>
+        <translation>Décalage Gauche/Droite :</translation>
     </message>
     <message>
         <location filename="../src/symbol_text.cpp" line="682"/>
         <source>Top/Down Offset:</source>
-        <translation>Décalage Haut/Bas:</translation>
+        <translation>Décalage Haut/Bas :</translation>
     </message>
     <message>
         <location filename="../src/symbol_text.cpp" line="686"/>
@@ -7210,17 +7210,17 @@ La version maximale supportée est la version %2.</translation>
     <message>
         <location filename="../src/symbol_text.cpp" line="697"/>
         <source>Line width:</source>
-        <translation>Épaisseur de ligne:</translation>
+        <translation>Épaisseur de ligne :</translation>
     </message>
     <message>
         <location filename="../src/symbol_text.cpp" line="700"/>
         <source>Line color:</source>
-        <translation>Couleur de ligne:</translation>
+        <translation>Couleur de ligne :</translation>
     </message>
     <message>
         <location filename="../src/symbol_text.cpp" line="970"/>
         <source>Position:</source>
-        <translation>Position:</translation>
+        <translation>Position :</translation>
     </message>
     <message>
         <location filename="../src/symbol_text.cpp" line="691"/>
@@ -7230,7 +7230,7 @@ La version maximale supportée est la version %2.</translation>
     <message>
         <location filename="../src/symbol_text.cpp" line="703"/>
         <source>Distance from baseline:</source>
-        <translation>Distance depuis la ligne de base:</translation>
+        <translation>Distance depuis la ligne de base :</translation>
     </message>
     <message>
         <location filename="../src/symbol_text.cpp" line="707"/>
@@ -7308,7 +7308,7 @@ La version maximale supportée est la version %2.</translation>
         <location filename="../src/util.cpp" line="313"/>
         <source>See more...</source>
         <extracomment>This "See more" is displayed as a link to the manual in What's-this tooltips.</extracomment>
-        <translation>En savoir plus...</translation>
+        <translation>En savoir plus…</translation>
     </message>
 </context>
 <context>
