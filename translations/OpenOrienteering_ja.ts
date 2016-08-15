@@ -2392,7 +2392,7 @@
     <message>
         <location filename="../src/file_import_export.cpp" line="135"/>
         <source>Click the red template name(s) in the Templates -&gt; Template setup window to locate the template file name(s).</source>
-        <translation type="unfinished"></translation>
+        <translation>テンプレート -&gt; テンプレートウィンドウで、赤のテンプレート名をクリックして、テンプレートファイル名を設定します。</translation>
     </message>
     <message>
         <location filename="../src/file_format_native.cpp" line="123"/>
@@ -2767,7 +2767,7 @@
     <message>
         <location filename="../src/template_track.cpp" line="534"/>
         <source>Real</source>
-        <translation type="unfinished"></translation>
+        <translation>実際</translation>
     </message>
     <message>
         <location filename="../src/template_track.cpp" line="535"/>
@@ -2783,17 +2783,17 @@
     <message>
         <location filename="../src/template_track.cpp" line="541"/>
         <source>One coordinate unit equals:</source>
-        <translation type="unfinished"></translation>
+        <translation>1 座標単位に等しい:</translation>
     </message>
     <message>
         <location filename="../src/template_track.cpp" line="543"/>
         <source>Position track at given coordinates</source>
-        <translation type="unfinished"></translation>
+        <translation>指定した座標でトラックを配置</translation>
     </message>
     <message>
         <location filename="../src/template_track.cpp" line="547"/>
         <source>Position track at view center</source>
-        <translation type="unfinished"></translation>
+        <translation>表示の中心でトラックを配置</translation>
     </message>
 </context>
 <context>
@@ -2939,7 +2939,7 @@
     <message>
         <location filename="../src/gui/main_window.cpp" line="500"/>
         <source>Do you want to remove the autosaved version?</source>
-        <translation type="unfinished"></translation>
+        <translation>自動保存したバージョンを削除しますか?</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="506"/>
@@ -2951,7 +2951,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../src/gui/main_window.cpp" line="346"/>
         <source>Unsaved file</source>
-        <translation type="unfinished"></translation>
+        <translation>未保存のファイル</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="618"/>
@@ -2970,22 +2970,22 @@ Do you want to scale the symbols to the selected scale?</source>
     <message>
         <location filename="../src/gui/main_window.cpp" line="681"/>
         <source>Crash warning</source>
-        <translation type="unfinished"></translation>
+        <translation>クラッシュ警告</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="682"/>
         <source>It seems that %1 crashed the last time this file was opened:&lt;br /&gt;&lt;tt&gt;%2&lt;/tt&gt;&lt;br /&gt;&lt;br /&gt;Really retry to open it?</source>
-        <translation type="unfinished"></translation>
+        <translation>最後にこのファイルを開いた時に %1 はクラッシュしたようです:&lt;br /&gt;&lt;tt&gt;%2&lt;/tt&gt;&lt;br /&gt;&lt;br /&gt;もう一度開いてもよろしいですか?</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="870"/>
         <source>Autosaving...</source>
-        <translation type="unfinished"></translation>
+        <translation>自動保存中...</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="880"/>
         <source>Autosaving failed!</source>
-        <translation type="unfinished"></translation>
+        <translation>自動保存に失敗しました!</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="955"/>
@@ -3023,7 +3023,8 @@ File format not recognized.</source>
         <location filename="../src/gui/main_window.cpp" line="772"/>
         <source>The file has been modified.
 Do you want to discard your changes?</source>
-        <translation type="unfinished"></translation>
+        <translation>ファイルが変更されています。
+変更を破棄しますか?</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="823"/>
@@ -3158,7 +3159,9 @@ because the format is unknown.</source>
         <source>Cannot save file
 %1:
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>ファイルを保存できません
+%1:
+%2</translation>
     </message>
     <message>
         <location filename="../src/map.cpp" line="746"/>
@@ -3223,7 +3226,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map.cpp" line="440"/>
         <source>default part</source>
-        <translation type="unfinished"></translation>
+        <translation>デフォルトの要素</translation>
     </message>
     <message>
         <location filename="../src/core/map_color.cpp" line="28"/>
@@ -3245,7 +3248,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/core/map_coord.cpp" line="176"/>
         <source>Coordinates are out-of-bounds.</source>
-        <translation type="unfinished"></translation>
+        <translation>座標は範囲外です。</translation>
     </message>
 </context>
 <context>
@@ -3312,7 +3315,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="802"/>
         <source>Select nothing</source>
-        <translation type="unfinished"></translation>
+        <translation>何も選択しない</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="803"/>
@@ -3495,12 +3498,12 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="841"/>
         <source>Tag editor</source>
-        <translation type="unfinished"></translation>
+        <translation>タグ エディター</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="841"/>
         <source>Show/Hide the tag editor window</source>
-        <translation type="unfinished"></translation>
+        <translation>タグ エディター ウィンドウの表示/非表示</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="843"/>
@@ -3530,12 +3533,12 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="849"/>
         <source>Draw free-handedly</source>
-        <translation type="unfinished"></translation>
+        <translation>フリーハンドで描画</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="850"/>
         <source>Fill bounded areas</source>
-        <translation type="unfinished"></translation>
+        <translation>閉じたエリアの塗りつぶし</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="851"/>
@@ -3594,12 +3597,12 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="880"/>
         <source>Cut away from area</source>
-        <translation type="unfinished"></translation>
+        <translation>エリアから切り取り</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="882"/>
         <source>Merge area holes</source>
-        <translation type="unfinished"></translation>
+        <translation>エリアの穴をマージ</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="883"/>
@@ -3614,90 +3617,90 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="885"/>
         <source>Cutout</source>
-        <translation>カットアウト</translation>
+        <translation>切り抜き</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="886"/>
         <source>Cut away</source>
-        <translation>カットアウェイ</translation>
+        <translation>切り取り</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="887"/>
         <source>Distribute points along path</source>
-        <translation type="unfinished"></translation>
+        <translation>コースに沿ってポイントを配布する</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="894"/>
         <source>Paint on template settings</source>
-        <translation type="unfinished"></translation>
+        <translation>テンプレート設定に書き込み</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="900"/>
         <source>Enable touch cursor</source>
-        <translation type="unfinished"></translation>
+        <translation>タッチ カーソルを有効にする</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="901"/>
         <source>Enable GPS display</source>
-        <translation type="unfinished"></translation>
+        <translation>GPS 表示を有効にする</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="903"/>
         <source>Enable GPS distance rings</source>
-        <translation type="unfinished"></translation>
+        <translation>GPS 距離リングを有効にする</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="905"/>
         <source>Set point object at GPS position</source>
-        <translation type="unfinished"></translation>
+        <translation>GPS の位置でポイント オブジェクトを設定</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="907"/>
         <source>Set temporary marker at GPS position</source>
-        <translation type="unfinished"></translation>
+        <translation>GPS の位置で一時的なマーカーを設定</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="909"/>
         <source>Create temporary path at GPS position</source>
-        <translation type="unfinished"></translation>
+        <translation>GPS の位置で一時的なコースを作成</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="911"/>
         <source>Clear temporary GPS markers</source>
-        <translation type="unfinished"></translation>
+        <translation>一時的な GPS マーカーをクリア</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="914"/>
         <source>Enable compass display</source>
-        <translation type="unfinished"></translation>
+        <translation>コンパスの表示を有効にする</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="915"/>
         <source>Align map with north</source>
-        <translation type="unfinished"></translation>
+        <translation>地図を北に合わせる</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="917"/>
         <location filename="../src/map_editor.cpp" line="3431"/>
         <source>Add new part...</source>
-        <translation type="unfinished"></translation>
+        <translation>新しい要素を追加...</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="918"/>
         <location filename="../src/map_editor.cpp" line="3491"/>
         <source>Rename current part...</source>
-        <translation type="unfinished"></translation>
+        <translation>現在の要素の名前を変更...</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="919"/>
         <location filename="../src/map_editor.cpp" line="3452"/>
         <source>Remove current part</source>
-        <translation type="unfinished"></translation>
+        <translation>現在の要素を削除</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="920"/>
         <source>Merge all parts</source>
-        <translation type="unfinished"></translation>
+        <translation>すべての要素をマージ</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="922"/>
@@ -3707,12 +3710,12 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="942"/>
         <source>Copy position</source>
-        <translation type="unfinished"></translation>
+        <translation>位置をコピー</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="942"/>
         <source>Copy position to clipboard.</source>
-        <translation type="unfinished"></translation>
+        <translation>位置をクリップボードにコピーします。</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="974"/>
@@ -3744,12 +3747,12 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="481"/>
         <source>Editing in progress</source>
-        <translation type="unfinished"></translation>
+        <translation>編集の処理中</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="481"/>
         <source>The map is currently being edited. Please finish the edit operation before saving.</source>
-        <translation type="unfinished"></translation>
+        <translation>地図は現在編集中です。保存する前に編集操作を終了してください。</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1084"/>
@@ -3914,7 +3917,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="1470"/>
         <source>Print / Export is not available in this program version!</source>
-        <translation type="unfinished"></translation>
+        <translation>印刷 / エクスポートはこのバージョンのプログラムで利用できません!</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1490"/>
@@ -4000,7 +4003,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="1904"/>
         <source>Tag Editor</source>
-        <translation type="unfinished"></translation>
+        <translation>タグ エディター</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1964"/>
@@ -4008,7 +4011,9 @@ Rescale the imported data?</source>
 symbol
 selected</source>
         <comment>Keep it short. Should not be much longer per line than the longest word in the original.</comment>
-        <translation type="unfinished"></translation>
+        <translation>記号が
+選択されて
+いません</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1965"/>
@@ -4016,7 +4021,9 @@ selected</source>
 symbols
 selected</source>
         <comment>Keep it short. Should not be much longer per line than the longest word in the original.</comment>
-        <translation type="unfinished"></translation>
+        <translation>複数の
+記号を
+選択</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2041"/>
@@ -4050,17 +4057,17 @@ selected</source>
     <message>
         <location filename="../src/map_editor.cpp" line="2049"/>
         <source>Draw paths free-handedly.</source>
-        <translation type="unfinished"></translation>
+        <translation>フリーハンドでコースを描画します。</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2051"/>
         <source>Fill bounded areas.</source>
-        <translation type="unfinished"></translation>
+        <translation>閉じられたエリアを塗りつぶします。</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2146"/>
         <source>Deletes the selected object(s).</source>
-        <translation type="unfinished"></translation>
+        <translation>選択したオブジェクトを削除します。</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2157"/>
@@ -4075,89 +4082,89 @@ selected</source>
     <message>
         <location filename="../src/map_editor.cpp" line="2187"/>
         <source>Resulting symbol: %1 %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>結果の記号: %1 %2。</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2188"/>
         <source>Select at least two area or path objects activate this tool.</source>
-        <translation type="unfinished"></translation>
+        <translation>少なくとも 2 つのエリアまたはコース オブジェクトを選択して、このツールを有効にします。</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2190"/>
         <source>Unify overlapping objects.</source>
-        <translation type="unfinished"></translation>
+        <translation>重なり合ったオブジェクトを結合します。</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2192"/>
         <source>Remove all parts which are not overlaps with the first selected object.</source>
-        <translation type="unfinished"></translation>
+        <translation>最初に選択したオブジェクトと重ならない要素をすべて削除します。</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2194"/>
         <source>Remove overlapped parts of the first selected object.</source>
-        <translation type="unfinished"></translation>
+        <translation>最初に選択したオブジェクトと重なった要素を削除します。</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2196"/>
         <source>Remove all parts which overlap the first selected object.</source>
-        <translation type="unfinished"></translation>
+        <translation>最初に選択したオブジェクトと重なった要素をすべて削除します。</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2200"/>
         <source>Merge area holes together, or merge holes with the object boundary to cut out this part.</source>
-        <translation type="unfinished"></translation>
+        <translation>エリアの穴を一緒にマージ、またはオブジェクトの境界と穴をマージして、この要素を切り取ります。</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2200"/>
         <source>Select one area object with holes to activate this tool.</source>
-        <translation type="unfinished"></translation>
+        <translation>穴のあるエリア オブジェクトを 1 つ選択して、このツールを有効にします。</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2969"/>
         <source>Merging holes failed.</source>
-        <translation type="unfinished"></translation>
+        <translation>穴のマージに失敗しました。</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="3258"/>
         <source>Clear temporary markers</source>
-        <translation type="unfinished"></translation>
+        <translation>一時的なマーカーをクリア</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="3258"/>
         <source>Are you sure you want to delete all temporary GPS markers? This cannot be undone.</source>
-        <translation type="unfinished"></translation>
+        <translation>一時的な GPS マーカーをすべて削除してもよろしいですか? これは元に戻すことができません。</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="3372"/>
         <source>Merge this part with</source>
-        <translation type="unfinished"></translation>
+        <translation>この要素をマージ</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="3378"/>
         <source>Move selected objects to</source>
-        <translation type="unfinished"></translation>
+        <translation>選択したオブジェクトを移動</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="3432"/>
         <location filename="../src/map_editor.cpp" line="3492"/>
         <source>Enter the name of the map part:</source>
-        <translation type="unfinished"></translation>
+        <translation>地図の要素の名前を入力:</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="3529"/>
         <location filename="../src/map_editor.cpp" line="3559"/>
         <source>Merge map parts</source>
-        <translation type="unfinished"></translation>
+        <translation>地図の要素をマージ</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="3530"/>
         <source>Do you want to move all objects from map part "%1" to "%2", and to remove "%1"?</source>
-        <translation type="unfinished"></translation>
+        <translation>すべてのオブジェクトを地図の要素 "%1" から "%2" に移動して、"%1" を削除しますか?</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="3560"/>
         <source>Do you want to move all objects to map part "%1", and to remove all other map parts?</source>
-        <translation type="unfinished"></translation>
+        <translation>すべてのオブジェクトを地図の要素 "%1" に移動して、他の地図の要素をすべて削除しますか?</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="3745"/>
@@ -4204,22 +4211,22 @@ selected</source>
     <message>
         <location filename="../src/map_editor.cpp" line="486"/>
         <source>Map saved</source>
-        <translation type="unfinished"></translation>
+        <translation>地図を保存しました</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="736"/>
         <source>Ctrl+A</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+A</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="737"/>
         <source>Ctrl+Shift+A</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+Shift+A</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="738"/>
         <source>Ctrl+I</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+I</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="740"/>
@@ -4234,57 +4241,57 @@ selected</source>
     <message>
         <location filename="../src/map_editor.cpp" line="754"/>
         <source>L</source>
-        <translation type="unfinished"></translation>
+        <translation>L</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="755"/>
         <source>S</source>
-        <translation type="unfinished"></translation>
+        <translation>S</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="756"/>
         <source>P</source>
-        <translation type="unfinished"></translation>
+        <translation>P</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="757"/>
         <source>O</source>
-        <translation type="unfinished"></translation>
+        <translation>O</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="758"/>
         <source>Ctrl+R</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+R</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="759"/>
         <source>F</source>
-        <translation type="unfinished"></translation>
+        <translation>F</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="760"/>
         <source>T</source>
-        <translation type="unfinished"></translation>
+        <translation>T</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="762"/>
         <source>D</source>
-        <translation type="unfinished"></translation>
+        <translation>D</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="763"/>
         <source>Ctrl+G</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+G</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="764"/>
         <source>Ctrl+F</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+F</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="765"/>
         <source>Ctrl+D</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+D</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="766"/>
@@ -4299,7 +4306,7 @@ selected</source>
     <message>
         <location filename="../src/map_editor.cpp" line="768"/>
         <source>Z</source>
-        <translation type="unfinished"></translation>
+        <translation>Z</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="769"/>
@@ -4309,7 +4316,7 @@ selected</source>
     <message>
         <location filename="../src/map_editor.cpp" line="770"/>
         <source>H</source>
-        <translation type="unfinished"></translation>
+        <translation>H</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="771"/>
@@ -4319,7 +4326,7 @@ selected</source>
     <message>
         <location filename="../src/map_editor.cpp" line="772"/>
         <source>U</source>
-        <translation type="unfinished"></translation>
+        <translation>U</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="773"/>
@@ -4329,29 +4336,29 @@ selected</source>
     <message>
         <location filename="../src/map_editor.cpp" line="774"/>
         <source>Ctrl+M</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+M</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1126"/>
         <location filename="../src/map_editor.cpp" line="1131"/>
         <location filename="../src/map_editor.cpp" line="3366"/>
         <source>Map parts</source>
-        <translation type="unfinished"></translation>
+        <translation>地図の要素</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1216"/>
         <source>Select symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>記号を選択</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1219"/>
         <source>Hide top bar</source>
-        <translation type="unfinished"></translation>
+        <translation>上部のバーを非表示</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1222"/>
         <source>Show top bar</source>
-        <translation type="unfinished"></translation>
+        <translation>上部のバーを表示</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2161"/>
@@ -4442,18 +4449,18 @@ selected</source>
     <message>
         <location filename="../src/map_editor.cpp" line="2205"/>
         <source>Create a cutout of some objects or the whole map.</source>
-        <translation type="unfinished"></translation>
+        <translation>いくつかのオブジェクトまたは地図全体の切り抜きを作成します。</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2205"/>
         <location filename="../src/map_editor.cpp" line="2207"/>
         <source>Select a closed path object as cutout shape to activate this tool.</source>
-        <translation type="unfinished"></translation>
+        <translation>切り抜きの形状として閉じられたコース オブジェクトを選択して、このツールを有効にします。</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2207"/>
         <source>Cut away some objects or everything in a limited area.</source>
-        <translation type="unfinished"></translation>
+        <translation>限定したエリアのいくつかのオブジェクトまたはすべてを切り取ります。</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2232"/>
@@ -4474,12 +4481,12 @@ selected</source>
     <message>
         <location filename="../src/map_editor.cpp" line="2239"/>
         <source>Places evenly spaced point objects along an existing path object</source>
-        <translation type="unfinished"></translation>
+        <translation>既存のコースオブジェクトに沿って、均等に間隔をあけてポイントオブジェクトを配置</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2239"/>
         <source>Select at least one path object and a single point symbol to activate this tool.</source>
-        <translation type="unfinished"></translation>
+        <translation>少なくとも 1 つのコース オブジェクトと単一のポイント記号を選択して、このツールを有効にします。</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2354"/>
@@ -4524,7 +4531,7 @@ selected</source>
     <message>
         <location filename="../src/map_editor.cpp" line="3453"/>
         <source>Do you want to remove map part "%1" and all its objects?</source>
-        <translation type="unfinished"></translation>
+        <translation>地図の要素「%1」と、そのすべてのオブジェクトを削除しますか?</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="3614"/>
@@ -4899,7 +4906,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="1546"/>
         <source>libocad returned %1</source>
-        <translation type="unfinished"></translation>
+        <translation>libocad が %1 を返しました</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="1588"/>
@@ -5738,7 +5745,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="235"/>
         <source>Default</source>
-        <translation type="unfinished"></translation>
+        <translation>デフォルト</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="236"/>
