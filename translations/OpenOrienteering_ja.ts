@@ -496,7 +496,7 @@
     </message>
     <message>
         <source>Please enter a percentage from 0% to 100%!</source>
-        <translation type="vanished">0%から100%の値を入力してください。</translation>
+        <translation>0%から100%の値を入力してください!</translation>
     </message>
     <message>
         <location filename="../src/color_dock_widget.cpp" line="364"/>
@@ -737,7 +737,7 @@
     <message>
         <location filename="../src/tool_cut.cpp" line="499"/>
         <source>The split line must end on the area boundary!</source>
-        <translation>分割ラインはエリアの輪郭上で終わらせてください。</translation>
+        <translation>分割ラインはエリアの輪郭上で終わらせてください!</translation>
     </message>
     <message>
         <location filename="../src/tool_cut.cpp" line="505"/>
@@ -1027,7 +1027,7 @@
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1100"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Draw a straight line. &lt;b&gt;Drag&lt;/b&gt;: Draw a curve. &lt;b&gt;Right or double click&lt;/b&gt;: Finish the path. &lt;b&gt;%1&lt;/b&gt;: Close the path. </source>
-        <translation>&lt;b&gt;クリック&lt;/b&gt;: 直線を描く。 &lt;b&gt;ドラッグ&lt;/b&gt;: 曲線を描く。 &lt;b&gt;右クリック/ダブルクリック&lt;/b&gt;: pathを終了。 &lt;b&gt;%1&lt;/b&gt;: pathを閉じる。 </translation>
+        <translation>&lt;b&gt;クリック&lt;/b&gt;: 直線を描く。 &lt;b&gt;ドラッグ&lt;/b&gt;: 曲線を描く。 &lt;b&gt;右クリック/ダブルクリック&lt;/b&gt;: コースを終了。 &lt;b&gt;%1&lt;/b&gt;: コースを閉じる。 </translation>
     </message>
 </context>
 <context>
@@ -1269,12 +1269,12 @@
     <message>
         <location filename="../src/tool_edit_point.cpp" line="683"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on point: Delete it; on path: Add a new dash point; with &lt;b&gt;%2&lt;/b&gt;: Add a normal point. </source>
-        <translation>&lt;b&gt;%1+クリック&lt;/b&gt; ポイント上: 削除; path上: ダッシュポイントを追加; &lt;b&gt;%2&lt;/b&gt;と: 通常の点を追加。 </translation>
+        <translation>&lt;b&gt;%1+クリック&lt;/b&gt; ポイント上: 削除; コース上: ダッシュポイントを追加; &lt;b&gt;%2&lt;/b&gt;と: 通常の点を追加。 </translation>
     </message>
     <message>
         <location filename="../src/tool_edit_point.cpp" line="686"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on point: Delete it; on path: Add a new point; with &lt;b&gt;%2&lt;/b&gt;: Add a dash point. </source>
-        <translation>&lt;b&gt;%1+クリック&lt;/b&gt; ポイント上: 削除; path上: ポイントを追加; &lt;b&gt;%2&lt;/b&gt;と: ダッシュ点を追加。 </translation>
+        <translation>&lt;b&gt;%1+クリック&lt;/b&gt; ポイント上: 削除; コース上: ポイントを追加; &lt;b&gt;%2&lt;/b&gt;と: ダッシュ点を追加。 </translation>
     </message>
     <message>
         <location filename="../src/tool_edit_point.cpp" line="690"/>
@@ -2549,17 +2549,17 @@
     <message>
         <location filename="../src/symbol_line.cpp" line="2180"/>
         <source>Show at least one mid symbol</source>
-        <translation>mid symbolを一つ以上表示する</translation>
+        <translation>中間記号を一つ以上表示する</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2183"/>
         <source>Minimum mid symbol count:</source>
-        <translation>最小のmid symbol数:</translation>
+        <translation>最小の中間記号数:</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2186"/>
         <source>Minimum mid symbol count when closed:</source>
-        <translation>ラインを閉じる場合の、最小のmid symbol数:</translation>
+        <translation>ラインを閉じる場合の、最小の中間記号数:</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2107"/>
@@ -2636,12 +2636,12 @@
     <message>
         <location filename="../src/symbol_line.cpp" line="2156"/>
         <source>Mid symbols per spot:</source>
-        <translation>mid symbolのスポットごとの数:</translation>
+        <translation>中間記号のスポットごとの数:</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2159"/>
         <source>Mid symbol distance:</source>
-        <translation>mid symbol 間の距離:</translation>
+        <translation>中間記号間の距離:</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2215"/>
@@ -3523,7 +3523,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="846"/>
         <source>Draw paths</source>
-        <translation>path を描画</translation>
+        <translation>コースを描画</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="847"/>
@@ -3573,7 +3573,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="856"/>
         <source>Connect paths</source>
-        <translation>path を接続</translation>
+        <translation>コースを接続</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="858"/>
@@ -3612,7 +3612,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="884"/>
         <source>Simplify path</source>
-        <translation>pathを単純化</translation>
+        <translation>コースを単純化</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="885"/>
@@ -4374,7 +4374,7 @@ selected</source>
     <message>
         <location filename="../src/map_editor.cpp" line="2163"/>
         <source>Connect endpoints of paths which are close together.</source>
-        <translation>近接しているpath の終点を接続します。</translation>
+        <translation>近接しているコースの終点を接続します。</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2167"/>
@@ -4439,12 +4439,12 @@ selected</source>
         <location filename="../src/map_editor.cpp" line="2169"/>
         <location filename="../src/map_editor.cpp" line="2171"/>
         <source>Select a path object to activate this tool.</source>
-        <translation>このツールを有効にするには、pathオブジェクトを選択してください。</translation>
+        <translation>このツールを有効にするには、コースオブジェクトを選択してください。</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2171"/>
         <source>Reduce the number of points in path objects while trying to retain their shape.</source>
-        <translation>pathオブジェクト内のポイントを(pathの形が変わらない範囲で)減らします。</translation>
+        <translation>コースオブジェクト内のポイントを(コースの形が変わらない範囲で)減らします。</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2205"/>
@@ -4749,7 +4749,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="75"/>
         <source>The selected object is not a path.</source>
-        <translation>選択中のオブジェクトが path ではありません。</translation>
+        <translation>選択中のオブジェクトがコースではありません。</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="99"/>
@@ -5924,7 +5924,7 @@ separations</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1174"/>
         <source>Failed to save the image. Does the path exist? Do you have sufficient rights?</source>
-        <translation>画像の保存に失敗しました。pathは存在しますか?　十分な権利はもっていますか?</translation>
+        <translation>画像の保存に失敗しました。コースは存在しますか?　十分な権利はもっていますか?</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1178"/>
@@ -7508,7 +7508,7 @@ Failed to load template. Does the file exist and is it valid?</source>
     <message>
         <location filename="../src/template_track.cpp" line="398"/>
         <source>The path is empty, there is nothing to import!</source>
-        <translation>path が空白です、インポートするものが何もありません。</translation>
+        <translation>コースが空です、インポートするものが何もありません!</translation>
     </message>
     <message>
         <location filename="../src/template_track.cpp" line="411"/>
