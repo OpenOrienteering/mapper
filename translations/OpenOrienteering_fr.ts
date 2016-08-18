@@ -6252,7 +6252,7 @@ des couleurs</translation>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="937"/>
         <source>The map contains objects with the symbol "%1". Deleting it will delete those objects and clear the undo history! Do you really want to do that?</source>
-        <translation>La carte contient des objets avec le symbole suivant"%1". En le supprimant, vous supprimerez ces objets et effacerez l'historique de vos dernières actions ! Voulez-vous vraiment continuer ?</translation>
+        <translation>La carte contient des objets avec le symbole suivant "%1". En le supprimant, vous supprimerez ces objets et effacerez l'historique de vos dernières actions ! Voulez-vous vraiment continuer ?</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1160"/>
