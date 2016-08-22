@@ -271,7 +271,7 @@
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="72"/>
         <source>Save the active file to remove the conflicting version.</source>
-        <translation>Uložte aktivní soubor pro odstranění konfliktní verze.</translation>
+        <translation>Uložit činný soubor pro odstranění střetávající se verze.</translation>
     </message>
 </context>
 <context>
@@ -279,17 +279,17 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="45"/>
         <source>Edit map color</source>
-        <translation>Upravit barvu mapy</translation>
+        <translation type="unfinished">Upravit barvu mapy</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="62"/>
         <source>Defines a spot color:</source>
-        <translation>Stanovit barvu místa:</translation>
+        <translation>Definovat přímou barvu:</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="71"/>
         <source>Mixture of spot colors (screens and overprint):</source>
-        <translation>Směs barev místa (rastr a přetisk):</translation>
+        <translation>Míchání přímých barev (rastr a přetisk):</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="86"/>
@@ -304,22 +304,22 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="91"/>
         <source>Knockout: erases lower colors</source>
-        <translation>Rozhodující úder: Smaže barvy ležící pod</translation>
+        <translation>Knockout: vymaže spodní barvy</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="119"/>
         <source>Custom process color:</source>
-        <translation>Vlastní barva procesu:</translation>
+        <translation>Vlastní procesní barva:</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="125"/>
         <source>Cyan</source>
-        <translation>Modrozelená</translation>
+        <translation>Azurová</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="130"/>
         <source>Magenta</source>
-        <translation>Červenorudá</translation>
+        <translation>Purpurová</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="135"/>
@@ -335,22 +335,22 @@
         <location filename="../src/gui/color_dialog.cpp" line="109"/>
         <location filename="../src/gui/color_dialog.cpp" line="166"/>
         <source>Calculate from spot colors</source>
-        <translation>Vypočítat z barev místa</translation>
+        <translation>Vypočítat z přímých barev</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="114"/>
         <source>Calculate from RGB color</source>
-        <translation>Vypočítat z barvy RGB</translation>
+        <translation>Vypočítat z RGB barvy</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="171"/>
         <source>Calculate from CMYK color</source>
-        <translation>Vypočítat z barvy CMYK</translation>
+        <translation>Vypočítat z CMYK barvy</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="176"/>
         <source>Custom RGB color:</source>
-        <translation>Vlastní barva RGB:</translation>
+        <translation>Vlastní RGB barva:</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="182"/>
@@ -406,7 +406,7 @@
     <message>
         <location filename="../src/color_dock_widget.cpp" line="57"/>
         <source>Spot color</source>
-        <translation>Barva místa</translation>
+        <translation>Přímá barva</translation>
     </message>
     <message>
         <location filename="../src/color_dock_widget.cpp" line="57"/>
@@ -437,7 +437,7 @@
     <message>
         <location filename="../src/color_dock_widget.cpp" line="64"/>
         <source>Duplicate</source>
-        <translation>Zdvojit</translation>
+        <translation>Duplikovat</translation>
     </message>
     <message>
         <location filename="../src/color_dock_widget.cpp" line="77"/>
@@ -457,7 +457,7 @@
     <message>
         <location filename="../src/color_dock_widget.cpp" line="111"/>
         <source>Double-click a color value to open a dialog.</source>
-        <translation>Dvojité klepnutí na hodnotu barvy otevře dialog pro barvy.</translation>
+        <translation>Dvojklik na hodnotu barvy otevře dialog.</translation>
     </message>
     <message>
         <location filename="../src/color_dock_widget.cpp" line="189"/>
@@ -467,13 +467,13 @@
     <message>
         <location filename="../src/color_dock_widget.cpp" line="189"/>
         <source>The map contains symbols with this color. Deleting it will remove the color from these objects! Do you really want to do that?</source>
-        <translation>Mapa obsahuje symboly s touto barvou. Její smazání odstraní barvu z těchto objektů. Opravdu to chcete udělat?</translation>
+        <translation>Mapa obsahuje symboly s touto barvou. Její smazání odstraní barvu z těchto objektů! Opravdu to chcete udělat?</translation>
     </message>
     <message>
         <location filename="../src/color_dock_widget.cpp" line="206"/>
         <source> (Duplicate)</source>
         <translatorcomment>Remove initial space from tr.</translatorcomment>
-        <translation> (Kopie)</translation>
+        <translation> (Duplikovat)</translation>
     </message>
     <message>
         <source>Error</source>
@@ -487,7 +487,7 @@
         <location filename="../src/color_dock_widget.cpp" line="364"/>
         <location filename="../src/color_dock_widget.cpp" line="411"/>
         <source>Double click to define the color</source>
-        <translation>Dvojité klepnutí pro stanovení barvy</translation>
+        <translation>Dvojité klepnutí pro definování barvy</translation>
     </message>
     <message>
         <location filename="../src/color_dock_widget.cpp" line="371"/>
@@ -500,22 +500,22 @@
     <message>
         <location filename="../src/symbol_combined.cpp" line="392"/>
         <source>&amp;Number of parts:</source>
-        <translation>&amp;Počet dílů:</translation>
+        <translation>&amp;Počet částí:</translation>
     </message>
     <message>
         <location filename="../src/symbol_combined.cpp" line="407"/>
         <source>- Private line symbol -</source>
-        <translation>- Soukromý symbol pro linii -</translation>
+        <translation>- Vlastní liniový symbol -</translation>
     </message>
     <message>
         <location filename="../src/symbol_combined.cpp" line="408"/>
         <source>- Private area symbol -</source>
-        <translation>- Symbol soukromá plocha -</translation>
+        <translation>- Vlastní plošný symbol -</translation>
     </message>
     <message>
         <location filename="../src/symbol_combined.cpp" line="414"/>
         <source>Edit private symbol...</source>
-        <translation>Upravit osobní symbol...</translation>
+        <translation>Upravit vlastní symbol...</translation>
     </message>
     <message>
         <location filename="../src/symbol_combined.cpp" line="434"/>
@@ -526,12 +526,12 @@
     <message>
         <location filename="../src/symbol_combined.cpp" line="487"/>
         <source>Change from public to private symbol</source>
-        <translation>Změnit symbol z veřejného na soukromý</translation>
+        <translation>Změnit z veřejného na vlastní symbol</translation>
     </message>
     <message>
         <location filename="../src/symbol_combined.cpp" line="488"/>
         <source>Take the old symbol as template for the private symbol?</source>
-        <translation>Vzít starý symbol jako předlohu pro soukromý symbol?</translation>
+        <translation>Vzít starý symbol jako předlohu pro vlastní symbol?</translation>
     </message>
     <message>
         <location filename="../src/symbol_combined.cpp" line="404"/>
@@ -585,17 +585,17 @@
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="64"/>
         <source>Align with magnetic north</source>
-        <translation>Vyrovnat podle magnetického severu</translation>
+        <translation>Zarovnat dle magnetického severu</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="65"/>
         <source>Align with grid north</source>
-        <translation>Vyrovnat podle severu mřížky</translation>
+        <translation>Zarovnat dle souřadnicového systému</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="66"/>
         <source>Align with true north</source>
-        <translation>Vyrovnat podle zeměpisného severu</translation>
+        <translation>Zarovnat dle zeměpisného severu</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="68"/>
@@ -615,12 +615,12 @@
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="74"/>
         <source>meters in terrain</source>
-        <translation>Metry v krajině</translation>
+        <translation>metry v terénu</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="75"/>
         <source>millimeters on map</source>
-        <translation>Millimetry na mapě</translation>
+        <translation>milimetry na mapě</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="77"/>
@@ -679,12 +679,12 @@
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="249"/>
         <source>Origin at: %1</source>
-        <translation>Počátek: %1</translation>
+        <translation>Počátek v: %1</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="251"/>
         <source>paper coordinates origin</source>
-        <translation>Počátek souřadnic papíru</translation>
+        <translation>Počátek papírových souřadnic</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="253"/>
@@ -713,22 +713,22 @@
     <message>
         <location filename="../src/tool_cut.cpp" line="499"/>
         <source>The split line must end on the area boundary!</source>
-        <translation>Linie rozdělení musí končit na kraji plochy!</translation>
+        <translation>Linie střihu musí končit na kraji plochy!</translation>
     </message>
     <message>
         <location filename="../src/tool_cut.cpp" line="505"/>
         <source>Start and end of the split line are at different parts of the object!</source>
-        <translation>Začátek a konec linie rozdělení se nacházejí v různých částech objektu!</translation>
+        <translation>Začátek a konec linie střihu se nacházejí v různých částech objektu!</translation>
     </message>
     <message>
         <location filename="../src/tool_cut.cpp" line="511"/>
         <source>Start and end of the split line are at the same position!</source>
-        <translation>Začátek a konec linie rozdělení se nacházejí v téže poloze!</translation>
+        <translation>Začátek a konec linie střihu se nacházejí ve shodné poloze!</translation>
     </message>
     <message>
         <location filename="../src/tool_cut.cpp" line="675"/>
         <source>&lt;b&gt;Click&lt;/b&gt; on a line: Split it into two. &lt;b&gt;Drag&lt;/b&gt; along a line: Remove this line part. &lt;b&gt;Click or Drag&lt;/b&gt; at an area boundary: Start a split line. </source>
-        <translation>&lt;b&gt;Klepnout&lt;/b&gt; na linii: Rozdělit linii na dvě. &lt;b&gt;Táhnout&lt;/b&gt;: Odstranit tuto část linie. &lt;b&gt;Klepnout nebo táhnout&lt;/b&gt; na okraj plochy: Začít linii rozdělení. </translation>
+        <translation>&lt;b&gt;Klepnout&lt;/b&gt; na linii: Rozdělit linii na dvě. &lt;b&gt;Táhnout&lt;/b&gt;: Odstranit tuto část linie. &lt;b&gt;Klepnout nebo táhnout&lt;/b&gt; na okraj plochy: Začít linii střihu. </translation>
     </message>
     <message>
         <location filename="../src/tool_cut.cpp" line="683"/>
@@ -741,13 +741,13 @@
     <message>
         <location filename="../src/tool_cutout.cpp" line="134"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Clip the whole map. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: Ořezat celou mapu. </translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Oříznout celou mapu. </translation>
     </message>
     <message>
         <location filename="../src/tool_cutout.cpp" line="135"/>
         <location filename="../src/tool_cutout.cpp" line="139"/>
         <source>&lt;b&gt;%1+Click or drag&lt;/b&gt;: Select the objects to be clipped. </source>
-        <translation>&lt;b&gt;%1+klepnout nebo táhnout&lt;/b&gt;: vybrat objekty, které se mají ořezat. </translation>
+        <translation>&lt;b&gt;%1+Klepnutí nebo tažení&lt;/b&gt;: Vybere objekty, které se mají ořezat. </translation>
     </message>
     <message>
         <location filename="../src/tool_cutout.cpp" line="140"/>
@@ -806,7 +806,7 @@
     <message>
         <location filename="../src/tool_distribute_points.cpp" line="121"/>
         <source>Distribute points evenly along path</source>
-        <translation>Klást body podél cesty</translation>
+        <translation>Rozložit body rovnoměrně podél cesty</translation>
     </message>
     <message>
         <location filename="../src/tool_distribute_points.cpp" line="127"/>
@@ -816,12 +816,12 @@
     <message>
         <location filename="../src/tool_distribute_points.cpp" line="129"/>
         <source>Also place objects at line end points</source>
-        <translation>Umístit objekty i na koncové body linie</translation>
+        <translation>Umístit objekty také na koncové body linie</translation>
     </message>
     <message>
         <location filename="../src/tool_distribute_points.cpp" line="135"/>
         <source>Rotation settings</source>
-        <translation>Nastavení otáčení</translation>
+        <translation>Nastavení rotace</translation>
     </message>
     <message>
         <location filename="../src/tool_distribute_points.cpp" line="138"/>
@@ -837,7 +837,7 @@
     <message>
         <location filename="../src/tool_distribute_points.cpp" line="144"/>
         <source>Additional rotation angle (counter-clockwise):</source>
-        <translation>Dodatečný úhel otočení (proti směru hodinových ručiček):</translation>
+        <translation>Dodatečný úhel rotace (proti směru hodinových ručiček):</translation>
     </message>
 </context>
 <context>
