@@ -35,9 +35,7 @@
 
 RotateTool::RotateTool(MapEditorController* editor, QAction* tool_button)
 : MapEditorToolBase { QCursor { QString::fromLatin1(":/images/cursor-rotate.png"), 1, 1 }, Other, editor, tool_button }
-, angle_helper      { new ConstrainAngleToolHelper() }
 {
-	angle_helper->setActive(false);
 	rotation_center_set = false;
 	rotating = false;
 }
@@ -75,7 +73,7 @@ void RotateTool::dragStart()
 	{
 		// Start rotating
 		rotating = true;
-		old_rotation = (cur_pos_map - rotation_center).angle();
+		old_rotation = (click_pos_map - rotation_center).angle();
 		original_rotation = old_rotation;
 		angle_helper->clearAngles();
 		angle_helper->addDefaultAnglesDeg(-original_rotation * 180 / M_PI);
@@ -87,8 +85,6 @@ void RotateTool::dragMove()
 {
 	if (rotating)
 	{
-		angle_helper->getConstrainedCursorPositions(cur_pos_map, constrained_pos_map, constrained_pos, cur_map_widget);
-		
 		double rotation = (constrained_pos_map - rotation_center).angle();
 		double delta_rotation = rotation - old_rotation;
 		
@@ -118,19 +114,17 @@ bool RotateTool::keyPress(QKeyEvent* event)
 	if (event->key() == Qt::Key_Control)
 	{
 		angle_helper->setActive(true, rotation_center);
-		if (isDragging())
-			dragMove();
+		reapplyConstraintHelpers();
 	}
 	return false;
 }
 
 bool RotateTool::keyRelease(QKeyEvent* event)
 {
-	if (event->key() == Qt::Key_Control && angle_helper->isActive())
+	if (event->key() == Qt::Key_Control)
 	{
 		angle_helper->setActive(false);
-		if (isDragging())
-			dragMove();
+		reapplyConstraintHelpers();
 		return true;
 	}
 	return false;
@@ -151,21 +145,16 @@ void RotateTool::drawImpl(QPainter* painter, MapWidget* widget)
 		painter->setPen(Qt::black);
 		painter->drawEllipse(center, 4, 4);
 	}
-	
-	if (rotating)
-		angle_helper->draw(painter, widget);
 }
 
 
 int RotateTool::updateDirtyRectImpl(QRectF& rect)
 {
-	if (rotation_center_set)
-	{
-		rectIncludeSafe(rect, rotation_center);
-		return qMax(angle_helper->getDisplayRadius(), 5);
-	}
-	else
-		return rect.isValid() ? 0 : -1;
+	if (!rotation_center_set)
+		return MapEditorToolBase::updateDirtyRectImpl(rect);
+	
+	rectIncludeSafe(rect, rotation_center);
+	return 5;
 }
 
 void RotateTool::objectSelectionChangedImpl()

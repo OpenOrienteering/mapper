@@ -24,10 +24,6 @@
 
 #include "tool_base.h"
 
-#include <QScopedPointer>
-
-class ConstrainAngleToolHelper;
-
 
 /**
  * Tool to rotate objects.
@@ -56,10 +52,6 @@ protected:
 	void objectSelectionChangedImpl() override;
 	
 	void updateStatusText() override;
-	
-	QScopedPointer<ConstrainAngleToolHelper> angle_helper;
-	QPointF constrained_pos;
-	MapCoordF constrained_pos_map;
 	
 	// Mouse handling
 	MapCoordF rotation_center;
