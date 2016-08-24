@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2015 Kai Pastor
+ *    Copyright 2012-2016 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -22,8 +22,7 @@
 #include "tool_rotate.h"
 
 #include <qmath.h>
-#include <QApplication>
-#include <QMouseEvent>
+#include <QKeyEvent>
 #include <QPainter>
 
 #include "map.h"
@@ -35,8 +34,8 @@
 #include "gui/modifier_key.h"
 
 RotateTool::RotateTool(MapEditorController* editor, QAction* tool_button)
- : MapEditorToolBase(QCursor(QPixmap(QString::fromLatin1(":/images/cursor-rotate.png")), 1, 1), Other, editor, tool_button),
-   angle_helper(new ConstrainAngleToolHelper())
+: MapEditorToolBase { QCursor { QString::fromLatin1(":/images/cursor-rotate.png"), 1, 1 }, Other, editor, tool_button }
+, angle_helper      { new ConstrainAngleToolHelper() }
 {
 	angle_helper->setActive(false);
 	rotation_center_set = false;
@@ -45,7 +44,7 @@ RotateTool::RotateTool(MapEditorController* editor, QAction* tool_button)
 
 RotateTool::~RotateTool()
 {
-	// Nothing, not inlined
+	// nothing, not inlined
 }
 
 void RotateTool::initImpl()
@@ -59,6 +58,7 @@ void RotateTool::initImpl()
 		rotation_center_set = true;
 	}
 }
+
 
 void RotateTool::clickRelease()
 {
@@ -82,6 +82,7 @@ void RotateTool::dragStart()
 		startEditing();
 	}
 }
+
 void RotateTool::dragMove()
 {
 	if (rotating)
@@ -100,6 +101,7 @@ void RotateTool::dragMove()
 		updateStatusText();
 	}
 }
+
 void RotateTool::dragFinish()
 {
 	if (rotating)
@@ -110,6 +112,30 @@ void RotateTool::dragFinish()
 		updateStatusText();
 	}
 }
+
+bool RotateTool::keyPress(QKeyEvent* event)
+{
+	if (event->key() == Qt::Key_Control)
+	{
+		angle_helper->setActive(true, rotation_center);
+		if (isDragging())
+			dragMove();
+	}
+	return false;
+}
+
+bool RotateTool::keyRelease(QKeyEvent* event)
+{
+	if (event->key() == Qt::Key_Control && angle_helper->isActive())
+	{
+		angle_helper->setActive(false);
+		if (isDragging())
+			dragMove();
+		return true;
+	}
+	return false;
+}
+
 
 void RotateTool::drawImpl(QPainter* painter, MapWidget* widget)
 {
@@ -130,27 +156,6 @@ void RotateTool::drawImpl(QPainter* painter, MapWidget* widget)
 		angle_helper->draw(painter, widget);
 }
 
-bool RotateTool::keyPress(QKeyEvent* event)
-{
-	if (event->key() == Qt::Key_Control)
-	{
-		angle_helper->setActive(true, rotation_center);
-		if (isDragging())
-			dragMove();
-	}
-    return false;
-}
-bool RotateTool::keyRelease(QKeyEvent* event)
-{
-	if (event->key() == Qt::Key_Control && angle_helper->isActive())
-	{
-		angle_helper->setActive(false);
-		if (isDragging())
-			dragMove();
-		return true;
-	}
-	return false;
-}
 
 int RotateTool::updateDirtyRectImpl(QRectF& rect)
 {
@@ -170,6 +175,7 @@ void RotateTool::objectSelectionChangedImpl()
 	else
 		updateDirtyRect();
 }
+
 
 void RotateTool::updateStatusText()
 {
