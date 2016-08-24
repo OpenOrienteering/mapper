@@ -99,21 +99,30 @@ void RotateTool::dragFinish()
 
 bool RotateTool::keyPress(QKeyEvent* event)
 {
-	if (event->key() == Qt::Key_Control)
+	switch (event->key())
 	{
+	case Qt::Key_Control:
 		angle_helper->setActive(true, rotation_center);
 		reapplyConstraintHelpers();
+		break;
+		
+	default:
+		; // nothing
 	}
 	return false;
 }
 
 bool RotateTool::keyRelease(QKeyEvent* event)
 {
-	if (event->key() == Qt::Key_Control)
+	switch (event->key())
 	{
+	case Qt::Key_Control:
 		angle_helper->setActive(false);
 		reapplyConstraintHelpers();
 		return true;
+		
+	default:
+		; // nothing
 	}
 	return false;
 }
