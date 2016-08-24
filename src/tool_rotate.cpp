@@ -36,8 +36,7 @@
 RotateTool::RotateTool(MapEditorController* editor, QAction* tool_button)
 : MapEditorToolBase { QCursor { QString::fromLatin1(":/images/cursor-rotate.png"), 1, 1 }, Other, editor, tool_button }
 {
-	rotation_center_set = false;
-	rotating = false;
+	// nothing else
 }
 
 RotateTool::~RotateTool()
@@ -53,7 +52,10 @@ void RotateTool::initImpl()
 		QRectF rect;
 		map()->includeSelectionRect(rect);
 		rotation_center = MapCoordF(rect.center());
-		rotation_center_set = true;
+	}
+	else
+	{
+		rotation_center = MapCoordF(cur_map_widget->getMapView()->center());
 	}
 }
 
@@ -61,52 +63,38 @@ void RotateTool::initImpl()
 void RotateTool::clickRelease()
 {
 	rotation_center = cur_pos_map;
-	rotation_center_set = true;
-	
 	updateDirtyRect();
 	updateStatusText();
 }
 
 void RotateTool::dragStart()
 {
-	if (!rotating && rotation_center_set)
-	{
-		// Start rotating
-		rotating = true;
-		old_rotation = (click_pos_map - rotation_center).angle();
-		original_rotation = old_rotation;
-		angle_helper->clearAngles();
-		angle_helper->addDefaultAnglesDeg(-original_rotation * 180 / M_PI);
-		startEditing();
-	}
+	old_rotation = (click_pos_map - rotation_center).angle();
+	original_rotation = old_rotation;
+	angle_helper->clearAngles();
+	angle_helper->addDefaultAnglesDeg(-original_rotation * 180 / M_PI);
+	startEditing();
 }
 
 void RotateTool::dragMove()
 {
-	if (rotating)
-	{
-		double rotation = (constrained_pos_map - rotation_center).angle();
-		double delta_rotation = rotation - old_rotation;
-		
-		Map::ObjectSelection::const_iterator it_end = map()->selectedObjectsEnd();
-		for (Map::ObjectSelection::const_iterator it = map()->selectedObjectsBegin(); it != it_end; ++it)
-			(*it)->rotateAround(rotation_center, -1.0 * delta_rotation);
-		updatePreviewObjects();
-		
-		old_rotation = rotation;
-		updateStatusText();
-	}
+	double rotation = (constrained_pos_map - rotation_center).angle();
+	double delta_rotation = rotation - old_rotation;
+	
+	Map::ObjectSelection::const_iterator it_end = map()->selectedObjectsEnd();
+	for (Map::ObjectSelection::const_iterator it = map()->selectedObjectsBegin(); it != it_end; ++it)
+		(*it)->rotateAround(rotation_center, -1.0 * delta_rotation);
+	updatePreviewObjects();
+	
+	old_rotation = rotation;
+	updateStatusText();
 }
 
 void RotateTool::dragFinish()
 {
-	if (rotating)
-	{
-		rotating = false;
-		finishEditing();
-		updateDirtyRect();
-		updateStatusText();
-	}
+	finishEditing();
+	updateDirtyRect();
+	updateStatusText();
 }
 
 bool RotateTool::keyPress(QKeyEvent* event)
@@ -135,24 +123,18 @@ void RotateTool::drawImpl(QPainter* painter, MapWidget* widget)
 {
 	drawSelectionOrPreviewObjects(painter, widget);
 	
-	if (rotation_center_set)
-	{
-		painter->setPen(Qt::white);
-		painter->setBrush(Qt::NoBrush);
-		
-		QPoint center = widget->mapToViewport(rotation_center).toPoint();
-		painter->drawEllipse(center, 3, 3);
-		painter->setPen(Qt::black);
-		painter->drawEllipse(center, 4, 4);
-	}
+	painter->setPen(Qt::white);
+	painter->setBrush(Qt::NoBrush);
+	
+	QPoint center = widget->mapToViewport(rotation_center).toPoint();
+	painter->drawEllipse(center, 3, 3);
+	painter->setPen(Qt::black);
+	painter->drawEllipse(center, 4, 4);
 }
 
 
 int RotateTool::updateDirtyRectImpl(QRectF& rect)
 {
-	if (!rotation_center_set)
-		return MapEditorToolBase::updateDirtyRectImpl(rect);
-	
 	rectIncludeSafe(rect, rotation_center);
 	return 5;
 }
@@ -168,7 +150,7 @@ void RotateTool::objectSelectionChangedImpl()
 
 void RotateTool::updateStatusText()
 {
-	if (rotating)
+	if (isDragging())
 	{
 		static const double pi_x_2 = M_PI * 2.0;
 		static const double to_deg = 180.0 / M_PI;
@@ -179,10 +161,6 @@ void RotateTool::updateStatusText()
 			delta_rotation = delta_rotation - pi_x_2;
 		setStatusBarText( trUtf8("<b>Rotation:</b> %1° ").arg(QLocale().toString(-delta_rotation * to_deg, 'f', 1)) + QLatin1String("| ") +
 		                  tr("<b>%1</b>: Fixed angles. ").arg(ModifierKey::control()) );
-	}
-	else if (!rotation_center_set)
-	{
-		setStatusBarText( tr("<b>Click</b>: Set the center of rotation. ") );
 	}
 	else
 	{

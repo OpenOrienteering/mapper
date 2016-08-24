@@ -55,8 +55,6 @@ protected:
 	
 	// Mouse handling
 	MapCoordF rotation_center;
-	bool rotation_center_set;
-	bool rotating;
 	double old_rotation;
 	double original_rotation;
 };
