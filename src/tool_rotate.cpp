@@ -132,13 +132,19 @@ void RotateTool::drawImpl(QPainter* painter, MapWidget* widget)
 {
 	drawSelectionOrPreviewObjects(painter, widget);
 	
+	const auto saved_hints = painter->renderHints();
+	painter->setRenderHint(QPainter::Antialiasing, true);
+	
 	painter->setPen(Qt::white);
 	painter->setBrush(Qt::NoBrush);
 	
-	QPoint center = widget->mapToViewport(rotation_center).toPoint();
+	const auto center = widget->mapToViewport(rotation_center);
+	/// \todo Use dpi-scaled dimensions
 	painter->drawEllipse(center, 3, 3);
 	painter->setPen(Qt::black);
 	painter->drawEllipse(center, 4, 4);
+	
+	painter->setRenderHints(saved_hints);
 }
 
 
