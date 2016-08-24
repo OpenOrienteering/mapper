@@ -139,18 +139,17 @@ bool RotateTool::keyRelease(QKeyEvent* event)
 
 void RotateTool::drawImpl(QPainter* painter, MapWidget* widget)
 {
-	map()->drawSelection(painter, true, widget);
-	
 	const auto center = widget->mapToViewport(rotation_center);
+	
+	painter->save();
 	if (isDragging())
 	{
-		painter->save();
 		painter->translate(center);
 		painter->rotate(qRadiansToDegrees(current_rotation));
 		painter->translate(-center);
-		map()->drawSelection(painter, true, widget);
-		painter->restore();
 	}
+	map()->drawSelection(painter, true, widget);
+	painter->restore();
 	
 	const auto saved_hints = painter->renderHints();
 	painter->setRenderHint(QPainter::Antialiasing, true);
