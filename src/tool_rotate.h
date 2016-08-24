@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2012-2014, 2016 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -18,49 +19,45 @@
  */
 
 
-#ifndef _OPENORIENTEERING_TOOL_ROTATE_H_
-#define _OPENORIENTEERING_TOOL_ROTATE_H_
+#ifndef OPENORIENTEERING_TOOL_ROTATE_H
+#define OPENORIENTEERING_TOOL_ROTATE_H
 
 #include "tool_base.h"
 
-#include <QScopedPointer>
 
-class ConstrainAngleToolHelper;
-
-/** Tool to rotate objects. */
+/**
+ * Tool to rotate objects.
+ */
 class RotateTool : public MapEditorToolBase
 {
-Q_OBJECT
+	Q_OBJECT
+	
 public:
 	RotateTool(MapEditorController* editor, QAction* tool_action);
-	virtual ~RotateTool();
-	
-	virtual void drawImpl(QPainter* painter, MapWidget* widget);
-	
-	virtual bool keyPress(QKeyEvent* event);
-	virtual bool keyRelease(QKeyEvent* event);
+	~RotateTool() override;
 	
 protected:
-	virtual void initImpl();
-	virtual int updateDirtyRectImpl(QRectF& rect);
-	virtual void updateStatusText();
-	virtual void objectSelectionChangedImpl();
+	void initImpl() override;
 	
-	virtual void clickRelease();
-	virtual void dragStart();
-	virtual void dragMove();
-	virtual void dragFinish();
+	void mouseMove() override;
+	void clickRelease() override;
+	void dragStart() override;
+	void dragMove() override;
+	void dragFinish() override;
+	bool keyPress(QKeyEvent* event) override;
+	bool keyRelease(QKeyEvent* event) override;
 	
-	QScopedPointer<ConstrainAngleToolHelper> angle_helper;
-	QPointF constrained_pos;
-	MapCoordF constrained_pos_map;
+	void drawImpl(QPainter* painter, MapWidget* widget) override;
+	
+	int updateDirtyRectImpl(QRectF& rect) override;
+	void objectSelectionChangedImpl() override;
+	
+	void updateStatusText() override;
 	
 	// Mouse handling
-	bool rotation_center_set;
 	MapCoordF rotation_center;
-	bool rotating;
-	double old_rotation;
-	double original_rotation;
+	qreal original_rotation;
+	qreal current_rotation;
 };
 
 #endif
