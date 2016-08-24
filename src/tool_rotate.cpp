@@ -33,8 +33,11 @@
 #include "util.h"
 #include "gui/modifier_key.h"
 
+
 RotateTool::RotateTool(MapEditorController* editor, QAction* tool_button)
 : MapEditorToolBase { QCursor { QString::fromLatin1(":/images/cursor-rotate.png"), 1, 1 }, Other, editor, tool_button }
+, original_rotation { 0 }
+, current_rotation  { 0 }
 {
 	// nothing else
 }
@@ -51,47 +54,46 @@ void RotateTool::initImpl()
 	{
 		QRectF rect;
 		map()->includeSelectionRect(rect);
-		rotation_center = MapCoordF(rect.center());
+		rotation_center = rect.center();
 	}
 	else
 	{
 		rotation_center = MapCoordF(cur_map_widget->getMapView()->center());
 	}
+	angle_helper->setCenter(rotation_center);
 }
 
 
 void RotateTool::clickRelease()
 {
 	rotation_center = cur_pos_map;
+	angle_helper->setCenter(rotation_center);
 	updateDirtyRect();
 	updateStatusText();
 }
 
+
 void RotateTool::dragStart()
 {
-	old_rotation = (click_pos_map - rotation_center).angle();
-	original_rotation = old_rotation;
-	angle_helper->clearAngles();
-	angle_helper->addDefaultAnglesDeg(-original_rotation * 180 / M_PI);
+	original_rotation = (click_pos_map - rotation_center).angle();
 	startEditing();
 }
 
 void RotateTool::dragMove()
 {
-	double rotation = (constrained_pos_map - rotation_center).angle();
-	double delta_rotation = rotation - old_rotation;
-	
-	Map::ObjectSelection::const_iterator it_end = map()->selectedObjectsEnd();
-	for (Map::ObjectSelection::const_iterator it = map()->selectedObjectsBegin(); it != it_end; ++it)
-		(*it)->rotateAround(rotation_center, -1.0 * delta_rotation);
-	updatePreviewObjects();
-	
-	old_rotation = rotation;
+	current_rotation = (constrained_pos_map - rotation_center).angle() - original_rotation;
+	cur_map_widget->update();
 	updateStatusText();
 }
 
 void RotateTool::dragFinish()
 {
+	if (qAbs(current_rotation) > 0.0001)
+	{
+		for (auto object : map()->selectedObjects())
+			object->rotateAround(rotation_center, -current_rotation);
+	}
+	original_rotation = current_rotation = 0;
 	finishEditing();
 	updateDirtyRect();
 	updateStatusText();
@@ -102,6 +104,8 @@ bool RotateTool::keyPress(QKeyEvent* event)
 	switch (event->key())
 	{
 	case Qt::Key_Control:
+		angle_helper->clearAngles();
+		angle_helper->addDefaultAnglesDeg(-qRadiansToDegrees(original_rotation));
 		angle_helper->setActive(true, rotation_center);
 		reapplyConstraintHelpers();
 		break;
@@ -130,7 +134,18 @@ bool RotateTool::keyRelease(QKeyEvent* event)
 
 void RotateTool::drawImpl(QPainter* painter, MapWidget* widget)
 {
-	drawSelectionOrPreviewObjects(painter, widget);
+	map()->drawSelection(painter, true, widget);
+	
+	const auto center = widget->mapToViewport(rotation_center);
+	if (isDragging())
+	{
+		painter->save();
+		painter->translate(center);
+		painter->rotate(qRadiansToDegrees(current_rotation));
+		painter->translate(-center);
+		map()->drawSelection(painter, true, widget);
+		painter->restore();
+	}
 	
 	const auto saved_hints = painter->renderHints();
 	painter->setRenderHint(QPainter::Antialiasing, true);
@@ -138,7 +153,6 @@ void RotateTool::drawImpl(QPainter* painter, MapWidget* widget)
 	painter->setPen(Qt::white);
 	painter->setBrush(Qt::NoBrush);
 	
-	const auto center = widget->mapToViewport(rotation_center);
 	/// \todo Use dpi-scaled dimensions
 	painter->drawEllipse(center, 3, 3);
 	painter->setPen(Qt::black);
@@ -169,7 +183,7 @@ void RotateTool::updateStatusText()
 	{
 		static const double pi_x_2 = M_PI * 2.0;
 		static const double to_deg = 180.0 / M_PI;
-		double delta_rotation = old_rotation - original_rotation;
+		double delta_rotation = current_rotation;
 		if (delta_rotation < -M_PI)
 			delta_rotation = delta_rotation + pi_x_2;
 		else if (delta_rotation > M_PI)

@@ -55,8 +55,8 @@ protected:
 	
 	// Mouse handling
 	MapCoordF rotation_center;
-	double old_rotation;
-	double original_rotation;
+	qreal original_rotation;
+	qreal current_rotation;
 };
 
 #endif
