@@ -39,6 +39,7 @@ public:
 protected:
 	void initImpl() override;
 	
+	void mouseMove() override;
 	void clickRelease() override;
 	void dragStart() override;
 	void dragMove() override;

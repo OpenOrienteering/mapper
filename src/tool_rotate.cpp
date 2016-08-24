@@ -64,6 +64,11 @@ void RotateTool::initImpl()
 }
 
 
+void RotateTool::mouseMove()
+{
+	updateStatusText();
+}
+
 void RotateTool::clickRelease()
 {
 	rotation_center = cur_pos_map;
@@ -179,21 +184,30 @@ void RotateTool::objectSelectionChangedImpl()
 
 void RotateTool::updateStatusText()
 {
+	QString text;
 	if (isDragging())
 	{
-		static const double pi_x_2 = M_PI * 2.0;
-		static const double to_deg = 180.0 / M_PI;
-		double delta_rotation = current_rotation;
-		if (delta_rotation < -M_PI)
-			delta_rotation = delta_rotation + pi_x_2;
-		else if (delta_rotation > M_PI)
-			delta_rotation = delta_rotation - pi_x_2;
-		setStatusBarText( trUtf8("<b>Rotation:</b> %1° ").arg(QLocale().toString(-delta_rotation * to_deg, 'f', 1)) + QLatin1String("| ") +
-		                  tr("<b>%1</b>: Fixed angles. ").arg(ModifierKey::control()) );
+		auto display_rotation = qRadiansToDegrees(current_rotation);
+		if (display_rotation <= -180)
+			display_rotation += 360;
+		else if (display_rotation > 180)
+			display_rotation -= 360;
+		else if (display_rotation > -0.05 && display_rotation < 0.0)
+			display_rotation = +0.0;
+		text = trUtf8("<b>Rotation:</b> %1° ").arg(QLocale().toString(display_rotation, 'f', 1));
+		if (!angle_helper->isActive())
+			text += QLatin1String("| ");
 	}
 	else
 	{
-		setStatusBarText( tr("<b>Click</b>: Set the center of rotation. ") +
-		                  tr("<b>Drag</b>: Rotate the selected objects. ") );
+		text = tr("<b>Click</b>: Set the center of rotation. ") +
+		       tr("<b>Drag</b>: Rotate the selected objects. ");
 	}
+	
+	if (!angle_helper->isActive())
+	{
+		text += tr("<b>%1</b>: Fixed angles. ").arg(ModifierKey::control());
+	}
+	
+	setStatusBarText(text);
 }
