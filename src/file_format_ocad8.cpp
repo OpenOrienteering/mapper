@@ -2627,9 +2627,21 @@ namespace
 {
 	constexpr s32 convertPointMember(s32 value)
 	{
-		return (value < 0) ? (0x80000000 | ((0x7fffffu & ((value-5)/10)) << 8)) : ((0x7fffffu & ((value+5)/10)) << 8);
+		return (value < -5) ? s32(0x80000000 | ((0x7fffffu & u32((value-4)/10)) << 8)) : s32((0x7fffffu & u32((value+5)/10)) << 8);
 	}
 	
+	// convertPointMember() shall round half up.
+	Q_STATIC_ASSERT(convertPointMember(-16) == s32(0xfffffe00u)); // __ down __
+	Q_STATIC_ASSERT(convertPointMember(-15) == s32(0xffffff00u)); //     up
+	Q_STATIC_ASSERT(convertPointMember( -6) == s32(0xffffff00u)); // __ down __
+	Q_STATIC_ASSERT(convertPointMember( -5) == s32(0x00000000u)); //     up
+	Q_STATIC_ASSERT(convertPointMember( -1) == s32(0x00000000u)); //     up
+	Q_STATIC_ASSERT(convertPointMember(  0) == s32(0x00000000u)); //  unchanged
+	Q_STATIC_ASSERT(convertPointMember( +1) == s32(0x00000000u)); //    down
+	Q_STATIC_ASSERT(convertPointMember( +4) == s32(0x00000000u)); // __ down __
+	Q_STATIC_ASSERT(convertPointMember( +5) == s32(0x00000100u)); //     up
+	Q_STATIC_ASSERT(convertPointMember(+14) == s32(0x00000100u)); // __ down __
+	Q_STATIC_ASSERT(convertPointMember(+15) == s32(0x00000200u)); //     up
 }
 
 OCADPoint OCAD8FileExport::convertPoint(qint32 x, qint32 y)
