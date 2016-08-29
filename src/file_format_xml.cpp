@@ -22,6 +22,7 @@
 #include "file_format_xml.h"
 #include "file_format_xml_p.h"
 
+#include <QBuffer>
 #include <QDebug>
 #include <QFile>
 #include <QScopedValueRollback>
@@ -524,14 +525,18 @@ void XMLFileImporter::importMapNotes()
 		// Try to recover from not well-formed map notes
 		if (stream->seek(0))
 		{
-			const auto data = stream->readAll();
-			const auto start = data.indexOf("<notes>");
+			auto buffer = new QBuffer(this);
+			auto& data = buffer->buffer();
+			data = stream->readAll();
+			const auto start = data.indexOf("<notes>") + 7;
 			const auto end = data.indexOf("</notes>", start);
-			if (start > 0 && end > 0)
+			if (start > 7 && end > 0)
 			{
+				data.remove(start, end - start);
+				stream = buffer;
+				stream->open(QIODevice::ReadOnly);
 				xml.clear();
-				xml.addData(QByteArray::fromRawData(data.data(), start + 7));
-				xml.addData(QByteArray::fromRawData(data.data() + end, data.length() - end));
+				xml.setDevice(stream);
 				while (!xml.atEnd()
 				       && xml.name() != literal::notes)
 				{
