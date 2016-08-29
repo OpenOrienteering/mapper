@@ -488,7 +488,7 @@ void XMLFileImporter::importElements(bool load_symbols_only)
 		* The remainder is skipped when loading a symbol set! *
 		******************************************************/
 		else if (name == literal::notes)
-			map->setMapNotes(xml.readElementText());
+			importMapNotes();
 		else if (name == literal::parts)
 			importMapParts();
 		else if (name == literal::templates)
@@ -512,6 +512,35 @@ void XMLFileImporter::importElements(bool load_symbols_only)
 		        .arg(xml.lineNumber())
 		        .arg(xml.columnNumber())
 		        .arg(xml.errorString()) );
+}
+
+void XMLFileImporter::importMapNotes()
+{
+	map->setMapNotes(xml.readElementText());
+	if (xml.error() == QXmlStreamReader::NotWellFormedError)
+	{
+		addWarning(tr("The map notes could not be read."));
+		
+		// Try to recover from not well-formed map notes
+		if (stream->seek(0))
+		{
+			const auto data = stream->readAll();
+			const auto start = data.indexOf("<notes>");
+			const auto end = data.indexOf("</notes>", start);
+			if (start > 0 && end > 0)
+			{
+				xml.clear();
+				xml.addData(QByteArray::fromRawData(data.data(), start + 7));
+				xml.addData(QByteArray::fromRawData(data.data() + end, data.length() - end));
+				while (!xml.atEnd()
+				       && xml.name() != literal::notes)
+				{
+					xml.readNextStartElement();
+				}
+				xml.skipCurrentElement();
+			}
+		}
+	}
 }
 
 void XMLFileImporter::importGeoreferencing(bool load_symbols_only)
