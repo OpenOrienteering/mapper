@@ -346,7 +346,7 @@ template< >
 inline
 QString OcdFileImport::convertOcdString< Ocd::Custom8BitEncoding >(const char* src, uint len) const
 {
-	len = qstrnlen(src, qMax(uint(std::numeric_limits<int>::max()), len));
+	len = qMin(uint(std::numeric_limits<int>::max()), qstrnlen(src, len));
 	return custom_8bit_encoding->toUnicode(src, int(len));
 }
 
@@ -354,7 +354,7 @@ template< >
 inline
 QString OcdFileImport::convertOcdString< Ocd::Utf8Encoding >(const char* src, uint len) const
 {
-	len = qstrnlen(src, qMax(uint(std::numeric_limits<int>::max()), len));
+	len = qMin(uint(std::numeric_limits<int>::max()), qstrnlen(src, len));
 	return QString::fromUtf8(src, int(len));
 }
 
