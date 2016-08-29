@@ -68,6 +68,7 @@ protected:
 	void importElements(bool load_symbols_only);
 	
 	void addWarningUnsupportedElement();
+	void importMapNotes();
 	void importGeoreferencing(bool load_symbols_only);
 	void importColors();
 	void importSymbols();
