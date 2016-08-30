@@ -185,6 +185,7 @@ SOURCES += \
   core/map_printer.cpp \
   core/map_view.cpp \
   core/path_coord.cpp \
+  core/storage_location.cpp \
   core/virtual_path.cpp \
   core/virtual_coord_vector.cpp \
   global.cpp \
