@@ -536,7 +536,11 @@ QWidget* HomeScreenWidgetMobile::makeFileListWidget(HomeScreenController* contro
 	
 	if (file_list->count() == 0)
 	{
-		QLabel* message_label = new QLabel(tr("No map files found!<br/><br/>Copy map files to a top-level folder named 'OOMapper' on the device or a memory card."));
+		//  Remove the incorrect part from the existing translated text.
+		/// \todo Review the text for placing the first maps
+		auto label_text = tr("No map files found!<br/><br/>Copy map files to a top-level folder named 'OOMapper' on the device or a memory card.");
+		label_text.truncate(label_text.indexOf(QLatin1String("<br/>")));
+		QLabel* message_label = new QLabel(label_text);
 		message_label->setWordWrap(true);
 		file_list_stack->addWidget(message_label);
 		file_list_stack->setCurrentWidget(message_label);
