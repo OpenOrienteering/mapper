@@ -184,15 +184,15 @@
         </color>
     </colors>
     <symbols count="170">
-        <symbol type="2" id="0" code="101" name="Contour">
+        <symbol type="2" id="0" code="101" name="Горизонталь">
             <description>A line joining points of equal height. The standard vertical interval between contours is 5 metres. The smallest bend in a contour is 0.25 mm from centre to centre of the lines.</description>
             <line_symbol color="6" line_width="140" minimum_length="0" join_style="2" cap_style="1" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
-        <symbol type="2" id="1" code="102" name="Index contour">
+        <symbol type="2" id="1" code="102" name="Утолщённая горизонталь">
             <description>Every fifth contour shall be drawn with a thicker line. This is an aid to the quick assessment of height difference and the overall shape of the terrain surface. Where an index contour coincides with an area of much detail, it may be shown with a normal contour line.</description>
             <line_symbol color="6" line_width="250" minimum_length="0" join_style="2" cap_style="1" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
-        <symbol type="1" id="2" code="104" name="Slope line">
+        <symbol type="1" id="2" code="104" name="Бергштрих">
             <description>Slope lines may be drawn on the lower side of a contour line, e.g. along the line of a re-entrant or in a depression. They are used only where it is necessary to clarify the direction of slope.</description>
             <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                 <element>
@@ -211,18 +211,18 @@
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="8" id="3" code="105" name="Contour value">
+        <symbol type="8" id="3" code="105" name="Высота горизонтали">
             <description>Contour values may be included to aid assessment of large height differences. They are inserted in the index contours in positions where other detail is not obscured. The figures should be orientated so that the top of the figure is on the higher side of the contour.</description>
             <text_symbol icon_text="225">
                 <font family="Arial" size="2076"/>
                 <text color="6" line_spacing="1" paragraph_spacing="0" character_spacing="0" kerning="true"/>
             </text_symbol>
         </symbol>
-        <symbol type="2" id="4" code="106" name="Earth bank">
+        <symbol type="2" id="4" code="106" name="Грунтовый обрыв">
             <description>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings  or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</description>
             <line_symbol color="6" line_width="180" minimum_length="600" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="780" end_length="850" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                 <start_symbol>
-                    <symbol type="1" code="" name="Start symbol">
+                    <symbol type="1" code="" name="Начальный символ">
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                             <element>
                                 <symbol type="2" code="">
@@ -242,7 +242,7 @@
                     </symbol>
                 </start_symbol>
                 <mid_symbol>
-                    <symbol type="1" code="" name="Mid symbol">
+                    <symbol type="1" code="" name="Средний символ">
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                             <element>
                                 <symbol type="2" code="">
@@ -262,7 +262,7 @@
                     </symbol>
                 </mid_symbol>
                 <end_symbol>
-                    <symbol type="1" code="" name="End symbol">
+                    <symbol type="1" code="" name="Конечный символ">
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                             <element>
                                 <symbol type="2" code="">
@@ -283,7 +283,7 @@
                 </end_symbol>
             </line_symbol>
         </symbol>
-        <symbol type="1" id="5" code="106.0.1" name="Earth bank, minimum size">
+        <symbol type="1" id="5" code="106.0.1" name="Грунтовый обрыв, минимальный размер">
             <description>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings  or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</description>
             <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="3">
                 <element>
@@ -330,11 +330,11 @@
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="2" id="6" code="106.1" name="Earth bank, very high">
+        <symbol type="2" id="6" code="106.1" name="Грунтовый обрыв, очень высокий">
             <description>The line width of very high earth banks may be 0.25 mm.</description>
             <line_symbol color="6" line_width="250" minimum_length="600" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="780" end_length="850" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                 <start_symbol>
-                    <symbol type="1" code="" name="Start symbol">
+                    <symbol type="1" code="" name="Начальный символ">
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                             <element>
                                 <symbol type="2" code="">
@@ -354,7 +354,7 @@
                     </symbol>
                 </start_symbol>
                 <mid_symbol>
-                    <symbol type="1" code="" name="Mid symbol">
+                    <symbol type="1" code="" name="Средний символ">
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                             <element>
                                 <symbol type="2" code="">
@@ -374,7 +374,7 @@
                     </symbol>
                 </mid_symbol>
                 <end_symbol>
-                    <symbol type="1" code="" name="End symbol">
+                    <symbol type="1" code="" name="Конечный символ">
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                             <element>
                                 <symbol type="2" code="">
@@ -395,7 +395,7 @@
                 </end_symbol>
             </line_symbol>
         </symbol>
-        <symbol type="1" id="7" code="106.1.1" name="Earth bank, very high, minimum size">
+        <symbol type="1" id="7" code="106.1.1" name="Грунтовый обрыв, очень выский, минимальный размер">
             <description>The line width of very high earth banks may be 0.25 mm.</description>
             <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="3">
                 <element>
@@ -442,29 +442,29 @@
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="2" id="8" code="106.2" name="Earth bank, tag line">
+        <symbol type="2" id="8" code="106.2" name="Грунтовый обрыв, зубчатая линия">
             <description>Use this symbol to display the full extent of wide earth banks.</description>
             <line_symbol color="6" line_width="140" minimum_length="500" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
-        <symbol type="2" id="9" code="107" name="Earth wall">
+        <symbol type="2" id="9" code="107" name="Грунтовый вал">
             <description>Distinct earth wall. Minimum height is 1 m.</description>
             <line_symbol color="6" line_width="140" minimum_length="0" join_style="2" cap_style="0" pointed_cap_length="1000" segment_length="2500" end_length="1250" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                 <mid_symbol>
-                    <symbol type="1" code="" name="Mid symbol">
+                    <symbol type="1" code="" name="Средний символ">
                         <point_symbol rotatable="true" inner_radius="200" inner_color="6" outer_width="0" outer_color="-1" elements="0"/>
                     </symbol>
                 </mid_symbol>
             </line_symbol>
         </symbol>
-        <symbol type="2" id="10" code="109" name="Erosion gully">
+        <symbol type="2" id="10" code="109" name="Маленький земляной вал">
             <description>An erosion gully or trench which is too small to be shown by symbol 106 is shown by a single line. The line width reflects the size of the gully. Minimum depth 1 m. The end of the line is pointed.</description>
             <line_symbol color="6" line_width="250" minimum_length="0" join_style="2" cap_style="3" pointed_cap_length="747" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
-        <symbol type="2" id="11" code="201" name="Impassable cliff">
+        <symbol type="2" id="11" code="201" name="Непреодолимая скала">
             <description>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water's edge, the bank line is omitted or the tags should clearly extend over the bank line.</description>
             <line_symbol color="3" line_width="350" minimum_length="600" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="600" end_length="660" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                 <start_symbol>
-                    <symbol type="1" code="" name="Start symbol">
+                    <symbol type="1" code="" name="Начальный символ">
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                             <element>
                                 <symbol type="2" code="">
@@ -484,7 +484,7 @@
                     </symbol>
                 </start_symbol>
                 <mid_symbol>
-                    <symbol type="1" code="" name="Mid symbol">
+                    <symbol type="1" code="" name="Средний символ">
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                             <element>
                                 <symbol type="2" code="">
@@ -504,7 +504,7 @@
                     </symbol>
                 </mid_symbol>
                 <end_symbol>
-                    <symbol type="1" code="" name="End symbol">
+                    <symbol type="1" code="" name="Конечный символ">
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                             <element>
                                 <symbol type="2" code="">
@@ -525,7 +525,7 @@
                 </end_symbol>
             </line_symbol>
         </symbol>
-        <symbol type="1" id="12" code="201.0.1" name="Impassable cliff, minimum size">
+        <symbol type="1" id="12" code="201.0.1" name="Непреодолимая скала, минимальный размер">
             <description>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water's edge, the bank line is omitted or the tags should clearly extend over the bank line.</description>
             <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="3">
                 <element>
@@ -572,104 +572,104 @@
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="2" id="13" code="201.1" name="Impassable cliff, no tags">
+        <symbol type="2" id="13" code="201.1" name="Непреодолимая скала, без зубцов">
             <description>For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm).</description>
             <line_symbol color="3" line_width="350" minimum_length="600" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="600" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
-        <symbol type="2" id="14" code="201.2" name="Impassable cliff, tag line">
+        <symbol type="2" id="14" code="201.2" name="Непреодолимая скала">
             <description>Use this symbol to display the full extent of a wide cliff.</description>
             <line_symbol color="3" line_width="120" minimum_length="500" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
-        <symbol type="4" id="15" code="202" name="Rock pillars/cliffs">
+        <symbol type="4" id="15" code="202" name="Скалы останцы">
             <description>In the case of unusual features such as rock pillars or massive cliffs or gigantic boulders, the rocks shall be shown in plan shape without tags.</description>
             <area_symbol inner_color="3" min_area="0" patterns="0"/>
         </symbol>
-        <symbol type="1" id="16" code="206" name="Boulder">
+        <symbol type="1" id="16" code="206" name="Валун">
             <description>A small distinct boulder (minimum height 1 m). Every boulder marked on the map should be immediately identifiable on the ground. To be able to show the distinction between boulders with significant difference in size it is permitted to enlarge this symbol by 20% (diameter 0.5 mm).</description>
             <point_symbol inner_radius="200" inner_color="3" outer_width="0" outer_color="-1" elements="0"/>
         </symbol>
-        <symbol type="1" id="17" code="206.1" name="Boulder, enlarged">
+        <symbol type="1" id="17" code="206.1" name="Валун, увеличенный">
             <description>To be able to show the distinction between boulders with significant difference in size it is permitted to enlarge this symbol by 20% (diameter 0.5 mm).</description>
             <point_symbol inner_radius="250" inner_color="3" outer_width="0" outer_color="-1" elements="0"/>
         </symbol>
-        <symbol type="1" id="18" code="210" name="Boulder fields / Stony ground, small">
+        <symbol type="1" id="18" code="210" name="Каменистый грунт, небольшой">
             <description>Stony or rocky ground which affects going should be shown on the map. The dots should be randomly distributed with density according to the amount of rock. A minimum of three dots should be used.</description>
             <point_symbol inner_radius="80" inner_color="3" outer_width="0" outer_color="-1" elements="0"/>
         </symbol>
-        <symbol type="1" id="19" code="210.1" name="Boulder fields / Stony ground">
+        <symbol type="1" id="19" code="210.1" name="Каменистый грунт">
             <description>Stony or rocky ground which affects going should be shown on the map. The dots should be randomly distributed with density according to the amount of rock. A minimum of three dots should be used.</description>
             <point_symbol inner_radius="100" inner_color="3" outer_width="0" outer_color="-1" elements="0"/>
         </symbol>
-        <symbol type="4" id="20" code="211" name="Open sandy ground">
+        <symbol type="4" id="20" code="211" name="Открытый песчаный грунт">
             <description>An area of soft sandy ground or gravel with no vegetation and where running is slow. Where an area of sandy ground is open but running is good, it is shown as open land (401/402).</description>
             <area_symbol inner_color="22" min_area="1000" patterns="1">
                 <pattern type="2" angle="0.785398" line_spacing="450" line_offset="0" offset_along_line="0" point_distance="450">
-                    <symbol type="1" code="" name="Pattern fill 1">
+                    <symbol type="1" code="" name="Заливка узором 1">
                         <point_symbol rotatable="true" inner_radius="90" inner_color="3" outer_width="0" outer_color="-1" elements="0"/>
                     </symbol>
                 </pattern>
             </area_symbol>
         </symbol>
-        <symbol type="4" id="21" code="212" name="Bare rock">
+        <symbol type="4" id="21" code="212" name="Чистая скала">
             <description>A runnable area of rock without earth or vegetation is shown as bare rock. An area of rock covered with grass, moss or other low vegetation is shown as open land (401/402).</description>
             <area_symbol inner_color="11" min_area="500" patterns="0"/>
         </symbol>
-        <symbol type="4" id="22" code="301" name="Lake">
+        <symbol type="4" id="22" code="301" name="Озеро">
             <description>Large areas of water are shown with this symbol (blue 50%). The colour of the bank line is blue 100 %.
 
 Small areas of water should be shown with full colour. Use symbol 302 (&quot;Pond&quot; in ISOM).</description>
             <area_symbol inner_color="10" min_area="1000" patterns="0"/>
         </symbol>
-        <symbol type="2" id="23" code="301.1" name="Lake, bank line">
+        <symbol type="2" id="23" code="301.1" name="Озеро, береговая линия">
             <description>A black bank line indicates that the feature cannot be crossed.</description>
             <line_symbol color="9" line_width="250" minimum_length="0" join_style="0" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
-        <symbol type="16" id="24" code="301.2" name="Lake, with bank line">
+        <symbol type="16" id="24" code="301.2" name="Озеро, с береговой линией">
             <combined_symbol parts="2">
                 <part symbol="22"/>
                 <part symbol="23"/>
             </combined_symbol>
         </symbol>
-        <symbol type="4" id="25" code="302" name="Pond">
+        <symbol type="4" id="25" code="302" name="Пруд">
             <description>Small areas of water should be shown with full colour.
 
 This is symbol &quot;302 Pond&quot; in ISOM, but is a variation of &quot;301 Lake&quot; in ISMTBOM.</description>
             <area_symbol inner_color="8" min_area="500" patterns="0"/>
         </symbol>
-        <symbol type="2" id="26" code="305" name="Crossable watercourse">
+        <symbol type="2" id="26" code="305" name="Преодолимая река">
             <description>A crossable watercourse, minimum 2 m wide. The width of watercourses over 5 m wide should be shown to scale.</description>
             <line_symbol color="9" line_width="250" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
-        <symbol type="2" id="27" code="306" name="Crossable small watercourse">
+        <symbol type="2" id="27" code="306" name="Преодолимый ручей">
             <description>A crossable watercourse (including a major drainage ditch) less than 2 m wide. For better legibility a ditch in a marsh should be drawn as a crossable watercourse (305).</description>
             <line_symbol color="9" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
-        <symbol type="2" id="28" code="307" name="Minor water channel">
+        <symbol type="2" id="28" code="307" name="Канава с водой">
             <description>A natural or man-made minor water channel which may contain water only intermittently.</description>
             <line_symbol color="9" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="1250" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
-        <symbol type="4" id="29" code="309" name="Uncrossable marsh">
+        <symbol type="4" id="29" code="309" name="Непроходимое болото">
             <description>A marsh which is uncrossable or dangerous for the runner. A blue line surrounds the symbol.</description>
             <area_symbol inner_color="-1" min_area="0" patterns="1">
                 <pattern type="1" angle="0" line_spacing="500" line_offset="0" offset_along_line="0" color="9" line_width="250"/>
             </area_symbol>
         </symbol>
-        <symbol type="2" id="30" code="309.1" name="Uncrossable marsh, border line">
+        <symbol type="2" id="30" code="309.1" name="Непроходимое болото, ограничивающая линия">
             <line_symbol color="9" line_width="250" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
-        <symbol type="16" id="31" code="309.2" name="Uncrossable marsh, with border line">
+        <symbol type="16" id="31" code="309.2" name="Непроходимое болото, с ограничивающей линией">
             <combined_symbol parts="2">
                 <part symbol="29"/>
                 <part symbol="30"/>
             </combined_symbol>
         </symbol>
-        <symbol type="4" id="32" code="310" name="Marsh">
+        <symbol type="4" id="32" code="310" name="Болото">
             <description>A crossable marsh, usually with a distinct edge. The symbol should be combined with vegetation symbols to show runnability and openness. Where a small marsh area should be combined with either 403/404 it is permitted to use 401/402 to improve legibility</description>
             <area_symbol inner_color="-1" min_area="0" patterns="1">
                 <pattern type="1" angle="0" line_spacing="300" line_offset="0" offset_along_line="0" color="9" line_width="100"/>
             </area_symbol>
         </symbol>
-        <symbol type="1" id="33" code="310.1" name="Marsh, minimum size">
+        <symbol type="1" id="33" code="310.1" name="Болото, минимальный размер">
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                 <element>
                     <symbol type="2" code="">
@@ -701,7 +701,7 @@ This is symbol &quot;302 Pond&quot; in ISOM, but is a variation of &quot;301 Lak
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="34" code="314" name="Special water feature">
+        <symbol type="1" id="34" code="314" name="Специальный объект гидрографии">
             <description>A special small water feature. The definition of the symbol must always be given in the map legend.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                 <element>
@@ -734,11 +734,11 @@ This is symbol &quot;302 Pond&quot; in ISOM, but is a variation of &quot;301 Lak
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="4" id="35" code="401" name="Open land">
+        <symbol type="4" id="35" code="401" name="Открытое пространство">
             <description>Cultivated land, fields, meadows, grassland, etc. without trees, offering easy running. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</description>
             <area_symbol inner_color="21" min_area="500" patterns="0"/>
         </symbol>
-        <symbol type="4" id="36" code="402" name="Open land with scattered trees">
+        <symbol type="4" id="36" code="402" name="Открытое пространство с отдельными деревьями">
             <description>Meadows with scattered trees or bushes, with grass or similar ground cover offering easy running. Areas smaller than 10 mm at the maps scale are shown as open land (401). Individual trees may be added (418, 419, 420). If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</description>
             <area_symbol inner_color="-1" min_area="10000" patterns="1">
                 <pattern type="2" angle="0.785398" line_spacing="500" line_offset="0" offset_along_line="0" point_distance="500">
@@ -748,11 +748,11 @@ This is symbol &quot;302 Pond&quot; in ISOM, but is a variation of &quot;301 Lak
                 </pattern>
             </area_symbol>
         </symbol>
-        <symbol type="4" id="37" code="403" name="Rough open land">
+        <symbol type="4" id="37" code="403" name="Неудобное открытое пространство">
             <description>Heath, moorland, felled areas, newly planted areas (trees lower than ca. 1 m) or other generally open land with rough ground vegetation, heather or tall grass. Symbol 403 may be combined with symbols 407 and 409 to show reduced runnability.</description>
             <area_symbol inner_color="22" min_area="1000" patterns="0"/>
         </symbol>
-        <symbol type="4" id="38" code="404" name="Rough open land with scattered trees">
+        <symbol type="4" id="38" code="404" name="Неудобное открытое пространство с отдельными деревьями">
             <description>Where there are scattered trees in rough open land, areas of white (or green) should appear in the tone. Such an area may be generalised by using a regular pattern of large white dots in the yellow screen. Areas smaller than 16 mm in the maps scale are shown as rough open land (403). Individual trees may be added (418, 419, 420).</description>
             <area_symbol inner_color="24" min_area="16000" patterns="1">
                 <pattern type="2" angle="0.785398" line_spacing="700" line_offset="0" offset_along_line="0" point_distance="700">
@@ -762,15 +762,15 @@ This is symbol &quot;302 Pond&quot; in ISOM, but is a variation of &quot;301 Lak
                 </pattern>
             </area_symbol>
         </symbol>
-        <symbol type="4" id="39" code="405" name="Forest: good visibility">
+        <symbol type="4" id="39" code="405" name="Лес: хорошая видимость">
             <description>Typically open forest for the particular type of terrain. Wherever a part of the forest is too dense to be traversed pushing or carrying a bicycle, no white should appear on the map.</description>
             <area_symbol inner_color="14" min_area="500" patterns="0"/>
         </symbol>
-        <symbol type="4" id="40" code="406" name="Forest: reduced visibility">
+        <symbol type="4" id="40" code="406" name="Лес: ограниченная видимость">
             <description>An area with dense trees (low visibility) which reduces the speed of traversing the forest pushing or carrying a bicycle significantly or even makes it impossible to traverse.</description>
             <area_symbol inner_color="19" min_area="1000" patterns="0"/>
         </symbol>
-        <symbol type="4" id="41" code="412" name="Orchard">
+        <symbol type="4" id="41" code="412" name="Сад">
             <description>Land planted with fruit trees or bushes. The dot lines may be orientated to show the
 direction of planting. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</description>
             <area_symbol inner_color="21" min_area="500" patterns="1">
@@ -781,11 +781,11 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
                 </pattern>
             </area_symbol>
         </symbol>
-        <symbol type="4" id="42" code="413" name="Vineyard">
+        <symbol type="4" id="42" code="413" name="Виноградник">
             <description>The green lines may be orientated to show the direction of planting. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</description>
             <area_symbol inner_color="21" min_area="500" patterns="2">
                 <pattern type="2" angle="1.5708" rotatable="true" line_spacing="1700" line_offset="0" offset_along_line="0" point_distance="1900">
-                    <symbol type="1" code="" name="Pattern fill 1">
+                    <symbol type="1" code="" name="Заливка узором 1">
                         <point_symbol rotatable="true" inner_radius="0" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                             <element>
                                 <symbol type="2" code="">
@@ -805,7 +805,7 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
                     </symbol>
                 </pattern>
                 <pattern type="2" angle="1.5708" rotatable="true" line_spacing="1700" line_offset="850" offset_along_line="950" point_distance="1900">
-                    <symbol type="1" code="" name="Pattern fill 2">
+                    <symbol type="1" code="" name="Заливка узором 2">
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                             <element>
                                 <symbol type="2" code="">
@@ -826,7 +826,7 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
                 </pattern>
             </area_symbol>
         </symbol>
-        <symbol type="1" id="43" code="418" name="Special vegetation feature">
+        <symbol type="1" id="43" code="418" name="Специальный объект растительности">
             <description>Symbols 418, 419 and 420 can be used for special small vegetation features. The definition of the symbol must be given in each case in the map legend.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                 <element>
@@ -859,19 +859,19 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="44" code="419" name="Special vegetation feature">
+        <symbol type="1" id="44" code="419" name="Специальный объект растительности">
             <description>Symbols 418, 419 and 420 can be used for special small vegetation features. The definition of the symbol must be given in each case in the map legend.</description>
             <point_symbol inner_radius="310" inner_color="-1" outer_width="180" outer_color="13" elements="0"/>
         </symbol>
-        <symbol type="1" id="45" code="420" name="Special vegetation feature">
+        <symbol type="1" id="45" code="420" name="Специальный объект растительности">
             <description>Symbols 418, 419 and 420 can be used for special small vegetation features. The definition of the symbol must be given in each case in the map legend.</description>
             <point_symbol inner_radius="250" inner_color="13" outer_width="0" outer_color="-1" elements="0"/>
         </symbol>
-        <symbol type="16" id="46" code="501.0" name="Motorway">
+        <symbol type="16" id="46" code="501.0" name="Автомагистраль">
             <description>A road with two carriageways. The width of the symbol should be drawn to scale but not smaller than the minimum width. The outer boundary lines may be replaced with symbols 519, 521, 522 or 524 if a fence or wall is so close to the motorway edge that it cannot practically be shown as a separate symbol. The space between the black lines must be filled with brown (50%). A road under construction may be shown with broken lines.</description>
             <combined_symbol parts="2">
                 <part private="true">
-                    <symbol type="2" code="501.1" name="Motorway, outer part">
+                    <symbol type="2" code="501.1" name="Автомагистраль, внешняя часть">
                         <line_symbol color="4" line_width="780" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                             <borders>
                                 <border color="5" width="180" shift="90" dash_length="2000" break_length="1000"/>
@@ -880,13 +880,13 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
                     </symbol>
                 </part>
                 <part private="true">
-                    <symbol type="2" code="501.2" name="Motorway, inner part">
+                    <symbol type="2" code="501.2" name="Автомагистраль, внутренняя часть">
                         <line_symbol color="1" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                 </part>
             </combined_symbol>
         </symbol>
-        <symbol type="2" id="47" code="502" name="Major road, minimum width">
+        <symbol type="2" id="47" code="502" name="Шоссе">
             <description>Road wider than 5m. The width of the symbol should be drawn to scale but not smaller than the minimum width. The outer boundary lines may be replaced with symbols 519, 521, 522 or 524 if a fence or wall is so close to the motorway edge that it cannot practically be shown as a separate symbol. The space between the black lines must be filled with brown (50%). A road under construction may be shown with broken lines.</description>
             <line_symbol color="4" line_width="500" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                 <borders>
@@ -894,7 +894,7 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
                 </borders>
             </line_symbol>
         </symbol>
-        <symbol type="2" id="48" code="503" name="Minor road">
+        <symbol type="2" id="48" code="503" name="Узкое шоссе">
             <description>Road 3-5 m wide. The space between the black lines must be filled with brown (50%). A road under construction may be shown with broken lines.</description>
             <line_symbol color="4" line_width="300" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                 <borders>
@@ -902,49 +902,49 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
                 </borders>
             </line_symbol>
         </symbol>
-        <symbol type="2" id="49" code="831" name="Track: fast riding">
+        <symbol type="2" id="49" code="831" name="Дорога: быстро проезжаемая">
             <description>A track with stabilised surface, at least 1.5 m wide. Forest road or well-maintained track with no obstacles. Speed 75-100 %.</description>
             <line_symbol color="1" line_width="600" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
-        <symbol type="2" id="50" code="832" name="Path: fast riding">
+        <symbol type="2" id="50" code="832" name="Тропа: быстро проезжаемая">
             <description>Well-maintained path narrower than 1.5 m wide. Smooth, clean path with no erosion or obstacles. Speed 75-100 %.</description>
             <line_symbol color="1" line_width="399" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
-        <symbol type="2" id="51" code="833" name="Track: medium riding">
+        <symbol type="2" id="51" code="833" name="Дорога: средне проезжаемая">
             <description>A track at least 1.5 m wide with some reduction in speed with the possibility of small obstacles such as stones, rocks, ruts, grass, sand or mud. Speed 50-75 %.</description>
             <line_symbol color="1" line_width="600" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="3000" break_length="800" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
-        <symbol type="2" id="52" code="834" name="Path: medium riding">
+        <symbol type="2" id="52" code="834" name="Тропа: средне проезжаемая">
             <description>A path narrower than 1.5 m wide with some reduction in speed with the possibility of small obstacles such as stones, rocks, ruts, grass, sand or mud. Speed 50-75 %.</description>
             <line_symbol color="1" line_width="399" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="3000" break_length="700" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
-        <symbol type="2" id="53" code="835" name="Track: slow riding">
+        <symbol type="2" id="53" code="835" name="Дорога: медленно проезжаемая">
             <description>Atrack at least 1.5 m wide, with obstacles that require the riders to choose their way to avoid obstacles such as stones, rocks, ruts, grass, sand or mud. Possibility of rocky surfaces. Pedaling is more difficult, riding is slowed. Skilled/fit riders will pass. Less skilled/fit riders may have to dismount. Speed 25-50 %.</description>
             <line_symbol color="1" line_width="600" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="1500" break_length="600" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
-        <symbol type="2" id="54" code="836" name="Path: slow riding">
+        <symbol type="2" id="54" code="836" name="Тропа: медленно проезжаемая">
             <description>A path narrower than 1.5 m wide, with sufficient obstacles to require the riders to choose their way to avoid obstacles such as stones, rocks, ruts, grass, sand or mud. Possibility of rocky surfaces. Pedaling is more difficult, riding is slowed. Skilled/fit riders will pass. Less skilled/fit riders may have to dismount. Speed 25-50 %.</description>
             <line_symbol color="1" line_width="399" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="1500" break_length="600" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
-        <symbol type="2" id="55" code="837" name="Track: difficult to ride">
+        <symbol type="2" id="55" code="837" name="Дорога: трудно проезжаемая">
             <description>A track at least 1.5 m wide, with difficult obstacles such as roots, deep sand/mud,
 erosion or rocky steps. Very slow riding or impossible to ride. Skilled/fit riders may be
 required to dismount. Speed max 25 %.</description>
             <line_symbol color="1" line_width="600" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="500" break_length="600" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
-        <symbol type="2" id="56" code="838" name="Path: difficult to ride">
+        <symbol type="2" id="56" code="838" name="Тропа: трудно проезжаемая">
             <description>A path less than 1.5 m wide, with difficult obstacles such as roots, deep sand/mud, erosion or rocky steps. Very slow riding or impossible riding. Skilled/fit riders may be required to dismount. Speed max 25 %.</description>
             <line_symbol color="1" line_width="399" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="400" break_length="400" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
-        <symbol type="2" id="57" code="509.1" name="Narrow ride">
+        <symbol type="2" id="57" code="509.1" name="Узкая просека">
             <description>Non-ridable narrow forest rides should be represented.</description>
             <line_symbol color="15" line_width="600" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="3000" break_length="500" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
-        <symbol type="2" id="58" code="515" name="Railway">
+        <symbol type="2" id="58" code="515" name="Железная дорога">
             <description>A railway or other kind of railed track (tramway, truckway, etc.).</description>
             <line_symbol color="3" line_width="420" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="3600" end_length="1800" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                 <mid_symbol>
-                    <symbol type="1" code="" name="Mid symbol">
+                    <symbol type="1" code="" name="Средний символ">
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                             <element>
                                 <symbol type="2" code="">
@@ -965,11 +965,11 @@ required to dismount. Speed max 25 %.</description>
                 </mid_symbol>
             </line_symbol>
         </symbol>
-        <symbol type="2" id="59" code="516" name="Power line">
+        <symbol type="2" id="59" code="516" name="Линия электропередачи">
             <description>Power line, cableway or skilift. The bars indicate the exact location of the pylons.</description>
             <line_symbol color="3" line_width="170" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                 <dash_symbol>
-                    <symbol type="1" code="" name="Dash symbol">
+                    <symbol type="1" code="" name="Штриховой символ">
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                             <element>
                                 <symbol type="2" code="">
@@ -990,11 +990,11 @@ required to dismount. Speed max 25 %.</description>
                 </dash_symbol>
             </line_symbol>
         </symbol>
-        <symbol type="2" id="60" code="517" name="Major power line">
+        <symbol type="2" id="60" code="517" name="Высоковольтная линия электропередачи">
             <description>Major power lines should be drawn with a double line. The gap between the lines may indicate the extent of the powerline.</description>
             <line_symbol color="-1" line_width="620" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                 <dash_symbol>
-                    <symbol type="1" code="" name="Dash symbol">
+                    <symbol type="1" code="" name="Штриховой символ">
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                             <element>
                                 <symbol type="2" code="">
@@ -1018,11 +1018,11 @@ required to dismount. Speed max 25 %.</description>
                 </borders>
             </line_symbol>
         </symbol>
-        <symbol type="2" id="61" code="518" name="Tunnel">
+        <symbol type="2" id="61" code="518" name="Туннель">
             <description>A way under roads, railways, etc. which may be used by the runner. This symbol is used whether or not the tunnel has a track leading to it.</description>
             <line_symbol color="3" line_width="210" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                 <start_symbol>
-                    <symbol type="1" code="" name="Start symbol">
+                    <symbol type="1" code="" name="Начальный символ">
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                             <element>
                                 <symbol type="2" code="">
@@ -1043,7 +1043,7 @@ required to dismount. Speed max 25 %.</description>
                     </symbol>
                 </start_symbol>
                 <end_symbol>
-                    <symbol type="1" code="" name="End symbol">
+                    <symbol type="1" code="" name="Конечный символ">
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                             <element>
                                 <symbol type="2" code="">
@@ -1065,7 +1065,7 @@ required to dismount. Speed max 25 %.</description>
                 </end_symbol>
             </line_symbol>
         </symbol>
-        <symbol type="1" id="62" code="518.1" name="Tunnel, minimum size">
+        <symbol type="1" id="62" code="518.1" name="Туннель, минимальный размер">
             <description>A way under roads, railways, etc. which may be used by the runner. This symbol is used whether or not the tunnel has a track leading to it.</description>
             <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                 <element>
@@ -1085,22 +1085,22 @@ required to dismount. Speed max 25 %.</description>
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="2" id="63" code="521" name="Stone wall">
+        <symbol type="2" id="63" code="521" name="Каменная стена">
             <description>This stone wall symbol should represent all visible walls. If a stone wall is forbidden to
 cross, it shall be marked with the symbol 707 (uncrossable boundary).</description>
             <line_symbol color="3" line_width="350" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="3000" end_length="1500" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="2" mid_symbol_distance="840">
                 <mid_symbol>
-                    <symbol type="1" code="" name="Mid symbol">
+                    <symbol type="1" code="" name="Средний символ">
                         <point_symbol rotatable="true" inner_radius="375" inner_color="3" outer_width="0" outer_color="-1" elements="0"/>
                     </symbol>
                 </mid_symbol>
             </line_symbol>
         </symbol>
-        <symbol type="2" id="64" code="524" name="High fence">
+        <symbol type="2" id="64" code="524" name="Высокая ограда">
             <description>A boarded or wire fence higher than ca 1.5 m, not crossable to the average orienteer, eg. deer fence.</description>
             <line_symbol color="3" line_width="350" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="3720" end_length="1500" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                 <mid_symbol>
-                    <symbol type="1" code="" name="Mid symbol">
+                    <symbol type="1" code="" name="Средний символ">
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                             <element>
                                 <symbol type="2" code="">
@@ -1135,7 +1135,7 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</descripti
                 </mid_symbol>
             </line_symbol>
         </symbol>
-        <symbol type="1" id="65" code="525" name="Crossing point">
+        <symbol type="1" id="65" code="525" name="Проход">
             <description>All ways through or over high fences or walls must be indicated. The symbol may also be used for a gate through or stile over a stone wall (521) or a fence (524) or a pipeline (534).</description>
             <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                 <element>
@@ -1168,11 +1168,11 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</descripti
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="4" id="66" code="526" name="Building">
+        <symbol type="4" id="66" code="526" name="Строение">
             <description>A building is shown with its ground plan so far as the scale permits.</description>
             <area_symbol inner_color="3" min_area="250" patterns="0"/>
         </symbol>
-        <symbol type="1" id="67" code="526.1" name="Building, minimum size">
+        <symbol type="1" id="67" code="526.1" name="Строение, минимальный размер">
             <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                 <element>
                     <symbol type="4" code="">
@@ -1193,28 +1193,28 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</descripti
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="4" id="68" code="527" name="Settlement">
+        <symbol type="4" id="68" code="527" name="Застроенная территория">
             <description>Houses and gardens and other built up areas. Roads, buildings and other significant features within a settlement must be shown. If all buildings cannot be shown, an alternative symbol (black line screen) may be used.</description>
             <area_symbol inner_color="12" min_area="500" patterns="0"/>
         </symbol>
-        <symbol type="4" id="69" code="529" name="Paved area">
+        <symbol type="4" id="69" code="529" name="Территория с покрытием">
             <description>An area of hard standing used for parking or other purposes.</description>
             <area_symbol inner_color="4" min_area="500" patterns="0"/>
         </symbol>
-        <symbol type="2" id="70" code="529.1" name="Paved area, bounding line">
+        <symbol type="2" id="70" code="529.1" name="Территория с покрытием, граничная линия">
             <line_symbol color="3" line_width="120" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
-        <symbol type="16" id="71" code="529.2" name="Paved area, with bounding line">
+        <symbol type="16" id="71" code="529.2" name="Территория с покрытием, с граничной линией">
             <combined_symbol parts="2">
                 <part symbol="69"/>
                 <part symbol="70"/>
             </combined_symbol>
         </symbol>
-        <symbol type="2" id="72" code="531" name="Firing range">
+        <symbol type="2" id="72" code="531" name="Стрельбище">
             <description>A firing range is shown with a special symbol to indicate the need for caution. Associated buildings are individually marked.</description>
             <line_symbol color="3" line_width="420" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                 <end_symbol>
-                    <symbol type="1" code="" name="End symbol">
+                    <symbol type="1" code="" name="Конечный символ">
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                             <element>
                                 <symbol type="2" code="">
@@ -1252,7 +1252,7 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</descripti
                 </end_symbol>
             </line_symbol>
         </symbol>
-        <symbol type="1" id="73" code="532" name="Grave">
+        <symbol type="1" id="73" code="532" name="Могила">
             <description>A distinct grave marked by a stone or shrine. Location is at the centre of gravity of the symbol, which is orientated to north. A cemetery is shown by using grave symbols as space permits.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                 <element>
@@ -1285,11 +1285,11 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</descripti
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="2" id="74" code="534" name="Uncrossable pipeline">
+        <symbol type="2" id="74" code="534" name="Трубопровод непреодолимый">
             <description>A pipeline which cannot be crossed. If an uncrossable pipeline is forbidden to cross, it shall be marked with the symbol 707 (uncrossable boundary).</description>
             <line_symbol color="3" line_width="210" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="3000" end_length="1500" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="2" mid_symbol_distance="720">
                 <mid_symbol>
-                    <symbol type="1" code="" name="Mid symbol">
+                    <symbol type="1" code="" name="Средний символ">
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                             <element>
                                 <symbol type="2" code="">
@@ -1311,7 +1311,7 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</descripti
                 </mid_symbol>
             </line_symbol>
         </symbol>
-        <symbol type="1" id="75" code="535" name="High tower">
+        <symbol type="1" id="75" code="535" name="Высокая башня">
             <description>A high tower or large pylon, standing above the level of the surrounding forest. Location is at the centre of gravity of the symbol.</description>
             <point_symbol inner_radius="480" inner_color="3" outer_width="0" outer_color="-1" elements="2">
                 <element>
@@ -1344,7 +1344,7 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</descripti
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="1" id="76" code="536" name="Small tower">
+        <symbol type="1" id="76" code="536" name="Маленькая башня">
             <description>An obvious shooting platform or seat, or small tower. Location is at the centre of gravity of the symbol.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                 <element>
