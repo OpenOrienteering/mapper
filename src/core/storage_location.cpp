@@ -171,7 +171,7 @@ std::shared_ptr<const std::vector<StorageLocation>> buildLocationCache()
 	const QFileInfo primary_storage_oomapper { primary_storage + QLatin1String("/OOMapper") };
 	if (primary_storage_oomapper.exists())
 	{
-		const auto path = primary_storage_oomapper.path();
+		const auto path = primary_storage_oomapper.filePath();
 		if (primary_storage_oomapper.isWritable())
 			locations_normal.push_back(path);
 		else
@@ -251,9 +251,10 @@ std::shared_ptr<const std::vector<StorageLocation>> StorageLocation::knownLocati
 #else
 	auto locations = std::make_shared<std::vector<StorageLocation>>();
 	auto paths = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation);
+	locations->reserve(std::size_t(paths.size()));
 	for (const auto& path : paths)
 	{
-		locations->emplace_back(path, locations->empty() ? HintPreferred : HintNormal);
+		locations->emplace_back(path, HintNormal);
 	}
 	return locations;
 #endif
