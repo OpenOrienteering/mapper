@@ -49,7 +49,7 @@
     </message>
     <message>
         <source>Developers in alphabetical order:</source>
-        <translation type="vanished">Développeurs par ordre alphabétique :</translation>
+        <translation type="vanished">Développeurs par ordre alphabétique :</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="174"/>
@@ -104,7 +104,7 @@
     <message>
         <location filename="../src/symbol_area.cpp" line="753"/>
         <source>Minimum size:</source>
-        <translation>Taille minimale :</translation>
+        <translation>Taille minimale :</translation>
     </message>
     <message>
         <location filename="../src/symbol_area.cpp" line="760"/>
@@ -143,7 +143,7 @@
     <message>
         <location filename="../src/symbol_area.cpp" line="843"/>
         <source>Line spacing:</source>
-        <translation>Espacement des lignes :</translation>
+        <translation>Espacement des lignes :</translation>
     </message>
     <message>
         <location filename="../src/symbol_area.cpp" line="846"/>
@@ -188,7 +188,7 @@
     <message>
         <location filename="../src/symbol_area.cpp" line="872"/>
         <source>Angle:</source>
-        <translation>Angle :</translation>
+        <translation>Angle :</translation>
     </message>
     <message>
         <location filename="../src/symbol_area.cpp" line="874"/>
@@ -5189,7 +5189,7 @@ utiliser la molette de la souris pour zoomer.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_progress_dialog.cpp" line="57"/>
-        <source>An error occured during processing.</source>
+        <source>An error occurred during processing.</source>
         <comment>PrintWidget</comment>
         <translation>Une erreur est survenue durant le calcul.</translation>
     </message>
@@ -5470,7 +5470,7 @@ utiliser la molette de la souris pour zoomer.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1252"/>
-        <source>An error occured during printing.</source>
+        <source>An error occurred during printing.</source>
         <translation>Une erreur est survenue durant l'impression.</translation>
     </message>
     <message>
@@ -6823,7 +6823,7 @@ Si vous ne souhaitez pas dessiner sur le modèle, cela ne pose alors aucun probl
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="1010"/>
         <source>The template will be invisible in the overprinting simulation. Switch to normal view?</source>
-        <translation>Le modèle sera invisible dans la simulation de surimpression. Basculer en mode normal ?</translation>
+        <translation>Le modèle sera invisible dans la simulation de surimpression. Basculer en mode normal ?</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="1143"/>

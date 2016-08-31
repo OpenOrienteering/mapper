@@ -5222,7 +5222,7 @@ rull musehjulet for å zoome.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_progress_dialog.cpp" line="57"></location>
-        <source>An error occured during processing.</source>
+        <source>An error occurred during processing.</source>
         <comment>PrintWidget</comment>
         <translation>En feil oppstod under kjøring.</translation>
     </message>
@@ -5506,7 +5506,7 @@ rull musehjulet for å zoome.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1252"></location>
-        <source>An error occured during printing.</source>
+        <source>An error occurred during printing.</source>
         <translation>En feil oppstof under utskrift.</translation>
     </message>
     <message>

@@ -4971,7 +4971,7 @@ zoom using the mouse wheel, if available.</source>
     </message>
     <message>
         <location filename="../src/gui/print_progress_dialog.cpp" line="57"/>
-        <source>An error occured during processing.</source>
+        <source>An error occurred during processing.</source>
         <comment>PrintWidget</comment>
         <translation>Виникла помилка під час виконання.</translation>
     </message>
@@ -5244,7 +5244,7 @@ zoom using the mouse wheel, if available.</source>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1252"/>
-        <source>An error occured during printing.</source>
+        <source>An error occurred during printing.</source>
         <translation>Під час друку виникла помилка.</translation>
     </message>
     <message>

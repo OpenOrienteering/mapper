@@ -38,12 +38,12 @@ class FileFormatException : public std::exception
 {
 public:
 	/** Creates a new exception with the given message
-	 *  \param message a text describing the exceptional event that has occured.
+	 *  \param message a text describing the exceptional event that has occurred.
 	 */
 	FileFormatException(const QString& message = QString());
 	
 	/** Creates a new exception with the given message
-	 *  \param message a text describing the exceptional event that has occured.
+	 *  \param message a text describing the exceptional event that has occurred.
 	 */
 	FileFormatException(const char* message);
 	

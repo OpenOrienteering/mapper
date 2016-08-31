@@ -1249,7 +1249,7 @@ void PrintWidget::print()
 	// Print the map
 	if (!map_printer->printMap(printer.get()))
 	{
-		QMessageBox::warning(main_window, tr("Error"), tr("An error occured during printing."));
+		QMessageBox::warning(main_window, tr("Error"), tr("An error occurred during printing."));
 	}
 	else if (!progress.wasCanceled())
 	{

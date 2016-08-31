@@ -5641,7 +5641,7 @@ zooma med scrollhjulet om tillgängligt.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_progress_dialog.cpp" line="57"></location>
-        <source>An error occured during processing.</source>
+        <source>An error occurred during processing.</source>
         <comment>PrintWidget</comment>
         <translation>Ett fel inträffade under bearbetning.</translation>
     </message>
@@ -5942,7 +5942,7 @@ zooma med scrollhjulet om tillgängligt.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1252"></location>
-        <source>An error occured during printing.</source>
+        <source>An error occurred during printing.</source>
         <translation>Ett fel inträffade under utskrift.</translation>
     </message>
     <message>
@@ -6048,7 +6048,7 @@ separations</source>
         <translation>Utskriftsjobb skapat</translation>
     </message>
     <message>
-        <source>An error occured during processing.</source>
+        <source>An error occurred during processing.</source>
         <translation type="vanished">Ett fel inträffade under bearbetning.</translation>
     </message>
     <message>
