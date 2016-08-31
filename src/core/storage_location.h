@@ -29,6 +29,11 @@
 #include <QString>
 
 
+// noexcept since Qt 5.5
+constexpr bool qstring_is_nothrow_copy_constructible = std::is_nothrow_copy_constructible<QString>::value;
+constexpr bool qstring_is_nothrow_move_constructible = std::is_nothrow_move_constructible<QString>::value;
+
+
 /**
  * Provides information about document storage locations.
  */
@@ -49,10 +54,10 @@ public:
 	StorageLocation(const QString& path, Hint hint) noexcept;
 	
 	/** Default copy constructor. */
-	StorageLocation(const StorageLocation&) noexcept = default;
+	StorageLocation(const StorageLocation&) noexcept(qstring_is_nothrow_copy_constructible) = default;
 	
 	/** Default move constructor. */
-	StorageLocation(StorageLocation&&) noexcept = default;
+	StorageLocation(StorageLocation&&) noexcept(qstring_is_nothrow_move_constructible) = default;
 	
 	
 	/** Returns the path of this location. */
