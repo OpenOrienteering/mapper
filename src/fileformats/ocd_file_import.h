@@ -373,7 +373,20 @@ QString OcdFileImport::convertOcdString(const QChar* src) const
 inline
 MapCoord OcdFileImport::convertOcdPoint(const Ocd::OcdPoint32& ocd_point) const
 {
-	return MapCoord::fromNative((ocd_point.x >> 8) * 10, (ocd_point.y >> 8) * -10);
+	qint32 ocad_x = ocd_point.x >> 8;
+	qint32 ocad_y = ocd_point.y >> 8;
+	// Recover from broken coordinate export from Mapper 0.6.2 ... 0.6.4 (#749)
+	// Cf. broken::convertPointMember in file_format_ocad8.cpp:
+	// The values -4 ... -1 (-0.004 mm ... -0.001 mm) were converted to 0x80000000u instead of 0.
+	// This is the maximum value. Thus it is okay to assume it won't occur in regular data,
+	// and we can safely replace it with 0 here.
+	// But the input parameter were already subject to right shift ...
+	constexpr auto invalid_value = qint32(0x80000000u) >> 8; // ... so we use this value here.
+	if (ocad_x == invalid_value)
+		ocad_x = 0;
+	if (ocad_y == invalid_value)
+		ocad_y = 0;
+	return MapCoord::fromNative(ocad_x * 10, ocad_y * -10);
 }
 
 inline
