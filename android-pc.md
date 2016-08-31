@@ -94,25 +94,3 @@ artifacts when saving the file and loading it again.
 Note that to view the scribbles on a PC after creating them on a mobile device,
 you need to transfer not only the map file, but also the affected image template
 file(s) back to the PC, as the scribbles are saved directly in the image files.
-
-
-
-Transferring the map to the Android device {#android-transfer-to-device}
-==========================================
-
-Create a folder named "OOMapper" (spelled exactly like this) either in the
-device's internal storage root or in its SD card root folder. Then copy the 
-map(s) to use together with all of their template files into this folder.
-
-Be aware that some devices use an uncommon protocol for direct file transfer via
-cable, which might not be well supported by your PC. This might corrupt files
-during transfer such that they cannot be opened on the target device. This can
-be worked around by choosing another method for file transfer.
-
-
-
-Transferring the map back to the PC {#android-transfer-to-pc}
-===================================
-
-Simply copy the map files and any templates you drew on with the
-paint-on-template functionality from the "OOMapper" folder back to your PC.
