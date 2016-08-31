@@ -388,7 +388,7 @@ template< class F >
 void OcdFileImport::importColors(const OcdFile< F >& file)
 {
 	handleStrings(file, { { 9, &OcdFileImport::importColor } });
-	addWarning(tr("Spot color information was ignored."));
+	addWarning(OcdFileImport::tr("Spot color information was ignored."));
 }
 
 void OcdFileImport::importColor(const QString& param_string, int)
@@ -516,11 +516,11 @@ void OcdFileImport::importSymbols(const OcdFile< F >& file)
 			symbol = importLineTextSymbol(reinterpret_cast<const typename F::LineTextSymbol&>(ocd_symbol), ocd_version);
 			break;
 		default:
-			addWarning(tr("Unable to import symbol %1.%2 \"%3\": %4") .
+			addWarning(OcdFileImport::tr("Unable to import symbol %1.%2 \"%3\": %4") .
 			           arg(ocd_symbol.number / F::BaseSymbol::symbol_number_factor) .
 			           arg(ocd_symbol.number % F::BaseSymbol::symbol_number_factor) .
 			           arg(convertOcdString(ocd_symbol.description)).
-			           arg(tr("Unsupported type \"%1\".").arg(ocd_symbol.type)) );
+			           arg(OcdFileImport::tr("Unsupported type \"%1\".").arg(ocd_symbol.type)) );
 			continue;
 		}
 		
@@ -898,7 +898,7 @@ Symbol* OcdFileImport::importLineSymbol(const S& ocd_symbol, int ocd_version)
 		CombinedSymbol* full_line = new CombinedSymbol();
 		setupBaseSymbol(full_line, ocd_symbol);
 		mergeLineSymbol(full_line, main_line, framing_line, double_line);
-		addSymbolWarning(symbol_line, tr("This symbol cannot be saved as a proper OCD symbol again."));
+		addSymbolWarning(symbol_line, OcdFileImport::tr("This symbol cannot be saved as a proper OCD symbol again."));
 		return full_line;
 	}
 }
@@ -1251,7 +1251,7 @@ Symbol* OcdFileImport::importAreaSymbol(const S& ocd_symbol, int ocd_version)
 		border->setNumberComponent(1, symbol->getNumberComponent(1));
 		border->setNumberComponent(2, static_cast<int>(ocd_symbol.border_symbol));
 		combined->setPart(1, border, true);
-		addSymbolWarning(symbol, tr("This symbol cannot be saved as a proper OCD symbol again."));
+		addSymbolWarning(symbol, OcdFileImport::tr("This symbol cannot be saved as a proper OCD symbol again."));
 		return combined;
 	}
 	return symbol;
@@ -1340,7 +1340,7 @@ TextSymbol* OcdFileImport::importLineTextSymbol(const S& ocd_symbol, int /*ocd_v
 	setBasicAttributes(symbol, convertOcdString(ocd_symbol.font_name), ocd_symbol.basic);
 	setFraming(symbol, ocd_symbol.framing);
 	
-	addSymbolWarning(symbol, tr("Line text symbols are not yet supported. Marking the symbol as hidden."));
+	addSymbolWarning(symbol, OcdFileImport::tr("Line text symbols are not yet supported. Marking the symbol as hidden."));
 	symbol->setHidden(true);
 	return symbol;
 }
@@ -1517,7 +1517,7 @@ Object* OcdFileImport::importObject(const O& ocd_object, MapPart* part, int ocd_
 			symbol = map->getUndefinedText();
 			break;
 		default:
-			addWarning(tr("Unable to load object"));
+			addWarning(OcdFileImport::tr("Unable to load object"));
 			qDebug() << "Undefined object type" << ocd_object.type << " for object of symbol" << ocd_object.symbol;
 			return nullptr;
 		}
@@ -1527,7 +1527,7 @@ Object* OcdFileImport::importObject(const O& ocd_object, MapPart* part, int ocd_
 	{
 		Object* object = importRectangleObject(ocd_object, part, rectangle_info[ocd_object.symbol]);
 		if (!object)
-			addWarning(tr("Unable to import rectangle object"));
+			addWarning(OcdFileImport::tr("Unable to import rectangle object"));
 		return object;
 	}
 	
@@ -1568,7 +1568,7 @@ Object* OcdFileImport::importObject(const O& ocd_object, MapPart* part, int ocd_
 		// Text objects need special path translation
 		if (!fillTextPathCoords(t, reinterpret_cast<TextSymbol*>(symbol), ocd_object.num_items, reinterpret_cast<const Ocd::OcdPoint32 *>(ocd_object.coords)))
 		{
-			addWarning(tr("Not importing text symbol, couldn't figure out path' (npts=%1): %2")
+			addWarning(OcdFileImport::tr("Not importing text symbol, couldn't figure out path' (npts=%1): %2")
 			           .arg(ocd_object.num_items).arg(t->getText()));
 			delete t;
 			return nullptr;
