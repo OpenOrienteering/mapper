@@ -7984,7 +7984,7 @@ The maximum supported version is %2.</source>
     <message>
         <location filename="../src/file_format_xml.cpp" line="523"/>
         <source>The map notes could not be read.</source>
-        <translation>地図のメモを読み取ることができません。</translation>
+        <translation>ノートを読み取ることができません。</translation>
     </message>
     <message>
         <location filename="../src/file_format_xml.cpp" line="564"/>
