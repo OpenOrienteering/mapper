@@ -36,4 +36,5 @@ You can transfer files from and to a PC via a USB cable. Android supports multip
 - Mass Storage makes the storage unavailable for apps for the duration of the connection with the PC.
   (Android also needs to terminate apps which are stored on the volume which is provided as mass storage.)
   Unlike MTP, mass storage does not depend on the media scanner.
-Mapper for Android can create GPX files. If these files 
+
+In some cases, users suffered from files being damaged during transfer. This can be worked around by choosing another method for file transfer. Remember to keep backups and to verify transferred files.
