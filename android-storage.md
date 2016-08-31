@@ -9,7 +9,7 @@ Storage locations
 Android organizes storage and permissions different than PCs.
 Especially on SD cards, write access is restricted.
 
-You can choose the following locations for storing data which want edit and display in OpenOrienteering Mapper:
+You can choose the following locations for storing data which you want to edit and to display in OpenOrienteering Mapper:
 
 - Top-level folder "OO-Mapper" on the primary storage volume. On most devices, the primary storage volume is a part of the built-in storage. 
   Files in this area are stored permanently, until you decide to remove them.
