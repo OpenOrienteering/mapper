@@ -21,8 +21,7 @@ Contents
 												  
 [Preparing a map on the PC](android-pc.md){: .subpage}
                                                  
-[Transferring the map to the Android device](android-pc.md#android-transfer-to-device){: .subpage}
+[Storing Maps and Templates on Android Devices](android-storage.md){: .subpage}
 
 [Using the Mapper app](android-app.md){: .subpage}
 
-[Transferring the map back to the PC](android-pc.md#android-transfer-to-pc){: .subpage}
