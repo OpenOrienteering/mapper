@@ -3322,7 +3322,7 @@ Přepočítat zavedená data na měřítko mapy?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="845"/>
         <source>Set point objects</source>
-        <translation>Nastavit bodové objekty</translation>
+        <translation>Kreslit body</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="846"/>
