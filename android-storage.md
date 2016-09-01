@@ -11,7 +11,7 @@ Especially on SD cards, write access for apps is restricted.
 
 You can choose the following locations for storing data which you want to edit and to display in OpenOrienteering Mapper:
 
-- Folder "OO-Mapper" at the top level of the primary storage volume. On most devices, the primary storage volume is a part of the built-in storage. 
+- Folder "OOMapper" at the top level of the primary storage volume. On most devices, the primary storage volume is a part of the built-in storage. 
   Files in this area are stored permanently, until you decide to remove them.
   Unfortunately, there is usually only limited capacity available - this memory is expensive when buying the device.
 
@@ -21,7 +21,7 @@ You can choose the following locations for storing data which you want to edit a
   So please carefully save your changes to a PC.
 
 OpenOrienteering Mapper for Android will create these folders when they are missing, and scan them for map files.
-It will display warnings when you open maps from the non-permanent app-specific folders or from read-only locations. (Top-level "OO-Mapper" folders on secondary storage volumes are scanned, but cannot be written to.)
+It will display warnings when you open maps from the non-permanent app-specific folders or from read-only locations. (Top-level "OOMapper" folders on secondary storage volumes are scanned, but cannot be written to.)
 
 
 File transfer
