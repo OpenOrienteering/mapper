@@ -5797,7 +5797,7 @@ separations</source>
     <message>
         <location filename="../src/core/storage_location.cpp" line="278"/>
         <source>'%1' is stored in a regular location.</source>
-        <translation>'% 1' сохранён в обычном месте.</translation>
+        <translation>'%1' сохранён в обычном месте.</translation>
     </message>
     <message>
         <location filename="../src/core/storage_location.cpp" line="281"/>
