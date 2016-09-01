@@ -22,6 +22,8 @@ string(MD5 file_md5 "${output}")
 
 string(REGEX REPLACE " *<file>tabs.css.*sync_off.png</file>" "" output "${output}")
 string(REGEX REPLACE " *<file>ftv2.*ftv2[^.]*[.]png</file>"  "" output "${output}")
+string(REGEX REPLACE " *<file>openorienteering.png</file>"  "" output "${output}")
+string(REGEX REPLACE "( *)(<file>index.html</file>)"  "\\1\\2\n\\1<file>openorienteering.png</file>" output "${output}")
 string(MD5 output_md5 "${output}")
 if(NOT "${output_md5}" STREQUAL "${file_md5}")
 	message(STATUS "Updating ${index_qhp}")
