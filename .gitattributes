@@ -3,3 +3,6 @@
 *.omap               binary diff=xmllint
 *.ocd                binary
 *.ts                 binary diff=xmllint
+3rd-party/*          linguist-vendored
+doc/*                linguist-documentation
+help/*               linguist-documentation
