@@ -202,7 +202,7 @@
             </text_symbol>
         </symbol>
         <symbol type="2" id="5" code="106" name="Грунтовый обрыв">
-            <description>Крутой перегиб поверхности земли, однозначно выделяющийся из окружающей среды. Гравийные или песчаные выработки, дорожные выемки и насыпи и т. п. Зубцы должны показывать полную проекцию склона, но могут быть опущены, если два обрыва располагаются близко друг от друга. Опасные грунтовые обрывы показываются ззнаком 201.</description>
+            <description>Крутой перегиб поверхности земли, однозначно выделяющийся из окружающей среды. Гравийные или песчаные выработки, дорожные выемки и насыпи и т. п. Зубцы должны показывать полную проекцию склона, но могут быть опущены, если два обрыва располагаются близко друг от друга. Опасные грунтовые обрывы показываются знаком 201.</description>
             <line_symbol color="4" line_width="180" minimum_length="600" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="780" end_length="850" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                 <start_symbol>
                     <symbol type="1" code="" name="Начальный символ">
