@@ -481,7 +481,7 @@
     <message>
         <location filename="../src/symbol_combined.cpp" line="408"/>
         <source>- Private area symbol -</source>
-        <translation>- Specifiek vlak symbool -</translation>
+        <translation>- Specifiek oppervlak symbool -</translation>
     </message>
     <message>
         <location filename="../src/symbol_combined.cpp" line="414"/>
