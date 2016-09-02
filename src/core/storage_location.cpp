@@ -101,9 +101,8 @@ std::vector<QString> getExternalFilesDirs(jstring* type)
 	                               type);
 	
 	QAndroidJniEnvironment jni;
-	jni->ExceptionClear();
-	
 	const auto length = jni->GetArrayLength(external_files_dirs.object<jarray>());
+	
 	std::vector<QString> locations;
 	locations.reserve(std::size_t(length));
 	for (auto i = 0; i < length; ++i)
@@ -111,7 +110,7 @@ std::vector<QString> getExternalFilesDirs(jstring* type)
 		auto location_jni = jni->GetObjectArrayElement(external_files_dirs.object<jobjectArray>(), i);
 		auto location = QAndroidJniObject{ location_jni }.toString();
 		
-		const auto warning_path = location + QLatin1String("/README.html");
+		const auto warning_path = QString(location + QLatin1String("/README.html"));
 		QFile warning(warning_path);
 		if (warning.open(QIODevice::WriteOnly | QIODevice::Truncate))
 		{
@@ -218,9 +217,9 @@ std::shared_ptr<const std::vector<StorageLocation>> buildLocationCache()
 	}
 	
 	auto locations = std::make_shared<std::vector<StorageLocation>>();
-	locations->reserve(1 + locations_normal.size()
-	                     + locations_application.size()
-	                     + locations_readonly.size());
+	locations->reserve(locations_normal.size()
+	                   + locations_application.size()
+	                   + locations_readonly.size());
 	for (const auto& path : locations_normal)
 		locations->emplace_back(path, StorageLocation::HintNormal);
 	for (const auto& path : locations_application)
@@ -247,6 +246,7 @@ std::shared_ptr<const std::vector<StorageLocation>> StorageLocation::knownLocati
 		locations = Android::buildLocationCache();
 		Android::locations_cache = locations;
 	}
+	Q_ASSERT(locations);
 	return locations;
 #else
 	auto locations = std::make_shared<std::vector<StorageLocation>>();
