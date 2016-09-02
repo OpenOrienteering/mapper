@@ -73,7 +73,11 @@ public:
 	static QString fileHintTextTemplate(Hint hint);
 	
 	
-	/** Returns the known locations for documents. */
+	/**
+	 * Returns the known locations for documents.
+	 * 
+	 * The returned shared-ptr will always have an object, even if it is an empty list.
+	 */
 	static std::shared_ptr<const std::vector<StorageLocation>> knownLocations();
 	
 	
