@@ -54,7 +54,7 @@ void PrintProgressDialog::paintRequested(QPrinter* printer)
 	{
 		QMessageBox::warning(
 		  parentWidget(), tr("Printing", "PrintWidget"),
-		  tr("An error occured during processing.", "PrintWidget"),
+		  tr("An error occurred during processing.", "PrintWidget"),
 		  QMessageBox::Ok, QMessageBox::Ok );
 	}
 }

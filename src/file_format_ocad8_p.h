@@ -109,7 +109,7 @@ protected:
 	QString convertCString(const char *p, size_t n, bool ignore_first_newline);
 	QString convertWideCString(const char *p, size_t n, bool ignore_first_newline);
 	float convertRotation(int angle);
-	void convertPoint(MapCoord &c, int ocad_x, int ocad_y);
+	void convertPoint(MapCoord &c, s32 ocad_x, s32 ocad_y);
 	qint32 convertSize(int ocad_size);
 	const MapColor *convertColor(int color);
 	double convertTemplateScale(double ocad_scale);

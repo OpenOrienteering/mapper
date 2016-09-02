@@ -32,6 +32,7 @@
 #include <QGridLayout>
 #include <QLabel>
 #include <QListWidget>
+#include <QMessageBox>
 #include <QPainter>
 #include <QProcessEnvironment>
 #include <QScrollArea>
@@ -41,6 +42,7 @@
 #include "../home_screen_controller.h"
 #include "../main_window.h"
 #include "../settings_dialog.h"
+#include "../../core/storage_location.h"
 #include "../../file_format_registry.h"
 #include "../../mapper_resource.h"
 
@@ -438,6 +440,10 @@ void HomeScreenWidgetMobile::showSettings()
 
 void HomeScreenWidgetMobile::fileClicked(QListWidgetItem* item)
 {
+	QString hint_text = item->data(Qt::UserRole+1).toString();
+	if (!hint_text.isEmpty())
+		QMessageBox::warning(this, MainWindow::tr("Warning"), hint_text.arg(item->data(Qt::DisplayRole).toString()));
+	
 	QString path = item->data(Qt::UserRole).toString();
 	controller->getWindow()->openPath(path);
 }
@@ -481,41 +487,60 @@ QWidget* HomeScreenWidgetMobile::makeFileListWidget(HomeScreenController* contro
 	
 	// Look for map files at device-specific locations
 #ifdef Q_OS_ANDROID
-	QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
-	// Actual SD card mount points may be found in secondary storage
-	QStringList folder_list = env.value(QString::fromLatin1("SECONDARY_STORAGE")).split(QLatin1Char{':'});
-	// The primary volume that can be accessed externally (from PC)
-	QString external_storage = env.value(QString::fromLatin1("EXTERNAL_STORAGE"));
-	if (!external_storage.isEmpty())
-		folder_list.insert(0, external_storage);
-	// Optional fallback locations
-	folder_list << QString::fromLatin1("/")
-	            << QString::fromLatin1("/mnt")
-	            << QString::fromLatin1("/mnt/sdcard")
-	            << QString::fromLatin1("/sdcard")
-	            << QString::fromLatin1("/storage");
-	
-	bool oomapper_found = false;
-	for (auto&& path : folder_list)
+	const auto style = file_list->style();
+	StorageLocation::refresh();
+	const auto locations = StorageLocation::knownLocations();
+	for (const auto& location : *locations)
 	{
-		if (oomapper_found && path == QLatin1String{"/"})
-			// Don't need fallback (avoid duplicate entries)
-			break;
-		
-		QDir dir(path);
-		auto oomapper = QString::fromLatin1("OOMapper"); 
-		if (dir.exists(oomapper))
+		QIcon icon;
+		QString hint_text;
+		switch (location.hint())
 		{
-			oomapper_found = true;
-			addFilesToFileList(file_list, dir.filePath(oomapper));
+		case StorageLocation::HintApplication:
+			icon = style->standardIcon(QStyle::SP_MessageBoxInformation);
+			hint_text = StorageLocation::fileHintTextTemplate(location.hint());
+			break;
+		case StorageLocation::HintReadOnly:
+			icon = style->standardIcon(QStyle::SP_MessageBoxWarning);
+			hint_text = StorageLocation::fileHintTextTemplate(location.hint());
+			break;
+		default:
+			break;
+		}
+
+		QDirIterator it(location.path(), QDir::Files | QDir::NoDotAndDotDot, QDirIterator::Subdirectories);
+		while (it.hasNext()) {
+			it.next();
+			if (!FileFormats.findFormatForFilename(it.filePath()))
+				continue;
+			
+			QListWidgetItem* new_item = new QListWidgetItem(it.fileInfo().fileName());
+			new_item->setData(Qt::UserRole, it.filePath());
+			new_item->setToolTip(it.filePath());
+			if (Q_LIKELY(
+			        location.hint() == StorageLocation::HintReadOnly
+			        || it.fileInfo().isWritable() ))
+			{
+				new_item->setIcon(icon);
+				new_item->setData(Qt::UserRole+1, hint_text);
+			}
+			else
+			{
+				new_item->setIcon(style->standardIcon(QStyle::SP_MessageBoxWarning));
+				new_item->setData(Qt::UserRole+1, StorageLocation::fileHintTextTemplate(StorageLocation::HintReadOnly));
+			}
+			file_list->addItem(new_item);
 		}
 	}
 #endif
 	
-	file_list->sortItems();
 	if (file_list->count() == 0)
 	{
-		QLabel* message_label = new QLabel(tr("No map files found!<br/><br/>Copy map files to a top-level folder named 'OOMapper' on the device or a memory card."));
+		//  Remove the incorrect part from the existing translated text.
+		/// \todo Review the text for placing the first maps
+		auto label_text = tr("No map files found!<br/><br/>Copy map files to a top-level folder named 'OOMapper' on the device or a memory card.");
+		label_text.truncate(label_text.indexOf(QLatin1String("<br/>")));
+		QLabel* message_label = new QLabel(label_text);
 		message_label->setWordWrap(true);
 		file_list_stack->addWidget(message_label);
 		file_list_stack->setCurrentWidget(message_label);

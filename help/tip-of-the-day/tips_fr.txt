@@ -11,6 +11,6 @@ Toutes les largeurs de lignes et les tailles des symboles doivent conserver leur
 Pour les lignes en pointillés : au moins deux pointillés doivent apparaître
 Pour les lignes en tirets : au moins deux tirets doivent apparaître
 Les surfaces délimitées par des lignes tirets doivent avoir un diamètre au moins égal à 1,5 mm et être composées d'au moins 5 tirets
-Les surfaces de couleurs doivent avoir un diamètre mininum :<br/>Bleu, vert, gris ou jaune en plein : 0,5 mm²; <br/>Pointillés noirs : 0,5 mm²; <br/>Bleu, marron, vert ou jaune en pointillés : 1,0 mm²
+Les surfaces de couleurs doivent avoir un diamètre minimum :<br/>Bleu, vert, gris ou jaune en plein : 0,5 mm²; <br/>Pointillés noirs : 0,5 mm²; <br/>Bleu, marron, vert ou jaune en pointillés : 1,0 mm²
 Tous les objets plus petits que les dimensions minimums doivent être exagérées (agrandies sur la carte) ou ne pas apparaître, en fonction de leur utilité ou non pour les orienteurs.
 La taille d'une carte de sprint ne doit pas dépasser le format A4.

@@ -1485,8 +1485,20 @@ float OCAD8FileImport::convertRotation(int angle) {
     return (float)a;
 }
 
-void OCAD8FileImport::convertPoint(MapCoord &coord, int ocad_x, int ocad_y)
+void OCAD8FileImport::convertPoint(MapCoord &coord, s32 ocad_x, s32 ocad_y)
 {
+    // Recover from broken coordinate export from Mapper 0.6.2 ... 0.6.4 (#749)
+    // Cf. broken::convertPointMember below:
+    // The values -4 ... -1 (-0.004 mm ... -0.001 mm) were converted to 0x80000000u instead of 0.
+    // This is the maximum value. Thus it is okay to assume it won't occur in regular data,
+    // and we can safely replace it with 0 here.
+    // But the input parameter were already subject to right shift in ocad_point ...
+    constexpr auto invalid_value = s32(0x80000000u) >> 8; // ... so we use this value here.
+    if (ocad_x == invalid_value)
+        ocad_x = 0;
+    if (ocad_y == invalid_value)
+        ocad_y = 0;
+    
     // OCAD uses hundredths of a millimeter.
     // oo-mapper uses 1/1000 mm
     coord.setNativeX(offset_x + (qint32)ocad_x * 10);
@@ -2627,9 +2639,49 @@ namespace
 {
 	constexpr s32 convertPointMember(s32 value)
 	{
-		return (value < 0) ? (0x80000000 | ((0x7fffffu & ((value-5)/10)) << 8)) : ((0x7fffffu & ((value+5)/10)) << 8);
+		return (value < -5) ? s32(0x80000000u | ((0x7fffffu & u32((value-4)/10)) << 8)) : s32((0x7fffffu & u32((value+5)/10)) << 8);
 	}
 	
+	// convertPointMember() shall round half up.
+	Q_STATIC_ASSERT(convertPointMember(-16) == s32(0xfffffe00u)); // __ down __
+	Q_STATIC_ASSERT(convertPointMember(-15) == s32(0xffffff00u)); //     up
+	Q_STATIC_ASSERT(convertPointMember( -6) == s32(0xffffff00u)); // __ down __
+	Q_STATIC_ASSERT(convertPointMember( -5) == s32(0x00000000u)); //     up
+	Q_STATIC_ASSERT(convertPointMember( -1) == s32(0x00000000u)); //     up
+	Q_STATIC_ASSERT(convertPointMember(  0) == s32(0x00000000u)); //  unchanged
+	Q_STATIC_ASSERT(convertPointMember( +1) == s32(0x00000000u)); //    down
+	Q_STATIC_ASSERT(convertPointMember( +4) == s32(0x00000000u)); // __ down __
+	Q_STATIC_ASSERT(convertPointMember( +5) == s32(0x00000100u)); //     up
+	Q_STATIC_ASSERT(convertPointMember(+14) == s32(0x00000100u)); // __ down __
+	Q_STATIC_ASSERT(convertPointMember(+15) == s32(0x00000200u)); //     up
+	
+#ifdef MAPPER_DEVELOPMENT_BUILD
+	namespace broken
+	{
+		// Previous, broken implementation (#749)
+		// Left here for reference.
+		constexpr s32 convertPointMember(s32 value)
+		{
+			return (value < 0) ? (0x80000000 | ((0x7fffffu & ((value-5)/10)) << 8)) : ((0x7fffffu & ((value+5)/10)) << 8);
+		}
+	}
+	// Actual behaviour of the broken implementation
+	Q_STATIC_ASSERT(broken::convertPointMember(-16) == s32(0xfffffe00u)); //    down
+	Q_STATIC_ASSERT(broken::convertPointMember(-15) == s32(0xfffffe00u)); // __ down __ (should be up)
+	Q_STATIC_ASSERT(broken::convertPointMember(-14) == s32(0xffffff00u)); //     up
+	Q_STATIC_ASSERT(broken::convertPointMember( -6) == s32(0xffffff00u)); //    down
+	Q_STATIC_ASSERT(broken::convertPointMember( -5) == s32(0xffffff00u)); // __ down __ (should be up)
+	Q_STATIC_ASSERT(broken::convertPointMember( -4) == s32(0x80000000u)); //   wrong    (should be 0x00000000u)
+	Q_STATIC_ASSERT(broken::convertPointMember( -3) == s32(0x80000000u)); //   wrong    (should be 0x00000000u)
+	Q_STATIC_ASSERT(broken::convertPointMember( -2) == s32(0x80000000u)); //   wrong    (should be 0x00000000u)
+	Q_STATIC_ASSERT(broken::convertPointMember( -1) == s32(0x80000000u)); //   wrong    (should be 0x00000000u)
+	Q_STATIC_ASSERT(broken::convertPointMember(  0) == s32(0x00000000u)); //  unchanged
+	Q_STATIC_ASSERT(broken::convertPointMember( +1) == s32(0x00000000u)); //    down
+	Q_STATIC_ASSERT(broken::convertPointMember( +4) == s32(0x00000000u)); // __ down __
+	Q_STATIC_ASSERT(broken::convertPointMember( +5) == s32(0x00000100u)); //     up
+	Q_STATIC_ASSERT(broken::convertPointMember(+14) == s32(0x00000100u)); // __ down __
+	Q_STATIC_ASSERT(broken::convertPointMember(+15) == s32(0x00000200u)); //     up
+#endif
 }
 
 OCADPoint OCAD8FileExport::convertPoint(qint32 x, qint32 y)
