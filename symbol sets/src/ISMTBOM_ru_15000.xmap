@@ -185,15 +185,15 @@
     </colors>
     <symbols count="170">
         <symbol type="2" id="0" code="101" name="Горизонталь">
-            <description>A line joining points of equal height. The standard vertical interval between contours is 5 metres. The smallest bend in a contour is 0.25 mm from centre to centre of the lines.</description>
+            <description>Линия, соединяющая точки одной высоты. Стандартный интервал между горизонталями по вертикали (сечение рельефа) 5 м. Минимально допустимый изгиб линии 0,25 мм от центра до центра линии.</description>
             <line_symbol color="6" line_width="140" minimum_length="0" join_style="2" cap_style="1" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="2" id="1" code="102" name="Утолщённая горизонталь">
-            <description>Every fifth contour shall be drawn with a thicker line. This is an aid to the quick assessment of height difference and the overall shape of the terrain surface. Where an index contour coincides with an area of much detail, it may be shown with a normal contour line.</description>
+            <description>Каждая пятая горизонталь должна быть утолщённой. Это способствует быстроте оценки разницы высот и общего восприятия форм местности. При необходимости показа мелких деталей, утолщённая горизонталь может быть вычерчена нормальной линией.</description>
             <line_symbol color="6" line_width="250" minimum_length="0" join_style="2" cap_style="1" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="1" id="2" code="104" name="Бергштрих">
-            <description>Slope lines may be drawn on the lower side of a contour line, e.g. along the line of a re-entrant or in a depression. They are used only where it is necessary to clarify the direction of slope.</description>
+            <description>Бергштрих (указатель направления ската) может быть нарисован на нижней стороне горизонтали, вдоль линии ската или во впадине. Они используются только когда необходимо уточнить понижение местности.</description>
             <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                 <element>
                     <symbol type="2" code="">
@@ -212,14 +212,14 @@
             </point_symbol>
         </symbol>
         <symbol type="8" id="3" code="105" name="Высота горизонтали">
-            <description>Contour values may be included to aid assessment of large height differences. They are inserted in the index contours in positions where other detail is not obscured. The figures should be orientated so that the top of the figure is on the higher side of the contour.</description>
+            <description>Обозначение высоты горизонтали часто применяют с целью оценки большой разности высоты. Они помещаются в утолщенных горизонталях там, где не загораживают важных деталей. Верх цифр должен располагаться в более высокой части склона.</description>
             <text_symbol icon_text="225">
                 <font family="Arial" size="2076"/>
                 <text color="6" line_spacing="1" paragraph_spacing="0" character_spacing="0" kerning="true"/>
             </text_symbol>
         </symbol>
         <symbol type="2" id="4" code="106" name="Грунтовый обрыв">
-            <description>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings  or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</description>
+            <description>Крутой перегиб поверхности земли, однозначно выделяющийся из окружающей среды. Гравийные или песчаные выработки, дорожные выемки и насыпи и т. п. Зубцы должны показывать полную проекцию склона, но могут быть опущены, если два обрыва располагаются близко друг от друга. Непреодолимые обрывы показываются знаком 201 (Непреодолимая скала).</description>
             <line_symbol color="6" line_width="180" minimum_length="600" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="780" end_length="850" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                 <start_symbol>
                     <symbol type="1" code="" name="Начальный символ">
@@ -284,7 +284,7 @@
             </line_symbol>
         </symbol>
         <symbol type="1" id="5" code="106.0.1" name="Грунтовый обрыв, минимальный размер">
-            <description>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings  or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</description>
+            <description>Крутой перегиб поверхности земли, однозначно выделяющийся из окружающей среды. Гравийные или песчаные выработки, дорожные выемки и насыпи и т. п. Зубцы должны показывать полную проекцию склона, но могут быть опущены, если два обрыва располагаются близко друг от друга. Непреодолимые обрывы показываются знаком 201 (Непреодолимая скала).</description>
             <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="3">
                 <element>
                     <symbol type="2" code="">
@@ -331,7 +331,7 @@
             </point_symbol>
         </symbol>
         <symbol type="2" id="6" code="106.1" name="Грунтовый обрыв, очень высокий">
-            <description>The line width of very high earth banks may be 0.25 mm.</description>
+            <description>Очень высокие грунтовые обрывы могут быть показаны толщиной линии бровки 0,25 мм.</description>
             <line_symbol color="6" line_width="250" minimum_length="600" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="780" end_length="850" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                 <start_symbol>
                     <symbol type="1" code="" name="Начальный символ">
@@ -396,7 +396,7 @@
             </line_symbol>
         </symbol>
         <symbol type="1" id="7" code="106.1.1" name="Грунтовый обрыв, очень выский, минимальный размер">
-            <description>The line width of very high earth banks may be 0.25 mm.</description>
+            <description>Очень высокие грунтовые обрывы могут быть показаны толщиной линии бровки 0,25 мм.</description>
             <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="3">
                 <element>
                     <symbol type="2" code="">
@@ -443,11 +443,11 @@
             </point_symbol>
         </symbol>
         <symbol type="2" id="8" code="106.2" name="Грунтовый обрыв, зубчатая линия">
-            <description>Use this symbol to display the full extent of wide earth banks.</description>
+            <description>Используется для показа на всем протяжении широкого грунтовго обрыва.</description>
             <line_symbol color="6" line_width="140" minimum_length="500" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="2" id="9" code="107" name="Грунтовый вал">
-            <description>Distinct earth wall. Minimum height is 1 m.</description>
+            <description>Четко видимая земляная насыпь. Высота минимум 1 метр.</description>
             <line_symbol color="6" line_width="140" minimum_length="0" join_style="2" cap_style="0" pointed_cap_length="1000" segment_length="2500" end_length="1250" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                 <mid_symbol>
                     <symbol type="1" code="" name="Средний символ">
@@ -456,12 +456,12 @@
                 </mid_symbol>
             </line_symbol>
         </symbol>
-        <symbol type="2" id="10" code="109" name="Маленький земляной вал">
-            <description>An erosion gully or trench which is too small to be shown by symbol 106 is shown by a single line. The line width reflects the size of the gully. Minimum depth 1 m. The end of the line is pointed.</description>
+        <symbol type="2" id="10" code="109" name="Промоина">
+            <description>Овраг или ров, которые не могут быть отображены в масштабе карты знаком 106. Толщина линии отображает ширину промоины. Минимальная глубина 1 метр. Конец линии заострённый.</description>
             <line_symbol color="6" line_width="250" minimum_length="0" join_style="2" cap_style="3" pointed_cap_length="747" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="2" id="11" code="201" name="Непреодолимая скала">
-            <description>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water's edge, the bank line is omitted or the tags should clearly extend over the bank line.</description>
+            <description>Непреодолимая (опасная) скала, карьер или опасный грунтовый обрыв (см. 106) показывается линией толщиной 0,35 мм вдоль бровки и зубцами, покрывающими площадь проекции обрыва от верхней кромки до подножья. При отображении вертикальных или близко расположенных обрывов зубцы могут быть опущены (ширина прохода должна быть не менее 0,3 мм в масштабе карты). Зубцы могут быть удлинены, если это необходимо. Например, если обрывом и береговой линией нет прохода, то зубцы обрыва должны пересекать береговую линию и накладываться на край изображения водоема.</description>
             <line_symbol color="3" line_width="350" minimum_length="600" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="600" end_length="660" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                 <start_symbol>
                     <symbol type="1" code="" name="Начальный символ">
@@ -526,7 +526,7 @@
             </line_symbol>
         </symbol>
         <symbol type="1" id="12" code="201.0.1" name="Непреодолимая скала, минимальный размер">
-            <description>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water's edge, the bank line is omitted or the tags should clearly extend over the bank line.</description>
+            <description>Непреодолимая (опасная) скала, карьер или опасный грунтовый обрыв (см. 106) показывается линией толщиной 0,35 мм вдоль бровки и зубцами, покрывающими площадь проекции обрыва от верхней кромки до подножья. При отображении вертикальных или близко расположенных обрывов зубцы могут быть опущены (ширина прохода должна быть не менее 0,3 мм в масштабе карты). Зубцы могут быть удлинены, если это необходимо. Например, если обрывом и береговой линией нет прохода, то зубцы обрыва должны пересекать береговую линию и накладываться на край изображения водоема.</description>
             <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="3">
                 <element>
                     <symbol type="2" code="">
@@ -573,35 +573,35 @@
             </point_symbol>
         </symbol>
         <symbol type="2" id="13" code="201.1" name="Непреодолимая скала, без зубцов">
-            <description>For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm).</description>
+            <description>При отображении вертикальных или близко расположенных обрывов зубцы могут быть опущены (ширина прохода должна быть не менее 0,3 мм в масштабе карты).</description>
             <line_symbol color="3" line_width="350" minimum_length="600" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="600" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="2" id="14" code="201.2" name="Непреодолимая скала">
-            <description>Use this symbol to display the full extent of a wide cliff.</description>
+            <description>Используется на всем протяжении широкой скалы.</description>
             <line_symbol color="3" line_width="120" minimum_length="500" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="4" id="15" code="202" name="Скалы останцы">
-            <description>In the case of unusual features such as rock pillars or massive cliffs or gigantic boulders, the rocks shall be shown in plan shape without tags.</description>
+            <description>В некоторых случаях скалы в виде столбов или гигантских валунов могут быть показаны в плане без зубцов.</description>
             <area_symbol inner_color="3" min_area="0" patterns="0"/>
         </symbol>
         <symbol type="1" id="16" code="206" name="Валун">
-            <description>A small distinct boulder (minimum height 1 m). Every boulder marked on the map should be immediately identifiable on the ground. To be able to show the distinction between boulders with significant difference in size it is permitted to enlarge this symbol by 20% (diameter 0.5 mm).</description>
+            <description>Небольшой камень, выделяющийся на местности, высотой не менее 1 метра. Все валуны, отображаемые на карте, должны быть легко опознаваемы но местности.</description>
             <point_symbol inner_radius="200" inner_color="3" outer_width="0" outer_color="-1" elements="0"/>
         </symbol>
         <symbol type="1" id="17" code="206.1" name="Валун, увеличенный">
-            <description>To be able to show the distinction between boulders with significant difference in size it is permitted to enlarge this symbol by 20% (diameter 0.5 mm).</description>
+            <description>Чтобы показать разницу между валунами разных размеров (находящимися на местности не далеко друг от друга) диаметр значка может быть увеличен на 20%.</description>
             <point_symbol inner_radius="250" inner_color="3" outer_width="0" outer_color="-1" elements="0"/>
         </symbol>
         <symbol type="1" id="18" code="210" name="Каменистый грунт, небольшой">
-            <description>Stony or rocky ground which affects going should be shown on the map. The dots should be randomly distributed with density according to the amount of rock. A minimum of three dots should be used.</description>
+            <description>Каменистая и скальная поверхность, которая влияет на пробегаемость, должна быть отображена на карте. Точки наносятся произвольно. Плотность точек показывает степень пробегаемости. Должно быть нанесено не менее трёх точек.</description>
             <point_symbol inner_radius="80" inner_color="3" outer_width="0" outer_color="-1" elements="0"/>
         </symbol>
         <symbol type="1" id="19" code="210.1" name="Каменистый грунт">
-            <description>Stony or rocky ground which affects going should be shown on the map. The dots should be randomly distributed with density according to the amount of rock. A minimum of three dots should be used.</description>
+            <description>Каменистая и скальная поверхность, которая влияет на пробегаемость, должна быть отображена на карте. Точки наносятся произвольно. Плотность точек показывает степень пробегаемости. Должно быть нанесено не менее трёх точек.</description>
             <point_symbol inner_radius="100" inner_color="3" outer_width="0" outer_color="-1" elements="0"/>
         </symbol>
         <symbol type="4" id="20" code="211" name="Открытый песчаный грунт">
-            <description>An area of soft sandy ground or gravel with no vegetation and where running is slow. Where an area of sandy ground is open but running is good, it is shown as open land (401/402).</description>
+            <description>Поверхность с мягким песчаным или гравийным покрытием, снижающим скорость бега. В случае, если пробегаемость нормальная, следует использовать знаки 401 или 402.</description>
             <area_symbol inner_color="22" min_area="1000" patterns="1">
                 <pattern type="2" angle="0.785398" line_spacing="450" line_offset="0" offset_along_line="0" point_distance="450">
                     <symbol type="1" code="" name="Заливка узором 1">
@@ -611,17 +611,15 @@
             </area_symbol>
         </symbol>
         <symbol type="4" id="21" code="212" name="Чистая скала">
-            <description>A runnable area of rock without earth or vegetation is shown as bare rock. An area of rock covered with grass, moss or other low vegetation is shown as open land (401/402).</description>
+            <description>Хорошо пробегаемая скальная поверхность без растительности. Если имеется какая-либо растительность (трава, мох и т. п.), следует использовать знаки 401 или 402</description>
             <area_symbol inner_color="11" min_area="500" patterns="0"/>
         </symbol>
         <symbol type="4" id="22" code="301" name="Озеро">
-            <description>Large areas of water are shown with this symbol (blue 50%). The colour of the bank line is blue 100 %.
-
-Small areas of water should be shown with full colour. Use symbol 302 (&quot;Pond&quot; in ISOM).</description>
+            <description>Большие водные пространства показываются данным знаком (Синий 50%) Цвет граничной линии - Синий 100%. Для небольших водоёмов следует использовать знак 302.</description>
             <area_symbol inner_color="10" min_area="1000" patterns="0"/>
         </symbol>
         <symbol type="2" id="23" code="301.1" name="Озеро, береговая линия">
-            <description>A black bank line indicates that the feature cannot be crossed.</description>
+            <description>Данный знак показывает невозможность преодоления водоъёма.</description>
             <line_symbol color="9" line_width="250" minimum_length="0" join_style="0" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="16" id="24" code="301.2" name="Озеро, с береговой линией">
@@ -631,25 +629,25 @@ Small areas of water should be shown with full colour. Use symbol 302 (&quot;Pon
             </combined_symbol>
         </symbol>
         <symbol type="4" id="25" code="302" name="Пруд">
-            <description>Small areas of water should be shown with full colour.
-
-This is symbol &quot;302 Pond&quot; in ISOM, but is a variation of &quot;301 Lake&quot; in ISMTBOM.</description>
+            <description>Небольшой водоём.
+            
+Этот знак &quot;302 Пруд&quot; из ISOM, но является вариацией &quot;301 Озеро&quot; из ISMTBOM.</description>
             <area_symbol inner_color="8" min_area="500" patterns="0"/>
         </symbol>
         <symbol type="2" id="26" code="305" name="Преодолимая река">
-            <description>A crossable watercourse, minimum 2 m wide. The width of watercourses over 5 m wide should be shown to scale.</description>
+            <description>Преодолимый река или канава шириной минимум 2 метра. Если ширина больше 5 метров, то объект показывается в масштабе карты.</description>
             <line_symbol color="9" line_width="250" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="2" id="27" code="306" name="Преодолимый ручей">
-            <description>A crossable watercourse (including a major drainage ditch) less than 2 m wide. For better legibility a ditch in a marsh should be drawn as a crossable watercourse (305).</description>
+            <description>Преодолимый ручей или канава шириной менее 2 метров. Для лучшей читаемости, канава по болоту должна отображаться знаком 305.</description>
             <line_symbol color="9" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="2" id="28" code="307" name="Канава с водой">
-            <description>A natural or man-made minor water channel which may contain water only intermittently.</description>
+            <description>Естественная или искусственная пересыхающая канава.</description>
             <line_symbol color="9" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="1250" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="4" id="29" code="309" name="Непроходимое болото">
-            <description>A marsh which is uncrossable or dangerous for the runner. A blue line surrounds the symbol.</description>
+            <description>Болото непроходимое или опасное для спортсменов. Синия линия дается по контуру.</description>
             <area_symbol inner_color="-1" min_area="0" patterns="1">
                 <pattern type="1" angle="0" line_spacing="500" line_offset="0" offset_along_line="0" color="9" line_width="250"/>
             </area_symbol>
@@ -664,7 +662,7 @@ This is symbol &quot;302 Pond&quot; in ISOM, but is a variation of &quot;301 Lak
             </combined_symbol>
         </symbol>
         <symbol type="4" id="32" code="310" name="Болото">
-            <description>A crossable marsh, usually with a distinct edge. The symbol should be combined with vegetation symbols to show runnability and openness. Where a small marsh area should be combined with either 403/404 it is permitted to use 401/402 to improve legibility</description>
+            <description>Преодолимое болото с четко видимыми краями. Знак 310 может комбинироваться со знаком 403 для отображения открытого болота. Залесённые болота могут быть показаны в комбинации со знаками растительности. Маленькие болота показываются на карте не меньше, чем двумя штрихами. Если маленькое болотце показывается в сочетании со знаками 403/404, то для улучшения читаемости, разрешается заменить эти знаки на 401/402 соответственно.</description>
             <area_symbol inner_color="-1" min_area="0" patterns="1">
                 <pattern type="1" angle="0" line_spacing="300" line_offset="0" offset_along_line="0" color="9" line_width="100"/>
             </area_symbol>
@@ -702,7 +700,7 @@ This is symbol &quot;302 Pond&quot; in ISOM, but is a variation of &quot;301 Lak
             </point_symbol>
         </symbol>
         <symbol type="1" id="34" code="314" name="Специальный объект гидрографии">
-            <description>A special small water feature. The definition of the symbol must always be given in the map legend.</description>
+            <description>Знак служит для показа специальных внемасштабных объектов гидрографии. Пояснение к использованию знака должно быть дано в легенде карты.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                 <element>
                     <symbol type="2" code="">
@@ -735,11 +733,11 @@ This is symbol &quot;302 Pond&quot; in ISOM, but is a variation of &quot;301 Lak
             </point_symbol>
         </symbol>
         <symbol type="4" id="35" code="401" name="Открытое пространство">
-            <description>Cultivated land, fields, meadows, grassland, etc. without trees, offering easy running. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</description>
+            <description>Поля, луга, пашни, покосы и т.п. без деревьев или кустарников, легко пробегаемые. Если жёлтый цвет становится доминирующим, возможна замена заливки на точечную сетку 75%.</description>
             <area_symbol inner_color="21" min_area="500" patterns="0"/>
         </symbol>
         <symbol type="4" id="36" code="402" name="Открытое пространство с отдельными деревьями">
-            <description>Meadows with scattered trees or bushes, with grass or similar ground cover offering easy running. Areas smaller than 10 mm at the maps scale are shown as open land (401). Individual trees may be added (418, 419, 420). If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</description>
+            <description>Луга с отдельно стоящими деревьями или кустами, легко пробегаемые. Площади, занимающие меньше 10 мм в масштабе карты, показываются знаком 401. Отдельные деревья могут быть добавлены знаками 418 - 420. Если жёлтый цвет становится доминирующим, возможна замена заливки на точечную сетку 75%.</description>
             <area_symbol inner_color="-1" min_area="10000" patterns="1">
                 <pattern type="2" angle="0.785398" line_spacing="500" line_offset="0" offset_along_line="0" point_distance="500">
                     <symbol type="1" code="" name="1">
@@ -749,11 +747,11 @@ This is symbol &quot;302 Pond&quot; in ISOM, but is a variation of &quot;301 Lak
             </area_symbol>
         </symbol>
         <symbol type="4" id="37" code="403" name="Неудобное открытое пространство">
-            <description>Heath, moorland, felled areas, newly planted areas (trees lower than ca. 1 m) or other generally open land with rough ground vegetation, heather or tall grass. Symbol 403 may be combined with symbols 407 and 409 to show reduced runnability.</description>
+            <description>Пустоши, вырубки, лесопосадки (высота деревьев до 1 метра) или другие открытые пространства с неудобной для бега поверхностью (растительностью), такой как вереск, высокая трава или мелкие сучки на вырубках. Знак может комбинироваться со знаком 407 или 409 для отображения изменения условий пробегаемости.</description>
             <area_symbol inner_color="22" min_area="1000" patterns="0"/>
         </symbol>
         <symbol type="4" id="38" code="404" name="Неудобное открытое пространство с отдельными деревьями">
-            <description>Where there are scattered trees in rough open land, areas of white (or green) should appear in the tone. Such an area may be generalised by using a regular pattern of large white dots in the yellow screen. Areas smaller than 16 mm in the maps scale are shown as rough open land (403). Individual trees may be added (418, 419, 420).</description>
+            <description>Редколесье по неудобице. В случаях когда группы растительности, показываемые белым или зелёным цветом, сливаются, - такие группы обобщаются и показываются регулярным рисунком, состоящим из больших белых точек на желтом фоне. Площади, занимающие меньше 10 мм2 в масштабе карты, показываются знаком 403. Отдельные деревья могут быть добавлены знаками 418 - 420.</description>
             <area_symbol inner_color="24" min_area="16000" patterns="1">
                 <pattern type="2" angle="0.785398" line_spacing="700" line_offset="0" offset_along_line="0" point_distance="700">
                     <symbol type="1" code="" name="1">
@@ -763,11 +761,11 @@ This is symbol &quot;302 Pond&quot; in ISOM, but is a variation of &quot;301 Lak
             </area_symbol>
         </symbol>
         <symbol type="4" id="39" code="405" name="Лес: хорошая видимость">
-            <description>Typically open forest for the particular type of terrain. Wherever a part of the forest is too dense to be traversed pushing or carrying a bicycle, no white should appear on the map.</description>
+            <description>Типичный для данной местности открытый лес. Если какая-либо часть леса слишком густая для преодоления с велосипедом, то на карте не должно быть белого цвета.</description>
             <area_symbol inner_color="14" min_area="500" patterns="0"/>
         </symbol>
         <symbol type="4" id="40" code="406" name="Лес: ограниченная видимость">
-            <description>An area with dense trees (low visibility) which reduces the speed of traversing the forest pushing or carrying a bicycle significantly or even makes it impossible to traverse.</description>
+            <description>Густой лес с низкой видимостью, значительно снижающий скорость преодоления с велосипедом или делающий это невозможным.</description>
             <area_symbol inner_color="19" min_area="1000" patterns="0"/>
         </symbol>
         <symbol type="4" id="41" code="412" name="Сад">
