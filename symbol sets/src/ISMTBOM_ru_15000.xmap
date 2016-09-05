@@ -193,7 +193,7 @@
             <line_symbol color="6" line_width="250" minimum_length="0" join_style="2" cap_style="1" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="1" id="2" code="104" name="Бергштрих">
-            <description>Бергштрих (указатель направления ската) может быть нарисован на нижней стороне горизонтали, вдоль линии ската или во впадине. Они используются только когда необходимо уточнить понижение местности.</description>
+            <description>Бергштрих (указатель направления ската) может быть нарисован на нижней стороне горизонтали, вдоль линии ската или во впадине. Используется только когда необходимо уточнить понижение местности.</description>
             <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                 <element>
                     <symbol type="2" code="">
@@ -447,7 +447,7 @@
             <line_symbol color="6" line_width="140" minimum_length="500" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="2" id="9" code="107" name="Грунтовый вал">
-            <description>Четко видимая земляная насыпь. Высота минимум 1 метр.</description>
+            <description>Четко видимая земляная насыпь. Высота не менее 1 метр.</description>
             <line_symbol color="6" line_width="140" minimum_length="0" join_style="2" cap_style="0" pointed_cap_length="1000" segment_length="2500" end_length="1250" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                 <mid_symbol>
                     <symbol type="1" code="" name="Средний символ">
@@ -631,15 +631,15 @@
         <symbol type="4" id="25" code="302" name="Пруд">
             <description>Небольшой водоём.
             
-Этот знак &quot;302 Пруд&quot; из ISOM, но является вариацией &quot;301 Озеро&quot; из ISMTBOM.</description>
+Этот знак &quot;302 Пруд&quot; взят из ISOM, но является вариацией знака &quot;301 Озеро&quot; из ISMTBOM.</description>
             <area_symbol inner_color="8" min_area="500" patterns="0"/>
         </symbol>
         <symbol type="2" id="26" code="305" name="Преодолимая река">
-            <description>Преодолимый река или канава шириной минимум 2 метра. Если ширина больше 5 метров, то объект показывается в масштабе карты.</description>
+            <description>Преодолимый река или канава шириной не менее 2 метра. Если ширина больше 5 метров, то объект показывается в масштабе карты.</description>
             <line_symbol color="9" line_width="250" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="2" id="27" code="306" name="Преодолимый ручей">
-            <description>Преодолимый ручей или канава шириной менее 2 метров. Для лучшей читаемости, канава по болоту должна отображаться знаком 305.</description>
+            <description>Преодолимый ручей или канава шириной менее 2 метров. Для лучшей читаемости, канава по болоту должна обозначаться знаком 305.</description>
             <line_symbol color="9" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="2" id="28" code="307" name="Канава с водой">
@@ -908,7 +908,7 @@
             <line_symbol color="1" line_width="399" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="2" id="51" code="833" name="Дорога: средне проезжаемая">
-            <description>Трек шириной не менее 1,5 м с некоторым уменьшением скорости, возможно, с небольшими препятствиями, такими как камни, скалы, рытвины, трава, песок или грязь. Скорость 50-75%.</description>
+            <description>Дорога шириной не менее 1,5 м с некоторым уменьшением скорости, возможно, с небольшими препятствиями, такими как камни, скалы, рытвины, трава, песок или грязь. Скорость 50-75%.</description>
             <line_symbol color="1" line_width="600" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="3000" break_length="800" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="2" id="52" code="834" name="Тропа: средне проезжаемая">
@@ -1521,7 +1521,7 @@
             <point_symbol inner_radius="2700" inner_color="-1" outer_width="600" outer_color="2" elements="0"/>
         </symbol>
         <symbol type="1" id="87" code="840" name="Контрольный пункт с центральной точкой">
-            <description>Центральная точка может быть использована, когда необходимо показать точное положение контрольного пункта, например, в плотной дорожной сети. Центральная точка должна использоваться в случае необходимости, когда точное положение Контрольного пункта не ясно.</description>
+            <description>Центральная точка может быть использована, когда необходимо показать точное положение контрольного пункта, например, в плотной дорожной сети. Центральная точка должна использоваться в случае необходимости, когда точное положение контрольного пункта не ясно.</description>
             <point_symbol inner_radius="300" inner_color="0" outer_width="0" outer_color="-1" elements="1">
                 <element>
                     <symbol type="1" code="">
