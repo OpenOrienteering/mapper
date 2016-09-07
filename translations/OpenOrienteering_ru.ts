@@ -1435,7 +1435,7 @@
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="128"/>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="274"/>
         <source>More...</source>
-        <translation>Подробнее...</translation>
+        <translation>Ещё...</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="135"/>
