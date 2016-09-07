@@ -1451,7 +1451,7 @@ symbols must be given in each case in the map legend.</description>
             </point_symbol>
         </symbol>
         <symbol type="2" id="80" code="601.2" name="Magnetic north line, blue">
-            <description>Magnetic north lines are lines placed on the map pointing to magnetic north. At the scale of 1:5000,1:7500 and 1:10000 the spacing of north lines on the map should be 30 mm, while at the scale of 1:15000 and 1:20000 the spacing on the map should be 20 mm. North lines may be broken where they obscure small features such as boulders, cliffs, stream junctions, and path ends.</description>
+            <description>Magnetic north lines are lines placed on the map pointing to magnetic north. At the scale of 1:5000, 1:7500 and 1:10000 the spacing of north lines on the map should be 30 mm, while at the scale of 1:15000 and 1:20000 the spacing on the map should be 20 mm. North lines may be broken where they obscure small features such as boulders, cliffs, stream junctions, and path ends.</description>
             <line_symbol color="9" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="4" id="81" code="601.3" name="North lines pattern, blue">
