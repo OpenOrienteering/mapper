@@ -71,9 +71,10 @@ OcdFileImport::~OcdFileImport()
 }
 
 
-void OcdFileImport::setCustom8BitEncoding(const char* encoding)
+void OcdFileImport::setCustom8BitEncoding(const QByteArray& encoding)
 {
-	custom_8bit_encoding = QTextCodec::codecForName(encoding);
+	custom_8bit_encoding = (encoding == "System") ? QTextCodec::codecForLocale()
+	                                              : QTextCodec::codecForName(encoding);
 }
 
 void OcdFileImport::addSymbolWarning(const AreaSymbol* symbol, const QString& warning)
@@ -1977,6 +1978,8 @@ void OcdFileImport::setFraming(OcdFileImport::OcdImportedTextSymbol* symbol, con
 
 void OcdFileImport::import(bool load_symbols_only)
 {
+	setCustom8BitEncoding(Settings::getInstance().getSetting(Settings::General_Local8BitEncoding).toByteArray());
+
 	Q_ASSERT(buffer.isEmpty());
 	
 	buffer.clear();

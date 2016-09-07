@@ -106,7 +106,7 @@ public:
 	
 	virtual ~OcdFileImport() override;
 	
-	void setCustom8BitEncoding(const char *encoding);
+	void setCustom8BitEncoding(const QByteArray& encoding);
 	
 	template< std::size_t N >
 	QString convertOcdString(const Ocd::PascalString<N>& src) const;
