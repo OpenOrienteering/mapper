@@ -3471,7 +3471,7 @@ Přepočítat zavedená data na měřítko mapy?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="922"/>
         <source>Import...</source>
-        <translation>Import...</translation>
+        <translation>Importovat...</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="974"/>
@@ -4117,7 +4117,7 @@ symbolů</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="966"/>
         <source>&amp;Export as...</source>
-        <translation>&amp;Exportovat jako...</translation>
+        <translation>&amp;Exportovat ...</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2054"/>
@@ -6375,7 +6375,7 @@ barev</translation>
         <location filename="../src/map_editor.cpp" line="804"/>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1167"/>
         <source>Select all objects with selected symbols</source>
-        <translation>Vybrat všechny objekty s vybranými symboly</translation>
+        <translation>Vybrat všechny objekty dle vybraných symbolů</translation>
     </message>
 </context>
 <context>
