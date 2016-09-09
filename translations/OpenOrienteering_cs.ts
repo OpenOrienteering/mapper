@@ -279,7 +279,7 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="45"/>
         <source>Edit map color</source>
-        <translation type="unfinished">Upravit barvu mapy</translation>
+        <translation>Upravit barvu</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="62"/>
@@ -6093,22 +6093,22 @@ barev</translation>
     <message>
         <location filename="../src/core/storage_location.cpp" line="278"/>
         <source>'%1' is stored in a regular location.</source>
-        <translation type="unfinished"></translation>
+        <translation>'%1' je uložen v obvyklém úložišti.</translation>
     </message>
     <message>
         <location filename="../src/core/storage_location.cpp" line="281"/>
         <source>'%1' is located in app storage. The files will be removed when uninstalling the app.</source>
-        <translation type="unfinished"></translation>
+        <translation>'%1' je umístěn v úložišti aplikace. Soubory budou při odinstalaci aplikace odstraněny.</translation>
     </message>
     <message>
         <location filename="../src/core/storage_location.cpp" line="284"/>
         <source>'%1' is not writable. Changes cannot be saved.</source>
-        <translation type="unfinished"></translation>
+        <translation>'%1' není zapisovatelný. Změny nemohou být uloženy.</translation>
     </message>
     <message>
         <location filename="../src/core/storage_location.cpp" line="287"/>
         <source>'%1' is not a valid storage location.</source>
-        <translation type="unfinished"></translation>
+        <translation>'%1' není platné umístění úložiště.</translation>
     </message>
 </context>
 <context>
@@ -7497,7 +7497,7 @@ Nejvyšší podporovaná verze je %2.</translation>
     <message>
         <location filename="../src/file_format_xml.cpp" line="523"/>
         <source>The map notes could not be read.</source>
-        <translation type="unfinished"></translation>
+        <translation>Mapové poznámky nebylo možné načíst.</translation>
     </message>
     <message>
         <location filename="../src/file_format_xml.cpp" line="564"/>
