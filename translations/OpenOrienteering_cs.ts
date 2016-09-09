@@ -3308,7 +3308,7 @@ Přepočítat zavedená data na měřítko mapy?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="802"/>
         <source>Select nothing</source>
-        <translation>Nevybrat nic</translation>
+        <translation>Zrušit výběr</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="803"/>
@@ -3471,7 +3471,7 @@ Přepočítat zavedená data na měřítko mapy?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="922"/>
         <source>Import...</source>
-        <translation>Zavést...</translation>
+        <translation>Import...</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="974"/>
@@ -4117,7 +4117,7 @@ symbolů</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="966"/>
         <source>&amp;Export as...</source>
-        <translation>&amp;Vyvést jako...</translation>
+        <translation>&amp;Exportovat jako...</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2054"/>
