@@ -271,7 +271,7 @@
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="72"/>
         <source>Save the active file to remove the conflicting version.</source>
-        <translation>Uložit činný soubor pro odstranění střetávající se verze.</translation>
+        <translation>Uložte aktivní soubor pro odstranění konfliktní verze.</translation>
     </message>
 </context>
 <context>
@@ -510,12 +510,12 @@
     <message>
         <location filename="../src/symbol_combined.cpp" line="408"/>
         <source>- Private area symbol -</source>
-        <translation>- Vlastní plošný symbol -</translation>
+        <translation>- Vlastní podsymbol -</translation>
     </message>
     <message>
         <location filename="../src/symbol_combined.cpp" line="414"/>
         <source>Edit private symbol...</source>
-        <translation>Upravit vlastní symbol...</translation>
+        <translation>Upravit podsymbol...</translation>
     </message>
     <message>
         <location filename="../src/symbol_combined.cpp" line="434"/>
@@ -879,7 +879,7 @@
     <message>
         <location filename="../src/tool_draw_freehand.cpp" line="276"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Draw a path. </source>
-        <translation>&lt;b&gt;Táhnout&lt;/b&gt;: Kreslit cestu. </translation>
+        <translation>&lt;b&gt;Táhnutí&lt;/b&gt;: Kreslí cestu. </translation>
     </message>
 </context>
 <context>
@@ -906,7 +906,7 @@
         <location filename="../src/tool_draw_rectangle.cpp" line="711"/>
         <location filename="../src/tool_draw_rectangle.cpp" line="735"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt;: Snap to existing objects. </source>
-        <translation>&lt;b&gt;%1 + klepnutí&lt;/b&gt;: Přichytit k existujícím objektům. </translation>
+        <translation>&lt;b&gt;%1 + klepnutí&lt;/b&gt;: Přichytí k existujícím objektům. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1095"/>
@@ -918,7 +918,7 @@
         <location filename="../src/tool_draw_path.cpp" line="1103"/>
         <location filename="../src/tool_draw_rectangle.cpp" line="741"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Undo last point. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: Odstranit poslední bod. </translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Vrátit zpět poslední bod. </translation>
     </message>
 </context>
 <context>
@@ -1108,7 +1108,7 @@
     <message>
         <location filename="../src/tool_draw_text.cpp" line="379"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Create a text object with a single anchor. &lt;b&gt;Drag&lt;/b&gt;: Create a text box. </source>
-        <translation>&lt;b&gt;Klepnout&lt;/b&gt;: Vytvořit objekt textu s jednou kotvou. &lt;b&gt;Táhnout&lt;/b&gt;: Vytvořit textový rámeček. </translation>
+        <translation>&lt;b&gt;Klepnutí&lt;/b&gt;: Vytvoří textový objekt s jednou kotvou. &lt;b&gt;Táhnutí&lt;/b&gt;: Vytvoří textové pole. </translation>
     </message>
     <message>
         <source>A</source>
@@ -1121,7 +1121,7 @@
         <location filename="../src/tool_edit_line.cpp" line="345"/>
         <source>Snap</source>
         <comment>Snap to existing objects</comment>
-        <translation>Zapadnout</translation>
+        <translation>Přichytit</translation>
     </message>
     <message>
         <location filename="../src/tool_edit_line.cpp" line="346"/>
@@ -1137,7 +1137,7 @@
     <message>
         <location filename="../src/tool_edit_line.cpp" line="472"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on segment: Toggle between straight and curved. </source>
-        <translation>&lt;b&gt;%1 + klepnutí&lt;/b&gt; na úsek: Přepnout mezi rovnou liniíou a křivkou. </translation>
+        <translation>&lt;b&gt;%1 + klepnutí&lt;/b&gt; na úsek: Přepne mezi rovnou linií a křivkou. </translation>
     </message>
 </context>
 <context>
@@ -1146,13 +1146,13 @@
         <location filename="../src/tool_edit_point.cpp" line="490"/>
         <source>Snap</source>
         <comment>Snap to existing objects</comment>
-        <translation>Zapadnout</translation>
+        <translation>Přichytit</translation>
     </message>
     <message>
         <location filename="../src/tool_edit_point.cpp" line="491"/>
         <source>Point / Angle</source>
         <comment>Modify points or use constrained angles</comment>
-        <translation>Bod/Úhel</translation>
+        <translation>Bod / Úhel</translation>
     </message>
     <message>
         <location filename="../src/tool_edit_point.cpp" line="492"/>
@@ -1163,27 +1163,27 @@
     <message>
         <location filename="../src/tool_edit_point.cpp" line="642"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Finish editing. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: Dokončit úpravy. </translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Dokončí úpravy. </translation>
     </message>
     <message>
         <location filename="../src/tool_edit_point.cpp" line="662"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Keep opposite handle positions. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: Anfasspunkte in gegenüberliegenden Positionen halten. </translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Zachová pozici protilehlého úchopu. </translation>
     </message>
     <message>
         <location filename="../src/tool_edit_point.cpp" line="683"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on point: Delete it; on path: Add a new dash point; with &lt;b&gt;%2&lt;/b&gt;: Add a normal point. </source>
-        <translation>&lt;b&gt;%1 + klepnutí&lt;/b&gt; na bod: Tento smazat; na cestu: Přidat nový symbolický bod; s &lt;b&gt;%2&lt;/b&gt;: Přidat normální bod. </translation>
+        <translation>&lt;b&gt;%1 + klepnutí&lt;/b&gt; na bod: Tento smazat; na cestu: Přidá nový čárkový bod; s &lt;b&gt;%2&lt;/b&gt;: Přidá normální bod. </translation>
     </message>
     <message>
         <location filename="../src/tool_edit_point.cpp" line="686"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on point: Delete it; on path: Add a new point; with &lt;b&gt;%2&lt;/b&gt;: Add a dash point. </source>
-        <translation>&lt;b&gt;%1 + klepnutí&lt;/b&gt; na bod: Tento smazat; na cestu: Přidat nový bod; s &lt;b&gt;%2&lt;/b&gt;: Přidat symbolický bod. </translation>
+        <translation>&lt;b&gt;%1 + klepnutí&lt;/b&gt; na bod: Tento smazat; na cestu: Přidá nový bod; s &lt;b&gt;%2&lt;/b&gt;: Přidá čárkový bod. </translation>
     </message>
     <message>
         <location filename="../src/tool_edit_point.cpp" line="690"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on point to switch between dash and normal point. </source>
-        <translation>&lt;b&gt;%1 + klepnutí&lt;/b&gt; na bod: Přepnout mezi symbolickým a normálním bodem. </translation>
+        <translation>&lt;b&gt;%1 + klepnutí&lt;/b&gt; na bod: Přepne mezi čárkovým a normálním bodem. </translation>
     </message>
 </context>
 <context>
@@ -1205,19 +1205,19 @@
         <location filename="../src/tool_edit_line.cpp" line="459"/>
         <location filename="../src/tool_draw_text.cpp" line="381"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Snap to existing objects. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: Zapadnout do stávajících objektů. </translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Přichytí ke stávajícím objektům. </translation>
     </message>
     <message>
         <location filename="../src/tool_edit_point.cpp" line="672"/>
         <location filename="../src/tool_edit_line.cpp" line="464"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Select a single object. &lt;b&gt;Drag&lt;/b&gt;: Select multiple objects. &lt;b&gt;%1+Click&lt;/b&gt;: Toggle selection. </source>
-        <translation>&lt;b&gt;Klepnout&lt;/b&gt;: Vytvořit jeden objekt. &lt;b&gt;Táhnout&lt;/b&gt;: Vytvořit více objektů. &lt;b&gt;%1 + klepnutí&lt;/b&gt;: Přepnout výběr. </translation>
+        <translation>&lt;b&gt;Klepnutí&lt;/b&gt;: Označí jeden objekt. &lt;b&gt;Táhnutí&lt;/b&gt;: Označí více objektů. &lt;b&gt;%1 + klepnutí&lt;/b&gt;: Přepne výběr. </translation>
     </message>
     <message>
         <location filename="../src/tool_edit_point.cpp" line="675"/>
         <location filename="../src/tool_edit_line.cpp" line="467"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Delete selected objects. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: Smazat vybrané objekty. </translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Smaže vybrané objekty. </translation>
     </message>
 </context>
 <context>
@@ -1225,23 +1225,23 @@
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="36"/>
         <source>High quality map display (antialiasing)</source>
-        <translation>Vysoká jakost zobrazení mapy (vyhlazování)</translation>
+        <translation>Vysoká kvalita zobrazení mapy (vyhlazování)</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="37"/>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="41"/>
         <source>Antialiasing makes the map look much better, but also slows down the map display</source>
-        <translation>Vyhlazování zlepší znázornění mapy, zpomalí ale zobrazení mapy</translation>
+        <translation>Vyhlazování zlepší vzhled mapy, zpomalí ale její zobrazení</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="40"/>
         <source>High quality text display in map (antialiasing), slow</source>
-        <translation>Vysoká jakost zobrazení textu v mapě (vyhlazování), pomalé</translation>
+        <translation>Vysoká kvalita zobrazení textu v mapě (vyhlazování), pomalé</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="45"/>
         <source>Click tolerance:</source>
-        <translation>Povolená odchylka pro klepnutí:</translation>
+        <translation>Tolerance klepnutí:</translation>
     </message>
     <message>
         <source>px</source>
@@ -1258,7 +1258,7 @@
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="48"/>
         <source>Snap distance (%1):</source>
-        <translation>Vzdálenost zapadnutí (%1):</translation>
+        <translation>Vzdálenost pro přichycení (%1):</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="51"/>
@@ -1274,7 +1274,7 @@
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="53"/>
         <source>When selecting an object, automatically select its symbol, too</source>
-        <translation>Automaticky vybrat příslušný symbol, když je vybrán objekt</translation>
+        <translation>Když je vybrán objekt automaticky vybrat také příslušný symbol</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="56"/>
@@ -1289,7 +1289,7 @@
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="62"/>
         <source>Templates: keep settings of closed templates</source>
-        <translation>Podklady: Uložit nastavení zavřených podkladů</translation>
+        <translation>Podklady: zachovat nastavení zavřených podkladů</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="67"/>
@@ -1306,7 +1306,7 @@
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="71"/>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="77"/>
         <source>Reset outer curve handles</source>
-        <translation>Nastavit vnější úchopy křivek znovu</translation>
+        <translation>Resetovat vnější úchopy křivek</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="72"/>
@@ -1333,7 +1333,7 @@
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="87"/>
         <source>Preview the width of lines with helper cross</source>
-        <translation>Zobrazit šířku linií s pomocným křížem</translation>
+        <translation>Náhled šířky linií s pomocným křížem</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="103"/>
@@ -1351,7 +1351,7 @@
     <message>
         <location filename="../src/file_format.cpp" line="87"/>
         <source>Format (%1) does not support export</source>
-        <translation>Formát (%1) nepodporuje vyvedení</translation>
+        <translation>Formát (%1) nepodporuje export</translation>
     </message>
 </context>
 <context>
@@ -1391,7 +1391,7 @@
     <message>
         <location filename="../src/tool_fill.cpp" line="179"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Fill area with active symbol. The area to be filled must be bounded by lines or areas, other symbols are not taken into account. </source>
-        <translation>&lt;b&gt;Klepnout&lt;/b&gt;: Vyplnit plochu s aktivním symbolem. Plocha k vyplnění musí být ohraničena čarami nebo plochami. Na jiné symboly není brán zřetel. </translation>
+        <translation>&lt;b&gt;Klepnutí&lt;/b&gt;: Vyplní plochu s aktivním symbolem. Plocha k vyplnění musí být ohraničena čarami nebo plochami. Na jiné symboly není brán zřetel. </translation>
     </message>
 </context>
 <context>
@@ -1447,7 +1447,7 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="98"/>
         <source>Retain compatibility with Mapper %1</source>
-        <translation>Zachovat slučitelnost s Mapperem %1</translation>
+        <translation>Zachovat kompatibilitu s Mapperem %1</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="103"/>
@@ -1468,7 +1468,7 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="110"/>
         <source>File import and export</source>
-        <translation>Zavedení a vyvedení souboru</translation>
+        <translation>Import a export souboru</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="133"/>
@@ -1484,7 +1484,7 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="135"/>
         <source>Use the new OCD importer also for version 8 files</source>
-        <translation>Použít nový zavaděč OCD také pro soubory verze 8</translation>
+        <translation>Použít nový importér OCD také pro soubory verze 8</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="155"/>
@@ -1520,7 +1520,7 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="307"/>
         <source>The selected file is not a valid translation.</source>
-        <translation>vybraný soubor není platným překladem.</translation>
+        <translation>Vybraný soubor není platným překladem.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="337"/>
@@ -1535,7 +1535,7 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="342"/>
         <source>Primary screen size in inches (diagonal):</source>
-        <translation>Velikost hlavní obrazovky v palcích (úhlopříčná):</translation>
+        <translation>Velikost hlavní obrazovky v palcích (úhlopříčně):</translation>
     </message>
 </context>
 <context>
@@ -1553,12 +1553,12 @@
     </message>
     <message>
         <source>UTM Zone (number north/south, e.g. "32 N", "24 S")</source>
-        <translation type="vanished">Zóna Univerzálního transverzálního Mercatorova systému souřadnic (UTM) (číslo sever/jih, např. "32 N", "24 S")</translation>
+        <translation>Zóna UTM (číslo sever/jih, např. "32 N", "24 S")</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="61"/>
         <source>UTM Zone (number north/south)</source>
-        <translation>Pásmo UTM (číslo sever/jih)</translation>
+        <translation>Zóna UTM (číslo sever/jih)</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="68"/>
@@ -2173,12 +2173,10 @@
     <message numerus="yes">
         <location filename="../src/file_import_export.cpp" line="93"/>
         <source>Dropped %n irregular object(s).</source>
-        <translation>
-            <numerusform>Zahodil %n nepravidelný objekt.</numerusform>
-            <numerusform>Zahodil %n nepravidelné objekty.</numerusform>
-            <numerusform>Zahodil %n nepravidelných objektů.</numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>Zahozen %n neregulérní objekt.</numerusform>
+        <numerusform>Zahozeny %n neregulérní objekty.</numerusform>
+        <numerusform>Zahozeno %n neregulérních objektů.</numerusform>
+        </translation></message>
     <message>
         <location filename="../src/file_import_export.cpp" line="100"/>
         <source>Error during symbol post-processing.</source>
@@ -2588,7 +2586,7 @@
     <message>
         <location filename="../src/template_track.cpp" line="534"/>
         <source>Real</source>
-        <translation>Skutečná</translation>
+        <translation>Reálné</translation>
     </message>
     <message>
         <location filename="../src/template_track.cpp" line="535"/>
@@ -3031,7 +3029,7 @@ Přepočítat zavedená data na měřítko mapy?</translation>
     <message>
         <location filename="../src/core/map_color.cpp" line="71"/>
         <source>Registration black (all printed colors)</source>
-        <translation>Černá zápisu je (všechny tištěné barvy)</translation>
+        <translation>Registrační černá (všechny tištěné barvy)</translation>
     </message>
 </context>
 <context>
@@ -5620,7 +5618,7 @@ barev</translation>
         <location filename="../src/gui/print_widget.cpp" line="1223"/>
         <source>Exported successfully to %1</source>
         <translatorcomment>Check original</translatorcomment>
-        <translation>Vyvedení do %1 se zdařilo</translation>
+        <translation>Úspěšně exportováno do %1</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1219"/>
@@ -6264,7 +6262,7 @@ barev</translation>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="990"/>
         <source>There are no symbols in clipboard which could be pasted!</source>
-        <translation>Ve schránce se nenachází žádný dostupný objekt, jejž by bylo možné vložit!</translation>
+        <translation>Ve schránce nejsou symboly, které by bylo možné vložit!</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1159"/>
@@ -6936,7 +6934,7 @@ Pokud ovšem není vaším úmyslem na tento podklad kreslit, nejde o žádný p
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="728"/>
         <source>Please enter a valid integer number to set a group or leave the field empty to ungroup the template!</source>
-        <translation>Zadejte celé číslo pro nastavení skupiny, nebo pole ponechejte prázdné pro zrušení seskupení tohoto podkladu!</translation>
+        <translation>Zadejte prosím celé číslo pro nastavení skupiny nebo ponechejte pole prázdné pro zrušení seskupení podkladů!</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="972"/>
