@@ -52,6 +52,19 @@
 #include "../util.h"
 
 
+namespace {
+
+static QTextCodec* codecFromSettings()
+{
+	const auto& settings = Settings::getInstance();
+	const auto name = settings.getSetting(Settings::General_Local8BitEncoding).toByteArray();
+	return (name == "System") ? QTextCodec::codecForLocale()
+	                          : QTextCodec::codecForName(name);
+}
+
+} // namespace
+
+
 OcdFileImport::OcdImportedPathObject::~OcdImportedPathObject()
 {
 	// nothing, not inlined
@@ -60,7 +73,7 @@ OcdFileImport::OcdImportedPathObject::~OcdImportedPathObject()
 OcdFileImport::OcdFileImport(QIODevice* stream, Map* map, MapView* view)
  : Importer { stream, map, view }
  , delegate { nullptr }
- , custom_8bit_encoding {  QTextCodec::codecForName("Windows-1252") }
+ , custom_8bit_encoding { codecFromSettings() }
 {
     // nothing else
 }
@@ -71,11 +84,11 @@ OcdFileImport::~OcdFileImport()
 }
 
 
-void OcdFileImport::setCustom8BitEncoding(const QByteArray& encoding)
+void OcdFileImport::setCustom8BitEncoding(QTextCodec* encoding)
 {
-	custom_8bit_encoding = (encoding == "System") ? QTextCodec::codecForLocale()
-	                                              : QTextCodec::codecForName(encoding);
+	custom_8bit_encoding = encoding;
 }
+
 
 void OcdFileImport::addSymbolWarning(const AreaSymbol* symbol, const QString& warning)
 {
@@ -1978,8 +1991,6 @@ void OcdFileImport::setFraming(OcdFileImport::OcdImportedTextSymbol* symbol, con
 
 void OcdFileImport::import(bool load_symbols_only)
 {
-	setCustom8BitEncoding(Settings::getInstance().getSetting(Settings::General_Local8BitEncoding).toByteArray());
-
 	Q_ASSERT(buffer.isEmpty());
 	
 	buffer.clear();
