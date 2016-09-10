@@ -505,12 +505,12 @@
     <message>
         <location filename="../src/symbol_combined.cpp" line="407"/>
         <source>- Private line symbol -</source>
-        <translation>- Vlastní liniový symbol -</translation>
+        <translation>-Liniový podsymbol -</translation>
     </message>
     <message>
         <location filename="../src/symbol_combined.cpp" line="408"/>
         <source>- Private area symbol -</source>
-        <translation>- Vlastní podsymbol -</translation>
+        <translation>- Plošný podsymbol -</translation>
     </message>
     <message>
         <location filename="../src/symbol_combined.cpp" line="414"/>
@@ -526,12 +526,12 @@
     <message>
         <location filename="../src/symbol_combined.cpp" line="487"/>
         <source>Change from public to private symbol</source>
-        <translation>Změnit z veřejného na vlastní symbol</translation>
+        <translation>Změna na podsymbol</translation>
     </message>
     <message>
         <location filename="../src/symbol_combined.cpp" line="488"/>
         <source>Take the old symbol as template for the private symbol?</source>
-        <translation>Vzít starý symbol jako předlohu pro vlastní symbol?</translation>
+        <translation>Použít původní symbol jako předlohu pro podsymbol?</translation>
     </message>
     <message>
         <location filename="../src/symbol_combined.cpp" line="404"/>
@@ -1564,7 +1564,7 @@
         <location filename="../src/core/crs_template_implementation.cpp" line="68"/>
         <source>Gauss-Krueger, datum: Potsdam</source>
         <comment>Gauss-Krueger coordinate reference system</comment>
-        <translation>Gauss-Krüger, Datum: Postupim (Potsdam)</translation>
+        <translation>Gauss-Krüger, datum: Potsdam</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="69"/>
@@ -1610,7 +1610,7 @@
         <location filename="../src/core/crs_template_implementation.cpp" line="96"/>
         <source>Specification</source>
         <comment>PROJ.4 specification</comment>
-        <translation>Přesný popis</translation>
+        <translation>Specifikace</translation>
     </message>
     <message>
         <location filename="../src/core/georeferencing.cpp" line="229"/>
@@ -1620,18 +1620,18 @@
     <message>
         <location filename="../src/core/georeferencing.cpp" line="235"/>
         <source>Invalid grid scale factor: %1</source>
-        <translation>Neplatný činitel měřítka mřížky: %1</translation>
+        <translation>Neplatný měřítkový koeficient mřížky: %1</translation>
     </message>
     <message>
         <location filename="../src/core/georeferencing.cpp" line="272"/>
         <location filename="../src/core/georeferencing.cpp" line="299"/>
         <source>Unknown CRS specification language: %1</source>
-        <translation>Neznámý jazyk popisu soustavy souřadnic: %1</translation>
+        <translation>Neznámý jazyk specifikace souřadnicového systému: %1</translation>
     </message>
     <message>
         <location filename="../src/core/georeferencing.cpp" line="302"/>
         <source>Unsupported geographic CRS specification: %1</source>
-        <translation>Nepodporovaný popis zeměpisné soustavy souřadnic: %1</translation>
+        <translation>Nepodporovaná specifikace geografického souřadnicového systému: %1</translation>
     </message>
     <message>
         <source>Scale only</source>
@@ -1644,7 +1644,7 @@
     </message>
     <message>
         <source>Projected</source>
-        <translation type="vanished">Promítnuto</translation>
+        <translation>Zobrazení</translation>
     </message>
 </context>
 <context>
@@ -1669,12 +1669,12 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="204"/>
         <source>Declination:</source>
-        <translation>Úhel místního zeměpisného a magnetického&lt;br&gt;poledníku (deklinace):</translation>
+        <translation>Deklinace:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="151"/>
         <source>Projected coordinates</source>
-        <translation>Reálné souřadnice (m)</translation>
+        <translation>Rovinné souřadnice (m)</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="98"/>
