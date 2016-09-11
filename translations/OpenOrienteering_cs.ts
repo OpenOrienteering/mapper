@@ -1685,12 +1685,12 @@
         <location filename="../src/gui/georeferencing_dialog.cpp" line="104"/>
         <source>Grid scale factor:</source>
         <extracomment>The grid scale factor is the ratio between a length in the grid plane and the corresponding length on the curved earth model. It is applied as a factor to ground distances to get grid plane distances.</extracomment>
-        <translation>Činitel měřítka mřížky:</translation>
+        <translation>Měřítkový koeficient:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="152"/>
         <source>Geographic coordinates</source>
-        <translation>Zeměpisné souřadnice</translation>
+        <translation>Geografické souřadnice</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="147"/>
@@ -1705,26 +1705,26 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="334"/>
         <source>&lt;a href="%1"&gt;OpenStreetMap&lt;/a&gt; | &lt;a href="%2"&gt;World of O Maps&lt;/a&gt;</source>
-        <translation>&lt;a href="%1"&gt;OpenStreetMap&lt;/a&gt; | &lt;a href="%2"&gt;Svět map O&lt;/a&gt;</translation>
+        <translation>&lt;a href="%1"&gt;OpenStreetMap&lt;/a&gt; | &lt;a href="%2"&gt;World of O Maps&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="366"/>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="673"/>
         <source>Online declination lookup</source>
-        <translation>Vyhledat úhel místního zeměpisného a magnetického poledníku</translation>
+        <translation>Vyhledání deklinace online</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="93"/>
         <source>Map coordinate reference system</source>
-        <translation>Souřadnicový systém</translation>
+        <translation>Souřadnicový systém mapy</translation>
     </message>
     <message>
         <source>- none -</source>
-        <translation type="vanished">- žádná -</translation>
+        <translation>- žádný -</translation>
     </message>
     <message>
         <source>- from Proj.4 specification -</source>
-        <translation type="vanished">- z popisu Proj. 4 -</translation>
+        <translation>- ze specifikace Proj. 4 -</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="96"/>
@@ -1772,13 +1772,13 @@
         <location filename="../src/gui/georeferencing_dialog.cpp" line="130"/>
         <source>E</source>
         <comment>west / east</comment>
-        <translation>V</translation>
+        <translation>E</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="132"/>
         <source>N</source>
         <comment>north / south</comment>
-        <translation>S</translation>
+        <translation>N</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="136"/>
@@ -1791,13 +1791,13 @@
         <location filename="../src/gui/georeferencing_dialog.cpp" line="140"/>
         <source>N</source>
         <comment>north</comment>
-        <translation>S</translation>
+        <translation>N</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="142"/>
         <source>E</source>
         <comment>east</comment>
-        <translation>V</translation>
+        <translation>E</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="163"/>
@@ -1808,7 +1808,7 @@
         <location filename="../src/gui/georeferencing_dialog.cpp" line="187"/>
         <location filename="../src/gui/select_crs_dialog.cpp" line="84"/>
         <source>&amp;Coordinate reference system:</source>
-        <translation>Soustava &amp;souřadnic:</translation>
+        <translation>&amp;Souřadnicový systém:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="194"/>
@@ -1818,7 +1818,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="196"/>
         <source>Geographic coordinates:</source>
-        <translation>Zeměpisné souřadnice:</translation>
+        <translation>Geografické souřadnice:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="199"/>
@@ -1828,7 +1828,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="205"/>
         <source>Grivation:</source>
-        <translation>Úhel svíraný svislicemi pravoúhlého souřadnicového&lt;br&gt;systému a místním zeměpisným poledníkem + deklinace (grivace):</translation>
+        <translation>Grivace:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="367"/>
@@ -1838,16 +1838,16 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="440"/>
         <source>Declination change</source>
-        <translation>Změna úhlu místního zeměpisného a magnetického poledníku</translation>
+        <translation>Změna deklinace</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="440"/>
         <source>The declination has been changed. Do you want to rotate the map content accordingly, too?</source>
-        <translation>Úhel místního zeměpisného a magnetického poledníku (deklinace) byl změněn. Chcete otočit odpovídajícím způsobem i obsah mapy?</translation>
+        <translation>Deklinace byla změněna. Chcete otočit odpovídajícím způsobem i obsah mapy?</translation>
     </message>
     <message>
         <source>Projected coordinates:</source>
-        <translation type="vanished">Reálné souřadnice:</translation>
+        <translation>Rovinné souřadnice:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="470"/>
@@ -1872,13 +1872,13 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="669"/>
         <source>Declination value not found.</source>
-        <translation>Hodnota odchylky nenalezena.</translation>
+        <translation>Hodnota deklinace nenalezena.</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="674"/>
         <source>The online declination lookup failed:
 %1</source>
-        <translation>Vyhledání odchylky na internetu se nezdařilo:
+        <translation>Online vyhledání deklinace se nezdařilo:
 %1</translation>
     </message>
     <message>
@@ -1892,12 +1892,12 @@
     <name>GeoreferencingTool</name>
     <message>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set the reference point. Another button to cancel.</source>
-        <translation type="vanished">&lt;b&gt;Klepnutí&lt;/b&gt;: Nastavit referenční bod. Stisknout jiné tlačítko myši pro zrušení.</translation>
+        <translation>&lt;b&gt;Klepnutí&lt;/b&gt;: Nastaví referenční bod. Stiskněte jiné tlačítko myši pro zrušení.</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="702"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set the reference point. &lt;b&gt;Right click&lt;/b&gt;: Cancel.</source>
-        <translation>&lt;b&gt;Klepnutí&lt;/b&gt;: Nastavit referenční bod. &lt;b&gt;Klepnutí pravým tlačítkem myši&lt;/b&gt;: Zrušit.</translation>
+        <translation>&lt;b&gt;Klepnutí&lt;/b&gt;: Nastaví referenční bod. &lt;b&gt;Klepnutí pravým tlačítkem myši&lt;/b&gt;: Zrušit.</translation>
     </message>
 </context>
 <context>
@@ -1905,7 +1905,7 @@
     <message>
         <location filename="../src/gui/home_screen_controller.cpp" line="147"/>
         <source>Welcome to OpenOrienteering Mapper!</source>
-        <translation>Vítejte v OpenOrienteering Mapper!</translation>
+        <translation>Vítejte v OpenOrienteering Mapperu!</translation>
     </message>
 </context>
 <context>
@@ -2076,7 +2076,7 @@
     </message>
     <message>
         <source>No map files found!&lt;br/&gt;&lt;br/&gt;Copy a map file to /OOMapper or /sdcard/OOMapper to list it here.</source>
-        <translation type="vanished">Nenalezeny žádné mapové soubory!&lt;br/&gt;&lt;br/&gt;Kopírujte soubor s mapou do /OOMapper nebo /sdcard/OOMapper, aby zde byly v seznamu uvedeny.</translation>
+        <translation>Nenalezeny žádné soubory s mapou!&lt;br/&gt;&lt;br/&gt;Kopírujte soubor s mapou do /OOMapper nebo /sdcard/OOMapper, aby zde byly v seznamu uvedeny.</translation>
     </message>
 </context>
 <context>
@@ -2089,7 +2089,7 @@
     <message>
         <location filename="../src/symbol.cpp" line="236"/>
         <source>Symbol ID '%1' not unique at line %2 column %3.</source>
-        <translation>Nejednoznačný identifikátor symbolu '%1', řádek %2, sloupec %3.</translation>
+        <translation>Symbol ID '%1', není jedinečný na řádku %2, sloupec %3.</translation>
     </message>
     <message>
         <location filename="../src/symbol.cpp" line="284"/>
@@ -2118,7 +2118,7 @@
     <message>
         <location filename="../src/object.cpp" line="440"/>
         <source>Point object with undefined or wrong symbol at %1:%2.</source>
-        <translation>Bodový objekt s nestanoveným nebo nesprávným symbolem při %1:%2.</translation>
+        <translation>Bodový objekt s nedefinovaným nebo nesprávným symbolem při %1:%2.</translation>
     </message>
     <message>
         <location filename="../src/file_format_native.cpp" line="92"/>
@@ -2129,7 +2129,7 @@
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="57"/>
         <source>OCAD Versions 7, 8</source>
-        <translation>OCAD verze 7, 8</translation>
+        <translation>OCAD Verze 7, 8</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="32"/>
@@ -2154,7 +2154,7 @@
     <message>
         <location filename="../src/file_format_xml.cpp" line="891"/>
         <source>Error while loading the printing configuration at %1:%2: %3</source>
-        <translation>Chyba při nahrávání nastavení tisku v %1: %2: %3</translation>
+        <translation>Chyba při načítání nastavení tisku v %1: %2: %3</translation>
     </message>
     <message>
         <location filename="../src/file_format_xml.cpp" line="904"/>
@@ -2180,12 +2180,12 @@
     <message>
         <location filename="../src/file_import_export.cpp" line="100"/>
         <source>Error during symbol post-processing.</source>
-        <translation>Chyba při dalším zpracování symbolu.</translation>
+        <translation>Chyba během následného zpracování symbolu.</translation>
     </message>
     <message>
         <location filename="../src/file_import_export.cpp" line="114"/>
         <source>Template "%1" has been loaded from the map's directory instead of the relative location to the map file where it was previously.</source>
-        <translation>Podklad "%1" byla nahrána z adresáře s mapou místo z relativní cesty k souboru s mapou, kde byla předtím.</translation>
+        <translation>Podklad "%1" byl nahrán z adresáře s mapou místo z relativní cesty k souboru s mapou, kde byl předtím.</translation>
     </message>
     <message>
         <location filename="../src/file_import_export.cpp" line="120"/>
@@ -2208,11 +2208,11 @@
     <message>
         <location filename="../src/file_import_export.cpp" line="135"/>
         <source>Click the red template name(s) in the Templates -&gt; Template setup window to locate the template file name(s).</source>
-        <translation>Klepněte na červeně označený název souboru v Podklady -&gt; okno Spravovat podklady pro nalezení názvu (názvů) souboru (souborů) s podkladem (podklady).</translation>
+        <translation>Klepněte na červeně označený název souboru v Podklady -&gt; okno Spravovat podklady pro nalezení souborů s podkladem.</translation>
     </message>
     <message>
         <source>At least one template file could not be found. Click the red template name(s) in the Templates -&gt; Template setup window to locate the template file name(s).</source>
-        <translation type="vanished">Jeden nebo více souborů s podkladem se nepodařilo najít. Klepněte na červeně označený název souboru v Podklady -&gt; okno Spravovat podklady pro nalezení názvu (názvů) souboru (souborů) s podkladem (podklady).</translation>
+        <translation>Jeden nebo více souborů s podkladem se nepodařilo najít. Klepněte na červeně označený název souboru v Podklady -&gt; okno Spravovat podklady pro nalezení souborů s podkladem.</translation>
     </message>
     <message>
         <location filename="../src/file_format_native.cpp" line="123"/>
@@ -2239,7 +2239,7 @@
     <message>
         <location filename="../src/file_format_native.cpp" line="200"/>
         <source>The geographic coordinate reference system of the map was "%1". This CRS is not supported. Using "%2".</source>
-        <translation>Zeměpisná soustava souřadnic tohoto souboru byla "%1". Tato soustava souřadnic není podporována. Používá se "%2".</translation>
+        <translation>Geografický souřadnicový systém mapy byl "%1". Tento souřadnicový systém není podporován. Používá se "%2".</translation>
     </message>
     <message>
         <location filename="../src/file_format_native.cpp" line="319"/>
@@ -2290,7 +2290,7 @@
     <message>
         <location filename="../src/file_format.cpp" line="79"/>
         <source>Format (%1) does not support import</source>
-        <translation>Formát (%1) nepodporuje zavedení</translation>
+        <translation>Formát (%1) nepodporuje import</translation>
     </message>
 </context>
 <context>
@@ -2357,12 +2357,12 @@
     <message>
         <location filename="../src/symbol_line.cpp" line="2061"/>
         <source>pointed</source>
-        <translation>zahrocený</translation>
+        <translation>špičatý</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2067"/>
         <source>Line join:</source>
-        <translation>Spojení linie:</translation>
+        <translation>Ohyb linie:</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2069"/>
@@ -2377,12 +2377,12 @@
     <message>
         <location filename="../src/symbol_line.cpp" line="2064"/>
         <source>Cap length:</source>
-        <translation>Délka konce linie:</translation>
+        <translation>Délka koncovky:</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2074"/>
         <source>Line is dashed</source>
-        <translation>Čárkovaná linie</translation>
+        <translation>Linie je čárkovaná</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2180"/>
@@ -2468,7 +2468,7 @@
     <message>
         <location filename="../src/symbol_line.cpp" line="2215"/>
         <source>Borders</source>
-        <translation>Okrajové linie</translation>
+        <translation>Okraje</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2219"/>
@@ -2492,7 +2492,7 @@
         <location filename="../src/file_format_ocad8.cpp" line="596"/>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1162"/>
         <source>Start symbol</source>
-        <translation>Symbol pro začátek</translation>
+        <translation>Počáteční symbol</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="1657"/>
@@ -2507,7 +2507,7 @@
         <location filename="../src/symbol_line.cpp" line="2723"/>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1169"/>
         <source>End symbol</source>
-        <translation>Symbol pro konec</translation>
+        <translation>Koncový symbol</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="1665"/>
@@ -2542,33 +2542,33 @@
     <message>
         <location filename="../src/symbol_line.cpp" line="2484"/>
         <source>Border width:</source>
-        <translation>Šířka linie:</translation>
+        <translation>Šířka okraje:</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2487"/>
         <source>Border color:</source>
-        <translation>Barva okrajové linie:</translation>
+        <translation>Barva okraje:</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2490"/>
         <source>Border shift:</source>
         <translatorcomment>Re-check.</translatorcomment>
-        <translation>Posunutí okrajové linie:</translation>
+        <translation>Posunutí okraje:</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2493"/>
         <source>Border is dashed</source>
-        <translation>Čárkovaná okrajová linie</translation>
+        <translation>Okraj je čárkovaný</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2514"/>
         <source>Border dash length:</source>
-        <translation>Délka čárky okrajové linie:</translation>
+        <translation>Délka čárky okraje:</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2517"/>
         <source>Border break length:</source>
-        <translation>Mezera mezi čárkami okrajové linie:</translation>
+        <translation>Mezera mezi čárkami okraje:</translation>
     </message>
 </context>
 <context>
@@ -2581,7 +2581,7 @@
     <message>
         <location filename="../src/template_track.cpp" line="533"/>
         <source>Coordinate system</source>
-        <translation>Soustava souřadnic</translation>
+        <translation>Souřadnicový systém</translation>
     </message>
     <message>
         <location filename="../src/template_track.cpp" line="534"/>
@@ -2780,7 +2780,7 @@ Chcete uložit změny?</translation>
         <source>The selected map scale is 1:%1, but the chosen symbol set has a nominal scale of 1:%2.
 
 Do you want to scale the symbols to the selected scale?</source>
-        <translation>Nové měřítko vybrané mapy je 1:%1, ale vybraná sada symbolů má měřítko 1:%2.
+        <translation>Vybrané měřítko mapy je 1:%1, ale vybraná sada symbolů má měřítko 1:%2.
 
 Má se změnit velikost symbolů na vybrané měřítko?</translation>
     </message>
@@ -2800,7 +2800,7 @@ Má se změnit velikost symbolů na vybrané měřítko?</translation>
     </message>
     <message>
         <source>There is an automatically saved version of &lt;br /&gt;&lt;tt&gt;%1&lt;/tt&gt;&lt;br /&gt;&lt;br /&gt;Load this version?</source>
-        <translation type="vanished">Je automaticky uložený obnovovací soubor &lt;br /&gt;&lt;tt&gt;%1&lt;/tt&gt;&lt;br /&gt;&lt;br /&gt;Nahrát tento soubor?</translation>
+        <translation>Je k dispozici automaticky uložená verze souboru &lt;br /&gt;&lt;tt&gt;%1&lt;/tt&gt;&lt;br /&gt;&lt;br /&gt;Nahrát tuto verzi?</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="876"/>
@@ -2840,7 +2840,7 @@ Má se změnit velikost symbolů na vybrané měřítko?</translation>
     <message>
         <location filename="../src/gui/main_window.cpp" line="1024"/>
         <source>Please report this as a bug.</source>
-        <translation>Nahlašte to, prosím, jako programovou chybu.</translation>
+        <translation>Ohlaste to prosím jako chybu.</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="317"/>
@@ -2893,7 +2893,7 @@ Chcete zahodit změny?</translation>
 
 Press Yes to save in this format.
 Press No to choose a different format.</source>
-        <translation>Mapa byla uložena jako soubor %1. U tohoto souborového formátu může dojít ke ztrátě informací.
+        <translation>Mapa se ukládá jako soubor %1. U tohoto souborového formátu může dojít ke ztrátě informací.
 
 Stiskněte Ano pro uložení souboru v tomto formátu.
 Stiskněte Ne pro vyhledání jiného souborového formátu.</translation>
@@ -2917,7 +2917,7 @@ Stiskněte Ne pro vyhledání jiného souborového formátu.</translation>
         <source>Cannot export the map as
 "%1"
 because saving as %2 (.%3) is not supported.</source>
-        <translation>Mapu nelze vyvést jako
+        <translation>Mapu nelze exportovat jako
 "%1",
 protože uložení jako %2 (.%3) není podporováno.</translation>
     </message>
@@ -2926,14 +2926,14 @@ protože uložení jako %2 (.%3) není podporováno.</translation>
         <source>Cannot export the map as
 "%1"
 because the format is unknown.</source>
-        <translation>Mapu nelze vyvést jako
+        <translation>Mapu nelze exportovat jako
 "%1",
 protože formát je neznámý.</translation>
     </message>
     <message>
         <source>File does not exist or insufficient permissions to open:
 %1</source>
-        <translation type="vanished">Soubor neexistuje, nebo jsou oprávnění k otevření nedostatečná:
+        <translation>Soubor neexistuje, nebo oprávnění k otevření jsou nedostatečná:
 %1</translation>
     </message>
     <message>
@@ -2945,7 +2945,7 @@ protože formát je neznámý.</translation>
     <message>
         <location filename="../src/map.cpp" line="676"/>
         <source>The map export generated warnings.</source>
-        <translation>Při vyvádění mapy se vyskytla varovná hlášení.</translation>
+        <translation>Při exportu mapy se vyskytla varovná hlášení.</translation>
     </message>
     <message>
         <location filename="../src/map.cpp" line="651"/>
@@ -2957,7 +2957,7 @@ protože formát je neznámý.</translation>
     <message>
         <location filename="../src/map.cpp" line="746"/>
         <source>The map import generated warnings.</source>
-        <translation>Při zavádění mapy se vyskytla varovná hlášení.</translation>
+        <translation>Při importu mapy se vyskytla varovná hlášení.</translation>
     </message>
     <message>
         <location filename="../src/map.cpp" line="694"/>
@@ -2979,7 +2979,7 @@ Soubor nelze otevřít pro čtení.</translation>
 %1
 
 %2</source>
-        <translation>Soubor nelze otevřít:
+        <translation>Nelze otevřít soubor:
 %1
 
 %2</translation>
@@ -2996,7 +2996,7 @@ Soubor nelze otevřít pro čtení.</translation>
     <message>
         <location filename="../src/map.cpp" line="803"/>
         <source>Nothing to import.</source>
-        <translation>Nic k zavedení.</translation>
+        <translation>Nic k importu.</translation>
     </message>
     <message>
         <location filename="../src/map.cpp" line="810"/>
@@ -3008,9 +3008,9 @@ Soubor nelze otevřít pro čtení.</translation>
         <source>The scale of the imported data is 1:%1 which is different from this map's scale of 1:%2.
 
 Rescale the imported data?</source>
-        <translation>Měřítko zavedených dat je 1:%1, ale měřítko mapy je 1:%2.
+        <translation>Měřítko importovaných dat je 1:%1, ale měřítko mapy je 1:%2.
 
-Přepočítat zavedená data na měřítko mapy?</translation>
+Změnit měřítko importovaných dat na měřítko mapy?</translation>
     </message>
     <message>
         <location filename="../src/map.cpp" line="440"/>
@@ -3037,7 +3037,7 @@ Přepočítat zavedená data na měřítko mapy?</translation>
     <message>
         <location filename="../src/core/map_coord.cpp" line="176"/>
         <source>Coordinates are out-of-bounds.</source>
-        <translation>Souřadnice jsou mimo meze.</translation>
+        <translation>Souřadnice jsou mimo specifikovaný rozsah.</translation>
     </message>
 </context>
 <context>
@@ -3146,7 +3146,7 @@ Přepočítat zavedená data na měřítko mapy?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="831"/>
         <source>Change the map scale and adjust map objects and symbol sizes</source>
-        <translation>Změnit měřítko mapy a změnit velikost všech objektů a symbolů</translation>
+        <translation>Změnit měřítko mapy a přizpůsobit velikost všech objektů a symbolů</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="833"/>
@@ -3341,7 +3341,7 @@ Přepočítat zavedená data na měřítko mapy?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="852"/>
         <source>Duplicate</source>
-        <translation>Zdvojit</translation>
+        <translation>Duplikovat</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="853"/>
@@ -3352,7 +3352,7 @@ Přepočítat zavedená data na měřítko mapy?</translation>
         <location filename="../src/map_editor.cpp" line="854"/>
         <source>Fill / Create border</source>
         <translatorcomment>Consider two separate actions or change text according to context</translatorcomment>
-        <translation>Vyplnit/Vytvořit okraj</translation>
+        <translation>Vyplnit / Vytvořit okraj</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="855"/>
@@ -3427,7 +3427,7 @@ Přepočítat zavedená data na měřítko mapy?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="911"/>
         <source>Clear temporary GPS markers</source>
-        <translation>Smazat dočasné značky v poloze GPS</translation>
+        <translation>Smazat dočasné polohové značky GPS</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="914"/>
@@ -3437,7 +3437,7 @@ Přepočítat zavedená data na měřítko mapy?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="915"/>
         <source>Align map with north</source>
-        <translation>Vyrovnat mapu podle severu</translation>
+        <translation>Zarovnat mapu na sever</translation>
     </message>
     <message>
         <source>Toggle template visibility</source>
@@ -3469,7 +3469,7 @@ Přepočítat zavedená data na měřítko mapy?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="922"/>
         <source>Import...</source>
-        <translation>Importovat...</translation>
+        <translation>Import...</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="974"/>
@@ -3522,7 +3522,7 @@ Přepočítat zavedená data na měřítko mapy?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="481"/>
         <source>The map is currently being edited. Please finish the edit operation before saving.</source>
-        <translation>Mapa je nyní upravována. Dokončete, prosím, krok úprav, předtím než ji uložíte.</translation>
+        <translation>Mapa je nyní upravována. Před uložením dokončete prosím úpravy.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="486"/>
@@ -3543,12 +3543,12 @@ Přepočítat zavedená data na měřítko mapy?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="819"/>
         <source>Hatch areas</source>
-        <translation>Šrafovovat plochy</translation>
+        <translation>Šrafování ploch</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="820"/>
         <source>Baseline view</source>
-        <translation>Zobrazit základní čáru</translation>
+        <translation>Zobrazit základní linie</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="821"/>
@@ -3624,7 +3624,7 @@ Přepočítat zavedená data na měřítko mapy?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="864"/>
         <source>Cut rectangular hole</source>
-        <translation>Vystřihnout obdélníkový otvor</translation>
+        <translation>Vystřihnout pravoúhlý otvor</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="875"/>
@@ -3653,17 +3653,17 @@ Přepočítat zavedená data na měřítko mapy?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="881"/>
         <source>Area XOr</source>
-        <translation>Odstranit dvojité vrstvy (XOr)</translation>
+        <translation>Odstranit překrytí (XOr)</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="885"/>
         <source>Cutout</source>
-        <translation>Vystřihnout vně</translation>
+        <translation>Oříznout</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="886"/>
         <source>Cut away</source>
-        <translation>Vystřihnout uvnitř</translation>
+        <translation>Vystřihnout</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="887"/>
@@ -3678,17 +3678,17 @@ Přepočítat zavedená data na měřítko mapy?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="926"/>
         <source>Projected coordinates</source>
-        <translation>Reálné souřadnice (m)</translation>
+        <translation>Rovinné souřadnice (m)</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="928"/>
         <source>Latitude/Longitude (Dec)</source>
-        <translation>Délka/Šířka (desetinná)</translation>
+        <translation>Zeměpisná šířka/délka (desetinná)</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="930"/>
         <source>Latitude/Longitude (DMS)</source>
-        <translation>Délka/Šířka (DMS)</translation>
+        <translation>Šířka/Délka (DMS)</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1006"/>
@@ -3765,7 +3765,7 @@ Přepočítat zavedená data na měřítko mapy?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="1471"/>
         <source>Print / Export is not available in this program version!</source>
-        <translation>Tisk/Vyvedení není v této verzi programu dostupné!</translation>
+        <translation>Tisk / Export není v této verzi programu dostupný!</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1491"/>
@@ -3791,7 +3791,7 @@ Přepočítat zavedená data na měřítko mapy?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="1568"/>
         <source>There are no objects in clipboard which could be pasted!</source>
-        <translation>Ve schránce se nenachází žádný dostupný objekt, jejž by bylo možné vložit!</translation>
+        <translation>Ve schránce nejsou objekty, které by bylo možné vložit!</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1598"/>
@@ -3898,7 +3898,7 @@ symbolů</translation>
         <location filename="../src/map_editor.cpp" line="2052"/>
         <source>Select a line, area or combined symbol to be able to use this tool.</source>
         <translatorcomment>Distinction between line and combined symbol probably not relevant here.</translatorcomment>
-        <translation>Vyberte symbol linie nebo plochy, abyste mohli tento nástroj používat.</translation>
+        <translation>Vyberte liniový, plošný nebo kombinovaný symbol, abyste mohli tento nástroj používat.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2046"/>
@@ -3938,32 +3938,32 @@ symbolů</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="2189"/>
         <source>Select at least two area or path objects activate this tool.</source>
-        <translation>Vyberte alespoň dva objekty plochy nebo liniové objekty, abyste tento nástroj zapnuli.</translation>
+        <translation>Vyberte alespoň dva plošné nebo liniové objekty, abyste tento nástroj zapnuli.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2191"/>
         <source>Unify overlapping objects.</source>
-        <translation>Sloučit překrývající se objekty.</translation>
+        <translation>Sloučí překrývající se objekty.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2193"/>
         <source>Remove all parts which are not overlaps with the first selected object.</source>
-        <translation>Odstranit všechny části, které nepřekrývají první vybraný objekt.</translation>
+        <translation>Odstraní všechny části, které se nepřekrývají s prvním vybraným objektem.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2195"/>
         <source>Remove overlapped parts of the first selected object.</source>
-        <translation>Odstranit všechny překryté části prvního vybraného objektu.</translation>
+        <translation>Odstraní všechny překryté části prvního vybraného objektu.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2197"/>
         <source>Remove all parts which overlap the first selected object.</source>
-        <translation>Odstranit všechny části, které překrývají první vybraný objekt.</translation>
+        <translation>Odstraní všechny části, které překrývají první vybraný objekt.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2201"/>
         <source>Merge area holes together, or merge holes with the object boundary to cut out this part.</source>
-        <translation>Sloučit díry v plochách, nebo díry spojit s okrajem objektu pro vystřižení této části.</translation>
+        <translation>Sloučí díry v plochách, nebo díry spojí s okrajem objektu pro vystřižení této části.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2201"/>
@@ -3973,18 +3973,18 @@ symbolů</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="2206"/>
         <source>Create a cutout of some objects or the whole map.</source>
-        <translation>vytvořit vystřižení některých objektů nebo celé mapy.</translation>
+        <translation>Vytvoří oříznutí některých objektů nebo celé mapy.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2206"/>
         <location filename="../src/map_editor.cpp" line="2208"/>
         <source>Select a closed path object as cutout shape to activate this tool.</source>
-        <translation>Vyberte zavřený objekt cesty jako tvar vystřižení, abyste tento nástroj zapnuli.</translation>
+        <translation>Vyberte uzavřený objekt cesty jako tvar oříznutí, abyste tento nástroj zapnuli.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2208"/>
         <source>Cut away some objects or everything in a limited area.</source>
-        <translation>Vystřihněte některé nebo všechny objekty nacházející se uvnitř vybrané (ohraničené) plochy.</translation>
+        <translation>Vystřihne některé nebo všechny objekty nacházející se uvnitř vybrané (ohraničené) plochy.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2240"/>
@@ -3999,7 +3999,7 @@ symbolů</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="2970"/>
         <source>Merging holes failed.</source>
-        <translation>Sločení děr se nezdařilo.</translation>
+        <translation>Sloučení děr se nezdařilo.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="3259"/>
@@ -4050,7 +4050,7 @@ symbolů</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="3785"/>
         <source>Cannot import the selected map file because it could not be loaded.</source>
-        <translation>Vybraný soubor s mapou se nepodařilo zavést, protože se jej nepodařilo nahrát.</translation>
+        <translation>Vybraný soubor s mapou nelze importovat, protože se jej nepodařilo nahrát.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2048"/>
@@ -4085,7 +4085,7 @@ symbolů</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="822"/>
         <source>Overprinting simulation</source>
-        <translation>Napodobení přetisku</translation>
+        <translation>Simulovat přetisk</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="844"/>
@@ -4115,12 +4115,12 @@ symbolů</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="966"/>
         <source>&amp;Export as...</source>
-        <translation>&amp;Exportovat ...</translation>
+        <translation>&amp;Exportovat jako ...</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2054"/>
         <source>Write text on the map.</source>
-        <translation>Psát text na mapu.</translation>
+        <translation>Napíše text na mapu.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2054"/>
@@ -4130,7 +4130,7 @@ symbolů</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="2149"/>
         <source>Duplicate the selected object(s).</source>
-        <translation>Zdvojit vybrané objekty.</translation>
+        <translation>Zduplikuje vybrané objekty.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2147"/>
@@ -4143,7 +4143,7 @@ symbolů</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="2162"/>
         <source>Switch the direction of symbols on line objects.</source>
-        <translation>Změnit směr symbolů pro objekt linie.</translation>
+        <translation>Přepne směr symbolů u liniových objektů.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2162"/>
@@ -4154,22 +4154,22 @@ symbolů</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="2164"/>
         <source>Connect endpoints of paths which are close together.</source>
-        <translation>Spojit dohromady konce cest, jež jsou blízko.</translation>
+        <translation>Spojí dohromady konce cest, jež jsou blízko.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2168"/>
         <source>Cut the selected object(s) into smaller parts.</source>
-        <translation>Rozstříhat vybrané objekty na menší části.</translation>
+        <translation>Rozstřihne vybrané objekty na menší části.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2168"/>
         <source>Select at least one line or area object to activate this tool.</source>
-        <translation>Vyberte alespoň jeden liniový objekt nebo plošný objekt, abyste tento nástroj zapnuli.</translation>
+        <translation>Vyberte alespoň jeden liniový nebo plošný objekt, abyste tento nástroj zapnuli.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2177"/>
         <source>Cut a hole into the selected area object.</source>
-        <translation>Vystřihnout otvor do vybraného objektu plochy.</translation>
+        <translation>Vystřihne otvor ve vybraném objektu plochy.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2177"/>
@@ -4179,28 +4179,28 @@ symbolů</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="2151"/>
         <source>Rotate the selected object(s).</source>
-        <translation>Otočit vybrané objekty.</translation>
+        <translation>Otočí vybrané objekty.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2153"/>
         <source>Scale the selected object(s).</source>
-        <translation>Změnit velikost vybranných objektů.</translation>
+        <translation>Změní velikost vybraných objektů.</translation>
     </message>
     <message>
         <source>Unify overlapping areas.</source>
-        <translation type="vanished">Sloučit překrývající se plochy.</translation>
+        <translation>Sloučí překrývající se plochy.</translation>
     </message>
     <message>
         <source>Select at least two area objects with the same symbol to activate this tool.</source>
-        <translation type="vanished">Vyberte alespoň dva objekty plochy mající tentýž symbol, abyste tento nástroj zapnuli.</translation>
+        <translation>Vyberte alespoň dva objekty plochy shodného symbolu, abyste tento nástroj zapnuli.</translation>
     </message>
     <message>
         <source>Intersect the first selected area object with all other selected overlapping areas.</source>
-        <translation type="vanished">Protnout první vybraný objekt plochy se všemi ostatními vybranými překrývajícími se plochami.</translation>
+        <translation>Protne první vybraný objekt plochy se všemi ostatními vybranými překrývajícími se plochami.</translation>
     </message>
     <message>
         <source>Subtract all other selected area objects from the first selected area object.</source>
-        <translation type="vanished">Odečíst všechny ostatní vybrané objekty plochy z prvního vybraného objektu plochy.</translation>
+        <translation>Odečte všechny ostatní vybrané objekty plochy z prvního vybraného objektu plochy.</translation>
     </message>
     <message>
         <source>Select at least two area objects to activate this tool.</source>
@@ -4213,7 +4213,7 @@ symbolů</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="2170"/>
         <source>Turn paths made of straight segments into smooth bezier splines.</source>
-        <translation>Proměnit cesty, jež sestávají z rovných kousků, na hladké Beziérovy křivky.</translation>
+        <translation>Změní cesty sestávající z rovných částí na hladké Beziérovy křivky.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2170"/>
@@ -4224,18 +4224,18 @@ symbolů</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="2172"/>
         <source>Reduce the number of points in path objects while trying to retain their shape.</source>
-        <translation>Zmenšit počet bodů u objektů cesty, zachovávaje pokud možno jejich tvar.</translation>
+        <translation>Zmenší počet bodů u objektů cesty se snahou zachovat jejich tvar.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2233"/>
         <source>Switches the symbol of the selected object(s) to the selected symbol.</source>
-        <translation>Vyměnit symbol nynějšího objektu za vybraný symbol.</translation>
+        <translation>Zamění symbol vybraného objektu za vybraný symbol.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2233"/>
         <location filename="../src/map_editor.cpp" line="2235"/>
         <source>Select at least one object and a fitting, different symbol to activate this tool.</source>
-        <translation>Vyberte alespoň jeden objekt a příhodný náhradní symbol, abyste tento nástroj zapnuli.</translation>
+        <translation>Vyberte alespoň jeden objekt a vhodný náhradní symbol, abyste tento nástroj zapnuli.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2235"/>
@@ -4245,7 +4245,7 @@ symbolů</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="2355"/>
         <source>%1 object(s) duplicated</source>
-        <translation>Zdvojen %1 objekt(y)</translation>
+        <translation>%1 objekt(y) duplikován(y)</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2567"/>
@@ -4255,7 +4255,7 @@ symbolů</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="2567"/>
         <source>No objects were selected because there are no objects with the selected symbol(s).</source>
-        <translation>Nebyly vybrány žádné objekty, protože nejsou žádné objekty s vybraným symbolem.</translation>
+        <translation>Objekty nebyly vybrány, protože neexistují objekty s vybraným symbolem.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2929"/>
@@ -4280,7 +4280,7 @@ symbolů</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="2961"/>
         <source>XOr failed.</source>
-        <translation>Operace XOr se nezdařila.</translation>
+        <translation>Odstranit překrytí (XOr) se nezdařilo.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="3454"/>
@@ -4301,12 +4301,12 @@ symbolů</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="3746"/>
         <source>Import %1, GPX, OSM or DXF file</source>
-        <translation>Zavést soubor %1, GPX, OSM nebo DXF</translation>
+        <translation>Importovat soubor %1, GPX, OSM nebo DXF</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="3750"/>
         <source>Importable files</source>
-        <translation>Zaveditelné soubory</translation>
+        <translation>Importovatelné soubory</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="3750"/>
@@ -4316,7 +4316,7 @@ symbolů</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="3778"/>
         <source>Cannot import the selected file because its file format is not supported.</source>
-        <translation>Vybraný soubor se nepodařilo zavést, protože jeho formát není podporován.</translation>
+        <translation>Vybraný soubor se nepodařilo importovat, protože jeho formát není podporován.</translation>
     </message>
 </context>
 <context>
@@ -4362,7 +4362,7 @@ symbolů</translation>
     <message>
         <location filename="../src/core/map_printer.cpp" line="1215"/>
         <source>Processing separations of page %1...</source>
-        <translation>Probíhá zpracování dělení strany %1...</translation>
+        <translation>Probíhá zpracování separací na straně %1...</translation>
     </message>
     <message>
         <location filename="../src/core/map_printer.cpp" line="1216"/>
@@ -4418,13 +4418,12 @@ Start by defining some colors:
 Select Symbols -&gt; Color window to
 open the color dialog and
 define the colors there.</source>
-        <translation>Prázdná mapa
+        <translation>Prázdná mapa!
 
-Nejprve stanovte nějaké barvy:
-Vyberte pro to v nabídce
-Symboly &gt; Barvy
+Nejprve definujte nějaké barvy:
+Vyberte Symboly -&gt; Okno s barvami
 k otevření okna pro barvy
-a vymezení barev.</translation>
+a definování barev.</translation>
     </message>
     <message>
         <location filename="../src/map_widget.cpp" line="835"/>
@@ -4434,9 +4433,9 @@ Now define some symbols:
 Right-click in the symbol bar
 and select "New symbol"
 to create one.</source>
-        <translation>Prázdná sada symbolů
+        <translation>Prázdná sada symbolů!
 
-Pro stanovení symbolů,
+Pro definování symbolů:
 klepněte pravým tlačítkem myši 
 do pruhu se symboly a vyberte
 "Nový symbol", abyste jeden vytvořili.</translation>
@@ -4451,7 +4450,7 @@ Templates -&gt; Open template...</source>
         <translation>Připraven ke kreslení.
 
 Začněte kreslit, nebo nahrajte podklad.
-Pro nahrání předlohy klepněte na
+Pro nahrání podkladu klepněte na
 Podklady -&gt; Otevřít podklad...</translation>
     </message>
     <message>
@@ -4467,7 +4466,7 @@ mapy. Změna zvětšení je možná pomocí kolečka myši.</translation>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="98"/>
         <source>Boundary length:</source>
-        <translation>Délka obrysu:</translation>
+        <translation>Obvod:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="136"/>
@@ -4538,17 +4537,17 @@ mapy. Změna zvětšení je možná pomocí kolečka myši.</translation>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="132"/>
         <source>Note: Boundary length and area are correct only if there are no self-intersections and holes are used as such.</source>
-        <translation>Rada: Délka obrysu a plocha jsou správné jen tehdy, když nejsou žádná vlastní protnutí a otvory se používají jako takové.</translation>
+        <translation>Rada: Obvod a plocha jsou správné jen tehdy, pokud se nevyskytují vlastní protnutí a otvory se používají jako takové.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="150"/>
         <source>This line is too short.</source>
-        <translation>Tato linie je příliš malá.</translation>
+        <translation>Tato linie je příliš krátká.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="151"/>
         <source>The minimum length is %1 %2.</source>
-        <translation>Nejmenší délka linie je %1 %2.</translation>
+        <translation>Minimální délka je %1 %2.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="151"/>
@@ -4566,7 +4565,7 @@ mapy. Změna zvětšení je možná pomocí kolečka myši.</translation>
     <message>
         <location filename="../src/map_dialog_new.cpp" line="47"/>
         <source>Choose the scale and symbol set for the new map.</source>
-        <translation>Vybrat měřítko a sadu symbolů pro novou mapu.</translation>
+        <translation>Vyberte měřítko a sadu symbolů pro novou mapu.</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_new.cpp" line="49"/>
@@ -4621,7 +4620,7 @@ mapy. Změna zvětšení je možná pomocí kolečka myši.</translation>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="1542"/>
         <source>The map contains more than 256 colors which is not supported by ocd version 8.</source>
-        <translation>Mapa obsahuje více než 256 barev, což není podporováno ocd verze 8.</translation>
+        <translation>Mapa obsahuje více než 256 barev, což není podporováno v ocd verze 8.</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="1546"/>
@@ -4631,62 +4630,62 @@ mapy. Změna zvětšení je možná pomocí kolečka myši.</translation>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="1588"/>
         <source>Registration black is exported as a regular color.</source>
-        <translation>Černá zápisu je vyvedena jako běžná barva.</translation>
+        <translation>Registrační černá je exportována jako běžná barva.</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="1683"/>
         <source>Unable to export fill pattern shift for an area object</source>
-        <translation>Nelze vyvést posun vzoru výplně pro objekt plochy</translation>
+        <translation>Nelze exportovat posun vzoru výplně pro objekt plochy</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="1831"/>
         <source>Unable to export template: file type of "%1" is not supported yet</source>
-        <translation>Nelze vyvést podklad: Souborový typ "%1" není podporován</translation>
+        <translation>Nelze exportovat podklad: Souborový typ "%1" není podporován</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="2049"/>
         <source>In line symbol "%1", cannot represent cap/join combination.</source>
-        <translation>V symbolu pro linii "%1" nelze podat spojení konců/rohů linií.</translation>
+        <translation>V liniovém symbolu "%1" nelze znázornit kombinaci koncovek/napojení linií.</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="2073"/>
         <source>In line symbol "%1", neglecting the dash grouping.</source>
-        <translation>V symbolu pro linii "%1" se přehlíží uskupení čárkování.</translation>
+        <translation>V liniovém symbolu "%1" se přehlíží seskupení čárek.</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="2084"/>
         <source>In line symbol "%1", the number of dashes in a group has been reduced to 2.</source>
-        <translation>V symbolu pro linii "%1" je počet čárek v jedné skupině zmenšen na 2.</translation>
+        <translation>V liniovém symbolu "%1" je počet čárek v jedné skupině zmenšen na 2.</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="2140"/>
         <source>In line symbol "%1", cannot export the borders correctly.</source>
-        <translation>V symbolu pro linii "%1" nemohou být okraje vyvedeny správně.</translation>
+        <translation>V liniovém symbolu "%1" nemohou být okraje správně exportovány.</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="2199"/>
         <source>In area symbol "%1", skipping a fill pattern.</source>
-        <translation>V symbolu pro plochu "%1" se zahazuje vzor výplně.</translation>
+        <translation>V plošném symbolu "%1" vynechávám vzor výplně.</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="2246"/>
         <source>In area symbol "%1", assuming a "shifted rows" point pattern. This might be correct as well as incorrect.</source>
-        <translation>V symbolu pro plochu "%1" je převzat bodový vzor s navzájem posunutými řádky. To může souhlasit, ale také to může být nesprávné.</translation>
+        <translation>V plošném symbolu "%1" předpokládám bodový vzor s "posunutými řádky". To může být správně, ale také to může být chybně.</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="2285"/>
         <source>In text symbol %1: custom character spacing is set, its implementation does not match OCAD's behavior yet</source>
-        <translation>V symbolu pro text "%1" je změněn odstup znaků. To je vykládáno tímto programem a OCAD rozdílně</translation>
+        <translation>V textovém symbolu "%1" je nastaven vlastní rozestup znaků. Jeho provedení prozatím neodpovídá chování v OCADu</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="2292"/>
         <source>In text symbol %1: ignoring underlining</source>
-        <translation>V symbolu pro text "%1" je zahozeno podtržení</translation>
+        <translation>V textovém symbolu %1: ignoruji podtržení</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="2294"/>
         <source>In text symbol %1: ignoring kerning</source>
-        <translation>V symbolu pro text "%1" je zahozeno podřezávání</translation>
+        <translation>V textovém symbolu %1: ignoruji podřezávání</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="2681"/>
@@ -4714,91 +4713,89 @@ mapy. Změna zvětšení je možná pomocí kolečka myši.</translation>
     <message numerus="yes">
         <location filename="../src/file_format_ocad8.cpp" line="145"/>
         <source>%n color separation(s) were skipped, reason: Import disabled.</source>
-        <translation>
-            <numerusform>Bylo přeskočeno %n oddělení barvy. Důvod: Zavedení zakázáno.</numerusform>
-            <numerusform>Bylo přeskočeno %n oddělení barvy. Důvod: Zavedení zakázáno.</numerusform>
-            <numerusform>Bylo přeskočeno %n oddělení barvy. Důvod: Zavedení zakázáno.</numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>Byla přeskočena %n barevná separace. Důvod: Import zakázán.</numerusform>
+        <numerusform>Byly přeskočeny %n barevné separace. Důvod: Import zakázán.</numerusform>
+        <numerusform>Bylo přeskočeno %n barevných separací. Důvod: Import zakázán.</numerusform>
+        </translation></message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="150"/>
         <source>Could not load the spot color definitions, error: %1</source>
-        <translation>Nepodařilo se nahrát popisy barev míst. Chyba: %1</translation>
+        <translation>Nepodařilo se nahrát definice přímých barev. Chyba: %1</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="210"/>
         <source>Color "Registration black" is imported as a special color.</source>
-        <translation>Barva "černá zápisu" je zavedena jako zvláštní barva.</translation>
+        <translation>Barva "Registrační černá" je importována jako zvláštní barva.</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="274"/>
         <source>Unable to import symbol "%3" (%1.%2)</source>
-        <translation>Nelze zavést symbol "%3" (%1.%2)</translation>
+        <translation>Nelze importovat symbol "%3" (%1.%2)</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="287"/>
         <source>OCAD import layer</source>
-        <translation>Vrstva zavedení OCAD</translation>
+        <translation>Vrstva importu OCAD</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="427"/>
         <source>In dashed line symbol %1, pointed cap lengths for begin and end are different (%2 and %3). Using %4.</source>
-        <translation>V symbolu pro čárkovanou linii %1 jsou délky pro špičaté konce na začátku a na konci rozdílné (%2 a %3). Používá se %4.</translation>
+        <translation>V čárkovaném liniovém symbolu %1 jsou délky pro špičaté konce na začátku a na konci rozdílné (%2 a %3). Používá se %4.</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="444"/>
         <source>In dashed line symbol %1, the end length cannot be imported correctly.</source>
-        <translation>Délku koncového kusu symbolu pro čárkovanou linii %1 nelze zavést správně.</translation>
+        <translation>V čárkovaném liniovém symbolu %1 nelze importovat správně délku koncového kusu.</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="446"/>
         <source>In dashed line symbol %1, the end gap cannot be imported correctly.</source>
-        <translation>Délku koncového přerušení symbolu pro čárkovanou linii %1 nelze zavést správně.</translation>
+        <translation>V čárkovaném liniovém symbolu %1 nelze importovat správně koncovou mezeru.</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="455"/>
         <source>In dashed line symbol %1, main and end length are different (%2 and %3). Using %4.</source>
-        <translation>V symbolu pro čárkovanou linii %1 jsou hlavní a koncová délka rozdílné (%2 a %3). Používá se %4.</translation>
+        <translation>V čárkovaném liniovém symbolu %1 jsou hlavní a koncová délka rozdílné (%2 a %3). Používá se %4.</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="465"/>
         <source>In dashed line symbol %1, gaps D and E are different (%2 and %3). Using %4.</source>
-        <translation>V symbolu pro čárkovanou linii %1 jsou přerušení D a E rozdílné (%2 a %3). Používá se %4.</translation>
+        <translation>V čárkovaném liniovém symbolu %1 jsou mezery D a E rozdílné (%2 a %3). Používá se %4.</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="615"/>
         <source>Line symbol %1: suppressing dash symbol at line ends.</source>
-        <translation>Symbol pro linii %1: Symboly čárkování na začátcích a koncích linií jsou potlačeny.</translation>
+        <translation>Liniový symbol %1: potlačuji symbol čárkování na koncích linie.</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="753"/>
         <source>During import of text symbol %1: ignoring justified alignment</source>
-        <translation>Při zavádění textového symbolu %1 se přehlíží zarovnání do bloku</translation>
+        <translation>Při importu textového symbolu %1 ignoruji zarovnání do bloku</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="759"/>
         <source>During import of text symbol %1: ignoring custom weight (%2)</source>
-        <translation>Při zavádění textového symbolu %1 se přehlíží vlastní výška (%2)</translation>
+        <translation>Při importu textového symbolu %1 se ignoruje vlastní výška (%2)</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="764"/>
         <source>During import of text symbol %1: custom character spacing is set, its implementation does not match OCAD's behavior yet</source>
-        <translation>Při zavádění textového symbolu %1 jsou nastaveny vlastní odstupy znaků. Provedení ještě neodpovídá chování OCAD</translation>
+        <translation>Při importu textového symbolu %1 jsou nastaveny vlastní rozestupy znaků. Jeho provedení zatím neodpovídá chování v OCADu</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="769"/>
         <source>During import of text symbol %1: ignoring custom word spacing (%2%)</source>
-        <translation>Při zavádění textového symbolu %1 se přehlíží vlastní odstupy slov (%2%)</translation>
+        <translation>Při importu textového symbolu %1 se ignorují vlastní rozestupy slov (%2%)</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="774"/>
         <source>During import of text symbol %1: ignoring custom indents (%2/%3)</source>
-        <translation>Při zavádění textového symbolu %1 se přehlíží vlastní odsazení (%2/%3)</translation>
+        <translation>Při importu textového symbolu %1 se ignoruje vlastní odsazení (%2/%3)</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="795"/>
         <source>During import of text symbol %1: ignoring text framing (mode %2)</source>
-        <translation>Při zavádění textového symbolu %1 se přehlíží textové rámečky (režim %2)</translation>
+        <translation>Při importu textového symbolu %1 se ignoruje rámování textu (režim %2)</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="949"/>
@@ -4813,7 +4810,7 @@ mapy. Změna zvětšení je možná pomocí kolečka myši.</translation>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="1003"/>
         <source>Not importing text symbol, couldn't figure out path' (npts=%1): %2</source>
-        <translation>Textový symbol nezaveden: Nepodařilo se vypátrat cestu (npts=%1): %2</translation>
+        <translation>Textový symbol neimportuji, nepodařilo se vypátrat cestu (npts=%1): %2</translation>
     </message>
     <message>
         <source>Unable to import template: %1</source>
@@ -4823,17 +4820,17 @@ mapy. Změna zvětšení je možná pomocí kolečka myši.</translation>
         <location filename="../src/file_format_ocad8.cpp" line="1195"/>
         <location filename="../src/file_format_ocad8.cpp" line="1302"/>
         <source>Unable to import template: background "%1" doesn't seem to be a raster image</source>
-        <translation>Nelze vyvést podklad: Zdá se, že pozadí "%1" není rastrovým obrázkem</translation>
+        <translation>Nelze importovat podklad: Zdá se, že "%1" není rastrovým obrázkem</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="1407"/>
         <source>Trying to import a text object with unknown coordinate format</source>
-        <translation>Pokus o zavedení textového objektu s neznámým formátem souřadnic</translation>
+        <translation>Pokus o import textového objektu s neznámým formátem souřadnic</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="1506"/>
         <source>Color id not found: %1, ignoring this color</source>
-        <translation>Identifikátor barvy nenalezen: %1. Tato barva se přehlíží</translation>
+        <translation>ID barvy nenalezeno: %1. Tato barva se ignoruje</translation>
     </message>
 </context>
 <context>
@@ -4841,28 +4838,28 @@ mapy. Změna zvětšení je možná pomocí kolečka myši.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="87"/>
         <source>In line symbol %1 '%2': %3</source>
-        <translation>V symbolu pro linii %1 '%2': %3</translation>
+        <translation>V liniovém symbolu %1 '%2': %3</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="93"/>
         <source>In text symbol %1 '%2': %3</source>
-        <translation>Při symbolu pro text %1 '%2': %3</translation>
+        <translation>V textovém symbolu %1 '%2': %3</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="350"/>
         <source>Could not load the coordinate reference system '%1'.</source>
-        <translation>Nepodařilo se nahrát soustavu souřadnic: '%1'.</translation>
+        <translation>Nepodařilo se načíst souřadnicový systém: '%1'.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="384"/>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="391"/>
         <source>Spot color information was ignored.</source>
-        <translation>Informace o barvě místa zahozeny.</translation>
+        <translation>Informace o přímých barvách byla ignorována.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="519"/>
         <source>Unable to import symbol %1.%2 "%3": %4</source>
-        <translation>Nelze zavést symbol %1.%2 "%3": %4</translation>
+        <translation>Nelze importovat symbol %1.%2 "%3": %4</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="523"/>
@@ -4872,7 +4869,7 @@ mapy. Změna zvětšení je možná pomocí kolečka myši.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="616"/>
         <source>Unable to import template: "%1" is not a supported template type.</source>
-        <translation>Nelze zavést podklad: Podkladový typ "%1" není podporován.</translation>
+        <translation>Nelze importovat podklad: "%1" není podporovaný typ podkladu.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="920"/>
@@ -4887,24 +4884,24 @@ mapy. Změna zvětšení je možná pomocí kolečka myši.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="973"/>
         <source>The dash pattern cannot be imported correctly.</source>
-        <translation>Vzor čárkování se nepodařilo zavést správně.</translation>
+        <translation>Čárkovaný vzor se nepodařilo správně importovat.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="988"/>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1020"/>
         <source>The dash pattern's end length (%1 mm) cannot be imported correctly. Using %2 mm.</source>
-        <translation>Délku koncového kusu vzoru čárkování (%1 mm) nelze zavést správně. Používá se %2 mm.</translation>
+        <translation>Délku koncového kusu v čárkovaném vzoru (%1 mm) nelze správně importovat. Používá se %2 mm.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="995"/>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1035"/>
         <source>The dash pattern's end gap (%1 mm) cannot be imported correctly. Using %2 mm.</source>
-        <translation>Délku koncového přerušení vzoru čárkování (%1 mm) nelze zavést správně. Používá se %2 mm.</translation>
+        <translation>Délku koncové mezery v čárkovaném vzoru (%1 mm) nelze správně importovat. Používá se %2 mm.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1077"/>
         <source>Unsupported framing line style '%1'.</source>
-        <translation>Nepodporovaný styl linie rámečku '%1'.</translation>
+        <translation>Nepodporovaný styl linie rámování '%1'.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1149"/>
@@ -4959,37 +4956,37 @@ mapy. Změna zvětšení je možná pomocí kolečka myši.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1883"/>
         <source>Ignoring custom weight (%1).</source>
-        <translation>Přehlíží se vlastní výška (%1).</translation>
+        <translation>Ignoruji vlastní výšku (%1).</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1920"/>
         <source>Custom character spacing may be incorrect.</source>
-        <translation>Vlastní odstupy znaků nemusí být správné.</translation>
+        <translation>Vlastní rozestupy znaků nemusí být správně.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1925"/>
         <source>Ignoring custom word spacing (%1 %).</source>
-        <translation>Přehlíží se vlastní odstupy slov (%1 %).</translation>
+        <translation>Ignoruji vlastní rozestupy slov (%1 %).</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1949"/>
         <source>Ignoring custom indents (%1/%2).</source>
-        <translation>Přehlíží se vlastní odsazení (%1/%2).</translation>
+        <translation>Ignoruji vlastní odsazení (%1/%2).</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1971"/>
         <source>Ignoring text framing (mode %1).</source>
-        <translation>Přehlíží se textové rámečky (režim %1).</translation>
+        <translation>Ignoruji rámování textu (režim %1).</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1343"/>
         <source>Line text symbols are not yet supported. Marking the symbol as hidden.</source>
-        <translation>Symboly pro liniový text ještě nejsou podporovány. Symbol je označen jako skrytý.</translation>
+        <translation>Liniové textové symboly ještě nejsou podporovány. Symbol je označen jako skrytý.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="81"/>
         <source>In area symbol %1 '%2': %3</source>
-        <translation>Při symbolu pro oblast %1 '%2': %3</translation>
+        <translation>V plošném symbolu %1 '%2': %3</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1520"/>
@@ -4999,17 +4996,17 @@ mapy. Změna zvětšení je možná pomocí kolečka myši.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1530"/>
         <source>Unable to import rectangle object</source>
-        <translation>Nelze zavést obdélníkový objekt</translation>
+        <translation>Nelze importovat obdélníkový objekt</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1571"/>
         <source>Not importing text symbol, couldn't figure out path' (npts=%1): %2</source>
-        <translation>Textový symbol nezaveden: Nepodařilo se vypátrat cestu (npts=%1): %2</translation>
+        <translation>Textový symbol nebyl importován: Nepodařilo se vypátrat cestu (npts=%1): %2</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1858"/>
         <source>Trying to import a text object with unknown coordinate format</source>
-        <translation>Pokus o zavedení textového objektu s neznámým formátem souřadnic</translation>
+        <translation>Pokus o import textového objektu s neznámým formátem souřadnic</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1988"/>
@@ -5019,7 +5016,7 @@ mapy. Změna zvětšení je možná pomocí kolečka myši.</translation>
     </message>
     <message>
         <source>Untested file importer for format: OCD %1</source>
-        <translation type="vanished">Nevyzkoušená funkce zavedení pro souborový formát OCD %1</translation>
+        <translation>Nevyzkoušená funkce importu pro souborový formát OCD %1</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="2023"/>
@@ -5050,7 +5047,7 @@ mapy. Změna zvětšení je možná pomocí kolečka myši.</translation>
     <message>
         <location filename="../src/template_tool_paint.cpp" line="58"/>
         <source>&lt;b&gt;Click and drag&lt;/b&gt;: Paint. &lt;b&gt;Right click and drag&lt;/b&gt;: Erase. </source>
-        <translation>&lt;b&gt;Klepnout a táhnout&lt;/b&gt;: Kreslit. &lt;b&gt;Klepnutí pravým tlačítkem myši a táhnout&lt;/b&gt;: Vymazat. </translation>
+        <translation>&lt;b&gt;Klepnutí a táhnutí&lt;/b&gt;: Maluje. &lt;b&gt;Klepnutí pravým tlačítkem myši a táhnutí&lt;/b&gt;: Gumuje. </translation>
     </message>
     <message>
         <location filename="../src/template_tool_paint.cpp" line="61"/>
@@ -5063,7 +5060,7 @@ mapy. Změna zvětšení je možná pomocí kolečka myši.</translation>
     <message>
         <location filename="../src/tool_pan.cpp" line="72"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the map. </source>
-        <translation>&lt;b&gt;Táhnout&lt;/b&gt;: Posunout mapu. </translation>
+        <translation>&lt;b&gt;Tažení&lt;/b&gt;: Posune mapu. </translation>
     </message>
 </context>
 <context>
@@ -5080,7 +5077,7 @@ mapy. Změna zvětšení je možná pomocí kolečka myši.</translation>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="967"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Add a coordinate. &lt;b&gt;%1+Click&lt;/b&gt;: Change the selected coordinate. </source>
-        <translation>&lt;b&gt;Klepnout&lt;/b&gt;: Přidat souřadnici. &lt;b&gt;%1 + klepnutí&lt;/b&gt;: Změnit vybranou souřadnici. </translation>
+        <translation>&lt;b&gt;Klepnutí&lt;/b&gt;: Přidá souřadnice. &lt;b&gt;%1 + klepnutí&lt;/b&gt;: Změní vybrané souřadnice. </translation>
     </message>
 </context>
 <context>
@@ -5088,7 +5085,7 @@ mapy. Změna zvětšení je možná pomocí kolečka myši.</translation>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="59"/>
         <source>Always oriented to north (not rotatable)</source>
-        <translation>Vždy směrovat na sever (neotáčecí)</translation>
+        <translation>Vždy orientováno na sever (není otočný)</translation>
     </message>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="62"/>
@@ -5116,12 +5113,12 @@ mapy. Změna zvětšení je možná pomocí kolečka myši.</translation>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="79"/>
         <source>Center all elements</source>
-        <translation>Vystředit všechny prvky</translation>
+        <translation>Vycentrovat všechny prvky</translation>
     </message>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="81"/>
         <source>Current element</source>
-        <translation>Nynější prvek</translation>
+        <translation>Aktuální prvek</translation>
     </message>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="87"/>
@@ -5204,7 +5201,7 @@ mapy. Změna zvětšení je možná pomocí kolečka myši.</translation>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="160"/>
         <source>Area color:</source>
-        <translation>Barva linie:</translation>
+        <translation>Barva plochy:</translation>
     </message>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="173"/>
@@ -5229,12 +5226,12 @@ mapy. Změna zvětšení je možná pomocí kolečka myši.</translation>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="189"/>
         <source>Center by coordinate average</source>
-        <translation>Vystředit podle průměru souřadnic</translation>
+        <translation>Vycentrovat dle průměru souřadnic</translation>
     </message>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="371"/>
         <source>[Midpoint]</source>
-        <translation>[Vnitřní bod]</translation>
+        <translation>[Středový bod]</translation>
     </message>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="936"/>
@@ -5247,7 +5244,7 @@ mapy. Změna zvětšení je možná pomocí kolečka myši.</translation>
     <message>
         <location filename="../src/symbol_point.cpp" line="436"/>
         <source>Point symbol</source>
-        <translation>Symbol bodu</translation>
+        <translation>Bodový symbol</translation>
     </message>
 </context>
 <context>
@@ -5275,36 +5272,36 @@ mapy. Změna zvětšení je možná pomocí kolečka myši.</translation>
         <location filename="../src/gui/print_tool.cpp" line="57"/>
         <location filename="../src/gui/print_tool.cpp" line="369"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the map, the print area or the area's borders. </source>
-        <translation>&lt;b&gt;Táhnout&lt;/b&gt;: Posunout mapu, oblast tisku nebo okraje oblasti. </translation>
+        <translation>&lt;b&gt;Táhnutí&lt;/b&gt;: Posune mapu, oblast tisku nebo okraje oblasti. </translation>
     </message>
     <message>
         <location filename="../src/gui/print_tool.cpp" line="341"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the print area. </source>
-        <translation>&lt;b&gt;Táhnout&lt;/b&gt;: Posunout oblast tisku. </translation>
+        <translation>&lt;b&gt;Táhnutí&lt;/b&gt;: Posune oblast tisku. </translation>
     </message>
     <message>
         <location filename="../src/gui/print_tool.cpp" line="345"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the map. </source>
-        <translation>&lt;b&gt;Táhnout&lt;/b&gt;: Posunout mapu. </translation>
+        <translation>&lt;b&gt;Táhnutí&lt;/b&gt;: Posune mapu. </translation>
     </message>
     <message>
         <location filename="../src/gui/print_tool.cpp" line="350"/>
         <location filename="../src/gui/print_tool.cpp" line="355"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the print area's border. </source>
-        <translation>&lt;b&gt;Táhnout&lt;/b&gt;: Posunout okraj oblasti tisku. </translation>
+        <translation>&lt;b&gt;Táhnutí&lt;/b&gt;: Posune okraj oblasti tisku. </translation>
     </message>
     <message>
         <location filename="../src/gui/print_tool.cpp" line="360"/>
         <location filename="../src/gui/print_tool.cpp" line="365"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the print area's borders. </source>
-        <translation>&lt;b&gt;Táhnout&lt;/b&gt;: Posunout okraje oblasti tisku. </translation>
+        <translation>&lt;b&gt;Táhnutí&lt;/b&gt;: Posune okraje oblasti tisku. </translation>
     </message>
 </context>
 <context>
     <name>PrintWidget</name>
     <message>
         <source>Export to PDF or PS</source>
-        <translation type="vanished">Vyvést jako PDF nebo PS</translation>
+        <translation>Export do PDF nebo PS</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="216"/>
@@ -5319,7 +5316,7 @@ mapy. Změna zvětšení je možná pomocí kolečka myši.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="140"/>
         <source>Page orientation:</source>
-        <translation>Natočení strany:</translation>
+        <translation>Orientace stránky:</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="100"/>
@@ -5339,7 +5336,7 @@ mapy. Změna zvětšení je možná pomocí kolečka myši.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="114"/>
         <source>Page format:</source>
-        <translation>Formát strany:</translation>
+        <translation>Formát stránky:</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="105"/>
@@ -5382,14 +5379,14 @@ grafika</translation>
         <location filename="../src/gui/print_widget.cpp" line="180"/>
         <source>Raster
 graphics</source>
-        <translation>Bitmapová
+        <translation>Rastrová
 grafika</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="181"/>
         <source>Color
 separations</source>
-        <translation>Oddělení
+        <translation>Separace
 barev</translation>
     </message>
     <message>
@@ -5405,7 +5402,7 @@ barev</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="148"/>
         <source>Single page</source>
-        <translation>Jedna strana</translation>
+        <translation>Jedna stránka</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="149"/>
@@ -5420,7 +5417,7 @@ barev</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="152"/>
         <source>Center print area</source>
-        <translation>Vystředit oblast tisku</translation>
+        <translation>Vycentrovat oblast tisku</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="120"/>
@@ -5436,7 +5433,7 @@ barev</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="168"/>
         <source>Page overlap:</source>
-        <translation>Překrytí mezi stranami:</translation>
+        <translation>Překrytí mezi stránkami:</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="172"/>
@@ -5445,11 +5442,11 @@ barev</translation>
     </message>
     <message>
         <source>Normal output</source>
-        <translation type="vanished">Obvyklý výstup</translation>
+        <translation>Normální výstup</translation>
     </message>
     <message>
         <source>Color separations</source>
-        <translation type="vanished">Oddělení barev</translation>
+        <translation>Separace barev</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="200"/>
@@ -5469,7 +5466,7 @@ barev</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="230"/>
         <source>Simulate overprinting</source>
-        <translation>Napodobení přetisku</translation>
+        <translation>Simulovat přetisk</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="235"/>
@@ -5479,7 +5476,7 @@ barev</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="236"/>
         <source>Device CMYK (experimental)</source>
-        <translation>Zařízení CMYK (pokusné)</translation>
+        <translation>Zařízení CMYK (experimentální)</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="237"/>
@@ -5495,17 +5492,17 @@ barev</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="265"/>
         <source>Export...</source>
-        <translation>Vyvést...</translation>
+        <translation>Export...</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="371"/>
         <source>PDF export</source>
-        <translation>Vyvést jako PDF</translation>
+        <translation>Exportovat jako PDF</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="382"/>
         <source>Image export</source>
-        <translation>Vyvést jako obrázek</translation>
+        <translation>Exportovat jako obrázek</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="488"/>
@@ -5521,7 +5518,7 @@ barev</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1078"/>
         <source>Not supported on Android.</source>
-        <translation>Nepodporováno pod Androidem.</translation>
+        <translation>Není podporováno v systému Android.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1086"/>
@@ -5531,7 +5528,7 @@ barev</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1097"/>
         <source>Print Preview Progress</source>
-        <translation>Postup náhledu</translation>
+        <translation>Postup zobrazení náhledu tisku</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1114"/>
@@ -5541,7 +5538,7 @@ barev</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1115"/>
         <source>A non-standard view mode is activated. Are you sure to print / export the map like this?</source>
-        <translation>Je zapnut zvláštní režim pohledu. Jste si jistý, že mapu chcete tisknout/vyvést takto?</translation>
+        <translation>Je aktivní nestandardní režim zobrazení. Opravdu chcete mapu takto vytisknout / exportovat?</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1132"/>
@@ -5566,7 +5563,7 @@ barev</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1189"/>
         <source>Failed to prepare the PDF export.</source>
-        <translation>Nepodařilo se připravit vyvedení do PDF.</translation>
+        <translation>Nepodařilo se připravit export do PDF.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1199"/>
@@ -5585,7 +5582,7 @@ barev</translation>
         <location filename="../src/gui/print_widget.cpp" line="1213"/>
         <source>Export map ...</source>
         <translatorcomment>Check original</translatorcomment>
-        <translation>Vyvést mapu...</translation>
+        <translation>Exportovat mapu...</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1136"/>
@@ -5611,7 +5608,7 @@ barev</translation>
         <location filename="../src/gui/print_widget.cpp" line="1174"/>
         <source>Failed to save the image. Does the path exist? Do you have sufficient rights?</source>
         <translatorcomment>Check original.</translatorcomment>
-        <translation>Nepodařilo se uložit obrázek. Cesta neexistuje, nebo nejsou dostatečná oprávnění?</translation>
+        <translation>Nepodařilo se uložit obrázek. Existuje cesta? Máte dostatečná práva?</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1178"/>
@@ -5623,7 +5620,7 @@ barev</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1219"/>
         <source>Failed to finish the PDF export.</source>
-        <translation>Nepodařilo se dokončit vyvedení do PDF.</translation>
+        <translation>Nepodařilo se dokončit export do PDF.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1238"/>
@@ -5633,7 +5630,7 @@ barev</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1247"/>
         <source>Printing Progress</source>
-        <translation>Postup tisku</translation>
+        <translation>Průběh tisku</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1155"/>
@@ -5677,7 +5674,7 @@ barev</translation>
     <name>ProjectedCRSSelector</name>
     <message>
         <source>&amp;Coordinate reference system:</source>
-        <translation type="vanished">Soustava &amp;souřadnic:</translation>
+        <translation>&amp;Souřadnicový systém:</translation>
     </message>
 </context>
 <context>
@@ -5705,7 +5702,7 @@ barev</translation>
     <message>
         <location filename="../src/template_dialog_reopen.cpp" line="49"/>
         <source>Active templates:</source>
-        <translation>Činné podklady:</translation>
+        <translation>Aktivní podklady:</translation>
     </message>
     <message>
         <location filename="../src/template_dialog_reopen.cpp" line="58"/>
@@ -5728,7 +5725,7 @@ barev</translation>
     <message>
         <location filename="../src/symbol_dialog_replace.cpp" line="48"/>
         <source>Import all new symbols, even if not used as replacement</source>
-        <translation>Zavést všechny nové symboly, i když nejsou používány coby náhrada</translation>
+        <translation>Importovat všechny nové symboly, i když nejsou použity pro nahrazení</translation>
     </message>
     <message>
         <location filename="../src/symbol_dialog_replace.cpp" line="50"/>
@@ -5738,17 +5735,17 @@ barev</translation>
     <message>
         <location filename="../src/symbol_dialog_replace.cpp" line="52"/>
         <source>Delete unused colors after the replacement</source>
-        <translation>Smazat barvy, které nejsou po nahrazení používány</translation>
+        <translation>Po nahrazení smazat nepoužité barvy</translation>
     </message>
     <message>
         <location filename="../src/symbol_dialog_replace.cpp" line="55"/>
         <source>Symbol mapping:</source>
-        <translation>Zařazení symbolů:</translation>
+        <translation>Přiřazení symbolů:</translation>
     </message>
     <message>
         <location filename="../src/symbol_dialog_replace.cpp" line="56"/>
         <source>Keep the symbols' hidden / protected states of the old symbol set</source>
-        <translation>Zachovaz skrytý/chráněný stav stará sady symbolů</translation>
+        <translation>Zachovat skrytý / chráněný stav staré sady symbolů</translation>
     </message>
     <message>
         <location filename="../src/symbol_dialog_replace.cpp" line="58"/>
@@ -5801,7 +5798,7 @@ barev</translation>
     <message>
         <location filename="../src/map_dialog_rotate.cpp" line="36"/>
         <source>Rotate map</source>
-        <translation>Otočit mapu</translation>
+        <translation>Rotovat mapu</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_rotate.cpp" line="44"/>
@@ -5816,30 +5813,30 @@ barev</translation>
     <message>
         <location filename="../src/map_dialog_rotate.cpp" line="40"/>
         <source>Rotation parameters</source>
-        <translation>Parametry otočení</translation>
+        <translation>Parametry rotace</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_rotate.cpp" line="46"/>
         <source>Rotate around:</source>
-        <translation>Otáčet okolo:</translation>
+        <translation>Rotovat okolo:</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_rotate.cpp" line="48"/>
         <source>Map coordinate system origin</source>
         <comment>Rotation center point</comment>
-        <translation>Počátek soustavy mapových souřadnic</translation>
+        <translation>Počátku souřadnicového systému mapy</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_rotate.cpp" line="52"/>
         <source>Georeferencing reference point</source>
         <comment>Rotation center point</comment>
-        <translation>Referenční bod soustavy souřadnic</translation>
+        <translation>Georeferenčního referenčního bodu</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_rotate.cpp" line="57"/>
         <source>Other point,</source>
         <comment>Rotation center point</comment>
-        <translation>Jiný bod,</translation>
+        <translation>Jiného bodu,</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_rotate.cpp" line="58"/>
