@@ -120,6 +120,9 @@
     <qresource prefix="/" lang="fr">
         <file alias="help/tip-of-the-day/tips.txt">help/tip-of-the-day/tips_fr.txt</file>
     </qresource>
+    <qresource prefix="/" lang="ru">
+        <file alias="help/tip-of-the-day/tips.txt">help/tip-of-the-day/tips_ru.txt</file>
+    </qresource>
     <qresource prefix="/" lang="uk">
         <file alias="help/tip-of-the-day/tips.txt">help/tip-of-the-day/tips_uk.txt</file>
     </qresource>
