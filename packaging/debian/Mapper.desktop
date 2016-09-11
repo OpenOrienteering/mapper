@@ -3,6 +3,7 @@ Type=Application
 Name=OpenOrienteering Mapper
 Comment=Orienteering map drawing program
 Comment[de]=Programm zum Zeichnen von Orientierungslaufkarten
+Comment[ru]=Программа картографии для спортивного ориентирования
 Exec=Mapper %F
 Icon=Mapper
 Terminal=false
