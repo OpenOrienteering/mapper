@@ -270,7 +270,7 @@
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="72"/>
         <source>Save the active file to remove the conflicting version.</source>
-        <translation>Grabar el fichero activo para eliminar la versión conflictiva.</translation>
+        <translation>Guarde el archivo activo para eliminar la versión conflictiva.</translation>
     </message>
 </context>
 <context>
@@ -508,12 +508,12 @@
     <message>
         <location filename="../src/symbol_combined.cpp" line="408"/>
         <source>- Private area symbol -</source>
-        <translation>- Símbolo de área privado -</translation>
+        <translation>- Sub-símbolo -</translation>
     </message>
     <message>
         <location filename="../src/symbol_combined.cpp" line="414"/>
         <source>Edit private symbol...</source>
-        <translation>Editar símbolo privado...</translation>
+        <translation>Editar sub-símbolo…</translation>
     </message>
     <message>
         <location filename="../src/symbol_combined.cpp" line="434"/>
@@ -4807,7 +4807,7 @@ zoom usando la rueda del ratón, si dispone de esos elementos.</translation>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="956"/>
         <source>Unable to import rectangle object</source>
-        <translation>Imposible importar objeto rectangular</translation>
+        <translation>Imposible importar objeto rectángulo</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="1003"/>
@@ -5403,7 +5403,7 @@ zoom usando la rueda del ratón, si dispone de esos elementos.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="202"/>
         <source>Print in different scale:</source>
-        <translation>Imprimir en diferente escala:</translation>
+        <translation>Utilizar una escala diferente:</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="223"/>
@@ -6062,7 +6062,7 @@ de color</translation>
     <message>
         <location filename="../src/core/storage_location.cpp" line="278"/>
         <source>'%1' is stored in a regular location.</source>
-        <translation>'%1' se almacena en una ruta válida.</translation>
+        <translation>'%1' es una ruta de almacenamiento válida.</translation>
     </message>
     <message>
         <location filename="../src/core/storage_location.cpp" line="281"/>
@@ -6227,7 +6227,7 @@ de color</translation>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="975"/>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1003"/>
         <source>An internal error occurred, sorry!</source>
-        <translation>¡Ha ocurrido un error interno, lo sentimos!</translation>
+        <translation>Ha ocurrido un error interno, lo sentimos!</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="990"/>
