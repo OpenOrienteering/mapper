@@ -1802,7 +1802,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="163"/>
         <source>Map north</source>
-        <translation>Sever na mapě</translation>
+        <translation>Mapový sever</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="187"/>
@@ -1813,7 +1813,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="194"/>
         <source>Map coordinates:</source>
-        <translation>Souřadnice mapy:</translation>
+        <translation>Papírové souřadnice:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="196"/>
@@ -5830,7 +5830,7 @@ barev</translation>
         <location filename="../src/map_dialog_rotate.cpp" line="52"/>
         <source>Georeferencing reference point</source>
         <comment>Rotation center point</comment>
-        <translation>Georeferenčního referenčního bodu</translation>
+        <translation>Souřadnicového referenčního bodu</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_rotate.cpp" line="57"/>
@@ -5864,17 +5864,17 @@ barev</translation>
     <message>
         <location filename="../src/map_dialog_rotate.cpp" line="72"/>
         <source>Adjust georeferencing reference point</source>
-        <translation>Upravit referenční bod soustavy souřadnic</translation>
+        <translation>Upravit souřadnicový referenční bod</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_rotate.cpp" line="79"/>
         <source>Adjust georeferencing declination</source>
-        <translation>Upravit úhel místního zeměpisného a magnetického poledníku souřadnicového systému</translation>
+        <translation>Upravit deklinaci souřadnicového systému</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_rotate.cpp" line="86"/>
         <source>Rotate non-georeferenced templates</source>
-        <translation>Otočit podklady s nevyjádřenými prostorovými vztahy</translation>
+        <translation>Rotovat negeoreferencované podklady</translation>
     </message>
 </context>
 <context>
@@ -5892,7 +5892,7 @@ barev</translation>
     <message>
         <location filename="../src/tool_rotate_pattern.cpp" line="162"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Set the direction of area fill patterns or point objects. </source>
-        <translation>&lt;b&gt;Táhnout&lt;/b&gt;: Nastavit směr vzorů výplně ploch nebo bodových objektů. </translation>
+        <translation>&lt;b&gt;Táhnutí&lt;/b&gt;: Nastaví směr vzorů u výplně ploch nebo bodových objektů. </translation>
     </message>
 </context>
 <context>
@@ -5900,7 +5900,7 @@ barev</translation>
     <message>
         <location filename="../src/tool_rotate.cpp" line="196"/>
         <source>&lt;b&gt;Rotation:&lt;/b&gt; %1° </source>
-        <translation>&lt;b&gt;Otočení:&lt;/b&gt; %1° </translation>
+        <translation>&lt;b&gt;Rotace:&lt;/b&gt; %1° </translation>
     </message>
     <message>
         <location filename="../src/tool_rotate.cpp" line="208"/>
@@ -5910,12 +5910,12 @@ barev</translation>
     <message>
         <location filename="../src/tool_rotate.cpp" line="202"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set the center of rotation. </source>
-        <translation>&lt;b&gt;Klepnout&lt;/b&gt;: Nastavit bod otočení. </translation>
+        <translation>&lt;b&gt;Klepnutí&lt;/b&gt;: Nastaví střed rotace. </translation>
     </message>
     <message>
         <location filename="../src/tool_rotate.cpp" line="203"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Rotate the selected objects. </source>
-        <translation>&lt;b&gt;Táhnout&lt;/b&gt;: Otočit vybrané objekty. </translation>
+        <translation>&lt;b&gt;Táhnutí&lt;/b&gt;: Otočí vybrané objekty. </translation>
     </message>
 </context>
 <context>
