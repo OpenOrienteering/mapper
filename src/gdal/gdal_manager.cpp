@@ -171,7 +171,7 @@ private:
 		if (!gdal_data.isEmpty())
 		{
 			// The user may overwrite this default in the settings.
-			CPLSetConfigOption("GDAL_DATA", gdal_data.toLatin1());
+			CPLSetConfigOption("GDAL_DATA", gdal_data.toLatin1().constData());
 		}
 		
 		settings.beginGroup(gdal_configuration_group);
@@ -188,14 +188,14 @@ private:
 		new_parameters.sort();
 		for (auto parameter : new_parameters)
 		{
-			CPLSetConfigOption(parameter.toLatin1(), settings.value(parameter).toByteArray());
+			CPLSetConfigOption(parameter.toLatin1().constData(), settings.value(parameter).toByteArray().constData());
 		}
 		for (auto parameter : static_cast<const QStringList&>(applied_parameters))
 		{
 			if (!new_parameters.contains(parameter)
 			    && parameter != QLatin1String{ "GDAL_DATA" })
 			{
-				CPLSetConfigOption(parameter.toLatin1(), nullptr);
+				CPLSetConfigOption(parameter.toLatin1().constData(), nullptr);
 			}
 		}
 		applied_parameters.swap(new_parameters);
