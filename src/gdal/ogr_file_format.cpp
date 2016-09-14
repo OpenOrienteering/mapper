@@ -283,7 +283,7 @@ OgrFileImport::OgrFileImport(QIODevice* stream, Map* map, MapView* view, bool dr
 	if (!map->getGeoreferencing().isLocal() && !error)
 	{
 		spec = map->getGeoreferencing().getProjectedCRSSpec().toLatin1();
-		error = OSRImportFromProj4(map_srs.get(), spec);
+		error = OSRImportFromProj4(map_srs.get(), spec.constData());
 	}
 	
 	if (error)
@@ -348,7 +348,7 @@ void OgrFileImport::import(bool load_symbols_only)
 	
 	auto filename = file->fileName();
 	// GDAL 2.0: ... = GDALOpenEx(template_path.toLatin1(), GDAL_OF_VECTOR, nullptr, nullptr, nullptr);
-	auto data_source = ogr::unique_datasource(OGROpen(filename.toLatin1(), 0, nullptr));
+	auto data_source = ogr::unique_datasource(OGROpen(filename.toUtf8().constData(), 0, nullptr));
 	if (data_source == nullptr)
 	{
 		throw FileFormatException(Importer::tr("Could not read '%1': %2")
@@ -574,7 +574,7 @@ Object* OgrFileImport::importPointGeometry(MapPart* map_part, OGRFeatureH featur
 		{
 			label.remove(0, 1);
 			label.chop(1);
-			int index = OGR_F_GetFieldIndex(feature, label.toLatin1());
+			int index = OGR_F_GetFieldIndex(feature, label.toLatin1().constData());
 			if (index >= 0)
 			{
 				label = QString::fromUtf8(OGR_F_GetFieldAsString(feature, index));
