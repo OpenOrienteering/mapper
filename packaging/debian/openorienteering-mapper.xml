@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
+   <mime-type type="application/x-openorienteering-omap">
+     <comment>Orienteering map</comment>
+     <comment xml:lang="ru">Спортивная карта</comment>
+     <glob pattern="*.omap"/>
+   </mime-type>
+   <mime-type type="application/x-openorienteering-xmap">
+     <comment>Orienteering map</comment>
+     <comment xml:lang="ru">Спортивная карта</comment>
+     <glob pattern="*.xmap"/>
+   </mime-type>
+</mime-info>
