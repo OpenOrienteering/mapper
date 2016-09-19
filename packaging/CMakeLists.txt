@@ -457,12 +457,25 @@ if(UNIX AND NOT APPLE)
 	install(
 	  FILES "debian/Mapper.desktop"
 	  DESTINATION "share/applications")
+	install(
+	  FILES "debian/openorienteering-mapper.xml"
+	  DESTINATION "share/mime/packages")
 	# Cf. http://standards.freedesktop.org/icon-theme-spec/icon-theme-spec-latest.html#directory_layout
 	foreach(_size 16 24 32 48 96 128 256 512)
 		install(
 		  FILES "${PROJECT_SOURCE_DIR}/images/mapper-icon/Mapper-${_size}.png"
 		  DESTINATION "share/icons/hicolor/${_size}x${_size}/apps"
 		  RENAME Mapper.png
+		)
+		install(
+		  FILES "${PROJECT_SOURCE_DIR}/images/mapper-icon/Mapper-${_size}.png"
+		  DESTINATION "share/icons/hicolor/${_size}x${_size}/mimetypes"
+		  RENAME application-x-openorienteering-omap.png
+		)
+		install(
+		  FILES "${PROJECT_SOURCE_DIR}/images/mapper-icon/Mapper-${_size}.png"
+		  DESTINATION "share/icons/hicolor/${_size}x${_size}/mimetypes"
+		  RENAME application-x-openorienteering-xmap.png
 		)
 	endforeach()
 endif()
