@@ -12,12 +12,12 @@
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="161"/>
         <source>This program is free software: you can redistribute it and/or modify it under the terms of the &lt;a %1&gt;GNU General Public License (GPL), version&amp;nbsp;3&lt;/a&gt;, as published by the Free Software Foundation.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tämä on vapaa ohjelma; sitä on sallittu levittää edelleen ja muuttaa &lt;a %1&gt;GNU yleisen lisenssin (GPL-lisenssin) version&amp;nbsp;3&lt;/a&gt; ehtojen mukaan sellaisina kuin Free Software Foundation on ne julkaissut.</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="166"/>
         <source>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License (GPL), version&amp;nbsp;3, for &lt;a %1&gt;more details&lt;/a&gt;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tätä ohjelmaa levitetään siinä toivossa, että se olisi hyödyllinen, mutta ilman mitään takuuta; ilman edes hiljaista takuuta kaupallisesti hyväksyttävästä laadusta tai soveltuvuudesta tiettyyn tarkoitukseen. Katso GNU yleisestä lisenssistä (GPL-lisenssistä) versiosta&amp;nbsp;3, &lt;a %1&gt;lisää yksityiskohtia&lt;/a&gt;.</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="171"/>
@@ -27,7 +27,7 @@
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="173"/>
         <source>The OpenOrienteering developers in alphabetical order:</source>
-        <translation type="unfinished"></translation>
+        <translation>OpenOrienteering ohjelmiston kehittäjät aakkosellissa järjestyksessä:</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="174"/>
@@ -242,7 +242,7 @@
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="56"/>
         <source>File recovery</source>
-        <translation type="unfinished"></translation>
+        <translation>Tiedoston palautus</translation>
     </message>
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="58"/>
@@ -903,7 +903,7 @@
     <message>
         <location filename="../src/tool_draw_path.cpp" line="87"/>
         <source>Finish</source>
-        <translation type="unfinished"></translation>
+        <translation>Loppu</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="88"/>
@@ -920,13 +920,13 @@
         <location filename="../src/tool_draw_path.cpp" line="90"/>
         <source>Angle</source>
         <comment>Using constrained angles</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kulma</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="91"/>
         <source>Dash</source>
         <comment>Drawing dash points</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ajatusviiva</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="92"/>
@@ -984,7 +984,7 @@
         <location filename="../src/tool_draw_point.cpp" line="61"/>
         <source>Angle</source>
         <comment>Using constrained angles</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kulma</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_point.cpp" line="62"/>
@@ -1029,7 +1029,7 @@
     <message>
         <location filename="../src/tool_draw_rectangle.cpp" line="78"/>
         <source>Finish</source>
-        <translation type="unfinished"></translation>
+        <translation>Loppu</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_rectangle.cpp" line="79"/>
@@ -1047,7 +1047,7 @@
         <location filename="../src/tool_draw_rectangle.cpp" line="81"/>
         <source>Dash</source>
         <comment>Drawing dash points</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ajatusviiva</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_rectangle.cpp" line="82"/>
@@ -1129,7 +1129,7 @@
         <location filename="../src/tool_edit_point.cpp" line="491"/>
         <source>Point / Angle</source>
         <comment>Modify points or use constrained angles</comment>
-        <translation type="unfinished"></translation>
+        <translation>Piste / Kulma</translation>
     </message>
     <message>
         <location filename="../src/tool_edit_point.cpp" line="492"/>
@@ -1315,7 +1315,7 @@
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="103"/>
         <source>Editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Editori</translation>
     </message>
 </context>
 <context>
@@ -1381,12 +1381,12 @@
     <message>
         <location filename="../src/gps_display.cpp" line="89"/>
         <source>Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>Kyllä</translation>
     </message>
     <message>
         <location filename="../src/gps_display.cpp" line="90"/>
         <source>No</source>
-        <translation type="unfinished"></translation>
+        <translation>Ei</translation>
     </message>
 </context>
 <context>
@@ -1404,12 +1404,12 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="72"/>
         <source>Screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Kuvaruutu</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="77"/>
         <source>Pixels per inch:</source>
-        <translation type="unfinished"></translation>
+        <translation>Pikseliä tuumalla:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="87"/>
@@ -1419,7 +1419,7 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="96"/>
         <source>Saving files</source>
-        <translation type="unfinished"></translation>
+        <translation>Tiedostojen tallentamista</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="98"/>
@@ -1440,7 +1440,7 @@
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="106"/>
         <source>min</source>
         <comment>unit minutes</comment>
-        <translation type="unfinished"></translation>
+        <translation>min</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="110"/>
@@ -1456,7 +1456,7 @@
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="128"/>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="274"/>
         <source>More...</source>
-        <translation type="unfinished"></translation>
+        <translation>Lisää...</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="135"/>
@@ -1466,7 +1466,7 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="155"/>
         <source>General</source>
-        <translation type="unfinished"></translation>
+        <translation>Yleinen</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="179"/>
@@ -1501,7 +1501,7 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="337"/>
         <source>%1 x %2</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 x %2</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="338"/>
@@ -1569,12 +1569,12 @@
         <location filename="../src/core/crs_template_implementation.cpp" line="93"/>
         <location filename="../src/core/georeferencing.cpp" line="533"/>
         <source>Local coordinates</source>
-        <translation type="unfinished"></translation>
+        <translation>Paikalliset koordinaatit</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="85"/>
         <source>EPSG code</source>
-        <translation type="unfinished"></translation>
+        <translation>EPSG koodi</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="92"/>
@@ -1977,7 +1977,7 @@
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="161"/>
         <source>About %1</source>
         <comment>As in 'About OpenOrienteering Mapper'</comment>
-        <translation type="unfinished"></translation>
+        <translation>Tietoja %1:stä</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="164"/>
@@ -2031,17 +2031,17 @@
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="334"/>
         <source>Examples</source>
-        <translation type="unfinished"></translation>
+        <translation>Esimerkit</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="340"/>
         <source>About Mapper</source>
-        <translation type="unfinished"></translation>
+        <translation>Tietoja Mapper:stä</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="458"/>
         <source>File list</source>
-        <translation type="unfinished"></translation>
+        <translation>Tiedostolista</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="541"/>
@@ -2545,7 +2545,7 @@ löytääksesi taustakarttatiedoston nimen.</translation>
     <message>
         <location filename="../src/template_track.cpp" line="533"/>
         <source>Coordinate system</source>
-        <translation type="unfinished"></translation>
+        <translation>Koordinaatisto</translation>
     </message>
     <message>
         <location filename="../src/template_track.cpp" line="534"/>
@@ -2555,7 +2555,7 @@ löytääksesi taustakarttatiedoston nimen.</translation>
     <message>
         <location filename="../src/template_track.cpp" line="535"/>
         <source>Map</source>
-        <translation type="unfinished"></translation>
+        <translation>Kartta</translation>
     </message>
     <message>
         <location filename="../src/template_track.cpp" line="538"/>
