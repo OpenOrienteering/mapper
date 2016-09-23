@@ -12,6 +12,7 @@
      <comment>Orienteering map</comment>
      <comment xml:lang="de">Orientierungslaufkarte</comment>
      <comment xml:lang="ru">Спортивная карта</comment>
+     <comment xml:lang="uk">Спортивна карта</comment>
      <glob pattern="*.xmap"/>
    </mime-type>
 </mime-info>
