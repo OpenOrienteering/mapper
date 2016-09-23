@@ -270,7 +270,7 @@
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="72"/>
         <source>Save the active file to remove the conflicting version.</source>
-        <translation>Guarde el archivo activo para eliminar la versión conflictiva.</translation>
+        <translation>Guardar el archivo activo para eliminar la versión conflictiva.</translation>
     </message>
 </context>
 <context>
@@ -1463,7 +1463,7 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="103"/>
         <source>Save information for automatic recovery</source>
-        <translation>Grabar información para recuperación automática</translation>
+        <translation>Guardar información para recuperación automática</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="107"/>
@@ -2299,7 +2299,7 @@
     <message>
         <location filename="../src/file_format_xml.cpp" line="417"/>
         <source>Unsupported new file format version. Some map features will not be loaded or saved by this version of the program.</source>
-        <translation>Versión moderna de formato de archivo no soportada. Algunas características del mapa no se podrán cargar o grabar con esta versión del programa.</translation>
+        <translation>Versión moderna de formato de archivo no soportada. Algunas características del mapa no se podrán cargar o guardar con esta versión del programa.</translation>
     </message>
     <message>
         <location filename="../src/file_format.cpp" line="79"/>
@@ -2687,12 +2687,12 @@
     <message>
         <location filename="../src/gui/main_window.cpp" line="244"/>
         <source>&amp;Save</source>
-        <translation>&amp;Grabar</translation>
+        <translation>&amp;Guardar</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="249"/>
         <source>Save &amp;as...</source>
-        <translation>Grabar &amp;como...</translation>
+        <translation>Guardar &amp;como...</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="251"/>
@@ -2768,7 +2768,7 @@
     <message>
         <location filename="../src/gui/main_window.cpp" line="328"/>
         <source>&amp;Help</source>
-        <translation>&amp;Ayuda</translation>
+        <translation>Ay&amp;uda</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="501"/>
@@ -2819,7 +2819,7 @@ Do you want to scale the symbols to the selected scale?</source>
     </message>
     <message>
         <source>There is an automatically saved version of &lt;br /&gt;&lt;tt&gt;%1&lt;/tt&gt;&lt;br /&gt;&lt;br /&gt;Load this version?</source>
-        <translation type="vanished">Hay una versión grabada automáticamente de &lt;br /&gt;&lt;tt&gt;%1&lt;/tt&gt;&lt;br /&gt;&lt;br /&gt;¿Cargar esta versión?</translation>
+        <translation>Hay una versión guardada automáticamente de &lt;br /&gt;&lt;tt&gt;%1&lt;/tt&gt;&lt;br /&gt;&lt;br /&gt;¿Cargar esta versión?</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="876"/>
@@ -3528,7 +3528,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="486"/>
         <source>Map saved</source>
-        <translation>Mapa grabado</translation>
+        <translation>Mapa guardado</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="807"/>
@@ -4919,7 +4919,7 @@ zoom usando la rueda del ratón, si dispone de esos elementos.</translation>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="901"/>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1254"/>
         <source>This symbol cannot be saved as a proper OCD symbol again.</source>
-        <translation>Este símbolo no se pudo grabar como un símbolo OCD correcto otra vez.</translation>
+        <translation>Este símbolo no se puede guardar como un símbolo OCD correcto otra vez.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1896"/>
@@ -5454,7 +5454,7 @@ zoom usando la rueda del ratón, si dispone de esos elementos.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="488"/>
         <source>Save to PDF</source>
-        <translation>Grabar en PDF</translation>
+        <translation>Guardar como PDF</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="912"/>
@@ -5599,7 +5599,7 @@ de color</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1174"/>
         <source>Failed to save the image. Does the path exist? Do you have sufficient rights?</source>
-        <translation>Falló la grabación de la imagen. ¿Existe el path? ¿Tiene suficientes permisos?</translation>
+        <translation>Fallo al guardar la imagen. ¿Existe la ruta y tiene suficientes permisos?</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1178"/>
@@ -7396,7 +7396,7 @@ La máxima versión soportada es %2.</translation>
     <message>
         <location filename="../src/file_format_xml.cpp" line="184"/>
         <source>Older versions of Mapper do not support multiple map parts. To save the map in compatibility mode, you must first merge all map parts.</source>
-        <translation>Versiones anteriores de Mapper  no soportan múltiples partes de mapa. Para grabar el mapa en un modo compatible, primero debe fusionar todas las partes del mapa.</translation>
+        <translation>Versiones anteriores de Mapper  no soportan múltiples partes de mapa. Para guardar el mapa en un modo compatible, primero debe fusionar todas las partes del mapa.</translation>
     </message>
 </context>
 <context>
