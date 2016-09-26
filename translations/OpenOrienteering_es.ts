@@ -45,7 +45,7 @@
     </message>
     <message>
         <source>This software is licensed under the term of the GNU General Public License (GPL), version 3.&lt;br/&gt;You are welcome to redistribute it under the terms of this license.&lt;br/&gt;THERE IS NO WARRANTY FOR THE PROGRAM, TO THE EXTENT PERMITTED BY APPLICABLE LAW.&lt;br&gt;The full license text is supplied in the file %1.</source>
-        <translation type="vanished">Este software tiene licencia bajo los términos de GNU General Public License (GPL), versión 3.&lt;br/&gt;Usted puede redistribuirlo bajo los términos de esta licencia.&lt;br/&gt;EL PROGRAMA NO TIENE GARANTÍA, HASTA LOS LÍMITES PERMITIDOS POR LA LEY QUE SEA DE APLICACIÓN.&lt;br&gt;El texto completo de la licencia está en el fichero %1.</translation>
+        <translation>Este software tiene licencia bajo los términos de GNU General Public License (GPL), versión 3.&lt;br/&gt;Usted puede redistribuirlo bajo los términos de esta licencia.&lt;br/&gt;EL PROGRAMA NO TIENE GARANTÍA, HASTA LOS LÍMITES PERMITIDOS POR LA LEY QUE SEA DE APLICACIÓN.&lt;br&gt;El texto completo de la licencia está en el archivo %1.</translation>
     </message>
     <message>
         <source>Developers in alphabetical order:</source>
@@ -78,7 +78,7 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="89"/>
         <source>Open most recently used file</source>
-        <translation>Abrir fichero usado más recientemente</translation>
+        <translation>Abrir el archivo usado más recientemente</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="92"/>
@@ -241,7 +241,7 @@
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="43"/>
         <source>Autosaved file</source>
-        <translation>Fichero guardado automáticamente</translation>
+        <translation>Archivo guardado automáticamente</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/gui/autosave_dialog.cpp" line="45"/>
@@ -255,22 +255,22 @@
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="49"/>
         <source>File saved by the user</source>
-        <translation>Fichero grabado por el usuario</translation>
+        <translation>Archivo guardado por el usuario</translation>
     </message>
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="56"/>
         <source>File recovery</source>
-        <translation>Recuperación de fichero</translation>
+        <translation>Recuperación de archivo</translation>
     </message>
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="58"/>
         <source>File %1 was not properly closed. At the moment, there are two versions:</source>
-        <translation>El fichero %1 no fue cerrado correctamente. En este momento, hay dos versiones:</translation>
+        <translation>El archivo %1 no se cerró correctamente. En este momento, hay dos versiones:</translation>
     </message>
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="72"/>
         <source>Save the active file to remove the conflicting version.</source>
-        <translation>Guarde el archivo activo para eliminar la versión conflictiva.</translation>
+        <translation>Guardar el archivo activo para eliminar la versión conflictiva.</translation>
     </message>
 </context>
 <context>
@@ -755,12 +755,12 @@
     <message>
         <location filename="../src/dxfparser.cpp" line="36"/>
         <source>Could not open the file.</source>
-        <translation>No se pudo abrir el fichero.</translation>
+        <translation>No se pudo abrir el archivo.</translation>
     </message>
     <message>
         <location filename="../src/dxfparser.cpp" line="52"/>
         <source>The file is not an DXF file.</source>
-        <translation>El fichero no es DXF.</translation>
+        <translation>El archivo no es un archivo DXF.</translation>
     </message>
 </context>
 <context>
@@ -1357,7 +1357,7 @@
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="1546"/>
         <source>Could not create new file: %1</source>
-        <translation>No se pudo crear el nuevo fichero: %1</translation>
+        <translation>No se pudo crear el nuevo archivo: %1</translation>
     </message>
     <message>
         <location filename="../src/file_format.cpp" line="87"/>
@@ -1453,7 +1453,7 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="96"/>
         <source>Saving files</source>
-        <translation>Grabando ficheros</translation>
+        <translation>Guardando archivos</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="98"/>
@@ -1463,7 +1463,7 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="103"/>
         <source>Save information for automatic recovery</source>
-        <translation>Grabar información para recuperación automática</translation>
+        <translation>Guardar información para recuperación automática</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="107"/>
@@ -1480,7 +1480,7 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="110"/>
         <source>File import and export</source>
-        <translation>Importación y exportación de ficheros</translation>
+        <translation>Importación y exportación de archivos</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="133"/>
@@ -1496,7 +1496,7 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="135"/>
         <source>Use the new OCD importer also for version 8 files</source>
-        <translation>Usar el nuevo importador de OCD también para ficheros de versión 8</translation>
+        <translation>Usar el nuevo importador de OCD también para archivos de la versión 8</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="155"/>
@@ -1515,7 +1515,7 @@
     </message>
     <message>
         <source>Use translation file...</source>
-        <translation type="vanished">Usar fichero de traducción...</translation>
+        <translation>Usar archivo de traducción...</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="300"/>
@@ -1526,12 +1526,12 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="300"/>
         <source>Translation files (*.qm)</source>
-        <translation>Ficheros de traducción (*.qm)</translation>
+        <translation>Archivos de traducción (*.qm)</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="307"/>
         <source>The selected file is not a valid translation.</source>
-        <translation>El fichero seleccionado no es una traducción válida.</translation>
+        <translation>El archivo seleccionado no es una traducción válida.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="337"/>
@@ -1957,7 +1957,7 @@
     </message>
     <message>
         <source>Open most recently used file on start</source>
-        <translation type="vanished">Abrir el fichero usado más recientemente al arrancar</translation>
+        <translation>Abrir el archivo usado más recientemente al arrancar</translation>
     </message>
     <message>
         <source>Clear list</source>
@@ -1977,7 +1977,7 @@
     </message>
     <message>
         <source>Open most recently used file</source>
-        <translation type="vanished">Abrir fichero usado más recientemente</translation>
+        <translation>Abrir el archivo usado más recientemente</translation>
     </message>
     <message>
         <source>Show tip of the day</source>
@@ -2033,7 +2033,7 @@
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="212"/>
         <source>Open most recently used file on start</source>
-        <translation>Abrir el fichero usado más recientemente al arrancar</translation>
+        <translation>Abrir el archivo usado más recientemente al arrancar</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="215"/>
@@ -2080,16 +2080,16 @@
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="458"/>
         <source>File list</source>
-        <translation>Lista de ficheros</translation>
+        <translation>Lista de archivos</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="541"/>
         <source>No map files found!&lt;br/&gt;&lt;br/&gt;Copy map files to a top-level folder named 'OOMapper' on the device or a memory card.</source>
-        <translation>¡No se han encontrado ficheros!&lt;br/&gt;&lt;br/&gt;Copie ficheros de mapas a una carpeta llamada 'OOMapper' en el nivel superior de la estructura en el dispositivo o en la tarjeta de memoria.</translation>
+        <translation>¡No se han encontrado archivos de mapas!&lt;br/&gt;&lt;br/&gt;Copie los archivos de mapas en una carpeta de primer nivel llamada 'OOMapper' en el almacenamiento del dispositivo o en la tarjeta de memoria.</translation>
     </message>
     <message>
         <source>No map files found!&lt;br/&gt;&lt;br/&gt;Copy a map file to /OOMapper or /sdcard/OOMapper to list it here.</source>
-        <translation type="vanished">¡No se han encontrado ficheros!&lt;br/&gt;&lt;br/&gt;Copie un fichero de mapa a /OOMapper o /sdcard/OOMapper para listarlo aquí.</translation>
+        <translation>¡No se han encontrado archivos de mapas!&lt;br/&gt;&lt;br/&gt;Copie un archivo de mapa a /OOMapper o /sdcard/OOMapper para listarlo aquí.</translation>
     </message>
 </context>
 <context>
@@ -2199,7 +2199,7 @@
     <message>
         <location filename="../src/file_import_export.cpp" line="114"/>
         <source>Template "%1" has been loaded from the map's directory instead of the relative location to the map file where it was previously.</source>
-        <translation>La plantilla "%1" se ha cargado desde el directorio del mapa en lugar de la ubicación relativa al fichero del mapa donde estaba anteriormente.</translation>
+        <translation>La plantilla "%1" se ha cargado desde el directorio del mapa en lugar de la ubicación relativa al archivo del mapa donde estaba anteriormente.</translation>
     </message>
     <message>
         <location filename="../src/file_import_export.cpp" line="120"/>
@@ -2217,38 +2217,38 @@
         <location filename="../src/file_import_export.cpp" line="132"/>
         <location filename="../src/file_import_export.cpp" line="134"/>
         <source>At least one template file could not be found.</source>
-        <translation>No se ha podido encontrar al menos un fichero de plantilla.</translation>
+        <translation>Al menos un archivo de plantilla no se ha podido encontrar.</translation>
     </message>
     <message>
         <location filename="../src/file_import_export.cpp" line="135"/>
         <source>Click the red template name(s) in the Templates -&gt; Template setup window to locate the template file name(s).</source>
-        <translation>Haga clic sobre el nombre de plantilla en la ventana Plantillas -&gt; Configuración de plantilla, para localizar el nombre del fichero de la plantilla.</translation>
+        <translation>Haga clic sobre el nombre de plantilla en rojo en la ventana de Plantillas -&gt; Configuración de plantilla, para localizar el nombre del archivo de la plantilla.</translation>
     </message>
     <message>
         <source>At least one template file could not be found. Click the red template name(s) in the Templates -&gt; Template setup window to locate the template file name(s).</source>
-        <translation type="vanished">Al menos una plantilla no se ha encontrado. Haga clic en el nombre de plantilla en rojo, en la opción Plantillas -&gt; Configuración de plantilla para localizar el nombre del fichero de plantilla.</translation>
+        <translation>Al menos un archivo de plantilla no se ha encontrado. Haga clic en el nombre de plantilla en rojo en la ventana Plantillas -&gt; Configuración de plantilla, para localizar el nombre del archivo de plantilla.</translation>
     </message>
     <message>
         <location filename="../src/file_format_native.cpp" line="123"/>
         <source>This file uses an obsolete format. Support for this format is to be removed from this program soon. To be able to open the file in the future, save it again.</source>
-        <translation>Este fichero utiliza un formato obsoleto. Dentro de poco este formato no estará soportado en este programa. Para poder abrir el fichero en el futuro, grábelo de nuevo.</translation>
+        <translation>Este archivo utiliza un formato obsoleto. Próximamente este formato no estará soportado en este programa. Para poder abrir el archivo en el futuro, guárdelo de nuevo.</translation>
     </message>
     <message>
         <location filename="../src/file_format_native.cpp" line="136"/>
         <location filename="../src/file_format_xml.cpp" line="413"/>
         <source>Invalid file format version.</source>
-        <translation>Versión no válida de formato de fichero.</translation>
+        <translation>Versión no válida de formato de archivo.</translation>
     </message>
     <message>
         <location filename="../src/file_format_native.cpp" line="140"/>
         <location filename="../src/file_format_xml.cpp" line="415"/>
         <source>Unsupported old file format version. Please use an older program version to load and update the file.</source>
-        <translation>Versión antigua no soportada de formato de fichero. Por favor, use una versión antigua del programa para cargar y actualizar el fichero.</translation>
+        <translation>Versión antigua de formato de archivo no soportada. Por favor, utilice una versión más antigua del programa para cargar y actualizar el archivo.</translation>
     </message>
     <message>
         <location filename="../src/file_format_native.cpp" line="144"/>
         <source>Unsupported new file format version. Some map features will not be loaded or saved by this version of the program. Consider updating.</source>
-        <translation>Versión no soportada de nuevo formato de fichero. Algunas características del mapa no se podrán cargar o grabar con esta versión del programa. Considere la posibilidad de actualizarlo.</translation>
+        <translation>Versión moderna de formato de archivo no soportada. Algunas características del mapa no se podrán cargar o guardar con esta versión del programa. Considere una actualización.</translation>
     </message>
     <message>
         <location filename="../src/file_format_native.cpp" line="200"/>
@@ -2289,17 +2289,17 @@
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1992"/>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="2022"/>
         <source>Could not read file: %1</source>
-        <translation>No se pudo leer el fichero: %1</translation>
+        <translation>No se pudo leer el archivo: %1</translation>
     </message>
     <message>
         <location filename="../src/file_format_xml.cpp" line="407"/>
         <source>Unsupported file format.</source>
-        <translation>Formato de fichero no soportado.</translation>
+        <translation>Formato de archivo no soportado.</translation>
     </message>
     <message>
         <location filename="../src/file_format_xml.cpp" line="417"/>
         <source>Unsupported new file format version. Some map features will not be loaded or saved by this version of the program.</source>
-        <translation>Versión no soportada de nuevo formato de fichero. Algunas características del mapa no se podrán cargar o grabar con esta versión del programa.</translation>
+        <translation>Versión moderna de formato de archivo no soportada. Algunas características del mapa no se podrán cargar o guardar con esta versión del programa.</translation>
     </message>
     <message>
         <location filename="../src/file_format.cpp" line="79"/>
@@ -2677,7 +2677,7 @@
     <message>
         <location filename="../src/gui/main_window.cpp" line="229"/>
         <source>Open an existing file</source>
-        <translation>Abre un fichero existente</translation>
+        <translation>Abrir un archivo existente</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="233"/>
@@ -2687,12 +2687,12 @@
     <message>
         <location filename="../src/gui/main_window.cpp" line="244"/>
         <source>&amp;Save</source>
-        <translation>&amp;Grabar</translation>
+        <translation>&amp;Guardar</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="249"/>
         <source>Save &amp;as...</source>
-        <translation>Grabar &amp;como...</translation>
+        <translation>Guardar &amp;como...</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="251"/>
@@ -2713,7 +2713,7 @@
     <message>
         <location filename="../src/gui/main_window.cpp" line="264"/>
         <source>Close this file</source>
-        <translation>Cierra este fichero</translation>
+        <translation>Cerrar este archivo</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="268"/>
@@ -2728,7 +2728,7 @@
     <message>
         <location filename="../src/gui/main_window.cpp" line="277"/>
         <source>&amp;File</source>
-        <translation>&amp;Fichero</translation>
+        <translation>&amp;Archivo</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="296"/>
@@ -2743,7 +2743,7 @@
     <message>
         <location filename="../src/gui/main_window.cpp" line="312"/>
         <source>Show the help file for this application</source>
-        <translation>Muestra el fichero de ayuda de este programa</translation>
+        <translation>Mostrar el archivo de ayuda de esta aplicación</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="316"/>
@@ -2768,7 +2768,7 @@
     <message>
         <location filename="../src/gui/main_window.cpp" line="328"/>
         <source>&amp;Help</source>
-        <translation>&amp;Ayuda</translation>
+        <translation>Ay&amp;uda</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="501"/>
@@ -2779,13 +2779,13 @@
         <location filename="../src/gui/main_window.cpp" line="507"/>
         <source>The file has been modified.
 Do you want to save your changes?</source>
-        <translation>El fichero ha sido modificado.
-¿Quiere grabar los cambios?</translation>
+        <translation>El archivo se ha modificado.
+¿Quiere guardar sus cambios?</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="347"/>
         <source>Unsaved file</source>
-        <translation>Fichero no grabado</translation>
+        <translation>Archivo no guardado</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="620"/>
@@ -2811,15 +2811,15 @@ Do you want to scale the symbols to the selected scale?</source>
     <message>
         <location filename="../src/gui/main_window.cpp" line="688"/>
         <source>It seems that %1 crashed the last time this file was opened:&lt;br /&gt;&lt;tt&gt;%2&lt;/tt&gt;&lt;br /&gt;&lt;br /&gt;Really retry to open it?</source>
-        <translation>Parece que %1 ha fallado la última vez que se abrió este fichero:&lt;br /&gt;&lt;tt&gt;%2&lt;/tt&gt;&lt;br /&gt;&lt;br /&gt;¿Realmente quiere tratar de abrirlo de nuevo?</translation>
+        <translation>Parece que %1 ha fallado la última vez que se abrió este archivo:&lt;br /&gt;&lt;tt&gt;%2&lt;/tt&gt;&lt;br /&gt;&lt;br /&gt;¿Realmente quiere intentar abrirlo de nuevo?</translation>
     </message>
     <message>
         <source>File recovery</source>
-        <translation type="vanished">Recuperación de fichero</translation>
+        <translation>Recuperación de archivo</translation>
     </message>
     <message>
         <source>There is an automatically saved version of &lt;br /&gt;&lt;tt&gt;%1&lt;/tt&gt;&lt;br /&gt;&lt;br /&gt;Load this version?</source>
-        <translation type="vanished">Hay una versión grabada automáticamente de &lt;br /&gt;&lt;tt&gt;%1&lt;/tt&gt;&lt;br /&gt;&lt;br /&gt;¿Cargar esta versión?</translation>
+        <translation>Hay una versión guardada automáticamente de &lt;br /&gt;&lt;tt&gt;%1&lt;/tt&gt;&lt;br /&gt;&lt;br /&gt;¿Cargar esta versión?</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="876"/>
@@ -2839,12 +2839,12 @@ Do you want to scale the symbols to the selected scale?</source>
     <message>
         <location filename="../src/gui/main_window.cpp" line="965"/>
         <source>All files</source>
-        <translation>Todos los ficheros</translation>
+        <translation>Todos los archivos</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="658"/>
         <source>Open file</source>
-        <translation>Abrir fichero</translation>
+        <translation>Abrir archivo</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="701"/>
@@ -2858,16 +2858,16 @@ Do you want to scale the symbols to the selected scale?</source>
 %1
 
 File format not recognized.</source>
-        <translation>No se puede abrir el fichero:
+        <translation>No se puede abrir el archivo:
 %1
 
-Formato de fichero no reconocido.</translation>
+Formato de archivo no reconocido.</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="778"/>
         <source>The file has been modified.
 Do you want to discard your changes?</source>
-        <translation>El fichero ha sido modificado.
+        <translation>El archivo se ha modificado.
 ¿Quiere descartar sus cambios?</translation>
     </message>
     <message>
@@ -2881,25 +2881,25 @@ Do you want to discard your changes?</source>
 
 Press Yes to save in this format.
 Press No to choose a different format.</source>
-        <translation>Este mapa se está grabando como un fichero "%1". Se puede perder información.
+        <translation>Este mapa se está guardando como un archivo "%1". Se puede perder información.
 
-Pulse Sí para grabar en este formato.
+Pulse Sí para guardar en este formato.
 Pulse No para seleccionar un formato diferente.</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="1001"/>
         <source>Save file</source>
-        <translation>Grabar fichero</translation>
+        <translation>Guardar archivo</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="1022"/>
         <source>File could not be saved:</source>
-        <translation>El fichero no se ha podido grabar:</translation>
+        <translation>El archivo no se ha podido guardar:</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="1023"/>
         <source>There was a problem in determining the file format.</source>
-        <translation>Ha habido un problema tratando de determinar el formato de fichero.</translation>
+        <translation>Ha habido un problema tratando de averiguar el formato de archivo.</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="1024"/>
@@ -2941,7 +2941,7 @@ porque el formato es desconocido.</translation>
     <message>
         <source>File does not exist or insufficient permissions to open:
 %1</source>
-        <translation type="vanished">El fichero no existe o no tiene suficientes permisos para abrirlo:
+        <translation>El archivo no existe o no tiene suficientes permisos para abrirlo:
 %1</translation>
     </message>
     <message>
@@ -2972,14 +2972,14 @@ porque el formato es desconocido.</translation>
         <source>Cannot open file:
 %1
 for reading.</source>
-        <translation>No se puede abrir el fichero:
+        <translation>No se puede abrir el archivo:
 %1
 para lectura.</translation>
     </message>
     <message>
         <location filename="../src/map.cpp" line="708"/>
         <source>Invalid file type.</source>
-        <translation>Tipo de fichero no válido.</translation>
+        <translation>Tipo de archivo no válido.</translation>
     </message>
     <message>
         <location filename="../src/map.cpp" line="664"/>
@@ -2988,7 +2988,7 @@ para lectura.</translation>
 %1
 
 %2</source>
-        <translation>No se puede abrir el fichero:
+        <translation>No se puede abrir el archivo:
 %1
 
 %2</translation>
@@ -2998,7 +2998,7 @@ para lectura.</translation>
         <source>Cannot save file
 %1:
 %2</source>
-        <translation>No se puede grabar el fichero
+        <translation>No se puede guardar el archivo
 %1:
 %2</translation>
     </message>
@@ -3129,7 +3129,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="826"/>
         <source>Replace the symbols with those from another map file</source>
-        <translation>Reemplaza los símbolos con los de otro fichero de mapa</translation>
+        <translation>Reemplazar los símbolos con los de otro archivo de mapa</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="829"/>
@@ -3528,7 +3528,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="486"/>
         <source>Map saved</source>
-        <translation>Mapa grabado</translation>
+        <translation>Mapa guardado</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="807"/>
@@ -4048,7 +4048,7 @@ selecc</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="3785"/>
         <source>Cannot import the selected map file because it could not be loaded.</source>
-        <translation>No se puede importar el fichero de mapa seleccionado porque no se pudo cargar.</translation>
+        <translation>No se puede importar el archivo de mapa seleccionado porque no se pudo cargar.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2048"/>
@@ -4078,7 +4078,7 @@ selecc</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="805"/>
         <source>Clear the undo / redo history to reduce map file size.</source>
-        <translation>Limpia el historial de deshacer / rehacer para reducir el tamaño de fichero del mapa.</translation>
+        <translation>Limpiar el historial de deshacer / rehacer para reducir el tamaño del archivo del mapa.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="812"/>
@@ -4303,22 +4303,22 @@ selecc</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="3746"/>
         <source>Import %1, GPX, OSM or DXF file</source>
-        <translation>Importar %1, GPX, OSM o DXF</translation>
+        <translation>Importar %1, archivo GPX, OSM o DXF</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="3750"/>
         <source>Importable files</source>
-        <translation>Ficheros importables</translation>
+        <translation>Archivos importables</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="3750"/>
         <source>All files</source>
-        <translation>Todos los ficheros</translation>
+        <translation>Todos los archivos</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="3778"/>
         <source>Cannot import the selected file because its file format is not supported.</source>
-        <translation>No se puede importar el fichero seleccionado porque su formato no está soportado.</translation>
+        <translation>No se puede importar el archivo seleccionado porque su formato no está soportado.</translation>
     </message>
 </context>
 <context>
@@ -4603,17 +4603,17 @@ zoom usando la rueda del ratón, si dispone de esos elementos.</translation>
         <location filename="../src/map_dialog_new.cpp" line="186"/>
         <location filename="../src/map_dialog_new.cpp" line="241"/>
         <source>Load symbol set from a file...</source>
-        <translation>Cargar conjunto de símbolos desde un fichero...</translation>
+        <translation>Cargar conjunto de símbolos desde un archivo...</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_new.cpp" line="237"/>
         <source>All symbol set files</source>
-        <translation>Todos los ficheros de conjuntos de símbolos</translation>
+        <translation>Todos los archivos de conjuntos de símbolos</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_new.cpp" line="239"/>
         <source>All files</source>
-        <translation>Todos los ficheros</translation>
+        <translation>Todos los archivos</translation>
     </message>
 </context>
 <context>
@@ -4641,7 +4641,7 @@ zoom usando la rueda del ratón, si dispone de esos elementos.</translation>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="1831"/>
         <source>Unable to export template: file type of "%1" is not supported yet</source>
-        <translation>Imposible exportar plantilla: el tipo de fichero "%1" no está soportado todavía</translation>
+        <translation>Imposible exportar plantilla: el tipo de archivo "%1" no está soportado todavía</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="2049"/>
@@ -4709,7 +4709,7 @@ zoom usando la rueda del ratón, si dispone de esos elementos.</translation>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="121"/>
         <source>OCAD files of version %1 are not supported!</source>
-        <translation>¡Los ficheros OCAD de la versión %1 no están soportados!</translation>
+        <translation>¡Los archivos OCAD de la versión %1 no están soportados!</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/file_format_ocad8.cpp" line="145"/>
@@ -4919,7 +4919,7 @@ zoom usando la rueda del ratón, si dispone de esos elementos.</translation>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="901"/>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1254"/>
         <source>This symbol cannot be saved as a proper OCD symbol again.</source>
-        <translation>Este símbolo no se pudo grabar como un símbolo OCD correcto otra vez.</translation>
+        <translation>Este símbolo no se puede guardar como un símbolo OCD correcto otra vez.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1896"/>
@@ -4994,12 +4994,12 @@ zoom usando la rueda del ratón, si dispone de esos elementos.</translation>
     </message>
     <message>
         <source>Untested file importer for format: OCD %1</source>
-        <translation type="vanished">Importador de ficheros no probado para formato: OCD %1</translation>
+        <translation>Importador de archivos no testeado para el formato: OCD %1</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="2023"/>
         <source>OCD files of version %1 are not supported!</source>
-        <translation>¡Ficheros de versión %1 de OCAD no están soportados!</translation>
+        <translation>¡Archivos OCD de versión %1 no están soportados!</translation>
     </message>
 </context>
 <context>
@@ -5454,7 +5454,7 @@ zoom usando la rueda del ratón, si dispone de esos elementos.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="488"/>
         <source>Save to PDF</source>
-        <translation>Grabar en PDF</translation>
+        <translation>Guardar como PDF</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="912"/>
@@ -5534,7 +5534,7 @@ zoom usando la rueda del ratón, si dispone de esos elementos.</translation>
         <location filename="../src/gui/print_widget.cpp" line="1136"/>
         <location filename="../src/gui/print_widget.cpp" line="1200"/>
         <source>All files (*.*)</source>
-        <translation>Todos los ficheros (*.*)</translation>
+        <translation>Todos los archivos (*.*)</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1238"/>
@@ -5599,7 +5599,7 @@ de color</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1174"/>
         <source>Failed to save the image. Does the path exist? Do you have sufficient rights?</source>
-        <translation>Falló la grabación de la imagen. ¿Existe el path? ¿Tiene suficientes permisos?</translation>
+        <translation>Fallo al guardar la imagen. ¿Existe la ruta y tiene suficientes permisos?</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1178"/>
@@ -5745,7 +5745,7 @@ de color</translation>
     <message>
         <location filename="../src/symbol_dialog_replace.cpp" line="327"/>
         <source>Choose map file to load symbols from</source>
-        <translation>Seleccione fichero de mapa desde el que cargar los símbolos</translation>
+        <translation>Seleccionar un archivo de mapa desde el que cargar los símbolos</translation>
     </message>
     <message>
         <location filename="../src/symbol_dialog_replace.cpp" line="335"/>
@@ -5755,7 +5755,7 @@ de color</translation>
     <message>
         <location filename="../src/symbol_dialog_replace.cpp" line="335"/>
         <source>Cannot load map file, aborting.</source>
-        <translation>No se puede cargar el fichero de mapa, abortando.</translation>
+        <translation>No se puede cargar el archivo de mapa, cancelando.</translation>
     </message>
     <message>
         <location filename="../src/symbol_dialog_replace.cpp" line="341"/>
@@ -6067,7 +6067,7 @@ de color</translation>
     <message>
         <location filename="../src/core/storage_location.cpp" line="281"/>
         <source>'%1' is located in app storage. The files will be removed when uninstalling the app.</source>
-        <translation>'%1' está ubicado en el almacenamiento de la app. Los archivos se eliminarán cuando la app se desinstale.</translation>
+        <translation>'%1' está ubicado en el almacenamiento de la aplicación. Los archivos se eliminarán cuando la aplicación se desinstale.</translation>
     </message>
     <message>
         <location filename="../src/core/storage_location.cpp" line="284"/>
@@ -6458,12 +6458,12 @@ para saltar sobre el perro perezoso
     <message>
         <location filename="../src/template.cpp" line="403"/>
         <source>Find the moved template file</source>
-        <translation>Encontrar el fichero de plantilla movido</translation>
+        <translation>Encontrar el archivo de plantilla movido</translation>
     </message>
     <message>
         <location filename="../src/template.cpp" line="405"/>
         <source>All files (*.*)</source>
-        <translation>Todos los ficheros (*.*)</translation>
+        <translation>Todos los archivos (*.*)</translation>
     </message>
     <message>
         <location filename="../src/template.cpp" line="420"/>
@@ -6474,16 +6474,16 @@ para saltar sobre el perro perezoso
         <location filename="../src/template.cpp" line="502"/>
         <location filename="../src/template.cpp" line="521"/>
         <source>No such file.</source>
-        <translation>No existe el fichero.</translation>
+        <translation>No existe el archivo.</translation>
     </message>
     <message>
         <location filename="../src/template.cpp" line="539"/>
         <source>Is the format of the file correct for this template type?</source>
-        <translation>¿Es un fichero con formato correcto para este tipo de plantilla?</translation>
+        <translation>¿Es correcto el formato del archivo para este tipo de plantilla?</translation>
     </message>
     <message>
         <source>Cannot change the template to this file! Is the format of the file correct for this template type?</source>
-        <translation type="vanished">¡No se puede cambiar la plantilla a este fichero! ¿El formato del fichero es correcto para este tipo de plantilla?</translation>
+        <translation>¡No se puede cambiar la plantilla a este archivo! ¿El correcto el formato del archivo para este tipo de plantilla?</translation>
     </message>
 </context>
 <context>
@@ -6619,13 +6619,13 @@ para saltar sobre el perro perezoso
 Saving GIF files is not supported. This means that drawings on this template won't be saved!
 If you do not intend to draw on this template however, that is no problem.</source>
         <translation>Cargando una imagen GIF como plantilla.
-La grabación de ficheros GIF no está soportada. ¡Esto significa que los dibujos sobre esta plantilla no serán grabados!
+Guardar archivos GIF no está soportado. ¡Esto significa que los dibujos sobre esta plantilla no se guardarán!
 Sin embargo, si no pretende dibujar sobre esta plantilla, entonces no hay problema.</translation>
     </message>
     <message>
         <location filename="../src/template_image.cpp" line="211"/>
         <source>Select the coordinate reference system of the coordinates in the world file</source>
-        <translation>Seleccione el sistema de coordenadas de referencia de las coordenadas del fichero de mundo</translation>
+        <translation>Seleccionar el sistema de referencia de coordenadas en el archivo mundial</translation>
     </message>
 </context>
 <context>
@@ -6648,7 +6648,7 @@ Sin embargo, si no pretende dibujar sobre esta plantilla, entonces no hay proble
     <message>
         <location filename="../src/template_image.cpp" line="610"/>
         <source>World file</source>
-        <translation>Fichero de mundo</translation>
+        <translation>Archivo mundial</translation>
     </message>
     <message>
         <location filename="../src/template_image.cpp" line="612"/>
@@ -6716,7 +6716,7 @@ Sin embargo, si no pretende dibujar sobre esta plantilla, entonces no hay proble
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="155"/>
         <source>Filename</source>
-        <translation>Nombre de fichero</translation>
+        <translation>Nombre del archivo</translation>
     </message>
     <message>
         <source>Create...</source>
@@ -6816,7 +6816,7 @@ Sin embargo, si no pretende dibujar sobre esta plantilla, entonces no hay proble
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="387"/>
         <source>Open image, GPS track or DXF file</source>
-        <translation>Abrir imagen, trayecto GPS o fichero DXF</translation>
+        <translation>Abrir imagen, trayecto GPS o archivo DXF</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="244"/>
@@ -6826,12 +6826,12 @@ Sin embargo, si no pretende dibujar sobre esta plantilla, entonces no hay proble
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="390"/>
         <source>Template files</source>
-        <translation>Ficheros de plantilla</translation>
+        <translation>Archivos de plantillas</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="390"/>
         <source>All files</source>
-        <translation>Todos los ficheros</translation>
+        <translation>Todos los archivos</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="240"/>
@@ -6848,12 +6848,12 @@ Sin embargo, si no pretende dibujar sobre esta plantilla, entonces no hay proble
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="403"/>
         <source>File format not recognized.</source>
-        <translation>Formato de fichero no reconocido.</translation>
+        <translation>Formato de archivo no reconocido.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="413"/>
         <source>Failed to load template. Does the file exist and is it valid?</source>
-        <translation>Falló la carga de la plantilla. ¿El fichero existe y es válido?</translation>
+        <translation>Falló la carga de la plantilla. ¿Existe el archivo y es válido?</translation>
     </message>
     <message>
         <source>Please enter a valid number from 0 to 1, or specify a percentage from 0 to 100!</source>
@@ -7048,7 +7048,7 @@ Sin embargo, si no pretende dibujar sobre esta plantilla, entonces no hay proble
         <source>There was an error reading the DXF file %1:
 
 %2</source>
-        <translation>Hubo un error leyendo el fichero DXF %1:
+        <translation>Hubo un error leyendo el archivo DXF %1:
 
 %2</translation>
     </message>
@@ -7057,20 +7057,20 @@ Sin embargo, si no pretende dibujar sobre esta plantilla, entonces no hay proble
         <source>%1:
 Not an OSM file.</source>
         <translation>%1:
-No es un fichero OSM.</translation>
+No es un archivo OSM.</translation>
     </message>
     <message>
         <location filename="../src/gps_track.cpp" line="511"/>
         <source>The OSM file has version %1.
 The minimum supported version is %2.</source>
-        <translation>El fichero OSM es versión %1.
+        <translation>El archivo OSM es versión %1.
 La mínima versión soportada es %2.</translation>
     </message>
     <message>
         <location filename="../src/gps_track.cpp" line="518"/>
         <source>The OSM file has version %1.
 The maximum supported version is %2.</source>
-        <translation>El fichero OSM es versión %1.
+        <translation>El archivo OSM es versión %1.
 La máxima versión soportada es %2.</translation>
     </message>
     <message>
@@ -7352,7 +7352,7 @@ La máxima versión soportada es %2.</translation>
     <message>
         <location filename="../src/undo_manager.cpp" line="127"/>
         <source>Undoing this step will go beyond the point where the file was loaded. Are you sure?</source>
-        <translation>Si deshace este paso se irá más allá del punto donde el fichero fue cargado. ¿Está usted seguro?</translation>
+        <translation>Si deshace este paso se irá más allá del punto donde el archivo fue cargado. ¿Está usted seguro?</translation>
     </message>
     <message>
         <location filename="../src/undo_manager.cpp" line="159"/>
@@ -7372,7 +7372,7 @@ La máxima versión soportada es %2.</translation>
     <message>
         <location filename="../src/util.cpp" line="256"/>
         <source>Failed to locate the help files.</source>
-        <translation>Falló la localización de los ficheros de ayuda.</translation>
+        <translation>Falló la localización de los archivos de ayuda.</translation>
     </message>
     <message>
         <location filename="../src/util.cpp" line="263"/>
@@ -7396,7 +7396,7 @@ La máxima versión soportada es %2.</translation>
     <message>
         <location filename="../src/file_format_xml.cpp" line="184"/>
         <source>Older versions of Mapper do not support multiple map parts. To save the map in compatibility mode, you must first merge all map parts.</source>
-        <translation>Versiones anteriores de Mapper  no soportan múltiples partes de mapa. Para grabar el mapa en un modo compatible, primero debe fusionar todas las partes del mapa.</translation>
+        <translation>Versiones anteriores de Mapper  no soportan múltiples partes de mapa. Para guardar el mapa en un modo compatible, primero debe fusionar todas las partes del mapa.</translation>
     </message>
 </context>
 <context>
@@ -7419,7 +7419,7 @@ La máxima versión soportada es %2.</translation>
     <message>
         <location filename="../src/file_format_xml.cpp" line="478"/>
         <source>Parts of this file cannot be read by this version of Mapper. Minimum required version: %1</source>
-        <translation>Partes de este fichero no se pueden leer en esta versión de Mapper. Versión mínima requerida: %1</translation>
+        <translation>Partes de este archivo no se pueden leer en esta versión de Mapper. Versión mínima requerida: %1</translation>
     </message>
     <message>
         <location filename="../src/file_format_xml.cpp" line="512"/>
