@@ -1,18 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
-   <mime-type type="application/x-openorienteering-omap">
-     <sub-class-of type="text/xml"/>
-     <comment>Orienteering map</comment>
-     <comment xml:lang="de">Orientierungslaufkarte</comment>
-     <comment xml:lang="ru">Спортивная карта</comment>
-     <glob pattern="*.omap"/>
-   </mime-type>
    <mime-type type="application/x-openorienteering-xmap">
      <sub-class-of type="text/xml"/>
      <comment>Orienteering map</comment>
      <comment xml:lang="de">Orientierungslaufkarte</comment>
      <comment xml:lang="ru">Спортивная карта</comment>
      <comment xml:lang="uk">Спортивна карта</comment>
+     <glob pattern="*.omap"/>
      <glob pattern="*.xmap"/>
    </mime-type>
 </mime-info>
