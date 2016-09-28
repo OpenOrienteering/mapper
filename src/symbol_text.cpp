@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2015 Kai Pastor
+ *    Copyright 2012-2016 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -45,6 +45,19 @@
 #include "util.h"
 #include "util_gui.h"
 #include "gui/widgets/color_dropdown.h"
+#include "util/backports.h"
+#include "util/scoped_signals_blocker.h"
+
+
+/**
+ * \todo Move translation items to TextSymbolSettings class.
+ */
+class DetermineFontSizeDialog
+{
+public:
+	Q_DECLARE_TR_FUNCTIONS(DetermineFontSizeDialog)
+};
+
 
 const float TextSymbol::internal_point_size = 256;
 
@@ -596,24 +609,28 @@ TextSymbolSettings::TextSymbolSettings(TextSymbol* symbol, SymbolSettingDialog* 
 	font_edit = new QFontComboBox();
 	layout->addRow(tr("Font family:"), font_edit);
 	
-	QHBoxLayout* size_layout = new QHBoxLayout();
-	size_layout->setMargin(0);
-	size_layout->setSpacing(0);
+	// 0.04 pt font size is app. 0.01 mm letter height, the non-zero minimum
+	font_size_edit = Util::SpinBox::create(2, 0.04, 40000.0, tr("pt"));
+	layout->addRow(tr("Font size:"), font_size_edit);
 	
-	size_edit = Util::SpinBox::create(1, 0.0, 999999.9);
-	size_layout->addWidget(size_edit);
+	QHBoxLayout* letter_size_layout = new QHBoxLayout();
+	letter_size_layout->setMargin(0);
 	
-	size_unit_combo = new QComboBox();
-	size_unit_combo->addItem(tr("mm"), QVariant((int)SizeInMM));
-	size_unit_combo->addItem(tr("pt"), QVariant((int)SizeInPT));
-	size_unit_combo->setCurrentIndex(0);
-	size_layout->addWidget(size_unit_combo);
+	letter_size_layout->addWidget(new QLabel(DetermineFontSizeDialog::tr("Letter:")));
+	//: "A" is the default letter which is used for determining letter height.
+	letter_edit = new QLineEdit(DetermineFontSizeDialog::tr("A"));
+	letter_edit->setMaxLength(3);
+	letter_size_layout->addWidget(letter_edit);
 	
-	size_determine_button = new QPushButton(tr("Determine size..."));
-	size_layout->addSpacing(8);
-	size_layout->addWidget(size_determine_button);
+	letter_size_layout->addSpacing(8);
 	
-	layout->addRow(tr("Font size:"), size_layout);
+	letter_size_layout->addWidget(new QLabel(DetermineFontSizeDialog::tr("Height:")));
+	letter_size_edit = Util::SpinBox::create(2, 0.01, 10000.0, tr("mm"));
+	letter_size_layout->addWidget(letter_size_edit);
+	
+	layout->addRow(new QWidget(), letter_size_layout);
+	
+	layout->addItem(Util::SpacerItem::create(this));
 	
 	color_edit = new ColorDropDown(map, symbol->getColor());
 	layout->addRow(tr("Text color:"), color_edit);
@@ -724,11 +741,10 @@ TextSymbolSettings::TextSymbolSettings(TextSymbol* symbol, SymbolSettingDialog* 
 	updateFramingContents();
 	updateCompatibilityContents();
 	
-	
 	connect(font_edit, SIGNAL(currentFontChanged(QFont)), this, SLOT(fontChanged(QFont)));
-	connect(size_edit, SIGNAL(valueChanged(double)), this, SLOT(sizeChanged(double)));
-	connect(size_unit_combo, SIGNAL(currentIndexChanged(int)), this, SLOT(sizeUnitChanged(int)));
-	connect(size_determine_button, SIGNAL(clicked(bool)), this, SLOT(determineSizeClicked()));
+	connect(font_size_edit, SIGNAL(valueChanged(double)), this, SLOT(fontSizeChanged(double)));
+	connect(letter_edit, &QLineEdit::textEdited, this, &TextSymbolSettings::letterSizeChanged);
+	connect(letter_size_edit, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &TextSymbolSettings::letterSizeChanged);
 	connect(color_edit, SIGNAL(currentIndexChanged(int)), this, SLOT(colorChanged()));
 	connect(bold_check, SIGNAL(clicked(bool)), this, SLOT(checkToggled(bool)));
 	connect(italic_check, SIGNAL(clicked(bool)), this, SLOT(checkToggled(bool)));
@@ -768,55 +784,53 @@ void TextSymbolSettings::fontChanged(QFont font)
 	
 	symbol->font_family = font.family();
 	symbol->updateQFont();
+	updateLetterSizeEdit();
 	emit propertiesModified();
 }
 
-void TextSymbolSettings::sizeChanged(double value)
+void TextSymbolSettings::fontSizeChanged(double value)
 {
 	if (!react_to_changes)
 		return;
 	
-	SizeUnit unit = (SizeUnit)size_unit_combo->itemData(size_unit_combo->currentIndex()).toInt();
-	if (unit == SizeInMM)
-		symbol->font_size = qRound(1000 * value);
-	else if (unit == SizeInPT)
-		symbol->font_size = qRound(1000 * value * (1 / 72.0 * 25.4));
-	
+	symbol->font_size = qRound(value * 25400.0 / 72.0);
 	symbol->updateQFont();
+	updateLetterSizeEdit();
 	emit propertiesModified();
 }
 
-void TextSymbolSettings::sizeUnitChanged(int index)
+void TextSymbolSettings::updateFontSizeEdit()
 {
-	Q_UNUSED(index);
-	
-	if (!react_to_changes)
-		return;
-	
-	updateSizeEdit();
+	QSignalBlocker block { font_size_edit };
+	font_size_edit->setValue(0.01 * qRound(symbol->font_size * 7.2 / 25.4));
 }
 
-void TextSymbolSettings::updateSizeEdit()
+void TextSymbolSettings::letterSizeChanged()
 {
-	SizeUnit unit = (SizeUnit)size_unit_combo->itemData(size_unit_combo->currentIndex()).toInt();
-	
-	react_to_changes = false;
-	if (unit == SizeInMM)
-		size_edit->setValue(0.001 * symbol->font_size);
-	else if (unit == SizeInPT)
-		size_edit->setValue(0.001 * symbol->font_size / (1 / 72.0 * 25.4));
-	react_to_changes = true;
-}
-
-void TextSymbolSettings::determineSizeClicked()
-{
-	DetermineFontSizeDialog modal_dialog(this, symbol);
-	modal_dialog.setWindowModality(Qt::WindowModal);
-	if (modal_dialog.exec() == QDialog::Accepted)
+	auto letter_height = calculateLetterHeight();
+	if (letter_height > 0.0)
 	{
-		updateSizeEdit();
+		symbol->font_size = qRound(1000.0 * letter_size_edit->value() / letter_height);
 		symbol->updateQFont();
+		updateFontSizeEdit();
 		emit propertiesModified();
+	}
+}
+
+qreal TextSymbolSettings::calculateLetterHeight() const
+{
+	QPainterPath path;
+	path.addText(0.0, 0.0, symbol->getQFont(), letter_edit->text());
+	return path.boundingRect().height() / qreal(TextSymbol::internal_point_size);
+}
+
+void TextSymbolSettings::updateLetterSizeEdit()
+{
+	auto letter_height = calculateLetterHeight();
+	if (letter_height > 0.0)
+	{
+		QSignalBlocker block { letter_size_edit };
+		letter_size_edit->setValue(0.01 * qRound(symbol->font_size * letter_height / 10.0));
 	}
 }
 
@@ -1009,7 +1023,8 @@ void TextSymbolSettings::updateGeneralContents()
 {
 	react_to_changes = false;
 	font_edit->setCurrentFont(QFont(symbol->font_family));
-	updateSizeEdit();
+	updateFontSizeEdit();
+	updateLetterSizeEdit();
 	color_edit->setColor(symbol->color);
 	bold_check->setChecked(symbol->bold);
 	italic_check->setChecked(symbol->italic);
@@ -1091,69 +1106,4 @@ void TextSymbolSettings::reset(Symbol* symbol)
 	updateGeneralContents();
 	updateFramingContents();
 	updateCompatibilityContents();
-}
-
-
-// ### DetermineFontSizeDialog ###
-
-DetermineFontSizeDialog::DetermineFontSizeDialog(QWidget* parent, TextSymbol* symbol) 
-: QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint), 
-  symbol(symbol)
-{
-	setWindowTitle(tr("Determine font size"));
-	
-	QFormLayout *form_layout = new QFormLayout();
-	
-	QLabel* explanation_label = new QLabel(tr("This dialog allows to choose a font size which results in a given exact height for a specific letter."));
-	explanation_label->setWordWrap(true);
-	form_layout->addRow(explanation_label);
-	
-	character_edit = new QLineEdit(tr("A"));
-	character_edit->setMaxLength(1);
-	form_layout->addRow(tr("Letter:"), character_edit);
-
-	size_edit = Util::SpinBox::create(1, 0.0, 999999.9, tr("mm"));
-	size_edit->setValue(symbol->getFontSize());
-	form_layout->addRow(tr("Height:"), size_edit);
-	
-	QDialogButtonBox* button_box = new QDialogButtonBox(QDialogButtonBox::Cancel | QDialogButtonBox::Ok);
-	ok_button = button_box->button(QDialogButtonBox::Ok);
-	updateOkButton();
-	
-	QVBoxLayout* layout = new QVBoxLayout();
-	layout->addLayout(form_layout, 1);
-	layout->addItem(Util::SpacerItem::create(this));
-	layout->addWidget(button_box, 0);
-	
-	setLayout(layout);
-	
-	connect(character_edit, SIGNAL(textEdited(QString)), this, SLOT(updateOkButton()));
-	connect(size_edit, SIGNAL(valueChanged(double)), this, SLOT(updateOkButton()));
-	connect(button_box, SIGNAL(rejected()), this, SLOT(reject()));
-	connect(button_box, SIGNAL(accepted()), this, SLOT(accept()));
-}
-
-void DetermineFontSizeDialog::updateOkButton()
-{
-	ok_button->setEnabled(!character_edit->text().isEmpty() && size_edit->value() > 0);
-}
-
-void DetermineFontSizeDialog::accept()
-{
-	QChar character = character_edit->text().at(0);
-	
-	// Use a slightly more exact way to find the character height than:
-	// double character_internal_height = symbol->getFontMetrics().tightBoundingRect(character).height();
-	const QFont& font(symbol->getQFont());
-	QPainterPath path;
-	path.addText(0, 0, font, character);
-	QRectF extent = path.boundingRect();
-	double character_internal_height = extent.height();
-	
-	double character_height_at_size_one = character_internal_height / TextSymbol::internal_point_size;
-	double desired_height = size_edit->value();
-	
-	symbol->font_size = qRound(1000.0 * desired_height / character_height_at_size_one);
-	symbol->updateQFont();
-	QDialog::accept();
 }
