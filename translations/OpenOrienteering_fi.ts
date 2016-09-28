@@ -737,7 +737,7 @@
     <message>
         <location filename="../src/dxfparser.cpp" line="36"/>
         <source>Could not open the file.</source>
-        <translation type="unfinished">Tiedostoa ei voitu avata.</translation>
+        <translation>Tiedostoa ei voitu avata.</translation>
     </message>
     <message>
         <location filename="../src/dxfparser.cpp" line="52"/>
@@ -856,7 +856,7 @@
     <message>
         <location filename="../src/tool_draw_freehand.cpp" line="276"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Draw a path. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Vedä&lt;/b&gt;: Piirrä polku. </translation>
     </message>
 </context>
 <context>
@@ -908,7 +908,7 @@
     <message>
         <location filename="../src/tool_draw_path.cpp" line="88"/>
         <source>Close</source>
-        <translation type="unfinished">Sulje</translation>
+        <translation>Sulje</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="89"/>
@@ -936,7 +936,7 @@
     <message>
         <location filename="../src/tool_draw_path.cpp" line="93"/>
         <source>Abort</source>
-        <translation type="unfinished"></translation>
+        <translation>Keskeytä</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1061"/>
@@ -1057,7 +1057,7 @@
     <message>
         <location filename="../src/tool_draw_rectangle.cpp" line="83"/>
         <source>Abort</source>
-        <translation type="unfinished"></translation>
+        <translation>Keskeytä</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_rectangle.cpp" line="716"/>
@@ -1586,7 +1586,7 @@
         <location filename="../src/core/crs_template_implementation.cpp" line="96"/>
         <source>Specification</source>
         <comment>PROJ.4 specification</comment>
-        <translation type="unfinished"></translation>
+        <translation>Määrittely</translation>
     </message>
     <message>
         <location filename="../src/core/georeferencing.cpp" line="229"/>
@@ -1907,7 +1907,7 @@
     <message>
         <source>About %1</source>
         <comment>As in 'About OpenOrienteering Mapper'</comment>
-        <translation type="vanished">Tietoja %1:sta</translation>
+        <translation>Tietoja %1ista</translation>
     </message>
     <message>
         <source>Help</source>
@@ -1977,7 +1977,7 @@
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="161"/>
         <source>About %1</source>
         <comment>As in 'About OpenOrienteering Mapper'</comment>
-        <translation>Tietoja %1:stä</translation>
+        <translation>Tietoja %1ista</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="164"/>
@@ -2036,7 +2036,7 @@
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="340"/>
         <source>About Mapper</source>
-        <translation>Tietoja Mapper:stä</translation>
+        <translation>Tietoja Mapperista</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="458"/>
@@ -2099,7 +2099,7 @@
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="57"/>
         <source>OCAD Versions 7, 8</source>
-        <translation>Ocad Versiot 7, 8</translation>
+        <translation>OCAD Versiot 7, 8</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="32"/>
@@ -2701,7 +2701,7 @@ löytääksesi taustakarttatiedoston nimen.</translation>
     <message>
         <location filename="../src/gui/main_window.cpp" line="316"/>
         <source>&amp;About %1</source>
-        <translation>&amp;Tietoja%1</translation>
+        <translation>&amp;Tietoja %1ista</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="317"/>
