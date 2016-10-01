@@ -1370,7 +1370,7 @@ LineSymbol* OcdFileImport::importRectangleSymbol(const S& ocd_symbol)
 	symbol->cap_style = LineSymbol::RoundCap;
 	symbol->join_style = LineSymbol::RoundJoin;
 	
-	RectangleInfo rect;
+	auto rect = RectangleInfo();
 	rect.border_line = symbol;
 	rect.corner_radius = 0.001 * convertLength(ocd_symbol.corner_radius);
 	rect.has_grid = ocd_symbol.grid_flags & 1;
