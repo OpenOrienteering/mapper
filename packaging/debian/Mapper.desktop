@@ -8,4 +8,4 @@ Exec=Mapper %F
 Icon=Mapper
 Terminal=false
 Categories=Graphics;Qt;
-MimeType=application/x-openorienteering-omap;application/x-openorienteering-xmap;
+MimeType=application/x-openorienteering-xmap;application/x-openorienteering-ocd;

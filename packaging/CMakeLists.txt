@@ -470,12 +470,12 @@ if(UNIX AND NOT APPLE)
 		install(
 		  FILES "${PROJECT_SOURCE_DIR}/images/mapper-icon/Mapper-${_size}.png"
 		  DESTINATION "share/icons/hicolor/${_size}x${_size}/mimetypes"
-		  RENAME application-x-openorienteering-omap.png
+		  RENAME application-x-openorienteering-xmap.png
 		)
 		install(
 		  FILES "${PROJECT_SOURCE_DIR}/images/mapper-icon/Mapper-${_size}.png"
 		  DESTINATION "share/icons/hicolor/${_size}x${_size}/mimetypes"
-		  RENAME application-x-openorienteering-xmap.png
+		  RENAME application-x-openorienteering-ocd.png
 		)
 	endforeach()
 endif()

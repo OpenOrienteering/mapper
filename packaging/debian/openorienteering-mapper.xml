@@ -9,4 +9,11 @@
      <glob pattern="*.omap"/>
      <glob pattern="*.xmap"/>
    </mime-type>
+   <mime-type type="application/x-openorienteering-ocd">
+     <comment>Orienteering map</comment>
+     <comment xml:lang="de">Orientierungslaufkarte</comment>
+     <comment xml:lang="ru">Спортивная карта</comment>
+     <comment xml:lang="uk">Спортивна карта</comment>
+     <glob pattern="*.ocd"/>
+   </mime-type>
 </mime-info>
