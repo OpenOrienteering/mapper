@@ -58,10 +58,6 @@ done | sed -e '
   /">$/ d
   s/$/<\/comment>/
 ' > mime_type_comment.txt
-echo >> mime_type_comment.txt \
-'     <comment xml:lang="de">Orientierungslaufkarte</comment>
-     <comment xml:lang="ru">Спортивная карта</comment>
-     <comment xml:lang="uk">Спортивна карта</comment>'
 
 sed -i "../packaging/linux/openorienteering-mapper.xml" -e '
   /^ *<comment>/ r mime_type_comment.txt
