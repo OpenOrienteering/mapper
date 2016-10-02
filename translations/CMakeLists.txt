@@ -122,7 +122,21 @@ file(WRITE "${${PROJECT_NAME}_TRANSLATIONS_LISTFILE}")
 # QT5_TRANSLATIONS_SOURCES(SOURCES a.cpp b.cpp)
 #
 macro(QT5_TRANSLATIONS_SOURCES)
-	find_package(Qt5LinguistTools REQUIRED QUIET) # Provides Qt5_LUPDATE_EXECUTABLE
+	if(NOT Qt5_LUPDATE_EXECUTABLE)
+		find_package(Qt5LinguistTools REQUIRED QUIET) # Provides Qt5_LUPDATE_EXECUTABLE
+	endif()
+	if(TARGET ${Qt5_LUPDATE_EXECUTABLE})
+		get_property(Qt5_LUPDATE_EXECUTABLE TARGET ${Qt5_LUPDATE_EXECUTABLE} PROPERTY LOCATION)
+	endif()
+	execute_process(
+	  COMMAND "${Qt5_LUPDATE_EXECUTABLE}" -version
+	  OUTPUT_VARIABLE lupdate_version
+	)
+	string(REGEX REPLACE "^.*([0-9]\\.[0-9]\\.[0-9]).*" "\\1" lupdate_version "${lupdate_version}")
+	if(lupdate_version VERSION_LESS 5.6.1)
+		message(WARNING "lupdate version ${lupdate_version} is less than 5.6.1. Updates disabled.")
+		return()
+	endif()
 	set(_DO_SOURCES FALSE)
 	foreach(_arg ${Mapper_TRANS} ${Mapper_TRANS_TEMPLATE} ${ARGN})
 		if("${_arg}" STREQUAL "SOURCES")
@@ -132,7 +146,7 @@ macro(QT5_TRANSLATIONS_SOURCES)
 			file(APPEND "${${PROJECT_NAME}_TRANSLATIONS_LISTFILE}" "${_abs_path}\n")
 		else()
 			get_filename_component(_ts_filename ${_arg} NAME_WE)
-			set(LUPDATE_OPTIONS -locations absolute)
+			set(LUPDATE_OPTIONS -locations relative)
 			if("${_ts_filename}" STREQUAL "OpenOrienteering_en")
 				list(APPEND LUPDATE_OPTIONS -pluralonly)
 			endif()
@@ -162,7 +176,7 @@ macro(QT5_TRANSLATIONS_SOURCES)
 			endif()
 			add_custom_target(${PROJECT_NAME}_${_ts_filename}_update
 			  ${PRE_LUPDATE_ACTION}
-			  COMMAND ${Qt5_LUPDATE_EXECUTABLE} ${LUPDATE_OPTIONS} @${${PROJECT_NAME}_TRANSLATIONS_LISTFILE} -ts ${Mapper_TRANS_DIR}/${_arg}
+			  COMMAND "${Qt5_LUPDATE_EXECUTABLE}" ${LUPDATE_OPTIONS} @${${PROJECT_NAME}_TRANSLATIONS_LISTFILE} -ts ${Mapper_TRANS_DIR}/${_arg}
 			  ${POST_LUPDATE_ACTION}
 			  # Reformat for Weblate to minimize git noise
 			  COMMAND sed -i -e "1s/\"/'/g" ${Mapper_TRANS_DIR}/${_arg}
