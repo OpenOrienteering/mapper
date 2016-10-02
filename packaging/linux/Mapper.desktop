@@ -1,9 +1,23 @@
 [Desktop Entry]
 Type=Application
 Name=OpenOrienteering Mapper
-Comment=Orienteering map drawing program
-Comment[de]=Programm zum Zeichnen von Orientierungslaufkarten
-Comment[ru]=Программа картографии для спортивного ориентирования
+Comment=A free software for drawing orienteering maps
+Comment[cs]=Svobodný program na kreslení map pro orientační běh
+Comment[de]=Ein freies Programm zum Zeichnen von Orientierungslaufkarten
+Comment[es]=Software libre para dibujar mapas de orientación
+Comment[fi]=Ilmainen ohjelma suunnistuskarttojen tekemiseen
+Comment[fr]=Un logiciel libre pour dessiner des cartes de course d'orientation
+Comment[hu]=Tartalmilag ez az igazság
+Comment[it]=Un software libero per il disegno delle mappe per orienteering
+Comment[ja]=オリエンテーリング地図作成のための自由なソフトウェア
+Comment[lv]=Brīvpieejas programma orientēšanās karšu zīmēšanai
+Comment[nb]=Fri programvare for tegning av orienteringskart
+Comment[nl]=Een gratis programma voor het tekenen van oriëntatieloop kaarten
+Comment[pl]=Darmowy program do kreślenia map do BnO
+Comment[pt_BR]=Um programa livre para desenho de mapas de orientação
+Comment[ru]=Свободное программное обеспечение для создания спортивных карт
+Comment[sv]=Fri mjukvara för att rita orienteringskartor
+Comment[uk]=Вільна програма для креслення спортивних карт
 Exec=Mapper %F
 Icon=Mapper
 Terminal=false
