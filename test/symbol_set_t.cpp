@@ -51,9 +51,10 @@ void saveIfDifferent(const QString& path, Map* map, MapView* view = nullptr)
 	QBuffer buffer(&new_data);
 	buffer.open(QFile::WriteOnly);
 	XMLFileExporter exporter(&buffer, map, view);
-	auto is_src_format = bool{ path.contains(QLatin1String(".xmap")) };
+	auto is_src_format = path.contains(QLatin1String(".xmap"));
 	exporter.setOption(QString::fromLatin1("autoFormatting"), is_src_format);
-	Settings::getInstance().setSetting(Settings::General_RetainCompatiblity, QVariant(is_src_format));
+	auto retain_compatibility = is_src_format && map->getNumParts() == 1;
+	Settings::getInstance().setSetting(Settings::General_RetainCompatiblity, retain_compatibility);
 	exporter.doExport();
 	QVERIFY(exporter.warnings().empty());
 	buffer.close();

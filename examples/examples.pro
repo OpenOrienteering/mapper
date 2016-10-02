@@ -22,6 +22,10 @@ CONFIG  -= debug_and_release
 !equals(OUT_PWD, $$PWD) {
     # Copy examples to shadow build dir.
     examples.target   = examples.stamp
+    examples.depends  =
+      "$$PWD/complete map.omap"
+      "$$PWD/forest sample.omap"
+      "$$PWD/overprinting.omap"
     examples.commands = \
       $(COPY_FILE) \"$$PWD\"/*.omap \"$$OUT_PWD/\" && \
       echo > $$examples.target
