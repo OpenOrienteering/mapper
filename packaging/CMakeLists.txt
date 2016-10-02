@@ -455,10 +455,10 @@ if(UNIX AND NOT APPLE)
 	  FILES "${PROJECT_SOURCE_DIR}/doc/man/Mapper.1"
 	  DESTINATION "share/man/man1")
 	install(
-	  FILES "debian/Mapper.desktop"
+	  FILES "linux/Mapper.desktop"
 	  DESTINATION "share/applications")
 	install(
-	  FILES "debian/openorienteering-mapper.xml"
+	  FILES "linux/openorienteering-mapper.xml"
 	  DESTINATION "share/mime/packages")
 	# Cf. http://standards.freedesktop.org/icon-theme-spec/icon-theme-spec-latest.html#directory_layout
 	foreach(_size 16 24 32 48 96 128 256 512)
