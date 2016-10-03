@@ -89,3 +89,8 @@ Sets a point object at the GPS position. Selecting this button first enters an a
 (16) Symbol selector
 
 Displays the active symbol, and opens the symbol selection screen when touched.
+
+(17) Map parts selector
+
+This button opens a popup for changing the active map part.
+
