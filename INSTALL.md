@@ -50,7 +50,7 @@ You can change the cmake option `Mapper_BUILD_PROJ` to adjust this.
 
 ## Getting the Source
 
-Download a tarball from
+Download a zip or tar.gz Source code archive from
 
 https://github.com/OpenOrienteering/mapper/releases
 
@@ -216,10 +216,3 @@ to change this. As already stated, this is untested, and you might need to look 
 additional tweaks.
 
 
-## Making a source package
-
-Start from a clean git working directory. Run
-
-```
-make Mapper_Source
-```

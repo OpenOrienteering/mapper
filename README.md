@@ -12,17 +12,13 @@ OpenOrienteering Mapper runs on Android, Windows, Mac OS X and Linux.
  - [OpenOrienteering Blog](http://www.openorienteering.org/)
 
 
+## Reporting Issues and Asking for Help
+
+Issues and possible improvements can be posted to our public [Ticket system](https://github.com/OpenOrienteering/mapper/issues).
+Please make sure you provide all relevant information about your problem or idea.
+
+
 ## Contributing
-
-### Writing Code
-
-For building Mapper from source see [`INSTALL.md`](https://github.com/OpenOrienteering/mapper/blob/master/INSTALL.md).
-Pull requests are very welcome.
-
- - [Issue tracker](https://github.com/OpenOrienteering/mapper/issues)
- - [API documentation](http://www.openorienteering.org/api-docs/mapper/)
- - [Developer wiki](https://github.com/OpenOrienteering/mapper/wiki)
-
 
 ### Translating
 
@@ -35,10 +31,14 @@ The Mapper manual lives in its [own repository](https://github.com/OpenOrienteer
 which contains all information for you to get started.
 
 
-### Reporting Issues
+### Writing Code
 
-Issues and possible improvements can be posted to our public [Ticket system](https://github.com/OpenOrienteering/mapper/issues).
-Please make sure you provide all relevant information about your problem or idea.
+For building Mapper from source see [`INSTALL.md`](https://github.com/OpenOrienteering/mapper/blob/master/INSTALL.md).
+Pull requests are very welcome.
+
+ - [Issue tracker](https://github.com/OpenOrienteering/mapper/issues)
+ - [API documentation](http://www.openorienteering.org/api-docs/mapper/)
+ - [Developer wiki](https://github.com/OpenOrienteering/mapper/wiki)
 
 
 ## License
