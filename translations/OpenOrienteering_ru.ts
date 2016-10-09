@@ -752,7 +752,7 @@
     <message>
         <location line="+2"/>
         <source>A</source>
-        <extracomment>&quot;A&quot; is the default letter which is used for determining letter height.</extracomment>
+        <extracomment>"A" is the default letter which is used for determining letter height.</extracomment>
         <translation>А</translation>
     </message>
     <message>
@@ -1537,7 +1537,7 @@
     <message>
         <location line="+2"/>
         <source>EPSG @code@ coordinates</source>
-        <extracomment>Don&apos;t translate @code@. It is placeholder.</extracomment>
+        <extracomment>Don't translate @code@. It is placeholder.</extracomment>
         <translation>Координаты EPSG @code@</translation>
     </message>
     <message>
@@ -1641,8 +1641,8 @@
     </message>
     <message>
         <location line="-7"/>
-        <source>&lt;a href=&quot;%1&quot;&gt;OpenStreetMap&lt;/a&gt; | &lt;a href=&quot;%2&quot;&gt;World of O Maps&lt;/a&gt;</source>
-        <translation>&lt;a href=&quot;%1&quot;&gt;OpenStreetMap&lt;/a&gt; | &lt;a href=&quot;%2&quot;&gt;World of O Maps&lt;/a&gt;</translation>
+        <source>&lt;a href="%1"&gt;OpenStreetMap&lt;/a&gt; | &lt;a href="%2"&gt;World of O Maps&lt;/a&gt;</source>
+        <translation>&lt;a href="%1"&gt;OpenStreetMap&lt;/a&gt; | &lt;a href="%2"&gt;World of O Maps&lt;/a&gt;</translation>
     </message>
     <message>
         <location line="+32"/>
@@ -1763,8 +1763,8 @@
     </message>
     <message>
         <location line="+162"/>
-        <source>The magnetic declination for the reference point %1° %2° will now be retrieved from &lt;a href=&quot;%3&quot;&gt;%3&lt;/a&gt;. Do you want to continue?</source>
-        <translation>Магнитное склонение для опорной точки %1° %2° будет взято из &lt;a href=&quot;%3&quot;&gt;%3&lt;/a&gt;. Вы хотите продолжить?</translation>
+        <source>The magnetic declination for the reference point %1° %2° will now be retrieved from &lt;a href="%3"&gt;%3&lt;/a&gt;. Do you want to continue?</source>
+        <translation>Магнитное склонение для опорной точки %1° %2° будет взято из &lt;a href="%3"&gt;%3&lt;/a&gt;. Вы хотите продолжить?</translation>
     </message>
     <message>
         <location line="+73"/>
@@ -1857,7 +1857,7 @@
     <message>
         <location line="-175"/>
         <source>About %1</source>
-        <comment>As in &apos;About OpenOrienteering Mapper&apos;</comment>
+        <comment>As in 'About OpenOrienteering Mapper'</comment>
         <translation>Про %1</translation>
     </message>
     <message>
@@ -1926,8 +1926,8 @@
     </message>
     <message>
         <location line="+83"/>
-        <source>No map files found!&lt;br/&gt;&lt;br/&gt;Copy map files to a top-level folder named &apos;OOMapper&apos; on the device or a memory card.</source>
-        <translation>Не найдены файлы карт!&lt;br/&gt;&lt;br/&gt;Скопируйте файлы карт в папку верхнего уровня &apos;OOMapper&apos; на устройстве или карте памяти.</translation>
+        <source>No map files found!&lt;br/&gt;&lt;br/&gt;Copy map files to a top-level folder named 'OOMapper' on the device or a memory card.</source>
+        <translation>Не найдены файлы карт!&lt;br/&gt;&lt;br/&gt;Скопируйте файлы карт в папку верхнего уровня 'OOMapper' на устройстве или карте памяти.</translation>
     </message>
 </context>
 <context>
@@ -1939,8 +1939,8 @@
     </message>
     <message>
         <location line="+8"/>
-        <source>Symbol ID &apos;%1&apos; not unique at line %2 column %3.</source>
-        <translation>ID символа &apos;%1&apos; не уникален в строке %2 столбце %3.</translation>
+        <source>Symbol ID '%1' not unique at line %2 column %3.</source>
+        <translation>ID символа '%1' не уникален в строке %2 столбце %3.</translation>
     </message>
     <message>
         <location line="+48"/>
@@ -2034,19 +2034,19 @@
     </message>
     <message>
         <location line="+14"/>
-        <source>Template &quot;%1&quot; has been loaded from the map&apos;s directory instead of the relative location to the map file where it was previously.</source>
-        <translation>Подложка &quot;%1&quot; была загружена из каталога карты, а не из места её расположения относительно файла карты, где она находилась раньше.</translation>
+        <source>Template "%1" has been loaded from the map's directory instead of the relative location to the map file where it was previously.</source>
+        <translation>Подложка "%1" была загружена из каталога карты, а не из места её расположения относительно файла карты, где она находилась раньше.</translation>
     </message>
     <message>
         <location line="+6"/>
-        <source>Failed to load template &apos;%1&apos;, reason: %2</source>
-        <translation>Не удалось загрузить подложку &quot;%1&quot; по следующей причине: %2</translation>
+        <source>Failed to load template '%1', reason: %2</source>
+        <translation>Не удалось загрузить подложку "%1" по следующей причине: %2</translation>
     </message>
     <message>
         <location line="+5"/>
-        <source>Warnings when loading template &apos;%1&apos;:
+        <source>Warnings when loading template '%1':
 %2</source>
-        <translation>При загрузке подложки &quot;%1&quot; выданы следующие предупреждения:
+        <translation>При загрузке подложки "%1" выданы следующие предупреждения:
 %2</translation>
     </message>
     <message>
@@ -2084,8 +2084,8 @@
     </message>
     <message>
         <location line="+56"/>
-        <source>The geographic coordinate reference system of the map was &quot;%1&quot;. This CRS is not supported. Using &quot;%2&quot;.</source>
-        <translation>Географическая базовая система координат карты была &quot;%1&quot;. Данная СК не поддерживается. Используйте &quot;%2&quot;.</translation>
+        <source>The geographic coordinate reference system of the map was "%1". This CRS is not supported. Using "%2".</source>
+        <translation>Географическая базовая система координат карты была "%1". Данная СК не поддерживается. Используйте "%2".</translation>
     </message>
     <message>
         <location line="+119"/>
@@ -2701,14 +2701,14 @@ Do you want to discard your changes?</source>
     </message>
     <message>
         <location line="+79"/>
-        <source>This map is being saved as a &quot;%1&quot; file. Information may be lost.
+        <source>This map is being saved as a "%1" file. Information may be lost.
 
 Press Yes to save in this format.
 Press No to choose a different format.</source>
-        <translation>Карта сохраняется в файле &quot;%1&quot;. Информация может быть потеряна.
+        <translation>Карта сохраняется в файле "%1". Информация может быть потеряна.
 
-Нажмите &quot;Да&quot;, чтобы сохранить в выбранном формате.
-Нажмите &quot;Нет&quot;, чтобы выбрать другой формат.</translation>
+Нажмите "Да", чтобы сохранить в выбранном формате.
+Нажмите "Нет", чтобы выбрать другой формат.</translation>
     </message>
     <message>
         <location line="+93"/>
@@ -2751,19 +2751,19 @@ Press No to choose a different format.</source>
     <message>
         <location line="-189"/>
         <source>Cannot export the map as
-&quot;%1&quot;
+"%1"
 because saving as %2 (.%3) is not supported.</source>
         <translation>Невозможно экспортировать карту, как
-&quot;%1&quot;
+"%1"
 потому что сохранение в %2 (.%3) не поддерживается.</translation>
     </message>
     <message>
         <location line="-5"/>
         <source>Cannot export the map as
-&quot;%1&quot;
+"%1"
 because the format is unknown.</source>
         <translation>Невозможно экспортировать карту, как
-&quot;%1&quot;
+"%1"
 поскольку формат неизвестен.</translation>
     </message>
     <message>
@@ -2836,7 +2836,7 @@ for reading.</source>
     </message>
     <message>
         <location line="+1"/>
-        <source>The scale of the imported data is 1:%1 which is different from this map&apos;s scale of 1:%2.
+        <source>The scale of the imported data is 1:%1 which is different from this map's scale of 1:%2.
 
 Rescale the imported data?</source>
         <translation>Масштаб импортируемых данных 1:%1 отличается от масштаба карты 1:%2.
@@ -3848,8 +3848,8 @@ selected</source>
     </message>
     <message>
         <location line="+16"/>
-        <source>Switched to map part &apos;%1&apos;.</source>
-        <translation type="unfinished"></translation>
+        <source>Switched to map part '%1'.</source>
+        <translation>Перешел на слой '%1'.</translation>
     </message>
     <message>
         <location line="+22"/>
@@ -3859,13 +3859,13 @@ selected</source>
     </message>
     <message>
         <location line="-29"/>
-        <source>Do you want to move all objects from map part &quot;%1&quot; to &quot;%2&quot;, and to remove &quot;%1&quot;?</source>
-        <translation>Вы хотите перенести все объекты с слоя &quot;%1&quot; на &quot;%2&quot;, и удалить &quot;%1&quot;?</translation>
+        <source>Do you want to move all objects from map part "%1" to "%2", and to remove "%1"?</source>
+        <translation>Вы хотите перенести все объекты с слоя "%1" на "%2", и удалить "%1"?</translation>
     </message>
     <message>
         <location line="+30"/>
-        <source>Do you want to move all objects to map part &quot;%1&quot;, and to remove all other map parts?</source>
-        <translation>Вы хотите перенести все объекты на слой &quot;%1&quot;, и удалить все другие слои?</translation>
+        <source>Do you want to move all objects to map part "%1", and to remove all other map parts?</source>
+        <translation>Вы хотите перенести все объекты на слой "%1", и удалить все другие слои?</translation>
     </message>
     <message>
         <location line="+224"/>
@@ -4075,8 +4075,8 @@ selected</source>
     </message>
     <message>
         <location line="+493"/>
-        <source>Do you want to remove map part &quot;%1&quot; and all its objects?</source>
-        <translation>Вы хотите удалить слой карты &quot;%1&quot; и все его объекты?</translation>
+        <source>Do you want to remove map part "%1" and all its objects?</source>
+        <translation>Вы хотите удалить слой карты "%1" и все его объекты?</translation>
     </message>
     <message>
         <location line="+162"/>
@@ -4220,13 +4220,13 @@ define the colors there.</source>
 
 Now define some symbols:
 Right-click in the symbol bar
-and select &quot;New symbol&quot;
+and select "New symbol"
 to create one.</source>
         <translation>Нет символов!
 
 Сначала определите немного символов:
 Правый щелчок в окне символов
-и выберите &quot;Новый символ&quot;
+и выберите "Новый символ"
 для его создания.</translation>
     </message>
     <message>
@@ -4427,42 +4427,42 @@ zoom using the mouse wheel, if available.</source>
     </message>
     <message>
         <location line="+148"/>
-        <source>Unable to export template: file type of &quot;%1&quot; is not supported yet</source>
-        <translation>Невозможно экспортировать подложку: тип файла &quot;%1&quot; пока не поддерживается</translation>
+        <source>Unable to export template: file type of "%1" is not supported yet</source>
+        <translation>Невозможно экспортировать подложку: тип файла "%1" пока не поддерживается</translation>
     </message>
     <message>
         <location line="+218"/>
-        <source>In line symbol &quot;%1&quot;, cannot represent cap/join combination.</source>
-        <translation>Для линейного символа &quot;%1&quot; невозможно отразить комбинацию окончания / соединения.</translation>
+        <source>In line symbol "%1", cannot represent cap/join combination.</source>
+        <translation>Для линейного символа "%1" невозможно отразить комбинацию окончания / соединения.</translation>
     </message>
     <message>
         <location line="+24"/>
-        <source>In line symbol &quot;%1&quot;, neglecting the dash grouping.</source>
-        <translation>Для линейного символа &quot;%1&quot; не воспроизведена группировка штрихов.</translation>
+        <source>In line symbol "%1", neglecting the dash grouping.</source>
+        <translation>Для линейного символа "%1" не воспроизведена группировка штрихов.</translation>
     </message>
     <message>
         <location line="+11"/>
-        <source>In line symbol &quot;%1&quot;, the number of dashes in a group has been reduced to 2.</source>
-        <translation>Для линейного символа &quot;%1&quot; количество штрихов в группе было уменьшено в 2 раза.</translation>
+        <source>In line symbol "%1", the number of dashes in a group has been reduced to 2.</source>
+        <translation>Для линейного символа "%1" количество штрихов в группе было уменьшено в 2 раза.</translation>
     </message>
     <message>
         <location line="+56"/>
-        <source>In line symbol &quot;%1&quot;, cannot export the borders correctly.</source>
-        <translation>Для линейного символа &quot;%1&quot; невозможно верно экспортировать границы.</translation>
+        <source>In line symbol "%1", cannot export the borders correctly.</source>
+        <translation>Для линейного символа "%1" невозможно верно экспортировать границы.</translation>
     </message>
     <message>
         <location line="+59"/>
-        <source>In area symbol &quot;%1&quot;, skipping a fill pattern.</source>
-        <translation>Для площадного символа &quot;%1&quot; пропущен заполняющий узор.</translation>
+        <source>In area symbol "%1", skipping a fill pattern.</source>
+        <translation>Для площадного символа "%1" пропущен заполняющий узор.</translation>
     </message>
     <message>
         <location line="+47"/>
-        <source>In area symbol &quot;%1&quot;, assuming a &quot;shifted rows&quot; point pattern. This might be correct as well as incorrect.</source>
-        <translation>Для площадного символа &quot;%1&quot; выявлено &quot;смещение рядов&quot; точечного рисунка. Это может быть как верным, так и нет.</translation>
+        <source>In area symbol "%1", assuming a "shifted rows" point pattern. This might be correct as well as incorrect.</source>
+        <translation>Для площадного символа "%1" выявлено "смещение рядов" точечного рисунка. Это может быть как верным, так и нет.</translation>
     </message>
     <message>
         <location line="+39"/>
-        <source>In text symbol %1: custom character spacing is set, its implementation does not match OCAD&apos;s behavior yet</source>
+        <source>In text symbol %1: custom character spacing is set, its implementation does not match OCAD's behavior yet</source>
         <translation>В текстовом символе %1: установлен нестандартный межсимвольный интервал, его реализация пока не соответствует функциональности OCAD</translation>
     </message>
     <message>
@@ -4477,8 +4477,8 @@ zoom using the mouse wheel, if available.</source>
     </message>
     <message>
         <location line="+415"/>
-        <source>String truncated (truncation marked with three &apos;|&apos;): %1</source>
-        <translation>Строка усечена (усечение отмечено тройным &quot;|&quot;): %1</translation>
+        <source>String truncated (truncation marked with three '|'): %1</source>
+        <translation>Строка усечена (усечение отмечено тройным "|"): %1</translation>
     </message>
 </context>
 <context>
@@ -4514,13 +4514,13 @@ zoom using the mouse wheel, if available.</source>
     </message>
     <message>
         <location line="+60"/>
-        <source>Color &quot;Registration black&quot; is imported as a special color.</source>
-        <translation>Цвет &quot;Registration black&quot; импортирован как специальный цвет.</translation>
+        <source>Color "Registration black" is imported as a special color.</source>
+        <translation>Цвет "Registration black" импортирован как специальный цвет.</translation>
     </message>
     <message>
         <location line="+64"/>
-        <source>Unable to import symbol &quot;%3&quot; (%1.%2)</source>
-        <translation>Нет возможности импортировать символ &quot;%3&quot; (%1.%2)</translation>
+        <source>Unable to import symbol "%3" (%1.%2)</source>
+        <translation>Нет возможности импортировать символ "%3" (%1.%2)</translation>
     </message>
     <message>
         <location line="+13"/>
@@ -4569,7 +4569,7 @@ zoom using the mouse wheel, if available.</source>
     </message>
     <message>
         <location line="+5"/>
-        <source>During import of text symbol %1: custom character spacing is set, its implementation does not match OCAD&apos;s behavior yet</source>
+        <source>During import of text symbol %1: custom character spacing is set, its implementation does not match OCAD's behavior yet</source>
         <translation>Импорт текстового символа %1: установлен нестандартный межсимвольный интервал, его реализация пока не соответствует функциональности OCAD</translation>
     </message>
     <message>
@@ -4599,14 +4599,14 @@ zoom using the mouse wheel, if available.</source>
     </message>
     <message>
         <location line="+47"/>
-        <source>Not importing text symbol, couldn&apos;t figure out path&apos; (npts=%1): %2</source>
+        <source>Not importing text symbol, couldn't figure out path' (npts=%1): %2</source>
         <translation>Текстовый символ не импортирован, не удалось выяснить путь (npts=%1): %2</translation>
     </message>
     <message>
         <location line="+192"/>
         <location line="+107"/>
-        <source>Unable to import template: background &quot;%1&quot; doesn&apos;t seem to be a raster image</source>
-        <translation>Невозможно импортировать подложку: похоже, подложка &quot;%1&quot; не растровое изображение</translation>
+        <source>Unable to import template: background "%1" doesn't seem to be a raster image</source>
+        <translation>Невозможно импортировать подложку: похоже, подложка "%1" не растровое изображение</translation>
     </message>
     <message>
         <location line="+105"/>
@@ -4623,18 +4623,18 @@ zoom using the mouse wheel, if available.</source>
     <name>OcdFileImport</name>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="-1068"/>
-        <source>In line symbol %1 &apos;%2&apos;: %3</source>
-        <translation>В линейном символе %1 &apos;%2&apos;: %3</translation>
+        <source>In line symbol %1 '%2': %3</source>
+        <translation>В линейном символе %1 '%2': %3</translation>
     </message>
     <message>
         <location line="+6"/>
-        <source>In text symbol %1 &apos;%2&apos;: %3</source>
-        <translation>В текстовом символе %1 &apos;%2&apos;: %3</translation>
+        <source>In text symbol %1 '%2': %3</source>
+        <translation>В текстовом символе %1 '%2': %3</translation>
     </message>
     <message>
         <location line="+257"/>
-        <source>Could not load the coordinate reference system &apos;%1&apos;.</source>
-        <translation>Не удалось загрузить опорную систему координат &apos;%1&apos;.</translation>
+        <source>Could not load the coordinate reference system '%1'.</source>
+        <translation>Не удалось загрузить опорную систему координат '%1'.</translation>
     </message>
     <message>
         <location line="+34"/>
@@ -4644,23 +4644,23 @@ zoom using the mouse wheel, if available.</source>
     </message>
     <message>
         <location line="+128"/>
-        <source>Unable to import symbol %1.%2 &quot;%3&quot;: %4</source>
-        <translation>Невозможно импортировать символ %1.%2 &quot;%3&quot;: %4</translation>
+        <source>Unable to import symbol %1.%2 "%3": %4</source>
+        <translation>Невозможно импортировать символ %1.%2 "%3": %4</translation>
     </message>
     <message>
         <location line="+4"/>
-        <source>Unsupported type &quot;%1&quot;.</source>
-        <translation>Неподдерживаемый тип &quot;%1&quot;.</translation>
+        <source>Unsupported type "%1".</source>
+        <translation>Неподдерживаемый тип "%1".</translation>
     </message>
     <message>
         <location line="+93"/>
-        <source>Unable to import template: &quot;%1&quot; is not a supported template type.</source>
-        <translation>Невозможно импортировать подложку: &quot;%1&quot; не поддерживаемый тип подложки.</translation>
+        <source>Unable to import template: "%1" is not a supported template type.</source>
+        <translation>Невозможно импортировать подложку: "%1" не поддерживаемый тип подложки.</translation>
     </message>
     <message>
         <location line="+304"/>
-        <source>Unsupported line style &apos;%1&apos;.</source>
-        <translation>Неподдерживаемый стиль линии &apos;%1&apos;.</translation>
+        <source>Unsupported line style '%1'.</source>
+        <translation>Неподдерживаемый стиль линии '%1'.</translation>
     </message>
     <message>
         <location line="+37"/>
@@ -4675,19 +4675,19 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location line="+15"/>
         <location line="+32"/>
-        <source>The dash pattern&apos;s end length (%1 mm) cannot be imported correctly. Using %2 mm.</source>
+        <source>The dash pattern's end length (%1 mm) cannot be imported correctly. Using %2 mm.</source>
         <translation>Длина конечного штриха в узоре (%1 мм) не может быть корректно импортирована. Используется %2 мм.</translation>
     </message>
     <message>
         <location line="-25"/>
         <location line="+40"/>
-        <source>The dash pattern&apos;s end gap (%1 mm) cannot be imported correctly. Using %2 mm.</source>
+        <source>The dash pattern's end gap (%1 mm) cannot be imported correctly. Using %2 mm.</source>
         <translation>Расстояние до конечного штриха в узоре (%1 мм) не может быть корректно импортирована. Используется %2 мм.</translation>
     </message>
     <message>
         <location line="+42"/>
-        <source>Unsupported framing line style &apos;%1&apos;.</source>
-        <translation>Неподдерживаемый стиль обрамляющей линии &apos;%1&apos;.</translation>
+        <source>Unsupported framing line style '%1'.</source>
+        <translation>Неподдерживаемый стиль обрамляющей линии '%1'.</translation>
     </message>
     <message>
         <location line="+72"/>
@@ -4712,8 +4712,8 @@ zoom using the mouse wheel, if available.</source>
     </message>
     <message>
         <location line="+15"/>
-        <source>Vertical alignment &apos;%1&apos; is not supported.</source>
-        <translation>Вертикальное выравнивание &apos;%1&apos; не поддерживается.</translation>
+        <source>Vertical alignment '%1' is not supported.</source>
+        <translation>Вертикальное выравнивание '%1' не поддерживается.</translation>
     </message>
     <message>
         <location line="-28"/>
@@ -4747,8 +4747,8 @@ zoom using the mouse wheel, if available.</source>
     </message>
     <message>
         <location line="-1262"/>
-        <source>In area symbol %1 &apos;%2&apos;: %3</source>
-        <translation>В площадном знаке %1 &apos;%2&apos;: %3</translation>
+        <source>In area symbol %1 '%2': %3</source>
+        <translation>В площадном знаке %1 '%2': %3</translation>
     </message>
     <message>
         <location line="+1439"/>
@@ -4762,7 +4762,7 @@ zoom using the mouse wheel, if available.</source>
     </message>
     <message>
         <location line="+41"/>
-        <source>Not importing text symbol, couldn&apos;t figure out path&apos; (npts=%1): %2</source>
+        <source>Not importing text symbol, couldn't figure out path' (npts=%1): %2</source>
         <translation>Текстовый символ не импортирован, не удалось выяснить путь (npts=%1): %2</translation>
     </message>
     <message>
@@ -5046,7 +5046,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_tool.cpp" line="+57"/>
         <location line="+312"/>
-        <source>&lt;b&gt;Drag&lt;/b&gt;: Move the map, the print area or the area&apos;s borders. </source>
+        <source>&lt;b&gt;Drag&lt;/b&gt;: Move the map, the print area or the area's borders. </source>
         <translation>&lt;b&gt;Перетаскивание&lt;/b&gt;: Сместить карту, область печати или границы области. </translation>
     </message>
     <message>
@@ -5062,13 +5062,13 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location line="+5"/>
         <location line="+5"/>
-        <source>&lt;b&gt;Drag&lt;/b&gt;: Move the print area&apos;s border. </source>
+        <source>&lt;b&gt;Drag&lt;/b&gt;: Move the print area's border. </source>
         <translation>&lt;b&gt;Перетаскивание&lt;/b&gt;: Сместить границы области печати. </translation>
     </message>
     <message>
         <location line="+5"/>
         <location line="+5"/>
-        <source>&lt;b&gt;Drag&lt;/b&gt;: Move the print area&apos;s borders. </source>
+        <source>&lt;b&gt;Drag&lt;/b&gt;: Move the print area's borders. </source>
         <translation>&lt;b&gt;Перетаскивание&lt;/b&gt;: Сместить границы области печати. </translation>
     </message>
 </context>
@@ -5493,7 +5493,7 @@ separations</source>
     </message>
     <message>
         <location line="+1"/>
-        <source>Keep the symbols&apos; hidden / protected states of the old symbol set</source>
+        <source>Keep the symbols' hidden / protected states of the old symbol set</source>
         <translation>Сохранить состояние символов (скрытый / защищённый) из исходного набора символов</translation>
     </message>
     <message>
@@ -5815,23 +5815,23 @@ separations</source>
     <name>StorageLocation</name>
     <message>
         <location filename="../src/core/storage_location.cpp" line="+278"/>
-        <source>&apos;%1&apos; is stored in a regular location.</source>
-        <translation>&apos;%1&apos; сохранён в обычном месте.</translation>
+        <source>'%1' is stored in a regular location.</source>
+        <translation>'%1' сохранён в обычном месте.</translation>
     </message>
     <message>
         <location line="+3"/>
-        <source>&apos;%1&apos; is located in app storage. The files will be removed when uninstalling the app.</source>
-        <translation>&apos;%1&apos; сохранён в каталоге программы. Эти файлы будут удалены при удалении программы.</translation>
+        <source>'%1' is located in app storage. The files will be removed when uninstalling the app.</source>
+        <translation>'%1' сохранён в каталоге программы. Эти файлы будут удалены при удалении программы.</translation>
     </message>
     <message>
         <location line="+3"/>
-        <source>&apos;%1&apos; is not writable. Changes cannot be saved.</source>
-        <translation>&apos;%1&apos; не доступен для записи. Изменения не могут быть сохранены.</translation>
+        <source>'%1' is not writable. Changes cannot be saved.</source>
+        <translation>'%1' не доступен для записи. Изменения не могут быть сохранены.</translation>
     </message>
     <message>
         <location line="+3"/>
-        <source>&apos;%1&apos; is not a valid storage location.</source>
-        <translation>&apos;%1&apos; не является допустимым местом хранения.</translation>
+        <source>'%1' is not a valid storage location.</source>
+        <translation>'%1' не является допустимым местом хранения.</translation>
     </message>
 </context>
 <context>
@@ -6041,7 +6041,7 @@ separations</source>
     <message>
         <location line="-43"/>
         <source>F1</source>
-        <comment>Shortcut for displaying the symbol&apos;s description</comment>
+        <comment>Shortcut for displaying the symbol's description</comment>
         <translation>F1</translation>
     </message>
     <message>
@@ -6086,8 +6086,8 @@ separations</source>
     </message>
     <message>
         <location line="+0"/>
-        <source>The map contains objects with the symbol &quot;%1&quot;. Deleting it will delete those objects and clear the undo history! Do you really want to do that?</source>
-        <translation>Карта содержит объекты с символом &quot;%1&quot;. Его удаление приведёт к удалению этих объекты и очистке истории отмены! Вы действительно хотите это сделать?</translation>
+        <source>The map contains objects with the symbol "%1". Deleting it will delete those objects and clear the undo history! Do you really want to do that?</source>
+        <translation>Карта содержит объекты с символом "%1". Его удаление приведёт к удалению этих объекты и очистке истории отмены! Вы действительно хотите это сделать?</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="-2988"/>
@@ -6193,8 +6193,8 @@ to jump over the lazy dog
     </message>
     <message>
         <location line="+1"/>
-        <source>The key &quot;%1&quot; already exists and must not be used twice.</source>
-        <translation>Ключ &quot;%1&quot; уже существует и не должен использоваться дважды.</translation>
+        <source>The key "%1" already exists and must not be used twice.</source>
+        <translation>Ключ "%1" уже существует и не должен использоваться дважды.</translation>
     </message>
 </context>
 <context>
@@ -6356,7 +6356,7 @@ to jump over the lazy dog
     <message>
         <location line="+0"/>
         <source>Loading a GIF image template.
-Saving GIF files is not supported. This means that drawings on this template won&apos;t be saved!
+Saving GIF files is not supported. This means that drawings on this template won't be saved!
 If you do not intend to draw on this template however, that is no problem.</source>
         <translation>Загрузка изображения GIF в качестве подложки.
 Сохранение GIF файлов не поддерживаются. Это означает, что рисунки на этой подложке не будут сохранены!
@@ -6595,7 +6595,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
     </message>
     <message>
         <location line="+3"/>
-        <source>Don&apos;t scale</source>
+        <source>Don't scale</source>
         <translation>Не масштабировать</translation>
     </message>
     <message>
@@ -6680,7 +6680,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
     </message>
     <message>
         <location line="+2"/>
-        <source>Positions the track according to the map&apos;s georeferencing settings.</source>
+        <source>Positions the track according to the map's georeferencing settings.</source>
         <translation>Разместить трек в соответствии с настройками геопривязки карты.</translation>
     </message>
     <message>
@@ -6700,7 +6700,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
     </message>
     <message>
         <location line="+0"/>
-        <source>Projects the track using an orthographic projection with center at the track&apos;s coordinate average. Allows adjustment of the transformation and setting the map georeferencing using the adjusted track position.</source>
+        <source>Projects the track using an orthographic projection with center at the track's coordinate average. Allows adjustment of the transformation and setting the map georeferencing using the adjusted track position.</source>
         <translation>Проецировать трек с использованием ортогональной проекции с центром в точке усредненных координат трека. Это позволит осуществить трансформацию карты и установить её геопривязку подгонкой относительно позиции трека.</translation>
     </message>
     <message>
@@ -7090,18 +7090,18 @@ The maximum supported version is %2.</source>
     </message>
     <message>
         <location line="+7"/>
-        <source>Failed to locate the help browser (&quot;Qt Assistant&quot;).</source>
-        <translation>Не удалось найти браузер справки (&quot;Qt Assistant&quot;).</translation>
+        <source>Failed to locate the help browser ("Qt Assistant").</source>
+        <translation>Не удалось найти браузер справки ("Qt Assistant").</translation>
     </message>
     <message>
         <location line="+34"/>
-        <source>Failed to launch the help browser (&quot;Qt Assistant&quot;).</source>
-        <translation>Не удалось запустить браузер справки (&quot;Qt Assistant&quot;).</translation>
+        <source>Failed to launch the help browser ("Qt Assistant").</source>
+        <translation>Не удалось запустить браузер справки ("Qt Assistant").</translation>
     </message>
     <message>
         <location line="+16"/>
         <source>See more...</source>
-        <extracomment>This &quot;See more&quot; is displayed as a link to the manual in What&apos;s-this tooltips.</extracomment>
+        <extracomment>This "See more" is displayed as a link to the manual in What's-this tooltips.</extracomment>
         <translation>Подробнее...</translation>
     </message>
 </context>
@@ -7152,14 +7152,14 @@ The maximum supported version is %2.</source>
     </message>
     <message>
         <location line="+1"/>
-        <source>Unsupported or invalid georeferencing specification &apos;%1&apos;: %2</source>
-        <translation>Неподдерживаемая или некорректная спецификация геопривязки &apos;%1&apos;: %2</translation>
+        <source>Unsupported or invalid georeferencing specification '%1': %2</source>
+        <translation>Неподдерживаемая или некорректная спецификация геопривязки '%1': %2</translation>
     </message>
     <message>
         <location line="+118"/>
         <location line="+59"/>
-        <source>Could not set knockout property of color &apos;%1&apos;.</source>
-        <translation>Невозможно установить свойства перекрытия для цвета &apos;%1&apos;.</translation>
+        <source>Could not set knockout property of color '%1'.</source>
+        <translation>Невозможно установить свойства перекрытия для цвета '%1'.</translation>
     </message>
     <message>
         <location line="-40"/>
