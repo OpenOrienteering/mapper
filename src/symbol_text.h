@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2015 Kai Pastor
+ *    Copyright 2012-2016 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -19,8 +19,8 @@
  */
 
 
-#ifndef _OPENORIENTEERING_SYMBOL_TEXT_H_
-#define _OPENORIENTEERING_SYMBOL_TEXT_H_
+#ifndef OPENORIENTEERING_SYMBOL_TEXT_H
+#define OPENORIENTEERING_SYMBOL_TEXT_H
 
 #include "symbol.h"
 
@@ -54,7 +54,6 @@ class TextObject;
 class TextSymbol : public Symbol
 {
 friend class TextSymbolSettings;
-friend class DetermineFontSizeDialog;
 friend class PointSymbolEditorWidget;
 friend class OCAD8FileImport;
 public:
@@ -201,10 +200,8 @@ public:
 	
 protected slots:
 	void fontChanged(QFont font);
-	void sizeChanged(double value);
-	void sizeUnitChanged(int index);
-	void updateSizeEdit();
-	void determineSizeClicked();
+	void fontSizeChanged(double value);
+	void letterSizeChanged();
 	void colorChanged();
 	void checkToggled(bool checked);
 	void spacingChanged(double value);
@@ -222,21 +219,20 @@ protected slots:
 	void addCustomTabClicked();
 	void removeCustomTabClicked();
 	
-private:
-	enum SizeUnit
-	{
-		SizeInMM = 0,
-		SizeInPT
-	};
+protected:
+	void updateFontSizeEdit();
+	void updateLetterSizeEdit();
+	qreal calculateLetterHeight() const;
 	
+private:
 	TextSymbol* symbol;
 	SymbolSettingDialog* dialog;
 	
 	ColorDropDown*  color_edit;
 	QFontComboBox*  font_edit;
-	QDoubleSpinBox* size_edit;
-	QComboBox*      size_unit_combo;
-	QPushButton*    size_determine_button;
+	QDoubleSpinBox* font_size_edit;
+	QLineEdit*      letter_edit;
+	QDoubleSpinBox* letter_size_edit;
 	QCheckBox*      bold_check;
 	QCheckBox*      italic_check;
 	QCheckBox*      underline_check;
@@ -266,28 +262,6 @@ private:
 	QPushButton*    custom_tab_remove;
 	
 	bool react_to_changes;
-};
-
-/**
- * Dialog to calculate the font size at which a certain letter
- * has a certain real size.
- */
-class DetermineFontSizeDialog : public QDialog
-{
-Q_OBJECT
-public:
-	DetermineFontSizeDialog(QWidget* parent, TextSymbol* symbol);
-	
-public slots:
-	virtual void accept();
-	void updateOkButton();
-	
-private:
-	QLineEdit* character_edit;
-	QDoubleSpinBox* size_edit;
-	QPushButton* ok_button;
-	
-	TextSymbol* symbol;
 };
 
 #endif

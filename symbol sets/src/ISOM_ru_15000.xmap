@@ -5,7 +5,7 @@
         <projected_crs id="Local"/>
     </georeferencing>
     <colors count="22">
-        <color priority="0" name="Фиолетовый" c="0.200" m="1.000" y="0.000" k="0.000" opacity="1.000">
+        <color priority="0" name="Пурпурный" c="0.200" m="1.000" y="0.000" k="0.000" opacity="1.000">
             <spotcolors>
                 <namedcolor>PURPLE</namedcolor>
             </spotcolors>
@@ -202,7 +202,7 @@
             </text_symbol>
         </symbol>
         <symbol type="2" id="5" code="106" name="Грунтовый обрыв">
-            <description>Крутой перегиб поверхности земли, однозначно выделяющийся из окружающей среды. Гравийные или песчаные выработки, дорожные выемки и насыпи и т. п. Зубцы должны показывать полную проекцию склона, но могут быть опущены, если два обрыва располагаются близко друг от друга. Опасные грунтовые обрывы показываются ззнаком 201.</description>
+            <description>Крутой перегиб поверхности земли, однозначно выделяющийся из окружающей среды. Гравийные или песчаные выработки, дорожные выемки и насыпи и т. п. Зубцы должны показывать полную проекцию склона, но могут быть опущены, если два обрыва располагаются близко друг от друга. Опасные грунтовые обрывы показываются знаком 201.</description>
             <line_symbol color="4" line_width="180" minimum_length="600" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="780" end_length="850" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                 <start_symbol>
                     <symbol type="1" code="" name="Начальный символ">
@@ -2337,7 +2337,7 @@
                 <pattern type="1" angle="1.5708" rotatable="true" line_spacing="33330" line_offset="0" offset_along_line="0" color="7" line_width="180"/>
             </area_symbol>
         </symbol>
-        <symbol type="1" id="137" code="602" name="Контрольные метки">
+        <symbol type="1" id="137" code="602" name="Контрольная метка">
             <description>По меньшей мере, три контрольных метки должны быть показаны на полях карты. Причём места нанесения меток должны быть асимметричны. Кроме того, возможно нанесение рисунка для контроля совмещения цветов.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                 <element>
@@ -2417,7 +2417,7 @@
             <description>Линии, соединяющие элементы дистанции в порядке прохождения, не должны закрывать мелкие элементы карты.</description>
             <line_symbol color="0" line_width="350" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
-        <symbol type="2" id="144" code="705" name="Маркированные участки">
+        <symbol type="2" id="144" code="705" name="Маркированный участок">
             <description>Показываются на карте пунктирной линией.</description>
             <line_symbol color="0" line_width="350" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="2000" break_length="500" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
@@ -2638,8 +2638,8 @@
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="2" id="155" code="799" name="Простой курс ориентирования">
-            <description>Этот знак предоставляет простой и быстрый способ сделать тренировочный курс. Фиолетовая линия будет находить немного на знак финиша, это недостаток этого подхода.</description>
+        <symbol type="2" id="155" code="799" name="Дистанция ориентирования">
+            <description>Данный знак предоставляет простой и быстрый способ нанести тренировочную дистанцию. Пурпурная линия будет немного заходить на знак финиша - это недостаток данного подхода.</description>
             <line_symbol color="-1" line_width="0" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="1150" end_length="3650" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="1000" break_length="1450" dashes_in_group="1" in_group_break_length="1600" mid_symbols_per_spot="1" mid_symbol_distance="0" suppress_dash_symbol_at_ends="true">
                 <start_symbol>
                     <symbol type="1" code="" name="Начальный символ">

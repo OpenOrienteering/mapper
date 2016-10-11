@@ -76,7 +76,7 @@ const FileFormat *FileFormatRegistry::findFormatForFilename(const QString& filen
 	QString file_extension = QFileInfo(filename).suffix();
 	for (auto format : fmts)
 	{
-		if (format->fileExtensions().contains(file_extension)) return format;
+		if (format->fileExtensions().contains(file_extension, Qt::CaseInsensitive)) return format;
 	}
 	return NULL;
 }

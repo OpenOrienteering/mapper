@@ -47,6 +47,7 @@
         <file>images/group.png</file>
         <file>images/help.png</file>
         <file>images/magnifying-glass.png</file>
+        <file>images/map-parts.png</file>
         <file>images/mapper.png</file>
         <file>images/minus.png</file>
         <file>images/move.png</file>
@@ -119,6 +120,9 @@
     </qresource>
     <qresource prefix="/" lang="fr">
         <file alias="help/tip-of-the-day/tips.txt">help/tip-of-the-day/tips_fr.txt</file>
+    </qresource>
+    <qresource prefix="/" lang="ru">
+        <file alias="help/tip-of-the-day/tips.txt">help/tip-of-the-day/tips_ru.txt</file>
     </qresource>
     <qresource prefix="/" lang="uk">
         <file alias="help/tip-of-the-day/tips.txt">help/tip-of-the-day/tips_uk.txt</file>

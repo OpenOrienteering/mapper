@@ -112,7 +112,9 @@ add_custom_target(${PROJECT_NAME}_translations_update)
 
 set(${PROJECT_NAME}_TRANSLATIONS_LISTFILE ${CMAKE_CURRENT_BINARY_DIR}/translations_sourcefiles.txt
 	CACHE INTERNAL "A temporary file which lists the source files to be translated")
-file(WRITE "${${PROJECT_NAME}_TRANSLATIONS_LISTFILE}")
+file(WRITE "${${PROJECT_NAME}_TRANSLATIONS_LISTFILE}"
+  "${PROJECT_SOURCE_DIR}/packaging/translations.cpp\n"
+)
 
 #
 # A macro for registering translations sources and creating update targets.
@@ -122,9 +124,26 @@ file(WRITE "${${PROJECT_NAME}_TRANSLATIONS_LISTFILE}")
 # QT5_TRANSLATIONS_SOURCES(SOURCES a.cpp b.cpp)
 #
 macro(QT5_TRANSLATIONS_SOURCES)
-	find_package(Qt5LinguistTools REQUIRED QUIET) # Provides Qt5_LUPDATE_EXECUTABLE
+	if(NOT Qt5_LUPDATE_EXECUTABLE)
+		find_package(Qt5LinguistTools REQUIRED QUIET) # Provides Qt5_LUPDATE_EXECUTABLE
+	endif()
+	if(TARGET ${Qt5_LUPDATE_EXECUTABLE})
+		get_property(Qt5_LUPDATE_EXECUTABLE TARGET ${Qt5_LUPDATE_EXECUTABLE} PROPERTY LOCATION)
+	endif()
+	execute_process(
+	  COMMAND "${Qt5_LUPDATE_EXECUTABLE}" -version
+	  OUTPUT_VARIABLE lupdate_version
+	)
+	string(REGEX REPLACE "^.*([0-9]\\.[0-9]\\.[0-9]).*" "\\1" lupdate_version "${lupdate_version}")
+	if(lupdate_version VERSION_LESS 5.6.1)
+		message(AUTHOR_WARNING "lupdate version ${lupdate_version} is less than 5.6.1. Updates disabled.")
+		# We can't return from a macro, so we skip the loop in this way
+		set(loop_args )
+	else()
+		set(loop_args ${Mapper_TRANS} ${Mapper_TRANS_TEMPLATE} ${ARGN})
+	endif()
 	set(_DO_SOURCES FALSE)
-	foreach(_arg ${Mapper_TRANS} ${Mapper_TRANS_TEMPLATE} ${ARGN})
+	foreach(_arg ${loop_args})
 		if("${_arg}" STREQUAL "SOURCES")
 			set(_DO_SOURCES TRUE)
 		elseif(_DO_SOURCES)
@@ -162,7 +181,7 @@ macro(QT5_TRANSLATIONS_SOURCES)
 			endif()
 			add_custom_target(${PROJECT_NAME}_${_ts_filename}_update
 			  ${PRE_LUPDATE_ACTION}
-			  COMMAND ${Qt5_LUPDATE_EXECUTABLE} ${LUPDATE_OPTIONS} @${${PROJECT_NAME}_TRANSLATIONS_LISTFILE} -ts ${Mapper_TRANS_DIR}/${_arg}
+			  COMMAND "${Qt5_LUPDATE_EXECUTABLE}" ${LUPDATE_OPTIONS} @${${PROJECT_NAME}_TRANSLATIONS_LISTFILE} -ts ${Mapper_TRANS_DIR}/${_arg}
 			  ${POST_LUPDATE_ACTION}
 			  # Reformat for Weblate to minimize git noise
 			  COMMAND sed -i -e "1s/\"/'/g" ${Mapper_TRANS_DIR}/${_arg}
@@ -174,5 +193,35 @@ macro(QT5_TRANSLATIONS_SOURCES)
 		endif()
 	endforeach()
 endmacro()
+
+if(UNIX AND NOT APPLE)
+	set(update_source )
+	if(Mapper_DEVELOPMENT_BUILD)
+		# Only development builds are allowed to update the source directories.
+		set(update_sources
+		  COMMAND "${CMAKE_COMMAND}" -E copy_if_different "../packaging/linux/Mapper.desktop" "${PROJECT_SOURCE_DIR}/packaging/linux/"
+		  COMMAND "${CMAKE_COMMAND}" -E copy_if_different "../packaging/linux/openorienteering-mapper.xml" "${PROJECT_SOURCE_DIR}/packaging/linux/"
+		)
+	endif()
+	set(translations )
+	foreach(translation ${Mapper_TRANS})
+		list(APPEND translations "${CMAKE_CURRENT_SOURCE_DIR}/${translation}")
+	endforeach()
+	add_custom_command(OUTPUT text-files.stamp
+	    desktop_file_comment.txt mime_type_comment.txt
+	  COMMAND "${CMAKE_COMMAND}" -E make_directory "../packaging/linux"
+	  COMMAND "${CMAKE_COMMAND}" -E copy "${PROJECT_SOURCE_DIR}/packaging/linux/Mapper.desktop" "../packaging/linux/"
+	  COMMAND "${CMAKE_COMMAND}" -E copy "${PROJECT_SOURCE_DIR}/packaging/linux/openorienteering-mapper.xml" "../packaging/linux/"
+	  COMMAND "${CMAKE_CURRENT_SOURCE_DIR}/translate_text_files.sh" ${translations}
+	  ${update_sources}
+	  COMMAND "${CMAKE_COMMAND}" -E touch text-files.stamp
+	  DEPENDS translate_text_files.sh ${translations}
+	  WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
+	)
+	add_custom_target(translate-text-files
+	  DEPENDS "${CMAKE_CURRENT_BINARY_DIR}/text-files.stamp"
+	)
+	add_dependencies(Mapper_translations translate-text-files)
+endif()
 
 message(STATUS "Configuring ${PROJECT_NAME} translations - done")

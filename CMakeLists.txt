@@ -39,7 +39,7 @@ set(Mapper_VERSION_MAJOR 0)
 set(Mapper_VERSION_MINOR 6)
 if(NOT Mapper_VERSION_PATCH)
 	# This can be configured when running cmake
-	set(Mapper_VERSION_PATCH 5)
+	set(Mapper_VERSION_PATCH 6)
 endif()
 
 set(MAPPER_VERSION_PRI "${PROJECT_SOURCE_DIR}/oo-mapper-version.pri")
@@ -53,6 +53,16 @@ Mapper_VERSION_PATCH = ${Mapper_VERSION_PATCH}
 string(MD5 output_md5 "${output}")
 if(NOT "${output_md5}" STREQUAL "${file_md5}")
 	file(WRITE "${MAPPER_VERSION_PRI}" "${output}")
+endif()
+
+set(android_manifest "${PROJECT_SOURCE_DIR}/android/AndroidManifest.xml")
+file(READ "${android_manifest}" current)
+if(NOT current MATCHES " android:versionName=.${Mapper_VERSION_MAJOR}\\.${Mapper_VERSION_MINOR}\\.${Mapper_VERSION_PATCH}. ")
+	set(android_version_name "${Mapper_VERSION_MAJOR}.${Mapper_VERSION_MINOR}.${Mapper_VERSION_PATCH}")
+	math(EXPR android_version_int "${Mapper_VERSION_MAJOR} * 10000 + ${Mapper_VERSION_MINOR} * 100 + ${Mapper_VERSION_PATCH}")
+	string(REGEX REPLACE "( android:versionName=.)[0-9]*\\.[0-9]*\\.[0-9]*(. )" "\\1${android_version_name}\\2" output "${current}")
+	string(REGEX REPLACE "( android:versionCode=.)[0-9]*(. )" "\\1${android_version_int}\\2" output "${output}")
+	file(WRITE "${android_manifest}" "${output}")
 endif()
 
 if(${CMAKE_CURRENT_BINARY_DIR} STREQUAL ${PROJECT_SOURCE_DIR})

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
+   <mime-type type="application/x-openorienteering-xmap">
+     <sub-class-of type="text/xml"/>
+     <comment>Orienteering map</comment>
+     <comment xml:lang="cs">Mapa pro orientační běh</comment>
+     <comment xml:lang="de">Orientierungslaufkarte</comment>
+     <comment xml:lang="ja">オリエンテーリング地図</comment>
+     <comment xml:lang="nl">Oriëntatiekaart</comment>
+     <comment xml:lang="ru">Спортивная карта</comment>
+     <comment xml:lang="uk">Спортивна карта</comment>
+     <glob pattern="*.omap"/>
+     <glob pattern="*.xmap"/>
+   </mime-type>
+   <mime-type type="application/x-openorienteering-ocd">
+     <comment>Orienteering map</comment>
+     <comment xml:lang="cs">Mapa pro orientační běh</comment>
+     <comment xml:lang="de">Orientierungslaufkarte</comment>
+     <comment xml:lang="ja">オリエンテーリング地図</comment>
+     <comment xml:lang="nl">Oriëntatiekaart</comment>
+     <comment xml:lang="ru">Спортивная карта</comment>
+     <comment xml:lang="uk">Спортивна карта</comment>
+     <glob pattern="*.ocd"/>
+   </mime-type>
+</mime-info>

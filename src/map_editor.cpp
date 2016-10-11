@@ -116,6 +116,7 @@
 #include "tool_scale.h"
 #include "undo_manager.h"
 #include "util.h"
+#include "util/backports.h"
 #include "util/scoped_signals_blocker.h"
 
 
@@ -1222,6 +1223,17 @@ void MapEditorController::createMobileGUI()
 	QAction* show_top_bar_action = new QAction(QIcon(QString::fromLatin1(":/images/arrow-thin-downright.png")), tr("Show top bar"), this);
  	connect(show_top_bar_action, SIGNAL(triggered()), this, SLOT(showTopActionBar()));
 	
+	Q_ASSERT(mappart_selector_box);
+	QAction* mappart_action = new QAction(QIcon(QString::fromLatin1(":/images/map-parts.png")), tr("Map parts"), this);
+	connect(mappart_action, &QAction::triggered, [this, mappart_action]() {
+		auto mappart_button = top_action_bar->getButtonForAction(mappart_action);
+		if (!mappart_button)
+			mappart_button = top_action_bar->getButtonForAction(top_action_bar->getOverflowAction());
+		mappart_selector_box->setGeometry(mappart_button->geometry());
+		mappart_selector_box->showPopup();
+	});
+	connect(mappart_selector_box, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &MapEditorController::changeMapPart);
+	
 	// Create button for showing the top bar again after hiding it
 	int icon_size_pixel = qRound(Util::mmToPixelLogical(10));
 	const int button_icon_size = icon_size_pixel - 12;
@@ -1335,6 +1347,8 @@ void MapEditorController::createMobileGUI()
 	
 	top_action_bar->addActionAtEnd(measure_act, 0, col);
 	top_action_bar->addActionAtEnd(boolean_merge_holes_act, 1, col++);
+	
+	top_action_bar->addActionAtEnd(mappart_action, 1, col++);
 	
 	bottom_action_bar->setToUseOverflowActionFrom(top_action_bar);
 	
@@ -3505,7 +3519,8 @@ void MapEditorController::changeMapPart(int index)
 {
 	if (index >= 0)
 	{
-		map->setCurrentPartIndex(index);
+		map->setCurrentPartIndex(std::size_t(index));
+		window->showStatusBarMessage(tr("Switched to map part '%1'.").arg(map->getCurrentPart()->getName()), 1000);
 	}
 }
 
