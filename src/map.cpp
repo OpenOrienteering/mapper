@@ -753,6 +753,10 @@ bool Map::loadFrom(const QString& path, QWidget* dialog_parent, MapView* view, b
 
 				import_complete = true;
 			}
+			catch (FileFormatException &e)
+			{
+				error_msg = e.message();
+			}
 			catch (std::exception &e)
 			{
 				qDebug() << "Exception:" << e.what();

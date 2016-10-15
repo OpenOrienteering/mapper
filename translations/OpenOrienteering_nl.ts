@@ -2996,8 +2996,8 @@ Kies Nee om een ander formaat te kiezen.</translation>
         <location filename="../src/map.cpp" line="651"></location>
         <location filename="../src/map.cpp" line="662"></location>
         <location filename="../src/map.cpp" line="693"></location>
-        <location filename="../src/map.cpp" line="777"></location>
-        <location filename="../src/map.cpp" line="803"></location>
+        <location filename="../src/map.cpp" line="781"></location>
+        <location filename="../src/map.cpp" line="807"></location>
         <source>Error</source>
         <translation>Fout</translation>
     </message>
@@ -3064,7 +3064,7 @@ om te lezen.</translation>
     </message>
     <message>
         <location filename="../src/map.cpp" line="664"></location>
-        <location filename="../src/map.cpp" line="778"></location>
+        <location filename="../src/map.cpp" line="782"></location>
         <source>Cannot open file:
 %1
 
@@ -3084,17 +3084,17 @@ om te lezen.</translation>
 %2</translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="803"></location>
+        <location filename="../src/map.cpp" line="807"></location>
         <source>Nothing to import.</source>
         <translation>Niets te importeren.</translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="810"></location>
+        <location filename="../src/map.cpp" line="814"></location>
         <source>Question</source>
         <translation>Vraag</translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="811"></location>
+        <location filename="../src/map.cpp" line="815"></location>
         <source>The scale of the imported data is 1:%1 which is different from this map's scale of 1:%2.
 
 Rescale the imported data?</source>
