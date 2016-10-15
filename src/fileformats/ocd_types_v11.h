@@ -48,7 +48,7 @@ namespace Ocd
 		quint8  RESERVED_MEMBER[2];
 		quint16 num_colors;
 		quint16 colors[14];
-		QChar   description[64];
+		Utf16PascalString<64> description;
 		quint8  icon_bits[484];
 		quint16 group[64];
 	};
