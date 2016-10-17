@@ -3452,7 +3452,7 @@ Voulez-vous redimensionner le fichier importé ?</translation>
         <translation>Une erreur interne est survenue, désolé !</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1573"></location>
+        <location filename="../src/map_editor.cpp" line="1572"></location>
         <source>Copied %1 object(s)</source>
         <translation>%1 objet(s) coupé(s)</translation>
     </message>

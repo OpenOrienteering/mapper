@@ -3877,7 +3877,7 @@ Geimporteerde gegevens schalen?</translation>
         <translation>Er is een interne fout opgetreden. Het spijt ons verschrikkelijk!</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1573"></location>
+        <location filename="../src/map_editor.cpp" line="1572"></location>
         <source>Copied %1 object(s)</source>
         <translation>%1 object(en) gecopieerd</translation>
     </message>

@@ -1519,14 +1519,15 @@ void MapEditorController::cut()
 	map->deleteSelectedObjects();
 }
 
+
 void MapEditorController::copy()
 {
 	if (map->getNumSelectedObjects() == 0)
 		return;
 	
 	// Create map containing required objects and their symbol and color dependencies
-	Map* copy_map = new Map();
-	copy_map->setScaleDenominator(map->getScaleDenominator());
+	Map copy_map;
+	copy_map.setScaleDenominator(map->getScaleDenominator());
 	
 	std::vector<bool> symbol_filter;
 	symbol_filter.assign(map->getNumSymbols(), false);
@@ -1538,11 +1539,11 @@ void MapEditorController::copy()
 	}
 	
 	// Copy all colors. This improves preservation of relative order during paste.
-	copy_map->importMap(map, Map::ColorImport, window);
+	copy_map.importMap(map, Map::ColorImport, window);
 	
 	// Export symbols and colors into copy_map
 	QHash<const Symbol*, Symbol*> symbol_map;
-	copy_map->importMap(map, Map::MinimalSymbolImport, window, &symbol_filter, -1, true, &symbol_map);
+	copy_map.importMap(map, Map::MinimalSymbolImport, window, &symbol_filter, -1, true, &symbol_map);
 	
 	// Duplicate all selected objects into copy map
 	for (Map::ObjectSelection::const_iterator it = map->selectedObjectsBegin(), end = map->selectedObjectsEnd(); it != end; ++it)
@@ -1551,18 +1552,16 @@ void MapEditorController::copy()
 		if (symbol_map.contains(new_object->getSymbol()))
 			new_object->setSymbol(symbol_map.value(new_object->getSymbol()), true);
 		
-		copy_map->addObject(new_object);
+		copy_map.addObject(new_object);
 	}
 	
 	// Save map to memory
 	QBuffer buffer;
-	if (!copy_map->exportToIODevice(&buffer))
+	if (!copy_map.exportToIODevice(&buffer))
 	{
-		delete copy_map;
 		QMessageBox::warning(NULL, tr("Error"), tr("An internal error occurred, sorry!"));
 		return;
 	}
-	delete copy_map;
 	
 	// Put buffer into clipboard
 	QMimeData* mime_data = new QMimeData();
@@ -1572,6 +1571,7 @@ void MapEditorController::copy()
 	// Show message
 	window->showStatusBarMessage(tr("Copied %1 object(s)").arg(map->getNumSelectedObjects()), 2000);
 }
+
 
 void MapEditorController::paste()
 {
@@ -1589,8 +1589,8 @@ void MapEditorController::paste()
 	buffer.open(QIODevice::ReadOnly);
 	
 	// Create map from buffer
-	Map* paste_map = new Map();
-	if (!paste_map->importFromIODevice(&buffer))
+	Map paste_map;
+	if (!paste_map.importFromIODevice(&buffer))
 	{
 		QMessageBox::warning(NULL, tr("Error"), tr("An internal error occurred, sorry!"));
 		return;
@@ -1598,20 +1598,20 @@ void MapEditorController::paste()
 	
 	// Move objects in paste_map so their bounding box center is at this map's viewport center.
 	// This makes the pasted objects appear at the center of the viewport.
-	QRectF paste_extent = paste_map->calculateExtent(true, false, NULL);
+	QRectF paste_extent = paste_map.calculateExtent(true, false, NULL);
 	auto offset = main_view->center() - paste_extent.center();
 	
-	MapPart* part = paste_map->getCurrentPart();
+	MapPart* part = paste_map.getCurrentPart();
 	for (int i = 0; i < part->getNumObjects(); ++i)
 		part->getObject(i)->move(offset);
 	
 	// Import pasted map. Do not blindly import all colors.
-	map->importMap(paste_map, Map::MinimalObjectImport, window);
+	map->importMap(&paste_map, Map::MinimalObjectImport, window);
 	
 	// Show message
-	window->showStatusBarMessage(tr("Pasted %1 object(s)").arg(paste_map->getNumObjects()), 2000);
-	delete paste_map;
+	window->showStatusBarMessage(tr("Pasted %1 object(s)").arg(paste_map.getNumObjects()), 2000);
 }
+
 
 void MapEditorController::clearUndoRedoHistory()
 {

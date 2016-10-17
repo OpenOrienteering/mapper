@@ -3511,7 +3511,7 @@ do odczytu.</translation>
         <translation>Obróć obiekt(y)</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1573"></location>
+        <location filename="../src/map_editor.cpp" line="1572"></location>
         <source>Copied %1 object(s)</source>
         <translation>Skopiowano %1 obiekt(ów)</translation>
     </message>

@@ -3787,7 +3787,7 @@ Změnit měřítko importovaných dat na měřítko mapy?</translation>
         <translation>Vyskytla se vnitřní chyba, promiňte!</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1573"></location>
+        <location filename="../src/map_editor.cpp" line="1572"></location>
         <source>Copied %1 object(s)</source>
         <translation>Zkopírován %1 objekt(y)</translation>
     </message>

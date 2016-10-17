@@ -3246,7 +3246,7 @@ Rescale the imported data?</source>
         <translation>Внутрішня непередбачена помилка, вибачте!</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1573"></location>
+        <location filename="../src/map_editor.cpp" line="1572"></location>
         <source>Copied %1 object(s)</source>
         <translation>Скопійовано %1 об’єкт(ів)</translation>
     </message>

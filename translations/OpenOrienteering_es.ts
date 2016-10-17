@@ -3786,7 +3786,7 @@ Rescale the imported data?</source>
         <translation>¡Ha ocurrido un error interno, lo sentimos!</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1573"></location>
+        <location filename="../src/map_editor.cpp" line="1572"></location>
         <source>Copied %1 object(s)</source>
         <translation>Copiado(s) %1 objeto(s)</translation>
     </message>

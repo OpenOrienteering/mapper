@@ -3989,7 +3989,7 @@ Skala om den importerade datan?</translation>
         <translation>Ett internt fel uppstod, ursäkta!</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1573"></location>
+        <location filename="../src/map_editor.cpp" line="1572"></location>
         <source>Copied %1 object(s)</source>
         <translation>Kopierade %1 objekt</translation>
     </message>

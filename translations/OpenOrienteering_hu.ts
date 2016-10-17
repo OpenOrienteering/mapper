@@ -3691,7 +3691,7 @@ Rescale the imported data?</source>
         <translation>Egy belső hiba keletkezett, bocsánat!</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1573"></location>
+        <location filename="../src/map_editor.cpp" line="1572"></location>
         <source>Copied %1 object(s)</source>
         <translation>%1 objektum(ok) másolva</translation>
     </message>

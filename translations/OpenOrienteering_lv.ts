@@ -3451,7 +3451,7 @@ Mainīt importējamo datu mērogu?</translation>
         <translation>Radās iekšēja kļūda, atvainojamies!</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1573"></location>
+        <location filename="../src/map_editor.cpp" line="1572"></location>
         <source>Copied %1 object(s)</source>
         <translation>Kopēti %1 objekti</translation>
     </message>

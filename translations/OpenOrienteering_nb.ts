@@ -3617,7 +3617,7 @@ Skal de importerte dataene omskaleres?</translation>
         <translation>En intern feil har oppstått, beklager!</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1573"></location>
+        <location filename="../src/map_editor.cpp" line="1572"></location>
         <source>Copied %1 object(s)</source>
         <translation>Kopiert %1 objekt(er)</translation>
     </message>
