@@ -3369,7 +3369,7 @@ Změnit měřítko importovaných dat na měřítko mapy?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="859"/>
         <source>Cut object</source>
-        <translation>Vyjmout objekt</translation>
+        <translation>Rozstřihnout objekt</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="875"/>
