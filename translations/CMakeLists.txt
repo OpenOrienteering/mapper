@@ -113,6 +113,7 @@ add_custom_target(${PROJECT_NAME}_translations_update)
 set(${PROJECT_NAME}_TRANSLATIONS_LISTFILE ${CMAKE_CURRENT_BINARY_DIR}/translations_sourcefiles.txt
 	CACHE INTERNAL "A temporary file which lists the source files to be translated")
 file(WRITE "${${PROJECT_NAME}_TRANSLATIONS_LISTFILE}"
+  "${PROJECT_SOURCE_DIR}/translations/future_translations.cpp\n"
   "${PROJECT_SOURCE_DIR}/packaging/translations.cpp\n"
 )
 
@@ -180,6 +181,9 @@ macro(QT5_TRANSLATIONS_SOURCES)
 				)
 			endif()
 			add_custom_target(${PROJECT_NAME}_${_ts_filename}_update
+			  # SOURCES are displayed in Qt Creator
+			  SOURCES "${PROJECT_SOURCE_DIR}/translations/future_translations.cpp"
+			          "${PROJECT_SOURCE_DIR}/packaging/translations.cpp"
 			  ${PRE_LUPDATE_ACTION}
 			  COMMAND "${Qt5_LUPDATE_EXECUTABLE}" ${LUPDATE_OPTIONS} @${${PROJECT_NAME}_TRANSLATIONS_LISTFILE} -ts ${Mapper_TRANS_DIR}/${_arg}
 			  ${POST_LUPDATE_ACTION}

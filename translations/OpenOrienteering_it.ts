@@ -3641,8 +3641,9 @@ Riscalatura dei dati importati?</translation>
         <translation>Non ci sono operazioni da annullare.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1518"></location>
+        <location filename="../src/map_editor.cpp" line="1519"></location>
         <source>Cut %1 object(s)</source>
+        <extracomment>Past tense. Displayed when an Edit &gt; Cut operation is completed.</extracomment>
         <translation>Tagliati %1 oggetti</translation>
     </message>
     <message>
@@ -4157,6 +4158,102 @@ multipli</translation>
         <location filename="../src/map_editor.cpp" line="3793"></location>
         <source>Cannot import the selected file because its file format is not supported.</source>
         <translation>Impossibile importare il file selezionato perché il suo formato non è supportato.</translation>
+    </message>
+    <message>
+        <location filename="future_translations.cpp" line="31"></location>
+        <source>Rotate objects</source>
+        <extracomment>To replace existing translation which uses "object(s)".</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="future_translations.cpp" line="34"></location>
+        <source>Scale objects</source>
+        <extracomment>To replace existing translation which uses "object(s)".</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <location filename="future_translations.cpp" line="37"></location>
+        <source>Cut %n object(s)</source>
+        <extracomment>Past tense. Displayed when an Edit &gt; Cut operator is completed.</extracomment>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <location filename="future_translations.cpp" line="40"></location>
+        <source>Copied %n object(s)</source>
+        <extracomment>To replace existing translation which doesn't use plural correctly</extracomment>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <location filename="future_translations.cpp" line="43"></location>
+        <source>Pasted %n object(s)</source>
+        <extracomment>To replace existing translation which doesn't use plural correctly</extracomment>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <location filename="future_translations.cpp" line="46"></location>
+        <source>Deletes the selected objects.</source>
+        <extracomment>To replace existing translation which uses "object(s)".</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="future_translations.cpp" line="49"></location>
+        <source>Duplicate the selected objects.</source>
+        <extracomment>To replace existing translation which uses "object(s)".</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="future_translations.cpp" line="52"></location>
+        <source>Rotate the selected objects.</source>
+        <extracomment>To replace existing translation which uses "object(s)".</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="future_translations.cpp" line="55"></location>
+        <source>Scale the selected objects.</source>
+        <extracomment>To replace existing translation which uses "object(s)".</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="future_translations.cpp" line="58"></location>
+        <source>Cut the selected objects into smaller parts.</source>
+        <extracomment>To replace existing translation which uses "object(s)".</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="future_translations.cpp" line="61"></location>
+        <source>Switches the symbol of the selected objects to the selected symbol.</source>
+        <extracomment>To replace existing translation which uses "object(s)".</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="future_translations.cpp" line="64"></location>
+        <source>Fill the selected lines or create a border for the selected areas.</source>
+        <extracomment>To replace existing translation which uses "line(s)" and "area(s)".</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <location filename="future_translations.cpp" line="67"></location>
+        <source>Duplicated %n object(s)</source>
+        <extracomment>To replace existing translation which doesn't use plural correctly</extracomment>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <location filename="future_translations.cpp" line="70"></location>
+        <source>No objects were selected because there are no objects with the selected symbols.</source>
+        <extracomment>To replace existing translation which uses "symbol(s)".</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6171,6 +6268,24 @@ separations</source>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1167"></location>
         <source>Select all objects with selected symbols</source>
         <translation>Seleziona tutti gli oggetti con il simbolo selezionato</translation>
+    </message>
+    <message>
+        <location filename="future_translations.cpp" line="73"></location>
+        <source>Switch symbol of selected objects</source>
+        <extracomment>To replace existing translation which uses "object(s)".</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="future_translations.cpp" line="76"></location>
+        <source>Fill / Create border for selected objects</source>
+        <extracomment>To replace existing translation which uses "object(s)".</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="future_translations.cpp" line="79"></location>
+        <source>Scale symbols</source>
+        <extracomment>To replace existing translation which uses "symbol(s)".</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

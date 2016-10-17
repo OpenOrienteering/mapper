@@ -25,6 +25,45 @@
     </message>
 </context>
 <context>
+    <name>MapEditorController</name>
+    <message numerus="yes">
+        <location filename="future_translations.cpp" line="37"></location>
+        <source>Cut %n object(s)</source>
+        <extracomment>Past tense. Displayed when an Edit &gt; Cut operator is completed.</extracomment>
+        <translation>
+            <numerusform>Cut one object</numerusform>
+            <numerusform>Cut %n objects</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <location filename="future_translations.cpp" line="40"></location>
+        <source>Copied %n object(s)</source>
+        <extracomment>To replace existing translation which doesn't use plural correctly</extracomment>
+        <translation>
+            <numerusform>Copied one object</numerusform>
+            <numerusform>Copied %n objects</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <location filename="future_translations.cpp" line="43"></location>
+        <source>Pasted %n object(s)</source>
+        <extracomment>To replace existing translation which doesn't use plural correctly</extracomment>
+        <translation>
+            <numerusform>Pasted one object</numerusform>
+            <numerusform>Pasted %n objects</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <location filename="future_translations.cpp" line="67"></location>
+        <source>Duplicated %n object(s)</source>
+        <extracomment>To replace existing translation which doesn't use plural correctly</extracomment>
+        <translation>
+            <numerusform>Duplicated one object</numerusform>
+            <numerusform>Duplicated %n objects</numerusform>
+        </translation>
+    </message>
+</context>
+<context>
     <name>OCAD8FileImport</name>
     <message numerus="yes">
         <location filename="../src/file_format_ocad8.cpp" line="145"></location>

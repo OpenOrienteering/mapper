@@ -1515,10 +1515,10 @@ void MapEditorController::doUndo(bool redo)
 void MapEditorController::cut()
 {
 	copy();
+	//: Past tense. Displayed when an Edit > Cut operation is completed.
 	window->showStatusBarMessage(tr("Cut %1 object(s)").arg(map->getNumSelectedObjects()), 2000);
 	map->deleteSelectedObjects();
 }
-
 
 void MapEditorController::copy()
 {
