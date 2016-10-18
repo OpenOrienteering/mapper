@@ -22,6 +22,7 @@ todo:
 
 *Note:* Toolbars may be moved to a more convenient position.  To detach and move, pick the handle (the vertical line of dots) at the left end and drag the toolbar to your preferred position.  The resulting order of your tools may thus be different from this page.
 
+To open and close toolbar windows right click on any open toolbars or windows. Then use the menu that displays to select or deselect the windows to show.
 
 ## General toolbar {#general-toolbar}
 
