@@ -13,6 +13,7 @@ todo:
 
 <!-- Note: Each item needs an ID. This ID is used to open the context-sensitive help. -->
 
+ * [Toolbar positions and visibility](#toolbar-visibility)
  * [General toolbar](#general-toolbar)
  * [View toolbar](#view-toolbar)
  * [Map parts toolbar](#map-parts-toolbar)
@@ -20,9 +21,12 @@ todo:
  * [Editing toolbar](#editing-toolbar)
  * [Advanced drawing](#advanced-drawing-toolbar)
 
-*Note:* Toolbars may be moved to a more convenient position.  To detach and move, pick the handle (the vertical line of dots) at the left end and drag the toolbar to your preferred position.  The resulting order of your tools may thus be different from this page.
+## Toolbar positions and visibility
 
-To open and close toolbar windows right click on any open toolbars or windows. Then use the menu that displays to select or deselect the windows to show.
+Toolbars may be moved to a more convenient position. To detach and move, pick the handle at the left end and drag the toolbar to your preferred position. The resulting order of your toolbars may thus be different from this page.
+
+You may hide toolbars you don't use. To close or open a toolbar right click on any open toolbar or docked window. This will open a small window where you can disable or enable toolbars and docked windows.
+
 
 ## General toolbar {#general-toolbar}
 
