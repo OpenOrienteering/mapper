@@ -1990,7 +1990,7 @@
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="167"/>
         <source>Exit</source>
-        <translation type="unfinished">Lopeta</translation>
+        <translation>Lopeta</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="187"/>
@@ -2005,7 +2005,7 @@
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="215"/>
         <source>Clear list</source>
-        <translation type="unfinished">Tyhjennä lista</translation>
+        <translation>Tyhjennä lista</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="234"/>
@@ -3033,7 +3033,7 @@ Skaalataanko tuotu tieto?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="802"/>
         <source>Select all</source>
-        <translation type="unfinished">Valitse kaikki</translation>
+        <translation>Valitse kaikki</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="803"/>
@@ -3809,7 +3809,7 @@ Skaalataanko tuotu tieto?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="801"/>
         <source>Delete</source>
-        <translation type="unfinished">Poista</translation>
+        <translation>Poista</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="737"/>
@@ -3929,7 +3929,7 @@ Skaalataanko tuotu tieto?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="774"/>
         <source>N</source>
-        <translation type="unfinished">N</translation>
+        <translation>N</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="775"/>
@@ -4394,7 +4394,7 @@ selected</source>
     <message>
         <location filename="../src/core/map_printer.cpp" line="480"/>
         <source>- Map -</source>
-        <translation type="unfinished">- Kartta -</translation>
+        <translation>- Kartta -</translation>
     </message>
     <message>
         <location filename="../src/core/map_printer.cpp" line="1215"/>
@@ -6501,17 +6501,17 @@ to jump over the lazy dog
     <message>
         <location filename="../src/gui/widgets/tags_widget.cpp" line="53"/>
         <source>Key</source>
-        <translation type="unfinished">Avain</translation>
+        <translation>Avain</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tags_widget.cpp" line="53"/>
         <source>Value</source>
-        <translation type="unfinished">Arvo</translation>
+        <translation>Arvo</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tags_widget.cpp" line="63"/>
         <source>Help</source>
-        <translation type="unfinished">Ohje</translation>
+        <translation>Ohje</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tags_widget.cpp" line="233"/>
@@ -6833,7 +6833,7 @@ Jos et aio piirtää taustakartalle, tämä ei ole ongelma.</translation>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="215"/>
         <source>Remove</source>
-        <translation type="unfinished">Poista</translation>
+        <translation>Poista</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="221"/>
@@ -7401,7 +7401,7 @@ Tuetaan vain versioon %2 asti.</translation>
         <location filename="../src/util.cpp" line="263"/>
         <location filename="../src/util.cpp" line="296"/>
         <source>Error</source>
-        <translation type="unfinished">Virhe</translation>
+        <translation>Virhe</translation>
     </message>
     <message>
         <location filename="../src/util.cpp" line="256"/>
