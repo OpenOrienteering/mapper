@@ -64,7 +64,7 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="89"></location>
         <source>Open most recently used file</source>
-        <translation type="unfinished">Avaa viimeisin tiedosto</translation>
+        <translation>Avaa viimeisin tiedosto</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="92"></location>
@@ -227,7 +227,7 @@
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="43"></location>
         <source>Autosaved file</source>
-        <translation type="unfinished"></translation>
+        <translation>Automaattisesti tallennettu tiedosto</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/gui/autosave_dialog.cpp" line="45"></location>
@@ -241,7 +241,7 @@
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="49"></location>
         <source>File saved by the user</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Tiedosto tallennettu käyttäjän toimesta</translation>
     </message>
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="56"></location>
@@ -251,12 +251,12 @@
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="58"></location>
         <source>File %1 was not properly closed. At the moment, there are two versions:</source>
-        <translation type="unfinished"></translation>
+        <translation>Tiedosto %1 ei suljettu oikein. Tällä hetkellä tiedostosta on 2 versiota:</translation>
     </message>
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="72"></location>
         <source>Save the active file to remove the conflicting version.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Tallenna aktiivinen tiedosto poistaaksesi väärän version</translation>
     </message>
 </context>
 <context>
@@ -2066,7 +2066,7 @@
     <message>
         <location filename="../src/symbol.cpp" line="284"></location>
         <source>Error while loading a symbol of type %1 at line %2 column %3: %4</source>
-        <translation type="unfinished"></translation>
+        <translation>Virhe ladattaessa symboli tyyppiä %1 rivillä %2 sarakkeessa %3:%4</translation>
     </message>
     <message>
         <source>Error while loading a symbol.</source>
@@ -2112,17 +2112,17 @@
         <location filename="../src/util/xml_stream_util.cpp" line="72"></location>
         <location filename="../src/util/xml_stream_util.cpp" line="88"></location>
         <source>Could not parse the coordinates.</source>
-        <translation type="unfinished"></translation>
+        <translation>Koordinaattien tulkitseminen ei onnistu.</translation>
     </message>
     <message>
         <location filename="../src/util/xml_stream_util.cpp" line="112"></location>
         <source>Expected %1 coordinates, found %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>Vaaditaan %1 koordinaatteja, löydetty %2.</translation>
     </message>
     <message>
         <location filename="../src/file_format_xml.cpp" line="891"></location>
         <source>Error while loading the printing configuration at %1:%2: %3</source>
-        <translation type="unfinished"></translation>
+        <translation>Virhe ladattaessa tulostus asetuksia %1:%2: %3</translation>
     </message>
     <message>
         <location filename="../src/file_format_xml.cpp" line="904"></location>
@@ -7416,13 +7416,13 @@ Tuetaan vain versioon %2 asti.</translation>
     <message>
         <location filename="../src/util.cpp" line="297"></location>
         <source>Failed to launch the help browser ("Qt Assistant").</source>
-        <translation type="unfinished">Ohjeen lukijaa ei voitu käynnistää ("Qt Assistant").</translation>
+        <translation>Ohje selainta ei voitu käynnistää ("Qt Assistant").</translation>
     </message>
     <message>
         <location filename="../src/util.cpp" line="313"></location>
         <source>See more...</source>
         <extracomment>This "See more" is displayed as a link to the manual in What's-this tooltips.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Katso lisää...</translation>
     </message>
 </context>
 <context>
@@ -7443,22 +7443,22 @@ Tuetaan vain versioon %2 asti.</translation>
     <message>
         <location filename="../src/file_format_xml.cpp" line="427"></location>
         <source>Some coordinates were out of bounds for printing. Map content was adjusted.</source>
-        <translation type="unfinished"></translation>
+        <translation>Jotkin koordinaatit ovat tulostusrajojen ulkopuolella. Kartan sisältöä säädetty.</translation>
     </message>
     <message>
         <location filename="../src/file_format_xml.cpp" line="477"></location>
         <source>unknown</source>
-        <translation type="unfinished"></translation>
+        <translation>Epämääräinen</translation>
     </message>
     <message>
         <location filename="../src/file_format_xml.cpp" line="478"></location>
         <source>Parts of this file cannot be read by this version of Mapper. Minimum required version: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Osaa tiedostosta ei voida lukea tällä Mapper versiolla. Minimi vaadittu versio: %1</translation>
     </message>
     <message>
         <location filename="../src/file_format_xml.cpp" line="512"></location>
         <source>Error at line %1 column %2: %3</source>
-        <translation type="unfinished"></translation>
+        <translation>Virhe rivillä %1 sarakkeessa %2: %3</translation>
     </message>
     <message>
         <location filename="../src/file_format_xml.cpp" line="523"></location>
@@ -7468,7 +7468,7 @@ Tuetaan vain versioon %2 asti.</translation>
     <message>
         <location filename="../src/file_format_xml.cpp" line="564"></location>
         <source>Unknown error</source>
-        <translation type="unfinished"></translation>
+        <translation>Tuntematon virhe</translation>
     </message>
     <message>
         <location filename="../src/file_format_xml.cpp" line="565"></location>
