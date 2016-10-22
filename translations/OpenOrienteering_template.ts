@@ -4176,7 +4176,7 @@ selected</source>
         <location filename="../src/map_widget.cpp" line="561"></location>
         <source>%1x</source>
         <comment>Zoom factor</comment>
-        <translation type="unfinished">REMOVE_ME {1x?}</translation>
+        <translation type="unfinished">%1x</translation>
     </message>
     <message>
         <location filename="../src/map_widget.cpp" line="582"></location>
@@ -5392,22 +5392,6 @@ separations</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1329"></location>
         <source>The map area is empty. Output canceled.</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QFileDialog</name>
-    <message>
-        <location filename="../src/gui/text_browser_dialog.cpp" line="59"></location>
-        <source>Back</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QPlatformTheme</name>
-    <message>
-        <location filename="../src/gui/text_browser_dialog.cpp" line="64"></location>
-        <source>Close</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

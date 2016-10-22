@@ -28,7 +28,9 @@ set(Mapper_TRANS
  OpenOrienteering_et.ts
  OpenOrienteering_fi.ts
  OpenOrienteering_fr.ts
+ OpenOrienteering_he.ts
  OpenOrienteering_hu.ts
+ OpenOrienteering_id.ts
  OpenOrienteering_it.ts
  OpenOrienteering_ja.ts
  OpenOrienteering_lv.ts
@@ -159,7 +161,7 @@ macro(QT5_TRANSLATIONS_SOURCES)
 			if("${_ts_filename}" STREQUAL "OpenOrienteering_template")
 				list(APPEND LUPDATE_OPTIONS -no-obsolete)
 			endif()
-			if("${_ts_filename}" MATCHES "OpenOrienteering_(et|lv|nb|nl|template)")
+			if("${_ts_filename}" MATCHES "OpenOrienteering_(et|id|lv|nb|nl)")
 				# Qt translations which are not yet available from upstream, as of Qt 5.5.1.
 				# Inserted from qt_template.ts into the OpenOrienteering .ts file by
 				#   lconvert -sort-contexts -o OpenOrienteering_XX.ts 
