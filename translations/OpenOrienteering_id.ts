@@ -34,12 +34,12 @@
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="161"/>
         <source>This program is free software: you can redistribute it and/or modify it under the terms of the &lt;a %1&gt;GNU General Public License (GPL), version&amp;nbsp;3&lt;/a&gt;, as published by the Free Software Foundation.</source>
-        <translation>Program ini adalah perangkat lunak bebas: Anda dapat mendistribusikan dan memodifikasi di bawah &lt;a %1&gt; GNU General Public License (GPL), versi 3&lt;/a&gt;, seperti dipublikasikan oleh Free Software Foundation.</translation>
+        <translation>Program ini adalah perangkat lunak bebas: Anda dapat mendistribusikan dan memodifikasi di bawah &lt;a %1&gt;GNU General Public License (GPL), versi&amp;nbsp;3&lt;/a&gt;, seperti dipublikasikan oleh Free Software Foundation.</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="166"/>
         <source>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License (GPL), version&amp;nbsp;3, for &lt;a %1&gt;more details&lt;/a&gt;.</source>
-        <translation>Program ini didistribusikan dalam harapan bahwa itu akan berguna, tetapi TANPA ADANYA JAMINAN; tanpa bahkan jaminan tersirat dapat DIPERJUALBELIKAN atau KESESUAIAN untuk TUJUAN TERTENTU. Lihat GNU General Public License (GPL), versi 3, untuk &lt;a %1&gt; lebih jelasnya&lt;/a&gt;.</translation>
+        <translation>Program ini didistribusikan dalam harapan bahwa itu akan berguna, tetapi TANPA ADANYA JAMINAN; tanpa bahkan jaminan tersirat dapat DIPERJUALBELIKAN atau KESESUAIAN untuk TUJUAN TERTENTU. Lihat GNU General Public License (GPL), versi&amp;nbsp;3, untuk &lt;a %1&gt;lebih jelasnya&lt;/a&gt;.</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="175"/>
@@ -177,7 +177,7 @@
     <message>
         <location filename="../src/symbol_area.cpp" line="970"/>
         <source>Pattern fill %1</source>
-        <translation>Pola mengisi</translation>
+        <translation>Pola mengisi %1</translation>
     </message>
     <message>
         <location filename="../src/symbol_area.cpp" line="979"/>
@@ -358,7 +358,7 @@
     <message>
         <location filename="../src/gui/widgets/color_dropdown.cpp" line="32"/>
         <source>- none -</source>
-        <translation>-tidak ada-</translation>
+        <translation>- tidak ada -</translation>
     </message>
 </context>
 <context>
@@ -461,17 +461,17 @@
     <message>
         <location filename="../src/symbol_combined.cpp" line="392"/>
         <source>&amp;Number of parts:</source>
-        <translation>&amp; Jumlah bagian:</translation>
+        <translation>&amp;Jumlah bagian:</translation>
     </message>
     <message>
         <location filename="../src/symbol_combined.cpp" line="407"/>
         <source>- Private line symbol -</source>
-        <translation>-Prifat baris simbol-</translation>
+        <translation>- Prifat baris simbol -</translation>
     </message>
     <message>
         <location filename="../src/symbol_combined.cpp" line="408"/>
         <source>- Private area symbol -</source>
-        <translation>-Area pribadi simbol-</translation>
+        <translation>- Area pribadi simbol -</translation>
     </message>
     <message>
         <location filename="../src/symbol_combined.cpp" line="414"/>
@@ -705,7 +705,7 @@
         <location filename="../src/tool_cutout.cpp" line="135"/>
         <location filename="../src/tool_cutout.cpp" line="139"/>
         <source>&lt;b&gt;%1+Click or drag&lt;/b&gt;: Select the objects to be clipped. </source>
-        <translation>&lt;b&gt;% 1 + klik atau drag&lt;/b&gt;: pilih objek untuk dipotong. </translation>
+        <translation>&lt;b&gt;%1+klik atau drag&lt;/b&gt;: pilih objek untuk dipotong. </translation>
     </message>
     <message>
         <location filename="../src/tool_cutout.cpp" line="140"/>
@@ -837,20 +837,20 @@
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1071"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt;: Snap or append to existing objects. </source>
-        <translation>&lt;b&gt;% 1 + klik&lt;/b&gt;: Snap atau menambahkan ke objek yang sudah ada. </translation>
+        <translation>&lt;b&gt;%1+klik&lt;/b&gt;: Snap atau menambahkan ke objek yang sudah ada. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1076"/>
         <location filename="../src/tool_draw_rectangle.cpp" line="706"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt;: Pick direction from existing objects. </source>
-        <translation>&lt;b&gt;% 1 + klik&lt;/b&gt;: memilih arah dari objek yang sudah ada. </translation>
+        <translation>&lt;b&gt;%1+klik&lt;/b&gt;: memilih arah dari objek yang sudah ada. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1089"/>
         <location filename="../src/tool_draw_rectangle.cpp" line="711"/>
         <location filename="../src/tool_draw_rectangle.cpp" line="735"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt;: Snap to existing objects. </source>
-        <translation>&lt;b&gt;% 1 + klik&lt;/b&gt;: Snap benda-benda yang ada. </translation>
+        <translation>&lt;b&gt;%1+klik&lt;/b&gt;: Snap benda-benda yang ada. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1095"/>
@@ -918,7 +918,7 @@
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1090"/>
         <source>&lt;b&gt;%1+Drag&lt;/b&gt;: Follow existing objects. </source>
-        <translation>&lt;b&gt;% 1 + drag&lt;/b&gt;: Ikuti benda-benda yang ada. </translation>
+        <translation>&lt;b&gt;%1+drag&lt;/b&gt;: Ikuti benda-benda yang ada. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1100"/>
@@ -963,7 +963,7 @@
         <location filename="../src/tool_draw_point.cpp" line="317"/>
         <location filename="../src/tool_draw_point.cpp" line="329"/>
         <source>&lt;b&gt;Angle:&lt;/b&gt; %1° </source>
-        <translation>&lt;b&gt;Sudut:&lt;/b&gt; %1 ° </translation>
+        <translation>&lt;b&gt;Sudut:&lt;/b&gt; %1° </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_point.cpp" line="318"/>
@@ -984,7 +984,7 @@
     <message>
         <location filename="../src/tool_draw_point.cpp" line="330"/>
         <source>&lt;b&gt;%1, 0&lt;/b&gt;: Reset rotation.</source>
-        <translation>&lt;b&gt;% 1, 0&lt;/b&gt;: reset rotasi.</translation>
+        <translation>&lt;b&gt;%1, 0&lt;/b&gt;: reset rotasi.</translation>
     </message>
 </context>
 <context>
@@ -1073,7 +1073,7 @@
     <message>
         <location filename="../src/tool_edit_line.cpp" line="472"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on segment: Toggle between straight and curved. </source>
-        <translation>&lt;b&gt;% 1 + klik&lt;/b&gt; pada segmen: beralih antara lurus dan melengkung. </translation>
+        <translation>&lt;b&gt;%1+klik&lt;/b&gt; pada segmen: beralih antara lurus dan melengkung. </translation>
     </message>
 </context>
 <context>
@@ -1109,17 +1109,17 @@
     <message>
         <location filename="../src/tool_edit_point.cpp" line="683"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on point: Delete it; on path: Add a new dash point; with &lt;b&gt;%2&lt;/b&gt;: Add a normal point. </source>
-        <translation>&lt;b&gt;% 1 + klik&lt;/b&gt; pada titik: Hapus; di jalan: menambahkan titik dash baru; dengan &lt;b&gt;%2&lt;/b&gt;: menambahkan titik normal. </translation>
+        <translation>&lt;b&gt;%1+klik&lt;/b&gt; pada titik: Hapus; di jalan: menambahkan titik dash baru; dengan &lt;b&gt;%2&lt;/b&gt;: menambahkan titik normal. </translation>
     </message>
     <message>
         <location filename="../src/tool_edit_point.cpp" line="686"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on point: Delete it; on path: Add a new point; with &lt;b&gt;%2&lt;/b&gt;: Add a dash point. </source>
-        <translation>&lt;b&gt;% 1 + klik&lt;/b&gt; pada titik: Hapus; di jalan: menambahkan sebuah titik yang baru; dengan &lt;b&gt;%2&lt;/b&gt;: menambahkan titik dash. </translation>
+        <translation>&lt;b&gt;%1+klik&lt;/b&gt; pada titik: Hapus; di jalan: menambahkan sebuah titik yang baru; dengan &lt;b&gt;%2&lt;/b&gt;: menambahkan titik dash. </translation>
     </message>
     <message>
         <location filename="../src/tool_edit_point.cpp" line="690"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on point to switch between dash and normal point. </source>
-        <translation>&lt;b&gt;% 1 + klik&lt;/b&gt; pada titik untuk beralih antara dasbor dan titik normal. </translation>
+        <translation>&lt;b&gt;%1+klik&lt;/b&gt; pada titik untuk beralih antara dasbor dan titik normal. </translation>
     </message>
 </context>
 <context>
@@ -1134,7 +1134,7 @@
         <location filename="../src/tool_edit_point.cpp" line="654"/>
         <location filename="../src/tool_edit_line.cpp" line="455"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Fixed angles. </source>
-        <translation type="unfinished">sudut tetap </translation>
+        <translation type="unfinished">&lt;b&gt;%1&lt;/b&gt;: sudut tetap. </translation>
     </message>
     <message>
         <location filename="../src/tool_edit_point.cpp" line="666"/>
@@ -1147,7 +1147,7 @@
         <location filename="../src/tool_edit_point.cpp" line="672"/>
         <location filename="../src/tool_edit_line.cpp" line="464"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Select a single object. &lt;b&gt;Drag&lt;/b&gt;: Select multiple objects. &lt;b&gt;%1+Click&lt;/b&gt;: Toggle selection. </source>
-        <translation>&lt;b&gt;Klik&lt;/b&gt;: pilih objek tunggal. &lt;b&gt;Drag&lt;/b&gt;: memilih beberapa objek. &lt;b&gt;% 1 + klik&lt;/b&gt;: beralih pilihan. </translation>
+        <translation>&lt;b&gt;Klik&lt;/b&gt;: pilih objek tunggal. &lt;b&gt;Drag&lt;/b&gt;: memilih beberapa objek. &lt;b&gt;%1+klik&lt;/b&gt;: beralih pilihan. </translation>
     </message>
     <message>
         <location filename="../src/tool_edit_point.cpp" line="675"/>
@@ -1190,7 +1190,7 @@
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="48"/>
         <source>Snap distance (%1):</source>
-        <translation type="unfinished">KLik Jarak (%1):</translation>
+        <translation type="unfinished">Klik Jarak (%1):</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="51"/>
@@ -1260,7 +1260,7 @@
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="85"/>
         <source>Radius of helper cross:</source>
-        <translation type="unfinished">Radius Garis Bantu</translation>
+        <translation type="unfinished">Radius Garis Bantu:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="87"/>
@@ -1318,7 +1318,7 @@
     <message>
         <location filename="../src/tool_fill.cpp" line="168"/>
         <source>Failed to create the fill object.</source>
-        <translation type="unfinished">Gagal membuat untuk mengisi objek</translation>
+        <translation type="unfinished">Gagal membuat untuk mengisi objek.</translation>
     </message>
     <message>
         <location filename="../src/tool_fill.cpp" line="179"/>
@@ -1442,7 +1442,7 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="300"/>
         <source>Translation files (*.qm)</source>
-        <translation>File terjemahan (* .qm)</translation>
+        <translation>File terjemahan (*.qm)</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="307"/>
@@ -1510,7 +1510,7 @@
         <location filename="../src/core/crs_template_implementation.cpp" line="82"/>
         <source>EPSG @code@ coordinates</source>
         <extracomment>Don't translate @code@. It is placeholder.</extracomment>
-        <translation>EPSG @code @ Koordinat</translation>
+        <translation>EPSG @code@ Koordinat</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="93"/>
@@ -1614,7 +1614,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="334"/>
         <source>&lt;a href="%1"&gt;OpenStreetMap&lt;/a&gt; | &lt;a href="%2"&gt;World of O Maps&lt;/a&gt;</source>
-        <translation>&lt;a href="%1"&gt; OpenStreetMap&lt;/a&gt; | &lt;a href="%2"&gt; dunia O Maps&lt;/a&gt;</translation>
+        <translation>&lt;a href="%1"&gt;OpenStreetMap&lt;/a&gt; | &lt;a href="%2"&gt;World of O Maps&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="366"/>
@@ -1630,7 +1630,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="96"/>
         <source>- local -</source>
-        <translation>-lokal-</translation>
+        <translation>- lokal -</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="104"/>
@@ -1646,7 +1646,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="109"/>
         <source>&amp;Pick on map</source>
-        <translation>&amp; Memilih pada peta</translation>
+        <translation>&amp;Memilih pada peta</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="111"/>
@@ -1711,7 +1711,7 @@
         <location filename="../src/gui/georeferencing_dialog.cpp" line="187"/>
         <location filename="../src/gui/select_crs_dialog.cpp" line="84"/>
         <source>&amp;Coordinate reference system:</source>
-        <translation type="unfinished">Referensi sistem koordinat</translation>
+        <translation type="unfinished">&amp;Referensi sistem koordinat:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="194"/>
@@ -1721,7 +1721,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="196"/>
         <source>Geographic coordinates:</source>
-        <translation type="unfinished">Koordinat geografis</translation>
+        <translation type="unfinished">Koordinat geografis:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="199"/>
@@ -1736,7 +1736,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="367"/>
         <source>The magnetic declination for the reference point %1° %2° will now be retrieved from &lt;a href="%3"&gt;%3&lt;/a&gt;. Do you want to continue?</source>
-        <translation>Deklinasi magnet untuk referensi titik %1 ° %2 ° sekarang dapat diperoleh dari &lt;a href="%3"&gt; %3&lt;/a&gt;. Apakah Anda ingin melanjutkan?</translation>
+        <translation>Deklinasi magnet untuk referensi titik %1° %2° sekarang dapat diperoleh dari &lt;a href="%3"&gt;%3&lt;/a&gt;. Apakah Anda ingin melanjutkan?</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="440"/>
@@ -1751,7 +1751,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="470"/>
         <source>Local coordinates:</source>
-        <translation type="unfinished">Koordinat lokal</translation>
+        <translation type="unfinished">Koordinat lokal:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="497"/>
@@ -1777,7 +1777,8 @@
         <location filename="../src/gui/georeferencing_dialog.cpp" line="674"/>
         <source>The online declination lookup failed:
 %1</source>
-        <translation>Pencarian online deklinasi gagal: %1</translation>
+        <translation>Pencarian online deklinasi gagal:
+%1</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="502"/>
@@ -1898,7 +1899,7 @@
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="541"/>
         <source>No map files found!&lt;br/&gt;&lt;br/&gt;Copy map files to a top-level folder named 'OOMapper' on the device or a memory card.</source>
-        <translation>Tidak ada file peta ditemukan! &lt;br/&gt; &lt;br/&gt; Salin file peta ke folder tingkat atas yang bernama 'OOMapper' pada perangkat atau kartu memori.</translation>
+        <translation>Tidak ada file peta ditemukan!&lt;br/&gt;&lt;br/&gt;Salin file peta ke folder tingkat atas yang bernama 'OOMapper' pada perangkat atau kartu memori.</translation>
     </message>
 </context>
 <context>
@@ -1916,7 +1917,7 @@
     <message>
         <location filename="../src/symbol.cpp" line="284"/>
         <source>Error while loading a symbol of type %1 at line %2 column %3: %4</source>
-        <translation>Error ketika memuat simbol jenis %1 baris %2 %3 kolom: %4</translation>
+        <translation type="unfinished">Error ketika memuat simbol jenis %1 baris %2 kolom %3: %4</translation>
     </message>
     <message>
         <location filename="../src/object.cpp" line="396"/>
@@ -1926,17 +1927,17 @@
     <message>
         <location filename="../src/object.cpp" line="460"/>
         <source>Error while loading an object of type %1 at %2:%3: %4</source>
-        <translation>Error ketika memuat sebuah objek jenis %1 di %2: %3: %4</translation>
+        <translation>Error ketika memuat sebuah objek jenis %1 di %2:%3: %4</translation>
     </message>
     <message>
         <location filename="../src/object.cpp" line="428"/>
         <source>Unable to find symbol for object at %1:%2.</source>
-        <translation>Tidak dapat menemukan simbol untuk objek di %1: %2.</translation>
+        <translation>Tidak dapat menemukan simbol untuk objek di %1:%2.</translation>
     </message>
     <message>
         <location filename="../src/object.cpp" line="440"/>
         <source>Point object with undefined or wrong symbol at %1:%2.</source>
-        <translation>Titik objek dengan simbol undefined atau salah 1%: %2.</translation>
+        <translation>Titik objek dengan simbol undefined atau salah 1%:%2.</translation>
     </message>
     <message>
         <location filename="../src/file_format_native.cpp" line="92"/>
@@ -1968,13 +1969,13 @@
     <message>
         <location filename="../src/file_format_xml.cpp" line="891"/>
         <source>Error while loading the printing configuration at %1:%2: %3</source>
-        <translation>Error ketika memuat konfigurasi pencetakan pada %1: %2: %3</translation>
+        <translation>Error ketika memuat konfigurasi pencetakan pada %1:%2: %3</translation>
     </message>
     <message>
         <location filename="../src/file_format_xml.cpp" line="904"/>
         <location filename="../src/file_format_xml.cpp" line="918"/>
         <source>Error while loading the undo/redo steps at %1:%2: %3</source>
-        <translation>Error ketika memuat undo/mengulang langkah 1%: %2: %3</translation>
+        <translation>Error ketika memuat undo/mengulang langkah 1%:%2: %3</translation>
     </message>
 </context>
 <context>
@@ -2008,7 +2009,8 @@
         <location filename="../src/file_import_export.cpp" line="125"/>
         <source>Warnings when loading template '%1':
 %2</source>
-        <translation>Peringatan ketika loading template '%1': %2</translation>
+        <translation>Peringatan ketika loading template '%1':
+%2</translation>
     </message>
     <message>
         <location filename="../src/file_import_export.cpp" line="132"/>
@@ -2071,7 +2073,7 @@
     <message>
         <location filename="../src/file_format_native.cpp" line="416"/>
         <source>Error while loading map part %2.</source>
-        <translation type="unfinished">Kesalahan ketika memuat peta bagian %2</translation>
+        <translation type="unfinished">Kesalahan ketika memuat peta bagian %2.</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="116"/>
@@ -2424,7 +2426,7 @@
     <message>
         <location filename="../src/gui/main_window.cpp" line="221"/>
         <source>&amp;New</source>
-        <translation>&amp; Baru</translation>
+        <translation>&amp;Baru</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="223"/>
@@ -2434,7 +2436,7 @@
     <message>
         <location filename="../src/gui/main_window.cpp" line="227"/>
         <source>&amp;Open...</source>
-        <translation>&amp; Terbuka...</translation>
+        <translation>&amp;Terbuka...</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="229"/>
@@ -2444,22 +2446,22 @@
     <message>
         <location filename="../src/gui/main_window.cpp" line="233"/>
         <source>Open &amp;recent</source>
-        <translation type="unfinished">Buka &amp; baru saja</translation>
+        <translation type="unfinished">Buka &amp;baru saja</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="244"/>
         <source>&amp;Save</source>
-        <translation>&amp; Simpan</translation>
+        <translation>&amp;Simpan</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="249"/>
         <source>Save &amp;as...</source>
-        <translation>Simpan &amp; sebagai...</translation>
+        <translation type="unfinished">Simpan &amp;sebagai...</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="251"/>
         <source>Ctrl+Shift+S</source>
-        <translation>Ctrl + Shift + S</translation>
+        <translation>Ctrl+Shift+S</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="257"/>
@@ -2480,7 +2482,7 @@
     <message>
         <location filename="../src/gui/main_window.cpp" line="268"/>
         <source>E&amp;xit</source>
-        <translation>E &amp; keluar instalasi</translation>
+        <translation type="unfinished">&amp;Keluar instalasi</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="270"/>
@@ -2490,7 +2492,7 @@
     <message>
         <location filename="../src/gui/main_window.cpp" line="277"/>
         <source>&amp;File</source>
-        <translation>&amp; File</translation>
+        <translation>&amp;File</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="296"/>
@@ -2500,7 +2502,7 @@
     <message>
         <location filename="../src/gui/main_window.cpp" line="311"/>
         <source>Open &amp;Manual</source>
-        <translation>Buka &amp; Manual</translation>
+        <translation>Buka &amp;Manual</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="312"/>
@@ -2510,7 +2512,7 @@
     <message>
         <location filename="../src/gui/main_window.cpp" line="316"/>
         <source>&amp;About %1</source>
-        <translation>&amp; Tentang %1</translation>
+        <translation>&amp;Tentang %1</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="317"/>
@@ -2520,7 +2522,7 @@
     <message>
         <location filename="../src/gui/main_window.cpp" line="321"/>
         <source>About &amp;Qt</source>
-        <translation>Tentang &amp; Qt</translation>
+        <translation>Tentang &amp;Qt</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="322"/>
@@ -2530,7 +2532,7 @@
     <message>
         <location filename="../src/gui/main_window.cpp" line="328"/>
         <source>&amp;Help</source>
-        <translation>&amp; Bantuan</translation>
+        <translation>&amp;Bantuan</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="501"/>
@@ -2561,7 +2563,7 @@ Apakah Anda ingin menyimpan perubahan?</translation>
         <source>The selected map scale is 1:%1, but the chosen symbol set has a nominal scale of 1:%2.
 
 Do you want to scale the symbols to the selected scale?</source>
-        <translation>Skala peta yang dipilih adalah 1:% 1, tetapi set pilihan simbol memiliki skala nominal 1:% 2.
+        <translation>Skala peta yang dipilih adalah 1:%1, tetapi set pilihan simbol memiliki skala nominal 1:%2.
 
 Apakah Anda ingin skala simbol untuk skala dipilih?</translation>
     </message>
@@ -2573,7 +2575,7 @@ Apakah Anda ingin skala simbol untuk skala dipilih?</translation>
     <message>
         <location filename="../src/gui/main_window.cpp" line="688"/>
         <source>It seems that %1 crashed the last time this file was opened:&lt;br /&gt;&lt;tt&gt;%2&lt;/tt&gt;&lt;br /&gt;&lt;br /&gt;Really retry to open it?</source>
-        <translation type="unfinished">Tampaknya bahwa %1 jatuh terakhir waktu file ini dibuka: &lt; br / &gt; &lt;tt&gt;%2&lt;/tt&gt; &lt; br / &gt; &lt; br / &gt; benar-benar mencoba untuk membukanya?</translation>
+        <translation>Tampaknya bahwa %1 jatuh terakhir waktu file ini dibuka: &lt;br /&gt;&lt;tt&gt;%2&lt;/tt&gt;&lt;br /&gt;&lt;br /&gt;benar-benar mencoba untuk membukanya?</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="876"/>
@@ -2612,7 +2614,10 @@ Apakah Anda ingin skala simbol untuk skala dipilih?</translation>
 %1
 
 File format not recognized.</source>
-        <translation>Tidak dapat membuka file: format File %1 tidak diakui.</translation>
+        <translation type="unfinished">Tidak dapat membuka file:
+%1
+
+format File tidak diakui.</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="778"/>
@@ -2624,7 +2629,7 @@ Apakah Anda ingin membuang perubahan Anda?</translation>
     <message>
         <location filename="../src/gui/main_window.cpp" line="829"/>
         <source>&amp;%1 %2</source>
-        <translation>&amp; %1 %2</translation>
+        <translation>&amp;%1 %2</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="908"/>
@@ -2676,14 +2681,18 @@ Tekan tidak untuk memilih format yang berbeda.</translation>
         <source>Cannot export the map as
 "%1"
 because saving as %2 (.%3) is not supported.</source>
-        <translation type="unfinished">Tidak dapat mengekspor peta sebagai "%1" karena penyimpan sebagai %2 (. %3) tidak didukung.</translation>
+        <translation>Tidak dapat mengekspor peta sebagai
+"%1"
+karena penyimpan sebagai %2 (.%3) tidak didukung.</translation>
     </message>
     <message>
         <location filename="../src/map.cpp" line="609"/>
         <source>Cannot export the map as
 "%1"
 because the format is unknown.</source>
-        <translation>Tidak dapat mengekspor peta sebagai "%1" karena format yang tidak diketahui.</translation>
+        <translation>Tidak dapat mengekspor peta sebagai
+"%1"
+karena format yang tidak diketahui.</translation>
     </message>
     <message>
         <location filename="../src/map.cpp" line="676"/>
@@ -2700,7 +2709,8 @@ because the format is unknown.</source>
         <location filename="../src/map.cpp" line="651"/>
         <source>Internal error while saving:
 %1</source>
-        <translation type="unfinished">Kesalahan internal sementara disimpan: %1</translation>
+        <translation>Kesalahan internal sementara disimpan:
+%1</translation>
     </message>
     <message>
         <location filename="../src/map.cpp" line="746"/>
@@ -2712,7 +2722,9 @@ because the format is unknown.</source>
         <source>Cannot open file:
 %1
 for reading.</source>
-        <translation>Tidak dapat membuka file: %1 untuk membaca.</translation>
+        <translation>Tidak dapat membuka file:
+%1
+untuk membaca.</translation>
     </message>
     <message>
         <location filename="../src/map.cpp" line="708"/>
@@ -2726,14 +2738,19 @@ for reading.</source>
 %1
 
 %2</source>
-        <translation>Tidak dapat membuka file: %1 %2</translation>
+        <translation>Tidak dapat membuka file:
+%1
+
+%2</translation>
     </message>
     <message>
         <location filename="../src/map.cpp" line="665"/>
         <source>Cannot save file
 %1:
 %2</source>
-        <translation>Tidak dapat menyimpan file %1: %2</translation>
+        <translation>Tidak dapat menyimpan file
+%1:
+%2</translation>
     </message>
     <message>
         <location filename="../src/map.cpp" line="807"/>
@@ -2807,17 +2824,17 @@ Rescale data yang diimpor?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="798"/>
         <source>Cu&amp;t</source>
-        <translation>Cu &amp; t</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="799"/>
         <source>C&amp;opy</source>
-        <translation>C &amp; opy</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="800"/>
         <source>&amp;Paste</source>
-        <translation type="unfinished">&amp;Paste</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="814"/>
@@ -3060,39 +3077,39 @@ Rescale data yang diimpor?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="923"/>
         <source>Import...</source>
-        <translation>Impor &amp;amp;...</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="975"/>
         <location filename="../src/color_dock_widget.cpp" line="87"/>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="248"/>
         <source>&amp;Edit</source>
-        <translation>&amp; Edit</translation>
+        <translation>&amp;Edit</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="993"/>
         <source>&amp;View</source>
-        <translation>&amp; Lihat</translation>
+        <translation>&amp;Lihat</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1022"/>
         <source>&amp;Tools</source>
-        <translation>&amp; Alat</translation>
+        <translation>&amp;Alat</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1075"/>
         <source>Sy&amp;mbols</source>
-        <translation>Sy &amp; mbols</translation>
+        <translation>Sy&amp;mbols</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1057"/>
         <source>M&amp;ap</source>
-        <translation>M &amp; ap</translation>
+        <translation>M&amp;ap</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1085"/>
         <source>&amp;Templates</source>
-        <translation>&amp; Template</translation>
+        <translation>&amp;Template</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1141"/>
@@ -3289,17 +3306,17 @@ Rescale data yang diimpor?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="737"/>
         <source>Ctrl+A</source>
-        <translation>Ctrl + A</translation>
+        <translation>Ctrl+A</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="738"/>
         <source>Ctrl+Shift+A</source>
-        <translation>Ctrl + Shift + A</translation>
+        <translation>Ctrl+Shift+A</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="739"/>
         <source>Ctrl+I</source>
-        <translation>Ctrl + aku</translation>
+        <translation>Ctrl+I</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="741"/>
@@ -3334,7 +3351,7 @@ Rescale data yang diimpor?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="759"/>
         <source>Ctrl+R</source>
-        <translation>Ctrl + R</translation>
+        <translation>Ctrl+R</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="760"/>
@@ -3354,17 +3371,17 @@ Rescale data yang diimpor?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="764"/>
         <source>Ctrl+G</source>
-        <translation>Ctrl + G</translation>
+        <translation>Ctrl+G</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="765"/>
         <source>Ctrl+F</source>
-        <translation>Ctrl + F</translation>
+        <translation>Ctrl+F</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="766"/>
         <source>Ctrl+D</source>
-        <translation>Ctrl + D</translation>
+        <translation>Ctrl+D</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="767"/>
@@ -3793,12 +3810,12 @@ selected</source>
     <message>
         <location filename="../src/map_editor.cpp" line="786"/>
         <source>&amp;Image</source>
-        <translation>&amp; Gambar</translation>
+        <translation>&amp;Gambar</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="788"/>
         <source>&amp;PDF</source>
-        <translation>&amp; PDF</translation>
+        <translation>&amp;PDF</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="806"/>
@@ -3838,7 +3855,7 @@ selected</source>
     <message>
         <location filename="../src/map_editor.cpp" line="967"/>
         <source>&amp;Export as...</source>
-        <translation>&amp; Ekspor sebagai...</translation>
+        <translation>&amp;Ekspor sebagai...</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2068"/>
@@ -3999,7 +4016,7 @@ selected</source>
     <message>
         <location filename="../src/map_editor.cpp" line="3761"/>
         <source>Import %1, GPX, OSM or DXF file</source>
-        <translation>1 %, GPX, OSM atau DXF file impor</translation>
+        <translation>%1, GPX, OSM atau DXF file impor</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="3765"/>
@@ -4092,7 +4109,7 @@ selected</source>
         <location filename="future_translations.cpp" line="67"/>
         <source>Duplicated %n object(s)</source>
         <extracomment>To replace existing translation which doesn't use plural correctly</extracomment>
-        <translation><numerusform>%N duplikasi obyek</numerusform>
+        <translation><numerusform>%n duplikasi obyek</numerusform>
         </translation></message>
     <message>
         <location filename="future_translations.cpp" line="70"/>
@@ -4139,7 +4156,7 @@ selected</source>
     <message>
         <location filename="../src/core/map_printer.cpp" line="480"/>
         <source>- Map -</source>
-        <translation>-Peta-</translation>
+        <translation>- Peta -</translation>
     </message>
     <message>
         <location filename="../src/core/map_printer.cpp" line="1215"/>
@@ -4202,7 +4219,11 @@ open the color dialog and
 define the colors there.</source>
         <translation>Peta kosong!
 
-Mulai dengan mendefinisikan beberapa warna: Pilih simbol-&gt; warna jendela untuk membuka warna dialog dan menetapkan warna yang ada.</translation>
+Mulai dengan mendefinisikan
+beberapa warna: Pilih simbol-&gt;
+warna jendela untuk membuka
+warna dialog dan menetapkan
+warna yang ada.</translation>
     </message>
     <message>
         <location filename="../src/map_widget.cpp" line="835"/>
@@ -4214,7 +4235,9 @@ and select "New symbol"
 to create one.</source>
         <translation>Simbol tidak!
 
-Menentukan beberapa simbol: klik kanan pada bilah simbol dan pilih "Simbol baru" untuk membuat satu.</translation>
+Menentukan beberapa simbol:
+klik kanan pada bilah simbol dan pilih
+"Simbol baru" untuk membuat satu.</translation>
     </message>
     <message>
         <location filename="../src/map_widget.cpp" line="837"/>
@@ -4226,13 +4249,15 @@ Templates -&gt; Open template...</source>
         <translation>Siap untuk menarik!
 
 Mulai menggambar atau memuat peta dasar.
-Untuk memuat peta dasar, klik template-&gt; terbuka template...</translation>
+Untuk memuat peta dasar, klik
+template-&gt; terbuka template...</translation>
     </message>
     <message>
         <location filename="../src/map_widget.cpp" line="837"/>
         <source>Hint: Hold the middle mouse button to drag the map,
 zoom using the mouse wheel, if available.</source>
-        <translation>Petunjuk: Tahan tombol mouse tengah untuk tarik peta, zoom menggunakan roda mouse, jika tersedia.</translation>
+        <translation>Petunjuk: Tahan tombol mouse tengah untuk tarik peta,
+zoom menggunakan roda mouse, jika tersedia.</translation>
     </message>
 </context>
 <context>
