@@ -290,7 +290,7 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="119"/>
         <source>Custom process color:</source>
-        <translation type="unfinished">proses warna kustom</translation>
+        <translation type="unfinished">proses warna kustom:</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="125"/>
@@ -589,7 +589,7 @@
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="79"/>
         <source>Vertical spacing:</source>
-        <translation type="unfinished">Jarak Vertical :</translation>
+        <translation type="unfinished">Jarak Vertical:</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="83"/>
@@ -832,7 +832,7 @@
         <location filename="../src/tool_draw_path.cpp" line="1065"/>
         <location filename="../src/tool_draw_rectangle.cpp" line="700"/>
         <source>&lt;b&gt;Dash points on.&lt;/b&gt; </source>
-        <translation type="unfinished">poin pada tanda pisah </translation>
+        <translation type="unfinished">&lt;b&gt;poin pada tanda pisah.&lt;/b&gt; </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1071"/>
@@ -1538,7 +1538,7 @@
     <message>
         <location filename="../src/core/georeferencing.cpp" line="229"/>
         <source>Map scale specification invalid or missing.</source>
-        <translation type="unfinished">Skala  spesifikasi peta  tidak sah atau kehilangan</translation>
+        <translation type="unfinished">Skala  spesifikasi peta  tidak sah atau kehilangan.</translation>
     </message>
     <message>
         <location filename="../src/core/georeferencing.cpp" line="235"/>
@@ -1746,7 +1746,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="440"/>
         <source>The declination has been changed. Do you want to rotate the map content accordingly, too?</source>
-        <translation type="unfinished">Deklinasi telah berubah. Apakah Anda ingin memutar konten  sesuai peta?</translation>
+        <translation type="unfinished">Deklinasi telah berubah. Apakah Anda ingin memutar konten sesuai peta?</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="470"/>
@@ -1818,7 +1818,7 @@
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="152"/>
         <source>Open map ...</source>
-        <translation type="unfinished">Buka peta</translation>
+        <translation type="unfinished">Buka peta...</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="158"/>
@@ -2063,7 +2063,7 @@
     <message>
         <location filename="../src/file_format_native.cpp" line="396"/>
         <source>Error while loading undo steps.</source>
-        <translation type="unfinished">Kesalahan ketika memuat lmengembalikan langkah-langkah</translation>
+        <translation type="unfinished">Kesalahan ketika memuat lmengembalikan langkah-langkah.</translation>
     </message>
     <message>
         <location filename="../src/file_format_native.cpp" line="406"/>
@@ -2354,7 +2354,7 @@
     <message>
         <location filename="../src/symbol_line.cpp" line="2487"/>
         <source>Border color:</source>
-        <translation type="unfinished">Warna batas</translation>
+        <translation type="unfinished">Warna batas:</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2490"/>
@@ -2369,7 +2369,7 @@
     <message>
         <location filename="../src/symbol_line.cpp" line="2514"/>
         <source>Border dash length:</source>
-        <translation type="unfinished">Batas garis panjang</translation>
+        <translation type="unfinished">Batas garis panjang:</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2517"/>
@@ -2580,12 +2580,12 @@ Apakah Anda ingin skala simbol untuk skala dipilih?</translation>
     <message>
         <location filename="../src/gui/main_window.cpp" line="876"/>
         <source>Autosaving...</source>
-        <translation type="unfinished">simpan otomatis</translation>
+        <translation type="unfinished">simpan otomatis...</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="886"/>
         <source>Autosaving failed!</source>
-        <translation type="unfinished">gagal menyimpan ootomatis</translation>
+        <translation type="unfinished">gagal menyimpan ootomatis!</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="961"/>
@@ -2796,7 +2796,7 @@ Rescale data yang diimpor?</translation>
     <message>
         <location filename="../src/core/map_coord.cpp" line="176"/>
         <source>Coordinates are out-of-bounds.</source>
-        <translation type="unfinished">Koordinat berada di luar batas</translation>
+        <translation type="unfinished">Koordinat berada di luar batas.</translation>
     </message>
 </context>
 <context>
@@ -2824,17 +2824,17 @@ Rescale data yang diimpor?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="798"/>
         <source>Cu&amp;t</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Cu&amp;t</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="799"/>
         <source>C&amp;opy</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">C&amp;opy</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="800"/>
         <source>&amp;Paste</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Paste</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="814"/>
@@ -2854,7 +2854,7 @@ Rescale data yang diimpor?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="818"/>
         <source>Set custom zoom factor...</source>
-        <translation type="unfinished">Mengatur faktor zoom kustom</translation>
+        <translation type="unfinished">Mengatur faktor zoom kustom...</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="825"/>
@@ -2894,17 +2894,17 @@ Rescale data yang diimpor?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="832"/>
         <source>Change map scale...</source>
-        <translation type="unfinished">Perubahan skala peta</translation>
+        <translation type="unfinished">Perubahan skala peta...</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="832"/>
         <source>Change the map scale and adjust map objects and symbol sizes</source>
-        <translation type="unfinished">Mengubah  skala peta dan menyesuaikan objek peta  dan ukuran simbol</translation>
+        <translation type="unfinished">Mengubah skala peta dan menyesuaikan objek peta  dan ukuran simbol</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="834"/>
         <source>Map notes...</source>
-        <translation type="unfinished">Catatan peta</translation>
+        <translation type="unfinished">Catatan peta...</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="836"/>
@@ -3084,7 +3084,7 @@ Rescale data yang diimpor?</translation>
         <location filename="../src/color_dock_widget.cpp" line="87"/>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="248"/>
         <source>&amp;Edit</source>
-        <translation>&amp;Edit</translation>
+        <translation type="unfinished">&amp;Edit</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="993"/>
@@ -3099,7 +3099,7 @@ Rescale data yang diimpor?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="1075"/>
         <source>Sy&amp;mbols</source>
-        <translation>Sy&amp;mbols</translation>
+        <translation type="unfinished">Sy&amp;mbols</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1057"/>
@@ -3577,7 +3577,7 @@ Rescale data yang diimpor?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="1787"/>
         <source>Scale to percentage:</source>
-        <translation type="unfinished">presentase skala</translation>
+        <translation type="unfinished">presentase skala:</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1811"/>
@@ -3657,7 +3657,7 @@ selected</source>
     <message>
         <location filename="../src/map_editor.cpp" line="2066"/>
         <source>Fill bounded areas.</source>
-        <translation type="unfinished">isi batas daerah</translation>
+        <translation type="unfinished">isi batas daerah.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2161"/>
@@ -6141,7 +6141,7 @@ separations</source>
     <message>
         <location filename="../src/symbol_setting_dialog.cpp" line="104"/>
         <source>&lt;b&gt;Template:&lt;/b&gt; </source>
-        <translation>background: </translation>
+        <translation>&lt;b&gt;Background:&lt;/b&gt; </translation>
     </message>
     <message>
         <location filename="../src/symbol_setting_dialog.cpp" line="105"/>
@@ -6324,7 +6324,7 @@ to jump over the lazy dog
     <message>
         <location filename="../src/template_adjust.cpp" line="210"/>
         <source>Template X</source>
-        <translation>Template x:</translation>
+        <translation>Template X</translation>
     </message>
     <message>
         <location filename="../src/template_adjust.cpp" line="210"/>
@@ -6704,7 +6704,7 @@ Jika Anda tidak berniat untuk menggambar pada template ini namun, itulah tidak a
     <message>
         <location filename="../src/template_track.cpp" line="166"/>
         <source>Positions the track according to the map's georeferencing settings.</source>
-        <translation>Pengaturan Posisi jalur menurut peta georeferencing</translation>
+        <translation>Pengaturan Posisi jalur menurut peta georeferencing.</translation>
     </message>
     <message>
         <location filename="../src/template_track.cpp" line="168"/>
