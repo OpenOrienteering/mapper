@@ -1540,7 +1540,7 @@
     <message>
         <location filename="../src/core/georeferencing.cpp" line="229"/>
         <source>Map scale specification invalid or missing.</source>
-        <translation>Skala  spesifikasi peta  tidak sah atau kehilangan.</translation>
+        <translation>Skala spesifikasi peta  tidak sah atau kehilangan.</translation>
     </message>
     <message>
         <location filename="../src/core/georeferencing.cpp" line="235"/>
@@ -5341,7 +5341,7 @@ zoom menggunakan roda mouse, jika tersedia.</translation>
         <location filename="../src/gui/print_widget.cpp" line="1136"/>
         <location filename="../src/gui/print_widget.cpp" line="1200"/>
         <source>All files (*.*)</source>
-        <translation>Semua file (*. *)</translation>
+        <translation>Semua file (*.*)</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1238"/>
@@ -5371,19 +5371,22 @@ zoom menggunakan roda mouse, jika tersedia.</translation>
         <location filename="../src/gui/print_widget.cpp" line="179"/>
         <source>Vector
 graphics</source>
-        <translation>Vektor grafis</translation>
+        <translation>Vektor
+grafis</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="180"/>
         <source>Raster
 graphics</source>
-        <translation>Gambar bitmap</translation>
+        <translation>Gambar
+bitmap</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="181"/>
         <source>Color
 separations</source>
-        <translation>Pemisahan warna</translation>
+        <translation>Pemisahan
+warna</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="194"/>
@@ -5444,15 +5447,15 @@ separations</source>
     <name>QAbstractSpinBox</name>
     <message>
         <source>Step &amp;down</source>
-        <translation>Langkah &amp; turun</translation>
+        <translation>Langkah &amp;turun</translation>
     </message>
     <message>
         <source>&amp;Step up</source>
-        <translation>&amp; Melangkah</translation>
+        <translation>&amp;Melangkah</translation>
     </message>
     <message>
         <source>&amp;Select All</source>
-        <translation>&amp; Pilih Semua</translation>
+        <translation>&amp;Pilih Semua</translation>
     </message>
 </context>
 <context>
@@ -5485,15 +5488,15 @@ separations</source>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp; OK</translation>
+        <translation>&amp;OK</translation>
     </message>
     <message>
         <source>&amp;No</source>
-        <translation>&amp; No</translation>
+        <translation>&amp;No</translation>
     </message>
     <message>
         <source>&amp;Yes</source>
-        <translation>&amp; Ya</translation>
+        <translation>&amp;Ya</translation>
     </message>
     <message>
         <source>Help</source>
@@ -5509,7 +5512,7 @@ separations</source>
     </message>
     <message>
         <source>&amp;Save</source>
-        <translation>&amp; Simpan</translation>
+        <translation>&amp;Simpan</translation>
     </message>
     <message>
         <source>Abort</source>
