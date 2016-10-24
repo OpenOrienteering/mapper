@@ -5532,128 +5532,128 @@ warna</translation>
     </message>
     <message>
         <source>Retry</source>
-        <translation type="unfinished"></translation>
+        <translation>Coba lagi</translation>
     </message>
     <message>
         <source>Restore Defaults</source>
-        <translation type="unfinished"></translation>
+        <translation>Kembalikan aturan baku</translation>
     </message>
     <message>
         <source>&amp;Close</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp; Menutup</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Batal</translation>
     </message>
     <message>
         <source>Ignore</source>
-        <translation type="unfinished"></translation>
+        <translation>Mengabaikan</translation>
     </message>
     <message>
         <source>Close without Saving</source>
-        <translation type="unfinished"></translation>
+        <translation>Tutup tanpa menyimpan</translation>
     </message>
     <message>
         <source>N&amp;o to All</source>
-        <translation type="unfinished"></translation>
+        <translation>N &amp; o untuk semua</translation>
     </message>
     <message>
         <source>Save All</source>
-        <translation type="unfinished"></translation>
+        <translation>Simpan Semua</translation>
     </message>
     <message>
         <source>&amp;Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp; Batal</translation>
     </message>
     <message>
         <source>Discard</source>
-        <translation type="unfinished"></translation>
+        <translation>Membuang</translation>
     </message>
     <message>
         <source>Yes to &amp;All</source>
-        <translation type="unfinished"></translation>
+        <translation>Ya untuk &amp; semua</translation>
     </message>
     <message>
         <source>Don't Save</source>
-        <translation type="unfinished"></translation>
+        <translation>Jangan Simpan</translation>
     </message>
 </context>
 <context>
     <name>QDirModel</name>
     <message>
         <source>Kind</source>
-        <translation type="unfinished"></translation>
+        <translation>Jenis</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Nama</translation>
     </message>
     <message>
         <source>Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Ukuran</translation>
     </message>
     <message>
         <source>Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Jenis</translation>
     </message>
     <message>
         <source>Date Modified</source>
-        <translation type="unfinished"></translation>
+        <translation>Tanggal dimodifikasi</translation>
     </message>
 </context>
 <context>
     <name>QErrorMessage</name>
     <message>
         <source>&amp;OK</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp; OK</translation>
     </message>
     <message>
         <source>Fatal Error:</source>
-        <translation type="unfinished"></translation>
+        <translation>Kesalahan fatal:</translation>
     </message>
     <message>
         <source>&amp;Show this message again</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp; Tampilkan pesan ini lagi</translation>
     </message>
     <message>
         <source>Debug Message:</source>
-        <translation type="unfinished"></translation>
+        <translation>pesan debug:</translation>
     </message>
     <message>
         <source>Warning:</source>
-        <translation type="unfinished"></translation>
+        <translation>Peringatan:</translation>
     </message>
 </context>
 <context>
     <name>QFile</name>
     <message>
         <source>Cannot remove source file</source>
-        <translation type="unfinished"></translation>
+        <translation>Tidak dapat menghapus file sumber</translation>
     </message>
     <message>
         <source>Cannot create %1 for output</source>
-        <translation type="unfinished"></translation>
+        <translation>Tidak dapat membuat %1 untuk output</translation>
     </message>
     <message>
         <source>Failure to write block</source>
-        <translation type="unfinished"></translation>
+        <translation>Kegagalan untuk menulis blok</translation>
     </message>
     <message>
         <source>Cannot open %1 for input</source>
-        <translation type="unfinished"></translation>
+        <translation>Tidak dapat membuka %1 untuk masukan</translation>
     </message>
     <message>
         <source>Destination file exists</source>
-        <translation type="unfinished"></translation>
+        <translation>File tujuan sudah ada</translation>
     </message>
     <message>
         <source>Cannot open for output</source>
-        <translation type="unfinished"></translation>
+        <translation>Tidak dapat membuka untuk output</translation>
     </message>
     <message>
         <source>Will not rename sequential file using block copy</source>
-        <translation type="unfinished"></translation>
+        <translation>Tidak akan mengubah file berurutan yang menggunakan menyalin blok</translation>
     </message>
 </context>
 <context>
@@ -5661,252 +5661,257 @@ warna</translation>
     <message>
         <location filename="../src/gui/text_browser_dialog.cpp" line="59"/>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Kembali</translation>
     </message>
     <message>
         <source>File</source>
-        <translation type="unfinished"></translation>
+        <translation>File</translation>
     </message>
     <message>
         <source>Open</source>
-        <translation type="unfinished"></translation>
+        <translation>Buka</translation>
     </message>
     <message>
         <source>&amp;Open</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp; Terbuka</translation>
     </message>
     <message>
         <source>&amp;Save</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp; Simpan</translation>
     </message>
     <message>
         <source>Alias</source>
-        <translation type="unfinished"></translation>
+        <translation>Alias</translation>
     </message>
     <message>
         <source>Drive</source>
-        <translation type="unfinished"></translation>
+        <translation>Berkendara</translation>
     </message>
     <message>
         <source>Files</source>
-        <translation type="unfinished"></translation>
+        <translation>File</translation>
     </message>
     <message>
         <source>Show </source>
-        <translation type="unfinished"></translation>
+        <translation>Tampilkan </translation>
     </message>
     <message>
         <source>'%1' is write protected.
 Do you want to delete it anyway?</source>
-        <translation type="unfinished"></translation>
+        <translation>'%1' adalah menulis yang dilindungi.
+Apakah Anda ingin menghapus bagaimanapun itu?</translation>
     </message>
     <message>
         <source>Are you sure you want to delete '%1'?</source>
-        <translation type="unfinished"></translation>
+        <translation>Apakah Anda yakin mau menghapus '%1'?</translation>
     </message>
     <message>
         <source>List of places and bookmarks</source>
-        <translation type="unfinished"></translation>
+        <translation>Daftar tempat dan bookmark</translation>
     </message>
     <message>
         <source>File &amp;name:</source>
-        <translation type="unfinished"></translation>
+        <translation>File &amp; nama:</translation>
     </message>
     <message>
         <source>File Folder</source>
-        <translation type="unfinished"></translation>
+        <translation>File Folder</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation type="unfinished"></translation>
+        <translation>Hapus</translation>
     </message>
     <message>
         <source>New Folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Folder Baru</translation>
     </message>
     <message>
         <source>Folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Folder</translation>
     </message>
     <message>
         <source>Parent Directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Direktori induk</translation>
     </message>
     <message>
         <source>&amp;New Folder</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp; Folder Baru</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Hapus</translation>
     </message>
     <message>
         <source>My Computer</source>
-        <translation type="unfinished"></translation>
+        <translation>Komputer saya</translation>
     </message>
     <message>
         <source>Look in:</source>
-        <translation type="unfinished"></translation>
+        <translation>Lihat:</translation>
     </message>
     <message>
         <source>Create a New Folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Buat Folder Baru</translation>
     </message>
     <message>
         <source>Files of type:</source>
-        <translation type="unfinished"></translation>
+        <translation>File jenis:</translation>
     </message>
     <message>
         <source>Find Directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Menemukan direktori</translation>
     </message>
     <message>
         <source>Show &amp;hidden files</source>
-        <translation type="unfinished"></translation>
+        <translation>Tampilkan &amp; file tersembunyi</translation>
     </message>
     <message>
         <source>Save As</source>
-        <translation type="unfinished"></translation>
+        <translation>Simpan sebagai</translation>
     </message>
     <message>
         <source>%1
 Directory not found.
 Please verify the correct directory name was given.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1
+direktori tidak ditemukan. 
+Pastikan nama direktori benar diberikan.</translation>
     </message>
     <message>
         <source>Sidebar</source>
-        <translation type="unfinished"></translation>
+        <translation>Sidebar</translation>
     </message>
     <message>
         <source>List View</source>
-        <translation type="unfinished"></translation>
+        <translation>Tampilan daftar</translation>
     </message>
     <message>
         <source>&amp;Choose</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp; Memilih</translation>
     </message>
     <message>
         <source>&amp;Delete</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp; Menghapus</translation>
     </message>
     <message>
         <source>All Files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Semua file (*)</translation>
     </message>
     <message>
         <source>Directories</source>
-        <translation type="unfinished"></translation>
+        <translation>Direktori</translation>
     </message>
     <message>
         <source>&amp;Rename</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp; Mengubah nama</translation>
     </message>
     <message>
         <source>Could not delete directory.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tidak dapat menghapus direktori.</translation>
     </message>
     <message>
         <source>Directory:</source>
-        <translation type="unfinished"></translation>
+        <translation>Direktori:</translation>
     </message>
     <message>
         <source>Unknown</source>
-        <translation type="unfinished"></translation>
+        <translation>tidak diketahui</translation>
     </message>
     <message>
         <source>%1 already exists.
 Do you want to replace it?</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 sudah ada. 
+Apakah Anda ingin menggantinya?</translation>
     </message>
     <message>
         <source>Forward</source>
-        <translation type="unfinished"></translation>
+        <translation>meneruskan</translation>
     </message>
     <message>
         <source>Go forward</source>
-        <translation type="unfinished"></translation>
+        <translation>maju</translation>
     </message>
     <message>
         <source>Go to the parent directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Pergi ke direktori induk</translation>
     </message>
     <message>
         <source>Recent Places</source>
-        <translation type="unfinished"></translation>
+        <translation>Tempat-tempat baru</translation>
     </message>
     <message>
         <source>Go back</source>
-        <translation type="unfinished"></translation>
+        <translation>Kembali</translation>
     </message>
     <message>
         <source>Change to detail view mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Mengubah detail Lihat mode</translation>
     </message>
     <message>
         <source>Create New Folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Buat Folder Baru</translation>
     </message>
     <message>
         <source>Shortcut</source>
-        <translation type="unfinished"></translation>
+        <translation>Jalan pintas</translation>
     </message>
     <message>
         <source>Detail View</source>
-        <translation type="unfinished"></translation>
+        <translation>Tampilan detail</translation>
     </message>
     <message>
         <source>%1
 File not found.
 Please verify the correct file name was given.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 file tidak ditemukan.
+Pastikan nama file benar diberikan.</translation>
     </message>
     <message>
         <source>Change to list view mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Mengubah ke mode tampilan daftar</translation>
     </message>
 </context>
 <context>
     <name>QFileSystemModel</name>
     <message>
         <source>Kind</source>
-        <translation type="unfinished"></translation>
+        <translation>Jenis</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Nama</translation>
     </message>
     <message>
         <source>Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Ukuran</translation>
     </message>
     <message>
         <source>Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Jenis</translation>
     </message>
     <message>
         <source>%1 GB</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 GB</translation>
     </message>
     <message>
         <source>%1 KB</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 KB</translation>
     </message>
     <message>
         <source>%1 MB</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 MB</translation>
     </message>
     <message>
         <source>%1 TB</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 TB</translation>
     </message>
     <message>
         <source>&lt;b&gt;The name "%1" can not be used.&lt;/b&gt;&lt;p&gt;Try using another name, with fewer characters or no punctuations marks.</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Nama "%1" tidak dapat digunakan.&lt;/b&gt; &lt;p&gt;Coba gunakan nama lain, dengan karakter lebih sedikit atau tidak ada tanda tanda.</translation>
     </message>
     <message>
         <source>%1 bytes</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 byte</translation>
     </message>
     <message>
         <source>My Computer</source>
