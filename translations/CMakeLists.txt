@@ -22,6 +22,7 @@ find_package(Qt5LinguistTools REQUIRED)
 
 set(Mapper_TRANS
  OpenOrienteering_cs.ts
+ OpenOrienteering_da.ts
  OpenOrienteering_de.ts
  OpenOrienteering_en.ts
  OpenOrienteering_es.ts
