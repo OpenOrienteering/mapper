@@ -7,17 +7,17 @@
         <location filename="../src/gui/about_dialog.cpp" line="94"></location>
         <location filename="../src/gui/about_dialog.cpp" line="157"></location>
         <source>About %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Om %1</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="171"></location>
         <source>&lt;a %1&gt;All about licenses, copyright notices, conditions and disclaimers.&lt;/a&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;a %1&gt; om licenser, copyright meddelelser, vilkår og ansvarsfralæggelser.&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="173"></location>
         <source>The OpenOrienteering developers in alphabetical order:</source>
-        <translation type="unfinished"></translation>
+        <translation>OpenOrienteering udviklere i alfabetisk rækkefølge:</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="174"></location>
@@ -44,7 +44,7 @@
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="175"></location>
         <source>For contributions, thanks to:</source>
-        <translation type="unfinished"></translation>
+        <translation>For bidrag, tak til:</translation>
     </message>
 </context>
 <context>
@@ -57,7 +57,7 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="92"></location>
         <source>Show tip of the day</source>
-        <translation type="unfinished"></translation>
+        <translation>Vis Dagens tip</translation>
     </message>
 </context>
 <context>
@@ -73,27 +73,27 @@
     <message>
         <location filename="../src/symbol_area.cpp" line="752"></location>
         <source>mm²</source>
-        <translation type="unfinished"></translation>
+        <translation>mm²</translation>
     </message>
     <message>
         <location filename="../src/symbol_area.cpp" line="753"></location>
         <source>Minimum size:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Mindstemål:</translation>
     </message>
     <message>
         <location filename="../src/symbol_area.cpp" line="760"></location>
         <source>Fills</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Fyld</translation>
     </message>
     <message>
         <location filename="../src/symbol_area.cpp" line="773"></location>
         <source>Line fill</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Liniefyld</translation>
     </message>
     <message>
         <location filename="../src/symbol_area.cpp" line="774"></location>
         <source>Pattern fill</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Mønsterfyld</translation>
     </message>
     <message>
         <location filename="../src/symbol_area.cpp" line="812"></location>
@@ -102,52 +102,52 @@
         <location filename="../src/symbol_area.cpp" line="849"></location>
         <location filename="../src/symbol_area.cpp" line="854"></location>
         <source>mm</source>
-        <translation type="unfinished"></translation>
+        <translation>mm</translation>
     </message>
     <message>
         <location filename="../src/symbol_area.cpp" line="827"></location>
         <source>Single line</source>
-        <translation type="unfinished"></translation>
+        <translation>Enkelt linje</translation>
     </message>
     <message>
         <location filename="../src/symbol_area.cpp" line="841"></location>
         <source>Parallel lines</source>
-        <translation type="unfinished"></translation>
+        <translation>Parallelle linjer</translation>
     </message>
     <message>
         <location filename="../src/symbol_area.cpp" line="843"></location>
         <source>Line spacing:</source>
-        <translation type="unfinished"></translation>
+        <translation>Linjeafstand:</translation>
     </message>
     <message>
         <location filename="../src/symbol_area.cpp" line="846"></location>
         <source>Single row</source>
-        <translation type="unfinished"></translation>
+        <translation>Enkelt række</translation>
     </message>
     <message>
         <location filename="../src/symbol_area.cpp" line="848"></location>
         <source>Pattern interval:</source>
-        <translation type="unfinished"></translation>
+        <translation>Mønsterinterval:</translation>
     </message>
     <message>
         <location filename="../src/symbol_area.cpp" line="853"></location>
         <source>Pattern offset:</source>
-        <translation type="unfinished"></translation>
+        <translation>Mønsterforskydning:</translation>
     </message>
     <message>
         <location filename="../src/symbol_area.cpp" line="858"></location>
         <source>Row offset:</source>
-        <translation type="unfinished"></translation>
+        <translation>Rækkeforskydning:</translation>
     </message>
     <message>
         <location filename="../src/symbol_area.cpp" line="860"></location>
         <source>Parallel rows</source>
-        <translation type="unfinished"></translation>
+        <translation>Parallelle rækker</translation>
     </message>
     <message>
         <location filename="../src/symbol_area.cpp" line="862"></location>
         <source>Row spacing:</source>
-        <translation type="unfinished"></translation>
+        <translation>Rækkeafstand:</translation>
     </message>
     <message>
         <location filename="../src/symbol_area.cpp" line="868"></location>
@@ -162,52 +162,52 @@
     <message>
         <location filename="../src/symbol_area.cpp" line="872"></location>
         <source>Angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Vinkel:</translation>
     </message>
     <message>
         <location filename="../src/symbol_area.cpp" line="874"></location>
         <source>adjustable per object</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">justerbar pr. objekt</translation>
     </message>
     <message>
         <location filename="../src/symbol_area.cpp" line="889"></location>
         <source>Area settings</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Områdeindstillinger</translation>
     </message>
     <message>
         <location filename="../src/symbol_area.cpp" line="970"></location>
         <source>Pattern fill %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Fyldmønster %1</translation>
     </message>
     <message>
         <location filename="../src/symbol_area.cpp" line="979"></location>
         <source>Line fill %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Liniefyld %1</translation>
     </message>
     <message>
         <location filename="../src/symbol_area.cpp" line="996"></location>
         <source>No fill selected</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ingen fyldning er valgt</translation>
     </message>
     <message>
         <location filename="../src/symbol_area.cpp" line="750"></location>
         <source>Area color:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Områdefarve:</translation>
     </message>
     <message>
         <location filename="../src/symbol_area.cpp" line="839"></location>
         <source>Line offset:</source>
-        <translation type="unfinished"></translation>
+        <translation>Linieforskydning:</translation>
     </message>
     <message>
         <location filename="../src/symbol_area.cpp" line="834"></location>
         <source>Line color:</source>
-        <translation type="unfinished"></translation>
+        <translation>Liniefarve:</translation>
     </message>
     <message>
         <location filename="../src/symbol_area.cpp" line="829"></location>
         <source>Line width:</source>
-        <translation type="unfinished"></translation>
+        <translation>Liniebredde:</translation>
     </message>
 </context>
 <context>
@@ -288,72 +288,72 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="114"></location>
         <source>Calculate from RGB color</source>
-        <translation type="unfinished"></translation>
+        <translation>Beregn fra RGB-farve</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="119"></location>
         <source>Custom process color:</source>
-        <translation type="unfinished"></translation>
+        <translation>Brugerdefineret procesfarve:</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="125"></location>
         <source>Cyan</source>
-        <translation type="unfinished"></translation>
+        <translation>Cyan</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="130"></location>
         <source>Magenta</source>
-        <translation type="unfinished"></translation>
+        <translation>Magenta</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="135"></location>
         <source>Yellow</source>
-        <translation type="unfinished"></translation>
+        <translation>Gul</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="140"></location>
         <source>Black</source>
-        <translation type="unfinished"></translation>
+        <translation>Sort</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="171"></location>
         <source>Calculate from CMYK color</source>
-        <translation type="unfinished"></translation>
+        <translation>Beregn fra CMYK-farve</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="176"></location>
         <source>Custom RGB color:</source>
-        <translation type="unfinished"></translation>
+        <translation>Brugerdefineret RGB-farve:</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="182"></location>
         <source>Red</source>
-        <translation type="unfinished"></translation>
+        <translation>Rød</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="187"></location>
         <source>Green</source>
-        <translation type="unfinished"></translation>
+        <translation>Grøn</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="192"></location>
         <source>Blue</source>
-        <translation type="unfinished"></translation>
+        <translation>Blå</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="197"></location>
         <source>#RRGGBB</source>
-        <translation type="unfinished"></translation>
+        <translation>#RRGGBB</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="215"></location>
         <source>Desktop</source>
-        <translation type="unfinished"></translation>
+        <translation>Skrivebord</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="216"></location>
         <source>Professional printing</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Professionel udskrivning</translation>
     </message>
 </context>
 <context>
@@ -361,7 +361,7 @@
     <message>
         <location filename="../src/gui/widgets/color_dropdown.cpp" line="32"></location>
         <source>- none -</source>
-        <translation type="unfinished"></translation>
+        <translation>-ingen-</translation>
     </message>
 </context>
 <context>
@@ -369,7 +369,7 @@
     <message>
         <location filename="../src/color_dock_widget.cpp" line="57"></location>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Navn</translation>
     </message>
     <message>
         <location filename="../src/color_dock_widget.cpp" line="57"></location>
@@ -379,17 +379,17 @@
     <message>
         <location filename="../src/color_dock_widget.cpp" line="57"></location>
         <source>Spot color</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Staffagefarve</translation>
     </message>
     <message>
         <location filename="../src/color_dock_widget.cpp" line="57"></location>
         <source>CMYK</source>
-        <translation type="unfinished"></translation>
+        <translation>CMYK</translation>
     </message>
     <message>
         <location filename="../src/color_dock_widget.cpp" line="57"></location>
         <source>RGB</source>
-        <translation type="unfinished"></translation>
+        <translation>RGB</translation>
     </message>
     <message>
         <location filename="../src/color_dock_widget.cpp" line="57"></location>
@@ -400,12 +400,12 @@
         <location filename="../src/color_dock_widget.cpp" line="63"></location>
         <location filename="../src/color_dock_widget.cpp" line="68"></location>
         <source>New</source>
-        <translation type="unfinished"></translation>
+        <translation>Ny</translation>
     </message>
     <message>
         <location filename="../src/color_dock_widget.cpp" line="71"></location>
         <source>Delete</source>
-        <translation type="unfinished"></translation>
+        <translation>Slet</translation>
     </message>
     <message>
         <location filename="../src/color_dock_widget.cpp" line="64"></location>
@@ -415,27 +415,27 @@
     <message>
         <location filename="../src/color_dock_widget.cpp" line="77"></location>
         <source>Move Up</source>
-        <translation type="unfinished"></translation>
+        <translation>Flyt op</translation>
     </message>
     <message>
         <location filename="../src/color_dock_widget.cpp" line="79"></location>
         <source>Move Down</source>
-        <translation type="unfinished"></translation>
+        <translation>Flyt ned</translation>
     </message>
     <message>
         <location filename="../src/color_dock_widget.cpp" line="90"></location>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Hjælp</translation>
     </message>
     <message>
         <location filename="../src/color_dock_widget.cpp" line="111"></location>
         <source>Double-click a color value to open a dialog.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Dobbeltklik på en farveværdi for at åbne en dialogboks.</translation>
     </message>
     <message>
         <location filename="../src/color_dock_widget.cpp" line="189"></location>
         <source>Confirmation</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Bekræftelse</translation>
     </message>
     <message>
         <location filename="../src/color_dock_widget.cpp" line="189"></location>
@@ -464,12 +464,12 @@
     <message>
         <location filename="../src/symbol_combined.cpp" line="392"></location>
         <source>&amp;Number of parts:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Antal dele:</translation>
     </message>
     <message>
         <location filename="../src/symbol_combined.cpp" line="407"></location>
         <source>- Private line symbol -</source>
-        <translation type="unfinished"></translation>
+        <translation>-Privat liniesymbol-</translation>
     </message>
     <message>
         <location filename="../src/symbol_combined.cpp" line="408"></location>
@@ -479,7 +479,7 @@
     <message>
         <location filename="../src/symbol_combined.cpp" line="414"></location>
         <source>Edit private symbol...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Rediger privat symbol...</translation>
     </message>
     <message>
         <location filename="../src/symbol_combined.cpp" line="434"></location>
@@ -494,12 +494,12 @@
     <message>
         <location filename="../src/symbol_combined.cpp" line="488"></location>
         <source>Take the old symbol as template for the private symbol?</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Anvend det gamle symbol som skabelon for det private symbol?</translation>
     </message>
     <message>
         <location filename="../src/symbol_combined.cpp" line="404"></location>
         <source>Symbol %1:</source>
-        <translation type="unfinished"></translation>
+        <translation>Symbol %1:</translation>
     </message>
 </context>
 <context>
@@ -507,47 +507,47 @@
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="53"></location>
         <source>Configure grid</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Konfigurer gitter</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="55"></location>
         <source>Show grid</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Vis gitter</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="56"></location>
         <source>Snap to grid</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Fastgør til gitter</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="57"></location>
         <source>Choose...</source>
-        <translation type="unfinished"></translation>
+        <translation>Vælg...</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="60"></location>
         <source>All lines</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle linier</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="61"></location>
         <source>Horizontal lines</source>
-        <translation type="unfinished"></translation>
+        <translation>Horisontale linier</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="62"></location>
         <source>Vertical lines</source>
-        <translation type="unfinished"></translation>
+        <translation>Vertikale linier</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="114"></location>
         <source>Alignment</source>
-        <translation type="unfinished"></translation>
+        <translation>Justering</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="64"></location>
         <source>Align with magnetic north</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Juster med magnetiske nordpol</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="65"></location>
@@ -562,7 +562,7 @@
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="68"></location>
         <source>Additional rotation (counter-clockwise):</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Yderligere rotation (mod uret):</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="69"></location>
@@ -577,12 +577,12 @@
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="74"></location>
         <source>meters in terrain</source>
-        <translation type="unfinished"></translation>
+        <translation>meter i terræn</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="75"></location>
         <source>millimeters on map</source>
-        <translation type="unfinished"></translation>
+        <translation>millimeter på kort</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="77"></location>
@@ -608,34 +608,34 @@
         <location filename="../src/gui/configure_grid_dialog.cpp" line="122"></location>
         <source>Unit:</source>
         <comment>measurement unit</comment>
-        <translation type="unfinished"></translation>
+        <translation>Enhed:</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="110"></location>
         <source>Line color:</source>
-        <translation type="unfinished"></translation>
+        <translation>Liniefarve:</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="111"></location>
         <source>Display:</source>
-        <translation type="unfinished"></translation>
+        <translation>Vis:</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="159"></location>
         <source>Choose grid line color</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Vælg gitter stregfarve</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="243"></location>
         <source>m</source>
         <comment>meters</comment>
-        <translation type="unfinished"></translation>
+        <translation>m</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="243"></location>
         <source>mm</source>
         <comment>millimeters</comment>
-        <translation type="unfinished"></translation>
+        <translation>mm</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="249"></location>
@@ -669,7 +669,7 @@
         <location filename="../src/tool_cut.cpp" line="511"></location>
         <location filename="../src/tool_cut.cpp" line="683"></location>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Fejl</translation>
     </message>
     <message>
         <location filename="../src/tool_cut.cpp" line="499"></location>
@@ -721,12 +721,12 @@
     <message>
         <location filename="../src/dxfparser.cpp" line="36"></location>
         <source>Could not open the file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kunne ikke åbne filen.</translation>
     </message>
     <message>
         <location filename="../src/dxfparser.cpp" line="52"></location>
         <source>The file is not an DXF file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Filen er ikke en DXF-fil.</translation>
     </message>
 </context>
 <context>
@@ -734,7 +734,7 @@
     <message>
         <location filename="../src/symbol_text.cpp" line="619"></location>
         <source>Letter:</source>
-        <translation type="unfinished"></translation>
+        <translation>Bogstav:</translation>
     </message>
     <message>
         <location filename="../src/symbol_text.cpp" line="621"></location>
@@ -745,7 +745,7 @@
     <message>
         <location filename="../src/symbol_text.cpp" line="627"></location>
         <source>Height:</source>
-        <translation type="unfinished"></translation>
+        <translation>Højde:</translation>
     </message>
 </context>
 <context>
@@ -793,7 +793,7 @@
         <location filename="../src/tool_draw_circle.cpp" line="59"></location>
         <source>From center</source>
         <comment>Draw circle starting from center</comment>
-        <translation type="unfinished"></translation>
+        <translation>Fra centrum</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_circle.cpp" line="294"></location>
@@ -803,7 +803,7 @@
     <message>
         <location filename="../src/tool_draw_circle.cpp" line="295"></location>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Draw a circle. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Træk&lt;/b&gt;: Tegn en cirkel. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_circle.cpp" line="297"></location>
@@ -878,7 +878,7 @@
     <message>
         <location filename="../src/tool_draw_path.cpp" line="88"></location>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Luk</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="89"></location>
@@ -1188,7 +1188,7 @@
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="84"></location>
         <source>mm</source>
         <comment>millimeters</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">mm</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="48"></location>
@@ -1306,7 +1306,7 @@
         <location filename="../src/tool_fill.cpp" line="119"></location>
         <location filename="../src/tool_fill.cpp" line="167"></location>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Fejl</translation>
     </message>
     <message>
         <location filename="../src/tool_fill.cpp" line="86"></location>
@@ -1424,7 +1424,7 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="155"></location>
         <source>General</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Generelt</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="179"></location>
@@ -1582,7 +1582,7 @@
         <location filename="../src/gui/georeferencing_dialog.cpp" line="126"></location>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="127"></location>
         <source>m</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">m</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="204"></location>
@@ -1660,7 +1660,7 @@
         <location filename="../src/gui/georeferencing_dialog.cpp" line="114"></location>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="115"></location>
         <source>mm</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">mm</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="119"></location>
@@ -1832,13 +1832,13 @@
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="161"></location>
         <source>About %1</source>
         <comment>As in 'About OpenOrienteering Mapper'</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Om %1</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="164"></location>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="338"></location>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Hjælp</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="167"></location>
@@ -1868,7 +1868,7 @@
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="239"></location>
         <source>Show tip of the day</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Vis Dagens tip</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="243"></location>
@@ -2116,7 +2116,7 @@
     <message>
         <location filename="../src/symbol_line.cpp" line="2038"></location>
         <source>Line width:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Liniebredde:</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2039"></location>
@@ -2133,12 +2133,12 @@
         <location filename="../src/symbol_line.cpp" line="2515"></location>
         <location filename="../src/symbol_line.cpp" line="2518"></location>
         <source>mm</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">mm</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2041"></location>
         <source>Line color:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Liniefarve:</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2053"></location>
@@ -2234,22 +2234,22 @@
     <message>
         <location filename="../src/symbol_line.cpp" line="2115"></location>
         <source>none</source>
-        <translation type="unfinished"></translation>
+        <translation>ingen</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2116"></location>
         <source>2</source>
-        <translation type="unfinished"></translation>
+        <translation>2</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2117"></location>
         <source>3</source>
-        <translation type="unfinished"></translation>
+        <translation>3</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2118"></location>
         <source>4</source>
-        <translation type="unfinished"></translation>
+        <translation>4</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2121"></location>
@@ -2303,7 +2303,7 @@
         <location filename="../src/file_format_ocad8.cpp" line="596"></location>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1196"></location>
         <source>Start symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>Startsymbol</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="1657"></location>
@@ -2318,7 +2318,7 @@
         <location filename="../src/symbol_line.cpp" line="2723"></location>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1203"></location>
         <source>End symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>Slutsymbol</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="1665"></location>
@@ -2333,7 +2333,7 @@
     <message>
         <location filename="../src/symbol_line.cpp" line="2077"></location>
         <source>Enable border lines</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktiver kantlinjer</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2174"></location>
@@ -2353,12 +2353,12 @@
     <message>
         <location filename="../src/symbol_line.cpp" line="2484"></location>
         <source>Border width:</source>
-        <translation type="unfinished"></translation>
+        <translation>Kantbredde:</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2487"></location>
         <source>Border color:</source>
-        <translation type="unfinished"></translation>
+        <translation>Kantfarve:</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2490"></location>
@@ -2391,7 +2391,7 @@
     <message>
         <location filename="../src/template_track.cpp" line="533"></location>
         <source>Coordinate system</source>
-        <translation type="unfinished"></translation>
+        <translation>Koordinatsystem</translation>
     </message>
     <message>
         <location filename="../src/template_track.cpp" line="534"></location>
@@ -2401,18 +2401,18 @@
     <message>
         <location filename="../src/template_track.cpp" line="535"></location>
         <source>Map</source>
-        <translation type="unfinished"></translation>
+        <translation>Kort</translation>
     </message>
     <message>
         <location filename="../src/template_track.cpp" line="538"></location>
         <source>m</source>
         <comment>meters</comment>
-        <translation type="unfinished"></translation>
+        <translation>m</translation>
     </message>
     <message>
         <location filename="../src/template_track.cpp" line="541"></location>
         <source>One coordinate unit equals:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Én koordinere enhed er lig med:</translation>
     </message>
     <message>
         <location filename="../src/template_track.cpp" line="543"></location>
@@ -2430,37 +2430,37 @@
     <message>
         <location filename="../src/gui/main_window.cpp" line="221"></location>
         <source>&amp;New</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Ny</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="223"></location>
         <source>Create a new map</source>
-        <translation type="unfinished"></translation>
+        <translation>Opret et nyt kort</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="227"></location>
         <source>&amp;Open...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Åbne...</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="229"></location>
         <source>Open an existing file</source>
-        <translation type="unfinished"></translation>
+        <translation>Åbne en eksisterende fil</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="233"></location>
         <source>Open &amp;recent</source>
-        <translation type="unfinished"></translation>
+        <translation>Åben &amp;seneste</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="244"></location>
         <source>&amp;Save</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Gem</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="249"></location>
         <source>Save &amp;as...</source>
-        <translation type="unfinished"></translation>
+        <translation>Gem &amp;som...</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="251"></location>
@@ -2470,73 +2470,73 @@
     <message>
         <location filename="../src/gui/main_window.cpp" line="257"></location>
         <source>Settings...</source>
-        <translation type="unfinished"></translation>
+        <translation>Indstillinger...</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="262"></location>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="115"></location>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Luk</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="264"></location>
         <source>Close this file</source>
-        <translation type="unfinished"></translation>
+        <translation>Luk filen</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="268"></location>
         <source>E&amp;xit</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Afslut</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="270"></location>
         <source>Exit the application</source>
-        <translation type="unfinished"></translation>
+        <translation>Afslut programmet</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="277"></location>
         <source>&amp;File</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Fil</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="296"></location>
         <source>General</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Generelt</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="311"></location>
         <source>Open &amp;Manual</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Åbn &amp;manualen</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="312"></location>
         <source>Show the help file for this application</source>
-        <translation type="unfinished"></translation>
+        <translation>Vis hjælp for programmet</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="316"></location>
         <source>&amp;About %1</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Om %1</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="317"></location>
         <source>Show information about this application</source>
-        <translation type="unfinished"></translation>
+        <translation>Vis oplysninger om programmet</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="321"></location>
         <source>About &amp;Qt</source>
-        <translation type="unfinished"></translation>
+        <translation>Om &amp;Qt</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="322"></location>
         <source>Show information about Qt</source>
-        <translation type="unfinished"></translation>
+        <translation>Vis oplysninger om Qt</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="328"></location>
         <source>&amp;Help</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Hjælp</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="501"></location>
@@ -2607,7 +2607,7 @@ Do you want to scale the symbols to the selected scale?</source>
         <location filename="../src/gui/main_window.cpp" line="701"></location>
         <location filename="../src/gui/main_window.cpp" line="1021"></location>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Fejl</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="701"></location>
@@ -2668,7 +2668,7 @@ Press No to choose a different format.</source>
         <location filename="../src/map.cpp" line="781"></location>
         <location filename="../src/map.cpp" line="807"></location>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Fejl</translation>
     </message>
     <message>
         <location filename="../src/map.cpp" line="614"></location>
@@ -2929,7 +2929,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="852"></location>
         <source>Write text</source>
-        <translation type="unfinished"></translation>
+        <translation>Skriv tekst</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="853"></location>
@@ -2959,12 +2959,12 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="859"></location>
         <source>Cut object</source>
-        <translation type="unfinished"></translation>
+        <translation>Klip objekt</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="875"></location>
         <source>Rotate object(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>Roter objekter</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="878"></location>
@@ -2994,12 +2994,12 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="902"></location>
         <source>Enable GPS display</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktiver GPS-visning</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="904"></location>
         <source>Enable GPS distance rings</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktiver GPS afstandsringe</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="906"></location>
@@ -3009,7 +3009,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="908"></location>
         <source>Set temporary marker at GPS position</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Angiv midlertidig markør på GPS-position</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="910"></location>
@@ -3019,82 +3019,82 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="912"></location>
         <source>Clear temporary GPS markers</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ryd midlertidige GPS markører</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="915"></location>
         <source>Enable compass display</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktiver kompas visning</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="916"></location>
         <source>Align map with north</source>
-        <translation type="unfinished"></translation>
+        <translation>Juster kort mod nord</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="918"></location>
         <location filename="../src/map_editor.cpp" line="3446"></location>
         <source>Add new part...</source>
-        <translation type="unfinished"></translation>
+        <translation>Tilføj nye del...</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="919"></location>
         <location filename="../src/map_editor.cpp" line="3506"></location>
         <source>Rename current part...</source>
-        <translation type="unfinished"></translation>
+        <translation>Omdøb aktuelle del...</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="920"></location>
         <location filename="../src/map_editor.cpp" line="3467"></location>
         <source>Remove current part</source>
-        <translation type="unfinished"></translation>
+        <translation>Fjern aktuelle del</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="921"></location>
         <source>Merge all parts</source>
-        <translation type="unfinished"></translation>
+        <translation>Flet alle dele</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="923"></location>
         <source>Import...</source>
-        <translation type="unfinished"></translation>
+        <translation>Importer...</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="975"></location>
         <location filename="../src/color_dock_widget.cpp" line="87"></location>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="248"></location>
         <source>&amp;Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Rediger</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="993"></location>
         <source>&amp;View</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Vis</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1022"></location>
         <source>&amp;Tools</source>
-        <translation type="unfinished"></translation>
+        <translation>Værk&amp;tøj</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1075"></location>
         <source>Sy&amp;mbols</source>
-        <translation type="unfinished"></translation>
+        <translation>Sy&amp;mboler</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1057"></location>
         <source>M&amp;ap</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Kort</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1085"></location>
         <source>&amp;Templates</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Skabeloner</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1141"></location>
         <source>Drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Tegning</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="890"></location>
@@ -3104,7 +3104,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="482"></location>
         <source>Editing in progress</source>
-        <translation type="unfinished"></translation>
+        <translation>Redigering i gang</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="482"></location>
@@ -3114,18 +3114,18 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="487"></location>
         <source>Map saved</source>
-        <translation type="unfinished"></translation>
+        <translation>Kortet er gemt</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="808"></location>
         <source>Show grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Vis gitter</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="809"></location>
         <location filename="../src/map_editor.cpp" line="1116"></location>
         <source>Configure grid...</source>
-        <translation type="unfinished"></translation>
+        <translation>Konfigurer gitter...</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="820"></location>
@@ -3141,12 +3141,12 @@ Rescale the imported data?</source>
         <location filename="../src/map_editor.cpp" line="822"></location>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="110"></location>
         <source>Hide all templates</source>
-        <translation type="unfinished"></translation>
+        <translation>Skjul alle skabeloner</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="827"></location>
         <source>Replace symbol set...</source>
-        <translation type="unfinished"></translation>
+        <translation>Erstat symbolsæt...</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="831"></location>
@@ -3156,17 +3156,17 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="833"></location>
         <source>Rotate map...</source>
-        <translation type="unfinished"></translation>
+        <translation>Roter kort...</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="833"></location>
         <source>Rotate the whole map</source>
-        <translation type="unfinished"></translation>
+        <translation>Roter hele kortet</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="840"></location>
         <source>Reopen template...</source>
-        <translation type="unfinished"></translation>
+        <translation>Genåbn skabelon...</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="842"></location>
@@ -3181,12 +3181,12 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="849"></location>
         <source>Draw rectangles</source>
-        <translation type="unfinished"></translation>
+        <translation>Tegn rektangler</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="850"></location>
         <source>Draw free-handedly</source>
-        <translation type="unfinished"></translation>
+        <translation>Tegn frihånd</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="851"></location>
@@ -3196,7 +3196,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="801"></location>
         <source>Delete</source>
-        <translation type="unfinished"></translation>
+        <translation>Slet</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="860"></location>
@@ -3216,12 +3216,12 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="876"></location>
         <source>Rotate pattern</source>
-        <translation type="unfinished"></translation>
+        <translation>Roter mønster</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="877"></location>
         <source>Scale object(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>Skaler objekter</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="879"></location>
@@ -3256,7 +3256,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="925"></location>
         <source>Map coordinates</source>
-        <translation type="unfinished"></translation>
+        <translation>Kortkoordinater</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="927"></location>
@@ -3266,17 +3266,17 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="929"></location>
         <source>Latitude/Longitude (Dec)</source>
-        <translation type="unfinished"></translation>
+        <translation>Breddegrad/Længdegrad (Dec)</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="931"></location>
         <source>Latitude/Longitude (DMS)</source>
-        <translation type="unfinished"></translation>
+        <translation>Breddegrad/Længdegrad (DMS)</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1007"></location>
         <source>Display coordinates as...</source>
-        <translation type="unfinished"></translation>
+        <translation>Vis koordinater som...</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="869"></location>
@@ -3286,17 +3286,17 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="737"></location>
         <source>Ctrl+A</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+A</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="738"></location>
         <source>Ctrl+Shift+A</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+Shift+A</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="739"></location>
         <source>Ctrl+I</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+I</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="741"></location>
@@ -3331,7 +3331,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="759"></location>
         <source>Ctrl+R</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ctrl+R</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="760"></location>
@@ -3411,12 +3411,12 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="802"></location>
         <source>Select all</source>
-        <translation type="unfinished"></translation>
+        <translation>Vælg alle</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="803"></location>
         <source>Select nothing</source>
-        <translation type="unfinished"></translation>
+        <translation>Vælg intet</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="804"></location>
@@ -3436,7 +3436,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="1109"></location>
         <source>View</source>
-        <translation type="unfinished"></translation>
+        <translation>Vis</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1127"></location>
@@ -3449,22 +3449,22 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="1159"></location>
         <source>Select template...</source>
-        <translation type="unfinished"></translation>
+        <translation>Vælg skabelon...</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1165"></location>
         <source>Editing</source>
-        <translation type="unfinished"></translation>
+        <translation>Redigering</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1190"></location>
         <source>Advanced editing</source>
-        <translation type="unfinished"></translation>
+        <translation>Avanceret redigering</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1217"></location>
         <source>Select symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>Vælg symbol</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1220"></location>
@@ -3490,7 +3490,7 @@ Rescale the imported data?</source>
         <location filename="../src/map_editor.cpp" line="3793"></location>
         <location filename="../src/map_editor.cpp" line="3800"></location>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Fejl</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1485"></location>
@@ -3532,27 +3532,27 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="1670"></location>
         <source>Set custom zoom factor</source>
-        <translation type="unfinished"></translation>
+        <translation>Brugerdefineret zoomfaktor</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1670"></location>
         <source>Zoom factor:</source>
-        <translation type="unfinished"></translation>
+        <translation>Zoomfaktor:</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1744"></location>
         <source>Symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>Symboler</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1758"></location>
         <source>Colors</source>
-        <translation type="unfinished"></translation>
+        <translation>Farver</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1787"></location>
         <source>Scale all symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>Skaler alle symboler</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1787"></location>
@@ -3562,22 +3562,22 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="1811"></location>
         <source>Map notes</source>
-        <translation type="unfinished"></translation>
+        <translation>Kortnoter</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1816"></location>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Annuller</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1817"></location>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>OK</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1857"></location>
         <source>Templates</source>
-        <translation type="unfinished"></translation>
+        <translation>Skabeloner</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1919"></location>
@@ -4168,7 +4168,7 @@ selected</source>
     <message>
         <location filename="../src/core/map_printer.cpp" line="1270"></location>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Fejl</translation>
     </message>
     <message>
         <location filename="../src/core/map_printer.cpp" line="1275"></location>
@@ -4188,18 +4188,18 @@ selected</source>
         <location filename="../src/map_widget.cpp" line="582"></location>
         <source>mm</source>
         <comment>millimeters</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">mm</translation>
     </message>
     <message>
         <location filename="../src/map_widget.cpp" line="598"></location>
         <source>m</source>
         <comment>meters</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">m</translation>
     </message>
     <message>
         <location filename="../src/map_widget.cpp" line="635"></location>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Fejl</translation>
     </message>
     <message>
         <location filename="../src/map_widget.cpp" line="833"></location>
@@ -4274,20 +4274,20 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="137"></location>
         <source>mm</source>
         <comment>millimeters</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">mm</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="100"></location>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="138"></location>
         <source>m</source>
         <comment>meters</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">m</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="115"></location>
         <source>mm²</source>
         <comment>square millimeters</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">mm²</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="116"></location>
@@ -4308,7 +4308,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="129"></location>
         <source>mm²</source>
-        <translation type="unfinished"></translation>
+        <translation>mm²</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="132"></location>
@@ -4328,7 +4328,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="151"></location>
         <source>mm</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">mm</translation>
     </message>
 </context>
 <context>
@@ -4361,7 +4361,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/map_dialog_new.cpp" line="59"></location>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Annuller</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_new.cpp" line="60"></location>
@@ -4791,7 +4791,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/template_tool_paint.cpp" line="341"></location>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Annuller</translation>
     </message>
     <message>
         <location filename="../src/template_tool_paint.cpp" line="342"></location>
@@ -4887,7 +4887,7 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/symbol_point_editor.cpp" line="94"></location>
         <location filename="../src/symbol_point_editor.cpp" line="122"></location>
         <source>mm</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">mm</translation>
     </message>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="90"></location>
@@ -4907,12 +4907,12 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="121"></location>
         <source>Line width:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Liniebredde:</translation>
     </message>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="124"></location>
         <source>Line color:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Liniefarve:</translation>
     </message>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="127"></location>
@@ -4958,7 +4958,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="160"></location>
         <source>Area color:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Områdefarve:</translation>
     </message>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="173"></location>
@@ -5060,7 +5060,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="227"></location>
         <source>Show grid</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Vis gitter</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="140"></location>
@@ -5110,7 +5110,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="165"></location>
         <source>Height:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Højde:</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="259"></location>
@@ -5146,7 +5146,7 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/gui/print_widget.cpp" line="164"></location>
         <location filename="../src/gui/print_widget.cpp" line="167"></location>
         <source>mm</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">mm</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="105"></location>
@@ -5327,7 +5327,7 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/gui/print_widget.cpp" line="1265"></location>
         <location filename="../src/gui/print_widget.cpp" line="1329"></location>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Fejl</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="179"></location>
@@ -5500,7 +5500,7 @@ separations</source>
     <message>
         <location filename="../src/symbol_dialog_replace.cpp" line="335"></location>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Fejl</translation>
     </message>
     <message>
         <location filename="../src/symbol_dialog_replace.cpp" line="335"></location>
@@ -5567,7 +5567,7 @@ separations</source>
         <location filename="../src/map_dialog_rotate.cpp" line="58"></location>
         <location filename="../src/map_dialog_rotate.cpp" line="59"></location>
         <source>mm</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">mm</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_rotate.cpp" line="62"></location>
@@ -5687,7 +5687,7 @@ separations</source>
         <location filename="../src/map_dialog_scale.cpp" line="58"></location>
         <location filename="../src/map_dialog_scale.cpp" line="59"></location>
         <source>mm</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">mm</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_scale.cpp" line="62"></location>
@@ -5815,7 +5815,7 @@ separations</source>
     <message>
         <location filename="../src/gui/widgets/symbol_dropdown.cpp" line="44"></location>
         <source>- none -</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">-ingen-</translation>
     </message>
 </context>
 <context>
@@ -5851,7 +5851,7 @@ separations</source>
     <message>
         <location filename="../src/symbol_properties_widget.cpp" line="87"></location>
         <source>General</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Generelt</translation>
     </message>
 </context>
 <context>
@@ -5904,7 +5904,7 @@ separations</source>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="248"></location>
         <source>Delete</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Slet</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="249"></location>
@@ -5951,7 +5951,7 @@ separations</source>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="990"></location>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1003"></location>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Fejl</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="975"></location>
@@ -6023,7 +6023,7 @@ separations</source>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="268"></location>
         <source>Select all</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Vælg alle</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="269"></location>
@@ -6058,7 +6058,7 @@ separations</source>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="937"></location>
         <source>Confirmation</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Bekræftelse</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="937"></location>
@@ -6174,7 +6174,7 @@ to jump over the lazy dog
     <message>
         <location filename="../src/gui/widgets/tags_widget.cpp" line="63"></location>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Hjælp</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tags_widget.cpp" line="233"></location>
@@ -6202,7 +6202,7 @@ to jump over the lazy dog
     <message>
         <location filename="../src/template.cpp" line="420"></location>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Fejl</translation>
     </message>
     <message>
         <location filename="../src/template.cpp" line="502"></location>
@@ -6226,7 +6226,7 @@ to jump over the lazy dog
     <message>
         <location filename="../src/template_adjust.cpp" line="140"></location>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Fejl</translation>
     </message>
     <message>
         <location filename="../src/template_adjust.cpp" line="140"></location>
@@ -6273,7 +6273,7 @@ to jump over the lazy dog
     <message>
         <location filename="../src/template_adjust.cpp" line="195"></location>
         <source>New</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ny</translation>
     </message>
     <message>
         <location filename="../src/template_adjust.cpp" line="199"></location>
@@ -6283,7 +6283,7 @@ to jump over the lazy dog
     <message>
         <location filename="../src/template_adjust.cpp" line="203"></location>
         <source>Delete</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Slet</translation>
     </message>
     <message>
         <location filename="../src/template_adjust.cpp" line="210"></location>
@@ -6308,7 +6308,7 @@ to jump over the lazy dog
     <message>
         <location filename="../src/template_adjust.cpp" line="210"></location>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Fejl</translation>
     </message>
     <message>
         <location filename="../src/template_adjust.cpp" line="221"></location>
@@ -6318,7 +6318,7 @@ to jump over the lazy dog
     <message>
         <location filename="../src/template_adjust.cpp" line="223"></location>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Hjælp</translation>
     </message>
     <message>
         <location filename="../src/template_adjust.cpp" line="224"></location>
@@ -6416,7 +6416,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/template_image.cpp" line="655"></location>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Annuller</translation>
     </message>
     <message>
         <location filename="../src/template_image.cpp" line="656"></location>
@@ -6471,7 +6471,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="215"></location>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Luk</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="203"></location>
@@ -6491,12 +6491,12 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="221"></location>
         <source>Move Up</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Flyt op</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="223"></location>
         <source>Move Down</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Flyt ned</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="246"></location>
@@ -6506,7 +6506,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="278"></location>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Hjælp</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="236"></location>
@@ -6543,7 +6543,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="414"></location>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="728"></location>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Fejl</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="728"></location>
@@ -6694,7 +6694,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
         <location filename="../src/gps_track.cpp" line="510"></location>
         <location filename="../src/gps_track.cpp" line="517"></location>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Fejl</translation>
     </message>
     <message>
         <location filename="../src/template_track.cpp" line="398"></location>
@@ -6783,7 +6783,7 @@ The maximum supported version is %2.</source>
     <message>
         <location filename="../src/gui/widgets/text_alignment_widget.cpp" line="61"></location>
         <source>Alignment</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Justering</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/text_alignment_widget.cpp" line="45"></location>
@@ -6849,7 +6849,7 @@ The maximum supported version is %2.</source>
         <location filename="../src/symbol_text.cpp" line="1001"></location>
         <location filename="../src/symbol_text.cpp" line="1094"></location>
         <source>mm</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">mm</translation>
     </message>
     <message>
         <location filename="../src/symbol_text.cpp" line="613"></location>
@@ -6890,7 +6890,7 @@ The maximum supported version is %2.</source>
     <message>
         <location filename="../src/symbol_text.cpp" line="651"></location>
         <source>Line spacing:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Linjeafstand:</translation>
     </message>
     <message>
         <location filename="../src/symbol_text.cpp" line="654"></location>
@@ -6966,12 +6966,12 @@ The maximum supported version is %2.</source>
     <message>
         <location filename="../src/symbol_text.cpp" line="714"></location>
         <source>Line width:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Liniebredde:</translation>
     </message>
     <message>
         <location filename="../src/symbol_text.cpp" line="717"></location>
         <source>Line color:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Liniefarve:</translation>
     </message>
     <message>
         <location filename="../src/symbol_text.cpp" line="984"></location>
@@ -7013,7 +7013,7 @@ The maximum supported version is %2.</source>
         <location filename="../src/undo_manager.cpp" line="121"></location>
         <location filename="../src/undo_manager.cpp" line="159"></location>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Fejl</translation>
     </message>
     <message>
         <location filename="../src/undo_manager.cpp" line="121"></location>
@@ -7023,7 +7023,7 @@ The maximum supported version is %2.</source>
     <message>
         <location filename="../src/undo_manager.cpp" line="127"></location>
         <source>Confirmation</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Bekræftelse</translation>
     </message>
     <message>
         <location filename="../src/undo_manager.cpp" line="127"></location>
@@ -7043,7 +7043,7 @@ The maximum supported version is %2.</source>
         <location filename="../src/util.cpp" line="263"></location>
         <location filename="../src/util.cpp" line="296"></location>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Fejl</translation>
     </message>
     <message>
         <location filename="../src/util.cpp" line="256"></location>
@@ -7110,7 +7110,7 @@ The maximum supported version is %2.</source>
     <message>
         <location filename="../src/file_format_xml.cpp" line="564"></location>
         <source>Unknown error</source>
-        <translation type="unfinished"></translation>
+        <translation>Ukendt fejl</translation>
     </message>
     <message>
         <location filename="../src/file_format_xml.cpp" line="565"></location>
