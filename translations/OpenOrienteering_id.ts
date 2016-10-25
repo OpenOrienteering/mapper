@@ -5540,7 +5540,7 @@ warna</translation>
     </message>
     <message>
         <source>&amp;Close</source>
-        <translation>&amp; Menutup</translation>
+        <translation>&amp;Menutup</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -5556,7 +5556,7 @@ warna</translation>
     </message>
     <message>
         <source>N&amp;o to All</source>
-        <translation>N &amp; o untuk semua</translation>
+        <translation>N&amp;o untuk semua</translation>
     </message>
     <message>
         <source>Save All</source>
@@ -5564,7 +5564,7 @@ warna</translation>
     </message>
     <message>
         <source>&amp;Cancel</source>
-        <translation>&amp; Batal</translation>
+        <translation>&amp;Batal</translation>
     </message>
     <message>
         <source>Discard</source>
@@ -5572,7 +5572,7 @@ warna</translation>
     </message>
     <message>
         <source>Yes to &amp;All</source>
-        <translation>Ya untuk &amp; semua</translation>
+        <translation>Ya untuk &amp;semua</translation>
     </message>
     <message>
         <source>Don't Save</source>
@@ -5606,7 +5606,7 @@ warna</translation>
     <name>QErrorMessage</name>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp; OK</translation>
+        <translation>&amp;OK</translation>
     </message>
     <message>
         <source>Fatal Error:</source>
@@ -5614,7 +5614,7 @@ warna</translation>
     </message>
     <message>
         <source>&amp;Show this message again</source>
-        <translation>&amp; Tampilkan pesan ini lagi</translation>
+        <translation>&amp;Tampilkan pesan ini lagi</translation>
     </message>
     <message>
         <source>Debug Message:</source>
@@ -5673,11 +5673,11 @@ warna</translation>
     </message>
     <message>
         <source>&amp;Open</source>
-        <translation>&amp; Terbuka</translation>
+        <translation>&amp;Terbuka</translation>
     </message>
     <message>
         <source>&amp;Save</source>
-        <translation>&amp; Simpan</translation>
+        <translation>&amp;Simpan</translation>
     </message>
     <message>
         <source>Alias</source>
@@ -5711,7 +5711,7 @@ Apakah Anda ingin menghapus bagaimanapun itu?</translation>
     </message>
     <message>
         <source>File &amp;name:</source>
-        <translation>File &amp; nama:</translation>
+        <translation>File &amp;nama:</translation>
     </message>
     <message>
         <source>File Folder</source>
@@ -5735,7 +5735,7 @@ Apakah Anda ingin menghapus bagaimanapun itu?</translation>
     </message>
     <message>
         <source>&amp;New Folder</source>
-        <translation>&amp; Folder Baru</translation>
+        <translation>Folder &amp;Baru</translation>
     </message>
     <message>
         <source>Remove</source>
@@ -5763,7 +5763,7 @@ Apakah Anda ingin menghapus bagaimanapun itu?</translation>
     </message>
     <message>
         <source>Show &amp;hidden files</source>
-        <translation>Tampilkan &amp; file tersembunyi</translation>
+        <translation>Tampilkan &amp;file tersembunyi</translation>
     </message>
     <message>
         <source>Save As</source>
@@ -5787,11 +5787,11 @@ Pastikan nama direktori benar diberikan.</translation>
     </message>
     <message>
         <source>&amp;Choose</source>
-        <translation>&amp; Memilih</translation>
+        <translation>&amp;Memilih</translation>
     </message>
     <message>
         <source>&amp;Delete</source>
-        <translation>&amp; Menghapus</translation>
+        <translation>&amp;Menghapus</translation>
     </message>
     <message>
         <source>All Files (*)</source>
@@ -5803,7 +5803,7 @@ Pastikan nama direktori benar diberikan.</translation>
     </message>
     <message>
         <source>&amp;Rename</source>
-        <translation>&amp; Mengubah nama</translation>
+        <translation>&amp;Mengubah nama</translation>
     </message>
     <message>
         <source>Could not delete directory.</source>
