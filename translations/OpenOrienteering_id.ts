@@ -8828,7 +8828,7 @@ Didukung versi maksimum adalah %2.</translation>
     <message>
         <location filename="../src/file_format_xml.cpp" line="564"/>
         <source>Unknown error</source>
-        <translation>kesalahan tidak diketahui</translation>
+        <translation>Kesalahan tidak diketahui</translation>
     </message>
     <message>
         <location filename="../src/file_format_xml.cpp" line="565"/>
