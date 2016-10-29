@@ -2771,7 +2771,7 @@ untuk membaca.</translation>
         <source>The scale of the imported data is 1:%1 which is different from this map's scale of 1:%2.
 
 Rescale the imported data?</source>
-        <translation>Skala data yang diimpor adalah 1:% 1 yang berbeda dari peta ini skala 1:% 2.
+        <translation>Skala data yang diimpor adalah 1:%1 yang berbeda dari peta ini skala 1:%2.
 
 Rescale data yang diimpor?</translation>
     </message>
@@ -4569,7 +4569,7 @@ zoom menggunakan roda mouse, jika tersedia.</translation>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="455"/>
         <source>In dashed line symbol %1, main and end length are different (%2 and %3). Using %4.</source>
-        <translation>Pada garis putus-putus simbol 1 %, utama dan akhir panjang berbeda (%2 dan %3). Menggunakan %4.</translation>
+        <translation>Pada garis putus-putus simbol %1, utama dan akhir panjang berbeda (%2 dan %3). Menggunakan %4.</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="465"/>
@@ -4752,12 +4752,12 @@ zoom menggunakan roda mouse, jika tersedia.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1960"/>
         <source>Ignoring custom word spacing (%1 %).</source>
-        <translation>Mengabaikan spasi kustom kata (%1%).</translation>
+        <translation>Mengabaikan spasi kustom kata (%1 %).</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1984"/>
         <source>Ignoring custom indents (%1/%2).</source>
-        <translation>Mengabaikan kustom indentasi (%1/2 %).</translation>
+        <translation>Mengabaikan kustom indentasi (%1/%2).</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="2006"/>
