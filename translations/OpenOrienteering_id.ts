@@ -3690,7 +3690,7 @@ yang dipilih</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="2203"/>
         <source>Select at least two area or path objects activate this tool.</source>
-        <translation>Pilih setidaknya dua daerah atau obyek path Aktifkan alat ini.</translation>
+        <translation>Pilih setidaknya dua daerah atau obyek path aktifkan alat ini.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2205"/>
