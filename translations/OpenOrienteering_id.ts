@@ -4640,7 +4640,7 @@ zoom menggunakan roda mouse, jika tersedia.</translation>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="1518"/>
         <source>Color id not found: %1, ignoring this color</source>
-        <translation>Id warna tidak ditemukan: 1 %, mengabaikan warna ini</translation>
+        <translation>Id warna tidak ditemukan: %1, mengabaikan warna ini</translation>
     </message>
 </context>
 <context>
@@ -4872,7 +4872,7 @@ zoom menggunakan roda mouse, jika tersedia.</translation>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="967"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Add a coordinate. &lt;b&gt;%1+Click&lt;/b&gt;: Change the selected coordinate. </source>
-        <translation>&lt;b&gt;Klik&lt;/b&gt;: Tambahkan koordinat. &lt;b&gt;% 1 + klik&lt;/b&gt;: mengubah koordinat dipilih. </translation>
+        <translation>&lt;b&gt;Klik&lt;/b&gt;: Tambahkan koordinat. &lt;b&gt;%1+klik&lt;/b&gt;: Mengubah koordinat dipilih. </translation>
     </message>
 </context>
 <context>
