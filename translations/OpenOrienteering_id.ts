@@ -7147,7 +7147,7 @@ Please choose a different file name.</source>
     <message>
         <location filename="../src/template_dialog_reopen.cpp" line="58"/>
         <source>- Map -</source>
-        <translation>-Peta-</translation>
+        <translation>- Peta -</translation>
     </message>
 </context>
 <context>
@@ -8319,7 +8319,7 @@ Jika Anda tidak berniat untuk menggambar pada template ini namun, itulah tidak a
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="1143"/>
         <source>- Map -</source>
-        <translation>-Peta-</translation>
+        <translation>- Peta -</translation>
     </message>
 </context>
 <context>
