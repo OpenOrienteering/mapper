@@ -8270,7 +8270,7 @@ Jika Anda tidak berniat untuk menggambar pada template ini namun, itulah tidak a
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="972"/>
         <source>Don't scale</source>
-        <translation>tidak terskala</translation>
+        <translation>Tidak terskala</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="967"/>
