@@ -8582,7 +8582,7 @@ Didukung versi maksimum adalah %2.</translation>
     <message>
         <location filename="../src/symbol_text.cpp" line="639"/>
         <source>bold</source>
-        <translation>Tebal</translation>
+        <translation>tebal</translation>
     </message>
     <message>
         <location filename="../src/symbol_text.cpp" line="641"/>
