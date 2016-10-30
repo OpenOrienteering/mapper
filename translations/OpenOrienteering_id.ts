@@ -5972,15 +5972,15 @@ Pastikan nama file benar diberikan.</translation>
     </message>
     <message>
         <source>&amp;Copy</source>
-        <translation>&amp; Copy</translation>
+        <translation>&amp;Copy</translation>
     </message>
     <message>
         <source>&amp;Redo</source>
-        <translation>&amp; Mengulang</translation>
+        <translation>M&amp;engulang</translation>
     </message>
     <message>
         <source>&amp;Undo</source>
-        <translation>&amp; Membatalkan</translation>
+        <translation>&amp;Membatalkan</translation>
     </message>
     <message>
         <source>&amp;Paste</source>
@@ -6019,7 +6019,7 @@ Pastikan nama file benar diberikan.</translation>
     </message>
     <message>
         <source>&lt;h3&gt;About Qt&lt;/h3&gt;&lt;p&gt;This program uses Qt version %1.&lt;/p&gt;</source>
-        <translation>&lt;h3&gt;Tentang Qt&lt;/h3&gt; &lt;p&gt;Program ini menggunakan Qt versi %1.&lt;/p&gt;</translation>
+        <translation>&lt;h3&gt;Tentang Qt&lt;/h3&gt;&lt;p&gt;Program ini menggunakan Qt versi %1.&lt;/p&gt;</translation>
     </message>
 </context>
 <context>
@@ -6236,11 +6236,11 @@ Pastikan nama file benar diberikan.</translation>
     </message>
     <message>
         <source>&amp;Options &lt;&lt;</source>
-        <translation>&amp; Pilihan &lt;&lt;</translation>
+        <translation>&amp;Pilihan &lt;&lt;</translation>
     </message>
     <message>
         <source>&amp;Options &gt;&gt;</source>
-        <translation>&amp; Pilihan &gt;&gt;</translation>
+        <translation>&amp;Pilihan &gt;&gt;</translation>
     </message>
     <message>
         <source>Write PDF file</source>
@@ -6506,15 +6506,15 @@ Silakan pilih nama file yang berbeda.</translation>
     </message>
     <message>
         <source>&amp;Name:</source>
-        <translation>&amp; Nama:</translation>
+        <translation>&amp;Nama:</translation>
     </message>
     <message>
         <source>Output &amp;file:</source>
-        <translation>Output &amp; file:</translation>
+        <translation>Output &amp;file:</translation>
     </message>
     <message>
         <source>P&amp;roperties</source>
-        <translation>P &amp; roperties</translation>
+        <translation>P&amp;roperties</translation>
     </message>
     <message>
         <source>Preview</source>
@@ -6654,7 +6654,7 @@ Silakan pilih nama file yang berbeda.</translation>
     </message>
     <message>
         <source>F%1</source>
-        <translation>F %1</translation>
+        <translation>F%1</translation>
     </message>
     <message>
         <source>Del</source>
@@ -7042,19 +7042,19 @@ Silakan pilih nama file yang berbeda.</translation>
     <name>QWidgetTextControl</name>
     <message>
         <source>Cu&amp;t</source>
-        <translation>Cu &amp; t</translation>
+        <translation>Cu&amp;t</translation>
     </message>
     <message>
         <source>&amp;Copy</source>
-        <translation>&amp; Copy</translation>
+        <translation>&amp;Copy</translation>
     </message>
     <message>
         <source>&amp;Redo</source>
-        <translation>&amp; Mengulang</translation>
+        <translation>M&amp;engulang</translation>
     </message>
     <message>
         <source>&amp;Undo</source>
-        <translation>&amp; Membatalkan</translation>
+        <translation>&amp;Membatalkan</translation>
     </message>
     <message>
         <source>&amp;Paste</source>
@@ -7070,7 +7070,7 @@ Silakan pilih nama file yang berbeda.</translation>
     </message>
     <message>
         <source>Copy &amp;Link Location</source>
-        <translation>Salinan &amp; Link lokasi</translation>
+        <translation>Salinan &amp;Link lokasi</translation>
     </message>
 </context>
 <context>
@@ -7085,11 +7085,11 @@ Silakan pilih nama file yang berbeda.</translation>
     </message>
     <message>
         <source>&amp;Help</source>
-        <translation>&amp; Bantuan</translation>
+        <translation>&amp;Bantuan</translation>
     </message>
     <message>
         <source>&amp;Next</source>
-        <translation>&amp; Berikutnya</translation>
+        <translation>&amp;Berikutnya</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -7105,11 +7105,11 @@ Silakan pilih nama file yang berbeda.</translation>
     </message>
     <message>
         <source>&amp;Finish</source>
-        <translation>&amp; Selesai</translation>
+        <translation>&amp;Selesai</translation>
     </message>
     <message>
         <source>&amp;Next &gt;</source>
-        <translation>&amp; Berikutnya &gt;</translation>
+        <translation>&amp;Berikutnya &gt;</translation>
     </message>
     <message>
         <source>Go Back</source>
@@ -7117,7 +7117,7 @@ Silakan pilih nama file yang berbeda.</translation>
     </message>
     <message>
         <source>&lt; &amp;Back</source>
-        <translation>&lt; &amp; Kembali</translation>
+        <translation>&lt; &amp;Kembali</translation>
     </message>
 </context>
 <context>
