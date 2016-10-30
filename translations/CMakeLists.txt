@@ -191,8 +191,6 @@ macro(QT5_TRANSLATIONS_SOURCES)
 			  COMMAND "${Qt5_LUPDATE_EXECUTABLE}" ${LUPDATE_OPTIONS} @${${PROJECT_NAME}_TRANSLATIONS_LISTFILE} -ts ${Mapper_TRANS_DIR}/${_arg}
 			  ${POST_LUPDATE_ACTION}
 			  # Reformat for Weblate to minimize git noise
-			  COMMAND sed -i -e "1s/\"/'/g" ${Mapper_TRANS_DIR}/${_arg}
-			  COMMAND sed -i -e "/<location/s/\\/>$/><\\/location>/" ${Mapper_TRANS_DIR}/${_arg}
 			  COMMAND sed -i -e "/<source\\|<translation\\|<[a-z]*comment/,/\\/source>\\|\\/translation>\\|\\/[a-z]*comment>/{s/&apos;/'/g;s/&quot;/\"/g}" ${Mapper_TRANS_DIR}/${_arg}
 			  DEPENDS ${${PROJECT_NAME}_TRANSLATIONS_LISTFILE}
 			  VERBATIM)
