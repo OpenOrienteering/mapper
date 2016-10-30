@@ -5915,205 +5915,205 @@ Pastikan nama file benar diberikan.</translation>
     </message>
     <message>
         <source>My Computer</source>
-        <translation type="unfinished"></translation>
+        <translation>Komputer saya</translation>
     </message>
     <message>
         <source>Computer</source>
-        <translation type="unfinished"></translation>
+        <translation>Komputer</translation>
     </message>
     <message>
         <source>Invalid filename</source>
-        <translation type="unfinished"></translation>
+        <translation>nama file tidak sah</translation>
     </message>
     <message>
         <source>%1 byte(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 byte(s)</translation>
     </message>
     <message>
         <source>Date Modified</source>
-        <translation type="unfinished"></translation>
+        <translation>Tanggal dimodifikasi</translation>
     </message>
 </context>
 <context>
     <name>QIODevice</name>
     <message>
         <source>No such file or directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Tidak ada berkas atau direktori</translation>
     </message>
     <message>
         <source>Permission denied</source>
-        <translation type="unfinished"></translation>
+        <translation>Izin ditolak</translation>
     </message>
     <message>
         <source>No space left on device</source>
-        <translation type="unfinished"></translation>
+        <translation>Tidak ada ruang yang tersisa pada perangkat</translation>
     </message>
     <message>
         <source>Unknown error</source>
-        <translation type="unfinished"></translation>
+        <translation>Error tidak diketahui</translation>
     </message>
     <message>
         <source>Too many open files</source>
-        <translation type="unfinished"></translation>
+        <translation>Terlalu banyak buka file</translation>
     </message>
 </context>
 <context>
     <name>QInputDialog</name>
     <message>
         <source>Enter a value:</source>
-        <translation type="unfinished"></translation>
+        <translation>Masukkan nilai:</translation>
     </message>
 </context>
 <context>
     <name>QLineEdit</name>
     <message>
         <source>Cu&amp;t</source>
-        <translation type="unfinished"></translation>
+        <translation>cu&amp;t</translation>
     </message>
     <message>
         <source>&amp;Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp; Copy</translation>
     </message>
     <message>
         <source>&amp;Redo</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp; Mengulang</translation>
     </message>
     <message>
         <source>&amp;Undo</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp; Membatalkan</translation>
     </message>
     <message>
         <source>&amp;Paste</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;paste</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation type="unfinished"></translation>
+        <translation>Hapus</translation>
     </message>
     <message>
         <source>Select All</source>
-        <translation type="unfinished"></translation>
+        <translation>Pilih Semua</translation>
     </message>
 </context>
 <context>
     <name>QMessageBox</name>
     <message>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>Oke</translation>
     </message>
     <message>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Tolong</translation>
     </message>
     <message>
         <source>Show Details...</source>
-        <translation type="unfinished"></translation>
+        <translation>Tampilkan rincian...</translation>
     </message>
     <message>
         <source>About Qt</source>
-        <translation type="unfinished"></translation>
+        <translation>Tentang Qt</translation>
     </message>
     <message>
         <source>Hide Details...</source>
-        <translation type="unfinished"></translation>
+        <translation>Sembunyikan detail...</translation>
     </message>
     <message>
         <source>&lt;h3&gt;About Qt&lt;/h3&gt;&lt;p&gt;This program uses Qt version %1.&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;h3&gt;Tentang Qt&lt;/h3&gt; &lt;p&gt;Program ini menggunakan Qt versi %1.&lt;/p&gt;</translation>
     </message>
 </context>
 <context>
     <name>QPPDOptionsModel</name>
     <message>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Nama</translation>
     </message>
     <message>
         <source>Value</source>
-        <translation type="unfinished"></translation>
+        <translation>Nilai</translation>
     </message>
 </context>
 <context>
     <name>QPageSetupWidget</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Bentuk</translation>
     </message>
     <message>
         <source>bottom margin</source>
-        <translation type="unfinished"></translation>
+        <translation>batas bawah</translation>
     </message>
     <message>
         <source>Paper</source>
-        <translation type="unfinished"></translation>
+        <translation>Kertas</translation>
     </message>
     <message>
         <source>Paper source:</source>
-        <translation type="unfinished"></translation>
+        <translation>Sumber kertas:</translation>
     </message>
     <message>
         <source>Centimeters (cm)</source>
-        <translation type="unfinished"></translation>
+        <translation>Centimeter (cm)</translation>
     </message>
     <message>
         <source>right margin</source>
-        <translation type="unfinished"></translation>
+        <translation>batas kanan</translation>
     </message>
     <message>
         <source>Margins</source>
-        <translation type="unfinished"></translation>
+        <translation>Margin</translation>
     </message>
     <message>
         <source>Landscape</source>
-        <translation type="unfinished"></translation>
+        <translation>Pemandangan</translation>
     </message>
     <message>
         <source>Width:</source>
-        <translation type="unfinished"></translation>
+        <translation>Lebar:</translation>
     </message>
     <message>
         <source>Orientation</source>
-        <translation type="unfinished"></translation>
+        <translation>Orientasi</translation>
     </message>
     <message>
         <source>Portrait</source>
-        <translation type="unfinished"></translation>
+        <translation>Potret</translation>
     </message>
     <message>
         <source>top margin</source>
-        <translation type="unfinished"></translation>
+        <translation>batas atas</translation>
     </message>
     <message>
         <source>left margin</source>
-        <translation type="unfinished"></translation>
+        <translation>batas kiri</translation>
     </message>
     <message>
         <source>Page size:</source>
-        <translation type="unfinished"></translation>
+        <translation>ukuan halaman:</translation>
     </message>
     <message>
         <source>Reverse portrait</source>
-        <translation type="unfinished"></translation>
+        <translation>Membalikkan potret</translation>
     </message>
     <message>
         <source>Millimeters (mm)</source>
-        <translation type="unfinished"></translation>
+        <translation>Milimeter (mm)</translation>
     </message>
     <message>
         <source>Points (pt)</source>
-        <translation type="unfinished"></translation>
+        <translation>Poin (pt)</translation>
     </message>
     <message>
         <source>Inches (in)</source>
-        <translation type="unfinished"></translation>
+        <translation>Inci (di)</translation>
     </message>
     <message>
         <source>Reverse landscape</source>
-        <translation type="unfinished"></translation>
+        <translation>Balik lansekap</translation>
     </message>
     <message>
         <source>Height:</source>
-        <translation type="unfinished"></translation>
+        <translation>Tinggi:</translation>
     </message>
 </context>
 <context>
@@ -6121,1000 +6121,1003 @@ Pastikan nama file benar diberikan.</translation>
     <message>
         <location filename="../src/gui/text_browser_dialog.cpp" line="64"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Tutup</translation>
     </message>
 </context>
 <context>
     <name>QPrintDialog</name>
     <message>
         <source>A0</source>
-        <translation type="unfinished"></translation>
+        <translation>A0</translation>
     </message>
     <message>
         <source>A1</source>
-        <translation type="unfinished"></translation>
+        <translation>A1</translation>
     </message>
     <message>
         <source>A2</source>
-        <translation type="unfinished"></translation>
+        <translation>A2</translation>
     </message>
     <message>
         <source>A3</source>
-        <translation type="unfinished"></translation>
+        <translation>A3</translation>
     </message>
     <message>
         <source>A4</source>
-        <translation type="unfinished"></translation>
+        <translation>A4</translation>
     </message>
     <message>
         <source>A5</source>
-        <translation type="unfinished"></translation>
+        <translation>A5</translation>
     </message>
     <message>
         <source>A6</source>
-        <translation type="unfinished"></translation>
+        <translation>A6</translation>
     </message>
     <message>
         <source>A7</source>
-        <translation type="unfinished"></translation>
+        <translation>A7</translation>
     </message>
     <message>
         <source>A8</source>
-        <translation type="unfinished"></translation>
+        <translation>A8</translation>
     </message>
     <message>
         <source>A9</source>
-        <translation type="unfinished"></translation>
+        <translation>A9</translation>
     </message>
     <message>
         <source>B0</source>
-        <translation type="unfinished"></translation>
+        <translation>B0</translation>
     </message>
     <message>
         <source>B1</source>
-        <translation type="unfinished"></translation>
+        <translation>B1</translation>
     </message>
     <message>
         <source>B2</source>
-        <translation type="unfinished"></translation>
+        <translation>B2</translation>
     </message>
     <message>
         <source>B3</source>
-        <translation type="unfinished"></translation>
+        <translation>B3</translation>
     </message>
     <message>
         <source>B4</source>
-        <translation type="unfinished"></translation>
+        <translation>B4</translation>
     </message>
     <message>
         <source>B5</source>
-        <translation type="unfinished"></translation>
+        <translation>B5</translation>
     </message>
     <message>
         <source>B6</source>
-        <translation type="unfinished"></translation>
+        <translation>B6</translation>
     </message>
     <message>
         <source>B7</source>
-        <translation type="unfinished"></translation>
+        <translation>B7</translation>
     </message>
     <message>
         <source>B8</source>
-        <translation type="unfinished"></translation>
+        <translation>B8</translation>
     </message>
     <message>
         <source>B9</source>
-        <translation type="unfinished"></translation>
+        <translation>B9</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>Oke</translation>
     </message>
     <message>
         <source>B10</source>
-        <translation type="unfinished"></translation>
+        <translation>B10</translation>
     </message>
     <message>
         <source>C5E</source>
-        <translation type="unfinished"></translation>
+        <translation>C5E</translation>
     </message>
     <message>
         <source>DLE</source>
-        <translation type="unfinished"></translation>
+        <translation>DLE</translation>
     </message>
     <message>
         <source>Folio</source>
-        <translation type="unfinished"></translation>
+        <translation>Polio</translation>
     </message>
     <message>
         <source>Legal</source>
-        <translation type="unfinished"></translation>
+        <translation>Hukum</translation>
     </message>
     <message>
         <source>Print</source>
-        <translation type="unfinished"></translation>
+        <translation>Cetak</translation>
     </message>
     <message>
         <source>&amp;Options &lt;&lt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp; Pilihan &lt;&lt;</translation>
     </message>
     <message>
         <source>&amp;Options &gt;&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp; Pilihan &gt;&gt;</translation>
     </message>
     <message>
         <source>Write PDF file</source>
-        <translation type="unfinished"></translation>
+        <translation>Menulis PDF file</translation>
     </message>
     <message>
         <source>&amp;Print</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp; Cetak</translation>
     </message>
     <message>
         <source>%1 already exists.
 Do you want to overwrite it?</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 sudah ada. 
+Apakah Anda ingin menimpa itu?</translation>
     </message>
     <message>
         <source>Custom</source>
-        <translation type="unfinished"></translation>
+        <translation>Kustom</translation>
     </message>
     <message>
         <source>Ledger</source>
-        <translation type="unfinished"></translation>
+        <translation>Buku besar</translation>
     </message>
     <message>
         <source>Letter</source>
-        <translation type="unfinished"></translation>
+        <translation>Surat</translation>
     </message>
     <message>
         <source>Local file</source>
-        <translation type="unfinished"></translation>
+        <translation>file lokal</translation>
     </message>
     <message>
         <source>Print to File (PDF)</source>
-        <translation type="unfinished"></translation>
+        <translation>Mencetak ke File (PDF)</translation>
     </message>
     <message>
         <source>Print To File ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Cetak ke File...</translation>
     </message>
     <message>
         <source>Tabloid</source>
-        <translation type="unfinished"></translation>
+        <translation>tabloid</translation>
     </message>
     <message>
         <source>Executive</source>
-        <translation type="unfinished"></translation>
+        <translation>Eksekutif</translation>
     </message>
     <message>
         <source>The 'From' value cannot be greater than the 'To' value.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nilai 'Dari' tidak dapat lebih besar dari nilai 'Ke'.</translation>
     </message>
     <message>
         <source>US Common #10 Envelope</source>
-        <translation type="unfinished"></translation>
+        <translation>US umum #10 amplop</translation>
     </message>
     <message>
         <source>%1 is a directory.
 Please choose a different file name.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 adalah direktori. 
+Silakan pilih nama file yang berbeda.</translation>
     </message>
     <message>
         <source>File %1 is not writable.
 Please choose a different file name.</source>
-        <translation type="unfinished"></translation>
+        <translation>File %1 tersebut tidak bisa ditulisi. 
+Silakan pilih nama file yang berbeda.</translation>
     </message>
 </context>
 <context>
     <name>QPrintPreviewDialog</name>
     <message>
         <source>%1%</source>
-        <translation type="unfinished"></translation>
+        <translation>%1%</translation>
     </message>
     <message>
         <source>Print Preview</source>
-        <translation type="unfinished"></translation>
+        <translation>Menggunakan pratinjau cetak</translation>
     </message>
     <message>
         <source>Print</source>
-        <translation type="unfinished"></translation>
+        <translation>Cetak</translation>
     </message>
     <message>
         <source>Fit page</source>
-        <translation type="unfinished"></translation>
+        <translation>Halaman yang pas</translation>
     </message>
     <message>
         <source>Zoom in</source>
-        <translation type="unfinished"></translation>
+        <translation>Memperbesar</translation>
     </message>
     <message>
         <source>Landscape</source>
-        <translation type="unfinished"></translation>
+        <translation>Pemandangan</translation>
     </message>
     <message>
         <source>Zoom out</source>
-        <translation type="unfinished"></translation>
+        <translation>Perkecil</translation>
     </message>
     <message>
         <source>Fit width</source>
-        <translation type="unfinished"></translation>
+        <translation>Lebar pas</translation>
     </message>
     <message>
         <source>Portrait</source>
-        <translation type="unfinished"></translation>
+        <translation>Potret</translation>
     </message>
     <message>
         <source>Page Setup</source>
-        <translation type="unfinished"></translation>
+        <translation>Halaman Setup</translation>
     </message>
     <message>
         <source>Page setup</source>
-        <translation type="unfinished"></translation>
+        <translation>Halaman setup</translation>
     </message>
     <message>
         <source>Show overview of all pages</source>
-        <translation type="unfinished"></translation>
+        <translation>Ikhtisar Tampilkan semua halaman</translation>
     </message>
     <message>
         <source>First page</source>
-        <translation type="unfinished"></translation>
+        <translation>Halaman pertama</translation>
     </message>
     <message>
         <source>Last page</source>
-        <translation type="unfinished"></translation>
+        <translation>Halaman terakhir</translation>
     </message>
     <message>
         <source>Show single page</source>
-        <translation type="unfinished"></translation>
+        <translation>Tampilkan Halaman tunggal</translation>
     </message>
     <message>
         <source>Export to PDF</source>
-        <translation type="unfinished"></translation>
+        <translation>Ekspor ke PDF</translation>
     </message>
     <message>
         <source>Previous page</source>
-        <translation type="unfinished"></translation>
+        <translation>Halaman sebelumnya</translation>
     </message>
     <message>
         <source>Next page</source>
-        <translation type="unfinished"></translation>
+        <translation>Halaman berikutnya</translation>
     </message>
     <message>
         <source>Show facing pages</source>
-        <translation type="unfinished"></translation>
+        <translation>Tampilkan menghadap halaman</translation>
     </message>
     <message>
         <source>Export to PostScript</source>
-        <translation type="unfinished"></translation>
+        <translation>Ekspor ke PostScript</translation>
     </message>
 </context>
 <context>
     <name>QPrintPropertiesWidget</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Bentuk</translation>
     </message>
     <message>
         <source>Page</source>
-        <translation type="unfinished"></translation>
+        <translation>Halaman</translation>
     </message>
     <message>
         <source>Advanced</source>
-        <translation type="unfinished"></translation>
+        <translation>Lanjutan</translation>
     </message>
 </context>
 <context>
     <name>QPrintSettingsOutput</name>
     <message>
         <source>to</source>
-        <translation type="unfinished"></translation>
+        <translation>untuk</translation>
     </message>
     <message>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Bentuk</translation>
     </message>
     <message>
         <source>None</source>
-        <translation type="unfinished"></translation>
+        <translation>Tidak ada</translation>
     </message>
     <message>
         <source>Color</source>
-        <translation type="unfinished"></translation>
+        <translation>Warna</translation>
     </message>
     <message>
         <source>Print all</source>
-        <translation type="unfinished"></translation>
+        <translation>Mencetak semua</translation>
     </message>
     <message>
         <source>Current Page</source>
-        <translation type="unfinished"></translation>
+        <translation>Saat ini Halaman</translation>
     </message>
     <message>
         <source>Selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleksi</translation>
     </message>
     <message>
         <source>Long side</source>
-        <translation type="unfinished"></translation>
+        <translation>Sisi panjang</translation>
     </message>
     <message>
         <source>Copies</source>
-        <translation type="unfinished"></translation>
+        <translation>Salinan</translation>
     </message>
     <message>
         <source>Print range</source>
-        <translation type="unfinished"></translation>
+        <translation>Jarak cetak</translation>
     </message>
     <message>
         <source>Color Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Mode warna</translation>
     </message>
     <message>
         <source>Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Pilihan</translation>
     </message>
     <message>
         <source>Output Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>pengaturan keluar</translation>
     </message>
     <message>
         <source>Reverse</source>
-        <translation type="unfinished"></translation>
+        <translation>Terbalik</translation>
     </message>
     <message>
         <source>Grayscale</source>
-        <translation type="unfinished"></translation>
+        <translation>grayscale</translation>
     </message>
     <message>
         <source>Short side</source>
-        <translation type="unfinished"></translation>
+        <translation>Pendek</translation>
     </message>
     <message>
         <source>Collate</source>
-        <translation type="unfinished"></translation>
+        <translation>Menyusun</translation>
     </message>
     <message>
         <source>Copies:</source>
-        <translation type="unfinished"></translation>
+        <translation>Salinan:</translation>
     </message>
     <message>
         <source>Pages from</source>
-        <translation type="unfinished"></translation>
+        <translation>Halaman dari</translation>
     </message>
     <message>
         <source>Duplex Printing</source>
-        <translation type="unfinished"></translation>
+        <translation>percetakan duplek</translation>
     </message>
 </context>
 <context>
     <name>QPrintWidget</name>
     <message>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation>...</translation>
     </message>
     <message>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Bentuk</translation>
     </message>
     <message>
         <source>Type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Jenis:</translation>
     </message>
     <message>
         <source>&amp;Name:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp; Nama:</translation>
     </message>
     <message>
         <source>Output &amp;file:</source>
-        <translation type="unfinished"></translation>
+        <translation>Output &amp; file:</translation>
     </message>
     <message>
         <source>P&amp;roperties</source>
-        <translation type="unfinished"></translation>
+        <translation>P &amp; roperties</translation>
     </message>
     <message>
         <source>Preview</source>
-        <translation type="unfinished"></translation>
+        <translation>Tinjauan</translation>
     </message>
     <message>
         <source>Printer</source>
-        <translation type="unfinished"></translation>
+        <translation>Cetakan</translation>
     </message>
     <message>
         <source>Location:</source>
-        <translation type="unfinished"></translation>
+        <translation>Lokasi:</translation>
     </message>
 </context>
 <context>
     <name>QProcess</name>
     <message>
         <source>Error writing to process</source>
-        <translation type="unfinished"></translation>
+        <translation>Kesalahan menulis untuk memproses</translation>
     </message>
     <message>
         <source>Resource error (fork failure): %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Sumber daya kesalahan (garpu kegagalan): %1</translation>
     </message>
     <message>
         <source>Error reading from process</source>
-        <translation type="unfinished"></translation>
+        <translation>Kesalahan membaca dari proses</translation>
     </message>
     <message>
         <source>Process failed to start: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Proses gagal untuk memulai: %1</translation>
     </message>
     <message>
         <source>Could not open input redirection for reading</source>
-        <translation type="unfinished"></translation>
+        <translation>Tidak dapat membuka input pengalihan untuk membaca</translation>
     </message>
     <message>
         <source>No program defined</source>
-        <translation type="unfinished"></translation>
+        <translation>Tidak ada program yang didefinisikan</translation>
     </message>
     <message>
         <source>Could not open output redirection for writing</source>
-        <translation type="unfinished"></translation>
+        <translation>Tidak dapat membuka output pengalihan untuk menulis</translation>
     </message>
     <message>
         <source>Process operation timed out</source>
-        <translation type="unfinished"></translation>
+        <translation>Proses operasi habis</translation>
     </message>
     <message>
         <source>Process crashed</source>
-        <translation type="unfinished"></translation>
+        <translation>Proses jatuh</translation>
     </message>
 </context>
 <context>
     <name>QProgressDialog</name>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Batal</translation>
     </message>
 </context>
 <context>
     <name>QScrollBar</name>
     <message>
         <source>Top</source>
-        <translation type="unfinished"></translation>
+        <translation>Atas</translation>
     </message>
     <message>
         <source>Scroll down</source>
-        <translation type="unfinished"></translation>
+        <translation>Gulir ke bawah</translation>
     </message>
     <message>
         <source>Scroll here</source>
-        <translation type="unfinished"></translation>
+        <translation>Gulir di sini</translation>
     </message>
     <message>
         <source>Scroll left</source>
-        <translation type="unfinished"></translation>
+        <translation>Gulir kiri</translation>
     </message>
     <message>
         <source>Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>Bawah</translation>
     </message>
     <message>
         <source>Page up</source>
-        <translation type="unfinished"></translation>
+        <translation>Halaman atas</translation>
     </message>
     <message>
         <source>Page right</source>
-        <translation type="unfinished"></translation>
+        <translation>Halaman yang tepat</translation>
     </message>
     <message>
         <source>Scroll up</source>
-        <translation type="unfinished"></translation>
+        <translation>Gulir ke atas</translation>
     </message>
     <message>
         <source>Scroll right</source>
-        <translation type="unfinished"></translation>
+        <translation>Gulir ke kanan</translation>
     </message>
     <message>
         <source>Left edge</source>
-        <translation type="unfinished"></translation>
+        <translation>Tepi kiri</translation>
     </message>
     <message>
         <source>Page down</source>
-        <translation type="unfinished"></translation>
+        <translation>Halaman bawah</translation>
     </message>
     <message>
         <source>Page left</source>
-        <translation type="unfinished"></translation>
+        <translation>Halaman Sidebar kiri</translation>
     </message>
     <message>
         <source>Right edge</source>
-        <translation type="unfinished"></translation>
+        <translation>Tepi kanan</translation>
     </message>
 </context>
 <context>
     <name>QShortcut</name>
     <message>
         <source>+</source>
-        <translation type="unfinished"></translation>
+        <translation>+</translation>
     </message>
     <message>
         <source>Go</source>
-        <translation type="unfinished"></translation>
+        <translation>Pergi</translation>
     </message>
     <message>
         <source>No</source>
-        <translation type="unfinished"></translation>
+        <translation>Tidak</translation>
     </message>
     <message>
         <source>Up</source>
-        <translation type="unfinished"></translation>
+        <translation>Up</translation>
     </message>
     <message>
         <source>Alt</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt</translation>
     </message>
     <message>
         <source>F%1</source>
-        <translation type="unfinished"></translation>
+        <translation>F %1</translation>
     </message>
     <message>
         <source>Del</source>
-        <translation type="unfinished"></translation>
+        <translation>Del</translation>
     </message>
     <message>
         <source>Cut</source>
-        <translation type="unfinished"></translation>
+        <translation>Memotong</translation>
     </message>
     <message>
         <source>End</source>
-        <translation type="unfinished"></translation>
+        <translation>Akhir</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation type="unfinished"></translation>
+        <translation>esc</translation>
     </message>
     <message>
         <source>Ins</source>
-        <translation type="unfinished"></translation>
+        <translation>INS</translation>
     </message>
     <message>
         <source>Tab</source>
-        <translation type="unfinished"></translation>
+        <translation>Tab</translation>
     </message>
     <message>
         <source>Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>Ya</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Kembali</translation>
     </message>
     <message>
         <source>Away</source>
-        <translation type="unfinished"></translation>
+        <translation>Kaki</translation>
     </message>
     <message>
         <source>Book</source>
-        <translation type="unfinished"></translation>
+        <translation>Buku</translation>
     </message>
     <message>
         <source>Call</source>
-        <translation type="unfinished"></translation>
+        <translation>Panggilan</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>Salinan</translation>
     </message>
     <message>
         <source>Ctrl</source>
-        <translation type="unfinished"></translation>
+        <translation>ctrl</translation>
     </message>
     <message>
         <source>Down</source>
-        <translation type="unfinished"></translation>
+        <translation>Turun</translation>
     </message>
     <message>
         <source>Flip</source>
-        <translation type="unfinished"></translation>
+        <translation>membalik</translation>
     </message>
     <message>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Tolong</translation>
     </message>
     <message>
         <source>Home</source>
-        <translation type="unfinished"></translation>
+        <translation>Beranda</translation>
     </message>
     <message>
         <source>Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Kiri</translation>
     </message>
     <message>
         <source>Menu</source>
-        <translation type="unfinished"></translation>
+        <translation>Menu</translation>
     </message>
     <message>
         <source>Meta</source>
-        <translation type="unfinished"></translation>
+        <translation>Meta</translation>
     </message>
     <message>
         <source>PgUp</source>
-        <translation type="unfinished"></translation>
+        <translation>keatas</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation>Simpan</translation>
     </message>
     <message>
         <source>Send</source>
-        <translation type="unfinished"></translation>
+        <translation>Kirim</translation>
     </message>
     <message>
         <source>Stop</source>
-        <translation type="unfinished"></translation>
+        <translation>Stop</translation>
     </message>
     <message>
         <source>XFer</source>
-        <translation type="unfinished"></translation>
+        <translation>xfer</translation>
     </message>
     <message>
         <source>View</source>
-        <translation type="unfinished"></translation>
+        <translation>Lihat</translation>
     </message>
     <message>
         <source>Clear</source>
-        <translation type="unfinished"></translation>
+        <translation>Jelas</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Tutup</translation>
     </message>
     <message>
         <source>Enter</source>
-        <translation type="unfinished"></translation>
+        <translation>Masukkan</translation>
     </message>
     <message>
         <source>Paste</source>
-        <translation type="unfinished"></translation>
+        <translation>Menempelkan</translation>
     </message>
     <message>
         <source>Pause</source>
-        <translation type="unfinished"></translation>
+        <translation>Berhenti</translation>
     </message>
     <message>
         <source>Print</source>
-        <translation type="unfinished"></translation>
+        <translation>Cetak</translation>
     </message>
     <message>
         <source>Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Kanan</translation>
     </message>
     <message>
         <source>Shift</source>
-        <translation type="unfinished"></translation>
+        <translation>Pergeseran</translation>
     </message>
     <message>
         <source>Space</source>
-        <translation type="unfinished"></translation>
+        <translation>Ruang</translation>
     </message>
     <message>
         <source>Tools</source>
-        <translation type="unfinished"></translation>
+        <translation>Alat</translation>
     </message>
     <message>
         <source>Print Screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Cetak layar</translation>
     </message>
     <message>
         <source>Zoom In</source>
-        <translation type="unfinished"></translation>
+        <translation>Memperbesar</translation>
     </message>
     <message>
         <source>Scroll Lock</source>
-        <translation type="unfinished"></translation>
+        <translation>Kunci gulir</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation type="unfinished"></translation>
+        <translation>Hapus</translation>
     </message>
     <message>
         <source>Escape</source>
-        <translation type="unfinished"></translation>
+        <translation>Melarikan diri</translation>
     </message>
     <message>
         <source>Insert</source>
-        <translation type="unfinished"></translation>
+        <translation>Masukkan</translation>
     </message>
     <message>
         <source>Option</source>
-        <translation type="unfinished"></translation>
+        <translation>Pilihan</translation>
     </message>
     <message>
         <source>PgDown</source>
-        <translation type="unfinished"></translation>
+        <translation>kebawah</translation>
     </message>
     <message>
         <source>Reload</source>
-        <translation type="unfinished"></translation>
+        <translation>Isi ulang</translation>
     </message>
     <message>
         <source>Return</source>
-        <translation type="unfinished"></translation>
+        <translation>Kembali</translation>
     </message>
     <message>
         <source>Search</source>
-        <translation type="unfinished"></translation>
+        <translation>Cari</translation>
     </message>
     <message>
         <source>Select</source>
-        <translation type="unfinished"></translation>
+        <translation>Pilih</translation>
     </message>
     <message>
         <source>SysReq</source>
-        <translation type="unfinished"></translation>
+        <translation>sysreq</translation>
     </message>
     <message>
         <source>NumLock</source>
-        <translation type="unfinished"></translation>
+        <translation>numlock</translation>
     </message>
     <message>
         <source>ScrollLock</source>
-        <translation type="unfinished"></translation>
+        <translation>Kunci mengulir</translation>
     </message>
     <message>
         <source>Zoom Out</source>
-        <translation type="unfinished"></translation>
+        <translation>Perkecil</translation>
     </message>
     <message>
         <source>Page Up</source>
-        <translation type="unfinished"></translation>
+        <translation>Halaman atas</translation>
     </message>
     <message>
         <source>Caps Lock</source>
-        <translation type="unfinished"></translation>
+        <translation>Kunci huruf besar</translation>
     </message>
     <message>
         <source>System Request</source>
-        <translation type="unfinished"></translation>
+        <translation>Sistem permintaan</translation>
     </message>
     <message>
         <source>CapsLock</source>
-        <translation type="unfinished"></translation>
+        <translation>capslock</translation>
     </message>
     <message>
         <source>Backtab</source>
-        <translation type="unfinished"></translation>
+        <translation>backtab</translation>
     </message>
     <message>
         <source>Backspace</source>
-        <translation type="unfinished"></translation>
+        <translation>Hapus</translation>
     </message>
     <message>
         <source>Page Down</source>
-        <translation type="unfinished"></translation>
+        <translation>Halaman bawah</translation>
     </message>
     <message>
         <source>Wake Up</source>
-        <translation type="unfinished"></translation>
+        <translation>Bangun</translation>
     </message>
     <message>
         <source>Monitor Brightness Down</source>
-        <translation type="unfinished"></translation>
+        <translation>Monitor kecerahan turun</translation>
     </message>
 </context>
 <context>
     <name>QStandardPaths</name>
     <message>
         <source>Home</source>
-        <translation type="unfinished"></translation>
+        <translation>Beranda</translation>
     </message>
     <message>
         <source>Cache</source>
-        <translation type="unfinished"></translation>
+        <translation>cache</translation>
     </message>
     <message>
         <source>Fonts</source>
-        <translation type="unfinished"></translation>
+        <translation>Huruf-huruf</translation>
     </message>
     <message>
         <source>Music</source>
-        <translation type="unfinished"></translation>
+        <translation>Musik</translation>
     </message>
     <message>
         <source>Shared Cache</source>
-        <translation type="unfinished"></translation>
+        <translation>Berbagi cache</translation>
     </message>
     <message>
         <source>Movies</source>
-        <translation type="unfinished"></translation>
+        <translation>Film</translation>
     </message>
     <message>
         <source>Download</source>
-        <translation type="unfinished"></translation>
+        <translation>mengunduh</translation>
     </message>
     <message>
         <source>Configuration</source>
-        <translation type="unfinished"></translation>
+        <translation>Konfigurasi</translation>
     </message>
     <message>
         <source>Application Data</source>
-        <translation type="unfinished"></translation>
+        <translation>Data Aplikasi</translation>
     </message>
     <message>
         <source>Runtime</source>
-        <translation type="unfinished"></translation>
+        <translation>waktu berlari</translation>
     </message>
     <message>
         <source>Documents</source>
-        <translation type="unfinished"></translation>
+        <translation>Dokumen</translation>
     </message>
     <message>
         <source>Desktop</source>
-        <translation type="unfinished"></translation>
+        <translation>desktop</translation>
     </message>
     <message>
         <source>Temporary Directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Direktori sementara</translation>
     </message>
     <message>
         <source>Shared Data</source>
-        <translation type="unfinished"></translation>
+        <translation>Data bersama</translation>
     </message>
     <message>
         <source>Applications</source>
-        <translation type="unfinished"></translation>
+        <translation>Aplikasi</translation>
     </message>
     <message>
         <source>Pictures</source>
-        <translation type="unfinished"></translation>
+        <translation>Gambar</translation>
     </message>
 </context>
 <context>
     <name>QTabBar</name>
     <message>
         <source>Scroll Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Gulir ke kiri</translation>
     </message>
     <message>
         <source>Scroll Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Gulir ke kanan</translation>
     </message>
 </context>
 <context>
     <name>QUndoGroup</name>
     <message>
         <source>Redo</source>
-        <translation type="unfinished"></translation>
+        <translation>Mengulang</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation type="unfinished"></translation>
+        <translation>Membatalkan</translation>
     </message>
     <message>
         <source>Redo %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Mengulang %1</translation>
     </message>
     <message>
         <source>Undo %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Membatalkan %1</translation>
     </message>
 </context>
 <context>
     <name>QUndoModel</name>
     <message>
         <source>&lt;empty&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;kosong&gt;</translation>
     </message>
 </context>
 <context>
     <name>QUndoStack</name>
     <message>
         <source>Redo</source>
-        <translation type="unfinished"></translation>
+        <translation>Mengulang</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation type="unfinished"></translation>
+        <translation>Membatalkan</translation>
     </message>
     <message>
         <source>Redo %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Mengulang %1</translation>
     </message>
     <message>
         <source>Undo %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Membatalkan %1</translation>
     </message>
 </context>
 <context>
     <name>QWhatsThisAction</name>
     <message>
         <source>What's This?</source>
-        <translation type="unfinished"></translation>
+        <translation>Apa ini?</translation>
     </message>
 </context>
 <context>
     <name>QWidget</name>
     <message>
         <source>*</source>
-        <translation type="unfinished"></translation>
+        <translation>*</translation>
     </message>
 </context>
 <context>
     <name>QWidgetTextControl</name>
     <message>
         <source>Cu&amp;t</source>
-        <translation type="unfinished"></translation>
+        <translation>Cu &amp; t</translation>
     </message>
     <message>
         <source>&amp;Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp; Copy</translation>
     </message>
     <message>
         <source>&amp;Redo</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp; Mengulang</translation>
     </message>
     <message>
         <source>&amp;Undo</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp; Membatalkan</translation>
     </message>
     <message>
         <source>&amp;Paste</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Menempelkan</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation type="unfinished"></translation>
+        <translation>Hapus</translation>
     </message>
     <message>
         <source>Select All</source>
-        <translation type="unfinished"></translation>
+        <translation>Pilih Semua</translation>
     </message>
     <message>
         <source>Copy &amp;Link Location</source>
-        <translation type="unfinished"></translation>
+        <translation>Salinan &amp; Link lokasi</translation>
     </message>
 </context>
 <context>
     <name>QWizard</name>
     <message>
         <source>Done</source>
-        <translation type="unfinished"></translation>
+        <translation>Selesai</translation>
     </message>
     <message>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Tolong</translation>
     </message>
     <message>
         <source>&amp;Help</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp; Bantuan</translation>
     </message>
     <message>
         <source>&amp;Next</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp; Berikutnya</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Batal</translation>
     </message>
     <message>
         <source>Commit</source>
-        <translation type="unfinished"></translation>
+        <translation>Komit</translation>
     </message>
     <message>
         <source>Continue</source>
-        <translation type="unfinished"></translation>
+        <translation>Lanjutkan</translation>
     </message>
     <message>
         <source>&amp;Finish</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp; Selesai</translation>
     </message>
     <message>
         <source>&amp;Next &gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp; Berikutnya &gt;</translation>
     </message>
     <message>
         <source>Go Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Kembali</translation>
     </message>
     <message>
         <source>&lt; &amp;Back</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt; &amp; Kembali</translation>
     </message>
 </context>
 <context>
@@ -7845,7 +7848,7 @@ Please choose a different file name.</source>
     <message>
         <location filename="../src/symbol_setting_dialog.cpp" line="115"/>
         <source>center of gravity on origin</source>
-        <translation type="unfinished"></translation>
+        <translation>Pusat gravitasi pada asal</translation>
     </message>
     <message>
         <location filename="../src/symbol_setting_dialog.cpp" line="233"/>
