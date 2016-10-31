@@ -57,7 +57,7 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="92"/>
         <source>Show tip of the day</source>
-        <translation>Tampilkan Tips</translation>
+        <translation>Tampilkan tips</translation>
     </message>
 </context>
 <context>
@@ -107,7 +107,7 @@
     <message>
         <location filename="../src/symbol_area.cpp" line="827"/>
         <source>Single line</source>
-        <translation>garis tunggal</translation>
+        <translation>Garis tunggal</translation>
     </message>
     <message>
         <location filename="../src/symbol_area.cpp" line="841"/>
@@ -167,7 +167,7 @@
     <message>
         <location filename="../src/symbol_area.cpp" line="874"/>
         <source>adjustable per object</source>
-        <translation>Adjustable per objek</translation>
+        <translation>adjustable per objek</translation>
     </message>
     <message>
         <location filename="../src/symbol_area.cpp" line="889"/>
@@ -215,7 +215,7 @@
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="43"/>
         <source>Autosaved file</source>
-        <translation>otomatis file tersimpan</translation>
+        <translation>Otomatis file tersimpan</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/gui/autosave_dialog.cpp" line="45"/>
@@ -233,7 +233,7 @@
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="56"/>
         <source>File recovery</source>
-        <translation>pemulihan file</translation>
+        <translation>Pemulihan file</translation>
     </message>
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="58"/>
@@ -292,7 +292,7 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="119"/>
         <source>Custom process color:</source>
-        <translation>proses warna kustom:</translation>
+        <translation>Proses warna kustom:</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="125"/>
@@ -352,7 +352,7 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="216"/>
         <source>Professional printing</source>
-        <translation>Percetakan Profesional</translation>
+        <translation>Percetakan profesional</translation>
     </message>
 </context>
 <context>
@@ -378,7 +378,7 @@
     <message>
         <location filename="../src/color_dock_widget.cpp" line="57"/>
         <source>Spot color</source>
-        <translation>warna bintik</translation>
+        <translation>Warna bintik</translation>
     </message>
     <message>
         <location filename="../src/color_dock_widget.cpp" line="57"/>
@@ -526,7 +526,7 @@
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="60"/>
         <source>All lines</source>
-        <translation>semua garis</translation>
+        <translation>Semua garis</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="61"/>
@@ -541,17 +541,17 @@
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="114"/>
         <source>Alignment</source>
-        <translation>garis arah</translation>
+        <translation>Garis arah</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="64"/>
         <source>Align with magnetic north</source>
-        <translation>Sejajar dengan Utara magnetik</translation>
+        <translation>Sejajar dengan utara magnetik</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="65"/>
         <source>Align with grid north</source>
-        <translation>Menyelaraskan dengan grid Utara</translation>
+        <translation>Menyelaraskan dengan grid utara</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="66"/>
@@ -576,7 +576,7 @@
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="74"/>
         <source>meters in terrain</source>
-        <translation>meter di Medan</translation>
+        <translation>meter di medan</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="75"/>
@@ -591,7 +591,7 @@
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="79"/>
         <source>Vertical spacing:</source>
-        <translation>Jarak Vertical:</translation>
+        <translation>Jarak vertical:</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="83"/>
@@ -712,7 +712,7 @@
     <message>
         <location filename="../src/tool_cutout.cpp" line="140"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Clip the selected objects. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: klip objek yang dipilih. </translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Klip objek yang dipilih. </translation>
     </message>
 </context>
 <context>
@@ -858,13 +858,13 @@
         <location filename="../src/tool_draw_path.cpp" line="1095"/>
         <location filename="../src/tool_draw_rectangle.cpp" line="725"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Fixed angles. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: tetap sudut. </translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Tetap sudut. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1103"/>
         <location filename="../src/tool_draw_rectangle.cpp" line="741"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Undo last point. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: membatalkan titik terakhir. </translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Membatalkan titik terakhir. </translation>
     </message>
 </context>
 <context>
@@ -883,7 +883,7 @@
         <location filename="../src/tool_draw_path.cpp" line="89"/>
         <source>Snap</source>
         <comment>Snap to existing objects</comment>
-        <translation>klik</translation>
+        <translation>Klik</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="90"/>
@@ -947,7 +947,7 @@
         <location filename="../src/tool_draw_point.cpp" line="60"/>
         <source>Snap</source>
         <comment>Snap to existing objects</comment>
-        <translation>klik</translation>
+        <translation>Klik</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_point.cpp" line="61"/>
@@ -959,7 +959,7 @@
         <location filename="../src/tool_draw_point.cpp" line="62"/>
         <source>Reset</source>
         <comment>Reset rotation</comment>
-        <translation>ulang</translation>
+        <translation>Ulang</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_point.cpp" line="317"/>
@@ -986,7 +986,7 @@
     <message>
         <location filename="../src/tool_draw_point.cpp" line="330"/>
         <source>&lt;b&gt;%1, 0&lt;/b&gt;: Reset rotation.</source>
-        <translation>&lt;b&gt;%1, 0&lt;/b&gt;: reset rotasi.</translation>
+        <translation>&lt;b&gt;%1, 0&lt;/b&gt;: Reset rotasi.</translation>
     </message>
 </context>
 <context>
@@ -1000,13 +1000,13 @@
         <location filename="../src/tool_draw_rectangle.cpp" line="79"/>
         <source>Snap</source>
         <comment>Snap to existing objects</comment>
-        <translation>klik</translation>
+        <translation>Klik</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_rectangle.cpp" line="80"/>
         <source>Line snap</source>
         <comment>Snap to previous lines</comment>
-        <translation>Klik Garis</translation>
+        <translation>Klik garis</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_rectangle.cpp" line="81"/>
@@ -1045,12 +1045,12 @@
     <message>
         <location filename="../src/tool_draw_text.cpp" line="375"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Finish editing. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: menyelesaikan pengeditan. </translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Menyelesaikan pengeditan. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_text.cpp" line="379"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Create a text object with a single anchor. &lt;b&gt;Drag&lt;/b&gt;: Create a text box. </source>
-        <translation>&lt;b&gt;Klik&lt;/b&gt;: membuat obyek teks dengan jangkar satu. &lt;b&gt;Drag&lt;/b&gt;: membuat kotak teks. </translation>
+        <translation>&lt;b&gt;Klik&lt;/b&gt;: Membuat obyek teks dengan jangkar satu. &lt;b&gt;Drag&lt;/b&gt;: Membuat kotak teks. </translation>
     </message>
 </context>
 <context>
@@ -1059,7 +1059,7 @@
         <location filename="../src/tool_edit_line.cpp" line="345"/>
         <source>Snap</source>
         <comment>Snap to existing objects</comment>
-        <translation>klik</translation>
+        <translation>Klik</translation>
     </message>
     <message>
         <location filename="../src/tool_edit_line.cpp" line="346"/>
@@ -1084,7 +1084,7 @@
         <location filename="../src/tool_edit_point.cpp" line="490"/>
         <source>Snap</source>
         <comment>Snap to existing objects</comment>
-        <translation>klik</translation>
+        <translation>Klik</translation>
     </message>
     <message>
         <location filename="../src/tool_edit_point.cpp" line="491"/>
@@ -1868,7 +1868,7 @@
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="239"/>
         <source>Show tip of the day</source>
-        <translation>Tampilkan Tips</translation>
+        <translation>Tampilkan tips</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="243"/>
