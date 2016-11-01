@@ -114,6 +114,7 @@ include_directories("${CMAKE_CURRENT_BINARY_DIR}")
 # Unit tests
 add_unit_test(tst_qglobal)
 add_unit_test(autosave_t ../src/core/autosave ../src/settings ../src/util ../src/mapper_resource)
+add_unit_test(encoding_t ../src/util/encoding)
 add_unit_test(georeferencing_t ../src/core/georeferencing
 	../src/core/latlon
 	../src/core/crs_template

@@ -310,6 +310,7 @@ SOURCES += \
   gui/widgets/tags_widget.cpp \
   gui/widgets/template_list_widget.cpp \
   gui/widgets/text_alignment_widget.cpp \
+  util/encoding.cpp \
   util/item_delegates.cpp \
   util/overriding_shortcut.cpp \
   util/recording_translator.cpp \
