@@ -62,12 +62,12 @@
 <context>
     <name>AbstractHomeScreenWidget</name>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="89"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="92"/>
         <source>Open most recently used file</source>
         <translation>Öppna den senast använda filen</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="92"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="95"/>
         <source>Show tip of the day</source>
         <translation>Visa dagens tips</translation>
     </message>
@@ -1571,84 +1571,89 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
 <context>
     <name>GeneralSettingsPage</name>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="50"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="53"/>
         <source>Appearance</source>
         <translation>Utseende</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="55"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="58"/>
         <source>Language:</source>
         <translation>Språk:</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="72"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="75"/>
         <source>Screen</source>
         <translation>Skärm</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="77"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="80"/>
         <source>Pixels per inch:</source>
         <translation>Pixlar per tum (PPI):</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="87"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="90"/>
         <source>Program start</source>
         <translation>Programstart</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="96"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="99"/>
         <source>Saving files</source>
         <translation>Sparning av filer</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="98"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="101"/>
         <source>Retain compatibility with Mapper %1</source>
         <translation>Behåll kompatibilitet med Mapper %1</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="103"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="106"/>
         <source>Save information for automatic recovery</source>
         <translation>Spara information för automatisk återställning</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="107"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="110"/>
         <source>Recovery information saving interval:</source>
         <translation>Intervall för att spara återställningsinformation:</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="106"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="109"/>
         <source>min</source>
         <comment>unit minutes</comment>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="110"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="113"/>
         <source>File import and export</source>
         <translation>Import och export av filer</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="133"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="137"/>
         <source>8-bit encoding:</source>
         <translation>8-bitars kodning:</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="128"/>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="274"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="130"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="283"/>
         <source>More...</source>
         <translation>Mer…</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="135"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="116"/>
+        <source>Default</source>
+        <translation type="unfinished">Förvald</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="139"/>
         <source>Use the new OCD importer also for version 8 files</source>
         <translation>Använd den nya OCD-filimporteraren även för version 8-filer</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="179"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="183"/>
         <source>Notice</source>
         <translation>Observera</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="179"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="183"/>
         <source>The program must be restarted for the language change to take effect!</source>
         <translation>Programmet måste startas om för att språket ska ändras!</translation>
     </message>
@@ -1657,38 +1662,38 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
         <translation type="vanished">Använd översättningsfil...</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="300"/>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="306"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="325"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="331"/>
         <source>Open translation</source>
         <translation>Öppna översättning</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="300"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="325"/>
         <source>Translation files (*.qm)</source>
         <translation>Översättningsfiler (*.qm)</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="307"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="332"/>
         <source>The selected file is not a valid translation.</source>
         <translation>Den valda filen är inte en giltig översättningsfil.</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="337"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="362"/>
         <source>%1 x %2</source>
         <translation>%1 x %2</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="338"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="363"/>
         <source>Primary screen resolution in pixels:</source>
         <translation>Primär skärmupplösning i pixlar:</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="342"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="367"/>
         <source>Primary screen size in inches (diagonal):</source>
         <translation>Primär skärmstorlek i tum (på diagonalen):</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="155"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="159"/>
         <source>General</source>
         <translation>Allmänt</translation>
     </message>
@@ -2425,7 +2430,7 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="57"/>
+        <location filename="../src/file_format_ocad8.cpp" line="58"/>
         <source>OCAD Versions 7, 8</source>
         <translation>OCAD Versioner 7, 8</translation>
     </message>
@@ -2565,10 +2570,10 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
         <location filename="../src/file_format_ocad8.cpp" line="116"/>
         <location filename="../src/file_format_ocad8.cpp" line="118"/>
         <location filename="../src/file_format_ocad8.cpp" line="121"/>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="2020"/>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="2023"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="2024"/>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="2027"/>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="2057"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="2031"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="2061"/>
         <source>Could not read file: %1</source>
         <translation>Kunde inte läsa fil: %1</translation>
     </message>
@@ -2796,7 +2801,7 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
         <location filename="../src/symbol_line.cpp" line="2263"/>
         <location filename="../src/symbol_line.cpp" line="2723"/>
         <location filename="../src/file_format_ocad8.cpp" line="596"/>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1196"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1200"/>
         <source>Start symbol</source>
         <translation>Startsymbol</translation>
     </message>
@@ -2811,7 +2816,7 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
         <location filename="../src/symbol_line.cpp" line="1661"/>
         <location filename="../src/symbol_line.cpp" line="2263"/>
         <location filename="../src/symbol_line.cpp" line="2723"/>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1203"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1207"/>
         <source>End symbol</source>
         <translation>Slutsymbol</translation>
     </message>
@@ -2821,7 +2826,7 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
         <location filename="../src/symbol_line.cpp" line="2263"/>
         <location filename="../src/symbol_line.cpp" line="2723"/>
         <location filename="../src/file_format_ocad8.cpp" line="590"/>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1189"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1193"/>
         <source>Dash symbol</source>
         <translation>Strecksymbol</translation>
     </message>
@@ -5318,157 +5323,162 @@ zooma med scrollhjulet om tillgängligt.</translation>
 <context>
     <name>OcdFileImport</name>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="121"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="125"/>
         <source>In line symbol %1 '%2': %3</source>
         <translation>I linjesymbol %1 '%2': %3</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="127"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="131"/>
         <source>In text symbol %1 '%2': %3</source>
         <translation>I textsymbol %1 '%2': %3</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="384"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="388"/>
         <source>Could not load the coordinate reference system '%1'.</source>
         <translation>Kunde inte ladda koordinatsystemet '%1'.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="418"/>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="425"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="422"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="429"/>
         <source>Spot color information was ignored.</source>
         <translation>Dekorfärgsinformation ignorerades.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="553"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="557"/>
         <source>Unable to import symbol %1.%2 "%3": %4</source>
         <translation>Kan inte importera symbol %1.%2 "%3": %4</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="557"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="561"/>
         <source>Unsupported type "%1".</source>
         <translation>Ostödd typ "%1".</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="650"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="654"/>
         <source>Unable to import template: "%1" is not a supported template type.</source>
         <translation>Kan inte importera bakgrund: "%1" er inte en bakgrunds typ som stöds.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="954"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="958"/>
         <source>Unsupported line style '%1'.</source>
         <translation>Linjeutseendet '%1' stöds ej.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="991"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="995"/>
         <source>Different lengths for pointed caps at begin (%1 mm) and end (%2 mm) are not supported. Using %3 mm.</source>
         <translation>Olika längder för spetsiga ändar vid början (%1 mm) och slut (%2 mm) stöds inte. Använder %3 mm.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1007"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1011"/>
         <source>The dash pattern cannot be imported correctly.</source>
         <translation>Det streckade mönstret kan inte importeras korrekt.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1022"/>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1054"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1026"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1058"/>
         <source>The dash pattern's end length (%1 mm) cannot be imported correctly. Using %2 mm.</source>
         <translation>Det streckade mönstrets slutlängd (%1 mm) kan inte importeras korrekt. Använder %2 mm.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1029"/>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1069"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1033"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1073"/>
         <source>The dash pattern's end gap (%1 mm) cannot be imported correctly. Using %2 mm.</source>
         <translation>Det streckade mönstrets slutmellanrum (%1 mm) kan inte importeras korrekt. Använder %2 mm.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1111"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1115"/>
         <source>Unsupported framing line style '%1'.</source>
         <translation>Ostödd ramlinjestil '%1'.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1183"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1187"/>
         <source>Skipped secondary point symbol.</source>
         <translation>Hoppade över sekundär punktsymbol.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1219"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1223"/>
         <source>Suppressing dash symbol at line ends.</source>
         <translation>Dumpa strecksymbol vid linjeslut.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="935"/>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1288"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="939"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1292"/>
         <source>This symbol cannot be saved as a proper OCD symbol again.</source>
         <translation>Denna symbol kan inte sparas som en OCD-symbol igen.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1931"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1935"/>
         <source>Justified alignment is not supported.</source>
         <translation>Berättigad justering stöds inte.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1946"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1950"/>
         <source>Vertical alignment '%1' is not supported.</source>
         <translation>Vertikal justering '%1' stöds ej.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1918"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1922"/>
         <source>Ignoring custom weight (%1).</source>
         <translation>Ignorerar egeninställd tjocklek (%1).</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1955"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1959"/>
         <source>Custom character spacing may be incorrect.</source>
         <translation>Eget symbolmellanrum kan vara inkorrekt.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1960"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1964"/>
         <source>Ignoring custom word spacing (%1 %).</source>
         <translation>Ignorerar eget ord mellanrum (%1 %).</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1984"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1988"/>
         <source>Ignoring custom indents (%1/%2).</source>
         <translation>Ignorerar eget indrag (%1/%2).</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="2006"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="2010"/>
         <source>Ignoring text framing (mode %1).</source>
         <translation>Ignorerar textinramning (läge %1).</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1377"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1381"/>
         <source>Line text symbols are not yet supported. Marking the symbol as hidden.</source>
         <translation>Linjetextsymboler stöds inte än. Markerar symbolen som gömd.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="115"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="82"/>
+        <source>Encoding '%1' is not available. Check the settings.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="119"/>
         <source>In area symbol %1 '%2': %3</source>
         <translation>I areasymbol %1 '%2': %3</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1554"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1558"/>
         <source>Unable to load object</source>
         <translation>Kunde inte ladda objekt</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1564"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1568"/>
         <source>Unable to import rectangle object</source>
         <translation>Kunde inte importera rektangelobjekt</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1605"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1609"/>
         <source>Not importing text symbol, couldn't figure out path' (npts=%1): %2</source>
         <translation>Importerar inte textsymbol, kunde inte beräkna bana (npts=%1): %2</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1893"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1897"/>
         <source>Trying to import a text object with unknown coordinate format</source>
         <translation>Försöker importera textobjekt med okänt koordinatformat</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="2023"/>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="2027"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="2031"/>
         <source>Invalid data.</source>
         <translation>Felaktig data.</translation>
     </message>
@@ -5477,7 +5487,7 @@ zooma med scrollhjulet om tillgängligt.</translation>
         <translation type="vanished">Otestad fil-importerare för format: OCD %1</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="2058"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="2062"/>
         <source>OCD files of version %1 are not supported!</source>
         <translation>OCD-filer med version %1 stöds ej!</translation>
     </message>

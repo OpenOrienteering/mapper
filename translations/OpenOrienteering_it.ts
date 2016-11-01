@@ -50,12 +50,12 @@
 <context>
     <name>AbstractHomeScreenWidget</name>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="89"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="92"/>
         <source>Open most recently used file</source>
         <translation>Apre file usati di recente</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="92"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="95"/>
         <source>Show tip of the day</source>
         <translation>Mostra il suggerimento del giorno</translation>
     </message>
@@ -1375,89 +1375,94 @@
 <context>
     <name>GeneralSettingsPage</name>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="50"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="53"/>
         <source>Appearance</source>
         <translation>Apparenza</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="55"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="58"/>
         <source>Language:</source>
         <translation>Lingua:</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="72"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="75"/>
         <source>Screen</source>
         <translation>Screen (Schermi)</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="77"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="80"/>
         <source>Pixels per inch:</source>
         <translation>Pixels (punti) per pollice:</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="87"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="90"/>
         <source>Program start</source>
         <translation>Avvio programma</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="96"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="99"/>
         <source>Saving files</source>
         <translation>Salvataggio file</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="98"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="101"/>
         <source>Retain compatibility with Mapper %1</source>
         <translation>Mantiene la comapatibilità con Mapper %1</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="103"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="106"/>
         <source>Save information for automatic recovery</source>
         <translation>Salva le informazioni per il ripristino automatico</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="107"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="110"/>
         <source>Recovery information saving interval:</source>
         <translation>Intervallo di salvataggio per il recupero delle informazioni:</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="106"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="109"/>
         <source>min</source>
         <comment>unit minutes</comment>
         <translation>min</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="110"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="113"/>
         <source>File import and export</source>
         <translation>Importazione ed esportazione file</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="133"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="137"/>
         <source>8-bit encoding:</source>
         <translation>codifica a 8-bit:</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="128"/>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="274"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="130"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="283"/>
         <source>More...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="135"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="116"/>
+        <source>Default</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="139"/>
         <source>Use the new OCD importer also for version 8 files</source>
         <translation>Usa il nuovo importatore OCD anche per i file in versione 8</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="155"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="159"/>
         <source>General</source>
         <translation type="unfinished">Generale</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="179"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="183"/>
         <source>Notice</source>
         <translation>Nota</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="179"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="183"/>
         <source>The program must be restarted for the language change to take effect!</source>
         <translation>Il programma deve essere chiuso e riaperto affincé il cambio di linguaggio abbia effetto!</translation>
     </message>
@@ -1466,33 +1471,33 @@
         <translation type="vanished">Usa un file di traduzione...</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="300"/>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="306"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="325"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="331"/>
         <source>Open translation</source>
         <translation>Apri una traduzione</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="300"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="325"/>
         <source>Translation files (*.qm)</source>
         <translation>File di traduzione (*.qm)</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="307"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="332"/>
         <source>The selected file is not a valid translation.</source>
         <translation>Il file selezionato non è una traduzione valida.</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="337"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="362"/>
         <source>%1 x %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="338"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="363"/>
         <source>Primary screen resolution in pixels:</source>
         <translation>Risoluzione dello schermo primario in pixel (punti):</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="342"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="367"/>
         <source>Primary screen size in inches (diagonal):</source>
         <translation>Dimensione (diagonale) dello schermo primario in pollici (1pollice=25.4mm):</translation>
     </message>
@@ -2019,7 +2024,7 @@
         <translation>OpenOrienteering Mapper</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="57"/>
+        <location filename="../src/file_format_ocad8.cpp" line="58"/>
         <source>OCAD Versions 7, 8</source>
         <translation>OCAD Versioni 7, 8</translation>
     </message>
@@ -2158,10 +2163,10 @@
         <location filename="../src/file_format_ocad8.cpp" line="116"/>
         <location filename="../src/file_format_ocad8.cpp" line="118"/>
         <location filename="../src/file_format_ocad8.cpp" line="121"/>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="2020"/>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="2023"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="2024"/>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="2027"/>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="2057"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="2031"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="2061"/>
         <source>Could not read file: %1</source>
         <translation>Impossibile leggere il file: %1</translation>
     </message>
@@ -2376,7 +2381,7 @@
         <location filename="../src/symbol_line.cpp" line="2263"/>
         <location filename="../src/symbol_line.cpp" line="2723"/>
         <location filename="../src/file_format_ocad8.cpp" line="596"/>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1196"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1200"/>
         <source>Start symbol</source>
         <translation>Simbolo iniziale</translation>
     </message>
@@ -2391,7 +2396,7 @@
         <location filename="../src/symbol_line.cpp" line="1661"/>
         <location filename="../src/symbol_line.cpp" line="2263"/>
         <location filename="../src/symbol_line.cpp" line="2723"/>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1203"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1207"/>
         <source>End symbol</source>
         <translation>Simbolo di termine</translation>
     </message>
@@ -2401,7 +2406,7 @@
         <location filename="../src/symbol_line.cpp" line="2263"/>
         <location filename="../src/symbol_line.cpp" line="2723"/>
         <location filename="../src/file_format_ocad8.cpp" line="590"/>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1189"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1193"/>
         <source>Dash symbol</source>
         <translation>Simbolo di tratteggio</translation>
     </message>
@@ -4769,157 +4774,162 @@ se disponibile si può zoomare con la rotella del mouse.</translation>
 <context>
     <name>OcdFileImport</name>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="121"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="125"/>
         <source>In line symbol %1 '%2': %3</source>
         <translation>Nel simbolo %1 '%2': %3</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="127"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="131"/>
         <source>In text symbol %1 '%2': %3</source>
         <translation>Nei simboli testol %1 '%2': %3</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="384"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="388"/>
         <source>Could not load the coordinate reference system '%1'.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="418"/>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="425"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="422"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="429"/>
         <source>Spot color information was ignored.</source>
         <translation>Le informazioni sul colore di calamaio sono state ignorate.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="553"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="557"/>
         <source>Unable to import symbol %1.%2 "%3": %4</source>
         <translation>Impossibile importare i simboli %1.%2 "%3": %4</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="557"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="561"/>
         <source>Unsupported type "%1".</source>
         <translation>Tipo non supprtato "%1".</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="650"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="654"/>
         <source>Unable to import template: "%1" is not a supported template type.</source>
         <translation>Impossibile importare il template/sfondo: "%1" non è un tipo supportato.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="954"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="958"/>
         <source>Unsupported line style '%1'.</source>
         <translation>Stile di linea non supportato '%1'.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="991"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="995"/>
         <source>Different lengths for pointed caps at begin (%1 mm) and end (%2 mm) are not supported. Using %3 mm.</source>
         <translation>Lunghezze differenti per i terminali appuntiti di inizio (%1 mm) e di fine (%2 mm) non sono supportate. Viene usato %3.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1007"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1011"/>
         <source>The dash pattern cannot be imported correctly.</source>
         <translation>Lo schema di tratteggio non può essere importato correttamente.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1022"/>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1054"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1026"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1058"/>
         <source>The dash pattern's end length (%1 mm) cannot be imported correctly. Using %2 mm.</source>
         <translation>La lunghezza finale del motivo di tratteggio (%1 mm) non può essere importata correttamente. Verrà usato %2 mm.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1029"/>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1069"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1033"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1073"/>
         <source>The dash pattern's end gap (%1 mm) cannot be imported correctly. Using %2 mm.</source>
         <translation>La lunghezza finale della spaziatura di tratteggio (%1 mm) non può essere importata correttamente. Verrà usato %2 mm.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1111"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1115"/>
         <source>Unsupported framing line style '%1'.</source>
         <translation>Stile di incorniciatura linea non supportato '%1'.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1183"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1187"/>
         <source>Skipped secondary point symbol.</source>
         <translation>Simbolo punto secondario Saltato.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1219"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1223"/>
         <source>Suppressing dash symbol at line ends.</source>
         <translation>Soppressione dei simboli tratteggio alle estremità della linea.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="935"/>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1288"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="939"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1292"/>
         <source>This symbol cannot be saved as a proper OCD symbol again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1931"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1935"/>
         <source>Justified alignment is not supported.</source>
         <translation>Allineamento giustificato non supportato.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1946"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1950"/>
         <source>Vertical alignment '%1' is not supported.</source>
         <translation>L'allineamento verticale '%1' non è supportato.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1918"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1922"/>
         <source>Ignoring custom weight (%1).</source>
         <translation>Pesatura custom ignorata (%1).</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1955"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1959"/>
         <source>Custom character spacing may be incorrect.</source>
         <translation>La spaziatura custom dei caratteri potrebbe non essere corretta.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1960"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1964"/>
         <source>Ignoring custom word spacing (%1 %).</source>
         <translation>La paziatura custom delle parole viene ignorata (%1 %).</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1984"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1988"/>
         <source>Ignoring custom indents (%1/%2).</source>
         <translation>L'indentazione custom viene ignorata (%1/%2).</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="2006"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="2010"/>
         <source>Ignoring text framing (mode %1).</source>
         <translation>L'incorniciatura del testo viene ignorata (modo %1).</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1377"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1381"/>
         <source>Line text symbols are not yet supported. Marking the symbol as hidden.</source>
         <translation>I simboli "line text" non sono supportati. Il simbolo viene marcato come nascosto.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="115"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="82"/>
+        <source>Encoding '%1' is not available. Check the settings.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="119"/>
         <source>In area symbol %1 '%2': %3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1554"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1558"/>
         <source>Unable to load object</source>
         <translation>Impossibile caricare l'oggetto</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1564"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1568"/>
         <source>Unable to import rectangle object</source>
         <translation>Impossibile importare l'oggetto rettangolo</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1605"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1609"/>
         <source>Not importing text symbol, couldn't figure out path' (npts=%1): %2</source>
         <translation>Simboli testo non importati, impossibile immaginare il percorso (npts=%1): %2</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1893"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1897"/>
         <source>Trying to import a text object with unknown coordinate format</source>
         <translation>Tentativo di importare un oggetto testo con formato delle coordinate sconosciuto</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="2023"/>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="2027"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="2031"/>
         <source>Invalid data.</source>
         <translation>Dati non validi.</translation>
     </message>
@@ -4928,7 +4938,7 @@ se disponibile si può zoomare con la rotella del mouse.</translation>
         <translation type="vanished">Importatore per il formato OCD %1 non testato</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="2058"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="2062"/>
         <source>OCD files of version %1 are not supported!</source>
         <translation>I files OCD di versione %1 non sono supportati!</translation>
     </message>
