@@ -7,7 +7,7 @@
         <location filename="../src/gui/about_dialog.cpp" line="94"/>
         <location filename="../src/gui/about_dialog.cpp" line="157"/>
         <source>About %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Pri la %1</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="171"/>
