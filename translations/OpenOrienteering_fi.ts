@@ -2048,7 +2048,7 @@
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="541"/>
         <source>No map files found!&lt;br/&gt;&lt;br/&gt;Copy map files to a top-level folder named 'OOMapper' on the device or a memory card.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kartta tiedostoa ei löydy!&lt;br/&gt;&lt;br/&gt; Kopio karttatiedosto laitteen tai muistikortin juuressa olevaan  'OOMapper' kansioon. </translation>
     </message>
 </context>
 <context>
@@ -2159,19 +2159,20 @@
     <message>
         <location filename="../src/file_import_export.cpp" line="120"/>
         <source>Failed to load template '%1', reason: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Virhe taustakartan latauksessa '%1', syy: %2</translation>
     </message>
     <message>
         <location filename="../src/file_import_export.cpp" line="125"/>
         <source>Warnings when loading template '%1':
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Varoitus ladattaessa taustakarttaa '%1':
+%2</translation>
     </message>
     <message>
         <location filename="../src/file_import_export.cpp" line="132"/>
         <location filename="../src/file_import_export.cpp" line="134"/>
         <source>At least one template file could not be found.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ainakin yksi taustakarttaa puuttuu.</translation>
     </message>
     <message>
         <location filename="../src/file_import_export.cpp" line="135"/>
@@ -2259,7 +2260,7 @@ löytääksesi taustakarttatiedoston nimen.</translation>
     <message>
         <location filename="../src/file_format.cpp" line="79"/>
         <source>Format (%1) does not support import</source>
-        <translation type="unfinished"></translation>
+        <translation>Formaattia (%1) ei tueta ladattaessa</translation>
     </message>
 </context>
 <context>
