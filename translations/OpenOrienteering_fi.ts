@@ -2000,7 +2000,7 @@
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="212"/>
         <source>Open most recently used file on start</source>
-        <translation type="unfinished">Avaa viimeisin tiedosto käynnistettäessä</translation>
+        <translation>Avaa viimeisin tiedosto käynnistettäessä</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="215"/>
@@ -5273,7 +5273,7 @@ zoomaa hiiren rullalla.</translation>
         <location filename="../src/gui/print_progress_dialog.cpp" line="56"/>
         <source>Printing</source>
         <comment>PrintWidget</comment>
-        <translation type="unfinished">Tulostaa</translation>
+        <translation>Tulostaa</translation>
     </message>
     <message>
         <location filename="../src/gui/print_progress_dialog.cpp" line="57"/>
@@ -7406,12 +7406,12 @@ Tuetaan vain versioon %2 asti.</translation>
     <message>
         <location filename="../src/util.cpp" line="256"/>
         <source>Failed to locate the help files.</source>
-        <translation type="unfinished">Ohje-tiedostoa ei löytynyt.</translation>
+        <translation>Ohje-tiedostoa ei löytynyt.</translation>
     </message>
     <message>
         <location filename="../src/util.cpp" line="263"/>
         <source>Failed to locate the help browser ("Qt Assistant").</source>
-        <translation type="unfinished">Ohjeen lukijaa ei löytynyt ("Qt Assistant").</translation>
+        <translation>Ohjeen lukijaa ei löytynyt ("Qt Assistant").</translation>
     </message>
     <message>
         <location filename="../src/util.cpp" line="297"/>
