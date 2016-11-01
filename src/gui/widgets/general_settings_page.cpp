@@ -28,6 +28,7 @@
 #include <QDialogButtonBox>
 #include <QFileDialog>
 #include <QFormLayout>
+#include <QLineEdit>
 #include <QMessageBox>
 #include <QScreen>
 #include <QSettings>
@@ -38,6 +39,8 @@
 #include "../main_window.h"
 #include "../../util_gui.h"
 #include "../../util_translation.h"
+#include "../../util/backports.h"
+#include "../../util/encoding.h"
 #include "../../util/scoped_signals_blocker.h"
 
 
@@ -109,26 +112,27 @@ GeneralSettingsPage::GeneralSettingsPage(QWidget* parent)
 	layout->addItem(Util::SpacerItem::create(this));
 	layout->addRow(Util::Headline::create(tr("File import and export")));
 	
-	encoding_box = new QComboBox();
-	encoding_box->addItem(QLatin1String("System"));
-	encoding_box->addItem(QLatin1String("Windows-1250"));
-	encoding_box->addItem(QLatin1String("Windows-1252"));
-	encoding_box->addItem(QLatin1String("ISO-8859-1"));
-	encoding_box->addItem(QLatin1String("ISO-8859-15"));
-	encoding_box->setEditable(true);
 	QStringList available_codecs;
-	for (const QByteArray& item : QTextCodec::availableCodecs())
+	available_codecs.append(tr("Default"));
+	encoding_box = new QComboBox();
+	encoding_box->setEditable(true);
+	encoding_box->addItem(available_codecs.first());
+	encoding_box->addItem(QString::fromLatin1("Windows-1252")); // Serves as an example, not translated.
+	const auto available_codecs_raw = QTextCodec::availableCodecs();
+	for (const QByteArray& item : available_codecs_raw)
 	{
 		available_codecs.append(QString::fromUtf8(item));
 	}
-	if (!available_codecs.empty())
+	if (available_codecs.size() > 1)
 	{
 		available_codecs.sort(Qt::CaseInsensitive);
 		available_codecs.removeDuplicates();
 		encoding_box->addItem(tr("More..."));
 	}
 	QCompleter* completer = new QCompleter(available_codecs, this);
+	completer->setModelSorting(QCompleter::CaseInsensitivelySortedModel);
 	completer->setCaseSensitivity(Qt::CaseInsensitive);
+	completer->setCompletionMode(QCompleter::UnfilteredPopupCompletion);
 	encoding_box->setCompleter(completer);
 	layout->addRow(tr("8-bit encoding:"), encoding_box);
 	
@@ -198,12 +202,13 @@ void GeneralSettingsPage::apply()
 	setSetting(Settings::General_RetainCompatiblity, compatibility_check->isChecked());
 	setSetting(Settings::General_PixelsPerInch, ppi_edit->value());
 	
-	auto name_latin1 = encoding_box->currentText().toLatin1();
-	if (name_latin1 == "System"
-	    || QTextCodec::codecForName(name_latin1))
+	auto encoding = encoding_box->currentText().toLatin1();
+	if (QLatin1String(encoding) == encoding_box->itemText(0)
+	    || !QTextCodec::codecForName(encoding))
 	{
-		setSetting(Settings::General_Local8BitEncoding, name_latin1);
+		encoding = "Default";
 	}
+	setSetting(Settings::General_Local8BitEncoding, encoding);
 	
 	int interval = autosave_interval_edit->value();
 	if (!autosave_check->isChecked())
@@ -262,30 +267,50 @@ void GeneralSettingsPage::updateWidgets()
 	autosave_interval_edit->setEnabled(autosave_interval > 0);
 	autosave_interval_edit->setValue(qAbs(autosave_interval));
 	
-	encoding_box->setCurrentText(getSetting(Settings::General_Local8BitEncoding).toString());
+	auto encoding = getSetting(Settings::General_Local8BitEncoding).toByteArray();
+	if (encoding != "Default"
+	    && QTextCodec::codecForName(encoding))
+	{
+		encoding_box->setCurrentText(QString::fromLatin1(encoding));
+	}
+	
 	ocd_importer_check->setChecked(getSetting(Settings::General_NewOcd8Implementation).toBool());
 }
 
 // slot
-void GeneralSettingsPage::encodingChanged(const QString& name)
+void GeneralSettingsPage::encodingChanged(const QString& input)
 {
-	const QSignalBlocker block(encoding_box);
-	
-	if (name == tr("More..."))
+	if (input == tr("More..."))
 	{
-		encoding_box->setCurrentText(QString());
-		encoding_box->completer()->setCompletionPrefix(QString());
+		const QSignalBlocker block(encoding_box);
+		encoding_box->setCurrentText(last_encoding_input);
+		encoding_box->completer()->setCompletionPrefix(last_encoding_input);
 		encoding_box->completer()->complete();
-		return;
 	}
-	
-	auto name_latin1 = name.toLatin1();
-	QTextCodec* codec = (name_latin1 == "System")
-	                    ? QTextCodec::codecForLocale()
-	                    : QTextCodec::codecForName(name_latin1);
-	if (codec)
+	else
 	{
-		encoding_box->setCurrentText(name);
+		// Inline completition, in addition to UnfilteredPopupCompletition
+		// Don't complete after pressing Backspace or Del
+		if (!last_encoding_input.startsWith(input))
+		{
+			if (last_matching_completition.startsWith(input))
+				encoding_box->completer()->setCompletionPrefix(last_matching_completition);
+			
+			auto text = encoding_box->completer()->currentCompletion();
+			auto line_edit = encoding_box->lineEdit();
+			if (text.startsWith(input)
+			    && line_edit)
+			{
+				const QSignalBlocker block(encoding_box);
+				auto pos = line_edit->cursorPosition();
+				line_edit->setText(text);
+				line_edit->setSelection(text.length(), pos - text.length());
+				last_encoding_input = input.left(pos);
+				last_matching_completition = text;
+				return;
+			}
+		}
+		last_encoding_input = input;
 	}
 }
 

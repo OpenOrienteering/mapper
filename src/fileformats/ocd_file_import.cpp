@@ -52,6 +52,7 @@
 #include "../template_image.h"
 #include "../template_map.h"
 #include "../util.h"
+#include "../util/encoding.h"
 
 
 namespace {
@@ -60,9 +61,8 @@ static QTextCodec* codecFromSettings()
 {
 	const auto& settings = Settings::getInstance();
 	const auto name = settings.getSetting(Settings::General_Local8BitEncoding).toByteArray();
-	return (name == "System") ? QTextCodec::codecForLocale()
-	                          : QTextCodec::codecForName(name);
-}
+	return Util::codecForName(name);
+}	
 
 } // namespace
 
@@ -77,7 +77,11 @@ OcdFileImport::OcdFileImport(QIODevice* stream, Map* map, MapView* view)
  , delegate { nullptr }
  , custom_8bit_encoding { codecFromSettings() }
 {
-    // nothing else
+	if (!custom_8bit_encoding)
+	{
+		addWarning(tr("Encoding '%1' is not available. Check the settings."));
+		custom_8bit_encoding = QTextCodec::codecForLocale();
+	}
 }
 
 OcdFileImport::~OcdFileImport()

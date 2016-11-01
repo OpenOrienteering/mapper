@@ -84,7 +84,7 @@ Settings::Settings()
 	registerSetting(General_TranslationFile, "translationFile", QVariant(QString{}));
 	registerSetting(General_RecentFilesList, "recentFileList", QVariant(QStringList()));
 	registerSetting(General_OpenMRUFile, "openMRUFile", false);
-	registerSetting(General_Local8BitEncoding, "local_8bit_encoding", QLatin1String("Windows-1252"));
+	registerSetting(General_Local8BitEncoding, "local_8bit_encoding", QLatin1String("Default"));
 	registerSetting(General_NewOcd8Implementation, "new_ocd8_implementation", true);
 	registerSetting(General_StartDragDistance, "startDragDistance", start_drag_distance_default);
 	
