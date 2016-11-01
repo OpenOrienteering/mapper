@@ -116,18 +116,18 @@ GeneralSettingsPage::GeneralSettingsPage(QWidget* parent)
 	encoding_box->addItem(QLatin1String("ISO-8859-1"));
 	encoding_box->addItem(QLatin1String("ISO-8859-15"));
 	encoding_box->setEditable(true);
-	QStringList availableCodecs;
+	QStringList available_codecs;
 	for (const QByteArray& item : QTextCodec::availableCodecs())
 	{
-		availableCodecs.append(QString::fromUtf8(item));
+		available_codecs.append(QString::fromUtf8(item));
 	}
-	if (!availableCodecs.empty())
+	if (!available_codecs.empty())
 	{
-		availableCodecs.sort(Qt::CaseInsensitive);
-		availableCodecs.removeDuplicates();
+		available_codecs.sort(Qt::CaseInsensitive);
+		available_codecs.removeDuplicates();
 		encoding_box->addItem(tr("More..."));
 	}
-	QCompleter* completer = new QCompleter(availableCodecs, this);
+	QCompleter* completer = new QCompleter(available_codecs, this);
 	completer->setCaseSensitivity(Qt::CaseInsensitive);
 	encoding_box->setCompleter(completer);
 	layout->addRow(tr("8-bit encoding:"), encoding_box);
@@ -162,7 +162,7 @@ void GeneralSettingsPage::apply()
 	    || translation_file != getSetting(Settings::General_TranslationFile).toString())
 	{
 		// Show an message box in the new language.
-		TranslationUtil translation((QLocale::Language)language.toInt(), translation_file);
+		TranslationUtil translation(QLocale::Language(language.toInt()), translation_file);
 		auto new_language = translation.getLocale().language();
 		switch (new_language)
 		{
@@ -236,7 +236,7 @@ void GeneralSettingsPage::updateLanguageBox(QVariant language)
 	language_box->clear();
 	
 	for (auto it = language_map.constBegin(),end = language_map.constEnd(); it != end; ++it)
-		language_box->addItem(it.key(), (int)it.value());
+		language_box->addItem(it.key(), int(it.value()));
 	
 	// Select current language
 	int index = language_box->findData(language);
@@ -252,7 +252,7 @@ void GeneralSettingsPage::updateWidgets()
 {
 	updateLanguageBox(getSetting(Settings::General_Language));
 	
-	ppi_edit->setValue(getSetting(Settings::General_PixelsPerInch).toFloat());
+	ppi_edit->setValue(getSetting(Settings::General_PixelsPerInch).toDouble());
 	open_mru_check->setChecked(getSetting(Settings::General_OpenMRUFile).toBool());
 	tips_visible_check->setChecked(getSetting(Settings::HomeScreen_TipsVisible).toBool());
 	compatibility_check->setChecked(getSetting(Settings::General_RetainCompatiblity).toBool());
@@ -319,10 +319,10 @@ void GeneralSettingsPage::openPPICalculationDialog()
 {
 	int primary_screen_width = QApplication::primaryScreen()->size().width();
 	int primary_screen_height = QApplication::primaryScreen()->size().height();
-	float screen_diagonal_pixels = qSqrt(primary_screen_width*primary_screen_width + primary_screen_height*primary_screen_height);
+	double screen_diagonal_pixels = double(qSqrt(primary_screen_width*primary_screen_width + primary_screen_height*primary_screen_height));
 	
-	float old_ppi = ppi_edit->value();
-	float old_screen_diagonal_inches = screen_diagonal_pixels / old_ppi;
+	double old_ppi = ppi_edit->value();
+	double old_screen_diagonal_inches = screen_diagonal_pixels / old_ppi;
 	
 	QDialog* dialog = new QDialog(window(), Qt::WindowSystemMenuHint | Qt::WindowTitleHint);
 	if (MainWindow::mobileMode())
