@@ -2048,7 +2048,7 @@
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="541"/>
         <source>No map files found!&lt;br/&gt;&lt;br/&gt;Copy map files to a top-level folder named 'OOMapper' on the device or a memory card.</source>
-        <translation>Kartta tiedostoa ei löydy!&lt;br/&gt;&lt;br/&gt; Kopio karttatiedosto laitteen tai muistikortin juuressa olevaan  'OOMapper' kansioon. </translation>
+        <translation>Kartta tiedostoa ei löydy!&lt;br/&gt;&lt;br/&gt; Kopio karttatiedosto laitteen tai muistikortin juuressa olevaan  'OOMapper' kansioon.</translation>
     </message>
 </context>
 <context>
