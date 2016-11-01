@@ -256,7 +256,7 @@
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="72"/>
         <source>Save the active file to remove the conflicting version.</source>
-        <translation type="unfinished">Tallenna aktiivinen tiedosto poistaaksesi väärän version</translation>
+        <translation>Tallenna aktiivinen tiedosto poistaaksesi väärän version.</translation>
     </message>
 </context>
 <context>
