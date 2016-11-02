@@ -7,7 +7,7 @@
         <location filename="../src/gui/about_dialog.cpp" line="94"/>
         <location filename="../src/gui/about_dialog.cpp" line="157"/>
         <source>About %1</source>
-        <translation>Pri la %1</translation>
+        <translation>Pri %1</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="171"/>
@@ -398,7 +398,7 @@
         <location filename="../src/color_dock_widget.cpp" line="63"/>
         <location filename="../src/color_dock_widget.cpp" line="68"/>
         <source>New</source>
-        <translation type="unfinished"></translation>
+        <translation>Nova</translation>
     </message>
     <message>
         <location filename="../src/color_dock_widget.cpp" line="71"/>
@@ -423,7 +423,7 @@
     <message>
         <location filename="../src/color_dock_widget.cpp" line="90"/>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Helpo</translation>
     </message>
     <message>
         <location filename="../src/color_dock_widget.cpp" line="111"/>
@@ -1830,13 +1830,13 @@
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="161"/>
         <source>About %1</source>
         <comment>As in 'About OpenOrienteering Mapper'</comment>
-        <translation type="unfinished"></translation>
+        <translation>Pri %1</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="164"/>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="338"/>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Helpo</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="167"/>
@@ -1846,7 +1846,7 @@
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="187"/>
         <source>Recent maps</source>
-        <translation type="unfinished"></translation>
+        <translation>Lastaj mapoj</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="212"/>
@@ -1889,7 +1889,7 @@
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="340"/>
         <source>About Mapper</source>
-        <translation type="unfinished"></translation>
+        <translation>Pri Mapper</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="458"/>
@@ -2437,7 +2437,7 @@
     <message>
         <location filename="../src/gui/main_window.cpp" line="227"/>
         <source>&amp;Open...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Malfermi...</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="229"/>
@@ -2513,7 +2513,7 @@
     <message>
         <location filename="../src/gui/main_window.cpp" line="316"/>
         <source>&amp;About %1</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Pri %1</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="317"/>
@@ -2523,7 +2523,7 @@
     <message>
         <location filename="../src/gui/main_window.cpp" line="321"/>
         <source>About &amp;Qt</source>
-        <translation type="unfinished"></translation>
+        <translation>Pri &amp;Qt</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="322"/>
@@ -2533,7 +2533,7 @@
     <message>
         <location filename="../src/gui/main_window.cpp" line="328"/>
         <source>&amp;Help</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Helpo</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="501"/>
@@ -3071,7 +3071,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="1022"/>
         <source>&amp;Tools</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Iloj</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1075"/>
@@ -3086,7 +3086,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="1085"/>
         <source>&amp;Templates</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Ŝablonoj</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1141"/>
@@ -3564,7 +3564,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="1816"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Rezigni</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1817"/>
@@ -3574,7 +3574,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="1857"/>
         <source>Templates</source>
-        <translation type="unfinished"></translation>
+        <translation>Ŝablonoj</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1919"/>
@@ -4354,7 +4354,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/map_dialog_new.cpp" line="59"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Rezigni</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_new.cpp" line="60"/>
@@ -4783,7 +4783,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/template_tool_paint.cpp" line="341"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Rezigni</translation>
     </message>
     <message>
         <location filename="../src/template_tool_paint.cpp" line="342"/>
@@ -6166,7 +6166,7 @@ to jump over the lazy dog
     <message>
         <location filename="../src/gui/widgets/tags_widget.cpp" line="63"/>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Helpo</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tags_widget.cpp" line="233"/>
@@ -6310,7 +6310,7 @@ to jump over the lazy dog
     <message>
         <location filename="../src/template_adjust.cpp" line="223"/>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Helpo</translation>
     </message>
     <message>
         <location filename="../src/template_adjust.cpp" line="224"/>
@@ -6408,7 +6408,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/template_image.cpp" line="655"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Rezigni</translation>
     </message>
     <message>
         <location filename="../src/template_image.cpp" line="656"/>
@@ -6498,7 +6498,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="278"/>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Helpo</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="236"/>
