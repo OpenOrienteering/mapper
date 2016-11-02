@@ -1586,7 +1586,7 @@ void OCAD8FileExport::doExport()
 	// Scale and georeferencing parameters
 	const Georeferencing& georef = map->getGeoreferencing();
 	setup->scale = georef.getScaleDenominator();
-	const QPointF offset(georef.getProjectedRefPoint());
+	const QPointF offset(georef.toProjectedCoords(MapCoord {0, 0}));
 	setup->offsetx = offset.x();
 	setup->offsety = offset.y();
 	setup->angle = georef.getGrivation();
