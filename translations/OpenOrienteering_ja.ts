@@ -1602,7 +1602,7 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="116"/>
         <source>Default</source>
-        <translation type="unfinished">デフォルト</translation>
+        <translation>デフォルト</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="139"/>
@@ -5352,7 +5352,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="82"/>
         <source>Encoding '%1' is not available. Check the settings.</source>
-        <translation type="unfinished"></translation>
+        <translation>エンコード '%1' は使用できません。設定を確認してください。</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="119"/>
