@@ -4346,21 +4346,21 @@ selecc</translation>
         <location filename="future_translations.cpp" line="37"/>
         <source>Cut %n object(s)</source>
         <extracomment>Past tense. Displayed when an Edit &gt; Cut operator is completed.</extracomment>
-        <translation><numerusform>Cortado(s) %n objeto(s)</numerusform>
+        <translation type="unfinished"><numerusform>Cortado(s) %n objeto(s)</numerusform>
         <numerusform>Cortado(s) %n objeto(s)</numerusform>
         </translation></message>
     <message numerus="yes">
         <location filename="future_translations.cpp" line="40"/>
         <source>Copied %n object(s)</source>
         <extracomment>To replace existing translation which doesn't use plural correctly</extracomment>
-        <translation><numerusform>Copiado(s) %n objeto(s)</numerusform>
+        <translation type="unfinished"><numerusform>Copiado(s) %n objeto(s)</numerusform>
         <numerusform>Copiado(s) %n objeto(s)</numerusform>
         </translation></message>
     <message numerus="yes">
         <location filename="future_translations.cpp" line="43"/>
         <source>Pasted %n object(s)</source>
         <extracomment>To replace existing translation which doesn't use plural correctly</extracomment>
-        <translation><numerusform>Pegado(s) %n objeto(s)</numerusform>
+        <translation type="unfinished"><numerusform>Pegado(s) %n objeto(s)</numerusform>
         <numerusform>Pegado(s) %n objeto(s)</numerusform>
         </translation></message>
     <message>
@@ -4409,7 +4409,7 @@ selecc</translation>
         <location filename="future_translations.cpp" line="67"/>
         <source>Duplicated %n object(s)</source>
         <extracomment>To replace existing translation which doesn't use plural correctly</extracomment>
-        <translation><numerusform>Duplicado(s) %n objeto(s)</numerusform>
+        <translation type="unfinished"><numerusform>Duplicado(s) %n objeto(s)</numerusform>
         <numerusform>Duplicado(s) %n objeto(s)</numerusform>
         </translation></message>
     <message>
@@ -7530,7 +7530,7 @@ La máxima versión soportada es %2.</translation>
     <message>
         <location filename="../src/file_format_xml.cpp" line="184"/>
         <source>Older versions of Mapper do not support multiple map parts. To save the map in compatibility mode, you must first merge all map parts.</source>
-        <translation>Versiones anteriores de Mapper  no soportan múltiples partes de mapa. Para guardar el mapa en un modo compatible, primero debe fusionar todas las partes del mapa.</translation>
+        <translation>Versiones anteriores de Mapper no soportan múltiples partes de mapa. Para guardar el mapa en un modo compatible, primero debe fusionar todas las partes del mapa.</translation>
     </message>
 </context>
 <context>
