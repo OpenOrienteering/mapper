@@ -191,9 +191,16 @@ public:
 	 *  The angle must be given in radians. */
 	void rotate(double angle);
 	
+	/** Apply a transformation to all coordinates.
+	 * 
+	 * \todo Handle rotation of patterns or text (?)
+	 */
+	void transform(const QTransform& t);
+	
 	/**
-	 * Checks if the given coord, with the given tolerance, is on this object;
-	 * with extended_selection, the coord is on point objects always
+	 * Checks if the given coord, with the given tolerance, is on this object.
+	 * 
+	 * With extended_selection, the coord is on point objects always
 	 * if it is whithin their extent, otherwise it has to be close to
 	 * their midpoint. Returns a Symbol::Type which specifies on which
 	 * symbol type the coord is

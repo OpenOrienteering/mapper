@@ -687,6 +687,17 @@ void Object::rotate(double angle)
 	setOutputDirty();
 }
 
+void Object::transform(const QTransform& t)
+{
+	for (auto& coord : coords)
+	{
+		const auto p = t.map(MapCoordF{coord});
+		coord.setX(p.x());
+		coord.setY(p.y());
+	}
+	setOutputDirty();
+}
+
 int Object::isPointOnObject(MapCoordF coord, float tolerance, bool treat_areas_as_paths, bool extended_selection) const
 {
 	Symbol::Type type = symbol->getType();
