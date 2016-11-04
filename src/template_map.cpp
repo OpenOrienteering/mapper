@@ -170,29 +170,18 @@ void TemplateMap::calculateTransformation()
 	const auto& georef = template_map->getGeoreferencing();
 	const auto src_origin = MapCoordF { georef.getMapRefPoint() };
 	
-	bool ok;
+	bool ok0, ok1, ok2;
 	QTransform q_transform;
-	PassPointList pp_list;
-	PassPoint pp;
-	pp.src_coords  = src_origin;
-	pp.dest_coords = map->getGeoreferencing().toMapCoordF(&georef, pp.src_coords, &ok);
-	if (ok)
-		pp_list.push_back(pp);
-	
-	pp.src_coords  = src_origin + MapCoordF { 100.0, 0.0 }; // 100 mm off horizontally
-	pp.dest_coords = map->getGeoreferencing().toMapCoordF(&georef, pp.src_coords, &ok);
-	if (ok)
-		pp_list.push_back(pp);
-	
-	pp.src_coords  = src_origin + MapCoordF { 0.0, 100.0 }; // 100 mm off vertically
-	pp.dest_coords = map->getGeoreferencing().toMapCoordF(&georef, pp.src_coords, &ok);
-	if (ok)
-	{
-		pp_list.push_back(pp);
-		ok = pp_list.estimateNonIsometricSimilarityTransform(&q_transform);
-	}
-	
-	if (ok)
+	PassPointList passpoints;
+	passpoints.resize(3);
+	passpoints[0].src_coords  = src_origin;
+	passpoints[0].dest_coords = map->getGeoreferencing().toMapCoordF(&georef, passpoints[0].src_coords, &ok0);
+	passpoints[1].src_coords  = src_origin + MapCoordF { 128.0, 0.0 }; // 128 mm off horizontally
+	passpoints[1].dest_coords = map->getGeoreferencing().toMapCoordF(&georef, passpoints[1].src_coords, &ok1);
+	passpoints[2].src_coords  = src_origin + MapCoordF { 0.0, 128.0 }; // 128 mm off vertically
+	passpoints[2].dest_coords = map->getGeoreferencing().toMapCoordF(&georef, passpoints[2].src_coords, &ok2);
+	if (ok0 && ok1 && ok2
+	    && passpoints.estimateNonIsometricSimilarityTransform(&q_transform))
 	{
 		qTransformToTemplateTransform(q_transform, &transform);
 		updateTransformationMatrices();
