@@ -10115,7 +10115,7 @@ The orientation of the symbol indicates the direction in which the corner points
     </symbols>
     <parts count="1" current="0">
         <part name="default part">
-            <objects count="43">
+            <objects count="42">
                 <object type="0" symbol="16">
                     <coords count="1">
                         <coord x="30000" y="-24000"/>
@@ -10156,7 +10156,7 @@ The orientation of the symbol indicates the direction in which the corner points
                 </object>
                 <object type="4" symbol="24" rotation="0" h_align="1" v_align="2">
                     <coords count="1">
-                        <coord x="29998" y="-17974"/>
+                        <coord x="30000" y="-18000"/>
                     </coords>
                     <text>M45, M50, W21</text>
                 </object>
@@ -10225,7 +10225,7 @@ The orientation of the symbol indicates the direction in which the corner points
                 </object>
                 <object type="0" symbol="200">
                     <coords count="1">
-                        <coord x="29998" y="24026"/>
+                        <coord x="30000" y="24000"/>
                     </coords>
                 </object>
                 <object type="0" symbol="20">
@@ -10287,11 +10287,6 @@ The orientation of the symbol indicates the direction in which the corner points
                 <object type="0" symbol="20">
                     <coords count="1">
                         <coord x="30000" y="18000"/>
-                    </coords>
-                </object>
-                <object type="0" symbol="20">
-                    <coords count="1">
-                        <coord x="30000" y="24000"/>
                     </coords>
                 </object>
                 <object type="4" symbol="24" rotation="0" h_align="1" v_align="2">
@@ -10361,7 +10356,7 @@ The orientation of the symbol indicates the direction in which the corner points
         </part>
     </parts>
     <templates count="1" first_front_template="1">
-        <template open="true" name="forest sample.omap" path="/home/kpa/Projekte/OpenOrienteering/OpenOrienteering/examples/forest sample.omap" relpath="../../examples/forest sample.omap">
+        <template open="true" name="forest sample.omap" path="../../examples/forest sample.omap" relpath="../../examples/forest sample.omap">
             <transformations adjustment_dirty="true" passpoints="0">
                 <transformation role="active" x="-131449" y="-52124" scale_x="1" scale_y="1" rotation="0"/>
                 <transformation role="other" x="0" y="0" scale_x="1" scale_y="1" rotation="0"/>

@@ -26,6 +26,7 @@
 #include "../src/map.h"
 #include "../src/symbol_area.h"
 #include "../src/settings.h"
+#include "../src/template.h"
 #include "../src/undo_manager.h"
 
 
@@ -81,6 +82,8 @@ void SymbolSetTool::initTestCase()
 	
 	examples_dir.cd(QFileInfo(QString::fromUtf8(__FILE__)).dir().absoluteFilePath(QString::fromLatin1("../examples")));
 	QVERIFY(examples_dir.exists());
+	
+	Template::pathForSaving = &Template::getTemplateRelativePath;
 }
 
 
