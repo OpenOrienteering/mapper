@@ -342,6 +342,14 @@ public:
 	 */
 	static std::unique_ptr<Template> templateForFile(const QString& path, Map* map);
 	
+	/**
+	 * The function which is used to save paths of template files.
+	 * 
+	 * By default, class Template saves absolute paths. This behavior can be
+	 * changed by setting this variable to &Template::getTemplateRelativePath.
+	 */
+	static const QString& (Template::* pathForSaving)() const;
+	
 signals:
 	/// Emitted whenever template_state was changed
 	void templateStateChanged();

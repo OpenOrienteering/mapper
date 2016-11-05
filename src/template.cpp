@@ -98,9 +98,9 @@ void TemplateTransform::load(QXmlStreamReader& xml)
 	template_rotation = element.attribute<double>(QLatin1String("rotation"));
 }
 
-
-
 // ### Template ###
+
+decltype(Template::pathForSaving) Template::pathForSaving = &Template::getTemplatePath;
 
 Template::Template(const QString& path, Map* map)
  : map(map)
@@ -225,7 +225,7 @@ void Template::saveTemplateConfiguration(QXmlStreamWriter& xml, bool open)
 	xml.writeStartElement(QString::fromLatin1("template"));
 	xml.writeAttribute(QString::fromLatin1("open"), QString::fromLatin1(open ? "true" : "false"));
 	xml.writeAttribute(QString::fromLatin1("name"), getTemplateFilename());
-	xml.writeAttribute(QString::fromLatin1("path"), getTemplatePath());
+	xml.writeAttribute(QString::fromLatin1("path"), (this->*pathForSaving)());
 	xml.writeAttribute(QString::fromLatin1("relpath"), getTemplateRelativePath());
 	if (template_group)
 	{
