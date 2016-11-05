@@ -241,7 +241,7 @@
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="49"/>
         <source>File saved by the user</source>
-        <translation type="unfinished">Tiedosto tallennettu käyttäjän toimesta</translation>
+        <translation>Tiedosto tallennettu käyttäjän toimesta</translation>
     </message>
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="56"/>
@@ -1962,7 +1962,7 @@
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="146"/>
         <source>Activities</source>
-        <translation type="unfinished">Toiminnot</translation>
+        <translation>Toiminnat</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="149"/>
