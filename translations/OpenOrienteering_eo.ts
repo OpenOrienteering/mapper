@@ -7,7 +7,7 @@
         <location filename="../src/gui/about_dialog.cpp" line="94"/>
         <location filename="../src/gui/about_dialog.cpp" line="157"/>
         <source>About %1</source>
-        <translation>Pri la %1</translation>
+        <translation>Pri %1</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="171"/>
@@ -73,7 +73,7 @@
     <message>
         <location filename="../src/symbol_area.cpp" line="752"/>
         <source>mm²</source>
-        <translation type="unfinished"></translation>
+        <translation>mm²</translation>
     </message>
     <message>
         <location filename="../src/symbol_area.cpp" line="753"/>
@@ -102,7 +102,7 @@
         <location filename="../src/symbol_area.cpp" line="849"/>
         <location filename="../src/symbol_area.cpp" line="854"/>
         <source>mm</source>
-        <translation type="unfinished"></translation>
+        <translation>mm</translation>
     </message>
     <message>
         <location filename="../src/symbol_area.cpp" line="827"/>
@@ -157,12 +157,12 @@
     <message>
         <location filename="../src/symbol_area.cpp" line="870"/>
         <source>°</source>
-        <translation type="unfinished"></translation>
+        <translation>°</translation>
     </message>
     <message>
         <location filename="../src/symbol_area.cpp" line="872"/>
         <source>Angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Angulo:</translation>
     </message>
     <message>
         <location filename="../src/symbol_area.cpp" line="874"/>
@@ -221,10 +221,9 @@
         <location filename="../src/gui/autosave_dialog.cpp" line="45"/>
         <location filename="../src/gui/autosave_dialog.cpp" line="51"/>
         <source>%n bytes</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>%n bajto</numerusform>
+        <numerusform>%n bajtoj</numerusform>
+        </translation></message>
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="49"/>
         <source>File saved by the user</source>
@@ -271,7 +270,7 @@
         <location filename="../src/gui/color_dialog.cpp" line="139"/>
         <location filename="../src/gui/color_dialog.cpp" line="349"/>
         <source>%</source>
-        <translation type="unfinished"></translation>
+        <translation>%</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="91"/>
@@ -307,12 +306,12 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="135"/>
         <source>Yellow</source>
-        <translation type="unfinished"></translation>
+        <translation>Flava</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="140"/>
         <source>Black</source>
-        <translation type="unfinished"></translation>
+        <translation>Nigra</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="171"/>
@@ -327,22 +326,22 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="182"/>
         <source>Red</source>
-        <translation type="unfinished"></translation>
+        <translation>Ruĝa</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="187"/>
         <source>Green</source>
-        <translation type="unfinished"></translation>
+        <translation>Verda</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="192"/>
         <source>Blue</source>
-        <translation type="unfinished"></translation>
+        <translation>Blua</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="197"/>
         <source>#RRGGBB</source>
-        <translation type="unfinished"></translation>
+        <translation>#RRGGBB</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="215"/>
@@ -368,7 +367,7 @@
     <message>
         <location filename="../src/color_dock_widget.cpp" line="57"/>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Nomo</translation>
     </message>
     <message>
         <location filename="../src/color_dock_widget.cpp" line="57"/>
@@ -383,12 +382,12 @@
     <message>
         <location filename="../src/color_dock_widget.cpp" line="57"/>
         <source>CMYK</source>
-        <translation type="unfinished"></translation>
+        <translation>CMYK</translation>
     </message>
     <message>
         <location filename="../src/color_dock_widget.cpp" line="57"/>
         <source>RGB</source>
-        <translation type="unfinished"></translation>
+        <translation>RGB</translation>
     </message>
     <message>
         <location filename="../src/color_dock_widget.cpp" line="57"/>
@@ -399,7 +398,7 @@
         <location filename="../src/color_dock_widget.cpp" line="63"/>
         <location filename="../src/color_dock_widget.cpp" line="68"/>
         <source>New</source>
-        <translation type="unfinished"></translation>
+        <translation>Nova</translation>
     </message>
     <message>
         <location filename="../src/color_dock_widget.cpp" line="71"/>
@@ -424,7 +423,7 @@
     <message>
         <location filename="../src/color_dock_widget.cpp" line="90"/>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Helpo</translation>
     </message>
     <message>
         <location filename="../src/color_dock_widget.cpp" line="111"/>
@@ -566,7 +565,7 @@
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="69"/>
         <source>°</source>
-        <translation type="unfinished"></translation>
+        <translation>°</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="121"/>
@@ -628,13 +627,13 @@
         <location filename="../src/gui/configure_grid_dialog.cpp" line="243"/>
         <source>m</source>
         <comment>meters</comment>
-        <translation type="unfinished"></translation>
+        <translation>m</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="243"/>
         <source>mm</source>
         <comment>millimeters</comment>
-        <translation type="unfinished"></translation>
+        <translation>mm</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="249"/>
@@ -668,7 +667,7 @@
         <location filename="../src/tool_cut.cpp" line="511"/>
         <location filename="../src/tool_cut.cpp" line="683"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Eraro</translation>
     </message>
     <message>
         <location filename="../src/tool_cut.cpp" line="499"/>
@@ -744,7 +743,7 @@
     <message>
         <location filename="../src/symbol_text.cpp" line="627"/>
         <source>Height:</source>
-        <translation type="unfinished"></translation>
+        <translation>Alteco:</translation>
     </message>
 </context>
 <context>
@@ -778,7 +777,7 @@
         <location filename="../src/tool_distribute_points.cpp" line="142"/>
         <source>°</source>
         <comment>degrees</comment>
-        <translation type="unfinished"></translation>
+        <translation>°</translation>
     </message>
     <message>
         <location filename="../src/tool_distribute_points.cpp" line="144"/>
@@ -872,7 +871,7 @@
     <message>
         <location filename="../src/tool_draw_path.cpp" line="87"/>
         <source>Finish</source>
-        <translation type="unfinished"></translation>
+        <translation>Finiŝo</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="88"/>
@@ -889,7 +888,7 @@
         <location filename="../src/tool_draw_path.cpp" line="90"/>
         <source>Angle</source>
         <comment>Using constrained angles</comment>
-        <translation type="unfinished"></translation>
+        <translation>Angulo</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="91"/>
@@ -910,7 +909,7 @@
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1061"/>
         <source>&lt;b&gt;Length:&lt;/b&gt; %1 m </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Longo:&lt;/b&gt; %1 m </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1081"/>
@@ -953,7 +952,7 @@
         <location filename="../src/tool_draw_point.cpp" line="61"/>
         <source>Angle</source>
         <comment>Using constrained angles</comment>
-        <translation type="unfinished"></translation>
+        <translation>Angulo</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_point.cpp" line="62"/>
@@ -965,7 +964,7 @@
         <location filename="../src/tool_draw_point.cpp" line="317"/>
         <location filename="../src/tool_draw_point.cpp" line="329"/>
         <source>&lt;b&gt;Angle:&lt;/b&gt; %1° </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Angulo:&lt;/b&gt; %1° </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_point.cpp" line="318"/>
@@ -994,7 +993,7 @@
     <message>
         <location filename="../src/tool_draw_rectangle.cpp" line="78"/>
         <source>Finish</source>
-        <translation type="unfinished"></translation>
+        <translation>Finiŝo</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_rectangle.cpp" line="79"/>
@@ -1187,7 +1186,7 @@
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="84"/>
         <source>mm</source>
         <comment>millimeters</comment>
-        <translation type="unfinished"></translation>
+        <translation>mm</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="48"/>
@@ -1203,7 +1202,7 @@
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="50"/>
         <source>°</source>
         <comment>Degree sign for angles</comment>
-        <translation type="unfinished"></translation>
+        <translation>°</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="53"/>
@@ -1293,7 +1292,7 @@
     <message>
         <location filename="../src/tool_fill.cpp" line="99"/>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation>Atentu</translation>
     </message>
     <message>
         <location filename="../src/tool_fill.cpp" line="100"/>
@@ -1305,7 +1304,7 @@
         <location filename="../src/tool_fill.cpp" line="119"/>
         <location filename="../src/tool_fill.cpp" line="167"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Eraro</translation>
     </message>
     <message>
         <location filename="../src/tool_fill.cpp" line="86"/>
@@ -1338,12 +1337,12 @@
     <message>
         <location filename="../src/gps_display.cpp" line="89"/>
         <source>Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>Jes</translation>
     </message>
     <message>
         <location filename="../src/gps_display.cpp" line="90"/>
         <source>No</source>
-        <translation type="unfinished"></translation>
+        <translation>Ne</translation>
     </message>
 </context>
 <context>
@@ -1351,12 +1350,12 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="50"/>
         <source>Appearance</source>
-        <translation type="unfinished"></translation>
+        <translation>Aspekto</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="55"/>
         <source>Language:</source>
-        <translation type="unfinished"></translation>
+        <translation>Lingvo:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="72"/>
@@ -1831,13 +1830,13 @@
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="161"/>
         <source>About %1</source>
         <comment>As in 'About OpenOrienteering Mapper'</comment>
-        <translation type="unfinished"></translation>
+        <translation>Pri %1</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="164"/>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="338"/>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Helpo</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="167"/>
@@ -1847,7 +1846,7 @@
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="187"/>
         <source>Recent maps</source>
-        <translation type="unfinished"></translation>
+        <translation>Lastaj mapoj</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="212"/>
@@ -1890,7 +1889,7 @@
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="340"/>
         <source>About Mapper</source>
-        <translation type="unfinished"></translation>
+        <translation>Pri Mapper</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="458"/>
@@ -1944,7 +1943,7 @@
         <location filename="../src/file_format_native.cpp" line="92"/>
         <location filename="../src/file_format_xml.cpp" line="68"/>
         <source>OpenOrienteering Mapper</source>
-        <translation type="unfinished"></translation>
+        <translation>OpenOrienteering Mapper</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="57"/>
@@ -2438,7 +2437,7 @@
     <message>
         <location filename="../src/gui/main_window.cpp" line="227"/>
         <source>&amp;Open...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Malfermi...</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="229"/>
@@ -2514,7 +2513,7 @@
     <message>
         <location filename="../src/gui/main_window.cpp" line="316"/>
         <source>&amp;About %1</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Pri %1</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="317"/>
@@ -2524,7 +2523,7 @@
     <message>
         <location filename="../src/gui/main_window.cpp" line="321"/>
         <source>About &amp;Qt</source>
-        <translation type="unfinished"></translation>
+        <translation>Pri &amp;Qt</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="322"/>
@@ -2534,7 +2533,7 @@
     <message>
         <location filename="../src/gui/main_window.cpp" line="328"/>
         <source>&amp;Help</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Helpo</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="501"/>
@@ -3072,7 +3071,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="1022"/>
         <source>&amp;Tools</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Iloj</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1075"/>
@@ -3087,7 +3086,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="1085"/>
         <source>&amp;Templates</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Ŝablonoj</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1141"/>
@@ -3565,7 +3564,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="1816"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Rezigni</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1817"/>
@@ -3575,7 +3574,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="1857"/>
         <source>Templates</source>
-        <translation type="unfinished"></translation>
+        <translation>Ŝablonoj</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1919"/>
@@ -4302,7 +4301,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="129"/>
         <source>mm²</source>
-        <translation type="unfinished"></translation>
+        <translation>mm²</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="132"/>
@@ -4355,7 +4354,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/map_dialog_new.cpp" line="59"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Rezigni</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_new.cpp" line="60"/>
@@ -4784,7 +4783,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/template_tool_paint.cpp" line="341"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Rezigni</translation>
     </message>
     <message>
         <location filename="../src/template_tool_paint.cpp" line="342"/>
@@ -6167,7 +6166,7 @@ to jump over the lazy dog
     <message>
         <location filename="../src/gui/widgets/tags_widget.cpp" line="63"/>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Helpo</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tags_widget.cpp" line="233"/>
@@ -6195,7 +6194,7 @@ to jump over the lazy dog
     <message>
         <location filename="../src/template.cpp" line="420"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Eraro</translation>
     </message>
     <message>
         <location filename="../src/template.cpp" line="502"/>
@@ -6219,7 +6218,7 @@ to jump over the lazy dog
     <message>
         <location filename="../src/template_adjust.cpp" line="140"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Eraro</translation>
     </message>
     <message>
         <location filename="../src/template_adjust.cpp" line="140"/>
@@ -6266,7 +6265,7 @@ to jump over the lazy dog
     <message>
         <location filename="../src/template_adjust.cpp" line="195"/>
         <source>New</source>
-        <translation type="unfinished"></translation>
+        <translation>Nova</translation>
     </message>
     <message>
         <location filename="../src/template_adjust.cpp" line="199"/>
@@ -6301,7 +6300,7 @@ to jump over the lazy dog
     <message>
         <location filename="../src/template_adjust.cpp" line="210"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Eraro</translation>
     </message>
     <message>
         <location filename="../src/template_adjust.cpp" line="221"/>
@@ -6311,7 +6310,7 @@ to jump over the lazy dog
     <message>
         <location filename="../src/template_adjust.cpp" line="223"/>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Helpo</translation>
     </message>
     <message>
         <location filename="../src/template_adjust.cpp" line="224"/>
@@ -6359,7 +6358,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/template_image.cpp" line="597"/>
         <source>Image size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Bilda grandeco:</translation>
     </message>
     <message>
         <location filename="../src/template_image.cpp" line="600"/>
@@ -6374,7 +6373,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/template_image.cpp" line="612"/>
         <source>GeoTiff</source>
-        <translation type="unfinished"></translation>
+        <translation>GeoTiff</translation>
     </message>
     <message>
         <location filename="../src/template_image.cpp" line="614"/>
@@ -6409,7 +6408,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/template_image.cpp" line="655"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Rezigni</translation>
     </message>
     <message>
         <location filename="../src/template_image.cpp" line="656"/>
@@ -6449,7 +6448,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="207"/>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="481"/>
         <source>GPS</source>
-        <translation type="unfinished"></translation>
+        <translation>GPS</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="200"/>
@@ -6499,7 +6498,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="278"/>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Helpo</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="236"/>
@@ -6536,7 +6535,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="414"/>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="728"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Eraro</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="728"/>
@@ -6595,7 +6594,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="1143"/>
         <source>- Map -</source>
-        <translation type="unfinished"></translation>
+        <translation>- Mapo -</translation>
     </message>
 </context>
 <context>
@@ -6616,12 +6615,12 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/template_position_dock_widget.cpp" line="40"/>
         <source>X:</source>
-        <translation type="unfinished"></translation>
+        <translation>X:</translation>
     </message>
     <message>
         <location filename="../src/template_position_dock_widget.cpp" line="43"/>
         <source>Y:</source>
-        <translation type="unfinished"></translation>
+        <translation>Y:</translation>
     </message>
     <message>
         <location filename="../src/template_position_dock_widget.cpp" line="46"/>
@@ -6636,7 +6635,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/template_position_dock_widget.cpp" line="52"/>
         <source>Rotation:</source>
-        <translation type="unfinished"></translation>
+        <translation>Turnado:</translation>
     </message>
 </context>
 <context>
@@ -6687,7 +6686,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
         <location filename="../src/gps_track.cpp" line="510"/>
         <location filename="../src/gps_track.cpp" line="517"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Eraro</translation>
     </message>
     <message>
         <location filename="../src/template_track.cpp" line="398"/>
@@ -6762,7 +6761,7 @@ The maximum supported version is %2.</source>
     <message>
         <location filename="../src/gui/text_browser_dialog.cpp" line="122"/>
         <source>External link: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Ekstera ligilo: %1</translation>
     </message>
     <message>
         <location filename="../src/gui/text_browser_dialog.cpp" line="126"/>
@@ -6780,18 +6779,18 @@ The maximum supported version is %2.</source>
     <message>
         <location filename="../src/gui/widgets/text_alignment_widget.cpp" line="45"/>
         <source>Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Maldekstro</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/text_alignment_widget.cpp" line="46"/>
         <location filename="../src/gui/widgets/text_alignment_widget.cpp" line="52"/>
         <source>Center</source>
-        <translation type="unfinished"></translation>
+        <translation>Centro</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/text_alignment_widget.cpp" line="47"/>
         <source>Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Dekstro</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/text_alignment_widget.cpp" line="51"/>
@@ -6814,23 +6813,23 @@ The maximum supported version is %2.</source>
     <message>
         <location filename="../src/symbol_text.cpp" line="604"/>
         <source>Text settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Tekstaj agordoj</translation>
     </message>
     <message>
         <location filename="../src/symbol_text.cpp" line="610"/>
         <source>Font family:</source>
-        <translation type="unfinished"></translation>
+        <translation>Tipara familio:</translation>
     </message>
     <message>
         <location filename="../src/symbol_text.cpp" line="614"/>
         <source>Font size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Tipara grandeco:</translation>
     </message>
     <message>
         <location filename="../src/symbol_text.cpp" line="558"/>
         <source>A</source>
         <comment>First capital letter of the local alphabet</comment>
-        <translation type="unfinished"></translation>
+        <translation>A</translation>
     </message>
     <message>
         <location filename="../src/symbol_text.cpp" line="628"/>
@@ -6841,7 +6840,7 @@ The maximum supported version is %2.</source>
         <location filename="../src/symbol_text.cpp" line="1001"/>
         <location filename="../src/symbol_text.cpp" line="1094"/>
         <source>mm</source>
-        <translation type="unfinished"></translation>
+        <translation>mm</translation>
     </message>
     <message>
         <location filename="../src/symbol_text.cpp" line="613"/>
@@ -6851,33 +6850,33 @@ The maximum supported version is %2.</source>
     <message>
         <location filename="../src/symbol_text.cpp" line="636"/>
         <source>Text color:</source>
-        <translation type="unfinished"></translation>
+        <translation>Teksta koloro:</translation>
     </message>
     <message>
         <location filename="../src/symbol_text.cpp" line="639"/>
         <source>bold</source>
-        <translation type="unfinished"></translation>
+        <translation>grasa</translation>
     </message>
     <message>
         <location filename="../src/symbol_text.cpp" line="641"/>
         <source>italic</source>
-        <translation type="unfinished"></translation>
+        <translation>kursiva</translation>
     </message>
     <message>
         <location filename="../src/symbol_text.cpp" line="643"/>
         <source>underlined</source>
-        <translation type="unfinished"></translation>
+        <translation>substrekita</translation>
     </message>
     <message>
         <location filename="../src/symbol_text.cpp" line="646"/>
         <source>Text style:</source>
-        <translation type="unfinished"></translation>
+        <translation>Teksta stilo:</translation>
     </message>
     <message>
         <location filename="../src/symbol_text.cpp" line="650"/>
         <location filename="../src/symbol_text.cpp" line="656"/>
         <source>%</source>
-        <translation type="unfinished"></translation>
+        <translation>%</translation>
     </message>
     <message>
         <location filename="../src/symbol_text.cpp" line="651"/>
@@ -6928,7 +6927,7 @@ The maximum supported version is %2.</source>
     <message>
         <location filename="../src/symbol_text.cpp" line="690"/>
         <source>Width:</source>
-        <translation type="unfinished"></translation>
+        <translation>Larĝo:</translation>
     </message>
     <message>
         <location filename="../src/symbol_text.cpp" line="692"/>
@@ -7005,7 +7004,7 @@ The maximum supported version is %2.</source>
         <location filename="../src/undo_manager.cpp" line="121"/>
         <location filename="../src/undo_manager.cpp" line="159"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Eraro</translation>
     </message>
     <message>
         <location filename="../src/undo_manager.cpp" line="121"/>
@@ -7035,7 +7034,7 @@ The maximum supported version is %2.</source>
         <location filename="../src/util.cpp" line="263"/>
         <location filename="../src/util.cpp" line="296"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Eraro</translation>
     </message>
     <message>
         <location filename="../src/util.cpp" line="256"/>
@@ -7082,7 +7081,7 @@ The maximum supported version is %2.</source>
     <message>
         <location filename="../src/file_format_xml.cpp" line="477"/>
         <source>unknown</source>
-        <translation type="unfinished"></translation>
+        <translation>nekonata</translation>
     </message>
     <message>
         <location filename="../src/file_format_xml.cpp" line="478"/>
