@@ -52,7 +52,7 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="92"/>
         <source>Open most recently used file</source>
-        <translation>Buka paling baru saja digunakan file</translation>
+        <translation>Buka berkas yang terakhir digunakan</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="95"/>
@@ -215,7 +215,7 @@
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="43"/>
         <source>Autosaved file</source>
-        <translation>Otomatis file tersimpan</translation>
+        <translation>Berkas tersimpan otomatis</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/gui/autosave_dialog.cpp" line="45"/>
@@ -233,7 +233,7 @@
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="56"/>
         <source>File recovery</source>
-        <translation>Pemulihan file</translation>
+        <translation>Pemulihan berkas</translation>
     </message>
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="58"/>
@@ -1438,7 +1438,7 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="183"/>
         <source>The program must be restarted for the language change to take effect!</source>
-        <translation>Program harus direstart supaya perubahan bahasa untuk mengambil efek!</translation>
+        <translation>Program harus direstart dahulu supaya perubahan bahasa terjadi!</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="325"/>
@@ -2018,7 +2018,7 @@
         <location filename="../src/file_import_export.cpp" line="125"/>
         <source>Warnings when loading template '%1':
 %2</source>
-        <translation>Peringatan ketika loading template '%1':
+        <translation>Peringatan ketika memuat template '%1':
 %2</translation>
     </message>
     <message>
@@ -4518,7 +4518,7 @@ zoom menggunakan roda mouse, jika tersedia.</translation>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="114"/>
         <source>Could not allocate buffer.</source>
-        <translation>Bisa tidak mengalokasikan buffer.</translation>
+        <translation>Tidak dapat mengalokasikan buffer.</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="118"/>
@@ -4590,7 +4590,7 @@ zoom menggunakan roda mouse, jika tersedia.</translation>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="753"/>
         <source>During import of text symbol %1: ignoring justified alignment</source>
-        <translation>Selama impor teks simbol %1: mengabaikan dibenarkan alignment</translation>
+        <translation>Selama impor teks simbol %1: mengabaikan perataan tengah</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="759"/>
