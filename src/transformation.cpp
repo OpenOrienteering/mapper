@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2015 Kai Pastor
+ *    Copyright 2012-2016 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -281,17 +281,17 @@ bool PassPointList::estimateNonIsometricSimilarityTransform(QTransform* out)
 	pseudo_inverse.multiply(values, output);
 	
 	out->setMatrix(
-		output.get(0, 0), output.get(1, 0), output.get(2, 0),
-		output.get(3, 0), output.get(4, 0), output.get(5, 0),
-		0, 0, 1);
+		output.get(0, 0), output.get(1, 0), 0,
+		output.get(3, 0), output.get(4, 0), 0,
+		output.get(2, 0), output.get(5, 0), 1);
 	return true;
 }
 
 
 void qTransformToTemplateTransform(const QTransform& in, TemplateTransform* out)
 {
-	out->template_x = qRound64(1000 * in.m13());
-	out->template_y = qRound64(1000 * in.m23());
+	out->template_x = qRound64(1000 * in.m31());
+	out->template_y = qRound64(1000 * in.m32());
 	
 	out->template_rotation = qAtan2(-in.m21(), in.m11());
 	

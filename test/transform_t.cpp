@@ -57,9 +57,7 @@ void TransformTest::testTransformTranslate()
 	
 	TemplateTransform t;
 	qTransformToTemplateTransform(qt, &t);
-	QEXPECT_FAIL("", "qTransformToTemplateTransform takes template_x from wrong field", Continue);
 	QCOMPARE(t.template_x, offset.nativeX());
-	QEXPECT_FAIL("", "qTransformToTemplateTransform takes template_y from wrong field", Continue);
 	QCOMPARE(t.template_y, offset.nativeY());
 	QCOMPARE(t.template_scale_x, 1.0);
 	QCOMPARE(t.template_scale_y, 1.0);
@@ -114,7 +112,6 @@ void TransformTest::testEstimateNonIsometric()
 	QVERIFY(passpoints.estimateNonIsometricSimilarityTransform(&qt));
 	QVERIFY(qt.isTranslating());
 	QVERIFY(qt.isScaling());
-	QEXPECT_FAIL("", "qTransformToTemplateTransform takes template_x/y from wrong fields", Continue);
 	QCOMPARE(int(qt.type()), int(QTransform::TxScale));
 	
 	TemplateTransform t;
