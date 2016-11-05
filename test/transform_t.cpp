@@ -114,6 +114,10 @@ void TransformTest::testEstimateNonIsometric()
 	QVERIFY(qt.isScaling());
 	QCOMPARE(int(qt.type()), int(QTransform::TxScale));
 	
+	QCOMPARE(qt.map(passpoints[0].src_coords), QPointF{passpoints[0].dest_coords});
+	QCOMPARE(qt.map(passpoints[1].src_coords), QPointF{passpoints[1].dest_coords});
+	QCOMPARE(qt.map(passpoints[2].src_coords), QPointF{passpoints[2].dest_coords});
+	
 	TemplateTransform t;
 	qTransformToTemplateTransform(qt, &t);
 	QCOMPARE(t.template_x, MapCoord(32,64).nativeX());
