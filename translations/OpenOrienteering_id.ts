@@ -3984,7 +3984,7 @@ yang dipilih</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="2581"/>
         <source>No objects were selected because there are no objects with the selected symbol(s).</source>
-        <translation>Ada benda yang dipilih karena tidak ada benda dengan symbol(s) dipilih.</translation>
+        <translation>Ada benda yang dipilih karena tidak ada benda dengan simbol-simbol dipilih.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2943"/>
@@ -5938,7 +5938,7 @@ Pastikan nama file benar diberikan.</translation>
     </message>
     <message>
         <source>%1 byte(s)</source>
-        <translation>%1 byte(s)</translation>
+        <translation>%1 byte-byte</translation>
     </message>
     <message>
         <source>Date Modified</source>
