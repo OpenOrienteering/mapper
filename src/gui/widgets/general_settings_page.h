@@ -48,7 +48,7 @@ protected:
 	 * Adds the available languages to the language combo box,
 	 * and sets the current element.
 	 */
-	void updateLanguageBox(QVariant language);
+	void updateLanguageBox(QVariant code);
 	
 	void updateWidgets();
 	

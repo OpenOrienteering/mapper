@@ -20,107 +20,124 @@
 
 #include "util_translation.h"
 
-#include <mapper_config.h>
-
-#include <QCoreApplication>
 #include <QDir>
+#include <QFileInfo>
 #include <QLibraryInfo>
+#include <QLocale>
 #include <QTranslator>
 
 #include "mapper_resource.h"
-#include "util/backports.h"
+
 
 QString TranslationUtil::base_name(QString::fromLatin1("qt_"));
 
-QStringList TranslationUtil::search_path;
 
-
-TranslationUtil::TranslationUtil(QLocale::Language lang, QString translation_file)
-: locale(lang)
+TranslationUtil::TranslationUtil(const QString& code, QString translation_file)
 {
-	if (search_path.isEmpty())
-		init_search_path();
-	
-	QString locale_name = locale.name();
-	
-	QString translation_name = QLatin1String("qt_") + locale_name;
-	if (!qt_translator.load(translation_name, QLibraryInfo::location(QLibraryInfo::TranslationsPath)))
-		load(qt_translator, translation_name);
-	
-	QString file_locale = localeNameForFile(translation_file);
-	if (!file_locale.isEmpty() && QLocale(file_locale).language() == lang)
+	auto translation_from_file = languageFromFilename(translation_file);
+	if (translation_from_file.isValid()
+	    && translation_from_file.code == code)
 	{
-		load(app_translator, translation_file);
+		language = translation_from_file;
 	}
 	else
 	{
-		translation_name = base_name + locale_name;
-		load(app_translator, translation_name);
+		language = languageFromCode(code);
+		translation_file = base_name + language.code;
 	}
+	
+	QString translation_name = QLatin1String("qt_") + language.code;
+	if (!qt_translator.load(translation_name, QLibraryInfo::location(QLibraryInfo::TranslationsPath)))
+		load(qt_translator, translation_name);
+	
+	load(app_translator, translation_file);
 }
 
-
-bool TranslationUtil::load(QTranslator& translator, QString translation_name)
+bool TranslationUtil::load(QTranslator& translator, QString translation_name) const
 {
-	for (const auto& translation_dir : qAsConst(search_path))
+	for (const auto& translation_dir : searchPath())
 	{
 		if (translator.load(translation_name, translation_dir))
+		{
+			qDebug("TranslationUtil: Using %s from %s", qPrintable(translation_name), qPrintable(translation_dir));
 			return true;
+		}
 	}
-	return (translator.load(translation_name));
+	if(translator.load(translation_name))
+	{
+		qDebug("TranslationUtil: Using %s from %s", qPrintable(translation_name), "default path");
+		return true;
+	}
+	qDebug("TranslationUtil: Failed to load %s", qPrintable(translation_name));
+	return false;
 }
 
 
-LanguageCollection TranslationUtil::getAvailableLanguages()
+// static
+void TranslationUtil::setBaseName(const QLatin1String& name)
 {
-	if (search_path.isEmpty())
-		init_search_path();
+	base_name = name + QLatin1Char('_');
+}
+
+
+// static
+TranslationUtil::LanguageList TranslationUtil::availableLanguages()
+{
+	LanguageList language_map;
 	
-	LanguageCollection language_map;
-	language_map.insert(QLocale::languageToString(QLocale::English), QLocale::English);
+	auto en = Language { QLatin1String("en"), QLocale::languageToString(QLocale::English) };
+	language_map.push_back(en);
 	
 	const QStringList name_filter = { base_name + QLatin1String("*.qm") };
-	for (const auto& translation_dir : qAsConst(search_path))
+	for (const auto& translation_dir : searchPath())
 	{
 		const auto translation_files = QDir(translation_dir).entryList(name_filter, QDir::Files);
 		for (const auto& filename : translation_files)
 		{
-			auto name = filename.mid(base_name.length(), filename.length() - base_name.length() - 3);
-			if (name != QLatin1String("en"))
-			{
-				QString language_name = QLocale(name).nativeLanguageName();
-				language_map.insert(language_name, QLocale(name).language());
-			}
+			auto language = languageFromFilename(filename);
+			if (language.code != en.code)
+				language_map.push_back(language);
 		}
 	}
 	
 	return language_map;
 }
 
-QString TranslationUtil::localeNameForFile(const QString& filename)
+
+// static
+TranslationUtil::Language TranslationUtil::languageFromFilename(const QString& path)
 {
-	if (!filename.endsWith(QLatin1String(".qm"), Qt::CaseInsensitive))
-		return QString();
-	
-	QFileInfo info(filename);
-	if (!info.isFile())
-		return QString();
-	
-	QString name(info.fileName());
-	if (!name.startsWith(base_name, Qt::CaseInsensitive))
-		return QString();
-	
-	name.remove(name.length()-3, 3); //.qm
-	name.remove(0, base_name.length());
-	return name;
+	Language language;
+	if (path.endsWith(QLatin1String(".qm"), Qt::CaseInsensitive))
+	{
+		QString filename(QFileInfo(path).fileName());
+		if (filename.startsWith(base_name, Qt::CaseInsensitive))
+		{
+			auto code = filename.mid(base_name.length(), filename.length() - base_name.length() - 3);
+			language = languageFromCode(code);
+		}
+	}
+	return language;
 }
 
-void TranslationUtil::setBaseName(const QString& name)
+// static
+TranslationUtil::Language TranslationUtil::languageFromCode(const QString& code)
 {
-	base_name = name + QLatin1Char('_');
+	Language language { code, {} };
+	if (code.startsWith(QLatin1String("eo")))
+		language.displayName = QLocale::languageToString(QLocale::Esperanto);
+	else
+		language.displayName = QLocale(code).nativeLanguageName();
+	return language;
 }
 
-void TranslationUtil::init_search_path()
+
+// static
+const QStringList& TranslationUtil::searchPath()
 {
-	search_path = MapperResource::getLocations(MapperResource::TRANSLATION);
+	static QStringList search_path;
+	if (search_path.isEmpty())
+		search_path = MapperResource::getLocations(MapperResource::TRANSLATION);
+	
+	return search_path;
 }

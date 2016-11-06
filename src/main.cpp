@@ -90,11 +90,11 @@ int main(int argc, char** argv)
 #endif
 	
 	// Localization
-	TranslationUtil::setBaseName(QString::fromLatin1("OpenOrienteering"));
-	QLocale::Language lang = (QLocale::Language)settings.getSetting(Settings::General_Language).toInt();
-	QString translation_file = settings.getSetting(Settings::General_TranslationFile).toString();
-	TranslationUtil translation(lang, translation_file);
-	QLocale::setDefault(translation.getLocale());
+	TranslationUtil::setBaseName(QLatin1String("OpenOrienteering"));
+	auto language = settings.getSetting(Settings::General_Language).toString();
+	auto translation_file = settings.getSetting(Settings::General_TranslationFile).toString();
+	TranslationUtil translation(language, translation_file);
+	QLocale::setDefault(QLocale(translation.code()));
 #if defined(Q_OS_MAC)
 	// Normally this is done in Settings::apply() because it is too late here.
 	// But Mapper 0.6.2/0.6.3 accidently wrote a string instead of a list. This
