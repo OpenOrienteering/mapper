@@ -960,7 +960,7 @@
         <location filename="../src/tool_draw_point.cpp" line="62"/>
         <source>Reset</source>
         <comment>Reset rotation</comment>
-        <translation type="unfinished"></translation>
+        <translation>Reagordi</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_point.cpp" line="317"/>
@@ -2455,7 +2455,7 @@
     <message>
         <location filename="../src/gui/main_window.cpp" line="233"/>
         <source>Open &amp;recent</source>
-        <translation type="unfinished"></translation>
+        <translation>Malfermi &amp;lastan</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="244"/>
@@ -2925,7 +2925,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="844"/>
         <source>Edit objects</source>
-        <translation type="unfinished"></translation>
+        <translation>Redakti objektojn</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="846"/>
@@ -3470,12 +3470,12 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="1165"/>
         <source>Editing</source>
-        <translation type="unfinished"></translation>
+        <translation>Redaktado</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1190"/>
         <source>Advanced editing</source>
-        <translation type="unfinished"></translation>
+        <translation>Progresinta redaktado</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1217"/>
@@ -3563,7 +3563,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="1758"/>
         <source>Colors</source>
-        <translation type="unfinished"></translation>
+        <translation>Koloroj</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1787"/>
@@ -3588,7 +3588,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="1817"/>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>Bone</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1857"/>
@@ -3806,7 +3806,7 @@ selected</source>
     <message>
         <location filename="../src/map_editor.cpp" line="786"/>
         <source>&amp;Image</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Bildo</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="788"/>
@@ -3836,7 +3836,7 @@ selected</source>
     <message>
         <location filename="../src/map_editor.cpp" line="845"/>
         <source>Edit lines</source>
-        <translation type="unfinished"></translation>
+        <translation>Redakti liniojn</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="884"/>
@@ -4012,7 +4012,7 @@ selected</source>
     <message>
         <location filename="../src/map_editor.cpp" line="3761"/>
         <source>Import %1, GPX, OSM or DXF file</source>
-        <translation type="unfinished"></translation>
+        <translation>Importi %1, GPX, OSM aŭ DXF dosieron</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="3765"/>
@@ -5238,7 +5238,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="382"/>
         <source>Image export</source>
-        <translation type="unfinished"></translation>
+        <translation>Bildoeksporto</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="488"/>
@@ -5915,7 +5915,7 @@ separations</source>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="246"/>
         <source>Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>Redakti</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="247"/>
@@ -6547,7 +6547,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="390"/>
         <source>Template files</source>
-        <translation type="unfinished"></translation>
+        <translation>Ŝablonaj dosieroj</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="390"/>
