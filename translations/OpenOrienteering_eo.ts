@@ -1367,7 +1367,7 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="80"/>
         <source>Pixels per inch:</source>
-        <translation type="unfinished"></translation>
+        <translation>Pikseloj en colo:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="90"/>
@@ -2835,12 +2835,12 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="814"/>
         <source>Zoom in</source>
-        <translation type="unfinished"></translation>
+        <translation>Zomi</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="815"/>
         <source>Zoom out</source>
-        <translation type="unfinished"></translation>
+        <translation>Malzomi</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="817"/>
@@ -3553,7 +3553,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="1670"/>
         <source>Zoom factor:</source>
-        <translation type="unfinished"></translation>
+        <translation>Zoma faktoro:</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1744"/>
@@ -5250,7 +5250,7 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/gui/print_widget.cpp" line="912"/>
         <location filename="../src/gui/print_widget.cpp" line="953"/>
         <source>dpi</source>
-        <translation type="unfinished"></translation>
+        <translation>dpi</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1078"/>
@@ -6427,7 +6427,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/template_image.cpp" line="627"/>
         <source>dpi</source>
-        <translation type="unfinished"></translation>
+        <translation>dpi</translation>
     </message>
     <message>
         <location filename="../src/template_image.cpp" line="629"/>
