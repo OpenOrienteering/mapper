@@ -1,5 +1,5 @@
 /*
- *    Copyright 2012, 2013 Kai Pastor
+ *    Copyright 2012-2016 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -28,6 +28,7 @@
 #include <QTranslator>
 
 #include "mapper_resource.h"
+#include "util/backports.h"
 
 QString TranslationUtil::base_name(QString::fromLatin1("qt_"));
 
@@ -37,7 +38,7 @@ QStringList TranslationUtil::search_path;
 TranslationUtil::TranslationUtil(QLocale::Language lang, QString translation_file)
 : locale(lang)
 {
-	if (search_path.size() == 0)
+	if (search_path.isEmpty())
 		init_search_path();
 	
 	QString locale_name = locale.name();
@@ -61,7 +62,7 @@ TranslationUtil::TranslationUtil(QLocale::Language lang, QString translation_fil
 
 bool TranslationUtil::load(QTranslator& translator, QString translation_name)
 {
-	for (auto&& translation_dir : search_path)
+	for (const auto& translation_dir : qAsConst(search_path))
 	{
 		if (translator.load(translation_name, translation_dir))
 			return true;
@@ -72,23 +73,19 @@ bool TranslationUtil::load(QTranslator& translator, QString translation_name)
 
 LanguageCollection TranslationUtil::getAvailableLanguages()
 {
-	if (search_path.size() == 0)
+	if (search_path.isEmpty())
 		init_search_path();
 	
 	LanguageCollection language_map;
 	language_map.insert(QLocale::languageToString(QLocale::English), QLocale::English);
 	
-	QStringList name_filter;
-	name_filter << (base_name + QLatin1String("*.qm"));
-	
-	for (auto&& translation_dir : search_path)
+	const QStringList name_filter = { base_name + QLatin1String("*.qm") };
+	for (const auto& translation_dir : qAsConst(search_path))
 	{
-		QDir dir(translation_dir);
-		for (auto name : dir.entryList(name_filter, QDir::Files))
+		const auto translation_files = QDir(translation_dir).entryList(name_filter, QDir::Files);
+		for (const auto& filename : translation_files)
 		{
-			name.remove(0, base_name.length());
-			name.remove(name.length()-3, 3); // ".qm"
-			
+			auto name = filename.mid(base_name.length(), filename.length() - base_name.length() - 3);
 			if (name != QLatin1String("en"))
 			{
 				QString language_name = QLocale(name).nativeLanguageName();
@@ -113,8 +110,8 @@ QString TranslationUtil::localeNameForFile(const QString& filename)
 	if (!name.startsWith(base_name, Qt::CaseInsensitive))
 		return QString();
 	
+	name.remove(name.length()-3, 3); //.qm
 	name.remove(0, base_name.length());
-	name.remove(name.length()-3, 3);
 	return name;
 }
 

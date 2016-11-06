@@ -18,8 +18,8 @@
  */
 
 
-#ifndef _OPENORIENTEERING_UTIL_TRANSLATION_H_
-#define _OPENORIENTEERING_UTIL_TRANSLATION_H_
+#ifndef OPENORIENTEERING_UTIL_TRANSLATION_H
+#define OPENORIENTEERING_UTIL_TRANSLATION_H
 
 #include <QLocale>
 #include <QMap>
@@ -28,7 +28,7 @@
 
 
 /**
- * A colllection of language names and the corresponding IDs.
+ * A collection of language names and the corresponding IDs.
  */
 typedef QMap<QString, QLocale::Language> LanguageCollection;
 
@@ -43,37 +43,40 @@ public:
 	 * Creates a new translation utility for the given language.
 	 * The base name of the translation files should be set in advance.
 	 */
-	TranslationUtil(QLocale::Language lang, QString translation_file = QString());
+	TranslationUtil(QLocale::Language lang, QString translation_file = {});
 	
 	/**
 	 * Returns the locale.
 	 */
-	const QLocale& getLocale() const { return locale; };
+	const QLocale& getLocale() const { return locale; }
 	
 	/**
 	 * Returns a translation for Qt.
 	 */
-	QTranslator& getQtTranslator() { return qt_translator; };
+	QTranslator& getQtTranslator() { return qt_translator; }
 	
 	/**
 	 * Returns a translation for the application.
 	 */
-	QTranslator& getAppTranslator() { return app_translator; };
+	QTranslator& getAppTranslator() { return app_translator; }
 	
 	/**
 	 * Returns a collection of available languages for this application.
 	 */
 	static LanguageCollection getAvailableLanguages();
 	
-	/** Sets the common base name of the application's translation files. */
+	/**
+	 * Sets the common base name of the application's translation files.
+	 */
 	static void setBaseName(const QString& name);
 	
-	/** Returns the locale name for a given translation file,
-	 *  or returns an empty string if the file is not a valid translation.
+	/**
+	 * Returns the locale name for a given translation file,
+	 * or returns an empty string if the file is not a valid translation.
 	 * 
-	 *  In order to be valid, the file must exist, and the file name
-	 *  (without directory) must be composed of the base name, an underscore,
-	 *  the locale name and the suffix ".qm".
+	 * In order to be valid, the file must exist, and the file name
+	 * (without directory) must be composed of the base name, an underscore,
+	 * the locale name and the suffix ".qm".
 	 */
 	static QString localeNameForFile(const QString& filename);
 	
