@@ -1273,7 +1273,7 @@
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="103"/>
         <source>Editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Redaktilo</translation>
     </message>
 </context>
 <context>
@@ -1281,7 +1281,7 @@
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="1558"/>
         <source>Could not create new file: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Ne eblas krei novan dosieron: %1</translation>
     </message>
     <message>
         <location filename="../src/file_format.cpp" line="87"/>
@@ -1820,7 +1820,7 @@
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="149"/>
         <source>Create a new map ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Krei novan mapon ...</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="152"/>
@@ -1878,12 +1878,12 @@
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="243"/>
         <source>Previous</source>
-        <translation type="unfinished"></translation>
+        <translation>Antaŭa</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="245"/>
         <source>Next</source>
-        <translation type="unfinished"></translation>
+        <translation>Sekva</translation>
     </message>
 </context>
 <context>
@@ -1901,7 +1901,7 @@
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="458"/>
         <source>File list</source>
-        <translation type="unfinished"></translation>
+        <translation>Dosierlisto</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="541"/>
@@ -2093,7 +2093,7 @@
         <location filename="../src/fileformats/ocd_file_import.cpp" line="2031"/>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="2061"/>
         <source>Could not read file: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Ne eblis legi dosieron: %1</translation>
     </message>
     <message>
         <location filename="../src/file_format_xml.cpp" line="407"/>
@@ -2435,12 +2435,12 @@
     <message>
         <location filename="../src/gui/main_window.cpp" line="221"/>
         <source>&amp;New</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Nova</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="223"/>
         <source>Create a new map</source>
-        <translation type="unfinished"></translation>
+        <translation>Krei novan mapon</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="227"/>
@@ -2460,12 +2460,12 @@
     <message>
         <location filename="../src/gui/main_window.cpp" line="244"/>
         <source>&amp;Save</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Konservi</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="249"/>
         <source>Save &amp;as...</source>
-        <translation type="unfinished"></translation>
+        <translation>Konservi &amp;kiel...</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="251"/>
@@ -2491,7 +2491,7 @@
     <message>
         <location filename="../src/gui/main_window.cpp" line="268"/>
         <source>E&amp;xit</source>
-        <translation type="unfinished"></translation>
+        <translation>E&amp;liri</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="270"/>
@@ -2501,7 +2501,7 @@
     <message>
         <location filename="../src/gui/main_window.cpp" line="277"/>
         <source>&amp;File</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Dosiero</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="296"/>
@@ -2647,7 +2647,7 @@ Press No to choose a different format.</source>
     <message>
         <location filename="../src/gui/main_window.cpp" line="1001"/>
         <source>Save file</source>
-        <translation type="unfinished"></translation>
+        <translation>Konservi dosieron</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="1022"/>
@@ -2746,7 +2746,9 @@ por legado.</translation>
         <source>Cannot save file
 %1:
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Ne eblas konservi dosieron
+%1:
+%2</translation>
     </message>
     <message>
         <location filename="../src/map.cpp" line="807"/>
@@ -2774,7 +2776,7 @@ Rescale the imported data?</source>
         <location filename="../src/core/map_color.cpp" line="28"/>
         <location filename="../src/core/map_color.cpp" line="42"/>
         <source>New color</source>
-        <translation type="unfinished"></translation>
+        <translation>Nova koloro</translation>
     </message>
 </context>
 <context>
@@ -2818,17 +2820,17 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="798"/>
         <source>Cu&amp;t</source>
-        <translation type="unfinished"></translation>
+        <translation>El&amp;tondi</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="799"/>
         <source>C&amp;opy</source>
-        <translation type="unfinished"></translation>
+        <translation>K&amp;opii</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="800"/>
         <source>&amp;Paste</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Alglui</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="814"/>
@@ -2973,7 +2975,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="859"/>
         <source>Cut object</source>
-        <translation type="unfinished"></translation>
+        <translation>Eltondi objekton</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="875"/>
@@ -3078,12 +3080,12 @@ Rescale the imported data?</source>
         <location filename="../src/color_dock_widget.cpp" line="87"/>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="248"/>
         <source>&amp;Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Redakti</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="993"/>
         <source>&amp;View</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Vido</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1022"/>
@@ -3093,12 +3095,12 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="1075"/>
         <source>Sy&amp;mbols</source>
-        <translation type="unfinished"></translation>
+        <translation>Si&amp;mboloj</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1057"/>
         <source>M&amp;ap</source>
-        <translation type="unfinished"></translation>
+        <translation>M&amp;apo</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1085"/>
@@ -3185,7 +3187,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="842"/>
         <source>Tag editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Etikeda redaktilo</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="842"/>
@@ -3450,7 +3452,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="1109"/>
         <source>View</source>
-        <translation type="unfinished"></translation>
+        <translation>Vido</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1127"/>
@@ -3556,7 +3558,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="1744"/>
         <source>Symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>Simboloj</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1758"/>
@@ -3596,7 +3598,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="1919"/>
         <source>Tag Editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Etikeda Redaktilo</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1979"/>
@@ -3799,7 +3801,7 @@ selected</source>
     <message>
         <location filename="../src/map_editor.cpp" line="784"/>
         <source>Print...</source>
-        <translation type="unfinished"></translation>
+        <translation>Presi...</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="786"/>
@@ -4350,7 +4352,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/map_dialog_new.cpp" line="45"/>
         <source>Create new map</source>
-        <translation type="unfinished"></translation>
+        <translation>Krei novan mapon</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_new.cpp" line="47"/>
@@ -4380,7 +4382,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/map_dialog_new.cpp" line="60"/>
         <source>Create</source>
-        <translation type="unfinished"></translation>
+        <translation>Krei</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_new.cpp" line="148"/>
@@ -5089,7 +5091,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="100"/>
         <source>Printer:</source>
-        <translation type="unfinished"></translation>
+        <translation>Presilo:</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="133"/>
@@ -5134,7 +5136,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="259"/>
         <source>Preview...</source>
-        <translation type="unfinished"></translation>
+        <translation>Antaŭvido...</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="148"/>
@@ -5221,7 +5223,7 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/gui/print_widget.cpp" line="261"/>
         <location filename="../src/gui/print_widget.cpp" line="366"/>
         <source>Print</source>
-        <translation type="unfinished"></translation>
+        <translation>Presi</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="265"/>
@@ -5834,7 +5836,7 @@ separations</source>
     <message>
         <location filename="../src/gui/widgets/symbol_dropdown.cpp" line="44"/>
         <source>- none -</source>
-        <translation type="unfinished"></translation>
+        <translation>- nenio -</translation>
     </message>
 </context>
 <context>
@@ -5842,7 +5844,7 @@ separations</source>
     <message>
         <location filename="../src/gui/widgets/symbol_dropdown.cpp" line="143"/>
         <source>- None -</source>
-        <translation>- Neniu -</translation>
+        <translation>- Nenio -</translation>
     </message>
 </context>
 <context>
@@ -5883,7 +5885,7 @@ separations</source>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="237"/>
         <source>New symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>Nova simbolo</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="239"/>
@@ -5933,12 +5935,12 @@ separations</source>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="251"/>
         <source>Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopii</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="252"/>
         <source>Paste</source>
-        <translation type="unfinished"></translation>
+        <translation>Alglui</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="254"/>
@@ -5953,7 +5955,7 @@ separations</source>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="267"/>
         <source>Select symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>Elekti simbolojn</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="278"/>
@@ -6129,7 +6131,7 @@ separations</source>
     <message>
         <location filename="../src/symbol_setting_dialog.cpp" line="105"/>
         <source>(none)</source>
-        <translation type="unfinished"></translation>
+        <translation>(nenio)</translation>
     </message>
     <message>
         <location filename="../src/symbol_setting_dialog.cpp" line="106"/>
