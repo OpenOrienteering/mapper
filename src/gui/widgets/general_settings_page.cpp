@@ -161,13 +161,13 @@ QString GeneralSettingsPage::title() const
 
 void GeneralSettingsPage::apply()
 {
-	auto language = language_box->currentData();
-	if (language != getSetting(Settings::General_Language)
+	auto language = language_box->currentData().toString();
+	if (language != getSetting(Settings::General_Language).toString()
 	    || translation_file != getSetting(Settings::General_TranslationFile).toString())
 	{
 		// Show an message box in the new language.
-		TranslationUtil translation(QLocale::Language(language.toInt()), translation_file);
-		auto new_language = translation.getLocale().language();
+		TranslationUtil translation(language, translation_file);
+		auto new_language = QLocale(translation.code()).language();
 		switch (new_language)
 		{
 		case QLocale::AnyLanguage:
@@ -186,7 +186,7 @@ void GeneralSettingsPage::apply()
 			qApp->removeEventFilter(this);
 		}
 		
-		setSetting(Settings::General_Language, new_language);
+		setSetting(Settings::General_Language, translation.code());
 		setSetting(Settings::General_TranslationFile, translation_file);
 #if defined(Q_OS_MAC)
 		// The native [file] dialogs will use the first element of the
@@ -222,33 +222,31 @@ void GeneralSettingsPage::reset()
 	updateWidgets();
 }
 
-void GeneralSettingsPage::updateLanguageBox(QVariant language)
+void GeneralSettingsPage::updateLanguageBox(QVariant code)
 {
-	LanguageCollection language_map = TranslationUtil::getAvailableLanguages();
+	auto languages = TranslationUtil::availableLanguages();
+	std::sort(begin(languages), end(languages));
 	
-	// If there is an explicit translation file, use its locale
-	QString locale_name = TranslationUtil::localeNameForFile(translation_file);
-	if (!locale_name.isEmpty())
-	{
-		QLocale file_locale(locale_name);
-		QString language_name = file_locale.nativeLanguageName();
-		if (!language_map.contains(language_name))
-			language_map.insert(language_name, file_locale.language());
-	}
-	
-	// Update the language box
 	const QSignalBlocker block(language_box);
 	language_box->clear();
+	for (const auto& language : languages)
+		language_box->addItem(language.displayName, language.code);
 	
-	for (auto it = language_map.constBegin(),end = language_map.constEnd(); it != end; ++it)
-		language_box->addItem(it.key(), int(it.value()));
+	// If there is an explicit translation file, make sure it is in the box.
+	auto language = TranslationUtil::languageFromFilename(translation_file);
+	if (language.isValid())
+	{
+		auto index = language_box->findData(language.code);
+		if (index < 0)
+			language_box->addItem(language.displayName, language.code);
+	}		
 	
 	// Select current language
-	int index = language_box->findData(language);
+	auto index = language_box->findData(code);
 	if (index < 0)
 	{
-		language = QLocale::English;
-		index = language_box->findData(language);
+		code = QString::fromLatin1("en");
+		index = language_box->findData(code);
 	}
 	language_box->setCurrentIndex(index);
 }
@@ -325,8 +323,8 @@ void GeneralSettingsPage::openTranslationFileDialog()
 	  tr("Open translation"), filename, tr("Translation files (*.qm)"));
 	if (!filename.isNull())
 	{
-		QString locale_name(TranslationUtil::localeNameForFile(filename));
-		if (locale_name.isEmpty())
+		auto language = TranslationUtil::languageFromFilename(filename);
+		if (!language.isValid())
 		{
 			QMessageBox::critical(this, tr("Open translation"),
 			  tr("The selected file is not a valid translation.") );
@@ -334,7 +332,7 @@ void GeneralSettingsPage::openTranslationFileDialog()
 		else
 		{
 			translation_file = filename;
-			updateLanguageBox(QLocale(locale_name).language());
+			updateLanguageBox(language.code);
 		}
 	}
 }

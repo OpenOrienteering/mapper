@@ -123,6 +123,7 @@ add_unit_test(georeferencing_t ../src/core/georeferencing
 	../src/mapper_resource
 	../src/file_format
 )
+add_unit_test(locale_t ../src/util_translation ../src/mapper_resource)
 add_unit_test(map_color_t ../src/core/map_color)
 add_unit_test(qpainter_t)
 
