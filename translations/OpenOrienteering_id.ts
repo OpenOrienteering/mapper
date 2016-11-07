@@ -4778,7 +4778,7 @@ zoom menggunakan roda mouse, jika tersedia.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="82"/>
         <source>Encoding '%1' is not available. Check the settings.</source>
-        <translation type="unfinished"></translation>
+        <translation>Pengodean '%1' tidak tersedia. Periksa pengaturan.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="119"/>
