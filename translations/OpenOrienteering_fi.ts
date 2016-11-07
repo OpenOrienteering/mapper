@@ -2988,7 +2988,7 @@ Skaalataanko tuotu tieto?</translation>
     <message>
         <location filename="../src/core/map_color.cpp" line="71"/>
         <source>Registration black (all printed colors)</source>
-        <translation type="unfinished">Värierottelu (kaikki tulostettavat värit)</translation>
+        <translation>Värierottelu (kaikki tulostettavat värit)</translation>
     </message>
 </context>
 <context>
@@ -3049,7 +3049,7 @@ Skaalataanko tuotu tieto?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="804"/>
         <source>Invert selection</source>
-        <translation type="unfinished">Valitse muut</translation>
+        <translation>Valitse muut</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="814"/>
@@ -5030,7 +5030,7 @@ zoomaa hiiren rullalla.</translation>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="2027"/>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="2031"/>
         <source>Invalid data.</source>
-        <translation type="unfinished"></translation>
+        <translation>Virheellinen data.</translation>
     </message>
     <message>
         <source>Untested file importer for format: OCD %1</source>
@@ -5467,7 +5467,7 @@ zoomaa hiiren rullalla.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="235"/>
         <source>Default</source>
-        <translation type="unfinished"></translation>
+        <translation>Oletusarvo</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="236"/>
@@ -5613,7 +5613,7 @@ zoomaa hiiren rullalla.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="105"/>
         <source>Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Ominaisuudet</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="179"/>
@@ -5636,7 +5636,7 @@ separations</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="194"/>
         <source>Mode:</source>
-        <translation type="unfinished"></translation>
+        <translation>Moodi:</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1155"/>
@@ -6417,7 +6417,7 @@ separations</source>
     <message>
         <location filename="../src/symbol_setting_dialog.cpp" line="103"/>
         <source>Template:</source>
-        <translation type="unfinished"></translation>
+        <translation>Taustakartta:</translation>
     </message>
     <message>
         <location filename="../src/symbol_setting_dialog.cpp" line="104"/>
@@ -6465,7 +6465,7 @@ to jump over the lazy dog
     <message>
         <location filename="../src/symbol_setting_dialog.cpp" line="483"/>
         <source>- unnamed -</source>
-        <translation type="unfinished"></translation>
+        <translation>- nimeämätön -</translation>
     </message>
 </context>
 <context>
@@ -6527,7 +6527,7 @@ to jump over the lazy dog
     <message>
         <location filename="../src/gui/widgets/tags_widget.cpp" line="233"/>
         <source>Key exists</source>
-        <translation type="unfinished"></translation>
+        <translation>Avain on olemassa</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tags_widget.cpp" line="234"/>
@@ -6556,7 +6556,7 @@ to jump over the lazy dog
         <location filename="../src/template.cpp" line="502"/>
         <location filename="../src/template.cpp" line="521"/>
         <source>No such file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tiedostoa ei ole.</translation>
     </message>
     <message>
         <location filename="../src/template.cpp" line="539"/>
@@ -7373,7 +7373,7 @@ Tuetaan vain versioon %2 asti.</translation>
     <message>
         <location filename="../src/gui/widgets/crs_param_widgets.cpp" line="60"/>
         <source>Calculate</source>
-        <translation type="unfinished"></translation>
+        <translation>Laskea</translation>
     </message>
 </context>
 <context>
