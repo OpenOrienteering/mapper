@@ -17,7 +17,7 @@
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="173"/>
         <source>The OpenOrienteering developers in alphabetical order:</source>
-        <translation type="unfinished"></translation>
+        <translation>La OpenOrienteering programistoj laŭ alfabeta ordo:</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="174"/>
@@ -44,7 +44,7 @@
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="175"/>
         <source>For contributions, thanks to:</source>
-        <translation type="unfinished"></translation>
+        <translation>Por kontribuoj, danke al:</translation>
     </message>
 </context>
 <context>
@@ -415,12 +415,12 @@
     <message>
         <location filename="../src/color_dock_widget.cpp" line="77"/>
         <source>Move Up</source>
-        <translation type="unfinished"></translation>
+        <translation>Movi Supren</translation>
     </message>
     <message>
         <location filename="../src/color_dock_widget.cpp" line="79"/>
         <source>Move Down</source>
-        <translation type="unfinished"></translation>
+        <translation>Movi Malsupren</translation>
     </message>
     <message>
         <location filename="../src/color_dock_widget.cpp" line="90"/>
@@ -906,7 +906,7 @@
     <message>
         <location filename="../src/tool_draw_path.cpp" line="93"/>
         <source>Abort</source>
-        <translation type="unfinished"></translation>
+        <translation>Ĉesigi</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1061"/>
@@ -1023,7 +1023,7 @@
     <message>
         <location filename="../src/tool_draw_rectangle.cpp" line="83"/>
         <source>Abort</source>
-        <translation type="unfinished"></translation>
+        <translation>Ĉesigi</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_rectangle.cpp" line="716"/>
@@ -1091,7 +1091,7 @@
         <location filename="../src/tool_edit_point.cpp" line="491"/>
         <source>Point / Angle</source>
         <comment>Modify points or use constrained angles</comment>
-        <translation type="unfinished"></translation>
+        <translation>Punkto / Angulo</translation>
     </message>
     <message>
         <location filename="../src/tool_edit_point.cpp" line="492"/>
@@ -1362,7 +1362,7 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="75"/>
         <source>Screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Ekrano</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="80"/>
@@ -1408,18 +1408,18 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="137"/>
         <source>8-bit encoding:</source>
-        <translation type="unfinished"></translation>
+        <translation>8-bita signaro:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="130"/>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="283"/>
         <source>More...</source>
-        <translation type="unfinished"></translation>
+        <translation>Pli...</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="116"/>
         <source>Default</source>
-        <translation type="unfinished"></translation>
+        <translation>Defaŭlto</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="139"/>
@@ -1484,7 +1484,7 @@
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="58"/>
         <source>UTM coordinates</source>
-        <translation type="unfinished"></translation>
+        <translation>UTM koordinatoj</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="61"/>
@@ -1500,7 +1500,7 @@
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="69"/>
         <source>Gauss-Krueger coordinates</source>
-        <translation type="unfinished"></translation>
+        <translation>Gauss-Krueger koordinatoj</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="72"/>
@@ -1518,13 +1518,13 @@
         <location filename="../src/core/crs_template_implementation.cpp" line="82"/>
         <source>EPSG @code@ coordinates</source>
         <extracomment>Don't translate @code@. It is placeholder.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>EPSG @code@ koordinatoj</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="93"/>
         <location filename="../src/core/georeferencing.cpp" line="533"/>
         <source>Local coordinates</source>
-        <translation type="unfinished"></translation>
+        <translation>Lokaj koordinatoj</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="85"/>
@@ -1567,7 +1567,7 @@
     <message>
         <location filename="../src/core/georeferencing.cpp" line="524"/>
         <source>Local</source>
-        <translation type="unfinished"></translation>
+        <translation>Loka</translation>
     </message>
 </context>
 <context>
@@ -1592,7 +1592,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="204"/>
         <source>Declination:</source>
-        <translation type="unfinished"></translation>
+        <translation>Deklinacio:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="151"/>
@@ -1602,12 +1602,12 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="98"/>
         <source>Status:</source>
-        <translation type="unfinished"></translation>
+        <translation>Stato:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="152"/>
         <source>Geographic coordinates</source>
-        <translation type="unfinished"></translation>
+        <translation>Geografiaj koordinatoj</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="147"/>
@@ -1617,7 +1617,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="341"/>
         <source>valid</source>
-        <translation type="unfinished"></translation>
+        <translation>valida</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="334"/>
@@ -1638,7 +1638,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="96"/>
         <source>- local -</source>
-        <translation type="unfinished"></translation>
+        <translation>- loka -</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="104"/>
@@ -1671,25 +1671,25 @@
         <location filename="../src/gui/georeferencing_dialog.cpp" line="119"/>
         <source>X</source>
         <comment>x coordinate</comment>
-        <translation type="unfinished"></translation>
+        <translation>X</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="121"/>
         <source>Y</source>
         <comment>y coordinate</comment>
-        <translation type="unfinished"></translation>
+        <translation>Y</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="130"/>
         <source>E</source>
         <comment>west / east</comment>
-        <translation type="unfinished"></translation>
+        <translation>E</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="132"/>
         <source>N</source>
         <comment>north / south</comment>
-        <translation type="unfinished"></translation>
+        <translation>N</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="136"/>
@@ -1702,13 +1702,13 @@
         <location filename="../src/gui/georeferencing_dialog.cpp" line="140"/>
         <source>N</source>
         <comment>north</comment>
-        <translation type="unfinished"></translation>
+        <translation>N</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="142"/>
         <source>E</source>
         <comment>east</comment>
-        <translation type="unfinished"></translation>
+        <translation>E</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="163"/>
@@ -1729,7 +1729,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="196"/>
         <source>Geographic coordinates:</source>
-        <translation type="unfinished"></translation>
+        <translation>Geografiaj koordinatoj:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="199"/>
@@ -1759,22 +1759,22 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="470"/>
         <source>Local coordinates:</source>
-        <translation type="unfinished"></translation>
+        <translation>Lokaj koordinatoj:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="497"/>
         <source>Loading...</source>
-        <translation type="unfinished"></translation>
+        <translation>Ŝargo...</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="504"/>
         <source>locked</source>
-        <translation type="unfinished"></translation>
+        <translation>ŝlosita</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="644"/>
         <source>Could not parse data.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ne eblis analizi datumon.</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="669"/>
@@ -1791,7 +1791,7 @@
         <location filename="../src/gui/georeferencing_dialog.cpp" line="502"/>
         <source>%1 °</source>
         <comment>degree value</comment>
-        <translation type="unfinished"></translation>
+        <translation>%1 °</translation>
     </message>
 </context>
 <context>
@@ -1815,7 +1815,7 @@
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="146"/>
         <source>Activities</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktivecoj</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="149"/>
@@ -1891,7 +1891,7 @@
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="334"/>
         <source>Examples</source>
-        <translation type="unfinished"></translation>
+        <translation>Ekzemploj</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="340"/>
@@ -1955,18 +1955,18 @@
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="58"/>
         <source>OCAD Versions 7, 8</source>
-        <translation type="unfinished"></translation>
+        <translation>OCAD Versioj 7, 8</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="32"/>
         <source>OCAD</source>
-        <translation type="unfinished"></translation>
+        <translation>OCAD</translation>
     </message>
     <message>
         <location filename="../src/util/xml_stream_util.cpp" line="72"/>
         <location filename="../src/util/xml_stream_util.cpp" line="88"/>
         <source>Could not parse the coordinates.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ne eblis analizi la koordinatojn.</translation>
     </message>
     <message>
         <location filename="../src/util/xml_stream_util.cpp" line="112"/>
@@ -2098,7 +2098,7 @@
     <message>
         <location filename="../src/file_format_xml.cpp" line="407"/>
         <source>Unsupported file format.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nesubtenata dosierformo.</translation>
     </message>
     <message>
         <location filename="../src/file_format_xml.cpp" line="417"/>
@@ -2148,7 +2148,7 @@
     <message>
         <location filename="../src/symbol_line.cpp" line="2053"/>
         <source>Minimum line length:</source>
-        <translation type="unfinished"></translation>
+        <translation>Minimuma longo de linio:</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2056"/>
@@ -2244,17 +2244,17 @@
     <message>
         <location filename="../src/symbol_line.cpp" line="2116"/>
         <source>2</source>
-        <translation type="unfinished"></translation>
+        <translation>2</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2117"/>
         <source>3</source>
-        <translation type="unfinished"></translation>
+        <translation>3</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2118"/>
         <source>4</source>
-        <translation type="unfinished"></translation>
+        <translation>4</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2121"/>
@@ -2406,7 +2406,7 @@
     <message>
         <location filename="../src/template_track.cpp" line="535"/>
         <source>Map</source>
-        <translation type="unfinished"></translation>
+        <translation>Mapo</translation>
     </message>
     <message>
         <location filename="../src/template_track.cpp" line="538"/>
@@ -2470,7 +2470,7 @@
     <message>
         <location filename="../src/gui/main_window.cpp" line="251"/>
         <source>Ctrl+Shift+S</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+Shift+S</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="257"/>
@@ -2634,7 +2634,7 @@ Do you want to discard your changes?</source>
     <message>
         <location filename="../src/gui/main_window.cpp" line="829"/>
         <source>&amp;%1 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;%1 %2</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="908"/>
@@ -2727,7 +2727,7 @@ por legado.</translation>
     <message>
         <location filename="../src/map.cpp" line="708"/>
         <source>Invalid file type.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nevalida dosiertipo.</translation>
     </message>
     <message>
         <location filename="../src/map.cpp" line="664"/>
@@ -2758,7 +2758,7 @@ por legado.</translation>
     <message>
         <location filename="../src/map.cpp" line="814"/>
         <source>Question</source>
-        <translation type="unfinished"></translation>
+        <translation>Demando</translation>
     </message>
     <message>
         <location filename="../src/map.cpp" line="815"/>
@@ -2770,7 +2770,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map.cpp" line="440"/>
         <source>default part</source>
-        <translation type="unfinished"></translation>
+        <translation>defaŭlta parto</translation>
     </message>
     <message>
         <location filename="../src/core/map_color.cpp" line="28"/>
@@ -3110,7 +3110,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="1141"/>
         <source>Drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Desegnado</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="890"/>
@@ -3197,7 +3197,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="849"/>
         <source>Draw rectangles</source>
-        <translation type="unfinished"></translation>
+        <translation>Desegni rektangulojn</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="850"/>
@@ -3302,127 +3302,127 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="737"/>
         <source>Ctrl+A</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+A</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="738"/>
         <source>Ctrl+Shift+A</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+Shift+A</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="739"/>
         <source>Ctrl+I</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+I</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="741"/>
         <source>G</source>
-        <translation type="unfinished"></translation>
+        <translation>G</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="754"/>
         <source>E</source>
-        <translation type="unfinished"></translation>
+        <translation>E</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="755"/>
         <source>L</source>
-        <translation type="unfinished"></translation>
+        <translation>L</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="756"/>
         <source>S</source>
-        <translation type="unfinished"></translation>
+        <translation>S</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="757"/>
         <source>P</source>
-        <translation type="unfinished"></translation>
+        <translation>P</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="758"/>
         <source>O</source>
-        <translation type="unfinished"></translation>
+        <translation>O</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="759"/>
         <source>Ctrl+R</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+R</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="760"/>
         <source>F</source>
-        <translation type="unfinished"></translation>
+        <translation>F</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="761"/>
         <source>T</source>
-        <translation type="unfinished"></translation>
+        <translation>T</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="763"/>
         <source>D</source>
-        <translation type="unfinished"></translation>
+        <translation>D</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="764"/>
         <source>Ctrl+G</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+G</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="765"/>
         <source>Ctrl+F</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+F</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="766"/>
         <source>Ctrl+D</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+D</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="767"/>
         <source>C</source>
-        <translation type="unfinished"></translation>
+        <translation>C</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="768"/>
         <source>R</source>
-        <translation type="unfinished"></translation>
+        <translation>R</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="769"/>
         <source>Z</source>
-        <translation type="unfinished"></translation>
+        <translation>Z</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="770"/>
         <source>K</source>
-        <translation type="unfinished"></translation>
+        <translation>K</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="771"/>
         <source>H</source>
-        <translation type="unfinished"></translation>
+        <translation>H</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="772"/>
         <source>M</source>
-        <translation type="unfinished"></translation>
+        <translation>M</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="773"/>
         <source>U</source>
-        <translation type="unfinished"></translation>
+        <translation>U</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="774"/>
         <source>N</source>
-        <translation type="unfinished"></translation>
+        <translation>N</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="775"/>
         <source>Ctrl+M</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+M</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="802"/>
@@ -3796,7 +3796,7 @@ selected</source>
     <message>
         <location filename="../src/map_editor.cpp" line="2062"/>
         <source>Draw rectangles.</source>
-        <translation type="unfinished"></translation>
+        <translation>Desegni rektangulojn.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="784"/>
@@ -3811,7 +3811,7 @@ selected</source>
     <message>
         <location filename="../src/map_editor.cpp" line="788"/>
         <source>&amp;PDF</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;PDF</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="806"/>
@@ -3851,7 +3851,7 @@ selected</source>
     <message>
         <location filename="../src/map_editor.cpp" line="967"/>
         <source>&amp;Export as...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Eksporti kiel...</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2068"/>
@@ -4136,7 +4136,7 @@ selected</source>
         <location filename="../src/tool_draw_freehand.cpp" line="277"/>
         <location filename="../src/tool_cutout.cpp" line="142"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Abort. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Ĉesigi. </translation>
     </message>
     <message>
         <location filename="../src/tool_edit_point.cpp" line="692"/>
@@ -4145,18 +4145,18 @@ selected</source>
         <location filename="../src/tool_draw_rectangle.cpp" line="695"/>
         <location filename="../src/tool_draw_rectangle.cpp" line="696"/>
         <source>More: %1, %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Pli: %1, %2</translation>
     </message>
     <message>
         <location filename="../src/tool_edit_line.cpp" line="474"/>
         <source>More: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Pli: %1</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1052"/>
         <location filename="../src/tool_draw_rectangle.cpp" line="694"/>
         <source>More: %1, %2, %3</source>
-        <translation type="unfinished"></translation>
+        <translation>Pli: %1, %2, %3</translation>
     </message>
 </context>
 <context>
@@ -4179,7 +4179,7 @@ selected</source>
     <message>
         <location filename="../src/core/map_printer.cpp" line="1266"/>
         <source>Canceled</source>
-        <translation type="unfinished"></translation>
+        <translation>Nuligita</translation>
     </message>
     <message>
         <location filename="../src/core/map_printer.cpp" line="1270"/>
@@ -4189,7 +4189,7 @@ selected</source>
     <message>
         <location filename="../src/core/map_printer.cpp" line="1275"/>
         <source>Finished</source>
-        <translation type="unfinished"></translation>
+        <translation>Finigita</translation>
     </message>
 </context>
 <context>
@@ -4198,7 +4198,7 @@ selected</source>
         <location filename="../src/map_widget.cpp" line="561"/>
         <source>%1x</source>
         <comment>Zoom factor</comment>
-        <translation type="unfinished"></translation>
+        <translation>%1x</translation>
     </message>
     <message>
         <location filename="../src/map_widget.cpp" line="582"/>
@@ -4263,12 +4263,12 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="136"/>
         <source>Length:</source>
-        <translation type="unfinished"></translation>
+        <translation>Longo:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="114"/>
         <source>Area:</source>
-        <translation type="unfinished"></translation>
+        <translation>Areo:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="61"/>
@@ -4309,7 +4309,7 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="116"/>
         <source>m²</source>
         <comment>square meters</comment>
-        <translation type="unfinished"></translation>
+        <translation>m²</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="128"/>
@@ -4319,7 +4319,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="129"/>
         <source>The minimimum area is %1 %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>La minimuma areo estas %1 %2.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="129"/>
@@ -4339,7 +4339,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="151"/>
         <source>The minimum length is %1 %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>La minimuma longo estas %1 %2.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="151"/>
@@ -4362,7 +4362,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/map_dialog_new.cpp" line="49"/>
         <source>Scale:  1 : </source>
-        <translation type="unfinished"></translation>
+        <translation>Skalo:  1 : </translation>
     </message>
     <message>
         <location filename="../src/map_dialog_new.cpp" line="54"/>
@@ -4403,7 +4403,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/map_dialog_new.cpp" line="239"/>
         <source>All files</source>
-        <translation type="unfinished"></translation>
+        <translation>Ĉiuj dosieroj</translation>
     </message>
 </context>
 <context>
@@ -4652,7 +4652,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="561"/>
         <source>Unsupported type "%1".</source>
-        <translation type="unfinished"></translation>
+        <translation>Nesubtenata tipo "%1".</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="654"/>
@@ -4760,7 +4760,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1558"/>
         <source>Unable to load object</source>
-        <translation type="unfinished"></translation>
+        <translation>Ne eblas ŝarĝi objekton</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1568"/>
@@ -4781,7 +4781,7 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="2027"/>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="2031"/>
         <source>Invalid data.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nevalidaj datumoj.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="2062"/>
@@ -4799,7 +4799,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../packaging/translations.cpp" line="11"/>
         <source>Software for drawing orienteering maps</source>
-        <translation type="unfinished"></translation>
+        <translation>Programaro por desegni orientiĝajn mapojn</translation>
     </message>
 </context>
 <context>
@@ -4817,7 +4817,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/template_tool_paint.cpp" line="342"/>
         <source>Draw</source>
-        <translation type="unfinished"></translation>
+        <translation>Desegni</translation>
     </message>
 </context>
 <context>
@@ -4830,7 +4830,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/template_tool_paint.cpp" line="61"/>
         <source>Color selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Kolorelekto</translation>
     </message>
 </context>
 <context>
@@ -4868,19 +4868,19 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="62"/>
         <source>Elements</source>
-        <translation type="unfinished"></translation>
+        <translation>Elementoj</translation>
     </message>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="74"/>
         <location filename="../src/symbol_point_editor.cpp" line="929"/>
         <source>Point</source>
-        <translation type="unfinished"></translation>
+        <translation>Punkto</translation>
     </message>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="75"/>
         <location filename="../src/symbol_point_editor.cpp" line="931"/>
         <source>Line</source>
-        <translation type="unfinished"></translation>
+        <translation>Linio</translation>
     </message>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="76"/>
@@ -4901,7 +4901,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="87"/>
         <source>Diameter &lt;b&gt;a&lt;/b&gt;:</source>
-        <translation type="unfinished"></translation>
+        <translation>Diametro &lt;b&gt;a&lt;/b&gt;:</translation>
     </message>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="88"/>
@@ -4984,17 +4984,17 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="173"/>
         <source>Coordinates:</source>
-        <translation type="unfinished"></translation>
+        <translation>Koordinatoj:</translation>
     </message>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="178"/>
         <source>X</source>
-        <translation type="unfinished"></translation>
+        <translation>X</translation>
     </message>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="178"/>
         <source>Y</source>
-        <translation type="unfinished"></translation>
+        <translation>Y</translation>
     </message>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="178"/>
@@ -5014,7 +5014,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="936"/>
         <source>Unknown</source>
-        <translation type="unfinished"></translation>
+        <translation>Nekonata</translation>
     </message>
 </context>
 <context>
@@ -5076,7 +5076,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="216"/>
         <source>Show templates</source>
-        <translation type="unfinished"></translation>
+        <translation>Montri ŝablonojn</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="227"/>
@@ -5096,12 +5096,12 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="133"/>
         <source>Portrait</source>
-        <translation type="unfinished"></translation>
+        <translation>Vertikala</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="135"/>
         <source>Landscape</source>
-        <translation type="unfinished"></translation>
+        <translation>Horizontala</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="114"/>
@@ -5182,12 +5182,12 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="172"/>
         <source>Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Agordaĵoj</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="200"/>
         <source>Resolution:</source>
-        <translation type="unfinished"></translation>
+        <translation>Distingivo:</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="202"/>
@@ -5207,7 +5207,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="235"/>
         <source>Default</source>
-        <translation type="unfinished"></translation>
+        <translation>Defaŭlto</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="236"/>
@@ -5354,13 +5354,15 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/gui/print_widget.cpp" line="179"/>
         <source>Vector
 graphics</source>
-        <translation type="unfinished"></translation>
+        <translation>Vektora
+bildo</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="180"/>
         <source>Raster
 graphics</source>
-        <translation type="unfinished"></translation>
+        <translation>Rastruma
+bildo</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="181"/>
@@ -5398,7 +5400,7 @@ separations</source>
         <location filename="../src/gui/print_widget.cpp" line="1229"/>
         <location filename="../src/gui/print_widget.cpp" line="1261"/>
         <source>Canceled.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nuligita.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1265"/>
@@ -5605,7 +5607,7 @@ separations</source>
     <message>
         <location filename="../src/map_dialog_rotate.cpp" line="70"/>
         <source>Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Agordaĵoj</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_rotate.cpp" line="72"/>
@@ -5679,7 +5681,7 @@ separations</source>
     <message>
         <location filename="../src/map_dialog_scale.cpp" line="44"/>
         <source>New scale:  1 :</source>
-        <translation type="unfinished"></translation>
+        <translation>Nova skalo:  1 :</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_scale.cpp" line="46"/>
@@ -5725,7 +5727,7 @@ separations</source>
     <message>
         <location filename="../src/map_dialog_scale.cpp" line="69"/>
         <source>Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Agordaĵoj</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_scale.cpp" line="71"/>
@@ -5782,22 +5784,22 @@ separations</source>
     <message>
         <location filename="../src/gui/select_crs_dialog.cpp" line="68"/>
         <source>Local</source>
-        <translation type="unfinished"></translation>
+        <translation>Loka</translation>
     </message>
     <message>
         <location filename="../src/gui/select_crs_dialog.cpp" line="73"/>
         <source>Geographic coordinates (WGS84)</source>
-        <translation type="unfinished"></translation>
+        <translation>Geografiaj koordinatoj (WGS84)</translation>
     </message>
     <message>
         <location filename="../src/gui/select_crs_dialog.cpp" line="85"/>
         <source>Status:</source>
-        <translation type="unfinished"></translation>
+        <translation>Stato:</translation>
     </message>
     <message>
         <location filename="../src/gui/select_crs_dialog.cpp" line="130"/>
         <source>valid</source>
-        <translation type="unfinished"></translation>
+        <translation>valida</translation>
     </message>
 </context>
 <context>
@@ -5895,7 +5897,7 @@ separations</source>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="240"/>
         <source>Line</source>
-        <translation type="unfinished"></translation>
+        <translation>Linio</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="241"/>
@@ -6190,7 +6192,7 @@ to jump over the lazy dog
     <message>
         <location filename="../src/gui/widgets/tags_widget.cpp" line="53"/>
         <source>Value</source>
-        <translation type="unfinished"></translation>
+        <translation>Valoro</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/tags_widget.cpp" line="63"/>
@@ -6299,7 +6301,7 @@ to jump over the lazy dog
     <message>
         <location filename="../src/template_adjust.cpp" line="199"/>
         <source>Move</source>
-        <translation type="unfinished"></translation>
+        <translation>Movi</translation>
     </message>
     <message>
         <location filename="../src/template_adjust.cpp" line="203"/>
@@ -6450,7 +6452,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="156"/>
         <source>Show</source>
-        <translation type="unfinished"></translation>
+        <translation>Montri</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="155"/>
@@ -6512,12 +6514,12 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="221"/>
         <source>Move Up</source>
-        <translation type="unfinished"></translation>
+        <translation>Movi Supren</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="223"/>
         <source>Move Down</source>
-        <translation type="unfinished"></translation>
+        <translation>Movi Malsupren</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="246"/>
@@ -6656,12 +6658,12 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/template_position_dock_widget.cpp" line="46"/>
         <source>X-Scale:</source>
-        <translation type="unfinished"></translation>
+        <translation>X-Skalo:</translation>
     </message>
     <message>
         <location filename="../src/template_position_dock_widget.cpp" line="49"/>
         <source>Y-Scale:</source>
-        <translation type="unfinished"></translation>
+        <translation>Y-Skalo:</translation>
     </message>
     <message>
         <location filename="../src/template_position_dock_widget.cpp" line="52"/>
@@ -7083,7 +7085,7 @@ The maximum supported version is %2.</source>
     <message>
         <location filename="../src/util.cpp" line="297"/>
         <source>Failed to launch the help browser ("Qt Assistant").</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Malsukcesis lanĉi la retumilo ("Qt Assistant").</translation>
     </message>
     <message>
         <location filename="../src/util.cpp" line="313"/>
