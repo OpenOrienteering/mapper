@@ -992,7 +992,7 @@
         <location filename="../src/tool_draw_point.cpp" line="62"/>
         <source>Reset</source>
         <comment>Reset rotation</comment>
-        <translation type="unfinished"></translation>
+        <translation>Palauta</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_point.cpp" line="317"/>
@@ -1019,7 +1019,7 @@
     <message>
         <location filename="../src/tool_draw_point.cpp" line="330"/>
         <source>&lt;b&gt;%1, 0&lt;/b&gt;: Reset rotation.</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1, 0&lt;/b&gt;: Palauta pyörimisliike.</translation>
     </message>
     <message>
         <source>&lt;b&gt;Click&lt;/b&gt;: Create a point object. &lt;b&gt;Drag&lt;/b&gt;: Create an object and set its orientation (if rotatable). </source>
@@ -2950,7 +2950,9 @@ ei voi avata luettavaksi.</translation>
         <source>Cannot save file
 %1:
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Tiedostoa ei voi tallentaa
+%1:
+%2</translation>
     </message>
     <message>
         <location filename="../src/map.cpp" line="807"/>
@@ -3044,7 +3046,7 @@ Skaalataanko tuotu tieto?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="803"/>
         <source>Select nothing</source>
-        <translation type="unfinished"></translation>
+        <translation>Älä valitse mitään</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="804"/>
@@ -3820,22 +3822,22 @@ Skaalataanko tuotu tieto?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="737"/>
         <source>Ctrl+A</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+A</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="738"/>
         <source>Ctrl+Shift+A</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+Shift+A</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="739"/>
         <source>Ctrl+I</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+I</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="741"/>
         <source>G</source>
-        <translation type="unfinished"></translation>
+        <translation>G</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="754"/>
@@ -3845,92 +3847,92 @@ Skaalataanko tuotu tieto?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="755"/>
         <source>L</source>
-        <translation type="unfinished"></translation>
+        <translation>L</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="756"/>
         <source>S</source>
-        <translation type="unfinished"></translation>
+        <translation>S</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="757"/>
         <source>P</source>
-        <translation type="unfinished"></translation>
+        <translation>P</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="758"/>
         <source>O</source>
-        <translation type="unfinished"></translation>
+        <translation>O</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="759"/>
         <source>Ctrl+R</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+R</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="760"/>
         <source>F</source>
-        <translation type="unfinished"></translation>
+        <translation>F</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="761"/>
         <source>T</source>
-        <translation type="unfinished"></translation>
+        <translation>T</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="763"/>
         <source>D</source>
-        <translation type="unfinished"></translation>
+        <translation>D</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="764"/>
         <source>Ctrl+G</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+G</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="765"/>
         <source>Ctrl+F</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+F</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="766"/>
         <source>Ctrl+D</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+D</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="767"/>
         <source>C</source>
-        <translation type="unfinished"></translation>
+        <translation>C</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="768"/>
         <source>R</source>
-        <translation type="unfinished"></translation>
+        <translation>R</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="769"/>
         <source>Z</source>
-        <translation type="unfinished"></translation>
+        <translation>Z</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="770"/>
         <source>K</source>
-        <translation type="unfinished"></translation>
+        <translation>K</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="771"/>
         <source>H</source>
-        <translation type="unfinished"></translation>
+        <translation>H</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="772"/>
         <source>M</source>
-        <translation type="unfinished"></translation>
+        <translation>M</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="773"/>
         <source>U</source>
-        <translation type="unfinished"></translation>
+        <translation>U</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="774"/>
@@ -3940,7 +3942,7 @@ Skaalataanko tuotu tieto?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="775"/>
         <source>Ctrl+M</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+M</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="883"/>
@@ -5619,13 +5621,15 @@ zoomaa hiiren rullalla.</translation>
         <location filename="../src/gui/print_widget.cpp" line="179"/>
         <source>Vector
 graphics</source>
-        <translation type="unfinished"></translation>
+        <translation>Vektori-
+grafiikka</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="180"/>
         <source>Raster
 graphics</source>
-        <translation type="unfinished"></translation>
+        <translation>Bittikartta-
+grafiikka</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="181"/>
@@ -6057,7 +6061,7 @@ separations</source>
     <message>
         <location filename="../src/gui/select_crs_dialog.cpp" line="62"/>
         <source>Same as map</source>
-        <translation type="unfinished"></translation>
+        <translation>Sama kuin kartalla</translation>
     </message>
     <message>
         <location filename="../src/gui/select_crs_dialog.cpp" line="68"/>
