@@ -368,7 +368,7 @@ add_dependencies(Mapper_Common
 )
 target_link_libraries(Mapper_Common
   libocad
-  polyclipping
+  Polyclipping::Polyclipping
   printsupport
   ${PROJ_LIBRARY}
   Qt5::Widgets
