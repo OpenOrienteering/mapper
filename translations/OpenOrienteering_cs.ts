@@ -439,7 +439,7 @@
     <message>
         <location filename="../src/color_dock_widget.cpp" line="64"/>
         <source>Duplicate</source>
-        <translation>Duplikovat</translation>
+        <translation>Zdvojit</translation>
     </message>
     <message>
         <location filename="../src/color_dock_widget.cpp" line="77"/>
@@ -475,7 +475,7 @@
         <location filename="../src/color_dock_widget.cpp" line="206"/>
         <source> (Duplicate)</source>
         <translatorcomment>Remove initial space from tr.</translatorcomment>
-        <translation> (Duplikovat)</translation>
+        <translation> (Zdvojit)</translation>
     </message>
     <message>
         <source>Error</source>
@@ -3348,7 +3348,7 @@ Změnit měřítko importovaných dat na měřítko mapy?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="853"/>
         <source>Duplicate</source>
-        <translation>Duplikovat</translation>
+        <translation>Zdvojit</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="854"/>
@@ -4139,7 +4139,7 @@ symbolů</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="2163"/>
         <source>Duplicate the selected object(s).</source>
-        <translation>Zduplikuje vybrané objekty.</translation>
+        <translation>Zdvojí vybrané objekty.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2161"/>
@@ -4254,7 +4254,7 @@ symbolů</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="2369"/>
         <source>%1 object(s) duplicated</source>
-        <translation>%1 objekt(y) duplikován(y)</translation>
+        <translation>%1 objekt(y) zdvojen(y)</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2581"/>
@@ -4384,7 +4384,7 @@ symbolů</translation>
         <location filename="future_translations.cpp" line="49"/>
         <source>Duplicate the selected objects.</source>
         <extracomment>To replace existing translation which uses "object(s)".</extracomment>
-        <translation>Duplikuje vybrané objekty.</translation>
+        <translation>Zdvojí vybrané objekty.</translation>
     </message>
     <message>
         <location filename="future_translations.cpp" line="52"/>
@@ -4420,12 +4420,10 @@ symbolů</translation>
         <location filename="future_translations.cpp" line="67"/>
         <source>Duplicated %n object(s)</source>
         <extracomment>To replace existing translation which doesn't use plural correctly</extracomment>
-        <translation>
-            <numerusform>Duplikován %n objekt</numerusform>
-            <numerusform>Duplikovány %n objekty</numerusform>
-            <numerusform>Duplikováno %n objektů</numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>Zdvojen %n objekt</numerusform>
+        <numerusform>Zdvojeny %n objekty</numerusform>
+        <numerusform>Zdvojeno %n objektů</numerusform>
+        </translation></message>
     <message>
         <location filename="future_translations.cpp" line="70"/>
         <source>No objects were selected because there are no objects with the selected symbols.</source>
@@ -4794,12 +4792,12 @@ mapy. Změna zvětšení je možná pomocí kolečka myši.</translation>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="2304"/>
         <source>In text symbol %1: ignoring underlining</source>
-        <translation>V textovém symbolu %1: ignoruji podtržení</translation>
+        <translation>V textovém symbolu %1: přehlíží se podtržení</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="2306"/>
         <source>In text symbol %1: ignoring kerning</source>
-        <translation>V textovém symbolu %1: ignoruji podřezávání</translation>
+        <translation>V textovém symbolu %1: přehlíží se podřezávání</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="2721"/>
@@ -4881,17 +4879,17 @@ mapy. Změna zvětšení je možná pomocí kolečka myši.</translation>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="615"/>
         <source>Line symbol %1: suppressing dash symbol at line ends.</source>
-        <translation>Liniový symbol %1: potlačuji symbol čárkování na koncích linie.</translation>
+        <translation>Liniový symbol %1: potlačuje se symbol čárkování na koncích linie.</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="753"/>
         <source>During import of text symbol %1: ignoring justified alignment</source>
-        <translation>Při importu textového symbolu %1 ignoruji zarovnání do bloku</translation>
+        <translation>Při importu textového symbolu %1: přehlíží se zarovnání do bloku</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="759"/>
         <source>During import of text symbol %1: ignoring custom weight (%2)</source>
-        <translation>Při importu textového symbolu %1 se ignoruje vlastní výška (%2)</translation>
+        <translation>Při importu textového symbolu %1 se ignoruje vlastní tloušťka písma (%2)</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="764"/>
@@ -4901,7 +4899,7 @@ mapy. Změna zvětšení je možná pomocí kolečka myši.</translation>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="769"/>
         <source>During import of text symbol %1: ignoring custom word spacing (%2%)</source>
-        <translation>Při importu textového symbolu %1 se ignorují vlastní rozestupy slov (%2%)</translation>
+        <translation>Při importu textového symbolu %1 se přehlíží vlastní rozestupy slov (%2%)</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="774"/>
@@ -4926,7 +4924,7 @@ mapy. Změna zvětšení je možná pomocí kolečka myši.</translation>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="1003"/>
         <source>Not importing text symbol, couldn't figure out path' (npts=%1): %2</source>
-        <translation>Textový symbol neimportuji, nepodařilo se vypátrat cestu (npts=%1): %2</translation>
+        <translation>Textový symbol se neimportuje, nepodařilo se vypátrat cestu (npts=%1): %2</translation>
     </message>
     <message>
         <source>Unable to import template: %1</source>
@@ -5072,7 +5070,7 @@ mapy. Změna zvětšení je možná pomocí kolečka myši.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1922"/>
         <source>Ignoring custom weight (%1).</source>
-        <translation>Ignoruji vlastní výšku (%1).</translation>
+        <translation>Přehlíží se vlastní tloušťka písma (%1).</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1959"/>
@@ -5082,17 +5080,17 @@ mapy. Změna zvětšení je možná pomocí kolečka myši.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1964"/>
         <source>Ignoring custom word spacing (%1 %).</source>
-        <translation>Ignoruji vlastní rozestupy slov (%1 %).</translation>
+        <translation>Přehlíží se vlastní rozestupy slov (%1 %).</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1988"/>
         <source>Ignoring custom indents (%1/%2).</source>
-        <translation>Ignoruji vlastní odsazení (%1/%2).</translation>
+        <translation>Přehlíží se vlastní odsazení (%1/%2).</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="2010"/>
         <source>Ignoring text framing (mode %1).</source>
-        <translation>Ignoruji rámování textu (režim %1).</translation>
+        <translation>Přehlíží se rámování textu (režim %1).</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1381"/>
@@ -6331,7 +6329,7 @@ barev</translation>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="247"/>
         <source>Duplicate</source>
-        <translation>Duplikovat</translation>
+        <translation>Zdvojit</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="248"/>
@@ -6987,7 +6985,7 @@ Pokud ovšem není vaším úmyslem na tento podklad kreslit, nejedná se o prob
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="203"/>
         <source>Duplicate</source>
-        <translation>Duplikovat</translation>
+        <translation>Zdvojit</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="221"/>
@@ -7228,7 +7226,7 @@ Pokud ovšem není vaším úmyslem na tento podklad kreslit, nejedná se o prob
     <message>
         <location filename="../src/template_track.cpp" line="411"/>
         <source>Should the waypoints be imported as a line going through all points?</source>
-        <translation>Mají se waypointy importovat jako linie vedoucí skrze všechny body?</translation>
+        <translation>Mají se body GPS (cestovní body) importovat jako linie vedoucí skrze všechny body?</translation>
     </message>
     <message>
         <location filename="../src/template_track.cpp" line="478"/>
@@ -7557,7 +7555,7 @@ Nejvyšší podporovaná verze je %2.</translation>
         <location filename="../src/undo_manager.cpp" line="121"/>
         <source>Cannot undo because the last undo step became invalid. This can for example happen if you change the symbol of an object to another and then delete the old symbol.</source>
         <translatorcomment>Original diskutabel</translatorcomment>
-        <translation>Nelze vrátit zpět, protože poslední uložený krok je neplatný. To se může stát, když byl například změníte symbol objektu na jiný, a potom tento starý symbol smažete.</translation>
+        <translation>Nelze vrátit zpět, protože poslední uložený krok je neplatný. To se může stát, když například změníte symbol objektu na jiný, a potom tento starý symbol smažete.</translation>
     </message>
     <message>
         <location filename="../src/undo_manager.cpp" line="127"/>
