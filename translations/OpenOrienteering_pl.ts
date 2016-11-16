@@ -2167,7 +2167,7 @@
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="32"/>
         <source>OCAD</source>
-        <translation type="unfinished"></translation>
+        <translation>OCAD</translation>
     </message>
     <message>
         <location filename="../src/object.cpp" line="460"/>
