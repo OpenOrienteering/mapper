@@ -5,44 +5,44 @@
     <name>AboutDialog</name>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="94"/>
-        <location filename="../src/gui/about_dialog.cpp" line="157"/>
+        <location filename="../src/gui/about_dialog.cpp" line="160"/>
         <source>About %1</source>
         <translation>Over %1</translation>
     </message>
     <message>
-        <location filename="../src/gui/about_dialog.cpp" line="161"/>
+        <location filename="../src/gui/about_dialog.cpp" line="164"/>
         <source>This program is free software: you can redistribute it and/or modify it under the terms of the &lt;a %1&gt;GNU General Public License (GPL), version&amp;nbsp;3&lt;/a&gt;, as published by the Free Software Foundation.</source>
         <translation>Deze software is gratis: het mag gedistribueerd en/of aangepast worden onder de voorwaarden &lt;a %1&gt;GNU General Public License (GPL), Version&amp;nbsp;3&lt;/a&gt;, zoals gepubliceerd door de Free Software Foundation.</translation>
     </message>
     <message>
-        <location filename="../src/gui/about_dialog.cpp" line="166"/>
+        <location filename="../src/gui/about_dialog.cpp" line="169"/>
         <source>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License (GPL), version&amp;nbsp;3, for &lt;a %1&gt;more details&lt;/a&gt;.</source>
         <translation>Dit programma wordt verspreid in de veronderstelling dat het nuttig zal zijn, maar ZONDER ENIGE GARANTIE; zelfs zonder de impliciete garantie van verkoopbaarheid of geschiktheid voor een bepaald doel. Voor &lt;a %1&gt;details&lt;/a&gt;, zie de GNU General Public License, Version&amp;nbsp;3.</translation>
     </message>
     <message>
-        <location filename="../src/gui/about_dialog.cpp" line="171"/>
+        <location filename="../src/gui/about_dialog.cpp" line="174"/>
         <source>&lt;a %1&gt;All about licenses, copyright notices, conditions and disclaimers.&lt;/a&gt;</source>
         <translation>&lt;a %1&gt;Alles over licenties, auteursrechtduidingen, voorwaarden en disclaimers.&lt;/a&gt;</translation>
     </message>
     <message>
-        <location filename="../src/gui/about_dialog.cpp" line="173"/>
+        <location filename="../src/gui/about_dialog.cpp" line="176"/>
         <source>The OpenOrienteering developers in alphabetical order:</source>
         <translation>De OpenOrienteering-ontwikkelaars in alfabetische volgorde:</translation>
     </message>
     <message>
-        <location filename="../src/gui/about_dialog.cpp" line="174"/>
+        <location filename="../src/gui/about_dialog.cpp" line="177"/>
         <source>(project initiator)</source>
         <translation>(initiatiefnemer)</translation>
     </message>
     <message>
         <location filename="../packaging/translations.cpp" line="14"/>
-        <location filename="../src/gui/about_dialog.cpp" line="159"/>
+        <location filename="../src/gui/about_dialog.cpp" line="162"/>
         <source>A free software for drawing orienteering maps</source>
         <extracomment>For the moment, we use this existing translation instead of the previous one.</extracomment>
         <translation>Een gratis programma voor het tekenen van oriëntatieloop kaarten</translation>
     </message>
     <message>
-        <location filename="../src/gui/about_dialog.cpp" line="175"/>
+        <location filename="../src/gui/about_dialog.cpp" line="178"/>
         <source>For contributions, thanks to:</source>
         <translation>Dank voor bijdragen gaat uit naar:</translation>
     </message>
@@ -1617,7 +1617,7 @@
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="130"/>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="283"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="281"/>
         <source>More...</source>
         <translation>Meer...</translation>
     </message>
@@ -1651,33 +1651,33 @@
         <translation>Het programma moet worden herstart om de gewijzigde taal te gebruiken!</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="325"/>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="331"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="323"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="329"/>
         <source>Open translation</source>
         <translation>Open taal-bestand</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="325"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="323"/>
         <source>Translation files (*.qm)</source>
         <translation>Taal-bestanden (*.qm)</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="332"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="330"/>
         <source>The selected file is not a valid translation.</source>
         <translation>Geen geldig taal-bestand gekozen.</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="362"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="360"/>
         <source>%1 x %2</source>
         <translation>%1 x %2</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="363"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="361"/>
         <source>Primary screen resolution in pixels:</source>
         <translation>Hoofdscherm resolutie in pixels:</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="367"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="365"/>
         <source>Primary screen size in inches (diagonal):</source>
         <translation>Grootte (diagonaal) van hoofdscherm in inches:</translation>
     </message>

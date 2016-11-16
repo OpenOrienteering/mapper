@@ -5,32 +5,32 @@
     <name>AboutDialog</name>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="94"/>
-        <location filename="../src/gui/about_dialog.cpp" line="157"/>
+        <location filename="../src/gui/about_dialog.cpp" line="160"/>
         <source>About %1</source>
         <translation>%1 について</translation>
     </message>
     <message>
-        <location filename="../src/gui/about_dialog.cpp" line="161"/>
+        <location filename="../src/gui/about_dialog.cpp" line="164"/>
         <source>This program is free software: you can redistribute it and/or modify it under the terms of the &lt;a %1&gt;GNU General Public License (GPL), version&amp;nbsp;3&lt;/a&gt;, as published by the Free Software Foundation.</source>
         <translation>このプログラムはフリー ソフトウェアです: フリー ソフトウェア財団によって公開される &lt;a %1&gt;GNU 一般公衆利用許諾書 (GPL)、バージョン&amp;nbsp;3&lt;/a&gt; の条件の下で再配布および/または変更することができます。</translation>
     </message>
     <message>
-        <location filename="../src/gui/about_dialog.cpp" line="166"/>
+        <location filename="../src/gui/about_dialog.cpp" line="169"/>
         <source>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License (GPL), version&amp;nbsp;3, for &lt;a %1&gt;more details&lt;/a&gt;.</source>
         <translation>このプログラムは有用であることを願って頒布されますが、全くの無保証です。商業可能性の保証や特定目的への適合性は、言外に示されたものも 含め、全く存在しません。&lt;a %1&gt;詳細は&lt;/a&gt;GNU 一般公衆利用許諾書 (GPL)、バージョン&amp;nbsp;3 をご覧くださ い。</translation>
     </message>
     <message>
-        <location filename="../src/gui/about_dialog.cpp" line="171"/>
+        <location filename="../src/gui/about_dialog.cpp" line="174"/>
         <source>&lt;a %1&gt;All about licenses, copyright notices, conditions and disclaimers.&lt;/a&gt;</source>
         <translation>&lt;a %1&gt;ライセンス、著作権通知、条件、および免責事項に関するすべて。&lt;/a&gt;</translation>
     </message>
     <message>
-        <location filename="../src/gui/about_dialog.cpp" line="173"/>
+        <location filename="../src/gui/about_dialog.cpp" line="176"/>
         <source>The OpenOrienteering developers in alphabetical order:</source>
         <translation>アルファベット順の OpenOrienteering 開発者:</translation>
     </message>
     <message>
-        <location filename="../src/gui/about_dialog.cpp" line="174"/>
+        <location filename="../src/gui/about_dialog.cpp" line="177"/>
         <source>(project initiator)</source>
         <translation>(プロジェクト開始)</translation>
     </message>
@@ -40,7 +40,7 @@
     </message>
     <message>
         <location filename="../packaging/translations.cpp" line="14"/>
-        <location filename="../src/gui/about_dialog.cpp" line="159"/>
+        <location filename="../src/gui/about_dialog.cpp" line="162"/>
         <source>A free software for drawing orienteering maps</source>
         <extracomment>For the moment, we use this existing translation instead of the previous one.</extracomment>
         <translation>オリエンテーリング地図作成のための自由なソフトウェア</translation>
@@ -50,7 +50,7 @@
         <translation type="vanished">デベロッパ (アルファベット順):</translation>
     </message>
     <message>
-        <location filename="../src/gui/about_dialog.cpp" line="175"/>
+        <location filename="../src/gui/about_dialog.cpp" line="178"/>
         <source>For contributions, thanks to:</source>
         <translation>コントリビュータ:</translation>
     </message>
@@ -1595,7 +1595,7 @@
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="130"/>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="283"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="281"/>
         <source>More...</source>
         <translation>さらに表示...</translation>
     </message>
@@ -1624,33 +1624,33 @@
         <translation type="vanished">翻訳ファイルを使用...</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="325"/>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="331"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="323"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="329"/>
         <source>Open translation</source>
         <translation>翻訳ファイルを開く</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="325"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="323"/>
         <source>Translation files (*.qm)</source>
         <translation>翻訳ファイル(*.qm)</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="332"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="330"/>
         <source>The selected file is not a valid translation.</source>
         <translation>選択されたファイルは有効な翻訳ファイルではありません。</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="362"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="360"/>
         <source>%1 x %2</source>
         <translation>%1 x %2</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="363"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="361"/>
         <source>Primary screen resolution in pixels:</source>
         <translation>プライマリ画面解像度 (ピクセル):</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="367"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="365"/>
         <source>Primary screen size in inches (diagonal):</source>
         <translation>プライマリ画面サイズ インチ (対角):</translation>
     </message>

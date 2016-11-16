@@ -5,45 +5,45 @@
     <name>AboutDialog</name>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="94"/>
-        <location filename="../src/gui/about_dialog.cpp" line="157"/>
+        <location filename="../src/gui/about_dialog.cpp" line="160"/>
         <source>About %1</source>
         <translation>Sobre %1</translation>
     </message>
     <message>
-        <location filename="../src/gui/about_dialog.cpp" line="171"/>
+        <location filename="../src/gui/about_dialog.cpp" line="174"/>
         <source>&lt;a %1&gt;All about licenses, copyright notices, conditions and disclaimers.&lt;/a&gt;</source>
         <translation>&lt;a %1&gt;Tudo sobre licenças, notas de direitos autorais, condições e renúncias.&lt;/a&gt;</translation>
     </message>
     <message>
-        <location filename="../src/gui/about_dialog.cpp" line="173"/>
+        <location filename="../src/gui/about_dialog.cpp" line="176"/>
         <source>The OpenOrienteering developers in alphabetical order:</source>
         <translation>Desenvolvedores do OpenOrienteering em ordem alfabética:</translation>
     </message>
     <message>
-        <location filename="../src/gui/about_dialog.cpp" line="174"/>
+        <location filename="../src/gui/about_dialog.cpp" line="177"/>
         <source>(project initiator)</source>
         <translation>(iniciador do projeto)</translation>
     </message>
     <message>
         <location filename="../packaging/translations.cpp" line="14"/>
-        <location filename="../src/gui/about_dialog.cpp" line="159"/>
+        <location filename="../src/gui/about_dialog.cpp" line="162"/>
         <source>A free software for drawing orienteering maps</source>
         <extracomment>For the moment, we use this existing translation instead of the previous one.</extracomment>
         <translation>Um programa livre para desenho de mapas de orientação</translation>
     </message>
     <message>
-        <location filename="../src/gui/about_dialog.cpp" line="161"/>
+        <location filename="../src/gui/about_dialog.cpp" line="164"/>
         <source>This program is free software: you can redistribute it and/or modify it under the terms of the &lt;a %1&gt;GNU General Public License (GPL), version&amp;nbsp;3&lt;/a&gt;, as published by the Free Software Foundation.</source>
         <translation>Este programa é um aplicativo livre: você pode redistribuir e/ou modificar sob os termos de &lt;a %1&gt;GNU General Public License (GPL), version&amp;nbsp;3&lt;/a&gt;, as published by the Free Software Foundation.
 Tradução em Português-BR feita por João Manoel Franco.</translation>
     </message>
     <message>
-        <location filename="../src/gui/about_dialog.cpp" line="166"/>
+        <location filename="../src/gui/about_dialog.cpp" line="169"/>
         <source>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License (GPL), version&amp;nbsp;3, for &lt;a %1&gt;more details&lt;/a&gt;.</source>
         <translation>Este aplicativo é distribuído na esperança de ser útil, mas SEM NENHUMA GARANTIA; nem mesmo a garantia implícita de APTIDÃO PARA COMERCIALIZAÇÃO ou PARA UM DETERMINADO FIM. Veja a GNU General Public License (GPL), versão&amp;nbsp;3, para &lt;a %1&gt;mais detalhes&lt;/a&gt;.</translation>
     </message>
     <message>
-        <location filename="../src/gui/about_dialog.cpp" line="175"/>
+        <location filename="../src/gui/about_dialog.cpp" line="178"/>
         <source>For contributions, thanks to:</source>
         <translation>Agradecemos às seguintes pessoas pelas contribuições:</translation>
     </message>
@@ -1449,7 +1449,7 @@ Tradução em Português-BR feita por João Manoel Franco.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="130"/>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="283"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="281"/>
         <source>More...</source>
         <translation>Mais...</translation>
     </message>
@@ -1479,33 +1479,33 @@ Tradução em Português-BR feita por João Manoel Franco.</translation>
         <translation>O aplicativo deve ser reiniciado para que a mudança de língua tenha efeito!</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="325"/>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="331"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="323"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="329"/>
         <source>Open translation</source>
         <translation>Tradução livre</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="325"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="323"/>
         <source>Translation files (*.qm)</source>
         <translation>Arquivos de tradução (*.qm)</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="332"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="330"/>
         <source>The selected file is not a valid translation.</source>
         <translation>O arquivo selecionado não é uma tradução válida.</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="362"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="360"/>
         <source>%1 x %2</source>
         <translation>%1 x %2</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="363"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="361"/>
         <source>Primary screen resolution in pixels:</source>
         <translation>Resolução da tela inicial em pixels:</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="367"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="365"/>
         <source>Primary screen size in inches (diagonal):</source>
         <translation>Tamanho da tela inicial em polegadas (diagonal):</translation>
     </message>
@@ -2061,7 +2061,7 @@ Tradução em Português-BR feita por João Manoel Franco.</translation>
     </message>
     <message>
         <source>Failed to load template '%1'', reason: %2</source>
-        <translation>Falha ao carregar mapa base '%1', razão: %2</translation>
+        <translation type="vanished">Falha ao carregar mapa base '%1', razão: %2</translation>
     </message>
     <message>
         <location filename="../src/file_import_export.cpp" line="125"/>

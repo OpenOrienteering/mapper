@@ -5,32 +5,32 @@
     <name>AboutDialog</name>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="94"/>
-        <location filename="../src/gui/about_dialog.cpp" line="157"/>
+        <location filename="../src/gui/about_dialog.cpp" line="160"/>
         <source>About %1</source>
         <translation>%1</translation>
     </message>
     <message>
-        <location filename="../src/gui/about_dialog.cpp" line="161"/>
+        <location filename="../src/gui/about_dialog.cpp" line="164"/>
         <source>This program is free software: you can redistribute it and/or modify it under the terms of the &lt;a %1&gt;GNU General Public License (GPL), version&amp;nbsp;3&lt;/a&gt;, as published by the Free Software Foundation.</source>
         <translation>Tento program je svobodným programovým vybavením. Můžete jej šířit a /nebo upravovat za podmínek &lt;a %1&gt;GNU General Public License (GPL), verze&amp;nbsp;3&lt;/a&gt;, jak byla zveřejněna Free Software Foundation.</translation>
     </message>
     <message>
-        <location filename="../src/gui/about_dialog.cpp" line="166"/>
+        <location filename="../src/gui/about_dialog.cpp" line="169"/>
         <source>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License (GPL), version&amp;nbsp;3, for &lt;a %1&gt;more details&lt;/a&gt;.</source>
         <translation>Tento program je šířen v naději, že bude užitečný, ale BEZ JAKÉKOLI ZÁRUKY; také bez předpokládané záruky PRODEJNOSTI nebo POUŽITELNOSTI PRO NĚJAKÝ URČITÝ ÚČEL. &lt;a %1&gt;Další podrobnosti&lt;/a&gt; najdete v GNU General Public License (GPL), verze&amp;nbsp;3.</translation>
     </message>
     <message>
-        <location filename="../src/gui/about_dialog.cpp" line="171"/>
+        <location filename="../src/gui/about_dialog.cpp" line="174"/>
         <source>&lt;a %1&gt;All about licenses, copyright notices, conditions and disclaimers.&lt;/a&gt;</source>
         <translation>&lt;a %1&gt;Vše o povoleních, upozorněních autorského práva, podmínkách a zřeknutí se právních nároků.&lt;/a&gt;</translation>
     </message>
     <message>
-        <location filename="../src/gui/about_dialog.cpp" line="173"/>
+        <location filename="../src/gui/about_dialog.cpp" line="176"/>
         <source>The OpenOrienteering developers in alphabetical order:</source>
         <translation>Vývojáři OpenOrienteering v abecedním pořadí:</translation>
     </message>
     <message>
-        <location filename="../src/gui/about_dialog.cpp" line="174"/>
+        <location filename="../src/gui/about_dialog.cpp" line="177"/>
         <source>(project initiator)</source>
         <translation>(původce projektu)</translation>
     </message>
@@ -40,7 +40,7 @@
     </message>
     <message>
         <location filename="../packaging/translations.cpp" line="14"/>
-        <location filename="../src/gui/about_dialog.cpp" line="159"/>
+        <location filename="../src/gui/about_dialog.cpp" line="162"/>
         <source>A free software for drawing orienteering maps</source>
         <extracomment>For the moment, we use this existing translation instead of the previous one.</extracomment>
         <translation>Svobodný program na kreslení map pro orientační běh</translation>
@@ -54,7 +54,7 @@
         <translation type="vanished">Vývojáři v abecedním pořadí:</translation>
     </message>
     <message>
-        <location filename="../src/gui/about_dialog.cpp" line="175"/>
+        <location filename="../src/gui/about_dialog.cpp" line="178"/>
         <source>For contributions, thanks to:</source>
         <translation>Poděkování za přispění:</translation>
     </message>
@@ -1477,7 +1477,7 @@
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="130"/>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="283"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="281"/>
         <source>More...</source>
         <translation>Více...</translation>
     </message>
@@ -1511,34 +1511,34 @@
         <translation type="vanished">Použít soubor s překladem...</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="325"/>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="331"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="323"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="329"/>
         <source>Open translation</source>
         <translatorcomment>-datei hinzugefügt</translatorcomment>
         <translation>Otevřít soubor s překladem</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="325"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="323"/>
         <source>Translation files (*.qm)</source>
         <translation>Soubory s překlady (*.qm)</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="332"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="330"/>
         <source>The selected file is not a valid translation.</source>
         <translation>Vybraný soubor není platným překladem.</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="362"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="360"/>
         <source>%1 x %2</source>
         <translation>%1 x %2</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="363"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="361"/>
         <source>Primary screen resolution in pixels:</source>
         <translation>Rozlišení hlavní obrazovky v pixelech:</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="367"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="365"/>
         <source>Primary screen size in inches (diagonal):</source>
         <translation>Velikost hlavní obrazovky v palcích (úhlopříčně):</translation>
     </message>
@@ -4420,10 +4420,12 @@ symbolů</translation>
         <location filename="future_translations.cpp" line="67"/>
         <source>Duplicated %n object(s)</source>
         <extracomment>To replace existing translation which doesn't use plural correctly</extracomment>
-        <translation><numerusform>Zdvojen %n objekt</numerusform>
-        <numerusform>Zdvojeny %n objekty</numerusform>
-        <numerusform>Zdvojeno %n objektů</numerusform>
-        </translation></message>
+        <translation>
+            <numerusform>Zdvojen %n objekt</numerusform>
+            <numerusform>Zdvojeny %n objekty</numerusform>
+            <numerusform>Zdvojeno %n objektů</numerusform>
+        </translation>
+    </message>
     <message>
         <location filename="future_translations.cpp" line="70"/>
         <source>No objects were selected because there are no objects with the selected symbols.</source>

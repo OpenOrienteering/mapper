@@ -5,7 +5,7 @@
     <name>AboutDialog</name>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="94"/>
-        <location filename="../src/gui/about_dialog.cpp" line="157"/>
+        <location filename="../src/gui/about_dialog.cpp" line="160"/>
         <source>About %1</source>
         <translation>%1 névjegye</translation>
     </message>
@@ -18,40 +18,40 @@
         <translation type="vanished">Kattins a megtekintéshez</translation>
     </message>
     <message>
-        <location filename="../src/gui/about_dialog.cpp" line="171"/>
+        <location filename="../src/gui/about_dialog.cpp" line="174"/>
         <source>&lt;a %1&gt;All about licenses, copyright notices, conditions and disclaimers.&lt;/a&gt;</source>
         <translation>&lt;a %1&gt;Minden engedélyekről, szerzői jogi értesítésekről, feltételekről és lemondásokról.&lt;/a&gt;</translation>
     </message>
     <message>
-        <location filename="../src/gui/about_dialog.cpp" line="173"/>
+        <location filename="../src/gui/about_dialog.cpp" line="176"/>
         <source>The OpenOrienteering developers in alphabetical order:</source>
         <translation>Az OpenOrienteering fejlesztői névsorban:</translation>
     </message>
     <message>
-        <location filename="../src/gui/about_dialog.cpp" line="174"/>
+        <location filename="../src/gui/about_dialog.cpp" line="177"/>
         <source>(project initiator)</source>
         <translation>(projekt kezdeményező)</translation>
     </message>
     <message>
         <location filename="../packaging/translations.cpp" line="14"/>
-        <location filename="../src/gui/about_dialog.cpp" line="159"/>
+        <location filename="../src/gui/about_dialog.cpp" line="162"/>
         <source>A free software for drawing orienteering maps</source>
         <extracomment>For the moment, we use this existing translation instead of the previous one.</extracomment>
         <translatorcomment>Tartalmilag ez az igazság</translatorcomment>
         <translation>Egy szabad szoftver tájékozódási sportok térkpeinek rajzolásához</translation>
     </message>
     <message>
-        <location filename="../src/gui/about_dialog.cpp" line="161"/>
+        <location filename="../src/gui/about_dialog.cpp" line="164"/>
         <source>This program is free software: you can redistribute it and/or modify it under the terms of the &lt;a %1&gt;GNU General Public License (GPL), version&amp;nbsp;3&lt;/a&gt;, as published by the Free Software Foundation.</source>
         <translation>Ez a program egy szabad szoftver, ami a &lt;a %1&gt; GNU General Public License (GPL) &amp;nbsp;3. verziója&lt;/a&gt; - (ahogy a Szabad Szoftver Alapítvány kiadta)- szerint terjeszthető és/ vagy módosítható.</translation>
     </message>
     <message>
-        <location filename="../src/gui/about_dialog.cpp" line="166"/>
+        <location filename="../src/gui/about_dialog.cpp" line="169"/>
         <source>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License (GPL), version&amp;nbsp;3, for &lt;a %1&gt;more details&lt;/a&gt;.</source>
         <translation>Ezt a programot abban a reményben terjesztik, hogy hasznos lesz, de BÁRMILYEN GARANCIA NÉLKÜL beleértve az ELADHATÓSÁGRA vagy BÁRMELY MÁS KÜLÖNÖS CÉLRA vonatkozóan. Lásd a GNU General Public License (GPL), 3. verzióját&amp;nbsp; &lt;egy %1&gt;részletek&lt;/a&gt;.</translation>
     </message>
     <message>
-        <location filename="../src/gui/about_dialog.cpp" line="175"/>
+        <location filename="../src/gui/about_dialog.cpp" line="178"/>
         <source>For contributions, thanks to:</source>
         <translation>A hozzájárulásért köszönet nekik:</translation>
     </message>
@@ -1465,7 +1465,7 @@
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="130"/>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="283"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="281"/>
         <source>More...</source>
         <translation>Tovább...</translation>
     </message>
@@ -1499,33 +1499,33 @@
         <translation type="vanished">Használja a fordítás fájlt...</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="325"/>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="331"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="323"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="329"/>
         <source>Open translation</source>
         <translation>Fordítás megnyitása</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="325"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="323"/>
         <source>Translation files (*.qm)</source>
         <translation>Fordítás fájlok (*.qm)</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="332"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="330"/>
         <source>The selected file is not a valid translation.</source>
         <translation>A kiválasztott fájl érvénytelen fordítás.</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="362"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="360"/>
         <source>%1 x %2</source>
         <translation type="unfinished">%1 x %2</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="363"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="361"/>
         <source>Primary screen resolution in pixels:</source>
         <translation>Az elsődleges képernyő felbontása képpontokban:</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/general_settings_page.cpp" line="367"/>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="365"/>
         <source>Primary screen size in inches (diagonal):</source>
         <translation>Az elsődleges képernyő mérete inchekben (átló):</translation>
     </message>
