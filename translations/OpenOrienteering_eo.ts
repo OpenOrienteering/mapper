@@ -3051,7 +3051,7 @@ Rescale the imported data?</source>
         <location filename="../src/map_editor.cpp" line="918"/>
         <location filename="../src/map_editor.cpp" line="3446"/>
         <source>Add new part...</source>
-        <translation type="unfinished"></translation>
+        <translation>Aldoni novan parton...</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="919"/>
