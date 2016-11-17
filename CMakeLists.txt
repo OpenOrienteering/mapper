@@ -213,7 +213,7 @@ if(Mapper_BUILD_CLIPPER)
 	add_feature_info(Mapper_BUILD_CLIPPER 1 "version: ${CLIPPER_VERSION}")
 	add_library(Polyclipping::Polyclipping ALIAS polyclipping)
 else()
-	find_package(Polyclipping 6.1.3#[[a]] EXACT MODULE REQUIRED)
+	find_package(Polyclipping 6.1.3 EXACT MODULE REQUIRED)
 	set(CLIPPER_VERSION "${POLYCLIPPING_VERSION}a")
 endif()
 
