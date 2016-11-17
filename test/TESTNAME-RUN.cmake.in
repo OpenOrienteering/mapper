@@ -16,18 +16,18 @@
 #    You should have received a copy of the GNU General Public License
 #    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
 
-# @TESTNAME@-RUN.cmake is generated from TESTNAME-RUN.cmake.in
+# @testname@-RUN.cmake is generated from TESTNAME-RUN.cmake.in
 
 # Run the test executable
 execute_process(
-  COMMAND @CMAKE_CURRENT_BINARY_DIR@/@TESTNAME@ 
+  COMMAND @CMAKE_CURRENT_BINARY_DIR@/@testname@ 
   RESULT_VARIABLE TEST_RESULT
 )
 
 if(TEST_RESULT EQUAL 0)
 	# Test succesful, update stamp file
 	execute_process(
-	  COMMAND ${CMAKE_COMMAND} -E touch @TESTNAME@-RUN.stamp 
+	  COMMAND ${CMAKE_COMMAND} -E touch @testname@-RUN.stamp 
 	  WORKING_DIRECTORY @CMAKE_CURRENT_BINARY_DIR@
 	)
 else()

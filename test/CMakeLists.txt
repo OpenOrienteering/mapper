@@ -35,6 +35,57 @@ add_definitions(
   -DQT_USE_QSTRINGBUILDER
 )
 
+# This function defines a test from a list of source file names 
+# (without ending). For each filename, a .cpp file and .h must exist.
+# The .h file is processed with Qt's moc.
+# The first filename is also used as the name of the executable file and
+# as the name of the test.
+#
+# The test executable is linked only to external libraries by default. 
+# It only needs to be rebuild and run when one of its components was modified.
+# Additional link libraries may be added to the executable target as usual.
+#
+# The autorun parameter controls whether the test will be run automatically
+# when executing Mapper-with-test.
+#
+function(add_test_helper testname autorun)
+	unset(TEST_${testname}_SRCS)
+	unset(TEST_${testname}_HDRS)
+	set(manual_test 0)
+	foreach(arg ${ARGN})
+		if("${arg}" STREQUAL "MANUAL")
+			set(manual_test 1)
+		else()
+			list(APPEND TEST_${testname}_SRCS ${arg}.cpp)
+			list(APPEND TEST_${testname}_HDRS ${arg}.h)
+			if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${arg}_p.h)
+				list(APPEND TEST_${testname}_HDRS ${arg}_p.h)
+			endif()
+		endif()
+	endforeach()
+	qt5_wrap_cpp(TEST_${testname}_MOC ${testname}.h)
+	qt5_wrap_cpp(TEST_${testname}_XTRA_MOC ${TEST_${testname}_HDRS} OPTIONS -nw)
+	add_executable(${testname} ${testname}.cpp ${TEST_${testname}_SRCS} ${TEST_${testname}_MOC} ${TEST_${testname}_XTRA_MOC})
+	target_link_libraries(${testname}
+	  proj4::proj
+	  Qt5::Test
+	  Qt5::Widgets
+	  Polyclipping::Polyclipping
+	)
+	if(NOT manual_test)
+		configure_file(TESTNAME-RUN.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/${testname}-RUN.cmake @ONLY)
+		add_test(${testname} ${CMAKE_COMMAND} -P ${testname}-RUN.cmake)
+		add_custom_command(OUTPUT ${testname}-RUN.stamp
+		  COMMAND ${CMAKE_COMMAND} -P ${testname}-RUN.cmake
+		  DEPENDS ${testname}
+		)
+		if(autorun)
+			set_property(DIRECTORY APPEND PROPERTY Mapper_AUTORUN_TESTS ${testname})
+		endif()
+	endif()
+endfunction()
+
+
 # This function defines a unit test from a list of source file names 
 # (without ending). For each filename, a .cpp file and .h must exist.
 # The .h file is processed with Qt's moc.
@@ -46,36 +97,8 @@ add_definitions(
 # Additional link libraries may be added to the executable target as usual.
 #
 function(add_unit_test testname)
-	unset(TEST_${testname}_SRCS)
-	unset(TEST_${testname}_HDRS)
-	set(manual_test 0)
-	foreach(arg ${ARGN})
-		if("${arg}" STREQUAL "MANUAL")
-			set(manual_test 1)
-			continue()
-		endif()
-		list(APPEND TEST_${testname}_SRCS ${arg}.cpp)
-		list(APPEND TEST_${testname}_HDRS ${arg}.h)
-		if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${arg}_p.h)
-			list(APPEND TEST_${testname}_HDRS ${arg}_p.h)
-		endif()
-	endforeach(arg)
-	qt5_wrap_cpp(TEST_${testname}_MOC ${testname}.h)
-	qt5_wrap_cpp(TEST_${testname}_XTRA_MOC ${TEST_${testname}_HDRS} OPTIONS -nw)
-	add_executable(${testname} ${testname}.cpp ${TEST_${testname}_SRCS} ${TEST_${testname}_MOC} ${TEST_${testname}_XTRA_MOC})
-	target_link_libraries(${testname} libocad proj4::proj Qt5::Test Qt5::Widgets Polyclipping::Polyclipping)
-	if(manual_test)
-		return()
-	endif()
-	set(TESTNAME ${testname}) # required for configure_file
-	configure_file(TESTNAME-RUN.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/${testname}-RUN.cmake @ONLY)
-	add_test(${testname} ${CMAKE_COMMAND} -P ${testname}-RUN.cmake)
-	add_custom_command(OUTPUT ${testname}-RUN.stamp
-	  COMMAND ${CMAKE_COMMAND} -P ${testname}-RUN.cmake
-	  DEPENDS ${testname}
-	)
-	set_property(DIRECTORY APPEND PROPERTY Mapper_AUTORUN_TESTS ${testname})
-endfunction(add_unit_test)
+	add_test_helper("${testname}" 1 ${ARGN})
+endfunction()
 
 
 # This function defines a system test from a list of source file names 
@@ -88,38 +111,12 @@ endfunction(add_unit_test)
 # That is why it will be rebuild and run very often.
 #
 function(add_system_test testname)
-	unset(TEST_${testname}_SRCS)
-	unset(TEST_${testname}_HDRS)
-	set(manual_test 0)
-	foreach(arg ${ARGN})
-		if("${arg}" STREQUAL "MANUAL")
-			set(manual_test 1)
-			continue()
-		endif()
-		list(APPEND TEST_${testname}_SRCS ${arg}.cpp)
-		list(APPEND TEST_${testname}_HDRS ${arg}.h)
-		if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${arg}_p.h)
-			list(APPEND TEST_${testname}_HDRS ${arg}_p.h)
-		endif()
-	endforeach(arg)
-	qt5_wrap_cpp(TEST_${testname}_MOC ${testname}.h)
-	qt5_wrap_cpp(TEST_${testname}_XTRA_MOC ${TEST_${testname}_HDRS} OPTIONS -nw)
-	add_executable(${testname} ${testname}.cpp ${TEST_${testname}_SRCS} ${TEST_${testname}_MOC} ${TEST_${testname}_XTRA_MOC})
-	target_link_libraries(${testname} Mapper_Common libocad proj4::proj Qt5::Test Qt5::Widgets Polyclipping::Polyclipping)
-	if(manual_test)
-		return()
-	endif()
-	set(TESTNAME ${testname}) # required for configure_file
-	configure_file(TESTNAME-RUN.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/${testname}-RUN.cmake @ONLY)
-	add_test(${testname} ${CMAKE_COMMAND} -P ${testname}-RUN.cmake)
-	add_custom_command(OUTPUT ${testname}-RUN.stamp
-	  COMMAND ${CMAKE_COMMAND} -P ${testname}-RUN.cmake
-	  DEPENDS ${testname}
+	add_test_helper("${testname}" ${Mapper_AUTORUN_SYSTEM_TESTS} ${ARGN})
+	target_link_libraries(${testname}
+	  Mapper_Common
+	  libocad
 	)
-	if(Mapper_AUTORUN_SYSTEM_TESTS)
-		set_property(DIRECTORY APPEND PROPERTY Mapper_AUTORUN_TESTS ${testname})
-	endif()
-endfunction(add_system_test)
+endfunction()
 
 
 # Include generated files (moc ouput, build configuration)
@@ -165,7 +162,7 @@ configure_file(AUTORUN_TESTS.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/AUTORUN_TESTS.
 
 
 # This executable first runs all tests which are marked for auto-run. If the
-# tests don't fail, it start the Mapper executable. Unlike the default "test"
+# tests don't fail, it starts the Mapper executable. Unlike the default "test"
 # target, it is displayed in Qt Creator's project view, and when run, it prints
 # the output of failed tests.
 add_executable(Mapper-with-test mapper_t.cpp)
