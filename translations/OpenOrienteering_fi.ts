@@ -77,7 +77,7 @@
     <message>
         <location filename="../src/gui/widgets/action_grid_bar.cpp" line="53"/>
         <source>Show remaining items</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Näytä jäljellä olevat kohteet</translation>
     </message>
 </context>
 <context>
@@ -825,7 +825,7 @@
         <location filename="../src/tool_draw_circle.cpp" line="59"/>
         <source>From center</source>
         <comment>Draw circle starting from center</comment>
-        <translation type="unfinished"></translation>
+        <translation>Keskuksesta</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_circle.cpp" line="294"/>
@@ -916,7 +916,7 @@
         <location filename="../src/tool_draw_path.cpp" line="89"/>
         <source>Snap</source>
         <comment>Snap to existing objects</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Napsahda</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="90"/>
@@ -980,7 +980,7 @@
         <location filename="../src/tool_draw_point.cpp" line="60"/>
         <source>Snap</source>
         <comment>Snap to existing objects</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Napsahda</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_point.cpp" line="61"/>
@@ -1009,7 +1009,7 @@
         <location filename="../src/tool_draw_point.cpp" line="323"/>
         <location filename="../src/tool_draw_point.cpp" line="337"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Create a point object.</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Klikkaa&lt;/b&gt;: Piirrä pistemäinen kohde.</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_point.cpp" line="324"/>
@@ -1037,7 +1037,7 @@
         <location filename="../src/tool_draw_rectangle.cpp" line="79"/>
         <source>Snap</source>
         <comment>Snap to existing objects</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Napsahda</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_rectangle.cpp" line="80"/>
@@ -1082,7 +1082,7 @@
     <message>
         <location filename="../src/tool_draw_text.cpp" line="375"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Finish editing. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Lopeta muokkaus. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_text.cpp" line="379"/>
@@ -1100,7 +1100,7 @@
         <location filename="../src/tool_edit_line.cpp" line="345"/>
         <source>Snap</source>
         <comment>Snap to existing objects</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Napsahdus</translation>
     </message>
     <message>
         <location filename="../src/tool_edit_line.cpp" line="346"/>
@@ -1125,7 +1125,7 @@
         <location filename="../src/tool_edit_point.cpp" line="490"/>
         <source>Snap</source>
         <comment>Snap to existing objects</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Napsahdus</translation>
     </message>
     <message>
         <location filename="../src/tool_edit_point.cpp" line="491"/>
@@ -1142,7 +1142,7 @@
     <message>
         <location filename="../src/tool_edit_point.cpp" line="642"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Finish editing. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Lopeta muokkaus. </translation>
     </message>
     <message>
         <location filename="../src/tool_edit_point.cpp" line="662"/>
@@ -1378,7 +1378,7 @@
     <message>
         <location filename="../src/gps_display.cpp" line="88"/>
         <source>GPS is disabled in the device settings. Open settings now?</source>
-        <translation type="unfinished"></translation>
+        <translation>GPS on poistettu käytöstä laitteen asetuksissa. Avaako asetukset nyt?</translation>
     </message>
     <message>
         <location filename="../src/gps_display.cpp" line="89"/>
@@ -1426,12 +1426,12 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="101"/>
         <source>Retain compatibility with Mapper %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Säilytä yhteensopivuus Mapper %1:n kanssa</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="106"/>
         <source>Save information for automatic recovery</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Tallenna tietoja automaattisen palauttamiselle</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="110"/>
@@ -1463,7 +1463,7 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="116"/>
         <source>Default</source>
-        <translation type="unfinished">Oletusarvo</translation>
+        <translation>Oletusarvo</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="139"/>
@@ -1513,12 +1513,12 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="361"/>
         <source>Primary screen resolution in pixels:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ensisijainen näytön resoluutio pikseleissä:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="365"/>
         <source>Primary screen size in inches (diagonal):</source>
-        <translation type="unfinished"></translation>
+        <translation>Ensisijainen näytön koko tuumissa (diagonaali):</translation>
     </message>
 </context>
 <context>
@@ -1541,7 +1541,7 @@
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="61"/>
         <source>UTM Zone (number north/south)</source>
-        <translation type="unfinished"></translation>
+        <translation>UTM Kaista (numero N/S)</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="68"/>
@@ -1564,13 +1564,13 @@
         <location filename="../src/core/crs_template_implementation.cpp" line="80"/>
         <source>by EPSG code</source>
         <comment>as in: The CRS is specified by EPSG code</comment>
-        <translation type="unfinished"></translation>
+        <translation>EPSG-koodilla</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="82"/>
         <source>EPSG @code@ coordinates</source>
         <extracomment>Don't translate @code@. It is placeholder.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>EPSG @code@ koordinaatit</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="93"/>
@@ -1587,7 +1587,7 @@
         <location filename="../src/core/crs_template_implementation.cpp" line="92"/>
         <source>Custom PROJ.4</source>
         <comment>PROJ.4 specification</comment>
-        <translation type="unfinished"></translation>
+        <translation>Muokattu PROJ.4</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="96"/>
@@ -1847,7 +1847,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="504"/>
         <source>locked</source>
-        <translation type="unfinished"></translation>
+        <translation>lukittu</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="644"/>
@@ -1882,7 +1882,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="702"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set the reference point. &lt;b&gt;Right click&lt;/b&gt;: Cancel.</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Klikkaa&lt;/b&gt;: Aseta vertailupiste. &lt;b&gt;Klikkaa oikealla&lt;/b&gt;: Peruuta.</translation>
     </message>
 </context>
 <context>
@@ -2085,7 +2085,7 @@
     <message>
         <location filename="../src/object.cpp" line="460"/>
         <source>Error while loading an object of type %1 at %2:%3: %4</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Virhe lastaus %1-tyyppinen objekti: %2:%3: %4</translation>
     </message>
     <message>
         <location filename="../src/object.cpp" line="428"/>
@@ -2146,11 +2146,9 @@
     <message numerus="yes">
         <location filename="../src/file_import_export.cpp" line="93"/>
         <source>Dropped %n irregular object(s).</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
+        <translation type="unfinished"><numerusform>Pudottu %n epäsäännöllinen kohde</numerusform>
+        <numerusform>Pudottu %n epäsäännöllistä kohdetta</numerusform>
+        </translation></message>
     <message>
         <location filename="../src/file_import_export.cpp" line="100"/>
         <source>Error during symbol post-processing.</source>
@@ -2558,7 +2556,7 @@ löytääksesi taustakarttatiedoston nimen.</translation>
     <message>
         <location filename="../src/template_track.cpp" line="534"/>
         <source>Real</source>
-        <translation type="unfinished"></translation>
+        <translation>Todellinen</translation>
     </message>
     <message>
         <location filename="../src/template_track.cpp" line="535"/>
@@ -2734,7 +2732,7 @@ löytääksesi taustakarttatiedoston nimen.</translation>
     <message>
         <location filename="../src/gui/main_window.cpp" line="501"/>
         <source>Do you want to remove the autosaved version?</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Haluatko poistaa automaattisesti tallennettu version?</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="507"/>
@@ -3211,30 +3209,30 @@ Skaalataanko tuotu tieto?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="881"/>
         <source>Cut away from area</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Leikkaa pois alueelta</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="918"/>
         <location filename="../src/map_editor.cpp" line="3446"/>
         <source>Add new part...</source>
-        <translation type="unfinished"></translation>
+        <translation>Lisää uusi osa...</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="919"/>
         <location filename="../src/map_editor.cpp" line="3506"/>
         <source>Rename current part...</source>
-        <translation type="unfinished"></translation>
+        <translation>Nimeä uudelleen nykyinen osa...</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="920"/>
         <location filename="../src/map_editor.cpp" line="3467"/>
         <source>Remove current part</source>
-        <translation type="unfinished"></translation>
+        <translation>Poista nykyinen osa</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="921"/>
         <source>Merge all parts</source>
-        <translation type="unfinished"></translation>
+        <translation>Yhdistä kaikki osat</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="923"/>
@@ -3454,7 +3452,7 @@ Skaalataanko tuotu tieto?</translation>
         <location filename="../src/map_editor.cpp" line="1227"/>
         <location filename="../src/map_editor.cpp" line="3381"/>
         <source>Map parts</source>
-        <translation type="unfinished"></translation>
+        <translation>Karttaosat</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1159"/>
@@ -3611,7 +3609,7 @@ Skaalataanko tuotu tieto?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="2202"/>
         <source>Resulting symbol: %1 %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tuloksena symboli: %1 %2.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2203"/>
@@ -3672,13 +3670,13 @@ Skaalataanko tuotu tieto?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="3393"/>
         <source>Move selected objects to</source>
-        <translation type="unfinished"></translation>
+        <translation>Siirrä valitut kohteet päälle</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="3447"/>
         <location filename="../src/map_editor.cpp" line="3507"/>
         <source>Enter the name of the map part:</source>
-        <translation type="unfinished"></translation>
+        <translation>Anna karttaosan nimi:</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="3523"/>
@@ -3792,17 +3790,17 @@ Skaalataanko tuotu tieto?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="487"/>
         <source>Map saved</source>
-        <translation type="unfinished"></translation>
+        <translation>Kartta tallennettu</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="842"/>
         <source>Tag editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Tagieditori</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="842"/>
         <source>Show/Hide the tag editor window</source>
-        <translation type="unfinished"></translation>
+        <translation>Näytä/Piilota tagieditori-ikkuna</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="850"/>
@@ -4002,17 +4000,17 @@ Skaalataanko tuotu tieto?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="943"/>
         <source>Copy position</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopioi kohdan</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="943"/>
         <source>Copy position to clipboard.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopioi kohdan leikepöydälle.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1217"/>
         <source>Select symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>Valitse symboli</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1220"/>
@@ -4032,7 +4030,7 @@ Skaalataanko tuotu tieto?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="1919"/>
         <source>Tag Editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Tagieditori</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1979"/>
@@ -4040,7 +4038,9 @@ Skaalataanko tuotu tieto?</translation>
 symbol
 selected</source>
         <comment>Keep it short. Should not be much longer per line than the longest word in the original.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ei
+symbolia
+valittu</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1980"/>
@@ -4048,7 +4048,9 @@ selected</source>
 symbols
 selected</source>
         <comment>Keep it short. Should not be much longer per line than the longest word in the original.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Useita
+symboleja
+valittu</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2064"/>
@@ -4063,7 +4065,7 @@ selected</source>
     <message>
         <location filename="../src/map_editor.cpp" line="2161"/>
         <source>Deletes the selected object(s).</source>
-        <translation type="unfinished"></translation>
+        <translation>Poista valittu kohde/kohteet.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2176"/>
@@ -4235,7 +4237,7 @@ selected</source>
     <message>
         <location filename="../src/map_editor.cpp" line="3468"/>
         <source>Do you want to remove map part "%1" and all its objects?</source>
-        <translation type="unfinished"></translation>
+        <translation>Haluatko poistaa karttaosan "%1" ja kaikki kohteensa?</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="3630"/>
@@ -4271,97 +4273,89 @@ selected</source>
         <location filename="future_translations.cpp" line="31"/>
         <source>Rotate objects</source>
         <extracomment>To replace existing translation which uses "object(s)".</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Kierrä kohteita</translation>
     </message>
     <message>
         <location filename="future_translations.cpp" line="34"/>
         <source>Scale objects</source>
         <extracomment>To replace existing translation which uses "object(s)".</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Skaalaa kohteita</translation>
     </message>
     <message numerus="yes">
         <location filename="future_translations.cpp" line="37"/>
         <source>Cut %n object(s)</source>
         <extracomment>Past tense. Displayed when an Edit &gt; Cut operator is completed.</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>Leikkaa %n kohde</numerusform>
+        <numerusform>Leikkaa %n kohdetta</numerusform>
+        </translation></message>
     <message numerus="yes">
         <location filename="future_translations.cpp" line="40"/>
         <source>Copied %n object(s)</source>
         <extracomment>To replace existing translation which doesn't use plural correctly</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>Kopioitu %n kohde</numerusform>
+        <numerusform>Kopioitu %n kohdetta</numerusform>
+        </translation></message>
     <message numerus="yes">
         <location filename="future_translations.cpp" line="43"/>
         <source>Pasted %n object(s)</source>
         <extracomment>To replace existing translation which doesn't use plural correctly</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>Liitetty %n kohde</numerusform>
+        <numerusform>Liitetty %n kohdetta</numerusform>
+        </translation></message>
     <message>
         <location filename="future_translations.cpp" line="46"/>
         <source>Deletes the selected objects.</source>
         <extracomment>To replace existing translation which uses "object(s)".</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Poista valittu kohteet.</translation>
     </message>
     <message>
         <location filename="future_translations.cpp" line="49"/>
         <source>Duplicate the selected objects.</source>
         <extracomment>To replace existing translation which uses "object(s)".</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Monista valittu kohteet.</translation>
     </message>
     <message>
         <location filename="future_translations.cpp" line="52"/>
         <source>Rotate the selected objects.</source>
         <extracomment>To replace existing translation which uses "object(s)".</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Kierrä valittua kohteita.</translation>
     </message>
     <message>
         <location filename="future_translations.cpp" line="55"/>
         <source>Scale the selected objects.</source>
         <extracomment>To replace existing translation which uses "object(s)".</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Skaalaa valittua kohteita.</translation>
     </message>
     <message>
         <location filename="future_translations.cpp" line="58"/>
         <source>Cut the selected objects into smaller parts.</source>
         <extracomment>To replace existing translation which uses "object(s)".</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Leikkaa valittu kohde useampaan osaan.</translation>
     </message>
     <message>
         <location filename="future_translations.cpp" line="61"/>
         <source>Switches the symbol of the selected objects to the selected symbol.</source>
         <extracomment>To replace existing translation which uses "object(s)".</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Vaihtaa valittuna olevan kohteen symbolin valituksi symboliksi.</translation>
     </message>
     <message>
         <location filename="future_translations.cpp" line="64"/>
         <source>Fill the selected lines or create a border for the selected areas.</source>
         <extracomment>To replace existing translation which uses "line(s)" and "area(s)".</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Täytä valittu viivat tai tee reunaviiva valitulle alueelle.</translation>
     </message>
     <message numerus="yes">
         <location filename="future_translations.cpp" line="67"/>
         <source>Duplicated %n object(s)</source>
         <extracomment>To replace existing translation which doesn't use plural correctly</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
+        <translation><numerusform>Monistettu %n kohde</numerusform>
+        <numerusform>Monistettu %n kohdetta</numerusform>
+        </translation></message>
     <message>
         <location filename="future_translations.cpp" line="70"/>
         <source>No objects were selected because there are no objects with the selected symbols.</source>
         <extracomment>To replace existing translation which uses "symbol(s)".</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Valitun symbolien kohteita ei ole.</translation>
     </message>
 </context>
 <context>
@@ -4667,7 +4661,7 @@ zoomaa hiiren rullalla.</translation>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="1558"/>
         <source>libocad returned %1</source>
-        <translation type="unfinished"></translation>
+        <translation>libocad palautti %1</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="1600"/>
@@ -4740,12 +4734,12 @@ zoomaa hiiren rullalla.</translation>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="114"/>
         <source>Could not allocate buffer.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ei voitu varata puskuria.</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="118"/>
         <source>libocad returned %1</source>
-        <translation type="unfinished"></translation>
+        <translation>libocad palautti %1</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="121"/>
@@ -4887,7 +4881,7 @@ zoomaa hiiren rullalla.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="388"/>
         <source>Could not load the coordinate reference system '%1'.</source>
-        <translation type="unfinished"></translation>
+        <translation>Koordinaattijärjestelmää '%1' ei voitu ladata.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="422"/>
@@ -5001,7 +4995,7 @@ zoomaa hiiren rullalla.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="82"/>
         <source>Encoding '%1' is not available. Check the settings.</source>
-        <translation type="unfinished"></translation>
+        <translation>Koodaus '%1' ei ole käytettävissä. Tarkista asetukset.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="119"/>
@@ -5292,7 +5286,7 @@ zoomaa hiiren rullalla.</translation>
         <location filename="../src/gui/print_progress_dialog.cpp" line="57"/>
         <source>An error occurred during processing.</source>
         <comment>PrintWidget</comment>
-        <translation type="unfinished"></translation>
+        <translation>Virhe tapahtui käsittelyn aikana.</translation>
     </message>
 </context>
 <context>
@@ -5479,7 +5473,7 @@ zoomaa hiiren rullalla.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="237"/>
         <source>Color mode:</source>
-        <translation type="unfinished"></translation>
+        <translation>Väritila:</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="261"/>
@@ -5517,7 +5511,7 @@ zoomaa hiiren rullalla.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1078"/>
         <source>Not supported on Android.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ei tueta Androidilla.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1086"/>
@@ -5572,7 +5566,7 @@ zoomaa hiiren rullalla.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1252"/>
         <source>An error occurred during printing.</source>
-        <translation type="unfinished"></translation>
+        <translation>Virhe tapahtui tulostuksen aikana.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1137"/>
@@ -5591,7 +5585,7 @@ zoomaa hiiren rullalla.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1238"/>
         <source>Failed to prepare the printing.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tulostuksen valmistaminen epäonnistui.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1247"/>
@@ -5635,7 +5629,8 @@ grafiikka</translation>
         <location filename="../src/gui/print_widget.cpp" line="181"/>
         <source>Color
 separations</source>
-        <translation type="unfinished"></translation>
+        <translation>Väri
+erottelut</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="194"/>
@@ -5645,7 +5640,7 @@ separations</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1155"/>
         <source>Failed to prepare the image. Not enough memory.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kuvan valmistaminen epäonnistui. Ei tarpeeksi muistia.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1174"/>
@@ -6123,12 +6118,12 @@ separations</source>
     <message>
         <location filename="../src/core/storage_location.cpp" line="284"/>
         <source>'%1' is not writable. Changes cannot be saved.</source>
-        <translation type="unfinished"></translation>
+        <translation>'%1' ei voi kirjoittaa. Muutoksia ei voida tallentaa.</translation>
     </message>
     <message>
         <location filename="../src/core/storage_location.cpp" line="287"/>
         <source>'%1' is not a valid storage location.</source>
-        <translation type="unfinished"></translation>
+        <translation>'%1' ei ole kelvollista tallennuspaikkaa.</translation>
     </message>
 </context>
 <context>
@@ -6260,7 +6255,7 @@ separations</source>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="278"/>
         <source>Enable drag and drop</source>
-        <translation type="unfinished"></translation>
+        <translation>Ota käyttöön "raahaa ja pudota"-toiminto</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="906"/>
@@ -6396,19 +6391,19 @@ separations</source>
         <location filename="future_translations.cpp" line="73"/>
         <source>Switch symbol of selected objects</source>
         <extracomment>To replace existing translation which uses "object(s)".</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Vaihda symboli tai valitut kohteet</translation>
     </message>
     <message>
         <location filename="future_translations.cpp" line="76"/>
         <source>Fill / Create border for selected objects</source>
         <extracomment>To replace existing translation which uses "object(s)".</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Täytä / Tee reunaviiva valituille kohteille</translation>
     </message>
     <message>
         <location filename="future_translations.cpp" line="79"/>
         <source>Scale symbols</source>
         <extracomment>To replace existing translation which uses "symbol(s)".</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Skaalaa symbolit</translation>
     </message>
 </context>
 <context>
@@ -6464,7 +6459,10 @@ separations</source>
 takes the routechoice
 to jump over the lazy dog
 1234567890</source>
-        <translation type="unfinished"></translation>
+        <translation>On sangen hauskaa että
+polkupyörä on maanteiden
+jokapäiväinen ilmiö
+1234567890</translation>
     </message>
     <message>
         <location filename="../src/symbol_setting_dialog.cpp" line="483"/>
@@ -6536,7 +6534,7 @@ to jump over the lazy dog
     <message>
         <location filename="../src/gui/widgets/tags_widget.cpp" line="234"/>
         <source>The key "%1" already exists and must not be used twice.</source>
-        <translation type="unfinished"></translation>
+        <translation>Avain "%1" on jo olemassa ja sitä ei saa käyttää kahdesti.</translation>
     </message>
 </context>
 <context>
@@ -6692,7 +6690,7 @@ to jump over the lazy dog
     <message>
         <location filename="../src/template_image.cpp" line="129"/>
         <source>Not enough free memory (image size: %1x%2 pixels)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ei ole tarpeeksi vapaata muistia (kuvan koko: %1x%2 pikseliä)</translation>
     </message>
     <message>
         <location filename="../src/template_image.cpp" line="169"/>
@@ -7139,12 +7137,12 @@ Tuetaan vain versioon %2 asti.</translation>
     <message>
         <location filename="../src/gui/text_browser_dialog.cpp" line="122"/>
         <source>External link: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Ulkoinen linkki: %1</translation>
     </message>
     <message>
         <location filename="../src/gui/text_browser_dialog.cpp" line="126"/>
         <source>Click to view</source>
-        <translation type="unfinished"></translation>
+        <translation>Klikkaa nähdäksesi</translation>
     </message>
 </context>
 <context>
@@ -7478,7 +7476,7 @@ Tuetaan vain versioon %2 asti.</translation>
     <message>
         <location filename="../src/file_format_xml.cpp" line="523"/>
         <source>The map notes could not be read.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kartan muistiinpanoja ei voitu lukea.</translation>
     </message>
     <message>
         <location filename="../src/file_format_xml.cpp" line="564"/>
