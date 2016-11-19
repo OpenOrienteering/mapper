@@ -4701,7 +4701,7 @@ zoomaa hiiren rullalla.</translation>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="2211"/>
         <source>In area symbol "%1", skipping a fill pattern.</source>
-        <translation>Viivasymbolissa "%1", ohitetaan täyttökuvio.</translation>
+        <translation>Aluesymbolissa "%1", ohitetaan täyttökuvio.</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="2258"/>
@@ -5000,7 +5000,7 @@ zoomaa hiiren rullalla.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="119"/>
         <source>In area symbol %1 '%2': %3</source>
-        <translation type="unfinished"></translation>
+        <translation>Aluesymbolissa %1 '%2': %3</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1558"/>
@@ -5516,7 +5516,7 @@ zoomaa hiiren rullalla.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1086"/>
         <source>Failed to prepare the preview.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Esikatselu epäonnistui valmistamaan.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1097"/>
@@ -5556,7 +5556,7 @@ zoomaa hiiren rullalla.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1189"/>
         <source>Failed to prepare the PDF export.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">PDF-vienti epäonnistui valmistamaan.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1199"/>
@@ -5656,7 +5656,7 @@ erottelut</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1219"/>
         <source>Failed to finish the PDF export.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">PDF-vienti epäonnistui loppumaan.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1229"/>
@@ -7486,7 +7486,7 @@ Tuetaan vain versioon %2 asti.</translation>
     <message>
         <location filename="../src/file_format_xml.cpp" line="565"/>
         <source>Unsupported or invalid georeferencing specification '%1': %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Georeferoinnin määrittelyä '%1' ei tueta tai ei kelpaa: %2</translation>
     </message>
     <message>
         <location filename="../src/file_format_xml.cpp" line="683"/>
