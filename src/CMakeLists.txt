@@ -370,7 +370,7 @@ target_link_libraries(Mapper_Common
   libocad
   Polyclipping::Polyclipping
   printsupport
-  proj4::proj
+  PROJ4::proj
   Qt5::Widgets
   Qt5::Xml
 )

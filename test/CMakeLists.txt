@@ -67,7 +67,7 @@ function(add_test_helper testname autorun)
 	qt5_wrap_cpp(TEST_${testname}_XTRA_MOC ${TEST_${testname}_HDRS} OPTIONS -nw)
 	add_executable(${testname} ${testname}.cpp ${TEST_${testname}_SRCS} ${TEST_${testname}_MOC} ${TEST_${testname}_XTRA_MOC})
 	target_link_libraries(${testname}
-	  proj4::proj
+	  PROJ4::proj
 	  Qt5::Test
 	  Qt5::Widgets
 	  Polyclipping::Polyclipping
