@@ -1,5 +1,5 @@
 #.rst:
-# Findproj4
+# FindPROJ4
 # --------
 #
 # Find the proj includes and library.
@@ -7,8 +7,8 @@
 # IMPORTED Targets
 # ^^^^^^^^^^^^^^^^
 #
-# This module defines :prop_tgt:`IMPORTED` target ``proj4::proj``,
-# if proj4 has been found.
+# This module defines :prop_tgt:`IMPORTED` target ``PROJ4::proj``,
+# if Proj.4 has been found.
 #
 # Result Variables
 # ^^^^^^^^^^^^^^^^
@@ -110,7 +110,7 @@ endif()
 # handle the QUIETLY and REQUIRED arguments and set PROJ4_FOUND to TRUE if
 # all listed variables are TRUE
 include(FindPackageHandleStandardArgs)
-find_package_handle_standard_args(proj4
+find_package_handle_standard_args(PROJ4
   REQUIRED_VARS
     PROJ4_LIBRARY
     PROJ4_INCLUDE_DIR
@@ -125,27 +125,27 @@ if(PROJ4_FOUND)
       set(PROJ4_LIBRARIES ${PROJ4_LIBRARY})
     endif()
 
-    if(NOT TARGET proj4::proj)
-      add_library(proj4::proj UNKNOWN IMPORTED)
-      set_target_properties(proj4::proj PROPERTIES
+    if(NOT TARGET PROJ4::proj)
+      add_library(PROJ4::proj UNKNOWN IMPORTED)
+      set_target_properties(PROJ4::proj PROPERTIES
         INTERFACE_INCLUDE_DIRECTORIES "${PROJ4_INCLUDE_DIRS}")
 
       if(PROJ4_LIBRARY_RELEASE)
-        set_property(TARGET proj4::proj APPEND PROPERTY
+        set_property(TARGET PROJ4::proj APPEND PROPERTY
           IMPORTED_CONFIGURATIONS RELEASE)
-        set_target_properties(proj4::proj PROPERTIES
+        set_target_properties(PROJ4::proj PROPERTIES
           IMPORTED_LOCATION_RELEASE "${PROJ4_LIBRARY_RELEASE}")
       endif()
 
       if(PROJ4_LIBRARY_DEBUG)
-        set_property(TARGET proj4::proj APPEND PROPERTY
+        set_property(TARGET PROJ4::proj APPEND PROPERTY
           IMPORTED_CONFIGURATIONS DEBUG)
-        set_target_properties(proj4::proj PROPERTIES
+        set_target_properties(PROJ4::proj PROPERTIES
           IMPORTED_LOCATION_DEBUG "${PROJ4_LIBRARY_DEBUG}")
       endif()
 
       if(NOT PROJ4_LIBRARY_RELEASE AND NOT PROJ4_LIBRARY_DEBUG)
-        set_property(TARGET proj4::proj APPEND PROPERTY
+        set_property(TARGET PROJ4::proj APPEND PROPERTY
           IMPORTED_LOCATION "${PROJ4_LIBRARY}")
       endif()
     endif()
