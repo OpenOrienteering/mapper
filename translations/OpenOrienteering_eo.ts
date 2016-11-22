@@ -12,7 +12,7 @@
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="174"/>
         <source>&lt;a %1&gt;All about licenses, copyright notices, conditions and disclaimers.&lt;/a&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;a %1&gt;Ĉion pri permesiloj, kopirajtaj avizoj, kondiĉoj kaj malgarantioj.&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="176"/>
@@ -52,12 +52,12 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="92"/>
         <source>Open most recently used file</source>
-        <translation type="unfinished"></translation>
+        <translation>Malfermi plej antaŭ nelonge uzita dosieron</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="95"/>
         <source>Show tip of the day</source>
-        <translation type="unfinished"></translation>
+        <translation>Montri helpilojn</translation>
     </message>
 </context>
 <context>
@@ -65,7 +65,7 @@
     <message>
         <location filename="../src/gui/widgets/action_grid_bar.cpp" line="53"/>
         <source>Show remaining items</source>
-        <translation type="unfinished"></translation>
+        <translation>Montri restantajn punktojn</translation>
     </message>
 </context>
 <context>
@@ -107,7 +107,7 @@
     <message>
         <location filename="../src/symbol_area.cpp" line="827"/>
         <source>Single line</source>
-        <translation type="unfinished"></translation>
+        <translation>Sola linio</translation>
     </message>
     <message>
         <location filename="../src/symbol_area.cpp" line="841"/>
@@ -117,12 +117,12 @@
     <message>
         <location filename="../src/symbol_area.cpp" line="843"/>
         <source>Line spacing:</source>
-        <translation type="unfinished"></translation>
+        <translation>Linipaŝo:</translation>
     </message>
     <message>
         <location filename="../src/symbol_area.cpp" line="846"/>
         <source>Single row</source>
-        <translation type="unfinished"></translation>
+        <translation>Sola vico</translation>
     </message>
     <message>
         <location filename="../src/symbol_area.cpp" line="848"/>
@@ -152,7 +152,7 @@
     <message>
         <location filename="../src/symbol_area.cpp" line="868"/>
         <source>Fill rotation</source>
-        <translation type="unfinished"></translation>
+        <translation>Pleniga rotacio</translation>
     </message>
     <message>
         <location filename="../src/symbol_area.cpp" line="870"/>
@@ -167,12 +167,12 @@
     <message>
         <location filename="../src/symbol_area.cpp" line="874"/>
         <source>adjustable per object</source>
-        <translation type="unfinished"></translation>
+        <translation>alĝustigebla per objekto</translation>
     </message>
     <message>
         <location filename="../src/symbol_area.cpp" line="889"/>
         <source>Area settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Agordoj de areo</translation>
     </message>
     <message>
         <location filename="../src/symbol_area.cpp" line="970"/>
@@ -192,22 +192,22 @@
     <message>
         <location filename="../src/symbol_area.cpp" line="750"/>
         <source>Area color:</source>
-        <translation type="unfinished"></translation>
+        <translation>Koloro de areo:</translation>
     </message>
     <message>
         <location filename="../src/symbol_area.cpp" line="839"/>
         <source>Line offset:</source>
-        <translation type="unfinished"></translation>
+        <translation>Linia deŝovo:</translation>
     </message>
     <message>
         <location filename="../src/symbol_area.cpp" line="834"/>
         <source>Line color:</source>
-        <translation>Koloro de linio:</translation>
+        <translation>Linikoloro:</translation>
     </message>
     <message>
         <location filename="../src/symbol_area.cpp" line="829"/>
         <source>Line width:</source>
-        <translation>Larĝeco de linio:</translation>
+        <translation>Larĝo de linio:</translation>
     </message>
 </context>
 <context>
@@ -215,7 +215,7 @@
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="43"/>
         <source>Autosaved file</source>
-        <translation type="unfinished"></translation>
+        <translation>Aŭtokonservita dosiero</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/gui/autosave_dialog.cpp" line="45"/>
@@ -234,7 +234,7 @@
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="56"/>
         <source>File recovery</source>
-        <translation type="unfinished"></translation>
+        <translation>Riparado de dosiero</translation>
     </message>
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="58"/>
@@ -252,7 +252,7 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="45"/>
         <source>Edit map color</source>
-        <translation type="unfinished"></translation>
+        <translation>Redakti koloron de mapo</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="62"/>
@@ -323,7 +323,7 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="176"/>
         <source>Custom RGB color:</source>
-        <translation type="unfinished"></translation>
+        <translation>Propra RGB-koloro:</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="182"/>
@@ -348,12 +348,12 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="215"/>
         <source>Desktop</source>
-        <translation type="unfinished"></translation>
+        <translation>Labortablo</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="216"/>
         <source>Professional printing</source>
-        <translation type="unfinished"></translation>
+        <translation>Profesia presado</translation>
     </message>
 </context>
 <context>
@@ -522,7 +522,7 @@
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="57"/>
         <source>Choose...</source>
-        <translation type="unfinished"></translation>
+        <translation>Elekti...</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="60"/>
@@ -597,12 +597,12 @@
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="83"/>
         <source>Horizontal offset:</source>
-        <translation type="unfinished"></translation>
+        <translation>Horizontala deŝovo:</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="85"/>
         <source>Vertical offset:</source>
-        <translation type="unfinished"></translation>
+        <translation>Vertikala deŝovo:</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="122"/>
@@ -613,7 +613,7 @@
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="110"/>
         <source>Line color:</source>
-        <translation>Koloro de linio:</translation>
+        <translation>Linikoloro:</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="111"/>
@@ -1535,13 +1535,13 @@
         <location filename="../src/core/crs_template_implementation.cpp" line="92"/>
         <source>Custom PROJ.4</source>
         <comment>PROJ.4 specification</comment>
-        <translation type="unfinished"></translation>
+        <translation>Propra PROJ.4</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="96"/>
         <source>Specification</source>
         <comment>PROJ.4 specification</comment>
-        <translation type="unfinished"></translation>
+        <translation>Specifo</translation>
     </message>
     <message>
         <location filename="../src/core/georeferencing.cpp" line="229"/>
@@ -1562,7 +1562,7 @@
     <message>
         <location filename="../src/core/georeferencing.cpp" line="302"/>
         <source>Unsupported geographic CRS specification: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Nesubtenata specifo de geografia CRS: %1</translation>
     </message>
     <message>
         <location filename="../src/core/georeferencing.cpp" line="524"/>
@@ -1863,7 +1863,7 @@
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="215"/>
         <source>Clear list</source>
-        <translation type="unfinished"></translation>
+        <translation>Vakigi liston</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="234"/>
@@ -2121,7 +2121,7 @@
     <message>
         <location filename="../src/symbol_line.cpp" line="2038"/>
         <source>Line width:</source>
-        <translation>Larĝeco de linio:</translation>
+        <translation>Larĝo de linio:</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2039"/>
@@ -2143,7 +2143,7 @@
     <message>
         <location filename="../src/symbol_line.cpp" line="2041"/>
         <source>Line color:</source>
-        <translation>Koloro de linio:</translation>
+        <translation>Linikoloro:</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2053"/>
@@ -2284,7 +2284,7 @@
     <message>
         <location filename="../src/symbol_line.cpp" line="2215"/>
         <source>Borders</source>
-        <translation type="unfinished"></translation>
+        <translation>Limoj</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2219"/>
@@ -2294,12 +2294,12 @@
     <message>
         <location filename="../src/symbol_line.cpp" line="2224"/>
         <source>Left border:</source>
-        <translation type="unfinished"></translation>
+        <translation>Maldekstra limo:</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2229"/>
         <source>Right border:</source>
-        <translation type="unfinished"></translation>
+        <translation>Dekstra limo:</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="1653"/>
@@ -2338,7 +2338,7 @@
     <message>
         <location filename="../src/symbol_line.cpp" line="2077"/>
         <source>Enable border lines</source>
-        <translation type="unfinished"></translation>
+        <translation>Ebligi limajn liniojn</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2174"/>
@@ -2358,12 +2358,12 @@
     <message>
         <location filename="../src/symbol_line.cpp" line="2484"/>
         <source>Border width:</source>
-        <translation type="unfinished"></translation>
+        <translation>Larĝo de limo:</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2487"/>
         <source>Border color:</source>
-        <translation type="unfinished"></translation>
+        <translation>Koloro de limo:</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2490"/>
@@ -2546,7 +2546,7 @@
     <message>
         <location filename="../src/gui/main_window.cpp" line="501"/>
         <source>Do you want to remove the autosaved version?</source>
-        <translation type="unfinished"></translation>
+        <translation>Ĉu vi volas forigi la aŭtokonservitan version?</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="507"/>
@@ -2960,7 +2960,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="855"/>
         <source>Fill / Create border</source>
-        <translation type="unfinished"></translation>
+        <translation>Plenigi / Krei limon</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="856"/>
@@ -3057,13 +3057,13 @@ Rescale the imported data?</source>
         <location filename="../src/map_editor.cpp" line="919"/>
         <location filename="../src/map_editor.cpp" line="3506"/>
         <source>Rename current part...</source>
-        <translation>Renomi kurantan parton...</translation>
+        <translation>Renomi aktualan parton...</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="920"/>
         <location filename="../src/map_editor.cpp" line="3467"/>
         <source>Remove current part</source>
-        <translation>Forigi kurantan parton</translation>
+        <translation>Forigi aktualan parton</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="921"/>
@@ -3485,12 +3485,12 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="1220"/>
         <source>Hide top bar</source>
-        <translation type="unfinished"></translation>
+        <translation>Kaŝi supran breton</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1223"/>
         <source>Show top bar</source>
-        <translation type="unfinished"></translation>
+        <translation>Montri supran breton</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1485"/>
@@ -3954,7 +3954,7 @@ selected</source>
     <message>
         <location filename="../src/map_editor.cpp" line="2249"/>
         <source>Fill the selected line(s) or create a border for the selected area(s).</source>
-        <translation type="unfinished"></translation>
+        <translation>Plenigi la elektitajn liniojn aŭ krei limon por la elektitaj areoj.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2369"/>
@@ -4110,7 +4110,7 @@ selected</source>
         <location filename="future_translations.cpp" line="64"/>
         <source>Fill the selected lines or create a border for the selected areas.</source>
         <extracomment>To replace existing translation which uses "line(s)" and "area(s)".</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Plenigi la elektitajn liniojn aŭ krei limon por la elektitaj areoj.</translation>
     </message>
     <message numerus="yes">
         <location filename="future_translations.cpp" line="67"/>
@@ -4171,12 +4171,12 @@ selected</source>
     <message>
         <location filename="../src/core/map_printer.cpp" line="1215"/>
         <source>Processing separations of page %1...</source>
-        <translation>Prilaborado de disiĝoj de paĝo %1...</translation>
+        <translation>Traktado de disiĝoj de paĝo %1...</translation>
     </message>
     <message>
         <location filename="../src/core/map_printer.cpp" line="1216"/>
         <source>Processing page %1...</source>
-        <translation>Prilaborado de paĝo %1...</translation>
+        <translation>Traktado de paĝo %1...</translation>
     </message>
     <message>
         <location filename="../src/core/map_printer.cpp" line="1266"/>
@@ -4664,7 +4664,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="958"/>
         <source>Unsupported line style '%1'.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nesubtenata linia stilo '%1'.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="995"/>
@@ -4893,12 +4893,12 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="79"/>
         <source>Center all elements</source>
-        <translation type="unfinished"></translation>
+        <translation>Centrigi ĉiujn elementojn</translation>
     </message>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="81"/>
         <source>Current element</source>
-        <translation>Kuranta elemento</translation>
+        <translation>Aktuala elemento</translation>
     </message>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="87"/>
@@ -4930,12 +4930,12 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="121"/>
         <source>Line width:</source>
-        <translation>Larĝeco de linio:</translation>
+        <translation>Larĝo de linio:</translation>
     </message>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="124"/>
         <source>Line color:</source>
-        <translation>Koloro de linio:</translation>
+        <translation>Linikoloro:</translation>
     </message>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="127"/>
@@ -5039,7 +5039,7 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/gui/print_progress_dialog.cpp" line="57"/>
         <source>An error occurred during processing.</source>
         <comment>PrintWidget</comment>
-        <translation type="unfinished"></translation>
+        <translation>Eraro okazis dum traktado.</translation>
     </message>
 </context>
 <context>
@@ -5053,7 +5053,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_tool.cpp" line="341"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the print area. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Treni&lt;/b&gt;: Movi la presareon. </translation>
     </message>
     <message>
         <location filename="../src/gui/print_tool.cpp" line="345"/>
@@ -5123,7 +5123,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="159"/>
         <source>Top:</source>
-        <translation type="unfinished"></translation>
+        <translation>Desupre:</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="162"/>
@@ -5138,7 +5138,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="259"/>
         <source>Preview...</source>
-        <translation>Antaŭvido...</translation>
+        <translation>Antaŭrigardo...</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="148"/>
@@ -5148,7 +5148,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="149"/>
         <source>Custom area</source>
-        <translation type="unfinished"></translation>
+        <translation>Propra areo</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="150"/>
@@ -5158,7 +5158,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="152"/>
         <source>Center print area</source>
-        <translation type="unfinished"></translation>
+        <translation>Centrigi presareon</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="120"/>
@@ -5312,7 +5312,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1252"/>
         <source>An error occurred during printing.</source>
-        <translation type="unfinished"></translation>
+        <translation>Eraro okazis dum presado.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1137"/>
@@ -5447,12 +5447,12 @@ separations</source>
     <message>
         <location filename="../src/template_dialog_reopen.cpp" line="46"/>
         <source>Clear list</source>
-        <translation type="unfinished"></translation>
+        <translation>Vakigi liston</translation>
     </message>
     <message>
         <location filename="../src/template_dialog_reopen.cpp" line="49"/>
         <source>Active templates:</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktivaj ŝablonoj:</translation>
     </message>
     <message>
         <location filename="../src/template_dialog_reopen.cpp" line="58"/>
@@ -5954,7 +5954,7 @@ separations</source>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="255"/>
         <source>Fill / Create border for selected object(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>Plenigi / Krei limon por elektitaj objektoj</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="267"/>
@@ -6106,7 +6106,7 @@ separations</source>
         <location filename="future_translations.cpp" line="76"/>
         <source>Fill / Create border for selected objects</source>
         <extracomment>To replace existing translation which uses "object(s)".</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Plenigi / Krei limon por elektitaj objektoj</translation>
     </message>
     <message>
         <location filename="future_translations.cpp" line="79"/>
@@ -6145,7 +6145,7 @@ separations</source>
     <message>
         <location filename="../src/symbol_setting_dialog.cpp" line="109"/>
         <source>Center template...</source>
-        <translation type="unfinished"></translation>
+        <translation>Centrigi ŝablonon...</translation>
     </message>
     <message>
         <location filename="../src/symbol_setting_dialog.cpp" line="114"/>
@@ -6356,7 +6356,7 @@ manĝaĵo kun spicoj
     <message>
         <location filename="../src/template_adjust.cpp" line="225"/>
         <source>Clear all</source>
-        <translation type="unfinished"></translation>
+        <translation>Vakigi ĉiujn</translation>
     </message>
 </context>
 <context>
@@ -6865,7 +6865,7 @@ The maximum supported version is %2.</source>
     <message>
         <location filename="../src/symbol_text.cpp" line="614"/>
         <source>Font size:</source>
-        <translation>Tipara grandeco:</translation>
+        <translation>Tipara grado:</translation>
     </message>
     <message>
         <location filename="../src/symbol_text.cpp" line="558"/>
@@ -6979,12 +6979,12 @@ The maximum supported version is %2.</source>
     <message>
         <location filename="../src/symbol_text.cpp" line="696"/>
         <source>Left/Right Offset:</source>
-        <translation type="unfinished"></translation>
+        <translation>Maldekstra/Dekstra Deŝovo:</translation>
     </message>
     <message>
         <location filename="../src/symbol_text.cpp" line="699"/>
         <source>Top/Down Offset:</source>
-        <translation type="unfinished"></translation>
+        <translation>Supra/Malsupra Deŝovo:</translation>
     </message>
     <message>
         <location filename="../src/symbol_text.cpp" line="703"/>
@@ -6994,17 +6994,17 @@ The maximum supported version is %2.</source>
     <message>
         <location filename="../src/symbol_text.cpp" line="710"/>
         <source>enabled</source>
-        <translation>ebligis</translation>
+        <translation>ŝaltita</translation>
     </message>
     <message>
         <location filename="../src/symbol_text.cpp" line="714"/>
         <source>Line width:</source>
-        <translation>Larĝeco de linio:</translation>
+        <translation>Larĝo de linio:</translation>
     </message>
     <message>
         <location filename="../src/symbol_text.cpp" line="717"/>
         <source>Line color:</source>
-        <translation>Koloro de linio:</translation>
+        <translation>Linikoloro:</translation>
     </message>
     <message>
         <location filename="../src/symbol_text.cpp" line="984"/>
