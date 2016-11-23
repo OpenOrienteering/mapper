@@ -542,7 +542,7 @@
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="114"/>
         <source>Alignment</source>
-        <translation type="unfinished">Alkadrigo</translation>
+        <translation>Alkadrigo</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="64"/>
@@ -803,7 +803,7 @@
     <message>
         <location filename="../src/tool_draw_circle.cpp" line="295"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Draw a circle. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Treni&lt;/b&gt;: Desegni cirklon. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_circle.cpp" line="297"/>
@@ -818,7 +818,7 @@
     <message>
         <location filename="../src/tool_draw_circle.cpp" line="302"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Draw an ellipse. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Treni&lt;/b&gt;: Desegni elipson. </translation>
     </message>
 </context>
 <context>
@@ -1156,7 +1156,7 @@
         <location filename="../src/tool_edit_point.cpp" line="675"/>
         <location filename="../src/tool_edit_line.cpp" line="467"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Delete selected objects. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Forigi elektitajn objektojn. </translation>
     </message>
 </context>
 <context>
@@ -1749,7 +1749,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="440"/>
         <source>Declination change</source>
-        <translation type="unfinished"></translation>
+        <translation>Deklinacioŝanĝo</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="440"/>
@@ -2860,7 +2860,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="825"/>
         <source>Show/Hide the symbol window</source>
-        <translation type="unfinished"></translation>
+        <translation>Montri/Kaŝi la simbolan fenestron</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="826"/>
@@ -2870,7 +2870,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="826"/>
         <source>Show/Hide the color window</source>
-        <translation type="unfinished"></translation>
+        <translation>Montri/Kaŝi la koloran fenestron</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="827"/>
@@ -2890,7 +2890,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="832"/>
         <source>Change map scale...</source>
-        <translation type="unfinished"></translation>
+        <translation>Ŝanĝi mapan skalon...</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="832"/>
@@ -2900,7 +2900,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="834"/>
         <source>Map notes...</source>
-        <translation type="unfinished"></translation>
+        <translation>Mapaj notoj...</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="836"/>
@@ -2910,7 +2910,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="836"/>
         <source>Show/Hide the template window</source>
-        <translation type="unfinished"></translation>
+        <translation>Montri/Kaŝi la ŝablonan fenestron</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="839"/>
@@ -2920,7 +2920,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="816"/>
         <source>Show whole map</source>
-        <translation type="unfinished"></translation>
+        <translation>Montri tutan mapon</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="844"/>
@@ -2985,7 +2985,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="878"/>
         <source>Measure lengths and areas</source>
-        <translation type="unfinished"></translation>
+        <translation>Mezuri longojn kaj areojn</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="881"/>
@@ -3051,7 +3051,7 @@ Rescale the imported data?</source>
         <location filename="../src/map_editor.cpp" line="918"/>
         <location filename="../src/map_editor.cpp" line="3446"/>
         <source>Add new part...</source>
-        <translation type="unfinished"></translation>
+        <translation>Aldoni novan parton...</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="919"/>
@@ -3068,12 +3068,12 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="921"/>
         <source>Merge all parts</source>
-        <translation type="unfinished"></translation>
+        <translation>Kunfandi ĉiujn partojn</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="923"/>
         <source>Import...</source>
-        <translation type="unfinished"></translation>
+        <translation>Importado...</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="975"/>
@@ -3157,7 +3157,7 @@ Rescale the imported data?</source>
         <location filename="../src/map_editor.cpp" line="822"/>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="110"/>
         <source>Hide all templates</source>
-        <translation type="unfinished"></translation>
+        <translation>Kaŝi ĉiujn ŝablonojn</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="827"/>
@@ -3172,12 +3172,12 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="833"/>
         <source>Rotate map...</source>
-        <translation type="unfinished"></translation>
+        <translation>Rotacii mapon...</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="833"/>
         <source>Rotate the whole map</source>
-        <translation type="unfinished"></translation>
+        <translation>Rotacii la tutan mapon</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="840"/>
@@ -3192,7 +3192,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="842"/>
         <source>Show/Hide the tag editor window</source>
-        <translation type="unfinished"></translation>
+        <translation>Montri/Kaŝi la etikedan redaktilan fenestron</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="849"/>
@@ -3232,7 +3232,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="876"/>
         <source>Rotate pattern</source>
-        <translation type="unfinished"></translation>
+        <translation>Rotacii modelon</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="877"/>
@@ -3247,7 +3247,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="880"/>
         <source>Intersect areas</source>
-        <translation type="unfinished"></translation>
+        <translation>Sekci areojn</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="882"/>
@@ -3578,7 +3578,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="1811"/>
         <source>Map notes</source>
-        <translation type="unfinished"></translation>
+        <translation>Mapaj notoj</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1816"/>
@@ -3756,12 +3756,12 @@ selected</source>
     <message>
         <location filename="../src/map_editor.cpp" line="3387"/>
         <source>Merge this part with</source>
-        <translation type="unfinished"></translation>
+        <translation>Kunfandi ĉi tiun parton kun</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="3393"/>
         <source>Move selected objects to</source>
-        <translation type="unfinished"></translation>
+        <translation>Movi elektitajn objektojn al</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="3447"/>
@@ -3778,7 +3778,7 @@ selected</source>
         <location filename="../src/map_editor.cpp" line="3545"/>
         <location filename="../src/map_editor.cpp" line="3575"/>
         <source>Merge map parts</source>
-        <translation type="unfinished"></translation>
+        <translation>Kunfandi mapajn partojn</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="3546"/>
@@ -3917,7 +3917,7 @@ selected</source>
     <message>
         <location filename="../src/map_editor.cpp" line="2165"/>
         <source>Rotate the selected object(s).</source>
-        <translation type="unfinished"></translation>
+        <translation>Rotacii la elektitajn objektojn.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2167"/>
@@ -3974,7 +3974,7 @@ selected</source>
     <message>
         <location filename="../src/map_editor.cpp" line="2943"/>
         <source>Measure</source>
-        <translation type="unfinished"></translation>
+        <translation>Mezurado</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2957"/>
@@ -3984,7 +3984,7 @@ selected</source>
     <message>
         <location filename="../src/map_editor.cpp" line="2963"/>
         <source>Intersection failed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sekco malsukcesis.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2969"/>
@@ -4035,7 +4035,7 @@ selected</source>
         <location filename="future_translations.cpp" line="31"/>
         <source>Rotate objects</source>
         <extracomment>To replace existing translation which uses "object(s)".</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Rotacii objektojn</translation>
     </message>
     <message>
         <location filename="future_translations.cpp" line="34"/>
@@ -4074,19 +4074,19 @@ selected</source>
         <location filename="future_translations.cpp" line="46"/>
         <source>Deletes the selected objects.</source>
         <extracomment>To replace existing translation which uses "object(s)".</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Forigi la elektitajn objektojn.</translation>
     </message>
     <message>
         <location filename="future_translations.cpp" line="49"/>
         <source>Duplicate the selected objects.</source>
         <extracomment>To replace existing translation which uses "object(s)".</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Duobligi la elektitajn objektojn.</translation>
     </message>
     <message>
         <location filename="future_translations.cpp" line="52"/>
         <source>Rotate the selected objects.</source>
         <extracomment>To replace existing translation which uses "object(s)".</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Rotacii la elektitajn objektojn.</translation>
     </message>
     <message>
         <location filename="future_translations.cpp" line="55"/>
@@ -4594,7 +4594,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="949"/>
         <source>Unable to load object</source>
-        <translation type="unfinished">Ne eblas ŝarĝi objekton</translation>
+        <translation>Ne eblas ŝarĝi objekton</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="956"/>
@@ -4840,7 +4840,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/tool_pan.cpp" line="72"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the map. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Treni&lt;/b&gt;: Movi la mapon. </translation>
     </message>
 </context>
 <context>
@@ -4857,7 +4857,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="967"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Add a coordinate. &lt;b&gt;%1+Click&lt;/b&gt;: Change the selected coordinate. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Klaki&lt;/b&gt;: Aldoni koordinaton. &lt;b&gt;%1+Klaki&lt;/b&gt;: Ŝanĝi la elektitan koordinaton. </translation>
     </message>
 </context>
 <context>
@@ -5058,7 +5058,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_tool.cpp" line="345"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the map. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Treni&lt;/b&gt;: Movi la mapon. </translation>
     </message>
     <message>
         <location filename="../src/gui/print_tool.cpp" line="350"/>
@@ -5548,7 +5548,7 @@ separations</source>
     <message>
         <location filename="../src/map_dialog_rotate.cpp" line="36"/>
         <source>Rotate map</source>
-        <translation type="unfinished"></translation>
+        <translation>Rotacii mapon</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_rotate.cpp" line="44"/>
@@ -5665,7 +5665,7 @@ separations</source>
     <message>
         <location filename="../src/tool_rotate.cpp" line="203"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Rotate the selected objects. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Treni&lt;/b&gt;: Rotacii la elektitajn objektojn. </translation>
     </message>
 </context>
 <context>
@@ -5673,7 +5673,7 @@ separations</source>
     <message>
         <location filename="../src/map_dialog_scale.cpp" line="36"/>
         <source>Change map scale</source>
-        <translation type="unfinished"></translation>
+        <translation>Ŝanĝi mapan skalon</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_scale.cpp" line="40"/>
@@ -5827,7 +5827,7 @@ separations</source>
     <message>
         <location filename="../src/core/storage_location.cpp" line="284"/>
         <source>'%1' is not writable. Changes cannot be saved.</source>
-        <translation type="unfinished"></translation>
+        <translation>'%1' ne estas skribebla. Ŝanĝoj ne estas konservebla.</translation>
     </message>
     <message>
         <location filename="../src/core/storage_location.cpp" line="287"/>
@@ -6168,7 +6168,10 @@ separations</source>
 takes the routechoice
 to jump over the lazy dog
 1234567890</source>
-        <translation type="unfinished"></translation>
+        <translation>Laŭ Ludoviko Zamenhof
+bongustas freŝa ĉeĥa
+manĝaĵo kun spicoj
+1234567890</translation>
     </message>
     <message>
         <location filename="../src/symbol_setting_dialog.cpp" line="483"/>
@@ -7125,7 +7128,7 @@ The maximum supported version is %2.</source>
     <message>
         <location filename="../src/file_format_xml.cpp" line="478"/>
         <source>Parts of this file cannot be read by this version of Mapper. Minimum required version: %1</source>
-        <translation>Partoj de ĉi tiu dosiero ne povas legi per tiu versio de Mapper. Minimuma postulata versio: %1</translation>
+        <translation>Partoj de ĉi tiu dosiero ne estas legebla per tiu versio de Mapper. Minimuma postulata versio: %1</translation>
     </message>
     <message>
         <location filename="../src/file_format_xml.cpp" line="512"/>
