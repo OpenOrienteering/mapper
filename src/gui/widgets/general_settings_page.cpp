@@ -192,7 +192,7 @@ void GeneralSettingsPage::apply()
 		// The native [file] dialogs will use the first element of the
 		// AppleLanguages array in the application's .plist file -
 		// and this file is also the one used by QSettings.
-		QSettings().setValue(QString::fromLatin1("AppleLanguages"), translation.getLocale().uiLanguages());
+		QSettings().setValue(QString::fromLatin1("AppleLanguages"), QStringList{ translation.code() });
 #endif
 	}
 	
